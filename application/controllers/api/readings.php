@@ -2,7 +2,7 @@
 
 require APPPATH.'/libraries/REST_Controller.php';
 
-class Locations extends REST_Controller {	
+class Readings extends REST_Controller {	
 	public $_database;
 	public $server_host;
 	public $server_user;
@@ -17,11 +17,12 @@ class Locations extends REST_Controller {
 			$this->server_host = $conn->server_name;
 			$this->server_user = $conn->username;
 			$this->server_pwd = $conn->password;	
-			$this->_database = $conn->inst_database;
+			// $this->_database = $conn->inst_database;
 		}
+		$this->_database = 'db_banhji';
 	}
 	
-	//GET
+	//GET 
 	function index_get() {		
 		$filters 	= $this->get("filter")["filters"];		
 		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
@@ -30,7 +31,7 @@ class Locations extends REST_Controller {
 		$data["results"] = array();
 		$data["count"] = 0;
 
-		$obj = new Location(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
+		$obj = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
 
 		//Sort
 		if(!empty($sort) && isset($sort)){					
@@ -38,8 +39,8 @@ class Locations extends REST_Controller {
 				$obj->order_by($value["field"], $value["dir"]);
 			}
 		}
-
-		//Filter
+		
+		//Filter		
 		if(!empty($filters) && isset($filters)){			
 	    	foreach ($filters as $value) {
 	    		if(!empty($value["operator"]) && isset($value["operator"])){
@@ -68,32 +69,44 @@ class Locations extends REST_Controller {
 		    		}else if($value["operator"]=="or_where"){
 		    			$obj->or_where($value["field"], $value["value"]);		    		
 		    		}else{
-		    			$obj->where($value["field"], $value["value"]);
+		    			$obj->where($value["field"].' '.$value["operator"], $value["value"]);
 		    		}
 	    		}else{
 	    			$obj->where($value["field"], $value["value"]);
 	    		}
 			}									 			
-		}
+		}			
 
-		//Results
+		//Get Result
+		$obj->where('location_id', 1);
 		$obj->get_paged_iterated($page, $limit);
 		$data["count"] = $obj->paged->total_rows;		
-		
-		if($obj->result_count()>0){
-			foreach ($obj as $value) {	
-				$license = $value->branch->get();			
-		 		$data["results"][] = array(	
-		 			"id"     		=> $value->id,		   	
-				   	"name" 			=> $value->name,
-				   	"abbr" 			=> $value->abbr,
-				   	"branch" 		=> array('id' => $license->id, 'name' => $license->name)			
-		 		);
+
+		if($obj->result_count()>0){			
+			foreach ($obj as $value) {
+				//Results
+				$location = $value->location->get();
+				$contact  = $value->contact->get();
+				$record = $value->record->limit(1)->order_by('id', 'desc')->get();
+				$data["meta"] = array(
+										'location_id' => $location->id,
+										'location_name' => $location->name,
+										'location_abbr' => $location->abbr
+									);				
+				$data["results"][] = array(
+					"meter_id" 		=> $value->id,
+					"number" 		=> intval($value->number),
+					"prev"			=> $record->current,
+					"current"		=> 0,
+					"from_date"		=> "2016-" . date('m') . "-01",
+					"to_date"		=> "2016-" . date('m') . "-" . date('t'),
+					"status" 		=> "n"
+				);
 			}
 		}
 
 		//Response Data		
-		$this->response($data, 200);			
+		$this->response($data, 200);		
 	}
 	
 	//POST
@@ -101,28 +114,43 @@ class Locations extends REST_Controller {
 		$models = json_decode($this->post('models'));
 
 		foreach ($models as $value) {
-			$obj = new Location(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			isset($value->utility_id) 			? $obj->utility_id 			= $value->utility_id : "";
-			isset($value->name) 				? $obj->name 				= $value->name : "";
-			isset($value->abbr) 				? $obj->abbr 				= $value->abbr : "";
-			isset($value->branch) 				? $obj->branch_id 			= $value->branch->id : "";
-			if($obj->save()){
+			$obj = new Meter_record(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			if($value->status == "n") {
+				$obj->meter_id = $value->meter_id;
+				$obj->previous = $value->prev;
+				$obj->current  = $value->current;
+				$obj->usage    = intval($value->current) - intval($value->prev);
+				$obj->from_date= $value->from_date;
+				$obj->to_date  = $value->to_date;
+			} elseif($value->status == "u") {
+				$obj->where('meter_id', $value->meter_id);
+				$obj->where('from_date', $value->from_date);
+				$obj->where('to_date', $value->to_date);
+				$obj->get();
+				// update with new value
+				$obj->previous = $value->prev;
+				$obj->current  = $value->current;
+				$obj->usage    = intval($value->current) - intval($value->prev);
+			}
+			
+			
+			if($obj->save()){								
 				//Respsone
-				
-				$data["results"][] = array(					
-					"id" 			=> $obj->id,
-					"utility_id" 	=> $obj->utility_id,
-					"name" 			=> $obj->name,
-					"abbr" 			=> $obj->abbr,
-					"branch_id" 	=> $obj->branch_id	
+				$data["results"][] = array(
+					"meter_id" 		=> $obj->meter_id,
+					"number" 		=> intval($value->number),
+					"prev"			=> $obj->previous,
+					"current"		=> $obj->current,
+					"from_date"		=> $obj->from_date,
+					"to_date"		=> $obj->to_date
 				);				
-			}		
+			}			
 		}
 		$data["count"] = count($data["results"]);
-
-		$this->response($data, 201);
+		
+		$this->response($data, 201);						
 	}
-	
+
 	//PUT
 	function index_put() {
 		$models = json_decode($this->put('models'));
@@ -130,24 +158,26 @@ class Locations extends REST_Controller {
 		$data["count"] = 0;
 
 		foreach ($models as $value) {			
-			$obj = new Location(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			$obj->get_by_id($value->id);
+			$obj = new Meter_record(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
-			$obj->company_id 	= $value->company_id;
-			$obj->utility_id 	= $value->utility_id;			
-			$obj->name 			= $value->name;
-			$obj->abbr 			= $value->abbr;
-			$obj->branch_id 	= $value->branch_id;
-			if($obj->save()){				
+			$obj->where('id', $value->id);
+			$obj->get();
+			$obj->meter_id = $value->meter_id;
+			$obj->previous = $value->prev;
+			$obj->current  = $value->current;
+			$obj->usage    = intval($value->current) - intval($value->prev);
+			$obj->from_date= $value->from_date;
+			$obj->to_date  = $value->to_date;
+
+			if($obj->save()){
 				//Results
 				$data["results"][] = array(
-					"id" 			=> $obj->id,		 			
-					"company_id" 	=> $obj->company_id,
-					"utility_id" 	=> $obj->utility_id,
-					"name" 			=> $obj->name,
-					"abbr" 			=> $obj->abbr,
-					"branch_id" 	=> $obj->branch_id,
-				   	"company" 		=> $obj->company->get_raw()->result()
+					"meter_id" 		=> $obj->meter_id,
+					"number" 		=> intval($value->number),
+					"prev"			=> $obj->previous,
+					"current"		=> $obj->current,
+					"from_date"		=> $obj->from_date,
+					"to_date"		=> $obj->to_date
 				);						
 			}
 		}
@@ -161,19 +191,19 @@ class Locations extends REST_Controller {
 		$models = json_decode($this->delete('models'));
 
 		foreach ($models as $key => $value) {
-			$obj = new Location(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$obj = new Meter_record(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$obj->where("id", $value->id)->get();
 			
 			$data["results"][] = array(
 				"data"   => $value,
-				"status" => $obj->delete()
-			);							
+				"deleted" => TRUE
+			);
+							
 		}
 
 		//Response data
 		$this->response($data, 200);
 	}
-	
 }
-/* End of file locations.php */
-/* Location: ./application/controllers/api/locations.php */
+/* End of file meters.php */
+/* Location: ./application/controllers/api/meters.php */

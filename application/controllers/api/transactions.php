@@ -999,7 +999,7 @@ class Transactions extends REST_Controller {
 					$itemIn->where_in_related("transaction", "type", array("Cash_Purchase", "Credit_Purchase", "Adjustment"));
 					$itemIn->where("item_id", $value->item_id);
 					$itemIn->where("movement", 1);
-					$itemIn->where_related("transaction", "issued_date<=", $transaction->issued_date);
+					$itemIn->where_related("transaction", "issued_date <=", $transaction->issued_date);
 					$itemIn->where_related("transaction", "is_recurring", 0);
 					$itemIn->where_related("transaction", "deleted", 0);
 					$itemIn->get();
@@ -1009,7 +1009,7 @@ class Transactions extends REST_Controller {
 					$itemOut->where_in_related("transaction", "type", array("Invoice", "Cash_Sale", "Adjustment"));
 					$itemOut->where("item_id", $value->item_id);
 					$itemOut->where("movement", -1);
-					$itemOut->where_related("transaction", "issued_date<=", $transaction->issued_date);
+					$itemOut->where_related("transaction", "issued_date <=", $transaction->issued_date);
 					$itemOut->where_related("transaction", "is_recurring", 0);
 					$itemOut->where_related("transaction", "deleted", 0);
 					$itemOut->get();					

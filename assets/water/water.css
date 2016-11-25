@@ -26,3 +26,31 @@ p.addItem.glyphicons.circle_remove i:before {
 .box-generic-noborder {
 	min-height: 155px;
 }
+.cutype-icon i:before {
+	left: 5px;
+	top: 3px;
+}
+#example.k-content .span4 {
+	padding-right: 0;
+}
+#example.k-content .span4:nth-child(2){
+	padding: 0 10px;
+}
+.k-widget.k-dropdown.k-header > .k-dropdown-wrap.k-state-default {
+	height: 30px;
+}
+
+/*Water Dashboard*/
+.water-tableList .table.table-borderless.table-condensed tr th{
+	background: #1E4E78;
+	text-transform: uppercase;
+	color: #fff;
+	padding: 10px;
+}
+.water-tableList .table.table-borderless.table-condensed tr:nth-child(2n+1) td {
+    background: #f4f4f4;
+    padding: 10px;
+}
+.water-tableList .table.table-borderless.table-condensed tr td {
+    background: #fff;
+}

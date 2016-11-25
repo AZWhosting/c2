@@ -102,8 +102,8 @@ class Branches extends REST_Controller {
 					"term_of_condition" => $value->term_of_condition,
 					"image_url" 		=> $value->image_url,
 					"status" 			=> $value->status,
-
-					"currency"			=> $value->currency->get_raw()->result(),			
+					"number"  			=> $value->number,
+					"currency"			=> $value->currency->get_raw()->result()
 		 		);
 			}
 		}
@@ -117,7 +117,8 @@ class Branches extends REST_Controller {
 		$models = json_decode($this->post('models'));
 
 		foreach ($models as $value) {
-			$obj = new Branch(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);						
+			$obj = new Branch(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
+			$now = new DateTime();				
 			
 			isset($value->utility_id) 			? $obj->utility_id 			= $value->utility_id : "";
 			isset($value->currency_id) 			? $obj->currency_id 		= $value->currency_id : "";
@@ -133,9 +134,10 @@ class Branches extends REST_Controller {
 			isset($value->address) 				? $obj->address 			= $value->address : "";
 			isset($value->expire_date) 			? $obj->expire_date 		= $value->expire_date : "";
 			isset($value->max_customer) 		? $obj->max_customer 		= $value->max_customer : "";
-			isset($value->operation_license) 	? $obj->operation_license 	= $value->operation_license : "";
+			isset($value->operation_license) 	? $obj->operation_license 	= $value->operation_license : $now->getTimestamp();
 			isset($value->term_of_condition) 	? $obj->term_of_condition 	= $value->term_of_condition : "";
 			isset($value->image_url) 			? $obj->image_url 			= $value->image_url : "";
+			isset($value->number) 				? $obj->number 			= $value->number : "";
 			isset($value->status) 				? $obj->status 				= $value->status : "";
 			
 			if($obj->save()){
@@ -159,6 +161,7 @@ class Branches extends REST_Controller {
 					"operation_license" => $obj->operation_license,
 					"term_of_condition" => $obj->term_of_condition,
 					"image_url" 		=> $obj->image_url,
+					"number" 			=> $obj->number,	
 					"status" 			=> $obj->status	
 				);				
 			}		
@@ -196,6 +199,7 @@ class Branches extends REST_Controller {
 			isset($value->term_of_condition) 	? $obj->term_of_condition 	= $value->term_of_condition : "";
 			isset($value->image_url) 			? $obj->image_url 			= $value->image_url : "";
 			isset($value->status) 				? $obj->status 				= $value->status : "";
+			isset($value->number) 				? $obj->number 				= $value->number : "";
 
 			if($obj->save()){				
 				//Results
@@ -218,6 +222,7 @@ class Branches extends REST_Controller {
 					"operation_license" => $obj->operation_license,
 					"term_of_condition" => $obj->term_of_condition,
 					"image_url" 		=> $obj->image_url,
+					"number" 			=> $obj->number,
 					"status" 			=> $obj->status	
 				);						
 			}
