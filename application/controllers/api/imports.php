@@ -18,7 +18,7 @@ class Imports extends REST_Controller {
 			$conn = $institute->connection->get();
 			$this->server_host = $conn->server_name;
 			$this->server_user = $conn->username;
-			$this->server_pwd = $conn->password;	
+			$this->server_pwd = $conn->password;
 			$this->_database = $conn->inst_database;
 			$this->locale = $institute->locale;
 		}
@@ -59,9 +59,9 @@ class Imports extends REST_Controller {
 			isset($value->ebranch_id) 				? $obj->ebranch_id 				= $value->ebranch_id : "";
 			isset($value->elocation_id) 			? $obj->elocation_id 			= $value->elocation_id : "";
 			isset($value->wbranch_id) 				? $obj->wbranch_id 				= $value->wbranch_id : "";
-			isset($value->wlocation_id) 			? $obj->wlocation_id			= $value->wlocation_id : "";		
+			isset($value->wlocation_id) 			? $obj->wlocation_id			= $value->wlocation_id : "";
 			isset($value->user_id)					? $obj->user_id 				= $value->user_id : "";
-			isset($value->contact_type)				? $obj->contact_type_id 		= $type->id : "";					
+			isset($value->contact_type)				? $obj->contact_type_id 		= $type->id : "";
 			isset($value->eorder)					? $obj->eorder					= $last_id : "";
 			isset($value->worder)					? $obj->worder					= $last_id : "";
 			isset($value->abbr)						? $obj->abbr					= $value->abbr : "";
@@ -77,10 +77,10 @@ class Imports extends REST_Controller {
 			isset($value->latitute)					? $obj->latitute 				= $value->latitute : "";
 			isset($value->longtitute)				? $obj->longtitute 				= $value->longtitute : "";
 			isset($value->credit_limit)				? $obj->credit_limit			= $value->credit_limit : "";
-			isset($value->locale)					? $obj->locale					= $value->locale : "";			
+			isset($value->locale)					? $obj->locale					= $value->locale : "";
 			isset($value->id_number)				? $obj->id_number				= $value->id_number : "";
 			isset($value->phone)					? $obj->phone 					= $value->phone : "";
-			isset($value->email)					? $obj->email 					= $value->email : "";			
+			isset($value->email)					? $obj->email 					= $value->email : "";
 			isset($value->website)					? $obj->website					= $value->website : "";
 			isset($value->job)						? $obj->job						= $value->job : "";
 			isset($value->vat_no)					? $obj->vat_no					= $value->vat_no : "";
@@ -90,7 +90,7 @@ class Imports extends REST_Controller {
 			isset($value->address)					? $obj->address 				= $value->address : "";
 			isset($value->bill_to)					? $obj->bill_to 				= $value->bill_to : "";
 			isset($value->ship_to)					? $obj->ship_to 				= $value->ship_to : "";
-			isset($value->memo)						? $obj->memo					= $value->memo : "";							
+			isset($value->memo)						? $obj->memo					= $value->memo : "";
 			isset($value->image_url)				? $obj->image_url				= $value->image_url : "";
 			isset($value->company)					? $obj->company					= $value->company : "";
 			isset($value->company_en)				? $obj->company_en				= $value->company_en : "";
@@ -104,7 +104,7 @@ class Imports extends REST_Controller {
 			isset($value->payment_method_id)		? $obj->payment_method_id		= $value->payment_method_id : "";
 			isset($value->deposit_account)			? $obj->deposit_account_id		= $deposit->id : "";
 			isset($value->trade_discount)			? $obj->trade_discount_id		= $discount->id : "";
-			isset($value->settlement_discount)		? $obj->settlement_discount_id	= $settlement->id : "";		
+			isset($value->settlement_discount)		? $obj->settlement_discount_id	= $settlement->id : "";
 			isset($value->salary_account_id)		? $obj->salary_account_id		= $value->salary_account_id : "";
 			isset($value->account)					? $obj->account_id				= $account->id : "";
 			isset($value->revenue_account)			? $obj->ra_id					= $revenue->id : "";
@@ -112,15 +112,15 @@ class Imports extends REST_Controller {
 			isset($value->phase_id)					? $obj->phase_id				= $value->phase_id : "";
 			isset($value->voltage_id)				? $obj->voltage_id				= $value->voltage_id : "";
 			isset($value->ampere_id)				? $obj->ampere_id				= $value->ampere_id : "";
-			isset($value->registered_date)			? $obj->registered_date 		= date("Y-m-d", strtotime($value->registered_date)) : "";		
+			isset($value->registered_date)			? $obj->registered_date 		= date("Y-m-d", strtotime($value->registered_date)) : "";
 			isset($value->use_electricity)			? $obj->use_electricity			= $value->use_electricity : "";
 			isset($value->use_water)				? $obj->use_water				= $value->use_water : "";
 			isset($value->is_local)					? $obj->is_local				= $value->is_local : "";
 			isset($value->is_pattern)				? $obj->is_pattern				= $value->is_pattern : "";
-			isset($value->status)					? $obj->status					= $value->status : "";			
-			isset($value->deleted)					? $obj->deleted					= $value->deleted : "";							
+			isset($value->status)					? $obj->status					= $value->status : "";
+			isset($value->deleted)					? $obj->deleted					= $value->deleted : "";
 			isset($value->is_system)				? $obj->is_system				= $value->is_system : "";
-			
+
 			if($obj->save()){
 				$fullname = $obj->surname.' '.$obj->name;
 				if($obj->contact_type_id=="6" || $obj->contact_type_id=="7" || $obj->contact_type_id=="8"){
@@ -129,35 +129,35 @@ class Imports extends REST_Controller {
 
 				//Respsone
 				$data["results"][] = array(
-					"id" 						=> $obj->id,		 			
+					"id" 						=> $obj->id,
 					"branch_id" 				=> $obj->branch_id,
 					"country_id" 				=> $obj->country_id,
 					"ebranch_id" 				=> $obj->ebranch_id,
 					"elocation_id" 				=> $obj->elocation_id,
 					"wbranch_id" 				=> $obj->wbranch_id,
-					"wlocation_id" 				=> $obj->wlocation_id,					
-					"user_id"					=> $obj->user_id, 	
+					"wlocation_id" 				=> $obj->wlocation_id,
+					"user_id"					=> $obj->user_id,
 					"contact_type_id" 			=> $obj->contact_type_id,
 					"eorder" 					=> $obj->eorder,
 					"worder" 					=> $obj->worder,
-					"abbr" 						=> $obj->abbr, 						
+					"abbr" 						=> $obj->abbr,
 					"number" 					=> $obj->number,
 					"eabbr" 					=> $obj->eabbr,
 					"enumber" 					=> $obj->enumber,
 					"wabbr" 					=> $obj->wabbr,
 					"wnumber" 					=> $obj->wnumber,
-					"name" 						=> $obj->name,			
-					"gender"					=> $obj->gender,			
-					"dob" 						=> $obj->dob,				
+					"name" 						=> $obj->name,
+					"gender"					=> $obj->gender,
+					"dob" 						=> $obj->dob,
 					"pob" 						=> $obj->pob,
 					"latitute" 					=> $obj->latitute,
 					"longtitute" 				=> $obj->longtitute,
 					"credit_limit" 				=> $obj->credit_limit,
-					"locale" 					=> $obj->locale,					
+					"locale" 					=> $obj->locale,
 					"id_number" 				=> $obj->id_number,
 					"phone" 					=> $obj->phone,
 					"email" 					=> $obj->email,
-					"website" 					=> $obj->website,					
+					"website" 					=> $obj->website,
 					"job" 						=> $obj->job,
 					"vat_no" 					=> $obj->vat_no,
 					"family_member"				=> $obj->family_member,
@@ -167,7 +167,7 @@ class Imports extends REST_Controller {
 					"bill_to" 					=> $obj->bill_to,
 					"ship_to" 					=> $obj->ship_to,
 					"memo" 						=> $obj->memo,
-					"image_url" 				=> $obj->image_url,				
+					"image_url" 				=> $obj->image_url,
 					"company" 					=> $obj->company,
 					"company_en" 				=> $obj->company_en,
 					"bank_name" 				=> $obj->bank_name,
@@ -175,17 +175,17 @@ class Imports extends REST_Controller {
 					"bank_account_name" 		=> $obj->bank_account_name,
 					"bank_account_number" 		=> $obj->bank_account_number,
 					"name_on_cheque" 			=> $obj->name_on_cheque,
-					"business_type_id" 			=> $obj->business_type_id,					
+					"business_type_id" 			=> $obj->business_type_id,
 					"payment_term_id" 			=> $obj->payment_term_id,
 					"payment_method_id" 		=> $obj->payment_method_id,
 					"deposit_account_id"		=> $obj->deposit_account_id,
 					"trade_discount_id" 		=> $obj->trade_discount_id,
-					"settlement_discount_id"	=> $obj->settlement_discount_id,																		
+					"settlement_discount_id"	=> $obj->settlement_discount_id,
 					"salary_account_id"			=> $obj->salary_account_id,
-					"account_id" 				=> $obj->account_id,																					
-					"account_id" 				=> $obj->account_id,					
+					"account_id" 				=> $obj->account_id,
+					"account_id" 				=> $obj->account_id,
 					"ra_id" 					=> $obj->ra_id,
-					"tax_item_id" 				=> $obj->tax_item_id,					
+					"tax_item_id" 				=> $obj->tax_item_id,
 					"phase_id" 					=> $obj->phase_id,
 					"voltage_id" 				=> $obj->voltage_id,
 					"ampere_id" 				=> $obj->ampere_id,
@@ -197,10 +197,10 @@ class Imports extends REST_Controller {
 					"status" 					=> $obj->status,
 					"is_system"					=> $obj->is_system,
 
-					"fullname" 					=> $fullname,					
+					"fullname" 					=> $fullname,
 					"contact_type"				=> $obj->contact_type->get_raw()->result()
-				);				
-			}		
+				);
+			}
 		}
 		$data["count"] = count($data["results"]);
 
@@ -208,10 +208,10 @@ class Imports extends REST_Controller {
 	}
 
 	function item_post() {
-		$models = json_decode($this->post('models'));				
+		$models = json_decode($this->post('models'));
 		$data["results"] = array();
-		$data["count"] = 0;				
-		
+		$data["count"] = 0;
+
 		foreach ($models as $value) {
 			$obj = new Item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
@@ -234,7 +234,7 @@ class Imports extends REST_Controller {
 			if(isset($value->fixed_assets_account)) {
 				$fixed = new Account(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 				$fixed->where('number', $value->fixed_assets_account)->get();
-			}				
+			}
 
 			if(isset($value->accumulated_account)) {
 				$accumulated = new Account(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
@@ -247,14 +247,14 @@ class Imports extends REST_Controller {
 			}
 
 			isset($value->company_id) 				? $obj->company_id 				= $value->company_id : "";
-			isset($value->contact_id) 				? $obj->contact_id 				= $value->contact_id : "";			
+			isset($value->contact_id) 				? $obj->contact_id 				= $value->contact_id : "";
 			isset($value->currency_id) 				? $obj->currency_id 			= $value->currency_id : "";
-			isset($value->item_type_id) 			? $obj->item_type_id			= $value->item_type_id : 1;			
+			isset($value->item_type_id) 			? $obj->item_type_id			= $value->item_type_id : 1;
 			isset($value->category_id) 				? $obj->category_id 			= $value->category_id : 1;
 			isset($value->item_group_id) 			? $obj->item_group_id 			= $value->item_group_id : "";
 			isset($value->item_sub_group_id) 		? $obj->item_sub_group_id 		= $value->item_sub_group_id : "";
 			isset($value->brand_id) 				? $obj->brand_id 				= $value->brand_id : "";
-			isset($value->measurement_id) 			? $obj->measurement_id 			= $value->measurement_id : "";		
+			isset($value->measurement_id) 			? $obj->measurement_id 			= $value->measurement_id : "";
 			isset($value->main_id) 					? $obj->main_id 				= $value->main_id : "";
 			isset($value->abbr) 					? $obj->abbr 					= $value->abbr : "";
 			isset($value->number) 					? $obj->number 					= $value->number : "";
@@ -290,7 +290,7 @@ class Imports extends REST_Controller {
 		   	isset($value->is_catalog) 				? $obj->is_catalog 				= $value->is_catalog : "";
 		   	isset($value->is_assembly) 				? $obj->is_assembly 			= $value->is_assembly : "";
 		   	isset($value->is_pattern) 				? $obj->is_pattern 				= $value->is_pattern : "";
-		   	isset($value->status) 					? $obj->status 					= $value->status : "";	   	
+		   	isset($value->status) 					? $obj->status 					= $value->status : "";
 		   	isset($value->deleted) 					? $obj->deleted 				= $value->deleted : "";
 
 	   		if($obj->save()){
@@ -299,12 +299,12 @@ class Imports extends REST_Controller {
 					"company_id" 				=> $obj->company_id,
 					"contact_id" 				=> $obj->contact_id,
 					"currency_id" 				=> $obj->currency_id,
-					"item_type_id"				=> $obj->item_type_id,					
+					"item_type_id"				=> $obj->item_type_id,
 					"category_id" 				=> $obj->category_id,
 					"item_group_id"				=> $obj->item_group_id,
 					"item_sub_group_id"			=> $obj->item_sub_group_id,
-					"brand_id" 					=> $obj->brand_id,					
-					"measurement_id" 			=> $obj->measurement_id,					
+					"brand_id" 					=> $obj->brand_id,
+					"measurement_id" 			=> $obj->measurement_id,
 					"main_id" 					=> $obj->main_id,
 					"abbr" 						=> $obj->abbr,
 					"number" 					=> $obj->number,
@@ -316,7 +316,7 @@ class Imports extends REST_Controller {
 				   	"name" 						=> $obj->name,
 				   	"purchase_description" 		=> $obj->purchase_description,
 				   	"sale_description" 			=> $obj->sale_description,
-				   	"catalogs" 					=> explode(",",$obj->catalogs),				   	
+				   	"catalogs" 					=> explode(",",$obj->catalogs),
 				   	"cost" 						=> floatval($obj->cost),
 				   	"price" 					=> floatval($obj->price),
 				   	"amount" 					=> floatval($obj->amount),
@@ -333,20 +333,20 @@ class Imports extends REST_Controller {
 				   	"fixed_assets_account_id" 	=> $obj->fixed_assets_account_id,
 				   	"accumulated_account_id" 	=> $obj->accumulated_account_id,
 				   	"depreciation_account_id" 	=> $obj->depreciation_account_id,
-				   	"deposit_account_id" 		=> $obj->deposit_account_id,				   				   	
+				   	"deposit_account_id" 		=> $obj->deposit_account_id,
 				   	"preferred_vendor_id" 		=> $obj->preferred_vendor_id,
 				   	"image_url" 				=> $obj->image_url,
 				   	"favorite" 					=> $obj->favorite=="true"?true:false,
 				   	"is_catalog" 				=> $obj->is_catalog,
 				   	"is_assembly" 				=> $obj->is_assembly,
-				   	"is_pattern" 				=> intval($obj->is_pattern),				  
+				   	"is_pattern" 				=> intval($obj->is_pattern),
 				   	"status" 					=> $obj->status,
 				   	"deleted" 					=> $obj->deleted,
 				   	"is_system" 				=> $obj->is_system
 			   	);
-		    }	
+		    }
 		}
-		
+
 		$data["count"] = count($data["results"]);
 		$this->response($data, 201);
 	}
@@ -411,25 +411,56 @@ class Imports extends REST_Controller {
 					$journalItem->locale = $this->locale;
 					$journalItem->save();
 				}
-			}				
+			}
 		}
-		
-		
-		$this->response(array('results'=> array(), 'msg' => "Operation is good."), 201);		
+
+
+		$this->response(array('results'=> array(), 'msg' => "Operation is good."), 201);
 	}
 
+	function dbsize_get() {
+		$CI=&get_instance();
+    $CI->load->database();
+		$this->load->dbutil();
+		$dbs = $this->dbutil->list_databases();
+
+		$companyList = array("banhji","banhji_mac", "db_banhji", "information_schema","innodb","mysql","performance_schema","tmp");
+		$data = array();
+		foreach ($dbs as $db)
+		{
+			if (!in_array("$db", $companyList)) {
+				// $data[] = $db;
+		    $dbName = $CI->db->database;
+
+		    $dbName = $this->db->escape($db);
+
+		    $sql = "SELECT table_schema AS db_name, sum( data_length + index_length ) / 1024 / 1024 AS db_size_mb FROM information_schema.tables WHERE table_schema = $dbName GROUP BY table_schema ;";
+
+		    $query = $CI->db->query($sql);
+
+		    if ($query->num_rows() == 1) {
+
+		       $row = $query->row();
+		       $size = $row->db_size_mb;
+		       $data[] = array("db" => $db, "size" => $size);
+
+		    }
+			}
+		}
+		$this->response(array('results'=> $data, 'count'=>count($data), 'msg' => "Operation is good."), 200);
+	}
 	// function create_get() {
 	// 	$this->load->dbutil();
 	// 	$dbs = $this->dbutil->list_databases();
-
+	//
 	// 	$companyList = array("banhji","banhji_mac", "db_banhji", "information_schema","innodb","mysql","performance_schema","tmp");
 	// 	$data = array();
 	// 	foreach ($dbs as $db)
-	// 	{	
+	// 	{
 	// 		if (!in_array("$db", $companyList)) {
 	// 		    $data[] = $db;
 	// 		    $connection = 'use ' . $db;
-
+	//
 	// 		 //    $dataInserted = array(
 	// 			//    'account_type_id' => 34,
 	// 			//    'sub_of_id' => 70,
@@ -439,42 +470,109 @@ class Imports extends REST_Controller {
 	// 			//    'status' => 1,
 	// 			//    'is_system' => 1
 	// 			// );
-
+	// 			$dataInserted = array(
+	// 				array(
+	// 					"is_pattern" => 0,
+	// 					"number" => "00001",
+	// 					"abbr" => "LAN",
+	// 					"name" => "Freehold Land"
+	// 				),
+	// 				array(
+	// 					"is_pattern" => 0,
+	// 					"number" => "00001",
+	// 					"abbr" => "CRE",
+	// 					"name" => "Computer & Related Equipment"
+	// 				),
+	// 				array(
+	// 					"is_pattern" => 0,
+	// 					"number" => "00001",
+	// 					"abbr" => "BUS",
+	// 					"name" => "Building & Structure"
+	// 				),
+	// 				array(
+	// 					"is_pattern" => 0,
+	// 					"number" => "00001",
+	// 					"abbr" => "AUC",
+	// 					"name" => "Asset Under Construction"
+	// 				),
+	// 				array(
+	// 					"is_pattern" => 0,
+	// 					"number" => "00001",
+	// 					"abbr" => "ESM",
+	// 					"name" => "Electrical System & Machine"
+	// 				),
+	// 				array(
+	// 					"is_pattern" => 0,
+	// 					"number" => "00001",
+	// 					"abbr" => "AUV",
+	// 					"name" => "Automobiles & Vehicles"
+	// 				),
+	// 				array(
+	// 					"is_pattern" => 0,
+	// 					"number" => "00001",
+	// 					"abbr" => "FFF",
+	// 					"name" => "Furniture, Fixtures & Fitting"
+	// 				),
+	// 				array(
+	// 					"is_pattern" => 0,
+	// 					"number" => "00001",
+	// 					"abbr" => "HEM",
+	// 					"name" => "Heavy Machineries"
+	// 				),
+	// 				array(
+	// 					"is_pattern" => 0,
+	// 					"number" => "00001",
+	// 					"abbr" => "INA",
+	// 					"name" => "Intangible Asset"
+	// 				)
+ // 				);
+	//
 	// 			$this->db->query($connection);
+	// 			// $this->db->insert('items', array(
+	// 			// 	"is_pattern" => 1,
+	// 			//
+	// 			// 	"abbr" => "CRE",
+	// 			// 	"purchase_description" => "Computer & Related Equipment",
+	// 			// 	"sale_description" => "Computer & Related Equipment",
+	// 			// 	"fixed_assets_account_id" => 32,
+	// 			// 	"accumulated_account_id" => 43,
+	// 			// 	"depreciation_account_id" => 106,
+	// 			// 	"is_system" => 1
+	// 			// ));
 	// 			// $this->dbforge->add_column("account_types", array('code'=> array('type'=> 'SMALLINT')));
-	// 			$myData = array(
-	// 				array('order' => 13, 'id' => 10),
-	// 				array('order' => 12, 'id' => 11),
-	// 				array('order' => 11, 'id' => 12),
-	// 				array('order' => 10, 'id' => 13),
-	// 				array('order' => 9, 'id' => 14),
-	// 				array('order' => 8, 'id' => 15),
-	// 				array('order' => 1, 'id' => 16),
-	// 				array('order' => 2, 'id' => 17),
-	// 				array('order' => 3, 'id' => 18),
-	// 				array('order' => 4, 'id' => 19),
-	// 				array('order' => 5, 'id' => 20),
-	// 				array('order' => 6, 'id' => 21),
-	// 				array('order' => 7, 'id' => 22),
-	// 				array('order' => 22, 'id' => 23),
-	// 				array('order' => 21, 'id' => 24),
-	// 				array('order' => 20, 'id' => 25),
-	// 				array('order' => 19, 'id' => 26),
-	// 				array('order' => 18, 'id' => 27),
-	// 				array('order' => 14, 'id' => 28),
-	// 				array('order' => 15, 'id' => 29),
-	// 				array('order' => 16, 'id' => 30),
-	// 				array('order' => 17, 'id' => 31)
-	// 			);
-	// 			$this->db->update_batch('account_types', $myData, 'id');
+	// 			// $myData = array(
+	// 			// 	array('order' => 13, 'id' => 10),
+	// 			// 	array('order' => 12, 'id' => 11),
+	// 			// 	array('order' => 11, 'id' => 12),
+	// 			// 	array('order' => 10, 'id' => 13),
+	// 			// 	array('order' => 9, 'id' => 14),
+	// 			// 	array('order' => 8, 'id' => 15),
+	// 			// 	array('order' => 1, 'id' => 16),
+	// 			// 	array('order' => 2, 'id' => 17),
+	// 			// 	array('order' => 3, 'id' => 18),
+	// 			// 	array('order' => 4, 'id' => 19),
+	// 			// 	array('order' => 5, 'id' => 20),
+	// 			// 	array('order' => 6, 'id' => 21),
+	// 			// 	array('order' => 7, 'id' => 22),
+	// 			// 	array('order' => 22, 'id' => 23),
+	// 			// 	array('order' => 21, 'id' => 24),
+	// 			// 	array('order' => 20, 'id' => 25),
+	// 			// 	array('order' => 19, 'id' => 26),
+	// 			// 	array('order' => 18, 'id' => 27),
+	// 			// 	array('order' => 14, 'id' => 28),
+	// 			// 	array('order' => 15, 'id' => 29),
+	// 			// 	array('order' => 16, 'id' => 30),
+	// 			// 	array('order' => 17, 'id' => 31)
+	// 			// );
+	// 			$this->db->update_batch('items', $dataInserted, 'name');
 	// 			// $this->db->insert('accounts', $dataInserted);
-	
+	//
 	// 		}
-		    
+	//
 	// 	}
-
+	//
 	// 	// $this->response(array('results'=>$data), 200);
-
+	//
 	// }
-	
+
 }
