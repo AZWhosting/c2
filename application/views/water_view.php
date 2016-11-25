@@ -283,13 +283,40 @@
 	    <!-- Tabs Heading -->
 	    <div class="widget-head span3">
 	        <ul>
-	            <li class="active"><a href="#tab1-1" class="glyphicons notes_2" data-toggle="tab"><i></i><span class="strong"><span>License</span></span></a>
+	            <li class="active">
+	            	<a href="#tab1" class="glyphicons notes_2" data-toggle="tab">
+	            		<i></i><span class="strong"><span>License</span></span>
+	            	</a>
 	            </li>  
-	             <li><a href="#tab1-3" class="glyphicons pushpin" data-toggle="tab"><i></i><span class="strong"><span>Bloc</span></span></a>
+	             <li>
+	             	<a href="#tab2" class="glyphicons pushpin" data-toggle="tab">
+	             		<i></i><span class="strong"><span>Bloc</span></span>
+	             	</a>
 	            </li>  
-	            <li><a href="#tab1-2" class="glyphicons old_man" data-toggle="tab"><i></i><span class="strong"><span>Customer Types</span></span></a>
+	            <li>
+	            	<a href="#tab3" class="glyphicons old_man" data-toggle="tab">
+	            		<i></i><span class="strong"><span>Customer Types</span></span>
+	            	</a>
 	            </li>  
-	            <li><a href="#tab1-4" class="glyphicons list" data-toggle="tab"><i></i><span class="strong"><span>Plans</span></span></a>
+	            <li>
+	            	<a href="#tab4" class="glyphicons calculator" data-toggle="tab">
+	            		<i></i><span class="strong"><span>Tariff</span></span>
+	            	</a>
+	            </li>
+	            <li>
+	            	<a href="#tab5" class="glyphicons retweet_2" data-toggle="tab">
+	            		<i></i><span class="strong"><span>Exemption</span></span>
+	            	</a>
+	            </li>
+	            <li>
+	            	<a href="#tab6" class="glyphicons snowflake" data-toggle="tab">
+	            		<i></i><span class="strong"><span>Installment</span></span>
+	            	</a>
+	            </li>
+	            <li>
+	            	<a href="#tab7" class="glyphicons list" data-toggle="tab">
+	            		<i></i><span class="strong"><span>Plans</span></span>
+	            	</a>
 	            </li>                       
 	        </ul>
 	    </div>
@@ -299,7 +326,7 @@
 	        <div class="tab-content">
 	        	
 	            <!-- License -->
-	            <div class="tab-pane active" id="tab1-1">
+	            <div class="tab-pane active" id="tab1">
 	            	<a class="btn-icon btn-primary glyphicons circle_plus" style="width: 130px" href="#/add_license"><i></i>Add License</a>
 	            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
 	            		<thead>
@@ -323,33 +350,8 @@
 
 	            </div>
 	            <!-- // End License -->
-	            <div class="tab-pane" id="tab1-2">
-	            	<div style="clear: both;margin-bottom: 10px;">
-		            	<input type="text" class="span3 k-textbox k-invalid" style="height: 32px;" data-bind="value: contactTypeName" placeholder="Type" />
-		            	<input type="text" placeholder="Abbr" data-bind="value: contactTypeAbbr" style="height: 32px;"  class="span3 k-textbox k-invalid" />
-		            	<select class="span3" style="height: 32px; border-radius: 0;background: #fff;" id="appendedInputButtons" data-bind="value: contactTypeCompany" >
-			                <option value="0"><span>Not A Company</span></option>
-			                <option value="1"><span>It is A Company</span></option>           
-			            </select>
-		            	<a class="btn btn-default glyphicons circle_plus cutype-icon" style="width: 80px;margin-left: 2px;" data-bind="click: addContactType"><i></i>Add</a>
-		            </div>
-	            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
-	            		<thead>
-	            			<tr>
-	            				<th class="center"><span>Type</span></th>
-	            				<th class="center"><span>Abbr</span></th>
-	            				<th class="center"><span>Other</span></th>
-	            				<th class="center">Action</th>
-	            			</tr>
-	            		</thead>
-	            		<tbody data-role="listview"	            	
-				                data-template="custType-template"
-				                data-edit-template="customerSetting-edit-contact-type-template"
-				                data-bind="source: contactTypeDS"></tbody>
-	            	</table>
-
-	            </div>
-	            <div class="tab-pane" id="tab1-3">
+	            
+	            <div class="tab-pane" id="tab2">
 	            	<div style="clear: both;margin-bottom: 10px;">
 		            	<input data-role="dropdownlist"
 		            	   class="span3"
@@ -381,9 +383,200 @@
 	            	</table>
 
 	            </div>
-	            <!-- // CUSTOMER TYPE END -->
-	            <!-- // CUSTOMER TYPE END -->
-	            <div class="tab-pane" id="tab1-4">
+	            <div class="tab-pane" id="tab3">
+	            	<div style="clear: both;margin-bottom: 10px;">
+		            	<input type="text" class="span3 k-textbox k-invalid" style="height: 32px;" data-bind="value: contactTypeName" placeholder="Type" />
+		            	<input type="text" placeholder="Abbr" data-bind="value: contactTypeAbbr" style="height: 32px;"  class="span3 k-textbox k-invalid" />
+		            	<select class="span3" style="height: 32px; border-radius: 0;background: #fff;" id="appendedInputButtons" data-bind="value: contactTypeCompany" >
+			                <option value="0"><span>Not A Company</span></option>
+			                <option value="1"><span>It is A Company</span></option>           
+			            </select>
+		            	<a class="btn btn-default glyphicons circle_plus cutype-icon" style="width: 80px;margin-left: 2px;" data-bind="click: addContactType"><i></i>Add</a>
+		            </div>
+	            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
+	            		<thead>
+	            			<tr>
+	            				<th class="center"><span>Type</span></th>
+	            				<th class="center"><span>Abbr</span></th>
+	            				<th class="center"><span>Other</span></th>
+	            				<th class="center">Action</th>
+	            			</tr>
+	            		</thead>
+	            		<tbody data-role="listview"	            	
+				                data-template="custType-template"
+				                data-edit-template="customerSetting-edit-contact-type-template"
+				                data-bind="source: contactTypeDS"></tbody>
+	            	</table>
+
+	            </div>
+	            <div class="tab-pane" id="tab4">
+	            	<div class="span6">
+		            	<div style="clear: both;margin-bottom: 10px; overflow: hidden;">
+			            	<input data-role="dropdownlist"
+			            	   class="span4"
+			            	   style="padding-right: 1px;height: 32px;" 
+	            			   data-option-label="(--- Select ---)"
+	            			   data-auto-bind="false"			                   
+			                   data-value-primitive="false"
+			                   data-text-field="name"
+			                   data-value-field="id"
+			                   data-bind="value: blockCompanyId,
+			                              source: licenseDS,
+			                              events: {change: onLicenseChange}"/>
+			            	<input 
+			            		data-bind="value: tariffName" 
+			            		type="text" 
+			            		placeholder="Tariff Name" 
+			            		style="height: 32px;"  
+			            		class="span5 k-textbox k-invalid" />
+			            		<a class="btn btn-default glyphicons circle_plus cutype-icon" style="width: 80px;margin-left: 2px;float:right;" data-bind="click: addTariff"><i></i>Add</a>
+			            </div>
+		            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
+		            		<thead>
+		            			<tr>
+		            				<th class="center"><span>License</span></th>
+		            				<th class="center"><span>Tariff Name</span></th>
+		            				<th class="center">Action</th>
+		            			</tr>
+		            		</thead>
+		            		<tbody data-role="listview"	            				
+					                data-template="tariffSetting-template"
+					                data-bind="source: blocDS"></tbody>
+		            	</table>
+		            </div>
+		            <div class="span6">
+		            	<div style="clear: both;margin-bottom: 10px;overflow: hidden;">
+			            	<input data-role="dropdownlist"
+			            	   class="span3"
+			            	   style="padding-right: 1px;height: 32px;" 
+	            			   data-option-label="(--- Select ---)"
+	            			   data-auto-bind="false"			                   
+			                   data-value-primitive="false"
+			                   data-text-field="name"
+			                   data-value-field="id"
+			                   data-bind="value: blockCompanyId,
+			                              source: licenseDS,
+			                              events: {change: onLicenseChange}"/>
+			            	<input 
+			            		data-bind="value: tariffName" 
+			            		type="text" 
+			            		placeholder="Usage" 
+			            		style="height: 32px;"  
+			            		class="span3 k-textbox k-invalid" />
+			            	<input 
+			            		data-bind="value: tariffName" 
+			            		type="text" 
+			            		placeholder="Price" 
+			            		style="height: 32px;"  
+			            		class="span3 k-textbox k-invalid" />
+			            	<a class="btn btn-default glyphicons circle_plus cutype-icon" 
+			            		style="width: 80px;margin-left: 2px;float:right;" data-bind="click: addTariff">
+			            		<i></i>Add
+			            	</a>
+			            </div>
+		            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
+		            		<thead>
+		            			<tr>
+		            				<th class="center"><span>Usage</span></th>
+		            				<th class="center"><span>Price</span></th>
+		            				<th class="center">Flat</th>
+		            			</tr>
+		            		</thead>
+		            		<tbody data-role="listview"	            				
+					                data-template="tariffSetting-template"
+					                data-bind="source: blocDS"></tbody>
+		            	</table>
+		            </div>
+	            </div>
+	            <div class="tab-pane" id="tab5">
+	            	<div style="clear: both;margin-bottom: 10px;">
+		            	<input data-role="dropdownlist"
+		            	   class="span2"
+		            	   style="padding-right: 1px;height: 32px;" 
+            			   data-option-label="(--- Select ---)"
+            			   data-auto-bind="false"			                   
+		                   data-value-primitive="false"
+		                   data-text-field="name"
+		                   data-value-field="id"
+		                   data-bind="value: blockCompanyId,
+		                              source: licenseDS,
+		                              events: {change: onLicenseChange}"/>
+		                <input data-role="dropdownlist"
+		            	   class="span2"
+		            	   style="padding-right: 1px;height: 32px;" 
+            			   data-option-label="(--- Select ---)"
+            			   data-auto-bind="false"			                   
+		                   data-value-primitive="false"
+		                   data-text-field="name"
+		                   data-value-field="id"
+		                   data-bind="value: blockCompanyId,
+		                              source: licenseDS,
+		                              events: {change: onLicenseChange}"/>
+		            	<input data-bind="value: blocName" type="text" placeholder="Name" style="height: 32px;"  class="span3 k-textbox k-invalid" />
+		            	<input data-bind="value: blocAbbr" type="text" placeholder="Price" style="height: 32px;" class="span3 k-textbox k-invalid" />
+		            	<a class="btn btn-default glyphicons circle_plus cutype-icon" style="width: 80px;margin-left: 2px;" data-bind="click: addBloc"><i></i>Add</a>
+		            </div>
+	            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
+	            		<thead>
+	            			<tr>
+	            				<th class="center"><span>License</span></th>
+	            				<th class="center"><span>Name</span></th>
+	            				<th class="center"><span>Price</span></th>
+	            				<th class="center"><span>Type</span></th>
+	            				<th class="center">Action</th>
+	            			</tr>
+	            		</thead>
+	            		<tbody data-role="listview"	            				
+				                data-template="exemptionSetting-template"
+				                data-bind="source: blocDS"></tbody>
+	            	</table>
+
+	            </div>
+	            <div class="tab-pane" id="tab6">
+	            	<div style="clear: both;margin-bottom: 10px;">
+		            	<input data-role="dropdownlist"
+		            	   class="span2"
+		            	   style="padding-right: 1px;height: 32px;" 
+            			   data-option-label="(--- Select ---)"
+            			   data-auto-bind="false"			                   
+		                   data-value-primitive="false"
+		                   data-text-field="name"
+		                   data-value-field="id"
+		                   data-bind="value: blockCompanyId,
+		                              source: licenseDS,
+		                              events: {change: onLicenseChange}"/>
+		                <input data-role="dropdownlist"
+		            	   class="span2"
+		            	   style="padding-right: 1px;height: 32px;" 
+            			   data-option-label="(--- Select ---)"
+            			   data-auto-bind="false"			                   
+		                   data-value-primitive="false"
+		                   data-text-field="name"
+		                   data-value-field="id"
+		                   data-bind="value: blockCompanyId,
+		                              source: licenseDS,
+		                              events: {change: onLicenseChange}"/>
+		            	<input data-bind="value: blocName" type="text" placeholder="Name" style="height: 32px;"  class="span3 k-textbox k-invalid" />
+		            	<input data-bind="value: blocAbbr" type="text" placeholder="Price" style="height: 32px;" class="span3 k-textbox k-invalid" />
+		            	<a class="btn btn-default glyphicons circle_plus cutype-icon" style="width: 80px;margin-left: 2px;" data-bind="click: addBloc"><i></i>Add</a>
+		            </div>
+	            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
+	            		<thead>
+	            			<tr>
+	            				<th class="center"><span>License</span></th>
+	            				<th class="center"><span>Name</span></th>
+	            				<th class="center"><span>Price</span></th>
+	            				<th class="center"><span>Type</span></th>
+	            				<th class="center">Action</th>
+	            			</tr>
+	            		</thead>
+	            		<tbody data-role="listview"	            				
+				                data-template="exemptionSetting-template"
+				                data-bind="source: blocDS"></tbody>
+	            	</table>
+
+	            </div>
+	            <div class="tab-pane" id="tab7">
 	            	<a class="btn-icon btn-primary glyphicons circle_plus" style="width: 110px;" href="#/plan"><i></i>Add Plan</a>
 	            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
 	            		<thead>
@@ -401,7 +594,6 @@
 	            	</table>
 
 	            </div>
-	            <!-- // CUSTOMER TYPE END -->
 
 	        </div>
 	    </div>
@@ -474,6 +666,38 @@
    		</td>
    		<td align="center">
     		#= abbr#
+   		</td>
+   		<td align="center">   			   
+		    <a class="btn-action glyphicons pencil btn-success k-edit-button" href="\\#"><i></i></a>
+   		</td>   		
+   	</tr>
+</script>
+<script id="exemptionSetting-template" type="text/x-kendo-tmpl">                    
+    <tr>
+    	<td>
+    		#= branch.name#
+   		</td>
+   		<td align="center">
+    		#= name#
+   		</td>
+   		<td align="center">
+    		#= abbr#
+   		</td>
+   		<td align="center">
+    		#= abbr#
+   		</td>
+   		<td align="center">   			   
+		    <a class="btn-action glyphicons pencil btn-success k-edit-button" href="\\#"><i></i></a>
+   		</td>   		
+   	</tr>
+</script>
+<script id="tariffSetting-template" type="text/x-kendo-tmpl">                    
+    <tr>
+    	<td>
+    		#= branch.name#
+   		</td>
+   		<td align="center">
+    		#= name#
    		</td>
    		<td align="center">   			   
 		    <a class="btn-action glyphicons pencil btn-success k-edit-button" href="\\#"><i></i></a>
@@ -564,66 +788,35 @@
 
 				        	<div class="box-generic well" style="height: 190px; padding-bottom: 0;">				
 								<table class="table table-borderless table-condensed cart_total">									
-									<tbody>
-										<tr>
-											<td><span >Date</span></td>
-											<td class="right">
-												<span class="k-widget k-datepicker k-header" style="width: 100%;"><span class="k-picker-wrap k-state-default"><input id="issuedDate" name="issuedDate" data-role="datepicker" data-format="dd-MM-yyyy" data-parse-formats="yyyy-MM-dd" data-bind="value: obj.issued_date, 
-																	events:{ change : setRate }" required="" data-required-msg="required" style="width:100%;" type="text" class="k-input" role="combobox" aria-expanded="false" aria-owns="issuedDate_dateview" aria-disabled="false" aria-readonly="false"><span unselectable="on" class="k-select" role="button" aria-controls="issuedDate_dateview"><span unselectable="on" class="k-icon k-i-calendar">select</span></span></span></span>
-											</td>
-										</tr>								
+									<tbody>								
 										<tr>
 											<td><span >Code</span></td>
 											<td>
-												<input id="fullname" name="fullname" class="k-textbox k-invalid" required="" data-required-msg="required" style="width: 100%;" placeholder="Code ..." aria-invalid="true">
+												<input 
+													class="k-textbox k-invalid" 
+													data-required-msg="required" 
+													style="width: 100%;" 
+													placeholder="Code ..." 
+													aria-invalid="true"
+													data-bind="value: obj.code" />
 											</td>
 										</tr>
 										<tr>
 											<td><span >Name</span></td>
 											<td>
-												<input id="fullname" name="fullname" class="k-textbox k-invalid" required="" data-required-msg="required" style="width: 100%;" placeholder="Name ..." aria-invalid="true">
+												<input
+													class="k-textbox k-invalid"
+													data-required-msg="required" 
+													style="width: 100%;" 
+													placeholder="Name ..." 
+													aria-invalid="true"
+													data-bind="value: obj.name" />
 											</td>
-										</tr>																															
+										</tr>												
 									</tbody>
 								</table>
-
-								
-
-
 							</div>
 						</div>
-
-			        	<!-- <input type="text" id="" name="Name" class="k-textbox k-invalid" placeholder="Name" required="" validationmessage="" style="width: 100%;margin-bottom: 20px;" data-bind="value: current.name" aria-invalid="true">
-
-			        	<select data-role="dropdownlist"
-			                   data-value-primitive="true"
-			                   data-text-field="name"
-			                   data-value-field="id"
-			                   data-bind="
-			                   	source: selectType,
-			                   	value: current.type"
-			                   style="width: 100%;" ></select>		
-		                <div class="row" style="margin-top: 20px;">	
-		                	<div class="span6">
-		                		<input type="text" 
-				                	style="width: 100%" 
-				                	placeholder="Valide From" 
-				                	data-role="datepicker"
-				                	data-format="dd-MM-yyyy"
-						           	data-bind="value: current.validFrom,
-						           			  	max: current.validTo" />
-			                </div>
-			                <div class="span6">
-		                 		<input type="text" 
-				                	style="width: 100%" 
-				                	placeholder="Valide To" 
-				                	data-role="datepicker"
-				                	data-format="dd-MM-yyyy"
-						           	data-bind="value: current.validTo,
-						           			  	min: current.validFrom" />
-			                </div>
-			            </div> -->
-
 		                <table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs" style="margin-top: 20px;">
 		                	<thead>
 		                		<tr>
@@ -633,20 +826,22 @@
 		                			<th style="width: 20%;" >DESCRIPTION</th>
 		                			<th style="width: 10%;" >RATE</th>
 		                			<th style="width: 11%;" >Tax</th>
-		                			<!-- <th width="60" style="text-align: center"><p class="addItem glyphicons circle_plus" data-bind="click: addItem"><i></i></p></th> -->
 		                		</tr>
 		                	</thead>
-		                	<tbody data-bind="source: items.dataSource" data-auto-bind="false" data-role="listview" data-template="tariff-list-item">
+		                	<tbody 
+		                		data-bind="source: items.dataSource" 
+		                		data-auto-bind="false" 
+		                		data-role="listview" 
+		                		data-template="tariff-list-item">
 		                	</tbody>
 		                </table>
-			        	
 		                 <!-- Bottom part -->
 			            <div class="row-fluid">
-				
 							<!-- Column -->
 							<div class="span4">
-								<button class="btn btn-inverse" data-bind="click: addRow"><i class="icon-plus icon-white"></i></button>
-
+								<button class="btn btn-inverse" data-bind="click: addItem">
+									<i class="icon-plus icon-white"></i>
+								</button>
 								<!-- Add New Item -->
 								<ul class="topnav addNew">
 									<li role="presentation" class="dropdown ">
@@ -665,14 +860,9 @@
 								  	</li>				
 								</ul>
 								<!--End Add New Item -->
-								
 							</div>
 							<!-- Column END -->
-							
 						</div>
-
-
-
 			        </div>
 				    <br>
 				    <!-- Form actions -->
@@ -680,11 +870,14 @@
 						<div id="ntf1" data-role="notification"></div>
 						<div class="row">
 							<div class="span3">
-								
 							</div>
 							<div class="span9" align="right">
-								<span id="saveNew" style="width: 80px!important;margin:0" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit, click: save" style="width: 50px;"><i></i> <span>Save</span></span>
-								<span id="cancel" data-bind="click: cancel" class="btn btn-icon btn-success glyphicons power" style="width: 100px;"><i></i> <span >Cancel</span></span>
+								<span id="saveNew" style="width: 80px!important;margin:0" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit, click: save" style="width: 50px;">
+									<i></i><span>Save</span>
+								</span>
+								<span id="cancel" data-bind="click: cancel" class="btn btn-icon btn-success glyphicons power" style="width: 100px;">
+									<i></i><span >Cancel</span>
+								</span>
 							</div>
 						</div>
 					</div>
@@ -696,22 +889,11 @@
 </script>
 <script id="tariff-list-item" type="text/x-kendo-tmpl">
 	<tr>
-		<td><input class="k-textbox k-invalid" style="width: 98%" type="text" data-bind="value: name" /></td>
-		<td>
-			<select data-role="dropdownlist"
-           		data-value-primitive="true"
-           		data-text-field="value"
-           		data-value-field="id"
-           		data-bind="
-		           	source: items.types,
-		           	value: type"
-           		style="width: 100%;" ></select>
-		</td>
-		<td><input style="width: 98%" data-role="numerictextbox" type="text" data-bind="value: rate" /></td>
-		<td><input data-role="numerictextbox" style="width: 98%" type="text" data-bind="value: tierFrom" /></td>
-		<td><input data-role="numerictextbox" style="width: 98%" type="text" data-bind="value: tierTo" /></td>
-		<td><input style="width: 98%" type="checkbox" data-bind="checked: taxed" /></td>
-		<td style="text-align:center"><p class="addItem glyphicons circle_remove" data-bind="click: removeItem"><i></i></p></td>
+		<td>#= name#</td>
+		<td>#= code #</td>
+		<td>#= description#</td>
+		<td>#= rate #</td>
+		<td>#= tax#</td>
 	</tr>
 </script>
 <script id="addLicense" type="text/x-kendo-template">
@@ -1147,7 +1329,7 @@
 							        <div class="tab-content">
 							        	<!-- Transactions Tab content -->
 							            <div id="tab1" class="tab-pane box-generic active">
-							            	<a class="btn btn-block btn-inverse" style="margin-bottom: 5px;" data-bind="click: goMeter">Add Meter</a>
+							            	<a class="btn btn-block btn-inverse" style="margin-bottom: 5px;" data-bind="click: goMeter, visible: meter_visible">Add Meter</a>
 							            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
 										        <thead>
 										            <tr>			                
@@ -1552,6 +1734,7 @@
 	</div>
 </script>
 
+<!--  Meter  -->
 <script id="waterAddMeter" type="text/x-kendo-template">
 	<div id="slide-form">
 		<div class="customer-background" style="overflow: hidden;">
@@ -1623,10 +1806,11 @@
 										<div class="control-group">							
 											<label for="txtAbbr"><span >Number</span> <span style="color:red">*</span></label>										
 					              			<br>
-						              		<input id="txtNumber" name="txtNumber" class="k-textbox"					              			   					                   
-								                   data-bind=""
-								                   placeholder="eg. 001" required data-required-msg="required"
-								                   style="width: 100%;" />
+						              		<input class="k-textbox" 
+						              			data-bind="value: obj.number"
+								                placeholder="eg. 001" 
+								                data-required-msg="required"
+								                style="width: 100%;" />
 										</div>
 										<!-- // Group END -->											
 									</div>
@@ -1638,11 +1822,10 @@
 										<div class="control-group">							
 											<label for="txtAbbr"><span >Number Digi</span> <span style="color:red">*</span></label>										
 					              			<br>
-					              			
-						              		<input id="txtNumber" name="txtNumber" class="k-textbox"					              			   					                   
-								                   data-bind=""
-								                   placeholder="eg. 001" required data-required-msg="required"
-								                   style="width: 100%" />
+						              		<input class="k-textbox"					    
+						              			data-bind="value: obj.number_digit"
+								                placeholder="eg. 1" required data-required-msg="required"
+								                style="width: 100%" />
 										</div>
 										<!-- // Group END -->											
 									</div>
@@ -1653,14 +1836,14 @@
 										<!-- Group -->
 										<div class="control-group">								
 											<label for="customerStatus"><span data-bind="text: lang.lang.status"></span> <span style="color:red">*</span></label>
-								            <input id="customerStatus" name="customerStatus" 
-								              				data-role="dropdownlist"
-										            		data-text-field="name"
-							           						data-value-field="id"
-							           						data-value-primitive="true" 
-										            		data-bind="source: statusList, value: obj.status"
-										            		data-option-label="(--- Select ---)"
-										            		required data-required-msg="required" style="width: 100%;" />
+								            <select data-role="dropdownlist"
+							                   data-value-primitive="true"
+							                   data-text-field="name"
+							                   data-value-field="id"
+							                   data-bind="
+							                   	source: selectType,
+							                   	value: obj.status"
+							                   style="width: 100%;margin-bottom: 15px;" ></select>
 										</div>																		
 										<!-- // Group END -->
 									</div>
@@ -1669,12 +1852,12 @@
 										<!-- Group -->
 										<div class="control-group">								
 											<label for="registeredDate"><span data-bind="text: lang.lang.register_date"></span> <span style="color:red">*</span></label>
-								            <input id="registeredDate" name="registeredDate" 
-									            		data-role="datepicker"			            		
-						            					data-bind="value: obj.registered_date, disabled: obj.is_pattern" 
-						            					data-format="dd-MM-yyyy"
-						            					data-parse-formats="yyyy-MM-dd" 
-						            					placeholder="dd-MM-yyyy" required data-required-msg="required" style="width: 100%;" />
+								            <input
+							            		data-role="datepicker"			            		
+				            					data-bind="value: obj.registered_date" 
+				            					data-format="dd-MM-yyyy"
+				            					data-parse-formats="yyyy-MM-dd" 
+				            					placeholder="dd-MM-yyyy" required data-required-msg="required" style="width: 100%;" />
 										</div>																		
 										<!-- // Group END -->
 									</div>
@@ -1714,8 +1897,7 @@
 									</div>										
 								</div>
 							</div>
-						</div>								
-								
+						</div>				
 						<!-- // Bottom Part -->
 						<div class="row-fluid">								
 							<div class="box-generic">
@@ -1728,59 +1910,55 @@
 							        </ul>
 							    </div>
 							    <!-- // Tabs Heading END -->
-
 							    <div class="tab-content">
-
 							    	<!-- //GENERAL INFO -->
 							        <div class="tab-pane active" id="tab1">
-						            	<table class="table table-borderless table-condensed cart_total">					            		
+						            	<table class="table table-borderless table-condensed cart_total">	      		
 								            <tr>
 								                <td><span >Start Up Reading</span></td>
 								              	<td>
-						            				<input class="k-textbox" data-bind="value: obj.vat_no" 
-														placeholder="e.g. 01234567897" style="width: 100%;" />									
+						            				<input class="k-textbox" data-bind="value: obj.starting_no" 
+														placeholder="e.g. 0" style="width: 100%;" />			
 								              	</td>							              	
 								            	<td><span >Type</span></td>
 								              	<td>
 								              		<input data-role="dropdownlist"
-								              			   data-option-label="(--- Select ---)"									                   
+								              			   data-option-label="(--- Select ---)"             
 										                   data-value-primitive="true"
 										                   data-text-field="name"
 										                   data-value-field="id"
-										                   data-bind="" style="width: 100%;" />
+										                   data-bind="value: obj.type" style="width: 100%;" />
 								              	</td>
 								            </tr>
 								            <tr>
 								            	<td><span >Location</span></td>
 								              	<td>
 								              		<input data-role="dropdownlist"
-								              			   data-option-label="(--- Select ---)"									                   
+								              			   data-option-label="(--- Select ---)"                  
 										                   data-value-primitive="true"
 										                   data-text-field="name"
 										                   data-value-field="id"
-										                   data-bind="" style="width: 100%;" />
+										                   data-bind="" 
+										                   style="width: 100%;" />
 								              	</td>							            								              	
 								            	<td><span >Plan</span></td>
 								              	<td>
 								              		<input data-role="dropdownlist"
-								              			   data-option-label="(--- Select ---)"									                   
+								              			   data-option-label="(--- Select ---)"		                   
 										                   data-value-primitive="true"
 										                   data-text-field="name"
 										                   data-value-field="id"
-										                   data-bind="" style="width: 100%;" />
+										                   data-bind="" 
+										                   style="width: 100%;" />
 								              	</td>							            	
 								            </tr>
 								            						            							            							            								            								            			            
 								        </table>
 						        	</div>
 							        <!-- //GENERAL INFO END -->
-							      
 							    </div>
 							</div>
 						</div>
-
-
-
 			       	</div>
 				    <br>
 				    <!-- Form actions -->
@@ -1788,7 +1966,6 @@
 						<div id="ntf1" data-role="notification"></div>
 						<div class="row">
 							<div class="span3">
-								
 							</div>
 							<div class="span9" align="right">
 								<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit, click: save" style="width: 80px;margin:0;"><i></i> <span>Add</span></span>
@@ -1802,7 +1979,38 @@
 		</div>
 	</div>
 </script>
-
+<script id="ActivateMeter" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background" style="overflow: hidden;">
+			<div class="container-960">					
+				<div id="example" class="k-content">
+			    	<div class="hidden-print pull-right">
+			    		<span class="glyphicons no-js remove_2" 
+							data-bind="click: cancel"><i></i></span>						
+					</div>
+			        <h2>Activate Meter</h2><br>
+			       
+				    <br>
+				    <!-- Form actions -->
+					<div class="box-generic bg-action-button">
+						<div id="ntf1" data-role="notification"></div>
+						<div class="row">
+							<div class="span3">
+							</div>
+							<div class="span9" align="right">
+								<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit, click: save" style="width: 80px;margin:0;"><i></i> <span>Add</span></span>
+								<span id="saveClose" data-bind="click: cancel" class="btn btn-icon btn-success glyphicons power" style="width: 80px;"><i></i> <span>Cancel</span></span>		
+							</div>
+						</div>
+					</div>
+					<!-- // Form actions END -->		
+				</div>						
+			</div>
+		</div>
+	</div>
+</script>
+<!--  End Meter  -->
+<!--  Reading  -->
 <script id="Reading" type="text/x-kendo-template">
 	<div  class="row-fluid saleSummaryCustomer">
 		<span class="glyphicons no-js remove_2 pull-right" 
@@ -1960,7 +2168,10 @@
 			# } #
 		</td>
 		<td style="text-align: center;">
-			<span style="background: \#1f4774" data-bind="click: goActivateMeter" class="btn-action glyphicons inbox_in btn-success"><i></i></span>
+			<a style="background: \#1f4774;padding:4px;margin-right: 3px;vertical-align: middle;" 
+				href="\#/activate_meter/#= id#" 
+				class="btn-action btn-success">Activate
+			</a>
 			<a style="border:none;" href="\#/meter/#= id #" class="btn-action glyphicons pencil btn-danger widget-stats widget-stats-info"><i></i></span>
 		</td>
 	</tr>
@@ -6011,6 +6222,7 @@
 		lang 				: langVM,
 		transactionDS  		: dataStore(apiUrl + 'transactions'),
 		filterKey 			: 1,
+		meter_visible 		: false,
 		meterDS 			: dataStore(apiUrl + 'meters'),
 		meterClick 			: function(){
 			banhji.view.layout.showIn("#waterCenterContent", banhji.view.waterCenterContent);
@@ -6134,9 +6346,6 @@
 			    dataURI: workbook.toDataURL(),
 			    fileName: "abc.xlsx"
 			});
-		},
-		goActivateMeter 	: function(){
-			console.log('Activate meter');
 		},
 		pageLoad 			: function(id){
 			banhji.view.layout.showIn("#waterCenterContent", banhji.view.waterCenterContent);
@@ -6427,12 +6636,12 @@
 			this.meterDS.filter({field: "contact_id", value: data.id});
 			this.set("obj", data);
 			this.loadData();
-			// if(data.use_water == 1){
-			// 	this.set('meter_visible', true);
-			// }else{
-			// 	this.set('meter_visible', false);
-			// }
-			// console.log(this.meter_visible);
+			if(data.use_water == 1){
+				this.set('meter_visible', true);
+			}else{
+				this.set('meter_visible', false);
+			}
+			console.log(this.meter_visible);
 		},
 		goMeter 			: function(){
 			banhji.meter.set("contact", this.get("obj"));
@@ -6615,6 +6824,8 @@
 			window.history.back();
 		}
 	});
+
+	/*==== Meter=====*/
 	banhji.meter = kendo.observable({
 		lang 				: langVM,
 		dataSource  		: dataStore(apiUrl + "meters"),
@@ -6652,7 +6863,10 @@
 				number 			: null,
 				status 			: 1,
 				location 		: null,
+				latitute 		: null,
+				longtitute  	: null,
 				plan 			: null,
+				registered_date : null,
 				map 			: null,
 				memo 			: null,
 				type 			: {id: "w", name: "Water"},
@@ -6688,6 +6902,74 @@
 			window.history.back();
 		}
 	});
+	banhji.ActivateMeter = kendo.observable({
+		lang 				: langVM,
+		// dataSource  		: dataStore(apiUrl + "activate_meters"),
+		// planDS 				: dataStore(apiUrl + "plans"),
+		// itemDS 				: null,
+		// obj 				: null,
+		// isEdit 				: false,
+		pageLoad 			: function(id){
+			// var self = this;				
+			// this.dataSource.query({    			
+			// 	filter: { field:"id", value: id },
+			// 	page: 1,
+			// 	take: 100
+			// }).then(function(e){
+			// 	var view = self.dataSource.view();	
+			// 	self.set("obj", view[0]);
+			// });
+		},
+		// addEmpty 		 	: function(id){			
+		// 	//this.dataSource.data([]);		
+		// 	this.set("obj", null);		
+		// 	this.set("isEdit", false);		
+		// 	this.dataSource.insert(0,{				
+		// 		contact_id		: id,
+		// 		number 			: null,
+		// 		status 			: 1,
+		// 		location 		: null,
+		// 		latitute 		: null,
+		// 		longtitute  	: null,
+		// 		plan 			: null,
+		// 		registered_date : null,
+		// 		map 			: null,
+		// 		memo 			: null,
+		// 		type 			: {id: "w", name: "Water"},
+		// 		starting_no 	: null,
+		// 		activated 		: 0,
+		// 		number_digit 	: null		
+	 //    	});		
+		// 	var obj = this.dataSource.at(0);			
+		// 	this.set("obj", obj);		
+		// },
+		save 				: function() {
+			console.log('save');
+			var self = this;
+			if(this.dataSource.data().length > 0) {
+				//$("#loadImport").css("display","block");
+				this.dataSource.sync();
+				this.dataSource.bind("requestEnd", function(e){
+					if(e.type != 'read') {
+						if(e.response){				
+				    		$("#ntf1").data("kendoNotification").success("Successfully!");
+							window.history.back();
+						}
+					}				    					  				
+			    });
+			    this.dataSource.bind("error", function(e){		    		    	
+					$("#ntf1").data("kendoNotification").error("Error!"); 
+					//$("#loadImport").css("display","none");				
+			    });
+			}	
+		},
+		cancel 				: function(){
+			this.dataSource.cancelChanges();		
+			window.history.back();
+		}
+	});
+	/*==== End Meter=====*/
+	/*Reading*/
 	banhji.reading = kendo.observable({
 		lang 				: langVM,
 		dataSource  		: dataStore(apiUrl + "meters"),
@@ -7574,6 +7856,7 @@
 		waterCenter: new kendo.Layout("#waterCenter", {model: banhji.waterCenter}),
 		waterActivateUser: new kendo.Layout("#waterActivateUser", {model: banhji.waterActivateUser}),
 		meter: new kendo.Layout("#waterAddMeter", {model: banhji.meter}),
+		ActivateMeter: new kendo.Layout("#ActivateMeter", {model: banhji.ActivateMeter}),
 		plan: new kendo.Layout("#plan", {model: banhji.plan}),
 		reading: new kendo.Layout("#Reading", {model: banhji.reading}),
 		customerDeposit: new kendo.Layout("#customerDeposit", {model: banhji.customerDeposit}),
@@ -7731,7 +8014,22 @@
 
 		vm.pageLoad(id);
 	});
-	
+	banhji.router.route("/activate_meter/:id", function(id){		
+		banhji.view.layout.showIn("#content", banhji.view.ActivateMeter);
+		banhji.view.layout.showIn('#menu', banhji.view.menu);
+		banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
+		
+		var vm = banhji.ActivateMeter;
+
+		banhji.userManagement.addMultiTask("Activate Meter","activate_meter",null);
+
+		if(banhji.pageLoaded["activate_meter"]==undefined){
+			banhji.pageLoaded["activate_meter"] = true;
+		}
+
+		vm.pageLoad(id);
+	});
+
 	banhji.router.route("/plan", function(){		
 		banhji.view.layout.showIn("#content", banhji.view.plan);
 		banhji.view.layout.showIn('#menu', banhji.view.menu);

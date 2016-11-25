@@ -54,3 +54,6 @@ p.addItem.glyphicons.circle_remove i:before {
 .water-tableList .table.table-borderless.table-condensed tr td {
     background: #fff;
 }
+.tab-pane .span2 {
+    padding-left: 0;
+}
