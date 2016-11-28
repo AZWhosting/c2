@@ -168,14 +168,9 @@ class Items extends REST_Controller {
 				   	"on_po" 					=> floatval($value->on_po),
 				   	"on_so" 					=> floatval($value->on_so),
 				   	"order_point" 				=> intval($value->order_point),
-				   	"account_id" 				=> $value->account_id,
 				   	"income_account_id" 		=> $value->income_account_id,
-				   	"cogs_account_id"			=> $value->cogs_account_id,
-				   	"inventory_account_id"		=> $value->inventory_account_id,
-				   	"fixed_assets_account_id" 	=> $value->fixed_assets_account_id,
-				   	"accumulated_account_id" 	=> $value->accumulated_account_id,
-				   	"depreciation_account_id" 	=> $value->depreciation_account_id,
-				   	"deposit_account_id" 		=> $value->deposit_account_id,	   				   	
+				   	"expense_account_id"		=> $value->expense_account_id,
+				   	"inventory_account_id"		=> $value->inventory_account_id,   				   	
 				   	"preferred_vendor_id" 		=> $value->preferred_vendor_id,
 				   	"image_url" 				=> $value->image_url,
 				   	"favorite" 					=> $value->favorite=="true"?true:false,
@@ -234,14 +229,9 @@ class Items extends REST_Controller {
 		   	isset($value->on_po) 					? $obj->on_po 					= $value->on_po : "";
 		   	isset($value->on_so) 					? $obj->on_so 					= $value->on_so : "";
 		   	isset($value->order_point) 				? $obj->order_point 			= $value->order_point : "";
-		   	isset($value->account_id) 				? $obj->account_id 				= $value->account_id : "";
 		   	isset($value->income_account_id) 		? $obj->income_account_id 		= $value->income_account_id : "";
-		   	isset($value->cogs_account_id) 			? $obj->cogs_account_id 		= $value->cogs_account_id : "";
+		   	isset($value->expense_account_id) 		? $obj->expense_account_id 		= $value->expense_account_id : "";
 		   	isset($value->inventory_account_id) 	? $obj->inventory_account_id 	= $value->inventory_account_id : "";
-		   	isset($value->fixed_assets_account_id) 	? $obj->fixed_assets_account_id = $value->fixed_assets_account_id : "";
-		   	isset($value->accumulated_account_id) 	? $obj->accumulated_account_id 	= $value->accumulated_account_id : "";
-		   	isset($value->depreciation_account_id) 	? $obj->depreciation_account_id = $value->depreciation_account_id : "";
-		   	isset($value->deposit_account_id) 		? $obj->deposit_account_id 		= $value->deposit_account_id : "";
 		   	isset($value->preferred_vendor_id) 		? $obj->preferred_vendor_id 	= $value->preferred_vendor_id : "";
 		   	isset($value->image_url) 				? $obj->image_url				= $value->image_url : "";
 		   	isset($value->favorite) 				? $obj->favorite 				= $value->favorite : "";
@@ -284,14 +274,9 @@ class Items extends REST_Controller {
 				   	"on_po" 					=> floatval($obj->on_po),
 				   	"on_so" 					=> floatval($obj->on_so),
 				   	"order_point" 				=> intval($obj->order_point),
-				   	"account_id" 				=> $obj->account_id,
 				   	"income_account_id" 		=> $obj->income_account_id,
-				   	"cogs_account_id"			=> $obj->cogs_account_id,
+				   	"expense_account_id"		=> $obj->expense_account_id,
 				   	"inventory_account_id"		=> $obj->inventory_account_id,
-				   	"fixed_assets_account_id" 	=> $obj->fixed_assets_account_id,
-				   	"accumulated_account_id" 	=> $obj->accumulated_account_id,
-				   	"depreciation_account_id" 	=> $obj->depreciation_account_id,
-				   	"deposit_account_id" 		=> $obj->deposit_account_id,				   				   	
 				   	"preferred_vendor_id" 		=> $obj->preferred_vendor_id,
 				   	"image_url" 				=> $obj->image_url,
 				   	"favorite" 					=> $obj->favorite=="true"?true:false,
@@ -349,14 +334,9 @@ class Items extends REST_Controller {
 		   	isset($value->on_po) 					? $obj->on_po 					= $value->on_po : "";
 		   	isset($value->on_so) 					? $obj->on_so 					= $value->on_so : "";
 		   	isset($value->order_point) 				? $obj->order_point 			= $value->order_point : "";
-		   	isset($value->account_id) 				? $obj->account_id 				= $value->account_id : "";
 		   	isset($value->income_account_id) 		? $obj->income_account_id 		= $value->income_account_id : "";
-		   	isset($value->cogs_account_id) 			? $obj->cogs_account_id 		= $value->cogs_account_id : "";
+		   	isset($value->expense_account_id) 		? $obj->expense_account_id 		= $value->expense_account_id : "";
 		   	isset($value->inventory_account_id) 	? $obj->inventory_account_id 	= $value->inventory_account_id : "";
-		   	isset($value->fixed_assets_account_id) 	? $obj->fixed_assets_account_id = $value->fixed_assets_account_id : "";
-		   	isset($value->accumulated_account_id) 	? $obj->accumulated_account_id 	= $value->accumulated_account_id : "";
-		   	isset($value->depreciation_account_id) 	? $obj->depreciation_account_id = $value->depreciation_account_id : "";
-		   	isset($value->deposit_account_id) 		? $obj->deposit_account_id 		= $value->deposit_account_id : "";		   	
 		   	isset($value->preferred_vendor_id) 		? $obj->preferred_vendor_id 	= $value->preferred_vendor_id : "";
 		   	isset($value->image_url) 				? $obj->image_url				= $value->image_url : "";
 		   	isset($value->favorite) 				? $obj->favorite 				= $value->favorite : "";
@@ -400,14 +380,9 @@ class Items extends REST_Controller {
 				   	"on_po" 					=> floatval($obj->on_po),
 				   	"on_so" 					=> floatval($obj->on_so),
 				   	"order_point" 				=> intval($obj->order_point),
-				   	"account_id" 				=> $obj->account_id,
 				   	"income_account_id" 		=> $obj->income_account_id,
-				   	"cogs_account_id"			=> $obj->cogs_account_id,
+				   	"expense_account_id"		=> $obj->expense_account_id,
 				   	"inventory_account_id"		=> $obj->inventory_account_id,
-				   	"fixed_assets_account_id" 	=> $obj->fixed_assets_account_id,
-				   	"accumulated_account_id" 	=> $obj->accumulated_account_id,
-				   	"depreciation_account_id" 	=> $obj->depreciation_account_id,
-				   	"deposit_account_id" 		=> $obj->deposit_account_id,				   				   	
 				   	"preferred_vendor_id" 		=> $obj->preferred_vendor_id,
 				   	"image_url" 				=> $obj->image_url,
 				   	"favorite" 					=> $obj->favorite=="true"?true:false,
