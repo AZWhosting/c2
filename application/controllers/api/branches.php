@@ -97,29 +97,10 @@ class Branches extends REST_Controller {
 		 			"province"			=> $value->province,
 		 			"district"			=> $value->district,
 		 			"email"				=> $value->email,
+		 			"mobile"			=> $value->mobile,
+		 			"telephone"			=> $value->telephone,
 		 			"term_of_condition"	=> $value->term_of_condition
 
-
-					// "utility_id" 		=> $value->utility_id,
-					// "currency_id" 		=> $value->currency_id,
-					// "province_id" 		=> $value->province_id,
-					// "country_id" 		=> $value->country_id,
-					// "name" 				=> $value->name,
-					// "description" 		=> $value->description,
-					// "abbr" 				=> $value->abbr,
-					// "representative" 	=> $value->representative,
-					// "email" 			=> $value->email,
-					// "mobile" 			=> $value->mobile,
-					// "phone" 			=> $value->phone,
-					// "address" 			=> $value->address,						
-					// "expire_date" 		=> $value->expire_date,
-					// "max_customer" 		=> $value->max_customer,
-					// "operation_license" => $value->operation_license,
-					// "term_of_condition" => $value->term_of_condition,
-					// "image_url" 		=> $value->image_url,
-					// "status" 			=> $value->status,
-					// "number"  			=> $value->number,
-					// "currency"			=> $value->currency->get_raw()->result()
 		 		);
 			}
 		}
@@ -136,49 +117,44 @@ class Branches extends REST_Controller {
 			$obj = new Branch(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
 			$now = new DateTime();				
 			
-			isset($value->utility_id) 			? $obj->utility_id 			= $value->utility_id : "";
-			isset($value->currency_id) 			? $obj->currency_id 		= $value->currency_id : "";
-			isset($value->province_id) 			? $obj->province_id 		= $value->province_id : "";
-			isset($value->country_id) 			? $obj->country_id 			= $value->country_id : "";
+			isset($value->number) 				? $obj->number 				= $value->number : "";
 			isset($value->name) 				? $obj->name 				= $value->name : "";
-			isset($value->description) 			? $obj->description 		= $value->description : "";
 			isset($value->abbr) 				? $obj->abbr 				= $value->abbr : "";
 			isset($value->representative) 		? $obj->representative 		= $value->representative : "";
-			isset($value->email) 				? $obj->email 				= $value->email : "";
-			isset($value->mobile) 				? $obj->mobile 				= $value->mobile : "";
-			isset($value->phone) 				? $obj->phone 				= $value->phone : "";
-			isset($value->address) 				? $obj->address 			= $value->address : "";
+			isset($value->currency) 			? $obj->currency 			= $value->currency : "";
+			isset($value->status) 				? $obj->status 				= $value->status : "";
 			isset($value->expire_date) 			? $obj->expire_date 		= $value->expire_date : "";
 			isset($value->max_customer) 		? $obj->max_customer 		= $value->max_customer : "";
-			isset($value->operation_license) 	? $obj->operation_license 	= $value->operation_license : $now->getTimestamp();
+			isset($value->description) 			? $obj->description 		= $value->description : "";
+			isset($value->address) 				? $obj->address 			= $value->address : "";
+			isset($value->province) 			? $obj->province 			= $value->province : "";
+			isset($value->district) 			? $obj->district 			= $value->district : "";
+			isset($value->email) 				? $obj->email 				= $value->email : "";
+			isset($value->mobile) 				? $obj->mobile 				= $value->mobile : "";
+			isset($value->telephone) 			? $obj->telephone 			= $value->telephone : "";
 			isset($value->term_of_condition) 	? $obj->term_of_condition 	= $value->term_of_condition : "";
-			isset($value->image_url) 			? $obj->image_url 			= $value->image_url : "";
-			isset($value->number) 				? $obj->number 			= $value->number : "";
-			isset($value->status) 				? $obj->status 				= $value->status : "";
 			
 			if($obj->save()){
 				//Respsone
 				$data["results"][] = array(					
 					"id" 				=> $obj->id,
-					"utility_id" 		=> $obj->utility_id,		 			
-					"currency_id" 		=> $obj->currency_id,
-					"province_id" 		=> $obj->province_id,
-					"country_id" 		=> $obj->country_id,
+					"number" 			=> $obj->number,
 					"name" 				=> $obj->name,
-					"description" 		=> $obj->description,
 					"abbr" 				=> $obj->abbr,
 					"representative" 	=> $obj->representative,
-					"email" 			=> $obj->email,
-					"mobile" 			=> $obj->mobile,
-					"phone" 			=> $obj->phone,
-					"address" 			=> $obj->address,						
+					"currency" 			=> $obj->currency,
+					"status" 			=> $obj->status,
 					"expire_date" 		=> $obj->expire_date,
-					"max_customer" 		=> $obj->max_customer,
-					"operation_license" => $obj->operation_license,
-					"term_of_condition" => $obj->term_of_condition,
-					"image_url" 		=> $obj->image_url,
-					"number" 			=> $obj->number,	
-					"status" 			=> $obj->status	
+					"max_customer"		=> $obj->max_customer,
+		 			"description"		=> $obj->description,
+		 			"address"			=> $obj->address,
+		 			"province"			=> $obj->province,
+		 			"district"			=> $obj->district,
+		 			"email"				=> $obj->email,
+		 			"mobile"			=> $obj->mobile,
+		 			"telephone"			=> $obj->telephone,
+		 			"term_of_condition"	=> $obj->term_of_condition
+					
 				);				
 			}		
 		}
@@ -197,49 +173,43 @@ class Branches extends REST_Controller {
 			$obj = new Branch(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$obj->get_by_id($value->id);
 
-			isset($value->utility_id) 			? $obj->utility_id 			= $value->utility_id : "";
-			isset($value->currency_id) 			? $obj->currency_id 		= $value->currency_id : "";
-			isset($value->province_id) 			? $obj->province_id 		= $value->province_id : "";
-			isset($value->country_id) 			? $obj->country_id 			= $value->country_id : "";
+			isset($value->number) 				? $obj->number 				= $value->number : "";
 			isset($value->name) 				? $obj->name 				= $value->name : "";
-			isset($value->description) 			? $obj->description 		= $value->description : "";
 			isset($value->abbr) 				? $obj->abbr 				= $value->abbr : "";
 			isset($value->representative) 		? $obj->representative 		= $value->representative : "";
-			isset($value->email) 				? $obj->email 				= $value->email : "";
-			isset($value->mobile) 				? $obj->mobile 				= $value->mobile : "";
-			isset($value->phone) 				? $obj->phone 				= $value->phone : "";
-			isset($value->address) 				? $obj->address 			= $value->address : "";
+			isset($value->currency) 			? $obj->currency 			= $value->currency : "";
+			isset($value->status) 				? $obj->status 				= $value->status : "";
 			isset($value->expire_date) 			? $obj->expire_date 		= $value->expire_date : "";
 			isset($value->max_customer) 		? $obj->max_customer 		= $value->max_customer : "";
-			isset($value->operation_license) 	? $obj->operation_license 	= $value->operation_license : "";
+			isset($value->description) 			? $obj->description 		= $value->description : "";
+			isset($value->address) 				? $obj->address 			= $value->address : "";
+			isset($value->province) 			? $obj->province 			= $value->province : "";
+			isset($value->district) 			? $obj->district 			= $value->district : "";
+			isset($value->email) 				? $obj->email 				= $value->email : "";
+			isset($value->mobile) 				? $obj->mobile 				= $value->mobile : "";
+			isset($value->telephone) 			? $obj->telephone 			= $value->telephone : "";
 			isset($value->term_of_condition) 	? $obj->term_of_condition 	= $value->term_of_condition : "";
-			isset($value->image_url) 			? $obj->image_url 			= $value->image_url : "";
-			isset($value->status) 				? $obj->status 				= $value->status : "";
-			isset($value->number) 				? $obj->number 				= $value->number : "";
-
+			
 			if($obj->save()){				
 				//Results
 				$data["results"][] = array(
 					"id" 				=> $obj->id,
-					"utility_id" 		=> $obj->utility_id,		 			
-					"currency_id" 		=> $obj->currency_id,
-					"province_id" 		=> $obj->province_id,
-					"country_id" 		=> $obj->country_id,
+					"number" 			=> $obj->number,
 					"name" 				=> $obj->name,
-					"description" 		=> $obj->description,
 					"abbr" 				=> $obj->abbr,
 					"representative" 	=> $obj->representative,
-					"email" 			=> $obj->email,
-					"mobile" 			=> $obj->mobile,
-					"phone" 			=> $obj->phone,
-					"address" 			=> $obj->address,						
+					"currency" 			=> $obj->currency,
+					"status" 			=> $obj->status,
 					"expire_date" 		=> $obj->expire_date,
-					"max_customer" 		=> $obj->max_customer,
-					"operation_license" => $obj->operation_license,
-					"term_of_condition" => $obj->term_of_condition,
-					"image_url" 		=> $obj->image_url,
-					"number" 			=> $obj->number,
-					"status" 			=> $obj->status	
+					"max_customer"		=> $obj->max_customer,
+		 			"description"		=> $obj->description,
+		 			"address"			=> $obj->address,
+		 			"province"			=> $obj->province,
+		 			"district"			=> $obj->district,
+		 			"email"				=> $obj->email,
+		 			"mobile"			=> $obj->mobile,
+		 			"telephone"			=> $obj->telephone,
+		 			"term_of_condition"	=> $obj->term_of_condition
 				);						
 			}
 		}

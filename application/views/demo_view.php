@@ -52405,13 +52405,11 @@
 	    	}	    	
 
 	    	//Edit Mode
-	    	if(this.get("isEdit")){
+	    	if(obj.isNew()==false){
 	    		obj.set("dirty", true);
 
 		    	//Line has changed
-		    	if(obj.amount!==this.get("original_total") && obj.is_recurring==0){
-		    		this.set("original_total",0);
-
+		    	if(obj.is_recurring==0){
 			    	$.each(this.journalLineDS.data(), function(index, value){										
 						value.set("deleted", 1);										
 					});
@@ -59185,13 +59183,11 @@
 	    	}
 
 	    	//Edit Mode
-	    	if(this.get("isEdit")){
+	    	if(obj.isNew()==false){
 		    	obj.set("dirty", true);
 
 		    	//Line has changed
-		    	if(obj.amount!==this.get("original_total") && obj.is_recurring==0){
-		    		this.set("original_total",0);
-
+		    	if(obj.is_recurring==0){
 			    	$.each(this.journalLineDS.data(), function(index, value){										
 						value.set("deleted", 1);										
 					});
@@ -60553,13 +60549,11 @@
 	    	}
 
 	    	//Edit Mode
-	    	if(this.get("isEdit")){
+	    	if(obj.isNew()==false){
 		    	obj.set("dirty", true);
 		    	
 		    	//Line has changed
-		    	if(obj.amount!==this.get("original_total") && obj.is_recurring==0){
-		    		this.set("original_total",0);
-
+		    	if(obj.is_recurring==0){
 			    	$.each(this.journalLineDS.data(), function(index, value){
 						value.set("deleted", 1);										
 					});
@@ -67242,31 +67236,27 @@
 	    	
 	    	//Edit Mode
 	    	if(this.get("isEdit")){
-	    		if(this.get("original_total")!==obj.amount+obj.discount){
-	    			this.set("original_total", obj.amount+obj.discount)
+    			$.each(this.journalLineDS.data(), function(index, value){										
+					value.set("deleted", 1);										
+				});
 
-	    			$.each(this.journalLineDS.data(), function(index, value){										
-						value.set("deleted", 1);										
-					});
+				this.addJournal(obj.id);
 
-					this.addJournal(obj.id);
-
-					//Credit
-					if(this.creditDS.total()>0){
-						var credit = this.creditDS.at(0),
-						overAmount = ((obj.reference[0].amount - obj.amount_paid) - obj.amount) - obj.discount;
-						
-						if(overAmount<0){
-							credit.set("amount", overAmount*-1);
-						}else{
-							credit.set("amount", 0);
-						}
-
-						this.creditDS.sync();
+				//Credit
+				if(this.creditDS.total()>0){
+					var credit = this.creditDS.at(0),
+					overAmount = ((obj.reference[0].amount - obj.amount_paid) - obj.amount) - obj.discount;
+					
+					if(overAmount<0){
+						credit.set("amount", overAmount*-1);
 					}else{
-						this.addCredit(obj.id);
-					}					
-				}	    			    		
+						credit.set("amount", 0);
+					}
+
+					this.creditDS.sync();
+				}else{
+					this.addCredit(obj.id);
+				}					    			    		
 	    	}else{
 	    		//Add brand new transaction
 	    		$.each(this.dataSource.data(), function(index, value){
@@ -67751,32 +67741,28 @@
 		save 				: function(){				
 	    	var self = this, obj = this.get("obj");	    			
 	    	
-	    	if(this.get("isEdit")){	    		
-	    		if(this.get("original_total")!==obj.amount+obj.discount){
-	    			this.set("original_total", obj.amount+obj.discount)
+	    	if(this.get("isEdit")){
+    			$.each(this.journalLineDS.data(), function(index, value){										
+					value.set("deleted", 1);										
+				});
 
-	    			$.each(this.journalLineDS.data(), function(index, value){										
-						value.set("deleted", 1);										
-					});
+				this.addJournal(obj.id);
 
-					this.addJournal(obj.id);
-
-					//Credit
-					if(this.creditDS.total()>0){
-						var credit = this.creditDS.at(0),
-						overAmount = ((obj.reference[0].amount - obj.amount_paid) - obj.amount) - obj.discount;
-						
-						if(overAmount<0){
-							credit.set("amount", overAmount*-1);
-						}else{
-							credit.set("amount", 0);
-						}
-
-						this.creditDS.sync();
+				//Credit
+				if(this.creditDS.total()>0){
+					var credit = this.creditDS.at(0),
+					overAmount = ((obj.reference[0].amount - obj.amount_paid) - obj.amount) - obj.discount;
+					
+					if(overAmount<0){
+						credit.set("amount", overAmount*-1);
 					}else{
-						this.addCredit(obj.id);
-					}					
-				}	    			    		
+						credit.set("amount", 0);
+					}
+
+					this.creditDS.sync();
+				}else{
+					this.addCredit(obj.id);
+				} 			    		
 	    	}else{
 	    		//Add brand new transaction
 	    		$.each(this.dataSource.data(), function(index, value){

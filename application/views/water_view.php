@@ -355,8 +355,6 @@
 	            				<th class="center"><span>License</span></th>
 	            				<th class="center"><span>Abbr</span></th>
 	            				<th class="center" width="160"><span>Representive</span></th>
-	            				<th class="center"><span>Phone</span></th>
-	            				<th class="center"><span>Address</span></th>
 	            				<th class="center" width="180"><span>Expire Date</span></th>
 	            				<th class="center" width="100"><span>Max Con.</span></th>
 	            				<th class="center">Status</th>
@@ -644,8 +642,6 @@
 		<td>#= name #</td>
 		<td>#= abbr #</td>
 		<td>#= representative #</td>
-		<td>#= phone #</td>
-		<td>#= address #</td>
 		<td>#= expire_date #</td>
 		<td>#= max_customer #</td>
 		<td>
@@ -6079,7 +6075,7 @@
 		obj 		: null,
 		isEdit      : false,
 		selectType 	: [{id: "active", name: "Active"},{id: "inactive", name: "Inactive"},{id: "void", name: "Void"}],
-		selectCurrency : [{id: "KHR", name: "KHR"},{id: "USD", name: "USD"},{id: "THB", name: "THB"},{id: "VND", name: "VND"}],
+		selectCurrency : [{id: "3", name: "KHR"},{id: "1", name: "USD"},{id: "10", name: "THB"},{id: "11", name: "VND"}],
 		pageLoad    : function(id){
 			if(id){
 				loadObj(id);
