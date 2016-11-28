@@ -7,7 +7,7 @@ class Plan_item extends DataMapper {
 	public $has_one = array(
 		'plan' => array(
 			'class' => "plan",
-			'other_field' => 'item'
+			'other_field' => 'plan_item'
 		)
 	);
 
@@ -18,7 +18,7 @@ class Plan_item extends DataMapper {
 	// 	)
 	// );
 
-	public function __construct($id = null, $server_name = null, $db_username = null, $server_password = null, $db = null) {	
+	public function __construct($id = null, $server_name = null, $db_username = null, $server_password = null, $db = null) {
 		$this->db_params = array(
 				'dbdriver' => 'mysql',
 				'pconnect' => true,

@@ -12,13 +12,13 @@ class Plan extends DataMapper {
 	);
 
 	public $has_many = array(
-		'item' => array(
+		'plan_item' => array(
 			'class' => "plan_item",
 			'other_field' => 'plan'
 		)
 	);
 
-	public function __construct($id = null, $server_name = null, $db_username = null, $server_password = null, $db = null) {	
+	public function __construct($id = null, $server_name = null, $db_username = null, $server_password = null, $db = null) {
 		$this->db_params = array(
 				'dbdriver' => 'mysql',
 				'pconnect' => true,
