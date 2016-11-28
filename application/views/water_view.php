@@ -297,25 +297,45 @@
 	            	<a href="#tab3" class="glyphicons old_man" data-toggle="tab">
 	            		<i></i><span class="strong"><span>Customer Types</span></span>
 	            	</a>
-	            </li>  
-	            <li>
-	            	<a href="#tab4" class="glyphicons calculator" data-toggle="tab">
-	            		<i></i><span class="strong"><span>Tariff</span></span>
-	            	</a>
 	            </li>
 	            <li>
-	            	<a href="#tab5" class="glyphicons retweet_2" data-toggle="tab">
+	            	<a href="#tab4" class="glyphicons retweet_2" data-toggle="tab">
 	            		<i></i><span class="strong"><span>Exemption</span></span>
 	            	</a>
 	            </li>
 	            <li>
-	            	<a href="#tab6" class="glyphicons snowflake" data-toggle="tab">
+	            	<a href="#tab5" class="glyphicons calculator" data-toggle="tab">
+	            		<i></i><span class="strong"><span>Tariff</span></span>
+	            	</a>
+	            </li>
+	            <li>
+	            	<a href="#tab6" class="glyphicons wallet" data-toggle="tab">
+	            		<i></i><span class="strong"><span>Deposit</span></span>
+	            	</a>
+	            </li>
+	            <li>
+	            	<a href="#tab7" class="glyphicons hand_saw" data-toggle="tab">
+	            		<i></i><span class="strong"><span>Service</span></span>
+	            	</a>
+	            </li>
+	            <li>
+	            	<a href="#tab8" class="glyphicons claw_hammer" data-toggle="tab">
+	            		<i></i><span class="strong"><span>Maintenance</span></span>
+	            	</a>
+	            </li>
+	            <li>
+	            	<a href="#tab9" class="glyphicons classic_hammer" data-toggle="tab">
 	            		<i></i><span class="strong"><span>Installment</span></span>
 	            	</a>
 	            </li>
 	            <li>
-	            	<a href="#tab7" class="glyphicons list" data-toggle="tab">
+	            	<a href="#tab11" class="glyphicons list" data-toggle="tab">
 	            		<i></i><span class="strong"><span>Plans</span></span>
+	            	</a>
+	            </li> 
+	             <li>
+	            	<a href="#tab12" class="glyphicons list" data-toggle="tab">
+	            		<i></i><span class="strong"><span>Custom Forms</span></span>
 	            	</a>
 	            </li>                       
 	        </ul>
@@ -409,7 +429,53 @@
 	            	</table>
 
 	            </div>
+
 	            <div class="tab-pane" id="tab4">
+	            	<div style="clear: both;margin-bottom: 10px;">
+		            	<input data-role="dropdownlist"
+		            	   class="span2"
+		            	   style="padding-right: 1px;height: 32px;" 
+            			   data-option-label="(--- Select ---)"
+            			   data-auto-bind="false"			                   
+		                   data-value-primitive="false"
+		                   data-text-field="name"
+		                   data-value-field="id"
+		                   data-bind="value: blockCompanyId,
+		                              source: licenseDS,
+		                              events: {change: onLicenseChange}"/>
+		                <input data-role="dropdownlist"
+		            	   class="span2"
+		            	   style="padding-right: 1px;height: 32px;" 
+            			   data-option-label="(--- Select ---)"
+            			   data-auto-bind="false"			                   
+		                   data-value-primitive="false"
+		                   data-text-field="name"
+		                   data-value-field="id"
+		                   data-bind="value: blockCompanyId,
+		                              source: licenseDS,
+		                              events: {change: onLicenseChange}"/>
+		            	<input data-bind="value: blocName" type="text" placeholder="Name" style="height: 32px;"  class="span3 k-textbox k-invalid" />
+		            	<input data-bind="value: blocAbbr" type="text" placeholder="Price" style="height: 32px;" class="span3 k-textbox k-invalid" />
+		            	<a class="btn btn-default glyphicons circle_plus cutype-icon" style="width: 80px;margin-left: 2px;" data-bind="click: addBloc"><i></i>Add</a>
+		            </div>
+	            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
+	            		<thead>
+	            			<tr>
+	            				<th class="center"><span>License</span></th>
+	            				<th class="center"><span>Name</span></th>
+	            				<th class="center"><span>Price</span></th>
+	            				<th class="center"><span>Type</span></th>
+	            				<th class="center">Action</th>
+	            			</tr>
+	            		</thead>
+	            		<tbody data-role="listview"	            				
+				                data-template="exemptionSetting-template"
+				                data-bind="source: blocDS"></tbody>
+	            	</table>
+
+	            </div>
+
+	            <div class="tab-pane" id="tab5">
 	            	<div class="span6">
 		            	<div style="clear: both;margin-bottom: 10px; overflow: hidden;">
 			            	<input data-role="dropdownlist"
@@ -488,51 +554,20 @@
 		            	</table>
 		            </div>
 	            </div>
-	            <div class="tab-pane" id="tab5">
-	            	<div style="clear: both;margin-bottom: 10px;">
-		            	<input data-role="dropdownlist"
-		            	   class="span2"
-		            	   style="padding-right: 1px;height: 32px;" 
-            			   data-option-label="(--- Select ---)"
-            			   data-auto-bind="false"			                   
-		                   data-value-primitive="false"
-		                   data-text-field="name"
-		                   data-value-field="id"
-		                   data-bind="value: blockCompanyId,
-		                              source: licenseDS,
-		                              events: {change: onLicenseChange}"/>
-		                <input data-role="dropdownlist"
-		            	   class="span2"
-		            	   style="padding-right: 1px;height: 32px;" 
-            			   data-option-label="(--- Select ---)"
-            			   data-auto-bind="false"			                   
-		                   data-value-primitive="false"
-		                   data-text-field="name"
-		                   data-value-field="id"
-		                   data-bind="value: blockCompanyId,
-		                              source: licenseDS,
-		                              events: {change: onLicenseChange}"/>
-		            	<input data-bind="value: blocName" type="text" placeholder="Name" style="height: 32px;"  class="span3 k-textbox k-invalid" />
-		            	<input data-bind="value: blocAbbr" type="text" placeholder="Price" style="height: 32px;" class="span3 k-textbox k-invalid" />
-		            	<a class="btn btn-default glyphicons circle_plus cutype-icon" style="width: 80px;margin-left: 2px;" data-bind="click: addBloc"><i></i>Add</a>
-		            </div>
-	            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
-	            		<thead>
-	            			<tr>
-	            				<th class="center"><span>License</span></th>
-	            				<th class="center"><span>Name</span></th>
-	            				<th class="center"><span>Price</span></th>
-	            				<th class="center"><span>Type</span></th>
-	            				<th class="center">Action</th>
-	            			</tr>
-	            		</thead>
-	            		<tbody data-role="listview"	            				
-				                data-template="exemptionSetting-template"
-				                data-bind="source: blocDS"></tbody>
-	            	</table>
 
-	            </div>
 	            <div class="tab-pane" id="tab6">
+	            	Deposit
+	            </div>
+
+	            <div class="tab-pane" id="tab7">
+	            	Service
+	            </div>
+
+	            <div class="tab-pane" id="tab8">
+	            	Maintenance
+	            </div>
+	            
+	            <div class="tab-pane" id="tab9">
 	            	<div style="clear: both;margin-bottom: 10px;">
 		            	<input data-role="dropdownlist"
 		            	   class="span2"
@@ -576,7 +611,7 @@
 	            	</table>
 
 	            </div>
-	            <div class="tab-pane" id="tab7">
+	            <div class="tab-pane" id="tab11">
 	            	<a class="btn-icon btn-primary glyphicons circle_plus" style="width: 110px;" href="#/plan"><i></i>Add Plan</a>
 	            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
 	            		<thead>
@@ -594,7 +629,9 @@
 	            	</table>
 
 	            </div>
-
+	            <div class="tab-pane" id="tab8">
+	            	Custom Forms
+	            </div>
 	        </div>
 	    </div>
 
@@ -784,25 +821,13 @@
 					</div>
 			        <h2 style="padding:0 15px;">Add Plan</h2>
 			        <div class="span12 row-fluid" style="padding:20px 0;">
-			        	<div class="span6" style="padding-left: 0;">
+			        	<div class="span12" style="padding-left: 0;">
 
 				        	<div class="box-generic well" style="height: 190px; padding-bottom: 0;">				
 								<table class="table table-borderless table-condensed cart_total">									
-									<tbody>								
+									<tbody>
 										<tr>
-											<td><span >Code</span></td>
-											<td>
-												<input 
-													class="k-textbox k-invalid" 
-													data-required-msg="required" 
-													style="width: 100%;" 
-													placeholder="Code ..." 
-													aria-invalid="true"
-													data-bind="value: obj.code" />
-											</td>
-										</tr>
-										<tr>
-											<td><span >Name</span></td>
+											<td style="width: 5%"><span >Name</span></td>
 											<td>
 												<input
 													class="k-textbox k-invalid"
@@ -812,7 +837,21 @@
 													aria-invalid="true"
 													data-bind="value: obj.name" />
 											</td>
-										</tr>												
+											<td style="width: 5%"><span >Code</span></td>
+											<td>
+												<input 
+													class="k-textbox k-invalid" 
+													data-required-msg="required" 
+													style="width: 100%;" 
+													placeholder="Code ..." 
+													aria-invalid="true"
+													data-bind="value: obj.code" />
+											</td>
+										</tr>									
+										<tr>
+											
+										</tr>
+																			
 									</tbody>
 								</table>
 							</div>
@@ -906,164 +945,70 @@
 							data-bind="click: cancel"><i></i></span>						
 					</div>
 			        <h2>Add License</h2>
-			        <!-- <div class="span12 row-fluid" style="overflow: hidden;padding:20px 0;">
-			        	<div class="span4">
-				        	<label>License Number</label>
-				        	<input type="text" 
-				        			class="k-textbox k-invalid" 
-				        			data-bind="value : obj.number"
-				        			style="width: 100%;margin-bottom: 15px;" />
-				        	
-				        	
-				        	<label>Max Customer</label>
-			        		<input type="text" 
-			        			class="k-textbox k-invalid" 
-			        			data-bind="value : obj.max_customer"
-			        			style="width: 100%;margin-bottom: 15px;" />
-			        		<label>Currency</label>
-			        		<select data-role="dropdownlist"
-			                   data-value-primitive="true"
-			                   data-text-field="name"
-			                   data-value-field="id"
-			                   data-bind="
-			                   	source: selectCurrency,
-			                   	value: obj.currency"
-			                   style="width: 100%;margin-bottom: 15px;" ></select>
-					        <label>Tel</label>
-			        		<input type="text" 
-			        			class="k-textbox k-invalid" 
-			        			data-bind="value : obj.mobile"
-			        			style="width: 100%;margin-bottom: 15px;" />
-			        		<label>Status</label>
-			        		<select data-role="dropdownlist"
-			                   data-value-primitive="true"
-			                   data-text-field="name"
-			                   data-value-field="id"
-			                   data-bind="
-			                   	source: selectType,
-			                   	value: obj.status"
-			                   style="width: 100%;margin-bottom: 15px;" ></select>
-
-				        </div>
-				        <div class="span4">
-				        	<label>License Name</label>
-				        	<input type="text" 
-				        			class="k-textbox k-invalid" 
-				        			data-bind="value : obj.name"
-				        			style="width: 100%;margin-bottom: 15px;" />
-				        	<label>Expire Date</label>
-			        		<div style="margin-bottom: 15px;">
-			        			<input type="text" 
-			                	style="width: 100%;" 
-			                	data-role="datepicker"
-			                	data-format="dd-MM-yyyy"
-					           	data-bind="value: obj.expire_date,
-					           			  	min: toDay" />
-					        </div>
-				        	
-			                <label>Abbr</label>
-			        		<input type="text" 
-			        			class="k-textbox k-invalid" 
-			        			data-bind="value : obj.abbr"
-			        			style="width: 100%;margin-bottom: 15px;" />
-			        		<label>Phone</label>
-			        		<input type="text" 
-			        			class="k-textbox k-invalid" 
-			        			data-bind="value : obj.phone"
-			        			style="width: 100%;margin-bottom: 15px;" />
-			        		
-				        </div>
-				        <div class="span4">
-				        	<label>Description</label>
-				        	<input type="text" 
-				        			class="k-textbox k-invalid" 
-				        			data-bind="value : obj.description"
-				        			style="width: 100%;margin-bottom: 15px;" />
-				        	<label>Address</label>
-			        		<input type="text" 
-			        			class="k-textbox k-invalid" 
-			        			data-bind="value : obj.address"
-			        			style="width: 100%;margin-bottom: 15px;" />
-				        	<label>Representative</label>
-			        		<input type="text" 
-			        			class="k-textbox k-invalid" 
-			        			data-bind="value : obj.representative"
-			        			style="width: 100%;margin-bottom: 15px;" />
-			        		
-					       	<label>Email</label>
-			        		<input type="text" 
-			        			class="k-textbox k-invalid" 
-			        			data-bind="value : obj.email"
-			        			style="width: 100%;margin-bottom: 15px;" />
-				        </div>
-				        <div class="span12" style="padding: 0">
-				        	<label>Term and Condition</label>
-				        	<div class="controls">
-								<textarea data-role="editor"
-				                      data-tools="['bold',
-				                                   'italic',
-				                                   'underline',
-				                                   'strikethrough',
-				                                   'justifyLeft',
-				                                   'justifyCenter',
-				                                   'justifyRight',
-				                                   'justifyFull']"
-				                      data-bind="value: obj.term_of_condition"
-				                      style="height: 200px;"></textarea>
-	                      	</div>
-				        </div>
-			        </div> -->
-
 			        <br>
 			        <!-- Top Part -->
 			    	<div class="row-fluid">
-			    		<div class="span9 well">									
-							<div class="row-fluid">
-								<div class="span4">														
+			    		<div class="span12 well">									
+							<div class="row">
+								<div class="span3">														
 									<!-- Group -->
 									<div class="control-group">										
 										<label ><span >License No.</span> <span style="color:red">*</span></label>
-										<input id="fullname" name="fullname" class="k-textbox" 
-							            		data-bind="" 
-							              		required data-required-msg="required"
-							              		style="width: 100%;" />																				            
+										<input 
+											class="k-textbox" 
+							            	data-bind="value: obj.number"
+							            	placeholder="License No." 
+							              	required data-required-msg="required"
+							              	style="width: 100%;" />																				            
 									</div>
 									<!-- // Group END -->
 								</div>
 
-								<div class="span4" >	
+								<div class="span3" >	
 									<!-- Group -->
 									<div class="control-group">							
-										<label ><span >License Name</span> <span style="color:red">*</span></label>										
+										<label ><span >License Name</span></label>										
 				              			<br>
-				              			<input id="fullname" name="fullname" class="k-textbox" 
-							            		data-bind="" 
-							              		required data-required-msg="required"
-							              		placeholder="Name..." 
-							              		style="width: 100%;" />
+				              			<input
+				              				class="k-textbox" 
+							            	data-bind="value: obj.name" 
+						              		placeholder="Name" 
+						              		style="width: 100%;" />
 									</div>
 									<!-- // Group END -->											
 								</div>
 
-								<div class="span4">	
+								<div class="span3">	
 									<!-- Group -->
 									<div class="control-group">								
-										<label ><span >Abbr</span> <span style="color:red">*</span></label>
-							            <input id="fullname" name="fullname" class="k-textbox" 
-							            		data-bind="" 
-							              		required data-required-msg="required"
-							              		style="width: 100%;" />
+										<label ><span >Abbr</span></label>
+							            <input 
+							            	class="k-textbox" 
+							            	placeholder="Abbr" 
+						            		data-bind="value: obj.abbr" 
+						              		style="width: 100%;" />
 									</div>																		
 									<!-- // Group END -->
 								</div>
+
+								<div class="span3">
+									<div class="control-group">								
+										<label ><span >Representative</span></label>
+										<input 
+							            	class="k-textbox" 
+							            	placeholder="Representative" 
+						            		data-bind="value: obj.representative" 
+						              		style="width: 100%;" />
+									</div>
+								</div>
 							</div>
 							
-							<div class="-fluid">
+							<div class="row">
 								
-								<div class="span4">	
+								<div class="span3">	
 									<!-- Group -->
 									<div class="control-group">								
-										<label ><span >Currency</span> <span style="color:red">*</span></label>
+										<label ><span >Currency</span></label>
 										<select data-role="dropdownlist"
 						                   data-value-primitive="true"
 						                   data-text-field="name"
@@ -1076,54 +1021,57 @@
 									<!-- // Group END -->
 								</div>
 
-								<div class="span4">	
+								<div class="span3">	
 									<!-- Group -->
 									<div class="control-group">								
-										<label ><span >Status</span> <span style="color:red">*</span></label>
-							            <input id="customerStatus" 
-							              				data-role="dropdownlist"
-									            		data-text-field="name"
-						           						data-value-field="id"
-						           						data-value-primitive="true" 
-									            		data-bind=""
-									            		data-option-label="(--- Select ---)"
-									            		required data-required-msg="required" style="width: 100%;" />
+										<label ><span >Status</span> </label>
+							            <select data-role="dropdownlist"
+						                   data-value-primitive="true"
+						                   data-text-field="name"
+						                   data-value-field="id"
+						                   data-bind="
+						                   	source: selectType,
+						                   	value: obj.status"
+						                   style="width: 100%;" ></select>
 									</div>																		
 									<!-- // Group END -->
 								</div>
 
-								<div class="span4">	
+								<div class="span3">	
 									<!-- Group -->
 									<div class="control-group">								
-										<label ><span >Expire Date</span> <span style="color:red">*</span></label>
-							            <input id="registeredDate" 
-								            		data-role="datepicker"			            		
-					            					data-bind="" 
-					            					data-format="dd-MM-yyyy"
-					            					data-parse-formats="yyyy-MM-dd" 
-					            					placeholder="dd-MM-yyyy" required data-required-msg="required" style="width: 100%;" />
+										<label ><span >Expire Date</span></label>
+							            <input type="text" 
+						                	style="width: 100%;" 
+						                	data-role="datepicker"
+						                	data-format="dd-MM-yyyy"
+						                	placeholder="dd-mm-yyyy" 
+								           	data-bind="value: obj.expire_date,
+								           			  	min: toDay" />
 									</div>																		
 									<!-- // Group END -->
+								</div>
+
+								<div class="span3">
+									<div class="control-group">								
+										<label ><span >Maximum Houshold</span></label>
+										<input 
+							            	class="k-textbox" 
+							            	placeholder="Maximum Houshold" 
+						            		data-bind="value: obj.max_customer" 
+						              		style="width: 100%;" />
+									</div>
 								</div>
 							</div>
 
-							<div class="row-fluid">
-								<div class="span4">
+							<div class="row">
+								<div class="span12">
 									<div class="control-group">								
-										<label ><span >Representative</span> <span style="color:red">*</span></label>
-										<textarea rows="2" class="k-textbox k-valid" style="width:100%" data-bind="" placeholder="Representative ..."></textarea>
-									</div>
-								</div>
-								<div class="span4">
-									<div class="control-group">								
-										<label ><span >Maximum Houshold</span> <span style="color:red">*</span></label>
-										<textarea rows="2" class="k-textbox k-valid" style="width:100%" data-bind="" placeholder="Maximum Houshold ..."></textarea>
-									</div>
-								</div>
-								<div class="span4">
-									<div class="control-group">								
-										<label ><span >Description</span> <span style="color:red">*</span></label>
-										<textarea rows="2" class="k-textbox k-valid" style="width:100%" data-bind="" placeholder="Description ..."></textarea>
+										<label ><span >Description</span></label>
+										<textarea rows="3" class="k-textbox k-valid" 
+											style="width:100%" 
+											data-bind="value: obj.description" 
+											placeholder="Description ..."></textarea>
 									</div>
 								</div>
 							</div>
@@ -1159,25 +1107,43 @@
 							            <tr>
 							                <td><span >Address</span></td>
 							              	<td colspan="3">
-					            				<input class="k-textbox" data-bind="" 
-													placeholder="Address ..." style="width: 100%;" />									
+					            				<input class="k-textbox" 
+					            					data-bind="value: obj.address" 
+													placeholder="Address ..." style="width: 100%;" />								
 							              	</td>
 							            </tr>
 							            <tr>
 							            	<td><span >Province</span></td>
-							              	<td><input class="k-textbox" data-bind="" placeholder="Province ..." style="width: 100%;" />							              	
-							            	<td><span >Telephone</span></td>
-							              	<td><input class="k-textbox" data-bind="" placeholder="Telephone ..." style="width: 100%;" /></td>
-							            </tr>							            
-							            <tr>
-							            	<td><span >District</span></td>
-							              	<td><input class="k-textbox" data-bind="" placeholder="District ..." style="width: 100%;" />									            								              	
+							              	<td>
+							              		<input class="k-textbox" 
+					            					data-bind="value: obj.province" 
+													placeholder="Province ..." style="width: 100%;" />
+							              	</td>									            								              	
 							            	<td><span >Mobile</span></td>
-							              	<td><input class="k-textbox" data-bind="" placeholder="Mobile ..." style="width: 100%;" /></td>							              	
+							              	<td>
+							              		<input class="k-textbox" 
+							              			data-bind="value: obj.mobile" 
+							              			placeholder="Mobile ..." 
+							              			style="width: 100%;" /></td>							              	
 							            </tr>
 							            <tr>
+							            	<td><span >District</span></td>
+							              	<td>
+							              		<input class="k-textbox" 
+					            					data-bind="value: obj.district" 
+													placeholder="District ..." style="width: 100%;" />
+							              	</td>							              	
+							            	<td><span >Telephone</span></td>
+							              	<td><input class="k-textbox" 
+							              		data-bind="value: obj.telephone" 
+							              		placeholder="Telephone ..." style="width: 100%;" /></td>
+							            </tr>	
+							            <tr>
 							            	<td><span >Email</span></td>
-							              	<td><input class="k-textbox" data-bind="" placeholder="Email ..." style="width: 100%;" />									            								              	
+							              	<td>
+							              		<input class="k-textbox" 
+							              			data-bind="value: obj.email" 
+							              			placeholder="Email ..." style="width: 100%;" />									            								              	
 							            	<td></td>
 							              	<td></td>							              	
 							            </tr>									            
@@ -1191,17 +1157,18 @@
 						        	
 						        	<div class="row-fluid">
 						        		<div class="controls">
-											<textarea data-role="editor"
-							                      data-tools="['bold',
-							                                   'italic',
-							                                   'underline',
-							                                   'strikethrough',
-							                                   'justifyLeft',
-							                                   'justifyCenter',
-							                                   'justifyRight',
-							                                   'justifyFull']"
-							                      data-bind="value: obj.term_of_condition"
-							                      style="height: 200px;"></textarea>
+											<textarea 
+												data-role="editor"
+						                      	data-tools="['bold','italic',
+						                                   'underline',
+						                                   'strikethrough',
+						                                   'justifyLeft',
+						                                   'justifyCenter',
+						                                   'justifyRight',
+						                                   'justifyFull']"
+						                      	data-bind="value: obj.term_of_condition"
+						                      	style="height: 200px;">
+							                </textarea>
 				                      	</div>							        		
 						            </div>
 					        	</div>
@@ -1237,10 +1204,6 @@
 						    </div>
 						</div>
 					</div>
-
-
-
-
 					<br>
 				    <!-- Form actions -->
 					<div class="box-generic bg-action-button">
@@ -6115,32 +6078,42 @@
 		toDay 		: new Date(),
 		obj 		: null,
 		isEdit      : false,
-		pageLoad    : function(){
-			this.addNew();
-		},
 		selectType 	: [{id: "active", name: "Active"},{id: "inactive", name: "Inactive"},{id: "void", name: "Void"}],
 		selectCurrency : [{id: "KHR", name: "KHR"},{id: "USD", name: "USD"},{id: "THB", name: "THB"},{id: "VND", name: "VND"}],
+		pageLoad    : function(id){
+			if(id){
+				loadObj(id);
+			}else{
+				this.addNew();
+			}
+		},
+		loadObj 	: function(id){
+
+		},
 		addNew 	  	: function() {
 			this.set("obj", null);		
 			this.set("isEdit", false);		
 			this.dataSource.insert(0,{	
 				number 			: null,
 				name 			: null,
-				description 	: null,
-				max_customer 	: null,
-				expire_date 	: null,
-				address 		: null,
-				currency 		: "KHR",
 				abbr 			: null,
-				representative 	: null,
-				mobile 			: null,
-				phone 			: null,
-				email 			: null,
+				representative  : null,
+				currency 		: "KHR",
 				status 			: "active",
-				term_of_condition 			: null
+				expire_date 	: null,
+				max_customer 	: 0,
+				description 	: null,
+				address   		: null,
+				province 		: null,
+				district 		: null,
+				email 			: null,
+				mobile 			: null,
+				telephone 		: null,
+				term_of_condition : null
 			});
+			console.log(this.dataSource.data());
 			var obj = this.dataSource.at(0);
-			console.log(this.dataSource.data());			
+						
 			this.set("obj", obj);	
 		},
 		save 		: function() {
@@ -8045,8 +8018,8 @@
 		console.log("plan");
 		vm.pageLoad();
 	});
-	banhji.router.route("/add_license", function(){		
-		banhji.view.layout.showIn("#content", banhji.view.addLicense);
+	banhji.router.route("/add_license(/:id)", function(id){		
+		
 		banhji.view.layout.showIn('#menu', banhji.view.menu);
 		banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
 		
@@ -8058,7 +8031,8 @@
 			banhji.pageLoaded["add_license"] = true;
 		}
 		console.log("add_license");
-		vm.pageLoad();
+		vm.pageLoad(id);
+		banhji.view.layout.showIn("#content", banhji.view.addLicense);
 	});
 	banhji.router.route("/reading", function(){		
 		banhji.view.layout.showIn("#content", banhji.view.reading);
@@ -8152,6 +8126,6 @@
 	$(function() {	
 		banhji.router.start();
 		banhji.source.loadData();
-		console.log($(location).attr('hash').substr(2));
+		//console.log($(location).attr('hash').substr(2));
 	});
 </script>

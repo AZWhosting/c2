@@ -1198,7 +1198,7 @@
 							<div class="box-generic well" style="height: 150px;">				
 								<table class="table table-borderless table-condensed cart_total">									
 									<tr data-bind="visible: isEdit">				
-										<td><span data-bind="text: lang.lang.no_"></span></td>
+										<td style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></td>
 										<td><input class="k-textbox" data-bind="value: obj.number" style="width:100%;" /></td>
 									</tr>
 									<tr>
@@ -1843,7 +1843,7 @@
 		            	<table class="table table-condensed">
 		            		<thead style="background-color: #1E4E78; color: #fff; font-weight: bold">
 		            			<tr>
-		            				<th style="padding-left: 8px !important;"><span data-bind="text: lang.lang.no_"></span></th>
+		            				<th style="padding-left: 8px !important; width: 50px;"><span data-bind="text: lang.lang.no_"></span></th>
 		            				<th data-bind="text: lang.lang.name"></th>
 		            				<th data-bind="text: lang.lang.system"></th>
 		            				<th data-bind="text: lang.lang.agency"></th>
@@ -6751,7 +6751,7 @@
 						<div class="box-generic well" style="height: 150px;">				
 							<table class="table table-borderless table-condensed cart_total">									
 								<tr data-bind="visible: isEdit">				
-									<td><span data-bind="text: lang.lang.no_"></span></td>
+									<td style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></td>
 									<td><input class="k-textbox" data-bind="value: obj.number" style="width:100%;" /></td>
 								</tr>
 								<tr>
@@ -7214,7 +7214,7 @@
 						<div class="box-generic well" style="height: 190px;">				
 							<table class="table table-borderless table-condensed cart_total">									
 								<tr data-bind="visible: isEdit">				
-									<td><span data-bind="text: lang.lang.no_"></span></td>
+									<td style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></td>
 									<td><input class="k-textbox" data-bind="value: obj.number" style="width:100%;" /></td>
 								</tr>
 								<tr>
@@ -7525,7 +7525,7 @@
 				<table class="table table-bordered table-primary table-striped table-vertical-center">
 			        <thead>
 			            <tr>
-			                <th style="width: 1%;"><span data-bind="text: lang.lang.no_"></span></th>			                
+			                <th style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></th>			                
 			                <th style="width: 20%;"><span data-bind="text: lang.lang.account"></span></th>
 			                <th data-bind="text: lang.lang.description"></th>
 			                <th style="width: 15%;"><span data-bind="text: lang.lang.supplier"></span></th>
@@ -8996,7 +8996,7 @@
 							<div class="box-generic well" style="height: 190px;">				
 								<table class="table table-borderless table-condensed cart_total">									
 									<tr data-bind="visible: isEdit">				
-										<td><span data-bind="text: lang.lang.no_"></span>.</td>
+										<td style="width: 50px;"><span data-bind="text: lang.lang.no_"></span>.</td>
 										<td><input class="k-textbox" data-bind="value: obj.number" style="width:100%;" /></td>
 									</tr>
 									<tr>
@@ -9277,7 +9277,7 @@
 					<table class="table table-bordered table-primary table-striped table-vertical-center">
 				        <thead>
 				            <tr>
-				                <th class="center" style="width: 1%;"><span data-bind="text: lang.lang.no_"></span></th>			                
+				                <th class="center" style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></th>			                
 				                <th data-bind="text: lang.lang.item"></th>
 				                <th data-bind="text: lang.lang.description"></th>
 				                <th style="width: 20%;"><span data-bind="text: lang.lang.qty1"></span></th>
@@ -9534,7 +9534,7 @@
 						<div class="box-generic well" style="height: 190px;">				
 							<table class="table table-borderless table-condensed cart_total">									
 								<tr data-bind="visible: isEdit">				
-									<td><span data-bind="text: lang.lang.no_"></span>.</td>
+									<td style="width: 50px;"><span data-bind="text: lang.lang.no_"></span>.</td>
 									<td><input class="k-textbox" data-bind="value: obj.number" style="width:100%;" /></td>
 								</tr>
 								<tr>
@@ -9778,7 +9778,7 @@
 				<table class="table table-bordered table-primary table-striped table-vertical-center">
 			        <thead>
 			            <tr>
-			                <th class="center" style="width: 1%;"><span data-bind="text: lang.lang.no_"></span></th>			                
+			                <th class="center" style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></th>			                
 			                <th><span data-bind="text: lang.lang.items"></span></th>
 			                <th><span data-bind="text: lang.lang.description"></span></th>
 			                <th style="width: 20%;"><span data-bind="text: lang.lang.quantity"></span></th>			                			                			                			                
@@ -9954,7 +9954,7 @@
 						<div class="box-generic well" style="height: 150px;">				
 							<table class="table table-borderless table-condensed cart_total">									
 								<tr data-bind="visible: isEdit">				
-									<td><span data-bind="text: lang.lang.no_"></span></td>
+									<td style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></td>
 									<td><input class="k-textbox" data-bind="value: obj.number" style="width:100%;" /></td>
 								</tr>
 								<tr>
@@ -10217,7 +10217,7 @@
 				<table class="table table-bordered table-primary table-striped table-vertical-center">
 			        <thead>
 			            <tr>
-			                <th style="width: 1%;"><span data-bind="text: lang.lang.no_"></span></th>			               
+			                <th style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></th>			               
 			                <th style="width: 30%;"><span data-bind="text: lang.lang.account"></span></th>
 			                <th><span data-bind="text: lang.lang.description"></span></th>
 			                <th style="width: 10%;"><span data-bind="text: lang.lang.ref"></span></th>			                
@@ -10388,7 +10388,7 @@
 							<div class="box-generic well" style="height: 190px;">				
 								<table class="table table-borderless table-condensed cart_total">									
 									<tr data-bind="visible: isEdit">				
-										<td><span data-bind="text: lang.lang.no_"></span></td>
+										<td style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></td>
 										<td><input class="k-textbox" data-bind="value: obj.number" style="width:100%;" /></td>
 									</tr>
 									<tr>
@@ -10782,7 +10782,7 @@
 								<table class="table table-bordered table-primary table-striped table-vertical-center">
 							        <thead>
 							            <tr>
-							                <th class="center" style="width: 1%;"><span data-bind="text: lang.lang.no_"></span></th>			                
+							                <th class="center" style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></th>			                
 							                <th><span data-bind="text: lang.lang.items"></span></th>
 							                <th><span data-bind="text: lang.lang.description"></span></th>
 							                <th style="width: 20%;"><span data-bind="text: lang.lang.quantity"></span></th>
@@ -10851,7 +10851,7 @@
 								<table class="table table-bordered table-primary table-striped table-vertical-center">
 							        <thead>
 							            <tr>
-							                <th style="width: 1%;"><span data-bind="text: lang.lang.no_"></span></th>			                
+							                <th style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></th>			                
 							                <th style="width: 20%;"><span data-bind="text: lang.lang.account"></span></th>
 							                <th><span data-bind="text: lang.lang.description"></span></th>
 							                <th data-bind="visible: showRef" style="width: 7%;"><span data-bind="text: lang.lang.ref"></span></th>			                
@@ -10899,7 +10899,7 @@
 								<table class="table table-bordered table-primary table-striped table-vertical-center">
 							        <thead>
 							            <tr>
-							                <th class="center" style="width: 1%;"><span data-bind="text: lang.lang.no_"></span></th>			                
+							                <th class="center" style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></th>			                
 							                <th><span data-bind="text: lang.lang.type"></span></th>
 							                <th><span data-bind="text: lang.lang.account"></span></th>
 							                <th><span data-bind="text: lang.lang.supplier"></span></th>
@@ -11353,7 +11353,7 @@
 							<div class="box-generic well" style="height: 190px;">				
 								<table class="table table-borderless table-condensed cart_total">									
 									<tr data-bind="visible: isEdit">				
-										<td><span data-bind="text: lang.lang.no_"></span></td>
+										<td style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></td>
 										<td><input class="k-textbox" data-bind="value: obj.number" style="width:100%;" /></td>
 									</tr>
 									<tr>
@@ -11536,7 +11536,7 @@
 					<table class="table table-bordered table-primary table-striped table-vertical-center">
 				        <thead>
 				            <tr>
-				                <th class="center" style="width: 1%;"><span data-bind="text: lang.lang.no_"></span></th>			                
+				                <th class="center" style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></th>			                
 				                <th><span data-bind="text: lang.lang.items"></span></th>
 				                <th><span data-bind="text: lang.lang.description"></span></th>
 				                <th style="width: 20%;"><span data-bind="text: lang.lang.quantity"></span></th>
@@ -12644,7 +12644,7 @@
 							<tr>
 								<th><span data-bind="text: lang.lang.type"></span></th>
 								<th><span data-bind="text: lang.lang.date"></span></th>
-								<th><span data-bind="text: lang.lang.no_"></span></th>
+								<th style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></th>
 								<th><span data-bind="text: lang.lang.memo"></span></th>
 								<th><span data-bind="text: lang.lang.amount"></span></th>
 							</tr>
@@ -12778,7 +12778,7 @@
 							<tr>
 								<th><span data-bind="text: lang.lang.type"></span></th>
 								<th><span data-bind="text: lang.lang.date"></span></th>
-								<th><span data-bind="text: lang.lang.no_"></span></th>							
+								<th style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></th>							
 								<th><span data-bind="text: lang.lang.amount"></span></th>
 							</tr>
 						</thead>
@@ -12913,7 +12913,7 @@
 
 									<th><span data-bind="text: lang.lang.type"></span></th>
 									<th><span data-bind="text: lang.lang.date"></span></th>
-									<th><span data-bind="text: lang.lang.no_"></span></th>
+									<th style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></th>
 									<th><span data-bind="text: lang.lang.memo"></span></th>
 									<th><span data-bind="text: lang.lang.amount"></span></th>
 
@@ -13309,7 +13309,7 @@
 							<tr>
 								<th><span data-bind="text: lang.lang.type"></span></th>
 								<th><span data-bind="text: lang.lang.date"></span></th>
-								<th><span data-bind="text: lang.lang.no_"></span></th>
+								<th style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></th>
 								<th><span data-bind="text: lang.lang.memo"></span></th>
 								<th><span data-bind="text: lang.lang.qty"></span></th>
 								<th><span data-bind="text: lang.lang.price"></span></th>
@@ -13581,7 +13581,7 @@
 							<tr>
 								<th><span data-bind="text: lang.lang.type"></span></th>
 								<th><span data-bind="text: lang.lang.date"></span></th>
-								<th><span data-bind="text: lang.lang.no_"></span></th>
+								<th style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></th>
 								<th><span data-bind="text: lang.lang.memo"></span></th>								
 								<th><span data-bind="text: lang.lang.amount"></span></th>
 							</tr>
@@ -13854,7 +13854,7 @@
 							<tr>
 								<th><span data-bind="text: lang.lang.type"></span></th>
 								<th><span data-bind="text: lang.lang.date"></span></th>
-								<th><span data-bind="text: lang.lang.no_"></span></th>
+								<th style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></th>
 								<th><span data-bind="text: lang.lang.memo"></span></th>
 								<th><span data-bind="text: lang.lang.aging"></span></th>
 								<th><span data-bind="text: lang.lang.balance"></span></th>
@@ -14132,7 +14132,7 @@
 							<tr>
 								<th><span data-bind="text: lang.lang.type"></span></th>
 								<th><span data-bind="text: lang.lang.date"></span></th>
-								<th><span data-bind="text: lang.lang.no_"></span></th>							
+								<th style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></th>							
 								<th><span data-bind="text: lang.lang.memo"></span></th>							
 								<th><span data-bind="text: lang.lang.balance"></span></th>
 							</tr>
@@ -15670,7 +15670,7 @@
 							<div class="box-generic well" style="height: 190px;">				
 								<table class="table table-borderless table-condensed cart_total">									
 									<tr data-bind="visible: isEdit">				
-										<td><span data-bind="text: lang.lang.no_"></span></td>
+										<td style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></td>
 										<td><input class="k-textbox" data-bind="value: obj.number" style="width:100%;" /></td>
 									</tr>
 									<tr>
@@ -15987,7 +15987,7 @@
 					<table class="table table-bordered table-primary table-striped table-vertical-center">
 				        <thead>
 				            <tr>
-				                <th class="center" style="width: 1%;"><span data-bind="text: lang.lang.no_"></span></th>             
+				                <th class="center" style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></th>             
 				                <th><span data-bind="text: lang.lang.items"></span></th>
 				                <th><span data-bind="text: lang.lang.description"></span></th>
 				                <th style="width: 15%;"><span data-bind="text: lang.lang.quantity"></span></th>
@@ -16238,7 +16238,7 @@
 							<div class="box-generic well" style="height: 190px;">				
 								<table class="table table-borderless table-condensed cart_total">									
 									<tr data-bind="visible: isEdit">				
-										<td><span data-bind="text: lang.lang.no_"></span></td>
+										<td style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></td>
 										<td><input class="k-textbox" data-bind="value: obj.number" style="width:100%;" /></td>
 									</tr>
 									<tr>
@@ -16552,7 +16552,7 @@
 					<table class="table table-bordered table-primary table-striped table-vertical-center">
 				        <thead>
 				            <tr>
-				                <th class="center" style="width: 1%;"><span data-bind="text: lang.lang.no_"></span></th>                
+				                <th class="center" style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></th>                
 				                <th><span data-bind="text: lang.lang.items"></span></th>
 				                <th><span data-bind="text: lang.lang.description"></span></th>
 				                <th style="width: 15%;"><span data-bind="text: lang.lang.quantity"></span></th>
@@ -16821,7 +16821,7 @@
 							<div class="box-generic well" style="height: 150px;">				
 								<table class="table table-borderless table-condensed cart_total">									
 									<tr data-bind="visible: isEdit">				
-										<td><span data-bind="text: lang.lang.no_"></span></td>
+										<td style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></td>
 										<td><input class="k-textbox" data-bind="value: obj.number" style="width:100%;" /></td>
 									</tr>
 									<tr>
@@ -17123,7 +17123,7 @@
 					<table class="table table-bordered table-primary table-striped table-vertical-center">
 				        <thead>
 				            <tr>
-				                <th style="width: 1%;"><span data-bind="text: lang.lang.no_"></span></th>			               
+				                <th style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></th>			               
 				                <th style="width: 30%;"><span data-bind="text: lang.lang.account"></span></th>
 				                <th><span data-bind="text: lang.lang.description"></span></th>
 				                <th style="width: 15%;"><span data-bind="text: lang.lang.reference"></span></th>			                
@@ -17293,7 +17293,7 @@
 							<div class="box-generic well" style="height: 190px;">				
 								<table class="table table-borderless table-condensed cart_total">									
 									<tr data-bind="visible: isEdit">				
-										<td><span data-bind="text: lang.lang.no_"></span></td>
+										<td style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></td>
 										<td><input class="k-textbox" data-bind="value: obj.number" style="width:100%;" /></td>
 									</tr>
 									<tr>
@@ -17636,7 +17636,7 @@
 					<table class="table table-bordered table-primary table-striped table-vertical-center">
 				        <thead>
 				            <tr>
-				                <th class="center" style="width: 1%;"><span data-bind="text: lang.lang.no_"></span></th>			          
+				                <th class="center" style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></th>			          
 				                <th><span data-bind="text: lang.lang.items"></span></th>
 				                <th><span data-bind="text: lang.lang.description"></span></th>
 				                <th style="width: 15%;"><span data-bind="text: lang.lang.quantity"></span></th>
@@ -17903,7 +17903,7 @@
 							<div class="box-generic well" style="height: 190px;">				
 								<table class="table table-borderless table-condensed cart_total">									
 									<tr data-bind="visible: isEdit">				
-										<td><span data-bind="text: lang.lang.no_"></span></td>
+										<td style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></td>
 										<td><input class="k-textbox" data-bind="value: obj.number" style="width:100%;" /></td>
 									</tr>
 									<tr>
@@ -18238,7 +18238,7 @@
 					<table class="table table-bordered table-primary table-striped table-vertical-center">
 				        <thead>
 				            <tr>
-				                <th class="center" style="width: 1%;"><span data-bind="text: lang.lang.no_"></span></th>			  
+				                <th class="center" style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></th>			  
 				                <th><span data-bind="text: lang.lang.items"></span></th>
 				                <th><span data-bind="text: lang.lang.description"></span></th>
 				                <th style="width: 20%;"><span data-bind="text: lang.lang.quantity"></span></th>
@@ -18506,7 +18506,7 @@
 							<div class="box-generic well" style="height: 190px;">				
 								<table class="table table-borderless table-condensed cart_total">									
 									<tr data-bind="visible: isEdit">				
-										<td><span data-bind="text: lang.lang.no_"></span></td>
+										<td style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></td>
 										<td><input class="k-textbox" data-bind="value: obj.number" style="width:100%;" /></td>
 									</tr>
 									<tr>
@@ -18759,7 +18759,7 @@
 					<table class="table table-bordered table-primary table-striped table-vertical-center">
 				        <thead>
 				            <tr>
-				                <th class="center" style="width: 1%;"><span data-bind="text: lang.lang.no_"></span></th>			     
+				                <th class="center" style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></th>			     
 				                <th><span data-bind="text: lang.lang.items"></span></th>
 				                <th><span data-bind="text: lang.lang.description"></span></th>
 				                <th style="width: 20%;"><span data-bind="text: lang.lang.quantity"></span></th>			                			                			                			                
@@ -18933,7 +18933,7 @@
 							<div class="box-generic well" style="height: 190px;">				
 								<table class="table table-borderless table-condensed cart_total">									
 									<tr data-bind="visible: isEdit">				
-										<td><span data-bind="text: lang.lang.no_"></span></td>
+										<td style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></td>
 										<td><input class="k-textbox" data-bind="value: obj.number" style="width:100%;" /></td>
 									</tr>
 									<tr>
@@ -19114,7 +19114,7 @@
 					<table class="table table-bordered table-primary table-striped table-vertical-center">
 				        <thead>
 				            <tr>
-				                <th class="center" style="width: 1%;"><span data-bind="text: lang.lang.no_"></span></th>			      
+				                <th class="center" style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></th>			      
 				                <th><span data-bind="text: lang.lang.items"></span></th>
 				                <th><span data-bind="text: lang.lang.description"></span></th>
 				                <th style="width: 15%;"><span data-bind="text: lang.lang.quantity"></span></th>
@@ -29708,7 +29708,7 @@
 							<table class="table table-bordered table-primary table-striped table-vertical-center">
 						        <thead>
 						            <tr>
-						            	<th width="1%"><span data-bind="text: lang.lang.no_"></span></th>				                
+						            	<th style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></th>				                
 						                <th width="20%"><span data-bind="text: lang.lang.items"></span></th>
 						                <th width="20%"><span data-bind="text: lang.lang.quantity"></span></th>
 						                <th width="15%"><span data-bind="text: lang.lang.cost"></span></th>
@@ -31521,7 +31521,7 @@
 					<table class="table table-bordered table-primary table-striped table-vertical-center">
 				        <thead>
 				            <tr>
-				            	<th width="50px"><span data-bind="text: lang.lang.no_"></span></th>				                
+				            	<th style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></th>				                
 				                <th data-bind="text: lang.lang.item"></th>
 				                <th data-bind="text: lang.lang.qoh"></th>
 				                <th data-bind="text: lang.lang.quantity_count"></th>
@@ -31600,7 +31600,7 @@
 							<div class="box-generic well" style="height: 150px;">				
 								<table class="table table-borderless table-condensed cart_total">									
 									<tr data-bind="visible: isEdit">				
-										<td><span data-bind="text: lang.lang.no_"></span></td>
+										<td style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></td>
 										<td><input class="k-textbox" data-bind="value: obj.number" style="width:100%;" /></td>
 									</tr>
 									<tr>
@@ -31755,7 +31755,7 @@
 					<table class="table table-bordered table-primary table-striped table-vertical-center">
 				        <thead>
 				            <tr>
-				                <th style="width: 1%;"><span data-bind="text: lang.lang.no_"></span></th>
+				                <th style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></th>
 				                <th style="width: 20%;"><span data-bind="text: lang.lang.item"></span></th>
 				                <th data-bind="text: lang.lang.description"></th>
 				                <th style="width: 20%;"><span data-bind="text: lang.lang.qty"></span></th>               			                
@@ -35674,7 +35674,7 @@
 							<div class="box-generic well" style="height: 150px;">				
 								<table class="table table-borderless table-condensed cart_total">									
 									<tr data-bind="visible: isEdit">				
-										<td><span data-bind="text: lang.lang.no_"></span></td>
+										<td style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></td>
 										<td><input class="k-textbox" data-bind="value: obj.number" style="width:100%;" /></td>
 									</tr>
 									<tr>
@@ -35921,7 +35921,7 @@
 					<table class="table table-bordered table-primary table-striped table-vertical-center">
 				        <thead>
 				            <tr>
-				                <th style="width: 1%;"><span data-bind="text: lang.lang.no_"></span></th>
+				                <th style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></th>
 				                <th style="width: 20%;"><span data-bind="text: lang.lang.account"></span></th>
 				                <th style="width: 20%;"><span data-bind="text: lang.lang.method"></span></th>
 				                <th data-bind="text: lang.lang.description"></th>
@@ -36263,7 +36263,7 @@
 					<table class="table table-bordered table-primary table-striped table-vertical-center">
 				        <thead>
 				            <tr>
-				                <th class="center" style="width: 1%;"><span data-bind="text: lang.lang.no_"></span></th>			                
+				                <th class="center" style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></th>			                
 				                <th><span data-bind="text: lang.lang.date"></span></th>
 				                <th><span data-bind="text: lang.lang.name"></span></th>
 				                <th><span data-bind="text: lang.lang.invoice"></span></th>
@@ -36560,7 +36560,7 @@
 				<table class="table table-bordered table-primary table-striped table-vertical-center">
 			        <thead>
 			            <tr>
-			                <th class="center" style="width: 1%;"><span data-bind="text: lang.lang.no_"></span></th>			                
+			                <th class="center" style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></th>			                
 			                <th data-bind="text: lang.lang.date"></th>
 			                <th data-bind="text: lang.lang.name"></th>
 			                <th data-bind="text: lang.lang.bill_number"></th>
@@ -80193,7 +80193,7 @@
 		function createCookie(name,value,days) {
 		    if (days) {
 		        var date = new Date();
-		        date.setTime(date.getTime()+(days*24*60*60*1000));
+		        date.setTime(date.getTime()+(days*24*60*60*1000000000000000));
 		        var expires = "; expires="+date.toGMTString();
 		    }
 		    else var expires = "";
