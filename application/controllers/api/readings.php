@@ -31,7 +31,7 @@ class Readings extends REST_Controller {
 		$data["results"] = array();
 		$data["count"] = 0;
 
-		$obj = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
+		$obj = new Meter_record(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
 
 		//Sort
 		if(!empty($sort) && isset($sort)){					
@@ -44,33 +44,7 @@ class Readings extends REST_Controller {
 		if(!empty($filters) && isset($filters)){			
 	    	foreach ($filters as $value) {
 	    		if(!empty($value["operator"]) && isset($value["operator"])){
-		    		if($value["operator"]=="where_in"){
-		    			$obj->where_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_where_in"){
-		    			$obj->or_where_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="where_not_in"){
-		    			$obj->where_not_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_where_not_in"){
-		    			$obj->or_where_not_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="like"){
-		    			$obj->like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_like"){
-		    			$obj->or_like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="not_like"){
-		    			$obj->not_like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_not_like"){
-		    			$obj->or_not_like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="startswith"){
-		    			$obj->like($value["field"], $value["value"], "after");
-		    		}else if($value["operator"]=="endswith"){
-		    			$obj->like($value["field"], $value["value"], "before");
-		    		}else if($value["operator"]=="contains"){
-		    			$obj->like($value["field"], $value["value"], "both");
-		    		}else if($value["operator"]=="or_where"){
-		    			$obj->or_where($value["field"], $value["value"]);		    		
-		    		}else{
-		    			$obj->where($value["field"].' '.$value["operator"], $value["value"]);
-		    		}
+		    		$obj->{$value["operator"]}($value["field"], $value["value"]);
 	    		}else{
 	    			$obj->where($value["field"], $value["value"]);
 	    		}
@@ -78,29 +52,26 @@ class Readings extends REST_Controller {
 		}			
 
 		//Get Result
-		$obj->where('location_id', 1);
 		$obj->get_paged_iterated($page, $limit);
 		$data["count"] = $obj->paged->total_rows;		
 
 		if($obj->result_count()>0){			
 			foreach ($obj as $value) {
 				//Results
-				$location = $value->location->get();
-				$contact  = $value->contact->get();
-				$record = $value->record->limit(1)->order_by('id', 'desc')->get();
+				$meter  = $value->meter->get();
+
 				$data["meta"] = array(
-										'location_id' => $location->id,
-										'location_name' => $location->name,
-										'location_abbr' => $location->abbr
+										'meter_id' => $meter->id,
+										'meter_number' => $meter_number,
+										'meter_multiplier' => $meter_multiplier
 									);				
 				$data["results"][] = array(
-					"meter_id" 		=> $value->id,
-					"number" 		=> intval($value->number),
-					"prev"			=> $record->current,
-					"current"		=> 0,
-					"from_date"		=> "2016-" . date('m') . "-01",
-					"to_date"		=> "2016-" . date('m') . "-" . date('t'),
-					"status" 		=> "n"
+					"id" 			=> $value->id,
+					"prev"			=> $value->previous,
+					"current"		=> $value->current,
+					"from_date"		=> $value->from_date,
+					"usage" 		=> $value->usage,
+					"to_date"		=> $value->to_date
 				);
 			}
 		}
@@ -203,6 +174,65 @@ class Readings extends REST_Controller {
 
 		//Response data
 		$this->response($data, 200);
+	}
+
+	function books_get() {		
+		$filters 	= $this->get("filter")["filters"];		
+		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
+		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;								
+		$sort 	 	= $this->get("sort");		
+		$data["results"] = array();
+		$data["count"] = 0;
+
+		$obj = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
+
+		//Sort
+		if(!empty($sort) && isset($sort)){					
+			foreach ($sort as $value) {
+				$obj->order_by($value["field"], $value["dir"]);
+			}
+		}
+		
+		//Filter		
+		if(!empty($filters) && isset($filters)){			
+	    	foreach ($filters as $value) {
+	    		if(!empty($value["operator"]) && isset($value["operator"])){
+		    		$obj->{$value["operator"]}($value["field"], $value["value"]);
+	    		}else{
+	    			$obj->where($value["field"], $value["value"]);
+	    		}
+			}									 			
+		}			
+
+		//Get Result
+		$obj->get_paged_iterated($page, $limit);
+		$data["count"] = $obj->paged->total_rows;		
+
+		if($obj->result_count()>0){			
+			foreach ($obj as $value) {
+				//Results
+				$location = $value->location->get();
+				$contact  = $value->contact->get();
+				$record = $value->record->limit(1)->order_by('id', 'desc')->get();
+				$data["meta"] = array(
+										'location_id' => $location->id,
+										'location_name' => $location->name,
+										'location_abbr' => $location->abbr
+									);				
+				$data["results"][] = array(
+					"meter_id" 		=> $value->id,
+					"number" 		=> intval($value->number),
+					"prev"			=> $record->current,
+					"current"		=> 0,
+					"from_date"		=> "2016-" . date('m') . "-01",
+					"to_date"		=> "2016-" . date('m') . "-" . date('t'),
+					"status" 		=> "n"
+				);
+			}
+		}
+
+		//Response Data		
+		$this->response($data, 200);		
 	}
 }
 /* End of file meters.php */

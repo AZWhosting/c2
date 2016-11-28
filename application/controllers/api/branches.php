@@ -39,41 +39,15 @@ class Branches extends REST_Controller {
 			}
 		}
 
-		//Filter
-		if(!empty($filters) && isset($filters)){			
+		//Filter		
+		if(!empty($filters) && isset($filters)){
 	    	foreach ($filters as $value) {
-	    		if(!empty($value["operator"]) && isset($value["operator"])){
-		    		if($value["operator"]=="where_in"){
-		    			$obj->where_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_where_in"){
-		    			$obj->or_where_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="where_not_in"){
-		    			$obj->where_not_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_where_not_in"){
-		    			$obj->or_where_not_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="like"){
-		    			$obj->like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_like"){
-		    			$obj->or_like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="not_like"){
-		    			$obj->not_like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_not_like"){
-		    			$obj->or_not_like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="startswith"){
-		    			$obj->like($value["field"], $value["value"], "after");
-		    		}else if($value["operator"]=="endswith"){
-		    			$obj->like($value["field"], $value["value"], "before");
-		    		}else if($value["operator"]=="contains"){
-		    			$obj->like($value["field"], $value["value"], "both");
-		    		}else if($value["operator"]=="or_where"){
-		    			$obj->or_where($value["field"], $value["value"]);		    		
-		    		}else{
-		    			$obj->where($value["field"].' '.$value["operator"], $value["value"]);
-		    		}
-	    		}else{
+	    		if(isset($value['operator'])) {
+					$obj->{$value['operator']}($value['field'], $value['value']);
+				} else {
 	    			$obj->where($value["field"], $value["value"]);
-	    		}
-			}									 			
+				}
+			}
 		}
 
 		//Results
@@ -136,13 +110,14 @@ class Branches extends REST_Controller {
 			
 			if($obj->save()){
 				//Respsone
+				$currency = $obj->currency->get();
 				$data["results"][] = array(					
 					"id" 				=> $obj->id,
 					"number" 			=> $obj->number,
 					"name" 				=> $obj->name,
 					"abbr" 				=> $obj->abbr,
 					"representative" 	=> $obj->representative,
-					"currency" 			=> $obj->currency,
+					"currency" 			=> array('id'=> $currency->id, 'name' => $currency->name),
 					"status" 			=> $obj->status,
 					"expire_date" 		=> $obj->expire_date,
 					"max_customer"		=> $obj->max_customer,
@@ -192,13 +167,14 @@ class Branches extends REST_Controller {
 			
 			if($obj->save()){				
 				//Results
+				// $currency = $obj->currency->get();
 				$data["results"][] = array(
 					"id" 				=> $obj->id,
 					"number" 			=> $obj->number,
 					"name" 				=> $obj->name,
 					"abbr" 				=> $obj->abbr,
 					"representative" 	=> $obj->representative,
-					"currency" 			=> $obj->currency,
+					"currency" 			=> array('id'=> $obj->currency_id),
 					"status" 			=> $obj->status,
 					"expire_date" 		=> $obj->expire_date,
 					"max_customer"		=> $obj->max_customer,

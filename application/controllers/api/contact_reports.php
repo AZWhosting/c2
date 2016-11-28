@@ -44,7 +44,6 @@ class Contact_reports extends REST_Controller {
 		$data["results"] = array();
 		$data["count"] = 0;
 		$is_recurring = 0;
-		$deleted = 0;
 
 		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
 
@@ -56,52 +55,24 @@ class Contact_reports extends REST_Controller {
 		}
 		
 		//Filter		
-		if(!empty($filters) && isset($filters)){			
+		if(!empty($filters) && isset($filters)){
 	    	foreach ($filters as $value) {
-	    		if(!empty($value["operator"]) && isset($value["operator"])){
-		    		if($value["operator"]=="where_in"){
-		    			$obj->where_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_where_in"){
-		    			$obj->or_where_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="where_not_in"){
-		    			$obj->where_not_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_where_not_in"){
-		    			$obj->or_where_not_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="like"){
-		    			$obj->like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_like"){
-		    			$obj->or_like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="not_like"){
-		    			$obj->not_like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_not_like"){
-		    			$obj->or_not_like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="startswith"){
-		    			$obj->like($value["field"], $value["value"], "after");
-		    		}else if($value["operator"]=="endswith"){
-		    			$obj->like($value["field"], $value["value"], "before");
-		    		}else if($value["operator"]=="contains"){
-		    			$obj->like($value["field"], $value["value"], "both");
-		    		}else if($value["operator"]=="or_where"){
-		    			$obj->or_where($value["field"], $value["value"]);		    		
-		    		}else{
-		    			$obj->where($value["field"], $value["value"]);
-		    		}
-	    		}else{	    			
-	    			if($value["field"]=="is_pattern"){
-	    				$is_pattern = $value["value"];
-	    			}else if($value["field"]=="deleted"){
-	    				$deleted = $value["value"];
+	    		if(isset($value['operator'])) {
+					$obj->{$value['operator']}($value['field'], $value['value']);
+				} else {
+					if($value["field"]=="is_recurring"){
+	    				$is_recurring = $value["value"];
 	    			}else{
 	    				$obj->where($value["field"], $value["value"]);
-	    			}	    				    			
-	    		}
-			}									 			
+	    			}
+				}
+			}
 		}
 
 		$obj->include_related("contact", array("number","surname","name","company"));
 		$obj->include_related("contact/contact_type", "name");		
 		$obj->where("is_recurring", $is_recurring);		
-		$obj->where("deleted", $deleted);		
+		$obj->where("deleted <>", 1);		
 		
 		//Results
 		$obj->get_paged_iterated($page, $limit);
@@ -151,7 +122,6 @@ class Contact_reports extends REST_Controller {
 		$data["results"] = array();
 		$data["count"] = 0;
 		$is_pattern = 0;
-		$deleted = 0;
 		$transaction_date = null;
 
 		$obj = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
@@ -164,54 +134,24 @@ class Contact_reports extends REST_Controller {
 		}
 		
 		//Filter		
-		if(!empty($filters) && isset($filters)){			
+		if(!empty($filters) && isset($filters)){
 	    	foreach ($filters as $value) {
-	    		if(!empty($value["operator"]) && isset($value["operator"])){
-		    		if($value["operator"]=="where_in"){
-		    			$obj->where_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_where_in"){
-		    			$obj->or_where_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="where_not_in"){
-		    			$obj->where_not_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_where_not_in"){
-		    			$obj->or_where_not_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="like"){
-		    			$obj->like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_like"){
-		    			$obj->or_like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="not_like"){
-		    			$obj->not_like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_not_like"){
-		    			$obj->or_not_like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="startswith"){
-		    			$obj->like($value["field"], $value["value"], "after");
-		    		}else if($value["operator"]=="endswith"){
-		    			$obj->like($value["field"], $value["value"], "before");
-		    		}else if($value["operator"]=="contains"){
-		    			$obj->like($value["field"], $value["value"], "both");
-		    		}else if($value["operator"]=="or_where"){
-		    			$obj->or_where($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="transaction_date"){
-		    			$transaction_date = $value["value"];
-		    		}else{
-		    			$obj->where($value["field"], $value["value"]);
-		    		}
-	    		}else{	    			
-	    			if($value["field"]=="is_pattern"){
+	    		if(isset($value['operator'])) {
+					$obj->{$value['operator']}($value['field'], $value['value']);
+				} else {
+					if($value["field"]=="is_pattern"){
 	    				$is_pattern = $value["value"];
-	    			}else if($value["field"]=="deleted"){
-	    				$deleted = $value["value"];
 	    			}else{
 	    				$obj->where($value["field"], $value["value"]);
-	    			}	    				    			
-	    		}
-			}									 			
+	    			}
+				}
+			}
 		}
 
 		$obj->include_related("contact_type", "name");
 		$obj->where_related("contact_type", "parent_id", 1);
 		$obj->where("is_pattern", $is_pattern);		
-		$obj->where("deleted", $deleted);		
+		$obj->where("deleted <>", 1);		
 		
 		//Results
 		$obj->get_iterated();

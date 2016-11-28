@@ -30,7 +30,6 @@ class Contacts extends REST_Controller {
 		$data["results"] = array();
 		$data["count"] = 0;
 		$is_pattern = 0;
-		$deleted = 0;
 
 		$obj = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
 
@@ -41,60 +40,23 @@ class Contacts extends REST_Controller {
 			}
 		}
 
-		//Filter
-		if(!empty($filters) && isset($filters)){			
+		//Filter		
+		if(!empty($filters) && isset($filters)){
 	    	foreach ($filters as $value) {
-	    		if(!empty($value["operator"]) && isset($value["operator"])){
-		    		if($value["operator"]=="where_in"){
-		    			$obj->where_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_where_in"){
-		    			$obj->or_where_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="where_not_in"){
-		    			$obj->where_not_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_where_not_in"){
-		    			$obj->or_where_not_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="like"){
-		    			$obj->like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_like"){
-		    			$obj->or_like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="not_like"){
-		    			$obj->not_like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_not_like"){
-		    			$obj->or_not_like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="startswith"){
-		    			$obj->like($value["field"], $value["value"], "after");
-		    		}else if($value["operator"]=="endswith"){
-		    			$obj->like($value["field"], $value["value"], "before");
-		    		}else if($value["operator"]=="contains"){
-		    			$obj->like($value["field"], $value["value"], "both");
-		    		}else if($value["operator"]=="or_where"){
-		    			$obj->or_where($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="where_related"){
-		    			$obj->where_related($value["model"], $value["field"], $value["value"]);
-		    		}else if($value["operator"]=="search"){		    			
-		    			$obj->like("number", $value["value"], "after");
-		    			$obj->or_like("enumber", $value["value"], "after");
-		    			$obj->or_like("wnumber", $value["value"], "after");
-				    	$obj->or_like("surname", $value["value"], "after");
-				    	$obj->or_like("name", $value["value"], "after");
-				    	$obj->or_like("company", $value["value"], "after");				    
-		    		}else{
-		    			$obj->where($value["field"].' '.$value["operator"], $value["value"]);
-		    		}
-	    		}else{
-	    			if($value["field"]=="is_pattern"){
+	    		if(isset($value['operator'])) {
+					$obj->{$value['operator']}($value['field'], $value['value']);
+				} else {
+					if($value["field"]=="is_pattern"){
 	    				$is_pattern = $value["value"];
-	    			}else if($value["field"]=="deleted"){
-	    				$deleted = $value["value"];
 	    			}else{
 	    				$obj->where($value["field"], $value["value"]);
 	    			}
-	    		}
-			}									 			
+				}
+			}
 		}
 		
 		$obj->where("is_pattern", $is_pattern);
-		$obj->where("deleted", $deleted);
+		$obj->where("deleted <>", 1);
 		$obj->include_related("contact_type", "name");		
 
 		//Results
@@ -526,539 +488,539 @@ class Contacts extends REST_Controller {
 		$this->response($data, 200);
 	}
 
-	function customer_get() {		
-		$filters 	= $this->get("filter")["filters"];		
-		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
-		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;								
-		$sort 	 	= $this->get("sort");		
-		$data["results"] = array();
-		$data["count"] = 0;
-		$is_pattern = 0;
-		$deleted = 0;
+	// function customer_get() {		
+	// 	$filters 	= $this->get("filter")["filters"];		
+	// 	$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
+	// 	$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;								
+	// 	$sort 	 	= $this->get("sort");		
+	// 	$data["results"] = array();
+	// 	$data["count"] = 0;
+	// 	$is_pattern = 0;
+	// 	$deleted = 0;
 
-		$obj = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
+	// 	$obj = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
 
-		//Sort
-		if(!empty($sort) && isset($sort)){					
-			foreach ($sort as $value) {
-				$obj->order_by($value["field"], $value["dir"]);
-			}
-		}
+	// 	//Sort
+	// 	if(!empty($sort) && isset($sort)){					
+	// 		foreach ($sort as $value) {
+	// 			$obj->order_by($value["field"], $value["dir"]);
+	// 		}
+	// 	}
 
-		//Filter
-		if(!empty($filters) && isset($filters)){			
-	    	foreach ($filters as $value) {
-	    		if(!empty($value["operator"]) && isset($value["operator"])){
-		    		if($value["operator"]=="where_in"){
-		    			$obj->where_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_where_in"){
-		    			$obj->or_where_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="where_not_in"){
-		    			$obj->where_not_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_where_not_in"){
-		    			$obj->or_where_not_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="like"){
-		    			$obj->like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_like"){
-		    			$obj->or_like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="not_like"){
-		    			$obj->not_like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_not_like"){
-		    			$obj->or_not_like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="startswith"){
-		    			$obj->like($value["field"], $value["value"], "after");
-		    		}else if($value["operator"]=="endswith"){
-		    			$obj->like($value["field"], $value["value"], "before");
-		    		}else if($value["operator"]=="contains"){
-		    			$obj->like($value["field"], $value["value"], "both");
-		    		}else if($value["operator"]=="or_where"){
-		    			$obj->or_where($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="where_related"){
-		    			$obj->where_related($value["model"], $value["field"], $value["value"]);
-		    		}else if($value["operator"]=="search"){		    			
-		    			$obj->like("number", $value["value"], "after");
-		    			$obj->or_like("enumber", $value["value"], "after");
-		    			$obj->or_like("wnumber", $value["value"], "after");
-				    	$obj->or_like("surname", $value["value"], "after");
-				    	$obj->or_like("name", $value["value"], "after");
-				    	$obj->or_like("company", $value["value"], "after");				    
-		    		}else{
-		    			$obj->where($value["field"].' '.$value["operator"], $value["value"]);
-		    		}
-	    		}else{
-	    			if($value["field"]=="is_pattern"){
-	    				$is_pattern = $value["value"];
-	    			}else if($value["field"]=="deleted"){
-	    				$deleted = $value["value"];
-	    			}else{
-	    				$obj->where($value["field"], $value["value"]);
-	    			}
-	    		}
-			}									 			
-		}
-		$obj->where_in("contact_type_id", array(4,5));
-		$obj->where("is_pattern", $is_pattern);
+	// 	//Filter
+	// 	if(!empty($filters) && isset($filters)){			
+	//     	foreach ($filters as $value) {
+	//     		if(!empty($value["operator"]) && isset($value["operator"])){
+	// 	    		if($value["operator"]=="where_in"){
+	// 	    			$obj->where_in($value["field"], $value["value"]);
+	// 	    		}else if($value["operator"]=="or_where_in"){
+	// 	    			$obj->or_where_in($value["field"], $value["value"]);
+	// 	    		}else if($value["operator"]=="where_not_in"){
+	// 	    			$obj->where_not_in($value["field"], $value["value"]);
+	// 	    		}else if($value["operator"]=="or_where_not_in"){
+	// 	    			$obj->or_where_not_in($value["field"], $value["value"]);
+	// 	    		}else if($value["operator"]=="like"){
+	// 	    			$obj->like($value["field"], $value["value"]);
+	// 	    		}else if($value["operator"]=="or_like"){
+	// 	    			$obj->or_like($value["field"], $value["value"]);
+	// 	    		}else if($value["operator"]=="not_like"){
+	// 	    			$obj->not_like($value["field"], $value["value"]);
+	// 	    		}else if($value["operator"]=="or_not_like"){
+	// 	    			$obj->or_not_like($value["field"], $value["value"]);
+	// 	    		}else if($value["operator"]=="startswith"){
+	// 	    			$obj->like($value["field"], $value["value"], "after");
+	// 	    		}else if($value["operator"]=="endswith"){
+	// 	    			$obj->like($value["field"], $value["value"], "before");
+	// 	    		}else if($value["operator"]=="contains"){
+	// 	    			$obj->like($value["field"], $value["value"], "both");
+	// 	    		}else if($value["operator"]=="or_where"){
+	// 	    			$obj->or_where($value["field"], $value["value"]);
+	// 	    		}else if($value["operator"]=="where_related"){
+	// 	    			$obj->where_related($value["model"], $value["field"], $value["value"]);
+	// 	    		}else if($value["operator"]=="search"){		    			
+	// 	    			$obj->like("number", $value["value"], "after");
+	// 	    			$obj->or_like("enumber", $value["value"], "after");
+	// 	    			$obj->or_like("wnumber", $value["value"], "after");
+	// 			    	$obj->or_like("surname", $value["value"], "after");
+	// 			    	$obj->or_like("name", $value["value"], "after");
+	// 			    	$obj->or_like("company", $value["value"], "after");				    
+	// 	    		}else{
+	// 	    			$obj->where($value["field"].' '.$value["operator"], $value["value"]);
+	// 	    		}
+	//     		}else{
+	//     			if($value["field"]=="is_pattern"){
+	//     				$is_pattern = $value["value"];
+	//     			}else if($value["field"]=="deleted"){
+	//     				$deleted = $value["value"];
+	//     			}else{
+	//     				$obj->where($value["field"], $value["value"]);
+	//     			}
+	//     		}
+	// 		}									 			
+	// 	}
+	// 	$obj->where_in("contact_type_id", array(4,5));
+	// 	$obj->where("is_pattern", $is_pattern);
 			
 
-		//Results
-		$obj->get_paged_iterated($page, $limit);
-		$data["count"] = $obj->paged->total_rows;		
+	// 	//Results
+	// 	$obj->get_paged_iterated($page, $limit);
+	// 	$data["count"] = $obj->paged->total_rows;		
 		
-		if($obj->result_count()>0){
-			foreach ($obj as $value) {
-		 		$data["results"][] = array(
-		 			"id" 						=> $value->id,		 			
-					"branch_id" 				=> $value->branch_id,
-					"country_id" 				=> $value->country_id,
-					"ebranch_id" 				=> $value->ebranch_id,
-					"elocation_id" 				=> $value->elocation_id,
-					"wbranch_id" 				=> $value->wbranch_id,
-					"wlocation_id" 				=> $value->wlocation_id,					
-					"user_id"					=> $value->user_id, 	
-					"contact_type_id" 			=> $value->contact_type_id,
-					"eorder" 					=> $value->eorder,
-					"worder" 					=> $value->worder, 						
-					"abbr" 						=> $value->abbr,
-					"number" 					=> $value->number,
-					"enumber" 					=> $value->enumber,
-					"wnumber" 					=> $value->wnumber,			
-					"surname" 					=> $value->surname,			
-					"name" 						=> $value->name,			
-					"gender"					=> $value->gender,			
-					"dob" 						=> $value->dob,				
-					"pob" 						=> $value->pob,
-					"latitute" 					=> $value->latitute,
-					"longtitute" 				=> $value->longtitute,
-					"credit_limit" 				=> $value->credit_limit,
-					"locale" 					=> $value->locale,					
-					"id_number" 				=> $value->id_number,
-					"phone" 					=> $value->phone,
-					"email" 					=> $value->email,
-					"website" 					=> $value->website,					
-					"job" 						=> $value->job,
-					"vat_no" 					=> $value->vat_no,
-					"family_member"				=> $value->family_member,
-					"city" 						=> $value->city,
-					"post_code" 				=> $value->post_code,
-					"address" 					=> $value->address,
-					"bill_to" 					=> $value->bill_to,
-					"ship_to" 					=> $value->ship_to,
-					"memo" 						=> $value->memo,
-					"image_url" 				=> $value->image_url,				
-					"company" 					=> $value->company,
-					"company_en" 				=> $value->company_en,
-					"bank_name" 				=> $value->bank_name,
-					"bank_address" 				=> $value->bank_address,
-					"bank_account_name" 		=> $value->bank_account_name,
-					"bank_account_number" 		=> $value->bank_account_number,
-					"name_on_cheque" 			=> $value->name_on_cheque,
-					"business_type_id" 			=> $value->business_type_id,					
-					"payment_term_id" 			=> $value->payment_term_id,
-					"payment_method_id" 		=> $value->payment_method_id,
-					"deposit_account_id"		=> $value->deposit_account_id,
-					"trade_discount_id" 		=> $value->trade_discount_id,
-					"settlement_discount_id"	=> $value->settlement_discount_id,
-					"salary_account_id"			=> $value->salary_account_id,
-					"account_id" 				=> $value->account_id,					
-					"ra_id" 					=> $value->ra_id,
-					"tax_item_id" 				=> $value->tax_item_id,					
-					"phase_id" 					=> $value->phase_id,
-					"voltage_id" 				=> $value->voltage_id,
-					"ampere_id" 				=> $value->ampere_id,
-					"registered_date" 			=> $value->registered_date,
-					"use_electricity" 			=> $value->use_electricity,
-					"use_water" 				=> $value->use_water,
-					"is_local" 					=> $value->is_local,
-					"is_pattern" 				=> intval($value->is_pattern),
-					"status" 					=> $value->status,
+	// 	if($obj->result_count()>0){
+	// 		foreach ($obj as $value) {
+	// 	 		$data["results"][] = array(
+	// 	 			"id" 						=> $value->id,		 			
+	// 				"branch_id" 				=> $value->branch_id,
+	// 				"country_id" 				=> $value->country_id,
+	// 				"ebranch_id" 				=> $value->ebranch_id,
+	// 				"elocation_id" 				=> $value->elocation_id,
+	// 				"wbranch_id" 				=> $value->wbranch_id,
+	// 				"wlocation_id" 				=> $value->wlocation_id,					
+	// 				"user_id"					=> $value->user_id, 	
+	// 				"contact_type_id" 			=> $value->contact_type_id,
+	// 				"eorder" 					=> $value->eorder,
+	// 				"worder" 					=> $value->worder, 						
+	// 				"abbr" 						=> $value->abbr,
+	// 				"number" 					=> $value->number,
+	// 				"enumber" 					=> $value->enumber,
+	// 				"wnumber" 					=> $value->wnumber,			
+	// 				"surname" 					=> $value->surname,			
+	// 				"name" 						=> $value->name,			
+	// 				"gender"					=> $value->gender,			
+	// 				"dob" 						=> $value->dob,				
+	// 				"pob" 						=> $value->pob,
+	// 				"latitute" 					=> $value->latitute,
+	// 				"longtitute" 				=> $value->longtitute,
+	// 				"credit_limit" 				=> $value->credit_limit,
+	// 				"locale" 					=> $value->locale,					
+	// 				"id_number" 				=> $value->id_number,
+	// 				"phone" 					=> $value->phone,
+	// 				"email" 					=> $value->email,
+	// 				"website" 					=> $value->website,					
+	// 				"job" 						=> $value->job,
+	// 				"vat_no" 					=> $value->vat_no,
+	// 				"family_member"				=> $value->family_member,
+	// 				"city" 						=> $value->city,
+	// 				"post_code" 				=> $value->post_code,
+	// 				"address" 					=> $value->address,
+	// 				"bill_to" 					=> $value->bill_to,
+	// 				"ship_to" 					=> $value->ship_to,
+	// 				"memo" 						=> $value->memo,
+	// 				"image_url" 				=> $value->image_url,				
+	// 				"company" 					=> $value->company,
+	// 				"company_en" 				=> $value->company_en,
+	// 				"bank_name" 				=> $value->bank_name,
+	// 				"bank_address" 				=> $value->bank_address,
+	// 				"bank_account_name" 		=> $value->bank_account_name,
+	// 				"bank_account_number" 		=> $value->bank_account_number,
+	// 				"name_on_cheque" 			=> $value->name_on_cheque,
+	// 				"business_type_id" 			=> $value->business_type_id,					
+	// 				"payment_term_id" 			=> $value->payment_term_id,
+	// 				"payment_method_id" 		=> $value->payment_method_id,
+	// 				"deposit_account_id"		=> $value->deposit_account_id,
+	// 				"trade_discount_id" 		=> $value->trade_discount_id,
+	// 				"settlement_discount_id"	=> $value->settlement_discount_id,
+	// 				"salary_account_id"			=> $value->salary_account_id,
+	// 				"account_id" 				=> $value->account_id,					
+	// 				"ra_id" 					=> $value->ra_id,
+	// 				"tax_item_id" 				=> $value->tax_item_id,					
+	// 				"phase_id" 					=> $value->phase_id,
+	// 				"voltage_id" 				=> $value->voltage_id,
+	// 				"ampere_id" 				=> $value->ampere_id,
+	// 				"registered_date" 			=> $value->registered_date,
+	// 				"use_electricity" 			=> $value->use_electricity,
+	// 				"use_water" 				=> $value->use_water,
+	// 				"is_local" 					=> $value->is_local,
+	// 				"is_pattern" 				=> intval($value->is_pattern),
+	// 				"status" 					=> $value->status,
 								
-					"contact_type"				=> $value->contact_type_name
-		 		);
-			}
-		}
+	// 				"contact_type"				=> $value->contact_type_name
+	// 	 		);
+	// 		}
+	// 	}
 
-		//Response Data		
-		$this->response($data, 200);			
-	}
+	// 	//Response Data		
+	// 	$this->response($data, 200);			
+	// }
 
-	function supplier_get() {		
-		$filters 	= $this->get("filter")["filters"];		
-		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
-		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;								
-		$sort 	 	= $this->get("sort");		
-		$data["results"] = array();
-		$data["count"] = 0;
-		$is_pattern = 0;
-		$deleted = 0;
+	// function supplier_get() {		
+	// 	$filters 	= $this->get("filter")["filters"];		
+	// 	$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
+	// 	$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;								
+	// 	$sort 	 	= $this->get("sort");		
+	// 	$data["results"] = array();
+	// 	$data["count"] = 0;
+	// 	$is_pattern = 0;
+	// 	$deleted = 0;
 
-		$obj = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
+	// 	$obj = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
 
-		//Sort
-		if(!empty($sort) && isset($sort)){					
-			foreach ($sort as $value) {
-				$obj->order_by($value["field"], $value["dir"]);
-			}
-		}
+	// 	//Sort
+	// 	if(!empty($sort) && isset($sort)){					
+	// 		foreach ($sort as $value) {
+	// 			$obj->order_by($value["field"], $value["dir"]);
+	// 		}
+	// 	}
 
-		//Filter
-		if(!empty($filters) && isset($filters)){			
-	    	foreach ($filters as $value) {
-	    		if(!empty($value["operator"]) && isset($value["operator"])){
-		    		if($value["operator"]=="where_in"){
-		    			$obj->where_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_where_in"){
-		    			$obj->or_where_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="where_not_in"){
-		    			$obj->where_not_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_where_not_in"){
-		    			$obj->or_where_not_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="like"){
-		    			$obj->like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_like"){
-		    			$obj->or_like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="not_like"){
-		    			$obj->not_like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_not_like"){
-		    			$obj->or_not_like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="startswith"){
-		    			$obj->like($value["field"], $value["value"], "after");
-		    		}else if($value["operator"]=="endswith"){
-		    			$obj->like($value["field"], $value["value"], "before");
-		    		}else if($value["operator"]=="contains"){
-		    			$obj->like($value["field"], $value["value"], "both");
-		    		}else if($value["operator"]=="or_where"){
-		    			$obj->or_where($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="where_related"){
-		    			$obj->where_related($value["model"], $value["field"], $value["value"]);
-		    		}else if($value["operator"]=="search"){		    			
-		    			$obj->like("number", $value["value"], "after");
-		    			$obj->or_like("enumber", $value["value"], "after");
-		    			$obj->or_like("wnumber", $value["value"], "after");
-				    	$obj->or_like("surname", $value["value"], "after");
-				    	$obj->or_like("name", $value["value"], "after");
-				    	$obj->or_like("company", $value["value"], "after");				    
-		    		}else{
-		    			$obj->where($value["field"].' '.$value["operator"], $value["value"]);
-		    		}
-	    		}else{
-	    			if($value["field"]=="is_pattern"){
-	    				$is_pattern = $value["value"];
-	    			}else if($value["field"]=="deleted"){
-	    				$deleted = $value["value"];
-	    			}else{
-	    				$obj->where($value["field"], $value["value"]);
-	    			}
-	    		}
-			}									 			
-		}
-		$obj->where_in("contact_type_id", array(6,7));
-		$obj->where("is_pattern", $is_pattern);
+	// 	//Filter
+	// 	if(!empty($filters) && isset($filters)){			
+	//     	foreach ($filters as $value) {
+	//     		if(!empty($value["operator"]) && isset($value["operator"])){
+	// 	    		if($value["operator"]=="where_in"){
+	// 	    			$obj->where_in($value["field"], $value["value"]);
+	// 	    		}else if($value["operator"]=="or_where_in"){
+	// 	    			$obj->or_where_in($value["field"], $value["value"]);
+	// 	    		}else if($value["operator"]=="where_not_in"){
+	// 	    			$obj->where_not_in($value["field"], $value["value"]);
+	// 	    		}else if($value["operator"]=="or_where_not_in"){
+	// 	    			$obj->or_where_not_in($value["field"], $value["value"]);
+	// 	    		}else if($value["operator"]=="like"){
+	// 	    			$obj->like($value["field"], $value["value"]);
+	// 	    		}else if($value["operator"]=="or_like"){
+	// 	    			$obj->or_like($value["field"], $value["value"]);
+	// 	    		}else if($value["operator"]=="not_like"){
+	// 	    			$obj->not_like($value["field"], $value["value"]);
+	// 	    		}else if($value["operator"]=="or_not_like"){
+	// 	    			$obj->or_not_like($value["field"], $value["value"]);
+	// 	    		}else if($value["operator"]=="startswith"){
+	// 	    			$obj->like($value["field"], $value["value"], "after");
+	// 	    		}else if($value["operator"]=="endswith"){
+	// 	    			$obj->like($value["field"], $value["value"], "before");
+	// 	    		}else if($value["operator"]=="contains"){
+	// 	    			$obj->like($value["field"], $value["value"], "both");
+	// 	    		}else if($value["operator"]=="or_where"){
+	// 	    			$obj->or_where($value["field"], $value["value"]);
+	// 	    		}else if($value["operator"]=="where_related"){
+	// 	    			$obj->where_related($value["model"], $value["field"], $value["value"]);
+	// 	    		}else if($value["operator"]=="search"){		    			
+	// 	    			$obj->like("number", $value["value"], "after");
+	// 	    			$obj->or_like("enumber", $value["value"], "after");
+	// 	    			$obj->or_like("wnumber", $value["value"], "after");
+	// 			    	$obj->or_like("surname", $value["value"], "after");
+	// 			    	$obj->or_like("name", $value["value"], "after");
+	// 			    	$obj->or_like("company", $value["value"], "after");				    
+	// 	    		}else{
+	// 	    			$obj->where($value["field"].' '.$value["operator"], $value["value"]);
+	// 	    		}
+	//     		}else{
+	//     			if($value["field"]=="is_pattern"){
+	//     				$is_pattern = $value["value"];
+	//     			}else if($value["field"]=="deleted"){
+	//     				$deleted = $value["value"];
+	//     			}else{
+	//     				$obj->where($value["field"], $value["value"]);
+	//     			}
+	//     		}
+	// 		}									 			
+	// 	}
+	// 	$obj->where_in("contact_type_id", array(6,7));
+	// 	$obj->where("is_pattern", $is_pattern);
 			
 
-		//Results
-		$obj->get_paged_iterated($page, $limit);
-		$data["count"] = $obj->paged->total_rows;		
+	// 	//Results
+	// 	$obj->get_paged_iterated($page, $limit);
+	// 	$data["count"] = $obj->paged->total_rows;		
 		
-		if($obj->result_count()>0){
-			foreach ($obj as $value) {
-		 		$data["results"][] = array(
-		 			"id" 						=> $value->id,		 			
-					"branch_id" 				=> $value->branch_id,
-					"country_id" 				=> $value->country_id,
-					"ebranch_id" 				=> $value->ebranch_id,
-					"elocation_id" 				=> $value->elocation_id,
-					"wbranch_id" 				=> $value->wbranch_id,
-					"wlocation_id" 				=> $value->wlocation_id,					
-					"user_id"					=> $value->user_id, 	
-					"contact_type_id" 			=> $value->contact_type_id,
-					"eorder" 					=> $value->eorder,
-					"worder" 					=> $value->worder, 						
-					"abbr" 						=> $value->abbr,
-					"number" 					=> $value->number,
-					"enumber" 					=> $value->enumber,
-					"wnumber" 					=> $value->wnumber,			
-					"surname" 					=> $value->surname,			
-					"name" 						=> $value->name,			
-					"gender"					=> $value->gender,			
-					"dob" 						=> $value->dob,				
-					"pob" 						=> $value->pob,
-					"latitute" 					=> $value->latitute,
-					"longtitute" 				=> $value->longtitute,
-					"credit_limit" 				=> $value->credit_limit,
-					"locale" 					=> $value->locale,					
-					"id_number" 				=> $value->id_number,
-					"phone" 					=> $value->phone,
-					"email" 					=> $value->email,
-					"website" 					=> $value->website,					
-					"job" 						=> $value->job,
-					"vat_no" 					=> $value->vat_no,
-					"family_member"				=> $value->family_member,
-					"city" 						=> $value->city,
-					"post_code" 				=> $value->post_code,
-					"address" 					=> $value->address,
-					"bill_to" 					=> $value->bill_to,
-					"ship_to" 					=> $value->ship_to,
-					"memo" 						=> $value->memo,
-					"image_url" 				=> $value->image_url,				
-					"company" 					=> $value->company,
-					"company_en" 				=> $value->company_en,
-					"bank_name" 				=> $value->bank_name,
-					"bank_address" 				=> $value->bank_address,
-					"bank_account_name" 		=> $value->bank_account_name,
-					"bank_account_number" 		=> $value->bank_account_number,
-					"name_on_cheque" 			=> $value->name_on_cheque,
-					"business_type_id" 			=> $value->business_type_id,					
-					"payment_term_id" 			=> $value->payment_term_id,
-					"payment_method_id" 		=> $value->payment_method_id,
-					"deposit_account_id"		=> $value->deposit_account_id,
-					"trade_discount_id" 		=> $value->trade_discount_id,
-					"settlement_discount_id"	=> $value->settlement_discount_id,
-					"salary_account_id"			=> $value->salary_account_id,
-					"account_id" 				=> $value->account_id,					
-					"ra_id" 					=> $value->ra_id,
-					"tax_item_id" 				=> $value->tax_item_id,					
-					"phase_id" 					=> $value->phase_id,
-					"voltage_id" 				=> $value->voltage_id,
-					"ampere_id" 				=> $value->ampere_id,
-					"registered_date" 			=> $value->registered_date,
-					"use_electricity" 			=> $value->use_electricity,
-					"use_water" 				=> $value->use_water,
-					"is_local" 					=> $value->is_local,
-					"is_pattern" 				=> intval($value->is_pattern),
-					"status" 					=> $value->status,
+	// 	if($obj->result_count()>0){
+	// 		foreach ($obj as $value) {
+	// 	 		$data["results"][] = array(
+	// 	 			"id" 						=> $value->id,		 			
+	// 				"branch_id" 				=> $value->branch_id,
+	// 				"country_id" 				=> $value->country_id,
+	// 				"ebranch_id" 				=> $value->ebranch_id,
+	// 				"elocation_id" 				=> $value->elocation_id,
+	// 				"wbranch_id" 				=> $value->wbranch_id,
+	// 				"wlocation_id" 				=> $value->wlocation_id,					
+	// 				"user_id"					=> $value->user_id, 	
+	// 				"contact_type_id" 			=> $value->contact_type_id,
+	// 				"eorder" 					=> $value->eorder,
+	// 				"worder" 					=> $value->worder, 						
+	// 				"abbr" 						=> $value->abbr,
+	// 				"number" 					=> $value->number,
+	// 				"enumber" 					=> $value->enumber,
+	// 				"wnumber" 					=> $value->wnumber,			
+	// 				"surname" 					=> $value->surname,			
+	// 				"name" 						=> $value->name,			
+	// 				"gender"					=> $value->gender,			
+	// 				"dob" 						=> $value->dob,				
+	// 				"pob" 						=> $value->pob,
+	// 				"latitute" 					=> $value->latitute,
+	// 				"longtitute" 				=> $value->longtitute,
+	// 				"credit_limit" 				=> $value->credit_limit,
+	// 				"locale" 					=> $value->locale,					
+	// 				"id_number" 				=> $value->id_number,
+	// 				"phone" 					=> $value->phone,
+	// 				"email" 					=> $value->email,
+	// 				"website" 					=> $value->website,					
+	// 				"job" 						=> $value->job,
+	// 				"vat_no" 					=> $value->vat_no,
+	// 				"family_member"				=> $value->family_member,
+	// 				"city" 						=> $value->city,
+	// 				"post_code" 				=> $value->post_code,
+	// 				"address" 					=> $value->address,
+	// 				"bill_to" 					=> $value->bill_to,
+	// 				"ship_to" 					=> $value->ship_to,
+	// 				"memo" 						=> $value->memo,
+	// 				"image_url" 				=> $value->image_url,				
+	// 				"company" 					=> $value->company,
+	// 				"company_en" 				=> $value->company_en,
+	// 				"bank_name" 				=> $value->bank_name,
+	// 				"bank_address" 				=> $value->bank_address,
+	// 				"bank_account_name" 		=> $value->bank_account_name,
+	// 				"bank_account_number" 		=> $value->bank_account_number,
+	// 				"name_on_cheque" 			=> $value->name_on_cheque,
+	// 				"business_type_id" 			=> $value->business_type_id,					
+	// 				"payment_term_id" 			=> $value->payment_term_id,
+	// 				"payment_method_id" 		=> $value->payment_method_id,
+	// 				"deposit_account_id"		=> $value->deposit_account_id,
+	// 				"trade_discount_id" 		=> $value->trade_discount_id,
+	// 				"settlement_discount_id"	=> $value->settlement_discount_id,
+	// 				"salary_account_id"			=> $value->salary_account_id,
+	// 				"account_id" 				=> $value->account_id,					
+	// 				"ra_id" 					=> $value->ra_id,
+	// 				"tax_item_id" 				=> $value->tax_item_id,					
+	// 				"phase_id" 					=> $value->phase_id,
+	// 				"voltage_id" 				=> $value->voltage_id,
+	// 				"ampere_id" 				=> $value->ampere_id,
+	// 				"registered_date" 			=> $value->registered_date,
+	// 				"use_electricity" 			=> $value->use_electricity,
+	// 				"use_water" 				=> $value->use_water,
+	// 				"is_local" 					=> $value->is_local,
+	// 				"is_pattern" 				=> intval($value->is_pattern),
+	// 				"status" 					=> $value->status,
 								
-					"contact_type"				=> $value->contact_type_name
-		 		);
-			}
-		}
+	// 				"contact_type"				=> $value->contact_type_name
+	// 	 		);
+	// 		}
+	// 	}
 
-		//Response Data		
-		$this->response($data, 200);			
-	}
+	// 	//Response Data		
+	// 	$this->response($data, 200);			
+	// }
 
-	//GET BRANCH
-	function branch_get() {		
-		$filters 	= $this->get("filter")["filters"];		
-		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
-		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;								
-		$sort 	 	= $this->get("sort");		
-		$data["results"] = array();
-		$data["count"] = 0;
+	// //GET BRANCH
+	// function branch_get() {		
+	// 	$filters 	= $this->get("filter")["filters"];		
+	// 	$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
+	// 	$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;								
+	// 	$sort 	 	= $this->get("sort");		
+	// 	$data["results"] = array();
+	// 	$data["count"] = 0;
 
-		$obj = new Company(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
+	// 	$obj = new Company(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
 
-		//Sort
-		if(!empty($sort) && isset($sort)){					
-			foreach ($sort as $value) {
-				$obj->order_by($value["field"], $value["dir"]);
-			}
-		}
+	// 	//Sort
+	// 	if(!empty($sort) && isset($sort)){					
+	// 		foreach ($sort as $value) {
+	// 			$obj->order_by($value["field"], $value["dir"]);
+	// 		}
+	// 	}
 
-		//Filter
-		if(!empty($filters) && isset($filters)){			
-	    	foreach ($filters as $value) {
-	    		if(!empty($value["operator"]) && isset($value["operator"])){
-		    		if($value["operator"]=="where_in"){
-		    			$obj->where_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_where_in"){
-		    			$obj->or_where_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="where_not_in"){
-		    			$obj->where_not_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_where_not_in"){
-		    			$obj->or_where_not_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="like"){
-		    			$obj->like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_like"){
-		    			$obj->or_like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="not_like"){
-		    			$obj->not_like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_not_like"){
-		    			$obj->or_not_like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="startswith"){
-		    			$obj->like($value["field"], $value["value"], "after");
-		    		}else if($value["operator"]=="endswith"){
-		    			$obj->like($value["field"], $value["value"], "before");
-		    		}else if($value["operator"]=="contains"){
-		    			$obj->like($value["field"], $value["value"], "both");
-		    		}else if($value["operator"]=="or_where"){
-		    			$obj->or_where($value["field"], $value["value"]);		    		
-		    		}else{
-		    			$obj->where($value["field"].' '.$value["operator"], $value["value"]);
-		    		}
-	    		}else{
-	    			$obj->where($value["field"], $value["value"]);
-	    		}
-			}									 			
-		}
+	// 	//Filter
+	// 	if(!empty($filters) && isset($filters)){			
+	//     	foreach ($filters as $value) {
+	//     		if(!empty($value["operator"]) && isset($value["operator"])){
+	// 	    		if($value["operator"]=="where_in"){
+	// 	    			$obj->where_in($value["field"], $value["value"]);
+	// 	    		}else if($value["operator"]=="or_where_in"){
+	// 	    			$obj->or_where_in($value["field"], $value["value"]);
+	// 	    		}else if($value["operator"]=="where_not_in"){
+	// 	    			$obj->where_not_in($value["field"], $value["value"]);
+	// 	    		}else if($value["operator"]=="or_where_not_in"){
+	// 	    			$obj->or_where_not_in($value["field"], $value["value"]);
+	// 	    		}else if($value["operator"]=="like"){
+	// 	    			$obj->like($value["field"], $value["value"]);
+	// 	    		}else if($value["operator"]=="or_like"){
+	// 	    			$obj->or_like($value["field"], $value["value"]);
+	// 	    		}else if($value["operator"]=="not_like"){
+	// 	    			$obj->not_like($value["field"], $value["value"]);
+	// 	    		}else if($value["operator"]=="or_not_like"){
+	// 	    			$obj->or_not_like($value["field"], $value["value"]);
+	// 	    		}else if($value["operator"]=="startswith"){
+	// 	    			$obj->like($value["field"], $value["value"], "after");
+	// 	    		}else if($value["operator"]=="endswith"){
+	// 	    			$obj->like($value["field"], $value["value"], "before");
+	// 	    		}else if($value["operator"]=="contains"){
+	// 	    			$obj->like($value["field"], $value["value"], "both");
+	// 	    		}else if($value["operator"]=="or_where"){
+	// 	    			$obj->or_where($value["field"], $value["value"]);		    		
+	// 	    		}else{
+	// 	    			$obj->where($value["field"].' '.$value["operator"], $value["value"]);
+	// 	    		}
+	//     		}else{
+	//     			$obj->where($value["field"], $value["value"]);
+	//     		}
+	// 		}									 			
+	// 	}
 
-		//Results
-		$obj->get_paged_iterated($page, $limit);
-		$data["count"] = $obj->paged->total_rows;		
+	// 	//Results
+	// 	$obj->get_paged_iterated($page, $limit);
+	// 	$data["count"] = $obj->paged->total_rows;		
 		
-		if($obj->result_count()>0){
-			foreach ($obj as $value) {				
-		 		$data["results"][] = array(
-		 			"id" 				=> $value->id,					
-					"utility_id" 		=> $value->utility_id,
-					"currency_id" 		=> $value->currency_id,
-					"province_id" 		=> $value->province_id,
-					"country_id" 		=> $value->country_id,
-					"name" 				=> $value->name,
-					"description" 		=> $value->description,
-					"abbr" 				=> $value->abbr,
-					"representative" 	=> $value->representative,
-					"email" 			=> $value->email,
-					"mobile" 			=> $value->mobile,
-					"phone" 			=> $value->phone,
-					"address" 			=> $value->address,						
-					"expire_date" 		=> $value->expire_date,
-					"max_customer" 		=> $value->max_customer,
-					"operation_license" => $value->operation_license,
-					"term_of_condition" => $value->term_of_condition,
-					"image_url" 		=> $value->image_url,
-					"status" 			=> $value->status,
+	// 	if($obj->result_count()>0){
+	// 		foreach ($obj as $value) {				
+	// 	 		$data["results"][] = array(
+	// 	 			"id" 				=> $value->id,					
+	// 				"utility_id" 		=> $value->utility_id,
+	// 				"currency_id" 		=> $value->currency_id,
+	// 				"province_id" 		=> $value->province_id,
+	// 				"country_id" 		=> $value->country_id,
+	// 				"name" 				=> $value->name,
+	// 				"description" 		=> $value->description,
+	// 				"abbr" 				=> $value->abbr,
+	// 				"representative" 	=> $value->representative,
+	// 				"email" 			=> $value->email,
+	// 				"mobile" 			=> $value->mobile,
+	// 				"phone" 			=> $value->phone,
+	// 				"address" 			=> $value->address,						
+	// 				"expire_date" 		=> $value->expire_date,
+	// 				"max_customer" 		=> $value->max_customer,
+	// 				"operation_license" => $value->operation_license,
+	// 				"term_of_condition" => $value->term_of_condition,
+	// 				"image_url" 		=> $value->image_url,
+	// 				"status" 			=> $value->status,
 
-					"currency"			=> $value->currency->get_raw()->result(),			
-		 		);
-			}
-		}
+	// 				"currency"			=> $value->currency->get_raw()->result(),			
+	// 	 		);
+	// 		}
+	// 	}
 
-		//Response Data		
-		$this->response($data, 200);			
-	}
+	// 	//Response Data		
+	// 	$this->response($data, 200);			
+	// }
 	
-	//POST BRANCH
-	function branch_post() {
-		$models = json_decode($this->post('models'));
+	// //POST BRANCH
+	// function branch_post() {
+	// 	$models = json_decode($this->post('models'));
 
-		foreach ($models as $value) {
-			$obj = new Company(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);						
+	// 	foreach ($models as $value) {
+	// 		$obj = new Company(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);						
 					 			
-			$obj->utility_id 		= $value->utility_id;
-			$obj->currency_id 		= $value->currency_id;
-			$obj->province_id 		= $value->province_id;
-			$obj->country_id 		= $value->country_id;
-			$obj->name				= $value->name;
-			$obj->description 		= $value->description;
-			$obj->abbr 				= $value->abbr;
-			$obj->representative 	= $value->representative;
-			$obj->email 			= $value->email;
-			$obj->mobile 			= $value->mobile;
-			$obj->phone 			= $value->phone;
-			$obj->address 			= $value->address;						
-			$obj->expire_date 		= isset($value->expire_date)?date("Y-m-d", strtotime($value->expire_date)):"";
-			$obj->max_customer 		= $value->max_customer;
-			$obj->operation_license = $value->operation_license;
-			$obj->term_of_condition = $value->term_of_condition;
-			$obj->image_url 		= $value->image_url;
-			$obj->status 			= $value->status;
+	// 		$obj->utility_id 		= $value->utility_id;
+	// 		$obj->currency_id 		= $value->currency_id;
+	// 		$obj->province_id 		= $value->province_id;
+	// 		$obj->country_id 		= $value->country_id;
+	// 		$obj->name				= $value->name;
+	// 		$obj->description 		= $value->description;
+	// 		$obj->abbr 				= $value->abbr;
+	// 		$obj->representative 	= $value->representative;
+	// 		$obj->email 			= $value->email;
+	// 		$obj->mobile 			= $value->mobile;
+	// 		$obj->phone 			= $value->phone;
+	// 		$obj->address 			= $value->address;						
+	// 		$obj->expire_date 		= isset($value->expire_date)?date("Y-m-d", strtotime($value->expire_date)):"";
+	// 		$obj->max_customer 		= $value->max_customer;
+	// 		$obj->operation_license = $value->operation_license;
+	// 		$obj->term_of_condition = $value->term_of_condition;
+	// 		$obj->image_url 		= $value->image_url;
+	// 		$obj->status 			= $value->status;
 			
-			if($obj->save()){
-				//Respsone
-				$data["results"][] = array(					
-					"id" 				=> $obj->id,
-					"utility_id" 		=> $obj->utility_id,		 			
-					"currency_id" 		=> $obj->currency_id,
-					"province_id" 		=> $obj->province_id,
-					"country_id" 		=> $obj->country_id,
-					"name" 				=> $obj->name,
-					"description" 		=> $obj->description,
-					"abbr" 				=> $obj->abbr,
-					"representative" 	=> $obj->representative,
-					"email" 			=> $obj->email,
-					"mobile" 			=> $obj->mobile,
-					"phone" 			=> $obj->phone,
-					"address" 			=> $obj->address,						
-					"expire_date" 		=> $obj->expire_date,
-					"max_customer" 		=> $obj->max_customer,
-					"operation_license" => $obj->operation_license,
-					"term_of_condition" => $obj->term_of_condition,
-					"image_url" 		=> $obj->image_url,
-					"status" 			=> $obj->status	
-				);				
-			}		
-		}
-		$data["count"] = count($data["results"]);
+	// 		if($obj->save()){
+	// 			//Respsone
+	// 			$data["results"][] = array(					
+	// 				"id" 				=> $obj->id,
+	// 				"utility_id" 		=> $obj->utility_id,		 			
+	// 				"currency_id" 		=> $obj->currency_id,
+	// 				"province_id" 		=> $obj->province_id,
+	// 				"country_id" 		=> $obj->country_id,
+	// 				"name" 				=> $obj->name,
+	// 				"description" 		=> $obj->description,
+	// 				"abbr" 				=> $obj->abbr,
+	// 				"representative" 	=> $obj->representative,
+	// 				"email" 			=> $obj->email,
+	// 				"mobile" 			=> $obj->mobile,
+	// 				"phone" 			=> $obj->phone,
+	// 				"address" 			=> $obj->address,						
+	// 				"expire_date" 		=> $obj->expire_date,
+	// 				"max_customer" 		=> $obj->max_customer,
+	// 				"operation_license" => $obj->operation_license,
+	// 				"term_of_condition" => $obj->term_of_condition,
+	// 				"image_url" 		=> $obj->image_url,
+	// 				"status" 			=> $obj->status	
+	// 			);				
+	// 		}		
+	// 	}
+	// 	$data["count"] = count($data["results"]);
 
-		$this->response($data, 201);
-	}
+	// 	$this->response($data, 201);
+	// }
 	
-	//PUT BRANCH
-	function branch_put() {
-		$models = json_decode($this->put('models'));
-		$data["results"] = array();
-		$data["count"] = 0;
+	// //PUT BRANCH
+	// function branch_put() {
+	// 	$models = json_decode($this->put('models'));
+	// 	$data["results"] = array();
+	// 	$data["count"] = 0;
 
-		foreach ($models as $value) {			
-			$obj = new Company(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			$obj->get_by_id($value->id);
+	// 	foreach ($models as $value) {			
+	// 		$obj = new Company(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+	// 		$obj->get_by_id($value->id);
 
-			$obj->utility_id 		= $value->utility_id;
-			$obj->currency_id 		= $value->currency_id;
-			$obj->province_id 		= $value->province_id;
-			$obj->country_id 		= $value->country_id;
-			$obj->name				= $value->name;
-			$obj->description 		= $value->description;
-			$obj->abbr 				= $value->abbr;
-			$obj->representative 	= $value->representative;
-			$obj->email 			= $value->email;
-			$obj->mobile 			= $value->mobile;
-			$obj->phone 			= $value->phone;
-			$obj->address 			= $value->address;						
-			$obj->expire_date 		= $value->expire_date;
-			$obj->max_customer 		= $value->max_customer;
-			$obj->operation_license = $value->operation_license;
-			$obj->term_of_condition = $value->term_of_condition;
-			$obj->image_url 		= $value->image_url;
-			$obj->status 			= $value->status;
+	// 		$obj->utility_id 		= $value->utility_id;
+	// 		$obj->currency_id 		= $value->currency_id;
+	// 		$obj->province_id 		= $value->province_id;
+	// 		$obj->country_id 		= $value->country_id;
+	// 		$obj->name				= $value->name;
+	// 		$obj->description 		= $value->description;
+	// 		$obj->abbr 				= $value->abbr;
+	// 		$obj->representative 	= $value->representative;
+	// 		$obj->email 			= $value->email;
+	// 		$obj->mobile 			= $value->mobile;
+	// 		$obj->phone 			= $value->phone;
+	// 		$obj->address 			= $value->address;						
+	// 		$obj->expire_date 		= $value->expire_date;
+	// 		$obj->max_customer 		= $value->max_customer;
+	// 		$obj->operation_license = $value->operation_license;
+	// 		$obj->term_of_condition = $value->term_of_condition;
+	// 		$obj->image_url 		= $value->image_url;
+	// 		$obj->status 			= $value->status;
 
-			if($obj->save()){				
-				//Results
-				$data["results"][] = array(
-					"id" 				=> $obj->id,
-					"utility_id" 		=> $obj->utility_id,		 			
-					"currency_id" 		=> $obj->currency_id,
-					"province_id" 		=> $obj->province_id,
-					"country_id" 		=> $obj->country_id,
-					"name" 				=> $obj->name,
-					"description" 		=> $obj->description,
-					"abbr" 				=> $obj->abbr,
-					"representative" 	=> $obj->representative,
-					"email" 			=> $obj->email,
-					"mobile" 			=> $obj->mobile,
-					"phone" 			=> $obj->phone,
-					"address" 			=> $obj->address,						
-					"expire_date" 		=> $obj->expire_date,
-					"max_customer" 		=> $obj->max_customer,
-					"operation_license" => $obj->operation_license,
-					"term_of_condition" => $obj->term_of_condition,
-					"image_url" 		=> $obj->image_url,
-					"status" 			=> $obj->status	
-				);						
-			}
-		}
-		$data["count"] = count($data["results"]);
+	// 		if($obj->save()){				
+	// 			//Results
+	// 			$data["results"][] = array(
+	// 				"id" 				=> $obj->id,
+	// 				"utility_id" 		=> $obj->utility_id,		 			
+	// 				"currency_id" 		=> $obj->currency_id,
+	// 				"province_id" 		=> $obj->province_id,
+	// 				"country_id" 		=> $obj->country_id,
+	// 				"name" 				=> $obj->name,
+	// 				"description" 		=> $obj->description,
+	// 				"abbr" 				=> $obj->abbr,
+	// 				"representative" 	=> $obj->representative,
+	// 				"email" 			=> $obj->email,
+	// 				"mobile" 			=> $obj->mobile,
+	// 				"phone" 			=> $obj->phone,
+	// 				"address" 			=> $obj->address,						
+	// 				"expire_date" 		=> $obj->expire_date,
+	// 				"max_customer" 		=> $obj->max_customer,
+	// 				"operation_license" => $obj->operation_license,
+	// 				"term_of_condition" => $obj->term_of_condition,
+	// 				"image_url" 		=> $obj->image_url,
+	// 				"status" 			=> $obj->status	
+	// 			);						
+	// 		}
+	// 	}
+	// 	$data["count"] = count($data["results"]);
 
-		$this->response($data, 200);
-	}
+	// 	$this->response($data, 200);
+	// }
 	
-	//DELETE BRANCH
-	function branch_delete() {
-		$models = json_decode($this->delete('models'));
+	// //DELETE BRANCH
+	// function branch_delete() {
+	// 	$models = json_decode($this->delete('models'));
 
-		foreach ($models as $key => $value) {
-			$obj = new Company(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			$obj->where("id", $value->id)->get();
+	// 	foreach ($models as $key => $value) {
+	// 		$obj = new Company(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+	// 		$obj->where("id", $value->id)->get();
 			
-			$data["results"][] = array(
-				"data"   => $value,
-				"status" => $obj->delete()
-			);							
-		}
+	// 		$data["results"][] = array(
+	// 			"data"   => $value,
+	// 			"status" => $obj->delete()
+	// 		);							
+	// 	}
 
-		//Response data
-		$this->response($data, 200);
-	}
+	// 	//Response data
+	// 	$this->response($data, 200);
+	// }
 
 
 	//GET TYPE
@@ -1079,41 +1041,15 @@ class Contacts extends REST_Controller {
 			}
 		}
 
-		//Filter
-		if(!empty($filters) && isset($filters)){			
+		//Filter		
+		if(!empty($filters) && isset($filters)){
 	    	foreach ($filters as $value) {
-	    		if(!empty($value["operator"]) && isset($value["operator"])){
-		    		if($value["operator"]=="where_in"){
-		    			$obj->where_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_where_in"){
-		    			$obj->or_where_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="where_not_in"){
-		    			$obj->where_not_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_where_not_in"){
-		    			$obj->or_where_not_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="like"){
-		    			$obj->like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_like"){
-		    			$obj->or_like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="not_like"){
-		    			$obj->not_like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_not_like"){
-		    			$obj->or_not_like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="startswith"){
-		    			$obj->like($value["field"], $value["value"], "after");
-		    		}else if($value["operator"]=="endswith"){
-		    			$obj->like($value["field"], $value["value"], "before");
-		    		}else if($value["operator"]=="contains"){
-		    			$obj->like($value["field"], $value["value"], "both");
-		    		}else if($value["operator"]=="or_where"){
-		    			$obj->or_where($value["field"], $value["value"]);		    		
-		    		}else{
-		    			$obj->where($value["field"].' '.$value["operator"], $value["value"]);
-		    		}
-	    		}else{
+	    		if(isset($value['operator'])) {
+					$obj->{$value['operator']}($value['field'], $value['value']);
+				} else {
 	    			$obj->where($value["field"], $value["value"]);
-	    		}
-			}									 			
+				}
+			}
 		}
 
 		//Results
@@ -1228,86 +1164,86 @@ class Contacts extends REST_Controller {
 		$this->response($data, 200);
 	}
 
-	//GET Employee
-	function employee_get() {		
-		$filters 	= $this->get("filter")["filters"];		
-		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
-		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;								
-		$sort 	 	= $this->get("sort");		
-		$data["results"] = array();
-		$data["count"] = 0;
+	// //GET Employee
+	// function employee_get() {		
+	// 	$filters 	= $this->get("filter")["filters"];		
+	// 	$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
+	// 	$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;								
+	// 	$sort 	 	= $this->get("sort");		
+	// 	$data["results"] = array();
+	// 	$data["count"] = 0;
 
-		$obj = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
+	// 	$obj = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
 
-		//Sort
-		if(!empty($sort) && isset($sort)){					
-			foreach ($sort as $value) {
-				$obj->order_by($value["field"], $value["dir"]);
-			}
-		}
+	// 	//Sort
+	// 	if(!empty($sort) && isset($sort)){					
+	// 		foreach ($sort as $value) {
+	// 			$obj->order_by($value["field"], $value["dir"]);
+	// 		}
+	// 	}
 
-		//Filter
-		if(!empty($filters) && isset($filters)){			
-	    	foreach ($filters as $value) {
-	    		if(!empty($value["operator"]) && isset($value["operator"])){
-		    		if($value["operator"]=="where_in"){
-		    			$obj->where_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_where_in"){
-		    			$obj->or_where_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="where_not_in"){
-		    			$obj->where_not_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_where_not_in"){
-		    			$obj->or_where_not_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="like"){
-		    			$obj->like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_like"){
-		    			$obj->or_like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="not_like"){
-		    			$obj->not_like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_not_like"){
-		    			$obj->or_not_like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="startswith"){
-		    			$obj->like($value["field"], $value["value"], "after");
-		    		}else if($value["operator"]=="endswith"){
-		    			$obj->like($value["field"], $value["value"], "before");
-		    		}else if($value["operator"]=="contains"){
-		    			$obj->like($value["field"], $value["value"], "both");
-		    		}else if($value["operator"]=="or_where"){
-		    			$obj->or_where($value["field"], $value["value"]);		    		
-		    		}else if($value["operator"]=="search"){		    			
-		    			$obj->like("number", $value["value"], "after");
-		    			$obj->or_like("enumber", $value["value"], "after");
-		    			$obj->or_like("wnumber", $value["value"], "after");
-				    	$obj->or_like("surname", $value["value"], "after");
-				    	$obj->or_like("name", $value["value"], "after");
-				    	$obj->or_like("company", $value["value"], "after");				    
-		    		}else{
-		    			$obj->where($value["field"].' '.$value["operator"], $value["value"]);
-		    		}
-	    		}else{
-	    			$obj->where($value["field"], $value["value"]);
-	    		}
-			}									 			
-		}
+	// 	//Filter
+	// 	if(!empty($filters) && isset($filters)){			
+	//     	foreach ($filters as $value) {
+	//     		if(!empty($value["operator"]) && isset($value["operator"])){
+	// 	    		if($value["operator"]=="where_in"){
+	// 	    			$obj->where_in($value["field"], $value["value"]);
+	// 	    		}else if($value["operator"]=="or_where_in"){
+	// 	    			$obj->or_where_in($value["field"], $value["value"]);
+	// 	    		}else if($value["operator"]=="where_not_in"){
+	// 	    			$obj->where_not_in($value["field"], $value["value"]);
+	// 	    		}else if($value["operator"]=="or_where_not_in"){
+	// 	    			$obj->or_where_not_in($value["field"], $value["value"]);
+	// 	    		}else if($value["operator"]=="like"){
+	// 	    			$obj->like($value["field"], $value["value"]);
+	// 	    		}else if($value["operator"]=="or_like"){
+	// 	    			$obj->or_like($value["field"], $value["value"]);
+	// 	    		}else if($value["operator"]=="not_like"){
+	// 	    			$obj->not_like($value["field"], $value["value"]);
+	// 	    		}else if($value["operator"]=="or_not_like"){
+	// 	    			$obj->or_not_like($value["field"], $value["value"]);
+	// 	    		}else if($value["operator"]=="startswith"){
+	// 	    			$obj->like($value["field"], $value["value"], "after");
+	// 	    		}else if($value["operator"]=="endswith"){
+	// 	    			$obj->like($value["field"], $value["value"], "before");
+	// 	    		}else if($value["operator"]=="contains"){
+	// 	    			$obj->like($value["field"], $value["value"], "both");
+	// 	    		}else if($value["operator"]=="or_where"){
+	// 	    			$obj->or_where($value["field"], $value["value"]);		    		
+	// 	    		}else if($value["operator"]=="search"){		    			
+	// 	    			$obj->like("number", $value["value"], "after");
+	// 	    			$obj->or_like("enumber", $value["value"], "after");
+	// 	    			$obj->or_like("wnumber", $value["value"], "after");
+	// 			    	$obj->or_like("surname", $value["value"], "after");
+	// 			    	$obj->or_like("name", $value["value"], "after");
+	// 			    	$obj->or_like("company", $value["value"], "after");				    
+	// 	    		}else{
+	// 	    			$obj->where($value["field"].' '.$value["operator"], $value["value"]);
+	// 	    		}
+	//     		}else{
+	//     			$obj->where($value["field"], $value["value"]);
+	//     		}
+	// 		}									 			
+	// 	}
 		
-		//Results
-		$obj->get_paged_iterated($page, $limit);
-		$data["count"] = $obj->paged->total_rows;		
+	// 	//Results
+	// 	$obj->get_paged_iterated($page, $limit);
+	// 	$data["count"] = $obj->paged->total_rows;		
 		
-		if($obj->result_count()>0){
-			foreach ($obj as $value) {
-				$fullname = $value->surname.' '.$value->name;							
+	// 	if($obj->result_count()>0){
+	// 		foreach ($obj as $value) {
+	// 			$fullname = $value->surname.' '.$value->name;							
 
-		 		$data["results"][] = array(
-		 			"id" 					=> $value->id,
-					"fullname" 				=> $value->surname.' '.$value->name					
-		 		);
-			}
-		}
+	// 	 		$data["results"][] = array(
+	// 	 			"id" 					=> $value->id,
+	// 				"fullname" 				=> $value->surname.' '.$value->name					
+	// 	 		);
+	// 		}
+	// 	}
 
-		//Response Data		
-		$this->response($data, 200);			
-	}	
+	// 	//Response Data		
+	// 	$this->response($data, 200);			
+	// }	
 
 
 	//WATER

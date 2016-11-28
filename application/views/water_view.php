@@ -352,7 +352,7 @@
 	            		<thead>
 	            			<tr>
 	            				<th class="center" width="100"><span>Number</span></th>
-	            				<th class="center"><span>License</span></th>
+	            				<th class="center"><span>Name</span></th>
 	            				<th class="center"><span>Abbr</span></th>
 	            				<th class="center" width="160"><span>Representive</span></th>
 	            				<th class="center" width="180"><span>Expire Date</span></th>
@@ -644,12 +644,15 @@
 		<td>#= representative #</td>
 		<td>#= expire_date #</td>
 		<td>#= max_customer #</td>
-		<td>
+		<td style="text-align: center;">
 			#if(status==1){#
-				<span class="btn-action glyphicons ok_2 btn-success"><i></i></span>
+				<span class="btn-action glyphicons ok_2 btn-success" title="Active"><i></i></span>
+			#}else if(status==2){#
+				<span class="btn-action glyphicons lock btn-danger" title="Void"><i></i></span>
 			#}else{#
-				<span class="btn-action glyphicons remove_2 btn-danger"><i></i></span>
+				<span class="btn-action glyphicons unlock btn-danger" title="Inactive"><i></i></span>
 			#}#
+			<a class="btn-action glyphicons pencil btn-success" title="Edit" href="\#/add_license/#= id #"><i></i></a>
 		</td>
 	</tr>
 </script>
@@ -1154,14 +1157,8 @@
 						        	<div class="row-fluid">
 						        		<div class="controls">
 											<textarea 
-												data-role="editor"
-						                      	data-tools="['bold','italic',
-						                                   'underline',
-						                                   'strikethrough',
-						                                   'justifyLeft',
-						                                   'justifyCenter',
-						                                   'justifyRight',
-						                                   'justifyFull']"
+												class="span12" 
+												placeholder="Terms & Condition..." 
 						                      	data-bind="value: obj.term_of_condition"
 						                      	style="height: 200px;">
 							                </textarea>
@@ -6074,17 +6071,25 @@
 		toDay 		: new Date(),
 		obj 		: null,
 		isEdit      : false,
-		selectType 	: [{id: "active", name: "Active"},{id: "inactive", name: "Inactive"},{id: "void", name: "Void"}],
+		selectType 	: [{id: "1", name: "Active"},{id: "0", name: "Inactive"},{id: "2", name: "Void"}],
 		selectCurrency : [{id: "3", name: "KHR"},{id: "1", name: "USD"},{id: "10", name: "THB"},{id: "11", name: "VND"}],
 		pageLoad    : function(id){
 			if(id){
-				loadObj(id);
+				this.loadObj(id);
 			}else{
 				this.addNew();
 			}
 		},
 		loadObj 	: function(id){
-
+			var self = this;	
+			this.dataSource.query({    			
+				filter: { field:"id", value: id },
+				page: 1,
+				take: 100
+			}).then(function(e){
+				var view = self.dataSource.view();
+				self.set("obj", view[0]);
+			});	
 		},
 		addNew 	  	: function() {
 			this.set("obj", null);		
@@ -6094,10 +6099,10 @@
 				name 			: null,
 				abbr 			: null,
 				representative  : null,
-				currency 		: "KHR",
-				status 			: "active",
+				currency 		: 3,
+				status 			: 1,
 				expire_date 	: null,
-				max_customer 	: 0,
+				max_customer 	: null,
 				description 	: null,
 				address   		: null,
 				province 		: null,
@@ -6107,26 +6112,31 @@
 				telephone 		: null,
 				term_of_condition : null
 			});
-			console.log(this.dataSource.data());
 			var obj = this.dataSource.at(0);
-						
 			this.set("obj", obj);	
 		},
 		save 		: function() {
-			var dfd = $.Deferred();
-			this.dataSource.sync();
-			this.dataSource.bind('requestEnd', function(e){
-				if(e.response.results) {
-					dfd.resolve(e.response.results);
-				}
-			});
-			this.dataSource.bind('error', function(e){
-				dfd.reject(e.status);
-			});
-			return dfd.promise();
+			var self = this;
+			if(this.dataSource.data().length > 0) {
+				this.dataSource.sync();
+				this.dataSource.bind("requestEnd", function(e){
+					if(e.type != 'read') {
+						if(e.response){				
+				    		$("#ntf1").data("kendoNotification").success("Successfully!");
+				    		//self.dataSource.addNew();
+							banhji.router.navigate("/setting");
+							banhji.setting.licenseDS.fetch();
+						}
+					}				    					  				
+			    });
+			    this.dataSource.bind("error", function(e){		    		    	
+					$("#ntf1").data("kendoNotification").error("Error!"); 			
+			    });
+			}
 		},
 		cancel 				: function(){
 			this.dataSource.cancelChanges();	
+			this.dataSource.data([]);
 			window.history.back();
 		}
 	});
@@ -6183,7 +6193,7 @@
 
 		},
 		cancel 				: function(){
-			//this.dataSource.cancelChanges();		
+			this.licenseDS.cancelChanges();		
 			window.history.back();
 		}
 	});
@@ -6847,7 +6857,7 @@
 			this.set("obj", obj);		
 		},
 		save 				: function() {
-			console.log('save');
+			
 			var self = this;
 			if(this.dataSource.data().length > 0) {
 				//$("#loadImport").css("display","block");
@@ -8019,7 +8029,7 @@
 		banhji.view.layout.showIn('#menu', banhji.view.menu);
 		banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
 		
-		var vm = banhji.addLicense;
+		
 
 		banhji.userManagement.addMultiTask("Add Licence","Licence",null);
 
@@ -8027,8 +8037,12 @@
 			banhji.pageLoaded["add_license"] = true;
 		}
 		console.log("add_license");
+		
+		//setTimeout(function(){
+			banhji.view.layout.showIn("#content", banhji.view.addLicense);
+		//},1000);
+		var vm = banhji.addLicense;
 		vm.pageLoad(id);
-		banhji.view.layout.showIn("#content", banhji.view.addLicense);
 	});
 	banhji.router.route("/reading", function(){		
 		banhji.view.layout.showIn("#content", banhji.view.reading);
