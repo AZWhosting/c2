@@ -33786,8 +33786,9 @@
 	# if(transactions.length>0){#
 		# for(var i = 0; i < transactions.length; i++ ) {#
 		<tr>
+			# var myDate = kendo.toString(new Date(transactions[i].date),'dd-MM-yyyy'); #
 			<td>#=transactions[i].type#</td>
-		    <td>#=transactions[i].date#</td>
+		    <td>#=myDate#</td>
 		    <td>
 		   		<a href="\#/#=transactions[i].type.toLowerCase()#/#=transactions[i].id#">#=transactions[i].ref#</a>
 		   	</td>
@@ -35128,7 +35129,7 @@
 					<div class="block-title">
 						<h3 data-bind="text: institute.name"></h3>
 						<h2>Cash Position Report</h2>
-						<p>As of Date: November 30 2016</p>
+						<p>From <span data-bind="text: displayDateStart"></span> to <span data-bind="text: displayDateEnd"></p>
 					</div>
 
 						<table class="table table-borderless table-condensed" style="width: 70%; margin: 0 auto;">
@@ -35140,121 +35141,27 @@
 								</tr>
 							</thead>
 							
-							<tr>
-								<td>
-									<b>Opening Balance</b>
-								</td>
-								<td>
-									
-								</td>
-								<td align="right">
-									210,000.00
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<b>Cash Inflows</b>
-								</td>
-								<td></td>
-								<td></td>
-							</tr>
-							<tr>
-								<td></td>
-								<td>
-									cash sale
-								</td>
-								<td align="right">
-									xxx
-								</td>
-							</tr>
-							<tr>
-								<td></td>
-								<td>
-									cash collection
-								</td>
-								<td align="right">
-									xxx
-								</td>
-							</tr>
-							<tr>
-								<td></td>
-								<td>
-									other cash recipt
-								</td>
-								<td align="right">
-									xxx
-								</td>
-							</tr>
-							<tr>
-								<td><b>Total Cash Inflows</b></td>
-								<td></td>
-								<td align="right" style="border-top: 1px solid #333 !important; border-bottom: 3px double #333 !important;">
-									xxx
-								</td>
-							</tr>
-							<tr>
-								<td><b>Cash Outflows</b></td>
-								<td></td>
-								<td></td>
-							</tr>
-							<tr>
-								<td></td>
-								<td>
-									cash payment
-								</td>
-								<td align="right">
-									xxx
-								</td>
-							</tr>
-							<tr>
-								<td></td>
-								<td>
-									cash expense
-								</td>
-								<td align="right">
-									xxx
-								</td>
-							</tr>
-							<tr>
-								<td></td>
-								<td>
-									other cash expense
-								</td>
-								<td align="right">
-									xxx
-								</td>
-							</tr>
-							<tr>
-								<td><b>Total Cash Outflows</b></td>
-								<td></td>
-								<td align="right" style="border-top: 1px solid #333 !important; border-bottom: 3px double #333 !important;">
-									xxx
-								</td>
-							</tr>
-							<tr>
-								<td>Net Cash Defisit/surplus</td>
-								<td></td>
-								<td align="right" style="border-bottom: 2px solid #333 !important;">
-									xxx
-								</td>
-							</tr>
-
-
-
-
-
-
-							
-							
+							<tbody  data-role="listview"
+		            				data-auto-bind="false"
+					                data-template="cash-position-row-template"
+					                data-bind="source: cashPositionReport.dataSource" >
+					        </tbody>							
 						</table>
-					 
-						
-
 	            	</div>
 				</div>		
 			</div>
 		</div>
 	</div>
+</script>
+<script id="cash-position-row-template" type="text/x-kendo-tmpl"> 
+	<tr>   
+	    <td>#=name#</td>          
+	    <td>#=purchase#</td>
+	    <td>#=sale#</td>
+	    <td>#=onHand#</td>
+	    <td>#=adjustment#</td>
+	    <td align="right">#=balance#</td>
+	</tr>
 </script>
 <script id="cashCollectionReport" type="text/x-kendo-template">
 	<div id="slide-form">
@@ -76252,7 +76159,194 @@
 		}
     });
 
+    /*************************
+	*	Water Section   	* 
+	**************************/
+	banhji.cashPositionReport = kendo.observable({
+		dataSource 		: dataStore(apiUrl + "cashReports/cash_positon"),
+		filterDB	 		: [
+			{id: 'customer', name: 'Customer'},
+			{id: 'segment', name: 'Segment'}
+		],
+		filteredBy          : "customer",
+		sortDB 				: [
+			{id: 'date', name: 'Date'}
+		],
+		search 	: function() {
 
+			banhji.cashPositionReport.dataSource.filter({
+				logic: banhji.cashPositionReport.get('filteredBy'),
+				filters: [			
+					{field: "issued_date >=", value: kendo.toString(this.startDate, "yyyy-MM-dd")},
+					{field: "issued_date <=", value: kendo.toString(this.endDate, "yyyy-MM-dd")}
+				]
+			});
+		}, 
+		filterChange  : function(e){
+			banhji.inventoryMovementDetail.set("filteredBy", e.sender.dataSource.at(e.sender.selectedIndex-1).id);
+		},
+	});
+	banhji.cash = kendo.observable({
+		institute 			: banhji.institute,
+		lang 				: langVM,
+		locale 				: banhji.locale,
+		statementDB 		: dataStore(apiUrl + "sales/statement"),	
+		count 				: 0,
+		total_avg 			: 0,
+		saleNumber 			: 0,
+		gpm 				: 0,
+		total_sale 			: 0,
+		companyName 		: null,
+		startDate 			: "<?php echo date("d-m-y"); ?>",
+		endDate				: new Date(),
+		sorter				: '',
+		openInvoice 		: 0,
+		company 			: banhji.institute,		
+		sortList			: banhji.source.sortList, 
+		//line to sale summary
+		cashPositon         : banhji.cashPositionReport,
+		// search button
+		saleDetailSearch 	: function() {
+			this.detailSale.filter({
+				logic: 'segment',
+				filters: [
+					{field: "id", "operator": "segment", value: 9},
+					{field: "issued_date >=", value: kendo.toString(this.startDate, "yyyy-MM-dd")},
+					{field: "issued_date <=", value: kendo.toString(this.endDate, "yyyy-MM-dd")}
+				]
+			});
+		},
+		displayDateStart    : function() {
+			return kendo.toString(new Date(this.get('startDate')), 'dd-MM-yyyy');
+		},
+		displayDateEnd    : function() {
+			return kendo.toString(new Date(this.get('endDate')), 'dd-MM-yyyy');
+		},
+		trnxSearch 			: function() {},
+		depositDetailSearch : function() {},
+		summaryProductSearch: function() {},
+		detailProductSearch : function() {},
+		saleJobSearch 		: function() {},
+		saleOrderSearch 	: function() {},
+		balanaceSearch 		: function() {},
+		balanceDetailSearch : function() {},
+		agingSummarySearch  : function() {},
+		agingDetailSearch   : function() {},
+		collectingInvSearch : function() {},
+		collectedInvSearch  : function() {},
+		invoiceListSearch 	: function() {},
+		customerListSearch 	: function() {},
+		dateMax 			: function(e) {
+			$('#edate').css('width', '160px');
+			var edate = $('#edate').kendoDatePicker().data("kendoDatePicker");
+			edate.min(e.sender.value());
+		},
+		dateMin 			: function(e) {
+			$('#sdate').css('width', '160px');
+			var sdate = $('#sdate').kendoDatePicker().data("kendoDatePicker");
+			sdate.max(e.sender.value());
+		},
+		printGrid			: function() {
+			var gridElement = $('#grid'),
+		        printableContent = '',
+		        win = window.open('', '', 'width=900, height=700'),
+		        doc = win.document.open();
+		    var htmlStart =
+		            '<!DOCTYPE html>' +
+		            '<html>' +
+		            '<head>' +
+		            '<meta charset="utf-8" />' +
+		            '<title></title>' +
+		            '<link href="http://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />'+
+		            '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/bootstrap.css">' +
+		            '<link href="https://fonts.googleapis.com/css?family=Content:400,700" rel="stylesheet" type="text/css">' +
+		            '<link href="<?php echo base_url(); ?>assets/responsive.css" rel="stylesheet" >' +
+		            '<link href="https://fonts.googleapis.com/css?family=Moul" rel="stylesheet">' +
+		            '<style>' +
+		            '*{  } html { font: 11pt sans-serif; }' +
+		            '.k-grid { border-top-width: 0; }' +
+		            '.k-grid, .k-grid-content { height: auto !important; }' +
+		            '.k-grid-content { overflow: visible !important; }' +
+		            'div.k-grid table { table-layout: auto; width: 100% !important; }' +
+		            '.k-grid .k-grid-header th { border-top: 1px solid; }' +
+		            '.k-grid-toolbar, .k-grid-pager > .k-link { display: none; }' +
+		            '</style><style type="text/css" media="print"> @page { size: landscape; margin:0mm; } .saleSummaryCustomer .total-customer, .saleSummaryCustomer .total-sale { background-color: #DDEBF7!important; -webkit-print-color-adjust:exact; }.saleSummaryCustomer .table.table-borderless.table-condensed  tr th { background-color: #1E4E78!important;-webkit-print-color-adjust:exact;}.saleSummaryCustomer .table.table-borderless.table-condensed  tr th span{ color: #fff!important; }.saleSummaryCustomer .table.table-borderless.table-condensed tr:nth-child(2n+1) td {  background-color: #fff!important; -webkit-print-color-adjust:exact;} .saleSummaryCustomer .table.table-borderless.table-condensed tr td { background-color: #F2F2F2!important;-webkit-print-color-adjust:exact; } </style>' +
+		            '</head>' +
+		            '<body><div id="example" class="k-content saleSummaryCustomer" style="padding: 30px;">';
+		    var htmlEnd =
+		            '</div></body>' +
+		            '</html>';
+		    
+		    printableContent = $('#invFormContent').html();
+		    doc.write(htmlStart + printableContent + htmlEnd);
+		    doc.close();
+		    setTimeout(function(){
+		    	win.print();
+		    	win.close();
+		    },2000);
+		},
+		dateChange 			: function(){
+			// var strDate = "";
+
+			// 	if(this.startDate && this.endDate){
+			// 		strDate = "From " + kendo.toString(this.startDate, "dd-MM-yyyy") + " To " + kendo.toString(this.endDate, "dd-MM-yyyy");
+			// 	}else if(this.startDate){
+			// 		strDate = "On " + kendo.toString(this.startDate,"dd-MM-yyyy");
+			// 	}else if(this.endDate){
+			// 		strDate = "As Of " + kendo.toString(this.endDate,"dd-MM-yyyy");
+			// 	}else{
+			// 		strDate = "";
+			// 	}
+
+			var today = new Date(),
+			day = today.getDate();
+        	sdate = "",
+        	edate = "",
+        	value = this.get('sorter');
+
+			switch(value){
+			case "today":
+				sdate = today;
+
+			  	break;
+			case "week":
+				var first = new Date(today.getTime() - 60*60*24* day*1000),
+				last = new Date(today.getTime() + 60*60*24* day*1000);
+
+				sdate = first;
+				edate = last;
+
+			  	break;
+			case "month":
+				var sdate = new Date(today.getFullYear(), today.getMonth(), 1),
+				edate = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+
+			  	break;
+			case "year":
+			  	var sdate = new Date(today.getFullYear(), 0, 1),
+			  	edate = new Date(today.getFullYear(), 11, 31);
+
+			  	break;
+			default:
+
+			}
+
+			this.set("startDate", sdate);
+			this.set("endDate", edate);
+			// start.value(sdate);
+			// end.value(edate);
+
+			// start.max(end.value());
+   //      	end.min(start.value());
+
+   //      	dateChanges();
+   //          });
+
+   //          start.max(end.value());
+   //          end.min(start.value());
+		}
+
+	});
 
     /*************************
 	*	Water Section   	* 
@@ -77169,9 +77263,9 @@
 
 
 
-		cashPositionReport: new kendo.Layout("#cashPositionReport", {model: banhji.cashPositionReport}),
-		cashCollectionReport: new kendo.Layout("#cashCollectionReport", {model: banhji.cashCollectionReport}),
-		cashPaymentReport: new kendo.Layout("#cashPaymentReport", {model: banhji.cashPaymentReport}),
+		cashPositionReport: new kendo.Layout("#cashPositionReport", {model: banhji.cash}),
+		cashCollectionReport: new kendo.Layout("#cashCollectionReport", {model: banhji.cash}),
+		cashPaymentReport: new kendo.Layout("#cashPaymentReport", {model: banhji.cash}),
 
 		//Cash Managment
 		cashDashboard: new kendo.Layout("#cashDashboard", {model: banhji.cashDashboard}),
@@ -83342,56 +83436,29 @@
 
 
 
-
-	banhji.router.route("/cash_position_report", function(id){
+	banhji.router.route("/cash_position_report", function(){
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
 		}else{
-			banhji.view.layout.showIn("#content", banhji.view.cashPositionReport);
-			banhji.view.layout.showIn('#menu', banhji.view.menu);
-			banhji.view.menu.showIn('#secondary-menu', banhji.view.inventoryMenu);
-
 			var vm = banhji.cashPositionReport;
+			banhji.userManagement.addMultiTask("Sale Summary by Product","sale_summary_product",null);
 
-			banhji.userManagement.addMultiTask("Cash Position Report","cash_position_report",vm);
-
-			if(banhji.pageLoaded["cash_position_report"]==undefined){
-				banhji.pageLoaded["cash_position_report"] = true;
-				var validator = $("#example").kendoValidator().data("kendoValidator");
-		        $("#saveNew").click(function(e){
-					e.preventDefault();
-
-					if(validator.validate()){
-		            	vm.save();
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }
-				});
-
-				$("#saveClose").click(function(e){
-					e.preventDefault();
-
-					if(validator.validate()){
-						vm.set("saveClose", true);
-		            	vm.save();
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }
-				});
-
-				$("#savePrint").click(function(e){
-					e.preventDefault();
-					
-					if(validator.validate()){
-						vm.set("savePrint", true);
-		            	vm.save();
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }
-				});
-			}
-
-			vm.pageLoad(id);
+			banhji.view.layout.showIn("#content", banhji.view.cashPositionReport);
+			banhji.cash.set('startDate', new Date().getFullYear() + "-01-01");
+			banhji.cash.cashPositionReport.dataSource.filter({
+				logic: banhji.cashPositionReport.get('filteredBy'),
+				filters: [
+					{field: "issued_date >=", value: kendo.toString(new Date().getFullYear() + "-01-01", "yyyy-MM-dd")},
+					{field: "issued_date <=", value: kendo.toString(new Date(), "yyyy-MM-dd")}
+				]
+			});
+			banhji.cash.cashPositionReport.dataSource.bind('requestEnd', function(e){
+				if(e.response) {
+					banhji.cash.set('count', e.response.count);
+					kendo.culture(banhji.locale);
+					banhji.cash.set('total', kendo.toString(e.response.total, 'c2'));	
+				}
+			});
 		}
 	});
 	banhji.router.route("/cash_collection_report", function(id){
