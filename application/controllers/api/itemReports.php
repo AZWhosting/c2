@@ -246,7 +246,7 @@ class Itemreports extends REST_Controller {
 							'date' => $value->issued_date,
 							'type' 	=> $value->type,
 							'ref'	=> $value->number,
-							'qty'	=> $itemLine->quantity,
+							'qty'	=> $in->quantity - $out->quantity,
 							'cost'  => floatval($itemLine->cost),
 							'price' => floatval($itemLine->price)
 						);
