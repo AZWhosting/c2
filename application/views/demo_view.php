@@ -30350,7 +30350,6 @@
 					              				placeholder="e.g. 0001" 
 					              				required data-required-msg="required"
 					              				style="width: 157px;" />
-					              		<span data-bind="visible: isDuplicateNumber" style="color: red;"><span data-bind="text: lang.lang.duplicate_number"></span></span>
 									</div>
 									<!-- // Group END -->		
 								</div>
@@ -70090,7 +70089,7 @@
     	saveClose 				: false,
 		showConfirm 			: false,
 		originalNo 				: "",
-		notDuplicateNumber 		: false,
+		notDuplicateNumber 		: true,
     	pageLoad 				: function(id, category_id){			
 			if(id){
 				this.set("isEdit", true);						
@@ -70466,11 +70465,11 @@
     	saveClose 				: false,
 		showConfirm 			: false,
 		originalNo 				: "",
-		isDuplicateNumber 		: false,    	
-    	pageLoad 				: function(id, is_pattern){			
+		notDuplicateNumber 		: true,    	
+    	pageLoad 				: function(id, category_id){			
 			if(id){
 				this.set("isEdit", true);						
-				this.loadObj(id, is_pattern);
+				this.loadObj(id, category_id);
 			}else{				
 				if(this.get("isEdit") || this.dataSource.total()==0){
 					this.addEmpty();
@@ -70478,18 +70477,6 @@
 			}  																							
 		},
 		//Pattern
-		setPattern 				: function(category_id){
-			var obj = this.get("obj");
-
-			obj.set("category_id", category_id);
-			obj.set("is_pattern", 1);
-		},
-		savePattern 			: function(category_id, item_id){
-			var data = banhji.itemSetting.categoryDS.get(category_id);
-			data.set("item_id", item_id);
-			banhji.itemSetting.categoryDS.sync();			
-			window.history.back();
-		},
 		loadPattern 			: function(){
 			var self = this, obj = self.get("obj");
 
@@ -70498,7 +70485,7 @@
 
 				this.patternDS.query({
 					filter: [
-						{ field:"id", value: cat.item_id },
+						{ field:"id", value: obj.category_id },
 						{ field:"is_pattern", value: 1 }
 					],
 					page: 1,
@@ -70541,29 +70528,32 @@
       	//Number      	
 		checkExistingNumber 	: function(){
 			var self = this, para = [], 
-			obj = this.get("obj"),
-			originalNo = this.get("originalNo");			
+			obj = this.get("obj");
 			
-			if(obj.number!=="" && obj.number!==originalNo){
+			if(obj.number!==""){
+
+				if(this.get("isEdit")){
+					para.push({ field:"id", operator:"where_not_in", value: [obj.id] });
+				}
+
+				para.push({ field:"abbr", value: obj.abbr });
+				para.push({ field:"number", value: obj.number });
+				para.push({ field:"category_id", value: obj.category_id });
+
 				this.existingDS.query({
-					filter: [
-						{ field:"number", value: obj.number },
-						{ field:"item_type_id", value: obj.item_type_id }
-					],
+					filter: para,
 					page: 1,
-					pageSize: 100
+					pageSize: 1
 				}).then(function(e){
 					var view = self.existingDS.view();
 					
 					if(view.length>0){
-				 		self.set("isDuplicateNumber", true);						
+				 		self.set("notDuplicateNumber", false);						
 					}else{
-						self.set("isDuplicateNumber", false);
+						self.set("notDuplicateNumber", true);
 					}
 				});							
-			}else{
-				this.set("isDuplicateNumber", false);
-			}			
+			}		
 		},
 		generateNumber 			: function(){
 			var self = this, obj = this.get("obj");
@@ -70585,7 +70575,7 @@
 						obj.set("number",kendo.toString(lastNo, "00000"));
 					}
 				}else{
-					obj.set("number","00001");
+					obj.set("number",kendo.toString(lastNo, "00001"));
 				}
 			});
 		},
@@ -70656,12 +70646,15 @@
 			}
 		},
 		//Obj
-		loadObj 				: function(id, is_pattern){
+		loadObj 				: function(id, category_id){
     		var self = this, para = [];
 
-			para.push({ field:"id", value: id });
+    		if(id>0){
+				para.push({ field:"id", value: id });
+			}
 
-			if(is_pattern){
+			if(category_id){
+				para.push({ field:"category_id", value: category_id });
 				para.push({ field:"is_pattern", value: 1 });
 			}
 
@@ -70671,7 +70664,6 @@
 				var view = self.dataSource.view();
 						    	
 		    	self.set("obj", view[0]);
-		    	self.set("originalNo", view[0].number);
 		    	self.loadItemContact();
 			});
     	},    	   	
@@ -70687,7 +70679,7 @@
 
       		this.patternDS.query({
       			filter:[
-      				{ field:"id", value:2 },
+      				{ field:"category_id", value:2 },
       				{ field:"is_pattern", value:1 }
       			],
       			page:1,
@@ -70759,10 +70751,6 @@
 	      			$.each(self.itemCustomerDS.data(), function(index, value){
 	      				value.set("item_id", data[0].id);
 	      			});
-
-	      			if(data[0].is_pattern){
-						self.savePattern(data[0].category_id, data[0].id);
-					}
 				}
 				
       			self.itemVendorDS.sync();
@@ -70847,7 +70835,7 @@
     	isEdit 					: false,
     	saveClose 				: false,
 		showConfirm 			: false,
-		notDuplicateNumber 		: false,    	
+		notDuplicateNumber 		: true,    	
     	pageLoad 				: function(id, category_id){			
 			if(id){
 				this.set("isEdit", true);						
@@ -78910,7 +78898,20 @@
 				if(banhji.pageLoaded["non_inventory_part"]==undefined){
 					banhji.pageLoaded["non_inventory_part"] = true;
 
-					var validator = $("#example").kendoValidator().data("kendoValidator");
+					var validator = $("#example").kendoValidator({
+			        	rules: {
+					        customRule1: function(input){
+					          	if (input.is("[name=txtNumber]")) {	
+						            return vm.get("notDuplicateNumber");
+						        }
+						        return true;
+					        }
+					    },
+					    messages: {
+					        customRule1: banhji.source.duplicateNumber
+					    }
+			        }).data("kendoValidator");
+
 			        $("#saveNew").click(function(e){
 						e.preventDefault();
 
