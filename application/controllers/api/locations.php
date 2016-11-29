@@ -39,41 +39,15 @@ class Locations extends REST_Controller {
 			}
 		}
 
-		//Filter
-		if(!empty($filters) && isset($filters)){			
+		//Filter		
+		if(!empty($filters) && isset($filters)){
 	    	foreach ($filters as $value) {
-	    		if(!empty($value["operator"]) && isset($value["operator"])){
-		    		if($value["operator"]=="where_in"){
-		    			$obj->where_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_where_in"){
-		    			$obj->or_where_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="where_not_in"){
-		    			$obj->where_not_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_where_not_in"){
-		    			$obj->or_where_not_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="like"){
-		    			$obj->like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_like"){
-		    			$obj->or_like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="not_like"){
-		    			$obj->not_like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_not_like"){
-		    			$obj->or_not_like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="startswith"){
-		    			$obj->like($value["field"], $value["value"], "after");
-		    		}else if($value["operator"]=="endswith"){
-		    			$obj->like($value["field"], $value["value"], "before");
-		    		}else if($value["operator"]=="contains"){
-		    			$obj->like($value["field"], $value["value"], "both");
-		    		}else if($value["operator"]=="or_where"){
-		    			$obj->or_where($value["field"], $value["value"]);		    		
-		    		}else{
-		    			$obj->where($value["field"], $value["value"]);
-		    		}
-	    		}else{
+	    		if(isset($value['operator'])) {
+					$obj->{$value['operator']}($value['field'], $value['value']);
+				} else {
 	    			$obj->where($value["field"], $value["value"]);
-	    		}
-			}									 			
+				}
+			}
 		}
 
 		//Results
@@ -81,15 +55,13 @@ class Locations extends REST_Controller {
 		$data["count"] = $obj->paged->total_rows;		
 		
 		if($obj->result_count()>0){
-			foreach ($obj as $value) {				
-		 		$data["results"][] = array(
-		 			"id" 			=> $value->id,
-					"company_id" 	=> $value->company_id,			   			   						   
-				   	"utility_id" 	=> $value->utility_id,				   	
+			foreach ($obj as $value) {	
+				$license = $value->branch->get();			
+		 		$data["results"][] = array(	
+		 			"id"     		=> $value->id,		   	
 				   	"name" 			=> $value->name,
 				   	"abbr" 			=> $value->abbr,
-
-				   	"company" 		=> $value->company->get_raw()->result()				
+				   	"branch" 		=> array('id' => $license->id, 'name' => $license->name)			
 		 		);
 			}
 		}
@@ -104,22 +76,19 @@ class Locations extends REST_Controller {
 
 		foreach ($models as $value) {
 			$obj = new Location(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			$obj->company_id 	= $value->company_id;
-			$obj->utility_id 	= $value->utility_id;			
-			$obj->name 			= $value->name;
-			$obj->abbr 			= $value->abbr;
-			
+			isset($value->utility_id) 			? $obj->utility_id 			= $value->utility_id : "";
+			isset($value->name) 				? $obj->name 				= $value->name : "";
+			isset($value->abbr) 				? $obj->abbr 				= $value->abbr : "";
+			isset($value->branch) 				? $obj->branch_id 			= $value->branch->id : "";
 			if($obj->save()){
 				//Respsone
-				$company = $obj->company->get_raw();
+				
 				$data["results"][] = array(					
-					"id" 			=> $obj->id,		 			
-					"company_id" 	=> $obj->company_id,
+					"id" 			=> $obj->id,
 					"utility_id" 	=> $obj->utility_id,
 					"name" 			=> $obj->name,
 					"abbr" 			=> $obj->abbr,
-
-				   	"company" 		=> $company->result()	
+					"branch_id" 	=> $obj->branch_id	
 				);				
 			}		
 		}
@@ -142,7 +111,7 @@ class Locations extends REST_Controller {
 			$obj->utility_id 	= $value->utility_id;			
 			$obj->name 			= $value->name;
 			$obj->abbr 			= $value->abbr;
-
+			$obj->branch_id 	= $value->branch_id;
 			if($obj->save()){				
 				//Results
 				$data["results"][] = array(
@@ -151,7 +120,7 @@ class Locations extends REST_Controller {
 					"utility_id" 	=> $obj->utility_id,
 					"name" 			=> $obj->name,
 					"abbr" 			=> $obj->abbr,
-
+					"branch_id" 	=> $obj->branch_id,
 				   	"company" 		=> $obj->company->get_raw()->result()
 				);						
 			}

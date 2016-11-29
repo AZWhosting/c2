@@ -3,7 +3,7 @@
 
 require APPPATH.'/libraries/REST_Controller.php';
 
-class Plans extends REST_Controller {
+class Winvoices extends REST_Controller {
 	public $_database;
 	public $server_host;
 	public $server_user;
@@ -23,6 +23,10 @@ class Plans extends REST_Controller {
 		$this->_database = "db_banhji";
 	}
 
+	// based on meter
+	// with contact detail
+	// and items based on meter record &
+	// plan items
 	function index_get() {
 		$getData = $this->get('filter');
 		$filters = $getData['filters'];
@@ -41,18 +45,18 @@ class Plans extends REST_Controller {
 
 		$table->get();
 
-		if($table->exists()) {
-			foreach($table as $value) {
-				$items = $value->plan_item->select('id, is_flat, type, unit, amount, from, to')->get_raw();
-				$data[] = array(
-					'code' => $value->code,
-					'name' => $value->name,
-					'items' => $items->result()
-				);
-			}
-		}
+		// if($table->exists()) {
+		// 	foreach($table as $value) {
+		// 		$items = $value->plan_item->select('id, is_flat, type, unit, amount, from, to')->get_raw();
+		// 		$data[] = array(
+		// 			'code' => $value->code,
+		// 			'name' => $value->name,
+		// 			'items' => $items->result()
+		// 		);
+		// 	}
+		// }
 
-		$this->response(array('results' => $data, 'count' => count($data)), 200);
+		// $this->response(array('results' => $data, 'count' => count($data)), 200);
 	}
 
 	function index_post() {

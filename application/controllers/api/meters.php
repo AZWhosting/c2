@@ -40,40 +40,14 @@ class Meters extends REST_Controller {
 		}
 		
 		//Filter		
-		if(!empty($filters) && isset($filters)){			
+		if(!empty($filters) && isset($filters)){
 	    	foreach ($filters as $value) {
-	    		if(!empty($value["operator"]) && isset($value["operator"])){
-		    		if($value["operator"]=="where_in"){
-		    			$obj->where_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_where_in"){
-		    			$obj->or_where_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="where_not_in"){
-		    			$obj->where_not_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_where_not_in"){
-		    			$obj->or_where_not_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="like"){
-		    			$obj->like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_like"){
-		    			$obj->or_like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="not_like"){
-		    			$obj->not_like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_not_like"){
-		    			$obj->or_not_like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="startswith"){
-		    			$obj->like($value["field"], $value["value"], "after");
-		    		}else if($value["operator"]=="endswith"){
-		    			$obj->like($value["field"], $value["value"], "before");
-		    		}else if($value["operator"]=="contains"){
-		    			$obj->like($value["field"], $value["value"], "both");
-		    		}else if($value["operator"]=="or_where"){
-		    			$obj->or_where($value["field"], $value["value"]);		    		
-		    		}else{
-		    			$obj->where($value["field"].' '.$value["operator"], $value["value"]);
-		    		}
-	    		}else{
+	    		if(isset($value['operator'])) {
+					$obj->{$value['operator']}($value['field'], $value['value']);
+				} else {
 	    			$obj->where($value["field"], $value["value"]);
-	    		}
-			}									 			
+				}
+			}
 		}			
 
 		//Get Result
@@ -82,54 +56,23 @@ class Meters extends REST_Controller {
 
 		if($obj->result_count()>0){			
 			foreach ($obj as $value) {
-				$invoice = new Invoice(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				$invoice->where("id", $value->invoice_id);
+				// $invoice = new Invoice(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				// $invoice->where("id", $value->invoice_id);
 
-				$deposit = new Invoice(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				$deposit->where("id", $value->deposit_id);
+				// $deposit = new Invoice(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				// $deposit->where("id", $value->deposit_id);
 
 				//Results				
 				$data["results"][] = array(
 					"id" 					=> $value->id,
-					"branch_id" 			=> $value->branch_id, 		
-					"utility_id" 			=> $value->utility_id,
-					"deposit_id" 			=> $value->deposit_id,
-					"invoice_id" 			=> $value->invoice_id,
-					"contact_id" 			=> $value->contact_id, 		
-					"location_id" 			=> $value->location_id,
-					"ampere_id" 			=> $value->ampere_id,
-					"phase_id" 				=> $value->phase_id,
-					"voltage_id" 			=> $value->voltage_id,
-					"electricity_box_id"	=> $value->electricity_box_id,					
-					"item_id" 				=> $value->item_id,
-					"tariff_id" 			=> $value->tariff_id,
-					"exemption_id" 			=> $value->exemption_id,
-					"maintenance_id" 		=> $value->maintenance_id,
-					"reactive_of"			=> $value->reactive_of,			
-					"backup_of" 			=> $value->backup_of, 						
-					"number" 				=> $value->number,					
-					"multiplier" 			=> $value->multiplier,			
-					"max_number" 			=> $value->max_number,
-					"startup_reading" 		=> $value->startup_reading,											
-					"ear_sealed"			=> $value->ear_sealed=="true"?true:fasle,
-					"cover_sealed" 			=> $value->cover_sealed=="true"?true:fasle,					
-					"memo" 					=> $value->memo,
-					"longtitute" 			=> $value->longtitute,
-					"latitute" 				=> $value->latitute,		
+					"number" 				=> $value->number,
 					"status" 				=> $value->status,
-					"date_used" 			=> $value->date_used,
-
-					"item" 					=> $value->item->get_raw()->result(),
-					"invoice" 				=> $invoice->get_raw()->result(),
-					"deposit" 				=> $deposit->get_raw()->result(),
-
-					"tariff" 				=> $value->tariff->get_raw()->result(),
-					"exemption" 			=> $value->exemption->get_raw()->result(),
-					"maintenance" 			=> $value->maintenance->get_raw()->result(),
-
-					"ampere" 				=> $value->ampere->get_raw()->result(),
-					"phase" 				=> $value->phase->get_raw()->result(),
-					"voltage" 				=> $value->voltage->get_raw()->result()
+					"contact_id" 			=> $value->contact_id,
+					"number_digit"			=> $value->number_digit,
+					"plan"					=> $value->plan_id,
+					"map" 					=> $value->latitute,
+					"starting_no" 			=> $value->startup_reading,
+					"activated" 			=> $value->activated
 				);
 			}
 		}
@@ -141,16 +84,13 @@ class Meters extends REST_Controller {
 	//POST
 	function index_post() {
 		$models = json_decode($this->post('models'));
-
+		$data = array();
 		foreach ($models as $value) {
 			$obj = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			
-			$obj->branch_id 			= $value->branch_id;
-			$obj->utility_id 			= $value->utility_id;
+			
 			$obj->deposit_id 			= isset($value->deposit_id)			?$value->deposit_id:0;
 			$obj->invoice_id 			= isset($value->invoice_id)			?$value->invoice_id:0;
-			$obj->contact_id 			= $value->contact_id;
-			$obj->location_id 			= $value->location_id;
 			$obj->ampere_id 			= isset($value->ampere_id)			?$value->ampere_id:0;
 			$obj->phase_id 				= isset($value->phase_id)			?$value->phase_id:0;
 			$obj->voltage_id 			= isset($value->voltage_id)			?$value->voltage_id:0;
@@ -161,65 +101,83 @@ class Meters extends REST_Controller {
 			$obj->maintenance_id 		= isset($value->maintenance_id)		?$value->maintenance_id:0;
 			$obj->reactive_of 			= isset($value->reactive_of)		?$value->reactive_of:0;
 			$obj->backup_of 			= isset($value->backup_of)			?$value->backup_of:0;
-			$obj->number 				= $value->number;			
-			$obj->multiplier 			= $value->multiplier;
-			$obj->max_number 			= $value->max_number;
-			$obj->startup_reading 		= $value->startup_reading;
+			$obj->number 				= isset($value->number) 			? $value->number:0;			
+			$obj->multiplier 			= isset($value->multiplier) 		? $value->multiplier: 1;
+			$obj->max_number 			= isset($value->max_number) 		? $value->max_number:0;
+			$obj->contact_id 			= isset($value->contact_id) 		? $value->contact_id:0;
+			$obj->startup_reading 		= isset($value->starting_no) 		? $value->starting_no: 0;
 			$obj->ear_sealed 			= isset($value->ear_sealed)			?$value->ear_sealed:true;
 			$obj->cover_sealed 			= isset($value->cover_sealed)		?$value->cover_sealed:true;
-			$obj->memo 					= $value->memo;
-			$obj->longtitute 			= $value->longtitute;
-			$obj->latitute 				= $value->latitute;
-			$obj->status 				= $value->status;
-			$obj->date_used 			= date("Y-m-d", strtotime($value->date_used));
+			// $obj->memo 					= $value->memo;
+			$obj->longtitute 			= $value->map;
+			// $obj->latitute 				= $value->latitute;
+			$obj->status 				= isset($value->status)				?$value->status:1;
+			$obj->date_used 			= isset($value->date_used) 			?date("Y-m-d", strtotime($value->date_used)):'0000-00-00';
 			
-			if($obj->save()){								
-				//Respsone
-				$data["results"][] = array(
+			$obj->number_digit 			= isset($value->number_digit)		?$value->number_digit:4;
+			$obj->plan_id 				= isset($value->plan->id)			?$value->plan->id:0;
+			if($obj->save()){	
+				$data[] = array(
 					"id" 					=> $obj->id,
-					"branch_id" 			=> $obj->branch_id, 		
-					"utility_id" 			=> $obj->utility_id,
-					"deposit_id" 			=> $obj->deposit_id,
-					"invoice_id" 			=> $obj->invoice_id,
-					"contact_id" 			=> $obj->contact_id, 		
-					"location_id" 			=> $obj->location_id,
-					"ampere_id" 			=> $obj->ampere_id,
-					"phase_id" 				=> $obj->phase_id,
-					"voltage_id" 			=> $obj->voltage_id,
-					"electricity_box_id"	=> $obj->electricity_box_id,					
-					"item_id" 				=> $obj->item_id,
-					"tariff_id" 			=> $obj->tariff_id,
-					"exemption_id" 			=> $obj->exemption_id,
-					"maintenance_id" 		=> $obj->maintenance_id,
-					"reactive_of"			=> $obj->reactive_of,			
-					"backup_of" 			=> $obj->backup_of, 						
-					"number" 				=> $obj->number,								
-					"multiplier" 			=> $obj->multiplier,			
-					"max_number" 			=> $obj->max_number,
-					"startup_reading" 		=> $obj->startup_reading,											
-					"ear_sealed"			=> $obj->ear_sealed=="true"?true:fasle,
-					"cover_sealed" 			=> $obj->cover_sealed=="true"?true:fasle,					
-					"memo" 					=> $obj->memo,
-					"longtitute" 			=> $obj->longtitute,
-					"latitute" 				=> $obj->latitute,		
+					"number" 				=> $obj->number,
 					"status" 				=> $obj->status,
-					"date_used" 			=> $obj->date_used,
+					"number_digit" 			=> $obj->number_digit,
+					"latitute" 				=> $obj->map,	
+					"plan" 					=> $obj->plan,	
+					"activated" 			=> $obj->activated
+				);							
+				//Respsone
+				// $data["results"][] = array(
+				// 	"id" 					=> $obj->id,
+				// 	"branch_id" 			=> $obj->branch_id, 		
+				// 	"utility_id" 			=> $obj->utility_id,
+				// 	"deposit_id" 			=> $obj->deposit_id,
+				// 	"invoice_id" 			=> $obj->invoice_id,
+				// 	"contact_id" 			=> $obj->contact_id, 		
+				// 	"location_id" 			=> $obj->location_id,
+				// 	"ampere_id" 			=> $obj->ampere_id,
+				// 	"phase_id" 				=> $obj->phase_id,
+				// 	"voltage_id" 			=> $obj->voltage_id,
+				// 	"electricity_box_id"	=> $obj->electricity_box_id,					
+				// 	"item_id" 				=> $obj->item_id,
+				// 	"tariff_id" 			=> $obj->tariff_id,
+				// 	"exemption_id" 			=> $obj->exemption_id,
+				// 	"maintenance_id" 		=> $obj->maintenance_id,
+				// 	"reactive_of"			=> $obj->reactive_of,			
+				// 	"backup_of" 			=> $obj->backup_of, 						
+				// 	"number" 				=> $obj->number,								
+				// 	"multiplier" 			=> $obj->multiplier,			
+				// 	"max_number" 			=> $obj->max_number,
+				// 	"startup_reading" 		=> $obj->startup_reading,											
+				// 	"ear_sealed"			=> $obj->ear_sealed=="true"?true:fasle,
+				// 	"cover_sealed" 			=> $obj->cover_sealed=="true"?true:fasle,					
+				// 	"memo" 					=> $obj->memo,
+				// 	"longtitute" 			=> $obj->longtitute,
+				// 	"latitute" 				=> $obj->latitute,		
+				// 	"status" 				=> $obj->status,
+				// 	"date_used" 			=> $obj->date_used,
 
-					"item" 					=> $obj->item->get_raw()->result(),
+				// 	"item" 					=> $obj->item->get_raw()->result(),
 					
-					"tariff" 				=> $obj->tariff->get_raw()->result(),
-					"exemption" 			=> $obj->exemption->get_raw()->result(),
-					"maintenance" 			=> $obj->maintenance->get_raw()->result(),
+				// 	"tariff" 				=> $obj->tariff->get_raw()->result(),
+				// 	"exemption" 			=> $obj->exemption->get_raw()->result(),
+				// 	"maintenance" 			=> $obj->maintenance->get_raw()->result(),
 
-					"ampere" 				=> $obj->ampere->get_raw()->result(),
-					"phase" 				=> $obj->phase->get_raw()->result(),
-					"voltage" 				=> $obj->voltage->get_raw()->result()
-				);				
+				// 	"ampere" 				=> $obj->ampere->get_raw()->result(),
+				// 	"phase" 				=> $obj->phase->get_raw()->result(),
+				// 	"voltage" 				=> $obj->voltage->get_raw()->result()
+				// );				
 			}			
 		}
-		$data["count"] = count($data["results"]);
+		$count = count($data);
 		
-		$this->response($data, 201);						
+		// $this->response($data, 201);
+		if($count > 0) {
+			$this->response(array("results" => 'success'), 201);
+		} else {
+			$this->response(array("results" => 'failed'), 401);
+		}
+							
 	}
 
 	//PUT
@@ -232,81 +190,53 @@ class Meters extends REST_Controller {
 			$obj = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$obj->get_by_id($value->id);
 
-			$obj->branch_id 			= $value->branch_id;
-			$obj->utility_id 			= $value->utility_id;
-			$obj->deposit_id 			= $value->deposit_id;
-			$obj->invoice_id 			= $value->invoice_id;
-			$obj->contact_id 			= $value->contact_id;
-			$obj->location_id 			= $value->location_id;
-			$obj->ampere_id 			= isset($value->ampere_id)?$value->ampere_id:0;
-			$obj->phase_id 				= isset($value->phase_id)?$value->phase_id:0;
-			$obj->voltage_id 			= isset($value->voltage_id)?$value->voltage_id:0;
-			$obj->electricity_box_id 	= isset($value->electricity_box_id)?$value->electricity_box_id:0;			
-			$obj->item_id 				= $value->item_id;
-			$obj->tariff_id 			= $value->tariff_id;
-			$obj->exemption_id 			= $value->exemption_id;
-			$obj->maintenance_id 		= $value->maintenance_id;
-			$obj->reactive_of 			= isset($value->reactive_of)?$value->reactive_of:0;
-			$obj->backup_of 			= isset($value->backup_of)?$value->backup_of:0;
-			$obj->number 				= $value->number;			
-			$obj->multiplier 			= $value->multiplier;
-			$obj->max_number 			= $value->max_number;
-			$obj->startup_reading 		= $value->startup_reading;
-			$obj->ear_sealed 			= isset($value->ear_sealed)?$value->ear_sealed:true;
-			$obj->cover_sealed 			= isset($value->cover_sealed)?$value->cover_sealed:true;
-			$obj->memo 					= $value->memo;
-			$obj->longtitute 			= $value->longtitute;
-			$obj->latitute 				= $value->latitute;
-			$obj->status 				= $value->status;
-			$obj->date_used 			= date("Y-m-d", strtotime($value->date_used));
+			$obj->deposit_id 			= isset($value->deposit_id)			?$value->deposit_id:0;
+			$obj->invoice_id 			= isset($value->invoice_id)			?$value->invoice_id:0;
+			$obj->ampere_id 			= isset($value->ampere_id)			?$value->ampere_id:0;
+			$obj->phase_id 				= isset($value->phase_id)			?$value->phase_id:0;
+			$obj->voltage_id 			= isset($value->voltage_id)			?$value->voltage_id:0;
+			$obj->electricity_box_id 	= isset($value->electricity_box_id)	?$value->electricity_box_id:0;			
+			$obj->item_id 				= isset($value->item_id)			?$value->item_id:0;
+			$obj->tariff_id 			= isset($value->tariff_id)			?$value->tariff_id:0;
+			$obj->exemption_id 			= isset($value->exemption_id)		?$value->exemption_id:0;
+			$obj->maintenance_id 		= isset($value->maintenance_id)		?$value->maintenance_id:0;
+			$obj->reactive_of 			= isset($value->reactive_of)		?$value->reactive_of:0;
+			$obj->backup_of 			= isset($value->backup_of)			?$value->backup_of:0;
+			$obj->number 				= isset($value->number) 			? $value->number:0;			
+			$obj->multiplier 			= isset($value->multiplier) 		? $value->multiplier: 1;
+			$obj->max_number 			= isset($value->max_number) 		? $value->max_number:0;
+			$obj->contact_id 			= isset($value->contact_id) 		? $value->contact_id:0;
+			$obj->startup_reading 		= isset($value->starting_no) 		? $value->starting_no: 0;
+			$obj->ear_sealed 			= isset($value->ear_sealed)			?$value->ear_sealed:true;
+			$obj->cover_sealed 			= isset($value->cover_sealed)		?$value->cover_sealed:true;
+			// $obj->memo 					= $value->memo;
+			$obj->longtitute 			= $value->map;
+			// $obj->latitute 				= $value->latitute;
+			$obj->status 				= isset($value->status)				?$value->status:1;
+			$obj->date_used 			= isset($value->date_used) 			?date("Y-m-d", strtotime($value->date_used)):'0000-00-00';
+			
+			$obj->number_digit 			= isset($value->number_digit)		?$value->number_digit:4;
+			$obj->plan_id 				= isset($value->plan->id)			?$value->plan->id:0;
 
 			if($obj->save()){
 				//Results
-				$data["results"][] = array(
+				$data[] = array(
 					"id" 					=> $obj->id,
-					"branch_id" 			=> $obj->branch_id, 		
-					"utility_id" 			=> $obj->utility_id,
-					"deposit_id" 			=> $obj->deposit_id,
-					"invoice_id" 			=> $obj->invoice_id,
-					"contact_id" 			=> $obj->contact_id, 		
-					"location_id" 			=> $obj->location_id,
-					"ampere_id" 			=> $obj->ampere_id,
-					"phase_id" 				=> $obj->phase_id,
-					"voltage_id" 			=> $obj->voltage_id,
-					"electricity_box_id"	=> $obj->electricity_box_id,					
-					"item_id" 				=> $obj->item_id,
-					"tariff_id" 			=> $obj->tariff_id,
-					"exemption_id" 			=> $obj->exemption_id,
-					"maintenance_id" 		=> $obj->maintenance_id,
-					"reactive_of"			=> $obj->reactive_of,			
-					"backup_of" 			=> $obj->backup_of, 						
-					"number" 				=> $obj->number,								
-					"multiplier" 			=> $obj->multiplier,			
-					"max_number" 			=> $obj->max_number,
-					"startup_reading" 		=> $obj->startup_reading,											
-					"ear_sealed"			=> $obj->ear_sealed=="true"?true:fasle,
-					"cover_sealed" 			=> $obj->cover_sealed=="true"?true:fasle,					
-					"memo" 					=> $obj->memo,
-					"longtitute" 			=> $obj->longtitute,
-					"latitute" 				=> $obj->latitute,		
+					"number" 				=> $obj->number,
 					"status" 				=> $obj->status,
-					"date_used" 			=> $obj->date_used,
-
-					"item" 					=> $obj->item->get_raw()->result(),
-
-					"tariff" 				=> $obj->tariff->get_raw()->result(),
-					"exemption" 			=> $obj->exemption->get_raw()->result(),
-					"maintenance" 			=> $obj->maintenance->get_raw()->result(),
-
-					"ampere" 				=> $obj->ampere->get_raw()->result(),
-					"phase" 				=> $obj->phase->get_raw()->result(),
-					"voltage" 				=> $obj->voltage->get_raw()->result()
-				);						
+					"number_digit" 			=> $obj->number_digit,
+					"latitute" 				=> $obj->map,	
+					"plan" 					=> $obj->plan,	
+					"activated" 			=> $obj->activated
+				);					
 			}
 		}
-		$data["count"] = count($data["results"]);
-
-		$this->response($data, 200);
+		$count = count($data);
+		if($count > 0) {
+			$this->response(array("results" => 'success'), 201);
+		} else {
+			$this->response(array("results" => 'failed'), 401);
+		}
 	}
 	
 	//DELETE
@@ -883,7 +813,7 @@ class Meters extends REST_Controller {
 		$data["results"] = array();
 		$data["count"] = 0;
 
-		$obj = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
+		$obj = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_banhji');		
 
 		//Sort
 		if(!empty($sort) && isset($sort)){					

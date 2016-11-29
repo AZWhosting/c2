@@ -881,6 +881,32 @@
             },
             phoneChange : function(e) {
                 $(".cover").eq(1).children(".imgTick").css("display", "block");
+                var Nu = this.get('telephone').length;
+                if(Nu < 8){
+                    this.set("err", null);
+                    this.set("err", "Minimum Phone Number is 8 digits!");
+                    $(".cover").eq(1).children(".imgLoad, .imgTick").css("display", "none");
+                    $(".cover").eq(1).children(".imgCross").css("display", "block");
+                    $(".cover").eq(1).children(".msg").text("Minimum Phone Number is 8 digits!");
+                    $(".cover").eq(1).children(".msg").css("display", "block");
+                    $(".cover").eq(1).children("input").css("border", "1px solid #a22314");
+                    $(".cover").eq(1).children("input").focus();
+                }else if(Nu > 15){
+                    this.set("err", null);
+                    this.set("err", "Maximum Phone Number is 15 digits!");
+                    $(".cover").eq(1).children(".imgLoad, .imgTick").css("display", "none");
+                    $(".cover").eq(1).children(".imgCross").css("display", "block");
+                    $(".cover").eq(1).children(".msg").text("Maximum Phone Number is 15 digits!");
+                    $(".cover").eq(1).children(".msg").css("display", "block");
+                    $(".cover").eq(1).children("input").css("border", "1px solid #a22314");
+                    $(".cover").eq(1).children("input").focus();
+                }else{
+                    this.set("err", null);
+                    $(".cover").eq(1).children(".imgLoad, .imgCross").css("display", "none");
+                    $(".cover").eq(1).children(".imgTick").css("display", "block");
+                    $(".cover").eq(1).children(".msg").removeAttr("style");
+                    $(".cover").eq(1).children("input").removeAttr("style");
+                }
             },
             checkLetter   : function(inputtxt) {  
                     var letters = /^[a-zA-Z]+$/,Num = /^[0-9]+$/, Result;

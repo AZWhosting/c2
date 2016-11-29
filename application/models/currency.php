@@ -6,6 +6,13 @@ class Currency extends DataMapper {
 	protected $created_field = "created_at";
 	protected $updated_field = "updated_at";
 
+	public $has_one = array(		
+		'branch' => array(
+			"class" => 'branch',
+			"other_field" => "currency"
+		)
+	);
+
 	public $has_many = array(
 		'currency_rate' => array(
 			'class' => 'currency_rate',

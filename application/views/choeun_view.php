@@ -20159,7 +20159,7 @@
 
 <script id="customerSetting" type="text/x-kendo-template">
 	<span class="pull-right glyphicons no-js remove_2" 
-			onclick="javascript:window.history.back()"><i></i></span>
+			data-bind="click: cancel"><i></i></span>
 
 	<h2 data-bind="text: lang.lang.general_customer_setting"></h2>
 
@@ -20193,7 +20193,7 @@
 					    <input class="span4" id="appendedInputButtons" type="text" placeholder="input abbr ..." data-bind="value: contactTypeAbbr">
 					    <select class="span3" id="appendedInputButtons" data-bind="value: contactTypeCompany" >
 			                <option value="0"><span data-bind="text: lang.lang.not_a_company"></span></option>
-			                <option value="1"><span data-bind="text: lang.lang.it_is_a_company"></span></option>			                
+			                <option value="1"><span data-bind="text: lang.lang.it_is_a_company"></span></option>           
 			            </select>
 					    <button class="btn btn-default" type="button" data-bind="click: addContactType"><i class="icon-plus"></i> <span data-bind="text: lang.lang.add_type"></span></button>
 					</div>

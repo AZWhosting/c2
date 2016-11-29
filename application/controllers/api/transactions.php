@@ -31,62 +31,33 @@ class Transactions extends REST_Controller {
 		$data["results"] = array();
 		$data["count"] = 0;
 		$is_recurring = 0;
-		$deleted = 0;
 
 		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
 
 		//Sort
-		if(!empty($sort) && isset($sort)){					
+		if(!empty($sort) && isset($sort)){
 			foreach ($sort as $value) {
 				$obj->order_by($value["field"], $value["dir"]);
 			}
 		}
 		
 		//Filter		
-		if(!empty($filters) && isset($filters)){			
+		if(!empty($filters) && isset($filters)){
 	    	foreach ($filters as $value) {
-	    		if(!empty($value["operator"]) && isset($value["operator"])){
-		    		if($value["operator"]=="where_in"){
-		    			$obj->where_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_where_in"){
-		    			$obj->or_where_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="where_not_in"){
-		    			$obj->where_not_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_where_not_in"){
-		    			$obj->or_where_not_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="like"){
-		    			$obj->like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_like"){
-		    			$obj->or_like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="not_like"){
-		    			$obj->not_like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_not_like"){
-		    			$obj->or_not_like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="startswith"){
-		    			$obj->like($value["field"], $value["value"], "after");
-		    		}else if($value["operator"]=="endswith"){
-		    			$obj->like($value["field"], $value["value"], "before");
-		    		}else if($value["operator"]=="contains"){
-		    			$obj->like($value["field"], $value["value"], "both");
-		    		}else if($value["operator"]=="or_where"){
-		    			$obj->or_where($value["field"], $value["value"]);		    				    		
-		    		}else{
-		    			$obj->where($value["field"], $value["value"]);
-		    		}
-	    		}else{	    			
-	    			if($value["field"]=="is_recurring"){
+	    		if(isset($value['operator'])) {
+					$obj->{$value['operator']}($value['field'], $value['value']);
+				} else {
+					if($value["field"]=="is_recurring"){
 	    				$is_recurring = $value["value"];
-	    			}else if($value["field"]=="deleted"){
-	    				$deleted = $value["value"];
 	    			}else{
 	    				$obj->where($value["field"], $value["value"]);
-	    			}	    				    			
-	    		}
-			}									 			
+	    			}
+				}
+			}
 		}
 
 		$obj->where("is_recurring", $is_recurring);
-		$obj->where("deleted", $deleted);		
+		$obj->where("deleted <>", 1);		
 		
 		//Results
 		$obj->get_paged_iterated($page, $limit);
@@ -571,7 +542,8 @@ class Transactions extends REST_Controller {
 		$this->response($data, 200);
 	}
 
-	//TXN PRINT GET 
+
+	//TXN PRINT GET --> Choeun
 	function txn_print_get() {		
 		$filters 	= $this->get("filter")["filters"];		
 		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
@@ -580,7 +552,6 @@ class Transactions extends REST_Controller {
 		$data["results"] = array();
 		$data["count"] = 0;
 		$is_recurring = 0;
-		$deleted = 0;
 
 		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
 
@@ -592,50 +563,22 @@ class Transactions extends REST_Controller {
 		}
 		
 		//Filter		
-		if(!empty($filters) && isset($filters)){			
+		if(!empty($filters) && isset($filters)){
 	    	foreach ($filters as $value) {
-	    		if(!empty($value["operator"]) && isset($value["operator"])){
-		    		if($value["operator"]=="where_in"){
-		    			$obj->where_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_where_in"){
-		    			$obj->or_where_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="where_not_in"){
-		    			$obj->where_not_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_where_not_in"){
-		    			$obj->or_where_not_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="like"){
-		    			$obj->like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_like"){
-		    			$obj->or_like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="not_like"){
-		    			$obj->not_like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_not_like"){
-		    			$obj->or_not_like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="startswith"){
-		    			$obj->like($value["field"], $value["value"], "after");
-		    		}else if($value["operator"]=="endswith"){
-		    			$obj->like($value["field"], $value["value"], "before");
-		    		}else if($value["operator"]=="contains"){
-		    			$obj->like($value["field"], $value["value"], "both");
-		    		}else if($value["operator"]=="or_where"){
-		    			$obj->or_where($value["field"], $value["value"]);		    				    		
-		    		}else{
-		    			$obj->where($value["field"], $value["value"]);
-		    		}
-	    		}else{	    			
-	    			if($value["field"]=="is_recurring"){
+	    		if(isset($value['operator'])) {
+					$obj->{$value['operator']}($value['field'], $value['value']);
+				} else {
+					if($value["field"]=="is_recurring"){
 	    				$is_recurring = $value["value"];
-	    			}else if($value["field"]=="deleted"){
-	    				$deleted = $value["value"];
 	    			}else{
 	    				$obj->where($value["field"], $value["value"]);
-	    			}	    				    			
-	    		}
-			}									 			
+	    			}
+				}
+			}
 		}
 
 		$obj->where("is_recurring", $is_recurring);
-		$obj->where("deleted", $deleted);		
+		$obj->where("deleted <>", 0);		
 		
 		//Results
 		$obj->get_paged_iterated($page, $limit);
@@ -737,7 +680,7 @@ class Transactions extends REST_Controller {
 		$this->response($data, 200);	
 	}		
 
-	//ITMES LINE PRINT GET 
+	//ITMES LINE PRINT GET --> Choeun
 	function line_print_get() {		
 		$filters 	= $this->get("filter")["filters"];		
 		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
@@ -756,42 +699,14 @@ class Transactions extends REST_Controller {
 		}
 		
 		//Filter		
-		if(!empty($filters) && isset($filters)){			
+		if(!empty($filters) && isset($filters)){
 	    	foreach ($filters as $value) {
-	    		if(!empty($value["operator"]) && isset($value["operator"])){
-		    		if($value["operator"]=="where_in"){
-		    			$obj->where_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_where_in"){
-		    			$obj->or_where_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="where_not_in"){
-		    			$obj->where_not_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_where_not_in"){
-		    			$obj->or_where_not_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="like"){
-		    			$obj->like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_like"){
-		    			$obj->or_like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="not_like"){
-		    			$obj->not_like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_not_like"){
-		    			$obj->or_not_like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="startswith"){
-		    			$obj->like($value["field"], $value["value"], "after");
-		    		}else if($value["operator"]=="endswith"){
-		    			$obj->like($value["field"], $value["value"], "before");
-		    		}else if($value["operator"]=="contains"){
-		    			$obj->like($value["field"], $value["value"], "both");
-		    		}else if($value["operator"]=="or_where"){
-		    			$obj->or_where($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="where_related"){
-		    			$obj->where_related($value["model"], $value["field"], $value["value"]);		    			    		
-		    		}else{
-		    			$obj->where($value["field"].' '.$value["operator"], $value["value"]);
-		    		}
-	    		}else{	    			
-	    			$obj->where($value["field"], $value["value"]);	    				    			
-	    		}
-			}									 			
+	    		if(isset($value['operator'])) {
+					$obj->{$value['operator']}($value['field'], $value['value']);
+				} else {
+	    			$obj->where($value["field"], $value["value"]);
+				}
+			}
 		}		
 		
 		//Results
@@ -855,6 +770,7 @@ class Transactions extends REST_Controller {
 		}		
 		$this->response($data, 200);		
 	}
+
 	
 	//LINE GET 
 	function line_get() {		
@@ -875,44 +791,14 @@ class Transactions extends REST_Controller {
 		}
 		
 		//Filter		
-		if(!empty($filters) && isset($filters)){			
+		if(!empty($filters) && isset($filters)){
 	    	foreach ($filters as $value) {
-	    		if(!empty($value["operator"]) && isset($value["operator"])){
-		    		if($value["operator"]=="where_in"){
-		    			$obj->where_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_where_in"){
-		    			$obj->or_where_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="where_not_in"){
-		    			$obj->where_not_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_where_not_in"){
-		    			$obj->or_where_not_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="like"){
-		    			$obj->like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_like"){
-		    			$obj->or_like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="not_like"){
-		    			$obj->not_like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_not_like"){
-		    			$obj->or_not_like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="startswith"){
-		    			$obj->like($value["field"], $value["value"], "after");
-		    		}else if($value["operator"]=="endswith"){
-		    			$obj->like($value["field"], $value["value"], "before");
-		    		}else if($value["operator"]=="contains"){
-		    			$obj->like($value["field"], $value["value"], "both");
-		    		}else if($value["operator"]=="or_where"){
-		    			$obj->or_where($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="where_related"){
-		    			$obj->where_related($value["model"], $value["field"], $value["value"]);
-		    		}else if($value["operator"]=="where_in_related"){
-		    			$obj->where_in_related($value["model"], $value["field"], $value["value"]);		    			    		
-		    		}else{
-		    			$obj->where($value["field"], $value["value"]);
-		    		}
-	    		}else{	    			
-	    			$obj->where($value["field"], $value["value"]);	    				    			
-	    		}
-			}									 			
+	    		if(isset($value['operator'])) {
+					$obj->{$value['operator']}($value['field'], $value['value']);
+				} else {
+	    			$obj->where($value["field"], $value["value"]);
+				}
+			}
 		}		
 		
 		//Results
@@ -999,7 +885,7 @@ class Transactions extends REST_Controller {
 					$itemIn->where_in_related("transaction", "type", array("Cash_Purchase", "Credit_Purchase", "Adjustment"));
 					$itemIn->where("item_id", $value->item_id);
 					$itemIn->where("movement", 1);
-					$itemIn->where_related("transaction", "issued_date<=", $transaction->issued_date);
+					$itemIn->where_related("transaction", "issued_date <=", $transaction->issued_date);
 					$itemIn->where_related("transaction", "is_recurring", 0);
 					$itemIn->where_related("transaction", "deleted", 0);
 					$itemIn->get();
@@ -1009,7 +895,7 @@ class Transactions extends REST_Controller {
 					$itemOut->where_in_related("transaction", "type", array("Invoice", "Cash_Sale", "Adjustment"));
 					$itemOut->where("item_id", $value->item_id);
 					$itemOut->where("movement", -1);
-					$itemOut->where_related("transaction", "issued_date<=", $transaction->issued_date);
+					$itemOut->where_related("transaction", "issued_date <=", $transaction->issued_date);
 					$itemOut->where_related("transaction", "is_recurring", 0);
 					$itemOut->where_related("transaction", "deleted", 0);
 					$itemOut->get();					
@@ -1250,7 +1136,7 @@ class Transactions extends REST_Controller {
 		$txn->where('type', $type);
 		$txn->where("issued_date >=", $startDate);
 		$txn->where("issued_date <=", $endDate);
-		$txn->where('is_recurring', 0);
+		$txn->where('is_recurring <>', 1);
 		$txn->order_by('id', 'desc');
 		$txn->limit(1);
 		$txn->get();
@@ -1520,479 +1406,479 @@ class Transactions extends REST_Controller {
 	}
 
 
-	//POST PAYMENT	
-	function payment_post() {
-		$models = json_decode($this->post('models'));				
-		$data["results"] = array();
-		$data["count"] = 0;
+	// //POST PAYMENT	
+	// function payment_post() {
+	// 	$models = json_decode($this->post('models'));				
+	// 	$data["results"] = array();
+	// 	$data["count"] = 0;
 				
-		foreach ($models as $value) {
-			$obj = new Payment(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+	// 	foreach ($models as $value) {
+	// 		$obj = new Payment(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
-			$obj->company_id 		= isset($value->company_id)?$value->company_id:0;
-			$obj->contact_id 		= isset($value->contact_id)?$value->contact_id:0;
-			$obj->cashier_id		= isset($value->cashier_id)?$value->cashier_id:0;
-			$obj->meter_id 			= isset($value->meter_id)?$value->meter_id:0;									
-		   	$obj->reference_id 		= isset($value->reference_id)?$value->reference_id:0;
-		   	$obj->payment_method_id	= isset($value->payment_method_id)?$value->payment_method_id:0;	   
-		   	$obj->account_id		= isset($value->account_id)?$value->account_id:0;
-		   	$obj->check_no			= isset($value->check_no)?$value->check_no:"";	   	
-		   	$obj->type 				= isset($value->type)?$value->type:"";	   				   	
-		   	$obj->amount 			= isset($value->amount)?$value->amount:0;
-		   	$obj->fine 				= isset($value->fine)?$value->fine:0;
-		   	$obj->discount 			= isset($value->discount)?$value->discount:0;
-		   	$obj->payment_date 		= isset($value->payment_date)?$value->payment_date:"";	   	
-		   	$obj->locale 			= isset($value->locale)?$value->locale:"";
-		   	$obj->rate 				= isset($value->rate)?$value->rate:0;
-		   	$obj->deleted			= isset($value->deleted)?$value->deleted:0;   		   	
+	// 		$obj->company_id 		= isset($value->company_id)?$value->company_id:0;
+	// 		$obj->contact_id 		= isset($value->contact_id)?$value->contact_id:0;
+	// 		$obj->cashier_id		= isset($value->cashier_id)?$value->cashier_id:0;
+	// 		$obj->meter_id 			= isset($value->meter_id)?$value->meter_id:0;									
+	// 	   	$obj->reference_id 		= isset($value->reference_id)?$value->reference_id:0;
+	// 	   	$obj->payment_method_id	= isset($value->payment_method_id)?$value->payment_method_id:0;	   
+	// 	   	$obj->account_id		= isset($value->account_id)?$value->account_id:0;
+	// 	   	$obj->check_no			= isset($value->check_no)?$value->check_no:"";	   	
+	// 	   	$obj->type 				= isset($value->type)?$value->type:"";	   				   	
+	// 	   	$obj->amount 			= isset($value->amount)?$value->amount:0;
+	// 	   	$obj->fine 				= isset($value->fine)?$value->fine:0;
+	// 	   	$obj->discount 			= isset($value->discount)?$value->discount:0;
+	// 	   	$obj->payment_date 		= isset($value->payment_date)?$value->payment_date:"";	   	
+	// 	   	$obj->locale 			= isset($value->locale)?$value->locale:"";
+	// 	   	$obj->rate 				= isset($value->rate)?$value->rate:0;
+	// 	   	$obj->deleted			= isset($value->deleted)?$value->deleted:0;   		   	
 
-	   		if($obj->save()){
-	   			$inv = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-	   			$inv->get_by_id($obj->reference_id);
+	//    		if($obj->save()){
+	//    			$inv = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+	//    			$inv->get_by_id($obj->reference_id);
 
-	   			$inv->status 		= $value->status;
-	   			$inv->amount_paid 	+= $value->amount;
-	   			$inv->save();
+	//    			$inv->status 		= $value->status;
+	//    			$inv->amount_paid 	+= $value->amount;
+	//    			$inv->save();
 
-			   	$data["results"][] = array(
-			   		"id" 				=> $obj->id,
-			   		"company_id"		=> $obj->company_id,
-					"contact_id" 		=> $obj->contact_id,
-					"cashier_id" 		=> $obj->cashier_id,
-					"meter_id" 			=> $obj->meter_id,
-					"reference_id" 		=> $obj->reference_id,				   	
-				   	"payment_method_id"	=> $obj->payment_method_id,				   	
-				   	"account_id"		=> $obj->account_id,
-				   	"check_no"			=> $obj->check_no,				   				   	
-				   	"type" 				=> $obj->type,				   			   	
-				   	"amount" 			=> floatval($obj->amount),
-				   	"fine" 				=> floatval($obj->fine),
-				   	"discount" 			=> floatval($obj->discount),
-				   	"payment_date" 		=> $obj->payment_date,			   	
-				   	"locale" 			=> $obj->locale,
-				   	"rate"				=> floatval($obj->rate),
-				   	"deleted" 			=> $obj->deleted,
-			   	);
-		    }	
-		}
+	// 		   	$data["results"][] = array(
+	// 		   		"id" 				=> $obj->id,
+	// 		   		"company_id"		=> $obj->company_id,
+	// 				"contact_id" 		=> $obj->contact_id,
+	// 				"cashier_id" 		=> $obj->cashier_id,
+	// 				"meter_id" 			=> $obj->meter_id,
+	// 				"reference_id" 		=> $obj->reference_id,				   	
+	// 			   	"payment_method_id"	=> $obj->payment_method_id,				   	
+	// 			   	"account_id"		=> $obj->account_id,
+	// 			   	"check_no"			=> $obj->check_no,				   				   	
+	// 			   	"type" 				=> $obj->type,				   			   	
+	// 			   	"amount" 			=> floatval($obj->amount),
+	// 			   	"fine" 				=> floatval($obj->fine),
+	// 			   	"discount" 			=> floatval($obj->discount),
+	// 			   	"payment_date" 		=> $obj->payment_date,			   	
+	// 			   	"locale" 			=> $obj->locale,
+	// 			   	"rate"				=> floatval($obj->rate),
+	// 			   	"deleted" 			=> $obj->deleted,
+	// 		   	);
+	// 	    }	
+	// 	}
 		
-		$data["count"] = count($data["results"]);
-		$this->response($data, 201);		
-	}		
+	// 	$data["count"] = count($data["results"]);
+	// 	$this->response($data, 201);		
+	// }		
     
-	//PRINT
-	function print_get() {		
-		$filters 	= $this->get("filter")["filters"];		
-		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
-		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;								
-		$sort 	 	= $this->get("sort");		
-		$data["results"] = array();
-		$data["count"] = 0;
+	// //PRINT
+	// function print_get() {		
+	// 	$filters 	= $this->get("filter")["filters"];		
+	// 	$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
+	// 	$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;								
+	// 	$sort 	 	= $this->get("sort");		
+	// 	$data["results"] = array();
+	// 	$data["count"] = 0;
 
-		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
+	// 	$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
 
-		//Sort
-		if(!empty($sort) && isset($sort)){					
-			foreach ($sort as $value) {
-				$obj->order_by($value["field"], $value["dir"]);
-			}
-		}			
+	// 	//Sort
+	// 	if(!empty($sort) && isset($sort)){					
+	// 		foreach ($sort as $value) {
+	// 			$obj->order_by($value["field"], $value["dir"]);
+	// 		}
+	// 	}			
 
-		//Filter
-		foreach ($filters as $value) {
-    		if($value["field"]=="id"){    					    		
-    			$obj->where($value["field"], $value["value"]);    			
-    		}
+	// 	//Filter
+	// 	foreach ($filters as $value) {
+ //    		if($value["field"]=="id"){    					    		
+ //    			$obj->where($value["field"], $value["value"]);    			
+ //    		}
 
-    		if($value["field"]=="month_of"){		    		
-    			$obj->where($value["field"], $value["value"]);
-    		}
+ //    		if($value["field"]=="month_of"){		    		
+ //    			$obj->where($value["field"], $value["value"]);
+ //    		}
 
-    		if($value["field"]=="location_id"){		    		
-    			$obj->where_related("location", "id", $value["value"]);
-    		}		
-		}
+ //    		if($value["field"]=="location_id"){		    		
+ //    			$obj->where_related("location", "id", $value["value"]);
+ //    		}		
+	// 	}
 
-		$obj->include_related('contact', array('id', 'number', 'surname', 'name', 'address'));		
-		$obj->include_related('company', array('name', 'mobile', 'phone', 'address', 'term_of_condition', 'image_url'));
-		$obj->include_related('location', 'name');
-		//$obj->include_related('invoice_line/meter_record', array('from_date', 'to_date'), FALSE);		
-		// $obj->include_related('invoice_line/meter_record/meter/electricity_box', 'number');
+	// 	$obj->include_related('contact', array('id', 'number', 'surname', 'name', 'address'));		
+	// 	$obj->include_related('company', array('name', 'mobile', 'phone', 'address', 'term_of_condition', 'image_url'));
+	// 	$obj->include_related('location', 'name');
+	// 	//$obj->include_related('invoice_line/meter_record', array('from_date', 'to_date'), FALSE);		
+	// 	// $obj->include_related('invoice_line/meter_record/meter/electricity_box', 'number');
 
-		if(!empty($limit) && !empty($page)){
-			$obj->get_paged_iterated($page, $limit);
-			$data["count"] = $obj->paged->total_rows;							
-		}		
+	// 	if(!empty($limit) && !empty($page)){
+	// 		$obj->get_paged_iterated($page, $limit);
+	// 		$data["count"] = $obj->paged->total_rows;							
+	// 	}		
 
-		if($obj->exists()) {
-			foreach ($obj as $value) {
-				//Invoice Line					 
-				$value->invoice_line->get();				
-				$invoiceLineList = [];
+	// 	if($obj->exists()) {
+	// 		foreach ($obj as $value) {
+	// 			//Invoice Line					 
+	// 			$value->invoice_line->get();				
+	// 			$invoiceLineList = [];
 
-				foreach ($value->invoice_line as $line) {
-					$meters = array();					
-					if(intval($line->meter_record_id)>0){												
-			    		$mr = $line->meter_record;
-			    		$mr->include_related('meter', array('number', 'multiplier', 'max_number', 'electricity_box_id'), FALSE);			    		
-			    		$mr->get();
+	// 			foreach ($value->invoice_line as $line) {
+	// 				$meters = array();					
+	// 				if(intval($line->meter_record_id)>0){												
+	// 		    		$mr = $line->meter_record;
+	// 		    		$mr->include_related('meter', array('number', 'multiplier', 'max_number', 'electricity_box_id'), FALSE);			    		
+	// 		    		$mr->get();
 						
-						$bno = "";
-						if($mr->electricity_box_id){			    		
-			    			$eb = new Electricity_box(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			    			$eb->get_by_id($mr->electricity_box_id);
-			    			$bno = $eb->number;
-			    		}
+	// 					$bno = "";
+	// 					if($mr->electricity_box_id){			    		
+	// 		    			$eb = new Electricity_box(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+	// 		    			$eb->get_by_id($mr->electricity_box_id);
+	// 		    			$bno = $eb->number;
+	// 		    		}
 
-			    		$meters = array(
-			    			"previous"	=> intval($mr->previous),
-			    			"current" 	=> intval($mr->current),
-			    			"from_date" => $mr->from_date,
-			    			"to_date" 	=> $mr->to_date,
+	// 		    		$meters = array(
+	// 		    			"previous"	=> intval($mr->previous),
+	// 		    			"current" 	=> intval($mr->current),
+	// 		    			"from_date" => $mr->from_date,
+	// 		    			"to_date" 	=> $mr->to_date,
 
-			    			"number"	=> $mr->number,
-			    			"multiplier"=> $mr->multiplier,
-			    			"max_number"=> $mr->max_number,			    			
-			    			"electricity_box_number" => $bno
-			    		);
-		    		}			    		
+	// 		    			"number"	=> $mr->number,
+	// 		    			"multiplier"=> $mr->multiplier,
+	// 		    			"max_number"=> $mr->max_number,			    			
+	// 		    			"electricity_box_number" => $bno
+	// 		    		);
+	// 	    		}			    		
 
-					$invoiceLineList[] = array(
-	   					"id" 				=> $line->id,
-	   					"invoice_id"		=> $line->invoice_id, 	
-			   			"item_id"			=> $line->item_id,				   			 	
-			   			"meter_record_id" 	=> $line->meter_record_id, 
-			   			"description" 		=> $line->description, 	
-			   			"unit"				=> $line->unit, 		
-			   			"price" 			=> floatval($line->price), 		
-			   			"amount" 			=> floatval($line->amount),
-			   			"rate"				=> floatval($line->rate),
-			   			"locale" 			=> $line->locale, 		
-			   			"has_vat" 			=> $line->has_vat,
+	// 				$invoiceLineList[] = array(
+	//    					"id" 				=> $line->id,
+	//    					"invoice_id"		=> $line->invoice_id, 	
+	// 		   			"item_id"			=> $line->item_id,				   			 	
+	// 		   			"meter_record_id" 	=> $line->meter_record_id, 
+	// 		   			"description" 		=> $line->description, 	
+	// 		   			"unit"				=> $line->unit, 		
+	// 		   			"price" 			=> floatval($line->price), 		
+	// 		   			"amount" 			=> floatval($line->amount),
+	// 		   			"rate"				=> floatval($line->rate),
+	// 		   			"locale" 			=> $line->locale, 		
+	// 		   			"has_vat" 			=> $line->has_vat,
 
-			   			"meters" 			=> $meters				   					
-	   				);
-				}
+	// 		   			"meters" 			=> $meters				   					
+	//    				);
+	// 			}
 
-				//Company
-				$companies = array(
-					"name" => $value->company_name,
-					"mobile" => $value->company_mobile,
-					"phone" => $value->company_phone,
-					"address" => $value->company_address,
-					"term_of_condition" => $value->company_term_of_condition,
-					"image_url" => $value->company_image_url
-				);
+	// 			//Company
+	// 			$companies = array(
+	// 				"name" => $value->company_name,
+	// 				"mobile" => $value->company_mobile,
+	// 				"phone" => $value->company_phone,
+	// 				"address" => $value->company_address,
+	// 				"term_of_condition" => $value->company_term_of_condition,
+	// 				"image_url" => $value->company_image_url
+	// 			);
 
-				//Customer
-				$customers = array(
-					"number" 	=> $value->contact_number,
-					"fullname" 	=> $value->contact_surname.' '.$value->contact_name,
-					"address" 	=> $value->contact_address
-				);
+	// 			//Customer
+	// 			$customers = array(
+	// 				"number" 	=> $value->contact_number,
+	// 				"fullname" 	=> $value->contact_surname.' '.$value->contact_name,
+	// 				"address" 	=> $value->contact_address
+	// 			);
 
-				//Balance forward
-				$bf = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				$bf->select_sum('amount');
-				$bf->where_related('contact', 'id', $value->contact_id);
-				$bf->where('status', 0);
-				$bf->where('type', 'eInvoice');
-				$bf->where_in('type', array('Invoice', 'eInvoice'));
-				$bf->where('month_of <', $value->month_of);
-				$bf->get();
+	// 			//Balance forward
+	// 			$bf = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+	// 			$bf->select_sum('amount');
+	// 			$bf->where_related('contact', 'id', $value->contact_id);
+	// 			$bf->where('status', 0);
+	// 			$bf->where('type', 'eInvoice');
+	// 			$bf->where_in('type', array('Invoice', 'eInvoice'));
+	// 			$bf->where('month_of <', $value->month_of);
+	// 			$bf->get();
 
-				$total = floatval($value->amount) + floatval($bf->amount);					
+	// 			$total = floatval($value->amount) + floatval($bf->amount);					
 
-				//Results				
-				$data["results"][] = array(
-					"id" 				=> $value->id,
-			   		"type" 				=> $value->type,				   
-				   	"number" 			=> $value->number,					   
-				   	"amount" 			=> floatval($value->amount),
-				   	"vat" 				=> $value->vat,
-				   	"rate" 				=> floatval($value->rate),
-				   	"locale" 			=> $value->locale,
-				   	"month_of" 			=> $value->month_of,
-				   	"issued_date"		=> $value->issued_date,
-				   	"payment_date" 		=> $value->payment_date,
-				   	"due_date" 			=> $value->due_date,
-				   	"check_no" 			=> $value->check_no,
-				   	"memo" 				=> $value->memo,
-				   	"memo2" 			=> $value->memo2,
-				   	"status" 			=> $value->status,
+	// 			//Results				
+	// 			$data["results"][] = array(
+	// 				"id" 				=> $value->id,
+	// 		   		"type" 				=> $value->type,				   
+	// 			   	"number" 			=> $value->number,					   
+	// 			   	"amount" 			=> floatval($value->amount),
+	// 			   	"vat" 				=> $value->vat,
+	// 			   	"rate" 				=> floatval($value->rate),
+	// 			   	"locale" 			=> $value->locale,
+	// 			   	"month_of" 			=> $value->month_of,
+	// 			   	"issued_date"		=> $value->issued_date,
+	// 			   	"payment_date" 		=> $value->payment_date,
+	// 			   	"due_date" 			=> $value->due_date,
+	// 			   	"check_no" 			=> $value->check_no,
+	// 			   	"memo" 				=> $value->memo,
+	// 			   	"memo2" 			=> $value->memo2,
+	// 			   	"status" 			=> $value->status,
 				   	
-				   	"total"				=> $total,
-				   	"companies" 		=> $companies,
-				   	"customers" 		=> $customers,
-				   	"location_name" 	=> $value->location_name,				   	
-				   	"balance_forward" 	=> floatval($bf->amount),
-				   	"invoiceLineList" 	=> $invoiceLineList				
-				);
-			}
-		}			
+	// 			   	"total"				=> $total,
+	// 			   	"companies" 		=> $companies,
+	// 			   	"customers" 		=> $customers,
+	// 			   	"location_name" 	=> $value->location_name,				   	
+	// 			   	"balance_forward" 	=> floatval($bf->amount),
+	// 			   	"invoiceLineList" 	=> $invoiceLineList				
+	// 			);
+	// 		}
+	// 	}			
 
-		//Response Data		
-		$this->response($data, 200);		
-	}
+	// 	//Response Data		
+	// 	$this->response($data, 200);		
+	// }
 
-	//INVOICE TRANSACTION
-	function transaction_get() {		
-		$filters 	= $this->get("filter")["filters"];		
-		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
-		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;								
-		$sort 	 	= $this->get("sort");		
-		$data["results"] = array();
-		$data["count"] = 0;
+	// //INVOICE TRANSACTION
+	// function transaction_get() {		
+	// 	$filters 	= $this->get("filter")["filters"];		
+	// 	$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
+	// 	$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;								
+	// 	$sort 	 	= $this->get("sort");		
+	// 	$data["results"] = array();
+	// 	$data["count"] = 0;
 
-		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
+	// 	$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
 
-		//Sort
-		if(!empty($sort) && isset($sort)){					
-			$obj->order_by($this->_get_sorts($sort));
-		}
+	// 	//Sort
+	// 	if(!empty($sort) && isset($sort)){					
+	// 		$obj->order_by($this->_get_sorts($sort));
+	// 	}
 
-		//Limit
-		if(!empty($limit) && isset($limit)){					
-			$obj->limit($limit, $offset);
-		}		
+	// 	//Limit
+	// 	if(!empty($limit) && isset($limit)){					
+	// 		$obj->limit($limit, $offset);
+	// 	}		
 
-		//Filter
-		if(!empty($filters) && isset($filters)){
-			if($filters[0]["field"]=="id"){
-				$obj->where($filters[0]["field"], $filters[0]["value"]);
-			}else{
-				$obj->where($filters[0]["field"], $filters[0]["value"]);
-				$obj->where_related("invoice_line/meter_record/meter", $filters[1]["field"], $filters[1]["value"]);
-			}
+	// 	//Filter
+	// 	if(!empty($filters) && isset($filters)){
+	// 		if($filters[0]["field"]=="id"){
+	// 			$obj->where($filters[0]["field"], $filters[0]["value"]);
+	// 		}else{
+	// 			$obj->where($filters[0]["field"], $filters[0]["value"]);
+	// 			$obj->where_related("invoice_line/meter_record/meter", $filters[1]["field"], $filters[1]["value"]);
+	// 		}
 			
-			$obj->include_related('contact', array('number', 'surname', 'name'));
+	// 		$obj->include_related('contact', array('number', 'surname', 'name'));
 			
 								
-			$obj->get_iterated();
-			if($obj->exists()) {
-				foreach ($obj as $value) {
-					//Results				
-					$data["results"][] = array(
+	// 		$obj->get_iterated();
+	// 		if($obj->exists()) {
+	// 			foreach ($obj as $value) {
+	// 				//Results				
+	// 				$data["results"][] = array(
 						
-					);
-				}
-			}
+	// 				);
+	// 			}
+	// 		}
 
-			$data["total"] = count($data["results"]);			 			
-		}
+	// 		$data["total"] = count($data["results"]);			 			
+	// 	}
 
-		//Response Data		
-		$this->response($data, 200);		
-	}
+	// 	//Response Data		
+	// 	$this->response($data, 200);		
+	// }
 
-	//OUTSTANDING
-	function outstanding_get(){
-		$filters 	= $this->get("filter")["filters"];		
-		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
-		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;								
-		$sort 	 	= $this->get("sort");		
-		$data["results"] = array();
-		$data["count"] = 6;
+	// //OUTSTANDING
+	// function outstanding_get(){
+	// 	$filters 	= $this->get("filter")["filters"];		
+	// 	$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
+	// 	$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;								
+	// 	$sort 	 	= $this->get("sort");		
+	// 	$data["results"] = array();
+	// 	$data["count"] = 6;
 
-		//Locale
-		$locale = "km-KH";
-		if(!empty($filters) && isset($filters)){
-			$customer = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			$customer->where("id", $filters[0]["value"]);
-			$customer->get();			
-			$locale = $customer->currency->get()->locale;						
-		}else{
-			$company = new Company(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			$company->get();
-			foreach ($company as $value) {
-				$locale = $value->currency->get()->locale;
-				break;
-			}			
-		}
-		$data["results"][] = array("locale"=>$locale);
+	// 	//Locale
+	// 	$locale = "km-KH";
+	// 	if(!empty($filters) && isset($filters)){
+	// 		$customer = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+	// 		$customer->where("id", $filters[0]["value"]);
+	// 		$customer->get();			
+	// 		$locale = $customer->currency->get()->locale;						
+	// 	}else{
+	// 		$company = new Company(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+	// 		$company->get();
+	// 		foreach ($company as $value) {
+	// 			$locale = $value->currency->get()->locale;
+	// 			break;
+	// 		}			
+	// 	}
+	// 	$data["results"][] = array("locale"=>$locale);
 
-		//Estimate
-		$est = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		if(!empty($filters) && isset($filters)){
-			$est->where($filters[0]["field"], $filters[0]["value"]);
-		}
-		$est->where("type", "Estimate");
-		$est->where("status", 0);
-		$data["results"][] = array("totalEstimate"=>$est->count());
+	// 	//Estimate
+	// 	$est = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+	// 	if(!empty($filters) && isset($filters)){
+	// 		$est->where($filters[0]["field"], $filters[0]["value"]);
+	// 	}
+	// 	$est->where("type", "Estimate");
+	// 	$est->where("status", 0);
+	// 	$data["results"][] = array("totalEstimate"=>$est->count());
 		
-		//SO
-		$so = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		if(!empty($filters) && isset($filters)){
-			$so->where($filters[0]["field"], $filters[0]["value"]);
-		}
-		$so->where("type", "SO");
-		$so->where("status", 0);		
-		$data["results"][] = array("totalSO"=>$so->count());		
+	// 	//SO
+	// 	$so = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+	// 	if(!empty($filters) && isset($filters)){
+	// 		$so->where($filters[0]["field"], $filters[0]["value"]);
+	// 	}
+	// 	$so->where("type", "SO");
+	// 	$so->where("status", 0);		
+	// 	$data["results"][] = array("totalSO"=>$so->count());		
 
-		//Invoice
-		$inv = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		if(!empty($filters) && isset($filters)){
-			$inv->where($filters[0]["field"], $filters[0]["value"]);
-		}
-		$inv->where_in("type", array("Invoice", "eInvoice", "Notice"));
-		$inv->where_in("status", array(0,2));
-		$inv->get();		
-		$data["results"][] = array("totalOpenInvoice"=>$inv->result_count());
+	// 	//Invoice
+	// 	$inv = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+	// 	if(!empty($filters) && isset($filters)){
+	// 		$inv->where($filters[0]["field"], $filters[0]["value"]);
+	// 	}
+	// 	$inv->where_in("type", array("Invoice", "eInvoice", "Notice"));
+	// 	$inv->where_in("status", array(0,2));
+	// 	$inv->get();		
+	// 	$data["results"][] = array("totalOpenInvoice"=>$inv->result_count());
 
-		$overDue = 0;
-		$bal = 0;
-		foreach ($inv as $value) {
-			$bal += floatval($value->amount);
-			$today = new DateTime();
-			$dueDate = new DateTime($value->due_date);
-			if($dueDate<$today){
-				$overDue++;
-			}
-		}
-		$data["results"][] = array("totalOverDue"=>$overDue);
-		$data["results"][] = array("balance"=>$bal);
+	// 	$overDue = 0;
+	// 	$bal = 0;
+	// 	foreach ($inv as $value) {
+	// 		$bal += floatval($value->amount);
+	// 		$today = new DateTime();
+	// 		$dueDate = new DateTime($value->due_date);
+	// 		if($dueDate<$today){
+	// 			$overDue++;
+	// 		}
+	// 	}
+	// 	$data["results"][] = array("totalOverDue"=>$overDue);
+	// 	$data["results"][] = array("balance"=>$bal);
 
-		$this->response($data, 200);		
-	}
+	// 	$this->response($data, 200);		
+	// }
 
-	//GET MONTHLY SALE
-	function monthly_sale_get() {		
-		$filters 	= $this->get("filter")["filters"];		
-		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
-		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;								
-		$sort 	 	= $this->get("sort");		
-		$data["results"] = array();
-		$data["count"] = 0;
+	// //GET MONTHLY SALE
+	// function monthly_sale_get() {		
+	// 	$filters 	= $this->get("filter")["filters"];		
+	// 	$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
+	// 	$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;								
+	// 	$sort 	 	= $this->get("sort");		
+	// 	$data["results"] = array();
+	// 	$data["count"] = 0;
 
-		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+	// 	$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		
-		//Filter		
-		if(!empty($filters) && isset($filters)){			
-	    	foreach ($filters as $value) {	    				
-	    		$obj->where($value["field"], $value["value"]);	    		  			    		
-			}									 			
-		}
+	// 	//Filter		
+	// 	if(!empty($filters) && isset($filters)){			
+	//     	foreach ($filters as $value) {	    				
+	//     		$obj->where($value["field"], $value["value"]);	    		  			    		
+	// 		}									 			
+	// 	}
 		
-		$obj->where_in("type", ["Invoice","Receipt"]);
-		$obj->where("issued_date >=", date("Y")."-01-01");
-		$obj->where("issued_date <=", date("Y")."-12-31");						
-		$obj->order_by("issued_date");								
-		$obj->get();
+	// 	$obj->where_in("type", ["Invoice","Receipt"]);
+	// 	$obj->where("issued_date >=", date("Y")."-01-01");
+	// 	$obj->where("issued_date <=", date("Y")."-12-31");						
+	// 	$obj->order_by("issued_date");								
+	// 	$obj->get();
 		
-		if($obj->result_count()>0){
-			foreach ($obj as $value) {
-				$data["results"][] = array(					
-				   	"amount" 		=> floatval($value->amount),
-				   	"month"			=> date('F', strtotime($value->issued_date))				   	
-				);
-			}
-		}
+	// 	if($obj->result_count()>0){
+	// 		foreach ($obj as $value) {
+	// 			$data["results"][] = array(					
+	// 			   	"amount" 		=> floatval($value->amount),
+	// 			   	"month"			=> date('F', strtotime($value->issued_date))				   	
+	// 			);
+	// 		}
+	// 	}
 
-		//Response Data		
-		$this->response($data, 200);	
-	}
+	// 	//Response Data		
+	// 	$this->response($data, 200);	
+	// }
 
-	//GET MONTHLY EXPENSE
-	function monthly_expense_get() {		
-		$filters 	= $this->get("filter")["filters"];		
-		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
-		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;								
-		$sort 	 	= $this->get("sort");		
-		$data["results"] = array();
-		$data["count"] = 0;
+	// //GET MONTHLY EXPENSE
+	// function monthly_expense_get() {		
+	// 	$filters 	= $this->get("filter")["filters"];		
+	// 	$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
+	// 	$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;								
+	// 	$sort 	 	= $this->get("sort");		
+	// 	$data["results"] = array();
+	// 	$data["count"] = 0;
 
-		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+	// 	$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		
-		//Filter		
-		if(!empty($filters) && isset($filters)){			
-	    	foreach ($filters as $value) {	    				
-	    		$obj->where($value["field"], $value["value"]);	    		  			    		
-			}									 			
-		}
+	// 	//Filter		
+	// 	if(!empty($filters) && isset($filters)){			
+	//     	foreach ($filters as $value) {	    				
+	//     		$obj->where($value["field"], $value["value"]);	    		  			    		
+	// 		}									 			
+	// 	}
 		
-		$obj->where_in("type", array("Purchase","Expense"));
-		$obj->where("issued_date >=", date("Y")."-01-01");
-		$obj->where("issued_date <=", date("Y")."-12-31");						
-		$obj->order_by("issued_date");								
-		$obj->get();
+	// 	$obj->where_in("type", array("Purchase","Expense"));
+	// 	$obj->where("issued_date >=", date("Y")."-01-01");
+	// 	$obj->where("issued_date <=", date("Y")."-12-31");						
+	// 	$obj->order_by("issued_date");								
+	// 	$obj->get();
 		
-		if($obj->result_count()>0){
-			foreach ($obj as $value) {
-				$data["results"][] = array(					
-				   	"amount" 		=> floatval($value->amount),
-				   	"month"			=> date('F', strtotime($value->issued_date))				   	
-				);
-			}
-		}
+	// 	if($obj->result_count()>0){
+	// 		foreach ($obj as $value) {
+	// 			$data["results"][] = array(					
+	// 			   	"amount" 		=> floatval($value->amount),
+	// 			   	"month"			=> date('F', strtotime($value->issued_date))				   	
+	// 			);
+	// 		}
+	// 	}
 
-		//Response Data		
-		$this->response($data, 200);	
-	}	
+	// 	//Response Data		
+	// 	$this->response($data, 200);	
+	// }	
 
-	//GET HOME DASHBOARD
-	function home_dashboard_get() {		
-		$filters 	= $this->get("filter")["filters"];		
-		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
-		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;								
-		$sort 	 	= $this->get("sort");		
-		$data["results"] = array();
-		$data["count"] = 1;
+	// //GET HOME DASHBOARD
+	// function home_dashboard_get() {		
+	// 	$filters 	= $this->get("filter")["filters"];		
+	// 	$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
+	// 	$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;								
+	// 	$sort 	 	= $this->get("sort");		
+	// 	$data["results"] = array();
+	// 	$data["count"] = 1;
 
-		$sale = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$inv = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$bill = new Bill(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$cus = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$order = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);	
+	// 	$sale = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+	// 	$inv = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+	// 	$bill = new Bill(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+	// 	$cus = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+	// 	$order = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);	
 
-		//Sort
-		if(!empty($sort) && isset($sort)){					
-			foreach ($sort as $value) {
-				$sale->order_by($value["field"], $value["dir"]);
-			}
-		}
+	// 	//Sort
+	// 	if(!empty($sort) && isset($sort)){					
+	// 		foreach ($sort as $value) {
+	// 			$sale->order_by($value["field"], $value["dir"]);
+	// 		}
+	// 	}
 		
-		//Filter		
-		if(!empty($filters) && isset($filters)){			
-	    	foreach ($filters as $value) {
-	    		$sale->where($value["field"]." ".$value["operatoin"], $value["value"]);
-	    		$inv->where($value["field"]." ".$value["operatoin"], $value["value"]);
-	    		$bill->where("expected_date"." ".$value["operatoin"], $value["value"]);
-	    		$order->where($value["field"]." ".$value["operatoin"], $value["value"]);
+	// 	//Filter		
+	// 	if(!empty($filters) && isset($filters)){			
+	//     	foreach ($filters as $value) {
+	//     		$sale->where($value["field"]." ".$value["operatoin"], $value["value"]);
+	//     		$inv->where($value["field"]." ".$value["operatoin"], $value["value"]);
+	//     		$bill->where("expected_date"." ".$value["operatoin"], $value["value"]);
+	//     		$order->where($value["field"]." ".$value["operatoin"], $value["value"]);
 
-	    		if($value["operatoin"]=="<="){
-	    			$cus->where("registered_date"." ".$value["operatoin"], $value["value"]);
-	    		}
-			}									 			
-		}		
+	//     		if($value["operatoin"]=="<="){
+	//     			$cus->where("registered_date"." ".$value["operatoin"], $value["value"]);
+	//     		}
+	// 		}									 			
+	// 	}		
 		
-		//Results
-		$sale->select_sum("amount");
-		$sale->where_in("type", array("Invoice", "Receipt", "eInvoice", "wInvoice"));
-		$sale->get();
+	// 	//Results
+	// 	$sale->select_sum("amount");
+	// 	$sale->where_in("type", array("Invoice", "Receipt", "eInvoice", "wInvoice"));
+	// 	$sale->get();
 
-		$inv->where_in("type", array("Invoice", "eInvoice", "wInvoice"));
-		$inv->where_in("status", array(0,2));
+	// 	$inv->where_in("type", array("Invoice", "eInvoice", "wInvoice"));
+	// 	$inv->where_in("status", array(0,2));
 
-		$bill->where("type", "bill");
-		$bill->where_in("status", array(0,2));
+	// 	$bill->where("type", "bill");
+	// 	$bill->where_in("status", array(0,2));
 		
-		$cus->where_related("contact_type", "parent_id", 1);
+	// 	$cus->where_related("contact_type", "parent_id", 1);
 
-		$order->where("type", "SO");
-		$order->where("status", 0);
+	// 	$order->where("type", "SO");
+	// 	$order->where("status", 0);
 							
-		$data["results"][] = array(
-			"id" 				=> 1,
-			"totalSale" 		=> floatval($sale->amount),
-			"totalOpenInvoice" 	=> $inv->count(),
-			"totalUnbill" 		=> $bill->count(),					
-			"totalCustomer" 	=> $cus->count(),
-			"totalOrder" 		=> $order->count()
-		);
+	// 	$data["results"][] = array(
+	// 		"id" 				=> 1,
+	// 		"totalSale" 		=> floatval($sale->amount),
+	// 		"totalOpenInvoice" 	=> $inv->count(),
+	// 		"totalUnbill" 		=> $bill->count(),					
+	// 		"totalCustomer" 	=> $cus->count(),
+	// 		"totalOrder" 		=> $order->count()
+	// 	);
 
-		//Response Data		
-		$this->response($data, 200);	
-	}
+	// 	//Response Data		
+	// 	$this->response($data, 200);	
+	// }
 
 
 

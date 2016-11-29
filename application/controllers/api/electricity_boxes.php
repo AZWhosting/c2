@@ -39,12 +39,14 @@ class Electricity_boxes extends REST_Controller {
 			}
 		}
 
-		//Filter
+		//Filter		
 		if(!empty($filters) && isset($filters)){
-			if(!empty($filters) && isset($filters)){			
-		    	foreach ($filters as $value) {		    		
-		    		$obj->where($value["field"], $value["value"]);		    		
-				}									 			
+	    	foreach ($filters as $value) {
+	    		if(isset($value['operator'])) {
+					$obj->{$value['operator']}($value['field'], $value['value']);
+				} else {
+	    			$obj->where($value["field"], $value["value"]);
+				}
 			}
 		}
 

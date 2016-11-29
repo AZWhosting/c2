@@ -8,6 +8,10 @@ class Meter_record extends DataMapper {
 		'employee' => array(
 			'class' => "employee",
 			'other_field' => 'meter_record'
+		),
+		'meter' => array(
+			'class' => 'meter',
+			'other_field' => 'record' 
 		)
 	);
 	
