@@ -20,7 +20,6 @@ class Plans extends REST_Controller {
 			$this->server_pwd = $conn->password;
 			$this->_database = $conn->inst_database;
 		}
-		$this->_database = "db_banhji";
 	}
 
 	function index_get() {
@@ -184,18 +183,22 @@ class Plans extends REST_Controller {
 				}
 			}
 		}
+		$table->where('is_deleted', 0);
+
 		$table->get();
 
 		if($table->exists()) {
 			foreach($table as $value) {
 				$data[] = array(
-					"is_flat" => $table->is_flat,
-					"type" 	  => $table->type,
-					"unit" 	  => $table->unit,
-					"amount"  => $table->amount,
-					"to" 	  => $table->to,
-					"from" 	  => $table->from,
-					"is_active"=>$table->is_active == 1 ? TRUE:FALSE
+					"id"  	  => $value->id,
+					"is_flat" => $value->is_flat,
+					"type" 	  => $value->type,
+					"unit" 	  => $value->unit,
+					"amount"  => $value->amount,
+					"to" 	  => $value->to,
+					"from" 	  => $value->from,
+					"name" 	  => $value->name,
+					"is_active"=>$value->is_active == 1 ? TRUE:FALSE
 				);
 			}
 		}		
@@ -213,24 +216,28 @@ class Plans extends REST_Controller {
 
 		foreach($requestedData as $row) {
 			$table = new Plan_item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			$table->where('id',  $row->id)->get();
-			$table->is_flat = $row->is_flat == TRUE ? 1 : 0;
+			$table->where('id', $row->id)->get();
+			$tmp = isset($row->is_flat) ? $row->is_flat:FALSE;
+			$table->is_flat = $tmp == TRUE ? 1 : 0;
 			$table->type = $row->type;
 			$table->unit = $row->unit;
-			$table->amount = $row->amount;
-			$table->to = $row->to;
-			$table->from = $row->from;
+			$table->amount = isset($row->amount) ? $row->amount : 0;
+			$table->to = isset($row->to)?$row->to:null;
+			$table->from = isset($row->from)?$row->from:null;
+			$table->name = isset($row->name)?$row->name:null;
 			$table->is_active = isset($row->is_active) ? $row->is_active : 1;
 			$table->is_deleted = 0;
 
 			if($table->save()) {
 				$data[] = array(
+					"id"  	  => $table->id,
 					"is_flat" => $table->is_flat,
 					"type" 	  => $table->type,
 					"unit" 	  => $table->unit,
 					"amount"  => $table->amount,
 					"to" 	  => $table->to,
 					"from" 	  => $table->from,
+					"name" 	  => $table->name,
 					"is_active"=>$table->is_active == 1 ? TRUE:FALSE
 				);
 			}
@@ -249,23 +256,27 @@ class Plans extends REST_Controller {
 
 		foreach($requestedData as $row) {
 			$table = new Plan_item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			$table->is_flat = $row->is_flat == TRUE ? 1 : 0;
+			$tmp = isset($row->is_flat) ? $row->is_flat:FALSE;
+			$table->is_flat = $tmp == TRUE ? 1 : 0;
 			$table->type = $row->type;
-			$table->unit = $row->unit;
-			$table->amount = $row->amount;
-			$table->to = $row->to;
-			$table->from = $row->from;
+			$table->unit = isset($row->unit)?$row->unit:null;
+			$table->amount = isset($row->amount) ? $row->amount : 0;
+			$table->to = isset($row->to)?$row->to:null;
+			$table->from = isset($row->from)?$row->from:null;
+			$table->name = isset($row->name)?$row->name:null;
 			$table->is_active = isset($row->is_active) ? $row->is_active : 1;
 			$table->is_deleted = 0;
 
 			if($table->save()) {
 				$data[] = array(
+					"id"  	  => $table->id,
 					"is_flat" => $table->is_flat,
 					"type" 	  => $table->type,
 					"unit" 	  => $table->unit,
 					"amount"  => $table->amount,
 					"to" 	  => $table->to,
 					"from" 	  => $table->from,
+					"name" 	  => $table->name,
 					"is_active"=>$table->is_active == 1 ? TRUE:FALSE
 				);
 			}
@@ -279,8 +290,8 @@ class Plans extends REST_Controller {
 	}
 
 	function items_delete() {
-		$requestedData = json_decode($this->put('models'));
-		$array = array();
+		$requestedData = json_decode($this->delete('models'));
+		$data = array();
 
 		foreach($requestedData as $row) {
 			$table = new Plan_item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);

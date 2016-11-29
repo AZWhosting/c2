@@ -107,7 +107,7 @@ class Locations extends REST_Controller {
 			$obj = new Location(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$obj->get_by_id($value->id);
 
-			$obj->company_id 	= $value->company_id;
+			
 			$obj->utility_id 	= $value->utility_id;			
 			$obj->name 			= $value->name;
 			$obj->abbr 			= $value->abbr;
@@ -115,8 +115,7 @@ class Locations extends REST_Controller {
 			if($obj->save()){				
 				//Results
 				$data["results"][] = array(
-					"id" 			=> $obj->id,		 			
-					"company_id" 	=> $obj->company_id,
+					"id" 			=> $obj->id,	
 					"utility_id" 	=> $obj->utility_id,
 					"name" 			=> $obj->name,
 					"abbr" 			=> $obj->abbr,

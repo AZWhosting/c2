@@ -14591,9 +14591,9 @@
 						</div>
 						<!-- // Widget heading END -->
 						
-						<a href="#/sale_summary_customer"><div class="widget-body alert alert-primary" style="min-height: 148px;">
+						<a href="#/sale_summary_customer"><div class="widget-body alert alert-primary " style="min-height: 148px;">
 							
-							<div align="center" class="text-large strong" data-bind="text: sale"></div>
+							<div align="center" class="text-large strong medai-font" data-bind="text: sale"></div>
 							<table width="100%">
 								<tr align="center">
 									<td width="33%" style="vertical-align: top">										
@@ -14634,9 +14634,9 @@
 						</div>
 						<!-- // Widget heading END -->
 						
-						<div class="widget-body alert-info" style="min-height: 148px;">
+						<div class="widget-body alert-info " style="min-height: 148px;">
 							
-							<div align="center" class="text-large strong" data-bind="text: order"></div>
+							<div align="center" class="text-large strong medai-font" data-bind="text: order"></div>
 							<table width="100%">
 								<tr align="center">
 									<td width="50%" style="vertical-align: top">										
@@ -14672,9 +14672,9 @@
 						</div>
 						<!-- // Widget heading END -->
 						
-						<a href="#/customer_balance_summary"><div class="widget-body alert-info3" style="background-color: LightGray; min-height: 148px;">
+						<a href="#/customer_balance_summary"><div class="widget-body alert-info" style="background-color: LightGray;  min-height: 148px;">
 							
-							<div align="center" class="text-large strong" data-bind="text: ar"></div>
+							<div align="center" class="text-large strong medai-font" data-bind="text: ar"></div>
 							<table width="100%">
 								<tr align="center">
 									<td width="33%" style="vertical-align: top">										
@@ -15048,14 +15048,14 @@
 						<div class="span6" style="margin-bottom: 10px;">
 							<div class="row-fluid">
 								<div class="span6">
-									<div class="widget-stats widget-stats-primary widget-stats-5" data-bind="click: loadBalance">
+									<div class="widget-stats widget-stats-primary widget-stats-5" data-bind="click: loadBalance" style="cursor: pointer;">
 										<span class="glyphicons coins"><i></i></span>
 										<span class="txt"><span data-bind="text: lang.lang.balance"></span><span data-bind="text: balance" style="font-size:medium;"></span></span>
 										<div class="clearfix"></div>
 									</div>
 								</div>
 								<div class="span6">
-									<div class="widget-stats widget-stats-inverse widget-stats-5" data-bind="click: loadDeposit">
+									<div class="widget-stats widget-stats-inverse widget-stats-5" data-bind="click: loadDeposit" style="cursor: pointer;">
 										<span class="glyphicons briefcase"><i></i></span>
 										<span class="txt"><span data-bind="text: lang.lang.deposit"></span><span data-bind="text: deposit" style="font-size:medium;"></span></span>
 										<div class="clearfix"></div>
@@ -15065,14 +15065,14 @@
 							
 							<div class="row-fluid">
 								<div class="span6">
-									<div class="widget-stats widget-stats-info widget-stats-5" data-bind="click: loadBalance">
+									<div class="widget-stats widget-stats-info widget-stats-5" data-bind="click: loadBalance" style="cursor: pointer;">
 										<span class="glyphicons circle_exclamation_mark"><i></i></span>
 										<span class="txt"><span data-bind="text: outInvoice"></span> <span data-bind="text: lang.lang.open_invoice"></span></span>
 										<div class="clearfix"></div>
 									</div>
 								</div>
 								<div class="span6">
-									<div class="widget-stats widget-stats-default widget-stats-5" data-bind="click: loadOverInvoice">
+									<div class="widget-stats widget-stats-default widget-stats-5" data-bind="click: loadOverInvoice" style="cursor: pointer;"> 
 										<span class="glyphicons turtle"><i></i></span>
 										<span class="txt"><span data-bind="text: overInvoice"></span> <span data-bind="text: lang.lang.over_due"></span></span>
 										<div class="clearfix"></div>
@@ -16897,7 +16897,7 @@
 
 						<div class="span8">
 
-							<div class="box-generic-noborder" style="height: 190px;">
+							<div class="box-generic-noborder">
 
 							    <!-- Tabs Heading -->
 							    <div class="tabsbar tabsbar-2">
@@ -29677,7 +29677,7 @@
 						</div>					   
 
 						<div class="span6" style="padding-left:0;">
-							<div class="row-fluid">
+							<div class="row">
 								<div class="span6">
 									<!-- Group -->
 									<div class="control-group">								
@@ -29709,7 +29709,7 @@
 									<!-- // Group END -->
 								</div>
 							</div>
-							<div class="row-fluid">
+							<div class="row">
 								<div class="span6">
 									<!-- Group -->
 									<div class="control-group">								
@@ -29738,10 +29738,10 @@
 						        <thead>
 						            <tr>
 						            	<th style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></th>				                
-						                <th width="20%"><span data-bind="text: lang.lang.items"></span></th>
-						                <th width="20%"><span data-bind="text: lang.lang.quantity"></span></th>
-						                <th width="15%"><span data-bind="text: lang.lang.cost"></span></th>
-						                <th width="15%"><span data-bind="text: lang.lang.amount"></span></th>
+						                <th ><span data-bind="text: lang.lang.items"></span></th>
+						                <th ><span data-bind="text: lang.lang.quantity"></span></th>
+						                <th ><span data-bind="text: lang.lang.cost"></span></th>
+						                <th ><span data-bind="text: lang.lang.amount"></span></th>
 						            </tr>
 						        </thead>
 						        <tbody data-role="listview"

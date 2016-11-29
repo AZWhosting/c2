@@ -299,7 +299,7 @@
 	            	</a>
 	            </li>
 	            <li>
-	            	<a href="#tab4" class="glyphicons retweet_2" data-toggle="tab">
+	            	<a href="#tab4" data-bind="click: goExemption" class="glyphicons retweet_2" data-toggle="tab">
 	            		<i></i><span class="strong"><span>Exemption</span></span>
 	            	</a>
 	            </li>
@@ -336,6 +336,11 @@
 	             <li>
 	            	<a href="#tab12" class="glyphicons list" data-toggle="tab">
 	            		<i></i><span class="strong"><span>Custom Forms</span></span>
+	            	</a>
+	            </li>
+	            <li>
+	            	<a href="#tab13" class="glyphicons list" data-toggle="tab">
+	            		<i></i><span class="strong"><span>Prefix Setting</span></span>
 	            	</a>
 	            </li>                       
 	        </ul>
@@ -395,9 +400,10 @@
 	            				<th class="center">Action</th>
 	            			</tr>
 	            		</thead>
-	            		<tbody data-role="listview"	            				
-				                data-template="blocSetting-template"
-				                data-bind="source: blocDS"></tbody>
+	            		<tbody data-role="listview"		
+			                data-template="blocSetting-template"
+			                data-edit-template="bloc-edit-template"
+			                data-bind="source: blocDS"></tbody>
 	            	</table>
 
 	            </div>
@@ -430,45 +436,33 @@
 
 	            <div class="tab-pane" id="tab4">
 	            	<div style="clear: both;margin-bottom: 10px;">
-		            	<input data-role="dropdownlist"
-		            	   class="span2"
-		            	   style="padding-right: 1px;height: 32px;" 
-            			   data-option-label="(--- Select ---)"
-            			   data-auto-bind="false"			                   
-		                   data-value-primitive="false"
-		                   data-text-field="name"
-		                   data-value-field="id"
-		                   data-bind="value: blockCompanyId,
-		                              source: licenseDS,
-		                              events: {change: onLicenseChange}"/>
 		                <input data-role="dropdownlist"
 		            	   class="span2"
 		            	   style="padding-right: 1px;height: 32px;" 
-            			   data-option-label="(--- Select ---)"
+            			   data-option-label="(--- Unit ---)"
             			   data-auto-bind="false"			                   
 		                   data-value-primitive="false"
 		                   data-text-field="name"
 		                   data-value-field="id"
-		                   data-bind="value: blockCompanyId,
-		                              source: licenseDS,
-		                              events: {change: onLicenseChange}"/>
-		            	<input data-bind="value: blocName" type="text" placeholder="Name" style="height: 32px;"  class="span3 k-textbox k-invalid" />
-		            	<input data-bind="value: blocAbbr" type="text" placeholder="Price" style="height: 32px;" class="span3 k-textbox k-invalid" />
-		            	<a class="btn btn-default glyphicons circle_plus cutype-icon" style="width: 80px;margin-left: 2px;" data-bind="click: addBloc"><i></i>Add</a>
+		                   data-bind="value: exUnit,
+		                              source: typeUnit"/>
+		            	<input data-bind="value: exName" type="text" placeholder="Name" style="height: 32px;"  class="span3 k-textbox k-invalid" />
+		            	<input data-bind="value: exPrice" type="text" placeholder="Price" style="height: 32px;" class="span3 k-textbox k-invalid" />
+		            	<a class="btn btn-default glyphicons circle_plus cutype-icon" style="width: 80px;margin-left: 2px;" data-bind="click: addEx"><i></i>Add</a>
 		            </div>
 	            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
 	            		<thead>
 	            			<tr>
-	            				<th class="center"><span>License</span></th>
 	            				<th class="center"><span>Name</span></th>
+	            				<th class="center"><span>Unit</span></th>
 	            				<th class="center"><span>Price</span></th>
-	            				<th class="center"><span>Type</span></th>
 	            				<th class="center">Action</th>
 	            			</tr>
 	            		</thead>
 	            		<tbody data-role="listview"	            				
 				                data-template="exemptionSetting-template"
-				                data-bind="source: blocDS"></tbody>
+				                data-edit-template="exemption-edit-template"
+				                data-bind="source: planItemDS"></tbody>
 	            	</table>
 
 	            </div>
@@ -627,8 +621,11 @@
 	            	</table>
 
 	            </div>
-	            <div class="tab-pane" id="tab8">
+	            <div class="tab-pane" id="tab12">
 	            	Custom Forms
+	            </div>
+	            <div class="tab-pane" id="tab13">
+	            	Prefix Setting
 	            </div>
 	        </div>
 	    </div>
@@ -708,53 +705,24 @@
    		</td>   		
    	</tr>
 </script>
-<script id="exemptionSetting-template" type="text/x-kendo-tmpl">                    
-    <tr>
-    	<td>
-    		#= branch.name#
-   		</td>
-   		<td align="center">
-    		#= name#
-   		</td>
-   		<td align="center">
-    		#= abbr#
-   		</td>
-   		<td align="center">
-    		#= abbr#
-   		</td>
-   		<td align="center">   			   
-		    <a class="btn-action glyphicons pencil btn-success k-edit-button" href="\\#"><i></i></a>
-   		</td>   		
-   	</tr>
-</script>
-<script id="tariffSetting-template" type="text/x-kendo-tmpl">                    
-    <tr>
-    	<td>
-    		#= branch.name#
-   		</td>
-   		<td align="center">
-    		#= name#
-   		</td>
-   		<td align="center">   			   
-		    <a class="btn-action glyphicons pencil btn-success k-edit-button" href="\\#"><i></i></a>
-   		</td>   		
-   	</tr>
-</script>
-<script id="bloc-edit-contact-type-template" type="text/x-kendo-tmpl">
+<script id="bloc-edit-template" type="text/x-kendo-tmpl">
     <div class="product-view k-widget">
-        <dl>                
+    	<dl>                
             <dd>
-                <input type="text" class="k-textbox" data-bind="value:name" name="ProductName" required="required" validationMessage="required" />
-                <span data-for="ProductName" class="k-invalid-msg"></span>
+            	<input type="text" class="k-textbox" data-bind="value:id" />
+                <input data-role="dropdownlist"
+        			   data-option-label="(--- Select ---)"        			   		                   
+	                   data-value-primitive="true"
+	                   data-text-field="name"
+	                   data-value-field="id"
+	                   data-bind="value: branch.id,
+	                              source: licenseDS" />
             </dd>               
         </dl>
         <dl>                
             <dd>
-                <select data-bind="value: location" >
-	                <option value="0"><span data-bind="text: lang.lang.not_a_company"></span></option>
-	                <option value="1"><span data-bind="text: lang.lang.it_is_a_company"></span></option>			                
-	            </select>
-            </dd>              
+                <input type="text" class="k-textbox" data-bind="value:name" name="ProductName" required="required" validationMessage="required" />
+            </dd>               
         </dl>
         <dl>                
             <dd>
@@ -769,6 +737,66 @@
         </div>
     </div>
 </script>
+<script id="exemptionSetting-template" type="text/x-kendo-tmpl">                    
+    <tr>
+    	<td>
+    		#= name#
+   		</td>
+   		<td align="center">
+    		#= unit#
+   		</td>
+   		<td align="center">
+    		#= amount#
+   		</td>
+   		<td align="center">   			   
+		    <a class="btn-action glyphicons pencil btn-success k-edit-button"><i></i></a>
+		    <a class="btn-action glyphicons remove_2 btn-danger k-delete-button"><i></i></a>
+   		</td>   		
+   	</tr>
+</script>
+<script id="exemption-edit-template" type="text/x-kendo-tmpl">
+    <div class="product-view k-widget">
+    	<dl>                
+            <dd>
+    			<input data-role="dropdownlist"      			   		                   
+	                   data-value-primitive="true"
+	                   data-text-field="name"
+	                   data-value-field="id"
+	                   data-bind="value: unit,
+	                              source: typeUnit" />
+	        </dd>               
+        </dl>
+    	<dl>                
+            <dd>
+            	<input type="text" class="k-textbox" data-bind="value:name" />
+            </dd>               
+        </dl>
+        <dl>                
+            <dd>
+            	<input type="text" class="k-textbox" data-bind="value:amount" />
+            </dd>               
+        </dl>
+        
+        <div class="edit-buttons">
+            <a class="k-button k-update-button" href="\\#"><span class="k-icon k-update"></span></a>
+            <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-cancel"></span></a>
+        </div>
+    </div>
+</script>
+<script id="tariffSetting-template" type="text/x-kendo-tmpl">                    
+    <tr>
+    	<td>
+    		#= branch.name#
+   		</td>
+   		<td align="center">
+    		#= name#
+   		</td>
+   		<td align="center">   			   
+		    <a class="btn-action glyphicons pencil btn-success k-edit-button" href="\\#"><i></i></a>
+   		</td>   		
+   	</tr>
+</script>
+
 
 <script id="customerSetting-edit-contact-type-template" type="text/x-kendo-tmpl">
     <div class="product-view k-widget">
@@ -6148,9 +6176,13 @@
         contactTypeCompany 	: 0,
         blockCompanyId  	: 0,
         blocDS 				: dataStore(apiUrl + "locations"),
+        planItemDS			: dataStore(apiUrl + "plans/items"),
         objBloc 			: null,
+        exUnit 				: [],
         licenseDS 			: dataStore(apiUrl + "branches"),
+        branchDS 			: dataStore(apiUrl + "branches"),
 		contactTypeDS 		: banhji.source.customerTypeDS,
+		typeUnit 			: [{id:"m3", name: "m3"},{id:"money", name: "Money"},{ id:"%", name: "%"}],
 		onLicenseChange 	: function(e) {
 			var index = e.sender.selectedIndex;
 			var block = this.licenseDS.at(index - 1);
@@ -6174,9 +6206,7 @@
         	}
         },
         addBloc 			: function(){
-
         	var branch = this.get("blockCompanyId");
-        	
         	if(branch!==""){
 	        	this.blocDS.add({
 	        		branch 		: {id : branch.id, name: branch.name},
@@ -6184,13 +6214,30 @@
 	        		abbr 		: this.get("blocAbbr")
 	        	});
 	        	this.blocDS.sync();
+	        	this.blocDS.data([]);
 	        	this.set("blocName", "");
 	        	this.set("blocAbbr", "");
 	        	this.set("blockCompanyId", 0);
         	}
         },
+        goExemption    	: function(){
+        	this.planItemDS.filter({field: "type", value: "exemption"});
+        },
+        addEx 			: function(){
+        	this.planItemDS.add({
+        		name 		: this.get("exName"),
+        		type     	: "exemption",
+        		unit 		: this.get("exUnit"),
+        		amount 		: this.get("exPrice")
+        	});
+        	this.planItemDS.sync();
+        	this.set("exName", "");
+        	this.set("exPrice", "");
+        	this.set("exUnit", "");
+        },
 		pageLoad 			: function(){
-
+			
+			
 		},
 		cancel 				: function(){
 			this.licenseDS.cancelChanges();		

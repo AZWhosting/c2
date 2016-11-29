@@ -27,10 +27,10 @@ class Winvoices extends REST_Controller {
 	// with contact detail
 	// and items based on meter record &
 	// plan items
-	function index_get() {
+	function make_get() {
 		$getData = $this->get('filter');
 		$filters = $getData['filters'];
-		$table = new Plan(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$table = new Meter_record(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$data = array();
 
 		if(isset($filters)) {
@@ -42,21 +42,64 @@ class Winvoices extends REST_Controller {
 				}
 			}
 		}
-
+		$table->where('invoiced <>', 1);
 		$table->get();
 
-		// if($table->exists()) {
-		// 	foreach($table as $value) {
-		// 		$items = $value->plan_item->select('id, is_flat, type, unit, amount, from, to')->get_raw();
-		// 		$data[] = array(
-		// 			'code' => $value->code,
-		// 			'name' => $value->name,
-		// 			'items' => $items->result()
-		// 		);
-		// 	}
-		// }
+		$tmp = array();
 
-		// $this->response(array('results' => $data, 'count' => count($data)), 200);
+		foreach($table as $row) {
+			$meter = $row->meter->get();
+			$plan  = $meter->plan->get();
+
+			if(isset($tmp["$meter->number"])){
+				$tmp["$meter->number"]['items'][] = array(
+												'usage' => array(
+													'id'   => $row->id,
+													'from' => $row->from_date,
+													'to'   => $row->to_date,
+													'prev'=>$row->previous, 
+													'current'=>$row->current, 
+													'usage' => $row->usage
+												));
+			} else {
+				$tmp["$meter->number"]['type'] = 'invoice';
+				$tmp["$meter->number"]['meter'] = array(
+													'number' => $meter->number,
+													'multiplier' => $meter->multiplier
+												);
+				$tmp["$meter->number"]['items'][] = array(
+												'usage' => array(
+													'id'   => $row->id,
+													'from' => $row->from_date,
+													'to'   => $row->to_date,
+													'prev'=>$row->previous, 
+													'current'=>$row->current, 
+													'usage' => $row->usage
+												));
+				$items = $plan->plan_item->get();
+				foreach($items as $item) {
+					$tmp["$meter->number"]['items'][] = array(
+												"$item->type" => array(
+													'id'   => $row->id,
+													'from' => $row->from_date,
+													'to'   => $row->to_date,
+													'prev'=>$row->previous, 
+													'current'=>$row->current, 
+													'usage' => $row->usage
+												));
+				}
+			}
+		}
+
+		foreach($tmp as $t) {
+			$data[] = array(
+				'type' => $t['type'],
+				'meter'=> $t['meter'],
+				'items'=> $t['items']
+			);
+		}
+
+		$this->response(array('results' => $data, 'count' => count($data)), 200);
 	}
 
 	function index_post() {
