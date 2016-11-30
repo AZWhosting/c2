@@ -32107,9 +32107,7 @@
 		        #if(id=="4" || id=="5" || id=="6"){#
 
 		        #}else{#
-		        	#if(is_system=="1"){#
-		        		<span class="k-button" data-bind="click: goPattern"><span data-bind="text: lang.lang.pattern"></span></span>
-		   			#}#
+		        	<span class="k-button" data-bind="click: goPattern"><span data-bind="text: lang.lang.pattern"></span></span>
 		   		#}#
 		   	</div>		   	
    		</td>
@@ -72306,6 +72304,7 @@
         itemGroupDS 		: banhji.source.itemGroupDS,        
         measurementDS		: banhji.source.measurementDS,
         brandDS 			: banhji.source.brandDS,
+        patternDS  			: dataStore(apiUrl + "items"),
         category_code 		: "",
         category_name 		: "",
         category_abbr 		: "",
@@ -72338,11 +72337,29 @@
 	        	});
 
 	        	this.categoryDS.sync();
+	        	this.categoryDS.bind("requestEnd", function(e){
+	        		if(e.type==="create"){
+	        			var response = e.response.results[0];	        			
+	        			self.addPattern(response.id, response.item_type_id);
+	        		}
+	        	});
+
     			this.set("category_name", "");
     			this.set("category_abbr", "");
         	}else{
         		alert("required abbr and name!");
         	}
+        },
+        addPattern 			: function(category_id, item_type_id){
+    		this.patternDS.insert(0, {				
+				item_type_id 			: item_type_id,     			      			
+      			category_id 			: category_id,
+      			number 					: "",
+      			is_pattern 				: 1,
+      			status 					: 1							
+			});
+
+			this.patternDS.sync();
         },
         addItemGroup 		: function(){
         	var self = this, 

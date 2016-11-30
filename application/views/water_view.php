@@ -304,12 +304,12 @@
 	            	</a>
 	            </li>
 	            <li>
-	            	<a href="#tab5" class="glyphicons calculator" data-toggle="tab">
+	            	<a href="#tab5" data-bind="click: goTariff" class="glyphicons calculator" data-toggle="tab">
 	            		<i></i><span class="strong"><span>Tariff</span></span>
 	            	</a>
 	            </li>
 	            <li>
-	            	<a href="#tab6" class="glyphicons wallet" data-toggle="tab">
+	            	<a href="#tab6" data-bind="click: goDeposit" class="glyphicons wallet" data-toggle="tab">
 	            		<i></i><span class="strong"><span>Deposit</span></span>
 	            	</a>
 	            </li>
@@ -436,17 +436,19 @@
 
 	            <div class="tab-pane" id="tab4">
 	            	<div style="clear: both;margin-bottom: 10px;">
+	            		<input data-bind="value: exName" type="text" placeholder="Name" style="height: 32px;"  class="span3 k-textbox k-invalid" />
+
 		                <input data-role="dropdownlist"
 		            	   class="span2"
 		            	   style="padding-right: 1px;height: 32px;" 
             			   data-option-label="(--- Unit ---)"
             			   data-auto-bind="false"			                   
-		                   data-value-primitive="false"
+		                   data-value-primitive="true"
 		                   data-text-field="name"
 		                   data-value-field="id"
 		                   data-bind="value: exUnit,
 		                              source: typeUnit"/>
-		            	<input data-bind="value: exName" type="text" placeholder="Name" style="height: 32px;"  class="span3 k-textbox k-invalid" />
+		            	
 		            	<input data-bind="value: exPrice" type="text" placeholder="Price" style="height: 32px;" class="span3 k-textbox k-invalid" />
 		            	<a class="btn btn-default glyphicons circle_plus cutype-icon" style="width: 80px;margin-left: 2px;" data-bind="click: addEx"><i></i>Add</a>
 		            </div>
@@ -468,87 +470,78 @@
 	            </div>
 
 	            <div class="tab-pane" id="tab5">
-	            	<div class="span6">
-		            	<div style="clear: both;margin-bottom: 10px; overflow: hidden;">
-			            	<input data-role="dropdownlist"
-			            	   class="span4"
-			            	   style="padding-right: 1px;height: 32px;" 
-	            			   data-option-label="(--- Select ---)"
-	            			   data-auto-bind="false"			                   
-			                   data-value-primitive="false"
-			                   data-text-field="name"
-			                   data-value-field="id"
-			                   data-bind="value: blockCompanyId,
-			                              source: licenseDS,
-			                              events: {change: onLicenseChange}"/>
-			            	<input 
-			            		data-bind="value: tariffName" 
-			            		type="text" 
-			            		placeholder="Tariff Name" 
-			            		style="height: 32px;"  
-			            		class="span5 k-textbox k-invalid" />
-			            		<a class="btn btn-default glyphicons circle_plus cutype-icon" style="width: 80px;margin-left: 2px;float:right;" data-bind="click: addTariff"><i></i>Add</a>
-			            </div>
-		            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
-		            		<thead>
-		            			<tr>
-		            				<th class="center"><span>License</span></th>
-		            				<th class="center"><span>Tariff Name</span></th>
-		            				<th class="center">Action</th>
-		            			</tr>
-		            		</thead>
-		            		<tbody data-role="listview"	            				
-					                data-template="tariffSetting-template"
-					                data-bind="source: blocDS"></tbody>
-		            	</table>
+		            <div style="clear: both;margin-bottom: 10px;">
+		            	<input data-bind="value: tariffName" type="text" placeholder="Name" style="height: 32px;"  class="span2 k-textbox k-invalid" />
+
+		                <input data-role="dropdownlist"
+		            	   class="span2"
+		            	   style="padding-right: 1px;height: 32px;" 
+            			   data-option-label="(--- Unit ---)"
+            			   data-auto-bind="false"			                   
+		                   data-value-primitive="true"
+		                   data-text-field="name"
+		                   data-value-field="id"
+		                   data-bind="value: tariffUnit,
+		                              source: typeUnit"/>
+
+		                <input data-role="dropdownlist"
+		            	   class="span2"
+		            	   style="padding-right: 1px;height: 32px;" 
+            			   data-auto-bind="false"			                   
+		                   data-value-primitive="true"
+		                   data-text-field="name"
+		                   data-value-field="id"
+		                   data-bind="value: tariffFlat,
+		                              source: typeFlat"/>
+
+		            	<input data-bind="value: tariffFrom" type="text" placeholder="From" style="height: 32px;"  class="span1 k-textbox k-invalid" />
+
+		            	<input data-bind="value: tariffTo" type="text" placeholder="To" style="height: 32px;" class="span1 k-textbox k-invalid" />
+
+		            	<input data-bind="value: tariffPrice" type="text" placeholder="Price" style="height: 32px;" class="span2 k-textbox k-invalid" />
+
+		            	<a class="btn btn-default glyphicons circle_plus cutype-icon" style="width: 80px;margin-left: 2px;" data-bind="click: addTariff"><i></i>Add</a>
 		            </div>
-		            <div class="span6">
-		            	<div style="clear: both;margin-bottom: 10px;overflow: hidden;">
-			            	<input data-role="dropdownlist"
-			            	   class="span3"
-			            	   style="padding-right: 1px;height: 32px;" 
-	            			   data-option-label="(--- Select ---)"
-	            			   data-auto-bind="false"			                   
-			                   data-value-primitive="false"
-			                   data-text-field="name"
-			                   data-value-field="id"
-			                   data-bind="value: blockCompanyId,
-			                              source: licenseDS,
-			                              events: {change: onLicenseChange}"/>
-			            	<input 
-			            		data-bind="value: tariffName" 
-			            		type="text" 
-			            		placeholder="Usage" 
-			            		style="height: 32px;"  
-			            		class="span3 k-textbox k-invalid" />
-			            	<input 
-			            		data-bind="value: tariffName" 
-			            		type="text" 
-			            		placeholder="Price" 
-			            		style="height: 32px;"  
-			            		class="span3 k-textbox k-invalid" />
-			            	<a class="btn btn-default glyphicons circle_plus cutype-icon" 
-			            		style="width: 80px;margin-left: 2px;float:right;" data-bind="click: addTariff">
-			            		<i></i>Add
-			            	</a>
-			            </div>
-		            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
-		            		<thead>
-		            			<tr>
-		            				<th class="center"><span>Usage</span></th>
-		            				<th class="center"><span>Price</span></th>
-		            				<th class="center">Flat</th>
-		            			</tr>
-		            		</thead>
-		            		<tbody data-role="listview"	            				
-					                data-template="tariffSetting-template"
-					                data-bind="source: blocDS"></tbody>
-		            	</table>
-		            </div>
+	            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
+	            		<thead>
+	            			<tr>
+	            				<th class="center"><span>Name</span></th>
+	            				<th class="center" width="100"><span>Unit</span></th>
+	            				<th class="center" ><span>Flat</span></th>
+	            				<th class="center"><span>From</span></th>
+	            				<th class="center"><span>To</span></th>
+	            				<th class="center"><span>Price</span></th>
+	            				<th class="center">Action</th>
+	            			</tr>
+	            		</thead>
+	            		<tbody data-role="listview"	            				
+				                data-template="tariffSetting-template"
+				                data-edit-template="tariff-edit-template"
+				                data-bind="source: planItemDS"></tbody>
+	            	</table>
 	            </div>
 
 	            <div class="tab-pane" id="tab6">
-	            	Deposit
+	            	<div style="clear: both;margin-bottom: 10px;">
+	            		<input data-bind="value: depositName" type="text" placeholder="Name" style="height: 32px;"  class="span3 k-textbox k-invalid" />
+		            	
+		            	<input data-bind="value: depositPrice" type="text" placeholder="Price" style="height: 32px;" class="span3 k-textbox k-invalid" />
+
+		            	<a class="btn btn-default glyphicons circle_plus cutype-icon" style="width: 80px;margin-left: 2px;" data-bind="click: addDeposit"><i></i>Add</a>
+		            </div>
+	            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
+	            		<thead>
+	            			<tr>
+	            				<th class="center"><span>Name</span></th>
+	            				<th class="center"><span>Price</span></th>
+	            				<th class="center">Action</th>
+	            			</tr>
+	            		</thead>
+	            		<tbody data-role="listview"	            				
+				                data-template="depositSetting-template"
+				                data-edit-template="deposit-edit-template"
+				                data-bind="source: planItemDS"></tbody>
+	            	</table>
 	            </div>
 
 	            <div class="tab-pane" id="tab7">
@@ -603,6 +596,9 @@
 	            	</table>
 
 	            </div>
+	            <div class="tab-pane" id="tab10">
+	            	Maintenance
+	            </div>
 	            <div class="tab-pane" id="tab11">
 	            	<a class="btn-icon btn-primary glyphicons circle_plus" style="width: 110px;" href="#/plan"><i></i>Add Plan</a>
 	            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
@@ -622,7 +618,6 @@
 
 	            </div>
 	            <div class="tab-pane" id="tab12">
-	            	
 	            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
 	            		<thead>
 	            			<tr class="widget-head">
@@ -638,9 +633,7 @@
 				                 data-bind="source: txnTemplateDS">				            
 	            		</tbody>
 	            	</table>
-
 	            	<a id="addNew" class="btn-icon btn-primary glyphicons ok_2" data-bind="click: goInvoiceCustom" style="width: 110px;"><i></i>Add New</a>
-
 	            </div>
 	            <div class="tab-pane" id="tab13">
 	            	Prefix Setting
@@ -724,36 +717,32 @@
    	</tr>
 </script>
 <script id="bloc-edit-template" type="text/x-kendo-tmpl">
-    <div class="product-view k-widget">
-    	<dl>                
-            <dd>
-            	<input type="text" class="k-textbox" data-bind="value:id" />
-                <input data-role="dropdownlist"
-        			   data-option-label="(--- Select ---)"        			   		                   
-	                   data-value-primitive="true"
-	                   data-text-field="name"
-	                   data-value-field="id"
-	                   data-bind="value: branch.id,
-	                              source: licenseDS" />
-            </dd>               
-        </dl>
-        <dl>                
-            <dd>
-                <input type="text" class="k-textbox" data-bind="value:name" name="ProductName" required="required" validationMessage="required" />
-            </dd>               
-        </dl>
-        <dl>                
-            <dd>
-                <input type="text" class="k-textbox" data-bind="value:abbr" name="abbr" required="required" validationMessage="required" />
-                <span data-for="abbr" class="k-invalid-msg"></span>
-            </dd>               
-        </dl>
-        
-        <div class="edit-buttons">
-            <a class="k-button k-update-button" href="\\#"><span class="k-icon k-update"></span></a>
-            <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-cancel"></span></a>
-        </div>
-    </div>
+	<tr>
+		<td>
+            <input data-role="dropdownlist"
+    			   data-option-label="(--- Select ---)"        			   		                   
+                   data-value-primitive="true"
+                   data-text-field="name"
+                   data-value-field="id"
+                   data-bind="value: branch.id,
+                              source: licenseDS" />
+        </td>
+			<td align="center">
+    
+            <input type="text" class="k-textbox" data-bind="value:name" name="ProductName" required="required" validationMessage="required" />
+        </td>
+			<td align="center">
+            <input type="text" class="k-textbox" data-bind="value:abbr" name="abbr" required="required" validationMessage="required" />
+            <span data-for="abbr" class="k-invalid-msg"></span>
+        </td>
+			<td align="center">
+    
+	        <div class="edit-buttons">
+	            <a class="k-button k-update-button" href="\\#"><span class="k-icon k-update"></span></a>
+	            <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-cancel"></span></a>
+	        </div>
+	    </td>
+	</tr>
 </script>
 <script id="exemptionSetting-template" type="text/x-kendo-tmpl">                    
     <tr>
@@ -800,16 +789,98 @@
 <script id="tariffSetting-template" type="text/x-kendo-tmpl">                    
     <tr>
     	<td>
-    		#= branch.name#
-   		</td>
-   		<td align="center">
     		#= name#
    		</td>
+   		<td align="center">
+    		#= unit#
+   		</td>
+   		<td align="center">
+    		#= is_flat#
+   		</td>
+   		<td align="center">
+    		#= from#
+   		</td>
+   		<td align="center">
+    		#= to#
+   		</td>
+   		<td align="center">
+    		#= amount#
+   		</td>
    		<td align="center">   			   
-		    <a class="btn-action glyphicons pencil btn-success k-edit-button" href="\\#"><i></i></a>
+		    <a class="btn-action glyphicons pencil btn-success k-edit-button"><i></i></a>
+		    <a class="btn-action glyphicons remove_2 btn-danger k-delete-button"><i></i></a>
    		</td>   		
    	</tr>
 </script>
+<script id="tariff-edit-template" type="text/x-kendo-tmpl">
+    <tr>    	               
+        <td>
+			<input style="width: 100%;" type="text" class="k-textbox" data-bind="value:name" />
+        </td>     
+        <td>        	
+        	<input style="width: 100%;" data-role="dropdownlist"      			   		                   
+                   data-value-primitive="true"
+                   data-text-field="name"
+                   data-value-field="id"
+                   data-bind="value: unit,
+                              source: typeUnit" />
+        </td>  
+        <td>
+        	<input data-role="dropdownlist"
+		            	   style="padding-right: 1px;height: 32px;" 
+            			   data-auto-bind="false"			                   
+		                   data-value-primitive="true"
+		                   data-text-field="name"
+		                   data-value-field="id"
+		                   data-bind="value: is_flat,
+		                              source: typeFlat"/>           
+		</td>  
+        <td>
+        	<input style="width: 100%;" type="text" class="k-textbox" data-bind="value:from" />
+        </td>
+        <td>
+        	<input style="width: 100%;" type="text" class="k-textbox" data-bind="value:to" />
+        </td>     
+        <td>
+        	<input style="width: 100%;" type="text" class="k-textbox" data-bind="value:amount" />
+        </td>
+
+	    <td class="edit-buttons" style="text-align: center;">
+	        <a class="k-button k-update-button" href="\\#"><span class="k-icon k-update"></span></a>
+	        <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-cancel"></span></a>
+	    </td>
+    </tr>
+</script>
+<script id="depositSetting-template" type="text/x-kendo-tmpl">                    
+    <tr>
+    	<td>
+    		#= name#
+   		</td>
+   		<td align="center">
+    		#= amount#
+   		</td>
+   		<td align="center">   			   
+		    <a class="btn-action glyphicons pencil btn-success k-edit-button"><i></i></a>
+		    <a class="btn-action glyphicons remove_2 btn-danger k-delete-button"><i></i></a>
+   		</td>   		
+   	</tr>
+</script>
+<script id="deposit-edit-template" type="text/x-kendo-tmpl">
+    <tr>    	               
+        <td>
+			<input style="width: 100%;" type="text" class="k-textbox" data-bind="value:name" />
+        </td>       
+        <td>
+        	<input style="width: 100%;" type="text" class="k-textbox" data-bind="value:amount" />
+        </td>
+
+	    <td class="edit-buttons" style="text-align: center;">
+	        <a class="k-button k-update-button" href="\\#"><span class="k-icon k-update"></span></a>
+	        <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-cancel"></span></a>
+	    </td>
+    </tr>
+</script>
+
 <script id="customerSetting-form-template" type="text/x-kendo-template">
 	<tr>
 		<td ><a style="text-align: left;" href="\\#/invoice_custom/#= id # "> #=name#  </a></td>
@@ -6765,11 +6836,12 @@
         blocDS 				: dataStore(apiUrl + "locations"),
         planItemDS			: dataStore(apiUrl + "plans/items"),
         objBloc 			: null,
-        exUnit 				: [],
         licenseDS 			: dataStore(apiUrl + "branches"),
         branchDS 			: dataStore(apiUrl + "branches"),
 		contactTypeDS 		: banhji.source.customerTypeDS,
 		typeUnit 			: [{id:"m3", name: "m3"},{id:"money", name: "Money"},{ id:"%", name: "%"}],
+		typeFlat 			: [{id:"false", name: "Not Flat"},{id:"true", name: "Flat"}],
+		tariffFlat 			: false,
 		onLicenseChange 	: function(e) {
 			var index = e.sender.selectedIndex;
 			var block = this.licenseDS.at(index - 1);
@@ -6814,6 +6886,9 @@
         	this.planItemDS.add({
         		name 		: this.get("exName"),
         		type     	: "exemption",
+        		is_flat 	: false,
+        		to 			: 0,
+        		from 		: 0,
         		unit 		: this.get("exUnit"),
         		amount 		: this.get("exPrice")
         	});
@@ -6821,6 +6896,44 @@
         	this.set("exName", "");
         	this.set("exPrice", "");
         	this.set("exUnit", "");
+        },
+        goTariff    		: function(){
+        	this.planItemDS.filter({field: "type", value: "tariff"});
+        },
+        addTariff 				: function(){
+        	this.planItemDS.add({
+        		name 		: this.get("tariffName"),
+        		type     	: "tariff",
+        		is_flat   	: this.get("tariffFlat"),
+        		unit 		: this.get("tariffUnit"),
+        		from 		: this.get("tariffFrom"),
+        		to 			: this.get("tariffTo"),
+        		amount 		: this.get("tariffPrice")
+        	});
+        	this.planItemDS.sync();
+        	this.set("tariffName", "");
+        	this.set("tariffPrice", "");
+        	this.set("tariffUnit", "");
+        	this.set("tariffFrom", "");
+        	this.set("tariffFlat", "false");
+        	this.set("tariffTo", "");
+        },
+        goDeposit    		: function(){
+        	this.planItemDS.filter({field: "type", value: "deposit"});
+        },
+        addDeposit			: function(){
+        	this.planItemDS.add({
+        		name 		: this.get("depositName"),
+        		type     	: "deposit",
+        		is_flat   	: false,
+        		unit 		: null,
+        		from 		: null,
+        		to 			: null,
+        		amount 		: this.get("depositPrice")
+        	});
+        	this.planItemDS.sync();
+        	this.set("depositName", "");
+        	this.set("depositPrice", "");
         },
 		pageLoad 			: function(){
 		},

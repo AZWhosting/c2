@@ -82,13 +82,13 @@ class Locations extends REST_Controller {
 			isset($value->branch) 				? $obj->branch_id 			= $value->branch->id : "";
 			if($obj->save()){
 				//Respsone
-				
+				$license = $obj->branch->get();
 				$data["results"][] = array(					
 					"id" 			=> $obj->id,
 					"utility_id" 	=> $obj->utility_id,
 					"name" 			=> $obj->name,
 					"abbr" 			=> $obj->abbr,
-					"branch_id" 	=> $obj->branch_id	
+					"branch" 		=> array('id' => $license->id, 'name' => $license->name)	
 				);				
 			}		
 		}
@@ -106,21 +106,18 @@ class Locations extends REST_Controller {
 		foreach ($models as $value) {			
 			$obj = new Location(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$obj->get_by_id($value->id);
-
-			
-			$obj->utility_id 	= $value->utility_id;			
+		
 			$obj->name 			= $value->name;
 			$obj->abbr 			= $value->abbr;
-			$obj->branch_id 	= $value->branch_id;
+			$obj->branch_id 	= $value->branch->id;
 			if($obj->save()){				
 				//Results
+				$license = $obj->branch->get();
 				$data["results"][] = array(
-					"id" 			=> $obj->id,	
-					"utility_id" 	=> $obj->utility_id,
+					"id" 			=> $obj->id,
 					"name" 			=> $obj->name,
 					"abbr" 			=> $obj->abbr,
-					"branch_id" 	=> $obj->branch_id,
-				   	"company" 		=> $obj->company->get_raw()->result()
+					"branch" 		=> array('id' => $license->id, 'name' => $license->name)
 				);						
 			}
 		}

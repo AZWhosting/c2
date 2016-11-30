@@ -191,7 +191,7 @@ class Plans extends REST_Controller {
 			foreach($table as $value) {
 				$data[] = array(
 					"id"  	  => $value->id,
-					"is_flat" => $value->is_flat,
+					"is_flat" => $value->is_flat == 0?FALSE:TRUE,
 					"type" 	  => $value->type,
 					"unit" 	  => $value->unit,
 					"amount"  => $value->amount,
@@ -231,7 +231,7 @@ class Plans extends REST_Controller {
 			if($table->save()) {
 				$data[] = array(
 					"id"  	  => $table->id,
-					"is_flat" => $table->is_flat,
+					"is_flat" => $table->is_flat == 0?FALSE:TRUE,
 					"type" 	  => $table->type,
 					"unit" 	  => $table->unit,
 					"amount"  => $table->amount,
@@ -270,7 +270,7 @@ class Plans extends REST_Controller {
 			if($table->save()) {
 				$data[] = array(
 					"id"  	  => $table->id,
-					"is_flat" => $table->is_flat,
+					"is_flat" => $table->is_flat == 0?FALSE:TRUE,
 					"type" 	  => $table->type,
 					"unit" 	  => $table->unit,
 					"amount"  => $table->amount,
