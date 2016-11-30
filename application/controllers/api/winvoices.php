@@ -26,7 +26,8 @@ class Winvoices extends REST_Controller {
 	// based on meter
 	// with contact detail
 	// and items based on meter record &
-	// plan items
+	// plan 
+	// installment
 	function make_get() {
 		$getData = $this->get('filter');
 		$filters = $getData['filters'];
@@ -59,10 +60,12 @@ class Winvoices extends REST_Controller {
 													'to'   => $row->to_date,
 													'prev'=>$row->previous, 
 													'current'=>$row->current, 
-													'usage' => $row->usage
+													'usage' => $row->usage,
+													'unit' => 'm3',
+													'amount'=> 0
 												));
 			} else {
-				$tmp["$meter->number"]['type'] = 'invoice';
+				$tmp["$meter->number"]['type'] = 'water_invoice';
 				$tmp["$meter->number"]['meter'] = array(
 													'number' => $meter->number,
 													'multiplier' => $meter->multiplier
@@ -74,20 +77,27 @@ class Winvoices extends REST_Controller {
 													'to'   => $row->to_date,
 													'prev'=>$row->previous, 
 													'current'=>$row->current, 
-													'usage' => $row->usage
+													'usage' => $row->usage,
+													'unit' => 'm3',
+													'amount'=> 0 
 												));
+				// plan items
 				$items = $plan->plan_item->get();
 				foreach($items as $item) {
 					$tmp["$meter->number"]['items'][] = array(
 												"$item->type" => array(
-													'id'   => $row->id,
-													'from' => $row->from_date,
-													'to'   => $row->to_date,
-													'prev'=>$row->previous, 
-													'current'=>$row->current, 
-													'usage' => $row->usage
+													'id'   => $item->id,
+													'from' => $item->from,
+													'to'   => $item->to,
+													'prev' =>0, 
+													'current'=>0, 
+													'usage' => 0,
+													'unit'  => $item->unit,
+													'amount'=> $item->amount
 												));
 				}
+
+				// installment
 			}
 		}
 
