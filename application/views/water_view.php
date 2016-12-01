@@ -403,7 +403,7 @@
 	            		<tbody data-role="listview"		
 			                data-template="blocSetting-template"
 			                data-edit-template="bloc-edit-template"
-			                data-auto-bind=false
+			                data-auto-bind="true"
 			                data-bind="source: blocDS"></tbody>
 	            	</table>
 
@@ -6780,7 +6780,7 @@
 
 			}else{
 				this.addNew();
-				this.get("current").items.push({});
+				this.get("current").items.push({item: null, code: n});
 			}
 		},
 		setCurrent 	: function(current) {
@@ -6939,6 +6939,7 @@
         addBloc 			: function(){
 
         	var branch = this.get("blockCompanyId");
+        	console.log(branch);
         	if(branch!= ""){
 	        	this.blocDS.add({
 	        		branch 		: {id : branch.id, name: branch.name},
@@ -6947,7 +6948,6 @@
 	        	});
 
 	        	this.blocDS.sync();
-	        	this.blocDS.data([]);
 	        	this.set("blocName", "");
 	        	this.set("blocAbbr", "");
 	        	this.set("blockCompanyId", 0);
