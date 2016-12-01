@@ -48769,10 +48769,10 @@
 		notDuplicateNumber 		: true,
 		phFullname 				: "Supplier Name ...",
 		contact_type_id 		: 0,
-		pageLoad 				: function(id, is_pattern){
+		pageLoad 				: function(id, contact_type_id){
 			if(id){
 				this.set("isEdit", true);						
-				this.loadObj(id, is_pattern);
+				this.loadObj(id, contact_type_id);
 			}else{				
 				if(this.get("isEdit") || this.dataSource.total()==0){
 					this.addEmpty();
@@ -48898,12 +48898,15 @@
 			});
 		},
 		//Obj
-		loadObj 				: function(id, is_pattern){
+		loadObj 				: function(id, contact_type_id){
 			var self = this, para = [];
 
-			para.push({ field:"id", value: id });
+			if(id>0){
+				para.push({ field:"id", value: id });
+			}
 
-			if(is_pattern){
+			if(contact_type_id){
+				para.push({ field:"contact_type_id", value: contact_type_id });
 				para.push({ field:"is_pattern", value: 1 });
 			}
 
@@ -48931,7 +48934,7 @@
 
       		this.patternDS.query({
       			filter:[
-      				{ field:"id", value:3 },
+      				{ field:"contact_type_id", value:3 },
       				{ field:"is_pattern", value:1 }
       			],
       			page:1,
@@ -49021,11 +49024,6 @@
 					$.each(self.contactPersonDS.data(), function(index, value) {
 						value.set("contact_id", data[0].id);
 					});
-					
-					//Pattern
-					if(data[0].is_pattern){
-						self.savePattern(data[0].contact_type_id, data[0].id);
-					}
 				}
 				self.contactPersonDS.sync();
 				
@@ -49079,21 +49077,23 @@
 			this.set("showConfirm", false);
 		},
 		//Pattern		
-		applyPattern 			: function(contact_id){
+		applyPattern 			: function(){
 			var self = this, obj = self.get("obj");
 			
 			this.patternDS.query({
 				filter: [
-					{ field:"id", value: contact_id },
+					{ field:"contact_type_id", value: obj.contact_type_id },
 					{ field:"is_pattern", value: 1 }
 				],
 				page: 1,
 				pageSize: 1
 			}).then(function(data){
-				var view = self.patternDS.view();				
+				var view = self.patternDS.view(),
+				type = this.contactTypeDS.get(view[0].contact_type_id);				
 
 				if(view.length>0){
-					obj.set("country_id", view[0].country_id);					
+					obj.set("country_id", view[0].country_id);
+					obj.set("abbr", type.abbr);					
 					obj.set("gender", view[0].gender);
 					obj.set("company", view[0].company);
 					obj.set("vat_no", view[0].vat_no);
@@ -49137,20 +49137,11 @@
 				}
 			});
 		},
-		savePattern 			: function(contact_type_id, contact_id){
-			var data = banhji.customerSetting.contactTypeDS.get(contact_type_id);
-			data.set("contact_id", contact_id);
-			banhji.vendorSetting.contactTypeDS.sync();			
-			window.history.back();
-		},
 		typeChanges 			: function(){
 			var obj = this.get("obj");
 
 			if(obj.contact_type_id){
-				var type = this.contactTypeDS.get(obj.contact_type_id);
-				this.applyPattern(type.contact_id);
-				obj.set("abbr", type.abbr);
-
+				this.applyPattern();
 				this.generateNumber();
 			}else{
 				obj.set("company", "");
@@ -55784,7 +55775,7 @@
 					"trade_discount_id"		: view[0].trade_discount_id,
 					"settlement_discount_id": view[0].settlement_discount_id,					
 					"is_pattern" 			: 0,
-					"status"				: 1								
+					"status"				: 1
 				});
 
 				var obj = self.dataSource.at(0);				
@@ -55833,11 +55824,6 @@
 					$.each(self.contactPersonDS.data(), function(index, value) {
 						value.set("contact_id", data[0].id);
 					});
-					
-					//Pattern
-					if(data[0].is_pattern){
-						self.savePattern(data[0].contact_type_id, data[0].id);
-					}
 				}
 				self.contactPersonDS.sync();
 				
@@ -55892,21 +55878,23 @@
 			this.set("showConfirm", false);
 		},
 		//Pattern		
-		applyPattern 			: function(contact_id){
+		applyPattern 			: function(){
 			var self = this, obj = self.get("obj");
 			
 			this.patternDS.query({
 				filter: [
-					{ field:"id", value: contact_id },
+					{ field:"contact_type_id", value: obj.contact_type_id },
 					{ field:"is_pattern", value: 1 }
 				],
 				page: 1,
 				pageSize: 1
 			}).then(function(data){
-				var view = self.patternDS.view();				
+				var view = self.patternDS.view(),
+				type = self.contactTypeDS.get(view[0].contact_type_id);				
 
 				if(view.length>0){
-					obj.set("country_id", view[0].country_id);					
+					obj.set("country_id", view[0].country_id);
+					obj.set("abbr", type.abbr);					
 					obj.set("gender", view[0].gender);
 					obj.set("company", view[0].company);
 					obj.set("vat_no", view[0].vat_no);
@@ -55949,26 +55937,16 @@
 					obj.set("settlement_discount_id", 0);
 				}
 			});
-		},		
-		savePattern 			: function(contact_type_id, contact_id){
-			var data = banhji.customerSetting.contactTypeDS.get(contact_type_id);
-			data.set("contact_id", contact_id);
-			banhji.customerSetting.contactTypeDS.sync();			
-			window.history.back();
 		},
 		typeChanges 			: function(){
 			var obj = this.get("obj");
 
 			if(obj.contact_type_id){
-				var type = this.contactTypeDS.get(obj.contact_type_id);
-				this.applyPattern(type.contact_id);
-				obj.set("abbr", type.abbr);
-
+				this.applyPattern();
 				this.generateNumber();
 			}else{
 				obj.set("company", "");
 				obj.set("vat_no", "");
-
 				obj.set("country_id", 0);					
 				obj.set("gender", "M");
 				obj.set("company", "");
@@ -63502,6 +63480,7 @@
         paymentMethodDS		: banhji.source.paymentMethodDS,
         paymentTermDS		: banhji.source.paymentTermDS,
         txnTemplateDS		: dataStore(apiUrl + "transaction_templates"),
+        patternDS 			: dataStore(apiUrl + "contacts"),
         contactTypeName 	: "",
         contactTypeAbbr 	: "",
         contactTypeCompany 	: 0,
@@ -63514,7 +63493,7 @@
         	this.txnTemplateDS.filter({ field: "moduls", value : "customer_mg" });
         },	    
         addContactType 		: function(){
-        	var name = this.get("contactTypeName");
+        	var self = this, name = this.get("contactTypeName");
 
         	if(name!==""){
 	        	this.contactTypeDS.add({
@@ -63530,7 +63509,7 @@
 	        	this.contactTypeDS.bind("requestEnd", function(e){
 	        		if(e.type==="create"){
 	        			var response = e.response.results[0];	        			
-	        			self.addPattern(response.id, response.parent_id);
+	        			self.addPattern(response.id);
 	        		}
 	        	});
 
@@ -63539,8 +63518,15 @@
 	        	this.set("contactTypeCompany", 0);
         	}
         },
-        addPattern 			: function(contact_type_id, parent_id){
-
+        addPattern 			: function(id){
+        	this.patternDS.insert(0, {
+				"contact_type_id" 		: id,
+				"number"				: "",
+				"locale" 				: banhji.locale,					
+				"is_pattern" 			: 1,
+				"status"				: 1								
+			});
+			this.patternDS.sync();
         },
         addPaymentMethod 	: function(){
         	var name = this.get("paymentMethodName");
@@ -68928,7 +68914,7 @@
 				para.push({ field:"category_id", value:category_id });
 			}
 
-			para.push({ field:"item_type_id", value:1 });
+			// para.push({ field:"item_type_id", value:1 });
 			// para.push({ field:"is_catalog", value: 0 });
 			// para.push({ field:"is_assembly", value: 0 });          
 
