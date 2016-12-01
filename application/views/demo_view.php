@@ -957,13 +957,12 @@
 	<tr data-bind="click: selectedRow">
 		<td>
 			<div class="media-body">
-				#if(sub_of_id>0){#
-					&nbsp;&nbsp;
-					<span>
+				#if(sub_of_id==0){#
+					<span class="strong">
 						#=number#				
 					</span>
 					-
-					<span>
+					<span class="strong">
 						#if(name.length>25){#
 							#=name.substring(0, 25)#...
 						#}else{#
@@ -971,11 +970,17 @@
 						#}#
 					</span>
 				#}else{#
-					<span class="strong">
+					#if(sub_of_id>0){#
+						&nbsp;&nbsp;
+					#}else{#
+						&nbsp;&nbsp;&nbsp;&nbsp;
+					#}#
+
+					<span>
 						#=number#				
 					</span>
 					-
-					<span class="strong">
+					<span>
 						#if(name.length>25){#
 							#=name.substring(0, 25)#...
 						#}else{#
@@ -43295,8 +43300,8 @@
 		delete 					: function(){
 			var self = this, obj = this.get("obj");
 			this.set("showConfirm",false);
-
-			if(!obj.is_system==1){
+			
+			if(obj.is_system!=="1"){
 				this.deleteDS.query({
 		        	filter:[
 		        		{ field:"account_id", value:obj.id },
@@ -43309,7 +43314,8 @@
 		        	if(view.length>0){
 		        		alert("Sorry, you can not delete it.");
 		        	}else{
-		        		obj.set("deleted", 1);
+		        		var data = self.dataSource.get(obj.id);
+		        		self.dataSource.remove(data);
 				        self.dataSource.sync();
 
 				        window.history.back();

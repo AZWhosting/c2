@@ -28,18 +28,14 @@ class Item extends DataMapper {
 		'contact' => array(
 			'class' => 'contact',
 			'other_field' => 'item'
-		),		
-		'account' => array(
-			'class' => 'account',
-			'other_field' => 'item'
 		),
 		'income_account' => array(
 			'class' => 'account',
 			'other_field' => 'income'
 		),
-		'cogs_account' => array(
+		'expense_account' => array(
 			'class'=>'account',
-			'other_field' => 'cogs'
+			'other_field' => 'expense'
 		),
 		'inventory_account' => array(
 			'class'=>'account',
