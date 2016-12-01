@@ -1081,7 +1081,8 @@
 					                   data-text-field="name"
 					                   data-value-field="id"
 					                   data-bind="value: obj.sub_of_id,
-					                              source: subAccountDS"
+					                              source: subAccountDS,
+					                              events:{change: generateNumber}"
 					                   data-option-label="Select Sub Account..."
 					                   style="width: 100%;" />
 							</div>
@@ -43151,7 +43152,7 @@
 
 				if(obj.isNew()==false){
 					para.push({ field:"id", operator:"where_not_in", value: [obj.id] });
-				}
+				}				
 				
 				para.push({ field:"number", value: obj.number });
 				para.push({ field:"account_type_id", value: obj.account_type_id });
@@ -43174,12 +43175,17 @@
 			}			
 		},
 		generateNumber 			: function(){
-			var self = this, obj = this.get("obj");
+			var self = this, para = [],
+			obj = this.get("obj");
+
+			if(obj.sub_of_id>0){
+				para.push({ field:"sub_of_id", value: obj.sub_of_id });
+			}
+
+			para.push({ field:"account_type_id", value:obj.account_type_id });
 
 			this.numberDS.query({
-				filter:[
-					{ field:"account_type_id", value:obj.account_type_id }
-				],
+				filter: para,
 				sort: { field:"number", dir:"desc" },
 				page:1,
 				pageSize:1
