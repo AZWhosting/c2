@@ -970,10 +970,10 @@
 						#}#
 					</span>
 				#}else{#
-					#if(sub_of_id>0){#
-						&nbsp;&nbsp;
+					#if(banhji.accountingCenter.checkIsSub(sub_of_id)){#
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					#}else{#
-						&nbsp;&nbsp;&nbsp;&nbsp;
+						&nbsp;&nbsp;
 					#}#
 
 					<span>
@@ -31466,15 +31466,16 @@
 								            <tr>
 								            	<td><span data-bind="text: lang.lang.adjustment_account"></span></td>
 								            	<td>
-								            		<input id="ddlAccount" name="ddlAccount"
-								            			   data-role="dropdownlist"
-														   data-option-label="Select Account..."
-														   data-header-template="account-header-tmpl"							                   
+								            		<input id="cbbAccount" name="cbbAccount"
+								            			   data-role="combobox"
+														   data-header-template="account-header-tmpl"
+														   data-template="account-list-tmpl"							                   
 										                   data-value-primitive="true"
 										                   data-text-field="name"
 										                   data-value-field="id"									                   
 										                   data-bind="value: obj.account_id,
 										                              source: accountDS"
+										                   placeholder="Select Account..."
 										                   required data-required-msg="required" style="width: 100%;" />
 								            	</td>
 								            </tr>
@@ -43113,6 +43114,16 @@
 		goEdit 				: function(){
 			var obj = this.get("obj");
 			banhji.router.navigate('/account/'+obj.id);
+		},
+		checkIsSub 			: function(sub_of_id){
+			var data = this.dataSource.get(sub_of_id);
+
+			var isSub = false;
+			if(data.sub_of_id>0){
+				isSub = true;
+			}
+			
+			return isSub;
 		}
 	});
 	banhji.account =  kendo.observable({
@@ -71322,7 +71333,7 @@
     	journalLineDS			: dataStore(apiUrl + "journal_lines"),	
 		itemDS  				: dataStore(apiUrl + "items"),
 		contactDS 				: banhji.source.employeeDS,
-		accountDS 				: banhji.source.adjustmentAccountDS,		
+		accountDS 				: banhji.source.accountDS,		
 		segmentItemDS			: banhji.source.segmentItemDS,
 		categoryDS 				: banhji.source.inventoryCategoryDS,
 		attachmentDS	 		: dataStore(apiUrl + "attachments"),
@@ -71616,7 +71627,7 @@
 				transaction_template_id : "",				
 				employee_id 			: "",
 				job_id 					: "",
-				account_id 	 			: 0,
+				account_id 	 			: "",
 			   	type					: "Item_Adjustment",			   				   
 			   	rate					: banhji.source.getRate(banhji.locale, new Date()),			   	
 			   	locale 					: banhji.locale,			   	

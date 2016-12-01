@@ -6780,6 +6780,7 @@
 
 			}else{
 				this.addNew();
+				this.get("current").items.push({});
 			}
 		},
 		setCurrent 	: function(current) {
