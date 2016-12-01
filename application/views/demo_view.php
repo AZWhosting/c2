@@ -43200,6 +43200,12 @@
 				var view = self.dataSource.view();
 						    	
 		    	self.set("obj", view[0]);
+
+		    	//Sub accounts
+				self.subAccountDS.filter([
+					{ field:"account_type_id", value:view[0].account_type_id },
+					{ field:"sub_of_id >", value:0 }
+				]);
 			});
     	},
     	typeChanges 			: function(){    		
