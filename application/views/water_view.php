@@ -314,17 +314,17 @@
 	            	</a>
 	            </li>
 	            <li>
-	            	<a href="#tab7" class="glyphicons hand_saw" data-toggle="tab">
+	            	<a href="#tab7" data-bind="click: goService" class="glyphicons hand_saw" data-toggle="tab">
 	            		<i></i><span class="strong"><span>Service</span></span>
 	            	</a>
 	            </li>
 	            <li>
-	            	<a href="#tab8" class="glyphicons claw_hammer" data-toggle="tab">
+	            	<a href="#tab8" data-bind="click: goMaintenance" class="glyphicons claw_hammer" data-toggle="tab">
 	            		<i></i><span class="strong"><span>Maintenance</span></span>
 	            	</a>
 	            </li>
 	            <li>
-	            	<a href="#tab9" class="glyphicons classic_hammer" data-toggle="tab">
+	            	<a href="#tab9" data-bind="click: goInstallment" class="glyphicons classic_hammer" data-toggle="tab">
 	            		<i></i><span class="strong"><span>Installment</span></span>
 	            	</a>
 	            </li>
@@ -403,6 +403,7 @@
 	            		<tbody data-role="listview"		
 			                data-template="blocSetting-template"
 			                data-edit-template="bloc-edit-template"
+			                data-auto-bind=false
 			                data-bind="source: blocDS"></tbody>
 	            	</table>
 
@@ -545,56 +546,72 @@
 	            </div>
 
 	            <div class="tab-pane" id="tab7">
-	            	Service
-	            </div>
-
-	            <div class="tab-pane" id="tab8">
-	            	Maintenance
-	            </div>
-	            
-	            <div class="tab-pane" id="tab9">
 	            	<div style="clear: both;margin-bottom: 10px;">
-		            	<input data-role="dropdownlist"
-		            	   class="span2"
-		            	   style="padding-right: 1px;height: 32px;" 
-            			   data-option-label="(--- Select ---)"
-            			   data-auto-bind="false"			                   
-		                   data-value-primitive="false"
-		                   data-text-field="name"
-		                   data-value-field="id"
-		                   data-bind="value: blockCompanyId,
-		                              source: licenseDS,
-		                              events: {change: onLicenseChange}"/>
-		                <input data-role="dropdownlist"
-		            	   class="span2"
-		            	   style="padding-right: 1px;height: 32px;" 
-            			   data-option-label="(--- Select ---)"
-            			   data-auto-bind="false"			                   
-		                   data-value-primitive="false"
-		                   data-text-field="name"
-		                   data-value-field="id"
-		                   data-bind="value: blockCompanyId,
-		                              source: licenseDS,
-		                              events: {change: onLicenseChange}"/>
-		            	<input data-bind="value: blocName" type="text" placeholder="Name" style="height: 32px;"  class="span3 k-textbox k-invalid" />
-		            	<input data-bind="value: blocAbbr" type="text" placeholder="Price" style="height: 32px;" class="span3 k-textbox k-invalid" />
-		            	<a class="btn btn-default glyphicons circle_plus cutype-icon" style="width: 80px;margin-left: 2px;" data-bind="click: addBloc"><i></i>Add</a>
+	            		<input data-bind="value: serviceName" type="text" placeholder="Name" style="height: 32px;"  class="span3 k-textbox k-invalid" />
+		            	
+		            	<input data-bind="value: servicePrice" type="text" placeholder="Price" style="height: 32px;" class="span3 k-textbox k-invalid" />
+
+		            	<a class="btn btn-default glyphicons circle_plus cutype-icon" style="width: 80px;margin-left: 2px;" data-bind="click: addService"><i></i>Add</a>
 		            </div>
 	            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
 	            		<thead>
 	            			<tr>
-	            				<th class="center"><span>License</span></th>
 	            				<th class="center"><span>Name</span></th>
 	            				<th class="center"><span>Price</span></th>
-	            				<th class="center"><span>Type</span></th>
 	            				<th class="center">Action</th>
 	            			</tr>
 	            		</thead>
 	            		<tbody data-role="listview"	            				
-				                data-template="exemptionSetting-template"
-				                data-bind="source: blocDS"></tbody>
+				                data-template="serviceSetting-template"
+				                data-edit-template="service-edit-template"
+				                data-bind="source: planItemDS"></tbody>
 	            	</table>
+	            </div>
 
+	            <div class="tab-pane" id="tab8">
+	            	<div style="clear: both;margin-bottom: 10px;">
+	            		<input data-bind="value: maintenanceName" type="text" placeholder="Name" style="height: 32px;"  class="span3 k-textbox k-invalid" />
+		            	
+		            	<input data-bind="value: maintenancePrice" type="text" placeholder="Price" style="height: 32px;" class="span3 k-textbox k-invalid" />
+
+		            	<a class="btn btn-default glyphicons circle_plus cutype-icon" style="width: 80px;margin-left: 2px;" data-bind="click: addMaintenance"><i></i>Add</a>
+		            </div>
+	            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
+	            		<thead>
+	            			<tr>
+	            				<th class="center"><span>Name</span></th>
+	            				<th class="center"><span>Price</span></th>
+	            				<th class="center">Action</th>
+	            			</tr>
+	            		</thead>
+	            		<tbody data-role="listview"	            				
+				                data-template="maintenanceSetting-template"
+				                data-edit-template="maintenance-edit-template"
+				                data-bind="source: planItemDS"></tbody>
+	            	</table>
+	            </div>
+	            
+	            <div class="tab-pane" id="tab9">
+	            	<div style="clear: both;margin-bottom: 10px;">
+	            		<input data-bind="value: installmentName" type="text" placeholder="Name" style="height: 32px;"  class="span3 k-textbox k-invalid" />
+		            	
+		            	<input data-bind="value: installmentPrice" type="text" placeholder="Price" style="height: 32px;" class="span3 k-textbox k-invalid" />
+
+		            	<a class="btn btn-default glyphicons circle_plus cutype-icon" style="width: 80px;margin-left: 2px;" data-bind="click: addInstallment"><i></i>Add</a>
+		            </div>
+	            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
+	            		<thead>
+	            			<tr>
+	            				<th class="center"><span>Name</span></th>
+	            				<th class="center"><span>Price</span></th>
+	            				<th class="center">Action</th>
+	            			</tr>
+	            		</thead>
+	            		<tbody data-role="listview"	            				
+				                data-template="installmentSetting-template"
+				                data-edit-template="installment-edit-template"
+				                data-bind="source: planItemDS"></tbody>
+	            	</table>
 	            </div>
 	            <div class="tab-pane" id="tab10">
 	            	Maintenance
@@ -664,26 +681,13 @@
 		</td>
 	</tr>
 </script>
-<script id="cusTypeSetting-template" type="text/x-kendo-tmpl">
-	<tr>
-		<td>sdfasdf</td>
-		<td></td>
-		<td></td>
-		<td></td>
-		<td></td>
-		<td></td>
-		<td></td>
-		<td></td>
-		<td></td>
-	</tr>
-</script>
 <script id="custType-template" type="text/x-kendo-tmpl">                    
     <tr>
     	<td>
-    		#:name#
+    		#= name#
    		</td>
    		<td align="center">
-    		#:abbr#
+    		#= abbr#
    		</td>
    		<td align="center">
     		#if(is_company=="1"){#
@@ -720,7 +724,7 @@
 	<tr>
 		<td>
             <input data-role="dropdownlist"
-    			   data-option-label="(--- Select ---)"        			   		                   
+    			   data-option-label="(--- Select ---)"       
                    data-value-primitive="true"
                    data-text-field="name"
                    data-value-field="id"
@@ -765,21 +769,18 @@
     <tr>    	               
         <td>
 			<input style="width: 100%;" type="text" class="k-textbox" data-bind="value:name" />
-        </td>               
-              
+        </td>    
         <td>        	
-        	<input style="width: 100%;" data-role="dropdownlist"      			   		                   
+        	<input style="width: 100%;" data-role="dropdownlist"      
                    data-value-primitive="true"
                    data-text-field="name"
                    data-value-field="id"
                    data-bind="value: unit,
                               source: typeUnit" />
-        </td>               
-                 
+        </td>      
         <td>
         	<input style="width: 100%;" type="text" class="k-textbox" data-bind="value:amount" />
         </td>
-
 	    <td class="edit-buttons" style="text-align: center;">
 	        <a class="k-button k-update-button" href="\\#"><span class="k-icon k-update"></span></a>
 	        <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-cancel"></span></a>
@@ -866,6 +867,93 @@
    	</tr>
 </script>
 <script id="deposit-edit-template" type="text/x-kendo-tmpl">
+    <tr>    	               
+        <td>
+			<input style="width: 100%;" type="text" class="k-textbox" data-bind="value:name" />
+        </td>       
+        <td>
+        	<input style="width: 100%;" type="text" class="k-textbox" data-bind="value:amount" />
+        </td>
+
+	    <td class="edit-buttons" style="text-align: center;">
+	        <a class="k-button k-update-button" href="\\#"><span class="k-icon k-update"></span></a>
+	        <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-cancel"></span></a>
+	    </td>
+    </tr>
+</script>
+<script id="serviceSetting-template" type="text/x-kendo-tmpl">                    
+    <tr>
+    	<td>
+    		#= name#
+   		</td>
+   		<td align="center">
+    		#= amount#
+   		</td>
+   		<td align="center">   			   
+		    <a class="btn-action glyphicons pencil btn-success k-edit-button"><i></i></a>
+		    <a class="btn-action glyphicons remove_2 btn-danger k-delete-button"><i></i></a>
+   		</td>   		
+   	</tr>
+</script>
+<script id="service-edit-template" type="text/x-kendo-tmpl">
+    <tr>    	               
+        <td>
+			<input style="width: 100%;" type="text" class="k-textbox" data-bind="value:name" />
+        </td>       
+        <td>
+        	<input style="width: 100%;" type="text" class="k-textbox" data-bind="value:amount" />
+        </td>
+
+	    <td class="edit-buttons" style="text-align: center;">
+	        <a class="k-button k-update-button" href="\\#"><span class="k-icon k-update"></span></a>
+	        <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-cancel"></span></a>
+	    </td>
+    </tr>
+</script>
+<script id="maintenanceSetting-template" type="text/x-kendo-tmpl">                    
+    <tr>
+    	<td>
+    		#= name#
+   		</td>
+   		<td align="center">
+    		#= amount#
+   		</td>
+   		<td align="center">   			   
+		    <a class="btn-action glyphicons pencil btn-success k-edit-button"><i></i></a>
+		    <a class="btn-action glyphicons remove_2 btn-danger k-delete-button"><i></i></a>
+   		</td>   		
+   	</tr>
+</script>
+<script id="maintenance-edit-template" type="text/x-kendo-tmpl">
+    <tr>    	               
+        <td>
+			<input style="width: 100%;" type="text" class="k-textbox" data-bind="value:name" />
+        </td>       
+        <td>
+        	<input style="width: 100%;" type="text" class="k-textbox" data-bind="value:amount" />
+        </td>
+
+	    <td class="edit-buttons" style="text-align: center;">
+	        <a class="k-button k-update-button" href="\\#"><span class="k-icon k-update"></span></a>
+	        <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-cancel"></span></a>
+	    </td>
+    </tr>
+</script>
+<script id="installmentSetting-template" type="text/x-kendo-tmpl">                    
+    <tr>
+    	<td>
+    		#= name#
+   		</td>
+   		<td align="center">
+    		#= amount#
+   		</td>
+   		<td align="center">   			   
+		    <a class="btn-action glyphicons pencil btn-success k-edit-button"><i></i></a>
+		    <a class="btn-action glyphicons remove_2 btn-danger k-delete-button"><i></i></a>
+   		</td>   		
+   	</tr>
+</script>
+<script id="installment-edit-template" type="text/x-kendo-tmpl">
     <tr>    	               
         <td>
 			<input style="width: 100%;" type="text" class="k-textbox" data-bind="value:name" />
@@ -1000,7 +1088,7 @@
 		                		data-bind="source: items.dataSource" 
 		                		data-auto-bind="false" 
 		                		data-role="listview" 
-		                		data-template="tariff-list-item">
+		                		data-template="planItem-list-item">
 		                	</tbody>
 		                </table>
 		                 <!-- Bottom part -->
@@ -1055,9 +1143,10 @@
 		</div>
 	</div>
 </script>
-<script id="tariff-list-item" type="text/x-kendo-tmpl">
+<script id="planItem-list-item" type="text/x-kendo-tmpl">
 	<tr>
-		<td>#= name#</td>
+		<td>#:banhji.plan.items.dataSource.indexOf(data)+1#</td>
+		<td>#= item #</td>
 		<td>#= code #</td>
 		<td>#= description#</td>
 		<td>#= rate #</td>
@@ -6635,7 +6724,7 @@
 	*	Water Section   	* 
 	**************************/
 	banhji.item = kendo.observable({
-		dataSource 	: dataStore(apiUrl + "tariffs"),
+		dataSource 	: dataStore(apiUrl + "plans/items"),
 		types 		: [
 			{id: 'excemption', value: "Excemption"},
 			{id: 'tariff', value: "Tariff"},
@@ -6646,12 +6735,11 @@
 		],
 		addNew 		: function() {
 			banhji.item.dataSource.add({
-				name 		: null,
-				type 		: {name: 'excemption', value: "Excemption"},
+				item 		: this.types,
+				code 		: null,
+				description : null,
 				rate 		: null,
-				tierFrom 	: null,
-				tierTo 		: null,
-				taxed 		: false
+				tax 		: null
 			});
 			this.setCurrent(this.dataSource.at(this.dataSource.data().length -1));
 		},
@@ -6687,9 +6775,9 @@
 		dataSource 	: dataStore(apiUrl + "plans"),
 		items 		: banhji.item,
 		current 	: null,
-		selectType  : [{id: "water", name: "Water"},{id: "electricity", name: "Electricity"}],
 		pageLoad    : function(){
 			this.addNew();
+			this.items.addNew();
 		},
 		setCurrent 	: function(current) {
 			this.set('current', current);
@@ -6697,11 +6785,10 @@
 		addNew 	  	: function() {
 			this.dataSource.add({
 				name 		: null,
-				type 		: {id: "water", name: "Water"},
-				validFrom 	: null,
-				validTo 	: null
+				code 	 	: null
 			});
 			this.setCurrent(this.dataSource.at(this.dataSource.data().length -1));
+			
 		},
 		remove 		: function(e) {
 			this.dataSource.remove(e.data);
@@ -6729,28 +6816,7 @@
 			this.dataSource.cancelChanges();
 			this.items.cancel();		
 			window.history.back();
-		},
-		addRow 				: function(){				
-			var obj = this.get("obj");
-									
-			this.lineDS.add({					
-				transaction_id 		: obj.id,
-				tax_item_id 		: "",
-				item_id 			: "",				
-				measurement_id 		: 0,				
-				description 		: "",				
-				quantity 	 		: 1,
-				price 				: 0,												
-				amount 				: 0,
-				discount 			: 0,
-				fine 				: 0,
-				rate				: obj.rate,
-				locale				: obj.locale,							
-				movement 			: -1,
-
-				item_prices 		: []
-			});																	
-		},
+		}
 	});
 	banhji.addLicense = kendo.observable({
 		dataSource 	: dataStore(apiUrl + "branches"),
@@ -6846,6 +6912,7 @@
 			var index = e.sender.selectedIndex;
 			var block = this.licenseDS.at(index - 1);
 			this.set('blockCompanyId',{id:block.id, name:block.name});
+			console.log(index);
 		},
 		addContactType 		: function(){
         	var name = this.get("contactTypeName");
@@ -6865,13 +6932,15 @@
         	}
         },
         addBloc 			: function(){
+
         	var branch = this.get("blockCompanyId");
-        	if(branch!==""){
+        	if(branch!= ""){
 	        	this.blocDS.add({
 	        		branch 		: {id : branch.id, name: branch.name},
 	        		name 		: this.get("blocName"),
 	        		abbr 		: this.get("blocAbbr")
 	        	});
+
 	        	this.blocDS.sync();
 	        	this.blocDS.data([]);
 	        	this.set("blocName", "");
@@ -6880,6 +6949,7 @@
         	}
         },
         goExemption    		: function(){
+        	this.planItemDS.data([]);
         	this.planItemDS.filter({field: "type", value: "exemption"});
         },
         addEx 				: function(){
@@ -6898,6 +6968,7 @@
         	this.set("exUnit", "");
         },
         goTariff    		: function(){
+        	this.planItemDS.data([]);
         	this.planItemDS.filter({field: "type", value: "tariff"});
         },
         addTariff 				: function(){
@@ -6919,6 +6990,7 @@
         	this.set("tariffTo", "");
         },
         goDeposit    		: function(){
+        	this.planItemDS.data([]);
         	this.planItemDS.filter({field: "type", value: "deposit"});
         },
         addDeposit			: function(){
@@ -6934,6 +7006,60 @@
         	this.planItemDS.sync();
         	this.set("depositName", "");
         	this.set("depositPrice", "");
+        },
+        goService    		: function(){
+        	this.planItemDS.data([]);
+        	this.planItemDS.filter({field: "type", value: "service"});
+        },
+        addService			: function(){
+        	this.planItemDS.add({
+        		name 		: this.get("serviceName"),
+        		type     	: "service",
+        		is_flat   	: false,
+        		unit 		: null,
+        		from 		: null,
+        		to 			: null,
+        		amount 		: this.get("servicePrice")
+        	});
+        	this.planItemDS.sync();
+        	this.set("serviceName", "");
+        	this.set("servicePrice", "");
+        },
+        goMaintenance    		: function(){
+        	this.planItemDS.data([]);
+        	this.planItemDS.filter({field: "type", value: "maintenance"});
+        },
+        addMaintenance			: function(){
+        	this.planItemDS.add({
+        		name 		: this.get("maintenanceName"),
+        		type     	: "maintenance",
+        		is_flat   	: false,
+        		unit 		: null,
+        		from 		: null,
+        		to 			: null,
+        		amount 		: this.get("maintenancePrice")
+        	});
+        	this.planItemDS.sync();
+        	this.set("maintenanceName", "");
+        	this.set("maintenancePrice", "");
+        },
+        goInstallment   		: function(){
+        	this.planItemDS.data([]);
+        	this.planItemDS.filter({field: "type", value: "installment"});
+        },
+        addInstallment			: function(){
+        	this.planItemDS.add({
+        		name 		: this.get("installmentName"),
+        		type     	: "installment",
+        		is_flat   	: false,
+        		unit 		: null,
+        		from 		: null,
+        		to 			: null,
+        		amount 		: this.get("installmentPrice")
+        	});
+        	this.planItemDS.sync();
+        	this.set("installmentName", "");
+        	this.set("installmentPrice", "");
         },
 		pageLoad 			: function(){
 		},
@@ -9301,7 +9427,7 @@
 		
 		banhji.view.layout.showIn('#menu', banhji.view.menu);
 		banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
-		
+		banhji.view.layout.showIn("#content", banhji.view.addLicense);
 		
 
 		banhji.userManagement.addMultiTask("Add Licence","Licence",null);
@@ -9310,10 +9436,6 @@
 			banhji.pageLoaded["add_license"] = true;
 		}
 		console.log("add_license");
-		
-		//setTimeout(function(){
-			banhji.view.layout.showIn("#content", banhji.view.addLicense);
-		//},1000);
 		var vm = banhji.addLicense;
 		vm.pageLoad(id);
 	});

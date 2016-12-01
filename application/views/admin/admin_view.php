@@ -174,7 +174,6 @@
                                     <div class="ln_solid"></div>
                                     <div class="form-group">
                                         <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-4" style="margin-top:10px;">
-                                            <button class="btn btn-primary">Cancel</button>
                                             <button id="userConfirm" class="btn btn-success" data-bind="click: users.confirm">Confirm</button>
                                         </div>
                                     </div>
@@ -921,8 +920,10 @@
               User
             #}#
           </div>
+          <div class="profile-card-status" style="font-weight: bold">
+            Confirm: <input type="checkbox" data-bind="checked: is_confirmed" disabled="true">
+          </div>
           <div class="profile-card-location">
-            <button class="btn btn-primary btn-xs btn-block" data-bind="disabled: is_confirmed, events: {click: showConfirm}" style="margin-bottom: 5px;"><i class="fa fa-folder"></i> Confirm </button>
             <a href="\#assignto/#=id#"><button class="btn btn-alert btn-block" style="margin-bottom: 5px;">Assign/Reassign</button></a>
             <button class="btn btn-alert btn-block" style="margin-bottom: 5px;" data-bind="click: showFormEdit">Edit</button>
             # if(username == userPool.getCurrentUser().username) {#
@@ -2848,7 +2849,7 @@
 
               var dataEmail = {
                   Name : 'email',
-                  Value : userPool.getCurrentUser().username
+                  Value : banhji.users.get('current').username
               };
 
               var attributeEmail = new AWSCognito.CognitoIdentityServiceProvider.CognitoUserAttribute(dataEmail);

@@ -321,6 +321,7 @@ class Profiles extends REST_Controller {
 				$report = $u->institute->report_monetary->get();
 				$country = $u->institute->country->get();
 				$profile_photo = $u->institute->pimage->get();
+				$connection = $u->institute->connection->get();
 				$lastLogin = new User();
 				$lastLogin->where_related('institute', 'id', $u->institute->id);
 				$lastLogin->where('created_at <= ', date('Y-m-d'));
@@ -344,6 +345,7 @@ class Profiles extends REST_Controller {
 					'is_local' => $u->institute->is_local,
 					// 'financial_year' => $u->institute->financial_year,
 					// 'financial_report_date' => $u->institute->financial_report_date,
+					'connection' => $connection->exists(),
 					'industry' => array('id'=>$industry->id,'type' => $industry->name),
 					'currency' => $currency->id ? array('id'=> $currency->id, 'code' => $currency->code, 'country' => $currency->country, 'locale'=>$currency->locale):array('id'=>null),
 					'accounting_standard' => $u->institute->accounting_standard,
@@ -431,23 +433,23 @@ class Profiles extends REST_Controller {
 			$company->where('id', $req->id)->get();
 
 			$company->name = $req->name;
-			$company->email= $req->email;
-			$company->address=$req->address;
-			$company->logo = $req->logo;
-			$company->description=$req->description;
-			$company->vat_number = $req->vat_number;
-			$company->fiscal_date= date('m-d', strtotime($req->fiscal_date));
-			$company->tax_regime= $req->tax_regime;
-			$company->year_founded = $req->year_founded;
-			$company->accounting_standard = $req->accounting_standard;
-			$company->city = $req->city;
-			$company->report_monetary_id=$req->reportCurrency->id;
-			$company->monetary_id = $req->currency->id;
-			$company->industry_id = $req->industry->id;
-			$company->is_local = $req->is_local;
-			$company->zip_code = $req->zip;
-			$company->financial_year = $req->financial_year;
-			$company->financial_report_date = date('m-d', strtotime($req->financial_report_date));
+			$company->email= isset($req->email) ? $req->email: "";
+			$company->address= isset($req->address) ? $req->address:"";
+			$company->logo = isset($req->logo) ? $req->logo : "";
+			$company->description= isset($req->description) ? $req->description : "";
+			$company->vat_number = isset($req->vat_number) ? $req->vat_number : "";
+			$company->fiscal_date= isset($req->fiscal_date) ? date('m-d', strtotime($req->fiscal_date)) : '01-01';
+			$company->tax_regime= isset($req->tax_regime) ? $req->tax_regime : "";
+			$company->year_founded = isset($req->year_founded) ? $req->year_founded : "";
+			$company->accounting_standard = isset($req->accounting_standard) ? $req->accounting_standard : "";
+			$company->city = isset($req->city) ? $req->city : "";
+			$company->report_monetary_id=isset($req->reportCurrency->id) ? $req->reportCurrency->id: "";
+			$company->monetary_id = isset($req->currency->id) ? $req->currency->id: "";
+			$company->industry_id = isset($req->industry->id) ? $req->industry->id: "";
+			$company->is_local = isset($req->is_local) ? $req->is_local: "";
+			$company->zip_code = isset($req->zip) ? $req->zip: "";
+			$company->financial_year = isset($req->financial_year) ? : "";
+			$company->financial_report_date = isset($req->financial_report_date) ? date('m-d', strtotime($req->financial_report_date)): '01-01';
 			if($company->save()) {
 				$industry = $company->industry->get();
 				$currency = $company->monetary->get();

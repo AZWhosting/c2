@@ -713,15 +713,30 @@
 		<div class="widget-body padding-none">			
 			<div class="row-fluid row-merge">
 				<div class="span3 listWrapper" >
-					<div class="innerAll">							
+					<div class="innerAll" style="height: 98px;">							
 						<form autocomplete="off" class="form-inline">
 
-							<div class="widget-search separator bottom">
-								<button type="button" class="btn btn-default pull-right" data-bind="click: search"><i class="icon-search"></i></button>
-								<div class="overflow-hidden">
-									<input type="search" placeholder="Account ..." data-bind="value: searchText, events:{change: enterSearch}">
+							<div class="widget-search separator bottom row" style="padding-bottom: 0; ">
+								<div class="span10" style="padding-right: 0;">
+									<button type="button" class="btn btn-default pull-right" data-bind="click: search"><i class="icon-search"></i></button>
+									<div class="overflow-hidden">
+										<input type="search" placeholder="Account ..." data-bind="value: searchText, events:{change: enterSearch}">
+									</div>
 								</div>
-							</div>
+								<div class="span2" style="padding: 0; width: 12%">
+									<ul class="topnav" style="padding: 0 !important; background: #e8e8e8; height: 34px;">										
+									  	<li role='presentation' class='dropdown' style="list-style: none; padding: 0 0 0 3px;">
+									  		<a class='dropdown-toggle glyphicons cogwheel' data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false'><i></i> </a>
+								  			<ul class='dropdown-menu' style="width: 127px !important; border-radius: 0; left: -125px !important; top: 34px !important; margin-left: 4px;">
+								  				<li><span data-bind="click: showActive">Show Active Account</span></li>  	
+								  				<li><span data-bind="click: showInactive">Show Inactive Account</span></li>
+								  				  				 		
+								  			</ul>
+									  	</li>	  	  	
+									  	
+									</ul>
+								</div>
+							</div>	
 
 							<div class="select2-container" style="width: 100%; margin-bottom: 10px;">								
 								<input data-role="dropdownlist"
@@ -42848,6 +42863,7 @@
 				data: 'results',
 				total: 'count'
 			},
+			filter: { field:"status", value:1 },
 			sort:[
 				{ field:"account_type_id", dir:"asc" },
 				{ field:"number", dir:"asc" }
@@ -43064,6 +43080,12 @@
             	pageSize: 10
             });            
 		},
+		showActive 			: function(){
+			this.dataSource.filter({ field:"status", value: 1 });
+		},
+		showInactive 			: function(){
+			this.dataSource.filter({ field:"status", value: 0 });
+		},
 		loadTransaction	 	: function(){
 			var self = this,
 				para = [],
@@ -43096,7 +43118,7 @@
     	deleteDS 				: dataStore(apiUrl + "account_lines"),
     	numberDS 				: dataStore(apiUrl + "accounts"),
     	accountTypeDS 			: banhji.source.accountTypeDS,
-    	subAccountDS			: banhji.source.subAccountDS,
+    	subAccountDS			: dataStore(apiUrl + "accounts"),
     	currencyDS 				: banhji.source.currencyDS,
     	statusList 				: banhji.source.statusList,
     	confirmMessage 			: banhji.source.confirmMessage,
@@ -43188,7 +43210,10 @@
     			if(obj.account_type_id==10){
     				this.set("showBank", true);
     			}
-    			// this.subAccountDS.filter({ field:"account_type_id", value:obj.account_type_id });
+    			this.subAccountDS.filter([
+    				{ field:"account_type_id", value:obj.account_type_id },
+    				{ field:"sub_of_id >", value:0 }
+    			]);
     			this.generateNumber();
     		}
     	},    	 	   	
@@ -55524,10 +55549,10 @@
 		notDuplicateNumber 		: true,
 		phFullname 				: "Customer Name ...",
 		contact_type_id 		: 0,						
-		pageLoad 				: function(id, is_pattern){
+		pageLoad 				: function(id, contact_type_id){
 			if(id){
 				this.set("isEdit", true);						
-				this.loadObj(id, is_pattern);
+				this.loadObj(id, contact_type_id);
 			}else{				
 				if(this.get("isEdit") || this.dataSource.total()==0){
 					this.addEmpty();
@@ -55653,12 +55678,15 @@
 			});
 		},
 		//Obj
-		loadObj 				: function(id, is_pattern){
+		loadObj 				: function(id, contact_type_id){
 			var self = this, para = [];
 
-			para.push({ field:"id", value: id });
+			if(id>0){
+				para.push({ field:"id", value: id });
+			}
 
-			if(is_pattern){
+			if(contact_type_id){
+				para.push({ field:"contact_type_id", value: contact_type_id });
 				para.push({ field:"is_pattern", value: 1 });
 			}
 
@@ -55688,7 +55716,7 @@
 
       		this.patternDS.query({
       			filter:[
-      				{ field:"id", value:1 },
+      				{ field:"contact_type_id", value:4 },
       				{ field:"is_pattern", value:1 }
       			],
       			page:1,
@@ -63473,13 +63501,22 @@
 	        	});
 
 	        	this.contactTypeDS.sync();
+	        	this.contactTypeDS.bind("requestEnd", function(e){
+	        		if(e.type==="create"){
+	        			var response = e.response.results[0];	        			
+	        			self.addPattern(response.id, response.parent_id);
+	        		}
+	        	});
 
 	        	this.set("contactTypeName", "");
 	        	this.set("contactTypeAbbr", "");
 	        	this.set("contactTypeCompany", 0);
         	}
         },
-        addPaymentMethod 		: function(){
+        addPattern 			: function(contact_type_id, parent_id){
+
+        },
+        addPaymentMethod 	: function(){
         	var name = this.get("paymentMethodName");
 
         	if(name!==""){
@@ -63514,7 +63551,7 @@
 	        	this.set("paymentTermPercentage", "");
         	}
         },
-        goPattern 	: function(e){
+        goPattern 			: function(e){
         	var data = e.data;        	        	
 
         	if(kendo.parseInt(data.contact_id)>0){        		        	
@@ -63524,14 +63561,14 @@
         		banhji.customer.set("contact_type_id",data.id);
         	}
         },
-        deleteForm 		: function(e){
+        deleteForm 			: function(e){
         	var data = e.data;
         	if(confirm("Do you want to delete it?") == true) {
         		this.txnTemplateDS.remove(data);
         		this.txnTemplateDS.sync();
         	}
         },
-        goInvoiceCustom : function(){
+        goInvoiceCustom 	: function(){
 
 		    banhji.invoiceCustom.set("selectTypeList", banhji.source.customerFormList);
 		    banhji.invoiceCustom.set("formShow", banhji.view.invoiceForm10);
@@ -69216,7 +69253,7 @@
 
 			this.patternDS.query({
 				filter: [
-					{ field:"id", value: obj.category_id },
+					{ field:"category_id", value: obj.category_id },
 					{ field:"is_pattern", value: 1 }
 				],
 				page: 1,
@@ -70105,7 +70142,7 @@
 
 			this.patternDS.query({
 				filter: [
-					{ field:"id", value: obj.category_id },
+					{ field:"category_id", value: obj.category_id },
 					{ field:"is_pattern", value: 1 }
 				],
 				page: 1,
@@ -70483,7 +70520,7 @@
 
 				this.patternDS.query({
 					filter: [
-						{ field:"id", value: obj.category_id },
+						{ field:"category_id", value: obj.category_id },
 						{ field:"is_pattern", value: 1 }
 					],
 					page: 1,
