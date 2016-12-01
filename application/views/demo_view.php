@@ -727,9 +727,9 @@
 									<ul class="topnav" style="padding: 0 !important; background: #e8e8e8; height: 34px;">										
 									  	<li role='presentation' class='dropdown' style="list-style: none; padding: 0 0 0 3px;">
 									  		<a class='dropdown-toggle glyphicons cogwheel' data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false'><i></i> </a>
-								  			<ul class='dropdown-menu' style="width: 127px !important; border-radius: 0; left: -125px !important; top: 34px !important; margin-left: 4px;">
-								  				<li><span data-bind="click: showActive">Show Active Account</span></li>  	
-								  				<li><span data-bind="click: showInactive">Show Inactive Account</span></li>
+								  			<ul class='dropdown-menu' style="width: 190px !important; border-radius: 0; left: -159px !important; top: 34px !important; margin-left: 4px;">
+								  				<li><a><span data-bind="click: showActive">Show Active Account</span></a></li>  	
+								  				<li><a><span data-bind="click: showInactive">Show Inactive Account</span></a></li>
 								  				  				 		
 								  			</ul>
 									  	</li>	  	  	
@@ -42897,18 +42897,15 @@
 		nature 				: "",		
 		user_id 			: banhji.source.user_id,				
 		pageLoad 			: function(id){
-			var self = this, obj = this.get("obj");
+			var self = this;
 
 			if(id){
 				this.loadObj(id);
 			}
 			//Refresh
 			if(this.dataSource.total()>0){
-				this.dataSource.fetch(function(){
-					var dataItem = self.dataSource.get(obj.id);
-					self.set("obj", dataItem);
-				});
-				this.summaryDS.fetch();
+				this.dataSource.fetch();
+				this.loadSummary();
 				this.searchTransaction();
 			}						
 		},
@@ -43089,7 +43086,7 @@
 		showActive 			: function(){
 			this.dataSource.filter({ field:"status", value: 1 });
 		},
-		showInactive 			: function(){
+		showInactive 		: function(){
 			this.dataSource.filter({ field:"status", value: 0 });
 		},
 		loadTransaction	 	: function(){

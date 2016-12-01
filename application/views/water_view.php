@@ -1085,7 +1085,7 @@
 		                		</tr>
 		                	</thead>
 		                	<tbody 
-		                		data-bind="source: items.dataSource" 
+		                		data-bind="source: obj.items" 
 		                		data-auto-bind="false" 
 		                		data-role="listview" 
 		                		data-template="planItem-list-item">
@@ -6775,9 +6775,12 @@
 		dataSource 	: dataStore(apiUrl + "plans"),
 		items 		: banhji.item,
 		current 	: null,
-		pageLoad    : function(){
-			this.addNew();
-			this.items.addNew();
+		pageLoad    : function(id){
+			if(id){
+
+			}else{
+				this.addNew();
+			}
 		},
 		setCurrent 	: function(current) {
 			this.set('current', current);
@@ -6785,7 +6788,8 @@
 		addNew 	  	: function() {
 			this.dataSource.add({
 				name 		: null,
-				code 	 	: null
+				code 	 	: null,
+				items 		: []
 			});
 			this.setCurrent(this.dataSource.at(this.dataSource.data().length -1));
 			
@@ -9408,7 +9412,7 @@
 		vm.pageLoad(id);
 	});
 
-	banhji.router.route("/plan", function(){		
+	banhji.router.route("/plan(/:id)", function(id){		
 		banhji.view.layout.showIn("#content", banhji.view.plan);
 		banhji.view.layout.showIn('#menu', banhji.view.menu);
 		banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
@@ -9421,7 +9425,7 @@
 			banhji.pageLoaded["plan"] = true;
 		}
 		console.log("plan");
-		vm.pageLoad();
+		vm.pageLoad(id);
 	});
 	banhji.router.route("/add_license(/:id)", function(id){		
 		
