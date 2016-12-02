@@ -414,3 +414,6 @@ pre {
 .inv1 .ten * {
 	font-size: 10px!important;
 }
+#example.k-content #formStyle .span4:nth-child(2) {
+	padding: 0;
+}

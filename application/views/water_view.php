@@ -2492,8 +2492,8 @@
 								
 							</div>
 							<div class="span9" align="right">
-								<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save_new"></span></span>
-								<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save_close"></span></span>		
+								
+								<span id="saveClose" data-bind="click: save" class="btn btn-icon btn-success glyphicons power" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save_close"></span></span>		
 							</div>
 						</div>
 					</div>
@@ -6893,7 +6893,7 @@
 
 			}else{
 				this.addNew();
-				this.get("current").items.push({item: null, code: n});
+				this.get("current").items.push({item: null, code: "n"});
 			}
 		},
 		setCurrent 	: function(current) {
@@ -6938,6 +6938,7 @@
 	});
 	banhji.addLicense = kendo.observable({
 		dataSource 	: dataStore(apiUrl + "branches"),
+		provinceDS 	: dataStore(apiUrl + "provinces"),
 		toDay 		: new Date(),
 		obj 		: null,
 		isEdit      : false,
@@ -6949,6 +6950,11 @@
 			}else{
 				this.addNew();
 			}
+			this.provinceDS.read()
+			.then(function(e){
+				console.log(banhji.addLicense.provinceDS.data());
+			});
+			
 		},
 		loadObj 	: function(id){
 			var self = this;	
@@ -6960,6 +6966,7 @@
 				var view = self.dataSource.view();
 				self.set("obj", view[0]);
 			});	
+
 		},
 		addNew 	  	: function() {
 			this.set("obj", null);		
@@ -7241,9 +7248,13 @@
 			this.licenseDS.cancelChanges();		
 			window.history.back();
 		},
-		goInvoiceCustom : function(){
-		    banhji.router.navigate('/invoice_custom');
-        }
+		deleteForm 			: function(e){
+        	var data = e.data;
+        	if(confirm("Do you want to delete it?") == true) {
+        		this.txnTemplateDS.remove(data);
+        		this.txnTemplateDS.sync();
+        	}
+        },
 	});
 	banhji.addAccountingprefix =  kendo.observable({
 		lang 				: langVM,		
@@ -7366,425 +7377,6 @@
 			window.history.back();
 		}
     });
-	banhji.invoiceCustom =  kendo.observable({
-    	lang 				: langVM,
-		dataSource 			: dataStore(apiUrl + "transaction_templates"),		
-		txnFormDS			: dataStore(apiUrl + "transaction_forms"),
-		obj 				: {type: "Invoice", amount: "$500,000.00",title: "Quotation"},
-		objForm	 			: null,
-		formShow			: 1,
-		formTitle 			: "Invoice",
-		formType			: "Invoice",
-		company 			: banhji.institute,
-		saveClose 			: false,
-		selectTypeList 		: banhji.source.customerFormList,
-		selectCustom		: "customer_mg",
-		isEdit 				: false,
-		user_id				: banhji.source.user_id,
-		onChange			: function(e) {
-			var obj = this.get("obj"), self = this;
-			this.txnFormDS.query({    			
-				filter: [{ field:"type", value: obj.type }, {field:"moduls", value: obj.moduls }],
-				page: 1,
-				take: 100
-			}).then(function(e){
-				var view = self.txnFormDS.view();
-				if(view.length > 0){
-					banhji.invoiceForm.set("obj", view[0]);
-					var obj = self.get("obj");
-					obj.set("type", view[0].type);
-					obj.set("title", view[0].title);
-					obj.set("note", view[0].note);
-				}
-			});	
-			setTimeout(function(e){ $('#formStyle a').eq(0).click(); },2000);
-        },		
-		pageLoad 			: function(id){
-			if(id){
-				this.set("isEdit", true);
-				this.loadObj(id);
-			}else{	
-				var obj = this.get("obj"), self = this;
-				//banhji.view.invoiceCustom.showIn('#invFormContent', banhji.view.invoiceForm1);	
-				console.log("a");	
-				this.addRowLineDS();
-				//if(this.get("isEdit") || this.dataSource.total()==0){
-					this.addEmpty();
-					this.txnFormDS.query({    			
-						filter: { field:"type", value: "Invoice" },
-						page: 1,
-						take: 100
-					}).then(function(e){
-						var view = self.txnFormDS.view();
-						var obj = self.get("obj");
-						obj.set("type", view[0].type);
-						obj.set("title", view[0].title);
-						obj.set("note", view[0].note);
-						
-					});	
-				//}	
-				var name = banhji.invoiceForm.get("obj");
-				name.set("title", this.formTitle);
-			}
-		},
-		addRowLineDS			: function(e){
-			banhji.invoiceForm.lineDS.data([]);
-			for (var i = 0; i < 15; i++) { 
-				banhji.invoiceForm.lineDS.add({				
-					id			: i,
-					description : '',
-					quantity 	: '',
-					price 		: '',
-					amount 		: '',
-					description : '',
-					locale : '',
-					item_prices : [],
-					item_id 	: ''
-		    	});	
-		    }
-		},
-		activeInvoiceTmp		: function(e){
-			var Active;
-			switch(e) {
-				case 1: Active = banhji.view.invoiceForm1; break;
-				case 2: Active = banhji.view.invoiceForm2; break;
-				//case 3: Active = banhji.view.invoiceForm3; break;
-				//case 4: Active = banhji.view.invoiceForm4; break;
-				//case 5: Active = banhji.view.invoiceForm5; break;
-				case 6: Active = banhji.view.invoiceForm6; break;
-				case 7: Active = banhji.view.invoiceForm7; break;
-				case 8: Active = banhji.view.invoiceForm8; break;
-				case 9: Active = banhji.view.invoiceForm9; break;
-				case 10: Active = banhji.view.invoiceForm10; break;
-				case 11: Active = banhji.view.invoiceForm11; break;
-				case 12: Active = banhji.view.invoiceForm12; break;
-				case 13: Active = banhji.view.invoiceForm13; break;
-				case 14: Active = banhji.view.invoiceForm31; break;
-				case 15: Active = banhji.view.invoiceForm15; break;
-				case 16: Active = banhji.view.invoiceForm25; break;
-				case 17: Active = banhji.view.invoiceForm17; break;
-				case 18: Active = banhji.view.invoiceForm18; break;
-				case 19: Active = banhji.view.invoiceForm19; break;
-				case 20: Active = banhji.view.invoiceForm20; break;
-				case 21: Active = banhji.view.invoiceForm21; break;
-				case 22: Active = banhji.view.invoiceForm22; break;
-				case 23: Active = banhji.view.invoiceForm28; break;
-				case 24: Active = banhji.view.invoiceForm29; break;
-				case 25: Active = banhji.view.invoiceForm35; break;
-				case 26: Active = banhji.view.invoiceForm39; break;
-				case 27: Active = banhji.view.invoiceForm19; break;
-				case 28: Active = banhji.view.invoiceForm25; break;
-				case 29: Active = banhji.view.invoiceForm26; break;
-				case 30: Active = banhji.view.invoiceForm25; break;
-				case 31: Active = banhji.view.invoiceForm25; break;
-				case 32: Active = banhji.view.invoiceForm27; break;
-				case 33: Active = banhji.view.invoiceForm30; break;
-				case 34: Active = banhji.view.invoiceForm32; break;
-				case 35: Active = banhji.view.invoiceForm33; break;
-				case 36: Active = banhji.view.invoiceForm34; break;
-				case 37: Active = banhji.view.invoiceForm36; break;
-				case 38: Active = banhji.view.invoiceForm37; break;
-				case 39: Active = banhji.view.invoiceForm38; break;
-				case 40: Active = banhji.view.invoiceForm40; break;
-				case 41: Active = banhji.view.invoiceForm41; break;
-				case 42: Active = banhji.view.invoiceForm42; break;
-			}
-			banhji.view.invoiceCustom.showIn('#invFormContent', Active);
-		},
-		colorCC 			: function(e){
-			var Color = e.value;
-			var tS = '';
-			if(Color == '#000000' || Color =='#1f497d') tS = '#fff'; 
-			else tS = '#333';
-			$('.main-color').css({'background-color': e.value, 'color': tS});
-			$('.main-color div').css({'color': tS});
-			$('.main-color p').css({'color': tS});
-			$('.main-color span').css({'color': tS});
-			$('.main-color th').css({'color': tS});
-		},
-		selectedForm 		: function(e){
-			var Index = e.data.id;
-			this.activeInvoiceTmp(Index);
-			this.addRowLineDS();
-
-			var data = e.data, obj = this.get("obj");
-			obj.set("transaction_form_id", data.id);
-		},	    			
-		loadObj 			: function(id){
-			var self = this;	
-			this.dataSource.query({    			
-				filter: { field:"id", value: id },
-				page: 1,
-				take: 100
-			}).then(function(e){
-				var view = self.dataSource.view();
-				self.set("obj", view[0]);
-				
-				banhji.invoiceForm.set("obj", view[0]);	
-				var Index = parseInt(view[0].transaction_form_id);
-				self.activeInvoiceTmp(Index);
-				self.addRowLineDS();
-
-				self.txnFormDS.filter([{ field:"type", value: view[0].type }, { field:"moduls", value: view[0].moduls }]);	
-				
-				if(view[0].moduls == "customer_mg"){
-					self.set("selectTypeList", banhji.source.customerFormList);
-				}else if(view[0].moduls == "vendor_mg"){
-					self.set("selectTypeList", banhji.source.vendorFormList);
-				}
-			});	
-		},		
-		addEmpty 		 	: function(){			
-			this.dataSource.data([]);		
-			this.set("obj", null);		
-			this.set("isEdit", false);		
-			this.dataSource.insert(0,{				
-				user_id			: banhji.source.user_id,
-				transaction_form_id : 0,
-				type 			: this.formType,
-				name 			: "",
-				title 			: "Quotation",
-				note 			: "",
-				color  			: null,
-				moduls 			: this.selectCustom,
-				item_id 		: '',
-				status 			: 0
-	    	});		
-			var obj = this.dataSource.at(0);			
-			this.set("obj", obj);		
-		},		
-		objSync 			: function(){
-	    	var dfd = $.Deferred();	        
-
-	    	this.dataSource.sync();
-		    this.dataSource.bind("requestEnd", function(e){
-		    	if(e.response){				
-					dfd.resolve(e.response.results);
-				}				  				
-		    });
-		    this.dataSource.bind("error", function(e){		    		    	
-				dfd.reject(e.errorThrown);    				
-		    });
-		    return dfd;	    		    	
-	    }, 	    
-		save 				: function(){				
-	    	var self = this, obj = this.get("obj");
-			//Save Obj
-			this.objSync()
-			.then(function(data){ //Success	
-				banhji.customerSetting.txnTemplateDS.fetch();	
-				
-				return data;
-			}, function(reason) { //Error
-				$("#ntf1").data("kendoNotification").error(reason);
-			}).then(function(result){				
-				$("#ntf1").data("kendoNotification").success(banhji.source.successMessage);
-
-				if(self.get("saveClose")){
-					//Save Close					
-					self.set("saveClose", false);
-					self.cancel();
-					//window.history.back();
-				}else{
-					//Save New
-					self.addEmpty();
-				}
-			});
-		},
-		cancel 				: function(){
-			this.dataSource.cancelChanges();		
-			window.history.back();
-		}
-	});
-	banhji.invoiceForm =  kendo.observable({
-		lang 				: langVM,
-		dataSource 			: dataStore(apiUrl + "transactions"),
-		txnTemplateDS		: dataStore(apiUrl + "transaction_templates"),		
-		obj 				: {title: "Quotation", issued_date : "<?php echo date('d/M/Y'); ?>", number : "QO123456", type : "Quote", amount: "$500,000.00", contact: []},
-		company 			: banhji.institute,		
-		lineDS 				: dataStore(apiUrl + "transactions/line"),
-		user_id				: banhji.source.user_id,
-		selectForm 			: null,
-		pageLoad 			: function(id, is_recurring){
-			if(id){				
-				this.loadObj(id);
-			}
-		},	 
-		printGrid			: function() {
-			var obj = this.get('obj'), colorM, ts;
-			if(obj.color == null){
-				colorM = "#10253f";
-			}else{
-				colorM = obj.color;
-			}
-			if(obj.color == '#000000' || obj.color =='#1f497d' || obj.color == null){ 
-				ts = 'color: #fff!important;';
-			} else { ts = 'color: #333;'; }
-			var gridElement = $('#grid'),
-		        printableContent = '',
-		        win = window.open('', '', 'width=800, height=900'),
-		        doc = win.document.open();
-		    var htmlStart =
-		            '<!DOCTYPE html>' +
-		            '<html>' +
-		            '<head>' +
-		            '<meta charset="utf-8" />' +
-		            '<title></title>' +
-		            '<link href="http://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />'+
-		            '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/bootstrap.css">' +
-		            '<link href="<?php echo base_url(); ?>assets/invoice/invoice.css" rel="stylesheet" />'+
-		            '<link href="https://fonts.googleapis.com/css?family=Content:400,700" rel="stylesheet" type="text/css">' +
-		            '<link href="https://fonts.googleapis.com/css?family=Moul" rel="stylesheet">' +
-		            '<style>' +
-		            'html { font: 11pt sans-serif; }' +
-		            '.k-grid { border-top-width: 0; }' +
-		            '.k-grid, .k-grid-content { height: auto !important; }' +
-		            '.k-grid-content { overflow: visible !important; }' +
-		            'div.k-grid table { table-layout: auto; width: 100% !important; }' +
-		            '.k-grid .k-grid-header th { border-top: 1px solid; }' +
-		            '.k-grid-toolbar, .k-grid-pager > .k-link { display: none; }' +
-		            '</style><style type="text/css" media="print"> @page { size: portrait; margin:0mm;margin-top: 1mm; }'+
-		            	'.inv1 .main-color {' +
-		            		'background-color: '+colorM+'!important; ' + ts +
-		            		'-webkit-print-color-adjust:exact; ' +
-		            	'} ' +
-		            	'.inv1 .light-blue-td { ' +
-		            		'background-color: #c6d9f1!important;' +
-		            		'text-align: left;' +
-		            		'padding-left: 5px;' +
-		            		'-webkit-print-color-adjust:exact; ' +
-		            	'}' +
-		            	'.inv1 thead tr {'+
-		            		'background-color: rgb(242, 242, 242)!important;'+
-		            		'-webkit-print-color-adjust:exact; ' +
-		            	'}'+
-		            	'.pcg .mid-title div {' + ts + '}' +
-		            	'.pcg .mid-header {' +
-		            		'background-color: #dce6f2!important; ' +
-		            		'-webkit-print-color-adjust:exact; ' +
-		            	'}'+
-		            	'.inv1 span.total-amount { ' +
-		            		'color:#fff!important;' +
-		            	'}</style>' +
-		            '</head>' +
-		            '<body>';
-		    var htmlEnd =
-		            '</body>' +
-		            '</html>';
-		    
-		    printableContent = $('#invFormContent').html();
-		    doc.write(htmlStart + printableContent + htmlEnd);
-		    doc.close();
-		    setTimeout(function(){
-		    	win.print();
-		    	//win.close();
-		    },2000);
-		},
-		activeInvoiceTmp		: function(e){
-			var Active;
-			switch(e) {
-				case 1: Active = banhji.view.invoiceForm1; break;
-				case 2: Active = banhji.view.invoiceForm2; break;
-				//case 3: Active = banhji.view.invoiceForm3; break;
-				//case 4: Active = banhji.view.invoiceForm4; break;
-				//case 5: Active = banhji.view.invoiceForm5; break;
-				case 6: Active = banhji.view.invoiceForm6; break;
-				case 7: Active = banhji.view.invoiceForm7; break;
-				case 8: Active = banhji.view.invoiceForm8; break;
-				case 9: Active = banhji.view.invoiceForm9; break;
-				case 10: Active = banhji.view.invoiceForm10; break;
-				case 11: Active = banhji.view.invoiceForm11; break;
-				case 12: Active = banhji.view.invoiceForm12; break;
-				case 13: Active = banhji.view.invoiceForm13; break;
-				case 14: Active = banhji.view.invoiceForm31; break;
-				case 15: Active = banhji.view.invoiceForm15; break;
-				case 16: Active = banhji.view.invoiceForm25; break;
-				case 17: Active = banhji.view.invoiceForm17; break;
-				case 18: Active = banhji.view.invoiceForm18; break;
-				case 19: Active = banhji.view.invoiceForm19; break;
-				case 20: Active = banhji.view.invoiceForm20; break;
-				case 21: Active = banhji.view.invoiceForm21; break;
-				case 22: Active = banhji.view.invoiceForm22; break;
-				case 23: Active = banhji.view.invoiceForm28; break;
-				case 24: Active = banhji.view.invoiceForm29; break;
-				case 25: Active = banhji.view.invoiceForm35; break;
-				case 26: Active = banhji.view.invoiceForm39; break;
-				case 27: Active = banhji.view.invoiceForm19; break;
-				case 28: Active = banhji.view.invoiceForm25; break;
-				case 29: Active = banhji.view.invoiceForm26; break;
-				case 30: Active = banhji.view.invoiceForm25; break;
-				case 31: Active = banhji.view.invoiceForm25; break;
-				case 32: Active = banhji.view.invoiceForm27; break;
-				case 33: Active = banhji.view.invoiceForm30; break;
-				case 34: Active = banhji.view.invoiceForm32; break;
-				case 35: Active = banhji.view.invoiceForm33; break;
-				case 36: Active = banhji.view.invoiceForm34; break;
-				case 37: Active = banhji.view.invoiceForm36; break;
-				case 38: Active = banhji.view.invoiceForm37; break;
-				case 39: Active = banhji.view.invoiceForm38; break;
-				case 40: Active = banhji.view.invoiceForm40; break;
-				case 41: Active = banhji.view.invoiceForm41; break;
-				case 42: Active = banhji.view.invoiceForm42; break;
-			}
-			banhji.view.invoiceForm.showIn('#invFormContent', Active);
-		},
-		loadObj 			: function(id){
-			var self = this;				
-			this.dataSource.query({    			
-				filter: { field:"id", value: id },
-				page: 1,
-				take: 100
-			}).then(function(e){
-				var view = self.dataSource.view();	
-				view[0].set("sub_total", kendo.toString(view[0].sub_total, "c", view[0].locale));	
-				view[0].set("tax", kendo.toString(view[0].tax, "c", view[0].locale));
-				view[0].set("amount", kendo.toString(view[0].amount, "c", view[0].locale));
-				view[0].set("discount", kendo.toString(view[0].discount, "c", view[0].locale));	
-				view[0].set("deposit", kendo.toString(view[0].deposit, "c", view[0].locale));	
-				view[0].set("amount_due", kendo.toString(view[0].amount_due, "c", view[0].locale));				
-				self.set("obj", view[0]);
-				self.loadObjTemplate(view[0].transaction_template_id, id);		
-			});	
-		},
-		loadObjTemplate 		: function(id, transaction_id){
-			var self = this, obj = this.get('obj');			
-			this.txnTemplateDS.query({    			
-				filter: { field:"id", value: id },
-				page: 1,
-				take: 100
-			}).then(function(e){
-				var view = self.txnTemplateDS.view(), Index = parseInt(view[0].transaction_form_id), Active;
-				obj.set("color", view[0].color);
-				obj.set("title", view[0].title);
-				self.activeInvoiceTmp(Index);
-				self.lineDS.filter({ field:"transaction_id", value: transaction_id });
-				setTimeout(function(){ 	
-					var CountItemsRow = parseInt(self.lineDS.data().length); 
-					var TotalRow = 15 - CountItemsRow;
-					if(TotalRow > 0){
-						for (var i = 1; i < TotalRow; i++) { 
-							self.lineDS.add({				
-								id			: '',
-								description : '',
-								quantity 	: '',
-								price 		: '',
-								amount 		: '',
-								description : '',
-								locale 		: '',
-								item_prices : [],
-								item_id 	: ''
-					    	});	
-					    }
-					    $("#loading-inv").remove();
-					}
-				},6000);
-			});
-		},
-		cancel 				: function(){
-			this.dataSource.cancelChanges();		
-			window.history.back();
-		}
-	});
     banhji.waterCenter = kendo.observable({
 		lang 				: langVM,
 		transactionDS  		: dataStore(apiUrl + 'transactions'),
@@ -9421,8 +9013,6 @@
 		formTitle 			: "Invoice",
 		formType			: "Invoice",
 		company 			: banhji.institute,
-		saveClose 			: false,
-		selectTypeList 		: banhji.source.customerFormList,
 		selectCustom		: "water_mg",
 		isEdit 				: false,
 		user_id				: banhji.source.user_id,
@@ -9511,13 +9101,7 @@
 				self.activeInvoiceTmp(Index);
 				self.addRowLineDS();
 
-				self.txnFormDS.filter([{ field:"type", value: view[0].type }, { field:"moduls", value: view[0].moduls }]);	
-				
-				if(view[0].moduls == "customer_mg"){
-					self.set("selectTypeList", banhji.source.customerFormList);
-				}else if(view[0].moduls == "vendor_mg"){
-					self.set("selectTypeList", banhji.source.vendorFormList);
-				}
+				self.txnFormDS.filter({ field:"type", value: "Invoice" });
 			});	
 		},		
 		addEmpty 		 	: function(){			
@@ -9538,43 +9122,25 @@
 	    	});		
 			var obj = this.dataSource.at(0);			
 			this.set("obj", obj);		
-		},		
-		objSync 			: function(){
-	    	var dfd = $.Deferred();	        
-
-	    	this.dataSource.sync();
-		    this.dataSource.bind("requestEnd", function(e){
-		    	if(e.response){				
-					dfd.resolve(e.response.results);
-				}				  				
-		    });
-		    this.dataSource.bind("error", function(e){		    		    	
-				dfd.reject(e.errorThrown);    				
-		    });
-		    return dfd;	    		    	
-	    }, 	    
+		},		    
 		save 				: function(){				
-	    	var self = this, obj = this.get("obj");
-			//Save Obj
-			this.objSync()
-			.then(function(data){ //Success	
-				banhji.setting.txnTemplateDS.fetch();	
-				return data;
-			}, function(reason) { //Error
-				$("#ntf1").data("kendoNotification").error(reason);
-			}).then(function(result){				
-				$("#ntf1").data("kendoNotification").success(banhji.source.successMessage);
-
-				if(self.get("saveClose")){
-					//Save Close					
-					self.set("saveClose", false);
-					self.cancel();
-					//window.history.back();
-				}else{
-					//Save New
-					self.addEmpty();
-				}
-			});
+	    	var self = this;
+			if(this.dataSource.data().length > 0) {
+				this.dataSource.sync();
+				this.dataSource.bind("requestEnd", function(e){
+					if(e.type != 'read') {
+						if(e.response){				
+				    		$("#ntf1").data("kendoNotification").success("Successfully!");
+				    		//self.dataSource.addNew();
+							banhji.router.navigate("/setting");
+							banhji.setting.txnTemplateDS.fetch();
+						}
+					}				    					  				
+			    });
+			    this.dataSource.bind("error", function(e){		    		    	
+					$("#ntf1").data("kendoNotification").error("Error!"); 			
+			    });
+			}
 		},
 		cancel 				: function(){
 			this.dataSource.cancelChanges();		
@@ -9883,104 +9449,6 @@
 
 		vm.pageLoad();
 	});
-	banhji.router.route("/invoice_custom(/:id)", function(id){
-		if(!banhji.userManagement.getLogin()){
-			banhji.router.navigate('/manage');
-		}else{
-			banhji.view.layout.showIn("#content", banhji.view.invoiceCustom);
-			kendo.fx($("#slide-form")).slideIn("down").play();
-
-			var vm = banhji.invoiceCustom;
-			
-			if(banhji.pageLoaded["invoice_custom"]==undefined){
-				banhji.pageLoaded["invoice_custom"] = true;
-
-				//Function write css to header
-				function loadStyle(href){
-				    // avoid duplicates
-				    for(var i = 0; i < document.styleSheets.length; i++){
-				        if(document.styleSheets[i].href == href){
-				            return;
-				        }
-				    }
-				    var head  = document.getElementsByTagName('head')[0];
-				    var link  = document.createElement('link');
-				    link.rel  = 'stylesheet';
-				    link.type = 'text/css';
-				    link.href = href;
-				    head.appendChild(link);
-				}
-				var Href1 = '<?php echo base_url(); ?>assets/invoice/invoice.css';
-				loadStyle(Href1);
-				setTimeout(function(){
-					var validator = $("#example").kendoValidator().data("kendoValidator");
-					var notification = $("#notification").kendoNotification({
-					    autoHideAfter: 5000,
-					    width: 300,
-					    height: 50
-					}).data('kendoNotification');
-					$("#saveNew").click(function(e){
-						e.preventDefault();
-						if(validator.validate()){
-			            	vm.save();
-
-			            	notification.success("Save Successful");
-				        }else{
-				        	notification.error("Warning, please review it again!");
-				        }
-					});
-					$("#saveClose").click(function(e){
-						e.preventDefault();
-
-						if(validator.validate()){
-			            	vm.save();
-			            	window.history.back();
-
-			            	notification.success("Save Successful");
-				        }else{
-				        	notification.error("Warning, please review it again!");
-				        }
-					});
-				},2000);
-			};
-			
-			vm.pageLoad(id);
-		};
-	});
-	banhji.router.route("/invoice_form(/:id)", function(id){
-		if(!banhji.userManagement.getLogin()){
-			banhji.router.navigate('/manage');
-		}else{
-			banhji.view.layout.showIn("#content", banhji.view.invoiceForm);
-			kendo.fx($("#slide-form")).slideIn("down").play();
-
-			var vm = banhji.invoiceForm;
-			banhji.userManagement.addMultiTask("Customer Form","invoice_form",null);
-			if(banhji.pageLoaded["invoice_form"]==undefined){
-				banhji.pageLoaded["invoice_form"] = true;
-
-				//Function write css to header
-				function loadStyle(href){
-				    // avoid duplicates
-				    for(var i = 0; i < document.styleSheets.length; i++){
-				        if(document.styleSheets[i].href == href){
-				            return;
-				        }
-				    }
-				    var head  = document.getElementsByTagName('head')[0];
-				    var link  = document.createElement('link');
-				    link.rel  = 'stylesheet';
-				    link.type = 'text/css';
-				    link.href = href;
-				    head.appendChild(link);
-				}
-				var Href1 = '<?php echo base_url(); ?>assets/invoice/invoice.css';
-				loadStyle(Href1);
-			};
-			
-			vm.pageLoad(id);
-		};
-	});
 	banhji.router.route("/search_advanced", function(){
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
@@ -10212,36 +9680,6 @@
 				}
 				var Href1 = '<?php echo base_url(); ?>assets/invoice/invoice.css';
 				loadStyle(Href1);
-				setTimeout(function(){
-					var validator = $("#example").kendoValidator().data("kendoValidator");
-					var notification = $("#notification").kendoNotification({
-					    autoHideAfter: 5000,
-					    width: 300,
-					    height: 50
-					}).data('kendoNotification');
-					$("#saveNew").click(function(e){
-						e.preventDefault();
-						if(validator.validate()){
-			            	vm.save();
-
-			            	notification.success("Save Successful");
-				        }else{
-				        	notification.error("Warning, please review it again!");
-				        }
-					});
-					$("#saveClose").click(function(e){
-						e.preventDefault();
-
-						if(validator.validate()){
-			            	vm.save();
-			            	window.history.back();
-
-			            	notification.success("Save Successful");
-				        }else{
-				        	notification.error("Warning, please review it again!");
-				        }
-					});
-				},2000);
 			};
 			
 			vm.pageLoad(id);

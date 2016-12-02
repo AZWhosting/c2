@@ -43116,11 +43116,12 @@
 			banhji.router.navigate('/account/'+obj.id);
 		},
 		checkIsSub 			: function(sub_of_id){
-			var data = this.dataSource.get(sub_of_id);
+			var isSub = false, data = this.dataSource.get(sub_of_id);
 
-			var isSub = false;
-			if(data.sub_of_id>0){
-				isSub = true;
+			if(data){	
+				if(data.sub_of_id>0){
+					isSub = true;
+				}
 			}
 			
 			return isSub;
@@ -43237,7 +43238,7 @@
     			}
     			this.subAccountDS.filter([
     				{ field:"account_type_id", value:obj.account_type_id },
-    				{ field:"sub_of_id >", value:0 }
+    				{ field:"status", value:1 }
     			]);
     			this.generateNumber();
     		}
