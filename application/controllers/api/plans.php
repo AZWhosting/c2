@@ -266,11 +266,13 @@ class Plans extends REST_Controller {
 			$table->name = isset($row->name)?$row->name:null;
 			$table->is_active = isset($row->is_active) ? $row->is_active : 1;
 			$table->is_deleted = 0;
+			$table->tariff_id = $row->tariff_id;
 
 			if($table->save()) {
 				$data[] = array(
 					"id"  	  => $table->id,
-					"is_flat" => $table->is_flat == 0?FALSE:TRUE,
+					"is_flat" => $table->is_flat == 0,
+					"tariff_id" 
 					"type" 	  => $table->type,
 					"unit" 	  => $table->unit,
 					"amount"  => $table->amount,

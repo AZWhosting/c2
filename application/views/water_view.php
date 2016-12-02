@@ -7231,15 +7231,19 @@
         showTariffItem 		: function(e){
         	var data = e.data;
         	this.set("windowTariffItemVisible", true);
+        	this.setCurrent(e.data);
         	this.viewTariffItem(e);
+        },
+        setCurrent 			: function(current) {
+        	this.set('current', current);
         },
         saveTariffItem 		: function(e){
         	var data = e.data.id;
-        	console.log(data);
+        	console.log(this.get('current').id);
         	this.tariffItemDS.add({
         		name 		: this.get("tariffItemName"),
         		type     	: "tariff",
-        		tariff_id	: data,
+        		tariff_id	: this.get('current').id,
         		is_flat   	: this.get("tariffItemFlat"),
         		unit 		: null,
         		from 		: this.get("tariffItemFrom"),
@@ -7247,12 +7251,20 @@
         		amount 		: this.get("tariffItemAmount"),
         	});
         	this.tariffItemDS.sync();
-        	this.set("tariffItemName", "");
-        	this.set("tariffItemFlat", 0);
-        	this.set("tariffItemFrom", "");
-        	this.set("tariffItemTo", "");
-        	this.set("tariffItemAmount", "");
-        	this.set("windowTariffItemVisible", false);
+        	this.tariffItemDS.bind("requestEnd", function(e){
+        		if(e.response) {
+        			this.set("tariffItemName", "");
+		        	this.set("tariffItemFlat", 0);
+		        	this.set("tariffItemFrom", "");
+		        	this.set("tariffItemTo", "");
+		        	this.set("tariffItemAmount", "");
+		        	this.set("windowTariffItemVisible", false);
+		        	this.closeTariffWindowItem();
+        		}
+        	});
+        	this.tariffItemDS.bind("error", function(e){
+
+        	});
         },
         closeTariffWindowItem 	: function(){
         	this.set("windowTariffItemVisible", false);
