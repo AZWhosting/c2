@@ -138,7 +138,7 @@
               <form>
                 <h1>Confirm Code</h1>
                 <div>
-                  <p>Please check your email for the verification code with this email: <span data-bind="text: email"></span></p><br>
+                  <p id="message"></p><br>
                   <input type="type" data-bind="value: email" class="form-control" placeholder="Email" required="" />
                 </div>
                 <div>
@@ -146,7 +146,7 @@
                 </div>
                 <div>
                   <a class="btn btn-default submit" href="#" data-bind="click: comfirmCode">Confirm Now</a>
-                  <!--a class="btn btn-invert submit" href="#" data-bind="click: resendCode">Resend Code</a-->
+                  <a class="btn btn-invert submit" href="#" data-bind="click: resendCode">Resend Code</a>
                 </div>
                 </div>
               </form>
@@ -488,7 +488,18 @@
           },
           resendCode: function(e) {
             e.preventDefault();
-            alert('code resent');
+            var userData = {
+                Username : this.get('email'),
+                Pool : userPool
+            };
+            var cognitoUser = new AWSCognito.CognitoIdentityServiceProvider.CognitoUser(userData);
+            cognitoUser.resendConfirmationCode(function(err, result) {
+              if (err) {
+                  $("#message").text(err.message);
+                  return;
+              }
+              $("#message").text("Please check your email for the confirm code.");
+            });
           },
           signIn: function() {
               var decimal=  /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,15}$/;

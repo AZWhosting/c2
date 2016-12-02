@@ -467,12 +467,12 @@
 	            </div>
 	            <div class="tab-pane" id="tab5">
 		            <div style="clear: both;margin-bottom: 10px;">
-		            	<input data-bind="value: tariffName" type="text" placeholder="Name" style="height: 32px;"  class="span2 k-textbox k-invalid" />
+		            	<input data-bind="value: tariffName" type="text" placeholder="Name" style="height: 32px;"  class="span8 k-textbox k-invalid" />
 
-		                <input data-role="dropdownlist"
+		               <!--  <input data-role="dropdownlist"
 		            	   class="span2"
 		            	   style="padding-right: 1px;height: 32px;" 
-            			   data-option-label="(--- Unit ---)"
+            			   data-option-label=""
             			   data-auto-bind="false"			                   
 		                   data-value-primitive="true"
 		                   data-text-field="name"
@@ -488,31 +488,43 @@
 		                   data-text-field="name"
 		                   data-value-field="id"
 		                   data-bind="value: tariffFlat,
-		                              source: typeFlat"/>
-		            	<input data-bind="value: tariffFrom" type="text" placeholder="From" style="height: 32px;"  class="span1 k-textbox k-invalid" />
+		                              source: typeFlat"/> -->
+		            	<!-- <input data-bind="value: tariffFrom" type="text" placeholder="From" style="height: 32px;"  class="span1 k-textbox k-invalid" />
 
 		            	<input data-bind="value: tariffTo" type="text" placeholder="To" style="height: 32px;" class="span1 k-textbox k-invalid" />
 
-		            	<input data-bind="value: tariffPrice" type="text" placeholder="Price" style="height: 32px;" class="span2 k-textbox k-invalid" />
+		            	<input data-bind="value: tariffPrice" type="text" placeholder="Price" style="height: 32px;" class="span2 k-textbox k-invalid" /> -->
 
 		            	<a class="btn btn-default glyphicons circle_plus cutype-icon" style="width: 80px;margin-left: 2px;" data-bind="click: addTariff"><i></i>Add</a>
 		            </div>
 	            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
 	            		<thead>
 	            			<tr>
-	            				<th class="center"><span>Name</span></th>
-	            				<th class="center" width="100"><span>Unit</span></th>
-	            				<th class="center" ><span>Flat</span></th>
-	            				<th class="center"><span>From</span></th>
-	            				<th class="center"><span>To</span></th>
-	            				<th class="center"><span>Price</span></th>
-	            				<th class="center">Action</th>
+	            				<th class="center" width="300"><span>Name</span></th>
+	            				<th class="center" ><span>Action</span></th>
 	            			</tr>
 	            		</thead>
 	            		<tbody data-role="listview"	            				
 				                data-template="tariffSetting-template"
 				                data-edit-template="tariff-edit-template"
 				                data-bind="source: planItemDS"></tbody>
+	            	</table>
+	            	<br>
+	            	<table data-bind="visible: tariffSelect" class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
+	            		<thead>
+	            			<tr>
+	            				<th class="center" width="150"><span>Name</span></th>
+	            				<th class="center" width="100"><span>Flat</span></th>
+	            				<th class="center" width="100"><span>From</span></th>
+	            				<th class="center" width="100"><span>To</span></th>
+	            				<th class="center" width="100"><span>Price</span></th>
+	            				<th class="center" width="200"><span>Action</span></th>
+	            			</tr>
+	            		</thead>
+	            		<tbody data-role="listview"	            				
+				                data-template="tariff-item-template"
+				                data-edit-template="tariff-edit-item-template"
+				                data-bind="source: tariffItemDS"></tbody>
 	            	</table>
 	            </div>
 	            <div class="tab-pane" id="tab6">
@@ -797,24 +809,14 @@
     	<td>
     		#= name#
    		</td>
-   		<td align="center">
-    		#= unit#
-   		</td>
-   		<td align="center">
-    		#= is_flat#
-   		</td>
-   		<td align="center">
-    		#= from#
-   		</td>
-   		<td align="center">
-    		#= to#
-   		</td>
-   		<td align="center">
-    		#= amount#
-   		</td>
-   		<td align="center">   			   
-		    <a class="btn-action glyphicons pencil btn-success k-edit-button"><i></i></a>
-		    <a class="btn-action glyphicons remove_2 btn-danger k-delete-button"><i></i></a>
+   		<td align="left">   
+		    <span class="k-edit-button"><i class="icon-edit"></i> Edit</span>
+		    |
+	    	<span class="k-delete-button"><i class="icon-remove"></i> Delete</span>
+    		|
+    		<span data-bind="click: viewTariffItem"><i class="icon-view"></i> View Item</span>
+    		|
+    		<span data-bind="click: addTariffItem"><i class="icon-plus icon-white"></i> Add Item</span>
    		</td>   		
    	</tr>
 </script>
@@ -822,40 +824,41 @@
     <tr>    	               
         <td>
 			<input style="width: 100%;" type="text" class="k-textbox" data-bind="value:name" />
-        </td>     
-        <td>        	
-        	<input style="width: 100%;" data-role="dropdownlist"      			   		                   
-                   data-value-primitive="true"
-                   data-text-field="name"
-                   data-value-field="id"
-                   data-bind="value: unit,
-                              source: typeUnit" />
-        </td>  
-        <td>
-        	<input data-role="dropdownlist"
-		            	   style="padding-right: 1px;height: 32px;" 
-            			   data-auto-bind="false"			                   
-		                   data-value-primitive="true"
-		                   data-text-field="name"
-		                   data-value-field="id"
-		                   data-bind="value: is_flat,
-		                              source: typeFlat"/>           
-		</td>  
-        <td>
-        	<input style="width: 100%;" type="text" class="k-textbox" data-bind="value:from" />
-        </td>
-        <td>
-        	<input style="width: 100%;" type="text" class="k-textbox" data-bind="value:to" />
-        </td>     
-        <td>
-        	<input style="width: 100%;" type="text" class="k-textbox" data-bind="value:amount" />
-        </td>
+        </td>    
 
 	    <td class="edit-buttons" style="text-align: center;">
 	        <a class="k-button k-update-button" href="\\#"><span class="k-icon k-update"></span></a>
 	        <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-cancel"></span></a>
 	    </td>
     </tr>
+</script>
+
+<script id="tariff-item-template" type="text/x-kendo-tmpl">                    
+    <tr>
+    	<td>#= name#</td>
+    	<td>#= is_flat#</td>
+    	<td>#= from#</td>
+    	<td>#= to#</td>
+    	<td>#= amount#</td>
+    	<td>
+    		<span class="k-edit-button"><i class="icon-edit"></i> Edit</span>
+		    |
+	    	<span class="k-delete-button"><i class="icon-remove"></i> Delete</span>
+    	</td>
+   	</tr>
+</script>
+<script id="tariff-edit-item-template" type="text/x-kendo-tmpl">                    
+    <tr>
+    	<td><input style="width: 100%;" type="text" class="k-textbox" data-bind="value:name" /></td>
+    	<td>#= is_flat#</td>
+    	<td><input style="width: 100%;" type="text" class="k-textbox" data-bind="value:from" /></td>
+    	<td><input style="width: 100%;" type="text" class="k-textbox" data-bind="value:to" /></td>
+    	<td><input style="width: 100%;" type="text" class="k-textbox" data-bind="value:amount" /></td>
+    	<td class="edit-buttons" style="text-align: center;">
+	        <a class="k-button k-update-button" href="\\#"><span class="k-icon k-update"></span></a>
+	        <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-cancel"></span></a>
+	    </td>
+   	</tr>
 </script>
 <script id="depositSetting-template" type="text/x-kendo-tmpl">                    
     <tr>
@@ -7026,6 +7029,7 @@
         blockCompanyId  	: 0,
         blocDS 				: dataStore(apiUrl + "locations"),
         planItemDS			: dataStore(apiUrl + "plans/items"),
+        tariffItemDS		: dataStore(apiUrl + "plans/tariff"),
         txnTemplateDS		: dataStore(apiUrl + "transaction_templates"),
         objBloc 			: null,
         licenseDS 			: dataStore(apiUrl + "branches"),
@@ -7034,6 +7038,7 @@
 		typeUnit 			: [{id:"m3", name: "m3"},{id:"money", name: "Money"},{ id:"%", name: "%"}],
 		typeFlat 			: [{id:"false", name: "Not Flat"},{id:"true", name: "Flat"}],
 		tariffFlat 			: false,
+		tariffSelect 		: false,
 		prefixDS			: new kendo.data.DataSource({
 			transport: {
 				read 	: {
@@ -7155,19 +7160,20 @@
         	this.planItemDS.add({
         		name 		: this.get("tariffName"),
         		type     	: "tariff",
-        		is_flat   	: this.get("tariffFlat"),
-        		unit 		: this.get("tariffUnit"),
-        		from 		: this.get("tariffFrom"),
-        		to 			: this.get("tariffTo"),
-        		amount 		: this.get("tariffPrice")
+        		is_flat   	: false,
+        		unit 		: null,
+        		from 		: null,
+        		to 			: null,
+        		amount 		: null
         	});
         	this.planItemDS.sync();
         	this.set("tariffName", "");
-        	this.set("tariffPrice", "");
-        	this.set("tariffUnit", "");
-        	this.set("tariffFrom", "");
-        	this.set("tariffFlat", "false");
-        	this.set("tariffTo", "");
+        },
+        viewTariffItem 		: function(e){
+        	var data = e.data.id;
+        	this.set("tariffSelect", true);
+        	this.tariffItemDS.data([]);
+        	this.tariffItemDS.filter({field: "tariff_id", value: data});
         },
         goDeposit    		: function(){
         	this.planItemDS.data([]);

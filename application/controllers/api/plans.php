@@ -333,13 +333,14 @@ class Plans extends REST_Controller {
 				}
 			}
 		}
-		$table->where('tariff_id <>', null);
+		//$table->where('tariff_id <>', null);
 		$table->get();
 		if($table->exists()) {
 			$data = array();
 			foreach($table as $row) {
 				$data[] = array(
 					'id' => $row->id,
+					'name' => $row->name,
 					'is_flat' => $row->is_flat == 0 ? FALSE:TRUE,
 					'type' => $row->type,
 					'to' 	=> $row->to,

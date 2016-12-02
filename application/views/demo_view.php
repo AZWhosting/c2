@@ -12001,7 +12001,7 @@
 		        #if(is_system=="0"){#
 			        <a class="k-button k-delete-button" href="\\#"><span class="k-icon k-delete"></span></a>				        
 		        #}#
-		        <span class="k-button" data-bind="click: goPattern"><span data-bind="text: lang.lang.pattern"></span></span>
+		        <a class="k-button" href="\#/customer/0/#=id#"><span data-bind="text: lang.lang.pattern"></span></a>
 		   	</div>		   	
    		</td>
    	</tr>
@@ -19782,7 +19782,7 @@
 		        #if(is_system=="0"){#
 			        <a class="k-button k-delete-button" href="\\#"><span class="k-icon k-delete"></span></a>				        
 		        #}#
-		        <span class="k-button" data-bind="click: goPattern"><span data-bind="text: lang.lang.pattern"></span></span>
+		        <a class="k-button" href="\#/customer/0/#=id#"><span data-bind="text: lang.lang.pattern"></span></a>
 		   	</div>		   	
    		</td>   		
    	</tr>
@@ -28298,7 +28298,7 @@
 				<p style="text-align: center; text-transform: uppercase;font-size:17px;font-weight: 600;"><span data-bind="text: lang.lang.total_attachment"></span></p>
 				<div class="total-customer" style="background: #496cad; color: #fff;min-height: 112px;">
 					<span class="number" data-bind="text: totalSize" style="font-size: 30px; font-weight: 600;"></span>GB
-					<p><span data-bind="text: lang.lang.use_of"></span> 1GB</p>
+					<p><span data-bind="text: lang.lang.use_of"></span> <span data-bind="text: allowSize"></span> GB</p>
 				</div>
 			</div>
 		</div>
@@ -38504,7 +38504,7 @@
 
 <script id="employee-header-tmpl" type="text/x-kendo-tmpl">
     <strong>
-    	<a href="\#/employee">+ Add New Employee</a>
+    	<a href="<?php echo base_url(); ?>admin\#employeelist">+ Add New Employee</a>
     </strong>
 </script>
 
@@ -39153,6 +39153,7 @@
             file            : files[0].rawFile
           });
         },
+        allowSize	  : 0,
         transactionSize: 0,
         contactSize   : 0,
         totalSize 	  : 0,
@@ -48924,72 +48925,53 @@
 			});
 		},
       	addEmpty 				: function(){
-      		var self = this;
       		this.dataSource.data([]);
       		this.contactPersonDS.data([]);
 
       		this.set("isEdit", false);
       		this.set("isProtected", false);
       		this.set("notDuplicateNumber", true);
-      		this.set("obj", null);
+      		this.set("obj", null);      		
 
-      		this.patternDS.query({
-      			filter:[
-      				{ field:"contact_type_id", value:3 },
-      				{ field:"is_pattern", value:1 }
-      			],
-      			page:1,
-      			pageSize:1
-      		}).then(function(){
-      			var view = self.patternDS.view(),
-      			type = self.contactTypeDS.at(0);
+  			this.dataSource.insert(0, {				
+				"country_id" 			: 0,			
+				"user_id" 				: 0,
+				"contact_type_id" 		: 6,							
+				"abbr"					: "",
+				"number"				: "",				
+				"surname"				: "",
+				"name"					: "",
+				"gender"				: "",					
+				"phone" 				: "",
+				"email" 				: "",					
+				"company"				: "",
+				"vat_no"				: "",					
+				"memo"					: "",
+				"city"					: "",
+				"post_code"				: "",
+				"address" 				: "",
+				"bill_to" 				: "",
+				"ship_to" 				: "",
+				"latitute" 				: "",
+				"longtitute" 			: "",
+				"credit_limit"			: 0,
+				"locale" 				: banhji.locale,														
+				"payment_term_id"		: 0,
+				"payment_method_id"		: 0,									
+				"registered_date" 		: new Date(),
+				"account_id"			: 0,
+				"ra_id"					: 0,
+				"tax_item_id"			: 0,
+				"deposit_account_id"	: 0,
+				"trade_discount_id"		: 0,
+				"settlement_discount_id": 0,					
+				"is_pattern" 			: 0,
+				"status"				: 1								
+			});
 
-      			self.dataSource.insert(0, {				
-					"country_id" 			: view[0].country_id,			
-					"user_id" 				: 0,
-					"contact_type_id" 		: 6,							
-					"abbr"					: type.abbr,
-					"number"				: "",				
-					"surname"				: "",
-					"name"					: "",
-					"gender"				: view[0].gender,					
-					"phone" 				: "",
-					"email" 				: "",					
-					"company"				: view[0].company,
-					"vat_no"				: view[0].vat_no,					
-					"memo"					: view[0].memo,
-					"city"					: view[0].city,
-					"post_code"				: view[0].post_code,
-					"address" 				: view[0].address,
-					"bill_to" 				: view[0].bill_to,
-					"ship_to" 				: view[0].ship_to,
-					"latitute" 				: "",
-					"longtitute" 			: "",
-					"credit_limit"			: view[0].credit_limit,
-					"locale" 				: view[0].locale,														
-					"payment_term_id"		: view[0].payment_term_id,
-					"payment_method_id"		: view[0].payment_method_id,									
-					"registered_date" 		: new Date(),
-					"account_id"			: view[0].account_id,
-					"ra_id"					: view[0].ra_id,
-					"tax_item_id"			: view[0].tax_item_id,
-					"deposit_account_id"	: view[0].deposit_account_id,
-					"trade_discount_id"		: view[0].trade_discount_id,
-					"settlement_discount_id": view[0].settlement_discount_id,					
-					"is_pattern" 			: 0,
-					"status"				: 1								
-				});
-
-				var obj = self.dataSource.at(0);				
-				//Pattern
-				if(self.get("contact_type_id")>0){
-					obj.set("contact_type_id", self.get("contact_type_id"));
-					obj.set("is_pattern", 1);
-				}
-
-				self.set("obj", obj);
-				self.generateNumber();
-      		});								
+			var obj = this.dataSource.at(0);
+			this.set("obj", obj);
+			this.typeChanges();
 		},
 		objSync 				: function(){
 	    	var dfd = $.Deferred();	        
@@ -49078,6 +49060,14 @@
 			this.set("showConfirm", false);
 		},
 		//Pattern		
+		typeChanges 			: function(){
+			var obj = this.get("obj");
+
+			if(obj.contact_type_id){
+				this.applyPattern();
+				this.generateNumber();
+			}
+		},
 		applyPattern 			: function(){
 			var self = this, obj = self.get("obj");
 			
@@ -49090,7 +49080,7 @@
 				pageSize: 1
 			}).then(function(data){
 				var view = self.patternDS.view(),
-				type = this.contactTypeDS.get(view[0].contact_type_id);				
+				type = self.contactTypeDS.get(view[0].contact_type_id);				
 
 				if(view.length>0){
 					obj.set("country_id", view[0].country_id);
@@ -49114,62 +49104,9 @@
 					obj.set("deposit_account_id", view[0].deposit_account_id);
 					obj.set("trade_discount_id", view[0].trade_discount_id);
 					obj.set("settlement_discount_id", view[0].settlement_discount_id);					
-				}else{
-					obj.set("country_id", 0);					
-					obj.set("gender", "M");
-					obj.set("company", "");
-					obj.set("vat_no", "");
-					obj.set("memo", "");
-					obj.set("city", "");
-					obj.set("post_code", "");
-					obj.set("address", "");
-					obj.set("bill_to", "");
-					obj.set("ship_to", "");									
-					obj.set("payment_term_id", 0);
-					obj.set("payment_method_id", 0);
-					obj.set("credit_limit", 0);
-					obj.set("locale", "");					
-					obj.set("account_id", 0);
-					obj.set("ra_id", 0);
-					obj.set("tax_item_id", 0);
-					obj.set("deposit_account_id", 0);
-					obj.set("trade_discount_id", 0);
-					obj.set("settlement_discount_id", 0);
 				}
 			});
-		},
-		typeChanges 			: function(){
-			var obj = this.get("obj");
-
-			if(obj.contact_type_id){
-				this.applyPattern();
-				this.generateNumber();
-			}else{
-				obj.set("company", "");
-				obj.set("vat_no", "");
-
-				obj.set("country_id", 0);					
-				obj.set("gender", "M");
-				obj.set("company", "");
-				obj.set("vat_no", "");
-				obj.set("memo", "");
-				obj.set("city", "");
-				obj.set("post_code", "");
-				obj.set("address", "");
-				obj.set("bill_to", "");
-				obj.set("ship_to", "");									
-				obj.set("payment_term_id", 0);
-				obj.set("payment_method_id", 0);
-				obj.set("credit_limit", 0);
-				obj.set("locale", "");					
-				obj.set("account_id", 0);
-				obj.set("ra_id", 0);
-				obj.set("tax_item_id", 0);
-				obj.set("deposit_account_id", 0);
-				obj.set("trade_discount_id", 0);
-				obj.set("settlement_discount_id", 0);
-			}
-		}
+		}		
 	});
 	banhji.purchaseOrder =  kendo.observable({
 		lang 					: langVM,
@@ -54292,11 +54229,27 @@
 	        	});
 
 	        	this.contactTypeDS.sync();
+	        	this.contactTypeDS.bind("requestEnd", function(e){
+	        		if(e.type==="create"){
+	        			var response = e.response.results[0];
+	        			self.addPattern(response.id);
+	        		}
+	        	});
 
 	        	this.set("contactTypeName", "");
 	        	this.set("contactTypeAbbr", "");
 	        	this.set("contactTypeCompany", 0);
         	}
+        },
+        addPattern 			: function(id){
+        	this.patternDS.insert(0, {
+				"contact_type_id" 		: id,
+				"number"				: "",
+				"locale" 				: banhji.locale,					
+				"is_pattern" 			: 1,
+				"status"				: 1								
+			});
+			this.patternDS.sync();
         },
         addPaymentMethod 		: function(){
         	var name = this.get("paymentMethodName");
@@ -54331,16 +54284,6 @@
 	        	this.set("paymentTermNetDue", "");
 	        	this.set("paymentTermPeriod", "");
 	        	this.set("paymentTermPercentage", "");
-        	}
-        },
-        goPattern 	: function(e){
-        	var data = e.data;        	        	
-
-        	if(kendo.parseInt(data.contact_id)>0){        		        	
-	        	banhji.router.navigate('/vendor/'+data.contact_id+'/1');   	
-        	}else{
-        		banhji.router.navigate('/vendor');
-        		banhji.vendor.set("contact_type_id",data.id);
         	}
         },
         deleteForm 		: function(e){
@@ -55723,7 +55666,6 @@
 			this.contactPersonDS.filter({ field:"contact_id", value: id });
 		},		
       	addEmpty 				: function(){
-      		var self = this;
       		this.dataSource.data([]);
       		this.contactPersonDS.data([]);
       		
@@ -55731,65 +55673,46 @@
       		this.set("isProtected", false);
       		this.set("notDuplicateNumber", true);
       		this.set("obj", null);
+      		
+  			this.dataSource.insert(0, {				
+				"country_id" 			: 0,			
+				"user_id" 				: 0,
+				"contact_type_id" 		: 4, //General Customer							
+				"abbr"					: "",
+				"number"				: "",				
+				"surname"				: "",
+				"name"					: "",
+				"gender"				: "",					
+				"phone" 				: "",
+				"email" 				: "",					
+				"company"				: "",
+				"vat_no"				: "",					
+				"memo"					: "",
+				"city"					: "",
+				"post_code"				: "",
+				"address" 				: "",
+				"bill_to" 				: "",
+				"ship_to" 				: "",
+				"latitute" 				: "",
+				"longtitute" 			: "",
+				"credit_limit"			: 0,
+				"locale" 				: banhji.locale,														
+				"payment_term_id"		: 0,
+				"payment_method_id"		: 0,									
+				"registered_date" 		: new Date(),
+				"account_id"			: 0,
+				"ra_id"					: 0,
+				"tax_item_id"			: 0,
+				"deposit_account_id"	: 0,
+				"trade_discount_id"		: 0,
+				"settlement_discount_id": 0,					
+				"is_pattern" 			: 0,
+				"status"				: 1
+			});
 
-      		this.patternDS.query({
-      			filter:[
-      				{ field:"contact_type_id", value:4 },
-      				{ field:"is_pattern", value:1 }
-      			],
-      			page:1,
-      			pageSize:1
-      		}).then(function(){
-      			var view = self.patternDS.view(),
-      			type = self.contactTypeDS.at(0);
-
-      			self.dataSource.insert(0, {				
-					"country_id" 			: view[0].country_id,			
-					"user_id" 				: 0,
-					"contact_type_id" 		: 4, //General Customer							
-					"abbr"					: type.abbr,
-					"number"				: "",				
-					"surname"				: "",
-					"name"					: "",
-					"gender"				: view[0].gender,					
-					"phone" 				: "",
-					"email" 				: "",					
-					"company"				: view[0].company,
-					"vat_no"				: view[0].vat_no,					
-					"memo"					: view[0].memo,
-					"city"					: view[0].city,
-					"post_code"				: view[0].post_code,
-					"address" 				: view[0].address,
-					"bill_to" 				: view[0].bill_to,
-					"ship_to" 				: view[0].ship_to,
-					"latitute" 				: "",
-					"longtitute" 			: "",
-					"credit_limit"			: view[0].credit_limit,
-					"locale" 				: view[0].locale,														
-					"payment_term_id"		: view[0].payment_term_id,
-					"payment_method_id"		: view[0].payment_method_id,									
-					"registered_date" 		: new Date(),
-					"account_id"			: view[0].account_id,
-					"ra_id"					: view[0].ra_id,
-					"tax_item_id"			: view[0].tax_item_id,
-					"deposit_account_id"	: view[0].deposit_account_id,
-					"trade_discount_id"		: view[0].trade_discount_id,
-					"settlement_discount_id": view[0].settlement_discount_id,					
-					"is_pattern" 			: 0,
-					"status"				: 1
-				});
-
-				var obj = self.dataSource.at(0);				
-				//Pattern
-				if(self.get("contact_type_id")>0){
-					obj.set("contact_type_id", self.get("contact_type_id"));
-					obj.set("abbr", "");
-					obj.set("is_pattern", 1);
-				}
-
-				self.set("obj", obj);
-				self.generateNumber();
-      		});								
+			var obj = this.dataSource.at(0);
+			this.set("obj", obj);
+			this.typeChanges();
 		},
 	    objSync 				: function(){
 	    	var dfd = $.Deferred();	        
@@ -55878,7 +55801,15 @@
 		closeConfirm 			: function(){
 			this.set("showConfirm", false);
 		},
-		//Pattern		
+		//Pattern
+		typeChanges 			: function(){
+			var obj = this.get("obj");
+
+			if(obj.contact_type_id){
+				this.applyPattern();
+				this.generateNumber();
+			}
+		},		
 		applyPattern 			: function(){
 			var self = this, obj = self.get("obj");
 			
@@ -55915,61 +55846,9 @@
 					obj.set("deposit_account_id", view[0].deposit_account_id);
 					obj.set("trade_discount_id", view[0].trade_discount_id);
 					obj.set("settlement_discount_id", view[0].settlement_discount_id);					
-				}else{
-					obj.set("country_id", 0);					
-					obj.set("gender", "M");
-					obj.set("company", "");
-					obj.set("vat_no", "");
-					obj.set("memo", "");
-					obj.set("city", "");
-					obj.set("post_code", "");
-					obj.set("address", "");
-					obj.set("bill_to", "");
-					obj.set("ship_to", "");									
-					obj.set("payment_term_id", 0);
-					obj.set("payment_method_id", 0);
-					obj.set("credit_limit", 0);
-					obj.set("locale", "");					
-					obj.set("account_id", 0);
-					obj.set("ra_id", 0);
-					obj.set("tax_item_id", 0);
-					obj.set("deposit_account_id", 0);
-					obj.set("trade_discount_id", 0);
-					obj.set("settlement_discount_id", 0);
 				}
 			});
-		},
-		typeChanges 			: function(){
-			var obj = this.get("obj");
-
-			if(obj.contact_type_id){
-				this.applyPattern();
-				this.generateNumber();
-			}else{
-				obj.set("company", "");
-				obj.set("vat_no", "");
-				obj.set("country_id", 0);					
-				obj.set("gender", "M");
-				obj.set("company", "");
-				obj.set("vat_no", "");
-				obj.set("memo", "");
-				obj.set("city", "");
-				obj.set("post_code", "");
-				obj.set("address", "");
-				obj.set("bill_to", "");
-				obj.set("ship_to", "");									
-				obj.set("payment_term_id", 0);
-				obj.set("payment_method_id", 0);
-				obj.set("credit_limit", 0);
-				obj.set("locale", "");					
-				obj.set("account_id", 0);
-				obj.set("ra_id", 0);
-				obj.set("tax_item_id", 0);
-				obj.set("deposit_account_id", 0);
-				obj.set("trade_discount_id", 0);
-				obj.set("settlement_discount_id", 0);
-			}
-		}
+		}		
 	});
 	banhji.quote =  kendo.observable({
 		lang 				: langVM,
@@ -63509,7 +63388,7 @@
 	        	this.contactTypeDS.sync();
 	        	this.contactTypeDS.bind("requestEnd", function(e){
 	        		if(e.type==="create"){
-	        			var response = e.response.results[0];	        			
+	        			var response = e.response.results[0];
 	        			self.addPattern(response.id);
 	        		}
 	        	});
@@ -63562,16 +63441,6 @@
 	        	this.set("paymentTermNetDue", "");
 	        	this.set("paymentTermPeriod", "");
 	        	this.set("paymentTermPercentage", "");
-        	}
-        },
-        goPattern 			: function(e){
-        	var data = e.data;        	        	
-
-        	if(kendo.parseInt(data.contact_id)>0){        		        	
-	        	banhji.router.navigate('/customer/'+data.contact_id+'/1');   	
-        	}else{
-        		banhji.router.navigate('/customer');
-        		banhji.customer.set("contact_type_id",data.id);
         	}
         },
         deleteForm 			: function(e){
@@ -67343,13 +67212,14 @@
 
 			$.each(this.dataSource.data(), function(index, value) {
 				var amount = value.reference[0].amount - (value.amount_paid + value.reference[0].deposit);								
+				
 				subTotal += amount / value.rate;					
 				discount += value.discount / value.rate;
 				pay += value.amount / value.rate;					
 	        });
 
 			total = subTotal - discount;
-			remain = total - pay;
+			remain = total - pay;			
 
 	        this.set("sub_total", kendo.toString(subTotal, "c", banhji.locale));
 	        this.set("discount", kendo.toString(discount, "c", banhji.locale));		        
@@ -78567,6 +78437,7 @@
 									vm.set('transactionNu', e.response.transactionNumber);
 									vm.set('transactionSize', kendo.toString(e.response.transactionSize, "n2"));
 									vm.set('totalSize', kendo.toString(e.response.total, 'n2'));
+									vm.set('allowSize', kendo.toString(e.response.allowedSize, 'n2'));
 								}
 							});
 							break;
