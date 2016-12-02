@@ -341,7 +341,7 @@ class Plans extends REST_Controller {
 				$data[] = array(
 					'id' => $row->id,
 					'name' => $row->name,
-					'is_flat' => $row->is_flat == 0 ? FALSE:TRUE,
+					'is_flat' => $row->is_flat,
 					'type' => $row->type,
 					'to' 	=> $row->to,
 					'from' 	=> $row->from,

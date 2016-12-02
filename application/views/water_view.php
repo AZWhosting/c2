@@ -509,6 +509,7 @@
 				                data-edit-template="tariff-edit-template"
 				                data-bind="source: planItemDS"></tbody>
 	            	</table>
+	            	
 	            	<br>
 	            	<table data-bind="visible: tariffSelect" class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
 	            		<thead>
@@ -526,6 +527,61 @@
 				                data-edit-template="tariff-edit-item-template"
 				                data-bind="source: tariffItemDS"></tbody>
 	            	</table>
+	            	<!-- Tariff Item Window -->
+		            <div data-role="window"
+			                 data-title="Tariff Item"		                 
+			                 data-width="250"
+			                 data-height="290"
+			                 data-actions="{}"
+			                 data-position="{top: '30%', left: '37%'}"		                 
+			                 data-bind="visible: windowTariffItemVisible">
+	            		<table>
+							<tr style="border-bottom: 8px solid #fff;">
+								<td width="35%"><span data-bind="text: lang.lang.name"></span></td>
+								<td>
+									<input class="k-textbox" placeholder="Item Name ..." data-bind="value: tariffItemName" style="width: 100%;">
+								</td>
+							</tr>
+							<tr style="border-bottom: 8px solid #fff;">
+								<td><span>Flat</span></td>
+								<td>
+									<input data-role="dropdownlist"
+					            	   style="padding-right: 1px;height: 32px;" 
+			            			   data-auto-bind="false"			                   
+					                   data-value-primitive="true"
+					                   data-text-field="name"
+					                   data-value-field="id"
+					                   data-bind="value: tariffItemFlat,
+					                              source: typeFlat"/>
+								</td>
+							</tr>
+							<tr style="border-bottom: 8px solid #fff;">
+								<td><span>From</span></td>
+								<td>
+									<input class="k-textbox" placeholder="From ..." data-bind="value: tariffItemFrom" style="width: 100%;">
+								</td>
+							</tr>
+							<tr style="border-bottom: 8px solid #fff;">
+								<td><span>To</span></td>
+								<td>
+									<input class="k-textbox" placeholder="To ..." data-bind="value: tariffItemTo" style="width: 100%;">
+								</td>
+							</tr>
+							<tr style="border-bottom: 8px solid #fff;">
+								<td><span>Price</span></td>
+								<td>
+									<input class="k-textbox" placeholder="Price ..." data-bind="value: tariffItemAmount" style="width: 100%;">
+								</td>
+							</tr>
+						</table>
+
+						<br>
+						<div style="text-align: center;">
+							<span class="btn btn-success btn-icon glyphicons ok_2" data-bind="click: saveTariffItem"><i></i><span data-bind="text: lang.lang.save"></span></span>
+
+							<span class="btn btn-danger btn-icon glyphicons remove_2" data-bind="click: closeTariffWindowItem"><i></i><span data-bind="text: lang.lang.close"></span></span>  
+						</div>
+					</div>
 	            </div>
 	            <div class="tab-pane" id="tab6">
 	            	<div style="clear: both;margin-bottom: 10px;">
@@ -816,7 +872,7 @@
     		|
     		<span data-bind="click: viewTariffItem"><i class="icon-view"></i> View Item</span>
     		|
-    		<span data-bind="click: addTariffItem"><i class="icon-plus icon-white"></i> Add Item</span>
+    		<span data-bind="click: showTariffItem"><i class="icon-plus icon-white"></i> Add Item</span>
    		</td>   		
    	</tr>
 </script>
@@ -836,7 +892,13 @@
 <script id="tariff-item-template" type="text/x-kendo-tmpl">                    
     <tr>
     	<td>#= name#</td>
-    	<td>#= is_flat#</td>
+    	<td align="center">
+    		# if(is_flat == 0) {#
+    			<span><i class="icon-remove"></i></span>
+    		# }else{ #
+    			<span><i class="icon-ok"></i></span>
+    		# } #
+    	</td>
     	<td>#= from#</td>
     	<td>#= to#</td>
     	<td>#= amount#</td>
@@ -850,7 +912,16 @@
 <script id="tariff-edit-item-template" type="text/x-kendo-tmpl">                    
     <tr>
     	<td><input style="width: 100%;" type="text" class="k-textbox" data-bind="value:name" /></td>
-    	<td>#= is_flat#</td>
+    	<td align="center">
+    		<input data-role="dropdownlist"
+        	   style="padding-right: 1px;height: 32px;" 
+			   data-auto-bind="false"			                   
+               data-value-primitive="true"
+               data-text-field="name"
+               data-value-field="id"
+               data-bind="value: is_flat,
+                          source: typeFlat"/>
+		</td>
     	<td><input style="width: 100%;" type="text" class="k-textbox" data-bind="value:from" /></td>
     	<td><input style="width: 100%;" type="text" class="k-textbox" data-bind="value:to" /></td>
     	<td><input style="width: 100%;" type="text" class="k-textbox" data-bind="value:amount" /></td>
@@ -7036,9 +7107,10 @@
         branchDS 			: dataStore(apiUrl + "branches"),
 		contactTypeDS 		: banhji.source.customerTypeDS,
 		typeUnit 			: [{id:"m3", name: "m3"},{id:"money", name: "Money"},{ id:"%", name: "%"}],
-		typeFlat 			: [{id:"false", name: "Not Flat"},{id:"true", name: "Flat"}],
-		tariffFlat 			: false,
+		typeFlat 			: [{id:"0", name: "Not Flat"},{id:"1", name: "Flat"}],
+		tariffItemFlat 		: 0,
 		tariffSelect 		: false,
+		windowTariffItemVisible : false,
 		prefixDS			: new kendo.data.DataSource({
 			transport: {
 				read 	: {
@@ -7156,18 +7228,34 @@
         	this.planItemDS.data([]);
         	this.planItemDS.filter({field: "type", value: "tariff"});
         },
-        addTariff 				: function(){
-        	this.planItemDS.add({
-        		name 		: this.get("tariffName"),
+        showTariffItem 		: function(e){
+        	var data = e.data;
+        	this.set("windowTariffItemVisible", true);
+        	this.viewTariffItem(e);
+        },
+        saveTariffItem 		: function(e){
+        	var data = e.data.id;
+        	console.log(data);
+        	this.tariffItemDS.add({
+        		name 		: this.get("tariffItemName"),
         		type     	: "tariff",
-        		is_flat   	: false,
+        		tariff_id	: data,
+        		is_flat   	: this.get("tariffItemFlat"),
         		unit 		: null,
-        		from 		: null,
-        		to 			: null,
-        		amount 		: null
+        		from 		: this.get("tariffItemFrom"),
+        		to 			: this.get("tariffItemTo"),
+        		amount 		: this.get("tariffItemAmount"),
         	});
-        	this.planItemDS.sync();
-        	this.set("tariffName", "");
+        	this.tariffItemDS.sync();
+        	this.set("tariffItemName", "");
+        	this.set("tariffItemFlat", 0);
+        	this.set("tariffItemFrom", "");
+        	this.set("tariffItemTo", "");
+        	this.set("tariffItemAmount", "");
+        	this.set("windowTariffItemVisible", false);
+        },
+        closeTariffWindowItem 	: function(){
+        	this.set("windowTariffItemVisible", false);
         },
         viewTariffItem 		: function(e){
         	var data = e.data.id;

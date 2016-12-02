@@ -28927,13 +28927,13 @@
 </script>
 <script id="itemCenter-transaction-tmpl" type="text/x-kendo-tmpl">
     <tr>    	  	
-    	<td>#=kendo.toString(new Date(invoice[0].issued_date), "dd-MM-yyyy")#</td>
-    	<td>#=invoice[0].type#</td>
+    	<td>#=kendo.toString(new Date(transaction_issued_date), "dd-MM-yyyy")#</td>
+    	<td>#=transaction_type#</td>
         <td align="center">		
-			#if(invoice[0].type=="Cash_Purchase" || invoice[0].type=="Credit_Purchase"){#
-				<a href="\#/purchase/#=id#">#=invoice[0].number#</a>
+			#if(transaction_type=="Cash_Purchase" || transaction_type=="Credit_Purchase"){#
+				<a href="\#/purchase/#=id#">#=transaction_number#</a>
 			#}else{#
-				<a href="\#/#=invoice[0].type.toLowerCase()#/#=id#">#=invoice[0].number#</a>
+				<a href="\#/#=transaction_type.toLowerCase()#/#=id#">#=transaction_number#</a>
 			#}#
         </td>
     	<td align="center">#=kendo.toString(quantity, "n0")#</td>
@@ -31351,9 +31351,15 @@
 </script>
 <script id="itemPrice-movement-tmpl" type="text/x-kendo-tmpl">
     <tr>    	  	
-    	<td>#=kendo.toString(new Date(invoice[0].issued_date), "dd-MM-yyyy")#</td>
-    	<td>#=invoice[0].type#</td>
-        <td>#=invoice[0].number#</td>
+    	<td>#=kendo.toString(new Date(transaction_issued_date), "dd-MM-yyyy")#</td>
+    	<td>#=transaction_type#</td>
+        <td>
+        	#if(transaction_type=="Cash_Purchase" || transaction_type=="Credit_Purchase"){#
+				<a href="\#/purchase/#=id#">#=transaction_number#</a>
+			#}else{#
+				<a href="\#/#=transaction_type.toLowerCase()#/#=id#">#=transaction_number#</a>
+			#}#
+        </td>
     	<td>#=kendo.toString(quantity, "n0")#</td>
     	<td>#=kendo.toString(cost, "c", "locale")#</td>
     	<td>#=kendo.toString(price, "c", "locale")#</td>  	
