@@ -43224,7 +43224,7 @@
 		    	//Sub accounts
 				self.subAccountDS.filter([
 					{ field:"account_type_id", value:view[0].account_type_id },
-					{ field:"sub_of_id >", value:0 }
+					{ field:"status", value:1 }
 				]);
 			});
     	},
@@ -67144,7 +67144,6 @@
 		total 				: 0,
 		pay 		 		: 0,
 		remain 				: 0,
-		original_total 		: 0,				
 		user_id				: banhji.source.user_id,
 		pageLoad 			: function(id){
 			if(id){
@@ -67327,15 +67326,15 @@
 				pageSize: 100
 			}).then(function(){
 				var view = self.dataSource.view();
+
+				self.set("obj", view[0]);
+				self.changes();
 				
 				self.journalLineDS.filter({ field: "transaction_id", value: id });
 				self.creditDS.filter([
 					{ field: "reference_id", value: id },
 					{ field: "type", value: "Customer_Deposit" }
-				]);				
-				self.set("obj", view[0]);
-				self.set("original_total", view[0].amount+view[0].discount);
-				self.changes();														
+				]);
 			});						
 		},
 		changes				: function(){
