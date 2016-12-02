@@ -64,11 +64,11 @@ class Itemreports extends REST_Controller {
 
 		//Filter		
 		if(!empty($filters) && isset($filters)){
-	    	foreach ($filters as $value) {
-	    		if(isset($value['operator'])) {
-					$obj->{$value['operator']}($value['field'], $value['value']);
+	    	foreach ($filters['filters'] as $f) {
+	    		if(isset($f['operator'])) {
+					$obj->{$f['operator']}($f['field'], $f['value']);
 				} else {
-	    			$obj->where($value["field"], $value["value"]);
+	    			$obj->where($f["field"], $f["value"]);
 				}
 			}
 		}
@@ -154,6 +154,7 @@ class Itemreports extends REST_Controller {
 		// Response Data
 		$data['onHand'] = $onHand;
 		$data['count'] = count($temp);
+		// $data['test'] =$test;
 		$this->response($data, 200);
 	}
 
@@ -186,11 +187,11 @@ class Itemreports extends REST_Controller {
 		
 		//Filter		
 		if(!empty($filters) && isset($filters)){
-	    	foreach ($filters as $value) {
+	    	foreach ($filters['filters']  as $value) {
 	    		if(isset($value['operator'])) {
-					$obj->{$value['operator']}($value['field'], $value['value']);
+					$line->{$value['operator']}($value['field'], $value['value']);
 				} else {
-	    			$obj->where($value["field"], $value["value"]);
+	    			$line->where($value["field"], $value["value"]);
 				}
 			}
 		}
@@ -239,7 +240,7 @@ class Itemreports extends REST_Controller {
 						$temp["$itemLine->item_id"]['name'] = $inventory->name;
 						$temp["$itemLine->item_id"]['avg_cost'] = floatval($inventory->cost);
 						$temp["$itemLine->item_id"]['price'] = $inventory->price;
-						$temp["$itemLine->item_id"]['onHand'] = $in->quantity - $out->quantity;
+						$temp["$itemLine->item_id"]['onHand'] = $in->quantity - $out->quantity; 
 						$temp["$itemLine->item_id"]['currency_code'] = $inventory->locale;
 						$temp["$itemLine->item_id"]['transactions'][] = array(
 							'id' => $value->id,
@@ -358,11 +359,11 @@ class Itemreports extends REST_Controller {
 
 		//Filter		
 		if(!empty($filters) && isset($filters)){
-	    	foreach ($filters as $value) {
-	    		if(isset($value['operator'])) {
-					$obj->{$value['operator']}($value['field'], $value['value']);
+	    	foreach ($filters['filters'] as $f) {
+	    		if(isset($f['operator'])) {
+					$obj->{$f['operator']}($f['field'], $f['value']);
 				} else {
-	    			$obj->where($value["field"], $value["value"]);
+	    			$obj->where($f["field"], $f["value"]);
 				}
 			}
 		}
