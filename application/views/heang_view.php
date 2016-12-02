@@ -14047,7 +14047,7 @@
 				<td>&nbsp;&nbsp;#=items[i].type#</td>
 				<td>#=myDate#</td>
 				<td>
-					<a href="\#/purchase/#=items[i].id#">#=items[i].number#</a>
+					<a href="\#/#=type.toLowerCase()#/#=items[i].id#">#=items[i].number#</a>
 				</td>
 				<td>#=items[i].memo#</td>				
 				<td style="text-align: right;">#=kendo.toString(items[i].amount, 'c2')#</td>
@@ -14055,6 +14055,7 @@
 
 		#}#
 	#}#
+
 </script>
 <script id="payablesAgingSummary" type="text/x-kendo-template">
 	<div id="slide-form">
