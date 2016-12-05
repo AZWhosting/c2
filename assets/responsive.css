@@ -30,7 +30,11 @@
 .medai-font{
   font-size: 35px !important;
 }
-
+.cogwheel i:before{
+  font-size: 15px !important;
+  margin-top: 4px;
+  margin-left: 6px;
+}
 .cash-position{
   background: #333E50;
   color: #fff;

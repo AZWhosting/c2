@@ -1439,48 +1439,19 @@ class Items extends REST_Controller {
 		}
 
 		//Filter		
-		if(!empty($filters) && isset($filters)){			
+		if(!empty($filters) && isset($filters)){
 	    	foreach ($filters as $value) {
-	    		if(!empty($value["operator"]) && isset($value["operator"])){
-		    		if($value["operator"]=="where_in"){
-		    			$obj->where_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_where_in"){
-		    			$obj->or_where_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="where_not_in"){
-		    			$obj->where_not_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_where_not_in"){
-		    			$obj->or_where_not_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="like"){
-		    			$obj->like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_like"){
-		    			$obj->or_like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="not_like"){
-		    			$obj->not_like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_not_like"){
-		    			$obj->or_not_like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="startswith"){
-		    			$obj->like($value["field"], $value["value"], "after");
-		    		}else if($value["operator"]=="endswith"){
-		    			$obj->like($value["field"], $value["value"], "before");
-		    		}else if($value["operator"]=="contains"){
-		    			$obj->like($value["field"], $value["value"], "both");
-		    		}else if($value["operator"]=="or_where"){
-		    			$obj->or_where($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="where_related"){
-		    			$obj->where_related($value["model"], $value["field"], $value["value"]);
-		    		}else if($value["operator"]=="where_in_related"){
-		    			$obj->where_in_related($value["model"], $value["field"], $value["value"]);		    			    		
-		    		}else{
-		    			$obj->where($value["field"], $value["value"]);
-		    		}
-	    		}else{	    			
-	    			$obj->where($value["field"], $value["value"]);	    				    			
-	    		}
-			}									 			
+	    		if(isset($value['operator'])) {
+					$obj->{$value['operator']}($value['field'], $value['value']);
+				} else {
+	    			$obj->where($value["field"], $value["value"]);
+				}
+			}
 		}
 		
-		$obj->where_related("transaction","is_recurring",0);
-		$obj->where_related("transaction","deleted",0);
+		$obj->include_related("transaction", array("number","type","issued_date"));
+		$obj->where_related("transaction","is_recurring <>", 1);
+		$obj->where_related("transaction","deleted <>", 1);
 		$obj->order_by_related("transaction", "issued_date", "desc");
 		$obj->order_by_related("transaction", "number", "desc");
 
@@ -1490,22 +1461,22 @@ class Items extends REST_Controller {
 
 		if($obj->exists()){
 			foreach ($obj as $value) {
-				if($value->item_id>0){
-					$data["results"][] = array(
-						"id" 			=> $value->id,
-						"item_id" 		=> $value->item_id,
-						"on_hand" 		=> floatval($value->on_hand),
-						"quantity" 		=> floatval($value->quantity),
-						"cost" 			=> floatval($value->cost),
-						"price" 		=> floatval($value->price),
-						"amount" 		=> floatval($value->amount),
-						"rate" 			=> floatval($value->rate),
-						"locale" 		=> $value->locale,
-						"movement" 		=> $value->movement,
-						
-						"invoice" 		=> $value->transaction->get_raw()->result()						
-					);
-				}
+				$data["results"][] = array(
+					"id" 						=> $value->transaction_id,
+					"item_id" 					=> $value->item_id,
+					"on_hand" 					=> floatval($value->on_hand),
+					"quantity" 					=> floatval($value->quantity),
+					"cost" 						=> floatval($value->cost),
+					"price" 					=> floatval($value->price),
+					"amount" 					=> floatval($value->amount),
+					"rate" 						=> floatval($value->rate),
+					"locale" 					=> $value->locale,
+					"movement" 					=> $value->movement,
+					
+					"transaction_number"		=> $value->transaction_number,
+					"transaction_type"			=> $value->transaction_type,
+					"transaction_issued_date"	=> $value->transaction_issued_date						
+				);
 			}
 		}				
 

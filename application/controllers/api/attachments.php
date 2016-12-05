@@ -8,6 +8,8 @@ class Attachments extends REST_Controller {
 	public $server_host;
 	public $server_user;
 	public $server_pwd;
+	public $intitute;
+	public $allowedStorage;
 	//CONSTRUCTOR
 	function __construct() {
 		parent::__construct();
@@ -15,6 +17,8 @@ class Attachments extends REST_Controller {
 		$institute->where('id', $this->input->get_request_header('Institute'))->get();
 		if($institute->exists()) {
 			$conn = $institute->connection->get();
+			$this->institute = $conn->id;
+			$this->allowedStorage = ceil((($institute->storage_space / 1024) / 1024 ) / 1024);
 			$this->server_host = $conn->server_name;
 			$this->server_user = $conn->username;
 			$this->server_pwd = $conn->password;	
@@ -37,8 +41,14 @@ class Attachments extends REST_Controller {
 		$total 	   = 0;
 		$gb = 3072;
 
-		$obj = new Attachment(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
+		$profileImage = new Pimage(null, $this->server_host, $this->server_user, $this->server_pwd, 'banhji');
+		$profileImage->where_related('institute', 'id', $this->institute)->get();
+		$profileImageSize = 0;
+		foreach($profileImage as $image) {
+			$profileImageSize = ceil((($image->size) / 1024) / 1024);
+		}
 
+		$obj = new Attachment(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
 		//Sort
 		if(!empty($sort) && isset($sort)){					
 			foreach ($sort as $value) {
@@ -105,8 +115,8 @@ class Attachments extends REST_Controller {
 		$data['contactNumber'] = $conNumber;
 		$data['transactionSize'] = $traSize / 1024;
 		$data['contactSize'] = $conSize / 1024;
-		$data['total'] = ($traSize + $conSize) / 1024;
-
+		$data['allowedSize'] = $this->allowedStorage;
+		$data['total'] = ($traSize + $conSize + $profileImageSize) / 1024;
 		//Response Data		
 		$this->response($data, 200);		
 	}

@@ -184,14 +184,14 @@ class Plans extends REST_Controller {
 			}
 		}
 		$table->where('is_deleted', 0);
-
+		$table->where('tariff_id', null);
 		$table->get();
 
 		if($table->exists()) {
 			foreach($table as $value) {
 				$data[] = array(
 					"id"  	  => $value->id,
-					"is_flat" => $value->is_flat,
+					"is_flat" => $value->is_flat == 0?FALSE:TRUE,
 					"type" 	  => $value->type,
 					"unit" 	  => $value->unit,
 					"amount"  => $value->amount,
@@ -231,7 +231,7 @@ class Plans extends REST_Controller {
 			if($table->save()) {
 				$data[] = array(
 					"id"  	  => $table->id,
-					"is_flat" => $table->is_flat,
+					"is_flat" => $table->is_flat == 0?FALSE:TRUE,
 					"type" 	  => $table->type,
 					"unit" 	  => $table->unit,
 					"amount"  => $table->amount,
@@ -266,11 +266,13 @@ class Plans extends REST_Controller {
 			$table->name = isset($row->name)?$row->name:null;
 			$table->is_active = isset($row->is_active) ? $row->is_active : 1;
 			$table->is_deleted = 0;
+			$table->tariff_id = $row->tariff_id;
 
 			if($table->save()) {
 				$data[] = array(
 					"id"  	  => $table->id,
-					"is_flat" => $table->is_flat,
+					"is_flat" => $table->is_flat == 0,
+					"tariff_id" 
 					"type" 	  => $table->type,
 					"unit" 	  => $table->unit,
 					"amount"  => $table->amount,
@@ -301,6 +303,158 @@ class Plans extends REST_Controller {
 			if($table->save()) {
 				$data[] = array(
 					"is_flat" => $table->is_flat,
+					"type" 	  => $table->type,
+					"unit" 	  => $table->unit,
+					"amount"  => $table->amount,
+					"to" 	  => $table->to,
+					"from" 	  => $table->from,
+					"is_active"=>$table->is_active == 1 ? TRUE:FALSE
+				);
+			}
+		}
+
+		if(count($data)>0) {
+			$this->response(array('results' => $data, 'count' => count($data)), 201);
+		} else {
+			$this->response(array('results' => $data, 'count' => count($data)), 200);
+		}
+	}
+
+	function tariff_get() {
+		$getData = $this->get('filter');
+		$filters = $getData['filters'];
+		$table = new Plan_item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$data = array();
+
+		if(isset($filters)) {
+			foreach($filters as $filter) {
+				if(isset($filter['operator'])) {
+					$table->{$filter['operator']}($filter['field'], $filter['value']);
+				} else {
+					$table->where($filter['field'], $filter['value']);
+				}
+			}
+		}
+		//$table->where('tariff_id <>', null);
+		$table->get();
+		if($table->exists()) {
+			$data = array();
+			foreach($table as $row) {
+				$data[] = array(
+					'id' => $row->id,
+					'name' => $row->name,
+					'is_flat' => $row->is_flat,
+					'type' => $row->type,
+					'to' 	=> $row->to,
+					'from' 	=> $row->from,
+					'amount'=> $row->amount
+				);
+			}
+			$this->response(array('results'=> $data, 'count' => count($data)), 200);
+		} else {
+			$this->response(array('results'=> array(), 'count' => 0), 400);
+		}
+	}
+
+	function tariff_post() {
+		$requestedData = json_decode($this->post('models'));
+		$array = array();
+
+		foreach($requestedData as $row) {
+			$table = new Plan_item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$tmp = isset($row->is_flat) ? $row->is_flat:FALSE;
+			$table->is_flat = $tmp == TRUE ? 1 : 0;
+			$table->type = isset($row->type) ? $row->type : null;
+			$table->unit = isset($row->unit)?$row->unit:null;
+			$table->amount = isset($row->amount) ? $row->amount : 0;
+			$table->to = isset($row->to)?$row->to:null;
+			$table->from = isset($row->from)?$row->from:null;
+			$table->name = isset($row->name)?$row->name:null;
+			$table->is_active = isset($row->is_active) ? $row->is_active : 1;
+			$table->is_deleted = 0;
+
+			if($table->save()) {
+				$data[] = array(
+					"id"  	  => $table->id,
+					"is_flat" => $table->is_flat == 0?FALSE:TRUE,
+					"type" 	  => $table->type,
+					"unit" 	  => $table->unit,
+					"amount"  => $table->amount,
+					"to" 	  => $table->to,
+					"from" 	  => $table->from,
+					"is_active"=>$table->is_active == 1 ? TRUE:FALSE
+				);
+			}
+		}
+
+		if(count($data)>0) {
+			$this->response(array('results' => $data, 'count' => count($data)), 201);
+		} else {
+			$this->response(array('results' => $data, 'count' => count($data)), 200);
+		}
+	}
+
+	function tariff_put() {
+		$requestedData = json_decode($this->put('models'));
+		$array = array();
+
+		foreach($requestedData as $row) {
+			$table = new Plan_item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$table->where('id', $row->id)->get();
+			$tmp = isset($row->is_flat) ? $row->is_flat:FALSE;
+			$table->is_flat = $tmp == TRUE ? 1 : 0;
+			$table->type = isset($row->type) ? $row->type : null;
+			$table->unit = isset($row->unit)?$row->unit:null;
+			$table->amount = isset($row->amount) ? $row->amount : 0;
+			$table->to = isset($row->to)?$row->to:null;
+			$table->from = isset($row->from)?$row->from:null;
+			$table->name = isset($row->name)?$row->name:null;
+			$table->is_active = isset($row->is_active) ? $row->is_active : 1;
+			$table->is_deleted = 0;
+
+			if($table->save()) {
+				$data[] = array(
+					"id"  	  => $table->id,
+					"is_flat" => $table->is_flat == 0?FALSE:TRUE,
+					"type" 	  => $table->type,
+					"unit" 	  => $table->unit,
+					"amount"  => $table->amount,
+					"to" 	  => $table->to,
+					"from" 	  => $table->from,
+					"is_active"=>$table->is_active == 1 ? TRUE:FALSE
+				);
+			}
+		}
+
+		if(count($data)>0) {
+			$this->response(array('results' => $data, 'count' => count($data)), 201);
+		} else {
+			$this->response(array('results' => $data, 'count' => count($data)), 200);
+		}
+	}
+
+	function tariff_delete() {
+		$requestedData = json_decode($this->delete('models'));
+		$array = array();
+
+		foreach($requestedData as $row) {
+			$table = new Plan_item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$table->where('id', $row->id)->get();
+			// $tmp = isset($row->is_flat) ? $row->is_flat:FALSE;
+			// $table->is_flat = $tmp == TRUE ? 1 : 0;
+			// $table->type = isset($row->type) ? $row->type : null;
+			// $table->unit = isset($row->unit)?$row->unit:null;
+			// $table->amount = isset($row->amount) ? $row->amount : 0;
+			// $table->to = isset($row->to)?$row->to:null;
+			// $table->from = isset($row->from)?$row->from:null;
+			// $table->name = isset($row->name)?$row->name:null;
+			// $table->is_active = isset($row->is_active) ? $row->is_active : 1;
+			$table->is_deleted = 1;
+
+			if($table->save()) {
+				$data[] = array(
+					"id"  	  => $table->id,
+					"is_flat" => $table->is_flat == 0?FALSE:TRUE,
 					"type" 	  => $table->type,
 					"unit" 	  => $table->unit,
 					"amount"  => $table->amount,

@@ -713,15 +713,30 @@
 		<div class="widget-body padding-none">			
 			<div class="row-fluid row-merge">
 				<div class="span3 listWrapper" >
-					<div class="innerAll">							
+					<div class="innerAll" style="height: 98px;">							
 						<form autocomplete="off" class="form-inline">
 
-							<div class="widget-search separator bottom">
-								<button type="button" class="btn btn-default pull-right" data-bind="click: search"><i class="icon-search"></i></button>
-								<div class="overflow-hidden">
-									<input type="search" placeholder="Account ..." data-bind="value: searchText, events:{change: enterSearch}">
+							<div class="widget-search separator bottom row" style="padding-bottom: 0; ">
+								<div class="span10" style="padding-right: 0;">
+									<button type="button" class="btn btn-default pull-right" data-bind="click: search"><i class="icon-search"></i></button>
+									<div class="overflow-hidden">
+										<input type="search" placeholder="Account ..." data-bind="value: searchText, events:{change: enterSearch}">
+									</div>
 								</div>
-							</div>
+								<div class="span2" style="padding: 0; width: 12%">
+									<ul class="topnav" style="padding: 0 !important; background: #e8e8e8; height: 34px;">										
+									  	<li role='presentation' class='dropdown' style="list-style: none; padding: 0 0 0 3px;">
+									  		<a class='dropdown-toggle glyphicons cogwheel' data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false'><i></i> </a>
+								  			<ul class='dropdown-menu' style="width: 190px !important; border-radius: 0; left: -159px !important; top: 34px !important; margin-left: 4px;">
+								  				<li><a><span data-bind="click: showActive">Show Active Account</span></a></li>  	
+								  				<li><a><span data-bind="click: showInactive">Show Inactive Account</span></a></li>
+								  				  				 		
+								  			</ul>
+									  	</li>	  	  	
+									  	
+									</ul>
+								</div>
+							</div>	
 
 							<div class="select2-container" style="width: 100%; margin-bottom: 10px;">								
 								<input data-role="dropdownlist"
@@ -942,13 +957,12 @@
 	<tr data-bind="click: selectedRow">
 		<td>
 			<div class="media-body">
-				#if(sub_of_id>0){#
-					&nbsp;&nbsp;
-					<span>
+				#if(sub_of_id==0){#
+					<span class="strong">
 						#=number#				
 					</span>
 					-
-					<span>
+					<span class="strong">
 						#if(name.length>25){#
 							#=name.substring(0, 25)#...
 						#}else{#
@@ -956,11 +970,17 @@
 						#}#
 					</span>
 				#}else{#
-					<span class="strong">
+					#if(banhji.accountingCenter.checkIsSub(sub_of_id)){#
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					#}else{#
+						&nbsp;&nbsp;
+					#}#
+
+					<span>
 						#=number#				
 					</span>
 					-
-					<span class="strong">
+					<span>
 						#if(name.length>25){#
 							#=name.substring(0, 25)#...
 						#}else{#
@@ -1061,7 +1081,8 @@
 					                   data-text-field="name"
 					                   data-value-field="id"
 					                   data-bind="value: obj.sub_of_id,
-					                              source: subAccountDS"
+					                              source: subAccountDS,
+					                              events:{change: generateNumber}"
 					                   data-option-label="Select Sub Account..."
 					                   style="width: 100%;" />
 							</div>
@@ -11980,7 +12001,7 @@
 		        #if(is_system=="0"){#
 			        <a class="k-button k-delete-button" href="\\#"><span class="k-icon k-delete"></span></a>				        
 		        #}#
-		        <span class="k-button" data-bind="click: goPattern"><span data-bind="text: lang.lang.pattern"></span></span>
+		        <a class="k-button" href="\#/customer/0/#=id#"><span data-bind="text: lang.lang.pattern"></span></a>
 		   	</div>		   	
    		</td>
    	</tr>
@@ -19761,7 +19782,7 @@
 		        #if(is_system=="0"){#
 			        <a class="k-button k-delete-button" href="\\#"><span class="k-icon k-delete"></span></a>				        
 		        #}#
-		        <span class="k-button" data-bind="click: goPattern"><span data-bind="text: lang.lang.pattern"></span></span>
+		        <a class="k-button" href="\#/customer/0/#=id#"><span data-bind="text: lang.lang.pattern"></span></a>
 		   	</div>		   	
    		</td>   		
    	</tr>
@@ -23847,7 +23868,7 @@
 							</div>
 							<div class="span9" align="right">
 								<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save_new"></span></span>
-								<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save-close"></span></span>		
+								<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save_close"></span></span>		
 							</div>
 						</div>
 					</div>
@@ -28277,7 +28298,7 @@
 				<p style="text-align: center; text-transform: uppercase;font-size:17px;font-weight: 600;"><span data-bind="text: lang.lang.total_attachment"></span></p>
 				<div class="total-customer" style="background: #496cad; color: #fff;min-height: 112px;">
 					<span class="number" data-bind="text: totalSize" style="font-size: 30px; font-weight: 600;"></span>GB
-					<p><span data-bind="text: lang.lang.use_of"></span> 1GB</p>
+					<p><span data-bind="text: lang.lang.use_of"></span> <span data-bind="text: allowSize"></span> GB</p>
 				</div>
 			</div>
 		</div>
@@ -28906,13 +28927,13 @@
 </script>
 <script id="itemCenter-transaction-tmpl" type="text/x-kendo-tmpl">
     <tr>    	  	
-    	<td>#=kendo.toString(new Date(invoice[0].issued_date), "dd-MM-yyyy")#</td>
-    	<td>#=invoice[0].type#</td>
+    	<td>#=kendo.toString(new Date(transaction_issued_date), "dd-MM-yyyy")#</td>
+    	<td>#=transaction_type#</td>
         <td align="center">		
-			#if(invoice[0].type=="Cash_Purchase" || invoice[0].type=="Credit_Purchase"){#
-				<a href="\#/purchase/#=id#">#=invoice[0].number#</a>
+			#if(transaction_type=="Cash_Purchase" || transaction_type=="Credit_Purchase"){#
+				<a href="\#/purchase/#=id#">#=transaction_number#</a>
 			#}else{#
-				<a href="\#/#=invoice[0].type.toLowerCase()#/#=id#">#=invoice[0].number#</a>
+				<a href="\#/#=transaction_type.toLowerCase()#/#=id#">#=transaction_number#</a>
 			#}#
         </td>
     	<td align="center">#=kendo.toString(quantity, "n0")#</td>
@@ -31330,9 +31351,15 @@
 </script>
 <script id="itemPrice-movement-tmpl" type="text/x-kendo-tmpl">
     <tr>    	  	
-    	<td>#=kendo.toString(new Date(invoice[0].issued_date), "dd-MM-yyyy")#</td>
-    	<td>#=invoice[0].type#</td>
-        <td>#=invoice[0].number#</td>
+    	<td>#=kendo.toString(new Date(transaction_issued_date), "dd-MM-yyyy")#</td>
+    	<td>#=transaction_type#</td>
+        <td>
+        	#if(transaction_type=="Cash_Purchase" || transaction_type=="Credit_Purchase"){#
+				<a href="\#/purchase/#=id#">#=transaction_number#</a>
+			#}else{#
+				<a href="\#/#=transaction_type.toLowerCase()#/#=id#">#=transaction_number#</a>
+			#}#
+        </td>
     	<td>#=kendo.toString(quantity, "n0")#</td>
     	<td>#=kendo.toString(cost, "c", "locale")#</td>
     	<td>#=kendo.toString(price, "c", "locale")#</td>  	
@@ -31445,15 +31472,16 @@
 								            <tr>
 								            	<td><span data-bind="text: lang.lang.adjustment_account"></span></td>
 								            	<td>
-								            		<input id="ddlAccount" name="ddlAccount"
-								            			   data-role="dropdownlist"
-														   data-option-label="Select Account..."
-														   data-header-template="account-header-tmpl"							                   
+								            		<input id="cbbAccount" name="cbbAccount"
+								            			   data-role="combobox"
+														   data-header-template="account-header-tmpl"
+														   data-template="account-list-tmpl"							                   
 										                   data-value-primitive="true"
 										                   data-text-field="name"
 										                   data-value-field="id"									                   
 										                   data-bind="value: obj.account_id,
 										                              source: accountDS"
+										                   placeholder="Select Account..."
 										                   required data-required-msg="required" style="width: 100%;" />
 								            	</td>
 								            </tr>
@@ -32107,9 +32135,7 @@
 		        #if(id=="4" || id=="5" || id=="6"){#
 
 		        #}else{#
-		        	#if(is_system=="1"){#
-		        		<span class="k-button" data-bind="click: goPattern"><span data-bind="text: lang.lang.pattern"></span></span>
-		   			#}#
+		        	<span class="k-button" data-bind="click: goPattern"><span data-bind="text: lang.lang.pattern"></span></span>
 		   		#}#
 		   	</div>		   	
    		</td>
@@ -38484,7 +38510,7 @@
 
 <script id="employee-header-tmpl" type="text/x-kendo-tmpl">
     <strong>
-    	<a href="\#/employee">+ Add New Employee</a>
+    	<a href="<?php echo base_url(); ?>admin\#employeelist">+ Add New Employee</a>
     </strong>
 </script>
 
@@ -39133,6 +39159,7 @@
             file            : files[0].rawFile
           });
         },
+        allowSize	  : 0,
         transactionSize: 0,
         contactSize   : 0,
         totalSize 	  : 0,
@@ -42850,6 +42877,7 @@
 				data: 'results',
 				total: 'count'
 			},
+			filter: { field:"status", value:1 },
 			sort:[
 				{ field:"account_type_id", dir:"asc" },
 				{ field:"number", dir:"asc" }
@@ -42877,18 +42905,15 @@
 		nature 				: "",		
 		user_id 			: banhji.source.user_id,				
 		pageLoad 			: function(id){
-			var self = this, obj = this.get("obj");
+			var self = this;
 
 			if(id){
 				this.loadObj(id);
 			}
 			//Refresh
 			if(this.dataSource.total()>0){
-				this.dataSource.fetch(function(){
-					var dataItem = self.dataSource.get(obj.id);
-					self.set("obj", dataItem);
-				});
-				this.summaryDS.fetch();
+				this.dataSource.fetch();
+				this.loadSummary();
 				this.searchTransaction();
 			}						
 		},
@@ -43066,6 +43091,12 @@
             	pageSize: 10
             });            
 		},
+		showActive 			: function(){
+			this.dataSource.filter({ field:"status", value: 1 });
+		},
+		showInactive 		: function(){
+			this.dataSource.filter({ field:"status", value: 0 });
+		},
 		loadTransaction	 	: function(){
 			var self = this,
 				para = [],
@@ -43090,6 +43121,17 @@
 		goEdit 				: function(){
 			var obj = this.get("obj");
 			banhji.router.navigate('/account/'+obj.id);
+		},
+		checkIsSub 			: function(sub_of_id){
+			var isSub = false, data = this.dataSource.get(sub_of_id);
+
+			if(data){	
+				if(data.sub_of_id>0){
+					isSub = true;
+				}
+			}
+			
+			return isSub;
 		}
 	});
 	banhji.account =  kendo.observable({
@@ -43098,7 +43140,7 @@
     	deleteDS 				: dataStore(apiUrl + "account_lines"),
     	numberDS 				: dataStore(apiUrl + "accounts"),
     	accountTypeDS 			: banhji.source.accountTypeDS,
-    	subAccountDS			: banhji.source.subAccountDS,
+    	subAccountDS			: dataStore(apiUrl + "accounts"),
     	currencyDS 				: banhji.source.currencyDS,
     	statusList 				: banhji.source.statusList,
     	confirmMessage 			: banhji.source.confirmMessage,
@@ -43126,7 +43168,7 @@
 
 				if(obj.isNew()==false){
 					para.push({ field:"id", operator:"where_not_in", value: [obj.id] });
-				}
+				}				
 				
 				para.push({ field:"number", value: obj.number });
 				para.push({ field:"account_type_id", value: obj.account_type_id });
@@ -43149,12 +43191,17 @@
 			}			
 		},
 		generateNumber 			: function(){
-			var self = this, obj = this.get("obj");
+			var self = this, para = [],
+			obj = this.get("obj");
+
+			if(obj.sub_of_id>0){
+				para.push({ field:"sub_of_id", value: obj.sub_of_id });
+			}
+
+			para.push({ field:"account_type_id", value:obj.account_type_id });
 
 			this.numberDS.query({
-				filter:[
-					{ field:"account_type_id", value:obj.account_type_id }
-				],
+				filter: para,
 				sort: { field:"number", dir:"desc" },
 				page:1,
 				pageSize:1
@@ -43180,6 +43227,12 @@
 				var view = self.dataSource.view();
 						    	
 		    	self.set("obj", view[0]);
+
+		    	//Sub accounts
+				self.subAccountDS.filter([
+					{ field:"account_type_id", value:view[0].account_type_id },
+					{ field:"status", value:1 }
+				]);
 			});
     	},
     	typeChanges 			: function(){    		
@@ -43190,7 +43243,10 @@
     			if(obj.account_type_id==10){
     				this.set("showBank", true);
     			}
-    			// this.subAccountDS.filter({ field:"account_type_id", value:obj.account_type_id });
+    			this.subAccountDS.filter([
+    				{ field:"account_type_id", value:obj.account_type_id },
+    				{ field:"status", value:1 }
+    			]);
     			this.generateNumber();
     		}
     	},    	 	   	
@@ -43266,8 +43322,8 @@
 		delete 					: function(){
 			var self = this, obj = this.get("obj");
 			this.set("showConfirm",false);
-
-			if(!obj.is_system==1){
+			
+			if(obj.is_system!=="1"){
 				this.deleteDS.query({
 		        	filter:[
 		        		{ field:"account_id", value:obj.id },
@@ -43280,7 +43336,8 @@
 		        	if(view.length>0){
 		        		alert("Sorry, you can not delete it.");
 		        	}else{
-		        		obj.set("deleted", 1);
+		        		var data = self.dataSource.get(obj.id);
+		        		self.dataSource.remove(data);
 				        self.dataSource.sync();
 
 				        window.history.back();
@@ -48720,10 +48777,10 @@
 		notDuplicateNumber 		: true,
 		phFullname 				: "Supplier Name ...",
 		contact_type_id 		: 0,
-		pageLoad 				: function(id, is_pattern){
+		pageLoad 				: function(id, contact_type_id){
 			if(id){
 				this.set("isEdit", true);						
-				this.loadObj(id, is_pattern);
+				this.loadObj(id, contact_type_id);
 			}else{				
 				if(this.get("isEdit") || this.dataSource.total()==0){
 					this.addEmpty();
@@ -48849,12 +48906,15 @@
 			});
 		},
 		//Obj
-		loadObj 				: function(id, is_pattern){
+		loadObj 				: function(id, contact_type_id){
 			var self = this, para = [];
 
-			para.push({ field:"id", value: id });
+			if(id>0){
+				para.push({ field:"id", value: id });
+			}
 
-			if(is_pattern){
+			if(contact_type_id){
+				para.push({ field:"contact_type_id", value: contact_type_id });
 				para.push({ field:"is_pattern", value: 1 });
 			}
 
@@ -48871,72 +48931,53 @@
 			});
 		},
       	addEmpty 				: function(){
-      		var self = this;
       		this.dataSource.data([]);
       		this.contactPersonDS.data([]);
 
       		this.set("isEdit", false);
       		this.set("isProtected", false);
       		this.set("notDuplicateNumber", true);
-      		this.set("obj", null);
+      		this.set("obj", null);      		
 
-      		this.patternDS.query({
-      			filter:[
-      				{ field:"id", value:3 },
-      				{ field:"is_pattern", value:1 }
-      			],
-      			page:1,
-      			pageSize:1
-      		}).then(function(){
-      			var view = self.patternDS.view(),
-      			type = self.contactTypeDS.at(0);
+  			this.dataSource.insert(0, {				
+				"country_id" 			: 0,			
+				"user_id" 				: 0,
+				"contact_type_id" 		: 6,							
+				"abbr"					: "",
+				"number"				: "",				
+				"surname"				: "",
+				"name"					: "",
+				"gender"				: "",					
+				"phone" 				: "",
+				"email" 				: "",					
+				"company"				: "",
+				"vat_no"				: "",					
+				"memo"					: "",
+				"city"					: "",
+				"post_code"				: "",
+				"address" 				: "",
+				"bill_to" 				: "",
+				"ship_to" 				: "",
+				"latitute" 				: "",
+				"longtitute" 			: "",
+				"credit_limit"			: 0,
+				"locale" 				: banhji.locale,														
+				"payment_term_id"		: 0,
+				"payment_method_id"		: 0,									
+				"registered_date" 		: new Date(),
+				"account_id"			: 0,
+				"ra_id"					: 0,
+				"tax_item_id"			: 0,
+				"deposit_account_id"	: 0,
+				"trade_discount_id"		: 0,
+				"settlement_discount_id": 0,					
+				"is_pattern" 			: 0,
+				"status"				: 1								
+			});
 
-      			self.dataSource.insert(0, {				
-					"country_id" 			: view[0].country_id,			
-					"user_id" 				: 0,
-					"contact_type_id" 		: 6,							
-					"abbr"					: type.abbr,
-					"number"				: "",				
-					"surname"				: "",
-					"name"					: "",
-					"gender"				: view[0].gender,					
-					"phone" 				: "",
-					"email" 				: "",					
-					"company"				: view[0].company,
-					"vat_no"				: view[0].vat_no,					
-					"memo"					: view[0].memo,
-					"city"					: view[0].city,
-					"post_code"				: view[0].post_code,
-					"address" 				: view[0].address,
-					"bill_to" 				: view[0].bill_to,
-					"ship_to" 				: view[0].ship_to,
-					"latitute" 				: "",
-					"longtitute" 			: "",
-					"credit_limit"			: view[0].credit_limit,
-					"locale" 				: view[0].locale,														
-					"payment_term_id"		: view[0].payment_term_id,
-					"payment_method_id"		: view[0].payment_method_id,									
-					"registered_date" 		: new Date(),
-					"account_id"			: view[0].account_id,
-					"ra_id"					: view[0].ra_id,
-					"tax_item_id"			: view[0].tax_item_id,
-					"deposit_account_id"	: view[0].deposit_account_id,
-					"trade_discount_id"		: view[0].trade_discount_id,
-					"settlement_discount_id": view[0].settlement_discount_id,					
-					"is_pattern" 			: 0,
-					"status"				: 1								
-				});
-
-				var obj = self.dataSource.at(0);				
-				//Pattern
-				if(self.get("contact_type_id")>0){
-					obj.set("contact_type_id", self.get("contact_type_id"));
-					obj.set("is_pattern", 1);
-				}
-
-				self.set("obj", obj);
-				self.generateNumber();
-      		});								
+			var obj = this.dataSource.at(0);
+			this.set("obj", obj);
+			this.typeChanges();
 		},
 		objSync 				: function(){
 	    	var dfd = $.Deferred();	        
@@ -48972,11 +49013,6 @@
 					$.each(self.contactPersonDS.data(), function(index, value) {
 						value.set("contact_id", data[0].id);
 					});
-					
-					//Pattern
-					if(data[0].is_pattern){
-						self.savePattern(data[0].contact_type_id, data[0].id);
-					}
 				}
 				self.contactPersonDS.sync();
 				
@@ -49030,21 +49066,31 @@
 			this.set("showConfirm", false);
 		},
 		//Pattern		
-		applyPattern 			: function(contact_id){
+		typeChanges 			: function(){
+			var obj = this.get("obj");
+
+			if(obj.contact_type_id){
+				this.applyPattern();
+				this.generateNumber();
+			}
+		},
+		applyPattern 			: function(){
 			var self = this, obj = self.get("obj");
 			
 			this.patternDS.query({
 				filter: [
-					{ field:"id", value: contact_id },
+					{ field:"contact_type_id", value: obj.contact_type_id },
 					{ field:"is_pattern", value: 1 }
 				],
 				page: 1,
 				pageSize: 1
 			}).then(function(data){
-				var view = self.patternDS.view();				
+				var view = self.patternDS.view(),
+				type = self.contactTypeDS.get(view[0].contact_type_id);				
 
 				if(view.length>0){
-					obj.set("country_id", view[0].country_id);					
+					obj.set("country_id", view[0].country_id);
+					obj.set("abbr", type.abbr);					
 					obj.set("gender", view[0].gender);
 					obj.set("company", view[0].company);
 					obj.set("vat_no", view[0].vat_no);
@@ -49064,71 +49110,9 @@
 					obj.set("deposit_account_id", view[0].deposit_account_id);
 					obj.set("trade_discount_id", view[0].trade_discount_id);
 					obj.set("settlement_discount_id", view[0].settlement_discount_id);					
-				}else{
-					obj.set("country_id", 0);					
-					obj.set("gender", "M");
-					obj.set("company", "");
-					obj.set("vat_no", "");
-					obj.set("memo", "");
-					obj.set("city", "");
-					obj.set("post_code", "");
-					obj.set("address", "");
-					obj.set("bill_to", "");
-					obj.set("ship_to", "");									
-					obj.set("payment_term_id", 0);
-					obj.set("payment_method_id", 0);
-					obj.set("credit_limit", 0);
-					obj.set("locale", "");					
-					obj.set("account_id", 0);
-					obj.set("ra_id", 0);
-					obj.set("tax_item_id", 0);
-					obj.set("deposit_account_id", 0);
-					obj.set("trade_discount_id", 0);
-					obj.set("settlement_discount_id", 0);
 				}
 			});
-		},
-		savePattern 			: function(contact_type_id, contact_id){
-			var data = banhji.customerSetting.contactTypeDS.get(contact_type_id);
-			data.set("contact_id", contact_id);
-			banhji.vendorSetting.contactTypeDS.sync();			
-			window.history.back();
-		},
-		typeChanges 			: function(){
-			var obj = this.get("obj");
-
-			if(obj.contact_type_id){
-				var type = this.contactTypeDS.get(obj.contact_type_id);
-				this.applyPattern(type.contact_id);
-				obj.set("abbr", type.abbr);
-
-				this.generateNumber();
-			}else{
-				obj.set("company", "");
-				obj.set("vat_no", "");
-
-				obj.set("country_id", 0);					
-				obj.set("gender", "M");
-				obj.set("company", "");
-				obj.set("vat_no", "");
-				obj.set("memo", "");
-				obj.set("city", "");
-				obj.set("post_code", "");
-				obj.set("address", "");
-				obj.set("bill_to", "");
-				obj.set("ship_to", "");									
-				obj.set("payment_term_id", 0);
-				obj.set("payment_method_id", 0);
-				obj.set("credit_limit", 0);
-				obj.set("locale", "");					
-				obj.set("account_id", 0);
-				obj.set("ra_id", 0);
-				obj.set("tax_item_id", 0);
-				obj.set("deposit_account_id", 0);
-				obj.set("trade_discount_id", 0);
-				obj.set("settlement_discount_id", 0);
-			}
-		}
+		}		
 	});
 	banhji.purchaseOrder =  kendo.observable({
 		lang 					: langVM,
@@ -54251,11 +54235,27 @@
 	        	});
 
 	        	this.contactTypeDS.sync();
+	        	this.contactTypeDS.bind("requestEnd", function(e){
+	        		if(e.type==="create"){
+	        			var response = e.response.results[0];
+	        			self.addPattern(response.id);
+	        		}
+	        	});
 
 	        	this.set("contactTypeName", "");
 	        	this.set("contactTypeAbbr", "");
 	        	this.set("contactTypeCompany", 0);
         	}
+        },
+        addPattern 			: function(id){
+        	this.patternDS.insert(0, {
+				"contact_type_id" 		: id,
+				"number"				: "",
+				"locale" 				: banhji.locale,					
+				"is_pattern" 			: 1,
+				"status"				: 1								
+			});
+			this.patternDS.sync();
         },
         addPaymentMethod 		: function(){
         	var name = this.get("paymentMethodName");
@@ -54290,16 +54290,6 @@
 	        	this.set("paymentTermNetDue", "");
 	        	this.set("paymentTermPeriod", "");
 	        	this.set("paymentTermPercentage", "");
-        	}
-        },
-        goPattern 	: function(e){
-        	var data = e.data;        	        	
-
-        	if(kendo.parseInt(data.contact_id)>0){        		        	
-	        	banhji.router.navigate('/vendor/'+data.contact_id+'/1');   	
-        	}else{
-        		banhji.router.navigate('/vendor');
-        		banhji.vendor.set("contact_type_id",data.id);
         	}
         },
         deleteForm 		: function(e){
@@ -55526,10 +55516,10 @@
 		notDuplicateNumber 		: true,
 		phFullname 				: "Customer Name ...",
 		contact_type_id 		: 0,						
-		pageLoad 				: function(id, is_pattern){
+		pageLoad 				: function(id, contact_type_id){
 			if(id){
 				this.set("isEdit", true);						
-				this.loadObj(id, is_pattern);
+				this.loadObj(id, contact_type_id);
 			}else{				
 				if(this.get("isEdit") || this.dataSource.total()==0){
 					this.addEmpty();
@@ -55655,12 +55645,15 @@
 			});
 		},
 		//Obj
-		loadObj 				: function(id, is_pattern){
+		loadObj 				: function(id, contact_type_id){
 			var self = this, para = [];
 
-			para.push({ field:"id", value: id });
+			if(id>0){
+				para.push({ field:"id", value: id });
+			}
 
-			if(is_pattern){
+			if(contact_type_id){
+				para.push({ field:"contact_type_id", value: contact_type_id });
 				para.push({ field:"is_pattern", value: 1 });
 			}
 
@@ -55679,7 +55672,6 @@
 			this.contactPersonDS.filter({ field:"contact_id", value: id });
 		},		
       	addEmpty 				: function(){
-      		var self = this;
       		this.dataSource.data([]);
       		this.contactPersonDS.data([]);
       		
@@ -55687,65 +55679,46 @@
       		this.set("isProtected", false);
       		this.set("notDuplicateNumber", true);
       		this.set("obj", null);
+      		
+  			this.dataSource.insert(0, {				
+				"country_id" 			: 0,			
+				"user_id" 				: 0,
+				"contact_type_id" 		: 4, //General Customer							
+				"abbr"					: "",
+				"number"				: "",				
+				"surname"				: "",
+				"name"					: "",
+				"gender"				: "",					
+				"phone" 				: "",
+				"email" 				: "",					
+				"company"				: "",
+				"vat_no"				: "",					
+				"memo"					: "",
+				"city"					: "",
+				"post_code"				: "",
+				"address" 				: "",
+				"bill_to" 				: "",
+				"ship_to" 				: "",
+				"latitute" 				: "",
+				"longtitute" 			: "",
+				"credit_limit"			: 0,
+				"locale" 				: banhji.locale,														
+				"payment_term_id"		: 0,
+				"payment_method_id"		: 0,									
+				"registered_date" 		: new Date(),
+				"account_id"			: 0,
+				"ra_id"					: 0,
+				"tax_item_id"			: 0,
+				"deposit_account_id"	: 0,
+				"trade_discount_id"		: 0,
+				"settlement_discount_id": 0,					
+				"is_pattern" 			: 0,
+				"status"				: 1
+			});
 
-      		this.patternDS.query({
-      			filter:[
-      				{ field:"id", value:1 },
-      				{ field:"is_pattern", value:1 }
-      			],
-      			page:1,
-      			pageSize:1
-      		}).then(function(){
-      			var view = self.patternDS.view(),
-      			type = self.contactTypeDS.at(0);
-
-      			self.dataSource.insert(0, {				
-					"country_id" 			: view[0].country_id,			
-					"user_id" 				: 0,
-					"contact_type_id" 		: 4, //General Customer							
-					"abbr"					: type.abbr,
-					"number"				: "",				
-					"surname"				: "",
-					"name"					: "",
-					"gender"				: view[0].gender,					
-					"phone" 				: "",
-					"email" 				: "",					
-					"company"				: view[0].company,
-					"vat_no"				: view[0].vat_no,					
-					"memo"					: view[0].memo,
-					"city"					: view[0].city,
-					"post_code"				: view[0].post_code,
-					"address" 				: view[0].address,
-					"bill_to" 				: view[0].bill_to,
-					"ship_to" 				: view[0].ship_to,
-					"latitute" 				: "",
-					"longtitute" 			: "",
-					"credit_limit"			: view[0].credit_limit,
-					"locale" 				: view[0].locale,														
-					"payment_term_id"		: view[0].payment_term_id,
-					"payment_method_id"		: view[0].payment_method_id,									
-					"registered_date" 		: new Date(),
-					"account_id"			: view[0].account_id,
-					"ra_id"					: view[0].ra_id,
-					"tax_item_id"			: view[0].tax_item_id,
-					"deposit_account_id"	: view[0].deposit_account_id,
-					"trade_discount_id"		: view[0].trade_discount_id,
-					"settlement_discount_id": view[0].settlement_discount_id,					
-					"is_pattern" 			: 0,
-					"status"				: 1								
-				});
-
-				var obj = self.dataSource.at(0);				
-				//Pattern
-				if(self.get("contact_type_id")>0){
-					obj.set("contact_type_id", self.get("contact_type_id"));
-					obj.set("abbr", "");
-					obj.set("is_pattern", 1);
-				}
-
-				self.set("obj", obj);
-				self.generateNumber();
-      		});								
+			var obj = this.dataSource.at(0);
+			this.set("obj", obj);
+			this.typeChanges();
 		},
 	    objSync 				: function(){
 	    	var dfd = $.Deferred();	        
@@ -55781,11 +55754,6 @@
 					$.each(self.contactPersonDS.data(), function(index, value) {
 						value.set("contact_id", data[0].id);
 					});
-					
-					//Pattern
-					if(data[0].is_pattern){
-						self.savePattern(data[0].contact_type_id, data[0].id);
-					}
 				}
 				self.contactPersonDS.sync();
 				
@@ -55839,22 +55807,32 @@
 		closeConfirm 			: function(){
 			this.set("showConfirm", false);
 		},
-		//Pattern		
-		applyPattern 			: function(contact_id){
+		//Pattern
+		typeChanges 			: function(){
+			var obj = this.get("obj");
+
+			if(obj.contact_type_id){
+				this.applyPattern();
+				this.generateNumber();
+			}
+		},		
+		applyPattern 			: function(){
 			var self = this, obj = self.get("obj");
 			
 			this.patternDS.query({
 				filter: [
-					{ field:"id", value: contact_id },
+					{ field:"contact_type_id", value: obj.contact_type_id },
 					{ field:"is_pattern", value: 1 }
 				],
 				page: 1,
 				pageSize: 1
 			}).then(function(data){
-				var view = self.patternDS.view();				
+				var view = self.patternDS.view(),
+				type = self.contactTypeDS.get(view[0].contact_type_id);				
 
 				if(view.length>0){
-					obj.set("country_id", view[0].country_id);					
+					obj.set("country_id", view[0].country_id);
+					obj.set("abbr", type.abbr);					
 					obj.set("gender", view[0].gender);
 					obj.set("company", view[0].company);
 					obj.set("vat_no", view[0].vat_no);
@@ -55874,71 +55852,9 @@
 					obj.set("deposit_account_id", view[0].deposit_account_id);
 					obj.set("trade_discount_id", view[0].trade_discount_id);
 					obj.set("settlement_discount_id", view[0].settlement_discount_id);					
-				}else{
-					obj.set("country_id", 0);					
-					obj.set("gender", "M");
-					obj.set("company", "");
-					obj.set("vat_no", "");
-					obj.set("memo", "");
-					obj.set("city", "");
-					obj.set("post_code", "");
-					obj.set("address", "");
-					obj.set("bill_to", "");
-					obj.set("ship_to", "");									
-					obj.set("payment_term_id", 0);
-					obj.set("payment_method_id", 0);
-					obj.set("credit_limit", 0);
-					obj.set("locale", "");					
-					obj.set("account_id", 0);
-					obj.set("ra_id", 0);
-					obj.set("tax_item_id", 0);
-					obj.set("deposit_account_id", 0);
-					obj.set("trade_discount_id", 0);
-					obj.set("settlement_discount_id", 0);
 				}
 			});
-		},		
-		savePattern 			: function(contact_type_id, contact_id){
-			var data = banhji.customerSetting.contactTypeDS.get(contact_type_id);
-			data.set("contact_id", contact_id);
-			banhji.customerSetting.contactTypeDS.sync();			
-			window.history.back();
-		},
-		typeChanges 			: function(){
-			var obj = this.get("obj");
-
-			if(obj.contact_type_id){
-				var type = this.contactTypeDS.get(obj.contact_type_id);
-				this.applyPattern(type.contact_id);
-				obj.set("abbr", type.abbr);
-
-				this.generateNumber();
-			}else{
-				obj.set("company", "");
-				obj.set("vat_no", "");
-
-				obj.set("country_id", 0);					
-				obj.set("gender", "M");
-				obj.set("company", "");
-				obj.set("vat_no", "");
-				obj.set("memo", "");
-				obj.set("city", "");
-				obj.set("post_code", "");
-				obj.set("address", "");
-				obj.set("bill_to", "");
-				obj.set("ship_to", "");									
-				obj.set("payment_term_id", 0);
-				obj.set("payment_method_id", 0);
-				obj.set("credit_limit", 0);
-				obj.set("locale", "");					
-				obj.set("account_id", 0);
-				obj.set("ra_id", 0);
-				obj.set("tax_item_id", 0);
-				obj.set("deposit_account_id", 0);
-				obj.set("trade_discount_id", 0);
-				obj.set("settlement_discount_id", 0);
-			}
-		}
+		}		
 	});
 	banhji.quote =  kendo.observable({
 		lang 				: langVM,
@@ -63450,6 +63366,7 @@
         paymentMethodDS		: banhji.source.paymentMethodDS,
         paymentTermDS		: banhji.source.paymentTermDS,
         txnTemplateDS		: dataStore(apiUrl + "transaction_templates"),
+        patternDS 			: dataStore(apiUrl + "contacts"),
         contactTypeName 	: "",
         contactTypeAbbr 	: "",
         contactTypeCompany 	: 0,
@@ -63462,7 +63379,7 @@
         	this.txnTemplateDS.filter({ field: "moduls", value : "customer_mg" });
         },	    
         addContactType 		: function(){
-        	var name = this.get("contactTypeName");
+        	var self = this, name = this.get("contactTypeName");
 
         	if(name!==""){
 	        	this.contactTypeDS.add({
@@ -63475,13 +63392,29 @@
 	        	});
 
 	        	this.contactTypeDS.sync();
+	        	this.contactTypeDS.bind("requestEnd", function(e){
+	        		if(e.type==="create"){
+	        			var response = e.response.results[0];
+	        			self.addPattern(response.id);
+	        		}
+	        	});
 
 	        	this.set("contactTypeName", "");
 	        	this.set("contactTypeAbbr", "");
 	        	this.set("contactTypeCompany", 0);
         	}
         },
-        addPaymentMethod 		: function(){
+        addPattern 			: function(id){
+        	this.patternDS.insert(0, {
+				"contact_type_id" 		: id,
+				"number"				: "",
+				"locale" 				: banhji.locale,					
+				"is_pattern" 			: 1,
+				"status"				: 1								
+			});
+			this.patternDS.sync();
+        },
+        addPaymentMethod 	: function(){
         	var name = this.get("paymentMethodName");
 
         	if(name!==""){
@@ -63516,24 +63449,14 @@
 	        	this.set("paymentTermPercentage", "");
         	}
         },
-        goPattern 	: function(e){
-        	var data = e.data;        	        	
-
-        	if(kendo.parseInt(data.contact_id)>0){        		        	
-	        	banhji.router.navigate('/customer/'+data.contact_id+'/1');   	
-        	}else{
-        		banhji.router.navigate('/customer');
-        		banhji.customer.set("contact_type_id",data.id);
-        	}
-        },
-        deleteForm 		: function(e){
+        deleteForm 			: function(e){
         	var data = e.data;
         	if(confirm("Do you want to delete it?") == true) {
         		this.txnTemplateDS.remove(data);
         		this.txnTemplateDS.sync();
         	}
         },
-        goInvoiceCustom : function(){
+        goInvoiceCustom 	: function(){
 
 		    banhji.invoiceCustom.set("selectTypeList", banhji.source.customerFormList);
 		    banhji.invoiceCustom.set("formShow", banhji.view.invoiceForm10);
@@ -67096,7 +67019,6 @@
 		total 				: 0,
 		pay 		 		: 0,
 		remain 				: 0,
-		original_total 		: 0,				
 		user_id				: banhji.source.user_id,
 		pageLoad 			: function(id){
 			if(id){
@@ -67279,15 +67201,15 @@
 				pageSize: 100
 			}).then(function(){
 				var view = self.dataSource.view();
+
+				self.set("obj", view[0]);
+				self.changes();
 				
 				self.journalLineDS.filter({ field: "transaction_id", value: id });
 				self.creditDS.filter([
 					{ field: "reference_id", value: id },
 					{ field: "type", value: "Customer_Deposit" }
-				]);				
-				self.set("obj", view[0]);
-				self.set("original_total", view[0].amount+view[0].discount);
-				self.changes();														
+				]);
 			});						
 		},
 		changes				: function(){
@@ -67296,13 +67218,14 @@
 
 			$.each(this.dataSource.data(), function(index, value) {
 				var amount = value.reference[0].amount - (value.amount_paid + value.reference[0].deposit);								
+				
 				subTotal += amount / value.rate;					
 				discount += value.discount / value.rate;
 				pay += value.amount / value.rate;					
 	        });
 
 			total = subTotal - discount;
-			remain = total - pay;
+			remain = total - pay;			
 
 	        this.set("sub_total", kendo.toString(subTotal, "c", banhji.locale));
 	        this.set("discount", kendo.toString(discount, "c", banhji.locale));		        
@@ -68867,7 +68790,7 @@
 				para.push({ field:"category_id", value:category_id });
 			}
 
-			para.push({ field:"item_type_id", value:1 });
+			// para.push({ field:"item_type_id", value:1 });
 			// para.push({ field:"is_catalog", value: 0 });
 			// para.push({ field:"is_assembly", value: 0 });          
 
@@ -69218,7 +69141,7 @@
 
 			this.patternDS.query({
 				filter: [
-					{ field:"id", value: obj.category_id },
+					{ field:"category_id", value: obj.category_id },
 					{ field:"is_pattern", value: 1 }
 				],
 				page: 1,
@@ -70107,7 +70030,7 @@
 
 			this.patternDS.query({
 				filter: [
-					{ field:"id", value: obj.category_id },
+					{ field:"category_id", value: obj.category_id },
 					{ field:"is_pattern", value: 1 }
 				],
 				page: 1,
@@ -70485,7 +70408,7 @@
 
 				this.patternDS.query({
 					filter: [
-						{ field:"id", value: obj.category_id },
+						{ field:"category_id", value: obj.category_id },
 						{ field:"is_pattern", value: 1 }
 					],
 					page: 1,
@@ -71272,7 +71195,7 @@
     	journalLineDS			: dataStore(apiUrl + "journal_lines"),	
 		itemDS  				: dataStore(apiUrl + "items"),
 		contactDS 				: banhji.source.employeeDS,
-		accountDS 				: banhji.source.adjustmentAccountDS,		
+		accountDS 				: banhji.source.accountDS,		
 		segmentItemDS			: banhji.source.segmentItemDS,
 		categoryDS 				: banhji.source.inventoryCategoryDS,
 		attachmentDS	 		: dataStore(apiUrl + "attachments"),
@@ -71566,7 +71489,7 @@
 				transaction_template_id : "",				
 				employee_id 			: "",
 				job_id 					: "",
-				account_id 	 			: 0,
+				account_id 	 			: "",
 			   	type					: "Item_Adjustment",			   				   
 			   	rate					: banhji.source.getRate(banhji.locale, new Date()),			   	
 			   	locale 					: banhji.locale,			   	
@@ -72306,6 +72229,7 @@
         itemGroupDS 		: banhji.source.itemGroupDS,        
         measurementDS		: banhji.source.measurementDS,
         brandDS 			: banhji.source.brandDS,
+        patternDS  			: dataStore(apiUrl + "items"),
         category_code 		: "",
         category_name 		: "",
         category_abbr 		: "",
@@ -72338,11 +72262,29 @@
 	        	});
 
 	        	this.categoryDS.sync();
+	        	this.categoryDS.bind("requestEnd", function(e){
+	        		if(e.type==="create"){
+	        			var response = e.response.results[0];	        			
+	        			self.addPattern(response.id, response.item_type_id);
+	        		}
+	        	});
+
     			this.set("category_name", "");
     			this.set("category_abbr", "");
         	}else{
         		alert("required abbr and name!");
         	}
+        },
+        addPattern 			: function(category_id, item_type_id){
+    		this.patternDS.insert(0, {				
+				item_type_id 			: item_type_id,     			      			
+      			category_id 			: category_id,
+      			number 					: "",
+      			is_pattern 				: 1,
+      			status 					: 1							
+			});
+
+			this.patternDS.sync();
         },
         addItemGroup 		: function(){
         	var self = this, 
@@ -78501,6 +78443,7 @@
 									vm.set('transactionNu', e.response.transactionNumber);
 									vm.set('transactionSize', kendo.toString(e.response.transactionSize, "n2"));
 									vm.set('totalSize', kendo.toString(e.response.total, 'n2'));
+									vm.set('allowSize', kendo.toString(e.response.allowedSize, 'n2'));
 								}
 							});
 							break;
