@@ -8,7 +8,7 @@ class Contact extends DataMapper {
 		'contact_type' => array(
 			'class' => 'contact_type',
 			'other_field' => 'contact'
-		),				
+		),
 		'account' => array(
 			'class' => 'account',
 			'other_field' => 'contact'
@@ -98,7 +98,7 @@ class Contact extends DataMapper {
 		)
 	);
 
-	public function __construct($id = null, $server_name = null, $db_username = null, $server_password = null, $db = null) {	
+	public function __construct($id = null, $server_name = null, $db_username = null, $server_password = null, $db = null) {
 		$this->db_params = array(
 				'dbdriver' => 'mysql',
 				'pconnect' => true,
