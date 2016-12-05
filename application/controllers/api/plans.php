@@ -42,7 +42,7 @@ class Plans extends REST_Controller {
 
 		if($table->exists()) {
 			foreach($table as $value) {
-				$items = $value->plan_item->select('id, is_flat, type, unit, amount, from, to')->get_raw();
+				$items = $value->plan_item->select('id, is_flat, type, unit, amount')->get_raw();
 				$data[] = array(
 					'code' => $value->code,
 					'name' => $value->name,
@@ -73,8 +73,7 @@ class Plans extends REST_Controller {
 							'unit' => $related_table->unit,
 							'type' => $related_table->type,
 							'amount' => $related_table->amount,
-							'from' => $related_table->from,
-							'to' => $related_table->to
+							'usage' => $related_table->usage
 						);
 					}
 				}
@@ -114,8 +113,7 @@ class Plans extends REST_Controller {
 							'unit' => $related_table->unit,
 							'type' => $related_table->type,
 							'amount' => $related_table->amount,
-							'from' => $related_table->from,
-							'to' => $related_table->to
+							'usage' => $related_table->usage
 						);
 					}
 				}
@@ -151,8 +149,7 @@ class Plans extends REST_Controller {
 							'unit' => $related_table->unit,
 							'type' => $related_table->type,
 							'amount' => $related_table->amount,
-							'from' => $related_table->from,
-							'to' => $related_table->to
+							'usage' => $related_table->usage
 						);
 					}
 				}
@@ -184,19 +181,18 @@ class Plans extends REST_Controller {
 			}
 		}
 		$table->where('is_deleted', 0);
-		$table->where('tariff_id', null);
+		$table->where('tariff_id', 0);
 		$table->get();
 
 		if($table->exists()) {
 			foreach($table as $value) {
 				$data[] = array(
 					"id"  	  => $value->id,
-					"is_flat" => $value->is_flat == 0?FALSE:TRUE,
+					"is_flat" => $value->is_flat,
 					"type" 	  => $value->type,
 					"unit" 	  => $value->unit,
 					"amount"  => $value->amount,
-					"to" 	  => $value->to,
-					"from" 	  => $value->from,
+					"usage"   => $value->usage,
 					"name" 	  => $value->name,
 					"is_active"=>$value->is_active == 1 ? TRUE:FALSE
 				);
@@ -217,13 +213,11 @@ class Plans extends REST_Controller {
 		foreach($requestedData as $row) {
 			$table = new Plan_item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$table->where('id', $row->id)->get();
-			$tmp = isset($row->is_flat) ? $row->is_flat:FALSE;
-			$table->is_flat = $tmp == TRUE ? 1 : 0;
+			$table->is_flat = isset($row->is_flat) ? $row->is_flat : 0;
 			$table->type = $row->type;
-			$table->unit = $row->unit;
+			$table->unit = isset($row->unit) ? $row->unit: 0;
 			$table->amount = isset($row->amount) ? $row->amount : 0;
-			$table->to = isset($row->to)?$row->to:null;
-			$table->from = isset($row->from)?$row->from:null;
+			$table->usage = isset($row->usage)?$row->usage:0;
 			$table->name = isset($row->name)?$row->name:null;
 			$table->is_active = isset($row->is_active) ? $row->is_active : 1;
 			$table->is_deleted = 0;
@@ -231,12 +225,11 @@ class Plans extends REST_Controller {
 			if($table->save()) {
 				$data[] = array(
 					"id"  	  => $table->id,
-					"is_flat" => $table->is_flat == 0?FALSE:TRUE,
+					"is_flat" => $table->is_flat,
 					"type" 	  => $table->type,
 					"unit" 	  => $table->unit,
 					"amount"  => $table->amount,
-					"to" 	  => $table->to,
-					"from" 	  => $table->from,
+					"usage"   => $table->usage,
 					"name" 	  => $table->name,
 					"is_active"=>$table->is_active == 1 ? TRUE:FALSE
 				);
@@ -256,13 +249,12 @@ class Plans extends REST_Controller {
 
 		foreach($requestedData as $row) {
 			$table = new Plan_item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			$tmp = isset($row->is_flat) ? $row->is_flat:FALSE;
-			$table->is_flat = $tmp == TRUE ? 1 : 0;
+			//$tmp = isset($row->is_flat) ? $row->is_flat:FALSE;
+			$table->is_flat = isset($row->is_flat) ? $row->is_flat : 0;
 			$table->type = $row->type;
-			$table->unit = isset($row->unit)?$row->unit:null;
+			$table->unit = isset($row->unit)?$row->unit:0;
 			$table->amount = isset($row->amount) ? $row->amount : 0;
-			$table->to = isset($row->to)?$row->to:null;
-			$table->from = isset($row->from)?$row->from:null;
+			$table->usage = isset($row->usage) ? $row->usage: 0;
 			$table->name = isset($row->name)?$row->name:null;
 			$table->is_active = isset($row->is_active) ? $row->is_active : 1;
 			$table->is_deleted = 0;
@@ -271,13 +263,12 @@ class Plans extends REST_Controller {
 			if($table->save()) {
 				$data[] = array(
 					"id"  	  => $table->id,
-					"is_flat" => $table->is_flat == 0,
-					"tariff_id" 
+					"is_flat" => $table->is_flat,
+					"tariff_id" => $table->tariff_id,
 					"type" 	  => $table->type,
 					"unit" 	  => $table->unit,
 					"amount"  => $table->amount,
-					"to" 	  => $table->to,
-					"from" 	  => $table->from,
+					"usage" 	  => $table->usage,
 					"name" 	  => $table->name,
 					"is_active"=>$table->is_active == 1 ? TRUE:FALSE
 				);
@@ -306,8 +297,7 @@ class Plans extends REST_Controller {
 					"type" 	  => $table->type,
 					"unit" 	  => $table->unit,
 					"amount"  => $table->amount,
-					"to" 	  => $table->to,
-					"from" 	  => $table->from,
+					"usage" 	  => $table->usage,
 					"is_active"=>$table->is_active == 1 ? TRUE:FALSE
 				);
 			}
@@ -335,7 +325,7 @@ class Plans extends REST_Controller {
 				}
 			}
 		}
-		//$table->where('tariff_id <>', null);
+		$table->where('is_deleted', 0);
 		$table->get();
 		if($table->exists()) {
 			$data = array();
@@ -345,8 +335,7 @@ class Plans extends REST_Controller {
 					'name' => $row->name,
 					'is_flat' => $row->is_flat,
 					'type' => $row->type,
-					'to' 	=> $row->to,
-					'from' 	=> $row->from,
+					'usage' 	=> $row->usage,
 					'amount'=> $row->amount
 				);
 			}
@@ -362,26 +351,24 @@ class Plans extends REST_Controller {
 
 		foreach($requestedData as $row) {
 			$table = new Plan_item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			$tmp = isset($row->is_flat) ? $row->is_flat:FALSE;
-			$table->is_flat = $tmp == TRUE ? 1 : 0;
+			$table->is_flat = isset($row->is_flat) ? $row->is_flat : 0;
 			$table->type = isset($row->type) ? $row->type : null;
 			$table->unit = isset($row->unit)?$row->unit:null;
 			$table->amount = isset($row->amount) ? $row->amount : 0;
-			$table->to = isset($row->to)?$row->to:null;
-			$table->from = isset($row->from)?$row->from:null;
+			$table->usage = isset($row->usage)?$row->usage:0;
 			$table->name = isset($row->name)?$row->name:null;
 			$table->is_active = isset($row->is_active) ? $row->is_active : 1;
 			$table->is_deleted = 0;
-
+			$table->tariff_id = $row->tariff_id;
 			if($table->save()) {
 				$data[] = array(
 					"id"  	  => $table->id,
-					"is_flat" => $table->is_flat == 0?FALSE:TRUE,
+					"is_flat" => $table->is_flat,
+					"tariff_id" => $table->tariff_id,
 					"type" 	  => $table->type,
 					"unit" 	  => $table->unit,
 					"amount"  => $table->amount,
-					"to" 	  => $table->to,
-					"from" 	  => $table->from,
+					"usage"   => $table->usage,
 					"is_active"=>$table->is_active == 1 ? TRUE:FALSE
 				);
 			}
@@ -401,26 +388,23 @@ class Plans extends REST_Controller {
 		foreach($requestedData as $row) {
 			$table = new Plan_item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$table->where('id', $row->id)->get();
-			$tmp = isset($row->is_flat) ? $row->is_flat:FALSE;
-			$table->is_flat = $tmp == TRUE ? 1 : 0;
+			$table->is_flat = isset($row->is_flat) ? $row->is_flat : 0;
 			$table->type = isset($row->type) ? $row->type : null;
 			$table->unit = isset($row->unit)?$row->unit:null;
 			$table->amount = isset($row->amount) ? $row->amount : 0;
-			$table->to = isset($row->to)?$row->to:null;
-			$table->from = isset($row->from)?$row->from:null;
+			$table->usage = isset($row->usage)?$row->usage:0;
 			$table->name = isset($row->name)?$row->name:null;
 			$table->is_active = isset($row->is_active) ? $row->is_active : 1;
 			$table->is_deleted = 0;
-
 			if($table->save()) {
 				$data[] = array(
 					"id"  	  => $table->id,
-					"is_flat" => $table->is_flat == 0?FALSE:TRUE,
+					"is_flat" => $table->is_flat,
+					"tariff_id" => $table->tariff_id,
 					"type" 	  => $table->type,
 					"unit" 	  => $table->unit,
 					"amount"  => $table->amount,
-					"to" 	  => $table->to,
-					"from" 	  => $table->from,
+					"usage"   => $table->usage,
 					"is_active"=>$table->is_active == 1 ? TRUE:FALSE
 				);
 			}
@@ -454,12 +438,11 @@ class Plans extends REST_Controller {
 			if($table->save()) {
 				$data[] = array(
 					"id"  	  => $table->id,
-					"is_flat" => $table->is_flat == 0?FALSE:TRUE,
+					"is_flat" => $table->is_flat,
 					"type" 	  => $table->type,
 					"unit" 	  => $table->unit,
 					"amount"  => $table->amount,
-					"to" 	  => $table->to,
-					"from" 	  => $table->from,
+					"usage" 	  => $table->usage,
 					"is_active"=>$table->is_active == 1 ? TRUE:FALSE
 				);
 			}

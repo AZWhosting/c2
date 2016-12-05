@@ -15944,7 +15944,9 @@
 							            			<span data-bind="text: lang.lang.name"></span>
 							            		</td>
 							            		<td style="border-top: 0;">
-							            			<input class="k-textbox" data-bind="value: obj.recurring_name" 
+							            			<input id="txtRecurringName" name="txtRecurringName"
+							            					class="k-textbox" 
+							            					data-bind="value: obj.recurring_name" 
 							            					placeholder="Recurring name.." 
 							            					style="width: 43%; " />
 							            			<span data-bind="text: lang.lang.start"></span>
@@ -16195,7 +16197,7 @@
 		<td>
 			<input id="ccbItem" name="ccbItem-#:uid#"
 				   data-role="combobox"				   
-				   data-template="item-list-tmpl"                   			   
+				   data-template="item-list-tmpl"
                    data-text-field="name"
                    data-value-field="id"
                    data-bind="value: item_id, 
@@ -19999,7 +20001,8 @@
 		<td>#=kendo.toString(new Date(start_date), "dd-MM-yyyy")#</td>
 		<td class="center">#=frequency#</td>
 		<td class="center">
-			<a class="btn btn-success" href="\#/#=type.toLowerCase()#/#=id#/1"><i></i> Edit</a>
+			<a class="btn btn-warning" data-bind="click: edit"><i></i> Edit</a>
+			<a class="btn btn-success" data-bind="click: use"><i></i> Use</a>
 		</td>		
     </tr>   
 </script>
@@ -20093,11 +20096,7 @@
     	<td>#=description#</td>
     	<td>
     		#if(contact.length>0){#
-    			#if(contact[0].company){#
-    				#=contact[0].company#
-    			#}else{#
-    				#=contact[0].surname# #=contact[0].name#
-    			#}#
+    			#=contact[0].name#
     		#}#
     	</td>    	
     	<td align="center">
@@ -39066,7 +39065,7 @@
 	banhji.no_image = "https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/no_image.jpg";
 
 	// custom widget for min and max
-	 kendo.data.binders.widget.max = kendo.data.Binder.extend({
+	kendo.data.binders.widget.max = kendo.data.Binder.extend({
 		init: function(widget, bindings, options) {//call the base constructor
             kendo.data.Binder.fn.init.call(this, widget.element[0], bindings, options);
         },
@@ -39588,7 +39587,7 @@
 				serverSorting: true,
 				serverPaging: true,
 				page: 1,
-				pageSize: 100
+				pageSize: 10
 			});
 		return o;
 	};
@@ -42717,6 +42716,7 @@
 		successMessage 				: "Saved Successful!",
 		errorMessage 				: "Warning, please review it again!",
 		confirmMessage 				: "Are you sure, you want to delete it?",
+		requiredMessage 			: "Required",
 		duplicateNumber 			: "Duplicate Number!",
 		loadData 					: function(){
 			this.loadRate();
@@ -55865,6 +55865,7 @@
 		recurringLineDS 	: dataStore(apiUrl + "transactions/line"),
 		attachmentDS	 	: dataStore(apiUrl + "attachments"),
 		balanceDS  			: dataStore(apiUrl + "transactions"),
+		jobDS				: banhji.source.jobDS,
 		paymentTermDS 		: banhji.source.paymentTermDS,
 		contactDS  			: banhji.source.customerDS,
 		employeeDS  		: banhji.source.saleRepDS,
@@ -55928,15 +55929,16 @@
 		showConfirm 		: false,
 		statusSrc 			: "",
 		showDiscount 		: false,
+		recurring 			: "",
 		sub_total 			: 0,		
 		discount 			: 0,
 		balance 			: 0,		
 		total 				: 0,		
 		user_id				: banhji.source.user_id,
-		pageLoad 			: function(id, is_recurring){
+		pageLoad 			: function(id){
 			if(id){
 				this.set("isEdit", true);						
-				this.loadObj(id, is_recurring);
+				this.loadObj(id);
 			}else{				
 				if(this.get("isEdit") || this.dataSource.total()==0){
 					this.addEmpty();
@@ -56047,7 +56049,6 @@
 				
 				self.setRate();
 				self.loadBalance();
-				self.loadRecurring();						
 			});
 		},		
 		contactChanges 		: function(){
@@ -56061,8 +56062,7 @@
 		    	obj.set("ship_to", contact.ship_to);
 
 		    	this.setRate();
-		    	this.loadBalance();		    			    	
-		    	this.loadRecurring();    			    	
+		    	this.loadBalance();
 	    	}
 
 	    	this.lineDS.data([]);
@@ -56240,43 +56240,50 @@
 	        }	                	        	
 		},
 		//Obj
-		loadObj 			: function(id, is_recurring){
+		loadObj 			: function(id){
 			var self = this, para = [];
 
-			para.push({ field:"id", value: id });
+			para.push({ field:"id", value: id });			
 
-			if(is_recurring){
-				para.push({ field:"is_recurring", value: 1 });
-			}			
-
-			this.dataSource.query({    			
-				filter: para,
-				page: 1,
-				pageSize: 100
-			}).then(function(e){
-				var view = self.dataSource.view();
-
-				self.set("obj", view[0]);				
-
-				self.set("sub_total", kendo.toString(view[0].sub_total, "c", view[0].locale));
-				self.set("discount", kendo.toString(view[0].discount, "c", view[0].locale));
-		        self.set("tax", kendo.toString(view[0].tax, "c", view[0].locale));
-		        self.set("total", kendo.toString(view[0].amount, "c", view[0].locale));				
-				
-				if(view[0].status=="1"){
-					self.set("statusSrc", banhji.source.usedSrc);
-				}else{
-					self.set("statusSrc", banhji.source.openSrc);
+			if(this.get("recurring")=="use"){
+				this.set("recurring","");
+				this.addEmpty();
+				this.loadRecurring(id);
+			}else{
+				if(this.get("recurring")=="edit"){
+					this.set("recurring","");
+					para.push({ field:"is_recurring", value: 1 });
 				}
 
-				if(view[0].discount>0){
-					self.set("showDiscount", true);
-				}
+				this.dataSource.query({    			
+					filter: para,
+					page: 1,
+					pageSize: 100
+				}).then(function(e){
+					var view = self.dataSource.view();
 
-				self.lineDS.filter({ field: "transaction_id", value: view[0].id });
-				self.attachmentDS.filter({ field: "transaction_id", value: view[0].id });
-				self.loadRecurring();				
-			});				
+					self.set("obj", view[0]);				
+
+					self.set("sub_total", kendo.toString(view[0].sub_total, "c", view[0].locale));
+					self.set("discount", kendo.toString(view[0].discount, "c", view[0].locale));
+			        self.set("tax", kendo.toString(view[0].tax, "c", view[0].locale));
+			        self.set("total", kendo.toString(view[0].amount, "c", view[0].locale));				
+					
+					if(view[0].status=="1"){
+						self.set("statusSrc", banhji.source.usedSrc);
+					}else{
+						self.set("statusSrc", banhji.source.openSrc);
+					}
+
+					if(view[0].discount>0){
+						self.set("showDiscount", true);
+					}
+
+					self.lineDS.filter({ field: "transaction_id", value: view[0].id });
+					self.attachmentDS.filter({ field: "transaction_id", value: view[0].id });
+					self.loadContact(view[0].contact_id);
+				});
+			}
 		},
 		changes				: function(){
 			var self = this, obj = this.get("obj");
@@ -56547,61 +56554,60 @@
 			this.set("showConfirm", false);
 		},		 
 		//Recurring
-		loadRecurring 		: function(){
-			var obj = this.get("obj");
+		loadRecurring 		: function(id){
+			var self = this;
 
-			this.recurringDS.filter([
-				{ field:"type", value:obj.type },
-				{ field:"contact_id", value:obj.contact_id },
-				{ field:"is_recurring", value:1 }
-			]);
-		},		
-		applyRecurring 		: function(){
-			var self = this, obj = this.get("obj");
-			
-			if(obj.recurring_id){
-				var data = this.recurringDS.get(obj.recurring_id);
+			this.recurringDS.query({
+				filter:[
+					{ field:"id", value:id },
+					{ field:"is_recurring", value:1 }
+				],
+				page: 1,
+				pageSize: 100
+			}).then(function(){
+				var view = self.recurringDS.view(),
+				obj = self.get("obj");
+				
+				obj.set("employee_id", view[0].employee_id);//Sale Rep
+				obj.set("job_id", view[0].job_id);
+				obj.set("segments", view[0].segments);
+				obj.set("locale", view[0].locale);
+				obj.set("memo", view[0].memo);
+				obj.set("memo2", view[0].memo2);
+				obj.set("bill_to", view[0].bill_to);
+				obj.set("ship_to", view[0].ship_to);
 
-				obj.set("employee_id", data.employee_id);//Sale Rep
-				obj.set("segments", data.segments);
-				obj.set("rate", data.rate);
-				obj.set("locale", data.locale);					
-				obj.set("memo", data.memo);
-				obj.set("memo2", data.memo2);
-				obj.set("bill_to", data.bill_to);
-				obj.set("ship_to", data.ship_to);
+				self.loadContact(view[0].contact_id);
+			});
 
-				this.recurringLineDS.query({
-					filter: { field:"transaction_id", value:data.id },
-					page: 1,
-					pageSize: 100
-				}).then(function(){
-					var view = self.recurringLineDS.view();
-					self.lineDS.data([]);
+			this.recurringLineDS.query({
+				filter: { field:"transaction_id", value:id },
+				page: 1,
+				pageSize: 100
+			}).then(function(){
+				var view = self.recurringLineDS.view();
+				self.lineDS.data([]);
 
-					$.each(view, function(index, value){
-						self.lineDS.add({					
-							transaction_id 		: obj.id,
-							tax_item_id 		: value.tax_item_id,							
-							item_id 			: value.item_id,									
-							description 		: value.description,							
-							quantity 			: value.quantity,
-							price 				: value.price,								
-							amount 	 			: value.amount,									
-							rate				: value.rate,
-							locale				: value.locale,
-							movement 			: value.movement,
-							
-							item_prices 		: value.item_prices
-						});
+				$.each(view, function(index, value){
+					self.lineDS.add({					
+						transaction_id 		: id,
+						tax_item_id 		: value.tax_item_id,							
+						item_id 			: value.item_id,									
+						description 		: value.description,							
+						quantity 			: value.quantity,
+						price 				: value.price,								
+						amount 	 			: value.amount,									
+						rate				: value.rate,
+						locale				: value.locale,
+						movement 			: value.movement,
+						
+						item_prices 		: value.item_prices
 					});
+				});
 
-					self.changes();
-				});				
-			}else{
-				this.addEmpty();
-			} 
-		},		
+				self.changes();
+			});
+		},
 		frequencyChanges 	: function(){
 			var obj = this.get("obj");
 
@@ -56651,27 +56657,6 @@
 			        this.set("showWeek", true);
 			        this.set("showDay", false);
 			}
-		},		
-		validateRecurring  	: function(){
-			var result = true, obj = this.get("obj");
-			
-			if(obj.recurring_name!==""){
-				//Check existing name
-				$.each(this.recurringDS.data(), function(index, value){
-					if(value.recurring_name==obj.recurring_name){
-						result = false;
-						alert("This is name is taken.");
-
-						return false;
-					}
-				});
-			}
-			else{
-				result = false;
-				alert("Recurring name is required.");				
-			}			
-
-			return result;
 		},
 		addNewRecurring 	: function(){
 			var self = this, obj = this.get("obj");
@@ -56781,7 +56766,7 @@
 			page:1,
 			pageSize: 100
 		}),
-		jobDS				: dataStore(apiUrl + "jobs"),		
+		jobDS				: banhji.source.jobDS,		
 		balanceDS  			: dataStore(apiUrl + "transactions"),
 		currencyRateDS		: dataStore(apiUrl + "currencies/rate"),
 		contactDS  			: banhji.source.customerDS,
@@ -57734,6 +57719,7 @@
 			page:1,
 			pageSize: 100
 		}),
+		jobDS				: banhji.source.jobDS,
 		contactDS 			: banhji.source.customerDS,
 		depositAccountDS 	: banhji.source.depositAccountDS,
 		segmentItemDS 		: banhji.source.segmentItemDS,
@@ -58469,7 +58455,6 @@
 		recurringLineDS 	: dataStore(apiUrl + "transactions/line"),
 		referenceDS			: dataStore(apiUrl + "transactions"),
 		referenceLineDS		: dataStore(apiUrl + "transactions/line"),
-		jobDS				: dataStore(apiUrl + "jobs"),		
 		balanceDS  			: dataStore(apiUrl + "transactions"),
 		depositDS  			: dataStore(apiUrl + "transactions"),
 		depositSumDS  		: new kendo.data.DataSource({
@@ -58545,6 +58530,7 @@
 		attachmentDS	 	: dataStore(apiUrl + "attachments"),
 		cashAccountDS  		: banhji.source.cashAccountDS,
 		currencyRateDS		: dataStore(apiUrl + "currencies/rate"),
+		jobDS				: banhji.source.jobDS,
 		contactDS  			: banhji.source.customerDS,
 		employeeDS  		: banhji.source.saleRepDS,
 		itemDS  			: banhji.source.itemForSaleDS,
@@ -59806,7 +59792,7 @@
 		recurringLineDS 	: dataStore(apiUrl + "transactions/line"),
 		referenceDS			: dataStore(apiUrl + "transactions"),
 		referenceLineDS		: dataStore(apiUrl + "transactions/line"),
-		jobDS				: dataStore(apiUrl + "jobs"),		
+		jobDS				: banhji.source.jobDS,		
 		balanceDS  			: dataStore(apiUrl + "transactions"),
 		depositDS  			: dataStore(apiUrl + "transactions"),
 		attachmentDS	 	: dataStore(apiUrl + "attachments"),
@@ -62010,8 +61996,8 @@
 		referenceLineDS		: dataStore(apiUrl + "transactions/line"),
 		returnDS			: dataStore(apiUrl + "transactions"),
 		invoiceDS			: dataStore(apiUrl + "transactions"),
-		jobDS				: dataStore(apiUrl + "jobs"),
 		currencyRateDS		: dataStore(apiUrl + "currencies/rate"),
+		jobDS				: banhji.source.jobDS,
 		contactDS  			: banhji.source.customerDS,
 		itemDS  			: banhji.source.itemForSaleDS,
 		taxItemDS  			: banhji.source.customerTaxDS,
@@ -63465,7 +63451,7 @@
     });
     banhji.job = kendo.observable({
 		lang 				: langVM,		
-        dataSource 			: dataStore(apiUrl + "jobs"),        
+        dataSource 			: banhji.source.jobDS,        
         contactDS 	 		: banhji.source.customerDS,        
 		obj 				: null,
 		isVisible 			: false,
@@ -63493,13 +63479,18 @@
       		this.set("isVisible", false);          	
       	},
         save 				: function(){
-        	var self = this;
-        	this.dataSource.sync();
-        	this.dataSource.bind("requestEnd", function(e){
-        		if( e.type == "create" || e.type == "update"){ 
-        			self.set("isVisible", false); 
-        		}
-        	});
+        	var self = this, obj = this.get("obj");
+
+        	if(obj.name!=="" && obj.contact_id>0){        		
+	        	this.dataSource.sync();
+	        	this.dataSource.bind("requestEnd", function(e){
+	        		if( e.type == "create" || e.type == "update"){ 
+	        			self.set("isVisible", false); 
+	        		}
+	        	});
+        	}else{
+        		alert("Name and Customer are required.");
+        	}
         },
         edit 				: function(e){
       		var data = e.data;      		
@@ -63945,22 +63936,95 @@
 		contactDS  			: banhji.source.customerDS,
 		contact_id 			: "",
 		pageLoad 			: function(){
-			if(this.dataSource.total>0){
-				this.search();
-			}
+			this.search();
 		},
 		search 				: function(){
-			var contact_id = this.get("contact_id");
+			var para = [],
+			contact_id = this.get("contact_id");
 
 			if(contact_id){
-				this.dataSource.filter([
-					{ field:"type", operator:"where_in", value:["Quote","Sale_Order","Customer_Deposit","Cash_Sale","Invoice","GDN"] },
-					{ field:"contact_id", value: contact_id },
-					{ field:"is_recurring", value: 1 }
-				]);
+				para.push({ field:"contact_id", value: contact_id });
 			}
 
+			para.push({ field:"type", operator:"where_in", value:["Quote","Sale_Order","Customer_Deposit","Cash_Sale","Invoice","GDN"] });
+			para.push({ field:"is_recurring", value: 1 });
+			
+			this.dataSource.filter(para);
+
 			this.set("contact_id", "");
+		},
+		edit 				: function(e){
+			var data = e.data;
+			
+			switch(data.type) {
+			    case "Quote":
+			        banhji.quote.set("recurring", "edit");
+			        banhji.router.navigate('/quote/' + data.id);
+			        break;
+			    case "Sale_Order":
+			        banhji.SaleOrder.set("recurring", "edit");
+			        banhji.router.navigate('/sale_order/' + data.id);
+
+			        break;
+			    case "Customer_Deposit":
+			        banhji.customerDeposit.set("recurring", "edit");
+			        banhji.router.navigate('/customer_deposit/' + data.id);
+
+			        break;
+			    case "Cash_Sale":
+			        banhji.cashSale.set("recurring", "edit");
+			        banhji.router.navigate('/cash_sale/' + data.id);
+
+			        break;
+			    case "Invoice":
+			        banhji.invoice.set("recurring", "edit");
+			        banhji.router.navigate('/invoice/' + data.id);
+
+			        break;
+			    case "GDN":
+			        banhji.gdn.set("recurring", "edit");
+			        banhji.router.navigate('/gdn/' + data.id);
+
+			        break;
+			    default:
+			        // default code block
+			}
+		},
+		use 				: function(e){
+			var data = e.data;
+			
+			switch(data.type) {
+			    case "Quote":
+			        banhji.quote.set("recurring", "use");
+			        banhji.router.navigate('/quote/' + data.id);
+			        break;
+			    case "Sale_Order":
+			        banhji.SaleOrder.set("recurring", "use");
+			        banhji.router.navigate('/sale_order/' + data.id);
+			        break;
+			    case "Customer_Deposit":
+			        banhji.customerDeposit.set("recurring", "use");
+			        banhji.router.navigate('/customer_deposit/' + data.id);
+
+			        break;
+			    case "Cash_Sale":
+			        banhji.cashSale.set("recurring", "use");
+			        banhji.router.navigate('/cash_sale/' + data.id);
+
+			        break;
+			    case "Invoice":
+			        banhji.invoice.set("recurring", "use");
+			        banhji.router.navigate('/invoice/' + data.id);
+
+			        break;
+			    case "GDN":
+			        banhji.gdn.set("recurring", "use");
+			        banhji.router.navigate('/gdn/' + data.id);
+
+			        break;
+			    default:
+			        // default code block
+			}
 		}
 	});
 
@@ -77068,7 +77132,7 @@
 			}
 		});
 	});
-	banhji.router.route("/quote(/:id)(/:is_recurring)", function(id,is_recurring){
+	banhji.router.route("/quote(/:id)", function(id){
 		// banhji.accessMod.query({
 		// 	filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
 		// }).then(function(e){
@@ -77090,6 +77154,20 @@
 
 				if(banhji.pageLoaded["quote"]==undefined){
 					banhji.pageLoaded["quote"] = true;
+
+					// var validator = $("#example").kendoValidator({
+			  //       	rules: {
+					//         customRule1: function(input) {
+					//           	if (input.is("[name=txtRecurringName]")) {
+					//             	return $.trim(input.val()) !== "";
+					//           	}
+					//           	return true;
+					//         }
+					//     },
+					//     messages: {
+					//         customRule1: banhji.source.requiredMessage
+					//     }
+			  //       }).data("kendoValidator");
 
 					var validator = $("#example").kendoValidator().data("kendoValidator");
 			        $("#saveNew").click(function(e){
@@ -77127,8 +77205,8 @@
 					$("#saveRecurring").click(function(e){
 						e.preventDefault();
 
-						if(validator.validate() && vm.validateRecurring()){
-			            	vm.set("saveRecurring", true);
+						if(validator.validate()){
+							vm.set("saveRecurring", true);			            	
 			            	vm.save();
 				        }else{
 				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
@@ -77136,7 +77214,7 @@
 					});
 				}
 
-				vm.pageLoad(id, is_recurring);
+				vm.pageLoad(id);
 		// 	} else {
 		// 		window.location.replace(baseUrl + "admin");
 		// 	}				

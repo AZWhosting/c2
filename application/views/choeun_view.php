@@ -5308,7 +5308,7 @@
 
 						<br>
 						<div style="text-align: center;">
-							<span class="btn btn-success btn-icon glyphicons ok_2" data-bind="click: saveItem"><i></i><span data-bind="text: lang.lang.save"></span></span>
+							<span style="margin-bottom: 0;" class="btn btn-success btn-icon glyphicons ok_2" data-bind="click: saveItem"><i></i><span data-bind="text: lang.lang.save"></span></span>
 							<span class="btn btn-danger btn-icon glyphicons remove_2" data-bind="click: closeWindowItem"><i></i><span data-bind="text: lang.lang.close"></span></span>  
 						</div>
 					</div>

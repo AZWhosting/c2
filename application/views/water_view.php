@@ -461,6 +461,7 @@
 	            		</thead>
 	            		<tbody data-role="listview"	            				
 				                data-template="exemptionSetting-template"
+				                data-auto-bind="false"
 				                data-edit-template="exemption-edit-template"
 				                data-bind="source: planItemDS"></tbody>
 	            	</table>
@@ -468,32 +469,6 @@
 	            <div class="tab-pane" id="tab5">
 		            <div style="clear: both;margin-bottom: 10px;">
 		            	<input data-bind="value: tariffName" type="text" placeholder="Name" style="height: 32px;"  class="span8 k-textbox k-invalid" />
-
-		               <!--  <input data-role="dropdownlist"
-		            	   class="span2"
-		            	   style="padding-right: 1px;height: 32px;" 
-            			   data-option-label=""
-            			   data-auto-bind="false"			                   
-		                   data-value-primitive="true"
-		                   data-text-field="name"
-		                   data-value-field="id"
-		                   data-bind="value: tariffUnit,
-		                              source: typeUnit"/>
-
-		                <input data-role="dropdownlist"
-		            	   class="span2"
-		            	   style="padding-right: 1px;height: 32px;" 
-            			   data-auto-bind="false"			                   
-		                   data-value-primitive="true"
-		                   data-text-field="name"
-		                   data-value-field="id"
-		                   data-bind="value: tariffFlat,
-		                              source: typeFlat"/> -->
-		            	<!-- <input data-bind="value: tariffFrom" type="text" placeholder="From" style="height: 32px;"  class="span1 k-textbox k-invalid" />
-
-		            	<input data-bind="value: tariffTo" type="text" placeholder="To" style="height: 32px;" class="span1 k-textbox k-invalid" />
-
-		            	<input data-bind="value: tariffPrice" type="text" placeholder="Price" style="height: 32px;" class="span2 k-textbox k-invalid" /> -->
 
 		            	<a class="btn btn-default glyphicons circle_plus cutype-icon" style="width: 80px;margin-left: 2px;" data-bind="click: addTariff"><i></i>Add</a>
 		            </div>
@@ -507,6 +482,7 @@
 	            		<tbody data-role="listview"	            				
 				                data-template="tariffSetting-template"
 				                data-edit-template="tariff-edit-template"
+				                data-auto-bind="false"
 				                data-bind="source: planItemDS"></tbody>
 	            	</table>
 	            	
@@ -516,14 +492,14 @@
 	            			<tr>
 	            				<th class="center" width="150"><span>Name</span></th>
 	            				<th class="center" width="100"><span>Flat</span></th>
-	            				<th class="center" width="100"><span>From</span></th>
-	            				<th class="center" width="100"><span>To</span></th>
+	            				<th class="center" width="100"><span>Usage</span></th>
 	            				<th class="center" width="100"><span>Price</span></th>
 	            				<th class="center" width="200"><span>Action</span></th>
 	            			</tr>
 	            		</thead>
 	            		<tbody data-role="listview"	            				
 				                data-template="tariff-item-template"
+				                data-auto-bind="false"
 				                data-edit-template="tariff-edit-item-template"
 				                data-bind="source: tariffItemDS"></tbody>
 	            	</table>
@@ -556,15 +532,9 @@
 								</td>
 							</tr>
 							<tr style="border-bottom: 8px solid #fff;">
-								<td><span>From</span></td>
+								<td><span>Usage</span></td>
 								<td>
-									<input class="k-textbox" placeholder="From ..." data-bind="value: tariffItemFrom" style="width: 100%;">
-								</td>
-							</tr>
-							<tr style="border-bottom: 8px solid #fff;">
-								<td><span>To</span></td>
-								<td>
-									<input class="k-textbox" placeholder="To ..." data-bind="value: tariffItemTo" style="width: 100%;">
+									<input class="k-textbox" placeholder="Usage ..." data-bind="value: tariffItemUsage" style="width: 100%;">
 								</td>
 							</tr>
 							<tr style="border-bottom: 8px solid #fff;">
@@ -577,7 +547,7 @@
 
 						<br>
 						<div style="text-align: center;">
-							<span class="btn btn-success btn-icon glyphicons ok_2" data-bind="click: saveTariffItem"><i></i><span data-bind="text: lang.lang.save"></span></span>
+							<span style="margin-bottom: 0;" class="btn btn-success btn-icon glyphicons ok_2" data-bind="click: saveTariffItem"><i></i><span data-bind="text: lang.lang.save"></span></span>
 
 							<span class="btn btn-danger btn-icon glyphicons remove_2" data-bind="click: closeTariffWindowItem"><i></i><span data-bind="text: lang.lang.close"></span></span>  
 						</div>
@@ -602,6 +572,7 @@
 	            		<tbody data-role="listview"	            				
 				                data-template="depositSetting-template"
 				                data-edit-template="deposit-edit-template"
+				                data-auto-bind="false"
 				                data-bind="source: planItemDS"></tbody>
 	            	</table>
 	            </div>
@@ -625,6 +596,7 @@
 	            		<tbody data-role="listview"	            				
 				                data-template="serviceSetting-template"
 				                data-edit-template="service-edit-template"
+				                data-auto-bind="false"
 				                data-bind="source: planItemDS"></tbody>
 	            	</table>
 	            </div>
@@ -647,6 +619,7 @@
 	            		</thead>
 	            		<tbody data-role="listview"	            				
 				                data-template="maintenanceSetting-template"
+				                data-auto-bind="false"
 				                data-edit-template="maintenance-edit-template"
 				                data-bind="source: planItemDS"></tbody>
 	            	</table>
@@ -671,6 +644,7 @@
 	            		<tbody data-role="listview"	            				
 				                data-template="installmentSetting-template"
 				                data-edit-template="installment-edit-template"
+				                data-auto-bind="false"
 				                data-bind="source: planItemDS"></tbody>
 	            	</table>
 	            </div>
@@ -679,15 +653,16 @@
 	            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
 	            		<thead>
 	            			<tr>
-	            				<th class="center"><span data-bind="text: lang.lang.name"></span></th>
-	            				<th class="center"><span>Usage Type</span></th>
-	            				<th class="center"><span>Valid From</span></th>
-	            				<th class="center"><span>Valid To</span></th>
+	            				<th class="center"><span>Type</span></th>
+	            				<th class="center"><span>Items</span></th>
+	            				<th class="center"><span>Name</span></th>
+	            				<th class="center"><span>Rate</span></th>
 	            				<th class="center">Action</th>
 	            			</tr>
 	            		</thead>
 	            		<tbody data-role="listview"	            				
 				                data-template="planSetting-template"
+				                data-auto-bind="false"
 				                data-bind="source: dataSource"></tbody>
 	            	</table>
 
@@ -899,10 +874,9 @@
     			<span><i class="icon-ok"></i></span>
     		# } #
     	</td>
-    	<td>#= from#</td>
-    	<td>#= to#</td>
-    	<td>#= amount#</td>
-    	<td>
+    	<td align="right">#= usage#</td>
+    	<td align="right">#= amount#</td>
+    	<td align="center">
     		<span class="k-edit-button"><i class="icon-edit"></i> Edit</span>
 		    |
 	    	<span class="k-delete-button"><i class="icon-remove"></i> Delete</span>
@@ -922,8 +896,7 @@
                data-bind="value: is_flat,
                           source: typeFlat"/>
 		</td>
-    	<td><input style="width: 100%;" type="text" class="k-textbox" data-bind="value:from" /></td>
-    	<td><input style="width: 100%;" type="text" class="k-textbox" data-bind="value:to" /></td>
+    	<td><input style="width: 100%;" type="text" class="k-textbox" data-bind="value:usage" /></td>
     	<td><input style="width: 100%;" type="text" class="k-textbox" data-bind="value:amount" /></td>
     	<td class="edit-buttons" style="text-align: center;">
 	        <a class="k-button k-update-button" href="\\#"><span class="k-icon k-update"></span></a>
@@ -1209,7 +1182,7 @@
 				<div id="example" class="k-content">
 			    	<div class="hidden-print pull-right">
 			    		<span class="glyphicons no-js remove_2" 
-							data-bind="click: cancel"><i></i></span>						
+							data-bind="click: cancel"><i></i></span>	
 					</div>
 			        <h2 style="padding:0 15px;">Add Plan</h2>
 			        <div class="span12 row-fluid" style="padding:20px 0;">
@@ -1227,7 +1200,7 @@
 													style="width: 100%;" 
 													placeholder="Name ..." 
 													aria-invalid="true"
-													data-bind="value: obj.name" />
+													data-bind="value: current.name" />
 											</td>
 											<td style="width: 5%"><span >Code</span></td>
 											<td>
@@ -1237,13 +1210,11 @@
 													style="width: 100%;" 
 													placeholder="Code ..." 
 													aria-invalid="true"
-													data-bind="value: obj.code" />
+													data-bind="value: current.code" />
 											</td>
 										</tr>									
 										<tr>
-											
-										</tr>
-																			
+										</tr>								
 									</tbody>
 								</table>
 							</div>
@@ -1251,16 +1222,14 @@
 		                <table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs" style="margin-top: 20px;">
 		                	<thead>
 		                		<tr>
-		                			<th style="width: 3%;" >No.</th>
-		                			<th >ITEMS</th>
-		                			<th >CODE</th>
-		                			<th style="width: 20%;" >DESCRIPTION</th>
-		                			<th style="width: 10%;" >RATE</th>
-		                			<th style="width: 11%;" >Tax</th>
+		                			<th style="width: 15%;" >Item</th>
+		                			<th style="width: 20%;" >Type</th>
+		                			<th style="width: 10%;" >Name</th>
+		                			<th style="width: 11%;" >Rate</th>
 		                		</tr>
 		                	</thead>
 		                	<tbody 
-		                		data-bind="source: obj.items" 
+		                		data-bind="source: current.items" 
 		                		data-auto-bind="false" 
 		                		data-role="listview" 
 		                		data-template="planItem-list-item">
@@ -1281,12 +1250,12 @@
 					    					<span class="caret"></span>
 								  		</a>
 							  			<ul class="dropdown-menu addNewItem">  				  				
-							  				<li><a href='#/excemption'><span >Excemption</span></a></li>
-							  				<li><a href='#/tariff'><span >Tariff</span></a></li>
-							  				<li><a href='#/deposit'><span >Deposit</span></a></li>
-							  				<li><a href='#/service'><span >Service</span></a></li>
-							  				<li><a href='#/maintenance'><span >Maintenance</span></a></li>
-							  				<li><a href='#/installation'><span >Installation</span></a></li>  	
+							  				<li><a data-bind="click: goSetting" data-go="3"><span >Excemption</span></a></li>
+							  				<li><a data-bind="click: goSetting" data-go="4"><span >Tariff</span></a></li>
+							  				<li><a data-bind="click: goSetting" data-go="5"><span >Deposit</span></a></li>
+							  				<li><a data-bind="click: goSetting" data-go="6"><span >Service</span></a></li>
+							  				<li><a data-bind="click: goSetting" data-go="7"><span >Maintenance</span></a></li>
+							  				<li><a data-bind="click: goSetting" data-go="8"><span >Installation</span></a></li>  	
 							  			</ul>
 								  	</li>				
 								</ul>
@@ -1320,12 +1289,10 @@
 </script>
 <script id="planItem-list-item" type="text/x-kendo-tmpl">
 	<tr>
-		<td>#:banhji.plan.items.dataSource.indexOf(data)+1#</td>
 		<td>#= item #</td>
-		<td>#= code #</td>
-		<td>#= description#</td>
-		<td>#= rate #</td>
-		<td>#= tax#</td>
+		<td></td>
+		<td></td>
+		<td></td>
 	</tr>
 </script>
 <script id="addLicense" type="text/x-kendo-template">
@@ -2010,11 +1977,20 @@
     </tr>
 </script>
 <script id="waterCenter-meter-tmpl" type="text/x-kendo-tmpl">
-	<div id="meterClick">
+	<div class="heading-buttons">
+		<h2 class="heading pull-left"><i class="icon-bar-chart icon-fixed-width text-primary"></i> <span data-bind="text: lang.lang.monthly_sale"></span></h2>
+		
+		<div class="clearfix"></div>
+	</div>
+
+	<div class="innerLR innerT">			
+		<div id="wsale-graph" style="height: 200px;"></div>
+	</div>
+	<!-- <div id="meterClick">
 	    <tr>    	  	
 	    	<td>Graph Meter</td>
 	    </tr>
-	</div>
+	</div> -->
 </script>
 <script id="waterCenter-customer-list-tmpl" type="text/x-kendo-tmpl">
 	<tr data-bind="click: selectedRow">
@@ -6922,7 +6898,7 @@
 		],
 		addNew 		: function() {
 			banhji.item.dataSource.add({
-				item 		: this.types,
+				item 		: banhji.item.types,
 				code 		: null,
 				description : null,
 				rate 		: null,
@@ -6960,7 +6936,7 @@
 	//Setting
 	banhji.plan = kendo.observable({
 		dataSource 	: dataStore(apiUrl + "plans"),
-		items 		: banhji.item,
+		items 		: dataStore(apiUrl + "plans/items"),
 		current 	: null,
 		pageLoad    : function(id){
 			if(id){
@@ -6986,10 +6962,18 @@
 			this.dataSource.remove(e.data);
 		},
 		addItem 	: function() {
-			this.items.addNew();
+			this.current.items.push({item: null});
+			console.log(this.get("current").items);
+			// this.get("current").items.push({item: null, type: null, name: null, amount: 0.0});
 		},
 		removeItem 	: function(e) {
 			this.items.remove(e);
+		},
+		goSetting 	: function(e){
+			var data = $(e.currentTarget).data("go");
+			console.log(data);
+			banhji.setting.set("tabGo", data);
+			banhji.router.navigate('/setting');
 		},
 		save 		: function() {
 			var dfd = $.Deferred();
@@ -7098,6 +7082,7 @@
 		contactTypeAbbr 	: "",
         contactTypeCompany 	: 0,
         blockCompanyId  	: 0,
+        tabGo 				: 0,
         blocDS 				: dataStore(apiUrl + "locations"),
         planItemDS			: dataStore(apiUrl + "plans/items"),
         tariffItemDS		: dataStore(apiUrl + "plans/tariff"),
@@ -7214,8 +7199,7 @@
         		name 		: this.get("exName"),
         		type     	: "exemption",
         		is_flat 	: false,
-        		to 			: 0,
-        		from 		: 0,
+        		usage 		: 0,
         		unit 		: this.get("exUnit"),
         		amount 		: this.get("exPrice")
         	});
@@ -7225,46 +7209,74 @@
         	this.set("exUnit", "");
         },
         goTariff    		: function(){
+        	this.set("tariffSelect", false)
         	this.planItemDS.data([]);
+        	this.tariffItemDS.data([]);
         	this.planItemDS.filter({field: "type", value: "tariff"});
         },
         showTariffItem 		: function(e){
         	var data = e.data;
         	this.set("windowTariffItemVisible", true);
         	this.setCurrent(e.data);
-        	this.viewTariffItem(e);
         },
         setCurrent 			: function(current) {
         	this.set('current', current);
         },
         saveTariffItem 		: function(e){
-        	var data = e.data.id;
-        	console.log(this.get('current').id);
+        	var data = e.data.id, self = this;
+        	console.log(data);
         	this.tariffItemDS.add({
         		name 		: this.get("tariffItemName"),
         		type     	: "tariff",
         		tariff_id	: this.get('current').id,
         		is_flat   	: this.get("tariffItemFlat"),
         		unit 		: null,
-        		from 		: this.get("tariffItemFrom"),
-        		to 			: this.get("tariffItemTo"),
+        		usage 		: this.get("tariffItemUsage"),
         		amount 		: this.get("tariffItemAmount"),
         	});
         	this.tariffItemDS.sync();
         	this.tariffItemDS.bind("requestEnd", function(e){
-        		if(e.response) {
-        			this.set("tariffItemName", "");
-		        	this.set("tariffItemFlat", 0);
-		        	this.set("tariffItemFrom", "");
-		        	this.set("tariffItemTo", "");
-		        	this.set("tariffItemAmount", "");
-		        	this.set("windowTariffItemVisible", false);
-		        	this.closeTariffWindowItem();
-        		}
+        		if(e.type != 'read') {
+	        		if(e.response) {
+	        			self.set("tariffItemName", "");
+			        	self.set("tariffItemFlat", 0);
+			        	self.set("tariffItemUsage", "");
+			        	self.set("tariffItemAmount", "");
+			        	self.set("windowTariffItemVisible", false);
+			        	self.closeTariffWindowItem();
+			        	console.log(e);
+			        	self.tariffItemDS.filter({field: "tariff_id", value: self.get('current').id});
+	        		}
+	        	}
         	});
         	this.tariffItemDS.bind("error", function(e){
-
+        		console.log("error");
         	});
+        	
+        },
+        addTariff 		: function(e){
+        	var self = this;
+        	this.planItemDS.add({
+        		name 		: this.get("tariffName"),
+        		type     	: "tariff",
+        		is_flat   	: 0,
+        		tariff_id 	: 0,
+        		unit 		: 0,
+        		usage 		: 0,
+        		amount 		: 0
+        	});
+        	this.planItemDS.sync();
+        	this.planItemDS.bind("requestEnd", function(e){
+        		console.log(e);
+        		if(e.response) {
+        			console.log("e");
+        			self.set("tariffName", "");
+        		}
+        	});
+        	this.planItemDS.bind("error", function(e){
+        		console.log("error");
+        	});
+
         },
         closeTariffWindowItem 	: function(){
         	this.set("windowTariffItemVisible", false);
@@ -7285,8 +7297,7 @@
         		type     	: "deposit",
         		is_flat   	: false,
         		unit 		: null,
-        		from 		: null,
-        		to 			: null,
+        		usage 		: 0,
         		amount 		: this.get("depositPrice")
         	});
         	this.planItemDS.sync();
@@ -7303,8 +7314,7 @@
         		type     	: "service",
         		is_flat   	: false,
         		unit 		: null,
-        		from 		: null,
-        		to 			: null,
+        		usage 		: 0,
         		amount 		: this.get("servicePrice")
         	});
         	this.planItemDS.sync();
@@ -7321,8 +7331,7 @@
         		type     	: "maintenance",
         		is_flat   	: false,
         		unit 		: null,
-        		from 		: null,
-        		to 			: null,
+        		usage 		: 0,
         		amount 		: this.get("maintenancePrice")
         	});
         	this.planItemDS.sync();
@@ -7339,8 +7348,7 @@
         		type     	: "installment",
         		is_flat   	: false,
         		unit 		: null,
-        		from 		: null,
-        		to 			: null,
+        		usage 		: 0,
         		amount 		: this.get("installmentPrice")
         	});
         	this.planItemDS.sync();
@@ -7349,6 +7357,8 @@
         },
 		pageLoad 			: function(){
 			this.txnTemplateDS.filter({ field: "moduls", value : "water_mg" });
+			$(".widget-head li").eq(this.tabGo).children("a").click();
+			console.log(this.tabGo);
 		},
 		cancel 				: function(){
 			this.licenseDS.cancelChanges();		
@@ -7491,6 +7501,39 @@
 		meterDS 			: dataStore(apiUrl + 'meters'),
 		meterClick 			: function(){
 			banhji.view.layout.showIn("#waterCenterContent", banhji.view.waterCenterContent);
+			$('#wsale-graph').kendoChart({
+				dataSource: {data: monthlyDS.data()},												
+				series: [
+					{field: 'amount', categoryField:'month', type: 'line', axis: 'sale'},
+					{field: 'usage', categoryField:'month', type: 'column', axis: 'usage'}
+				],
+				valueAxes: [
+					{
+	                    name: "sale",
+	                    color: "#007eff",
+	                    min: 0,
+	                    majorUnit: 5000000,
+	                    max: 50000000
+	                }, 
+	                {
+	                    name: "usage",
+	                    color: "#3399ff",
+	                    min: 0,	
+	                    majorUnit: 5000,		                   
+	                    max: 50000
+	                }
+                ],
+                categoryAxis: {
+                    //categories: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],		                    
+                    axisCrossingValues: [0, 13],
+                    justified: true
+                },
+                tooltip: {
+                    visible: true,
+                    format: "{0}"
+                }
+
+			});
 		},
 		NometerClick 		: function(){
 			// var Find = $('#waterCenterContent').find('#meterClick');
@@ -7620,6 +7663,7 @@
 				this.searchTransaction();
 				this.loadSummary();
 			}
+
 		},
 		sorterChanges 		: function(){
 	        var today = new Date(),
