@@ -304,42 +304,42 @@
 	            	</a>
 	            </li>
 	            <li>
-	            	<a href="#tab5" class="glyphicons calculator" data-toggle="tab">
+	            	<a href="#tab5" data-bind="click: goTariff" class="glyphicons calculator" data-toggle="tab">
 	            		<i></i><span class="strong"><span>Tariff</span></span>
 	            	</a>
 	            </li>
 	            <li>
-	            	<a href="#tab6" class="glyphicons wallet" data-toggle="tab">
+	            	<a href="#tab6" data-bind="click: goDeposit" class="glyphicons wallet" data-toggle="tab">
 	            		<i></i><span class="strong"><span>Deposit</span></span>
 	            	</a>
 	            </li>
 	            <li>
-	            	<a href="#tab7" class="glyphicons hand_saw" data-toggle="tab">
+	            	<a href="#tab7" data-bind="click: goService" class="glyphicons hand_saw" data-toggle="tab">
 	            		<i></i><span class="strong"><span>Service</span></span>
 	            	</a>
 	            </li>
 	            <li>
-	            	<a href="#tab8" class="glyphicons claw_hammer" data-toggle="tab">
+	            	<a href="#tab8" data-bind="click: goMaintenance" class="glyphicons claw_hammer" data-toggle="tab">
 	            		<i></i><span class="strong"><span>Maintenance</span></span>
 	            	</a>
 	            </li>
 	            <li>
-	            	<a href="#tab9" class="glyphicons classic_hammer" data-toggle="tab">
+	            	<a href="#tab9" data-bind="click: goInstallment" class="glyphicons classic_hammer" data-toggle="tab">
 	            		<i></i><span class="strong"><span>Installment</span></span>
 	            	</a>
 	            </li>
 	            <li>
-	            	<a href="#tab11" class="glyphicons list" data-toggle="tab">
+	            	<a href="#tab10" class="glyphicons list" data-toggle="tab">
 	            		<i></i><span class="strong"><span>Plans</span></span>
 	            	</a>
 	            </li> 
 	             <li>
-	            	<a href="#tab12" class="glyphicons list" data-toggle="tab">
+	            	<a href="#tab11" class="glyphicons list" data-toggle="tab">
 	            		<i></i><span class="strong"><span>Custom Forms</span></span>
 	            	</a>
 	            </li>
 	            <li>
-	            	<a href="#tab13" class="glyphicons list" data-toggle="tab">
+	            	<a href="#tab12" class="glyphicons list" data-toggle="tab">
 	            		<i></i><span class="strong"><span>Prefix Setting</span></span>
 	            	</a>
 	            </li>                       
@@ -403,9 +403,9 @@
 	            		<tbody data-role="listview"		
 			                data-template="blocSetting-template"
 			                data-edit-template="bloc-edit-template"
+			                data-auto-bind="true"
 			                data-bind="source: blocDS"></tbody>
 	            	</table>
-
 	            </div>
 	            <div class="tab-pane" id="tab3">
 	            	<div style="clear: both;margin-bottom: 10px;">
@@ -431,22 +431,22 @@
 				                data-edit-template="customerSetting-edit-contact-type-template"
 				                data-bind="source: contactTypeDS"></tbody>
 	            	</table>
-
 	            </div>
-
 	            <div class="tab-pane" id="tab4">
 	            	<div style="clear: both;margin-bottom: 10px;">
+	            		<input data-bind="value: exName" type="text" placeholder="Name" style="height: 32px;"  class="span3 k-textbox k-invalid" />
+
 		                <input data-role="dropdownlist"
 		            	   class="span2"
 		            	   style="padding-right: 1px;height: 32px;" 
             			   data-option-label="(--- Unit ---)"
             			   data-auto-bind="false"			                   
-		                   data-value-primitive="false"
+		                   data-value-primitive="true"
 		                   data-text-field="name"
 		                   data-value-field="id"
 		                   data-bind="value: exUnit,
 		                              source: typeUnit"/>
-		            	<input data-bind="value: exName" type="text" placeholder="Name" style="height: 32px;"  class="span3 k-textbox k-invalid" />
+		            	
 		            	<input data-bind="value: exPrice" type="text" placeholder="Price" style="height: 32px;" class="span3 k-textbox k-invalid" />
 		            	<a class="btn btn-default glyphicons circle_plus cutype-icon" style="width: 80px;margin-left: 2px;" data-bind="click: addEx"><i></i>Add</a>
 		            </div>
@@ -461,171 +461,247 @@
 	            		</thead>
 	            		<tbody data-role="listview"	            				
 				                data-template="exemptionSetting-template"
+				                data-auto-bind="false"
 				                data-edit-template="exemption-edit-template"
 				                data-bind="source: planItemDS"></tbody>
 	            	</table>
-
 	            </div>
-
 	            <div class="tab-pane" id="tab5">
-	            	<div class="span6">
-		            	<div style="clear: both;margin-bottom: 10px; overflow: hidden;">
-			            	<input data-role="dropdownlist"
-			            	   class="span4"
-			            	   style="padding-right: 1px;height: 32px;" 
-	            			   data-option-label="(--- Select ---)"
-	            			   data-auto-bind="false"			                   
-			                   data-value-primitive="false"
-			                   data-text-field="name"
-			                   data-value-field="id"
-			                   data-bind="value: blockCompanyId,
-			                              source: licenseDS,
-			                              events: {change: onLicenseChange}"/>
-			            	<input 
-			            		data-bind="value: tariffName" 
-			            		type="text" 
-			            		placeholder="Tariff Name" 
-			            		style="height: 32px;"  
-			            		class="span5 k-textbox k-invalid" />
-			            		<a class="btn btn-default glyphicons circle_plus cutype-icon" style="width: 80px;margin-left: 2px;float:right;" data-bind="click: addTariff"><i></i>Add</a>
-			            </div>
-		            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
-		            		<thead>
-		            			<tr>
-		            				<th class="center"><span>License</span></th>
-		            				<th class="center"><span>Tariff Name</span></th>
-		            				<th class="center">Action</th>
-		            			</tr>
-		            		</thead>
-		            		<tbody data-role="listview"	            				
-					                data-template="tariffSetting-template"
-					                data-bind="source: blocDS"></tbody>
-		            	</table>
-		            </div>
-		            <div class="span6">
-		            	<div style="clear: both;margin-bottom: 10px;overflow: hidden;">
-			            	<input data-role="dropdownlist"
-			            	   class="span3"
-			            	   style="padding-right: 1px;height: 32px;" 
-	            			   data-option-label="(--- Select ---)"
-	            			   data-auto-bind="false"			                   
-			                   data-value-primitive="false"
-			                   data-text-field="name"
-			                   data-value-field="id"
-			                   data-bind="value: blockCompanyId,
-			                              source: licenseDS,
-			                              events: {change: onLicenseChange}"/>
-			            	<input 
-			            		data-bind="value: tariffName" 
-			            		type="text" 
-			            		placeholder="Usage" 
-			            		style="height: 32px;"  
-			            		class="span3 k-textbox k-invalid" />
-			            	<input 
-			            		data-bind="value: tariffName" 
-			            		type="text" 
-			            		placeholder="Price" 
-			            		style="height: 32px;"  
-			            		class="span3 k-textbox k-invalid" />
-			            	<a class="btn btn-default glyphicons circle_plus cutype-icon" 
-			            		style="width: 80px;margin-left: 2px;float:right;" data-bind="click: addTariff">
-			            		<i></i>Add
-			            	</a>
-			            </div>
-		            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
-		            		<thead>
-		            			<tr>
-		            				<th class="center"><span>Usage</span></th>
-		            				<th class="center"><span>Price</span></th>
-		            				<th class="center">Flat</th>
-		            			</tr>
-		            		</thead>
-		            		<tbody data-role="listview"	            				
-					                data-template="tariffSetting-template"
-					                data-bind="source: blocDS"></tbody>
-		            	</table>
-		            </div>
-	            </div>
+		            <div style="clear: both;margin-bottom: 10px;">
+		            	<input data-bind="value: tariffName" type="text" placeholder="Name" style="height: 32px;"  class="span8 k-textbox k-invalid" />
 
-	            <div class="tab-pane" id="tab6">
-	            	Deposit
-	            </div>
-
-	            <div class="tab-pane" id="tab7">
-	            	Service
-	            </div>
-
-	            <div class="tab-pane" id="tab8">
-	            	Maintenance
-	            </div>
-	            
-	            <div class="tab-pane" id="tab9">
-	            	<div style="clear: both;margin-bottom: 10px;">
-		            	<input data-role="dropdownlist"
-		            	   class="span2"
-		            	   style="padding-right: 1px;height: 32px;" 
-            			   data-option-label="(--- Select ---)"
-            			   data-auto-bind="false"			                   
-		                   data-value-primitive="false"
-		                   data-text-field="name"
-		                   data-value-field="id"
-		                   data-bind="value: blockCompanyId,
-		                              source: licenseDS,
-		                              events: {change: onLicenseChange}"/>
-		                <input data-role="dropdownlist"
-		            	   class="span2"
-		            	   style="padding-right: 1px;height: 32px;" 
-            			   data-option-label="(--- Select ---)"
-            			   data-auto-bind="false"			                   
-		                   data-value-primitive="false"
-		                   data-text-field="name"
-		                   data-value-field="id"
-		                   data-bind="value: blockCompanyId,
-		                              source: licenseDS,
-		                              events: {change: onLicenseChange}"/>
-		            	<input data-bind="value: blocName" type="text" placeholder="Name" style="height: 32px;"  class="span3 k-textbox k-invalid" />
-		            	<input data-bind="value: blocAbbr" type="text" placeholder="Price" style="height: 32px;" class="span3 k-textbox k-invalid" />
-		            	<a class="btn btn-default glyphicons circle_plus cutype-icon" style="width: 80px;margin-left: 2px;" data-bind="click: addBloc"><i></i>Add</a>
+		            	<a class="btn btn-default glyphicons circle_plus cutype-icon" style="width: 80px;margin-left: 2px;" data-bind="click: addTariff"><i></i>Add</a>
 		            </div>
 	            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
 	            		<thead>
 	            			<tr>
-	            				<th class="center"><span>License</span></th>
+	            				<th class="center" width="300"><span>Name</span></th>
+	            				<th class="center" ><span>Action</span></th>
+	            			</tr>
+	            		</thead>
+	            		<tbody data-role="listview"	            				
+				                data-template="tariffSetting-template"
+				                data-edit-template="tariff-edit-template"
+				                data-auto-bind="false"
+				                data-bind="source: planItemDS"></tbody>
+	            	</table>
+	            	
+	            	<br>
+	            	<table data-bind="visible: tariffSelect" class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
+	            		<thead>
+	            			<tr>
+	            				<th class="center" width="150"><span>Name</span></th>
+	            				<th class="center" width="100"><span>Flat</span></th>
+	            				<th class="center" width="100"><span>Usage</span></th>
+	            				<th class="center" width="100"><span>Price</span></th>
+	            				<th class="center" width="200"><span>Action</span></th>
+	            			</tr>
+	            		</thead>
+	            		<tbody data-role="listview"	            				
+				                data-template="tariff-item-template"
+				                data-auto-bind="false"
+				                data-edit-template="tariff-edit-item-template"
+				                data-bind="source: tariffItemDS"></tbody>
+	            	</table>
+	            	<!-- Tariff Item Window -->
+		            <div data-role="window"
+			                 data-title="Tariff Item"		                 
+			                 data-width="250"
+			                 data-height="290"
+			                 data-actions="{}"
+			                 data-position="{top: '30%', left: '37%'}"		                 
+			                 data-bind="visible: windowTariffItemVisible">
+	            		<table>
+							<tr style="border-bottom: 8px solid #fff;">
+								<td width="35%"><span data-bind="text: lang.lang.name"></span></td>
+								<td>
+									<input class="k-textbox" placeholder="Item Name ..." data-bind="value: tariffItemName" style="width: 100%;">
+								</td>
+							</tr>
+							<tr style="border-bottom: 8px solid #fff;">
+								<td><span>Flat</span></td>
+								<td>
+									<input data-role="dropdownlist"
+					            	   style="padding-right: 1px;height: 32px;" 
+			            			   data-auto-bind="false"			                   
+					                   data-value-primitive="true"
+					                   data-text-field="name"
+					                   data-value-field="id"
+					                   data-bind="value: tariffItemFlat,
+					                              source: typeFlat"/>
+								</td>
+							</tr>
+							<tr style="border-bottom: 8px solid #fff;">
+								<td><span>Usage</span></td>
+								<td>
+									<input class="k-textbox" placeholder="Usage ..." data-bind="value: tariffItemUsage" style="width: 100%;">
+								</td>
+							</tr>
+							<tr style="border-bottom: 8px solid #fff;">
+								<td><span>Price</span></td>
+								<td>
+									<input class="k-textbox" placeholder="Price ..." data-bind="value: tariffItemAmount" style="width: 100%;">
+								</td>
+							</tr>
+						</table>
+
+						<br>
+						<div style="text-align: center;">
+							<span style="margin-bottom: 0;" class="btn btn-success btn-icon glyphicons ok_2" data-bind="click: saveTariffItem"><i></i><span data-bind="text: lang.lang.save"></span></span>
+
+							<span class="btn btn-danger btn-icon glyphicons remove_2" data-bind="click: closeTariffWindowItem"><i></i><span data-bind="text: lang.lang.close"></span></span>  
+						</div>
+					</div>
+	            </div>
+	            <div class="tab-pane" id="tab6">
+	            	<div style="clear: both;margin-bottom: 10px;">
+	            		<input data-bind="value: depositName" type="text" placeholder="Name" style="height: 32px;"  class="span3 k-textbox k-invalid" />
+		            	
+		            	<input data-bind="value: depositPrice" type="text" placeholder="Price" style="height: 32px;" class="span3 k-textbox k-invalid" />
+
+		            	<a class="btn btn-default glyphicons circle_plus cutype-icon" style="width: 80px;margin-left: 2px;" data-bind="click: addDeposit"><i></i>Add</a>
+		            </div>
+	            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
+	            		<thead>
+	            			<tr>
 	            				<th class="center"><span>Name</span></th>
 	            				<th class="center"><span>Price</span></th>
-	            				<th class="center"><span>Type</span></th>
 	            				<th class="center">Action</th>
 	            			</tr>
 	            		</thead>
 	            		<tbody data-role="listview"	            				
-				                data-template="exemptionSetting-template"
-				                data-bind="source: blocDS"></tbody>
+				                data-template="depositSetting-template"
+				                data-edit-template="deposit-edit-template"
+				                data-auto-bind="false"
+				                data-bind="source: planItemDS"></tbody>
 	            	</table>
-
 	            </div>
-	            <div class="tab-pane" id="tab11">
+
+	            <div class="tab-pane" id="tab7">
+	            	<div style="clear: both;margin-bottom: 10px;">
+	            		<input data-bind="value: serviceName" type="text" placeholder="Name" style="height: 32px;"  class="span3 k-textbox k-invalid" />
+		            	
+		            	<input data-bind="value: servicePrice" type="text" placeholder="Price" style="height: 32px;" class="span3 k-textbox k-invalid" />
+
+		            	<a class="btn btn-default glyphicons circle_plus cutype-icon" style="width: 80px;margin-left: 2px;" data-bind="click: addService"><i></i>Add</a>
+		            </div>
+	            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
+	            		<thead>
+	            			<tr>
+	            				<th class="center"><span>Name</span></th>
+	            				<th class="center"><span>Price</span></th>
+	            				<th class="center">Action</th>
+	            			</tr>
+	            		</thead>
+	            		<tbody data-role="listview"	            				
+				                data-template="serviceSetting-template"
+				                data-edit-template="service-edit-template"
+				                data-auto-bind="false"
+				                data-bind="source: planItemDS"></tbody>
+	            	</table>
+	            </div>
+
+	            <div class="tab-pane" id="tab8">
+	            	<div style="clear: both;margin-bottom: 10px;">
+	            		<input data-bind="value: maintenanceName" type="text" placeholder="Name" style="height: 32px;"  class="span3 k-textbox k-invalid" />
+		            	
+		            	<input data-bind="value: maintenancePrice" type="text" placeholder="Price" style="height: 32px;" class="span3 k-textbox k-invalid" />
+
+		            	<a class="btn btn-default glyphicons circle_plus cutype-icon" style="width: 80px;margin-left: 2px;" data-bind="click: addMaintenance"><i></i>Add</a>
+		            </div>
+	            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
+	            		<thead>
+	            			<tr>
+	            				<th class="center"><span>Name</span></th>
+	            				<th class="center"><span>Price</span></th>
+	            				<th class="center">Action</th>
+	            			</tr>
+	            		</thead>
+	            		<tbody data-role="listview"	            				
+				                data-template="maintenanceSetting-template"
+				                data-auto-bind="false"
+				                data-edit-template="maintenance-edit-template"
+				                data-bind="source: planItemDS"></tbody>
+	            	</table>
+	            </div>
+	            
+	            <div class="tab-pane" id="tab9">
+	            	<div style="clear: both;margin-bottom: 10px;">
+	            		<input data-bind="value: installmentName" type="text" placeholder="Name" style="height: 32px;"  class="span3 k-textbox k-invalid" />
+		            	
+		            	<input data-bind="value: installmentPrice" type="text" placeholder="Price" style="height: 32px;" class="span3 k-textbox k-invalid" />
+
+		            	<a class="btn btn-default glyphicons circle_plus cutype-icon" style="width: 80px;margin-left: 2px;" data-bind="click: addInstallment"><i></i>Add</a>
+		            </div>
+	            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
+	            		<thead>
+	            			<tr>
+	            				<th class="center"><span>Name</span></th>
+	            				<th class="center"><span>Price</span></th>
+	            				<th class="center">Action</th>
+	            			</tr>
+	            		</thead>
+	            		<tbody data-role="listview"	            				
+				                data-template="installmentSetting-template"
+				                data-edit-template="installment-edit-template"
+				                data-auto-bind="false"
+				                data-bind="source: planItemDS"></tbody>
+	            	</table>
+	            </div>
+	            <div class="tab-pane" id="tab10">
 	            	<a class="btn-icon btn-primary glyphicons circle_plus" style="width: 110px;" href="#/plan"><i></i>Add Plan</a>
 	            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
 	            		<thead>
 	            			<tr>
-	            				<th class="center"><span data-bind="text: lang.lang.name"></span></th>
-	            				<th class="center"><span>Usage Type</span></th>
-	            				<th class="center"><span>Valid From</span></th>
-	            				<th class="center"><span>Valid To</span></th>
+	            				<th class="center"><span>Type</span></th>
+	            				<th class="center"><span>Items</span></th>
+	            				<th class="center"><span>Name</span></th>
+	            				<th class="center"><span>Rate</span></th>
 	            				<th class="center">Action</th>
 	            			</tr>
 	            		</thead>
 	            		<tbody data-role="listview"	            				
 				                data-template="planSetting-template"
+				                data-auto-bind="false"
 				                data-bind="source: dataSource"></tbody>
 	            	</table>
 
 	            </div>
-	            <div class="tab-pane" id="tab12">
-	            	Custom Forms
+	            <div class="tab-pane" id="tab11">
+	            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
+	            		<thead>
+	            			<tr class="widget-head">
+	            				<th class="center"><span data-bind="text: lang.lang.name"></span></th>
+	            				<th class="center"><span data-bind="text: lang.lang.form_type"></span></th>
+	            				<th class="center"><span data-bind="text: lang.lang.last_edited"></span></th>
+	            				<th class="center"><span data-bind="text: lang.lang.action"></span></th>
+	            			</tr>
+	            		</thead>
+	            		<tbody data-role="listview"
+								 data-selectable="false"
+				                 data-template="customerSetting-form-template"
+				                 data-bind="source: txnTemplateDS">				            
+	            		</tbody>
+	            	</table>
+	            	<a id="addNew" class="btn-icon btn-primary glyphicons ok_2" href="#/invoice_custom" style="width: 110px;"><i></i>Add New</a>
 	            </div>
-	            <div class="tab-pane" id="tab13">
-	            	Prefix Setting
+	            <div class="tab-pane" id="tab12">
+	            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
+	            		<thead>
+	            			<tr class="widget-head">
+	            				<th class="center" data-bind="text: lang.lang.type"></th>
+	            				<th class="center" data-bind="text: lang.lang.abbr"></th>
+	            				<th class="center" data-bind="text: lang.lang.startup_number"></th>
+	            				<th style="text-align: left;padding-left: 5px;" data-bind="text: lang.lang.name"></th>
+	            				<th class="center"><span data-bind="text: lang.lang.action"></span></th>
+	            			</tr>
+	            		</thead>
+	            		<tbody data-role="listview"
+								 data-selectable="false"
+				                 data-template="accountSetting-prefix-template"
+				                 data-bind="source: prefixDS">				            
+	            		</tbody>
+	            	</table>
 	            </div>
 	        </div>
 	    </div>
@@ -653,26 +729,13 @@
 		</td>
 	</tr>
 </script>
-<script id="cusTypeSetting-template" type="text/x-kendo-tmpl">
-	<tr>
-		<td>sdfasdf</td>
-		<td></td>
-		<td></td>
-		<td></td>
-		<td></td>
-		<td></td>
-		<td></td>
-		<td></td>
-		<td></td>
-	</tr>
-</script>
 <script id="custType-template" type="text/x-kendo-tmpl">                    
     <tr>
     	<td>
-    		#:name#
+    		#= name#
    		</td>
    		<td align="center">
-    		#:abbr#
+    		#= abbr#
    		</td>
    		<td align="center">
     		#if(is_company=="1"){#
@@ -706,36 +769,32 @@
    	</tr>
 </script>
 <script id="bloc-edit-template" type="text/x-kendo-tmpl">
-    <div class="product-view k-widget">
-    	<dl>                
-            <dd>
-            	<input type="text" class="k-textbox" data-bind="value:id" />
-                <input data-role="dropdownlist"
-        			   data-option-label="(--- Select ---)"        			   		                   
-	                   data-value-primitive="true"
-	                   data-text-field="name"
-	                   data-value-field="id"
-	                   data-bind="value: branch.id,
-	                              source: licenseDS" />
-            </dd>               
-        </dl>
-        <dl>                
-            <dd>
-                <input type="text" class="k-textbox" data-bind="value:name" name="ProductName" required="required" validationMessage="required" />
-            </dd>               
-        </dl>
-        <dl>                
-            <dd>
-                <input type="text" class="k-textbox" data-bind="value:abbr" name="abbr" required="required" validationMessage="required" />
-                <span data-for="abbr" class="k-invalid-msg"></span>
-            </dd>               
-        </dl>
-        
-        <div class="edit-buttons">
-            <a class="k-button k-update-button" href="\\#"><span class="k-icon k-update"></span></a>
-            <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-cancel"></span></a>
-        </div>
-    </div>
+	<tr>
+		<td>
+            <input data-role="dropdownlist"
+    			   data-option-label="(--- Select ---)"       
+                   data-value-primitive="true"
+                   data-text-field="name"
+                   data-value-field="id"
+                   data-bind="value: branch.id,
+                              source: licenseDS" />
+        </td>
+			<td align="center">
+    
+            <input type="text" class="k-textbox" data-bind="value:name" name="ProductName" required="required" validationMessage="required" />
+        </td>
+			<td align="center">
+            <input type="text" class="k-textbox" data-bind="value:abbr" name="abbr" required="required" validationMessage="required" />
+            <span data-for="abbr" class="k-invalid-msg"></span>
+        </td>
+			<td align="center">
+    
+	        <div class="edit-buttons">
+	            <a class="k-button k-update-button" href="\\#"><span class="k-icon k-update"></span></a>
+	            <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-cancel"></span></a>
+	        </div>
+	    </td>
+	</tr>
 </script>
 <script id="exemptionSetting-template" type="text/x-kendo-tmpl">                    
     <tr>
@@ -755,76 +814,355 @@
    	</tr>
 </script>
 <script id="exemption-edit-template" type="text/x-kendo-tmpl">
-    <div class="product-view k-widget">
-    	<dl>                
-            <dd>
-    			<input data-role="dropdownlist"      			   		                   
-	                   data-value-primitive="true"
-	                   data-text-field="name"
-	                   data-value-field="id"
-	                   data-bind="value: unit,
-	                              source: typeUnit" />
-	        </dd>               
-        </dl>
-    	<dl>                
-            <dd>
-            	<input type="text" class="k-textbox" data-bind="value:name" />
-            </dd>               
-        </dl>
-        <dl>                
-            <dd>
-            	<input type="text" class="k-textbox" data-bind="value:amount" />
-            </dd>               
-        </dl>
-        
-        <div class="edit-buttons">
-            <a class="k-button k-update-button" href="\\#"><span class="k-icon k-update"></span></a>
-            <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-cancel"></span></a>
-        </div>
-    </div>
+    <tr>    	               
+        <td>
+			<input style="width: 100%;" type="text" class="k-textbox" data-bind="value:name" />
+        </td>    
+        <td>        	
+        	<input style="width: 100%;" data-role="dropdownlist"      
+                   data-value-primitive="true"
+                   data-text-field="name"
+                   data-value-field="id"
+                   data-bind="value: unit,
+                              source: typeUnit" />
+        </td>      
+        <td>
+        	<input style="width: 100%;" type="text" class="k-textbox" data-bind="value:amount" />
+        </td>
+	    <td class="edit-buttons" style="text-align: center;">
+	        <a class="k-button k-update-button" href="\\#"><span class="k-icon k-update"></span></a>
+	        <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-cancel"></span></a>
+	    </td>
+    </tr>
 </script>
 <script id="tariffSetting-template" type="text/x-kendo-tmpl">                    
     <tr>
     	<td>
-    		#= branch.name#
-   		</td>
-   		<td align="center">
     		#= name#
    		</td>
-   		<td align="center">   			   
-		    <a class="btn-action glyphicons pencil btn-success k-edit-button" href="\\#"><i></i></a>
+   		<td align="left">   
+		    <span class="k-edit-button"><i class="icon-edit"></i> Edit</span>
+		    |
+	    	<span class="k-delete-button"><i class="icon-remove"></i> Delete</span>
+    		|
+    		<span data-bind="click: viewTariffItem"><i class="icon-view"></i> View Item</span>
+    		|
+    		<span data-bind="click: showTariffItem"><i class="icon-plus icon-white"></i> Add Item</span>
    		</td>   		
    	</tr>
 </script>
+<script id="tariff-edit-template" type="text/x-kendo-tmpl">
+    <tr>    	               
+        <td>
+			<input style="width: 100%;" type="text" class="k-textbox" data-bind="value:name" />
+        </td>    
+
+	    <td class="edit-buttons" style="text-align: center;">
+	        <a class="k-button k-update-button" href="\\#"><span class="k-icon k-update"></span></a>
+	        <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-cancel"></span></a>
+	    </td>
+    </tr>
+</script>
+
+<script id="tariff-item-template" type="text/x-kendo-tmpl">                    
+    <tr>
+    	<td>#= name#</td>
+    	<td align="center">
+    		# if(is_flat == 0) {#
+    			<span><i class="icon-remove"></i></span>
+    		# }else{ #
+    			<span><i class="icon-ok"></i></span>
+    		# } #
+    	</td>
+    	<td align="right">#= usage#</td>
+    	<td align="right">#= amount#</td>
+    	<td align="center">
+    		<span class="k-edit-button"><i class="icon-edit"></i> Edit</span>
+		    |
+	    	<span class="k-delete-button"><i class="icon-remove"></i> Delete</span>
+    	</td>
+   	</tr>
+</script>
+<script id="tariff-edit-item-template" type="text/x-kendo-tmpl">                    
+    <tr>
+    	<td><input style="width: 100%;" type="text" class="k-textbox" data-bind="value:name" /></td>
+    	<td align="center">
+    		<input data-role="dropdownlist"
+        	   style="padding-right: 1px;height: 32px;" 
+			   data-auto-bind="false"			                   
+               data-value-primitive="true"
+               data-text-field="name"
+               data-value-field="id"
+               data-bind="value: is_flat,
+                          source: typeFlat"/>
+		</td>
+    	<td><input style="width: 100%;" type="text" class="k-textbox" data-bind="value:usage" /></td>
+    	<td><input style="width: 100%;" type="text" class="k-textbox" data-bind="value:amount" /></td>
+    	<td class="edit-buttons" style="text-align: center;">
+	        <a class="k-button k-update-button" href="\\#"><span class="k-icon k-update"></span></a>
+	        <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-cancel"></span></a>
+	    </td>
+   	</tr>
+</script>
+<script id="depositSetting-template" type="text/x-kendo-tmpl">                    
+    <tr>
+    	<td>
+    		#= name#
+   		</td>
+   		<td align="center">
+    		#= amount#
+   		</td>
+   		<td align="center">   			   
+		    <a class="btn-action glyphicons pencil btn-success k-edit-button"><i></i></a>
+		    <a class="btn-action glyphicons remove_2 btn-danger k-delete-button"><i></i></a>
+   		</td>   		
+   	</tr>
+</script>
+<script id="deposit-edit-template" type="text/x-kendo-tmpl">
+    <tr>    	               
+        <td>
+			<input style="width: 100%;" type="text" class="k-textbox" data-bind="value:name" />
+        </td>       
+        <td>
+        	<input style="width: 100%;" type="text" class="k-textbox" data-bind="value:amount" />
+        </td>
+
+	    <td class="edit-buttons" style="text-align: center;">
+	        <a class="k-button k-update-button" href="\\#"><span class="k-icon k-update"></span></a>
+	        <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-cancel"></span></a>
+	    </td>
+    </tr>
+</script>
+<script id="serviceSetting-template" type="text/x-kendo-tmpl">                    
+    <tr>
+    	<td>
+    		#= name#
+   		</td>
+   		<td align="center">
+    		#= amount#
+   		</td>
+   		<td align="center">   			   
+		    <a class="btn-action glyphicons pencil btn-success k-edit-button"><i></i></a>
+		    <a class="btn-action glyphicons remove_2 btn-danger k-delete-button"><i></i></a>
+   		</td>   		
+   	</tr>
+</script>
+<script id="service-edit-template" type="text/x-kendo-tmpl">
+    <tr>    	               
+        <td>
+			<input style="width: 100%;" type="text" class="k-textbox" data-bind="value:name" />
+        </td>       
+        <td>
+        	<input style="width: 100%;" type="text" class="k-textbox" data-bind="value:amount" />
+        </td>
+
+	    <td class="edit-buttons" style="text-align: center;">
+	        <a class="k-button k-update-button" href="\\#"><span class="k-icon k-update"></span></a>
+	        <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-cancel"></span></a>
+	    </td>
+    </tr>
+</script>
+<script id="maintenanceSetting-template" type="text/x-kendo-tmpl">                    
+    <tr>
+    	<td>
+    		#= name#
+   		</td>
+   		<td align="center">
+    		#= amount#
+   		</td>
+   		<td align="center">   			   
+		    <a class="btn-action glyphicons pencil btn-success k-edit-button"><i></i></a>
+		    <a class="btn-action glyphicons remove_2 btn-danger k-delete-button"><i></i></a>
+   		</td>   		
+   	</tr>
+</script>
+<script id="maintenance-edit-template" type="text/x-kendo-tmpl">
+    <tr>    	               
+        <td>
+			<input style="width: 100%;" type="text" class="k-textbox" data-bind="value:name" />
+        </td>       
+        <td>
+        	<input style="width: 100%;" type="text" class="k-textbox" data-bind="value:amount" />
+        </td>
+
+	    <td class="edit-buttons" style="text-align: center;">
+	        <a class="k-button k-update-button" href="\\#"><span class="k-icon k-update"></span></a>
+	        <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-cancel"></span></a>
+	    </td>
+    </tr>
+</script>
+<script id="installmentSetting-template" type="text/x-kendo-tmpl">                    
+    <tr>
+    	<td>
+    		#= name#
+   		</td>
+   		<td align="center">
+    		#= amount#
+   		</td>
+   		<td align="center">   			   
+		    <a class="btn-action glyphicons pencil btn-success k-edit-button"><i></i></a>
+		    <a class="btn-action glyphicons remove_2 btn-danger k-delete-button"><i></i></a>
+   		</td>   		
+   	</tr>
+</script>
+<script id="installment-edit-template" type="text/x-kendo-tmpl">
+    <tr>    	               
+        <td>
+			<input style="width: 100%;" type="text" class="k-textbox" data-bind="value:name" />
+        </td>       
+        <td>
+        	<input style="width: 100%;" type="text" class="k-textbox" data-bind="value:amount" />
+        </td>
+
+	    <td class="edit-buttons" style="text-align: center;">
+	        <a class="k-button k-update-button" href="\\#"><span class="k-icon k-update"></span></a>
+	        <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-cancel"></span></a>
+	    </td>
+    </tr>
+</script>
+<script id="accountSetting-prefix-template" type="text/x-kendo-template">
+	<tr>
+		<td > #=type#  </a></td>
+		<td style="text-align: center; padding-left: 10px!important;"> 
+			#= abbr# 
+		</td>
+		<td class="center"> 
+			#= startup_number#
+		</td>
+		<td class="center" style="text-align: left;">
+			<a style="text-align: left;padding-left: 5px;" href="\\#/add_accountingprefix/#= id # ">#= name# </a>
+		</td>
+		<td class="center">
+			<a class="btn-action glyphicons pencil btn-success" href="\\#/add_accountingprefix/#= id # "><i></i></a>
+		</td>
+	</tr>
+</script>
+<script id="addAccountingprefix" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">					
+				<div id="example" class="k-content">
+			    	<div class="hidden-print pull-right">
+			    		<span class="glyphicons no-js remove_2" 
+							data-bind="click: cancel"><i></i></span>						
+					</div>
+			        <h2 style="padding:0 15px;"">Transaction Prefix</h2>
+				    <br>
+
+				    <span class="row-fluid">
+
+				    	<span class="span6">
+				    		<p>At the begining of every fiscal year, all the reference numbers will start at 1. 
+				    			If you donot start using BanhJi at the beginning of your fiscal year, 
+				    			please use Starting Number to determine you next number for each transaction reference. 
+				    			This is important for your transaction reference number.</p>
+				    	</span>
+
+				    	<span class="span6">
+				    		<table class="table table-borderless">	
+						    	<thead>
+							    	<tr>
+							    		<th width="40%">Name</th>
+							    		<th>Abbr</th>
+							    		<th>Starting Number</td>
+							    	</tr>
+						    	</thead>
+						    	<tbody>
+							    	<tr>
+							    		<td><span data-bind="text: obj.type"></span></td>
+							    		<td>
+							    			<input type="text" placeholder="Abbr" class="k-textbox k-invalid span4" data-bind="value: obj.abbr" style="width: 100px;" >
+							    		</td>
+							    		<td>
+							    			<input type="text" placeholder="Starting Number" class="k-textbox k-invalid span2" data-bind="value: obj.startup_number" style="width: 100px;" >
+							    		</td>
+							    	</tr>
+						    	</tbody>
+							</table>
+				    	</span>
+
+				    </span>
+
+					<!-- Form actions -->
+					<div class="box-generic bg-action-button">
+						<div id="ntf1" data-role="notification"></div>
+						<div class="row">
+							<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;float:right; margin-right: 15px;"><i></i> Save Close</span>	
+						</div>
+					</div>
+					<!-- // Form actions END -->	
+				</div>							
+			</div>
+		</div>
+	</div>
+</script>
+<script id="customerSetting-form-template" type="text/x-kendo-template">
+	<tr>
+		<td ><a style="text-align: left;" href="\\#/invoice_custom/#= id # "> #=name#  </a></td>
+		<td style="text-align: left; padding-left: 10px!important;"> 
+			#= type.replace("_"," ")# 
+		</td>
+		<td style="text-align: left; padding-left: 10px!important;"> #if( updated_at ){ # 
+				#=kendo.toString(new Date(updated_at),"D")# 
+			 #}else{ #
+			 	#=kendo.toString(new Date(created_at),"D")# 
+			 #}#
+		</td>
+		<td class="center">
+			#if( status == 0){ #
+			<a class="btn-action glyphicons pencil btn-success" href="\\#/invoice_custom/#= id # "><i></i></a>
+			<a data-bind="click: deleteForm" class="btn-action glyphicons remove_2 btn-danger"><i></i></a>
+			# } #
+		</td>
+	</tr>
+</script>
+
+<script id="customerSetting-form-template" type="text/x-kendo-template">
+	<tr>
+		<td ><a style="text-align: left;" href="\\#/invoice_custom/#= id # "> #=name#  </a></td>
+		<td style="text-align: left; padding-left: 10px!important;"> 
+			#= type.replace("_"," ")# 
+		</td>
+		<td style="text-align: left; padding-left: 10px!important;"> #if( updated_at ){ # 
+				#=kendo.toString(new Date(updated_at),"D")# 
+			 #}else{ #
+			 	#=kendo.toString(new Date(created_at),"D")# 
+			 #}#
+		</td>
+		<td class="center">
+			#if( status == 0){ #
+			<a class="btn-action glyphicons pencil btn-success" href="\\#/invoice_custom/#= id # "><i></i></a>
+			<a data-bind="click: deleteForm" class="btn-action glyphicons remove_2 btn-danger"><i></i></a>
+			# } #
+		</td>
+	</tr>
+</script>
 
 
-<script id="customerSetting-edit-contact-type-template" type="text/x-kendo-tmpl">
-    <div class="product-view k-widget">
-        <dl>                
-            <dd>
-                <input type="text" class="k-textbox" data-bind="value:name" name="ProductName" required="required" validationMessage="required" />
-                <span data-for="ProductName" class="k-invalid-msg"></span>
-            </dd>               
-        </dl>
-        <dl>                
-            <dd>
-                <input type="text" class="k-textbox" data-bind="value:abbr" name="abbr" required="required" validationMessage="required" />
-                <span data-for="abbr" class="k-invalid-msg"></span>
-            </dd>               
-        </dl>
-        <dl>                
-            <dd>
-                <select data-bind="value: is_company" >
-	                <option value="0"><span data-bind="text: lang.lang.not_a_company"></span></option>
-	                <option value="1"><span data-bind="text: lang.lang.it_is_a_company"></span></option>			                
-	            </select>
-            </dd>              
-        </dl>
-        <div class="edit-buttons">
+<script id="customerSetting-edit-contact-type-template" type="text/x-kendo-tmpl">   
+    <tr>                
+        <td>
+            <input style="width: 100%" type="text" class="k-textbox" data-bind="value:name" name="ProductName" required="required" validationMessage="required" />
+            <span data-for="ProductName" class="k-invalid-msg"></span>
+        </td>               
+                   
+        <td>
+            <input  style="width: 100%" type="text" class="k-textbox" data-bind="value:abbr" name="abbr" required="required" validationMessage="required" />
+            <span data-for="abbr" class="k-invalid-msg"></span>
+        </td>               
+                   
+        <td>
+            <select  style="width: 100%; " data-bind="value: is_company" >
+                <option value="0"><span data-bind="text: lang.lang.not_a_company"></span></option>
+                <option value="1"><span data-bind="text: lang.lang.it_is_a_company"></span></option>			                
+            </select>
+        </td>              
+ 
+    	<td class="edit-buttons" style="text-align: center;">
             <a class="k-button k-update-button" href="\\#"><span class="k-icon k-update"></span></a>
             <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-cancel"></span></a>
-        </div>
-    </div>
+        </td>
+    </tr>  
 </script>
 <script id="planSetting-template" type="text/x-kendo-tmpl">
 	<tr>
@@ -844,7 +1182,7 @@
 				<div id="example" class="k-content">
 			    	<div class="hidden-print pull-right">
 			    		<span class="glyphicons no-js remove_2" 
-							data-bind="click: cancel"><i></i></span>						
+							data-bind="click: cancel"><i></i></span>	
 					</div>
 			        <h2 style="padding:0 15px;">Add Plan</h2>
 			        <div class="span12 row-fluid" style="padding:20px 0;">
@@ -862,7 +1200,7 @@
 													style="width: 100%;" 
 													placeholder="Name ..." 
 													aria-invalid="true"
-													data-bind="value: obj.name" />
+													data-bind="value: current.name" />
 											</td>
 											<td style="width: 5%"><span >Code</span></td>
 											<td>
@@ -872,13 +1210,11 @@
 													style="width: 100%;" 
 													placeholder="Code ..." 
 													aria-invalid="true"
-													data-bind="value: obj.code" />
+													data-bind="value: current.code" />
 											</td>
 										</tr>									
 										<tr>
-											
-										</tr>
-																			
+										</tr>								
 									</tbody>
 								</table>
 							</div>
@@ -886,19 +1222,17 @@
 		                <table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs" style="margin-top: 20px;">
 		                	<thead>
 		                		<tr>
-		                			<th style="width: 3%;" >No.</th>
-		                			<th >ITEMS</th>
-		                			<th >CODE</th>
-		                			<th style="width: 20%;" >DESCRIPTION</th>
-		                			<th style="width: 10%;" >RATE</th>
-		                			<th style="width: 11%;" >Tax</th>
+		                			<th style="width: 15%;" >Item</th>
+		                			<th style="width: 20%;" >Type</th>
+		                			<th style="width: 10%;" >Name</th>
+		                			<th style="width: 11%;" >Rate</th>
 		                		</tr>
 		                	</thead>
 		                	<tbody 
-		                		data-bind="source: items.dataSource" 
+		                		data-bind="source: current.items" 
 		                		data-auto-bind="false" 
 		                		data-role="listview" 
-		                		data-template="tariff-list-item">
+		                		data-template="planItem-list-item">
 		                	</tbody>
 		                </table>
 		                 <!-- Bottom part -->
@@ -916,12 +1250,12 @@
 					    					<span class="caret"></span>
 								  		</a>
 							  			<ul class="dropdown-menu addNewItem">  				  				
-							  				<li><a href='#/excemption'><span >Excemption</span></a></li>
-							  				<li><a href='#/tariff'><span >Tariff</span></a></li>
-							  				<li><a href='#/deposit'><span >Deposit</span></a></li>
-							  				<li><a href='#/service'><span >Service</span></a></li>
-							  				<li><a href='#/maintenance'><span >Maintenance</span></a></li>
-							  				<li><a href='#/installation'><span >Installation</span></a></li>  	
+							  				<li><a data-bind="click: goSetting" data-go="3"><span >Excemption</span></a></li>
+							  				<li><a data-bind="click: goSetting" data-go="4"><span >Tariff</span></a></li>
+							  				<li><a data-bind="click: goSetting" data-go="5"><span >Deposit</span></a></li>
+							  				<li><a data-bind="click: goSetting" data-go="6"><span >Service</span></a></li>
+							  				<li><a data-bind="click: goSetting" data-go="7"><span >Maintenance</span></a></li>
+							  				<li><a data-bind="click: goSetting" data-go="8"><span >Installation</span></a></li>  	
 							  			</ul>
 								  	</li>				
 								</ul>
@@ -953,13 +1287,12 @@
 		</div>
 	</div>
 </script>
-<script id="tariff-list-item" type="text/x-kendo-tmpl">
+<script id="planItem-list-item" type="text/x-kendo-tmpl">
 	<tr>
-		<td>#= name#</td>
-		<td>#= code #</td>
-		<td>#= description#</td>
-		<td>#= rate #</td>
-		<td>#= tax#</td>
+		<td>#= item #</td>
+		<td></td>
+		<td></td>
+		<td></td>
 	</tr>
 </script>
 <script id="addLicense" type="text/x-kendo-template">
@@ -1644,11 +1977,20 @@
     </tr>
 </script>
 <script id="waterCenter-meter-tmpl" type="text/x-kendo-tmpl">
-	<div id="meterClick">
+	<div class="heading-buttons">
+		<h2 class="heading pull-left"><i class="icon-bar-chart icon-fixed-width text-primary"></i> <span data-bind="text: lang.lang.monthly_sale"></span></h2>
+		
+		<div class="clearfix"></div>
+	</div>
+
+	<div class="innerLR innerT">			
+		<div id="wsale-graph" style="height: 200px;"></div>
+	</div>
+	<!-- <div id="meterClick">
 	    <tr>    	  	
 	    	<td>Graph Meter</td>
 	    </tr>
-	</div>
+	</div> -->
 </script>
 <script id="waterCenter-customer-list-tmpl" type="text/x-kendo-tmpl">
 	<tr data-bind="click: selectedRow">
@@ -2135,6 +2477,574 @@
 <!-- ***************************
 *	End Water Section         *
 **************************** -->
+
+
+
+
+<!-- ***************************
+*	Invoice Form Section        *
+**************************** -->
+<script id="invoiceCustom" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">					
+				<div id="example" class="k-content">
+			    	<div class="hidden-print pull-right">
+			    		<span class="glyphicons no-js remove_2" 
+							data-bind="click: cancel"><i></i></span>						
+					</div>
+			        <h2 style="padding:0 15px;"" data-bind="text: lang.lang.custom_forms"></h2>
+				    <br>	
+				    <div class="row" style="margin-left:0;">			   				
+						<div class="span4">	
+							<div class="span12" style="margin-bottom: 10px;">
+								<input type="text" id="formName" name="Form Name" class="k-textbox" placeholder="Form Name" required validationMessage="" data-bind="value: obj.name" style="width: 100%;" />
+							</div>
+							<div class="span12">
+								<h2 class="btn btn-block btn-primary">Form Style</h2>
+								<div class="row formstyle">
+									<div id="formStyle"
+										 data-role="listview"
+										 data-selectable="true"
+						                 data-template="invoiceCustom-txn-form-template"
+						                 data-bind="source: txnFormDS"
+						                 style="overflow: auto">
+						            </div>
+						        </div>
+							</div>
+							<div class="span12" style="margin-left:0; margin-top: 10px;">
+								<h2 class="btn btn-block btn-primary">Form Color</h2>
+								<div class="colorPalatte span12">
+									<div class="" style="margin-top: 15px;">
+										<div data-selectable="true" data-bind="value: obj.color, events: { change : colorCC }" data-tile-size='{ width: 60, height: 35 }' data-role="colorpalette" data-columns="6" data-palette='[ "#ffffff", "#000000", "#eeece1", "#1f497d", "#4f81bd", "#c0504d", "#9bbb59", "#dbeef3", "#8064a2", "#f79646", "#f2f2f2", "#7f7f7f", "#ddd9c3", "#c6d9f0", "#dbe5f1", "#f2dcdb", "#ebf1dd", "#e5e0ec"]'></div>
+                                	</div>
+                                </div>
+							</div>
+							<div class="span12" style="margin-left:0; margin-top: 10px;padding-bottom: 30px;">
+								<h2 class="btn btn-block btn-primary">Form Appearance</h2>
+								<div class="colorPalatte span12">
+									<div class="" style="margin-top: 15px;">
+										<input type="text" id="formtitle" name="Form Title" class="k-textbox" placeholder="Form Title" required validationMessage="" data-bind="value: obj.title" style="width: 100%;" />
+										<textarea data-bind="value: obj.note, text: obj.note" placeholder="Note" class="span12" style="min-height: 100px;margin-top: 15px;padding-left: 10px;"></textarea>
+                                	</div>
+                                </div>
+							</div>
+						</div>
+						<div class="span8" id="invFormContent" style="padding-left:0;padding-right: 0;width: 63%;border:1px solid #eee;margin-bottom:20px;">
+
+						</div>
+					</div>
+					<!-- Form actions -->
+					<div class="box-generic bg-action-button">
+						<div id="ntf1" data-role="notification"></div>
+						<div class="row">
+							<div class="span3">
+								
+							</div>
+							<div class="span9" align="right">
+								
+								<span id="saveClose" data-bind="click: save" class="btn btn-icon btn-success glyphicons power" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save_close"></span></span>		
+							</div>
+						</div>
+					</div>
+					<!-- // Form actions END -->	
+				</div>							
+			</div>
+		</div>
+	</div>
+</script>
+<script id="invoiceForm" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">					
+				<div id="example" class="k-content">
+			    	<div class="hidden-print pull-right">
+			    		<span class="glyphicons no-js remove_2" 
+							data-bind="click: cancel"><i></i></span>						
+					</div>
+			        <h2>PREVIEW FORM</h2>
+				    <br>	
+				    <div class="row" style="margin-left:0;">	 				
+						<div class="span10" id="invFormContent" style="min-height: 300px;border:1px solid #ccc; margin: 0 auto;float:none;padding-bottom:20px;margin-bottom: 30px;">	
+							<div id="loading-inv" style="margin-left: -15px;text-align: center;position: absolute;width: 100%; height: 100%;background: rgba(142, 159, 167, 0.8);z-index: 9999;">
+								<i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 45%;left: 45%"></i>
+							</div>
+						</div>
+					</div>
+					<!-- Form actions -->
+					<div class="box-generic" align="right" style="background-color: #0B0B3B;">
+						<span id="notification"></span>
+
+						<span id="savePrint" class="btn btn-icon btn-primary glyphicons print" data-bind="click: printGrid" style="width: 80px;"><i></i>Print / PDF</span>
+						<!--span id="savePDF" class="btn btn-icon btn-success glyphicons edit" data-bind="click: savePDF" style="width: 120px;"><i></i> Save PDF</span-->									
+					</div>
+					<!-- // Form actions END -->
+				</div>							
+			</div>
+		</div>
+	</div>
+</script>
+<script id="invoiceForm1" type="text/x-kendo-template">
+	<div class="inv1">
+    	<div class="head">
+        	<div class="logo">
+            	<img data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
+            </div>
+            <div class="cover-name-company">
+            	<h2 ></h2>
+                <h3 style="text-align:left;" data-bind="text: company.name"></h3>
+                <div class="vattin">
+                	<p>លេខ​អត្ត​សញ្ញាណ​កម្ម អតប (VATTIN)</p><span id="vat_number" data-bind="text: company.vat_number"></span>
+                </div>
+                <div class="clear">
+                	<pre>អាស័យ​ដ្ឋាន Address: <span data-bind="text: company.address"></span></pre>
+                    <pre>ទូរស័ព្ទលេខ HP <span data-bind="text: company.phone"></span></pre>
+                </div>
+            </div>
+        </div>
+        <div class="content">
+        	<div style="overflow: hidden;padding:10px 0;">
+        		<h1>វិក្កយបត្រ</h1>
+            	<h2 data-bind="text: obj.title"></h2>
+        	</div>
+            <div class="clear mid-header" style="padding: 10px;background: #dce6f2;padding-bottom: 10px;">
+            	<div class="cover-customer">
+                	<h5>ព័ត៌មានអតិថិជន​ CUSTOMER INFO:</h5>
+                    <div class="clear">
+                        <div class="left dotted-ruler" style="width: 62%;">
+                        	<p style="font-weight:bold">
+                        		<span data-bind="text: obj.contact[0].name"></span><br>
+                        		<span data-bind="text: obj.contact[0].address"></span>
+                        	</p>
+                        </div>
+                    </div>
+                    <div class="clear">
+                    	<!--div class="left">
+                    		<p>ទូរស័ព្ទ​លេខ HP:</p>
+                        </div-->
+                        <div class="left dotted-ruler" style="width: 78%;">
+                        	<p style="font-weight:bold" data-bind="text: obj.contact[0].phone"></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="cover-inv-number">
+                	<div class="clear">
+                    	<div class="left">
+                    		<p>លេខ No. :</p>
+                        </div>
+                        <div class="left dotted-ruler" style="width: 42%;">
+                        	<p style="font-weight:bold" data-bind="text: obj.number"></p>
+                        </div>
+                    </div>
+                    <div class="clear">
+                    	<div class="left">
+                    		<p>កាល​បរិច្ឆេទ Date:</p>
+                        </div>
+                        <div class="left dotted-ruler" style="width: 57%;">
+                        	<p style="font-weight:bold" data-bind="text: obj.issued_date"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        	<div class="clear">
+            	<table cellpadding="0" cellspacing="0" border="1" class="span12">
+                	<thead>
+                        <tr class="main-color" style="height: 45px;" data-bind="style: {backgroundColor: obj.color}">
+                            <th>ល.រ<br />N<sup>0</sup></th>
+                            <th>បរិយាយ​មុខ​ទំនិញ<br />Description</th>
+                            <th>បរិមាណ<br />Quantity</th>
+                            <th>ថ្លៃឯកតា​<br />Unit Price</th>
+                            <th>ថ្លៃ​ទំនិញ<br />Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody style="margin-top: 2px" id="formListView" data-role="listview"
+										 data-auto-bind="false"
+						                 data-template="invoiceForm-lineDS-template"
+						                 data-bind="source: lineDS">
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                        	<td colspan="4" style="text-align:right;padding:5px;font-weight: bold;">បញ្ចុះតម្លៃ Discount</td>
+                            <td style="text-align: right; padding-right: 5px;" data-bind="text: obj.discount"></td>
+                        </tr>
+                        <tr>
+                        	<td colspan="4" style="text-align:right;padding:5px;font-weight: bold;">សរុប (បូក​បញ្ចូល​ទាំង​អាករ)​ Total (VAT included)</td>
+                            <td style="text-align: right; padding-right: 5px;" data-bind="text: obj.amount"></td>
+                        </tr>
+                        <tr>
+                        	<td colspan="4" style="text-align:right;padding:5px;font-weight: bold;">ប្រាក់កក់ Deposit</td>
+                            <td style="text-align: right; padding-right: 5px;" data-bind="text: obj.deposit"></td>
+                        </tr>
+                        <tr>
+                        	<td colspan="4" style="text-align:right;padding:5px;font-weight: bold;">សាច់ប្រាក់ត្រូវទូទាត់ Amount Due</td>
+                            <td style="text-align: right; padding-right: 5px;" data-bind="text: obj.amount_due"></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+        <div class="foot">
+        	<div class="cover-signature">
+            	<div class="singature" style="float:left">
+                	<p>ហត្ថលេខា និងឈ្មោះ​អ្នក​ទិញ<br />Customer's Signature & Name</p>
+                </div>
+                <div class="singature" style="float:right">
+                	<p>ហត្ថលេខា និងឈ្មោះ​អ្នកលក់<br />Seller's Signature & Name</p>
+                </div>
+            </div>
+            <h6>សម្គាល់៖ <span>ច្បាប់​ដើម​សម្រាប់​អ្នក​ទិញ ច្បាប់​ចម្លង​សម្រាប់​អ្នក​លក់</span><br /><span style="font-size: 10px"><strong>Note:</strong> Original invoice for customer, copied invoice for seller</span></h6>
+        </div>
+    </div>
+</script>
+<script id="invoiceForm2" type="text/x-kendo-template">
+	<div class="inv1">
+    	<div class="head">
+        	<div class="logo">
+            	<img data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
+            </div>
+            <div class="cover-name-company">
+            	<h2 ></h2>
+                <h3 style="text-align:left;" data-bind="text: company.name"></h3>
+                <div class="vattin">
+                	<p>លេខ​អត្ត​សញ្ញាណ​កម្ម អតប (VATTIN)</p><span id="vat_number" data-bind="text: company.vat_number"></span>
+                </div>
+                <div class="clear">
+                	<pre>អាស័យ​ដ្ឋាន Address: <span data-bind="text: company.address"></span></pre>
+                    <pre>ទូរស័ព្ទលេខ HP <span data-bind="text: company.phone"></span></pre>
+                </div>
+            </div>
+        </div>
+        <div class="content">
+        	<div style="overflow: hidden;padding:10px 0;">
+        		<h1>វិក្កយបត្រអាករ</h1>
+            	<h2 data-bind="text: obj.title"></h2>
+        	</div>
+            <div class="clear mid-header" style="padding: 10px;background: #dce6f2;padding-bottom: 10px;">
+            	<div class="cover-customer">
+                	<h5>ព័ត៌មានអតិថិជន​ CUSTOMER INFO:</h5>
+                    <div class="clear">
+                        <div class="left dotted-ruler" style="width: 62%;">
+                        	<p style="font-weight:bold">
+                        		<span data-bind="text: obj.contact[0].name"></span><br>
+                        		<span data-bind="text: obj.contact[0].address"></span>
+                        	</p>
+                        </div>
+                    </div>
+                    <div class="clear">
+                    	<!--div class="left">
+                    		<p>ទូរស័ព្ទ​លេខ HP:</p>
+                        </div-->
+                        <div class="left dotted-ruler" style="width: 78%;">
+                        	<p style="font-weight:bold" data-bind="text: obj.contact[0].phone"></p>
+                        </div>
+                    </div>
+                    <div class="vattin">
+                	<p>លេខ​អត្ត​សញ្ញាណ​កម្ម អតប (VATTIN)</p><span id="vat_number" data-bind="text: company.vat_number"></span><p style="font-size:8px;font-weight:normal;margin-left: 8px;">(ប្រសិន​បើ​មាន / If any)</p>
+                	</div>
+                </div>
+                <div class="cover-inv-number">
+                	<div class="clear">
+                    	<div class="left">
+                    		<p>លេខ No. :</p>
+                        </div>
+                        <div class="left dotted-ruler" style="width: 42%;">
+                        	<p style="font-weight:bold" data-bind="text: obj.number"></p>
+                        </div>
+                    </div>
+                    <div class="clear">
+                    	<div class="left">
+                    		<p>កាល​បរិច្ឆេទ Date:</p>
+                        </div>
+                        <div class="left dotted-ruler" style="width: 57%;">
+                        	<p style="font-weight:bold" data-bind="text: obj.issued_date"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        	<div class="clear inv2">
+            	<table cellpadding="0" cellspacing="0" border="1" style="width:100%;">
+                	<thead>
+                        <tr class="main-color" style="height: 45px;" data-bind="style: {backgroundColor: obj.color}">
+                            <th>ល.រ<br />N<sup>0</sup></th>
+                            <th>បរិយាយ​មុខ​ទំនិញ<br />Description</th>
+                            <th>បរិមាណ<br />Quantity</th>
+                            <th>ថ្លៃឯកតា​<br />Unit Price</th>
+                            <th>ថ្លៃ​ទំនិញ<br />Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody style="margin-top: 2px" id="formListView" data-role="listview"
+										 data-auto-bind="false"
+						                 data-template="invoiceForm-lineDS-template"
+						                 data-bind="source: lineDS">
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                        	<td colspan="4" style="text-align:right;padding-right:10px;font-weight:bold;">សរុប​ Sub Total</td>
+                            <td data-bind="text: obj.sub_total"></td>
+                        </tr>
+                        <tr>
+                        	<td colspan="4" style="text-align:right;padding-right:10px;font-weight:bold;">បញ្ចុះតម្លៃ Discount</td>
+                            <td data-bind="text: obj.discount"></td>
+                        </tr>
+                        <tr>
+                        	<td colspan="4" style="text-align:right;padding-right:10px;font-weight:bold;">អាករ​លើ​តម្លៃ​បន្ថែម ១០% VAT (10%)</td>
+                            <td data-bind="text: obj.tax"></td>
+                        </tr>
+                        <tr>
+                        	<td colspan="4" style="text-align:right;padding-right:10px;font-weight:bold;">សរុបរួម​ Grand Total</td>
+                            <td data-bind="text: obj.amount"></td>
+                        </tr>
+                        <tr>
+                        	<td colspan="4" style="text-align:right;padding-right:10px;font-weight:bold;">ប្រាក់កក់ Deposit</td>
+                            <td data-bind="text: obj.deposit"></td>
+                        </tr>
+                        <tr>
+                        	<td colspan="4" style="text-align:right;padding-right:10px;font-weight:bold;">សាច់ប្រាក់ត្រូវទូទាត់ Amount Due</td>
+                            <td data-bind="text: obj.amount_due"></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+        <div class="foot">
+        	<div class="cover-signature">
+            	<div class="singature" style="float:left">
+                	<p>ហត្ថលេខា និងឈ្មោះ​អ្នក​ទិញ<br />Customer's Signature & Name</p>
+                </div>
+                <div class="singature" style="float:right">
+                	<p>ហត្ថលេខា និងឈ្មោះ​អ្នកលក់<br />Seller's Signature & Name</p>
+                </div>
+            </div>
+            <h6>សម្គាល់៖ <span>ច្បាប់​ដើម​សម្រាប់​អ្នក​ទិញ ច្បាប់​ចម្លង​សម្រាប់​អ្នក​លក់</span><br /><span style="font-size: 10px"><strong>Note:</strong> Original invoice for customer, copied invoice for seller</span></h6>
+        </div>
+    </div>
+</script>
+<script id="invoiceForm32" type="text/x-kendo-template">
+	<div class="inv1">
+        <div class="content">
+        	<div style="overflow: hidden;padding:10px 0;">
+        		<h1>វិក្កយបត្រ</h1>
+            	<h2 data-bind="text: obj.title"></h2>
+        	</div>
+            <div class="clear mid-header" style="padding: 10px;background: #dce6f2;padding-bottom: 10px;">
+            	<div class="cover-customer">
+                	<h5>ព័ត៌មានអតិថិជន​ CUSTOMER INFO:</h5>
+                    <div class="clear">
+                        <div class="left dotted-ruler" style="width: 62%;">
+                        	<p style="font-weight:bold">
+                        		<span data-bind="text: obj.contact[0].name"></span><br>
+                        		<span data-bind="text: obj.contact[0].address"></span>
+                        	</p>
+                        </div>
+                    </div>
+                    <div class="clear">
+                    	<!--div class="left">
+                    		<p>ទូរស័ព្ទ​លេខ HP:</p>
+                        </div-->
+                        <div class="left dotted-ruler" style="width: 78%;">
+                        	<p style="font-weight:bold" data-bind="text: obj.contact[0].phone"></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="cover-inv-number">
+                	<div class="clear">
+                    	<div class="left">
+                    		<p>លេខ No. :</p>
+                        </div>
+                        <div class="left dotted-ruler" style="width: 42%;">
+                        	<p style="font-weight:bold" data-bind="text: obj.number"></p>
+                        </div>
+                    </div>
+                    <div class="clear">
+                    	<div class="left">
+                    		<p>កាល​បរិច្ឆេទ Date:</p>
+                        </div>
+                        <div class="left dotted-ruler" style="width: 57%;">
+                        	<p style="font-weight:bold" data-bind="text: obj.issued_date"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        	<div class="clear">
+            	<table cellpadding="0" cellspacing="0" border="1" class="span12">
+                	<thead>
+                        <tr class="main-color" style="height: 45px;" data-bind="style: {backgroundColor: obj.color}">
+                            <th>ល.រ<br />N<sup>0</sup></th>
+                            <th>បរិយាយ​មុខ​ទំនិញ<br />Description</th>
+                            <th>បរិមាណ<br />Quantity</th>
+                            <th>ថ្លៃឯកតា​<br />Unit Price</th>
+                            <th>ថ្លៃ​ទំនិញ<br />Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody style="margin-top: 2px" id="formListView" data-role="listview"
+										 data-auto-bind="false"
+						                 data-template="invoiceForm-lineDS-template"
+						                 data-bind="source: lineDS">
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                        	<td colspan="4" style="text-align:right;padding:5px;font-weight: bold;">បញ្ចុះតម្លៃ Discount</td>
+                            <td data-bind="text: obj.discount"></td>
+                        </tr>
+                        <tr>
+                        	<td colspan="4" style="text-align:right;padding:5px;font-weight: bold;">សរុប Total</td>
+                            <td data-bind="text: obj.amount"></td>
+                        </tr>
+                        <tr>
+                        	<td colspan="4" style="text-align:right;padding:5px;font-weight: bold;">ប្រាក់កក់ Deposit</td>
+                            <td data-bind="text: obj.deposit"></td>
+                        </tr>
+                        <tr>
+                        	<td colspan="4" style="text-align:right;padding:5px;font-weight: bold;">សាច់ប្រាក់ត្រូវទូទាត់ Amount Due</td>
+                            <td data-bind="text: obj.amount_due"></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+        <div class="foot">
+        	<div class="cover-signature">
+            	<div class="singature" style="float:left">
+                	<p>ហត្ថលេខា និងឈ្មោះ​អ្នក​ទិញ<br />Customer's Signature & Name</p>
+                </div>
+                <div class="singature" style="float:right">
+                	<p>ហត្ថលេខា និងឈ្មោះ​អ្នកលក់<br />Seller's Signature & Name</p>
+                </div>
+            </div>
+            <h6>សម្គាល់៖ <span>ច្បាប់​ដើម​សម្រាប់​អ្នក​ទិញ ច្បាប់​ចម្លង​សម្រាប់​អ្នក​លក់</span><br /><span style="font-size: 10px"><strong>Note:</strong> Original invoice for customer, copied invoice for seller</span></h6>
+        </div>
+    </div>
+</script>
+
+
+<script id="invoiceCustom-txn-form-template" type="text/x-kendo-template">
+	<a class="span4 #= type #" data-id="#= id #" data-bind="click: selectedForm" style="padding-right: 0; width: 32%;">
+    	<img src="<?php echo base_url(); ?>assets/invoice/img/#= image_url #.jpg" alt="#: name # image" />
+    </a>
+</script>
+<script id="invoiceForm-lineDS-template" type="text/x-kendo-template">
+	<tr>
+		<td><i>#:banhji.invoiceForm.lineDS.indexOf(data)+1#</i>&nbsp;</td>
+		<td class="lside">#= description#</td>
+		<td>#= quantity#</td>
+		<td class="rside" width="70">#= kendo.toString(price, "c", locale) #</td>
+		<td class="rside">#= kendo.toString(amount, "c", locale) #</td>
+	</tr>
+</script>
+<script id="invoiceForm-lineDS-template3" type="text/x-kendo-template">
+	<tr>
+		<td><i>#:banhji.invoiceForm.lineDS.indexOf(data)+1#</i></td>
+		<td style="text-align: left; padding-left: 5px;">#= description#</td>
+		<td style="text-align: left; padding-left: 5px;"></td>
+		<td>#= item_prices.length>0 ? item_prices[0].measurement : "" #</td>
+		<td>#= quantity#</td>
+		<td style="text-align: right; padding-right: 5px;">#= kendo.toString(price, "c", locale) #</td>
+		<td style="text-align: right; padding-right: 5px;">#= kendo.toString(amount, "c", locale) #</td>
+	</tr>
+</script>
+<script id="invoiceForm-lineDS-template4" type="text/x-kendo-template">
+	<tr>
+		<td><i>#:banhji.invoiceForm.lineDS.indexOf(data)+1#</i></td>
+		<td style="text-align: left; padding-left: 5px;"></td>
+		<td style="text-align: left; padding-left: 5px;">#= description#</td>
+		<td></td>
+		<td></td>
+		<td>#= quantity#</td>
+		<td style="text-align: right; padding-right: 5px;">#= kendo.toString(price, "c", locale) #</td>
+		<td style="text-align: right; padding-right: 5px;">#= kendo.toString(amount, "c", locale) #</td>
+	</tr>
+</script>
+<script id="invoiceForm-lineDS-template5" type="text/x-kendo-template">
+	<tr>
+		<td style="text-align: left; padding-left: 5px;">&nbsp;</td>
+		<td style="text-align: left; padding-left: 5px;">#= description#</td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td style="text-align: right; padding-right: 5px;"></td>
+		<td style="text-align: right; padding-right: 5px;"></td>
+	</tr>
+</script>
+<script id="invoiceForm-lineDS-template6" type="text/x-kendo-template">
+	<tr>
+		<td class="lside">&nbsp;#= item_id #</td>
+		<td class="lside">#= description#</td>
+		<td>#= item_prices.length>0 ? item_prices[0].measurement : "" #</td>
+		<td>#= quantity#</td>
+		<td class="rside" width="70">#= kendo.toString(price, "c", locale) #</td>
+		<td class="rside" style="background-color: \\#eee">#= kendo.toString(amount, "c", locale) #</td>
+	</tr>
+</script>
+<script id="invoiceForm-lineDS-template8" type="text/x-kendo-template">
+	<tr>
+		<td style="text-align: left; padding-left: 5px;">&nbsp;#= description#</td>
+		<td>#= item_prices.length>0 ? item_prices[0].measurement : "" #</td>
+		<td>#= quantity#</td>
+		<td class="rside">#= kendo.toString(price, "c", locale) #</td>
+		<td class="rside" style="background-color: \\#eee">#= kendo.toString(amount, "c", locale) #</td>
+	</tr>
+</script>
+<script id="invoiceForm-lineDS-template10" type="text/x-kendo-template">
+	<tr>
+		<td class="lside">&nbsp;#= item_id #</td>
+		<td class="lside">#= description#</td>
+		<td>#= item_prices.length>0 ? item_prices[0].measurement : "" #</td>
+		<td>#= quantity#</td>
+		<td class="rside" width="70">#= kendo.toString(price, "c", locale) #</td>
+		<td class="rside" style="background-color: \\#eee">#= kendo.toString(amount, "c", locale) #</td>
+	</tr>
+</script>
+<script id="invoiceForm-lineDS-template12" type="text/x-kendo-template">
+	<tr>
+		<td class="lside">#= description.length>0 ? description: "&nbsp;"#</td>
+		<td >#= item_prices.length>0 ? item_prices[0].measurement : "" #</td>
+		<td>#= quantity#</td>
+		<td class="rside" width="70">#= kendo.toString(price, "c", locale) #</td>
+		<td class="rside" style="background-color: \\#eee;">#= kendo.toString(amount, "c", locale) #</td>
+	</tr>
+</script>
+<script id="invoiceForm-lineDS-template14" type="text/x-kendo-template">
+	<tr>
+		<td>#:banhji.invoiceForm.lineDS.indexOf(data)+1#</td>
+		<td style="text-align: left; padding-left: 5px;"></td>
+		<td style="text-align: left; padding-left: 5px;">#= description#</td>
+		<td>#= item_prices.length>0 ? item_prices[0].measurement : "" #</td>
+		<td>#= quantity#</td>
+		<td style="text-align: right; padding-right: 5px;"></td>
+	</tr>
+</script>
+<script id="invoiceForm-lineDS-template19" type="text/x-kendo-template">
+	<tr>
+		<td>#:banhji.invoiceForm.lineDS.indexOf(data)+1#</td>
+		<td style="text-align: left; padding-left: 5px;"></td>
+		<td style="text-align: left; padding-left: 5px;"></td>
+		<td></td>
+	</tr>
+</script>
+<script id="invoiceForm-lineDS-template31" type="text/x-kendo-template">
+	<tr>
+		<td style="text-align: left; padding-left: 5px;">&nbsp;</td>
+		<td style="text-align: left; padding-left: 5px;">#= description#</td>
+		<td>#= item_prices.length>0 ? item_prices[0].measurement : "" #</td>
+		<td>#= quantity#</td>
+		<td style="text-align: right; padding-right: 5px;">#= kendo.toString(price, "c", locale) #</td>
+	</tr>
+</script>
+<script id="invoiceForm-lineDS-template33" type="text/x-kendo-template">
+	<tr>
+		<td style="text-align: left; padding-left: 5px;">&nbsp;#= description#</td>
+		<td>#= item_prices.length>0 ? item_prices[0].measurement : "" #</td>
+		<td>#= quantity#</td>
+		<td style="text-align: right; padding-right: 5px;">#= kendo.toString(price, "c", locale) #</td>
+		<td style="text-align: right; padding-right: 5px;">#= kendo.toString(amount, "c", locale) #</td>
+	</tr>
+</script>
+
+
+
+
 
 <!-- ***************************
 *	Template Blog         	  *
@@ -5977,7 +6887,7 @@
 	*	Water Section   	* 
 	**************************/
 	banhji.item = kendo.observable({
-		dataSource 	: dataStore(apiUrl + "tariffs"),
+		dataSource 	: dataStore(apiUrl + "plans/items"),
 		types 		: [
 			{id: 'excemption', value: "Excemption"},
 			{id: 'tariff', value: "Tariff"},
@@ -5988,12 +6898,11 @@
 		],
 		addNew 		: function() {
 			banhji.item.dataSource.add({
-				name 		: null,
-				type 		: {name: 'excemption', value: "Excemption"},
+				item 		: banhji.item.types,
+				code 		: null,
+				description : null,
 				rate 		: null,
-				tierFrom 	: null,
-				tierTo 		: null,
-				taxed 		: false
+				tax 		: null
 			});
 			this.setCurrent(this.dataSource.at(this.dataSource.data().length -1));
 		},
@@ -6027,11 +6936,15 @@
 	//Setting
 	banhji.plan = kendo.observable({
 		dataSource 	: dataStore(apiUrl + "plans"),
-		items 		: banhji.item,
+		items 		: dataStore(apiUrl + "plans/items"),
 		current 	: null,
-		selectType  : [{id: "water", name: "Water"},{id: "electricity", name: "Electricity"}],
-		pageLoad    : function(){
-			this.addNew();
+		pageLoad    : function(id){
+			if(id){
+
+			}else{
+				this.addNew();
+				this.get("current").items.push({item: null, code: "n"});
+			}
 		},
 		setCurrent 	: function(current) {
 			this.set('current', current);
@@ -6039,20 +6952,28 @@
 		addNew 	  	: function() {
 			this.dataSource.add({
 				name 		: null,
-				type 		: {id: "water", name: "Water"},
-				validFrom 	: null,
-				validTo 	: null
+				code 	 	: null,
+				items 		: []
 			});
 			this.setCurrent(this.dataSource.at(this.dataSource.data().length -1));
+			
 		},
 		remove 		: function(e) {
 			this.dataSource.remove(e.data);
 		},
 		addItem 	: function() {
-			this.items.addNew();
+			this.current.items.push({item: null});
+			console.log(this.get("current").items);
+			// this.get("current").items.push({item: null, type: null, name: null, amount: 0.0});
 		},
 		removeItem 	: function(e) {
 			this.items.remove(e);
+		},
+		goSetting 	: function(e){
+			var data = $(e.currentTarget).data("go");
+			console.log(data);
+			banhji.setting.set("tabGo", data);
+			banhji.router.navigate('/setting');
 		},
 		save 		: function() {
 			var dfd = $.Deferred();
@@ -6071,31 +6992,11 @@
 			this.dataSource.cancelChanges();
 			this.items.cancel();		
 			window.history.back();
-		},
-		addRow 				: function(){				
-			var obj = this.get("obj");
-									
-			this.lineDS.add({					
-				transaction_id 		: obj.id,
-				tax_item_id 		: "",
-				item_id 			: "",				
-				measurement_id 		: 0,				
-				description 		: "",				
-				quantity 	 		: 1,
-				price 				: 0,												
-				amount 				: 0,
-				discount 			: 0,
-				fine 				: 0,
-				rate				: obj.rate,
-				locale				: obj.locale,							
-				movement 			: -1,
-
-				item_prices 		: []
-			});																	
-		},
+		}
 	});
 	banhji.addLicense = kendo.observable({
 		dataSource 	: dataStore(apiUrl + "branches"),
+		provinceDS 	: dataStore(apiUrl + "provinces"),
 		toDay 		: new Date(),
 		obj 		: null,
 		isEdit      : false,
@@ -6107,6 +7008,11 @@
 			}else{
 				this.addNew();
 			}
+			this.provinceDS.read()
+			.then(function(e){
+				console.log(banhji.addLicense.provinceDS.data());
+			});
+			
 		},
 		loadObj 	: function(id){
 			var self = this;	
@@ -6118,6 +7024,7 @@
 				var view = self.dataSource.view();
 				self.set("obj", view[0]);
 			});	
+
 		},
 		addNew 	  	: function() {
 			this.set("obj", null);		
@@ -6175,18 +7082,79 @@
 		contactTypeAbbr 	: "",
         contactTypeCompany 	: 0,
         blockCompanyId  	: 0,
+        tabGo 				: 0,
         blocDS 				: dataStore(apiUrl + "locations"),
         planItemDS			: dataStore(apiUrl + "plans/items"),
+        tariffItemDS		: dataStore(apiUrl + "plans/tariff"),
+        txnTemplateDS		: dataStore(apiUrl + "transaction_templates"),
         objBloc 			: null,
-        exUnit 				: [],
         licenseDS 			: dataStore(apiUrl + "branches"),
         branchDS 			: dataStore(apiUrl + "branches"),
 		contactTypeDS 		: banhji.source.customerTypeDS,
 		typeUnit 			: [{id:"m3", name: "m3"},{id:"money", name: "Money"},{ id:"%", name: "%"}],
+		typeFlat 			: [{id:"0", name: "Not Flat"},{id:"1", name: "Flat"}],
+		tariffItemFlat 		: 0,
+		tariffSelect 		: false,
+		windowTariffItemVisible : false,
+		prefixDS			: new kendo.data.DataSource({
+			transport: {
+				read 	: {
+					url: apiUrl + "prefixes",
+					type: "GET",
+					headers: banhji.header,
+					dataType: 'json'
+				},
+				create 	: {
+					url: apiUrl + "prefixes",
+					type: "POST",
+					headers: banhji.header,
+					dataType: 'json'
+				},
+				update 	: {
+					url: apiUrl + "prefixes",
+					type: "PUT",
+					headers: banhji.header,
+					dataType: 'json'
+				},
+				destroy 	: {
+					url: apiUrl + "prefixes",
+					type: "DELETE",
+					headers: banhji.header,
+					dataType: 'json'
+				},				
+				parameterMap: function(options, operation) {
+					if(operation === 'read') {
+						return {
+							page: options.page,
+							limit: options.pageSize,
+							filter: options.filter,
+							sort: options.sort
+						};
+					} else {
+						return {models: kendo.stringify(options.models)};
+					}
+				}
+			},
+			schema 	: {
+				model: {
+					id: 'id'
+				},
+				data: 'results',
+				total: 'count'
+			},
+			filter: { field:"type", operator:"where", value:"Water_Invoice" },			
+			batch: true,
+			serverFiltering: true,
+			serverSorting: true,
+			serverPaging: true,
+			page:1,
+			pageSize: 100
+		}),
 		onLicenseChange 	: function(e) {
 			var index = e.sender.selectedIndex;
 			var block = this.licenseDS.at(index - 1);
 			this.set('blockCompanyId',{id:block.id, name:block.name});
+			console.log(index);
 		},
 		addContactType 		: function(){
         	var name = this.get("contactTypeName");
@@ -6206,27 +7174,32 @@
         	}
         },
         addBloc 			: function(){
+
         	var branch = this.get("blockCompanyId");
-        	if(branch!==""){
+        	console.log(branch);
+        	if(branch!= ""){
 	        	this.blocDS.add({
 	        		branch 		: {id : branch.id, name: branch.name},
 	        		name 		: this.get("blocName"),
 	        		abbr 		: this.get("blocAbbr")
 	        	});
+
 	        	this.blocDS.sync();
-	        	this.blocDS.data([]);
 	        	this.set("blocName", "");
 	        	this.set("blocAbbr", "");
 	        	this.set("blockCompanyId", 0);
         	}
         },
-        goExemption    	: function(){
+        goExemption    		: function(){
+        	this.planItemDS.data([]);
         	this.planItemDS.filter({field: "type", value: "exemption"});
         },
-        addEx 			: function(){
+        addEx 				: function(){
         	this.planItemDS.add({
         		name 		: this.get("exName"),
         		type     	: "exemption",
+        		is_flat 	: false,
+        		usage 		: 0,
         		unit 		: this.get("exUnit"),
         		amount 		: this.get("exPrice")
         	});
@@ -6235,15 +7208,291 @@
         	this.set("exPrice", "");
         	this.set("exUnit", "");
         },
+        goTariff    		: function(){
+        	this.set("tariffSelect", false)
+        	this.planItemDS.data([]);
+        	this.tariffItemDS.data([]);
+        	this.planItemDS.filter({field: "type", value: "tariff"});
+        },
+        showTariffItem 		: function(e){
+        	var data = e.data;
+        	this.set("windowTariffItemVisible", true);
+        	this.setCurrent(e.data);
+        },
+        setCurrent 			: function(current) {
+        	this.set('current', current);
+        },
+        saveTariffItem 		: function(e){
+        	var data = e.data.id, self = this;
+        	console.log(data);
+        	this.tariffItemDS.add({
+        		name 		: this.get("tariffItemName"),
+        		type     	: "tariff",
+        		tariff_id	: this.get('current').id,
+        		is_flat   	: this.get("tariffItemFlat"),
+        		unit 		: null,
+        		usage 		: this.get("tariffItemUsage"),
+        		amount 		: this.get("tariffItemAmount"),
+        	});
+        	this.tariffItemDS.sync();
+        	this.tariffItemDS.bind("requestEnd", function(e){
+        		if(e.type != 'read') {
+	        		if(e.response) {
+	        			self.set("tariffItemName", "");
+			        	self.set("tariffItemFlat", 0);
+			        	self.set("tariffItemUsage", "");
+			        	self.set("tariffItemAmount", "");
+			        	self.set("windowTariffItemVisible", false);
+			        	self.closeTariffWindowItem();
+			        	console.log(e);
+			        	self.tariffItemDS.filter({field: "tariff_id", value: self.get('current').id});
+	        		}
+	        	}
+        	});
+        	this.tariffItemDS.bind("error", function(e){
+        		console.log("error");
+        	});
+        	
+        },
+        addTariff 		: function(e){
+        	var self = this;
+        	this.planItemDS.add({
+        		name 		: this.get("tariffName"),
+        		type     	: "tariff",
+        		is_flat   	: 0,
+        		tariff_id 	: 0,
+        		unit 		: 0,
+        		usage 		: 0,
+        		amount 		: 0
+        	});
+        	this.planItemDS.sync();
+        	this.planItemDS.bind("requestEnd", function(e){
+        		console.log(e);
+        		if(e.response) {
+        			console.log("e");
+        			self.set("tariffName", "");
+        		}
+        	});
+        	this.planItemDS.bind("error", function(e){
+        		console.log("error");
+        	});
+
+        },
+        closeTariffWindowItem 	: function(){
+        	this.set("windowTariffItemVisible", false);
+        },
+        viewTariffItem 		: function(e){
+        	var data = e.data.id;
+        	this.set("tariffSelect", true);
+        	this.tariffItemDS.data([]);
+        	this.tariffItemDS.filter({field: "tariff_id", value: data});
+        },
+        goDeposit    		: function(){
+        	this.planItemDS.data([]);
+        	this.planItemDS.filter({field: "type", value: "deposit"});
+        },
+        addDeposit			: function(){
+        	this.planItemDS.add({
+        		name 		: this.get("depositName"),
+        		type     	: "deposit",
+        		is_flat   	: false,
+        		unit 		: null,
+        		usage 		: 0,
+        		amount 		: this.get("depositPrice")
+        	});
+        	this.planItemDS.sync();
+        	this.set("depositName", "");
+        	this.set("depositPrice", "");
+        },
+        goService    		: function(){
+        	this.planItemDS.data([]);
+        	this.planItemDS.filter({field: "type", value: "service"});
+        },
+        addService			: function(){
+        	this.planItemDS.add({
+        		name 		: this.get("serviceName"),
+        		type     	: "service",
+        		is_flat   	: false,
+        		unit 		: null,
+        		usage 		: 0,
+        		amount 		: this.get("servicePrice")
+        	});
+        	this.planItemDS.sync();
+        	this.set("serviceName", "");
+        	this.set("servicePrice", "");
+        },
+        goMaintenance    		: function(){
+        	this.planItemDS.data([]);
+        	this.planItemDS.filter({field: "type", value: "maintenance"});
+        },
+        addMaintenance			: function(){
+        	this.planItemDS.add({
+        		name 		: this.get("maintenanceName"),
+        		type     	: "maintenance",
+        		is_flat   	: false,
+        		unit 		: null,
+        		usage 		: 0,
+        		amount 		: this.get("maintenancePrice")
+        	});
+        	this.planItemDS.sync();
+        	this.set("maintenanceName", "");
+        	this.set("maintenancePrice", "");
+        },
+        goInstallment   		: function(){
+        	this.planItemDS.data([]);
+        	this.planItemDS.filter({field: "type", value: "installment"});
+        },
+        addInstallment			: function(){
+        	this.planItemDS.add({
+        		name 		: this.get("installmentName"),
+        		type     	: "installment",
+        		is_flat   	: false,
+        		unit 		: null,
+        		usage 		: 0,
+        		amount 		: this.get("installmentPrice")
+        	});
+        	this.planItemDS.sync();
+        	this.set("installmentName", "");
+        	this.set("installmentPrice", "");
+        },
 		pageLoad 			: function(){
-			
-			
+			this.txnTemplateDS.filter({ field: "moduls", value : "water_mg" });
+			$(".widget-head li").eq(this.tabGo).children("a").click();
+			console.log(this.tabGo);
 		},
 		cancel 				: function(){
 			this.licenseDS.cancelChanges();		
 			window.history.back();
-		}
+		},
+		deleteForm 			: function(e){
+        	var data = e.data;
+        	if(confirm("Do you want to delete it?") == true) {
+        		this.txnTemplateDS.remove(data);
+        		this.txnTemplateDS.sync();
+        	}
+        },
 	});
+	banhji.addAccountingprefix =  kendo.observable({
+		lang 				: langVM,		
+		selectTypeList 		: banhji.source.typeList,
+		Type 				: "Invoice",
+        dataSource			: new kendo.data.DataSource({
+			transport: {
+				read 	: {
+					url: apiUrl + "prefixes",
+					type: "GET",
+					headers: banhji.header,
+					dataType: 'json'
+				},
+				create 	: {
+					url: apiUrl + "prefixes",
+					type: "POST",
+					headers: banhji.header,
+					dataType: 'json'
+				},
+				update 	: {
+					url: apiUrl + "prefixes",
+					type: "PUT",
+					headers: banhji.header,
+					dataType: 'json'
+				},
+				destroy 	: {
+					url: apiUrl + "prefixes",
+					type: "DELETE",
+					headers: banhji.header,
+					dataType: 'json'
+				},				
+				parameterMap: function(options, operation) {
+					if(operation === 'read') {
+						return {
+							page: options.page,
+							limit: options.pageSize,
+							filter: options.filter,
+							sort: options.sort
+						};
+					} else {
+						return {models: kendo.stringify(options.models)};
+					}
+				}
+			},
+			schema 	: {
+				model: {
+					id: 'id'
+				},
+				data: 'results',
+				total: 'count'
+			},
+			filter: { field:"type", operator:"where_not_in", value:["Electricity_Invoice", "Water_Invoice"] },
+			batch: true,
+			serverFiltering: true,
+			serverSorting: true,
+			serverPaging: true,
+			page:1,
+			pageSize: 100
+		}),
+        pageLoad 			: function(id){
+			if(id){
+				this.set("isEdit", true);
+				this.loadObj(id);
+			}else{	
+				this.cancel;
+			}
+		},
+		loadObj 			: function(id){
+			var self = this;	
+			this.dataSource.query({    			
+				filter: { field:"id", value: id },
+				page: 1,
+				take: 100
+			}).then(function(e){
+				var view = self.dataSource.view();
+				self.set("obj", view[0]);
+				
+			});	
+		},	
+		objSync 			: function(){
+	    	var dfd = $.Deferred();	        
+
+	    	this.dataSource.sync();
+		    this.dataSource.bind("requestEnd", function(e){
+		    	if(e.response){				
+					dfd.resolve(e.response.results);
+				}				  				
+		    });
+		    this.dataSource.bind("error", function(e){		    		    	
+				dfd.reject(e.errorThrown);    				
+		    });
+		    return dfd;	    		    	
+	    }, 	    
+		save 				: function(){				
+	    	var self = this, obj = this.get("obj");
+			//Save Obj
+			this.objSync()
+			.then(function(data){ //Success	
+				banhji.accountingSetting.prefixDS.fetch();	
+				
+				return data;
+			}, function(reason) { //Error
+				$("#ntf1").data("kendoNotification").error(reason);
+			}).then(function(result){				
+				$("#ntf1").data("kendoNotification").success(banhji.source.successMessage);
+
+				if(self.get("saveClose")){
+					//Save Close					
+					self.set("saveClose", false);
+					self.cancel();
+					//window.history.back();
+				}else{
+					//Save New
+					self.addEmpty();
+				}
+			});
+		},
+		cancel 				: function(){
+			this.dataSource.cancelChanges();		
+			window.history.back();
+		}
+    });
     banhji.waterCenter = kendo.observable({
 		lang 				: langVM,
 		transactionDS  		: dataStore(apiUrl + 'transactions'),
@@ -6252,6 +7501,39 @@
 		meterDS 			: dataStore(apiUrl + 'meters'),
 		meterClick 			: function(){
 			banhji.view.layout.showIn("#waterCenterContent", banhji.view.waterCenterContent);
+			$('#wsale-graph').kendoChart({
+				dataSource: {data: monthlyDS.data()},												
+				series: [
+					{field: 'amount', categoryField:'month', type: 'line', axis: 'sale'},
+					{field: 'usage', categoryField:'month', type: 'column', axis: 'usage'}
+				],
+				valueAxes: [
+					{
+	                    name: "sale",
+	                    color: "#007eff",
+	                    min: 0,
+	                    majorUnit: 5000000,
+	                    max: 50000000
+	                }, 
+	                {
+	                    name: "usage",
+	                    color: "#3399ff",
+	                    min: 0,	
+	                    majorUnit: 5000,		                   
+	                    max: 50000
+	                }
+                ],
+                categoryAxis: {
+                    //categories: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],		                    
+                    axisCrossingValues: [0, 13],
+                    justified: true
+                },
+                tooltip: {
+                    visible: true,
+                    format: "{0}"
+                }
+
+			});
 		},
 		NometerClick 		: function(){
 			// var Find = $('#waterCenterContent').find('#meterClick');
@@ -6381,6 +7663,7 @@
 				this.searchTransaction();
 				this.loadSummary();
 			}
+
 		},
 		sorterChanges 		: function(){
 	        var today = new Date(),
@@ -7870,6 +9153,339 @@
 		    return dfd;
 	    }
 	});
+
+	banhji.invoiceCustom =  kendo.observable({
+    	lang 				: langVM,
+		dataSource 			: dataStore(apiUrl + "transaction_templates"),		
+		txnFormDS			: dataStore(apiUrl + "transaction_forms"),
+		obj 				: null,
+		objForm	 			: null,
+		formTitle 			: "Invoice",
+		formType			: "Invoice",
+		company 			: banhji.institute,
+		selectCustom		: "water_mg",
+		isEdit 				: false,
+		user_id				: banhji.source.user_id,
+		pageLoad 			: function(id){
+			if(id){
+				this.set("isEdit", true);
+				this.loadObj(id);
+			}else{	
+				var obj = this.get("obj"), self = this;
+				banhji.view.invoiceCustom.showIn('#invFormContent', banhji.view.invoiceForm1);	
+				this.addRowLineDS();
+				if(this.get("isEdit") || this.dataSource.total()==0){
+					this.addEmpty();
+					this.txnFormDS.query({    			
+						filter: { field:"type", value: "Invoice" },
+						page: 1,
+						take: 100
+					}).then(function(e){
+						var view = self.txnFormDS.view();
+						var obj = self.get("obj");
+						obj.set("type", view[0].type);
+						obj.set("title", view[0].title);
+						obj.set("note", view[0].note);
+						
+					});	
+				}	
+				var name = banhji.invoiceForm.get("obj");
+				name.set("title", this.formTitle);
+			}
+		},
+		addRowLineDS			: function(e){
+			banhji.invoiceForm.lineDS.data([]);
+			for (var i = 0; i < 15; i++) { 
+				banhji.invoiceForm.lineDS.add({				
+					id			: i,
+					description : '',
+					quantity 	: '',
+					price 		: '',
+					amount 		: '',
+					description : '',
+					locale : '',
+					item_prices : [],
+					item_id 	: ''
+		    	});	
+		    }
+		},
+		activeInvoiceTmp		: function(e){
+			var Active;
+			switch(e) {
+				case 1: Active = banhji.view.invoiceForm1; break;
+				case 2: Active = banhji.view.invoiceForm2; break;
+				case 32: Active = banhji.view.invoiceForm32; break;
+			}
+			banhji.view.invoiceCustom.showIn('#invFormContent', Active);
+		},
+		colorCC 			: function(e){
+			var Color = e.value;
+			var tS = '';
+			if(Color == '#000000' || Color =='#1f497d') tS = '#fff'; 
+			else tS = '#333';
+			$('.main-color').css({'background-color': e.value, 'color': tS});
+			$('.main-color div').css({'color': tS});
+			$('.main-color p').css({'color': tS});
+			$('.main-color span').css({'color': tS});
+			$('.main-color th').css({'color': tS});
+		},
+		selectedForm 		: function(e){
+			var Index = e.data.id;
+			this.activeInvoiceTmp(Index);
+			this.addRowLineDS();
+			var data = e.data, obj = this.get("obj");
+			obj.set("transaction_form_id", data.id);
+		},	    			
+		loadObj 			: function(id){
+			var self = this;	
+			this.dataSource.query({    			
+				filter: { field:"id", value: id },
+				page: 1,
+				take: 100
+			}).then(function(e){
+				var view = self.dataSource.view();
+				self.set("obj", view[0]);
+				
+				banhji.invoiceForm.set("obj", view[0]);	
+				var Index = parseInt(view[0].transaction_form_id);
+				self.activeInvoiceTmp(Index);
+				self.addRowLineDS();
+
+				self.txnFormDS.filter({ field:"type", value: "Invoice" });
+			});	
+		},		
+		addEmpty 		 	: function(){			
+			this.dataSource.data([]);		
+			this.set("obj", null);		
+			this.set("isEdit", false);		
+			this.dataSource.insert(0,{				
+				user_id			: banhji.source.user_id,
+				transaction_form_id : 0,
+				type 			: "Invoice",
+				name 			: "",
+				title 			: "Invoice",
+				note 			: "",
+				color  			: null,
+				moduls 			: "water_mg",
+				item_id 		: '',
+				status 			: 0
+	    	});		
+			var obj = this.dataSource.at(0);			
+			this.set("obj", obj);		
+		},		    
+		save 				: function(){				
+	    	var self = this;
+			if(this.dataSource.data().length > 0) {
+				this.dataSource.sync();
+				this.dataSource.bind("requestEnd", function(e){
+					if(e.type != 'read') {
+						if(e.response){				
+				    		$("#ntf1").data("kendoNotification").success("Successfully!");
+				    		//self.dataSource.addNew();
+							banhji.router.navigate("/setting");
+							banhji.setting.txnTemplateDS.fetch();
+						}
+					}				    					  				
+			    });
+			    this.dataSource.bind("error", function(e){		    		    	
+					$("#ntf1").data("kendoNotification").error("Error!"); 			
+			    });
+			}
+		},
+		cancel 				: function(){
+			this.dataSource.cancelChanges();		
+			window.history.back();
+		}
+	});
+	banhji.invoiceForm =  kendo.observable({
+		lang 				: langVM,
+		dataSource 			: dataStore(apiUrl + "transactions"),
+		txnTemplateDS		: dataStore(apiUrl + "transaction_templates"),		
+		obj 				: {title: "Quotation", issued_date : "<?php echo date('d/M/Y'); ?>", number : "QO123456", type : "Quote", amount: "$500,000.00", contact: []},
+		company 			: banhji.institute,		
+		lineDS 				: dataStore(apiUrl + "transactions/line"),
+		user_id				: banhji.source.user_id,
+		selectForm 			: null,
+		pageLoad 			: function(id, is_recurring){
+			if(id){				
+				this.loadObj(id);
+			}
+		},	 
+		printGrid			: function() {
+			var obj = this.get('obj'), colorM, ts;
+			if(obj.color == null){
+				colorM = "#10253f";
+			}else{
+				colorM = obj.color;
+			}
+			if(obj.color == '#000000' || obj.color =='#1f497d' || obj.color == null){ 
+				ts = 'color: #fff!important;';
+			} else { ts = 'color: #333;'; }
+			var gridElement = $('#grid'),
+		        printableContent = '',
+		        win = window.open('', '', 'width=800, height=900'),
+		        doc = win.document.open();
+		    var htmlStart =
+		            '<!DOCTYPE html>' +
+		            '<html>' +
+		            '<head>' +
+		            '<meta charset="utf-8" />' +
+		            '<title></title>' +
+		            '<link href="http://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />'+
+		            '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/bootstrap.css">' +
+		            '<link href="<?php echo base_url(); ?>assets/invoice/invoice.css" rel="stylesheet" />'+
+		            '<link href="https://fonts.googleapis.com/css?family=Content:400,700" rel="stylesheet" type="text/css">' +
+		            '<link href="https://fonts.googleapis.com/css?family=Moul" rel="stylesheet">' +
+		            '<style>' +
+		            'html { font: 11pt sans-serif; }' +
+		            '.k-grid { border-top-width: 0; }' +
+		            '.k-grid, .k-grid-content { height: auto !important; }' +
+		            '.k-grid-content { overflow: visible !important; }' +
+		            'div.k-grid table { table-layout: auto; width: 100% !important; }' +
+		            '.k-grid .k-grid-header th { border-top: 1px solid; }' +
+		            '.k-grid-toolbar, .k-grid-pager > .k-link { display: none; }' +
+		            '</style><style type="text/css" media="print"> @page { size: portrait; margin:0mm;margin-top: 1mm; }'+
+		            	'.inv1 .main-color {' +
+		            		'background-color: '+colorM+'!important; ' + ts +
+		            		'-webkit-print-color-adjust:exact; ' +
+		            	'} ' +
+		            	'.inv1 .light-blue-td { ' +
+		            		'background-color: #c6d9f1!important;' +
+		            		'text-align: left;' +
+		            		'padding-left: 5px;' +
+		            		'-webkit-print-color-adjust:exact; ' +
+		            	'}' +
+		            	'.inv1 thead tr {'+
+		            		'background-color: rgb(242, 242, 242)!important;'+
+		            		'-webkit-print-color-adjust:exact; ' +
+		            	'}'+
+		            	'.pcg .mid-title div {' + ts + '}' +
+		            	'.pcg .mid-header {' +
+		            		'background-color: #dce6f2!important; ' +
+		            		'-webkit-print-color-adjust:exact; ' +
+		            	'}'+
+		            	'.inv1 span.total-amount { ' +
+		            		'color:#fff!important;' +
+		            	'}</style>' +
+		            '</head>' +
+		            '<body>';
+		    var htmlEnd =
+		            '</body>' +
+		            '</html>';
+		    
+		    printableContent = $('#invFormContent').html();
+		    doc.write(htmlStart + printableContent + htmlEnd);
+		    doc.close();
+		    setTimeout(function(){
+		    	win.print();
+		    	//win.close();
+		    },2000);
+		},
+		activeInvoiceTmp		: function(e){
+			var Active;
+			switch(e) {
+				case 1: Active = banhji.view.invoiceForm1; break;
+				case 2: Active = banhji.view.invoiceForm2; break;
+				//case 3: Active = banhji.view.invoiceForm3; break;
+				//case 4: Active = banhji.view.invoiceForm4; break;
+				//case 5: Active = banhji.view.invoiceForm5; break;
+				case 6: Active = banhji.view.invoiceForm6; break;
+				case 7: Active = banhji.view.invoiceForm7; break;
+				case 8: Active = banhji.view.invoiceForm8; break;
+				case 9: Active = banhji.view.invoiceForm9; break;
+				case 10: Active = banhji.view.invoiceForm10; break;
+				case 11: Active = banhji.view.invoiceForm11; break;
+				case 12: Active = banhji.view.invoiceForm12; break;
+				case 13: Active = banhji.view.invoiceForm13; break;
+				case 14: Active = banhji.view.invoiceForm31; break;
+				case 15: Active = banhji.view.invoiceForm15; break;
+				case 16: Active = banhji.view.invoiceForm25; break;
+				case 17: Active = banhji.view.invoiceForm17; break;
+				case 18: Active = banhji.view.invoiceForm18; break;
+				case 19: Active = banhji.view.invoiceForm19; break;
+				case 20: Active = banhji.view.invoiceForm20; break;
+				case 21: Active = banhji.view.invoiceForm21; break;
+				case 22: Active = banhji.view.invoiceForm22; break;
+				case 23: Active = banhji.view.invoiceForm28; break;
+				case 24: Active = banhji.view.invoiceForm29; break;
+				case 25: Active = banhji.view.invoiceForm35; break;
+				case 26: Active = banhji.view.invoiceForm39; break;
+				case 27: Active = banhji.view.invoiceForm19; break;
+				case 28: Active = banhji.view.invoiceForm25; break;
+				case 29: Active = banhji.view.invoiceForm26; break;
+				case 30: Active = banhji.view.invoiceForm25; break;
+				case 31: Active = banhji.view.invoiceForm25; break;
+				case 32: Active = banhji.view.invoiceForm27; break;
+				case 33: Active = banhji.view.invoiceForm30; break;
+				case 34: Active = banhji.view.invoiceForm32; break;
+				case 35: Active = banhji.view.invoiceForm33; break;
+				case 36: Active = banhji.view.invoiceForm34; break;
+				case 37: Active = banhji.view.invoiceForm36; break;
+				case 38: Active = banhji.view.invoiceForm37; break;
+				case 39: Active = banhji.view.invoiceForm38; break;
+				case 40: Active = banhji.view.invoiceForm40; break;
+				case 41: Active = banhji.view.invoiceForm41; break;
+				case 42: Active = banhji.view.invoiceForm42; break;
+			}
+			banhji.view.invoiceForm.showIn('#invFormContent', Active);
+		},
+		loadObj 			: function(id){
+			var self = this;				
+			this.dataSource.query({    			
+				filter: { field:"id", value: id },
+				page: 1,
+				take: 100
+			}).then(function(e){
+				var view = self.dataSource.view();	
+				view[0].set("sub_total", kendo.toString(view[0].sub_total, "c", view[0].locale));	
+				view[0].set("tax", kendo.toString(view[0].tax, "c", view[0].locale));
+				view[0].set("amount", kendo.toString(view[0].amount, "c", view[0].locale));
+				view[0].set("discount", kendo.toString(view[0].discount, "c", view[0].locale));	
+				view[0].set("deposit", kendo.toString(view[0].deposit, "c", view[0].locale));	
+				view[0].set("amount_due", kendo.toString(view[0].amount_due, "c", view[0].locale));				
+				self.set("obj", view[0]);
+				self.loadObjTemplate(view[0].transaction_template_id, id);		
+			});	
+		},
+		loadObjTemplate 		: function(id, transaction_id){
+			var self = this, obj = this.get('obj');			
+			this.txnTemplateDS.query({    			
+				filter: { field:"id", value: id },
+				page: 1,
+				take: 100
+			}).then(function(e){
+				var view = self.txnTemplateDS.view(), Index = parseInt(view[0].transaction_form_id), Active;
+				obj.set("color", view[0].color);
+				obj.set("title", view[0].title);
+				self.activeInvoiceTmp(Index);
+				self.lineDS.filter({ field:"transaction_id", value: transaction_id });
+				setTimeout(function(){ 	
+					var CountItemsRow = parseInt(self.lineDS.data().length); 
+					var TotalRow = 15 - CountItemsRow;
+					if(TotalRow > 0){
+						for (var i = 1; i < TotalRow; i++) { 
+							self.lineDS.add({				
+								id			: '',
+								description : '',
+								quantity 	: '',
+								price 		: '',
+								amount 		: '',
+								description : '',
+								locale 		: '',
+								item_prices : [],
+								item_id 	: ''
+					    	});	
+					    }
+					    $("#loading-inv").remove();
+					}
+				},6000);
+			});
+		},
+		cancel 				: function(){
+			this.dataSource.cancelChanges();		
+			window.history.back();
+		}
+	});
 	/* views and layout */
 	banhji.view = {
 		layout 		: new kendo.Layout('#layout', {model: banhji.Layout}),
@@ -7889,6 +9505,15 @@
 		addLicense: new kendo.Layout("#addLicense", {model: banhji.addLicense}),
 		waterCenterContent: new kendo.Layout("#waterCenter-meter-tmpl", {model: banhji.waterCenter}),
 		waterTransactionContent: new kendo.Layout("#waterCenter-transaction-tmpl", {model: banhji.waterCenter}),
+		addAccountingprefix: new kendo.Layout("#addAccountingprefix", {model: banhji.addAccountingprefix}),
+
+		//custom form
+		invoiceCustom: new kendo.Layout("#invoiceCustom", {model: banhji.invoiceCustom}),
+		invoiceForm: new kendo.Layout("#invoiceForm", {model: banhji.invoiceForm}),
+		invoiceForm1: new kendo.Layout("#invoiceForm1", {model: banhji.invoiceForm}),
+		invoiceForm2: new kendo.Layout("#invoiceForm2", {model: banhji.invoiceForm}),
+		invoiceForm32: new kendo.Layout("#invoiceForm32", {model: banhji.invoiceForm}),
+
 		//Menu
 		accountingMenu: new kendo.View("#accountingMenu", {model: langVM}),
 		employeeMenu: new kendo.View("#employeeMenu", {model: langVM}),
@@ -8056,7 +9681,7 @@
 		vm.pageLoad(id);
 	});
 
-	banhji.router.route("/plan", function(){		
+	banhji.router.route("/plan(/:id)", function(id){		
 		banhji.view.layout.showIn("#content", banhji.view.plan);
 		banhji.view.layout.showIn('#menu', banhji.view.menu);
 		banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
@@ -8069,13 +9694,13 @@
 			banhji.pageLoaded["plan"] = true;
 		}
 		console.log("plan");
-		vm.pageLoad();
+		vm.pageLoad(id);
 	});
 	banhji.router.route("/add_license(/:id)", function(id){		
 		
 		banhji.view.layout.showIn('#menu', banhji.view.menu);
 		banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
-		
+		banhji.view.layout.showIn("#content", banhji.view.addLicense);
 		
 
 		banhji.userManagement.addMultiTask("Add Licence","Licence",null);
@@ -8084,10 +9709,6 @@
 			banhji.pageLoaded["add_license"] = true;
 		}
 		console.log("add_license");
-		
-		//setTimeout(function(){
-			banhji.view.layout.showIn("#content", banhji.view.addLicense);
-		//},1000);
 		var vm = banhji.addLicense;
 		vm.pageLoad(id);
 	});
@@ -8180,6 +9801,123 @@
 		// 	}
 		// });
 	});
+	banhji.router.route("/invoice_custom(/:id)", function(id){
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{
+			banhji.view.layout.showIn("#content", banhji.view.invoiceCustom);
+			kendo.fx($("#slide-form")).slideIn("down").play();
+
+			var vm = banhji.invoiceCustom;
+			
+			if(banhji.pageLoaded["invoice_custom"]==undefined){
+				banhji.pageLoaded["invoice_custom"] = true;
+
+				//Function write css to header
+				function loadStyle(href){
+				    // avoid duplicates
+				    for(var i = 0; i < document.styleSheets.length; i++){
+				        if(document.styleSheets[i].href == href){
+				            return;
+				        }
+				    }
+				    var head  = document.getElementsByTagName('head')[0];
+				    var link  = document.createElement('link');
+				    link.rel  = 'stylesheet';
+				    link.type = 'text/css';
+				    link.href = href;
+				    head.appendChild(link);
+				}
+				var Href1 = '<?php echo base_url(); ?>assets/invoice/invoice.css';
+				loadStyle(Href1);
+			};
+			
+			vm.pageLoad(id);
+		};
+	});
+	banhji.router.route("/invoice_form(/:id)", function(id){
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{
+			banhji.view.layout.showIn("#content", banhji.view.invoiceForm);
+			kendo.fx($("#slide-form")).slideIn("down").play();
+
+			var vm = banhji.invoiceForm;
+			banhji.userManagement.addMultiTask("Customer Form","invoice_form",null);
+			if(banhji.pageLoaded["invoice_form"]==undefined){
+				banhji.pageLoaded["invoice_form"] = true;
+
+				//Function write css to header
+				function loadStyle(href){
+				    // avoid duplicates
+				    for(var i = 0; i < document.styleSheets.length; i++){
+				        if(document.styleSheets[i].href == href){
+				            return;
+				        }
+				    }
+				    var head  = document.getElementsByTagName('head')[0];
+				    var link  = document.createElement('link');
+				    link.rel  = 'stylesheet';
+				    link.type = 'text/css';
+				    link.href = href;
+				    head.appendChild(link);
+				}
+				var Href1 = '<?php echo base_url(); ?>assets/invoice/invoice.css';
+				loadStyle(Href1);
+			};
+			
+			vm.pageLoad(id);
+		};
+	});
+
+	banhji.router.route("/add_accountingprefix(/:id)", function(id){
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{
+			banhji.view.layout.showIn("#content", banhji.view.addAccountingprefix);			
+			kendo.fx($("#slide-form")).slideIn("down").play();
+
+			var vm = banhji.addAccountingprefix;
+			banhji.userManagement.addMultiTask("Add Accounting Prefix","add_accountingprefix",null);
+			if(banhji.pageLoaded["add_accountingprefix"]==undefined){
+				banhji.pageLoaded["add_accountingprefix"] = true;				        
+				setTimeout(function(){
+					var validator = $("#example").kendoValidator().data("kendoValidator");
+					var notification = $("#notification").kendoNotification({				    
+					    autoHideAfter: 5000,
+					    width: 300,				    
+					    height: 50
+					}).data('kendoNotification');
+					$("#saveNew").click(function(e){	
+		        			
+						e.preventDefault();
+						if(validator.validate()){
+			            	vm.save();		            	
+
+			            	notification.success("Save Successful");			  
+				        }else{
+				        	notification.error("Warning, please review it again!");			           
+				        }		            
+					});
+					$("#saveClose").click(function(e){				
+						e.preventDefault();
+
+						if(validator.validate()){
+			            	vm.save();
+			            	window.history.back();
+
+			            	notification.success("Save Successful");			  
+				        }else{
+				        	notification.error("Warning, please review it again!");			           
+				        }	            
+					});
+				},2000);
+						
+			};
+			
+			vm.pageLoad(id);		
+		};
+	});	
 	$(function() {	
 		banhji.router.start();
 		banhji.source.loadData();

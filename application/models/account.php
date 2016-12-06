@@ -43,18 +43,14 @@ class Account extends DataMapper {
 		'deposit' => array(
 			'class' => 'contact',
 			'other_field' => 'deposit_account'
-		),		
-		'item' => array(
-			'class' => 'item',
-			'other_field' => 'account'
 		),
 		'income' => array(
 			'class' => 'item',
 			'other_field' => 'income_account'
 		),
-		'cogs' => array(
+		'expense' => array(
 			'class' => 'item',
-			'other_field' => 'cogs_account'
+			'other_field' => 'expense_account'
 		),
 		'inventory' => array(
 			'class' => 'item',

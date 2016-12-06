@@ -138,7 +138,7 @@
               <form>
                 <h1>Confirm Code</h1>
                 <div>
-                  <p>Please check your email for the verification code with this email: <span data-bind="text: email"></span></p><br>
+                  <p id="message"></p><br>
                   <input type="type" data-bind="value: email" class="form-control" placeholder="Email" required="" />
                 </div>
                 <div>
@@ -146,7 +146,7 @@
                 </div>
                 <div>
                   <a class="btn btn-default submit" href="#" data-bind="click: comfirmCode">Confirm Now</a>
-                  <!--a class="btn btn-invert submit" href="#" data-bind="click: resendCode">Resend Code</a-->
+                  <a class="btn btn-invert submit" href="#" data-bind="click: resendCode">Resend Code</a>
                 </div>
                 </div>
               </form>
@@ -429,48 +429,77 @@
             }
           },
           comfirmCode: function(e) {
-             e.preventDefault();
-              // confirm user verification code after signed up
-              layout.showIn("#main-container", watingView);
-              AnimateSlide();
-              var userData = {
-                  Username : this.get('email'),
-                  Pool : userPool
-              };
-              var cognitoUser = new AWSCognito.CognitoIdentityServiceProvider.CognitoUser(userData);
-              cognitoUser.confirmRegistration(this.get('verificationCode'), true, function(err, result) {
-                  if (err) {
-                      layout.showIn("#main-container", confirmView);
-                      return;
-                  }
-                  banhji.companyDS.filter({
-                    field: 'username', value: banhji.aws.get('email')
-                  });
-                  banhji.companyDS.bind('requestEnd', function(e){
-                    banhji.aws.createDB.add({institute: e.response.results[0].id});
+            e.preventDefault();
+            var that = this;
+            // confirm user verification code after signed up
+            layout.showIn("#main-container", watingView);
+            AnimateSlide();
+            var userData = {
+                Username : this.get('email'),
+                Pool : userPool
+            };
+            var cognitoUser = new AWSCognito.CognitoIdentityServiceProvider.CognitoUser(userData);
+            cognitoUser.confirmRegistration(this.get('verificationCode'), true, function(err, result) {
+              if (err) {
+                  layout.showIn("#main-container", confirmView);
+                  return;
+              }
+
+              banhji.companyDS.query({
+                filter: {field: 'username', value: banhji.aws.get('email')},
+                page: 1,
+                pageSize: 1
+              })
+              .then(function(e){
+                var data = banhji.companyDS.data();
+                var connection = data[0].connection;
+                banhji.userDS.query({
+                  filter:{field: 'username', 'operator': 'n', value: banhji.aws.get('email')}
+                })
+                .then(function(e){
+                  var data = banhji.userDS.at(0);
+                  data.set('is_confirmed', true);
+                  banhji.userDS.sync();
+                });
+                return data[0];
+              })
+              .then(function(data){
+                if(data.connection == false) {
+                  // banhji.companyDS.bind('requestEnd', function(e){
+                    banhji.aws.createDB.add({institute: data.id});
                     $('#proccessMsg').text("Creating Company");
                     banhji.aws.createDB.sync();
                     banhji.aws.createDB.bind('requestEnd', function(e){
                     $('#proccessMsg').text("Finalizing...");
                       if(e.response.results.institute) {
-                        banhji.userDS.filter({field: 'username', value: banhji.aws.get('email')});
-                        banhji.userDS.bind('requestEnd', function(e) {
-                          var data = banhji.userDS.at(0);
-                          data.set('is_confirmed', true);
-                          banhji.userDS.sync();
-                        });
                         $('#proccessMsg').text("Redirecting...");
                         setTimeout(function(){
                           window.location.replace(baseUrl + "login/");
                         },2000);
                       }
                     });
-                  });
-              });
+                  // });
+                } else {
+                  console.log('redirecting...');
+                  window.location.replace(baseUrl + "login/");
+                }
+              });              
+            });
           },
           resendCode: function(e) {
             e.preventDefault();
-            alert('code resent');
+            var userData = {
+                Username : this.get('email'),
+                Pool : userPool
+            };
+            var cognitoUser = new AWSCognito.CognitoIdentityServiceProvider.CognitoUser(userData);
+            cognitoUser.resendConfirmationCode(function(err, result) {
+              if (err) {
+                  $("#message").text(err.message);
+                  return;
+              }
+              $("#message").text("Please check your email for the confirm code.");
+            });
           },
           signIn: function() {
               var decimal=  /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,15}$/;

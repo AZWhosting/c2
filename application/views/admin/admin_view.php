@@ -174,7 +174,6 @@
                                     <div class="ln_solid"></div>
                                     <div class="form-group">
                                         <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-4" style="margin-top:10px;">
-                                            <button class="btn btn-primary">Cancel</button>
                                             <button id="userConfirm" class="btn btn-success" data-bind="click: users.confirm">Confirm</button>
                                         </div>
                                     </div>
@@ -921,8 +920,10 @@
               User
             #}#
           </div>
+          <div class="profile-card-status" style="font-weight: bold">
+            Confirm: <input type="checkbox" data-bind="checked: is_confirmed" disabled="true">
+          </div>
           <div class="profile-card-location">
-            <button class="btn btn-primary btn-xs btn-block" data-bind="disabled: is_confirmed, events: {click: showConfirm}" style="margin-bottom: 5px;"><i class="fa fa-folder"></i> Confirm </button>
             <a href="\#assignto/#=id#"><button class="btn btn-alert btn-block" style="margin-bottom: 5px;">Assign/Reassign</button></a>
             <button class="btn btn-alert btn-block" style="margin-bottom: 5px;" data-bind="click: showFormEdit">Edit</button>
             # if(username == userPool.getCurrentUser().username) {#
@@ -2483,6 +2484,7 @@
           }
           // return true;
         },
+
         modules: new kendo.data.DataSource({
           transport: {
             read  : {
@@ -2565,7 +2567,27 @@
           }
         },
         removeFrom: function(e) {
-          this.modules.remove(e.data);
+          // this.users.remove(e.data);
+          var that = this;
+          var userData = {
+              Username : e.data.username,
+              Pool : userPool
+          };
+          var cognitoUser = new AWSCognito.CognitoIdentityServiceProvider.CognitoUser(userData);
+          cognitoUser.deleteUser(function(err, result) {
+            if (err) {
+                alert(err);
+                return;
+            }
+            
+          });
+          that.users.remove(e.data);
+          that.users.sync();
+          that.users.bind('requestEnd', function(e){
+            if(e.type == 'delete') {
+              console.log('deleted');
+            }
+          });
         },
         upload: function(e) {
           var id = this.get('current').profile_photo.id;
@@ -2848,7 +2870,7 @@
 
               var dataEmail = {
                   Name : 'email',
-                  Value : userPool.getCurrentUser().username
+                  Value : banhji.users.get('current').username
               };
 
               var attributeEmail = new AWSCognito.CognitoIdentityServiceProvider.CognitoUserAttribute(dataEmail);

@@ -4,7 +4,11 @@ class Meter extends DataMapper {
 	protected $created_field = "created_at";
 	protected $updated_field = "updated_at";
 
-	public $has_one = array("branch", "location", "electricity_box", "contact",
+	public $has_one = array("branch", "location", "electricity_box",
+		"contact" => array(
+			'class' => 'contact',
+			'other_field' => 'meter'
+		),
 		'item' => array(
             'class' => 'item',
             'other_field' => 'meter'
@@ -42,7 +46,7 @@ class Meter extends DataMapper {
             'other_field' => 'meter'
         )
 	);
-	public $has_many = array( 
+	public $has_many = array(
 		'reading' => array(
             'class' => 'reading',
             'other_field' => 'meter'
@@ -54,10 +58,14 @@ class Meter extends DataMapper {
         'record' => array(
             'class' => 'meter_record',
             'other_field' => 'meter'
-        )  
+        ),
+				'installment' => array(
+					'class' => 'installment',
+					'other_field' => 'meter'
+				)
 	);
 
-	public function __construct($id = null, $server_name = null, $db_username = null, $server_password = null, $db = null) {   
+	public function __construct($id = null, $server_name = null, $db_username = null, $server_password = null, $db = null) {
         $this->db_params = array(
                 'dbdriver' => 'mysql',
                 'pconnect' => true,
@@ -73,7 +81,7 @@ class Meter extends DataMapper {
                 'prefix'   => ''
             );
         parent::__construct($id);
-    }	
+    }
 }
 
 /* End of file meter.php */
