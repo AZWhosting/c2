@@ -3,20 +3,17 @@
 class Plan_item extends DataMapper {
 	// protected $created_field = "created_at";
 	// protected $updated_field = "updated_at";
-
-	public $has_one = array(
-		'plan' => array(
-			'class' => "plan",
-			'other_field' => 'plan_item'
-		)
-	);
-
-	// public $has_many = array(
-	// 	'journal_line' => array(
-	// 		'class' => "journal_line",
-	// 		'other_field' => 'account'
+	public $table = "plan_items";
+	// public $has_one = array(
+	// 	'plan' => array(
+	// 		'class' => "plan",
+	// 		'other_field' => 'plan_item'
 	// 	)
 	// );
+
+	public $has_many = array(
+		'plan'
+	);
 
 	public function __construct($id = null, $server_name = null, $db_username = null, $server_password = null, $db = null) {
 		$this->db_params = array(

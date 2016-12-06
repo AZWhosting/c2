@@ -39587,7 +39587,7 @@
 				serverSorting: true,
 				serverPaging: true,
 				page: 1,
-				pageSize: 10
+				pageSize: 100
 			});
 		return o;
 	};

@@ -98,13 +98,14 @@ class Installments extends REST_Controller {
 
 			if($obj->save()){
 				for($x=0; $x < $obj->payment_number; $x++) {
-					$year = date('Y');
-					$month= date('m') + $x;
+					$day = date('d', strtotime($obj->start_month));
+					$year = date('Y', strtotime($obj->start_month));
+					$month= date('m', strtotime($obj->start_month)) + $x;
 					$sDate = null;
 					if($month > 12) {
-						$sDate = '01' . '-'. ($month - 12) .'-'. $year;
+						$sDate = $year . '-'. ($month - 12) .'-'. $day;
 					} else {
-						$sDate = '01' . '-'.$month .'-'. $year;
+						$sDate = $year . '-'.$month .'-'. $day;
 					}
 					$installment = new Installment_schedule(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 					$installment->installment_id = $obj->id;
@@ -117,14 +118,14 @@ class Installments extends REST_Controller {
 				//Results
 
 				$data["results"][] = array(
-					"id" 						=> $obj->id,
+					"id" 				=> $obj->id,
 					"biller_id"			=> $obj->biller_id,
 					"contact_id" 		=> $obj->contact_id,
 					"start_month"		=> $obj->start_month,
-					"amount"				=> $obj->amount,
-					"period"				=> $obj->period,
-					"payment_number"=> $obj->payment_number,
-					"paid_in_full"	=> $obj->paid_in_full,
+					"amount"			=> $obj->amount,
+					"period"			=> $obj->period,
+					"payment_number" 	=> $obj->payment_number,
+					"paid_in_full"		=> $obj->paid_in_full,
 					"schedule" 			=> $schedule->result()
 				);
 			}

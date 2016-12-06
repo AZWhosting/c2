@@ -18,7 +18,7 @@ class Provinces extends REST_Controller {
 			$this->server_host = $conn->server_name;
 			$this->server_user = $conn->username;
 			$this->server_pwd = $conn->password;	
-			$this->_database = $conn->inst_database;
+			$this->_database = $conn->inst_database; 
 		}
 	}
 	
@@ -58,7 +58,8 @@ class Provinces extends REST_Controller {
 		if($obj->result_count()>0){			
 			foreach ($obj as $value) {				
 				//Results				
-				$data["results"][] = array(				
+				$data["results"][] = array(	
+					"id" 			=> $value->id,			
 					"name_en" 		=> $value->name_en,
 					"name_local" 	=> $value->name_local
 				);

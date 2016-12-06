@@ -1138,7 +1138,6 @@ class Sales extends REST_Controller {
 	}
 
 
-
 	// item or service classified as list
 	function summary_list_get() {
 		$filters 	= $this->get("filter")["filters"];
