@@ -461,12 +461,12 @@
                   data.set('is_confirmed', true);
                   banhji.userDS.sync();
                 });
-                return connection;
+                return data[0];
               })
-              .then(function(conn){
-                if(conn == false) {
-                  banhji.companyDS.bind('requestEnd', function(e){
-                    banhji.aws.createDB.add({institute: e.response.results[0].id});
+              .then(function(data){
+                if(data.connection == false) {
+                  // banhji.companyDS.bind('requestEnd', function(e){
+                    banhji.aws.createDB.add({institute: data.id});
                     $('#proccessMsg').text("Creating Company");
                     banhji.aws.createDB.sync();
                     banhji.aws.createDB.bind('requestEnd', function(e){
@@ -478,7 +478,7 @@
                         },2000);
                       }
                     });
-                  });
+                  // });
                 } else {
                   console.log('redirecting...');
                   window.location.replace(baseUrl + "login/");

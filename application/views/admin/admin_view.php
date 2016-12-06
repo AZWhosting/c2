@@ -2484,6 +2484,7 @@
           }
           // return true;
         },
+
         modules: new kendo.data.DataSource({
           transport: {
             read  : {
@@ -2566,7 +2567,27 @@
           }
         },
         removeFrom: function(e) {
-          this.modules.remove(e.data);
+          // this.users.remove(e.data);
+          var that = this;
+          var userData = {
+              Username : e.data.username,
+              Pool : userPool
+          };
+          var cognitoUser = new AWSCognito.CognitoIdentityServiceProvider.CognitoUser(userData);
+          cognitoUser.deleteUser(function(err, result) {
+            if (err) {
+                alert(err);
+                return;
+            }
+            
+          });
+          that.users.remove(e.data);
+          that.users.sync();
+          that.users.bind('requestEnd', function(e){
+            if(e.type == 'delete') {
+              console.log('deleted');
+            }
+          });
         },
         upload: function(e) {
           var id = this.get('current').profile_photo.id;
