@@ -288,9 +288,13 @@ class Sales extends REST_Controller {
 			// $obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
 			$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			$type->where('parent_id', 1)->get();
+			$type->select('id')->where('parent_id', 1)->get();
+			$types = array();
+			foreach($type as $t) {
+				$types[] => $t->id;
+			}
 
-			$obj->where_related("contact", 'contact_type_id', $type);
+			$obj->where_in_related("contact", 'contact_type_id', $types);
 			$obj->where_in("type", array("Invoice", "Cash_Sale", "Sale_Return"));
 			$obj->where('is_recurring', 0);
 			$obj->where("deleted",0);

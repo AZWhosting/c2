@@ -918,7 +918,11 @@ class Transactions extends REST_Controller {
 						$lastCost = $onHand * floatval($item->cost);
 						$currentCost = (floatval($value->amount) + floatval($value->additional_cost)) / floatval($value->rate);
 
-						$item->cost = ($lastCost + $currentCost) / $totalQty;
+						if($onHand>0){
+							$item->cost = ($lastCost + $currentCost) / $totalQty;
+						}else{
+							$item->cost = $currentCost / floatval($value->quantity);
+						}
 					}
 
 					if($transaction->type=="Adjustment"){
