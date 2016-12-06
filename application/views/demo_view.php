@@ -55928,8 +55928,9 @@
 		saveRecurring 		: false,
 		showConfirm 		: false,
 		statusSrc 			: "",
-		showDiscount 		: false,
 		recurring 			: "",
+		recurring_validate 	: false,
+		showDiscount 		: false,
 		sub_total 			: 0,		
 		discount 			: 0,
 		balance 			: 0,		
@@ -56795,6 +56796,7 @@
 		saveRecurring 		: false,
 		showConfirm 		: false,
 		statusSrc 			: "",
+		recurring 			: "",
 		enableRef 	 		: false,
 		showCost 			: false,
 		showDiscount 		: false,
@@ -57742,6 +57744,7 @@
 		saveRecurring 		: false,
 		showConfirm 		: false,
 		statusSrc 			: "",
+		recurring 			: "",
 		enableRef 	 		: false,
 		total				: 0,
 		original_total 		: 0,
@@ -58557,6 +58560,7 @@
 		saveRecurring 		: false,
 		showConfirm 		: false,
 		statusSrc 			: "",
+		recurring 			: "",
 		enableRef 	 		: false,
 		showDiscount 		: false,
 		sub_total 			: 0,
@@ -59892,6 +59896,7 @@
 		saveRecurring 		: false,
 		showConfirm 		: false,
 		statusSrc 			: "",
+		recurring 			: "",
 		enableRef 	 		: false,
 		showDiscount 		: false,
 		sub_total 			: 0,
@@ -61218,6 +61223,7 @@
 		saveRecurring 		: false,
 		showConfirm 		: false,
 		statusSrc 			: "",
+		recurring 			: "",
 		enableRef 	 		: false,
 		total 				: 0,
 		user_id				: banhji.source.user_id,
@@ -77155,21 +77161,21 @@
 				if(banhji.pageLoaded["quote"]==undefined){
 					banhji.pageLoaded["quote"] = true;
 
-					// var validator = $("#example").kendoValidator({
-			  //       	rules: {
-					//         customRule1: function(input) {
-					//           	if (input.is("[name=txtRecurringName]")) {
-					//             	return $.trim(input.val()) !== "";
-					//           	}
-					//           	return true;
-					//         }
-					//     },
-					//     messages: {
-					//         customRule1: banhji.source.requiredMessage
-					//     }
-			  //       }).data("kendoValidator");
-
-					var validator = $("#example").kendoValidator().data("kendoValidator");
+					var validator = $("#example").kendoValidator({
+			        	rules: {
+					        customRule1: function(input) {
+					          	if (input.is("[name=txtRecurringName]") && vm.recurring_validate) {
+					          		vm.set("recurring_validate", false);
+					            	return $.trim(input.val()) !== "";
+					          	}
+					          	return true;
+					        }
+					    },
+					    messages: {
+					        customRule1: banhji.source.requiredMessage
+					    }
+			        }).data("kendoValidator");
+			        
 			        $("#saveNew").click(function(e){
 						e.preventDefault();
 
@@ -77204,6 +77210,8 @@
 
 					$("#saveRecurring").click(function(e){
 						e.preventDefault();
+
+						vm.set("recurring_validate", true);
 
 						if(validator.validate()){
 							vm.set("saveRecurring", true);			            	
