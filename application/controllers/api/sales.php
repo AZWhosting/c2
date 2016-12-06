@@ -291,7 +291,7 @@ class Sales extends REST_Controller {
 			$type->select('id')->where('parent_id', 1)->get();
 			$types = array();
 			foreach($type as $t) {
-				$types[] => $t->id;
+				$types[] = $t->id;
 			}
 
 			$obj->where_in_related("contact", 'contact_type_id', $types);
