@@ -1458,9 +1458,9 @@ class Accounting_reports extends REST_Controller {
 		$obj->include_related("account", array("account_type_id","number","name"));
 		$obj->include_related("account/account_type", array("sub_of_id","name","nature"));		
 		$obj->where_related("transaction", "issued_date <=", $startDate);
-		$obj->where_related("transaction", "is_recurring", 0);
-		$obj->where_related("transaction", "deleted", 0);
-		$obj->where("deleted", 0);
+		$obj->where_related("transaction", "is_recurring <>", 1);
+		$obj->where_related("transaction", "deleted <>", 1);
+		$obj->where("deleted <>", 1);
 		$obj->order_by_related("account", "account_type_id", "desc");
 		$obj->order_by_related("account", "number", "asc");		
 		$obj->get_iterated();
@@ -1554,16 +1554,28 @@ class Accounting_reports extends REST_Controller {
 			}		
 		}
 
-		$currentPLAmount = $sumCr - $sumDr;		
+		$currentPLAmount = $sumCr - $sumDr;
+		$totalAmount += $currentPLAmount;
+
 		if(isset($typeList[34])){
-			$typeList[34]["line"][] = array(
+			$typeList[34]["line"][] 		= array(
 				"id" 		=> 0,
 				"number" 	=> "",
 				"name" 		=> "Profit For The Year",
 				"amount" 	=> $currentPLAmount
 			);
-
-			$totalAmount += $currentPLAmount;
+		}else{
+			$typeList[34]["id"] 			= 34;
+			$typeList[34]["sub_of_id"] 		= 3;
+			$typeList[34]["sub_of_name"] 	= "Equity";
+			$typeList[34]["multiplier"] 	= 1;
+			$typeList[34]["type"] 			= "Retained Earning";		
+			$typeList[34]["line"][] 		= array(
+				"id" 		=> 0,
+				"number" 	=> "",
+				"name" 		=> "Profit For The Year",
+				"amount" 	=> $currentPLAmount
+			);
 		}
 		//END CURRENT PROFIT AND LOSS		
 		

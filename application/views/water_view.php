@@ -632,6 +632,22 @@
 				                data-auto-bind="false"
 				                data-bind="source: planDS"></tbody>
 	            	</table>
+	            	<table data-bind="visible: planSelect" class="table table-bordered table-condensed table-striped table-secondary table-vertical-center checkboxs">
+	            		<thead>
+	            			<tr>
+	            				<th class="center" width="150"><span>Name</span></th>
+	            				<th class="center" width="100"><span>Flat</span></th>
+	            				<th class="center" width="100"><span>Usage</span></th>
+	            				<th class="center" width="100"><span>Price</span></th>
+	            				<th class="center" width="200"><span>Action</span></th>
+	            			</tr>
+	            		</thead>
+	            		<tbody data-role="listview"	            				
+				                data-template="tariff-item-template"
+				                data-auto-bind="false"
+				                data-edit-template="tariff-edit-item-template"
+				                data-bind="source: tariffItemDS"></tbody>
+	            	</table>
 	            </div>
 	            <div class="tab-pane" id="tab10">
 	            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
@@ -7125,6 +7141,7 @@
 		typeFlat 			: [{id:"0", name: "Not Flat"},{id:"1", name: "Flat"}],
 		tariffItemFlat 		: 0,
 		tariffSelect 		: false,
+		planSelect 		: false,
 		windowTariffItemVisible : false,
 		prefixDS			: new kendo.data.DataSource({
 			transport: {
@@ -7387,6 +7404,12 @@
         },
         goPlan 				: function(){
         	this.planDS.read();
+        },
+        viewPlanItem 		: function(e){
+        	var data = e.data.id;
+        	this.set("planSelect", true);
+        	this.tariffItemDS.data([]);
+        	this.tariffItemDS.filter({field: "tariff_id", value: data});
         },
 		pageLoad 			: function(){
 			this.txnTemplateDS.filter({ field: "moduls", value : "water_mg" });
