@@ -79,15 +79,15 @@
 					</a>						
 				</div>
 				<div class="span3" style="padding-left: 0; text-align: center;">
-					<a href="#/wInvoice">
+					<a href="#/run_bill">
 						<img title="Add Create Invoice" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/create_invoice.png" style="width: 120px;"  />
-						<span style=" text-transform: uppercase; color: #000; font-weight: 600; margin-top: 8px; display: inline-block;">Create Invoice</span>
+						<span style=" text-transform: uppercase; color: #000; font-weight: 600; margin-top: 8px; display: inline-block;">Run Bill</span>
 					</a>
 				</div>
 				<div class="span3" style="padding-left: 0; text-align: center;">						
-					<a href="#/wPrint_center">
+					<a href="#/print_bill">
 						<img title="Add Print Invoice" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/print_invoice.png" style="width: 120px;"  />
-						<span style="text-transform: uppercase; color: #000; font-weight: 600; margin-top: 8px; display: inline-block;">Print Invoice</span>
+						<span style="text-transform: uppercase; color: #000; font-weight: 600; margin-top: 8px; display: inline-block;">Print Bill</span>
 					</a>						
 				</div>
 				<div class="span3" style="padding: 0; text-align: center;">						
@@ -2028,7 +2028,19 @@
 		                   data-text-field="name"
 		                   data-value-field="id"
 		                   data-bind="value: obj.licence,
-		                              source: licenseDS"/>
+		                              source: licenseDS,
+		                              events: {change : lonChange}"/>
+
+		                <input data-role="dropdownlist"
+		            	   class="span2 row-fluid"
+		            	   style="width: 100%;margin-bottom: 20px;padding-left: 0" 
+            			   data-option-label="(--- Bloc ---)"
+            			   data-auto-bind="false"			                   
+		                   data-value-primitive="true"
+		                   data-text-field="name"
+		                   data-value-field="id"
+		                   data-bind="value: obj.bloc,
+		                              source: blocDS"/>
 
 			        	<input type="text" id="" name="Code" class="k-textbox k-invalid" placeholder="Code" required="" validationmessage="" style="width: 100%;margin-bottom: 20px;" data-bind="value: obj.code" aria-invalid="true">
 			        	<input type="text" id="" name="Number of Family" class="k-textbox k-invalid" placeholder="Number of Family" required="" validationmessage="" style="width: 100%;margin-bottom: 20px;" data-bind="value: obj.family_member" aria-invalid="true">
@@ -2333,8 +2345,9 @@
 <!--  End Meter  -->
 <!--  Reading  -->
 <script id="Reading" type="text/x-kendo-template">
-	<div  class="row-fluid saleSummaryCustomer">
-		<span class="glyphicons no-js remove_2 pull-right" data-bind="click: cancel"><i></i></span>	
+	<span class="glyphicons no-js remove_2 pull-right" data-bind="click: cancel"><i></i></span>	
+	<div  class="row-fluid saleSummaryCustomer" style="padding-top: 30px;">
+		
 		<!-- Tabs -->
 		<div class="relativeWrap" data-toggle="source-code">
 			<div class="widget widget-tabs widget-tabs-double-2 widget-tabs-gray">
@@ -2355,11 +2368,11 @@
 						<!-- Tab content -->
 						<div id="tabContact" style="border: 1px solid #ccc" class="tab-pane active widget-body-regular">
 							
-							<h4 class="separator bottom" style="margin-top: 10px;">Please upload reading file</h4>
+							<h4 class="separator bottom" style="margin-top: 10px;">Please upload reading book</h4>
 							<a data-bind="click: exportEXCEL">
 								<span id="saveClose" class="btn btn-icon btn-success glyphicons download" style="width: 200px!important;position: absolute;top: 85px;right: 10px;">
 									<i></i> 
-									<span >Download Reading file</span>
+									<span >Download Reading Book</span>
 								</span>
 							</a>
 							<div class="fileupload fileupload-new margin-none" data-provides="fileupload">
@@ -2480,8 +2493,9 @@
 </script>
 
 <script id="waterImport" type="text/x-kendo-template">
-	<div  class="row-fluid saleSummaryCustomer">
-		<span class="glyphicons no-js remove_2 pull-right" data-bind="click: cancel"><i></i></span>	
+	<span class="glyphicons no-js remove_2 pull-right" data-bind="click: cancel"><i></i></span>	
+	<div  class="row-fluid saleSummaryCustomer" style="padding-top: 30px;">
+		
 		<!-- Tabs -->
 		<div class="relativeWrap" data-toggle="source-code">
 			<div class="widget widget-tabs widget-tabs-double-2 widget-tabs-gray">
@@ -2525,9 +2539,10 @@
 	</div>
 </script>
 
-<script id="createInvoice" type="text/x-kendo-template">
-	<div  class="row-fluid saleSummaryCustomer">
-		<span class="glyphicons no-js remove_2 pull-right" data-bind="click: cancel"><i></i></span>	
+<script id="runBill" type="text/x-kendo-template">
+	<span class="glyphicons no-js remove_2 pull-right" data-bind="click: cancel"><i></i></span>	
+	<div  class="row-fluid saleSummaryCustomer" style="padding-top: 30px;">
+		
 		<!-- Tabs -->
 		<div class="relativeWrap" data-toggle="source-code">
 			<div class="widget widget-tabs widget-tabs-double-2 widget-tabs-gray">
@@ -2538,28 +2553,19 @@
 						<!-- Tab content -->
 						<div id="tabContact" style="border: 1px solid #ccc" class="tab-pane active widget-body-regular">
 							
-							<h4 class="separator bottom" style="margin-top: 10px;">Create Invoice</h4>
+							<h4 class="separator bottom" style="margin-top: 10px;">Run Bill</h4>
 							
 							<div class="fileupload fileupload-new margin-none" >
-							  	<table class="table table-borderless table-condensed cart_total">
-							  		<thead>
-				                		<tr>
-				                			<th>Meter Number</th>
-				                			<th style="text-align: center">Date</th>
-				                			<th>Previous</th>
-				                			<th>Current</th>
-				                			<th>Usage</th>
-				                			<th style="text-align: center">Action</th>
-				                		</tr>
-				                	</thead>
-				                	<tbody 
-				                		data-bind="source: dataSource" 
-				                		data-auto-bind="true" 
-				                		data-role="listview" 
-				                		data-edit-template="readding-edit-template"
-				                		data-template="reading-list-template">
-				                	</tbody>
-							  	</table>
+							  	<div class="span12">
+							  		<input 
+							  			data-role="datepicker" 
+							  			data-bind="" 
+							  			data-start="year" 
+							  			data-depth="year" 
+							  			data-format="MM-yyyy" 
+							  			placeholder="Month Of ..." 
+							  			type="text" class="k-input k-valid span3" />
+							  	</div>
 							</div>
 						</div>
 						<!-- // Tab content END -->
@@ -3295,14 +3301,13 @@
 	  		<a class='dropdown-toggle glyphicons text_bigger' data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false'><i></i> <span class='caret'></span></a>
   			<ul class='dropdown-menu'>
   				<li><a href='#/customer'><span >New Customer</span></a></li> 
-  				<li ><a href='#/reorder'><span >Reorder</span></a></li>  				
+  				<li ><a href='#/reorder'><span >Reorder Customer Number</span></a></li>  				
   				<li><span class="li-line"></span></li>
   				<li><a href='#/reading'><span >Meter Reading</span></a></li> 
-  				<li><a href='#/reading_book'><span >Reading Book</span></a></li>
   				<li><a href='#/edit_reading'><span >Edit Reading</span></a></li>
   				<li><span class="li-line"></span></li>
-  				<li><a href='#/create_invoice'><span >Calculate Invoice</span></a></li> 
-  				<li><a href='#/print_invoice'><span >Print Invoice</span></a></li>
+  				<li><a href='#/run_bill'><span >Run Bill</span></a></li> 
+  				<li><a href='#/print_invoice'><span >Print Bill</span></a></li>
   				<li><span class="li-line"></span></li>
   				<li><a href='#/import'><span >Import</span></a></li>
   			</ul>
@@ -8244,6 +8249,7 @@
 		lang 				: langVM,
 		dataSource  		: dataStore(apiUrl + "activate_water"),
 		licenseDS 			: dataStore(apiUrl + "branches"),
+		blocDS 				: dataStore(apiUrl + "locations"),
 		obj 				: null,
 		isEdit 				: false,
 		pageLoad 			: function(id){
@@ -8263,6 +8269,10 @@
 					self.loadData();
 				}
 			});
+		},
+		lonChange 			: function(e){
+			var obj = this.get("obj"), self = this;
+			this.blocDS.filter({field: "branch_id", value: obj.licence});
 		},
 		loadContact 		: function(id){
 			var self = this;
@@ -8811,7 +8821,7 @@
 		}
 	});
 
-	banhji.createInvoice = kendo.observable({
+	banhji.runBill = kendo.observable({
 		lang 				: langVM,
 		pageLoad 			: function(id){
 			
@@ -9951,6 +9961,106 @@
 			window.history.back();
 		}
 	});
+
+	// Invoice
+	banhji.invoice = kendo.observable({
+		makes 	: new kendo.data.DataSource({
+	      transport: {
+	        read  : {
+	          url: baseUrl + 'api/winvoices/make',
+	          type: "GET",
+	          dataType: 'json'
+	        },
+	        parameterMap: function(options, operation) {
+	          if(operation === 'read') {
+	            return {
+	              limit: options.take,
+	              page: options.page,
+	              filter: options.filter
+	            };
+	          } else {
+	            return {models: kendo.stringify(options.models)};
+	          }
+	        }
+	      },
+	      schema  : {
+	        model: {
+	          id: 'id'
+	        },
+	        data: 'results',
+	        total: 'count'
+	      },
+	      batch: true,
+	      serverFiltering: true,
+	      serverPaging: true,
+	      pageSize: 100
+	    }),
+		dataSource 	: new kendo.data.DataSource({
+	      transport: {
+	        read  : {
+	          url: baseUrl + 'api/winvoices',
+	          type: "GET",
+	          dataType: 'json'
+	        },
+	        create  : {
+	          url: baseUrl + 'api/winvoices',
+	          type: "POST",
+	          dataType: 'json'
+	        },
+	        destroy  : {
+	          url: baseUrl + 'api/winvoices',
+	          type: "DELETE",
+	          dataType: 'json'
+	        },
+	        parameterMap: function(options, operation) {
+	          if(operation === 'read') {
+	            return {
+	              limit: options.take,
+	              page: options.page,
+	              filter: options.filter
+	            };
+	          } else {
+	            return {models: kendo.stringify(options.models)};
+	          }
+	        }
+	      },
+	      schema  : {
+	        model: {
+	          id: 'id'
+	        },
+	        data: 'results',
+	        total: 'count'
+	      },
+	      batch: true,
+	      serverFiltering: true,
+	      serverPaging: true,
+	      pageSize: 100
+	    }),
+		remove 		: function(e) {
+			this.dataSource.remove(e.data);
+		},
+		queryReading: function() {
+			var dfd = $.Deferred();
+			return this.makes.query({
+				filter: {field: '', value: ''}
+			});
+		},
+		save 		: function() {
+			var that = this, dfd = $.Deferred();
+			this.dataSource.sync();
+			this.dataSource.bind('requestEnd', function(e){
+				if(e.type != 'read' && e.response.results) {
+					dfd.resolve(e.response.results);
+				} else {
+					dfd.reject(e.response);
+				}
+			});
+			this.dataSource.bind('error', function(e){
+				dfd.reject(e.status);
+			});
+			return dfd.promise();
+		}
+	});
 	/* views and layout */
 	banhji.view = {
 		layout 		: new kendo.Layout('#layout', {model: banhji.Layout}),
@@ -9974,7 +10084,7 @@
 		addAccountingprefix: new kendo.Layout("#addAccountingprefix", {model: banhji.addAccountingprefix}),
 
 		waterImport: new kendo.Layout("#waterImport", {model: banhji.waterImport}),
-		createInvoice: new kendo.Layout("#createInvoice", {model: banhji.createInvoice}),
+		runBill: new kendo.Layout("#runBill", {model: banhji.runBill}),
 
 		//custom form
 		invoiceCustom: new kendo.Layout("#invoiceCustom", {model: banhji.invoiceCustom}),
@@ -10228,17 +10338,17 @@
 		vm.pageLoad();
 	});
 
-	banhji.router.route("/create_invoice", function(){		
-		banhji.view.layout.showIn("#content", banhji.view.createInvoice);
+	banhji.router.route("/run_bill", function(){		
+		banhji.view.layout.showIn("#content", banhji.view.runBill);
 		banhji.view.layout.showIn('#menu', banhji.view.menu);
 		banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
 		
-		var vm = banhji.createInvoice;
+		var vm = banhji.runBill;
 
-		banhji.userManagement.addMultiTask("Create Invoice","create_invoice",null);
+		banhji.userManagement.addMultiTask("Run Bill","run_bill",null);
 
-		if(banhji.pageLoaded["create_invoice"]==undefined){
-			banhji.pageLoaded["create_invoice"] = true;
+		if(banhji.pageLoaded["run_bill"]==undefined){
+			banhji.pageLoaded["run_bill"] = true;
 		}
 
 		vm.pageLoad();
