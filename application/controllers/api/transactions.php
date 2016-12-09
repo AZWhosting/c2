@@ -374,7 +374,7 @@ class Transactions extends REST_Controller {
 		   	isset($value->rate) 					? $obj->rate 						= $value->rate : "";
 		   	isset($value->locale) 					? $obj->locale 						= $value->locale : "";
 		   	isset($value->month_of) 				? $obj->month_of 					= $value->month_of : "";
-		   	isset($value->issued_date) 				? $obj->issued_date 				= $value->issued_date : "";
+		   	isset($value->issued_date) 				? $obj->issued_date 				= date("Y-m-d", strtotime($value->issued_date)) : "";
 		   	isset($value->bill_date) 				? $obj->bill_date 					= $value->bill_date : "";
 		   	isset($value->payment_date) 			? $obj->payment_date 				= $value->payment_date : "";
 		   	isset($value->due_date) 				? $obj->due_date 					= $value->due_date : "";
@@ -879,77 +879,79 @@ class Transactions extends REST_Controller {
 					$transaction = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 					$transaction->get_by_id($value->transaction_id);
 
-					//Sum On Hand
-					$itemIn = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-					$itemIn->select_sum("quantity");
-					$itemIn->where_in_related("transaction", "type", array("Cash_Purchase", "Credit_Purchase", "Adjustment"));
-					$itemIn->where("item_id", $value->item_id);
-					$itemIn->where("movement", 1);
-					$itemIn->where_related("transaction", "issued_date <=", $transaction->issued_date);
-					$itemIn->where_related("transaction", "is_recurring", 0);
-					$itemIn->where_related("transaction", "deleted", 0);
-					$itemIn->get();
+					if($transaction->is_recurring!=="1"){
+						//Sum On Hand
+						$itemIn = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+						$itemIn->select_sum("quantity");
+						$itemIn->where_in_related("transaction", "type", array("Cash_Purchase", "Credit_Purchase", "Adjustment"));
+						$itemIn->where("item_id", $value->item_id);
+						$itemIn->where("movement", 1);
+						$itemIn->where_related("transaction", "issued_date <=", $transaction->issued_date);
+						$itemIn->where_related("transaction", "is_recurring <>", 1);
+						$itemIn->where_related("transaction", "deleted <>", 1);
+						$itemIn->get();
 
-					$itemOut = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-					$itemOut->select_sum("quantity");
-					$itemOut->where_in_related("transaction", "type", array("Invoice", "Cash_Sale", "Adjustment"));
-					$itemOut->where("item_id", $value->item_id);
-					$itemOut->where("movement", -1);
-					$itemOut->where_related("transaction", "issued_date <=", $transaction->issued_date);
-					$itemOut->where_related("transaction", "is_recurring", 0);
-					$itemOut->where_related("transaction", "deleted", 0);
-					$itemOut->get();
+						$itemOut = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+						$itemOut->select_sum("quantity");
+						$itemOut->where_in_related("transaction", "type", array("Invoice", "Cash_Sale", "Adjustment"));
+						$itemOut->where("item_id", $value->item_id);
+						$itemOut->where("movement", -1);
+						$itemOut->where_related("transaction", "issued_date <=", $transaction->issued_date);
+						$itemOut->where_related("transaction", "is_recurring <>", 1);
+						$itemOut->where_related("transaction", "deleted <>", 1);
+						$itemOut->get();
 
-					$onHand = floatval($itemIn->quantity) - floatval($itemOut->quantity);
-					$totalQty = $onHand + floatval($value->quantity);
+						$onHand = floatval($itemIn->quantity) - floatval($itemOut->quantity);
+						$totalQty = $onHand + floatval($value->quantity);
 
-					if($transaction->type=="Invoice" || $transaction->type=="Cash_Sale"){
-						//Avg Price
-						$lastPrice = $onHand * floatval($item->price);
-						$currentPrice = floatval($value->quantity) * (floatval($value->price) / floatval($value->rate));
+						if($transaction->type=="Invoice" || $transaction->type=="Cash_Sale"){
+							//Avg Price
+							$lastPrice = $onHand * floatval($item->price);
+							$currentPrice = floatval($value->quantity) * (floatval($value->price) / floatval($value->rate));
 
-						$item->price = ($lastPrice + $currentPrice) / $totalQty;
-						$obj->cost = floatval($item->cost) * floatval($value->rate);
-						$obj->price_avg = ($lastPrice + $currentPrice) / $totalQty;;
-					}
-
-					if($transaction->type=="Cash_Purchase" || $transaction->type=="Credit_Purchase"){
-						//Avg Cost
-						$lastCost = $onHand * floatval($item->cost);
-						$currentCost = (floatval($value->amount) + floatval($value->additional_cost)) / floatval($value->rate);
-
-						if($onHand>0){
-							$item->cost = ($lastCost + $currentCost) / $totalQty;
-						}else{
-							$item->cost = $currentCost / floatval($value->quantity);
+							$item->price = ($lastPrice + $currentPrice) / $totalQty;
+							$obj->cost = floatval($item->cost) * floatval($value->rate);
+							$obj->price_avg = ($lastPrice + $currentPrice) / $totalQty;;
 						}
-					}
 
-					if($transaction->type=="Adjustment"){
-						$obj->on_hand = $value->on_hand;
-					}
+						if($transaction->type=="Cash_Purchase" || $transaction->type=="Credit_Purchase"){
+							//Avg Cost
+							$lastCost = $onHand * floatval($item->cost);
+							$currentCost = (floatval($value->amount) + floatval($value->additional_cost)) / floatval($value->rate);
 
-					if($item->save()){
-						$po = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-						$po->select_sum("quantity");
-						$po->where_related("transaction", "type", "Purchase_Order");
-						$po->where_related("transaction", "issued_date <=", $transaction->issued_date);
-						$po->where_related("transaction", "status", 0);
-						$po->where_related("transaction", "is_recurring", 0);
-						$po->where_related("transaction", "deleted", 0);
-						$po->get();
+							if($onHand>0){
+								$item->cost = ($lastCost + $currentCost) / $totalQty;
+							}else{
+								$item->cost = $currentCost / floatval($value->quantity);
+							}
+						}
 
-						$so = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-						$so->select_sum("quantity");
-						$so->where_related("transaction", "type", "Sale_Order");
-						$po->where_related("transaction", "issued_date <=", $transaction->issued_date);
-						$so->where_related("transaction", "status", 0);
-						$so->where_related("transaction", "is_recurring", 0);
-						$so->where_related("transaction", "deleted", 0);
-						$so->get();
+						if($transaction->type=="Adjustment"){
+							$obj->on_hand = $value->on_hand;
+						}
 
-						$obj->on_po = $po->quantity;
-						$obj->on_so = $so->quantity;
+						if($item->save()){
+							$po = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+							$po->select_sum("quantity");
+							$po->where_related("transaction", "type", "Purchase_Order");
+							$po->where_related("transaction", "issued_date <=", $transaction->issued_date);
+							$po->where_related("transaction", "status", 0);
+							$po->where_related("transaction", "is_recurring <>", 1);
+							$po->where_related("transaction", "deleted <>", 1);
+							$po->get();
+
+							$so = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+							$so->select_sum("quantity");
+							$so->where_related("transaction", "type", "Sale_Order");
+							$po->where_related("transaction", "issued_date <=", $transaction->issued_date);
+							$so->where_related("transaction", "status", 0);
+							$so->where_related("transaction", "is_recurring <>", 1);
+							$so->where_related("transaction", "deleted <>", 1);
+							$so->get();
+
+							$obj->on_po = $po->quantity;
+							$obj->on_so = $so->quantity;
+						}
 					}
 				}
 			}

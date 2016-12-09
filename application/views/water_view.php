@@ -481,6 +481,7 @@
 	            	</table>
 	            	
 	            	<br>
+	            	<p data-bind="visible: tariffSelect">Tariff Name: <span data-bind="text: tariffNameShow"></span></p>
 	            	<table data-bind="visible: tariffSelect" class="table table-bordered table-condensed table-striped table-secondary table-vertical-center checkboxs">
 	            		<thead>
 	            			<tr>
@@ -628,7 +629,6 @@
 	            		</thead>
 	            		<tbody data-role="listview"	            				
 				                data-template="planSetting-template"
-				                data-edit-template="plan-edit-template"
 				                data-auto-bind="false"
 				                data-bind="source: planDS"></tbody>
 	            	</table>
@@ -636,17 +636,14 @@
 	            		<thead>
 	            			<tr>
 	            				<th class="center" width="150"><span>Name</span></th>
-	            				<th class="center" width="100"><span>Flat</span></th>
-	            				<th class="center" width="100"><span>Usage</span></th>
-	            				<th class="center" width="100"><span>Price</span></th>
-	            				<th class="center" width="200"><span>Action</span></th>
+	            				<th class="center" width="100"><span>Type</span></th>
+	            				<th class="center" width="100"><span>Amount</span></th>
 	            			</tr>
 	            		</thead>
 	            		<tbody data-role="listview"	            				
-				                data-template="tariff-item-template"
+				                data-template="plan-item-template"
 				                data-auto-bind="false"
-				                data-edit-template="tariff-edit-item-template"
-				                data-bind="source: tariffItemDS"></tbody>
+				                data-bind="source: planItemDS"></tbody>
 	            	</table>
 	            </div>
 	            <div class="tab-pane" id="tab10">
@@ -786,7 +783,7 @@
    		<td align="center">
     		#= unit#
    		</td>
-   		<td align="center">
+   		<td align="right" >
     		#= amount#
    		</td>
    		<td align="center">   			   
@@ -886,7 +883,7 @@
     	<td>
     		#= name#
    		</td>
-   		<td align="center">
+   		<td align="right">
     		#= amount#
    		</td>
    		<td align="center">   			   
@@ -914,7 +911,7 @@
     	<td>
     		#= name#
    		</td>
-   		<td align="center">
+   		<td align="right">
     		#= amount#
    		</td>
    		<td align="center">   			   
@@ -942,7 +939,7 @@
     	<td>
     		#= name#
    		</td>
-   		<td align="center">
+   		<td align="right">
     		#= amount#
    		</td>
    		<td align="center">   			   
@@ -965,33 +962,14 @@
 	    </td>
     </tr>
 </script>
-<script id="installmentSetting-template" type="text/x-kendo-tmpl">                    
+<script id="plan-item-template" type="text/x-kendo-tmpl">                    
     <tr>
-    	<td>
-    		#= name#
-   		</td>
-   		<td align="center">
-    		#= amount#
-   		</td>
-   		<td align="center">   			   
-		    <a class="btn-action glyphicons pencil btn-success k-edit-button"><i></i></a>
-   		</td>   		
+    	<td>#= name#</td>
+    	<td align="center">
+    		#= type#
+    	</td>
+    	<td align="right">#= amount#</td>
    	</tr>
-</script>
-<script id="installment-edit-template" type="text/x-kendo-tmpl">
-    <tr>    	               
-        <td>
-			<input style="width: 100%;" type="text" class="k-textbox" data-bind="value:name" />
-        </td>       
-        <td>
-        	<input style="width: 100%;" type="text" class="k-textbox" data-bind="value:amount" />
-        </td>
-
-	    <td class="edit-buttons" style="text-align: center;">
-	        <a class="k-button k-update-button" href="\\#"><span class="k-icon k-update"></span></a>
-	        <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-cancel"></span></a>
-	    </td>
-    </tr>
 </script>
 <script id="accountSetting-prefix-template" type="text/x-kendo-template">
 	<tr>
@@ -1142,25 +1120,11 @@
 		<td>#= name #</td>
 		<td>#= code #</td>
 		<td>
-			<span class="k-edit-button"><i class="icon-edit"></i> Edit</span>
+			<a href="\#/plan/#: id#"><i class="icon-edit"></i> Edit</a>
     		|
     		<span data-bind="click: viewPlanItem"><i class="icon-view"></i> View Item</span>
     	</td>
 	</tr>
-</script>
-<script id="plan-edit-template" type="text/x-kendo-tmpl">
-    <tr>    	               
-        <td>
-			<input style="width: 100%;" type="text" class="k-textbox" data-bind="value:name" />
-        </td>    
-        <td>
-			<input style="width: 100%;" type="text" class="k-textbox" data-bind="value:code" />
-        </td>   
-	    <td class="edit-buttons" style="text-align: center;">
-	        <a class="k-button k-update-button" href="\\#"><span class="k-icon k-update"></span></a>
-	        <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-cancel"></span></a>
-	    </td>
-    </tr>
 </script>
 
 <script id="plan" type="text/x-kendo-template">
@@ -1999,7 +1963,7 @@
 </script>
 <script id="waterCenter-meter-tmpl" type="text/x-kendo-tmpl">
 	<div class="heading-buttons">
-		<h2 class="heading pull-left"><i class="icon-bar-chart icon-fixed-width text-primary"></i> <span data-bind="text: lang.lang.monthly_sale"></span></h2>
+		<h4 class="icon-bar-chart" ><i></i><span style="font-style: normal" data-bind="text: lang.lang.monthly_sale"></span></h4>
 		
 		<div class="clearfix"></div>
 	</div>
@@ -2091,58 +2055,8 @@
 			    		<span class="glyphicons no-js remove_2" 
 							data-bind="click: cancel"><i></i></span>						
 					</div>
-			        <h2>Add Meter</h2><br>
-			       <!--  <h3 style="padding:0 15px;" ><p style="float:left;font-size: 15px;">Customer Name: </p><p style="float:left;font-size: 15px" data-bind="text: contact.name"></p></h3>
-			        <div class="span12 row-fluid" style="overflow: hidden;padding:20px 0;">
-			        	<div class="span4">
-				        	<label>Number</label>
-				        	<input type="text" 
-				        			class="k-textbox k-invalid" 
-				        			data-bind="value : obj.number"
-				        			style="width: 100%;margin-bottom: 15px;height: 32px;" />
-				        	<label>Plan</label>
-				        	<input type="text" 
-				        			class="k-textbox k-invalid" 
-				        			data-bind="value : obj.plan"
-				        			style="width: 100%;margin-bottom: 15px;height: 32px;" />
-				        	select data-role="dropdownlist"
-			                   data-value-primitive="true"
-			                   data-text-field="name"
-			                   data-value-field="id"
-			                   data-bind="
-			                   	source: planDS,
-			                   	value: obj.plan"
-			                   style="width: 100%;margin-bottom: 15px;" ></select
-				        </div>
-				        <div class="span4">
-				        	<label>Number Digit</label>
-				        	<input type="text" 
-				        			class="k-textbox k-invalid" 
-				        			data-bind="value : obj.number_digit"
-				        			style="width: 100%;margin-bottom: 15px;height: 32px;" />
-				        	<label>Map</label>
-				        	<input type="text" 
-				        			class="k-textbox k-invalid" 
-				        			data-bind="value : obj.map"
-				        			style="width: 100%;margin-bottom: 15px;height: 32px;" />
-				        </div>
-				        <div class="span4">
-				        	<label>Status</label>
-				        	<select data-role="dropdownlist"
-			                   data-value-primitive="true"
-			                   data-text-field="name"
-			                   data-value-field="id"
-			                   data-bind="
-			                   	source: selectType,
-			                   	value: obj.status"
-			                   style="width: 100%;margin-bottom: 15px;" ></select>
-			                <label>Starting No.</label>
-				        	<input type="text" 
-				        			class="k-textbox k-invalid" 
-				        			data-bind="value : obj.starting_no"
-				        			style="width: 100%;margin-bottom: 15px;height: 32px;" />
-				        </div>
-			        </div> -->	
+			        <h2>Meter</h2><br>
+			       
 			       	<div class="span12 row">			       		
 			       		<!-- Top Part -->
 				    	<div class="row-fluid">
@@ -2157,7 +2071,7 @@
 						              			data-bind="value: obj.number"
 								                placeholder="eg. 001" 
 								                data-required-msg="required"
-								                style="width: 100%;" />
+								                style="width: 96%;" />
 										</div>
 										<!-- // Group END -->											
 									</div>
@@ -2172,7 +2086,7 @@
 						              		<input class="k-textbox"					    
 						              			data-bind="value: obj.number_digit"
 								                placeholder="eg. 1" required data-required-msg="required"
-								                style="width: 100%" />
+								                style="width: 96%" />
 										</div>
 										<!-- // Group END -->											
 									</div>
@@ -2262,7 +2176,7 @@
 							        <div class="tab-pane active" id="tab1">
 						            	<table class="table table-borderless table-condensed cart_total">	      		
 								            <tr>
-								                <td><span >Start Up Reading</span></td>
+								                <td><span>Start Up Number</span></td>
 								              	<td>
 						            				<input class="k-textbox" data-bind="value: obj.starting_no" 
 														placeholder="e.g. 0" style="width: 100%;" />			
@@ -2285,7 +2199,7 @@
 										                   data-value-primitive="true"
 										                   data-text-field="name"
 										                   data-value-field="id"
-										                   data-bind="" 
+										                   data-bind="source: locationDS, value: obj.location_id" 
 										                   style="width: 100%;" />
 								              	</td>							            								              	
 								            	<td><span >Plan</span></td>
@@ -2295,7 +2209,7 @@
 										                   data-value-primitive="true"
 										                   data-text-field="name"
 										                   data-value-field="id"
-										                   data-bind="" 
+										                   data-bind="source: planDS, value: obj.plan_id"
 										                   style="width: 100%;" />
 								              	</td>							            	
 								            </tr>
@@ -2315,7 +2229,7 @@
 							<div class="span3">
 							</div>
 							<div class="span9" align="right">
-								<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit, click: save" style="width: 80px;margin:0;"><i></i> <span>Add</span></span>
+								<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit, click: save" style="width: 80px;margin:0;"><i></i> <span>Save</span></span>
 								<span id="saveClose" data-bind="click: cancel" class="btn btn-icon btn-success glyphicons power" style="width: 80px;"><i></i> <span>Cancel</span></span>		
 							</div>
 						</div>
@@ -2360,9 +2274,7 @@
 <!--  Reading  -->
 <script id="Reading" type="text/x-kendo-template">
 	<div  class="row-fluid saleSummaryCustomer">
-		<span class="glyphicons no-js remove_2 pull-right" 
-	    				onclick="javascript:window.history.back()"
-						data-bind="click: cancel"><i></i></span>	
+		<span class="glyphicons no-js remove_2 pull-right" data-bind="click: cancel"><i></i></span>	
 		<!-- Tabs -->
 		<div class="relativeWrap" data-toggle="source-code">
 			<div class="widget widget-tabs widget-tabs-double-2 widget-tabs-gray">
@@ -2393,8 +2305,8 @@
 							<div class="fileupload fileupload-new margin-none" data-provides="fileupload">
 							  	<input type="file"  data-role="upload" data-show-file-list="true" data-bind="events: {select: onSelected}" id="myFile"  class="margin-none" />
 							</div>
-							<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 160px!important;"><i></i>
-							<span data-bind="click: importReading">Start Reading</span></span>
+							<span class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 160px!important;"><i></i>
+							<span data-bind="click: save">Start Reading</span></span>
 						</div>
 						<!-- // Tab content END -->
 					</div>
@@ -2404,6 +2316,107 @@
 		</div>
 		<!-- // Tabs END -->
 	</div>
+</script>
+<script id="EditReading" type="text/x-kendo-template">
+	<div  class="row-fluid saleSummaryCustomer">
+		<span class="glyphicons no-js remove_2 pull-right" data-bind="click: cancel"><i></i></span>	
+		<!-- Tabs -->
+		<div class="relativeWrap" data-toggle="source-code">
+			<div class="widget widget-tabs widget-tabs-double-2 widget-tabs-gray">
+				<!-- // Tabs Heading END -->
+				
+				<div class="widget-body">
+					<div class="tab-content">
+						<div id="loadImport" style="display:none;text-align: center;position: absolute;width: 100%; height: 70%;background: rgba(142, 159, 167, 0.8);z-index: 9999;">
+							<i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 35%;left: 45%"></i>
+						</div>
+						<!-- Tab content -->
+						<div id="tabContact" style="border: 1px solid #ccc" class="tab-pane active widget-body-regular">
+							
+							<h4 class="separator bottom" style="margin-top: 10px;">Edit Reading</h4>
+							<a data-bind="click: exportEXCEL" style="position: absolute;top: 13px;right:10px;">
+								<span id="saveClose" class="btn btn-icon btn-success glyphicons download" style="width: 200px!important;">
+									<i></i> 
+									<span >Download Reading file</span>
+								</span>
+							</a>
+							<div class="fileupload fileupload-new margin-none" >
+							  	<table class="table table-borderless table-condensed cart_total">
+							  		<thead>
+				                		<tr>
+				                			<th>Meter Number</th>
+				                			<th style="text-align: center">Date</th>
+				                			<th>Previous</th>
+				                			<th>Current</th>
+				                			<th>Usage</th>
+				                			<th style="text-align: center">Action</th>
+				                		</tr>
+				                	</thead>
+				                	<tbody 
+				                		data-bind="source: dataSource" 
+				                		data-auto-bind="true" 
+				                		data-role="listview" 
+				                		data-edit-template="readding-edit-template"
+				                		data-template="reading-list-template">
+				                	</tbody>
+							  	</table>
+							</div>
+						</div>
+						<!-- // Tab content END -->
+					</div>
+				</div>
+				<div id="ntf1" data-role="notification"></div>
+			</div>
+		</div>
+		<!-- // Tabs END -->
+	</div>
+</script>
+<script id="reading-list-template" type="text/x-kendo-tmpl">                    
+    <tr>
+    	<td>
+    		#= number#
+   		</td>
+   		<td align="center">
+    		#= date#
+   		</td>
+   		<td align="center">
+    		#= previous#
+   		</td>
+   		<td align="center">
+    		#= current#
+   		</td>
+   		<td align="center">
+    		#= current - previous#
+   		</td>
+   		<td align="center">   			   
+		    <a class="btn-action glyphicons pencil btn-success k-edit-button" ><i></i></a>
+   		</td>   		
+   	</tr>
+</script>
+<script id="readding-edit-template" type="text/x-kendo-tmpl">
+	<tr>
+		<td>
+            #= number#
+        </td>
+		<td align="center">
+            <input type="text" class="k-textbox" data-bind="value:date" name="ProductName" required="required" validationMessage="required" />
+        </td>
+		<td align="center">
+            <input type="text" class="k-textbox" data-bind="value:previous" name="abbr" required="required" validationMessage="required" />
+        </td>
+        <td align="center">
+            <input type="text" class="k-textbox" data-bind="value:current" name="abbr" required="required" validationMessage="required" />
+        </td>
+        <td align="center">
+            
+        </td>
+		<td align="center">
+	        <div class="edit-buttons">
+	            <a class="k-button k-update-button" href="\\#"><span class="k-icon k-update"></span></a>
+	            <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-cancel"></span></a>
+	        </div>
+	    </td>
+	</tr>
 </script>
 
 <script id="customerDeposit" type="text/x-kendo-template">
@@ -3249,6 +3262,7 @@
 <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/js/libs/localforage.min.js"></script>
 <script src="http://cdnjs.cloudflare.com/ajax/libs/jszip/2.4.0/jszip.js"></script>
 <script src="https://maps.googleapis.com/maps/api/js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/xlsx.js"></script>
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/water/water.css" />
 <script>
 	localforage.config({
@@ -6969,12 +6983,23 @@
 		list 		: [],
 		pageLoad    : function(id){
 			if(id){
-
+				this.loadObj(id);
 			}else{
 				this.addNew();
 				this.itemDS.read();
 				this.addItem();
 			}
+		},
+		loadObj 	: function(id){
+			var self = this;	
+			this.dataSource.query({    			
+				filter: { field:"id", value: id },
+				page: 1,
+				take: 100
+			}).then(function(e){
+				var view = self.dataSource.view();
+				self.setCurrent(view[0]);
+			});
 		},
 		onChange 	: function(e) {
 			var data = e.data,
@@ -7011,11 +7036,14 @@
 			banhji.router.navigate('/setting');
 		},
 		save 		: function() {
-			var dfd = $.Deferred();
+			var dfd = $.Deferred(), self = this;
 			banhji.plan.dataSource.sync();
 			banhji.plan.dataSource.bind('requestEnd', function(e){
-				if(e.response.results) {
-					dfd.resolve(e.response.results);
+				if(e.type != 'read') {
+					if(e.response.results) {
+						dfd.resolve(e.response.results);
+					}
+					self.cancel();
 				}
 			});
 			banhji.plan.dataSource.bind('error', function(e){
@@ -7141,7 +7169,8 @@
 		typeFlat 			: [{id:"0", name: "Not Flat"},{id:"1", name: "Flat"}],
 		tariffItemFlat 		: 0,
 		tariffSelect 		: false,
-		planSelect 		: false,
+		tariffNameShow 		: null,
+		planSelect 			: false,
 		windowTariffItemVisible : false,
 		prefixDS			: new kendo.data.DataSource({
 			transport: {
@@ -7271,7 +7300,7 @@
         },
         saveTariffItem 		: function(e){
         	var data = e.data.id, self = this;
-        	console.log(data);
+        	this.tariffItemDS.data([]);
         	this.tariffItemDS.add({
         		name 		: this.get("tariffItemName"),
         		type     	: "tariff",
@@ -7291,15 +7320,15 @@
 			        	self.set("tariffItemAmount", "");
 			        	self.set("windowTariffItemVisible", false);
 			        	self.closeTariffWindowItem();
-			        	console.log(e);
+			        	// console.log(e);
 			        	self.tariffItemDS.filter({field: "tariff_id", value: self.get('current').id});
+			        	//self.set("tariffNameShow", e.data.name);
 	        		}
 	        	}
         	});
         	this.tariffItemDS.bind("error", function(e){
         		console.log("error");
         	});
-        	
         },
         addTariff 		: function(e){
         	var self = this;
@@ -7323,13 +7352,13 @@
         	this.planItemDS.bind("error", function(e){
         		console.log("error");
         	});
-
         },
         closeTariffWindowItem 	: function(){
         	this.set("windowTariffItemVisible", false);
         },
         viewTariffItem 		: function(e){
         	var data = e.data.id;
+        	this.set("tariffNameShow", e.data.name);
         	this.set("tariffSelect", true);
         	this.tariffItemDS.data([]);
         	this.tariffItemDS.filter({field: "tariff_id", value: data});
@@ -7385,31 +7414,20 @@
         	this.set("maintenanceName", "");
         	this.set("maintenancePrice", "");
         },
-        goInstallment   		: function(){
-        	this.planItemDS.data([]);
-        	this.planItemDS.filter({field: "type", value: "installment"});
-        },
-        addInstallment			: function(){
-        	this.planItemDS.add({
-        		name 		: this.get("installmentName"),
-        		type     	: "installment",
-        		is_flat   	: false,
-        		unit 		: null,
-        		usage 		: 0,
-        		amount 		: this.get("installmentPrice")
-        	});
-        	this.planItemDS.sync();
-        	this.set("installmentName", "");
-        	this.set("installmentPrice", "");
-        },
         goPlan 				: function(){
         	this.planDS.read();
+        	this.planItemDS.data([]);
+        	this.set("planSelect", false);
         },
         viewPlanItem 		: function(e){
-        	var data = e.data.id;
+        	var data = e.data;
+        	var idList = [];
+        	$.each(data.items, function(index, value){
+        		idList.push(value.item);
+        	});
         	this.set("planSelect", true);
-        	this.tariffItemDS.data([]);
-        	this.tariffItemDS.filter({field: "tariff_id", value: data});
+        	this.planItemDS.data([]);
+        	this.planItemDS.filter({field: "id", operator:"where_in", value: idList});
         },
 		pageLoad 			: function(){
 			this.txnTemplateDS.filter({ field: "moduls", value : "water_mg" });
@@ -8195,6 +8213,7 @@
 		lang 				: langVM,
 		dataSource  		: dataStore(apiUrl + "meters"),
 		planDS 				: dataStore(apiUrl + "plans"),
+		locationDS 			: dataStore(apiUrl + "locations"),
 		itemDS 				: null,
 		obj 				: null,
 		isEdit 				: false,
@@ -8220,17 +8239,17 @@
 			});
 		},
 		addEmpty 		 	: function(id){			
-			//this.dataSource.data([]);		
+			this.dataSource.data([]);		
 			this.set("obj", null);		
 			this.set("isEdit", false);		
 			this.dataSource.insert(0,{				
 				contact_id		: id,
 				number 			: null,
 				status 			: 1,
-				location 		: null,
+				location_id 	: 0,
 				latitute 		: null,
 				longtitute  	: null,
-				plan 			: null,
+				plan_id 		: 0,
 				registered_date : null,
 				map 			: null,
 				memo 			: null,
@@ -8243,22 +8262,19 @@
 			this.set("obj", obj);		
 		},
 		save 				: function() {
-			
 			var self = this;
 			if(this.dataSource.data().length > 0) {
-				//$("#loadImport").css("display","block");
 				this.dataSource.sync();
 				this.dataSource.bind("requestEnd", function(e){
 					if(e.type != 'read') {
 						if(e.response){				
 				    		$("#ntf1").data("kendoNotification").success("Successfully!");
-							window.history.back();
+							self.cancel();
 						}
 					}				    					  				
 			    });
 			    this.dataSource.bind("error", function(e){		    		    	
-					$("#ntf1").data("kendoNotification").error("Error!"); 
-					//$("#loadImport").css("display","none");				
+					$("#ntf1").data("kendoNotification").error("Error!"); 	
 			    });
 			}	
 		},
@@ -8337,7 +8353,7 @@
 	/*Reading*/
 	banhji.reading = kendo.observable({
 		lang 				: langVM,
-		dataSource  		: dataStore(apiUrl + "meters"),
+		dataSource  		: dataStore(apiUrl + "readings"),
 		itemDS 				: null,
 		obj 				: null,
 		isEdit 				: false,
@@ -8358,78 +8374,193 @@
 			var obj = this.dataSource.at(0);			
 			this.set("obj", obj);		
 		},
-		onSelected 			: function(){
+		onSelected 			: function(e){
 			$('li.k-file').remove();
+	        var files = e.files, self = this;
+	        $("#loadImport").css("display","block");
+	        var reader = new FileReader();
+			this.dataSource.data([]);	
+			reader.onload = function() {	
+				var data = reader.result;	
+				var result = {}; 						
+				var workbook = XLSX.read(data, {type : 'binary'});
+				workbook.SheetNames.forEach(function(sheetName) {
+					var roa = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
+					if(roa.length > 0){
+						result[sheetName] = roa;
+						for(var i = 0; i < roa.length; i++) {
+							self.dataSource.add(roa[i]);
+							$("#loadImport").css("display","none");	
+							console.log(roa[i]);
+						}							
+					}					
+				});															
+			}
+			reader.readAsBinaryString(files[0].rawFile);      
 		},
-		exportEXCEL 		: function(){
-			var workbook = new kendo.ooxml.Workbook({
-			  sheets: [
-			    {
-			      // Column settings (width)
-			      columns: [
-			        { autoWidth: true },
-			        { autoWidth: true }
-			      ],
-			      // Title of the sheet
-			      title: "Customers",
-			      // Rows of the sheet
-			      rows: [
-			        // First row (header)
-			        {
-			          cells: [
-			            // First cell
-			            { value: "number" },
-			            { value: "date" },
-			            { value: "previous" },
-			            { value: "reading" },
-			            { value: "current" }
-			          ]
-			        },
-			        // Second row (data)
-			        {
-			          cells: [
-			            { value: "1" },
-			            { value: "1" },
-			            { value: "1" },
-			            { value: "1" },
-			            { value: "1" }
-			          ]
-			        }
-			      ]
-			    }
-			  ]
-			});
-			kendo.saveAs({
-			    dataURI: workbook.toDataURL(),
-			    fileName: "reading.xlsx"
-			});
-		},
-		importReading 		: function(){
+		exportEXCEL 		: function(e){
+			$("#loadImport").css("display","block");
+			var ds = new kendo.data.DataSource({
+		        type: "json",
+		        transport: {
+		          read: apiUrl + "readings"
+		        },
+		        schema: {
+		          model: {
+		            fields: {
+		              number: { type: "number" },
+		              date: { type: "date" },
+		              previous: { type: "previous" },
+		              reading: { type: "reading" },
+		              current: { type: "current" }
+		            }
+		          }
+		        }
+		      });
 
+		      var rows = [{
+		        cells: [
+		          { value: "number" },
+		          { value: "date" },
+		          { value: "previous" },
+		          { value: "reading" },
+		          { value: "current" }
+		        ]
+		      }];
+		      ds.fetch(function(){
+		        var data = this.data();
+		        for (var i = 0; i < data[0].count; i++){
+		          rows.push({
+		            cells: [
+		              { value: data[0].results[i].number },
+		              { value: data[0].results[i].date },
+		              { value: data[0].results[i].previous },
+		              { value: data[0].results[i].reading },
+		              { value: data[0].results[i].current }
+		            ]
+		          })
+		        }
+		        var workbook = new kendo.ooxml.Workbook({
+		          sheets: [
+		            {
+		              columns: [
+		                { autoWidth: true },
+		                { autoWidth: true },
+		                { autoWidth: true },
+		                { autoWidth: true },
+		                { autoWidth: true }
+		              ],
+		              // Title of the sheet
+		              title: "Reading",
+		              // Rows of the sheet
+		              rows: rows
+		            }
+		          ]
+		        });
+		        //save the file as Excel file with extension xlsx
+		        kendo.saveAs({dataURI: workbook.toDataURL(), fileName: "Reading.xlsx"});
+		      }).then(function(){
+		      	$("#loadImport").css("display","none");
+		      });
 		},
 		save 				: function() {
+			var self = this;
 			if(this.dataSource.data().length > 0) {
-				//$("#loadImport").css("display","block");
+				$("#loadImport").css("display","block");
 				this.dataSource.sync();
 				this.dataSource.bind("requestEnd", function(e){
-			    	if(e.response){				
-			    		$("#ntf1").data("kendoNotification").success("Activated user successfully!");
-			    		//console.log(banhji.waterCenter.get('obj'));		
-						banhji.waterCenter.get('obj').set('user_water', 1);	
-						banhji.waterCenter.dataSource.sync();
-			    		window.history.back();
-						//$("#loadImport").css("display","none");
-					}				  				
+					if(e.type != 'read') {
+				    	if(e.response){				
+				    		$("#ntf1").data("kendoNotification").success("Activated user successfully!");
+				    		self.cancel();
+							$("#loadImport").css("display","none");
+						}	
+					}			  				
 			    });
 			    this.dataSource.bind("error", function(e){		    		    	
 					$("#ntf1").data("kendoNotification").error("Error activated!"); 
-					//$("#loadImport").css("display","none");				
+					$("#loadImport").css("display","none");				
 			    });
 			}	
-			
 		},
 		cancel 				: function(){
-			//this.dataSource.cancelChanges();		
+			this.dataSource.cancelChanges();		
+			window.history.back();
+		}
+	});
+	banhji.EditReading = kendo.observable({
+		lang 				: langVM,
+		dataSource  		: dataStore(apiUrl + "readings"),
+		pageLoad 			: function(id){
+			this.dataSource.read();
+		},
+		exportEXCEL 		: function(e){
+			$("#loadImport").css("display","block");
+			var ds = new kendo.data.DataSource({
+		        type: "json",
+		        transport: {
+		          read: apiUrl + "readings"
+		        },
+		        schema: {
+		          model: {
+		            fields: {
+		              number: { type: "number" },
+		              date: { type: "date" },
+		              previous: { type: "previous" },
+		              reading: { type: "reading" },
+		              current: { type: "current" }
+		            }
+		          }
+		        }
+		      });
+
+		      var rows = [{
+		        cells: [
+		          { value: "number" },
+		          { value: "date" },
+		          { value: "previous" },
+		          { value: "reading" },
+		          { value: "current" }
+		        ]
+		      }];
+		      ds.fetch(function(){
+		        var data = this.data();
+		        for (var i = 0; i < data[0].count; i++){
+		          rows.push({
+		            cells: [
+		              { value: data[0].results[i].number },
+		              { value: data[0].results[i].date },
+		              { value: data[0].results[i].previous },
+		              { value: data[0].results[i].reading },
+		              { value: data[0].results[i].current }
+		            ]
+		          })
+		        }
+		        var workbook = new kendo.ooxml.Workbook({
+		          sheets: [
+		            {
+		              columns: [
+		                { autoWidth: true },
+		                { autoWidth: true },
+		                { autoWidth: true },
+		                { autoWidth: true },
+		                { autoWidth: true }
+		              ],
+		              // Title of the sheet
+		              title: "Reading",
+		              // Rows of the sheet
+		              rows: rows
+		            }
+		          ]
+		        });
+		        //save the file as Excel file with extension xlsx
+		        kendo.saveAs({dataURI: workbook.toDataURL(), fileName: "Reading.xlsx"});
+		      }).then(function(){
+		      	$("#loadImport").css("display","none");
+		      });
+		},
+		cancel 				: function(){
+			this.dataSource.cancelChanges();		
 			window.history.back();
 		}
 	});
@@ -9557,6 +9688,7 @@
 		ActivateMeter: new kendo.Layout("#ActivateMeter", {model: banhji.ActivateMeter}),
 		plan: new kendo.Layout("#plan", {model: banhji.plan}),
 		reading: new kendo.Layout("#Reading", {model: banhji.reading}),
+		EditReading: new kendo.Layout("#EditReading", {model: banhji.EditReading}),
 		customerDeposit: new kendo.Layout("#customerDeposit", {model: banhji.customerDeposit}),
 		addLicense: new kendo.Layout("#addLicense", {model: banhji.addLicense}),
 		waterCenterContent: new kendo.Layout("#waterCenter-meter-tmpl", {model: banhji.waterCenter}),
@@ -9779,6 +9911,21 @@
 
 		if(banhji.pageLoaded["reading"]==undefined){
 			banhji.pageLoaded["reading"] = true;
+		}
+
+		vm.pageLoad();
+	});
+	banhji.router.route("/edit_reading", function(){		
+		banhji.view.layout.showIn("#content", banhji.view.EditReading);
+		banhji.view.layout.showIn('#menu', banhji.view.menu);
+		banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
+		
+		var vm = banhji.EditReading;
+
+		banhji.userManagement.addMultiTask("Edit Reading","Edit Reading",null);
+
+		if(banhji.pageLoaded["edit_reading"]==undefined){
+			banhji.pageLoaded["edit_reading"] = true;
 		}
 
 		vm.pageLoad();

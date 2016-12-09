@@ -60,18 +60,18 @@ class Readings extends REST_Controller {
 				//Results
 				$meter  = $value->meter->get();
 
-				$data["meta"] = array(
-										'meter_id' => $meter->id,
-										'meter_number' => $meter_number,
-										'meter_multiplier' => $meter_multiplier
-									);				
+				// 			$data["meta"] = array(
+				// 						'meter_id' => $meter->id,
+				// 						'meter_number' => $meter_number,
+				// 						'meter_multiplier' => $meter_multiplier
+				// 					);	
 				$data["results"][] = array(
 					"id" 			=> $value->id,
-					"prev"			=> $value->previous,
+					"previous"		=> $value->previous,
 					"current"		=> $value->current,
-					"from_date"		=> $value->from_date,
-					"usage" 		=> $value->usage,
-					"to_date"		=> $value->to_date
+					"date"			=> $value->from_date." - ".$value->to_date,
+					"number" 		=> $value->number,
+					"reading" 		=> $value->usage
 				);
 			}
 		}
@@ -86,23 +86,24 @@ class Readings extends REST_Controller {
 
 		foreach ($models as $value) {
 			$obj = new Meter_record(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			if($value->status == "n") {
-				$obj->meter_id = $value->meter_id;
-				$obj->previous = $value->prev;
-				$obj->current  = $value->current;
-				$obj->usage    = intval($value->current) - intval($value->prev);
-				$obj->from_date= $value->from_date;
-				$obj->to_date  = $value->to_date;
-			} elseif($value->status == "u") {
-				$obj->where('meter_id', $value->meter_id);
-				$obj->where('from_date', $value->from_date);
-				$obj->where('to_date', $value->to_date);
-				$obj->get();
-				// update with new value
-				$obj->previous = $value->prev;
-				$obj->current  = $value->current;
-				$obj->usage    = intval($value->current) - intval($value->prev);
-			}
+			//if($value->status == "n") {
+				$obj->meter_id 				= isset($value->meter_id)			?$value->meter_id: "";
+				$obj->previous 				= isset($value->previous)			?$value->previous: "";
+				$obj->current 				= isset($value->current)			?$value->current: "";
+				$obj->from_date 			= isset($value->from_date)			?$value->from_date: "";
+				$obj->to_date 				= isset($value->to_date)			?$value->to_date: "";
+				
+				$obj->usage    = intval($value->current) - intval($value->previous);
+			// } elseif($value->status == "u") {
+			// 	$obj->where('meter_id', $value->meter_id);
+			// 	$obj->where('from_date', $value->from_date);
+			// 	$obj->where('to_date', $value->to_date);
+			// 	$obj->get();
+			// 	// update with new value
+			// 	$obj->previous = $value->prev;
+			// 	$obj->current  = $value->current;
+			// 	$obj->usage    = intval($value->current) - intval($value->prev);
+			// }
 			
 			
 			if($obj->save()){								
@@ -133,12 +134,17 @@ class Readings extends REST_Controller {
 
 			$obj->where('id', $value->id);
 			$obj->get();
-			$obj->meter_id = $value->meter_id;
-			$obj->previous = $value->prev;
-			$obj->current  = $value->current;
-			$obj->usage    = intval($value->current) - intval($value->prev);
-			$obj->from_date= $value->from_date;
-			$obj->to_date  = $value->to_date;
+			// $obj->meter_id = $value->meter_id;
+			// $obj->previous = $value->prev;
+			// $obj->current  = $value->current;
+			// $obj->usage    = intval($value->current) - intval($value->prev);
+			// $obj->from_date= $value->from_date;
+			// $obj->to_date  = $value->to_date;
+			$obj->meter_id 				= isset($value->meter_id)			?$value->meter_id: "";
+			$obj->previous 				= isset($value->previous)			?$value->previous: "";
+			$obj->current 				= isset($value->current)			?$value->current: "";
+			$obj->from_date 			= isset($value->from_date)			?$value->from_date: "";
+			$obj->to_date 				= isset($value->to_date)			?$value->to_date: "";
 
 			if($obj->save()){
 				//Results
