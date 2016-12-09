@@ -3387,16 +3387,6 @@
 
 					<br>
 					<br>
-					<!-- <div>
-						As of:
-				        <input data-role="datepicker"
-								data-format="dd-MM-yyyy"
-								data-parse-formats="yyyy-MM-dd" 
-								data-bind="value: as_of" />
-
-			            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
-					</div> -->
-
 
 					<div class="row-fluid">
 						<!-- Tabs -->
@@ -3456,27 +3446,12 @@
 							<p data-bind="text: displayDate"></p>
 						</div>
 				    	
-				    	<!-- <div class="row-fluid journal_block1">
-							<div class="span2">
-								<p>&nbsp;</p>
-								<span>&nbsp;</span>
-							</div>
-							<div class="span5">
-								<p>Assets</p>
-								<span data-bind="text: totalAsset"></span>
-							</div>
-							<div class="span5">
-								<p>Liabilities + Equity</p>
-								<span data-format="n" data-bind="text: totalLiabilityEquity"></span>
-							</div>
-						</div> -->
-				    	
 						<table class="table table-borderless table-condensed" style="width: 70%; margin: 0 auto;">
 							<thead>
 								<tr>
-									<th>ASSETS</th>
-									<th width="15%"></th>
-									<th width="15%"></th>
+									<th style="background: none; color: #333;">ASSETS</th>
+									<th style="background: none;" width="15%"></th>
+									<th style="background: none;" width="15%"></th>
 								</tr>
 							</thead>
 							<tbody data-role="listview" 
@@ -3485,9 +3460,9 @@
 								data-bind="source: dataSource"></tbody>
 							<tfoot>
 								<tr>
-									<td style="font-weight: bold; font-size: large;">TOTAL ASSETS</td>
-									<td width="15%"></td>
-									<td width="15%" style="font-weight: bold; font-size: large;" align="right">
+									<td style="font-weight: bold; font-size: large; background: #1E4E78; color: #fff;">TOTAL ASSETS</td>
+									<td style="background: #1E4E78;" width="15%"></td>
+									<td width="15%" style="font-weight: bold; font-size: large; color: #fff; background: #1E4E78;" align="right">
 										<span data-bind="text: totalAsset"></span>
 									</td>
 								</tr>
@@ -3499,9 +3474,9 @@
 						<table class="table table-borderless table-condensed" style="width: 70%; margin: 0 auto;">
 							<thead>
 								<tr>
-									<th>LIABILITIES</th>
-									<th width="15%"></th>
-									<th width="15%"></th>
+									<th style="background: none; color: #333;">LIABILITIES</th>
+									<th style="background: none;" width="15%"></th>
+									<th style="background: none;" width="15%"></th>
 								</tr>
 							</thead>
 							<tbody data-role="listview"
@@ -3524,9 +3499,9 @@
 						<table class="table table-borderless table-condensed" style="width: 70%; margin: 0 auto;">
 							<thead>
 								<tr>
-									<th>EQUITY</th>
-									<th width="15%"></th>
-									<th width="15%"></th>
+									<th style="background: none; color: #333;">EQUITY</th>
+									<th style="background: none;" width="15%"></th>
+									<th style="background: none;" width="15%"></th>
 								</tr>
 							</thead>
 							<tbody data-role="listview"
@@ -44703,10 +44678,7 @@
 				});
 
 				//Equity
-				this.equityDS.filter([
-					{ field:"issued_date", value:kendo.toString(new Date(as_of), "yyyy-MM-dd") },
-					{ field:"account_type_id", value:[32,33,34] }
-				]);
+				this.equityDS.filter({ field:"issued_date", value:kendo.toString(new Date(as_of), "yyyy-MM-dd") });
 				var unReadEquity = true;
 				this.equityDS.bind("requestEnd", function(e){
 					if(e.type=="read" && unReadEquity){
@@ -51084,7 +51056,6 @@
 		amount_due 					: 0,
 		additional_cost 			: 0,
 		original_deposit			: 0,
-		original_total 				: 0,
 		user_id						: banhji.source.user_id,
 		pageLoad 			: function(id){
 			this.loadCashAccount();
@@ -51449,7 +51420,7 @@
 		//Additional Cost
 		addRowAdditionalCost: function(){
 			var self = this, obj = this.get("obj");
-			
+
 			this.additionalCostDS.add({				
 				contact_id 			: "",
 				payment_term_id		: 0,				
@@ -51567,7 +51538,7 @@
 						break;
 					}
 				}
-			}				
+			}
 		},
 		//Obj
 		loadObj 			: function(id){
@@ -51593,7 +51564,6 @@
 					var view = self.dataSource.view();
 
 					self.set("obj", view[0]);
-					self.set("original_total", view[0].amount);				
 
 					self.set("sub_total", kendo.toString(view[0].sub_total, "c", view[0].locale));
 					self.set("discount", kendo.toString(view[0].discount, "c", view[0].locale));
@@ -65456,27 +65426,33 @@
 		},
 		//Segment
 		transactionSegmentChanges  	: function() {									
-			dataArr = this.get("obj").segments,			
-			lastIndex = dataArr.length - 1;
+			var dataArr = this.get("obj").segments,
+			lastIndex = dataArr.length - 1,
+			last = this.segmentItemDS.get(dataArr[lastIndex]);
+			
 			if(dataArr.length > 1) {
 				for(var i = 0; i < dataArr.length - 1; i++) {
-					var current = this.segmentItemDS.get(dataArr[i]);
-					var last = this.segmentItemDS.get(dataArr[lastIndex]);
-					if(current.segment.id === last.segment.id) {
+					var current_index = dataArr[i],
+					current = this.segmentItemDS.get(current_index);
+
+					if(current.segment_id === last.segment_id) {
 						dataArr.splice(lastIndex, 1);
 						break;
 					}
 				}
 			}				
 		},
-		segmentChanges  	: function(e) {					
-			var dataArr = e.data.segments;			
-			var lastIndex = dataArr.length - 1;
+		segmentChanges  	: function(e) {		
+			var dataArr = e.data.segments,
+			lastIndex = dataArr.length - 1,
+			last = this.segmentItemDS.get(dataArr[lastIndex]);
+			
 			if(dataArr.length > 1) {
 				for(var i = 0; i < dataArr.length - 1; i++) {
-					var current = this.segmentItemDS.get(dataArr[i]);
-					var last = this.segmentItemDS.get(dataArr[lastIndex]);
-					if(current.segment.id === last.segment.id) {
+					var current_index = dataArr[i],
+					current = this.segmentItemDS.get(current_index);
+
+					if(current.segment_id === last.segment_id) {
 						dataArr.splice(lastIndex, 1);
 						break;
 					}

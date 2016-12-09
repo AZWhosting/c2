@@ -42,7 +42,7 @@ class Plans extends REST_Controller {
 
 		if($table->exists()) {
 			foreach($table as $value) {
-				$items = $value->plan_item->select('id as item, is_flat, type, unit, amount')->get_raw();
+				$items = $value->plan_item->select('id as item, name, is_flat, type, unit, amount')->get_raw();
 				$data[] = array(
 					'id' => $value->id,
 					'code' => $value->code,
