@@ -1533,7 +1533,8 @@ class Accounting_reports extends REST_Controller {
 		$prevRetainedEarning = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$prevRetainedEarning->include_related("account", array("number","name"));
 		$prevRetainedEarning->include_related("account/account_type", array("name","nature"));		
-		$prevRetainedEarning->where_related("account", "account_type_id", 34);
+		$prevRetainedEarning->where_related("account", "account_type_id >=", 34);
+		$prevRetainedEarning->where_related("account", "account_type_id <=", 43);
 		$prevRetainedEarning->where_related("transaction", "issued_date <=", $startDate);
 		$prevRetainedEarning->where_related("transaction", "is_recurring <>", 1);
 		$prevRetainedEarning->where_related("transaction", "deleted <>", 1);		
@@ -1567,10 +1568,9 @@ class Accounting_reports extends REST_Controller {
 		);
 
 		//CURRENT PROFIT FOR THE YEAR (startFiscalDate -> As Of)
-		$currPL = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$currPL->include_related("account", array("number","name"));
+		$currPL = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
 		$currPL->include_related("account/account_type", array("name","nature"));		
-		$currPL->where_related("account", "account_type_id >=", 35);
+		$currPL->where_related("account", "account_type_id >=", 34);
 		$currPL->where_related("account", "account_type_id <=", 43);
 		$currPL->where_related("transaction", "issued_date >", $startDate);
 		$currPL->where_related("transaction", "issued_date <=", $asOf);

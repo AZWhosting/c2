@@ -2525,6 +2525,53 @@
 	</div>
 </script>
 
+<script id="createInvoice" type="text/x-kendo-template">
+	<div  class="row-fluid saleSummaryCustomer">
+		<span class="glyphicons no-js remove_2 pull-right" data-bind="click: cancel"><i></i></span>	
+		<!-- Tabs -->
+		<div class="relativeWrap" data-toggle="source-code">
+			<div class="widget widget-tabs widget-tabs-double-2 widget-tabs-gray">
+				<!-- // Tabs Heading END -->
+				
+				<div class="widget-body">
+					<div class="tab-content">
+						<!-- Tab content -->
+						<div id="tabContact" style="border: 1px solid #ccc" class="tab-pane active widget-body-regular">
+							
+							<h4 class="separator bottom" style="margin-top: 10px;">Create Invoice</h4>
+							
+							<div class="fileupload fileupload-new margin-none" >
+							  	<table class="table table-borderless table-condensed cart_total">
+							  		<thead>
+				                		<tr>
+				                			<th>Meter Number</th>
+				                			<th style="text-align: center">Date</th>
+				                			<th>Previous</th>
+				                			<th>Current</th>
+				                			<th>Usage</th>
+				                			<th style="text-align: center">Action</th>
+				                		</tr>
+				                	</thead>
+				                	<tbody 
+				                		data-bind="source: dataSource" 
+				                		data-auto-bind="true" 
+				                		data-role="listview" 
+				                		data-edit-template="readding-edit-template"
+				                		data-template="reading-list-template">
+				                	</tbody>
+							  	</table>
+							</div>
+						</div>
+						<!-- // Tab content END -->
+					</div>
+				</div>
+				<div id="ntf1" data-role="notification"></div>
+			</div>
+		</div>
+		<!-- // Tabs END -->
+	</div>
+</script>
+
 <script id="customerDeposit" type="text/x-kendo-template">
 	<div id="slide-form">
 		<div class="customer-background">
@@ -3241,46 +3288,6 @@
 **************************** -->
 
 <script id="waterMenu" type="text/x-kendo-template">
-	<!-- <ul class="topnav">
-	  	<li><a href='#/' class='glyphicons home'><i></i></a></li>
-	  	<li role='presentation' class='dropdown'>
-	  		<a class='dropdown-toggle' data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false'><span data-bind="text: lang.lang.customer"></span> <span class='caret'></span></a>
-  			<ul class='dropdown-menu'>  				
-  				<li><a href='#/wCustomer_center'><span >Customer Center</span></a></li>
-  				<li><a href='#/wNew_customer'><span data-bind="text: lang.lang.new_customer"></span></a></li>
-  				<li><a href='#/wCustomer_order'><span data-bind="text: lang.lang.reorder_customer"></span></a></li>  				
-  			</ul>
-	  	</li>	  	
-	  	<li role="presentation" class=""><a href="#/water_center">Center</a></li>
-	  	<li role='presentation' class='dropdown'>
-	  		<a class='dropdown-toggle' data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false'><span data-bind="text: lang.lang.reading"></span> <span class='caret'></span></a>
-  			<ul class='dropdown-menu'> 
-  				<li><a href='#/wReading'><span data-bind="text: lang.lang.take_reading"></span></a></li>
-  				<li><a href='#/wIR_reader'><span data-bind="text: lang.lang.ir_reader"></span></a></li>  				
-  				<li><a href='#/wReading_book'><span data-bind="text: lang.lang.reading_book"></span></a></li>
-  				<li><a href='#/wReading_center'><span data-bind="text: lang.lang.edit_reading"></span></a></li>  				 
-  			</ul>
-	  	</li>
-	  	<li role='presentation' class='dropdown'>
-	  		<a class='dropdown-toggle' data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false'><span data-bind="text: lang.lang.invoice"></span> <span class='caret'></span></a>
-  			<ul class='dropdown-menu'> 
-  				<li><a href='#/wInvoice'><span data-bind="text: lang.lang.invoice"></span></a></li>
-  				<li><a href='#/wPrint_center'><span data-bind="text: lang.lang.print"></span></a></li>  				  								 
-  			</ul>
-	  	</li>	  	
-	  	<li><a href='#/cashier'><span data-bind="text: lang.lang.cashier"></span></a></li>	  	
-	  	<li role='presentation' class='dropdown'>
-	  		<a class='dropdown-toggle' data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false'><span data-bind="text: lang.lang.inventory"></span> <span class='caret'></span></a>
-  			<ul class='dropdown-menu'>  				
-  				<li><a href='#/wInventory_item'><span data-bind="text: lang.lang.inventory_center"></span></a></li>
-  				<li><a href='#/item'><span data-bind="text: lang.lang.new_item"></span></a></li>
-  				<li><a href='#/item_catalog'><span data-bind="text: lang.lang.new_catalog"></span></a></li>
-  				<li><a href='#/item_assembly'><span data-bind="text: lang.lang.new_assembly"></span></a></li>  				 				 				
-  			</ul>
-	  	</li>
-	  	<li><a href='#/wReport_center'><span data-bind="text: lang.lang.report"></span></a></li>	  	
-	  	<li><a href='#/setting' class='glyphicons settings'><i></i></a></li>
-	</ul> -->
 	<ul class="topnav pull-left">
 	  	<li><a href='#/' class='glyphicons show_big_thumbnails'><i></i></a></li>
 	  	<li><a href='#/center'><span data-bind="text: lang.lang.center"></span></a></li>
@@ -3294,7 +3301,7 @@
   				<li><a href='#/reading_book'><span >Reading Book</span></a></li>
   				<li><a href='#/edit_reading'><span >Edit Reading</span></a></li>
   				<li><span class="li-line"></span></li>
-  				<li><a href='#/calculate_invoice'><span >Calculate Invoice</span></a></li> 
+  				<li><a href='#/create_invoice'><span >Calculate Invoice</span></a></li> 
   				<li><a href='#/print_invoice'><span >Print Invoice</span></a></li>
   				<li><span class="li-line"></span></li>
   				<li><a href='#/import'><span >Import</span></a></li>
@@ -8804,6 +8811,37 @@
 		}
 	});
 
+	banhji.createInvoice = kendo.observable({
+		lang 				: langVM,
+		pageLoad 			: function(id){
+			
+		},   
+		save 				: function() {
+			var self = this;
+			if(this.dataSource.data().length > 0) {
+				$("#loadImport").css("display","block");
+				this.dataSource.sync();
+				this.dataSource.bind("requestEnd", function(e){
+					if(e.type != 'read') {
+				    	if(e.response){				
+				    		$("#ntf1").data("kendoNotification").success("Activated user successfully!");
+				    		self.cancel();
+							$("#loadImport").css("display","none");
+						}	
+					}			  				
+			    });
+			    this.dataSource.bind("error", function(e){		    		    	
+					$("#ntf1").data("kendoNotification").error("Error activated!"); 
+					$("#loadImport").css("display","none");				
+			    });
+			}	
+		},
+		cancel 				: function(){
+			this.dataSource.cancelChanges();		
+			window.history.back();
+		}
+	});
+
 	banhji.customerDeposit =  kendo.observable({
 		lang 				: langVM,
 		dataSource 			: dataStore(apiUrl + "transactions"),
@@ -9936,6 +9974,7 @@
 		addAccountingprefix: new kendo.Layout("#addAccountingprefix", {model: banhji.addAccountingprefix}),
 
 		waterImport: new kendo.Layout("#waterImport", {model: banhji.waterImport}),
+		createInvoice: new kendo.Layout("#createInvoice", {model: banhji.createInvoice}),
 
 		//custom form
 		invoiceCustom: new kendo.Layout("#invoiceCustom", {model: banhji.invoiceCustom}),
@@ -10184,6 +10223,22 @@
 
 		if(banhji.pageLoaded["import"]==undefined){
 			banhji.pageLoaded["import"] = true;
+		}
+
+		vm.pageLoad();
+	});
+
+	banhji.router.route("/create_invoice", function(){		
+		banhji.view.layout.showIn("#content", banhji.view.createInvoice);
+		banhji.view.layout.showIn('#menu', banhji.view.menu);
+		banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
+		
+		var vm = banhji.createInvoice;
+
+		banhji.userManagement.addMultiTask("Create Invoice","create_invoice",null);
+
+		if(banhji.pageLoaded["create_invoice"]==undefined){
+			banhji.pageLoaded["create_invoice"] = true;
 		}
 
 		vm.pageLoad();
