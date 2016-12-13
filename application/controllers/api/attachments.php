@@ -105,6 +105,7 @@ class Attachments extends REST_Controller {
 					"size"				=> (($value->size) / 1024) /1024,
 					"user" 				=> $user->exists() ? array('id' => $user->id, 'name' => $user->name):array(),
 					'attachedTo'		=> $attachedTo,
+					"license_id" 		=> $value->license_id,
 					"deleted"			=> $value->deleted,
 					"created_at" 		=> $value->created_at,
 					"updated_at" 		=> $value->updated_at
@@ -137,6 +138,7 @@ class Attachments extends REST_Controller {
 			isset($value->description) 		? $obj->description 	= $value->description : "";
 			isset($value->key) 				? $obj->key 			= $value->key : "";
 			isset($value->url) 				? $obj->url 			= $value->url : "";
+			isset($value->license_id) 		? $obj->license_id 		= $value->license_id : "";
 			isset($value->deleted) 			? $obj->deleted 		= $value->deleted : "";
 			isset($value->size) 			? $obj->size 			= $value->size : "";
 			isset($value->created_at) 		? $obj->created_at 		= $value->created_at : "";
@@ -153,6 +155,7 @@ class Attachments extends REST_Controller {
 					"description" 		=> $obj->description,
 					"key" 				=> $obj->key,
 					"url" 				=> $obj->url,
+					"license_id" 		=> $obj->license_id,
 					"deleted"			=> $obj->deleted,
 					"created_at" 		=> $obj->created_at,
 					"updated_at" 		=> $obj->updated_at
@@ -184,6 +187,7 @@ class Attachments extends REST_Controller {
 			isset($value->size) 			? $obj->size 			= $value->size : "";
 			isset($value->key) 				? $obj->key 			= $value->key : "";			
 			isset($value->url) 				? $obj->url 			= $value->url : "";
+			isset($value->license_id) 		? $obj->license_id 		= $value->license_id : "";
 			isset($value->deleted) 			? $obj->deleted 		= $value->deleted : "";
 
 			if($obj->save()){				
@@ -198,6 +202,7 @@ class Attachments extends REST_Controller {
 					"description" 		=> $obj->description,
 					"key" 				=> $obj->key,
 					"url" 				=> $obj->url,
+					"license_id" 		=> $obj->license_id,
 					"deleted"			=> $obj->deleted,
 					"created_at" 		=> $obj->created_at,
 					"updated_at" 		=> $obj->updated_at
