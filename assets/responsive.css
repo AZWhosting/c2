@@ -79,7 +79,8 @@
 #ddlJob-list,
 #ddlAccount-list,
 #ddlCategory-list,
-#ddlName-list
+#ddlName-list,
+#txtMeasurement-list
 {
   width: 350px !important;
 }

@@ -56,6 +56,7 @@ class Meters extends REST_Controller {
 
 		if($obj->result_count()>0){			
 			foreach ($obj as $value) {
+				$contact = $value->contact->get_raw();
 				// $invoice = new Invoice(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 				// $invoice->where("id", $value->invoice_id);
 
@@ -67,13 +68,16 @@ class Meters extends REST_Controller {
 					"id" 					=> $value->id,
 					"number" 				=> $value->number,
 					"status" 				=> $value->status,
-					"contact_id" 			=> $value->contact_id,
+					"contact" 				=> $contact->result(),
 					"number_digit"			=> $value->number_digit,
 					"plan_id"				=> $value->plan_id,
 					"map" 					=> $value->latitute,
 					"starting_no" 			=> $value->startup_reading,
 					"location_id" 			=> $value->location_id,
-					"activated" 			=> $value->activated
+					"activated" 			=> $value->activated,
+					"latitute" 				=> $value->latitute,
+					"longtitute" 			=> $value->longtitute,
+					"date_used" 			=> $value->date_used
 				);
 			}
 		}
@@ -110,11 +114,11 @@ class Meters extends REST_Controller {
 			$obj->ear_sealed 			= isset($value->ear_sealed)			?$value->ear_sealed:true;
 			$obj->cover_sealed 			= isset($value->cover_sealed)		?$value->cover_sealed:true;
 			// $obj->memo 					= $value->memo;
-			$obj->longtitute 			= $value->map;
-			// $obj->latitute 				= $value->latitute;
+			$obj->longtitute 			= isset($value->longtitute) 		?$value->longtitute: "";
+			$obj->latitute 				= isset($value->latitute) 			?$value->latitute: "";
 			$obj->status 				= isset($value->status)				?$value->status:1;
 			$obj->location_id 			= isset($value->location_id)		?$value->location_id:"";
-			$obj->date_used 			= isset($value->date_used) 			?date("Y-m-d", strtotime($value->date_used)):'0000-00-00';
+			$obj->date_used= isset($value->date_used)?date("Y-m-d", strtotime($value->date_used)):'0000-00-00';
 			
 			$obj->number_digit 			= isset($value->number_digit)		?$value->number_digit:4;
 			$obj->plan_id 				= isset($value->plan_id)			?$value->plan_id:0;
@@ -127,7 +131,10 @@ class Meters extends REST_Controller {
 					"latitute" 				=> $obj->map,	
 					"plan_id" 				=> $obj->plan_id,	
 					"location_id" 			=> $obj->location_id,
-					"activated" 			=> $obj->activated
+					"activated" 			=> $obj->activated,
+					"latitute" 				=> $obj->latitute,
+					"longtitute" 			=> $obj->longtitute,
+					"date_used" 			=> $obj->date_used
 				);					
 			}			
 		}
@@ -172,12 +179,12 @@ class Meters extends REST_Controller {
 			$obj->ear_sealed 			= isset($value->ear_sealed)			?$value->ear_sealed:true;
 			$obj->cover_sealed 			= isset($value->cover_sealed)		?$value->cover_sealed:true;
 			// $obj->memo 					= $value->memo;
-			$obj->longtitute 			= $value->map;
-			// $obj->latitute 				= $value->latitute;
+			$obj->longtitute 			= isset($value->longtitute) 		?$value->longtitute: "";
+			$obj->latitute 				= isset($value->latitute) 			?$value->latitute: "";
 			$obj->status 				= isset($value->status)				?$value->status:1;
 			$obj->location_id 			= isset($value->location_id)		?$value->location_id:"";
-			$obj->date_used 			= isset($value->date_used) 			?date("Y-m-d", strtotime($value->date_used)):'0000-00-00';
-			
+			$obj->date_used = isset($value->date_used)?date("Y-m-d", strtotime($value->date_used)):'0000-00-00';
+			echo $obj->date_used;
 			$obj->number_digit 			= isset($value->number_digit)		?$value->number_digit:4;
 			$obj->plan_id 				= isset($value->plan_id)			?$value->plan_id:0;
 
@@ -191,7 +198,10 @@ class Meters extends REST_Controller {
 					"latitute" 				=> $obj->map,	
 					"plan_id" 				=> $obj->plan_id,	
 					"location_id" 			=> $obj->location_id,
-					"activated" 			=> $obj->activated
+					"activated" 			=> $obj->activated,
+					"latitute" 				=> $obj->latitute,
+					"longtitute" 			=> $obj->longtitute,
+					"date_used" 			=> $obj->date_used
 				);					
 			}
 		}

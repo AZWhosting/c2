@@ -88,13 +88,13 @@ class Installments extends REST_Controller {
 
 		foreach ($models as $value) {
 			$obj = new Installment(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			$obj->biller_id 	= $value->biller_id;
-			$obj->contact_id 	= $value->contact_id;
-			$obj->start_month 	= $value->start_month;
-			$obj->amount 		= $value->amount;
+			$obj->biller_id 		= $value->biller_id;
+			$obj->contact_id 		= $value->contact_id;
+			$obj->start_month 		= $value->start_month;
+			$obj->amount 			= $value->amount;
 			$obj->period 			= $value->period;
-			$obj->payment_number 		= $value->payment_number;
-			$obj->invoiced 		= $value->invoiced;
+			$obj->payment_number 	= $value->payment_number;
+			$obj->invoiced 			= $value->invoiced;
 
 			if($obj->save()){
 				for($x=0; $x < $obj->payment_number; $x++) {
