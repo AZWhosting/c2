@@ -1439,8 +1439,7 @@ class Accounting_reports extends REST_Controller {
 		$typeID = [];
 		if(!empty($filters) && isset($filters)){
 	    	$asOf = $filters[0]["value"];
-	    	$obj->where_in_related("account", "account_type_id", $filters[1]["value"]);		 			
-		}		
+		}	
 
 		//Fiscal Date
 		//Note: selecting date must greater than startFiscalDate AND smaller or equal to endFiscalDate		
@@ -1454,17 +1453,18 @@ class Accounting_reports extends REST_Controller {
 			$endDate 	= $asOfYear ."-". $this->fiscalDate;
 		}
 		
-		//OBJ (To Start Fiscal Date)
+		//OBJ (As Of)
+		$obj->where_in_related("account", "account_type_id", array(32,33));
 		$obj->include_related("account", array("account_type_id","number","name"));
 		$obj->include_related("account/account_type", array("sub_of_id","name","nature"));		
-		$obj->where_related("transaction", "issued_date <=", $startDate);
-		$obj->where_related("transaction", "is_recurring", 0);
-		$obj->where_related("transaction", "deleted", 0);
-		$obj->where("deleted", 0);
+		$obj->where_related("transaction", "issued_date <=", $asOf);
+		$obj->where_related("transaction", "is_recurring <>", 1);
+		$obj->where_related("transaction", "deleted <>", 1);
+		$obj->where("deleted <>", 1);
 		$obj->order_by_related("account", "account_type_id", "desc");
 		$obj->order_by_related("account", "number", "asc");		
 		$obj->get_iterated();
-		
+
 		//Sum Dr and Cr					
 		$objList = [];
 		foreach ($obj as $value) {
@@ -1529,17 +1529,54 @@ class Accounting_reports extends REST_Controller {
 			}			
 		}
 
-		//CURRENT PROFIT AND LOSS (startFiscalDate to As Of) => Profit for the year
-		$currPL = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$currPL->include_related("account", array("number","name"));
+		//PREVIOUSE RETAINED EARNING (Beginning -> startFiscalDate)
+		$prevRetainedEarning = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$prevRetainedEarning->include_related("account", array("number","name"));
+		$prevRetainedEarning->include_related("account/account_type", array("name","nature"));		
+		$prevRetainedEarning->where_related("account", "account_type_id >=", 34);
+		$prevRetainedEarning->where_related("account", "account_type_id <=", 43);
+		$prevRetainedEarning->where_related("transaction", "issued_date <=", $startDate);
+		$prevRetainedEarning->where_related("transaction", "is_recurring <>", 1);
+		$prevRetainedEarning->where_related("transaction", "deleted <>", 1);		
+		$prevRetainedEarning->where("deleted <>", 1);
+		$prevRetainedEarning->get_iterated();
+
+		//Sum dr and cr
+		$sumDr = 0;
+		$sumCr = 0;		
+		foreach ($prevRetainedEarning as $value) {			
+			if($value->dr>0){
+				$sumDr += floatval($value->dr) / floatval($value->rate);
+			}
+			if($value->cr>0){
+				$sumCr += floatval($value->cr) / floatval($value->rate);
+			}		
+		}
+		$prevRetainedEarningAmount = $sumCr - $sumDr;
+		$totalAmount += $prevRetainedEarningAmount;
+
+		$typeList[34]["id"] 			= 34;
+		$typeList[34]["sub_of_id"] 		= 3;
+		$typeList[34]["sub_of_name"] 	= "Equity";
+		$typeList[34]["multiplier"] 	= 1;
+		$typeList[34]["type"] 			= "Retained Earning";		
+		$typeList[34]["line"][] 		= array(
+			"id" 		=> 0,
+			"number" 	=> "",
+			"name" 		=> "Retained Earning",
+			"amount" 	=> $prevRetainedEarningAmount
+		);
+
+		//CURRENT PROFIT FOR THE YEAR (startFiscalDate -> As Of)
+		$currPL = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
 		$currPL->include_related("account/account_type", array("name","nature"));		
-		$currPL->where_related("account", "account_type_id >=", 35);
+		$currPL->where_related("account", "account_type_id >=", 34);
 		$currPL->where_related("account", "account_type_id <=", 43);
 		$currPL->where_related("transaction", "issued_date >", $startDate);
 		$currPL->where_related("transaction", "issued_date <=", $asOf);
-		$currPL->where_related("transaction", "is_recurring", $is_recurring);
-		$currPL->where_related("transaction", "deleted", $deleted);		
-		$currPL->where("deleted", $deleted);
+		$currPL->where_related("transaction", "is_recurring <>", 1);
+		$currPL->where_related("transaction", "deleted <>", 1);		
+		$currPL->where("deleted <>", 1);
 		$currPL->get_iterated();
 
 		//Sum dr and cr
@@ -1553,18 +1590,15 @@ class Accounting_reports extends REST_Controller {
 				$sumCr += floatval($value->cr) / floatval($value->rate);
 			}		
 		}
-
-		$currentPLAmount = $sumCr - $sumDr;		
-		if(isset($typeList[34])){
-			$typeList[34]["line"][] = array(
-				"id" 		=> 0,
-				"number" 	=> "",
-				"name" 		=> "Profit For The Year",
-				"amount" 	=> $currentPLAmount
-			);
-
-			$totalAmount += $currentPLAmount;
-		}
+		$currentPLAmount = $sumCr - $sumDr;
+		$totalAmount += $currentPLAmount;
+		
+		$typeList[34]["line"][] 		= array(
+			"id" 		=> 0,
+			"number" 	=> "",
+			"name" 		=> "Profit For The Year",
+			"amount" 	=> $currentPLAmount
+		);
 		//END CURRENT PROFIT AND LOSS		
 		
 		//Group by sub_of_id

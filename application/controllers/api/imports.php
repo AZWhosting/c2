@@ -386,9 +386,9 @@ class Imports extends REST_Controller {
 
 		foreach($journals as $journal) {
 			$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			$obj->number = $journal['number'];
+			$obj->number = isset($journal['number']) ? $journal['number'] : "";
 			$obj->type = "Journal";
-			$obj->memo = $journal['items'][0]['memo'];
+			$obj->memo = isset($journal['items'][0]['memo']) ? $journal['items'][0]['memo'] : "";
 			$obj->journal_type = "Journal";
 			$obj->issued_date = date("Y-m-d", strtotime($journal['date']));
 			$obj->amount = $journal['amount'];

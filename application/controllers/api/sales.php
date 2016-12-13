@@ -109,13 +109,17 @@ class Sales extends REST_Controller {
 			}
 		} else {
 			$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			$type->where('parent_id', 1)->get();
+			$type->select('id')->where('parent_id', 1)->get();
+			foreach($type as $t) {
+				$types[] = $t->id;
+			}
 
 			// $obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			$obj->where_related("contact", 'contact_type_id', $type);
+			$obj->where_in_related("contact", 'contact_type_id', $type);
+			$obj->where_in("type", array("Invoice", "Cash_Sale", "Sale_Return"));
 			$obj->where('is_recurring', 0);
 			$obj->where("deleted",0);
-			$obj->where_in("type", array("Invoice", "Cash_Sale", "Sale_Return"));
+			
 			// $obj->include_related("contact_type", "name");
 
 		
@@ -288,9 +292,13 @@ class Sales extends REST_Controller {
 			// $obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
 			$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			$type->where('parent_id', 1)->get();
+			$type->select('id')->where('parent_id', 1)->get();
+			$types = array();
+			foreach($type as $t) {
+				$types[] = $t->id;
+			}
 
-			$obj->where_related("contact", 'contact_type_id', $type);
+			$obj->where_in_related("contact", 'contact_type_id', $types);
 			$obj->where_in("type", array("Invoice", "Cash_Sale", "Sale_Return"));
 			$obj->where('is_recurring', 0);
 			$obj->where("deleted",0);
@@ -479,9 +487,13 @@ class Sales extends REST_Controller {
 		} else {
 
 			$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			$type->where('parent_id', 1)->get();
+			$type->select('id')->where('parent_id', 1)->get();
+			$types = array();
+			foreach($type as $t) {
+				$types[] = $t->id;
+			}
 
-			$obj->where_related("contact", 'contact_type_id', $type);
+			$obj->where_in_related("contact", 'contact_type_id', $type);
 			$obj->where_in("type", array("Invoice", "Cash_Sale", "Deposit", "Cash_Receipt", "Sale_Return"));
 			$obj->where('is_recurring', 0);
 			$obj->where("deleted",0);
@@ -683,9 +695,13 @@ class Sales extends REST_Controller {
 
 
 			$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			$type->where('parent_id', 1)->get();
+			$type->select('id')->where('parent_id', 1)->get();
+			$types = array();
+			foreach($type as $t) {
+				$types[] = $t->id;
+			}
 
-			$obj->where_related("contact", 'contact_type_id', $type);
+			$obj->where_in_related("contact", 'contact_type_id', $type);
 			$obj->where('is_recurring', 0);
 			$obj->where("type", "Invoice");
 			$obj->where("deleted",0);
@@ -824,7 +840,11 @@ class Sales extends REST_Controller {
 		}
 
 		$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$type->where('parent_id', 1)->get();
+		$type->select('id')->where('parent_id', 1)->get();
+			$types = array();
+			foreach($type as $t) {
+				$types[] = $t->id;
+			}
 
 		$customer = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$customer->where('deleted <>', 1);
@@ -1008,7 +1028,11 @@ class Sales extends REST_Controller {
 		}
 
 		$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$type->where('parent_id', 1)->get();
+		$type->select('id')->where('parent_id', 1)->get();
+			$types = array();
+			foreach($type as $t) {
+				$types[] = $t->id;
+			}
 
 		$customer = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$customer->where('deleted <>', 1);
@@ -1138,7 +1162,6 @@ class Sales extends REST_Controller {
 	}
 
 
-
 	// item or service classified as list
 	function summary_list_get() {
 		$filters 	= $this->get("filter")["filters"];
@@ -1195,10 +1218,13 @@ class Sales extends REST_Controller {
 			}									 			
 		}
 
-		// $type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_banhji');
-		// $type->where('parent_id', 1)->get();
-
-		// $obj->where_related("contact", 'contact_type_id', $type);
+		$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$type->select('id')->where('parent_id', 1)->get();
+			$types = array();
+			foreach($type as $t) {
+				$types[] = $t->id;
+			}
+		$obj->where_in_related("contact", 'contact_type_id', $types);
 		$obj->where_in("type", array("Invoice", "Cash_Sale", "Sale_Return"));
 		$obj->where('is_recurring', 0);
 		$obj->where("deleted",0);
@@ -1313,10 +1339,14 @@ class Sales extends REST_Controller {
 		}
 
 
-		// $type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, `);
-		// $type->where('parent_id', 1)->get();
+		$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$type->select('id')->where('parent_id', 1)->get();
+			$types = array();
+			foreach($type as $t) {
+				$types[] = $t->id;
+			}
 
-		// $obj->where_related("contact", 'contact_type_id', $type);
+		$obj->where_in_related("contact", 'contact_type_id', $types);
 		$obj->where('is_recurring', 0);
 		$obj->where_in("type", array("Invoice", "Cash_Sale", "Sale_Return"));
 		$obj->where("deleted",0);
@@ -1491,9 +1521,13 @@ class Sales extends REST_Controller {
 		} else {
 
 			$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			$type->where('parent_id', 1)->get();
+			$type->select('id')->where('parent_id', 1)->get();
+			$types = array();
+			foreach($type as $t) {
+				$types[] = $t->id;
+			}
 			$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			$obj->where_related("contact", 'contact_type_id', $type);
+			$obj->where_in_related("contact", 'contact_type_id', $type);
 			$obj->where("type", "Deposit");
 			$obj->where('is_recurring', 0);
 			$obj->where("deleted",0);
@@ -1607,9 +1641,13 @@ class Sales extends REST_Controller {
 
 
 		$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$type->where('parent_id', 1)->get();
+		$type->select('id')->where('parent_id', 1)->get();
+			$types = array();
+			foreach($type as $t) {
+				$types[] = $t->id;
+			}
 
-		$obj->where_related("contact", 'contact_type_id', $type);
+		$obj->where_in_related("contact", 'contact_type_id', $type);
 		$obj->where_in("type", array("Invoice", "Cash_Sale", "Deposit"));
 		$obj->where('job_id <>', 0);
 		$obj->where('is_recurring', 0);
@@ -1812,9 +1850,13 @@ class Sales extends REST_Controller {
 
 
 			$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			$type->where('parent_id', 1)->get();
+			$type->select('id')->where('parent_id', 1)->get();
+			$types = array();
+			foreach($type as $t) {
+				$types[] = $t->id;
+			}
 
-			$obj->where_related("contact", 'contact_type_id', $type);
+			$obj->where_in_related("contact", 'contact_type_id', $type);
 			$obj->where("type", "Invoice");
 			$obj->where('is_recurring', 0);
 			$obj->where("deleted",0);
@@ -2051,9 +2093,13 @@ class Sales extends REST_Controller {
 
 
 			$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			$type->where('parent_id', 1)->get();
+			$type->select('id')->where('parent_id', 1)->get();
+			$types = array();
+			foreach($type as $t) {
+				$types[] = $t->id;
+			}
 
-			$obj->where_related("contact", 'contact_type_id', $type);
+			$obj->where_in_related("contact", 'contact_type_id', $type);
 			$obj->where("type", "Invoice");
 			$obj->where('is_recurring', 0);
 			$obj->where("deleted",0);
@@ -2270,9 +2316,13 @@ class Sales extends REST_Controller {
 		} else {
 
 			$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			$type->where('parent_id', 1)->get();
+			$type->select('id')->where('parent_id', 1)->get();
+			$types = array();
+			foreach($type as $t) {
+				$types[] = $t->id;
+			}
 
-			$obj->where_related("contact", 'contact_type_id', $type);
+			$obj->where_in_related("contact", 'contact_type_id', $type);
 			$obj->where("type", "Invoice");
 			$obj->where_in("status", array(0,2));
 			$obj->where('is_recurring', 0);
@@ -2478,9 +2528,13 @@ class Sales extends REST_Controller {
 
 
 			$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			$type->where('parent_id', 1)->get();
+			$type->select('id')->where('parent_id', 1)->get();
+			$types = array();
+			foreach($type as $t) {
+				$types[] = $t->id;
+			}
 
-			$obj->where_related("contact", 'contact_type_id', $type);
+			$obj->where_in_related("contact", 'contact_type_id', $type);
 			$obj->where("type", "Invoice");
 			$obj->where_in('status', array(1, 2));
 			$obj->where('is_recurring', 0);
@@ -2828,7 +2882,11 @@ class Sales extends REST_Controller {
 
 		// checked if the logic is customer or segment
 		$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$type->where('parent_id', 1)->get();
+		$type->select('id')->where('parent_id', 1)->get();
+			$types = array();
+			foreach($type as $t) {
+				$types[] = $t->id;
+			}
 
 		$customer = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$customer->where('deleted <>', 1);

@@ -91,17 +91,19 @@ class Winvoices extends REST_Controller {
 				// plan items
 				$items = $plan->plan_item->get();
 				foreach($items as $item) {
-					$tmp["$meter->number"]['items'][] = array(
-												"$item->type" => array(
-													'id'   => $item->id,
-													'from' => $item->from,
-													'to'   => $item->to,
-													'prev' =>0,
-													'current'=>0,
-													'usage' => 0,
-													'unit'  => $item->unit,
-													'amount'=> $item->amount
-												));
+					// if($item->type == 'tariff') {
+						$tmp["$meter->number"]['items'][] = array(
+						"$item->type" => array(
+							'id'   => $item->id,
+							'from' => $item->from,
+							'to'   => $item->to,
+							'prev' =>0,
+							'current'=>0,
+							'usage' => 0,
+							'unit'  => $item->unit,
+							'amount'=> $item->amount
+						));
+					// }						
 				}
 
 				// installment
@@ -191,7 +193,7 @@ class Winvoices extends REST_Controller {
 					}
 					$paid->where("is_recurring",0);
 					$paid->where("deleted",0);
-					$paid->get();
+					$paid->get(); 
 					$amount_paid = floatval($paid->amount) + floatval($paid->discount);
 				}
 
@@ -652,6 +654,6 @@ class Winvoices extends REST_Controller {
 		$this->response($data, 200);
 	}
 
-
+}
 /* End of file winvoices.php */
 /* Location: ./application/controllers/api/categories.php */

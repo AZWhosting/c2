@@ -7,7 +7,7 @@ class Branch extends DataMapper {
 	
 	public $has_one = array(		
 		'currency' => array(
-			"class" => 'currency',
+			"class" => 'currency', 
 			"other_field" => "branch"
 		)
 	);

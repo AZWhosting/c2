@@ -42,8 +42,9 @@ class Plans extends REST_Controller {
 
 		if($table->exists()) {
 			foreach($table as $value) {
-				$items = $value->plan_item->select('id, is_flat, type, unit, amount')->get_raw();
+				$items = $value->plan_item->select('id as item, name, is_flat, type, unit, amount')->get_raw();
 				$data[] = array(
+					'id' => $value->id,
 					'code' => $value->code,
 					'name' => $value->name,
 					'items' => $items->result()
@@ -63,10 +64,11 @@ class Plans extends REST_Controller {
 			$table->name = $row->name;
 			if($table->save()) {
 				$items = array();
+
 				foreach($row->items as $item) {
-					$related_table = new Plan_item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-					$related_table->where($item->id)->get();
-					if($related_table->save($table->id)) {
+					$related_table = new Plan_item(null, null, null, null, $this->_database);
+					$related_table->where('id', $item->item)->get();
+					if($table->save($related_table)) {
 						$items[] = array(
 							'id' => $related_table->id,
 							'is_flat' => $related_table->is_flat,
@@ -105,7 +107,7 @@ class Plans extends REST_Controller {
 				$items = array();
 				foreach($row->items as $item) {
 					$related_table = new Plan_item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-					$related_table->where($item->id)->get();
+					$related_table->where('id', $item->item)->get();
 					if($related_table->save($table)) {
 						$items[] = array(
 							'id' => $related_table->id,

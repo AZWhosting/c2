@@ -95,7 +95,7 @@ class Branches extends REST_Controller {
 			isset($value->name) 				? $obj->name 				= $value->name : "";
 			isset($value->abbr) 				? $obj->abbr 				= $value->abbr : "";
 			isset($value->representative) 		? $obj->representative 		= $value->representative : "";
-			isset($value->currency) 			? $obj->currency 			= $value->currency : "";
+			isset($value->currency) 			? $obj->currency_id 		= $value->currency : "";
 			isset($value->status) 				? $obj->status 				= $value->status : "";
 			isset($value->expire_date) 			? $obj->expire_date 		= $value->expire_date : "";
 			isset($value->max_customer) 		? $obj->max_customer 		= $value->max_customer : "";

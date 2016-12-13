@@ -12,10 +12,7 @@ class Plan extends DataMapper {
 	);
 
 	public $has_many = array(
-		'plan_item' => array(
-			'class' => "plan_item",
-			'other_field' => 'plan'
-		)
+		'plan_item'
 	);
 
 	public function __construct($id = null, $server_name = null, $db_username = null, $server_password = null, $db = null) {

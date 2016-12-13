@@ -69,9 +69,10 @@ class Meters extends REST_Controller {
 					"status" 				=> $value->status,
 					"contact_id" 			=> $value->contact_id,
 					"number_digit"			=> $value->number_digit,
-					"plan"					=> $value->plan_id,
+					"plan_id"				=> $value->plan_id,
 					"map" 					=> $value->latitute,
 					"starting_no" 			=> $value->startup_reading,
+					"location_id" 			=> $value->location_id,
 					"activated" 			=> $value->activated
 				);
 			}
@@ -112,10 +113,11 @@ class Meters extends REST_Controller {
 			$obj->longtitute 			= $value->map;
 			// $obj->latitute 				= $value->latitute;
 			$obj->status 				= isset($value->status)				?$value->status:1;
+			$obj->location_id 			= isset($value->location_id)		?$value->location_id:"";
 			$obj->date_used 			= isset($value->date_used) 			?date("Y-m-d", strtotime($value->date_used)):'0000-00-00';
 			
 			$obj->number_digit 			= isset($value->number_digit)		?$value->number_digit:4;
-			$obj->plan_id 				= isset($value->plan->id)			?$value->plan->id:0;
+			$obj->plan_id 				= isset($value->plan_id)			?$value->plan_id:0;
 			if($obj->save()){	
 				$data[] = array(
 					"id" 					=> $obj->id,
@@ -123,50 +125,10 @@ class Meters extends REST_Controller {
 					"status" 				=> $obj->status,
 					"number_digit" 			=> $obj->number_digit,
 					"latitute" 				=> $obj->map,	
-					"plan" 					=> $obj->plan,	
+					"plan_id" 				=> $obj->plan_id,	
+					"location_id" 			=> $obj->location_id,
 					"activated" 			=> $obj->activated
-				);							
-				//Respsone
-				// $data["results"][] = array(
-				// 	"id" 					=> $obj->id,
-				// 	"branch_id" 			=> $obj->branch_id, 		
-				// 	"utility_id" 			=> $obj->utility_id,
-				// 	"deposit_id" 			=> $obj->deposit_id,
-				// 	"invoice_id" 			=> $obj->invoice_id,
-				// 	"contact_id" 			=> $obj->contact_id, 		
-				// 	"location_id" 			=> $obj->location_id,
-				// 	"ampere_id" 			=> $obj->ampere_id,
-				// 	"phase_id" 				=> $obj->phase_id,
-				// 	"voltage_id" 			=> $obj->voltage_id,
-				// 	"electricity_box_id"	=> $obj->electricity_box_id,					
-				// 	"item_id" 				=> $obj->item_id,
-				// 	"tariff_id" 			=> $obj->tariff_id,
-				// 	"exemption_id" 			=> $obj->exemption_id,
-				// 	"maintenance_id" 		=> $obj->maintenance_id,
-				// 	"reactive_of"			=> $obj->reactive_of,			
-				// 	"backup_of" 			=> $obj->backup_of, 						
-				// 	"number" 				=> $obj->number,								
-				// 	"multiplier" 			=> $obj->multiplier,			
-				// 	"max_number" 			=> $obj->max_number,
-				// 	"startup_reading" 		=> $obj->startup_reading,											
-				// 	"ear_sealed"			=> $obj->ear_sealed=="true"?true:fasle,
-				// 	"cover_sealed" 			=> $obj->cover_sealed=="true"?true:fasle,					
-				// 	"memo" 					=> $obj->memo,
-				// 	"longtitute" 			=> $obj->longtitute,
-				// 	"latitute" 				=> $obj->latitute,		
-				// 	"status" 				=> $obj->status,
-				// 	"date_used" 			=> $obj->date_used,
-
-				// 	"item" 					=> $obj->item->get_raw()->result(),
-					
-				// 	"tariff" 				=> $obj->tariff->get_raw()->result(),
-				// 	"exemption" 			=> $obj->exemption->get_raw()->result(),
-				// 	"maintenance" 			=> $obj->maintenance->get_raw()->result(),
-
-				// 	"ampere" 				=> $obj->ampere->get_raw()->result(),
-				// 	"phase" 				=> $obj->phase->get_raw()->result(),
-				// 	"voltage" 				=> $obj->voltage->get_raw()->result()
-				// );				
+				);					
 			}			
 		}
 		$count = count($data);
@@ -213,10 +175,11 @@ class Meters extends REST_Controller {
 			$obj->longtitute 			= $value->map;
 			// $obj->latitute 				= $value->latitute;
 			$obj->status 				= isset($value->status)				?$value->status:1;
+			$obj->location_id 			= isset($value->location_id)		?$value->location_id:"";
 			$obj->date_used 			= isset($value->date_used) 			?date("Y-m-d", strtotime($value->date_used)):'0000-00-00';
 			
 			$obj->number_digit 			= isset($value->number_digit)		?$value->number_digit:4;
-			$obj->plan_id 				= isset($value->plan->id)			?$value->plan->id:0;
+			$obj->plan_id 				= isset($value->plan_id)			?$value->plan_id:0;
 
 			if($obj->save()){
 				//Results
@@ -226,7 +189,8 @@ class Meters extends REST_Controller {
 					"status" 				=> $obj->status,
 					"number_digit" 			=> $obj->number_digit,
 					"latitute" 				=> $obj->map,	
-					"plan" 					=> $obj->plan,	
+					"plan_id" 				=> $obj->plan_id,	
+					"location_id" 			=> $obj->location_id,
 					"activated" 			=> $obj->activated
 				);					
 			}
