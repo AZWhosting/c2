@@ -69,7 +69,26 @@ class Districts extends REST_Controller {
 		//Response Data		
 		$this->response($data, 200);		
 	}
-	 
+	// function index_post() {
+	// 	$models = json_decode($this->post('models'));
+
+	// 	foreach ($models as $value) {
+	// 		$obj = new District(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+	// 		isset($value->province_id) 	? $obj->province_id = $value->province_id : "";
+	// 		isset($value->name_local) 	? $obj->name_local = $value->name_local : "";
+
+	// 		if($obj->save()){
+	// 			//Respsone
+	// 			$data["results"][] = array(
+	// 				"province_id" 				=> $obj->province_id,
+	// 				"name_local" 				=> $obj->name_local
+	// 			);
+	// 		}
+	// 	}
+	// 	$data["count"] = count($data["results"]);
+
+	// 	$this->response($data, 201);
+	// }
 	
 }
 /* End of file categories.php */

@@ -504,19 +504,19 @@
 			</table>
 			<table class="table table-borderless table-condensed table-vertical-center ">
 				<tr>	
-					<td class="center">
+					<td class="center" style="vertical-align: top;">
 						<a href="#/journal">
 							<img title="Add Account" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/journal.png" width="110" height="200" />
 							<span data-bind="text: lang.lang.journal" style="margin-top: 7px; display: inline-block; text-transform: uppercase;"></span>
 						</a>						
 					</td>					
-					<td class="center">
+					<td class="center" style="vertical-align: top;">
 						<a href="#/cash_transaction">
 							<img title="Add Cash Transaction" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/cash_transaction.png" width="110" height="200" />
 							<span data-bind="text: lang.lang.cash_transaction" style="margin-top: 7px; display: inline-block; text-transform: uppercase;"></span>
 						</a>						
 					</td>
-					<td class="center">
+					<td class="center" style="vertical-align: top;">
 						<a href="#/cash_advance">
 							<img title="Add Cash Advance" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/cash_advance.png" width="110" height="200" />
 							<span data-bind="text: lang.lang.cash_advance" style="margin-top: 7px; display: inline-block; text-transform: uppercase;"></span>
@@ -38892,7 +38892,7 @@
 	  	<li role='presentation' class='dropdown'>
 	  		<a class='dropdown-toggle glyphicons text_bigger' data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false'><i></i> <span class='caret'></span></a>
   			<ul class='dropdown-menu'>
-  				<li><a href='#/tax'><span data-bind="text: lang.lang.add_transaction_item"></span></a></li>  	
+  				<li><a href='#/txn_item'><span data-bind="text: lang.lang.add_transaction_item"></span></a></li>  	
   				<li><a href='#/account'><span data-bind="text: lang.lang.add_account"></span></a></li>
   				<li><a href='#/segment'><span data-bind="text: lang.lang.add_segment"></span></a></li> 
   				<li> <span class="li-line"></span></li>
