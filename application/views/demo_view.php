@@ -43054,7 +43054,7 @@
 			sub = this.dataSource.get(data.sub_of_id),
 			type = this.accountTypeDS.get(data.account_type_id);
 			
-			if(data.sub_of_id>0){
+			if(sub && data.sub_of_id>0){
 				this.set("subName", sub.name);
 			}else{
 				this.set("subName", "");
