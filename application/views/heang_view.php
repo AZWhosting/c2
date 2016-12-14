@@ -2228,6 +2228,30 @@
 			</div> -->
 
 			<div class="row-fluid recevable-report">
+				<h2>Cash</h2>
+				<div class="row-fluid">
+					<table class="table table-borderless table-condensed">
+						<tr>
+							<td >
+								<h3><a href="#/cash_position_report">Cash Position Report</a></h3>
+							</td>
+							<td >
+								<h3><a href="#/cash_collection_report">Cash Collection Report</a></h3>
+							</td>						
+						</tr>
+						<tr>
+							<td >
+								<h3><a href="#/cash_payment_report">Cash Payment Report</a></h3>
+							</td>
+							<td ></td>						
+						</tr>
+
+					</table>
+				</div>
+			</div>
+
+
+			<div class="row-fluid recevable-report">
 				<h2>OTHER REPORTS/ LISTS</h2>
 				<div class="row-fluid">
 					<table class="table table-borderless table-condensed">
@@ -4817,6 +4841,133 @@
 					</table>
 				</div>		
 			</div>
+		</div>
+	</div>
+</script>
+
+
+<script id="cashPositionReport" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background ">
+			<div class="container-960">	
+				<div id="example" class="k-content saleSummaryCustomer">
+
+					<span class="glyphicons no-js remove_2 pull-right" 
+							onclick="javascript: window.history.back()"><i></i></span>
+					<br>
+					<br>
+
+					<div class="block-title">
+						<h3 data-bind="text: company.name"></h3>
+						<h2>Cash Position Report</h2>
+						<p data-bind="text: displayDate"></p>
+					</div>		    
+					
+					<br><br>
+
+		        </div>		        
+			</div>							
+		</div>
+	</div>
+</script>
+<script id="cashCollectionReport" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background ">
+			<div class="container-960">	
+				<div id="example" class="k-content saleSummaryCustomer">
+
+					<span class="glyphicons no-js remove_2 pull-right" 
+							onclick="javascript: window.history.back()"><i></i></span>
+					<br>
+					<br>
+
+					<div class="block-title">
+						<h3 data-bind="text: company.name"></h3>
+						<h2>Cash Collection Report</h2>
+						<p>As of Date: November 30 2016</p>
+					</div>		    
+					
+					<br><br>
+
+					<table class="table table-borderless table-condensed">
+						<tr>
+							<th>Amount</th>
+							<th>Date</th>
+							<th>Type</th>
+							<th>Supplier</th>
+							<th>Bill</th>
+							<th style="text-align: right;">Cash Payment</th>
+						</tr>
+						<tr>
+							<td>1</td>
+							<td>2</td>
+							<td>3</td>
+							<td>4</td>
+							<td>5</td>
+							<td style="text-align: right;">6</td>
+						</tr>
+						<tr>
+							<td>1</td>
+							<td>2</td>
+							<td>3</td>
+							<td>4</td>
+							<td>5</td>
+							<td style="text-align: right;">6</td>
+						</tr>
+					</table>
+
+		        </div>		        
+			</div>							
+		</div>
+	</div>
+</script>
+<script id="cashPaymentReport" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background ">
+			<div class="container-960">	
+				<div id="example" class="k-content saleSummaryCustomer">
+
+					<span class="glyphicons no-js remove_2 pull-right" 
+							onclick="javascript: window.history.back()"><i></i></span>
+					<br>
+					<br>
+
+					<div class="block-title">
+						<h3 data-bind="text: company.name"></h3>
+						<h2>Cash Payment Report</h2>
+						<p>As of Date: November 30 2016</p>
+					</div>		    
+					
+					<br><br>
+					<table class="table table-borderless table-condensed">
+						<tr>
+							<th>Amount</th>
+							<th>Date</th>
+							<th>Type</th>
+							<th>Supplier</th>
+							<th>Bill</th>
+							<th style="text-align: right;">Cash Payment</th>
+						</tr>
+						<tr>
+							<td>1</td>
+							<td>2</td>
+							<td>3</td>
+							<td>4</td>
+							<td>5</td>
+							<td style="text-align: right;">6</td>
+						</tr>
+						<tr>
+							<td>1</td>
+							<td>2</td>
+							<td>3</td>
+							<td>4</td>
+							<td>5</td>
+							<td style="text-align: right;">6</td>
+						</tr>
+					</table>
+
+		        </div>		        
+			</div>							
 		</div>
 	</div>
 </script>
@@ -72359,6 +72510,11 @@
 		accountingRecurring: new kendo.Layout("#accountingRecurring", {model: banhji.accountingRecurring}),
 		addAccountingprefix: new kendo.Layout("#addAccountingprefix", {model: banhji.addAccountingprefix}),
 
+
+		cashPositionReport: new kendo.Layout("#cashPositionReport", {model: banhji.cashPositionReport}),
+		cashCollectionReport: new kendo.Layout("#cashCollectionReport", {model: banhji.cashCollectionReport}),
+		cashPaymentReport: new kendo.Layout("#cashPaymentReport", {model: banhji.cashPaymentReport}),
+
 		segment: new kendo.Layout("#segment", {model: banhji.segment}),
 		transactionListDate: new kendo.Layout("#transactionListDate", {model: banhji.transactionListDate}),
 		recentTransactionsList: new kendo.Layout("#recentTransactionsList", {model: banhji.recentTransactionsList}),
@@ -74595,6 +74751,64 @@
 			vm.pageLoad();
 		}
 	});
+
+
+
+	banhji.router.route("/cash_position_report", function(){
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{
+			banhji.view.layout.showIn("#content", banhji.view.cashPositionReport);
+			banhji.view.layout.showIn('#menu', banhji.view.menu);
+			banhji.view.menu.showIn('#secondary-menu', banhji.view.accountingMenu);
+
+			var vm = banhji.cashPositionReport;			
+			banhji.userManagement.addMultiTask("Cash Position Report","cash_position_report",null);
+			if(banhji.pageLoaded["cash_position_report"]==undefined){
+				banhji.pageLoaded["cash_position_report"] = true;				
+								
+			}
+
+			vm.pageLoad();
+		}
+	});
+	banhji.router.route("/cash_collection_report", function(){
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{
+			banhji.view.layout.showIn("#content", banhji.view.cashCollectionReport);
+			banhji.view.layout.showIn('#menu', banhji.view.menu);
+			banhji.view.menu.showIn('#secondary-menu', banhji.view.accountingMenu);
+
+			var vm = banhji.cashCollectionReport;			
+			banhji.userManagement.addMultiTask("Cash Collection Report","cash_collection_report",null);
+			if(banhji.pageLoaded["cash_collection_report"]==undefined){
+				banhji.pageLoaded["cash_collection_report"] = true;				
+								
+			}
+
+			vm.pageLoad();
+		}
+	});
+	banhji.router.route("/cash_payment_report", function(){
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{
+			banhji.view.layout.showIn("#content", banhji.view.cashPaymentReport);
+			banhji.view.layout.showIn('#menu', banhji.view.menu);
+			banhji.view.menu.showIn('#secondary-menu', banhji.view.accountingMenu);
+
+			var vm = banhji.cashPaymentReport;			
+			banhji.userManagement.addMultiTask("Cash Payment Report","cash_payment_report",null);
+			if(banhji.pageLoaded["cash_payment_report"]==undefined){
+				banhji.pageLoaded["cash_payment_report"] = true;				
+								
+			}
+
+			vm.pageLoad();
+		}
+	});
+
 
 	/*************************
 	*   Tax Section   *

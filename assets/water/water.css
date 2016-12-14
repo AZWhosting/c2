@@ -57,3 +57,9 @@ p.addItem.glyphicons.circle_remove i:before {
 .tab-pane .span2, .tab-pane .span1 {
     padding-left: 0;
 }
+.k-state-default {
+	padding-right: 40px;
+}
+.k-state-default .k-input {
+	width: 96%!important;
+}

@@ -79,7 +79,8 @@
 #ddlJob-list,
 #ddlAccount-list,
 #ddlCategory-list,
-#ddlName-list
+#ddlName-list,
+#txtMeasurement-list
 {
   width: 350px !important;
 }
@@ -1658,6 +1659,7 @@ width: 50% !important;
 }
 .account-stement table{
    text-align: left;
+   width: 100%;
 }
 .account-stement table tr td {
     padding: 5px 0 5px 15px;
