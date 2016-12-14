@@ -211,6 +211,7 @@ class Readings extends REST_Controller {
 		}			
 
 		//Get Result
+		$obj->where('activated', 1);
 		$obj->get_paged_iterated($page, $limit);
 		$data["count"] = $obj->paged->total_rows;		
 
@@ -228,9 +229,9 @@ class Readings extends REST_Controller {
 				$data["results"][] = array(
 					"meter_id" 		=> $value->id,
 					"number" 		=> intval($value->number),
-					"prev"			=> $record->current,
+					"previous"			=> $record->current ==,
 					"current"		=> 0,
-					"from_date"		=> "2016-" . date('m') . "-01",
+					"date"			=> "2016-" . date('m') . "-01",
 					"to_date"		=> "2016-" . date('m') . "-" . date('t'),
 					"status" 		=> "n"
 				);

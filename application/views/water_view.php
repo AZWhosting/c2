@@ -2674,6 +2674,7 @@
 <!--  End Meter  -->
 <!--  Reading  -->
 <script id="Reading" type="text/x-kendo-template">
+	<h2>Reading</h2>
 	<span class="glyphicons no-js remove_2 pull-right" data-bind="click: cancel"><i></i></span>	
 	<div  class="row-fluid saleSummaryCustomer" style="padding-top: 30px;">
 		
@@ -2684,7 +2685,10 @@
 				<!-- Tabs Heading -->
 				<div class="widget-head">
 					<ul style="padding-left: 1px;">
-						<li class="active"><a class="glyphicons inbox_in" href="#tabContact" data-toggle="tab"><i></i><span style="line-height: 55px;">Reading</span></a></li>
+						<li class="active"><a class="glyphicons inbox_in" href="#tabDownload" data-toggle="tab"><i></i><span style="line-height: 55px;">Download</span></a></li>
+
+						<li ><a class="glyphicons inbox_out" href="#tabReading" data-toggle="tab"><i></i><span style="line-height: 55px;">Upload</span></a></li>
+						
 					</ul>
 				</div>
 				<!-- // Tabs Heading END -->
@@ -2695,15 +2699,83 @@
 							<i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 35%;left: 45%"></i>
 						</div>
 						<!-- Tab content -->
-						<div id="tabContact" style="border: 1px solid #ccc" class="tab-pane active widget-body-regular">
-							
-							<h4 class="separator bottom" style="margin-top: 10px;">Please upload reading book</h4>
+						<div id="tabDownload" style="border: 1px solid #ccc" class="tab-pane active widget-body-regular">
+							<h4 class="separator bottom" style="margin-top: 10px;">Please Select Query</h4>
+						  	<div class="span12 row-fluid" style="padding:20px 0;padding-top: 0;">
+					        	<div class="span5" style="padding-left: 0;">
+						        	<div class="span6">	
+										<!-- Group -->
+										<div class="control-group">								
+											<label ><span >Month Of</span></label>
+								            <input type="text" 
+							                	style="width: 100%;" 
+							                	data-role="datepicker"
+							                	data-format="MM-yyyy"
+							                	data-start="year" 
+								  				data-depth="year" 
+							                	placeholder="Moth of ..." 
+									           	data-bind="value: monthOfSelect" />
+										</div>
+																										
+										<!-- // Group END -->
+									</div>
+									<div class="span6" style="padding-left: 0;">
+										<div class="control-group">								
+											<label ><span >License</span></label>
+											<input 
+												data-role="dropdownlist" 
+												style="width: 100%;" 
+												data-option-label="License ..." 
+												data-auto-bind="false" 
+												data-value-primitive="true" 
+												data-text-field="name" 
+												data-value-field="id" 
+												data-bind="
+													value: licenseSelect,
+				                  					source: licenseDS,
+				                  					events: {change: onLicenseChange}">
+				                  		</div>
+									</div>	
+								</div>
+								<div class="span7" style="padding-left: 0;">
+									<div class="span4">
+										<div class="control-group">								
+											<label ><span >Location</span></label>
+											<input 
+												data-role="dropdownlist" 
+												style="width: 100%;" 
+												data-option-label="Location ..." 
+												data-auto-bind="false" 
+												data-value-primitive="true" 
+												data-text-field="name" 
+												data-value-field="id" 
+												data-bind="
+													value: blocSelect,
+				                  					source: blocDS,
+				                  					events: {change: blocChange}">
+				                  		</div>
+									</div>
+									<div class="span4">
+										<div class="control-group">	
+											<label ><span >Action</span></label>	
+											<div class="row" style="margin: 0;">					
+												<button type="button" data-role="button" data-bind="click: search" class="k-button" role="button" aria-disabled="false" tabindex="0"><i class="icon-search"></i></button>
+											</div>
+				                  		</div>
+									</div>		
+								</div>
+					        </div>
 							<a data-bind="click: exportEXCEL">
-								<span id="saveClose" class="btn btn-icon btn-success glyphicons download" style="width: 200px!important;position: absolute;top: 85px;right: 10px;">
+								<span id="saveClose" class="btn btn-icon btn-success glyphicons download" style="width: 250px!important;">
 									<i></i> 
 									<span >Download Reading Book</span>
 								</span>
 							</a>
+						</div>
+						<!-- // Tab content END -->
+						<!-- Tab content -->
+						<div id="tabReading" style="border: 1px solid #ccc" class="tab-pane widget-body-regular">	
+							<h4 class="separator bottom" style="margin-top: 10px;">Please upload reading book</h4>
 							<div class="fileupload fileupload-new margin-none" data-provides="fileupload">
 							  	<input type="file"  data-role="upload" data-show-file-list="true" data-bind="events: {select: onSelected}" id="myFile"  class="margin-none" />
 							</div>
@@ -2711,6 +2783,7 @@
 							<span data-bind="click: save">Start Reading</span></span>
 						</div>
 						<!-- // Tab content END -->
+						
 					</div>
 				</div>
 				<div id="ntf1" data-role="notification"></div>
@@ -9421,18 +9494,30 @@
 	/*Reading*/
 	banhji.reading = kendo.observable({
 		lang 				: langVM,
-		dataSource  		: dataStore(apiUrl + "readings"),
+		dataSource  		: dataStore(apiUrl + "readings/books"),
+		licenseDS 			: dataStore(apiUrl + "branches"),
+		blocDS 				: dataStore(apiUrl + "locations"),
 		itemDS 				: null,
 		obj 				: null,
+		monthOfSelect		: null,
+		licenseSelect		: null,
+		blocSelect			: null,
 		isEdit 				: false,
 		contact 			: null,
 		pageLoad 			: function(id){
 			this.addEmpty();
 		},
-		types 				: [
-			{id: "w", name: "Water"},
-			{id: "e", name: "Electricity"}
-		],
+		onLicenseChange 	: function(e) {
+			var data = e.data;
+			var license = this.licenseDS.at(e.sender.selectedIndex - 1);
+			this.set("licenseSelect", license);
+			this.blocDS.filter({field: "branch_id", value: license.id});
+		},
+		blocChange 			: function(e){
+			var data = e.data;
+			var bloc = this.blocDS.at(e.sender.selectedIndex - 1);
+			this.set("blocSelect", bloc);
+		},
 		addEmpty 		 	: function(id){			
 			//this.dataSource.data([]);		
 			this.set("obj", null);		
@@ -9466,21 +9551,23 @@
 			}
 			reader.readAsBinaryString(files[0].rawFile);      
 		},
+
 		exportEXCEL 		: function(e){
 			$("#loadImport").css("display","block");
 			var ds = new kendo.data.DataSource({
 		        type: "json",
 		        transport: {
-		          read: apiUrl + "readings"
+		          read: apiUrl + "readings/books"
 		        },
 		        schema: {
 		          model: {
 		            fields: {
 		              number: { type: "number" },
-		              date: { type: "date" },
-		              previous: { type: "previous" },
-		              reading: { type: "reading" },
-		              current: { type: "current" }
+		              from_date: { type: "date" },
+		              to_date : { type: "date"},
+		              previous: { type: "number" },
+		              reading: { type: "number" },
+		              current: { type: "number" }
 		            }
 		          }
 		        }
@@ -9489,7 +9576,8 @@
 		      var rows = [{
 		        cells: [
 		          { value: "number" },
-		          { value: "date" },
+		          { value: "from_date" },
+		          { value: "to_date" },
 		          { value: "previous" },
 		          { value: "reading" },
 		          { value: "current" }
@@ -9501,7 +9589,8 @@
 		          rows.push({
 		            cells: [
 		              { value: data[0].results[i].number },
-		              { value: data[0].results[i].date },
+		              { value: data[0].results[i].from_date },
+		              { value: data[0].results[i].to_date },
 		              { value: data[0].results[i].previous },
 		              { value: data[0].results[i].reading },
 		              { value: data[0].results[i].current }

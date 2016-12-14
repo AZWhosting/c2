@@ -1038,8 +1038,6 @@
 										data-bind="value: obj.number,
 													events:{change: checkExistingNumber}"										
 										required data-required-msg="required" style="width: 100%;">
-								<br>
-								<span data-bind="visible: isDuplicateNumber" style="color: red;"><span data-bind="text: lang.lang.duplicate_number"></span></span>								
 							</div>
 							<!-- // Group END -->
 						</div>
@@ -43224,7 +43222,7 @@
     	isProtected 			: false,
         saveClose 				: false,
 		showConfirm 			: false,
-		isDuplicateNumber 		: false,
+		notDuplicateNumber 		: true,
     	showBank 				: false,
     	pageLoad 				: function(id){
 			if(id){					
@@ -43235,7 +43233,7 @@
 				}								
 			}
 		},
-		//Number      	
+		//Number
 		checkExistingNumber 	: function(){
 			var self = this, para = [], 
 			obj = this.get("obj");			
@@ -43257,14 +43255,12 @@
 					var view = self.numberDS.view();
 					
 					if(view.length>0){
-				 		self.set("isDuplicateNumber", true);						
+				 		self.set("notDuplicateNumber", false);
 					}else{
-						self.set("isDuplicateNumber", false);
+						self.set("notDuplicateNumber", true);
 					}
 				});							
-			}else{
-				this.set("isDuplicateNumber", false);
-			}			
+			}		
 		},
 		generateNumber 			: function(){
 			var self = this, para = [],
@@ -67649,7 +67645,7 @@
 		},
 		setItemType 	 	: function(){
 			var itemType = "", obj = this.get("obj");
-		
+
 			$.each(banhji.source.itemTypeDS.data(), function(index, value){				
 				if(value.id == obj.item_type_id){
 					itemType = value.name;					
@@ -72901,12 +72897,24 @@
 				if(banhji.pageLoaded["account"]==undefined){
 					banhji.pageLoaded["account"] = true;		         
 
-			       var validator = $("#example").kendoValidator().data("kendoValidator");
+			    	var validator = $("#example").kendoValidator({
+			        	rules: {
+					        customRule1: function(input){
+					          	if (input.is("[name=txtNumber]")) {	
+						            return vm.get("notDuplicateNumber");
+						        }
+						        return true;
+					        }
+					    },
+					    messages: {
+					        customRule1: banhji.source.duplicateNumber
+					    }
+			        }).data("kendoValidator");
 													
 			        $("#saveNew").click(function(e){				
 						e.preventDefault();
 
-						if(validator.validate() && vm.get("isDuplicateNumber")==false){
+						if(validator.validate()){
 			            	vm.save();		            				  
 				        }else{
 				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
@@ -72916,7 +72924,7 @@
 					$("#saveClose").click(function(e){				
 						e.preventDefault();
 
-						if(validator.validate() && vm.get("isDuplicateNumber")==false){
+						if(validator.validate()){
 							vm.set("saveClose", true);
 			            	vm.save();		            	
 				        }else{

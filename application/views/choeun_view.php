@@ -2674,6 +2674,7 @@
 <!--  End Meter  -->
 <!--  Reading  -->
 <script id="Reading" type="text/x-kendo-template">
+	<h2>Reading</h2>
 	<span class="glyphicons no-js remove_2 pull-right" data-bind="click: cancel"><i></i></span>	
 	<div  class="row-fluid saleSummaryCustomer" style="padding-top: 30px;">
 		
@@ -2713,7 +2714,7 @@
 							                	data-start="year" 
 								  				data-depth="year" 
 							                	placeholder="Moth of ..." 
-									           	data-bind="value: obj.month_of" />
+									           	data-bind="value: monthOfSelect" />
 										</div>
 																										
 										<!-- // Group END -->
@@ -2730,9 +2731,9 @@
 												data-text-field="name" 
 												data-value-field="id" 
 												data-bind="
-													value: obj.license,
+													value: licenseSelect,
 				                  					source: licenseDS,
-				                  					events: {change: licenseChange}">
+				                  					events: {change: onLicenseChange}">
 				                  		</div>
 									</div>	
 								</div>
@@ -2749,7 +2750,7 @@
 												data-text-field="name" 
 												data-value-field="id" 
 												data-bind="
-													value: obj.bloc,
+													value: blocSelect,
 				                  					source: blocDS,
 				                  					events: {change: blocChange}">
 				                  		</div>
@@ -9498,15 +9499,25 @@
 		blocDS 				: dataStore(apiUrl + "locations"),
 		itemDS 				: null,
 		obj 				: null,
+		monthOfSelect		: null,
+		licenseSelect		: null,
+		blocSelect			: null,
 		isEdit 				: false,
 		contact 			: null,
 		pageLoad 			: function(id){
 			this.addEmpty();
 		},
-		types 				: [
-			{id: "w", name: "Water"},
-			{id: "e", name: "Electricity"}
-		],
+		onLicenseChange 	: function(e) {
+			var data = e.data;
+			var license = this.licenseDS.at(e.sender.selectedIndex - 1);
+			this.set("licenseSelect", license);
+			this.blocDS.filter({field: "branch_id", value: license.id});
+		},
+		blocChange 			: function(e){
+			var data = e.data;
+			var bloc = this.blocDS.at(e.sender.selectedIndex - 1);
+			this.set("blocSelect", bloc);
+		},
 		addEmpty 		 	: function(id){			
 			//this.dataSource.data([]);		
 			this.set("obj", null);		
@@ -9540,6 +9551,7 @@
 			}
 			reader.readAsBinaryString(files[0].rawFile);      
 		},
+
 		exportEXCEL 		: function(e){
 			$("#loadImport").css("display","block");
 			var ds = new kendo.data.DataSource({
