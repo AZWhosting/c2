@@ -29279,7 +29279,7 @@
 											</div>
 						        		</div>
 										<div class="span6">
-											<img data-bind="attr: { src: obj.image_url, alt: obj.name, title: obj.name }" width="120px" style="margin-bottom: 15px; border: 1px solid #ddd;">
+											<img width="120px" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/no_image.jpg" style="margin-bottom: 15px; border: 1px solid #ddd;">
 											
 											<input id="files" name="files"
 							                    type="file"
@@ -42052,6 +42052,46 @@
 			page:1,
 			pageSize: 100
 		}),
+		exemptionAccountDS			: new kendo.data.DataSource({
+			transport: {
+				read 	: {
+					url: apiUrl + "accounts",
+					type: "GET",
+					headers: banhji.header,
+					dataType: 'json'
+				},				
+				parameterMap: function(options, operation) {
+					if(operation === 'read') {
+						return {
+							page: options.page,
+							limit: options.pageSize,
+							filter: options.filter,
+							sort: options.sort
+						};
+					} else {
+						return {models: kendo.stringify(options.models)};
+					}
+				}
+			},
+			schema 	: {
+				model: {
+					id: 'id'
+				},
+				data: 'results',
+				total: 'count'
+			},
+			filter: [
+					{ field:"account_type_id", operator:"where_in", value: [35] },
+					{ field:"status", value: 1 }
+			],
+			sort: { field:"number", dir:"asc" },
+			batch: true,
+			serverFiltering: true,
+			serverSorting: true,
+			serverPaging: true,
+			page:1,
+			pageSize: 100
+		}),
 		//Expense
 		expenseAccountDS			: new kendo.data.DataSource({
 			transport: {
@@ -45026,10 +45066,10 @@
 		        	var view = self.deleteDS.view();
 
 		        	if(view.length>0){
-		        		this.dataSource.remove(data);
-		        		this.dataSource.sync();
-		        	}else{
 		        		alert("Sorry, this item can not be deleted.");
+		        	}else{		        		
+		        		self.dataSource.remove(data);
+		        		self.dataSource.sync();		        	
 		        	}
 		        });		        		        
 	    	}	    	
@@ -45074,7 +45114,7 @@
 			this.set("item", obj);
 			this.openWindowItem();	            	
         },
-      	saveItem 				: function(){
+      	saveItem 			: function(){
         	var self = this;
         	this.itemDS.sync();
         	this.itemDS.bind("requestEnd", function(e){
@@ -45084,34 +45124,33 @@
         		}
         	});
         },
-        editItem 				: function(e){
+        editItem 			: function(e){
       		var data = e.data;
       		this.set("item", data);
 
       		this.set("windowItemVisible", true);
       	}, 
-      	deleteItem 				: function(e){
+      	deleteItem 			: function(e){
 			if (confirm("Are you sure, you want to delete it?")) {
 		        var self = this, data = e.data;
 
 		        this.itemDeleteDS.query({
-		        	filter: { field:"segments", operator:"contains", value:data.id},
+		        	filter: { field:"segments", operator:"like", value:data.id},
 		        	page:1,
 		        	pageSize:1
 		        }).then(function(){
 		        	var view = self.itemDeleteDS.view();
 
 		        	if(view.length>0){
-		        		this.itemDS.remove(data);
-		        		this.itemDS.sync();
-		        		this.itemDS.bind("requestEnd", function(e){
-			        		if( e.type == "create" || e.type == "update"){ 
-			        			self.set("windowItemVisible", false);
-			        			banhji.source.segmentItemDS.fetch();
-			        		}
-			        	});
-		        	}else{
 		        		alert("Sorry, this item can not be deleted.");
+		        	}else{		        		
+		        		self.itemDS.remove(data);
+		        		self.itemDS.sync();
+		        		self.itemDS.bind("requestEnd", function(e){
+		        			if(e.type=="delete"){
+		        				banhji.source.segmentItemDS.fetch();
+		        			}
+		        		});
 		        	}
 		        });
 	    	}

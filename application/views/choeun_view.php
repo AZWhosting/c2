@@ -337,7 +337,12 @@
 	            	<a href="#tab11" class="glyphicons building" data-toggle="tab">
 	            		<i></i><span class="strong"><span>Prefix Setting</span></span>
 	            	</a>
-	            </li>                       
+	            </li>
+	            <li>
+	            	<a href="#tab12" data-bind="click: goBrand" class="glyphicons certificate" data-toggle="tab">
+	            		<i></i><span class="strong"><span>Brand</span></span>
+	            	</a>
+	            </li>                        
 	        </ul>
 	    </div>
 	    <!-- // Tabs Heading END -->
@@ -428,7 +433,19 @@
 	            </div>
 	            <div class="tab-pane" id="tab4">
 	            	<div style="clear: both;margin-bottom: 10px;">
-	            		<input data-bind="value: exName" type="text" placeholder="Name" style="height: 32px;"  class="span3 k-textbox k-invalid" />
+	            		<input data-bind="value: exName" type="text" placeholder="Name" style="height: 32px;"  class="span2 k-textbox k-invalid" />
+
+	            		<input data-role="dropdownlist"
+		            	   class="span3"
+		            	   style="padding-right: 1px;height: 32px;" 
+            			   data-option-label="(--- Acount ---)"
+            			   data-auto-bind="false"			                   
+		                   data-value-primitive="false"
+		                   data-text-field="name"
+		                   data-value-field="id"
+		                   data-bind="value: exAccount,
+		                              source: exAccountDS"/>
+	            		
 
 		                <input data-role="dropdownlist"
 		            	   class="span2"
@@ -441,13 +458,15 @@
 		                   data-bind="value: exUnit,
 		                              source: typeUnit"/>
 		            	
-		            	<input data-bind="value: exPrice" type="text" placeholder="Price" style="height: 32px;" class="span3 k-textbox k-invalid" />
+		            	<input data-bind="value: exPrice" type="text" placeholder="Price" style="height: 32px;" class="span2 k-textbox k-invalid" />
+
 		            	<a class="btn btn-default glyphicons circle_plus cutype-icon" style="width: 80px;margin-left: 2px;" data-bind="click: addEx"><i></i>Add</a>
 		            </div>
 	            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
 	            		<thead>
 	            			<tr>
 	            				<th class="center"><span>Name</span></th>
+	            				<th class="center"><span>Account</span></th>
 	            				<th class="center"><span>Unit</span></th>
 	            				<th class="center"><span>Price</span></th>
 	            				<th class="center">Action</th>
@@ -462,7 +481,17 @@
 	            </div>
 	            <div class="tab-pane" id="tab5">
 		            <div style="clear: both;margin-bottom: 10px;">
-		            	<input data-bind="value: tariffName" type="text" placeholder="Name" style="height: 32px;"  class="span8 k-textbox k-invalid" />
+		            	<input data-bind="value: tariffName" type="text" placeholder="Name" style="height: 32px;"  class="span4 k-textbox k-invalid" />
+		            	<input data-role="dropdownlist"
+		            	   class="span4"
+		            	   style="padding-right: 1px;height: 32px;" 
+            			   data-option-label="(--- Acount ---)"
+            			   data-auto-bind="false"			                   
+		                   data-value-primitive="false"
+		                   data-text-field="name"
+		                   data-value-field="id"
+		                   data-bind="value: tariffAccount,
+		                              source: tariffAccDS"/>
 
 		            	<a class="btn btn-default glyphicons circle_plus cutype-icon" style="width: 80px;margin-left: 2px;" data-bind="click: addTariff"><i></i>Add</a>
 		            </div>
@@ -470,6 +499,7 @@
 	            		<thead>
 	            			<tr>
 	            				<th class="center" width="300"><span>Name</span></th>
+	            				<th class="center" ><span>Account</span></th>
 	            				<th class="center" ><span>Action</span></th>
 	            			</tr>
 	            		</thead>
@@ -549,9 +579,20 @@
 					</div>
 	            </div>
 	            <div class="tab-pane" id="tab6">
+	            
 	            	<div style="clear: both;margin-bottom: 10px;">
 	            		<input data-bind="value: depositName" type="text" placeholder="Name" style="height: 32px;"  class="span3 k-textbox k-invalid" />
-		            	
+		            	<input data-role="dropdownlist"
+		            	   class="span3"
+		            	   style="padding-right: 1px;height: 32px;" 
+            			   data-option-label="(--- Acount ---)"
+            			   data-auto-bind="false"			                   
+		                   data-value-primitive="false"
+		                   data-text-field="name"
+		                   data-value-field="id"
+		                   data-bind="value: depositAccount,
+		                              source: depositAccDS"/>
+
 		            	<input data-bind="value: depositPrice" type="text" placeholder="Price" style="height: 32px;" class="span3 k-textbox k-invalid" />
 
 		            	<a class="btn btn-default glyphicons circle_plus cutype-icon" style="width: 80px;margin-left: 2px;" data-bind="click: addDeposit"><i></i>Add</a>
@@ -560,6 +601,7 @@
 	            		<thead>
 	            			<tr>
 	            				<th class="center"><span>Name</span></th>
+	            				<th class="center"><span>Account</span></th>
 	            				<th class="center"><span>Price</span></th>
 	            				<th class="center">Action</th>
 	            			</tr>
@@ -574,7 +616,17 @@
 	            <div class="tab-pane" id="tab7">
 	            	<div style="clear: both;margin-bottom: 10px;">
 	            		<input data-bind="value: serviceName" type="text" placeholder="Name" style="height: 32px;"  class="span3 k-textbox k-invalid" />
-		            	
+
+		            	<input data-role="dropdownlist"
+		            	   class="span3"
+		            	   style="padding-right: 1px;height: 32px;" 
+            			   data-option-label="(--- Acount ---)"
+            			   data-auto-bind="false"			                   
+		                   data-value-primitive="false"
+		                   data-text-field="name"
+		                   data-value-field="id"
+		                   data-bind="value: serviceAccount,
+		                              source: tariffAccDS"/>
 		            	<input data-bind="value: servicePrice" type="text" placeholder="Price" style="height: 32px;" class="span3 k-textbox k-invalid" />
 
 		            	<a class="btn btn-default glyphicons circle_plus cutype-icon" style="width: 80px;margin-left: 2px;" data-bind="click: addService"><i></i>Add</a>
@@ -583,6 +635,7 @@
 	            		<thead>
 	            			<tr>
 	            				<th class="center"><span>Name</span></th>
+	            				<th class="center"><span>Account</span></th>
 	            				<th class="center"><span>Price</span></th>
 	            				<th class="center">Action</th>
 	            			</tr>
@@ -597,7 +650,16 @@
 	            <div class="tab-pane" id="tab8">
 	            	<div style="clear: both;margin-bottom: 10px;">
 	            		<input data-bind="value: maintenanceName" type="text" placeholder="Name" style="height: 32px;"  class="span3 k-textbox k-invalid" />
-		            	
+		            	<input data-role="dropdownlist"
+		            	   class="span3"
+		            	   style="padding-right: 1px;height: 32px;" 
+            			   data-option-label="(--- Acount ---)"
+            			   data-auto-bind="false"			                   
+		                   data-value-primitive="false"
+		                   data-text-field="name"
+		                   data-value-field="id"
+		                   data-bind="value: maintenanceAccount,
+		                              source: tariffAccDS"/>
 		            	<input data-bind="value: maintenancePrice" type="text" placeholder="Price" style="height: 32px;" class="span3 k-textbox k-invalid" />
 
 		            	<a class="btn btn-default glyphicons circle_plus cutype-icon" style="width: 80px;margin-left: 2px;" data-bind="click: addMaintenance"><i></i>Add</a>
@@ -606,6 +668,7 @@
 	            		<thead>
 	            			<tr>
 	            				<th class="center"><span>Name</span></th>
+	            				<th class="center"><span>Account</span></th>
 	            				<th class="center"><span>Price</span></th>
 	            				<th class="center">Action</th>
 	            			</tr>
@@ -680,6 +743,29 @@
 				                 data-template="accountSetting-prefix-template"
 				                 data-bind="source: prefixDS">				            
 	            		</tbody>
+	            	</table>
+	            </div>
+	            <div class="tab-pane" id="tab12">
+	            	<div style="clear: both;margin-bottom: 10px;">
+		            	<input data-bind="value: brandCode" type="text" placeholder="Code ..." style="height: 32px;"  class="span3 k-textbox k-invalid" />
+		            	<input data-bind="value: brandName" type="text" placeholder="Name ..." style="height: 32px;"  class="span3 k-textbox k-invalid" />
+		            	<input data-bind="value: brandAbbr" type="text" placeholder="Abbr ..." style="height: 32px;" class="span3 k-textbox k-invalid" />
+		            	<a class="btn btn-default glyphicons circle_plus cutype-icon" style="width: 80px;margin-left: 2px;" data-bind="click: addBrand"><i></i>Add</a>
+		            </div>
+	            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
+	            		<thead>
+	            			<tr>
+	            				<th class="center"><span>Code</span></th>
+	            				<th class="center"><span>Name</span></th>
+	            				<th class="center"><span>Abbr</span></th>
+	            				<th class="center">Action</th>
+	            			</tr>
+	            		</thead>
+	            		<tbody data-role="listview"		
+			                data-template="brandSetting-template"
+			                data-edit-template="brand-edit-template"
+			                data-auto-bind="true"
+			                data-bind="source: brandDS"></tbody>
 	            	</table>
 	            </div>
 	        </div>
@@ -780,6 +866,9 @@
     	<td>
     		#= name#
    		</td>
+   		<td>
+    		#= account.name#
+   		</td>
    		<td align="center">
     		#= unit#
    		</td>
@@ -798,7 +887,15 @@
         </td>    
         <td>        	
         	<input style="width: 100%;" data-role="dropdownlist"      
-                   data-value-primitive="true"
+                   data-value-primitive="false"
+                   data-text-field="name"
+                   data-value-field="id"
+                   data-bind="value: account,
+                              source: exAccountDS" />
+        </td> 
+        <td>        	
+        	<input style="width: 100%;" data-role="dropdownlist"      
+                   data-value-primitive="false"
                    data-text-field="name"
                    data-value-field="id"
                    data-bind="value: unit,
@@ -818,6 +915,9 @@
     	<td>
     		#= name#
    		</td>
+   		<td>
+    		#= account.name#
+   		</td>
    		<td align="left">   
 		    <span class="k-edit-button"><i class="icon-edit"></i> Edit</span>
     		|
@@ -832,7 +932,14 @@
         <td>
 			<input style="width: 100%;" type="text" class="k-textbox" data-bind="value:name" />
         </td>    
-
+        <td>        	
+        	<input style="width: 100%;" data-role="dropdownlist"      
+                   data-value-primitive="false"
+                   data-text-field="name"
+                   data-value-field="id"
+                   data-bind="value: account,
+                              source: tariffAccDS" />
+        </td>
 	    <td class="edit-buttons" style="text-align: center;">
 	        <a class="k-button k-update-button" href="\\#"><span class="k-icon k-update"></span></a>
 	        <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-cancel"></span></a>
@@ -883,6 +990,9 @@
     	<td>
     		#= name#
    		</td>
+   		<td align="left">
+    		#= account.name#
+   		</td>
    		<td align="right">
     		#= amount#
    		</td>
@@ -895,7 +1005,15 @@
     <tr>    	               
         <td>
 			<input style="width: 100%;" type="text" class="k-textbox" data-bind="value:name" />
-        </td>       
+        </td>  
+        <td>
+			<input style="width: 100%;" data-role="dropdownlist"      
+                   data-value-primitive="false"
+                   data-text-field="name"
+                   data-value-field="id"
+                   data-bind="value: account,
+                              source: depositAccDS" />
+        </td>      
         <td>
         	<input style="width: 100%;" type="text" class="k-textbox" data-bind="value:amount" />
         </td>
@@ -911,6 +1029,9 @@
     	<td>
     		#= name#
    		</td>
+   		<td align="left">
+    		#= account.name#
+   		</td>
    		<td align="right">
     		#= amount#
    		</td>
@@ -923,6 +1044,14 @@
     <tr>    	               
         <td>
 			<input style="width: 100%;" type="text" class="k-textbox" data-bind="value:name" />
+        </td>  
+        <td>
+			<input style="width: 100%;" data-role="dropdownlist"      
+                   data-value-primitive="false"
+                   data-text-field="name"
+                   data-value-field="id"
+                   data-bind="value: account,
+                              source: tariffAccDS" />
         </td>       
         <td>
         	<input style="width: 100%;" type="text" class="k-textbox" data-bind="value:amount" />
@@ -940,6 +1069,9 @@
     		#= name#
    		</td>
    		<td align="right">
+    		#= account.name#
+   		</td>
+   		<td align="right">
     		#= amount#
    		</td>
    		<td align="center">   			   
@@ -952,6 +1084,14 @@
         <td>
 			<input style="width: 100%;" type="text" class="k-textbox" data-bind="value:name" />
         </td>       
+        <td>
+			<input style="width: 100%;" data-role="dropdownlist"      
+                   data-value-primitive="false"
+                   data-text-field="name"
+                   data-value-field="id"
+                   data-bind="value: account,
+                              source: tariffAccDS" />
+        </td>  
         <td>
         	<input style="width: 100%;" type="text" class="k-textbox" data-bind="value:amount" />
         </td>
@@ -1065,6 +1205,44 @@
 			<a data-bind="click: deleteForm" class="btn-action glyphicons remove_2 btn-danger"><i></i></a>
 			# } #
 		</td>
+	</tr>
+</script>
+<script id="brandSetting-template" type="text/x-kendo-tmpl">                    
+    <tr>
+    	<td>
+    		#= code#
+   		</td>
+   		<td align="center">
+    		#= name#
+   		</td>
+   		<td align="center">
+    		#= abbr#
+   		</td>
+   		<td align="center">   			   
+		    <a class="btn-action glyphicons pencil btn-success k-edit-button" href="\\#"><i></i></a>
+   		</td>   		
+   	</tr>
+</script>
+<script id="brand-edit-template" type="text/x-kendo-tmpl">
+	<tr>
+		<td>
+            <input type="text" class="k-textbox" data-bind="value:code" name="ProductName" required="required" validationMessage="required" />
+        </td>
+			<td align="center">
+    
+            <input type="text" class="k-textbox" data-bind="value:name" name="ProductName" required="required" validationMessage="required" />
+        </td>
+			<td align="center">
+            <input type="text" class="k-textbox" data-bind="value:abbr" name="abbr" required="required" validationMessage="required" />
+            <span data-for="abbr" class="k-invalid-msg"></span>
+        </td>
+			<td align="center">
+    
+	        <div class="edit-buttons">
+	            <a class="k-button k-update-button" href="\\#"><span class="k-icon k-update"></span></a>
+	            <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-cancel"></span></a>
+	        </div>
+	    </td>
 	</tr>
 </script>
 
@@ -1552,7 +1730,7 @@
 								
 							</div>
 							<div class="span9" align="right">
-								<span id="saveNew" style="width: 80px!important;margin:0" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="click: save" style="width: 50px;"><i></i> <span>Save</span></span>
+								<span id="saveNew" style="width: 80px!important;margin:0" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit, click: save" style="width: 50px;"><i></i> <span>Save</span></span>
 								<span id="cancel" data-bind="click: cancel" class="btn btn-icon btn-success glyphicons power" style="width: 100px;"><i></i> <span >Cancel</span></span>
 							</div>
 						</div>
@@ -1966,6 +2144,47 @@
 		<h4 class="icon-bar-chart" ><i></i><span style="font-style: normal" data-bind="text: lang.lang.monthly_sale"></span></h4>
 		
 		<div class="clearfix"></div>
+		<div class="row-fluid">								
+			<div class="box-generic" style="margin-bottom: 0; padding-bottom: 0;">
+			    <!-- //Tabs Heading -->
+			    <div class="tabsbar tabsbar-1">
+			        <ul class="row-fluid row-merge">						            
+			            <li class="span2 glyphicons usd active">
+			            	<a href="#metertab1" data-toggle="tab"><i></i> <span><span >Water Sale</span></span></a>
+			            </li>								            
+			            <li class="span2 glyphicons qrcode" style="width: 21%;">
+			            	<a href="#metertab2" data-toggle="tab"><i></i> <span><span >Reading</span></span></a>
+			            </li>
+			            <li class="span2 glyphicons show_lines">
+			            	<a href="#metertab3" data-toggle="tab"><i></i> <span><span ></span>Installment Schedule</span></a>
+			            </li>						            					            
+			        </ul>
+			    </div>
+			    <!-- // Tabs Heading END -->
+
+			    <div class="tab-content">
+
+			    	<!-- //GENERAL INFO -->
+			        <div class="tab-pane active" id="metertab1">
+		            	Water Sale
+		        	</div>
+			        <!-- //GENERAL INFO END -->
+
+			        <!-- //ACCOUNTING -->
+			        <div class="tab-pane" id="metertab2">
+			        	Reading
+		        	</div>
+			        <!-- //ACCOUNTING END -->						       
+
+			        <!-- //CONTACT PERSON -->
+			        <div class="tab-pane" id="metertab3">
+			        	Installment Schedule
+		        	</div>
+			        <!-- //CONTACT PERSON END -->
+			    </div>
+			</div>
+		</div>
+
 	</div>
 
 	<div class="innerLR innerT">			
@@ -2302,51 +2521,100 @@
 				    <div class="span12 row">			       		
 			       		<!-- Top Part -->
 				    	<div class="row-fluid">
-				    		<div class="span5 well" style="padding-left: 20px;">									
-								<div class="row">
-									<div class="span12" style="padding-right: 0;">	
-										<!-- Group -->
-										<div class="control-group">							
-											<label for="txtAbbr"><span >Meter Number</span></label>										
-					              			<br>
-						              		<p tyle="width: 96%;" data-bind="text: meterObj.number"></p>
-						              		<label for="txtAbbr"><span >Customer</span></label>										
-					              			<br>
-						              		<p tyle="width: 96%;" data-bind="text: meterObj.contact[0].name"></p>
-						              		
-						              		<div class="installshow" data-bind="visible: installShow">
-							              		<label><span >Installment Period</span></label>										
-						              			<br>
-							              		<input 
-							              			type="text"
-							              			class="k-textbox k-invalid"
-							              			style="width: 80%" 
-							              			data-bind="value: obj.installment_period"
-							              			placeholder="1 - 12" 
-							              		/>
-							              		<br>
-							              		<label><span >Start Date</span></label>										
-						              			<br>
-							              		<input
-								            		data-role="datepicker"	 		
-					            					data-bind="value: obj.start_date" 
-					            					data-format="dd-MM-yyyy"
-					            					data-parse-formats="yyyy-MM-dd" 
-					            					placeholder="dd-MM-yyyy" required data-required-msg="required" 
-					            					style="width: 80%" />
-					            			</div>
-										</div>
-										<!-- // Group END -->											
+				    		<div class="span5" style="padding-left: 20px;">									
+								<div class="row well">
+									<div class="span12">
+										<table class="table table-borderless table-condensed">
+											<tbody>
+												<tr>
+													<td data-bind="text: lang.lang.customer" style="width: 40%"></td>
+													<td data-bind="text: meterObj.contact[0].name"></td>
+												</tr>
+												<tr>
+													<td>Meter Number</td>
+													<td data-bind="text: meterObj.number"></td>
+												</tr>
+												<tr>
+													<td>Activation Date</td>
+													<td>
+														<input
+										            		data-role="datepicker"	 		
+							            					data-bind="value: issued_date" 
+							            					data-format="dd-MM-yyyy"
+							            					data-parse-formats="yyyy-MM-dd" 
+							            					placeholder="dd-MM-yyyy" required data-required-msg="required" 
+							            					style="width: 80%" />
+													</td>
+												</tr>
+											</tbody>
+										</table>											
 									</div>
 								</div>
+								<div class="installshow" data-bind="visible: showInstallment">
+									<hr>
+									<h2>Installment</h2>
+				              		<label><span >Month</span></label>										
+			              			<br>
+				              		<input 
+				              			type="text"
+				              			class="k-textbox k-invalid"
+				              			style="width: 80%" 
+				              			data-bind="value: period"
+				              			placeholder="1 - 12" 
+				              		/>
+				              		<br>
+				              		<label><span >Start Date</span></label>										
+			              			<br>
+				              		<input
+					            		data-role="datepicker"	 		
+		            					data-bind="value: startDate" 
+		            					data-format="dd-MM-yyyy"
+		            					data-parse-formats="yyyy-MM-dd" 
+		            					placeholder="dd-MM-yyyy" required data-required-msg="required" 
+		            					style="width: 80%" />
+		            			</div>
 							</div>
 							<div class="span7">
-								<label for="txtAbbr"><span >Payment Method</span></label><br>
-						        <label for="txtAbbr"><span >Payment Term</span></label>	
+								<div class="box-generic-noborder">
+								    <div class="tabsbar tabsbar-2">
+								        <ul class="row-fluid row-merge">
+								        	<li class="span1 glyphicons cogwheels active"><a href="#tab1-5" data-toggle="tab"><i></i></a>
+								            </li>						            								            
+								        </ul>
+								    </div>
+								    <div class="tab-content">
+								        <div class="tab-pane active" id="tab1-5">						            
+								            <table style="margin-bottom: 0;" class="table table-borderless table-condensed cart_total">							            
+												<tbody>
+												<tr>
+									            	<td><span data-bind="text: lang.lang.payment_method">Payment Method </span></td>				
+													<td>
+														<input data-role="dropdownlist" data-value-primitive="true" data-text-field="name" data-value-field="id" data-bind="value: paymentMethod,
+									              							source: paymentMethodDS" data-option-label="Select method..." style="width: 100%; display: none;">
+													</td>
+												</tr>
+									            <tr>
+									            	<td><span data-bind="text: lang.lang.cash_account">Cash Account</span></td>				            	
+								            		<td>
+								            			<input id="ddlCash" name="ddlCash" data-role="dropdownlist"  data-template="account-list-tmpl" data-value-primitive="true" data-text-field="name" data-value-field="id" data-bind="value: cashAccount,
+								              							source: cashAccountDS" data-option-label="Select Account..." required="" data-required-msg="required" style="width: 100%; display: none;" class="k-valid">
+													</td>							            	
+									            </tr>
+									            <tr>
+									            	<td><span data-bind="text: lang.lang.check_no">Check Number</span></td>							            	
+								            		<td>
+														<input class="k-textbox" placeholder="type check number ..." data-bind="value: checkNumber" style="width: 100%;">
+													</td>							            	
+									            </tr>	
+								            </tbody></table>						            
+								        </div>	        								        
+								    </div>
+								</div>
+
 								<table class="table">
 									<thead>
 										<tr>
-											<th>Type</th><th>Name</th><th>Amount</th>
+											<th>Type</th><th>Name</th><th style="width: 30%">Amount</th><th style="width: 30%">Receive</th>
 										</tr>
 									</thead>
 									<tbody data-role="listview" data-bind="source: items" data-template="meter-plan-item-list">
@@ -2355,19 +2623,26 @@
 								<div class="row">
 									<div class="span12" style="padding-right: 0;">	
 										<!-- Group -->
-										<div class="control-group">							
-											<label for="txtAbbr"><span>Payment Amount:</span></label>										
-					              			<br>
-						              		<input type="text" 
-						              			class="k-textbox k-invalid" 
-						              			placeholder="Amount Reciept ..." 
-						              			style="width: 100%;margin-bottom: 20px;"
-						              			data-bind="
-						              				value: amountToBeRecieved,
-						              				events: {change: amountRecievChange}
-						              			" />
-										</div>
-										<!-- // Group END -->											
+										<table class="table table-condensed table-striped table-white">
+											<tbody>
+												<tr>
+													<td class="right"><span data-bind="text: lang.lang.subtotal">Amount Paid:</span></td>
+													<td class="right" width="40%"><span data-bind="text: amountToBeRecieved">0</span></td>
+												</tr>
+												<tr>
+													<td class="right"><span>Amount Billed</span></td>
+													<td class="right" style="width: 40%;border-bottom: 1px solid #000">
+														<span data-bind="text: amountBilled">0</span>
+				                   					</td>
+												</tr>							
+												<tr>
+													<td class="right"><span data-bind="text: lang.lang.remaining">Outstanding:</span></td>
+													<td class="right">
+														<span data-bind="text: amountRemain">0</span>
+				                   					</td>
+												</tr>								
+											</tbody>
+										</table>											
 									</div>
 								</div>
 							</div>
@@ -2393,7 +2668,7 @@
 </script>
 <script id="meter-plan-item-list" type="text/x-kendo-template">
 	<tr>
-		<td>#=type#</td><td>#=name#</td><td>#=amount#</td>
+		<td>#=type#</td><td>#=name#</td><td>#=amount#</td><td><input type="text" class="k-textbox k-input k-formatted-value" data-bind="value: received, events: {change: onAmountChange}">
 	</tr>
 </script>
 <!--  End Meter  -->
@@ -2409,7 +2684,8 @@
 				<!-- Tabs Heading -->
 				<div class="widget-head">
 					<ul style="padding-left: 1px;">
-						<li class="active"><a class="glyphicons inbox_in" href="#tabContact" data-toggle="tab"><i></i><span style="line-height: 55px;">Reading</span></a></li>
+						<li class="active"><a class="glyphicons inbox_in" href="#tabReading" data-toggle="tab"><i></i><span style="line-height: 55px;">Reading</span></a></li>
+						<li><a class="glyphicons inbox_in" href="#tabDownload" data-toggle="tab"><i></i><span style="line-height: 55px;">Download</span></a></li>
 					</ul>
 				</div>
 				<!-- // Tabs Heading END -->
@@ -2420,20 +2696,88 @@
 							<i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 35%;left: 45%"></i>
 						</div>
 						<!-- Tab content -->
-						<div id="tabContact" style="border: 1px solid #ccc" class="tab-pane active widget-body-regular">
-							
+						<div id="tabReading" style="border: 1px solid #ccc" class="tab-pane active widget-body-regular">	
 							<h4 class="separator bottom" style="margin-top: 10px;">Please upload reading book</h4>
-							<a data-bind="click: exportEXCEL">
-								<span id="saveClose" class="btn btn-icon btn-success glyphicons download" style="width: 200px!important;position: absolute;top: 85px;right: 10px;">
-									<i></i> 
-									<span >Download Reading Book</span>
-								</span>
-							</a>
 							<div class="fileupload fileupload-new margin-none" data-provides="fileupload">
 							  	<input type="file"  data-role="upload" data-show-file-list="true" data-bind="events: {select: onSelected}" id="myFile"  class="margin-none" />
 							</div>
 							<span class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 160px!important;"><i></i>
 							<span data-bind="click: save">Start Reading</span></span>
+						</div>
+						<!-- // Tab content END -->
+						<!-- Tab content -->
+						<div id="tabDownload" style="border: 1px solid #ccc" class="tab-pane widget-body-regular">
+							<h4 class="separator bottom" style="margin-top: 10px;">Please Select Query</h4>
+						  	<div class="span12 row-fluid" style="padding:20px 0;padding-top: 0;">
+					        	<div class="span5" style="padding-left: 0;">
+						        	<div class="span6">	
+										<!-- Group -->
+										<div class="control-group">								
+											<label ><span >Month Of</span></label>
+								            <input type="text" 
+							                	style="width: 100%;" 
+							                	data-role="datepicker"
+							                	data-format="MM-yyyy"
+							                	data-start="year" 
+								  				data-depth="year" 
+							                	placeholder="Moth of ..." 
+									           	data-bind="value: obj.month_of" />
+										</div>
+																										
+										<!-- // Group END -->
+									</div>
+									<div class="span6" style="padding-left: 0;">
+										<div class="control-group">								
+											<label ><span >License</span></label>
+											<input 
+												data-role="dropdownlist" 
+												style="width: 100%;" 
+												data-option-label="License ..." 
+												data-auto-bind="false" 
+												data-value-primitive="true" 
+												data-text-field="name" 
+												data-value-field="id" 
+												data-bind="
+													value: obj.license,
+				                  					source: licenseDS,
+				                  					events: {change: licenseChange}">
+				                  		</div>
+									</div>	
+								</div>
+								<div class="span7" style="padding-left: 0;">
+									<div class="span4">
+										<div class="control-group">								
+											<label ><span >Location</span></label>
+											<input 
+												data-role="dropdownlist" 
+												style="width: 100%;" 
+												data-option-label="Location ..." 
+												data-auto-bind="false" 
+												data-value-primitive="true" 
+												data-text-field="name" 
+												data-value-field="id" 
+												data-bind="
+													value: obj.bloc,
+				                  					source: blocDS,
+				                  					events: {change: blocChange}">
+				                  		</div>
+									</div>
+									<div class="span4">
+										<div class="control-group">	
+											<label ><span >Action</span></label>	
+											<div class="row" style="margin: 0;">					
+												<button type="button" data-role="button" data-bind="click: search" class="k-button" role="button" aria-disabled="false" tabindex="0"><i class="icon-search"></i></button>
+											</div>
+				                  		</div>
+									</div>		
+								</div>
+					        </div>
+							<a data-bind="click: exportEXCEL">
+								<span id="saveClose" class="btn btn-icon btn-success glyphicons download" style="width: 250px!important;">
+									<i></i> 
+									<span >Download Reading Book</span>
+								</span>
+							</a>
 						</div>
 						<!-- // Tab content END -->
 					</div>
@@ -2603,7 +2947,7 @@
 							data-bind="click: cancel"><i></i></span>	
 					</div>
 			        <h2 style="padding:0 15px;">Run Bill</h2>
-			        <div class="span12 row-fluid" style="padding:20px 0;">
+			        <div class="row-fluid" style="border: 1px solid #ccc;">
 			        	<div class="span5" style="padding-right: 0;">
 				        	<div class="span6">	
 								<!-- Group -->
@@ -2824,6 +3168,8 @@
 <!-- ***************************
 *	End Water Section         *
 **************************** -->
+
+
 
 
 <!-- ***************************
@@ -3407,10 +3753,12 @@
 			# } #
 		</td>
 		<td style="text-align: center;">
+			# if(activated != "1") { #
 			<a style="background: \#1f4774;padding:4px;margin-right: 3px;vertical-align: middle;" 
 				href="\#/activate_meter/#= id#" 
 				class="btn-action btn-success">Activate
 			</a>
+			# } #
 			<a style="border:none;" href="\#/meter/#= id #" class="btn-action glyphicons pencil btn-danger widget-stats widget-stats-info"><i></i></span>
 		</td>
 	</tr>
@@ -3467,6 +3815,28 @@
 	  	<li><a href="#/reports">Reports</a></li>	  	
 	  	<li><a href='#/setting' class='glyphicons settings'><i></i></a></li>
 	</ul>
+</script>
+
+<!-- ***************************
+* widget templates
+**************************** -->
+<script id="account-header-tmpl" type="text/x-kendo-tmpl">
+    <strong>
+    	<a href="\#/account">+ Add New Account</a>
+    </strong>
+</script>
+<script id="account-list-tmpl" type="text/x-kendo-tmpl">	
+	<span>
+		#=number#				
+	</span>
+	-
+	<span>
+		#if(name.length>25){#
+			#=name.substring(0, 25)#..
+		#}else{#
+			#=name#
+		#}#
+	</span>
 </script>
 
 <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/js/libs/localforage.min.js"></script>
@@ -7469,7 +7839,11 @@
         contactTypeCompany 	: 0,
         blockCompanyId  	: 0,
         tabGo 				: 0,
+        depositAccDS 		: banhji.source.depositAccountDS,
+        exAccountDS 		: banhji.source.tradeDiscountDS,
+        tariffAccDS	 	 	: banhji.source.incomeAccountDS,
         blocDS 				: dataStore(apiUrl + "locations"),
+        brandDS 			: banhji.source.brandDS,
         planItemDS			: dataStore(apiUrl + "plans/items"),
         tariffItemDS		: dataStore(apiUrl + "plans/tariff"),
         txnTemplateDS		: dataStore(apiUrl + "transaction_templates"),
@@ -7589,11 +7963,13 @@
         		type     	: "exemption",
         		is_flat 	: false,
         		usage 		: 0,
+        		account 	: this.get("exAccount"),
         		unit 		: this.get("exUnit"),
         		amount 		: this.get("exPrice")
         	});
         	this.planItemDS.sync();
         	this.set("exName", "");
+        	this.set("exAccount", "");
         	this.set("exPrice", "");
         	this.set("exUnit", "");
         },
@@ -7651,6 +8027,7 @@
         		is_flat   	: 0,
         		tariff_id 	: 0,
         		unit 		: 0,
+        		account 	: this.get("tariffAccount"),
         		usage 		: 0,
         		amount 		: 0
         	});
@@ -7660,6 +8037,7 @@
         		if(e.response) {
         			console.log("e");
         			self.set("tariffName", "");
+        			self.set("tariffAccount", "");
         		}
         	});
         	this.planItemDS.bind("error", function(e){
@@ -7686,12 +8064,14 @@
         		type     	: "deposit",
         		is_flat   	: false,
         		unit 		: null,
+        		account 	: this.get("depositAccount"),
         		usage 		: 0,
         		amount 		: this.get("depositPrice")
         	});
         	this.planItemDS.sync();
         	this.set("depositName", "");
         	this.set("depositPrice", "");
+        	this.set("depositAccount", "");
         },
         goService    		: function(){
         	this.planItemDS.data([]);
@@ -7703,12 +8083,14 @@
         		type     	: "service",
         		is_flat   	: false,
         		unit 		: null,
+        		account 	: this.get("serviceAccount"),
         		usage 		: 0,
         		amount 		: this.get("servicePrice")
         	});
         	this.planItemDS.sync();
         	this.set("serviceName", "");
         	this.set("servicePrice", "");
+        	this.set("serviceAccount", "");
         },
         goMaintenance    		: function(){
         	this.planItemDS.data([]);
@@ -7720,12 +8102,14 @@
         		type     	: "maintenance",
         		is_flat   	: false,
         		unit 		: null,
+        		account 	: this.get("maintenanceAccount"),
         		usage 		: 0,
         		amount 		: this.get("maintenancePrice")
         	});
         	this.planItemDS.sync();
         	this.set("maintenanceName", "");
         	this.set("maintenancePrice", "");
+        	this.set("maintenanceAccount", "");
         },
         goPlan 				: function(){
         	this.planDS.read();
@@ -7741,6 +8125,29 @@
         	this.set("planSelect", true);
         	this.planItemDS.data([]);
         	this.planItemDS.filter({field: "id", operator:"where_in", value: idList});
+        },
+        goBrand    		: function(){
+        	this.brandDS.data([]);
+        	this.brandDS.filter({field: "sub_of", value: "water"});
+        },
+        addBrand 			: function(){
+        	var self = this;
+        	if(this.get("brandCode") !== "" && this.get("brandName") !== ""){
+	        	this.brandDS.add({
+	        		sub_of 		: "water",
+	        		code 		: this.get("brandCode"),        		
+	        		name 		: this.get("brandName"),
+	        		abbr 		: this.get("brandAbbr")
+	        	});
+
+	        	this.brandDS.sync();	        	    			
+	        			
+    			this.set("brandCode", "");
+    			this.set("brandName", "");
+    			this.set("brandAbbr", "");	        		
+        	}else{
+        		alert("required number and name!");
+        	}
         },
 		pageLoad 			: function(){
 			this.txnTemplateDS.filter({ field: "moduls", value : "water_mg" });
@@ -8530,11 +8937,23 @@
 	
 
 	banhji.transactionLine = kendo.observable({
-		dataSource 		: dataStore(apiUrl + "transactions/line"),
-		addById 		: function(transactionId) {
+		dataSource 		: dataStore(apiUrl + "journal_lines"),
+		addById 		: function(transactionId, contactId, accountId, description, dr, cr, issuedDate) {
 			// todo: create chart of accounts: water_sale_revenue(42610) & service_charge(42620) & maintenance(42630)
 			// get from customer 
-
+			this.dataSource.add({					
+				transaction_id 		: transactionId,
+				account_id 			: accountId,				
+				contact_id 			: contactId,				
+				description 		: description,
+				reference_no 		: "",
+				job_id 				: "",
+				segments 	 		: [],								
+				dr 	 				: dr,
+				cr 					: cr,				
+				rate				: banhji.source.getRate(banhji.locale, issuedDate),
+				locale				: banhji.locale
+			});
 		},
 		save 			: function() {
 			// customer account and Cash account
@@ -8555,7 +8974,7 @@
 	});
 	banhji.transaction = kendo.observable({
 		dataSource 					: dataStore(apiUrl + "transactions"),
-		makeInvoice 				: function(contactId) {
+		makeInvoice 				: function(contactId, payment, amount, type) {
 			var duedate = new Date(), dfd = $.Deferred();
 			duedate.setDate(duedate.getDate() + 7);				
 
@@ -8568,12 +8987,12 @@
 				job_id 				: 0,				
 				user_id 			: banhji.userData.id,
 				employee_id 		: "",//Sale Rep 	    		
-			   	type				: "Cash_Receipt",//Required
+			   	type				: type,//Required
 			   	sub_total 			: 0,
 			   	discount 			: 0,
 			   	tax 				: 0,
 			   	deposit 			: 0,			   	
-			   	amount				: 0,
+			   	amount				: amount,
 			   	remaining 			: 0,
 			   	credit_allowed 		: 0,
 			   	rate				: 1,			   	
@@ -8586,7 +9005,7 @@
 			   	memo2 				: "",
 			   	status 				: 0,
 			   	segments 			: [],
-			   	is_journal 			: 1,
+			   	is_journal 			: 0,
 			   	//Recurring
 			   	recurring_name 		: "",
 			   	start_date 			: new Date(),
@@ -8632,7 +9051,7 @@
 		setPeriod 			: function(period) {
 			this.set('period', period);
 		},
-		makeSchedule 		: function(amount, contactId) {
+		makeSchedule 		: function(amount, contactId, startDate, period) {
 			var dfd = $.Deferred();
 			try {
 				if(amount == undefined) throw "TypeError: Amount is not defined";
@@ -8641,10 +9060,10 @@
 				banhji.installment.dataSource.insert(0, {
 					biller_id 	: banhji.userData.id,
 					contact_id 	: contactId,
-					start_month : kendo.toString(banhji.installment.get('startDate'), 'yyyy-MM-dd'),
+					start_month : kendo.toString(startDate, 'yyyy-MM-dd'),
 					amount 		: amount,
 					payment_number: null,
-					period 		: banhji.installment.get('period'),
+					period 		: period,
 					invoiced 	: 0
 				});
 				dfd.resolve(banhji.installment.dataSource.at(0));
@@ -8824,12 +9243,16 @@
 		meterDS     		: dataStore(apiUrl + "meters"),
 		dataSource 			: null,
 		planDS 				: dataStore(apiUrl + "plans"),
+		cashAccountDS  		: banhji.source.cashAccountDS,
+		paymentMethodDS 	: dataStore(apiUrl + "payment_methods"),
 		meterObj	 		: null,
 		isEdit 				: false,
 		obj 				: [],
 		installShow 		: false,
 		startDate 			: new Date(),
+		issued_date 		: new Date(),
 		period 				: 12,
+		showInstallment 	: false,
 		pageLoad 			: function(id){
 			var self = this;				
 			this.meterDS.query({    			
@@ -8843,6 +9266,9 @@
 				self.addEmpty(view[0].id);
 			});	
 		},
+		cashAccount 		: null,
+		paymentMethod 		: null,
+		checkNumber 		: null,
 		addEmpty 			: function(id){
 			//this.dataSource.data([]);	
 			// var self = this;	
@@ -8868,7 +9294,26 @@
 		},
 		items :[],
 		amountToBeRecieved 	: 0.0,
-		NamountToBeRecieved 	: 0.0,
+		amountBilled 		: 0.0,
+		amountRemain 		: 0.00,
+		onAmountChange 		: function(e) {
+			var that = this;
+			if(this.items.length > 0) {
+				var amount = 0.00;
+				$.each(this.items, function(i, v){
+					amount += kendo.parseFloat(v.received);
+				});
+				var remain = this.get('amountBilled') - amount;
+				this.set('amountRemain', remain);
+				this.set('amountToBeRecieved', amount);
+				if(this.get('amountRemain') > 0) {
+					this.set('showInstallment', true);
+				} else {
+					this.set('showInstallment', false);
+				}
+			}
+		},
+		NamountToBeRecieved : 0.0,
 		setObj 				: function(plan_id){
 			var self = this;
 			this.planDS.query({
@@ -8876,14 +9321,15 @@
 			})
 			.then(function(e){
 				var data = self.planDS.view()[0];
+				self.items.splice(0, self.items.length);
 				var amount = 0.0;
 				$.each(data.items, function(i, v){
 					if(v.type == 'service' || v.type== 'deposit'){
-						self.items.push(v);
+						self.items.push({id: v.item, account_id: v.account_id, name: v.name, type: v.type, amount: v.amount, received: 0.00});
 						amount += parseFloat(v.amount);
 					}
 				});
-				self.set('amountToBeRecieved', amount);
+				self.set('amountBilled', amount);
 				self.set('NamountToBeRecieved', amount);
 			});
 		},
@@ -8897,7 +9343,7 @@
 			});
 			if(this.get('amountToBeRecieved') < amount) {
 				// create one invoice
-				banhji.transaction.makeInvoice(this.get('meterObj').id)
+				banhji.transaction.makeInvoice(this.get('meterObj').contact[0].id, this.get('paymentMethod'), this.get('amountToBeRecieved'), 'Cash_Sale')
 				.then(function(data){
 					// create invoice
 					// console.log(amount - kendo.parseFloat(banhji.ActivateMeter.get('amountToBeRecieved')));
@@ -8909,8 +9355,28 @@
 				})
 				.then(function(transaction){
 					// create invoice line
-					if(transaction[0]){
-						banhji.transactionLine.addById(transaction[0].id);
+					if(transaction[0]){	
+						$.each(banhji.ActivateMeter.items, function(i, v){
+							if(v.type == 'service') {
+								var amount = 0.00;
+								banhji.transactionLine.addById(transaction[0].id, banhji.ActivateMeter.get('meterObj').contact[0].id, banhji.ActivateMeter.get('cashAccount'), 'Meter Activation', v.received, 0, banhji.ActivateMeter.get('issued_date'));
+
+								banhji.transactionLine.addById(transaction[0].id, banhji.ActivateMeter.get('meterObj').contact[0].id, banhji.ActivateMeter.get('meterObj').contact[0].account_id, 'Meter Activation', v.amount - v.received, 0, banhji.ActivateMeter.get('issued_date'));
+
+								if(banhji.ActivateMeter.get('amountToBeRecieved') > 0) {
+									banhji.transactionLine.addById(transaction[0].id, banhji.ActivateMeter.get('meterObj').contact[0].id, v.account_id, 'Meter Activation', 0, v.amount, banhji.ActivateMeter.get('issued_date'));
+								} else {
+									banhji.transactionLine.addById(transaction[0].id, banhji.ActivateMeter.get('meterObj').contact[0].id, v.account_id, 'Meter Activation', 0, banhji.ActivateMeter.get('amountBilled'), banhji.ActivateMeter.get('issued_date'));
+								}
+								
+							}
+
+							if(v.type == 'deposit' && v.received > 0) {
+								banhji.transactionLine.addById(transaction[0].id, banhji.ActivateMeter.get('meterObj').contact[0].id, banhji.ActivateMeter.get('cashAccount'), 'Meter Activation', v.received, 0, banhji.ActivateMeter.get('issued_date'));
+								banhji.transactionLine.addById(transaction[0].id, banhji.ActivateMeter.get('meterObj').contact[0].id, v.account_id, 'Meter Activation', 0, v.received, banhji.ActivateMeter.get('issued_date'));
+							}
+						});
+						
 						return banhji.transactionLine.save();
 					} else {
 						return false;
@@ -8939,7 +9405,7 @@
 					if(status) {
 						banhji.installment.setDate(banhji.ActivateMeter.get('startDate'));
 						banhji.installment.setPeriod(banhji.ActivateMeter.get('period'));
-						return banhji.installment.makeSchedule(amount - kendo.parseFloat(banhji.ActivateMeter.get('amountToBeRecieved')), banhji.ActivateMeter.get('meterObj').contact_id);
+						return banhji.installment.makeSchedule(amount - kendo.parseFloat(banhji.ActivateMeter.get('amountToBeRecieved')), banhji.ActivateMeter.get('meterObj').contact[0].id, banhji.ActivateMeter.get('startDate'), banhji.ActivateMeter.get('period'));
 					}
 				})
 				.then(function(data){
@@ -8948,32 +9414,71 @@
 				.then(function(installment){
 					if(installment[0]) {
 						// show message
+						banhji.ActivateMeter.set('amountBilled', 0.00);
+						banhji.ActivateMeter.set('cashAccount', null);
+						banhji.ActivateMeter.set('paymentMethod', null);
+						banhji.ActivateMeter.set('amountToBeRecieved', 0.00);
+						banhji.ActivateMeter.set('amountRemain', 0.00);
+						$("#ntf1").data("kendoNotification").success("Successfully!");
+						banhji.router.navigate("/center");
 					} else {
 						// show error
+						$("#ntf1").data("kendoNotification").error("Error!");
 					}
 				});
 				// and amount left to be make via installment
 				
 			} else {
-				// create only invoice for the service
-				// then change meter activated field to 1
-				// make receipt
-				if(this.dataSource.data().length > 0) {
-					//$("#loadImport").css("display","block");
-					this.dataSource.sync();
-					this.dataSource.bind("requestEnd", function(e){
-						if(e.type != 'read') {
-							if(e.response){				
-					    		$("#ntf1").data("kendoNotification").success("Successfully!");
-								window.history.back();
+				banhji.transaction.makeInvoice(this.get('meterObj').contact[0].id, this.get('paymentMethod'), this.get('amountToBeRecieved'), 'Cash_Sale')
+				.then(function(data){
+					// create invoice
+					// console.log(amount - kendo.parseFloat(banhji.ActivateMeter.get('amountToBeRecieved')));
+					if(data) {
+						return banhji.transaction.save();
+					} else {
+						return false;
+					}
+				})
+				.then(function(transaction){
+					// create invoice line
+					if(transaction[0]){	
+						$.each(banhji.ActivateMeter.items, function(i, v){
+							if(v.type == 'service') {
+								var amount = 0.00;
+								banhji.transactionLine.addById(transaction[0].id, banhji.ActivateMeter.get('meterObj').contact[0].id, banhji.ActivateMeter.get('cashAccount'), 'Meter Activation', v.received, 0, banhji.ActivateMeter.get('issued_date'));
+
+								banhji.transactionLine.addById(transaction[0].id, banhji.ActivateMeter.get('meterObj').contact[0].id, v.account_id, 'Meter Activation', 0, v.received, banhji.ActivateMeter.get('issued_date'));								
 							}
-						}				    					  				
-				    });
-				    this.dataSource.bind("error", function(e){		    		    	
+
+							if(v.type == 'deposit' && v.received > 0) {
+								banhji.transactionLine.addById(transaction[0].id, banhji.ActivateMeter.get('meterObj').contact[0].id, banhji.ActivateMeter.get('cashAccount'), 'Meter Activation', v.received, 0, anhji.ActivateMeter.get('issued_date'));
+								banhji.transactionLine.addById(transaction[0].id, v.account_id, banhji.ActivateMeter.get('meterObj').contact.deposit_account_id, 'Meter Activation', 0, v.received, banhji.ActivateMeter.get('issued_date'));
+							}
+						});
+						
+						return banhji.transactionLine.save();
+					} else {
+						return false;
+					}
+				})
+				.then(function(lines){
+					// then change meter activated field to 1
+					var status = false;
+					if(lines.length > 0) {
+						status = true;
+						banhji.ActivateMeter.set('amountBilled', 0.00);
+						banhji.ActivateMeter.set('cashAccount', null);
+						banhji.ActivateMeter.set('paymentMethod', null);
+						banhji.ActivateMeter.set('amountToBeRecieved', 0.00);
+						banhji.ActivateMeter.set('amountRemain', 0.00);
+						$("#ntf1").data("kendoNotification").success("Successfully!");
+						banhji.router.navigate("/center");
+					} else {
+						status = false;
 						$("#ntf1").data("kendoNotification").error("Error!"); 
-						//$("#loadImport").css("display","none");				
-				    });
-				}
+					}
+					return status;
+				});
 			}		
 		},
 		cancel 				: function(){
@@ -9216,28 +9721,86 @@
 				workbook.SheetNames.forEach(function(sheetName) {
 					var roa = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
 					if(roa.length > 0){
-						console.log(i);
 						result[sheetName] = roa;
-						var j = 0;
 						for(var i = 0; i < roa.length; i++) {
-							if(i != 0){
-								j = i - 1;
-								if(roa[i].name_local != roa[j].name_local){
-									self.dataSource.add(roa[i]);
-									console.log(roa[i].name_local);
-								}
-							}else{
-								self.dataSource.add(roa[i]);
-							}
+							self.dataSource.add(roa[i]);
+							$("#loadImport").css("display","none");	
+							console.log(roa[i]);
 						}							
 					}					
 				});															
 			}
 			reader.readAsBinaryString(files[0].rawFile);      
 		},
+		exportEXCEL 		: function(e){
+			$("#loadImport").css("display","block");
+			var ds = new kendo.data.DataSource({
+		        type: "json",
+		        transport: {
+		          read: apiUrl + "readings"
+		        },
+		        schema: {
+		          model: {
+		            fields: {
+		              number: { type: "number" },
+		              date: { type: "date" },
+		              previous: { type: "previous" },
+		              reading: { type: "reading" },
+		              current: { type: "current" }
+		            }
+		          }
+		        }
+		      });
+
+		      var rows = [{
+		        cells: [
+		          { value: "number" },
+		          { value: "date" },
+		          { value: "previous" },
+		          { value: "reading" },
+		          { value: "current" }
+		        ]
+		      }];
+		      ds.fetch(function(){
+		        var data = this.data();
+		        for (var i = 0; i < data[0].count; i++){
+		          rows.push({
+		            cells: [
+		              { value: data[0].results[i].number },
+		              { value: data[0].results[i].date },
+		              { value: data[0].results[i].previous },
+		              { value: data[0].results[i].reading },
+		              { value: data[0].results[i].current }
+		            ]
+		          })
+		        }
+		        var workbook = new kendo.ooxml.Workbook({
+		          sheets: [
+		            {
+		              columns: [
+		                { autoWidth: true },
+		                { autoWidth: true },
+		                { autoWidth: true },
+		                { autoWidth: true },
+		                { autoWidth: true }
+		              ],
+		              // Title of the sheet
+		              title: "Reading",
+		              // Rows of the sheet
+		              rows: rows
+		            }
+		          ]
+		        });
+		        //save the file as Excel file with extension xlsx
+		        kendo.saveAs({dataURI: workbook.toDataURL(), fileName: "Reading.xlsx"});
+		      }).then(function(){
+		      	$("#loadImport").css("display","none");
+		      });
+		},
 		save 				: function() {
 			var self = this;
 			if(this.dataSource.data().length > 0) {
+				$("#loadImport").css("display","block");
 				this.dataSource.sync();
 				this.dataSource.bind("requestEnd", function(e){
 					if(e.type != 'read') {

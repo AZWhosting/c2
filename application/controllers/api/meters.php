@@ -174,7 +174,7 @@ class Meters extends REST_Controller {
 			$obj->number 				= isset($value->number) 			? $value->number:0;			
 			$obj->multiplier 			= isset($value->multiplier) 		? $value->multiplier: 1;
 			$obj->max_number 			= isset($value->max_number) 		? $value->max_number:0;
-			$obj->contact_id 			= isset($value->contact_id) 		? $value->contact_id:0;
+			// $obj->contact_id 			= isset($value->contact_id) 		? $value->contact_id:0;
 			$obj->startup_reading 		= isset($value->starting_no) 		? $value->starting_no: 0;
 			$obj->ear_sealed 			= isset($value->ear_sealed)			?$value->ear_sealed:true;
 			$obj->cover_sealed 			= isset($value->cover_sealed)		?$value->cover_sealed:true;

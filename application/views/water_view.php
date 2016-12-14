@@ -337,7 +337,12 @@
 	            	<a href="#tab11" class="glyphicons building" data-toggle="tab">
 	            		<i></i><span class="strong"><span>Prefix Setting</span></span>
 	            	</a>
-	            </li>                       
+	            </li>
+	            <li>
+	            	<a href="#tab12" data-bind="click: goBrand" class="glyphicons certificate" data-toggle="tab">
+	            		<i></i><span class="strong"><span>Brand</span></span>
+	            	</a>
+	            </li>                        
 	        </ul>
 	    </div>
 	    <!-- // Tabs Heading END -->
@@ -428,7 +433,19 @@
 	            </div>
 	            <div class="tab-pane" id="tab4">
 	            	<div style="clear: both;margin-bottom: 10px;">
-	            		<input data-bind="value: exName" type="text" placeholder="Name" style="height: 32px;"  class="span3 k-textbox k-invalid" />
+	            		<input data-bind="value: exName" type="text" placeholder="Name" style="height: 32px;"  class="span2 k-textbox k-invalid" />
+
+	            		<input data-role="dropdownlist"
+		            	   class="span3"
+		            	   style="padding-right: 1px;height: 32px;" 
+            			   data-option-label="(--- Acount ---)"
+            			   data-auto-bind="false"			                   
+		                   data-value-primitive="false"
+		                   data-text-field="name"
+		                   data-value-field="id"
+		                   data-bind="value: exAccount,
+		                              source: exAccountDS"/>
+	            		
 
 		                <input data-role="dropdownlist"
 		            	   class="span2"
@@ -441,13 +458,15 @@
 		                   data-bind="value: exUnit,
 		                              source: typeUnit"/>
 		            	
-		            	<input data-bind="value: exPrice" type="text" placeholder="Price" style="height: 32px;" class="span3 k-textbox k-invalid" />
+		            	<input data-bind="value: exPrice" type="text" placeholder="Price" style="height: 32px;" class="span2 k-textbox k-invalid" />
+
 		            	<a class="btn btn-default glyphicons circle_plus cutype-icon" style="width: 80px;margin-left: 2px;" data-bind="click: addEx"><i></i>Add</a>
 		            </div>
 	            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
 	            		<thead>
 	            			<tr>
 	            				<th class="center"><span>Name</span></th>
+	            				<th class="center"><span>Account</span></th>
 	            				<th class="center"><span>Unit</span></th>
 	            				<th class="center"><span>Price</span></th>
 	            				<th class="center">Action</th>
@@ -462,7 +481,17 @@
 	            </div>
 	            <div class="tab-pane" id="tab5">
 		            <div style="clear: both;margin-bottom: 10px;">
-		            	<input data-bind="value: tariffName" type="text" placeholder="Name" style="height: 32px;"  class="span8 k-textbox k-invalid" />
+		            	<input data-bind="value: tariffName" type="text" placeholder="Name" style="height: 32px;"  class="span4 k-textbox k-invalid" />
+		            	<input data-role="dropdownlist"
+		            	   class="span4"
+		            	   style="padding-right: 1px;height: 32px;" 
+            			   data-option-label="(--- Acount ---)"
+            			   data-auto-bind="false"			                   
+		                   data-value-primitive="false"
+		                   data-text-field="name"
+		                   data-value-field="id"
+		                   data-bind="value: tariffAccount,
+		                              source: tariffAccDS"/>
 
 		            	<a class="btn btn-default glyphicons circle_plus cutype-icon" style="width: 80px;margin-left: 2px;" data-bind="click: addTariff"><i></i>Add</a>
 		            </div>
@@ -470,6 +499,7 @@
 	            		<thead>
 	            			<tr>
 	            				<th class="center" width="300"><span>Name</span></th>
+	            				<th class="center" ><span>Account</span></th>
 	            				<th class="center" ><span>Action</span></th>
 	            			</tr>
 	            		</thead>
@@ -549,9 +579,20 @@
 					</div>
 	            </div>
 	            <div class="tab-pane" id="tab6">
+	            
 	            	<div style="clear: both;margin-bottom: 10px;">
 	            		<input data-bind="value: depositName" type="text" placeholder="Name" style="height: 32px;"  class="span3 k-textbox k-invalid" />
-		            	
+		            	<input data-role="dropdownlist"
+		            	   class="span3"
+		            	   style="padding-right: 1px;height: 32px;" 
+            			   data-option-label="(--- Acount ---)"
+            			   data-auto-bind="false"			                   
+		                   data-value-primitive="false"
+		                   data-text-field="name"
+		                   data-value-field="id"
+		                   data-bind="value: depositAccount,
+		                              source: depositAccDS"/>
+
 		            	<input data-bind="value: depositPrice" type="text" placeholder="Price" style="height: 32px;" class="span3 k-textbox k-invalid" />
 
 		            	<a class="btn btn-default glyphicons circle_plus cutype-icon" style="width: 80px;margin-left: 2px;" data-bind="click: addDeposit"><i></i>Add</a>
@@ -560,6 +601,7 @@
 	            		<thead>
 	            			<tr>
 	            				<th class="center"><span>Name</span></th>
+	            				<th class="center"><span>Account</span></th>
 	            				<th class="center"><span>Price</span></th>
 	            				<th class="center">Action</th>
 	            			</tr>
@@ -574,7 +616,17 @@
 	            <div class="tab-pane" id="tab7">
 	            	<div style="clear: both;margin-bottom: 10px;">
 	            		<input data-bind="value: serviceName" type="text" placeholder="Name" style="height: 32px;"  class="span3 k-textbox k-invalid" />
-		            	
+
+		            	<input data-role="dropdownlist"
+		            	   class="span3"
+		            	   style="padding-right: 1px;height: 32px;" 
+            			   data-option-label="(--- Acount ---)"
+            			   data-auto-bind="false"			                   
+		                   data-value-primitive="false"
+		                   data-text-field="name"
+		                   data-value-field="id"
+		                   data-bind="value: serviceAccount,
+		                              source: tariffAccDS"/>
 		            	<input data-bind="value: servicePrice" type="text" placeholder="Price" style="height: 32px;" class="span3 k-textbox k-invalid" />
 
 		            	<a class="btn btn-default glyphicons circle_plus cutype-icon" style="width: 80px;margin-left: 2px;" data-bind="click: addService"><i></i>Add</a>
@@ -583,6 +635,7 @@
 	            		<thead>
 	            			<tr>
 	            				<th class="center"><span>Name</span></th>
+	            				<th class="center"><span>Account</span></th>
 	            				<th class="center"><span>Price</span></th>
 	            				<th class="center">Action</th>
 	            			</tr>
@@ -597,7 +650,16 @@
 	            <div class="tab-pane" id="tab8">
 	            	<div style="clear: both;margin-bottom: 10px;">
 	            		<input data-bind="value: maintenanceName" type="text" placeholder="Name" style="height: 32px;"  class="span3 k-textbox k-invalid" />
-		            	
+		            	<input data-role="dropdownlist"
+		            	   class="span3"
+		            	   style="padding-right: 1px;height: 32px;" 
+            			   data-option-label="(--- Acount ---)"
+            			   data-auto-bind="false"			                   
+		                   data-value-primitive="false"
+		                   data-text-field="name"
+		                   data-value-field="id"
+		                   data-bind="value: maintenanceAccount,
+		                              source: tariffAccDS"/>
 		            	<input data-bind="value: maintenancePrice" type="text" placeholder="Price" style="height: 32px;" class="span3 k-textbox k-invalid" />
 
 		            	<a class="btn btn-default glyphicons circle_plus cutype-icon" style="width: 80px;margin-left: 2px;" data-bind="click: addMaintenance"><i></i>Add</a>
@@ -606,6 +668,7 @@
 	            		<thead>
 	            			<tr>
 	            				<th class="center"><span>Name</span></th>
+	            				<th class="center"><span>Account</span></th>
 	            				<th class="center"><span>Price</span></th>
 	            				<th class="center">Action</th>
 	            			</tr>
@@ -680,6 +743,29 @@
 				                 data-template="accountSetting-prefix-template"
 				                 data-bind="source: prefixDS">				            
 	            		</tbody>
+	            	</table>
+	            </div>
+	            <div class="tab-pane" id="tab12">
+	            	<div style="clear: both;margin-bottom: 10px;">
+		            	<input data-bind="value: brandCode" type="text" placeholder="Code ..." style="height: 32px;"  class="span3 k-textbox k-invalid" />
+		            	<input data-bind="value: brandName" type="text" placeholder="Name ..." style="height: 32px;"  class="span3 k-textbox k-invalid" />
+		            	<input data-bind="value: brandAbbr" type="text" placeholder="Abbr ..." style="height: 32px;" class="span3 k-textbox k-invalid" />
+		            	<a class="btn btn-default glyphicons circle_plus cutype-icon" style="width: 80px;margin-left: 2px;" data-bind="click: addBrand"><i></i>Add</a>
+		            </div>
+	            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
+	            		<thead>
+	            			<tr>
+	            				<th class="center"><span>Code</span></th>
+	            				<th class="center"><span>Name</span></th>
+	            				<th class="center"><span>Abbr</span></th>
+	            				<th class="center">Action</th>
+	            			</tr>
+	            		</thead>
+	            		<tbody data-role="listview"		
+			                data-template="brandSetting-template"
+			                data-edit-template="brand-edit-template"
+			                data-auto-bind="true"
+			                data-bind="source: brandDS"></tbody>
 	            	</table>
 	            </div>
 	        </div>
@@ -780,6 +866,9 @@
     	<td>
     		#= name#
    		</td>
+   		<td>
+    		#= account.name#
+   		</td>
    		<td align="center">
     		#= unit#
    		</td>
@@ -798,7 +887,15 @@
         </td>    
         <td>        	
         	<input style="width: 100%;" data-role="dropdownlist"      
-                   data-value-primitive="true"
+                   data-value-primitive="false"
+                   data-text-field="name"
+                   data-value-field="id"
+                   data-bind="value: account,
+                              source: exAccountDS" />
+        </td> 
+        <td>        	
+        	<input style="width: 100%;" data-role="dropdownlist"      
+                   data-value-primitive="false"
                    data-text-field="name"
                    data-value-field="id"
                    data-bind="value: unit,
@@ -818,6 +915,9 @@
     	<td>
     		#= name#
    		</td>
+   		<td>
+    		#= account.name#
+   		</td>
    		<td align="left">   
 		    <span class="k-edit-button"><i class="icon-edit"></i> Edit</span>
     		|
@@ -832,7 +932,14 @@
         <td>
 			<input style="width: 100%;" type="text" class="k-textbox" data-bind="value:name" />
         </td>    
-
+        <td>        	
+        	<input style="width: 100%;" data-role="dropdownlist"      
+                   data-value-primitive="false"
+                   data-text-field="name"
+                   data-value-field="id"
+                   data-bind="value: account,
+                              source: tariffAccDS" />
+        </td>
 	    <td class="edit-buttons" style="text-align: center;">
 	        <a class="k-button k-update-button" href="\\#"><span class="k-icon k-update"></span></a>
 	        <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-cancel"></span></a>
@@ -883,6 +990,9 @@
     	<td>
     		#= name#
    		</td>
+   		<td align="left">
+    		#= account.name#
+   		</td>
    		<td align="right">
     		#= amount#
    		</td>
@@ -895,7 +1005,15 @@
     <tr>    	               
         <td>
 			<input style="width: 100%;" type="text" class="k-textbox" data-bind="value:name" />
-        </td>       
+        </td>  
+        <td>
+			<input style="width: 100%;" data-role="dropdownlist"      
+                   data-value-primitive="false"
+                   data-text-field="name"
+                   data-value-field="id"
+                   data-bind="value: account,
+                              source: depositAccDS" />
+        </td>      
         <td>
         	<input style="width: 100%;" type="text" class="k-textbox" data-bind="value:amount" />
         </td>
@@ -911,6 +1029,9 @@
     	<td>
     		#= name#
    		</td>
+   		<td align="left">
+    		#= account.name#
+   		</td>
    		<td align="right">
     		#= amount#
    		</td>
@@ -923,6 +1044,14 @@
     <tr>    	               
         <td>
 			<input style="width: 100%;" type="text" class="k-textbox" data-bind="value:name" />
+        </td>  
+        <td>
+			<input style="width: 100%;" data-role="dropdownlist"      
+                   data-value-primitive="false"
+                   data-text-field="name"
+                   data-value-field="id"
+                   data-bind="value: account,
+                              source: tariffAccDS" />
         </td>       
         <td>
         	<input style="width: 100%;" type="text" class="k-textbox" data-bind="value:amount" />
@@ -940,6 +1069,9 @@
     		#= name#
    		</td>
    		<td align="right">
+    		#= account.name#
+   		</td>
+   		<td align="right">
     		#= amount#
    		</td>
    		<td align="center">   			   
@@ -952,6 +1084,14 @@
         <td>
 			<input style="width: 100%;" type="text" class="k-textbox" data-bind="value:name" />
         </td>       
+        <td>
+			<input style="width: 100%;" data-role="dropdownlist"      
+                   data-value-primitive="false"
+                   data-text-field="name"
+                   data-value-field="id"
+                   data-bind="value: account,
+                              source: tariffAccDS" />
+        </td>  
         <td>
         	<input style="width: 100%;" type="text" class="k-textbox" data-bind="value:amount" />
         </td>
@@ -1065,6 +1205,44 @@
 			<a data-bind="click: deleteForm" class="btn-action glyphicons remove_2 btn-danger"><i></i></a>
 			# } #
 		</td>
+	</tr>
+</script>
+<script id="brandSetting-template" type="text/x-kendo-tmpl">                    
+    <tr>
+    	<td>
+    		#= code#
+   		</td>
+   		<td align="center">
+    		#= name#
+   		</td>
+   		<td align="center">
+    		#= abbr#
+   		</td>
+   		<td align="center">   			   
+		    <a class="btn-action glyphicons pencil btn-success k-edit-button" href="\\#"><i></i></a>
+   		</td>   		
+   	</tr>
+</script>
+<script id="brand-edit-template" type="text/x-kendo-tmpl">
+	<tr>
+		<td>
+            <input type="text" class="k-textbox" data-bind="value:code" name="ProductName" required="required" validationMessage="required" />
+        </td>
+			<td align="center">
+    
+            <input type="text" class="k-textbox" data-bind="value:name" name="ProductName" required="required" validationMessage="required" />
+        </td>
+			<td align="center">
+            <input type="text" class="k-textbox" data-bind="value:abbr" name="abbr" required="required" validationMessage="required" />
+            <span data-for="abbr" class="k-invalid-msg"></span>
+        </td>
+			<td align="center">
+    
+	        <div class="edit-buttons">
+	            <a class="k-button k-update-button" href="\\#"><span class="k-icon k-update"></span></a>
+	            <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-cancel"></span></a>
+	        </div>
+	    </td>
 	</tr>
 </script>
 
@@ -1966,6 +2144,47 @@
 		<h4 class="icon-bar-chart" ><i></i><span style="font-style: normal" data-bind="text: lang.lang.monthly_sale"></span></h4>
 		
 		<div class="clearfix"></div>
+		<div class="row-fluid">								
+			<div class="box-generic" style="margin-bottom: 0; padding-bottom: 0;">
+			    <!-- //Tabs Heading -->
+			    <div class="tabsbar tabsbar-1">
+			        <ul class="row-fluid row-merge">						            
+			            <li class="span2 glyphicons usd active">
+			            	<a href="#metertab1" data-toggle="tab"><i></i> <span><span >Water Sale</span></span></a>
+			            </li>								            
+			            <li class="span2 glyphicons qrcode" style="width: 21%;">
+			            	<a href="#metertab2" data-toggle="tab"><i></i> <span><span >Reading</span></span></a>
+			            </li>
+			            <li class="span2 glyphicons show_lines">
+			            	<a href="#metertab3" data-toggle="tab"><i></i> <span><span ></span>Installment Schedule</span></a>
+			            </li>						            					            
+			        </ul>
+			    </div>
+			    <!-- // Tabs Heading END -->
+
+			    <div class="tab-content">
+
+			    	<!-- //GENERAL INFO -->
+			        <div class="tab-pane active" id="metertab1">
+		            	Water Sale
+		        	</div>
+			        <!-- //GENERAL INFO END -->
+
+			        <!-- //ACCOUNTING -->
+			        <div class="tab-pane" id="metertab2">
+			        	Reading
+		        	</div>
+			        <!-- //ACCOUNTING END -->						       
+
+			        <!-- //CONTACT PERSON -->
+			        <div class="tab-pane" id="metertab3">
+			        	Installment Schedule
+		        	</div>
+			        <!-- //CONTACT PERSON END -->
+			    </div>
+			</div>
+		</div>
+
 	</div>
 
 	<div class="innerLR innerT">			
@@ -2340,7 +2559,7 @@
 				              			type="text"
 				              			class="k-textbox k-invalid"
 				              			style="width: 80%" 
-				              			data-bind="value: obj.installment_period"
+				              			data-bind="value: period"
 				              			placeholder="1 - 12" 
 				              		/>
 				              		<br>
@@ -2348,7 +2567,7 @@
 			              			<br>
 				              		<input
 					            		data-role="datepicker"	 		
-		            					data-bind="value: obj.start_date" 
+		            					data-bind="value: startDate" 
 		            					data-format="dd-MM-yyyy"
 		            					data-parse-formats="yyyy-MM-dd" 
 		            					placeholder="dd-MM-yyyy" required data-required-msg="required" 
@@ -3465,10 +3684,12 @@
 			# } #
 		</td>
 		<td style="text-align: center;">
+			# if(activated != "1") { #
 			<a style="background: \#1f4774;padding:4px;margin-right: 3px;vertical-align: middle;" 
 				href="\#/activate_meter/#= id#" 
 				class="btn-action btn-success">Activate
 			</a>
+			# } #
 			<a style="border:none;" href="\#/meter/#= id #" class="btn-action glyphicons pencil btn-danger widget-stats widget-stats-info"><i></i></span>
 		</td>
 	</tr>
@@ -7549,7 +7770,11 @@
         contactTypeCompany 	: 0,
         blockCompanyId  	: 0,
         tabGo 				: 0,
+        depositAccDS 		: banhji.source.depositAccountDS,
+        exAccountDS 		: banhji.source.tradeDiscountDS,
+        tariffAccDS	 	 	: banhji.source.incomeAccountDS,
         blocDS 				: dataStore(apiUrl + "locations"),
+        brandDS 			: banhji.source.brandDS,
         planItemDS			: dataStore(apiUrl + "plans/items"),
         tariffItemDS		: dataStore(apiUrl + "plans/tariff"),
         txnTemplateDS		: dataStore(apiUrl + "transaction_templates"),
@@ -7669,11 +7894,13 @@
         		type     	: "exemption",
         		is_flat 	: false,
         		usage 		: 0,
+        		account 	: this.get("exAccount"),
         		unit 		: this.get("exUnit"),
         		amount 		: this.get("exPrice")
         	});
         	this.planItemDS.sync();
         	this.set("exName", "");
+        	this.set("exAccount", "");
         	this.set("exPrice", "");
         	this.set("exUnit", "");
         },
@@ -7731,6 +7958,7 @@
         		is_flat   	: 0,
         		tariff_id 	: 0,
         		unit 		: 0,
+        		account 	: this.get("tariffAccount"),
         		usage 		: 0,
         		amount 		: 0
         	});
@@ -7740,6 +7968,7 @@
         		if(e.response) {
         			console.log("e");
         			self.set("tariffName", "");
+        			self.set("tariffAccount", "");
         		}
         	});
         	this.planItemDS.bind("error", function(e){
@@ -7766,12 +7995,14 @@
         		type     	: "deposit",
         		is_flat   	: false,
         		unit 		: null,
+        		account 	: this.get("depositAccount"),
         		usage 		: 0,
         		amount 		: this.get("depositPrice")
         	});
         	this.planItemDS.sync();
         	this.set("depositName", "");
         	this.set("depositPrice", "");
+        	this.set("depositAccount", "");
         },
         goService    		: function(){
         	this.planItemDS.data([]);
@@ -7783,12 +8014,14 @@
         		type     	: "service",
         		is_flat   	: false,
         		unit 		: null,
+        		account 	: this.get("serviceAccount"),
         		usage 		: 0,
         		amount 		: this.get("servicePrice")
         	});
         	this.planItemDS.sync();
         	this.set("serviceName", "");
         	this.set("servicePrice", "");
+        	this.set("serviceAccount", "");
         },
         goMaintenance    		: function(){
         	this.planItemDS.data([]);
@@ -7800,12 +8033,14 @@
         		type     	: "maintenance",
         		is_flat   	: false,
         		unit 		: null,
+        		account 	: this.get("maintenanceAccount"),
         		usage 		: 0,
         		amount 		: this.get("maintenancePrice")
         	});
         	this.planItemDS.sync();
         	this.set("maintenanceName", "");
         	this.set("maintenancePrice", "");
+        	this.set("maintenanceAccount", "");
         },
         goPlan 				: function(){
         	this.planDS.read();
@@ -7821,6 +8056,29 @@
         	this.set("planSelect", true);
         	this.planItemDS.data([]);
         	this.planItemDS.filter({field: "id", operator:"where_in", value: idList});
+        },
+        goBrand    		: function(){
+        	this.brandDS.data([]);
+        	this.brandDS.filter({field: "sub_of", value: "water"});
+        },
+        addBrand 			: function(){
+        	var self = this;
+        	if(this.get("brandCode") !== "" && this.get("brandName") !== ""){
+	        	this.brandDS.add({
+	        		sub_of 		: "water",
+	        		code 		: this.get("brandCode"),        		
+	        		name 		: this.get("brandName"),
+	        		abbr 		: this.get("brandAbbr")
+	        	});
+
+	        	this.brandDS.sync();	        	    			
+	        			
+    			this.set("brandCode", "");
+    			this.set("brandName", "");
+    			this.set("brandAbbr", "");	        		
+        	}else{
+        		alert("required number and name!");
+        	}
         },
 		pageLoad 			: function(){
 			this.txnTemplateDS.filter({ field: "moduls", value : "water_mg" });
@@ -8611,7 +8869,7 @@
 
 	banhji.transactionLine = kendo.observable({
 		dataSource 		: dataStore(apiUrl + "journal_lines"),
-		addById 		: function(transactionId, contactId, description, accountId, dr, cr, issuedDate) {
+		addById 		: function(transactionId, contactId, accountId, description, dr, cr, issuedDate) {
 			// todo: create chart of accounts: water_sale_revenue(42610) & service_charge(42620) & maintenance(42630)
 			// get from customer 
 			this.dataSource.add({					
@@ -8724,7 +8982,7 @@
 		setPeriod 			: function(period) {
 			this.set('period', period);
 		},
-		makeSchedule 		: function(amount, contactId) {
+		makeSchedule 		: function(amount, contactId, startDate, period) {
 			var dfd = $.Deferred();
 			try {
 				if(amount == undefined) throw "TypeError: Amount is not defined";
@@ -8733,10 +8991,10 @@
 				banhji.installment.dataSource.insert(0, {
 					biller_id 	: banhji.userData.id,
 					contact_id 	: contactId,
-					start_month : kendo.toString(banhji.installment.get('startDate'), 'yyyy-MM-dd'),
+					start_month : kendo.toString(startDate, 'yyyy-MM-dd'),
 					amount 		: amount,
 					payment_number: null,
-					period 		: banhji.installment.get('period'),
+					period 		: period,
 					invoiced 	: 0
 				});
 				dfd.resolve(banhji.installment.dataSource.at(0));
@@ -8994,10 +9252,11 @@
 			})
 			.then(function(e){
 				var data = self.planDS.view()[0];
+				self.items.splice(0, self.items.length);
 				var amount = 0.0;
 				$.each(data.items, function(i, v){
 					if(v.type == 'service' || v.type== 'deposit'){
-						self.items.push({id: v.item, name: v.name, type: v.type, amount: v.amount, received: 0.00});
+						self.items.push({id: v.item, account_id: v.account_id, name: v.name, type: v.type, amount: v.amount, received: 0.00});
 						amount += parseFloat(v.amount);
 					}
 				});
@@ -9015,7 +9274,7 @@
 			});
 			if(this.get('amountToBeRecieved') < amount) {
 				// create one invoice
-				banhji.transaction.makeInvoice(this.get('meterObj').contact.id, this.get('paymentMethod'), this.get('amountToBeRecieved'), 'Cash_Sale')
+				banhji.transaction.makeInvoice(this.get('meterObj').contact[0].id, this.get('paymentMethod'), this.get('amountToBeRecieved'), 'Cash_Sale')
 				.then(function(data){
 					// create invoice
 					// console.log(amount - kendo.parseFloat(banhji.ActivateMeter.get('amountToBeRecieved')));
@@ -9031,21 +9290,21 @@
 						$.each(banhji.ActivateMeter.items, function(i, v){
 							if(v.type == 'service') {
 								var amount = 0.00;
-								banhji.transactionLine.addById(transaction[0].id, banhji.ActivateMeter.get('meterObj').contact.id, banhji.ActivateMeter.get('cashAccount'), 'Meter Activation', v.received, 0, banhji.ActivateMeter.get('issued_date'));
+								banhji.transactionLine.addById(transaction[0].id, banhji.ActivateMeter.get('meterObj').contact[0].id, banhji.ActivateMeter.get('cashAccount'), 'Meter Activation', v.received, 0, banhji.ActivateMeter.get('issued_date'));
 
-								banhji.transactionLine.addById(transaction[0].id, banhji.ActivateMeter.get('meterObj').contact.id, banhji.ActivateMeter.get('meterObj').contact.account_id, 'Meter Activation', v.received, 0, banhji.ActivateMeter.get('issued_date'));
+								banhji.transactionLine.addById(transaction[0].id, banhji.ActivateMeter.get('meterObj').contact[0].id, banhji.ActivateMeter.get('meterObj').contact[0].account_id, 'Meter Activation', v.amount - v.received, 0, banhji.ActivateMeter.get('issued_date'));
 
 								if(banhji.ActivateMeter.get('amountToBeRecieved') > 0) {
-									banhji.transactionLine.addById(transaction[0].id, banhji.ActivateMeter.get('meterObj').contact.id, banhji.ActivateMeter.get('meterObj').contact.ra_id, 'Meter Activation', 0, banhji.ActivateMeter.get('amountToBeRecieved'), banhji.ActivateMeter.get('issued_date'));
+									banhji.transactionLine.addById(transaction[0].id, banhji.ActivateMeter.get('meterObj').contact[0].id, v.account_id, 'Meter Activation', 0, v.amount, banhji.ActivateMeter.get('issued_date'));
 								} else {
-									banhji.transactionLine.addById(transaction[0].id, banhji.ActivateMeter.get('meterObj').contact.id, banhji.ActivateMeter.get('meterObj').contact.ra_id, 'Meter Activation', 0, banhji.ActivateMeter.get('amountBilled'), banhji.ActivateMeter.get('issued_date'));
+									banhji.transactionLine.addById(transaction[0].id, banhji.ActivateMeter.get('meterObj').contact[0].id, v.account_id, 'Meter Activation', 0, banhji.ActivateMeter.get('amountBilled'), banhji.ActivateMeter.get('issued_date'));
 								}
 								
 							}
 
 							if(v.type == 'deposit' && v.received > 0) {
-								banhji.transactionLine.addById(transaction[0].id, banhji.ActivateMeter.get('meterObj').contact.id, banhji.ActivateMeter.get('cashAccount'), 'Meter Activation', v.received, 0, banhji.ActivateMeter.get('issued_date'));
-								banhji.transactionLine.addById(transaction[0].id, banhji.ActivateMeter.get('meterObj').contact.id, banhji.ActivateMeter.get('meterObj').contact.deposit_account_id, 'Meter Activation', 0, v.received, banhji.ActivateMeter.get('issued_date'));
+								banhji.transactionLine.addById(transaction[0].id, banhji.ActivateMeter.get('meterObj').contact[0].id, banhji.ActivateMeter.get('cashAccount'), 'Meter Activation', v.received, 0, banhji.ActivateMeter.get('issued_date'));
+								banhji.transactionLine.addById(transaction[0].id, banhji.ActivateMeter.get('meterObj').contact[0].id, v.account_id, 'Meter Activation', 0, v.received, banhji.ActivateMeter.get('issued_date'));
 							}
 						});
 						
@@ -9077,7 +9336,7 @@
 					if(status) {
 						banhji.installment.setDate(banhji.ActivateMeter.get('startDate'));
 						banhji.installment.setPeriod(banhji.ActivateMeter.get('period'));
-						return banhji.installment.makeSchedule(amount - kendo.parseFloat(banhji.ActivateMeter.get('amountToBeRecieved')), banhji.ActivateMeter.get('meterObj').contact.id);
+						return banhji.installment.makeSchedule(amount - kendo.parseFloat(banhji.ActivateMeter.get('amountToBeRecieved')), banhji.ActivateMeter.get('meterObj').contact[0].id, banhji.ActivateMeter.get('startDate'), banhji.ActivateMeter.get('period'));
 					}
 				})
 				.then(function(data){
@@ -9091,14 +9350,17 @@
 						banhji.ActivateMeter.set('paymentMethod', null);
 						banhji.ActivateMeter.set('amountToBeRecieved', 0.00);
 						banhji.ActivateMeter.set('amountRemain', 0.00);
+						$("#ntf1").data("kendoNotification").success("Successfully!");
+						banhji.router.navigate("/center");
 					} else {
 						// show error
+						$("#ntf1").data("kendoNotification").error("Error!");
 					}
 				});
 				// and amount left to be make via installment
 				
 			} else {
-				banhji.transaction.makeInvoice(this.get('meterObj').contact.id, this.get('paymentMethod'), this.get('amountToBeRecieved'), 'Cash_Sale')
+				banhji.transaction.makeInvoice(this.get('meterObj').contact[0].id, this.get('paymentMethod'), this.get('amountToBeRecieved'), 'Cash_Sale')
 				.then(function(data){
 					// create invoice
 					// console.log(amount - kendo.parseFloat(banhji.ActivateMeter.get('amountToBeRecieved')));
@@ -9114,14 +9376,14 @@
 						$.each(banhji.ActivateMeter.items, function(i, v){
 							if(v.type == 'service') {
 								var amount = 0.00;
-								banhji.transactionLine.addById(transaction[0].id, banhji.ActivateMeter.get('meterObj').contact.id, banhji.ActivateMeter.get('cashAccount'), 'Meter Activation', v.received, 0, banhji.ActivateMeter.get('issued_date'));
+								banhji.transactionLine.addById(transaction[0].id, banhji.ActivateMeter.get('meterObj').contact[0].id, banhji.ActivateMeter.get('cashAccount'), 'Meter Activation', v.received, 0, banhji.ActivateMeter.get('issued_date'));
 
-								banhji.transactionLine.addById(transaction[0].id, banhji.ActivateMeter.get('meterObj').contact.id, banhji.ActivateMeter.get('meterObj').contact.ra_id, 'Meter Activation', 0, v.received, banhji.ActivateMeter.get('issued_date'));								
+								banhji.transactionLine.addById(transaction[0].id, banhji.ActivateMeter.get('meterObj').contact[0].id, v.account_id, 'Meter Activation', 0, v.received, banhji.ActivateMeter.get('issued_date'));								
 							}
 
 							if(v.type == 'deposit' && v.received > 0) {
-								banhji.transactionLine.addById(transaction[0].id, banhji.ActivateMeter.get('meterObj').contact.id, banhji.ActivateMeter.get('cashAccount'), 'Meter Activation', v.received, 0, anhji.ActivateMeter.get('issued_date'));
-								banhji.transactionLine.addById(transaction[0].id, banhji.ActivateMeter.get('meterObj').contact.id, banhji.ActivateMeter.get('meterObj').contact.deposit_account_id, 'Meter Activation', 0, v.received, banhji.ActivateMeter.get('issued_date'));
+								banhji.transactionLine.addById(transaction[0].id, banhji.ActivateMeter.get('meterObj').contact[0].id, banhji.ActivateMeter.get('cashAccount'), 'Meter Activation', v.received, 0, anhji.ActivateMeter.get('issued_date'));
+								banhji.transactionLine.addById(transaction[0].id, v.account_id, banhji.ActivateMeter.get('meterObj').contact.deposit_account_id, 'Meter Activation', 0, v.received, banhji.ActivateMeter.get('issued_date'));
 							}
 						});
 						
@@ -9140,28 +9402,14 @@
 						banhji.ActivateMeter.set('paymentMethod', null);
 						banhji.ActivateMeter.set('amountToBeRecieved', 0.00);
 						banhji.ActivateMeter.set('amountRemain', 0.00);
+						$("#ntf1").data("kendoNotification").success("Successfully!");
+						banhji.router.navigate("/center");
 					} else {
 						status = false;
+						$("#ntf1").data("kendoNotification").error("Error!"); 
 					}
 					return status;
 				});
-			
-				if(this.dataSource.data().length > 0) {
-					//$("#loadImport").css("display","block");
-					this.dataSource.sync();
-					this.dataSource.bind("requestEnd", function(e){
-						if(e.type != 'read') {
-							if(e.response){				
-					    		$("#ntf1").data("kendoNotification").success("Successfully!");
-								window.history.back();
-							}
-						}				    					  				
-				    });
-				    this.dataSource.bind("error", function(e){		    		    	
-						$("#ntf1").data("kendoNotification").error("Error!"); 
-						//$("#loadImport").css("display","none");				
-				    });
-				}
 			}		
 		},
 		cancel 				: function(){
