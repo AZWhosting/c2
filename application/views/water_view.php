@@ -2964,7 +2964,7 @@
 					                	data-start="year" 
 						  				data-depth="year" 
 					                	placeholder="Moth of ..." 
-							           	data-bind="value: obj.month_of" />
+							           	data-bind="value: monthSelect" />
 								</div>
 																								
 								<!-- // Group END -->
@@ -2981,7 +2981,7 @@
 										data-text-field="name" 
 										data-value-field="id" 
 										data-bind="
-											value: obj.license,
+											
 		                  					source: licenseDS,
 		                  					events: {change: licenseChange}">
 		                  		</div>
@@ -3000,33 +3000,17 @@
 										data-text-field="name" 
 										data-value-field="id" 
 										data-bind="
-											value: obj.bloc,
+											
 		                  					source: blocDS,
 		                  					events: {change: blocChange}">
-		                  		</div>
-							</div>
-							<div class="span4">
-								<div class="control-group">								
-									<label ><span >Number</span></label>
-									<input 
-										data-role="dropdownlist" 
-										style="width: 100%;" 
-										data-option-label="Number ..." 
-										data-auto-bind="false" 
-										data-value-primitive="true" 
-										data-text-field="name" 
-										data-value-field="id" 
-										data-bind="
-											value: obj.bloc,
-		                  					source: numberDS,
-		                  					events: {change: numberChange}">
 		                  		</div>
 							</div>
 							<div class="span4">
 								<div class="control-group">	
 									<label ><span >Action</span></label>	
 									<div class="row" style="margin: 0;">					
-										<button type="button" data-role="button" data-bind="click: search" class="k-button" role="button" aria-disabled="false" tabindex="0"><i class="icon-search"></i></button> | <button type="button" data-role="button" onclick="javascript:window.print()" class="k-button" role="button" aria-disabled="false" tabindex="0"><i class="icon-print"></i></button>
+										<button type="button" data-role="button" data-bind="click: search" class="k-button" role="button" aria-disabled="false" tabindex="0"><i class="icon-search"></i></button>
+										<button type="button" data-role="button" data-bind="click: save, visible: showButton" class="k-button" role="button" aria-disabled="false" tabindex="0">Create Bill</button> 
 									</div>
 		                  		</div>
 							</div>		
@@ -3047,13 +3031,13 @@
 					        <tbody data-role="listview" 
 					        		data-template="runbill-row-template" 
 					        		data-auto-bind="false" 
-					        		data-bind="source: readingDS"></tbody>
+					        		data-bind="source: invoiceDS"></tbody>
 					        <tfoot data-template="runbill-footer-template" 
 						        		data-bind="source: this"></tfoot>	            
 					    </table>
 					    <div id="pager" class="k-pager-wrap"
 					    	 data-auto-bind="false"
-				             data-role="pager" data-bind="source: readingDS"></div>
+				             data-role="pager" data-bind="source: invoiceDS"></div>
 			        </div>
 				</div>						
 			</div>
@@ -3063,13 +3047,13 @@
 <script id="runbill-row-template" type="text/x-kendo-tmpl">
 	<tr>
 		<td align="center">
-		   <input type="checkbox" data-bind="checked: isCheck" />
+		   <input type="checkbox" data-bind="checked: invoiced, events: {change: makeInvoice}" />
 		</td>						
-		<td>#=customer[0].surname# #=customer[0].name#</td>		
-		<td><a href="\#/wReading_center/#=meter_id#"><i></i> #=meter[0].number#</a></td>
-		<td class="right">#=previous#</td>
-		<td class="right">#=current#</td>		
-		<td class="right">#=usage# m<sup>3</sup></td>		
+		<td>#= contact.name#</td>		
+		<td>#= meter.number#</td>
+		<td class="right">#= items[0].usage.prev #</td>
+		<td class="right">#= items[0].usage.current #</td>		
+		<td class="right">#= items[0].usage.current - items[0].usage.prev # m<sup>3</sup></td>		
     </tr>
 </script>
 <script id="runbill-footer-template" type="text/x-kendo-template">
@@ -9494,7 +9478,7 @@
 	/*Reading*/
 	banhji.reading = kendo.observable({
 		lang 				: langVM,
-		dataSource  		: dataStore(apiUrl + "readings/books"),
+		dataSource  		: dataStore(apiUrl + "readings"),
 		licenseDS 			: dataStore(apiUrl + "branches"),
 		blocDS 				: dataStore(apiUrl + "locations"),
 		itemDS 				: null,
@@ -9566,7 +9550,7 @@
 		              from_date: { type: "date" },
 		              to_date : { type: "date"},
 		              previous: { type: "number" },
-		              reading: { type: "number" },
+		              status: { type: "string" },
 		              current: { type: "number" }
 		            }
 		          }
@@ -9579,8 +9563,8 @@
 		          { value: "from_date" },
 		          { value: "to_date" },
 		          { value: "previous" },
-		          { value: "reading" },
-		          { value: "current" }
+		          { value: "current" },
+		          { value: "status" }
 		        ]
 		      }];
 		      ds.fetch(function(){
@@ -9592,8 +9576,8 @@
 		              { value: data[0].results[i].from_date },
 		              { value: data[0].results[i].to_date },
 		              { value: data[0].results[i].previous },
-		              { value: data[0].results[i].reading },
-		              { value: data[0].results[i].current }
+		              { value: data[0].results[i].current },
+		              { value: data[0].results[i].status }
 		            ]
 		          })
 		        }
@@ -9847,9 +9831,13 @@
 		lang 				: langVM,
 		licenseDS 			: dataStore(apiUrl + "branches"),
 		blocDS 				: dataStore(apiUrl + "locations"),
-		chkAll 				: false,	
+		invoiceDS	     	: dataStore(apiUrl + "winvoices/make"),
+		chkAll 				: false,
+		licenseSelect 		: null,	
+		monthSelect 		: null,	
+		blocSelect 			: null,
 		pageLoad 			: function(id){
-
+			
 		},   
 		checkAll 		: function(e){
 			e.preventDefault();
@@ -9872,6 +9860,45 @@
 
 	        return kendo.toString(sum, "n0");
 	    },	 
+	    licenseChange 		: function(e) {
+			var license = this.licenseDS.at(e.sender.selectedIndex - 1);
+			console.log(license);
+			this.set("licenseSelect", license.id);
+	    	//this.invoiceDS.filter({field: "branch_id",value: license.id});
+	    },
+	    blocChange 			: function(e) {
+	    	var bloc = this.blocDS.at(e.sender.selectedIndex - 1);
+			this.set("blocSelect", bloc.id);
+	    },
+	    invoiceArray 		: [],
+	    search 				: function(){
+	    	this.invoiceDS.filter([
+	    		{field: 'branch_id', operator: 'where_related_meter', value: this.licenseSelect},
+	    		{field: 'location_id', operator: 'where_related_meter', value: this.blocSelect}
+	    	]);
+	    },
+	    makeInvoice 		: function(e) {
+	    	var that = this;
+	    	if(e.data.invoiced) {
+	    		this.invoiceArray.push(e.data);
+	    	} else {
+	    		$.each(this.invoiceArray, function(i, v){
+	    			if(e.data == v) {
+	    				that.invoiceArray.splice(i, 1);
+	    				return false;
+	    			}
+	    		});
+	    	}
+	    	this.makeBilled();
+	    },
+	    showButton 			: false,
+	    makeBilled 			: function(){
+	    	if(this.invoiceArray.length > 0) {
+	    		this.set('showButton', true);
+	    	} else {
+	    		this.set('showButton', false);
+	    	}
+	    },
 		save 				: function() {
 			var self = this;
 			if(this.dataSource.data().length > 0) {

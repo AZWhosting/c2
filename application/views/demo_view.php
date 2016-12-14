@@ -66177,6 +66177,24 @@
 
 			this.changes();			
 		},
+		//Segments		
+	    segmentChanges 		: function(e) {
+			var dataArr = this.get("obj").segments,
+			lastIndex = dataArr.length - 1,
+			last = this.segmentItemDS.get(dataArr[lastIndex]);
+			
+			if(dataArr.length > 1) {
+				for(var i = 0; i < dataArr.length - 1; i++) {
+					var current_index = dataArr[i],
+					current = this.segmentItemDS.get(current_index);
+
+					if(current.segment_id === last.segment_id) {
+						dataArr.splice(lastIndex, 1);
+						break;
+					}
+				}
+			}				
+		},
 		//Search		
 		search 				: function(){
 			var self = this, 
@@ -66270,24 +66288,6 @@
 
 			this.search();
 		},
-		//Segments		
-	    segmentChanges 		: function(e) {
-			var dataArr = this.get("obj").segments,
-			lastIndex = dataArr.length - 1,
-			last = this.segmentItemDS.get(dataArr[lastIndex]);
-			
-			if(dataArr.length > 1) {
-				for(var i = 0; i < dataArr.length - 1; i++) {
-					var current_index = dataArr[i],
-					current = this.segmentItemDS.get(current_index);
-
-					if(current.segment_id === last.segment_id) {
-						dataArr.splice(lastIndex, 1);
-						break;
-					}
-				}
-			}				
-		},
 		//Obj
 		loadObj 			: function(id){
 			var self = this, para = [];
@@ -66302,7 +66302,11 @@
 				var view = self.dataSource.view();
 
 				self.set("obj", view[0]);
-				self.changes();
+				self.set("sub_total", kendo.toString(view[0].sub_total, "c", banhji.locale));
+		        self.set("discount", kendo.toString(view[0].discount, "c", banhji.locale));
+		        self.set("total", kendo.toString(view[0].amount, "c", banhji.locale));
+		        self.set("pay", kendo.toString(view[0].amount_paid, "c", banhji.locale));
+		        self.set("remain", kendo.toString(view[0].remaining, "c", banhji.locale));
 				
 				self.journalLineDS.filter({ field: "transaction_id", value: id });
 				self.creditDS.filter([
@@ -66327,10 +66331,10 @@
 			remain = total - pay;			
 
 	        this.set("sub_total", kendo.toString(subTotal, "c", banhji.locale));
-	        this.set("discount", kendo.toString(discount, "c", banhji.locale));		        
+	        this.set("discount", kendo.toString(discount, "c", banhji.locale));
 	        this.set("total", kendo.toString(total, "c", banhji.locale));
 	        this.set("pay", kendo.toString(pay, "c", banhji.locale));
-	        this.set("remain", kendo.toString(remain, "c", banhji.locale));	    		
+	        this.set("remain", kendo.toString(remain, "c", banhji.locale));
 		},
 		removeRow 			: function(e){			
 			this.dataSource.remove(e.data);		    
