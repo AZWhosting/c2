@@ -2684,8 +2684,10 @@
 				<!-- Tabs Heading -->
 				<div class="widget-head">
 					<ul style="padding-left: 1px;">
-						<li class="active"><a class="glyphicons inbox_in" href="#tabReading" data-toggle="tab"><i></i><span style="line-height: 55px;">Reading</span></a></li>
-						<li><a class="glyphicons inbox_in" href="#tabDownload" data-toggle="tab"><i></i><span style="line-height: 55px;">Download</span></a></li>
+						<li class="active"><a class="glyphicons inbox_in" href="#tabDownload" data-toggle="tab"><i></i><span style="line-height: 55px;">Download</span></a></li>
+
+						<li ><a class="glyphicons inbox_out" href="#tabReading" data-toggle="tab"><i></i><span style="line-height: 55px;">Upload</span></a></li>
+						
 					</ul>
 				</div>
 				<!-- // Tabs Heading END -->
@@ -2696,17 +2698,7 @@
 							<i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 35%;left: 45%"></i>
 						</div>
 						<!-- Tab content -->
-						<div id="tabReading" style="border: 1px solid #ccc" class="tab-pane active widget-body-regular">	
-							<h4 class="separator bottom" style="margin-top: 10px;">Please upload reading book</h4>
-							<div class="fileupload fileupload-new margin-none" data-provides="fileupload">
-							  	<input type="file"  data-role="upload" data-show-file-list="true" data-bind="events: {select: onSelected}" id="myFile"  class="margin-none" />
-							</div>
-							<span class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 160px!important;"><i></i>
-							<span data-bind="click: save">Start Reading</span></span>
-						</div>
-						<!-- // Tab content END -->
-						<!-- Tab content -->
-						<div id="tabDownload" style="border: 1px solid #ccc" class="tab-pane widget-body-regular">
+						<div id="tabDownload" style="border: 1px solid #ccc" class="tab-pane active widget-body-regular">
 							<h4 class="separator bottom" style="margin-top: 10px;">Please Select Query</h4>
 						  	<div class="span12 row-fluid" style="padding:20px 0;padding-top: 0;">
 					        	<div class="span5" style="padding-left: 0;">
@@ -2780,6 +2772,17 @@
 							</a>
 						</div>
 						<!-- // Tab content END -->
+						<!-- Tab content -->
+						<div id="tabReading" style="border: 1px solid #ccc" class="tab-pane widget-body-regular">	
+							<h4 class="separator bottom" style="margin-top: 10px;">Please upload reading book</h4>
+							<div class="fileupload fileupload-new margin-none" data-provides="fileupload">
+							  	<input type="file"  data-role="upload" data-show-file-list="true" data-bind="events: {select: onSelected}" id="myFile"  class="margin-none" />
+							</div>
+							<span class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 160px!important;"><i></i>
+							<span data-bind="click: save">Start Reading</span></span>
+						</div>
+						<!-- // Tab content END -->
+						
 					</div>
 				</div>
 				<div id="ntf1" data-role="notification"></div>
@@ -9491,6 +9494,8 @@
 	banhji.reading = kendo.observable({
 		lang 				: langVM,
 		dataSource  		: dataStore(apiUrl + "readings"),
+		licenseDS 			: dataStore(apiUrl + "branches"),
+		blocDS 				: dataStore(apiUrl + "locations"),
 		itemDS 				: null,
 		obj 				: null,
 		isEdit 				: false,

@@ -117,6 +117,7 @@ class Meters extends REST_Controller {
 			$obj->longtitute 			= isset($value->longtitute) 		?$value->longtitute: "";
 			$obj->latitute 				= isset($value->latitute) 			?$value->latitute: "";
 			$obj->status 				= isset($value->status)				?$value->status:1;
+			$obj->branch_id 			= isset($value->branch_id)			?$value->branch_id:"";
 			$obj->location_id 			= isset($value->location_id)		?$value->location_id:"";
 			$obj->date_used= isset($value->date_used)?date("Y-m-d", strtotime($value->date_used)):'0000-00-00';
 			
@@ -183,6 +184,7 @@ class Meters extends REST_Controller {
 			$obj->activated 			= isset($value->activated) 			?$value->activated: "";
 			$obj->latitute 				= isset($value->latitute) 			?$value->latitute: "";
 			$obj->status 				= isset($value->status)				?$value->status:1;
+			$obj->branch_id 			= isset($value->branch_id)			?$value->branch_id:"";
 			$obj->location_id 			= isset($value->location_id)		?$value->location_id:"";
 			$obj->date_used = isset($value->date_used)?date("Y-m-d", strtotime($value->date_used)):'0000-00-00';
 			echo $obj->date_used;

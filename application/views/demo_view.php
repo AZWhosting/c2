@@ -42791,6 +42791,9 @@
 		confirmMessage 				: "Are you sure, you want to delete it?",
 		requiredMessage 			: "Required",
 		duplicateNumber 			: "Duplicate Number!",
+		selectCustomerMessage 		: "Please select a customer.",
+		selectSupplierMessage 		: "Please select a supplier.",
+		selectItemMessage 			: "Please select an item.",
 		loadData 					: function(){
 			this.loadRate();
 			this.itemTypeDS.read();
@@ -47974,7 +47977,7 @@
 		sorter 				: "all",
 		sdate 				: "",
 		edate 				: "",
-		obj 				: {id:0},
+		obj 				: null,
 		note 				: "",
 		searchText 			: "",
 		contact_type_id 	: null,
@@ -48063,17 +48066,21 @@
 		loadData 			: function(){
 			var obj = this.get("obj");
 
-			this.searchTransaction();
-			this.loadSummary(obj.id);
-			this.setCurrencyCode();
-			
-			this.attachmentDS.filter({ field:"contact_id", value: obj.id });
-			this.noteDS.query({
-				filter: { field:"contact_id", value: obj.id },
-				sort: { field:"noted_date", dir:"desc" },
-				page: 1,
-				pageSize: 10
-			});
+			if(obj!==null){
+				this.searchTransaction();
+				this.loadSummary();
+				this.setCurrencyCode();
+				
+				this.attachmentDS.filter({ field:"contact_id", value: obj.id });
+				this.noteDS.query({
+					filter: { field:"contact_id", value: obj.id },
+					sort: { field:"noted_date", dir:"desc" },
+					page: 1,
+					pageSize: 10
+				});
+			}else{
+				alert(banhji.source.selectSupplierMessage);
+			}
 		},
 		//Upload
 		onSelect 			: function(e){			
@@ -48185,92 +48192,108 @@
 			    }
 			});			
 		},				
-		loadSummary 		: function(id){
+		loadSummary 		: function(){
 			var self = this, obj = this.get("obj");
 
-			this.summaryDS.query({
-			  	filter: [
-			  		{ field:"contact_id", value: obj.id },
-			  		{ field:"type", operator:"where_in", value: ["Credit_Purchase", "Purchase_Order"] },
-			  		{ field:"status", operator:"where_in", value: [0,2] }
-			  	],
-			  	sort: { field: "issued_date", dir: "desc" },
-			  	page: 1,
-			  	pageSize: 1000
-			}).then(function(){
-				var view = self.summaryDS.view(),
-				balance = 0, open = 0, over = 0, po = 0, today = new Date();
+			if(obj!==null){
+				this.summaryDS.query({
+				  	filter: [
+				  		{ field:"contact_id", value: obj.id },
+				  		{ field:"type", operator:"where_in", value: ["Credit_Purchase", "Purchase_Order"] },
+				  		{ field:"status", operator:"where_in", value: [0,2] }
+				  	],
+				  	sort: { field: "issued_date", dir: "desc" },
+				  	page: 1,
+				  	pageSize: 1000
+				}).then(function(){
+					var view = self.summaryDS.view(),
+					balance = 0, open = 0, over = 0, po = 0, today = new Date();
 
-				$.each(view, function(index, value){
-					if(value.type=="Purchase_Order"){
-						po++;
-					}else{
-						balance += kendo.parseFloat(value.amount);
-						open++;
+					$.each(view, function(index, value){
+						if(value.type=="Purchase_Order"){
+							po++;
+						}else{
+							balance += kendo.parseFloat(value.amount);
+							open++;
 
-						if(new Date(value.due_date)<today){						
-							over++;
-						}
-					}									
+							if(new Date(value.due_date)<today){						
+								over++;
+							}
+						}									
+					});
+					
+					self.set("balance", kendo.toString(balance, "c", obj.locale));
+					self.set("po", kendo.toString(po, "n0"));
+					self.set("openInvoice", kendo.toString(open, "n0"));
+					self.set("overInvoice", kendo.toString(over, "n0"));
 				});
-				
-				self.set("balance", kendo.toString(balance, "c", obj.locale));
-				self.set("po", kendo.toString(po, "n0"));
-				self.set("openInvoice", kendo.toString(open, "n0"));
-				self.set("overInvoice", kendo.toString(over, "n0"));
-			});
+			}else{
+				alert(banhji.source.selectSupplierMessage);
+			}
 		},
 		loadBalance 		: function(){
 			var obj = this.get("obj");
 
-			this.transactionDS.query({
-			  	filter: [
-			  		{ field:"contact_id", value: obj.id },
-			  		{ field:"type", value:"Credit_Purchase" },			  		
-			  		{ field:"status", operator:"where_in", value: [0,2] }
-			  	],
-			  	sort: [
-			  		{ field: "issued_date", dir: "desc" },
-			  		{ field: "id", dir: "desc" }
-			  	],
-			  	page: 1,
-			  	pageSize: 10
-			});
+			if(obj!==null){
+				this.transactionDS.query({
+				  	filter: [
+				  		{ field:"contact_id", value: obj.id },
+				  		{ field:"type", value:"Credit_Purchase" },			  		
+				  		{ field:"status", operator:"where_in", value: [0,2] }
+				  	],
+				  	sort: [
+				  		{ field: "issued_date", dir: "desc" },
+				  		{ field: "id", dir: "desc" }
+				  	],
+				  	page: 1,
+				  	pageSize: 10
+				});
+			}else{
+				alert(banhji.source.selectSupplierMessage);
+			}
 		},
 		loadPO 				: function(){
 			var obj = this.get("obj");
 
-			this.transactionDS.query({
-			  	filter: [
-			  		{ field:"contact_id", value: obj.id },
-			  		{ field:"type", value:"Purchase_Order" },			  		
-			  		{ field:"status", value: 0 }
-			  	],
-			  	sort: [
-			  		{ field: "issued_date", dir: "desc" },
-			  		{ field: "id", dir: "desc" }
-			  	],
-			  	page: 1,
-			  	pageSize: 10
-			});
+			if(obj!==null){
+				this.transactionDS.query({
+				  	filter: [
+				  		{ field:"contact_id", value: obj.id },
+				  		{ field:"type", value:"Purchase_Order" },			  		
+				  		{ field:"status", value: 0 }
+				  	],
+				  	sort: [
+				  		{ field: "issued_date", dir: "desc" },
+				  		{ field: "id", dir: "desc" }
+				  	],
+				  	page: 1,
+				  	pageSize: 10
+				});
+			}else{
+				alert(banhji.source.selectSupplierMessage);
+			}
 		},
 		loadOverInvoice 	: function(){
 			var obj = this.get("obj");
 
-			this.transactionDS.query({
-			  	filter: [
-			  		{ field:"contact_id", value: obj.id },
-			  		{ field:"type", operator:"where_in", value: ["Cash_Purchase","Credit_Purchase"] },
-			  		{ field:"due_date <", value: new Date() },
-			  		{ field:"status", value: 0 }
-			  	],
-			  	sort: [
-			  		{ field: "issued_date", dir: "desc" },
-			  		{ field: "id", dir: "desc" }
-			  	],
-			  	page: 1,
-			  	pageSize: 10
-			});
+			if(obj!==null){
+				this.transactionDS.query({
+				  	filter: [
+				  		{ field:"contact_id", value: obj.id },
+				  		{ field:"type", operator:"where_in", value: ["Cash_Purchase","Credit_Purchase"] },
+				  		{ field:"due_date <", value: new Date() },
+				  		{ field:"status", value: 0 }
+				  	],
+				  	sort: [
+				  		{ field: "issued_date", dir: "desc" },
+				  		{ field: "id", dir: "desc" }
+				  	],
+				  	page: 1,
+				  	pageSize: 10
+				});
+			}else{
+				alert(banhji.source.selectSupplierMessage);
+			}
 		},
 		selectedRow			: function(e){
 			var data = e.data;
@@ -48318,7 +48341,7 @@
         		end = kendo.toString(this.get("edate"), "yyyy-MM-dd"),
         		para = [], obj = this.get("obj");
 
-        	if(obj.id>0){
+        	if(obj!==null){
         		para.push({ field:"contact_id", value: obj.id });        	
 
 	        	//Dates
@@ -48348,49 +48371,81 @@
 		goEdit 		 		: function(){
 			var obj = this.get("obj");
 
-			banhji.router.navigate('/vendor/'+obj.id);
+			if(obj!==null){
+				banhji.router.navigate('/vendor/'+obj.id);
+			}else{
+				alert(banhji.source.selectSupplierMessage);
+			}
 		},
 		goPO				: function(){
 			var obj = this.get("obj");
 
-			banhji.router.navigate('/purchase_order');
-			banhji.purchaseOrder.loadContact(obj.id);			
+			if(obj!==null){
+				banhji.router.navigate('/purchase_order');
+				banhji.purchaseOrder.loadContact(obj.id);
+			}else{
+				alert(banhji.source.selectSupplierMessage);
+			}
 		},
 		goDeposit			: function(){
 			var obj = this.get("obj");
 
-			banhji.router.navigate('/vendor_deposit');
-			banhji.vendorDeposit.loadContact(obj.id);			
+			if(obj!==null){
+				banhji.router.navigate('/vendor_deposit');
+				banhji.vendorDeposit.loadContact(obj.id);
+			}else{
+				alert(banhji.source.selectSupplierMessage);
+			}
 		},
 		goPurchase			: function(){
 			var obj = this.get("obj");
 
-			banhji.router.navigate('/purchase');
-			banhji.purchase.loadContact(obj.id);
+			if(obj!==null){
+				banhji.router.navigate('/purchase');
+				banhji.purchase.loadContact(obj.id);
+			}else{
+				alert(banhji.source.selectSupplierMessage);
+			}
 		},
 		goPurchaseReturn	: function(){
 			var obj = this.get("obj");
 
-			banhji.router.navigate('/purchase_return');
-			banhji.purchaseReturn.loadContact(obj.id);
+			if(obj!==null){
+				banhji.router.navigate('/purchase_return');
+				banhji.purchaseReturn.loadContact(obj.id);
+			}else{
+				alert(banhji.source.selectSupplierMessage);
+			}
 		},
 		goGRN				: function(){
 			var obj = this.get("obj");
 
-			banhji.router.navigate('/grn');
-			banhji.grn.loadContact(obj.id);
+			if(obj!==null){
+				banhji.router.navigate('/grn');
+				banhji.grn.loadContact(obj.id);
+			}else{
+				alert(banhji.source.selectSupplierMessage);
+			}
 		},
 		goCashPayment		: function(){
 			var obj = this.get("obj");
 
-			banhji.router.navigate('/cash_payment');
-			banhji.cashPayment.loadContact(obj.id);
+			if(obj!==null){
+				banhji.router.navigate('/cash_payment');
+				banhji.cashPayment.loadContact(obj.id);
+			}else{
+				alert(banhji.source.selectSupplierMessage);
+			}
 		},
 		payBill 			: function(e){
 			var data = e.data;
 
-			banhji.router.navigate('/cash_payment');
-			banhji.cashPayment.loadInvoice(data.id);
+			if(obj!==null){
+				banhji.router.navigate('/cash_payment');
+				banhji.cashPayment.loadInvoice(data.id);
+			}else{
+				alert(banhji.source.selectSupplierMessage);
+			}
 		},
 		//Note
 		saveNoteEnter 		: function(e){
@@ -48400,7 +48455,7 @@
 		saveNote 			: function(){
 			var obj = this.get("obj");
 
-			if(obj.id>0 && this.get("note")!==""){
+			if(obj!==null && this.get("note")!==""){
 				this.noteDS.insert(0, {
 					contact_id 	: obj.id,
 					note 		: this.get("note"),
@@ -54444,7 +54499,7 @@
 		sorter 				: "all",
 		sdate 				: "",
 		edate 				: "",
-		obj 				: {id:0},
+		obj 				: null,
 		note 				: "",
 		searchText 			: "",
 		contact_type_id 	: null,
@@ -54534,17 +54589,21 @@
 		loadData 			: function(){
 			var obj = this.get("obj");
 
-			this.searchTransaction();
-			this.loadSummary(obj.id);
-			this.setCurrencyCode();
+			if(obj!==null){
+				this.searchTransaction();
+				this.loadSummary();
+				this.setCurrencyCode();
 
-			this.attachmentDS.filter({ field:"contact_id", value: obj.id });
-			this.noteDS.query({
-				filter: { field:"contact_id", value: obj.id },
-				sort: { field:"noted_date", dir:"desc" },
-				page: 1,
-				pageSize: 10
-			});
+				this.attachmentDS.filter({ field:"contact_id", value: obj.id });
+				this.noteDS.query({
+					filter: { field:"contact_id", value: obj.id },
+					sort: { field:"noted_date", dir:"desc" },
+					page: 1,
+					pageSize: 10
+				});
+			}else{
+				alert(banhji.source.selectCustomerMessage);
+			}
 		},
 		//Upload
 		onSelect 			: function(e){			
@@ -54656,91 +54715,107 @@
 			    }
 			});
 		},
-		loadSummary 		: function(id){
+		loadSummary 		: function(){
 			var self = this, obj = this.get("obj");
 
-			this.summaryDS.query({
-			  	filter: [
-			  		{ field:"contact_id", value: obj.id },
-			  		{ field:"type", operator:"where_in", value: ["Customer_Deposit", "Invoice"] },
-			  		{ field:"status", operator:"where_in", value: [0,2] }
-			  	],
-			  	sort: { field: "issued_date", dir: "desc" },
-			  	page: 1,
-			  	pageSize: 1000
-			}).then(function(){
-				var view = self.summaryDS.view(),
-				deposit = 0, open = 0, over = 0, balance = 0, today = new Date();
+			if(obj!==null){
+				this.summaryDS.query({
+				  	filter: [
+				  		{ field:"contact_id", value: obj.id },
+				  		{ field:"type", operator:"where_in", value: ["Customer_Deposit", "Invoice"] },
+				  		{ field:"status", operator:"where_in", value: [0,2] }
+				  	],
+				  	sort: { field: "issued_date", dir: "desc" },
+				  	page: 1,
+				  	pageSize: 1000
+				}).then(function(){
+					var view = self.summaryDS.view(),
+					deposit = 0, open = 0, over = 0, balance = 0, today = new Date();
 
-				$.each(view, function(index, value){
-					if(value.type=="Customer_Deposit"){
-						deposit += kendo.parseFloat(value.amount);
-					}else{
-						balance += kendo.parseFloat(value.amount) - kendo.parseFloat(value.deposit);
-						open++;
+					$.each(view, function(index, value){
+						if(value.type=="Customer_Deposit"){
+							deposit += kendo.parseFloat(value.amount);
+						}else{
+							balance += kendo.parseFloat(value.amount) - kendo.parseFloat(value.deposit);
+							open++;
 
-						if(new Date(value.due_date)<today){						
-							over++;
-						}
-					}									
+							if(new Date(value.due_date)<today){						
+								over++;
+							}
+						}									
+					});
+					
+					self.set("deposit", kendo.toString(deposit, obj.locale=="km-KH"?"c0":"c", obj.locale));
+					self.set("outInvoice", kendo.toString(open, "n0"));
+					self.set("overInvoice", kendo.toString(over, "n0"));
+					self.set("balance", kendo.toString(balance, obj.locale=="km-KH"?"c0":"c", obj.locale));
 				});
-				
-				self.set("deposit", kendo.toString(deposit, obj.locale=="km-KH"?"c0":"c", obj.locale));
-				self.set("outInvoice", kendo.toString(open, "n0"));
-				self.set("overInvoice", kendo.toString(over, "n0"));
-				self.set("balance", kendo.toString(balance, obj.locale=="km-KH"?"c0":"c", obj.locale));
-			});
+			}else{
+				alert(banhji.source.selectCustomerMessage);
+			}
 		},
 		loadBalance 		: function(){
 			var obj = this.get("obj");
 
-			this.transactionDS.query({
-			  	filter: [
-			  		{ field:"contact_id", value: obj.id },
-			  		{ field:"type", value:"Invoice" },
-			  		{ field:"status", operator:"where_in", value: [0,2] }
-			  	],
-			  	sort: [
-			  		{ field: "issued_date", dir: "desc" },
-			  		{ field: "id", dir: "desc" }
-			  	],
-			  	page: 1,
-			  	pageSize: 10
-			});
+			if(obj!==null){
+				this.transactionDS.query({
+				  	filter: [
+				  		{ field:"contact_id", value: obj.id },
+				  		{ field:"type", value:"Invoice" },
+				  		{ field:"status", operator:"where_in", value: [0,2] }
+				  	],
+				  	sort: [
+				  		{ field: "issued_date", dir: "desc" },
+				  		{ field: "id", dir: "desc" }
+				  	],
+				  	page: 1,
+				  	pageSize: 10
+				});
+			}else{
+				alert(banhji.source.selectCustomerMessage);
+			}
 		},
 		loadDeposit 		: function(){
 			var obj = this.get("obj");
 
-			this.transactionDS.query({
-			  	filter: [
-			  		{ field:"contact_id", value: obj.id },
-			  		{ field:"type", value:"Customer_Deposit" }
-			  	],
-			  	sort: [
-			  		{ field: "issued_date", dir: "desc" },
-			  		{ field: "id", dir: "desc" }
-			  	],
-			  	page: 1,
-			  	pageSize: 10
-			});
+			if(obj!==null){
+				this.transactionDS.query({
+				  	filter: [
+				  		{ field:"contact_id", value: obj.id },
+				  		{ field:"type", value:"Customer_Deposit" }
+				  	],
+				  	sort: [
+				  		{ field: "issued_date", dir: "desc" },
+				  		{ field: "id", dir: "desc" }
+				  	],
+				  	page: 1,
+				  	pageSize: 10
+				});
+			}else{
+				alert(banhji.source.selectCustomerMessage);
+			}
 		},
 		loadOverInvoice 	: function(){
 			var obj = this.get("obj");
 
-			this.transactionDS.query({
-			  	filter: [
-			  		{ field:"contact_id", value: obj.id },
-			  		{ field:"type", value: "Invoice" },
-			  		{ field:"status", operator:"where_in", value: [0,2] },
-			  		{ field:"due_date <", value: kendo.toString(new Date(), "yyyy-MM-dd") }
-			  	],
-			  	sort: [
-			  		{ field: "issued_date", dir: "desc" },
-			  		{ field: "id", dir: "desc" }
-			  	],
-			  	page: 1,
-			  	pageSize: 10
-			});
+			if(obj!==null){
+				this.transactionDS.query({
+				  	filter: [
+				  		{ field:"contact_id", value: obj.id },
+				  		{ field:"type", value: "Invoice" },
+				  		{ field:"status", operator:"where_in", value: [0,2] },
+				  		{ field:"due_date <", value: kendo.toString(new Date(), "yyyy-MM-dd") }
+				  	],
+				  	sort: [
+				  		{ field: "issued_date", dir: "desc" },
+				  		{ field: "id", dir: "desc" }
+				  	],
+				  	page: 1,
+				  	pageSize: 10
+				});
+			}else{
+				alert(banhji.source.selectCustomerMessage);
+			}
 		},	
 		selectedRow			: function(e){
 			var data = e.data;
@@ -54788,7 +54863,7 @@
         		end = kendo.toString(this.get("edate"), "yyyy-MM-dd"),
         		para = [], obj = this.get("obj");
 
-        	if(obj.id>0){
+        	if(obj!==null){
         		para.push({ field:"contact_id", value: obj.id });
         	
 	        	//Dates
@@ -54812,73 +54887,119 @@
 	            	page: 1,
 	            	pageSize: 10
 	            });
+	        }else{
+	        	alert("Please select a customer.");
 	        }            
 		},
 		//Links	
 		goEdit 		 		: function(){
 			var obj = this.get("obj");
 
-			banhji.router.navigate('/customer/'+obj.id);
+			if(obj!==null){
+				banhji.router.navigate('/customer/'+obj.id);
+			}else{
+				alert(banhji.source.selectCustomerMessage);
+			}
 		},
 		goQuote				: function(){
 			var obj = this.get("obj");
 
-			banhji.router.navigate('/quote');
-			banhji.quote.loadContact(obj.id);
+			if(obj!==null){
+				banhji.router.navigate('/quote');
+				banhji.quote.loadContact(obj.id);
+			}else{
+				alert(banhji.source.selectCustomerMessage);
+			}
 		},
 		goDeposit			: function(){
 			var obj = this.get("obj");
 
-			banhji.router.navigate('/customer_deposit');
-			banhji.customerDeposit.loadContact(obj.id);
+			if(obj!==null){
+				banhji.router.navigate('/customer_deposit');
+				banhji.customerDeposit.loadContact(obj.id);
+			}else{
+				alert(banhji.source.selectCustomerMessage);
+			}
 		},
 		goSaleOrder			: function(){
 			var obj = this.get("obj");
 
-			banhji.router.navigate('/sale_order');
-			banhji.saleOrder.loadContact(obj.id);
+			if(obj!==null){
+				banhji.router.navigate('/sale_order');
+				banhji.saleOrder.loadContact(obj.id);
+			}else{
+				alert(banhji.source.selectCustomerMessage);
+			}
 		},
 		goCashSale			: function(){
 			var obj = this.get("obj");
 
-			banhji.router.navigate('/cash_sale');
-			banhji.cashSale.loadContact(obj.id);
+			if(obj!==null){
+				banhji.router.navigate('/cash_sale');
+				banhji.cashSale.loadContact(obj.id);
+			}else{
+				alert(banhji.source.selectCustomerMessage);
+			}
 		},
 		goInvoice			: function(){
 			var obj = this.get("obj");
 
-			banhji.router.navigate('/invoice');
-			banhji.invoice.loadContact(obj.id);
+			if(obj!==null){
+				banhji.router.navigate('/invoice');
+				banhji.invoice.loadContact(obj.id);
+			}else{
+				alert(banhji.source.selectCustomerMessage);
+			}
 		},
 		goGDN				: function(){
 			var obj = this.get("obj");
 
-			banhji.router.navigate('/gdn');
-			banhji.gdn.loadContact(obj.id);
+			if(obj!==null){
+				banhji.router.navigate('/gdn');
+				banhji.gdn.loadContact(obj.id);
+			}else{
+				alert(banhji.source.selectCustomerMessage);
+			}
 		},
 		goSaleReturn		: function(){
 			var obj = this.get("obj");
 
-			banhji.router.navigate('/sale_return');
-			banhji.saleReturn.loadContact(obj.id);
+			if(obj!==null){
+				banhji.router.navigate('/sale_return');
+				banhji.saleReturn.loadContact(obj.id);
+			}else{
+				alert(banhji.source.selectCustomerMessage);
+			}
 		},
 		goStatement			: function(){
 			var obj = this.get("obj");
 
-			banhji.router.navigate('/statement');
-			banhji.statement.loadContact(obj.id);
+			if(obj!==null){
+				banhji.router.navigate('/statement');
+				banhji.statement.loadContact(obj.id);
+			}else{
+				alert(banhji.source.selectCustomerMessage);
+			}
 		},
 		goCashReceipt		: function(){
 			var obj = this.get("obj");
 
-			banhji.router.navigate('/cash_receipt');
-			banhji.cashReceipt.loadContact(obj.id);
+			if(obj!==null){
+				banhji.router.navigate('/cash_receipt');
+				banhji.cashReceipt.loadContact(obj.id);
+			}else{
+				alert(banhji.source.selectCustomerMessage);
+			}
 		},
 		payInvoice			: function(e){
 			var data = e.data;
 
-			banhji.router.navigate('/cash_receipt');
-			banhji.cashReceipt.loadInvoice(data.id);
+			if(obj!==null){
+				banhji.router.navigate('/cash_receipt');
+				banhji.cashReceipt.loadInvoice(data.id);
+			}else{
+				alert(banhji.source.selectCustomerMessage);
+			}
 		},
 		//Note
 		saveNoteEnter 		: function(e){
@@ -54888,7 +55009,7 @@
 		saveNote 			: function(){
 			var obj = this.get("obj");
 
-			if(obj.id>0 && this.get("note")!==""){
+			if(obj!==null && this.get("note")!==""){
 				this.noteDS.insert(0, {
 					contact_id 	: obj.id,
 					note 		: this.get("note"),
@@ -67528,7 +67649,7 @@
 		},
 		setItemType 	 	: function(){
 			var itemType = "", obj = this.get("obj");
-
+		
 			$.each(banhji.source.itemTypeDS.data(), function(index, value){				
 				if(value.id == obj.item_type_id){
 					itemType = value.name;					
@@ -67684,15 +67805,20 @@
 			});
 		},
 		loadData 			: function(){
-			var obj = this.get("obj"),
-			totalValue = kendo.parseFloat(obj.on_hand) * kendo.parseFloat(obj.cost);
+			var obj = this.get("obj");
 
-			this.searchTransaction();			
-			this.set("total_value", kendo.toString(totalValue, "c", obj.locale));
-			this.attachmentDS.filter({ field:"item_id", value:obj.id });
-			this.setCurrencyCode();
-			this.setUOM();
-			this.setItemType();
+			if(obj!==null){
+				var totalValue = kendo.parseFloat(obj.on_hand) * kendo.parseFloat(obj.cost);
+
+				this.searchTransaction();			
+				this.set("total_value", kendo.toString(totalValue, "c", obj.locale));
+				this.attachmentDS.filter({ field:"item_id", value:obj.id });
+				this.setCurrencyCode();
+				this.setUOM();
+				this.setItemType();
+			}else{
+				alert(banhji.source.selectItemMessage);
+			}
 		},		
 		selectedRow			: function(e){
 			var id = e.data.id,
@@ -67787,7 +67913,7 @@
 				start = kendo.toString(this.get("sdate"), "yyyy-MM-dd"),
         		end = kendo.toString(this.get("edate"), "yyyy-MM-dd");
 
-        	if(obj.id>0){
+        	if(obj!==null){
         		para.push({ field:"item_id", value: obj.id });
         	
 	        	//Dates
@@ -67807,41 +67933,51 @@
 	            	page: 1,
 	            	pageSize: 10
 	            });
-	        }            
+	        }else{
+				alert("Please select an item.");
+			}            
 		},
 		edit				: function(){
 			var obj = this.get("obj");
 
-			if(obj.item_type_id=="1"){
-				if(obj.is_catalog=="1"){
-					banhji.router.navigate('/item_catalog/'+obj.id);
-				}else if(obj.is_assembly=="1"){
-					banhji.router.navigate('/item_assembly/'+obj.id);
+			if(obj!==null){
+				if(obj.item_type_id=="1"){
+					if(obj.is_catalog=="1"){
+						banhji.router.navigate('/item_catalog/'+obj.id);
+					}else if(obj.is_assembly=="1"){
+						banhji.router.navigate('/item_assembly/'+obj.id);
+					}else{
+						banhji.router.navigate('/item/'+obj.id);
+					}
+				}else if(obj.item_type_id=="2"){
+					banhji.router.navigate('/non_inventory_part/'+obj.id);
+				}else if(obj.item_type_id=="3"){
+					banhji.router.navigate('/fixed_assets/'+obj.id);
+				}else if(obj.item_type_id=="4"){
+					banhji.router.navigate('/item_service/'+obj.id);
+				}else if(obj.item_type_id=="5"){
+					banhji.router.navigate('/txn_item/'+obj.id);
 				}else{
-					banhji.router.navigate('/item/'+obj.id);
-				}
-			}else if(obj.item_type_id=="2"){
-				banhji.router.navigate('/non_inventory_part/'+obj.id);
-			}else if(obj.item_type_id=="3"){
-				banhji.router.navigate('/fixed_assets/'+obj.id);
-			}else if(obj.item_type_id=="4"){
-				banhji.router.navigate('/item_service/'+obj.id);
-			}else if(obj.item_type_id=="5"){
-				banhji.router.navigate('/txn_item/'+obj.id);
-			}else{
 
+				}
+			}else{
+				alert(banhji.source.selectItemMessage);
 			}
 		},
 		pricing				: function(){
 			var obj = this.get("obj");
 
-			if(obj.is_catalog=="1"){
-				banhji.router.navigate('/item_catalog/'+obj.id);
-			}else if(obj.is_assembly=="1"){
-				banhji.router.navigate('/item_assembly/'+obj.id);
+			if(obj!==null){
+				if(obj.is_catalog=="1"){
+					banhji.router.navigate('/item_catalog/'+obj.id);
+				}else if(obj.is_assembly=="1"){
+					banhji.router.navigate('/item_assembly/'+obj.id);
+				}else{
+					banhji.router.navigate('/item_prices/'+obj.id);
+				}
 			}else{
-				banhji.router.navigate('/item_prices/'+obj.id);
-			}			
+				alert(banhji.source.selectItemMessage);
+			}
 		}
 	});	
 	banhji.itemPrice = kendo.observable({
