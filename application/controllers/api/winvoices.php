@@ -154,8 +154,8 @@ class Winvoices extends REST_Controller {
 			}
 
 			$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			$obj->company_id 		= $value->company_id;
-			$obj->location_id 		= $value->location_id;
+			// $obj->company_id 		= $value->company_id;
+			// $obj->location_id 		= $value->location_id;
 			$obj->contact_id 		= $value->contact_id;
 			$obj->payment_term_id	= $value->payment_term_id;
 			$obj->payment_method_id = $value->payment_method_id;

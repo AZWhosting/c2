@@ -9078,6 +9078,104 @@
 			return dfd.promise();
 		}
 	});
+
+	// Invoice
+	banhji.invoice = kendo.observable({
+		makes 	: new kendo.data.DataSource({
+	      transport: {
+	        read  : {
+	          url: baseUrl + 'api/winvoices/make',
+	          type: "GET",
+	          dataType: 'json'
+	        },
+	        parameterMap: function(options, operation) {
+	          if(operation === 'read') {
+	            return {
+	              limit: options.take,
+	              page: options.page,
+	              filter: options.filter
+	            };
+	          } else {
+	            return {models: kendo.stringify(options.models)};
+	          }
+	        }
+	      },
+	      schema  : {
+	        model: {
+	          id: 'id'
+	        },
+	        data: 'results',
+	        total: 'count'
+	      },
+	      batch: true,
+	      serverFiltering: true,
+	      serverPaging: true,
+	      pageSize: 100
+	    }),
+		dataSource 	: new kendo.data.DataSource({
+	      transport: {
+	        create  : {
+	          url: baseUrl + 'api/winvoices',
+	          type: "POST",
+	          dataType: 'json'
+	        },
+	        parameterMap: function(options, operation) {
+	          if(operation === 'read') {
+	            return {
+	              limit: options.take,
+	              page: options.page,
+	              filter: options.filter
+	            };
+	          } else {
+	            return {models: kendo.stringify(options.models)};
+	          }
+	        }
+	      },
+	      schema  : {
+	        model: {
+	          id: 'id'
+	        },
+	        data: 'results',
+	        total: 'count'
+	      },
+	      batch: true,
+	      serverFiltering: true,
+	      serverPaging: true,
+	      pageSize: 100
+	    }),
+		remove 		: function(e) {
+			this.dataSource.remove(e.data);
+		},
+		queryReading: function() {
+			var dfd = $.Deferred();
+			return this.makes.query({
+				filter: {field: '', value: ''}
+			});
+		},
+		save 		: function() {
+			var that = this, dfd = $.Deferred();
+			this.dataSource.sync();
+			this.dataSource.bind('requestStart', function(e){
+				if(e.type == 'create') {
+					// preprocess that invoice
+					// consider exemption, tariff and installment
+				}
+				console.log(banhji.invoice.dataSource.data());
+				e.preventDefault();
+			});
+			this.dataSource.bind('requestEnd', function(e){
+				if(e.type != 'read' && e.response.results) {
+					dfd.resolve(e.response.results);
+				} else {
+					dfd.reject(e.response);
+				}
+			});
+			this.dataSource.bind('error', function(e){
+				dfd.reject(e.status);
+			});
+			return dfd.promise();
+		}
+	});
 	/* End of Invoice Section */
 
 	/*==== Meter=====*/
@@ -9331,7 +9429,7 @@
 			});
 			if(this.get('amountToBeRecieved') < amount) {
 				// create one invoice
-				banhji.transaction.makeInvoice(this.get('meterObj').contact[0].id, this.get('paymentMethod'), this.get('amountToBeRecieved'), 'Cash_Sale')
+				banhji.transaction.makeInvoice(this.get('meterObj').contact[0].id, this.get('paymentMethod'), this.get('amountToBeRecieved'), 'Meter_Activation')
 				.then(function(data){
 					// create invoice
 					// console.log(amount - kendo.parseFloat(banhji.ActivateMeter.get('amountToBeRecieved')));
@@ -9417,7 +9515,7 @@
 				// and amount left to be make via installment
 				
 			} else {
-				banhji.transaction.makeInvoice(this.get('meterObj').contact[0].id, this.get('paymentMethod'), this.get('amountToBeRecieved'), 'Cash_Sale')
+				banhji.transaction.makeInvoice(this.get('meterObj').contact[0].id, this.get('paymentMethod'), this.get('amountToBeRecieved'), 'Meter_Activation')
 				.then(function(data){
 					// create invoice
 					// console.log(amount - kendo.parseFloat(banhji.ActivateMeter.get('amountToBeRecieved')));
@@ -9832,6 +9930,7 @@
 		licenseDS 			: dataStore(apiUrl + "branches"),
 		blocDS 				: dataStore(apiUrl + "locations"),
 		invoiceDS	     	: dataStore(apiUrl + "winvoices/make"),
+		invoiceCollection 	: banhji.invoice, 
 		chkAll 				: false,
 		licenseSelect 		: null,	
 		monthSelect 		: null,	
@@ -9901,6 +10000,34 @@
 	    },
 		save 				: function() {
 			var self = this;
+			$.each(this.invoiceArray, function(i, v){
+				self.invoiceCollection.dataSource.add({
+					contact_id 			: v.contact.id,
+					payment_term_id		: null,
+					payment_method_id 	: null,
+					reference_id 		: null,
+					account_id 			: v.contact.account_id,
+					vat_id 				: v.contact.vat_id,
+					biller_id 			: banhji.userData.id,
+					number 				: null,
+					type 				: "wInvoice",
+					amount 				: 0.00,
+					vat 				: null,
+					rate 				: null,
+					locale 				: null,
+					month_of 			: null,
+					issued_date 		: new Date(),
+					payment_date 		: null,
+					due_date 			: 'issue_date + 7',
+					check_no 			: null,
+					memo 				: null,
+					memo2 				: null,
+					status 				: null,
+					invoice_lines    	: v.items
+				});
+			});
+			this.invoiceCollection.save();
+				
 			if(this.dataSource.data().length > 0) {
 				$("#loadImport").css("display","block");
 				this.dataSource.sync();
@@ -11035,105 +11162,7 @@
 		}
 	});
 
-	// Invoice
-	banhji.invoice = kendo.observable({
-		makes 	: new kendo.data.DataSource({
-	      transport: {
-	        read  : {
-	          url: baseUrl + 'api/winvoices/make',
-	          type: "GET",
-	          dataType: 'json'
-	        },
-	        parameterMap: function(options, operation) {
-	          if(operation === 'read') {
-	            return {
-	              limit: options.take,
-	              page: options.page,
-	              filter: options.filter
-	            };
-	          } else {
-	            return {models: kendo.stringify(options.models)};
-	          }
-	        }
-	      },
-	      schema  : {
-	        model: {
-	          id: 'id'
-	        },
-	        data: 'results',
-	        total: 'count'
-	      },
-	      batch: true,
-	      serverFiltering: true,
-	      serverPaging: true,
-	      pageSize: 100
-	    }),
-		dataSource 	: new kendo.data.DataSource({
-	      transport: {
-	        read  : {
-	          url: baseUrl + 'api/winvoices',
-	          type: "GET",
-	          dataType: 'json'
-	        },
-	        create  : {
-	          url: baseUrl + 'api/winvoices',
-	          type: "POST",
-	          dataType: 'json'
-	        },
-	        destroy  : {
-	          url: baseUrl + 'api/winvoices',
-	          type: "DELETE",
-	          dataType: 'json'
-	        },
-	        parameterMap: function(options, operation) {
-	          if(operation === 'read') {
-	            return {
-	              limit: options.take,
-	              page: options.page,
-	              filter: options.filter
-	            };
-	          } else {
-	            return {models: kendo.stringify(options.models)};
-	          }
-	        }
-	      },
-	      schema  : {
-	        model: {
-	          id: 'id'
-	        },
-	        data: 'results',
-	        total: 'count'
-	      },
-	      batch: true,
-	      serverFiltering: true,
-	      serverPaging: true,
-	      pageSize: 100
-	    }),
-		remove 		: function(e) {
-			this.dataSource.remove(e.data);
-		},
-		queryReading: function() {
-			var dfd = $.Deferred();
-			return this.makes.query({
-				filter: {field: '', value: ''}
-			});
-		},
-		save 		: function() {
-			var that = this, dfd = $.Deferred();
-			this.dataSource.sync();
-			this.dataSource.bind('requestEnd', function(e){
-				if(e.type != 'read' && e.response.results) {
-					dfd.resolve(e.response.results);
-				} else {
-					dfd.reject(e.response);
-				}
-			});
-			this.dataSource.bind('error', function(e){
-				dfd.reject(e.status);
-			});
-			return dfd.promise();
-		}
-	});
+	
 	/* views and layout */
 	banhji.view = {
 		layout 		: new kendo.Layout('#layout', {model: banhji.Layout}),
