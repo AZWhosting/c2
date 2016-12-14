@@ -44,16 +44,10 @@ class Cashreports extends REST_Controller {
 		$deleted = 0;
 		$temp = array();
 		$onHand = 0;
-		$total =0;
-		$totalService =0;
-		$totalProduct = 0;
-		$totalOnhand =0;
-		$totalQOH = 0;
-		$totalPO =0;
 		$totalSO =0;
 
 		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$obj->where_in( 'type', array("Cash_Sale", "Cash_Receipt"));
+		$obj->where_in( 'type', array("Cash_Payment", "Cash_Receipt"));
 		$obj->where('is_recurring <>', 1);
 		$obj->where('deleted <>', 1);
 		if(!empty($sort) && isset($sort)){					

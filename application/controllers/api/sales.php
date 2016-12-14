@@ -1677,10 +1677,11 @@ class Sales extends REST_Controller {
 					}
 				}
 
-				if(isset($customers["$job->name"])) {
-					$customers["$job->name"]['amount'] += floatval($value->amount);
-					$customers["$job->name"]['transactions'][] = array(
+				if(isset($customers["$fullname"])) {
+					$customers["$fullname"]['amount'] += floatval($value->amount);
+					$customers["$fullname"]['transactions'][] = array(
 						'id'  		=> $value->id,
+						'job'		=> $job->name,
 						'type'  	=> $value->type,
 						'date' 		=> $value->issued_date,
 						'number' 	=> $value->number,
@@ -1689,14 +1690,15 @@ class Sales extends REST_Controller {
 						'amount' 	=> floatval($value->amount)/floatval($value->rate)
 					);
 				} else {
-					$customers["$job->name"]['amount'] = floatval($value->amount);
-					$customers["$job->name"]['transactions'][] = array(
+					$customers["$fullname"]['amount'] = floatval($value->amount);
+					$customers["$fullname"]['transactions'][] = array(
 						'id'  		=> $value->id,
+						'job'		=> $job->name,
 						'type'  	=> $value->type,
 						'date' 		=> $value->issued_date,
 						'number' 	=> $value->number,
 						'memo' 		=> $value->memo2,
-						'segments'=> $segments,
+						'segments'	=> $segments,
 						'amount' 	=> floatval($value->amount)/floatval($value->rate)
 					);
 			//Results
