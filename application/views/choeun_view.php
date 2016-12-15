@@ -3150,33 +3150,37 @@
 			        </div>
 
 			        
-			        <div class="row saleSummaryCustomer">
-						<div class="span3">
-							<div class="total-customer">
-								<div class="span12">
-									<p>Total Invoice</p>
-									<span>11,190,000.00៛</span>
-								</div>	
+			        <div class="row-fluid saleSummaryCustomer">
+			        	<div class="span6" >
+				        	<div class="row">
+								<div class="span4">
+									<div class="total-customer">
+										<div class="span12">
+											<p>Total Invoice</p>
+											<span>11</span>
+										</div>	
+									</div>
+								</div>
+								<div class="span4">
+									<div class="total-customer">
+										<p>No Print</p>
+										<span >55</span>
+									</div>
+								</div>
+								<div class="span4">
+									<div class="total-customer">
+										<div class="span12">
+											<p>m<sup>3</sup></p>
+											<span >11</span>
+										</div>	
+									</div>
+								</div>
 							</div>
 						</div>
-						<div class="span3" style="padding: 0;">
-							<div class="total-customer">
-								<p>No Print</p>
-								<span >55.16%</span>
-							</div>
-						</div>
-						<div class="span3" style="padding-right: 0;">
-							<div class="total-customer">
-								<div class="span12">
-									<p>m<sup>3</sup></p>
-									<span >11,190,000.00៛</span>
-								</div>	
-							</div>
-						</div>
-						<div class="span3" >
-							<div class="total-customer" style="background: green; color: #fff;">
+						<div class="span6" style="padding-right: 0;">
+							<div class="total-customer" style="background: #0B0B3B; color: #fff;">
 								<p>Amount</p>
-								<span>55.16%</span>
+								<span>55.16</span>
 							</div>
 						</div>
 					</div>
@@ -3208,6 +3212,161 @@
 			</div>
 		</div>
 	</div>				  	
+</script>
+<script id="Invoice-print-row-template" type="text/x-kendo-tmpl">	
+  	<div class="container winvoice-print" style="width: 900px;">
+		<div class="span12 headerinv ">
+			<!--div valign="top">
+				<img src="/banhji/#:company[0].image_url#" height="90" width="60" style="float: left">
+			</div-->
+			<div class="span12" align="center">
+				<h4>#:company[0].name#</h4>					
+				<h5>#:company[0].address# 
+				<br>
+				#:company[0].phone#</h5>					
+			</div>
+		</div>		
+
+		<div class="span12 cover-customer">
+			<div class="span8">
+				<span id="#=contact[0].wnumber#"></span>
+				<div class="span12">
+					<p>អតិថិជន​ #=contact[0].number#</p>
+					<p>#:contact[0].name#</p>
+					<p>#=contact[0].address#</p>
+					<p style="font-size: 10px;"><i>ថ្ងៃ​ចាប់​ផ្តើម​ទទួល​ប្រាក់ #=kendo.toString(new Date(payment_date), "dd-MM-yyyy")#</i></p>
+				</div>
+			</div>
+			<div class="span4">
+				<div class="span6">
+					<p>លេខ​វិក្កយ​បត្រ</p>
+					<p>ថ្ងៃ​ចេញ វិក្កយ​បត្រ</p>
+					<p>តំបន់</p>
+					<p>លេខ​ទី​តាំង​</p>
+					<p>គិត​ចាប់​ពី​ថ្ងៃ​ទី</p>
+					<p>ដល់​ថ្ងៃ​ទី</p>
+				</div>	
+				<div class="span6">
+					<p style="margin-top: 5px;">#:number#</p>
+					<p style="margin-top: 10px;">#:issued_date#</p>
+					<p style="margin-top: 5px;">#:location[0].name#</p>
+					<p><strong>#:location[0].abbr#</strong></p>
+					<p style="margin-top: 10px;">#:kendo.toString(new Date(month_of), "dd-MM-yyyy")#</p>
+					<p style="margin-top: 10px;">#:kendo.toString(new Date(due_date), "dd-MM-yyyy")#</p>
+				</div>		
+			</div>			
+		</div>
+		<table class="span12 table table-bordered table-condensed" style="margin-top: 40px;border:1px solid \\#000; border-radius: 3px;margin-left: 0px;">
+			<thead>
+				<tr>
+					<th width="180">លេខ​កុងទ័រ<br>METER</th>
+					<th width="150">អំណានចាស់<br>PREVIOUS</th>
+					<th width="120">អំណានថ្មី<br>CURRENT</th>
+					<th width="120">បរិមាណ<br>CONSUMPTION</th>
+					<th width="120">តំលៃឯកត្តា<br>RATE</th>
+					<th width="180">តំលៃសរុប<br>AMOUNT</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td style="vertical-align: middle;">19-10-2015</td>
+					<td colspan="4" style="text-align: right">
+						ប្រាក់​ជំ​ពាក់​ពេល​មុន Balance brought forward . រ<br>
+						ប្រាក់​បាន​ទទួល​ Payment Recieve - THANK YOU . រ<br>
+						ជំពាក់​សរុប​នៅ​ថ្ងៃ​ធ្វើ​វិក្កយបត្រ Balance as at billing date .រ
+					</td>
+					<td>
+						#:kendo.toString(balance_forward*kendo.parseFloat(rate), locale=="km-KH"?"c0":"c", locale)#<br>
+						0<br>
+						0
+					</td>
+				</tr>
+				#for(var i=0; i<invoiceLines.length; i++) {#
+					#if(invoiceLines[i].type=="tariff"){#
+						<tr>
+							<td>#:invoiceLines[i].meter[0].number#</td>
+							<td class="right">#:invoiceLines[i].record[0].previous#</td>
+							<td class="right">#:invoiceLines[i].record[0].current#</td>						
+							<td class="right">#:kendo.toString(kendo.parseInt(invoiceLines[i].unit), 'n0')#</td>
+							<td class="right"><span>#:kendo.toString(kendo.parseFloat(invoiceLines[i].price)*kendo.parseFloat(rate), locale=="km-KH"?"c0":"c", locale)#</span></td>
+							<td class="right"><span>#:kendo.toString(kendo.parseFloat(invoiceLines[i].amount)*kendo.parseFloat(rate), locale=="km-KH"?"c0":"c", locale)#</span></td>
+						</tr>
+					#}else{#
+						<tr>						
+							<td colspan="5" class="right">#:invoiceLines[i].description#</td>
+							#if(invoiceLines[i].type=="exemptionUsage"){#
+								<td class="right">#:invoiceLines[i].amount# ម<sup>៣</sup></td>							
+							#}else{#
+								<td class="right">#:kendo.toString(kendo.parseFloat(invoiceLines[i].amount)*kendo.parseFloat(rate), locale=="km-KH"?"c0":"c", locale)#</td>
+							#}#
+						</tr>
+					#}#
+				#}#	
+				<tr><td colspan="6" style="height: 200px;"></td></tr>
+				<tr>
+					<td colspan="5" style="background: \\#355176;color: \\#fff;text-align: right;">បំណុល​សរុប TOTAL BALANCE</td><td>#:kendo.toString(kendo.parseFloat(total), locale=="km-KH"?"c0":"c", locale)#</td>
+				</tr>
+				<tr>
+					<td rowspan="4" colspan="3">#=company[0].term_of_condition#</td>
+					<td colspan="2" style="background: \\#ccc;">ប្រាក់​ត្រូវ​បង់ TOTAL DUE</td>
+					<td><strong>#:kendo.toString(kendo.parseFloat(total), locale=="km-KH"?"c0":"c", locale)#</strong></td>
+				</tr>
+				<tr>
+					<td colspan="2" style="background: \\#ccc;">ថ្ងៃផុតកំណត់ DUE DATE</td>
+					<td>#=kendo.toString(new Date(due_date), "dd-MM-yyyy")#</td>
+				</tr>
+				<tr>
+					<td colspan="2" style="background: \\#ccc;">ថ្ងៃបង់ប្រាក់ PAY DATE</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td colspan="2" style="background: \\#ccc;">ប្រាក់បានបង់ PAY AMOUNT</td>
+					<td></td>
+				</tr>
+			</tbody>
+		</table>
+		<div class="line"></div>
+		<table class="span12 table table-bordered table-condensed" style="margin-top: 15px;border:1px solid \\#000; border-radius: 3px;margin-left: 0px;">
+			<tbody>
+				<tr>
+					<th width="490" rowspan="5">
+						<div class="span4">
+							<p style="margin-top: 45px;">វិក្កយបត្រ</p>
+							<p>អតិថិជន</p>
+							<p style="margin-top: 15px;">លេខ​ទី​តាំង</p>
+							<p>លេខ​កុនង​ទ័រ</p>
+						</div>
+						<div class="span8" style="text-align: left;">
+							<span style="margin-left: -15px;" id="secondwnumber"></span>
+							<p style="margin-top: 10px;">#:kendo.toString(new Date(month_of), "dd-MM-yyyy")# - #:number#</p>
+							<p>#=contact[0].number# #=contact[0].name#</p>
+							<p>#:location[0].name#</p>
+							<p><strong>#:location[0].abbr#</strong></p>
+							<p style="margin-top: 8px;">#:invoiceLines[0].meter[0].number#</p>
+						</div>
+					</th>
+					<td width="270" style="background: \\#ccc;">ប្រាក់​ត្រូវ​បង់ TOTAL DUE</td>
+					<td width="180">#:kendo.toString(kendo.parseFloat(total), locale=="km-KH"?"c0":"c", locale)#</td>
+				</tr>
+				<tr>
+					<td style="background: \\#ccc;">ថ្ងៃបង់ប្រាក់ PAY DATE</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td style="background: \\#ccc;">ប្រាក់បានបង់ PAY AMOUNT</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td style="background: \\#ccc;">អ្នកទទួលប្រាក់ RECEIVER</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td style="background: \\#ccc;"></td>
+					<td></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
 </script>
 
 <script id="customerDeposit" type="text/x-kendo-template">
@@ -10248,7 +10407,9 @@
 			
 		}, 
 		printBill 			: function(){
-
+			kendo.drawing.drawDOM($(".pdf-page")).then(function(group){
+	          kendo.drawing.pdf.saveAs(group, "Invoice.pdf");
+	        });
 		},
 		save 				: function() {
 			var self = this;

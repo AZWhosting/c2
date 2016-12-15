@@ -6862,7 +6862,9 @@
 						            <li class="span1 glyphicons paperclip"><a href="#tab3-4" data-toggle="tab"><i></i></a>
 						            </li>
 						            <li class="span1 glyphicons history"><a href="#tab4-4" data-toggle="tab"><i></i></a>
-						            </li>								            
+						            </li>
+						            <li class="span1 glyphicons show_lines"><a href="#tab4-5" data-toggle="tab"><i></i></a>
+							            </li>								            
 						        </ul>
 						    </div>
 						    <!-- // Tabs Heading END -->
@@ -7070,7 +7072,34 @@
 							        <span id="saveRecurring" class="btn btn-icon btn-default glyphicons history" data-bind="visible: obj.isNew" style="float: right; margin-top: -12px;"><i></i> <span data-bind="text: lang.lang.save_recurring"></span></span>									     
 						            
 						        </div>
-						        <!-- // Recuring Tab content END -->								        
+						        <!-- // Recuring Tab content END -->
+
+						        <div class="tab-pane saleSummaryCustomer" id="tab4-5">
+							        	<table class="table table-borderless table-condensed">
+								            <thead>
+									            <tr>
+									                <th>NUMBER</th>
+									                <th>ACCOUNT</th>                		                
+									                <th class="right">DEBITS (Dr)</th>
+									                <th class="right">CREDITS (Cr)</th>		                
+									            </tr>
+								            </thead> 
+									        <tbody>
+									        	<tr>
+									        		<td>1</td>
+									        		<td>2</td>
+									        		<td class="right">3</td>
+									        		<td class="right">4</td>
+									        	</tr>
+									        	<tr>
+									        		<td>1</td>
+									        		<td>2</td>
+									        		<td class="right">3</td>
+									        		<td class="right">4</td>
+									        	</tr>
+									        </tbody>			        
+									    </table>
+							    </div>									        
 
 						    </div>
 						</div>
@@ -7327,7 +7356,9 @@
 						            <li class="span1 glyphicons paperclip"><a href="#tab2-3" data-toggle="tab"><i></i></a>
 						            </li>
 						            <li class="span1 glyphicons history"><a href="#tab3-3" data-toggle="tab"><i></i></a>
-						            </li>								            
+						            </li>
+						            
+						            							            
 						        </ul>
 						    </div>
 						    <!-- // Tabs Heading END -->
@@ -7559,6 +7590,34 @@
 						            
 						        </div>
 						        <!-- // Recuring Tab content END -->								        
+
+						        <div class="tab-pane saleSummaryCustomer" id="tab3-4">
+									<table class="table table-borderless table-condensed">
+								        <thead>
+								            <tr>
+								                <th>NUMBER</th>
+								                <th>ACCOUNT</th>                		                
+								                <th class="right">DEBITS (Dr)</th>
+								                <th class="right">CREDITS (Cr)</th>		                
+								            </tr>
+								        </thead> 
+								        <tbody>
+								        	<tr>
+								        		<td>1</td>
+								        		<td>2</td>
+								        		<td class="right">3</td>
+								        		<td class="right">4</td>
+								        	</tr>
+								        	<tr>
+								        		<td>1</td>
+								        		<td>2</td>
+								        		<td class="right">3</td>
+								        		<td class="right">4</td>
+								        	</tr>
+								        </tbody>			        
+								    </table>
+								</div>
+
 
 						    </div>
 						</div>
@@ -35825,6 +35884,8 @@
 							            <li class="span1 glyphicons paperclip"><a href="#tab2-3" data-toggle="tab"><i></i></a>
 							            </li>
 							            <li class="span1 glyphicons history"><a href="#tab3-3" data-toggle="tab"><i></i></a>
+							            </li>
+							             <li class="span1 glyphicons show_lines"><a href="#tab3-4" data-toggle="tab"><i></i></a>
 							            </li>								            
 							        </ul>
 							    </div>
@@ -35965,7 +36026,34 @@
 							            <span id="saveRecurring" class="btn btn-icon btn-default glyphicons history" data-bind="visible: obj.isNew" style="float: right; margin-top: -12px;"><i></i> <span data-bind="text: lang.lang.save_recurring"></span></span>									     
 							            
 							        </div>
-							        <!-- // Recuring Tab content END -->								        
+							        <!-- // Recuring Tab content END -->
+
+							        <div class="tab-pane saleSummaryCustomer" id="tab3-4">
+							        	<table class="table table-borderless table-condensed">
+								            <thead>
+									            <tr>
+									                <th>NUMBER</th>
+									                <th>ACCOUNT</th>                		                
+									                <th class="right">DEBITS (Dr)</th>
+									                <th class="right">CREDITS (Cr)</th>		                
+									            </tr>
+								            </thead> 
+									        <tbody>
+									        	<tr>
+									        		<td>1</td>
+									        		<td>2</td>
+									        		<td class="right">3</td>
+									        		<td class="right">4</td>
+									        	</tr>
+									        	<tr>
+									        		<td>1</td>
+									        		<td>2</td>
+									        		<td class="right">3</td>
+									        		<td class="right">4</td>
+									        	</tr>
+									        </tbody>			        
+									    </table>
+							        </div>							        
 
 							    </div>
 							</div>
@@ -44410,6 +44498,82 @@
 		}
 	});
 	banhji.statementProfitLoss =  kendo.observable({
+		lang 				: langVM,
+		dataSource 			: dataStore(apiUrl + "accounting_reports/income_statement"),		
+		sortList			: banhji.source.sortList,
+		sorter 				: "all",
+		sdate 				: "",
+		edate 				: "",
+		obj 				: null,
+		company 			: banhji.institute,
+		displayDate 		: "",
+		pageLoad 			: function(){
+			this.search();
+		},
+		sorterChanges 		: function(){
+	        var today = new Date(),
+        	sdate = "",
+        	edate = "",
+        	sorter = this.get("sorter");
+        	
+			switch(sorter){
+				case "today":								
+					this.set("sdate", today);
+					this.set("edate", "");
+													  					
+				  	break;
+				case "week":			  	
+					var first = today.getDate() - today.getDay(),
+					last = first + 6;
+
+					this.set("sdate", new Date(today.setDate(first)));
+					this.set("edate", new Date(today.setDate(last)));						
+					
+				  	break;
+				case "month":							  	
+					this.set("sdate", new Date(today.getFullYear(), today.getMonth(), 1));
+					this.set("edate", new Date(today.getFullYear(), today.getMonth() + 1, 0));
+
+				  	break;
+				case "year":				
+				  	this.set("sdate", new Date(today.getFullYear(), 0, 1));
+				  	this.set("edate", new Date(today.getFullYear(), 11, 31));
+
+				  	break;
+				default:
+					this.set("sdate", "");
+				  	this.set("edate", "");									  
+			}
+		},
+		search				: function(){
+			var self = this, para = [], displayDate = "",
+				start = this.get("sdate"),
+        		end = this.get("edate");
+    	
+        	//Dates
+        	if(start && end){
+            	para.push({ field:"issued_date >=", value: kendo.toString(new Date(start), "yyyy-MM-dd") });
+            	para.push({ field:"issued_date <=", value: kendo.toString(new Date(end), "yyyy-MM-dd") });
+
+            	displayDate = "From " + kendo.toString(new Date(start), "dd-MM-yyyy") + " To " + kendo.toString(new Date(end), "dd-MM-yyyy");
+            }else if(start){
+            	para.push({ field:"issued_date", value: kendo.toString(new Date(start), "yyyy-MM-dd") });
+
+            	displayDate = "On " + kendo.toString(new Date(start), "dd-MM-yyyy");
+            }else if(end){
+            	para.push({ field:"issued_date <=", value: kendo.toString(new Date(end), "yyyy-MM-dd") });
+
+            	displayDate = "As Of " + kendo.toString(new Date(end), "dd-MM-yyyy");
+            }else{
+            	
+            }
+
+            this.set("displayDate", displayDate);
+
+            this.dataSource.filter(para);
+		}
+	});
+	banhji.statementProfitLossComparison =  kendo.observable({
 		lang 				: langVM,
 		dataSource 			: dataStore(apiUrl + "accounting_reports/income_statement"),		
 		sortList			: banhji.source.sortList,
@@ -74204,142 +74368,14 @@
 			banhji.view.layout.showIn('#menu', banhji.view.menu);
 			banhji.view.menu.showIn('#secondary-menu', banhji.view.accountingMenu);			
 			
-			var vm = banhji.journalReport;
+			var vm = banhji.statementProfitLossComparison;
 
 			banhji.userManagement.addMultiTask("Statement of Profit or Loss Comparison","statement_profit_loss_comparison",null);
 
 			if(banhji.pageLoaded["statement_profit_loss_comparison"]==undefined){
 				banhji.pageLoaded["statement_profit_loss_comparison"] = true;
 
-				function startChange() {
-                    var startDate = start.value(),
-                    endDate = end.value();
-
-                    if (startDate) {
-                        startDate = new Date(startDate);
-                        startDate.setDate(startDate.getDate());
-                        end.min(startDate);
-                    } else if (endDate) {
-                        start.max(new Date(endDate));
-                    } else {
-                        endDate = new Date();
-                        start.max(endDate);
-                        end.min(endDate);
-                    }
-
-                    dateChanges();
-                }
-
-                function endChange() {
-                    var endDate = end.value(),
-                    startDate = start.value();
-
-                    if (endDate) {
-                        endDate = new Date(endDate);
-                        endDate.setDate(endDate.getDate());
-                        start.max(endDate);
-                    } else if (startDate) {
-                        end.min(new Date(startDate));
-                    } else {
-                        endDate = new Date();
-                        start.max(endDate);
-                        end.min(endDate);
-                    }
-
-                    dateChanges();
-                }
-
-                function dateChanges(){
-                	var strDate = "";
-
-					if(start.value() && end.value()){
-						strDate = "From " + kendo.toString(new Date(start.value()), "dd-MM-yyyy") + " To " + kendo.toString(new Date(end.value()), "dd-MM-yyyy");
-					}else if(start.value()){
-						strDate = "On " + kendo.toString(new Date(start.value()),"dd-MM-yyyy");
-					}else if(end.value()){
-						strDate = "As Of " + kendo.toString(new Date(end.value()),"dd-MM-yyyy");
-					}else{
-						strDate = "";
-					}
-
-					$("#strDate").text(strDate);
-                }
-
-                var start = $("#sdate").kendoDatePicker({
-                	format: "dd-MM-yyyy",
-                    change: startChange
-                }).data("kendoDatePicker");               
-
-                var end = $("#edate").kendoDatePicker({
-                	format: "dd-MM-yyyy",
-                    change: endChange
-                }).data("kendoDatePicker");
-
-                var sorter = $("#sorter").change(function(){
-                	var today = new Date(),
-                	sdate = "",
-                	edate = "",
-                	value = $("#sorter").val();
-
-					switch(value){
-					case "today":								
-						sdate = today;
-															  					
-					  	break;
-					case "week":			  	
-						var first = today.getDate() - today.getDay(),
-						last = first + 6;
-
-						var sdate = new Date(today.setDate(first)),
-						edate = new Date(today.setDate(last));						
-						
-					  	break;
-					case "month":							  	
-						var sdate = new Date(today.getFullYear(), today.getMonth(), 1),
-						edate = new Date(today.getFullYear(), today.getMonth() + 1, 0);
-
-					  	break;
-					case "year":				
-					  	var sdate = new Date(today.getFullYear(), 0, 1),
-					  	edate = new Date(today.getFullYear(), 11, 31);
-
-					  	break;
-					default:
-					}
-
-					start.value(sdate);
-					end.value(edate);
-					
-					start.max(end.value());
-                	end.min(start.value());
-
-                	dateChanges();
-                });
-                
-                start.max(end.value());
-                end.min(start.value());
-
-				$("#search").click(function(e){
-		        	e.preventDefault();
-
-		        	var para = [],
-					sdate = kendo.toString(start.value(), "yyyy-MM-dd"), 
-					edate = kendo.toString(end.value(), "yyyy-MM-dd");
-					
-		        	//Dates
-		        	if(start.value() && end.value()){
-		            	para.push({ field:"issued_date >=", value: sdate });
-		            	para.push({ field:"issued_date <=", value: edate });
-		            }else if(start.value()){
-		            	para.push({ field:"issued_date", value: sdate });
-		            }else if(end.value()){
-		            	para.push({ field:"issued_date <=", value: edate });
-		            }else{
-		            	
-		            }
-
-		            vm.dataSource.filter(para);
-		        });
+				
 			}
 		}
 	});

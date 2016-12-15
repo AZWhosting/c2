@@ -9,9 +9,15 @@ class Meter_record extends DataMapper {
 			'class' => "employee",
 			'other_field' => 'meter_record'
 		),
-		'meter' => array(
-			'class' => 'meter',
-			'other_field' => 'record' 
+		'transaction' => array(
+			'class' => 'transaction',
+			'other_field' => 'meter_record'
+		)
+	);
+	public $has_many = array(
+		'winvoice_line' => array(
+			'class' => 'winvoice_line',
+			'other_field' => 'meter_record' 
 		)
 	);
 	

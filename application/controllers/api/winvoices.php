@@ -264,6 +264,86 @@ class Winvoices extends REST_Controller {
 		$this->response($data, 201);
 	}
 
+	function index_get() {
+		$getData = $this->get('filter');
+		$filters = $getData['filters'];
+		$table = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$data = array();
+
+		if(isset($filters)) {
+			foreach($filters as $filter) {
+				if(isset($filter['operator'])) {
+					$table->{$filter['operator']}($filter['field'], $filter['value']);
+				} else {
+					$table->where($filter['field'], $filter['value']);
+				}
+			}
+		}
+		$table->where('status', 0);
+		$table->where('type','Water_Invoice');
+		$table->get();
+
+		$tmp = array();
+
+		foreach($table as $row) {
+			$meter = null;
+			$contact = $row->contact->select('id, name, abbr, number, address')->get();
+
+			$items  = $row->winvoice_line->get();
+			$lines  = array();
+			$m = $contact->meter->get();
+				
+			$meter = array(
+				'number'   => $m->number,
+				'location' => $m->location->get_raw()->result(),
+			);
+
+			foreach($items as $item) {
+				
+				 if($item->type == '') {
+					$record = $item->meter_record->limit(1)->get();
+					$lines[] = array(
+						'number' => $m->number,
+						'previous' => $record->previous,
+						'current'  => $record->current,
+						'consumption' => $record->usage,
+						'rate' => $item->rate,
+						'amount' => $item->amount
+					);
+				} else {
+					$lines[] = array(
+						'number' => $item->description,
+						'previous' => 0,
+						'current'  => 0,
+						'consumption' => 0,
+						'rate' => 0,
+						'amount' => $item->amount
+					);
+				}
+			}
+			$data[] = array(
+				'id' => $row->id,
+				'type' => $row->type,
+				'number' => $row->number,
+				'status'=> $row->status,
+				'issue_date' => $row->issued_date,
+				'due_date' => $row->due_date,
+				'contact' => array(
+					'id' => $contact->id,
+					'name' => $contact->name,
+					'abbr' => $contact->abbrm,
+					'number' => $contact->number,
+					'address'=> $contact->address
+				),
+				'meter'=> $meter,
+				'items'=> $lines
+			);
+
+		}
+
+		$this->response(array('results' => $data, 'count' => count($data)), 200);
+	}
+
 	//Generate invoice number
 	public function _generate_number($type, $date){
 		$YY = date("y");

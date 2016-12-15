@@ -10202,7 +10202,7 @@
 					month_of 			: null,
 					issued_date 		: date,
 					payment_date 		: null,
-					due_date 			: date.getDate() + 7,
+					due_date 			: new Date(date.getDate() + 7),
 					check_no 			: null,
 					memo 				: null,
 					memo2 				: null,
