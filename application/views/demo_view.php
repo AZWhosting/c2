@@ -36472,7 +36472,7 @@
 					style="width: 100%; margin-bottom: 0;" />
 		</td>		
 		<td class="center">
-			#=reference.length>0 ? kendo.toString(reference[0].amount - (amount_paid + reference[0].deposit), "c", locale) : 0#			
+			#=reference.length>0 ? kendo.toString(kendo.parseFloat(reference[0].amount) - (amount_paid + kendo.parseFloat(reference[0].deposit)), "c", locale) : 0#			
 		</td>		
 		<td class="center">
 			<input data-role="numerictextbox"
@@ -66302,11 +66302,14 @@
 				var view = self.dataSource.view();
 
 				self.set("obj", view[0]);
+
 				self.set("sub_total", kendo.toString(view[0].sub_total, "c", banhji.locale));
 		        self.set("discount", kendo.toString(view[0].discount, "c", banhji.locale));
 		        self.set("total", kendo.toString(view[0].amount, "c", banhji.locale));
 		        self.set("pay", kendo.toString(view[0].amount_paid, "c", banhji.locale));
-		        self.set("remain", kendo.toString(view[0].remaining, "c", banhji.locale));
+
+		        var remain = kendo.parseFloat(view[0].reference[0].amount) - (view[0].amount_paid + kendo.parseFloat(view[0].reference[0].deposit));
+		        self.set("remain", kendo.toString(remain, "c", banhji.locale));
 				
 				self.journalLineDS.filter({ field: "transaction_id", value: id });
 				self.creditDS.filter([

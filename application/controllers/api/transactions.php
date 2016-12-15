@@ -75,12 +75,12 @@ class Transactions extends REST_Controller {
 					$paid->where_in("type", array("Cash_Receipt", "Cash_Payment"));
 					if($value->type=="Cash_Receipt" || $value->type=="Cash_Payment"){
 						$paid->where("reference_id", $value->reference_id);
-						$paid->where_not_in("id", array($value->id));
+						// $paid->where_not_in("id", array($value->id));
 					}else{
 						$paid->where("reference_id", $value->id);
 					}
-					$paid->where("is_recurring",0);
-					$paid->where("deleted",0);
+					$paid->where("is_recurring <>",1);
+					$paid->where("deleted <>",1);
 					$paid->get();
 					$amount_paid = floatval($paid->amount) + floatval($paid->discount);
 				}
