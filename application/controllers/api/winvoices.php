@@ -56,8 +56,10 @@ class Winvoices extends REST_Controller {
 
 			if(isset($tmp["$meter->number"])){
 				$tmp["$meter->number"]['items'][] = array(
-												'usage' => array(
+					'							type' => 'usage',
+												'line' => array(
 													'id'   => $row->id,
+													'name' => 'usage',
 													'from' => $row->from_date,
 													'to'   => $row->to_date,
 													'prev'=>$row->previous,
@@ -70,6 +72,8 @@ class Winvoices extends REST_Controller {
 				$tmp["$meter->number"]['type'] = 'water_invoice';
 				$tmp["$meter->number"]['contact'] = array(
 													'id' => $contact->id,
+													'account_id' => $contact->account_id,
+													'ra_id' => $contact->ra_id,
 													'name' => $contact->name
 												);
 				$tmp["$meter->number"]['meter'] = array(
@@ -78,8 +82,10 @@ class Winvoices extends REST_Controller {
 													'multiplier' => $meter->multiplier
 												);
 				$tmp["$meter->number"]['items'][] = array(
-												'usage' => array(
+												'type' => 'usage',
+												'line' => array(													
 													'id'   => $row->id,
+													'name' => 'Usage',
 													'from' => $row->from_date,
 													'to'   => $row->to_date,
 													'prev'=>$row->previous,
@@ -94,24 +100,30 @@ class Winvoices extends REST_Controller {
 					$types = array('tariff', 'exemption', 'maintenance');
 					if(in_array($item->type, $types)) {
 						$tmp["$meter->number"]['items'][] = array(
-						"$item->type" => array(
-							'id'   => $item->id,
-							'from' => $item->from,
-							'to'   => $item->to,
-							'prev' =>0,
-							'current'=>0,
-							'usage' => 0,
-							'unit'  => $item->unit,
-							'amount'=> $item->amount
-						));
+							"type" => "$item->type",
+							"line" => array(
+								'id'   => $item->id,
+								'from' => $item->from,
+								'to'   => $item->to,
+								'name' => $item->name,
+								'prev' =>0,
+								'current'=>0,
+								'usage' => 0,
+								'is_flat' => $item->is_flat == 0 ? FALSE:TRUE,
+								'unit'  => $item->unit,
+								'amount'=> $item->amount
+							)
+						);
 					}						
 				}
 
 				// installment
 				$installment = $meter->installment->get();
 				$tmp["$meter->number"]['items'][] = array(
-											"installment" => array(
+											"type" => 'installment',
+											"line" => array(
 												'id'   => $installment->id,
+												'name' => 'Installment',
 												'from' => 0,
 												'to'   => 0,
 												'prev' =>0,
@@ -143,14 +155,12 @@ class Winvoices extends REST_Controller {
 
 		$number = "";
 		foreach ($models as $value) {
-			if($number==""){
-				$number = $this->_generate_number($value->type);
+			if(isset($value->is_recurring)){
+				if($value->is_recurring==0){
+					$number = $this->_generate_number($value->type, $value->issued_date);
+				}
 			}else{
-				$last_no = $number;
-				$header = substr($last_no, 0, -5);
-				$no = intval(substr($last_no, strlen($last_no) - 5));
-				$no++;
-				$number = $header . str_pad($no, 5, "0", STR_PAD_LEFT);
+				$number = $this->_generate_number($value->type, $value->issued_date);
 			}
 
 			$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
@@ -161,7 +171,7 @@ class Winvoices extends REST_Controller {
 			$obj->payment_method_id = $value->payment_method_id;
 			$obj->reference_id 		= $value->reference_id;
 			$obj->account_id 		= $value->account_id;
-			$obj->vat_id 			= $value->vat_id;
+			$obj->vat_id 			= isset($value->vat_id) ? $value->vat_id: 0;
 			$obj->biller_id 		= $value->biller_id;
 		   	$obj->number 			= $number;
 		   	$obj->type 				= $value->type;
@@ -181,12 +191,18 @@ class Winvoices extends REST_Controller {
 	   		if($obj->save()){
 	   			$invoice_lines = [];
 		   		foreach ($value->invoice_lines as $row) {
-		   			$line = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		   			$line->invoice_id 		= $obj->id;
+		   			if($row->type == 'usage') {
+		   				$record = new Meter_record(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		   				$record->where('id', $row->meter_record_id)->get();
+		   				$record->invoiced = 1;
+		   				$record->save();
+		   			}
+		   			$line = new Winvoice_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		   			$line->transaction_id 	= $obj->id;
 		   			$line->item_id 			= $row->item_id;
 		   			$line->meter_record_id 	= $row->meter_record_id;
 		   			$line->description 		= $row->description;
-		   			$line->unit 			= $row->unit;
+		   			$line->quantity 		= $row->quantity;
 		   			$line->price 			= $row->price;
 		   			$line->amount 			= $row->amount;
 		   			$line->rate 			= $row->rate;
@@ -202,7 +218,7 @@ class Winvoices extends REST_Controller {
 				   			"measurement_id" 	=> isset($line->measurement_id)?$line->measurement_id:0,
 				   			"meter_record_id" 	=> $line->meter_record_id,
 				   			"description" 		=> $line->description,
-				   			"unit"				=> $line->unit,
+				   			"quantity"			=> $line->quantity,
 				   			"price" 			=> floatval($line->price),
 				   			"amount" 			=> floatval($line->amount),
 				   			"rate"				=> floatval($line->rate),
@@ -248,6 +264,7 @@ class Winvoices extends REST_Controller {
 		$this->response($data, 201);
 	}
 
+	//Generate invoice number
 	public function _generate_number($type, $date){
 		$YY = date("y");
 		$MM = date("m");
@@ -290,7 +307,7 @@ class Winvoices extends REST_Controller {
 			//Check existing txn
 			$existTxn = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$existTxn->where('type', $type);
-			$existTxn->where('is_recurring', 0);
+			$existTxn->where('is_recurring <>', 1);
 			$existTxn->limit(1);
 			$existTxn->get();
 

@@ -5147,7 +5147,7 @@ input[type=password],
 select,
 textarea {
   border-color: #efefef;
-  color: #A7A7A7;
+  color: #000;
 }
 .control-label.center {
   text-align: center;

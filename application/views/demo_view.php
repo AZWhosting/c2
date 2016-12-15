@@ -36472,7 +36472,7 @@
 					style="width: 100%; margin-bottom: 0;" />
 		</td>		
 		<td class="center">
-			#=reference.length>0 ? kendo.toString(kendo.parseFloat(reference[0].amount) - (amount_paid + kendo.parseFloat(reference[0].deposit)), "c", locale) : 0#			
+			<span data-bind="text: amount_due"></span>
 		</td>		
 		<td class="center">
 			<input data-role="numerictextbox"
@@ -36771,7 +36771,7 @@
 					style="width: 100%; margin-bottom: 0;" />
 		</td>		
 		<td class="center">
-			#=reference.length>0 ? kendo.toString(reference[0].amount - (amount_paid + reference[0].deposit), "c", locale) : 0#			
+			<span data-bind="text: amount_due"></span>
 		</td>
 		<td class="center">
 			<input data-role="numerictextbox"
@@ -66137,7 +66137,7 @@
 		loadContact 		: function(id){
 			this.set("contact_id", id);
 			this.search();
-		},		
+		},
 		contactChanges 		: function(){
 			this.search();
 	    },
@@ -66270,18 +66270,19 @@
 						   	is_recurring 		: 0,
 
 						   	contact				: value.contact,
+						   	amount_due 			: kendo.toString(amount_due, "c", value.locale),
 						   	amount_paid 		: value.amount_paid,
 						   	reference 			: [{ "number" : value.number, "amount" : value.amount, "deposit" : value.deposit, "issued_date":value.issued_date, "account_id":value.account_id }]				
 				    	});						
 					});
 					self.applyTerm();
-					self.setRate();	
-				}				
-			});
+					self.setRate();
+				}
 
-			this.set("searchText", "");
-			this.set("contact_id", "");
-			this.set("invoice_id", 0);	
+				self.set("searchText", "");
+				self.set("contact_id", "");
+				self.set("invoice_id", 0);				
+			});
 		},
 		enterSearch 		: function(e){
 			e.preventDefault();
@@ -66300,16 +66301,20 @@
 				pageSize: 100
 			}).then(function(){
 				var view = self.dataSource.view();
+				
+				var amount_due = kendo.parseFloat(view[0].reference[0].amount) - (view[0].amount_paid + kendo.parseFloat(view[0].reference[0].deposit)), 
+				total = amount_due - view[0].discount,
+				remain = amount_due - (view[0].amount + view[0].discount);
 
+				view[0].set("amount_due", kendo.toString(amount_due, "c", view[0].locale));
+				
 				self.set("obj", view[0]);
 
-				self.set("sub_total", kendo.toString(view[0].sub_total, "c", banhji.locale));
-		        self.set("discount", kendo.toString(view[0].discount, "c", banhji.locale));
-		        self.set("total", kendo.toString(view[0].amount, "c", banhji.locale));
-		        self.set("pay", kendo.toString(view[0].amount_paid, "c", banhji.locale));
-
-		        var remain = kendo.parseFloat(view[0].reference[0].amount) - (view[0].amount_paid + kendo.parseFloat(view[0].reference[0].deposit));
-		        self.set("remain", kendo.toString(remain, "c", banhji.locale));
+				self.set("sub_total", kendo.toString(amount_due, "c", view[0].locale));
+		        self.set("discount", kendo.toString(view[0].discount, "c", view[0].locale));
+		        self.set("total", kendo.toString(total, "c", view[0].locale));
+		        self.set("pay", kendo.toString(view[0].amount, "c", view[0].locale));
+		        self.set("remain", kendo.toString(remain, "c", view[0].locale));
 				
 				self.journalLineDS.filter({ field: "transaction_id", value: id });
 				self.creditDS.filter([
@@ -66323,9 +66328,9 @@
 			total = 0, subTotal = 0, discount = 0, pay = 0, remain = 0;											
 
 			$.each(this.dataSource.data(), function(index, value) {
-				var amount = value.reference[0].amount - (value.amount_paid + value.reference[0].deposit);								
+				//var amount = value.reference[0].amount - (value.amount_paid + value.reference[0].deposit);								
 				
-				subTotal += amount / value.rate;					
+				subTotal += kendo.parseFloat(value.amount_due) / value.rate;					
 				discount += value.discount / value.rate;
 				pay += value.amount / value.rate;					
 	        });
@@ -66764,18 +66769,19 @@
 						   	is_recurring 		: 0,
 
 						   	contact				: value.contact,
+						   	amount_due 			: kendo.toString(amount_due, "c", value.locale),
 						   	amount_paid 		: value.amount_paid,
 						   	reference 			: [{ "number" : value.number, "amount" : value.amount, "deposit" : value.deposit, "issued_date":value.issued_date, "account_id":value.account_id }]				
 				    	});						
 					});
 					self.applyTerm();
 					self.setRate();	
-				}				
-			});
+				}
 
-			this.set("searchText", "");
-			this.set("contact_id", "");
-			this.set("invoice_id", 0);	
+				self.set("searchText", "");
+				self.set("contact_id", "");
+				self.set("invoice_id", 0);				
+			});
 		},
 		enterSearch 		: function(e){
 			e.preventDefault();
@@ -66811,15 +66817,26 @@
 				pageSize: 100
 			}).then(function(){
 				var view = self.dataSource.view();
+
+				var amount_due = kendo.parseFloat(view[0].reference[0].amount) - (view[0].amount_paid + kendo.parseFloat(view[0].reference[0].deposit)), 
+				total = amount_due - view[0].discount,
+				remain = amount_due - (view[0].amount + view[0].discount);
+
+				view[0].set("amount_due", kendo.toString(amount_due, "c", view[0].locale));
+				
+				self.set("obj", view[0]);
+
+				self.set("sub_total", kendo.toString(amount_due, "c", view[0].locale));
+		        self.set("discount", kendo.toString(view[0].discount, "c", view[0].locale));
+		        self.set("total", kendo.toString(total, "c", view[0].locale));
+		        self.set("pay", kendo.toString(view[0].amount, "c", view[0].locale));
+		        self.set("remain", kendo.toString(remain, "c", view[0].locale));
 				
 				self.journalLineDS.filter({ field: "transaction_id", value: id });
 				self.creditDS.filter([
 					{ field: "reference_id", value: id },
 					{ field: "type", value: "Vendor_Deposit" }
-				]);				
-				self.set("obj", view[0]);
-				self.set("original_total", view[0].amount+view[0].discount);
-				self.changes();														
+				]);
 			});						
 		},
 		loadInvoice 		: function(id){
@@ -66831,8 +66848,9 @@
 			total = 0, subTotal = 0, discount =0, pay = 0, remain = 0;											
 
 			$.each(this.dataSource.data(), function(index, value) {
-				var amount = value.reference[0].amount - (value.amount_paid + value.reference[0].deposit);								
-				subTotal += amount / value.rate;					
+				// var amount = value.reference[0].amount - (value.amount_paid + value.reference[0].deposit);								
+				
+				subTotal += kendo.parseFloat(value.amount_due) / value.rate;					
 				discount += value.discount / value.rate;
 				pay += value.amount / value.rate;				
 	        });
@@ -66930,32 +66948,32 @@
 			}
 
 			this.objSync()
-				.then(function(data){
-					if(self.get("isEdit")==false){
-						self.addCredit(data[0].id);
-						self.addJournal(data[0].id);
-					}					
-					return data;
-				}, function(reason) { //Error
-					$("#ntf1").data("kendoNotification").error(reason);
-				}).then(function(result){				
-					$("#ntf1").data("kendoNotification").success(banhji.source.successMessage);
+			.then(function(data){
+				if(self.get("isEdit")==false){
+					self.addCredit(data[0].id);
+					self.addJournal(data[0].id);
+				}					
+				return data;
+			}, function(reason) { //Error
+				$("#ntf1").data("kendoNotification").error(reason);
+			}).then(function(result){				
+				$("#ntf1").data("kendoNotification").success(banhji.source.successMessage);
 
-					if(self.get("saveClose")){
-						//Save Close					
-						self.set("saveClose", false);
-						self.cancel();
-						window.history.back();
-					}else if(self.get("savePrint")){
-						//Save Print					
-						self.set("savePrint", false);
-						self.cancel();
-						banhji.router.navigate("/invoice_form/"+result[0].id);
-					}else{
-						//Save New
-						self.addEmpty();
-					}
-				});
+				if(self.get("saveClose")){
+					//Save Close					
+					self.set("saveClose", false);
+					self.cancel();
+					window.history.back();
+				}else if(self.get("savePrint")){
+					//Save Print					
+					self.set("savePrint", false);
+					self.cancel();
+					banhji.router.navigate("/invoice_form/"+result[0].id);
+				}else{
+					//Save New
+					self.addEmpty();
+				}
+			});
 		},
 		cancel 				: function(){
 			this.dataSource.cancelChanges();
@@ -67020,7 +67038,7 @@
 					description 		: "",
 					reference_no 		: "",
 					segments 	 		: [],								
-					dr 	 				: value.amount + value.discount,
+					dr 	 				: value.amount,
 					cr 					: 0,				
 					rate				: value.rate,
 					locale				: value.locale

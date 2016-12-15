@@ -1826,16 +1826,7 @@
 										    <div id="pager" class="k-pager-wrap"
 											 data-auto-bind="false"
 										     data-role="pager" data-bind="source: meterDS"></div>	
-							            	<!--table class="table table-borderless table-condensed cart_total cash-table">
-								            	<tr>
-								            		<td width="50%">
-								            			<a class="btn btn-block btn-inverse" data-bind="click: goMeter">Add Meter</a>
-								            		</td>
-								            		<td width="50%">
-								            			<span class="btn btn-block btn-primary" data-bind="click: goActivateMeter"><span><span>Activate Meter</span></span>								            			
-								            		</td>
-								            	</tr>
-							            	</table-->
+							            	
 							            </div>
 							            <!-- // Transactions Tab content END -->	
 							            <!-- Transactions Tab content -->
@@ -2166,13 +2157,33 @@
 
 			    	<!-- //GENERAL INFO -->
 			        <div class="tab-pane active" id="metertab1">
-		            	Water Sale
+		            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
+					        <thead>
+					            <tr>			                
+					                <th width="140">Date</th>
+					                <th width="50">Amount</th>
+					                <th width="100">Status</th>            
+					            </tr> 
+					        </thead>
+					    </table>
+				        <!-- <tbody data-role="listview" data-template="meter-list-tmpl" data-auto-bind="false" data-bind="source: meterDS" class="k-widget k-listview" role="listbox"></tbody>	 -->		        
+				    </table>
 		        	</div>
 			        <!-- //GENERAL INFO END -->
 
 			        <!-- //ACCOUNTING -->
 			        <div class="tab-pane" id="metertab2">
-			        	Reading
+			        	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
+				        	<thead>
+					            <tr>			                
+					                <th width="140">Month</th>
+					                <th width="50">Ref.</th>
+					                <th width="100">m<sup>3</sup></th>    
+					                <th width="50">Amount</th>
+					                <th width="50">Action</th>     
+					            </tr> 
+					        </thead>
+					    </table>
 		        	</div>
 			        <!-- //ACCOUNTING END -->						       
 
@@ -2951,7 +2962,7 @@
 							data-bind="click: cancel"><i></i></span>	
 					</div>
 			        <h2 style="padding:0 15px;">Run Bill</h2>
-			        <div class="row-fluid" style="border: 1px solid #ccc;">
+			        <div class="span12 row-fluid" style="padding:20px 0;">
 			        	<div class="span5" style="padding-right: 0;">
 				        	<div class="span6">	
 								<!-- Group -->
@@ -2964,7 +2975,7 @@
 					                	data-start="year" 
 						  				data-depth="year" 
 					                	placeholder="Moth of ..." 
-							           	data-bind="value: obj.month_of" />
+							           	data-bind="value: monthSelect" />
 								</div>
 																								
 								<!-- // Group END -->
@@ -2981,7 +2992,7 @@
 										data-text-field="name" 
 										data-value-field="id" 
 										data-bind="
-											value: obj.license,
+											
 		                  					source: licenseDS,
 		                  					events: {change: licenseChange}">
 		                  		</div>
@@ -3000,33 +3011,17 @@
 										data-text-field="name" 
 										data-value-field="id" 
 										data-bind="
-											value: obj.bloc,
+											
 		                  					source: blocDS,
 		                  					events: {change: blocChange}">
-		                  		</div>
-							</div>
-							<div class="span4">
-								<div class="control-group">								
-									<label ><span >Number</span></label>
-									<input 
-										data-role="dropdownlist" 
-										style="width: 100%;" 
-										data-option-label="Number ..." 
-										data-auto-bind="false" 
-										data-value-primitive="true" 
-										data-text-field="name" 
-										data-value-field="id" 
-										data-bind="
-											value: obj.bloc,
-		                  					source: numberDS,
-		                  					events: {change: numberChange}">
 		                  		</div>
 							</div>
 							<div class="span4">
 								<div class="control-group">	
 									<label ><span >Action</span></label>	
 									<div class="row" style="margin: 0;">					
-										<button type="button" data-role="button" data-bind="click: search" class="k-button" role="button" aria-disabled="false" tabindex="0"><i class="icon-search"></i></button> | <button type="button" data-role="button" onclick="javascript:window.print()" class="k-button" role="button" aria-disabled="false" tabindex="0"><i class="icon-print"></i></button>
+										<button type="button" data-role="button" data-bind="click: search" class="k-button" role="button" aria-disabled="false" tabindex="0"><i class="icon-search"></i></button>
+										<button type="button" data-role="button" data-bind="click: save, visible: showButton" class="k-button" role="button" aria-disabled="false" tabindex="0">Create Bill</button> 
 									</div>
 		                  		</div>
 							</div>		
@@ -3047,13 +3042,13 @@
 					        <tbody data-role="listview" 
 					        		data-template="runbill-row-template" 
 					        		data-auto-bind="false" 
-					        		data-bind="source: readingDS"></tbody>
+					        		data-bind="source: invoiceDS"></tbody>
 					        <tfoot data-template="runbill-footer-template" 
 						        		data-bind="source: this"></tfoot>	            
 					    </table>
 					    <div id="pager" class="k-pager-wrap"
 					    	 data-auto-bind="false"
-				             data-role="pager" data-bind="source: readingDS"></div>
+				             data-role="pager" data-bind="source: invoiceDS"></div>
 			        </div>
 				</div>						
 			</div>
@@ -3063,13 +3058,13 @@
 <script id="runbill-row-template" type="text/x-kendo-tmpl">
 	<tr>
 		<td align="center">
-		   <input type="checkbox" data-bind="checked: isCheck" />
+		   <input type="checkbox" data-bind="checked: invoiced, events: {change: makeInvoice}" />
 		</td>						
-		<td>#=customer[0].surname# #=customer[0].name#</td>		
-		<td><a href="\#/wReading_center/#=meter_id#"><i></i> #=meter[0].number#</a></td>
-		<td class="right">#=previous#</td>
-		<td class="right">#=current#</td>		
-		<td class="right">#=usage# m<sup>3</sup></td>		
+		<td>#= contact.name#</td>		
+		<td>#= meter.number#</td>
+		<td class="right">#= items[0].line.prev #</td>
+		<td class="right">#= items[0].line.current #</td>		
+		<td class="right">#= items[0].line.current - items[0].line.prev # m<sup>3</sup></td>		
     </tr>
 </script>
 <script id="runbill-footer-template" type="text/x-kendo-template">
@@ -3078,6 +3073,141 @@
             <span data-bind="text: lang.lang.total"></span>:  m<sup>3</sup>
         </td>
     </tr>
+</script>
+<script id="printBill" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background" style="overflow: hidden;">
+			<div class="container-960">					
+				<div id="example" class="k-content">
+			    	<div class="hidden-print pull-right">
+			    		<span class="glyphicons no-js remove_2" 
+							data-bind="click: cancel"><i></i></span>	
+					</div>
+			        <h2 style="padding:0 15px;">Print Bill</h2>
+			        <div class="span12 row-fluid" style="padding:20px 0;">
+			        	<div class="span5" style="padding-right: 0;">
+				        	<div class="span6">	
+								<!-- Group -->
+								<div class="control-group">								
+									<label ><span >Month Of</span></label>
+						            <input type="text" 
+					                	style="width: 100%;" 
+					                	data-role="datepicker"
+					                	data-format="MM-yyyy"
+					                	data-start="year" 
+						  				data-depth="year" 
+					                	placeholder="Moth of ..." 
+							           	data-bind="value: monthSelect" />
+								</div>
+																								
+								<!-- // Group END -->
+							</div>
+							<div class="span6" style="padding-left: 0;">
+								<div class="control-group">								
+									<label ><span >License</span></label>
+									<input 
+										data-role="dropdownlist" 
+										style="width: 100%;" 
+										data-option-label="License ..." 
+										data-auto-bind="false" 
+										data-value-primitive="true" 
+										data-text-field="name" 
+										data-value-field="id" 
+										data-bind="
+											
+		                  					source: licenseDS,
+		                  					events: {change: licenseChange}">
+		                  		</div>
+							</div>	
+						</div>
+						<div class="span7" style="padding-left: 0;">
+							<div class="span4">
+								<div class="control-group">								
+									<label ><span >Location</span></label>
+									<input 
+										data-role="dropdownlist" 
+										style="width: 100%;" 
+										data-option-label="Location ..." 
+										data-auto-bind="false" 
+										data-value-primitive="true" 
+										data-text-field="name" 
+										data-value-field="id" 
+										data-bind="
+											
+		                  					source: blocDS,
+		                  					events: {change: blocChange}">
+		                  		</div>
+							</div>
+							<div class="span4">
+								<div class="control-group">	
+									<label ><span >Action</span></label>	
+									<div class="row" style="margin: 0;">					
+										<button type="button" data-role="button" data-bind="click: search" class="k-button" role="button" aria-disabled="false" tabindex="0"><i class="icon-search"></i></button> | <button type="button" data-role="button" data-bind="click: printBill" class="k-button" role="button" aria-disabled="false" tabindex="0"><i class="icon-print"></i></button>
+									</div>
+		                  		</div>
+							</div>		
+						</div>
+			        </div>
+
+			        
+			        <div class="row saleSummaryCustomer">
+						<div class="span3">
+							<div class="total-customer">
+								<div class="span12">
+									<p>Total Invoice</p>
+									<span>11,190,000.00៛</span>
+								</div>	
+							</div>
+						</div>
+						<div class="span3" style="padding: 0;">
+							<div class="total-customer">
+								<p>No Print</p>
+								<span >55.16%</span>
+							</div>
+						</div>
+						<div class="span3" style="padding-right: 0;">
+							<div class="total-customer">
+								<div class="span12">
+									<p>m<sup>3</sup></p>
+									<span >11,190,000.00៛</span>
+								</div>	
+							</div>
+						</div>
+						<div class="span3" >
+							<div class="total-customer" style="background: green; color: #fff;">
+								<p>Amount</p>
+								<span>55.16%</span>
+							</div>
+						</div>
+					</div>
+
+			        <div class="span12 row-fluid" style="padding:20px 0;padding-top: 0;">
+			        	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
+					        <thead>
+					            <tr>
+					                <th><input type="checkbox" data-bind="checked: chkAll, events: {change : checkAll}" /></th>                
+					                <th><span data-bind="text: lang.lang.customer"></span></th>		         
+					                <th><span data-bind="text: lang.lang.meter"></span></th>
+					                <th><span data-bind="">Previous</span></th>
+					                <th><span data-bind="text: lang.lang.current"></span></th>
+					                <th><span data-bind="text: lang.lang.total"></span></th>	                    
+					            </tr>
+					        </thead>
+					        <tbody data-role="listview" 
+					        		data-template="runbill-row-template" 
+					        		data-auto-bind="false" 
+					        		data-bind="source: invoiceDS"></tbody>
+					        <tfoot data-template="runbill-footer-template" 
+						        		data-bind="source: this"></tfoot>	            
+					    </table>
+					    <div id="pager" class="k-pager-wrap"
+					    	 data-auto-bind="false"
+				             data-role="pager" data-bind="source: invoiceDS"></div>
+			        </div>
+				</div>						
+			</div>
+		</div>
+	</div>				  	
 </script>
 
 <script id="customerDeposit" type="text/x-kendo-template">
@@ -3811,7 +3941,7 @@
   				<li><a href='#/edit_reading'><span >Edit Reading</span></a></li>
   				<li><span class="li-line"></span></li>
   				<li><a href='#/run_bill'><span >Run Bill</span></a></li> 
-  				<li><a href='#/print_invoice'><span >Print Bill</span></a></li>
+  				<li><a href='#/print_bill'><span >Print Bill</span></a></li>
   				<li><span class="li-line"></span></li>
   				<li><a href='#/import'><span >Import</span></a></li>
   			</ul>
@@ -9094,6 +9224,96 @@
 			return dfd.promise();
 		}
 	});
+
+	// Invoice
+	banhji.invoice = kendo.observable({
+		makes 	: new kendo.data.DataSource({
+	      transport: {
+	        read  : {
+	          url: baseUrl + 'api/winvoices/make',
+	          type: "GET",
+	          dataType: 'json'
+	        },
+	        parameterMap: function(options, operation) {
+	          if(operation === 'read') {
+	            return {
+	              limit: options.take,
+	              page: options.page,
+	              filter: options.filter
+	            };
+	          } else {
+	            return {models: kendo.stringify(options.models)};
+	          }
+	        }
+	      },
+	      schema  : {
+	        model: {
+	          id: 'id'
+	        },
+	        data: 'results',
+	        total: 'count'
+	      },
+	      batch: true,
+	      serverFiltering: true,
+	      serverPaging: true,
+	      pageSize: 100
+	    }),
+		dataSource 	: new kendo.data.DataSource({
+	      transport: {
+	        create  : {
+	          url: baseUrl + 'api/winvoices',
+	          type: "POST",
+	          dataType: 'json'
+	        },
+	        parameterMap: function(options, operation) {
+	          if(operation === 'read') {
+	            return {
+	              limit: options.take,
+	              page: options.page,
+	              filter: options.filter
+	            };
+	          } else {
+	            return {models: kendo.stringify(options.models)};
+	          }
+	        }
+	      },
+	      schema  : {
+	        model: {
+	          id: 'id'
+	        },
+	        data: 'results',
+	        total: 'count'
+	      },
+	      batch: true,
+	      serverFiltering: true,
+	      serverPaging: true,
+	      pageSize: 100
+	    }),
+		remove 		: function(e) {
+			this.dataSource.remove(e.data);
+		},
+		queryReading: function() {
+			var dfd = $.Deferred();
+			return this.makes.query({
+				filter: {field: '', value: ''}
+			});
+		},
+		save 		: function() {
+			var that = this, dfd = $.Deferred();
+			this.dataSource.sync();
+			this.dataSource.bind('requestEnd', function(e){
+				if(e.type != 'read' && e.response.results) {
+					dfd.resolve(e.response.results);
+				} else {
+					dfd.reject(e.response);
+				}
+			});
+			this.dataSource.bind('error', function(e){
+				dfd.reject(e.status);
+			});
+			return dfd.promise();
+		}
+	});
 	/* End of Invoice Section */
 
 	/*==== Meter=====*/
@@ -9347,7 +9567,7 @@
 			});
 			if(this.get('amountToBeRecieved') < amount) {
 				// create one invoice
-				banhji.transaction.makeInvoice(this.get('meterObj').contact[0].id, this.get('paymentMethod'), this.get('amountToBeRecieved'), 'Cash_Sale')
+				banhji.transaction.makeInvoice(this.get('meterObj').contact[0].id, this.get('paymentMethod'), this.get('amountToBeRecieved'), 'Meter_Activation')
 				.then(function(data){
 					// create invoice
 					// console.log(amount - kendo.parseFloat(banhji.ActivateMeter.get('amountToBeRecieved')));
@@ -9433,7 +9653,7 @@
 				// and amount left to be make via installment
 				
 			} else {
-				banhji.transaction.makeInvoice(this.get('meterObj').contact[0].id, this.get('paymentMethod'), this.get('amountToBeRecieved'), 'Cash_Sale')
+				banhji.transaction.makeInvoice(this.get('meterObj').contact[0].id, this.get('paymentMethod'), this.get('amountToBeRecieved'), 'Meter_Activation')
 				.then(function(data){
 					// create invoice
 					// console.log(amount - kendo.parseFloat(banhji.ActivateMeter.get('amountToBeRecieved')));
@@ -9557,16 +9777,17 @@
 			var ds = new kendo.data.DataSource({
 		        type: "json",
 		        transport: {
-		          read: apiUrl + "readings"
+		          read: apiUrl + "readings/books"
 		        },
 		        schema: {
 		          model: {
 		            fields: {
 		              number: { type: "number" },
-		              date: { type: "date" },
-		              previous: { type: "previous" },
-		              reading: { type: "reading" },
-		              current: { type: "current" }
+		              from_date: { type: "date" },
+		              to_date : { type: "date"},
+		              previous: { type: "number" },
+		              status: { type: "string" },
+		              current: { type: "number" }
 		            }
 		          }
 		        }
@@ -9575,10 +9796,11 @@
 		      var rows = [{
 		        cells: [
 		          { value: "number" },
-		          { value: "date" },
+		          { value: "from_date" },
+		          { value: "to_date" },
 		          { value: "previous" },
-		          { value: "reading" },
-		          { value: "current" }
+		          { value: "current" },
+		          { value: "status" }
 		        ]
 		      }];
 		      ds.fetch(function(){
@@ -9587,10 +9809,11 @@
 		          rows.push({
 		            cells: [
 		              { value: data[0].results[i].number },
-		              { value: data[0].results[i].date },
+		              { value: data[0].results[i].from_date },
+		              { value: data[0].results[i].to_date },
 		              { value: data[0].results[i].previous },
-		              { value: data[0].results[i].reading },
-		              { value: data[0].results[i].current }
+		              { value: data[0].results[i].current },
+		              { value: data[0].results[i].status }
 		            ]
 		          })
 		        }
@@ -9844,9 +10067,14 @@
 		lang 				: langVM,
 		licenseDS 			: dataStore(apiUrl + "branches"),
 		blocDS 				: dataStore(apiUrl + "locations"),
-		chkAll 				: false,	
+		invoiceDS	     	: dataStore(apiUrl + "winvoices/make"),
+		invoiceCollection 	: banhji.invoice, 
+		chkAll 				: false,
+		licenseSelect 		: null,	
+		monthSelect 		: null,	
+		blocSelect 			: null,
 		pageLoad 			: function(id){
-
+			
 		},   
 		checkAll 		: function(e){
 			e.preventDefault();
@@ -9869,25 +10097,161 @@
 
 	        return kendo.toString(sum, "n0");
 	    },	 
+	    licenseChange 		: function(e) {
+			var license = this.licenseDS.at(e.sender.selectedIndex - 1);
+			console.log(license);
+			this.set("licenseSelect", license.id);
+	    	//this.invoiceDS.filter({field: "branch_id",value: license.id});
+	    },
+	    blocChange 			: function(e) {
+	    	var bloc = this.blocDS.at(e.sender.selectedIndex - 1);
+			this.set("blocSelect", bloc.id);
+	    },
+	    invoiceArray 		: [],
+	    search 				: function(){
+	    	this.invoiceDS.filter([
+	    		{field: 'branch_id', operator: 'where_related_meter', value: this.licenseSelect},
+	    		{field: 'location_id', operator: 'where_related_meter', value: this.blocSelect}
+	    	]);
+	    },
+	    makeInvoice 		: function(e) {
+	    	var that = this;
+	    	if(e.data.invoiced) {
+	    		this.invoiceArray.push(e.data);
+	    		console.log(e.data);
+	    	} else {
+	    		$.each(this.invoiceArray, function(i, v){
+	    			if(e.data == v) {
+	    				that.invoiceArray.splice(i, 1);
+	    				return false;
+	    			}
+	    		});
+	    	}
+
+	    	this.makeBilled();
+	    },
+	    showButton 			: false,
+	    makeBilled 			: function(){
+	    	if(this.invoiceArray.length > 0) {
+	    		this.set('showButton', true);
+	    	} else {
+	    		this.set('showButton', false);
+	    	}
+	    },
 		save 				: function() {
 			var self = this;
-			if(this.dataSource.data().length > 0) {
-				$("#loadImport").css("display","block");
-				this.dataSource.sync();
-				this.dataSource.bind("requestEnd", function(e){
-					if(e.type != 'read') {
-				    	if(e.response){				
-				    		$("#ntf1").data("kendoNotification").success("Activated user successfully!");
-				    		self.cancel();
-							$("#loadImport").css("display","none");
-						}	
-					}			  				
-			    });
-			    this.dataSource.bind("error", function(e){		    		    	
-					$("#ntf1").data("kendoNotification").error("Error activated!"); 
-					$("#loadImport").css("display","none");				
-			    });
-			}	
+			$.each(this.invoiceArray, function(i, v){
+				var invoiceItems = [];
+				var rate = banhji.source.getRate(banhji.locale, date);
+				var locale = banhji.locale;
+				var usage = v.items[0].line.usage * v.meter.multiplier;
+				var record_id = v.items[0].line.id;
+				var amount = 0.00;
+				var date = new Date();
+
+				$.each(v.items, function(index, value) {
+				
+					if(value.type == "tariff") {
+						invoiceItems.push({				
+					   		"invoice_id"		: 0,
+							"item_id" 			: 0,														
+						   	"meter_record_id"	: record_id,
+						   	"description" 		: value.line.name,					   	
+						   	"quantity" 			: usage,
+						   	"price"				: value.line.amount,					   	
+						   	"amount" 			: value.line.is_flat == false ? usage * kendo.parseFloat(value.line.amount) : kendo.parseFloat(value.line.amount),
+						   	"rate"				: rate,
+						   	"locale" 			: locale,
+						   	"has_vat" 			: false,
+					   		"type" 				: value.type
+						});
+						amount += value.line.is_flat == false ? usage * kendo.parseFloat(value.line.amount) : kendo.parseFloat(value.line.amount);
+					} else {
+						invoiceItems.push({				
+					   		"invoice_id"		: 0,
+							"item_id" 			: 0,														
+						   	"meter_record_id"	: record_id,
+						   	"description" 		: value.line.name,					   	
+						   	"quantity" 			: value.type == 'usage' ? value.line.usage : 1,
+						   	"price"				: value.line.amount,					   	
+						   	"amount" 			: value.line.amount,
+						   	"rate"				: rate,
+						   	"locale" 			: locale,
+						   	"has_vat" 			: false,
+					   		"type" 				: value.type
+						});
+						amount += kendo.parseFloat(value.line.amount);
+					}	
+				});
+
+				self.invoiceCollection.dataSource.add({
+					contact_id 			: v.contact.id,
+					payment_term_id		: null,
+					payment_method_id 	: null,
+					reference_id 		: null,
+					account_id 			: v.contact.account_id,
+					vat_id 				: v.contact.vat_id,
+					biller_id 			: banhji.userData.id,
+					number 				: null,
+					type 				: "Water_Invoice",
+					amount 				: amount,
+					vat 				: null,
+					rate 				: rate,
+					locale 				: locale,
+					month_of 			: null,
+					issued_date 		: date,
+					payment_date 		: null,
+					due_date 			: date.getDate() + 7,
+					check_no 			: null,
+					memo 				: null,
+					memo2 				: null,
+					status 				: null,
+					invoice_lines    	: invoiceItems
+				});
+			});
+			this.invoiceCollection.save();
+				
+			// if(this.dataSource.data().length > 0) {
+			// 	$("#loadImport").css("display","block");
+			// 	this.dataSource.sync();
+			// 	this.dataSource.bind("requestEnd", function(e){
+			// 		if(e.type != 'read') {
+			// 	    	if(e.response){				
+			// 	    		$("#ntf1").data("kendoNotification").success("Activated user successfully!");
+			// 	    		self.cancel();
+			// 				$("#loadImport").css("display","none");
+			// 			}	
+			// 		}			  				
+			//     });
+			//     this.dataSource.bind("error", function(e){		    		    	
+			// 		$("#ntf1").data("kendoNotification").error("Error activated!"); 
+			// 		$("#loadImport").css("display","none");				
+			//     });
+			// }	
+		},
+		cancel 				: function(){
+			this.dataSource.cancelChanges();		
+			window.history.back();
+		}
+	});
+	banhji.printBill = kendo.observable({
+		lang 				: langVM,
+		dataSource 			: dataStore(apiUrl + "branches"),
+		blocDS 				: dataStore(apiUrl + "locations"),
+		invoiceDS	     	: dataStore(apiUrl + "winvoices/make"),
+		invoiceCollection 	: banhji.invoice, 
+		chkAll 				: false,
+		licenseSelect 		: null,	
+		monthSelect 		: null,	
+		blocSelect 			: null,
+		pageLoad 			: function(id){
+			
+		}, 
+		printBill 			: function(){
+
+		},
+		save 				: function() {
+			var self = this;
 		},
 		cancel 				: function(){
 			this.dataSource.cancelChanges();		
@@ -11005,105 +11369,7 @@
 		}
 	});
 
-	// Invoice
-	banhji.invoice = kendo.observable({
-		makes 	: new kendo.data.DataSource({
-	      transport: {
-	        read  : {
-	          url: baseUrl + 'api/winvoices/make',
-	          type: "GET",
-	          dataType: 'json'
-	        },
-	        parameterMap: function(options, operation) {
-	          if(operation === 'read') {
-	            return {
-	              limit: options.take,
-	              page: options.page,
-	              filter: options.filter
-	            };
-	          } else {
-	            return {models: kendo.stringify(options.models)};
-	          }
-	        }
-	      },
-	      schema  : {
-	        model: {
-	          id: 'id'
-	        },
-	        data: 'results',
-	        total: 'count'
-	      },
-	      batch: true,
-	      serverFiltering: true,
-	      serverPaging: true,
-	      pageSize: 100
-	    }),
-		dataSource 	: new kendo.data.DataSource({
-	      transport: {
-	        read  : {
-	          url: baseUrl + 'api/winvoices',
-	          type: "GET",
-	          dataType: 'json'
-	        },
-	        create  : {
-	          url: baseUrl + 'api/winvoices',
-	          type: "POST",
-	          dataType: 'json'
-	        },
-	        destroy  : {
-	          url: baseUrl + 'api/winvoices',
-	          type: "DELETE",
-	          dataType: 'json'
-	        },
-	        parameterMap: function(options, operation) {
-	          if(operation === 'read') {
-	            return {
-	              limit: options.take,
-	              page: options.page,
-	              filter: options.filter
-	            };
-	          } else {
-	            return {models: kendo.stringify(options.models)};
-	          }
-	        }
-	      },
-	      schema  : {
-	        model: {
-	          id: 'id'
-	        },
-	        data: 'results',
-	        total: 'count'
-	      },
-	      batch: true,
-	      serverFiltering: true,
-	      serverPaging: true,
-	      pageSize: 100
-	    }),
-		remove 		: function(e) {
-			this.dataSource.remove(e.data);
-		},
-		queryReading: function() {
-			var dfd = $.Deferred();
-			return this.makes.query({
-				filter: {field: '', value: ''}
-			});
-		},
-		save 		: function() {
-			var that = this, dfd = $.Deferred();
-			this.dataSource.sync();
-			this.dataSource.bind('requestEnd', function(e){
-				if(e.type != 'read' && e.response.results) {
-					dfd.resolve(e.response.results);
-				} else {
-					dfd.reject(e.response);
-				}
-			});
-			this.dataSource.bind('error', function(e){
-				dfd.reject(e.status);
-			});
-			return dfd.promise();
-		}
-	});
+	
 	/* views and layout */
 	banhji.view = {
 		layout 		: new kendo.Layout('#layout', {model: banhji.Layout}),
@@ -11128,6 +11394,7 @@
 
 		waterImport: new kendo.Layout("#waterImport", {model: banhji.waterImport}),
 		runBill: new kendo.Layout("#runBill", {model: banhji.runBill}),
+		printBill: new kendo.Layout("#printBill", {model: banhji.printBill}),
 
 		//custom form
 		invoiceCustom: new kendo.Layout("#invoiceCustom", {model: banhji.invoiceCustom}),
@@ -11392,6 +11659,21 @@
 
 		if(banhji.pageLoaded["run_bill"]==undefined){
 			banhji.pageLoaded["run_bill"] = true;
+		}
+
+		vm.pageLoad();
+	});
+	banhji.router.route("/print_bill", function(){		
+		banhji.view.layout.showIn("#content", banhji.view.printBill);
+		banhji.view.layout.showIn('#menu', banhji.view.menu);
+		banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
+		
+		var vm = banhji.printBill;
+
+		banhji.userManagement.addMultiTask("Print Bill","print_bill",null);
+
+		if(banhji.pageLoaded["print_bill"]==undefined){
+			banhji.pageLoaded["print_bill"] = true;
 		}
 
 		vm.pageLoad();
