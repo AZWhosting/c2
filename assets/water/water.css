@@ -63,3 +63,38 @@ p.addItem.glyphicons.circle_remove i:before {
 .k-state-default .k-input {
 	width: 96%!important;
 }
+
+@charset "UTF-8";
+/* CSS Document */
+.winvoice-print * {
+	font-family: 'Content', Arial!important;
+}
+.winvoice-print h4 {
+	font-family: 'Moul', Arial!important;
+}
+.winvoice-print .headerinv {
+	text-align: center;
+	padding: 15px;
+	border-bottom: 1px solid #000;
+	margin-bottom: 15px;
+}
+.winvoice-print .cover-customer {
+	margin-left: 0;
+}
+.winvoice-print p {
+	margin-bottom: 0;
+}
+.winvoice-print table thead th {
+	text-align: center;
+	background: #355176;
+	color: #fff;
+}
+.winvoice-print table thead td {
+	text-align: center;
+}
+.winvoice-print .line {
+	border-top: 1px dotted #000;
+	width: 100%;
+	position: relative;
+	clear: both;
+}

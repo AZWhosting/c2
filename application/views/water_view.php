@@ -3296,27 +3296,29 @@
         </td>
     </tr>
 </script>
-<script id="wInvoicePrint" type="text/x-kendo-template">
-	<div class="container-960">
-		<div class="container-fluid">
-			<div class="row-fluid">
-				<div class="span12">
-					<div id="example" class="k-content">
-						<div class="hidden-print">
-							<span class="glyphicons no-js remove_2 pull-right" 
-								onclick="javascript:window.history.back()"><i></i></span>
+<script id="InvoicePrint" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background" style="overflow: hidden;">
+			<div class="container-960">					
+				<div id="example" class="k-content">
+					<div class="hidden-print pull-right">
+			    		<span style="padding: 5px 0 11px 35px;" class="glyphicons no-js remove_2" 
+							data-bind="click: cancel"><i></i></span>	
+					</div>
 
-							<span class="btn btn-inverse btn-icon glyphicons print" data-bind="click: print"><i></i><span data-bind="text: lang.lang.print"></span></span>											          																
-						</div>
+					<br>					
+					
+					<div id="wInvoiceContent" data-role="listview" 
+						data-auto-bind="false"
+						data-bind="source: dataSource" 
+						data-template="Invoice-print-row-template"></div>						
+					<!-- Form actions -->
+					<div class="box-generic" align="right" style="background-color: #0B0B3B;">
+						<span id="notification"></span>
 
-						<br>					
-						
-						<div id="wInvoiceContent" data-role="listview" 
-							data-auto-bind="false"
-							data-bind="source: dataSource" 
-							data-template="Invoice-print-row-template"></div>						
-			
-					</div><!-- //End div example-->
+						<span id="savePrint" class="btn btn-icon btn-primary glyphicons print" data-bind="click: printGrid" style="width: 80px;"><i></i>Print</span>
+						<!--span id="savePDF" class="btn btn-icon btn-success glyphicons edit" data-bind="click: savePDF" style="width: 120px;"><i></i> Save PDF</span-->									
+					</div>
 				</div><!-- //End div span12-->
 			</div><!-- //End div row-fluid-->
 		</div>
@@ -10773,7 +10775,7 @@
 			  //         kendo.drawing.pdf.saveAs(group, "Invoice.pdf");
 			  //       });
 
-			        banhji.router.navigate('/wInvoice_print');
+			        banhji.router.navigate('/invoice_print');
 
 			        // banhji.wInvoicePrint.dataSource.query({
 			        // 	filter: { field:"id", operator:"where_in", value:ids },
@@ -10797,7 +10799,7 @@
 			window.history.back();
 		}
 	});
-	banhji.wInvoicePrint = kendo.observable({
+	banhji.InvoicePrint = kendo.observable({
 		lang 				: langVM,				
 		//dataSource 	 		: dataStore(baseUrl + "winvoices"),
 		invoiceDS 	 		: dataStore(baseUrl + "invoices"),	
@@ -10881,63 +10883,62 @@
 									
 			}		
 		},
-		print 						: function(){
-			kendo.drawing.drawDOM($("#wInvoiceContent")).then(function(group){
-	          kendo.drawing.pdf.saveAs(group, "Invoice.pdf");
-	        });
-		// 	var self = this;
-		// 	$.each(this.dataSource.data(), function(index, value){
-		// 		value.set("print_count", kendo.parseInt(value.print_count)+1);
-		// 		value.set("printed_by", self.get("user_id"));
-		// 	});
+		printGrid 						: function(){
+			// kendo.drawing.drawDOM($("#wInvoiceContent")).then(function(group){
+	  //         kendo.drawing.pdf.saveAs(group, "Invoice.pdf");
+	  //       });
+			var self = this;
+			$.each(this.dataSource.data(), function(index, value){
+				value.set("print_count", kendo.parseInt(value.print_count)+1);
+				value.set("printed_by", self.get("user_id"));
+			});
 
-		// 	//window.print();
+			//window.print();
 
-		// 	// this.dataSource.sync();
-		// 	// var saved = false;
-		// 	// this.dataSource.bind("requestEnd", function(){
-		// 	// 	if(e.type=="update"){
-		// 	// 		saved = true;
+			// this.dataSource.sync();
+			// var saved = false;
+			// this.dataSource.bind("requestEnd", function(){
+			// 	if(e.type=="update"){
+			// 		saved = true;
 
-		// 	// 		self.dataSource.data([]);
-		// 	// 		window.history.back();
-		// 	// 	}
-		// 	// });
-		// // 	print 						: function(){
-		// 	var gridElement = $('#grid'),
-		//         printableContent = '',
-		//         win = window.open('', '', 'width=1000, height=900'),
-		//         doc = win.document.open();
-		//     var htmlStart =
-		//             '<!DOCTYPE html>' +
-		//             '<html>' +
-		//             '<head>' +
-		//             '<meta charset="utf-8" />' +
-		//             '<title></title>' +
-		//             '<link rel="stylesheet" href="<?php echo base_url(); ?>resources/js/kendoui/styles/kendo.bootstrap.min.css">'+
-		//             '<link rel="stylesheet" href="<?php echo base_url(); ?>resources/common/bootstrap/css/bootstrap.css">'+
-		//             '<link href="<?php echo base_url(); ?>uploads/winvoiceprint/winvoice-print.css" rel="stylesheet" />'+
-		//             '<link href="<?php echo base_url(); ?>resources/common/theme/css/style-default-menus-dark.css" rel="stylesheet" />'+
-		//             '<link href="https://fonts.googleapis.com/css?family=Content:400,700" rel="stylesheet" type="text/css">'+
-		//             '<link href="https://fonts.googleapis.com/css?family=Moul" rel="stylesheet">'+
-		//             '<style type="text/css" media="print">'+
-		// 		    '@page  { size:  auto; margin: 0 10mm; }'+
-		// 		    '</style></head>' + 
-		// 		    '<body><div class="row-fluid" style="padding-top: 40px" ><div id="example" class="k-content">';
+			// 		self.dataSource.data([]);
+			// 		window.history.back();
+			// 	}
+			// });
+		// 	print 						: function(){
+			var gridElement = $('#grid'),
+		        printableContent = '',
+		        win = window.open('', '', 'width=1000, height=900'),
+		        doc = win.document.open();
+		    var htmlStart =
+		            '<!DOCTYPE html>' +
+		            '<html>' +
+		            '<head>' +
+		            '<meta charset="utf-8" />' +
+		            '<title></title>' +
+		            '<link rel="stylesheet" href="<?php echo base_url(); ?>resources/js/kendoui/styles/kendo.bootstrap.min.css">'+
+		            '<link rel="stylesheet" href="<?php echo base_url(); ?>resources/common/bootstrap/css/bootstrap.css">'+
+		            '<link href="<?php echo base_url(); ?>uploads/winvoiceprint/winvoice-print.css" rel="stylesheet" />'+
+		            '<link href="<?php echo base_url(); ?>resources/common/theme/css/style-default-menus-dark.css" rel="stylesheet" />'+
+		            '<link href="https://fonts.googleapis.com/css?family=Content:400,700" rel="stylesheet" type="text/css">'+
+		            '<link href="https://fonts.googleapis.com/css?family=Moul" rel="stylesheet">'+
+		            '<style type="text/css" media="print">'+
+				    '@page  { size:  auto; margin: 0 10mm; }'+
+				    '</style></head>' + 
+				    '<body><div class="row-fluid" style="padding-top: 40px" ><div id="example" class="k-content">';
 
-		//     var htmlEnd =
-		//             '</div></div></body>' +
-		//             '</html>';
+		    var htmlEnd =
+		            '</div></div></body>' +
+		            '</html>';
 		    
-		//     printableContent = $('#wInvoiceContent').html();
-		//     doc.write(htmlStart + printableContent + htmlEnd);
-		//     doc.close();
-		//     setTimeout(function(){
-		//     	win.print();	
-		//     	win.close();
-		//     },2000)
-			
-		// }
+		    printableContent = $('#wInvoiceContent').html();
+		    doc.write(htmlStart + printableContent + htmlEnd);
+		    doc.close();
+		    setTimeout(function(){
+		    	win.print();	
+		    	win.close();
+		    },2000)
+			//}
 		},		
 		hideFrameInvoice 			: function(e) {
 			var printBtn = e.target;
@@ -10946,7 +10947,11 @@
 			} else {
 				$(".hiddenPrint").css("visibility", "visible");
 			}
-		}
+		},
+		cancel 				: function(){
+			this.dataSource.cancelChanges();		
+			window.history.back();
+		}		
 	});
 	banhji.Receipt = kendo.observable({
 		lang 				: langVM,
@@ -12098,7 +12103,7 @@
 		waterImport: new kendo.Layout("#waterImport", {model: banhji.waterImport}),
 		runBill: new kendo.Layout("#runBill", {model: banhji.runBill}),
 		printBill: new kendo.Layout("#printBill", {model: banhji.printBill}),
-		wInvoicePrint: new kendo.Layout("#wInvoicePrint", {model: banhji.wInvoicePrint}),	
+		InvoicePrint: new kendo.Layout("#InvoicePrint", {model: banhji.InvoicePrint}),	
 
 		Receipt: new kendo.Layout("#Receipt", {model: banhji.Receipt}),
 		//custom form
@@ -12383,18 +12388,18 @@
 
 		vm.pageLoad();
 	});
-	banhji.router.route("/wInvoice_print(/:id)", function(id){
+	banhji.router.route("/invoice_print(/:id)", function(id){
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
 		}else{
-			banhji.view.layout.showIn("#content", banhji.view.wInvoicePrint);
+			banhji.view.layout.showIn("#content", banhji.view.InvoicePrint);
 			banhji.view.layout.showIn('#menu', banhji.view.menu);
 			banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
 
-			var vm = banhji.wInvoicePrint;
+			var vm = banhji.InvoicePrint;
 			
-			if(banhji.pageLoaded["wInvoice_print"]==undefined){
-				banhji.pageLoaded["wInvoice_print"] = true;							
+			if(banhji.pageLoaded["invoice_print"]==undefined){
+				banhji.pageLoaded["invoice_print"] = true;							
 
 			}
 			vm.pageLoad(id);
@@ -12612,5 +12617,21 @@
 		banhji.router.start();
 		banhji.source.loadData();
 		//console.log($(location).attr('hash').substr(2));
+		function loadStyle(href){
+				    // avoid duplicates
+		    for(var i = 0; i < document.styleSheets.length; i++){
+		        if(document.styleSheets[i].href == href){
+		            return;
+		        }
+		    }
+		    var head  = document.getElementsByTagName('head')[0];
+		    var link  = document.createElement('link');
+		    link.rel  = 'stylesheet';
+		    link.type = 'text/css';
+		    link.href = href;
+		    head.appendChild(link);
+		}
+		var Href1 = '<?php echo base_url(); ?>assets/water/water.css';
+		loadStyle(Href1);
 	});
 </script>

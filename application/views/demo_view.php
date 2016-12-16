@@ -10329,6 +10329,7 @@
 						        </div>
 						        <!-- // Recuring Tab content END -->								        
 
+						        <!-- Journal Entry Tab content -->
 						        <div class="tab-pane saleSummaryCustomer" id="tab4-5">
 									<table class="table table-borderless table-condensed">
 								        <thead>
@@ -10355,6 +10356,7 @@
 								        </tbody>			        
 								    </table>
 								</div>
+								<!-- // Journal Entry Tab content END -->
 
 						    </div>
 						</div>
@@ -28630,10 +28632,11 @@
 	</tr>
 </script>
 
+
+
 <!-- ***************************
 *	Inventory Section      	  *
 **************************** -->
-
 <script id="itemDashBoard" type="text/x-kendo-template">
 	<div class="row-fluid">
 
@@ -70720,6 +70723,8 @@
 					obj.set("income_account_id", account_id);
 					obj.set("expense_account_id", 0);
 				}
+
+				obj.set("inventory_account_id", 0);
 			}
 		},
 		//Number      	
