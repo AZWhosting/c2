@@ -59232,13 +59232,15 @@
 						cogsAmount = value.amount;
 					}					
 
-					if(cogsList[cogsID]===undefined){
-						cogsList[cogsID]={"id": cogsID, "amount": cogsAmount, "rate": itemRate, "locale": item.locale};						
-					}else{											
-						if(cogsList[cogsID].id===cogsID){
-							cogsList[cogsID].amount += cogsAmount;
-						}else{
-							cogsList[cogsID]={"id": cogsID, "amount": cogsAmount, "rate": itemRate, "locale": item.locale};
+					if(cogsAmount>0){
+						if(cogsList[cogsID]===undefined){
+							cogsList[cogsID]={"id": cogsID, "amount": cogsAmount, "rate": itemRate, "locale": item.locale};						
+						}else{											
+							if(cogsList[cogsID].id===cogsID){
+								cogsList[cogsID].amount += cogsAmount;
+							}else{
+								cogsList[cogsID]={"id": cogsID, "amount": cogsAmount, "rate": itemRate, "locale": item.locale};
+							}
 						}
 					}
 				}						
@@ -60526,13 +60528,15 @@
 						cogsAmount = value.amount;
 					}					
 
-					if(cogsList[cogsID]===undefined){
-						cogsList[cogsID]={"id": cogsID, "amount": cogsAmount, "rate": itemRate, "locale": item.locale};						
-					}else{											
-						if(cogsList[cogsID].id===cogsID){
-							cogsList[cogsID].amount += cogsAmount;
-						}else{
-							cogsList[cogsID]={"id": cogsID, "amount": cogsAmount, "rate": itemRate, "locale": item.locale};
+					if(cogsAmount>0){
+						if(cogsList[cogsID]===undefined){
+							cogsList[cogsID]={"id": cogsID, "amount": cogsAmount, "rate": itemRate, "locale": item.locale};						
+						}else{											
+							if(cogsList[cogsID].id===cogsID){
+								cogsList[cogsID].amount += cogsAmount;
+							}else{
+								cogsList[cogsID]={"id": cogsID, "amount": cogsAmount, "rate": itemRate, "locale": item.locale};
+							}
 						}
 					}
 				}						
