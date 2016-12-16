@@ -3222,10 +3222,13 @@
 				            </tr> 
 				        </thead>
 				        <tbody data-role="listview"
+				        		data-auto-bind="false"
 				        		data-template="chartOfAccount-template"			        		
 				        		data-bind="source: dataSource"></tbody> 
 				    </table>
-		            <div data-role="pager" data-bind="source: dataSource"></div>					  
+		            <div data-role="pager"
+		            	data-auto-bind="false" 
+		            	data-bind="source: dataSource"></div>					  
 
 				</div>
 			</div>						
@@ -45330,6 +45333,15 @@
 		as_of 				: new Date(),		
 		currentSort 		: "asc",							
 		pageLoad 			: function(){
+			this.dataSource.query({
+				filter: [],
+				sort: [
+					{ field:"account_type_id", dir:"asc" },
+					{ field:"number", dir:"asc" }
+				],
+				page:1,
+				pageSize: 1000
+			});
 		},	
 		sort 				: function(e){
 			var col = "",
@@ -74090,6 +74102,8 @@
 				banhji.pageLoaded["chart_of_account"] = true;              
                 						
 			}
+
+			vm.pageLoad();
 		}
 	});
 	banhji.router.route("/add_accountingprefix(/:id)", function(id){
