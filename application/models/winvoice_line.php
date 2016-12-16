@@ -12,7 +12,11 @@ class Winvoice_line extends DataMapper {
 		'reading' => array(
 			'class' => 'reading',
 			'other_field' => 'winvoice_line'
-		)
+		),
+        'meter_record' => array(
+            'class' => 'meter_record',
+            'other_field' => 'winvoice_line'
+        )
 	);
 		
 	public function __construct($id = null, $server_name = null, $db_username = null, $server_password = null, $db = null) {	

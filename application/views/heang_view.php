@@ -4846,6 +4846,199 @@
 </script>
 
 
+<script id="cashPositionReport" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background ">
+			<div class="container-960">	
+				<div id="example" class="k-content saleSummaryCustomer">
+
+					<span class="glyphicons no-js remove_2 pull-right" 
+							onclick="javascript: window.history.back()"><i></i></span>
+					<br>
+					<div class="block-title">
+						<h3 data-bind="text: company.name"></h3>
+						<h2>Cash Position Report</h2>
+						<p>As of Date: November 30 2016</p>
+					</div>	
+					<table class="table table-borderless table-condensed" style="width: 80%; margin: 0 auto;">
+						<tr>
+							<th colspan="4" style="text-align: right;">Cash Account</th>
+						</tr>
+						<tr>
+							<td>Opening Balance</td>
+							<td></td>
+							<td></td>
+							<td style="text-align: right;">210000</td>
+						</tr>
+						<tr>
+							<td>Cash Inflows</td>
+							<td></td>
+							<td></td>
+							<td style="text-align: right;"></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td>cash sale</td>
+							<td>xx</td>
+							<td style="text-align: right;"></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td>cash collection</td>
+							<td style="border-bottom: 1px solid #000 !important; ">xx</td>
+							<td style="border-bottom: 1px solid #000 !important; text-align: right;"></td>
+						</tr>
+						<tr>
+							<td>Total Cash Inflows</td>
+							<td></td>
+							<td style="border-bottom: 3px double #000 !important; font-size: 20px;">xxx</td>
+							<td style="border-bottom: 3px double #000 !important; text-align: right;"></td>
+						</tr>
+
+						<tr>
+							<td>Cash Outflows</td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td>cash expense</td>
+							<td>xx</td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td>cash payment</td>
+							<td style="border-bottom: 1px solid #000 !important; ">xx</td>
+							<td style="border-bottom: 1px solid #000 !important; text-align: right;"></td>
+						</tr>
+						<tr>
+							<td>Total Cash Outflows</td>
+							<td></td>
+							<td style="border-bottom: 3px double #000 !important; font-size: 20px;">xxx</td>
+							<td style="border-bottom: 3px double #000 !important; text-align: right;"></td>
+						</tr>
+
+						<tr>
+							<td style="padding-left: 25px !important;">Net Cash Defisit/surplus</td>
+							<td></td>
+							<td style="border-bottom: 3px solid #000 !important;">xxx</td>
+							<td style="border-bottom: 3px solid #000 !important; text-align: right;"></td>
+						</tr>
+
+
+
+					</table>
+
+
+		        </div>		        
+			</div>							
+		</div>
+	</div>
+</script>
+<script id="cashCollectionReport" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background ">
+			<div class="container-960">	
+				<div id="example" class="k-content saleSummaryCustomer">
+
+					<span class="glyphicons no-js remove_2 pull-right" 
+							onclick="javascript: window.history.back()"><i></i></span>
+					<br>
+					<br>
+
+					<div class="block-title">
+						<h3 data-bind="text: company.name"></h3>
+						<h2>Cash Collection Report</h2>
+						<p>As of Date: November 30 2016</p>
+					</div>		    
+					
+					<br><br>
+
+					<table class="table table-borderless table-condensed">
+						<tr>
+							<th>Account</th>
+							<th>Date</th>
+							<th>Type</th>
+							<th>Customer</th>
+							<th>Invoice</th>
+							<th style="text-align: right;">Cash Receipt</th>
+						</tr>
+						<tr>
+							<td>1</td>
+							<td>2</td>
+							<td>3</td>
+							<td>4</td>
+							<td>5</td>
+							<td style="text-align: right;">6</td>
+						</tr>
+						<tr>
+							<td>1</td>
+							<td>2</td>
+							<td>3</td>
+							<td>4</td>
+							<td>5</td>
+							<td style="text-align: right;">6</td>
+						</tr>
+					</table>
+
+		        </div>		        
+			</div>							
+		</div>
+	</div>
+</script>
+<script id="cashPaymentReport" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background ">
+			<div class="container-960">	
+				<div id="example" class="k-content saleSummaryCustomer">
+
+					<span class="glyphicons no-js remove_2 pull-right" 
+							onclick="javascript: window.history.back()"><i></i></span>
+					<br>
+					<br>
+
+					<div class="block-title">
+						<h3 data-bind="text: company.name"></h3>
+						<h2>Cash Payment Report</h2>
+						<p>As of Date: November 30 2016</p>
+					</div>		    
+					
+					<br><br>
+					<table class="table table-borderless table-condensed">
+						<tr>
+							<th>Amount</th>
+							<th>Date</th>
+							<th>Type</th>
+							<th>Supplier</th>
+							<th>Bill</th>
+							<th style="text-align: right;">Cash Payment</th>
+						</tr>
+						<tr>
+							<td>1</td>
+							<td>2</td>
+							<td>3</td>
+							<td>4</td>
+							<td>5</td>
+							<td style="text-align: right;">6</td>
+						</tr>
+						<tr>
+							<td>1</td>
+							<td>2</td>
+							<td>3</td>
+							<td>4</td>
+							<td>5</td>
+							<td style="text-align: right;">6</td>
+						</tr>
+					</table>
+
+		        </div>		        
+			</div>							
+		</div>
+	</div>
+</script>
+
 <script id="accountingSetting" type="text/x-kendo-template">
 	<span class="pull-right glyphicons no-js remove_2" 
 			onclick="javascript:window.history.back()"><i></i></span>

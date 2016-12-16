@@ -59,6 +59,10 @@ class Account extends DataMapper {
 		'tax_item' => array(
 			'class' => 'tax_item',
 			'other_field' => 'account'
+		),
+		'plan_item' => array(
+			'class' => 'plan_item',
+			'other_field' => 'account'
 		)
 	);
 

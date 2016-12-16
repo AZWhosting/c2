@@ -10,6 +10,12 @@ class Plan_item extends DataMapper {
 	// 		'other_field' => 'plan_item'
 	// 	)
 	// );
+	public $has_one = array(
+		'account' => array(
+			'class' => 'account',
+			'other_field' => 'plan_item'
+		)
+	);
 
 	public $has_many = array(
 		'plan'
