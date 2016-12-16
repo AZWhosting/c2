@@ -2504,12 +2504,12 @@
 			</td>			
 			<td class="right" style="color: black;">
 				#if(line[i].dr>0){#
-					#=kendo.toString(line[i].dr / line[i].rate, "c", banhji.locale)#
+					#=kendo.toString(line[i].dr / line[i].rate, "c2", banhji.locale)#
 				#}#
 			</td>
 			<td class="right" style="color: black;">
 				#if(line[i].cr>0){#
-					#=kendo.toString(line[i].cr / line[i].rate, "c", banhji.locale)#
+					#=kendo.toString(line[i].cr / line[i].rate, "c2", banhji.locale)#
 				#}#
 			</td>
 			<td></td>  			
@@ -2522,10 +2522,10 @@
     	<td></td>
     	<td></td>    	
     	<td class="right strong" style="border-top-color: black; color: black;">
-    		#=kendo.toString(sumDr, "c", banhji.locale)#
+    		#=kendo.toString(sumDr, "c2", banhji.locale)#
     	</td>
     	<td class="right strong" style="border-top-color: black; color: black;">
-    		#=kendo.toString(sumCr, "c", banhji.locale)#
+    		#=kendo.toString(sumCr, "c2", banhji.locale)#
     	</td>
     	<td class="right" style="padding-right: 8px !important;"><i class="icon-paper-clip"></i></td>  	
     </tr>  
