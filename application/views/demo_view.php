@@ -31346,8 +31346,7 @@
 			           						data-value-field="id"
 			           						data-value-primitive="true"			           								           						
 						            		data-bind="source: accountDS, 
-						            					value: account_id,
-						            					events:{change:accountChanges}"
+						            					value: obj.inventory_account_id"
 						            		data-option-label="Select Account..."
 						            		required data-required-msg="required" style="width: 100%;" />
 									</div>
@@ -70707,25 +70706,6 @@
 					this.addEmpty();
 				}								
 			}  																							
-		},
-		accountChanges 			: function(){
-			var obj = this.get("obj"),
-			account_id = this.get("account_id");
-
-			if(account_id){
-				var account = this.accountDS.get(account_id),
-				type = banhji.source.accountTypeDS.get(account.account_type_id);
-
-				if(type.nature=="Dr"){
-					obj.set("income_account_id", 0);
-					obj.set("expense_account_id", account_id);
-				}else{//nature = Cr
-					obj.set("income_account_id", account_id);
-					obj.set("expense_account_id", 0);
-				}
-
-				obj.set("inventory_account_id", 0);
-			}
 		},
 		//Number      	
 		checkExistingName 	: function(){
