@@ -39345,6 +39345,7 @@
   				<li> <span class="li-line"></span></li> 		
   				<li><a href='#/currency_rate'><span data-bind="text: lang.lang.set_exchange_rate"></span></a></li>
   				<li><a href='#/accounting_recurring'><span data-bind="text: lang.lang.accounting_recurring_list"></span></a></li>
+  				<li><a href='#/chart_of_account'><span data-bind="text: lang.lang.chart_of_account"></span></a></li>
   				<li><a href='#/imports'><span ></span>Imports</a></li> 			  				 		
   			</ul>
 	  	</li>	  	  	
