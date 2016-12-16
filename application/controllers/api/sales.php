@@ -2585,7 +2585,7 @@ class Sales extends REST_Controller {
 			$data["results"][] = array(
 				'group' 	=> $key,
 				'amount'	=> $value['amount'],
-				'items' => $value['transactions']
+				'items' 	=> $value['transactions']
 			);
 		}
 		$data['total'] = $total;
