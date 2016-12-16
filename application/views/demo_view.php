@@ -7257,6 +7257,7 @@
 			<input id="txtAmount" name="txtAmount" 
 					data-role="numerictextbox" 
 					data-decimals="2"
+					data-min="0"
 					data-spinners="false"
 					data-bind="value: amount, events: {change : changes}" 
 					required data-required-msg="required" style="width: 100%;" /> 						
@@ -7851,6 +7852,7 @@
 			<input id="txtAmount-#:uid#" name="txtAmount-#:uid#" 
 					data-role="numerictextbox" 
 					data-decimals="2"
+					data-min="0"
 					data-spinners="false"
 					data-bind="value: amount, events: {change : changes}" 
 					required data-required-msg="required" style="width: 100%;" /> 						
@@ -9570,7 +9572,8 @@
 		<td>
 			<input id="txtQuantity-#:uid#" name="txtQuantity-#:uid#" 
 					data-role="numerictextbox" 
-					data-format="n0" data-min="0"
+					data-format="n0" 
+					data-min="0"
 					data-spinners="false"
 					data-bind="value: quantity, events: {change : changes}"
 					required data-required-msg="required" style="width: 40%;" />
@@ -9589,6 +9592,7 @@
 			<input id="txtPrice-#:uid#" name="txtPrice-#:uid#" 
 					data-role="numerictextbox" 
 					data-decimals="2"
+					data-min="0"
 					data-spinners="false"
 					data-bind="value: cost, events: {change : changes}" 
 					required data-required-msg="required" style="width: 100%;" />
@@ -10512,6 +10516,7 @@
 			<input id="txtAmount" name="txtAmount" 
 					data-role="numerictextbox" 
 					data-decimals="2"
+					data-min="0"
 					data-spinners="false"
 					data-bind="value: amount, events: {change : changes}" 
 					required data-required-msg="required" style="width: 100%;" /> 						
@@ -11186,7 +11191,13 @@
 									<tr>
 										<td class="right"><span data-bind="text: lang.lang.total_discount"></span></td>
 										<td class="right strong">
-											<span data-bind="text: discount"></span>
+											<input data-role="numerictextbox"
+								                   data-format="n"
+								                   data-spinners="false"
+								                   data-min="0"							                                      
+								                   data-bind="value: obj.discount,
+								                              events: { change: discountChanges }"
+								                   style="width: 90%; text-align: right;">
 	                   					</td>
 									</tr>
 									<tr>
@@ -11322,6 +11333,7 @@
 			<input id="txtPrice" name="txtPrice-#:uid#" 
 					data-role="numerictextbox" 
 					data-decimals="2"
+					data-min="0"
 					data-spinners="false"
 					data-bind="value: cost, events: {change : changes}" 
 					required data-required-msg="required" style="width: 100%;" />
@@ -11405,7 +11417,8 @@
 			<input id="txtAmount-#:uid#" name="txtAmount-#:uid#" 
 					data-role="numerictextbox"
 					data-spinners="false" 
-					data-decimals="2" 
+					data-decimals="2"
+					data-min="0" 
 					data-bind="value: amount, events: {change : changes}" 
 					required data-required-msg="required" style="width: 100%;" /> 						
 		</td>
@@ -11497,7 +11510,8 @@
 			<input id="txtSubTotal-#:uid#" name="txtSubTotal-#:uid#" 
 					data-role="numerictextbox"
 					data-spinners="false" 
-					data-decimals="2" 
+					data-decimals="2"
+					data-min="0" 
 					data-bind="value: sub_total, events: {change : changes}" 
 					required data-required-msg="required" style="width: 100%;" /> 						
 		</td>		
@@ -11947,7 +11961,8 @@
 			<input id="txtPrice-#:uid#" name="txtPrice-#:uid#" 
 					data-role="numerictextbox"
 					data-spinners="false" 
-					data-decimals="2" 
+					data-decimals="2"
+					data-min="0" 
 					data-bind="value: cost, events: {change : changes}" 
 					required data-required-msg="required" style="width: 100%;" />
 		</td>					
@@ -12020,7 +12035,8 @@
 			<input id="txtAmount-#:uid#" name="txtAmount-#:uid#" 
 					data-role="numerictextbox"
 					data-spinners="false" 
-					data-decimals="2" 
+					data-decimals="2"
+					data-min="0" 
 					data-bind="value: amount, events: {change : changes}" 
 					required data-required-msg="required" style="width: 100%;" />
 		</td>								
@@ -16398,6 +16414,7 @@
 					name="txtPrice-#:uid#" 
 					data-role="numerictextbox" 
 					data-decimals="2"
+					data-min="0"
 					data-spinners="false"
 					data-bind="value: price, events: {change : changes}" 
 					required data-required-msg="required" style="width: 100%;" />
@@ -16971,6 +16988,7 @@
 			<input id="txtPrice-#:uid#" name="txtPrice-#:uid#" 
 					data-role="numerictextbox" 
 					data-decimals="2"
+					data-min="0"
 					data-spinners="false" 
 					data-bind="value: price, events: {change : changes}" 
 					required data-required-msg="required" style="width: 100%;" />
@@ -17515,7 +17533,8 @@
 			<input id="txtAmount" name="txtAmount" 
 					data-role="numerictextbox"
 					data-spinners="false" 
-					data-decimals="2" 
+					data-decimals="2"
+					data-min="0" 
 					data-bind="value: amount, events: {change : changes}" 
 					required data-required-msg="required" style="width: 100%; text-align: right;" /> 						
 		</td>			
@@ -17995,8 +18014,14 @@
 									</tr>								
 									<tr>
 										<td class="right"><span data-bind="text: lang.lang.total_discount"></span></td>
-										<td class="right">
-											<span data-bind="text: discount"></span>
+										<td class="right strong">
+											<input data-role="numerictextbox"
+								                   data-format="n"
+								                   data-spinners="false"
+								                   data-min="0"							                                      
+								                   data-bind="value: obj.discount,
+								                              events: { change: discountChanges }"
+								                   style="width: 90%; text-align: right;">
 	                   					</td>
 									</tr>
 									<tr>
@@ -18133,6 +18158,7 @@
 			<input id="txtPrice-#:uid#" name="txtPrice-#:uid#" 
 					data-role="numerictextbox" 
 					data-decimals="2"
+					data-min="0"
 					data-spinners="false" 
 					data-bind="value: price, events: {change : changes}" 
 					required data-required-msg="required" style="width: 100%;" />
@@ -18630,7 +18656,13 @@
 									<tr>
 										<td class="right"><span data-bind="text: lang.lang.total_discount"></span></td>
 										<td class="right strong">
-											<span data-bind="text: discount"></span>
+											<input data-role="numerictextbox"
+								                   data-format="n"
+								                   data-spinners="false"
+								                   data-min="0"							                                      
+								                   data-bind="value: obj.discount,
+								                              events: { change: discountChanges }"
+								                   style="width: 90%; text-align: right;">
 	                   					</td>
 									</tr>
 									<tr>
@@ -18767,6 +18799,7 @@
 			<input id="txtPrice-#:uid#" name="txtPrice-#:uid#" 
 					data-role="numerictextbox" 
 					data-decimals="2"
+					data-min="0"
 					data-spinners="false" 
 					data-bind="value: price, events: {change : changes}" 
 					required data-required-msg="required" style="width: 100%;" />
@@ -19659,6 +19692,7 @@
 			<input id="txtPrice-#:uid#" name="txtPrice-#:uid#" 
 					data-role="numerictextbox" 
 					data-decimals="2"
+					data-min="0"
 					data-spinners="false"
 					data-bind="value: price, events: {change : changes}" 
 					required data-required-msg="required" style="width: 100%;" />
@@ -36542,7 +36576,8 @@
 		<td class="right">
 			<input id="txtAmount" name="txtAmount" 
 					data-role="numerictextbox" 
-					data-format="n0"
+					data-decimals="2"
+					data-min="0"
 					data-spinners="false"
 					data-bind="value: amount, events: {change : changes}" 
 					required data-required-msg="required" style="width: 100%;" /> 						
@@ -52354,6 +52389,18 @@
 				obj.set("remaining", remaining);									    	
 	    	}
 		},
+		discountChanges 	: function(){
+			var obj = this.get("obj");
+
+			var total = (obj.sub_total + obj.tax) - obj.discount;
+	        var remaining = total - obj.deposit;
+
+	        this.set("total", kendo.toString(total, "c", obj.locale));
+	        this.set("remaining", kendo.toString(remaining, "c", obj.locale));
+
+	        obj.set("amount", total);
+	        obj.set("remaining", remaining);
+		},
 		addEmpty 		 	: function(){			
 			this.dataSource.data([]);
 			this.lineDS.data([]);
@@ -58878,6 +58925,18 @@
 				obj.set("amount", total);
 				obj.set("remaining", remaining);									    	
 	    	}	
+		},
+		discountChanges 	: function(){
+			var obj = this.get("obj");
+
+			var total = (obj.sub_total + obj.tax) - obj.discount;
+	        var remaining = total - obj.deposit;
+
+	        this.set("total", kendo.toString(total, "c", obj.locale));
+	        this.set("remaining", kendo.toString(remaining, "c", obj.locale));
+
+	        obj.set("amount", total);
+	        obj.set("remaining", remaining);
 		},					
 		addEmpty 		 	: function(){			
 			this.dataSource.data([]);
@@ -60145,8 +60204,7 @@
 		        	this.set("amtDueColor", banhji.source.amtDueColor);
 		        }
 
-		        this.set("sub_total", kendo.toString(subTotal, "c", obj.locale));
-		        this.set("discount", kendo.toString(discount, "c", obj.locale));
+		        this.set("sub_total", kendo.toString(subTotal, "c", obj.locale));		        
 		        this.set("tax", kendo.toString(tax, "c", obj.locale));
 		        this.set("total", kendo.toString(total, "c", obj.locale));
 		        this.set("remaining", kendo.toString(remaining, "c", obj.locale));
@@ -60158,6 +60216,18 @@
 				obj.set("amount", total);
 				obj.set("remaining", remaining);									    	
 	    	}	
+		},
+		discountChanges 	: function(){
+			var obj = this.get("obj");
+
+			var total = (obj.sub_total + obj.tax) - obj.discount;
+	        var remaining = total - obj.deposit;
+
+	        this.set("total", kendo.toString(total, "c", obj.locale));
+	        this.set("remaining", kendo.toString(remaining, "c", obj.locale));
+
+	        obj.set("amount", total);
+	        obj.set("remaining", remaining);
 		},					
 		addEmpty 		 	: function(){
 			this.dataSource.data([]);
