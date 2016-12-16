@@ -6863,8 +6863,8 @@
 						            </li>
 						            <li class="span1 glyphicons history"><a href="#tab4-4" data-toggle="tab"><i></i></a>
 						            </li>
-						            <li class="span1 glyphicons show_lines"><a href="#tab4-5" data-toggle="tab"><i></i></a>
-							            </li>								            
+						            <li class="span1 glyphicons show_liness"><a href="#tab4-5" data-toggle="tab"><i></i></a>
+							        </li>								            
 						        </ul>
 						    </div>
 						    <!-- // Tabs Heading END -->
@@ -7357,7 +7357,7 @@
 						            </li>
 						            <li class="span1 glyphicons history"><a href="#tab3-3" data-toggle="tab"><i></i></a>
 						            </li>
-						            
+						            <li class="span1 glyphicons show_liness"><a href="#tab3-4" data-toggle="tab"><i></i></a></li>
 						            							            
 						        </ul>
 						    </div>
@@ -7795,19 +7795,23 @@
 					style="width: 100%; margin-bottom: 0;" />
 		</td>
 		<td>
-			<input data-role="combobox" id="ddlVendor"                  
+			<input id="ddlVendor" name="ddlVendor"
+				   data-role="combobox"
                    data-value-primitive="true" 
                    data-header-template="vendor-header-tmpl"                  
                    data-template="contact-list-tmpl"
                    data-text-field="name"
                    data-value-field="id"
                    data-bind="value: contact_id,
-                              source: supplierDS"
+                              source: supplierDS,
+                              events:{change: checkExistingInvoice}"
                    data-placeholder="Add Supplier.." style="width: 100%" />	
 		</td>
 		<td>
-			<input type="text" class="k-textbox" 
-					data-bind="value: reference_no"				
+			<input id="txtReferenceNo" name="txtReferenceNo"
+					type="text" class="k-textbox" 
+					data-bind="value: reference_no,
+                               events:{change: checkExistingInvoice}"				
 					style="width: 100%; margin-bottom: 0;" />		
 		</td>
 		<td>
@@ -10125,7 +10129,8 @@
 						            <li class="span1 glyphicons paperclip"><a href="#tab3-4" data-toggle="tab"><i></i></a>
 						            </li>
 						            <li class="span2 glyphicons history"><a href="#tab4-4" data-toggle="tab"><i></i><span data-bind="text: lang.lang.recurring"></span></a>
-						            </li>								            
+						            </li>
+						            <li class="span1 glyphicons show_liness"><a href="#tab4-5" data-toggle="tab"><i></i></a></li>							            
 						        </ul>
 						    </div>
 						    <!-- // Tabs Heading END -->
@@ -10323,6 +10328,33 @@
 						            
 						        </div>
 						        <!-- // Recuring Tab content END -->								        
+
+						        <div class="tab-pane saleSummaryCustomer" id="tab4-5">
+									<table class="table table-borderless table-condensed">
+								        <thead>
+								            <tr>
+								                <th>NUMBER</th>
+								                <th>ACCOUNT</th>                		                
+								                <th class="right">DEBITS (Dr)</th>
+								                <th class="right">CREDITS (Cr)</th>		                
+								            </tr>
+								        </thead> 
+								        <tbody>
+								        	<tr>
+								        		<td>1</td>
+								        		<td>2</td>
+								        		<td class="right">3</td>
+								        		<td class="right">4</td>
+								        	</tr>
+								        	<tr>
+								        		<td>1</td>
+								        		<td>2</td>
+								        		<td class="right">3</td>
+								        		<td class="right">4</td>
+								        	</tr>
+								        </tbody>			        
+								    </table>
+								</div>
 
 						    </div>
 						</div>
@@ -10564,7 +10596,8 @@
 							            <li class="span1 glyphicons paperclip"><a href="#tab4-5" data-toggle="tab"><i></i></a>
 							            </li>						            
 							            <li class="span1 glyphicons history"><a href="#tab5-5" data-toggle="tab"><i></i></a>
-							            </li>						            								            
+							            </li>
+							            <li class="span1 glyphicons show_liness"><a href="#tab5-6" data-toggle="tab"><i></i></a></li>						            								            
 							        </ul>
 							    </div>
 							    <!-- // Tabs Heading END -->
@@ -10873,6 +10906,33 @@
 							            
 							        </div>
 							        <!-- // Recuring Tab content END -->						        								        
+
+							        <div class="tab-pane saleSummaryCustomer" id="tab5-6">
+										<table class="table table-borderless table-condensed">
+									        <thead>
+									            <tr>
+									                <th>NUMBER</th>
+									                <th>ACCOUNT</th>                		                
+									                <th class="right">DEBITS (Dr)</th>
+									                <th class="right">CREDITS (Cr)</th>		                
+									            </tr>
+									        </thead> 
+									        <tbody>
+									        	<tr>
+									        		<td>1</td>
+									        		<td>2</td>
+									        		<td class="right">3</td>
+									        		<td class="right">4</td>
+									        	</tr>
+									        	<tr>
+									        		<td>1</td>
+									        		<td>2</td>
+									        		<td class="right">3</td>
+									        		<td class="right">4</td>
+									        	</tr>
+									        </tbody>			        
+									    </table>
+									</div>
 
 							    </div>
 							</div>
@@ -11533,6 +11593,7 @@
 							            </li>						            
 							            <li class="span1 glyphicons paperclip"><a href="#tab4-4" data-toggle="tab"><i></i></a>
 							            </li>
+							            <li class="span1 glyphicons show_liness"><a href="#tab4-5" data-toggle="tab"><i></i></a></li>
 							        </ul>
 							    </div>
 							    <!-- // Tabs Heading END -->
@@ -11645,6 +11706,34 @@
 
 							        </div>
 							        <!-- // Attach Tab content END -->
+
+							        <div class="tab-pane saleSummaryCustomer" id="tab4-5">
+										<table class="table table-borderless table-condensed">
+									        <thead>
+									            <tr>
+									                <th>NUMBER</th>
+									                <th>ACCOUNT</th>                		                
+									                <th class="right">DEBITS (Dr)</th>
+									                <th class="right">CREDITS (Cr)</th>		                
+									            </tr>
+									        </thead> 
+									        <tbody>
+									        	<tr>
+									        		<td>1</td>
+									        		<td>2</td>
+									        		<td class="right">3</td>
+									        		<td class="right">4</td>
+									        	</tr>
+									        	<tr>
+									        		<td>1</td>
+									        		<td>2</td>
+									        		<td class="right">3</td>
+									        		<td class="right">4</td>
+									        	</tr>
+									        </tbody>			        
+									    </table>
+									</div>
+
 
 							    </div>
 							</div>
@@ -17006,6 +17095,8 @@
 							            <li class="span1 glyphicons paperclip"><a href="#tab4-5" data-toggle="tab"><i></i></a>
 							            </li>						            
 							            <li class="span1 glyphicons history"><a href="#tab5-5" data-toggle="tab"><i></i> <span data-bind="text: lang.lang.recurring"></span></a>
+							            </li>
+							            <li class="span1 glyphicons show_liness"><a href="#tab5-6" data-toggle="tab"><i></i></a>
 							            </li>						            								            
 							        </ul>
 							    </div>
@@ -17240,6 +17331,33 @@
 							            
 							        </div>
 							        <!-- // Recuring Tab content END -->						        								        
+
+							        <div class="tab-pane saleSummaryCustomer" id="tab5-6">
+										<table class="table table-borderless table-condensed">
+									        <thead>
+									            <tr>
+									                <th>NUMBER</th>
+									                <th>ACCOUNT</th>                		                
+									                <th class="right">DEBITS (Dr)</th>
+									                <th class="right">CREDITS (Cr)</th>		                
+									            </tr>
+									        </thead> 
+									        <tbody>
+									        	<tr>
+									        		<td>1</td>
+									        		<td>2</td>
+									        		<td class="right">3</td>
+									        		<td class="right">4</td>
+									        	</tr>
+									        	<tr>
+									        		<td>1</td>
+									        		<td>2</td>
+									        		<td class="right">3</td>
+									        		<td class="right">4</td>
+									        	</tr>
+									        </tbody>			        
+									    </table>
+									</div>
 
 							    </div>
 							</div>
@@ -17482,7 +17600,8 @@
 							            <li class="span1 glyphicons paperclip"><a href="#tab4-5" data-toggle="tab"><i></i></a>
 							            </li>						            
 							            <li class="span1 glyphicons history"><a href="#tab5-5" data-toggle="tab"><i></i> Recuring</a>
-							            </li>						            								            
+							            </li>
+							            <li class="span1 glyphicons show_liness"><a href="#tab5-6" data-toggle="tab"><i></i></a></li>						            								            
 							        </ul>
 							    </div>
 							    <!-- // Tabs Heading END -->
@@ -17757,6 +17876,33 @@
 							            
 							        </div>
 							        <!-- // Recuring Tab content END -->						        								        
+
+							        <div class="tab-pane saleSummaryCustomer" id="tab5-6">
+										<table class="table table-borderless table-condensed">
+									        <thead>
+									            <tr>
+									                <th>NUMBER</th>
+									                <th>ACCOUNT</th>                		                
+									                <th class="right">DEBITS (Dr)</th>
+									                <th class="right">CREDITS (Cr)</th>		                
+									            </tr>
+									        </thead> 
+									        <tbody>
+									        	<tr>
+									        		<td>1</td>
+									        		<td>2</td>
+									        		<td class="right">3</td>
+									        		<td class="right">4</td>
+									        	</tr>
+									        	<tr>
+									        		<td>1</td>
+									        		<td>2</td>
+									        		<td class="right">3</td>
+									        		<td class="right">4</td>
+									        	</tr>
+									        </tbody>			        
+									    </table>
+									</div>
 
 							    </div>
 							</div>
@@ -18096,7 +18242,8 @@
 							            <li class="span1 glyphicons paperclip"><a href="#tab4-5" data-toggle="tab"><i></i></a>
 							            </li>						            
 							            <li class="span1 glyphicons history"><a href="#tab5-5" data-toggle="tab"><i></i></a>
-							            </li>						            								            
+							            </li>
+							            <li class="span1 glyphicons show_liness"><a href="#tab5-6" data-toggle="tab"><i></i></a></li>						            								            
 							        </ul>
 							    </div>
 							    <!-- // Tabs Heading END -->
@@ -18363,6 +18510,33 @@
 							            
 							        </div>
 							        <!-- // Recuring Tab content END -->						        								        
+
+							        <div class="tab-pane saleSummaryCustomer" id="tab5-6">
+										<table class="table table-borderless table-condensed">
+									        <thead>
+									            <tr>
+									                <th>NUMBER</th>
+									                <th>ACCOUNT</th>                		                
+									                <th class="right">DEBITS (Dr)</th>
+									                <th class="right">CREDITS (Cr)</th>		                
+									            </tr>
+									        </thead> 
+									        <tbody>
+									        	<tr>
+									        		<td>1</td>
+									        		<td>2</td>
+									        		<td class="right">3</td>
+									        		<td class="right">4</td>
+									        	</tr>
+									        	<tr>
+									        		<td>1</td>
+									        		<td>2</td>
+									        		<td class="right">3</td>
+									        		<td class="right">4</td>
+									        	</tr>
+									        </tbody>			        
+									    </table>
+									</div>
 
 							    </div>
 							</div>
@@ -19131,6 +19305,7 @@
 							            </li>						            
 							            <li class="span1 glyphicons paperclip"><a href="#tab4-4" data-toggle="tab"><i></i></a>
 							            </li>
+							            <li class="span1 glyphicons show_liness"><a href="#tab4-5" data-toggle="tab"><i></i></a></li>
 							        </ul>
 							    </div>
 							    <!-- // Tabs Heading END -->
@@ -19241,6 +19416,33 @@
 
 							        </div>
 							        <!-- // Attach Tab content END -->					        								        
+
+							        <div class="tab-pane saleSummaryCustomer" id="tab4-5">
+										<table class="table table-borderless table-condensed">
+									        <thead>
+									            <tr>
+									                <th>NUMBER</th>
+									                <th>ACCOUNT</th>                		                
+									                <th class="right">DEBITS (Dr)</th>
+									                <th class="right">CREDITS (Cr)</th>		                
+									            </tr>
+									        </thead> 
+									        <tbody>
+									        	<tr>
+									        		<td>1</td>
+									        		<td>2</td>
+									        		<td class="right">3</td>
+									        		<td class="right">4</td>
+									        	</tr>
+									        	<tr>
+									        		<td>1</td>
+									        		<td>2</td>
+									        		<td class="right">3</td>
+									        		<td class="right">4</td>
+									        	</tr>
+									        </tbody>			        
+									    </table>
+									</div>
 
 							    </div>
 							</div>
@@ -31140,7 +31342,9 @@
 						            		data-text-field="name"
 			           						data-value-field="id"
 			           						data-value-primitive="true"			           								           						
-						            		data-bind="source: accountDS, value: obj.account_id"
+						            		data-bind="source: accountDS, 
+						            					value: account_id,
+						            					events:{change:accountChanges}"
 						            		data-option-label="Select Account..."
 						            		required data-required-msg="required" style="width: 100%;" />
 									</div>
@@ -31512,7 +31716,8 @@
 							            <li class="span1 glyphicons circle_info"><a href="#tab3-4" data-toggle="tab"><i></i></a>
 								        </li>
 							            <li class="span1 glyphicons paperclip"><a href="#tab4-4" data-toggle="tab"><i></i></a>
-							            </li>			            								            
+							            </li>
+							            <li class="span1 glyphicons show_liness"><a href="#tab4-5" data-toggle="tab"><i></i></a></li>		            								            
 							        </ul>
 							    </div>
 							    <!-- // Tabs Heading END -->
@@ -31654,6 +31859,33 @@
 							        </div>
 							        <!-- // Attach Tab content END -->							        
 
+							        <div class="tab-pane saleSummaryCustomer" id="tab4-5">
+										<table class="table table-borderless table-condensed">
+									        <thead>
+									            <tr>
+									                <th>NUMBER</th>
+									                <th>ACCOUNT</th>                		                
+									                <th class="right">DEBITS (Dr)</th>
+									                <th class="right">CREDITS (Cr)</th>		                
+									            </tr>
+									        </thead> 
+									        <tbody>
+									        	<tr>
+									        		<td>1</td>
+									        		<td>2</td>
+									        		<td class="right">3</td>
+									        		<td class="right">4</td>
+									        	</tr>
+									        	<tr>
+									        		<td>1</td>
+									        		<td>2</td>
+									        		<td class="right">3</td>
+									        		<td class="right">4</td>
+									        	</tr>
+									        </tbody>			        
+									    </table>
+									</div>
+
 							    </div>							
 							</div>
 					    </div>					   
@@ -31779,7 +32011,8 @@
 							            <li class="span1 glyphicons adress_book"><a href="#tab2-3" data-toggle="tab"><i></i> </a>
 							            </li>
 							            <li class="span1 glyphicons paperclip"><a href="#tab3-3" data-toggle="tab"><i></i></a>
-							            </li>					            								            
+							            </li>
+							            <li class="span1 glyphicons show_liness"><a href="#tab3-4" data-toggle="tab"><i></i></a></li>					            								            
 							        </ul>
 							    </div>
 							    <!-- // Tabs Heading END -->
@@ -31866,6 +32099,33 @@
 
 							        </div>
 							        <!-- // Attach Tab content END -->							        					        								        
+
+							        <div class="tab-pane saleSummaryCustomer" id="tab3-4">
+										<table class="table table-borderless table-condensed">
+									        <thead>
+									            <tr>
+									                <th>NUMBER</th>
+									                <th>ACCOUNT</th>                		                
+									                <th class="right">DEBITS (Dr)</th>
+									                <th class="right">CREDITS (Cr)</th>		                
+									            </tr>
+									        </thead> 
+									        <tbody>
+									        	<tr>
+									        		<td>1</td>
+									        		<td>2</td>
+									        		<td class="right">3</td>
+									        		<td class="right">4</td>
+									        	</tr>
+									        	<tr>
+									        		<td>1</td>
+									        		<td>2</td>
+									        		<td class="right">3</td>
+									        		<td class="right">4</td>
+									        	</tr>
+									        </tbody>			        
+									    </table>
+									</div>
 
 							    </div>
 							</div>
@@ -35885,7 +36145,7 @@
 							            </li>
 							            <li class="span1 glyphicons history"><a href="#tab3-3" data-toggle="tab"><i></i></a>
 							            </li>
-							             <li class="span1 glyphicons show_lines"><a href="#tab3-4" data-toggle="tab"><i></i></a>
+							             <li class="span1 glyphicons show_liness"><a href="#tab3-4" data-toggle="tab"><i></i></a>
 							            </li>								            
 							        </ul>
 							    </div>
@@ -36355,6 +36615,7 @@
 							        <ul class="row-fluid row-merge">
 							        	<li class="span1 glyphicons cogwheels active"><a href="#tab1-1" data-toggle="tab"><i></i> </a>
 							            </li>
+							            <li class="span1 glyphicons show_liness"><a href="#tab1-2" data-toggle="tab"><i></i></a></li>
 							        </ul>
 							    </div>
 							    <!-- // Tabs Heading END -->
@@ -36431,6 +36692,33 @@
 							            </table>						            
 							        </div>
 							        <!-- // Options Tab content END -->
+
+							        <div class="tab-pane saleSummaryCustomer" id="tab1-2">
+										<table class="table table-borderless table-condensed">
+									        <thead>
+									            <tr>
+									                <th>NUMBER</th>
+									                <th>ACCOUNT</th>                		                
+									                <th class="right">DEBITS (Dr)</th>
+									                <th class="right">CREDITS (Cr)</th>		                
+									            </tr>
+									        </thead> 
+									        <tbody>
+									        	<tr>
+									        		<td>1</td>
+									        		<td>2</td>
+									        		<td class="right">3</td>
+									        		<td class="right">4</td>
+									        	</tr>
+									        	<tr>
+									        		<td>1</td>
+									        		<td>2</td>
+									        		<td class="right">3</td>
+									        		<td class="right">4</td>
+									        	</tr>
+									        </tbody>			        
+									    </table>
+									</div>
 
 							    </div>
 							</div>
@@ -36651,7 +36939,8 @@
 						    <div class="tabsbar tabsbar-2">
 						        <ul class="row-fluid row-merge">
 						        	<li class="span1 glyphicons cogwheels active"><a href="#tab1-1" data-toggle="tab"><i></i> </a>
-						            </li>		            								            
+						            </li>
+						            <li class="span1 glyphicons show_liness"><a href="#tab1-2" data-toggle="tab"><i></i></a></li>		            								            
 						        </ul>
 						    </div>
 						    <!-- // Tabs Heading END -->
@@ -36728,6 +37017,33 @@
 						            </table>						            
 						        </div>
 						        <!-- // Options Tab content END -->					        								        
+
+						        <div class="tab-pane saleSummaryCustomer" id="tab1-2">
+									<table class="table table-borderless table-condensed">
+								        <thead>
+								            <tr>
+								                <th>NUMBER</th>
+								                <th>ACCOUNT</th>                		                
+								                <th class="right">DEBITS (Dr)</th>
+								                <th class="right">CREDITS (Cr)</th>		                
+								            </tr>
+								        </thead> 
+								        <tbody>
+								        	<tr>
+								        		<td>1</td>
+								        		<td>2</td>
+								        		<td class="right">3</td>
+								        		<td class="right">4</td>
+								        	</tr>
+								        	<tr>
+								        		<td>1</td>
+								        		<td>2</td>
+								        		<td class="right">3</td>
+								        		<td class="right">4</td>
+								        	</tr>
+								        </tbody>			        
+								    </table>
+								</div>
 
 						    </div>
 						</div>
@@ -38745,7 +39061,7 @@
 		#if(type=="GDN" || type=="GRN"){# 
 			#=kendo.toString(amount, "n")#
 		#}else{#
-			#=kendo.toString(amount, "c", locale)#
+			#=kendo.toString(amount - amount_paid, "c", locale)#
 		#}#
 	</span>
 	<span class="pull-right">
@@ -41479,7 +41795,7 @@
 			serverSorting: true,
 			serverPaging: true,
 			page:1,
-			pageSize: 100
+			pageSize: 10000
 		}),
 		itemInventoryDS				: new kendo.data.DataSource({
 			transport: {
@@ -41519,7 +41835,7 @@
 			serverSorting: true,
 			serverPaging: true,
 			page:1,
-			pageSize: 100
+			pageSize: 10000
 		}),
 		itemNonAssemblyDS			: new kendo.data.DataSource({
 			transport: {
@@ -41562,7 +41878,7 @@
 			serverSorting: true,
 			serverPaging: true,
 			page:1,
-			pageSize: 100
+			pageSize: 10000
 		}),
 		itemNonCatalogDS			: new kendo.data.DataSource({
 			transport: {
@@ -41605,7 +41921,7 @@
 			serverSorting: true,
 			serverPaging: true,
 			page:1,
-			pageSize: 100
+			pageSize: 10000
 		}),
 		inventoryCategoryDS			: new kendo.data.DataSource({
 			transport: {
@@ -41641,7 +41957,7 @@
 			serverSorting: true,
 			serverPaging: true,
 			page:1,
-			pageSize: 100
+			pageSize: 10000
 		}),
 		nonInventoryPartCategoryDS	: new kendo.data.DataSource({
 			transport: {
@@ -41677,7 +41993,7 @@
 			serverSorting: true,
 			serverPaging: true,
 			page:1,
-			pageSize: 100
+			pageSize: 10000
 		}),
 		fixedAssetCategoryDS		: new kendo.data.DataSource({
 			transport: {
@@ -41713,7 +42029,7 @@
 			serverSorting: true,
 			serverPaging: true,
 			page:1,
-			pageSize: 100
+			pageSize: 10000
 		}),
 		serviceCategoryDS			: new kendo.data.DataSource({
 			transport: {
@@ -41749,7 +42065,7 @@
 			serverSorting: true,
 			serverPaging: true,
 			page:1,
-			pageSize: 100
+			pageSize: 10000
 		}),
 		//Measurement
 		measurementDS				: dataStore(apiUrl + "measurements"),		
@@ -42877,6 +43193,7 @@
 		confirmMessage 				: "Are you sure, you want to delete it?",
 		requiredMessage 			: "Required",
 		duplicateNumber 			: "Duplicate Number!",
+		duplicateInvoice 			: "Duplicate Invoice!",
 		selectCustomerMessage 		: "Please select a customer.",
 		selectSupplierMessage 		: "Please select a supplier.",
 		selectItemMessage 			: "Please select an item.",
@@ -47085,7 +47402,8 @@
 		referenceDS			: dataStore(apiUrl + "transactions"),
 		referenceLineDS  	: dataStore(apiUrl + "account_lines"),
 		recurringDS 		: dataStore(apiUrl + "transactions"),
-		recurringLineDS 	: dataStore(apiUrl + "account_lines"),		
+		recurringLineDS 	: dataStore(apiUrl + "account_lines"),
+		existingInvoiceDS 	: dataStore(apiUrl + "account_lines"),		
 		contactDS  			: banhji.source.employeeDS,
 		supplierDS  		: banhji.source.supplierDS,
 		currencyDS  		: banhji.source.currencyDS,
@@ -47153,6 +47471,7 @@
 		statusSrc 			: "",
 		recurring 			: "",
 		recurring_validate 	: false,
+		isExistingInvoice 	: false,
 		showJob 			: false,
 		showSegment 		: false,
 		showCashAdvance 	: false,		
@@ -47343,6 +47662,33 @@
 			}				
 		},
 	    //Obj
+	    checkExistingInvoice: function(){
+	    	var self = this, contactIDs = [], referenceNos = [];
+
+		    $.each(this.lineDS.data(), function(index, value){
+		    	if(value.contact_id>0 && value.reference_no!==""){
+		    		contactIDs.push(value.contact_id);
+		    		referenceNos.push(value.reference_no);
+		    	}
+		    });
+	    	
+	    	this.existingInvoiceDS.query({
+	    		filter:[
+	    			{ field:"contact_id", operator:"where_in", value: contactIDs },
+	    			{ field:"reference_no", operator:"where_in", value: referenceNos }
+	    		],
+	    		page:1,
+	    		pageSize:1
+	    	}).then(function(){
+	    		var view = self.existingInvoiceDS.view();
+
+	    		if(view.length>0){
+	    			self.set("isExistingInvoice", true);
+	    		}else{
+	    			self.set("isExistingInvoice", false);
+	    		}
+	    	});
+	    },
 	    loadObj 			: function(id){
 			var self = this, para = [];
 
@@ -47500,8 +47846,13 @@
 
 	    	//Reference
 	    	if(obj.reference_id>0){
-	    		var ref = this.referenceDS.get(obj.reference_id);				
-				ref.set("status", 1);
+	    		var ref = this.referenceDS.get(obj.reference_id);
+	    		if(obj.remaining<1){
+	    			ref.set("status", 1);
+	    		}else{
+					ref.set("status", 2);
+				}
+
 				this.referenceDS.sync();
 			}else{
 				obj.set("reference_id", 0);
@@ -47864,7 +48215,7 @@
 				this.referenceDS.filter([
 					{ field:"contact_id", value:obj.contact_id },
 					{ field:"type", value:"Cash_Advance" },
-					{ field:"status", value:0 }
+					{ field:"status", operator:"where_in", value:[0,2] }
 				]);
 			}
 		},
@@ -47872,7 +48223,7 @@
 			var obj = this.get("obj");
 			if(obj.reference_id){
 				var data = this.referenceDS.get(obj.reference_id);
-				obj.set("deposit", data.amount);
+				obj.set("deposit", data.amount - data.amount_paid);
 				this.referenceLineDS.filter({ field:"transaction_id", value: obj.reference_id});
 			}
 		},
@@ -70331,7 +70682,7 @@
     	dataSource 				: dataStore(apiUrl + "items"),    	
     	deleteDS 				: dataStore(apiUrl + "transactions/line"),
     	numberDS 				: dataStore(apiUrl + "items"),
-    	existingDS 				: dataStore(apiUrl + "items"),    	
+    	existingDS 				: dataStore(apiUrl + "items"),   	
     	currencyDS 	 			: banhji.source.currencyDS,  	
     	accountDS 				: banhji.source.accountDS,   	
     	statusList 				: banhji.source.statusList,
@@ -70340,8 +70691,9 @@
     	isEdit 					: false,
     	saveClose 				: false,
 		showConfirm 			: false,
-		originalName 				: "",
+		originalName 			: "",
 		isDuplicateNumber 		: false,
+		account_id 				: 0,
 		user_id					: banhji.source.user_id,
     	pageLoad 				: function(id){			
 			if(id){
@@ -70352,6 +70704,23 @@
 					this.addEmpty();
 				}								
 			}  																							
+		},
+		accountChanges 			: function(){
+			var obj = this.get("obj"),
+			account_id = this.get("account_id");
+
+			if(account_id){
+				var account = this.accountDS.get(account_id),
+				type = banhji.source.accountTypeDS.get(account.account_type_id);
+
+				if(type.nature=="Dr"){
+					obj.set("income_account_id", 0);
+					obj.set("expense_account_id", account_id);
+				}else{//nature = Cr
+					obj.set("income_account_id", account_id);
+					obj.set("expense_account_id", 0);
+				}
+			}
 		},
 		//Number      	
 		checkExistingName 	: function(){
@@ -70392,6 +70761,11 @@
 				var view = self.dataSource.view();
 						    	
 		    	self.set("obj", view[0]);
+
+		    	self.set("account_id", view[0].income_account_id);
+		    	if(view[0].expense_account_id>0){
+		    		self.set("account_id", view[0].expense_account_id);
+		    	}		    	
 		    	self.set("originalName", view[0].name);
 			});
     	},		
@@ -73339,10 +73713,17 @@
 					            	return $.trim(input.val()) !== "";
 					          	}
 					          	return true;
+					        },
+					        customRule2: function(input) {
+					          	if (input.is("[name=txtReferenceNo]")) {
+					            	return $.trim(input.val()) !== "" && vm.isExistingInvoice==false;
+					          	}
+					          	return true;
 					        }
 					    },
 					    messages: {
-					        customRule1: banhji.source.requiredMessage
+					        customRule1: banhji.source.requiredMessage,
+					        customRule2: banhji.source.duplicateInvoice
 					    }
 			        }).data("kendoValidator");
 

@@ -2539,12 +2539,13 @@
           this.modules.sync();
           this.modules.bind('requestEnd', function(e){
             var res = e.response;
-            if(res.results.length > 0) {
+            if(res.results.length > 0 && e.type != 'read') {
               $("#ntf1").data("kendoNotification").success("Data saved.");
               banhji.router.navigate('userlist');
-            } else {
+            } else if(res.results.length < 0 ) {
               $("#ntf1").data("kendoNotification").error("Operation failed.");
             }
+            
           });
         },
         assignTo: function(e) {
@@ -2568,26 +2569,27 @@
         },
         removeFrom: function(e) {
           // this.users.remove(e.data);
-          var that = this;
-          var userData = {
-              Username : e.data.username,
-              Pool : userPool
-          };
-          var cognitoUser = new AWSCognito.CognitoIdentityServiceProvider.CognitoUser(userData);
-          cognitoUser.deleteUser(function(err, result) {
-            if (err) {
-                alert(err);
-                return;
-            }
+          // var that = this;
+          // var userData = {
+          //     Username : e.data.username,
+          //     Pool : userPool
+          // };
+          // var cognitoUser = new AWSCognito.CognitoIdentityServiceProvider.CognitoUser(userData);
+          // cognitoUser.deleteUser(function(err, result) {
+          //   if (err) {
+          //       alert(err);
+          //       return;
+          //   }
             
-          });
-          that.users.remove(e.data);
-          that.users.sync();
-          that.users.bind('requestEnd', function(e){
-            if(e.type == 'delete') {
-              console.log('deleted');
-            }
-          });
+          // });
+          // that.users.remove(e.data);
+          // that.users.sync();
+          // that.users.bind('requestEnd', function(e){
+          //   if(e.type == 'delete') {
+          //     console.log('deleted');
+          //   }
+          // });
+          this.modules.remove(e.data);
         },
         upload: function(e) {
           var id = this.get('current').profile_photo.id;

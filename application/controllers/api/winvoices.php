@@ -182,7 +182,7 @@ class Winvoices extends REST_Controller {
 		   	$obj->month_of 			= $value->month_of;
 		   	$obj->issued_date 		= $value->issued_date;
 		   	$obj->payment_date 		= $value->payment_date;
-		   	$obj->due_date 			= $value->due_date;
+		   	$obj->due_date 			= date('Y-m-d', strtotime($value->due_date));
 		   	$obj->check_no 			= $value->check_no;
 		   	$obj->memo 				= $value->memo;
 		   	$obj->memo2 			= $value->memo2;
@@ -328,6 +328,7 @@ class Winvoices extends REST_Controller {
 				'status'=> $row->status,
 				'issue_date' => $row->issued_date,
 				'due_date' => $row->due_date,
+				'amount'  => $row->amount,
 				'contact' => array(
 					'id' => $contact->id,
 					'name' => $contact->name,

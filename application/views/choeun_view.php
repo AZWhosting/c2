@@ -3191,27 +3191,42 @@
 					            <tr>
 					                <th><input type="checkbox" data-bind="checked: chkAll, events: {change : checkAll}" /></th>                
 					                <th><span data-bind="text: lang.lang.customer"></span></th>		         
-					                <th><span data-bind="text: lang.lang.meter"></span></th>
-					                <th><span data-bind="">Previous</span></th>
-					                <th><span data-bind="text: lang.lang.current"></span></th>
-					                <th><span data-bind="text: lang.lang.total"></span></th>	                    
+					                <th><span data-bind="text: lang.lang.number"></span></th>
+					                <th><span data-bind="text: lang.lang.amount"></span></th>
+					                <th><span data-bind="text: lang.lang.status"></span></th>                    
 					            </tr>
 					        </thead>
 					        <tbody data-role="listview" 
-					        		data-template="runbill-row-template" 
+					        		data-template="printbill-row-template" 
 					        		data-auto-bind="false" 
-					        		data-bind="source: invoiceDS"></tbody>
-					        <tfoot data-template="runbill-footer-template" 
+					        		data-bind="source: invoiceCollection.dataSource"></tbody>
+					        <tfoot data-template="printbill-footer-template" 
 						        		data-bind="source: this"></tfoot>	            
 					    </table>
 					    <div id="pager" class="k-pager-wrap"
 					    	 data-auto-bind="false"
-				             data-role="pager" data-bind="source: invoiceDS"></div>
+				             data-role="pager" data-bind="source: invoiceCollection.dataSource"></div>
 			        </div>
 				</div>						
 			</div>
 		</div>
 	</div>				  	
+</script>
+<script id="printbill-row-template" type="text/x-kendo-tmpl">
+	<tr>
+		<td><input type="checkbox" data-bind="checked: isCheck" /></td>
+		<td>#= contact.name#</td>
+		<td>#= meter.number#</td>
+		<td>#= amount#</td>
+		<td>#= status#</td>
+	</tr>
+</script>
+<script id="printbill-footer-template" type="text/x-kendo-template">
+    <tr>    	
+        <td class="right" colspan="8" style="font-size:30px;">
+            <span data-bind="text: lang.lang.total"></span>:  m<sup>3</sup>
+        </td>
+    </tr>
 </script>
 <script id="Invoice-print-row-template" type="text/x-kendo-tmpl">	
   	<div class="container winvoice-print" style="width: 900px;">
@@ -9419,6 +9434,11 @@
 	    }),
 		dataSource 	: new kendo.data.DataSource({
 	      transport: {
+	      	read  : {
+	          url: baseUrl + 'api/winvoices',
+	          type: "GET",
+	          dataType: 'json'
+	        },
 	        create  : {
 	          url: baseUrl + 'api/winvoices',
 	          type: "POST",
@@ -10406,6 +10426,9 @@
 		pageLoad 			: function(id){
 			
 		}, 
+		search 				: function(){
+			this.invoiceCollection.dataSource.read();
+		},
 		printBill 			: function(){
 			kendo.drawing.drawDOM($(".pdf-page")).then(function(group){
 	          kendo.drawing.pdf.saveAs(group, "Invoice.pdf");
