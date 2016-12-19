@@ -1901,7 +1901,7 @@
 															</td>
 														</tr>
 														<tr>
-															<td><span data-bind="text: lang.lang.billed_address"></span></td>
+															<td><span data-bind="">Location</span></td>
 															<td>
 																<span data-bind="text: obj.address"></span>
 															</td>
@@ -2132,31 +2132,34 @@
 </script>
 <script id="waterCenter-meter-tmpl" type="text/x-kendo-tmpl">
 	<div class="heading-buttons">
-		<h4 class="icon-bar-chart" ><i></i><span style="font-style: normal" data-bind="text: lang.lang.monthly_sale"></span></h4>
-		
-		<div class="clearfix"></div>
 		<div class="row-fluid">								
 			<div class="box-generic" style="margin-bottom: 0; padding-bottom: 0;">
 			    <!-- //Tabs Heading -->
 			    <div class="tabsbar tabsbar-1">
-			        <ul class="row-fluid row-merge">						            
-			            <li class="span2 glyphicons usd active">
-			            	<a href="#metertab1" data-toggle="tab"><i></i> <span><span >Water Sale</span></span></a>
+			        <ul class="row-fluid row-merge">	
+			        	<li class="span2 glyphicons charts active">
+			            	<a href="#metertab1" data-toggle="tab"><i></i> <span><span >Monthly Sale</span></span></a>
+			            </li>					            
+			            <li class="span2 glyphicons usd">
+			            	<a href="#metertab2" data-toggle="tab"><i></i> <span><span >Water Sale</span></span></a>
 			            </li>								            
 			            <li class="span2 glyphicons qrcode" style="width: 21%;">
-			            	<a href="#metertab2" data-toggle="tab"><i></i> <span><span >Reading</span></span></a>
+			            	<a href="#metertab3" data-toggle="tab"><i></i> <span><span >Reading</span></span></a>
 			            </li>
 			            <li class="span2 glyphicons show_lines">
-			            	<a href="#metertab3" data-toggle="tab"><i></i> <span><span ></span>Installment Schedule</span></a>
+			            	<a href="#metertab4" data-toggle="tab"><i></i> <span><span ></span>Installment Schedule</span></a>
 			            </li>						            					            
 			        </ul>
 			    </div>
 			    <!-- // Tabs Heading END -->
 
 			    <div class="tab-content">
-
 			    	<!-- //GENERAL INFO -->
 			        <div class="tab-pane active" id="metertab1">
+		            	Graph
+		        	</div>
+			    	<!-- //GENERAL INFO -->
+			        <div class="tab-pane" id="metertab2">
 		            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
 					        <thead>
 					            <tr>			                
@@ -2166,13 +2169,62 @@
 					            </tr> 
 					        </thead>
 					    </table>
-				        <!-- <tbody data-role="listview" data-template="meter-list-tmpl" data-auto-bind="false" data-bind="source: meterDS" class="k-widget k-listview" role="listbox"></tbody>	 -->		        
-				    </table>
 		        	</div>
 			        <!-- //GENERAL INFO END -->
 
 			        <!-- //ACCOUNTING -->
-			        <div class="tab-pane" id="metertab2">
+			        <div class="tab-pane" id="metertab3">
+			        	<h2>Add Single Reading</h2>
+			        	<div class="row-fluid" style="padding: 15px 0;overflow:hidden;">
+			        		<div class="span10">
+			        			<div class="span3">	
+									<div class="control-group">								
+										<label ><span >Month Of</span></label>
+							            <input type="text" 
+						                	style="width: 100%;" 
+						                	data-role="datepicker"
+						                	data-format="MM-yyyy"
+						                	data-start="year" 
+							  				data-depth="year" 
+						                	placeholder="Moth of ..." 
+								           	data-bind="value: monthOfSR" />
+									</div>
+								</div>
+								<div class="span3">	
+									<div class="control-group">								
+										<label ><span >Meter Number</span></label>
+						        		<input type="text" 
+						        			class="k-input k-textbox" 
+						        			placeholder="Meter Number" 
+						        			style="width:100%;border:1px solid #ccc;"
+						        			data-bind="value: NumberSR" />
+						        	</div>
+						        </div>
+						        <div class="span3">	
+									<div class="control-group">								
+										<label ><span >Previous</span></label>
+						        		<input type="text" 
+						        			class="k-input k-textbox" 
+						        			placeholder="Previous" 
+						        			style="width:100%;border:1px solid #ccc;"
+						        			data-bind="value: previousSR" />
+						        	</div>
+						       	</div>
+						       	<div class="span3">	
+									<div class="control-group">								
+										<label ><span >Current</span></label>
+						        		<input type="text" 
+						        			class="k-input k-textbox" 
+						        			placeholder="Current" 
+						        			style="width:100%;border:1px solid #ccc;"
+						        			data-bind="value: currentSR" />
+						        	</div>
+						        </div>
+				        	</div>
+				        	<div class="span2">
+				        		<span id="saveNew" style="width: 80px!important;margin:0;top: 22px;" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="click: AddSingleReading"><i></i> <span>Add</span></span>
+				        	</div>
+			        	</div>
 			        	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
 				        	<thead>
 					            <tr>			                
@@ -2188,7 +2240,7 @@
 			        <!-- //ACCOUNTING END -->						       
 
 			        <!-- //CONTACT PERSON -->
-			        <div class="tab-pane" id="metertab3">
+			        <div class="tab-pane" id="metertab4">
 			        	Installment Schedule
 		        	</div>
 			        <!-- //CONTACT PERSON END -->
@@ -2263,19 +2315,26 @@
 			                              events: {change : lonChange}"/>
 			            </div>
 			            <div class="control-group">										
-							<label for="ddlContactType"><span>Location</span></label>
+							<label for="ddlContactType"><span>Bloc</span></label>
 			                <input data-role="dropdownlist"
 			            	   class="span2 row-fluid"
-			            	   style="width: 100%;margin-bottom: 20px;padding-left: 0" 
+			            	   style="width: 100%;padding-left: 0" 
 	            			   data-option-label="(--- Bloc ---)"
 	            			   data-auto-bind="false"			                   
 			                   data-value-primitive="true"
 			                   data-text-field="name"
 			                   data-value-field="id"
 			                   data-bind="value: obj.bloc,
-			                              source: blocDS"/>
+			                              source: blocDS,
+			                              events: {change : BlocChange}"/>
 			            </div>
-			        	
+			        	<div class="control-group">							
+							<label for="txtAbbr"><span data-bind="text: lang.lang.code">Code</span> <span style="color:red">*</span></label>										
+	              			<br>
+	              			<input id="txtAbbr" name="txtAbbr" class="k-textbox k-valid" data-bind="value: Codeabbr" placeholder="eg. AB" required="" data-required-msg="required" style="width: 55px;">
+		              		-					              		
+		              		<input id="txtNumber" name="txtNumber" class="k-textbox" data-bind="value: Codenumber, events:{change:checkExistingNumber}" placeholder="eg. 001" required="" data-required-msg="required" style="width: 143px;">
+						</div>
 			        </div>
 			        <dvi class="span6">
 			        	<label for="ddlContactType"><span>Number of Family</span></label>
@@ -2462,7 +2521,7 @@
 											<div class="span6">		
 												<!-- Group -->
 												<div class="control-group">
-									    			<label for="latitute"><span>Location</span> </label>
+									    			<label for="latitute"><span>Bloc</span> </label>
 													<div class="input-prepend">
 														<input data-role="dropdownlist"
 								              			   data-option-label="(--- Select ---)"        
@@ -2479,7 +2538,7 @@
 										                   data-value-primitive="true"
 										                   data-text-field="name"
 										                   data-value-field="id"
-										                   data-bind="value: obj.type" style="width: 100%;" />
+										                   data-bind="value: obj.brand_id, source: brandDS" style="width: 100%;" />
 													</div>
 												</div>									
 												<!-- // Group END -->
@@ -2812,57 +2871,109 @@
 	</div>
 </script>
 <script id="EditReading" type="text/x-kendo-template">
-	<div  class="row-fluid saleSummaryCustomer">
-		<span class="glyphicons no-js remove_2 pull-right" data-bind="click: cancel"><i></i></span>	
-		<!-- Tabs -->
-		<div class="relativeWrap" data-toggle="source-code">
-			<div class="widget widget-tabs widget-tabs-double-2 widget-tabs-gray">
-				<!-- // Tabs Heading END -->
-				
-				<div class="widget-body">
-					<div class="tab-content">
-						<div id="loadImport" style="display:none;text-align: center;position: absolute;width: 100%; height: 70%;background: rgba(142, 159, 167, 0.8);z-index: 9999;">
-							<i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 35%;left: 45%"></i>
-						</div>
-						<!-- Tab content -->
-						<div id="tabContact" style="border: 1px solid #ccc" class="tab-pane active widget-body-regular">
-							
-							<h4 class="separator bottom" style="margin-top: 10px;">Edit Reading</h4>
-							<a data-bind="click: exportEXCEL" style="position: absolute;top: 13px;right:10px;">
-								<span id="saveClose" class="btn btn-icon btn-success glyphicons download" style="width: 200px!important;">
-									<i></i> 
-									<span >Download Reading file</span>
-								</span>
-							</a>
-							<div class="fileupload fileupload-new margin-none" >
-							  	<table class="table table-borderless table-condensed cart_total">
-							  		<thead>
-				                		<tr>
-				                			<th>Meter Number</th>
-				                			<th style="text-align: center">Date</th>
-				                			<th>Previous</th>
-				                			<th>Current</th>
-				                			<th>Usage</th>
-				                			<th style="text-align: center">Action</th>
-				                		</tr>
-				                	</thead>
-				                	<tbody 
-				                		data-bind="source: dataSource" 
-				                		data-auto-bind="true" 
-				                		data-role="listview" 
-				                		data-edit-template="readding-edit-template"
-				                		data-template="reading-list-template">
-				                	</tbody>
-							  	</table>
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">					
+				<div id="example" class="k-content">					
+				    
+			    	<span class="glyphicons no-js remove_2 pull-right" 
+							data-bind="click: cancel"><i></i></span>
+
+			        <h2>Edit Reading</h2>
+
+				    <br>
+						
+					<!-- Upper Part -->
+					<div class="row-fluid">
+						<div class="span12 row-fluid" style="padding:20px 0;padding-top: 0;">
+				        	<div class="span5" style="padding-left: 0;">
+					        	<div class="span6">	
+									<!-- Group -->
+									<div class="control-group">								
+										<label ><span >Month Of</span></label>
+							            <input type="text" 
+						                	style="width: 100%;" 
+						                	data-role="datepicker"
+						                	data-format="MM-yyyy"
+						                	data-start="year" 
+							  				data-depth="year" 
+						                	placeholder="Moth of ..." 
+								           	data-bind="value: monthOfSelect" />
+									</div>
+																									
+									<!-- // Group END -->
+								</div>
+								<div class="span6" style="padding-left: 0;">
+									<div class="control-group">								
+										<label ><span >License</span></label>
+										<input 
+											data-role="dropdownlist" 
+											style="width: 100%;" 
+											data-option-label="License ..." 
+											data-auto-bind="false" 
+											data-value-primitive="true" 
+											data-text-field="name" 
+											data-value-field="id" 
+											data-bind="
+												value: licenseSelect,
+			                  					source: licenseDS,
+			                  					events: {change: onLicenseChange}">
+			                  		</div>
+								</div>	
 							</div>
+							<div class="span7" style="padding-left: 0;">
+								<div class="span4">
+									<div class="control-group">								
+										<label ><span >Location</span></label>
+										<input 
+											data-role="dropdownlist" 
+											style="width: 100%;" 
+											data-option-label="Location ..." 
+											data-auto-bind="false" 
+											data-value-primitive="true" 
+											data-text-field="name" 
+											data-value-field="id" 
+											data-bind="
+												value: blocSelect,
+			                  					source: blocDS,
+			                  					events: {change: blocChange}">
+			                  		</div>
+								</div>
+								<div class="span4">
+									<div class="control-group">	
+										<label ><span >Action</span></label>	
+										<div class="row" style="margin: 0;">					
+											<button type="button" data-role="button" data-bind="click: search" class="k-button" role="button" aria-disabled="false" tabindex="0"><i class="icon-search"></i></button>
+										</div>
+			                  		</div>
+								</div>		
+							</div>
+				        </div>
+						<div class="fileupload fileupload-new margin-none" >
+						  	<table class="table table-borderless table-condensed cart_total table-primary">
+						  		<thead>
+			                		<tr>
+			                			<th>Meter Number</th>
+			                			<th style="text-align: center">Date</th>
+			                			<th>Previous</th>
+			                			<th>Current</th>
+			                			<th>Usage</th>
+			                			<th style="text-align: center">Action</th>
+			                		</tr>
+			                	</thead>
+			                	<tbody 
+			                		data-bind="source: dataSource" 
+			                		data-auto-bind="true" 
+			                		data-role="listview" 
+			                		data-edit-template="readding-edit-template"
+			                		data-template="reading-list-template">
+			                	</tbody>
+						  	</table>
 						</div>
-						<!-- // Tab content END -->
 					</div>
 				</div>
-				<div id="ntf1" data-role="notification"></div>
 			</div>
 		</div>
-		<!-- // Tabs END -->
 	</div>
 </script>
 <script id="reading-list-template" type="text/x-kendo-tmpl">                    
@@ -2896,10 +3007,10 @@
             <input type="text" class="k-textbox" data-bind="value:date" name="ProductName" required="required" validationMessage="required" />
         </td>
 		<td align="center">
-            <input type="text" class="k-textbox" data-bind="value:previous" name="abbr" required="required" validationMessage="required" />
+            #= previous#
         </td>
         <td align="center">
-            <input type="text" class="k-textbox" data-bind="value:current" name="abbr" required="required" validationMessage="required" />
+            <input type="text" class="k-textbox" data-bind="value:current" name="current" required="required" validationMessage="required" />
         </td>
         <td align="center">
             
@@ -3296,27 +3407,29 @@
         </td>
     </tr>
 </script>
-<script id="wInvoicePrint" type="text/x-kendo-template">
-	<div class="container-960">
-		<div class="container-fluid">
-			<div class="row-fluid">
-				<div class="span12">
-					<div id="example" class="k-content">
-						<div class="hidden-print">
-							<span class="glyphicons no-js remove_2 pull-right" 
-								onclick="javascript:window.history.back()"><i></i></span>
+<script id="InvoicePrint" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background" style="overflow: hidden;">
+			<div class="container-960">					
+				<div id="example" class="k-content">
+					<div class="hidden-print pull-right">
+			    		<span style="padding: 5px 0 11px 35px;" class="glyphicons no-js remove_2" 
+							data-bind="click: cancel"><i></i></span>	
+					</div>
 
-							<span class="btn btn-inverse btn-icon glyphicons print" data-bind="click: print"><i></i><span data-bind="text: lang.lang.print"></span></span>											          																
-						</div>
+					<br>					
+					
+					<div id="wInvoiceContent" data-role="listview" 
+						data-auto-bind="false"
+						data-bind="source: dataSource" 
+						data-template="Invoice-print-row-template"></div>						
+					<!-- Form actions -->
+					<div class="box-generic" align="right" style="background-color: #0B0B3B;">
+						<span id="notification"></span>
 
-						<br>					
-						
-						<div id="wInvoiceContent" data-role="listview" 
-							data-auto-bind="false"
-							data-bind="source: dataSource" 
-							data-template="Invoice-print-row-template"></div>						
-			
-					</div><!-- //End div example-->
+						<span id="savePrint" class="btn btn-icon btn-primary glyphicons print" data-bind="click: printGrid" style="width: 80px;"><i></i>Print</span>
+						<!--span id="savePDF" class="btn btn-icon btn-success glyphicons edit" data-bind="click: savePDF" style="width: 120px;"><i></i> Save PDF</span-->									
+					</div>
 				</div><!-- //End div span12-->
 			</div><!-- //End div row-fluid-->
 		</div>
@@ -3774,8 +3887,6 @@
 <!-- ***************************
 *	End Water Section         *
 **************************** -->
-
-
 
 
 <!-- ***************************
@@ -4340,9 +4451,6 @@
 </script>
 
 
-
-
-
 <!-- ***************************
 *	Template Blog         	  *
 **************************** -->
@@ -4415,7 +4523,7 @@
   				<li><a href='#/run_bill'><span >Run Bill</span></a></li> 
   				<li><a href='#/print_bill'><span >Print Bill</span></a></li>
   				<li><span class="li-line"></span></li>
-  				<li><a href='#/import'><span >Import</span></a></li>
+  				<li><a href='#/receipt'><span >Receipt</span></a></li>
   			</ul>
 	  	</li>	  	  	
 	  	<li><a href="#/reports">Reports</a></li>	  	
@@ -4450,6 +4558,7 @@
 <script src="https://maps.googleapis.com/maps/api/js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/xlsx.js"></script>
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/water/water.css" />
+
 <script>
 	localforage.config({
 		driver: localforage.LOCALSTORAGE,
@@ -8600,6 +8709,7 @@
         		name 		: this.get("tariffItemName"),
         		type     	: "tariff",
         		tariff_id	: this.get('current').id,
+        		account   	: this.get('current').account,
         		is_flat   	: this.get("tariffItemFlat"),
         		unit 		: null,
         		usage 		: this.get("tariffItemUsage"),
@@ -8901,50 +9011,14 @@
 		meterDS 			: dataStore(apiUrl + 'meters'),
 		meterClick 			: function(){
 			banhji.view.layout.showIn("#waterCenterContent", banhji.view.waterCenterContent);
-			$('#wsale-graph').kendoChart({
-				dataSource: {data: monthlyDS.data()},												
-				series: [
-					{field: 'amount', categoryField:'month', type: 'line', axis: 'sale'},
-					{field: 'usage', categoryField:'month', type: 'column', axis: 'usage'}
-				],
-				valueAxes: [
-					{
-	                    name: "sale",
-	                    color: "#007eff",
-	                    min: 0,
-	                    majorUnit: 5000000,
-	                    max: 50000000
-	                }, 
-	                {
-	                    name: "usage",
-	                    color: "#3399ff",
-	                    min: 0,	
-	                    majorUnit: 5000,		                   
-	                    max: 50000
-	                }
-                ],
-                categoryAxis: {
-                    //categories: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],		                    
-                    axisCrossingValues: [0, 13],
-                    justified: true
-                },
-                tooltip: {
-                    visible: true,
-                    format: "{0}"
-                }
-
-			});
 		},
 		NometerClick 		: function(){
-			// var Find = $('#waterCenterContent').find('#meterClick');
-			// if(Find.length > 0){
-				banhji.view.layout.showIn("#waterCenterContent", banhji.view.waterTransactionContent);
-			// }
+			banhji.view.layout.showIn("#waterCenterContent", banhji.view.waterTransactionContent);
 		},
 		contactDS			: new kendo.data.DataSource({
 			transport: {
 				read 	: {
-					url: apiUrl + "contacts",
+					url: apiUrl + "customers",
 					type: "GET",
 					headers: banhji.header,
 					dataType: 'json'
@@ -8989,9 +9063,6 @@
 				{field:"is_pattern", value: "0"},
 				{field:"parent_id", operation: "where_related", model: "contact_type", value: 1}
 			]);
-			// if(this.meter_visible == true){
-			// 	this.set('meter_visible',false);
-			// }
 		},
 		noteDS 				: dataStore(apiUrl + 'notes'),
 		attachmentDS	 	: dataStore(apiUrl + "attachments"),
@@ -9013,47 +9084,7 @@
 		currencyCode 		: "",
 		user_id 			: banhji.source.user_id,
 		exportEXCEL 		: function(){
-			var workbook = new kendo.ooxml.Workbook({
-			  sheets: [
-			    {
-			      // Column settings (width)
-			      columns: [
-			        { autoWidth: true },
-			        { autoWidth: true }
-			      ],
-			      // Title of the sheet
-			      title: "Customers",
-			      // Rows of the sheet
-			      rows: [
-			        // First row (header)
-			        {
-			          cells: [
-			            // First cell
-			            { value: "number/" },
-			            { value: "date" },
-			            { value: "previous" },
-			            { value: "reading" },
-			            { value: "current" }
-			          ]
-			        },
-			        // Second row (data)
-			        {
-			          cells: [
-			            { value: "1" },
-			            { value: "1" },
-			            { value: "1" },
-			            { value: "1" },
-			            { value: "1" }
-			          ]
-			        }
-			      ]
-			    }
-			  ]
-			});
-			kendo.saveAs({
-			    dataURI: workbook.toDataURL(),
-			    fileName: "abc.xlsx"
-			});
+			
 		},
 		pageLoad 			: function(id){
 			banhji.view.layout.showIn("#waterCenterContent", banhji.view.waterCenterContent);
@@ -9449,14 +9480,27 @@
 			}else{
 				alert("Please select a customer and Memo is required");
 			}
-		}
+		},
+		goEdit 		 		: function(){
+			var obj = this.get("obj");
+
+			if(obj!==null && obj.id !== 0){
+				window.open('<?php echo base_url(); ?>rrd#/customer/'+obj.id,'_blank');
+				//banhji.router.navigate('/customer/'+obj.id);
+			}else{
+				alert("Please select a customer.");
+			}
+		},
 	});
 	banhji.waterActivateUser = kendo.observable({
 		lang 				: langVM,
 		dataSource  		: dataStore(apiUrl + "activate_water"),
+		numberDS  			: dataStore(apiUrl + "activate_water"),
 		licenseDS 			: dataStore(apiUrl + "branches"),
 		blocDS 				: dataStore(apiUrl + "locations"),
 		obj 				: null,
+		Codeabbr 			: null,
+		Codenumber 			: null,
 		isEdit 				: false,
 		pageLoad 			: function(id){
 			this.addEmpty(id);
@@ -9504,6 +9548,7 @@
 				contact_id			: id,
 				code 				: null,
 				licence 			: null,
+				abbr 				: null,
 				location  			: null,
 				type 				: "w",
 				family_member 		: null,
@@ -9512,6 +9557,36 @@
 	    	});		
 			var obj = this.dataSource.at(0);			
 			this.set("obj", obj);		
+		},
+		BlocChange 			: function(e) {
+			var obj = this.get("obj"), self = this;
+			this.blocDS.query({    			
+				filter: { field:"id", value: obj.bloc },
+				page: 1,
+				take: 100
+			}).then(function(e){
+				var view = self.blocDS.view();	
+				self.goNumber(view[0].abbr);
+				self.set("Codeabbr", view[0].abbr);
+				self.dataSource.pushUpdate({abbr: view[0].abbr});
+			});
+		},
+		goNumber 			: function(abbr) {
+			var self = this, obj = this.get("obj");
+			this.numberDS.query({    			
+				filter: { field:"abbr", value: abbr },
+				sort: { field:"code", dir:"desc" },
+				page: 1,
+				take: 100
+			}).then(function(e){
+				var view = self.numberDS.view();	
+				var lastNo = kendo.parseInt(view[0].code);
+				if(lastNo){
+					lastNo++;
+					obj.set("code",lastNo);
+					self.set("Codenumber", kendo.toString(lastNo, "00000"));
+				}
+			});
 		},
 		save 				: function() {
 			var self = this;
@@ -9798,6 +9873,7 @@
 		lang 				: langVM,
 		dataSource  		: dataStore(apiUrl + "meters"),
 		planDS 				: dataStore(apiUrl + "plans"),
+		brandDS 			: banhji.source.brandDS,
 		locationDS 			: dataStore(apiUrl + "locations"),
 		itemDS 				: null,
 		obj 				: null,
@@ -9857,6 +9933,7 @@
 				number 			: null,
 				status 			: 1,
 				location_id 	: 0,
+				brand_id 		: 0,
 				latitute 		: null,
 				longtitute  	: null,
 				plan_id 		: 0,
@@ -10122,6 +10199,7 @@
 						banhji.ActivateMeter.set('amountRemain', 0.00);
 						$("#ntf1").data("kendoNotification").success("Successfully!");
 						banhji.router.navigate("/center");
+						banhji.waterCenter.meterDS.read();
 					} else {
 						// show error
 						$("#ntf1").data("kendoNotification").error("Error!");
@@ -10202,7 +10280,7 @@
 		isEdit 				: false,
 		contact 			: null,
 		pageLoad 			: function(id){
-			this.addEmpty();
+
 		},
 		onLicenseChange 	: function(e) {
 			var data = e.data;
@@ -10215,14 +10293,8 @@
 			var bloc = this.blocDS.at(e.sender.selectedIndex - 1);
 			this.set("blocSelect", bloc);
 		},
-		addEmpty 		 	: function(id){			
-			//this.dataSource.data([]);		
-			this.set("obj", null);		
-			this.set("isEdit", false);		
-			this.dataSource.insert(0,{		
-	    	});		
-			var obj = this.dataSource.at(0);			
-			this.set("obj", obj);		
+		addEmpty 		 	: function(id){		
+
 		},
 		onSelected 			: function(e){
 			$('li.k-file').remove();
@@ -10248,7 +10320,6 @@
 			}
 			reader.readAsBinaryString(files[0].rawFile);      
 		},
-
 		exportEXCEL 		: function(e){
 			$("#loadImport").css("display","block");
 			var ds = new kendo.data.DataSource({
@@ -10345,8 +10416,16 @@
 	banhji.EditReading = kendo.observable({
 		lang 				: langVM,
 		dataSource  		: dataStore(apiUrl + "readings"),
+		licenseDS 			: dataStore(apiUrl + "branches"),
+		blocDS 				: dataStore(apiUrl + "locations"),
+		monthOfSelect 		: null,
+		licenseSelect 		: null,
+		blocSelect 			: null,
 		pageLoad 			: function(id){
 			this.dataSource.read();
+		},
+		search 				: function(e){
+
 		},
 		exportEXCEL 		: function(e){
 			$("#loadImport").css("display","block");
@@ -10773,7 +10852,7 @@
 			  //         kendo.drawing.pdf.saveAs(group, "Invoice.pdf");
 			  //       });
 
-			        banhji.router.navigate('/wInvoice_print');
+			        banhji.router.navigate('/invoice_print');
 
 			        // banhji.wInvoicePrint.dataSource.query({
 			        // 	filter: { field:"id", operator:"where_in", value:ids },
@@ -10797,7 +10876,7 @@
 			window.history.back();
 		}
 	});
-	banhji.wInvoicePrint = kendo.observable({
+	banhji.InvoicePrint = kendo.observable({
 		lang 				: langVM,				
 		//dataSource 	 		: dataStore(baseUrl + "winvoices"),
 		invoiceDS 	 		: dataStore(baseUrl + "invoices"),	
@@ -10881,63 +10960,62 @@
 									
 			}		
 		},
-		print 						: function(){
-			kendo.drawing.drawDOM($("#wInvoiceContent")).then(function(group){
-	          kendo.drawing.pdf.saveAs(group, "Invoice.pdf");
-	        });
-		// 	var self = this;
-		// 	$.each(this.dataSource.data(), function(index, value){
-		// 		value.set("print_count", kendo.parseInt(value.print_count)+1);
-		// 		value.set("printed_by", self.get("user_id"));
-		// 	});
+		printGrid 						: function(){
+			// kendo.drawing.drawDOM($("#wInvoiceContent")).then(function(group){
+	  //         kendo.drawing.pdf.saveAs(group, "Invoice.pdf");
+	  //       });
+			var self = this;
+			$.each(this.dataSource.data(), function(index, value){
+				value.set("print_count", kendo.parseInt(value.print_count)+1);
+				value.set("printed_by", self.get("user_id"));
+			});
 
-		// 	//window.print();
+			//window.print();
 
-		// 	// this.dataSource.sync();
-		// 	// var saved = false;
-		// 	// this.dataSource.bind("requestEnd", function(){
-		// 	// 	if(e.type=="update"){
-		// 	// 		saved = true;
+			// this.dataSource.sync();
+			// var saved = false;
+			// this.dataSource.bind("requestEnd", function(){
+			// 	if(e.type=="update"){
+			// 		saved = true;
 
-		// 	// 		self.dataSource.data([]);
-		// 	// 		window.history.back();
-		// 	// 	}
-		// 	// });
-		// // 	print 						: function(){
-		// 	var gridElement = $('#grid'),
-		//         printableContent = '',
-		//         win = window.open('', '', 'width=1000, height=900'),
-		//         doc = win.document.open();
-		//     var htmlStart =
-		//             '<!DOCTYPE html>' +
-		//             '<html>' +
-		//             '<head>' +
-		//             '<meta charset="utf-8" />' +
-		//             '<title></title>' +
-		//             '<link rel="stylesheet" href="<?php echo base_url(); ?>resources/js/kendoui/styles/kendo.bootstrap.min.css">'+
-		//             '<link rel="stylesheet" href="<?php echo base_url(); ?>resources/common/bootstrap/css/bootstrap.css">'+
-		//             '<link href="<?php echo base_url(); ?>uploads/winvoiceprint/winvoice-print.css" rel="stylesheet" />'+
-		//             '<link href="<?php echo base_url(); ?>resources/common/theme/css/style-default-menus-dark.css" rel="stylesheet" />'+
-		//             '<link href="https://fonts.googleapis.com/css?family=Content:400,700" rel="stylesheet" type="text/css">'+
-		//             '<link href="https://fonts.googleapis.com/css?family=Moul" rel="stylesheet">'+
-		//             '<style type="text/css" media="print">'+
-		// 		    '@page  { size:  auto; margin: 0 10mm; }'+
-		// 		    '</style></head>' + 
-		// 		    '<body><div class="row-fluid" style="padding-top: 40px" ><div id="example" class="k-content">';
+			// 		self.dataSource.data([]);
+			// 		window.history.back();
+			// 	}
+			// });
+		// 	print 						: function(){
+			var gridElement = $('#grid'),
+		        printableContent = '',
+		        win = window.open('', '', 'width=1000, height=900'),
+		        doc = win.document.open();
+		    var htmlStart =
+		            '<!DOCTYPE html>' +
+		            '<html>' +
+		            '<head>' +
+		            '<meta charset="utf-8" />' +
+		            '<title></title>' +
+		            '<link rel="stylesheet" href="<?php echo base_url(); ?>resources/js/kendoui/styles/kendo.bootstrap.min.css">'+
+		            '<link rel="stylesheet" href="<?php echo base_url(); ?>resources/common/bootstrap/css/bootstrap.css">'+
+		            '<link href="<?php echo base_url(); ?>uploads/winvoiceprint/winvoice-print.css" rel="stylesheet" />'+
+		            '<link href="<?php echo base_url(); ?>resources/common/theme/css/style-default-menus-dark.css" rel="stylesheet" />'+
+		            '<link href="https://fonts.googleapis.com/css?family=Content:400,700" rel="stylesheet" type="text/css">'+
+		            '<link href="https://fonts.googleapis.com/css?family=Moul" rel="stylesheet">'+
+		            '<style type="text/css" media="print">'+
+				    '@page  { size:  auto; margin: 0 10mm; }'+
+				    '</style></head>' + 
+				    '<body><div class="row-fluid" style="padding-top: 40px" ><div id="example" class="k-content">';
 
-		//     var htmlEnd =
-		//             '</div></div></body>' +
-		//             '</html>';
+		    var htmlEnd =
+		            '</div></div></body>' +
+		            '</html>';
 		    
-		//     printableContent = $('#wInvoiceContent').html();
-		//     doc.write(htmlStart + printableContent + htmlEnd);
-		//     doc.close();
-		//     setTimeout(function(){
-		//     	win.print();	
-		//     	win.close();
-		//     },2000)
-			
-		// }
+		    printableContent = $('#wInvoiceContent').html();
+		    doc.write(htmlStart + printableContent + htmlEnd);
+		    doc.close();
+		    setTimeout(function(){
+		    	win.print();	
+		    	win.close();
+		    },2000)
+			//}
 		},		
 		hideFrameInvoice 			: function(e) {
 			var printBtn = e.target;
@@ -10946,7 +11024,11 @@
 			} else {
 				$(".hiddenPrint").css("visibility", "visible");
 			}
-		}
+		},
+		cancel 				: function(){
+			this.dataSource.cancelChanges();		
+			window.history.back();
+		}		
 	});
 	banhji.Receipt = kendo.observable({
 		lang 				: langVM,
@@ -12098,7 +12180,7 @@
 		waterImport: new kendo.Layout("#waterImport", {model: banhji.waterImport}),
 		runBill: new kendo.Layout("#runBill", {model: banhji.runBill}),
 		printBill: new kendo.Layout("#printBill", {model: banhji.printBill}),
-		wInvoicePrint: new kendo.Layout("#wInvoicePrint", {model: banhji.wInvoicePrint}),	
+		InvoicePrint: new kendo.Layout("#InvoicePrint", {model: banhji.InvoicePrint}),	
 
 		Receipt: new kendo.Layout("#Receipt", {model: banhji.Receipt}),
 		//custom form
@@ -12383,18 +12465,18 @@
 
 		vm.pageLoad();
 	});
-	banhji.router.route("/wInvoice_print(/:id)", function(id){
+	banhji.router.route("/invoice_print(/:id)", function(id){
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
 		}else{
-			banhji.view.layout.showIn("#content", banhji.view.wInvoicePrint);
+			banhji.view.layout.showIn("#content", banhji.view.InvoicePrint);
 			banhji.view.layout.showIn('#menu', banhji.view.menu);
 			banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
 
-			var vm = banhji.wInvoicePrint;
+			var vm = banhji.InvoicePrint;
 			
-			if(banhji.pageLoaded["wInvoice_print"]==undefined){
-				banhji.pageLoaded["wInvoice_print"] = true;							
+			if(banhji.pageLoaded["invoice_print"]==undefined){
+				banhji.pageLoaded["invoice_print"] = true;							
 
 			}
 			vm.pageLoad(id);
@@ -12612,5 +12694,25 @@
 		banhji.router.start();
 		banhji.source.loadData();
 		//console.log($(location).attr('hash').substr(2));
+		function loadStyle(href){
+				    // avoid duplicates
+		    for(var i = 0; i < document.styleSheets.length; i++){
+		        if(document.styleSheets[i].href == href){
+		            return;
+		        }
+		    }
+		    var head  = document.getElementsByTagName('head')[0];
+		    var link  = document.createElement('link');
+		    link.rel  = 'stylesheet';
+		    link.type = 'text/css';
+		    link.href = href;
+		    head.appendChild(link);
+		}
+		var Href1 = '<?php echo base_url(); ?>assets/water/winvoice-res.css';
+		var Href2 = '<?php echo base_url(); ?>assets/water/winvoice-print.css';
+		if($(location).attr('hash').substr(2) == "invoice_print"){
+			loadStyle(Href1);
+			loadStyle(Href2);
+		}
 	});
 </script>

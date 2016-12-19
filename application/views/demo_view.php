@@ -2504,12 +2504,12 @@
 			</td>			
 			<td class="right" style="color: black;">
 				#if(line[i].dr>0){#
-					#=kendo.toString(line[i].dr / line[i].rate, "c0", banhji.locale)#
+					#=kendo.toString(line[i].dr / line[i].rate, "c2", banhji.locale)#
 				#}#
 			</td>
 			<td class="right" style="color: black;">
 				#if(line[i].cr>0){#
-					#=kendo.toString(line[i].cr / line[i].rate, "c0", banhji.locale)#
+					#=kendo.toString(line[i].cr / line[i].rate, "c2", banhji.locale)#
 				#}#
 			</td>
 			<td></td>  			
@@ -2522,10 +2522,10 @@
     	<td></td>
     	<td></td>    	
     	<td class="right strong" style="border-top-color: black; color: black;">
-    		#=kendo.toString(sumDr, "c0", banhji.locale)#
+    		#=kendo.toString(sumDr, "c2", banhji.locale)#
     	</td>
     	<td class="right strong" style="border-top-color: black; color: black;">
-    		#=kendo.toString(sumCr, "c0", banhji.locale)#
+    		#=kendo.toString(sumCr, "c2", banhji.locale)#
     	</td>
     	<td class="right" style="padding-right: 8px !important;"><i class="icon-paper-clip"></i></td>  	
     </tr>  
@@ -3222,10 +3222,13 @@
 				            </tr> 
 				        </thead>
 				        <tbody data-role="listview"
+				        		data-auto-bind="false"
 				        		data-template="chartOfAccount-template"			        		
 				        		data-bind="source: dataSource"></tbody> 
 				    </table>
-		            <div data-role="pager" data-bind="source: dataSource"></div>					  
+		            <div data-role="pager"
+		            	data-auto-bind="false" 
+		            	data-bind="source: dataSource"></div>					  
 
 				</div>
 			</div>						
@@ -7257,6 +7260,7 @@
 			<input id="txtAmount" name="txtAmount" 
 					data-role="numerictextbox" 
 					data-decimals="2"
+					data-min="0"
 					data-spinners="false"
 					data-bind="value: amount, events: {change : changes}" 
 					required data-required-msg="required" style="width: 100%;" /> 						
@@ -7851,6 +7855,7 @@
 			<input id="txtAmount-#:uid#" name="txtAmount-#:uid#" 
 					data-role="numerictextbox" 
 					data-decimals="2"
+					data-min="0"
 					data-spinners="false"
 					data-bind="value: amount, events: {change : changes}" 
 					required data-required-msg="required" style="width: 100%;" /> 						
@@ -9570,7 +9575,8 @@
 		<td>
 			<input id="txtQuantity-#:uid#" name="txtQuantity-#:uid#" 
 					data-role="numerictextbox" 
-					data-format="n0" data-min="0"
+					data-format="n0" 
+					data-min="0"
 					data-spinners="false"
 					data-bind="value: quantity, events: {change : changes}"
 					required data-required-msg="required" style="width: 40%;" />
@@ -9589,6 +9595,7 @@
 			<input id="txtPrice-#:uid#" name="txtPrice-#:uid#" 
 					data-role="numerictextbox" 
 					data-decimals="2"
+					data-min="0"
 					data-spinners="false"
 					data-bind="value: cost, events: {change : changes}" 
 					required data-required-msg="required" style="width: 100%;" />
@@ -10329,6 +10336,7 @@
 						        </div>
 						        <!-- // Recuring Tab content END -->								        
 
+						        <!-- Journal Entry Tab content -->
 						        <div class="tab-pane saleSummaryCustomer" id="tab4-5">
 									<table class="table table-borderless table-condensed">
 								        <thead>
@@ -10355,6 +10363,7 @@
 								        </tbody>			        
 								    </table>
 								</div>
+								<!-- // Journal Entry Tab content END -->
 
 						    </div>
 						</div>
@@ -10510,6 +10519,7 @@
 			<input id="txtAmount" name="txtAmount" 
 					data-role="numerictextbox" 
 					data-decimals="2"
+					data-min="0"
 					data-spinners="false"
 					data-bind="value: amount, events: {change : changes}" 
 					required data-required-msg="required" style="width: 100%;" /> 						
@@ -11184,7 +11194,13 @@
 									<tr>
 										<td class="right"><span data-bind="text: lang.lang.total_discount"></span></td>
 										<td class="right strong">
-											<span data-bind="text: discount"></span>
+											<input data-role="numerictextbox"
+								                   data-format="n"
+								                   data-spinners="false"
+								                   data-min="0"							                                      
+								                   data-bind="value: obj.discount,
+								                              events: { change: discountChanges }"
+								                   style="width: 90%; text-align: right;">
 	                   					</td>
 									</tr>
 									<tr>
@@ -11320,6 +11336,7 @@
 			<input id="txtPrice" name="txtPrice-#:uid#" 
 					data-role="numerictextbox" 
 					data-decimals="2"
+					data-min="0"
 					data-spinners="false"
 					data-bind="value: cost, events: {change : changes}" 
 					required data-required-msg="required" style="width: 100%;" />
@@ -11403,7 +11420,8 @@
 			<input id="txtAmount-#:uid#" name="txtAmount-#:uid#" 
 					data-role="numerictextbox"
 					data-spinners="false" 
-					data-decimals="2" 
+					data-decimals="2"
+					data-min="0" 
 					data-bind="value: amount, events: {change : changes}" 
 					required data-required-msg="required" style="width: 100%;" /> 						
 		</td>
@@ -11495,7 +11513,8 @@
 			<input id="txtSubTotal-#:uid#" name="txtSubTotal-#:uid#" 
 					data-role="numerictextbox"
 					data-spinners="false" 
-					data-decimals="2" 
+					data-decimals="2"
+					data-min="0" 
 					data-bind="value: sub_total, events: {change : changes}" 
 					required data-required-msg="required" style="width: 100%;" /> 						
 		</td>		
@@ -11945,7 +11964,8 @@
 			<input id="txtPrice-#:uid#" name="txtPrice-#:uid#" 
 					data-role="numerictextbox"
 					data-spinners="false" 
-					data-decimals="2" 
+					data-decimals="2"
+					data-min="0" 
 					data-bind="value: cost, events: {change : changes}" 
 					required data-required-msg="required" style="width: 100%;" />
 		</td>					
@@ -12018,7 +12038,8 @@
 			<input id="txtAmount-#:uid#" name="txtAmount-#:uid#" 
 					data-role="numerictextbox"
 					data-spinners="false" 
-					data-decimals="2" 
+					data-decimals="2"
+					data-min="0" 
 					data-bind="value: amount, events: {change : changes}" 
 					required data-required-msg="required" style="width: 100%;" />
 		</td>								
@@ -16396,6 +16417,7 @@
 					name="txtPrice-#:uid#" 
 					data-role="numerictextbox" 
 					data-decimals="2"
+					data-min="0"
 					data-spinners="false"
 					data-bind="value: price, events: {change : changes}" 
 					required data-required-msg="required" style="width: 100%;" />
@@ -16969,6 +16991,7 @@
 			<input id="txtPrice-#:uid#" name="txtPrice-#:uid#" 
 					data-role="numerictextbox" 
 					data-decimals="2"
+					data-min="0"
 					data-spinners="false" 
 					data-bind="value: price, events: {change : changes}" 
 					required data-required-msg="required" style="width: 100%;" />
@@ -17513,7 +17536,8 @@
 			<input id="txtAmount" name="txtAmount" 
 					data-role="numerictextbox"
 					data-spinners="false" 
-					data-decimals="2" 
+					data-decimals="2"
+					data-min="0" 
 					data-bind="value: amount, events: {change : changes}" 
 					required data-required-msg="required" style="width: 100%; text-align: right;" /> 						
 		</td>			
@@ -17993,8 +18017,14 @@
 									</tr>								
 									<tr>
 										<td class="right"><span data-bind="text: lang.lang.total_discount"></span></td>
-										<td class="right">
-											<span data-bind="text: discount"></span>
+										<td class="right strong">
+											<input data-role="numerictextbox"
+								                   data-format="n"
+								                   data-spinners="false"
+								                   data-min="0"							                                      
+								                   data-bind="value: obj.discount,
+								                              events: { change: discountChanges }"
+								                   style="width: 90%; text-align: right;">
 	                   					</td>
 									</tr>
 									<tr>
@@ -18131,6 +18161,7 @@
 			<input id="txtPrice-#:uid#" name="txtPrice-#:uid#" 
 					data-role="numerictextbox" 
 					data-decimals="2"
+					data-min="0"
 					data-spinners="false" 
 					data-bind="value: price, events: {change : changes}" 
 					required data-required-msg="required" style="width: 100%;" />
@@ -18628,7 +18659,13 @@
 									<tr>
 										<td class="right"><span data-bind="text: lang.lang.total_discount"></span></td>
 										<td class="right strong">
-											<span data-bind="text: discount"></span>
+											<input data-role="numerictextbox"
+								                   data-format="n"
+								                   data-spinners="false"
+								                   data-min="0"							                                      
+								                   data-bind="value: obj.discount,
+								                              events: { change: discountChanges }"
+								                   style="width: 90%; text-align: right;">
 	                   					</td>
 									</tr>
 									<tr>
@@ -18765,6 +18802,7 @@
 			<input id="txtPrice-#:uid#" name="txtPrice-#:uid#" 
 					data-role="numerictextbox" 
 					data-decimals="2"
+					data-min="0"
 					data-spinners="false" 
 					data-bind="value: price, events: {change : changes}" 
 					required data-required-msg="required" style="width: 100%;" />
@@ -19657,6 +19695,7 @@
 			<input id="txtPrice-#:uid#" name="txtPrice-#:uid#" 
 					data-role="numerictextbox" 
 					data-decimals="2"
+					data-min="0"
 					data-spinners="false"
 					data-bind="value: price, events: {change : changes}" 
 					required data-required-msg="required" style="width: 100%;" />
@@ -28630,10 +28669,11 @@
 	</tr>
 </script>
 
+
+
 <!-- ***************************
 *	Inventory Section      	  *
 **************************** -->
-
 <script id="itemDashBoard" type="text/x-kendo-template">
 	<div class="row-fluid">
 
@@ -31343,8 +31383,7 @@
 			           						data-value-field="id"
 			           						data-value-primitive="true"			           								           						
 						            		data-bind="source: accountDS, 
-						            					value: account_id,
-						            					events:{change:accountChanges}"
+						            					value: obj.inventory_account_id"
 						            		data-option-label="Select Account..."
 						            		required data-required-msg="required" style="width: 100%;" />
 									</div>
@@ -36540,7 +36579,8 @@
 		<td class="right">
 			<input id="txtAmount" name="txtAmount" 
 					data-role="numerictextbox" 
-					data-format="n0"
+					data-decimals="2"
+					data-min="0"
 					data-spinners="false"
 					data-bind="value: amount, events: {change : changes}" 
 					required data-required-msg="required" style="width: 100%;" /> 						
@@ -39305,6 +39345,7 @@
   				<li> <span class="li-line"></span></li> 		
   				<li><a href='#/currency_rate'><span data-bind="text: lang.lang.set_exchange_rate"></span></a></li>
   				<li><a href='#/accounting_recurring'><span data-bind="text: lang.lang.accounting_recurring_list"></span></a></li>
+  				<li><a href='#/chart_of_account'><span data-bind="text: lang.lang.chart_of_account"></span></a></li>
   				<li><a href='#/imports'><span ></span>Imports</a></li> 			  				 		
   			</ul>
 	  	</li>	  	  	
@@ -45293,6 +45334,15 @@
 		as_of 				: new Date(),		
 		currentSort 		: "asc",							
 		pageLoad 			: function(){
+			this.dataSource.query({
+				filter: [],
+				sort: [
+					{ field:"account_type_id", dir:"asc" },
+					{ field:"number", dir:"asc" }
+				],
+				page:1,
+				pageSize: 1000
+			});
 		},	
 		sort 				: function(e){
 			var col = "",
@@ -52352,6 +52402,18 @@
 				obj.set("remaining", remaining);									    	
 	    	}
 		},
+		discountChanges 	: function(){
+			var obj = this.get("obj");
+
+			var total = (obj.sub_total + obj.tax) - obj.discount;
+	        var remaining = total - obj.deposit;
+
+	        this.set("total", kendo.toString(total, "c", obj.locale));
+	        this.set("remaining", kendo.toString(remaining, "c", obj.locale));
+
+	        obj.set("amount", total);
+	        obj.set("remaining", remaining);
+		},
 		addEmpty 		 	: function(){			
 			this.dataSource.data([]);
 			this.lineDS.data([]);
@@ -58876,6 +58938,18 @@
 				obj.set("amount", total);
 				obj.set("remaining", remaining);									    	
 	    	}	
+		},
+		discountChanges 	: function(){
+			var obj = this.get("obj");
+
+			var total = (obj.sub_total + obj.tax) - obj.discount;
+	        var remaining = total - obj.deposit;
+
+	        this.set("total", kendo.toString(total, "c", obj.locale));
+	        this.set("remaining", kendo.toString(remaining, "c", obj.locale));
+
+	        obj.set("amount", total);
+	        obj.set("remaining", remaining);
 		},					
 		addEmpty 		 	: function(){			
 			this.dataSource.data([]);
@@ -59171,13 +59245,15 @@
 						cogsAmount = value.amount;
 					}					
 
-					if(cogsList[cogsID]===undefined){
-						cogsList[cogsID]={"id": cogsID, "amount": cogsAmount, "rate": itemRate, "locale": item.locale};						
-					}else{											
-						if(cogsList[cogsID].id===cogsID){
-							cogsList[cogsID].amount += cogsAmount;
-						}else{
-							cogsList[cogsID]={"id": cogsID, "amount": cogsAmount, "rate": itemRate, "locale": item.locale};
+					if(cogsAmount>0){
+						if(cogsList[cogsID]===undefined){
+							cogsList[cogsID]={"id": cogsID, "amount": cogsAmount, "rate": itemRate, "locale": item.locale};						
+						}else{											
+							if(cogsList[cogsID].id===cogsID){
+								cogsList[cogsID].amount += cogsAmount;
+							}else{
+								cogsList[cogsID]={"id": cogsID, "amount": cogsAmount, "rate": itemRate, "locale": item.locale};
+							}
 						}
 					}
 				}						
@@ -60143,8 +60219,7 @@
 		        	this.set("amtDueColor", banhji.source.amtDueColor);
 		        }
 
-		        this.set("sub_total", kendo.toString(subTotal, "c", obj.locale));
-		        this.set("discount", kendo.toString(discount, "c", obj.locale));
+		        this.set("sub_total", kendo.toString(subTotal, "c", obj.locale));		        
 		        this.set("tax", kendo.toString(tax, "c", obj.locale));
 		        this.set("total", kendo.toString(total, "c", obj.locale));
 		        this.set("remaining", kendo.toString(remaining, "c", obj.locale));
@@ -60156,6 +60231,18 @@
 				obj.set("amount", total);
 				obj.set("remaining", remaining);									    	
 	    	}	
+		},
+		discountChanges 	: function(){
+			var obj = this.get("obj");
+
+			var total = (obj.sub_total + obj.tax) - obj.discount;
+	        var remaining = total - obj.deposit;
+
+	        this.set("total", kendo.toString(total, "c", obj.locale));
+	        this.set("remaining", kendo.toString(remaining, "c", obj.locale));
+
+	        obj.set("amount", total);
+	        obj.set("remaining", remaining);
 		},					
 		addEmpty 		 	: function(){
 			this.dataSource.data([]);
@@ -60454,13 +60541,15 @@
 						cogsAmount = value.amount;
 					}					
 
-					if(cogsList[cogsID]===undefined){
-						cogsList[cogsID]={"id": cogsID, "amount": cogsAmount, "rate": itemRate, "locale": item.locale};						
-					}else{											
-						if(cogsList[cogsID].id===cogsID){
-							cogsList[cogsID].amount += cogsAmount;
-						}else{
-							cogsList[cogsID]={"id": cogsID, "amount": cogsAmount, "rate": itemRate, "locale": item.locale};
+					if(cogsAmount>0){
+						if(cogsList[cogsID]===undefined){
+							cogsList[cogsID]={"id": cogsID, "amount": cogsAmount, "rate": itemRate, "locale": item.locale};						
+						}else{											
+							if(cogsList[cogsID].id===cogsID){
+								cogsList[cogsID].amount += cogsAmount;
+							}else{
+								cogsList[cogsID]={"id": cogsID, "amount": cogsAmount, "rate": itemRate, "locale": item.locale};
+							}
 						}
 					}
 				}						
@@ -70705,23 +70794,6 @@
 				}								
 			}  																							
 		},
-		accountChanges 			: function(){
-			var obj = this.get("obj"),
-			account_id = this.get("account_id");
-
-			if(account_id){
-				var account = this.accountDS.get(account_id),
-				type = banhji.source.accountTypeDS.get(account.account_type_id);
-
-				if(type.nature=="Dr"){
-					obj.set("income_account_id", 0);
-					obj.set("expense_account_id", account_id);
-				}else{//nature = Cr
-					obj.set("income_account_id", account_id);
-					obj.set("expense_account_id", 0);
-				}
-			}
-		},
 		//Number      	
 		checkExistingName 	: function(){
 			var self = this, para = [], 
@@ -74031,6 +74103,8 @@
 				banhji.pageLoaded["chart_of_account"] = true;              
                 						
 			}
+
+			vm.pageLoad();
 		}
 	});
 	banhji.router.route("/add_accountingprefix(/:id)", function(id){
