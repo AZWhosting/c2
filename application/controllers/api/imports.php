@@ -396,7 +396,7 @@ class Imports extends REST_Controller {
 		$this->response(array('results'=> array(), 'msg' => "Operation is good."), 201);
 	}
 
-	function dbsize_get() {
+	private function dbsize_get() {
 		$CI=&get_instance();
     $CI->load->database();
 		$this->load->dbutil();
