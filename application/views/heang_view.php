@@ -4845,200 +4845,6 @@
 	</div>
 </script>
 
-
-<script id="cashPositionReport" type="text/x-kendo-template">
-	<div id="slide-form">
-		<div class="customer-background ">
-			<div class="container-960">	
-				<div id="example" class="k-content saleSummaryCustomer">
-
-					<span class="glyphicons no-js remove_2 pull-right" 
-							onclick="javascript: window.history.back()"><i></i></span>
-					<br>
-					<div class="block-title">
-						<h3 data-bind="text: company.name"></h3>
-						<h2>Cash Position Report</h2>
-						<p>As of Date: November 30 2016</p>
-					</div>	
-					<table class="table table-borderless table-condensed" style="width: 80%; margin: 0 auto;">
-						<tr>
-							<th colspan="4" style="text-align: right;">Cash Account</th>
-						</tr>
-						<tr>
-							<td>Opening Balance</td>
-							<td></td>
-							<td></td>
-							<td style="text-align: right;">210000</td>
-						</tr>
-						<tr>
-							<td>Cash Inflows</td>
-							<td></td>
-							<td></td>
-							<td style="text-align: right;"></td>
-						</tr>
-						<tr>
-							<td></td>
-							<td>cash sale</td>
-							<td>xx</td>
-							<td style="text-align: right;"></td>
-						</tr>
-						<tr>
-							<td></td>
-							<td>cash collection</td>
-							<td style="border-bottom: 1px solid #000 !important; ">xx</td>
-							<td style="border-bottom: 1px solid #000 !important; text-align: right;"></td>
-						</tr>
-						<tr>
-							<td>Total Cash Inflows</td>
-							<td></td>
-							<td style="border-bottom: 3px double #000 !important; font-size: 20px;">xxx</td>
-							<td style="border-bottom: 3px double #000 !important; text-align: right;"></td>
-						</tr>
-
-						<tr>
-							<td>Cash Outflows</td>
-							<td></td>
-							<td></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td></td>
-							<td>cash expense</td>
-							<td>xx</td>
-							<td></td>
-						</tr>
-						<tr>
-							<td></td>
-							<td>cash payment</td>
-							<td style="border-bottom: 1px solid #000 !important; ">xx</td>
-							<td style="border-bottom: 1px solid #000 !important; text-align: right;"></td>
-						</tr>
-						<tr>
-							<td>Total Cash Outflows</td>
-							<td></td>
-							<td style="border-bottom: 3px double #000 !important; font-size: 20px;">xxx</td>
-							<td style="border-bottom: 3px double #000 !important; text-align: right;"></td>
-						</tr>
-
-						<tr>
-							<td style="padding-left: 25px !important;">Net Cash Defisit/surplus</td>
-							<td></td>
-							<td style="border-bottom: 3px solid #000 !important;">xxx</td>
-							<td style="border-bottom: 3px solid #000 !important; text-align: right;"></td>
-						</tr>
-
-
-
-					</table>
-
-
-		        </div>		        
-			</div>							
-		</div>
-	</div>
-</script>
-<script id="cashCollectionReport" type="text/x-kendo-template">
-	<div id="slide-form">
-		<div class="customer-background ">
-			<div class="container-960">	
-				<div id="example" class="k-content saleSummaryCustomer">
-
-					<span class="glyphicons no-js remove_2 pull-right" 
-							onclick="javascript: window.history.back()"><i></i></span>
-					<br>
-					<br>
-
-					<div class="block-title">
-						<h3 data-bind="text: company.name"></h3>
-						<h2>Cash Collection Report</h2>
-						<p>As of Date: November 30 2016</p>
-					</div>		    
-					
-					<br><br>
-
-					<table class="table table-borderless table-condensed">
-						<tr>
-							<th>Account</th>
-							<th>Date</th>
-							<th>Type</th>
-							<th>Customer</th>
-							<th>Invoice</th>
-							<th style="text-align: right;">Cash Receipt</th>
-						</tr>
-						<tr>
-							<td>1</td>
-							<td>2</td>
-							<td>3</td>
-							<td>4</td>
-							<td>5</td>
-							<td style="text-align: right;">6</td>
-						</tr>
-						<tr>
-							<td>1</td>
-							<td>2</td>
-							<td>3</td>
-							<td>4</td>
-							<td>5</td>
-							<td style="text-align: right;">6</td>
-						</tr>
-					</table>
-
-		        </div>		        
-			</div>							
-		</div>
-	</div>
-</script>
-<script id="cashPaymentReport" type="text/x-kendo-template">
-	<div id="slide-form">
-		<div class="customer-background ">
-			<div class="container-960">	
-				<div id="example" class="k-content saleSummaryCustomer">
-
-					<span class="glyphicons no-js remove_2 pull-right" 
-							onclick="javascript: window.history.back()"><i></i></span>
-					<br>
-					<br>
-
-					<div class="block-title">
-						<h3 data-bind="text: company.name"></h3>
-						<h2>Cash Payment Report</h2>
-						<p>As of Date: November 30 2016</p>
-					</div>		    
-					
-					<br><br>
-					<table class="table table-borderless table-condensed">
-						<tr>
-							<th>Amount</th>
-							<th>Date</th>
-							<th>Type</th>
-							<th>Supplier</th>
-							<th>Bill</th>
-							<th style="text-align: right;">Cash Payment</th>
-						</tr>
-						<tr>
-							<td>1</td>
-							<td>2</td>
-							<td>3</td>
-							<td>4</td>
-							<td>5</td>
-							<td style="text-align: right;">6</td>
-						</tr>
-						<tr>
-							<td>1</td>
-							<td>2</td>
-							<td>3</td>
-							<td>4</td>
-							<td>5</td>
-							<td style="text-align: right;">6</td>
-						</tr>
-					</table>
-
-		        </div>		        
-			</div>							
-		</div>
-	</div>
-</script>
-
 <script id="accountingSetting" type="text/x-kendo-template">
 	<span class="pull-right glyphicons no-js remove_2" 
 			onclick="javascript:window.history.back()"><i></i></span>
@@ -22625,7 +22431,7 @@
 	# kendo.culture(banhji.customerSale.locale); #
 	<tr style="font-weight: bold">
 		<td>#=number#</td>
-		<td>#=name#</td>
+		<td data-bind="click: selectedRow">#=name#</td>
 		<td>#=contact_type#</td>
 		<td>#=address#</td>
 		<td>#=phone#</td>
@@ -33563,15 +33369,82 @@
 					<span class="glyphicons no-js remove_2 pull-right" 
 							onclick="javascript: window.history.back()"><i></i></span>
 					<br>
-					<br>
-
 					<div class="block-title">
 						<h3 data-bind="text: company.name"></h3>
 						<h2>Cash Position Report</h2>
-						<p data-bind="text: displayDate"></p>
-					</div>		    
-					
-					<br><br>
+						<p>As of Date: November 30 2016</p>
+					</div>	
+					<table class="table table-borderless table-condensed" style="width: 80%; margin: 0 auto;">
+						<tr>
+							<th colspan="4" style="text-align: right;">Cash Account</th>
+						</tr>
+						<tr>
+							<td>Opening Balance</td>
+							<td></td>
+							<td></td>
+							<td style="text-align: right;">210000</td>
+						</tr>
+						<tr>
+							<td>Cash Inflows</td>
+							<td></td>
+							<td></td>
+							<td style="text-align: right;"></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td>cash sale</td>
+							<td>xx</td>
+							<td style="text-align: right;"></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td>cash collection</td>
+							<td style="border-bottom: 1px solid #000 !important; ">xx</td>
+							<td style="border-bottom: 1px solid #000 !important; text-align: right;"></td>
+						</tr>
+						<tr>
+							<td>Total Cash Inflows</td>
+							<td></td>
+							<td style="border-bottom: 3px double #000 !important; font-size: 20px;">xxx</td>
+							<td style="border-bottom: 3px double #000 !important; text-align: right;"></td>
+						</tr>
+
+						<tr>
+							<td>Cash Outflows</td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td>cash expense</td>
+							<td>xx</td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td>cash payment</td>
+							<td style="border-bottom: 1px solid #000 !important; ">xx</td>
+							<td style="border-bottom: 1px solid #000 !important; text-align: right;"></td>
+						</tr>
+						<tr>
+							<td>Total Cash Outflows</td>
+							<td></td>
+							<td style="border-bottom: 3px double #000 !important; font-size: 20px;">xxx</td>
+							<td style="border-bottom: 3px double #000 !important; text-align: right;"></td>
+						</tr>
+
+						<tr>
+							<td style="padding-left: 25px !important;">Net Cash Defisit/surplus</td>
+							<td></td>
+							<td style="border-bottom: 3px solid #000 !important;">xxx</td>
+							<td style="border-bottom: 3px solid #000 !important; text-align: right;"></td>
+						</tr>
+
+
+
+					</table>
+
 
 		        </div>		        
 			</div>							
@@ -33580,9 +33453,14 @@
 </script>
 <script id="cashCollectionReport" type="text/x-kendo-template">
 	<div id="slide-form">
-		<div class="customer-background ">
-			<div class="container-960">	
-				<div id="example" class="k-content saleSummaryCustomer">
+		<div class="customer-background">
+			<div class="container-960">
+				<div id="example" class="k-content saleSummaryCustomer">		
+			    	<span class="pull-right glyphicons no-js remove_2" 
+						onclick="javascript:window.history.back()"><i></i></span>
+					<br>
+					<br>
+
 					<div class="row-fluid">
 					    <!-- Tabs -->
 						<div class="relativeWrap" data-toggle="source-code">
@@ -33618,7 +33496,7 @@
 										           data-bind="value: endDate, events: {change: dateMin}"
 										           placeholder="To ..." />
 
-										  	 <button type="button" data-role="button" data-bind="click: inventoryPositionSummary.search"><i class="icon-search"></i></button>							
+										  	 <button type="button" data-role="button" data-bind="click: inventoryPositionDetail.search"><i class="icon-search"></i></button>							
 									    </div>
 								    </div>
 								</div>
@@ -33626,99 +33504,138 @@
 						</div>
 						<!-- // Tabs END -->						
 					</div>
-					<span class="glyphicons no-js remove_2 pull-right" 
-							onclick="javascript: window.history.back()"><i></i></span>
-					<br>
-					<br>
+					<div id="invFormContent">
+						<div class="block-title">
+							<h3 data-bind="text: company.name"></h3>
+							<h2>Cash Collection Report</h2>
+							<p>From <span data-bind="text: displayDateStart"></span> to <span data-bind="text: displayDateEnd"></p>
+						</div>
 
-					<div class="block-title">
-						<h3 data-bind="text: company.name"></h3>
-						<h2>Cash Collection Report</h2>
-						<p>From <span data-bind="text: displayDateStart"></span> to <span data-bind="text: displayDateEnd">
-					</div>		    
-					
-					<br><br>
-
-					<table class="table table-borderless table-condensed">
-						<tr>
-							<th>Account</th>
-							<th>Date</th>
-							<th>Type</th>
-							<th>Customer</th>
-							<th>Number</th>
-							<th style="text-align: right;">Amount</th>
-						</tr>
-						<tbody data-role="listview"
-	            				data-auto-bind="false"
-				                data-template="cashCollectionReport-row-template"
-				                data-bind="source: cashCollection.dataSource" >
-					    </tbody>
-					</table>
-
-		        </div>		        
-			</div>							
+						<table class="table table-borderless table-condensed ">
+							<thead>
+								<tr>
+									<th><span>Account</span></th>
+									<th><span>Date</span></th>								
+									<th><span>Type</span></th>
+									<th><span>Customer</span></th>
+									<th><span>Invoice</span></th>
+									<th><span>Cash Receipt</span></th>
+								</tr>
+							</thead>
+		            		<tbody data-role="listview"
+		            				data-auto-bind="false"
+					                data-template="cashCollectionReport-row-template"
+					                data-bind="source: cashCollection.dataSource" >
+					        </tbody>
+		            	</table>
+		            </div>
+				</div>		
+			</div>
 		</div>
 	</div>
 </script>
 <script id="cashCollectionReport-row-template" type="text/x-kendo-tmpl">  
 	<tr>  
-	    <td>#=account#</td>          
+	    <td>#=account#</td>      
 	    <td>#=date#</td>
 	    <td>#=type#</td>
-	    <td>#=customer#</td>
+	    <td>#=contact#</td>
 	    <td>#=number#</td>
 	    <td>#=amount#</td>
 	</tr>
 </script>
 <script id="cashPaymentReport" type="text/x-kendo-template">
 	<div id="slide-form">
-		<div class="customer-background ">
-			<div class="container-960">	
-				<div id="example" class="k-content saleSummaryCustomer">
-
-					<span class="glyphicons no-js remove_2 pull-right" 
-							onclick="javascript: window.history.back()"><i></i></span>
+		<div class="customer-background">
+			<div class="container-960">
+				<div id="example" class="k-content saleSummaryCustomer">		
+			    	<span class="pull-right glyphicons no-js remove_2" 
+						onclick="javascript:window.history.back()"><i></i></span>
 					<br>
 					<br>
 
-					<div class="block-title">
-						<h3 data-bind="text: company.name"></h3>
-						<h2>Cash Payment Report</h2>
-						<p>As of Date: November 30 2016</p>
-					</div>		    
-					
-					<br><br>
-					<table class="table table-borderless table-condensed">
-						<tr>
-							<th>Amount</th>
-							<th>Date</th>
-							<th>Type</th>
-							<th>Supplier</th>
-							<th>Bill</th>
-							<th style="text-align: right;">Cash Payment</th>
-						</tr>
-						<tr>
-							<td>1</td>
-							<td>2</td>
-							<td>3</td>
-							<td>4</td>
-							<td>5</td>
-							<td style="text-align: right;">6</td>
-						</tr>
-						<tr>
-							<td>1</td>
-							<td>2</td>
-							<td>3</td>
-							<td>4</td>
-							<td>5</td>
-							<td style="text-align: right;">6</td>
-						</tr>
-					</table>
+					<div class="row-fluid">
+					    <!-- Tabs -->
+						<div class="relativeWrap" data-toggle="source-code">
+							<div class="widget widget-tabs widget-tabs-gray report-tab">
+							
+								<!-- Tabs Heading -->
+								<div class="widget-head">
+									<ul>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab" data-bind="click: printGrid"><i></i>Print/Export</a></li>
+									</ul>
+								</div>
+								<!-- // Tabs Heading END -->								
+								<div class="widget-body">
+									<div class="tab-content">
+								        <div class="tab-pane active" id="tab-1">
+											<input id="sorter" name="sorter"
+									    	   data-role="dropdownlist"
+									           data-value-primitive="true"
+									           data-text-field="text"
+									           data-value-field="value"
+									           data-bind="value: sorter,
+									                      source: sortList,
+									                      events: {change: dateChange}" />
 
-		        </div>		        
-			</div>							
+									        <input id="sdate" name="sdate"
+									        	   data-role="datepicker"
+										           data-bind="value: startDate, events: {change: dateMax}"
+										           placeholder="From ..." />
+
+									       	<input id="edate" name="edate"
+									       		   data-role="datepicker"
+										           data-bind="value: endDate, events: {change: dateMin}"
+										           placeholder="To ..." />
+
+										  	 <button type="button" data-role="button" data-bind="click: inventoryPositionDetail.search"><i class="icon-search"></i></button>							
+									    </div>
+								    </div>
+								</div>
+							</div>
+						</div>
+						<!-- // Tabs END -->						
+					</div>
+					<div id="invFormContent">
+						<div class="block-title">
+							<h3 data-bind="text: company.name"></h3>
+							<h2>Cash Payment Report</h2>
+							<p>From <span data-bind="text: displayDateStart"></span> to <span data-bind="text: displayDateEnd"></p>
+						</div>
+
+						<table class="table table-borderless table-condensed ">
+							<thead>
+								<tr>
+									<th><span>Account</span></th>
+									<th><span>Date</span></th>								
+									<th><span>Type</span></th>
+									<th><span>Supplier</span></th>
+									<th><span>Invoice</span></th>
+									<th><span>Cash Payment</span></th>
+								</tr>
+							</thead>
+		            		<tbody data-role="listview"
+		            				data-auto-bind="false"
+					                data-template="cashPaymentReport-row-template"
+					                data-bind="source: cashPaymentReport.dataSource" >
+					        </tbody>
+		            	</table>
+		            </div>
+				</div>		
+			</div>
 		</div>
 	</div>
+</script>
+<script id="cashPaymentReport-row-template" type="text/x-kendo-tmpl">  
+	<tr>  
+	    <td>#=account#</td>      
+	    <td>#=date#</td>
+	    <td>#=type#</td>
+	    <td>#=contact#</td>
+	    <td>#=number#</td>
+	    <td>#=amount#</td>
+	</tr>
 </script>
 
 <script id="inventoryMovementSummary" type="text/x-kendo-template">
@@ -63001,7 +62918,13 @@
 			this.dataSource.filter(para);
 			this.set("status", null);
 			this.set("contact_type_id", null);
-		}
+		}, 
+		selectedRow			: function(e){
+			var data = e.data;
+			
+			this.set("obj", data);
+			this.loadData();
+		},
 	});
 	banhji.customerBalance = kendo.observable({
 		lang 					: langVM,
@@ -68046,8 +67969,8 @@
 		],
 		search 	: function() {
 
-			banhji.cash_position.dataSource.filter({
-				logic: banhji.cash_position.get('filteredBy'),
+			banhji.cashCollection.dataSource.filter({
+				logic: banhji.cashCollection.get('filteredBy'),
 				filters: [			
 					{field: "issued_date >=", value: kendo.toString(this.startDate, "yyyy-MM-dd")},
 					{field: "issued_date <=", value: kendo.toString(this.endDate, "yyyy-MM-dd")}
@@ -68055,7 +67978,32 @@
 			});
 		}, 
 		filterChange  : function(e){
-			banhji.cash_position.set("filteredBy", e.sender.dataSource.at(e.sender.selectedIndex-1).id);
+			banhji.cashCollection.set("filteredBy", e.sender.dataSource.at(e.sender.selectedIndex-1).id);
+		}
+	});
+	banhji.cashPaymentReport = kendo.observable({
+		lang 				: langVM,
+		dataSource 			: dataStore(apiUrl + "cashReports/cash_payment"),
+		filterDB	 		: [
+			{id: 'customer', name: 'Customer'},
+			{id: 'segment', name: 'Segment'}
+		],
+		filteredBy          : "customer",
+		sortDB 				: [
+			{id: 'date', name: 'Date'}
+		],
+		search 	: function() {
+
+			banhji.cashPaymentReport.dataSource.filter({
+				logic: banhji.cashPaymentReport.get('filteredBy'),
+				filters: [			
+					{field: "issued_date >=", value: kendo.toString(this.startDate, "yyyy-MM-dd")},
+					{field: "issued_date <=", value: kendo.toString(this.endDate, "yyyy-MM-dd")}
+				]
+			});
+		}, 
+		filterChange  : function(e){
+			banhji.cashPaymentReport.set("filteredBy", e.sender.dataSource.at(e.sender.selectedIndex-1).id);
 		}
 	});
     banhji.cashSale = kendo.observable({
@@ -68077,6 +68025,7 @@
 		sortList			: banhji.source.sortList, 
 		//line to sale summary
 		cashCollection     	: banhji.cashCollection,
+		cashPaymentReport     	: banhji.cashPaymentReport,
 		// search button
 		saleDetailSearch 	: function() {
 			this.detailSale.filter({
@@ -75599,18 +75548,26 @@
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
 		}else{
+			var vm = banhji.cashPaymentReport;
+			banhji.userManagement.addMultiTask("Cash Payment Report","cash_payment_report"); 
+
 			banhji.view.layout.showIn("#content", banhji.view.cashPaymentReport);
-			banhji.view.layout.showIn('#menu', banhji.view.menu);
-			banhji.view.menu.showIn('#secondary-menu', banhji.view.accountingMenu);
-
-			var vm = banhji.cashPaymentReport;			
-			banhji.userManagement.addMultiTask("Cash Payment Report","cash_payment_report",null);
-			if(banhji.pageLoaded["cash_payment_report"]==undefined){
-				banhji.pageLoaded["cash_payment_report"] = true;				
-								
-			}
-
-			vm.pageLoad();
+			banhji.cashSale.set('startDate', new Date().getFullYear() + "-01-01");
+			banhji.cashSale.cashPaymentReport.dataSource.filter({
+				logic: banhji.saleSummaryCustomer.get('filteredBy'),
+				filters: [
+					{field: "issued_date >=", value: kendo.toString(new Date().getFullYear() + "-01-01", "yyyy-MM-dd")},
+					{field: "issued_date <=", value: kendo.toString(new Date(), "yyyy-MM-dd")}
+				]
+			});
+			banhji.cashSale.cashPaymentReport.dataSource.bind('requestEnd', function(e){
+				if(e.response) {
+					banhji.cashSale.set('count', e.response.count);
+					kendo.culture(banhji.locale);
+					banhji.cashSale.set('total', kendo.toString(e.response.total, 'c2'));
+					banhji.cashSale.set('segments', kendo.toString(e.response.segments, 'n0'));
+				}
+			});
 		}
 	});
 
