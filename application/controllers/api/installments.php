@@ -93,11 +93,11 @@ class Installments extends REST_Controller {
 			$obj->start_month 		= $value->start_month;
 			$obj->amount 			= $value->amount;
 			$obj->period 			= $value->period;
-			$obj->payment_number 	= $value->payment_number;
+			// $obj->payment_number 	= $value->payment_number;
 			$obj->invoiced 			= $value->invoiced;
 
 			if($obj->save()){
-				for($x=0; $x < $obj->payment_number; $x++) {
+				for($x=0; $x < $obj->period; $x++) {
 					$day = date('d', strtotime($obj->start_month));
 					$year = date('Y', strtotime($obj->start_month));
 					$month= date('m', strtotime($obj->start_month)) + $x;
@@ -112,9 +112,9 @@ class Installments extends REST_Controller {
 					$installment->amount = floatval($obj->amount) / $obj->period;
 					$installment->date = $sDate;
 					$installment->invoiced = 0;
-					$installment->save();
+					$installment->save($obj);
 				}
-				$schedule = $value->installment_schedule->select('id, date, amount')->get_raw();
+				$schedule = $obj->installment_schedule->select('id, date, amount')->get_raw();
 				//Results
 
 				$data["results"][] = array(

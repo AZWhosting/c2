@@ -33,7 +33,7 @@ class Cashreports extends REST_Controller {
 		}
 	}
 
-	function cash_position_get() {
+	function cash_collection_get() {
 		$filters 	= $this->get("filter");
 		$page 		= $this->get('page') !== false ? $this->get('page') : 1;
 		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;
@@ -41,21 +41,14 @@ class Cashreports extends REST_Controller {
 		$data["results"] = array();
 		$data["count"] = 0;
 		$is_pattern = 0;
-		$deleted = 0;
-		$temp = array();
-		$onHand = 0;
+		$deleted = 0;			
+		$customers = array();
 		$total =0;
-		$totalService =0;
-		$totalProduct = 0;
-		$totalOnhand =0;
-		$totalQOH = 0;
-		$totalPO =0;
-		$totalSO =0;
-
+		$segments = 0;
+		$amount = 0;
+		// checked if the logic is customer or segment
 		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$obj->where_in( 'type', array("Cash_Sale", "Cash_Receipt"));
-		$obj->where('is_recurring <>', 1);
-		$obj->where('deleted <>', 1);
+
 		if(!empty($sort) && isset($sort)){					
 			foreach ($sort as $value) {
 				$obj->order_by($value["field"], $value["dir"]);
@@ -99,88 +92,78 @@ class Cashreports extends REST_Controller {
 			}									 			
 		}
 
-		// $obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		// $obj->where("item_type_id", 1);
-		// $obj->where('is_pattern', 0);
+		// Segment
+		if($filters['logic'] == "segment") {
+			$segmentItem = new Segmentitem(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$segmentItem->get();
 
-		// $obj->include_related("contact_type", "name");
+			foreach ($segmentItem as $seg) {
+				$segments +=1;
+				$txn = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
-		//Results
-		$obj->get_paged_iterated($page, $limit);
-		$data["count"] = $obj->paged->total_rows;
-		
-		if($obj->result_count()>0){
-			foreach ($obj as $value) {
-				$po = 0;
-				$so = 0;
-				$items = $value->item_line->get();
-				foreach ($items as $item) {
-					$inventory = $item->item->get();
-					
+				$txn->where_in("type", array("Cash_Payment", "Cash_Purchase", "Journal"));
+				$txn->where_in("status", array(0,2));
+				$txn->like("segments", $seg->id, "both");
+				$txn->where("deleted",0);
+				$txn->where("is_recurring",0);
+				$txn->get_iterated();
 
-					if(isset($temp["$inventory->id"])) {
-						if($value->type == "Purchase_Order") {
-							isset($temp["$inventory->id"]['po']) ? $temp["$inventory->id"]['po'] += $item->quantity : $temp["$inventory->id"]['po'] = $item->quantity;
-						} else {
-							isset($temp["$inventory->id"]['so']) ? $temp["$inventory->id"]['so'] += $item->quantity : $temp["$inventory->id"]['so'] = $item->quantity;
-						}
+				foreach ($txn as $t) {
+					$amt = floatval($t->amount)/ floatval($t->rate);
+
+					if(isset($customers["$seg->name"])) {
+						$customers["$seg->name"]['amount']+= $amt;
 					} else {
-						$in = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-						$in->select_sum('quantity');						
-						$in->where_in_related("transaction", "type", array("Cash_Purchase", "Credit_Purchase", "Item_Adjustment"));
-						$in->where_related("transaction", "is_recurring", 0);
-						$in->where_related("transaction", "deleted", 0);
-						$in->where('item_id', $item->item_id);
-						$in->where('movement', 1);
-						$in->get();
-
-						$out = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-						$out->select_sum('quantity');
-						$out->where_in_related("transaction", "type", array("Invoice", "Cash_Sale", "Item_Adjustment"));
-						$out->where_related("transaction", "is_recurring", 0);
-						$out->where_related("transaction", "deleted", 0);
-						$out->where('item_id', $item->item_id);
-						$out->where('movement', -1);
-						$out->get();
-
-						
-
-						if($value->type == "Purchase_Order") {
-							$temp["$inventory->id"]['po'] = $item->quantity;
-						} else {
-							$temp["$inventory->id"]['so'] = $item->quantity;
-						}
-						$temp["$inventory->id"]['name'] = $inventory->name;
-						$temp["$inventory->id"]['cost'] = floatval($inventory->cost);
-						$temp["$inventory->id"]['price'] = floatval($inventory->price);
-						$temp["$inventory->id"]['onHand'] = $in->quantity - $out->quantity;
-						$temp["$inventory->id"]['currency_code'] = $inventory->locale;
-
-						$onHand +=  $in->quantity - $out->quantity;
+						$customers["$seg->name"]['amount']= $amt;
 					}
-				}				
+					$total += $amt;
+				}
 			}
-		}			
+		} else {
+			$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$type->select('id')->where('parent_id', 2)->get();
+			$types = array();
+			foreach($type as $t) {
+				$types[] = $t->id;
+			}
 
-		foreach ($temp as $key => $value) {
+			$obj->where_in_related("contact", 'contact_type_id', $type);
+			$obj->where('is_recurring', 0);
+			$obj->where("deleted", 0);
+			$obj->where_in("type", array("Cash_Payment", "Cash_Purchase", "Journal"));
+
+			// $obj->include_related("contact_type", "name");
+
+			//Results
+			$obj->get_paged_iterated($page, $limit);
+			$data["count"] = $obj->paged->total_rows;
+			
+			if($obj->result_count()>0){
+				foreach ($obj as $value) {
+					$customer = $value->contact->get();
+					$fullname = $customer->surname.' '.$customer->name;
+					if(isset($customers["$fullname"])) {
+						$customers["$fullname"]['amount']+= $amount;
+					} else {
+						$customers["$fullname"]['amount']= $amount;
+					}
+				}
+			}
+		}				
+
+		foreach ($customers as $key => $value) {
 			$data["results"][] = array(
-				'id' 		=> $key,
-				'item' 		=> $value['name'],
-				'cost'		=> $value['cost'],
-				'price'		=> $value['price'],
-				'onHand'	=> $value['onHand'],
-				'currency'	=> $value['currency_code'],
-				'so'		=> isset($value['so'])? $value['so'] : 0,
-				'po'		=> isset($value['po'])? $value['po'] : 0,
+				'customer' => $key,
+				'amount'	=> $value['amount'],
+				'number' 	=> $value['number'],
+				'date'		=> $value['issued_date'],
+				'type' 		=> $value['type'],
 			);
-
 		}
-		
 
 		// Response Data
-		$data['onHand'] = $onHand;
-		$data['count'] = count($temp);
-		$this->response($data, 200); 
+		$data['segments'] = $segments;
+		$this->response($data, 200);
 	}
 	
 }//End Of Class

@@ -1677,10 +1677,11 @@ class Sales extends REST_Controller {
 					}
 				}
 
-				if(isset($customers["$job->name"])) {
-					$customers["$job->name"]['amount'] += floatval($value->amount);
-					$customers["$job->name"]['transactions'][] = array(
+				if(isset($customers["$fullname"])) {
+					$customers["$fullname"]['amount'] += floatval($value->amount);
+					$customers["$fullname"]['transactions'][] = array(
 						'id'  		=> $value->id,
+						'job'		=> $job->name,
 						'type'  	=> $value->type,
 						'date' 		=> $value->issued_date,
 						'number' 	=> $value->number,
@@ -1689,14 +1690,15 @@ class Sales extends REST_Controller {
 						'amount' 	=> floatval($value->amount)/floatval($value->rate)
 					);
 				} else {
-					$customers["$job->name"]['amount'] = floatval($value->amount);
-					$customers["$job->name"]['transactions'][] = array(
+					$customers["$fullname"]['amount'] = floatval($value->amount);
+					$customers["$fullname"]['transactions'][] = array(
 						'id'  		=> $value->id,
+						'job'		=> $job->name,
 						'type'  	=> $value->type,
 						'date' 		=> $value->issued_date,
 						'number' 	=> $value->number,
 						'memo' 		=> $value->memo2,
-						'segments'=> $segments,
+						'segments'	=> $segments,
 						'amount' 	=> floatval($value->amount)/floatval($value->rate)
 					);
 			//Results
@@ -2583,7 +2585,7 @@ class Sales extends REST_Controller {
 			$data["results"][] = array(
 				'group' 	=> $key,
 				'amount'	=> $value['amount'],
-				'items' => $value['transactions']
+				'items' 	=> $value['transactions']
 			);
 		}
 		$data['total'] = $total;
@@ -2998,5 +3000,126 @@ class Sales extends REST_Controller {
 		$data['saleOrder'] = $saleOrder;
 		$data['customerCount'] = $customerCount;
 		$this->response($data, 200);
+	}
+
+	function customer_get() {		
+		$filters 	= $this->get("filter")["filters"];		
+		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
+		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;								
+		$sort 	 	= $this->get("sort");		
+		$data["results"] = array();
+		$data["count"] = 0;
+		$is_pattern = 0;
+
+		$obj = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
+
+		//Sort
+		if(!empty($sort) && isset($sort)){					
+			foreach ($sort as $value) {
+				$obj->order_by($value["field"], $value["dir"]);
+			}
+		}
+
+		//Filter		
+		if(!empty($filters) && isset($filters)){
+	    	foreach ($filters as $value) {
+	    		if(isset($value['operator'])) {
+					$obj->{$value['operator']}($value['field'], $value['value']);
+				} else {
+					if($value["field"]=="is_pattern"){
+	    				$is_pattern = $value["value"];
+	    			}else{
+	    				$obj->where($value["field"], $value["value"]);
+	    			}
+				}
+			}
+		}
+		
+		$obj->where("is_pattern", $is_pattern);
+		$obj->where("deleted <>", 1);
+		$obj->where_in("contact_type_id", array(4,5));
+		$obj->include_related("contact_type", "name");		
+
+		//Results
+		$obj->get_paged_iterated($page, $limit);
+		$data["count"] = $obj->paged->total_rows;		
+		
+		if($obj->result_count()>0){
+			foreach ($obj as $value) {
+		 		$data["results"][] = array(
+		 			"id" 						=> $value->id,		 			
+					"branch_id" 				=> $value->branch_id,
+					"country_id" 				=> $value->country_id,
+					"ebranch_id" 				=> $value->ebranch_id,
+					"elocation_id" 				=> $value->elocation_id,
+					"wbranch_id" 				=> $value->wbranch_id,
+					"wlocation_id" 				=> $value->wlocation_id,					
+					"user_id"					=> $value->user_id, 	
+					"contact_type_id" 			=> $value->contact_type_id,
+					"eorder" 					=> $value->eorder,
+					"worder" 					=> $value->worder, 						
+					"abbr" 						=> $value->abbr,
+					"number" 					=> $value->number,
+					"eabbr" 					=> $value->eabbr,
+					"enumber" 					=> $value->enumber,
+					"wabbr" 					=> $value->wabbr,
+					"wnumber" 					=> $value->wnumber,		
+					"name" 						=> $value->name,			
+					"gender"					=> $value->gender,			
+					"dob" 						=> $value->dob,				
+					"pob" 						=> $value->pob,
+					"latitute" 					=> $value->latitute,
+					"longtitute" 				=> $value->longtitute,
+					"credit_limit" 				=> $value->credit_limit,
+					"locale" 					=> $value->locale,					
+					"id_number" 				=> $value->id_number,
+					"phone" 					=> $value->phone,
+					"email" 					=> $value->email,
+					"website" 					=> $value->website,					
+					"job" 						=> $value->job,
+					"vat_no" 					=> $value->vat_no,
+					"family_member"				=> $value->family_member,
+					"city" 						=> $value->city,
+					"post_code" 				=> $value->post_code,
+					"address" 					=> $value->address,
+					"bill_to" 					=> $value->bill_to,
+					"ship_to" 					=> $value->ship_to,
+					"memo" 						=> $value->memo,
+					"image_url" 				=> $value->image_url,				
+					"company" 					=> $value->company,
+					"company_en" 				=> $value->company_en,
+					"bank_name" 				=> $value->bank_name,
+					"bank_address" 				=> $value->bank_address,
+					"bank_account_name" 		=> $value->bank_account_name,
+					"bank_account_number" 		=> $value->bank_account_number,
+					"name_on_cheque" 			=> $value->name_on_cheque,
+					"business_type_id" 			=> $value->business_type_id,					
+					"payment_term_id" 			=> $value->payment_term_id,
+					"payment_method_id" 		=> $value->payment_method_id,
+					"deposit_account_id"		=> $value->deposit_account_id,
+					"trade_discount_id" 		=> $value->trade_discount_id,
+					"settlement_discount_id"	=> $value->settlement_discount_id,
+					"salary_account_id"			=> $value->salary_account_id,
+					"account_id" 				=> $value->account_id,					
+					"ra_id" 					=> $value->ra_id,
+					"tax_item_id" 				=> $value->tax_item_id,					
+					"phase_id" 					=> $value->phase_id,
+					"voltage_id" 				=> $value->voltage_id,
+					"ampere_id" 				=> $value->ampere_id,
+					"registered_date" 			=> $value->registered_date,
+					"use_electricity" 			=> $value->use_electricity,
+					"use_water" 				=> $value->use_water,
+					"is_local" 					=> $value->is_local,
+					"is_pattern" 				=> intval($value->is_pattern),
+					"status" 					=> $value->status,
+					"is_system"					=> $value->is_system,
+								
+					"contact_type"				=> $value->contact_type_name
+		 		);
+			}
+		}
+
+		//Response Data		
+		$this->response($data, 200);			
 	}
 }//End Of Class

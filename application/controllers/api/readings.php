@@ -86,8 +86,10 @@ class Readings extends REST_Controller {
 
 		foreach ($models as $value) {
 			$obj = new Meter_record(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$meter = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$meter->where('number', $value->number)->get();
 			//if($value->status == "n") {
-				$obj->meter_id 				= isset($value->meter_id)			?$value->meter_id: "";
+				$obj->meter_id 				= isset($meter->id)					?$meter->id: "";
 				$obj->previous 				= isset($value->previous)			?$value->previous: "";
 				$obj->current 				= isset($value->current)			?$value->current: "";
 				$obj->from_date 			= isset($value->from_date)			?$value->from_date: "";
@@ -211,6 +213,7 @@ class Readings extends REST_Controller {
 		}			
 
 		//Get Result
+		$obj->where('activated', 1);
 		$obj->get_paged_iterated($page, $limit);
 		$data["count"] = $obj->paged->total_rows;		
 
@@ -228,7 +231,7 @@ class Readings extends REST_Controller {
 				$data["results"][] = array(
 					"meter_id" 		=> $value->id,
 					"number" 		=> intval($value->number),
-					"prev"			=> $record->current,
+					"previous"		=> $record->current,
 					"current"		=> 0,
 					"from_date"		=> "2016-" . date('m') . "-01",
 					"to_date"		=> "2016-" . date('m') . "-" . date('t'),

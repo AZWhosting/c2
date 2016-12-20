@@ -42,7 +42,7 @@ class Plans extends REST_Controller {
 
 		if($table->exists()) {
 			foreach($table as $value) {
-				$items = $value->plan_item->select('id as item, name, is_flat, type, unit, amount')->get_raw();
+				$items = $value->plan_item->select('id as item, account_id, name, is_flat, type, unit, amount')->get_raw();
 				$data[] = array(
 					'id' => $value->id,
 					'code' => $value->code,
@@ -188,6 +188,7 @@ class Plans extends REST_Controller {
 
 		if($table->exists()) {
 			foreach($table as $value) {
+				$account = $value->account->get();
 				$data[] = array(
 					"id"  	  => $value->id,
 					"is_flat" => $value->is_flat,
@@ -196,6 +197,7 @@ class Plans extends REST_Controller {
 					"amount"  => $value->amount,
 					"usage"   => $value->usage,
 					"name" 	  => $value->name,
+					"account" => array('id' => $account->id, 'name' => $account->name),
 					"is_active"=>$value->is_active == 1 ? TRUE:FALSE
 				);
 			}
@@ -221,6 +223,7 @@ class Plans extends REST_Controller {
 			$table->amount = isset($row->amount) ? $row->amount : 0;
 			$table->usage = isset($row->usage)?$row->usage:0;
 			$table->name = isset($row->name)?$row->name:null;
+			$table->account_id = isset($row->account->id)?$row->account->id:0;
 			$table->is_active = isset($row->is_active) ? $row->is_active : 1;
 			$table->is_deleted = 0;
 
@@ -233,6 +236,7 @@ class Plans extends REST_Controller {
 					"amount"  => $table->amount,
 					"usage"   => $table->usage,
 					"name" 	  => $table->name,
+					"acount"  => $row->account,
 					"is_active"=>$table->is_active == 1 ? TRUE:FALSE
 				);
 			}
@@ -258,9 +262,10 @@ class Plans extends REST_Controller {
 			$table->amount = isset($row->amount) ? $row->amount : 0;
 			$table->usage = isset($row->usage) ? $row->usage: 0;
 			$table->name = isset($row->name)?$row->name:null;
+			$table->account_id = isset($row->account->id)?$row->account->id:0;
 			$table->is_active = isset($row->is_active) ? $row->is_active : 1;
 			$table->is_deleted = 0;
-			$table->tariff_id = $row->tariff_id;
+			$table->tariff_id = isset($row->tariff_id) ? $row->tariff_id : 0;
 
 			if($table->save()) {
 				$data[] = array(
@@ -272,6 +277,7 @@ class Plans extends REST_Controller {
 					"amount"  => $table->amount,
 					"usage" 	  => $table->usage,
 					"name" 	  => $table->name,
+					"acount"  => $row->account,
 					"is_active"=>$table->is_active == 1 ? TRUE:FALSE
 				);
 			}
@@ -332,12 +338,14 @@ class Plans extends REST_Controller {
 		if($table->exists()) {
 			$data = array();
 			foreach($table as $row) {
+				$account = $row->account->get();
 				$data[] = array(
 					'id' => $row->id,
 					'name' => $row->name,
 					'is_flat' => $row->is_flat,
 					'type' => $row->type,
 					'usage' 	=> $row->usage,
+					"account" => array('id' => $account->id, 'name' => $account->name),
 					'amount'=> $row->amount
 				);
 			}
@@ -359,6 +367,7 @@ class Plans extends REST_Controller {
 			$table->amount = isset($row->amount) ? $row->amount : 0;
 			$table->usage = isset($row->usage)?$row->usage:0;
 			$table->name = isset($row->name)?$row->name:null;
+			$table->account_id = isset($row->account->id)?$row->account->id:0;
 			$table->is_active = isset($row->is_active) ? $row->is_active : 1;
 			$table->is_deleted = 0;
 			$table->tariff_id = $row->tariff_id;
@@ -370,6 +379,7 @@ class Plans extends REST_Controller {
 					"type" 	  => $table->type,
 					"unit" 	  => $table->unit,
 					"amount"  => $table->amount,
+					"account" => $row->account,
 					"usage"   => $table->usage,
 					"is_active"=>$table->is_active == 1 ? TRUE:FALSE
 				);
@@ -396,6 +406,7 @@ class Plans extends REST_Controller {
 			$table->amount = isset($row->amount) ? $row->amount : 0;
 			$table->usage = isset($row->usage)?$row->usage:0;
 			$table->name = isset($row->name)?$row->name:null;
+			$table->account_id = isset($row->account->id)?$row->account->id:0;
 			$table->is_active = isset($row->is_active) ? $row->is_active : 1;
 			$table->is_deleted = 0;
 			if($table->save()) {
@@ -407,6 +418,7 @@ class Plans extends REST_Controller {
 					"unit" 	  => $table->unit,
 					"amount"  => $table->amount,
 					"usage"   => $table->usage,
+					"account" => $row->account,
 					"is_active"=>$table->is_active == 1 ? TRUE:FALSE
 				);
 			}

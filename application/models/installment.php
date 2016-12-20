@@ -9,18 +9,22 @@ class Installment extends DataMapper {
             'class' => 'contact',
             'other_field' => 'installment'
         ),
-				'meter' => array(
-					'class' => 'meter',
-					'other_field' => 'installment'
-				)
-	);
-
-	public $has_many = array(
+		'meter' => array(
+			'class' => 'meter',
+			'other_field' => 'installment'
+		),
 		'installment_schedule' => array(
 			'class' => 'installment_schedule',
 			'other_field' => 'installment'
 		)
 	);
+
+	// public $has_many = array(
+	// 	'installment_schedule' => array(
+	// 		'class' => 'installment_schedule',
+	// 		'other_field' => 'installment'
+	// 	)
+	// );
 
 	public function __construct($id = null, $server_name = null, $db_username = null, $server_password = null, $db = null) {
 		$this->db_params = array(

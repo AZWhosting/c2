@@ -79,10 +79,19 @@ class Transactions extends REST_Controller {
 					}else{
 						$paid->where("reference_id", $value->id);
 					}
-					$paid->where("is_recurring",0);
-					$paid->where("deleted",0);
+					$paid->where("is_recurring <>",1);
+					$paid->where("deleted <>",1);
 					$paid->get();
 					$amount_paid = floatval($paid->amount) + floatval($paid->discount);
+				}else if($value->type=="Cash_Advance"){
+					$paid = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					$paid->select_sum("amount");
+					$paid->where("type", "Advance_Settlement");
+					$paid->where("reference_id", $value->id);
+					$paid->where("is_recurring <>",1);
+					$paid->where("deleted <>",1);
+					$paid->get();
+					$amount_paid = floatval($paid->amount);
 				}
 
 				$data["results"][] = array(
@@ -1160,7 +1169,7 @@ class Transactions extends REST_Controller {
 			//Check existing txn
 			$existTxn = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$existTxn->where('type', $type);
-			$existTxn->where('is_recurring', 0);
+			$existTxn->where('is_recurring <>', 1);
 			$existTxn->limit(1);
 			$existTxn->get();
 

@@ -572,6 +572,73 @@ class Dashboards extends REST_Controller {
 		//Response Data		
 		$this->response($data, 200);	
 	}
+
+	//GET MONTHLY Receiable
+	function monthly_receivable_get() {		
+		$filters 	= $this->get("filter")["filters"];		
+		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
+		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;								
+		$sort 	 	= $this->get("sort");		
+		$data["results"] = [];
+		$data["count"] = 0;
+		$is_recurring = 0;
+		$deleted = 0;
+
+		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		
+		//Filter		
+		if(!empty($filters) && isset($filters)){			
+	    	foreach ($filters as $value) {	    				
+	    		if($value["field"]=="is_recurring"){
+    				$is_recurring = $value["value"];
+    			}else if($value["field"]=="deleted"){
+    				$deleted = $value["value"];
+    			}else{
+    				$obj->where($value["field"], $value["value"]);    				
+    			}    			    		  			    		
+			}									 			
+		}
+		
+		$obj->where_in("type", array("Invoice","Cash_Receipt"));
+		$obj->where("issued_date >=", $this->startFiscalDate);
+		$obj->where("issued_date <", $this->endFiscalDate);
+		$obj->where_in("status", array(0,2));
+		$obj->where("is_recurring", $is_recurring);	
+		$obj->where("deleted", $deleted);						
+		$obj->order_by("issued_date");								
+		$obj->get_iterated();
+
+		$transactionList = [];
+		foreach ($obj as $value) {
+			$month = date('M', strtotime($value->issued_date));
+			$amount = floatval($value->amount) / floatval($value->rate);
+
+			if(isset($transactionList[$month])){
+				if($value->type==="Invoice"){
+					$transactionList[$month]["receivable"] += $amount;
+				}else{
+					$transactionList[$month]["payment"] += $amount;
+				}
+			} else {
+				if($value->type==="Invoice"){
+					$transactionList[$month] = array("receivable"=>$amount, "payment"=>0);
+				}else{
+					$transactionList[$month] = array("receivable"=>0, "payment"=>$amount);
+				}			
+			}			
+		}		
+		
+		foreach ($transactionList as $key => $value) {
+			$data["results"][] = array(					
+			   	"receivable" 		=> floatval($value['receivable']),
+			   	"payment" 	=> floatval($value['payment']),				   	
+			   	"month"		=> $key				   	
+			);
+		}					
+
+		//Response Data		
+		$this->response($data, 200);	
+	}
 	
 	//GET TOP CUSTOMER 
 	function top_customer_get() {		
@@ -1068,6 +1135,72 @@ class Dashboards extends REST_Controller {
 		//Response Data		
 		$this->response($data, 200);	
 	}	
+
+	//GET MONTHLY PURCHASE
+	function monthly_payment_get() {		
+		$filters 	= $this->get("filter")["filters"];		
+		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
+		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;								
+		$sort 	 	= $this->get("sort");		
+		$data["results"] = [];
+		$data["count"] = 0;
+		$is_recurring = 0;
+		$deleted = 0;
+
+		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		
+		//Filter		
+		if(!empty($filters) && isset($filters)){			
+	    	foreach ($filters as $value) {	    				
+	    		if($value["field"]=="is_recurring"){
+    				$is_recurring = $value["value"];
+    			}else if($value["field"]=="deleted"){
+    				$deleted = $value["value"];
+    			}else{
+    				$obj->where($value["field"], $value["value"]);    				
+    			}    			    		  			    		
+			}									 			
+		}
+		
+		$obj->where_in("type", array("Credit_Purchase","Credit_Payment"));
+		$obj->where("issued_date >=", $this->startFiscalDate);
+		$obj->where("issued_date <", $this->endFiscalDate);
+		$obj->where("is_recurring", $is_recurring);		
+		$obj->where("deleted", $deleted);						
+		$obj->order_by("issued_date");								
+		$obj->get_iterated();
+
+		$transactionList = [];
+		foreach ($obj as $value) {
+			$month = date('M', strtotime($value->issued_date));
+			$amount = floatval($value->amount) / floatval($value->rate);
+
+			if(isset($transactionList[$month])){
+				if($value->type==="Cash_Purchase"){
+					$transactionList[$month]["payable"] += $amount;
+				}else{
+					$transactionList[$month]["payment"] += $amount;
+				}
+			} else {
+				if($value->type==="Cash_Purchase"){
+					$transactionList[$month] = array("payable"=>$amount, "payment"=>0);
+				}else{
+					$transactionList[$month] = array("payable"=>0, "payment"=>$amount);
+				}			
+			}			
+		}		
+		
+		foreach ($transactionList as $key => $value) {
+			$data["results"][] = array(					
+			   	"payable" 		=> floatval($value['payable']),
+			   	"payment" 	=> floatval($value['payment']),				   	
+			   	"month"		=> $key				   	
+			);
+		}					
+
+		//Response Data		
+		$this->response($data, 200);	
+	}
 	
 	//GET TOP SUPPLIER 
 	function top_supplier_get() {		

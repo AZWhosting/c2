@@ -45,6 +45,7 @@ class Users extends REST_Controller {
 				'profile_photo' => $u->profile_photo_url,
 				'is_confirmed'	=> $u->is_confirmed == 0 ? FALSE : TRUE,
 				'is_disabled'=> $u->is_diabled == 0 ? FALSE : TRUE,
+				'password' => '********',
 				'email' => $u->email,
 				'mobile' => $u->mobile,
 				'role' 	=> $u->role,
