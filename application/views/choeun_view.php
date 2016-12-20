@@ -1552,7 +1552,7 @@
 								
 							</div>
 							<div class="span9" align="right">
-								<span id="saveNew" style="width: 80px!important;margin:0" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit, click: save" style="width: 50px;"><i></i> <span>Save</span></span>
+								<span id="saveNew" style="width: 80px!important;margin:0" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="click: save" style="width: 50px;"><i></i> <span>Save</span></span>
 								<span id="cancel" data-bind="click: cancel" class="btn btn-icon btn-success glyphicons power" style="width: 100px;"><i></i> <span >Cancel</span></span>
 							</div>
 						</div>
@@ -2824,8 +2824,6 @@
 <!-- ***************************
 *	End Water Section         *
 **************************** -->
-
-
 
 
 <!-- ***************************
@@ -7311,7 +7309,6 @@
 				var view = self.dataSource.view();
 				self.set("obj", view[0]);
 			});	
-
 		},
 		addNew 	  	: function() {
 			this.set("obj", null);		
@@ -7364,7 +7361,6 @@
 	            		url 			: banhji.s3 + key,
 	            		size 			: value.size,
 	            		created_at 		: new Date(),
-
 	            		file 			: value.rawFile
 	            	});	            			            		            
 	            }else{
@@ -7372,7 +7368,11 @@
 	            }
 	        });
 	    },
-	    uploadFile 			: function(){
+	    uploadFile 			: function(id){
+	    	if(id){
+	    		this.attachmentDS.pushUpdate({license_id: id});
+	    	}
+	    	//console.log();
 	    	$.each(this.attachmentDS.data(), function(index, value){	    		
 		    	if(!value.id){
 			    	var params = { 
@@ -7424,24 +7424,33 @@
 	    },
 		save 		: function() {
 			var self = this;
+			
 			if(this.dataSource.data().length > 0) {
-				this.dataSource.sync();
-				this.dataSource.bind("requestEnd", function(e){
-					if(e.type != 'read') {
-						if(e.response){				
-				    		$("#ntf1").data("kendoNotification").success("Successfully!");
-				    		//self.dataSource.addNew();
-							banhji.router.navigate("/setting");
-							banhji.setting.licenseDS.fetch();
-							self.uploadFile();
-						}
-					}else{
-						console.log("Read");
-					}			    					  				
-			    });
-			    this.dataSource.bind("error", function(e){		    		    	
-					$("#ntf1").data("kendoNotification").error("Error!"); 			
-			    });
+				if(this.dataSource.hasChanges() == true ){
+					this.dataSource.sync();
+					this.dataSource.bind("requestEnd", function(e){
+						if(e.type != 'read') {
+							if(e.response){				
+					    		$("#ntf1").data("kendoNotification").success("Successfully!");
+					    		//self.dataSource.addNew();
+								banhji.router.navigate("/setting");
+								banhji.setting.licenseDS.fetch();
+								self.uploadFile(e.response.results[0].id);
+							}
+						}else{
+							console.log("Read");
+						}					  				
+				    });
+				    this.dataSource.bind("error", function(e){		    		    	
+						$("#ntf1").data("kendoNotification").error("Error!"); 			
+				    });
+				}else{
+					if(this.attachmentDS.hasChanges() == true) {
+						banhji.router.navigate("/setting");
+						banhji.setting.licenseDS.fetch();
+						this.uploadFile();
+					}
+				}
 			}
 		},
 		cancel 				: function(){
@@ -9207,86 +9216,28 @@
 				workbook.SheetNames.forEach(function(sheetName) {
 					var roa = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
 					if(roa.length > 0){
+						console.log(i);
 						result[sheetName] = roa;
+						var j = 0;
 						for(var i = 0; i < roa.length; i++) {
-							self.dataSource.add(roa[i]);
-							$("#loadImport").css("display","none");	
-							console.log(roa[i]);
+							if(i != 0){
+								j = i - 1;
+								if(roa[i].name_local != roa[j].name_local){
+									self.dataSource.add(roa[i]);
+									console.log(roa[i].name_local);
+								}
+							}else{
+								self.dataSource.add(roa[i]);
+							}
 						}							
 					}					
 				});															
 			}
 			reader.readAsBinaryString(files[0].rawFile);      
 		},
-		exportEXCEL 		: function(e){
-			$("#loadImport").css("display","block");
-			var ds = new kendo.data.DataSource({
-		        type: "json",
-		        transport: {
-		          read: apiUrl + "readings"
-		        },
-		        schema: {
-		          model: {
-		            fields: {
-		              number: { type: "number" },
-		              date: { type: "date" },
-		              previous: { type: "previous" },
-		              reading: { type: "reading" },
-		              current: { type: "current" }
-		            }
-		          }
-		        }
-		      });
-
-		      var rows = [{
-		        cells: [
-		          { value: "number" },
-		          { value: "date" },
-		          { value: "previous" },
-		          { value: "reading" },
-		          { value: "current" }
-		        ]
-		      }];
-		      ds.fetch(function(){
-		        var data = this.data();
-		        for (var i = 0; i < data[0].count; i++){
-		          rows.push({
-		            cells: [
-		              { value: data[0].results[i].number },
-		              { value: data[0].results[i].date },
-		              { value: data[0].results[i].previous },
-		              { value: data[0].results[i].reading },
-		              { value: data[0].results[i].current }
-		            ]
-		          })
-		        }
-		        var workbook = new kendo.ooxml.Workbook({
-		          sheets: [
-		            {
-		              columns: [
-		                { autoWidth: true },
-		                { autoWidth: true },
-		                { autoWidth: true },
-		                { autoWidth: true },
-		                { autoWidth: true }
-		              ],
-		              // Title of the sheet
-		              title: "Reading",
-		              // Rows of the sheet
-		              rows: rows
-		            }
-		          ]
-		        });
-		        //save the file as Excel file with extension xlsx
-		        kendo.saveAs({dataURI: workbook.toDataURL(), fileName: "Reading.xlsx"});
-		      }).then(function(){
-		      	$("#loadImport").css("display","none");
-		      });
-		},
 		save 				: function() {
 			var self = this;
 			if(this.dataSource.data().length > 0) {
-				$("#loadImport").css("display","block");
 				this.dataSource.sync();
 				this.dataSource.bind("requestEnd", function(e){
 					if(e.type != 'read') {

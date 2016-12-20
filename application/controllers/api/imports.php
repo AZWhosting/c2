@@ -219,32 +219,15 @@ class Imports extends REST_Controller {
 			$accumulated = 0;
 			$depreciation = 0;
 
-			$account = new Account(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			$account->where('number', $value->account)->get();
-
 			$income = new Account(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$income->where('number', $value->income_account)->get();
 
-			$cogs = new Account(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			$cogs->where('number', $value->cogs_account)->get();
+			$expense = new Account(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$expense->where('number', $value->expense_account)->get();
 
 			$inventory = new Account(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$inventory->where('number', $value->inventory_account)->get();
 
-			if(isset($value->fixed_assets_account)) {
-				$fixed = new Account(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				$fixed->where('number', $value->fixed_assets_account)->get();
-			}
-
-			if(isset($value->accumulated_account)) {
-				$accumulated = new Account(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				$accumulated->where('number', $value->accumulated_account)->get();
-			}
-
-			if(isset($value->depreciation_account)) {
-				$depreciation = new Account(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				$depreciation->where('number', $value->depreciation_account)->get();
-			}
 
 			isset($value->company_id) 				? $obj->company_id 				= $value->company_id : "";
 			isset($value->contact_id) 				? $obj->contact_id 				= $value->contact_id : "";
@@ -276,14 +259,9 @@ class Imports extends REST_Controller {
 		   	isset($value->on_po) 					? $obj->on_po 					= $value->on_po : "";
 		   	isset($value->on_so) 					? $obj->on_so 					= $value->on_so : "";
 		   	isset($value->order_point) 				? $obj->order_point 			= $value->order_point : "";
-		   	isset($value->account) 					? $obj->account_id 				= $account->id : "";
 		   	isset($value->income_account) 			? $obj->income_account_id 		= $income->id : "";
-		   	isset($value->cogs_account) 			? $obj->cogs_account_id 		= $cogs->id : "";
+		   	isset($value->expense_account) 			? $obj->expense_account_id 		= $expense->id : "";
 		   	isset($value->inventory_account) 		? $obj->inventory_account_id 	= $inventory->id : "";
-		   	isset($value->fixed_assets_account) 	? $obj->fixed_assets_account_id = $fixed->id : $fixed;
-		   	isset($value->accumulated_account) 		? $obj->accumulated_account_id 	= $accumulated->id : $accumulated;
-		   	isset($value->depreciation_account) 	? $obj->depreciation_account_id = $depreciation->id : $depreciation;
-		   	isset($value->deposit_account_id) 		? $obj->deposit_account_id 		= $value->deposit_account_id : "";
 		   	isset($value->preferred_vendor_id) 		? $obj->preferred_vendor_id 	= $value->preferred_vendor_id : "";
 		   	isset($value->image_url) 				? $obj->image_url				= $value->image_url : "";
 		   	isset($value->favorite) 				? $obj->favorite 				= $value->favorite : "";

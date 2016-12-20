@@ -180,6 +180,7 @@ class Meters extends REST_Controller {
 			$obj->cover_sealed 			= isset($value->cover_sealed)		?$value->cover_sealed:true;
 			// $obj->memo 					= $value->memo;
 			$obj->longtitute 			= isset($value->longtitute) 		?$value->longtitute: "";
+			$obj->activated 			= isset($value->activated) 			?$value->activated: "";
 			$obj->latitute 				= isset($value->latitute) 			?$value->latitute: "";
 			$obj->status 				= isset($value->status)				?$value->status:1;
 			$obj->location_id 			= isset($value->location_id)		?$value->location_id:"";
