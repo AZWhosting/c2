@@ -36799,7 +36799,7 @@
 				                <th data-bind="visible: showCheckNo" style="width: 10%"><span data-bind="text: lang.lang.check_number"></span></th>
 				                <th style="width: 15%"><span data-bind="text: lang.lang.amount"></span></th>			                
 				                <th style="width: 15%"><span data-bind="text: lang.lang.discount"></span></th>
-				                <th style="width: 15%"><span data-bind="text: lang.lang.pay"></span></th>
+				                <th style="width: 15%">RECEIVE</th>
 				            </tr> 
 				        </thead>
 				        <tbody data-role="listview" 
@@ -67148,7 +67148,7 @@
 					reference_no 		: "",
 					segments 	 		: [],								
 					dr 	 				: 0,
-					cr 					: value.amount + value.discount,				
+					cr 					: kendo.parseFloat(value.amount_due) + value.discount,				
 					rate				: value.rate,
 					locale				: value.locale
 				});
