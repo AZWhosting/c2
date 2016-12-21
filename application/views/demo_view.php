@@ -67148,7 +67148,7 @@
 					reference_no 		: "",
 					segments 	 		: [],								
 					dr 	 				: 0,
-					cr 					: kendo.parseFloat(value.amount_due) + value.discount,				
+					cr 					: kendo.parseFloat(value.amount_due),				
 					rate				: value.rate,
 					locale				: value.locale
 				});
@@ -67636,7 +67636,7 @@
 					description 		: "",
 					reference_no 		: "",
 					segments 	 		: [],								
-					dr 	 				: value.amount,
+					dr 	 				: kendo.parseFloat(value.amount_due),
 					cr 					: 0,				
 					rate				: value.rate,
 					locale				: value.locale
