@@ -33393,19 +33393,19 @@
 						<tr>
 							<td></td>
 							<td>cash sale</td>
-							<td>xx</td>
+							<td><span data-bind="text: totalCashSale"></span></td>
 							<td style="text-align: right;"></td>
 						</tr>
 						<tr>
 							<td></td>
-							<td>cash collection</td>
-							<td style="border-bottom: 1px solid #000 !important; ">xx</td>
+							<td>cash receipt</td>
+							<td style="border-bottom: 1px solid #000 !important; "><span data-bind="text: totalCashReceipt"></span></td>
 							<td style="border-bottom: 1px solid #000 !important; text-align: right;"></td>
 						</tr>
 						<tr>
 							<td>Total Cash Inflows</td>
 							<td></td>
-							<td style="border-bottom: 3px double #000 !important; font-size: 20px;">xxx</td>
+							<td style="border-bottom: 3px double #000 !important; font-size: 20px;"><span data-bind="text: totalSale"></span></td>
 							<td style="border-bottom: 3px double #000 !important; text-align: right;"></td>
 						</tr>
 
@@ -33418,26 +33418,31 @@
 						<tr>
 							<td></td>
 							<td>cash expense</td>
-							<td>xx</td>
+							<td><span data-bind="text: cashExpense"></span></td>
 							<td></td>
 						</tr>
 						<tr>
 							<td></td>
 							<td>cash payment</td>
-							<td style="border-bottom: 1px solid #000 !important; ">xx</td>
+							<td><span data-bind="text: cashPayment"></span></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td>cash purchase</td>
+							<td style="border-bottom: 1px solid #000 !important; "><span data-bind="text: cashPurchase"></span></td>
 							<td style="border-bottom: 1px solid #000 !important; text-align: right;"></td>
 						</tr>
 						<tr>
 							<td>Total Cash Outflows</td>
 							<td></td>
-							<td style="border-bottom: 3px double #000 !important; font-size: 20px;">xxx</td>
+							<td style="border-bottom: 3px double #000 !important; font-size: 20px;"><span data-bind="text: totalPurchase"></span></td>
 							<td style="border-bottom: 3px double #000 !important; text-align: right;"></td>
 						</tr>
 
 						<tr>
 							<td style="padding-left: 25px !important;">Net Cash Defisit/surplus</td>
 							<td></td>
-							<td style="border-bottom: 3px solid #000 !important;">xxx</td>
+							<td style="border-bottom: 3px solid #000 !important;"><span data-bind="text: total"></span></td>
 							<td style="border-bottom: 3px solid #000 !important; text-align: right;"></td>
 						</tr>
 
@@ -33540,8 +33545,8 @@
 	    <td>#=date#</td>
 	    <td>#=type#</td>
 	    <td>#=contact#</td>
-	    <td>#=number#</td>
-	    <td>#=amount#</td>
+	    <td><a href="\#/#=type.toLowerCase()#/#=id#">#=number#</a></td>
+	    <td align="right">#=kendo.toString(amount, 'c2')#</td>
 	</tr>
 </script>
 <script id="cashPaymentReport" type="text/x-kendo-template">
@@ -33633,8 +33638,8 @@
 	    <td>#=date#</td>
 	    <td>#=type#</td>
 	    <td>#=contact#</td>
-	    <td>#=number#</td>
-	    <td>#=amount#</td>
+	    <td><a href="\#/#=type.toLowerCase()#/#=id#">#=number#</a></td>
+	    <td align="right">#=kendo.toString(amount, 'c2')#</td>
 	</tr>
 </script>
 
@@ -67956,6 +67961,31 @@
 		    banhji.router.navigate('/invoice_custom');
         }
     });
+    banhji.cashPositionReport = kendo.observable({
+		lang 					: langVM,
+		dataSource 		: dataStore(apiUrl + "cashReports/cash_position"),
+		filterDB	 		: [
+			{id: 'customer', name: 'Customer'},
+			{id: 'segment', name: 'Segment'}
+		],
+		filteredBy          : "customer",
+		sortDB 				: [
+			{id: 'date', name: 'Date'}
+		],
+		search 	: function() {
+
+			banhji.cashPositionReport.dataSource.filter({
+				logic: banhji.cashPositionReport.get('filteredBy'),
+				filters: [			
+					{field: "issued_date >=", value: kendo.toString(this.startDate, "yyyy-MM-dd")},
+					{field: "issued_date <=", value: kendo.toString(this.endDate, "yyyy-MM-dd")}
+				]
+			});
+		}, 
+		filterChange  : function(e){
+			banhji.cashPositionReport.set("filteredBy", e.sender.dataSource.at(e.sender.selectedIndex-1).id);
+		}
+	});
     banhji.cashCollection = kendo.observable({
 		lang 					: langVM,
 		dataSource 		: dataStore(apiUrl + "cashReports/cash_collection"),
@@ -68025,7 +68055,8 @@
 		sortList			: banhji.source.sortList, 
 		//line to sale summary
 		cashCollection     	: banhji.cashCollection,
-		cashPaymentReport     	: banhji.cashPaymentReport,
+		cashPaymentReport   : banhji.cashPaymentReport,
+		cashPositionReport   : banhji.cashPositionReport,
 		// search button
 		saleDetailSearch 	: function() {
 			this.detailSale.filter({
@@ -75498,24 +75529,36 @@
 		}
 	});
 
-
-
 	banhji.router.route("/cash_position_report", function(){
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
 		}else{
+			var vm = banhji.cashPositionReport;
+			banhji.userManagement.addMultiTask("Cash Position Report","cash_position_report"); 
+
 			banhji.view.layout.showIn("#content", banhji.view.cashPositionReport);
-			banhji.view.layout.showIn('#menu', banhji.view.menu);
-			banhji.view.menu.showIn('#secondary-menu', banhji.view.accountingMenu);
-
-			var vm = banhji.cashPositionReport;			
-			banhji.userManagement.addMultiTask("Cash Position Report","cash_position_report",null);
-			if(banhji.pageLoaded["cash_position_report"]==undefined){
-				banhji.pageLoaded["cash_position_report"] = true;				
-								
-			}
-
-			vm.pageLoad();
+			banhji.cashSale.set('startDate', new Date().getFullYear() + "-01-01");
+			banhji.cashSale.cashPositionReport.dataSource.filter({
+				logic: banhji.saleSummaryCustomer.get('filteredBy'),
+				filters: [
+					{field: "issued_date >=", value: kendo.toString(new Date().getFullYear() + "-01-01", "yyyy-MM-dd")},
+					{field: "issued_date <=", value: kendo.toString(new Date(), "yyyy-MM-dd")}
+				]
+			});
+			banhji.cashSale.cashPositionReport.dataSource.bind('requestEnd', function(e){
+				if(e.response) {
+					banhji.cashSale.set('count', e.response.count);
+					kendo.culture(banhji.locale);
+					banhji.cashSale.set('total', kendo.toString(e.response.total, 'c2'));
+					banhji.cashSale.set('totalCashSale', kendo.toString(e.response.totalCashSale, 'n0'));
+					banhji.cashSale.set('totalCashReceipt', kendo.toString(e.response.totalCashReceipt, 'n0'));
+					banhji.cashSale.set('cashPayment', kendo.toString(e.response.cashPayment, 'n0'));
+					banhji.cashSale.set('cashExpense', kendo.toString(e.response.cashExpense, 'n0'));
+					banhji.cashSale.set('cashPurchase', kendo.toString(e.response.cashPurchase, 'n0'));
+					banhji.cashSale.set('totalSale', kendo.toString(e.response.totalSale, 'n0'));
+					banhji.cashSale.set('totalPurchase', kendo.toString(e.response.totalPurchase, 'n0'));
+				}
+			});
 		}
 	});
 	banhji.router.route("/cash_collection_report", function(){

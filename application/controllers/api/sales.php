@@ -158,7 +158,8 @@ class Sales extends REST_Controller {
 		foreach ($customers as $key => $value) {
 			$data["results"][] = array(
 				'customer' => $key,
-				'amount'	=> $value['amount']
+				'amount'	=> $value['amount'],
+				'type'	=> $value['type']
 			);
 			$total += $value['amount'];
 		}
