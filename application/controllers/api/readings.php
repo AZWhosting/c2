@@ -52,6 +52,9 @@ class Readings extends REST_Controller {
 		}			
 
 		//Get Result
+		$obj->order_by('created_at', 'desc');
+		$obj->order_by('id', 'desc');
+		$obj->where('deleted', 0);
 		$obj->get_paged_iterated($page, $limit);
 		$data["count"] = $obj->paged->total_rows;		
 
@@ -68,10 +71,14 @@ class Readings extends REST_Controller {
 				$data["results"][] = array(
 					"id" 			=> $value->id,
 					"previous"		=> $value->previous,
+					"meter_id"		=> $meter->id,
 					"current"		=> $value->current,
+					"month_of"		=> $value->month_of,
 					"date"			=> $value->from_date." - ".$value->to_date,
-					"number" 		=> $value->number,
-					"reading" 		=> $value->usage
+					"number" 		=> $meter->number,
+					"invoiced"   	=> $value->invoiced == 0 ? FALSE:TRUE,
+					"consumption" 	=> $value->usage,
+					"_meta" 		=> array()
 				);
 			}
 		}
@@ -111,6 +118,7 @@ class Readings extends REST_Controller {
 			if($obj->save()){								
 				//Respsone
 				$data["results"][] = array(
+					"id"			=> $obj->id,
 					"meter_id" 		=> $obj->meter_id,
 					"number" 		=> intval($value->number),
 					"prev"			=> $obj->previous,
@@ -136,30 +144,61 @@ class Readings extends REST_Controller {
 
 			$obj->where('id', $value->id);
 			$obj->get();
-			// $obj->meter_id = $value->meter_id;
-			// $obj->previous = $value->prev;
-			// $obj->current  = $value->current;
-			// $obj->usage    = intval($value->current) - intval($value->prev);
-			// $obj->from_date= $value->from_date;
-			// $obj->to_date  = $value->to_date;
-			$obj->meter_id 				= isset($value->meter_id)			?$value->meter_id: "";
-			$obj->previous 				= isset($value->previous)			?$value->previous: "";
-			$obj->current 				= isset($value->current)			?$value->current: "";
-			$obj->from_date 			= isset($value->from_date)			?$value->from_date: "";
-			$obj->to_date 				= isset($value->to_date)			?$value->to_date: "";
 
-			if($obj->save()){
-				//Results
-				$data["results"][] = array(
-					"meter_id" 		=> $obj->meter_id,
-					"number" 		=> intval($value->number),
-					"prev"			=> $obj->previous,
-					"current"		=> $obj->current,
-					"from_date"		=> $obj->from_date,
-					"to_date"		=> $obj->to_date
-				);						
+			if($obj->invoiced == 0) {
+				// $obj->previous 				= isset($value->previous)			?$value->previous: "";
+				$obj->current 				= isset($value->current)			?$value->current: "";
+				$obj->from_date 			= isset($value->from_date)			?$value->from_date: "";
+				$obj->to_date 				= isset($value->to_date)			?$value->to_date: "";
+				if($obj->save()){
+					$data["results"][] = array(
+						"meter_id" 		=> $obj->meter_id,
+						"number" 		=> intval($value->number),
+						"month_of"		=> $obj->month_of,
+						"prev"			=> $obj->previous,
+						"current"		=> $obj->current,
+						"from_date"		=> $obj->from_date,
+						"to_date"		=> $obj->to_date,
+						"_meta" 		=> array()
+					);						
+				}
+			} else {
+				$obj->deleted = 1;
+				$obj->save();
+
+				$winvioceLine = new Winvoice_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$winvioceLine->where('meter_record_id', $value->id)->limit(1)->get();
+
+				$tx = $obj->include_related('winvoice_lines/transaction', array('id', 'status'))->get();
+				$invoiceStatus = $tx->winvoice_line_transaction_status;
+
+				if($invoiceStatus == 0) {
+					$newObj = new Meter_record(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					$newObj->meter_id 				= $value->meter_id;
+					$newObj->month_of 				= isset($value->month_of)			?$value->month_of: "";
+					$newObj->previous 				= isset($value->previous)			?$value->previous: "";
+					$newObj->current 				= isset($value->current)			?$value->current: "";
+					$newObj->from_date 				= isset($value->from_date)			?$value->from_date: "";
+					$newObj->to_date 				= isset($value->to_date)			?$value->to_date: "";
+					$newObj->invoiced 				= 1;
+					if($newObj->save()){
+											
+						$data["results"][] = array(
+							"id"			=> $newObj->id,
+							"meter_id" 		=> $newObj->meter_id,
+							"month_of"		=> $newObj->month_of,
+							"number" 		=> intval($value->number),
+							"prev"			=> $newObj->previous,
+							"current"		=> $newObj->current,
+							"from_date"		=> $newObj->from_date,
+							"to_date"		=> $newObj->to_date,
+							"_meta" 		=> array('id' => $winvioceLine)
+						);						
+					}
+				}
 			}
-		}
+
+						}
 		$data["count"] = count($data["results"]);
 
 		$this->response($data, 200);

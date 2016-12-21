@@ -89,9 +89,10 @@
   .row-fluid .controls-row [class*="span"] + [class*="span"] {
     margin-left: 1.4925373134328357%;
   }
-  .row-fluid .span12 {
+  #wInvoiceContent .row-fluid .span12 {
     width: 100%;
-    *width: 99.94350282485875%;
+    *width: 99.94350282485875%; 
+    padding: 0;
   }
   .row-fluid .span11 {
     width: 91.54228855721392%;
@@ -310,3 +311,4 @@
   .row-fluid .thumbnails {
     margin-left: 0;
   }
+  

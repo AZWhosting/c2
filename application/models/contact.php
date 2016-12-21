@@ -44,10 +44,6 @@ class Contact extends DataMapper {
 		'payroll' => array(
 			'class' => 'payroll',
 			'other_field' => 'contact'
-		),
-		'utility' => array(
-			'class' => 'plan_utility',
-			'other_field' => 'contact'
 		)
 	);
 
@@ -94,6 +90,10 @@ class Contact extends DataMapper {
 		),
 		'attachment' => array(
 			'class' => 'attachment',
+			'other_field' => 'contact'
+		),
+		'utility' => array(
+			'class' => 'contact_utility',
 			'other_field' => 'contact'
 		)
 	);

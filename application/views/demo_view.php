@@ -2415,15 +2415,15 @@
 						</div>
 
 						<div class="row-fluid journal_block">
-							<div class="span4">
-								<p>Total no. of transactions</p>
+							<div class="span4" style="width: 16.66666667%;">
+								<p>No. of Txn</p>
 								<span data-bind="text: totalTxn"></span>
 							</div>
-							<div class="span4">
+							<div class="span4" style="width: 41.66666667%;">
 								<p>Total Dr. Balance</p>
 								<span data-bind="text: dr"></span>
 							</div>
-							<div class="span4">
+							<div class="span4" style="width: 41.66666667%;">
 								<p>Total Cr. Balance</p>
 								<span data-bind="text: dr"></span>
 							</div>
@@ -3228,8 +3228,18 @@
 				    </table>
 		            <div data-role="pager"
 		            	data-auto-bind="false" 
-		            	data-bind="source: dataSource"></div>					  
+		            	data-bind="source: dataSource"></div>	
 
+		            
+				</div>
+				<div class="box-generic bg-action-button">
+					<div id="ntf1" data-role="notification" style="display: none;"></div>
+					<div class="row">
+						<div class="span12" align="right">
+							<span class="btn btn-icon btn-primary glyphicons download" data-bind="click: ExportExcel" style="width: 150px;"><i></i> <span >Export Excel</span></span>
+									
+						</div>
+					</div>
 				</div>
 			</div>						
 		</div>
@@ -7693,7 +7703,19 @@
 									<td class="right strong"><span data-format="n" data-bind="text: obj.deposit"></span></td>
 								</tr>
 								<tr>
-									<td class="right"><span data-bind="text: lang.lang.amount_due"></span></td>
+									<td class="right"><span data-bind="text: lang.lang.amount_received"></span></td>
+									<td class="right strong">
+										<input data-role="numerictextbox" 
+												data-decimals="2"
+												data-min="0"
+												data-spinners="false"
+												data-bind="value: obj.received,
+															events:{change: changes}"
+												style="width: 100%; text-align: right;" />
+									</td>
+								</tr>
+								<tr>
+									<td class="right"><span data-bind="text: lang.lang.remaining"></span></td>
 									<td class="right strong"><span data-format="n" data-bind="text: obj.remaining"></span></td>
 								</tr>								
 							</tbody>
@@ -7705,12 +7727,12 @@
 						<table class="table table-condensed table-striped table-white">
 							<tbody>
 								<tr>
-									<td class="right"><span data-bind="text: lang.lang.sub_total"></span></td>
-									<td class="right strong" width="40%"><span data-bind="text: sub_total"></span></td>
+									<td class="right"><span data-bind="text: lang.lang.subtotal"></span></td>
+									<td class="right strong" width="40%"><span data-bind="text: obj.sub_total"></span></td>
 								</tr>								
 								<tr>
 									<td class="right"><span data-bind="text: lang.lang.total_tax"></span></td>
-									<td class="right strong"><span data-bind="text: tax"></span></td>
+									<td class="right strong"><span data-bind="text: obj.tax"></span></td>
 								</tr>																
 								<tr>
 									<td class="right"><h4 span data-bind="text: lang.lang.total"></h4></td>
@@ -42375,6 +42397,46 @@
 			page:1,
 			pageSize: 100
 		}),
+		expenseCashAccountDS		: new kendo.data.DataSource({
+			transport: {
+				read 	: {
+					url: apiUrl + "accounts",
+					type: "GET",
+					headers: banhji.header,
+					dataType: 'json'
+				},				
+				parameterMap: function(options, operation) {
+					if(operation === 'read') {
+						return {
+							page: options.page,
+							limit: options.pageSize,
+							filter: options.filter,
+							sort: options.sort
+						};
+					} else {
+						return {models: kendo.stringify(options.models)};
+					}
+				}
+			},
+			schema 	: {
+				model: {
+					id: 'id'
+				},
+				data: 'results',
+				total: 'count'
+			},
+			filter: [
+				{ field:"account_type_id", operator:"where_in", value: [10,36,37,38,40,41,42,43] },
+				{ field:"status", value: 1 }
+			],
+			sort: { field:"number", dir:"asc" },
+			batch: true,
+			serverFiltering: true,
+			serverSorting: true,
+			serverPaging: true,
+			page:1,
+			pageSize: 100
+		}),
 		advAccountDS				: new kendo.data.DataSource({
 			transport: {
 				read 	: {
@@ -45332,8 +45394,10 @@
 		lang 				: langVM,
 		dataSource 			: dataStore(apiUrl + "accounts"),		
 		as_of 				: new Date(),		
-		currentSort 		: "asc",							
+		currentSort 		: "asc",	
+		exArray 			: [{ cells: [{ value: "Number", background: "#496cad" },{ value: "Name", background: "#496cad" },{ value: "Type", background: "#496cad" }]}],	
 		pageLoad 			: function(){
+			var self = this;
 			this.dataSource.query({
 				filter: [],
 				sort: [
@@ -45342,8 +45406,37 @@
 				],
 				page:1,
 				pageSize: 1000
+			}).then(function(e){
+				for (var i = 0; i < self.dataSource.data().length; i++){
+		          self.exArray.push({
+		            cells: [
+		              { value: self.dataSource.data()[i].number },
+		              { value: self.dataSource.data()[i].name },
+		              { value: self.dataSource.data()[i].account_type_name  }
+		            ]
+		          });
+		        }
 			});
 		},	
+		ExportExcel 		: function(){
+	        var workbook = new kendo.ooxml.Workbook({
+	          sheets: [
+	            {
+	              columns: [
+	                { autoWidth: true },
+	                { autoWidth: true },
+	                { autoWidth: true },
+	                { autoWidth: true },
+	                { autoWidth: true }
+	              ],
+	              title: "Chart Of Account",
+	              rows: this.exArray
+	            }
+	          ]
+	        });
+	        //save the file as Excel file with extension xlsx
+	        kendo.saveAs({dataURI: workbook.toDataURL(), fileName: "ChartOfAccount.xlsx"});
+		},
 		sort 				: function(e){
 			var col = "",
 			target = e.currentTarget.innerText;
@@ -47671,15 +47764,15 @@
 	    typeChanges 		: function(){
 	    	var obj = this.get("obj");
 
-	    	switch(obj.type) {
-			    case "Reimbursement":
-			        this.set("showCashAdvance", false);
-			        break;
+	    	switch(obj.type) {			    
 			    case "Advance_Settlement":
 			        this.set("showCashAdvance", true);
 			        break;
 			    default:			         
 			        this.set("showCashAdvance", false);
+			        obj.set("reference_id", 0);
+			        obj.set("deposit", 0);
+			        obj.set("received", 0);
 			}
 	    },
 	    //Segment
@@ -47760,14 +47853,16 @@
 					pageSize: 1
 				}).then(function(e){
 					var view = self.dataSource.view();
-
-					if(view.length>0){	       
-						self.set("obj", view[0]);					
-			        }				
+					       
+					self.set("obj", view[0]);
 
 					self.lineDS.filter({ field: "transaction_id", value: id });
 					self.journalLineDS.filter({ field: "transaction_id", value: id });
-					self.attachmentDS.filter({ field: "transaction_id", value: id });								
+					self.attachmentDS.filter({ field: "transaction_id", value: id });
+					self.referenceDS.filter({ field: "id", value: view[0].reference_id });
+					self.referenceLineDS.filter({ field: "transaction_id", value: view[0].reference_id });
+					self.loadContact(view[0].contact_id);
+					self.typeChanges();								
 				});
 			}
 		},
@@ -47797,6 +47892,7 @@
 			   	deposit 			: 0,			   		   				   		   					   				   	
 			   	amount				: 0,
 			   	remaining 			: 0,
+			   	received 			: 0,
 			   	rate				: 1,			   	
 			   	locale 				: banhji.locale,			   	
 			   	issued_date 		: new Date(),			   			   	   	
@@ -47864,17 +47960,15 @@
 	        total = subTotal + tax;
 
 	        if(obj.deposit>0){
-	        	remaining = obj.deposit - total;
-	        }
-
-	        this.set("sub_total", kendo.toString(subTotal, "c", obj.locale));
-	        this.set("tax", kendo.toString(tax, "c", obj.locale));
-	        this.set("total", kendo.toString(total, "c", obj.locale));
+	        	remaining = obj.deposit - (total + obj.received);
+	        }	        
 
 	        obj.set("sub_total", subTotal);
 	        obj.set("tax", tax);
+	        obj.set("amount", total);
 	        obj.set("remaining", remaining);
-	        obj.set("amount", total);	    		
+
+	        this.set("total", kendo.toString(total, "c", obj.locale));
 		},
 		objSync 			: function(){
 	    	var dfd = $.Deferred();	        
@@ -48022,22 +48116,44 @@
 		//Journal
 		addJournal 			: function(transaction_id){
 			var self = this, obj = this.get("obj"),
-			taxList = {};
+			sum = 0, sumExpense = 0, taxList = {};
+
+			//Expense on Dr
+    		$.each(this.lineDS.data(), function(index, value){
+    			sumExpense += value.amount;
+
+				self.journalLineDS.add({					
+					transaction_id 		: transaction_id,
+					contact_id 			: value.contact_id,
+					account_id 			: value.account_id,
+					description 		: value.description,
+					reference_no 		: value.reference_no,
+					segments 	 		: value.segments,
+					dr 	 				: value.amount,
+					cr 					: 0,
+					rate				: value.rate,
+					locale				: value.locale
+				});
+			});
+			sum += sumExpense;
 
 			//Tax accounts
 			if(obj.tax>0){				
 				$.each(this.lineDS.data(), function(index, value){
-					var taxItem = self.taxItemDS.get(value.tax_item_id),
-					taxAmount = value.amount * taxItem.rate;
+					if(value.tax_item_id>0){
+						var taxItem = self.taxItemDS.get(value.tax_item_id),
+						taxAmount = value.amount * taxItem.rate;
+						sum += taxAmount;
 
-					if(taxItem.account_id>0){
-						if(taxList[taxItem.account_id]===undefined){
-							taxList[taxItem.account_id]={"id": taxItem.account_id, "amount":taxAmount};						
-						}else{											
-							if(taxList[taxItem.account_id].id===taxItem.account_id){
-								taxList[taxItem.account_id].amount += taxAmount;
-							}else{
-								taxList[taxItem.account_id]={"id": taxItem.account_id, "amount": taxAmount};
+						if(taxItem.account_id>0){
+							if(taxList[taxItem.account_id]===undefined){
+								taxList[taxItem.account_id]={"id": taxItem.account_id, "amount":taxAmount};						
+							}else{											
+								if(taxList[taxItem.account_id].id===taxItem.account_id){
+									taxList[taxItem.account_id].amount += taxAmount;
+								}else{
+									taxList[taxItem.account_id]={"id": taxItem.account_id, "amount": taxAmount};
+								}
 							}
 						}
 					}
@@ -48064,184 +48180,62 @@
 
 			if(obj.type=="Advance_Settlement") {
 				var reference = this.referenceDS.get(obj.reference_id),
-				advance_account_id = this.referenceLineDS.at(0).account_id;
-		    	
-		    	//Zero and Full Expense
-		    	if(obj.remaining==0){
-		    		//Zero Expense
-		    		if(obj.amount==0){			    		
-			    		//Cash on Dr
-			    		this.journalLineDS.add({					
-							transaction_id 		: transaction_id,
-							contact_id 			: obj.contact_id,
-							account_id 			: obj.account_id,										
-							description 		: "",
-							reference_no 		: "",
-							segments 	 		: obj.segments,								
-							dr 	 				: reference.amount,
-							cr 					: 0,				
-							rate				: obj.rate,
-							locale				: obj.locale
-						});
+				advance_account_id = this.referenceLineDS.at(0).account_id,
+				sumExpense = 0;
 
-			    		//Cash Advance account on Cr
-			    		this.journalLineDS.add({					
-							transaction_id 		: transaction_id,
-							contact_id 			: reference.contact_id,
-							account_id 			: advance_account_id,											
-							description 		: reference.memo,
-							reference_no 		: reference.number,
-							segments 	 		: reference.segments,								
-							dr 	 				: 0,
-							cr 					: reference.amount,				
-							rate				: reference.rate,
-							locale				: reference.locale
-						});
-					}else{//Full Expense
-						//Expense on Dr
-			    		$.each(this.lineDS.data(), function(index, value){				
-							self.journalLineDS.add({					
-								transaction_id 		: transaction_id,
-								contact_id 			: value.contact_id,
-								account_id 			: value.account_id,											
-								description 		: value.description,
-								reference_no 		: value.reference_no,
-								segments 	 		: value.segments,								
-								dr 	 				: value.amount,
-								cr 					: 0,				
-								rate				: value.rate,
-								locale				: value.locale
-							});						
-						});
+				//Cash on Dr
+				if(obj.received>0){
+					sum += obj.received;
 
-			    		//Cash Advance account on Cr
-			    		this.journalLineDS.add({					
-							transaction_id 		: transaction_id,
-							contact_id 			: reference.contact_id,
-							account_id 			: advance_account_id,											
-							description 		: reference.memo,
-							reference_no 		: reference.number,
-							segments 	 		: reference.segments,								
-							dr 	 				: 0,
-							cr 					: reference.amount,				
-							rate				: reference.rate,
-							locale				: reference.locale
-						});
-					}					
-		    	}		    	
-
-		   		//Over Expense
-		    	if(obj.remaining<0){			    		
-		    		//Expense on Dr
-		    		$.each(this.lineDS.data(), function(index, value){				
-						self.journalLineDS.add({					
-							transaction_id 		: transaction_id,
-							contact_id 			: value.contact_id,
-							account_id 			: value.account_id,											
-							description 		: value.description,
-							reference_no 		: value.reference_no,
-							segments 	 		: value.segments,								
-							dr 	 				: value.amount,
-							cr 					: 0,				
-							rate				: value.rate,
-							locale				: value.locale
-						});						
-					});
-					
-		    		//Cash Advance account on Cr
-		    		this.journalLineDS.add({					
+					this.journalLineDS.add({
 						transaction_id 		: transaction_id,
-						contact_id 			: reference.contact_id,
-						account_id 			: advance_account_id,											
-						description 		: reference.memo,
-						reference_no 		: reference.number,
-						segments 	 		: reference.segments,								
-						dr 	 				: 0,
-						cr 					: reference.amount,				
-						rate				: reference.rate,
-						locale				: reference.locale
+						contact_id 			: obj.contact_id,
+						account_id 			: obj.account_id,
+						description 		: "",
+						reference_no 		: "",
+						segments 	 		: obj.segments,
+						dr 	 				: obj.received,
+						cr 					: 0,
+						rate				: obj.rate,
+						locale				: obj.locale
 					});
+				}				
+
+				//Over Expense
+				if(obj.remaining<0){
+					sum += obj.remaining;
 
 					//Cash on Cr
-					this.journalLineDS.add({					
+					this.journalLineDS.add({
 						transaction_id 		: transaction_id,
 						contact_id 			: obj.contact_id,
-						account_id 			: obj.account_id,										
+						account_id 			: obj.account_id,
 						description 		: "",
 						reference_no 		: "",
-						segments 	 		: obj.segments,								
+						segments 	 		: obj.segments,
 						dr 	 				: 0,
-						cr 					: obj.remaining*-1,				
+						cr 					: Math.abs(obj.remaining),
 						rate				: obj.rate,
 						locale				: obj.locale
 					});
-		    	}
+				}			
 
-		    	//Less Expense
-		    	if(obj.remaining>0){
-		    		//Cash on Dr			    		
-					this.journalLineDS.add({					
-						transaction_id 		: transaction_id,
-						contact_id 			: obj.contact_id,
-						account_id 			: obj.account_id,										
-						description 		: "",
-						reference_no 		: "",
-						segments 	 		: obj.segments,								
-						dr 	 				: obj.remaining,
-						cr 					: 0,				
-						rate				: obj.rate,
-						locale				: obj.locale
-					});
-
-		    		//Expense on Dr
-		    		$.each(this.lineDS.data(), function(index, value){				
-						self.journalLineDS.add({					
-							transaction_id 		: transaction_id,
-							contact_id 			: value.contact_id,
-							account_id 			: value.account_id,											
-							description 		: value.description,
-							reference_no 		: value.reference_no,
-							segments 	 		: value.segments,								
-							dr 	 				: value.amount,
-							cr 					: 0,				
-							rate				: value.rate,
-							locale				: value.locale
-						});						
-					});
-
-					//Cash Advance account on Cr
-					this.journalLineDS.add({					
-						transaction_id 		: transaction_id,
-						contact_id 			: reference.contact_id,
-						account_id 			: advance_account_id,											
-						description 		: reference.memo,
-						reference_no 		: reference.number,
-						segments 	 		: reference.segments,								
-						dr 	 				: 0,
-						cr 					: reference.amount,				
-						rate				: reference.rate,
-						locale				: reference.locale
-					});					
-		    	} 
-			}else{//Direct Expense & Reimbursement			    
-			    //Expense on Dr
-			    $.each(this.lineDS.data(), function(index, value){				
-					self.journalLineDS.add({					
-						transaction_id 		: transaction_id,
-						contact_id 			: value.contact_id,
-						account_id 			: value.account_id,											
-						description 		: value.description,
-						reference_no 		: value.reference_no,
-						segments 	 		: value.segments,								
-						dr 	 				: value.amount,
-						cr 					: 0,				
-						rate				: value.rate,
-						locale				: value.locale
-					});						
+				//Advance Account on Cr
+	    		this.journalLineDS.add({
+					transaction_id 		: transaction_id,
+					contact_id 			: reference.contact_id,
+					account_id 			: advance_account_id,
+					description 		: reference.memo,
+					reference_no 		: reference.number,
+					segments 	 		: reference.segments,
+					dr 	 				: 0,
+					cr 					: sum,
+					rate				: reference.rate,
+					locale				: reference.locale
 				});
-
+			}else{//Direct Expense & Reimbursement
 			    //Cash on Cr
-				this.journalLineDS.add({					
+				this.journalLineDS.add({
 					transaction_id 		: transaction_id,
 					contact_id 			: obj.contact_id,
 					account_id 			: obj.account_id,										
@@ -48249,7 +48243,7 @@
 					reference_no 		: "",
 					segments 	 		: obj.segments,								
 					dr 	 				: 0,
-					cr 					: obj.amount,				
+					cr 					: sum,				
 					rate				: obj.rate,
 					locale				: obj.locale
 				});
@@ -50924,7 +50918,7 @@
 		contactDS 			: banhji.source.supplierDS,
 		depositAccountDS 	: banhji.source.prepaidAccountDS,
 		segmentItemDS 		: banhji.source.segmentItemDS,
-		accountDS 			: banhji.source.cashAccountDS,
+		accountDS 			: banhji.source.expenseCashAccountDS,
 		amtDueColor 		: banhji.source.amtDueColor,
 	    confirmMessage 		: banhji.source.confirmMessage,
 		frequencyList 		: banhji.source.frequencyList,
@@ -57683,7 +57677,7 @@
 		employeeDS  		: banhji.source.saleRepDS,
 		depositAccountDS 	: banhji.source.depositAccountDS,
 		segmentItemDS 		: banhji.source.segmentItemDS,
-		accountDS 			: banhji.source.cashAccountDS,
+		accountDS 			: banhji.source.expenseCashAccountDS,
 		amtDueColor 		: banhji.source.amtDueColor,
 	    confirmMessage 		: banhji.source.confirmMessage,
 		frequencyList 		: banhji.source.frequencyList,

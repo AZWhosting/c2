@@ -32,12 +32,23 @@ class Rrd extends MY_Controller {
 		 */
 		$this->_render("choeun_view");	
 	}
+	public function choeunw() {	
+		
+		/*
+		 *set up title and keywords (if not the default in custom.php config file will be set) 
+		 */
+		$this->_render("choeunw_view");	
+	}
 	public function water() {	
 		
 		/*
 		 *set up title and keywords (if not the default in custom.php config file will be set) 
 		 */
 		$this->_render("water_view");	
+	}
+
+	public function virtual() {
+		$this->_render('virtual_view');
 	}
 }
 

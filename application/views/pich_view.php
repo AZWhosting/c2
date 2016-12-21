@@ -2686,26 +2686,60 @@
         </div>
     </div> -->
     <div class="row-fluid">
-    	<div class="span6 inv1" style="width: 50%;">
+    	<div class="span7 inv1" style="width: 54%; padding-right: 15px;">
     		<div class="head" style="width: 100%">
-	        	<div class="logo">
+	        	<div class="logo" style="width: 30%;">
 	            	<img data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
 	            </div>
-	            <div class="cover-name-company">
-	            	<h2 ></h2>
-	                <h3 style="text-align:left;" data-bind="text: company.name"></h3>
-	                <div class="vattin">
-	                	<p>លេខ​អត្ត​សញ្ញាណ​កម្ម អតប (VATTIN)</p><span id="vat_number" data-bind="text: company.vat_number"></span>
-	                </div>
-	                <div class="clear">
-	                	<pre>អាស័យ​ដ្ឋាន Address: <span data-bind="text: company.address"></span></pre>
-	                    <pre>ទូរស័ព្ទលេខ HP <span data-bind="text: company.phone"></span></pre>
-	                </div>
+	            <div class="cover-name-company" style="width: 65%; margin-left: 15px;">
+	            	<h2 style="text-align: left;">សហគ្រាសបន្ទាយមាស អេឡិទ្រីស៊ីធី    </h2>
+	                <p style="font-size: 12px; color: #000;">ភូមិទូកមាស ឃុំទូកមាសខាងលិច ស្រុកបន្ទាយមាស ខេត្តកំពត </p>
+	                
 	            </div>
 	        </div>
+	        <div class="row textunder">
+	        	<div clas="span6" style="width: 50%;">
+	        		<p>បច្ចេកទេស</p>
+	        		<a href=""><i class="icon-phone"></i> ០៣៣ ៦៦០១ ៣៣៣</a>
+	        		<p>២៤ម៉ោង</p>
+	        	</div>
+	        	<div clas="span6" style="border-left: 1px solid #000; width: 50%;">
+	        		<p>បង់ប្រាក់ និង វិក្កយបត្រ </p>
+	        		<a href=""><i class="icon-phone"></i> ០៩៩ ៨៤១ ១៣៣</a>
+	        		<p>ច័ន្ទ ដល់ សៅរ៍ ៧:០០-៦:០០</p>
+	        	</div>
+	        </div>
     	</div>
-    	<div class="span6">
-    		afgfd
+    	<div class="span5 " style="padding-left: 0; padding-right: 8px; width: 46%">
+    		<div class="headertable-invoice">
+	    		<table style="">
+	    			<tr>
+	    				<td>លេខវិក្កយបត្រ INVOICE NO</td>
+	    				<td>
+	    					<input type="text">
+	    				</td>
+
+	    			</tr>
+	    			<tr>
+	    				<td>ថ្ងៃចេញ INVOICE DATE</td>
+	    				<td>
+	    					<input type="text">
+	    				</td>
+	    			</tr>
+	    			<tr>
+	    				<td>តំបន់ AREA</td>
+	    				<td>
+	    					<input type="text">
+	    				</td>
+	    			</tr>
+	    			<tr>
+	    				<td>លេខប្រអប់ BOX NO</td>
+	    				<td>
+	    					<input type="text">
+	    				</td>
+	    			</tr>
+	    		</table>
+	    	</div>
     	</div>
     </div>
 </script>

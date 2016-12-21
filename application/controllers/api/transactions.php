@@ -86,12 +86,13 @@ class Transactions extends REST_Controller {
 				}else if($value->type=="Cash_Advance"){
 					$paid = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 					$paid->select_sum("amount");
+					$paid->select_sum("received");
 					$paid->where("type", "Advance_Settlement");
 					$paid->where("reference_id", $value->id);
 					$paid->where("is_recurring <>",1);
 					$paid->where("deleted <>",1);
 					$paid->get();
-					$amount_paid = floatval($paid->amount);
+					$amount_paid = floatval($paid->amount) + floatval($paid->received);
 				}
 
 				$data["results"][] = array(
@@ -122,6 +123,8 @@ class Transactions extends REST_Controller {
 				   	"fine" 						=> floatval($value->fine),
 				   	"deposit"					=> floatval($value->deposit),
 				   	"remaining" 				=> floatval($value->remaining),
+				   	"received" 					=> floatval($value->received),
+				   	"change" 					=> floatval($value->change),
 				   	"credit_allowed"			=> floatval($value->credit_allowed),
 				   	"additional_cost" 			=> floatval($value->additional_cost),
 				   	"additional_apply" 			=> $value->additional_apply,
@@ -209,6 +212,8 @@ class Transactions extends REST_Controller {
 		   	isset($value->fine) 					? $obj->fine 						= $value->fine : "";
 		   	isset($value->deposit) 					? $obj->deposit 					= $value->deposit : "";
 		   	isset($value->remaining) 				? $obj->remaining 					= $value->remaining : "";
+		   	isset($value->received) 				? $obj->received 					= $value->received : "";
+		   	isset($value->change) 					? $obj->change 						= $value->change : "";
 		   	isset($value->credit_allowed) 			? $obj->credit_allowed 				= $value->credit_allowed : "";
 		   	isset($value->additional_cost) 			? $obj->additional_cost 			= $value->additional_cost : "";
 		   	isset($value->additional_apply) 		? $obj->additional_apply 			= $value->additional_apply : "";
@@ -299,6 +304,8 @@ class Transactions extends REST_Controller {
 				   	"fine" 						=> floatval($obj->fine),
 				   	"deposit"					=> floatval($obj->deposit),
 				   	"remaining" 				=> floatval($obj->remaining),
+				   	"received" 					=> floatval($obj->received),
+				   	"change" 					=> floatval($obj->change),
 				   	"credit_allowed"			=> floatval($obj->credit_allowed),
 				   	"additional_cost" 			=> floatval($obj->additional_cost),
 				   	"additional_apply" 			=> $obj->additional_apply,
@@ -377,6 +384,8 @@ class Transactions extends REST_Controller {
 		   	isset($value->fine) 					? $obj->fine 						= $value->fine : "";
 		   	isset($value->deposit) 					? $obj->deposit 					= $value->deposit : "";
 		   	isset($value->remaining) 				? $obj->remaining 					= $value->remaining : "";
+		   	isset($value->received) 				? $obj->received 					= $value->received : "";
+		   	isset($value->change) 					? $obj->change 						= $value->change : "";
 		   	isset($value->credit_allowed) 			? $obj->credit_allowed 				= $value->credit_allowed : "";
 		   	isset($value->additional_cost) 			? $obj->additional_cost 			= $value->additional_cost : "";
 		   	isset($value->additional_apply) 		? $obj->additional_apply 			= $value->additional_apply : "";
@@ -466,6 +475,8 @@ class Transactions extends REST_Controller {
 				   	"fine" 						=> floatval($obj->fine),
 				   	"deposit"					=> floatval($obj->deposit),
 				   	"remaining" 				=> floatval($obj->remaining),
+				   	"received" 					=> floatval($obj->received),
+				   	"change" 					=> floatval($obj->change),
 				   	"credit_allowed"			=> floatval($obj->credit_allowed),
 				   	"additional_cost" 			=> floatval($obj->additional_cost),
 				   	"additional_apply" 			=> $obj->additional_apply,

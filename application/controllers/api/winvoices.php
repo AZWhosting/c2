@@ -20,7 +20,7 @@ class Winvoices extends REST_Controller {
 			$this->server_pwd = $conn->password;
 			$this->_database = $conn->inst_database;
 		}
-		$this->_database = "db_banhji";
+		// $this->_database = "db_banhji";
 	}
 
 	// based on meter
@@ -210,6 +210,8 @@ class Winvoices extends REST_Controller {
 		   			$line->has_vat 			= $row->has_vat;
 		   			$line->type 			= isset($row->type)?$row->type:"";
 
+		   			//to do: add to accouting line
+
 		   			if($line->save()){
 		   				$invoice_lines[] = array(
 		   					"id" 				=> $line->id,
@@ -287,12 +289,12 @@ class Winvoices extends REST_Controller {
 
 		foreach($table as $row) {
 			$meter = null;
-			$contact = $row->contact->select('id, name, abbr, number, address')->get();
+			$contact = $row->contact->include_related('utility', array('abbr', 'code'))->select('id, name, abbr, number, address')->get();
 
 			$items  = $row->winvoice_line->get();
 			$lines  = array();
 			$m = $contact->meter->get();
-				
+			$usage = 0;	
 			$meter = array(
 				'number'   => $m->number,
 				'location' => $m->location->get_raw()->result(),
@@ -302,6 +304,7 @@ class Winvoices extends REST_Controller {
 				
 				 if($item->type == '') {
 					$record = $item->meter_record->limit(1)->get();
+					$usage = $record->usage;
 					$lines[] = array(
 						'number' => $m->number,
 						'previous' => $record->previous,
@@ -325,16 +328,19 @@ class Winvoices extends REST_Controller {
 				'id' => $row->id,
 				'type' => $row->type,
 				'number' => $row->number,
+				'month_of' => date('m', strtotime($row->month_of)),
 				'status'=> $row->status,
 				'issue_date' => $row->issued_date,
 				'due_date' => $row->due_date,
 				'amount'  => $row->amount,
+				'consumption' => $usage,
 				'contact' => array(
 					'id' => $contact->id,
 					'name' => $contact->name,
-					'abbr' => $contact->abbrm,
+					'abbr' => $contact->abbr,
 					'number' => $contact->number,
-					'address'=> $contact->address
+					'address'=> $contact->address,
+					'code' 	 => $contact->utility_abbr ."-".$contact->utility_code
 				),
 				'meter'=> $meter,
 				'items'=> $lines
@@ -343,6 +349,102 @@ class Winvoices extends REST_Controller {
 		}
 
 		$this->response(array('results' => $data, 'count' => count($data)), 200);
+	}
+
+	//GET WATER PRINT SNAPSHOT 
+	function wprint_snapshot_get() {		
+		$filters 	= $this->get("filter")["filters"];		
+		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
+		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;								
+		$sort 	 	= $this->get("sort");		
+		$data["results"] = array();
+		$data["count"] = 0;
+
+		$obj = new Meter_record(null, $this->entity);		
+
+		//Sort
+		if(!empty($sort) && isset($sort)){					
+			foreach ($sort as $value) {
+				$obj->order_by($value["field"], $value["dir"]);
+			}
+		}
+		
+		//Filter		
+		if(!empty($filters) && isset($filters)){			
+	    	foreach ($filters as $value) {
+	    		if(!empty($value["operator"]) && isset($value["operator"])){
+		    		if($value["operator"]=="where_in"){
+		    			$obj->where_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_where_in"){
+		    			$obj->or_where_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="where_not_in"){
+		    			$obj->where_not_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_where_not_in"){
+		    			$obj->or_where_not_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="like"){
+		    			$obj->like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_like"){
+		    			$obj->or_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="not_like"){
+		    			$obj->not_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_not_like"){
+		    			$obj->or_not_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="startswith"){
+		    			$obj->like($value["field"], $value["value"], "after");
+		    		}else if($value["operator"]=="endswith"){
+		    			$obj->like($value["field"], $value["value"], "before");
+		    		}else if($value["operator"]=="contains"){
+		    			$obj->like($value["field"], $value["value"], "both");
+		    		}else if($value["operator"]=="or_where"){
+		    			$obj->or_where($value["field"], $value["value"]);		    			    		
+		    		}else{
+		    			$obj->where($value["field"].' '.$value["operator"], $value["value"]);
+		    		}
+	    		}else{	    			
+	    			$obj->where($value["field"], $value["value"]);	    				    			
+	    		}
+			}									 			
+		}
+
+		//Only water invoice
+		$obj->where("type", "wInvoice");		
+		
+		//Results
+		$obj->get();
+
+		$totalInvoice = 0;
+		$totalUnprint = 0;
+		$totalUsage = 0;
+		$totalAmount = 0;
+		$ids = [];		
+		if($obj->result_count()>0){
+			foreach ($obj as $value) {
+				array_push($ids, $value->id);
+				$totalInvoice++;
+				if($value->print_count==0){
+					$totalUnprint++;
+				}
+				$totalAmount += $value->amount;
+			}
+
+			$line = new Invoice_line(null, $this->entity);
+			$line->select_sum("unit");
+			$line->where_in("invoice_id", $ids);
+			$line->where("type", "tariff");
+			$line->get();
+		}
+
+		$data["results"][] = array(
+			"id" 			=> 0,
+			"totalInvoice" 	=> $totalInvoice,
+			"totalUnprint" 	=> $totalUnprint,
+			"totalUsage" 	=> intval($line->unit),
+			"totalAmount" 	=> $totalAmount					
+		);
+		$data["count"] = count($data["results"]);			
+
+		//Response Data		
+		$this->response($data, 200);	
 	}
 
 	//Generate invoice number

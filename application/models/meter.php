@@ -59,10 +59,10 @@ class Meter extends DataMapper {
             'class' => 'meter_record',
             'other_field' => 'meter'
         ),
-				'installment' => array(
-					'class' => 'installment',
-					'other_field' => 'meter'
-				)
+		'installment' => array(
+			'class' => 'installment',
+			'other_field' => 'meter'
+		)
 	);
 
 	public function __construct($id = null, $server_name = null, $db_username = null, $server_password = null, $db = null) {
