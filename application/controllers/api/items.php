@@ -24,7 +24,10 @@ class Items extends REST_Controller {
 
 	//GET 
 	function index_get() {		
-		$filters 	= $this->get("filter")["filters"];		
+		$filters 	= $this->get("filter");
+		// if(null !== $this->get("filter")){
+		// 	$filters = $this->get("filter")["filters"];
+		// }		
 		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
 		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;
 		$sort 	 	= $this->get("sort");		
@@ -42,7 +45,7 @@ class Items extends REST_Controller {
 		}
 		
 		//Filter		
-		if(!empty($filters) && isset($filters)){
+		if(!empty($filters) && isset($filters['filters'])){
 	    	foreach ($filters as $value) {
 	    		if(isset($value['operator'])) {
 					$obj->{$value['operator']}($value['field'], $value['value']);
@@ -156,7 +159,9 @@ class Items extends REST_Controller {
 				   	"item_prices"				=> $itemPrice
 				);
 			}
-		}		
+		}
+		$data['pageSize'] = $limit;
+		$data['skip'] = $limit * $page;	
 
 		//Response Data		
 		$this->response($data, 200);	
@@ -1484,6 +1489,11 @@ class Items extends REST_Controller {
 		$this->response($data, 200);	
 	}	
 
+	function valueMapper_get() {
+		$requestedDate = $this->get('callback');
+		$result["$requestedDate"] = array();
 
+		$this->response($result, 200);
+	}
 	
 }

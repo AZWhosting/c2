@@ -32,3 +32,13 @@
 	position: relative;
 	clear: both;
 }
+#wInvoiceContent .span12 {
+    padding: 0;
+}
+.winvoice-print .headerinv {
+	padding: 20px 0!important;
+	    border-bottom: 2px solid #000;
+} 
+table.footerTbl > tbody > tr > td {
+	border: none;
+}
