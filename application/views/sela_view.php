@@ -5530,6 +5530,254 @@
 *	Tax Section            *
 **************************** -->
 <script id="taxes" type="text/x-kendo-template">
+	<div class="row-fluid">
+
+		<!-- Left Side -->
+		<div class="span4">
+
+			<!-- Logo of the page -->
+			<table width="100%" cellpadding="10">
+				<tr>
+			        <td valign="top">
+			        	<h2>Tax Compliance</h2>
+			        	<p>
+			        		In the purpose of monthly self tax declaration
+			        	</p>			        	
+			        </td>
+			 	</tr>
+			</table>
+			<table class="table table-borderless table-condensed table-vertical-center costom-imag">
+				<tr>
+					<td class="center" style="vertical-align: top;">
+						<a href="#/sale_record">
+							<img title="Add Quote" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/sale_record.png"  height="200" />
+							<span style="margin-top: 7px; display: inline-block; text-transform: uppercase;">Sale Record</span>
+						</a>						
+					</td>
+					<td class="center" style="vertical-align: top;">
+						<a href="#/purchase_record">
+							<img title="Add Sale Order" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/purchase_record.png"  height="200" />
+							<span style="margin-top: 7px; display: inline-block; text-transform: uppercase;">Purchase Record</span>
+						</a>
+					</td>
+					<td class="center" style="vertical-align: top;">
+						<a href="#/payroll_list">
+							<img title="Add Customer Deposit" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/payroll_list.png"  height="200" />
+							<span style="margin-top: 7px; display: inline-block; text-transform: uppercase;">Payroll List</span>
+						</a>						
+					</td>					
+				</tr>				
+			</table>
+
+		</div>
+
+		<!-- Right Side -->
+		<div class="span8">
+			<div class="row">
+				<div class="span3" style="font-weight: 600; margin-bottom: 20px; width: 17%; padding-right: 0; line-height: 25px;">Filter by Month</div>
+				<div class="span4" >
+					<input id="issuedDate" name="issuedDate" 
+						data-role="datepicker"
+						data-format="dd-MM-yyyy"
+						data-parse-formats="yyyy-MM-dd" 
+						data-bind="value: obj.issued_date, 
+									events:{ change : setRate }" 
+						required data-required-msg="required"
+						style="width:100%;  "/>
+				</div>
+			</div>
+
+			<!-- Summary -->
+			<div class="row-fluid">
+	
+				<!-- Column -->
+				<div class="span4">
+				
+					<!-- Widget -->
+					<div class="widget widget-3 customer-border"  >
+					
+						<!-- Widget heading -->
+						<div class="widget-head">
+							<h4 class="heading"><span class="glyphicons coins"><i></i></span><span >Sale Record</span></h4>
+						</div>
+						<!-- // Widget heading END -->
+						
+						<a href="#/sale_summary_customer"><div class="widget-body alert alert-primary " style="min-height: 148px;">
+							
+							<div align="center" class="text-large strong medai-font" >300,000</div>
+							<table width="100%">
+								<tr align="center">
+									<td width="33%" style="vertical-align: top">										
+										<span >VAT-INV</span>
+										<br>
+										<span >500</span>
+									</td>
+									<td width="33%" style="vertical-align: top">
+										<span >C-INV</span>
+										<br>
+										<span >500</span>
+									</td>
+									<td width="33%" style="vertical-align: top">
+										<span >INV</span>
+										<br>
+										<span >500</span>
+									</td>
+								</tr>
+							</table>
+						</div></a>
+						<!-- // Widget footer END -->
+						
+					</div>
+					<!-- // Widget END -->
+					
+				</div>
+				<!-- // Column END -->
+				
+				<!-- Column -->
+				<div class="span4">
+				
+					<!-- Widget -->
+					<a href="#/sale_order_list"><div class="widget widget-3 customer-border">
+					
+						<!-- Widget heading -->
+						<div class="widget-head">
+							<h4 class="heading"><span class="glyphicons cart_in"><i></i></span><span >Purchase Record</span></h4>
+						</div>
+						<!-- // Widget heading END -->
+						
+						<div class="widget-body alert-info " style="min-height: 148px;">
+							
+							<div align="center" class="text-large strong medai-font" >200,000</div>
+							<table width="100%">
+								<tr align="center">
+									<td width="50%" style="vertical-align: top">										
+										<span >VAT-Bill</span>
+										<br>
+										<span >500</span>
+									</td>
+									<td style="vertical-align: top">										
+										<span >Bill</span>
+										<br>
+										<span >500</span>
+									</td>
+									<td  style="vertical-align: top">
+										<span >Supplier</span>
+										<br>
+										<span >500</span>
+									</td>									
+								</tr>
+							</table>
+						</div></a>
+						<!-- // Widget footer END -->
+						
+					</div>
+					<!-- // Widget END -->
+					
+				</div>
+				<!-- // Column END -->
+				
+				<!-- Column -->
+				<div class="span4">
+				
+					<!-- Widget -->
+					<div class="widget widget-3 customer-border">
+					
+						<!-- Widget heading -->
+						<div class="widget-head">
+							<h4 class="heading"><span class="glyphicons credit_card"><i></i></span><span >Payroll</span></h4>
+						</div>
+						<!-- // Widget heading END -->
+						
+						<a href="#/customer_balance_summary"><div class="widget-body alert-info" style="background-color: LightGray;  min-height: 148px;">
+							
+							<div align="center" class="text-large strong medai-font" >3000</div>
+							<table width="100%">
+								<tr align="center">
+									<td width="33%" style="vertical-align: top">										
+										<span > Employee</span>
+										<br>
+										<span><span >500</span></span>
+									</td>
+								</tr>
+							</table>
+						</div></a>
+						<!-- // Widget footer END -->
+						
+					</div>
+					<!-- // Widget END -->
+					
+				</div>
+				<!-- // Column END -->
+				
+			</div>
+
+			<!-- Top 5 -->
+			<div class="row-fluid">
+				<div class="span4">								
+					<table class="table table-bordered table-primary table-striped table-vertical-center" style="font-size: 12px;">
+				        <thead>
+				            <tr>
+				                <th class="center" colspan="2"><span >Sale Tax</span></th>				                			                
+				            </tr>
+				        </thead>
+				        <tbody data-role="listview"
+				        	 data-auto-bind="false"				        	                 
+			                 data-template="customerDashBoard-top-customer-template"
+			                 data-bind="source: topCustomerDS"></tbody>			        
+				    </table>			
+				</div>
+				<div class="span4">					
+					<table class="table table-bordered table-primary table-striped table-vertical-center" style="font-size: 12px;">
+				        <thead>				           
+				            <tr>
+				                <th class="center" colspan="2"><span >Purchase Tax</span></th>				                			                
+				            </tr>					        
+				        </thead>
+				        <tbody data-role="listview"
+				        	 data-auto-bind="false"				        	                  
+			                 data-template="customerDashBoard-top-ar-template"
+			                 data-bind="source: topARDS"></tbody>			        
+				    </table>
+				</div>
+				<div class="span4">					
+					<table class="table table-bordered table-primary table-striped table-vertical-center" style="font-size: 12px;">
+				        <thead>				           
+				            <tr>
+				                <th class="center" colspan="2"><span >Tax on Salary</span></th>				                			                
+				            </tr>					        
+				        </thead>
+				        <tbody data-role="listview"
+				        	 data-auto-bind="false"                
+			                 data-template="customerDashBoard-top-product-template"
+			                 data-bind="source: topProductDS"></tbody>			        
+				    </table>
+				</div>		
+			</div>
+
+			<!-- Graph -->
+			<div class="home-chart">
+				<div data-role="chart"
+	                 data-legend="{ position: 'top' }"
+	                 data-series-defaults="{ type: 'column' }"
+	                 data-tooltip='{
+	                    visible: true,
+	                    format: "{0}%",
+	                    template: "#= series.name #: #= kendo.toString(value, &#39;c&#39;, banhji.locale) #"
+	                 }'                 
+	                 data-series="[
+	                                 { field: 'sale', name: 'Monthly Sale', categoryField:'month', color: '#236DA4' },
+	                                 { field: 'order', name: 'Monthly Order', categoryField:'month', color: '#A6C9E3' }
+	                             ]"
+	                 data-auto-bind="false"	                             
+	                 data-bind="source: graphDS"
+	                 style="height: 250px;" ></div>
+            <!-- End Graph -->
+            </div>
+		</div>		
+
+	</div>
+</script>
+<!-- <script id="taxes" type="text/x-kendo-template">
 	<div id="slide-form">
 		<div class="customer-background">
 			<div class="container-960" style="overflow: hidden;">					
@@ -5554,7 +5802,6 @@
 
 			    <br>
 
-			    <!-- Tax Type Window -->
 			    <div data-role="window"
 		                 data-title="Tax Type"		                 
 		                 data-width="350"
@@ -5642,7 +5889,7 @@
 		            	</table>
 	            	</div>
 
-	            <!-- Item Window -->
+	      
 	            <div data-role="window"
 		                 data-title="Tax Item"		                 
 		                 data-width="285"
@@ -5726,7 +5973,7 @@
 			</div>
 		</div>
 	</div>
-</script>
+</script> -->
 <script id="tax-type-template" type="text/x-kendo-tmpl">                    
     <tr>
     	<td>#=number#</td>
@@ -5755,7 +6002,42 @@
     	</td>
    	</tr>
 </script>
+<script id="saleRecord" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background ">
+			<div class="container-960">					
+				<div id="example" class="k-content">
 
+			    	<span class="glyphicons no-js remove_2 pull-right" 
+		    				onclick="javascript:window.history.back()"
+							data-bind="click: cancel"><i></i></span>
+
+				    <div class="center" style="text-align: center;">
+				    	<h2 >សៀវភៅទិន្នានុប្បវត្តិលក់</h2>	
+				    	<p>Sale Record</p>	
+				    	<p>ខែ កក្កដា ឆ្នាំ ២០១៦ </p>
+				    	<p>For July 2016</p>		    		   
+				    </div>
+				    <br>
+
+				    <div class="row">
+				    	<table>
+				    		<tr>
+				    			<td colspan="6">វិក័យប័ត្រ</td>
+				    			<td colspan="6">ការផ្គត់ផ្គង់</td>
+				    			<td rowspan="5">សរុបថ្លៃលក់រួមទាំងអាករ</td>
+				    		</tr>
+				    		<tr>
+				    			<td >សរុបថ្លៃលក់រួមទាំងអាករ</td>
+				    		</tr>
+				    	</table>
+				    </div>					
+			    	
+				</div>							
+			</div>
+		</div>
+	</div>
+</script>
 
 
 
@@ -39528,17 +39810,22 @@
 </script>
 <script id="taxesMenu" type="text/x-kendo-template">
 	<ul class="topnav">
-		<li><a href='#/tax' class='glyphicons show_big_thumbnails'><i></i></a></li>
+		<li><a href='#/taxes' class='glyphicons show_big_thumbnails'><i></i></a></li>
 	  	<li role='presentation' class='dropdown'>
 	  		<a class='dropdown-toggle glyphicons text_bigger' data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false'><i></i> <span class='caret'></span></a>
   			<ul class='dropdown-menu'>				 				  				
-  				<li><a href='#/journal'>Journal</a></li>  				
-  				<li><a href='#/tax'>Tax</a></li>
-  				<li><a href='#/imports'><span ></span>Imports</a></li> 				  				 				  				 				
+  				<li><a href='#/sale_record'><span >Select Sale Record</span></a></li>  				
+  				<li><a href='#/purchase_record'><span >Select Purchase Record</span></a></li>
+  				<li><a href='#/payroll_list'><span >Select Payroll List</span></a></li>
+  				<li> <span class="li-line"></span></li>
+  				<li><a href='#/profit_tax'><span >Prepayment of Profit Tax</span></a></li>  				
+  				<li><a href='#/value_added_tax'><span >Return for Value Added Tax</span></a></li>
+  				<li><a href='#/withholding_tax'><span >Return for Withholding Tax</span></a></li>
+  				<li><a href='#/tax_salary'><span >Return for Tax on Salary</span></a></li>			  				 				
   			</ul>
 	  	</li>	  	  	
 	  	<li><a href='#/tax_report_center'>REPORTS</a></li>	  	
-	  	<li><a href='#/' class='glyphicons settings'><i></i></a></li>	  				
+	  	<li><a href='#/tax_setting' class='glyphicons settings'><i></i></a></li>	  				
 	</ul>
 </script>
 <script id="saleMenu" type="text/x-kendo-template">
@@ -73293,6 +73580,7 @@
 		taxReportCenter: new kendo.Layout("#taxReportCenter", {model: banhji.taxReportCenter}),
 		saleJournal: new kendo.Layout("#saleJournal", {model: banhji.saleJournal}),
 		purchaseJournal: new kendo.Layout("#purchaseJournal", {model: banhji.purchaseJournal}),
+		saleRecord: new kendo.Layout("#saleRecord", {model: banhji.saleRecord}),
 
 
 		//Employee
@@ -75446,6 +75734,24 @@
 			}
 		}		
 	});
+	banhji.router.route("/sale_record", function(){
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{
+			banhji.view.layout.showIn("#content", banhji.view.saleRecord);
+
+			banhji.userManagement.addMultiTask("Sale Record","sale_record",null);
+
+			banhji.view.layout.showIn('#menu', banhji.view.menu);
+			banhji.view.menu.showIn('#secondary-menu', banhji.view.taxesMenu);
+			
+			var vm = banhji.saleRecord;
+
+			if(banhji.pageLoaded["sale_record"]==undefined){
+				banhji.pageLoaded["sale_record"] = true;
+			}
+		}		
+	});	
 	banhji.router.route("/sale_journal", function(){
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');

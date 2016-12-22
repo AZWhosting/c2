@@ -396,6 +396,32 @@ class Imports extends REST_Controller {
 		$this->response(array('results'=> array(), 'msg' => "Operation is good."), 201);
 	}
 
+	function coa_post() {
+		$models = json_decode($this->post('models'));
+		$journals = array();
+		$err = array();
+		$data = array();
+
+		foreach($models as $value) {
+			$coa = new Account(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$type = new Account_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$type->where('name', $value->type)->get();
+
+			$coa->number = $value->code;
+			$coa->name   = $value->name;
+			$coa->account_type_id = $type->id;
+			if($coa->save()) {
+				$data[] = array(
+					'id' => $coa->id,
+					'name' => $coa->name,
+					'account_type_id' => $coa->account_type_id,
+					'_type' => array('id' => $type->id,'name' => $type->name, 'number' => $type->number, 'nature' => $type->nature)
+				);
+			}
+		}
+
+		$this->response(array('results'=> $data, 'msg' => "Operation is good."), 201);
+	}
 	private function dbsize_get() {
 		$CI=&get_instance();
     $CI->load->database();

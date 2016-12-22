@@ -436,7 +436,7 @@
 	            		<input data-bind="value: exName" type="text" placeholder="Name" style="height: 32px;"  class="span2 k-textbox k-invalid" />
 
 	            		<input data-role="dropdownlist"
-		            	   class="span3"
+		            	   class="span2"
 		            	   style="padding-right: 1px;height: 32px;" 
             			   data-option-label="(--- Acount ---)"
             			   data-auto-bind="false"			                   
@@ -9847,7 +9847,7 @@
 				var amount = 0.0;
 				$.each(data.items, function(i, v){
 					if(v.type == 'service' || v.type== 'deposit'){
-						self.items.push({id: v.item, account_id: v.account_id, name: v.name, type: v.type, amount: v.amount, received: 0.00});
+						self.items.push({id: v.item, account_id: v.account_id, name: v.name, type: v.type, amount: v.amount, received: v.amount});
 						amount += parseFloat(v.amount);
 					}
 				});
@@ -9985,6 +9985,15 @@
 					}
 				})
 				.then(function(lines){
+					banhji.ActivateMeter.get('meterObj').set('activated', 1);
+						banhji.ActivateMeter.meterDS.sync();
+						banhji.ActivateMeter.meterDS.bind('requestEnd', function(e){
+							if(e.response) {
+								// show success message
+							} else {
+								// show erro message
+							}
+						});
 					// then change meter activated field to 1
 					var status = false;
 					if(lines.length > 0) {
@@ -10047,18 +10056,24 @@
 			bloc_id = this.get("blocSelect");
 					
 			if(monthOfSearch){				
-				if(license_id || bloc_id){						
+				//if(license_id || bloc_id){						
 					var monthOf = new Date(monthOfSearch);
 					monthOf.setDate(1);
 					monthOf = kendo.toString(monthOf, "yyyy-MM-dd");
-										
-					this.dataSource.transport.options.read.data={
-						month_of 	: monthOf,
-						license_id : license_id,
-						bloc_id 	: bloc_id
-					};
-					this.dataSource.read();	
-				}
+					this.dataSource.filter([
+			    		// {field: 'branch_id', operator: 'where_related_meter', value: license_id	},
+			    		// {field: 'location_id', operator: 'where_related_meter', value: bloc_id},
+			    		{field: 'month_of', operator: 'where_related_meter', value: monthOf}
+			    	]).then(function(){
+			    		console.log(this.dataSource.data());
+			    	});			
+					// this.dataSource.transport.options.read.data={
+					// 	month_of 	: monthOf,
+					// 	license_id : license_id,
+					// 	bloc_id 	: bloc_id
+					// };
+					// this.dataSource.read();	
+				//}
 			}else{
 				alert("សូមSelect ខែ");
 			}	
@@ -10073,6 +10088,7 @@
 				number  : banhji.reading.get('NumberSR'),
 				previous: banhji.reading.get('previousSR'),
 				current : banhji.reading.get('currentSR'),
+				invoiced: 0,
 				consumption: banhji.reading.get('currentSR') - banhji.reading.get('previousSR')
 			});
 			banhji.reading.save()

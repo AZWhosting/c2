@@ -431,11 +431,13 @@ class Profiles extends REST_Controller {
 		foreach($requested_data as $req) {
 			$company = new Institute();
 			$company->where('id', $req->id)->get();
+			$pimage = new Pimage();
+			$pimage->where('url', $req->logo->url)->get();
 
 			$company->name = $req->name;
 			$company->email= isset($req->email) ? $req->email: "";
 			$company->address= isset($req->address) ? $req->address:"";
-			$company->logo = isset($req->logo) ? $req->logo : "";
+			$company->pimage_id = $pimage->id;
 			$company->description= isset($req->description) ? $req->description : "";
 			$company->vat_number = isset($req->vat_number) ? $req->vat_number : "";
 			$company->fiscal_date= isset($req->fiscal_date) ? date('m-d', strtotime($req->fiscal_date)) : '01-01';
@@ -460,7 +462,7 @@ class Profiles extends REST_Controller {
 					'name'=>$company->name,
 					'email' => $company->email,
 					'address'=>$company->address,
-					'logo' => $company->logo,
+					'logo' => array('id'=>$pimage->id, 'url' => $pimage->url),
 					'description' => $company->description,
 					'vat_number' => $company->vat_number,
 					'fiscal_date'=> $company->fiscal_date,

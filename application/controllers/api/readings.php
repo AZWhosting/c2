@@ -94,7 +94,7 @@ class Readings extends REST_Controller {
 		foreach ($models as $value) {
 			$obj = new Meter_record(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$meter = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			$meter->where('number', $value->number)->get();
+			$meter->where('id', $value->number->id)->get();
 			//if($value->status == "n") {
 				$obj->meter_id 				= isset($meter->id)					?$meter->id: "";
 				$obj->previous 				= isset($value->previous)			?$value->previous: "";
@@ -120,7 +120,7 @@ class Readings extends REST_Controller {
 				$data["results"][] = array(
 					"id"			=> $obj->id,
 					"meter_id" 		=> $obj->meter_id,
-					"number" 		=> intval($value->number),
+					"number" 		=> intval($meter->number),
 					"prev"			=> $obj->previous,
 					"current"		=> $obj->current,
 					"from_date"		=> $obj->from_date,

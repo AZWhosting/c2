@@ -1059,7 +1059,8 @@
                                         banhji.index.set('industry', null);
                                         banhji.index.set('type', null);
                                         // go to confirm
-                                        window.location.replace(baseUrl + "confirm/");
+                                        //window.location.replace(baseUrl + "confirm/");
+                                        window.location.replace(baseUrl + "confirm/?e=" + this.get('email'));
                                     });
                                 }
                             });

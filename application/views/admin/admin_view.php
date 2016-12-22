@@ -516,8 +516,10 @@
                             <span class="glyphicon glyphicon-remove glyphicon-size" data-bind="click: close"><i></i></span>
                         </div>
                         <h2>Edit Company Info</h2>
-                        <img data-bind="attr: {src: current.logo.url}"><br>
-                        <input type="file" id="companyLogo" data-bind="events: {change: onLogoChange}">
+                        <img width="240px" data-bind="attr: {src: current.logo.url}" />
+                        <input data-role="upload" id="companyLogo" class="form-control col-md-7 col-xs-12" type="file" data-bind="events: {select: upload}" data-show-file-list="false">
+                        <br>
+                        
                         <div class="divider"></div>
                         <header class="box-typical-header-sm">
                           General Info
@@ -2994,15 +2996,25 @@
           {id:'medium', value: 'Medium'},
           {id:'large', value: 'Large'}
         ],
-        upload: function() {
-          var fileChooser = document.getElementById('companyLogo');
-          var file = fileChooser.files[0];
-          if (file) {
-            var params = {Key: Math.floor(Math.random() * 100000000000000001)+ '_' +file.name , ContentType: file.type, Body: file};
-            bucket.upload(params, function (err, data) {
-              banhji.company.dataStore.data()[0].set('logo', data.Location);
-            });
+        upload: function(e) {
+          // var fileChooser = document.getElementById('companyLogo');
+          // var file = fileChooser.files[0];
+          // if (file) {
+          //   var params = {Key: Math.floor(Math.random() * 100000000000000001)+ '_' +file.name , ContentType: file.type, Body: file};
+          //   bucket.upload(params, function (err, data) {
+          //     banhji.company.dataStore.data()[0].set('logo', data.Location);
+          //   });
+          // }
+          var id = this.get('current').logo.id;
+          var that = this;
+          var fileReader = new FileReader();
+          fileReader.onload = function (event) {
+            var mapImage = event.target.result;
+            // $("#MyImage").attr('src', mapImage);
+            banhji.company.get('current').set('logo', {id: "", url: mapImage});
           }
+          fileReader.readAsDataURL(e.files[0].rawFile);
+          this.media.upload(id, e.files).done(function(data){});
         },
         edit: function() {
           banhji.router.navigate('company/edit');
@@ -3015,19 +3027,15 @@
           banhji.router.navigate('');
         },
         save: function() {
-          if(banhji.company.get('logoChange')) {
-            var fileChooser = document.getElementById('companyLogo');
-            var file = fileChooser.files[0];
-            if (file) {
-              var params = {Key: Math.floor(Math.random() * 100000000000000001)+ '_' +file.name , ContentType: file.type, Body: file};
-              bucket.upload(params, function (err, data) {
-                banhji.company.dataStore.data()[0].set('logo', data.Location);
-                banhji.company.dataStore.sync();
-              });
-            }
+          if(banhji.company.media.dataSource.hasChanges()) {
+            banhji.company.media.save().then(function(data){
+              banhji.company.get('current').set('logo', {id: data.id, url: data.url});
+              banhji.company.dataStore.sync();
+            });
           } else {
             banhji.company.dataStore.sync();
           } 
+          
           banhji.company.dataStore.bind('requestEnd', function(e){
             var res = e.response;
             if(res.results.length > 0) {

@@ -1,3 +1,4 @@
+<?php $Email = $_GET["e"]; ?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -135,6 +136,7 @@
         <div id="wrapper">
           <div id="login" class=" form">
             <section class="login_content">
+              
               <form>
                 <h1>Confirm Code</h1>
                 <div>
@@ -374,7 +376,7 @@
           }),
           password: null,
           confirm: null,
-          email: null,
+          email: "<?php echo $Email; ?>",
           verificationCode: null,
           cognitoUser: null,
           newPass: null,
