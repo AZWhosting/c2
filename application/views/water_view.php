@@ -445,7 +445,6 @@
 		                   data-value-field="id"
 		                   data-bind="value: exAccount,
 		                              source: exAccountDS"/>
-	            		
 
 		                <input data-role="dropdownlist"
 		            	   class="span2"
@@ -456,8 +455,18 @@
 		                   data-text-field="name"
 		                   data-value-field="id"
 		                   data-bind="value: exUnit,
-		                              source: typeUnit"/>
-		            	
+		                              source: typeUnit" />
+
+		            	<input data-role="dropdownlist"
+		            	   class="span2"
+		            	   style="padding-right: 1px;height: 32px;" 
+            			   data-option-label="(--- Currency ---)"
+            			   data-auto-bind="false"			                   
+		                   data-value-primitive="true"
+		                   data-text-field="name"
+		                   data-value-field="id"
+		                   data-bind="value: exCurrency,
+		                              source: currencyDS"/>
 		            	<input data-bind="value: exPrice" type="text" placeholder="Price" style="height: 32px;" class="span2 k-textbox k-invalid" />
 
 		            	<a class="btn btn-default glyphicons circle_plus cutype-icon" style="width: 80px;margin-left: 2px;" data-bind="click: addEx"><i></i>Add</a>
@@ -8764,6 +8773,7 @@
         tariffItemDS		: dataStore(apiUrl + "plans/tariff"),
         txnTemplateDS		: dataStore(apiUrl + "transaction_templates"),
         objBloc 			: null,
+        currencyDS  		: banhji.source.currencyDS,
         licenseDS 			: dataStore(apiUrl + "branches"),
         branchDS 			: dataStore(apiUrl + "branches"),
         planDS 				: dataStore(apiUrl + "plans"),

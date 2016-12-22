@@ -6021,15 +6021,35 @@
 				    <br>
 
 				    <div class="row">
-				    	<table>
-				    		<tr>
-				    			<td colspan="6">វិក័យប័ត្រ</td>
-				    			<td colspan="6">ការផ្គត់ផ្គង់</td>
-				    			<td rowspan="5">សរុបថ្លៃលក់រួមទាំងអាករ</td>
-				    		</tr>
-				    		<tr>
-				    			<td >សរុបថ្លៃលក់រួមទាំងអាករ</td>
-				    		</tr>
+				    	<table class="table table-bordered table-condensed">
+				    		<thead>
+					    		<tr>
+					    			<td colspan="6">វិក័យប័ត្រ</td>
+					    			<td colspan="6">ការផ្គត់ផ្គង់</td>
+					    			<td rowspan="5">សរុបថ្លៃលក់រួមទាំងអាករ</td>
+					    		</tr>
+					    		<tr>
+					    			<td rowspan="3">កាលបរិច្ឆេទ</td>
+					    			<td rowspan="4">លេខយោង</td>
+					    			<td rowspan="3">លេខវិក័យប័ត្រ</td>
+					    			<td rowspan="3">អ្នកទិញ</td>
+					    			<td rowspan="3">លេខអត្តសញ្ញាណ <br> សារពើពន្ធ <br> VAT TIN</td>
+					    			<td rowspan="3">បរិយាយ</td>
+					    			<td rowspan="3">ការផ្គត់ផ្គង់មិនជាប់អាករ</td>
+					    			<td rowspan="3">ការនាំចេញ</td>
+					    			<td colspan="4">ការផ្គត់ផ្គង់ជាប់អាករ</td>
+					    		</tr>
+					    		<tr>
+					    			<td colspan="2">ផ្គត់ផ្គង់ឲ្យបុគ្គលជាប់អាករ	</td>
+					    			<td colspan="2">ផ្គត់ផ្គង់ឲ្យអ្នកប្រើប្រាស់</td>
+					    		</tr>
+					    		<tr>
+					    			<td >តម្លៃមិនរួមអាករ</td>
+					    			<td >អាករ (VAT)</td>
+					    			<td >តម្លៃមិនរួមអាករ</td>
+					    			<td >អាករ (VAT)</td>
+					    		</tr>
+					    	</thead>
 				    	</table>
 				    </div>					
 			    	

@@ -17558,6 +17558,20 @@
 													required data-required-msg="required"
 													style="width:100%;" />
 										</td>
+									</tr>
+									<tr>
+										<td><span data-bind="text: lang.lang.type"></span></td>
+										<td>
+											<input id="cbbType" name="cbbType"
+												   data-role="dropdownlist"											                    
+								                   data-value-primitive="true"
+								                   data-text-field="name"
+								                   data-value-field="type"
+								                   data-bind="value: obj.type,
+								                              source: typeList,
+								                              events:{ change: typeChanges }"
+								                   required data-required-msg="required" style="width: 100%" />
+										</td>
 									</tr>								
 									<tr>
 										<td><span data-bind="text: lang.lang.customers"></span></td>
@@ -58490,6 +58504,7 @@
 		catalogDS			: dataStore(apiUrl + "items"),
 		assemblyDS			: dataStore(apiUrl + "items/assembly"),
 		paymentMethodDS 	: dataStore(apiUrl + "payment_methods"),
+		typeList 			: banhji.source.cashSalePrefixDS,
 		segmentItemDS		: banhji.source.segmentItemDS,
 		amtDueColor 		: banhji.source.amtDueColor,
 	    confirmMessage 		: banhji.source.confirmMessage,
@@ -59018,6 +59033,17 @@
 				obj.set("remaining", remaining);									    	
 	    	}	
 		},
+		typeChanges 		: function(){
+			var obj = this.get("obj");
+
+			$.each(this.txnTemplateDS.data(), function(index, value){
+				if(value.type==obj.type){
+					obj.set("transaction_template_id", value.id);
+
+					return false;
+				}
+			});
+		},
 		discountChanges 	: function(){
 			var obj = this.get("obj");
 
@@ -59049,7 +59075,7 @@
 			this.set("amtDueColor", banhji.source.amtDueColor);				
 
 			this.dataSource.insert(0, {
-				transaction_template_id: 10,				
+				transaction_template_id: 0,				
 				contact_id 			: "",//Customer
 				payment_method_id	: 0,				
 				reference_id 		: "",
@@ -59058,7 +59084,7 @@
 				job_id 				: 0,				
 				user_id 			: this.get("user_id"),
 				employee_id			: "",//Sale Rep 	    		
-			   	type				: "Cash_Sale",//Required
+			   	type				: "Commercial_Cash_Sale",//Required
 			   	sub_total 			: 0,
 			   	discount 			: 0,
 			   	tax 				: 0,  					   				   	
