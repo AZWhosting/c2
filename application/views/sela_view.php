@@ -6020,23 +6020,23 @@
 				    </div>
 				    <br>
 
-				    <div class="row">
-				    	<table class="table table-bordered table-condensed">
+				    <div class="row abc">
+				    	<table class="bcd">				    		
 				    		<thead>
 					    		<tr>
 					    			<td colspan="6">វិក័យប័ត្រ</td>
 					    			<td colspan="6">ការផ្គត់ផ្គង់</td>
-					    			<td rowspan="5">សរុបថ្លៃលក់រួមទាំងអាករ</td>
+					    			<td rowspan="4">សរុបថ្លៃលក់រួមទាំងអាករ</td>
 					    		</tr>
 					    		<tr>
-					    			<td rowspan="3">កាលបរិច្ឆេទ</td>
-					    			<td rowspan="4">លេខយោង</td>
+					    			<td rowspan="3" style="width: 7%;">កាលបរិច្ឆេទ</td>
+					    			<td rowspan="3">លេខយោង</td>
 					    			<td rowspan="3">លេខវិក័យប័ត្រ</td>
 					    			<td rowspan="3">អ្នកទិញ</td>
 					    			<td rowspan="3">លេខអត្តសញ្ញាណ <br> សារពើពន្ធ <br> VAT TIN</td>
-					    			<td rowspan="3">បរិយាយ</td>
+					    			<td rowspan="3" style="width: 15%;">បរិយាយ</td>
 					    			<td rowspan="3">ការផ្គត់ផ្គង់មិនជាប់អាករ</td>
-					    			<td rowspan="3">ការនាំចេញ</td>
+					    			<td rowspan="3" style="width: 7%;">ការនាំចេញ</td>
 					    			<td colspan="4">ការផ្គត់ផ្គង់ជាប់អាករ</td>
 					    		</tr>
 					    		<tr>
@@ -6049,7 +6049,166 @@
 					    			<td >តម្លៃមិនរួមអាករ</td>
 					    			<td >អាករ (VAT)</td>
 					    		</tr>
+					    		<tr>
+					    			<td>P1</td>
+					    			<td>P2</td>
+					    			<td>P3</td>
+					    			<td>P4</td>
+					    			<td>P5</td>
+					    			<td>P6</td>
+					    			<td>P7</td>
+					    			<td>P8</td>
+					    			<td>P9</td>
+					    			<td>P10</td>
+					    			<td>P11</td>
+					    			<td>P12</td>
+					    			<td>P13</td>
+					    		</tr>					    		
 					    	</thead>
+					    	<tbody>
+					    		<tr>
+					    			<td style="text-align: center;">01-Sep-16</td>
+					    			<td></td>
+					    			<td >E3543</td>
+					    			<td >ABC</td>
+					    			<td style="text-align: right;">N/A</td>
+					    			<td>Metal Pattern</td>
+					    			<td></td>
+					    			<td style="text-align: right;">722.00</td>
+					    			<td></td>
+					    			<td>-</td>
+					    			<td></td>
+					    			<td>-</td>
+					    			<td style="text-align: right;">722.00</td>
+					    		</tr>
+					    		<tr>
+					    			<td style="text-align: center;">01-Sep-16</td>
+					    			<td></td>
+					    			<td >E3543</td>
+					    			<td >ABC</td>
+					    			<td style="text-align: right;">N/A</td>
+					    			<td>Metal Pattern</td>
+					    			<td></td>
+					    			<td style="text-align: right;">722.00</td>
+					    			<td></td>
+					    			<td>-</td>
+					    			<td></td>
+					    			<td>-</td>
+					    			<td style="text-align: right;">722.00</td>
+					    		</tr>
+					    		<tr>
+					    			<td style="text-align: center;">01-Sep-16</td>
+					    			<td></td>
+					    			<td >E3543</td>
+					    			<td >ABC</td>
+					    			<td style="text-align: right;">N/A</td>
+					    			<td>Metal Pattern</td>
+					    			<td></td>
+					    			<td style="text-align: right;">722.00</td>
+					    			<td></td>
+					    			<td>-</td>
+					    			<td></td>
+					    			<td>-</td>
+					    			<td style="text-align: right;">722.00</td>
+					    		</tr>
+					    		<tr>
+					    			<td style="text-align: center;">01-Sep-16</td>
+					    			<td></td>
+					    			<td >E3543</td>
+					    			<td >ABC</td>
+					    			<td style="text-align: right;">N/A</td>
+					    			<td>Metal Pattern</td>
+					    			<td></td>
+					    			<td style="text-align: right;">722.00</td>
+					    			<td></td>
+					    			<td>-</td>
+					    			<td></td>
+					    			<td>-</td>
+					    			<td style="text-align: right;">722.00</td>
+					    		</tr>
+					    		<tr>
+					    			<td style="text-align: center;">01-Sep-16</td>
+					    			<td></td>
+					    			<td >E3543</td>
+					    			<td >ABC</td>
+					    			<td style="text-align: right;">N/A</td>
+					    			<td>Metal Pattern</td>
+					    			<td></td>
+					    			<td style="text-align: right;">722.00</td>
+					    			<td></td>
+					    			<td>-</td>
+					    			<td></td>
+					    			<td>-</td>
+					    			<td style="text-align: right;">722.00</td>
+					    		</tr>
+					    		<tr>
+					    			<td style="text-align: center;">01-Sep-16</td>
+					    			<td></td>
+					    			<td >E3543</td>
+					    			<td >ABC</td>
+					    			<td style="text-align: right;">N/A</td>
+					    			<td>Metal Pattern</td>
+					    			<td></td>
+					    			<td style="text-align: right;">722.00</td>
+					    			<td></td>
+					    			<td>-</td>
+					    			<td></td>
+					    			<td>-</td>
+					    			<td style="text-align: right;">722.00</td>
+					    		</tr>
+					    		<tr>
+					    			<td style="text-align: center;">01-Sep-16</td>
+					    			<td></td>
+					    			<td >E3543</td>
+					    			<td >ABC</td>
+					    			<td style="text-align: right;">N/A</td>
+					    			<td>Metal Pattern</td>
+					    			<td></td>
+					    			<td style="text-align: right;">722.00</td>
+					    			<td></td>
+					    			<td>-</td>
+					    			<td></td>
+					    			<td>-</td>
+					    			<td style="text-align: right;">722.00</td>
+					    		</tr>
+					    		<tr>
+					    			<td style="text-align: center;">01-Sep-16</td>
+					    			<td></td>
+					    			<td >E3543</td>
+					    			<td >ABC</td>
+					    			<td style="text-align: right;">N/A</td>
+					    			<td>Metal Pattern</td>
+					    			<td></td>
+					    			<td style="text-align: right;">722.00</td>
+					    			<td></td>
+					    			<td>-</td>
+					    			<td></td>
+					    			<td>-</td>
+					    			<td style="text-align: right;">722.00</td>
+					    		</tr>
+					    	</tbody>
+					    	<tfoot>
+					    		<tr>
+						    		<td colspan="6" style="text-align: center; font-weight: 600;">សរុប (USD)</td>
+						    		<td>-</td>
+						    		<td style="text-align: right;">238,660</td>
+						    		<td>-</td>
+						    		<td>-</td>
+						    		<td>-</td>
+						    		<td>-</td>
+						    		<td style="text-align: right;">189,391</td>
+						    	</tr>
+						    	<tr>
+						    		<td colspan="6" style="text-align: center; font-weight: 600;">សរុប (KHR)</td>
+						    		<td>-</td>
+						    		<td style="text-align: right;">970,393,227</td>
+						    		<td>-</td>
+						    		<td>-</td>
+						    		<td>-</td>
+						    		<td>-</td>
+						    		<td style="text-align: right;">770,064,416</td>
+						    	</tr>
+					    	</tfoot>
 				    	</table>
 				    </div>					
 			    	

@@ -510,17 +510,17 @@ class Accounting_reports extends REST_Controller {
 
 		//SALE (Begin FiscalDate To As Of)
 		$sale = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$sale->where_in("type", array("Invoice","Cash_Sale","Sale_Return"));
+		$sale->where_in("type", array("Commercial_Invoice","Vat_Invoice","Invoice","Commercial_Cash_Sale","Vat_Cash_Sale","Cash_Sale","Sale_Return"));
 		$sale->where("issued_date >", $this->startFiscalDate);
 		$sale->where("issued_date <=", $today);
-		$sale->where("is_recurring", 0);
-		$sale->where("deleted", 0);
+		$sale->where("is_recurring <>", 1);
+		$sale->where("deleted <>", 1);
 		$sale->get_iterated();
 		
 		//Sum Sale					
 		$totalSale = 0;
 		foreach ($sale as $value) {
-			if($value->type=="Invoice" || $value->type=="Cash_Sale"){
+			if($value->type=="Commercial_Invoice" || $value->type=="Vat_Invoice" || $value->type=="Invoice" || $value->type=="Commercial_Cash_Sale" || $value->type=="Vat_Cash_Sale" || $value->type=="Cash_Sale"){
 				$totalSale += floatval($value->amount) / floatval($value->rate);
 			}else{
 				// -Sale Return
@@ -532,11 +532,11 @@ class Accounting_reports extends REST_Controller {
 
 		//CREDIT SALE (Begin FiscalDate To As Of)
 		$creditSale = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$creditSale->where("type", "Invoice");
+		$creditSale->where_in("type", ["Commercial_Invoice","Vat_Invoice","Invoice"]);
 		$creditSale->where("issued_date >", $this->startFiscalDate);
 		$creditSale->where("issued_date <=", $today);
-		$creditSale->where("is_recurring", 0);
-		$creditSale->where("deleted", 0);
+		$creditSale->where("is_recurring <>", 1);
+		$creditSale->where("deleted <>", 1);
 		$creditSale->get_iterated();
 		
 		//Sum Sale					

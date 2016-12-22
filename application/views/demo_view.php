@@ -43350,7 +43350,7 @@
 			{ id: "Journal", name: "Journal" }
 	    ],
 		genderList					: ["M", "F"],
-		typeList 					: ['Invoice','Cash_Sale','Receipt_Allocation','Sale_Order','Quote','GDN','Sale_Return','Purchase_Order','GRN','Cash_Purchase','Credit_Purchase','Purchase_Return','Payment_Allocation','Deposit','Electricty_Deposit','Water_Deposit','Customer_Deposit','Vendor_Deposit','Witdraw','Transfer','Journal','Item_Adjustment','Cash_Advance','Reimbursement','Direct_Expense','Advance_Settlement','Additional_Cost','Cash_Payment','Cash_Receipt','Credit_Note','Debit_Note','Offset_Bill','Offset_Invoice','Cash_Transfer','Internal_Usage'],
+		typeList 					: ['Invoice','Commercial_Invoice','Vat_Invoice','Electricity_Invoice','Water_Invoice','Cash_Sale','Commercial_Cash_Sale','Vat_Cash_Sale','Receipt_Allocation','Sale_Order','Quote','GDN','Sale_Return','Purchase_Order','GRN','Cash_Purchase','Credit_Purchase','Purchase_Return','Payment_Allocation','Deposit','Electricty_Deposit','Water_Deposit','Customer_Deposit','Vendor_Deposit','Witdraw','Transfer','Journal','Item_Adjustment','Cash_Advance','Reimbursement','Direct_Expense','Advance_Settlement','Additional_Cost','Cash_Payment','Cash_Receipt','Credit_Note','Debit_Note','Offset_Bill','Offset_Invoice','Cash_Transfer','Internal_Usage'],
 		user_id						: banhji.userData.id,
 		amtDueColor 				: "#D5DBDB",
 		acceptedSrc					: "https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/accepted.ico",
@@ -49692,7 +49692,7 @@
 			this.balanceDS.query({    			
 				filter:[
 					{ field:"contact_id", value:obj.contact_id },
-					{ field:"type", value:"Invoice" },
+					{ field:"type", operator:"where_in", value:["Commercial_Invoice", "Vat_Invoice", "Invoice"] },
 					{ field:"status", operator:"where_in", value:[0,2] }
 				],
 				page: 1,
@@ -51977,7 +51977,7 @@
 			this.balanceDS.query({    			
 				filter:[
 					{ field:"contact_id", value:obj.contact_id },
-					{ field:"type", value:"Invoice" },
+					{ field:"type", operator:"where_in", value:["Commercial_Invoice", "Vat_Invoice", "Invoice"] },
 					{ field:"status", operator:"where_in", value:[0,2] }
 				],
 				page: 1,
@@ -55382,7 +55382,7 @@
 				this.summaryDS.query({
 				  	filter: [
 				  		{ field:"contact_id", value: obj.id },
-				  		{ field:"type", operator:"where_in", value: ["Customer_Deposit", "Invoice"] },
+				  		{ field:"type", operator:"where_in", value: ["Customer_Deposit", "Commercial_Invoice", "Vat_Invoice", "Invoice"] },
 				  		{ field:"status", operator:"where_in", value: [0,2] }
 				  	],
 				  	sort: { field: "issued_date", dir: "desc" },
@@ -55421,7 +55421,7 @@
 				this.transactionDS.query({
 				  	filter: [
 				  		{ field:"contact_id", value: obj.id },
-				  		{ field:"type", value:"Invoice" },
+				  		{ field:"type", operator:"where_in", value:["Commercial_Invoice", "Vat_Invoice", "Invoice"] },
 				  		{ field:"status", operator:"where_in", value: [0,2] }
 				  	],
 				  	sort: [
@@ -55462,7 +55462,7 @@
 				this.transactionDS.query({
 				  	filter: [
 				  		{ field:"contact_id", value: obj.id },
-				  		{ field:"type", value: "Invoice" },
+				  		{ field:"type", operator:"where_in", value: ["Commercial_Invoice", "Vat_Invoice", "Invoice"] },
 				  		{ field:"status", operator:"where_in", value: [0,2] },
 				  		{ field:"due_date <", value: kendo.toString(new Date(), "yyyy-MM-dd") }
 				  	],
@@ -56277,7 +56277,7 @@
 			this.balanceDS.query({    			
 				filter:[
 					{ field:"contact_id", value:obj.contact_id },
-					{ field:"type", value:"Invoice" },
+					{ field:"type", operator:"where_in", value: ["Commercial_Invoice", "Vat_Invoice", "Invoice"] },
 					{ field:"status", operator:"where_in", value:[0,2] }
 				],
 				page: 1,
@@ -57085,7 +57085,7 @@
 			this.balanceDS.query({    			
 				filter:[
 					{ field:"contact_id", value:obj.contact_id },
-					{ field:"type", value:"Invoice" },
+					{ field:"type", operator:"where_in", value:["Commercial_Invoice", "Vat_Invoice", "Invoice"] },
 					{ field:"status", operator:"where_in", value:[0,2] }
 				],
 				page: 1,
@@ -58750,7 +58750,7 @@
 			this.balanceDS.query({    			
 				filter:[
 					{ field:"contact_id", value:obj.contact_id },
-					{ field:"type", value:"Invoice" },
+					{ field:"type", operator:"where_in", value:["Commercial_Invoice", "Vat_Invoice", "Invoice"] },
 					{ field:"status", operator:"where_in", value:[0,2] }
 				],
 				page: 1,
@@ -60054,7 +60054,7 @@
 			this.balanceDS.query({    			
 				filter:[
 					{ field:"contact_id", value:obj.contact_id },
-					{ field:"type", value:"Invoice" },
+					{ field:"type", operator:"where_in", value:["Commercial_Invoice", "Vat_Invoice", "Invoice"] },
 					{ field:"status", operator:"where_in", value:[0,2] }
 				],
 				page: 1,
@@ -61644,7 +61644,7 @@
 				this.referenceDS.filter([
 					{ field: "contact_id", value: obj.contact_id },
 					{ field: "status", value: 0 },
-					{ field: "type", operator:"where_in", value:["Quote", "Sale_Order", "Invoice"] },
+					{ field: "type", operator:"where_in", value:["Quote", "Sale_Order", "Commercial_Invoice", "Vat_Invoice", "Invoice"] },
 					{ field: "due_date >=", value: kendo.toString(obj.issued_date, "yyyy-MM-dd") }
 				]);
 			}else{
@@ -62224,7 +62224,7 @@
 			        	var para = [
 					 			{ field:"contact_id", value: obj.contact_id },
 					 			{ field:"status", operator:"where_in", value:[0,2] },
-					 			{ field:"type", value:"Invoice" },
+					 			{ field:"type", operator:"where_in", value:["Commercial_Invoice", "Vat_Invoice", "Invoice"] }
 					 	];
 
 					 	if(obj.reference_id>0){
@@ -62857,7 +62857,7 @@
 
 				this.referenceDS.filter([
 					{ field: "contact_id", value: obj.contact_id },					
-					{ field: "type", operator:"where_in", value:["Invoice","Cash_Sale"] }
+					{ field: "type", operator:"where_in", value:["Commercial_Invoice", "Vat_Invoice", "Invoice", "Commercial_Cash_Sale","Vat_Cash_Sale", "Cash_Sale"] }
 				]);				
 			}else{
 				this.set("enableRef", false);
@@ -62872,7 +62872,7 @@
 				
 				obj.set("amount", ref.amount);
 
-				if(ref.type=="Cash_Sale"){					
+				if(ref.type=="Commercial_Cash_Sale" || ref.type=="Vat_Cash_Sale" || ref.type=="Cash_Sale"){					
 					obj.set("amount_paid", ref.amount);
 					this.set("showReturn", true);
 				}else{
@@ -63777,7 +63777,7 @@
 				para.push({ field:"contact_id", value: contact_id });
 			}
 
-			para.push({ field:"type", operator:"where_in", value:["Quote","Sale_Order","Customer_Deposit","Cash_Sale","Invoice","GDN"] });
+			para.push({ field:"type", operator:"where_in", value:["Quote","Sale_Order","Customer_Deposit", "Commercial_Cash_Sale","Vat_Cash_Sale", "Cash_Sale", "Commercial_Invoice", "Vat_Invoice", "Invoice","GDN"] });
 			para.push({ field:"is_recurring", value: 1 });
 			
 			this.dataSource.filter(para);
@@ -65548,7 +65548,7 @@
 				filter: [
 					{ field:"contact_id", value: contact_id },
 		    		{ field:"status", operator:"where_in", value: [0,2] },
-		    		{ field:"type", operator:"where_in", value:["Invoice", "eInvoice", "wInvoice"] }
+		    		{ field:"type", operator:"where_in", value:["Commercial_Invoice", "Vat_Invoice", "Invoice", "Electricity_Invoice", "Water_Invoice"] }
 				],
 				page: 1,
 				pageSize: 50	  	
@@ -65818,7 +65818,7 @@
 			this.paymentDS.query({
 				filter: [
 					{ field: "cashier", value: this.get("cashier") },
-					{ field: "type" , value: "invoice" },						
+					{ field:"type", operator:"where_in", value:["Commercial_Invoice", "Vat_Invoice", "Invoice"] },						
 					{ field: "payment_date", value: kendo.toString(new Date(), "yyyy-MM-dd") }
 				],
 				aggregate: [
@@ -66962,7 +66962,7 @@
 				para.push({ field:"number", value: searchText });
 			}
 
-			para.push({ field:"type", value:"Invoice" });
+			para.push({ field:"type", operator:"where_in", value:["Commercial_Invoice", "Vat_Invoice", "Invoice"] });
 			para.push({ field:"status", operator:"where_in", value:[0,2] });
 
 			if(this.dataSource.total()>0){

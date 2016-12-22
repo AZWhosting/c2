@@ -463,7 +463,7 @@
             			   data-option-label="(--- Currency ---)"
             			   data-auto-bind="false"			                   
 		                   data-value-primitive="true"
-		                   data-text-field="name"
+		                   data-text-field="code"
 		                   data-value-field="id"
 		                   data-bind="value: exCurrency,
 		                              source: currencyDS"/>
@@ -490,9 +490,9 @@
 	            </div>
 	            <div class="tab-pane" id="tab5">
 		            <div style="clear: both;margin-bottom: 10px;">
-		            	<input data-bind="value: tariffName" type="text" placeholder="Name" style="height: 32px;"  class="span4 k-textbox k-invalid" />
+		            	<input data-bind="value: tariffName" type="text" placeholder="Name" style="height: 32px;"  class="span3 k-textbox k-invalid" />
 		            	<input data-role="dropdownlist"
-		            	   class="span4"
+		            	   class="span3"
 		            	   style="padding-right: 1px;height: 32px;" 
             			   data-option-label="(--- Acount ---)"
             			   data-auto-bind="false"			                   
@@ -501,7 +501,16 @@
 		                   data-value-field="id"
 		                   data-bind="value: tariffAccount,
 		                              source: tariffAccDS"/>
-
+		                <input data-role="dropdownlist"
+		            	   class="span3"
+		            	   style="padding-right: 1px;height: 32px;" 
+            			   data-option-label="(--- Currency ---)"
+            			   data-auto-bind="false"			                   
+		                   data-value-primitive="true"
+		                   data-text-field="code"
+		                   data-value-field="id"
+		                   data-bind="value: tariffCurrency,
+		                              source: currencyDS"/>
 		            	<a class="btn btn-default glyphicons circle_plus cutype-icon" style="width: 80px;margin-left: 2px;" data-bind="click: addTariff"><i></i>Add</a>
 		            </div>
 	            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
@@ -569,6 +578,20 @@
 								<td><span>Usage</span></td>
 								<td>
 									<input class="k-textbox" placeholder="Usage ..." data-bind="value: tariffItemUsage" style="width: 100%;">
+								</td>
+							</tr>
+							<tr style="border-bottom: 8px solid #fff;">
+								<td><span>Currency</span></td>
+								<td>
+									<input data-role="dropdownlist"
+					            	   style="padding-right: 1px;height: 32px;" 
+			            			   data-option-label="(--- Currency ---)"
+			            			   data-auto-bind="false"			                   
+					                   data-value-primitive="true"
+					                   data-text-field="code"
+					                   data-value-field="id"
+					                   data-bind="value: tariffCurrencyItem,
+					                              source: currencyDS"/>
 								</td>
 							</tr>
 							<tr style="border-bottom: 8px solid #fff;">
@@ -8783,6 +8806,7 @@
 		tariffItemFlat 		: 0,
 		tariffSelect 		: false,
 		tariffNameShow 		: null,
+		exCurrency 			: null,
 		planSelect 			: false,
 		windowTariffItemVisible : false,
 		prefixDS			: new kendo.data.DataSource({
@@ -8891,6 +8915,7 @@
         		usage 		: 0,
         		account 	: this.get("exAccount"),
         		unit 		: this.get("exUnit"),
+        		currency 	: this.get("exCurrency"),
         		amount 		: this.get("exPrice")
         	});
         	this.planItemDS.sync();
@@ -8898,6 +8923,7 @@
         	this.set("exAccount", "");
         	this.set("exPrice", "");
         	this.set("exUnit", "");
+        	this.set("exCurrency", "");
         },
         goTariff    		: function(){
         	this.set("tariffSelect", false)
@@ -8923,6 +8949,7 @@
         		account   	: this.get('current').account,
         		is_flat   	: this.get("tariffItemFlat"),
         		unit 		: null,
+        		currency 	: this.get("tariffCurrencyItem"),
         		usage 		: this.get("tariffItemUsage"),
         		amount 		: this.get("tariffItemAmount"),
         	});
@@ -8935,6 +8962,7 @@
 			        	self.set("tariffItemUsage", "");
 			        	self.set("tariffItemAmount", "");
 			        	self.set("windowTariffItemVisible", false);
+			        	self.set("tariffCurrencyItem", "");
 			        	self.closeTariffWindowItem();
 			        	// console.log(e);
 			        	self.tariffItemDS.filter({field: "tariff_id", value: self.get('current').id});
@@ -8954,6 +8982,7 @@
         		is_flat   	: 0,
         		tariff_id 	: 0,
         		unit 		: 0,
+        		currency 	: this.get("tariffCurrency"),
         		account 	: this.get("tariffAccount"),
         		usage 		: 0,
         		amount 		: 0
@@ -8965,6 +8994,7 @@
         			console.log("e");
         			self.set("tariffName", "");
         			self.set("tariffAccount", "");
+        			self.set("tariffCurrency", "");
         		}
         	});
         	this.planItemDS.bind("error", function(e){

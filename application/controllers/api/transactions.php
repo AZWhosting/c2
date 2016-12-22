@@ -68,7 +68,7 @@ class Transactions extends REST_Controller {
 
 				//Sum amount paid
 				$amount_paid = 0;
-				if($value->type=="Invoice" || $value->type=="Credit_Purchase" || $value->type=="Cash_Receipt" || $value->type=="Cash_Payment"){
+				if($value->type=="Commercial_Invoice" || $value->type=="Vat_Invoice" || $value->type=="Invoice" || $value->type=="Credit_Purchase" || $value->type=="Cash_Receipt" || $value->type=="Cash_Payment"){
 					$paid = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 					$paid->select_sum("amount");
 					$paid->select_sum("discount");
@@ -525,32 +525,7 @@ class Transactions extends REST_Controller {
 
 		foreach ($models as $key => $value) {
 			$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			$obj->where("id", $value->id)->get();
-
-			//Update invoice status
-			if($value->type=="Cash_Receipt" || $value->type=="Cash_Payment"){
-				//Sum amount paid
-				$paid = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				$paid->select_sum("amount");
-				$paid->select_sum("discount");
-				$paid->where("reference_id", $obj->reference_id);
-				$paid->where("is_recurring",0);
-				$paid->where("deleted",0);
-				$paid->get();
-				$amount_paid = floatval($paid->amount) + floatval($paid->discount);
-
-				//Update invoice status
-				$inv = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				$inv->get_by_id($obj->reference_id);
-
-				if($amount_paid>0){
-					$inv->status = 2;
-				}else{
-					$inv->status = 0;
-				}
-
-				$inv->save();
-			}
+			$obj->where("id", $value->id)->get();			
 
 			$data["results"][] = array(
 				"data"   => $value,
@@ -609,7 +584,7 @@ class Transactions extends REST_Controller {
 
 				//Sum amount paid
 				$amount_paid = 0;
-				if($value->type=="Invoice" || $value->type=="Credit_Purchase" || $value->type=="Cash_Receipt" || $value->type=="Cash_Payment"){
+				if($value->type=="Commercial_Invoice" || $value->type=="Vat_Invoice" || $value->type=="Invoice" || $value->type=="Credit_Purchase" || $value->type=="Cash_Receipt" || $value->type=="Cash_Payment"){
 					$paid = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 					$paid->select_sum("amount");
 					$paid->select_sum("discount");
@@ -620,8 +595,8 @@ class Transactions extends REST_Controller {
 					}else{
 						$paid->where("reference_id", $value->id);
 					}
-					$paid->where("is_recurring",0);
-					$paid->where("deleted",0);
+					$paid->where("is_recurring <>", 1);
+					$paid->where("deleted <>", 1);
 					$paid->get();
 					$amount_paid = floatval($paid->amount) + floatval($paid->discount);
 				}
@@ -913,7 +888,7 @@ class Transactions extends REST_Controller {
 
 						$itemOut = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 						$itemOut->select_sum("quantity");
-						$itemOut->where_in_related("transaction", "type", array("Invoice", "Cash_Sale", "Adjustment"));
+						$itemOut->where_in_related("transaction", "type", array("Commercial_Invoice", "Vat_Invoice", "Invoice", "Commercial_Cash_Sale", "Vat_Cash_Sale", "Cash_Sale", "Adjustment"));
 						$itemOut->where("item_id", $value->item_id);
 						$itemOut->where("movement", -1);
 						$itemOut->where_related("transaction", "issued_date <=", $transaction->issued_date);
@@ -924,7 +899,7 @@ class Transactions extends REST_Controller {
 						$onHand = floatval($itemIn->quantity) - floatval($itemOut->quantity);
 						$totalQty = $onHand + floatval($value->quantity);
 
-						if($transaction->type=="Invoice" || $transaction->type=="Cash_Sale"){
+						if($transaction->type=="Commercial_Invoice" || $transaction->type=="Vat_Invoice" || $transaction->type=="Invoice" || $transaction->type=="Commercial_Cash_Sale" || $transaction->type=="Vat_Cash_Sale" || $transaction->type=="Cash_Sale"){
 							//Avg Price
 							$lastPrice = $onHand * floatval($item->price);
 							$currentPrice = floatval($value->quantity) * (floatval($value->price) / floatval($value->rate));
@@ -1273,7 +1248,7 @@ class Transactions extends REST_Controller {
 		$data["results"] = [];
 		$data["count"] = 0;
 		$startDate = "";
-		$typeList = array("Invoice", "Cash_Sale", "Deposit", "Cash_Receipt", "Sale_Return");
+		$typeList = array("Commercial_Invoice", "Vat_Invoice", "Invoice", "Commercial_Cash_Sale", "Vat_Cash_Sale", "Cash_Sale", "Deposit", "Cash_Receipt", "Sale_Return");
 
 		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
@@ -1377,7 +1352,7 @@ class Transactions extends REST_Controller {
 			}
 		}
 
-		$obj->where("type", "Invoice");
+		$obj->where_in("type", ["Commercial_Invoice", "Vat_Invoice", "Invoice"]);
 		$obj->where_in("status", array(0,2));
 		$obj->where("is_recurring", 0);
 		$obj->where("deleted", 0);
