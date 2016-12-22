@@ -35,6 +35,7 @@ class Sales extends REST_Controller {
 		$customers = array();
 		$total =0;
 		$totalSale =0;
+		$countInv =0;
 		$deposit =0;
 		// checked if the logic is customer or segment
 		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
@@ -133,19 +134,23 @@ class Sales extends REST_Controller {
 					$customer = $value->contact->get();
 					$fullname = $customer->surname.' '.$customer->name;
 					$temp = 0;
-
+					
 					if(isset($customers["$fullname"])) {
+						$countInv+=1;
 						if($value->type=="Sale_Return"){
 							$customers["$fullname"]['amount']+= (floatval($value->amount)/ floatval($value->rate))*-1;
 						}else{
 							$customers["$fullname"]['amount']+= (floatval($value->amount)/ floatval($value->rate));
 						}
+						$customers["$fullname"]['invoiceCount'] += 1;
 					} else {
+						$countInv+=1;
 						if($value->type=="Sale_Return"){
 							$customers["$fullname"]['amount']= (floatval($value->amount)/ floatval($value->rate))*-1;
 						}else{
 							$customers["$fullname"]['amount']= (floatval($value->amount)/ floatval($value->rate));
 						}
+						$customers["$fullname"]['invoiceCount'] = 1;
 					}
 					
 					// if($ref->type == "Deposit" ) {
@@ -157,9 +162,9 @@ class Sales extends REST_Controller {
 
 		foreach ($customers as $key => $value) {
 			$data["results"][] = array(
-				'customer' => $key,
+				'customer'  => $key,
 				'amount'	=> $value['amount'],
-				'type'	=> $value['type']
+				'invoice'	=> $value['invoiceCount'],
 			);
 			$total += $value['amount'];
 		}
@@ -451,7 +456,7 @@ class Sales extends REST_Controller {
 			foreach ($segmentItem as $seg) {
 				$txn = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
-				$txn->where_in("type", array("Invoice", "Cash_Sale", "Deposit", "Cash_Receipt", "Sale_Return"));
+				$txn->where_in("type", array("Invoice", "Cash_Sale", "Deposit", "Cash_Receipt", "Sale_Return", "Quote", "Sale_Order"));
 				$txn->where_in("status", array(0,2));
 				$txn->like("segments", $seg->id, "both");
 				$txn->where("deleted",0);
@@ -495,7 +500,7 @@ class Sales extends REST_Controller {
 			}
 
 			$obj->where_in_related("contact", 'contact_type_id', $type);
-			$obj->where_in("type", array("Invoice", "Cash_Sale", "Deposit", "Cash_Receipt", "Sale_Return"));
+			$obj->where_in("type", array("Invoice", "Cash_Sale", "Deposit", "Cash_Receipt", "Sale_Return", "Quote", "Sale_Order"));
 			$obj->where('is_recurring', 0);
 			$obj->where("deleted",0);
 
@@ -1421,6 +1426,9 @@ class Sales extends REST_Controller {
 		$deleted = 0;
 		$customers = array();
 		$total = 0;
+		$paid  = 0;
+		$startDate = "";
+		$invoiceOpen = 0;
 
 		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
@@ -1467,6 +1475,18 @@ class Sales extends REST_Controller {
 			}									 			
 		}
 
+		$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$type->select('id')->where('parent_id', 1)->get();
+			$types = array();
+			foreach($type as $t) {
+				$types[] = $t->id;
+			}
+
+		$customer = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$customer->where('deleted <>', 1);
+		$customer->where('is_pattern <>', 1);
+		$customerCount = $customer->where_in('contact_type_id', $type)->count();
+
 		if($this->get("filter")['logic'] == "segment") {
 			$segmentItem = new Segmentitem(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		
@@ -1475,44 +1495,33 @@ class Sales extends REST_Controller {
 			foreach ($segmentItem as $seg) {
 				$txn = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
-				$txn->where("type", "Deposit");
+				$txn->where("type", "Customer_Deposit");
 				$txn->where_in("status", array(0,2));
 				$txn->like("segments", $seg->id, "both");
 				$txn->where("deleted",0);
 				$txn->where("is_recurring",0);
-	
 				$txn->get_iterated();
 
 				foreach ($txn as $t) {
+					$ref = $t->referece->get();
 					$amt = floatval($t->amount)/ floatval($t->rate);
 					$items = $t->item_line->include_related('item', array('name'))->get();
-					$lines = array();
-					foreach($items as $item) {
-						$lines[] = array(
-							'name' 			=> $item->item_name,
-							'quantity' 	=> $item->quantity,
-							'price' 		=> floatval($item->price)/floatval($t->rate),
-							'amount'		=> floatval($item->amount)/floatval($t->rate)
-						);
-					}
 					if(isset($customers["$seg->name"])) {
-						$customers["$seg->name"]['amount']+= $amt;
 						$customers["$seg->name"]['transactions'][] = array(
 							'id'  		=> $t->id,
 							'type'  	=> $t->type,
 							'date' 		=> $t->issued_date,
 							'number' 	=> $t->number,
-							'memo' 		=> $t->memo2,
+							'memo' 		=> $t->memo2,						
 							'amount' 	=> floatval($t->amount)/floatval($t->rate)
 						);
 					} else {
-						$customers["$seg->name"]['amount']= $amt;
 						$customers["$seg->name"]['transactions'][] = array(
 							'id'  		=> $t->id,
 							'type'  	=> $t->type,
 							'date' 		=> $t->issued_date,
 							'number' 	=> $t->number,
-							'memo' 		=> $t->memo2,
+							'memo' 		=> $t->memo2,					
 							'amount' 	=> floatval($t->amount)/floatval($t->rate)
 						);
 					}
@@ -1520,18 +1529,16 @@ class Sales extends REST_Controller {
 				}
 			}
 		} else {
+			// $obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
 			$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			$type->select('id')->where('parent_id', 1)->get();
-			$types = array();
-			foreach($type as $t) {
-				$types[] = $t->id;
-			}
-			$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			$obj->where_in_related("contact", 'contact_type_id', $type);
-			$obj->where("type", "Deposit");
-			$obj->where('is_recurring', 0);
+			$type->where('parent_id', 1)->get();
+
+			$obj->where_related("contact", 'contact_type_id', $type);
+			$obj->where("status <>", 1);
+			$obj->where("type", "Customer_Deposit");
 			$obj->where("deleted",0);
+			$obj->where('is_recurring', 0);
 
 			// $obj->include_related("contact_type", "name");
 
@@ -1541,47 +1548,44 @@ class Sales extends REST_Controller {
 			
 			if($obj->result_count()>0){
 				foreach ($obj as $value) {
+					$ref = $value->transaction->get();
 					$customer = $value->contact->get();
 					$fullname = $customer->surname.' '.$customer->name;
-					$items = $value->item_line->include_related('item', array('name'))->get();
-
 					if(isset($customers["$fullname"])) {
-						$customers["$fullname"]['amount'] += floatval($value->amount);
 						$customers["$fullname"]['transactions'][] = array(
 							'id'  		=> $value->id,
 							'type'  	=> $value->type,
 							'date' 		=> $value->issued_date,
 							'number' 	=> $value->number,
-							'memo' 		=> $value->memo2,
+							'memo' 		=> $value->memo2,					
 							'amount' 	=> floatval($value->amount)/floatval($value->rate)
 						);
 					} else {
-						$customers["$fullname"]['amount'] = floatval($value->amount);
 						$customers["$fullname"]['transactions'][] = array(
 							'id'  		=> $value->id,
 							'type'  	=> $value->type,
 							'date' 		=> $value->issued_date,
 							'number' 	=> $value->number,
-							'memo' 		=> $value->memo2,
+							'memo' 		=> $value->memo2,					
 							'amount' 	=> floatval($value->amount)/floatval($value->rate)
 						);
-				//Results
 					}
-				$total += floatval($value->amount)/ floatval($value->rate);
+					$total += (floatval($value->amount)/ floatval($value->rate)); 
+
 				}
 			}
 		}	
+
 		foreach ($customers as $key => $value) {
 			$data["results"][] = array(
-				'group' 	=> $key,
-				'amount'	=> $value['amount'],
-				'items' 	=> $value['transactions']
-
+				'group' => $key,
+				'items' => $value['transactions']
 			);
 		}
+
+		//Response Data
 		$data['total'] = $total;
 		$data['count'] = count($customers);
-		//Response Data
 		$this->response($data, 200);
 	}
 
@@ -1667,6 +1671,7 @@ class Sales extends REST_Controller {
 				$customer = $value->contact->get();
 				$fullname = $customer->surname.' '.$customer->name;
 				$job = $value->job->get();
+				$jobName = $job->name;
 				$segment = new Segmentitem(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 				$segment->where_in('id', explode(',',$value->segments))->get();
 				$segments = array();
@@ -1678,28 +1683,26 @@ class Sales extends REST_Controller {
 					}
 				}
 
-				if(isset($customers["$fullname"])) {
-					$customers["$fullname"]['amount'] += floatval($value->amount);
-					$customers["$fullname"]['transactions'][] = array(
+				if(isset($customers["$jobName"])) {
+					$customers["$jobName"]['amount'] += floatval($value->amount);
+					$customers["$jobName"]['transactions'][] = array(
 						'id'  		=> $value->id,
-						'job'		=> $job->name,
+						'name'		=> $fullname,
 						'type'  	=> $value->type,
 						'date' 		=> $value->issued_date,
 						'number' 	=> $value->number,
 						'memo' 		=> $value->memo2,
-						'segments'=> $segments,
 						'amount' 	=> floatval($value->amount)/floatval($value->rate)
 					);
 				} else {
-					$customers["$fullname"]['amount'] = floatval($value->amount);
-					$customers["$fullname"]['transactions'][] = array(
+					$customers["$jobName"]['amount'] = floatval($value->amount);
+					$customers["$jobName"]['transactions'][] = array(
 						'id'  		=> $value->id,
-						'job'		=> $job->name,
+						'name'		=> $fullname,
 						'type'  	=> $value->type,
 						'date' 		=> $value->issued_date,
 						'number' 	=> $value->number,
 						'memo' 		=> $value->memo2,
-						'segments'	=> $segments,
 						'amount' 	=> floatval($value->amount)/floatval($value->rate)
 					);
 			//Results
@@ -1861,6 +1864,7 @@ class Sales extends REST_Controller {
 
 			$obj->where_in_related("contact", 'contact_type_id', $type);
 			$obj->where("type", "Invoice");
+			$obj->where("status <>", 1);
 			$obj->where('is_recurring', 0);
 			$obj->where("deleted",0);
 
@@ -1943,6 +1947,7 @@ class Sales extends REST_Controller {
 		}
 		$data['total'] = $total;
 		$data['aging'] = $aging;
+		$data['totalDay'] = $totalDay;
 		$data['totalInvoice'] = $totalInvoice;
 		$data['count'] = count($customers);
 		//Response Data

@@ -20710,25 +20710,17 @@
 							<p>From <span data-bind="text: displayDateStart"></span> to <span data-bind="text: displayDateEnd"></p>
 						</div>
 
-						<div class="row-fluid">
-							<div class="span5">
-								<div class="total-customer">
-									<p>Total Customer</p>
-									<span data-bind="text: count"></span>
-								</div>
-
-							</div>
-							<div class="span7">
-								<div class="total-sale">
-									<p>Total Sale</p>
-									<span data-bind="text: total"></span>
-								</div>
-							</div>
+						<div class="row-fluid">						
+							<div class="total-sale">
+								<p>Total Sale</p>
+								<span data-bind="text: total"></span>
+							</div>	
 						</div>
 						<table class="table table-borderless table-condensed ">
 							<thead>
 								<tr>
 									<th><span>Customer</span></th>
+									<th><span>Number Invoice</span></th>
 									<th><span>Total Sale</span></th>
 								</tr>
 							</thead>
@@ -20747,6 +20739,7 @@
 <script id="sale-summary-tmpl" type="text/x-kendo-template">
 	<tr>
 		<td>#=customer#</td>
+		<td align="left">#=invoice#</td>
 		<td align="right">#=kendo.toString(amount, 'c2')#</td>
 	</tr>
 </script>
@@ -20968,7 +20961,6 @@
 									<th><span>Type</span></th>
 									<th><span>Date</span></th>
 									<th><span>No</span></th>
-									<th><span>Item/service</span></th>
 									<th><span>Qty</span></th>
 									<th><span>Price</span></th>
 									<th><span>Amount</span></th>
@@ -21013,7 +21005,6 @@
 				<td>
 					<a href="\#/#=items[i].type.toLowerCase()#/#=items[i].id#">#=items[i].number#</a>
 				</td>
-				<td>#=items[i].lines[x].name#</td>
 				<td>#=items[i].lines[x].quantity#</td>
 				<td align="right">#=kendo.toString(items[i].lines[x].price, 'c2')#</td>
 				<td align="right">#=kendo.toString(items[i].lines[x].amount, 'c2')#</td>
@@ -21022,7 +21013,6 @@
 		#}#
 	#}#
 	<tr style="font-weight: 700;">
-		<td></td>
 		<td></td>
 		<td></td>
 		<td></td>
@@ -21271,7 +21261,8 @@
 		<td></td>
 		<td></td>
 	</tr>
-	# if (items.length) {#
+	# if (items.length > 0) {#
+		# var amount = 0;#
 		#for(var i= 0; i <items.length; i++) {#
 			<tr>
 				# var myDate = kendo.toString(new Date(items[i].date),'dd-MM-yyyy'); #
@@ -21283,16 +21274,16 @@
 				<td>#=items[i].memo#</td>
 				<td style="text-align: right;">#=kendo.toString(items[i].amount, 'c2')#</td>
 			</tr>
-
+			# amount += kendo.parseFloat(items[i].amount);#
 		#}#
+		<tr style="font-weight: 700;">
+			<td></td>
+			<td></td>
+			<td></td>
+			<td style="text-align: right;">#=kendo.toString(amount, 'c2')#</td>
+		</tr>
 	#}#
-	<tr style="font-weight: 700;">
-		<td></td>
-		<td></td>
-		<td></td>
-		<td></td>
-		<td style="text-align: right;">#=kendo.toString(amount, 'c2')#</td>
-	</tr>
+		
 </script>
 <script id="saleDetailProduct" type="text/x-kendo-template">
 	<div id="slide-form">
@@ -21654,12 +21645,6 @@
 										 data-bind="source: saleDetail.dataSource"
 										 data-template="customerBalanceDetail-temp"
 							></tbody>
-							<tfoot>
-								<tr>
-									<th colspan="3">Total</th>
-									<th colspan="1"><span data-bind="text: total"></span></th>
-								</tr>
-							</tfoot>
 						</table>
 					</div>
 				</div>
@@ -21676,6 +21661,7 @@
 		<td></td>
 	</tr>
 	# if (items.length) {#
+	# var amount = 0;#
 		#for(var i= 0; i <items.length; i++) {#
 			<tr>
 				# var myDate = kendo.toString(new Date(items[i].date),'dd-MM-yyyy'); #
@@ -21686,8 +21672,14 @@
 				</td>			
 				<td style="text-align: right;">#=kendo.toString(items[i].amount, 'c2')#</td>
 			</tr>
-
+			# amount += kendo.parseFloat(items[i].amount);#
 		#}#
+		<tr style="font-weight: 700;">
+			<td></td>
+			<td></td>
+			<td></td>
+			<td style="text-align: right;">#=kendo.toString(amount, 'c2')#</td>
+		</tr>
 	#}#
 </script>
 <script id="receivableAgingSummary" type="text/x-kendo-template">
@@ -21775,12 +21767,12 @@
 							<thead>
 								<tr>
 									<th><span>Name</span></th>
-									<th><span>CURRENT</span></th>
-									<th><span>1-30</span></th>
-									<th><span>31-60</span></th>
-									<th><span>61-90</span></th>
-									<th><span>OVER 90</span></th>
-									<th><span>TOTAL</span></th>							
+									<th style="text-align: right;"><span>CURRENT</span></th>
+									<th style="text-align: right;"><span>1-30</span></th>
+									<th style="text-align: right;"><span>31-60</span></th>
+									<th style="text-align: right;"><span>61-90</span></th>
+									<th style="text-align: right;"><span>OVER 90</span></th>
+									<th style="text-align: right;"><span>TOTAL</span></th>							
 								</tr>
 							</thead>
 							<tbody data-role="listview"
@@ -21802,13 +21794,13 @@
 </script>
 <script id="receivableAginglist-temp" type="text/x-kendo-template" >
 	# kendo.culture(banhji.customerSale.locale); #
-	<tr style="font-weight: bold">
+	<tr>
 		<td>#=group#</td>
-		<td>#=kendo.toString(underThirty, 'c2')#</td>
-		<td>#=kendo.toString(thirty, 'c2')#</td>
-		<td>#=kendo.toString(sixty, 'c2')#</td>
-		<td>#=kendo.toString(ninety, 'c2')#</td>
-		<td>#=kendo.toString(overNinety, 'c2')#</td>
+		<td style="text-align: right;">#=kendo.toString(underThirty, 'c2')#</td>
+		<td style="text-align: right;">#=kendo.toString(thirty, 'c2')#</td>
+		<td style="text-align: right;">#=kendo.toString(sixty, 'c2')#</td>
+		<td style="text-align: right;">#=kendo.toString(ninety, 'c2')#</td>
+		<td style="text-align: right;">#=kendo.toString(overNinety, 'c2')#</td>
 		<td style="text-align: right;">#=kendo.toString(amount, 'c2')#</td>
 	</tr>
 </script>
@@ -22613,12 +22605,11 @@
 						<table class="table table-borderless table-condensed ">
 							<thead>
 								<tr>
+									<th><span>Name</span></th>
 									<th><span>Type</span></th>
-									<th><span>Job</span></th>
 									<th><span>Date</span></th>
 									<th><span>No</span></th>
 									<th><span>Memo</span></th>
-									<th><span>Segment</span></th>
 									<th><span>Amount</span></th>
 								</tr>
 							</thead>
@@ -22655,29 +22646,19 @@
 		#for(var i= 0; i <items.length; i++) {#
 			<tr>
 				# var myDate = kendo.toString(new Date(items[i].date),'dd-MM-yyyy'); #
+				<td>&nbsp;&nbsp;#=items[i].name#</td>
 				<td>&nbsp;&nbsp;#=items[i].type#</td>
-				<td>#=items[i].job#</td>
 				<td>#=myDate#</td>
 				<td>
 					<a href="\#/#=items[i].type.toLowerCase()#/#=items[i].id#">#=items[i].number#</a>
 				</td>
 				<td>#=items[i].memo#</td>
-
-				<td>#if (items[i].segments.length){#
-					#for (var x=0; x<items[i].segments.length; x++) {#
-						#=items[i].segments[x].code#
-						<br>
-
-					#}#
-				#}#</td>
 				<td style="text-align: right;">#=kendo.toString(items[i].amount, 'c2')#</td>
 			</tr>
 
 		#}#
 	#}#
 	<tr style="font-weight: bold; color: black">
-		<td></td>
-		<td></td>
 		<td></td>
 		<td></td>
 		<td></td>
@@ -78244,7 +78225,7 @@
 					kendo.culture(banhji.locale);
 					banhji.customerSale.set('total', kendo.toString(e.response.total, 'c2'));
 					banhji.customerSale.set('cashSale', kendo.toString(e.response.cashSale, 'c2'));
-					banhji.customerSale.set('aging', kendo.toString(e.response.aging, '0'));
+					banhji.customerSale.set('aging', kendo.toString(e.response.aging, 'n0'));
 				}
 			});
 		}
