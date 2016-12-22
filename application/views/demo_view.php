@@ -9640,7 +9640,7 @@
 					style="width:100%;" />
 		</td>				
 		<td class="right">
-			<span data-decimals="2" data-bind="text: amount"></span> 						
+			<span data-format="n" data-bind="text: amount"></span> 						
 		</td>
 		<td>
 			<input id="ccbTaxItem" name="ccbTaxItem-#:uid#"
@@ -11374,7 +11374,7 @@
                    style="width: 65px;">			
 		</td>				
 		<td class="right">
-			<span data-decimals="2" data-bind="text: amount"></span> 						
+			<span data-format="n" data-bind="text: amount"></span> 						
 		</td>
 		<td>
 			<input id="ccbTaxItem" name="ccbTaxItem-#:uid#"
@@ -12002,7 +12002,7 @@
                    style="width: 65px;">			
 		</td>				
 		<td class="right">
-			<span data-decimals="2" data-bind="text: amount"></span> 						
+			<span data-format="n" data-bind="text: amount"></span> 						
 		</td>
 		<td>
 			<input id="ccbTaxItem" name="ccbTaxItem-#:uid#"
@@ -16455,7 +16455,7 @@
                    style="width: 100%;">			
 		</td>				
 		<td class="right">
-			<span data-decimals="2" data-bind="text: amount"></span> 						
+			<span data-format="n" data-bind="text: amount"></span> 						
 		</td>
 		<td>
 			<input 	id="ccbTaxItem" 
@@ -17044,7 +17044,7 @@
 					style="width:100%;" />
 		</td>				
 		<td class="right">
-			<span data-decimals="2" data-bind="text: amount"></span> 						
+			<span data-format="n" data-bind="text: amount"></span> 						
 		</td>
 		<td>
 			<input id="ccbTaxItem" name="ccbTaxItem-#:uid#"
@@ -18199,7 +18199,7 @@
                    style="width: 65px;">			
 		</td>				
 		<td class="right">
-			<span data-decimals="2" data-bind="text: amount"></span> 						
+			<span data-format="n" data-bind="text: amount"></span> 						
 		</td>
 		<td>
 			<input id="ccbTaxItem" name="ccbTaxItem-#:uid#"
@@ -18800,7 +18800,6 @@
 		<td>
 			<input id="ccbItem" name="ccbItem-#:uid#"
 				   data-role="combobox"
-				   
 				   data-template="item-list-tmpl"                   			   
                    data-text-field="name"
                    data-value-field="id"
@@ -18854,7 +18853,7 @@
                    style="width: 65px;">			
 		</td>				
 		<td class="right">
-			<span data-decimals="2" data-bind="text: amount"></span> 						
+			<span data-format="n" data-bind="text: amount"></span> 						
 		</td>
 		<td>
 			<input id="ccbTaxItem" name="ccbTaxItem-#:uid#"
@@ -19747,7 +19746,7 @@
                    style="width: 65px;">			
 		</td>				
 		<td class="right">
-			<span data-decimals="2" data-bind="text: amount"></span> 						
+			<span data-format="n" data-bind="text: amount"></span> 						
 		</td>
 		<td>
 			<input id="ccbTaxItem" name="ccbTaxItem-#:uid#"
@@ -19805,7 +19804,7 @@
 			<input id="txtAmount-#:uid#" name="txtAmount-#:uid#" 
 					data-role="numerictextbox"
 					data-spinners="false" 
-					data-format="n"
+					data-decimals="2"
 					data-spinners="false"
 					data-bind="value: amount, events: {change : changes}" 
 					required data-required-msg="required" style="width: 100%;" />

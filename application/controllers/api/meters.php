@@ -57,15 +57,17 @@ class Meters extends REST_Controller {
 		if($obj->result_count()>0){			
 			foreach ($obj as $value) {
 				$contact = $value->contact->get_raw();
-				// $invoice = new Invoice(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				// $invoice->where("id", $value->invoice_id);
-
-				// $deposit = new Invoice(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				// $deposit->where("id", $value->deposit_id);
+				$currency= $value->currency->get();
 
 				//Results				
 				$data["results"][] = array(
 					"id" 					=> $value->id,
+					"currency_id"			=> $value->currency_id,
+					"_currency"				=> array(
+												"id" => $currency->id,
+												"code" => $currency->code,
+												"locale" => $currency->locale
+					),
 					"number" 				=> $value->number,
 					"status" 				=> $value->status,
 					"contact" 				=> $contact->result(),

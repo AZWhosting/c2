@@ -106,7 +106,7 @@
 							<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span data-bind="text: lang.lang.reports" style="margin-top: 5px; display: inline-block;"></span></span>
 						</li>
 						<li style="text-align:center;">
-							<a href="#/tax">
+							<a href="#/taxes">
 								<img title="Tax Module" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/tax.jpg" alt="Tax">
 							</a>
 							<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span data-bind="text: lang.lang.tax" style="margin-top: 5px; display: inline-block;" style="margin-top: 5px; display: inline-block;"></span></span>
@@ -5529,7 +5529,7 @@
 <!-- ***************************
 *	Tax Section            *
 **************************** -->
-<script id="tax" type="text/x-kendo-template">
+<script id="taxes" type="text/x-kendo-template">
 	<div id="slide-form">
 		<div class="customer-background">
 			<div class="container-960" style="overflow: hidden;">					
@@ -39526,7 +39526,7 @@
 	  	<li><a href='#/item_setting' class='glyphicons settings'><i></i></a></li>	  	
 	</ul>	
 </script>
-<script id="taxMenu" type="text/x-kendo-template">
+<script id="taxesMenu" type="text/x-kendo-template">
 	<ul class="topnav">
 		<li><a href='#/tax' class='glyphicons show_big_thumbnails'><i></i></a></li>
 	  	<li role='presentation' class='dropdown'>
@@ -46124,7 +46124,7 @@
     /*********************
 	*   Tax Section   *
 	**********************/
-	banhji.tax =  kendo.observable({
+	banhji.taxes =  kendo.observable({
 		lang 				: langVM,
         dataSource 			: dataStore(apiUrl + "tax_types"),
         itemDS 	 			: dataStore(apiUrl + "tax_items"),
@@ -73287,8 +73287,9 @@
 		statementCashFlow: new kendo.Layout("#statementCashFlow", {model: banhji.statementCashFlow}),
 		auditTrialReport: new kendo.Layout("#auditTrialReport", {model: banhji.auditTrialReport}),
 				
+		
 		//Tax
-		tax: new kendo.Layout("#tax", {model: banhji.tax}),
+		taxes: new kendo.Layout("#taxes", {model: banhji.taxes}),
 		taxReportCenter: new kendo.Layout("#taxReportCenter", {model: banhji.taxReportCenter}),
 		saleJournal: new kendo.Layout("#saleJournal", {model: banhji.saleJournal}),
 		purchaseJournal: new kendo.Layout("#purchaseJournal", {model: banhji.purchaseJournal}),
@@ -73480,7 +73481,7 @@
 		customerMenu: new kendo.View("#customerMenu", {model: langVM}),
 		cashMenu: new kendo.View("#cashMenu", {model: langVM}),
 		inventoryMenu: new kendo.View("#inventoryMenu", {model: langVM}),
-		taxMenu: new kendo.View("#taxMenu", {model: langVM}),
+		taxesMenu: new kendo.View("#taxesMenu", {model: langVM}),
 		saleMenu: new kendo.View("#saleMenu", {model: langVM})	
 	};
 	/* views and layout */
@@ -75409,21 +75410,21 @@
 	/*************************
 	*   Tax Section   *
 	**************************/
-	banhji.router.route("/tax", function(){
+	banhji.router.route("/taxes", function(){
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
 		}else{
-			banhji.view.layout.showIn("#content", banhji.view.tax);
+			banhji.view.layout.showIn("#content", banhji.view.taxes);
 
-			banhji.userManagement.addMultiTask("Tax","tax",null);
+			banhji.userManagement.addMultiTask("Tax","taxes",null);
 
 			banhji.view.layout.showIn('#menu', banhji.view.menu);
-			//banhji.view.menu.showIn('#secondary-menu', banhji.view.taxMenu);
+			banhji.view.menu.showIn('#secondary-menu', banhji.view.taxesMenu);
 			
-			var vm = banhji.tax;
+			var vm = banhji.taxes;
 
-			if(banhji.pageLoaded["tax"]==undefined){
-				banhji.pageLoaded["tax"] = true;
+			if(banhji.pageLoaded["taxes"]==undefined){
+				banhji.pageLoaded["taxes"] = true;
 			}
 		}		
 	});

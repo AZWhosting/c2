@@ -10041,8 +10041,27 @@
 			var bloc = this.blocDS.at(e.sender.selectedIndex - 1);
 			banhji.reading.set("blocSelect", bloc);
 		},
-		addEmpty 		 	: function(id){		
-
+		search 		 		: function(){		
+			var monthOfSearch = this.get("monthOfSelect"),
+			license_id = this.get("licenseSelect"),
+			bloc_id = this.get("blocSelect");
+					
+			if(monthOfSearch){				
+				if(license_id || bloc_id){						
+					var monthOf = new Date(monthOfSearch);
+					monthOf.setDate(1);
+					monthOf = kendo.toString(monthOf, "yyyy-MM-dd");
+										
+					this.dataSource.transport.options.read.data={
+						month_of 	: monthOf,
+						license_id : license_id,
+						bloc_id 	: bloc_id
+					};
+					this.dataSource.read();	
+				}
+			}else{
+				alert("សូមSelect ខែ");
+			}	
 		},
 		monthOfSR 			: null,
 		NumberSR 			: null,

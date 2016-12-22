@@ -43,8 +43,15 @@ class Plans extends REST_Controller {
 		if($table->exists()) {
 			foreach($table as $value) {
 				$items = $value->plan_item->select('id as item, account_id, name, is_flat, type, unit, amount')->get_raw();
+				$currency= $value->currency->get();
 				$data[] = array(
 					'id' => $value->id,
+					"currency_id"			=> $value->currency_id,
+					"_currency"				=> array(
+												"id" => $currency->id,
+												"code" => $currency->code,
+												"locale" => $currency->locale
+					),
 					'code' => $value->code,
 					'name' => $value->name,
 					'items' => $items->result()
@@ -60,6 +67,7 @@ class Plans extends REST_Controller {
 		$data = array();
 		foreach($requestedData as $row) {
 			$table = new Plan(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$table->currency_id = $row->currency_id;
 			$table->code = $row->code;
 			$table->name = $row->name;
 			if($table->save()) {
@@ -100,7 +108,7 @@ class Plans extends REST_Controller {
 			$deleted_table = new Plan_item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$deleted_table->where_related_plan('id', $table->id)->get();
 			$table->delete($deleted_table->all);
-
+			$table->currency_id = $row->currency_id;
 			$table->code = $row->code;
 			$table->name = $row->name;
 			if($table->save()) {
@@ -189,8 +197,15 @@ class Plans extends REST_Controller {
 		if($table->exists()) {
 			foreach($table as $value) {
 				$account = $value->account->get();
+				$currency= $value->currency->get();
 				$data[] = array(
 					"id"  	  => $value->id,
+					"currency_id"			=> $value->currency_id,
+					"_currency"				=> array(
+												"id" => $currency->id,
+												"code" => $currency->code,
+												"locale" => $currency->locale
+					),
 					"is_flat" => $value->is_flat,
 					"type" 	  => $value->type,
 					"unit" 	  => $value->unit,
@@ -217,6 +232,7 @@ class Plans extends REST_Controller {
 		foreach($requestedData as $row) {
 			$table = new Plan_item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$table->where('id', $row->id)->get();
+			$table->currency_id = $row->currency_id;
 			$table->is_flat = isset($row->is_flat) ? $row->is_flat : 0;
 			$table->type = $row->type;
 			$table->unit = isset($row->unit) ? $row->unit: 0;
@@ -257,6 +273,7 @@ class Plans extends REST_Controller {
 			$table = new Plan_item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			//$tmp = isset($row->is_flat) ? $row->is_flat:FALSE;
 			$table->is_flat = isset($row->is_flat) ? $row->is_flat : 0;
+			$table->currency_id = $row->currency_id;
 			$table->type = $row->type;
 			$table->unit = isset($row->unit)?$row->unit:0;
 			$table->amount = isset($row->amount) ? $row->amount : 0;
@@ -339,8 +356,15 @@ class Plans extends REST_Controller {
 			$data = array();
 			foreach($table as $row) {
 				$account = $row->account->get();
+				$currency= $value->currency->get();
 				$data[] = array(
 					'id' => $row->id,
+					"currency_id"			=> $value->currency_id,
+					"_currency"				=> array(
+												"id" => $currency->id,
+												"code" => $currency->code,
+												"locale" => $currency->locale
+					),
 					'name' => $row->name,
 					'is_flat' => $row->is_flat,
 					'type' => $row->type,
@@ -362,6 +386,7 @@ class Plans extends REST_Controller {
 		foreach($requestedData as $row) {
 			$table = new Plan_item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$table->is_flat = isset($row->is_flat) ? $row->is_flat : 0;
+			$table->currency_id = $row->currency_id;
 			$table->type = isset($row->type) ? $row->type : null;
 			$table->unit = isset($row->unit)?$row->unit:null;
 			$table->amount = isset($row->amount) ? $row->amount : 0;
@@ -400,6 +425,7 @@ class Plans extends REST_Controller {
 		foreach($requestedData as $row) {
 			$table = new Plan_item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$table->where('id', $row->id)->get();
+			$table->currency_id = $row->currency_id;
 			$table->is_flat = isset($row->is_flat) ? $row->is_flat : 0;
 			$table->type = isset($row->type) ? $row->type : null;
 			$table->unit = isset($row->unit)?$row->unit:null;
