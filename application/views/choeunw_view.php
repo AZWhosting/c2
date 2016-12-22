@@ -3607,8 +3607,8 @@
 	</div>	
 </script>
 <script id="Invoice-print-row-template" type="text/x-kendo-tmpl">	
-  	<div class="container winvoice-print" style="margin-bottom: 10px;width: 775px;">
-		<div class="span12 headerinv " style="border-bottom: 2px solid \#000">
+  	<div class="container winvoice-print" style="margin-bottom: 10px; #if(banhji.InvoicePrint.PaperSize == 'A5'){# width: 775px; #}else{# width: 900px; #}#">
+		<div class="span12 headerinv " style="border-bottom: 2px solid \#000;padding: 15px 0;">
 			<div class="span12" align="center">
 				<h4>#: banhji.institute.name#</h4>					
 				<h5>#: banhji.institute.address# 
@@ -3701,10 +3701,9 @@
 					<td></td>
 				</tr>
 				#}#	
-
-
-
-				<tr><td colspan="6" style="height: 200px;"></td></tr>
+				#if(banhji.InvoicePrint.PaperSize == 'A4'){#
+					<tr><td colspan="6"  style="height: 200px;" ></td></tr>
+				#}#
 				<tr>
 					<td colspan="5" style="padding-right: 10px;background: \\#355176;color: \\#fff;text-align: right;" class="darkbblue">បំណុល​សរុប TOTAL BALANCE</td>
 					<td style="border: 1px solid;text-align: right">#: amount#</td>
@@ -10002,7 +10001,9 @@
 			}		
 		},
 		cancel 				: function(){
-			this.dataSource.cancelChanges();		
+			this.meterDS.cancelChanges();	
+			this.planDS.cancelChanges();
+			this.paymentMethodDS.cancelChanges();	
 			window.history.back();
 		}
 	});
@@ -10687,11 +10688,19 @@
 			}		
 		},
 		printGrid 						: function(){
-			var self = this;
-			
+			var self = this, Win, pHeight, pWidth;
+			if(this.PaperSize == "A5"){
+				Win = window.open('', '', 'width=800, height=900');
+				pHeight = "210mm";
+				pWidth = "148mm";
+			}else{
+				Win = window.open('', '', 'width=1000, height=900');
+				pHeight = "297mm";
+				pWidth = "210mm";
+			}
 			var gridElement = $('#grid'),
 		        printableContent = '',
-		        win = window.open('', '', 'width=800, height=900'),
+		        win = Win,
 		        doc = win.document.open();
 		    var htmlStart =
 		            '<!DOCTYPE html>' +
@@ -10706,11 +10715,11 @@
 		            '<link href="<?php echo base_url(); ?>resources/common/theme/css/style-default-menus-dark.css" rel="stylesheet" />'+
 		            '<link href="https://fonts.googleapis.com/css?family=Content:400,700" rel="stylesheet" type="text/css">'+
 		            '<link href="https://fonts.googleapis.com/css?family=Moul" rel="stylesheet">'+
-		            '<style type="text/css" media="print"> @page { size: portrait; margin:1mm 0.5mm; size: A5;} '+
+		            '<style type="text/css" media="print"> @page { size: portrait; margin:1mm 0.5mm; size: '+ this.PaperSize +';} '+
 						'@media print {' +
   							'html, body {' +
-    							'width: 210mm;' +
-    							'height: 297mm;' +
+    							'width: '+ pWidth +';' +
+    							'height: '+ pHeight +';' +
   							'}' +
 						'}' +
 		            	'.inv1 .light-blue-td { ' +
@@ -10765,6 +10774,7 @@
 		},
 		cancel 				: function(){
 			this.set("dataSource",[]);	
+			this.set("PaperSize","A4");
 			window.history.back();
 		}		
 	});

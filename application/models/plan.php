@@ -8,6 +8,10 @@ class Plan extends DataMapper {
 		'meter' => array(
 			'class' => "meter",
 			'other_field' => 'plan'
+		),
+		'currency' => array(
+			'class' => "currency",
+			'other_field' => 'plan'
 		)
 	);
 

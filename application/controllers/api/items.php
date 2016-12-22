@@ -24,7 +24,7 @@ class Items extends REST_Controller {
 
 	//GET 
 	function index_get() {		
-		$filters 	= $this->get("filter")["filters"];
+		$filters 	= $this->get("filter");
 		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
 		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;
 		$sort 	 	= $this->get("sort");		
@@ -42,8 +42,8 @@ class Items extends REST_Controller {
 		}
 		
 		//Filter		
-		if(!empty($filters) && isset($filters['filters'])){
-	    	foreach ($filters as $value) {
+		if(!empty($filters) && isset($filters)){
+	    	foreach ($filters['filters'] as $value) {
 	    		if(isset($value['operator'])) {
 					$obj->{$value['operator']}($value['field'], $value['value']);
 				} else {

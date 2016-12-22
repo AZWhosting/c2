@@ -25,6 +25,14 @@ class Currency extends DataMapper {
 		'branch' => array(
 			"class" => 'branch',
 			"other_field" => "currency"
+		),
+		'plan' => array(
+			'class' => "plan",
+			'other_field' => 'currency'
+		),
+		'meter' => array(
+			'class' => "meter",
+			'other_field' => 'currency'
 		)
 	);
 

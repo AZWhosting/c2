@@ -175,11 +175,11 @@ class Readings extends REST_Controller {
 				if($invoiceStatus == 0) {
 					$newObj = new Meter_record(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 					$newObj->meter_id 				= $value->meter_id;
-					$newObj->month_of 				= isset($value->month_of)			?$value->month_of: "";
-					$newObj->previous 				= isset($value->previous)			?$value->previous: "";
-					$newObj->current 				= isset($value->current)			?$value->current: "";
-					$newObj->from_date 				= isset($value->from_date)			?$value->from_date: "";
-					$newObj->to_date 				= isset($value->to_date)			?$value->to_date: "";
+					$newObj->month_of 				= isset($value->month_of)			? $value->month_of: "";
+					$newObj->previous 				= isset($value->previous)			? $value->previous: "";
+					$newObj->current 				= isset($value->current)			? $value->current: "";
+					$newObj->from_date 				= isset($value->from_date)			? $value->from_date: "";
+					$newObj->to_date 				= isset($value->to_date)			? $value->to_date: "";
 					$newObj->invoiced 				= 1;
 					if($newObj->save()){
 											

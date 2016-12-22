@@ -43450,7 +43450,7 @@
 			this.supplierTaxDS.fetch();
 		},
 		txnLink 					: function(){
-			var obj = 0;
+			
 		}
 	});
 
@@ -47834,7 +47834,8 @@
 				var view = self.contactDS.view(),
 				obj = self.get("obj");
 		    	
-		    	obj.set("contact_id", view[0].id);			
+		    	obj.set("contact_id", view[0].id);		    			    	
+		    	obj.set("locale", view[0].locale);				
 				
 				self.setRate();											
 			});
@@ -47845,6 +47846,7 @@
 	    	if(obj.contact_id>0){		    			    	
 		    	var contact = this.contactDS.get(obj.contact_id);
 		    			    	
+		    	obj.set("locale", contact.locale);		    	
 		    	this.setRate();
 		    	this.loadReference();
 	    	}
@@ -77365,9 +77367,6 @@
 		// 		window.location.replace(baseUrl + "admin");
 		// 	}
 		// });
-	});
-	banhji.router.route("/commercial_invoice(/:id)", function(id){
-		banhji.router.navigate('/invoice/'+id);
 	});
 	banhji.router.route("/gdn(/:id)", function(id){
 		if(!banhji.userManagement.getLogin()){

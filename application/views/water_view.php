@@ -2707,12 +2707,16 @@
 			    		<span class="glyphicons no-js remove_2" 
 							data-bind="click: cancel"><i></i></span>						
 					</div>
+
 			        <h2>Activate Meter</h2><br>
 			       
 				    <br>
 				    <div class="span12 row">			       		
 			       		<!-- Top Part -->
 				    	<div class="row-fluid">
+				    		<div id="loadImport" style="display:none;text-align: center;position: absolute;width: 100%; height: 100%;background: rgba(142, 159, 167, 0.8);z-index: 9999;">
+								<i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 45%;left: 45%"></i>
+							</div>
 				    		<div class="span5" style="padding-left: 20px;">									
 								<div class="row well">
 									<div class="span12">
@@ -3532,7 +3536,7 @@
 			        <div class="box-generic bg-action-button">
 						<div id="ntf1" data-role="notification"></div>
 				        <div class="row">
-							<div class="span3">
+							<div class="span2">
 								<input data-role="dropdownlist"
 					                   data-value-primitive="true"
 					                   data-text-field="name"
@@ -3541,7 +3545,15 @@
 					                              source: txnTemplateDS"
 					                   data-option-label="Select Template..." />
 							</div>
-							<div class="span9" align="right">
+							<div class="span2" style="margin: 0 10px">
+								<input data-role="dropdownlist"
+					                   data-value-primitive="true"
+					                   data-text-field="name"
+					                   data-value-field="id"
+					                   data-bind="value: SelectSize,
+					                              source: SizePaper" />
+							</div>
+							<div class="span7" align="right">
 								<span class="btn btn-icon btn-primary glyphicons print" data-bind="click: printBill" style="width: 110px;margin-bottom: 0;"><i></i> <span data-bind="text: lang.lang.print"></span></span>
 								
 								<span class="btn btn-icon btn-warning glyphicons remove_2" data-bind="click: cancel" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.cancel"></span></span>
@@ -3599,8 +3611,8 @@
 	</div>	
 </script>
 <script id="Invoice-print-row-template" type="text/x-kendo-tmpl">	
-  	<div class="container winvoice-print" style="margin-bottom: 10px;width: 900px;">
-		<div class="span12 headerinv " style="border-bottom: 2px solid \#000">
+  	<div class="container winvoice-print" style="margin-bottom: 10px; #if(banhji.InvoicePrint.PaperSize == 'A5'){# width: 775px; #}else{# width: 900px; #}#">
+		<div class="span12 headerinv " style="border-bottom: 2px solid \#000;padding: 15px 0;">
 			<div class="span12" align="center">
 				<h4>#: banhji.institute.name#</h4>					
 				<h5>#: banhji.institute.address# 
@@ -3693,10 +3705,9 @@
 					<td></td>
 				</tr>
 				#}#	
-
-
-
-				<tr><td colspan="6" style="height: 200px;"></td></tr>
+				#if(banhji.InvoicePrint.PaperSize == 'A4'){#
+					<tr><td colspan="6"  style="height: 200px;" ></td></tr>
+				#}#
 				<tr>
 					<td colspan="5" style="padding-right: 10px;background: \\#355176;color: \\#fff;text-align: right;" class="darkbblue">បំណុល​សរុប TOTAL BALANCE</td>
 					<td style="border: 1px solid;text-align: right">#: amount#</td>
@@ -9746,7 +9757,7 @@
 		},
 		cancel 				: function(){
 			this.dataSource.cancelChanges();		
-			window.history.back();
+			banhji.router.navigate("/center");
 		}
 	});
 	banhji.ActivateMeter = kendo.observable({
@@ -9846,7 +9857,7 @@
 		},
 		save 				: function() {
 			console.log('save');
-
+			$("#loadImport").css("display","block");
 			var self = this;
 			var amount = 0.0;
 			$.each(this.items, function(i, v){
@@ -9963,7 +9974,7 @@
 							}
 
 							if(v.type == 'deposit' && v.received > 0) {
-								banhji.transactionLine.addById(transaction[0].id, banhji.ActivateMeter.get('meterObj').contact[0].id, banhji.ActivateMeter.get('cashAccount'), 'Meter Activation', v.received, 0, anhji.ActivateMeter.get('issued_date'));
+								banhji.transactionLine.addById(transaction[0].id, banhji.ActivateMeter.get('meterObj').contact[0].id, banhji.ActivateMeter.get('cashAccount'), 'Meter Activation', v.received, 0, banhji.ActivateMeter.get('issued_date'));
 								banhji.transactionLine.addById(transaction[0].id, v.account_id, banhji.ActivateMeter.get('meterObj').contact.deposit_account_id, 'Meter Activation', 0, v.received, banhji.ActivateMeter.get('issued_date'));
 							}
 						});
@@ -9984,6 +9995,7 @@
 						banhji.ActivateMeter.set('amountToBeRecieved', 0.00);
 						banhji.ActivateMeter.set('amountRemain', 0.00);
 						$("#ntf1").data("kendoNotification").success("Successfully!");
+						$("#loadImport").css("display","none");
 						banhji.router.navigate("/center");
 					} else {
 						status = false;
@@ -9994,8 +10006,10 @@
 			}		
 		},
 		cancel 				: function(){
-			this.dataSource.cancelChanges();		
-			window.history.back();
+			this.meterDS.cancelChanges();	
+			this.planDS.cancelChanges();
+			this.paymentMethodDS.cancelChanges();	
+			banhji.router.navigate("/center");
 		}
 	});
 	/*==== End Meter=====*/
@@ -10575,6 +10589,8 @@
 		licenseSelect 		: null,	
 		monthSelect 		: null,	
 		TemplateSelect 		: 1,
+		SelectSize 			: "A4",
+		SizePaper 			: [{id: "A4", name: "A4"},{id: "A5", name: "A5"}],
 		obj 				: [],
 		blocSelect 			: null,
 		pageLoad 			: function(id){
@@ -10627,6 +10643,7 @@
 				  	$.each(this.printArray, function(index, value){
 				  		banhji.InvoicePrint.dataSource.push(self.printArray[index]);
 				  	});
+				  	banhji.InvoicePrint.PaperSize = this.SelectSize;
 			        banhji.router.navigate('/invoice_print');
 
 		    	}else{
@@ -10650,10 +10667,12 @@
 		dataSource 			: [],
 		isVisible 			: true,
 		company 			: banhji.institute,
+		PaperSize 			: "A4",
 		user_id 			: banhji.userManagement.getLogin() === null ? '':banhji.userManagement.getLogin().id,	
 				
 		pageLoad 			: function(id){	
 			this.barcod();
+			console.log(this.PaperSize);
 		},					
 		barcod 			: function(){									
 			var view = this.dataSource;
@@ -10684,11 +10703,19 @@
 			}		
 		},
 		printGrid 						: function(){
-			var self = this;
-			
+			var self = this, Win, pHeight, pWidth;
+			if(this.PaperSize == "A5"){
+				Win = window.open('', '', 'width=800, height=900');
+				pHeight = "210mm";
+				pWidth = "148mm";
+			}else{
+				Win = window.open('', '', 'width=1000, height=900');
+				pHeight = "297mm";
+				pWidth = "210mm";
+			}
 			var gridElement = $('#grid'),
 		        printableContent = '',
-		        win = window.open('', '', 'width=1000, height=900'),
+		        win = Win,
 		        doc = win.document.open();
 		    var htmlStart =
 		            '<!DOCTYPE html>' +
@@ -10703,11 +10730,11 @@
 		            '<link href="<?php echo base_url(); ?>resources/common/theme/css/style-default-menus-dark.css" rel="stylesheet" />'+
 		            '<link href="https://fonts.googleapis.com/css?family=Content:400,700" rel="stylesheet" type="text/css">'+
 		            '<link href="https://fonts.googleapis.com/css?family=Moul" rel="stylesheet">'+
-		            '<style type="text/css" media="print"> @page { size: portrait; margin:1mm 0.5mm; size: A4;} '+
+		            '<style type="text/css" media="print"> @page { size: portrait; margin:1mm 0.5mm; size: '+ this.PaperSize +';} '+
 						'@media print {' +
   							'html, body {' +
-    							'width: 210mm;' +
-    							'height: 297mm;' +
+    							'width: '+ pWidth +';' +
+    							'height: '+ pHeight +';' +
   							'}' +
 						'}' +
 		            	'.inv1 .light-blue-td { ' +
@@ -10762,6 +10789,7 @@
 		},
 		cancel 				: function(){
 			this.set("dataSource",[]);	
+			this.set("PaperSize","A4");
 			window.history.back();
 		}		
 	});

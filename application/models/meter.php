@@ -44,6 +44,10 @@ class Meter extends DataMapper {
         'plan' => array(
             'class' => 'plan',
             'other_field' => 'meter'
+        ),
+        'currency' => array(
+            'class' => "currency",
+            'other_field' => 'meter'
         )
 	);
 	public $has_many = array(
