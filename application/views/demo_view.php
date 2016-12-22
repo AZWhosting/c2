@@ -18233,6 +18233,20 @@
 						<div class="span4">
 							<div class="box-generic well" style="height: 190px;">				
 								<table class="table table-borderless table-condensed cart_total">									
+									<tr>
+										<td><span data-bind="text: lang.lang.type"></span></td>
+										<td>
+											<input id="cbbType" name="cbbType"
+												   data-role="dropdownlist"											                    
+								                   data-value-primitive="true"
+								                   data-text-field="name"
+								                   data-value-field="type"
+								                   data-bind="value: obj.type,
+								                              source: typeList,
+								                              events:{ change: typeChanges }"
+								                   required data-required-msg="required" style="width: 100%" />
+										</td>
+									</tr>
 									<tr data-bind="visible: isEdit">				
 										<td style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></td>
 										<td><input class="k-textbox" data-bind="value: obj.number" style="width:100%;" /></td>
@@ -18267,7 +18281,7 @@
 								                   data-placeholder="Type Name.."                    
 								                   required data-required-msg="required" style="width: 100%" />
 										</td>
-									</tr>																															
+									</tr>
 								</table>
 
 								<div class="strong" style="margin-bottom:0; width: 100%; padding: 10px;" align="center"
@@ -41814,6 +41828,79 @@
 			pageSize: 100
 		}),
 		currencyRateDS				: dataStore(apiUrl + "currencies/rate"),
+		//Prefixes
+		invoicePrefixDS				: new kendo.data.DataSource({
+			transport: {
+				read 	: {
+					url: apiUrl + "prefixes",
+					type: "GET",
+					headers: banhji.header,
+					dataType: 'json'
+				},
+				parameterMap: function(options, operation) {
+					if(operation === 'read') {
+						return {
+							page: options.page,
+							limit: options.pageSize,
+							filter: options.filter,
+							sort: options.sort
+						};
+					} else {
+						return {models: kendo.stringify(options.models)};
+					}
+				}
+			},
+			schema 	: {
+				model: {
+					id: 'id'
+				},
+				data: 'results',
+				total: 'count'
+			},
+			filter: { field:"type", operator:"where_in", value: ["Commercial_Invoice", "Vat_Invoice", "Invoice"] },
+			batch: true,
+			serverFiltering: true,
+			serverSorting: true,
+			serverPaging: true,
+			page:1,
+			pageSize: 100
+		}),
+		cashSalePrefixDS				: new kendo.data.DataSource({
+			transport: {
+				read 	: {
+					url: apiUrl + "prefixes",
+					type: "GET",
+					headers: banhji.header,
+					dataType: 'json'
+				},
+				parameterMap: function(options, operation) {
+					if(operation === 'read') {
+						return {
+							page: options.page,
+							limit: options.pageSize,
+							filter: options.filter,
+							sort: options.sort
+						};
+					} else {
+						return {models: kendo.stringify(options.models)};
+					}
+				}
+			},
+			schema 	: {
+				model: {
+					id: 'id'
+				},
+				data: 'results',
+				total: 'count'
+			},
+			filter: { field:"type", operator:"where_in", value: ["Commercial_Cash_Sale", "Vat_Cash_Sale", "Cash_Sale"] },
+			batch: true,
+			serverFiltering: true,
+			serverSorting: true,
+			serverPaging: true,
+			page:1,
+			pageSize: 100
+		}),
 		//Item
 		itemDS						: dataStore(apiUrl + "items"),
 		itemTypeDS					: dataStore(apiUrl + "item_types"),
@@ -43361,6 +43448,9 @@
 		fetchAllTaxes 				: function(){
 			this.customerTaxDS.fetch();
 			this.supplierTaxDS.fetch();
+		},
+		txnLink 					: function(){
+			
 		}
 	});
 
@@ -58386,7 +58476,7 @@
 				data: 'results',
 				total: 'count'
 			},
-			filter: { field: "type", value:"Cash_Sale" },
+			filter: { field: "type", operator:"where_in", value:["Commercial_Cash_Sale","Vat_Cash_Sale","Cash_Sale"] },
 			batch: true,
 			serverFiltering: true,
 			serverSorting: true,
@@ -59667,7 +59757,7 @@
 				data: 'results',
 				total: 'count'
 			},
-			filter: { field: "type", value:"Invoice" },
+			filter: { field: "type", operator:"where_in", value:["Commercial_Invoice","Vat_Invoice","Invoice"] },
 			batch: true,
 			serverFiltering: true,
 			serverSorting: true,
@@ -59675,6 +59765,7 @@
 			page:1,
 			pageSize: 100
 		}),
+		typeList 			: banhji.source.invoicePrefixDS,
 		paymentTermDS 		: banhji.source.paymentTermDS,
 		segmentItemDS		: banhji.source.segmentItemDS,
 		amtDueColor 		: banhji.source.amtDueColor,
@@ -60226,6 +60317,17 @@
 				obj.set("remaining", remaining);									    	
 	    	}	
 		},
+		typeChanges 		: function(){
+			var obj = this.get("obj");
+
+			$.each(this.txnTemplateDS.data(), function(index, value){
+				if(value.type==obj.type){
+					obj.set("transaction_template_id", value.id);
+
+					return false;
+				}
+			});
+		},
 		discountChanges 	: function(){
 			var obj = this.get("obj");
 
@@ -60269,7 +60371,7 @@
 				job_id 				: 0,				
 				user_id 			: this.get("user_id"),
 				employee_id 		: "",//Sale Rep 	    		
-			   	type				: "Invoice",//Required
+			   	type				: "Commercial_Invoice",//Required
 			   	sub_total 			: 0,
 			   	discount 			: 0,
 			   	tax 				: 0,

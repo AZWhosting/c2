@@ -24,10 +24,7 @@ class Items extends REST_Controller {
 
 	//GET 
 	function index_get() {		
-		$filters 	= $this->get("filter");
-		// if(null !== $this->get("filter")){
-		// 	$filters = $this->get("filter")["filters"];
-		// }		
+		$filters 	= $this->get("filter")["filters"];
 		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
 		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;
 		$sort 	 	= $this->get("sort");		
