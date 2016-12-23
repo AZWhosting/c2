@@ -8232,12 +8232,9 @@
 
 							    <!-- Widget Heading -->
 							    <div class="widget-head">
-
+							    	<input type="text" name="" data-bind="value: obj.name" style="border: none; width: 69%; font-size: 20px; font-weight: 600; margin-top: -11px; margin-left: 11px;">
 							        <!-- Tabs -->
 							        <ul class="pull-right">
-							            <li style="font-size: large; color: black; font-weight: bold;">
-							            	<span data-bind="text: obj.name"></span>
-							            </li>
 							            <li class="glyphicons text_bigger active"><span data-toggle="tab" data-target="#tab1-4"><i></i></span>
 							            </li>							            							            
 							            <li class="glyphicons circle_info"><span data-toggle="tab" data-target="#tab2-4"><i></i></span>
@@ -15039,12 +15036,10 @@
 
 							    <!-- Widget Heading -->
 							    <div class="widget-head">
-
+							    	<input type="text" name="" data-bind="value: obj.name" style="border: none; width: 69%; font-size: 20px; font-weight: 600; margin-top: -11px; margin-left: 11px;">
 							        <!-- Tabs -->
 							        <ul class="pull-right">
-							        	<li style="font-size: large; color: black; font-weight: bold;">							            	
-							            	<span data-bind="text: obj.name"></span>
-							            </li>
+
 							            <li class="glyphicons text_bigger active"><span data-toggle="tab" data-target="#tab1-4"><i></i></span>
 							            </li>							            							            
 							            <li class="glyphicons circle_info"><span data-toggle="tab" data-target="#tab2-4"><i></i></span>
@@ -29042,12 +29037,9 @@
 
 							    <!-- Widget Heading -->
 							    <div class="widget-head">
-
+							    <input type="text" data-bind="value: obj.name" style="border: none; width: 76%; font-size: 20px; font-weight: 600; margin-top: -11px; margin-left: 11px;">
 							        <!-- Tabs -->
 							        <ul class="pull-right">
-							            <li style="font-size: large; color: black; font-weight: bold;">
-							            	<span data-bind="text: obj.name"></span>
-							            </li>
 							            <li class="glyphicons circle_info active"><span data-toggle="tab" data-target="#tab1-3"><i></i></span>
 							            </li>
 							            <li class="glyphicons coins"><span data-bind="click: pricing"><i></i></span>
