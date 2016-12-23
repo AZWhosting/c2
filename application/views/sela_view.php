@@ -6074,6 +6074,73 @@
 
 	</div>
 </script>
+<script id="taxReportCenter" type="text/x-kendo-template">
+	<span class="pull-right glyphicons no-js remove_2" 
+			onclick="javascript:window.history.back()"><i></i></span>
+
+	<h2 >General Tax Setting</h2>
+
+	<br>
+
+	<div class="widget widget-tabs widget-tabs-double widget-tabs-vertical row-fluid row-merge widget-tabs-gray">
+
+	    <!-- Tabs Heading -->
+	    <div class="widget-head span3">
+	        <ul>
+	            <li class="active"><a href="#tab1-4" class="glyphicons group" data-toggle="tab"><i></i><span class="strong">Prepayment of Profit Tax</span></a>
+	            </li>
+	            <li><a href="#tab2-4" class="glyphicons credit_card" data-toggle="tab"><i></i><span class="strong">Return for Value Added Tax</span></a>
+	            </li>
+	            <li><a href="#tab3-4" class="glyphicons clock" data-toggle="tab"><i></i><span class="strong">Return for Withholding Tax</span></a>
+	            </li>
+	            <li><a href="#tab4-4" class="glyphicons list" data-toggle="tab"><i></i><span class="strong">Return for Tax on Salary</span></a>
+	            </li>	                        
+	        </ul>
+	    </div>
+	    <!-- // Tabs Heading END -->
+
+	    <div class="widget-body span9">
+	        <div class="tab-content">
+
+	            <!-- CUSTOMER TYPE -->
+	            <div class="tab-pane active" id="tab1-4">
+	            	<div style="margin: 0 auto; text-align: center;">
+						<h1 style="font-size: 35px; font-weight: 600;">Comoing Soon</h1>
+					</div>		            
+	            </div>
+	            <!-- // CUSTOMER TYPE END -->
+
+	            <!-- PAYMENT METHOD -->
+	            <div class="tab-pane" id="tab2-4">
+	            	<div style="margin: 0 auto; text-align: center;">
+						<h1 style="font-size: 35px; font-weight: 600;">Comoing Soon</h1>
+					</div>			            
+	            </div>
+	            <!-- // PAYMENT METHOD END -->
+
+	            <!-- PAYMENT TERM -->
+	            <div class="tab-pane" id="tab3-4">
+            		<div style="margin: 0 auto; text-align: center;">
+						<h1 style="font-size: 35px; font-weight: 600;">Comoing Soon</h1>
+					</div>
+	            </div>
+	            <!-- // PAYMENT TERM END -->
+
+	            <!-- Tab Invocice Custom content -->
+	            <div class="tab-pane" id="tab4-4">
+            		
+	            	<div style="margin: 0 auto; text-align: center;">
+						<h1 style="font-size: 35px; font-weight: 600;">Comoing Soon</h1>
+					</div>
+
+	            </div>
+	            <!-- // Tab Invoice Custom content END -->
+
+	        </div>
+	    </div>
+
+	</div>
+</script>
 <script id="saleRecord" type="text/x-kendo-template">
 	<div id="slide-form">
 		<div class="customer-background ">
@@ -74522,6 +74589,8 @@
 		purchaseRecord: new kendo.Layout("#purchaseRecord", {model: banhji.purchaseRecord}),
 		payrollList: new kendo.Layout("#payrollList", {model: banhji.payrollList}),
 		taxSetting: new kendo.Layout("#taxSetting", {model: banhji.taxSetting}),
+
+		
 
 		//Employee
 		employeeDashboard: new kendo.Layout("#employeeDashboard", {model: banhji.employeeDashboard}),

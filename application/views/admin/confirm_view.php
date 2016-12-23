@@ -1,4 +1,3 @@
-<?php $Email = $_GET["e"]; ?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -376,7 +375,6 @@
           }),
           password: null,
           confirm: null,
-          email: "<?php echo $Email; ?>",
           verificationCode: null,
           cognitoUser: null,
           newPass: null,

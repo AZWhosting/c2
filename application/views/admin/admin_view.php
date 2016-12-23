@@ -3139,7 +3139,7 @@
         } else {
           banhji.companyDS.fetch(function() {
             banhji.company.set('data', banhji.companyDS.data()[0]);
-            banhji.moduleDS.filter({field: 'id', value: JSON.parse(localStorage.getItem('userData/user')) != null ? JSON.parse(localStorage.getItem('userData/user')).id : 0});
+            banhji.moduleDS.filter({field: 'id', value: JSON.parse(localStorage.getItem('userData/user')) != null ? JSON.parse(localStorage.getItem('userData/user')).institute.id : 0});
             banhji.moduleDS.bind('requestEnd', function(e){
               if(e.response) {
                 banhji.company.setCurrent(banhji.companyDS.data()[0]);

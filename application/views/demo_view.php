@@ -30171,7 +30171,6 @@
 						              				placeholder="e.g. 0001" 
 						              				required data-required-msg="required"
 						              				style="width: 128px;" />
-						              		<span data-bind="visible: isDuplicateNumber" style="color: red;"><span data-bind="text: lang.lang.duplicate_number"></span></span>
 										</div>
 										<!-- // Group END -->
 									
@@ -69473,8 +69472,6 @@
 						lastNo++;
 						obj.set("number",kendo.toString(lastNo, "00000"));
 					}
-				}else{
-					obj.set("number",kendo.toString(lastNo, "00001"));
 				}
 			});
 		},
@@ -69820,8 +69817,6 @@
 						lastNo++;
 						obj.set("number",kendo.toString(lastNo, "00000"));
 					}
-				}else{
-					obj.set("number","00001");
 				}
 			});
 		},
@@ -69956,7 +69951,7 @@
     	saveClose 				: false,
 		showConfirm 			: false,
 		originalNo 				: "",
-		isDuplicateNumber 		: false,
+		notDuplicateNumber 		: true,
 		total 					: 0,
     	user_id					: banhji.source.user_id,
     	pageLoad 				: function(id){			
@@ -70023,32 +70018,35 @@
 		        this.lineDS.remove(data);
 	        }	    	
       	},
-		//Number      	
+		//Number
 		checkExistingNumber 	: function(){
 			var self = this, para = [], 
-			obj = this.get("obj"),
-			originalNo = this.get("originalNo");			
+			obj = this.get("obj");
 			
-			if(obj.number!=="" && obj.number!==originalNo){
+			if(obj.number!==""){
+
+				if(this.get("isEdit")){
+					para.push({ field:"id", operator:"where_not_in", value: [obj.id] });
+				}
+
+				para.push({ field:"abbr", value: obj.abbr });
+				para.push({ field:"number", value: obj.number });
+				para.push({ field:"category_id", value: obj.category_id });
+
 				this.existingDS.query({
-					filter: [
-						{ field:"number", value: obj.number },
-						{ field:"category_id", value: obj.category_id }
-					],
+					filter: para,
 					page: 1,
-					pageSize: 100
+					pageSize: 1
 				}).then(function(e){
 					var view = self.existingDS.view();
 					
 					if(view.length>0){
-				 		self.set("isDuplicateNumber", true);						
+				 		self.set("notDuplicateNumber", false);						
 					}else{
-						self.set("isDuplicateNumber", false);
+						self.set("notDuplicateNumber", true);
 					}
 				});							
-			}else{
-				this.set("isDuplicateNumber", false);
-			}			
+			}		
 		},
 		generateNumber 			: function(){
 			var self = this, obj = this.get("obj");
@@ -70063,14 +70061,12 @@
 			}).then(function(){
 				var view = self.numberDS.view();
 
-				if(view.length>0){
+				if(view.length>0){					
 					var lastNo = kendo.parseInt(view[0].number);
 					if(lastNo){
 						lastNo++;
 						obj.set("number",kendo.toString(lastNo, "00000"));
 					}
-				}else{
-					obj.set("number","00001");
 				}
 			});
 		},
@@ -70332,8 +70328,6 @@
 						lastNo++;
 						obj.set("number",kendo.toString(lastNo, "00000"));
 					}
-				}else{
-					obj.set("number",kendo.toString(lastNo, "00001"));
 				}
 			});
 		},
@@ -70719,8 +70713,6 @@
 						lastNo++;
 						obj.set("number",kendo.toString(lastNo, "00000"));
 					}
-				}else{
-					obj.set("number",kendo.toString(lastNo, "00001"));
 				}
 			});
 		},
@@ -71082,8 +71074,6 @@
 						lastNo++;
 						obj.set("number",kendo.toString(lastNo, "00000"));
 					}
-				}else{
-					obj.set("number","00001");
 				}
 			});
 		},
@@ -79982,7 +79972,20 @@
 				if(banhji.pageLoaded["item_assembly"]==undefined){
 					banhji.pageLoaded["item_assembly"] = true;
 
-					var validator = $("#example").kendoValidator().data("kendoValidator");
+					var validator = $("#example").kendoValidator({
+			        	rules: {
+					        customRule1: function(input){
+					          	if (input.is("[name=txtNumber]")) {	
+						            return vm.get("notDuplicateNumber");
+						        }
+						        return true;
+					        }
+					    },
+					    messages: {
+					        customRule1: banhji.source.duplicateNumber
+					    }
+			        }).data("kendoValidator");
+
 			        $("#saveNew").click(function(e){
 						e.preventDefault();
 
