@@ -42126,6 +42126,48 @@
 		brandDS						: dataStore(apiUrl + "brands"),
 		categoryDS					: dataStore(apiUrl + "categories"),
 		assemblyItemDS				: dataStore(apiUrl + "item_prices"),
+		itemForSupplierDS			: new kendo.data.DataSource({
+			transport: {
+				read 	: {
+					url: apiUrl + "items",
+					type: "GET",
+					headers: banhji.header,
+					dataType: 'json'
+				},				
+				parameterMap: function(options, operation) {
+					if(operation === 'read') {
+						return {
+							page: options.page,
+							limit: options.pageSize,
+							filter: options.filter,
+							sort: options.sort
+						};
+					} else {
+						return {models: kendo.stringify(options.models)};
+					}
+				}
+			},
+			schema 	: {
+				model: {
+					id: 'id'
+				},
+				data: 'results',
+				total: 'count'
+			},
+			filter:[
+				{ field:"is_assembly", value: 0 }
+			],
+			sort:[
+				{ field:"item_type_id", dir:"asc" },
+				{ field:"number", dir:"asc" },
+			],
+			batch: true,
+			serverFiltering: true,
+			serverSorting: true,
+			serverPaging: true,
+			page:1,
+			pageSize: 100
+		}),
 		itemForSaleDS				: new kendo.data.DataSource({
 			transport: {
 				read 	: {
@@ -42164,7 +42206,7 @@
 			serverSorting: true,
 			serverPaging: true,
 			page:1,
-			pageSize: 10000
+			pageSize: 100
 		}),
 		itemInventoryDS				: new kendo.data.DataSource({
 			transport: {
@@ -42204,7 +42246,7 @@
 			serverSorting: true,
 			serverPaging: true,
 			page:1,
-			pageSize: 10000
+			pageSize: 100
 		}),
 		itemNonAssemblyDS			: new kendo.data.DataSource({
 			transport: {
@@ -42235,6 +42277,7 @@
 				total: 'count'
 			},
 			filter:[
+				{ field:"item_type_id", operator:"where_in", value: [1,4] },
 				{ field:"is_catalog", value: 0 },
 				{ field:"is_assembly", value: 0 }
 			],
@@ -42247,7 +42290,7 @@
 			serverSorting: true,
 			serverPaging: true,
 			page:1,
-			pageSize: 10000
+			pageSize: 100
 		}),
 		itemNonCatalogDS			: new kendo.data.DataSource({
 			transport: {
@@ -42290,7 +42333,7 @@
 			serverSorting: true,
 			serverPaging: true,
 			page:1,
-			pageSize: 10000
+			pageSize: 100
 		}),
 		inventoryCategoryDS			: new kendo.data.DataSource({
 			transport: {
@@ -42326,7 +42369,7 @@
 			serverSorting: true,
 			serverPaging: true,
 			page:1,
-			pageSize: 10000
+			pageSize: 100
 		}),
 		nonInventoryPartCategoryDS	: new kendo.data.DataSource({
 			transport: {
@@ -42362,7 +42405,7 @@
 			serverSorting: true,
 			serverPaging: true,
 			page:1,
-			pageSize: 10000
+			pageSize: 100
 		}),
 		fixedAssetCategoryDS		: new kendo.data.DataSource({
 			transport: {
@@ -42398,7 +42441,7 @@
 			serverSorting: true,
 			serverPaging: true,
 			page:1,
-			pageSize: 10000
+			pageSize: 100
 		}),
 		serviceCategoryDS			: new kendo.data.DataSource({
 			transport: {
@@ -42434,7 +42477,7 @@
 			serverSorting: true,
 			serverPaging: true,
 			page:1,
-			pageSize: 10000
+			pageSize: 100
 		}),
 		//Measurement
 		measurementDS				: dataStore(apiUrl + "measurements"),		
@@ -42570,7 +42613,7 @@
 			serverSorting: true,
 			serverPaging: true,
 			page:1,
-			pageSize: 1000
+			pageSize: 100
 		}),
 		subAccountDS				: new kendo.data.DataSource({
 			transport: {
@@ -42607,7 +42650,7 @@
 			serverSorting: true,
 			serverPaging: true,
 			page:1,
-			pageSize: 1000
+			pageSize: 100
 		}),
 		accountTypeDS				: new kendo.data.DataSource({
 			transport: {
@@ -42661,7 +42704,7 @@
 			serverSorting: true,
 			serverPaging: true,
 			page:1,
-			pageSize: 1000
+			pageSize: 100
 		}),
 		cashAccountDS				: new kendo.data.DataSource({
 			transport: {
@@ -43612,12 +43655,12 @@
 			this.measurementDS.query({
 				filter:[],
 				page:1,
-				pageSize:1000
+				pageSize:100
 			});
 			this.accountDS.read();
 			this.accountTypeDS.read();
 			this.fixedAssetCategoryDS.read();
-			this.assemblyItemDS.query({ filter:[], page:1, pageSize:1000 });
+			this.assemblyItemDS.query({ filter:[{ field:"assembly_id >", value:0 }], page:1, pageSize:100 });
 		},
 		getFiscalDate 				: function(){
 			var today = new Date(),	
@@ -43662,6 +43705,7 @@
 		fetchAllItems				: function(){
 			this.itemDS.fetch();
 			this.itemForSaleDS.fetch();
+			this.itemForSupplierDS.fetch();
 		},
 		fetchAllAccounts			: function(){
 		},
@@ -49758,7 +49802,7 @@
 		}),		
 		balanceDS  			: dataStore(apiUrl + "transactions"),
 		contactDS  			: banhji.source.supplierDS,
-		itemDS  			: banhji.source.itemDS,
+		itemDS  			: banhji.source.itemForSupplierDS,
 		taxItemDS  			: banhji.source.supplierTaxDS,
 		catalogDS			: dataStore(apiUrl + "items"),
 		assemblyDS			: dataStore(apiUrl + "items/assembly"),
@@ -50526,7 +50570,7 @@
 			pageSize: 100
 		}),
 		contactDS  			: banhji.source.supplierDS,					
-		itemDS  			: banhji.source.itemDS,
+		itemDS  			: banhji.source.itemForSupplierDS,
 		catalogDS			: dataStore(apiUrl + "items"),
 		assemblyDS			: dataStore(apiUrl + "items/assembly"),
 		amtDueColor 		: banhji.source.amtDueColor,
@@ -51899,7 +51943,7 @@
 		contactDS  					: banhji.source.supplierDS,
 		accountDS  					: dataStore(apiUrl + "accounts"),
 		expenseAccountDS  			: banhji.source.expenseAccountDS,
-		itemDS  					: banhji.source.itemDS,
+		itemDS  					: banhji.source.itemForSupplierDS,
 		depositDS  					: dataStore(apiUrl + "transactions"),
 		depositSumDS  				: new kendo.data.DataSource({
 			transport: {
@@ -51937,7 +51981,6 @@
 		}),
 		taxItemDS  					: banhji.source.supplierTaxDS,
 		catalogDS					: dataStore(apiUrl + "items"),
-		assemblyDS					: dataStore(apiUrl + "items/assembly"),
 		paymentTermDS 				: banhji.source.paymentTermDS,
 		paymentMethodDS 			: banhji.source.paymentMethodDS,
 		measurementDS				: banhji.source.measurementDS,
@@ -53012,14 +53055,14 @@
 	    addJournal 			: function(transaction_id){
 	    	var self = this,
 	    	obj = this.get("obj"),
-	    	contact = this.contactDS.get(obj.contact_id),	    	
+	    	contact = this.contactDS.get(obj.contact_id),
 	    	taxList = {},
 	    	inventoryList = {},
 	    	additionalList = {};			
 			
 			//Item line
 			$.each(this.lineDS.data(), function(index, value){										
-				var item = self.itemDS.get(value.item_id);				
+				var item = self.itemDS.get(value.item_id);
 
 				//Add tax list																							
 				if(value.tax_item_id>0){
@@ -53518,7 +53561,7 @@
 		jobDS				: banhji.source.jobDS,
 		currencyRateDS		: dataStore(apiUrl + "currencies/rate"),
 		contactDS  			: banhji.source.supplierDS,
-		itemDS  			: banhji.source.itemDS,
+		itemDS  			: banhji.source.itemForSupplierDS,
 		taxItemDS  			: banhji.source.supplierTaxDS,
 		accountDS  			: banhji.source.cashAccountDS,
 		catalogDS			: dataStore(apiUrl + "items"),
@@ -59643,7 +59686,8 @@
 	    addJournal 			: function(transaction_id){
 	    	var self = this,
 	    	obj = this.get("obj"),
-	    	contact = this.contactDS.get(obj.contact_id),	    				    	
+	    	contact = this.contactDS.get(obj.contact_id),
+	    	assemblyItemList = [],	    				    	
 	    	saleList = {},
 	    	taxList = {},
 	    	inventoryList = {},
@@ -59652,7 +59696,11 @@
 			//Arrange sale, cogs, inventory
 			$.each(this.lineDS.data(), function(index, value){										
 				var item = self.itemDS.get(value.item_id),
-				amount = value.quantity * value.price;				
+				amount = value.quantity * value.price;
+
+				if(item.is_assembly=="1"){
+					assemblyItemList.push(value.item_id);
+				}				
 				
 				//Add Tax list																							
 				if(value.tax_item_id>0){
@@ -59732,7 +59780,65 @@
 						}
 					}
 				}
-			});//End Foreach Loop			
+			});//End Foreach Loop
+
+			//Assembly Item for cogs and inventory
+			$.each(assemblyItemList, function(ind, val){				
+				$.each(self.assemblyItemDS.data(), function(index, value){
+					if(value.assembly_id==val){
+						var item = self.itemDS.get(value.item_id),
+						amount = value.quantity * value.cost;				
+						
+						//Add COGS list
+						var cogsID = kendo.parseInt(item.expense_account_id);
+						if(cogsID>0){
+							var cogsAmount = 0, 
+							itemRate = banhji.source.getRate(item.locale, new Date(obj.issued_date));
+
+							if(item.item_type_id==1 || item.item_type_id==4){
+								cogsAmount = value.quantity*item.cost;						
+							}else{
+								cogsAmount = value.amount;
+							}					
+
+							if(cogsAmount>0){
+								if(cogsList[cogsID]===undefined){
+									cogsList[cogsID]={"id": cogsID, "amount": cogsAmount, "rate": itemRate, "locale": item.locale};						
+								}else{											
+									if(cogsList[cogsID].id===cogsID){
+										cogsList[cogsID].amount += cogsAmount;
+									}else{
+										cogsList[cogsID]={"id": cogsID, "amount": cogsAmount, "rate": itemRate, "locale": item.locale};
+									}
+								}
+							}
+						}
+
+						//Add Inventory list
+						var inventoryID = kendo.parseInt(item.inventory_account_id);
+						if(inventoryID>0){
+							var inventoryAmount = 0, 
+							itemRate = banhji.source.getRate(item.locale, new Date(obj.issued_date));
+
+							if(item.item_type_id==1 || item.item_type_id==4){
+								inventoryAmount = value.quantity*item.cost;						
+							}else{
+								inventoryAmount = value.amount;
+							}
+
+							if(inventoryList[inventoryID]===undefined){
+								inventoryList[inventoryID]={"id": inventoryID, "amount": inventoryAmount, "rate": itemRate, "locale": item.locale};						
+							}else{											
+								if(inventoryList[inventoryID].id===inventoryID){
+									inventoryList[inventoryID].amount += inventoryAmount;
+								}else{
+									inventoryList[inventoryID]={"id": inventoryID, "amount": inventoryAmount, "rate": itemRate, "locale": item.locale};
+								}
+							}
+						}
+					}
+				});
+			});//End Assembly Item for cogs and inventory		
 
 			//Start journal
 			//Cash on Dr 
@@ -60525,19 +60631,6 @@
 		        		self.changes();
 		        	});
 		        }else if(item.is_assembly=="1"){
-		        	var idList 
-		        	this.assemblyItemDS.query({
-		        		filter: { field:"assembly_id", value: data.id },
-		        		page:1,
-		        		pageSize:100
-		        	}).then(function(){
-		        		var view = self.assemblyItemDS.view();
-
-		        		$.each(view, function(index, value){
-		        			self.assemblyItemList.push({ id: value.assembly_id, item_id: value.item_id });
-		        		});
-		        	});
-
 		        	rate = obj.rate / banhji.source.getRate(item.locale, new Date(obj.issued_date));
 
 		        	data.set("measurement_id", item.measurement_id);
@@ -60976,18 +61069,23 @@
 	    addJournal 			: function(transaction_id){
 	    	var self = this,
 	    	obj = this.get("obj"),
-	    	contact = this.contactDS.get(obj.contact_id),	    				    	
+	    	contact = this.contactDS.get(obj.contact_id),
+	    	assemblyItemList = [];
 	    	taxList = {},
 	    	saleList = {},
-	    	cogsList = {},	    	
-	    	inventoryList = {};						
+	    	cogsList = {},
+	    	inventoryList = {};
 			
 			//Arrange sale, cogs, inventory
-			$.each(this.lineDS.data(), function(index, value){										
+			$.each(this.lineDS.data(), function(index, value){
 				var item = self.itemDS.get(value.item_id),
 				amount = value.quantity * value.price;
 
-				//Add Tax list																							
+				if(item.is_assembly=="1"){
+					assemblyItemList.push(value.item_id);
+				}
+
+				//Add Tax list
 				if(value.tax_item_id>0){
 					var taxItem = self.taxItemDS.get(value.tax_item_id),
 					taxID = taxItem.account_id,
@@ -61002,10 +61100,10 @@
 							taxList[taxID]={"id": taxID, "amount": taxAmt};
 						}
 					}
-				}				
+				}
 				
 				//Add Income list
-				var incomeID = kendo.parseInt(item.income_account_id);																				
+				var incomeID = kendo.parseInt(item.income_account_id);
 				if(incomeID>0){
 					if(saleList[incomeID]===undefined){
 						saleList[incomeID]={"id": incomeID, "amount": amount};						
@@ -61016,7 +61114,7 @@
 							saleList[incomeID]={"id": incomeID, "amount": amount};
 						}
 					}
-				}				
+				}
 				
 				//Add COGS list
 				var cogsID = kendo.parseInt(item.expense_account_id);
@@ -61041,7 +61139,7 @@
 							}
 						}
 					}
-				}						
+				}
 
 				//Add Inventory list
 				var inventoryID = kendo.parseInt(item.inventory_account_id);
@@ -61065,8 +61163,56 @@
 						}
 					}
 				}
-								  	
-			});//End Foreach Loop			
+			});//End Foreach Loop
+			
+			//Assembly Item for cogs and inventory
+			$.each(assemblyItemList, function(ind, val){				
+				$.each(self.assemblyItemDS.data(), function(index, value){
+					if(value.assembly_id==val){
+						var item = self.itemDS.get(value.item_id);				
+						
+						//Add COGS list
+						var cogsID = kendo.parseInt(item.expense_account_id);
+						if(cogsID>0){
+							var cogsAmount = 0, 
+							itemRate = banhji.source.getRate(item.locale, new Date(obj.issued_date));
+							
+							cogsAmount = value.quantity*item.cost;
+
+							if(cogsAmount>0){
+								if(cogsList[cogsID]===undefined){
+									cogsList[cogsID]={"id": cogsID, "amount": cogsAmount, "rate": itemRate, "locale": item.locale};						
+								}else{											
+									if(cogsList[cogsID].id===cogsID){
+										cogsList[cogsID].amount += cogsAmount;
+									}else{
+										cogsList[cogsID]={"id": cogsID, "amount": cogsAmount, "rate": itemRate, "locale": item.locale};
+									}
+								}
+							}
+						}
+
+						//Add Inventory list
+						var inventoryID = kendo.parseInt(item.inventory_account_id);
+						if(inventoryID>0){
+							var inventoryAmount = 0, 
+							itemRate = banhji.source.getRate(item.locale, new Date(obj.issued_date));
+
+							inventoryAmount = value.quantity*item.cost;
+
+							if(inventoryList[inventoryID]===undefined){
+								inventoryList[inventoryID]={"id": inventoryID, "amount": inventoryAmount, "rate": itemRate, "locale": item.locale};						
+							}else{											
+								if(inventoryList[inventoryID].id===inventoryID){
+									inventoryList[inventoryID].amount += inventoryAmount;
+								}else{
+									inventoryList[inventoryID]={"id": inventoryID, "amount": inventoryAmount, "rate": itemRate, "locale": item.locale};
+								}
+							}
+						}
+					}
+				});
+			});//End Assembly Item for cogs and inventory
 
 			//Start journal
 			//A/R on Dr
