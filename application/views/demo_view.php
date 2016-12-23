@@ -29484,7 +29484,7 @@
     	</td>
     	<td align="right">
     		#if(price>0){#
-    			#=kendo.toString(price, "c", locale)#
+    			#=kendo.toString(price/rate, "c", locale)#
     		#}#
     	</td>
     </tr>
@@ -31907,15 +31907,19 @@
     	<td>#=kendo.toString(new Date(transaction_issued_date), "dd-MM-yyyy")#</td>
     	<td>#=transaction_type#</td>
         <td>
-        	#if(transaction_type=="Cash_Purchase" || transaction_type=="Credit_Purchase"){#
-				<a href="\#/purchase/#=id#">#=transaction_number#</a>
-			#}else{#
-				<a href="\#/#=transaction_type.toLowerCase()#/#=id#">#=transaction_number#</a>
-			#}#
+			<a href="\#/#=transaction_type.toLowerCase()#/#=id#">#=transaction_number#</a>
         </td>
     	<td>#=kendo.toString(quantity, "n0")#</td>
-    	<td>#=kendo.toString(cost, "c", "locale")#</td>
-    	<td>#=kendo.toString(price, "c", "locale")#</td>  	
+    	<td align="right">
+    		#if(cost>0){#
+    			#=kendo.toString((cost+additional_cost)/rate, "c", locale)#
+    		#}#
+    	</td>
+    	<td align="right">
+    		#if(price>0){#
+    			#=kendo.toString(price/rate, "c", locale)#
+    		#}#
+    	</td>  	
     </tr>
 </script>
 <script id="itemAdjustment" type="text/x-kendo-template">
