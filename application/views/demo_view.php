@@ -44074,13 +44074,12 @@
 			}).then(function(){
 				var view = self.numberDS.view();
 
+				var lastNo = 0;
 				if(view.length>0){
-					var lastNo = kendo.parseInt(view[0].number);
-					if(lastNo){
-						lastNo++;
-						obj.set("number",kendo.toString(lastNo, "00000"));
-					}
+					lastNo = kendo.parseInt(view[0].number);
 				}
+				lastNo++;
+				obj.set("number",kendo.toString(lastNo, "00000"));
 			});
 		},
 		//Obj
@@ -49452,13 +49451,12 @@
 			}).then(function(){
 				var view = self.numberDS.view();
 
+				var lastNo = 0;
 				if(view.length>0){
-					var lastNo = kendo.parseInt(view[0].number);
-					if(lastNo){
-						lastNo++;
-						obj.set("number",kendo.toString(lastNo, "00000"));
-					}
+					lastNo = kendo.parseInt(view[0].number);
 				}
+				lastNo++;
+				obj.set("number",kendo.toString(lastNo, "00000"));
 			});
 		},
 		checkExistingTxn		: function(){
@@ -56092,13 +56090,12 @@
 			}).then(function(){
 				var view = self.numberDS.view();
 
+				var lastNo = 0;
 				if(view.length>0){
-					var lastNo = kendo.parseInt(view[0].number);
-					if(lastNo){
-						lastNo++;
-						obj.set("number",kendo.toString(lastNo, "00000"));
-					}
+					lastNo = kendo.parseInt(view[0].number);
 				}
+				lastNo++;
+				obj.set("number",kendo.toString(lastNo, "00000"));
 			});
 		},
 		checkExistingTxn		: function(){
@@ -56677,10 +56674,12 @@
 		        		self.changes();
 		        	});
 		        }else if(item.is_assembly=="1"){
-		        	data.set("measurement_id", measurement_id);
+		        	rate = obj.rate / banhji.source.getRate(item.locale, new Date(obj.issued_date));
+
+		        	data.set("measurement_id", item.measurement_id);
 		    		data.set("description", item.sale_description);
 		    		data.set("quantity", 1);		    			    		
-			        data.set("price", price);
+			        data.set("price", item.price);
 			        data.set("rate", rate);
 			        data.set("locale", item.locale);
 			       	data.set("item_prices", []);
@@ -57472,10 +57471,12 @@
 		        		self.changes();
 		        	});
 		        }else if(item.is_assembly=="1"){
-		        	data.set("measurement_id", measurement_id);
+		        	rate = obj.rate / banhji.source.getRate(item.locale, new Date(obj.issued_date));
+
+		        	data.set("measurement_id", item.measurement_id);
 		    		data.set("description", item.sale_description);
 		    		data.set("quantity", 1);		    			    		
-			        data.set("price", price);
+			        data.set("price", item.price);
 			        data.set("rate", rate);
 			        data.set("locale", item.locale);
 			       	data.set("item_prices", []);
@@ -59136,10 +59137,12 @@
 		        		self.changes();
 		        	});
 		        }else if(item.is_assembly=="1"){
-		        	data.set("measurement_id", measurement_id);
+		        	rate = obj.rate / banhji.source.getRate(item.locale, new Date(obj.issued_date));
+
+		        	data.set("measurement_id", item.measurement_id);
 		    		data.set("description", item.sale_description);
 		    		data.set("quantity", 1);		    			    		
-			        data.set("price", price);
+			        data.set("price", item.price);
 			        data.set("rate", rate);
 			        data.set("locale", item.locale);
 			       	data.set("item_prices", []);
@@ -59988,7 +59991,6 @@
 		recurringLineDS 	: dataStore(apiUrl + "transactions/line"),
 		referenceDS			: dataStore(apiUrl + "transactions"),
 		referenceLineDS		: dataStore(apiUrl + "transactions/line"),
-		jobDS				: banhji.source.jobDS,		
 		balanceDS  			: dataStore(apiUrl + "transactions"),
 		depositDS  			: dataStore(apiUrl + "transactions"),
 		attachmentDS	 	: dataStore(apiUrl + "attachments"),
@@ -59998,6 +60000,7 @@
 		taxItemDS  			: banhji.source.customerTaxDS,
 		catalogDS			: dataStore(apiUrl + "items"),
 		assemblyDS			: dataStore(apiUrl + "items/assembly"),
+		assemblyItemDS		: dataStore(apiUrl + "item_prices"),
 		depositSumDS  		: new kendo.data.DataSource({
 			transport: {
 				read 	: {
@@ -60068,6 +60071,8 @@
 			page:1,
 			pageSize: 100
 		}),
+		assemblyItemList 	: [],
+		jobDS				: banhji.source.jobDS,
 		typeList 			: banhji.source.invoicePrefixDS,
 		paymentTermDS 		: banhji.source.paymentTermDS,
 		segmentItemDS		: banhji.source.segmentItemDS,
@@ -60455,16 +60460,39 @@
 		        		self.changes();
 		        	});
 		        }else if(item.is_assembly=="1"){
-		        	data.set("measurement_id", measurement_id);
+		        	this.assemblyItemDS.query({
+		        		filter: { field:"assembly_id", value: data.id },
+		        		page:1,
+		        		pageSize:100
+		        	}).then(function(){
+		        		var view = self.assemblyItemDS.view(),
+		        		assList = {};
+
+		        		$.each(view, function(index, value){
+		        			if(assList[value.assembly_id]===undefined){
+								assList[value.assembly_id]={"id": value.assembly_id, "item_id": value.item_id};						
+							}else{											
+								if(assList[value.assembly_id].id===value.assembly_id){
+									assList[value.assembly_id].amount += taxAmt;
+								}else{
+									assList[value.assembly_id]={"id": value.assembly_id, "amount": taxAmt};
+								}
+							}
+		        		});
+		        	});
+
+		        	rate = obj.rate / banhji.source.getRate(item.locale, new Date(obj.issued_date));
+
+		        	data.set("measurement_id", item.measurement_id);
 		    		data.set("description", item.sale_description);
 		    		data.set("quantity", 1);
-			        data.set("price", price);
+			        data.set("price", item.price);
 			        data.set("rate", rate);
 			        data.set("locale", item.locale);
 			       	data.set("item_prices", []);
 
 			        this.changes();		     
-		        }else{	        	
+		        }else{
 		    		data.set("measurement_id", measurement_id);
 		    		data.set("description", item.sale_description);
 		    		data.set("quantity", 1);
@@ -61604,10 +61632,12 @@
 		        		self.changes();
 		        	});
 		        }else if(item.is_assembly=="1"){
-		        	data.set("measurement_id", measurement_id);
+		        	rate = obj.rate / banhji.source.getRate(item.locale, new Date(obj.issued_date));
+
+		        	data.set("measurement_id", item.measurement_id);
 		    		data.set("description", item.sale_description);
 		    		data.set("quantity", 1);
-			        data.set("price", price);
+			        data.set("price", item.price);
 			        data.set("rate", rate);
 			        data.set("locale", item.locale);
 			       	data.set("item_prices", []);
@@ -62406,10 +62436,12 @@
 		        		self.changes();
 		        	});
 		        }else if(item.is_assembly=="1"){
-		        	data.set("measurement_id", measurement_id);
+		        	rate = obj.rate / banhji.source.getRate(item.locale, new Date(obj.issued_date));
+
+		        	data.set("measurement_id", item.measurement_id);
 		    		data.set("description", item.sale_description);
 		    		data.set("quantity", 1);
-			        data.set("price", price);
+			        data.set("price", item.price);
 			        data.set("rate", rate);
 			        data.set("locale", item.locale);
 			       	data.set("item_prices", []);
@@ -69466,13 +69498,12 @@
 			}).then(function(){
 				var view = self.numberDS.view();
 
+				var lastNo = 0;
 				if(view.length>0){
-					var lastNo = kendo.parseInt(view[0].number);
-					if(lastNo){
-						lastNo++;
-						obj.set("number",kendo.toString(lastNo, "00000"));
-					}
+					lastNo = kendo.parseInt(view[0].number);
 				}
+				lastNo++;
+				obj.set("number",kendo.toString(lastNo, "00000"));
 			});
 		},
 		categoryChanges 		: function(){
@@ -69811,13 +69842,12 @@
 			}).then(function(){
 				var view = self.numberDS.view();
 
+				var lastNo = 0;
 				if(view.length>0){
-					var lastNo = kendo.parseInt(view[0].number);
-					if(lastNo){
-						lastNo++;
-						obj.set("number",kendo.toString(lastNo, "00000"));
-					}
+					lastNo = kendo.parseInt(view[0].number);
 				}
+				lastNo++;
+				obj.set("number",kendo.toString(lastNo, "00000"));
 			});
 		},
 		//Obj
@@ -70061,13 +70091,12 @@
 			}).then(function(){
 				var view = self.numberDS.view();
 
-				if(view.length>0){					
-					var lastNo = kendo.parseInt(view[0].number);
-					if(lastNo){
-						lastNo++;
-						obj.set("number",kendo.toString(lastNo, "00000"));
-					}
+				var lastNo = 0;
+				if(view.length>0){
+					lastNo = kendo.parseInt(view[0].number);
 				}
+				lastNo++;
+				obj.set("number",kendo.toString(lastNo, "00000"));
 			});
 		},
 		//Obj
@@ -70322,13 +70351,12 @@
 			}).then(function(){
 				var view = self.numberDS.view();
 
+				var lastNo = 0;
 				if(view.length>0){
-					var lastNo = kendo.parseInt(view[0].number);
-					if(lastNo){
-						lastNo++;
-						obj.set("number",kendo.toString(lastNo, "00000"));
-					}
+					lastNo = kendo.parseInt(view[0].number);
 				}
+				lastNo++;
+				obj.set("number",kendo.toString(lastNo, "00000"));
 			});
 		},
 		categoryChanges 		: function(){
@@ -70707,13 +70735,12 @@
 			}).then(function(){
 				var view = self.numberDS.view();
 
+				var lastNo = 0;
 				if(view.length>0){
-					var lastNo = kendo.parseInt(view[0].number);
-					if(lastNo){
-						lastNo++;
-						obj.set("number",kendo.toString(lastNo, "00000"));
-					}
+					lastNo = kendo.parseInt(view[0].number);
 				}
+				lastNo++;
+				obj.set("number",kendo.toString(lastNo, "00000"));
 			});
 		},
 		categoryChanges 		: function(){
@@ -71068,13 +71095,12 @@
 			}).then(function(){
 				var view = self.numberDS.view();
 
+				var lastNo = 0;
 				if(view.length>0){
-					var lastNo = kendo.parseInt(view[0].number);
-					if(lastNo){
-						lastNo++;
-						obj.set("number",kendo.toString(lastNo, "00000"));
-					}
+					lastNo = kendo.parseInt(view[0].number);
 				}
+				lastNo++;
+				obj.set("number",kendo.toString(lastNo, "00000"));
 			});
 		},
 		categoryChanges 		: function(){
@@ -72138,10 +72164,12 @@
 		        		self.changes();
 		        	});
 		        }else if(item.is_assembly=="1"){
-		        	data.set("measurement_id", measurement_id);
+		        	rate = obj.rate / banhji.source.getRate(item.locale, new Date(obj.issued_date));
+
+		        	data.set("measurement_id", item.measurement_id);
 		    		data.set("description", item.sale_description);
 		    		data.set("quantity", 1);	    		
-			        data.set("price", price);
+			        data.set("price", item.price);
 			       	data.set("item_prices", []);
 
 			        this.changes();		     
