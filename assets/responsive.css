@@ -75,11 +75,39 @@
 
 
 .sale-record table {
-  width: 100%;
-  float: left;
+  width: 98%;
+  border: 1px solid black;
+  border-collapse: collapse;
+  font-size: 10px;
+  margin: 0 auto;
+  line-height: 25px;
+}
+.sale-record table thead tr td{
+  text-align: center;
+  font-weight: 600;
 }
 
-
+.sale-record table tr td{
+  border: 1px solid black;
+  border-collapse: collapse;
+  padding: 5px;
+  text-align: left;
+  right: -5px;
+}
+.box-right{
+  position: absolute; 
+  right: 0; 
+  top: 70px; 
+  border: 1px #000 solid;
+  width: 270px;
+}
+.box-right table{
+  width: 100%;
+}
+.box-right table tr td{
+  text-align: left;
+  padding: 5px 10px;
+}
 
 #cbbContact-list,
 #cbbAccount-list,
@@ -105,7 +133,8 @@
 #ddlAccount-list,
 #ddlCategory-list,
 #ddlName-list,
-#txtMeasurement-list
+#txtMeasurement-list,
+#ddlIncome-list,
 {
   width: 350px !important;
 }

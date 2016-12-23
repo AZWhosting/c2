@@ -34,7 +34,7 @@ class Contacts extends REST_Controller {
 		$obj = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
 
 		//Sort
-		if(!empty($sort) && isset($sort)){					
+		if(!empty($sort) && isset($sort)){
 			foreach ($sort as $value) {
 				$obj->order_by($value["field"], $value["dir"]);
 			}
@@ -139,7 +139,7 @@ class Contacts extends REST_Controller {
 		}
 
 		//Response Data		
-		$this->response($data, 200);			
+		$this->response($data, 200);
 	}
 	
 	//POST
@@ -221,7 +221,7 @@ class Contacts extends REST_Controller {
 			isset($value->status)					? $obj->status					= $value->status : "";			
 			isset($value->deleted)					? $obj->deleted					= $value->deleted : "";							
 			isset($value->is_system)				? $obj->is_system				= $value->is_system : "";
-			
+
 			if($obj->save()){
 				$fullname = $obj->surname.' '.$obj->name;
 				if($obj->contact_type_id=="6" || $obj->contact_type_id=="7" || $obj->contact_type_id=="8"){
@@ -301,7 +301,7 @@ class Contacts extends REST_Controller {
 					"fullname" 					=> $fullname,					
 					"contact_type"				=> $obj->contact_type->get_raw()->result()
 				);				
-			}		
+			}
 		}
 		$data["count"] = count($data["results"]);
 
@@ -314,7 +314,7 @@ class Contacts extends REST_Controller {
 		$data["results"] = array();
 		$data["count"] = 0;
 
-		foreach ($models as $value) {			
+		foreach ($models as $value) {
 			$obj = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$obj->get_by_id($value->id);
 
@@ -481,7 +481,7 @@ class Contacts extends REST_Controller {
 			$data["results"][] = array(
 				"data"   => $value,
 				"status" => $obj->delete()
-			);							
+			);
 		}
 
 		//Response data
@@ -556,16 +556,15 @@ class Contacts extends REST_Controller {
 	//     				$obj->where($value["field"], $value["value"]);
 	//     			}
 	//     		}
-	// 		}									 			
+	// 		}
 	// 	}
 	// 	$obj->where_in("contact_type_id", array(4,5));
 	// 	$obj->where("is_pattern", $is_pattern);
-			
 
 	// 	//Results
 	// 	$obj->get_paged_iterated($page, $limit);
 	// 	$data["count"] = $obj->paged->total_rows;		
-		
+
 	// 	if($obj->result_count()>0){
 	// 		foreach ($obj as $value) {
 	// 	 		$data["results"][] = array(
@@ -633,7 +632,7 @@ class Contacts extends REST_Controller {
 	// 				"is_local" 					=> $value->is_local,
 	// 				"is_pattern" 				=> intval($value->is_pattern),
 	// 				"status" 					=> $value->status,
-								
+
 	// 				"contact_type"				=> $value->contact_type_name
 	// 	 		);
 	// 		}
@@ -715,7 +714,7 @@ class Contacts extends REST_Controller {
 	// 	}
 	// 	$obj->where_in("contact_type_id", array(6,7));
 	// 	$obj->where("is_pattern", $is_pattern);
-			
+
 
 	// 	//Results
 	// 	$obj->get_paged_iterated($page, $limit);
@@ -788,7 +787,7 @@ class Contacts extends REST_Controller {
 	// 				"is_local" 					=> $value->is_local,
 	// 				"is_pattern" 				=> intval($value->is_pattern),
 	// 				"status" 					=> $value->status,
-								
+
 	// 				"contact_type"				=> $value->contact_type_name
 	// 	 		);
 	// 		}
@@ -856,7 +855,7 @@ class Contacts extends REST_Controller {
 	// 	//Results
 	// 	$obj->get_paged_iterated($page, $limit);
 	// 	$data["count"] = $obj->paged->total_rows;		
-		
+
 	// 	if($obj->result_count()>0){
 	// 		foreach ($obj as $value) {				
 	// 	 		$data["results"][] = array(
@@ -895,7 +894,7 @@ class Contacts extends REST_Controller {
 
 	// 	foreach ($models as $value) {
 	// 		$obj = new Company(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);						
-					 			
+
 	// 		$obj->utility_id 		= $value->utility_id;
 	// 		$obj->currency_id 		= $value->currency_id;
 	// 		$obj->province_id 		= $value->province_id;
@@ -914,7 +913,7 @@ class Contacts extends REST_Controller {
 	// 		$obj->term_of_condition = $value->term_of_condition;
 	// 		$obj->image_url 		= $value->image_url;
 	// 		$obj->status 			= $value->status;
-			
+
 	// 		if($obj->save()){
 	// 			//Respsone
 	// 			$data["results"][] = array(					
@@ -1011,7 +1010,7 @@ class Contacts extends REST_Controller {
 	// 	foreach ($models as $key => $value) {
 	// 		$obj = new Company(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 	// 		$obj->where("id", $value->id)->get();
-			
+
 	// 		$data["results"][] = array(
 	// 			"data"   => $value,
 	// 			"status" => $obj->delete()
@@ -1072,7 +1071,7 @@ class Contacts extends REST_Controller {
 		}
 
 		//Response Data		
-		$this->response($data, 200);			
+		$this->response($data, 200);
 	}
 	
 	//POST TYPE
@@ -1102,7 +1101,7 @@ class Contacts extends REST_Controller {
 					"is_company" 	=> $obj->is_company,
 					"is_system" 	=> $obj->is_system	
 				);				
-			}		
+			}
 		}
 		$data["count"] = count($data["results"]);
 
@@ -1157,7 +1156,7 @@ class Contacts extends REST_Controller {
 			$data["results"][] = array(
 				"data"   => $value,
 				"status" => $obj->delete()
-			);							
+			);
 		}
 
 		//Response data
@@ -1353,7 +1352,7 @@ class Contacts extends REST_Controller {
 	    		}else{
 	    			$obj->where($value["field"], $value["value"]);
 	    		}
-			}									 			
+			}
 		}
 
 		//Only water customer
@@ -1439,7 +1438,7 @@ class Contacts extends REST_Controller {
 	    		}else{
 	    			$obj->where($value["field"], $value["value"]);
 	    		}
-			}									 			
+			}
 		}
 
 		//Only water customer
@@ -1532,7 +1531,7 @@ class Contacts extends REST_Controller {
 	    		}else{
 	    			$obj->where($value["field"], $value["value"]);
 	    		}
-			}									 			
+			}
 		}
 
 		//Only water customer
@@ -1569,7 +1568,7 @@ class Contacts extends REST_Controller {
 		}
 
 		//Response Data		
-		$this->response($data, 200);			
+		$this->response($data, 200);
 	}
 
 	//GET CUSTOMER NO METER
@@ -1585,11 +1584,11 @@ class Contacts extends REST_Controller {
 		$sub_obj = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
 
 		//Sort
-		if(!empty($sort) && isset($sort)){					
+		if(!empty($sort) && isset($sort)){
 			foreach ($sort as $value) {
 				$obj->order_by($value["field"], $value["dir"]);
 			}
-		}				
+		}
 
 		// //Filter
 		// if(!empty($filters) && isset($filters)){			
@@ -1709,7 +1708,7 @@ class Contacts extends REST_Controller {
 	    		}else{
 	    			$obj->where($value["field"], $value["value"]);
 	    		}
-			}									 			
+			}
 		}
 
 		//Only customer
@@ -1761,8 +1760,8 @@ class Contacts extends REST_Controller {
 		}
 
 		//Response Data		
-		$this->response($data, 200);			
-	}			
+		$this->response($data, 200);
+	}
 }
 
 /* End of file contacts.php */

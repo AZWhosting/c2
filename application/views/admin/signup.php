@@ -325,7 +325,7 @@
                                     <img src="<?php echo base_url();?>assets/img/form-loader.gif" class="imgLoad" />
                                     <img src="<?php echo base_url();?>assets/img/form-tick.png" class="imgTick" />
                                     <img src="<?php echo base_url();?>assets/img/form-cross.png" class="imgCross" />
-                                    <input required="required" type="password" data-bind="value: password, events : {change: pwdCheck}" placeholder="Password " class="signup-email">
+                                    <input required="required" type="password" data-bind="value: password, events: {change: pwdCheck}" placeholder="Password " class="signup-email">
                                     <p class="msg"></p>
                                 </div>
 
@@ -912,10 +912,24 @@
                         $(".cover").eq(1).children("input").focus();
                     }else{
                         this.set("err", null);
-                        $(".cover").eq(1).children(".imgLoad, .imgCross").css("display", "none");
-                        $(".cover").eq(1).children(".imgTick").css("display", "block");
-                        $(".cover").eq(1).children(".msg").removeAttr("style");
-                        $(".cover").eq(1).children("input").removeAttr("style");
+                        var str = this.get('telephone');
+                        var phoneNumber = str.substring(3,0);
+                        var HeadPhone = ["012","011","017","061","076","077","078","085","087","089","092","095","099","010","015","016","069","070","081","096","098","031","060","066","067","068","071","088","090","097","013","018"];
+                        if($.inArray(phoneNumber, HeadPhone) != -1) {
+                            $(".cover").eq(1).children(".imgLoad, .imgCross").css("display", "none");
+                            $(".cover").eq(1).children(".imgTick").css("display", "block");
+                            $(".cover").eq(1).children(".msg").removeAttr("style");
+                            $(".cover").eq(1).children("input").removeAttr("style");
+                        }else{
+                            this.set("err", null);
+                            this.set("err", "Phone Number is Incorrect!");
+                            $(".cover").eq(1).children(".imgLoad, .imgTick").css("display", "none");
+                            $(".cover").eq(1).children(".imgCross").css("display", "block");
+                            $(".cover").eq(1).children(".msg").text("Phone Number is Incorrect!");
+                            $(".cover").eq(1).children(".msg").css("display", "block");
+                            $(".cover").eq(1).children("input").css("border", "1px solid #a22314");
+                            $(".cover").eq(1).children("input").focus();
+                        }
                     }
                 }
             },
@@ -931,22 +945,32 @@
                     }
             },
             pwdChange   : function(e) {
-                
-                if(this.get('password') != this.get('cPassword')) {
-                    this.set("err", null);
-                    this.set("err", "Your password does not match!");
-                    $(".cover").eq(3).children(".imgLoad, .imgTick").css("display", "none");
-                    $(".cover").eq(3).children(".imgCross").css("display", "block");
-                    $(".cover").eq(3).children(".msg").text("Your password does not match!");
-                    $(".cover").eq(3).children(".msg").css("display", "block");
-                    $(".cover").eq(3).children("input").css("border", "1px solid #a22314");
-                    $(".cover").eq(3).children("input").focus();
+                if(this.get('password')){
+                    if(this.get('password') != this.get('cPassword')) {
+                        this.set("err", null);
+                        this.set("err", "Your password does not match!");
+                        $(".cover").eq(3).children(".imgLoad, .imgTick").css("display", "none");
+                        $(".cover").eq(3).children(".imgCross").css("display", "block");
+                        $(".cover").eq(3).children(".msg").text("Your password does not match!");
+                        $(".cover").eq(3).children(".msg").css("display", "block");
+                        $(".cover").eq(3).children("input").css("border", "1px solid #a22314");
+                        $(".cover").eq(3).children("input").focus();
+                    }else{
+                        this.set("err", null);
+                        $(".cover").eq(3).children(".imgLoad, .imgCross").css("display", "none");
+                        $(".cover").eq(3).children(".imgTick").css("display", "block");
+                        $(".cover").eq(3).children(".msg").removeAttr("style");
+                        $(".cover").eq(3).children("input").removeAttr("style");
+                    }
                 }else{
                     this.set("err", null);
-                    $(".cover").eq(3).children(".imgLoad, .imgCross").css("display", "none");
-                    $(".cover").eq(3).children(".imgTick").css("display", "block");
-                    $(".cover").eq(3).children(".msg").removeAttr("style");
-                    $(".cover").eq(3).children("input").removeAttr("style");
+                    this.set("err", "Password emty!");
+                    $(".cover").eq(2).children(".imgLoad, .imgTick").css("display", "none");
+                    $(".cover").eq(2).children(".imgCross").css("display", "block");
+                    $(".cover").eq(2).children(".msg").text("Fill Your Password!");
+                    $(".cover").eq(2).children(".msg").css("display", "block");
+                    $(".cover").eq(2).children("input").css("border", "1px solid #a22314");
+                    $(".cover").eq(2).children("input").focus();
                 }
             },
             pwdCheck    : function(e) {
@@ -966,7 +990,10 @@
                     $(".cover").eq(2).children(".msg").removeAttr("style");
                     $(".cover").eq(2).children("input").removeAttr("style");
                 }
-                this.pwdChange();
+                if(this.get("cPassword")){
+                    this.pwdChange();
+                }
+                
             },
             comChange   : function(e) {
                 var self = this;
@@ -1046,6 +1073,7 @@
                                         country:  banhji.index.get('country'),
                                         industry:  banhji.index.get('industry'),
                                         type: banhji.index.get('type'),
+                                        telephone: banhji.index.get('telephone'),
                                         username:result.user.username
                                     });
                                     banhji.companyDS.sync();
@@ -1057,6 +1085,7 @@
                                         banhji.index.set('currency', '');
                                         banhji.index.set('country', null);
                                         banhji.index.set('industry', null);
+                                        banhji.index.set('telephone', null);
                                         banhji.index.set('type', null);
                                         // go to confirm
                                         //window.location.replace(baseUrl + "confirm/");

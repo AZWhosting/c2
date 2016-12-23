@@ -200,7 +200,7 @@ class Plans extends REST_Controller {
 				$currency= $value->currency->get();
 				$data[] = array(
 					"id"  	  => $value->id,
-					"currency_id"			=> $value->currency_id,
+					"currency"			=> $value->currency_id,
 					"_currency"				=> array(
 												"id" => $currency->id,
 												"code" => $currency->code,
@@ -232,7 +232,7 @@ class Plans extends REST_Controller {
 		foreach($requestedData as $row) {
 			$table = new Plan_item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$table->where('id', $row->id)->get();
-			$table->currency_id = $row->currency_id;
+			$table->currency_id = $row->currency;
 			$table->is_flat = isset($row->is_flat) ? $row->is_flat : 0;
 			$table->type = $row->type;
 			$table->unit = isset($row->unit) ? $row->unit: 0;
@@ -244,9 +244,16 @@ class Plans extends REST_Controller {
 			$table->is_deleted = 0;
 
 			if($table->save()) {
+				$currency= $table->currency->get();
 				$data[] = array(
 					"id"  	  => $table->id,
 					"is_flat" => $table->is_flat,
+					"currency"=> $table->currency_id,
+					"_currency"				=> array(
+												"id" => $currency->id,
+												"code" => $currency->code,
+												"locale" => $currency->locale
+					),
 					"type" 	  => $table->type,
 					"unit" 	  => $table->unit,
 					"amount"  => $table->amount,
@@ -273,7 +280,7 @@ class Plans extends REST_Controller {
 			$table = new Plan_item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			//$tmp = isset($row->is_flat) ? $row->is_flat:FALSE;
 			$table->is_flat = isset($row->is_flat) ? $row->is_flat : 0;
-			$table->currency_id = $row->currency_id;
+			$table->currency_id = $row->currency;
 			$table->type = $row->type;
 			$table->unit = isset($row->unit)?$row->unit:0;
 			$table->amount = isset($row->amount) ? $row->amount : 0;
@@ -285,9 +292,16 @@ class Plans extends REST_Controller {
 			$table->tariff_id = isset($row->tariff_id) ? $row->tariff_id : 0;
 
 			if($table->save()) {
+				$currency= $table->currency->get();
 				$data[] = array(
 					"id"  	  => $table->id,
 					"is_flat" => $table->is_flat,
+					"currency"=> $table->currency_id,
+					"_currency"				=> array(
+												"id" => $currency->id,
+												"code" => $currency->code,
+												"locale" => $currency->locale
+					),
 					"tariff_id" => $table->tariff_id,
 					"type" 	  => $table->type,
 					"unit" 	  => $table->unit,
@@ -359,7 +373,7 @@ class Plans extends REST_Controller {
 				$currency= $value->currency->get();
 				$data[] = array(
 					'id' => $row->id,
-					"currency_id"			=> $value->currency_id,
+					"currency"				=> $value->currency_id,
 					"_currency"				=> array(
 												"id" => $currency->id,
 												"code" => $currency->code,
@@ -386,7 +400,7 @@ class Plans extends REST_Controller {
 		foreach($requestedData as $row) {
 			$table = new Plan_item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$table->is_flat = isset($row->is_flat) ? $row->is_flat : 0;
-			$table->currency_id = $row->currency_id;
+			$table->currency_id = isset($row->currency) ? $row->currency : 1;
 			$table->type = isset($row->type) ? $row->type : null;
 			$table->unit = isset($row->unit)?$row->unit:null;
 			$table->amount = isset($row->amount) ? $row->amount : 0;
@@ -397,9 +411,16 @@ class Plans extends REST_Controller {
 			$table->is_deleted = 0;
 			$table->tariff_id = $row->tariff_id;
 			if($table->save()) {
+				$currency= $table->currency->get();
 				$data[] = array(
 					"id"  	  => $table->id,
 					"is_flat" => $table->is_flat,
+					"currency"				=> $value->currency_id,
+					"_currency"				=> array(
+												"id" => $currency->id,
+												"code" => $currency->code,
+												"locale" => $currency->locale
+					),
 					"tariff_id" => $table->tariff_id,
 					"type" 	  => $table->type,
 					"unit" 	  => $table->unit,
@@ -425,7 +446,7 @@ class Plans extends REST_Controller {
 		foreach($requestedData as $row) {
 			$table = new Plan_item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$table->where('id', $row->id)->get();
-			$table->currency_id = $row->currency_id;
+			$table->currency_id = $row->currency;
 			$table->is_flat = isset($row->is_flat) ? $row->is_flat : 0;
 			$table->type = isset($row->type) ? $row->type : null;
 			$table->unit = isset($row->unit)?$row->unit:null;
@@ -436,9 +457,16 @@ class Plans extends REST_Controller {
 			$table->is_active = isset($row->is_active) ? $row->is_active : 1;
 			$table->is_deleted = 0;
 			if($table->save()) {
+				$currency= $table->currency->get();
 				$data[] = array(
 					"id"  	  => $table->id,
 					"is_flat" => $table->is_flat,
+					"currency"				=> $value->currency_id,
+					"_currency"				=> array(
+												"id" => $currency->id,
+												"code" => $currency->code,
+												"locale" => $currency->locale
+					),
 					"tariff_id" => $table->tariff_id,
 					"type" 	  => $table->type,
 					"unit" 	  => $table->unit,

@@ -1278,7 +1278,11 @@ class Sales extends REST_Controller {
 				'qty' => $value['qty'],
 				'avg_price' => $value['price'],
 				'cost' => $value['cost'],
+<<<<<<< HEAD
 				'gross_profit_margin' => $value['price'] > 0? (($value['price'] - $value['cost']) / $value['price']) : 0
+=======
+				'gross_profit_margin' => $value['price'] > 0? (($value['price'] - $value['cost']) / $value['price']):0
+>>>>>>> 262f73f6ccb0faf3f81845cb07a8703e9334d070
 			);
 		}
 		$data['total_sale'] = $total;

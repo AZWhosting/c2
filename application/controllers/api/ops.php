@@ -27,98 +27,34 @@ class Ops extends REST_Controller {
 	// 	}
 	// }
 
-	// function items_get() {
-	// 	$this->load->dbutil();
-	// 	$dbs = $this->dbutil->list_databases();
+	function items_get() {
+		$this->load->dbutil();
+		$dbs = $this->dbutil->list_databases();
 
-	// 	$companyList = array("banhji","banhji_mac", "db_banhji", "information_schema","innodb","mysql","performance_schema","tmp");
-	// 	$data = array();
-	// 	foreach ($dbs as $db)
-	// 	{	
-	// 		if (!in_array("$db", $companyList)) {
-	// 		    $data[] = $db;
-	// 		    $connection = 'use '.$db;
-	// 		    $this->db->query($connection);
-	// 		    // $this->dbforge->modify_column('prefixes', array('type' => array('name' => 'type', 'type' => "ENUM('Invoice','Commercial_Invoice','Vat_Invoice','Electricity_Invoice','Water_Invoice','Cash_Sale','Commercial_Cash_Sale','Vat_Cash_Sale','Receipt_Allocation','Sale_Order','Quote','GDN','Sale_Return','Purchase_Order','GRN','Cash_Purchase','Credit_Purchase','Purchase_Return','Payment_Allocation','Deposit','eDeposit','wDeposit','Customer_Deposit','Vendor_Deposit','Witdraw','Transfer','Journal','Adjustment','Cash_Advance','Reimbursement','Direct_Expense','Advance_Settlement','Additional_Cost','Cash_Payment','Cash_Receipt','Credit_Note','Debit_Note','Offset_Bill','Offset_Invoice','Cash_Transfer','Internal_Usage')")));
-			
-	// 			// $myData = array(
-	// 			// 	array('expense_account_id' => 106, 'income_account_id' => 38, 'inventory_account_id' => 26, 'abbr' => "LAN"),
-	// 			// 	array('expense_account_id' => 106, 'income_account_id' => 39, 'inventory_account_id' => 27, 'abbr' => "BUS"),
-	// 			// 	array('expense_account_id' => 106, 'income_account_id' => 38, 'inventory_account_id' => 28, 'abbr' => "AUC"),
-	// 			// 	array('expense_account_id' => 106, 'income_account_id' => 40, 'inventory_account_id' => 29, 'abbr' => "ESM"),
-	// 			// 	array('expense_account_id' => 106, 'income_account_id' => 41, 'inventory_account_id' => 30, 'abbr' => "AUV"),
-	// 			// 	array('expense_account_id' => 106, 'income_account_id' => 42, 'inventory_account_id' => 31, 'abbr' => "FFF"),
-	// 			// 	array('expense_account_id' => 106, 'income_account_id' => 43, 'inventory_account_id' => 32, 'abbr' => "CRE"),
-	// 			// 	array('expense_account_id' => 106, 'income_account_id' => 45, 'inventory_account_id' => 34, 'abbr' => "HEM"),
-	// 			// 	array('expense_account_id' => 106, 'income_account_id' => 46, 'inventory_account_id' => 25, 'abbr' => "INA")
-	// 			// );
-	// 			// $this->db->update_batch('items', $myData, 'abbr');
+		$companyList = array("banhji","banhji_mac", "db_banhji", "information_schema","innodb","mysql","performance_schema","tmp");
+		$data = array();
+		foreach ($dbs as $db)
+		{	
+			if (!in_array("$db", $companyList)) {
+			    $data[] = $db;
+			    $connection = 'use '.$db;
+			    $this->db->query($connection);
+			    
+			    // $this->dbforge->modify_column('prefixes', array('type' => array('name' => 'type', 'type' => "ENUM('Invoice','Commercial_Invoice','Vat_Invoice','Electricity_Invoice','Water_Invoice','Cash_Sale','Commercial_Cash_Sale','Vat_Cash_Sale','Receipt_Allocation','Sale_Order','Quote','GDN','Sale_Return','Purchase_Order','GRN','Cash_Purchase','Credit_Purchase','Purchase_Return','Payment_Allocation','Deposit','eDeposit','wDeposit','Customer_Deposit','Vendor_Deposit','Withdraw','Transfer','Journal','Adjustment','Cash_Advance','Reimbursement','Direct_Expense','Advance_Settlement','Additional_Cost','Cash_Payment','Cash_Receipt','Credit_Note','Debit_Note','Offset_Bill','Offset_Invoice','Cash_Transfer','Internal_Usage')")));
+			    
+			    // $this->db->where('id', 23);
+			    // $this->db->update('prefixes', array('type'=> 'Withdraw', 'name'=>"Withdraw"));
+			}
+		}
 
-	// 			// $fields = array(
-	// 			// 	"received" => array("type" => "DECIMAL", "constraint" => '30,2'),
-	// 			// 	"change" => array("type" => "DECIMAL", "constraint" => '30,2')
-	// 			// );
+		// $fields = array(
+  //           'users' => array(
+  //                'type' => 'VARCHAR',
+  //                'constraint' => '100',
+  //         	)
+  //       );
 
-	// 		    // $this->dbforge->add_column('transactions', $fields);
-
-	// 		 //    $fields = array(
-	// 			// 	"received" => array(
-	// 			// 		"name" => "received", "type" => "DECIMAL", "constraint" => '30,2'
-	// 			// 	),
-	// 			// 	"change" => array(
-	// 			// 		"name" => "change", "type" => "DECIMAL", "constraint" => '30,2'
-	// 			// 	)
-	// 			// );
-	// 		 //    $this->dbforge->modify_column('transactions', $fields);
-
-	// 		    $data = array(
-	// 		    	array(
-	// 		    		'type' => 'Electricity_Invoice',
-	// 		    		'abbr' => 'EI'
-	// 		    	),
-	// 		    	array(
-	// 		    		'type' => 'Water_Invoice',
-	// 		    		'abbr' => 'WI'
-	// 		    	)
-	// 		    );
-
-	// 		    $this->db->update_batch('prefixes', $data, 'abbr'); 
-				
-	// 			// $dataInserted = array(
-	// 			// 	array(
-	// 			// 		"type" => "Commercial_Invoice",
-	// 			// 		'abbr' => "CIN",
-	// 			// 		'startup_number' => 1,
-	// 			// 		'name' => "Commercial Invoice"
-	// 			// 	),
-	// 			// 	array(
-	// 			// 		"type" => "Commercial_Cash_Sale",
-	// 			// 		'abbr' => "CCS",
-	// 			// 		'startup_number' => 1,
-	// 			// 		'name' => "Commercial Cash Sale"
-	// 			// 	),
-	// 			// 	array(
-	// 			// 		"type" => "Vat_Invoice",
-	// 			// 		'abbr' => "VIN",
-	// 			// 		'startup_number' => 1,
-	// 			// 		'name' => "VAT Invoice"
-	// 			// 	),
-	// 			// 	array(
-	// 			// 		"type" => "Vat_Cash_Sale",
-	// 			// 		'abbr' => "VCS",
-	// 			// 		'startup_number' => 1,
-	// 			// 		'name' => "VAT Cash Sale"
-	// 			// 	)
- // 			// 	);
-	// 			// $this->db->insert_batch('prefixes', $dataInserted);
-	// 			// $this->db->where('abbr', "");
-	// 			// $this->db->delete('prefixes');
-	
-	// 		}   
-	// 	}
-
-	// 	// $this->response(array('results'=>$data), 200);
-	// }
+	}
 
 	// function create_get() {
 	// 	$this->load->dbutil();
@@ -300,4 +236,82 @@ class Ops extends REST_Controller {
 	// 	// $this->response(array('results'=>$data), 200);
 	
 	// }
+
+	// 			// $myData = array(
+	// 			// 	array('expense_account_id' => 106, 'income_account_id' => 38, 'inventory_account_id' => 26, 'abbr' => "LAN"),
+	// 			// 	array('expense_account_id' => 106, 'income_account_id' => 39, 'inventory_account_id' => 27, 'abbr' => "BUS"),
+	// 			// 	array('expense_account_id' => 106, 'income_account_id' => 38, 'inventory_account_id' => 28, 'abbr' => "AUC"),
+	// 			// 	array('expense_account_id' => 106, 'income_account_id' => 40, 'inventory_account_id' => 29, 'abbr' => "ESM"),
+	// 			// 	array('expense_account_id' => 106, 'income_account_id' => 41, 'inventory_account_id' => 30, 'abbr' => "AUV"),
+	// 			// 	array('expense_account_id' => 106, 'income_account_id' => 42, 'inventory_account_id' => 31, 'abbr' => "FFF"),
+	// 			// 	array('expense_account_id' => 106, 'income_account_id' => 43, 'inventory_account_id' => 32, 'abbr' => "CRE"),
+	// 			// 	array('expense_account_id' => 106, 'income_account_id' => 45, 'inventory_account_id' => 34, 'abbr' => "HEM"),
+	// 			// 	array('expense_account_id' => 106, 'income_account_id' => 46, 'inventory_account_id' => 25, 'abbr' => "INA")
+	// 			// );
+	// 			// $this->db->update_batch('items', $myData, 'abbr');
+
+	// 			// $fields = array(
+	// 			// 	"received" => array("type" => "DECIMAL", "constraint" => '30,2'),
+	// 			// 	"change" => array("type" => "DECIMAL", "constraint" => '30,2')
+	// 			// );
+
+	// 		    // $this->dbforge->add_column('transactions', $fields);
+
+	// 		 //    $fields = array(
+	// 			// 	"received" => array(
+	// 			// 		"name" => "received", "type" => "DECIMAL", "constraint" => '30,2'
+	// 			// 	),
+	// 			// 	"change" => array(
+	// 			// 		"name" => "change", "type" => "DECIMAL", "constraint" => '30,2'
+	// 			// 	)
+	// 			// );
+	// 		 //    $this->dbforge->modify_column('transactions', $fields);
+
+	// 		    $data = array(
+	// 		    	array(
+	// 		    		'type' => 'Electricity_Invoice',
+	// 		    		'abbr' => 'EI'
+	// 		    	),
+	// 		    	array(
+	// 		    		'type' => 'Water_Invoice',
+	// 		    		'abbr' => 'WI'
+	// 		    	)
+	// 		    );
+
+	// 		    $this->db->update_batch('prefixes', $data, 'abbr'); 
+				
+	// 			// $dataInserted = array(
+	// 			// 	array(
+	// 			// 		"type" => "Commercial_Invoice",
+	// 			// 		'abbr' => "CIN",
+	// 			// 		'startup_number' => 1,
+	// 			// 		'name' => "Commercial Invoice"
+	// 			// 	),
+	// 			// 	array(
+	// 			// 		"type" => "Commercial_Cash_Sale",
+	// 			// 		'abbr' => "CCS",
+	// 			// 		'startup_number' => 1,
+	// 			// 		'name' => "Commercial Cash Sale"
+	// 			// 	),
+	// 			// 	array(
+	// 			// 		"type" => "Vat_Invoice",
+	// 			// 		'abbr' => "VIN",
+	// 			// 		'startup_number' => 1,
+	// 			// 		'name' => "VAT Invoice"
+	// 			// 	),
+	// 			// 	array(
+	// 			// 		"type" => "Vat_Cash_Sale",
+	// 			// 		'abbr' => "VCS",
+	// 			// 		'startup_number' => 1,
+	// 			// 		'name' => "VAT Cash Sale"
+	// 			// 	)
+ // 			// 	);
+	// 			// $this->db->insert_batch('prefixes', $dataInserted);
+	// 			// $this->db->where('abbr', "");
+	// 			// $this->db->delete('prefixes');
+	
+		// 	}   
+		// }
+
+	// 	// $this->response(array('results'=>$data), 200);
 }
