@@ -1599,14 +1599,15 @@
 		</td>
 		<td data-bind="visible: showJob">
 			<input id="ddlJob" name="ddlJob"
-				   data-option-label="Add Job..." 
-				   data-role="dropdownlist"                   
+				   data-role="dropdownlist"
+				   data-header-template="job-header-tmpl"
+				   data-template="job-list-tmpl"
                    data-value-primitive="true"                   
                    data-text-field="name"
                    data-value-field="id"
                    data-bind="value: job_id,
                               source: jobDS"
-                   data-placeholder="Add Job.."
+                   data-option-label="Add Job.."
                    style="width: 80px;" />	
 		</td>		
 		<td data-bind="visible: showSegment">
@@ -54148,7 +54149,7 @@
 	    	//Reference
 	    	if(obj.reference_id>0){
 	    		var ref = this.referenceDS.get(obj.reference_id);				
-				ref.set("status", 1);
+				ref.set("status", 3);
 				this.referenceDS.sync();
 			}else{
 				obj.set("reference_id", 0);
@@ -54460,7 +54461,8 @@
 				this.set("enableRef", true);
 
 				this.referenceDS.filter([
-					{ field: "contact_id", value: obj.contact_id },					
+					{ field: "contact_id", value: obj.contact_id },
+					{ field: "status <>", value: 3 },					
 					{ field: "type", operator:"where_in", value:["Cash_Purchase", "Credit_Purchase"] }
 				]);				
 			}else{
@@ -67931,7 +67933,7 @@
 					reference_no 		: "",
 					segments 	 		: [],								
 					dr 	 				: 0,
-					cr 					: kendo.parseFloat(value.amount_due),				
+					cr 					: kendo.parseFloat(value.amount),				
 					rate				: value.rate,
 					locale				: value.locale
 				});
@@ -68421,7 +68423,7 @@
 					description 		: "",
 					reference_no 		: "",
 					segments 	 		: [],								
-					dr 	 				: kendo.parseFloat(value.amount_due),
+					dr 	 				: kendo.parseFloat(value.amount),
 					cr 					: 0,				
 					rate				: value.rate,
 					locale				: value.locale
