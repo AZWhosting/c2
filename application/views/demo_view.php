@@ -60473,9 +60473,9 @@
 								assList[value.assembly_id]={"id": value.assembly_id, "item_id": value.item_id};						
 							}else{											
 								if(assList[value.assembly_id].id===value.assembly_id){
-									assList[value.assembly_id].amount += taxAmt;
+									assList[value.assembly_id].item_id = value.item_id;
 								}else{
-									assList[value.assembly_id]={"id": value.assembly_id, "amount": taxAmt};
+									assList[value.assembly_id]={"id": value.assembly_id, "item_id": value.item_id};
 								}
 							}
 		        		});
