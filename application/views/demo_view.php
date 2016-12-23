@@ -14633,54 +14633,65 @@
 	<div id="slide-form">
 		<div class="customer-background">
 			<div class="container-960">
-				<div id="example" class="k-content">
-
-					<div class="hidden-print">
-						<span class="pull-right glyphicons no-js remove_2"
-							onclick="javascript:window.history.back()"><i></i></span>
-
-						<input data-role="dropdownlist"
-						   data-option-label="Select Type..."
-		                   data-value-primitive="true"
-		                   data-text-field="name"
-		                   data-value-field="id"
-		                   data-bind="value: contact_type_id,
-		                              source: contactTypeDS" />
-
-		                <input data-role="dropdownlist"
-						   data-option-label="Select Status..."
-		                   data-value-primitive="true"
-		                   data-text-field="name"
-		                   data-value-field="id"
-		                   data-bind="value: status,
-		                              source: statusList" />
-
-						<button id="search" type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button> |
-						<button type="button" data-role="button" onclick="javascript:window.print()"><i class="icon-print"></i></button>
-					</div>
-
-					<h3 align="center" data-bind="text: lang.lang.customer_list"></h3>
-
+				<div id="example" class="k-content saleSummaryCustomer">
+			    	<span class="pull-right glyphicons no-js remove_2"
+						onclick="javascript:window.history.back()"><i></i></span>
 					<br>
-
-					<div data-role="grid"
-						 data-groupable="true"
-						 data-sortable="true"
-						 data-pageable="true"
-		                 data-columns="[
-                             { field: 'number', title:'Number' },
-                             { field: 'surname', title:'Surname' },
-                             { field: 'name', title:'Name' },
-                             { field: 'contact_type_id', title:'Type', template:'#=contact_type#' },
-                             { field: 'phone', title:'Phone' },
-                             { field: 'status', title:'Status', template:'#=status==1?&quot;Active&quot;:&quot;Inactive&quot;#' }
-                                                       ]"
-		                 data-bind="source: dataSource"></div>
-
-				</div> <!-- //End div example-->
-			</div><!-- //End div row-fluid-->
+					<br>
+					<div class="row-fluid">
+					    <!-- Tabs -->
+						<div class="relativeWrap" data-toggle="source-code">
+							<div class="widget widget-tabs widget-tabs-gray report-tab">
+							
+								<!-- Tabs Heading -->
+								<div class="widget-head">
+									<ul>
+																			
+										<li><a class="glyphicons print" href="#tab-1" data-toggle="tab" data-bind="click: printGrid"><i></i>Print/Export</a></li>
+									</ul>
+								</div>
+							</div>
+						</div>
+						<!-- // Tabs END -->						
+					</div>
+					<br>
+					<div id="invFormContent">
+						<div class="block-title">
+							<h3 data-bind="text: institute.name"></h3>
+							<h2>Supplier List</h2>
+						</div>
+						<table class="table table-borderless table-condensed ">
+							<thead>
+								<tr>
+									<th><span>SupplierID</span></th>
+									<th><span>Supplier Name</span></th>
+									<th><span>Type</span></th>
+									<th><span>Address</span></th>
+									<th><span>Phone</span></th>
+									<th><span>E-Mail</span></th>
+								</tr>
+							</thead>
+							<tbody data-role="listview"
+										 data-bind="source: contact"
+										 data-template="SupplierList-temp"
+							></tbody>
+						</table>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
+</script>
+<script id="SupplierList-temp" type="text/x-kendo-template" >
+	# kendo.culture(banhji.customerSale.locale); #
+	<tr style="font-weight: bold">
+		<td>#=number#</td>
+		<td>#=name#</td>
+		<td>#=contact_type#</td>
+		<td>#=address#</td>
+		<td>#=phone#</td>
+		<td>#=email#</td>
+	</tr>
 </script>
 
 
@@ -22186,7 +22197,7 @@
 					<div id="invFormContent">
 						<div class="block-title">
 							<h3 data-bind="text: company.name"></h3>
-							<h2>List Invoices Collect</h2>
+							<h2>List of Invoices to be Collected</h2>
 							<p>From <span data-bind="text: displayDateStart"></span> to <span data-bind="text: displayDateEnd"></p>
 						</div>
 
@@ -22217,7 +22228,8 @@
 									<th><span>Type</span></th>
 									<th><span>Date</span></th>
 									<th><span>Name</span></th>
-									<th><span>No</span></th>									
+									<th><span>No</span></th>
+									<th><span>Aging</span></th>									
 									<th><span>Balance</span></th>
 								</tr>
 							</thead>
@@ -22227,8 +22239,8 @@
 							></tbody>
 							<tfoot>
 								<tr>
-									<th colspan="2">Total</th>
-									<th colspan="3"><span data-bind="text: total"></span></th>
+									<th colspan="4">Total</th>
+									<th colspan="4"><span data-bind="text: total"></span></th>
 								</tr>
 							</tfoot>
 						</table>
@@ -22240,13 +22252,7 @@
 </script>
 <script id="listInvoicesCollectlist-temp" type="text/x-kendo-template" >
 	# kendo.culture(banhji.customerSale.locale); #
-	<tr style="font-weight: bold">
-		<td>#=group#</td>
-		<td></td>
-		<td></td>
-		<td></td>
-		<td></td>
-	</tr>
+	<tr>
 	# if (items.length) {#
 		#for(var i= 0; i <items.length; i++) {#
 			<tr>
@@ -22256,18 +22262,12 @@
 				<td>#=items[i].name#</td>
 				<td>
 					<a href="\#/#=items[i].type.toLowerCase()#/#=items[i].id#">#=items[i].number#</a>
-				</td>				
+				</td>	
+				<td>#=items[i].agingkk# days</td>			
 				<td style="text-align: right;">#=kendo.toString(items[i].amount, 'c2')#</td>
 			</tr>
-
 		#}#
 	#}#
-	<tr style="font-weight: bold; color: \#000;">
-		<td></td>
-		<td></td>
-		<td></td>
-		<td></td>
-		<td style="text-align: right;">#=kendo.toString(amount, 'c2')#</td>
 	</tr>
 </script>
 <script id="collectReport" type="text/x-kendo-template">
@@ -22326,14 +22326,14 @@
 					<div id="invFormContent">
 						<div class="block-title">
 							<h3 data-bind="text: institute.name"></h3>
-							<h2>Collect Report</h2>
+							<h2>Collection Report</h2>
 							<p>From <span data-bind="text: displayDateStart"></span> to <span data-bind="text: displayDateEnd"></p>
 						</div>
 
 						<div class="row-fluid">
 							<div class="span5">
 								<div class="total-customer">
-										<p>Total Sale</p>
+										<p>Amount Collected</p>
 										<span data-bind="text: total"></span>
 								</div>
 							</div>
@@ -22354,10 +22354,12 @@
 						<table class="table table-borderless table-condensed ">
 							<thead>
 								<tr>
-									<th><span>Type</span></th>
-									<th><span>Date</span></th>
-									<th><span>No</span></th>
-									<th><span>Balance</span></th>
+									<th><span>Invoice Date</span></th>
+									<th><span>Invoice Number</span></th>
+									<th><span>Invoice Balance</span></th>
+									<th><span>Receipt Date</span></th>
+									<th><span>Receipt Number</span></th>
+									<th><span>Receipt Balance</span></th>
 								</tr>
 							</thead>
 							<tbody data-role="listview"
@@ -22389,22 +22391,31 @@
 		#for(var i= 0; i <items.length; i++) {#
 			<tr>
 				# var myDate = kendo.toString(new Date(items[i].date),'dd-MM-yyyy'); #
-				<td>&nbsp;&nbsp;#=items[i].type#</td>
 				<td>#=myDate#</td>
 				<td>
 					<a href="\#/#=items[i].type.toLowerCase()#/#=items[i].id#">#=items[i].number#</a>
 				</td>
 				<td style="text-align: right;">#=kendo.toString(items[i].amount, 'c2')#</td>
+
+			</tr>
+		#}#
+	#}#
+	# if (cr.length>0) {#
+		#for(var i= 0; i <cr.length; i++) {#
+			# var myDate = kendo.toString(new Date(cr[i].date),'dd-MM-yyyy'); #
+			<tr>
+				<td></td>
+				<td></td>
+				<td></td>				
+				<td>#=myDate#</td>
+				<td>
+					<a href="\#/#=cr[i].type.toLowerCase()#/#=cr[i].id#">#=cr[i].number#</a>
+				</td>
+				<td style="text-align: right;">#=kendo.toString(cr[i].amount, 'c2')#</td>
 			</tr>
 
 		#}#
 	#}#
-	<tr style="font-weight: bold; color: \#000;">
-		<td></td>
-		<td></td>
-		<td></td>
-		<td style="text-align: right;">#=kendo.toString(amount, 'c2')#</td>
-	</tr>
 </script>
 <script id="invoiceList" type="text/x-kendo-template">
 	<div id="slide-form">
@@ -22551,53 +22562,65 @@
 	<div id="slide-form">
 		<div class="customer-background">
 			<div class="container-960">
-				<div id="example" class="k-content">
-					<div class="hidden-print">
-						<span class="pull-right glyphicons no-js remove_2" 
-							onclick="javascript:window.history.back()"><i></i></span>
-
-						<input data-role="dropdownlist"
-						   data-option-label="Select Type..."		                   
-		                   data-value-primitive="true"
-		                   data-text-field="name"
-		                   data-value-field="id"
-		                   data-bind="value: contact_type_id,
-		                              source: contactTypeDS" />
-
-		                <input data-role="dropdownlist"
-						   data-option-label="Select Status..."		                   
-		                   data-value-primitive="true"
-		                   data-text-field="name"
-		                   data-value-field="id"
-		                   data-bind="value: status,
-		                              source: statusList" />
-
-						<button id="search" type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button> |
-						<button type="button" data-role="button" onclick="javascript:window.print()"><i class="icon-print"></i></button>		
-					</div>
-
-					<h3 align="center" data-bind="text: lang.lang.customer_list"></h3>
-
+				<div id="example" class="k-content saleSummaryCustomer">
+			    	<span class="pull-right glyphicons no-js remove_2"
+						onclick="javascript:window.history.back()"><i></i></span>
 					<br>
-			
-					<div data-role="grid"
-						 data-groupable="true"
-						 data-sortable="true"
-						 data-pageable="true"			                 		                 
-		                 data-columns="[
-                             { field: 'number', title:'Number' },
-                             { field: 'surname', title:'Surname' },
-                             { field: 'name', title:'Name' },
-                             { field: 'contact_type_id', title:'Type', template:'#=contact_type#' },
-                             { field: 'phone', title:'Phone' },
-                             { field: 'status', title:'Status', template:'#=status==1?&quot;Active&quot;:&quot;Inactive&quot;#' }
-                                                       ]"
-		                 data-bind="source: dataSource"></div>
-
-				</div> <!-- //End div example-->				
-			</div><!-- //End div row-fluid-->
+					<br>
+					<div class="row-fluid">
+					    <!-- Tabs -->
+						<div class="relativeWrap" data-toggle="source-code">
+							<div class="widget widget-tabs widget-tabs-gray report-tab">
+							
+								<!-- Tabs Heading -->
+								<div class="widget-head">
+									<ul>
+																			
+										<li><a class="glyphicons print" href="#tab-1" data-toggle="tab" data-bind="click: printGrid"><i></i>Print/Export</a></li>
+									</ul>
+								</div>
+							</div>
+						</div>
+						<!-- // Tabs END -->						
+					</div>
+					<br>
+					<div id="invFormContent">
+						<div class="block-title">
+							<h3 data-bind="text: institute.name"></h3>
+							<h2>Customer List</h2>
+						</div>
+						<table class="table table-borderless table-condensed ">
+							<thead>
+								<tr>
+									<th><span>CustomerID</span></th>
+									<th><span>Customer Name</span></th>
+									<th><span>Type</span></th>
+									<th><span>Address</span></th>
+									<th><span>Phone</span></th>
+									<th><span>E-Mail</span></th>
+								</tr>
+							</thead>
+							<tbody data-role="listview"
+										 data-bind="source: contact"
+										 data-template="customerList-temp"
+							></tbody>
+						</table>
+					</div>
+				</div>
+			</div>
 		</div>
-	</div>	
+	</div>
+</script>
+<script id="customerList-temp" type="text/x-kendo-template" >
+	# kendo.culture(banhji.customerSale.locale); #
+	<tr style="font-weight: bold">
+		<td>#=number#</td>
+		<td data-bind="click: selectedRow">#=name#</td>
+		<td>#=contact_type#</td>
+		<td>#=address#</td>
+		<td>#=phone#</td>
+		<td>#=email#</td>
+	</tr>
 </script>
 <script id="customerBalance" type="text/x-kendo-template">
 	<div id="slide-form">
@@ -54747,6 +54770,8 @@
     //Report Vendor
     banhji.supplierList = kendo.observable({
 		lang 					: langVM,
+		institute 				: banhji.institute,
+		contact 				: dataStore(apiUrl + "vendorReports/supplier"),
 		dataSource 				: dataStore(apiUrl + "contacts/supplier"),
 		contactTypeDS			: banhji.source.customerTypeDS,
 		statusList 				: banhji.source.statusList,
@@ -54770,8 +54795,48 @@
 			this.dataSource.filter(para);
 			this.set("status", null);
 			this.set("contact_type_id", null);
-		}
+		}, 
+		printGrid			: function() {
+			var gridElement = $('#grid'),
+		        printableContent = '',
+		        win = window.open('', '', 'width=900, height=700'),
+		        doc = win.document.open();
+		    var htmlStart =
+		            '<!DOCTYPE html>' +
+		            '<html>' +
+		            '<head>' +
+		            '<meta charset="utf-8" />' +
+		            '<title></title>' +
+		            '<link href="http://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />'+
+		            '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/bootstrap.css">' +
+		            '<link href="https://fonts.googleapis.com/css?family=Content:400,700" rel="stylesheet" type="text/css">' +
+		            '<link href="<?php echo base_url(); ?>assets/responsive.css" rel="stylesheet" >' +
+		            '<link href="https://fonts.googleapis.com/css?family=Moul" rel="stylesheet">' +
+		            '<style>' +
+		            '*{  } html { font: 11pt sans-serif; }' +
+		            '.k-grid { border-top-width: 0; }' +
+		            '.k-grid, .k-grid-content { height: auto !important; }' +
+		            '.k-grid-content { overflow: visible !important; }' +
+		            'div.k-grid table { table-layout: auto; width: 100% !important; }' +
+		            '.k-grid .k-grid-header th { border-top: 1px solid; }' +
+		            '.k-grid-toolbar, .k-grid-pager > .k-link { display: none; }' +
+		            '</style><style type="text/css" media="print"> @page { size: landscape; margin:0mm; } .saleSummaryCustomer .total-customer, .saleSummaryCustomer .total-sale { background-color: #DDEBF7!important; -webkit-print-color-adjust:exact; }.saleSummaryCustomer .table.table-borderless.table-condensed  tr th { background-color: #1E4E78!important;-webkit-print-color-adjust:exact;}.saleSummaryCustomer .table.table-borderless.table-condensed  tr th span{ color: #fff!important; }.saleSummaryCustomer .table.table-borderless.table-condensed tr:nth-child(2n+1) td {  background-color: #fff!important; -webkit-print-color-adjust:exact;} .saleSummaryCustomer .table.table-borderless.table-condensed tr td { background-color: #F2F2F2!important;-webkit-print-color-adjust:exact; } </style>' +
+		            '</head>' +
+		            '<body><div id="example" class="k-content saleSummaryCustomer" style="padding: 30px;">';
+		    var htmlEnd =
+		            '</div></body>' +
+		            '</html>';
+		    
+		    printableContent = $('#invFormContent').html();
+		    doc.write(htmlStart + printableContent + htmlEnd);
+		    doc.close();
+		    setTimeout(function(){
+		    	win.print();
+		    	win.close();
+		    },2000);
+		},
 	});
+
 	banhji.expensesPurchaseSummarySupplier = kendo.observable({
 		lang 					: langVM,
 		startDate 			: new Date(),
@@ -63409,12 +63474,54 @@
 	});
 	banhji.customerList = kendo.observable({
 		lang 					: langVM,
+		institute 				: banhji.institute,
+		contact 				: dataStore(apiUrl + "sales/customer"),
 		dataSource 				: dataStore(apiUrl+"contacts"),
 		contactTypeDS			: banhji.source.customerTypeDS,
+		contactAAA 				: banhji.source.customerDS,
 		statusList 				: banhji.source.statusList,
 		contact_type_id 		: null,
 		status 					: null,		
 		pageLoad 				: function(){
+		},
+		printGrid			: function() {
+			var gridElement = $('#grid'),
+		        printableContent = '',
+		        win = window.open('', '', 'width=900, height=700'),
+		        doc = win.document.open();
+		    var htmlStart =
+		            '<!DOCTYPE html>' +
+		            '<html>' +
+		            '<head>' +
+		            '<meta charset="utf-8" />' +
+		            '<title></title>' +
+		            '<link href="http://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />'+
+		            '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/bootstrap.css">' +
+		            '<link href="https://fonts.googleapis.com/css?family=Content:400,700" rel="stylesheet" type="text/css">' +
+		            '<link href="<?php echo base_url(); ?>assets/responsive.css" rel="stylesheet" >' +
+		            '<link href="https://fonts.googleapis.com/css?family=Moul" rel="stylesheet">' +
+		            '<style>' +
+		            '*{  } html { font: 11pt sans-serif; }' +
+		            '.k-grid { border-top-width: 0; }' +
+		            '.k-grid, .k-grid-content { height: auto !important; }' +
+		            '.k-grid-content { overflow: visible !important; }' +
+		            'div.k-grid table { table-layout: auto; width: 100% !important; }' +
+		            '.k-grid .k-grid-header th { border-top: 1px solid; }' +
+		            '.k-grid-toolbar, .k-grid-pager > .k-link { display: none; }' +
+		            '</style><style type="text/css" media="print"> @page { size: landscape; margin:0mm; } .saleSummaryCustomer .total-customer, .saleSummaryCustomer .total-sale { background-color: #DDEBF7!important; -webkit-print-color-adjust:exact; }.saleSummaryCustomer .table.table-borderless.table-condensed  tr th { background-color: #1E4E78!important;-webkit-print-color-adjust:exact;}.saleSummaryCustomer .table.table-borderless.table-condensed  tr th span{ color: #fff!important; }.saleSummaryCustomer .table.table-borderless.table-condensed tr:nth-child(2n+1) td {  background-color: #fff!important; -webkit-print-color-adjust:exact;} .saleSummaryCustomer .table.table-borderless.table-condensed tr td { background-color: #F2F2F2!important;-webkit-print-color-adjust:exact; } </style>' +
+		            '</head>' +
+		            '<body><div id="example" class="k-content saleSummaryCustomer" style="padding: 30px;">';
+		    var htmlEnd =
+		            '</div></body>' +
+		            '</html>';
+		    
+		    printableContent = $('#invFormContent').html();
+		    doc.write(htmlStart + printableContent + htmlEnd);
+		    doc.close();
+		    setTimeout(function(){
+		    	win.print();
+		    	win.close();
+		    },2000);
 		},
 		search 					: function(){
 			var para = [],
@@ -63432,8 +63539,14 @@
 			this.dataSource.filter(para);
 			this.set("status", null);
 			this.set("contact_type_id", null);
-		}
-	});
+		}, 
+		selectedRow			: function(e){
+			var data = e.data;
+			
+			this.set("obj", data);
+			this.loadData();
+		},
+	});	
 	banhji.customerBalance = kendo.observable({
 		lang 					: langVM,
 		dataSource 				: dataStore(apiUrl+"contact_reports/balance"),
