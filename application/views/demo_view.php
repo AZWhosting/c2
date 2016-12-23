@@ -42102,6 +42102,7 @@
 		itemGroupDS					: dataStore(apiUrl + "items/group"),
 		brandDS						: dataStore(apiUrl + "brands"),
 		categoryDS					: dataStore(apiUrl + "categories"),
+		assemblyItemDS				: dataStore(apiUrl + "item_prices"),
 		itemForSaleDS				: new kendo.data.DataSource({
 			transport: {
 				read 	: {
@@ -43593,6 +43594,7 @@
 			this.accountDS.read();
 			this.accountTypeDS.read();
 			this.fixedAssetCategoryDS.read();
+			this.assemblyItemDS.query({ filter:[], page:1, pageSize:1000 });
 		},
 		getFiscalDate 				: function(){
 			var today = new Date(),	
@@ -59999,8 +60001,7 @@
 		itemDS  			: banhji.source.itemForSaleDS,
 		taxItemDS  			: banhji.source.customerTaxDS,
 		catalogDS			: dataStore(apiUrl + "items"),
-		assemblyDS			: dataStore(apiUrl + "items/assembly"),
-		assemblyItemDS		: dataStore(apiUrl + "item_prices"),
+		assemblyItemDS		: banhji.source.assemblyItemDS,		
 		depositSumDS  		: new kendo.data.DataSource({
 			transport: {
 				read 	: {
@@ -60071,7 +60072,6 @@
 			page:1,
 			pageSize: 100
 		}),
-		assemblyItemList 	: [],
 		jobDS				: banhji.source.jobDS,
 		typeList 			: banhji.source.invoicePrefixDS,
 		paymentTermDS 		: banhji.source.paymentTermDS,
@@ -60460,24 +60460,16 @@
 		        		self.changes();
 		        	});
 		        }else if(item.is_assembly=="1"){
+		        	var idList 
 		        	this.assemblyItemDS.query({
 		        		filter: { field:"assembly_id", value: data.id },
 		        		page:1,
 		        		pageSize:100
 		        	}).then(function(){
-		        		var view = self.assemblyItemDS.view(),
-		        		assList = {};
+		        		var view = self.assemblyItemDS.view();
 
 		        		$.each(view, function(index, value){
-		        			if(assList[value.assembly_id]===undefined){
-								assList[value.assembly_id]={"id": value.assembly_id, "item_id": value.item_id};						
-							}else{											
-								if(assList[value.assembly_id].id===value.assembly_id){
-									assList[value.assembly_id].item_id = value.item_id;
-								}else{
-									assList[value.assembly_id]={"id": value.assembly_id, "item_id": value.item_id};
-								}
-							}
+		        			self.assemblyItemList.push({ id: value.assembly_id, item_id: value.item_id });
 		        		});
 		        	});
 
