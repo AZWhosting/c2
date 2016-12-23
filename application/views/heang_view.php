@@ -8017,7 +8017,7 @@
 						
 						<a href="#/suppliers_balance_summary"><div class="widget-body alert-info3" style="background-color: LightGray">
 							
-							<div align="center" class="text-large strong" data-bind="text: ap"></div>
+							<div align="center" class="text-large strong"'5/.'></div>
 							<table width="100%">
 								<tr align="center">
 									<td>										
@@ -21111,12 +21111,12 @@
 						<table class="table table-borderless table-condensed ">
 							<thead>
 								<tr>
-									<th><span>ITEM</span></th>
-									<th><span>QTY</span></th>
-									<th><span>AMOUNT</span></th>
-									<th><span>AVG PRICE</span></th>
-									<th><span>COST</span></th>
-									<th><span>GROSS PROFIT MARGIN</span></th>								
+									<th style="text-align: right;"><span>ITEM</span></th>
+									<th style="text-align: right;"><span>QTY</span></th>
+									<th style="text-align: right;"><span>AMOUNT</span></th>
+									<th style="text-align: right;"><span>AVG PRICE</span></th>
+									<th style="text-align: right;"><span>COST</span></th>
+									<th style="text-align: right;"><span>GROSS PROFIT MARGIN</span></th>								
 								</tr>
 							</thead>
 							<tbody data-role="listview"
@@ -21138,7 +21138,7 @@
 </script>
 <script id="saleSummary-product-temp" type="text/x-kendo-template" >
 	# kendo.culture(banhji.customerSale.locale); #
-	<tr style="font-weight: bold">
+	<tr>
 		<td>#=group#</td>
 		<td>#=qty#</td>
 		<td style="text-align: right;">#=kendo.toString(amount, 'c2')#</td>
@@ -22005,7 +22005,7 @@
 					<div id="invFormContent">
 						<div class="block-title">
 							<h3 data-bind="text: company.name"></h3>
-							<h2>List Invoices Collect</h2>
+							<h2>List of Invoices to be Collected</h2>
 							<p>From <span data-bind="text: displayDateStart"></span> to <span data-bind="text: displayDateEnd"></p>
 						</div>
 
@@ -22036,7 +22036,8 @@
 									<th><span>Type</span></th>
 									<th><span>Date</span></th>
 									<th><span>Name</span></th>
-									<th><span>No</span></th>									
+									<th><span>No</span></th>
+									<th><span>Aging</span></th>									
 									<th><span>Balance</span></th>
 								</tr>
 							</thead>
@@ -22046,8 +22047,8 @@
 							></tbody>
 							<tfoot>
 								<tr>
-									<th colspan="2">Total</th>
-									<th colspan="3"><span data-bind="text: total"></span></th>
+									<th colspan="4">Total</th>
+									<th colspan="4"><span data-bind="text: total"></span></th>
 								</tr>
 							</tfoot>
 						</table>
@@ -22059,13 +22060,7 @@
 </script>
 <script id="listInvoicesCollectlist-temp" type="text/x-kendo-template" >
 	# kendo.culture(banhji.customerSale.locale); #
-	<tr style="font-weight: bold">
-		<td>#=group#</td>
-		<td></td>
-		<td></td>
-		<td></td>
-		<td></td>
-	</tr>
+	<tr>
 	# if (items.length) {#
 		#for(var i= 0; i <items.length; i++) {#
 			<tr>
@@ -22075,18 +22070,12 @@
 				<td>#=items[i].name#</td>
 				<td>
 					<a href="\#/#=items[i].type.toLowerCase()#/#=items[i].id#">#=items[i].number#</a>
-				</td>				
+				</td>	
+				<td>#=items[i].agingkk# days</td>			
 				<td style="text-align: right;">#=kendo.toString(items[i].amount, 'c2')#</td>
 			</tr>
-
 		#}#
 	#}#
-	<tr style="font-weight: bold; color: \#000;">
-		<td></td>
-		<td></td>
-		<td></td>
-		<td></td>
-		<td style="text-align: right;">#=kendo.toString(amount, 'c2')#</td>
 	</tr>
 </script>
 <script id="collectReport" type="text/x-kendo-template">
@@ -22145,14 +22134,14 @@
 					<div id="invFormContent">
 						<div class="block-title">
 							<h3 data-bind="text: institute.name"></h3>
-							<h2>Collect Report</h2>
+							<h2>Collection Report</h2>
 							<p>From <span data-bind="text: displayDateStart"></span> to <span data-bind="text: displayDateEnd"></p>
 						</div>
 
 						<div class="row-fluid">
 							<div class="span5">
 								<div class="total-customer">
-										<p>Total Sale</p>
+										<p>Amount Collected</p>
 										<span data-bind="text: total"></span>
 								</div>
 							</div>
@@ -22173,10 +22162,12 @@
 						<table class="table table-borderless table-condensed ">
 							<thead>
 								<tr>
-									<th><span>Type</span></th>
-									<th><span>Date</span></th>
-									<th><span>No</span></th>
-									<th><span>Balance</span></th>
+									<th><span>Invoice Date</span></th>
+									<th><span>Invoice Number</span></th>
+									<th><span>Invoice Balance</span></th>
+									<th><span>Receipt Date</span></th>
+									<th><span>Receipt Number</span></th>
+									<th><span>Receipt Balance</span></th>
 								</tr>
 							</thead>
 							<tbody data-role="listview"
@@ -22208,22 +22199,31 @@
 		#for(var i= 0; i <items.length; i++) {#
 			<tr>
 				# var myDate = kendo.toString(new Date(items[i].date),'dd-MM-yyyy'); #
-				<td>&nbsp;&nbsp;#=items[i].type#</td>
 				<td>#=myDate#</td>
 				<td>
 					<a href="\#/#=items[i].type.toLowerCase()#/#=items[i].id#">#=items[i].number#</a>
 				</td>
 				<td style="text-align: right;">#=kendo.toString(items[i].amount, 'c2')#</td>
+
+			</tr>
+		#}#
+	#}#
+	# if (cr.length>0) {#
+		#for(var i= 0; i <cr.length; i++) {#
+			# var myDate = kendo.toString(new Date(cr[i].date),'dd-MM-yyyy'); #
+			<tr>
+				<td></td>
+				<td></td>
+				<td></td>				
+				<td>#=myDate#</td>
+				<td>
+					<a href="\#/#=cr[i].type.toLowerCase()#/#=cr[i].id#">#=cr[i].number#</a>
+				</td>
+				<td style="text-align: right;">#=kendo.toString(cr[i].amount, 'c2')#</td>
 			</tr>
 
 		#}#
 	#}#
-	<tr style="font-weight: bold; color: \#000;">
-		<td></td>
-		<td></td>
-		<td></td>
-		<td style="text-align: right;">#=kendo.toString(amount, 'c2')#</td>
-	</tr>
 </script>
 <script id="invoiceList" type="text/x-kendo-template">
 	<div id="slide-form">

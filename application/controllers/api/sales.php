@@ -1278,7 +1278,7 @@ class Sales extends REST_Controller {
 				'qty' => $value['qty'],
 				'avg_price' => $value['price'],
 				'cost' => $value['cost'],
-				'gross_profit_margin' => (($value['price'] - $value['cost']) / $value['price'])
+				'gross_profit_margin' => $value['price'] > 0? (($value['price'] - $value['cost']) / $value['price']) : 0
 			);
 		}
 		$data['total_sale'] = $total;
@@ -2208,6 +2208,7 @@ class Sales extends REST_Controller {
 		$totalDay = 0;
 		$aging = 0;
 		$totalInvoice = 0;
+		$countCustomer = 0;
 
 		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
@@ -2378,6 +2379,12 @@ class Sales extends REST_Controller {
 					if(isset($customers["$outstanding"])) {
 						$customers["$outstanding"]['amount']	+= floatval($value->amount) / floatval($value->rate)- $temp;
 						 // days
+							$outstanding = 0; // days
+							if($dueDate<$today){
+								$outstanding = $today->diff($dueDate)->format("%a");
+							}else{
+								$outstanding = 0;
+							}
 
 						$customers["$outstanding"]['transactions'][] = array(
 							'id' => $value->id,
@@ -2386,6 +2393,7 @@ class Sales extends REST_Controller {
 							'date' => $value->issued_date,
 							'number' => $value->number,
 							'memo' => $value->memo2,
+							'agingkk' => $dueDate<$today ? $diff : 0,
 							'amount' => floatval($value->amount) / floatval($value->rate)- $temp
 						);
 					} else {
@@ -2397,8 +2405,14 @@ class Sales extends REST_Controller {
 							'date' => $value->issued_date,
 							'number' => $value->number,
 							'memo' => $value->memo2,
+							'agingkk' => $dueDate<$today ? $diff : 0,
 							'amount' => floatval($value->amount) / floatval($value->rate)- $temp
 						);
+					}
+					if(isset($fullname)) {
+						$countCustomer +=1;
+					}else{
+						$countCustomer +=0;
 					}
 					$totalDay += $dayOutsatanding;
 					$total += floatval($value->amount)/ floatval($value->rate)- $temp;
@@ -2407,10 +2421,9 @@ class Sales extends REST_Controller {
 				}
 			}
 		}	
-		foreach ($customers as $key => $value) {
+		foreach ($customers as $key => $value) {	
 			$data["results"][] = array(
 				'group' 	=> $key,
-				'amount'	=> $value['amount'],
 				'items' => $value['transactions']
 			);
 		}
@@ -2418,7 +2431,7 @@ class Sales extends REST_Controller {
 		$data['totalDay'] = $totalDay;
 		$data['aging'] = $aging;
 		$data['totalInvoice'] = $totalInvoice;
-		$data['count'] = count($customers);
+		$data['count'] = $countCustomer;
 		//Response Data
 		$this->response($data, 200);
 	}
@@ -2501,7 +2514,7 @@ class Sales extends REST_Controller {
 					$amt = floatval($t->amount)/ floatval($t->rate);
 					$customers = array();
 					$paymentMethod = $t->payment_method->get();
-
+					$cr = $t->referece->get();
 					if(isset($customers["$paymentMethod->name"])) {
 						$customers["$paymentMethod->name"]['amount']	+= floatval($t->amount) / floatval($value->rate);
 						 // days
@@ -2516,13 +2529,27 @@ class Sales extends REST_Controller {
 						);
 					} else {
 						$customers["$paymentMethod->name"]['amount']	= floatval($t->amount) / floatval($value->rate);
+						
+						$tmp = array();
+						foreach ($cr as $recipt){
+							if($recipt->type=="Cash_Receipt"){
+								if($recipt->id == $t->id){
+								$tmp[] = array(
+									'date' => $recipt->issued_date,
+									'number' => $recipt->number,
+									'amount' => floatval($recipt->amount) / floatval($recipt->rate)
+									);
+								}
+							}
+						}
 						$customers["$paymentMethod->name"]['transactions'][] = array(
 							'id' => $t->id,
 							'type' => $t->type,
 							'date' => $t->issued_date,
 							'number' => $t->number,
 							'memo' => $t->memo2,
-							'amount' => floatval($t->amount) / floatval($t->rate)
+							'amount' => floatval($t->amount) / floatval($t->rate),
+							'cashReceipt' => $tmp
 						);
 				//Results
 					}
@@ -2548,6 +2575,7 @@ class Sales extends REST_Controller {
 			$obj->where('is_recurring', 0);
 			$obj->where("deleted",0);
 
+
 			// $obj->include_related("contact_type", "name");
 
 			//Results
@@ -2558,7 +2586,10 @@ class Sales extends REST_Controller {
 				foreach ($obj as $value) {
 					$totalInvoice += 1;
 					$paymentMethod = $value->payment_method->get();
-
+					$cr = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					$cr->where('reference_id', $value->id);
+					$cr->where('type', 'Cash_Receipt');
+					$cr->get();
 					if(isset($customers["$paymentMethod->name"])) {
 						$customers["$paymentMethod->name"]['amount']	+= floatval($value->amount) / floatval($value->rate);
 						 // days
@@ -2573,13 +2604,23 @@ class Sales extends REST_Controller {
 						);
 					} else {
 						$customers["$paymentMethod->name"]['amount']	= floatval($value->amount) / floatval($value->rate);
+						$tmp = array();
+						foreach ($cr as $recipt){ 
+							$tmp[] = array(
+								'date' => $recipt->issued_date,
+								'number' => $recipt->number,
+								'type' => $recipt->type,
+								'amount' => floatval($recipt->amount) / floatval($recipt->rate)
+								);
+						}
+
 						$customers["$paymentMethod->name"]['transactions'][] = array(
 							'id' => $value->id,
 							'type' => $value->type,
 							'date' => $value->issued_date,
 							'number' => $value->number,
 							'memo' => $value->memo2,
-							'amount' => floatval($value->amount) / floatval($value->rate)
+							'amount' => floatval($value->amount) / floatval($value->rate),
 						);
 				//Results
 					}
@@ -2591,7 +2632,8 @@ class Sales extends REST_Controller {
 			$data["results"][] = array(
 				'group' 	=> $key,
 				'amount'	=> $value['amount'],
-				'items' 	=> $value['transactions']
+				'items' 	=> $value['transactions'],
+				'cr' 		=> $tmp
 			);
 		}
 		$data['total'] = $total;

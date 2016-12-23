@@ -132,15 +132,16 @@ class Vendorreports extends REST_Controller {
 					$customer = $value->contact->get();
 					$fullname = $customer->surname.' '.$customer->name;
 					$amount = $value->type =="Purchase_Return"?floatval($value->amount)/floatval($value->rate)*-1:floatval($value->amount)/floatval($value->rate);
+					$deposit =  $value->deposit/floatval($value->rate);
 					$purchaseReturn = $value->transaction->get();
 					if(isset($customers["$fullname"])) {
-						$customers["$fullname"]['amount']+= $amount;
-						$customers[$fullname]['reference'][] = $purchaseReturn->id;
+						$customers["$fullname"]['amount']+= ($amount - $deposit);
+						$customers["$fullname"]['reference'][] = $purchaseReturn->id;
 					} else {
-						$customers["$fullname"]['amount']= $amount;
-						$customers[$fullname]['reference'][] = array('id' => $purchaseReturn->id, 'type'=> $purchaseReturn->type);
+						$customers["$fullname"]['amount']= ($amount - $deposit);
+						$customers["$fullname"]['reference'][] = array('id' => $purchaseReturn->id, 'type'=> $purchaseReturn->type);
 					}
-					$total += $amount;
+					$total += ($amount - $deposit);
 				}
 			}
 		}				
