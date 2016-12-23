@@ -24436,7 +24436,7 @@
                         </div>
                     </div>
                     <div class="vattin">
-                	<p>លេខ​អត្ត​សញ្ញាណ​កម្ម អតប (VATTIN)</p><span id="vat_number" data-bind="text: company.vat_number"></span><p style="font-size:8px;font-weight:normal;margin-left: 8px;">(ប្រសិន​បើ​មាន / If any)</p>
+                	<p>លេខ​អត្ត​សញ្ញាណ​កម្ម អតប (VATTIN)</p><span id="vat_number" data-bind="text: contact[0].vat_no"></span><p style="font-size:8px;font-weight:normal;margin-left: 8px;">(ប្រសិន​បើ​មាន / If any)</p>
                 	</div>
                 </div>
                 <div class="cover-inv-number">
@@ -24901,7 +24901,7 @@
         	<div class="span12 mid-title main-color" data-bind="style: {backgroundColor: obj.color}">
         		<div class="span6" style="text-align: left;padding-left: 10px;">ល្ខខណ្ឌ<br>TERM OF PAYMENT</div>
         		
-        		<div class="span6" style="text-align: left;padding-left: 10px;">សុពលភាព <br>VALIDITY PERIOD</div>
+        		<div class="span6" style="text-align: left;padding-left: 10px;">សុពលភាព <br>VALIDITY PERIOD <span data-bind="text: obj.due_date"></span></div>
         	</div>
         	<table class="span12" rules="rows">
         		<thead>
@@ -24996,7 +24996,7 @@
         	<div class="span12 mid-title main-color" data-bind="style: {backgroundColor: obj.color}">
         		<div class="span6" style="text-align: left;padding-left: 10px;">ល្ខខណ្ឌ<br>TERM OF PAYMENT</div>
         		
-        		<div class="span6" style="text-align: left;padding-left: 10px;">សុពលភាព <br>VALIDITY PERIOD</div>
+        		<div class="span6" style="text-align: left;padding-left: 10px;">សុពលភាព <br>VALIDITY PERIOD <span data-bind="text: obj.due_date"></span></div>
         	</div>
         	<table class="span12" rules="rows">
         		<thead>
@@ -25093,7 +25093,7 @@
         	<div class="span12 mid-title main-color" data-bind="style: {backgroundColor: obj.color}">
         		<div class="span6" style="text-align: left;padding-left: 10px;">ល្ខខណ្ឌ<br>TERM OF PAYMENT</div>
         		
-        		<div class="span6" style="text-align: left;padding-left: 10px;">សុពលភាព <br>VALIDITY PERIOD</div>
+        		<div class="span6" style="text-align: left;padding-left: 10px;">សុពលភាព <br>VALIDITY PERIOD <span data-bind="text: obj.due_date"></span></div>
         	</div>
         	<table class="span12" rules="rows">
         		<thead>
@@ -25186,7 +25186,7 @@
         	<div class="span12 mid-title main-color" data-bind="style: {backgroundColor: obj.color}">
         		<div class="span6" style="text-align: left;padding-left: 10px;">ល្ខខណ្ឌ<br>TERM OF PAYMENT</div>
         		
-        		<div class="span6" style="text-align: left;padding-left: 10px;">សុពលភាព <br>VALIDITY PERIOD</div>
+        		<div class="span6" style="text-align: left;padding-left: 10px;">សុពលភាព <br>VALIDITY PERIOD <span data-bind="text: obj.due_date"></span></div>
         	</div>
         	<table class="span12" rules="rows">
         		<thead>
@@ -25278,7 +25278,7 @@
         	<div class="span12 mid-title main-color" data-bind="style: {backgroundColor: obj.color}">
         		<div class="span6" style="text-align: left;padding-left: 10px;">ល្ខខណ្ឌ<br>TERM OF PAYMENT</div>
         		
-        		<div class="span6" style="text-align: left;padding-left: 10px;">សុពលភាព <br>VALIDITY PERIOD</div>
+        		<div class="span6" style="text-align: left;padding-left: 10px;">សុពលភាព <br>VALIDITY PERIOD <span data-bind="text: obj.due_date"></span></div>
         	</div>
         	<table class="span12" rules="rows">
         		<thead>
@@ -25372,7 +25372,7 @@
         	<div class="span12 mid-title main-color" data-bind="style: {backgroundColor: obj.color}">
         		<div class="span6" style="text-align: left;padding-left: 10px;">ល្ខខណ្ឌ<br>TERM OF PAYMENT</div>
         		
-        		<div class="span6" style="text-align: left;padding-left: 10px;">សុពលភាព <br>VALIDITY PERIOD</div>
+        		<div class="span6" style="text-align: left;padding-left: 10px;">សុពលភាព <br>VALIDITY PERIOD <span data-bind="text: obj.due_date"></span></div>
         	</div>
         	<table class="span12" rules="rows">
         		<thead>
@@ -25467,7 +25467,7 @@
         	<div class="span12 mid-title main-color" data-bind="style: {backgroundColor: obj.color}">
         		<div class="span6" style="text-align: left;padding-left: 10px;">ល្ខខណ្ឌ<br>TERM OF PAYMENT</div>
         		
-        		<div class="span6" style="text-align: left;padding-left: 10px;">សុពលភាព <br>VALIDITY PERIOD</div>
+        		<div class="span6" style="text-align: left;padding-left: 10px;">សុពលភាព <br>VALIDITY PERIOD <span data-bind="text: obj.due_date"></span></div>
         	</div>
         	<table class="span12" rules="rows">
         		<thead>
@@ -25562,7 +25562,7 @@
         	<div class="span12 mid-title main-color" data-bind="style: {backgroundColor: obj.color}">
         		<div class="span6" style="text-align: left;padding-left: 10px;">ល្ខខណ្ឌ<br>TERM OF PAYMENT</div>
         		
-        		<div class="span6" style="text-align: left;padding-left: 10px;">សុពលភាព <br>VALIDITY PERIOD</div>
+        		<div class="span6" style="text-align: left;padding-left: 10px;">សុពលភាព <br>VALIDITY PERIOD <span data-bind="text: obj.due_date"></span></div>
         	</div>
         	<table class="span12" rules="rows">
         		<thead>
@@ -27321,6 +27321,139 @@
         </div>
     </div>
 </script>
+<script id="invoiceForm28" type="text/x-kendo-template">
+	<div class="inv1">
+    	<div class="head">
+        	<div class="logo">
+            	<img data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
+            </div>
+            <div class="cover-name-company">
+            	<h2 ></h2>
+                <h3 style="text-align:left;" data-bind="text: company.name"></h3>
+                <div class="vattin">
+                	<p>លេខ​អត្ត​សញ្ញាណ​កម្ម អតប (VATTIN)</p><span id="vat_number" data-bind="text: company.vat_number"></span>
+                </div>
+                <div class="clear">
+                	<pre>អាស័យ​ដ្ឋាន Address: <span data-bind="text: company.address"></span></pre>
+                    <pre>ទូរស័ព្ទលេខ HP <span data-bind="text: company.phone"></span></pre>
+                </div>
+            </div>
+        </div>
+        <div class="content">
+        	<div style="overflow: hidden;padding:10px 0;">
+        		<h1>វិក្កយបត្រ</h1>
+            	<h2 data-bind="text: obj.title"></h2>
+        	</div>
+            <div class="clear" style="padding: 10px;background: #dce6f2;padding-bottom: 10px;">
+            	<div class="cover-customer">
+                	<h5>ព័ត៌មានអតិថិជន​ CUSTOMER INFO:</h5>
+                    <div class="clear">
+                        <div class="left dotted-ruler" style="width: 62%;">
+                        	<p style="font-weight:bold">
+                        		<span data-bind="text: obj.contact[0].name"></span><br>
+                        		<span data-bind="text: obj.contact[0].address"></span>
+                        	</p>
+                        </div>
+                    </div>
+                    <div class="clear">
+                    	<!--div class="left">
+                    		<p>ទូរស័ព្ទ​លេខ HP:</p>
+                        </div-->
+                        <div class="left dotted-ruler" style="width: 78%;">
+                        	<p style="font-weight:bold" data-bind="text: obj.contact[0].phone"></p>
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="cover-inv-number">
+                	<div class="clear">
+                    	<div class="left">
+                    		<p>លេខ No. :</p>
+                        </div>
+                        <div class="left dotted-ruler" style="width: 42%;">
+                        	<p style="font-weight:bold" data-bind="text: obj.number"></p>
+                        </div>
+                    </div>
+                    <div class="clear">
+                    	<div class="left">
+                    		<p>កាល​បរិច្ឆេទ Date:</p>
+                        </div>
+                        <div class="left dotted-ruler" style="width: 57%;">
+                        	<p style="font-weight:bold" data-bind="text: obj.issued_date"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        	<div class="clear inv2">
+            	<table cellpadding="0" cellspacing="0" border="1" style="width:100%;">
+                	<thead>
+                        <tr class="main-color" style="height: 45px;" data-bind="style: {backgroundColor: obj.color}">
+                            <th>ល.រ<br />N<sup>0</sup></th>
+                            <th>បរិយាយ​មុខ​ទំនិញ<br />Description</th>
+                            <th>បរិមាណ<br />Quantity</th>
+                            <th>ថ្លៃឯកតា​<br />Unit Price</th>
+                            <th>ថ្លៃ​ទំនិញ<br />Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody style="margin-top: 2px" id="formListView" data-role="listview"
+										 data-auto-bind="false"
+						                 data-template="invoiceForm-lineDS-template"
+						                 data-bind="source: lineDS">
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                        	<td colspan="4" style="text-align:right;padding-right:10px;font-weight:bold;">សរុប​ Sub Total</td>
+                            <td data-bind="text: obj.sub_total"></td>
+                        </tr>
+                        <tr>
+                        	<td colspan="4" style="text-align:right;padding-right:10px;font-weight:bold;">បញ្ចុះតម្លៃ Discount</td>
+                            <td data-bind="text: obj.discount"></td>
+                        </tr>
+                        <tr>
+                        	<td colspan="4" style="text-align:right;padding-right:10px;font-weight:bold;">អាករ​លើ​តម្លៃ​បន្ថែម ១០% VAT (10%)</td>
+                            <td data-bind="text: obj.tax"></td>
+                        </tr>
+                        <tr>
+                        	<td colspan="4" style="text-align:right;padding-right:10px;font-weight:bold;">សរុបរួម​ Grand Total</td>
+                            <td data-bind="text: obj.amount"></td>
+                        </tr>
+                        <tr>
+                        	<td colspan="4" style="text-align:right;padding-right:10px;font-weight:bold;">ប្រាក់កក់ Deposit</td>
+                            <td data-bind="text: obj.deposit"></td>
+                        </tr>
+                        <tr>
+                        	<td colspan="4" style="text-align:right;padding-right:10px;font-weight:bold;">
+                        	សាច់ប្រាក់ត្រូវទូទាត់ Amount Due</td>
+                            <td data-bind="text: obj.amount_due"></td>
+                        </tr>
+                        <tr>
+                        	<td colspan="4" style="text-align:right;padding-right:10px;font-weight:bold;">
+                        	សាច់ប្រាក់ទទួលបាន Cash Receipt</td>
+                            <td data-bind="text: obj.cash_receipt"></td>
+                        </tr>
+                        <tr>
+                        	<td colspan="4" style="text-align:right;padding-right:10px;font-weight:bold;">
+                        	សមតុល្យ Balance</td>
+                            <td data-bind="text: obj.balance"></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+        <div class="foot">
+        	<div class="cover-signature">
+            	<div class="singature" style="float:left">
+                	<p>ហត្ថលេខា និងឈ្មោះ​អ្នក​ទិញ<br />Customer's Signature & Name</p>
+                </div>
+                <div class="singature" style="float:right">
+                	<p>ហត្ថលេខា និងឈ្មោះ​អ្នកលក់<br />Seller's Signature & Name</p>
+                </div>
+            </div>
+            <h6>សម្គាល់៖ <span>ច្បាប់​ដើម​សម្រាប់​អ្នក​ទិញ ច្បាប់​ចម្លង​សម្រាប់​អ្នក​លក់</span><br /><span style="font-size: 10px"><strong>Note:</strong> Original invoice for customer, copied invoice for seller</span></h6>
+        </div>
+    </div>
+</script>
 <script id="invoiceForm29" type="text/x-kendo-template">
 	<div class="inv1">
     	<div class="head">
@@ -27364,7 +27497,7 @@
                         </div>
                     </div>
                     <div class="vattin">
-                	<p>លេខ​អត្ត​សញ្ញាណ​កម្ម អតប (VATTIN)</p><span id="vat_number" data-bind="text: company.vat_number"></span><p style="font-size:8px;font-weight:normal;margin-left: 8px;">(ប្រសិន​បើ​មាន / If any)</p>
+                	<p>លេខ​អត្ត​សញ្ញាណ​កម្ម អតប (VATTIN)</p><span id="vat_number" data-bind="text: obj.contact[0].vat_no"></span><p style="font-size:8px;font-weight:normal;margin-left: 8px;">(ប្រសិន​បើ​មាន / If any)</p>
                 	</div>
                 </div>
                 <div class="cover-inv-number">
@@ -28515,7 +28648,7 @@
 <script id="invoiceForm-lineDS-template" type="text/x-kendo-template">
 	<tr>
 		<td><i>#:banhji.invoiceForm.lineDS.indexOf(data)+1#</i>&nbsp;</td>
-		<td class="lside">#= description#</td>
+		<td class="lside">#= description #</td>
 		<td>#= quantity#</td>
 		<td class="rside" width="70">#= kendo.toString(price, "c", locale) #</td>
 		<td class="rside">#= kendo.toString(amount, "c", locale) #</td>
@@ -63345,7 +63478,7 @@
 				data: 'results',
 				total: 'count'
 			},
-			filter: { field:"type", operator:"where_in", value:["Quote", "Sale_Order", "Deposit", "Cash_Sale", "Invoice", "Cash_Receipt", "GDN"] },			
+			filter: { field:"type", operator:"where_in", value:["Quote", "Sale_Order", "Deposit", "Cash_Sale", "Commercial_Cash_Sale","Vat_Cash_Sale", "Cash_Sale", "Invoice","Commercial_Invoice", "Vat_Invoice", "Cash_Receipt", "GDN"] },
 			batch: true,
 			serverFiltering: true,
 			serverSorting: true,

@@ -133,7 +133,8 @@
 #ddlAccount-list,
 #ddlCategory-list,
 #ddlName-list,
-#txtMeasurement-list
+#txtMeasurement-list,
+#ddlIncome-list,
 {
   width: 350px !important;
 }

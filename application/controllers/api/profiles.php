@@ -379,31 +379,44 @@ class Profiles extends REST_Controller {
 		// todo: add currency base on country selected
 		foreach($request as $r) {
 			// find user
-			$user = new User();
-			$user->where('username', $r->username);
-			$user->get();
-			$modules = new Module();
-			$modules->where('is_core', 'true')->get();
-			$inst = new Institute();
-			$inst->name = $r->name;
-			$inst_year_founded = date('Y');
-			$inst->telephone = $r->telephone;
-			$inst->fiscal_date = '01-01';
-			$inst->monetary_id = $r->currency->id;
-			$inst->locale = $r->currency->locale;
-			$inst->report_monetary_id = $r->currency->id;
-			$inst->pimage_id = 1;
-			// $inst->logo = 'https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/default_logo.png';
-			$inst->country_id = $r->country->id;
-			$inst->industry_id = $r->industry->id;
-			$inst->type_id = $r->type->id;
-			if($inst->save(array($user, $modules->all))) {
-				$user->save($modules->all);
-				// fillin dafault data
-				$data[] = array(
-					'id' => $inst->id,
-					'institute' => $inst->name
-				);
+			if(isset($r->telephone)) {
+				$user = new User();
+				$user->where('username', $r->username);
+				$user->get();
+				$modules = new Module();
+				$modules->where('is_core', 'true')->get();
+				$inst = new Institute();
+				$inst->name = $r->name;
+				$inst->vat_number = $r->vat_number;
+				$inst_year_founded = date('Y');
+				$inst->telephone = $r->telephone;
+				$inst->fiscal_date = '01-01';
+				$inst->monetary_id = $r->currency->id;
+				$inst->locale = $r->currency->locale;
+				$inst->report_monetary_id = $r->currency->id;
+				$inst->pimage_id = 1;
+				// $inst->logo = 'https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/default_logo.png';
+				$inst->country_id = $r->country->id;
+				$inst->industry_id = $r->industry->id;
+				$inst->type_id = $r->type->id;
+				if($inst->save(array($user, $modules->all))) {
+					$user->save($modules->all);
+					// fillin dafault data
+					$data[] = array(
+						'id' => $inst->id,
+						'institute' => $inst->name
+					);
+				}
+			} else {
+				$this->response(array(
+					'error' => TRUE,
+					'msgCode' => 2000,
+					'msg' => 'Telephone is needed',
+					'results' => array(),
+					'count' => 0
+				),
+				400);
+				break;
 			}
 		}
 		if(count($data) > 0) {

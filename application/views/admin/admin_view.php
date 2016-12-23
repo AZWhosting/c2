@@ -655,6 +655,15 @@
                                       data-value-field="id">
                                   </td>
                                 </tr>
+                                <tr>
+                                  <td>VAT</td>
+                                  <td>:</td>
+                                  <td>
+                                    <input type="text"
+                                      class="form-control"
+                                      data-bind="value: current.vat_number">
+                                  </td>
+                                </tr>
                             </table>
                         </article>
                         <div class="box-generic">
@@ -767,6 +776,11 @@
                     <td>Tax Regime</td>
                     <td>:</td>
                     <td><span data-bind="text:current.tax_regime"></span></td>
+                </tr>
+                <tr>
+                    <td>VAT</td>
+                    <td>:</td>
+                    <td><span data-bind="text:current.vat_number"></span></td>
                 </tr>
             </table>
         </article>
@@ -3251,6 +3265,7 @@
 
       $(document).ready(function() {
         banhji.profileDS.read().then(function(e){
+
           banhji.profile.set('currentID', banhji.profileDS.data()[0]);
           layout.showIn('#menu', menu);
           if(banhji.profileDS.data()[0].role == 1) {
@@ -3262,6 +3277,7 @@
             banhji.aws.getImage(banhji.profileDS.data()[0].profile_photo);
             cognitoUser.getSession(function(err, result){
               if(result) {
+
                 AWS.config.credentials = new AWS.CognitoIdentityCredentials({
                   IdentityPoolId: 'us-east-1:35445541-da4c-4dbb-b83f-d1d0301a26a9',
                   Logins: {

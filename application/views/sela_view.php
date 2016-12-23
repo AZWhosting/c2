@@ -6002,6 +6002,78 @@
     	</td>
    	</tr>
 </script>
+<script id="taxCenter" type="text/x-kendo-template">
+	<div style="margin: 0 auto; text-align: center;">
+		<h1 style="font-size: 35px; font-weight: 600;">Comoing Soon</h1>
+	</div>
+</script>
+<script id="taxSetting" type="text/x-kendo-template">
+	<span class="pull-right glyphicons no-js remove_2" 
+			onclick="javascript:window.history.back()"><i></i></span>
+
+	<h2 >General Tax Setting</h2>
+
+	<br>
+
+	<div class="widget widget-tabs widget-tabs-double widget-tabs-vertical row-fluid row-merge widget-tabs-gray">
+
+	    <!-- Tabs Heading -->
+	    <div class="widget-head span3">
+	        <ul>
+	            <li class="active"><a href="#tab1-4" class="glyphicons group" data-toggle="tab"><i></i><span class="strong">Prepayment of Profit Tax</span></a>
+	            </li>
+	            <li><a href="#tab2-4" class="glyphicons credit_card" data-toggle="tab"><i></i><span class="strong">Return for Value Added Tax</span></a>
+	            </li>
+	            <li><a href="#tab3-4" class="glyphicons clock" data-toggle="tab"><i></i><span class="strong">Return for Withholding Tax</span></a>
+	            </li>
+	            <li><a href="#tab4-4" class="glyphicons list" data-toggle="tab"><i></i><span class="strong">Return for Tax on Salary</span></a>
+	            </li>	                        
+	        </ul>
+	    </div>
+	    <!-- // Tabs Heading END -->
+
+	    <div class="widget-body span9">
+	        <div class="tab-content">
+
+	            <!-- CUSTOMER TYPE -->
+	            <div class="tab-pane active" id="tab1-4">
+	            	<div style="margin: 0 auto; text-align: center;">
+						<h1 style="font-size: 35px; font-weight: 600;">Comoing Soon</h1>
+					</div>		            
+	            </div>
+	            <!-- // CUSTOMER TYPE END -->
+
+	            <!-- PAYMENT METHOD -->
+	            <div class="tab-pane" id="tab2-4">
+	            	<div style="margin: 0 auto; text-align: center;">
+						<h1 style="font-size: 35px; font-weight: 600;">Comoing Soon</h1>
+					</div>			            
+	            </div>
+	            <!-- // PAYMENT METHOD END -->
+
+	            <!-- PAYMENT TERM -->
+	            <div class="tab-pane" id="tab3-4">
+            		<div style="margin: 0 auto; text-align: center;">
+						<h1 style="font-size: 35px; font-weight: 600;">Comoing Soon</h1>
+					</div>
+	            </div>
+	            <!-- // PAYMENT TERM END -->
+
+	            <!-- Tab Invocice Custom content -->
+	            <div class="tab-pane" id="tab4-4">
+            		
+	            	<div style="margin: 0 auto; text-align: center;">
+						<h1 style="font-size: 35px; font-weight: 600;">Comoing Soon</h1>
+					</div>
+
+	            </div>
+	            <!-- // Tab Invoice Custom content END -->
+
+	        </div>
+	    </div>
+
+	</div>
+</script>
 <script id="saleRecord" type="text/x-kendo-template">
 	<div id="slide-form">
 		<div class="customer-background ">
@@ -6037,17 +6109,17 @@
 				    	<table >				    		
 				    		<thead>
 					    		<tr>
-					    			<td colspan="6">វិក័យប័ត្រ</td>
-					    			<td colspan="6">ការផ្គត់ផ្គង់</td>
+					    			<td colspan="6">វិក័យប័ត្រ <br> Invoice</td>
+					    			<td colspan="6">ការផ្គត់ផ្គង់ <br> Sale</td>
 					    			<td rowspan="4">សរុបថ្លៃលក់រួមទាំងអាករ</td>
 					    		</tr>
 					    		<tr>
-					    			<td rowspan="3" style="width: 7%;">កាលបរិច្ឆេទ</td>
-					    			<td rowspan="3">លេខយោង</td>
-					    			<td rowspan="3">លេខវិក័យប័ត្រ</td>
-					    			<td rowspan="3">អ្នកទិញ</td>
+					    			<td rowspan="3" style="width: 7%;">កាលបរិច្ឆេទ <br> Date</td>
+					    			<td rowspan="3">លេខយោង <br> Ref.</td>
+					    			<td rowspan="3">លេខវិក័យប័ត្រ <br> Invoice</td>
+					    			<td rowspan="3">អ្នកទិញ <br> Customer</td>
 					    			<td rowspan="3">លេខអត្តសញ្ញាណ <br> សារពើពន្ធ <br> VAT TIN</td>
-					    			<td rowspan="3" style="width: 15%;">បរិយាយ</td>
+					    			<td rowspan="3" style="width: 15%;">បរិយាយ <br> Description</td>
 					    			<td rowspan="3">ការផ្គត់ផ្គង់មិនជាប់អាករ</td>
 					    			<td rowspan="3" style="width: 7%;">ការនាំចេញ</td>
 					    			<td colspan="4">ការផ្គត់ផ្គង់ជាប់អាករ</td>
@@ -6265,199 +6337,636 @@
 				    	<table >				    		
 				    		<thead>
 					    		<tr>
-					    			<td >វិក័យប័ត្រ</td>
-					    			<td></td>
-					    			<td></td>
-					    			<td></td>
-					    			<td></td>
-					    			<td></td>
-					    			<td>ការទិញ</td>
-					    			<td colspan="6">វិក័យប័ត្រ</td>
-					    			<td colspan="6">ការផ្គត់ផ្គង់</td>
-					    			<td rowspan="4">សរុបថ្លៃលក់រួមទាំងអាករ</td>
+					    			<td colspan="6">វិក័យប័ត្រ <br> Invoice</td>
+					    			<td colspan="5">ការទិញ <br> Purchase</td>
+					    			<td rowspan="3">សរុបការទិញរួមទាំងអាករ</td>
+					    			<td rowspan="4">Tax Type</td>
+					    			<td rowspan="4">Tax Rate</td>
 					    		</tr>
 					    		<tr>
-					    			<td rowspan="3" style="width: 7%;">កាលបរិច្ឆេទ</td>
-					    			<td rowspan="3">លេខយោង</td>
-					    			<td rowspan="3">លេខវិក័យប័ត្រ</td>
-					    			<td rowspan="3">អ្នកទិញ</td>
-					    			<td rowspan="3">លេខអត្តសញ្ញាណ <br> សារពើពន្ធ <br> VAT TIN</td>
-					    			<td rowspan="3" style="width: 15%;">បរិយាយ</td>
-					    			<td rowspan="3">ការផ្គត់ផ្គង់មិនជាប់អាករ</td>
-					    			<td rowspan="3" style="width: 7%;">ការនាំចេញ</td>
-					    			<td colspan="4">ការផ្គត់ផ្គង់ជាប់អាករ</td>
+					    			<td rowspan="3" style="width: 7%">កាលបរិច្ឆេទ <br> Date</td>
+					    			<td rowspan="3">លេខយោង <br> Ref.</td>
+					    			<td rowspan="3">លេខវិក័យប័ត្រ <br> Invoice</td>
+					    			<td rowspan="3">អ្នកផ្គត់ផ្គង់ <br> Supplier</td>
+					    			<td rowspan="3" style="width: 10%;">លេខអត្តសញ្ញាណ <br> សារពើពន្ធ <br> VAT TIN</td>
+					    			<td rowspan="3" style="width: 15%;">បរិយាយ <br> Description</td>
+					    			<td rowspan="3">ការទិញមិនជាប់អាករ ឬ ការទិញមិនជាប់ឥណទាន <br> Non Taxable Purchase</td>
+					    			<td colspan="4">ការទិញជាប់អាករ</td>
+					    			
+
 					    		</tr>
 					    		<tr>
-					    			<td colspan="2">ផ្គត់ផ្គង់ឲ្យបុគ្គលជាប់អាករ	</td>
-					    			<td colspan="2">ផ្គត់ផ្គង់ឲ្យអ្នកប្រើប្រាស់</td>
+					    			<td colspan="2">ការនាំចូល <br> Import</td>
+					    			<td colspan="2">ការទិញក្នុងស្រុក <br> Local Purchase</td>
 					    		</tr>
 					    		<tr>
-					    			<td >តម្លៃមិនរួមអាករ</td>
-					    			<td >អាករ (VAT)</td>
-					    			<td >តម្លៃមិនរួមអាករ</td>
-					    			<td >អាករ (VAT)</td>
+					    			<td >តម្លៃជាប់អាករ <br> Import</td>
+					    			<td >អាករ <br> VAT</td>
+					    			<td >តម្លៃជាប់អាករ <br> Import</td>
+					    			<td >អាករ <br> VAT</td>
+					    			<td >Total</td>
 					    		</tr>
 					    		<tr>
-					    			<td>P1</td>
-					    			<td>P2</td>
-					    			<td>P3</td>
-					    			<td>P4</td>
-					    			<td>P5</td>
-					    			<td>P6</td>
-					    			<td>P7</td>
-					    			<td>P8</td>
-					    			<td>P9</td>
-					    			<td>P10</td>
-					    			<td>P11</td>
-					    			<td>P12</td>
-					    			<td>P13</td>
+					    			<td>
+					    				<input 	id="ddlMesurement"
+											data-role="dropdownlist"					                
+						                	data-text-field="measurement"
+						                   	data-value-field="measurement_id"
+						                   	data-bind="value: measurement_id,
+						                   			  source: item_prices,
+						                   			  events:{ change: measurementChanges }"
+						                   data-option-label="test"
+						                   style="width: 100%;" />
+					    			</td>
+					    			<td>
+					    				<input 	id="ddlMesurement"
+											data-role="dropdownlist"					                
+						                	data-text-field="measurement"
+						                   	data-value-field="measurement_id"
+						                   	data-bind="value: measurement_id,
+						                   			  source: item_prices,
+						                   			  events:{ change: measurementChanges }"
+						                   data-option-label="test"
+						                   style="width: 100%;" />
+						            </td>
+						            <td>
+					    				<input 	id="ddlMesurement"
+											data-role="dropdownlist"					                
+						                	data-text-field="measurement"
+						                   	data-value-field="measurement_id"
+						                   	data-bind="value: measurement_id,
+						                   			  source: item_prices,
+						                   			  events:{ change: measurementChanges }"
+						                   data-option-label="test"
+						                   style="width: 100%;" />
+						            </td>
+						            <td>
+					    				<input 	id="ddlMesurement"
+											data-role="dropdownlist"					                
+						                	data-text-field="measurement"
+						                   	data-value-field="measurement_id"
+						                   	data-bind="value: measurement_id,
+						                   			  source: item_prices,
+						                   			  events:{ change: measurementChanges }"
+						                   data-option-label="test"
+						                   style="width: 100%;" />
+						            </td>
+						            <td>
+					    				<input 	id="ddlMesurement"
+											data-role="dropdownlist"					                
+						                	data-text-field="measurement"
+						                   	data-value-field="measurement_id"
+						                   	data-bind="value: measurement_id,
+						                   			  source: item_prices,
+						                   			  events:{ change: measurementChanges }"
+						                   data-option-label="test"
+						                   style="width: 100%;" />
+						            </td>
+						            <td>
+					    				<input 	id="ddlMesurement"
+											data-role="dropdownlist"					                
+						                	data-text-field="measurement"
+						                   	data-value-field="measurement_id"
+						                   	data-bind="value: measurement_id,
+						                   			  source: item_prices,
+						                   			  events:{ change: measurementChanges }"
+						                   data-option-label="test"
+						                   style="width: 100%;" />
+						            </td>
+						            <td>
+					    				<input 	id="ddlMesurement"
+											data-role="dropdownlist"					                
+						                	data-text-field="measurement"
+						                   	data-value-field="measurement_id"
+						                   	data-bind="value: measurement_id,
+						                   			  source: item_prices,
+						                   			  events:{ change: measurementChanges }"
+						                   data-option-label="test"
+						                   style="width: 100%;" />
+						            </td>
+						            <td>
+					    				<input 	id="ddlMesurement"
+											data-role="dropdownlist"					                
+						                	data-text-field="measurement"
+						                   	data-value-field="measurement_id"
+						                   	data-bind="value: measurement_id,
+						                   			  source: item_prices,
+						                   			  events:{ change: measurementChanges }"
+						                   data-option-label="test"
+						                   style="width: 100%;" />
+						            </td>
+						            <td>
+					    				<input 	id="ddlMesurement"
+											data-role="dropdownlist"					                
+						                	data-text-field="measurement"
+						                   	data-value-field="measurement_id"
+						                   	data-bind="value: measurement_id,
+						                   			  source: item_prices,
+						                   			  events:{ change: measurementChanges }"
+						                   data-option-label="test"
+						                   style="width: 100%;" />
+						            </td>
+						            <td>
+					    				<input 	id="ddlMesurement"
+											data-role="dropdownlist"					                
+						                	data-text-field="measurement"
+						                   	data-value-field="measurement_id"
+						                   	data-bind="value: measurement_id,
+						                   			  source: item_prices,
+						                   			  events:{ change: measurementChanges }"
+						                   data-option-label="test"
+						                   style="width: 100%;" />
+						            </td>
+						            <td>
+					    				<input 	id="ddlMesurement"
+											data-role="dropdownlist"					                
+						                	data-text-field="measurement"
+						                   	data-value-field="measurement_id"
+						                   	data-bind="value: measurement_id,
+						                   			  source: item_prices,
+						                   			  events:{ change: measurementChanges }"
+						                   data-option-label="test"
+						                   style="width: 100%;" />
+						            </td>
+						            <td>
+					    				<input 	id="ddlMesurement"
+											data-role="dropdownlist"					                
+						                	data-text-field="measurement"
+						                   	data-value-field="measurement_id"
+						                   	data-bind="value: measurement_id,
+						                   			  source: item_prices,
+						                   			  events:{ change: measurementChanges }"
+						                   data-option-label="test"
+						                   style="width: 100%;" />
+						            </td>
+						            <td>
+					    				<input 	id="ddlMesurement"
+											data-role="dropdownlist"					                
+						                	data-text-field="measurement"
+						                   	data-value-field="measurement_id"
+						                   	data-bind="value: measurement_id,
+						                   			  source: item_prices,
+						                   			  events:{ change: measurementChanges }"
+						                   data-option-label="test"
+						                   style="width: 100%;" />
+						            </td>
+						            <td>
+					    				<input 	id="ddlMesurement"
+											data-role="dropdownlist"					                
+						                	data-text-field="measurement"
+						                   	data-value-field="measurement_id"
+						                   	data-bind="value: measurement_id,
+						                   			  source: item_prices,
+						                   			  events:{ change: measurementChanges }"
+						                   data-option-label="test"
+						                   style="width: 100%;" />
+						            </td>
 					    		</tr>					    		
 					    	</thead>
 					    	<tbody>
 					    		<tr>
 					    			<td style="text-align: center;">01-Sep-16</td>
-					    			<td></td>
-					    			<td >E3543</td>
-					    			<td >ABC</td>
-					    			<td style="text-align: right;">N/A</td>
-					    			<td>Metal Pattern</td>
-					    			<td></td>
-					    			<td style="text-align: right;">722.00</td>
-					    			<td></td>
-					    			<td>-</td>
+					    			<td>1</td>
+					    			<td >000859</td>
+					    			<td >AZZ</td>
+					    			<td style="text-align: right;">KD02-104018593</td>
+					    			<td>Marine Cargo MC/PP/C-0053/EX122/2016(29-Sep-08-Oct-2016)</td>
+					    			<td style="text-align: right;">33.06</td>
 					    			<td></td>
 					    			<td>-</td>
-					    			<td style="text-align: right;">722.00</td>
+					    			<td></td>
+					    			<td>-</td>
+					    			<td style="text-align: center;">66.06</td>
+					    			<td ></td>
+					    			<td ></td>
 					    		</tr>
 					    		<tr>
 					    			<td style="text-align: center;">01-Sep-16</td>
-					    			<td></td>
-					    			<td >E3543</td>
-					    			<td >ABC</td>
-					    			<td style="text-align: right;">N/A</td>
-					    			<td>Metal Pattern</td>
-					    			<td></td>
-					    			<td style="text-align: right;">722.00</td>
-					    			<td></td>
-					    			<td>-</td>
+					    			<td>1</td>
+					    			<td >000859</td>
+					    			<td >AZZ</td>
+					    			<td style="text-align: right;">KD02-104018593</td>
+					    			<td>Marine Cargo MC/PP/C-0053/EX122/2016(29-Sep-08-Oct-2016)</td>
+					    			<td style="text-align: right;">33.06</td>
 					    			<td></td>
 					    			<td>-</td>
-					    			<td style="text-align: right;">722.00</td>
+					    			<td></td>
+					    			<td>-</td>
+					    			<td style="text-align: center;">66.06</td>
+					    			<td ></td>
+					    			<td ></td>
 					    		</tr>
 					    		<tr>
 					    			<td style="text-align: center;">01-Sep-16</td>
-					    			<td></td>
-					    			<td >E3543</td>
-					    			<td >ABC</td>
-					    			<td style="text-align: right;">N/A</td>
-					    			<td>Metal Pattern</td>
-					    			<td></td>
-					    			<td style="text-align: right;">722.00</td>
-					    			<td></td>
-					    			<td>-</td>
+					    			<td>1</td>
+					    			<td >000859</td>
+					    			<td >AZZ</td>
+					    			<td style="text-align: right;">KD02-104018593</td>
+					    			<td>C-0053/EX122</td>
+					    			<td style="text-align: right;">33.06</td>
 					    			<td></td>
 					    			<td>-</td>
-					    			<td style="text-align: right;">722.00</td>
+					    			<td></td>
+					    			<td>-</td>
+					    			<td style="text-align: center;">66.06</td>
+					    			<td ></td>
+					    			<td ></td>
 					    		</tr>
 					    		<tr>
 					    			<td style="text-align: center;">01-Sep-16</td>
-					    			<td></td>
-					    			<td >E3543</td>
-					    			<td >ABC</td>
-					    			<td style="text-align: right;">N/A</td>
-					    			<td>Metal Pattern</td>
-					    			<td></td>
-					    			<td style="text-align: right;">722.00</td>
-					    			<td></td>
-					    			<td>-</td>
+					    			<td>1</td>
+					    			<td >000859</td>
+					    			<td >AZZ</td>
+					    			<td style="text-align: right;">KD02-104018593</td>
+					    			<td>Marine Cargo</td>
+					    			<td style="text-align: right;">33.06</td>
 					    			<td></td>
 					    			<td>-</td>
-					    			<td style="text-align: right;">722.00</td>
+					    			<td></td>
+					    			<td>-</td>
+					    			<td style="text-align: center;">66.06</td>
+					    			<td ></td>
+					    			<td ></td>
 					    		</tr>
 					    		<tr>
 					    			<td style="text-align: center;">01-Sep-16</td>
-					    			<td></td>
-					    			<td >E3543</td>
-					    			<td >ABC</td>
-					    			<td style="text-align: right;">N/A</td>
-					    			<td>Metal Pattern</td>
-					    			<td></td>
-					    			<td style="text-align: right;">722.00</td>
-					    			<td></td>
-					    			<td>-</td>
+					    			<td>1</td>
+					    			<td >000859</td>
+					    			<td >AZZ</td>
+					    			<td style="text-align: right;">KD02-104018593</td>
+					    			<td>MC/PP/C-0053</td>
+					    			<td style="text-align: right;">33.06</td>
 					    			<td></td>
 					    			<td>-</td>
-					    			<td style="text-align: right;">722.00</td>
+					    			<td></td>
+					    			<td>-</td>
+					    			<td style="text-align: center;">66.06</td>
+					    			<td ></td>
+					    			<td ></td>
 					    		</tr>
-					    		<tr>
-					    			<td style="text-align: center;">01-Sep-16</td>
-					    			<td></td>
-					    			<td >E3543</td>
-					    			<td >ABC</td>
-					    			<td style="text-align: right;">N/A</td>
-					    			<td>Metal Pattern</td>
-					    			<td></td>
-					    			<td style="text-align: right;">722.00</td>
-					    			<td></td>
-					    			<td>-</td>
-					    			<td></td>
-					    			<td>-</td>
-					    			<td style="text-align: right;">722.00</td>
-					    		</tr>
-					    		<tr>
-					    			<td style="text-align: center;">01-Sep-16</td>
-					    			<td></td>
-					    			<td >E3543</td>
-					    			<td >ABC</td>
-					    			<td style="text-align: right;">N/A</td>
-					    			<td>Metal Pattern</td>
-					    			<td></td>
-					    			<td style="text-align: right;">722.00</td>
-					    			<td></td>
-					    			<td>-</td>
-					    			<td></td>
-					    			<td>-</td>
-					    			<td style="text-align: right;">722.00</td>
-					    		</tr>
-					    		<tr>
-					    			<td style="text-align: center;">01-Sep-16</td>
-					    			<td></td>
-					    			<td >E3543</td>
-					    			<td >ABC</td>
-					    			<td style="text-align: right;">N/A</td>
-					    			<td>Metal Pattern</td>
-					    			<td></td>
-					    			<td style="text-align: right;">722.00</td>
-					    			<td></td>
-					    			<td>-</td>
-					    			<td></td>
-					    			<td>-</td>
-					    			<td style="text-align: right;">722.00</td>
-					    		</tr>
+					    		
 					    	</tbody>
 					    	<tfoot>
 					    		<tr>
 						    		<td colspan="6" style="text-align: center; font-weight: 600;">សរុប (USD)</td>
-						    		<td>-</td>
 						    		<td style="text-align: right;">238,660</td>
 						    		<td>-</td>
 						    		<td>-</td>
 						    		<td>-</td>
 						    		<td>-</td>
 						    		<td style="text-align: right;">189,391</td>
+						    		<td>-</td>
+						    		<td>-</td>
 						    	</tr>
 						    	<tr>
 						    		<td colspan="6" style="text-align: center; font-weight: 600;">សរុប (KHR)</td>
-						    		<td>-</td>
 						    		<td style="text-align: right;">970,393,227</td>
 						    		<td>-</td>
 						    		<td>-</td>
 						    		<td>-</td>
 						    		<td>-</td>
 						    		<td style="text-align: right;">770,064,416</td>
+						    		<td>-</td>
+						    		<td>-</td>
 						    	</tr>
 					    	</tfoot>
 				    	</table>
+				    </div>					
+			    	
+				</div>							
+			</div>
+		</div>
+	</div>
+</script>
+<script id="payrollList" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background ">
+			<div class="container-960">					
+				<div id="example" class="k-content">
+
+			    	<span class="glyphicons no-js remove_2 pull-right" 
+		    				onclick="javascript:window.history.back()"
+							data-bind="click: cancel"><i></i></span>
+
+				    <div class="center" style="text-align: center; position: relative;">
+				    	<h2 >សៀវភៅទិន្នានុប្បវត្តិទិញ</h2>	
+				    	<p>Payroll List</p>	
+				    	<p>ខែ កក្កដា ឆ្នាំ ២០១៦ </p>
+				    	<p>For July 2016</p>
+				    	<div class="box-right" style="">
+				    		<table>
+				    			<tr>
+				    				<td style="width: 76%;">
+				    					អត្រាប្តូរប្រាក់មធ្យមៈ
+				    				</td>
+				    				<td rowspan="2" style="text-align: right;">4,066</td>
+				    			</tr>
+				    			<tr>
+				    				<td>Average Exchange Rate:</td>
+				    			</tr>
+				    		</table>
+				    	</div>		    		   
+				    </div>
+				    <br>
+
+				    <div class="row sale-record">
+				    	<!-- <table >				    		
+				    		<thead>
+					    		<tr>
+					    			<td colspan="6">វិក័យប័ត្រ <br> Invoice</td>
+					    			<td colspan="5">ការទិញ <br> Purchase</td>
+					    			<td rowspan="3">សរុបការទិញរួមទាំងអាករ</td>
+					    			<td rowspan="4">Tax Type</td>
+					    			<td rowspan="4">Tax Rate</td>
+					    		</tr>
+					    		<tr>
+					    			<td rowspan="3" style="width: 7%">កាលបរិច្ឆេទ <br> Date</td>
+					    			<td rowspan="3">លេខយោង <br> Ref.</td>
+					    			<td rowspan="3">លេខវិក័យប័ត្រ <br> Invoice</td>
+					    			<td rowspan="3">អ្នកផ្គត់ផ្គង់ <br> Supplier</td>
+					    			<td rowspan="3" style="width: 10%;">លេខអត្តសញ្ញាណ <br> សារពើពន្ធ <br> VAT TIN</td>
+					    			<td rowspan="3" style="width: 15%;">បរិយាយ <br> Description</td>
+					    			<td rowspan="3">ការទិញមិនជាប់អាករ ឬ ការទិញមិនជាប់ឥណទាន <br> Non Taxable Purchase</td>
+					    			<td colspan="4">ការទិញជាប់អាករ</td>
+					    			
+
+					    		</tr>
+					    		<tr>
+					    			<td colspan="2">ការនាំចូល <br> Import</td>
+					    			<td colspan="2">ការទិញក្នុងស្រុក <br> Local Purchase</td>
+					    		</tr>
+					    		<tr>
+					    			<td >តម្លៃជាប់អាករ <br> Import</td>
+					    			<td >អាករ <br> VAT</td>
+					    			<td >តម្លៃជាប់អាករ <br> Import</td>
+					    			<td >អាករ <br> VAT</td>
+					    			<td >Total</td>
+					    		</tr>
+					    		<tr>
+					    			<td>
+					    				<input 	id="ddlMesurement"
+											data-role="dropdownlist"					                
+						                	data-text-field="measurement"
+						                   	data-value-field="measurement_id"
+						                   	data-bind="value: measurement_id,
+						                   			  source: item_prices,
+						                   			  events:{ change: measurementChanges }"
+						                   data-option-label="test"
+						                   style="width: 100%;" />
+					    			</td>
+					    			<td>
+					    				<input 	id="ddlMesurement"
+											data-role="dropdownlist"					                
+						                	data-text-field="measurement"
+						                   	data-value-field="measurement_id"
+						                   	data-bind="value: measurement_id,
+						                   			  source: item_prices,
+						                   			  events:{ change: measurementChanges }"
+						                   data-option-label="test"
+						                   style="width: 100%;" />
+						            </td>
+						            <td>
+					    				<input 	id="ddlMesurement"
+											data-role="dropdownlist"					                
+						                	data-text-field="measurement"
+						                   	data-value-field="measurement_id"
+						                   	data-bind="value: measurement_id,
+						                   			  source: item_prices,
+						                   			  events:{ change: measurementChanges }"
+						                   data-option-label="test"
+						                   style="width: 100%;" />
+						            </td>
+						            <td>
+					    				<input 	id="ddlMesurement"
+											data-role="dropdownlist"					                
+						                	data-text-field="measurement"
+						                   	data-value-field="measurement_id"
+						                   	data-bind="value: measurement_id,
+						                   			  source: item_prices,
+						                   			  events:{ change: measurementChanges }"
+						                   data-option-label="test"
+						                   style="width: 100%;" />
+						            </td>
+						            <td>
+					    				<input 	id="ddlMesurement"
+											data-role="dropdownlist"					                
+						                	data-text-field="measurement"
+						                   	data-value-field="measurement_id"
+						                   	data-bind="value: measurement_id,
+						                   			  source: item_prices,
+						                   			  events:{ change: measurementChanges }"
+						                   data-option-label="test"
+						                   style="width: 100%;" />
+						            </td>
+						            <td>
+					    				<input 	id="ddlMesurement"
+											data-role="dropdownlist"					                
+						                	data-text-field="measurement"
+						                   	data-value-field="measurement_id"
+						                   	data-bind="value: measurement_id,
+						                   			  source: item_prices,
+						                   			  events:{ change: measurementChanges }"
+						                   data-option-label="test"
+						                   style="width: 100%;" />
+						            </td>
+						            <td>
+					    				<input 	id="ddlMesurement"
+											data-role="dropdownlist"					                
+						                	data-text-field="measurement"
+						                   	data-value-field="measurement_id"
+						                   	data-bind="value: measurement_id,
+						                   			  source: item_prices,
+						                   			  events:{ change: measurementChanges }"
+						                   data-option-label="test"
+						                   style="width: 100%;" />
+						            </td>
+						            <td>
+					    				<input 	id="ddlMesurement"
+											data-role="dropdownlist"					                
+						                	data-text-field="measurement"
+						                   	data-value-field="measurement_id"
+						                   	data-bind="value: measurement_id,
+						                   			  source: item_prices,
+						                   			  events:{ change: measurementChanges }"
+						                   data-option-label="test"
+						                   style="width: 100%;" />
+						            </td>
+						            <td>
+					    				<input 	id="ddlMesurement"
+											data-role="dropdownlist"					                
+						                	data-text-field="measurement"
+						                   	data-value-field="measurement_id"
+						                   	data-bind="value: measurement_id,
+						                   			  source: item_prices,
+						                   			  events:{ change: measurementChanges }"
+						                   data-option-label="test"
+						                   style="width: 100%;" />
+						            </td>
+						            <td>
+					    				<input 	id="ddlMesurement"
+											data-role="dropdownlist"					                
+						                	data-text-field="measurement"
+						                   	data-value-field="measurement_id"
+						                   	data-bind="value: measurement_id,
+						                   			  source: item_prices,
+						                   			  events:{ change: measurementChanges }"
+						                   data-option-label="test"
+						                   style="width: 100%;" />
+						            </td>
+						            <td>
+					    				<input 	id="ddlMesurement"
+											data-role="dropdownlist"					                
+						                	data-text-field="measurement"
+						                   	data-value-field="measurement_id"
+						                   	data-bind="value: measurement_id,
+						                   			  source: item_prices,
+						                   			  events:{ change: measurementChanges }"
+						                   data-option-label="test"
+						                   style="width: 100%;" />
+						            </td>
+						            <td>
+					    				<input 	id="ddlMesurement"
+											data-role="dropdownlist"					                
+						                	data-text-field="measurement"
+						                   	data-value-field="measurement_id"
+						                   	data-bind="value: measurement_id,
+						                   			  source: item_prices,
+						                   			  events:{ change: measurementChanges }"
+						                   data-option-label="test"
+						                   style="width: 100%;" />
+						            </td>
+						            <td>
+					    				<input 	id="ddlMesurement"
+											data-role="dropdownlist"					                
+						                	data-text-field="measurement"
+						                   	data-value-field="measurement_id"
+						                   	data-bind="value: measurement_id,
+						                   			  source: item_prices,
+						                   			  events:{ change: measurementChanges }"
+						                   data-option-label="test"
+						                   style="width: 100%;" />
+						            </td>
+						            <td>
+					    				<input 	id="ddlMesurement"
+											data-role="dropdownlist"					                
+						                	data-text-field="measurement"
+						                   	data-value-field="measurement_id"
+						                   	data-bind="value: measurement_id,
+						                   			  source: item_prices,
+						                   			  events:{ change: measurementChanges }"
+						                   data-option-label="test"
+						                   style="width: 100%;" />
+						            </td>
+					    		</tr>					    		
+					    	</thead>
+					    	<tbody>
+					    		<tr>
+					    			<td style="text-align: center;">01-Sep-16</td>
+					    			<td>1</td>
+					    			<td >000859</td>
+					    			<td >AZZ</td>
+					    			<td style="text-align: right;">KD02-104018593</td>
+					    			<td>Marine Cargo MC/PP/C-0053/EX122/2016(29-Sep-08-Oct-2016)</td>
+					    			<td style="text-align: right;">33.06</td>
+					    			<td></td>
+					    			<td>-</td>
+					    			<td></td>
+					    			<td>-</td>
+					    			<td style="text-align: center;">66.06</td>
+					    			<td ></td>
+					    			<td ></td>
+					    		</tr>
+					    		<tr>
+					    			<td style="text-align: center;">01-Sep-16</td>
+					    			<td>1</td>
+					    			<td >000859</td>
+					    			<td >AZZ</td>
+					    			<td style="text-align: right;">KD02-104018593</td>
+					    			<td>Marine Cargo MC/PP/C-0053/EX122/2016(29-Sep-08-Oct-2016)</td>
+					    			<td style="text-align: right;">33.06</td>
+					    			<td></td>
+					    			<td>-</td>
+					    			<td></td>
+					    			<td>-</td>
+					    			<td style="text-align: center;">66.06</td>
+					    			<td ></td>
+					    			<td ></td>
+					    		</tr>
+					    		<tr>
+					    			<td style="text-align: center;">01-Sep-16</td>
+					    			<td>1</td>
+					    			<td >000859</td>
+					    			<td >AZZ</td>
+					    			<td style="text-align: right;">KD02-104018593</td>
+					    			<td>C-0053/EX122</td>
+					    			<td style="text-align: right;">33.06</td>
+					    			<td></td>
+					    			<td>-</td>
+					    			<td></td>
+					    			<td>-</td>
+					    			<td style="text-align: center;">66.06</td>
+					    			<td ></td>
+					    			<td ></td>
+					    		</tr>
+					    		<tr>
+					    			<td style="text-align: center;">01-Sep-16</td>
+					    			<td>1</td>
+					    			<td >000859</td>
+					    			<td >AZZ</td>
+					    			<td style="text-align: right;">KD02-104018593</td>
+					    			<td>Marine Cargo</td>
+					    			<td style="text-align: right;">33.06</td>
+					    			<td></td>
+					    			<td>-</td>
+					    			<td></td>
+					    			<td>-</td>
+					    			<td style="text-align: center;">66.06</td>
+					    			<td ></td>
+					    			<td ></td>
+					    		</tr>
+					    		<tr>
+					    			<td style="text-align: center;">01-Sep-16</td>
+					    			<td>1</td>
+					    			<td >000859</td>
+					    			<td >AZZ</td>
+					    			<td style="text-align: right;">KD02-104018593</td>
+					    			<td>MC/PP/C-0053</td>
+					    			<td style="text-align: right;">33.06</td>
+					    			<td></td>
+					    			<td>-</td>
+					    			<td></td>
+					    			<td>-</td>
+					    			<td style="text-align: center;">66.06</td>
+					    			<td ></td>
+					    			<td ></td>
+					    		</tr>
+					    		
+					    	</tbody>
+					    	<tfoot>
+					    		<tr>
+						    		<td colspan="6" style="text-align: center; font-weight: 600;">សរុប (USD)</td>
+						    		<td style="text-align: right;">238,660</td>
+						    		<td>-</td>
+						    		<td>-</td>
+						    		<td>-</td>
+						    		<td>-</td>
+						    		<td style="text-align: right;">189,391</td>
+						    		<td>-</td>
+						    		<td>-</td>
+						    	</tr>
+						    	<tr>
+						    		<td colspan="6" style="text-align: center; font-weight: 600;">សរុប (KHR)</td>
+						    		<td style="text-align: right;">970,393,227</td>
+						    		<td>-</td>
+						    		<td>-</td>
+						    		<td>-</td>
+						    		<td>-</td>
+						    		<td style="text-align: right;">770,064,416</td>
+						    		<td>-</td>
+						    		<td>-</td>
+						    	</tr>
+					    	</tfoot>
+				    	</table> -->
 				    </div>					
 			    	
 				</div>							
@@ -40238,6 +40747,7 @@
 <script id="taxesMenu" type="text/x-kendo-template">
 	<ul class="topnav">
 		<li><a href='#/taxes' class='glyphicons show_big_thumbnails'><i></i></a></li>
+		<li><a href='#/tax_center'><span >CENTER</span></a></li>
 	  	<li role='presentation' class='dropdown'>
 	  		<a class='dropdown-toggle glyphicons text_bigger' data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false'><i></i> <span class='caret'></span></a>
   			<ul class='dropdown-menu'>				 				  				
@@ -74005,11 +74515,13 @@
 		//Tax
 		taxes: new kendo.Layout("#taxes", {model: banhji.taxes}),
 		taxReportCenter: new kendo.Layout("#taxReportCenter", {model: banhji.taxReportCenter}),
+		taxCenter: new kendo.Layout("#taxCenter", {model: banhji.taxCenter}),
 		saleJournal: new kendo.Layout("#saleJournal", {model: banhji.saleJournal}),
 		purchaseJournal: new kendo.Layout("#purchaseJournal", {model: banhji.purchaseJournal}),
 		saleRecord: new kendo.Layout("#saleRecord", {model: banhji.saleRecord}),
 		purchaseRecord: new kendo.Layout("#purchaseRecord", {model: banhji.purchaseRecord}),
-
+		payrollList: new kendo.Layout("#payrollList", {model: banhji.payrollList}),
+		taxSetting: new kendo.Layout("#taxSetting", {model: banhji.taxSetting}),
 
 		//Employee
 		employeeDashboard: new kendo.Layout("#employeeDashboard", {model: banhji.employeeDashboard}),
@@ -76162,6 +76674,24 @@
 			}
 		}		
 	});
+	banhji.router.route("/tax_center", function(){
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{
+			banhji.view.layout.showIn("#content", banhji.view.taxCenter);
+
+			banhji.userManagement.addMultiTask("Tax Center","tax_center",null);
+
+			banhji.view.layout.showIn('#menu', banhji.view.menu);
+			banhji.view.menu.showIn('#secondary-menu', banhji.view.taxesMenu);
+			
+			var vm = banhji.taxCenter;
+
+			if(banhji.pageLoaded["tax_center"]==undefined){
+				banhji.pageLoaded["tax_center"] = true;
+			}
+		}		
+	});
 	banhji.router.route("/sale_record", function(){
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
@@ -76177,6 +76707,24 @@
 
 			if(banhji.pageLoaded["sale_record"]==undefined){
 				banhji.pageLoaded["sale_record"] = true;
+			}
+		}		
+	});
+	banhji.router.route("/tax_setting", function(){
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{
+			banhji.view.layout.showIn("#content", banhji.view.taxSetting);
+
+			banhji.userManagement.addMultiTask("Tax Setting","tax_setting",null);
+
+			banhji.view.layout.showIn('#menu', banhji.view.menu);
+			banhji.view.menu.showIn('#secondary-menu', banhji.view.taxesMenu);
+			
+			var vm = banhji.taxSetting;
+
+			if(banhji.pageLoaded["tax_setting"]==undefined){
+				banhji.pageLoaded["tax_setting"] = true;
 			}
 		}		
 	});	
@@ -76198,6 +76746,24 @@
 			}
 		}		
 	});	
+	banhji.router.route("/payroll_list", function(){
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{
+			banhji.view.layout.showIn("#content", banhji.view.payrollList);
+
+			banhji.userManagement.addMultiTask("Payroll List","payroll_list",null);
+
+			banhji.view.layout.showIn('#menu', banhji.view.menu);
+			banhji.view.menu.showIn('#secondary-menu', banhji.view.taxesMenu);
+			
+			var vm = banhji.payrollList;
+
+			if(banhji.pageLoaded["payroll_list"]==undefined){
+				banhji.pageLoaded["payroll_list"] = true;
+			}
+		}		
+	});
 	banhji.router.route("/sale_journal", function(){
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
