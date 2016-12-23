@@ -8232,7 +8232,7 @@
 
 							    <!-- Widget Heading -->
 							    <div class="widget-head">
-							    	<input type="text" name="" data-bind="value: obj.name" style="border: none; width: 69%; font-size: 20px; font-weight: 600; margin-top: -11px; margin-left: 11px;">
+							    	<input type="text" name="" data-bind="value: obj.name" style="border: none; width: 69%; font-size: 20px; font-weight: 600; margin-top: -11px; margin-left: 11px; " disabled="disabled">
 							        <!-- Tabs -->
 							        <ul class="pull-right">
 							            <li class="glyphicons text_bigger active"><span data-toggle="tab" data-target="#tab1-4"><i></i></span>
@@ -15036,7 +15036,7 @@
 
 							    <!-- Widget Heading -->
 							    <div class="widget-head">
-							    	<input type="text" name="" data-bind="value: obj.name" style="border: none; width: 69%; font-size: 20px; font-weight: 600; margin-top: -11px; margin-left: 11px;">
+							    	<input type="text" name="" data-bind="value: obj.name" disabled="disabled" style="border: none; width: 69%; font-size: 20px; font-weight: 600; margin-top: -11px; margin-left: 11px;">
 							        <!-- Tabs -->
 							        <ul class="pull-right">
 
@@ -29037,7 +29037,7 @@
 
 							    <!-- Widget Heading -->
 							    <div class="widget-head">
-							    <input type="text" data-bind="value: obj.name" style="border: none; width: 76%; font-size: 20px; font-weight: 600; margin-top: -11px; margin-left: 11px;">
+							    <input type="text" disabled="disabled" data-bind="value: obj.name" style="border: none; width: 76%; font-size: 20px; font-weight: 600; margin-top: -11px; margin-left: 11px;">
 							        <!-- Tabs -->
 							        <ul class="pull-right">
 							            <li class="glyphicons circle_info active"><span data-toggle="tab" data-target="#tab1-3"><i></i></span>
