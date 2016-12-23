@@ -1296,25 +1296,25 @@
               url: baseUrl + 'api/images',
               type: "GET",
               dataType: 'json',
-              headers: { Institute: JSON.parse(localStorage.getItem('userData/user')).institute.id }
+              headers: { Institute: JSON.parse(localStorage.getItem('userData/user')) != null ? JSON.parse(localStorage.getItem('userData/user')).institute.id : 0 }
             },
             create  : {
               url: baseUrl + 'api/images',
               type: "POST",
               dataType: 'json',
-              headers: { Institute: JSON.parse(localStorage.getItem('userData/user')).institute.id }
+              headers: { Institute: JSON.parse(localStorage.getItem('userData/user')) != null ? JSON.parse(localStorage.getItem('userData/user')).institute.id : 0 }
             },
             update  : {
               url: baseUrl + 'api/images',
               type: "PUT",
               dataType: 'json',
-              headers: { Institute: JSON.parse(localStorage.getItem('userData/user')).institute.id }
+              headers: { Institute: JSON.parse(localStorage.getItem('userData/user')) != null ? JSON.parse(localStorage.getItem('userData/user')).institute.id : 0 }
             },
             destroy  : {
               url: baseUrl + 'api/images',
               type: "DELETE",
               dataType: 'json',
-              headers: { Institute: JSON.parse(localStorage.getItem('userData/user')).institute.id }
+              headers: { Institute: JSON.parse(localStorage.getItem('userData/user')) != null ? JSON.parse(localStorage.getItem('userData/user')).institute.id : 0 }
             },
             parameterMap: function(options, operation) {
               if(operation === 'read') {
@@ -1422,25 +1422,25 @@
               url: baseUrl + 'api/attachments',
               type: "GET",
               dataType: 'json',
-              headers: { Institute: JSON.parse(localStorage.getItem('userData/user')).institute.id }
+              headers: { Institute: JSON.parse(localStorage.getItem('userData/user')) != null ? JSON.parse(localStorage.getItem('userData/user')).institute.id : 0 }
             },
             create  : {
               url: baseUrl + 'api/attachments',
               type: "POST",
               dataType: 'json',
-              headers: { Institute: JSON.parse(localStorage.getItem('userData/user')).institute.id }
+              headers: { Institute: JSON.parse(localStorage.getItem('userData/user')) != null ? JSON.parse(localStorage.getItem('userData/user')).institute.id : 0 }
             },
             update  : {
               url: baseUrl + 'api/attachments',
               type: "PUT",
               dataType: 'json',
-              headers: { Institute: JSON.parse(localStorage.getItem('userData/user')).institute.id }
+              headers: { Institute: JSON.parse(localStorage.getItem('userData/user')) != null ? JSON.parse(localStorage.getItem('userData/user')).institute.id : 0 }
             },
             destroy  : {
               url: baseUrl + 'api/attachments',
               type: "DELETE",
               dataType: 'json',
-              headers: { Institute: JSON.parse(localStorage.getItem('userData/user')).institute.id }
+              headers: { Institute: JSON.parse(localStorage.getItem('userData/user')) != null ? JSON.parse(localStorage.getItem('userData/user')).institute.id : 0 }
             },
             parameterMap: function(options, operation) {
               if(operation === 'read') {
@@ -2055,25 +2055,25 @@
               url: baseUrl + 'api/employees',
               type: "GET",
               dataType: 'json',
-              headers: { Institute: JSON.parse(localStorage.getItem('userData/user')).institute.id }
+              headers: { Institute: JSON.parse(localStorage.getItem('userData/user')) != null ? JSON.parse(localStorage.getItem('userData/user')).institute.id : 0 }
             },
             create  : {
               url: baseUrl + 'api/employees',
               type: "POST",
               dataType: 'json',
-              headers: { Institute: JSON.parse(localStorage.getItem('userData/user')).institute.id }
+              headers: { Institute: JSON.parse(localStorage.getItem('userData/user')) != null ? JSON.parse(localStorage.getItem('userData/user')).institute.id : 0 }
             },
             update  : {
               url: baseUrl + 'api/employees',
               type: "PUT",
               dataType: 'json',
-              headers: { Institute: JSON.parse(localStorage.getItem('userData/user')).institute.id }
+              headers: { Institute: JSON.parse(localStorage.getItem('userData/user')) != null ? JSON.parse(localStorage.getItem('userData/user')).institute.id : 0 }
             },
             destroy  : {
               url: baseUrl + 'api/employees',
               type: "DELETE",
               dataType: 'json',
-              headers: { Institute: JSON.parse(localStorage.getItem('userData/user')).institute.id }
+              headers: { Institute: JSON.parse(localStorage.getItem('userData/user')) != null ? JSON.parse(localStorage.getItem('userData/user')).institute.id : 0 }
             },
             parameterMap: function(options, operation) {
               if(operation === 'read') {
@@ -2105,7 +2105,7 @@
             read  : {
               url: baseUrl + "api/currencies",
               type: "GET",
-              headers: { Institute: JSON.parse(localStorage.getItem('userData/user')).institute.id },
+              headers: { Institute: JSON.parse(localStorage.getItem('userData/user')) != null ? JSON.parse(localStorage.getItem('userData/user')).institute.id : 0 },
               dataType: 'json'
             },        
             parameterMap: function(options, operation) {
@@ -2140,7 +2140,7 @@
             read  : {
               url: baseUrl + "api/accounts",
               type: "GET",
-              headers: { Institute: JSON.parse(localStorage.getItem('userData/user')).institute.id },
+              headers: { Institute: JSON.parse(localStorage.getItem('userData/user')) != null ? JSON.parse(localStorage.getItem('userData/user')).institute.id : 0 },
               dataType: 'json'
             },        
             parameterMap: function(options, operation) {
@@ -2180,7 +2180,7 @@
             read  : {
               url: baseUrl + "api/accounts",
               type: "GET",
-              headers: { Institute: JSON.parse(localStorage.getItem('userData/user')).institute.id },
+              headers: { Institute: JSON.parse(localStorage.getItem('userData/user')) != null ? JSON.parse(localStorage.getItem('userData/user')).institute.id : 0 },
               dataType: 'json'
             },        
             parameterMap: function(options, operation) {
@@ -2260,19 +2260,19 @@
               url: baseUrl + 'api/employees/roles',
               type: "GET",
               dataType: 'json',
-              headers: { Institute: JSON.parse(localStorage.getItem('userData/user')).institute.id }
+              headers: { Institute: JSON.parse(localStorage.getItem('userData/user')) != null ? JSON.parse(localStorage.getItem('userData/user')).institute.id : 0 }
             },
             create  : {
               url: baseUrl + 'api/employees/roles',
               type: "POST",
               dataType: 'json',
-              headers: { Institute: JSON.parse(localStorage.getItem('userData/user')).institute.id }
+              headers: { Institute: JSON.parse(localStorage.getItem('userData/user')) != null ? JSON.parse(localStorage.getItem('userData/user')).institute.id : 0 }
             },
             update  : {
               url: baseUrl + 'api/employees/roles',
               type: "PUT",
               dataType: 'json',
-              headers: { Institute: JSON.parse(localStorage.getItem('userData/user')).institute.id }
+              headers: { Institute: JSON.parse(localStorage.getItem('userData/user')) != null ? JSON.parse(localStorage.getItem('userData/user')).institute.id : 0 }
             },
             parameterMap: function(options, operation) {
               if(operation === 'read') {
@@ -2304,19 +2304,19 @@
               url: baseUrl + 'api/payrolls',
               type: "GET",
               dataType: 'json',
-              headers: { Institute: JSON.parse(localStorage.getItem('userData/user')).institute.id }
+              headers: { Institute: JSON.parse(localStorage.getItem('userData/user')) != null ? JSON.parse(localStorage.getItem('userData/user')).institute.id : 0 }
             },
             create  : {
               url: baseUrl + 'api/payrolls',
               type: "POST",
               dataType: 'json',
-              headers: { Institute: JSON.parse(localStorage.getItem('userData/user')).institute.id }
+              headers: { Institute: JSON.parse(localStorage.getItem('userData/user')) != null ? JSON.parse(localStorage.getItem('userData/user')).institute.id : 0 }
             },
             update  : {
               url: baseUrl + 'api/payrolls',
               type: "PUT",
               dataType: 'json',
-              headers: { Institute: JSON.parse(localStorage.getItem('userData/user')).institute.id }
+              headers: { Institute: JSON.parse(localStorage.getItem('userData/user')) != null ? JSON.parse(localStorage.getItem('userData/user')).institute.id : 0 }
             },
             parameterMap: function(options, operation) {
               if(operation === 'read') {
@@ -2472,7 +2472,8 @@
         cModules: banhji.moduleDS,
         media    : new image(),
         showAdmin: function() {
-          if(JSON.parse(localStorage.getItem('userData/user')).role == 1) {
+          var admin = JSON.parse(localStorage.getItem('userData/user')) != null ? JSON.parse(localStorage.getItem('userData/user')).role : 0;
+          if(admin == 1) {
             return true;
           } else {
             return false;
@@ -3042,7 +3043,21 @@
               $("#ntf1").data("kendoNotification").success("Data saved.");
               // institute.showIn('#companyInfoPlaceholder', instInfo);
               // console.log("kdsslfds");
+              //
               banhji.company.setCurrent(res.results[0]);
+              var appData = JSON.parse(localStorage.getItem('userData/user'));
+              localforage.removeItem('user').then(function() {
+                var data = {id: appData.id, username: appData.username, role: appData.role, institute: res.results[0]};
+                localforage.setItem('user', data).then(function (value) {
+                    console.log(value);
+                }).catch(function(err) {
+                    console.log(err);
+                });
+              }).catch(function(err) {
+                  // This code runs if there were any errors
+                  console.log(err);
+              });
+
               banhji.router.navigate('company');
             } else {
               $("#ntf1").data("kendoNotification").error("Operation failed.");
@@ -3079,7 +3094,7 @@
             if(userPool.getCurrentUser()) {
               layout.render("#main");
               
-              institute = JSON.parse(localStorage.getItem('userData/user')).institute;
+              institute = JSON.parse(localStorage.getItem('userData/user')) != null ? JSON.parse(localStorage.getItem('userData/user')).institute.id : 0;
               
             } else {
               window.location.replace("<?php echo base_url(); ?>login");
@@ -3093,15 +3108,16 @@
 
       // start here
       banhji.router.route('/', function() {
-        if(JSON.parse(localStorage.getItem('userData/user')).role != 1) {
+        var admin = JSON.parse(localStorage.getItem('userData/user')) != null ? JSON.parse(localStorage.getItem('userData/user')).role : 0;
+          if(admin != 1) {
           banhji.users.users.filter([
-            {field: 'id', value: JSON.parse(localStorage.getItem('userData/user')).institute.id},
-            {field: 'id', operator: 'user', value:JSON.parse(localStorage.getItem('userData/user')).id}
+            {field: 'id', value: JSON.parse(localStorage.getItem('userData/user')) != null ? JSON.parse(localStorage.getItem('userData/user')).institute.id : 0},
+            {field: 'id', operator: 'user', value:JSON.parse(localStorage.getItem('userData/user')) != null ? JSON.parse(localStorage.getItem('userData/user')).id : 0}
           ]);
           banhji.users.users.bind('requestEnd', function(e){
             if(e.response) {
               banhji.users.setCurrent(e.response.results[0]);
-              banhji.users.modules.filter({field: 'id', value: JSON.parse(localStorage.getItem('userData/user')).id});
+              banhji.users.modules.filter({field: 'id', value: JSON.parse(localStorage.getItem('userData/user')) != null ? JSON.parse(localStorage.getItem('userData/user')).id : 0});
               layout.showIn("#container", mainDash);
               mainDash.showIn("#placeholder", profileMod);
             }
@@ -3109,7 +3125,7 @@
         } else {
           banhji.companyDS.fetch(function() {
             banhji.company.set('data', banhji.companyDS.data()[0]);
-            banhji.moduleDS.filter({field: 'id', value: banhji.companyDS.data()[0].id});
+            banhji.moduleDS.filter({field: 'id', value: JSON.parse(localStorage.getItem('userData/user')) != null ? JSON.parse(localStorage.getItem('userData/user')).id : 0});
             banhji.moduleDS.bind('requestEnd', function(e){
               if(e.response) {
                 banhji.company.setCurrent(banhji.companyDS.data()[0]);
@@ -3119,11 +3135,11 @@
                 // console.log(e.response.results[0]);
                 banhji.userDS.filter([
                   {field: 'id', value: institute.id},
-                  {field: 'id <>', operator: "user", value: JSON.parse(localStorage.getItem('userData/user')).id}
+                  {field: 'id <>', operator: "user", value: JSON.parse(localStorage.getItem('userData/user')) != null ? JSON.parse(localStorage.getItem('userData/user')).id : 0}
                 ]);
               }            
             });
-            banhji.users.modules.filter({field: 'id', value: JSON.parse(localStorage.getItem('userData/user')).id});
+            banhji.users.modules.filter({field: 'id', value: JSON.parse(localStorage.getItem('userData/user')) != null ? JSON.parse(localStorage.getItem('userData/user')).id : 0});
           });
           layout.showIn("#container", mainDash);
           // mainDash.showIn("#placeholder", instituteModule);
@@ -3258,24 +3274,22 @@
           console.log('init');
         });
         banhji.router.start();
-          // signout when browser closed
-          // window.addEventListener("beforeunload", function (e) {
-          //   // var confirmationMessage = "\o/";
-
-          //   // (e || window.event).returnValue = confirmationMessage; //Gecko + IE
-          //   // return confirmationMessage;                            //Webkit, Safari, Chrome
-          //   var userData = {
-          //       Username : userPool.getCurrentUser().username,
-          //       Pool : userPool
-          //   };
-          //   var cognitoUser = new AWSCognito.CognitoIdentityServiceProvider.CognitoUser(userData);
-          //   if(cognitoUser != null) {
-          //       cognitoUser.signOut();
-          //       // window.location.replace("<?php echo base_url(); ?>login");
-          //   } else {
-          //       console.log('No user');
-          //   }
-          // });
+        localforage.getItem('user').then(function(value) {
+          if(value == null) {
+            window.location.replace(baseUrl + "login");
+          }
+        }).catch(function(err) {
+          console.log(err);
+        });
+        // localforage.getItem('user', function(err, value) {
+        //     if(err) {
+        //        window.location.replace(baseUrl + "login");
+        //        console.log(err);
+        //     } else {
+        //       console.log(value);
+        //     }
+        //     console.log('getlocal');
+        // });
       });
     </script>
   </body>

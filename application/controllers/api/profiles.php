@@ -392,7 +392,8 @@ class Profiles extends REST_Controller {
 			$inst->monetary_id = $r->currency->id;
 			$inst->locale = $r->currency->locale;
 			$inst->report_monetary_id = $r->currency->id;
-			$inst->logo = 'https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/default_logo.png';
+			$inst->pimage_id = 1;
+			// $inst->logo = 'https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/default_logo.png';
 			$inst->country_id = $r->country->id;
 			$inst->industry_id = $r->industry->id;
 			$inst->type_id = $r->type->id;

@@ -74,7 +74,7 @@
 
 
 
-.abc .bcd {
+.sale-record table {
   width: 98%;
   border: 1px solid black;
   border-collapse: collapse;
@@ -82,19 +82,32 @@
   margin: 0 auto;
   line-height: 25px;
 }
-.abc .bcd thead tr td{
+.sale-record table thead tr td{
   text-align: center;
   font-weight: 600;
 }
 
-.abc .bcd tr td{
+.sale-record table tr td{
   border: 1px solid black;
   border-collapse: collapse;
   padding: 5px;
   text-align: left;
+  right: -5px;
 }
-
-
+.box-right{
+  position: absolute; 
+  right: 0; 
+  top: 70px; 
+  border: 1px #000 solid;
+  width: 270px;
+}
+.box-right table{
+  width: 100%;
+}
+.box-right table tr td{
+  text-align: left;
+  padding: 5px 10px;
+}
 
 #cbbContact-list,
 #cbbAccount-list,

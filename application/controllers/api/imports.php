@@ -53,6 +53,9 @@ class Imports extends REST_Controller {
 			$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$type->where('name', $value->contact_type)->where('parent_id <>', "")->get();
 
+			$currency = new Currency(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$currency->where('code', $value->currency)->get();
+
 			$obj = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			isset($value->branch_id) 				? $obj->branch_id 				= $value->branch_id : "";
 			isset($value->country_id) 				? $obj->country_id 				= $value->country_id : "";
@@ -77,7 +80,7 @@ class Imports extends REST_Controller {
 			isset($value->latitute)					? $obj->latitute 				= $value->latitute : "";
 			isset($value->longtitute)				? $obj->longtitute 				= $value->longtitute : "";
 			isset($value->credit_limit)				? $obj->credit_limit			= $value->credit_limit : "";
-			isset($value->locale)					? $obj->locale					= $value->locale : "";
+			isset($value->currency)					? $obj->locale					= $currency->locale : "";
 			isset($value->id_number)				? $obj->id_number				= $value->id_number : "";
 			isset($value->phone)					? $obj->phone 					= $value->phone : "";
 			isset($value->email)					? $obj->email 					= $value->email : "";

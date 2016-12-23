@@ -325,7 +325,7 @@
                                     <img src="<?php echo base_url();?>assets/img/form-loader.gif" class="imgLoad" />
                                     <img src="<?php echo base_url();?>assets/img/form-tick.png" class="imgTick" />
                                     <img src="<?php echo base_url();?>assets/img/form-cross.png" class="imgCross" />
-                                    <input required="required" type="password" data-bind="value: password, events : {change: pwdCheck}" placeholder="Password " class="signup-email">
+                                    <input required="required" type="password" data-bind="value: password" placeholder="Password " class="signup-email">
                                     <p class="msg"></p>
                                 </div>
 
@@ -931,22 +931,23 @@
                     }
             },
             pwdChange   : function(e) {
-                
-                if(this.get('password') != this.get('cPassword')) {
-                    this.set("err", null);
-                    this.set("err", "Your password does not match!");
-                    $(".cover").eq(3).children(".imgLoad, .imgTick").css("display", "none");
-                    $(".cover").eq(3).children(".imgCross").css("display", "block");
-                    $(".cover").eq(3).children(".msg").text("Your password does not match!");
-                    $(".cover").eq(3).children(".msg").css("display", "block");
-                    $(".cover").eq(3).children("input").css("border", "1px solid #a22314");
-                    $(".cover").eq(3).children("input").focus();
-                }else{
-                    this.set("err", null);
-                    $(".cover").eq(3).children(".imgLoad, .imgCross").css("display", "none");
-                    $(".cover").eq(3).children(".imgTick").css("display", "block");
-                    $(".cover").eq(3).children(".msg").removeAttr("style");
-                    $(".cover").eq(3).children("input").removeAttr("style");
+                if(this.get('password')){
+                    if(this.get('password') != this.get('cPassword')) {
+                        this.set("err", null);
+                        this.set("err", "Your password does not match!");
+                        $(".cover").eq(3).children(".imgLoad, .imgTick").css("display", "none");
+                        $(".cover").eq(3).children(".imgCross").css("display", "block");
+                        $(".cover").eq(3).children(".msg").text("Your password does not match!");
+                        $(".cover").eq(3).children(".msg").css("display", "block");
+                        $(".cover").eq(3).children("input").css("border", "1px solid #a22314");
+                        $(".cover").eq(3).children("input").focus();
+                    }else{
+                        this.set("err", null);
+                        $(".cover").eq(3).children(".imgLoad, .imgCross").css("display", "none");
+                        $(".cover").eq(3).children(".imgTick").css("display", "block");
+                        $(".cover").eq(3).children(".msg").removeAttr("style");
+                        $(".cover").eq(3).children("input").removeAttr("style");
+                    }
                 }
             },
             pwdCheck    : function(e) {

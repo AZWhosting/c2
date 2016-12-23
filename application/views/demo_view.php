@@ -482,6 +482,16 @@
 			        	<p>
 			        		<span data-bind="text: lang.lang.acc_in_this_module"></span>
 			        	</p>
+
+			        	<p style="width: 100%; float: left; margin-top: 8px;">
+				        	<span style="position: relative; height: 35px; line-height: 35px; padding-right: 15px; float: left; display: block; ">
+								<a style="color: #fff; margin-top: 4px; line-height: 17px; background: #203864; padding: 8px 55px;" href="#/accounting_recurring">
+									<span class="badge fix badge-primary" style="color: #fff; position: absolute; top: -13px; background: red; right: 5px; width: 25px; height: 25px; font-size: 15px; line-height: 25px;">0</span>
+									Recurring												
+								</a>
+							</span>
+						</p>
+
 			        	<div class="supplier-icon">
 						    <div class="span4">
 						       	<a href="#/txn_item" class="center">
@@ -7876,6 +7886,16 @@
 			        	<p>
 			        		<span data-bind="text: lang.lang.S_inhere"></span>
 			        	</p>
+
+			        	<p style="width: 100%; float: left; margin-top: 8px;">
+				        	<span style="position: relative; height: 35px; line-height: 35px; padding-right: 15px; float: left; display: block; ">
+								<a style="color: #fff; margin-top: 4px; line-height: 17px; background: #203864; padding: 8px 55px;" href="#/vendor_recurring">
+									<span class="badge fix badge-primary" style="color: #fff; position: absolute; top: -13px; background: red; right: 5px; width: 25px; height: 25px; font-size: 15px; line-height: 25px;">0</span>
+									Recurring												
+								</a>
+							</span>
+						</p>
+
 			        	<div class="supplier-icon">
 					       	<div class="span4">
 						       	<a href="#/vendor" class="center">
@@ -12043,7 +12063,9 @@
 	            <li><a href="#tab3-1" class="glyphicons clock" data-toggle="tab"><i></i><span class="strong"><span data-bind="text: lang.lang.payment_term"></span></span></a>
 	            </li>
 	            <li><a href="#tab4-1" class="glyphicons list" data-toggle="tab"><i></i><span class="strong"><span data-bind="text: lang.lang.custom_forms"></span></span></a>
-	            </li>	                       
+	            </li>	
+	            <li><a href="#tab5-1" class="glyphicons building" data-toggle="tab"><i></i><span class="strong"><span data-bind="text: lang.lang.prefix_setting"></span></span></a>
+	            </li>                           
 	        </ul>
 	    </div>
 	    <!-- // Tabs Heading END -->
@@ -12141,6 +12163,25 @@
 	            	<a id="addNew" class="btn-icon btn-primary glyphicons ok_2" data-bind="click: goInvoiceCustom" style="width: 110px;"><i></i><span data-bind="text: lang.lang.add_new"></span></a>
 	            </div>
 	            <!-- // Tab Invoice Custom content END -->
+	            <div class="tab-pane" id="tab5-1">
+	            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
+	            		<thead>
+	            			<tr class="widget-head">
+	            				<th class="center" data-bind="text: lang.lang.type"></th>
+	            				<th class="center" data-bind="text: lang.lang.abbr"></th>
+	            				<th class="center" data-bind="text: lang.lang.startup_number"></th>
+	            				<th style="text-align: left;padding-left: 5px;" data-bind="text: lang.lang.name"></th>
+	            				<th class="center"><span data-bind="text: lang.lang.action"></span></th>
+	            			</tr>
+	            		</thead>
+	            		<tbody data-role="listview"
+								 data-selectable="false"
+				                 data-template="accountSetting-prefix-template"
+				                 data-bind="source: prefixDS">				            
+	            		</tbody>
+	            	</table>
+
+	            </div>
 	        </div>
 	    </div>
 
@@ -14657,11 +14698,21 @@
 			<!-- Logo of the page -->
 			<table width="100%" cellpadding="10">
 				<tr>
-			        <td valign="top">
+			        <td>
 			        	<h2 data-bind="text: lang.lang.customers"></h2>
 			        	<p>
 			        		<span data-bind="text: lang.lang.in_here"></span>
 			        	</p>
+
+			        	<p style="width: 100%; float: left; margin-top: 8px;">
+				        	<span style="position: relative; height: 35px; line-height: 35px; padding-right: 15px; float: left; display: block; ">
+								<a style="color: #fff; margin-top: 4px; line-height: 17px; background: #203864; padding: 8px 55px;" href="#/customer_recurring">
+									<span class="badge fix badge-primary" style="color: #fff; position: absolute; top: -13px; background: red; right: 5px; width: 25px; height: 25px; font-size: 15px; line-height: 25px;">0</span>
+									Recurring												
+								</a>
+							</span>
+						</p>
+
 			        	<div class="supplier-icon">
 					       	<div class="span4">
 						       	<a href="#/customer" class="center">
@@ -14696,7 +14747,7 @@
 							<span data-bind="text: lang.lang.sale_order" style="margin-top: 7px; display: inline-block; text-transform: uppercase;"></span>
 						</a>
 					</td>
-					<td class="center" >
+					<td class="center">
 						<a href="#/customer_deposit">
 							<img title="Add Customer Deposit" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/customer_deposit.png"  height="200" />
 							<span data-bind="text: lang.lang.c_deposit" style="margin-top: 7px; display: inline-block; text-transform: uppercase;"></span>
@@ -19978,7 +20029,9 @@
 	            <li><a href="#tab3-4" class="glyphicons clock" data-toggle="tab"><i></i><span class="strong"><span data-bind="text: lang.lang.payment_terms"></span></span></a>
 	            </li>
 	            <li><a href="#tab4-4" class="glyphicons list" data-toggle="tab"><i></i><span class="strong"><span data-bind="text: lang.lang.custom_forms"></span></span></a>
-	            </li>	                        
+	            </li>	   
+	            <li><a href="#tab4-5" class="glyphicons building" data-toggle="tab"><i></i><span class="strong"><span data-bind="text: lang.lang.prefix_setting"></span></span></a>
+	            </li>                     
 	        </ul>
 	    </div>
 	    <!-- // Tabs Heading END -->
@@ -20085,7 +20138,25 @@
 
 	            </div>
 	            <!-- // Tab Invoice Custom content END -->
+	            <div class="tab-pane" id="tab4-5">
+	            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
+	            		<thead>
+	            			<tr class="widget-head">
+	            				<th class="center" data-bind="text: lang.lang.type"></th>
+	            				<th class="center" data-bind="text: lang.lang.abbr"></th>
+	            				<th class="center" data-bind="text: lang.lang.startup_number"></th>
+	            				<th style="text-align: left;padding-left: 5px;" data-bind="text: lang.lang.name"></th>
+	            				<th class="center"><span data-bind="text: lang.lang.action"></span></th>
+	            			</tr>
+	            		</thead>
+	            		<tbody data-role="listview"
+								 data-selectable="false"
+				                 data-template="accountSetting-prefix-template"
+				                 data-bind="source: prefixDS">				            
+	            		</tbody>
+	            	</table>
 
+	            </div>
 	        </div>
 	    </div>
 
@@ -20252,8 +20323,7 @@
 				<div id="example" class="k-content">
 
 		    		<span class="glyphicons no-js remove_2 pull-right" 
-		    				onclick="javascript:window.history.back()"
-							data-bind="click: cancel"><i></i></span>
+		    				onclick="javascript:window.history.back()"><i></i></span>
 
 				    <h2>Customer Recurring</h2>
 
@@ -54279,6 +54349,60 @@
         paymentTermNetDue	: "",
         paymentTermPeriod 	: "",
         paymentTermPercentage 	: "",
+        prefixDS			: new kendo.data.DataSource({
+			transport: {
+				read 	: {
+					url: apiUrl + "prefixes",
+					type: "GET",
+					headers: banhji.header,
+					dataType: 'json'
+				},
+				create 	: {
+					url: apiUrl + "prefixes",
+					type: "POST",
+					headers: banhji.header,
+					dataType: 'json'
+				},
+				update 	: {
+					url: apiUrl + "prefixes",
+					type: "PUT",
+					headers: banhji.header,
+					dataType: 'json'
+				},
+				destroy 	: {
+					url: apiUrl + "prefixes",
+					type: "DELETE",
+					headers: banhji.header,
+					dataType: 'json'
+				},				
+				parameterMap: function(options, operation) {
+					if(operation === 'read') {
+						return {
+							page: options.page,
+							limit: options.pageSize,
+							filter: options.filter,
+							sort: options.sort
+						};
+					} else {
+						return {models: kendo.stringify(options.models)};
+					}
+				}
+			},
+			schema 	: {
+				model: {
+					id: 'id'
+				},
+				data: 'results',
+				total: 'count'
+			},
+			filter: { field:"type", operator:"where_in", value:["Purchase_Order", "GRN", "Cash_Payment"] },			
+			batch: true,
+			serverFiltering: true,
+			serverSorting: true,
+			serverPaging: true,
+			page:1,
+			pageSize: 100
+		}),
         pageLoad 			: function() {
         	this.txnTemplateDS.filter({ field: "moduls", value : "vendor_mg" });
         },	    
@@ -63184,6 +63308,60 @@
         paymentTermNetDue	: "",
         paymentTermPeriod 	: "",
         paymentTermPercentage 	: "",
+        prefixDS			: new kendo.data.DataSource({
+			transport: {
+				read 	: {
+					url: apiUrl + "prefixes",
+					type: "GET",
+					headers: banhji.header,
+					dataType: 'json'
+				},
+				create 	: {
+					url: apiUrl + "prefixes",
+					type: "POST",
+					headers: banhji.header,
+					dataType: 'json'
+				},
+				update 	: {
+					url: apiUrl + "prefixes",
+					type: "PUT",
+					headers: banhji.header,
+					dataType: 'json'
+				},
+				destroy 	: {
+					url: apiUrl + "prefixes",
+					type: "DELETE",
+					headers: banhji.header,
+					dataType: 'json'
+				},				
+				parameterMap: function(options, operation) {
+					if(operation === 'read') {
+						return {
+							page: options.page,
+							limit: options.pageSize,
+							filter: options.filter,
+							sort: options.sort
+						};
+					} else {
+						return {models: kendo.stringify(options.models)};
+					}
+				}
+			},
+			schema 	: {
+				model: {
+					id: 'id'
+				},
+				data: 'results',
+				total: 'count'
+			},
+			filter: { field:"type", operator:"where_in", value:["Quote", "Sale_Order", "Deposit", "Cash_Sale", "Invoice", "Cash_Receipt", "GDN"] },			
+			batch: true,
+			serverFiltering: true,
+			serverSorting: true,
+			serverPaging: true,
+			page:1,
+			pageSize: 100
+		}),
         pageLoad 			: function() {
         	this.txnTemplateDS.filter({ field: "moduls", value : "customer_mg" });
         },	    

@@ -6012,18 +6012,266 @@
 		    				onclick="javascript:window.history.back()"
 							data-bind="click: cancel"><i></i></span>
 
-				    <div class="center" style="text-align: center;">
+				    <div class="center" style="text-align: center; position: relative;">
 				    	<h2 >សៀវភៅទិន្នានុប្បវត្តិលក់</h2>	
 				    	<p>Sale Record</p>	
 				    	<p>ខែ កក្កដា ឆ្នាំ ២០១៦ </p>
-				    	<p>For July 2016</p>		    		   
+				    	<p>For July 2016</p>
+				    	<div class="box-right" style="">
+				    		<table>
+				    			<tr>
+				    				<td style="width: 76%;">
+				    					អត្រាប្តូរប្រាក់មធ្យមៈ
+				    				</td>
+				    				<td rowspan="2" style="text-align: right;">4,066</td>
+				    			</tr>
+				    			<tr>
+				    				<td>Average Exchange Rate:</td>
+				    			</tr>
+				    		</table>
+				    	</div>		    		   
 				    </div>
 				    <br>
 
-				    <div class="row abc">
-				    	<table class="bcd">				    		
+				    <div class="row sale-record">
+				    	<table >				    		
 				    		<thead>
 					    		<tr>
+					    			<td colspan="6">វិក័យប័ត្រ</td>
+					    			<td colspan="6">ការផ្គត់ផ្គង់</td>
+					    			<td rowspan="4">សរុបថ្លៃលក់រួមទាំងអាករ</td>
+					    		</tr>
+					    		<tr>
+					    			<td rowspan="3" style="width: 7%;">កាលបរិច្ឆេទ</td>
+					    			<td rowspan="3">លេខយោង</td>
+					    			<td rowspan="3">លេខវិក័យប័ត្រ</td>
+					    			<td rowspan="3">អ្នកទិញ</td>
+					    			<td rowspan="3">លេខអត្តសញ្ញាណ <br> សារពើពន្ធ <br> VAT TIN</td>
+					    			<td rowspan="3" style="width: 15%;">បរិយាយ</td>
+					    			<td rowspan="3">ការផ្គត់ផ្គង់មិនជាប់អាករ</td>
+					    			<td rowspan="3" style="width: 7%;">ការនាំចេញ</td>
+					    			<td colspan="4">ការផ្គត់ផ្គង់ជាប់អាករ</td>
+					    		</tr>
+					    		<tr>
+					    			<td colspan="2">ផ្គត់ផ្គង់ឲ្យបុគ្គលជាប់អាករ	</td>
+					    			<td colspan="2">ផ្គត់ផ្គង់ឲ្យអ្នកប្រើប្រាស់</td>
+					    		</tr>
+					    		<tr>
+					    			<td >តម្លៃមិនរួមអាករ</td>
+					    			<td >អាករ (VAT)</td>
+					    			<td >តម្លៃមិនរួមអាករ</td>
+					    			<td >អាករ (VAT)</td>
+					    		</tr>
+					    		<tr>
+					    			<td>P1</td>
+					    			<td>P2</td>
+					    			<td>P3</td>
+					    			<td>P4</td>
+					    			<td>P5</td>
+					    			<td>P6</td>
+					    			<td>P7</td>
+					    			<td>P8</td>
+					    			<td>P9</td>
+					    			<td>P10</td>
+					    			<td>P11</td>
+					    			<td>P12</td>
+					    			<td>P13</td>
+					    		</tr>					    		
+					    	</thead>
+					    	<tbody>
+					    		<tr>
+					    			<td style="text-align: center;">01-Sep-16</td>
+					    			<td></td>
+					    			<td >E3543</td>
+					    			<td >ABC</td>
+					    			<td style="text-align: right;">N/A</td>
+					    			<td>Metal Pattern</td>
+					    			<td></td>
+					    			<td style="text-align: right;">722.00</td>
+					    			<td></td>
+					    			<td>-</td>
+					    			<td></td>
+					    			<td>-</td>
+					    			<td style="text-align: right;">722.00</td>
+					    		</tr>
+					    		<tr>
+					    			<td style="text-align: center;">01-Sep-16</td>
+					    			<td></td>
+					    			<td >E3543</td>
+					    			<td >ABC</td>
+					    			<td style="text-align: right;">N/A</td>
+					    			<td>Metal Pattern</td>
+					    			<td></td>
+					    			<td style="text-align: right;">722.00</td>
+					    			<td></td>
+					    			<td>-</td>
+					    			<td></td>
+					    			<td>-</td>
+					    			<td style="text-align: right;">722.00</td>
+					    		</tr>
+					    		<tr>
+					    			<td style="text-align: center;">01-Sep-16</td>
+					    			<td></td>
+					    			<td >E3543</td>
+					    			<td >ABC</td>
+					    			<td style="text-align: right;">N/A</td>
+					    			<td>Metal Pattern</td>
+					    			<td></td>
+					    			<td style="text-align: right;">722.00</td>
+					    			<td></td>
+					    			<td>-</td>
+					    			<td></td>
+					    			<td>-</td>
+					    			<td style="text-align: right;">722.00</td>
+					    		</tr>
+					    		<tr>
+					    			<td style="text-align: center;">01-Sep-16</td>
+					    			<td></td>
+					    			<td >E3543</td>
+					    			<td >ABC</td>
+					    			<td style="text-align: right;">N/A</td>
+					    			<td>Metal Pattern</td>
+					    			<td></td>
+					    			<td style="text-align: right;">722.00</td>
+					    			<td></td>
+					    			<td>-</td>
+					    			<td></td>
+					    			<td>-</td>
+					    			<td style="text-align: right;">722.00</td>
+					    		</tr>
+					    		<tr>
+					    			<td style="text-align: center;">01-Sep-16</td>
+					    			<td></td>
+					    			<td >E3543</td>
+					    			<td >ABC</td>
+					    			<td style="text-align: right;">N/A</td>
+					    			<td>Metal Pattern</td>
+					    			<td></td>
+					    			<td style="text-align: right;">722.00</td>
+					    			<td></td>
+					    			<td>-</td>
+					    			<td></td>
+					    			<td>-</td>
+					    			<td style="text-align: right;">722.00</td>
+					    		</tr>
+					    		<tr>
+					    			<td style="text-align: center;">01-Sep-16</td>
+					    			<td></td>
+					    			<td >E3543</td>
+					    			<td >ABC</td>
+					    			<td style="text-align: right;">N/A</td>
+					    			<td>Metal Pattern</td>
+					    			<td></td>
+					    			<td style="text-align: right;">722.00</td>
+					    			<td></td>
+					    			<td>-</td>
+					    			<td></td>
+					    			<td>-</td>
+					    			<td style="text-align: right;">722.00</td>
+					    		</tr>
+					    		<tr>
+					    			<td style="text-align: center;">01-Sep-16</td>
+					    			<td></td>
+					    			<td >E3543</td>
+					    			<td >ABC</td>
+					    			<td style="text-align: right;">N/A</td>
+					    			<td>Metal Pattern</td>
+					    			<td></td>
+					    			<td style="text-align: right;">722.00</td>
+					    			<td></td>
+					    			<td>-</td>
+					    			<td></td>
+					    			<td>-</td>
+					    			<td style="text-align: right;">722.00</td>
+					    		</tr>
+					    		<tr>
+					    			<td style="text-align: center;">01-Sep-16</td>
+					    			<td></td>
+					    			<td >E3543</td>
+					    			<td >ABC</td>
+					    			<td style="text-align: right;">N/A</td>
+					    			<td>Metal Pattern</td>
+					    			<td></td>
+					    			<td style="text-align: right;">722.00</td>
+					    			<td></td>
+					    			<td>-</td>
+					    			<td></td>
+					    			<td>-</td>
+					    			<td style="text-align: right;">722.00</td>
+					    		</tr>
+					    	</tbody>
+					    	<tfoot>
+					    		<tr>
+						    		<td colspan="6" style="text-align: center; font-weight: 600;">សរុប (USD)</td>
+						    		<td>-</td>
+						    		<td style="text-align: right;">238,660</td>
+						    		<td>-</td>
+						    		<td>-</td>
+						    		<td>-</td>
+						    		<td>-</td>
+						    		<td style="text-align: right;">189,391</td>
+						    	</tr>
+						    	<tr>
+						    		<td colspan="6" style="text-align: center; font-weight: 600;">សរុប (KHR)</td>
+						    		<td>-</td>
+						    		<td style="text-align: right;">970,393,227</td>
+						    		<td>-</td>
+						    		<td>-</td>
+						    		<td>-</td>
+						    		<td>-</td>
+						    		<td style="text-align: right;">770,064,416</td>
+						    	</tr>
+					    	</tfoot>
+				    	</table>
+				    </div>					
+			    	
+				</div>							
+			</div>
+		</div>
+	</div>
+</script>
+<script id="purchaseRecord" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background ">
+			<div class="container-960">					
+				<div id="example" class="k-content">
+
+			    	<span class="glyphicons no-js remove_2 pull-right" 
+		    				onclick="javascript:window.history.back()"
+							data-bind="click: cancel"><i></i></span>
+
+				    <div class="center" style="text-align: center; position: relative;">
+				    	<h2 >សៀវភៅទិន្នានុប្បវត្តិទិញ</h2>	
+				    	<p>Purchase Record</p>	
+				    	<p>ខែ កក្កដា ឆ្នាំ ២០១៦ </p>
+				    	<p>For July 2016</p>
+				    	<div class="box-right" style="">
+				    		<table>
+				    			<tr>
+				    				<td style="width: 76%;">
+				    					អត្រាប្តូរប្រាក់មធ្យមៈ
+				    				</td>
+				    				<td rowspan="2" style="text-align: right;">4,066</td>
+				    			</tr>
+				    			<tr>
+				    				<td>Average Exchange Rate:</td>
+				    			</tr>
+				    		</table>
+				    	</div>		    		   
+				    </div>
+				    <br>
+
+				    <div class="row sale-record">
+				    	<table >				    		
+				    		<thead>
+					    		<tr>
+					    			<td >វិក័យប័ត្រ</td>
+					    			<td></td>
+					    			<td></td>
+					    			<td></td>
+					    			<td></td>
+					    			<td></td>
+					    			<td>ការទិញ</td>
 					    			<td colspan="6">វិក័យប័ត្រ</td>
 					    			<td colspan="6">ការផ្គត់ផ្គង់</td>
 					    			<td rowspan="4">សរុបថ្លៃលក់រួមទាំងអាករ</td>
@@ -73760,6 +74008,7 @@
 		saleJournal: new kendo.Layout("#saleJournal", {model: banhji.saleJournal}),
 		purchaseJournal: new kendo.Layout("#purchaseJournal", {model: banhji.purchaseJournal}),
 		saleRecord: new kendo.Layout("#saleRecord", {model: banhji.saleRecord}),
+		purchaseRecord: new kendo.Layout("#purchaseRecord", {model: banhji.purchaseRecord}),
 
 
 		//Employee
@@ -75928,6 +76177,24 @@
 
 			if(banhji.pageLoaded["sale_record"]==undefined){
 				banhji.pageLoaded["sale_record"] = true;
+			}
+		}		
+	});	
+	banhji.router.route("/purchase_record", function(){
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{
+			banhji.view.layout.showIn("#content", banhji.view.purchaseRecord);
+
+			banhji.userManagement.addMultiTask("Purchase Record","purchase_record",null);
+
+			banhji.view.layout.showIn('#menu', banhji.view.menu);
+			banhji.view.menu.showIn('#secondary-menu', banhji.view.taxesMenu);
+			
+			var vm = banhji.purchaseRecord;
+
+			if(banhji.pageLoaded["purchase_record"]==undefined){
+				banhji.pageLoaded["purchase_record"] = true;
 			}
 		}		
 	});	
