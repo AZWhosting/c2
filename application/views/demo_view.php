@@ -8519,8 +8519,10 @@
     	<td class="right">
     		#if(type=="GRN"){#
     			#=kendo.toString(amount, "n0")#
-    		#}else{#
+    		#}else if(type=="Cash_Purchase" || type=="Credit_Purchase"){#
     			#=kendo.toString(amount-deposit, locale=="km-KH"?"c0":"c", locale)#
+    		#}else{#
+    			#=kendo.toString(amount, locale=="km-KH"?"c0":"c", locale)#
     		#}#
     	</td>
     	<td align="center">        	
@@ -11160,7 +11162,8 @@
 					        <!-- // Additional Cost Tab content END -->				        						        								        
 
 					    </div>
-					</div>							    	    
+					</div>
+
  		            <!-- Bottom part -->
 		            <div class="row-fluid">
 			
@@ -11186,7 +11189,7 @@
 								<tbody>
 									<tr>
 										<td class="right"><span data-bind="text: lang.lang.subtotal"></span></td>
-										<td class="right strong" width="40%"><span data-bind="text: sub_total"></span></td>
+										<td class="right strong" width="40%"><span data-format="n" data-bind="text: obj.sub_total"></span></td>
 									</tr>								
 									<tr>
 										<td class="right"><span data-bind="text: lang.lang.total_discount"></span></td>
@@ -11202,7 +11205,7 @@
 									</tr>
 									<tr>
 										<td class="right"><span data-bind="text: lang.lang.total_tax"></span></td>
-										<td class="right strong"><span data-bind="text: tax"></span></td>
+										<td class="right strong"><span data-format="n" data-bind="text: obj.tax"></span></td>
 									</tr>																
 									<tr>
 										<td class="right"><h4><span data-bind="text: lang.lang.total"></span></h4></td>
@@ -11228,7 +11231,7 @@
 											<span data-bind="text: lang.lang.remaining"></span>
 										</td>
 										<td class="right">
-											<span data-bind="text: remaining"></span>
+											<span data-format="n" data-bind="text: obj.remaining"></span>
 										</td>
 									</tr>								
 								</tbody>
@@ -15385,8 +15388,10 @@
     	<td class="right">
     		#if(type=="GDN"){#
     			#=kendo.toString(amount, "n0")#
-    		#}else{#
+    		#}else if(type=="Commercial_Invoice" || type=="Vat_Invoice" || type=="Invoice" || type=="Commercial_Cash_Sale" || type=="Vat_Cash_Sale" || type=="Cash_Sale"){#
     			#=kendo.toString(amount-deposit, locale=="km-KH"?"c0":"c", locale)#
+    		#}else{#
+    			#=kendo.toString(amount, locale=="km-KH"?"c0":"c", locale)#
     		#}#
     	</td>
     	<!-- Status -->
@@ -49130,7 +49135,7 @@
 						if(value.type=="Purchase_Order"){
 							po++;
 						}else{
-							balance += kendo.parseFloat(value.amount);
+							balance += kendo.parseFloat(value.amount) - (kendo.parseFloat(value.deposit) + value.amount_paid);
 							open++;
 
 							if(new Date(value.due_date)<today){						
@@ -52582,9 +52587,6 @@
 
 					self.set("obj", view[0]);
 
-					self.set("sub_total", kendo.toString(view[0].sub_total, "c", view[0].locale));
-					self.set("discount", kendo.toString(view[0].discount, "c", view[0].locale));
-			        self.set("tax", kendo.toString(view[0].tax, "c", view[0].locale));
 			        self.set("total", kendo.toString(view[0].amount, "c", view[0].locale));
 			        self.set("amount_due", kendo.toString(view[0].amount - view[0].deposit, "c", view[0].locale));
 			        self.set("additional_cost", kendo.toString(view[0].additional_cost, "c", view[0].locale));
@@ -52594,12 +52596,13 @@
 					self.journalLineDS.filter({ field: "transaction_id", value: view[0].id });
 					self.referenceDS.filter({ field: "id", value: view[0].reference_id });
 
-					var recurringPara = [];
+					var additionalCostPara = [];
 					if(view[0].is_recurring=="1"){
-						recurringPara.push({ field: "is_recurring", value: 1 });
+						additionalCostPara.push({ field: "is_recurring", value: 1 });
 					}
-					recurringPara.push({ field: "reference_id", value: view[0].id });
-					self.additionalCostDS.filter(recurringPara);				
+					additionalCostPara.push({ field: "reference_id", value: view[0].id });
+					additionalCostPara.push({ field: "type", operator:"where_in", value: ["Cash_Purchase","Credit_Purchase"] });
+					self.additionalCostDS.filter(additionalCostPara);				
 
 					if(view[0].status=="1" || view[0].type=="Cash_Purchase"){
 						self.set("statusSrc", banhji.source.paidSrc);
@@ -52747,13 +52750,9 @@
 		        }else{
 		        	this.set("amtDueColor", banhji.source.amtDueColor);
 		        }
-
-		        this.set("sub_total", kendo.toString(subTotal, "c", obj.locale));
-		        this.set("discount", kendo.toString(discount, "c", obj.locale));
-		        this.set("tax", kendo.toString(tax, "c", obj.locale));
+		        
 		        this.set("total", kendo.toString(total, "c", obj.locale));
 		        this.set("additional_cost", kendo.toString(additionalCost, "c", obj.locale));
-		        this.set("remaining", kendo.toString(remaining, "c", obj.locale));
 		        this.set("amount_due", kendo.toString(amount_due, "c", obj.locale));
 
 		        obj.set("sub_total", subTotal);
@@ -53238,7 +53237,7 @@
 				}
 			}
 
-			//Additional Cash OR A/P on Cr
+			//Cash OR A/P on Cr
 			if(!jQuery.isEmptyObject(additionalList)){
 				$.each(additionalList, function(index, value){				
 					self.journalLineDS.add({					
@@ -53249,7 +53248,7 @@
 						reference_no 		: "",
 						segments 	 		: [],								
 						dr 	 				: 0,
-						cr 					: value.amount,				
+						cr 					: value.amount - obj.deposit,				
 						rate				: obj.rate,
 						locale				: obj.locale
 					});
@@ -53267,6 +53266,22 @@
 					segments 	 		: [],								
 					dr 	 				: 0,
 					cr 					: obj.discount,				
+					rate				: obj.rate,
+					locale				: obj.locale
+				});
+			}
+
+			//Deposit on Cr			
+			if(obj.deposit > 0){				
+				this.journalLineDS.add({					
+					transaction_id 		: transaction_id,
+					account_id 			: contact.deposit_account_id,				
+					contact_id 			: obj.contact_id,				
+					description 		: "",
+					reference_no 		: "",
+					segments 	 		: [],								
+					dr 	 				: 0,
+					cr 					: obj.deposit,				
 					rate				: obj.rate,
 					locale				: obj.locale
 				});
@@ -55778,7 +55793,7 @@
 						if(value.type=="Customer_Deposit"){
 							deposit += kendo.parseFloat(value.amount);
 						}else{
-							balance += kendo.parseFloat(value.amount) - kendo.parseFloat(value.deposit);
+							balance += kendo.parseFloat(value.amount) - (kendo.parseFloat(value.deposit) + value.amount_paid);
 							open++;
 
 							if(new Date(value.due_date)<today){						
