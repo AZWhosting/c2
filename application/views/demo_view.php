@@ -11514,7 +11514,7 @@
 					data-role="numerictextbox"
 					data-spinners="false" 
 					data-decimals="2"
-					data-min="0" 
+					data-min="0"
 					data-bind="value: sub_total, events: {change : changes}" 
 					required data-required-msg="required" style="width: 100%;" /> 						
 		</td>		
@@ -29479,7 +29479,7 @@
     	<td align="center">#=kendo.toString(quantity, "n0")#</td>
     	<td align="right">
     		#if(cost>0){#
-    			#=kendo.toString(cost, "c", locale)#
+    			#=kendo.toString((cost+additional_cost)/rate, "c", locale)#
     		#}#
     	</td>
     	<td align="right">
@@ -52495,11 +52495,12 @@
 	        this.changes();	        		        
 		},
 		contactColumnChanges: function(e){
-			var data = e.data;
+			var data = e.data, obj = this.get("obj");
 
 			if(data.contact_id>0){
-				var contact = this.contactListDS.get(data.contact_id);
-				var rate = banhji.source.getRate(contact.locale, new Date(data.issued_date));
+				var contact = this.contactListDS.get(data.contact_id),
+				rate = banhji.source.getRate(contact.locale, new Date(data.issued_date)) / obj.rate;
+
 				data.set("rate", rate);
 				data.set("locale", contact.locale);
 			}
@@ -52680,7 +52681,7 @@
 						tax += additionalTax;																							
 					}
 
-					additionalCost += value.sub_total;
+					additionalCost += value.sub_total / value.rate;
 
 					value.set("amount", value.sub_total + additionalTax);									
 		        });
@@ -53101,7 +53102,7 @@
 				var inventoryID = kendo.parseInt(item.inventory_account_id);
 				if(inventoryID>0){
 					var inventoryAmount = (value.quantity*value.cost) + value.additional_cost,
-					itemRate = banhji.source.getRate(item.locale, new Date(obj.issued_date));
+					itemRate = obj.rate / banhji.source.getRate(item.locale, new Date(obj.issued_date));
 
 					if(inventoryList[inventoryID]===undefined){
 						inventoryList[inventoryID]={"id": inventoryID, "amount": inventoryAmount, "rate": itemRate, "locale": item.locale};						
@@ -53139,7 +53140,7 @@
 			$.each(this.additionalCostDS.data(), function(index, value){				
 				if(value.amount>0){
 					additionalAccountID = value.account_id;
-					additionalAmt = value.amount;
+					additionalAmt = value.amount / value.rate;
 
 					if(additionalList[additionalAccountID]===undefined){
 						additionalList[additionalAccountID]={"id": additionalAccountID, "amount": additionalAmt, "contact_id": value.contact_id };						

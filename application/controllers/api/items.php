@@ -1471,6 +1471,7 @@ class Items extends REST_Controller {
 					"cost" 						=> floatval($value->cost),
 					"price" 					=> floatval($value->price),
 					"amount" 					=> floatval($value->amount),
+					"additional_cost" 			=> floatval($value->additional_cost),
 					"rate" 						=> floatval($value->rate),
 					"locale" 					=> $value->locale,
 					"movement" 					=> $value->movement,
