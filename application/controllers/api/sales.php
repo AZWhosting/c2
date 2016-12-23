@@ -867,7 +867,7 @@ class Sales extends REST_Controller {
 				$txn = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 				
 
-				$txn->where_in("type", array("Invoice", "Cash_Receipt", "Commercial_Invoice", "Vat_Invoice");
+				$txn->where_in("type", array("Invoice", "Cash_Receipt", "Commercial_Invoice", "Vat_Invoice"));
 				$txn->where_related("contact", 'contact_type_id', $type);
 				$txn->where_in("status", array(0,2));
 				$txn->like("segments", $seg->id, "both");
@@ -887,75 +887,74 @@ class Sales extends REST_Controller {
 					if(isset($customers["$seg->name"])) {
 						if($t->type == 'Invoice') {
 							$customers["$seg->name"]['amount']+= floatval($t->amount);
-					} else {
+						} else {
 						$customers["$seg->name"]['amount']-= floatval($t->amount);
-					}
+						}
 					} else {
-					if($t->type == 'Invoice') {
-						$customers[$seg->name]['amount']= floatval($t->amount)/ floatval($t->rate);
-					} else {
-						$customers[$seg->name]['amount']= (floatval($t->amount)/ floatval($t->rate)) * -1;
-					}
+						if($t->type == 'Invoice') {
+							$customers[$seg->name]['amount']= floatval($t->amount)/ floatval($t->rate);
+						} else {
+							$customers[$seg->name]['amount']= (floatval($t->amount)/ floatval($t->rate)) * -1;
+						}
 					}
 					if($t->type == "Invoice") {
 						$total += floatval($t->amount)/ floatval($t->rate);
 					} else {
 						$paid += floatval($t->amount)/ floatval($t->rate);
 					}
-
+				}
+			}
 						$total += $amt;
-				}
-			}
-		} else {
+		}else {
 
-			// $obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				// $obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
-			$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			$type->where('parent_id', 1)->get();
+				$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$type->where('parent_id', 1)->get();
 
-			$obj->where_related("contact", 'contact_type_id', $type);
-			$obj->where("status <>", 1);
-			$obj->where_in("type", array("Invoice", "Commercial_Invoice", "Vat_Invoice"));
-			$obj->where('is_recurring', 0);
-			$obj->where("deleted",0);
+				$obj->where_related("contact", 'contact_type_id', $type);
+				$obj->where("status <>", 1);
+				$obj->where_in("type", array("Invoice", "Commercial_Invoice", "Vat_Invoice"));
+				$obj->where('is_recurring', 0);
+				$obj->where("deleted",0);
 
-			// $obj->include_related("contact_type", "name");
+				// $obj->include_related("contact_type", "name");
 
-			//Results
-			$obj->get_paged_iterated($page, $limit);
-			$data["count"] = $obj->paged->total_rows;
-			$customers = array();
-			$total = 0;
-			$paid  = 0;
-			$openInvoice = 0;
-			if($obj->result_count()>0){
-				foreach ($obj as $value) {
-					$openInvoice += 1;
-					$ref = $value->transaction->get();
-					$customer = $value->contact->get();
-					$fullname = $customer->surname.' '.$customer->name;
-					$temp = 0;
-					foreach ($ref as $r) {
-						$a = abs($r->amount);					
-						$temp += floatval($a);
-					}
-					if(isset($customers["$fullname"])) {
-						if($value->type == 'Invoice') {
-							$customers["$fullname"]['amount']+= floatval($value->amount);
-						} else {
-							$customers["$fullname"]['amount']-= floatval($value->amount);
+				//Results
+				$obj->get_paged_iterated($page, $limit);
+				$data["count"] = $obj->paged->total_rows;
+				$customers = array();
+				$total = 0;
+				$paid  = 0;
+				$openInvoice = 0;
+				if($obj->result_count()>0){
+					foreach ($obj as $value) {
+						$openInvoice += 1;
+						$ref = $value->transaction->get();
+						$customer = $value->contact->get();
+						$fullname = $customer->surname.' '.$customer->name;
+						$temp = 0;
+						foreach ($ref as $r) {
+							$a = abs($r->amount);					
+							$temp += floatval($a);
 						}
-					} else {
-						if($value->type == 'Invoice') {
-							$customers[$fullname]['amount']= floatval($value->amount)/ floatval($value->rate)  - $temp;
+						if(isset($customers["$fullname"])) {
+							if($value->type == 'Invoice') {
+								$customers["$fullname"]['amount']+= floatval($value->amount);
+							} else {
+								$customers["$fullname"]['amount']-= floatval($value->amount);
+							}
 						} else {
-							$customers[$fullname]['amount']= (floatval($value->amount)/ floatval($value->rate))  - $temp;
+							if($value->type == 'Invoice') {
+								$customers[$fullname]['amount']= floatval($value->amount)/ floatval($value->rate)  - $temp;
+							} else {
+								$customers[$fullname]['amount']= (floatval($value->amount)/ floatval($value->rate))  - $temp;
+							}
 						}
-					}
-					$total += (floatval($value->amount)/ floatval($value->rate)) - $temp;
+						$total += (floatval($value->amount)/ floatval($value->rate)) - $temp;
 
+					}
 				}
-			}
 		}
 
 		foreach ($customers as $key => $value) {
