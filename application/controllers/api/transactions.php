@@ -909,7 +909,7 @@ class Transactions extends REST_Controller {
 							$obj->price_avg = ($lastPrice + $currentPrice) / $totalQty;;
 						}
 
-						if($transaction->type=="Cash_Purchase" || $transaction->type=="Credit_Purchase"){
+						if($transaction->type=="Cash_Purchase" || $transaction->type=="Credit_Purchase" || $transaction->type=="Item_Adjustment"){
 							//Avg Cost
 							$lastCost = $onHand * floatval($item->cost);
 							$currentCost = (floatval($value->amount) + floatval($value->additional_cost)) / floatval($value->rate);
@@ -921,9 +921,10 @@ class Transactions extends REST_Controller {
 							}
 						}
 
-						if($transaction->type=="Adjustment"){
-							$obj->on_hand = $value->on_hand;
-						}
+						if($transaction->type=="Item_Adjustment" && $item->cost==0){
+							//Avg Cost
+							$item->cost = floatval($value->cost);
+						}						
 
 						if($item->save()){
 							$po = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);

@@ -32165,8 +32165,9 @@
 				            <tr>
 				            	<th style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></th>				                
 				                <th data-bind="text: lang.lang.item"></th>
+				                <th style="width: 20px;" data-bind="text: lang.lang.cost"></th>
 				                <th data-bind="text: lang.lang.qoh"></th>
-				                <th data-bind="text: lang.lang.quantity_count"></th>
+				                <th style="width: 20px;" data-bind="text: lang.lang.quantity_count"></th>
 				                <th data-bind="text: lang.lang.different"></th>
 				            </tr>
 				        </thead>
@@ -32205,6 +32206,15 @@
 			#:banhji.itemAdjustment.lineDS.indexOf(data)+1#			
 		</td>
     	<td>#=description#</td>
+    	<td align="right">
+    		<input data-role="numerictextbox"
+                   data-format="c"
+                   data-culture=#:locale#
+                   data-min="0"
+                   data-spinners="false"                   
+                   data-bind="value: cost"
+                   style="text-align: right; width: 150px;" #=cost>0?disabled="disabled":""# >    		
+    	</td>
     	<td align="right">#=kendo.toString(on_hand, "n")#</td>
     	<td align="right">
     		<input class="txt#=uid#"
@@ -32214,7 +32224,7 @@
                    data-spinners="false"                   
                    data-bind="value: quantity_adjusted,
                    			  events:{ change: onChange }"
-                   style="width: 100px;">    		
+                   style="text-align: right; width: 100px;">    		
     	</td>
     	<td align="right">
     		<span data-format="n0" data-bind="text: quantity"></span>
@@ -71902,7 +71912,7 @@
 				para.push({ field:"category_id", value:category_id });
 			}
 
-			// para.push({ field:"item_type_id", value:1 });
+			para.push({ field:"item_type_id", value:1 });
 			para.push({ field:"is_catalog", value: 0 });
 			para.push({ field:"is_assembly", value: 0 });          
 
@@ -71922,6 +71932,8 @@
 						on_hand 			: value.on_hand,
 						quantity_adjusted 	: "",				
 						quantity 	 		: 0,
+						cost 				: value.cost,
+						additional_cost 	: 0,
 						rate				: banhji.source.getRate(value.locale, new Date(obj.issued_date)),
 						locale				: value.locale,
 						movement 			: 1				
@@ -72124,16 +72136,20 @@
 			$.each(this.lineDS.data(), function(index, value){										
 				var item = self.itemDS.get(value.item_id),
 				accountID = item.inventory_account_id,
-				itemRate = banhji.source.getRate(item.locale, new Date(obj.issued_date)),
-				itemCost = value.quantity*(item.cost/itemRate);
+				itemRate = banhji.source.getRate(item.locale, new Date(obj.issued_date));
+
+				var itemCost = value.quantity*(kendo.parseFloat(item.cost)/itemRate);
+				if(itemCost==0){
+					itemCost = value.quantity*(value.cost/itemRate);
+				}
 				
 				if(inventoryList[accountID]===undefined){
-					inventoryList[accountID]={"id": accountID, "amount": itemCost, "rate": itemRate, "locale": item.locale};						
+					inventoryList[accountID]={"id": accountID, "amount": itemCost };						
 				}else{											
 					if(inventoryList[accountID].id===accountID){
 						inventoryList[accountID].amount += itemCost;
 					}else{
-						inventoryList[accountID]={"id": accountID, "amount": itemCost, "rate": itemRate, "locale": item.locale};
+						inventoryList[accountID]={"id": accountID, "amount": itemCost };
 					}
 				}
 			});//End Foreach Loop			
@@ -72155,8 +72171,8 @@
 							segments 	 		: [],								
 							dr 	 				: Math.abs(value.amount),
 							cr 					: 0,				
-							rate				: value.rate,
-							locale				: value.locale
+							rate				: obj.rate,
+							locale				: obj.locale
 						});
 					}else{						
 						//Add -Negative Inventory On Cr
@@ -72168,8 +72184,8 @@
 							segments 	 		: [],								
 							dr 	 				: 0,
 							cr 					: Math.abs(value.amount),				
-							rate				: value.rate,
-							locale				: value.locale
+							rate				: obj.rate,
+							locale				: obj.locale
 						});
 					}								
 				});
