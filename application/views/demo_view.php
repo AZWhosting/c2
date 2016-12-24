@@ -43007,6 +43007,46 @@
 			page:1,
 			pageSize: 100
 		}),
+		expenseInventoryAccountDS			: new kendo.data.DataSource({
+			transport: {
+				read 	: {
+					url: apiUrl + "accounts",
+					type: "GET",
+					headers: banhji.header,
+					dataType: 'json'
+				},				
+				parameterMap: function(options, operation) {
+					if(operation === 'read') {
+						return {
+							page: options.page,
+							limit: options.pageSize,
+							filter: options.filter,
+							sort: options.sort
+						};
+					} else {
+						return {models: kendo.stringify(options.models)};
+					}
+				}
+			},
+			schema 	: {
+				model: {
+					id: 'id'
+				},
+				data: 'results',
+				total: 'count'
+			},
+			filter: [
+					{ field:"account_type_id", operator:"where_in", value: [13,36,37,38,40,41,42,43] },
+					{ field:"status", value: 1 }
+			],
+			sort: { field:"number", dir:"asc" },
+			batch: true,
+			serverFiltering: true,
+			serverSorting: true,
+			serverPaging: true,
+			page:1,
+			pageSize: 100
+		}),
 		ARAccountDS					: new kendo.data.DataSource({
 			transport: {
 				read 	: {
@@ -51962,7 +52002,7 @@
 		contactListDS 				: banhji.source.supplierListDS,
 		contactDS  					: banhji.source.supplierDS,
 		accountDS  					: dataStore(apiUrl + "accounts"),
-		expenseAccountDS  			: banhji.source.expenseAccountDS,
+		expenseAccountDS  			: banhji.source.expenseInventoryAccountDS,
 		itemDS  					: banhji.source.itemForSupplierDS,
 		depositDS  					: dataStore(apiUrl + "transactions"),
 		depositSumDS  				: new kendo.data.DataSource({
