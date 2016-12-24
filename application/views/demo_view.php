@@ -18942,7 +18942,7 @@
 									<tr>
 										<td><span data-bind="text: lang.lang.customers"></span></td>
 										<td>
-											<input id="cbbContact" name="cbbContact"
+											<input id="ccbItem" name="cbbContact"
 												   data-role="combobox"
 								                   data-value-primitive="true"
 								                   data-auto-bind="false"
@@ -19371,7 +19371,7 @@
 									<tr>
 										<td><span data-bind="text: lang.lang.customers"></span></td>
 										<td>
-											<input id="cbbContact" name="cbbContact"
+											<input id="ccbItem" name="cbbContact"
 												   data-role="combobox"
 								                   data-value-primitive="true"
 								                   data-auto-bind="false"
@@ -19872,7 +19872,7 @@
 
 								    	<!-- //GENERAL INFO -->
 								        <div class="tab-pane active" id="tab-1">									
-									       <input id="cbbContact" name="cbbContact"
+									       <input id="ccbItem" name="cbbContact"
 												   data-role="combobox"											                    
 								                   data-value-primitive="true"
 								                   data-auto-bind="false"
@@ -20362,7 +20362,7 @@
 
 								    	<!-- //GENERAL INFO -->
 								        <div class="tab-pane active" id="tab-1">									
-									       <input id="cbbContact" name="cbbContact"
+									       <input id="ccbItem" name="cbbContact"
 												   data-role="combobox"											                    
 								                   data-value-primitive="true"
 								                   data-auto-bind="false"
@@ -23890,7 +23890,7 @@
 
 								    	<!-- //GENERAL INFO -->
 								        <div class="tab-pane active" id="tab-1">									
-									       <input id="cbbContact" name="cbbContact"
+									       <input id="ccbItem" name="cbbContact"
 												   data-role="combobox"											                    
 								                   data-value-primitive="true"
 								                   data-auto-bind="false"
@@ -36873,7 +36873,7 @@
 														</div>
 													</div>
 													<div class="select2-container" style="width: 100%;">								
-														<input id="cbbContact" name="cbbContact"
+														<input id="ccbItem" name="cbbContact"
 															   data-role="combobox"
 															   data-auto-bind="false"    
 											                   data-value-primitive="true"
@@ -37198,7 +37198,7 @@
 													</div>
 												</div>
 												<div class="select2-container" style="width: 100%;">								
-													<input id="cbbContact" name="cbbContact"
+													<input id="ccbItem" name="cbbContact"
 														   data-role="combobox"
 														   data-auto-bind="false"
 														   data-header-template="vendor-header-tmpl"										                    
