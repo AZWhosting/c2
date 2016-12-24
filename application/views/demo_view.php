@@ -18301,7 +18301,7 @@
 									<tr>
 										<td><span data-bind="text: lang.lang.customers"></span></td>
 										<td>
-											<input id="cbbContact" name="cbbContact"
+											<input id="ccbItem" name="cbbContact"
 												   data-role="combobox"
 												   data-auto-bind="false"											                    
 								                   data-value-primitive="true"

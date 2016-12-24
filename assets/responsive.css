@@ -109,7 +109,7 @@
   padding: 5px 10px;
 }
 
-#cbbContact-list,
+/*#cbbContact-list,*/
 #cbbAccount-list,
 #cbbCurrency-list,
 #ddlRA-list,
@@ -134,10 +134,15 @@
 #ddlCategory-list,
 #ddlName-list,
 #txtMeasurement-list,
-#ddlIncome-list,
+#ddlIncome-list
 {
   width: 350px !important;
 }
+
+#cbbContact-list{
+  width: 350px !important;
+}
+
 .k-grid tbody tr {
     cursor: pointer !important;
 }
