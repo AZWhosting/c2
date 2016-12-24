@@ -8360,7 +8360,7 @@
 
 										    <div>
 												<input type="text" class="k-textbox" 
-														data-bind="value: note, events:{change:saveNoteEnter}" 
+														data-bind="value: note" 
 														placeholder="Add memo ..." 
 														style="width: 350px;" />
 												<span class="btn btn-primary" data-bind="click: saveNote"><span data-bind="text: lang.lang.add"></span></span>
@@ -15227,7 +15227,7 @@
 
 										    <div>
 												<input type="text" class="k-textbox" 
-														data-bind="value: note, events:{change:saveNoteEnter}" 
+														data-bind="value: note" 
 														placeholder="Add memo ..." 
 														style="width: 366px;" />
 												<span class="btn btn-primary" data-bind="click: saveNote"><span data-bind="text: lang.lang.add"></span></span>
@@ -23436,7 +23436,7 @@
 
 										    <div>
 												<input type="text" class="k-textbox" 
-														data-bind="value: note, events:{change:saveNoteEnter}" 
+														data-bind="value: note" 
 														placeholder="Add memo ..." 
 														style="width: 366px;" />
 												<span class="btn btn-primary" data-bind="click: saveNote"><span data-bind="text: lang.lang.add"></span></span>
