@@ -677,7 +677,7 @@ class Accounting_reports extends REST_Controller {
 			}									 			
 		}
 		
-		$obj->include_related("transaction", array("type", "number", "issued_date", "memo"));
+		$obj->include_related("transaction", array("type", "number", "issued_date", "memo","rate"));
 		$obj->include_related("account", array("number","name"));
 		$obj->include_related("contact", array("abbr","number","name"));
 		$obj->where_related("transaction", "is_journal", 1);
@@ -712,6 +712,7 @@ class Accounting_reports extends REST_Controller {
 					$objList[$value->transaction_id]["number"] = $value->transaction_number;
 					$objList[$value->transaction_id]["issued_date"] = $value->transaction_issued_date;
 					$objList[$value->transaction_id]["memo"] = $value->transaction_memo;
+					$objList[$value->transaction_id]["rate"] = $value->transaction_rate;
 					$objList[$value->transaction_id]["line"][] = array(
 						"id" 			=> $value->id,
 						"description" 	=> $value->description,

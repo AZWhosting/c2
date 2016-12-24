@@ -2455,8 +2455,8 @@
 <script id="journalReport-template" type="text/x-kendo-tmpl">
 	#var sumDr =0, sumCr = 0;#
 	#for(var i=0; i<line.length; i++){#
-		#sumDr += line[i].dr / line[i].rate;#
-		#sumCr += line[i].cr / line[i].rate;#
+		#sumDr += line[i].dr / rate;#
+		#sumCr += line[i].cr / rate;#
 		<tr>
 			<td style="color: black;">
 				#if(i==0){#
@@ -2483,12 +2483,12 @@
 			</td>			
 			<td class="right" style="color: black;">
 				#if(line[i].dr>0){#
-					#=kendo.toString(line[i].dr / line[i].rate, "c2", banhji.locale)#
+					#=kendo.toString(line[i].dr / rate, "c2", banhji.locale)#
 				#}#
 			</td>
 			<td class="right" style="color: black;">
 				#if(line[i].cr>0){#
-					#=kendo.toString(line[i].cr / line[i].rate, "c2", banhji.locale)#
+					#=kendo.toString(line[i].cr / rate, "c2", banhji.locale)#
 				#}#
 			</td>
 			<td></td>  			
@@ -53190,6 +53190,7 @@
 			//Inventory on Dr
 			if(!jQuery.isEmptyObject(inventoryList)){
 				$.each(inventoryList, function(index, value){
+					
 					if(value.amount>0){
 						self.journalLineDS.add({					
 							transaction_id 		: transaction_id,
@@ -63829,7 +63830,7 @@
 				data: 'results',
 				total: 'count'
 			},
-			filter: { field:"type", operator:"where_in", value:["Quote", "Sale_Order", "Deposit", "Cash_Sale", "Invoice", "Cash_Receipt", "GDN", "Sale_Return"] },			
+			filter: { field:"type", operator:"where_in", value:["Quote", "Sale_Order", "Deposit","Commercial_Cash_Sale", "Vat_Cash_Sale", "Cash_Sale","Commercial_Invoice","Vat_Invoice", "Invoice", "Cash_Receipt", "GDN", "Sale_Return"] },			
 			batch: true,
 			serverFiltering: true,
 			serverSorting: true,
