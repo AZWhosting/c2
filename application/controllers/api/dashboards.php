@@ -50,7 +50,7 @@ class Dashboards extends REST_Controller {
 		$ap = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 				
 		//A/R			
-		$ar->where("type", "Invoice");
+		$ar->where_in("type", array("Commercial_Invoice","Vat_Invoice","Invoice"));
 		$ar->where_in("status", array(0,2));
 		$ar->where("is_recurring", 0);		
 		$ar->where("deleted", 0);		
@@ -246,7 +246,7 @@ class Dashboards extends REST_Controller {
 				
 		//Sale
 		$sale = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);			
-		$sale->where_in("type", array("Invoice", "Cash_Sale", "Sale_Return"));
+		$sale->where_in("type", array("Commercial_Invoice","Vat_Invoice","Invoice","Commercial_Cash_Sale","Vat_Cash_Sale","Cash_Sale", "Sale_Return"));
 		$sale->where("issued_date >=", $this->startFiscalDate);
 		$sale->where("issued_date <", $this->endFiscalDate);
 		$sale->where("is_recurring", 0);		
@@ -259,7 +259,7 @@ class Dashboards extends REST_Controller {
 		$saleCustomerCount = 0;
 		foreach($sale as $value) {
 			//Total sale
-			if($value->type=="Invoice" || $value->type=="Cash_Sale"){
+			if($value->type=="Commercial_Invoice" || $value->type=="Vat_Invoice" || $value->type=="Invoice" || $value->type=="Commercial_Cash_Sale" || $value->type=="Vat_Cash_Sale" || $value->type=="Cash_Sale"){
 				$saleAmount += floatval($value->amount) / floatval($value->rate);
 			}else{
 				//Sale Return
@@ -278,7 +278,7 @@ class Dashboards extends REST_Controller {
 
 		//Sale Count Product
 		$saleProduct = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$saleProduct->where_in_related("transaction", "type", array("Invoice","Cash_Sale"));
+		$saleProduct->where_in_related("transaction", "type", array("Commercial_Invoice","Vat_Invoice","Invoice","Commercial_Cash_Sale","Vat_Cash_Sale","Cash_Sale"));
 		$saleProduct->where_related("transaction", "issued_date >=", $this->startFiscalDate);
 		$saleProduct->where_related("transaction", "issued_date <", $this->endFiscalDate);	
 		$saleProduct->where_related("item", "item_type_id", 1);
@@ -297,7 +297,7 @@ class Dashboards extends REST_Controller {
 
 		//Sale Count Order
 		$saleOrder = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$saleOrder->where_in("type", array("Invoice", "Cash_Sale"));
+		$saleOrder->where_in("type", array("Commercial_Invoice","Vat_Invoice","Invoice","Commercial_Cash_Sale","Vat_Cash_Sale","Cash_Sale"));
 		$saleOrder->where("status", 1);		
 		$saleOrder->where("type", "Sale_Order");		
 
@@ -330,7 +330,7 @@ class Dashboards extends REST_Controller {
 
 		// AR
 		$ar = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);			
-		$ar->where("type", "Invoice");
+		$ar->where_in("type", array("Commercial_Invoice","Vat_Invoice","Invoice"));
 		$ar->where_in("status", array(0,2));
 		$ar->where("is_recurring", 0);		
 		$ar->where("deleted", 0);		
@@ -389,7 +389,7 @@ class Dashboards extends REST_Controller {
 
 		//Credit Sale
 		$creditSale = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);			
-		$creditSale->where_in("type", "Invoice");
+		$creditSale->where_in("type", array("Commercial_Invoice","Vat_Invoice","Invoice"));
 		$creditSale->where("issued_date >=", $this->startFiscalDate);
 		$creditSale->where("issued_date <", $this->endFiscalDate);
 		$creditSale->where("is_recurring", 0);		
@@ -460,7 +460,7 @@ class Dashboards extends REST_Controller {
     		}	    										 			
 		}
 
-		$obj->where("type", "Invoice");
+		$obj->where_in("type", array("Commercial_Invoice","Vat_Invoice","Invoice"));
 		$obj->where_in("status", array(0,2));
 		$obj->where("is_recurring", $is_recurring);		
 		$obj->where("deleted", $deleted);		
@@ -533,7 +533,7 @@ class Dashboards extends REST_Controller {
 			}									 			
 		}
 		
-		$obj->where_in("type", array("Invoice","Cash_Sale","Sale_Order"));
+		$obj->where_in("type", array("Commercial_Invoice","Vat_Invoice","Invoice","Commercial_Cash_Sale","Vat_Cash_Sale","Cash_Sale","Sale_Order"));
 		$obj->where("issued_date >=", $this->startFiscalDate);
 		$obj->where("issued_date <", $this->endFiscalDate);
 		$obj->where("is_recurring", $is_recurring);		
@@ -547,13 +547,13 @@ class Dashboards extends REST_Controller {
 			$amount = floatval($value->amount) / floatval($value->rate);
 
 			if(isset($transactionList[$month])){
-				if($value->type==="Invoice" || $value->type==="Cash_Sale"){
+				if($value->type==="Commercial_Invoice" || $value->type==="Vat_Invoice" || $value->type==="Invoice" || $value->type==="Commercial_Cash_Sale" || $value->type==="Vat_Cash_Sale" || $value->type==="Cash_Sale"){
 					$transactionList[$month]["sale"] += $amount;
 				}else{
 					$transactionList[$month]["order"] += $amount;
 				}
 			} else {
-				if($value->type==="Invoice" || $value->type==="Cash_Sale"){
+				if($value->type==="Commercial_Invoice" || $value->type==="Vat_Invoice" || $value->type==="Invoice" || $value->type==="Commercial_Cash_Sale" || $value->type==="Vat_Cash_Sale" || $value->type==="Cash_Sale"){
 					$transactionList[$month] = array("sale"=>$amount, "order"=>0);
 				}else{
 					$transactionList[$month] = array("sale"=>0, "order"=>$amount);
@@ -599,7 +599,7 @@ class Dashboards extends REST_Controller {
 			}									 			
 		}
 		
-		$obj->where_in("type", array("Invoice","Cash_Receipt"));
+		$obj->where_in("type", array("Commercial_Invoice","Vat_Invoice","Invoice","Cash_Receipt"));
 		$obj->where("issued_date >=", $this->startFiscalDate);
 		$obj->where("issued_date <", $this->endFiscalDate);
 		$obj->where_in("status", array(0,2));
@@ -614,13 +614,13 @@ class Dashboards extends REST_Controller {
 			$amount = floatval($value->amount) / floatval($value->rate);
 
 			if(isset($transactionList[$month])){
-				if($value->type==="Invoice"){
+				if($value->type==="Commercial_Invoice" || $value->type==="Vat_Invoice" || $value->type==="Invoice"){
 					$transactionList[$month]["receivable"] += $amount;
 				}else{
 					$transactionList[$month]["payment"] += $amount;
 				}
 			} else {
-				if($value->type==="Invoice"){
+				if($value->type==="Commercial_Invoice" || $value->type==="Vat_Invoice" || $value->type==="Invoice"){
 					$transactionList[$month] = array("receivable"=>$amount, "payment"=>0);
 				}else{
 					$transactionList[$month] = array("receivable"=>0, "payment"=>$amount);
@@ -703,7 +703,7 @@ class Dashboards extends REST_Controller {
 			}									 			
 		}
 				
-		$obj->where_in("type", array("Invoice", "Cash_Sale"));
+		$obj->where_in("type", array("Commercial_Invoice","Vat_Invoice","Invoice","Commercial_Cash_Sale","Vat_Cash_Sale","Cash_Sale"));
 		$obj->where("is_recurring", $is_recurring);		
 		$obj->where("deleted", $deleted);		
 		$obj->get_iterated();
@@ -814,7 +814,7 @@ class Dashboards extends REST_Controller {
 			}									 			
 		}
 
-		$obj->where("type", "Invoice");
+		$obj->where_in("type", array("Commercial_Invoice","Vat_Invoice","Invoice"));
 		$obj->where_in("status", array(0,2));
 		$obj->where("is_recurring", $is_recurring);		
 		$obj->where("deleted", $deleted);		
@@ -1499,7 +1499,7 @@ class Dashboards extends REST_Controller {
 
 		//Open RECEIVALBLE
 		$ar = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);			
-		$ar->where("type", "Invoice");
+		$ar->where_in("type", array("Commercial_Invoice","Vat_Invoice","Invoice"));
 		$ar->where_in("status", array(0,2));
 		$ar->where("is_recurring", 0);		
 		$ar->where("deleted", 0);		
@@ -1597,7 +1597,7 @@ class Dashboards extends REST_Controller {
 
 		//SALE (Begin FiscalDate To As Of)
 		$sale = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$sale->where_in("type", array("Invoice","Cash_Sale","Sale_Return"));
+		$sale->where_in("type", array("Commercial_Invoice","Vat_Invoice","Invoice","Commercial_Cash_Sale","Vat_Cash_Sale","Cash_Sale","Sale_Return"));
 		$sale->where("issued_date >=", $this->startFiscalDate);
 		$sale->where("issued_date <=", $today);
 		$sale->where("is_recurring", 0);
@@ -1607,7 +1607,7 @@ class Dashboards extends REST_Controller {
 		//Sum Sale					
 		$totalSale = 0;
 		foreach ($sale as $value) {
-			if($value->type=="Invoice" || $value->type=="Cash_Sale"){
+			if($value->type=="Commercial_Invoice" || $value->type=="Vat_Invoice" || $value->type=="Invoice" || $value->type=="Commercial_Cash_Sale" || $value->type=="Vat_Cash_Sale" || $value->type=="Cash_Sale"){
 				$totalSale += floatval($value->amount) / floatval($value->rate);
 			}else{
 				// -Sale Return
@@ -1743,7 +1743,7 @@ class Dashboards extends REST_Controller {
 		
 		$obj->include_related("item", array("number", "name"), FALSE);		
 		
-		$obj->where_in_related("transaction", "type", array("Invoice", "Cash_Sale"));
+		$obj->where_in_related("transaction", "type", array("Commercial_Invoice","Vat_Invoice","Invoice","Commercial_Cash_Sale","Vat_Cash_Sale","Cash_Sale"));
 		$obj->where_related("transaction", "issued_date >=", $this->startFiscalDate);
 		$obj->where_related("transaction", "issued_date <", $this->endFiscalDate);		
 		$obj->where_related("transaction", "is_recurring", 0);		
@@ -1886,7 +1886,7 @@ class Dashboards extends REST_Controller {
 
 		//SALE (Begin FiscalDate To As Of)
 		$sale = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$sale->where_in("type", array("Invoice","Cash_Sale","Sale_Return"));
+		$sale->where_in("type", array("Commercial_Invoice","Vat_Invoice","Invoice","Commercial_Cash_Sale","Vat_Cash_Sale","Cash_Sale","Sale_Return"));
 		$sale->where("issued_date >=", $this->startFiscalDate);
 		$sale->where("issued_date <=", $today);
 		$sale->where("is_recurring", 0);
@@ -1896,7 +1896,7 @@ class Dashboards extends REST_Controller {
 		//Sum Sale					
 		$totalSale = 0;
 		foreach ($sale as $value) {
-			if($value->type=="Invoice" || $value->type=="Cash_Sale"){
+			if($value->type=="Commercial_Invoice" || $value->type=="Vat_Invoice" || $value->type=="Invoice" || $value->type=="Commercial_Cash_Sale" || $value->type=="Vat_Cash_Sale" || $value->type=="Cash_Sale"){
 				$totalSale += floatval($value->amount) / floatval($value->rate);
 			}else{
 				// -Sale Return
@@ -1978,7 +1978,7 @@ class Dashboards extends REST_Controller {
 			}									 			
 		}
 		
-		$obj->where_in("type", array("Cash_Purchase","Credit_Purchase","Invoice","Cash_Sale"));
+		$obj->where_in("type", array("Cash_Purchase","Credit_Purchase","Commercial_Invoice","Vat_Invoice","Invoice","Commercial_Cash_Sale","Vat_Cash_Sale","Cash_Sale"));
 		$obj->where("issued_date >=", $this->startFiscalDate);
 		$obj->where("issued_date <", $this->endFiscalDate);
 		$obj->where("is_recurring", 0);		
