@@ -8586,20 +8586,33 @@
 		onTypeChange: function(e) {
 			console.log(this.addNewItemType);
 			var self = this;
+			this.list = [];
+			this.filters = null;
 			if(this.addNewItemType) {
-				console.log(this.current.items.length);
+				if(this.get('current').items.length > 0) {
+					for(var i = 0; i < this.get('current').items.length; i++) {
+						if(this.get('current').items[i].item != "") {
+							this.list.push(self.get('current').items[i].item);
+						}
+					}
+				} 
+				if(this.list.length > 0) {
+					this.filters = [
+						{field: "type", value: this.addNewItemType.id},
+						{field: "id", operator:"or_where_in", value: this.list}
+					];
+				}
+				else {
+					this.filters = {field: "type", value: this.addNewItemType.id};
+				}
+				console.log(this.list);
+
 				this.itemDS.query({
-					filter: {field: "type", value: this.addNewItemType.id}
+					filter: this.filters
 				})
 				.then(function(e){
 					self.planItemList.splice(0, self.planItemList.length);
-					var that = this;
-					this.list = [];
-					$.each(self.get("current").items, function(i, v){
-						// self.planItemList.push(v);
-						that.list.push(v.item);
-						console.log(that.list);
-					});
+					
 					$.each(self.itemDS.data(), function(i, v){
 						self.planItemList.push(v);	
 					});

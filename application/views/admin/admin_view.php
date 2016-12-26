@@ -90,7 +90,7 @@
                           </div>
                           </div>
                           <div class="profile-statistic tbl" style="margin-top: 15px;">
-                            <a href="<?php echo base_url(); ?>rrd" type="button" class="btn btn-block goto-banhji" style="background-color: #001933;">Go to BanhJi App</a>
+                            <button type="button" class="btn btn-block goto-banhji" style="background-color: #001933;" data-bind="click: checkRole">Go to BanhJi App</button>
                             <button type="button" class="btn btn-block goto-banhji" data-bind="click: goModule">Assigned Modules</button>
                             <button type="button" class="btn btn-block goto-banhji" data-bind="click: goProfile">View/ Edit Profile</button>
                             <button type="button" class="btn btn-block goto-banhji" data-bind="click: userProfile.goPassword">Change Password</button>
@@ -2951,6 +2951,14 @@
       banhji.company = kendo.observable({
         dataStore: banhji.companyDS,
         data: '',
+        checkRole  : function() {
+          // e.preventDefault();
+        if(JSON.parse(localStorage.getItem('userData/user')).role == 1) {
+                window.location.replace(baseUrl + "rrd/");
+              } else {
+                window.location.replace("<?php echo base_url(); ?>admin");
+              }
+        },
         media: new image(),
         modules: banhji.moduleDS,
         countries: banhji.countries,

@@ -31086,12 +31086,16 @@
 											</div>
 						        		</div>
 										<div class="span6">
-											<p>Upload Image:</p>
-											<img width="120px" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/no_image.jpg" style="margin-bottom: 15px; border: 1px solid #ddd;">
+											<img width="120px" data-bind="attr: { src: obj.image_url }" style="margin-bottom: 15px; border: 1px solid #ddd;">
 											
-											<div class="k-widget k-upload k-header k-upload-sync k-upload-empty"><div class="k-button k-upload-button"><input id="files" name="files" type="file" data-role="upload" data-show-file-list="false" data-bind="events: { 
-				                   				select: onSelect
-						                   }" multiple="multiple" autocomplete="off" class="k-valid"><span>Select files...</span></div></div>
+											<input id="files" name="files"
+							                    type="file"
+							                    data-role="upload"
+							                    data-multiple="false"
+							                    data-show-file-list="false"
+							                    data-bind="events: { 
+					                   				select: onSelect
+							                    }">
 										</div>
 																						
 							        </div>
@@ -63033,7 +63037,7 @@
 	    	//Reference
 	    	if(obj.reference_id>0){
 	    		var ref = this.referenceDS.get(obj.reference_id);				
-				ref.set("status", 1);
+				ref.set("status", 3);
 				this.referenceDS.sync();
 			}else{
 				obj.set("reference_id", 0);
@@ -63440,7 +63444,8 @@
 				this.set("enableRef", true);
 
 				this.referenceDS.filter([
-					{ field: "contact_id", value: obj.contact_id },					
+					{ field: "contact_id", value: obj.contact_id },
+					{ field: "status <>", value: 3 },					
 					{ field: "type", operator:"where_in", value:["Commercial_Invoice", "Vat_Invoice", "Invoice", "Commercial_Cash_Sale","Vat_Cash_Sale", "Cash_Sale"] }
 				]);				
 			}else{

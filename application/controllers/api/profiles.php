@@ -477,6 +477,7 @@ class Profiles extends REST_Controller {
 					'id' => $company->id,
 					'name'=>$company->name,
 					'email' => $company->email,
+					'telephone' => $company->telephone,
 					'address'=>$company->address,
 					'logo' => array('id'=>$pimage->id, 'url' => $pimage->url),
 					'description' => $company->description,
