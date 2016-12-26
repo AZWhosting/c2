@@ -613,9 +613,9 @@
 	            <div class="tab-pane" id="tab6">
 	            
 	            	<div style="clear: both;margin-bottom: 10px;">
-	            		<input data-bind="value: depositName" type="text" placeholder="Name" style="height: 32px;"  class="span3 k-textbox k-invalid" />
+	            		<input data-bind="value: depositName" type="text" placeholder="Name" style="height: 32px;"  class="span2 k-textbox k-invalid" />
 		            	<input data-role="dropdownlist"
-		            	   class="span3"
+		            	   class="span2"
 		            	   style="padding-right: 1px;height: 32px;" 
             			   data-option-label="(--- Acount ---)"
             			   data-auto-bind="false"			                   
@@ -625,7 +625,18 @@
 		                   data-bind="value: depositAccount,
 		                              source: depositAccDS"/>
 
-		            	<input data-bind="value: depositPrice" type="text" placeholder="Price" style="height: 32px;" class="span3 k-textbox k-invalid" />
+		                <input data-role="dropdownlist"
+		            	   class="span2"
+		            	   style="padding-right: 1px;height: 32px;" 
+            			   data-option-label="(--- Currency ---)"
+            			   data-auto-bind="false"			                   
+		                   data-value-primitive="true"
+		                   data-text-field="code"
+		                   data-value-field="id"
+		                   data-bind="value: depositCurrency,
+		                              source: currencyDS"/>
+
+		            	<input data-bind="value: depositPrice" type="text" placeholder="Price" style="height: 32px;" class="span2 k-textbox k-invalid" />
 
 		            	<a class="btn btn-default glyphicons circle_plus cutype-icon" style="width: 80px;margin-left: 2px;" data-bind="click: addDeposit"><i></i>Add</a>
 		            </div>
@@ -647,10 +658,10 @@
 	            </div>
 	            <div class="tab-pane" id="tab7">
 	            	<div style="clear: both;margin-bottom: 10px;">
-	            		<input data-bind="value: serviceName" type="text" placeholder="Name" style="height: 32px;"  class="span3 k-textbox k-invalid" />
+	            		<input data-bind="value: serviceName" type="text" placeholder="Name" style="height: 32px;"  class="span2 k-textbox k-invalid" />
 
 		            	<input data-role="dropdownlist"
-		            	   class="span3"
+		            	   class="span2"
 		            	   style="padding-right: 1px;height: 32px;" 
             			   data-option-label="(--- Acount ---)"
             			   data-auto-bind="false"			                   
@@ -659,7 +670,18 @@
 		                   data-value-field="id"
 		                   data-bind="value: serviceAccount,
 		                              source: tariffAccDS"/>
-		            	<input data-bind="value: servicePrice" type="text" placeholder="Price" style="height: 32px;" class="span3 k-textbox k-invalid" />
+		                <input data-role="dropdownlist"
+		            	   class="span2"
+		            	   style="padding-right: 1px;height: 32px;" 
+            			   data-option-label="(--- Currency ---)"
+            			   data-auto-bind="false"			                   
+		                   data-value-primitive="true"
+		                   data-text-field="code"
+		                   data-value-field="id"
+		                   data-bind="value: serviceCurrency,
+		                              source: currencyDS"/>
+
+		            	<input data-bind="value: servicePrice" type="text" placeholder="Price" style="height: 32px;" class="span2 k-textbox k-invalid" />
 
 		            	<a class="btn btn-default glyphicons circle_plus cutype-icon" style="width: 80px;margin-left: 2px;" data-bind="click: addService"><i></i>Add</a>
 		            </div>
@@ -681,9 +703,9 @@
 	            </div>
 	            <div class="tab-pane" id="tab8">
 	            	<div style="clear: both;margin-bottom: 10px;">
-	            		<input data-bind="value: maintenanceName" type="text" placeholder="Name" style="height: 32px;"  class="span3 k-textbox k-invalid" />
+	            		<input data-bind="value: maintenanceName" type="text" placeholder="Name" style="height: 32px;"  class="span2 k-textbox k-invalid" />
 		            	<input data-role="dropdownlist"
-		            	   class="span3"
+		            	   class="span2"
 		            	   style="padding-right: 1px;height: 32px;" 
             			   data-option-label="(--- Acount ---)"
             			   data-auto-bind="false"			                   
@@ -692,7 +714,17 @@
 		                   data-value-field="id"
 		                   data-bind="value: maintenanceAccount,
 		                              source: tariffAccDS"/>
-		            	<input data-bind="value: maintenancePrice" type="text" placeholder="Price" style="height: 32px;" class="span3 k-textbox k-invalid" />
+		                <input data-role="dropdownlist"
+		            	   class="span2"
+		            	   style="padding-right: 1px;height: 32px;" 
+            			   data-option-label="(--- Currency ---)"
+            			   data-auto-bind="false"			                   
+		                   data-value-primitive="true"
+		                   data-text-field="code"
+		                   data-value-field="id"
+		                   data-bind="value: maintenanceCurrency,
+		                              source: currencyDS"/>
+		            	<input data-bind="value: maintenancePrice" type="text" placeholder="Price" style="height: 32px;" class="span2 k-textbox k-invalid" />
 
 		            	<a class="btn btn-default glyphicons circle_plus cutype-icon" style="width: 80px;margin-left: 2px;" data-bind="click: addMaintenance"><i></i>Add</a>
 		            </div>
@@ -1402,27 +1434,20 @@
 			            <div class="row-fluid">
 							<!-- Column -->
 							<div class="span4">
-								<button class="btn btn-inverse" data-bind="click: addItem">
+								<button style="float: left" class="btn btn-inverse" data-bind="click: addItem">
 									<i class="icon-plus icon-white"></i>
 								</button>
-								<!-- Add New Item -->
-								<ul class="topnav addNew">
-									<li role="presentation" class="dropdown ">
-								  		<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-								  			<span >Add New Item</span>
-					    					<span class="caret"></span>
-								  		</a>
-							  			<ul class="dropdown-menu addNewItem">  				  				
-							  				<li><a data-bind="click: goSetting" data-go="3"><span >Excemption</span></a></li>
-							  				<li><a data-bind="click: goSetting" data-go="4"><span >Tariff</span></a></li>
-							  				<li><a data-bind="click: goSetting" data-go="5"><span >Deposit</span></a></li>
-							  				<li><a data-bind="click: goSetting" data-go="6"><span >Service</span></a></li>
-							  				<li><a data-bind="click: goSetting" data-go="7"><span >Maintenance</span></a></li>
-							  				<li><a data-bind="click: goSetting" data-go="8"><span >Installation</span></a></li>  	
-							  			</ul>
-								  	</li>				
-								</ul>
-								<!--End Add New Item -->
+								<input data-role="dropdownlist"
+				            	   class="span8"
+				            	   style="padding-right: 1px;height: 32px;" 
+		            			   data-option-label="Add New Item"
+		            			   data-auto-bind="false"			                   
+				                   data-value-primitive="false"
+				                   data-text-field="name"
+				                   data-value-field="id"
+				                   data-bind="value: addNewItemType,
+				                              source: ItemTypeDS,
+				                              events: {change: onTypeChange}"/>
 							</div>
 							<!-- Column END -->
 						</div>
@@ -1460,9 +1485,10 @@
 				data-auto-bind="true"  
 				data-text-field="name" 
 				data-value-field="id" 
+				data-value-primitive="false"
 				data-bind="
 					value: item, 
-					source: itemDS, 
+					source: planItemList, 
 					events: {change: onChange}">
 		</td>
 		<td><input type="text" class="k-textbox" data-bind="value: type" /></td>
@@ -8507,14 +8533,17 @@
 		}),
 		itemDS 		: dataStore(apiUrl + "plans/items"),
 		itemSelect 	: 0,
+		ItemTypeDS  : [{id:"exemption",name: "Exemption"}, {id: "tariff",name: "Tariff"},{id:"deposit",name:"Deposit"},{id:"service",name:"Service"},{id:"maintenance",name:"Maintenance"},{id:"installment",name:"Installment"}],
+		addNewItemType : null,
 		current 	: null,
 		list 		: [],
+		planItemList: [],
 		pageLoad    : function(id){
 			if(id){
 				this.loadObj(id);
 			}else{
 				this.addNew();
-				this.itemDS.read();
+				//this.itemDS.read();
 				this.addItem();
 			}
 		},
@@ -8552,16 +8581,38 @@
 			this.dataSource.remove(e.data);
 		},
 		addItem 	: function() {
-			this.get("current").items.push({item: "", type: "", name: "", amount: 0});
+			this.get("current").items.push({item:"", type: "", name: "", amount: 0});
+		},
+		onTypeChange: function(e) {
+			console.log(this.addNewItemType);
+			var self = this;
+			if(this.addNewItemType) {
+				console.log(this.current.items.length);
+				this.itemDS.query({
+					filter: {field: "type", value: this.addNewItemType.id}
+				})
+				.then(function(e){
+					self.planItemList.splice(0, self.planItemList.length);
+					var that = this;
+					this.list = [];
+					$.each(self.get("current").items, function(i, v){
+						// self.planItemList.push(v);
+						that.list.push(v.item);
+						console.log(that.list);
+					});
+					$.each(self.itemDS.data(), function(i, v){
+						self.planItemList.push(v);	
+					});
+						
+				});
+				
+			}else{
+				this.itemDS.read();
+				this.get("current").items.push({item: "", type: "", name: "", amount: 0});
+			}
 		},
 		removeItem 	: function(e) {
 			this.items.remove(e);
-		},
-		goSetting 	: function(e){
-			var data = $(e.currentTarget).data("go");
-			console.log(data);
-			banhji.setting.set("tabGo", data);
-			banhji.router.navigate('/setting');
 		},
 		save 		: function() {
 			var dfd = $.Deferred(), self = this;
@@ -9023,11 +9074,13 @@
         		unit 		: null,
         		account 	: this.get("depositAccount"),
         		usage 		: 0,
+        		currency 	: this.get("depositCurrency"),
         		amount 		: this.get("depositPrice")
         	});
         	this.planItemDS.sync();
         	this.set("depositName", "");
         	this.set("depositPrice", "");
+        	this.set("depositCurrency", "");
         	this.set("depositAccount", "");
         },
         goService    		: function(){
@@ -9042,11 +9095,13 @@
         		unit 		: null,
         		account 	: this.get("serviceAccount"),
         		usage 		: 0,
+        		currency 	: this.get("serviceCurrency"),
         		amount 		: this.get("servicePrice")
         	});
         	this.planItemDS.sync();
         	this.set("serviceName", "");
         	this.set("servicePrice", "");
+        	this.set("serviceCurrency","");
         	this.set("serviceAccount", "");
         },
         goMaintenance    		: function(){
@@ -9061,12 +9116,14 @@
         		unit 		: null,
         		account 	: this.get("maintenanceAccount"),
         		usage 		: 0,
+        		currency 	: this.get("maintenanceCurrency"),
         		amount 		: this.get("maintenancePrice")
         	});
         	this.planItemDS.sync();
         	this.set("maintenanceName", "");
         	this.set("maintenancePrice", "");
         	this.set("maintenanceAccount", "");
+        	this.set("maintenanceCurrency","");
         },
         goPlan 				: function(){
         	this.planDS.read();

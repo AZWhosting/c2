@@ -88,18 +88,18 @@ class Items extends REST_Controller {
 				if($value->item_type_id=="1"){					
 					$itemIn = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 					$itemIn->select_sum("quantity");
-					$itemIn->where_in_related("transaction", "type", array("Cash_Purchase", "Credit_Purchase", "Item_Adjustment"));
-					$itemIn->where_related("transaction", "is_recurring", 0);
-					$itemIn->where_related("transaction", "deleted", 0);
+					$itemIn->where_in_related("transaction", "type", array("Cash_Purchase", "Credit_Purchase", "Item_Adjustment","Sale_Return"));
+					$itemIn->where_related("transaction", "is_recurring <>", 1);
+					$itemIn->where_related("transaction", "deleted <>", 1);
 					$itemIn->where("item_id", $value->id);
 					$itemIn->where("movement", 1);
 					$itemIn->get();
 					
 					$itemOut = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 					$itemOut->select_sum("quantity");
-					$itemOut->where_in_related("transaction", "type", array("Invoice", "Cash_Sale", "Item_Adjustment"));
-					$itemOut->where_related("transaction", "is_recurring", 0);
-					$itemOut->where_related("transaction", "deleted", 0);
+					$itemOut->where_in_related("transaction", "type", array("Commercial_Invoice","Vat_Invoice","Invoice", "Commercial_Cash_Sale", "Vat_Cash_Sale", "Cash_Sale", "Item_Adjustment","Purchase_Return"));
+					$itemOut->where_related("transaction", "is_recurring <>", 1);
+					$itemOut->where_related("transaction", "deleted <>", 1);
 					$itemOut->where("item_id", $value->id);
 					$itemOut->where("movement", -1);
 					$itemOut->get();					

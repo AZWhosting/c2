@@ -34,30 +34,29 @@
     </div>
     <script type="text/x-kendo-template" id="header-menu">
       <header class="site-header">
-          <div class="container-fluid">
-              <a href="#" data-bind="click: checkRole" class="site-logo">
-                  <div class="hidden-xs">
-                      <img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/banhji-logo.png" alt="" width="40">
+        <div class="container-fluid">
+          <a href="#" data-bind="click: checkRole" class="site-logo">
+            <div class="hidden-xs">
+                <img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/banhji-logo.png" alt="" width="40">
+            </div>
+            <img class="hidden-sm hidden-md hidden-lg" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/banhji-logo.png" alt="">
+          </a>
+
+          <div class="site-header-content">
+            <div class="site-header-content-in">
+              <div class="site-header-shown">
+                <div class="dropdown user-menu">
+                  <button class="dropdown-toggle" id="dd-user-menu" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span style="color:#fff;" data-bind="text: currentID.username"></span>
+                  </button>
+                  <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dd-user-menu">
+                    <a class="dropdown-item" href="#" data-bind="click: logOut"><span class="font-icon glyphicon glyphicon-log-out"></span>Logout</a>
                   </div>
-                  <img class="hidden-sm hidden-md hidden-lg" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/banhji-logo.png" alt="">
-              </a>
-
-              <div class="site-header-content">
-                  <div class="site-header-content-in">
-                      <div class="site-header-shown">
-
-                          <div class="dropdown user-menu">
-                              <button class="dropdown-toggle" id="dd-user-menu" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                  <span style="color:#fff;" data-bind="text: currentID.username"></span>
-                              </button>
-                              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dd-user-menu">
-                                  <a class="dropdown-item" href="#" data-bind="click: logOut"><span class="font-icon glyphicon glyphicon-log-out"></span>Logout</a>
-                              </div>
-                          </div>
-                      </div><!--.site-header-shown-->
-                  </div><!--site-header-content-in-->
-              </div><!--.site-header-content-->
-          </div><!--.container-fluid-->
+                </div>
+              </div><!--.site-header-shown-->
+            </div><!--site-header-content-in-->
+          </div><!--.site-header-content-->
+        </div><!--.container-fluid-->
       </header>
     </script>
     <script type="text/x-kendo-template" id="companyDash">
@@ -534,6 +533,13 @@
                               </td>
                             </tr>
                             <tr>
+                              <td>Telephone</td>
+                              <td>:</td>
+                              <td>
+                                <input type="phone" class="form-control" id="" value="" data-bind="value: current.telephone">
+                              </td>
+                            </tr>
+                            <tr>
                               <td>Email</td>
                               <td>:</td>
                               <td>
@@ -711,6 +717,11 @@
                     <td>Company Name</td>
                     <td>:</td>
                     <td><span data-bind="text:current.name"></span></td>
+                </tr>
+                <tr>
+                    <td>Telephone</td>
+                    <td>:</td>
+                    <td><span data-bind="text:current.telephone"></span></td>
                 </tr>
                 <tr>
                     <td>Email</td>
@@ -2927,6 +2938,7 @@
             if(res.results.length > 0) {
               if(type != 'read'){
                 $("#ntf1").data("kendoNotification").success("Data saved.");
+                banhji.router.navigate('userlist');
               }              
               banhji.router.route('userlist');
             } else {

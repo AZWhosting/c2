@@ -29792,7 +29792,7 @@
 											</div>
 						        		</div>
 										<div class="span6">
-											<img width="120px" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/no_image.jpg" style="margin-bottom: 15px; border: 1px solid #ddd;">
+											<img width="120px" data-bind="attr: { src: obj.image_url }" style="margin-bottom: 15px; border: 1px solid #ddd;">
 											
 											<input id="files" name="files"
 							                    type="file"
@@ -43681,14 +43681,14 @@
 	    cashMGTFormList				: [
 	    	{ id: "Cash_Transfer", name: "Transfer" },
 	    	{ id: "Deposit", name: "Deposit" },
-			{ id: "Witdraw", name: "Witdraw" },
+			{ id: "Withdraw", name: "Withdraw" },
 			{ id: "Cash_Advance", name: "Advance" },
 			{ id: "Cash_Payment", name: "Payment" },
 			{ id: "Reimbursement", name: "Reimbursement" },
 			{ id: "Journal", name: "Journal" }
 	    ],
 		genderList					: ["M", "F"],
-		typeList 					: ['Invoice','Commercial_Invoice','Vat_Invoice','Electricity_Invoice','Water_Invoice','Cash_Sale','Commercial_Cash_Sale','Vat_Cash_Sale','Receipt_Allocation','Sale_Order','Quote','GDN','Sale_Return','Purchase_Order','GRN','Cash_Purchase','Credit_Purchase','Purchase_Return','Payment_Allocation','Deposit','Electricty_Deposit','Water_Deposit','Customer_Deposit','Vendor_Deposit','Witdraw','Transfer','Journal','Item_Adjustment','Cash_Advance','Reimbursement','Direct_Expense','Advance_Settlement','Additional_Cost','Cash_Payment','Cash_Receipt','Credit_Note','Debit_Note','Offset_Bill','Offset_Invoice','Cash_Transfer','Internal_Usage'],
+		typeList 					: ['Invoice','Commercial_Invoice','Vat_Invoice','Electricity_Invoice','Water_Invoice','Cash_Sale','Commercial_Cash_Sale','Vat_Cash_Sale','Receipt_Allocation','Sale_Order','Quote','GDN','Sale_Return','Purchase_Order','GRN','Cash_Purchase','Credit_Purchase','Purchase_Return','Payment_Allocation','Deposit','Electricty_Deposit','Water_Deposit','Customer_Deposit','Vendor_Deposit','Withdraw','Transfer','Journal','Item_Adjustment','Cash_Advance','Reimbursement','Direct_Expense','Advance_Settlement','Additional_Cost','Cash_Payment','Cash_Receipt','Credit_Note','Debit_Note','Offset_Bill','Offset_Invoice','Cash_Transfer','Internal_Usage'],
 		user_id						: banhji.userData.id,
 		amtDueColor 				: "#D5DBDB",
 		acceptedSrc					: "https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/accepted.ico",
@@ -46378,7 +46378,7 @@
 		},
 		search 				: function(){
 			this.dataSource.filter([
-				{ field:"type", operator:"where_in", value:["Deposit","Witdraw","Transfer","Cash_Advance","Journal","Direct_Expense","Reimbursement","Advance_Settlement"] },
+				{ field:"type", operator:"where_in", value:["Deposit","Withdraw","Transfer","Cash_Advance","Journal","Direct_Expense","Reimbursement","Advance_Settlement"] },
 				{ field:"is_recurring", value: 1 }
 			]);
 		},
@@ -46395,7 +46395,7 @@
 			        banhji.router.navigate('/cash_transaction/' + data.id);
 
 			        break;
-			    case "Witdraw":
+			    case "Withdraw":
 			        banhji.cashTransaction.set("recurring", "edit");
 			        banhji.router.navigate('/cash_transaction/' + data.id);
 
@@ -46442,7 +46442,7 @@
 			        banhji.router.navigate('/cash_transaction/' + data.id);
 
 			        break;
-			    case "Witdraw":
+			    case "Withdraw":
 			        banhji.cashTransaction.set("recurring", "use");
 			        banhji.router.navigate('/cash_transaction/' + data.id);
 
@@ -63000,7 +63000,7 @@
 				discount 			: 0,
 				rate				: obj.rate,
 				locale				: obj.locale,							
-				movement 			: -1,
+				movement 			: 1,
 
 				item_prices 		: []
 			});																	
@@ -66854,7 +66854,7 @@
 		}),					
 		types 				: [
 			{id: 'Deposit', name: 'Deposit'},
-			{id: 'Witdraw', name: 'Witdraw'},
+			{id: 'Withdraw', name: 'Withdraw'},
 			{id: 'Transfer', name: 'Transfer'}
 		],
 		confirmMessage 		: banhji.source.confirmMessage,
@@ -69043,6 +69043,7 @@
 			page:1,
 			pageSize: 100
 		}),
+		itemMovementDS 		: dataStore(apiUrl + "transactions/line"),
 		categoryDS 			: dataStore(apiUrl + "categories"),
 		sumamryDS 			: dataStore(apiUrl + "transactions/line"),
 		transactionDS		: dataStore(apiUrl + "items/movement"),
@@ -81655,7 +81656,7 @@
 			vm.pageLoad(id);
 		}
 	});
-	banhji.router.route("/witdraw(/:id)", function(id){
+	banhji.router.route("/withdraw(/:id)", function(id){
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
 		}else{

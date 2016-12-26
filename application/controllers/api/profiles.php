@@ -331,6 +331,7 @@ class Profiles extends REST_Controller {
 					'id' => $u->institute->id,
 					'name'=>$u->institute->name,
 					'email' => $u->institute->email,
+					'telephone' => $u->institute->telephone,
 					'address'=>$u->institute->address,
 					'logo' => array('id' => $profile_photo->id, 'url' => $profile_photo->url),
 					'description' => $u->institute->description,
@@ -452,6 +453,7 @@ class Profiles extends REST_Controller {
 			$company->email= isset($req->email) ? $req->email: "";
 			$company->address= isset($req->address) ? $req->address:"";
 			$company->pimage_id = $pimage->id;
+			$company->telephone = isset($req->telephone) ? $req->telephone : "";
 			$company->description= isset($req->description) ? $req->description : "";
 			$company->vat_number = isset($req->vat_number) ? $req->vat_number : "";
 			$company->fiscal_date= isset($req->fiscal_date) ? date('m-d', strtotime($req->fiscal_date)) : '01-01';

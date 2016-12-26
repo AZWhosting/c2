@@ -1004,8 +1004,8 @@
 				<div id="example" class="k-content">
 
 			    	<span class="glyphicons no-js remove_2 pull-right" 
-		    				onclick="javascript:window.history.back()"
-							data-bind="click: cancel"><i></i></span>
+	    				onclick="javascript:window.history.back()"
+						data-bind="click: cancel"><i></i></span>
 
 				    <h2 data-bind="text: lang.lang.account"></h2>				    		   
 
@@ -6148,8 +6148,8 @@
 				<div id="example" class="k-content">
 
 			    	<span class="glyphicons no-js remove_2 pull-right" 
-		    				onclick="javascript:window.history.back()"
-							data-bind="click: cancel"><i></i></span>
+	    				onclick="javascript:window.history.back()"
+						data-bind="click: cancel"><i></i></span>
 
 				    <div class="center" style="text-align: center; position: relative;">
 				    	<h2 >សៀវភៅទិន្នានុប្បវត្តិលក់</h2>	
@@ -6376,8 +6376,8 @@
 				<div id="example" class="k-content">
 
 			    	<span class="glyphicons no-js remove_2 pull-right" 
-		    				onclick="javascript:window.history.back()"
-							data-bind="click: cancel"><i></i></span>
+	    				onclick="javascript:window.history.back()"
+						data-bind="click: cancel"><i></i></span>
 
 				    <div class="center" style="text-align: center; position: relative;">
 				    	<h2 >សៀវភៅទិន្នានុប្បវត្តិទិញ</h2>	
@@ -6712,11 +6712,11 @@
 				<div id="example" class="k-content">
 
 			    	<span class="glyphicons no-js remove_2 pull-right" 
-		    				onclick="javascript:window.history.back()"
-							data-bind="click: cancel"><i></i></span>
+	    				onclick="javascript:window.history.back()"
+						data-bind="click: cancel"><i></i></span>
 
 				    <div class="center" style="text-align: center; position: relative;">
-				    	<h2 >សៀវភៅទិន្នានុប្បវត្តិទិញ</h2>	
+				    	<h2 >របាយការណ៍លំអិតប្រាក់បៀវត្ស</h2>	
 				    	<p>Payroll List</p>	
 				    	<p>ខែ កក្កដា ឆ្នាំ ២០១៦ </p>
 				    	<p>For July 2016</p>
@@ -6736,304 +6736,91 @@
 				    </div>
 				    <br>
 
+				    <p>ពន្ធលើប្រាក់បៀវត្សចំពោះនិយោជិកនិវាសនជន  Tax on Salary on Resident Employees :</p>
 				    <div class="row sale-record">
-				    	<!-- <table >				    		
+				    	<table >				    		
 				    		<thead>
 					    		<tr>
-					    			<td colspan="6">វិក័យប័ត្រ <br> Invoice</td>
-					    			<td colspan="5">ការទិញ <br> Purchase</td>
-					    			<td rowspan="3">សរុបការទិញរួមទាំងអាករ</td>
-					    			<td rowspan="4">Tax Type</td>
-					    			<td rowspan="4">Tax Rate</td>
-					    		</tr>
-					    		<tr>
-					    			<td rowspan="3" style="width: 7%">កាលបរិច្ឆេទ <br> Date</td>
-					    			<td rowspan="3">លេខយោង <br> Ref.</td>
-					    			<td rowspan="3">លេខវិក័យប័ត្រ <br> Invoice</td>
-					    			<td rowspan="3">អ្នកផ្គត់ផ្គង់ <br> Supplier</td>
-					    			<td rowspan="3" style="width: 10%;">លេខអត្តសញ្ញាណ <br> សារពើពន្ធ <br> VAT TIN</td>
-					    			<td rowspan="3" style="width: 15%;">បរិយាយ <br> Description</td>
-					    			<td rowspan="3">ការទិញមិនជាប់អាករ ឬ ការទិញមិនជាប់ឥណទាន <br> Non Taxable Purchase</td>
-					    			<td colspan="4">ការទិញជាប់អាករ</td>
-					    			
-
-					    		</tr>
-					    		<tr>
-					    			<td colspan="2">ការនាំចូល <br> Import</td>
-					    			<td colspan="2">ការទិញក្នុងស្រុក <br> Local Purchase</td>
-					    		</tr>
-					    		<tr>
-					    			<td >តម្លៃជាប់អាករ <br> Import</td>
-					    			<td >អាករ <br> VAT</td>
-					    			<td >តម្លៃជាប់អាករ <br> Import</td>
-					    			<td >អាករ <br> VAT</td>
-					    			<td >Total</td>
-					    		</tr>
-					    		<tr>
-					    			<td>
-					    				<input 	id="ddlMesurement"
-											data-role="dropdownlist"					                
-						                	data-text-field="measurement"
-						                   	data-value-field="measurement_id"
-						                   	data-bind="value: measurement_id,
-						                   			  source: item_prices,
-						                   			  events:{ change: measurementChanges }"
-						                   data-option-label="test"
-						                   style="width: 100%;" />
-					    			</td>
-					    			<td>
-					    				<input 	id="ddlMesurement"
-											data-role="dropdownlist"					                
-						                	data-text-field="measurement"
-						                   	data-value-field="measurement_id"
-						                   	data-bind="value: measurement_id,
-						                   			  source: item_prices,
-						                   			  events:{ change: measurementChanges }"
-						                   data-option-label="test"
-						                   style="width: 100%;" />
-						            </td>
-						            <td>
-					    				<input 	id="ddlMesurement"
-											data-role="dropdownlist"					                
-						                	data-text-field="measurement"
-						                   	data-value-field="measurement_id"
-						                   	data-bind="value: measurement_id,
-						                   			  source: item_prices,
-						                   			  events:{ change: measurementChanges }"
-						                   data-option-label="test"
-						                   style="width: 100%;" />
-						            </td>
-						            <td>
-					    				<input 	id="ddlMesurement"
-											data-role="dropdownlist"					                
-						                	data-text-field="measurement"
-						                   	data-value-field="measurement_id"
-						                   	data-bind="value: measurement_id,
-						                   			  source: item_prices,
-						                   			  events:{ change: measurementChanges }"
-						                   data-option-label="test"
-						                   style="width: 100%;" />
-						            </td>
-						            <td>
-					    				<input 	id="ddlMesurement"
-											data-role="dropdownlist"					                
-						                	data-text-field="measurement"
-						                   	data-value-field="measurement_id"
-						                   	data-bind="value: measurement_id,
-						                   			  source: item_prices,
-						                   			  events:{ change: measurementChanges }"
-						                   data-option-label="test"
-						                   style="width: 100%;" />
-						            </td>
-						            <td>
-					    				<input 	id="ddlMesurement"
-											data-role="dropdownlist"					                
-						                	data-text-field="measurement"
-						                   	data-value-field="measurement_id"
-						                   	data-bind="value: measurement_id,
-						                   			  source: item_prices,
-						                   			  events:{ change: measurementChanges }"
-						                   data-option-label="test"
-						                   style="width: 100%;" />
-						            </td>
-						            <td>
-					    				<input 	id="ddlMesurement"
-											data-role="dropdownlist"					                
-						                	data-text-field="measurement"
-						                   	data-value-field="measurement_id"
-						                   	data-bind="value: measurement_id,
-						                   			  source: item_prices,
-						                   			  events:{ change: measurementChanges }"
-						                   data-option-label="test"
-						                   style="width: 100%;" />
-						            </td>
-						            <td>
-					    				<input 	id="ddlMesurement"
-											data-role="dropdownlist"					                
-						                	data-text-field="measurement"
-						                   	data-value-field="measurement_id"
-						                   	data-bind="value: measurement_id,
-						                   			  source: item_prices,
-						                   			  events:{ change: measurementChanges }"
-						                   data-option-label="test"
-						                   style="width: 100%;" />
-						            </td>
-						            <td>
-					    				<input 	id="ddlMesurement"
-											data-role="dropdownlist"					                
-						                	data-text-field="measurement"
-						                   	data-value-field="measurement_id"
-						                   	data-bind="value: measurement_id,
-						                   			  source: item_prices,
-						                   			  events:{ change: measurementChanges }"
-						                   data-option-label="test"
-						                   style="width: 100%;" />
-						            </td>
-						            <td>
-					    				<input 	id="ddlMesurement"
-											data-role="dropdownlist"					                
-						                	data-text-field="measurement"
-						                   	data-value-field="measurement_id"
-						                   	data-bind="value: measurement_id,
-						                   			  source: item_prices,
-						                   			  events:{ change: measurementChanges }"
-						                   data-option-label="test"
-						                   style="width: 100%;" />
-						            </td>
-						            <td>
-					    				<input 	id="ddlMesurement"
-											data-role="dropdownlist"					                
-						                	data-text-field="measurement"
-						                   	data-value-field="measurement_id"
-						                   	data-bind="value: measurement_id,
-						                   			  source: item_prices,
-						                   			  events:{ change: measurementChanges }"
-						                   data-option-label="test"
-						                   style="width: 100%;" />
-						            </td>
-						            <td>
-					    				<input 	id="ddlMesurement"
-											data-role="dropdownlist"					                
-						                	data-text-field="measurement"
-						                   	data-value-field="measurement_id"
-						                   	data-bind="value: measurement_id,
-						                   			  source: item_prices,
-						                   			  events:{ change: measurementChanges }"
-						                   data-option-label="test"
-						                   style="width: 100%;" />
-						            </td>
-						            <td>
-					    				<input 	id="ddlMesurement"
-											data-role="dropdownlist"					                
-						                	data-text-field="measurement"
-						                   	data-value-field="measurement_id"
-						                   	data-bind="value: measurement_id,
-						                   			  source: item_prices,
-						                   			  events:{ change: measurementChanges }"
-						                   data-option-label="test"
-						                   style="width: 100%;" />
-						            </td>
-						            <td>
-					    				<input 	id="ddlMesurement"
-											data-role="dropdownlist"					                
-						                	data-text-field="measurement"
-						                   	data-value-field="measurement_id"
-						                   	data-bind="value: measurement_id,
-						                   			  source: item_prices,
-						                   			  events:{ change: measurementChanges }"
-						                   data-option-label="test"
-						                   style="width: 100%;" />
-						            </td>
+					    			<td >ល.រ <br> No.</td>
+					    			<td style="width: 10%">ឈ្មោះនិយោជិក <br> Name of Emplyee</td>
+					    			<td >សញ្ជាតិ <br> Nationlity</td>
+					    			<td >មុខងារ <br> Function</td> 
+					    			<td >ប្រាក់បៀវត្សត្រូវបើក <br> Salary to be Paid (USD)</td>
+					    			<td >ប្រាក់បៀវត្សត្រូវបើក <br> Salary to be Paid (KHR)</td>
+					    			<td >កូនក្នុងបន្ទុក <br> Number of dependent children</td>
+					    			<td >សហព័ទ្ធ <br> Spouse-housewife</td> 
+					    			<td >ទឹកប្រាក់កាត់បន្ថយ <br> Tax base reduction</td>
+					    			<td >មូលដ្ឋានគិតពន្ធ បវ<br> Tax base for TOS (KHR)</td>
+					    			<td >អត្រាពន្ធ <br> Tax Rate</td>
 					    		</tr>					    		
 					    	</thead>
 					    	<tbody>
 					    		<tr>
-					    			<td style="text-align: center;">01-Sep-16</td>
-					    			<td>1</td>
-					    			<td >000859</td>
-					    			<td >AZZ</td>
-					    			<td style="text-align: right;">KD02-104018593</td>
-					    			<td>Marine Cargo MC/PP/C-0053/EX122/2016(29-Sep-08-Oct-2016)</td>
-					    			<td style="text-align: right;">33.06</td>
-					    			<td></td>
-					    			<td>-</td>
-					    			<td></td>
-					    			<td>-</td>
-					    			<td style="text-align: center;">66.06</td>
-					    			<td ></td>
-					    			<td ></td>
+					    			<td >1</td>
+					    			<td >A</td>
+					    			<td >B</td>
+					    			<td >C</td> 
+					    			<td >D</td>
+					    			<td >E</td>
+					    			<td >F</td>
+					    			<td >G</td> 
+					    			<td >H</td>
+					    			<td >I</td>
+					    			<td >J</td>
 					    		</tr>
 					    		<tr>
-					    			<td style="text-align: center;">01-Sep-16</td>
-					    			<td>1</td>
-					    			<td >000859</td>
-					    			<td >AZZ</td>
-					    			<td style="text-align: right;">KD02-104018593</td>
-					    			<td>Marine Cargo MC/PP/C-0053/EX122/2016(29-Sep-08-Oct-2016)</td>
-					    			<td style="text-align: right;">33.06</td>
-					    			<td></td>
-					    			<td>-</td>
-					    			<td></td>
-					    			<td>-</td>
-					    			<td style="text-align: center;">66.06</td>
-					    			<td ></td>
-					    			<td ></td>
+					    			<td >2</td>
+					    			<td >A</td>
+					    			<td >B</td>
+					    			<td >C</td> 
+					    			<td >D</td>
+					    			<td >E</td>
+					    			<td >F</td>
+					    			<td >G</td> 
+					    			<td >H</td>
+					    			<td >I</td>
+					    			<td >J</td>
 					    		</tr>
 					    		<tr>
-					    			<td style="text-align: center;">01-Sep-16</td>
-					    			<td>1</td>
-					    			<td >000859</td>
-					    			<td >AZZ</td>
-					    			<td style="text-align: right;">KD02-104018593</td>
-					    			<td>C-0053/EX122</td>
-					    			<td style="text-align: right;">33.06</td>
-					    			<td></td>
-					    			<td>-</td>
-					    			<td></td>
-					    			<td>-</td>
-					    			<td style="text-align: center;">66.06</td>
-					    			<td ></td>
-					    			<td ></td>
+					    			<td >3</td>
+					    			<td >A</td>
+					    			<td >B</td>
+					    			<td >C</td> 
+					    			<td >D</td>
+					    			<td >E</td>
+					    			<td >F</td>
+					    			<td >G</td> 
+					    			<td >H</td>
+					    			<td >I</td>
+					    			<td >J</td>
 					    		</tr>
 					    		<tr>
-					    			<td style="text-align: center;">01-Sep-16</td>
-					    			<td>1</td>
-					    			<td >000859</td>
-					    			<td >AZZ</td>
-					    			<td style="text-align: right;">KD02-104018593</td>
-					    			<td>Marine Cargo</td>
-					    			<td style="text-align: right;">33.06</td>
-					    			<td></td>
-					    			<td>-</td>
-					    			<td></td>
-					    			<td>-</td>
-					    			<td style="text-align: center;">66.06</td>
-					    			<td ></td>
-					    			<td ></td>
+					    			<td >4</td>
+					    			<td >A</td>
+					    			<td >B</td>
+					    			<td >C</td> 
+					    			<td >D</td>
+					    			<td >E</td>
+					    			<td >F</td>
+					    			<td >G</td> 
+					    			<td >H</td>
+					    			<td >I</td>
+					    			<td >J</td>
 					    		</tr>
-					    		<tr>
-					    			<td style="text-align: center;">01-Sep-16</td>
-					    			<td>1</td>
-					    			<td >000859</td>
-					    			<td >AZZ</td>
-					    			<td style="text-align: right;">KD02-104018593</td>
-					    			<td>MC/PP/C-0053</td>
-					    			<td style="text-align: right;">33.06</td>
-					    			<td></td>
-					    			<td>-</td>
-					    			<td></td>
-					    			<td>-</td>
-					    			<td style="text-align: center;">66.06</td>
-					    			<td ></td>
-					    			<td ></td>
-					    		</tr>
-					    		
 					    	</tbody>
 					    	<tfoot>
 					    		<tr>
-						    		<td colspan="6" style="text-align: center; font-weight: 600;">សរុប (USD)</td>
-						    		<td style="text-align: right;">238,660</td>
-						    		<td>-</td>
-						    		<td>-</td>
-						    		<td>-</td>
-						    		<td>-</td>
-						    		<td style="text-align: right;">189,391</td>
-						    		<td>-</td>
-						    		<td>-</td>
-						    	</tr>
-						    	<tr>
-						    		<td colspan="6" style="text-align: center; font-weight: 600;">សរុប (KHR)</td>
-						    		<td style="text-align: right;">970,393,227</td>
-						    		<td>-</td>
-						    		<td>-</td>
-						    		<td>-</td>
-						    		<td>-</td>
-						    		<td style="text-align: right;">770,064,416</td>
-						    		<td>-</td>
-						    		<td>-</td>
+						    		<td colspan="4" style="text-align: center;">សរុប (Total)</td>
+					    			<td ></td>
+					    			<td ></td>
+					    			<td ></td> 
+					    			<td ></td>
+					    			<td ></td>
+					    			<td ></td>
+					    			<td ></td>
 						    	</tr>
 					    	</tfoot>
-				    	</table> -->
+				    	</table>
 				    </div>					
 			    	
 				</div>							
