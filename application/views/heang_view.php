@@ -21111,7 +21111,7 @@
 						<table class="table table-borderless table-condensed ">
 							<thead>
 								<tr>
-									<th style="text-align: right;"><span>ITEM</span></th>
+									<th><span>ITEM</span></th>
 									<th style="text-align: right;"><span>QTY</span></th>
 									<th style="text-align: right;"><span>AMOUNT</span></th>
 									<th style="text-align: right;"><span>AVG PRICE</span></th>
@@ -21140,7 +21140,7 @@
 	# kendo.culture(banhji.customerSale.locale); #
 	<tr>
 		<td>#=group#</td>
-		<td>#=qty#</td>
+		<td style="text-align: right;">#=qty#</td>
 		<td style="text-align: right;">#=kendo.toString(amount, 'c2')#</td>
 		<td style="text-align: right;">#=kendo.toString(avg_price, 'c2')#</td>	
 		<td style="text-align: right;">#=kendo.toString(cost, 'c2')#</td>	
@@ -21239,7 +21239,7 @@
 							<tfoot>
 								<tr>
 									<th colspan="4">Total</th>
-									<th colspan="3"> <span data-bind="text: total"></span></th>
+									<th colspan="4"> <span data-bind="text: total"></span></th>
 								</tr>
 							</tfoot>
 						</table>
@@ -21253,9 +21253,6 @@
 	# kendo.culture(banhji.customerSale.locale); #
 	<tr style="font-weight: bold">
 		<td>#=group#</td>
-		<td></td>
-		<td></td>
-		<td></td>
 		<td></td>
 		<td></td>
 		<td></td>
@@ -21277,6 +21274,7 @@
 			# amount += kendo.parseFloat(items[i].amount);#
 		#}#
 		<tr style="font-weight: 700;">
+			<td></td>
 			<td></td>
 			<td></td>
 			<td></td>
@@ -21416,8 +21414,8 @@
 					<a href="\#/#=items[i].type.toLowerCase()#/#=items[i].id#">#=items[i].number#</a>
 				</td>
 				<td>#=items[i].memo#</td>
-				<td>#=kendo.toString(items[i].qty, 'n0')#</td>
-				<td>#=kendo.toString(items[i].price, 'c2')#</td>
+				<td style="text-align: right;">#=kendo.toString(items[i].qty, 'n0')#</td>
+				<td style="text-align: right;">#=kendo.toString(items[i].price, 'c2')#</td>
 				<td style="text-align: right;">#=kendo.toString(items[i].amount, 'c2')#</td>
 			</tr>
 
@@ -21497,8 +21495,8 @@
 							<div class="span5">
 								<div class="total-customer">
 									<div class="span6">
-										<p>Total Customer</p>
-										<span data-bind="text: customerCount"></span>
+										<p>Open Invoice</p>
+										<span data-bind="text: openInvoice"></span>
 									</div>
 									<div class="span6">
 										<p>Number Customer</p>
@@ -21508,14 +21506,8 @@
 							</div>
 							<div class="span7">
 								<div class="total-customer">
-									<div class="span6">
-										<p>Total Customer Balance</p>
-										<span data-bind="text: total"></span>
-									</div>
-									<div class="span6">
-										<p>Open Invoice</p>
-										<span data-bind="text: openInvoice"></span>
-									</div>
+									<p>Total Customer Balance</p>
+									<span data-bind="text: total"></span>									
 								</div>
 							</div>
 						</div>
@@ -21524,6 +21516,7 @@
 							<thead>
 								<tr>
 									<th><span>CUSTOMER NAME</span></th>
+									<th><span>NUMBER INVOICES</span></th>
 									<th><span>ACCOUNT RECEIVABLE BALANCE</span></th>
 								</tr>
 							</thead>
@@ -21532,6 +21525,12 @@
 					                data-template="balance-summary-tmpl"
 					                data-bind="source: summaryBalance.dataSource" >
 					        </tbody>
+				        	<tfoot>
+								<tr>
+									<th colspan="2">Total</th>
+									<th colspan="2"><span data-bind="text: total"></span></th>
+								</tr>
+							</tfoot>
 		            	</table>
 		            </div>
 				</div>
@@ -21542,6 +21541,7 @@
 <script id="balance-summary-tmpl" type="text/x-kendo-template">
 	<tr>
 		<td>#=customer#</td>
+		<td>#=invoice#</td>
 		<td align="right">#=kendo.toString(amount, 'c2')#</td>
 	</tr>
 </script>	
@@ -21609,8 +21609,8 @@
 							<div class="span5">
 								<div class="total-customer">
 									<div class="span6">
-										<p>Total Customer</p>
-										<span data-bind="text: customerCount"></span>
+										<p>Open Invoice</p>
+										<span data-bind="text: openInvoice"></span>
 									</div>
 									<div class="span6">
 										<p>Number Customer</p>
@@ -21620,14 +21620,8 @@
 							</div>
 							<div class="span7">
 								<div class="total-customer">
-									<div class="span6">
-										<p>Total Customer Balance</p>
-										<span data-bind="text: total"></span>
-									</div>	
-									<div class="span6">
-										<p>Open Invoice</p>
-										<span data-bind="text: openInvoice"></span>
-									</div>							
+									<p>Total Customer Balance</p>
+									<span data-bind="text: total"></span>						
 								</div>
 							</div>
 						</div>
@@ -21892,7 +21886,7 @@
 									<th><span>Date</span></th>
 									<th><span>Due Date</span></th>
 									<th><span>No</span></th>
-									<th><span>Aging</span></th>
+									<th><span>Days Overdue</span></th>
 									<th><span>Balance</span></th>
 								</tr>
 							</thead>
@@ -22037,7 +22031,7 @@
 									<th><span>Date</span></th>
 									<th><span>Name</span></th>
 									<th><span>No</span></th>
-									<th><span>Aging</span></th>									
+									<th><span>Day Overdue</span></th>									
 									<th><span>Balance</span></th>
 								</tr>
 							</thead>
@@ -22584,19 +22578,13 @@
 						<div class="row-fluid">
 							<div class="span5">
 								<div class="total-customer">
-									<div class="span6">
-										<p>Total Sale</p>
-										<span data-bind="text: saleNumber"></span>
-									</div>
-									<div class="span6">
-										<p>Number of Customer</p>
-										<span data-bind="text: count"></span>
-									</div>	
+									<p>Number of Job Sale</p>
+									<span data-bind="text: count"></span>
 								</div>
 							</div>
 							<div class="span7">
 								<div class="total-customer">
-										<p>Customer Balance</p>
+										<p>Total Sale by Job</p>
 										<span data-bind="text: total"></span>							
 								</div>
 							</div>
@@ -22605,6 +22593,7 @@
 						<table class="table table-borderless table-condensed ">
 							<thead>
 								<tr>
+									<th><span>Job</span></th>
 									<th><span>Name</span></th>
 									<th><span>Type</span></th>
 									<th><span>Date</span></th>
@@ -22617,12 +22606,6 @@
 										 data-bind="source: saleJob.dataSource"
 										 data-template="saleJobEngagement-temp"
 							></tbody>
-							<tfoot>
-								<tr>
-									<th colspan="4">Total</th>
-									<th colspan="3"><span data-bind="text: total"></span></th>
-								</tr>
-							</tfoot>
 						</table>					
 					</div>	
 				</div>		
@@ -22632,38 +22615,17 @@
 </script>
 <script id="saleJobEngagement-temp" type="text/x-kendo-template" >
 	# kendo.culture(banhji.customerSale.locale); #
-	<tr style="font-weight: bold">
-		<td>#=group#</td>
-		<td></td>
-		<td></td>
-		<td></td>
-		<td></td>
-		<td></td>
-		<td></td>
-		<td></td>
-	</tr>
-	# if (items.length) {#
-		#for(var i= 0; i <items.length; i++) {#
-			<tr>
-				# var myDate = kendo.toString(new Date(items[i].date),'dd-MM-yyyy'); #
-				<td>&nbsp;&nbsp;#=items[i].name#</td>
-				<td>&nbsp;&nbsp;#=items[i].type#</td>
-				<td>#=myDate#</td>
-				<td>
-					<a href="\#/#=items[i].type.toLowerCase()#/#=items[i].id#">#=items[i].number#</a>
-				</td>
-				<td>#=items[i].memo#</td>
-				<td style="text-align: right;">#=kendo.toString(items[i].amount, 'c2')#</td>
-			</tr>
-
-		#}#
-	#}#
-	<tr style="font-weight: bold; color: black">
-		<td></td>
-		<td></td>
-		<td></td>
-		<td></td>
-		<td style="text-align: right;">#=kendo.toString(amount, 'c2')#</td>
+	<tr>
+		# var myDate = kendo.toString(new Date(date),'dd-MM-yyyy'); #
+		<td>#=job#</td>
+		<td>#=name#</td>
+		<td>#=type#</td>
+		<td>#=myDate#</td>
+		<td>
+			<a href="\#/#=type.toLowerCase()#/#=id#">#=number#</a>
+		</td>	
+		<td align="right">#=memo#</td>
+		<td align="right">#=kendo.toString(amount, 'c2')#</td>
 	</tr>
 </script>
 <script id="saleOrderList" type="text/x-kendo-template">
