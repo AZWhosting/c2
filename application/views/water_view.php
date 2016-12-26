@@ -1446,8 +1446,7 @@
 				                   data-text-field="name"
 				                   data-value-field="id"
 				                   data-bind="value: addNewItemType,
-				                              source: ItemTypeDS,
-				                              events: {change: onTypeChange}"/>
+				                              source: ItemTypeDS"/>
 							</div>
 							<!-- Column END -->
 						</div>
@@ -1478,18 +1477,7 @@
 <script id="planItem-list-item" type="text/x-kendo-tmpl">
 	<tr>
 		<td>
-			<input 
-				data-role="dropdownlist" 
-				style="width: 100%;" 
-				data-option-label="Select ..." 
-				data-auto-bind="true"  
-				data-text-field="name" 
-				data-value-field="id" 
-				data-value-primitive="false"
-				data-bind="
-					value: item, 
-					source: planItemList, 
-					events: {change: onChange}">
+			<input class="itemClass" data-bind="value: item" />
 		</td>
 		<td><input type="text" class="k-textbox" data-bind="value: type" /></td>
 		<td><input type="text" class="k-textbox" data-bind="value: name" /></td>
@@ -8538,12 +8526,40 @@
 		current 	: null,
 		list 		: [],
 		planItemList: [],
+		exList 		: [],
+		tariffList 	: [],
+		depositList : [],
+		serviceList : [],
+		mainList 	: [],
+		installList : [],
 		pageLoad    : function(id){
 			if(id){
 				this.loadObj(id);
 			}else{
 				this.addNew();
-				//this.itemDS.read();
+				var self = this;
+				this.itemDS.query()
+				.then(function(e){
+					//console.log(e.results.id);
+					var view = self.itemDS.view();
+					console.log(view.length);
+					for(var i = 0; i < view.length; i++){
+						if(view[i].type == 'exemption'){
+							self.exList.push({id: view[i].id, name: view[i].name});
+						}else if(view[i].type == 'tariff'){
+							self.tariffList.push({id: view[i].id, name: view[i].name});
+						}else if(view[i].type == 'deposit'){
+							self.depositList.push({id: view[i].id, name: view[i].name});
+						}else if(view[i].type == 'service'){
+							self.serviceList.push({id: view[i].id, name: view[i].name});
+						}else if(view[i].type == 'maintenance'){
+							self.mainList.push({id: view[i].id, name: view[i].name});
+						}else if(view[i].type == 'installment'){
+							self.installList.push({id: view[i].id, name: view[i].name});
+						}
+					}
+					
+				});
 				this.addItem();
 			}
 		},
@@ -8581,48 +8597,65 @@
 			this.dataSource.remove(e.data);
 		},
 		addItem 	: function() {
-			this.get("current").items.push({item:"", type: "", name: "", amount: 0});
+			if(this.addNewItemType){
+				if(this.addNewItemType.id == 'exemption'){
+					this.planItemList = this.exList;
+				}else if(this.addNewItemType.id == 'tariff'){
+					this.planItemList = this.tariffList;
+				}else if(this.addNewItemType.id == 'deposit'){
+					this.planItemList = this.depositList;
+				}else if(this.addNewItemType.id == 'service'){
+					this.planItemList = this.serviceList;
+				}else if(this.addNewItemType.id == 'maintenance'){
+					this.planItemList = this.mainList;
+				}else if(this.addNewItemType.id == 'installment'){
+					this.planItemList = this.installList;
+				}
+				this.get("current").items.push({item:"", type: "", name: "", amount: 0});
+			}else{
+				this.get("current").items.push({item:"", type: "", name: "", amount: 0});
+			}
 		},
 		onTypeChange: function(e) {
-			console.log(this.addNewItemType);
-			var self = this;
-			this.list = [];
-			this.filters = null;
-			if(this.addNewItemType) {
-				if(this.get('current').items.length > 0) {
-					for(var i = 0; i < this.get('current').items.length; i++) {
-						if(this.get('current').items[i].item != "") {
-							this.list.push(self.get('current').items[i].item);
-						}
-					}
-				} 
-				if(this.list.length > 0) {
-					this.filters = [
-						{field: "type", value: this.addNewItemType.id},
-						{field: "id", operator:"or_where_in", value: this.list}
-					];
-				}
-				else {
-					this.filters = {field: "type", value: this.addNewItemType.id};
-				}
-				console.log(this.list);
+			// console.log(this.addNewItemType);
+			// var self = this;
+			// this.list = [];
+			// this.filters = null;
+			// if(this.addNewItemType) {
+			// 	if(this.get('current').items.length > 0) {
+			// 		for(var i = 0; i < this.get('current').items.length; i++) {
+			// 			if(this.get('current').items[i].item != "") {
+			// 				this.list.push(self.get('current').items[i].item);
+			// 			}
+			// 		}
+			// 	} 
+			// 	if(this.list.length > 0) {
+			// 		this.filters = [
+			// 			{field: "type", value: this.addNewItemType.id},
+			// 			{field: "id", operator:"or_where_in", value: this.list}
+			// 		];
+			// 	}
+			// 	else {
+			// 		this.filters = {field: "type", value: this.addNewItemType.id};
+			// 	}
+			// 	console.log(this.list);
 
-				this.itemDS.query({
-					filter: this.filters
-				})
-				.then(function(e){
-					self.planItemList.splice(0, self.planItemList.length);
+			// 	this.itemDS.query({
+			// 		filter: this.filters
+			// 	})
+			// 	.then(function(e){
+			// 		self.planItemList.splice(0, self.planItemList.length);
 					
-					$.each(self.itemDS.data(), function(i, v){
-						self.planItemList.push(v);	
-					});
+			// 		$.each(self.itemDS.data(), function(i, v){
+			// 			self.planItemList.push(v);	
+			// 		});
 						
-				});
+			// 	});
 				
-			}else{
-				this.itemDS.read();
-				this.get("current").items.push({item: "", type: "", name: "", amount: 0});
-			}
+			// }else{
+			// 	this.itemDS.read();
+			// 	this.get("current").items.push({item: "", type: "", name: "", amount: 0});
+			// }
 		},
 		removeItem 	: function(e) {
 			this.items.remove(e);

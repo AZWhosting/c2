@@ -69968,6 +69968,7 @@
 	      			income_account_id 		: view[0].income_account_id,
 	      			expense_account_id  	: view[0].expense_account_id,
 	      			inventory_account_id 	: view[0].inventory_account_id,
+	      			image_url 				: banhji.no_image,
 	      			favorite 				: view[0].favorite,
 	      			is_pattern 				: 0,
 	      			status 					: 1,
@@ -70208,6 +70209,7 @@
       			sale_description 		: "",
       			catalogs 				: [],
       			locale 					: banhji.locale,
+      			image_url 				: banhji.no_image,
       			favorite 				: false,
       			status 					: 1,
       			is_catalog 				: 1,
@@ -70461,6 +70463,7 @@
       			price 					: "",
       			rate 					: banhji.source.getRate(banhji.locale, new Date()),
       			locale 					: banhji.locale,
+      			image_url 				: banhji.no_image,
       			favorite 				: false,
       			status 					: 1,
       			is_assembly 			: 1,
@@ -70820,6 +70823,7 @@
 	      			sale_description		: view[0].sale_description,
 	      			income_account_id 		: view[0].income_account_id,
 	      			expense_account_id  	: view[0].expense_account_id,
+	      			image_url 				: banhji.no_image,
 	      			favorite 				: view[0].favorite,
 	      			is_pattern 				: 0,
 	      			status 					: 1							
@@ -71197,6 +71201,7 @@
 	      			color_code 				: view[0].color_code,
 	      			international_code 		: view[0].international_code,
 	      			inventory_account_id 	: view[0].inventory_account_id,
+	      			image_url 				: banhji.no_image,
 	      			favorite 				: view[0].favorite,
 	      			is_pattern 				: 0,
 	      			status 					: 1,
@@ -71493,6 +71498,7 @@
 	      			inventory_account_id 	: view[0].inventory_account_id,
 	      			income_account_id  		: view[0].income_account_id,
 	      			expense_account_id 		: view[0].expense_account_id,
+	      			image_url 				: banhji.no_image,
 	      			is_pattern 				: 0,
 	      			status 					: 1,
 	      			deleted 				: 0								
@@ -71680,6 +71686,7 @@
       			purchase_description	: "",
       			sale_description		: "",
       			locale 					: banhji.locale,
+      			image_url 				: banhji.no_image,
       			status 					: 1
 			});      		
 
