@@ -477,6 +477,7 @@
 	            				<th class="center"><span>Name</span></th>
 	            				<th class="center"><span>Account</span></th>
 	            				<th class="center"><span>Unit</span></th>
+	            				<th class="center"><span>Currency</span></th>
 	            				<th class="center"><span>Price</span></th>
 	            				<th class="center">Action</th>
 	            			</tr>
@@ -518,6 +519,7 @@
 	            			<tr>
 	            				<th class="center" width="300"><span>Name</span></th>
 	            				<th class="center" ><span>Account</span></th>
+	            				<th class="center"><span>Currency</span></th>
 	            				<th class="center" ><span>Action</span></th>
 	            			</tr>
 	            		</thead>
@@ -537,6 +539,7 @@
 	            				<th class="center" width="100"><span>Flat</span></th>
 	            				<th class="center" width="100"><span>Usage</span></th>
 	            				<th class="center" width="100"><span>Price</span></th>
+	            				<th class="center"><span>Currency</span></th>
 	            				<th class="center" width="200"><span>Action</span></th>
 	            			</tr>
 	            		</thead>
@@ -645,6 +648,7 @@
 	            			<tr>
 	            				<th class="center"><span>Name</span></th>
 	            				<th class="center"><span>Account</span></th>
+	            				<th class="center"><span>Currency</span></th>
 	            				<th class="center"><span>Price</span></th>
 	            				<th class="center">Action</th>
 	            			</tr>
@@ -690,6 +694,7 @@
 	            			<tr>
 	            				<th class="center"><span>Name</span></th>
 	            				<th class="center"><span>Account</span></th>
+	            				<th class="center"><span>Currency</span></th>
 	            				<th class="center"><span>Price</span></th>
 	            				<th class="center">Action</th>
 	            			</tr>
@@ -733,6 +738,7 @@
 	            			<tr>
 	            				<th class="center"><span>Name</span></th>
 	            				<th class="center"><span>Account</span></th>
+	            				<th class="center"><span>Currency</span></th>
 	            				<th class="center"><span>Price</span></th>
 	            				<th class="center">Action</th>
 	            			</tr>
@@ -751,6 +757,7 @@
 	            			<tr>
 	            				<th class="center"><span>Name</span></th>
 	            				<th class="center"><span>Code</span></th>
+	            				<th class="center"><span>Currency</span></th>
 	            				<th class="center"><span>Action</span></th>
 	            			</tr>
 	            		</thead>
@@ -936,6 +943,9 @@
    		<td align="center">
     		#= unit#
    		</td>
+   		<td align="center">
+    		#= _currency.code#
+   		</td>
    		<td align="right" >
     		#= amount#
    		</td>
@@ -964,7 +974,17 @@
                    data-value-field="id"
                    data-bind="value: unit,
                               source: typeUnit" />
-        </td>      
+        </td>    
+        <td>
+        	<input data-role="dropdownlist"
+            	   style="padding-right: 1px;height: 32px;" 
+    			   data-auto-bind="false"			                   
+                   data-value-primitive="true"
+                   data-text-field="code"
+                   data-value-field="id"
+                   data-bind="value: currency,
+                              source: currencyDS"/>
+        </td>  
         <td>
         	<input style="width: 100%;" type="text" class="k-textbox" data-bind="value:amount" />
         </td>
@@ -981,6 +1001,9 @@
    		</td>
    		<td>
     		#= account.name#
+   		</td>
+   		<td>
+    		#= _currency.code#
    		</td>
    		<td align="left">   
 		    <span class="k-edit-button"><i class="icon-edit"></i> Edit</span>
@@ -1004,6 +1027,16 @@
                    data-bind="value: account,
                               source: tariffAccDS" />
         </td>
+        <td>
+        	<input data-role="dropdownlist"
+            	   style="padding-right: 1px;height: 32px;" 
+    			   data-auto-bind="false"			                   
+                   data-value-primitive="true"
+                   data-text-field="code"
+                   data-value-field="id"
+                   data-bind="value: currency,
+                              source: currencyDS"/>
+        </td>  
 	    <td class="edit-buttons" style="text-align: center;">
 	        <a class="k-button k-update-button" href="\\#"><span class="k-icon k-update"></span></a>
 	        <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-cancel"></span></a>
@@ -1057,6 +1090,9 @@
    		<td align="left">
     		#= account.name#
    		</td>
+   		<td>
+   			#= _currency.code #
+   		</td>
    		<td align="right">
     		#= amount#
    		</td>
@@ -1077,7 +1113,17 @@
                    data-value-field="id"
                    data-bind="value: account,
                               source: depositAccDS" />
-        </td>      
+        </td>    
+        <td>
+        	<input data-role="dropdownlist"
+            	   style="padding-right: 1px;height: 32px;" 
+    			   data-auto-bind="false"			                   
+                   data-value-primitive="true"
+                   data-text-field="code"
+                   data-value-field="id"
+                   data-bind="value: currency,
+                              source: currencyDS"/>
+        </td>    
         <td>
         	<input style="width: 100%;" type="text" class="k-textbox" data-bind="value:amount" />
         </td>
@@ -1095,6 +1141,9 @@
    		</td>
    		<td align="left">
     		#= account.name#
+   		</td>
+   		<td>
+   			#= _currency.code #
    		</td>
    		<td align="right">
     		#= amount#
@@ -1116,7 +1165,17 @@
                    data-value-field="id"
                    data-bind="value: account,
                               source: tariffAccDS" />
-        </td>       
+        </td>   
+        <td>
+        	<input data-role="dropdownlist"
+            	   style="padding-right: 1px;height: 32px;" 
+    			   data-auto-bind="false"			                   
+                   data-value-primitive="true"
+                   data-text-field="code"
+                   data-value-field="id"
+                   data-bind="value: currency,
+                              source: currencyDS"/>
+        </td>      
         <td>
         	<input style="width: 100%;" type="text" class="k-textbox" data-bind="value:amount" />
         </td>
@@ -1134,6 +1193,9 @@
    		</td>
    		<td align="right">
     		#= account.name#
+   		</td>
+   		<td>
+   			#= _currency.code #
    		</td>
    		<td align="right">
     		#= amount#
@@ -1155,6 +1217,16 @@
                    data-value-field="id"
                    data-bind="value: account,
                               source: tariffAccDS" />
+        </td>  
+        <td>
+        	<input data-role="dropdownlist"
+            	   style="padding-right: 1px;height: 32px;" 
+    			   data-auto-bind="false"			                   
+                   data-value-primitive="true"
+                   data-text-field="code"
+                   data-value-field="id"
+                   data-bind="value: currency,
+                              source: currencyDS"/>
         </td>  
         <td>
         	<input style="width: 100%;" type="text" class="k-textbox" data-bind="value:amount" />
@@ -1361,6 +1433,7 @@
 	<tr>
 		<td>#= name #</td>
 		<td>#= code #</td>
+		<td>#= _currency.code #</td>
 		<td>
 			<a href="\#/plan/#: id#"><i class="icon-edit"></i> Edit</a>
     		|
@@ -1406,6 +1479,19 @@
 													aria-invalid="true"
 													data-bind="value: current.code" />
 											</td>
+											<td style="width: 5%"><span >Currency</span></td>
+											<td>
+												<input data-role="dropdownlist"
+								            	   style="width: 100%;padding-right: 1px;height: 32px;" 
+						            			   data-option-label="(--- Currency ---)"
+						            			   data-auto-bind="false"			                   
+								                   data-value-primitive="true"
+								                   data-text-field="code"
+								                   data-value-field="id"
+								                   data-bind="value: current.currency,
+								                            source: currencyDS,
+								                            events: {change: currencyChange}"/>
+											</td>
 										</tr>									
 										<tr>
 										</tr>								
@@ -1437,16 +1523,6 @@
 								<button style="float: left" class="btn btn-inverse" data-bind="click: addItem">
 									<i class="icon-plus icon-white"></i>
 								</button>
-								<input data-role="dropdownlist"
-				            	   class="span8"
-				            	   style="padding-right: 1px;height: 32px;" 
-		            			   data-option-label="Add New Item"
-		            			   data-auto-bind="false"			                   
-				                   data-value-primitive="false"
-				                   data-text-field="name"
-				                   data-value-field="id"
-				                   data-bind="value: addNewItemType,
-				                              source: ItemTypeDS"/>
 							</div>
 							<!-- Column END -->
 						</div>
@@ -1477,15 +1553,31 @@
 <script id="planItem-list-item" type="text/x-kendo-tmpl">
 	<tr>
 		<td>
-			<input class="itemClass" data-bind="value: item" />
+			<input id="ccbItem" name="ccbItem-#:uid#"
+			   data-role="combobox"
+			   data-template="item-list-tmpl"                   			   
+               data-text-field="name"
+               data-auto-bind="true"
+               data-value-field="id"
+               data-bind="value: item, 
+               			  source: itemDS,
+               			  events:{ change: onChange }"
+               placeholder="Select ..." 
+               required data-required-msg="required" style="width: 100%" />	
 		</td>
-		<td><input type="text" class="k-textbox" data-bind="value: type" /></td>
-		<td><input type="text" class="k-textbox" data-bind="value: name" /></td>
-		<td><input type="text" class="k-textbox" data-bind="value: amount" /></td>
+		<td><span data-bind="text: type"></span></td>
+		<td><span data-bind="text: name"></span></td>
+		<td><input type="text" style="text-align:right;" class="k-textbox" data-bind="value: amount" /></td>
 		<td align="center">
 			<a class="btn-action glyphicons remove_2 btn-danger k-delete-button"><i></i></a>
 		</td>
 	</tr>
+</script>
+<script id="item-list-tmpl" type="text/x-kendo-tmpl">
+	<span style="width:45%; float: left">
+		#=name#
+	</span>
+	<span style="width:35%; text-align: center; text-transform: capitalize;">#=type#</span>
 </script>
 <script id="addLicense" type="text/x-kendo-template">
 	<div id="slide-form">
@@ -2969,7 +3061,7 @@
 												style="width: 100%;" 
 												data-option-label="License ..." 
 												data-auto-bind="false" 
-												data-value-primitive="true" 
+												data-value-primitive="false" 
 												data-text-field="name" 
 												data-value-field="id" 
 												data-bind="
@@ -2988,7 +3080,7 @@
 												style="width: 100%;" 
 												data-option-label="Location ..." 
 												data-auto-bind="false" 
-												data-value-primitive="true" 
+												data-value-primitive="false" 
 												data-text-field="name" 
 												data-value-field="id" 
 												data-bind="
@@ -8524,42 +8616,15 @@
 		ItemTypeDS  : [{id:"exemption",name: "Exemption"}, {id: "tariff",name: "Tariff"},{id:"deposit",name:"Deposit"},{id:"service",name:"Service"},{id:"maintenance",name:"Maintenance"},{id:"installment",name:"Installment"}],
 		addNewItemType : null,
 		current 	: null,
+		currencyDS  : banhji.source.currencyDS,
 		list 		: [],
 		planItemList: [],
-		exList 		: [],
-		tariffList 	: [],
-		depositList : [],
-		serviceList : [],
-		mainList 	: [],
-		installList : [],
 		pageLoad    : function(id){
 			if(id){
 				this.loadObj(id);
 			}else{
 				this.addNew();
-				var self = this;
-				this.itemDS.query()
-				.then(function(e){
-					//console.log(e.results.id);
-					var view = self.itemDS.view();
-					console.log(view.length);
-					for(var i = 0; i < view.length; i++){
-						if(view[i].type == 'exemption'){
-							self.exList.push({id: view[i].id, name: view[i].name});
-						}else if(view[i].type == 'tariff'){
-							self.tariffList.push({id: view[i].id, name: view[i].name});
-						}else if(view[i].type == 'deposit'){
-							self.depositList.push({id: view[i].id, name: view[i].name});
-						}else if(view[i].type == 'service'){
-							self.serviceList.push({id: view[i].id, name: view[i].name});
-						}else if(view[i].type == 'maintenance'){
-							self.mainList.push({id: view[i].id, name: view[i].name});
-						}else if(view[i].type == 'installment'){
-							self.installList.push({id: view[i].id, name: view[i].name});
-						}
-					}
-					
-				});
+				//this.itemDS.read();
 				this.addItem();
 			}
 		},
@@ -8576,12 +8641,18 @@
 		},
 		onChange 	: function(e) {
 			var data = e.data,
-			selected = e.sender.selectedIndex - 1,
+			selected = e.sender.selectedIndex,
 			dataitemDs = this.itemDS.at(selected);
+			console.log(data);
 			data.set("type", dataitemDs.type);
 			data.set("name", dataitemDs.name);
 			data.set("amount", dataitemDs.amount);
 		}, 
+		currencyChange : function(e) {
+			var data = e.data;
+			console.log(this.current.currency);
+			this.itemDS.filter({field: "currency_id", value: this.current.currency});
+		},
 		setCurrent 	: function(current) {
 			this.set('current', current);
 		},
@@ -8597,65 +8668,7 @@
 			this.dataSource.remove(e.data);
 		},
 		addItem 	: function() {
-			if(this.addNewItemType){
-				if(this.addNewItemType.id == 'exemption'){
-					this.planItemList = this.exList;
-				}else if(this.addNewItemType.id == 'tariff'){
-					this.planItemList = this.tariffList;
-				}else if(this.addNewItemType.id == 'deposit'){
-					this.planItemList = this.depositList;
-				}else if(this.addNewItemType.id == 'service'){
-					this.planItemList = this.serviceList;
-				}else if(this.addNewItemType.id == 'maintenance'){
-					this.planItemList = this.mainList;
-				}else if(this.addNewItemType.id == 'installment'){
-					this.planItemList = this.installList;
-				}
-				this.get("current").items.push({item:"", type: "", name: "", amount: 0});
-			}else{
-				this.get("current").items.push({item:"", type: "", name: "", amount: 0});
-			}
-		},
-		onTypeChange: function(e) {
-			// console.log(this.addNewItemType);
-			// var self = this;
-			// this.list = [];
-			// this.filters = null;
-			// if(this.addNewItemType) {
-			// 	if(this.get('current').items.length > 0) {
-			// 		for(var i = 0; i < this.get('current').items.length; i++) {
-			// 			if(this.get('current').items[i].item != "") {
-			// 				this.list.push(self.get('current').items[i].item);
-			// 			}
-			// 		}
-			// 	} 
-			// 	if(this.list.length > 0) {
-			// 		this.filters = [
-			// 			{field: "type", value: this.addNewItemType.id},
-			// 			{field: "id", operator:"or_where_in", value: this.list}
-			// 		];
-			// 	}
-			// 	else {
-			// 		this.filters = {field: "type", value: this.addNewItemType.id};
-			// 	}
-			// 	console.log(this.list);
-
-			// 	this.itemDS.query({
-			// 		filter: this.filters
-			// 	})
-			// 	.then(function(e){
-			// 		self.planItemList.splice(0, self.planItemList.length);
-					
-			// 		$.each(self.itemDS.data(), function(i, v){
-			// 			self.planItemList.push(v);	
-			// 		});
-						
-			// 	});
-				
-			// }else{
-			// 	this.itemDS.read();
-			// 	this.get("current").items.push({item: "", type: "", name: "", amount: 0});
-			// }
+			this.get("current").items.push({item:"", type: "", name: "", amount: 0});
 		},
 		removeItem 	: function(e) {
 			this.items.remove(e);
@@ -9177,14 +9190,18 @@
         	this.set("planSelect", false);
         },
         viewPlanItem 		: function(e){
-        	var data = e.data;
+        	var data = e.data, self = this;
         	var idList = [];
         	$.each(data.items, function(index, value){
         		idList.push(value.item);
         	});
         	this.set("planSelect", true);
         	this.planItemDS.data([]);
-        	this.planItemDS.filter({field: "id", operator:"where_in", value: idList});
+        	this.planItemDS.query({filter: { field:"id", operator:"where_in", value: idList }})
+        	.then(function(e){
+        		var view = self.planItemDS.view();
+
+        	});
         },
         goBrand    		: function(){
         	this.brandDS.data([]);
@@ -10174,13 +10191,14 @@
 		blocDS 				: dataStore(apiUrl + "locations"),
 		itemDS 				: null,
 		obj 				: null,
+		para 				: [],
 		monthOfSelect		: null,
 		licenseSelect		: null,
 		blocSelect			: null,
 		isEdit 				: false,
 		contact 			: null,
 		pageLoad 			: function(id){
-
+			this.licenseDS.read();
 		},
 		onLicenseChange 	: function(e) {
 			var data = e.data;
@@ -10198,28 +10216,26 @@
 			license_id = this.get("licenseSelect"),
 			bloc_id = this.get("blocSelect");
 					
-			if(monthOfSearch){				
-				//if(license_id || bloc_id){						
-					var monthOf = new Date(monthOfSearch);
-					monthOf.setDate(1);
-					monthOf = kendo.toString(monthOf, "yyyy-MM-dd");
-					this.dataSource.filter([
-			    		// {field: 'branch_id', operator: 'where_related_meter', value: license_id	},
-			    		// {field: 'location_id', operator: 'where_related_meter', value: bloc_id},
-			    		{field: 'month_of', operator: 'where_related_meter', value: monthOf}
-			    	]).then(function(){
-			    		console.log(this.dataSource.data());
-			    	});			
-					// this.dataSource.transport.options.read.data={
-					// 	month_of 	: monthOf,
-					// 	license_id : license_id,
-					// 	bloc_id 	: bloc_id
-					// };
-					// this.dataSource.read();	
-				//}
+			if(monthOfSearch){						
+				var monthOf = new Date(monthOfSearch);
+				monthOf.setDate(1);
+				monthOf = kendo.toString(monthOf, "yyyy-MM-dd");
+				var monthL = new Date(monthOfSearch);
+				monthL.setDate(31);
+				monthL = kendo.toString(monthL, "yyyy-MM-dd");
+				
+				this.para.push([
+					{field: "month_of >=" , value: monthOf},
+					{field: "month_of <=", value: monthL}
+				]);
+				this.dataSource.query({filter: this.para});
+					
 			}else{
 				alert("សូមSelect ខែ");
 			}	
+			if(license_id){
+				this.para.push({field: "month_of >=" , value: monthOf});
+			}
 		},
 		monthOfSR 			: null,
 		NumberSR 			: null,

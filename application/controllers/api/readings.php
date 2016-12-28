@@ -62,7 +62,7 @@ class Readings extends REST_Controller {
 			foreach ($obj as $value) {
 				//Results
 				$meter  = $value->meter->get();
-
+				//$license = $value->branch->get();
 				// 			$data["meta"] = array(
 				// 						'meter_id' => $meter->id,
 				// 						'meter_number' => $meter_number,
@@ -70,6 +70,7 @@ class Readings extends REST_Controller {
 				// 					);	
 				$data["results"][] = array(
 					"id" 			=> $value->id,
+					"branch_id" 	=> $meter->branch_id,
 					"previous"		=> $value->previous,
 					"meter_id"		=> $meter->id,
 					"current"		=> $value->current,

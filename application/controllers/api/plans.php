@@ -46,7 +46,7 @@ class Plans extends REST_Controller {
 				$currency= $value->currency->get();
 				$data[] = array(
 					'id' => $value->id,
-					"currency_id"			=> $value->currency_id,
+					"currency"			=> $value->currency_id,
 					"_currency"				=> array(
 												"id" => $currency->id,
 												"code" => $currency->code,
@@ -67,7 +67,7 @@ class Plans extends REST_Controller {
 		$data = array();
 		foreach($requestedData as $row) {
 			$table = new Plan(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			$table->currency_id = $row->currency_id;
+			$table->currency_id = $row->currency;
 			$table->code = $row->code;
 			$table->name = $row->name;
 			if($table->save()) {
@@ -108,7 +108,7 @@ class Plans extends REST_Controller {
 			$deleted_table = new Plan_item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$deleted_table->where_related_plan('id', $table->id)->get();
 			$table->delete($deleted_table->all);
-			$table->currency_id = $row->currency_id;
+			$table->currency_id = $row->currency;
 			$table->code = $row->code;
 			$table->name = $row->name;
 			if($table->save()) {
@@ -196,7 +196,8 @@ class Plans extends REST_Controller {
 
 		if($table->exists()) {
 			foreach($table as $value) {
-				$account = $value->account->get();
+				$account = new Account(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$account->where('id', $value->account_id)->get();
 				$currency= $value->currency->get();
 				$data[] = array(
 					"id"  	  => $value->id,

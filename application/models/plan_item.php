@@ -11,10 +11,6 @@ class Plan_item extends DataMapper {
 	// 	)
 	// );
 	public $has_one = array(
-		'account' => array(
-			'class' => 'account',
-			'other_field' => 'plan_item'
-		),
 		'currency' => array(
 			'class' => "currency",
 			'other_field' => 'plan_item'

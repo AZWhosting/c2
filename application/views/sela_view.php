@@ -5143,7 +5143,7 @@
 </script>
 
 
-<script id="taxReportCenter" type="text/x-kendo-template">
+<!-- <script id="taxReportCenter" type="text/x-kendo-template">
 	<div class="row-fluid customer-report-center">
 		<div class="span7">
 			<div class="row-fluid sale-report">
@@ -5186,7 +5186,7 @@
 			
 		</div>
 	</div>
-</script>
+</script> -->
 <script id="saleJournal" type="text/x-kendo-template">
 	<div id="slide-form">
 		<div class="customer-background">
@@ -6078,11 +6078,11 @@
 	<span class="pull-right glyphicons no-js remove_2" 
 			onclick="javascript:window.history.back()"><i></i></span>
 
-	<h2 >General Tax Setting</h2>
-
+	<h2 >Monthly Tax Files</h2>
+	
 	<br>
 
-	<div class="widget widget-tabs widget-tabs-double widget-tabs-vertical row-fluid row-merge widget-tabs-gray">
+	<div class="widget widget-tabs widget-tabs-double widget-tabs-vertical row-fluid row-merge widget-tabs-gray" style="border: none !important;">
 
 	    <!-- Tabs Heading -->
 	    <div class="widget-head span3">
@@ -6100,7 +6100,18 @@
 	    <!-- // Tabs Heading END -->
 
 	    <div class="widget-body span9">
-	        <div class="tab-content">
+	    	<div class="span3" style="font-weight: 600; margin-bottom: 20px; width: 15%; padding-right: 0; line-height: 25px;">Select Tax Files</div>
+			<div class="span4" >
+				<input id="ddlContactType" name="ddlContactType"
+				   data-role="dropdownlist"      
+                   data-value-primitive="true"
+                   data-text-field="name"
+                   data-value-field="id"
+                   data-bind=""
+                   data-option-label="(--- Select ---)"
+                   required data-required-msg="required" style="width: 100%;" />
+			</div>
+	        <div class="tab-content" style="background: #fff; border: 1px solid #efefef; margin-left: 15px; float: left; width: 100%">
 
 	            <!-- CUSTOMER TYPE -->
 	            <div class="tab-pane active" id="tab1-4">
@@ -6742,7 +6753,7 @@
 				    		<thead>
 					    		<tr>
 					    			<td >ល.រ <br> No.</td>
-					    			<td style="width: 10%">ឈ្មោះនិយោជិក <br> Name of Emplyee</td>
+					    			<td style="width: 10%;">ឈ្មោះនិយោជិក <br> Name of Emplyee</td>
 					    			<td >សញ្ជាតិ <br> Nationlity</td>
 					    			<td >មុខងារ <br> Function</td> 
 					    			<td >ប្រាក់បៀវត្សត្រូវបើក <br> Salary to be Paid (USD)</td>
@@ -6821,7 +6832,112 @@
 						    	</tr>
 					    	</tfoot>
 				    	</table>
-				    </div>					
+				    </div>
+
+				    <br>
+				    <p>
+				    	តារាងលម្អិតអំពីពន្ធលើប្រាក់បៀវត្សចំពោះនិយោជិក អនិវាសនជន និងពន្ធលើប្រាក់បៀវត្សចំពោះអត្ថប្រយោជន៍បន្ថែម <br/>
+				    	Details on the Tax on Salary on Non-Resident Employees and Tax on Salary on Fringe Benefit:
+				   	</p>
+				    <div class="row sale-record">
+				    	<table >				    		
+				    		<thead>
+					    		<tr>
+					    			<td >ល.រ <br> No.</td>
+					    			<td style="width: 10%;">ឈ្មោះនិយោជិក <br> Name of Emplyee</td>
+					    			<td >សញ្ជាតិ <br> Nationlity</td>
+					    			<td >មុខងារ <br> Function</td> 
+					    			<td colspan="2">ប្រាក់បៀវត្សត្រូវបើក/អត្ថប្រយោជន៍បន្ថែម	 <br> Salary to be Paid/Fringe Benefit</td>
+					    			<td >អត្រាពន្ធ <br> Tax Rate</td>
+					    			<td colspan="2">ពន្ធលើប្រាក់បៀវត្ស <br> Tax on Salary</td> 
+					    			<td >កំណត់សម្គាល់ <br> Remarks</td>					    			
+					    		</tr>
+					    		<tr>
+					    			<td rowspan="2"></td>
+					    			<td rowspan="2">A</td>
+					    			<td rowspan="2">C-22160910</td>
+					    			<td rowspan="2">C</td>					    			
+					    			<td >D</td>
+					    			<td >E</td>
+					    			<td rowspan="2">F</td>
+					    			<td >G = D x F</td>
+					    			<td >H = E x F</td>
+					    			<td rowspan="2">I</td>
+					    		</tr>	
+					    		<tr>				    			
+					    			<td >USD</td>
+					    			<td >KHR</td>
+					    			<td >USD</td>
+					    			<td >KHR</td>
+					    		</tr>				    		
+					    	</thead>
+					    	<tbody>
+					    		<tr>
+					    			<td >1</td>
+					    			<td >A</td>
+					    			<td >B</td>
+					    			<td >C</td> 
+					    			<td >D</td>
+					    			<td >E</td>
+					    			<td >F</td>
+					    			<td >G</td> 
+					    			<td >H</td>
+					    			<td >I</td>
+					    		</tr>
+					    		<tr>
+					    			<td >2</td>
+					    			<td >A</td>
+					    			<td >B</td>
+					    			<td >C</td> 
+					    			<td >D</td>
+					    			<td >E</td>
+					    			<td >F</td>
+					    			<td >G</td> 
+					    			<td >H</td>
+					    			<td >I</td>
+					    		</tr>
+					    		<tr>
+					    			<td >3</td>
+					    			<td >A</td>
+					    			<td >B</td>
+					    			<td >C</td> 
+					    			<td >D</td>
+					    			<td >E</td>
+					    			<td >F</td>
+					    			<td >G</td> 
+					    			<td >H</td>
+					    			<td >I</td>
+					    		</tr>
+					    		<tr>
+					    			<td >4</td>
+					    			<td >A</td>
+					    			<td >B</td>
+					    			<td >C</td> 
+					    			<td >D</td>
+					    			<td >E</td>
+					    			<td >F</td>
+					    			<td >G</td> 
+					    			<td >H</td>
+					    			<td >I</td>
+					    		</tr>
+					    	</tbody>
+					    	<tfoot>
+					    		<tr>
+						    		<td colspan="4" style="text-align: center;">សរុប (Total)</td>
+					    			<td ></td>
+					    			<td ></td>
+					    			<td ></td> 
+					    			<td ></td>
+					    			<td ></td>
+					    			<td ></td>
+						    	</tr>
+					    	</tfoot>
+				    	</table>				    	
+				    </div>
+				    <br>
+				    <p><u>កំណត់សម្គាល់ៈ</u> ប្រសិនបើសរសេរមិនអស់ សូមភ្ជាប់ជាមួយក្នុងក្រដាសដោយឡែក។</p>
+				    <p><b>Notes:</b> Please use separate sheets if the space is insufficient.</p>
+
 			    	
 				</div>							
 			</div>

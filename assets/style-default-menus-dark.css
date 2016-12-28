@@ -436,7 +436,7 @@ p.separator i {
   margin-left: 0;
 }
 .row-merge > [class*="span"] ~ [class*="span"]:after {
-  position: absolute;
+  /*position: absolute;*/
   top: 0;
   bottom: 0;
   width: 1px;
