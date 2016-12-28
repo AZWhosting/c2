@@ -70029,16 +70029,18 @@
 			});
 		},
 		//Item Price
-		addItemPrice 			: function () {
+		addItemPrice 			: function (item_id) {
 			var obj = this.get("obj");
 
       		this.itemPriceDS.add({
-      			item_id			: obj.id,
+      			item_id			: item_id,
       			measurement_id 	: obj.measurement_id,
       			price 			: obj.price,
       			unit_value		: 0,
       			locale 			: obj.locale
 			});
+
+			this.itemPriceDS.sync();
       	},
       	//Number      	
 		checkExistingNumber 	: function(){
@@ -70263,10 +70265,6 @@
 			//Edit Mode
 	    	if(obj.isNew()==false){
 		    	obj.set("dirty", true);
-	    	}else{
-	    		this.addItemPrice();
-	    		obj.set("cost", 0);
-	    		obj.set("price", 0);
 	    	}
 
 	    	if(this.attachmentDS.total()>0){
@@ -70277,7 +70275,7 @@
 			//Save Obj
 			this.objSync()
 			.then(function(data){ //Success												
-				if(obj.isNew()==false){
+				if(self.get("isEdit")==false){
 					$.each(self.itemVendorDS.data(), function(index, value){
 	      				value.set("item_id", data[0].id);
 	      			});
@@ -70286,16 +70284,12 @@
 	      				value.set("item_id", data[0].id);
 	      			});
 
-	      			$.each(self.itemPriceDS.data(), function(index, value){
-	      				value.set("item_id", data[0].id);
-	      			});
-
 					//Attachment
 					$.each(self.attachmentDS.data(), function(index, value){
 			    		value.set("item_id", data[0].id);
 		            });
 
-					self.itemPriceDS.sync();
+					self.addItemPrice(data[0].id);
 				}
 				
       			self.itemVendorDS.sync();
