@@ -32415,6 +32415,7 @@
 					    </div>
 					</div>
 					
+					<!-- To Item / Account -->
 					<div class="row-fluid">
 						<table width="25%">
             				<tr>
@@ -32442,11 +32443,11 @@
 						<table data-bind="visible: isItemType" class="table table-bordered table-primary table-striped table-vertical-center">
 					        <thead>
 					            <tr>
-					                <th style="width: 25%;"><span data-bind="text: lang.lang.item"></span></th>
-					                <th data-bind="text: lang.lang.description"></th>
-					                <th style="width: 20%;"><span data-bind="text: lang.lang.qty"></span></th>
-					                <th style="width: 20%;"><span data-bind="text: lang.lang.cost"></span></th>
-					                <th style="width: 20%;"><span data-bind="text: lang.lang.amount"></span></th>               			                
+					                <th style="width: 25%; background: #0B0B3B; "><span data-bind="text: lang.lang.item"></span></th>
+					                <th style="background: #0B0B3B;"><span data-bind="text: lang.lang.description"></span></th>
+					                <th style="width: 20%; background: #0B0B3B;"><span data-bind="text: lang.lang.qty"></span></th>
+					                <th style="width: 20%; background: #0B0B3B;"><span data-bind="text: lang.lang.cost"></span></th>
+					                <th style="width: 20%; background: #0B0B3B;"><span data-bind="text: lang.lang.amount"></span></th>               			                
 					            </tr> 
 					        </thead>
 					        <tbody data-role="listview" 
@@ -32459,9 +32460,9 @@
 						<table data-bind="invisible: isItemType" class="table table-bordered table-primary table-striped table-vertical-center">
 					        <thead>
 					            <tr>			                
-					                <th style="width: 20%;"><span data-bind="text: lang.lang.account"></span></th>
-					                <th data-bind="text: lang.lang.description"></th>
-					                <th style="width: 20%;"><span data-bind="text: lang.lang.amount"></span></th>		                			  
+					                <th style="width: 25%; background: #0B0B3B;"><span data-bind="text: lang.lang.account"></span></th>
+					                <th style="background: #0B0B3B;" data-bind="text: lang.lang.description"></th>
+					                <th style="width: 20%; background: #0B0B3B;"><span data-bind="text: lang.lang.amount"></span></th>		                			  
 					            </tr> 
 					        </thead>
 					        <tbody data-role="listview" 
@@ -32479,14 +32480,15 @@
 				            <tr>
 				                <th style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></th>
 				                <th style="width: 20%;"><span data-bind="text: lang.lang.item"></span></th>
-				                <th data-bind="text: lang.lang.description"></th>
-				                <th style="width: 20%;"><span data-bind="text: lang.lang.qty"></span></th>               			                
+				                <th><span data-bind="text: lang.lang.description"></span></th>
+				                <th style="width: 20%;"><span data-bind="text: lang.lang.qty"></span></th>
+				                <th style="width: 20%;"><span data-bind="text: lang.lang.cost"></span></th>               			                
 				            </tr> 
 				        </thead>
 				        <tbody data-role="listview" 
 				        		data-template="internalUsage-from-item-line-template" 
 				        		data-auto-bind="false"
-				        		data-bind="source: fromItemLineDS"></tbody>			        
+				        		data-bind="source: lineDS"></tbody>			        
 				    </table>
 
 				    <!-- From Item Add Row part -->
@@ -32531,7 +32533,7 @@
 				        <tbody data-role="listview" 
 				        		data-template="internalUsage-from-account-line-template" 
 				        		data-auto-bind="false"
-				        		data-bind="source: fromAccountLineDS"></tbody>			        
+				        		data-bind="source: accountLineDS"></tbody>			        
 				    </table>			    
 									
 		            <!-- Bottom part -->
@@ -32616,154 +32618,165 @@
 	</div>
 </script>
 <script id="internalUsage-to-item-line-template" type="text/x-kendo-tmpl">		
-	<tr data-uid="#: uid #">
-		<td>
-			<input id="ccbItem" name="ccbItem-#:uid#"
-				   data-role="combobox"
-				   data-template="item-list-tmpl"                   			   
-                   data-text-field="name"
-                   data-value-field="id"
-                   data-bind="value: item_id, 
-                   			  source: itemDS,
-                   			  events:{ change: itemChanges }"
-                   placeholder="Add Item..." 
-                   required data-required-msg="required" style="width: 100%" />			
-		</td>		
-		<td>
-			<input id="txtDescription-#:uid#" name="txtDescription-#:uid#" 
-					type="text" class="k-textbox" 
-					data-bind="value: description"
-					style="width: 100%; margin-bottom: 0;" />
-		</td>
-		<td>
-			<input id="txtQuantity-#:uid#" name="txtQuantity-#:uid#" 
-					data-role="numerictextbox" 
-					data-format="n0" data-min="0"
-					data-spinners="false"
-					data-bind="value: quantity, events: {change : changes}"
-					required data-required-msg="required" style="width: 40%;" />
+	#if(movement=="1"){#
+		<tr data-uid="#: uid #">
+			<td>
+				<input id="ccbItem" name="ccbItem-#:uid#"
+					   data-role="combobox"
+					   data-template="item-list-tmpl"                   			   
+	                   data-text-field="name"
+	                   data-value-field="id"
+	                   data-bind="value: item_id, 
+	                   			  source: itemDS,
+	                   			  events:{ change: toItemChanges }"
+	                   placeholder="Add Item..." 
+	                   required data-required-msg="required" style="width: 100%" />			
+			</td>		
+			<td>
+				<input id="txtDescription-#:uid#" name="txtDescription-#:uid#" 
+						type="text" class="k-textbox" 
+						data-bind="value: description"
+						style="width: 100%; margin-bottom: 0;" />
+			</td>
+			<td>
+				<input id="txtQuantity-#:uid#" name="txtQuantity-#:uid#" 
+						data-role="numerictextbox" 
+						data-format="n0" data-min="0"
+						data-spinners="false"
+						data-bind="value: quantity, events: {change : changes}"
+						required data-required-msg="required" style="width: 40%;" />
 
-			<input id="ddlMesurement" 
-				   data-role="dropdownlist"
-				   data-header-template="item-measurement-header-tmpl"                  
-                   data-text-field="name"
-                   data-value-field="id"
-                   data-bind="value: measurement_id,
-                   			  source: measurementDS"
-                   data-option-label="UM"
-                   style="width: 57%;" />
-		</td>
-		<td class="right">
-			<span data-format="n" data-bind="text: cost"></span>
-		</td>
-		<td class="right">
-			<span data-format="n" data-bind="text: amount"></span>
-		</td>	
-    </tr>   
+				<input id="ddlMesurement" 
+					   data-role="dropdownlist"
+					   data-header-template="item-measurement-header-tmpl"                  
+	                   data-text-field="name"
+	                   data-value-field="id"
+	                   data-bind="value: measurement_id,
+	                   			  source: measurementDS"
+	                   data-option-label="UM"
+	                   style="width: 57%;" />
+			</td>
+			<td class="right">
+				<span data-format="n" data-bind="text: cost"></span>
+			</td>
+			<td class="right">
+				<span data-format="n" data-bind="text: amount"></span>
+			</td>	
+	    </tr>
+	#}#   
 </script>
 <script id="internalUsage-to-account-line-template" type="text/x-kendo-tmpl">		
-	<tr data-uid="#: uid #">
-		<td>
-			<input id="cbbAccounts" name="cbbAccounts-#:uid#"
-				   data-role="combobox"                   
-                   data-value-primitive="true" 
-                   data-header-template="account-header-tmpl"                 
-                   data-template="account-list-tmpl"
-                   data-text-field="name"
-                   data-value-field="id"
-                   data-bind="value: account_id,
-                              source: expenseAccountDS"
-                   data-placeholder="Add Account.."                                     
-                   required data-required-msg="required" style="width: 100%" />	
-		</td>
-		<td>
-			<input type="text" class="k-textbox" 
-					data-bind="value: description"					
-					style="width: 100%; margin-bottom: 0;" />
-		</td>
-		<td class="right">
-			<span data-format="n" data-bind="text: amount"></span>						
-		</td>
-    </tr>   
+	#if(movement=="1"){#
+		<tr data-uid="#: uid #">
+			<td>
+				<input id="cbbAccounts" name="cbbAccounts-#:uid#"
+					   data-role="combobox"                   
+	                   data-value-primitive="true" 
+	                   data-header-template="account-header-tmpl"                 
+	                   data-template="account-list-tmpl"
+	                   data-text-field="name"
+	                   data-value-field="id"
+	                   data-bind="value: account_id,
+	                              source: expenseAccountDS"
+	                   data-placeholder="Add Account.."                                     
+	                   required data-required-msg="required" style="width: 100%" />	
+			</td>
+			<td>
+				<input type="text" class="k-textbox" 
+						data-bind="value: description"					
+						style="width: 100%; margin-bottom: 0;" />
+			</td>
+			<td class="right">
+				<span data-format="n" data-bind="text: amount"></span>						
+			</td>
+	    </tr>
+    #}#   
 </script>
 <script id="internalUsage-from-item-line-template" type="text/x-kendo-tmpl">		
-	<tr data-uid="#: uid #">		
-		<td>
-			<i class="icon-trash" data-bind="events: { click: removeRow }"></i>
-			#:banhji.internalUsage.fromItemLineDS.indexOf(data)+1#			
-		</td>		
-		<td>
-			<input id="ccbItem" name="ccbItem-#:uid#"
-				   data-role="combobox"
-				   data-template="item-list-tmpl"                   			   
-                   data-text-field="name"
-                   data-value-field="id"
-                   data-bind="value: item_id, 
-                   			  source: itemDS,
-                   			  events:{ change: itemChanges }"
-                   placeholder="Add Item..." 
-                   required data-required-msg="required" style="width: 100%" />			
-		</td>		
-		<td>
-			<input id="txtDescription-#:uid#" name="txtDescription-#:uid#" 
-					type="text" class="k-textbox" 
-					data-bind="value: description"
-					style="width: 100%; margin-bottom: 0;" />
-		</td>
-		<td>
-			<input id="txtQuantity-#:uid#" name="txtQuantity-#:uid#" 
-					data-role="numerictextbox" 
-					data-format="n0" data-min="0"
-					data-spinners="false"
-					data-bind="value: quantity, events: {change : changes}"
-					required data-required-msg="required" style="width: 40%;" />
+	#if(movement=="-1"){#
+		<tr data-uid="#: uid #">
+			<td>
+				<i class="icon-trash" data-bind="events: { click: removeRow }"></i>
+				#:banhji.internalUsage.lineDS.indexOf(data)+1#			
+			</td>		
+			<td>
+				<input id="ccbItem" name="ccbItem-#:uid#"
+					   data-role="combobox"
+					   data-template="item-list-tmpl"                   			   
+	                   data-text-field="name"
+	                   data-value-field="id"
+	                   data-bind="value: item_id, 
+	                   			  source: itemDS,
+	                   			  events:{ change: itemChanges }"
+	                   placeholder="Add Item..." 
+	                   required data-required-msg="required" style="width: 100%" />			
+			</td>		
+			<td>
+				<input id="txtDescription-#:uid#" name="txtDescription-#:uid#" 
+						type="text" class="k-textbox" 
+						data-bind="value: description"
+						style="width: 100%; margin-bottom: 0;" />
+			</td>
+			<td>
+				<input id="txtQuantity-#:uid#" name="txtQuantity-#:uid#" 
+						data-role="numerictextbox" 
+						data-format="n0" data-min="0"
+						data-spinners="false"
+						data-bind="value: quantity, events: {change : changes}"
+						required data-required-msg="required" style="width: 40%;" />
 
-			<input id="ddlMesurement" 
-				   data-role="dropdownlist"
-				   data-header-template="item-measurement-header-tmpl"                  
-                   data-text-field="name"
-                   data-value-field="id"
-                   data-bind="value: measurement_id,
-                   			  source: measurementDS"
-                   data-option-label="UM"
-                   style="width: 57%;" />
-		</td>
-    </tr>   
+				<input id="ddlMesurement" 
+					   data-role="dropdownlist"
+					   data-header-template="item-measurement-header-tmpl"                  
+	                   data-text-field="name"
+	                   data-value-field="id"
+	                   data-bind="value: measurement_id,
+	                   			  source: measurementDS"
+	                   data-option-label="UM"
+	                   style="width: 57%;" />
+			</td>
+			<td class="right">
+				<span data-format="n" data-bind="text: cost"></span>
+			</td>
+	    </tr>
+    #}#  
 </script>
 <script id="internalUsage-from-account-line-template" type="text/x-kendo-tmpl">		
-	<tr data-uid="#: uid #">		
-		<td class="center">
-			<i class="icon-trash" data-bind="events: { click: removeRowAccount }"></i>
-			#:banhji.internalUsage.fromAccountLineDS.indexOf(data)+1#			
-		</td>			
-		<td>
-			<input id="cbbAccounts" name="cbbAccounts-#:uid#"
-				   data-role="combobox"                   
-                   data-value-primitive="true" 
-                   data-header-template="account-header-tmpl"                 
-                   data-template="account-list-tmpl"
-                   data-text-field="name"
-                   data-value-field="id"
-                   data-bind="value: account_id,
-                              source: expenseAccountDS"
-                   data-placeholder="Add Account.."                                     
-                   required data-required-msg="required" style="width: 100%" />	
-		</td>
-		<td>
-			<input type="text" class="k-textbox" 
-					data-bind="value: description"					
-					style="width: 100%; margin-bottom: 0;" />
-		</td>
-		<td class="right">
-			<input id="txtAmount-#:uid#" name="txtAmount-#:uid#" 
-					data-role="numerictextbox" 
-					data-decimals="2"
-					data-min="0"
-					data-spinners="false"
-					data-bind="value: amount, events: {change : changes}" 
-					required data-required-msg="required" style="width: 100%;" /> 						
-		</td>
-    </tr>   
+	#if(movement=="-1"){#
+		<tr data-uid="#: uid #">		
+			<td class="center">
+				<i class="icon-trash" data-bind="events: { click: removeRowAccount }"></i>
+				#:banhji.internalUsage.accountLineDS.indexOf(data)+1#			
+			</td>			
+			<td>
+				<input id="cbbAccounts" name="cbbAccounts-#:uid#"
+					   data-role="combobox"                   
+	                   data-value-primitive="true" 
+	                   data-header-template="account-header-tmpl"                 
+	                   data-template="account-list-tmpl"
+	                   data-text-field="name"
+	                   data-value-field="id"
+	                   data-bind="value: account_id,
+	                              source: expenseAccountDS"
+	                   data-placeholder="Add Account.."                                     
+	                   required data-required-msg="required" style="width: 100%" />	
+			</td>
+			<td>
+				<input type="text" class="k-textbox" 
+						data-bind="value: description"					
+						style="width: 100%; margin-bottom: 0;" />
+			</td>
+			<td class="right">
+				<input id="txtAmount-#:uid#" name="txtAmount-#:uid#" 
+						data-role="numerictextbox" 
+						data-decimals="2"
+						data-min="0"
+						data-spinners="false"
+						data-bind="value: amount, events: {change : changes}" 
+						required data-required-msg="required" style="width: 100%; text-align: right;" /> 						
+			</td>
+	    </tr>
+    #}#   
 </script>
 <script id="itemSetting" type="text/x-kendo-template">
 	<span class="pull-right glyphicons no-js remove_2" 
@@ -72523,10 +72536,10 @@
 	banhji.internalUsage = kendo.observable({
     	lang 					: langVM,
     	dataSource  			: dataStore(apiUrl + "transactions"),	
+    	lineDS  				: dataStore(apiUrl + "transactions/line"),
+    	accountLineDS  			: dataStore(apiUrl + "account_lines"),
     	toItemLineDS  			: dataStore(apiUrl + "transactions/line"),
     	toAccountLineDS  		: dataStore(apiUrl + "account_lines"),
-    	fromItemLineDS  		: dataStore(apiUrl + "transactions/line"),
-    	fromAccountLineDS  		: dataStore(apiUrl + "account_lines"),
     	journalLineDS			: dataStore(apiUrl + "journal_lines"),	
 		itemDS  				: banhji.source.inventoryForSaleDS,
 		measurementDS			: dataStore(apiUrl + "measurements"),		
@@ -72765,12 +72778,12 @@
 		        		self.changes();
 		        	});
 		        }else if(item.is_assembly=="1"){
-		        	rate = obj.rate / banhji.source.getRate(item.locale, new Date(obj.issued_date));
-
 		        	data.set("measurement_id", item.measurement_id);
 		    		data.set("description", item.sale_description);
 		    		data.set("quantity", 1);	    		
 			        data.set("cost", item.cost);
+			        data.set("rate", rate);
+			        data.set("locale", item.locale);
 			       	data.set("item_prices", []);
 
 			        this.changes();		     
@@ -72779,23 +72792,50 @@
 		    		data.set("description", item.sale_description);
 		    		data.set("quantity", 1);	    		
 			        data.set("cost", cost);
+			        data.set("rate", rate);
+			        data.set("locale", item.locale);
 			        data.set("item_prices", []);			        
 
 			        this.changes();
 		    	}
 	        }                	        	
 		},
+		toItemChanges 			: function(e){								
+			var self = this, 
+			data = e.data,
+			item = this.itemDS.get(data.item_id);
+			
+    		data.set("measurement_id", item.measurement_id);
+    		data.set("description", item.purchase_description);
+    		data.set("quantity", 1);
+	        data.set("item_prices", []);
+		},
 		typeChanges 			: function(){
-			var obj = this.get("obj"), type = this.get("type");
+			var self = this, 
+			obj = this.get("obj");
 
-			this.toItemLineDS.data([]);
-			this.toAccountLineDS.data([]);
+			$.each(this.toItemLineDS.data(), function(index, value){
+				if(value.movement=="1"){
+					self.toItemLineDS.remove(value);
 
-			if(type=="Item"){
+					return false;
+				}
+			});
+
+			$.each(this.toAccountLineDS.data(), function(index, value){
+				if(value.movement=="1"){
+					self.toAccountLineDS.remove(value);
+
+					return false;
+				}
+			});
+
+			if(this.get("type")=="Item"){
 				this.set("isItemType", true);
 
-				this.toItemLineDS.add({					
+				this.toItemLineDS.insert(0, {					
 					transaction_id 		: obj.id,
+					tax_item_id 		: "",
 					item_id 			: "",				
 					measurement_id 		: 0,				
 					description 		: "",				
@@ -72810,28 +72850,29 @@
 			}else{
 				this.set("isItemType", false);
 
-				this.toAccountLineDS.add({					
+				this.toAccountLineDS.insert(0, {					
 					transaction_id 		: obj.id,
 					account_id 			: "",				
 					description 		: "",											
 					amount 				: 0,
 					rate				: obj.rate,
-					locale				: obj.locale
+					locale				: obj.locale,
+					movement 			: 1 //To Account
 				});
 			}
 
 			this.changes();
 		},		
 		changes 				: function() {
-			var obj = this.get("obj"), sum = 0, qty = 0;
+			var obj = this.get("obj"), sum = 0;
 
-			$.each(this.fromItemLineDS.data(), function(index, value){
-				var amount = value.quantity * value.cost;
-				qty += value.quantity;
-				sum += amount;
+			//Item
+			$.each(this.lineDS.data(), function(index, value){
+				sum += value.quantity * value.cost;
 			});
 
-			$.each(this.fromAccountLineDS.data(), function(index, value){
+			//Account
+			$.each(this.accountLineDS.data(), function(index, value){
 				sum += value.amount;
 			});
 
@@ -72851,8 +72892,8 @@
         },
         addRow 					: function(){				
 			var obj = this.get("obj");
-									
-			this.fromItemLineDS.add({					
+			
+			this.lineDS.add({					
 				transaction_id 		: obj.id,
 				tax_item_id 		: "",
 				item_id 			: "",				
@@ -72862,16 +72903,15 @@
 				cost 				: 0,
 				price 				: 0,												
 				amount 				: 0,
-				discount 			: 0,
 				rate				: obj.rate,
 				locale				: obj.locale,							
 				movement 			: -1
-			});																	
+			});														
 		},		
 		removeRow 				: function(e){						
 			var data = e.data;
-			if(this.fromItemLineDS.total()>1){				
-				this.fromItemLineDS.remove(data);
+			if(this.lineDS.total()>1){				
+				this.lineDS.remove(data);
 		        this.changes();
 	        }		        
 		},
@@ -72879,19 +72919,20 @@
 		addRowAccount 			: function(){				
 			var obj = this.get("obj");
 									
-			this.fromAccountLineDS.add({					
+			this.accountLineDS.add({					
 				transaction_id 		: obj.id,
 				account_id 			: "",				
 				description 		: "",											
 				amount 				: 0,
 				rate				: obj.rate,
-				locale				: obj.locale
+				locale				: obj.locale,
+				movement 			: -1 //From Account
 			});																	
 		},		
 		removeRowAccount 		: function(e){						
 			var data = e.data;
 						
-			this.fromAccountLineDS.remove(data);
+			this.accountLineDS.remove(data);
 	        this.changes();
 		},
 		//Obj
@@ -72906,18 +72947,58 @@
 				var view = self.dataSource.view();
 						    	
 		    	self.set("obj", view[0]);
-		    	self.set("total", kendo.toString(view[0].amount, "n0"));
+		    	self.set("total", kendo.toString(view[0].amount, "c", view[0].locale));
 		    			    	
 		    	self.journalLineDS.filter({ field:"transaction_id", value: id });
-		    	self.lineDS.filter({ field:"transaction_id", value: id });
+		    	
+		    	//To
+		    	self.toItemLineDS.query({
+		    		filter:[
+			    		{ field:"transaction_id", value: id },
+			    		{ field:"movement", value: 1 }
+			    	],
+			    	page:1,
+			    	pageSize:1
+		    	}).then(function(){
+		    		var view = self.toItemLineDS.view();
+		    		if(view.length>0){
+		    			self.set("type", "Item");
+		    			self.set("isItemType", true);
+		    		}
+		    	});
+		    	self.toAccountLineDS.query({
+		    		filter:[
+			    		{ field:"transaction_id", value: id },
+			    		{ field:"movement", value: 1 }
+			    	],
+			    	page:1,
+			    	pageSize:1
+		    	}).then(function(){
+		    		var view = self.toAccountLineDS.view();
+		    		if(view.length>0){
+		    			self.set("type", "Account");
+		    			self.set("isItemType", false);
+		    		}
+		    	});
+
+		    	//From
+		    	self.lineDS.filter([
+		    		{ field:"transaction_id", value: id },
+		    		{ field:"movement", value: -1 }
+		    	]);
+		    	self.accountLineDS.filter([
+		    		{ field:"transaction_id", value: id },
+		    		{ field:"movement", value: -1 }
+		    	]);
+		    	
 			});
     	},			
 		addEmpty 		 		: function(){
 			this.dataSource.data([]);
+			this.lineDS.data([]);
+			this.accountLineDS.data([]);
 			this.toItemLineDS.data([]);
 			this.toAccountLineDS.data([]);
-			this.fromItemLineDS.data([]);
-			this.fromAccountLineDS.data([]);
 			this.journalLineDS.data([]);
 			this.attachmentDS.data([]);
 
@@ -72984,7 +73065,7 @@
 			//Edit Mode
 	    	if(this.get("isEdit")){
 	    		//Line has changes
-		    	if(this.lineDS.hasChanges()){
+		    	if(this.lineDS.hasChanges() || this.accountLineDS.hasChanges() || this.toItemLineDS.hasChanges() || this.toAccountLineDS.hasChanges()){
 		    		obj.set("dirty", true);
 
 		    		$.each(this.journalLineDS.data(), function(index, value){
@@ -72999,8 +73080,23 @@
 			this.objSync()
 			.then(function(data){ //Success												
 				if(self.get("isEdit")==false){
-					//Item Line
+					//To Item Line
+					$.each(self.toItemLineDS.data(), function(index, value){						
+	      				value.set("transaction_id", data[0].id);
+	      			});
+
+	      			//To Account Line
+					$.each(self.toAccountLineDS.data(), function(index, value){						
+	      				value.set("transaction_id", data[0].id);
+	      			});
+
+	      			//Item Line
 					$.each(self.lineDS.data(), function(index, value){						
+	      				value.set("transaction_id", data[0].id);
+	      			});
+
+	      			//Account Line
+					$.each(self.accountLineDS.data(), function(index, value){						
 	      				value.set("transaction_id", data[0].id);
 	      			});
 
@@ -73014,6 +73110,10 @@
 				}
 				
       			self.lineDS.sync();
+      			self.accountLineDS.sync();
+      			self.toItemLineDS.sync();
+      			self.toAccountLineDS.sync();
+
       			self.uploadFile();
       							
 				return data;
@@ -73031,7 +73131,10 @@
 					//Save Print					
 					self.set("savePrint", false);
 					self.cancel();
-					banhji.router.navigate("/invoice_form/"+result[0].id);
+
+					if(result[0].transaction_template_id>0){
+						banhji.router.navigate("/invoice_form/"+result[0].id);
+					}
 				}else{
 					//Save New
 					self.addEmpty();
@@ -73041,11 +73144,17 @@
 		cancel 					: function(){
 			this.dataSource.cancelChanges();
 			this.lineDS.cancelChanges();
+			this.accountLineDS.cancelChanges();
+			this.toItemLineDS.cancelChanges();
+			this.toAccountLineDS.cancelChanges();
 			this.journalLineDS.cancelChanges();
 			this.attachmentDS.cancelChanges();			
 			
 			this.dataSource.data([]);
 			this.lineDS.data([]);
+			this.accountLineDS.data([]);
+			this.toItemLineDS.data([]);
+			this.toAccountLineDS.data([]);
 			this.journalLineDS.data([]);
 			this.attachmentDS.data([]);		
 
@@ -73054,44 +73163,58 @@
 		//Journal	        
 	    addJournal 				: function(transaction_id){
 	    	var self = this,
-	    	obj = this.get("obj"),
-	    	total = 0,	    				    	
+	    	obj = this.get("obj"),		    	
 	    	inventoryList = {};			
 			
-			//Group accounts
+			//Group From Item Accounts
 			$.each(this.lineDS.data(), function(index, value){										
 				var item = self.itemDS.get(value.item_id),
 				accountID = item.inventory_account_id,
-				itemRate = banhji.source.getRate(item.locale, new Date(obj.issued_date)),
-				itemCost = value.quantity*(item.cost/itemRate);
-				
-				total += itemCost;
+				cost = value.quantity*value.cost;
 
 				if(inventoryList[accountID]===undefined){
-					inventoryList[accountID]={"id": accountID, "amount": itemCost, "rate": itemRate, "locale": item.locale};						
+					inventoryList[accountID]={ "id": accountID, "amount": cost, "rate": value.rate, "locale": value.locale };						
 				}else{											
 					if(inventoryList[accountID].id===accountID){
-						inventoryList[accountID].amount += itemCost;
+						inventoryList[accountID].amount += cost;
 					}else{
-						inventoryList[accountID]={"id": accountID, "amount": itemCost, "rate": itemRate, "locale": item.locale};
+						inventoryList[accountID]={ "id": accountID, "amount": cost, "rate": value.rate, "locale": value.locale };
 					}
 				}
 			});//End Foreach Loop			
 
-			//Start journal
-			//Add To item's account on Dr
-			var itemTo = this.itemDS.get(obj.item_id);
-			this.journalLineDS.add({					
-				transaction_id 		: transaction_id,
-				account_id 			: itemTo.inventory_account_id,				
-				description 		: "",
-				reference_no 		: "",
-				segments 	 		: [],								
-				dr 	 				: total,
-				cr 					: 0,				
-				rate				: obj.rate,
-				locale				: obj.locale
+			//Start journal			
+			//Add From Item Account on Dr
+			$.each(this.toItemLineDS.data(), function(index, value){
+				var item = self.itemDS.get(value.item_id);
+
+				self.journalLineDS.add({					
+					transaction_id 		: transaction_id,
+					account_id 			: item.inventory_account_id,				
+					description 		: "",
+					reference_no 		: "",
+					segments 	 		: [],								
+					dr 	 				: value.amount,
+					cr 					: 0,				
+					rate				: obj.rate,
+					locale				: obj.locale
+				});
 			});
+
+			//Add From Account on Dr
+			$.each(this.toAccountLineDS.data(), function(index, value){
+				self.journalLineDS.add({					
+					transaction_id 		: transaction_id,
+					account_id 			: value.account_id,				
+					description 		: "",
+					reference_no 		: "",
+					segments 	 		: [],								
+					dr 	 				: value.amount,
+					cr 					: 0,				
+					rate				: obj.rate,
+					locale				: obj.locale
+				});
+			});			
 
 			if(!jQuery.isEmptyObject(inventoryList)){
 				$.each(inventoryList, function(index, value){										
@@ -73108,7 +73231,22 @@
 						locale				: value.locale
 					});							
 				});	
-			}			
+			}
+
+			//Add From Account on Cr
+			$.each(this.accountLineDS.data(), function(index, value){
+				self.journalLineDS.add({					
+					transaction_id 		: transaction_id,
+					account_id 			: value.account_id,				
+					description 		: "",
+					reference_no 		: "",
+					segments 	 		: [],								
+					dr 	 				: 0,
+					cr 					: value.amount,				
+					rate				: value.rate,
+					locale				: value.locale
+				});
+			});
 
 			this.journalLineDS.sync();
 		}

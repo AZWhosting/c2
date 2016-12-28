@@ -71,14 +71,18 @@ class Readings extends REST_Controller {
 				$data["results"][] = array(
 					"id" 			=> $value->id,
 					"branch_id" 	=> $meter->branch_id,
+					"location_id" 	=> $meter->location_id,
 					"previous"		=> $value->previous,
 					"meter_id"		=> $meter->id,
 					"current"		=> $value->current,
 					"month_of"		=> $value->month_of,
+					"from_date" 	=> $value->from_date,
+					"to_date" 		=> $value->to_date,
 					"date"			=> $value->from_date." - ".$value->to_date,
 					"number" 		=> $meter->number,
 					"invoiced"   	=> $value->invoiced == 0 ? FALSE:TRUE,
 					"consumption" 	=> $value->usage,
+					"status"		=> "n",
 					"_meta" 		=> array()
 				);
 			}

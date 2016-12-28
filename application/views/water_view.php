@@ -3033,7 +3033,7 @@
 							<i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 35%;left: 45%"></i>
 						</div>
 						<!-- Tab content -->
-						<div id="tabDownload" style="border: 1px solid #ccc" class="tab-pane active widget-body-regular">
+						<div id="tabDownload" style="border: 1px solid #ccc; overflow: hidden;" class="tab-pane active widget-body-regular">
 							<h4 class="separator bottom" style="margin-top: 10px;">Please Select Query</h4>
 						  	<div class="span12 row-fluid" style="padding:20px 0;padding-top: 0;">
 					        	<div class="span5" style="padding-left: 0;">
@@ -3099,12 +3099,32 @@
 									</div>		
 								</div>
 					        </div>
-							<a data-bind="click: exportEXCEL">
-								<span id="saveClose" class="btn btn-icon btn-success glyphicons download" style="width: 250px!important;">
-									<i></i> 
-									<span >Download Reading Book</span>
-								</span>
-							</a>
+					        <div class="row-fluid" data-bind="visible: selectMeter">
+								<a data-bind="click: exportEXCEL">
+									<span id="saveClose" class="btn btn-icon btn-success glyphicons download" style="width: 250px!important;">
+										<i></i> 
+										<span >Download Reading Book</span>
+									</span>
+								</a>
+								<br>
+								<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
+									<thead>
+										<tr>
+											<th class="center">Meter Number</th>
+											<th class="center">Date</th>
+											<th class="center">Previouse</th>
+											<th class="center">Current</th>
+											<th class="center">Usage</th>
+										</tr>
+									</thead>
+									<tbody 
+				                		data-bind="source: dataSource" 
+				                		data-auto-bind="false" 
+				                		data-role="listview" 
+				                		data-template="reading-template">
+				                	</tbody>
+								</table>
+							</div>
 						</div>
 						<!-- // Tab content END -->
 						<!-- Tab content -->
@@ -3126,6 +3146,25 @@
 		<!-- // Tabs END -->
 	</div>
 </script>
+<script id="reading-template" type="text/x-kendo-tmpl">                    
+    <tr>
+    	<td>
+    		#= number#
+   		</td>
+   		<td align="center">
+    		#= date#
+   		</td>
+   		<td align="center">
+    		#= previous#
+   		</td>
+   		<td align="center">
+    		#= current#
+   		</td>
+   		<td align="center">
+    		#= consumption#
+   		</td> 		
+   	</tr>
+</script>
 <script id="EditReading" type="text/x-kendo-template">
 	<div id="slide-form">
 		<div class="customer-background">
@@ -3142,70 +3181,70 @@
 					<!-- Upper Part -->
 					<div class="row-fluid">
 						<div class="span12 row-fluid" style="padding:20px 0;padding-top: 0;">
-				        	<div class="span5" style="padding-left: 0;">
-					        	<div class="span6">	
-									<!-- Group -->
-									<div class="control-group">								
-										<label ><span >Month Of</span></label>
-							            <input type="text" 
-						                	style="width: 100%;" 
-						                	data-role="datepicker"
-						                	data-format="MM-yyyy"
-						                	data-start="year" 
-							  				data-depth="year" 
-						                	placeholder="Moth of ..." 
-								           	data-bind="value: monthOfSelect" />
-									</div>
-																									
-									<!-- // Group END -->
-								</div>
-								<div class="span6" style="padding-left: 0;">
-									<div class="control-group">								
-										<label ><span >License</span></label>
-										<input 
-											data-role="dropdownlist" 
-											style="width: 100%;" 
-											data-option-label="License ..." 
-											data-auto-bind="false" 
-											data-value-primitive="true" 
-											data-text-field="name" 
-											data-value-field="id" 
-											data-bind="
-												value: licenseSelect,
-			                  					source: licenseDS,
-			                  					events: {change: onLicenseChange}">
-			                  		</div>
-								</div>	
-							</div>
-							<div class="span7" style="padding-left: 0;">
-								<div class="span4">
-									<div class="control-group">								
-										<label ><span >Location</span></label>
-										<input 
-											data-role="dropdownlist" 
-											style="width: 100%;" 
-											data-option-label="Location ..." 
-											data-auto-bind="false" 
-											data-value-primitive="true" 
-											data-text-field="name" 
-											data-value-field="id" 
-											data-bind="
-												value: blocSelect,
-			                  					source: blocDS,
-			                  					events: {change: blocChange}">
-			                  		</div>
-								</div>
-								<div class="span4">
-									<div class="control-group">	
-										<label ><span >Action</span></label>	
-										<div class="row" style="margin: 0;">					
-											<button type="button" data-role="button" data-bind="click: search" class="k-button" role="button" aria-disabled="false" tabindex="0"><i class="icon-search"></i></button>
+					        	<div class="span5" style="padding-left: 0;">
+						        	<div class="span6">	
+										<!-- Group -->
+										<div class="control-group">								
+											<label ><span >Month Of</span></label>
+								            <input type="text" 
+							                	style="width: 100%;" 
+							                	data-role="datepicker"
+							                	data-format="MM-yyyy"
+							                	data-start="year" 
+								  				data-depth="year" 
+							                	placeholder="Moth of ..." 
+									           	data-bind="value: monthOfSelect" />
 										</div>
-			                  		</div>
-								</div>		
-							</div>
-				        </div>
-						<div class="fileupload fileupload-new margin-none" >
+																										
+										<!-- // Group END -->
+									</div>
+									<div class="span6" style="padding-left: 0;">
+										<div class="control-group">								
+											<label ><span >License</span></label>
+											<input 
+												data-role="dropdownlist" 
+												style="width: 100%;" 
+												data-option-label="License ..." 
+												data-auto-bind="false" 
+												data-value-primitive="false" 
+												data-text-field="name" 
+												data-value-field="id" 
+												data-bind="
+													value: licenseSelect,
+				                  					source: licenseDS,
+				                  					events: {change: onLicenseChange}">
+				                  		</div>
+									</div>	
+								</div>
+								<div class="span7" style="padding-left: 0;">
+									<div class="span4">
+										<div class="control-group">								
+											<label ><span >Location</span></label>
+											<input 
+												data-role="dropdownlist" 
+												style="width: 100%;" 
+												data-option-label="Location ..." 
+												data-auto-bind="false" 
+												data-value-primitive="false" 
+												data-text-field="name" 
+												data-value-field="id" 
+												data-bind="
+													value: blocSelect,
+				                  					source: blocDS,
+				                  					events: {change: blocChange}">
+				                  		</div>
+									</div>
+									<div class="span4">
+										<div class="control-group">	
+											<label ><span >Action</span></label>	
+											<div class="row" style="margin: 0;">					
+												<button type="button" data-role="button" data-bind="click: search" class="k-button" role="button" aria-disabled="false" tabindex="0"><i class="icon-search"></i></button>
+											</div>
+				                  		</div>
+									</div>		
+								</div>
+					        </div>
+							<br>
 						  	<table class="table table-borderless table-condensed cart_total table-primary">
 						  		<thead>
 			                		<tr>
@@ -3260,7 +3299,7 @@
             #= number#
         </td>
 		<td align="center">
-            <input type="text" class="k-textbox" data-bind="value:date" name="ProductName" required="required" validationMessage="required" />
+            #= date#
         </td>
 		<td align="center">
             #= previous#
@@ -3269,7 +3308,7 @@
             <input type="text" class="k-textbox" data-bind="value:current" name="current" required="required" validationMessage="required" />
         </td>
         <td align="center">
-            
+            #= current - previous#
         </td>
 		<td align="center">
 	        <div class="edit-buttons">
@@ -3683,9 +3722,10 @@
 					                              source: txnTemplateDS"
 					                   data-option-label="Select Template..." />
 							</div>
-							<div class="span2" style="margin: 0 10px">
+							<div class="span2" style="margin: 0 10px;margin-left: 25px;">
 								<input data-role="dropdownlist"
 					                   data-value-primitive="true"
+					                   data-option-label="Paper Size ..." 
 					                   data-text-field="name"
 					                   data-value-field="id"
 					                   data-bind="value: SelectSize,
@@ -3907,7 +3947,7 @@
 	</div>
 </script> 
 
-<script id="Receipt" type="text/x-kendo-template">
+<!-- <script id="Receipt" type="text/x-kendo-template">
 	<div id="slide-form">
 		<div class="customer-background" style="overflow: hidden;">
 			<div class="container-960">					
@@ -4132,8 +4172,338 @@
 			</div>
 		</div>
 	</div>				  	
+</script> -->
+<script id="Receipt" type="text/x-kendo-template">
+	<div class="row-fluid">
+
+		<!-- Left Side -->
+		<div class="span4">
+
+			<!-- Logo of the page -->
+			<table width="100%" cellpadding="10">
+				<tr>
+			        <td>
+			        	<h2 >Receipt</h2>
+			        	<p>
+			        		<span data-bind="text: lang.lang.in_here"></span>
+			        	</p>
+
+			        	<p style="width: 100%; float: left; margin-top: 8px;">
+				        	<span style="position: relative; height: 35px; line-height: 35px; padding-right: 15px; float: left; display: block; ">
+								<a style="color: #fff; margin-top: 4px; line-height: 17px; background: #203864; padding: 8px 91px; font-size: 20px;" href="#/reconcile">
+									Reconcile & Transfer												
+								</a>
+							</span>
+						</p>
+			        </td>
+			 	</tr>
+			</table>
+
+			<div style="width: 100%; float: left; background: #fff; height: 80px; margin: 10px 0 15px 0;">
+				Chart
+			</div>
+
+			<h2 >Report</h2>
+			<p>
+				Summary and detail cash receipt reports grouped by sources/ methods of receipts
+			</p>
+			<ul style="margin-left: -20px;">
+				<li><a href="#/wPayment_summary"><span >Cash Receipt By Summary</span></a></li> 
+				<li><a href="#/wPayment_detail"><span >Cash Receipt By Detail</span></a></li>  
+  				<li><a href="#/wPayment_by_source_summary"><span >Cash Receipt By Sources Summary</span></a></li>
+  				<li><a href="#/wPayment_by_source_detail"><span >Cash Receipt By Sources Detail</span></a></li> 
+			</ul>
+
+		</div>
+
+		<!-- Right Side -->
+		<div class="span8">
+
+			<!-- Summary -->
+			<div class="row">
+	
+				<div class="span4" style="background: #496cad; margin-bottom: 15px;">
+					<div class="innerAll padding-bottom-none-phone" >
+						<a href="javascript:void(0)" class="widget-stats widget-stats-gray widget-stats-4" style="background: #496cad;"> 
+							<span class="txt" style="color: #fff;"><span >Customer</span></span>
+							<span class="count" style="color: #fff;">0</span>
+							<span class="glyphicons user userss"><i></i></span>
+						</a>
+					</div>
+				</div>
+
+				<div class="span8" >
+					<div class="innerAll padding-bottom-none-phone" style="background: #d9edf7;">
+						<a href="#/wPayment_summary" class="widget-stats widget-stats-primary widget-stats-4" style="background: #d9edf7;">
+							<span class="txt" style="color: #31708f;"><span >Today Payment</span></span>
+							<span class="count"><span style="font-size: 35px; color: #31708f;">0៛</span></span>
+							<span class="glyphicons coins addcolor-coins"><i></i></span>
+						</a>
+					</div>
+				</div>
+				
+			</div>
+
+			<div class="row-fluid" style="background: #fff; float: left; padding: 15px; margin-left: -15px;">
+				<!-- Upper Part -->
+					<div class="row-fluid">
+						<div class="span4">
+							<div class="widget widget-heading-simple widget-body-primary widget-employees">		
+								<div class="widget-body padding-none">			
+									<div class="row-fluid row-merge">
+										<div class="listWrapper">
+											<div class="innerAll" style="padding: 15px 15px 19px;">							
+												<form autocomplete="off" class="form-inline">
+													<div class="widget-search separator bottom" style="padding-bottom: 0;">
+														<button type="button" class="btn btn-default pull-right" data-bind="click: search"><i class="icon-search"></i></button>
+														<div class="overflow-hidden">
+															<input type="search" placeholder="Invoice Number..." data-bind="value: invNum, events:{change: invNumChange}">
+														</div>
+													</div>
+												</form>					
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							
+							<div class="strong" style="margin-bottom:0; width: 100%; padding: 10px; background: #D5DBDB;" align="center">
+								<div align="left"><span >AMOUNT RECEIVED</span></div>
+								<h2 align="right">0</h2>
+							</div>												
+						</div>					   
+
+						<div class="span8" style="padding-right: 0; padding-left: 0;">
+
+							<div class="box-generic-noborder" style="padding: 10px 10px 10px 10px">
+						            
+					            <table style="margin-bottom: 0;" class="table table-borderless table-condensed cart_total">
+					            	<tr>
+										<td><span >Date</span></td>
+										<td class="right">
+											<input id="issuedDate" name="issuedDate" 
+													data-role="datepicker"
+													data-format="dd-MM-yyyy"
+													data-parse-formats="yyyy-MM-dd" 
+													data-bind="value: obj.issued_date, 
+															   events:{ change : issuedDateChanges }" 
+													required data-required-msg="required"
+													style="width:100%;" />
+										</td>
+									</tr>							            
+									<tr>
+						            	<td>
+						            		<span >Payment Term</span>
+						            	</td>				
+										<td>
+											<input id="ddlPaymentMethod" name="ddlPaymentMethod"
+													data-role="dropdownlist"								
+													data-header-template="customer-payment-method-header-tmpl"
+						              				data-value-primitive="true"
+													data-text-field="name" 
+						              				data-value-field="id"
+						              				data-bind="value: obj.payment_method_id,
+						              							source: paymentMethodDS"
+						              				data-option-label="Select Method..."
+						              				required data-required-msg="required" 
+						              				style="width: 100%" />
+										</td>
+									</tr>
+									<tr>
+						            	<td><span >Cash Account</span></td>							            	
+					            		<td>
+											<input id="ddlCashAccount" name="ddlCashAccount" 
+												data-role="dropdownlist"
+												data-header-template="account-header-tmpl"
+												data-template="account-list-tmpl"
+					              				data-value-primitive="true"
+												data-text-field="name" 
+					              				data-value-field="id"
+					              				data-bind="value: obj.account_id,
+					              							source: accountDS"
+					              				data-option-label="Select Account..."
+					              				required data-required-msg="required" 
+					              				style="width: 100%" />
+										</td>							            	
+						            </tr>							            
+						            <tr>
+										<td><span >Segment</span></td>
+										<td>
+											<select data-role="multiselect"
+												   data-value-primitive="true"
+												   data-header-template="segment-header-tmpl"
+												   data-item-template="segment-list-tmpl"				    
+												   data-value-field="id" 
+												   data-text-field="code"
+												   data-bind="value: obj.segments, 
+												   			source: segmentItemDS,
+												   			events:{ change: segmentChanges }"
+												   data-placeholder="Add Segment.."				   
+												   style="width: 100%" /></select>
+										</td>
+									</tr>											
+					            </table>						            
+							       
+							</div>         
+					    </div>
+					</div>
+
+					<!-- Item List -->
+					<table class="table table-bordered table-primary table-striped table-vertical-center">
+				        <thead>
+				            <tr>
+				                <th class="center" style="width: 50px;"><span >No.</span></th>			                
+				                <th><span >Date</span></th>
+				                <th><span >Name</span></th>
+				                <th><span >Invoice</span></th>
+				                <th style="width: 15%"><span >Amount</span></th>
+				                <th style="width: 15%">RECEIVE</th>
+				            </tr> 
+				        </thead>
+				        <tbody data-role="listview" 
+				        		data-template="cashReceipt-template" 
+				        		data-auto-bind="false"
+				        		data-bind="source: dataSource"></tbody>			        
+				    </table>			    
+									
+		            <!-- Bottom part -->
+		            <div class="row-fluid">
+			
+						<!-- Column -->
+						<div class="span5" style="padding-left: 0;">
+							
+							<div class="btn-group">
+								<div class="leadcontainer">
+									
+								</div>
+								<a class="btn btn-default dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-list"></i> </a>
+								<ul class="dropdown-menu" style="padding: 5px; border-radius:0;">
+									<li>
+										<input type="checkbox" id="chbCheckNo" class="k-checkbox" data-bind="checked: showCheckNo">
+	  									<label class="k-checkbox-label" for="chbCheckNo"><span data-bind="text: lang.lang.check_number"></span></label>
+									</li>															
+								</ul>
+							</div>
+
+							<br>
+							<div class="well" style="overflow: hidden;">
+								<textarea cols="0" rows="2" class="k-textbox" style="width:100% !important;" data-bind="value: obj.memo" placeholder="memo for external ..."></textarea>												
+								<textarea cols="0" rows="2" class="k-textbox" style="width:100% !important;" data-bind="value: obj.memo2" placeholder="memo for internal ..."></textarea>
+							</div>
+						</div>
+						<!-- Column END -->
+						
+						<!-- Column -->
+						<div class="span7" style="padding-left: 0;">
+							<table class="table table-condensed table-striped table-white">
+								<tbody>
+									<tr>
+										<td class="right"><span >Total Received</span>:</td>
+										<td class="right strong" ><span >0</span></td>
+										<td class="right"><span >Subtotal</span>:</td>
+										<td class="right strong" width="40%"><span >0</span></td>
+									</tr>								
+									<tr>
+										<td class="right"><span >Remaining</span>:</td>
+										<td class="right strong"><span >0</span></td>
+										<td class="right"><span >Discount</span>:</td>
+										<td class="right strong">
+											<span >0</span>
+	                   					</td>
+									</tr>								
+								</tbody>
+							</table>
+
+							<table class="table table-bordered table-primary table-striped table-vertical-center">
+						        <thead>
+						            <tr>
+						                <th class="center" style="width: 50px;"><span >No.</span></th>             
+						                <th><span >Currency</span></th>
+						                <th><span >Cash Receipt</span></th>			                			                			                			                
+						            </tr> 
+						        </thead>
+						        <tbody >		
+									<tr>
+										<td>1</td>
+										<td>2</td>
+										<td>3</td>
+									</tr>
+								</tbody>			        
+						    </table>
+
+						    <button style="margin-bottom: 15px;" class="btn btn-inverse" data-bind="click: addRow"><i class="icon-plus icon-white"></i></button>
+							
+							<table class="table table-condensed table-striped table-white">
+								<tbody>																
+									<tr>
+										<td></td>
+										<td></td>
+										<td class="right"><h4><span >Total Due</span>:</h4></td>
+										<td class="right strong"><h4 >0</h4></td>
+									</tr>								
+								</tbody>
+							</table>
+							
+						</div>
+						<!-- // Column END -->
+						
+					</div>	           
+					
+					<!-- Form actions -->
+					<div class="box-generic bg-action-button">
+						<div id="ntf1" data-role="notification"></div>
+
+						<div class="row">
+							<div class="span3">
+								<input data-role="dropdownlist"
+					                   data-value-primitive="true"
+					                   data-text-field="name"
+					                   data-value-field="id"
+					                   data-bind="value: obj.transaction_template_id,
+					                              source: txnTemplateDS"
+					                   data-option-label="Select Template..." />
+							</div>
+							<div class="span9" align="right">
+								<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 80px;"><i></i><span >Receipt</span></span>			
+							</div>
+						</div>
+					</div>
+					<!-- // Form actions END -->
+			</div>
+		</div>		
+
+	</div>				  	
 </script>
 
+<script id="cashReceipt-template" type="text/x-kendo-template">
+	<tr data-uid="#: uid #">		
+		<td>
+			<i class="icon-trash" data-bind="events: { click: removeRow }"></i>
+			#:banhji.Receipt.dataSource.indexOf(data)+1#			
+		</td>		
+		<td>#=kendo.toString(new Date(issue_date), "dd-MM-yyyy")#</td>
+		<td>#=contact.name#</td>		
+		<td>#=number#</td>
+		<td data-bind="visible: showCheckNo">
+			<input type="text" class="k-textbox" 
+					data-bind="value: check_no"
+					style="width: 100%; margin-bottom: 0;" />
+		</td>		
+		<td class="center">
+			#=amount#
+		</td>	
+		<td class="center">
+			<input data-role="numerictextbox"
+				   data-spinners="false"
+				   data-culture=""
+                   data-decimals="2"
+                   data-min="0"                   
+                   data-bind="value: received,
+                              events: { change: changes }"
+                   style="width: 100%;">			
+		</td>
+    </tr> 
+</script>
 <script id="customerDeposit" type="text/x-kendo-template">
 	<div id="slide-form">
 		<div class="customer-background">
@@ -4793,6 +5163,24 @@
 <!-- ***************************
 *	Template Blog         	  *
 **************************** -->
+<script id="account-header-tmpl" type="text/x-kendo-tmpl">
+    <strong>
+    	<a href="\#/account">+ Add New Account</a>
+    </strong>
+</script>
+<script id="account-list-tmpl" type="text/x-kendo-tmpl">	
+	<span>
+		#=number#				
+	</span>
+	-
+	<span>
+		#if(name.length>25){#
+			#=name.substring(0, 25)#..
+		#}else{#
+			#=name#
+		#}#
+	</span>
+</script>
 <script id="meter-list-tmpl" type="text/x-kendo-tmpl">
 	<tr>
 		<td data-bind="click: onSelectedMeter">#= number#</td>
@@ -4838,6 +5226,19 @@
 		</td>
 	</tr>
 </script>
+<script id="segment-header-tmpl" type="text/x-kendo-tmpl">
+    <strong>
+    	<a href="\#/segment">+ Add New Segment</a>
+    </strong>
+</script>
+<script id="segment-list-tmpl" type="text/x-kendo-tmpl">
+	<span>#=code#</span> <span>#=name#</span>
+</script>
+<script id="customer-payment-method-header-tmpl" type="text/x-kendo-tmpl">
+	<strong>
+    	<a href="\#/customer_setting">+ Add New Payment Method</a>
+    </strong>	
+</script>
 <!-- ***************************
 *	Menu Section         	  *
 **************************** -->
@@ -4873,24 +5274,7 @@
 <!-- ***************************
 * widget templates
 **************************** -->
-<script id="account-header-tmpl" type="text/x-kendo-tmpl">
-    <strong>
-    	<a href="\#/account">+ Add New Account</a>
-    </strong>
-</script>
-<script id="account-list-tmpl" type="text/x-kendo-tmpl">	
-	<span>
-		#=number#				
-	</span>
-	-
-	<span>
-		#if(name.length>25){#
-			#=name.substring(0, 25)#..
-		#}else{#
-			#=name#
-		#}#
-	</span>
-</script>
+
 
 <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/js/libs/localforage.min.js"></script>
 <script src="http://cdnjs.cloudflare.com/ajax/libs/jszip/2.4.0/jszip.js"></script>
@@ -10191,12 +10575,21 @@
 		blocDS 				: dataStore(apiUrl + "locations"),
 		itemDS 				: null,
 		obj 				: null,
-		para 				: [],
 		monthOfSelect		: null,
 		licenseSelect		: null,
 		blocSelect			: null,
-		isEdit 				: false,
-		contact 			: null,
+		selectMeter 		: false,
+		rows 				: [{
+						        cells: [
+						          { value: "number" },
+						          { value: "from_date" },
+						          { value: "to_date" },
+						          { value: "previous" },
+						          { value: "current" },
+						          { value: "consumption" },
+						          { value: "status" }
+						        ]
+						      }],
 		pageLoad 			: function(id){
 			this.licenseDS.read();
 		},
@@ -10215,7 +10608,7 @@
 			var monthOfSearch = this.get("monthOfSelect"),
 			license_id = this.get("licenseSelect"),
 			bloc_id = this.get("blocSelect");
-					
+			var para = [];	
 			if(monthOfSearch){						
 				var monthOf = new Date(monthOfSearch);
 				monthOf.setDate(1);
@@ -10224,18 +10617,45 @@
 				monthL.setDate(31);
 				monthL = kendo.toString(monthL, "yyyy-MM-dd");
 				
-				this.para.push([
+				para.push(
 					{field: "month_of >=" , value: monthOf},
 					{field: "month_of <=", value: monthL}
-				]);
-				this.dataSource.query({filter: this.para});
-					
+				);
+				//this.dataSource.filter(para);
+				if(license_id){
+					para.push({field: "branch_id", operator: "where_related_meter" , value: license_id.id});
+				}
+				if(bloc_id){
+					para.push({field: "location_id", operator: "where_related_meter" , value: bloc_id.id});
+				}
+				this.set("selectMeter", true);
+				var self = this;
+				this.dataSource.query({
+					filter: para
+				}).then(function(){
+					for (var i = 0; i < self.dataSource.data().length; i++){
+			        self.rows.push({
+			            cells: [
+			              { value: self.dataSource.data()[i].number },
+			              { value: self.dataSource.data()[i].from_date },
+			              { value: self.dataSource.data()[i].to_date  },
+			              { value: self.dataSource.data()[i].previous  },
+			              { value: self.dataSource.data()[i].current  },
+			              { value: self.dataSource.data()[i].consumption  },
+			              { value: self.dataSource.data()[i].status  }
+			            ]
+			          });
+			        }
+				});
+
+
+
+				
+				console.log(para);
+
 			}else{
 				alert("សូមSelect ខែ");
 			}	
-			if(license_id){
-				this.para.push({field: "month_of >=" , value: monthOf});
-			}
 		},
 		monthOfSR 			: null,
 		NumberSR 			: null,
@@ -10265,6 +10685,25 @@
 				$("#loadImport").css("display","none");	
 			});
 		},
+		exportEXCEL 		: function(e){
+			var workbook = new kendo.ooxml.Workbook({
+	          	sheets: [
+	            	{
+	              		columns: [
+	                		{ autoWidth: true },
+	                		{ autoWidth: true },
+	                		{ autoWidth: true },
+	                		{ autoWidth: true },
+	                		{ autoWidth: true }
+	              		],
+	              		title: "Reading",
+	              		rows: this.rows
+	            	}
+	          	]
+	        });
+	        //save the file as Excel file with extension xlsx
+	        kendo.saveAs({dataURI: workbook.toDataURL(), fileName: "Reading.xlsx"});
+		},
 		onSelected 			: function(e){
 			$('li.k-file').remove();
 	        var files = e.files, self = this;
@@ -10280,7 +10719,7 @@
 					if(roa.length > 0){
 						result[sheetName] = roa;
 						for(var i = 0; i < roa.length; i++) {
-							banhji.reading.dataSource.add(roa[i]);
+							//banhji.reading.dataSource.add(roa[i]);
 							$("#loadImport").css("display","none");	
 							console.log(roa[i]);
 						}							
@@ -10288,74 +10727,6 @@
 				});															
 			}
 			reader.readAsBinaryString(files[0].rawFile);      
-		},
-		exportEXCEL 		: function(e){
-			$("#loadImport").css("display","block");
-			var ds = new kendo.data.DataSource({
-		        type: "json",
-		        transport: {
-		          read: apiUrl + "readings/books"
-		        },
-		        schema: {
-		          model: {
-		            fields: {
-		              number: { type: "number" },
-		              from_date: { type: "date" },
-		              to_date : { type: "date"},
-		              previous: { type: "number" },
-		              status: { type: "string" },
-		              current: { type: "number" }
-		            }
-		          }
-		        }
-		      });
-
-		      var rows = [{
-		        cells: [
-		          { value: "number" },
-		          { value: "from_date" },
-		          { value: "to_date" },
-		          { value: "previous" },
-		          { value: "current" },
-		          { value: "status" }
-		        ]
-		      }];
-		      ds.fetch(function(){
-		        var data = this.data();
-		        for (var i = 0; i < data[0].count; i++){
-		          rows.push({
-		            cells: [
-		              { value: data[0].results[i].number },
-		              { value: data[0].results[i].from_date },
-		              { value: data[0].results[i].to_date },
-		              { value: data[0].results[i].previous },
-		              { value: data[0].results[i].current },
-		              { value: data[0].results[i].status }
-		            ]
-		          })
-		        }
-		        var workbook = new kendo.ooxml.Workbook({
-		          sheets: [
-		            {
-		              columns: [
-		                { autoWidth: true },
-		                { autoWidth: true },
-		                { autoWidth: true },
-		                { autoWidth: true },
-		                { autoWidth: true }
-		              ],
-		              // Title of the sheet
-		              title: "Reading",
-		              // Rows of the sheet
-		              rows: rows
-		            }
-		          ]
-		        });
-		        //save the file as Excel file with extension xlsx
-		        kendo.saveAs({dataURI: workbook.toDataURL(), fileName: "Reading.xlsx"});
-		      }).then(function(){
-		      	$("#loadImport").css("display","none");
-		      });
 		},
 		save 				: function() {
 			var self = this;
@@ -10398,14 +10769,75 @@
 		dataSource  		: dataStore(apiUrl + "readings"),
 		licenseDS 			: dataStore(apiUrl + "branches"),
 		blocDS 				: dataStore(apiUrl + "locations"),
-		monthOfSelect 		: null,
+		monthOfSearch 		: null,
 		licenseSelect 		: null,
 		blocSelect 			: null,
 		pageLoad 			: function(id){
-			this.dataSource.read();
+			this.licenseDS.read();
 		},
-		search 				: function(e){
+		onLicenseChange 	: function(e) {
+			var data = e.data;
+			var license = this.licenseDS.at(e.sender.selectedIndex - 1);
+			this.set("licenseSelect", license);
+			this.blocDS.filter({field: "branch_id", value: license.id});
+		},
+		blocChange 			: function(e){
+			var data = e.data;
+			var bloc = this.blocDS.at(e.sender.selectedIndex - 1);
+			this.set("blocSelect", bloc);
+		},
+		search 		 		: function(){		
+			var monthOfSearch = this.get("monthOfSelect"),
+			license_id = this.get("licenseSelect"),
+			bloc_id = this.get("blocSelect");
+			var para = [];	
+			if(monthOfSearch){						
+				var monthOf = new Date(monthOfSearch);
+				monthOf.setDate(1);
+				monthOf = kendo.toString(monthOf, "yyyy-MM-dd");
+				var monthL = new Date(monthOfSearch);
+				monthL.setDate(31);
+				monthL = kendo.toString(monthL, "yyyy-MM-dd");
+				
+				para.push(
+					{field: "month_of >=" , value: monthOf},
+					{field: "month_of <=", value: monthL}
+				);
+				//this.dataSource.filter(para);
+				if(license_id){
+					para.push({field: "branch_id", operator: "where_related_meter" , value: license_id.id});
+				}
+				if(bloc_id){
+					para.push({field: "location_id", operator: "where_related_meter" , value: bloc_id.id});
+				}
+				this.set("selectMeter", true);
+				var self = this;
+				this.dataSource.query({
+					filter: para
+				}).then(function(){
+					for (var i = 0; i < self.dataSource.data().length; i++){
+			        self.rows.push({
+			            cells: [
+			              { value: self.dataSource.data()[i].number },
+			              { value: self.dataSource.data()[i].from_date },
+			              { value: self.dataSource.data()[i].to_date  },
+			              { value: self.dataSource.data()[i].previous  },
+			              { value: self.dataSource.data()[i].current  },
+			              { value: self.dataSource.data()[i].consumption  },
+			              { value: self.dataSource.data()[i].status  }
+			            ]
+			          });
+			        }
+				});
 
+
+
+				
+				console.log(para);
+
+			}else{
+				alert("សូមSelect ខែ");
+			}	
 		},
 		exportEXCEL 		: function(e){
 			$("#loadImport").css("display","block");
@@ -10783,7 +11215,7 @@
 		licenseSelect 		: null,	
 		monthSelect 		: null,	
 		TemplateSelect 		: 1,
-		SelectSize 			: "A4",
+		SelectSize 			: null,
 		SizePaper 			: [{id: "A4", name: "A4"},{id: "A5", name: "A5"}],
 		obj 				: [],
 		blocSelect 			: null,
@@ -10989,9 +11421,35 @@
 	});
 	banhji.Receipt = kendo.observable({
 		lang 				: langVM,
+		dataSource 			: banhji.invoice.dataSource,
+		txnTemplateDS		: dataStore(apiUrl + "transaction_templates"),
+		invNum 				: null,
+		accountDS  			: banhji.source.cashAccountDS,		
+		paymentTermDS 		: banhji.source.paymentTermDS,
+		paymentMethodDS 	: banhji.source.paymentMethodDS,	
+		segmentItemDS		: banhji.source.segmentItemDS,
+		obj 				: null,
 		pageLoad 			: function(id){
-			
+			this.txnTemplateDS.filter({field:"moduls", value: "water_mg" });
+			this.addEmpty();
+			this.dataSource.read();
 		},  
+		invNumChange 		: function(e) {
+			console.log(this.invNum);
+		},
+		addEmpty 		 	: function(){			
+			this.dataSource.data([]);
+			this.set("obj", {				
+				account_id 			: 7,
+				payment_method_id	: 1,							   	
+			   	rate				: 1,			   	
+			   	locale 				: banhji.locale,			   	
+			   	issued_date 		: new Date(),			   	
+			   	memo 				: "",
+			   	memo2 				: "",			   	
+			   	segments 			: []		
+	    	});						
+		},	
 		save 				: function() {
 			var self = this;
 		},

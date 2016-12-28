@@ -4186,27 +4186,25 @@
 					<div class="innerAll padding-bottom-none-phone" >
 						<a href="javascript:void(0)" class="widget-stats widget-stats-gray widget-stats-4" style="background: #496cad;"> 
 							<span class="txt" style="color: #fff;"><span >Customer</span></span>
-							<span class="count" >0</span>
-							<span class="glyphicons user"><i></i></span>
+							<span class="count" style="color: #fff;">0</span>
+							<span class="glyphicons user userss"><i></i></span>
 						</a>
 					</div>
 				</div>
 
-				<div class="span8">
-					<div class="innerAll padding-bottom-none-phone">
-						<a href="#/wPayment_summary" class="widget-stats widget-stats-primary widget-stats-4">
-							<span class="txt"><span >Today Payment</span></span>
-							<span class="count"><span style="font-size: 35px;">0៛</span></span>
-							<span class="glyphicons coins"><i></i></span>
-							<div class="clearfix"></div>
-							<i class="icon-play-circle"></i>
+				<div class="span8" >
+					<div class="innerAll padding-bottom-none-phone" style="background: #d9edf7;">
+						<a href="#/wPayment_summary" class="widget-stats widget-stats-primary widget-stats-4" style="background: #d9edf7;">
+							<span class="txt" style="color: #31708f;"><span >Today Payment</span></span>
+							<span class="count"><span style="font-size: 35px; color: #31708f;">0៛</span></span>
+							<span class="glyphicons coins addcolor-coins"><i></i></span>
 						</a>
 					</div>
 				</div>
 				
 			</div>
 
-			<div class="row" style="background: #fff; width: 100%; float: left; padding: 15px;">
+			<div class="row-fluid" style="background: #fff; float: left; padding: 15px; margin-left: -15px;">
 				<!-- Upper Part -->
 					<div class="row-fluid">
 						<div class="span4">
@@ -4357,7 +4355,7 @@
 						<!-- Column END -->
 						
 						<!-- Column -->
-						<div class="span7">
+						<div class="span7" style="padding-left: 0;">
 							<table class="table table-condensed table-striped table-white">
 								<tbody>
 									<tr>
@@ -4373,7 +4371,31 @@
 										<td class="right strong">
 											<span >0</span>
 	                   					</td>
-									</tr>																
+									</tr>								
+								</tbody>
+							</table>
+
+							<table class="table table-bordered table-primary table-striped table-vertical-center">
+						        <thead>
+						            <tr>
+						                <th class="center" style="width: 50px;"><span >No.</span></th>             
+						                <th><span >Currency</span></th>
+						                <th><span >Cash Receipt</span></th>			                			                			                			                
+						            </tr> 
+						        </thead>
+						        <tbody >		
+									<tr>
+										<td>1</td>
+										<td>2</td>
+										<td>3</td>
+									</tr>
+								</tbody>			        
+						    </table>
+
+						    <button style="margin-bottom: 15px;" class="btn btn-inverse" data-bind="click: addRow"><i class="icon-plus icon-white"></i></button>
+							
+							<table class="table table-condensed table-striped table-white">
+								<tbody>																
 									<tr>
 										<td></td>
 										<td></td>
@@ -4382,6 +4404,7 @@
 									</tr>								
 								</tbody>
 							</table>
+
 						</div>
 						<!-- // Column END -->
 						
@@ -4411,6 +4434,293 @@
 		</div>		
 
 	</div>				  	
+</script>
+
+<script id="Reports" type="text/x-kendo-template">
+	<div class="row-fluid customer-report-center">
+		<div class="span7">
+			<p>
+				Key Performance Indicators (KPIs) 
+				<span title="" class="k-widget k-dropdown k-header" 
+					unselectable="on" 
+					role="listbox" 
+					aria-haspopup="true" 
+					aria-expanded="false" 
+					tabindex="0" 
+					aria-owns="" 
+					aria-disabled="false" 
+					aria-readonly="false" 
+					aria-busy="false" 
+					aria-activedescendant="088c5441-a9c0-4ed1-98a5-ffa18ba6fc10" 
+					style="width: 400px;">
+						<span unselectable="on" class="k-dropdown-wrap k-state-default">
+							<span unselectable="on" class="k-input">
+								ស្ថានីយ៍ទឹកស្អាត&nbsp;ឈូក
+							</span>
+						<span unselectable="on" class="k-select">
+							<span unselectable="on" 
+								class="k-icon k-i-arrow-s">select</span></span></span><input data-role="dropdownlist" data-option-label="(--- Select ---)" data-auto-bind="false" data-value-primitive="true" data-text-field="name" data-value-field="id" data-bind="value: branch_id,
+                  source: branchDS,
+                  events: {
+                    change: branchChanges
+                  }" style="width: 400px; display: none; margin-left: 15px;"></span>
+			</p>
+
+			<div class="row-fluid sale-report">
+				<h2>Customer Management Report</h2>
+				<p>
+					These reports are useful for customer information management, meter connections, and usage managements 
+				</p>
+				
+				<div class="row-fluid">
+					<table class="table table-borderless table-condensed">
+						<tr>
+							<td width="50%">
+								<h3><a href="#/wCustomer_list">Customer List</a></h3>
+							</td>
+							<td width="50%">
+								<h3><a href="#/wBrand_new_customer">New Customer List</a></h3>								
+							</td>						
+						</tr>
+						<tr>
+							<td width="50%">
+								<p></p>
+								
+							</td>
+							<td width="50%">
+								<p></p>
+							</td>
+							
+						</tr>
+						<tr>
+							<td width="50%">
+								<h3><a href="#/wCustomer_no_meter">Customer List with No Connection</a></h3>
+							</td>
+							<td width="50%">
+								<h3><a href="#/wLow_consumption">Minimum Water Usage List</a></h3>
+							</td>
+						</tr>
+						<tr>
+							<td width="50%">
+								<p></p>
+							</td>
+							<td width="50%">
+								<p></p>
+							</td>
+						</tr>
+
+						<tr>
+							<td width="50%">
+								<h3><a href="#/wDisconnect_list">Disconnected List</a></h3>
+							</td>
+							<td width="50%">
+								<!-- <h3><a href="#/">Period-End Closing Checklist</a></h3> -->
+							</td>
+						</tr>
+
+						<tr>
+							<td width="50%">
+								<p></p>
+							</td>
+							<td width="50%">
+								<p></p>
+							</td>
+						</tr>
+						
+
+					</table>
+				</div>
+			</div>
+
+			<div class="row-fluid recevable-report">
+				<h2>Receiveable and Deposits</h2>
+				<p>
+					These would be the most common reports that you will be using. It includes receivables balance and its aging in both summary and detail list and the security deposit made by the customers for their water connection.
+				</p>
+				<div class="row-fluid">
+					<table class="table table-borderless table-condensed">
+						<tr>
+							<td >
+								<h3><a href="#/wCustomer_balance">Accounts Receivable Listing</a></h3>
+							</td>
+							<td >
+								<h3><a href="#/wCustomer_deposit">Customer Deposit</a></h3>								
+							</td>						
+						</tr>
+						<tr>
+							<td >
+								<p></p>
+								
+							</td>
+							<td >
+								<p></p>
+							</td>							
+						</tr>
+
+						<tr>
+							<td >
+								<h3><a href="#/wAging_summary">Customer Aging Summary List</a></h3>
+							</td>
+							<td >
+								<h3><a href="#/wAging_detail">Customer Aging Detail List</a></h3>								
+							</td>						
+						</tr>
+						<tr>
+							<td >
+								<p></p>
+								
+							</td>
+							<td >
+								<p></p>
+							</td>							
+						</tr>
+						
+
+					</table>
+				</div>
+			</div>
+
+			<div class="row-fluid sale-report">
+				<h2>Sale Report</h2>
+				<p>
+					Summary and detail sale report broken down by Licenses, bloc, and types of reveneues.	
+				</p>
+				<div class="row-fluid">
+					<table class="table table-borderless table-condensed">
+						<tr>
+							<td>
+								<h3><a href="#/wSale_summary">Sale Summary Report</a></h3>
+							</td>
+							<td >
+								<h3><a href="#/wSale_detail">Sale Detail Report</a></h3>								
+							</td>						
+						</tr>
+						<tr>
+							<td >
+								<p></p>
+								
+							</td>
+							<td >
+								<p></p>
+							</td>							
+						</tr>
+						<tr>
+							<td >
+								<h3><a href="#/">Connection Service Revenue Report</a></h3>
+							</td>
+							<td >
+								<h3><a href="#/">Other Revenues</a></h3>
+							</td>
+						</tr>
+						<tr>
+							<td >
+								<p></p>
+							</td>
+							<td >
+								<p></p>
+							</td>
+						</tr>
+					</table>					
+				</div>
+			</div>
+
+			<div class="row-fluid recevable-report">
+				<h2>Cash Receipt Report</h2>
+				<p>
+					Summary and detail cash receipt reports grouped by sources/ methods of receipts 
+				</p>
+				<div class="row-fluid">
+					<table class="table table-borderless table-condensed">
+						<tr>
+							<td>
+								<h3><a href="#/wPayment_summary">Cash Receipt By Summary</a></h3>
+							</td>
+							<td >
+								<h3><a href="#/wPayment_detail">Cash Receipt By Detail</a></h3>								
+							</td>						
+						</tr>
+						<tr>
+							<td >
+								<p></p>
+								
+							</td>
+							<td >
+								<p></p>
+							</td>							
+						</tr>
+						<tr>
+							<td >
+								<h3><a href="#/wPayment_by_source_summary">Cash Receipt By Sources Summary</a></h3>
+							</td>
+							<td >
+								<h3><a href="#/wPayment_by_source_detail">Cash Receipt By Sources Detail</a></h3>
+							</td>
+						</tr>
+						<tr>
+							<td >
+								<p></p>
+							</td>
+							<td >
+								<p></p>
+							</td>
+						</tr>
+					</table>					
+				</div>
+			</div>
+
+		</div>
+		<div class="span5">
+			<span class="pull-right glyphicons no-js remove_2" 
+						onclick="javascript:window.history.back()"><i></i></span>
+			<br>
+			<br>
+			<div class="report-chart" style="overflow: hidden;">
+				<div class="statement">
+					<div class="account-stement">
+						<h2 style="color: #496cad; font-size: 20px;">Statement of Profit or Loss</h2>
+						<table class="performance" style="width:100%; background: #fff; color: #000; padding: 0; margin-bottom: 20px;">
+							<tr>
+								<td style="padding-left: 0;">Income</td>
+								<td></td>
+								<td align="right"><span data-bind="text: income"></span></td>
+							</tr>
+							<tr>
+								<td style="padding-left: 0;">Expense</td>
+								<td></td>
+								<td align="right"><span data-bind="text: expense"></span></td>
+							</tr>
+							<tr>
+								<td style="padding-left: 0;"><b>Net Income</b></td>
+								<td></td>
+								<td align="right"><b data-bind="text: net_income"></b></td>
+							</tr>
+						</table>
+
+						<h2 style="color: #496cad; font-size: 20px;">Statement of Financial Position</h2>
+						<table class="position" style="width:100%; background: #fff; color: #000; padding: 0;">
+							<tr>
+								<td style="padding-left: 0;">Assets</td>
+								<td></td>
+								<td align="right"><span data-bind="text: asset"></span></td>
+							</tr>
+							<tr>
+								<td style="padding-left: 0;">Liabilities</td>
+								<td></td>
+								<td align="right"><span data-bind="text: liability"></span></td>
+							</tr>
+							<tr>
+								<td style="padding-left: 0;"><b>Equity</b></td>
+								<td></td>
+								<td align="right"><b data-bind="text: equity"></b></td>
+							</tr>
+						</table>
+						
+					</div>
+				</div>
+			</div>
+			
+		</div>
+	</div>
 </script>
 
 <script id="customerDeposit" type="text/x-kendo-template">
@@ -12933,6 +13243,9 @@
 		InvoicePrint: new kendo.Layout("#InvoicePrint", {model: banhji.InvoicePrint}),	
 
 		Receipt: new kendo.Layout("#Receipt", {model: banhji.Receipt}),
+
+		Reports: new kendo.Layout("#Reports", {model: banhji.Reports}),
+
 		//custom form
 		invoiceCustom: new kendo.Layout("#invoiceCustom", {model: banhji.invoiceCustom}),
 		invoiceForm: new kendo.Layout("#invoiceForm", {model: banhji.invoiceForm}),
@@ -13264,6 +13577,22 @@
 
 		if(banhji.pageLoaded["receipt"]==undefined){
 			banhji.pageLoaded["receipt"] = true;
+		}
+
+		vm.pageLoad();
+	});
+
+	banhji.router.route("/reports", function(){		
+		banhji.view.layout.showIn("#content", banhji.view.Reports);
+		banhji.view.layout.showIn('#menu', banhji.view.menu);
+		banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
+		
+		var vm = banhji.Reports;
+
+		banhji.userManagement.addMultiTask("Reports","reports",null);
+
+		if(banhji.pageLoaded["reports"]==undefined){
+			banhji.pageLoaded["reports"] = true;
 		}
 
 		vm.pageLoad();

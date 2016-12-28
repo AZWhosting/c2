@@ -681,9 +681,9 @@ class Accounting_reports extends REST_Controller {
 		$obj->include_related("account", array("number","name"));
 		$obj->include_related("contact", array("abbr","number","name"));
 		$obj->where_related("transaction", "is_journal", 1);
-		$obj->where_related("transaction", "is_recurring", 0);		
-		$obj->where_related("transaction", "deleted", 0);
-		$obj->where("deleted", 0);
+		$obj->where_related("transaction", "is_recurring <>", 1);		
+		$obj->where_related("transaction", "deleted <>", 1);
+		$obj->where("deleted <>", 1);
 		$obj->order_by("dr", "desc");
 		
 		//Results
