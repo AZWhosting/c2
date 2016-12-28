@@ -70036,7 +70036,7 @@
       			item_id			: item_id,
       			measurement_id 	: obj.measurement_id,
       			price 			: obj.price,
-      			unit_value		: 0,
+      			unit_value		: 1,
       			locale 			: obj.locale
 			});
 
