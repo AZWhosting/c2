@@ -6849,8 +6849,8 @@
 						            </li>
 						            <li class="span1 glyphicons history"><a href="#tab4-4" data-toggle="tab"><i></i></a>
 						            </li>
-						            <li class="span1 glyphicons show_liness"><a href="#tab4-5" data-toggle="tab"><i></i></a>
-							        </li>								            
+						            <!-- <li class="span1 glyphicons show_liness"><a href="#tab4-5" data-toggle="tab"><i></i></a>
+							        </li> -->								            
 						        </ul>
 						    </div>
 						    <!-- // Tabs Heading END -->
@@ -7343,7 +7343,7 @@
 						            </li>
 						            <li class="span1 glyphicons history"><a href="#tab3-3" data-toggle="tab"><i></i></a>
 						            </li>
-						            <li class="span1 glyphicons show_liness"><a href="#tab3-4" data-toggle="tab"><i></i></a></li>
+						            <!-- <li class="span1 glyphicons show_liness"><a href="#tab3-4" data-toggle="tab"><i></i></a></li> -->
 						            							            
 						        </ul>
 						    </div>
@@ -10138,7 +10138,7 @@
 						            </li>
 						            <li class="span2 glyphicons history"><a href="#tab4-4" data-toggle="tab"><i></i><span data-bind="text: lang.lang.recurring"></span></a>
 						            </li>
-						            <li class="span1 glyphicons show_liness"><a href="#tab4-5" data-toggle="tab"><i></i></a></li>							            
+						           <!--  <li class="span1 glyphicons show_liness"><a href="#tab4-5" data-toggle="tab"><i></i></a></li> -->							            
 						        </ul>
 						    </div>
 						    <!-- // Tabs Heading END -->
@@ -10607,7 +10607,7 @@
 							            </li>						            
 							            <li class="span1 glyphicons history"><a href="#tab5-5" data-toggle="tab"><i></i></a>
 							            </li>
-							            <li class="span1 glyphicons show_liness"><a href="#tab5-6" data-toggle="tab"><i></i></a></li>						            								            
+							            <!-- <li class="span1 glyphicons show_liness"><a href="#tab5-6" data-toggle="tab"><i></i></a></li> -->						            								            
 							        </ul>
 							    </div>
 							    <!-- // Tabs Heading END -->
@@ -11613,7 +11613,7 @@
 							            </li>						            
 							            <li class="span1 glyphicons paperclip"><a href="#tab4-4" data-toggle="tab"><i></i></a>
 							            </li>
-							            <li class="span1 glyphicons show_liness"><a href="#tab4-5" data-toggle="tab"><i></i></a></li>
+							            <!-- <li class="span1 glyphicons show_liness"><a href="#tab4-5" data-toggle="tab"><i></i></a></li> -->
 							        </ul>
 							    </div>
 							    <!-- // Tabs Heading END -->
@@ -17162,8 +17162,8 @@
 							            </li>						            
 							            <li class="span1 glyphicons history"><a href="#tab5-5" data-toggle="tab"><i></i> <span data-bind="text: lang.lang.recurring"></span></a>
 							            </li>
-							            <li class="span1 glyphicons show_liness"><a href="#tab5-6" data-toggle="tab"><i></i></a>
-							            </li>						            								            
+							            <!-- <li class="span1 glyphicons show_liness"><a href="#tab5-6" data-toggle="tab"><i></i></a>
+							            </li> -->						            								            
 							        </ul>
 							    </div>
 							    <!-- // Tabs Heading END -->
@@ -17682,7 +17682,7 @@
 							            </li>						            
 							            <li class="span1 glyphicons history"><a href="#tab5-5" data-toggle="tab"><i></i> Recuring</a>
 							            </li>
-							            <li class="span1 glyphicons show_liness"><a href="#tab5-6" data-toggle="tab"><i></i></a></li>						            								            
+							            <!-- <li class="span1 glyphicons show_liness"><a href="#tab5-6" data-toggle="tab"><i></i></a></li> -->						            								            
 							        </ul>
 							    </div>
 							    <!-- // Tabs Heading END -->
@@ -18344,7 +18344,7 @@
 							            </li>						            
 							            <li class="span1 glyphicons history"><a href="#tab5-5" data-toggle="tab"><i></i></a>
 							            </li>
-							            <li class="span1 glyphicons show_liness"><a href="#tab5-6" data-toggle="tab"><i></i></a></li>						            								            
+							            <!-- <li class="span1 glyphicons show_liness"><a href="#tab5-6" data-toggle="tab"><i></i></a></li> -->						            								            
 							        </ul>
 							    </div>
 							    <!-- // Tabs Heading END -->
@@ -19412,7 +19412,7 @@
 							            </li>						            
 							            <li class="span1 glyphicons paperclip"><a href="#tab4-4" data-toggle="tab"><i></i></a>
 							            </li>
-							            <li class="span1 glyphicons show_liness"><a href="#tab4-5" data-toggle="tab"><i></i></a></li>
+							           <!--  <li class="span1 glyphicons show_liness"><a href="#tab4-5" data-toggle="tab"><i></i></a></li> -->
 							        </ul>
 							    </div>
 							    <!-- // Tabs Heading END -->
@@ -31990,7 +31990,7 @@
 								        </li>
 							            <li class="span1 glyphicons paperclip"><a href="#tab4-4" data-toggle="tab"><i></i></a>
 							            </li>
-							            <li class="span1 glyphicons show_liness"><a href="#tab4-5" data-toggle="tab"><i></i></a></li>		            								            
+							            <!-- <li class="span1 glyphicons show_liness"><a href="#tab4-5" data-toggle="tab"><i></i></a></li> -->		            								            
 							        </ul>
 							    </div>
 							    <!-- // Tabs Heading END -->
@@ -32295,7 +32295,7 @@
 							            </li>
 							            <li class="span1 glyphicons paperclip"><a href="#tab3-3" data-toggle="tab"><i></i></a>
 							            </li>
-							            <li class="span1 glyphicons show_liness"><a href="#tab3-4" data-toggle="tab"><i></i></a></li>					            								            
+							            <!-- <li class="span1 glyphicons show_liness"><a href="#tab3-4" data-toggle="tab"><i></i></a></li>	 -->				            								            
 							        </ul>
 							    </div>
 							    <!-- // Tabs Heading END -->
@@ -36630,7 +36630,7 @@
 							            </li>
 							            <li class="span1 glyphicons history"><a href="#tab3-3" data-toggle="tab"><i></i></a>
 							            </li>
-							             <li class="span1 glyphicons show_liness"><a href="#tab3-4" data-toggle="tab"><i></i></a>
+							             <!-- <li class="span1 glyphicons show_liness"><a href="#tab3-4" data-toggle="tab"><i></i></a> -->
 							            </li>								            
 							        </ul>
 							    </div>
@@ -37060,7 +37060,7 @@
 													<div class="widget-search separator bottom">
 														<button type="button" class="btn btn-default pull-right" data-bind="click: search"><i class="icon-search"></i></button>
 														<div class="overflow-hidden">
-															<input type="search" placeholder="Invoice Number..." data-bind="value: searchText, events:{change: enterSearch}">
+															<input type="search" placeholder="Invoice Number..." data-bind="value: searchText">
 														</div>
 													</div>
 													<div class="select2-container" style="width: 100%;">								
@@ -37101,7 +37101,7 @@
 							        <ul class="row-fluid row-merge">
 							        	<li class="span1 glyphicons cogwheels active"><a href="#tab1-1" data-toggle="tab"><i></i> </a>
 							            </li>
-							            <li class="span1 glyphicons show_liness"><a href="#tab1-2" data-toggle="tab"><i></i></a></li>
+							            <!-- <li class="span1 glyphicons show_liness"><a href="#tab1-2" data-toggle="tab"><i></i></a></li> -->
 							        </ul>
 							    </div>
 							    <!-- // Tabs Heading END -->
@@ -37385,7 +37385,7 @@
 												<div class="widget-search separator bottom">
 													<button type="button" class="btn btn-default pull-right" data-bind="click: search"><i class="icon-search"></i></button>
 													<div class="overflow-hidden">
-														<input type="search" placeholder="Bill Number..." data-bind="value: searchText, events:{change: enterSearch}">
+														<input type="search" placeholder="Bill Number..." data-bind="value: searchText">
 													</div>
 												</div>
 												<div class="select2-container" style="width: 100%;">								
@@ -37426,7 +37426,7 @@
 						        <ul class="row-fluid row-merge">
 						        	<li class="span1 glyphicons cogwheels active"><a href="#tab1-1" data-toggle="tab"><i></i> </a>
 						            </li>
-						            <li class="span1 glyphicons show_liness"><a href="#tab1-2" data-toggle="tab"><i></i></a></li>		            								            
+						            <!-- <li class="span1 glyphicons show_liness"><a href="#tab1-2" data-toggle="tab"><i></i></a></li> -->		            								            
 						        </ul>
 						    </div>
 						    <!-- // Tabs Heading END -->
@@ -67986,11 +67986,6 @@
 				self.set("invoice_id", 0);				
 			});
 		},
-		enterSearch 		: function(e){
-			e.preventDefault();
-
-			this.search();
-		},
 		//Obj
 		loadObj 			: function(id){
 			var self = this, para = [];
@@ -68486,12 +68481,7 @@
 				self.set("contact_id", "");
 				self.set("invoice_id", 0);				
 			});
-		},
-		enterSearch 		: function(e){
-			e.preventDefault();
-
-			this.search();
-		},		
+		},	
 	    segmentChanges 		: function(e) {
 			var dataArr = this.get("obj").segments,
 			lastIndex = dataArr.length - 1,
