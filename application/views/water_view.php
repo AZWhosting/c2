@@ -4410,7 +4410,12 @@
 										<td class="right strong">
 											<span >0</span>
 	                   					</td>
-									</tr>								
+									</tr>
+									<tr>
+										<td class="right"><span >Finding</span>:</td>
+										<td class="right strong"><span >0</span></td>
+										<td></td>
+										<td></td>							
 								</tbody>
 							</table>
 
@@ -4425,8 +4430,14 @@
 						        <tbody >		
 									<tr>
 										<td>1</td>
-										<td>2</td>
-										<td>3</td>
+										<td>
+											<span class="k-widget k-combobox k-header k-combobox-clearable" style="width: 100%;"><span tabindex="-1" unselectable="on" class="k-dropdown-wrap k-state-default"><input name="cbbCurrency_input" class="k-input" type="text" autocomplete="off" title="" role="combobox" aria-expanded="false" placeholder="Select currency..." style="width: 100%;" tabindex="0" aria-disabled="false" aria-autocomplete="list" aria-owns="cbbCurrency_listbox" aria-busy="false" aria-activedescendant="f0d42fda-54ce-4622-b063-7c9170786a8b"><span unselectable="on" class="k-icon k-i-close" title="clear" role="button" tabindex="-1"></span><span unselectable="on" class="k-select" aria-label="select" role="button" tabindex="-1" aria-controls="cbbCurrency_listbox"><span class="k-icon k-i-arrow-s"></span></span></span><input id="cbbCurrency" name="cbbCurrency" data-role="combobox" data-value-primitive="true" data-template="currency-list-tmpl" data-text-field="code" data-value-field="locale" data-bind="value: obj.locale, 
+					                   			source: currencyDS, 
+					                   			events: {change : setRate}" placeholder="Select currency..." required="" data-required-msg="required" style="width: 100%; display: none;" aria-disabled="false"></span>
+										</td>
+										<td>
+											<span class="k-widget k-numerictextbox" style="width: 100%; text-align: right;"><span class="k-numeric-wrap k-state-default k-expand-padding"><input type="text" class="k-formatted-value k-input" title="0.00" tabindex="0" role="spinbutton" aria-title="0.00" aria-valuenow="0" aria-disabled="false" aria-readonly="false" style="text-align: right; display: inline-block;"><input id="ntbDr" name="ntbDr" data-role="numerictextbox" data-spinners="false" data-format="n" data-bind="value: dr, events: {change : changes}" required="" data-required-msg="required" style="text-align: right; display: none;" role="spinbutton" class="k-input" type="text" aria-valuenow="0" aria-disabled="false" aria-readonly="false"><span class="k-select" style="display: none;"><span unselectable="on" class="k-link k-link-increase" aria-label="Increase value" title="Increase value" style="touch-action: none;"><span unselectable="on" class="k-icon k-i-arrow-n"></span></span><span unselectable="on" class="k-link k-link-decrease" aria-label="Decrease value" title="Decrease value" style="touch-action: none;"><span unselectable="on" class="k-icon k-i-arrow-s"></span></span></span></span></span>
+										</td>
 									</tr>
 								</tbody>			        
 						    </table>
@@ -4464,7 +4475,7 @@
 					                   data-option-label="Select Template..." />
 							</div>
 							<div class="span9" align="right">
-								<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 80px;"><i></i><span >Receipt</span></span>			
+								<span class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit, click: save" style="width: 80px;"><i></i><span >Save</span></span>			
 							</div>
 						</div>
 					</div>

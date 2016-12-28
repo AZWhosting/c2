@@ -39,8 +39,18 @@ class Ops extends REST_Controller {
 			    $data[] = $db;
 			    $connection = 'use '.$db;
 			    $this->db->query($connection);
+
+                $this->dbforge->add_column(
+                	"account_lines", array(
+	                	'movement'=> array(
+	                			'type'=> 'TINYINT', 
+	                			'constraint'=> 1, 
+	                			'unsigned'=> TRUE
+	                	)
+                	)
+                );
 			    
-			    $this->dbforge->modify_column('transaction_templates', array('type' => array('name' => 'type', 'type' => "ENUM('Invoice','Commercial_Invoice','Vat_Invoice','Electricity_Invoice','Water_Invoice','Cash_Sale','Commercial_Cash_Sale','Vat_Cash_Sale','Receipt_Allocation','Sale_Order','Quote','GDN','Sale_Return','Purchase_Order','GRN','Cash_Purchase','Credit_Purchase','Purchase_Return','Payment_Allocation','Deposit','Electricty_Deposit','Water_Deposit','Customer_Deposit','Vendor_Deposit','Withdraw','Transfer','Journal','Item_Adjustment','Cash_Advance','Reimbursement','Direct_Expense','Advance_Settlement','Additional_Cost','Cash_Payment','Cash_Receipt','Credit_Note','Debit_Note','Offset_Bill','Offset_Invoice','Cash_Transfer','Internal_Usage')")));
+			    // $this->dbforge->modify_column('transaction_templates', array('type' => array('name' => 'type', 'type' => "ENUM('Invoice','Commercial_Invoice','Vat_Invoice','Electricity_Invoice','Water_Invoice','Cash_Sale','Commercial_Cash_Sale','Vat_Cash_Sale','Receipt_Allocation','Sale_Order','Quote','GDN','Sale_Return','Purchase_Order','GRN','Cash_Purchase','Credit_Purchase','Purchase_Return','Payment_Allocation','Deposit','Electricty_Deposit','Water_Deposit','Customer_Deposit','Vendor_Deposit','Withdraw','Transfer','Journal','Item_Adjustment','Cash_Advance','Reimbursement','Direct_Expense','Advance_Settlement','Additional_Cost','Cash_Payment','Cash_Receipt','Credit_Note','Debit_Note','Offset_Bill','Offset_Invoice','Cash_Transfer','Internal_Usage')")));
 			    
 			    // $this->db->where('id', 23);
 			    // $this->db->update('prefixes', array('type'=> 'Withdraw', 'name'=>"Withdraw"));

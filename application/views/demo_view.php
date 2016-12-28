@@ -32677,7 +32677,7 @@
 	                   data-text-field="name"
 	                   data-value-field="id"
 	                   data-bind="value: account_id,
-	                              source: expenseAccountDS"
+	                              source: inventoryFixAssetAccountDS"
 	                   data-placeholder="Add Account.."                                     
 	                   required data-required-msg="required" style="width: 100%" />	
 			</td>
@@ -32757,7 +32757,7 @@
 	                   data-text-field="name"
 	                   data-value-field="id"
 	                   data-bind="value: account_id,
-	                              source: expenseAccountDS"
+	                              source: accountDS"
 	                   data-placeholder="Add Account.."                                     
 	                   required data-required-msg="required" style="width: 100%" />	
 			</td>
@@ -72572,8 +72572,8 @@
 			page:1,
 			pageSize: 100
 		}),
-		accountDS 				: banhji.source.inventoryFixAssetAccountDS,
-		expenseAccountDS 		: banhji.source.expenseAccountDS,
+		accountDS 				: banhji.source.accountDS,
+		inventoryFixAssetAccountDS 	: banhji.source.inventoryFixAssetAccountDS,
 		amtDueColor 			: banhji.source.amtDueColor,
 	    confirmMessage 			: banhji.source.confirmMessage,
 		frequencyList 			: banhji.source.frequencyList,
