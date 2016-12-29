@@ -317,4 +317,33 @@ class Ops extends REST_Controller {
 		// }
 
 	// 	// $this->response(array('results'=>$data), 200);
+
+
+	//Made by Great Mighty Dawine ^_^
+	// function add_new_field_get() {
+	// 	$this->load->dbutil();
+	// 	$dbs = $this->dbutil->list_databases();
+
+	// 	$companyList = array("banhji","banhji_mac", "db_banhji", "information_schema","innodb","mysql","performance_schema","tmp");
+	// 	$data = array();
+	// 	foreach ($dbs as $db)
+	// 	{	
+	// 		if (!in_array("$db", $companyList)) {
+	// 		    $data[] = $db;
+	// 		    $connection = 'use '.$db;
+	// 		    $this->db->query($connection);
+
+ //                $this->dbforge->add_column(
+ //                	"account_lines", array(//Table Name
+	//                 	'movement'=> array(//New Field Name
+	//                 			'type'=> 'TINYINT', 
+	//                 			'constraint'=> 1, 
+	//                 			'unsigned'=> TRUE
+	//                 	)
+ //                	)
+ //                );
+	// 		}
+	// 	}
+
+	// }
 }

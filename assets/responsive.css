@@ -1,3 +1,10 @@
+.top-itemprice tr td{
+  padding: 5px;
+
+}
+.top-itemprice{
+  width: 100%;
+}
 .k-icon.k-i-close{
 	display: none !important;
 }

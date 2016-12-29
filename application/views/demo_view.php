@@ -68,7 +68,7 @@
 				<div class="span12" style="padding-left: 0; margin-left: 0; margin-top: 0;">
 					<ul id="module-image">
 						<li style="text-align:center;">
-							<a href="#/customers ">
+							<a href="#/customers">
 								<img title="Customers Module" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/customers.jpg" alt="Customer">
 							</a>
 							<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span data-bind="text: lang.lang.customers" style="margin-top: 5px; display: inline-block;"></span></span>
@@ -31724,79 +31724,52 @@
 			        <div class="widget-body">
 
 				    	<div class="widget widget-heading-simple widget-body-simple">
-
-			
 							<div class="widget-head" style="font-size: large; font-weight: bold;">
 								<span data-bind="text: obj.number"></span>
 								-
 								<span data-bind="text: obj.name"></span>
 							</div>
-						
-										
+
 							<div class="widget-body">
-
-
 								<div class="row-fluid">
 									<div class="span3" style="padding-left:0;">
-									
-								
 										<a href="" class="widget-stats widget-stats-gray widget-stats-1">
 											<span class="glyphicons cart_in"><i></i><span class="txt"><span data-bind="text: lang.lang.weighted_avg_cost"></span></span></span>
 											<div class="clearfix"></div>
 											<span class="count"><span data-format="n" data-bind="text: obj.cost" style="font-size: xx-large;"></span></span>
 										</a>
-								
-										
 									</div>
 									<div class="span3">
-									
-								
 										<a href="" class="widget-stats widget-stats-1">
 											<span class="glyphicons cart_out"><i></i><span class="txt"><span data-bind="text: lang.lang.avg_price"></span></span></span>
 											<div class="clearfix"></div>
 											<span class="count"><span data-format="n" data-bind="text: obj.price" style="font-size: xx-large;"></span></span>
 										</a>
-								
-										
 									</div>
 									<div class="span2">
-									
-		
 										<a href="" class="widget-stats widget-stats-gray widget-stats-2">
 											<span class="count"><span data-format="n0" data-bind="text: obj.on_hand"></span></span>
 											<span class="txt"><span data-bind="text: lang.lang.qty_on_hand"></span></span>
 										</a>
-								
-										
 									</div>
 									<div class="span2">
-									
-							
 										<a href="" class="widget-stats widget-stats-2">
 											<span class="count"><span data-format="n0" data-bind="text: on_po"></span></span>
 											<span class="txt"><span data-bind="text: lang.lang.on_po"></span></span>
 										</a>
-					
-										
 									</div>
 									<div class="span2">
-									
-						
 										<a href="" class="widget-stats widget-stats-gray widget-stats-2">
 											<span class="count"><span data-format="n0" data-bind="text: on_so"></span></span>
 											<span class="txt"><span data-bind="text: lang.lang.on_so"></span></span>
 										</a>
-									
-										
 									</div>
 									
-								</div>
-					
-															
+								</div>					
 							</div>
 						</div>
 
-						<div id="priceList-window" data-role="window" data-visible="false" data-modal="true" data-resizable="false" data-iframe="true">				    	
+						<!-- <div id="priceList-window" data-role="window" data-visible="false" data-modal="true" data-resizable="false" data-iframe="true">				    	
 							<table>
 								<tr>
 									<td><span data-bind="text: lang.lang.price"></span></td>
@@ -31841,16 +31814,199 @@
 								</tr>
 							</table>
 
+							<table class="top-itemprice">
+								<tr>
+									<td>
+										<div class="control-group" style="">										
+											<label for="ddlContactType"><span >URM</span> <span style="color:red">*</span></label>
+											<span title="" class="k-widget k-dropdown k-header" unselectable="on" role="listbox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-owns="ddlContactType_listbox" aria-disabled="false" aria-busy="false" aria-activedescendant="4174f176-af83-4c87-83c3-79b0026a16e1" style="width: 100%;"><span unselectable="on" class="k-dropdown-wrap k-state-default"><span unselectable="on" class="k-input">General Customer</span><span unselectable="on" class="k-select" aria-label="select"><span class="k-icon k-i-arrow-s"></span></span></span><input id="ddlContactType" name="ddlContactType" data-role="dropdownlist" data-header-template="customer-type-header-tmpl" data-value-primitive="true" data-text-field="name" data-value-field="id" data-bind="value: obj.contact_type_id,
+				                   			  disabled: obj.is_pattern,
+				                              source: contactTypeDS,
+				                              events:{change: typeChanges}" data-option-label="(--- Select ---)" required="" data-required-msg="required" style="width: 100%; display: none;"></span>																				            
+										</div>
+										=
+									</td>
+									<td>
+										<div class="control-group">								
+											<label for="fullname"><span >Quatity</span> <span style="color:red">*</span></label>
+								            <input id="fullname" name="fullname" class="k-textbox" data-bind="value: obj.name, 
+				            					disabled: obj.is_pattern,
+				            					attr: { placeholder: phFullname }" required="" data-required-msg="required" style="width: 100%;" placeholder="Customer Name ...">
+										</div>
+									</td>
+								</tr>
+							</table>
 							<br>
 
 							<span class="btn btn-success btn-icon glyphicons ok_2" data-bind="click: save"><i></i><span data-bind="text: lang.lang.save"></span></span>
 							<span class="btn btn-danger btn-icon glyphicons remove_2" data-bind="click: closeWindow"><i></i><span data-bind="text: lang.lang.close"></span></span>  
-						</div>				
+						</div>	 -->
+
+						<!-- Item Price Type Window -->
+					    <div data-role="window"
+				                 data-title="Item Price"		                 
+				                 data-width="810"
+				                 data-height="290"
+				                 data-actions="{}"
+				                 data-position="{top: '30%', left: '18%'}"
+				                 data-bind="visible: windowVisible">
+				    		
+				    		<!-- <table class="top-itemprice">
+								<tr>
+									<td style="vertical-align: top;">
+										<div class="control-group" style="padding: 5px; float: left;">										
+											<label for="ddlContactType"><span >URM</span> <span style="color:red">*</span></label>
+											<span title="" class="k-widget k-dropdown k-header" unselectable="on" role="listbox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-owns="ddlContactType_listbox" aria-disabled="false" aria-busy="false" aria-activedescendant="4174f176-af83-4c87-83c3-79b0026a16e1" style="width: 100%;"><span unselectable="on" class="k-dropdown-wrap k-state-default"><span unselectable="on" class="k-input">General Customer</span><span unselectable="on" class="k-select" aria-label="select"><span class="k-icon k-i-arrow-s"></span></span></span><input id="ddlContactType" name="ddlContactType" data-role="dropdownlist" data-header-template="customer-type-header-tmpl" data-value-primitive="true" data-text-field="name" data-value-field="id" data-bind="value: obj.contact_type_id,
+				                   			  disabled: obj.is_pattern,
+				                              source: contactTypeDS,
+				                              events:{change: typeChanges}" data-option-label="(--- Select ---)" required="" data-required-msg="required" style="width: 100%; display: none;"></span>																				            
+										</div>
+										 
+									</td>
+									<td style="vertical-align: bottom;"><span style=" font-size: 35px; margin-top: 20px; float: left;">=</span></td>
+									<td style="vertical-align: top;">
+										<div class="control-group" style="padding: 5px; float: left;">								
+											<label for="fullname"><span >Quatity</span> <span style="color:red">*</span></label>
+								            <input id="fullname" name="fullname" class="k-textbox" data-bind="value: obj.name, 
+				            					disabled: obj.is_pattern,
+				            					attr: { placeholder: phFullname }" required="" data-required-msg="required" style="width: 100%;" placeholder="Customer Name ...">
+										</div>										
+									</td>
+									<td style="vertical-align: bottom;"><span style="font-size: 15px; font-weight: 600;">Base UOM</span></td>
+								</tr>
+								<tr>
+									<td style="vertical-align: top;">
+										<div class="control-group" style="padding: 5px; float: left;">										
+											<label for="ddlContactType"><span >Price</span> <span style="color:red">*</span></label>
+											<input data-role="numerictextbox"		                   
+							                   data-min="0"		                   
+							                   data-bind="value: priceList.price" />																				            
+										</div>
+									</td>
+									<td></td>
+									<td style="vertical-align: top;">
+										<div class="control-group" style="padding: 5px; float: left;">								
+											<label for="fullname"><span data-bind="text: lang.lang.currency"></span><span style="color:red">*</span></label>
+								            <input data-role="dropdownlist"
+											   data-option-label="(--- Select ---)"
+											   data-template="currency-list-tmpl"			                   
+							                   data-value-primitive="true"
+							                   data-text-field="code"
+							                   data-value-field="locale"
+							                   data-bind="value: priceList.locale,
+							                              source: currencyDS" />
+										</div>
+									</td>
+									<td></td>
+								</tr>
+							</table> -->
+
+							<div class="top-itemprice">
+								<table>
+		            				<tr >
+		            					<td style="width: 100px">
+					            			<input type="radio" value="Cash_Purchase" class="k-radio"
+					            					name="payOption" id="payOption1"
+					            					data-bind="checked: obj.type, 
+					            								events:{ change: typeChanges }"> 
+					            			<label class="k-radio-label" for="payOption1">Formula A</label> <br>
+					            			<span style="margin-left: 25px;">(< Base)</span>
+					            		</td>
+					            		<td></td>
+					            		<td >
+					            			<span style="float: left; margin-top: 6px;"> 1 Base UOM </span>
+					            		</td>
+					            		<td><span style="float: left; margin-top: 7px; font-size: 25px; font-weight: 600;">=</span></td>
+					            		<td>
+					            			<div class="control-group" style="padding: 5px; float: left;">								
+												<label for="fullname"><span >Quatity</span> <span style="color:red">*</span></label>
+									            <input id="fullname" name="fullname" class="k-textbox" data-bind="value: obj.name, 
+					            					disabled: obj.is_pattern,
+					            					attr: { placeholder: phFullname }" required="" data-required-msg="required" style="width: 100%;" placeholder="Customer Name ...">
+											</div>
+					            		</td>
+					            		<td>
+					            			<div class="control-group" style="padding: 5px; float: left;">										
+												<label for="ddlContactType"><span >UOM</span> <span style="color:red">*</span></label>
+												<span title="" class="k-widget k-dropdown k-header" unselectable="on" role="listbox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-owns="ddlContactType_listbox" aria-disabled="false" aria-busy="false" aria-activedescendant="4174f176-af83-4c87-83c3-79b0026a16e1" style="width: 100%;"><span unselectable="on" class="k-dropdown-wrap k-state-default"><span unselectable="on" class="k-input">General Customer</span><span unselectable="on" class="k-select" aria-label="select"><span class="k-icon k-i-arrow-s"></span></span></span><input id="ddlContactType" name="ddlContactType" data-role="dropdownlist" data-header-template="customer-type-header-tmpl" data-value-primitive="true" data-text-field="name" data-value-field="id" data-bind="value: obj.contact_type_id,
+					                   			  disabled: obj.is_pattern,
+					                              source: contactTypeDS,
+					                              events:{change: typeChanges}" data-option-label="(--- Select ---)" required="" data-required-msg="required" style="width: 100%; display: none;"></span>																				            
+											</div>
+					            		</td>
+					            	</tr>
+					            	<tr >
+					            		<td>
+								            <input type="radio" value="Credit_Purchase" class="k-radio"
+								            		name="payOption" id="payOption2"
+								            		data-bind="checked: obj.type, 
+								            					events:{ change: typeChanges }"> 
+								            <label class="k-radio-label" for="payOption2">Formula B</label>
+								            <span style="margin-left: 25px;">(> Base)</span>
+						            	</td>
+						            	<td><span style="float: left;">1</span></td>
+						            	<td>						            		
+						            		<div class="control-group" style="padding: 5px; float: left;">										
+												<label for="ddlContactType"><span >UOM</span> <span style="color:red">*</span></label>
+												<span title="" class="k-widget k-dropdown k-header" unselectable="on" role="listbox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-owns="ddlContactType_listbox" aria-disabled="false" aria-busy="false" aria-activedescendant="4174f176-af83-4c87-83c3-79b0026a16e1" style="width: 100%;"><span unselectable="on" class="k-dropdown-wrap k-state-default"><span unselectable="on" class="k-input">General Customer</span><span unselectable="on" class="k-select" aria-label="select"><span class="k-icon k-i-arrow-s"></span></span></span><input id="ddlContactType" name="ddlContactType" data-role="dropdownlist" data-header-template="customer-type-header-tmpl" data-value-primitive="true" data-text-field="name" data-value-field="id" data-bind="value: obj.contact_type_id,
+					                   			  disabled: obj.is_pattern,
+					                              source: contactTypeDS,
+					                              events:{change: typeChanges}" data-option-label="(--- Select ---)" required="" data-required-msg="required" style="width: 100%; display: none;"></span>																				            
+											</div>
+						            	</td>
+						            	<td><span style="float: left; margin-top: 7px; font-size: 25px; font-weight: 600;">=</span></td>
+						            	<td>
+					            			<div class="control-group" style="padding: 5px; float: left;">								
+												<label for="fullname"><span >Quatity</span> <span style="color:red">*</span></label>
+									            <input id="fullname" name="fullname" class="k-textbox" data-bind="value: obj.name, 
+					            					disabled: obj.is_pattern,
+					            					attr: { placeholder: phFullname }" required="" data-required-msg="required" style="width: 100%;" placeholder="Customer Name ...">
+											</div>
+					            		</td>
+					            		<td><span >Base UOM</span></td>
+						            </tr>
+						            <tr>
+						            	<td></td>
+						            	<td></td>
+						            	<td>
+						            		<div class="control-group" style="padding: 5px; float: left;">										
+												<label for="ddlContactType"><span >Price</span> <span style="color:red">*</span></label>
+												<input data-role="numerictextbox"		                   
+								                   data-min="0"		                   
+								                   data-bind="value: priceList.price" />																				            
+											</div>
+						            	</td>
+						            	<td></td>
+						            	<td >
+						            		<div class="control-group" style="padding: 5px; float: left;">								
+												<label for="fullname"><span data-bind="text: lang.lang.currency"></span><span style="color:red">*</span></label>
+									            <input data-role="dropdownlist"
+												   data-option-label="(--- Select ---)"
+												   data-template="currency-list-tmpl"			                   
+								                   data-value-primitive="true"
+								                   data-text-field="code"
+								                   data-value-field="locale"
+								                   data-bind="value: priceList.locale,
+								                              source: currencyDS" />
+											</div>
+						            	</td>
+						            	<td></td>
+						            </tr>
+					            </table>
+							</div>
+
+							<br>
+							<div style="text-align: center;">
+								<span class="btn btn-success btn-icon glyphicons ok_2" data-bind="click: save"><i></i>Save</span>
+								<span class="btn btn-danger btn-icon glyphicons remove_2" data-bind="click: closeWindow"><i></i><span data-bind="text: lang.lang.close"></span></span> 
+							</div> 
+						</div>		
 
 						<button class="btn btn-inverse" data-bind="click: openWindow"><i class="icon-plus icon-white"></i></button>
 						<span data-bind="text: lang.lang.set_new_price"></span>
 						</br>
 						</br>
+
 						<table class="table table-bordered table-primary table-striped table-vertical-center">
 					        <thead>
 					            <tr>	            	
@@ -69711,6 +69867,7 @@
     	priceList 			: null,
     	on_po 				: 0,
     	on_so 				: 0,
+    	windowVisible 		: false,
     	pageLoad 			: function(id){    		
     		this.dataSource.filter({ field:"item_id", value: id });    		
     		this.recordDS.filter({ field:"item_id", value: id });    		
@@ -69785,16 +69942,11 @@
     	},
     	openWindow			: function(){
       		this.addEmpty();
-
-         	var window = $("#priceList-window").data("kendoWindow");
-          	window.title("តំលៃ");          	
-          	window.center().open();         	
+      		this.set('windowVisible', true);
       	},
       	closeWindow 		: function(){	      		
       		this.dataSource.cancelChanges();
-
-      		var window = $("#priceList-window").data("kendoWindow");          	         	
-          	window.close();          	
+      		this.set('windowVisible', false);        	
       	},      	
       	addEmpty 			: function () {
       		this.dataSource.add({      			      			
