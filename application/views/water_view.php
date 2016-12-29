@@ -4427,19 +4427,10 @@
 						                <th><span >Cash Receipt</span></th>			                			                			                			                
 						            </tr> 
 						        </thead>
-						        <tbody >		
-									<tr>
-										<td>1</td>
-										<td>
-											<span class="k-widget k-combobox k-header k-combobox-clearable" style="width: 100%;"><span tabindex="-1" unselectable="on" class="k-dropdown-wrap k-state-default"><input name="cbbCurrency_input" class="k-input" type="text" autocomplete="off" title="" role="combobox" aria-expanded="false" placeholder="Select currency..." style="width: 100%;" tabindex="0" aria-disabled="false" aria-autocomplete="list" aria-owns="cbbCurrency_listbox" aria-busy="false" aria-activedescendant="f0d42fda-54ce-4622-b063-7c9170786a8b"><span unselectable="on" class="k-icon k-i-close" title="clear" role="button" tabindex="-1"></span><span unselectable="on" class="k-select" aria-label="select" role="button" tabindex="-1" aria-controls="cbbCurrency_listbox"><span class="k-icon k-i-arrow-s"></span></span></span><input id="cbbCurrency" name="cbbCurrency" data-role="combobox" data-value-primitive="true" data-template="currency-list-tmpl" data-text-field="code" data-value-field="locale" data-bind="value: obj.locale, 
-					                   			source: currencyDS, 
-					                   			events: {change : setRate}" placeholder="Select currency..." required="" data-required-msg="required" style="width: 100%; display: none;" aria-disabled="false"></span>
-										</td>
-										<td>
-											<span class="k-widget k-numerictextbox" style="width: 100%; text-align: right;"><span class="k-numeric-wrap k-state-default k-expand-padding"><input type="text" class="k-formatted-value k-input" title="0.00" tabindex="0" role="spinbutton" aria-title="0.00" aria-valuenow="0" aria-disabled="false" aria-readonly="false" style="text-align: right; display: inline-block;"><input id="ntbDr" name="ntbDr" data-role="numerictextbox" data-spinners="false" data-format="n" data-bind="value: dr, events: {change : changes}" required="" data-required-msg="required" style="text-align: right; display: none;" role="spinbutton" class="k-input" type="text" aria-valuenow="0" aria-disabled="false" aria-readonly="false"><span class="k-select" style="display: none;"><span unselectable="on" class="k-link k-link-increase" aria-label="Increase value" title="Increase value" style="touch-action: none;"><span unselectable="on" class="k-icon k-i-arrow-n"></span></span><span unselectable="on" class="k-link k-link-decrease" aria-label="Decrease value" title="Decrease value" style="touch-action: none;"><span unselectable="on" class="k-icon k-i-arrow-s"></span></span></span></span></span>
-										</td>
-									</tr>
-								</tbody>			        
+						        <tbody data-role="listview" 
+					        		data-template="cash-currency-template" 
+					        		data-auto-bind="false"
+					        		data-bind="source: cashCurrencyDS"></tbody>			        
 						    </table>
 
 						    <button style="margin-bottom: 15px;" class="btn btn-inverse" data-bind="click: addRow"><i class="icon-plus icon-white"></i></button>
@@ -4602,6 +4593,28 @@
 			</div>
 		</div>
 	</div>
+</script>
+<script id="cash-currency-template" type="text/x-kendo-template">
+	<tr>
+		<td><i class="icon-trash" data-bind="events: { click: removeRow }"></i>
+			#:banhji.Receipt.cashCurrencyDS.indexOf(data)+1#	</td>
+		<td>
+			<input data-role="dropdownlist"
+        	   style="padding-right: 1px;height: 32px;" 
+			   data-option-label="(--- Currency ---)"
+			   data-auto-bind="false"			                   
+               data-value-primitive="true"
+               data-text-field="code"
+               data-value-field="id"
+               data-bind="value: currency,
+                          source: currencyDS"/>
+		</td>
+		<td>
+			<input 
+				class="k-formatted-value k-input"
+				data-bind="value: cash_receipt">
+		</td>
+	</tr>
 </script>
 
 <!-- ***************************
@@ -11433,12 +11446,14 @@
 	banhji.Receipt = kendo.observable({
 		lang 				: langVM,
 		dataSource 			: banhji.invoice.dataSource,
+		cashCurrencyDS 		: [],
 		txnTemplateDS		: dataStore(apiUrl + "transaction_templates"),
 		invNum 				: null,
 		accountDS  			: banhji.source.cashAccountDS,		
 		paymentTermDS 		: banhji.source.paymentTermDS,
 		paymentMethodDS 	: banhji.source.paymentMethodDS,	
 		segmentItemDS		: banhji.source.segmentItemDS,
+		currencyDS  		: banhji.source.currencyDS,
 		obj 				: null,
 		pageLoad 			: function(id){
 			this.txnTemplateDS.filter({field:"moduls", value: "water_mg" });
@@ -11461,6 +11476,15 @@
 			   	segments 			: []		
 	    	});						
 		},	
+		addRow 	  	: function() {
+			var obj = this.get("obj");
+			this.cashCurrencyDS.add({
+				id 				: obj.id,
+				currency 	 	: null,
+				cash_receipt 	: 0
+			});
+			this.set("obj", this.cashCurrencyDS.at(this.cashCurrencyDS.data().length -1));
+		},
 		save 				: function() {
 			var self = this;
 		},

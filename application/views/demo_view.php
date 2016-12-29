@@ -18834,14 +18834,14 @@
 		<td>
 			<input id="ccbItem" name="ccbItem-#:uid#"
 				   data-role="combobox"
-				   data-template="item-list-tmpl"                   			   
+				   data-template="item-list-tmpl"
                    data-text-field="name"
                    data-value-field="id"
                    data-bind="value: item_id, 
                    			  source: itemDS,
                    			  events:{ change: itemChanges }"
                    placeholder="Add Item..." 
-                   required data-required-msg="required" style="width: 100%" />			
+                   required data-required-msg="required" style="width: 100%" />
 		</td>		
 		<td>
 			<input id="txtDescription-#:uid#" name="txtDescription-#:uid#" 
@@ -31724,7 +31724,7 @@
 			        <div class="widget-body">
 
 				    	<div class="widget widget-heading-simple widget-body-simple">
-							<div class="widget-head" style="font-size: large; font-weight: bold;">
+							<div class="widget-head" style="text-align: center; font-size: 25px; font-weight: bold;">
 								<span data-bind="text: obj.number"></span>
 								-
 								<span data-bind="text: obj.name"></span>
@@ -31769,79 +31769,6 @@
 							</div>
 						</div>
 
-						<!-- <div id="priceList-window" data-role="window" data-visible="false" data-modal="true" data-resizable="false" data-iframe="true">				    	
-							<table>
-								<tr>
-									<td><span data-bind="text: lang.lang.price"></span></td>
-									<td style="padding: 0 0 10px;">
-										<input data-role="numerictextbox"		                   
-						                   data-min="0"		                   
-						                   data-bind="value: priceList.price" />
-									</td>
-								</tr>
-								<tr>
-									<td><span data-bind="text: lang.lang.currency"></span></td>
-									<td style="padding: 0 0 10px;">
-										<input data-role="dropdownlist"
-											   data-option-label="(--- Select ---)"
-											   data-template="currency-list-tmpl"			                   
-							                   data-value-primitive="true"
-							                   data-text-field="code"
-							                   data-value-field="locale"
-							                   data-bind="value: priceList.locale,
-							                              source: currencyDS" />
-									</td>
-								</tr>
-								<tr>
-									<td><span data-bind="text: lang.lang.unit_price"></span></td>
-									<td style="padding: 0 0 10px;">
-										<input data-role="numerictextbox"		                   
-						                   data-min="0"		                   
-						                   data-bind="value: priceList.unit_value" />
-									</td>
-								</tr>
-								<tr>
-									<td><span data-bind="text: lang.lang.unit"></span></td>
-									<td style="padding: 0 0 10px;">
-										<input data-role="dropdownlist"
-											   data-option-label="(--- Select ---)"			                   
-							                   data-value-primitive="true"
-							                   data-text-field="name"
-							                   data-value-field="id"
-							                   data-bind="value: priceList.measurement_id,
-							                              source: unitDS" />
-									</td>
-								</tr>
-							</table>
-
-							<table class="top-itemprice">
-								<tr>
-									<td>
-										<div class="control-group" style="">										
-											<label for="ddlContactType"><span >URM</span> <span style="color:red">*</span></label>
-											<span title="" class="k-widget k-dropdown k-header" unselectable="on" role="listbox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-owns="ddlContactType_listbox" aria-disabled="false" aria-busy="false" aria-activedescendant="4174f176-af83-4c87-83c3-79b0026a16e1" style="width: 100%;"><span unselectable="on" class="k-dropdown-wrap k-state-default"><span unselectable="on" class="k-input">General Customer</span><span unselectable="on" class="k-select" aria-label="select"><span class="k-icon k-i-arrow-s"></span></span></span><input id="ddlContactType" name="ddlContactType" data-role="dropdownlist" data-header-template="customer-type-header-tmpl" data-value-primitive="true" data-text-field="name" data-value-field="id" data-bind="value: obj.contact_type_id,
-				                   			  disabled: obj.is_pattern,
-				                              source: contactTypeDS,
-				                              events:{change: typeChanges}" data-option-label="(--- Select ---)" required="" data-required-msg="required" style="width: 100%; display: none;"></span>																				            
-										</div>
-										=
-									</td>
-									<td>
-										<div class="control-group">								
-											<label for="fullname"><span >Quatity</span> <span style="color:red">*</span></label>
-								            <input id="fullname" name="fullname" class="k-textbox" data-bind="value: obj.name, 
-				            					disabled: obj.is_pattern,
-				            					attr: { placeholder: phFullname }" required="" data-required-msg="required" style="width: 100%;" placeholder="Customer Name ...">
-										</div>
-									</td>
-								</tr>
-							</table>
-							<br>
-
-							<span class="btn btn-success btn-icon glyphicons ok_2" data-bind="click: save"><i></i><span data-bind="text: lang.lang.save"></span></span>
-							<span class="btn btn-danger btn-icon glyphicons remove_2" data-bind="click: closeWindow"><i></i><span data-bind="text: lang.lang.close"></span></span>  
-						</div>	 -->
-
 						<!-- Item Price Type Window -->
 					    <div data-role="window"
 				                 data-title="Item Price"		                 
@@ -31850,144 +31777,121 @@
 				                 data-actions="{}"
 				                 data-position="{top: '30%', left: '18%'}"
 				                 data-bind="visible: windowVisible">
-				    		
-				    		<!-- <table class="top-itemprice">
-								<tr>
-									<td style="vertical-align: top;">
-										<div class="control-group" style="padding: 5px; float: left;">										
-											<label for="ddlContactType"><span >URM</span> <span style="color:red">*</span></label>
-											<span title="" class="k-widget k-dropdown k-header" unselectable="on" role="listbox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-owns="ddlContactType_listbox" aria-disabled="false" aria-busy="false" aria-activedescendant="4174f176-af83-4c87-83c3-79b0026a16e1" style="width: 100%;"><span unselectable="on" class="k-dropdown-wrap k-state-default"><span unselectable="on" class="k-input">General Customer</span><span unselectable="on" class="k-select" aria-label="select"><span class="k-icon k-i-arrow-s"></span></span></span><input id="ddlContactType" name="ddlContactType" data-role="dropdownlist" data-header-template="customer-type-header-tmpl" data-value-primitive="true" data-text-field="name" data-value-field="id" data-bind="value: obj.contact_type_id,
-				                   			  disabled: obj.is_pattern,
-				                              source: contactTypeDS,
-				                              events:{change: typeChanges}" data-option-label="(--- Select ---)" required="" data-required-msg="required" style="width: 100%; display: none;"></span>																				            
-										</div>
-										 
-									</td>
-									<td style="vertical-align: bottom;"><span style=" font-size: 35px; margin-top: 20px; float: left;">=</span></td>
-									<td style="vertical-align: top;">
-										<div class="control-group" style="padding: 5px; float: left;">								
-											<label for="fullname"><span >Quatity</span> <span style="color:red">*</span></label>
-								            <input id="fullname" name="fullname" class="k-textbox" data-bind="value: obj.name, 
-				            					disabled: obj.is_pattern,
-				            					attr: { placeholder: phFullname }" required="" data-required-msg="required" style="width: 100%;" placeholder="Customer Name ...">
-										</div>										
-									</td>
-									<td style="vertical-align: bottom;"><span style="font-size: 15px; font-weight: 600;">Base UOM</span></td>
-								</tr>
-								<tr>
-									<td style="vertical-align: top;">
-										<div class="control-group" style="padding: 5px; float: left;">										
-											<label for="ddlContactType"><span >Price</span> <span style="color:red">*</span></label>
-											<input data-role="numerictextbox"		                   
-							                   data-min="0"		                   
-							                   data-bind="value: priceList.price" />																				            
-										</div>
-									</td>
-									<td></td>
-									<td style="vertical-align: top;">
-										<div class="control-group" style="padding: 5px; float: left;">								
-											<label for="fullname"><span data-bind="text: lang.lang.currency"></span><span style="color:red">*</span></label>
-								            <input data-role="dropdownlist"
-											   data-option-label="(--- Select ---)"
-											   data-template="currency-list-tmpl"			                   
-							                   data-value-primitive="true"
-							                   data-text-field="code"
-							                   data-value-field="locale"
-							                   data-bind="value: priceList.locale,
-							                              source: currencyDS" />
-										</div>
-									</td>
-									<td></td>
-								</tr>
-							</table> -->
 
 							<div class="top-itemprice">
 								<table>
-		            				<tr >
-		            					<td style="width: 100px">
-					            			<input type="radio" value="Cash_Purchase" class="k-radio"
+		            				<tr>
+		            					<td>
+					            			<input type="radio" value="ltBase" class="k-radio"
 					            					name="payOption" id="payOption1"
-					            					data-bind="checked: obj.type, 
+					            					data-bind="checked: type, 
 					            								events:{ change: typeChanges }"> 
-					            			<label class="k-radio-label" for="payOption1">Formula A</label> <br>
-					            			<span style="margin-left: 25px;">(< Base)</span>
+					            			<label class="k-radio-label" for="payOption1">Formula A (< Base)</label> 
 					            		</td>
-					            		<td></td>
-					            		<td >
-					            			<span style="float: left; margin-top: 6px;"> 1 Base UOM </span>
+					            		<td>
+								            <input type="radio" value="gtBase" class="k-radio"
+								            		name="payOption" id="payOption2"
+								            		data-bind="checked: type, 
+								            					events:{ change: typeChanges }"> 
+								            <label class="k-radio-label" for="payOption2">Formula B (> Base)</label>
+						            	</td>
+					            </table>
+
+					            <table width="100%">
+		            				<tr data-bind="visible: isltBase">
+					            		<td><span style="float: left;">1</span></td>
+					            		<td>
+					            			<span style="float: left; "> Base UOM </span>
 					            		</td>
 					            		<td><span style="float: left; margin-top: 7px; font-size: 25px; font-weight: 600;">=</span></td>
 					            		<td>
 					            			<div class="control-group" style="padding: 5px; float: left;">								
-												<label for="fullname"><span >Quatity</span> <span style="color:red">*</span></label>
-									            <input id="fullname" name="fullname" class="k-textbox" data-bind="value: obj.name, 
-					            					disabled: obj.is_pattern,
-					            					attr: { placeholder: phFullname }" required="" data-required-msg="required" style="width: 100%;" placeholder="Customer Name ...">
+												<label for="txtQuantity"><span data-bind="text: lang.lang.quantity"></span> <span style="color:red">*</span></label>
+									            <input id="txtQuantity" name="txtQuantity"
+									            	data-role="numerictextbox" 
+													data-format="n" data-min="0"
+													data-spinners="false"
+									            	data-bind="value: priceList.quantity,
+									            				disabled: isBase,
+									            				events:{change:changes}"
+					            					required data-required-msg="required" style="width: 100%;">
 											</div>
 					            		</td>
 					            		<td>
 					            			<div class="control-group" style="padding: 5px; float: left;">										
-												<label for="ddlContactType"><span >UOM</span> <span style="color:red">*</span></label>
-												<span title="" class="k-widget k-dropdown k-header" unselectable="on" role="listbox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-owns="ddlContactType_listbox" aria-disabled="false" aria-busy="false" aria-activedescendant="4174f176-af83-4c87-83c3-79b0026a16e1" style="width: 100%;"><span unselectable="on" class="k-dropdown-wrap k-state-default"><span unselectable="on" class="k-input">General Customer</span><span unselectable="on" class="k-select" aria-label="select"><span class="k-icon k-i-arrow-s"></span></span></span><input id="ddlContactType" name="ddlContactType" data-role="dropdownlist" data-header-template="customer-type-header-tmpl" data-value-primitive="true" data-text-field="name" data-value-field="id" data-bind="value: obj.contact_type_id,
-					                   			  disabled: obj.is_pattern,
-					                              source: contactTypeDS,
-					                              events:{change: typeChanges}" data-option-label="(--- Select ---)" required="" data-required-msg="required" style="width: 100%; display: none;"></span>																				            
+												<label for="ddlMesurement"><span >UOM</span> <span style="color:red">*</span></label>
+												<input id="ddlMesurement" name="ddlMesurement" 
+														data-role="dropdownlist"
+														data-value-primitive="true"                  
+									                    data-text-field="name"
+									                    data-value-field="id"
+									                    data-bind="value: priceList.measurement_id,
+									                   			  source: measurementDS"
+									                    data-option-label="UM"
+									                    required data-required-msg="required" style="width: 100%;" />																				            
 											</div>
 					            		</td>
 					            	</tr>
-					            	<tr >
-					            		<td>
-								            <input type="radio" value="Credit_Purchase" class="k-radio"
-								            		name="payOption" id="payOption2"
-								            		data-bind="checked: obj.type, 
-								            					events:{ change: typeChanges }"> 
-								            <label class="k-radio-label" for="payOption2">Formula B</label>
-								            <span style="margin-left: 25px;">(> Base)</span>
-						            	</td>
+					            	<tr data-bind="invisible: isltBase">
 						            	<td><span style="float: left;">1</span></td>
 						            	<td>						            		
 						            		<div class="control-group" style="padding: 5px; float: left;">										
-												<label for="ddlContactType"><span >UOM</span> <span style="color:red">*</span></label>
-												<span title="" class="k-widget k-dropdown k-header" unselectable="on" role="listbox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-owns="ddlContactType_listbox" aria-disabled="false" aria-busy="false" aria-activedescendant="4174f176-af83-4c87-83c3-79b0026a16e1" style="width: 100%;"><span unselectable="on" class="k-dropdown-wrap k-state-default"><span unselectable="on" class="k-input">General Customer</span><span unselectable="on" class="k-select" aria-label="select"><span class="k-icon k-i-arrow-s"></span></span></span><input id="ddlContactType" name="ddlContactType" data-role="dropdownlist" data-header-template="customer-type-header-tmpl" data-value-primitive="true" data-text-field="name" data-value-field="id" data-bind="value: obj.contact_type_id,
-					                   			  disabled: obj.is_pattern,
-					                              source: contactTypeDS,
-					                              events:{change: typeChanges}" data-option-label="(--- Select ---)" required="" data-required-msg="required" style="width: 100%; display: none;"></span>																				            
+												<label for="ddlMesurement"><span >UOM</span> <span style="color:red">*</span></label>
+												<input id="ddlMesurement" name="ddlMesurement" 
+														data-role="dropdownlist"
+														data-value-primitive="true"                  
+									                    data-text-field="name"
+									                    data-value-field="id"
+									                    data-bind="value: priceList.measurement_id,
+									                   			  	source: measurementDS"
+									                    data-option-label="UM"
+									                    required data-required-msg="required" style="width: 100%;" />
 											</div>
 						            	</td>
 						            	<td><span style="float: left; margin-top: 7px; font-size: 25px; font-weight: 600;">=</span></td>
 						            	<td>
 					            			<div class="control-group" style="padding: 5px; float: left;">								
-												<label for="fullname"><span >Quatity</span> <span style="color:red">*</span></label>
-									            <input id="fullname" name="fullname" class="k-textbox" data-bind="value: obj.name, 
-					            					disabled: obj.is_pattern,
-					            					attr: { placeholder: phFullname }" required="" data-required-msg="required" style="width: 100%;" placeholder="Customer Name ...">
+												<label for="txtQuantity"><span data-bind="text: lang.lang.quantity"></span> <span style="color:red">*</span></label>
+									            <input id="txtQuantity" name="txtQuantity"
+									            	data-role="numerictextbox" 
+													data-format="n" data-min="0"
+													data-spinners="false"
+									            	data-bind="value: priceList.quantity,
+									            				disabled: isBase,
+									            				events:{change:changes}"
+					            					required data-required-msg="required" style="width: 100%;">
 											</div>
 					            		</td>
 					            		<td><span >Base UOM</span></td>
 						            </tr>
-						            <tr>
-						            	<td></td>
+						            <tr style="background-color: #D5DBDB;">
 						            	<td></td>
 						            	<td>
 						            		<div class="control-group" style="padding: 5px; float: left;">										
-												<label for="ddlContactType"><span >Price</span> <span style="color:red">*</span></label>
-												<input data-role="numerictextbox"		                   
+												<label for="txtPrice"><span >Price</span> <span style="color:red">*</span></label>
+												<input id="txtPrice" name="txtPrice"
+												   data-role="numerictextbox"
+												   data-spinners="false"		                   
+								                   data-format="n"
 								                   data-min="0"		                   
-								                   data-bind="value: priceList.price" />																				            
+								                   data-bind="value: priceList.price"
+								                   required data-required-msg="required" />																				            
 											</div>
 						            	</td>
 						            	<td></td>
 						            	<td >
 						            		<div class="control-group" style="padding: 5px; float: left;">								
-												<label for="fullname"><span data-bind="text: lang.lang.currency"></span><span style="color:red">*</span></label>
-									            <input data-role="dropdownlist"
+												<label for="ddlCurrency"><span data-bind="text: lang.lang.currency"></span><span style="color:red">*</span></label>
+									            <input id="ddlCurrency" name="ddlCurrency" 
+									               data-role="dropdownlist"
 												   data-option-label="(--- Select ---)"
 												   data-template="currency-list-tmpl"			                   
 								                   data-value-primitive="true"
 								                   data-text-field="code"
 								                   data-value-field="locale"
 								                   data-bind="value: priceList.locale,
-								                              source: currencyDS" />
+								                              source: currencyDS"
+								                   required data-required-msg="required" />
 											</div>
 						            	</td>
 						            	<td></td>
@@ -32058,8 +31962,11 @@
     	<td>#=measurement#</td>    	
     	<td style="text-align: center;">
     		<span style="cursor: pointer;" data-bind="click: edit"><i class="icon-edit"></i> <span data-bind="text: lang.lang.edit"></span></span>
-    		|
-    		<span style="cursor: pointer; data-bind="click: delete"><i class="icon-remove"></i> <span data-bind="text: lang.lang.delete"></span></span>
+    		
+    		#if(banhji.itemPrice.dataSource.indexOf(data)>0){#
+    			|
+    			<span style="cursor: pointer;" data-bind="click: delete"><i class="icon-remove"></i> <span data-bind="text: lang.lang.delete"></span></span>
+    		#}#
     	</td>
     </tr>
 </script>
@@ -69862,83 +69769,101 @@
     	poDS 				: dataStore(apiUrl + "transactions/line"),
     	soDS 				: dataStore(apiUrl + "transactions/line"),
     	currencyDS  		: banhji.source.currencyDS,
-    	unitDS	   			: banhji.source.measurementDS,
+    	measurementDS	   	: banhji.source.measurementDS,
     	obj 				: null,
     	priceList 			: null,
+    	windowVisible 		: false,
+    	isltBase 			: true,
+    	type 				: "ltBase",
+    	isBase 				: false,
     	on_po 				: 0,
     	on_so 				: 0,
-    	windowVisible 		: false,
     	pageLoad 			: function(id){    		
     		this.dataSource.filter({ field:"item_id", value: id });    		
     		this.recordDS.filter({ field:"item_id", value: id });    		
     		this.loadObj(id);
-    		this.countPO(id);
-    		this.countSO(id);
+    		this.loadData(id);
     	},
     	loadObj 			: function(id){
     		var self = this;
 
     		this.itemDS.query({    			
-				filter: { field:"id", value: id }
+				filter: { field:"id", value: id },
+				page:1,
+				pageSize:1
 			}).then(function(e){
 				var view = self.itemDS.view();
 						    	
 		    	self.set("obj", view[0]);
 			});
     	},
-    	countPO 			: function(id){
+    	loadData 			: function(id){
     		var self = this;
 
+    		//PO
     		this.poDS.query({
     			filter:[
-	    			{ field:"item_id", value: id },
-	    			{ field:"type", operator:"where_related_transaction",  value:"Purchase_Order" },
+    				{ field:"item_id", value:id },
+    				{ field:"type", operator:"where_related_transaction",  value:"Purchase_Order" },
 	    			{ field:"status", operator:"where_related_transaction", value:0 }
-	    		],
-	    		page:1,
-	    		pageSize:1
-	    	}).then(function(){
-	    		var view = self.poDS.view();
+    			],
+    			page:1,
+    			pageSize:100
+    		}).then(function(){
+	    		var view = self.poDS.view(),
+	    		sum = 0;
 
-	    		if(view.length>0){
-	    			var sum = 0;
+    			$.each(view, function(index, value){
+    				sum += kendo.parseInt(value.quantity);
+    			});
 
-	    			$.each(view, function(index, value){
-	    				sum += kendo.parseInt(value.unit);
-	    			});
-
-	    			self.set("on_po", kendo.toString(sum, "n0"));
-	    		}else{
-	    			self.set("on_po", 0);
-	    		}
+	    		self.set("on_po", kendo.toString(sum, "n0"));
 	    	});
-    	},
-    	countSO 			: function(id){
-    		var self = this;
 
-    		this.soDS.query({
+    		//SO
+	    	this.soDS.query({
     			filter:[
 	    			{ field:"item_id", value: id },
-	    			{ field:"type", operator:"where_related_transaction", value:"SO" },
+	    			{ field:"type", operator:"where_related_transaction", value:"Sale_Order" },
 	    			{ field:"status", operator:"where_related_transaction", value:0 }
 	    		],
 	    		page:1,
 	    		pageSize:1
 	    	}).then(function(){
-	    		var view = self.soDS.view();
+	    		var view = self.soDS.view(),
+	    		sum = 0;
 
-	    		if(view.length>0){
-	    			var sum = 0;
+    			$.each(view, function(index, value){
+    				sum += kendo.parseInt(value.quantity);
+    			});
 
-	    			$.each(view, function(index, value){
-	    				sum += kendo.parseInt(value.unit);
-	    			});
-
-	    			self.set("on_so", kendo.toString(sum, "n0"));
-	    		}else{
-	    			self.set("on_so", 0);
-	    		}
+    			self.set("on_so", kendo.toString(sum, "n0"));
 	    	});
+    	},
+    	changes 			: function(){
+    		var p = this.get("priceList"),
+    		unitValue = 0;
+
+    		if(this.get("type")=="ltBase"){
+    			if(p.quantity>0){
+    				unitValue = 1 / p.quantity;
+    			}else{
+    				unitValue = 0;
+    			}
+    		}else{
+    			unitValue = p.quantity;
+    		}
+
+    		p.set("unit_value", unitValue);
+    	},
+    	typeChanges 		: function(){
+    		if(this.get("type")=="ltBase"){
+    			this.set("isltBase", true);
+    		}else{
+    			this.set("isltBase", false);
+    		}
+
+    		this.changes();
     	},
     	openWindow			: function(){
       		this.addEmpty();
@@ -69949,15 +69874,18 @@
       		this.set('windowVisible', false);        	
       	},      	
       	addEmpty 			: function () {
+      		var obj = this.get("obj");
+      		this.set("isBase", false);
+      		this.set("type", "ltBase");
+
       		this.dataSource.add({      			      			
-      			item_id			: this.get("obj").id,
+      			item_id			: obj.id,
       			measurement_id 	: 0,
+      			quantity 		: 1,
       			price 			: 0,
       			unit_value		: 0,
-      			locale 			: "km-KH",
-
-      			currency 		: [{locale:"km-KH"}],      			
-      			measurement 	: []
+      			locale 			: obj.locale,      			
+      			measurement 	: ""
 			});
 
 			var data = this.dataSource.data();
@@ -69967,31 +69895,37 @@
       	},      	 	
       	save 				: function(){
       		this.dataSource.sync();
-      		banhji.itemCenter.itemDS.fetch();
 
-      		var window = $("#priceList-window").data("kendoWindow");          	         	
-          	window.close(); 		
+      		this.set("windowVisible", false); 		
       	},
       	edit 				: function(e){
       		var data = e.data;
       		
       		this.set("priceList", data);
+      		
+      		if(this.dataSource.indexOf(data)==0){
+      			this.set("isBase", true);
+      			data.set("quantity", 1);
+      		}else{
+      			this.set("isBase", false);
 
-      		var window = $("#priceList-window").data("kendoWindow");
-          	window.title("តំលៃ");          	
-          	window.center().open();       		
+	      		if(data.unit_value>1){
+	      			this.set("type", "gtBase");
+	      			this.set("isltBase", false);
+	      		}else{
+	      			this.set("type", "ltBase");
+	      			this.set("isltBase", true);
+      			}
+      		}
+      		
+      		this.set("windowVisible", true);       		
       	},      	
       	delete 				: function(e){
 			if (confirm("Are you sure, you want to delete it?")) {        
 		        var data = e.data;
-
-		        if(this.dataSource.total()>1){
-			        this.dataSource.remove(data);
-			        this.dataSource.sync();
-			        banhji.itemCenter.dataSource.fetch();
-		    	}else{
-		    		alert("Sorry, you can't delete it!");
-		    	}
+		        
+		        this.dataSource.remove(data);
+		        this.dataSource.sync();
 	    	}	    	
 	    }
     });	
