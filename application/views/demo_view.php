@@ -24,7 +24,7 @@
 				    	<li data-bind="click: searchItem"><a href="#"><i class="icon-th-list"></i> Item</a></li>
 				  	</ul> -->
 				</div>
-			  	<input type="text" class="span2 search-query" placeholder="Search Contact" id="search-placeholder" 
+			  	<input type="text" class="span2 search-query" placeholder="Search" id="search-placeholder" 
 			  			data-bind="value: searchText" 
 			  			style="background-color: #555555; color: #ffffff; border-color: #333333; height: 22px;">
 			  	<button type="submit" class="btn btn-inverse" data-bind="click: search"><i class="icon-search"></i></button>
@@ -1252,7 +1252,9 @@
 											<input id="cbbCurrency" name="cbbCurrency"
 												   data-role="combobox"				                
 								                   data-value-primitive="true"
-								                   data-template="currency-list-tmpl"				   
+								                   data-template="currency-list-tmpl"
+								                   data-filter="like"
+								                   data-min-length="3"				   
 								                   data-text-field="code"
 								                   data-value-field="locale"
 								                   data-bind="value: obj.locale, 
@@ -1565,11 +1567,13 @@
 		<td>
 			<input id="cbbAccounts" name="cbbAccounts" 
 				   data-role="combobox"                   
-                   data-value-primitive="true"
+                   data-value-primitive="true"                   
+                   data-header-template="account-header-tmpl"
                    data-template="account-list-tmpl"
+                   data-filter="like"
+                   data-min-length="3"
                    data-text-field="name"
                    data-value-field="id"
-                   data-header-template="account-header-tmpl"
                    data-bind="value: account_id,
                               source: accountDS"
                    data-placeholder="Add Account.."                                     
@@ -1590,6 +1594,8 @@
 			<input data-role="combobox" id="ddlName"                  
                    data-value-primitive="true"
                    data-template="contact-list-tmpl"
+                   data-filter="like"
+                   data-min-length="3"                  
                    data-text-field="name"
                    data-value-field="id"
                    data-bind="value: contact_id,
@@ -6796,7 +6802,9 @@
 										<input id="cbbCurrency" name="cbbCurrency"
 											   data-role="combobox"				                
 							                   data-value-primitive="true"
-							                   data-template="currency-list-tmpl"				   
+							                   data-template="currency-list-tmpl"
+							                   data-filter="like"
+							                   data-min-length="3"				   
 							                   data-text-field="code"
 							                   data-value-field="locale"
 							                   data-bind="value: obj.locale, 
@@ -6815,6 +6823,8 @@
 											   data-header-template="employee-header-tmpl"                  
 							                   data-value-primitive="true"
 							                   data-template="contact-list-tmpl"
+							                   data-filter="like"
+							                   data-min-length="3"
 							                   data-text-field="name"
 							                   data-value-field="id"
 							                   data-bind="value: obj.contact_id,
@@ -6897,6 +6907,8 @@
 									                   data-value-primitive="true"
 									                   data-header-template="account-header-tmpl"                  
 									                   data-template="account-list-tmpl"
+									                   data-filter="like"
+									                   data-min-length="3"
 									                   data-text-field="name"
 									                   data-value-field="id"
 									                   data-bind="value: obj.account_id,
@@ -7208,6 +7220,8 @@
                    data-value-primitive="true"
                    data-header-template="account-header-tmpl"                  
                    data-template="account-list-tmpl"
+                   data-filter="like"
+                   data-min-length="3"
                    data-text-field="name"
                    data-value-field="id"
                    data-bind="value: account_id,
@@ -7290,9 +7304,11 @@
 									<td><span data-bind="text: lang.lang.currency"></span></td>
 									<td>
 										<input id="cbbCurrency" name="cbbCurrency"
-											   data-role="combobox"											                    
+											   data-role="combobox"										                    
 							                   data-value-primitive="true"
 							                   data-template="currency-list-tmpl"
+							                   data-filter="like"
+							                   data-min-length="3"
 							                   data-text-field="code"
 							                   data-value-field="locale"
 							                   data-bind="value: obj.locale,
@@ -7306,11 +7322,12 @@
 									<td><span data-bind="text: lang.lang.employee"></span></td>
 									<td>
 										<input id="cbbContact" name="cbbContact"
-											   data-role="combobox"
-											   data-auto-bind="false"                   
+											   data-role="combobox"                   
 							                   data-value-primitive="true"
 							                   data-header-template="employee-header-tmpl"
 							                   data-template="contact-list-tmpl"
+							                   data-filter="like"
+							                   data-min-length="3"
 							                   data-text-field="name"
 							                   data-value-field="id"
 							                   data-bind="value: obj.contact_id,
@@ -7391,6 +7408,8 @@
 									                   data-value-primitive="true"
 									                   data-header-template="account-header-tmpl"                 
 									                   data-template="account-list-tmpl"
+									                   data-filter="like"
+									                   data-min-length="3"
 									                   data-text-field="name"
 									                   data-value-field="id"
 									                   data-bind="value: obj.account_id,
@@ -7402,10 +7421,10 @@
 							        	<tr data-bind="visible: showCashAdvance">
 							        		<td><span data-bind="text: lang.lang.cash_advance"></span></td>
 							        		<td>
-							        			<input data-role="dropdownlist"                   
+							        			<input data-role="dropdownlist"
+							        				   data-template="reference-list-tmpl"                   
 									                   data-value-primitive="true"
-									                   data-auto-bind="false"                   
-									                   data-template="reference-list-tmpl"
+									                   data-auto-bind="false"
 									                   data-text-field="number"
 									                   data-value-field="id"
 									                   data-bind="value: obj.reference_id,
@@ -7780,6 +7799,8 @@
                    data-value-primitive="true" 
                    data-header-template="account-header-tmpl"                 
                    data-template="account-list-tmpl"
+                   data-filter="like"
+                   data-min-length="3"
                    data-text-field="name"
                    data-value-field="id"
                    data-bind="value: account_id,
@@ -7798,6 +7819,8 @@
                    data-value-primitive="true" 
                    data-header-template="vendor-header-tmpl"                  
                    data-template="contact-list-tmpl"
+                   data-filter="like"
+                   data-min-length="3"
                    data-text-field="name"
                    data-value-field="id"
                    data-bind="value: contact_id,
@@ -7855,14 +7878,17 @@
 					required data-required-msg="required" style="width: 100%;" /> 						
 		</td>
 		<td>
-			<input data-role="combobox"   id="ccbTaxItem"                			   
-                   data-text-field="name"                   
-                   data-value-field="id"
-                   data-header-template="tax-header-tmpl"
-                   data-bind="value: tax_item_id, 
+			<input id="ccbTaxItem"
+					data-role="combobox"
+					data-header-template="tax-header-tmpl"
+					data-filter="like"
+                   	data-min-length="3"               			   
+                   	data-text-field="name"                   
+                   	data-value-field="id"                   	
+                   	data-bind="value: tax_item_id, 
                    			  source: taxItemDS,
                    			  events:{ change: changes }"
-                   style="width: 100%" />			
+                   	style="width: 100%" />			
 		</td>			
     </tr>   
 </script>
@@ -9130,10 +9156,11 @@
 										<td><span data-bind="text: lang.lang.suppliers"></span></td>
 										<td>
 											<input id="cbbContact" name="cbbContact"
-												   data-role="combobox"											                    
+												   data-role="combobox"
+												   data-header-template="vendor-header-tmpl"									                    
 								                   data-value-primitive="true"
-								                   data-auto-bind="false"
-								                   data-header-template="vendor-header-tmpl"
+								                   data-filter="like"
+								                   data-min-length="3"								                   
 								                   data-template="contact-list-tmpl"
 								                   data-text-field="name"
 								                   data-value-field="id"
@@ -9556,9 +9583,10 @@
 		</td>		
 		<td>
 			<input id="ccbItem" name="ccbItem-#:uid#"
-				   data-role="combobox"
-				   
-				   data-template="item-list-tmpl"                   			   
+				   data-role="combobox"				   
+				   data-template="item-list-tmpl"
+				   data-filter="like"
+                   data-min-length="3"                 			   
                    data-text-field="name"
                    data-value-field="id"
                    data-bind="value: item_id, 
@@ -9624,7 +9652,9 @@
 		<td>
 			<input id="ccbTaxItem" name="ccbTaxItem-#:uid#"
 				   data-role="combobox"
-				   data-header-template="tax-header-tmpl"			   
+				   data-header-template="tax-header-tmpl"
+				   data-filter="like"
+                   data-min-length="3"			   
                    data-text-field="name"
                    data-value-field="id"
                    data-bind="value: tax_item_id, 
@@ -9674,11 +9704,12 @@
 									<td><span data-bind="text: lang.lang.supplier"></span></td>
 									<td>
 										<input id="cbbContact" name="cbbContact"
-											   data-role="combobox"											                    
+											   data-role="combobox"
+											   data-header-template="vendor-header-tmpl"
+											   data-template="contact-list-tmpl"										                    
 							                   data-value-primitive="true"
-							                   data-auto-bind="false"
-							                   data-header-template="vendor-header-tmpl"
-							                   data-template="contact-list-tmpl"
+							                   data-filter="like"
+							                   data-min-length="3"							                   
 							                   data-text-field="name"
 							                   data-value-field="id"
 							                   data-bind="value: obj.contact_id,
@@ -9742,8 +9773,10 @@
 								            	<td>
 													<input data-role="combobox"
 															data-template="reference-list-tmpl"
+															data-value-primitive="true"
 															data-auto-bind="false"
-								              				data-value-primitive="true"
+															data-filter="like"
+										                    data-min-length="3"
 															data-text-field="number" 
 								              				data-value-field="id"						              				 
 								              				data-bind="value: obj.reference_id,
@@ -10021,9 +10054,10 @@
 		</td>		
 		<td>
 			<input id="ccbItem" name="ccbItem-#:uid#"
-				   data-role="combobox"
-				   
-				   data-template="item-list-tmpl"                   			   
+				   data-role="combobox"				   
+				   data-template="item-list-tmpl"
+				   data-filter="like"
+                   data-min-length="3"                 			   
                    data-text-field="name"
                    data-value-field="id"
                    data-bind="value: item_id, 
@@ -10102,7 +10136,8 @@
 							                   data-value-primitive="true"
 							                   data-header-template="vendor-header-tmpl"
 							                   data-template="contact-list-tmpl"
-							                   data-auto-bind="false"
+							                   data-filter="like"
+							                   data-min-length="3"
 							                   data-text-field="name"
 							                   data-value-field="id"
 							                   data-bind="value: obj.contact_id,
@@ -10156,6 +10191,8 @@
 									                   data-value-primitive="true"
 									                   data-header-template="account-header-tmpl"                
 									                   data-template="account-list-tmpl"
+									                   data-filter="like"
+									                   data-min-length="3"
 									                   data-text-field="name"								                  
 									                   data-value-field="id"
 									                   data-bind="value: obj.account_id,
@@ -10187,8 +10224,10 @@
 							            	<td>
 												<input data-role="combobox"
 														data-template="reference-list-tmpl"
+														data-value-primitive="true"
 														data-auto-bind="false"
-							              				data-value-primitive="true"
+														data-filter="like"
+									                    data-min-length="3"							              				
 														data-text-field="number" 
 							              				data-value-field="id"	 
 							              				data-bind="value: obj.reference_id,
@@ -10497,6 +10536,8 @@
                    data-value-primitive="true"
                    data-header-template="account-header-tmpl"                  
                    data-template="account-list-tmpl"
+                   data-filter="like"
+                   data-min-length="3"
                    data-text-field="name"
                    data-value-field="id"
                    data-bind="value: account_id,
@@ -10566,11 +10607,12 @@
 										<td><span data-bind="text: lang.lang.supplier"></span></td>
 										<td>
 											<input id="cbbContact" name="cbbContact"
-												   data-role="combobox"											                    
-								                   data-value-primitive="true"
-								                   data-auto-bind="false"
+												   data-role="combobox"
 								                   data-header-template="vendor-header-tmpl"
 								                   data-template="contact-list-tmpl"
+								                   data-value-primitive="true"
+								                   data-filter="like"
+								                   data-min-length="3"
 								                   data-text-field="name"
 								                   data-value-field="id"
 								                   data-bind="value: obj.contact_id,
@@ -10686,8 +10728,10 @@
 								            	<td>
 													<input data-role="combobox"
 															data-template="reference-list-tmpl"
+															data-value-primitive="true"
 															data-auto-bind="false"
-								              				data-value-primitive="true"
+															data-filter="like"
+										                    data-min-length="3"
 															data-text-field="number" 
 								              				data-value-field="id"						              				 
 								              				data-bind="value: obj.reference_id,
@@ -11300,7 +11344,9 @@
 		<td>
 			<input id="ccbItem" name="ccbItem-#:uid#"
 				   data-role="combobox"
-				   data-template="item-list-tmpl"                   			   
+				   data-template="item-list-tmpl"
+				   data-filter="like"
+                   data-min-length="3"                   			   
                    data-text-field="name"
                    data-value-field="id"
                    data-bind="value: item_id, 
@@ -11357,10 +11403,12 @@
 		</td>
 		<td>
 			<input id="ccbTaxItem" name="ccbTaxItem-#:uid#"
-				   data-role="combobox"                   			   
+				   data-role="combobox"
+				   data-header-template="tax-header-tmpl"
+				   data-filter="like"
+                   data-min-length="3"                  			   
                    data-text-field="name"
-                   data-value-field="id"
-                   data-header-template="tax-header-tmpl"
+                   data-value-field="id"                   
                    data-bind="value: tax_item_id, 
                    			  source: taxItemDS,
                    			  events:{ change: changes }"
@@ -11385,7 +11433,9 @@
 			<input id="cbbAccounts" name="cbbAccounts-#:uid#"
 				   data-role="combobox"                   
                    data-value-primitive="true"                  
-                   data-template="account-list-tmpl"                                     
+                   data-template="account-list-tmpl"
+                   data-filter="like"
+                   data-min-length="3"                                     
                    data-text-field="name"
                    data-value-field="id"
                    data-bind="value: account_id,
@@ -11428,9 +11478,11 @@
 		</td>
 		<td>
 			<input id="ccbTaxItem" name="ccbTaxItemAccount-#:uid#"
-				   data-role="combobox"                   			   
+				   data-role="combobox"
+                   data-header-template="tax-header-tmpl"
+				   data-filter="like"
+                   data-min-length="3"                  			   
                    data-text-field="name"
-                    data-header-template="tax-header-tmpl"
                    data-value-field="id"
                    data-bind="value: tax_item_id, 
                    			  source: taxItemDS,
@@ -11473,10 +11525,12 @@
 		</td>
 		<td>
 			<input id="ddlVendor" name="ddlVendor-#:uid#"
-					data-role="combobox"                   
+					data-role="combobox"                 
                    data-value-primitive="true"
                    data-header-template="vendor-header-tmpl"
                    data-template="contact-list-tmpl"
+                   data-filter="like"
+                   data-min-length="3"
                    data-text-field="name"
                    data-value-field="id"
                    data-bind="value: contact_id,
@@ -11521,7 +11575,9 @@
 		</td>		
 		<td>
 			<input id="ccbTaxItem" name="ccbTaxItem-#:uid#"
-				   data-role="combobox"                   			   
+				   data-role="combobox"
+				   data-filter="like"
+                   data-min-length="3"                			   
                    data-text-field="name"
                    data-value-field="id"
                    data-header-template="tax-header-tmpl"
@@ -11573,11 +11629,12 @@
 										<td><span data-bind="text: lang.lang.supplier"></span></td>
 										<td>
 											<input id="cbbContact" name="cbbContact"
-												   data-role="combobox"											                    
-								                   data-value-primitive="true"
-								                   data-auto-bind="false"
+												   data-role="combobox"
 								                   data-header-template="vendor-header-tmpl"
 								                   data-template="contact-list-tmpl"
+								                   data-value-primitive="true"
+								                   data-filter="like"
+								                   data-min-length="3"
 								                   data-text-field="name"
 								                   data-value-field="id"
 								                   data-bind="value: obj.contact_id,
@@ -11626,10 +11683,12 @@
 											<tr>							            				
 												<td><span data-bind="text: lang.lang.relate_purchase"></span></td>
 								            	<td>
-													<input data-role="combobox"														
-															data-auto-bind="false"
-								              				data-value-primitive="true"
+													<input data-role="combobox"
 								              				data-template="reference-list-tmpl"
+								              				data-value-primitive="true"
+								              				data-auto-bind="false"
+								              				data-filter="like"
+										                    data-min-length="3"
 															data-text-field="number" 
 								              				data-value-field="id"						              				 
 								              				data-bind="value: obj.reference_id,
@@ -11927,8 +11986,9 @@
 		<td>
 			<input id="ccbItem" name="ccbItem-#:uid#"
 				   data-role="combobox"
-				   
-				   data-template="item-list-tmpl"                   			   
+				   data-template="item-list-tmpl"
+				   data-filter="like"
+                   data-min-length="3"                   			   
                    data-text-field="name"
                    data-value-field="id"
                    data-bind="value: item_id, 
@@ -11985,8 +12045,10 @@
 		</td>
 		<td>
 			<input id="ccbTaxItem" name="ccbTaxItem-#:uid#"
-				   data-role="combobox" 
-				   data-header-template="tax-header-tmpl"                  			   
+				   data-role="combobox"
+				   data-header-template="tax-header-tmpl"
+				   data-filter="like"
+                   data-min-length="3"                  			   
                    data-text-field="name"
                    data-value-field="id"
                    data-bind="value: tax_item_id, 
@@ -12015,7 +12077,10 @@
 		<td>
 			<input id="cbbInvoice" name="cbbInvoice-#:uid#"
 				   data-role="combobox"
-				   data-template="reference-list-tmpl"				                      			   
+				   data-template="reference-list-tmpl"
+				   data-filter="like"
+                   data-auto-bind="false"
+                   data-min-length="3"			                      			   
                    data-text-field="number"
                    data-value-field="id"
                    data-bind="value: reference_id, 
@@ -12334,9 +12399,10 @@
 									       <input id="cbbContact" name="cbbContact"
 												   data-role="combobox"											                    
 								                   data-value-primitive="true"
-								                   data-auto-bind="false"
 								                   data-header-template="contact-header-tmpl"
 								                   data-template="contact-list-tmpl"
+								                   data-filter="like"
+								                   data-min-length="3"
 								                   data-text-field="name"
 								                   data-value-field="id"
 								                   data-bind="value: contact_id,
@@ -15961,9 +16027,10 @@
 											<input id="cbbContact" name="cbbContact"
 												   data-role="combobox"											                    
 								                   data-value-primitive="true"
-								                   data-auto-bind="false"
 								                   data-header-template="contact-header-tmpl"
 								                   data-template="contact-list-tmpl"
+								                   data-filter="like"
+								                   data-min-length="3"
 								                   data-text-field="name"
 								                   data-value-field="id"
 								                   data-bind="value: obj.contact_id,
@@ -16079,6 +16146,8 @@
 										                   data-value-primitive="true"
 										                   data-header-template="employee-header-tmpl"
 										                   data-template="contact-list-tmpl"
+										                   data-filter="like"
+										                   data-min-length="3"
 										                   data-text-field="name"
 										                   data-value-field="id"
 										                   data-bind="value: obj.employee_id,
@@ -16419,6 +16488,9 @@
 			<input id="ccbItem" name="ccbItem-#:uid#"
 				   data-role="combobox"				   
 				   data-template="item-list-tmpl"
+				   data-filter="like"
+                   data-auto-bind="false"
+                   data-min-length="3"
                    data-text-field="name"
                    data-value-field="id"
                    data-bind="value: item_id, 
@@ -16482,7 +16554,9 @@
 			<input 	id="ccbTaxItem" 
 					name="ccbTaxItem-#:uid#"
 					data-header-template="tax-header-tmpl"
-				   	data-role="combobox"                   			   
+				   	data-role="combobox"   
+				   	data-filter="like"
+                    data-min-length="3"                			   
                    	data-text-field="name"
                    	data-value-field="id"
                    	data-bind="value: tax_item_id, 
@@ -16532,11 +16606,12 @@
 										<td><span data-bind="text: lang.lang.customers"></span></td>
 										<td>
 											<input id="cbbContact" name="cbbContact"
-												   data-role="combobox"											                    
-								                   data-value-primitive="true"
-								                   data-auto-bind="false"
+												   data-role="combobox"
 								                   data-header-template="contact-header-tmpl"
 								                   data-template="contact-list-tmpl"
+								                   data-value-primitive="true"
+								                   data-filter="like"
+								                   data-min-length="3"
 								                   data-text-field="name"
 								                   data-value-field="id"
 								                   data-bind="value: obj.contact_id,
@@ -16610,8 +16685,10 @@
 								            	<td>
 													<input data-role="combobox"
 															data-template="reference-list-tmpl"
-															data-auto-bind="false"
 								              				data-value-primitive="true"
+								              				data-auto-bind="false"
+								              				data-filter="like"
+												            data-min-length="3"
 															data-text-field="number" 
 								              				data-value-field="id"						              				 
 								              				data-bind="value: obj.reference_id,
@@ -16648,6 +16725,8 @@
 										                   data-value-primitive="true"
 										                   data-header-template="employee-header-tmpl"
 										                   data-template="contact-list-tmpl"
+										                   data-filter="like"
+										                   data-min-length="3"
 										                   data-text-field="name"
 										                   data-value-field="id"
 										                   data-bind="value: obj.employee_id,
@@ -16996,7 +17075,9 @@
 		<td>
 			<input id="ccbItem" name="ccbItem-#:uid#"
 				   data-role="combobox"				   
-				   data-template="item-list-tmpl"                   			   
+				   data-template="item-list-tmpl"
+				   data-filter="like"
+                   data-min-length="3"                   			   
                    data-text-field="name"
                    data-value-field="id"
                    data-bind="value: item_id, 
@@ -17069,8 +17150,10 @@
 		</td>
 		<td>
 			<input id="ccbTaxItem" name="ccbTaxItem-#:uid#"
-					data-header-template="tax-header-tmpl"
-				   data-role="combobox"                   			   
+				   data-header-template="tax-header-tmpl"
+				   data-role="combobox"  
+				   data-filter="like"
+                   data-min-length="3"                 			   
                    data-text-field="name"
                    data-value-field="id"
                    data-bind="value: tax_item_id, 
@@ -17122,9 +17205,10 @@
 											<input id="cbbContact" name="cbbContact"
 												   data-role="combobox"
 								                   data-value-primitive="true"
-								                   data-auto-bind="false"
 								                   data-header-template="contact-header-tmpl"
 								                   data-template="contact-list-tmpl"
+								                   data-filter="like"
+										           data-min-length="3"
 								                   data-text-field="name"
 								                   data-value-field="id"
 								                   data-bind="value: obj.contact_id,
@@ -17188,8 +17272,10 @@
 								            	<td>
 													<input data-role="combobox"
 															data-template="reference-list-tmpl"
-															data-auto-bind="false"
 								              				data-value-primitive="true"
+								              				data-filter="like"
+												            data-auto-bind="false"
+												            data-min-length="3"
 															data-text-field="number" 
 								              				data-value-field="id"						              				 
 								              				data-bind="value: obj.reference_id,
@@ -17226,6 +17312,8 @@
 										                   data-value-primitive="true"
 										                   data-header-template="employee-header-tmpl"
 										                   data-template="contact-list-tmpl"
+										                   data-filter="like"
+										                   data-min-length="3"
 										                   data-text-field="name"
 										                   data-value-field="id"
 										                   data-bind="value: obj.employee_id,
@@ -17556,6 +17644,8 @@
                    data-value-primitive="true"
                    data-header-template="account-header-tmpl"                   
                    data-template="account-list-tmpl"
+                   data-filter="like"
+                   data-min-length="3"
                    data-text-field="name"
                    data-value-field="id"
                    data-bind="value: account_id,
@@ -17640,11 +17730,12 @@
 										<td><span data-bind="text: lang.lang.customers"></span></td>
 										<td>
 											<input id="cbbContact" name="cbbContact"
-												   data-role="combobox"
-								                   data-value-primitive="true"
-								                   data-auto-bind="false"
+												   data-role="combobox"								                   
 								                   data-header-template="contact-header-tmpl"
 								                   data-template="contact-list-tmpl"
+								                   data-value-primitive="true"
+								                   data-filter="like"
+										           data-min-length="3"
 								                   data-text-field="name"
 								                   data-value-field="id"
 								                   data-bind="value: obj.contact_id,
@@ -17745,9 +17836,11 @@
 								            	</td>
 								            	<td>
 													<input data-role="combobox"
-															data-template="reference-list-tmpl"
-															data-auto-bind="false"
+															data-template="reference-list-tmpl"															
 								              				data-value-primitive="true"
+								              				data-filter="like"
+										                    data-auto-bind="false"
+										                    data-min-length="3"
 															data-text-field="number" 
 								              				data-value-field="id"						              				 
 								              				data-bind="value: obj.reference_id,
@@ -17785,6 +17878,8 @@
 										                   data-value-primitive="true"
 										                   data-header-template="employee-header-tmpl"
 										                   data-template="contact-list-tmpl"
+										                   data-filter="like"
+										                   data-min-length="3"
 										                   data-text-field="name"
 										                   data-value-field="id"
 										                   data-bind="value: obj.employee_id,
@@ -18180,8 +18275,9 @@
 		<td>
 			<input id="ccbItem" name="ccbItem-#:uid#"
 				   data-role="combobox"
-				   
-				   data-template="item-list-tmpl"                   			   
+				   data-template="item-list-tmpl"
+				   data-filter="like"
+                   data-min-length="3"                  			   
                    data-text-field="name"
                    data-value-field="id"
                    data-bind="value: item_id, 
@@ -18239,7 +18335,9 @@
 		<td>
 			<input id="ccbTaxItem" name="ccbTaxItem-#:uid#"
 					data-header-template="tax-header-tmpl"
-				   data-role="combobox"                   			   
+				   data-role="combobox"  
+				   data-filter="like"
+                   data-min-length="3"                 			   
                    data-text-field="name"
                    data-value-field="id"
                    data-bind="value: tax_item_id, 
@@ -18302,11 +18400,12 @@
 										<td><span data-bind="text: lang.lang.customers"></span></td>
 										<td>
 											<input id="ccbItem" name="cbbContact"
-												   data-role="combobox"
-												   data-auto-bind="false"											                    
+												   data-role="combobox"										                    
 								                   data-value-primitive="true"
 								                   data-header-template="contact-header-tmpl"
 								                   data-template="contact-list-tmpl"
+								                   data-filter="like"
+								                   data-min-length="3"
 								                   data-text-field="name"
 								                   data-value-field="id"
 								                   data-bind="value: obj.contact_id,
@@ -18400,8 +18499,10 @@
 								            	<td>
 													<input data-role="combobox"
 															data-template="reference-list-tmpl"
-															data-auto-bind="false"
 								              				data-value-primitive="true"
+								              				data-filter="like"
+										                    data-auto-bind="false"
+										                    data-min-length="3"
 															data-text-field="number" 
 								              				data-value-field="id"						              				 
 								              				data-bind="value: obj.reference_id,
@@ -18439,6 +18540,8 @@
 										                   data-value-primitive="true"
 										                   data-header-template="employee-header-tmpl"
 										                   data-template="contact-list-tmpl"
+										                   data-filter="like"
+										                   data-min-length="3"
 										                   data-text-field="name"
 										                   data-value-field="id"
 										                   data-bind="value: obj.employee_id,
@@ -18835,6 +18938,8 @@
 			<input id="ccbItem" name="ccbItem-#:uid#"
 				   data-role="combobox"
 				   data-template="item-list-tmpl"
+				   data-filter="like"
+                   data-min-length="3"
                    data-text-field="name"
                    data-value-field="id"
                    data-bind="value: item_id, 
@@ -18892,7 +18997,9 @@
 		<td>
 			<input id="ccbTaxItem" name="ccbTaxItem-#:uid#"
 					data-header-template="tax-header-tmpl"
-				   data-role="combobox"                   			   
+				   data-role="combobox"
+				   data-filter="like"
+                   data-min-length="3"                  			   
                    data-text-field="name"
                    data-value-field="id"
                    data-bind="value: tax_item_id, 
@@ -18945,9 +19052,10 @@
 											<input id="ccbItem" name="cbbContact"
 												   data-role="combobox"
 								                   data-value-primitive="true"
-								                   data-auto-bind="false"
 								                   data-header-template="contact-header-tmpl"
 								                   data-template="contact-list-tmpl"
+								                   data-filter="like"
+								                   data-min-length="3"
 								                   data-text-field="name"
 								                   data-value-field="id"
 								                   data-bind="value: obj.contact_id,
@@ -19011,8 +19119,10 @@
 								            	<td>
 													<input data-role="combobox"
 															data-template="reference-list-tmpl"
-															data-auto-bind="false"
 								              				data-value-primitive="true"
+								              				data-filter="like"
+										                    data-auto-bind="false"
+										                    data-min-length="3"
 															data-text-field="number" 
 								              				data-value-field="id"						              				 
 								              				data-bind="value: obj.reference_id,
@@ -19297,8 +19407,9 @@
 		<td>
 			<input id="ccbItem" name="ccbItem-#:uid#"
 				   data-role="combobox"
-				   
-				   data-template="item-list-tmpl"                   			   
+				   data-template="item-list-tmpl"
+				   data-filter="like"
+                   data-min-length="3"                  			   
                    data-text-field="name"
                    data-value-field="id"
                    data-bind="value: item_id, 
@@ -19373,10 +19484,11 @@
 										<td>
 											<input id="ccbItem" name="cbbContact"
 												   data-role="combobox"
-								                   data-value-primitive="true"
-								                   data-auto-bind="false"
 								                   data-header-template="contact-header-tmpl"
 								                   data-template="contact-list-tmpl"
+								                   data-value-primitive="true"
+								                   data-filter="like"
+								                   data-min-length="3"
 								                   data-text-field="name"
 								                   data-value-field="id"
 								                   data-bind="value: obj.contact_id,
@@ -19425,10 +19537,12 @@
 											<tr>							            				
 												<td><span data-bind="text: lang.lang.related_invoices"></span></td>
 								            	<td>
-													<input data-role="combobox"														
-															data-auto-bind="false"
+													<input data-role="combobox"
 								              				data-value-primitive="true"
 								              				data-template="reference-list-tmpl"
+								              				data-filter="like"
+										                    data-auto-bind="false"
+										                    data-min-length="3"
 															data-text-field="number" 
 								              				data-value-field="id"						              				 
 								              				data-bind="value: obj.reference_id,
@@ -19726,8 +19840,9 @@
 		<td>
 			<input id="ccbItem" name="ccbItem-#:uid#"
 				   data-role="combobox"
-				   
-				   data-template="item-list-tmpl"                   			   
+				   data-template="item-list-tmpl"
+				   data-filter="like"
+                   data-min-length="3"                   			   
                    data-text-field="name"
                    data-value-field="id"
                    data-bind="value: item_id, 
@@ -19785,7 +19900,9 @@
 		<td>
 			<input id="ccbTaxItem" name="ccbTaxItem-#:uid#"
 					data-header-template="tax-header-tmpl"
-				   data-role="combobox"                   			   
+				   data-role="combobox"
+				   data-filter="like"
+                   data-min-length="3"                  			   
                    data-text-field="name"
                    data-value-field="id"
                    data-bind="value: tax_item_id, 
@@ -19814,8 +19931,11 @@
 		<td>
 			<input id="cbbInvoice" name="cbbInvoice-#:uid#"
 				   data-role="combobox"
-				   data-template="reference-list-tmpl"				                      			   
-                   data-text-field="number"
+				   data-template="reference-list-tmpl"
+				   data-filter="like"
+                   data-auto-bind="false"
+                   data-min-length="3"			                      			   
+                   data-text-field="number"                   
                    data-value-field="id"
                    data-bind="value: reference_id, 
                    			  source: invoiceDS,
@@ -19873,11 +19993,12 @@
 								    	<!-- //GENERAL INFO -->
 								        <div class="tab-pane active" id="tab-1">									
 									       <input id="ccbItem" name="cbbContact"
-												   data-role="combobox"											                    
-								                   data-value-primitive="true"
-								                   data-auto-bind="false"
+												   data-role="combobox"	
 								                   data-header-template="contact-header-tmpl"
 								                   data-template="contact-list-tmpl"
+								                   data-value-primitive="true"
+								                   data-filter="like"
+								                   data-min-length="3"
 								                   data-text-field="name"
 								                   data-value-field="id"
 								                   data-bind="value: contact_id,
@@ -20363,11 +20484,12 @@
 								    	<!-- //GENERAL INFO -->
 								        <div class="tab-pane active" id="tab-1">									
 									       <input id="ccbItem" name="cbbContact"
-												   data-role="combobox"											                    
-								                   data-value-primitive="true"
-								                   data-auto-bind="false"
+												   data-role="combobox"								                   
 								                   data-header-template="contact-header-tmpl"
 								                   data-template="contact-list-tmpl"
+								                   data-value-primitive="true"
+								                   data-filter="like"
+								                   data-min-length="3"
 								                   data-text-field="name"
 								                   data-value-field="id"
 								                   data-bind="value: contact_id,
@@ -20467,6 +20589,8 @@
 									<input data-role="combobox"
 										   data-template="contact-list-tmpl"				            			               			   		                   
 						                   data-value-primitive="true"
+						                   data-filter="like"
+						                   data-min-length="3"
 						                   data-text-field="name"
 						                   data-value-field="id"
 						                   data-bind="value: obj.contact_id,
@@ -23891,11 +24015,12 @@
 								    	<!-- //GENERAL INFO -->
 								        <div class="tab-pane active" id="tab-1">									
 									       <input id="ccbItem" name="cbbContact"
-												   data-role="combobox"											                    
-								                   data-value-primitive="true"
-								                   data-auto-bind="false"
+												   data-role="combobox"
 								                   data-header-template="contact-header-tmpl"
 								                   data-template="contact-list-tmpl"
+								                   data-value-primitive="true"
+								                   data-filter="like"
+								                   data-min-length="3"
 								                   data-text-field="name"
 								                   data-value-field="id"
 								                   data-bind="value: contact_id,
@@ -29207,7 +29332,7 @@
 					#=name#
 				#}#
 			</span>
-			<span class="pull-right">#=kendo.toString(quantity, "n0")#</span>
+			<span class="pull-right">#:kendo.toString(quantity, "n0")#</span>
 		</td>
 	</tr>
 </script>
@@ -29968,14 +30093,14 @@
 			   data-role="combobox"
 			   data-header-template="vendor-header-tmpl"
 			   data-template="contact-list-tmpl"
-               data-placeholder="vendor ..."
                data-value-primitive="true"
-               data-filter="startswith"							                   
+               data-filter="like"							                   
                data-min-length="3"							                   
                data-text-field="name"
                data-value-field="id"										                   
                data-bind="value: contact_id,
                           source: vendorDS"
+               data-placeholder="Vendor ..."
                style="width: 100%" />
 		</td>
 		<td>
@@ -29993,14 +30118,14 @@
 			   data-role="combobox"
 			   data-header-template="contact-header-tmpl"
 			   data-template="contact-list-tmpl"
-               data-placeholder="customer ..."
                data-value-primitive="true"
-               data-filter="startswith"							                   
+               data-filter="like"							                   
                data-min-length="3"							                   
                data-text-field="name"
                data-value-field="id"										                   
                data-bind="value: contact_id,
                           source: customerDS"
+               data-placeholder="Customer ..."
                style="width: 100%" />
 		</td>
 		<td>
@@ -30402,7 +30527,9 @@
 		<td>
 			<input id="ccbItem" name="ccbItem-#:uid#"
 				   data-role="combobox"
-				   data-template="item-list-tmpl"                   			   
+				   data-template="item-list-tmpl"
+				   data-filter="like"
+                   data-min-length="3"                   			   
                    data-text-field="name"
                    data-value-field="id"
                    data-bind="value: item_id, 
@@ -30803,15 +30930,14 @@
 			   data-role="combobox"
 			   data-header-template="vendor-header-tmpl"
 			   data-template="contact-list-tmpl"
-               data-placeholder="vendor ..."
-               data-auto-bind="false"
                data-value-primitive="true"
-               data-filter="startswith"							                   
+               data-filter="like"							                   
                data-min-length="3"							                   
                data-text-field="name"
                data-value-field="id"										                   
                data-bind="value: contact_id,
                           source: vendorList"
+               data-placeholder="Vendor ..."
                style="width: 100%" />
 		</td>
 		<td>
@@ -30826,18 +30952,17 @@
 	<tr>		
 		<td>
 			<input id="cbbCustomer" name="cbbCustomer" 
-			  data-role="combobox"
+			   data-role="combobox"
 			   data-header-template="contact-header-tmpl"
 			   data-template="contact-list-tmpl"
-               data-placeholder="customer ..."
-               data-auto-bind="false"
                data-value-primitive="true"
-               data-filter="startswith"							                   
+               data-filter="like"							                   
                data-min-length="3"							                   
                data-text-field="name"
                data-value-field="id"										                   
                data-bind="value: contact_id,
                           source: customerList"
+               data-placeholder="Customer ..."
                style="width: 100%" />
 		</td>
 		<td>
@@ -31232,16 +31357,16 @@
 		<td>
 			<input id="cbbVendor" name="cbbVendor" 
 			   data-role="combobox"
-               data-placeholder="vendor ..."
-               data-auto-bind="false"
+			   data-header-template="vendor-header-tmpl"
+			   data-template="contact-list-tmpl"
                data-value-primitive="true"
-               data-filter="startswith"							                   
-               data-min-length="3"
-               data-header-template="vendor-header-tmpl"						                   
+               data-filter="like"							                   
+               data-min-length="3"                   
                data-text-field="name"
                data-value-field="id"										                   
                data-bind="value: contact_id,
                           source: vendorList"
+               data-placeholder="Vendor ..."
                style="width: 100%" />
 		</td>
 		<td>
@@ -31259,15 +31384,14 @@
 			   data-role="combobox"
 			   data-header-template="vendor-header-tmpl"
 			   data-template="contact-list-tmpl"
-               data-placeholder="vendor ..."
-               data-auto-bind="false"
                data-value-primitive="true"
-               data-filter="startswith"							                   
+               data-filter="like"							                   
                data-min-length="3"							                   
                data-text-field="name"
                data-value-field="id"										                   
                data-bind="value: contact_id,
                           source: vendorList"
+               data-placeholder="Vendor ..."
                style="width: 100%" />
 		</td>
 		<td>
@@ -32083,15 +32207,14 @@
 												<td>
 													<input id="cbbReader" name="cbbReader" 
 									    				   data-role="combobox"
-										                   data-placeholder="Select ..."
-										                   data-auto-bind="false"
 										                   data-value-primitive="true"
-										                   data-filter="startswith"							                   
+										                   data-filter="like"							                   
 										                   data-min-length="3"							                   
 										                   data-text-field="name"
 										                   data-value-field="id"							                   
 										                   data-bind="value: obj.contact_id,
 										                              source: contactDS"
+										                   data-placeholder="Select ..."
 										                   style="width: 100%" />
 												</td>
 											</tr>										
@@ -32103,6 +32226,8 @@
 														   data-header-template="account-header-tmpl"
 														   data-template="account-list-tmpl"							                   
 										                   data-value-primitive="true"
+										                   data-filter="like"
+										                   data-min-length="3"
 										                   data-text-field="name"
 										                   data-value-field="id"									                   
 										                   data-bind="value: obj.account_id,
@@ -32686,7 +32811,9 @@
 			<td>
 				<input id="ccbItem" name="ccbItem-#:uid#"
 					   data-role="combobox"
-					   data-template="item-list-tmpl"                   			   
+					   data-template="item-list-tmpl"
+					   data-filter="like"
+	                   data-min-length="3"                  			   
 	                   data-text-field="name"
 	                   data-value-field="id"
 	                   data-bind="value: item_id, 
@@ -32733,10 +32860,12 @@
 		<tr data-uid="#: uid #">
 			<td>
 				<input id="cbbAccounts" name="cbbAccounts-#:uid#"
-					   data-role="combobox"                   
-	                   data-value-primitive="true" 
+					   data-role="combobox"
 	                   data-header-template="account-header-tmpl"                 
 	                   data-template="account-list-tmpl"
+	                   data-value-primitive="true"
+	                   data-filter="like"
+	                   data-min-length="3"
 	                   data-text-field="name"
 	                   data-value-field="id"
 	                   data-bind="value: account_id,
@@ -32765,7 +32894,9 @@
 			<td>
 				<input id="ccbItem" name="ccbItem-#:uid#"
 					   data-role="combobox"
-					   data-template="item-list-tmpl"                   			   
+					   data-template="item-list-tmpl"
+					   data-filter="like"
+	                   data-min-length="3"                  			   
 	                   data-text-field="name"
 	                   data-value-field="id"
 	                   data-bind="value: item_id, 
@@ -32813,10 +32944,12 @@
 			</td>			
 			<td>
 				<input id="cbbAccounts" name="cbbAccounts-#:uid#"
-					   data-role="combobox"                   
-	                   data-value-primitive="true" 
+					   data-role="combobox"
 	                   data-header-template="account-header-tmpl"                 
 	                   data-template="account-list-tmpl"
+	                   data-value-primitive="true"
+	                   data-filter="like"
+	                   data-min-length="3"
 	                   data-text-field="name"
 	                   data-value-field="id"
 	                   data-bind="value: account_id,
@@ -35126,7 +35259,9 @@
 									<input data-role="combobox"
 										   data-template="contact-list-tmpl"				            			               			   		                   
 						                   data-value-primitive="true"
-						                   data-text-field="name"
+						                   data-filter="like"
+						                   data-min-length="3"
+						                   data-text-field="name"						                   
 						                   data-value-field="id"
 						                   data-bind="value: obj.contact_id,
 						                              source: contactDS"
@@ -36875,11 +37010,13 @@
 							<td style="width: 10%"><span data-bind="text: lang.lang.account"></span></td>
 							<td style="width: 40%">
 								<input id="cbbAccount" name="cbbAccount"
-									   data-role="combobox"                   
-					                   data-value-primitive="true"
+									   data-role="combobox"
 					                   data-header-template="account-header-tmpl"                 
 					                   data-template="account-list-tmpl"
-					                   data-text-field="name"
+					                   data-value-primitive="true"
+					                   data-filter="like"
+					                   data-min-length="3"
+					                   data-text-field="name"					                   
 					                   data-value-field="id"
 					                   data-bind="value: obj.account_id,
 					                              source: accountDS"
@@ -37027,10 +37164,12 @@
 		</td>	
 		<td>
 			<input id="cbbAccounts" name="cbbAccounts"
-				   data-role="combobox"                   
-                   data-value-primitive="true"  
+				   data-role="combobox"
                    data-header-template="account-header-tmpl"                 
                    data-template="account-list-tmpl"
+                   data-value-primitive="true"
+                   data-filter="like"
+                   data-min-length="3"
                    data-text-field="name"
                    data-value-field="id"
                    data-bind="value: account_id,
@@ -37066,6 +37205,8 @@
 			<input data-role="combobox" id="showName"                  
                    data-value-primitive="true"
                    data-template="contact-list-tmpl"
+                   data-filter="like"
+                   data-min-length="3"
                    data-text-field="name"
                    data-value-field="id"
                    data-bind="value: contact_id,
@@ -37129,10 +37270,11 @@
 													<div class="select2-container" style="width: 100%;">								
 														<input id="ccbItem" name="cbbContact"
 															   data-role="combobox"
-															   data-auto-bind="false"    
-											                   data-value-primitive="true"
 											                   data-header-template="contact-header-tmpl"
 											                   data-template="contact-list-tmpl"
+											                   data-value-primitive="true"
+											                   data-filter="like"
+											                   data-min-length="3"
 											                   data-text-field="name"
 											                   data-value-field="id"
 											                   data-bind="value: contact_id,
@@ -37454,10 +37596,11 @@
 												<div class="select2-container" style="width: 100%;">								
 													<input id="ccbItem" name="cbbContact"
 														   data-role="combobox"
-														   data-auto-bind="false"
-														   data-header-template="vendor-header-tmpl"										                    
-										                   data-value-primitive="true"
+														   data-header-template="vendor-header-tmpl"
 										                   data-template="contact-list-tmpl"
+										                   data-value-primitive="true"
+										                   data-filter="like"
+										                   data-min-length="3"
 										                   data-text-field="name"
 										                   data-value-field="id"
 										                   data-bind="value: contact_id,
@@ -44523,6 +44666,7 @@
 
 			if(obj.sub_of_id>0){
 				para.push({ field:"sub_of_id", value: obj.sub_of_id });
+				para.push({ field:"id", operator:"or_like", value: obj.sub_of_id });
 			}
 
 			para.push({ field:"account_type_id", value:obj.account_type_id });
@@ -44641,7 +44785,6 @@
 		cancel 					: function(){
 			this.dataSource.cancelChanges();
 			this.dataSource.data([]);
-			this.set("obj", null);
 
 			banhji.userManagement.removeMultiTask("account");
 		},
@@ -44910,8 +45053,8 @@
 					var view = self.dataSource.view();
 						       
 					self.set("obj", view[0]);
-					self.set("dr", kendo.toString(view[0].amount, "c0", view[0].locale));
-			        self.set("cr", kendo.toString(view[0].amount, "c0", view[0].locale));
+					self.set("dr", kendo.toString(view[0].amount, "c", view[0].locale));
+			        self.set("cr", kendo.toString(view[0].amount, "c", view[0].locale));
 
 					self.lineDS.filter({ field: "transaction_id", value: id });								
 				});
@@ -44994,6 +45137,8 @@
 				cr += kendo.parseFloat(value.cr);				
 	        });
 
+	        obj.set("amount", dr);
+
 	        dr = kendo.toString(dr, 'n2');
 	        cr = kendo.toString(cr, 'n2');
 
@@ -45003,8 +45148,6 @@
 
 	        this.set("dr", kendo.toString(kendo.parseFloat(dr), "c", obj.locale));
 	        this.set("cr", kendo.toString(kendo.parseFloat(cr), "c", obj.locale));
-	        
-	        obj.set("amount", dr);
 		},
 		objSync 			: function(){
 	    	var dfd = $.Deferred();	        

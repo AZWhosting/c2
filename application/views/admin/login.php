@@ -236,9 +236,9 @@ a.enquiries:hover .enquiry-content, .enquiry-content:hover {
                         <input type="password" data-bind="value: password" placeholder="Password " class="login-email"><br>                    
 
                         <input id="loginBtn" type="button" data-bind="click: btnSignIn" class="btn-login" value="Login"><br><br>
-                        <div id="loginInformation"></div>
+                        <div id="loginInformation" style="text-align: center;margin-bottom: 15px;color: #a22314"></div>
                     </form> 
-                    <p>By clicking Login,you agree to our <a href="https://www.banhji.com/terms" target="_blank">Term of Service.</a></p>
+                    <p>By clicking Login, you agree to our <a href="https://www.banhji.com/terms" target="_blank">Term of Service.</a></p>
                     <a href="<?php echo base_url(); ?>forgetpassword">Forget Password</a> | <a href="<?php echo base_url(); ?>signup"> Sign Up</a>
                 </div>
               </div>
@@ -272,7 +272,7 @@ a.enquiries:hover .enquiry-content, .enquiry-content:hover {
 
             </div>           
           </div>
-           <p style="width: 35%; font-size: 11px; margin-top: 10px; margin-left: 140px; float: left;">©2016 BanhJi Pte. Ltd. All rights reserved. Terms, conditions, features, support, pricing and service options subject to change without notice.</p>
+           <p style="width: 35%; font-size: 11px; margin-top: 10px; margin-left: 140px; float: left;">©<?php echo date("Y"); ?> BanhJi Pte. Ltd. All rights reserved. Terms, conditions, features, support, pricing and service options subject to change without notice.</p>
             <span style="float: right; width: 45%; text-align: right; margin-right: 35px;" id="siteseal"><script async type="text/javascript" src="https://seal.godaddy.com/getSeal?sealID=lNpq2OuFwU0nDcZ5f7uSQ9D1rwgIIgTNOoYBNRt4BqE4CMLt8GMhEDKt66EL"></script></span>
          </div>
      </div>
@@ -393,7 +393,7 @@ a.enquiries:hover .enquiry-content, .enquiry-content:hover {
             console.log(this.get('password')); 
           },
           btnSignIn: function() {
-            $("#loginBtn").val("Loging in...");
+            $("#loginBtn").val("Logging in...");
             var authenticationData = {
                 Username : this.get('email'),
                 Password : this.get('password')

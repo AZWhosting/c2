@@ -98,3 +98,7 @@ p.addItem.glyphicons.circle_remove i:before {
 	position: relative;
 	clear: both;
 }
+.customer-report-center table tr td h3 {
+	line-height: 14px;
+	margin-bottom: 0;
+}

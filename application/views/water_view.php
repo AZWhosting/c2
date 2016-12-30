@@ -2564,7 +2564,7 @@
 			                   data-value-field="id"
 			                   data-bind="value: obj.licence,
 			                              source: licenseDS,
-			                              events: {change : lonChange}"/>
+			                              events: {change : licenseChange}"/>
 			            </div>
 			            <div class="control-group">										
 							<label for="ddlContactType"><span>Bloc</span></label>
@@ -4399,21 +4399,21 @@
 								<tbody>
 									<tr>
 										<td class="right"><span >Total Received</span>:</td>
-										<td class="right strong" ><span >0</span></td>
+										<td class="right strong" ><span data-bind="text: total_received"></span></td>
 										<td class="right"><span >Subtotal</span>:</td>
-										<td class="right strong" width="40%"><span >0</span></td>
+										<td class="right strong" width="40%"><span data-bind="text: sub_total"></span></td>
 									</tr>								
 									<tr>
 										<td class="right"><span >Remaining</span>:</td>
-										<td class="right strong"><span >0</span></td>
+										<td class="right strong"><span data-bind="text: remain"></span></td>
 										<td class="right"><span >Discount</span>:</td>
 										<td class="right strong">
-											<span >0</span>
+											<span data-bind="text: discount"></span>
 	                   					</td>
 									</tr>
 									<tr>
 										<td class="right"><span >Finding</span>:</td>
-										<td class="right strong"><span >0</span></td>
+										<td class="right strong"><span data-bind="text: find"></span></td>
 										<td></td>
 										<td></td>							
 								</tbody>
@@ -4477,10 +4477,282 @@
 	</div>				  	
 </script>
 
+<script id="Reports" type="text/x-kendo-template">
+	<div class="row-fluid customer-report-center">
+		<div class="span7">
+			<p>Key Performance Indicators (KPIs)</p> 
+			<input id="ddlCashAccount" name="ddlCashAccount" 
+				data-role="dropdownlist"
+  				data-value-primitive="true"
+				data-text-field="name" 
+  				data-value-field="id"
+  				data-bind="value: licenseSelect,
+  							source: licenseDS"
+  				data-option-label="Select Licenses..."
+  				/>
+			
+
+			<div class="row-fluid sale-report">
+				<h2>Customer Management Report</h2>
+				<p>
+					These reports are useful for customer information management, meter connections, and usage managements 
+				</p>
+				
+				<div class="row-fluid">
+					<table class="table table-borderless table-condensed">
+						<tr>
+							<td width="50%">
+								<h3><a href="#/customer_list">Customer List</a></h3>
+							</td>
+							<td width="50%">
+								<h3><a href="#/new_customer_list">New Customer List</a></h3>								
+							</td>						
+						</tr>
+						<tr>
+							<td width="50%">
+								<p></p>
+								
+							</td>
+							<td width="50%">
+								<p></p>
+							</td>
+							
+						</tr>
+						<tr>
+							<td width="50%">
+								<h3><a href="#/customer_no_connection">Customer List with No Connection</a></h3>
+							</td>
+							<td width="50%">
+								<h3><a href="#/mini_usage_list">Minimum Water Usage List</a></h3>
+							</td>
+						</tr>
+						<tr>
+							<td width="50%">
+								<p></p>
+							</td>
+							<td width="50%">
+								<p></p>
+							</td>
+						</tr>
+
+						<tr>
+							<td width="50%">
+								<h3><a href="#/disconnect_list">Disconnected List</a></h3>
+							</td>
+							<td width="50%">
+								<!-- <h3><a href="#/">Period-End Closing Checklist</a></h3> -->
+							</td>
+						</tr>
+
+						<tr>
+							<td width="50%">
+								<p></p>
+							</td>
+							<td width="50%">
+								<p></p>
+							</td>
+						</tr>
+						
+
+					</table>
+				</div>
+			</div>
+
+			<div class="row-fluid recevable-report">
+				<h2>Receiveable and Deposits</h2>
+				<p>
+					These would be the most common reports that you will be using. It includes receivables balance and its aging in both summary and detail list and the security deposit made by the customers for their water connection.
+				</p>
+				<div class="row-fluid">
+					<table class="table table-borderless table-condensed">
+						<tr>
+							<td >
+								<h3><a href="#/account_receivable_list">Accounts Receivable Listing</a></h3>
+							</td>
+							<td >
+								<h3><a href="#/customer_deposit">Customer Deposit</a></h3>								
+							</td>						
+						</tr>
+						<tr>
+							<td >
+								<p></p>
+								
+							</td>
+							<td >
+								<p></p>
+							</td>							
+						</tr>
+
+						<tr>
+							<td >
+								<h3><a href="#/customer_aging_sum_list">Customer Aging Summary List</a></h3>
+							</td>
+							<td >
+								<h3><a href="#/customer_aging_detail">Customer Aging Detail List</a></h3>								
+							</td>						
+						</tr>
+						<tr>
+							<td >
+								<p></p>
+								
+							</td>
+							<td >
+								<p></p>
+							</td>							
+						</tr>
+						
+
+					</table>
+				</div>
+			</div>
+
+			<div class="row-fluid sale-report">
+				<h2>Sale Report</h2>
+				<p>
+					Summary and detail sale report broken down by Licenses, bloc, and types of reveneues.	
+				</p>
+				<div class="row-fluid">
+					<table class="table table-borderless table-condensed">
+						<tr>
+							<td>
+								<h3><a href="#/sale_summary">Sale Summary Report</a></h3>
+							</td>
+							<td >
+								<h3><a href="#/sale_detail">Sale Detail Report</a></h3>								
+							</td>						
+						</tr>
+						<tr>
+							<td >
+								<p></p>
+								
+							</td>
+							<td >
+								<p></p>
+							</td>							
+						</tr>
+						<tr>
+							<td >
+								<h3><a href="#/connect_service_revenue">Connection Service Revenue Report</a></h3>
+							</td>
+							<td >
+								<h3><a href="#/other_revenues">Other Revenues</a></h3>
+							</td>
+						</tr>
+						<tr>
+							<td >
+								<p></p>
+							</td>
+							<td >
+								<p></p>
+							</td>
+						</tr>
+					</table>					
+				</div>
+			</div>
+
+			<div class="row-fluid recevable-report">
+				<h2>Cash Receipt Report</h2>
+				<p>
+					Summary and detail cash receipt reports grouped by sources/ methods of receipts 
+				</p>
+				<div class="row-fluid">
+					<table class="table table-borderless table-condensed">
+						<tr>
+							<td>
+								<h3><a href="#/cash_receipt_summary">Cash Receipt By Summary</a></h3>
+							</td>
+							<td >
+								<h3><a href="#/cash_receipt_detail">Cash Receipt By Detail</a></h3>								
+							</td>						
+						</tr>
+						<tr>
+							<td >
+								<p></p>
+								
+							</td>
+							<td >
+								<p></p>
+							</td>							
+						</tr>
+						<tr>
+							<td >
+								<h3><a href="#/cash_receipt_source_summary">Cash Receipt By Sources Summary</a></h3>
+							</td>
+							<td >
+								<h3><a href="#/cash_receipt_source_detail">Cash Receipt By Sources Detail</a></h3>
+							</td>
+						</tr>
+						<tr>
+							<td >
+								<p></p>
+							</td>
+							<td >
+								<p></p>
+							</td>
+						</tr>
+					</table>					
+				</div>
+			</div>
+
+		</div>
+		<div class="span5">
+			<span class="pull-right glyphicons no-js remove_2" 
+						onclick="javascript:window.history.back()"><i></i></span>
+			<br>
+			<br>
+			<div class="report-chart" style="overflow: hidden;">
+				<div class="statement">
+					<div class="account-stement">
+						<h2 style="color: #496cad; font-size: 20px;">Statement of Profit or Loss</h2>
+						<table class="performance" style="width:100%; background: #fff; color: #000; padding: 0; margin-bottom: 20px;">
+							<tr>
+								<td style="padding-left: 0;">Income</td>
+								<td></td>
+								<td align="right"><span data-bind="text: income"></span></td>
+							</tr>
+							<tr>
+								<td style="padding-left: 0;">Expense</td>
+								<td></td>
+								<td align="right"><span data-bind="text: expense"></span></td>
+							</tr>
+							<tr>
+								<td style="padding-left: 0;"><b>Net Income</b></td>
+								<td></td>
+								<td align="right"><b data-bind="text: net_income"></b></td>
+							</tr>
+						</table>
+
+						<h2 style="color: #496cad; font-size: 20px;">Statement of Financial Position</h2>
+						<table class="position" style="width:100%; background: #fff; color: #000; padding: 0;">
+							<tr>
+								<td style="padding-left: 0;">Assets</td>
+								<td></td>
+								<td align="right"><span data-bind="text: asset"></span></td>
+							</tr>
+							<tr>
+								<td style="padding-left: 0;">Liabilities</td>
+								<td></td>
+								<td align="right"><span data-bind="text: liability"></span></td>
+							</tr>
+							<tr>
+								<td style="padding-left: 0;"><b>Equity</b></td>
+								<td></td>
+								<td align="right"><b data-bind="text: equity"></b></td>
+							</tr>
+						</table>
+						
+					</div>
+				</div>
+			</div>
+			
+		</div>
+	</div>
+</script>
+
 <script id="cashReceipt-template" type="text/x-kendo-template">
 	<tr data-uid="#: uid #">		
 		<td>
-			<i class="icon-trash" data-bind="events: { click: removeRow }"></i>
+			<i class="icon-trash" data-bind="events: { click: removeInvRow }"></i>
 			#:banhji.Receipt.dataSource.indexOf(data)+1#			
 		</td>		
 		<td>#=kendo.toString(new Date(issue_date), "dd-MM-yyyy")#</td>
@@ -4610,9 +4882,8 @@
                           source: currencyDS"/>
 		</td>
 		<td>
-			<input 
-				class="k-formatted-value k-input"
-				data-bind="value: cash_receipt">
+			<input id="numeric" class="k-formatted-value k-input" type="number" value="17" min="0" data-bind="value: cash_receipt" step="1" />
+			
 		</td>
 	</tr>
 </script>
@@ -5263,10 +5534,101 @@
     	<a href="\#/customer_setting">+ Add New Payment Method</a>
     </strong>	
 </script>
-<!-- ***************************
-*	Menu Section         	  *
-**************************** -->
+<!-- Report -->
+<script id="customerList" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">
+				<div id="example" class="k-content saleSummaryCustomer">
+			    	<span class="pull-right glyphicons no-js remove_2"
+						onclick="javascript:window.history.back()"><i></i></span>
+					<br>
+					<br>
+					<div class="row-fluid">
+					    <!-- Tabs -->
+						<div class="relativeWrap" data-toggle="source-code">
+							<div class="widget widget-tabs widget-tabs-gray report-tab">
+								<!-- Tabs Heading -->
+								<div class="widget-head">
+									<ul>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab" data-bind="click: printGrid"><i></i>Print/Export</a></li
+									</ul>
+								</div>
+								<!-- // Tabs Heading END -->								
+								<div class="widget-body">
+									<div class="tab-content">
+								        <div class="tab-pane active" id="tab-1">
+											<input 
+												data-role="dropdownlist" 
+												data-option-label="License ..." 
+												data-auto-bind="false" 
+												data-value-primitive="true" 
+												data-text-field="name" 
+												data-value-field="id" 
+												data-bind="
+													value: obj.license,
+				                  					source: licenseDS,
+				                  					events: {change: licenseChange}">
 
+									        <input 
+												data-role="dropdownlist" 
+												data-option-label="Location ..." 
+												data-auto-bind="false" 
+												data-value-primitive="false" 
+												data-text-field="name" 
+												data-value-field="id" 
+												data-bind="
+													value: obj.location,
+				                  					source: blocDS">
+
+										  	 <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>							
+									    </div>									        							       
+								    </div>
+								</div>
+							</div>
+						</div>
+						<!-- // Tabs END -->						
+					</div>
+					<br>
+					<div id="invFormContent">
+						<div class="block-title">
+							<h3 data-bind="text: institute.name"></h3>
+							<h2>Customer List</h2>
+						</div>
+						<table class="table table-borderless table-condensed ">
+							<thead>
+								<tr>
+									<th><span>CustomerID</span></th>
+									<th><span>Customer Name</span></th>
+									<th><span>Type</span></th>
+									<th><span>Address</span></th>
+									<th><span>Phone</span></th>
+									<th><span>E-Mail</span></th>
+								</tr>
+							</thead>
+							<tbody data-role="listview"
+										 data-bind="source: contact"
+										 data-template="customerList-temp"
+							></tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</script>
+<script id="customerList-temp" type="text/x-kendo-template" >
+	# kendo.culture(locale); #
+	<tr style="font-weight: bold">
+		<td>#=number#</td>
+		<td data-bind="click: selectedRow">#=name#</td>
+		<td>#=contact_type#</td>
+		<td>#=address#</td>
+		<td>#=phone#</td>
+		<td>#=email#</td>
+	</tr>
+</script>
 <!-- ***************************
 *	Menu Section         	  *
 **************************** -->
@@ -9787,6 +10149,7 @@
 		isEdit 				: false,
 		pageLoad 			: function(id){
 			this.addEmpty(id);
+			this.licenseDS.read();
 		},
 		loadObj 			: function(id){
 			var self = this;
@@ -9803,7 +10166,7 @@
 				}
 			});
 		},
-		lonChange 			: function(e){
+		licenseChange 			: function(e){
 			var obj = this.get("obj"), self = this;
 			this.blocDS.filter({field: "branch_id", value: obj.licence});
 		},
@@ -9862,10 +10225,14 @@
 				page: 1,
 				take: 100
 			}).then(function(e){
-				var view = self.numberDS.view();	
-				var lastNo = kendo.parseInt(view[0].code);
+				var view = self.numberDS.view();
+				var lastNo;
+				if(self.numberDS._total > 0){
+					lastNo = kendo.parseInt(view[0].code) + 1;
+				}else{
+					lastNo = 1;
+				}
 				if(lastNo){
-					lastNo++;
 					obj.set("code",lastNo);
 					self.set("Codenumber", kendo.toString(lastNo, "00000"));
 				}
@@ -11449,6 +11816,13 @@
 		cashCurrencyDS 		: [],
 		txnTemplateDS		: dataStore(apiUrl + "transaction_templates"),
 		invNum 				: null,
+		sub_total 			: 0,		
+		discount 			: 0,		
+		total 				: 0,
+		pay 		 		: 0,
+		remain 				: 0,
+		find 				: 0,
+		total_received 		: 0,
 		accountDS  			: banhji.source.cashAccountDS,		
 		paymentTermDS 		: banhji.source.paymentTermDS,
 		paymentMethodDS 	: banhji.source.paymentMethodDS,	
@@ -11458,7 +11832,15 @@
 		pageLoad 			: function(id){
 			this.txnTemplateDS.filter({field:"moduls", value: "water_mg" });
 			this.addEmpty();
-			this.dataSource.read();
+			
+			var self = this;
+			this.dataSource.query()
+			.then(function(e){
+				banhji.Receipt.changes();
+				console.log("daaa");
+			});
+			this.addRow();
+
 		},  
 		invNumChange 		: function(e) {
 			console.log(this.invNum);
@@ -11476,14 +11858,59 @@
 			   	segments 			: []		
 	    	});						
 		},	
+		removeInvRow 			: function(e){			
+			this.dataSource.remove(e.data);		    
+		    this.changes();	        
+		},
+		changes				: function(){
+			var self = this, obj = this.get("obj"),
+			total = 0, subTotal = 0, discount = 0, pay = 0, remain = 0;											
+
+			$.each(this.dataSource.data(), function(index, value) {
+				//var amount = value.reference[0].amount - (value.amount_paid + value.reference[0].deposit);								
+				
+				subTotal += kendo.parseFloat(value.amount);					
+				discount += value.discount;
+				pay += value.amount;					
+	        });
+
+			total = subTotal - discount;
+			remain = total - pay;			
+
+	        this.set("sub_total", kendo.toString(subTotal, "c", banhji.locale));
+	        this.set("discount", kendo.toString(discount, "c", banhji.locale));
+	        this.set("total", kendo.toString(total, "c", banhji.locale));
+	        this.set("pay", kendo.toString(pay, "c", banhji.locale));
+	        this.set("remain", kendo.toString(remain, "c", banhji.locale));
+	        console.log(this.dataSource.data());
+		},
 		addRow 	  	: function() {
 			var obj = this.get("obj");
-			this.cashCurrencyDS.add({
+			this.cashCurrencyDS.push({
 				id 				: obj.id,
 				currency 	 	: null,
 				cash_receipt 	: 0
 			});
-			this.set("obj", this.cashCurrencyDS.at(this.cashCurrencyDS.data().length -1));
+			//this.set("obj", this.cashCurrencyDS.at(this.cashCurrencyDS.data().length -1));
+		},
+		removeRow 			: function(e){			
+			this.cashCurrencyDS.remove(e.data);		    
+		    //this.changes();	        
+		},
+		save 				: function() {
+			var self = this;
+		},
+		cancel 				: function(){
+			this.dataSource.cancelChanges();		
+			window.history.back();
+		}
+	});
+	banhji.Reports = kendo.observable({
+		lang 				: langVM,
+		dataSource 			: banhji.invoice.dataSource,
+		licenseDS 			: dataStore(apiUrl + "branches"),
+		pageLoad 			: function(){
+
 		},
 		save 				: function() {
 			var self = this;
@@ -13116,8 +13543,95 @@
 			}
 		},
 	});
+	/* Report */
+	banhji.customerList = kendo.observable({
+		lang 					: langVM,
+		institute 				: banhji.institute,
+		contact 				: dataStore(apiUrl + "sales/customer"),
+		dataSource 				: dataStore(apiUrl+"contacts"),
+		licenseDS 				: dataStore(apiUrl+"branches"),
+		blocDS 					: dataStore(apiUrl+"locations"),
+		licenseSelect 			: null,
+		blocSelect 				: null,
+		contactTypeDS			: banhji.source.customerTypeDS,
+		contactAAA 				: banhji.source.customerDS,
+		statusList 				: banhji.source.statusList,
+		contact_type_id 		: null,
+		status 					: null,		
+		pageLoad 				: function(){
+			this.contact.filter({field: "use_water", value: 1});
+			this.licenseDS.read();
 
-	
+		},
+		printGrid			: function() {
+			var gridElement = $('#grid'),
+		        printableContent = '',
+		        win = window.open('', '', 'width=900, height=700'),
+		        doc = win.document.open();
+		    var htmlStart =
+		            '<!DOCTYPE html>' +
+		            '<html>' +
+		            '<head>' +
+		            '<meta charset="utf-8" />' +
+		            '<title></title>' +
+		            '<link href="http://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />'+
+		            '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/bootstrap.css">' +
+		            '<link href="https://fonts.googleapis.com/css?family=Content:400,700" rel="stylesheet" type="text/css">' +
+		            '<link href="<?php echo base_url(); ?>assets/responsive.css" rel="stylesheet" >' +
+		            '<link href="https://fonts.googleapis.com/css?family=Moul" rel="stylesheet">' +
+		            '<style>' +
+		            '*{  } html { font: 11pt sans-serif; }' +
+		            '.k-grid { border-top-width: 0; }' +
+		            '.k-grid, .k-grid-content { height: auto !important; }' +
+		            '.k-grid-content { overflow: visible !important; }' +
+		            'div.k-grid table { table-layout: auto; width: 100% !important; }' +
+		            '.k-grid .k-grid-header th { border-top: 1px solid; }' +
+		            '.k-grid-toolbar, .k-grid-pager > .k-link { display: none; }' +
+		            '</style><style type="text/css" media="print"> @page { size: landscape; margin:0mm; } .saleSummaryCustomer .total-customer, .saleSummaryCustomer .total-sale { background-color: #DDEBF7!important; -webkit-print-color-adjust:exact; }.saleSummaryCustomer .table.table-borderless.table-condensed  tr th { background-color: #1E4E78!important;-webkit-print-color-adjust:exact;}.saleSummaryCustomer .table.table-borderless.table-condensed  tr th span{ color: #fff!important; }.saleSummaryCustomer .table.table-borderless.table-condensed tr:nth-child(2n+1) td {  background-color: #fff!important; -webkit-print-color-adjust:exact;} .saleSummaryCustomer .table.table-borderless.table-condensed tr td { background-color: #F2F2F2!important;-webkit-print-color-adjust:exact; } </style>' +
+		            '</head>' +
+		            '<body><div id="example" class="k-content saleSummaryCustomer" style="padding: 30px;">';
+		    var htmlEnd =
+		            '</div></body>' +
+		            '</html>';
+		    
+		    printableContent = $('#invFormContent').html();
+		    doc.write(htmlStart + printableContent + htmlEnd);
+		    doc.close();
+		    setTimeout(function(){
+		    	win.print();
+		    	win.close();
+		    },2000);
+		},
+		licenseChange 	: function(e) {
+			var data = e.data;
+			var license = this.licenseDS.at(e.sender.selectedIndex - 1);
+			this.set("licenseSelect", license);
+			this.blocDS.filter({field: "branch_id", value: license.id});
+		},
+		search 					: function(){
+			var para = [],
+			status = this.get("status"),
+			contact_type_id = this.get("contact_type_id");
+
+			if(status!==null){
+				para.push({ field:"status", value: status });
+			}
+
+			if(contact_type_id){
+				para.push({ field:"contact_type_id", value: contact_type_id });
+			}
+
+			this.dataSource.filter(para);
+			this.set("status", null);
+			this.set("contact_type_id", null);
+		}, 
+		selectedRow			: function(e){
+			var data = e.data;
+			
+			this.set("obj", data);
+			this.loadData();
+		},
+	});	
 	/* views and layout */
 	banhji.view = {
 		layout 		: new kendo.Layout('#layout', {model: banhji.Layout}),
@@ -13146,6 +13660,8 @@
 		InvoicePrint: new kendo.Layout("#InvoicePrint", {model: banhji.InvoicePrint}),	
 
 		Receipt: new kendo.Layout("#Receipt", {model: banhji.Receipt}),
+		Reports: new kendo.Layout("#Reports", {model: banhji.Reports}),
+
 		//custom form
 		invoiceCustom: new kendo.Layout("#invoiceCustom", {model: banhji.invoiceCustom}),
 		invoiceForm: new kendo.Layout("#invoiceForm", {model: banhji.invoiceForm}),
@@ -13166,6 +13682,8 @@
 
 		wDashBoard: new kendo.View("#wDashBoard", {model: wDashBoard}),
 		customer: new kendo.Layout("#customer", {model: banhji.customer}),	
+		//Report
+		customerList : new kendo.Layout("#customerList", {model: banhji.customerList}),
 	};
 	/* views and layout */
 	banhji.router = new kendo.Router({
@@ -13482,6 +14000,22 @@
 		vm.pageLoad();
 	});
 
+	banhji.router.route("/reports", function(){		
+		banhji.view.layout.showIn("#content", banhji.view.Reports);
+		banhji.view.layout.showIn('#menu', banhji.view.menu);
+		banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
+		
+		var vm = banhji.Reports;
+
+		banhji.userManagement.addMultiTask("Reports","reports",null);
+
+		if(banhji.pageLoaded["reports"]==undefined){
+			banhji.pageLoaded["reports"] = true;
+		}
+
+		vm.pageLoad();
+	});
+
 	banhji.router.route("/customer_deposit(/:id)(/:is_recurring)", function(id,is_recurring){
 		// banhji.accessMod.query({
 		// 	filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
@@ -13673,6 +14207,25 @@
 			vm.pageLoad(id);		
 		};
 	});	
+	//////Report Router/////
+	banhji.router.route("/customer_list", function(){
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{
+			banhji.view.layout.showIn("#content", banhji.view.customerList);
+			banhji.view.layout.showIn('#menu', banhji.view.menu);
+			banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
+
+			var vm = banhji.customerList;
+			banhji.userManagement.addMultiTask("Customer List","customer_list",null);
+			if(banhji.pageLoaded["customer_list"]==undefined){
+				banhji.pageLoaded["customer_list"] = true;
+				
+			}
+			vm.pageLoad();
+		}
+	});
+
 	$(function() {	
 		banhji.router.start();
 		banhji.source.loadData();
@@ -13697,5 +14250,24 @@
 			loadStyle(Href1);
 			loadStyle(Href2);
 		}
+		jQuery("input").bind("focus", function(){
+			alert("focus");
+		});
+		// setTimeout(function(){
+		// //wire focus of all numerictextbox widgets on the page
+  //   	$("input[type=text]").bind("focus", function () {
+  //   		alert("slkdjflk;asjdf;laksj");
+  //       	var input = $(this);
+  //           clearTimeout(input.data("selectTimeId")); //stop started time out if any
+
+  //           var selectTimeId = setTimeout(function()  {
+  //               input.select();
+  //           });
+
+  //           input.data("selectTimeId", selectTimeId);
+  //       }).blur(function(e) {
+  //           clearTimeout($(this).data("selectTimeId")); //stop started timeout
+  //       });
+  //   	},50000);
 	});
 </script>

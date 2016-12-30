@@ -61,7 +61,7 @@ class Customers extends REST_Controller {
 
 		//Results
 		$obj->get_paged_iterated($page, $limit);
-		$data["count"] = $obj->paged->total_rows;		
+		$data["count"] = $obj->paged->total_rows;	
 		
 		if($obj->result_count()>0){
 			foreach ($obj as $value) {
