@@ -297,9 +297,9 @@ class Dashboards extends REST_Controller {
 
 		//Sale Count Order
 		$saleOrder = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$saleOrder->where_in("type", array("Invoice", "Cash_Sale"));
-		$saleOrder->where("status", 1);		
-		$saleOrder->where("type", "Sale_Order");		
+		$saleOrder->where("status", 0);		
+		$saleOrder->where("type", "Sale_Order");
+	
 
 		//Order
 		$order = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);					
@@ -630,8 +630,7 @@ class Dashboards extends REST_Controller {
 		
 		foreach ($transactionList as $key => $value) {
 			$data["results"][] = array(					
-			   	"receivable" 		=> floatval($value['receivable']),
-			   	"payment" 	=> floatval($value['payment']),				   	
+			   	"receivable" 		=> floatval($value['receivable']),			   	
 			   	"month"		=> $key				   	
 			);
 		}					
@@ -999,7 +998,6 @@ class Dashboards extends REST_Controller {
 			if($value->status==2){
 				$paid = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 				$paid->where("type", "Cash_Payment");
-				$paid->where("reference_id", $value->id);
 				$paid->where("is_recurring", 0);		
 				$paid->where("deleted", 0);
 				$paid->get();

@@ -20834,7 +20834,7 @@
 							<thead>
 								<tr>
 									<th><span>Type</span></th>
-									<th><span>Date</span></th>
+									<th><span>Inv Date</span></th>
 									<th><span>No</span></th>
 									<th><span>Amount</span></th>
 								</tr>
@@ -20959,7 +20959,7 @@
 							<thead>
 								<tr>
 									<th><span>Type</span></th>
-									<th><span>Date</span></th>
+									<th><span>INV Date</span></th>
 									<th><span>No</span></th>
 									<th><span>Qty</span></th>
 									<th><span>Price</span></th>
@@ -21368,7 +21368,7 @@
 							<thead>
 								<tr>
 									<th><span>Type</span></th>
-									<th><span>Date</span></th>
+									<th><span>INV Date</span></th>
 									<th><span>No</span></th>
 									<th><span>Memo</span></th>
 									<th><span>QTY</span></th>
@@ -21516,7 +21516,7 @@
 							<thead>
 								<tr>
 									<th><span>CUSTOMER NAME</span></th>
-									<th><span>NUMBER INVOICES</span></th>
+									<th><span>NUM of TRANSACTIONS</span></th>
 									<th><span>ACCOUNT RECEIVABLE BALANCE</span></th>
 								</tr>
 							</thead>
@@ -21630,9 +21630,9 @@
 							<thead>
 								<tr>
 									<th><span>Type</span></th>
-									<th><span>Date</span></th>
-									<th><span>No</span></th>								
-									<th><span>AMOUNT</span></th>
+									<th><span>Invoice Date</span></th>
+									<th><span>Invoice Num</span></th>								
+									<th><span>Receivable Balance</span></th>
 								</tr>
 							</thead>
 							<tbody data-role="listview"
@@ -63620,6 +63620,7 @@
 					{field: "issued_date <=", value: kendo.toString(this.endDate, "yyyy-MM-dd")}
 				]
 			});
+
 		}, 
 		filterChange  : function(e){
 			banhji.saleSummaryCustomer.set("filteredBy", e.sender.dataSource.at(e.sender.selectedIndex-1).id);
