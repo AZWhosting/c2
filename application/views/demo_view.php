@@ -1207,8 +1207,8 @@
 
 				    <h2 span data-bind="text: lang.lang.journal_entry"></h2>				        				        				        	
 				   
-				    <br>				   				
-						
+				    <br>				    
+
 					<!-- Upper Part -->
 					<div class="row-fluid">
 						<div class="span4">
@@ -1575,7 +1575,8 @@
                    data-text-field="name"
                    data-value-field="id"
                    data-bind="value: account_id,
-                              source: accountDS"
+                              source: accountDS,
+				   			  events:{ change: accountChanges }"
                    data-placeholder="Add Account.."                                     
                    required data-required-msg="required" style="width: 100%" />	
 		</td>		
@@ -1633,7 +1634,7 @@
 					data-role="numerictextbox"
 					data-spinners="false" 
 					data-format="n"
-					data-bind="value: dr, events: {change : changes}" 
+					data-bind="value: dr, events: {change : checkDr}" 
 					required data-required-msg="required" style="width: 100%; text-align: right;" /> 						
 		</td>
 		<td class="right">
@@ -1641,7 +1642,7 @@
 					data-role="numerictextbox"
 					data-spinners="false" 
 					data-format="n"
-					data-bind="value: cr, events: {change : changes}" 
+					data-bind="value: cr, events: {change : checkCr}" 
 					required data-required-msg="required" style="width: 100%; text-align: right;" />										
 		</td>		
     </tr>   
@@ -42050,7 +42051,7 @@
 
 
 	//DAWINE -----------------------------------------------------------------------------------------
-	banhji.source =  kendo.observable({
+	banhji.source = kendo.observable({
 		lang 						: langVM,
 		countryDS					: dataStore(apiUrl + "countries"),
 		//Contact
@@ -45126,6 +45127,45 @@
 	        	this.changes();
 	        }		        
 		},
+		checkDr 			: function(e){
+			var data = e.data;
+
+			if(data.dr>0 && data.cr>0){
+				data.set("cr", 0);
+			}
+
+			this.changes();
+		},
+		checkCr 			: function(e){
+			var data = e.data;
+
+			if(data.dr>0 && data.cr>0){
+				data.set("dr", 0);
+			}
+
+			this.changes();
+		},
+		accountChanges 		: function(e){
+			var data = e.data,
+			index = this.lineDS.indexOf(data),
+			beforeLine = this.lineDS.at(index-1);
+
+			if(beforeLine){
+				data.set("description", beforeLine.description);
+
+				if(index==1){
+					if(beforeLine.dr>0){
+						data.set("dr", 0);
+						data.set("cr", beforeLine.dr);
+					}else{
+						data.set("dr", beforeLine.cr);
+						data.set("cr", 0);
+					}
+
+					this.changes();
+				}
+			}
+		},
 		changes				: function(){
 			var obj = this.get("obj"), dr = 0, cr = 0;
 			this.set("isValid", true);								
@@ -45139,8 +45179,8 @@
 
 	        obj.set("amount", dr);
 
-	        dr = kendo.toString(dr, 'n2');
-	        cr = kendo.toString(cr, 'n2');
+	        dr = kendo.toString(dr, 'n');
+	        cr = kendo.toString(cr, 'n');
 
 			if(dr!==cr){
 				this.set("isValid", false);
@@ -75182,7 +75222,7 @@
 				
 				if(banhji.pageLoaded["journal"]==undefined){
 					banhji.pageLoaded["journal"] = true;
-	   
+					   
 					var validator = $("#example").kendoValidator({
 			        	rules: {
 					        customRule1: function(input) {

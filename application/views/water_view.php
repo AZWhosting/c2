@@ -2562,7 +2562,7 @@
 			                   data-value-primitive="true"
 			                   data-text-field="name"
 			                   data-value-field="id"
-			                   data-bind="value: obj.licence,
+			                   data-bind="value: obj.license_id,
 			                              source: licenseDS,
 			                              events: {change : licenseChange}"/>
 			            </div>
@@ -2576,7 +2576,7 @@
 			                   data-value-primitive="true"
 			                   data-text-field="name"
 			                   data-value-field="id"
-			                   data-bind="value: obj.bloc,
+			                   data-bind="value: obj.location_id,
 			                              source: blocDS,
 			                              events: {change : BlocChange}"/>
 			            </div>
@@ -2590,7 +2590,7 @@
 			        </div>
 			        <dvi class="span6">
 			        	<label for="ddlContactType"><span>Number of Family</span></label>
-			        	<input type="text" id="" name="Number of Family" class="k-textbox k-invalid" placeholder="Number of Family" required="" validationmessage="" style="width: 100%;margin-bottom: 10px" data-bind="value: obj.family_member" aria-invalid="true">
+			        	<input type="text" id="" name="Number of Family" class="k-textbox k-invalid" placeholder="Number of Family" required="" validationmessage="" style="width: 100%;margin-bottom: 10px" data-bind="value: obj.id_card" aria-invalid="true">
 			        	<label for="ddlContactType"><span>ID Card Number</span></label>
 			        	<input type="text" id="" name="ID Card Number" class="k-textbox k-invalid" placeholder="ID Card Number" required="" validationmessage="" style="width: 100%;margin-bottom: 10px;" data-bind="value: obj.national_id_number" aria-invalid="true">
 			        	<label for="ddlContactType"><span>Occupation</span></label>
@@ -5567,7 +5567,7 @@
 												data-text-field="name" 
 												data-value-field="id" 
 												data-bind="
-													value: obj.license,
+													value: licenseSelect,
 				                  					source: licenseDS,
 				                  					events: {change: licenseChange}">
 
@@ -5579,7 +5579,7 @@
 												data-text-field="name" 
 												data-value-field="id" 
 												data-bind="
-													value: obj.location,
+													value: blocSelect,
 				                  					source: blocDS">
 
 										  	 <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>							
@@ -10168,7 +10168,7 @@
 		},
 		licenseChange 			: function(e){
 			var obj = this.get("obj"), self = this;
-			this.blocDS.filter({field: "branch_id", value: obj.licence});
+			this.blocDS.filter({field: "branch_id", value: obj.license_id});
 		},
 		loadContact 		: function(id){
 			var self = this;
@@ -10193,12 +10193,12 @@
 			this.dataSource.insert(0,{				
 				contact_id			: id,
 				code 				: null,
-				licence 			: null,
+				license_id 			: null,
 				abbr 				: null,
-				location  			: null,
+				location_id  		: null,
 				type 				: "w",
 				family_member 		: null,
-				national_id_number 	: null,
+				id_card 			: null,
 				occupation 			: null
 	    	});		
 			var obj = this.dataSource.at(0);			
@@ -10207,7 +10207,7 @@
 		BlocChange 			: function(e) {
 			var obj = this.get("obj"), self = this;
 			this.blocDS.query({    			
-				filter: { field:"id", value: obj.bloc },
+				filter: { field:"id", value: obj.location_id },
 				page: 1,
 				take: 100
 			}).then(function(e){
@@ -13547,7 +13547,7 @@
 	banhji.customerList = kendo.observable({
 		lang 					: langVM,
 		institute 				: banhji.institute,
-		contact 				: dataStore(apiUrl + "sales/customer"),
+		contact 				: dataStore(apiUrl + "customers"),
 		dataSource 				: dataStore(apiUrl+"contacts"),
 		licenseDS 				: dataStore(apiUrl+"branches"),
 		blocDS 					: dataStore(apiUrl+"locations"),

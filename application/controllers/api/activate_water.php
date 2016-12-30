@@ -60,10 +60,10 @@ class Activate_water extends REST_Controller {
 		 			"id" 				=> $value->id,	
 		 			"abbr"				=> $value->abbr,
 		 			"code"				=> $value->code,
-		 			"contact" 			=> $value->contact_id,
-					"location" 			=> $value->location_id,
-					"license" 			=> $value->license_id,					
-					"id_card" 			=> $value->national_id_number,
+		 			"contact_id" 			=> $value->contact_id,
+					"location_id" 			=> $value->location_id,
+					"license_id" 			=> $value->license_id,					
+					"id_card" 			=> $value->id_card,
 					"family_member" 	=> $value->family_member,
 					"occupation" 		=> $value->occupation
 		 		);
@@ -85,9 +85,9 @@ class Activate_water extends REST_Controller {
 			isset($value->type) 				? $obj->type				= $value->type : "";
 			isset($value->code) 				? $obj->code 				= $value->code : "";	
 			isset($value->abbr) 				? $obj->abbr 				= $value->abbr : "";				
-			isset($value->location) 			? $obj->location_id 		= $value->location : "";
-			isset($value->license) 				? $obj->license_id 			= $value->license : "";
-			isset($value->national_id_number) 	? $obj->id_card 			= $value->national_id_number : "";
+			isset($value->location_id) 			? $obj->location_id 		= $value->location_id : "";
+			isset($value->license_id) 			? $obj->license_id 			= $value->license_id : "";
+			isset($value->id_card) 				? $obj->id_card 			= $value->id_card : "";
 			isset($value->family_member) 		? $obj->family_member 		= $value->family_member : "";
 			isset($value->occupation) 			? $obj->occupation 			= $value->occupation : "";
 
@@ -102,9 +102,9 @@ class Activate_water extends REST_Controller {
 					"code" 					=> $obj->code,
 					"abbr"					=> $obj->abbr,						
 					"contact" 				=> $obj->contact_id,
-					"location" 				=> $obj->location_id,
-					"license" 				=> $obj->license_id,					
-					"id_card" 				=> $obj->national_id_number,
+					"location_id" 			=> $obj->location_id,
+					"license_id" 			=> $obj->license_id,					
+					"id_card" 				=> $obj->id_card,
 					"family_member" 		=> $obj->family_member,
 					"occupation" 			=> $obj->occupation
 			   	);
