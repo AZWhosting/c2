@@ -90,6 +90,7 @@ class Item_lines extends REST_Controller {
 					"on_so" 			=> floatval($value->on_so),
 					"quantity" 			=> floatval($value->quantity),
 				   	"quantity_adjusted" => floatval($value->quantity_adjusted),
+				   	"unit_value" 		=> floatval($value->unit_value),
 				   	"cost"				=> floatval($value->cost),
 				   	"price"				=> floatval($value->price),
 				   	"price_avg" 		=> floatval($value->price_avg),
@@ -216,6 +217,7 @@ class Item_lines extends REST_Controller {
 		   	// isset($value->on_so)			? $obj->on_so 				= $value->on_so : "";
 		   	isset($value->quantity)			? $obj->quantity 			= $value->quantity : "";
 		   	isset($value->quantity_adjusted)? $obj->quantity_adjusted 	= $value->quantity_adjusted : "";
+		   	isset($value->unit_value)		? $obj->unit_value 			= $value->unit_value : "";
 		   	isset($value->cost)				? $obj->cost 				= $value->cost : "";
 		   	isset($value->price)			? $obj->price 				= $value->price : "";
 		   	//isset($value->price_avg)		? $obj->price_avg 			= $value->price_avg : "";
@@ -241,6 +243,7 @@ class Item_lines extends REST_Controller {
 					"on_so" 			=> floatval($obj->on_so),
 					"quantity" 			=> floatval($obj->quantity),
 				   	"quantity_adjusted" => floatval($obj->quantity_adjusted),
+				   	"unit_value" 		=> floatval($obj->unit_value),
 				   	"cost"				=> floatval($obj->cost),
 				   	"price"				=> floatval($obj->price),
 				   	"price_avg" 		=> floatval($obj->price_avg),
@@ -302,6 +305,7 @@ class Item_lines extends REST_Controller {
 		   	isset($value->on_so)			? $obj->on_so 				= $value->on_so : "";
 		   	isset($value->quantity)			? $obj->quantity 			= $value->quantity : "";
 		   	isset($value->quantity_adjusted)? $obj->quantity_adjusted 	= $value->quantity_adjusted : "";
+		   	isset($value->unit_value)		? $obj->unit_value 			= $value->unit_value : "";
 		   	isset($value->cost)				? $obj->cost 				= $value->cost : "";
 		   	isset($value->price)			? $obj->price 				= $value->price : "";
 		   	isset($value->price_avg)		? $obj->price_avg 			= $value->price_avg : "";
@@ -328,6 +332,7 @@ class Item_lines extends REST_Controller {
 					"on_so" 			=> floatval($obj->on_so),
 					"quantity" 			=> floatval($obj->quantity),
 				   	"quantity_adjusted" => floatval($obj->quantity_adjusted),
+				   	"unit_value" 		=> floatval($obj->unit_value),
 				   	"cost"				=> floatval($obj->cost),
 				   	"price"				=> floatval($obj->price),
 				   	"price_avg" 		=> floatval($obj->price_avg),

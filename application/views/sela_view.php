@@ -5793,195 +5793,195 @@
 	<div id="slide-form">
 		<div class="customer-background">
 			<div class="container-960" style="overflow: hidden;">					
-			<div id="example" class="k-content">
-				
-		    	<span class="glyphicons no-js remove_2 pull-right" 
-						onclick="javascript: window.history.back()"><i></i></span>
+				<div id="example" class="k-content">
+					
+			    	<span class="glyphicons no-js remove_2 pull-right" 
+							onclick="javascript: window.history.back()"><i></i></span>
 
-		        <h2 span data-bind="text: lang.lang.tax"></h2>
+			        <h2 span data-bind="text: lang.lang.tax"></h2>
 
-			    <div class="row">
-			        <div class="span6">
-			        	<p>
-				        	<span data-bind="text: lang.lang.these_are_the_tax_items_required_by_your_countries"></span>
-				        </p>
-			        </div>
-			        <div class="span6">
-			         	<button class="btn btn-inverse" data-bind="click: openWindow"><i class="icon-plus icon-white"></i>&nbsp&nbsp <span data-bind="text: lang.lang.add_tax_type"></span></button>
-						
-			        </div>		        				        				        	
-			    </div>			   
+				    <div class="row">
+				        <div class="span6">
+				        	<p>
+					        	<span data-bind="text: lang.lang.these_are_the_tax_items_required_by_your_countries"></span>
+					        </p>
+				        </div>
+				        <div class="span6">
+				         	<button class="btn btn-inverse" data-bind="click: openWindow"><i class="icon-plus icon-white"></i>&nbsp&nbsp <span data-bind="text: lang.lang.add_tax_type"></span></button>
+							
+				        </div>		        				        				        	
+				    </div>			   
 
-			    <br>
+				    <br>
 
-			    <div data-role="window"
-		                 data-title="Tax Type"		                 
-		                 data-width="350"
-		                 data-height="290"
-		                 data-actions="{}"
-		                 data-position="{top: '30%', left: '35%'}"
-		                 data-bind="visible: windowVisible">
-		    		<table>
-						<tr style="border-bottom: 8px #fff solid;">
-							<td width="50%"><span data-bind="text: lang.lang.tax_system"></span></td>
-							<td width="50%">
-								<input data-role="dropdownlist"				            			               			   		                   
-				                   data-value-primitive="true"
-				                   data-text-field="name"
-				                   data-value-field="id"
-				                   data-bind="value: obj.tax_system,
-				                              source: typeList"
-				                   style="width: 100%;" />
-							</td>
-						</tr>
-						<tr style="border-bottom: 8px #fff solid;">
-							<td><span data-bind="text: lang.lang.tax_registration_no"></span></td>
-							<td>
-								<input class="k-textbox" placeholder="type number ..." data-bind="value: obj.number" style="width: 100%;">
-							</td>
-						</tr>
-						<tr style="border-bottom: 8px #fff solid;">
-							<td><span data-bind="text: lang.lang.agency"></span></td>
-							<td>
-								<input class="k-textbox" placeholder="type agency ..." data-bind="value: obj.agency" style="width: 100%;">
-							</td>
-						</tr>
-						<tr style="border-bottom: 8px #fff solid;">
-							<td><span data-bind="text: lang.lang.name"></span></td>
-							<td>
-								<input class="k-textbox" placeholder="type name ..." data-bind="value: obj.name" style="width: 100%;">
-							</td>
-						</tr >
-						<tr style="border-bottom: 8px #fff solid;">
-							<td><span data-bind="text: lang.lang.last_end_date"></span></td>
-							<td>
-								<input data-role="datepicker"
-									data-format="dd-MM-yyyy"
-									data-parse-formats="yyyy-MM-dd" 
-									data-bind="value: obj.end_date"
-									style="width: 100%;" />
-							</td>
-						</tr>
-						<tr>
-							<td><span data-bind="text: lang.lang.last_submission_date"></span></td>
-							<td>
-								<input data-role="datepicker"
-									data-format="dd-MM-yyyy"
-									data-parse-formats="yyyy-MM-dd" 
-									data-bind="value: obj.submission_date"
-									style="width: 100%;" />
-						</td>
-						</tr>
-					</table>
-
-					<br>
-					<div style="text-align: center;">
-						<span class="btn btn-success btn-icon glyphicons ok_2" data-bind="click: save"><i></i>Save</span>
-						<span class="btn btn-danger btn-icon glyphicons remove_2" data-bind="click: closeWindow"><i></i><span data-bind="text: lang.lang.close"></span></span> 
-					</div> 
-				</div>
-						
-                <div class="row">
-	                <div class="span12 table-tax">	                					
-		            	<table class="table table-condensed">
-		            		<thead style="background-color: #1E4E78; color: #fff; font-weight: bold">
-		            			<tr>
-		            				<th style="padding-left: 8px !important; width: 50px;"><span data-bind="text: lang.lang.no_"></span></th>
-		            				<th data-bind="text: lang.lang.name"></th>
-		            				<th data-bind="text: lang.lang.system"></th>
-		            				<th data-bind="text: lang.lang.agency"></th>
-		            				<th style="text-align: center;"><span data-bind="text: lang.lang.end_date"></span></th>
-		            				<th style="text-align: center;"><span data-bind="text: lang.lang.submission_date"></span></th>
-		            				<th></th>
-		            			</tr>
-		            		</thead>
-		            		<tbody data-role="listview"			            			
-					                data-template="tax-type-template"
-					                data-bind="source: dataSource"></tbody>
-		            	</table>
-	            	</div>
-
-	      
-	            <div data-role="window"
-		                 data-title="Tax Item"		                 
-		                 data-width="285"
-		                 data-height="220"
-		                 data-actions="{}"
-		                 data-position="{top: '30%', left: '37%'}"
-		                 data-bind="visible: windowItemVisible">
-
-            		<table>
-						<tr style="border-bottom: 8px solid #fff;">
-							<td width="34%"><span data-bind="text: lang.lang.item_name"></span></td>
-							<td>
-								<input class="k-textbox" placeholder="type name ..." data-bind="value: item.name" style="width: 100%;">
-							</td>
-						</tr>
-						<tr style="border-bottom: 8px solid #fff;">
-							<td width="34%"><span data-bind="text: lang.lang.description"></span></td>
-							<td>
-								<input class="k-textbox" placeholder="type description ..." data-bind="value: item.description" style="width: 100%;">
-							</td>
-						</tr>
-						<tr style="border-bottom: 8px solid #fff;">
-							<td><span data-bind="text: lang.lang.item_rate"></span></td>
-							<td>
-								<input data-role="numerictextbox"
-				                   data-format="p"
-				                   data-min="0"
-				                   data-max="0.99"
-				                   data-step="0.1"                   
-				                   data-bind="value: item.rate"
-				                   style="width: 100%;">
-							</td>
-						</tr>
-						<tr>
-							<td><span data-bind="text: lang.lang.account"></span></td>
-							<td>
-								<input data-role="dropdownlist" id="ddlAccount"
-					                   data-option-label="Select Account..."
-					                   data-header-template="account-header-tmpl"
-					                   data-template="account-list-tmpl"
-					                   data-value-primitive="true"					                   
+				    <div data-role="window"
+			                 data-title="Tax Type"		                 
+			                 data-width="350"
+			                 data-height="290"
+			                 data-actions="{}"
+			                 data-position="{top: '30%', left: '35%'}"
+			                 data-bind="visible: windowVisible">
+			    		<table>
+							<tr style="border-bottom: 8px #fff solid;">
+								<td width="50%"><span data-bind="text: lang.lang.tax_system"></span></td>
+								<td width="50%">
+									<input data-role="dropdownlist"				            			               			   		                   
+					                   data-value-primitive="true"
 					                   data-text-field="name"
 					                   data-value-field="id"
-					                   data-bind="value: item.account_id,
-					                              source: accountDS"
-					                   style="width: 100%" />
+					                   data-bind="value: obj.tax_system,
+					                              source: typeList"
+					                   style="width: 100%;" />
+								</td>
+							</tr>
+							<tr style="border-bottom: 8px #fff solid;">
+								<td><span data-bind="text: lang.lang.tax_registration_no"></span></td>
+								<td>
+									<input class="k-textbox" placeholder="type number ..." data-bind="value: obj.number" style="width: 100%;">
+								</td>
+							</tr>
+							<tr style="border-bottom: 8px #fff solid;">
+								<td><span data-bind="text: lang.lang.agency"></span></td>
+								<td>
+									<input class="k-textbox" placeholder="type agency ..." data-bind="value: obj.agency" style="width: 100%;">
+								</td>
+							</tr>
+							<tr style="border-bottom: 8px #fff solid;">
+								<td><span data-bind="text: lang.lang.name"></span></td>
+								<td>
+									<input class="k-textbox" placeholder="type name ..." data-bind="value: obj.name" style="width: 100%;">
+								</td>
+							</tr >
+							<tr style="border-bottom: 8px #fff solid;">
+								<td><span data-bind="text: lang.lang.last_end_date"></span></td>
+								<td>
+									<input data-role="datepicker"
+										data-format="dd-MM-yyyy"
+										data-parse-formats="yyyy-MM-dd" 
+										data-bind="value: obj.end_date"
+										style="width: 100%;" />
+								</td>
+							</tr>
+							<tr>
+								<td><span data-bind="text: lang.lang.last_submission_date"></span></td>
+								<td>
+									<input data-role="datepicker"
+										data-format="dd-MM-yyyy"
+										data-parse-formats="yyyy-MM-dd" 
+										data-bind="value: obj.submission_date"
+										style="width: 100%;" />
 							</td>
-						</tr>
-						
-					</table>
+							</tr>
+						</table>
 
-					<br>
-					<div style="text-align: center;">
-						<span class="btn btn-success btn-icon glyphicons ok_2" data-bind="click: saveItem"><i></i><span data-bind="text: lang.lang.save"></span></span>
-						<span class="btn btn-danger btn-icon glyphicons remove_2" data-bind="click: closeWindowItem"><i></i><span data-bind="text: lang.lang.close"></span></span>
-					</div>  
-				</div>
+						<br>
+						<div style="text-align: center;">
+							<span class="btn btn-success btn-icon glyphicons ok_2" data-bind="click: save"><i></i>Save</span>
+							<span class="btn btn-danger btn-icon glyphicons remove_2" data-bind="click: closeWindow"><i></i><span data-bind="text: lang.lang.close"></span></span> 
+						</div> 
+					</div>
+							
+	                <div class="row">
+		                <div class="span12 table-tax">	                					
+			            	<table class="table table-condensed">
+			            		<thead style="background-color: #1E4E78; color: #fff; font-weight: bold">
+			            			<tr>
+			            				<th style="padding-left: 8px !important; width: 50px;"><span data-bind="text: lang.lang.no_"></span></th>
+			            				<th data-bind="text: lang.lang.name"></th>
+			            				<th data-bind="text: lang.lang.system"></th>
+			            				<th data-bind="text: lang.lang.agency"></th>
+			            				<th style="text-align: center;"><span data-bind="text: lang.lang.end_date"></span></th>
+			            				<th style="text-align: center;"><span data-bind="text: lang.lang.submission_date"></span></th>
+			            				<th></th>
+			            			</tr>
+			            		</thead>
+			            		<tbody data-role="listview"			            			
+						                data-template="tax-type-template"
+						                data-bind="source: dataSource"></tbody>
+			            	</table>
+		            	</div>
 
-				<h3 data-bind="text: taxName" style="margin-left: 20px;"></h3>
+		      
+		            <div data-role="window"
+			                 data-title="Tax Item"		                 
+			                 data-width="285"
+			                 data-height="220"
+			                 data-actions="{}"
+			                 data-position="{top: '30%', left: '37%'}"
+			                 data-bind="visible: windowItemVisible">
 
-				<div class="row">
-	            	<div class="span12" style="padding-left: 30px;">		                	
-					    <table class="table table-bordered table-white" style="width: 98%;">
-		            		<thead>
-		            			<tr>
-		            				<th style="width:15%"><span data-bind="text: lang.lang.name"></span></th>
-		            				<th style="width: 45%;"><span data-bind="text: lang.lang.description"></span></th>
-		            				<th data-bind="text: lang.lang.rate"></th>
-		            				<th data-bind="text: lang.lang.account"></th>		            					            		
-		            				<th></th>
-		            			</tr>
-		            		</thead>
-		            		<tbody data-role="listview"			            				
-					                data-template="tax-item-template"
-					                data-auto-bind="false"
-					                data-bind="source: itemDS"></tbody>
-		            	</table>
+	            		<table>
+							<tr style="border-bottom: 8px solid #fff;">
+								<td width="34%"><span data-bind="text: lang.lang.item_name"></span></td>
+								<td>
+									<input class="k-textbox" placeholder="type name ..." data-bind="value: item.name" style="width: 100%;">
+								</td>
+							</tr>
+							<tr style="border-bottom: 8px solid #fff;">
+								<td width="34%"><span data-bind="text: lang.lang.description"></span></td>
+								<td>
+									<input class="k-textbox" placeholder="type description ..." data-bind="value: item.description" style="width: 100%;">
+								</td>
+							</tr>
+							<tr style="border-bottom: 8px solid #fff;">
+								<td><span data-bind="text: lang.lang.item_rate"></span></td>
+								<td>
+									<input data-role="numerictextbox"
+					                   data-format="p"
+					                   data-min="0"
+					                   data-max="0.99"
+					                   data-step="0.1"                   
+					                   data-bind="value: item.rate"
+					                   style="width: 100%;">
+								</td>
+							</tr>
+							<tr>
+								<td><span data-bind="text: lang.lang.account"></span></td>
+								<td>
+									<input data-role="dropdownlist" id="ddlAccount"
+						                   data-option-label="Select Account..."
+						                   data-header-template="account-header-tmpl"
+						                   data-template="account-list-tmpl"
+						                   data-value-primitive="true"					                   
+						                   data-text-field="name"
+						                   data-value-field="id"
+						                   data-bind="value: item.account_id,
+						                              source: accountDS"
+						                   style="width: 100%" />
+								</td>
+							</tr>
+							
+						</table>
+
+						<br>
+						<div style="text-align: center;">
+							<span class="btn btn-success btn-icon glyphicons ok_2" data-bind="click: saveItem"><i></i><span data-bind="text: lang.lang.save"></span></span>
+							<span class="btn btn-danger btn-icon glyphicons remove_2" data-bind="click: closeWindowItem"><i></i><span data-bind="text: lang.lang.close"></span></span>
+						</div>  
+					</div>
+
+					<h3 data-bind="text: taxName" style="margin-left: 20px;"></h3>
+
+					<div class="row">
+		            	<div class="span12" style="padding-left: 30px;">		                	
+						    <table class="table table-bordered table-white" style="width: 98%;">
+			            		<thead>
+			            			<tr>
+			            				<th style="width:15%"><span data-bind="text: lang.lang.name"></span></th>
+			            				<th style="width: 45%;"><span data-bind="text: lang.lang.description"></span></th>
+			            				<th data-bind="text: lang.lang.rate"></th>
+			            				<th data-bind="text: lang.lang.account"></th>		            					            		
+			            				<th></th>
+			            			</tr>
+			            		</thead>
+			            		<tbody data-role="listview"			            				
+						                data-template="tax-item-template"
+						                data-auto-bind="false"
+						                data-bind="source: itemDS"></tbody>
+			            	</table>
+		            	</div>
 	            	</div>
-            	</div>
-			</div>							
+				</div>							
 			</div>
 		</div>
 	</div>

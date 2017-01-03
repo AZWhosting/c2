@@ -16490,7 +16490,6 @@
 				   data-role="combobox"				   
 				   data-template="item-list-tmpl"
 				   data-filter="like"
-                   data-auto-bind="false"
                    data-min-length="3"
                    data-text-field="name"
                    data-value-field="id"
@@ -50624,6 +50623,7 @@
 								measurement_id 		: value.measurement_id,								
 								description 		: value.purchase_description,				
 								quantity 	 		: 1,
+								unit_value 			: 0,
 								cost 				: value.cost*catalogRate,												
 								amount 				: value.cost*catalogRate,
 								discount 			: 0,
@@ -50838,6 +50838,7 @@
 				measurement_id 		: 0,
 				description 		: "",
 				quantity 	 		: 1,
+				unit_value 			: 0,
 				cost 				: 0,
 				amount 				: 0,
 				discount 			: 0,
@@ -51486,6 +51487,7 @@
 				measurement_id 		: 0,
 				description 		: "",
 				quantity 	 		: 1,
+				unit_value 			: 0,
 				cost 				: 0,
 				amount 				: 0,
 				rate				: obj.rate,
@@ -53430,6 +53432,7 @@
 				measurement_id 		: 0,
 				description 		: "",
 				quantity 	 		: 1,
+				unit_value 			: 0,
 				cost 				: 0,
 				amount 				: 0,
 				discount 			: 0,
@@ -54676,6 +54679,7 @@
 				measurement_id 		: 0,				
 				description 		: "",				
 				quantity 	 		: 1,
+				unit_value 			: 0,
 				cost 				: 0,												
 				amount 				: 0,
 				discount 			: 0,
@@ -57571,6 +57575,7 @@
 				measurement_id 		: 0,				
 				description 		: "",				
 				quantity 	 		: 1,
+				unit_value 			: 0,
 				price 				: 0,												
 				amount 				: 0,
 				discount 			: 0,
@@ -58371,6 +58376,7 @@
 				measurement_id 		: 0,				
 				description 		: "",				
 				quantity 	 		: 1,
+				unit_value 			: 0,
 				price 				: 0,												
 				amount 				: 0,
 				discount 			: 0,				
@@ -60107,6 +60113,7 @@
 				measurement_id 		: 0,
 				description 		: "",
 				quantity 	 		: 1,
+				unit_value 			: 0,
 				price 				: 0,
 				amount 				: 0,
 				discount 			: 0,
@@ -61487,6 +61494,7 @@
 				measurement_id 		: 0,				
 				description 		: "",				
 				quantity 	 		: 1,
+				unit_value 			: 0,
 				price 				: 0,												
 				amount 				: 0,
 				discount 			: 0,
@@ -62566,6 +62574,7 @@
 				measurement_id 		: 0,
 				description 		: "",
 				quantity 	 		: 1,
+				unit_value 			: 0,
 				price 				: 0,
 				amount 				: 0,
 				rate				: obj.rate,
@@ -63510,6 +63519,7 @@
 				measurement_id 		: 0,				
 				description 		: "",				
 				quantity 	 		: 1,
+				unit_value 			: 0,
 				price 				: 0,												
 				amount 				: 0,
 				discount 			: 0,

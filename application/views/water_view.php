@@ -4895,7 +4895,7 @@
 
 <!-- ***************************
 *	Invoice Form Section        *
-**************************** -->
+**************************** -->	
 <script id="invoiceCustom" type="text/x-kendo-template">
 	<div id="slide-form">
 		<div class="customer-background">
@@ -4997,336 +4997,158 @@
 	</div>
 </script>
 <script id="invoiceForm1" type="text/x-kendo-template">
-	<div class="inv1">
-    	<div class="head">
-        	<div class="logo">
-            	<img data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
-            </div>
-            <div class="cover-name-company">
-            	<h2 ></h2>
-                <h3 style="text-align:left;" data-bind="text: company.name"></h3>
-                <div class="vattin">
-                	<p>លេខ​អត្ត​សញ្ញាណ​កម្ម អតប (VATTIN)</p><span id="vat_number" data-bind="text: company.vat_number"></span>
-                </div>
-                <div class="clear">
-                	<pre>អាស័យ​ដ្ឋាន Address: <span data-bind="text: company.address"></span></pre>
-                    <pre>ទូរស័ព្ទលេខ HP <span data-bind="text: company.phone"></span></pre>
-                </div>
-            </div>
-        </div>
-        <div class="content">
-        	<div style="overflow: hidden;padding:10px 0;">
-        		<h1>វិក្កយបត្រ</h1>
-            	<h2 data-bind="text: obj.title"></h2>
-        	</div>
-            <div class="clear mid-header" style="padding: 10px;background: #dce6f2;padding-bottom: 10px;">
-            	<div class="cover-customer">
-                	<h5>ព័ត៌មានអតិថិជន​ CUSTOMER INFO:</h5>
-                    <div class="clear">
-                        <div class="left dotted-ruler" style="width: 62%;">
-                        	<p style="font-weight:bold">
-                        		<span data-bind="text: obj.contact[0].name"></span><br>
-                        		<span data-bind="text: obj.contact[0].address"></span>
-                        	</p>
-                        </div>
-                    </div>
-                    <div class="clear">
-                    	<!--div class="left">
-                    		<p>ទូរស័ព្ទ​លេខ HP:</p>
-                        </div-->
-                        <div class="left dotted-ruler" style="width: 78%;">
-                        	<p style="font-weight:bold" data-bind="text: obj.contact[0].phone"></p>
-                        </div>
-                    </div>
-                </div>
-                <div class="cover-inv-number">
-                	<div class="clear">
-                    	<div class="left">
-                    		<p>លេខ No. :</p>
-                        </div>
-                        <div class="left dotted-ruler" style="width: 42%;">
-                        	<p style="font-weight:bold" data-bind="text: obj.number"></p>
-                        </div>
-                    </div>
-                    <div class="clear">
-                    	<div class="left">
-                    		<p>កាល​បរិច្ឆេទ Date:</p>
-                        </div>
-                        <div class="left dotted-ruler" style="width: 57%;">
-                        	<p style="font-weight:bold" data-bind="text: obj.issued_date"></p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        	<div class="clear">
-            	<table cellpadding="0" cellspacing="0" border="1" class="span12">
-                	<thead>
-                        <tr class="main-color" style="height: 45px;" data-bind="style: {backgroundColor: obj.color}">
-                            <th>ល.រ<br />N<sup>0</sup></th>
-                            <th>បរិយាយ​មុខ​ទំនិញ<br />Description</th>
-                            <th>បរិមាណ<br />Quantity</th>
-                            <th>ថ្លៃឯកតា​<br />Unit Price</th>
-                            <th>ថ្លៃ​ទំនិញ<br />Amount</th>
-                        </tr>
-                    </thead>
-                    <tbody style="margin-top: 2px" id="formListView" data-role="listview"
-										 data-auto-bind="false"
-						                 data-template="invoiceForm-lineDS-template"
-						                 data-bind="source: lineDS">
-                    </tbody>
-                    <tfoot>
-                        <tr>
-                        	<td colspan="4" style="text-align:right;padding:5px;font-weight: bold;">បញ្ចុះតម្លៃ Discount</td>
-                            <td style="text-align: right; padding-right: 5px;" data-bind="text: obj.discount"></td>
-                        </tr>
-                        <tr>
-                        	<td colspan="4" style="text-align:right;padding:5px;font-weight: bold;">សរុប (បូក​បញ្ចូល​ទាំង​អាករ)​ Total (VAT included)</td>
-                            <td style="text-align: right; padding-right: 5px;" data-bind="text: obj.amount"></td>
-                        </tr>
-                        <tr>
-                        	<td colspan="4" style="text-align:right;padding:5px;font-weight: bold;">ប្រាក់កក់ Deposit</td>
-                            <td style="text-align: right; padding-right: 5px;" data-bind="text: obj.deposit"></td>
-                        </tr>
-                        <tr>
-                        	<td colspan="4" style="text-align:right;padding:5px;font-weight: bold;">សាច់ប្រាក់ត្រូវទូទាត់ Amount Due</td>
-                            <td style="text-align: right; padding-right: 5px;" data-bind="text: obj.amount_due"></td>
-                        </tr>
-                    </tfoot>
-                </table>
-            </div>
-        </div>
-        <div class="foot">
-        	<div class="cover-signature">
-            	<div class="singature" style="float:left">
-                	<p>ហត្ថលេខា និងឈ្មោះ​អ្នក​ទិញ<br />Customer's Signature & Name</p>
-                </div>
-                <div class="singature" style="float:right">
-                	<p>ហត្ថលេខា និងឈ្មោះ​អ្នកលក់<br />Seller's Signature & Name</p>
-                </div>
-            </div>
-            <h6>សម្គាល់៖ <span>ច្បាប់​ដើម​សម្រាប់​អ្នក​ទិញ ច្បាប់​ចម្លង​សម្រាប់​អ្នក​លក់</span><br /><span style="font-size: 10px"><strong>Note:</strong> Original invoice for customer, copied invoice for seller</span></h6>
-        </div>
-    </div>
-</script>
-<script id="invoiceForm2" type="text/x-kendo-template">
-	<div class="inv1">
-    	<div class="head">
-        	<div class="logo">
-            	<img data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
-            </div>
-            <div class="cover-name-company">
-            	<h2 ></h2>
-                <h3 style="text-align:left;" data-bind="text: company.name"></h3>
-                <div class="vattin">
-                	<p>លេខ​អត្ត​សញ្ញាណ​កម្ម អតប (VATTIN)</p><span id="vat_number" data-bind="text: company.vat_number"></span>
-                </div>
-                <div class="clear">
-                	<pre>អាស័យ​ដ្ឋាន Address: <span data-bind="text: company.address"></span></pre>
-                    <pre>ទូរស័ព្ទលេខ HP <span data-bind="text: company.phone"></span></pre>
-                </div>
-            </div>
-        </div>
-        <div class="content">
-        	<div style="overflow: hidden;padding:10px 0;">
-        		<h1>វិក្កយបត្រអាករ</h1>
-            	<h2 data-bind="text: obj.title"></h2>
-        	</div>
-            <div class="clear mid-header" style="padding: 10px;background: #dce6f2;padding-bottom: 10px;">
-            	<div class="cover-customer">
-                	<h5>ព័ត៌មានអតិថិជន​ CUSTOMER INFO:</h5>
-                    <div class="clear">
-                        <div class="left dotted-ruler" style="width: 62%;">
-                        	<p style="font-weight:bold">
-                        		<span data-bind="text: obj.contact[0].name"></span><br>
-                        		<span data-bind="text: obj.contact[0].address"></span>
-                        	</p>
-                        </div>
-                    </div>
-                    <div class="clear">
-                    	<!--div class="left">
-                    		<p>ទូរស័ព្ទ​លេខ HP:</p>
-                        </div-->
-                        <div class="left dotted-ruler" style="width: 78%;">
-                        	<p style="font-weight:bold" data-bind="text: obj.contact[0].phone"></p>
-                        </div>
-                    </div>
-                    <div class="vattin">
-                	<p>លេខ​អត្ត​សញ្ញាណ​កម្ម អតប (VATTIN)</p><span id="vat_number" data-bind="text: company.vat_number"></span><p style="font-size:8px;font-weight:normal;margin-left: 8px;">(ប្រសិន​បើ​មាន / If any)</p>
-                	</div>
-                </div>
-                <div class="cover-inv-number">
-                	<div class="clear">
-                    	<div class="left">
-                    		<p>លេខ No. :</p>
-                        </div>
-                        <div class="left dotted-ruler" style="width: 42%;">
-                        	<p style="font-weight:bold" data-bind="text: obj.number"></p>
-                        </div>
-                    </div>
-                    <div class="clear">
-                    	<div class="left">
-                    		<p>កាល​បរិច្ឆេទ Date:</p>
-                        </div>
-                        <div class="left dotted-ruler" style="width: 57%;">
-                        	<p style="font-weight:bold" data-bind="text: obj.issued_date"></p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-        	<div class="clear inv2">
-            	<table cellpadding="0" cellspacing="0" border="1" style="width:100%;">
-                	<thead>
-                        <tr class="main-color" style="height: 45px;" data-bind="style: {backgroundColor: obj.color}">
-                            <th>ល.រ<br />N<sup>0</sup></th>
-                            <th>បរិយាយ​មុខ​ទំនិញ<br />Description</th>
-                            <th>បរិមាណ<br />Quantity</th>
-                            <th>ថ្លៃឯកតា​<br />Unit Price</th>
-                            <th>ថ្លៃ​ទំនិញ<br />Amount</th>
-                        </tr>
-                    </thead>
-                    <tbody style="margin-top: 2px" id="formListView" data-role="listview"
-										 data-auto-bind="false"
-						                 data-template="invoiceForm-lineDS-template"
-						                 data-bind="source: lineDS">
-                    </tbody>
-                    <tfoot>
-                        <tr>
-                        	<td colspan="4" style="text-align:right;padding-right:10px;font-weight:bold;">សរុប​ Sub Total</td>
-                            <td data-bind="text: obj.sub_total"></td>
-                        </tr>
-                        <tr>
-                        	<td colspan="4" style="text-align:right;padding-right:10px;font-weight:bold;">បញ្ចុះតម្លៃ Discount</td>
-                            <td data-bind="text: obj.discount"></td>
-                        </tr>
-                        <tr>
-                        	<td colspan="4" style="text-align:right;padding-right:10px;font-weight:bold;">អាករ​លើ​តម្លៃ​បន្ថែម ១០% VAT (10%)</td>
-                            <td data-bind="text: obj.tax"></td>
-                        </tr>
-                        <tr>
-                        	<td colspan="4" style="text-align:right;padding-right:10px;font-weight:bold;">សរុបរួម​ Grand Total</td>
-                            <td data-bind="text: obj.amount"></td>
-                        </tr>
-                        <tr>
-                        	<td colspan="4" style="text-align:right;padding-right:10px;font-weight:bold;">ប្រាក់កក់ Deposit</td>
-                            <td data-bind="text: obj.deposit"></td>
-                        </tr>
-                        <tr>
-                        	<td colspan="4" style="text-align:right;padding-right:10px;font-weight:bold;">សាច់ប្រាក់ត្រូវទូទាត់ Amount Due</td>
-                            <td data-bind="text: obj.amount_due"></td>
-                        </tr>
-                    </tfoot>
-                </table>
-            </div>
-        </div>
-        <div class="foot">
-        	<div class="cover-signature">
-            	<div class="singature" style="float:left">
-                	<p>ហត្ថលេខា និងឈ្មោះ​អ្នក​ទិញ<br />Customer's Signature & Name</p>
-                </div>
-                <div class="singature" style="float:right">
-                	<p>ហត្ថលេខា និងឈ្មោះ​អ្នកលក់<br />Seller's Signature & Name</p>
-                </div>
-            </div>
-            <h6>សម្គាល់៖ <span>ច្បាប់​ដើម​សម្រាប់​អ្នក​ទិញ ច្បាប់​ចម្លង​សម្រាប់​អ្នក​លក់</span><br /><span style="font-size: 10px"><strong>Note:</strong> Original invoice for customer, copied invoice for seller</span></h6>
-        </div>
-    </div>
-</script>
-<script id="invoiceForm32" type="text/x-kendo-template">
-	<div class="inv1">
-        <div class="content">
-        	<div style="overflow: hidden;padding:10px 0;">
-        		<h1>វិក្កយបត្រ</h1>
-            	<h2 data-bind="text: obj.title"></h2>
-        	</div>
-            <div class="clear mid-header" style="padding: 10px;background: #dce6f2;padding-bottom: 10px;">
-            	<div class="cover-customer">
-                	<h5>ព័ត៌មានអតិថិជន​ CUSTOMER INFO:</h5>
-                    <div class="clear">
-                        <div class="left dotted-ruler" style="width: 62%;">
-                        	<p style="font-weight:bold">
-                        		<span data-bind="text: obj.contact[0].name"></span><br>
-                        		<span data-bind="text: obj.contact[0].address"></span>
-                        	</p>
-                        </div>
-                    </div>
-                    <div class="clear">
-                    	<!--div class="left">
-                    		<p>ទូរស័ព្ទ​លេខ HP:</p>
-                        </div-->
-                        <div class="left dotted-ruler" style="width: 78%;">
-                        	<p style="font-weight:bold" data-bind="text: obj.contact[0].phone"></p>
-                        </div>
-                    </div>
-                </div>
-                <div class="cover-inv-number">
-                	<div class="clear">
-                    	<div class="left">
-                    		<p>លេខ No. :</p>
-                        </div>
-                        <div class="left dotted-ruler" style="width: 42%;">
-                        	<p style="font-weight:bold" data-bind="text: obj.number"></p>
-                        </div>
-                    </div>
-                    <div class="clear">
-                    	<div class="left">
-                    		<p>កាល​បរិច្ឆេទ Date:</p>
-                        </div>
-                        <div class="left dotted-ruler" style="width: 57%;">
-                        	<p style="font-weight:bold" data-bind="text: obj.issued_date"></p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        	<div class="clear">
-            	<table cellpadding="0" cellspacing="0" border="1" class="span12">
-                	<thead>
-                        <tr class="main-color" style="height: 45px;" data-bind="style: {backgroundColor: obj.color}">
-                            <th>ល.រ<br />N<sup>0</sup></th>
-                            <th>បរិយាយ​មុខ​ទំនិញ<br />Description</th>
-                            <th>បរិមាណ<br />Quantity</th>
-                            <th>ថ្លៃឯកតា​<br />Unit Price</th>
-                            <th>ថ្លៃ​ទំនិញ<br />Amount</th>
-                        </tr>
-                    </thead>
-                    <tbody style="margin-top: 2px" id="formListView" data-role="listview"
-										 data-auto-bind="false"
-						                 data-template="invoiceForm-lineDS-template"
-						                 data-bind="source: lineDS">
-                    </tbody>
-                    <tfoot>
-                        <tr>
-                        	<td colspan="4" style="text-align:right;padding:5px;font-weight: bold;">បញ្ចុះតម្លៃ Discount</td>
-                            <td data-bind="text: obj.discount"></td>
-                        </tr>
-                        <tr>
-                        	<td colspan="4" style="text-align:right;padding:5px;font-weight: bold;">សរុប Total</td>
-                            <td data-bind="text: obj.amount"></td>
-                        </tr>
-                        <tr>
-                        	<td colspan="4" style="text-align:right;padding:5px;font-weight: bold;">ប្រាក់កក់ Deposit</td>
-                            <td data-bind="text: obj.deposit"></td>
-                        </tr>
-                        <tr>
-                        	<td colspan="4" style="text-align:right;padding:5px;font-weight: bold;">សាច់ប្រាក់ត្រូវទូទាត់ Amount Due</td>
-                            <td data-bind="text: obj.amount_due"></td>
-                        </tr>
-                    </tfoot>
-                </table>
-            </div>
-        </div>
-        <div class="foot">
-        	<div class="cover-signature">
-            	<div class="singature" style="float:left">
-                	<p>ហត្ថលេខា និងឈ្មោះ​អ្នក​ទិញ<br />Customer's Signature & Name</p>
-                </div>
-                <div class="singature" style="float:right">
-                	<p>ហត្ថលេខា និងឈ្មោះ​អ្នកលក់<br />Seller's Signature & Name</p>
-                </div>
-            </div>
-            <h6>សម្គាល់៖ <span>ច្បាប់​ដើម​សម្រាប់​អ្នក​ទិញ ច្បាប់​ចម្លង​សម្រាប់​អ្នក​លក់</span><br /><span style="font-size: 10px"><strong>Note:</strong> Original invoice for customer, copied invoice for seller</span></h6>
-        </div>
-    </div>
+	<div class="container font-small winvoice-print" style="margin-bottom: 10px; width: 610px; ">
+		<div class="span12 headerinv " style="border-bottom: 2px solid \#000;padding: 15px 0;">
+			<div class="span12" align="center">
+				<h4 data-bind="text: company.name"></h4>					
+				<h5><span data-bind="text: company.address"></span>
+				<br>
+				<span data-bind="text: company.phone"></span></h5>					
+			</div>
+		</div>		
+
+		<div class="span12 cover-customer">
+			
+			<div class="span7">
+				<span id="secondwnumber1" style="margin-left: -14px;"></span>
+				<div class="span12">
+					<p>អតិថិជន​ <span data-bind="text: obj.customer_number"></span></p>
+					<p data-bind="text: obj.customer_name"></p>
+					<p data-bind="text: obj.customer_address"></p>
+					<p style="font-size: 10px;"><i>ថ្ងៃ​ចាប់​ផ្តើម​ទទួល​ប្រាក់ <?php echo date("d/m/Y"); ?></i></p>
+				</div>
+			</div>
+			<div class="span4">
+				<table >
+					<tr>
+						<td width="200"><p>លេខ​វិក្កយ​បត្រ</p></td>
+						<td><p data-bind="text: obj.wnumber"></p></td>
+					</tr>
+					<tr>
+						<td><p>ថ្ងៃ​ចេញ វិក្កយ​បត្រ</p></td>
+						<td><p data-bind="text: obj.issue_date"></p></td>
+					</tr>
+					<tr>
+						<td><p>តំបន់</p></td>
+						<td><p data-bind="text: obj.customer_code"></p></td>
+					</tr>
+					<!-- <tr>
+						<td><p>លេខ​ទី​តាំង​</p></td>
+						<td><p>#:contact.code#</p></td>
+					</tr> -->
+					<tr>
+						<td><p>គិត​ចាប់​ពី​ថ្ងៃ​ទី</p></td>
+						<td><p data-bind="text: obj.start_date"></p></td>
+					</tr>
+					<tr>
+						<td><p>ដល់​ថ្ងៃ​ទី</p></td>
+						<td><p data-bind="text: obj.due_date">#:due_date#</p></td>
+					</tr>
+				</table>		
+			</div>			
+		</div>
+		<table class="span12 table table-bordered footerTbl" style="padding:0;margin-top: 40px;border:1px solid #000; border-radius: 3px;border-collapse: inherit;margin-left: 0px;">
+			<thead>
+				<tr>
+					<th width="180" class="darkbblue">លេខ​កុងទ័រ<br>METER</th>
+					<th width="150" class="darkbblue">អំណានចាស់<br>PREVIOUS</th>
+					<th width="120" class="darkbblue">អំណានថ្មី<br>CURRENT</th>
+					<th width="120" class="darkbblue">បរិមាណ<br>CONSUMPTION</th>
+					<th width="120" class="darkbblue">តំលៃឯកត្តា<br>RATE</th>
+					<th width="180" class="darkbblue">តំលៃសរុប<br>AMOUNT</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td style="vertical-align: middle;" data-bind="text: obj.issue_date"></td>
+					<td colspan="4" style="text-align: right">
+						ប្រាក់​ជំ​ពាក់​ពេល​មុន Balance brought forward . រ<br>
+						ប្រាក់​បាន​ទទួល​ Payment Recieve - THANK YOU . រ<br>
+						ជំពាក់​សរុប​នៅ​ថ្ងៃ​ធ្វើ​វិក្កយបត្រ Balance as at billing date .រ
+					</td>
+					<td>
+						<br>
+						0<br>
+						0
+					</td>
+				</tr>
+				<tr>
+					<td data-bind="text: meter_number"></td>
+					<td align="center" data-bind="text: obj.meter_prev"></td>
+					<td align="center" data-bind="text: obj.meter_current"></td>
+					<td align="center" data-bind="text: obj.meter_consumption"></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td data-bind="text: obj.item_number"></td>
+					<td align="center" data-bind="text: obj.item_amount"></td>
+					<td align="center"></td>
+					<td align="center"></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr><td colspan="6"  style="height: 80px;" ></td></tr>
+				<tr>
+					<td colspan="5" style="padding-right: 10px;background: #355176;color: #fff;text-align: right;" class="darkbblue">បំណុល​សរុប TOTAL BALANCE</td>
+					<td style="border: 1px solid;text-align: right"><strong data-bind="text: obj.amount"></strong></td>
+				</tr>
+				<tr>
+					<td rowspan="4" colspan="3"></td>
+					<td colspan="2" class="greyy" style="background: \\#ccc;">ប្រាក់​ត្រូវ​បង់ TOTAL DUE</td>
+					<td style="text-align: right"><strong data-bind="text: obj.amount"></strong></td>
+				</tr>
+				<tr>
+					<td colspan="2" class="greyy" style="background: \\#ccc;">ថ្ងៃផុតកំណត់ DUE DATE</td>
+					<td data-bind="text: obj.due_date"></td>
+				</tr>
+				<tr>
+					<td colspan="2" class="greyy" style="background: \\#ccc;">ថ្ងៃបង់ប្រាក់ PAY DATE</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td colspan="2" class="greyy" style="background: \\#ccc;">ប្រាក់បានបង់ PAY AMOUNT</td>
+					<td></td>
+				</tr>
+			</tbody>
+		</table>
+		<div class="line"></div>
+		<table class="span12 table table-bordered footerTbl" style="padding:0;border-collapse: inherit;margin-top: 15px;border:1px solid #000; border-radius: 3px;margin-left: 0px;">
+			<tbody>
+				<tr>
+					<td width="100"></td>
+					<th width="390" style="border: none">
+						<span style="margin-left: -15px;" id="footwnumber1"></span>
+					</th>
+					<td width="270" class="greyy" style="background: #ccc;border-bottom:1px solid #fff;">ប្រាក់​ត្រូវ​បង់ TOTAL DUE</td>
+					<td width="180" data-bind="text: obj.amount"></td>
+				</tr>
+				<tr>
+					<td><p>វិក្កយបត្រ</p></td>
+					<td><span data-bind="text: obj.issue_date"></span> - <span data-bind="text: obj.wnumber"></span></td>
+					<td class="greyy" style="background: #ccc;border-bottom:1px solid #fff;">ថ្ងៃបង់ប្រាក់ PAY DATE</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td><p>អតិថិជន</p></td>
+					<td><span data-bind="text: obj.customer_number"></span> <span data-bind="text: obj.customer_name"></span><br>
+					<span data-bind="text: obj.customer_phone"></span> <span data-bind="text: obj.customer_address"></span></td>
+					<td class="greyy" style="background: #ccc;border-bottom:1px solid #fff;">ប្រាក់បានបង់ PAY AMOUNT</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>លេខ​ទី​តាំង</td>
+					<td data-bind="text: obj.customer_code"></td>
+					<td rowspan="2" class="greyy" style="background: #ccc;">អ្នកទទួលប្រាក់ RECEIVER</td>
+					<td rowspan="2"></td>
+				</tr>
+				<tr>
+					<td>លេខ​កុនង​ទ័រ</td>
+					<td data-bind="text: obj.meter_number"></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
 </script>
 
 
@@ -5344,116 +5166,34 @@
 		<td class="rside">#= kendo.toString(amount, "c", locale) #</td>
 	</tr>
 </script>
-<script id="invoiceForm-lineDS-template3" type="text/x-kendo-template">
-	<tr>
-		<td><i>#:banhji.invoiceForm.lineDS.indexOf(data)+1#</i></td>
-		<td style="text-align: left; padding-left: 5px;">#= description#</td>
-		<td style="text-align: left; padding-left: 5px;"></td>
-		<td>#= item_prices.length>0 ? item_prices[0].measurement : "" #</td>
-		<td>#= quantity#</td>
-		<td style="text-align: right; padding-right: 5px;">#= kendo.toString(price, "c", locale) #</td>
-		<td style="text-align: right; padding-right: 5px;">#= kendo.toString(amount, "c", locale) #</td>
-	</tr>
-</script>
-<script id="invoiceForm-lineDS-template4" type="text/x-kendo-template">
-	<tr>
-		<td><i>#:banhji.invoiceForm.lineDS.indexOf(data)+1#</i></td>
-		<td style="text-align: left; padding-left: 5px;"></td>
-		<td style="text-align: left; padding-left: 5px;">#= description#</td>
-		<td></td>
-		<td></td>
-		<td>#= quantity#</td>
-		<td style="text-align: right; padding-right: 5px;">#= kendo.toString(price, "c", locale) #</td>
-		<td style="text-align: right; padding-right: 5px;">#= kendo.toString(amount, "c", locale) #</td>
-	</tr>
-</script>
-<script id="invoiceForm-lineDS-template5" type="text/x-kendo-template">
-	<tr>
-		<td style="text-align: left; padding-left: 5px;">&nbsp;</td>
-		<td style="text-align: left; padding-left: 5px;">#= description#</td>
-		<td></td>
-		<td></td>
-		<td></td>
-		<td></td>
-		<td style="text-align: right; padding-right: 5px;"></td>
-		<td style="text-align: right; padding-right: 5px;"></td>
-	</tr>
-</script>
-<script id="invoiceForm-lineDS-template6" type="text/x-kendo-template">
-	<tr>
-		<td class="lside">&nbsp;#= item_id #</td>
-		<td class="lside">#= description#</td>
-		<td>#= item_prices.length>0 ? item_prices[0].measurement : "" #</td>
-		<td>#= quantity#</td>
-		<td class="rside" width="70">#= kendo.toString(price, "c", locale) #</td>
-		<td class="rside" style="background-color: \\#eee">#= kendo.toString(amount, "c", locale) #</td>
-	</tr>
-</script>
-<script id="invoiceForm-lineDS-template8" type="text/x-kendo-template">
-	<tr>
-		<td style="text-align: left; padding-left: 5px;">&nbsp;#= description#</td>
-		<td>#= item_prices.length>0 ? item_prices[0].measurement : "" #</td>
-		<td>#= quantity#</td>
-		<td class="rside">#= kendo.toString(price, "c", locale) #</td>
-		<td class="rside" style="background-color: \\#eee">#= kendo.toString(amount, "c", locale) #</td>
-	</tr>
-</script>
-<script id="invoiceForm-lineDS-template10" type="text/x-kendo-template">
-	<tr>
-		<td class="lside">&nbsp;#= item_id #</td>
-		<td class="lside">#= description#</td>
-		<td>#= item_prices.length>0 ? item_prices[0].measurement : "" #</td>
-		<td>#= quantity#</td>
-		<td class="rside" width="70">#= kendo.toString(price, "c", locale) #</td>
-		<td class="rside" style="background-color: \\#eee">#= kendo.toString(amount, "c", locale) #</td>
-	</tr>
-</script>
-<script id="invoiceForm-lineDS-template12" type="text/x-kendo-template">
-	<tr>
-		<td class="lside">#= description.length>0 ? description: "&nbsp;"#</td>
-		<td >#= item_prices.length>0 ? item_prices[0].measurement : "" #</td>
-		<td>#= quantity#</td>
-		<td class="rside" width="70">#= kendo.toString(price, "c", locale) #</td>
-		<td class="rside" style="background-color: \\#eee;">#= kendo.toString(amount, "c", locale) #</td>
-	</tr>
-</script>
-<script id="invoiceForm-lineDS-template14" type="text/x-kendo-template">
-	<tr>
-		<td>#:banhji.invoiceForm.lineDS.indexOf(data)+1#</td>
-		<td style="text-align: left; padding-left: 5px;"></td>
-		<td style="text-align: left; padding-left: 5px;">#= description#</td>
-		<td>#= item_prices.length>0 ? item_prices[0].measurement : "" #</td>
-		<td>#= quantity#</td>
-		<td style="text-align: right; padding-right: 5px;"></td>
-	</tr>
-</script>
-<script id="invoiceForm-lineDS-template19" type="text/x-kendo-template">
-	<tr>
-		<td>#:banhji.invoiceForm.lineDS.indexOf(data)+1#</td>
-		<td style="text-align: left; padding-left: 5px;"></td>
-		<td style="text-align: left; padding-left: 5px;"></td>
-		<td></td>
-	</tr>
-</script>
-<script id="invoiceForm-lineDS-template31" type="text/x-kendo-template">
-	<tr>
-		<td style="text-align: left; padding-left: 5px;">&nbsp;</td>
-		<td style="text-align: left; padding-left: 5px;">#= description#</td>
-		<td>#= item_prices.length>0 ? item_prices[0].measurement : "" #</td>
-		<td>#= quantity#</td>
-		<td style="text-align: right; padding-right: 5px;">#= kendo.toString(price, "c", locale) #</td>
-	</tr>
-</script>
-<script id="invoiceForm-lineDS-template33" type="text/x-kendo-template">
-	<tr>
-		<td style="text-align: left; padding-left: 5px;">&nbsp;#= description#</td>
-		<td>#= item_prices.length>0 ? item_prices[0].measurement : "" #</td>
-		<td>#= quantity#</td>
-		<td style="text-align: right; padding-right: 5px;">#= kendo.toString(price, "c", locale) #</td>
-		<td style="text-align: right; padding-right: 5px;">#= kendo.toString(amount, "c", locale) #</td>
-	</tr>
-</script>
 
+<script id="Reconcile" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background" style="overflow: hidden;">
+			<div class="container-960">					
+				<div id="example" class="k-content">
+			    	<div class="hidden-print pull-right">
+			    		<span class="glyphicons no-js remove_2" 
+							data-bind="click: cancel"><i></i></span>	
+					</div>
+			        <h2 style="padding:0 15px;">Reconcile</h2>
+			        
+			        <div class="box-generic bg-action-button">
+						<div id="ntf1" data-role="notification"></div>
+				        <div class="row">
+							<div class="span12" align="right">
+								<span class="btn btn-icon btn-primary glyphicons ok_2" data-bind="click: runBill" style="width: 110px;margin-bottom: 0;"><i></i> <span>Save</span></span>
+								
+								<span class="btn btn-icon btn-warning glyphicons remove_2" data-bind="click: cancel" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.cancel"></span></span>
+													
+							</div>
+						</div>
+					</div>
+				</div>						
+			</div>
+		</div>
+	</div>				  	
+</script>
 
 <!-- ***************************
 *	Template Blog         	  *
@@ -12717,46 +12457,47 @@
 			}else{	
 				var obj = this.get("obj"), self = this;
 				banhji.view.invoiceCustom.showIn('#invFormContent', banhji.view.invoiceForm1);	
-				this.addRowLineDS();
-				if(this.get("isEdit") || this.dataSource.total()==0){
-					this.addEmpty();
-					this.txnFormDS.query({    			
-						filter: { field:"type", value: "Invoice" },
-						page: 1,
-						take: 100
-					}).then(function(e){
-						var view = self.txnFormDS.view();
-						var obj = self.get("obj");
-						obj.set("type", view[0].type);
-						obj.set("title", view[0].title);
-						obj.set("note", view[0].note);
-						
-					});	
-				}	
+				banhji.invoiceForm.pageLoad();
+				this.addEmpty();
+				this.txnFormDS.query({    			
+					filter: [{ field:"type", value: "Invoice" },{ field:"moduls", value: "water_mg"}],
+					page: 1,
+					take: 100
+				}).then(function(e){
+					var view = self.txnFormDS.view();
+					var obj = self.get("obj");
+					obj.set("type", view[0].type);
+					obj.set("title", view[0].title);
+					obj.set("note", view[0].note);
+					
+				});	
 				var name = banhji.invoiceForm.get("obj");
 				name.set("title", this.formTitle);
 			}
-		},
-		addRowLineDS			: function(e){
-			banhji.invoiceForm.lineDS.data([]);
-			for (var i = 0; i < 15; i++) { 
-				banhji.invoiceForm.lineDS.add({				
-					id			: i,
-					description : '',
-					quantity 	: '',
-					price 		: '',
-					amount 		: '',
-					description : '',
-					locale : '',
-					item_prices : [],
-					item_id 	: ''
-		    	});	
-		    }
+
+		},	
+		addEmpty 		 	: function(){			
+			this.dataSource.data([]);		
+			this.set("obj", null);		
+			this.dataSource.insert(0,{				
+				user_id			: banhji.source.user_id,
+				transaction_form_id : 0,
+				type 			: "Invoice",
+				name 			: "",
+				title 			: "Invoice",
+				note 			: "",
+				color  			: null,
+				moduls 			: "water_mg",
+				item_id 		: '',
+				status 			: 0
+	    	});		
+			var obj = this.dataSource.at(0);			
+			this.set("obj", obj);		
 		},
 		activeInvoiceTmp		: function(e){
 			var Active;
 			switch(e) {
-				case 1: Active = banhji.view.invoiceForm1; break;
+				case 43: Active = banhji.view.invoiceForm1; break;
 				case 2: Active = banhji.view.invoiceForm2; break;
 				case 32: Active = banhji.view.invoiceForm32; break;
 			}
@@ -12776,7 +12517,6 @@
 		selectedForm 		: function(e){
 			var Index = e.data.id;
 			this.activeInvoiceTmp(Index);
-			this.addRowLineDS();
 			var data = e.data, obj = this.get("obj");
 			obj.set("transaction_form_id", data.id);
 		},	    			
@@ -12797,25 +12537,6 @@
 
 				self.txnFormDS.filter({ field:"type", value: "Invoice" });
 			});	
-		},		
-		addEmpty 		 	: function(){			
-			this.dataSource.data([]);		
-			this.set("obj", null);		
-			this.set("isEdit", false);		
-			this.dataSource.insert(0,{				
-				user_id			: banhji.source.user_id,
-				transaction_form_id : 0,
-				type 			: "Invoice",
-				name 			: "",
-				title 			: "Invoice",
-				note 			: "",
-				color  			: null,
-				moduls 			: "water_mg",
-				item_id 		: '',
-				status 			: 0
-	    	});		
-			var obj = this.dataSource.at(0);			
-			this.set("obj", obj);		
 		},		    
 		save 				: function(){				
 	    	var self = this;
@@ -12845,7 +12566,28 @@
 		lang 				: langVM,
 		dataSource 			: dataStore(apiUrl + "transactions"),
 		txnTemplateDS		: dataStore(apiUrl + "transaction_templates"),		
-		obj 				: {title: "Quotation", issued_date : "<?php echo date('d/M/Y'); ?>", number : "QO123456", type : "Quote", amount: "$500,000.00", contact: []},
+		obj 				: {
+								title: "Quotation", 
+								issued_date : "<?php echo date('d/M/Y'); ?>", 
+								number : "QO123456", 
+								type : "Quote", 
+								amount: "$500,000.00", 
+								contact: [],
+								customer_number : "CS0001",
+								customer_code 	: "A1",
+								customer_phone 	: "012 345 678",
+								customer_address : banhji.institute.address,
+								issue_date 		: "<?php echo date("d/M/Y"); ?>",
+								start_date 		: "<?php echo date("d/M/Y"); ?>",
+								due_date 		: "<?php echo date("d/M/Y"); ?>",
+								wnumber 		: "INVW00001",
+								meter_number 	: "MT00001",
+								meter_prev 		: 1,
+								meter_current 	: 2,
+								meter_consumption : 1,
+								item_number 	: "001",
+								item_amount 	: "1,000"
+							},
 		company 			: banhji.institute,		
 		lineDS 				: dataStore(apiUrl + "transactions/line"),
 		user_id				: banhji.source.user_id,
@@ -12854,6 +12596,30 @@
 			if(id){				
 				this.loadObj(id);
 			}
+			for (var i=0; i < 2; i++) {			
+				$("#secondwnumber1").kendoBarcode({
+					renderAs: "svg",
+				  	value: "1",
+				  	type: "code128",
+				  	width: 200,
+					height: 10,
+					text:{
+					    visible: false
+					}	
+				});					
+				$("#footwnumber1").kendoBarcode({
+					renderAs: "svg",
+				  	value: "1",
+				  	type: "code128",
+				  	width: 200,
+					height: 10,
+					text:{
+					    visible: false
+					}	
+				});	
+									
+			}
+			console.log("abd");
 		},	 
 		printGrid			: function() {
 			var obj = this.get('obj'), colorM, ts;
@@ -12928,48 +12694,9 @@
 		activeInvoiceTmp		: function(e){
 			var Active;
 			switch(e) {
-				case 1: Active = banhji.view.invoiceForm1; break;
+				case 43: Active = banhji.view.invoiceForm1; break;
 				case 2: Active = banhji.view.invoiceForm2; break;
-				//case 3: Active = banhji.view.invoiceForm3; break;
-				//case 4: Active = banhji.view.invoiceForm4; break;
-				//case 5: Active = banhji.view.invoiceForm5; break;
-				case 6: Active = banhji.view.invoiceForm6; break;
-				case 7: Active = banhji.view.invoiceForm7; break;
-				case 8: Active = banhji.view.invoiceForm8; break;
-				case 9: Active = banhji.view.invoiceForm9; break;
-				case 10: Active = banhji.view.invoiceForm10; break;
-				case 11: Active = banhji.view.invoiceForm11; break;
-				case 12: Active = banhji.view.invoiceForm12; break;
-				case 13: Active = banhji.view.invoiceForm13; break;
-				case 14: Active = banhji.view.invoiceForm31; break;
-				case 15: Active = banhji.view.invoiceForm15; break;
-				case 16: Active = banhji.view.invoiceForm25; break;
-				case 17: Active = banhji.view.invoiceForm17; break;
-				case 18: Active = banhji.view.invoiceForm18; break;
-				case 19: Active = banhji.view.invoiceForm19; break;
-				case 20: Active = banhji.view.invoiceForm20; break;
-				case 21: Active = banhji.view.invoiceForm21; break;
-				case 22: Active = banhji.view.invoiceForm22; break;
-				case 23: Active = banhji.view.invoiceForm28; break;
-				case 24: Active = banhji.view.invoiceForm29; break;
-				case 25: Active = banhji.view.invoiceForm35; break;
-				case 26: Active = banhji.view.invoiceForm39; break;
-				case 27: Active = banhji.view.invoiceForm19; break;
-				case 28: Active = banhji.view.invoiceForm25; break;
-				case 29: Active = banhji.view.invoiceForm26; break;
-				case 30: Active = banhji.view.invoiceForm25; break;
-				case 31: Active = banhji.view.invoiceForm25; break;
-				case 32: Active = banhji.view.invoiceForm27; break;
-				case 33: Active = banhji.view.invoiceForm30; break;
-				case 34: Active = banhji.view.invoiceForm32; break;
-				case 35: Active = banhji.view.invoiceForm33; break;
-				case 36: Active = banhji.view.invoiceForm34; break;
-				case 37: Active = banhji.view.invoiceForm36; break;
-				case 38: Active = banhji.view.invoiceForm37; break;
-				case 39: Active = banhji.view.invoiceForm38; break;
-				case 40: Active = banhji.view.invoiceForm40; break;
-				case 41: Active = banhji.view.invoiceForm41; break;
-				case 42: Active = banhji.view.invoiceForm42; break;
+				case 32: Active = banhji.view.invoiceForm32; break;
 			}
 			banhji.view.invoiceForm.showIn('#invFormContent', Active);
 		},
@@ -13543,6 +13270,19 @@
 			}
 		},
 	});
+	banhji.Reconcile = kendo.observable({
+		lang 					: langVM,
+		institute 				: banhji.institute,	
+		pageLoad 				: function(){
+			
+		},
+		save 					: function(){
+
+		},
+		cancel 					: function(){
+			window.history.back();
+		}
+	});	
 	/* Report */
 	banhji.customerList = kendo.observable({
 		lang 					: langVM,
@@ -14087,7 +13827,21 @@
 
 		vm.pageLoad();
 	});
+	banhji.router.route("/reconcile", function(){		
+		banhji.view.layout.showIn("#content", banhji.view.Reconcile);
+		banhji.view.layout.showIn('#menu', banhji.view.menu);
+		banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
+		
+		var vm = banhji.Reconcile;
 
+		banhji.userManagement.addMultiTask("Reconcile","reconcile",null);
+
+		if(banhji.pageLoaded["reconcile"]==undefined){
+			banhji.pageLoaded["reconcile"] = true;
+		}
+
+		vm.pageLoad();
+	});
 	banhji.router.route("/reports", function(){		
 		banhji.view.layout.showIn("#content", banhji.view.Reports);
 		banhji.view.layout.showIn('#menu', banhji.view.menu);

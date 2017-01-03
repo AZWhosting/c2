@@ -5088,7 +5088,7 @@
 					<td></td>
 					<td></td>
 				</tr>
-				<tr><td colspan="6"  style="height: 100px;" ></td></tr>
+				<tr><td colspan="6"  style="height: 80px;" ></td></tr>
 				<tr>
 					<td colspan="5" style="padding-right: 10px;background: #355176;color: #fff;text-align: right;" class="darkbblue">បំណុល​សរុប TOTAL BALANCE</td>
 					<td style="border: 1px solid;text-align: right"><strong data-bind="text: obj.amount"></strong></td>
@@ -5247,6 +5247,33 @@
 	<strong>
     	<a href="\#/customer_setting">+ Add New Payment Method</a>
     </strong>	
+</script>
+<script id="Reconcile" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background" style="overflow: hidden;">
+			<div class="container-960">					
+				<div id="example" class="k-content">
+			    	<div class="hidden-print pull-right">
+			    		<span class="glyphicons no-js remove_2" 
+							data-bind="click: cancel"><i></i></span>	
+					</div>
+			        <h2 style="padding:0 15px;">Reconcile</h2>
+			        
+			        <div class="box-generic bg-action-button">
+						<div id="ntf1" data-role="notification"></div>
+				        <div class="row">
+							<div class="span12" align="right">
+								<span class="btn btn-icon btn-primary glyphicons ok_2" data-bind="click: runBill" style="width: 110px;margin-bottom: 0;"><i></i> <span>Save</span></span>
+								
+								<span class="btn btn-icon btn-warning glyphicons remove_2" data-bind="click: cancel" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.cancel"></span></span>
+													
+							</div>
+						</div>
+					</div>
+				</div>						
+			</div>
+		</div>
+	</div>				  	
 </script>
 <!-- Report -->
 <script id="customerList" type="text/x-kendo-template">
@@ -13244,6 +13271,19 @@
 			}
 		},
 	});
+ 	banhji.Reconcile = kendo.observable({
+		lang 					: langVM,
+		institute 				: banhji.institute,	
+		pageLoad 				: function(){
+			
+		},
+		save 					: function(){
+
+		},
+		cancel 					: function(){
+			window.history.back();
+		}
+	});	
 	/* Report */
 	banhji.customerList = kendo.observable({
 		lang 					: langVM,
@@ -13471,6 +13511,7 @@
 
 		wDashBoard: new kendo.View("#wDashBoard", {model: wDashBoard}),
 		customer: new kendo.Layout("#customer", {model: banhji.customer}),	
+		Reconcile: new kendo.Layout("#Reconcile", {model: banhji.Reconcile}),
 		//Report
 		customerList : new kendo.Layout("#customerList", {model: banhji.customerList}),
 	};
@@ -13788,18 +13829,17 @@
 
 		vm.pageLoad();
 	});
-
-	banhji.router.route("/reports", function(){		
-		banhji.view.layout.showIn("#content", banhji.view.Reports);
+	banhji.router.route("/reconcile", function(){		
+		banhji.view.layout.showIn("#content", banhji.view.Reconcile);
 		banhji.view.layout.showIn('#menu', banhji.view.menu);
 		banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
 		
-		var vm = banhji.Reports;
+		var vm = banhji.Reconcile;
 
-		banhji.userManagement.addMultiTask("Reports","reports",null);
+		banhji.userManagement.addMultiTask("Reconcile","reconcile",null);
 
-		if(banhji.pageLoaded["reports"]==undefined){
-			banhji.pageLoaded["reports"] = true;
+		if(banhji.pageLoaded["reconcile"]==undefined){
+			banhji.pageLoaded["reconcile"] = true;
 		}
 
 		vm.pageLoad();
@@ -13997,6 +14037,21 @@
 		};
 	});	
 	//////Report Router/////
+	banhji.router.route("/reports", function(){		
+		banhji.view.layout.showIn("#content", banhji.view.Reports);
+		banhji.view.layout.showIn('#menu', banhji.view.menu);
+		banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
+		
+		var vm = banhji.Reports;
+
+		banhji.userManagement.addMultiTask("Reports","reports",null);
+
+		if(banhji.pageLoaded["reports"]==undefined){
+			banhji.pageLoaded["reports"] = true;
+		}
+
+		vm.pageLoad();
+	});
 	banhji.router.route("/customer_list", function(){
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');

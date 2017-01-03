@@ -496,7 +496,7 @@ class Customers extends REST_Controller {
 		$sort 	 	= $this->get("sort");		
 		$is_pattern = 0;
 
-		$obj = new Meters(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
+		$obj = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
 
 		//Sort
 		if(!empty($sort) && isset($sort)){				
@@ -517,14 +517,22 @@ class Customers extends REST_Controller {
 		}
 		$obj->include_related('contact', array('name'));
 		$obj->include_related('contact/utility', array('abbr', 'code'));
+		$obj->include_related('branch', array('name'));
+		$obj->include_related('branch/location', array('name'));
 		$obj->get_paged_iterated($page, $limit);
-		if($obj->exists) {
+		if($obj->exists()) {
 			$data = array();
 			foreach($obj as $row) {
 				$data[] = array(
-					"number" => 
+					"id" => $row->id,
+					"number" => array('abbr'=> $row->contact_utility_abbr, 'code' => $row->contact_utility_code),
+					"fullname"=>$row->name,
+					"type" =>$row->contact_type,
+					"license" => $row->branch_name,
+					"bloc"=> $row->location_name
 				);
 			}
+			$this->response(array('results' => $data, 'count' => $obj->paged->total_rows), 200);
 		} else {
 			$this->reponse(array('results'=> array(), 'msg'=> 'no meter found'), 404);
 		}
@@ -532,7 +540,60 @@ class Customers extends REST_Controller {
 
 	//Get customer list
 	//@param: register_date, code, fullname, type, bloc, license, deposit (get from journal_line based on contact), meter
-	function newlist_get() {}		
+	function newlist_get() {
+		$filters 	= $this->get("filter");		
+		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
+		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;								
+		$sort 	 	= $this->get("sort");		
+		$is_pattern = 0;
+
+		$obj = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
+
+		//Sort
+		if(!empty($sort) && isset($sort)){				
+			foreach ($sort as $value) {
+				$obj->order_by($value["field"], $value["dir"]);
+			}
+		}
+
+		//Filter		
+		if(!empty($filters) && isset($filters['filters'])){
+	    	foreach ($filters['filters'] as $value) {
+	    		if(isset($value['operator'])) {
+					$obj->{$value['operator']}($value['field'], $value['value']);
+				} else {
+	    			$obj->where($value["field"], $value["value"]);
+				}
+			}
+		}
+		$obj->include_related('contact', array('id', 'name', 'deposit_account_id'));
+		$obj->include_related('contact/utility', array('abbr', 'code'));
+		$obj->include_related('branch', array('name'));
+		$obj->include_related('branch/location', array('name'));
+		$obj->get_paged_iterated($page, $limit);
+		if($obj->exists()) {
+			$data = array();
+			foreach($obj as $row) {
+				$account = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$account->where('contact_id', $row->contact_id);
+				$account->where('account_id', $row->contact_deposit_account_id)->get();
+				$data[] = array(
+					"id" => $row->id,
+					"register_date" => $row->contact_registered_date,
+					"number" => array('abbr'=> $row->contact_utility_abbr, 'code' => $row->contact_utility_code),
+					"meter" => $row->number,
+					"fullname"=>$row->name,
+					"type" =>$row->contact_type,
+					"license" => $row->branch_name,
+					"bloc"=> $row->location_name,
+					"deposit" => $account->exists() ? "" : ""
+				);
+			}
+			$this->response(array('results' => $data, 'count' => $obj->paged->total_rows), 200);
+		} else {
+			$this->reponse(array('results'=> array(), 'msg'=> 'no meter found'), 404);
+		}
+	}		
 }
 
 /* End of file contacts.php */
