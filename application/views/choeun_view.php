@@ -4997,7 +4997,7 @@
 	</div>
 </script>
 <script id="invoiceForm1" type="text/x-kendo-template">
-	<div class="container winvoice-print" style="margin-bottom: 10px; width: 610px; ">
+	<div class="container font-small winvoice-print" style="margin-bottom: 10px; width: 610px; ">
 		<div class="span12 headerinv " style="border-bottom: 2px solid \#000;padding: 15px 0;">
 			<div class="span12" align="center">
 				<h4 data-bind="text: company.name"></h4>					
@@ -5010,7 +5010,7 @@
 		<div class="span12 cover-customer">
 			
 			<div class="span7">
-				<span id="secondwnumber2" style="margin-left: -14px;"></span>
+				<span id="secondwnumber1" style="margin-left: -14px;"></span>
 				<div class="span12">
 					<p>អតិថិជន​ <span data-bind="text: obj.customer_number"></span></p>
 					<p data-bind="text: obj.customer_name"></p>
@@ -5088,10 +5088,10 @@
 					<td></td>
 					<td></td>
 				</tr>
-				<tr><td colspan="6"  style="height: 200px;" ></td></tr>
+				<tr><td colspan="6"  style="height: 100px;" ></td></tr>
 				<tr>
 					<td colspan="5" style="padding-right: 10px;background: #355176;color: #fff;text-align: right;" class="darkbblue">បំណុល​សរុប TOTAL BALANCE</td>
-					<td style="border: 1px solid;text-align: right"></td>
+					<td style="border: 1px solid;text-align: right"><strong data-bind="text: obj.amount"></strong></td>
 				</tr>
 				<tr>
 					<td rowspan="4" colspan="3"></td>
@@ -5166,115 +5166,7 @@
 		<td class="rside">#= kendo.toString(amount, "c", locale) #</td>
 	</tr>
 </script>
-<script id="invoiceForm-lineDS-template3" type="text/x-kendo-template">
-	<tr>
-		<td><i>#:banhji.invoiceForm.lineDS.indexOf(data)+1#</i></td>
-		<td style="text-align: left; padding-left: 5px;">#= description#</td>
-		<td style="text-align: left; padding-left: 5px;"></td>
-		<td>#= item_prices.length>0 ? item_prices[0].measurement : "" #</td>
-		<td>#= quantity#</td>
-		<td style="text-align: right; padding-right: 5px;">#= kendo.toString(price, "c", locale) #</td>
-		<td style="text-align: right; padding-right: 5px;">#= kendo.toString(amount, "c", locale) #</td>
-	</tr>
-</script>
-<script id="invoiceForm-lineDS-template4" type="text/x-kendo-template">
-	<tr>
-		<td><i>#:banhji.invoiceForm.lineDS.indexOf(data)+1#</i></td>
-		<td style="text-align: left; padding-left: 5px;"></td>
-		<td style="text-align: left; padding-left: 5px;">#= description#</td>
-		<td></td>
-		<td></td>
-		<td>#= quantity#</td>
-		<td style="text-align: right; padding-right: 5px;">#= kendo.toString(price, "c", locale) #</td>
-		<td style="text-align: right; padding-right: 5px;">#= kendo.toString(amount, "c", locale) #</td>
-	</tr>
-</script>
-<script id="invoiceForm-lineDS-template5" type="text/x-kendo-template">
-	<tr>
-		<td style="text-align: left; padding-left: 5px;">&nbsp;</td>
-		<td style="text-align: left; padding-left: 5px;">#= description#</td>
-		<td></td>
-		<td></td>
-		<td></td>
-		<td></td>
-		<td style="text-align: right; padding-right: 5px;"></td>
-		<td style="text-align: right; padding-right: 5px;"></td>
-	</tr>
-</script>
-<script id="invoiceForm-lineDS-template6" type="text/x-kendo-template">
-	<tr>
-		<td class="lside">&nbsp;#= item_id #</td>
-		<td class="lside">#= description#</td>
-		<td>#= item_prices.length>0 ? item_prices[0].measurement : "" #</td>
-		<td>#= quantity#</td>
-		<td class="rside" width="70">#= kendo.toString(price, "c", locale) #</td>
-		<td class="rside" style="background-color: \\#eee">#= kendo.toString(amount, "c", locale) #</td>
-	</tr>
-</script>
-<script id="invoiceForm-lineDS-template8" type="text/x-kendo-template">
-	<tr>
-		<td style="text-align: left; padding-left: 5px;">&nbsp;#= description#</td>
-		<td>#= item_prices.length>0 ? item_prices[0].measurement : "" #</td>
-		<td>#= quantity#</td>
-		<td class="rside">#= kendo.toString(price, "c", locale) #</td>
-		<td class="rside" style="background-color: \\#eee">#= kendo.toString(amount, "c", locale) #</td>
-	</tr>
-</script>
-<script id="invoiceForm-lineDS-template10" type="text/x-kendo-template">
-	<tr>
-		<td class="lside">&nbsp;#= item_id #</td>
-		<td class="lside">#= description#</td>
-		<td>#= item_prices.length>0 ? item_prices[0].measurement : "" #</td>
-		<td>#= quantity#</td>
-		<td class="rside" width="70">#= kendo.toString(price, "c", locale) #</td>
-		<td class="rside" style="background-color: \\#eee">#= kendo.toString(amount, "c", locale) #</td>
-	</tr>
-</script>
-<script id="invoiceForm-lineDS-template12" type="text/x-kendo-template">
-	<tr>
-		<td class="lside">#= description.length>0 ? description: "&nbsp;"#</td>
-		<td >#= item_prices.length>0 ? item_prices[0].measurement : "" #</td>
-		<td>#= quantity#</td>
-		<td class="rside" width="70">#= kendo.toString(price, "c", locale) #</td>
-		<td class="rside" style="background-color: \\#eee;">#= kendo.toString(amount, "c", locale) #</td>
-	</tr>
-</script>
-<script id="invoiceForm-lineDS-template14" type="text/x-kendo-template">
-	<tr>
-		<td>#:banhji.invoiceForm.lineDS.indexOf(data)+1#</td>
-		<td style="text-align: left; padding-left: 5px;"></td>
-		<td style="text-align: left; padding-left: 5px;">#= description#</td>
-		<td>#= item_prices.length>0 ? item_prices[0].measurement : "" #</td>
-		<td>#= quantity#</td>
-		<td style="text-align: right; padding-right: 5px;"></td>
-	</tr>
-</script>
-<script id="invoiceForm-lineDS-template19" type="text/x-kendo-template">
-	<tr>
-		<td>#:banhji.invoiceForm.lineDS.indexOf(data)+1#</td>
-		<td style="text-align: left; padding-left: 5px;"></td>
-		<td style="text-align: left; padding-left: 5px;"></td>
-		<td></td>
-	</tr>
-</script>
-<script id="invoiceForm-lineDS-template31" type="text/x-kendo-template">
-	<tr>
-		<td style="text-align: left; padding-left: 5px;">&nbsp;</td>
-		<td style="text-align: left; padding-left: 5px;">#= description#</td>
-		<td>#= item_prices.length>0 ? item_prices[0].measurement : "" #</td>
-		<td>#= quantity#</td>
-		<td style="text-align: right; padding-right: 5px;">#= kendo.toString(price, "c", locale) #</td>
-	</tr>
-</script>
-<script id="invoiceForm-lineDS-template33" type="text/x-kendo-template">
-	<tr>
-		<td style="text-align: left; padding-left: 5px;">&nbsp;#= description#</td>
-		<td>#= item_prices.length>0 ? item_prices[0].measurement : "" #</td>
-		<td>#= quantity#</td>
-		<td style="text-align: right; padding-right: 5px;">#= kendo.toString(price, "c", locale) #</td>
-		<td style="text-align: right; padding-right: 5px;">#= kendo.toString(amount, "c", locale) #</td>
-	</tr>
-</script>
+
 
 
 <!-- ***************************
@@ -12539,9 +12431,10 @@
 			}else{	
 				var obj = this.get("obj"), self = this;
 				banhji.view.invoiceCustom.showIn('#invFormContent', banhji.view.invoiceForm1);	
+				banhji.invoiceForm.pageLoad();
 				this.addEmpty();
 				this.txnFormDS.query({    			
-					filter: { field:"type", value: "Invoice" },
+					filter: [{ field:"type", value: "Invoice" },{ field:"moduls", value: "water_mg"}],
 					page: 1,
 					take: 100
 				}).then(function(e){
@@ -12555,29 +12448,7 @@
 				var name = banhji.invoiceForm.get("obj");
 				name.set("title", this.formTitle);
 			}
-			for (var i=0; i < 2; i++) {			
-				$("#secondwnumber1").kendoBarcode({
-					renderAs: "svg",
-				  	value: "1",
-				  	type: "code128",
-				  	width: 200,
-					height: 40,
-					text:{
-					    visible: false
-					}	
-				});					
-				$("#footwnumber1").kendoBarcode({
-					renderAs: "svg",
-				  	value: "1",
-				  	type: "code128",
-				  	width: 200,
-					height: 40,
-					text:{
-					    visible: false
-					}	
-				});	
-									
-			}
+
 		},	
 		addEmpty 		 	: function(){			
 			this.dataSource.data([]);		
@@ -12600,7 +12471,7 @@
 		activeInvoiceTmp		: function(e){
 			var Active;
 			switch(e) {
-				case 1: Active = banhji.view.invoiceForm1; break;
+				case 43: Active = banhji.view.invoiceForm1; break;
 				case 2: Active = banhji.view.invoiceForm2; break;
 				case 32: Active = banhji.view.invoiceForm32; break;
 			}
@@ -12620,7 +12491,6 @@
 		selectedForm 		: function(e){
 			var Index = e.data.id;
 			this.activeInvoiceTmp(Index);
-			this.addRowLineDS();
 			var data = e.data, obj = this.get("obj");
 			obj.set("transaction_form_id", data.id);
 		},	    			
@@ -12700,7 +12570,30 @@
 			if(id){				
 				this.loadObj(id);
 			}
-				
+			for (var i=0; i < 2; i++) {			
+				$("#secondwnumber1").kendoBarcode({
+					renderAs: "svg",
+				  	value: "1",
+				  	type: "code128",
+				  	width: 200,
+					height: 10,
+					text:{
+					    visible: false
+					}	
+				});					
+				$("#footwnumber1").kendoBarcode({
+					renderAs: "svg",
+				  	value: "1",
+				  	type: "code128",
+				  	width: 200,
+					height: 10,
+					text:{
+					    visible: false
+					}	
+				});	
+									
+			}
+			console.log("abd");
 		},	 
 		printGrid			: function() {
 			var obj = this.get('obj'), colorM, ts;
@@ -12775,48 +12668,9 @@
 		activeInvoiceTmp		: function(e){
 			var Active;
 			switch(e) {
-				case 1: Active = banhji.view.invoiceForm1; break;
+				case 43: Active = banhji.view.invoiceForm1; break;
 				case 2: Active = banhji.view.invoiceForm2; break;
-				//case 3: Active = banhji.view.invoiceForm3; break;
-				//case 4: Active = banhji.view.invoiceForm4; break;
-				//case 5: Active = banhji.view.invoiceForm5; break;
-				case 6: Active = banhji.view.invoiceForm6; break;
-				case 7: Active = banhji.view.invoiceForm7; break;
-				case 8: Active = banhji.view.invoiceForm8; break;
-				case 9: Active = banhji.view.invoiceForm9; break;
-				case 10: Active = banhji.view.invoiceForm10; break;
-				case 11: Active = banhji.view.invoiceForm11; break;
-				case 12: Active = banhji.view.invoiceForm12; break;
-				case 13: Active = banhji.view.invoiceForm13; break;
-				case 14: Active = banhji.view.invoiceForm31; break;
-				case 15: Active = banhji.view.invoiceForm15; break;
-				case 16: Active = banhji.view.invoiceForm25; break;
-				case 17: Active = banhji.view.invoiceForm17; break;
-				case 18: Active = banhji.view.invoiceForm18; break;
-				case 19: Active = banhji.view.invoiceForm19; break;
-				case 20: Active = banhji.view.invoiceForm20; break;
-				case 21: Active = banhji.view.invoiceForm21; break;
-				case 22: Active = banhji.view.invoiceForm22; break;
-				case 23: Active = banhji.view.invoiceForm28; break;
-				case 24: Active = banhji.view.invoiceForm29; break;
-				case 25: Active = banhji.view.invoiceForm35; break;
-				case 26: Active = banhji.view.invoiceForm39; break;
-				case 27: Active = banhji.view.invoiceForm19; break;
-				case 28: Active = banhji.view.invoiceForm25; break;
-				case 29: Active = banhji.view.invoiceForm26; break;
-				case 30: Active = banhji.view.invoiceForm25; break;
-				case 31: Active = banhji.view.invoiceForm25; break;
-				case 32: Active = banhji.view.invoiceForm27; break;
-				case 33: Active = banhji.view.invoiceForm30; break;
-				case 34: Active = banhji.view.invoiceForm32; break;
-				case 35: Active = banhji.view.invoiceForm33; break;
-				case 36: Active = banhji.view.invoiceForm34; break;
-				case 37: Active = banhji.view.invoiceForm36; break;
-				case 38: Active = banhji.view.invoiceForm37; break;
-				case 39: Active = banhji.view.invoiceForm38; break;
-				case 40: Active = banhji.view.invoiceForm40; break;
-				case 41: Active = banhji.view.invoiceForm41; break;
-				case 42: Active = banhji.view.invoiceForm42; break;
+				case 32: Active = banhji.view.invoiceForm32; break;
 			}
 			banhji.view.invoiceForm.showIn('#invFormContent', Active);
 		},

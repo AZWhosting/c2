@@ -71106,6 +71106,7 @@
     	customerDS 	 			: banhji.source.customerDS,
     	itemVendorDS 	 		: dataStore(apiUrl + "items/contact"),
     	itemCustomerDS 	 		: dataStore(apiUrl + "items/contact"),
+    	itemPriceDS 			: dataStore(apiUrl + "item_prices"),
     	currencyDS 	 			: banhji.source.currencyDS,  	
     	incomeAccountDS 		: banhji.source.incomeAccountDS,
     	cogsAccountDS 			: banhji.source.cogsAccountDS,    	
@@ -71224,6 +71225,20 @@
 				this.generateNumber();
 			}
 		},
+		//Item Price
+		addItemPrice 			: function (item_id) {
+			var obj = this.get("obj");
+
+      		this.itemPriceDS.add({
+      			item_id			: item_id,
+      			measurement_id 	: obj.measurement_id,
+      			price 			: obj.price,
+      			unit_value		: 1,
+      			locale 			: obj.locale
+			});
+
+			this.itemPriceDS.sync();
+      	},
       	//Item Contact
 		loadItemContact			: function(){
     		var obj = this.get("obj");
@@ -71402,6 +71417,8 @@
 	      			$.each(self.itemCustomerDS.data(), function(index, value){
 	      				value.set("item_id", data[0].id);
 	      			});
+
+	      			self.addItemPrice(data[0].id);
 				}
 				
       			self.itemVendorDS.sync();

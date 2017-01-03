@@ -102,3 +102,9 @@ p.addItem.glyphicons.circle_remove i:before {
 	line-height: 14px;
 	margin-bottom: 0;
 }
+.font-small * {
+	font-size: 10px;
+}
+.font-small .cover-customer {
+	padding: 0;
+}
