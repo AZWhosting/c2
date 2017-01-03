@@ -311,7 +311,7 @@
 
 	<div class="row-fluid">
 		<div style="margin-top: 10px; margin-left: 0;" align="center">
-			<p><span data-bind="text: lang.lang.all_rights_reserved"></span></p>
+			<p>&copy; <?php echo date('Y'); ?><span data-bind="text: lang.lang.all_rights_reserved"></span></p>
 		</div>	
 	</div>		
 </script>
@@ -50329,7 +50329,7 @@
 		}		
 	});
 	banhji.purchaseOrder =  kendo.observable({
-		lang 					: langVM,
+		lang 				: langVM,
 		dataSource 			: dataStore(apiUrl + "transactions"),
 		lineDS  			: dataStore(apiUrl + "item_lines"),
 		deleteDS  			: dataStore(apiUrl + "transactions"),
@@ -50379,7 +50379,7 @@
 		itemDS  			: banhji.source.itemForSupplierDS,
 		taxItemDS  			: banhji.source.supplierTaxDS,
 		catalogDS			: dataStore(apiUrl + "items"),
-		assemblyDS			: dataStore(apiUrl + "items/assembly"),
+		assemblyDS			: dataStore(apiUrl + "item_prices"),
 		segmentItemDS		: banhji.source.segmentItemDS,
 		amtDueColor 		: banhji.source.amtDueColor,
 	    confirmMessage 		: banhji.source.confirmMessage,
@@ -50594,18 +50594,19 @@
 		itemChanges 		: function(e){								
 			var self = this, 
 			data = e.data,
-			obj = this.get("obj"), 
-			item = this.itemDS.get(data.item_id);
+			obj = this.get("obj");
 
 			if(data.item_id>0){
-				var rate = obj.rate / banhji.source.getRate(item.locale, new Date(obj.issued_date));
+				var item = this.itemDS.get(data.item_id),
+				unit_value = 1,
+				rate = obj.rate / banhji.source.getRate(item.locale, new Date(obj.issued_date));
 
-		        if(item.is_catalog=="1"){		        	
+		        if(item.is_catalog=="1"){
 		        	var catalogList = [];
 		        	$.each(item.catalogs, function(index, value){
 		        		catalogList.push(value);
 		        	});
-		        	
+
 		        	this.catalogDS.query({
 		        		filter: { field:"id", operator:"where_in", value:catalogList },
 		        		page:1,
@@ -50614,42 +50615,44 @@
 		        		self.lineDS.remove(data);
 
 		        		$.each(self.catalogDS.view(), function(index, value){
-		        			var catalogRate = obj.rate / banhji.source.getRate(value.locale, new Date(obj.issued_date));
+		        			rate = obj.rate / banhji.source.getRate(value.locale, new Date(obj.issued_date));
+		        			
+		        			if(value.item_prices.length>0){
+		        				unit_value = value.item_prices[0].unit_value;
+		        			}
 
-							self.lineDS.add({					
+							self.lineDS.add({
 								transaction_id 		: obj.id,
 								tax_item_id 		: 0,
 								item_id 			: value.id,
-								measurement_id 		: value.measurement_id,								
-								description 		: value.purchase_description,				
+								measurement_id 		: value.measurement_id,
+								description 		: value.purchase_description,
 								quantity 	 		: 1,
-								unit_value 			: 0,
-								cost 				: value.cost*catalogRate,												
-								amount 				: value.cost*catalogRate,
+								unit_value 			: unit_value,
+								cost 				: value.cost*rate,
+								amount 				: value.cost*rate,
 								discount 			: 0,
-								rate				: catalogRate,
+								rate				: rate,
 								locale				: value.locale,
-								movement 			: 1,								
+								movement 			: 1,
+								required_date 		: obj.issued_date,
 
 								item_prices 		: []
-							});								
+							});
 		        		});
 
 		        		self.changes();
 		        	});
-		        }else if(item.is_assembly=="1"){
-		        	data.set("measurement_id", item.measurement_id);
-		    		data.set("description", item.purchase_description);
-		    		data.set("quantity", 1);	    		
-			        data.set("cost", item.cost*rate);
-			        data.set("rate", rate);
-			        data.set("locale", item.locale);
+		        }else{
+		        	//Unit Value
+					if(item.item_prices.length>0){
+	    				unit_value = item.item_prices[0].unit_value;
+	    			}
 
-			        this.changes();		     
-		        }else{	        	
 		    		data.set("measurement_id", item.measurement_id);
 		    		data.set("description", item.purchase_description);
-		    		data.set("quantity", 1);	    		
+		    		data.set("quantity", 1);
+		    		data.set("unit_value", unit_value);	    		
 			        data.set("cost", item.cost*rate);
 			        data.set("rate", rate);
 			        data.set("locale", item.locale);
@@ -50838,7 +50841,7 @@
 				measurement_id 		: 0,
 				description 		: "",
 				quantity 	 		: 1,
-				unit_value 			: 0,
+				unit_value 			: 1,
 				cost 				: 0,
 				amount 				: 0,
 				discount 			: 0,
@@ -51322,11 +51325,12 @@
 		itemChanges 		: function(e){								
 			var self = this, 
 			data = e.data,
-			obj = this.get("obj"), 
-			item = this.itemDS.get(data.item_id);
+			obj = this.get("obj");
 
 			if(data.item_id>0){
-				var rate = obj.rate / banhji.source.getRate(item.locale, new Date(obj.issued_date));
+				var item = this.itemDS.get(data.item_id),
+				unit_value = 1,
+				rate = obj.rate / banhji.source.getRate(item.locale, new Date(obj.issued_date));
 
 		        if(item.is_catalog=="1"){
 		        	var catalogList = [];
@@ -51342,7 +51346,11 @@
 		        		self.lineDS.remove(data);
 
 		        		$.each(self.catalogDS.view(), function(index, value){
-		        			var catalogRate = obj.rate / banhji.source.getRate(value.locale, new Date(obj.issued_date));
+		        			rate = obj.rate / banhji.source.getRate(value.locale, new Date(obj.issued_date));
+
+		        			if(value.item_prices.length>0){
+		        				unit_value = value.item_prices[0].unit_value;
+		        			}
 
 							self.lineDS.add({					
 								transaction_id 		: obj.id,
@@ -51351,10 +51359,11 @@
 								measurement_id 		: value.measurement_id,								
 								description 		: value.purchase_description,				
 								quantity 	 		: 1,
+								unit_value 			: unit_value,
 								cost 				: value.cost*rate,												
 								amount 				: value.cost*rate,
 								discount 			: 0,
-								rate				: catalogRate,
+								rate				: rate,
 								locale				: value.locale,
 								movement 			: 1,								
 
@@ -51363,20 +51372,17 @@
 		        		});
 
 		        		self.changes();
-		        	});
-		        }else if(item.is_assembly=="1"){
-		        	data.set("measurement_id", item.measurement_id);
-		    		data.set("description", item.purchase_description);
-		    		data.set("quantity", 1);	    		
-			        data.set("cost", item.cost*rate);
-			        data.set("rate", rate);
-			        data.set("locale", item.locale);
+		        	}); 
+		        }else{
+		        	//Unit Value
+					if(item.item_prices.length>0){
+	    				unit_value = item.item_prices[0].unit_value;
+	    			}
 
-			        this.changes();		     
-		        }else{	        	
 		    		data.set("measurement_id", item.measurement_id);
 		    		data.set("description", item.purchase_description);
-		    		data.set("quantity", 1);	    		
+		    		data.set("quantity", 1);
+		    		data.set("unit_value", unit_value);	    		
 			        data.set("cost", item.cost*rate);
 			        data.set("rate", rate);
 			        data.set("locale", item.locale);
@@ -51487,7 +51493,7 @@
 				measurement_id 		: 0,
 				description 		: "",
 				quantity 	 		: 1,
-				unit_value 			: 0,
+				unit_value 			: 1,
 				cost 				: 0,
 				amount 				: 0,
 				rate				: obj.rate,
@@ -52914,11 +52920,12 @@
 		itemChanges 		: function(e){								
 			var self = this, 
 			data = e.data,
-			obj = this.get("obj"), 
-			item = this.itemDS.get(data.item_id);
+			obj = this.get("obj");
 
 			if(data.item_id>0){
-				var rate = obj.rate / banhji.source.getRate(item.locale, new Date(obj.issued_date));
+				var item = this.itemDS.get(data.item_id),
+				unit_value = 1,
+				rate = obj.rate / banhji.source.getRate(item.locale, new Date(obj.issued_date));
 
 		        if(item.is_catalog=="1"){
 		        	var catalogList = [];
@@ -52934,7 +52941,11 @@
 		        		self.lineDS.remove(data);
 
 		        		$.each(self.catalogDS.view(), function(index, value){
-		        			var catalogRate = obj.rate / banhji.source.getRate(value.locale, new Date(obj.issued_date));
+		        			rate = obj.rate / banhji.source.getRate(value.locale, new Date(obj.issued_date));
+
+		        			if(value.item_prices.length>0){
+		        				unit_value = value.item_prices[0].unit_value;
+		        			}
 
 							self.lineDS.add({					
 								transaction_id 		: obj.id,
@@ -52943,10 +52954,11 @@
 								measurement_id 		: value.measurement_id,								
 								description 		: value.purchase_description,				
 								quantity 	 		: 1,
-								cost 				: value.cost*catalogRate,												
-								amount 				: value.cost*catalogRate,
+								unit_value 			: unit_value,
+								cost 				: value.cost*rate,												
+								amount 				: value.cost*rate,
 								discount 			: 0,
-								rate				: catalogRate,
+								rate				: rate,
 								locale				: value.locale,
 								movement 			: 1,								
 
@@ -52955,20 +52967,17 @@
 		        		});
 
 		        		self.changes();
-		        	});
-		        }else if(item.is_assembly=="1"){
-		        	data.set("measurement_id", item.measurement_id);
-		    		data.set("description", item.purchase_description);
-		    		data.set("quantity", 1);	    		
-			        data.set("cost", item.cost*rate);
-			        data.set("rate", rate);
-			        data.set("locale", item.locale);
+		        	}); 
+		        }else{
+		        	//Unit Value
+					if(item.item_prices.length>0){
+	    				unit_value = item.item_prices[0].unit_value;
+	    			}
 
-			        this.changes();		     
-		        }else{	        	
 		    		data.set("measurement_id", item.measurement_id);
 		    		data.set("description", item.purchase_description);
-		    		data.set("quantity", 1);	    		
+		    		data.set("quantity", 1);
+		    		data.set("unit_value", unit_value);	    		
 			        data.set("cost", item.cost*rate);
 			        data.set("rate", rate);
 			        data.set("locale", item.locale);
@@ -53432,7 +53441,7 @@
 				measurement_id 		: 0,
 				description 		: "",
 				quantity 	 		: 1,
-				unit_value 			: 0,
+				unit_value 			: 1,
 				cost 				: 0,
 				amount 				: 0,
 				discount 			: 0,
@@ -54398,11 +54407,12 @@
 		itemChanges 		: function(e){								
 			var self = this, 
 			data = e.data,
-			obj = this.get("obj"), 
-			item = this.itemDS.get(data.item_id);
+			obj = this.get("obj");
 
 			if(data.item_id>0){
-				var rate = obj.rate / banhji.source.getRate(item.locale, new Date(obj.issued_date));
+				var item = this.itemDS.get(data.item_id),
+				unit_value = 1,
+				rate = obj.rate / banhji.source.getRate(item.locale, new Date(obj.issued_date));
 
 		        if(item.is_catalog=="1"){
 		        	var catalogList = [];
@@ -54418,7 +54428,11 @@
 		        		self.lineDS.remove(data);
 
 		        		$.each(self.catalogDS.view(), function(index, value){
-		        			var catalogRate = obj.rate / banhji.source.getRate(value.locale, new Date(obj.issued_date));
+		        			rate = obj.rate / banhji.source.getRate(value.locale, new Date(obj.issued_date));
+
+		        			if(value.item_prices.length>0){
+		        				unit_value = value.item_prices[0].unit_value;
+		        			}
 
 							self.lineDS.add({					
 								transaction_id 		: obj.id,
@@ -54427,10 +54441,11 @@
 								measurement_id 		: value.measurement_id,								
 								description 		: value.purchase_description,				
 								quantity 	 		: 1,
-								cost 				: value.cost*catalogRate,												
-								amount 				: value.cost*catalogRate,
+								unit_value 			: unit_value,
+								cost 				: value.cost*rate,												
+								amount 				: value.cost*rate,
 								discount 			: 0,
-								rate				: catalogRate,
+								rate				: rate,
 								locale				: value.locale,
 								movement 			: 1,								
 
@@ -54439,20 +54454,17 @@
 		        		});
 
 		        		self.changes();
-		        	});
-		        }else if(item.is_assembly=="1"){
-		        	data.set("measurement_id", item.measurement_id);
-		    		data.set("description", item.purchase_description);
-		    		data.set("quantity", 1);	    		
-			        data.set("cost", item.cost*rate);
-			        data.set("rate", rate);
-			        data.set("locale", item.locale);
+		        	}); 
+		        }else{
+		        	//Unit Value
+					if(item.item_prices.length>0){
+	    				unit_value = item.item_prices[0].unit_value;
+	    			}
 
-			        this.changes();		     
-		        }else{	        	
 		    		data.set("measurement_id", item.measurement_id);
 		    		data.set("description", item.purchase_description);
-		    		data.set("quantity", 1);	    		
+		    		data.set("quantity", 1);
+		    		data.set("unit_value", unit_value);
 			        data.set("cost", item.cost*rate);
 			        data.set("rate", rate);
 			        data.set("locale", item.locale);
@@ -54679,7 +54691,7 @@
 				measurement_id 		: 0,				
 				description 		: "",				
 				quantity 	 		: 1,
-				unit_value 			: 0,
+				unit_value 			: 1,
 				cost 				: 0,												
 				amount 				: 0,
 				discount 			: 0,
@@ -57033,6 +57045,7 @@
 		lang 				: langVM,
 		dataSource 			: dataStore(apiUrl + "transactions"),
 		lineDS  			: dataStore(apiUrl + "item_lines"),
+		assemblyLineDS  	: dataStore(apiUrl + "item_lines"),
 		deleteDS 			: dataStore(apiUrl + "transactions"),
 		recurringDS 		: dataStore(apiUrl + "transactions"),
 		recurringLineDS 	: dataStore(apiUrl + "item_lines"),
@@ -57045,7 +57058,8 @@
 		itemDS  			: banhji.source.itemForSaleDS,
 		taxItemDS 			: banhji.source.customerTaxDS,
 		catalogDS			: dataStore(apiUrl + "items"),
-		assemblyDS			: dataStore(apiUrl + "items/assembly"),
+		itemListDS			: dataStore(apiUrl + "items"),
+		assemblyDS			: dataStore(apiUrl + "item_prices"),
 		txnTemplateDS		: new kendo.data.DataSource({
 			transport: {
 				read 	: {
@@ -57325,19 +57339,11 @@
 		itemChanges 		: function(e){								
 			var self = this, 
 			data = e.data,
-			obj = this.get("obj"), 
-			item = this.itemDS.get(data.item_id);
+			obj = this.get("obj");
 
 			if(data.item_id>0){
-				var price = 0, rate = 1, measurement_id = item.measurement_id;
-
-				if(item.item_type_id=="1" || item.item_type_id=="4"){
-					if(item.item_prices.length>0){
-						rate = obj.rate / banhji.source.getRate(item.item_prices[0].locale, new Date(obj.issued_date));
-						price = item.item_prices[0].price*rate;
-						measurement_id = item.item_prices[0].measurement_id;
-					}
-				}
+				var item = this.itemDS.get(data.item_id),
+				price = item.price, unit_value = 1, rate = 1, measurement_id = item.measurement_id, locale = item.locale;
 
 		        if(item.is_catalog=="1"){
 		        	var catalogList = [];
@@ -57353,20 +57359,27 @@
 		        		self.lineDS.remove(data);
 
 		        		$.each(self.catalogDS.view(), function(index, value){
-		        			var catalogRate = obj.rate / banhji.source.getRate(value.item_prices[0].locale, new Date(obj.issued_date));										
-							
+							if(value.item_prices.length>0){
+								rate = obj.rate / banhji.source.getRate(item.item_prices[0].locale, new Date(obj.issued_date));
+								price = item.item_prices[0].price*rate;
+								unit_value = item.item_prices[0].unit_value;
+								measurement_id = item.item_prices[0].measurement_id;
+								locale = item.item_prices[0].locale;
+		        			}
+
 							self.lineDS.add({					
 								transaction_id 		: obj.id,
 								tax_item_id 		: 0,
 								item_id 			: value.id,
-								measurement_id 		: value.item_prices[0].measurement_id,								
+								measurement_id 		: measurement_id,								
 								description 		: value.sale_description,				
 								quantity 	 		: 1,
-								price 				: value.item_prices[0].price*catalogRate,												
-								amount 				: value.item_prices[0].price*catalogRate,
+								unit_value 			: unit_value,
+								price 				: price,												
+								amount 				: price,
 								discount 			: 0,
-								rate				: catalogRate,
-								locale				: value.locale,
+								rate				: rate,
+								locale				: locale,
 								movement 			: -1,								
 
 								item_prices 		: value.item_prices
@@ -57378,22 +57391,63 @@
 		        }else if(item.is_assembly=="1"){
 		        	rate = obj.rate / banhji.source.getRate(item.locale, new Date(obj.issued_date));
 
-		        	data.set("measurement_id", item.measurement_id);
+		        	data.set("measurement_id", measurement_id);
 		    		data.set("description", item.sale_description);
-		    		data.set("quantity", 1);		    			    		
-			        data.set("price", item.price);
+		    		data.set("quantity", 1);
+		    		data.set("unit_value", 1);		    			    		
+			        data.set("price", price*rate);
 			        data.set("rate", rate);
-			        data.set("locale", item.locale);
-			       	data.set("item_prices", []);
+			        data.set("locale", locale);
+			        data.set("movement", 0);
 
-			        this.changes();		     
-		        }else{	        	
+			        this.assemblyDS.query({
+		        		filter: { field:"assembly_id", value: data.item_id },
+		        		page:1,
+		        		pageSize:100
+		        	}).then(function(){
+		        		var view = self.assemblyDS.view();
+		        		
+		        		$.each(view, function(index, value){
+		        			rate = obj.rate / banhji.source.getRate(value.locale, new Date(obj.issued_date));
+
+							self.assemblyLineDS.add({					
+								transaction_id 		: obj.id,								
+								item_id 			: value.item_id,
+								assembly_id 		: value.assembly_id,
+								measurement_id 		: value.measurement_id,								
+								description 		: "",				
+								quantity 	 		: value.quantity,
+								unit_value 			: value.unit_value,
+								price 				: value.price,												
+								amount 				: value.price,
+								rate				: rate,
+								locale				: value.locale,
+								movement 			: -1,
+								
+								item_prices 		: []
+							});
+
+							self.changes();								
+		        		});
+		        	});		     
+		        }else{
+		        	if(item.item_type_id=="1" || item.item_type_id=="4"){
+						if(item.item_prices.length>0){
+							rate = obj.rate / banhji.source.getRate(item.item_prices[0].locale, new Date(obj.issued_date));
+							price = item.item_prices[0].price*rate;
+							unit_value = item.item_prices[0].unit_value;
+							measurement_id = item.item_prices[0].measurement_id;
+							locale = item.item_prices[0].locale;
+						}
+					}
+
 		    		data.set("measurement_id", measurement_id);
 		    		data.set("description", item.sale_description);
 		    		data.set("quantity", 1);
+		    		data.set("unit_value", unit_value);
 			        data.set("price", price);
 			        data.set("rate", rate);	
-			        data.set("locale", item.locale);
+			        data.set("locale", locale);
 			        data.set("item_prices", item.item_prices);			        
 
 			        this.changes();
@@ -57456,7 +57510,14 @@
 						self.set("showDiscount", true);
 					}
 
-					self.lineDS.filter({ field: "transaction_id", value: view[0].id });
+					self.lineDS.filter([
+						{ field: "transaction_id", value: view[0].id },
+						{ field: "assembly_id", value: 0 }
+					]);
+					self.assemblyLineDS.filter([
+						{ field: "transaction_id", value: view[0].id },
+						{ field: "assembly_id >", value: 0 }
+					]);
 					self.attachmentDS.filter({ field: "transaction_id", value: view[0].id });
 					self.loadContact(view[0].contact_id);
 				});
@@ -57512,6 +57573,7 @@
 		addEmpty 		 	: function(){			
 			this.dataSource.data([]);
 			this.lineDS.data([]);
+			this.assemblyLineDS.data([]);
 			this.attachmentDS.data([]);			
 
 			this.set("isEdit", false);
@@ -57575,7 +57637,7 @@
 				measurement_id 		: 0,				
 				description 		: "",				
 				quantity 	 		: 1,
-				unit_value 			: 0,
+				unit_value 			: 1,
 				price 				: 0,												
 				amount 				: 0,
 				discount 			: 0,
@@ -57587,8 +57649,23 @@
 			});																	
 		},		
 		removeRow 			: function(e){						
-			var data = e.data;
-			if(this.lineDS.total()>1){				
+			var self = this, data = e.data;
+			
+			if(this.lineDS.total()>1){
+				//Remove Assembly Item List
+				if(data.item_id>0){
+					var raw = this.assemblyLineDS.data();
+				    
+				    var item, i;
+				    for(i=raw.length-1; i>=0; i--){
+				      item = raw[i];
+				      if (item.assembly_id==data.item_id){
+				        this.assemblyLineDS.remove(item);
+				      }
+
+				    }
+				}
+
 				this.lineDS.remove(data);
 		        this.changes();
 	        }		        
@@ -57628,8 +57705,13 @@
 			.then(function(data){ //Success												
 				if(self.get("isEdit")==false){
 					//Item line
-					$.each(self.lineDS.data(), function(index, value){										
-						value.set("transaction_id", data[0].id);										
+					$.each(self.lineDS.data(), function(index, value){
+						value.set("transaction_id", data[0].id);
+					});
+
+					//Assembly line
+					$.each(self.assemblyLineDS.data(), function(index, value){
+						value.set("transaction_id", data[0].id);
 					});
 
 					//Attachment
@@ -57638,6 +57720,7 @@
 		            });
 				}
 				self.lineDS.sync();
+				self.assemblyLineDS.sync();
 				self.uploadFile();
 				
 				return data;
@@ -57670,10 +57753,12 @@
 		cancel 				: function(){
 			this.dataSource.cancelChanges();
 			this.lineDS.cancelChanges();
+			this.assemblyLineDS.cancelChanges();
 			this.attachmentDS.cancelChanges();
 
 			this.dataSource.data([]);
 			this.lineDS.data([]);
+			this.assemblyLineDS.data([]);
 			this.attachmentDS.data([]);
 
 			this.contactDS.filter({ field:"parent_id", operator:"where_related_contact_type", value:1 });			

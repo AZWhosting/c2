@@ -84,6 +84,7 @@ class Item_lines extends REST_Controller {
 			   		"measurement_id" 	=> $value->measurement_id,
 					"tax_item_id" 		=> $value->tax_item_id,
 					"item_id" 			=> $value->item_id,
+					"assembly_id" 		=> $value->assembly_id,
 				   	"description" 		=> $value->description,
 				   	"on_hand" 			=> floatval($value->on_hand),
 					"on_po" 			=> floatval($value->on_po),
@@ -209,6 +210,7 @@ class Item_lines extends REST_Controller {
 
 			isset($value->transaction_id) 	? $obj->transaction_id 		= $value->transaction_id : "";
 			isset($value->item_id)			? $obj->item_id				= $value->item_id : "";
+			isset($value->assembly_id)		? $obj->assembly_id 		= $value->assembly_id : "";
 			isset($value->measurement_id)	? $obj->measurement_id		= $value->measurement_id : "";
 			isset($value->tax_item_id)		? $obj->tax_item_id			= $value->tax_item_id : "";
 		   	isset($value->description)		? $obj->description 		= $value->description : "";
@@ -237,6 +239,7 @@ class Item_lines extends REST_Controller {
 			   		"measurement_id" 	=> $obj->measurement_id,
 			   		"tax_item_id" 		=> $obj->tax_item_id,
 					"item_id" 			=> $obj->item_id,
+					"assembly_id" 		=> $obj->assembly_id,
 				   	"description" 		=> $obj->description,
 				   	"on_hand" 			=> floatval($obj->on_hand),
 					"on_po" 			=> floatval($obj->on_po),
@@ -297,6 +300,7 @@ class Item_lines extends REST_Controller {
 
 			isset($value->transaction_id) 	? $obj->transaction_id 		= $value->transaction_id : "";
 			isset($value->item_id)			? $obj->item_id				= $value->item_id : "";
+			isset($value->assembly_id)		? $obj->assembly_id 		= $value->assembly_id : "";
 			isset($value->measurement_id)	? $obj->measurement_id		= $value->measurement_id : "";
 			isset($value->tax_item_id)		? $obj->tax_item_id			= $value->tax_item_id : "";
 		   	isset($value->description)		? $obj->description 		= $value->description : "";
@@ -326,6 +330,7 @@ class Item_lines extends REST_Controller {
 			   		"measurement_id" 	=> $obj->measurement_id,
 			   		"tax_item_id" 		=> $obj->tax_item_id,
 					"item_id" 			=> $obj->item_id,
+					"assembly_id" 		=> $obj->assembly_id,
 				   	"description" 		=> $obj->description,
 				   	"on_hand" 			=> floatval($obj->on_hand),
 					"on_po" 			=> floatval($obj->on_po),

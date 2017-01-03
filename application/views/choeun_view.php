@@ -3100,7 +3100,7 @@
 								</div>
 					        </div>
 					        <div class="row-fluid" data-bind="visible: selectMeter">
-								<a data-bind="click: exportEXCEL">
+								<a data-bind="visible: haveData, click: exportEXCEL">
 									<span id="saveClose" class="btn btn-icon btn-success glyphicons download" style="width: 250px!important;">
 										<i></i> 
 										<span >Download Reading Book</span>
@@ -3111,14 +3111,14 @@
 									<thead>
 										<tr>
 											<th class="center">Meter Number</th>
-											<th class="center">Date</th>
+											<th class="center">From Date</th>
+											<th class="center">To Date</th>
 											<th class="center">Previouse</th>
 											<th class="center">Current</th>
-											<th class="center">Usage</th>
 										</tr>
 									</thead>
 									<tbody 
-				                		data-bind="source: dataSource" 
+				                		data-bind="source: uploadDS" 
 				                		data-auto-bind="false" 
 				                		data-role="listview" 
 				                		data-template="reading-template">
@@ -3133,7 +3133,7 @@
 							<div class="fileupload fileupload-new margin-none" data-provides="fileupload">
 							  	<input type="file"  data-role="upload" data-show-file-list="true" data-bind="events: {select: onSelected}" id="myFile"  class="margin-none" />
 							</div>
-							<span class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 160px!important;"><i></i>
+							<span class="btn btn-icon btn-primary glyphicons ok_2" style="width: 160px!important;"><i></i>
 							<span data-bind="click: save">Start Reading</span></span>
 						</div>
 						<!-- // Tab content END -->
@@ -3152,17 +3152,17 @@
     		#= number#
    		</td>
    		<td align="center">
-    		#= date#
+    		#= from_date#
+   		</td>
+   		<td align="center">
+    		#= to_date#
    		</td>
    		<td align="center">
     		#= previous#
    		</td>
    		<td align="center">
     		#= current#
-   		</td>
-   		<td align="center">
-    		#= consumption#
-   		</td> 		
+   		</td>		
    	</tr>
 </script>
 <script id="EditReading" type="text/x-kendo-template">
@@ -3249,10 +3249,10 @@
 						  		<thead>
 			                		<tr>
 			                			<th>Meter Number</th>
-			                			<th style="text-align: center">Date</th>
+			                			<th style="text-align: center">From Date</th>
+			                			<th style="text-align: center">To Date</th>
 			                			<th>Previous</th>
 			                			<th>Current</th>
-			                			<th>Usage</th>
 			                			<th style="text-align: center">Action</th>
 			                		</tr>
 			                	</thead>
@@ -3277,16 +3277,16 @@
     		#= number#
    		</td>
    		<td align="center">
-    		#= date#
+    		#= from_date#
+   		</td>
+   		<td align="center">
+    		#= to_date#
    		</td>
    		<td align="center">
     		#= previous#
    		</td>
    		<td align="center">
     		#= current#
-   		</td>
-   		<td align="center">
-    		#= current - previous#
    		</td>
    		<td align="center">   			   
 		    <a class="btn-action glyphicons pencil btn-success k-edit-button" ><i></i></a>
@@ -3406,7 +3406,6 @@
 										data-text-field="name" 
 										data-value-field="id" 
 										data-bind="
-											
 		                  					source: licenseDS,
 		                  					events: {change: licenseChange}">
 		                  		</div>
@@ -3425,7 +3424,6 @@
 										data-text-field="name" 
 										data-value-field="id" 
 										data-bind="
-											
 		                  					source: blocDS,
 		                  					events: {change: blocChange}">
 		                  		</div>
@@ -3435,7 +3433,6 @@
 									<label ><span >Action</span></label>	
 									<div class="row" style="margin: 0;">					
 										<button type="button" data-role="button" data-bind="click: search" class="k-button" role="button" aria-disabled="false" tabindex="0"><i class="icon-search"></i></button>
-										<button type="button" data-role="button" data-bind="click: save, visible: showButton" class="k-button" role="button" aria-disabled="false" tabindex="0">Create Bill</button> 
 									</div>
 		                  		</div>
 							</div>		
@@ -3546,7 +3543,7 @@
 						<div id="ntf1" data-role="notification"></div>
 				        <div class="row">
 							<div class="span12" align="right">
-								<span class="btn btn-icon btn-primary glyphicons ok_2" data-bind="click: runBill" style="width: 110px;margin-bottom: 0;"><i></i> <span>Run Bill</span></span>
+								<span class="btn btn-icon btn-primary glyphicons ok_2" data-bind="click: save, visible: showButton" style="width: 110px;margin-bottom: 0;"><i></i> <span>Run Bill</span></span>
 								
 								<span class="btn btn-icon btn-warning glyphicons remove_2" data-bind="click: cancel" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.cancel"></span></span>
 													
@@ -3617,7 +3614,6 @@
 										data-text-field="name" 
 										data-value-field="id" 
 										data-bind="
-											
 		                  					source: licenseDS,
 		                  					events: {change: licenseChange}">
 		                  		</div>
@@ -3636,7 +3632,6 @@
 										data-text-field="name" 
 										data-value-field="id" 
 										data-bind="
-											
 		                  					source: blocDS,
 		                  					events: {change: blocChange}">
 		                  		</div>
@@ -4895,7 +4890,7 @@
 
 <!-- ***************************
 *	Invoice Form Section        *
-**************************** -->
+**************************** -->	
 <script id="invoiceCustom" type="text/x-kendo-template">
 	<div id="slide-form">
 		<div class="customer-background">
@@ -5167,7 +5162,33 @@
 	</tr>
 </script>
 
-
+<script id="Reconcile" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background" style="overflow: hidden;">
+			<div class="container-960">					
+				<div id="example" class="k-content">
+			    	<div class="hidden-print pull-right">
+			    		<span class="glyphicons no-js remove_2" 
+							data-bind="click: cancel"><i></i></span>	
+					</div>
+			        <h2 style="padding:0 15px;">Reconcile</h2>
+			        
+			        <div class="box-generic bg-action-button">
+						<div id="ntf1" data-role="notification"></div>
+				        <div class="row">
+							<div class="span12" align="right">
+								<span class="btn btn-icon btn-primary glyphicons ok_2" data-bind="click: runBill" style="width: 110px;margin-bottom: 0;"><i></i> <span>Save</span></span>
+								
+								<span class="btn btn-icon btn-warning glyphicons remove_2" data-bind="click: cancel" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.cancel"></span></span>
+													
+							</div>
+						</div>
+					</div>
+				</div>						
+			</div>
+		</div>
+	</div>				  	
+</script>
 
 <!-- ***************************
 *	Template Blog         	  *
@@ -5247,33 +5268,6 @@
 	<strong>
     	<a href="\#/customer_setting">+ Add New Payment Method</a>
     </strong>	
-</script>
-<script id="Reconcile" type="text/x-kendo-template">
-	<div id="slide-form">
-		<div class="customer-background" style="overflow: hidden;">
-			<div class="container-960">					
-				<div id="example" class="k-content">
-			    	<div class="hidden-print pull-right">
-			    		<span class="glyphicons no-js remove_2" 
-							data-bind="click: cancel"><i></i></span>	
-					</div>
-			        <h2 style="padding:0 15px;">Reconcile</h2>
-			        
-			        <div class="box-generic bg-action-button">
-						<div id="ntf1" data-role="notification"></div>
-				        <div class="row">
-							<div class="span12" align="right">
-								<span class="btn btn-icon btn-primary glyphicons ok_2" data-bind="click: runBill" style="width: 110px;margin-bottom: 0;"><i></i> <span>Save</span></span>
-								
-								<span class="btn btn-icon btn-warning glyphicons remove_2" data-bind="click: cancel" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.cancel"></span></span>
-													
-							</div>
-						</div>
-					</div>
-				</div>						
-			</div>
-		</div>
-	</div>				  	
 </script>
 <!-- Report -->
 <script id="customerList" type="text/x-kendo-template">
@@ -5385,7 +5379,7 @@
   				<li ><a href='#/reorder'><span >Reorder Customer Number</span></a></li>  				
   				<li><span class="li-line"></span></li>
   				<li><a href='#/reading'><span >Meter Reading</span></a></li> 
-  				<li><a href='#/edit_reading'><span >Edit Reading</span></a></li>
+  				<!--li><a href='#/edit_reading'><span >Edit Reading</span></a></li-->
   				<li><span class="li-line"></span></li>
   				<li><a href='#/run_bill'><span >Run Bill</span></a></li> 
   				<li><a href='#/print_bill'><span >Print Bill</span></a></li>
@@ -10703,6 +10697,7 @@
 		lang 				: langVM,
 		meterVM 			: banhji.meter,
 		dataSource  		: dataStore(apiUrl + "readings"),
+		uploadDS  			: dataStore(apiUrl + "readings/books"),
 		licenseDS 			: dataStore(apiUrl + "branches"),
 		blocDS 				: dataStore(apiUrl + "locations"),
 		itemDS 				: null,
@@ -10711,6 +10706,7 @@
 		licenseSelect		: null,
 		blocSelect			: null,
 		selectMeter 		: false,
+		haveData 			: false,
 		rows 				: [{
 						        cells: [
 						          { value: "number" },
@@ -10718,7 +10714,6 @@
 						          { value: "to_date" },
 						          { value: "previous" },
 						          { value: "current" },
-						          { value: "consumption" },
 						          { value: "status" }
 						        ]
 						      }],
@@ -10736,7 +10731,8 @@
 			var bloc = this.blocDS.at(e.sender.selectedIndex - 1);
 			banhji.reading.set("blocSelect", bloc);
 		},
-		search 		 		: function(){		
+		search 		 		: function(){	
+			this.set("haveData", false);	
 			var monthOfSearch = this.get("monthOfSelect"),
 			license_id = this.get("licenseSelect"),
 			bloc_id = this.get("blocSelect");
@@ -10750,43 +10746,43 @@
 				monthL = kendo.toString(monthL, "yyyy-MM-dd");
 				
 				para.push(
-					{field: "month_of >=" , value: monthOf},
-					{field: "month_of <=", value: monthL}
+					{field: "month_of >=", operator: "where_related_record", value: monthOf},
+					{field: "month_of <=", operator: "where_related_record", value: monthL}
 				);
 				//this.dataSource.filter(para);
 				if(license_id){
-					para.push({field: "branch_id", operator: "where_related_meter" , value: license_id.id});
+					para.push({field: "branch_id", value: license_id.id});
+					if(bloc_id){
+						para.push({field: "location_id", value: bloc_id.id});
+						this.set("selectMeter", true);
+						var self = this;
+						this.uploadDS.query({
+							filter: para
+						}).then(function(){
+							for (var i = 0; i < self.uploadDS.data().length; i++){
+					        self.rows.push({
+					            cells: [
+					              { value: self.uploadDS.data()[i].number },
+					              { value: self.uploadDS.data()[i].from_date },
+					              { value: self.uploadDS.data()[i].to_date  },
+					              { value: self.uploadDS.data()[i].previous  },
+					              { value: self.uploadDS.data()[i].current  },
+					              { value: self.uploadDS.data()[i].status  }
+					            ]
+					          });
+					        }
+					        if(self.uploadDS.data().length > 0){
+					        	self.set("haveData", true);
+					        }
+						});
+					}else{
+						alert("Please Select Location");
+					}
+				}else{
+					alert("Please Select License");
 				}
-				if(bloc_id){
-					para.push({field: "location_id", operator: "where_related_meter" , value: bloc_id.id});
-				}
-				this.set("selectMeter", true);
-				var self = this;
-				this.dataSource.query({
-					filter: para
-				}).then(function(){
-					for (var i = 0; i < self.dataSource.data().length; i++){
-			        self.rows.push({
-			            cells: [
-			              { value: self.dataSource.data()[i].number },
-			              { value: self.dataSource.data()[i].from_date },
-			              { value: self.dataSource.data()[i].to_date  },
-			              { value: self.dataSource.data()[i].previous  },
-			              { value: self.dataSource.data()[i].current  },
-			              { value: self.dataSource.data()[i].consumption  },
-			              { value: self.dataSource.data()[i].status  }
-			            ]
-			          });
-			        }
-				});
-
-
-
-				
-				console.log(para);
-
 			}else{
-				alert("សូមSelect ខែ");
+				alert("Please Select Month Of");
 			}	
 		},
 		monthOfSR 			: null,
@@ -10851,7 +10847,7 @@
 					if(roa.length > 0){
 						result[sheetName] = roa;
 						for(var i = 0; i < roa.length; i++) {
-							//banhji.reading.dataSource.add(roa[i]);
+							banhji.reading.dataSource.add(roa[i]);
 							$("#loadImport").css("display","none");	
 							console.log(roa[i]);
 						}							
@@ -10868,19 +10864,19 @@
 				banhji.reading.dataSource.sync();
 				banhji.reading.dataSource.bind("requestEnd", function(e){
 					if(e.type != 'read') {
-						// if(e.type == 'update') {
-						// 	// update current invoice
-						// 	banhji.invoice.dataSource.query({
-						// 		filter: {field: 'meter_record_id', operator: 'where_related_winvoice_line', value: e.response.results[0]._meta.id}
-						// 	}).then(function(e){
-						// 		console.log(banhji.invoice.dataSource.data());
-						// 	});
-						// 	// create new invoice
-						// }
+						if(e.type == 'update') {
+							// update current invoice
+							banhji.invoice.dataSource.query({
+								filter: {field: 'meter_record_id', operator: 'where_related_winvoice_line', value: e.response.results[0]._meta.id}
+							}).then(function(e){
+								console.log(banhji.invoice.dataSource.data());
+							});
+							// create new invoice
+						}
 				    	if(e.response){	
 				    		dfd.resolve(e.response.results);			
 				    		self.cancel();
-							
+							$("#loadImport").css("display","none");
 						}	
 					}
 					console.log(e.type);			  				
@@ -10892,7 +10888,10 @@
 			return dfd.promise();	
 		},
 		cancel 				: function(){
-			banhji.reading.dataSource.cancelChanges();		
+			banhji.reading.dataSource.cancelChanges();	
+			banhji.reading.uploadDS.cancelChanges();	
+			banhji.reading.dataSource.data([]);
+			banhji.reading.uploadDS.data([]);	
 			window.history.back();
 		}
 	});
@@ -11174,14 +11173,11 @@
 		monthSelect 		: null,	
 		blocSelect 			: null,
 		pageLoad 			: function(id){
-			
 		},   
 		checkAll 		: function(e){
 			e.preventDefault();
-
 			var bolValue = this.get("chkAll");
 			var data = this.readingDS.data();
-			
 			if(data.length>0){						
 		        $.each(data, function(index, value){		        			        	
 		        	value.set("isCheck", bolValue);		        	
@@ -11190,17 +11186,16 @@
 		},	
 		total 			: function(){      		
 	        var sum = 0;
-
 	        $.each(this.readingDS.data(), function(index, value) {	        		            
 	        	sum += kendo.parseInt(value.usage);		        	          
 	        });
-
 	        return kendo.toString(sum, "n0");
 	    },	 
 	    licenseChange 		: function(e) {
 			var license = this.licenseDS.at(e.sender.selectedIndex - 1);
 			console.log(license);
 			this.set("licenseSelect", license.id);
+			this.blocDS.filter({field: "branch_id",value: license.id});
 	    	//this.invoiceDS.filter({field: "branch_id",value: license.id});
 	    },
 	    blocChange 			: function(e) {
@@ -11238,7 +11233,12 @@
 	    	}
 	    },
 		save 				: function() {
-			var self = this;
+			var self = this,
+			monthOF,
+			issueDate,
+			paymentDate,
+			billDate,
+			dueDate;
 			$.each(this.invoiceArray, function(i, v){
 				var invoiceItems = [];
 				var rate = banhji.source.getRate(banhji.locale, date);
@@ -11247,7 +11247,32 @@
 				var record_id = v.items[0].line.id;
 				var amount = 0.00;
 				var date = new Date();
-
+				if(self.get("FmonthSelect")){
+					monthOF = self.get("FmonthSelect");
+				}else{
+					monthOF = null;
+				}
+				if(self.get("BillingDate")){
+					billDate = self.get("BillingDate");
+				}else{
+					billDate = null;
+				}
+				if(self.get("PaymentDate")){
+					paymentDate = self.get("PaymentDate");
+				}else{
+					paymentDate = null;
+				}
+				if(self.get("PaymentDate")){
+					paymentDate = self.get("PaymentDate");
+				}else{
+					paymentDate = null;
+				}
+				if(self.get("DueDate")){
+					dueDate = self.get("DueDate");
+				}else{
+					dueDate = date.setDate(date.getDate() + 7);
+				}
+				
 				$.each(v.items, function(index, value) {
 				
 					if(value.type == "tariff") {
@@ -11297,10 +11322,11 @@
 					vat 				: null,
 					rate 				: rate,
 					locale 				: locale,
-					month_of 			: null,
+					month_of 			: monthOF,
 					issued_date 		: date,
-					payment_date 		: null,
-					due_date 			: date.setDate(date.getDate() + 7),
+					payment_date 		: paymentDate,
+					bill_date 			: billDate,
+					due_date 			: dueDate,
 					check_no 			: null,
 					memo 				: null,
 					memo2 				: null,
@@ -13271,7 +13297,7 @@
 			}
 		},
 	});
- 	banhji.Reconcile = kendo.observable({
+	banhji.Reconcile = kendo.observable({
 		lang 					: langVM,
 		institute 				: banhji.institute,	
 		pageLoad 				: function(){
@@ -13511,7 +13537,6 @@
 
 		wDashBoard: new kendo.View("#wDashBoard", {model: wDashBoard}),
 		customer: new kendo.Layout("#customer", {model: banhji.customer}),	
-		Reconcile: new kendo.Layout("#Reconcile", {model: banhji.Reconcile}),
 		//Report
 		customerList : new kendo.Layout("#customerList", {model: banhji.customerList}),
 	};
@@ -13844,6 +13869,21 @@
 
 		vm.pageLoad();
 	});
+	banhji.router.route("/reports", function(){		
+		banhji.view.layout.showIn("#content", banhji.view.Reports);
+		banhji.view.layout.showIn('#menu', banhji.view.menu);
+		banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
+		
+		var vm = banhji.Reports;
+
+		banhji.userManagement.addMultiTask("Reports","reports",null);
+
+		if(banhji.pageLoaded["reports"]==undefined){
+			banhji.pageLoaded["reports"] = true;
+		}
+
+		vm.pageLoad();
+	});
 
 	banhji.router.route("/customer_deposit(/:id)(/:is_recurring)", function(id,is_recurring){
 		// banhji.accessMod.query({
@@ -14037,21 +14077,6 @@
 		};
 	});	
 	//////Report Router/////
-	banhji.router.route("/reports", function(){		
-		banhji.view.layout.showIn("#content", banhji.view.Reports);
-		banhji.view.layout.showIn('#menu', banhji.view.menu);
-		banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
-		
-		var vm = banhji.Reports;
-
-		banhji.userManagement.addMultiTask("Reports","reports",null);
-
-		if(banhji.pageLoaded["reports"]==undefined){
-			banhji.pageLoaded["reports"] = true;
-		}
-
-		vm.pageLoad();
-	});
 	banhji.router.route("/customer_list", function(){
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');

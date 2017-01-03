@@ -17,8 +17,8 @@
     <link rel="stylesheet" href="<?php echo base_url()?>assets/css/main.css">
 
     <!-- Custom styling plus plugins -->
-    <link rel="stylesheet" href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/kendoui/styles/kendo.common.min.css">
-    <link rel="stylesheet" href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/kendoui/styles/kendo.material.min.css">
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/libraries/kendoui/styles/kendo.common.min.css">
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/libraries/kendoui/styles/kendo.material.min.css">
 
      <!-- Custom style -->
     <link rel="stylesheet" href="<?php echo base_url()?>assets/admin-style.css">

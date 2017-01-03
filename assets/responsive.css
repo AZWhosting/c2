@@ -11,9 +11,9 @@
 #ddlSegment_taglist li span .k-icon.k-i-close{
   display: block !important;
 }*/
-.k-list-container.k-popup.k-group.k-reset{
+/*.k-list-container.k-popup.k-group.k-reset{
 	overflow-y: scroll !important;
-}
+}*/
 .padding-bottom-none-phone .glyphicons.user.userss i:before,
 .padding-bottom-none-phone .icon-play-circles:before{
   color: #fff !important;
@@ -122,6 +122,14 @@
   padding: 5px 10px;
 }
 
+
+.k-animation-container .k-list-container.k-popup.k-group.k-reset{
+  border-color: #f9fafc !important;
+  margin-top: 40px;
+}
+
+
+
 /*#cbbContact-list,*/
 #cbbAccount-list,
 #cbbCurrency-list,
@@ -154,8 +162,27 @@
 
 #cbbContact-list{
   width: 350px !important;
-  border-color: #f9fafc !important;
 }
+
+
+
+/*#ccbItem-list,
+#ddlMesurement-list,
+#cbbReader-list,
+#ccbTaxItem-list{
+  border-color: #f9fafc !important;
+}*/
+
+/*.k-animation-container #cbbContact-list,
+.k-animation-container #ccbItem-list,
+.k-animation-container #cbbAccounts-list,
+.k-animation-container #ddlMesurement-list,
+.k-animation-container #ddlCategory-list,
+.k-animation-container #cbbReader-list,
+.k-animation-container #ccbTaxItem-list{
+  margin-top: 40px;
+}
+*/
 
 .k-grid tbody tr {
     cursor: pointer !important;

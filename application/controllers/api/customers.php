@@ -576,7 +576,7 @@ class Customers extends REST_Controller {
 			foreach($obj as $row) {
 				$account = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 				$account->where('contact_id', $row->contact_id);
-				$account->where('account_id', $row->contact_deposit_account_id)->get();
+				$account->where('account_id', $row->contact_deposit_account_id)->get_raw();
 				$data[] = array(
 					"id" => $row->id,
 					"register_date" => $row->contact_registered_date,
@@ -586,14 +586,88 @@ class Customers extends REST_Controller {
 					"type" =>$row->contact_type,
 					"license" => $row->branch_name,
 					"bloc"=> $row->location_name,
-					"deposit" => $account->exists() ? "" : ""
+					"deposit" => $account->exists() ? array_reduce($account, "_getAmount") : 0
 				);
 			}
 			$this->response(array('results' => $data, 'count' => $obj->paged->total_rows), 200);
 		} else {
 			$this->reponse(array('results'=> array(), 'msg'=> 'no meter found'), 404);
 		}
-	}		
+	}
+
+	//Get Water Sale Summary
+	//@param: License, location, m3, amount
+	function saleSummary_get() {}
+
+	//Get Water Sale Detail
+	//@param: Number, customer, type, location, usage, amount
+	function saleDetail_get() {}
+
+	//Get Payment Summary
+	//@param: Number, customer, type, location, usage, amount
+	function paymentSummary_get() {}
+
+	//Get Payment Detail
+	//@param: Number, customer, type, location, usage, amount
+	function paymentDetail_get() {}
+
+	//Get Payment Detail
+	//@param: Number, customer, type, location, usage, amount
+	function minimumWaterUsage_get() {}
+
+	//Get Payment Detail
+	//@param: Number, customer, type, location, usage, amount
+	function disconnect_get() {}
+
+	//Get Payment Detail
+	//@param: Number, customer, type, location, usage, amount
+	function accountReceivable_get() {}
+
+	//Get Payment Detail
+	//@param: Number, customer, type, location, usage, amount
+	function deposit_get() {}
+
+	//Get Payment Detail
+	//@param: Number, customer, type, location, usage, amount
+	function agingSummary_get() {}
+
+	//Get Payment Detail
+	//@param: Number, customer, type, location, usage, amount
+	function agingDetail_get() {}
+
+	//Get Payment Detail
+	//@param: Number, customer, type, location, usage, amount
+	function connectionRevenue_get() {}
+
+	//Get Payment Detail
+	//@param: Number, customer, type, location, usage, amount
+	function otherRevenue_get() {}
+
+	//Get Payment Detail
+	//@param: Number, customer, type, location, usage, amount
+	function cashReceiptSummary_get() {}
+
+	//Get Payment Detail
+	//@param: Number, customer, type, location, usage, amount
+	function cashReceiptDetail_get() {}
+
+	//Get Payment Detail
+	//@param: Number, customer, type, location, usage, amount
+	function cashReceiptSourceSummary_get() {}
+
+	//Get Payment Detail
+	//@param: Number, customer, type, location, usage, amount
+	function cashReceiptSourceDetail_get() {}
+
+	function _getAmount($carry, $item) {
+		if($item['dr'] !=0) {
+			$curry += $item['dr'];
+		} else {
+			$curry -= $item['cr'];
+		}
+		return $curry;
+	}
+	
 }
 
 /* End of file contacts.php */

@@ -191,7 +191,7 @@ class Winvoices extends REST_Controller {
 	   		if($obj->save()){
 	   			$invoice_lines = [];
 		   		foreach ($value->invoice_lines as $row) {
-		   			if($row->type == 'usage') {
+		   			if(isset($row->type) && $row->type == 'usage') {
 		   				$record = new Meter_record(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		   				$record->where('id', $row->meter_record_id)->get();
 		   				$record->invoiced = 1;
