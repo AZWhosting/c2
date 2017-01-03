@@ -46398,7 +46398,7 @@
         dataSource 			: dataStore(apiUrl + "tax_types"),
         itemDS 	 			: dataStore(apiUrl + "tax_items"),
         deleteDS 			: dataStore(apiUrl + "tax_items"),
-        itemDeleteDS 		: dataStore(apiUrl + "transactions/line"),
+        itemDeleteDS 		: dataStore(apiUrl + "item_lines"),
         accountDS 			: banhji.source.accountDS,
         typeList			: [ 
 	 		{ id:"Invoice Based", name: "Invoice Based" },
@@ -50332,10 +50332,10 @@
 	banhji.purchaseOrder =  kendo.observable({
 		lang 					: langVM,
 		dataSource 			: dataStore(apiUrl + "transactions"),
-		lineDS  			: dataStore(apiUrl + "transactions/line"),
+		lineDS  			: dataStore(apiUrl + "item_lines"),
 		deleteDS  			: dataStore(apiUrl + "transactions"),
 		recurringDS 		: dataStore(apiUrl + "transactions"),
-		recurringLineDS 	: dataStore(apiUrl + "transactions/line"),
+		recurringLineDS 	: dataStore(apiUrl + "item_lines"),
 		jobDS				: banhji.source.jobDS,
 		measurementDS	 	: dataStore(apiUrl + "measurements"),
 		attachmentDS	 	: dataStore(apiUrl + "attachments"),			
@@ -51100,12 +51100,12 @@
 	banhji.grn =  kendo.observable({
 		lang 					: langVM,
 		dataSource 			: dataStore(apiUrl + "transactions"),
-		lineDS  			: dataStore(apiUrl + "transactions/line"),
+		lineDS  			: dataStore(apiUrl + "item_lines"),
 		deleteDS 			: dataStore(apiUrl + "transactions"),
 		recurringDS 		: dataStore(apiUrl + "transactions"),
-		recurringLineDS 	: dataStore(apiUrl + "transactions/line"),
+		recurringLineDS 	: dataStore(apiUrl + "item_lines"),
 		referenceDS			: dataStore(apiUrl + "transactions"),
-		referenceLineDS		: dataStore(apiUrl + "transactions/line"),
+		referenceLineDS		: dataStore(apiUrl + "item_linese"),
 		measurementDS	 	: dataStore(apiUrl + "measurements"),
 		attachmentDS	 	: dataStore(apiUrl + "attachments"),			
 		txnTemplateDS		: new kendo.data.DataSource({
@@ -52501,17 +52501,17 @@
 	banhji.purchase =  kendo.observable({
 		lang 						: langVM,
 		dataSource 					: dataStore(apiUrl + "transactions"),
-		lineDS  					: dataStore(apiUrl + "transactions/line"),
+		lineDS  					: dataStore(apiUrl + "item_lines"),
 		deleteDS 					: dataStore(apiUrl + "transactions"),
 		accountLineDS  				: dataStore(apiUrl + "account_lines"),
 		journalLineDS				: dataStore(apiUrl + "journal_lines"),
 		additionalCostDS 			: dataStore(apiUrl + "transactions"),
 		recurringDS 				: dataStore(apiUrl + "transactions"),
-		recurringLineDS 			: dataStore(apiUrl + "transactions/line"),
+		recurringLineDS 			: dataStore(apiUrl + "item_lines"),
 		recurringAccountLineDS 		: dataStore(apiUrl + "account_lines"),
 		recurringAdditionalCostDS 	: dataStore(apiUrl + "transactions"),
 		referenceDS					: dataStore(apiUrl + "transactions"),
-		referenceLineDS				: dataStore(apiUrl + "transactions/line"),
+		referenceLineDS				: dataStore(apiUrl + "item_lines"),
 		jobDS						: banhji.source.jobDS,	
 		balanceDS  					: dataStore(apiUrl + "transactions"),
 		contactListDS 				: banhji.source.supplierListDS,
@@ -54137,11 +54137,11 @@
 	banhji.purchaseReturn =  kendo.observable({
 		lang 					: langVM,
 		dataSource 			: dataStore(apiUrl + "transactions"),
-		lineDS  			: dataStore(apiUrl + "transactions/line"),
+		lineDS  			: dataStore(apiUrl + "item_lines"),
 		deleteDS 			: dataStore(apiUrl + "transactions"),		
 		journalLineDS		: dataStore(apiUrl + "journal_lines"),
 		referenceDS			: dataStore(apiUrl + "transactions"),
-		referenceLineDS		: dataStore(apiUrl + "transactions/line"),
+		referenceLineDS		: dataStore(apiUrl + "item_lines"),
 		returnDS			: dataStore(apiUrl + "transactions"),
 		invoiceDS			: dataStore(apiUrl + "transactions"),
 		measurementDS		: dataStore(apiUrl + "measurements"),
@@ -57028,10 +57028,10 @@
 	banhji.quote =  kendo.observable({
 		lang 				: langVM,
 		dataSource 			: dataStore(apiUrl + "transactions"),
-		lineDS  			: dataStore(apiUrl + "transactions/line"),
+		lineDS  			: dataStore(apiUrl + "item_lines"),
 		deleteDS 			: dataStore(apiUrl + "transactions"),
 		recurringDS 		: dataStore(apiUrl + "transactions"),
-		recurringLineDS 	: dataStore(apiUrl + "transactions/line"),
+		recurringLineDS 	: dataStore(apiUrl + "item_lines"),
 		attachmentDS	 	: dataStore(apiUrl + "attachments"),
 		balanceDS  			: dataStore(apiUrl + "transactions"),
 		jobDS				: banhji.source.jobDS,
@@ -57830,11 +57830,11 @@
 		lang 				: langVM,
 		dataSource 			: dataStore(apiUrl + "transactions"),
 		deleteDS 			: dataStore(apiUrl + "transactions"),
-		lineDS  			: dataStore(apiUrl + "transactions/line"),		
+		lineDS  			: dataStore(apiUrl + "item_lines"),		
 		recurringDS 		: dataStore(apiUrl + "transactions"),
-		recurringLineDS 	: dataStore(apiUrl + "transactions/line"),
+		recurringLineDS 	: dataStore(apiUrl + "item_lines"),
 		referenceDS			: dataStore(apiUrl + "transactions"),
-		referenceLineDS		: dataStore(apiUrl + "transactions/line"),
+		referenceLineDS		: dataStore(apiUrl + "item_lines"),
 		attachmentDS	 	: dataStore(apiUrl + "attachments"),
 		txnTemplateDS		: new kendo.data.DataSource({
 			transport: {
@@ -59387,13 +59387,13 @@
 	banhji.cashSale =  kendo.observable({
 		lang 				: langVM,
 		dataSource 			: dataStore(apiUrl + "transactions"),
-		lineDS  			: dataStore(apiUrl + "transactions/line"),
+		lineDS  			: dataStore(apiUrl + "item_lines"),
 		deleteDS 			: dataStore(apiUrl + "transactions"),
 		journalLineDS		: dataStore(apiUrl + "journal_lines"),
 		recurringDS 		: dataStore(apiUrl + "transactions"),
-		recurringLineDS 	: dataStore(apiUrl + "transactions/line"),
+		recurringLineDS 	: dataStore(apiUrl + "item_lines"),
 		referenceDS			: dataStore(apiUrl + "transactions"),
-		referenceLineDS		: dataStore(apiUrl + "transactions/line"),
+		referenceLineDS		: dataStore(apiUrl + "item_lines"),
 		balanceDS  			: dataStore(apiUrl + "transactions"),
 		depositDS  			: dataStore(apiUrl + "transactions"),
 		depositSumDS  		: new kendo.data.DataSource({
@@ -60745,13 +60745,13 @@
 	banhji.invoice =  kendo.observable({
 		lang 				: langVM,
 		dataSource 			: dataStore(apiUrl + "transactions"),
-		lineDS  			: dataStore(apiUrl + "transactions/line"),
+		lineDS  			: dataStore(apiUrl + "item_lines"),
 		deleteDS 			: dataStore(apiUrl + "transactions"),
 		journalLineDS		: dataStore(apiUrl + "journal_lines"),
 		recurringDS 		: dataStore(apiUrl + "transactions"),
-		recurringLineDS 	: dataStore(apiUrl + "transactions/line"),
+		recurringLineDS 	: dataStore(apiUrl + "item_lines"),
 		referenceDS			: dataStore(apiUrl + "transactions"),
-		referenceLineDS		: dataStore(apiUrl + "transactions/line"),
+		referenceLineDS		: dataStore(apiUrl + "item_lines"),
 		balanceDS  			: dataStore(apiUrl + "transactions"),
 		depositDS  			: dataStore(apiUrl + "transactions"),
 		attachmentDS	 	: dataStore(apiUrl + "attachments"),
@@ -62137,12 +62137,12 @@
 	banhji.gdn =  kendo.observable({
 		lang 				: langVM,
 		dataSource 			: dataStore(apiUrl + "transactions"),
-		lineDS  			: dataStore(apiUrl + "transactions/line"),
+		lineDS  			: dataStore(apiUrl + "item_lines"),
 		deleteDS 			: dataStore(apiUrl + "transactions"),
 		recurringDS 		: dataStore(apiUrl + "transactions"),
-		recurringLineDS 	: dataStore(apiUrl + "transactions/line"),
+		recurringLineDS 	: dataStore(apiUrl + "item_lines"),
 		referenceDS			: dataStore(apiUrl + "transactions"),
-		referenceLineDS		: dataStore(apiUrl + "transactions/line"),
+		referenceLineDS		: dataStore(apiUrl + "item_lines"),
 		contactDS  			: banhji.source.customerDS,
 		itemDS  			: banhji.source.itemForSaleDS,
 		catalogDS			: dataStore(apiUrl + "items"),
@@ -62915,11 +62915,11 @@
 	banhji.saleReturn =  kendo.observable({
 		lang 				: langVM,
 		dataSource 			: dataStore(apiUrl + "transactions"),
-		lineDS  			: dataStore(apiUrl + "transactions/line"),
+		lineDS  			: dataStore(apiUrl + "item_lines"),
 		deleteDS 			: dataStore(apiUrl + "transactions"),		
 		journalLineDS		: dataStore(apiUrl + "journal_lines"),
 		referenceDS			: dataStore(apiUrl + "transactions"),
-		referenceLineDS		: dataStore(apiUrl + "transactions/line"),
+		referenceLineDS		: dataStore(apiUrl + "item_lines"),
 		returnDS			: dataStore(apiUrl + "transactions"),
 		invoiceDS			: dataStore(apiUrl + "transactions"),
 		currencyRateDS		: dataStore(apiUrl + "currencies/rate"),
@@ -64780,7 +64780,7 @@
 		txnTemplateDS		: dataStore(apiUrl + "transaction_templates"),		
 		obj 				: {title: "Quotation", issued_date : "<?php echo date('d/M/Y'); ?>", number : "QO123456", type : "Quote", amount: "$500,000.00", contact: []},
 		company 			: banhji.institute,		
-		lineDS 				: dataStore(apiUrl + "transactions/line"),
+		lineDS 				: dataStore(apiUrl + "item_lines"),
 		user_id				: banhji.source.user_id,
 		selectForm 			: null,
 		pageLoad 			: function(id, is_recurring){
@@ -66187,7 +66187,7 @@
 	banhji.sale = kendo.observable({
 		lang 				: langVM,
 		dataSource  		: dataStore(apiUrl + 'items'),
-		txnDS  				: dataStore(apiUrl + 'transactions/line'),
+		txnDS  				: dataStore(apiUrl + 'item_lines'),
 		quoteLineDS  		: banhji.quote.lineDS,
 		soLineDS  			: banhji.saleOrder.lineDS,
 		categoryDS 			: dataStore(apiUrl + 'categories'),
@@ -68188,6 +68188,7 @@
 						var amount_due = value.amount - (value.amount_paid + value.deposit);							
 
 						self.dataSource.add({
+							transaction_template_id : 0,
 		    				contact_id 			: value.contact_id,				
 							account_id 			: obj.account_id,
 							payment_term_id		: value.payment_term_id,
@@ -68305,7 +68306,8 @@
 			this.set("pay", 0);
 			this.set("remain", 0);				
 
-			this.set("obj", {				
+			this.set("obj", {
+				transaction_template_id: 6,				
 				account_id 			: 7,
 				payment_method_id	: 1,							   	
 			   	rate				: 1,			   	
@@ -68361,6 +68363,7 @@
 	    	}else{
 	    		//Add brand new transaction
 	    		$.each(this.dataSource.data(), function(index, value){
+	    			value.set("transaction_template_id", obj.transaction_template_id);
 	    			value.set("account_id", obj.account_id);
 	    			value.set("payment_method_id", obj.payment_method_id);	    			
 	    			value.set("issued_date", obj.issued_date);
@@ -68684,6 +68687,7 @@
 						var amount_due = value.amount - (value.amount_paid + value.deposit);							
 
 						self.dataSource.add({
+							transaction_template_id : 0,
 		    				contact_id 			: value.contact_id,				
 							account_id 			: obj.account_id,
 							payment_term_id		: value.payment_term_id,
@@ -68823,7 +68827,8 @@
 			this.set("pay", 0);
 			this.set("remain", 0);				
 
-			this.set("obj", {				
+			this.set("obj", {
+				transaction_template_id : 12,				
 				account_id 			: 7,
 				payment_method_id	: 1,							   	
 			   	rate				: 1,			   	
@@ -68878,6 +68883,7 @@
 	    	}else{
 	    		//Add brand new transaction
 	    		$.each(this.dataSource.data(), function(index, value){
+	    			value.set("transaction_template_id", obj.transaction_template_id);
 	    			value.set("account_id", obj.account_id);
 	    			value.set("payment_method_id", obj.payment_method_id);	    			
 	    			value.set("issued_date", obj.issued_date);
@@ -69549,9 +69555,9 @@
 			page:1,
 			pageSize: 100
 		}),
-		itemMovementDS 		: dataStore(apiUrl + "transactions/line"),
+		itemMovementDS 		: dataStore(apiUrl + "item_lines"),
 		categoryDS 			: dataStore(apiUrl + "categories"),
-		sumamryDS 			: dataStore(apiUrl + "transactions/line"),
+		sumamryDS 			: dataStore(apiUrl + "item_lines"),
 		transactionDS		: dataStore(apiUrl + "items/movement"),
 		attachmentDS 		: dataStore(apiUrl + "attachments"),		
 		sortList			: banhji.source.sortList,
@@ -69949,8 +69955,8 @@
     	dataSource 			: dataStore(apiUrl + "item_prices"),
     	itemDS 				: dataStore(apiUrl + "items"),
     	recordDS 			: dataStore(apiUrl + "items/movement"),
-    	poDS 				: dataStore(apiUrl + "transactions/line"),
-    	soDS 				: dataStore(apiUrl + "transactions/line"),
+    	poDS 				: dataStore(apiUrl + "item_lines"),
+    	soDS 				: dataStore(apiUrl + "item_lines"),
     	currencyDS  		: banhji.source.currencyDS,
     	measurementDS	   	: banhji.source.measurementDS,
     	obj 				: null,
@@ -70116,7 +70122,7 @@
     	lang 					: langVM,    	
     	dataSource 				: dataStore(apiUrl + "items"),
     	patternDS 				: dataStore(apiUrl + "items"),
-    	deleteDS 				: dataStore(apiUrl + "transactions/line"),
+    	deleteDS 				: dataStore(apiUrl + "item_lines"),
     	categoryDS 				: banhji.source.inventoryCategoryDS,
     	itemGroupDS 			: banhji.source.itemGroupDS,   	
     	brandDS 	 			: banhji.source.brandDS,    	   	   	
@@ -71090,7 +71096,7 @@
     	lang 					: langVM,    	
     	dataSource 				: dataStore(apiUrl + "items"),
     	patternDS 				: dataStore(apiUrl + "items"),
-    	deleteDS 				: dataStore(apiUrl + "transactions/line"),
+    	deleteDS 				: dataStore(apiUrl + "item_lines"),
     	numberDS 				: dataStore(apiUrl + "items"),
     	existingDS 				: dataStore(apiUrl + "items"),
     	categoryDS 				: banhji.source.serviceCategoryDS,
@@ -71465,7 +71471,7 @@
     	lang 					: langVM,    	
     	dataSource 				: dataStore(apiUrl + "items"),
     	patternDS 				: dataStore(apiUrl + "items"),
-    	deleteDS 				: dataStore(apiUrl + "transactions/line"),
+    	deleteDS 				: dataStore(apiUrl + "item_lines"),
     	categoryDS 				: banhji.source.nonInventoryPartCategoryDS,
     	itemGroupDS 			: dataStore(apiUrl + "items/group"),
     	brandDS 	 			: dataStore(apiUrl + "brands"),    	   	   	
@@ -71837,7 +71843,7 @@
     	lang 					: langVM,    	
     	dataSource 				: dataStore(apiUrl + "items"),
     	patternDS 				: dataStore(apiUrl + "items"),
-    	deleteDS 				: dataStore(apiUrl + "transactions/line"),
+    	deleteDS 				: dataStore(apiUrl + "item_lines"),
     	categoryDS 				: banhji.source.fixedAssetCategoryDS,
     	measurementDS			: dataStore(apiUrl + "measurements"),
     	numberDS 				: dataStore(apiUrl + "items"),
@@ -72118,7 +72124,7 @@
 	banhji.txnItem =  kendo.observable({
     	lang 					: langVM,    	
     	dataSource 				: dataStore(apiUrl + "items"),    	
-    	deleteDS 				: dataStore(apiUrl + "transactions/line"),
+    	deleteDS 				: dataStore(apiUrl + "item_lines"),
     	numberDS 				: dataStore(apiUrl + "items"),
     	existingDS 				: dataStore(apiUrl + "items"),   	
     	currencyDS 	 			: banhji.source.currencyDS,  	
@@ -72290,7 +72296,7 @@
     banhji.itemAdjustment = kendo.observable({
     	lang 					: langVM,
     	dataSource  			: dataStore(apiUrl + "transactions"),	
-    	lineDS  				: dataStore(apiUrl + "transactions/line"),
+    	lineDS  				: dataStore(apiUrl + "item_lines"),
     	journalLineDS			: dataStore(apiUrl + "journal_lines"),	
 		itemDS  				: dataStore(apiUrl + "items"),
 		contactDS 				: banhji.source.employeeDS,
@@ -72789,9 +72795,9 @@
 	banhji.internalUsage = kendo.observable({
     	lang 					: langVM,
     	dataSource  			: dataStore(apiUrl + "transactions"),	
-    	lineDS  				: dataStore(apiUrl + "transactions/line"),
+    	lineDS  				: dataStore(apiUrl + "item_lines"),
     	accountLineDS  			: dataStore(apiUrl + "account_lines"),
-    	toItemLineDS  			: dataStore(apiUrl + "transactions/line"),
+    	toItemLineDS  			: dataStore(apiUrl + "item_lines"),
     	toAccountLineDS  		: dataStore(apiUrl + "account_lines"),
     	journalLineDS			: dataStore(apiUrl + "journal_lines"),	
 		itemDS  				: banhji.source.inventoryForSaleDS,

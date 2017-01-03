@@ -5,12 +5,12 @@
 .top-itemprice{
   width: 100%;
 }
-.k-icon.k-i-close{
+/*.k-icon.k-i-close{
 	display: none !important;
 }
 #ddlSegment_taglist li span .k-icon.k-i-close{
   display: block !important;
-}
+}*/
 .k-list-container.k-popup.k-group.k-reset{
 	overflow-y: scroll !important;
 }

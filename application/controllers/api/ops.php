@@ -41,11 +41,10 @@ class Ops extends REST_Controller {
 			    $this->db->query($connection);
 
                 $this->dbforge->add_column(
-                	"account_lines", array(
-	                	'movement'=> array(
-	                			'type'=> 'TINYINT', 
-	                			'constraint'=> 1, 
-	                			'unsigned'=> TRUE
+                	"item_lines", array(
+	                	'unit_value'=> array(
+	                			'type'=> 'DECIMAL', 
+	                			'constraint'=> '30,15'
 	                	)
                 	)
                 );

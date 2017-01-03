@@ -1211,7 +1211,7 @@
 		    				onclick="javascript:window.history.back()"
 							data-bind="click: cancel"><i></i></span>
 
-				    <h2 span data-bind="text: lang.lang.journal_entry"></h2>				        				        				        	
+				    <h2 span data-bind="text: lang.lang.journal_entry"></h2>
 				   
 				    <br>				   				
 						
@@ -5566,7 +5566,19 @@
 							<span style="margin-top: 7px; display: inline-block; text-transform: uppercase;">Payroll List</span>
 						</a>						
 					</td>					
-				</tr>				
+				</tr>
+				<tr>
+					<td class="center">
+						<a href="#/purchase_order">
+							<img title="Add Purchase Order" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/purchase_order.png" width="110" height="200">
+							<span data-bind="text: lang.lang.po" style="margin-top: 7px; display: inline-block; text-transform: uppercase;">PO</span>
+						</a>						
+					</td>
+					<td class="center">
+					</td>
+					<td class="center">
+					</td>
+				</tr>			
 			</table>
 
 		</div>

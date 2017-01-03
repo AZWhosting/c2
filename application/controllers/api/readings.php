@@ -17,9 +17,9 @@ class Readings extends REST_Controller {
 			$this->server_host = $conn->server_name;
 			$this->server_user = $conn->username;
 			$this->server_pwd = $conn->password;	
-			// $this->_database = $conn->inst_database;
+			$this->_database = $conn->inst_database;
 		}
-		$this->_database = 'db_banhji';
+		// $this->_database = 'db_banhji';
 	}
 	
 	//GET 
