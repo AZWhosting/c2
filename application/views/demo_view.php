@@ -44568,18 +44568,20 @@
     	statusList 				: banhji.source.statusList,
     	confirmMessage 			: banhji.source.confirmMessage,
     	obj 					: null,
+    	isEdit 					: false,
     	isProtected 			: false,
         saveClose 				: false,
 		showConfirm 			: false,
 		notDuplicateNumber 		: true,
     	showBank 				: false,
     	pageLoad 				: function(id){
-			if(id){					
+			if(id){
+				this.set("isEdit", true);
 				this.loadObj(id);
 			}else{
-				if(this.get("obj")==null){
+				if(this.get("isEdit") || this.dataSource.total()==0){
 					this.addEmpty();
-				}								
+				}
 			}
 		},
 		//Number
@@ -44673,6 +44675,9 @@
     	},    	 	   	
       	addEmpty 				: function(){
       		this.dataSource.data([]);
+			
+			this.set("isEdit", false);
+			this.set("obj", null);
 
       		this.dataSource.insert(0,{
       			account_type_id 		: 0,
@@ -52715,10 +52720,10 @@
 			if(id){
 				this.set("isEdit", true);
 				this.loadObj(id);
-			}else{				
+			}else{
 				if(this.get("isEdit") || this.dataSource.total()==0){
 					this.addEmpty();
-				}								
+				}
 			}
 		},
 		//Upload
@@ -53168,7 +53173,7 @@
 		typeChanges 		: function(){
 			var obj = this.get("obj");
 			obj.set("account_id", 0);
-			
+
 			if(obj.type=="Cash_Purchase"){
 				this.set("isCash", true);				
 
