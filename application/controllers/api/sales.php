@@ -405,6 +405,7 @@ class Sales extends REST_Controller {
 		$customerBalance = 0;
 		$totalSale = 0;
 		$saleReturn =0;
+		$totalQuote	= 0;
 
 		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
@@ -557,6 +558,9 @@ class Sales extends REST_Controller {
 								}
 							};
 						}
+						if($value->type == "Quote"){
+							$totalQuote += floatval($value->amount)/floatval($value->rate);
+						}
 						$total += floatval($value->amount)/floatval($value->rate);
 					}
 				}
@@ -568,7 +572,7 @@ class Sales extends REST_Controller {
 			);
 		}
 
-		$data['total'] = $totalSale - $saleReturn;
+		$data['total'] = $totalSale + $totalCashSale + $totalCashReceipt + $totalQuote - $saleReturn;
 		$data['totalCashSale'] = $totalCashSale;
 		$data['totalCashReceipt'] = $totalCashReceipt;
 		$data['customerBalance'] = $customerBalance;

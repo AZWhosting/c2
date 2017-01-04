@@ -20840,7 +20840,7 @@
 								</tr>
 							</thead>
 							<tbody data-role="listview"
-										 data-bind="source: customerTransaction.dataSource"
+										 data-bind="source: customerTransactionList.dataSource"
 										 data-template="customertransactionlist-temp"
 							></tbody>
 							<tfoot>
@@ -63989,6 +63989,7 @@
 		saleNumber 			: 0,
 		gpm 				: 0,
 		total_sale 			: 0,
+		totalCashReceipt 	: 0,
 		companyName 		: null,
 		startDate 			: "<?php echo date("d-m-y"); ?>",
 		endDate				: new Date(),
@@ -63999,7 +64000,7 @@
 		//line to sale summary
 		saleSummary         : banhji.saleSummaryCustomer,
 		detailSummary       : banhji.saleDetailCustomer,
-		customerTransaction : banhji.customerTransactionList,
+		customerTransactionList : banhji.customerTransactionList,
 		depositDetail 		: banhji.depositDetailCustomer,
 		summaryProductSale 	: banhji.saleSummaryProduct,
 		detailCustomerSale 	: banhji.saleDetailProduct,
@@ -78036,14 +78037,14 @@
 
 			banhji.view.layout.showIn("#content", banhji.view.customerTransactionList);
 			banhji.customerSale.set('startDate', new Date().getFullYear() + "-01-01");
-			banhji.customerSale.customerTransaction.dataSource.filter({
+			banhji.customerSale.customerTransactionList.dataSource.filter({
 				logic: banhji.saleSummaryCustomer.get('filteredBy'),
 				filters: [
 					{field: "issued_date >=", value: kendo.toString(new Date().getFullYear() + "-01-01", "yyyy-MM-dd")},
 					{field: "issued_date <=", value: kendo.toString(new Date(), "yyyy-MM-dd")}
 				]
 			});
-			banhji.customerSale.customerTransaction.dataSource.bind('requestEnd', function(e){
+			banhji.customerSale.customerTransactionList.dataSource.bind('requestEnd', function(e){
 				if(e.response) {
 					banhji.customerSale.set('count', e.response.count);
 					kendo.culture(banhji.locale);
