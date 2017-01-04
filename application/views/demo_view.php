@@ -1567,8 +1567,9 @@
 		<td>
 			<input id="cbbAccounts" name="cbbAccounts" 
 				   data-role="combobox"
-                   data-filter="like"
-                   data-min-length="3"
+                   data-header-template="account-header-tmpl"                 
+                   data-template="account-list-tmpl"
+                   data-value-primitive="true"
                    data-text-field="name"
                    data-value-field="id"
                    data-bind="value: account_id,
@@ -39716,13 +39717,7 @@
 		#=number#				
 	</span>
 	-
-	<span>
-		#if(name.length>25){#
-			#=name.substring(0, 25)#..
-		#}else{#
-			#=name#
-		#}#
-	</span>
+	<span>#=name#</span>
 </script>
 <script id="account-type-header-tmpl" type="text/x-kendo-tmpl">
     <strong>
@@ -40680,58 +40675,58 @@
 	banhji.header = { Institute: banhji.institute.id };	
 	var dataStore = function(url) {
 		var o = new kendo.data.DataSource({
-				transport: {
-					read 	: {
-						url: url,
-						type: "GET",
-						headers: banhji.header,
-						dataType: 'json'
-					},
-					create 	: {
-						url: url,
-						type: "POST",
-						headers: banhji.header,
-						dataType: 'json'
-					},
-					update 	: {
-						url: url,
-						type: "PUT",
-						headers: banhji.header,
-						dataType: 'json'
-					},
-					destroy 	: {
-						url: url,
-						type: "DELETE",
-						headers: banhji.header,
-						dataType: 'json'
-					},
-					parameterMap: function(options, operation) {
-						if(operation === 'read') {
-							return {
-								page: options.page,
-								limit: options.pageSize,								
-								filter: options.filter,
-								sort: options.sort
-							};
-						} else {
-							return {models: kendo.stringify(options.models)};
-						}
+			transport: {
+				read 	: {
+					url: url,
+					type: "GET",
+					headers: banhji.header,
+					dataType: 'json'
+				},
+				create 	: {
+					url: url,
+					type: "POST",
+					headers: banhji.header,
+					dataType: 'json'
+				},
+				update 	: {
+					url: url,
+					type: "PUT",
+					headers: banhji.header,
+					dataType: 'json'
+				},
+				destroy 	: {
+					url: url,
+					type: "DELETE",
+					headers: banhji.header,
+					dataType: 'json'
+				},
+				parameterMap: function(options, operation) {
+					if(operation === 'read') {
+						return {
+							page: options.page,
+							limit: options.pageSize,								
+							filter: options.filter,
+							sort: options.sort
+						};
+					} else {
+						return {models: kendo.stringify(options.models)};
 					}
+				}
+			},
+			schema 	: {
+				model: {
+					id: 'id'
 				},
-				schema 	: {
-					model: {
-						id: 'id'
-					},
-					data: 'results',
-					total: 'count'
-				},
-				batch: true,
-				serverFiltering: true,
-				serverSorting: true,
-				serverPaging: true,
-				page: 1,
-				pageSize: 100
-			});
+				data: 'results',
+				total: 'count'
+			},
+			batch: true,
+			serverFiltering: true,
+			serverSorting: true,
+			serverPaging: true,
+			page: 1,
+			pageSize: 100
+		});
 		return o;
 	};
 	banhji.userManagement = kendo.observable({
@@ -43006,65 +43001,7 @@
 			pageSize: 100
 		}),
 		//Accounting
-		accountDS					: new kendo.data.DataSource({
-			transport: {
-				read 	: {
-					url: apiUrl + "accounts",
-					type: "GET",
-					headers: banhji.header,
-					dataType: 'json'
-				},
-				create 	: {
-					url: apiUrl + "accounts",
-					type: "POST",
-					headers: banhji.header,
-					dataType: 'json'
-				},
-				update 	: {
-					url: apiUrl + "accounts",
-					type: "PUT",
-					headers: banhji.header,
-					dataType: 'json'
-				},
-				destroy 	: {
-					url: apiUrl + "accounts",
-					type: "DELETE",
-					headers: banhji.header,
-					dataType: 'json'
-				},				
-				parameterMap: function(options, operation) {
-					if(operation === 'read') {
-						return {
-							page: options.page,
-							limit: options.pageSize,	
-							filter: options.filter,
-							sort: options.sort
-						};
-					} else {
-						return {models: kendo.stringify(options.models)};
-					}
-				}
-			},			
-			schema 	: {
-				model: {
-					id: 'id'
-				},				
-				data: 'results',
-				total: 'count'
-			},
-			filter:{ field:"status", value:1 },
-			//group:{ field: "account_type_name" },
-			sort:[
-				{ field:"account_type_id", dir:"asc" },
-				{ field:"number", dir:"asc" }
-			],
-			batch: true,			
-			serverFiltering: true,
-			serverSorting: true,
-			serverPaging: true,
-			page:1,
-			pageSize: 100
-		}),
+		accountDS					: dataStore(apiUrl + "accounts"),
 		subAccountDS				: new kendo.data.DataSource({
 			transport: {
 				read 	: {
@@ -43997,7 +43934,7 @@
 			page:1,
 			pageSize: 100
 		}),
-		inventoryFixAssetAccountDS			: new kendo.data.DataSource({
+		inventoryFixAssetAccountDS	: new kendo.data.DataSource({
 			transport: {
 				read 	: {
 					url: apiUrl + "accounts",
@@ -44157,6 +44094,7 @@
 			{ id: "Reimbursement", name: "Reimbursement" },
 			{ id: "Journal", name: "Journal" }
 	    ],
+	    accountList 				: [],
 		genderList					: ["M", "F"],
 		typeList 					: ['Invoice','Commercial_Invoice','Vat_Invoice','Electricity_Invoice','Water_Invoice','Cash_Sale','Commercial_Cash_Sale','Vat_Cash_Sale','Receipt_Allocation','Sale_Order','Quote','GDN','Sale_Return','Purchase_Order','GRN','Cash_Purchase','Credit_Purchase','Purchase_Return','Payment_Allocation','Deposit','Electricty_Deposit','Water_Deposit','Customer_Deposit','Vendor_Deposit','Withdraw','Transfer','Journal','Item_Adjustment','Cash_Advance','Reimbursement','Direct_Expense','Advance_Settlement','Additional_Cost','Cash_Payment','Cash_Receipt','Credit_Note','Debit_Note','Offset_Bill','Offset_Invoice','Cash_Transfer','Internal_Usage'],
 		user_id						: banhji.userData.id,
@@ -44188,7 +44126,7 @@
 				page:1,
 				pageSize:100
 			});
-			this.accountDS.read();
+			this.loadAccount();
 			this.accountTypeDS.read();
 			this.fixedAssetCategoryDS.read();
 			this.assemblyItemDS.query({ filter:[{ field:"assembly_id >", value:0 }], page:1, pageSize:100 });
@@ -44232,6 +44170,31 @@
 			}
 
 			return rate;
+		},
+		loadAccount 				: function(){
+			var self = this;
+
+			var dataSource = new kendo.data.DataSource({
+			  	transport: {
+				    read 	: {
+						url: apiUrl + "accounts",
+						type: "GET",
+						headers: banhji.header,
+						dataType: 'json'
+					}
+			  	},
+			  	requestEnd: function(e) {
+				    if (e.type === "read" && e.response) {
+						var response = e.response;
+						if(response.results){
+							for (var i = 0; i < response.results.length; i++) {
+								self.accountList.push(response.results[i]);
+							}
+						}
+					}
+			  	}
+			});
+			dataSource.fetch();
 		},
 		fetchAllItems				: function(){
 			this.itemDS.fetch();
@@ -44825,7 +44788,13 @@
 		lineDS  			: dataStore(apiUrl + "journal_lines"),
 		recurringDS 		: dataStore(apiUrl + "transactions"),
 		recurringLineDS 	: dataStore(apiUrl + "journal_lines"),
-		accountDS 			: dataStore(apiUrl + "accounts"),//banhji.source.accountDS,
+		accountDS 			: new kendo.data.DataSource({
+		  	data: banhji.source.accountList,
+			sort: [
+			  	{ field: "account_type_id", dir: "asc" },
+			  	{ field: "number", dir: "asc" }
+			]
+		}),
 		jobDS 				: banhji.source.jobDS,
 		contactDS 			: banhji.source.contactDS,				
 		currencyDS 			: banhji.source.currencyDS,
@@ -44904,6 +44873,8 @@
 		isValid 			: true,			
 		user_id				: banhji.source.user_id,
 		pageLoad 			: function(id){
+			// this.accountDS.fetch();
+
 			if(id){
 				this.set("isEdit", true);						
 				this.loadObj(id);

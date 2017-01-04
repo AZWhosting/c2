@@ -1,6 +1,7 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Account extends DataMapper {
+class Acct extends DataMapper {
+	public $table = 'accounts';
 	protected $created_field = "created_at";
 	protected $updated_field = "updated_at";
 
@@ -58,6 +59,10 @@ class Account extends DataMapper {
 		), 
 		'tax_item' => array(
 			'class' => 'tax_item',
+			'other_field' => 'account'
+		),
+		'plan_item' => array(
+			'class' => 'plan_item',
 			'other_field' => 'account'
 		)
 	);

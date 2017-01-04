@@ -2749,19 +2749,37 @@
     	</div>
     </div>
     <div class="row-fluid">
-    	<div class="span6">
+    	<div class="span5">
     	</div>
-    	<div class="span6">
+    	<div class="span7">
     		<div class="row">
-    			<div class="span6">
-    				<p>យនិ អចុិ </p>
-    				<p>ភូមសាិ មគគីឃុអំ ងគរជ័យ</p>
+    			<div class="span5" style="padding-right: 0">
+    				<p style="list-style: 20px; margin-bottom: 0;">
+    					<b>យនិ អចុិ </b><br>
+    					ភូមសាិ មគគីឃុអំ ងគរជ័យ
+    				</p>
 		    	</div>
-		    	<div class="span6">
+		    	<div class="span6" style="padding-left: 0; margin-left: 15px;">
+		    		<img style="width: 180px; height: auto; " src="<?php echo base_url();?>/assets/barcode.png">
+		    		<p style="margin-bottom: 0; margin-top: 5px; font-size: 12px; margin-left: 8px;">លេខកូដអតិថិជន ០០៤៣៣៦</p>
 		    	</div>
     		</div>
     	</div>
     </div>
+    <div class="row-fluid">
+    	<div class="span5" style="padding-left: 15px;">
+    		<p >ប្រវត្តិប្រើប្រាស់របស់អ្នកក្នុងឆ្នាំនេះ</p>
+    		<img style="width: 100%; height: auto;" src="<?php echo base_url();?>/assets/chart.png">
+    	</div>
+    	<div class="span7" style="padding-left: 0;">
+    		<img style="width: 58px; height: auto; float: left;" src="<?php echo base_url();?>/assets/icon-water.png">
+    		<p style="width: 100px; float: left; margin: 25px 0 0 8px; ">ប្រាក់ត្រូវចង់សរុប</p>
+    		<p style="padding: 5px 15px; background: #F1F1F1; border: 1px solid #000; width: 183px; float: left;font-size: 25px; color: #000;font-weight: 600; text-align: right;">38,808,900</p>
+    		<p>សូមអប្ជើញមកបង្់ ាក់ បោយានមុនម្ថៃផុតកំនត់ទី</p>
+    	</div>
+    </div>
+
+
 </script>
 <script id="invoiceForm2" type="text/x-kendo-template">
 	<div class="inv1">

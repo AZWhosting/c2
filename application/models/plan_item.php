@@ -16,7 +16,7 @@ class Plan_item extends DataMapper {
 			'other_field' => 'plan_item'
 		),
 		'account' => array(
-			'class' => "account",
+			'class' => "acct",
 			'other_field' => 'plan_item'
 		)
 	);

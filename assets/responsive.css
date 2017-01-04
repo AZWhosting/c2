@@ -131,9 +131,10 @@
   margin-top: 40px;
 }
 
+#cbbAccounts-list{
+  width: 550px !important;
+}
 
-
-/*#cbbContact-list,*/
 #cbbAccount-list,
 #cbbCurrency-list,
 #ddlRA-list,
@@ -145,7 +146,6 @@
 #ddlAP-list,
 #ddlTradeDiscountAccount-list,
 #ddlPrePaymentAccount-list,
-#cbbAccounts-list,
 #ddlVendor-list,
 #ddlPaymentMethod-list,
 #ddlAccount-list,
@@ -166,7 +166,6 @@
 #cbbContact-list{
   width: 350px !important;
 }
-
 
 
 /*#ccbItem-list,
