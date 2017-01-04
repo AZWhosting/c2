@@ -94,7 +94,7 @@ class Contact extends DataMapper {
 		),
 		'utility' => array(
 			'class' => 'contact_utility',
-			'other_field' => 'contact_id'
+			'other_field' => 'contact'
 		)
 	);
 

@@ -1566,10 +1566,7 @@
 		</td>		
 		<td>
 			<input id="cbbAccounts" name="cbbAccounts" 
-				   data-role="combobox"                   
-                   data-value-primitive="true"                   
-                   data-header-template="account-header-tmpl"
-                   data-template="account-list-tmpl"
+				   data-role="combobox"
                    data-filter="like"
                    data-min-length="3"
                    data-text-field="name"
@@ -1661,7 +1658,7 @@
 				    <br>
 
 					<!-- Collapsible Widget -->			
-					<div class="widget">
+					<div class="widget" style="border: 0; margin-bottom: 0;">
 					    <div class="widget-body">
 
 					    	<div class="row-fluid">
@@ -1769,8 +1766,8 @@
 		<td align="right">#=rate#</td>					
 		<td>#=source#</td>
 		<td>#=method#</td>				
-		<td>			
-			<span data-bind="click: edit"><i class="icon-edit"></i> <span data-bind="text: lang.lang.edit"></span></span>	
+		<td style="text-align: center;">			
+			<span data-bind="click: edit" style="cursor: pointer;"><i class="icon-edit"></i> <span data-bind="text: lang.lang.edit"></span></span>	
 		</td>		
     </tr>   
 </script>
@@ -5203,8 +5200,7 @@
 					<span class="glyphicons no-js remove_2 pull-right" 
 	    				onclick="javascript:window.history.back()"
 						data-bind="click: cancel"><i></i></span>
-					<br>
-					<br>
+					
 			        <h2 span data-bind="text: lang.lang.segment"></h2>
 
 			        <div class="row">
@@ -5320,16 +5316,16 @@
 <script id="segment-template" type="text/x-kendo-tmpl">                    
     <tr>    	
     	<td>#=name#</td>
-    	<td>
-    		<span data-bind="click: edit"><i class="icon-edit"></i> Edit</span>
+    	<td >
+    		<span data-bind="click: edit" style="cursor: pointer;"><i class="icon-edit"></i> Edit</span>
     		#if(!is_system=="1"){#
 	    		|
-	    		<span data-bind="click: delete"><i class="icon-remove"></i> Delete</span>
+	    		<span data-bind="click: delete" style="cursor: pointer;"><i class="icon-remove"></i> Delete</span>
     		#}#
     		|
-    		<span data-bind="click: view"><i class="icon-view"></i> View Item</span>
+    		<span data-bind="click: view" style="cursor: pointer;"><i class="icon-view"></i> View Item</span>
     		|
-    		<span data-bind="click: addItem"><i class="icon-plus icon-white"></i> Add Item</span>
+    		<span data-bind="click: addItem" style="cursor: pointer;"><i class="icon-plus icon-white"></i> Add Item</span>
     	</td>
    	</tr>
 </script>
@@ -5339,10 +5335,10 @@
     	<td>#=name#</td>
     	<td>#=segment[0].name#</td>
    		<td>
-    		<span data-bind="click: editItem"><i class="icon-edit"></i> Edit</span>
+    		<span data-bind="click: editItem" style="cursor: pointer;"><i class="icon-edit"></i> Edit</span>
     		#if(!is_system=="1"){#
 	    		|
-	    		<span data-bind="click: deleteItem"><i class="icon-remove"></i> Delete</span>
+	    		<span data-bind="click: deleteItem" style="cursor: pointer;"><i class="icon-remove"></i> Delete</span>
     		#}#
     	</td>
    	</tr>
@@ -6771,7 +6767,7 @@
 	    				onclick="javascript:window.history.back()"
 						data-bind="click: cancel"><i></i></span>
 
-		        <h4 span data-bind="text: lang.lang.cash_advance"></h4>			    		   
+		        <h2 span data-bind="text: lang.lang.cash_advance"></h2>			    		   
 
 			    <br>				   				
 					
@@ -12268,7 +12264,7 @@
 		        #if(is_system=="0"){#
 			        <a class="k-button k-delete-button" href="\\#"><span class="k-icon k-delete"></span></a>				        
 		        #}#
-		        <a class="k-button" href="\#/customer/0/#=id#"><span data-bind="text: lang.lang.pattern"></span></a>
+		        <a class="k-button" href="\#/vendor/0/#=id#"><span data-bind="text: lang.lang.pattern"></span></a>
 		   	</div>		   	
    		</td>
    	</tr>
@@ -38753,26 +38749,26 @@
 						</h4>
 					</div>					
 					<div class="widget-body alert alert-primary" style="min-height: 178px;">
-						<div align="center" class="text-large strong" style="font-size: 50px;">
+						<div align="center" class="text-large strong" style="font-size: 35px;">
 							<span data-bind="text: ccc"></span>
 							<br>
 							<p style="font-size: 14px">Cash Conversion Cycle</p>
 						</div>
 						<table width="100%">
 							<tbody>
-								<tr align="center">
+								<tr align="center" style="vertical-align: top;">
 									<td width="33%">										
-										<span style="font-size: 25px;" data-bind="text: arCollectionPeriod"></span>
+										<span style="font-size: 18px;" data-bind="text: arCollectionPeriod"></span>
 										<br>
 										<span style="font-size: 12px;">Receivable Collection Days</span>
 									</td>
 									<td width="33%">
-										<span style="font-size: 25px;" data-bind="text: apPaymentPeriod"></span>
+										<span style="font-size: 18px;" data-bind="text: apPaymentPeriod"></span>
 										<br>
 										<span style="font-size: 12px;">Payable Payment Days</span>
 									</td>
 									<td width="33%">
-										<span style="font-size: 25px;" data-bind="text: inventoryTurnOver"></span>
+										<span style="font-size: 18px;" data-bind="text: inventoryTurnOver"></span>
 										<br>
 										<span style="font-size: 12px;">Inventory Turnover Days </span>
 									</td>
@@ -38790,26 +38786,26 @@
 						</h4>
 					</div>					
 					<div class="widget-body alert-info" style="min-height: 178px;">
-						<div align="center" class="text-large strong" style="font-size: 50px;">
+						<div align="center" class="text-large strong" style="font-size: 35px;">
 							<span data-bind="text: currentRatio"></span>
 							<br>
 							<p style="font-size: 14px">Current Ratio</p>
 						</div>
 						<table width="100%">
 							<tbody>
-								<tr align="center">
+								<tr align="center" style="vertical-align: top;">
 									<td width="33%">										
-										<span style="font-size: 25px;" data-bind="text: quickRatio"></span>
+										<span style="font-size: 18px;" data-bind="text: quickRatio"></span>
 										<br>
 										<span style="font-size: 12px;">Quick Ratio</span>
 									</td>
 									<td width="33%">
-										<span style="font-size: 25px;" data-bind="text: cashRatio"></span>
+										<span style="font-size: 18px;" data-bind="text: cashRatio"></span>
 										<br>
 										<span style="font-size: 12px;">Cash Ratio</span>
 									</td>
 									<td width="33%">
-										<span style="font-size: 25px;" data-bind="text: wcSale"></span>
+										<span style="font-size: 18px;" data-bind="text: wcSale"></span>
 										<br>
 										<span style="font-size: 12px;">Working Capital To Sale Ratio</span>
 									</td>
@@ -38827,26 +38823,26 @@
 						</h4>
 					</div>					
 					<div class="widget-body alert-info3" style="min-height: 178px;background-color: LightGray">
-						<div align="center" class="text-large strong" style="font-size: 50px;">
+						<div align="center" class="text-large strong" style="font-size: 35px;">
 							<span data-bind="text: roce"></span>
 							<br>
 							<p style="font-size: 14px">Return on Capital Employed</p>
 						</div>						
 						<table width="100%">
 							<tbody>
-								<tr align="center">
+								<tr align="center" style="vertical-align: top;">
 									<td width="33%">										
-										<span style="font-size: 25px;" data-bind="text: grossProfitMargin"></span>
+										<span style="font-size: 18px;" data-bind="text: grossProfitMargin"></span>
 										<br>
 										<span style="font-size: 12px;">Gross Margin</span>
 									</td>
 									<td width="33%">
-										<span style="font-size: 25px;" data-bind="text: profitMargin"></span>
+										<span style="font-size: 18px;" data-bind="text: profitMargin"></span>
 										<br>
 										<span style="font-size: 12px;">Earning Before interest & Tax</span>
 									</td>
 									<td width="33%">
-										<span style="font-size: 25px;" data-bind="text: returnOnAsset"></span>
+										<span style="font-size: 18px;" data-bind="text: returnOnAsset"></span>
 										<br>
 										<span style="font-size: 12px;">Return on Asset </span>
 									</td>
@@ -44183,6 +44179,7 @@
 		selectCustomerMessage 		: "Please select a customer.",
 		selectSupplierMessage 		: "Please select a supplier.",
 		selectItemMessage 			: "Please select an item.",
+		duplicateSelectedItemMessage: "You already selected this item",
 		loadData 					: function(){
 			this.loadRate();
 			this.itemTypeDS.read();
@@ -44828,7 +44825,7 @@
 		lineDS  			: dataStore(apiUrl + "journal_lines"),
 		recurringDS 		: dataStore(apiUrl + "transactions"),
 		recurringLineDS 	: dataStore(apiUrl + "journal_lines"),
-		accountDS 			: banhji.source.accountDS,
+		accountDS 			: dataStore(apiUrl + "accounts"),//banhji.source.accountDS,
 		jobDS 				: banhji.source.jobDS,
 		contactDS 			: banhji.source.contactDS,				
 		currencyDS 			: banhji.source.currencyDS,
@@ -57341,7 +57338,18 @@
 			data = e.data,
 			obj = this.get("obj");
 
-			if(data.item_id>0){
+			var notDuplicate = true, existingList = {};
+			$.each(this.lineDS.data(), function(index, value){
+				if(existingList[value.item_id]===undefined){
+					existingList[value.item_id]=value.item_id;											
+				}else{
+					notDuplicate = false;
+
+					return false;
+				}
+			});
+			
+			if(notDuplicate && data.item_id>0){
 				var item = this.itemDS.get(data.item_id),
 				price = item.price, unit_value = 1, rate = 1, measurement_id = item.measurement_id, locale = item.locale;
 
@@ -57452,6 +57460,9 @@
 
 			        this.changes();
 		    	}
+	        }else{
+	        	data.set("item_id", "");
+	        	alert(banhji.source.duplicateSelectedItemMessage);
 	        }                	        	
 		},
 		measurementChanges 	: function(e){										
@@ -57658,10 +57669,10 @@
 				    
 				    var item, i;
 				    for(i=raw.length-1; i>=0; i--){
-				      item = raw[i];
-				      if (item.assembly_id==data.item_id){
-				        this.assemblyLineDS.remove(item);
-				      }
+				      	item = raw[i];
+				      	if (item.assembly_id==data.item_id){
+				       	 	this.assemblyLineDS.remove(item);
+				      	}
 
 				    }
 				}
@@ -57761,7 +57772,8 @@
 			this.assemblyLineDS.data([]);
 			this.attachmentDS.data([]);
 
-			this.contactDS.filter({ field:"parent_id", operator:"where_related_contact_type", value:1 });			
+			this.contactDS.filter({ field:"parent_id", operator:"where_related_contact_type", value:1 });
+			this.accountDS.filter({ field:"status", value:1 });			
 
 			banhji.userManagement.removeMultiTask("quote");
 		},

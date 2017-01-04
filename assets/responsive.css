@@ -1,3 +1,6 @@
+.k-pager-wrap .k-pager-nav.k-pager-last{
+  border-radius: 50% !important;
+}
 .top-itemprice tr td{
   padding: 5px;
 
@@ -1723,7 +1726,7 @@ width: 50% !important;
   cursor: pointer;
 }
 .widget-body>div{
-  margin-bottom: 15px;
+  margin-bottom: 10px;
 }
 
 

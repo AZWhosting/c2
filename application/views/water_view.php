@@ -539,7 +539,6 @@
 	            				<th class="center" width="100"><span>Flat</span></th>
 	            				<th class="center" width="100"><span>Usage</span></th>
 	            				<th class="center" width="100"><span>Price</span></th>
-	            				<th class="center"><span>Currency</span></th>
 	            				<th class="center" width="200"><span>Action</span></th>
 	            			</tr>
 	            		</thead>
@@ -581,20 +580,6 @@
 								<td><span>Usage</span></td>
 								<td>
 									<input class="k-textbox" placeholder="Usage ..." data-bind="value: tariffItemUsage" style="width: 100%;">
-								</td>
-							</tr>
-							<tr style="border-bottom: 8px solid #fff;">
-								<td><span>Currency</span></td>
-								<td>
-									<input data-role="dropdownlist"
-					            	   style="padding-right: 1px;height: 32px;" 
-			            			   data-option-label="(--- Currency ---)"
-			            			   data-auto-bind="false"			                   
-					                   data-value-primitive="true"
-					                   data-text-field="code"
-					                   data-value-field="id"
-					                   data-bind="value: tariffCurrencyItem,
-					                              source: currencyDS"/>
 								</td>
 							</tr>
 							<tr style="border-bottom: 8px solid #fff;">
@@ -893,7 +878,7 @@
     	<td>
     		#= branch.name#
    		</td>
-   		<td align="center">
+   		<td>
     		#= name#
    		</td>
    		<td align="center">
@@ -1241,7 +1226,7 @@
 <script id="plan-item-template" type="text/x-kendo-tmpl">                    
     <tr>
     	<td>#= name#</td>
-    	<td align="center">
+    	<td>
     		#= type#
     	</td>
     	<td align="right">#= amount#</td>
@@ -4356,6 +4341,7 @@
 				                <th><span >Name</span></th>
 				                <th><span >Invoice</span></th>
 				                <th style="width: 15%"><span >Amount</span></th>
+				                <th style="width: 15%"><span >Discount</span></th>
 				                <th style="width: 15%">RECEIVE</th>
 				            </tr> 
 				        </thead>
@@ -4761,10 +4747,19 @@
 			<input type="text" class="k-textbox" 
 					data-bind="value: check_no"
 					style="width: 100%; margin-bottom: 0;" />
-		</td>		
+		</td>	
 		<td class="center">
 			#=amount#
 		</td>	
+		<td> 
+			<input data-role="numerictextbox"
+				   data-spinners="false"
+				   data-culture=""
+                   data-decimals="2"
+                   data-min="0"                   
+                   data-bind="value: discount"
+                   style="width: 100%;">
+        </td>
 		<td class="center">
 			<input data-role="numerictextbox"
 				   data-spinners="false"
@@ -9506,7 +9501,6 @@
         	}
         },
         addBloc 			: function(){
-
         	var branch = this.get("blockCompanyId");
         	console.log(branch);
         	if(branch!= ""){
@@ -9527,6 +9521,7 @@
         	this.planItemDS.filter({field: "type", value: "exemption"});
         },
         addEx 				: function(){
+        	var self = this;
         	this.planItemDS.add({
         		name 		: this.get("exName"),
         		type     	: "exemption",
@@ -9535,14 +9530,23 @@
         		account 	: this.get("exAccount"),
         		unit 		: this.get("exUnit"),
         		currency 	: this.get("exCurrency"),
-        		amount 		: this.get("exPrice")
+        		amount 		: this.get("exPrice"),
+        		_currency 	: []
         	});
         	this.planItemDS.sync();
-        	this.set("exName", "");
-        	this.set("exAccount", "");
-        	this.set("exPrice", "");
-        	this.set("exUnit", "");
-        	this.set("exCurrency", "");
+        	this.planItemDS.bind("requestEnd", function(e){
+				if(e.type != 'read') {
+					if(e.response){				
+						//$("#ntf1").data("kendoNotification").success("Successfully!");
+						self.set("exName", "");
+			        	self.set("exAccount", "");
+			        	self.set("exPrice", "");
+			        	self.set("exUnit", "");
+			        	self.set("exCurrency", "");
+			        }
+				}
+			});
+        	
         },
         goTariff    		: function(){
         	this.set("tariffSelect", false)
@@ -9568,9 +9572,10 @@
         		account   	: this.get('current').account,
         		is_flat   	: this.get("tariffItemFlat"),
         		unit 		: null,
-        		currency 	: this.get("tariffCurrencyItem"),
         		usage 		: this.get("tariffItemUsage"),
         		amount 		: this.get("tariffItemAmount"),
+        		currency 	: this.get("current").currency,
+        		_currency   : []
         	});
         	this.tariffItemDS.sync();
         	this.tariffItemDS.bind("requestEnd", function(e){
@@ -9581,9 +9586,9 @@
 			        	self.set("tariffItemUsage", "");
 			        	self.set("tariffItemAmount", "");
 			        	self.set("windowTariffItemVisible", false);
-			        	self.set("tariffCurrencyItem", "");
 			        	self.closeTariffWindowItem();
 			        	// console.log(e);
+			        	self.closeTariffWindowItem();
 			        	self.tariffItemDS.filter({field: "tariff_id", value: self.get('current').id});
 			        	//self.set("tariffNameShow", e.data.name);
 	        		}
@@ -9604,16 +9609,17 @@
         		currency 	: this.get("tariffCurrency"),
         		account 	: this.get("tariffAccount"),
         		usage 		: 0,
-        		amount 		: 0
+        		amount 		: 0,
+        		_currency 	: []
         	});
         	this.planItemDS.sync();
         	this.planItemDS.bind("requestEnd", function(e){
-        		console.log(e);
-        		if(e.response) {
-        			console.log("e");
-        			self.set("tariffName", "");
-        			self.set("tariffAccount", "");
-        			self.set("tariffCurrency", "");
+        		if(e.type != 'read') {
+	        		if(e.response) {
+	        			self.set("tariffName", "");
+	        			self.set("tariffAccount", "");
+	        			self.set("tariffCurrency", "");
+	        		}
         		}
         	});
         	this.planItemDS.bind("error", function(e){
@@ -9635,6 +9641,7 @@
         	this.planItemDS.filter({field: "type", value: "deposit"});
         },
         addDeposit			: function(){
+        	var self = this;
         	this.planItemDS.add({
         		name 		: this.get("depositName"),
         		type     	: "deposit",
@@ -9643,19 +9650,27 @@
         		account 	: this.get("depositAccount"),
         		usage 		: 0,
         		currency 	: this.get("depositCurrency"),
-        		amount 		: this.get("depositPrice")
+        		amount 		: this.get("depositPrice"),
+        		_currency 	: []
         	});
         	this.planItemDS.sync();
-        	this.set("depositName", "");
-        	this.set("depositPrice", "");
-        	this.set("depositCurrency", "");
-        	this.set("depositAccount", "");
+        	this.planItemDS.bind("requestEnd", function(e){
+        		if(e.type != 'read') {
+	        		if(e.response) {
+			        	self.set("depositName", "");
+			        	self.set("depositPrice", "");
+			        	self.set("depositCurrency", "");
+			        	self.set("depositAccount", "");
+			        }
+			    }
+			});
         },
         goService    		: function(){
         	this.planItemDS.data([]);
         	this.planItemDS.filter({field: "type", value: "service"});
         },
         addService			: function(){
+        	var self = tself
         	this.planItemDS.add({
         		name 		: this.get("serviceName"),
         		type     	: "service",
@@ -9664,19 +9679,27 @@
         		account 	: this.get("serviceAccount"),
         		usage 		: 0,
         		currency 	: this.get("serviceCurrency"),
-        		amount 		: this.get("servicePrice")
+        		amount 		: this.get("servicePrice"),
+        		_currency  	: []
         	});
         	this.planItemDS.sync();
-        	this.set("serviceName", "");
-        	this.set("servicePrice", "");
-        	this.set("serviceCurrency","");
-        	this.set("serviceAccount", "");
+        	this.planItemDS.bind("requestEnd", function(e){
+        		if(e.type != 'read') {
+	        		if(e.response) {
+			        	self.set("serviceName", "");
+			        	self.set("servicePrice", "");
+			        	self.set("serviceCurrency","");
+			        	self.set("serviceAccount", "");
+			       	}
+			    }
+			});
         },
         goMaintenance    		: function(){
         	this.planItemDS.data([]);
         	this.planItemDS.filter({field: "type", value: "maintenance"});
         },
         addMaintenance			: function(){
+        	var self = this;
         	this.planItemDS.add({
         		name 		: this.get("maintenanceName"),
         		type     	: "maintenance",
@@ -9685,13 +9708,20 @@
         		account 	: this.get("maintenanceAccount"),
         		usage 		: 0,
         		currency 	: this.get("maintenanceCurrency"),
-        		amount 		: this.get("maintenancePrice")
+        		amount 		: this.get("maintenancePrice"),
+        		_currency   : []
         	});
         	this.planItemDS.sync();
-        	this.set("maintenanceName", "");
-        	this.set("maintenancePrice", "");
-        	this.set("maintenanceAccount", "");
-        	this.set("maintenanceCurrency","");
+        	this.planItemDS.bind("requestEnd", function(e){
+        		if(e.type != 'read') {
+	        		if(e.response) {
+			        	self.set("maintenanceName", "");
+			        	self.set("maintenancePrice", "");
+			        	self.set("maintenanceAccount", "");
+			        	self.set("maintenanceCurrency","");
+			       	}
+			    }
+			});
         },
         goPlan 				: function(){
         	this.planDS.read();
@@ -9709,7 +9739,6 @@
         	this.planItemDS.query({filter: { field:"id", operator:"where_in", value: idList }})
         	.then(function(e){
         		var view = self.planItemDS.view();
-
         	});
         },
         goBrand    		: function(){
@@ -9725,12 +9754,16 @@
 	        		name 		: this.get("brandName"),
 	        		abbr 		: this.get("brandAbbr")
 	        	});
-
 	        	this.brandDS.sync();	        	    			
-	        			
-    			this.set("brandCode", "");
-    			this.set("brandName", "");
-    			this.set("brandAbbr", "");	        		
+	        	this.brandDS.bind("requestEnd", function(e){
+	        		if(e.type != 'read') {
+		        		if(e.response) {
+			    			self.set("brandCode", "");
+			    			self.set("brandName", "");
+			    			self.set("brandAbbr", "");	
+			    		}
+			    	}
+			    });
         	}else{
         		alert("required number and name!");
         	}
@@ -11468,7 +11501,6 @@
 		company 			: banhji.institute,
 		PaperSize 			: "A4",
 		user_id 			: banhji.userManagement.getLogin() === null ? '':banhji.userManagement.getLogin().id,	
-				
 		pageLoad 			: function(id){	
 			this.barcod();
 			console.log(this.PaperSize);
@@ -11501,7 +11533,7 @@
 									
 			}		
 		},
-		printGrid 						: function(){
+		printGrid 		: function(){
 			var self = this, Win, pHeight, pWidth;
 			if(this.PaperSize == "A5"){
 				Win = window.open('', '', 'width=800, height=900');
@@ -11596,6 +11628,7 @@
 		lang 				: langVM,
 		dataSource 			: banhji.invoice.dataSource,
 		cashCurrencyDS 		: [],
+		invoiceArrayDS	    : [],
 		txnTemplateDS		: dataStore(apiUrl + "transaction_templates"),
 		invNum 				: null,
 		sub_total 			: 0,		
@@ -11614,18 +11647,9 @@
 		pageLoad 			: function(id){
 			this.txnTemplateDS.filter({field:"moduls", value: "water_mg" });
 			this.addEmpty();
-			
-			var self = this;
-			this.dataSource.query()
-			.then(function(e){
-				banhji.Receipt.changes();
-				console.log("daaa");
-			});
 			this.addRow();
-
 		},  
 		invNumChange 		: function(e) {
-			console.log(this.invNum);
 		},
 		addEmpty 		 	: function(){			
 			this.dataSource.data([]);
@@ -11665,6 +11689,16 @@
 	        this.set("pay", kendo.toString(pay, "c", banhji.locale));
 	        this.set("remain", kendo.toString(remain, "c", banhji.locale));
 	        console.log(this.dataSource.data());
+		},
+		search 				: function(e){
+			var keyword = this.get("invNum"), self = this;
+			this.dataSource.query({filter: { field:"number", value: keyword }})
+        	.then(function(e){
+        		if(self.dataSource.data().length > 0){
+	        		var view = self.dataSource.view();
+	        		console.log(view);
+        		}
+        	});
 		},
 		addRow 	  	: function() {
 			var obj = this.get("obj");
@@ -14134,24 +14168,6 @@
 			loadStyle(Href1);
 			loadStyle(Href2);
 		}
-		jQuery("input").bind("focus", function(){
-			alert("focus");
-		});
-		// setTimeout(function(){
-		// //wire focus of all numerictextbox widgets on the page
-  //   	$("input[type=text]").bind("focus", function () {
-  //   		alert("slkdjflk;asjdf;laksj");
-  //       	var input = $(this);
-  //           clearTimeout(input.data("selectTimeId")); //stop started time out if any
-
-  //           var selectTimeId = setTimeout(function()  {
-  //               input.select();
-  //           });
-
-  //           input.data("selectTimeId", selectTimeId);
-  //       }).blur(function(e) {
-  //           clearTimeout($(this).data("selectTimeId")); //stop started timeout
-  //       });
-  //   	},50000);
+		
 	});
 </script>

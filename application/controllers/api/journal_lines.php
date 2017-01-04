@@ -59,6 +59,7 @@ class Journal_lines extends REST_Controller {
 		
 		if($obj->result_count()>0){			
 			foreach ($obj as $value) {
+				$account = $value->account->get();
 				$data["results"][] = array(
 					"id" 				=> $value->id,
 			   		"transaction_id"	=> $value->transaction_id,			   		
