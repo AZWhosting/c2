@@ -7402,12 +7402,10 @@
 							        		<td><span data-bind="text: lang.lang.cash_account"></span></td>
 							        		<td>
 							        			<input id="cbbAccount" name="cbbAccount"
-													   data-role="combobox"                   
-									                   data-value-primitive="true"
+													   data-role="combobox"
 									                   data-header-template="account-header-tmpl"                 
 									                   data-template="account-list-tmpl"
-									                   data-filter="like"
-									                   data-min-length="3"
+									                   data-value-primitive="true"
 									                   data-text-field="name"
 									                   data-value-field="id"
 									                   data-bind="value: obj.account_id,
@@ -7793,16 +7791,14 @@
 		</td>			
 		<td>
 			<input id="cbbAccounts" name="cbbAccounts-#:uid#"
-				   data-role="combobox"                   
-                   data-value-primitive="true" 
+				   data-role="combobox"
                    data-header-template="account-header-tmpl"                 
                    data-template="account-list-tmpl"
-                   data-filter="like"
-                   data-min-length="3"
+                   data-value-primitive="true"
                    data-text-field="name"
                    data-value-field="id"
                    data-bind="value: account_id,
-                              source: expenseAccountDS"
+                              source: accountDS"
                    data-placeholder="Add Account.."                                     
                    required data-required-msg="required" style="width: 100%" />	
 		</td>
@@ -10530,12 +10526,10 @@
 		</td>				
 		<td>
 			<input id="cbbAccounts" name="cbbAccounts"
-				   data-role="combobox"                   
-                   data-value-primitive="true"
+				   data-role="combobox"
                    data-header-template="account-header-tmpl"                  
                    data-template="account-list-tmpl"
-                   data-filter="like"
-                   data-min-length="3"
+                   data-value-primitive="true"
                    data-text-field="name"
                    data-value-field="id"
                    data-bind="value: account_id,
@@ -10706,10 +10700,9 @@
 												<td>
 													<input id="ddlAccount" name="ddlAccount" 
 															data-role="dropdownlist"
-															data-auto-bind="false"														
-								              				data-value-primitive="true"
 								              				data-header-template="account-header-tmpl"
 								              				data-template="account-list-tmpl"
+								              				data-value-primitive="true"
 															data-text-field="name" 
 								              				data-value-field="id"						              				 
 								              				data-bind="value: obj.account_id,
@@ -11429,17 +11422,14 @@
 		</td>			
 		<td>
 			<input id="cbbAccounts" name="cbbAccounts-#:uid#"
-				   data-role="combobox"                   
-                   data-value-primitive="true"                  
+				   data-role="combobox"
                    data-template="account-list-tmpl"
-                   data-filter="like"
-                   data-min-length="3"                                     
+                   data-value-primitive="true"                                     
                    data-text-field="name"
                    data-value-field="id"
                    data-bind="value: account_id,
                               source: expenseAccountDS"
-                   data-placeholder="Add Account.."
-                   data-list-width="400"                    
+                   data-placeholder="Add Account.."        
                    required data-required-msg="required" style="width: 100%" />	
 		</td>		
 		<td>
@@ -44186,6 +44176,7 @@
 			  	requestEnd: function(e) {
 				    if (e.type === "read" && e.response) {
 						var response = e.response;
+
 						if(response.results){
 							for (var i = 0; i < response.results.length; i++) {
 								self.accountList.push(response.results[i]);
@@ -44790,7 +44781,7 @@
 		recurringLineDS 	: dataStore(apiUrl + "journal_lines"),
 		accountDS 			: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
-			sort: [
+		  	sort: [
 			  	{ field: "account_type_id", dir: "asc" },
 			  	{ field: "number", dir: "asc" }
 			]
@@ -44873,8 +44864,6 @@
 		isValid 			: true,			
 		user_id				: banhji.source.user_id,
 		pageLoad 			: function(id){
-			// this.accountDS.fetch();
-
 			if(id){
 				this.set("isEdit", true);						
 				this.loadObj(id);
@@ -47836,9 +47825,26 @@
 		currencyDS 			: banhji.source.currencyDS,
 		jobDS				: banhji.source.jobDS,
 		paymentMethodDS		: banhji.source.paymentMethodDS,
-		accountDS  			: banhji.source.accountDS,
-		cashAccountDS  		: banhji.source.cashAccountDS,
-		advAccountDS  		: banhji.source.advAccountDS,
+		accountDS  			: new kendo.data.DataSource({
+		  	data: banhji.source.accountList,
+			sort: { field:"number", dir:"asc" }
+		}),
+		cashAccountDS 			: new kendo.data.DataSource({
+		  	data: banhji.source.accountList,
+		  	filter: [
+				{ field:"account_type_id", value: 10 },
+				{ field:"status", value: 1 }
+			],
+		  	sort: { field:"number", dir:"asc" }
+		}),
+		advAccountDS 			: new kendo.data.DataSource({
+		  	data: banhji.source.accountList,
+		  	filter: [
+				{ field:"account_type_id", value: 11 },
+				{ field:"status", value: 1 }
+			],
+		  	sort: { field:"number", dir:"asc" }
+		}),
 		attachmentDS	 	: dataStore(apiUrl + "attachments"),
 		segmentItemDS 		: banhji.source.segmentItemDS,
 		txnTemplateDS		: new kendo.data.DataSource({
@@ -48449,11 +48455,35 @@
 		contactDS  			: banhji.source.employeeDS,
 		supplierDS  		: banhji.source.supplierDS,
 		currencyDS  		: banhji.source.currencyDS,
-		currencyRateDS		: dataStore(apiUrl + "currencies/rate"),		
-		accountDS  			: banhji.source.accountDS,
-		jobDS				: banhji.source.jobDS,
-		cashAccountDS  		: banhji.source.cashAccountDS,
-		expenseAccountDS    : banhji.source.expenseAccountDS,
+		currencyRateDS		: dataStore(apiUrl + "currencies/rate"),
+		jobDS				: banhji.source.jobDS,		
+		accountDS 			: new kendo.data.DataSource({
+		  	data: banhji.source.accountList,
+			filter:[ 
+				{
+				    logic: "or",
+				    filters: [
+				      	{ field: "account_type_id", value: 36 },
+				      	{ field: "account_type_id", value: 37 },
+				      	{ field: "account_type_id", value: 38 },
+				      	{ field: "account_type_id", value: 40 },
+				      	{ field: "account_type_id", value: 41 },
+				      	{ field: "account_type_id", value: 42 },
+				      	{ field: "account_type_id", value: 43 }
+				    ]
+				},
+				{ field:"status", value: 1 }
+			],
+			sort: { field:"number", dir:"asc" }
+		}),
+		cashAccountDS 			: new kendo.data.DataSource({
+		  	data: banhji.source.accountList,
+		  	filter: [
+				{ field:"account_type_id", value: 10 },
+				{ field:"status", value: 1 }
+			],
+		  	sort: { field:"number", dir:"asc" }
+		}),
 		taxItemDS  			: dataStore(apiUrl + "tax_items"),
 		txnTemplateDS		: new kendo.data.DataSource({
 			transport: {
@@ -51796,6 +51826,8 @@
 		currencyRateDS		: dataStore(apiUrl + "currencies/rate"),
 		paymentMethodDS		: dataStore(apiUrl + "payment_methods"),
 		attachmentDS	 	: dataStore(apiUrl + "attachments"),
+		contactDS 			: banhji.source.supplierDS,
+		segmentItemDS 		: banhji.source.segmentItemDS,
 		txnTemplateDS		: new kendo.data.DataSource({
 			transport: {
 				read 	: {
@@ -51832,10 +51864,40 @@
 			page:1,
 			pageSize: 100
 		}),
-		contactDS 			: banhji.source.supplierDS,
-		depositAccountDS 	: banhji.source.prepaidAccountDS,
-		segmentItemDS 		: banhji.source.segmentItemDS,
-		accountDS 			: banhji.source.expenseCashAccountDS,
+		accountDS 			: new kendo.data.DataSource({
+		  	data: banhji.source.accountList,
+			filter:[ 
+				{
+				    logic: "or",
+				    filters: [
+				      	{ field: "account_type_id", value: 10 },//Cash
+				      	{ field: "account_type_id", value: 36 },//Expense
+				      	{ field: "account_type_id", value: 37 },
+				      	{ field: "account_type_id", value: 38 },
+				      	{ field: "account_type_id", value: 40 },
+				      	{ field: "account_type_id", value: 41 },
+				      	{ field: "account_type_id", value: 42 },
+				      	{ field: "account_type_id", value: 43 }
+				    ]
+				},
+				{ field:"status", value: 1 }
+			],
+			sort: { field:"number", dir:"asc" }
+		}),
+		depositAccountDS 	: new kendo.data.DataSource({
+		  	data: banhji.source.accountList,
+			filter:[ 
+				{
+				    logic: "or",
+				    filters: [
+				      	{ field: "account_type_id", value: 14 },
+				      	{ field: "account_type_id", value: 21 }
+				    ]
+				},
+				{ field:"status", value: 1 }
+			],
+			sort: { field:"number", dir:"asc" }
+		}),
 		amtDueColor 		: banhji.source.amtDueColor,
 	    confirmMessage 		: banhji.source.confirmMessage,
 		frequencyList 		: banhji.source.frequencyList,
@@ -52492,8 +52554,30 @@
 		balanceDS  					: dataStore(apiUrl + "transactions"),
 		contactListDS 				: banhji.source.supplierListDS,
 		contactDS  					: banhji.source.supplierDS,
-		accountDS  					: dataStore(apiUrl + "accounts"),
-		expenseAccountDS  			: banhji.source.expenseInventoryAccountDS,
+		accountDS  					: new kendo.data.DataSource({
+		  	data: banhji.source.accountList,
+			sort: { field:"number", dir:"asc" }
+		}),
+		expenseAccountDS  			: new kendo.data.DataSource({
+		  	data: banhji.source.accountList,
+			filter:[ 
+				{
+				    logic: "or",
+				    filters: [
+				      	{ field: "account_type_id", value: 13 },//Inventory
+				      	{ field: "account_type_id", value: 36 },//Expense
+				      	{ field: "account_type_id", value: 37 },
+				      	{ field: "account_type_id", value: 38 },
+				      	{ field: "account_type_id", value: 40 },
+				      	{ field: "account_type_id", value: 41 },
+				      	{ field: "account_type_id", value: 42 },
+				      	{ field: "account_type_id", value: 43 }
+				    ]
+				},
+				{ field:"status", value: 1 }
+			],
+			sort: { field:"number", dir:"asc" }
+		}),
 		itemDS  					: banhji.source.itemForSupplierDS,
 		depositDS  					: dataStore(apiUrl + "transactions"),
 		depositSumDS  				: new kendo.data.DataSource({
@@ -53083,15 +53167,28 @@
 		},			
 		typeChanges 		: function(){
 			var obj = this.get("obj");
+			obj.set("account_id", 0);
 			
 			if(obj.type=="Cash_Purchase"){
 				this.set("isCash", true);				
 
 				this.accountDS.filter({ field:"account_type_id", value: 10 });
 			}else{
-				this.set("isCash", false);				
-
-				this.accountDS.filter({ field:"account_type_id", operator:"where_in", value:[23,24] });
+				this.set("isCash", false);
+				
+				this.accountDS.filter({					
+				    logic: "and",
+				    filters: [
+				      	{ field:"status", value: 1 },
+					    {
+					        logic: "or",
+					        filters: [
+					            { field: "account_type_id", value: 23 },
+		      					{ field: "account_type_id", value: 24 }
+					        ]
+					    }
+				    ]						
+				});				
 			}			
 		},
 		//Segment
@@ -53348,7 +53445,8 @@
 			duedate.setDate(duedate.getDate() + 30);				
 
 			this.dataSource.insert(0, {
-				transaction_template_id : 0,				
+				transaction_template_id : 0,
+				account_id 			: 1,				
 				contact_id 			: "",
 				payment_term_id		: 0,
 				payment_method_id	: 0,				
@@ -53397,7 +53495,7 @@
 						
 			this.setRate();
 			this.addRow();
-			this.typeChanges();
+			this.typeChanges();			
 		},
 		addRow 				: function(){
 			var obj = this.get("obj");
@@ -67408,7 +67506,14 @@
 		currencyDS 			: banhji.source.currencyDS,
 		attachmentDS	 	: dataStore(apiUrl + "attachments"),
 		paymentMethodDS		: banhji.source.paymentMethodDS,
-		accountDS  			: banhji.source.cashAccountDS,
+		accountDS 			: new kendo.data.DataSource({
+		  	data: banhji.source.accountList,
+		  	filter: [
+				{ field:"account_type_id", value: 10 },
+				{ field:"status", value: 1 }
+			],
+		  	sort: { field:"number", dir:"asc" }
+		}),
 		segmentItemDS 		: banhji.source.segmentItemDS,
 		txnTemplateDS		: new kendo.data.DataSource({
 			transport: {
@@ -68090,7 +68195,14 @@
 		currencyRateDS		: dataStore(apiUrl + "currencies/rate"),
 		contactDS  			: banhji.source.customerDS,
 		employeeDS  		: banhji.source.saleRepDS,
-		accountDS  			: banhji.source.cashAccountDS,		
+		accountDS  			: new kendo.data.DataSource({
+		  	data: banhji.source.accountList,
+		  	filter: [
+				{ field:"account_type_id", value: 10 },
+				{ field:"status", value: 1 }
+			],
+		  	sort: { field:"number", dir:"asc" }
+		}),		
 		paymentTermDS 		: banhji.source.paymentTermDS,
 		paymentMethodDS 	: banhji.source.paymentMethodDS,	
 		txnTemplateDS		: new kendo.data.DataSource({
@@ -68610,7 +68722,14 @@
 		currencyRateDS		: dataStore(apiUrl + "currencies/rate"),
 		contactDS  			: banhji.source.supplierDS,
 		employeeDS  		: banhji.source.saleRepDS,
-		accountDS  			: banhji.source.cashAccountDS,		
+		accountDS  			: new kendo.data.DataSource({
+		  	data: banhji.source.accountList,
+		  	filter: [
+				{ field:"account_type_id", value: 10 },
+				{ field:"status", value: 1 }
+			],
+		  	sort: { field:"number", dir:"asc" }
+		}),		
 		paymentTermDS 		: banhji.source.paymentTermDS,
 		paymentMethodDS 	: banhji.source.paymentMethodDS,	
 		txnTemplateDS		: new kendo.data.DataSource({
