@@ -311,7 +311,7 @@
 
 	<div class="row-fluid">
 		<div style="margin-top: 10px; margin-left: 0;" align="center">
-			<p><span data-bind="text: lang.lang.all_rights_reserved"></span></p>
+			<p>&copy; <?php echo date('Y'); ?><span data-bind="text: lang.lang.all_rights_reserved"></span></p>
 		</div>	
 	</div>		
 </script>
@@ -1564,9 +1564,15 @@
 		</td>		
 		<td>
 			<input id="cbbAccounts" name="cbbAccounts" 
+<<<<<<< HEAD
 				   data-role="combobox"                   
                    data-value-primitive="true"
                    data-template="account-list-tmpl"
+=======
+				   data-role="combobox"
+                   data-filter="like"
+                   data-min-length="3"
+>>>>>>> refs/remotes/origin/master
                    data-text-field="name"
                    data-value-field="id"
                    data-header-template="account-header-tmpl"
@@ -1653,7 +1659,7 @@
 				    <br>
 
 					<!-- Collapsible Widget -->			
-					<div class="widget">
+					<div class="widget" style="border: 0; margin-bottom: 0;">
 					    <div class="widget-body">
 
 					    	<div class="row-fluid">
@@ -1761,8 +1767,8 @@
 		<td align="right">#=rate#</td>					
 		<td>#=source#</td>
 		<td>#=method#</td>				
-		<td>			
-			<span data-bind="click: edit"><i class="icon-edit"></i> <span data-bind="text: lang.lang.edit"></span></span>	
+		<td style="text-align: center;">			
+			<span data-bind="click: edit" style="cursor: pointer;"><i class="icon-edit"></i> <span data-bind="text: lang.lang.edit"></span></span>	
 		</td>		
     </tr>   
 </script>
@@ -5195,8 +5201,7 @@
 					<span class="glyphicons no-js remove_2 pull-right" 
 	    				onclick="javascript:window.history.back()"
 						data-bind="click: cancel"><i></i></span>
-					<br>
-					<br>
+					
 			        <h2 span data-bind="text: lang.lang.segment"></h2>
 
 			        <div class="row">
@@ -5312,16 +5317,16 @@
 <script id="segment-template" type="text/x-kendo-tmpl">                    
     <tr>    	
     	<td>#=name#</td>
-    	<td>
-    		<span data-bind="click: edit"><i class="icon-edit"></i> Edit</span>
+    	<td >
+    		<span data-bind="click: edit" style="cursor: pointer;"><i class="icon-edit"></i> Edit</span>
     		#if(!is_system=="1"){#
 	    		|
-	    		<span data-bind="click: delete"><i class="icon-remove"></i> Delete</span>
+	    		<span data-bind="click: delete" style="cursor: pointer;"><i class="icon-remove"></i> Delete</span>
     		#}#
     		|
-    		<span data-bind="click: view"><i class="icon-view"></i> View Item</span>
+    		<span data-bind="click: view" style="cursor: pointer;"><i class="icon-view"></i> View Item</span>
     		|
-    		<span data-bind="click: addItem"><i class="icon-plus icon-white"></i> Add Item</span>
+    		<span data-bind="click: addItem" style="cursor: pointer;"><i class="icon-plus icon-white"></i> Add Item</span>
     	</td>
    	</tr>
 </script>
@@ -5331,10 +5336,10 @@
     	<td>#=name#</td>
     	<td>#=segment[0].name#</td>
    		<td>
-    		<span data-bind="click: editItem"><i class="icon-edit"></i> Edit</span>
+    		<span data-bind="click: editItem" style="cursor: pointer;"><i class="icon-edit"></i> Edit</span>
     		#if(!is_system=="1"){#
 	    		|
-	    		<span data-bind="click: deleteItem"><i class="icon-remove"></i> Delete</span>
+	    		<span data-bind="click: deleteItem" style="cursor: pointer;"><i class="icon-remove"></i> Delete</span>
     		#}#
     	</td>
    	</tr>
@@ -6763,7 +6768,7 @@
 	    				onclick="javascript:window.history.back()"
 						data-bind="click: cancel"><i></i></span>
 
-		        <h4 span data-bind="text: lang.lang.cash_advance"></h4>			    		   
+		        <h2 span data-bind="text: lang.lang.cash_advance"></h2>			    		   
 
 			    <br>				   				
 					
@@ -12198,7 +12203,7 @@
 		        #if(is_system=="0"){#
 			        <a class="k-button k-delete-button" href="\\#"><span class="k-icon k-delete"></span></a>				        
 		        #}#
-		        <a class="k-button" href="\#/customer/0/#=id#"><span data-bind="text: lang.lang.pattern"></span></a>
+		        <a class="k-button" href="\#/vendor/0/#=id#"><span data-bind="text: lang.lang.pattern"></span></a>
 		   	</div>		   	
    		</td>
    	</tr>
@@ -16413,6 +16418,11 @@
 			<input id="ccbItem" name="ccbItem-#:uid#"
 				   data-role="combobox"				   
 				   data-template="item-list-tmpl"
+<<<<<<< HEAD
+=======
+				   data-filter="like"
+                   data-min-length="3"
+>>>>>>> refs/remotes/origin/master
                    data-text-field="name"
                    data-value-field="id"
                    data-bind="value: item_id, 
@@ -38336,26 +38346,26 @@
 						</h4>
 					</div>					
 					<div class="widget-body alert alert-primary" style="min-height: 178px;">
-						<div align="center" class="text-large strong" style="font-size: 50px;">
+						<div align="center" class="text-large strong" style="font-size: 35px;">
 							<span data-bind="text: ccc"></span>
 							<br>
 							<p style="font-size: 14px">Cash Conversion Cycle</p>
 						</div>
 						<table width="100%">
 							<tbody>
-								<tr align="center">
+								<tr align="center" style="vertical-align: top;">
 									<td width="33%">										
-										<span style="font-size: 25px;" data-bind="text: arCollectionPeriod"></span>
+										<span style="font-size: 18px;" data-bind="text: arCollectionPeriod"></span>
 										<br>
 										<span style="font-size: 12px;">Receivable Collection Days</span>
 									</td>
 									<td width="33%">
-										<span style="font-size: 25px;" data-bind="text: apPaymentPeriod"></span>
+										<span style="font-size: 18px;" data-bind="text: apPaymentPeriod"></span>
 										<br>
 										<span style="font-size: 12px;">Payable Payment Days</span>
 									</td>
 									<td width="33%">
-										<span style="font-size: 25px;" data-bind="text: inventoryTurnOver"></span>
+										<span style="font-size: 18px;" data-bind="text: inventoryTurnOver"></span>
 										<br>
 										<span style="font-size: 12px;">Inventory Turnover Days </span>
 									</td>
@@ -38373,26 +38383,26 @@
 						</h4>
 					</div>					
 					<div class="widget-body alert-info" style="min-height: 178px;">
-						<div align="center" class="text-large strong" style="font-size: 50px;">
+						<div align="center" class="text-large strong" style="font-size: 35px;">
 							<span data-bind="text: currentRatio"></span>
 							<br>
 							<p style="font-size: 14px">Current Ratio</p>
 						</div>
 						<table width="100%">
 							<tbody>
-								<tr align="center">
+								<tr align="center" style="vertical-align: top;">
 									<td width="33%">										
-										<span style="font-size: 25px;" data-bind="text: quickRatio"></span>
+										<span style="font-size: 18px;" data-bind="text: quickRatio"></span>
 										<br>
 										<span style="font-size: 12px;">Quick Ratio</span>
 									</td>
 									<td width="33%">
-										<span style="font-size: 25px;" data-bind="text: cashRatio"></span>
+										<span style="font-size: 18px;" data-bind="text: cashRatio"></span>
 										<br>
 										<span style="font-size: 12px;">Cash Ratio</span>
 									</td>
 									<td width="33%">
-										<span style="font-size: 25px;" data-bind="text: wcSale"></span>
+										<span style="font-size: 18px;" data-bind="text: wcSale"></span>
 										<br>
 										<span style="font-size: 12px;">Working Capital To Sale Ratio</span>
 									</td>
@@ -38410,26 +38420,26 @@
 						</h4>
 					</div>					
 					<div class="widget-body alert-info3" style="min-height: 178px;background-color: LightGray">
-						<div align="center" class="text-large strong" style="font-size: 50px;">
+						<div align="center" class="text-large strong" style="font-size: 35px;">
 							<span data-bind="text: roce"></span>
 							<br>
 							<p style="font-size: 14px">Return on Capital Employed</p>
 						</div>						
 						<table width="100%">
 							<tbody>
-								<tr align="center">
+								<tr align="center" style="vertical-align: top;">
 									<td width="33%">										
-										<span style="font-size: 25px;" data-bind="text: grossProfitMargin"></span>
+										<span style="font-size: 18px;" data-bind="text: grossProfitMargin"></span>
 										<br>
 										<span style="font-size: 12px;">Gross Margin</span>
 									</td>
 									<td width="33%">
-										<span style="font-size: 25px;" data-bind="text: profitMargin"></span>
+										<span style="font-size: 18px;" data-bind="text: profitMargin"></span>
 										<br>
 										<span style="font-size: 12px;">Earning Before interest & Tax</span>
 									</td>
 									<td width="33%">
-										<span style="font-size: 25px;" data-bind="text: returnOnAsset"></span>
+										<span style="font-size: 18px;" data-bind="text: returnOnAsset"></span>
 										<br>
 										<span style="font-size: 12px;">Return on Asset </span>
 									</td>
@@ -43606,6 +43616,7 @@
 		selectCustomerMessage 		: "Please select a customer.",
 		selectSupplierMessage 		: "Please select a supplier.",
 		selectItemMessage 			: "Please select an item.",
+		duplicateSelectedItemMessage: "You already selected this item",
 		loadData 					: function(){
 			this.loadRate();
 			this.itemTypeDS.read();
@@ -44249,7 +44260,7 @@
 		lineDS  			: dataStore(apiUrl + "journal_lines"),
 		recurringDS 		: dataStore(apiUrl + "transactions"),
 		recurringLineDS 	: dataStore(apiUrl + "journal_lines"),
-		accountDS 			: banhji.source.accountDS,
+		accountDS 			: dataStore(apiUrl + "accounts"),//banhji.source.accountDS,
 		jobDS 				: banhji.source.jobDS,
 		contactDS 			: banhji.source.contactDS,				
 		currencyDS 			: banhji.source.currencyDS,
@@ -45779,7 +45790,7 @@
         dataSource 			: dataStore(apiUrl + "tax_types"),
         itemDS 	 			: dataStore(apiUrl + "tax_items"),
         deleteDS 			: dataStore(apiUrl + "tax_items"),
-        itemDeleteDS 		: dataStore(apiUrl + "transactions/line"),
+        itemDeleteDS 		: dataStore(apiUrl + "item_lines"),
         accountDS 			: banhji.source.accountDS,
         typeList			: [ 
 	 		{ id:"Invoice Based", name: "Invoice Based" },
@@ -49711,12 +49722,12 @@
 		}		
 	});
 	banhji.purchaseOrder =  kendo.observable({
-		lang 					: langVM,
+		lang 				: langVM,
 		dataSource 			: dataStore(apiUrl + "transactions"),
-		lineDS  			: dataStore(apiUrl + "transactions/line"),
+		lineDS  			: dataStore(apiUrl + "item_lines"),
 		deleteDS  			: dataStore(apiUrl + "transactions"),
 		recurringDS 		: dataStore(apiUrl + "transactions"),
-		recurringLineDS 	: dataStore(apiUrl + "transactions/line"),
+		recurringLineDS 	: dataStore(apiUrl + "item_lines"),
 		jobDS				: banhji.source.jobDS,
 		measurementDS	 	: dataStore(apiUrl + "measurements"),
 		attachmentDS	 	: dataStore(apiUrl + "attachments"),			
@@ -49761,7 +49772,7 @@
 		itemDS  			: banhji.source.itemDS,
 		taxItemDS  			: banhji.source.supplierTaxDS,
 		catalogDS			: dataStore(apiUrl + "items"),
-		assemblyDS			: dataStore(apiUrl + "items/assembly"),
+		assemblyDS			: dataStore(apiUrl + "item_prices"),
 		segmentItemDS		: banhji.source.segmentItemDS,
 		amtDueColor 		: banhji.source.amtDueColor,
 	    confirmMessage 		: banhji.source.confirmMessage,
@@ -49976,18 +49987,19 @@
 		itemChanges 		: function(e){								
 			var self = this, 
 			data = e.data,
-			obj = this.get("obj"), 
-			item = this.itemDS.get(data.item_id);
+			obj = this.get("obj");
 
 			if(data.item_id>0){
-				var rate = obj.rate / banhji.source.getRate(item.locale, new Date(obj.issued_date));
+				var item = this.itemDS.get(data.item_id),
+				unit_value = 1,
+				rate = obj.rate / banhji.source.getRate(item.locale, new Date(obj.issued_date));
 
-		        if(item.is_catalog=="1"){		        	
+		        if(item.is_catalog=="1"){
 		        	var catalogList = [];
 		        	$.each(item.catalogs, function(index, value){
 		        		catalogList.push(value);
 		        	});
-		        	
+
 		        	this.catalogDS.query({
 		        		filter: { field:"id", operator:"where_in", value:catalogList },
 		        		page:1,
@@ -49996,41 +50008,44 @@
 		        		self.lineDS.remove(data);
 
 		        		$.each(self.catalogDS.view(), function(index, value){
-		        			var catalogRate = obj.rate / banhji.source.getRate(value.locale, new Date(obj.issued_date));
+		        			rate = obj.rate / banhji.source.getRate(value.locale, new Date(obj.issued_date));
+		        			
+		        			if(value.item_prices.length>0){
+		        				unit_value = value.item_prices[0].unit_value;
+		        			}
 
-							self.lineDS.add({					
+							self.lineDS.add({
 								transaction_id 		: obj.id,
 								tax_item_id 		: 0,
 								item_id 			: value.id,
-								measurement_id 		: value.measurement_id,								
-								description 		: value.purchase_description,				
+								measurement_id 		: value.measurement_id,
+								description 		: value.purchase_description,
 								quantity 	 		: 1,
-								cost 				: value.cost*catalogRate,												
-								amount 				: value.cost*catalogRate,
+								unit_value 			: unit_value,
+								cost 				: value.cost*rate,
+								amount 				: value.cost*rate,
 								discount 			: 0,
-								rate				: catalogRate,
+								rate				: rate,
 								locale				: value.locale,
-								movement 			: 1,								
+								movement 			: 1,
+								required_date 		: obj.issued_date,
 
 								item_prices 		: []
-							});								
+							});
 		        		});
 
 		        		self.changes();
 		        	});
-		        }else if(item.is_assembly=="1"){
-		        	data.set("measurement_id", item.measurement_id);
-		    		data.set("description", item.purchase_description);
-		    		data.set("quantity", 1);	    		
-			        data.set("cost", item.cost*rate);
-			        data.set("rate", rate);
-			        data.set("locale", item.locale);
+		        }else{
+		        	//Unit Value
+					if(item.item_prices.length>0){
+	    				unit_value = item.item_prices[0].unit_value;
+	    			}
 
-			        this.changes();		     
-		        }else{	        	
 		    		data.set("measurement_id", item.measurement_id);
 		    		data.set("description", item.purchase_description);
-		    		data.set("quantity", 1);	    		
+		    		data.set("quantity", 1);
+		    		data.set("unit_value", unit_value);	    		
 			        data.set("cost", item.cost*rate);
 			        data.set("rate", rate);
 			        data.set("locale", item.locale);
@@ -50219,6 +50234,7 @@
 				measurement_id 		: 0,
 				description 		: "",
 				quantity 	 		: 1,
+				unit_value 			: 1,
 				cost 				: 0,
 				amount 				: 0,
 				discount 			: 0,
@@ -50481,12 +50497,12 @@
 	banhji.grn =  kendo.observable({
 		lang 					: langVM,
 		dataSource 			: dataStore(apiUrl + "transactions"),
-		lineDS  			: dataStore(apiUrl + "transactions/line"),
+		lineDS  			: dataStore(apiUrl + "item_lines"),
 		deleteDS 			: dataStore(apiUrl + "transactions"),
 		recurringDS 		: dataStore(apiUrl + "transactions"),
-		recurringLineDS 	: dataStore(apiUrl + "transactions/line"),
+		recurringLineDS 	: dataStore(apiUrl + "item_lines"),
 		referenceDS			: dataStore(apiUrl + "transactions"),
-		referenceLineDS		: dataStore(apiUrl + "transactions/line"),
+		referenceLineDS		: dataStore(apiUrl + "item_linese"),
 		measurementDS	 	: dataStore(apiUrl + "measurements"),
 		attachmentDS	 	: dataStore(apiUrl + "attachments"),			
 		txnTemplateDS		: new kendo.data.DataSource({
@@ -50702,11 +50718,12 @@
 		itemChanges 		: function(e){								
 			var self = this, 
 			data = e.data,
-			obj = this.get("obj"), 
-			item = this.itemDS.get(data.item_id);
+			obj = this.get("obj");
 
 			if(data.item_id>0){
-				var rate = obj.rate / banhji.source.getRate(item.locale, new Date(obj.issued_date));
+				var item = this.itemDS.get(data.item_id),
+				unit_value = 1,
+				rate = obj.rate / banhji.source.getRate(item.locale, new Date(obj.issued_date));
 
 		        if(item.is_catalog=="1"){
 		        	var catalogList = [];
@@ -50722,7 +50739,11 @@
 		        		self.lineDS.remove(data);
 
 		        		$.each(self.catalogDS.view(), function(index, value){
-		        			var catalogRate = obj.rate / banhji.source.getRate(value.locale, new Date(obj.issued_date));
+		        			rate = obj.rate / banhji.source.getRate(value.locale, new Date(obj.issued_date));
+
+		        			if(value.item_prices.length>0){
+		        				unit_value = value.item_prices[0].unit_value;
+		        			}
 
 							self.lineDS.add({					
 								transaction_id 		: obj.id,
@@ -50731,10 +50752,11 @@
 								measurement_id 		: value.measurement_id,								
 								description 		: value.purchase_description,				
 								quantity 	 		: 1,
+								unit_value 			: unit_value,
 								cost 				: value.cost*rate,												
 								amount 				: value.cost*rate,
 								discount 			: 0,
-								rate				: catalogRate,
+								rate				: rate,
 								locale				: value.locale,
 								movement 			: 1,								
 
@@ -50743,20 +50765,17 @@
 		        		});
 
 		        		self.changes();
-		        	});
-		        }else if(item.is_assembly=="1"){
-		        	data.set("measurement_id", item.measurement_id);
-		    		data.set("description", item.purchase_description);
-		    		data.set("quantity", 1);	    		
-			        data.set("cost", item.cost*rate);
-			        data.set("rate", rate);
-			        data.set("locale", item.locale);
+		        	}); 
+		        }else{
+		        	//Unit Value
+					if(item.item_prices.length>0){
+	    				unit_value = item.item_prices[0].unit_value;
+	    			}
 
-			        this.changes();		     
-		        }else{	        	
 		    		data.set("measurement_id", item.measurement_id);
 		    		data.set("description", item.purchase_description);
-		    		data.set("quantity", 1);	    		
+		    		data.set("quantity", 1);
+		    		data.set("unit_value", unit_value);	    		
 			        data.set("cost", item.cost*rate);
 			        data.set("rate", rate);
 			        data.set("locale", item.locale);
@@ -50867,6 +50886,7 @@
 				measurement_id 		: 0,
 				description 		: "",
 				quantity 	 		: 1,
+				unit_value 			: 1,
 				cost 				: 0,
 				amount 				: 0,
 				rate				: obj.rate,
@@ -51882,17 +51902,17 @@
 	banhji.purchase =  kendo.observable({
 		lang 						: langVM,
 		dataSource 					: dataStore(apiUrl + "transactions"),
-		lineDS  					: dataStore(apiUrl + "transactions/line"),
+		lineDS  					: dataStore(apiUrl + "item_lines"),
 		deleteDS 					: dataStore(apiUrl + "transactions"),
 		accountLineDS  				: dataStore(apiUrl + "account_lines"),
 		journalLineDS				: dataStore(apiUrl + "journal_lines"),
 		additionalCostDS 			: dataStore(apiUrl + "transactions"),
 		recurringDS 				: dataStore(apiUrl + "transactions"),
-		recurringLineDS 			: dataStore(apiUrl + "transactions/line"),
+		recurringLineDS 			: dataStore(apiUrl + "item_lines"),
 		recurringAccountLineDS 		: dataStore(apiUrl + "account_lines"),
 		recurringAdditionalCostDS 	: dataStore(apiUrl + "transactions"),
 		referenceDS					: dataStore(apiUrl + "transactions"),
-		referenceLineDS				: dataStore(apiUrl + "transactions/line"),
+		referenceLineDS				: dataStore(apiUrl + "item_lines"),
 		jobDS						: banhji.source.jobDS,	
 		balanceDS  					: dataStore(apiUrl + "transactions"),
 		contactListDS 				: banhji.source.supplierListDS,
@@ -52294,11 +52314,12 @@
 		itemChanges 		: function(e){								
 			var self = this, 
 			data = e.data,
-			obj = this.get("obj"), 
-			item = this.itemDS.get(data.item_id);
+			obj = this.get("obj");
 
 			if(data.item_id>0){
-				var rate = obj.rate / banhji.source.getRate(item.locale, new Date(obj.issued_date));
+				var item = this.itemDS.get(data.item_id),
+				unit_value = 1,
+				rate = obj.rate / banhji.source.getRate(item.locale, new Date(obj.issued_date));
 
 		        if(item.is_catalog=="1"){
 		        	var catalogList = [];
@@ -52314,7 +52335,11 @@
 		        		self.lineDS.remove(data);
 
 		        		$.each(self.catalogDS.view(), function(index, value){
-		        			var catalogRate = obj.rate / banhji.source.getRate(value.locale, new Date(obj.issued_date));
+		        			rate = obj.rate / banhji.source.getRate(value.locale, new Date(obj.issued_date));
+
+		        			if(value.item_prices.length>0){
+		        				unit_value = value.item_prices[0].unit_value;
+		        			}
 
 							self.lineDS.add({					
 								transaction_id 		: obj.id,
@@ -52323,10 +52348,11 @@
 								measurement_id 		: value.measurement_id,								
 								description 		: value.purchase_description,				
 								quantity 	 		: 1,
-								cost 				: value.cost*catalogRate,												
-								amount 				: value.cost*catalogRate,
+								unit_value 			: unit_value,
+								cost 				: value.cost*rate,												
+								amount 				: value.cost*rate,
 								discount 			: 0,
-								rate				: catalogRate,
+								rate				: rate,
 								locale				: value.locale,
 								movement 			: 1,								
 
@@ -52335,20 +52361,17 @@
 		        		});
 
 		        		self.changes();
-		        	});
-		        }else if(item.is_assembly=="1"){
-		        	data.set("measurement_id", item.measurement_id);
-		    		data.set("description", item.purchase_description);
-		    		data.set("quantity", 1);	    		
-			        data.set("cost", item.cost*rate);
-			        data.set("rate", rate);
-			        data.set("locale", item.locale);
+		        	}); 
+		        }else{
+		        	//Unit Value
+					if(item.item_prices.length>0){
+	    				unit_value = item.item_prices[0].unit_value;
+	    			}
 
-			        this.changes();		     
-		        }else{	        	
 		    		data.set("measurement_id", item.measurement_id);
 		    		data.set("description", item.purchase_description);
-		    		data.set("quantity", 1);	    		
+		    		data.set("quantity", 1);
+		    		data.set("unit_value", unit_value);	    		
 			        data.set("cost", item.cost*rate);
 			        data.set("rate", rate);
 			        data.set("locale", item.locale);
@@ -52817,6 +52840,7 @@
 				measurement_id 		: 0,
 				description 		: "",
 				quantity 	 		: 1,
+				unit_value 			: 1,
 				cost 				: 0,
 				amount 				: 0,
 				discount 			: 0,
@@ -53507,11 +53531,11 @@
 	banhji.purchaseReturn =  kendo.observable({
 		lang 					: langVM,
 		dataSource 			: dataStore(apiUrl + "transactions"),
-		lineDS  			: dataStore(apiUrl + "transactions/line"),
+		lineDS  			: dataStore(apiUrl + "item_lines"),
 		deleteDS 			: dataStore(apiUrl + "transactions"),		
 		journalLineDS		: dataStore(apiUrl + "journal_lines"),
 		referenceDS			: dataStore(apiUrl + "transactions"),
-		referenceLineDS		: dataStore(apiUrl + "transactions/line"),
+		referenceLineDS		: dataStore(apiUrl + "item_lines"),
 		returnDS			: dataStore(apiUrl + "transactions"),
 		invoiceDS			: dataStore(apiUrl + "transactions"),
 		measurementDS		: dataStore(apiUrl + "measurements"),
@@ -53765,11 +53789,12 @@
 		itemChanges 		: function(e){								
 			var self = this, 
 			data = e.data,
-			obj = this.get("obj"), 
-			item = this.itemDS.get(data.item_id);
+			obj = this.get("obj");
 
 			if(data.item_id>0){
-				var rate = obj.rate / banhji.source.getRate(item.locale, new Date(obj.issued_date));
+				var item = this.itemDS.get(data.item_id),
+				unit_value = 1,
+				rate = obj.rate / banhji.source.getRate(item.locale, new Date(obj.issued_date));
 
 		        if(item.is_catalog=="1"){
 		        	var catalogList = [];
@@ -53785,7 +53810,11 @@
 		        		self.lineDS.remove(data);
 
 		        		$.each(self.catalogDS.view(), function(index, value){
-		        			var catalogRate = obj.rate / banhji.source.getRate(value.locale, new Date(obj.issued_date));
+		        			rate = obj.rate / banhji.source.getRate(value.locale, new Date(obj.issued_date));
+
+		        			if(value.item_prices.length>0){
+		        				unit_value = value.item_prices[0].unit_value;
+		        			}
 
 							self.lineDS.add({					
 								transaction_id 		: obj.id,
@@ -53794,10 +53823,11 @@
 								measurement_id 		: value.measurement_id,								
 								description 		: value.purchase_description,				
 								quantity 	 		: 1,
-								cost 				: value.cost*catalogRate,												
-								amount 				: value.cost*catalogRate,
+								unit_value 			: unit_value,
+								cost 				: value.cost*rate,												
+								amount 				: value.cost*rate,
 								discount 			: 0,
-								rate				: catalogRate,
+								rate				: rate,
 								locale				: value.locale,
 								movement 			: 1,								
 
@@ -53806,20 +53836,17 @@
 		        		});
 
 		        		self.changes();
-		        	});
-		        }else if(item.is_assembly=="1"){
-		        	data.set("measurement_id", item.measurement_id);
-		    		data.set("description", item.purchase_description);
-		    		data.set("quantity", 1);	    		
-			        data.set("cost", item.cost*rate);
-			        data.set("rate", rate);
-			        data.set("locale", item.locale);
+		        	}); 
+		        }else{
+		        	//Unit Value
+					if(item.item_prices.length>0){
+	    				unit_value = item.item_prices[0].unit_value;
+	    			}
 
-			        this.changes();		     
-		        }else{	        	
 		    		data.set("measurement_id", item.measurement_id);
 		    		data.set("description", item.purchase_description);
-		    		data.set("quantity", 1);	    		
+		    		data.set("quantity", 1);
+		    		data.set("unit_value", unit_value);
 			        data.set("cost", item.cost*rate);
 			        data.set("rate", rate);
 			        data.set("locale", item.locale);
@@ -54046,6 +54073,7 @@
 				measurement_id 		: 0,				
 				description 		: "",				
 				quantity 	 		: 1,
+				unit_value 			: 1,
 				cost 				: 0,												
 				amount 				: 0,
 				discount 			: 0,
@@ -56397,10 +56425,11 @@
 	banhji.quote =  kendo.observable({
 		lang 				: langVM,
 		dataSource 			: dataStore(apiUrl + "transactions"),
-		lineDS  			: dataStore(apiUrl + "transactions/line"),
+		lineDS  			: dataStore(apiUrl + "item_lines"),
+		assemblyLineDS  	: dataStore(apiUrl + "item_lines"),
 		deleteDS 			: dataStore(apiUrl + "transactions"),
 		recurringDS 		: dataStore(apiUrl + "transactions"),
-		recurringLineDS 	: dataStore(apiUrl + "transactions/line"),
+		recurringLineDS 	: dataStore(apiUrl + "item_lines"),
 		attachmentDS	 	: dataStore(apiUrl + "attachments"),
 		balanceDS  			: dataStore(apiUrl + "transactions"),
 		jobDS				: banhji.source.jobDS,
@@ -56410,7 +56439,8 @@
 		itemDS  			: banhji.source.itemForSaleDS,
 		taxItemDS 			: banhji.source.customerTaxDS,
 		catalogDS			: dataStore(apiUrl + "items"),
-		assemblyDS			: dataStore(apiUrl + "items/assembly"),
+		itemListDS			: dataStore(apiUrl + "items"),
+		assemblyDS			: dataStore(apiUrl + "item_prices"),
 		txnTemplateDS		: new kendo.data.DataSource({
 			transport: {
 				read 	: {
@@ -56690,19 +56720,22 @@
 		itemChanges 		: function(e){								
 			var self = this, 
 			data = e.data,
-			obj = this.get("obj"), 
-			item = this.itemDS.get(data.item_id);
+			obj = this.get("obj");
 
-			if(data.item_id>0){
-				var price = 0, rate = 1, measurement_id = item.measurement_id;
+			var notDuplicate = true, existingList = {};
+			$.each(this.lineDS.data(), function(index, value){
+				if(existingList[value.item_id]===undefined){
+					existingList[value.item_id]=value.item_id;											
+				}else{
+					notDuplicate = false;
 
-				if(item.item_type_id=="1" || item.item_type_id=="4"){
-					if(item.item_prices.length>0){
-						rate = obj.rate / banhji.source.getRate(item.item_prices[0].locale, new Date(obj.issued_date));
-						price = item.item_prices[0].price*rate;
-						measurement_id = item.item_prices[0].measurement_id;
-					}
+					return false;
 				}
+			});
+			
+			if(notDuplicate && data.item_id>0){
+				var item = this.itemDS.get(data.item_id),
+				price = item.price, unit_value = 1, rate = 1, measurement_id = item.measurement_id, locale = item.locale;
 
 		        if(item.is_catalog=="1"){
 		        	var catalogList = [];
@@ -56718,20 +56751,27 @@
 		        		self.lineDS.remove(data);
 
 		        		$.each(self.catalogDS.view(), function(index, value){
-		        			var catalogRate = obj.rate / banhji.source.getRate(value.item_prices[0].locale, new Date(obj.issued_date));										
-							
+							if(value.item_prices.length>0){
+								rate = obj.rate / banhji.source.getRate(item.item_prices[0].locale, new Date(obj.issued_date));
+								price = item.item_prices[0].price*rate;
+								unit_value = item.item_prices[0].unit_value;
+								measurement_id = item.item_prices[0].measurement_id;
+								locale = item.item_prices[0].locale;
+		        			}
+
 							self.lineDS.add({					
 								transaction_id 		: obj.id,
 								tax_item_id 		: 0,
 								item_id 			: value.id,
-								measurement_id 		: value.item_prices[0].measurement_id,								
+								measurement_id 		: measurement_id,								
 								description 		: value.sale_description,				
 								quantity 	 		: 1,
-								price 				: value.item_prices[0].price*catalogRate,												
-								amount 				: value.item_prices[0].price*catalogRate,
+								unit_value 			: unit_value,
+								price 				: price,												
+								amount 				: price,
 								discount 			: 0,
-								rate				: catalogRate,
-								locale				: value.locale,
+								rate				: rate,
+								locale				: locale,
 								movement 			: -1,								
 
 								item_prices 		: value.item_prices
@@ -56743,26 +56783,70 @@
 		        }else if(item.is_assembly=="1"){
 		        	rate = obj.rate / banhji.source.getRate(item.locale, new Date(obj.issued_date));
 
-		        	data.set("measurement_id", item.measurement_id);
+		        	data.set("measurement_id", measurement_id);
 		    		data.set("description", item.sale_description);
-		    		data.set("quantity", 1);		    			    		
-			        data.set("price", item.price);
+		    		data.set("quantity", 1);
+		    		data.set("unit_value", 1);		    			    		
+			        data.set("price", price*rate);
 			        data.set("rate", rate);
-			        data.set("locale", item.locale);
-			       	data.set("item_prices", []);
+			        data.set("locale", locale);
+			        data.set("movement", 0);
 
-			        this.changes();		     
-		        }else{	        	
+			        this.assemblyDS.query({
+		        		filter: { field:"assembly_id", value: data.item_id },
+		        		page:1,
+		        		pageSize:100
+		        	}).then(function(){
+		        		var view = self.assemblyDS.view();
+		        		
+		        		$.each(view, function(index, value){
+		        			rate = obj.rate / banhji.source.getRate(value.locale, new Date(obj.issued_date));
+
+							self.assemblyLineDS.add({					
+								transaction_id 		: obj.id,								
+								item_id 			: value.item_id,
+								assembly_id 		: value.assembly_id,
+								measurement_id 		: value.measurement_id,								
+								description 		: "",				
+								quantity 	 		: value.quantity,
+								unit_value 			: value.unit_value,
+								price 				: value.price,												
+								amount 				: value.price,
+								rate				: rate,
+								locale				: value.locale,
+								movement 			: -1,
+								
+								item_prices 		: []
+							});
+
+							self.changes();								
+		        		});
+		        	});		     
+		        }else{
+		        	if(item.item_type_id=="1" || item.item_type_id=="4"){
+						if(item.item_prices.length>0){
+							rate = obj.rate / banhji.source.getRate(item.item_prices[0].locale, new Date(obj.issued_date));
+							price = item.item_prices[0].price*rate;
+							unit_value = item.item_prices[0].unit_value;
+							measurement_id = item.item_prices[0].measurement_id;
+							locale = item.item_prices[0].locale;
+						}
+					}
+
 		    		data.set("measurement_id", measurement_id);
 		    		data.set("description", item.sale_description);
 		    		data.set("quantity", 1);
+		    		data.set("unit_value", unit_value);
 			        data.set("price", price);
 			        data.set("rate", rate);	
-			        data.set("locale", item.locale);
+			        data.set("locale", locale);
 			        data.set("item_prices", item.item_prices);			        
 
 			        this.changes();
 		    	}
+	        }else{
+	        	data.set("item_id", "");
+	        	alert(banhji.source.duplicateSelectedItemMessage);
 	        }                	        	
 		},
 		measurementChanges 	: function(e){										
@@ -56821,7 +56905,14 @@
 						self.set("showDiscount", true);
 					}
 
-					self.lineDS.filter({ field: "transaction_id", value: view[0].id });
+					self.lineDS.filter([
+						{ field: "transaction_id", value: view[0].id },
+						{ field: "assembly_id", value: 0 }
+					]);
+					self.assemblyLineDS.filter([
+						{ field: "transaction_id", value: view[0].id },
+						{ field: "assembly_id >", value: 0 }
+					]);
 					self.attachmentDS.filter({ field: "transaction_id", value: view[0].id });
 					self.loadContact(view[0].contact_id);
 				});
@@ -56877,6 +56968,7 @@
 		addEmpty 		 	: function(){			
 			this.dataSource.data([]);
 			this.lineDS.data([]);
+			this.assemblyLineDS.data([]);
 			this.attachmentDS.data([]);			
 
 			this.set("isEdit", false);
@@ -56940,6 +57032,7 @@
 				measurement_id 		: 0,				
 				description 		: "",				
 				quantity 	 		: 1,
+				unit_value 			: 1,
 				price 				: 0,												
 				amount 				: 0,
 				discount 			: 0,
@@ -56951,8 +57044,23 @@
 			});																	
 		},		
 		removeRow 			: function(e){						
-			var data = e.data;
-			if(this.lineDS.total()>1){				
+			var self = this, data = e.data;
+			
+			if(this.lineDS.total()>1){
+				//Remove Assembly Item List
+				if(data.item_id>0){
+					var raw = this.assemblyLineDS.data();
+				    
+				    var item, i;
+				    for(i=raw.length-1; i>=0; i--){
+				      	item = raw[i];
+				      	if (item.assembly_id==data.item_id){
+				       	 	this.assemblyLineDS.remove(item);
+				      	}
+
+				    }
+				}
+
 				this.lineDS.remove(data);
 		        this.changes();
 	        }		        
@@ -56992,8 +57100,13 @@
 			.then(function(data){ //Success												
 				if(self.get("isEdit")==false){
 					//Item line
-					$.each(self.lineDS.data(), function(index, value){										
-						value.set("transaction_id", data[0].id);										
+					$.each(self.lineDS.data(), function(index, value){
+						value.set("transaction_id", data[0].id);
+					});
+
+					//Assembly line
+					$.each(self.assemblyLineDS.data(), function(index, value){
+						value.set("transaction_id", data[0].id);
 					});
 
 					//Attachment
@@ -57002,6 +57115,7 @@
 		            });
 				}
 				self.lineDS.sync();
+				self.assemblyLineDS.sync();
 				self.uploadFile();
 				
 				return data;
@@ -57034,13 +57148,16 @@
 		cancel 				: function(){
 			this.dataSource.cancelChanges();
 			this.lineDS.cancelChanges();
+			this.assemblyLineDS.cancelChanges();
 			this.attachmentDS.cancelChanges();
 
 			this.dataSource.data([]);
 			this.lineDS.data([]);
+			this.assemblyLineDS.data([]);
 			this.attachmentDS.data([]);
 
-			this.contactDS.filter({ field:"parent_id", operator:"where_related_contact_type", value:1 });			
+			this.contactDS.filter({ field:"parent_id", operator:"where_related_contact_type", value:1 });
+			this.accountDS.filter({ field:"status", value:1 });			
 
 			banhji.userManagement.removeMultiTask("quote");
 		},
@@ -57199,11 +57316,11 @@
 		lang 				: langVM,
 		dataSource 			: dataStore(apiUrl + "transactions"),
 		deleteDS 			: dataStore(apiUrl + "transactions"),
-		lineDS  			: dataStore(apiUrl + "transactions/line"),		
+		lineDS  			: dataStore(apiUrl + "item_lines"),		
 		recurringDS 		: dataStore(apiUrl + "transactions"),
-		recurringLineDS 	: dataStore(apiUrl + "transactions/line"),
+		recurringLineDS 	: dataStore(apiUrl + "item_lines"),
 		referenceDS			: dataStore(apiUrl + "transactions"),
-		referenceLineDS		: dataStore(apiUrl + "transactions/line"),
+		referenceLineDS		: dataStore(apiUrl + "item_lines"),
 		attachmentDS	 	: dataStore(apiUrl + "attachments"),
 		txnTemplateDS		: new kendo.data.DataSource({
 			transport: {
@@ -57740,6 +57857,7 @@
 				measurement_id 		: 0,				
 				description 		: "",				
 				quantity 	 		: 1,
+				unit_value 			: 0,
 				price 				: 0,												
 				amount 				: 0,
 				discount 			: 0,				
@@ -58756,13 +58874,13 @@
 	banhji.cashSale =  kendo.observable({
 		lang 				: langVM,
 		dataSource 			: dataStore(apiUrl + "transactions"),
-		lineDS  			: dataStore(apiUrl + "transactions/line"),
+		lineDS  			: dataStore(apiUrl + "item_lines"),
 		deleteDS 			: dataStore(apiUrl + "transactions"),
 		journalLineDS		: dataStore(apiUrl + "journal_lines"),
 		recurringDS 		: dataStore(apiUrl + "transactions"),
-		recurringLineDS 	: dataStore(apiUrl + "transactions/line"),
+		recurringLineDS 	: dataStore(apiUrl + "item_lines"),
 		referenceDS			: dataStore(apiUrl + "transactions"),
-		referenceLineDS		: dataStore(apiUrl + "transactions/line"),
+		referenceLineDS		: dataStore(apiUrl + "item_lines"),
 		balanceDS  			: dataStore(apiUrl + "transactions"),
 		depositDS  			: dataStore(apiUrl + "transactions"),
 		depositSumDS  		: new kendo.data.DataSource({
@@ -59476,6 +59594,7 @@
 				measurement_id 		: 0,
 				description 		: "",
 				quantity 	 		: 1,
+				unit_value 			: 0,
 				price 				: 0,
 				amount 				: 0,
 				discount 			: 0,
@@ -60051,13 +60170,13 @@
 	banhji.invoice =  kendo.observable({
 		lang 				: langVM,
 		dataSource 			: dataStore(apiUrl + "transactions"),
-		lineDS  			: dataStore(apiUrl + "transactions/line"),
+		lineDS  			: dataStore(apiUrl + "item_lines"),
 		deleteDS 			: dataStore(apiUrl + "transactions"),
 		journalLineDS		: dataStore(apiUrl + "journal_lines"),
 		recurringDS 		: dataStore(apiUrl + "transactions"),
-		recurringLineDS 	: dataStore(apiUrl + "transactions/line"),
+		recurringLineDS 	: dataStore(apiUrl + "item_lines"),
 		referenceDS			: dataStore(apiUrl + "transactions"),
-		referenceLineDS		: dataStore(apiUrl + "transactions/line"),
+		referenceLineDS		: dataStore(apiUrl + "item_lines"),
 		balanceDS  			: dataStore(apiUrl + "transactions"),
 		depositDS  			: dataStore(apiUrl + "transactions"),
 		attachmentDS	 	: dataStore(apiUrl + "attachments"),
@@ -60806,6 +60925,7 @@
 				measurement_id 		: 0,				
 				description 		: "",				
 				quantity 	 		: 1,
+				unit_value 			: 0,
 				price 				: 0,												
 				amount 				: 0,
 				discount 			: 0,
@@ -61403,12 +61523,12 @@
 	banhji.gdn =  kendo.observable({
 		lang 				: langVM,
 		dataSource 			: dataStore(apiUrl + "transactions"),
-		lineDS  			: dataStore(apiUrl + "transactions/line"),
+		lineDS  			: dataStore(apiUrl + "item_lines"),
 		deleteDS 			: dataStore(apiUrl + "transactions"),
 		recurringDS 		: dataStore(apiUrl + "transactions"),
-		recurringLineDS 	: dataStore(apiUrl + "transactions/line"),
+		recurringLineDS 	: dataStore(apiUrl + "item_lines"),
 		referenceDS			: dataStore(apiUrl + "transactions"),
-		referenceLineDS		: dataStore(apiUrl + "transactions/line"),
+		referenceLineDS		: dataStore(apiUrl + "item_lines"),
 		contactDS  			: banhji.source.customerDS,
 		itemDS  			: banhji.source.itemForSaleDS,
 		catalogDS			: dataStore(apiUrl + "items"),
@@ -61832,6 +61952,7 @@
 				measurement_id 		: 0,
 				description 		: "",
 				quantity 	 		: 1,
+				unit_value 			: 0,
 				price 				: 0,
 				amount 				: 0,
 				rate				: obj.rate,
@@ -62181,11 +62302,11 @@
 	banhji.saleReturn =  kendo.observable({
 		lang 				: langVM,
 		dataSource 			: dataStore(apiUrl + "transactions"),
-		lineDS  			: dataStore(apiUrl + "transactions/line"),
+		lineDS  			: dataStore(apiUrl + "item_lines"),
 		deleteDS 			: dataStore(apiUrl + "transactions"),		
 		journalLineDS		: dataStore(apiUrl + "journal_lines"),
 		referenceDS			: dataStore(apiUrl + "transactions"),
-		referenceLineDS		: dataStore(apiUrl + "transactions/line"),
+		referenceLineDS		: dataStore(apiUrl + "item_lines"),
 		returnDS			: dataStore(apiUrl + "transactions"),
 		invoiceDS			: dataStore(apiUrl + "transactions"),
 		currencyRateDS		: dataStore(apiUrl + "currencies/rate"),
@@ -62776,6 +62897,7 @@
 				measurement_id 		: 0,				
 				description 		: "",				
 				quantity 	 		: 1,
+				unit_value 			: 0,
 				price 				: 0,												
 				amount 				: 0,
 				discount 			: 0,
@@ -64045,7 +64167,7 @@
 		txnTemplateDS		: dataStore(apiUrl + "transaction_templates"),		
 		obj 				: {title: "Quotation", issued_date : "<?php echo date('d/M/Y'); ?>", number : "QO123456", type : "Quote", amount: "$500,000.00", contact: []},
 		company 			: banhji.institute,		
-		lineDS 				: dataStore(apiUrl + "transactions/line"),
+		lineDS 				: dataStore(apiUrl + "item_lines"),
 		user_id				: banhji.source.user_id,
 		selectForm 			: null,
 		pageLoad 			: function(id, is_recurring){
@@ -65452,7 +65574,7 @@
 	banhji.sale = kendo.observable({
 		lang 				: langVM,
 		dataSource  		: dataStore(apiUrl + 'items'),
-		txnDS  				: dataStore(apiUrl + 'transactions/line'),
+		txnDS  				: dataStore(apiUrl + 'item_lines'),
 		quoteLineDS  		: banhji.quote.lineDS,
 		soLineDS  			: banhji.saleOrder.lineDS,
 		categoryDS 			: dataStore(apiUrl + 'categories'),
@@ -67453,6 +67575,7 @@
 						var amount_due = value.amount - (value.amount_paid + value.deposit);							
 
 						self.dataSource.add({
+							transaction_template_id : 0,
 		    				contact_id 			: value.contact_id,				
 							account_id 			: obj.account_id,
 							payment_term_id		: value.payment_term_id,
@@ -67575,7 +67698,8 @@
 			this.set("pay", 0);
 			this.set("remain", 0);				
 
-			this.set("obj", {				
+			this.set("obj", {
+				transaction_template_id: 6,				
 				account_id 			: 7,
 				payment_method_id	: 1,							   	
 			   	rate				: 1,			   	
@@ -67631,6 +67755,7 @@
 	    	}else{
 	    		//Add brand new transaction
 	    		$.each(this.dataSource.data(), function(index, value){
+	    			value.set("transaction_template_id", obj.transaction_template_id);
 	    			value.set("account_id", obj.account_id);
 	    			value.set("payment_method_id", obj.payment_method_id);	    			
 	    			value.set("issued_date", obj.issued_date);
@@ -67954,6 +68079,7 @@
 						var amount_due = value.amount - (value.amount_paid + value.deposit);							
 
 						self.dataSource.add({
+							transaction_template_id : 0,
 		    				contact_id 			: value.contact_id,				
 							account_id 			: obj.account_id,
 							payment_term_id		: value.payment_term_id,
@@ -68098,7 +68224,8 @@
 			this.set("pay", 0);
 			this.set("remain", 0);				
 
-			this.set("obj", {				
+			this.set("obj", {
+				transaction_template_id : 12,				
 				account_id 			: 7,
 				payment_method_id	: 1,							   	
 			   	rate				: 1,			   	
@@ -68153,6 +68280,7 @@
 	    	}else{
 	    		//Add brand new transaction
 	    		$.each(this.dataSource.data(), function(index, value){
+	    			value.set("transaction_template_id", obj.transaction_template_id);
 	    			value.set("account_id", obj.account_id);
 	    			value.set("payment_method_id", obj.payment_method_id);	    			
 	    			value.set("issued_date", obj.issued_date);
@@ -68824,8 +68952,12 @@
 			page:1,
 			pageSize: 100
 		}),
+<<<<<<< HEAD
+=======
+		itemMovementDS 		: dataStore(apiUrl + "item_lines"),
+>>>>>>> refs/remotes/origin/master
 		categoryDS 			: dataStore(apiUrl + "categories"),
-		sumamryDS 			: dataStore(apiUrl + "transactions/line"),
+		sumamryDS 			: dataStore(apiUrl + "item_lines"),
 		transactionDS		: dataStore(apiUrl + "items/movement"),
 		attachmentDS 		: dataStore(apiUrl + "attachments"),		
 		sortList			: banhji.source.sortList,
@@ -69223,8 +69355,8 @@
     	dataSource 			: dataStore(apiUrl + "item_prices"),
     	itemDS 				: dataStore(apiUrl + "items"),
     	recordDS 			: dataStore(apiUrl + "items/movement"),
-    	poDS 				: dataStore(apiUrl + "transactions/line"),
-    	soDS 				: dataStore(apiUrl + "transactions/line"),
+    	poDS 				: dataStore(apiUrl + "item_lines"),
+    	soDS 				: dataStore(apiUrl + "item_lines"),
     	currencyDS  		: banhji.source.currencyDS,
     	unitDS	   			: banhji.source.measurementDS,
     	obj 				: null,
@@ -69367,7 +69499,7 @@
     	lang 					: langVM,    	
     	dataSource 				: dataStore(apiUrl + "items"),
     	patternDS 				: dataStore(apiUrl + "items"),
-    	deleteDS 				: dataStore(apiUrl + "transactions/line"),
+    	deleteDS 				: dataStore(apiUrl + "item_lines"),
     	categoryDS 				: banhji.source.inventoryCategoryDS,
     	itemGroupDS 			: banhji.source.itemGroupDS,   	
     	brandDS 	 			: banhji.source.brandDS,    	   	   	
@@ -70344,7 +70476,7 @@
     	lang 					: langVM,    	
     	dataSource 				: dataStore(apiUrl + "items"),
     	patternDS 				: dataStore(apiUrl + "items"),
-    	deleteDS 				: dataStore(apiUrl + "transactions/line"),
+    	deleteDS 				: dataStore(apiUrl + "item_lines"),
     	numberDS 				: dataStore(apiUrl + "items"),
     	existingDS 				: dataStore(apiUrl + "items"),
     	categoryDS 				: banhji.source.serviceCategoryDS,
@@ -70354,6 +70486,7 @@
     	customerDS 	 			: banhji.source.customerDS,
     	itemVendorDS 	 		: dataStore(apiUrl + "items/contact"),
     	itemCustomerDS 	 		: dataStore(apiUrl + "items/contact"),
+    	itemPriceDS 			: dataStore(apiUrl + "item_prices"),
     	currencyDS 	 			: banhji.source.currencyDS,  	
     	incomeAccountDS 		: banhji.source.incomeAccountDS,
     	cogsAccountDS 			: banhji.source.cogsAccountDS,    	
@@ -70472,6 +70605,20 @@
 				this.generateNumber();
 			}
 		},
+		//Item Price
+		addItemPrice 			: function (item_id) {
+			var obj = this.get("obj");
+
+      		this.itemPriceDS.add({
+      			item_id			: item_id,
+      			measurement_id 	: obj.measurement_id,
+      			price 			: obj.price,
+      			unit_value		: 1,
+      			locale 			: obj.locale
+			});
+
+			this.itemPriceDS.sync();
+      	},
       	//Item Contact
 		loadItemContact			: function(){
     		var obj = this.get("obj");
@@ -70649,6 +70796,8 @@
 	      			$.each(self.itemCustomerDS.data(), function(index, value){
 	      				value.set("item_id", data[0].id);
 	      			});
+
+	      			self.addItemPrice(data[0].id);
 				}
 				
       			self.itemVendorDS.sync();
@@ -70718,7 +70867,7 @@
     	lang 					: langVM,    	
     	dataSource 				: dataStore(apiUrl + "items"),
     	patternDS 				: dataStore(apiUrl + "items"),
-    	deleteDS 				: dataStore(apiUrl + "transactions/line"),
+    	deleteDS 				: dataStore(apiUrl + "item_lines"),
     	categoryDS 				: banhji.source.nonInventoryPartCategoryDS,
     	itemGroupDS 			: dataStore(apiUrl + "items/group"),
     	brandDS 	 			: dataStore(apiUrl + "brands"),    	   	   	
@@ -71089,7 +71238,7 @@
     	lang 					: langVM,    	
     	dataSource 				: dataStore(apiUrl + "items"),
     	patternDS 				: dataStore(apiUrl + "items"),
-    	deleteDS 				: dataStore(apiUrl + "transactions/line"),
+    	deleteDS 				: dataStore(apiUrl + "item_lines"),
     	categoryDS 				: banhji.source.fixedAssetCategoryDS,
     	measurementDS			: dataStore(apiUrl + "measurements"),
     	numberDS 				: dataStore(apiUrl + "items"),
@@ -71369,7 +71518,7 @@
 	banhji.txnItem =  kendo.observable({
     	lang 					: langVM,    	
     	dataSource 				: dataStore(apiUrl + "items"),    	
-    	deleteDS 				: dataStore(apiUrl + "transactions/line"),
+    	deleteDS 				: dataStore(apiUrl + "item_lines"),
     	numberDS 				: dataStore(apiUrl + "items"),
     	existingDS 				: dataStore(apiUrl + "items"),   	
     	currencyDS 	 			: banhji.source.currencyDS,  	
@@ -71540,7 +71689,7 @@
     banhji.itemAdjustment = kendo.observable({
     	lang 					: langVM,
     	dataSource  			: dataStore(apiUrl + "transactions"),	
-    	lineDS  				: dataStore(apiUrl + "transactions/line"),
+    	lineDS  				: dataStore(apiUrl + "item_lines"),
     	journalLineDS			: dataStore(apiUrl + "journal_lines"),	
 		itemDS  				: dataStore(apiUrl + "items"),
 		contactDS 				: banhji.source.employeeDS,
@@ -72033,7 +72182,14 @@
 	banhji.internalUsage = kendo.observable({
     	lang 					: langVM,
     	dataSource  			: dataStore(apiUrl + "transactions"),	
+<<<<<<< HEAD
     	lineDS  				: dataStore(apiUrl + "transactions/line"),
+=======
+    	lineDS  				: dataStore(apiUrl + "item_lines"),
+    	accountLineDS  			: dataStore(apiUrl + "account_lines"),
+    	toItemLineDS  			: dataStore(apiUrl + "item_lines"),
+    	toAccountLineDS  		: dataStore(apiUrl + "account_lines"),
+>>>>>>> refs/remotes/origin/master
     	journalLineDS			: dataStore(apiUrl + "journal_lines"),	
 		itemDS  				: banhji.source.itemDS,
 		measurementDS			: dataStore(apiUrl + "measurements"),		

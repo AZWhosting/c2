@@ -370,10 +370,10 @@ class Plans extends REST_Controller {
 			$data = array();
 			foreach($table as $row) {
 				$account = $row->account->get();
-				$currency= $value->currency->get();
+				$currency= $row->currency->get();
 				$data[] = array(
 					'id' => $row->id,
-					"currency"				=> $value->currency_id,
+					"currency"				=> $row->currency_id,
 					"_currency"				=> array(
 												"id" => $currency->id,
 												"code" => $currency->code,
@@ -383,7 +383,7 @@ class Plans extends REST_Controller {
 					'is_flat' => $row->is_flat,
 					'type' => $row->type,
 					'usage' 	=> $row->usage,
-					"account" => array('id' => $account->id, 'name' => $account->name),
+					"account" => $account->exists() ? array('id' => $account->id, 'name' => $account->name) : array('id'=>null, 'name'=> null),
 					'amount'=> $row->amount
 				);
 			}
@@ -415,7 +415,7 @@ class Plans extends REST_Controller {
 				$data[] = array(
 					"id"  	  => $table->id,
 					"is_flat" => $table->is_flat,
-					"currency"				=> $value->currency_id,
+					"currency"				=> $table->currency_id,
 					"_currency"				=> array(
 												"id" => $currency->id,
 												"code" => $currency->code,

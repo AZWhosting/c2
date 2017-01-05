@@ -219,8 +219,12 @@ pre {
 }
 .textunder{
 	color: #31849b;
+	font-size: 11px;
 }
-
+.glyphicons.iphone i:before{
+	font-size: 15px;
+	color: #31849b;
+}
 
 
 .formstyle div img {

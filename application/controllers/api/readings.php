@@ -17,9 +17,9 @@ class Readings extends REST_Controller {
 			$this->server_host = $conn->server_name;
 			$this->server_user = $conn->username;
 			$this->server_pwd = $conn->password;	
-			// $this->_database = $conn->inst_database;
+			$this->_database = $conn->inst_database;
 		}
-		$this->_database = 'db_banhji';
+		// $this->_database = 'db_banhji';
 	}
 	
 	//GET 
@@ -94,8 +94,8 @@ class Readings extends REST_Controller {
 		foreach ($models as $value) {
 			$obj = new Meter_record(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$meter = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			$meter->where('id', $value->number->id)->get();
-			//if($value->status == "n") {
+			$meter->where('id', $value->number)->get();
+			if($value->status == "n") {
 				$obj->meter_id 				= isset($meter->id)					?$meter->id: "";
 				$obj->previous 				= isset($value->previous)			?$value->previous: "";
 				$obj->current 				= isset($value->current)			?$value->current: "";
@@ -103,16 +103,16 @@ class Readings extends REST_Controller {
 				$obj->to_date 				= isset($value->to_date)			?$value->to_date: "";
 				
 				$obj->usage    = intval($value->current) - intval($value->previous);
-			// } elseif($value->status == "u") {
-			// 	$obj->where('meter_id', $value->meter_id);
-			// 	$obj->where('from_date', $value->from_date);
-			// 	$obj->where('to_date', $value->to_date);
-			// 	$obj->get();
-			// 	// update with new value
-			// 	$obj->previous = $value->prev;
-			// 	$obj->current  = $value->current;
-			// 	$obj->usage    = intval($value->current) - intval($value->prev);
-			// }
+			} elseif($value->status == "u") {
+				$obj->where('meter_id', $value->meter_id);
+				$obj->where('from_date', $value->from_date);
+				$obj->where('to_date', $value->to_date);
+				$obj->get();
+				// update with new value
+				$obj->previous = $value->prev;
+				$obj->current  = $value->current;
+				$obj->usage    = intval($value->current) - intval($value->prev);
+			}
 			
 			
 			if($obj->save()){								

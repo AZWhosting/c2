@@ -1,3 +1,25 @@
+<<<<<<< HEAD
+=======
+.k-pager-wrap .k-pager-nav.k-pager-last{
+  border-radius: 50% !important;
+}
+.top-itemprice tr td{
+  padding: 5px;
+
+}
+.top-itemprice{
+  width: 100%;
+}
+/*.k-icon.k-i-close{
+	display: none !important;
+}
+#ddlSegment_taglist li span .k-icon.k-i-close{
+  display: block !important;
+}*/
+/*.k-list-container.k-popup.k-group.k-reset{
+	overflow-y: scroll !important;
+}*/
+>>>>>>> refs/remotes/origin/master
 .padding-bottom-none-phone .glyphicons.user.userss i:before,
 .padding-bottom-none-phone .icon-play-circles:before{
   color: #fff !important;
@@ -109,7 +131,19 @@
   padding: 5px 10px;
 }
 
+<<<<<<< HEAD
 #cbbContact-list,
+=======
+
+.k-animation-container .k-list-container.k-popup.k-group.k-reset{
+  border-color: #f9fafc !important;
+  margin-top: 40px;
+}
+
+
+
+/*#cbbContact-list,*/
+>>>>>>> refs/remotes/origin/master
 #cbbAccount-list,
 #cbbCurrency-list,
 #ddlRA-list,
@@ -138,6 +172,34 @@
 {
   width: 350px !important;
 }
+<<<<<<< HEAD
+=======
+
+#cbbContact-list{
+  width: 350px !important;
+}
+
+
+
+/*#ccbItem-list,
+#ddlMesurement-list,
+#cbbReader-list,
+#ccbTaxItem-list{
+  border-color: #f9fafc !important;
+}*/
+
+/*.k-animation-container #cbbContact-list,
+.k-animation-container #ccbItem-list,
+.k-animation-container #cbbAccounts-list,
+.k-animation-container #ddlMesurement-list,
+.k-animation-container #ddlCategory-list,
+.k-animation-container #cbbReader-list,
+.k-animation-container #ccbTaxItem-list{
+  margin-top: 40px;
+}
+*/
+
+>>>>>>> refs/remotes/origin/master
 .k-grid tbody tr {
     cursor: pointer !important;
 }
@@ -1282,7 +1344,7 @@ width: 50% !important;
   border-bottom: 0;
 }
 .accounCetner-textedit table tr td .k-checkbox-label{
-  margin-top: -11px;
+  margin-top: 3px;
 }
 .media, .media-body{
     border-bottom: 1px solid #ccc;
@@ -1677,7 +1739,7 @@ width: 50% !important;
   cursor: pointer;
 }
 .widget-body>div{
-  margin-bottom: 15px;
+  margin-bottom: 10px;
 }
 
 

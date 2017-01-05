@@ -25,7 +25,7 @@
           height: auto;
       }
       .login-content{
-          margin: 200px 0 50px;
+          margin: 17% 0 50px;
           display: inline-block;
           width: 100%;
       }
@@ -66,18 +66,18 @@
         font-size: 30px !important;
       }
       .footer-list ul li{
-            float: right;
-    width: 120px;
-    margin-left: 25px;
-    font-size: 12px;
-    list-style: none;
-    border-right: 1px solid #fff;
-}
- .footer-list ul li:first-child{ border-right: 0; }
-.footer-list ul li a,
-.footer-list ul li a:hover{
-  color: #839ABA;
-}
+          float: right;
+          width: 120px;
+          margin-left: 25px;
+          font-size: 12px;
+          list-style: none;
+          border-right: 1px solid #fff;
+      }
+       .footer-list ul li:first-child{ border-right: 0; }
+      .footer-list ul li a,
+      .footer-list ul li a:hover{
+        color: #839ABA;
+      }
 
       
       

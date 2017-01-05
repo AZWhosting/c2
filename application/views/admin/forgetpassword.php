@@ -209,11 +209,11 @@ a.enquiries:hover .enquiry-content, .enquiry-content:hover {
             <div class="col-sm-6">
               <div class="login-image">
                   <img style="width: 70%;" src="<?php echo base_url(); ?>assets/signup-new.png" />
-                  <p>© 2016 BanhJi PTE Ltd.  All rights reserved. </p>
+                  <p>© <?php echo date('Y'); ?> BanhJi PTE Ltd.  All rights reserved. </p>
               </div>
             </div>
             <div class="col-sm-6">
-              <div class="login-form">
+              <div class="login-form" data-bind="invisible: showVerify">
                 <h2 align="center">Forget Password</h2>
                   <form action="" method="">
 
@@ -222,7 +222,19 @@ a.enquiries:hover .enquiry-content, .enquiry-content:hover {
                       <input id="loginBtn" type="button" data-bind="click: forgotPassword" class="btn-login" value="Get New Password"><br><br>
                       <div id="loginInformation"></div>
                   </form> 
-                  <a href="<?php echo base_url(); ?>login"">Login</a> | <a href="<?php echo base_url(); ?>signup"> Sign Up</a>
+                  <a href="<?php echo base_url(); ?>login">Login</a> | <a href="<?php echo base_url(); ?>signup"> Sign Up</a>
+              </div>
+              <div class="login-form" data-bind="visible: showVerify">
+                <h2 align="center">Forget Password</h2>
+                  <form action="" method="">
+                      <input type="text" data-bind="value: veriCode" placeholder="Enter verification Code" class="login-email"><br>
+                      <input type="password" data-bind="value: newPassword, events: {change: onChange}" placeholder="Enter New Password" class="login-email"><br>
+                      <input type="password" data-bind="value: cPassword, events: {keyup: onKeyUp}" placeholder="Confirm Your Password" class="login-email"><br>
+                      <span data-bind="text: message"></span>
+                      <input id="changePasswordBtn" type="button" class="btn-login" value="Change Password"><br><br>
+                      <div id="loginInformation"></div>
+                  </form> 
+                  <a href="<?php echo base_url(); ?>login">Login</a> | <a href="<?php echo base_url(); ?>signup"> Sign Up</a>
               </div>
             </div>
         </div>
@@ -334,6 +346,51 @@ a.enquiries:hover .enquiry-content, .enquiry-content:hover {
           cPassword: null,
           veriCode: null,
           showReset: false,
+          showVerify: false,
+          message: null,
+          onKeyUp: function(e) {
+            if(this.get('newPassword')!== this.get('cPassword')) {
+              this.set('message', "Passwords do not match");
+            } else {
+              this.set('message', "");
+            }
+          },
+          onChange: function(e) {
+            //password Strength
+            var score = 0;
+            if (!this.get('newPassword'))
+                return score;
+
+            // award every unique letter until 5 repetitions
+            var letters = new Object();
+            for (var i=0; i<this.get('newPassword').length; i++) {
+                letters[this.get('newPassword')[i]] = (letters[this.get('newPassword')[i]] || 0) + 1;
+                score += 5.0 / letters[this.get('newPassword')[i]];
+            }
+
+            // bonus points for mixing it up
+            var variations = {
+                digits: /\d/.test(this.get('newPassword')),
+                lower: /[a-z]/.test(this.get('newPassword')),
+                upper: /[A-Z]/.test(this.get('newPassword')),
+                nonWords: /\W/.test(this.get('newPassword')),
+            }
+
+            variationCount = 0;
+            for (var check in variations) {
+                variationCount += (variations[check] == true) ? 1 : 0;
+            }
+            score += (variationCount - 1) * 10;
+            if (score > 80) {
+              this.set('message', "strong");
+            }else if (score > 60){
+              this.set('message', "good");
+            }else if (score >= 30) {
+              this.set('message', "weak");
+            } else {
+              this.set('message', "");
+            }
+          },
           reset: function() {
             var that = this;
             var userData = {
@@ -357,16 +414,23 @@ a.enquiries:hover .enquiry-content, .enquiry-content:hover {
             var cognitoUser = new AWSCognito.CognitoIdentityServiceProvider.CognitoUser(userData);
             cognitoUser.forgotPassword({
                 onSuccess: function (result) {
-                    
                 },
                 onFailure: function(err) {
                     alert(err);
                 },
                 inputVerificationCode(data) {
-                    var verificationCode = prompt('Please input verification code ' ,'');
-                    var newPassword = prompt('Enter new password ' ,'');
-                    cognitoUser.confirmPassword(verificationCode, newPassword, this);
-                    window.location.replace("<?php echo base_url(); ?>login");
+                    // var verificationCode = prompt('Please input verification code ' ,'');
+                    // var newPassword = prompt('Enter new password ' ,'');
+                    // cognitoUser.confirmPassword(verificationCode, newPassword, this);
+                    banhji.aws.set("showVerify", true);
+                    $("#changePasswordBtn").on('click', function(){
+                      if(banhji.aws.get('newPassword')!== banhji.aws.get('cPassword')) {
+                        banhji.aws.set('message', "Passwords do not match");
+                      } else {
+                        cognitoUser.confirmPassword(banhji.aws.get("veriCode"), banhji.aws.get("newPassword"), this);
+                        window.location.replace("<?php echo base_url(); ?>login");
+                      }                      
+                    }); 
                 }
             });
           }

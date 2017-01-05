@@ -2698,14 +2698,20 @@
 	            </div>
 	        </div>
 	        <div class="row textunder">
-	        	<div clas="span6" style="width: 50%;">
+	        	<div clas="span6" style="width: 47%;float: left; display: inherit; line-height: 30px;">
 	        		<p>បច្ចេកទេស</p>
-	        		<a href=""><i class="icon-phone"></i> ០៣៣ ៦៦០១ ៣៣៣</a>
+	        		<a href="#" class="glyphicons no-js iphone" style="font-weight: 600; color: #31849b;">
+	        			<i></i> 
+	        			<span style="margin-left: 17px;">០៣៣ ៦៦០១ ៣៣៣</span>
+	        		</a>
 	        		<p>២៤ម៉ោង</p>
 	        	</div>
-	        	<div clas="span6" style="border-left: 1px solid #000; width: 50%;">
+	        	<div clas="span6" style="width: 50%;float: left; display: inherit; border-left: 1px solid #000; padding-left: 15px; line-height: 30px;">
 	        		<p>បង់ប្រាក់ និង វិក្កយបត្រ </p>
-	        		<a href=""><i class="icon-phone"></i> ០៩៩ ៨៤១ ១៣៣</a>
+	        		<a href="#" class="glyphicons no-js iphone" style="font-weight: 600; color: #31849b;">
+	        			<i></i>
+	        			<span style="margin-left: 17px;">០៩៩ ៨៤១ ១៣៣</span>
+	        		</a>
 	        		<p>ច័ន្ទ ដល់ សៅរ៍ ៧:០០-៦:០០</p>
 	        	</div>
 	        </div>
@@ -2740,6 +2746,20 @@
 	    			</tr>
 	    		</table>
 	    	</div>
+    	</div>
+    </div>
+    <div class="row-fluid">
+    	<div class="span6">
+    	</div>
+    	<div class="span6">
+    		<div class="row">
+    			<div class="span6">
+    				<p>យនិ អចុិ </p>
+    				<p>ភូមសាិ មគគីឃុអំ ងគរជ័យ</p>
+		    	</div>
+		    	<div class="span6">
+		    	</div>
+    		</div>
     	</div>
     </div>
 </script>
