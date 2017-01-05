@@ -3310,15 +3310,8 @@
         }).catch(function(err) {
           console.log(err);
         });
-        // localforage.getItem('user', function(err, value) {
-        //     if(err) {
-        //        window.location.replace(baseUrl + "login");
-        //        console.log(err);
-        //     } else {
-        //       console.log(value);
-        //     }
-        //     console.log('getlocal');
-        // });
+  
+        var cognitoUser = userPool.getCurrentUser();
       });
     </script>
   </body>

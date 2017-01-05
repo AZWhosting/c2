@@ -58,7 +58,7 @@ class Accounts extends REST_Controller {
 		
 		$obj->include_related("account_type", "name");
 		
-		// Results
+		//Results
 		if($page && $limit){
 			$obj->get_paged_iterated($page, $limit);
 			$data["count"] = $obj->paged->total_rows;

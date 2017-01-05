@@ -113,7 +113,6 @@ p.addItem.glyphicons.circle_remove i:before {
   width: 100%;
   float: left;
   text-align: center;
-  margin-bottom: 10px;
 }
 .reconcile table tr th{
 	background: #3C849A;
@@ -126,4 +125,8 @@ p.addItem.glyphicons.circle_remove i:before {
 	padding: 5px;
 	border: 1px solid #000;
 	text-align: center;
+}
+
+.reconcile2{
+	padding: 0;
 }

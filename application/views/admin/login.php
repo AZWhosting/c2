@@ -308,6 +308,93 @@ a.enquiries:hover .enquiry-content, .enquiry-content:hover {
         });
         // Initialize aws userpool
         var userPool = new AWSCognito.CognitoIdentityServiceProvider.CognitoUserPool(poolData);
+        let banhjiAuth = kendo.Class.extend({
+          userPool: null,
+          cognitoUser: null,
+          companyDatastore: new kendo.data.DataSource({
+            transport: {
+              read  : {
+                url: apiUrl + "profiles/company",
+                type: "GET",
+                dataType: 'json'
+              },
+              update  : {
+                url: apiUrl + "profiles/company",
+                type: "PUT",
+                dataType: 'json'
+              },
+              parameterMap: function(options, operation) {
+                if(operation === 'read') {
+                  return {
+                    limit: options.take,
+                    page: options.page,
+                    filter: options.filter
+                  };
+                } else {
+                  return {models: kendo.stringify(options.models)};
+                }
+              }
+            },
+            schema  : {
+              model: {
+                id: 'id'
+              },
+              data: 'results',
+              total: 'count'
+            },
+            batch: true,
+            serverFiltering: true,
+            serverPaging: true,
+            pageSize: 1
+          }),
+          profileDatastore: new kendo.data.DataSource({
+            transport: {
+              read  : {
+                url: baseUrl + 'api/profiles/login',
+                type: "POST",
+                dataType: 'json'
+              },
+              parameterMap: function(options, operation) {
+                if(operation === 'read') {
+                  return {
+                    limit: options.take,
+                    page: options.page,
+                    filter: options.filter
+                  };
+                } else {
+                  return {models: kendo.stringify(options.models)};
+                }
+              }
+            },
+            schema  : {
+              model: {
+                id: 'id'
+              },
+              data: 'results',
+              total: 'count'
+            },
+            batch: true,
+            serverFiltering: true,
+            serverPaging: true,
+            pageSize: 100
+          }),
+          getSession: function() {
+            // this.cognitoUser.getSession(function(err, session) {
+            //   if(session) {
+            //     window.location.replace(baseUrl + "rrd/");
+            //   } else {
+            //     console.log(err);
+            //   }
+            // });
+          },
+          init: function(jsonArr) {
+            if(jsonArr === null) {
+              this.userPool = new AWSCognito.CognitoIdentityServiceProvider.CognitoUserPool(poolData);
+            }
+            this.cognitoUser = userPool.getCurrentUser();
+          }
+        });
+        var auth = new banhjiAuth();
         var baseUrl = "<?php echo base_url(); ?>"
         var apiUrl = baseUrl + "api/";
         banhji.companyDS = new kendo.data.DataSource({
@@ -406,6 +493,22 @@ a.enquiries:hover .enquiry-content, .enquiry-content:hover {
             var cognitoUser = new AWSCognito.CognitoIdentityServiceProvider.CognitoUser(userData);
             cognitoUser.authenticateUser(authenticationDetails, {
               onSuccess: function (result) {
+                // success
+                AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+                  IdentityPoolId : 'us-east-1:35445541-da4c-4dbb-b83f-d1d0301a26a9',
+                  Logins : {
+                      'cognito-idp.us-east-1.amazonaws.com/us-east-1_56S0nUDS4' : result.getIdToken().getJwtToken()
+                  }
+                });
+                if (cognitoUser != null) {
+                    cognitoUser.getSession(function(err, session) {
+                        if (err) {
+                          alert(err);
+                            return;
+                        }                        
+                    });
+                }
+                
                 banhji.companyDS.filter({field: 'username', value: userPool.getCurrentUser() == null ? '': userPool.getCurrentUser().username});
                     banhji.companyDS.bind('requestEnd', function(e) {
                       var res = e.response;
@@ -479,7 +582,9 @@ a.enquiries:hover .enquiry-content, .enquiry-content:hover {
               return cognitoUser;
           }
         });
+        
       $(function(){
+        auth.getSession();
         kendo.bind($('.login'), banhji.aws);
       });
     </script>

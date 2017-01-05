@@ -2686,7 +2686,7 @@
         </div>
     </div> -->
     <div class="row-fluid">
-    	<div class="span7 inv1" style="width: 54%; padding-right: 15px;">
+    	<div class="span7 inv1" style="width: 54%; padding-right: 15px; padding-left: 8px; ">
     		<div class="head" style="width: 100%">
 	        	<div class="logo" style="width: 30%;">
 	            	<img data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
@@ -2767,7 +2767,7 @@
     	</div>
     </div>
     <div class="row-fluid">
-    	<div class="span4" style="padding-left: 15px;">
+    	<div class="span4" style="padding-left: 15px; padding-left: 8px;">
     		<p >ប្រវត្តិប្រើប្រាស់របស់អ្នកក្នុងឆ្នាំនេះ</p>
     		<img style="width: 175px; height: auto;" src="<?php echo base_url();?>/assets/chart.png">
     	</div>
@@ -2778,6 +2778,84 @@
     		<p style="margin-left: 30px; float: left; margin-bottom: 0;">សូមអញ្ជើញមកបង់ប្រាក់ អោយបានមុនថ្ងៃផុតកំនត់ទី</p><br>
     		<p style="margin-left: 40%; float: left; font-weight: 600;">១៥ មេសា ២០១៦</p>
 
+    	</div>
+    </div>
+
+    <div class="row-fluid">
+    	<div class="table-content" style="border: 2px solid #30859C; border-radius: 10px; padding: 10px; margin: 10px 8px; font-weight: 600; float: left; width: 97.5%;">
+    		<p style="color: #30859C;">ការប្រើប្រាស់របស់អ្នកក្នុងរយះពេលពី​ (Electricity charges) <span style="color: #000;">01-05-2013</span> ដល់ <span style="color: #000;">31-05-2013</span></p>
+    		<table>
+    			<thead>
+    				<tr>
+    					<th>លេខកុងទ័រ <br> METER NO.</th>
+    					<th>អំនានមុន <br> PREVIOUS</th>
+    					<th>អំនានថ្មី <br> LASTES</th>
+    					<th>មេគុណ <br> MULTIPLIER</th>
+    					<th>ប្រើប្រាស់ <br> UNIT</th>
+    					<th>តម្លៃឯកតា <br> RATE</th>
+    					<th>តម្លៃសរុប <br> AMOUNT</th>
+    				</tr>
+    			</thead>
+    			<tbody>
+    				<tr>
+    					<td>1</td>
+    					<td>2</td>
+    					<td>3</td>
+    					<td>4</td>
+    					<td>5</td>
+    					<td>6</td>
+    					<td>7</td>
+    				</tr>
+    				<tr>
+    					<td>1</td>
+    					<td>2</td>
+    					<td>3</td>
+    					<td>4</td>
+    					<td>5</td>
+    					<td>6</td>
+    					<td>7</td>
+    				</tr>
+    				<tr>
+    					<td>1</td>
+    					<td>2</td>
+    					<td>3</td>
+    					<td>4</td>
+    					<td>5</td>
+    					<td>6</td>
+    					<td>7</td>
+    				</tr>
+    				<tr>
+    					<td>1</td>
+    					<td>2</td>
+    					<td>3</td>
+    					<td>4</td>
+    					<td>5</td>
+    					<td>6</td>
+    					<td>7</td>
+    				</tr>
+    			</tbody>
+    			<tfoot>
+    				<tr>
+    					<td colspan="2" rowspan="5"></td>
+    					<td colspan="4">
+    						ប្រាក់ត្រូវបង់សរុប ខែនេះ
+    						<span style="font-size: 10px;">
+    							Total amount due
+    						</span>
+    					</td>
+    					<td></td>
+    				</tr>
+    				<tr>
+    					<td colspan="4">
+    						ប្រាក់ត្រូវបង់សរុប
+    						<span style="font-size: 10px;">
+    							Total charge for this period
+    						</span>
+    					</td>
+    					<td></td>
+    				</tr>
+    			</tfoot>
+    		</table>
     	</div>
     </div>
 

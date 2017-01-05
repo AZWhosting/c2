@@ -349,8 +349,6 @@
 
 	    <div class="widget-body span9">
 	        <div class="tab-content">
-	        	
-	            <!-- License -->
 	            <div class="tab-pane active" id="tab1">
 	            	<a class="btn-icon btn-primary glyphicons circle_plus" style="width: 130px" href="#/add_license"><i></i>Add License</a>
 	            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
@@ -371,8 +369,6 @@
 				                data-bind="source: licenseDS"></tbody>
 	            	</table>
 	            </div>
-	            <!-- // End License -->
-	            
 	            <div class="tab-pane" id="tab2">
 	            	<div style="clear: both;margin-bottom: 10px;">
 		            	<input data-role="dropdownlist"
@@ -455,7 +451,8 @@
 		                   data-text-field="name"
 		                   data-value-field="id"
 		                   data-bind="value: exUnit,
-		                              source: typeUnit" />
+		                              source: typeUnit,
+		                              events: {change: unitChange}" />
 
 		            	<input data-role="dropdownlist"
 		            	   class="span2"
@@ -467,8 +464,8 @@
 		                   data-value-field="id"
 		                   data-bind="value: exCurrency,
 		                              source: currencyDS"/>
-		            	<input data-bind="value: exPrice" type="text" placeholder="Price" style="height: 32px;" class="span2 k-textbox k-invalid" />
-
+		            	<input data-bind="invisible: percentUnit, value: exPrice" type="text" placeholder="Price" style="height: 32px;" class="span2 k-textbox k-invalid" />
+		            	<input data-bind="visible: percentUnit, value: exPrice" type="text" placeholder="%" data-spinners="false" data-role="numerictextbox" max="100" min="1" style="padding:0;" class="span2 k-input k-valid" />
 		            	<a class="btn btn-default glyphicons circle_plus cutype-icon" style="width: 80px;margin-left: 2px;" data-bind="click: addEx"><i></i>Add</a>
 		            </div>
 	            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
@@ -4462,279 +4459,6 @@
 
 	</div>				  	
 </script>
-
-<script id="Reports" type="text/x-kendo-template">
-	<div class="row-fluid customer-report-center">
-		<div class="span7">
-			<p>Key Performance Indicators (KPIs)</p> 
-			<input id="ddlCashAccount" name="ddlCashAccount" 
-				data-role="dropdownlist"
-  				data-value-primitive="true"
-				data-text-field="name" 
-  				data-value-field="id"
-  				data-bind="value: licenseSelect,
-  							source: licenseDS"
-  				data-option-label="Select Licenses..."
-  				/>
-			
-
-			<div class="row-fluid sale-report">
-				<h2>Customer Management Report</h2>
-				<p>
-					These reports are useful for customer information management, meter connections, and usage managements 
-				</p>
-				
-				<div class="row-fluid">
-					<table class="table table-borderless table-condensed">
-						<tr>
-							<td width="50%">
-								<h3><a href="#/customer_list">Customer List</a></h3>
-							</td>
-							<td width="50%">
-								<h3><a href="#/new_customer_list">New Customer List</a></h3>								
-							</td>						
-						</tr>
-						<tr>
-							<td width="50%">
-								<p></p>
-								
-							</td>
-							<td width="50%">
-								<p></p>
-							</td>
-							
-						</tr>
-						<tr>
-							<td width="50%">
-								<h3><a href="#/customer_no_connection">Customer List with No Connection</a></h3>
-							</td>
-							<td width="50%">
-								<h3><a href="#/mini_usage_list">Minimum Water Usage List</a></h3>
-							</td>
-						</tr>
-						<tr>
-							<td width="50%">
-								<p></p>
-							</td>
-							<td width="50%">
-								<p></p>
-							</td>
-						</tr>
-
-						<tr>
-							<td width="50%">
-								<h3><a href="#/disconnect_list">Disconnected List</a></h3>
-							</td>
-							<td width="50%">
-								<!-- <h3><a href="#/">Period-End Closing Checklist</a></h3> -->
-							</td>
-						</tr>
-
-						<tr>
-							<td width="50%">
-								<p></p>
-							</td>
-							<td width="50%">
-								<p></p>
-							</td>
-						</tr>
-						
-
-					</table>
-				</div>
-			</div>
-
-			<div class="row-fluid recevable-report">
-				<h2>Receiveable and Deposits</h2>
-				<p>
-					These would be the most common reports that you will be using. It includes receivables balance and its aging in both summary and detail list and the security deposit made by the customers for their water connection.
-				</p>
-				<div class="row-fluid">
-					<table class="table table-borderless table-condensed">
-						<tr>
-							<td >
-								<h3><a href="#/account_receivable_list">Accounts Receivable Listing</a></h3>
-							</td>
-							<td >
-								<h3><a href="#/customer_deposit">Customer Deposit</a></h3>								
-							</td>						
-						</tr>
-						<tr>
-							<td >
-								<p></p>
-								
-							</td>
-							<td >
-								<p></p>
-							</td>							
-						</tr>
-
-						<tr>
-							<td >
-								<h3><a href="#/customer_aging_sum_list">Customer Aging Summary List</a></h3>
-							</td>
-							<td >
-								<h3><a href="#/customer_aging_detail">Customer Aging Detail List</a></h3>								
-							</td>						
-						</tr>
-						<tr>
-							<td >
-								<p></p>
-								
-							</td>
-							<td >
-								<p></p>
-							</td>							
-						</tr>
-						
-
-					</table>
-				</div>
-			</div>
-
-			<div class="row-fluid sale-report">
-				<h2>Sale Report</h2>
-				<p>
-					Summary and detail sale report broken down by Licenses, bloc, and types of reveneues.	
-				</p>
-				<div class="row-fluid">
-					<table class="table table-borderless table-condensed">
-						<tr>
-							<td>
-								<h3><a href="#/sale_summary">Sale Summary Report</a></h3>
-							</td>
-							<td >
-								<h3><a href="#/sale_detail">Sale Detail Report</a></h3>								
-							</td>						
-						</tr>
-						<tr>
-							<td >
-								<p></p>
-								
-							</td>
-							<td >
-								<p></p>
-							</td>							
-						</tr>
-						<tr>
-							<td >
-								<h3><a href="#/connect_service_revenue">Connection Service Revenue Report</a></h3>
-							</td>
-							<td >
-								<h3><a href="#/other_revenues">Other Revenues</a></h3>
-							</td>
-						</tr>
-						<tr>
-							<td >
-								<p></p>
-							</td>
-							<td >
-								<p></p>
-							</td>
-						</tr>
-					</table>					
-				</div>
-			</div>
-
-			<div class="row-fluid recevable-report">
-				<h2>Cash Receipt Report</h2>
-				<p>
-					Summary and detail cash receipt reports grouped by sources/ methods of receipts 
-				</p>
-				<div class="row-fluid">
-					<table class="table table-borderless table-condensed">
-						<tr>
-							<td>
-								<h3><a href="#/cash_receipt_summary">Cash Receipt By Summary</a></h3>
-							</td>
-							<td >
-								<h3><a href="#/cash_receipt_detail">Cash Receipt By Detail</a></h3>								
-							</td>						
-						</tr>
-						<tr>
-							<td >
-								<p></p>
-								
-							</td>
-							<td >
-								<p></p>
-							</td>							
-						</tr>
-						<tr>
-							<td >
-								<h3><a href="#/cash_receipt_source_summary">Cash Receipt By Sources Summary</a></h3>
-							</td>
-							<td >
-								<h3><a href="#/cash_receipt_source_detail">Cash Receipt By Sources Detail</a></h3>
-							</td>
-						</tr>
-						<tr>
-							<td >
-								<p></p>
-							</td>
-							<td >
-								<p></p>
-							</td>
-						</tr>
-					</table>					
-				</div>
-			</div>
-
-		</div>
-		<div class="span5">
-			<span class="pull-right glyphicons no-js remove_2" 
-						onclick="javascript:window.history.back()"><i></i></span>
-			<br>
-			<br>
-			<div class="report-chart" style="overflow: hidden;">
-				<div class="statement">
-					<div class="account-stement">
-						<h2 style="color: #496cad; font-size: 20px;">Statement of Profit or Loss</h2>
-						<table class="performance" style="width:100%; background: #fff; color: #000; padding: 0; margin-bottom: 20px;">
-							<tr>
-								<td style="padding-left: 0;">Income</td>
-								<td></td>
-								<td align="right"><span data-bind="text: income"></span></td>
-							</tr>
-							<tr>
-								<td style="padding-left: 0;">Expense</td>
-								<td></td>
-								<td align="right"><span data-bind="text: expense"></span></td>
-							</tr>
-							<tr>
-								<td style="padding-left: 0;"><b>Net Income</b></td>
-								<td></td>
-								<td align="right"><b data-bind="text: net_income"></b></td>
-							</tr>
-						</table>
-
-						<h2 style="color: #496cad; font-size: 20px;">Statement of Financial Position</h2>
-						<table class="position" style="width:100%; background: #fff; color: #000; padding: 0;">
-							<tr>
-								<td style="padding-left: 0;">Assets</td>
-								<td></td>
-								<td align="right"><span data-bind="text: asset"></span></td>
-							</tr>
-							<tr>
-								<td style="padding-left: 0;">Liabilities</td>
-								<td></td>
-								<td align="right"><span data-bind="text: liability"></span></td>
-							</tr>
-							<tr>
-								<td style="padding-left: 0;"><b>Equity</b></td>
-								<td></td>
-								<td align="right"><b data-bind="text: equity"></b></td>
-							</tr>
-						</table>
-						
-					</div>
-				</div>
-			</div>
-			
-		</div>
-	</div>
-</script>
-
 <script id="cashReceipt-template" type="text/x-kendo-template">
 	<tr data-uid="#: uid #">		
 		<td>
@@ -5155,7 +4879,87 @@
 		</table>
 	</div>
 </script>
-
+<script id="invoiceForm2" type="text/x-kendo-template">
+	<div class="inv1 pcg pcg-border">
+        <div class="content clear">
+        	<div class="span12">
+	        	<div class="span7">
+	        		<div class="logo" style="width: 40%">
+		            	<img style="width: " data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
+		            </div>
+	        	</div>
+	        	<div class="span5">
+	        		<div class="span12" style="margin-bottom: 10px;">
+	        			<h2 style="font-size: 24px;text-align: left;color:#10253f " data-bind="text: obj.title"></h2>
+	        			<!--img src="<?php echo base_url(); ?>assets/invoice/img/official-receipt.jpg" /-->
+	        		</div>
+	        		<div class="span12">
+	        			<table class="span12">
+	        				<tr>
+	        					<td class="light-blue-td" width="100">កាលបរិច្ឆេទ Date</td>
+	        					<td style="text-align: left;padding-left: 5px;" data-bind="text: obj.issued_date"></td>
+	        				</tr>
+	        				<tr>
+	        					<td class="light-blue-td">លេខបបង្កាន់ដៃ Receipt No.</td>
+	        					<td style="text-align: left;padding-left: 5px;" data-bind="text: obj.number"></td>
+	        				</tr>
+	        			</table>
+	        		</div>
+	        	</div>
+	        </div>
+        	<div class="span12" style="margin-top: 10px;">
+		    	<div class="span7" style="margin-top: 10px;">
+		    		<table class="span11">
+						<tr>
+							<td class="light-blue-td" width="120">ទទួលពីឈ្មោះ​ <br>Recieve From</td>
+							<td style="text-align: left;padding-left: 5px;" data-bind="text: obj.issued_date"></td>
+						</tr>
+						<tr>
+							<td class="light-blue-td">អស័យដ្ឋាន <br>Contact Address</td>
+							<td style="text-align: left;padding-left: 5px;" data-bind="text: obj.contact[0].address"></td>
+						</tr>
+						<tr>
+							<td class="light-blue-td">គោលបំណង​​ <br>Purpose</td>
+							<td style="text-align: left;padding-left: 5px;" data-bind="text: obj.memo"></td>
+						</tr>
+						<tr>
+							<td class="light-blue-td">លេខយោង <br> Reference Document</td>
+							<td style="text-align: left;padding-left: 5px;" data-bind="text: obj.reference_id"></td>
+						</tr>
+					</table>
+		    	</div>
+		    	<div class="span5" style="float:right">
+		    		<p style="padding: 5px 0; text-align: left;font-weight: bold;color: #000;">ចំនួនទទួលសរុប​ <br> TOTAL RECEIVED AMOUNT</p>
+		    		<div class="span12 main-color order-price" data-bind="style: {backgroundColor: obj.color}">
+		    			<p><span class="total-amount" data-bind="text: obj.amount"></span></p>		    			
+		    		</div>
+		    		<p style="padding: 5px 0;font-weight: bold;color: #000;clear:both;">វិធីសាស្រ្តទូទាត់​ Mode of payment</p>
+		    		<p style="padding: 5px 0;font-weight: bold;color: #000;clear:both;" data-bind="text: obj.payment_method"></p>
+		    	</div>
+		    </div>
+        	<div class="span12">
+        		<div class="span8">
+        			<p style="color:black;margin: 10px 0;" data-bind="text: obj.note"></p>
+        		</div>
+        	</div>
+        	<div class="span12">
+        		<div class="span5">
+        			<p>On behalf of <span data-bind="text: company.name"></span></p>
+        			<div style="height: 60px;border-bottom: 1px solid #000" class="span12"></div>
+        			<p style="font-weight: bold;">Name</p>
+        		</div>
+        		<div class="span4" style="float:right;">
+        			<p>Paid By:</p>
+        			<div style="height: 60px;border-bottom: 1px solid #000" class="span12"></div>
+        			<p style="font-weight: bold;">Name</p>
+        		</div>
+        	</div>
+        	<div style="margin-top: 15px" class="span12">
+        		<p>Address: <span data-bind="text: company.address"></span> <sapn data-bind="text: company.city"></sapn> <span data-bind="text: company.country.name"></span>.</p>
+        	</div>
+        </div>
+    </div>
+</script>
 
 <script id="invoiceCustom-txn-form-template" type="text/x-kendo-template">
 	<a class="span4 #= type #" data-id="#= id #" data-bind="click: selectedForm" style="padding-right: 0; width: 32%;">
@@ -5185,7 +4989,7 @@
 			        <br>
 
 			        <div class="row-fluid reconcile">
-				        <table >
+				        <table class="span12">
 				        	<thead>
 					        	<tr>
 					        		<th colspan="1">Actual Cash Count</th>
@@ -5193,8 +4997,95 @@
 				        	</thead>
 				        	<tbody>
 					        	<tr>
-									<td colspan="2">
-										<div>
+									<td colspan="2" style="padding: 0;">
+										<div class="span6 reconcile2 pull-left" >
+											<table>
+												<tr>
+													<td colspan="2"></td>
+					        						<td>Khmer Riel</td>
+												</tr>
+												<tr>
+													<td style="background: #DBEEF3;">Note:</td>
+													<td style="background: #DBEEF3;" >Unit</td>
+													<td style="background: #DBEEF3;" >Total</td>
+												</tr>
+												<tr>
+													<td>1</td>
+													<td><input type="number"></td>
+													<td></td>
+												</tr>
+												<tr>
+													<td>2</td>
+													<td><input type="number"></td>
+													<td></td>
+												</tr>
+												<tr>
+													<td>5</td>
+													<td><input type="number"></td>
+													<td></td>
+												</tr>
+												<tr>
+													<td>10</td>
+													<td><input type="number"></td>
+													<td></td>
+												</tr>
+												<tr>
+													<td>20</td>
+													<td><input type="number"></td>
+													<td></td>
+												</tr>
+												<tr>
+													<td>50</td>
+													<td><input type="number"></td>
+													<td></td>
+												</tr>
+												<tr>
+													<td>100</td>
+													<td><input type="number"></td>
+													<td></td>
+												</tr>
+												<tr>
+													<td>500</td>
+													<td><input type="number"></td>
+													<td></td>
+												</tr>
+												<tr>
+													<td>1000</td>
+													<td><input type="number"></td>
+													<td></td>
+												</tr>
+												<tr>
+													<td>2000</td>
+													<td><input type="number"></td>
+													<td></td>
+												</tr>
+												<tr>
+													<td>5000</td>
+													<td><input type="number"></td>
+													<td></td>
+												</tr>
+												<tr>
+													<td>10000</td>
+													<td><input type="number"></td>
+													<td></td>
+												</tr>
+												<tr>
+													<td>20000</td>
+													<td><input type="number"></td>
+													<td></td>
+												</tr>
+												<tr>
+													<td>50000</td>
+													<td><input type="number"></td>
+													<td></td>
+												</tr>
+												<tr>
+													<td colspan="2">Subtotal</td>
+													<td></td>
+												</tr>
+											</table>
+										</div>
+										<div class="span6 reconcile2 pull-left" >
 											<table>
 												<tr>
 													<td colspan="2"></td>
@@ -5405,6 +5296,226 @@
     </strong>	
 </script>
 <!-- Report -->
+<script id="Reports" type="text/x-kendo-template">
+	<div class="row-fluid customer-report-center">
+		<div class="span12">
+			<div class="row-fluid" style="margin-bottom: 20px;">
+				<p>Key Performance Indicators (KPIs)</p> 
+				<input id="ddlCashAccount" name="ddlCashAccount" 
+					data-role="dropdownlist"
+	  				data-value-primitive="true"
+					data-text-field="name" 
+	  				data-value-field="id"
+	  				data-bind="value: licenseSelect,
+	  							source: licenseDS"
+	  				data-option-label="Select Licenses..."
+	  				/>
+	  		</div>
+	  		<div class="row-fluid">
+	  			<div class="span6">
+					<div class="row-fluid sale-report">
+						<h2>Customer Management Report</h2>
+						<p>
+							These reports are useful for customer information management, meter connections, and usage managements 
+						</p>
+						<div class="row-fluid">
+							<table class="table table-borderless table-condensed">
+								<tr>
+									<td width="50%">
+										<h3><a href="#/customer_list">Customer List</a></h3>
+									</td>
+									<td width="50%">
+										<h3><a href="#/new_customer_list">New Customer List</a></h3>
+									</td>						
+								</tr>
+								<tr>
+									<td width="50%">
+										<p></p>
+									</td>
+									<td width="50%">
+										<p></p>
+									</td>
+								</tr>
+								<tr>
+									<td width="50%">
+										<h3><a href="#/customer_no_connection">Customer List with No Connection</a></h3>
+									</td>
+									<td width="50%">
+										<h3><a href="#/mini_usage_list">Minimum Water Usage List</a></h3>
+									</td>
+								</tr>
+								<tr>
+									<td width="50%">
+										<p></p>
+									</td>
+									<td width="50%">
+										<p></p>
+									</td>
+								</tr>
+
+								<tr>
+									<td width="50%">
+										<h3><a href="#/disconnect_list">Disconnected List</a></h3>
+									</td>
+									<td width="50%">
+										<!-- <h3><a href="#/">Period-End Closing Checklist</a></h3> -->
+									</td>
+								</tr>
+								<tr>
+									<td width="50%">
+										<p></p>
+									</td>
+									<td width="50%">
+										<p></p>
+									</td>
+								</tr>
+							</table>
+						</div>
+					</div>
+				</div>
+				<div class="span6">
+					<div class="row-fluid recevable-report">
+						<h2>Receiveable and Deposits</h2>
+						<p>
+							These would be the most common reports that you will be using. It includes receivables balance and its aging in both summary and detail list and the security deposit made by the customers for their water connection.
+						</p>
+						<div class="row-fluid">
+							<table class="table table-borderless table-condensed">
+								<tr>
+									<td >
+										<h3><a href="#/account_receivable_list">Accounts Receivable Listing</a></h3>
+									</td>
+									<td >
+										<h3><a href="#/customer_deposit_report">Customer Deposit</a></h3>								
+									</td>						
+								</tr>
+								<tr>
+									<td >
+										<p></p>
+										
+									</td>
+									<td >
+										<p></p>
+									</td>							
+								</tr>
+
+								<tr>
+									<td >
+										<h3><a href="#/customer_aging_sum_list">Customer Aging Summary List</a></h3>
+									</td>
+									<td >
+										<h3><a href="#/customer_aging_detail">Customer Aging Detail List</a></h3>								
+									</td>						
+								</tr>
+								<tr>
+									<td >
+										<p></p>
+										
+									</td>
+									<td >
+										<p></p>
+									</td>							
+								</tr>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row-fluid">
+				<div class="span6">
+					<div class="row-fluid sale-report">
+						<h2>Sale Report</h2>
+						<p>
+							Summary and detail sale report broken down by Licenses, bloc, and types of reveneues.	
+						</p>
+						<div class="row-fluid">
+							<table class="table table-borderless table-condensed">
+								<tr>
+									<td>
+										<h3><a href="#/sale_summary">Sale Summary Report</a></h3>
+									</td>
+									<td >
+										<h3><a href="#/sale_detail">Sale Detail Report</a></h3>								
+									</td>						
+								</tr>
+								<tr>
+									<td >
+										<p></p>
+										
+									</td>
+									<td >
+										<p></p>
+									</td>							
+								</tr>
+								<tr>
+									<td >
+										<h3><a href="#/connect_service_revenue">Connection Service Revenue Report</a></h3>
+									</td>
+									<td >
+										<h3><a href="#/other_revenues">Other Revenues</a></h3>
+									</td>
+								</tr>
+								<tr>
+									<td >
+										<p></p>
+									</td>
+									<td >
+										<p></p>
+									</td>
+								</tr>
+							</table>					
+						</div>
+					</div>
+				</div>
+				<div class="span6">
+					<div class="row-fluid recevable-report">
+						<h2>Cash Receipt Report</h2>
+						<p>
+							Summary and detail cash receipt reports grouped by sources/ methods of receipts 
+						</p>
+						<div class="row-fluid">
+							<table class="table table-borderless table-condensed">
+								<tr>
+									<td>
+										<h3><a href="#/cash_receipt_summary">Cash Receipt By Summary</a></h3>
+									</td>
+									<td >
+										<h3><a href="#/cash_receipt_detail">Cash Receipt By Detail</a></h3>								
+									</td>						
+								</tr>
+								<tr>
+									<td >
+										<p></p>
+										
+									</td>
+									<td >
+										<p></p>
+									</td>							
+								</tr>
+								<tr>
+									<td >
+										<h3><a href="#/cash_receipt_source_summary">Cash Receipt By Sources Summary</a></h3>
+									</td>
+									<td >
+										<h3><a href="#/cash_receipt_source_detail">Cash Receipt By Sources Detail</a></h3>
+									</td>
+								</tr>
+								<tr>
+									<td >
+										<p></p>
+									</td>
+									<td >
+										<p></p>
+									</td>
+								</tr>
+							</table>					
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</script>
 <script id="customerList" type="text/x-kendo-template">
 	<div id="slide-form">
 		<div class="customer-background">
@@ -5499,6 +5610,359 @@
 		<td>#=email#</td>
 	</tr>
 </script>
+<script id="customerNoConnection" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">
+				<div id="example" class="k-content saleSummaryCustomer">
+			    	<span class="pull-right glyphicons no-js remove_2" data-bind="click: cancel"><i></i></span>
+					<br>
+					<br>
+					<div class="row-fluid">						
+					</div>
+					<br>
+					<div id="invFormContent">
+						<div class="block-title">
+							<h3 data-bind="text: institute.name"></h3>
+							<h2>Customer No Connecting</h2>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</script>
+<script id="disconnectList" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">
+				<div id="example" class="k-content saleSummaryCustomer">
+			    	<span class="pull-right glyphicons no-js remove_2" data-bind="click: cancel"><i></i></span>
+					<br>
+					<br>
+					<div class="row-fluid">						
+					</div>
+					<br>
+					<div id="invFormContent">
+						<div class="block-title">
+							<h3 data-bind="text: institute.name"></h3>
+							<h2>Disconnect List</h2>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</script>
+<script id="newCustomerList" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">
+				<div id="example" class="k-content saleSummaryCustomer">
+			    	<span class="pull-right glyphicons no-js remove_2" data-bind="click: cancel"><i></i></span>
+					<br>
+					<br>
+					<div class="row-fluid">						
+					</div>
+					<br>
+					<div id="invFormContent">
+						<div class="block-title">
+							<h3 data-bind="text: institute.name"></h3>
+							<h2>New Customer List</h2>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</script>
+<script id="miniUsageList" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">
+				<div id="example" class="k-content saleSummaryCustomer">
+			    	<span class="pull-right glyphicons no-js remove_2" data-bind="click: cancel"><i></i></span>
+					<br>
+					<br>
+					<div class="row-fluid">						
+					</div>
+					<br>
+					<div id="invFormContent">
+						<div class="block-title">
+							<h3 data-bind="text: institute.name"></h3>
+							<h2>Minimum Water Usage List</h2>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</script>
+<script id="saleSummary" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">
+				<div id="example" class="k-content saleSummaryCustomer">
+			    	<span class="pull-right glyphicons no-js remove_2" data-bind="click: cancel"><i></i></span>
+					<br>
+					<br>
+					<div class="row-fluid">						
+					</div>
+					<br>
+					<div id="invFormContent">
+						<div class="block-title">
+							<h3 data-bind="text: institute.name"></h3>
+							<h2>Sale Summary</h2>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</script>
+<script id="connectServiceRevenue" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">
+				<div id="example" class="k-content saleSummaryCustomer">
+			    	<span class="pull-right glyphicons no-js remove_2" data-bind="click: cancel"><i></i></span>
+					<br>
+					<br>
+					<div class="row-fluid">						
+					</div>
+					<br>
+					<div id="invFormContent">
+						<div class="block-title">
+							<h3 data-bind="text: institute.name"></h3>
+							<h2>Connect Service Revenue</h2>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</script>
+<script id="saleDetail" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">
+				<div id="example" class="k-content saleSummaryCustomer">
+			    	<span class="pull-right glyphicons no-js remove_2" data-bind="click: cancel"><i></i></span>
+					<br>
+					<br>
+					<div class="row-fluid">						
+					</div>
+					<br>
+					<div id="invFormContent">
+						<div class="block-title">
+							<h3 data-bind="text: institute.name"></h3>
+							<h2>Sale Detail</h2>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</script>
+<script id="otherRevenues" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">
+				<div id="example" class="k-content saleSummaryCustomer">
+			    	<span class="pull-right glyphicons no-js remove_2" data-bind="click: cancel"><i></i></span>
+					<br>
+					<br>
+					<div class="row-fluid">						
+					</div>
+					<br>
+					<div id="invFormContent">
+						<div class="block-title">
+							<h3 data-bind="text: institute.name"></h3>
+							<h2>Other Revenues</h2>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</script>
+<script id="accountReceivableList" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">
+				<div id="example" class="k-content saleSummaryCustomer">
+			    	<span class="pull-right glyphicons no-js remove_2" data-bind="click: cancel"><i></i></span>
+					<br>
+					<br>
+					<div class="row-fluid">						
+					</div>
+					<br>
+					<div id="invFormContent">
+						<div class="block-title">
+							<h3 data-bind="text: institute.name"></h3>
+							<h2>Account Receivable List</h2>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</script>
+<script id="customerAgingSumList" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">
+				<div id="example" class="k-content saleSummaryCustomer">
+			    	<span class="pull-right glyphicons no-js remove_2" data-bind="click: cancel"><i></i></span>
+					<br>
+					<br>
+					<div class="row-fluid">						
+					</div>
+					<br>
+					<div id="invFormContent">
+						<div class="block-title">
+							<h3 data-bind="text: institute.name"></h3>
+							<h2>Customer Aging Summary List</h2>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</script>
+<script id="customerDepositReport" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">
+				<div id="example" class="k-content saleSummaryCustomer">
+			    	<span class="pull-right glyphicons no-js remove_2" data-bind="click: cancel"><i></i></span>
+					<br>
+					<br>
+					<div class="row-fluid">						
+					</div>
+					<br>
+					<div id="invFormContent">
+						<div class="block-title">
+							<h3 data-bind="text: institute.name"></h3>
+							<h2>Customer Deposit Report</h2>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</script>
+<script id="customerAgingDetail" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">
+				<div id="example" class="k-content saleSummaryCustomer">
+			    	<span class="pull-right glyphicons no-js remove_2" data-bind="click: cancel"><i></i></span>
+					<br>
+					<br>
+					<div class="row-fluid">						
+					</div>
+					<br>
+					<div id="invFormContent">
+						<div class="block-title">
+							<h3 data-bind="text: institute.name"></h3>
+							<h2>Customer Aging Detail</h2>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</script>
+<script id="cashReceiptSummary" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">
+				<div id="example" class="k-content saleSummaryCustomer">
+			    	<span class="pull-right glyphicons no-js remove_2" data-bind="click: cancel"><i></i></span>
+					<br>
+					<br>
+					<div class="row-fluid">						
+					</div>
+					<br>
+					<div id="invFormContent">
+						<div class="block-title">
+							<h3 data-bind="text: institute.name"></h3>
+							<h2>Cash Receipt Summary</h2>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</script>
+<script id="cashReceiptSourceSummary" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">
+				<div id="example" class="k-content saleSummaryCustomer">
+			    	<span class="pull-right glyphicons no-js remove_2" data-bind="click: cancel"><i></i></span>
+					<br>
+					<br>
+					<div class="row-fluid">						
+					</div>
+					<br>
+					<div id="invFormContent">
+						<div class="block-title">
+							<h3 data-bind="text: institute.name"></h3>
+							<h2>Cash Receipt Source Summary</h2>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</script>
+<script id="cashReceiptDetail" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">
+				<div id="example" class="k-content saleSummaryCustomer">
+			    	<span class="pull-right glyphicons no-js remove_2" data-bind="click: cancel"><i></i></span>
+					<br>
+					<br>
+					<div class="row-fluid">						
+					</div>
+					<br>
+					<div id="invFormContent">
+						<div class="block-title">
+							<h3 data-bind="text: institute.name"></h3>
+							<h2>Cash Receipt Detail</h2>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</script>
+<script id="cashReceiptSourceDetail" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">
+				<div id="example" class="k-content saleSummaryCustomer">
+			    	<span class="pull-right glyphicons no-js remove_2" data-bind="click: cancel"><i></i></span>
+					<br>
+					<br>
+					<div class="row-fluid">						
+					</div>
+					<br>
+					<div id="invFormContent">
+						<div class="block-title">
+							<h3 data-bind="text: institute.name"></h3>
+							<h2>Cash Receipt Source Detail</h2>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</script>
+
 <!-- ***************************
 *	Menu Section         	  *
 **************************** -->
@@ -6679,7 +7143,7 @@
 		return entity;
 	}
 	banhji.currency = kendo.observable({
-		dataSource 			: dataStore(apiUrl + 'currencies'),				
+		dataSource 			: dataStore(apiUrl + 'currencies'),
 		getCurrencyID 		: function(locale){
 			var currency_id = 0;
 
@@ -7196,7 +7660,7 @@
 				}
 			});
 		},
-		today 				: new Date(),		
+		today 				: new Date(),
 		ar 					: 0,
 		ar_open 			: 0,
 		ar_customer 		: 0,
@@ -7210,7 +7674,7 @@
 		net_income 			: 0,
 		asset 				: 0,
 		liability 	 		: 0,
-		equity 	 			: 0,		
+		equity 	 			: 0,
 		pageLoad 			: function(){
 			var self = this;
 
@@ -7252,7 +7716,7 @@
 		}
 	});
 	banhji.searchAdvanced =  kendo.observable({
-    	lang 				: langVM,    	
+    	lang 				: langVM,
     	contactDS 			: dataStore(apiUrl+"contacts"),
     	contactTypeDS 		: dataStore(apiUrl+"contacts/type"),
     	transactionDS 		: dataStore(apiUrl+"transactions"),
@@ -7261,9 +7725,7 @@
     	searchType 			: "",
     	searchText 			: "",
     	found 				: 0,
-    	pageLoad 			: function(){			
-																									
-		},
+    	pageLoad 			: function(){},
 		search 				: function(){
 			var self = this, 
 			searchText = this.get("searchText");
@@ -7353,10 +7815,7 @@
 			banhji.router.navigate('/accounting_center/'+e.data.id);
 		}
     });	
-
-
 	//DAWINE -----------------------------------------------------------------------------------------
-	
 	banhji.source =  kendo.observable({
 		lang 						: langVM,
 		countryDS					: new kendo.data.DataSource({
@@ -8045,7 +8504,7 @@
 			pageSize: 100
 		}),
 		//Measurement
-		measurementDS				: dataStore(apiUrl + "measurements"),		
+		measurementDS				: dataStore(apiUrl + "measurements"),
 		//Tax Item
 		taxItemDS					: new kendo.data.DataSource({
 			transport: {
@@ -9195,7 +9654,6 @@
 	/*************************
 	*	Water Section   	* 
 	**************************/
-	
 	//Setting
 	banhji.plan = kendo.observable({
 		dataSource 	: new kendo.data.DataSource({
@@ -9402,12 +9860,11 @@
 			var obj = this.dataSource.at(0);
 			this.set("obj", obj);	
 		},
-		onSelect 			: function(e){			
+		onSelect 			: function(e){
 	        // Array with information about the uploaded files
 	        var self = this, 
 	        files = e.files,
-	        obj = this.get("obj");			
-			
+	        obj = this.get("obj");
 	        // Check the extension of each file and abort the upload if it is not .jpg
 	        $.each(files, function(index, value){
 	            if (value.extension.toLowerCase() === ".jpg"
@@ -9416,9 +9873,7 @@
 	            	|| value.extension.toLowerCase() === ".png" 
 	            	|| value.extension.toLowerCase() === ".gif"
 	            	|| value.extension.toLowerCase() === ".pdf"){
-
 	            	var key = 'ATTACH_' + banhji.institute.id + "_" + Math.floor(Math.random() * 100000000000000001) +'_'+ value.name;
-
 	            	self.attachmentDS.add({
 	            		user_id 		: self.get("user_id"),
 	            		license_id 		: obj.id,
@@ -9430,7 +9885,7 @@
 	            		size 			: value.size,
 	            		created_at 		: new Date(),
 	            		file 			: value.rawFile
-	            	});	            			            		            
+	            	});
 	            }else{
 	            	alert("This type of file is not allowed to attach.");
 	            }
@@ -9529,7 +9984,6 @@
 			window.history.back();
 		}
 	});
-	//End Setting
 	banhji.setting = kendo.observable({
 		lang 				: langVM,
 		contactTypeName 	: "",
@@ -9558,6 +10012,7 @@
 		tariffNameShow 		: null,
 		exCurrency 			: null,
 		planSelect 			: false,
+		percentUnit 		: false,
 		windowTariffItemVisible : false,
 		prefixDS			: new kendo.data.DataSource({
 			transport: {
@@ -9618,6 +10073,15 @@
 			var block = this.licenseDS.at(index - 1);
 			this.set('blockCompanyId',{id:block.id, name:block.name});
 			console.log(index);
+		},
+		unitChange 			: function(e){
+			this.set("exPrice","");
+			if(this.exUnit === "%"){
+				console.log(this.exUnit);
+				this.set("percentUnit", true);
+			}else{
+				this.set("percentUnit", false);
+			}
 		},
 		addContactType 		: function(){
         	var name = this.get("contactTypeName");
@@ -9922,7 +10386,7 @@
         },
 	});
 	banhji.addAccountingprefix =  kendo.observable({
-		lang 				: langVM,		
+		lang 				: langVM,
 		selectTypeList 		: banhji.source.typeList,
 		Type 				: "Invoice",
         dataSource			: new kendo.data.DataSource({
@@ -10013,21 +10477,19 @@
 		    });
 		    return dfd;	    		    	
 	    }, 	    
-		save 				: function(){				
+		save 				: function(){
 	    	var self = this, obj = this.get("obj");
 			//Save Obj
 			this.objSync()
 			.then(function(data){ //Success	
-				banhji.accountingSetting.prefixDS.fetch();	
-				
+				banhji.accountingSetting.prefixDS.fetch();
 				return data;
 			}, function(reason) { //Error
 				$("#ntf1").data("kendoNotification").error(reason);
-			}).then(function(result){				
+			}).then(function(result){
 				$("#ntf1").data("kendoNotification").success(banhji.source.successMessage);
-
 				if(self.get("saveClose")){
-					//Save Close					
+					//Save Close
 					self.set("saveClose", false);
 					self.cancel();
 					//window.history.back();
@@ -10042,7 +10504,6 @@
 			window.history.back();
 		}
     });
-    
 	banhji.waterActivateUser = kendo.observable({
 		lang 				: langVM,
 		dataSource  		: dataStore(apiUrl + "activate_water"),
@@ -10197,7 +10658,6 @@
 			window.history.back();
 		}
 	});
-
 	/* Invoice Section */
 	banhji.transactionLine = kendo.observable({
 		dataSource 		: dataStore(apiUrl + "journal_lines"),
@@ -10303,7 +10763,6 @@
 			return dfd.promise();
 		}
 	});
-
 	banhji.installment = kendo.observable({
 		dataSource 			: dataStore(apiUrl + "installments"),
 		startDate 			: new Date(),
@@ -10353,7 +10812,6 @@
 			return dfd.promise();
 		}
 	});
-
 	// Invoice
 	banhji.invoice = kendo.observable({
 		makes 	: new kendo.data.DataSource({
@@ -10452,7 +10910,6 @@
 		}
 	});
 	/* End of Invoice Section */
-
 	/*==== Meter=====*/
 	banhji.meter = kendo.observable({
 		lang 				: langVM,
@@ -10878,16 +11335,7 @@
 		blocSelect			: null,
 		selectMeter 		: false,
 		haveData 			: false,
-		rows 				: [{
-						        cells: [
-						          { value: "number" },
-						          { value: "from_date" },
-						          { value: "to_date" },
-						          { value: "previous" },
-						          { value: "current" },
-						          { value: "status" }
-						        ]
-						      }],
+		rows 				: [{ cells: [ { value: "number" }, { value: "from_date" }, { value: "to_date" }, { value: "previous" }, { value: "current" }, { value: "status" }]}],
 		pageLoad 			: function(id){
 			this.licenseDS.read();
 		},
@@ -11088,12 +11536,12 @@
 			var bloc = this.blocDS.at(e.sender.selectedIndex - 1);
 			this.set("blocSelect", bloc);
 		},
-		search 		 		: function(){		
+		search 		 		: function(){
 			var monthOfSearch = this.get("monthOfSelect"),
 			license_id = this.get("licenseSelect"),
 			bloc_id = this.get("blocSelect");
 			var para = [];	
-			if(monthOfSearch){						
+			if(monthOfSearch){
 				var monthOf = new Date(monthOfSearch);
 				monthOf.setDate(1);
 				monthOf = kendo.toString(monthOf, "yyyy-MM-dd");
@@ -11131,15 +11579,10 @@
 			          });
 			        }
 				});
-
-
-
-				
 				console.log(para);
-
 			}else{
 				alert("សូមSelect ខែ");
-			}	
+			}
 		},
 		exportEXCEL 		: function(e){
 			$("#loadImport").css("display","block");
@@ -11211,7 +11654,6 @@
 			window.history.back();
 		}
 	});
-
 	banhji.waterImport = kendo.observable({
 		lang 				: langVM,
 		dataSource  		: dataStore(apiUrl + "districts"),
@@ -11332,7 +11774,6 @@
 			window.history.back();
 		}
 	});
-
 	banhji.runBill = kendo.observable({
 		lang 				: langVM,
 		licenseDS 			: dataStore(apiUrl + "branches"),
@@ -11628,22 +12069,22 @@
 		}
 	});
 	banhji.InvoicePrint = kendo.observable({
-		lang 				: langVM,				
-		invoiceDS 	 		: dataStore(baseUrl + "invoices"),	
+		lang 				: langVM,
+		invoiceDS 	 		: dataStore(baseUrl + "invoices"),
 		dataSource 			: [],
 		isVisible 			: true,
 		company 			: banhji.institute,
 		PaperSize 			: "A4",
-		user_id 			: banhji.userManagement.getLogin() === null ? '':banhji.userManagement.getLogin().id,	
+		user_id 			: banhji.userManagement.getLogin() === null ? '':banhji.userManagement.getLogin().id,
 		pageLoad 			: function(id){	
 			this.barcod();
 			console.log(this.PaperSize);
-		},					
-		barcod 			: function(){									
+		},
+		barcod 			: function(){
 			var view = this.dataSource;
 			
 			for (var i=0;i<view.length;i++) {
-				var d = view[i];				
+				var d = view[i];
 				$("#secondwnumber"+d.id).kendoBarcode({
 					renderAs: "svg",
 				  	value: d.number,
@@ -11652,8 +12093,8 @@
 					height: 40,
 					text:{
 					    visible: false
-					}	
-				});					
+					}
+				});
 				$("#footwnumber"+d.id).kendoBarcode({
 					renderAs: "svg",
 				  	value: d.number,
@@ -11663,9 +12104,8 @@
 					text:{
 					    visible: false
 					}	
-				});	
-									
-			}		
+				});
+			}
 		},
 		printGrid 		: function(){
 			var self = this, Win, pHeight, pWidth;
@@ -11756,7 +12196,7 @@
 			this.set("dataSource",[]);	
 			this.set("PaperSize","A4");
 			window.history.back();
-		}		
+		}
 	});
 	banhji.Receipt = kendo.observable({
 		lang 				: langVM,
@@ -11765,16 +12205,16 @@
 		invoiceArrayDS	    : [],
 		txnTemplateDS		: dataStore(apiUrl + "transaction_templates"),
 		invNum 				: null,
-		sub_total 			: 0,		
-		discount 			: 0,		
+		sub_total 			: 0,
+		discount 			: 0,
 		total 				: 0,
 		pay 		 		: 0,
 		remain 				: 0,
 		find 				: 0,
 		total_received 		: 0,
-		accountDS  			: banhji.source.cashAccountDS,		
+		accountDS  			: banhji.source.cashAccountDS,
 		paymentTermDS 		: banhji.source.paymentTermDS,
-		paymentMethodDS 	: banhji.source.paymentMethodDS,	
+		paymentMethodDS 	: banhji.source.paymentMethodDS,
 		segmentItemDS		: banhji.source.segmentItemDS,
 		currencyDS  		: banhji.source.currencyDS,
 		obj 				: null,
@@ -11785,22 +12225,22 @@
 		},  
 		invNumChange 		: function(e) {
 		},
-		addEmpty 		 	: function(){			
+		addEmpty 		 	: function(){
 			this.dataSource.data([]);
-			this.set("obj", {				
+			this.set("obj", {
 				account_id 			: 7,
-				payment_method_id	: 1,							   	
-			   	rate				: 1,			   	
-			   	locale 				: banhji.locale,			   	
-			   	issued_date 		: new Date(),			   	
+				payment_method_id	: 1,
+			   	rate				: 1,
+			   	locale 				: banhji.locale,
+			   	issued_date 		: new Date(),
 			   	memo 				: "",
-			   	memo2 				: "",			   	
-			   	segments 			: []		
-	    	});						
+			   	memo2 				: "",
+			   	segments 			: []
+	    	});
 		},	
-		removeInvRow 			: function(e){			
-			this.dataSource.remove(e.data);		    
-		    this.changes();	        
+		removeInvRow 			: function(e){
+			this.dataSource.remove(e.data);
+		    this.changes();
 		},
 		changes				: function(){
 			var self = this, obj = this.get("obj"),
@@ -11844,9 +12284,8 @@
 			});
 			//this.set("obj", this.cashCurrencyDS.at(this.cashCurrencyDS.data().length -1));
 		},
-		removeRow 			: function(e){			
-			this.cashCurrencyDS.remove(e.data);		    
-		    //this.changes();	        
+		removeRow 			: function(e){
+			this.cashCurrencyDS.remove(e.data);
 		},
 		save 				: function() {
 			var self = this;
@@ -11861,7 +12300,6 @@
 		dataSource 			: banhji.invoice.dataSource,
 		licenseDS 			: dataStore(apiUrl + "branches"),
 		pageLoad 			: function(){
-
 		},
 		save 				: function() {
 			var self = this;
@@ -11871,7 +12309,6 @@
 			window.history.back();
 		}
 	});
-
 	banhji.customerDeposit =  kendo.observable({
 		lang 				: langVM,
 		dataSource 			: dataStore(apiUrl + "transactions"),
@@ -11958,12 +12395,11 @@
 			}
 		},
 		//Upload
-		onSelect 			: function(e){			
+		onSelect 			: function(e){
 	        // Array with information about the uploaded files
 	        var self = this, 
 	        files = e.files,
-	        obj = this.get("obj");			
-			
+	        obj = this.get("obj");
 	        // Check the extension of each file and abort the upload if it is not .jpg
 	        $.each(files, function(index, value){
 	            if (value.extension.toLowerCase() === ".jpg"
@@ -11972,9 +12408,7 @@
 	            	|| value.extension.toLowerCase() === ".png" 
 	            	|| value.extension.toLowerCase() === ".gif"
 	            	|| value.extension.toLowerCase() === ".pdf"){
-
 	            	var key = 'ATTACH_' + banhji.institute.id + "_" + Math.floor(Math.random() * 100000000000000001) +'_'+ value.name;
-
 	            	self.attachmentDS.add({
 	            		user_id 		: self.get("user_id"),
 	            		transaction_id 	: obj.id,
@@ -11985,9 +12419,8 @@
 	            		url 			: banhji.s3 + key,
 	            		size 			: value.size,
 	            		created_at 		: new Date(),
-
 	            		file 			: value.rawFile
-	            	});	            			            		            
+	            	});
 	            }else{
 	            	alert("This type of file is not allowed to attach.");
 	            }
@@ -12212,12 +12645,12 @@
 				locale				: obj.locale
 			});
 		},
-		removeRow  			: function(e){						
+		removeRow  			: function(e){
 			var data = e.data;
-			if(this.lineDS.total()>1){				
+			if(this.lineDS.total()>1){
 				this.lineDS.remove(data);
 		        this.changes();
-	        }		        
+	        }
 		},
 		objSync 			: function(){
 	    	var dfd = $.Deferred();	        
@@ -12234,9 +12667,8 @@
 
 		    return dfd;	    		    	
 	    },	    	    
-		save 				: function(){				
+		save 				: function(){
 	    	var self = this, obj = this.get("obj");
-
 	    	//Reference
 	    	if(obj.reference_id>0){
 				var ref = this.referenceDS.get(obj.reference_id);
@@ -12245,81 +12677,67 @@
 			}else{
 				obj.set("reference_id", 0);
 			}
-
 	    	//Recurring
 	    	if(this.get("saveRecurring")){
 	    		this.set("saveRecurring", false);
-
 	    		if(this.get("isEdit")){
-		    		if(obj.is_recurring=="0"){ //Add brand new recurring from existing transaction	    			
+		    		if(obj.is_recurring=="0"){ 
+		    			//Add brand new recurring from existing transaction
 		    			this.addNewRecurring();
-
 		    			this.recurringSync()
 						.then(function(data){ //Success
-							$.each(self.recurringLineDS.data(), function(index, value){										
-								value.set("transaction_id", data[0].id);						
+							$.each(self.recurringLineDS.data(), function(index, value){	
+								value.set("transaction_id", data[0].id);
 							});
 							self.recurringLineDS.sync();
-
-							return data;			
+							return data;
 						}, function(reason) { //Error
 							$("#ntf1").data("kendoNotification").error(reason);
 						}).then(function(result){
 							$("#ntf1").data("kendoNotification").success(banhji.source.successMessage);
-
 							self.addEmpty();
 						});
 		    		}
 		    	}else{
 	    			obj.set("is_recurring", 1);
 		    	}
-	    	}	    	
-
+	    	}
 	    	//Edit Mode
 	    	if(this.get("isEdit")){
 		    	obj.set("dirty", true);
-		    	
 		    	//Line has changed
 		    	if(obj.amount!==this.get("original_total") && obj.is_recurring==0){
 		    		this.set("original_total",0);
-
-			    	$.each(this.journalLineDS.data(), function(index, value){										
-						value.set("deleted", 1);										
+			    	$.each(this.journalLineDS.data(), function(index, value){
+						value.set("deleted", 1);
 					});
-
 					this.addJournal(obj.id);
 		    	}
-	    	}	    	
-	    	
+	    	}
 			//Save Obj
 			this.objSync()
-			.then(function(data){ //Success												
+			.then(function(data){ //Success
 				if(self.get("isEdit")==false){
 					//Item line
 					$.each(self.lineDS.data(), function(index, value){
 						value.set("transaction_id", data[0].id);
 					});
-
 					//Attachment
 					$.each(self.attachmentDS.data(), function(index, value){
 			    		value.set("transaction_id", data[0].id);
 		            });
-
 					if(obj.is_recurring==0){
 			            //Journal
 			            self.addJournal(data[0].id);
 			        }
 				}
-
 				self.lineDS.sync();
 				self.uploadFile();
-				
 				return data;
 			}, function(reason) { //Error
 				$("#ntf1").data("kendoNotification").error(reason);
 			}).then(function(result){				
 				$("#ntf1").data("kendoNotification").success(banhji.source.successMessage);
-
 				if(self.get("saveClose")){
 					//Save Close					
 					self.set("saveClose", false);
@@ -12334,10 +12752,9 @@
 					//Save New
 					self.addEmpty();
 				}
-
 				// Refresh Customer
 				self.contactDS.filter({ field:"parent_id", operator:"where_related", model:"contact_type", value:1 });
-			});			
+			});
 		},
 		cancel 				: function(){
 			this.dataSource.cancelChanges();
@@ -12648,10 +13065,9 @@
 		    return dfd;
 	    }
 	});
-
 	banhji.invoiceCustom =  kendo.observable({
     	lang 				: langVM,
-		dataSource 			: dataStore(apiUrl + "transaction_templates"),		
+		dataSource 			: dataStore(apiUrl + "transaction_templates"),
 		txnFormDS			: dataStore(apiUrl + "transaction_forms"),
 		obj 				: null,
 		objForm	 			: null,
@@ -12674,7 +13090,7 @@
 				banhji.view.invoiceCustom.showIn('#invFormContent', banhji.view.invoiceForm1);	
 				banhji.invoiceForm.pageLoad();
 				this.addEmpty();
-				this.txnFormDS.query({    			
+				this.txnFormDS.query({
 					filter: [{ field:"type", value: "Invoice" },{ field:"moduls", value: "water_mg"}],
 					page: 1,
 					take: 100
@@ -12689,12 +13105,29 @@
 				var name = banhji.invoiceForm.get("obj");
 				name.set("title", this.formTitle);
 			}
-
 		},	
-		addEmpty 		 	: function(){			
-			this.dataSource.data([]);		
-			this.set("obj", null);		
-			this.dataSource.insert(0,{				
+		onChange			: function(e) {
+			var obj = this.get("obj"), self = this;
+			this.txnFormDS.query({    			
+				filter: [{ field:"type", value: obj.type }, {field:"moduls", value: "water_mg" }],
+				page: 1,
+				take: 100
+			}).then(function(e){
+				var view = self.txnFormDS.view();
+				if(view.length > 0){
+					banhji.invoiceForm.set("obj", view[0]);
+					var obj = self.get("obj");
+					obj.set("type", view[0].type);
+					obj.set("title", view[0].title);
+					obj.set("note", view[0].note);
+				}
+			});	
+			setTimeout(function(e){ $('#formStyle a').eq(0).click(); },2000);
+        },
+		addEmpty 		 	: function(){
+			this.dataSource.data([]);
+			this.set("obj", null);
+			this.dataSource.insert(0,{
 				user_id			: banhji.source.user_id,
 				transaction_form_id : 0,
 				type 			: "Invoice",
@@ -12706,13 +13139,14 @@
 				item_id 		: '',
 				status 			: 0
 	    	});		
-			var obj = this.dataSource.at(0);			
-			this.set("obj", obj);		
+			var obj = this.dataSource.at(0);
+			this.set("obj", obj);
 		},
 		activeInvoiceTmp		: function(e){
 			var Active;
 			switch(e) {
 				case 43: Active = banhji.view.invoiceForm1; break;
+				case 44: Active = banhji.view.invoiceForm2; break;
 				case 2: Active = banhji.view.invoiceForm2; break;
 				case 32: Active = banhji.view.invoiceForm32; break;
 			}
@@ -12753,22 +13187,22 @@
 				self.txnFormDS.filter({ field:"type", value: "Invoice" });
 			});	
 		},		    
-		save 				: function(){				
-	    	var self = this;
+		save 				: function(){
+			var self = this;
 			if(this.dataSource.data().length > 0) {
 				this.dataSource.sync();
 				this.dataSource.bind("requestEnd", function(e){
 					if(e.type != 'read') {
-						if(e.response){				
+						if(e.response){
 				    		$("#ntf1").data("kendoNotification").success("Successfully!");
 				    		//self.dataSource.addNew();
 							banhji.router.navigate("/setting");
 							banhji.setting.txnTemplateDS.fetch();
 						}
-					}				    					  				
-			    });
-			    this.dataSource.bind("error", function(e){		    		    	
-					$("#ntf1").data("kendoNotification").error("Error!"); 			
+					}
+				});
+			    this.dataSource.bind("error", function(e){
+			    	$("#ntf1").data("kendoNotification").error("Error!");
 			    });
 			}
 		},
@@ -12780,7 +13214,7 @@
 	banhji.invoiceForm =  kendo.observable({
 		lang 				: langVM,
 		dataSource 			: dataStore(apiUrl + "transactions"),
-		txnTemplateDS		: dataStore(apiUrl + "transaction_templates"),		
+		txnTemplateDS		: dataStore(apiUrl + "transaction_templates"),
 		obj 				: {
 								title: "Quotation", 
 								issued_date : "<?php echo date('d/M/Y'); ?>", 
@@ -12972,7 +13406,6 @@
 			window.history.back();
 		}
 	});
-
 	banhji.waterCenter = kendo.observable({
 		lang 				: langVM,
 		transactionDS  		: dataStore(apiUrl + 'transactions'),
@@ -13516,7 +13949,6 @@
 		pageLoad 				: function(){
 			this.contact.filter({field: "use_water", value: 1});
 			this.licenseDS.read();
-
 		},
 		printGrid			: function() {
 			var gridElement = $('#grid'),
@@ -13587,6 +14019,206 @@
 			this.loadData();
 		},
 	});	
+	banhji.customerNoConnection = kendo.observable({
+		lang 					: langVM,
+		institute 				: banhji.institute,
+		dataSource 				: dataStore(apiUrl + "customers"),	
+		pageLoad 				: function(){
+		},
+		printGrid			: function() {
+			var gridElement = $('#grid'),
+		        printableContent = '',
+		        win = window.open('', '', 'width=900, height=700'),
+		        doc = win.document.open();
+		    var htmlStart =
+		            '<!DOCTYPE html>' +
+		            '<html>' +
+		            '<head>' +
+		            '<meta charset="utf-8" />' +
+		            '<title></title>' +
+		            '<link href="http://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />'+
+		            '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/bootstrap.css">' +
+		            '<link href="https://fonts.googleapis.com/css?family=Content:400,700" rel="stylesheet" type="text/css">' +
+		            '<link href="<?php echo base_url(); ?>assets/responsive.css" rel="stylesheet" >' +
+		            '<link href="https://fonts.googleapis.com/css?family=Moul" rel="stylesheet">' +
+		            '<style>' +
+		            '*{  } html { font: 11pt sans-serif; }' +
+		            '.k-grid { border-top-width: 0; }' +
+		            '.k-grid, .k-grid-content { height: auto !important; }' +
+		            '.k-grid-content { overflow: visible !important; }' +
+		            'div.k-grid table { table-layout: auto; width: 100% !important; }' +
+		            '.k-grid .k-grid-header th { border-top: 1px solid; }' +
+		            '.k-grid-toolbar, .k-grid-pager > .k-link { display: none; }' +
+		            '</style><style type="text/css" media="print"> @page { size: landscape; margin:0mm; } .saleSummaryCustomer .total-customer, .saleSummaryCustomer .total-sale { background-color: #DDEBF7!important; -webkit-print-color-adjust:exact; }.saleSummaryCustomer .table.table-borderless.table-condensed  tr th { background-color: #1E4E78!important;-webkit-print-color-adjust:exact;}.saleSummaryCustomer .table.table-borderless.table-condensed  tr th span{ color: #fff!important; }.saleSummaryCustomer .table.table-borderless.table-condensed tr:nth-child(2n+1) td {  background-color: #fff!important; -webkit-print-color-adjust:exact;} .saleSummaryCustomer .table.table-borderless.table-condensed tr td { background-color: #F2F2F2!important;-webkit-print-color-adjust:exact; } </style>' +
+		            '</head>' +
+		            '<body><div id="example" class="k-content saleSummaryCustomer" style="padding: 30px;">';
+		    var htmlEnd =
+		            '</div></body>' +
+		            '</html>';
+		    
+		    printableContent = $('#invFormContent').html();
+		    doc.write(htmlStart + printableContent + htmlEnd);
+		    doc.close();
+		    setTimeout(function(){
+		    	win.print();
+		    	win.close();
+		    },2000);
+		},
+		cancel				: function(e){
+			this.dataSource.cancelChanges();
+			window.history.back();
+		},
+	});
+	banhji.disconnectList = kendo.observable({
+		lang 					: langVM,
+		institute 				: banhji.institute,
+		dataSource 				: dataStore(apiUrl + "customers"),	
+		pageLoad 				: function(){
+		},
+		printGrid			: function() {
+			var gridElement = $('#grid'),
+		        printableContent = '',
+		        win = window.open('', '', 'width=900, height=700'),
+		        doc = win.document.open();
+		    var htmlStart =
+		            '<!DOCTYPE html>' +
+		            '<html>' +
+		            '<head>' +
+		            '<meta charset="utf-8" />' +
+		            '<title></title>' +
+		            '<link href="http://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />'+
+		            '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/bootstrap.css">' +
+		            '<link href="https://fonts.googleapis.com/css?family=Content:400,700" rel="stylesheet" type="text/css">' +
+		            '<link href="<?php echo base_url(); ?>assets/responsive.css" rel="stylesheet" >' +
+		            '<link href="https://fonts.googleapis.com/css?family=Moul" rel="stylesheet">' +
+		            '<style>' +
+		            '*{  } html { font: 11pt sans-serif; }' +
+		            '.k-grid { border-top-width: 0; }' +
+		            '.k-grid, .k-grid-content { height: auto !important; }' +
+		            '.k-grid-content { overflow: visible !important; }' +
+		            'div.k-grid table { table-layout: auto; width: 100% !important; }' +
+		            '.k-grid .k-grid-header th { border-top: 1px solid; }' +
+		            '.k-grid-toolbar, .k-grid-pager > .k-link { display: none; }' +
+		            '</style><style type="text/css" media="print"> @page { size: landscape; margin:0mm; } .saleSummaryCustomer .total-customer, .saleSummaryCustomer .total-sale { background-color: #DDEBF7!important; -webkit-print-color-adjust:exact; }.saleSummaryCustomer .table.table-borderless.table-condensed  tr th { background-color: #1E4E78!important;-webkit-print-color-adjust:exact;}.saleSummaryCustomer .table.table-borderless.table-condensed  tr th span{ color: #fff!important; }.saleSummaryCustomer .table.table-borderless.table-condensed tr:nth-child(2n+1) td {  background-color: #fff!important; -webkit-print-color-adjust:exact;} .saleSummaryCustomer .table.table-borderless.table-condensed tr td { background-color: #F2F2F2!important;-webkit-print-color-adjust:exact; } </style>' +
+		            '</head>' +
+		            '<body><div id="example" class="k-content saleSummaryCustomer" style="padding: 30px;">';
+		    var htmlEnd =
+		            '</div></body>' +
+		            '</html>';
+		    
+		    printableContent = $('#invFormContent').html();
+		    doc.write(htmlStart + printableContent + htmlEnd);
+		    doc.close();
+		    setTimeout(function(){
+		    	win.print();
+		    	win.close();
+		    },2000);
+		},
+		cancel				: function(e){
+			this.dataSource.cancelChanges();
+			window.history.back();
+		},
+	});	
+	banhji.newCustomerList = kendo.observable({
+		lang 					: langVM,
+		institute 				: banhji.institute,
+		dataSource 				: dataStore(apiUrl + "customers"),	
+		pageLoad 				: function(){
+		},
+		printGrid			: function() {
+			var gridElement = $('#grid'),
+		        printableContent = '',
+		        win = window.open('', '', 'width=900, height=700'),
+		        doc = win.document.open();
+		    var htmlStart =
+		            '<!DOCTYPE html>' +
+		            '<html>' +
+		            '<head>' +
+		            '<meta charset="utf-8" />' +
+		            '<title></title>' +
+		            '<link href="http://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />'+
+		            '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/bootstrap.css">' +
+		            '<link href="https://fonts.googleapis.com/css?family=Content:400,700" rel="stylesheet" type="text/css">' +
+		            '<link href="<?php echo base_url(); ?>assets/responsive.css" rel="stylesheet" >' +
+		            '<link href="https://fonts.googleapis.com/css?family=Moul" rel="stylesheet">' +
+		            '<style>' +
+		            '*{  } html { font: 11pt sans-serif; }' +
+		            '.k-grid { border-top-width: 0; }' +
+		            '.k-grid, .k-grid-content { height: auto !important; }' +
+		            '.k-grid-content { overflow: visible !important; }' +
+		            'div.k-grid table { table-layout: auto; width: 100% !important; }' +
+		            '.k-grid .k-grid-header th { border-top: 1px solid; }' +
+		            '.k-grid-toolbar, .k-grid-pager > .k-link { display: none; }' +
+		            '</style><style type="text/css" media="print"> @page { size: landscape; margin:0mm; } .saleSummaryCustomer .total-customer, .saleSummaryCustomer .total-sale { background-color: #DDEBF7!important; -webkit-print-color-adjust:exact; }.saleSummaryCustomer .table.table-borderless.table-condensed  tr th { background-color: #1E4E78!important;-webkit-print-color-adjust:exact;}.saleSummaryCustomer .table.table-borderless.table-condensed  tr th span{ color: #fff!important; }.saleSummaryCustomer .table.table-borderless.table-condensed tr:nth-child(2n+1) td {  background-color: #fff!important; -webkit-print-color-adjust:exact;} .saleSummaryCustomer .table.table-borderless.table-condensed tr td { background-color: #F2F2F2!important;-webkit-print-color-adjust:exact; } </style>' +
+		            '</head>' +
+		            '<body><div id="example" class="k-content saleSummaryCustomer" style="padding: 30px;">';
+		    var htmlEnd =
+		            '</div></body>' +
+		            '</html>';
+		    
+		    printableContent = $('#invFormContent').html();
+		    doc.write(htmlStart + printableContent + htmlEnd);
+		    doc.close();
+		    setTimeout(function(){
+		    	win.print();
+		    	win.close();
+		    },2000);
+		},
+		cancel				: function(e){
+			this.dataSource.cancelChanges();
+			window.history.back();
+		},
+	});
+	banhji.miniUsageList = kendo.observable({
+		lang 					: langVM,
+		institute 				: banhji.institute,
+		dataSource 				: dataStore(apiUrl + "customers"),	
+		pageLoad 				: function(){
+		},
+		printGrid			: function() {
+			var gridElement = $('#grid'),
+		        printableContent = '',
+		        win = window.open('', '', 'width=900, height=700'),
+		        doc = win.document.open();
+		    var htmlStart =
+		            '<!DOCTYPE html>' +
+		            '<html>' +
+		            '<head>' +
+		            '<meta charset="utf-8" />' +
+		            '<title></title>' +
+		            '<link href="http://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />'+
+		            '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/bootstrap.css">' +
+		            '<link href="https://fonts.googleapis.com/css?family=Content:400,700" rel="stylesheet" type="text/css">' +
+		            '<link href="<?php echo base_url(); ?>assets/responsive.css" rel="stylesheet" >' +
+		            '<link href="https://fonts.googleapis.com/css?family=Moul" rel="stylesheet">' +
+		            '<style>' +
+		            '*{  } html { font: 11pt sans-serif; }' +
+		            '.k-grid { border-top-width: 0; }' +
+		            '.k-grid, .k-grid-content { height: auto !important; }' +
+		            '.k-grid-content { overflow: visible !important; }' +
+		            'div.k-grid table { table-layout: auto; width: 100% !important; }' +
+		            '.k-grid .k-grid-header th { border-top: 1px solid; }' +
+		            '.k-grid-toolbar, .k-grid-pager > .k-link { display: none; }' +
+		            '</style><style type="text/css" media="print"> @page { size: landscape; margin:0mm; } .saleSummaryCustomer .total-customer, .saleSummaryCustomer .total-sale { background-color: #DDEBF7!important; -webkit-print-color-adjust:exact; }.saleSummaryCustomer .table.table-borderless.table-condensed  tr th { background-color: #1E4E78!important;-webkit-print-color-adjust:exact;}.saleSummaryCustomer .table.table-borderless.table-condensed  tr th span{ color: #fff!important; }.saleSummaryCustomer .table.table-borderless.table-condensed tr:nth-child(2n+1) td {  background-color: #fff!important; -webkit-print-color-adjust:exact;} .saleSummaryCustomer .table.table-borderless.table-condensed tr td { background-color: #F2F2F2!important;-webkit-print-color-adjust:exact; } </style>' +
+		            '</head>' +
+		            '<body><div id="example" class="k-content saleSummaryCustomer" style="padding: 30px;">';
+		    var htmlEnd =
+		            '</div></body>' +
+		            '</html>';
+		    
+		    printableContent = $('#invFormContent').html();
+		    doc.write(htmlStart + printableContent + htmlEnd);
+		    doc.close();
+		    setTimeout(function(){
+		    	win.print();
+		    	win.close();
+		    },2000);
+		},
+		cancel				: function(e){
+			this.dataSource.cancelChanges();
+			window.history.back();
+		},
+	});
 	banhji.customerNoMeter = kendo.observable({
 		lang 					: langVM,
 		institute 				: banhji.institute,
@@ -13675,6 +14307,606 @@
 			this.loadData();
 		},
 	});
+	banhji.saleSummary = kendo.observable({
+		lang 					: langVM,
+		institute 				: banhji.institute,
+		dataSource 				: dataStore(apiUrl + "customers"),	
+		pageLoad 				: function(){
+		},
+		printGrid			: function() {
+			var gridElement = $('#grid'),
+		        printableContent = '',
+		        win = window.open('', '', 'width=900, height=700'),
+		        doc = win.document.open();
+		    var htmlStart =
+		            '<!DOCTYPE html>' +
+		            '<html>' +
+		            '<head>' +
+		            '<meta charset="utf-8" />' +
+		            '<title></title>' +
+		            '<link href="http://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />'+
+		            '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/bootstrap.css">' +
+		            '<link href="https://fonts.googleapis.com/css?family=Content:400,700" rel="stylesheet" type="text/css">' +
+		            '<link href="<?php echo base_url(); ?>assets/responsive.css" rel="stylesheet" >' +
+		            '<link href="https://fonts.googleapis.com/css?family=Moul" rel="stylesheet">' +
+		            '<style>' +
+		            '*{  } html { font: 11pt sans-serif; }' +
+		            '.k-grid { border-top-width: 0; }' +
+		            '.k-grid, .k-grid-content { height: auto !important; }' +
+		            '.k-grid-content { overflow: visible !important; }' +
+		            'div.k-grid table { table-layout: auto; width: 100% !important; }' +
+		            '.k-grid .k-grid-header th { border-top: 1px solid; }' +
+		            '.k-grid-toolbar, .k-grid-pager > .k-link { display: none; }' +
+		            '</style><style type="text/css" media="print"> @page { size: landscape; margin:0mm; } .saleSummaryCustomer .total-customer, .saleSummaryCustomer .total-sale { background-color: #DDEBF7!important; -webkit-print-color-adjust:exact; }.saleSummaryCustomer .table.table-borderless.table-condensed  tr th { background-color: #1E4E78!important;-webkit-print-color-adjust:exact;}.saleSummaryCustomer .table.table-borderless.table-condensed  tr th span{ color: #fff!important; }.saleSummaryCustomer .table.table-borderless.table-condensed tr:nth-child(2n+1) td {  background-color: #fff!important; -webkit-print-color-adjust:exact;} .saleSummaryCustomer .table.table-borderless.table-condensed tr td { background-color: #F2F2F2!important;-webkit-print-color-adjust:exact; } </style>' +
+		            '</head>' +
+		            '<body><div id="example" class="k-content saleSummaryCustomer" style="padding: 30px;">';
+		    var htmlEnd =
+		            '</div></body>' +
+		            '</html>';
+		    
+		    printableContent = $('#invFormContent').html();
+		    doc.write(htmlStart + printableContent + htmlEnd);
+		    doc.close();
+		    setTimeout(function(){
+		    	win.print();
+		    	win.close();
+		    },2000);
+		},
+		cancel				: function(e){
+			this.dataSource.cancelChanges();
+			window.history.back();
+		},
+	});
+	banhji.connectServiceRevenue = kendo.observable({
+		lang 					: langVM,
+		institute 				: banhji.institute,
+		dataSource 				: dataStore(apiUrl + "customers"),	
+		pageLoad 				: function(){
+		},
+		printGrid			: function() {
+			var gridElement = $('#grid'),
+		        printableContent = '',
+		        win = window.open('', '', 'width=900, height=700'),
+		        doc = win.document.open();
+		    var htmlStart =
+		            '<!DOCTYPE html>' +
+		            '<html>' +
+		            '<head>' +
+		            '<meta charset="utf-8" />' +
+		            '<title></title>' +
+		            '<link href="http://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />'+
+		            '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/bootstrap.css">' +
+		            '<link href="https://fonts.googleapis.com/css?family=Content:400,700" rel="stylesheet" type="text/css">' +
+		            '<link href="<?php echo base_url(); ?>assets/responsive.css" rel="stylesheet" >' +
+		            '<link href="https://fonts.googleapis.com/css?family=Moul" rel="stylesheet">' +
+		            '<style>' +
+		            '*{  } html { font: 11pt sans-serif; }' +
+		            '.k-grid { border-top-width: 0; }' +
+		            '.k-grid, .k-grid-content { height: auto !important; }' +
+		            '.k-grid-content { overflow: visible !important; }' +
+		            'div.k-grid table { table-layout: auto; width: 100% !important; }' +
+		            '.k-grid .k-grid-header th { border-top: 1px solid; }' +
+		            '.k-grid-toolbar, .k-grid-pager > .k-link { display: none; }' +
+		            '</style><style type="text/css" media="print"> @page { size: landscape; margin:0mm; } .saleSummaryCustomer .total-customer, .saleSummaryCustomer .total-sale { background-color: #DDEBF7!important; -webkit-print-color-adjust:exact; }.saleSummaryCustomer .table.table-borderless.table-condensed  tr th { background-color: #1E4E78!important;-webkit-print-color-adjust:exact;}.saleSummaryCustomer .table.table-borderless.table-condensed  tr th span{ color: #fff!important; }.saleSummaryCustomer .table.table-borderless.table-condensed tr:nth-child(2n+1) td {  background-color: #fff!important; -webkit-print-color-adjust:exact;} .saleSummaryCustomer .table.table-borderless.table-condensed tr td { background-color: #F2F2F2!important;-webkit-print-color-adjust:exact; } </style>' +
+		            '</head>' +
+		            '<body><div id="example" class="k-content saleSummaryCustomer" style="padding: 30px;">';
+		    var htmlEnd =
+		            '</div></body>' +
+		            '</html>';
+		    
+		    printableContent = $('#invFormContent').html();
+		    doc.write(htmlStart + printableContent + htmlEnd);
+		    doc.close();
+		    setTimeout(function(){
+		    	win.print();
+		    	win.close();
+		    },2000);
+		},
+		cancel				: function(e){
+			this.dataSource.cancelChanges();
+			window.history.back();
+		},
+	});
+	banhji.saleDetail = kendo.observable({
+		lang 					: langVM,
+		institute 				: banhji.institute,
+		dataSource 				: dataStore(apiUrl + "customers"),	
+		pageLoad 				: function(){
+		},
+		printGrid			: function() {
+			var gridElement = $('#grid'),
+		        printableContent = '',
+		        win = window.open('', '', 'width=900, height=700'),
+		        doc = win.document.open();
+		    var htmlStart =
+		            '<!DOCTYPE html>' +
+		            '<html>' +
+		            '<head>' +
+		            '<meta charset="utf-8" />' +
+		            '<title></title>' +
+		            '<link href="http://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />'+
+		            '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/bootstrap.css">' +
+		            '<link href="https://fonts.googleapis.com/css?family=Content:400,700" rel="stylesheet" type="text/css">' +
+		            '<link href="<?php echo base_url(); ?>assets/responsive.css" rel="stylesheet" >' +
+		            '<link href="https://fonts.googleapis.com/css?family=Moul" rel="stylesheet">' +
+		            '<style>' +
+		            '*{  } html { font: 11pt sans-serif; }' +
+		            '.k-grid { border-top-width: 0; }' +
+		            '.k-grid, .k-grid-content { height: auto !important; }' +
+		            '.k-grid-content { overflow: visible !important; }' +
+		            'div.k-grid table { table-layout: auto; width: 100% !important; }' +
+		            '.k-grid .k-grid-header th { border-top: 1px solid; }' +
+		            '.k-grid-toolbar, .k-grid-pager > .k-link { display: none; }' +
+		            '</style><style type="text/css" media="print"> @page { size: landscape; margin:0mm; } .saleSummaryCustomer .total-customer, .saleSummaryCustomer .total-sale { background-color: #DDEBF7!important; -webkit-print-color-adjust:exact; }.saleSummaryCustomer .table.table-borderless.table-condensed  tr th { background-color: #1E4E78!important;-webkit-print-color-adjust:exact;}.saleSummaryCustomer .table.table-borderless.table-condensed  tr th span{ color: #fff!important; }.saleSummaryCustomer .table.table-borderless.table-condensed tr:nth-child(2n+1) td {  background-color: #fff!important; -webkit-print-color-adjust:exact;} .saleSummaryCustomer .table.table-borderless.table-condensed tr td { background-color: #F2F2F2!important;-webkit-print-color-adjust:exact; } </style>' +
+		            '</head>' +
+		            '<body><div id="example" class="k-content saleSummaryCustomer" style="padding: 30px;">';
+		    var htmlEnd =
+		            '</div></body>' +
+		            '</html>';
+		    
+		    printableContent = $('#invFormContent').html();
+		    doc.write(htmlStart + printableContent + htmlEnd);
+		    doc.close();
+		    setTimeout(function(){
+		    	win.print();
+		    	win.close();
+		    },2000);
+		},
+		cancel				: function(e){
+			this.dataSource.cancelChanges();
+			window.history.back();
+		},
+	});
+	banhji.otherRevenues = kendo.observable({
+		lang 					: langVM,
+		institute 				: banhji.institute,
+		dataSource 				: dataStore(apiUrl + "customers"),	
+		pageLoad 				: function(){
+		},
+		printGrid			: function() {
+			var gridElement = $('#grid'),
+		        printableContent = '',
+		        win = window.open('', '', 'width=900, height=700'),
+		        doc = win.document.open();
+		    var htmlStart =
+		            '<!DOCTYPE html>' +
+		            '<html>' +
+		            '<head>' +
+		            '<meta charset="utf-8" />' +
+		            '<title></title>' +
+		            '<link href="http://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />'+
+		            '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/bootstrap.css">' +
+		            '<link href="https://fonts.googleapis.com/css?family=Content:400,700" rel="stylesheet" type="text/css">' +
+		            '<link href="<?php echo base_url(); ?>assets/responsive.css" rel="stylesheet" >' +
+		            '<link href="https://fonts.googleapis.com/css?family=Moul" rel="stylesheet">' +
+		            '<style>' +
+		            '*{  } html { font: 11pt sans-serif; }' +
+		            '.k-grid { border-top-width: 0; }' +
+		            '.k-grid, .k-grid-content { height: auto !important; }' +
+		            '.k-grid-content { overflow: visible !important; }' +
+		            'div.k-grid table { table-layout: auto; width: 100% !important; }' +
+		            '.k-grid .k-grid-header th { border-top: 1px solid; }' +
+		            '.k-grid-toolbar, .k-grid-pager > .k-link { display: none; }' +
+		            '</style><style type="text/css" media="print"> @page { size: landscape; margin:0mm; } .saleSummaryCustomer .total-customer, .saleSummaryCustomer .total-sale { background-color: #DDEBF7!important; -webkit-print-color-adjust:exact; }.saleSummaryCustomer .table.table-borderless.table-condensed  tr th { background-color: #1E4E78!important;-webkit-print-color-adjust:exact;}.saleSummaryCustomer .table.table-borderless.table-condensed  tr th span{ color: #fff!important; }.saleSummaryCustomer .table.table-borderless.table-condensed tr:nth-child(2n+1) td {  background-color: #fff!important; -webkit-print-color-adjust:exact;} .saleSummaryCustomer .table.table-borderless.table-condensed tr td { background-color: #F2F2F2!important;-webkit-print-color-adjust:exact; } </style>' +
+		            '</head>' +
+		            '<body><div id="example" class="k-content saleSummaryCustomer" style="padding: 30px;">';
+		    var htmlEnd =
+		            '</div></body>' +
+		            '</html>';
+		    
+		    printableContent = $('#invFormContent').html();
+		    doc.write(htmlStart + printableContent + htmlEnd);
+		    doc.close();
+		    setTimeout(function(){
+		    	win.print();
+		    	win.close();
+		    },2000);
+		},
+		cancel				: function(e){
+			this.dataSource.cancelChanges();
+			window.history.back();
+		},
+	});
+	banhji.accountReceivableList = kendo.observable({
+		lang 					: langVM,
+		institute 				: banhji.institute,
+		dataSource 				: dataStore(apiUrl + "customers"),	
+		pageLoad 				: function(){
+		},
+		printGrid			: function() {
+			var gridElement = $('#grid'),
+		        printableContent = '',
+		        win = window.open('', '', 'width=900, height=700'),
+		        doc = win.document.open();
+		    var htmlStart =
+		            '<!DOCTYPE html>' +
+		            '<html>' +
+		            '<head>' +
+		            '<meta charset="utf-8" />' +
+		            '<title></title>' +
+		            '<link href="http://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />'+
+		            '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/bootstrap.css">' +
+		            '<link href="https://fonts.googleapis.com/css?family=Content:400,700" rel="stylesheet" type="text/css">' +
+		            '<link href="<?php echo base_url(); ?>assets/responsive.css" rel="stylesheet" >' +
+		            '<link href="https://fonts.googleapis.com/css?family=Moul" rel="stylesheet">' +
+		            '<style>' +
+		            '*{  } html { font: 11pt sans-serif; }' +
+		            '.k-grid { border-top-width: 0; }' +
+		            '.k-grid, .k-grid-content { height: auto !important; }' +
+		            '.k-grid-content { overflow: visible !important; }' +
+		            'div.k-grid table { table-layout: auto; width: 100% !important; }' +
+		            '.k-grid .k-grid-header th { border-top: 1px solid; }' +
+		            '.k-grid-toolbar, .k-grid-pager > .k-link { display: none; }' +
+		            '</style><style type="text/css" media="print"> @page { size: landscape; margin:0mm; } .saleSummaryCustomer .total-customer, .saleSummaryCustomer .total-sale { background-color: #DDEBF7!important; -webkit-print-color-adjust:exact; }.saleSummaryCustomer .table.table-borderless.table-condensed  tr th { background-color: #1E4E78!important;-webkit-print-color-adjust:exact;}.saleSummaryCustomer .table.table-borderless.table-condensed  tr th span{ color: #fff!important; }.saleSummaryCustomer .table.table-borderless.table-condensed tr:nth-child(2n+1) td {  background-color: #fff!important; -webkit-print-color-adjust:exact;} .saleSummaryCustomer .table.table-borderless.table-condensed tr td { background-color: #F2F2F2!important;-webkit-print-color-adjust:exact; } </style>' +
+		            '</head>' +
+		            '<body><div id="example" class="k-content saleSummaryCustomer" style="padding: 30px;">';
+		    var htmlEnd =
+		            '</div></body>' +
+		            '</html>';
+		    
+		    printableContent = $('#invFormContent').html();
+		    doc.write(htmlStart + printableContent + htmlEnd);
+		    doc.close();
+		    setTimeout(function(){
+		    	win.print();
+		    	win.close();
+		    },2000);
+		},
+		cancel				: function(e){
+			this.dataSource.cancelChanges();
+			window.history.back();
+		},
+	});
+	banhji.customerAgingSumList = kendo.observable({
+		lang 					: langVM,
+		institute 				: banhji.institute,
+		dataSource 				: dataStore(apiUrl + "customers"),	
+		pageLoad 				: function(){
+		},
+		printGrid			: function() {
+			var gridElement = $('#grid'),
+		        printableContent = '',
+		        win = window.open('', '', 'width=900, height=700'),
+		        doc = win.document.open();
+		    var htmlStart =
+		            '<!DOCTYPE html>' +
+		            '<html>' +
+		            '<head>' +
+		            '<meta charset="utf-8" />' +
+		            '<title></title>' +
+		            '<link href="http://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />'+
+		            '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/bootstrap.css">' +
+		            '<link href="https://fonts.googleapis.com/css?family=Content:400,700" rel="stylesheet" type="text/css">' +
+		            '<link href="<?php echo base_url(); ?>assets/responsive.css" rel="stylesheet" >' +
+		            '<link href="https://fonts.googleapis.com/css?family=Moul" rel="stylesheet">' +
+		            '<style>' +
+		            '*{  } html { font: 11pt sans-serif; }' +
+		            '.k-grid { border-top-width: 0; }' +
+		            '.k-grid, .k-grid-content { height: auto !important; }' +
+		            '.k-grid-content { overflow: visible !important; }' +
+		            'div.k-grid table { table-layout: auto; width: 100% !important; }' +
+		            '.k-grid .k-grid-header th { border-top: 1px solid; }' +
+		            '.k-grid-toolbar, .k-grid-pager > .k-link { display: none; }' +
+		            '</style><style type="text/css" media="print"> @page { size: landscape; margin:0mm; } .saleSummaryCustomer .total-customer, .saleSummaryCustomer .total-sale { background-color: #DDEBF7!important; -webkit-print-color-adjust:exact; }.saleSummaryCustomer .table.table-borderless.table-condensed  tr th { background-color: #1E4E78!important;-webkit-print-color-adjust:exact;}.saleSummaryCustomer .table.table-borderless.table-condensed  tr th span{ color: #fff!important; }.saleSummaryCustomer .table.table-borderless.table-condensed tr:nth-child(2n+1) td {  background-color: #fff!important; -webkit-print-color-adjust:exact;} .saleSummaryCustomer .table.table-borderless.table-condensed tr td { background-color: #F2F2F2!important;-webkit-print-color-adjust:exact; } </style>' +
+		            '</head>' +
+		            '<body><div id="example" class="k-content saleSummaryCustomer" style="padding: 30px;">';
+		    var htmlEnd =
+		            '</div></body>' +
+		            '</html>';
+		    
+		    printableContent = $('#invFormContent').html();
+		    doc.write(htmlStart + printableContent + htmlEnd);
+		    doc.close();
+		    setTimeout(function(){
+		    	win.print();
+		    	win.close();
+		    },2000);
+		},
+		cancel				: function(e){
+			this.dataSource.cancelChanges();
+			window.history.back();
+		},
+	});
+	banhji.customerDepositReport = kendo.observable({
+		lang 					: langVM,
+		institute 				: banhji.institute,
+		dataSource 				: dataStore(apiUrl + "customers"),	
+		pageLoad 				: function(){
+		},
+		printGrid			: function() {
+			var gridElement = $('#grid'),
+		        printableContent = '',
+		        win = window.open('', '', 'width=900, height=700'),
+		        doc = win.document.open();
+		    var htmlStart =
+		            '<!DOCTYPE html>' +
+		            '<html>' +
+		            '<head>' +
+		            '<meta charset="utf-8" />' +
+		            '<title></title>' +
+		            '<link href="http://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />'+
+		            '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/bootstrap.css">' +
+		            '<link href="https://fonts.googleapis.com/css?family=Content:400,700" rel="stylesheet" type="text/css">' +
+		            '<link href="<?php echo base_url(); ?>assets/responsive.css" rel="stylesheet" >' +
+		            '<link href="https://fonts.googleapis.com/css?family=Moul" rel="stylesheet">' +
+		            '<style>' +
+		            '*{  } html { font: 11pt sans-serif; }' +
+		            '.k-grid { border-top-width: 0; }' +
+		            '.k-grid, .k-grid-content { height: auto !important; }' +
+		            '.k-grid-content { overflow: visible !important; }' +
+		            'div.k-grid table { table-layout: auto; width: 100% !important; }' +
+		            '.k-grid .k-grid-header th { border-top: 1px solid; }' +
+		            '.k-grid-toolbar, .k-grid-pager > .k-link { display: none; }' +
+		            '</style><style type="text/css" media="print"> @page { size: landscape; margin:0mm; } .saleSummaryCustomer .total-customer, .saleSummaryCustomer .total-sale { background-color: #DDEBF7!important; -webkit-print-color-adjust:exact; }.saleSummaryCustomer .table.table-borderless.table-condensed  tr th { background-color: #1E4E78!important;-webkit-print-color-adjust:exact;}.saleSummaryCustomer .table.table-borderless.table-condensed  tr th span{ color: #fff!important; }.saleSummaryCustomer .table.table-borderless.table-condensed tr:nth-child(2n+1) td {  background-color: #fff!important; -webkit-print-color-adjust:exact;} .saleSummaryCustomer .table.table-borderless.table-condensed tr td { background-color: #F2F2F2!important;-webkit-print-color-adjust:exact; } </style>' +
+		            '</head>' +
+		            '<body><div id="example" class="k-content saleSummaryCustomer" style="padding: 30px;">';
+		    var htmlEnd =
+		            '</div></body>' +
+		            '</html>';
+		    
+		    printableContent = $('#invFormContent').html();
+		    doc.write(htmlStart + printableContent + htmlEnd);
+		    doc.close();
+		    setTimeout(function(){
+		    	win.print();
+		    	win.close();
+		    },2000);
+		},
+		cancel				: function(e){
+			this.dataSource.cancelChanges();
+			window.history.back();
+		},
+	});
+	banhji.customerAgingDetail = kendo.observable({
+		lang 					: langVM,
+		institute 				: banhji.institute,
+		dataSource 				: dataStore(apiUrl + "customers"),	
+		pageLoad 				: function(){
+		},
+		printGrid			: function() {
+			var gridElement = $('#grid'),
+		        printableContent = '',
+		        win = window.open('', '', 'width=900, height=700'),
+		        doc = win.document.open();
+		    var htmlStart =
+		            '<!DOCTYPE html>' +
+		            '<html>' +
+		            '<head>' +
+		            '<meta charset="utf-8" />' +
+		            '<title></title>' +
+		            '<link href="http://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />'+
+		            '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/bootstrap.css">' +
+		            '<link href="https://fonts.googleapis.com/css?family=Content:400,700" rel="stylesheet" type="text/css">' +
+		            '<link href="<?php echo base_url(); ?>assets/responsive.css" rel="stylesheet" >' +
+		            '<link href="https://fonts.googleapis.com/css?family=Moul" rel="stylesheet">' +
+		            '<style>' +
+		            '*{  } html { font: 11pt sans-serif; }' +
+		            '.k-grid { border-top-width: 0; }' +
+		            '.k-grid, .k-grid-content { height: auto !important; }' +
+		            '.k-grid-content { overflow: visible !important; }' +
+		            'div.k-grid table { table-layout: auto; width: 100% !important; }' +
+		            '.k-grid .k-grid-header th { border-top: 1px solid; }' +
+		            '.k-grid-toolbar, .k-grid-pager > .k-link { display: none; }' +
+		            '</style><style type="text/css" media="print"> @page { size: landscape; margin:0mm; } .saleSummaryCustomer .total-customer, .saleSummaryCustomer .total-sale { background-color: #DDEBF7!important; -webkit-print-color-adjust:exact; }.saleSummaryCustomer .table.table-borderless.table-condensed  tr th { background-color: #1E4E78!important;-webkit-print-color-adjust:exact;}.saleSummaryCustomer .table.table-borderless.table-condensed  tr th span{ color: #fff!important; }.saleSummaryCustomer .table.table-borderless.table-condensed tr:nth-child(2n+1) td {  background-color: #fff!important; -webkit-print-color-adjust:exact;} .saleSummaryCustomer .table.table-borderless.table-condensed tr td { background-color: #F2F2F2!important;-webkit-print-color-adjust:exact; } </style>' +
+		            '</head>' +
+		            '<body><div id="example" class="k-content saleSummaryCustomer" style="padding: 30px;">';
+		    var htmlEnd =
+		            '</div></body>' +
+		            '</html>';
+		    
+		    printableContent = $('#invFormContent').html();
+		    doc.write(htmlStart + printableContent + htmlEnd);
+		    doc.close();
+		    setTimeout(function(){
+		    	win.print();
+		    	win.close();
+		    },2000);
+		},
+		cancel				: function(e){
+			this.dataSource.cancelChanges();
+			window.history.back();
+		},
+	});
+	banhji.cashReceiptSummary = kendo.observable({
+		lang 					: langVM,
+		institute 				: banhji.institute,
+		dataSource 				: dataStore(apiUrl + "customers"),	
+		pageLoad 				: function(){
+		},
+		printGrid			: function() {
+			var gridElement = $('#grid'),
+		        printableContent = '',
+		        win = window.open('', '', 'width=900, height=700'),
+		        doc = win.document.open();
+		    var htmlStart =
+		            '<!DOCTYPE html>' +
+		            '<html>' +
+		            '<head>' +
+		            '<meta charset="utf-8" />' +
+		            '<title></title>' +
+		            '<link href="http://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />'+
+		            '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/bootstrap.css">' +
+		            '<link href="https://fonts.googleapis.com/css?family=Content:400,700" rel="stylesheet" type="text/css">' +
+		            '<link href="<?php echo base_url(); ?>assets/responsive.css" rel="stylesheet" >' +
+		            '<link href="https://fonts.googleapis.com/css?family=Moul" rel="stylesheet">' +
+		            '<style>' +
+		            '*{  } html { font: 11pt sans-serif; }' +
+		            '.k-grid { border-top-width: 0; }' +
+		            '.k-grid, .k-grid-content { height: auto !important; }' +
+		            '.k-grid-content { overflow: visible !important; }' +
+		            'div.k-grid table { table-layout: auto; width: 100% !important; }' +
+		            '.k-grid .k-grid-header th { border-top: 1px solid; }' +
+		            '.k-grid-toolbar, .k-grid-pager > .k-link { display: none; }' +
+		            '</style><style type="text/css" media="print"> @page { size: landscape; margin:0mm; } .saleSummaryCustomer .total-customer, .saleSummaryCustomer .total-sale { background-color: #DDEBF7!important; -webkit-print-color-adjust:exact; }.saleSummaryCustomer .table.table-borderless.table-condensed  tr th { background-color: #1E4E78!important;-webkit-print-color-adjust:exact;}.saleSummaryCustomer .table.table-borderless.table-condensed  tr th span{ color: #fff!important; }.saleSummaryCustomer .table.table-borderless.table-condensed tr:nth-child(2n+1) td {  background-color: #fff!important; -webkit-print-color-adjust:exact;} .saleSummaryCustomer .table.table-borderless.table-condensed tr td { background-color: #F2F2F2!important;-webkit-print-color-adjust:exact; } </style>' +
+		            '</head>' +
+		            '<body><div id="example" class="k-content saleSummaryCustomer" style="padding: 30px;">';
+		    var htmlEnd =
+		            '</div></body>' +
+		            '</html>';
+		    
+		    printableContent = $('#invFormContent').html();
+		    doc.write(htmlStart + printableContent + htmlEnd);
+		    doc.close();
+		    setTimeout(function(){
+		    	win.print();
+		    	win.close();
+		    },2000);
+		},
+		cancel				: function(e){
+			this.dataSource.cancelChanges();
+			window.history.back();
+		},
+	});
+	banhji.cashReceiptSourceSummary = kendo.observable({
+		lang 					: langVM,
+		institute 				: banhji.institute,
+		dataSource 				: dataStore(apiUrl + "customers"),	
+		pageLoad 				: function(){
+		},
+		printGrid			: function() {
+			var gridElement = $('#grid'),
+		        printableContent = '',
+		        win = window.open('', '', 'width=900, height=700'),
+		        doc = win.document.open();
+		    var htmlStart =
+		            '<!DOCTYPE html>' +
+		            '<html>' +
+		            '<head>' +
+		            '<meta charset="utf-8" />' +
+		            '<title></title>' +
+		            '<link href="http://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />'+
+		            '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/bootstrap.css">' +
+		            '<link href="https://fonts.googleapis.com/css?family=Content:400,700" rel="stylesheet" type="text/css">' +
+		            '<link href="<?php echo base_url(); ?>assets/responsive.css" rel="stylesheet" >' +
+		            '<link href="https://fonts.googleapis.com/css?family=Moul" rel="stylesheet">' +
+		            '<style>' +
+		            '*{  } html { font: 11pt sans-serif; }' +
+		            '.k-grid { border-top-width: 0; }' +
+		            '.k-grid, .k-grid-content { height: auto !important; }' +
+		            '.k-grid-content { overflow: visible !important; }' +
+		            'div.k-grid table { table-layout: auto; width: 100% !important; }' +
+		            '.k-grid .k-grid-header th { border-top: 1px solid; }' +
+		            '.k-grid-toolbar, .k-grid-pager > .k-link { display: none; }' +
+		            '</style><style type="text/css" media="print"> @page { size: landscape; margin:0mm; } .saleSummaryCustomer .total-customer, .saleSummaryCustomer .total-sale { background-color: #DDEBF7!important; -webkit-print-color-adjust:exact; }.saleSummaryCustomer .table.table-borderless.table-condensed  tr th { background-color: #1E4E78!important;-webkit-print-color-adjust:exact;}.saleSummaryCustomer .table.table-borderless.table-condensed  tr th span{ color: #fff!important; }.saleSummaryCustomer .table.table-borderless.table-condensed tr:nth-child(2n+1) td {  background-color: #fff!important; -webkit-print-color-adjust:exact;} .saleSummaryCustomer .table.table-borderless.table-condensed tr td { background-color: #F2F2F2!important;-webkit-print-color-adjust:exact; } </style>' +
+		            '</head>' +
+		            '<body><div id="example" class="k-content saleSummaryCustomer" style="padding: 30px;">';
+		    var htmlEnd =
+		            '</div></body>' +
+		            '</html>';
+		    
+		    printableContent = $('#invFormContent').html();
+		    doc.write(htmlStart + printableContent + htmlEnd);
+		    doc.close();
+		    setTimeout(function(){
+		    	win.print();
+		    	win.close();
+		    },2000);
+		},
+		cancel				: function(e){
+			this.dataSource.cancelChanges();
+			window.history.back();
+		},
+	});
+	banhji.cashReceiptDetail = kendo.observable({
+		lang 					: langVM,
+		institute 				: banhji.institute,
+		dataSource 				: dataStore(apiUrl + "customers"),	
+		pageLoad 				: function(){
+		},
+		printGrid			: function() {
+			var gridElement = $('#grid'),
+		        printableContent = '',
+		        win = window.open('', '', 'width=900, height=700'),
+		        doc = win.document.open();
+		    var htmlStart =
+		            '<!DOCTYPE html>' +
+		            '<html>' +
+		            '<head>' +
+		            '<meta charset="utf-8" />' +
+		            '<title></title>' +
+		            '<link href="http://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />'+
+		            '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/bootstrap.css">' +
+		            '<link href="https://fonts.googleapis.com/css?family=Content:400,700" rel="stylesheet" type="text/css">' +
+		            '<link href="<?php echo base_url(); ?>assets/responsive.css" rel="stylesheet" >' +
+		            '<link href="https://fonts.googleapis.com/css?family=Moul" rel="stylesheet">' +
+		            '<style>' +
+		            '*{  } html { font: 11pt sans-serif; }' +
+		            '.k-grid { border-top-width: 0; }' +
+		            '.k-grid, .k-grid-content { height: auto !important; }' +
+		            '.k-grid-content { overflow: visible !important; }' +
+		            'div.k-grid table { table-layout: auto; width: 100% !important; }' +
+		            '.k-grid .k-grid-header th { border-top: 1px solid; }' +
+		            '.k-grid-toolbar, .k-grid-pager > .k-link { display: none; }' +
+		            '</style><style type="text/css" media="print"> @page { size: landscape; margin:0mm; } .saleSummaryCustomer .total-customer, .saleSummaryCustomer .total-sale { background-color: #DDEBF7!important; -webkit-print-color-adjust:exact; }.saleSummaryCustomer .table.table-borderless.table-condensed  tr th { background-color: #1E4E78!important;-webkit-print-color-adjust:exact;}.saleSummaryCustomer .table.table-borderless.table-condensed  tr th span{ color: #fff!important; }.saleSummaryCustomer .table.table-borderless.table-condensed tr:nth-child(2n+1) td {  background-color: #fff!important; -webkit-print-color-adjust:exact;} .saleSummaryCustomer .table.table-borderless.table-condensed tr td { background-color: #F2F2F2!important;-webkit-print-color-adjust:exact; } </style>' +
+		            '</head>' +
+		            '<body><div id="example" class="k-content saleSummaryCustomer" style="padding: 30px;">';
+		    var htmlEnd =
+		            '</div></body>' +
+		            '</html>';
+		    
+		    printableContent = $('#invFormContent').html();
+		    doc.write(htmlStart + printableContent + htmlEnd);
+		    doc.close();
+		    setTimeout(function(){
+		    	win.print();
+		    	win.close();
+		    },2000);
+		},
+		cancel				: function(e){
+			this.dataSource.cancelChanges();
+			window.history.back();
+		},
+	});
+	banhji.cashReceiptSourceDetail = kendo.observable({
+		lang 					: langVM,
+		institute 				: banhji.institute,
+		dataSource 				: dataStore(apiUrl + "customers"),	
+		pageLoad 				: function(){
+		},
+		printGrid			: function() {
+			var gridElement = $('#grid'),
+		        printableContent = '',
+		        win = window.open('', '', 'width=900, height=700'),
+		        doc = win.document.open();
+		    var htmlStart =
+		            '<!DOCTYPE html>' +
+		            '<html>' +
+		            '<head>' +
+		            '<meta charset="utf-8" />' +
+		            '<title></title>' +
+		            '<link href="http://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />'+
+		            '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/bootstrap.css">' +
+		            '<link href="https://fonts.googleapis.com/css?family=Content:400,700" rel="stylesheet" type="text/css">' +
+		            '<link href="<?php echo base_url(); ?>assets/responsive.css" rel="stylesheet" >' +
+		            '<link href="https://fonts.googleapis.com/css?family=Moul" rel="stylesheet">' +
+		            '<style>' +
+		            '*{  } html { font: 11pt sans-serif; }' +
+		            '.k-grid { border-top-width: 0; }' +
+		            '.k-grid, .k-grid-content { height: auto !important; }' +
+		            '.k-grid-content { overflow: visible !important; }' +
+		            'div.k-grid table { table-layout: auto; width: 100% !important; }' +
+		            '.k-grid .k-grid-header th { border-top: 1px solid; }' +
+		            '.k-grid-toolbar, .k-grid-pager > .k-link { display: none; }' +
+		            '</style><style type="text/css" media="print"> @page { size: landscape; margin:0mm; } .saleSummaryCustomer .total-customer, .saleSummaryCustomer .total-sale { background-color: #DDEBF7!important; -webkit-print-color-adjust:exact; }.saleSummaryCustomer .table.table-borderless.table-condensed  tr th { background-color: #1E4E78!important;-webkit-print-color-adjust:exact;}.saleSummaryCustomer .table.table-borderless.table-condensed  tr th span{ color: #fff!important; }.saleSummaryCustomer .table.table-borderless.table-condensed tr:nth-child(2n+1) td {  background-color: #fff!important; -webkit-print-color-adjust:exact;} .saleSummaryCustomer .table.table-borderless.table-condensed tr td { background-color: #F2F2F2!important;-webkit-print-color-adjust:exact; } </style>' +
+		            '</head>' +
+		            '<body><div id="example" class="k-content saleSummaryCustomer" style="padding: 30px;">';
+		    var htmlEnd =
+		            '</div></body>' +
+		            '</html>';
+		    
+		    printableContent = $('#invFormContent').html();
+		    doc.write(htmlStart + printableContent + htmlEnd);
+		    doc.close();
+		    setTimeout(function(){
+		    	win.print();
+		    	win.close();
+		    },2000);
+		},
+		cancel				: function(e){
+			this.dataSource.cancelChanges();
+			window.history.back();
+		},
+	});
 	/* views and layout */
 	banhji.view = {
 		layout 		: new kendo.Layout('#layout', {model: banhji.Layout}),
@@ -13727,6 +14959,22 @@
 		customer: new kendo.Layout("#customer", {model: banhji.customer}),	
 		//Report
 		customerList : new kendo.Layout("#customerList", {model: banhji.customerList}),
+		customerNoConnection : new kendo.Layout("#customerNoConnection", {model: banhji.customerNoConnection}),
+		disconnectList : new kendo.Layout("#disconnectList", {model: banhji.disconnectList}),
+		newCustomerList : new kendo.Layout("#newCustomerList", {model: banhji.newCustomerList}),
+		miniUsageList : new kendo.Layout("#miniUsageList", {model: banhji.miniUsageList}),
+		saleSummary : new kendo.Layout("#saleSummary", {model: banhji.saleSummary}),
+		connectServiceRevenue : new kendo.Layout("#connectServiceRevenue", {model: banhji.connectServiceRevenue}),
+		saleDetail : new kendo.Layout("#saleDetail", {model: banhji.saleDetail}),
+		otherRevenues : new kendo.Layout("#otherRevenues", {model: banhji.otherRevenues}),
+		accountReceivableList : new kendo.Layout("#accountReceivableList", {model: banhji.accountReceivableList}),
+		customerAgingSumList : new kendo.Layout("#customerAgingSumList", {model: banhji.customerAgingSumList}),
+		customerDepositReport : new kendo.Layout("#customerDepositReport", {model: banhji.customerDepositReport}),
+		customerAgingDetail : new kendo.Layout("#customerAgingDetail", {model: banhji.customerAgingDetail}),
+		cashReceiptSummary : new kendo.Layout("#cashReceiptSummary", {model: banhji.cashReceiptSummary}),
+		cashReceiptSourceSummary : new kendo.Layout("#cashReceiptSourceSummary", {model: banhji.cashReceiptSourceSummary}),
+		cashReceiptDetail : new kendo.Layout("#cashReceiptDetail", {model: banhji.cashReceiptDetail}),
+		cashReceiptSourceDetail : new kendo.Layout("#cashReceiptSourceDetail", {model: banhji.cashReceiptSourceDetail}),
 	};
 	/* views and layout */
 	banhji.router = new kendo.Router({
@@ -13816,95 +15064,70 @@
 			vm.pageLoad();			
 		}
 	});	
-
 	/*************************
 	*   Water Section   *
 	**************************/
-	banhji.router.route("/center(/:id)", function(id){		
+	banhji.router.route("/center(/:id)", function(id){
 		banhji.view.layout.showIn("#content", banhji.view.waterCenter);
 		banhji.view.layout.showIn('#menu', banhji.view.menu);
 		banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
-		
 		var vm = banhji.waterCenter;
-
 		banhji.userManagement.addMultiTask("Water Center","water_center",null);
-
 		if(banhji.pageLoaded["water_center"]==undefined){
 			banhji.pageLoaded["water_center"] = true;
 		}
-
 		vm.pageLoad(id);
 	});
-	banhji.router.route("/activate_user/:id", function(id){		
+	banhji.router.route("/activate_user/:id", function(id){
 		banhji.view.layout.showIn("#content", banhji.view.waterActivateUser);
 		banhji.view.layout.showIn('#menu', banhji.view.menu);
 		banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
-		
 		var vm = banhji.waterActivateUser;
-
 		banhji.userManagement.addMultiTask("Activate User","activate_user",null);
-
 		if(banhji.pageLoaded["activate_user"]==undefined){
 			banhji.pageLoaded["activate_user"] = true;
 		}
-
 		vm.pageLoad(id);
 	});
-	banhji.router.route("/meter(/:id)", function(id){		
+	banhji.router.route("/meter(/:id)", function(id){
 		banhji.view.layout.showIn("#content", banhji.view.meter);
 		banhji.view.layout.showIn('#menu', banhji.view.menu);
 		banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
-		
 		var vm = banhji.meter;
-
 		banhji.userManagement.addMultiTask("Add Meter","meter",null);
-
 		if(banhji.pageLoaded["meter"]==undefined){
 			banhji.pageLoaded["meter"] = true;
 		}
-
 		vm.pageLoad(id);
 	});
-	banhji.router.route("/activate_meter/:id", function(id){		
+	banhji.router.route("/activate_meter/:id", function(id){
 		banhji.view.layout.showIn("#content", banhji.view.ActivateMeter);
 		banhji.view.layout.showIn('#menu', banhji.view.menu);
 		banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
-		
 		var vm = banhji.ActivateMeter;
-
 		banhji.userManagement.addMultiTask("Activate Meter","activate_meter",null);
-
 		if(banhji.pageLoaded["activate_meter"]==undefined){
 			banhji.pageLoaded["activate_meter"] = true;
 		}
-
 		vm.pageLoad(id);
 	});
-
-	banhji.router.route("/plan(/:id)", function(id){		
+	banhji.router.route("/plan(/:id)", function(id){
 		banhji.view.layout.showIn("#content", banhji.view.plan);
 		banhji.view.layout.showIn('#menu', banhji.view.menu);
 		banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
-		
 		var vm = banhji.plan;
-
 		banhji.userManagement.addMultiTask("Add Plan","plan",null);
-
 		if(banhji.pageLoaded["plan"]==undefined){
 			banhji.pageLoaded["plan"] = true;
 		}
 		console.log("plan");
 		vm.pageLoad(id);
 	});
-	banhji.router.route("/add_license(/:id)", function(id){		
-		
+	banhji.router.route("/add_license(/:id)", function(id){
 		banhji.view.layout.showIn('#menu', banhji.view.menu);
 		banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
 		banhji.view.layout.showIn("#content", banhji.view.addLicense);
-		
-
 		banhji.userManagement.addMultiTask("Add Licence","Licence",null);
-
 		if(banhji.pageLoaded["add_license"]==undefined){
 			banhji.pageLoaded["add_license"] = true;
 		}
@@ -13912,81 +15135,61 @@
 		var vm = banhji.addLicense;
 		vm.pageLoad(id);
 	});
-	banhji.router.route("/reading", function(){		
+	banhji.router.route("/reading", function(){
 		banhji.view.layout.showIn("#content", banhji.view.reading);
 		banhji.view.layout.showIn('#menu', banhji.view.menu);
 		banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
-		
 		var vm = banhji.reading;
-
 		banhji.userManagement.addMultiTask("Reading","reading",null);
-
 		if(banhji.pageLoaded["reading"]==undefined){
 			banhji.pageLoaded["reading"] = true;
 		}
-
 		vm.pageLoad();
 	});
-	banhji.router.route("/edit_reading", function(){		
+	banhji.router.route("/edit_reading", function(){
 		banhji.view.layout.showIn("#content", banhji.view.EditReading);
 		banhji.view.layout.showIn('#menu', banhji.view.menu);
-		banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
-		
+		banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);	
 		var vm = banhji.EditReading;
-
 		banhji.userManagement.addMultiTask("Edit Reading","Edit Reading",null);
-
 		if(banhji.pageLoaded["edit_reading"]==undefined){
 			banhji.pageLoaded["edit_reading"] = true;
 		}
-
 		vm.pageLoad();
 	});
-
-	banhji.router.route("/import", function(){		
+	banhji.router.route("/import", function(){
 		banhji.view.layout.showIn("#content", banhji.view.waterImport);
 		banhji.view.layout.showIn('#menu', banhji.view.menu);
 		banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
-		
 		var vm = banhji.waterImport;
-
 		banhji.userManagement.addMultiTask("Import","import",null);
-
 		if(banhji.pageLoaded["import"]==undefined){
 			banhji.pageLoaded["import"] = true;
 		}
-
 		vm.pageLoad();
 	});
-
-	banhji.router.route("/run_bill", function(){		
+	banhji.router.route("/run_bill", function(){
 		banhji.view.layout.showIn("#content", banhji.view.runBill);
 		banhji.view.layout.showIn('#menu', banhji.view.menu);
 		banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
 		
 		var vm = banhji.runBill;
-
 		banhji.userManagement.addMultiTask("Run Bill","run_bill",null);
-
 		if(banhji.pageLoaded["run_bill"]==undefined){
 			banhji.pageLoaded["run_bill"] = true;
 		}
-
 		vm.pageLoad();
 	});
-	banhji.router.route("/print_bill", function(){		
+	banhji.router.route("/print_bill", function(){
 		banhji.view.layout.showIn("#content", banhji.view.printBill);
 		banhji.view.layout.showIn('#menu', banhji.view.menu);
 		banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
 		
 		var vm = banhji.printBill;
-
 		banhji.userManagement.addMultiTask("Print Bill","print_bill",null);
-
 		if(banhji.pageLoaded["print_bill"]==undefined){
 			banhji.pageLoaded["print_bill"] = true;
 		}
-
 		vm.pageLoad();
 	});
 	banhji.router.route("/invoice_print(/:id)", function(id){
@@ -14026,53 +15229,40 @@
 			vm.pageLoad(id);
 		}							
 	});
-
-	banhji.router.route("/receipt", function(){		
+	banhji.router.route("/receipt", function(){
 		banhji.view.layout.showIn("#content", banhji.view.Receipt);
 		banhji.view.layout.showIn('#menu', banhji.view.menu);
 		banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
 		
 		var vm = banhji.Receipt;
-
 		banhji.userManagement.addMultiTask("Receipt","receipt",null);
-
 		if(banhji.pageLoaded["receipt"]==undefined){
 			banhji.pageLoaded["receipt"] = true;
 		}
-
 		vm.pageLoad();
 	});
-	banhji.router.route("/reconcile", function(){		
+	banhji.router.route("/reconcile", function(){
 		banhji.view.layout.showIn("#content", banhji.view.Reconcile);
 		banhji.view.layout.showIn('#menu', banhji.view.menu);
 		banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
-		
 		var vm = banhji.Reconcile;
-
 		banhji.userManagement.addMultiTask("Reconcile","reconcile",null);
-
 		if(banhji.pageLoaded["reconcile"]==undefined){
 			banhji.pageLoaded["reconcile"] = true;
 		}
-
 		vm.pageLoad();
 	});
-	banhji.router.route("/reports", function(){		
+	banhji.router.route("/reports", function(){
 		banhji.view.layout.showIn("#content", banhji.view.Reports);
 		banhji.view.layout.showIn('#menu', banhji.view.menu);
 		banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
-		
 		var vm = banhji.Reports;
-
 		banhji.userManagement.addMultiTask("Reports","reports",null);
-
 		if(banhji.pageLoaded["reports"]==undefined){
 			banhji.pageLoaded["reports"] = true;
 		}
-
 		vm.pageLoad();
 	});
-
 	banhji.router.route("/customer_deposit(/:id)(/:is_recurring)", function(id,is_recurring){
 		// banhji.accessMod.query({
 		// 	filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
@@ -14215,7 +15405,6 @@
 			vm.pageLoad(id);
 		};
 	});
-
 	banhji.router.route("/add_accountingprefix(/:id)", function(id){
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
@@ -14282,7 +15471,265 @@
 			vm.pageLoad();
 		}
 	});
+	banhji.router.route("/customer_no_connection", function(){
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{
+			banhji.view.layout.showIn("#content", banhji.view.customerNoConnection);
+			banhji.view.layout.showIn('#menu', banhji.view.menu);
+			banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
 
+			var vm = banhji.customerNoConnection;
+			banhji.userManagement.addMultiTask("Customer No Connection","customer_no_connection",null);
+			if(banhji.pageLoaded["customer_no_connection"]==undefined){
+				banhji.pageLoaded["customer_no_connection"] = true;
+				
+			}
+			vm.pageLoad();
+		}
+	});
+	banhji.router.route("/disconnect_list", function(){
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{
+			banhji.view.layout.showIn("#content", banhji.view.disconnectList);
+			banhji.view.layout.showIn('#menu', banhji.view.menu);
+			banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
+
+			var vm = banhji.disconnectList;
+			banhji.userManagement.addMultiTask("Disconnect List","disconnect_list",null);
+			if(banhji.pageLoaded["disconnect_list"]==undefined){
+				banhji.pageLoaded["disconnect_list"] = true;
+				
+			}
+			vm.pageLoad();
+		}
+	});
+	banhji.router.route("/new_customer_list", function(){
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{
+			banhji.view.layout.showIn("#content", banhji.view.newCustomerList);
+			banhji.view.layout.showIn('#menu', banhji.view.menu);
+			banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
+
+			var vm = banhji.newCustomerList;
+			banhji.userManagement.addMultiTask("New Customer List","new_customer_list",null);
+			if(banhji.pageLoaded["new_customer_list"]==undefined){
+				banhji.pageLoaded["new_customer_list"] = true;
+			}
+			vm.pageLoad();
+		}
+	});
+	banhji.router.route("/mini_usage_list", function(){
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{
+			banhji.view.layout.showIn("#content", banhji.view.miniUsageList);
+			banhji.view.layout.showIn('#menu', banhji.view.menu);
+			banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
+
+			var vm = banhji.miniUsageList;
+			banhji.userManagement.addMultiTask("Minimum Water Usage List","mini_usage_list",null);
+			if(banhji.pageLoaded["mini_usage_list"]==undefined){
+				banhji.pageLoaded["mini_usage_list"] = true;
+			}
+			vm.pageLoad();
+		}
+	});
+	banhji.router.route("/sale_summary", function(){
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{
+			banhji.view.layout.showIn("#content", banhji.view.saleSummary);
+			banhji.view.layout.showIn('#menu', banhji.view.menu);
+			banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
+
+			var vm = banhji.saleSummary;
+			banhji.userManagement.addMultiTask("Sale Summary","sale_summary",null);
+			if(banhji.pageLoaded["sale_summary"]==undefined){
+				banhji.pageLoaded["sale_summary"] = true;
+			}
+			vm.pageLoad();
+		}
+	});
+	banhji.router.route("/connect_service_revenue", function(){
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{
+			banhji.view.layout.showIn("#content", banhji.view.connectServiceRevenue);
+			banhji.view.layout.showIn('#menu', banhji.view.menu);
+			banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
+
+			var vm = banhji.connectServiceRevenue;
+			banhji.userManagement.addMultiTask("Connect Service Revenue","connect_service_revenue",null);
+			if(banhji.pageLoaded["connect_service_revenue"]==undefined){
+				banhji.pageLoaded["connect_service_revenue"] = true;
+			}
+			vm.pageLoad();
+		}
+	});
+	banhji.router.route("/sale_detail", function(){
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{
+			banhji.view.layout.showIn("#content", banhji.view.saleDetail);
+			banhji.view.layout.showIn('#menu', banhji.view.menu);
+			banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
+
+			var vm = banhji.saleDetail;
+			banhji.userManagement.addMultiTask("Sale Detail","sale_detail",null);
+			if(banhji.pageLoaded["sale_detail"]==undefined){
+				banhji.pageLoaded["sale_detail"] = true;
+			}
+			vm.pageLoad();
+		}
+	});
+	banhji.router.route("/other_revenues", function(){
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{
+			banhji.view.layout.showIn("#content", banhji.view.otherRevenues);
+			banhji.view.layout.showIn('#menu', banhji.view.menu);
+			banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
+
+			var vm = banhji.otherRevenues;
+			banhji.userManagement.addMultiTask("Other Revenues","other_revenues",null);
+			if(banhji.pageLoaded["other_revenues"]==undefined){
+				banhji.pageLoaded["other_revenues"] = true;
+			}
+			vm.pageLoad();
+		}
+	});
+	banhji.router.route("/account_receivable_list", function(){
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{
+			banhji.view.layout.showIn("#content", banhji.view.accountReceivableList);
+			banhji.view.layout.showIn('#menu', banhji.view.menu);
+			banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
+
+			var vm = banhji.accountReceivableList;
+			banhji.userManagement.addMultiTask("Other Revenues","account_receivable_list",null);
+			if(banhji.pageLoaded["account_receivable_list"]==undefined){
+				banhji.pageLoaded["account_receivable_list"] = true;
+			}
+			vm.pageLoad();
+		}
+	});
+	banhji.router.route("/customer_aging_sum_list", function(){
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{
+			banhji.view.layout.showIn("#content", banhji.view.customerAgingSumList);
+			banhji.view.layout.showIn('#menu', banhji.view.menu);
+			banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
+
+			var vm = banhji.customerAgingSumList;
+			banhji.userManagement.addMultiTask("Customer Aging Sum List","customer_aging_sum_list",null);
+			if(banhji.pageLoaded["customer_aging_sum_list"]==undefined){
+				banhji.pageLoaded["customer_aging_sum_list"] = true;
+			}
+			vm.pageLoad();
+		}
+	});
+	banhji.router.route("/customer_deposit_report", function(){
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{
+			banhji.view.layout.showIn("#content", banhji.view.customerDepositReport);
+			banhji.view.layout.showIn('#menu', banhji.view.menu);
+			banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
+
+			var vm = banhji.customerDepositReport;
+			banhji.userManagement.addMultiTask("Customer Deposit Report","customer_deposit_report",null);
+			if(banhji.pageLoaded["customer_deposit_report"]==undefined){
+				banhji.pageLoaded["customer_deposit_report"] = true;
+			}
+			vm.pageLoad();
+		}
+	});
+	banhji.router.route("/customer_aging_detail", function(){
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{
+			banhji.view.layout.showIn("#content", banhji.view.customerAgingDetail);
+			banhji.view.layout.showIn('#menu', banhji.view.menu);
+			banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
+
+			var vm = banhji.customerAgingDetail;
+			banhji.userManagement.addMultiTask("Customer Aging Detail","customer_aging_detail",null);
+			if(banhji.pageLoaded["customer_aging_detail"]==undefined){
+				banhji.pageLoaded["customer_aging_detail"] = true;
+			}
+			vm.pageLoad();
+		}
+	});
+	banhji.router.route("/cash_receipt_summary", function(){
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{
+			banhji.view.layout.showIn("#content", banhji.view.cashReceiptSummary);
+			banhji.view.layout.showIn('#menu', banhji.view.menu);
+			banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
+
+			var vm = banhji.cashReceiptSummary;
+			banhji.userManagement.addMultiTask("Cash Receipt Summary","cash_receipt_summary",null);
+			if(banhji.pageLoaded["cash_receipt_summary"]==undefined){
+				banhji.pageLoaded["cash_receipt_summary"] = true;
+			}
+			vm.pageLoad();
+		}
+	});
+	banhji.router.route("/cash_receipt_source_summary", function(){
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{
+			banhji.view.layout.showIn("#content", banhji.view.cashReceiptSourceSummary);
+			banhji.view.layout.showIn('#menu', banhji.view.menu);
+			banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
+
+			var vm = banhji.cashReceiptSourceSummary;
+			banhji.userManagement.addMultiTask("Cash Receipt Source Summary","cash_receipt_source_summary",null);
+			if(banhji.pageLoaded["cash_receipt_source_summary"]==undefined){
+				banhji.pageLoaded["cash_receipt_source_summary"] = true;
+			}
+			vm.pageLoad();
+		}
+	});
+	banhji.router.route("/cash_receipt_detail", function(){
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{
+			banhji.view.layout.showIn("#content", banhji.view.cashReceiptDetail);
+			banhji.view.layout.showIn('#menu', banhji.view.menu);
+			banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
+
+			var vm = banhji.cashReceiptDetail;
+			banhji.userManagement.addMultiTask("Cash Receipt Detail","cash_receipt_detail",null);
+			if(banhji.pageLoaded["cash_receipt_detail"]==undefined){
+				banhji.pageLoaded["cash_receipt_detail"] = true;
+			}
+			vm.pageLoad();
+		}
+	});
+	banhji.router.route("/cash_receipt_source_detail", function(){
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{
+			banhji.view.layout.showIn("#content", banhji.view.cashReceiptSourceDetail);
+			banhji.view.layout.showIn('#menu', banhji.view.menu);
+			banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
+
+			var vm = banhji.cashReceiptSourceDetail;
+			banhji.userManagement.addMultiTask("Cash Receipt Source Detail","cash_receipt_source_detail",null);
+			if(banhji.pageLoaded["cash_receipt_source_detail"]==undefined){
+				banhji.pageLoaded["cash_receipt_source_detail"] = true;
+			}
+			vm.pageLoad();
+		}
+	});
+	
 	$(function() {	
 		banhji.router.start();
 		banhji.source.loadData();
@@ -14307,6 +15754,5 @@
 			loadStyle(Href1);
 			loadStyle(Href2);
 		}
-		
 	});
 </script>

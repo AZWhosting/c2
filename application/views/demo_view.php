@@ -11501,24 +11501,23 @@
 		<td>
 			<input id="ddlAccount" name="ddlAccount-#:uid#" 
 					data-role="dropdownlist"
-					data-auto-bind="false"														
-      				data-value-primitive="true"
-      				data-header-template="account-header-tmpl"
+					data-header-template="account-header-tmpl"
       				data-template="account-list-tmpl"
+					data-value-primitive="true"
 					data-text-field="name" 
       				data-value-field="id"						              				 
       				data-bind="value: account_id,
-      							source: accountList"
+      							source: additionalCostAccountDS"
       				data-option-label="Select Account..."
       				required data-required-msg="required" 
       				style="width: 100%" />
 		</td>
 		<td>
 			<input id="ddlVendor" name="ddlVendor-#:uid#"
-					data-role="combobox"                 
+				   data-role="combobox"
+				   data-header-template="vendor-header-tmpl"
+                   data-template="contact-list-tmpl"                 
                    data-value-primitive="true"
-                   data-header-template="vendor-header-tmpl"
-                   data-template="contact-list-tmpl"
                    data-filter="like"
                    data-min-length="3"
                    data-text-field="name"
@@ -40721,6 +40720,42 @@
 		});
 		return o;
 	};
+	var dsRead = function(url) {
+		var o = new kendo.data.DataSource({
+			transport: {
+				read 	: {
+					url: url,
+					type: "GET",
+					headers: banhji.header,
+					dataType: 'json'
+				},
+				parameterMap: function(options, operation) {
+					if(operation === 'read') {
+						return {
+							page: options.page,
+							limit: options.pageSize,
+							filter: options.filter,
+							sort: options.sort
+						};
+					} else {
+						return {models: kendo.stringify(options.models)};
+					}
+				}
+			},
+			schema 	: {
+				model: {
+					id: 'id'
+				},
+				data: 'results',
+				total: 'count'
+			},
+			batch: true,
+			serverFiltering: true,
+			serverSorting: true,
+			serverPaging: true
+		});
+		return o;
+	};
 	banhji.userManagement = kendo.observable({
 		lang : langVM,
 		multiTaskList 		: [],
@@ -42993,44 +43028,6 @@
 			pageSize: 100
 		}),
 		//Accounting
-		accountDS					: dataStore(apiUrl + "accounts"),
-		subAccountDS				: new kendo.data.DataSource({
-			transport: {
-				read 	: {
-					url: apiUrl + "accounts",
-					type: "GET",
-					headers: banhji.header,
-					dataType: 'json'
-				},				
-				parameterMap: function(options, operation) {
-					if(operation === 'read') {
-						return {
-							page: options.page,
-							limit: options.pageSize,	
-							filter: options.filter,
-							sort: options.sort
-						};
-					} else {
-						return {models: kendo.stringify(options.models)};
-					}
-				}
-			},			
-			schema 	: {
-				model: {
-					id: 'id'
-				},				
-				data: 'results',
-				total: 'count'
-			},
-			filter:{ field: "sub_of_id", value:0 },
-			sort:{ field:"number", dir:"asc" },
-			batch: true,			
-			serverFiltering: true,
-			serverSorting: true,
-			serverPaging: true,
-			page:1,
-			pageSize: 100
-		}),
 		accountTypeDS				: new kendo.data.DataSource({
 			transport: {
 				read 	: {
@@ -43039,24 +43036,6 @@
 					headers: banhji.header,
 					dataType: 'json'
 				},
-				create 	: {
-					url: apiUrl + "accounts/type",
-					type: "POST",
-					headers: banhji.header,
-					dataType: 'json'
-				},
-				update 	: {
-					url: apiUrl + "accounts/type",
-					type: "PUT",
-					headers: banhji.header,
-					dataType: 'json'
-				},
-				destroy 	: {
-					url: apiUrl + "accounts/type",
-					type: "DELETE",
-					headers: banhji.header,
-					dataType: 'json'
-				},				
 				parameterMap: function(options, operation) {
 					if(operation === 'read') {
 						return {
@@ -43077,889 +43056,8 @@
 				data: 'results',
 				total: 'count'
 			},
-			filter:{ field:"number <>", value:"" },			
+			filter:{ field:"id >", value:9 },			
 			batch: true,			
-			serverFiltering: true,
-			serverSorting: true,
-			serverPaging: true,
-			page:1,
-			pageSize: 100
-		}),
-		cashAccountDS				: new kendo.data.DataSource({
-			transport: {
-				read 	: {
-					url: apiUrl + "accounts",
-					type: "GET",
-					headers: banhji.header,
-					dataType: 'json'
-				},				
-				parameterMap: function(options, operation) {
-					if(operation === 'read') {
-						return {
-							page: options.page,
-							limit: options.pageSize,
-							filter: options.filter,
-							sort: options.sort
-						};
-					} else {
-						return {models: kendo.stringify(options.models)};
-					}
-				}
-			},
-			schema 	: {
-				model: {
-					id: 'id'
-				},
-				data: 'results',
-				total: 'count'
-			},
-			filter: [
-				{ field:"account_type_id", value: 10 },
-				{ field:"status", value: 1 }
-			],
-			sort: { field:"number", dir:"asc" },
-			batch: true,
-			serverFiltering: true,
-			serverSorting: true,
-			serverPaging: true,
-			page:1,
-			pageSize: 100
-		}),
-		expenseCashAccountDS		: new kendo.data.DataSource({
-			transport: {
-				read 	: {
-					url: apiUrl + "accounts",
-					type: "GET",
-					headers: banhji.header,
-					dataType: 'json'
-				},				
-				parameterMap: function(options, operation) {
-					if(operation === 'read') {
-						return {
-							page: options.page,
-							limit: options.pageSize,
-							filter: options.filter,
-							sort: options.sort
-						};
-					} else {
-						return {models: kendo.stringify(options.models)};
-					}
-				}
-			},
-			schema 	: {
-				model: {
-					id: 'id'
-				},
-				data: 'results',
-				total: 'count'
-			},
-			filter: [
-				{ field:"account_type_id", operator:"where_in", value: [10,36,37,38,40,41,42,43] },
-				{ field:"status", value: 1 }
-			],
-			sort: { field:"number", dir:"asc" },
-			batch: true,
-			serverFiltering: true,
-			serverSorting: true,
-			serverPaging: true,
-			page:1,
-			pageSize: 100
-		}),
-		advAccountDS				: new kendo.data.DataSource({
-			transport: {
-				read 	: {
-					url: apiUrl + "accounts",
-					type: "GET",
-					headers: banhji.header,
-					dataType: 'json'
-				},				
-				parameterMap: function(options, operation) {
-					if(operation === 'read') {
-						return {
-							page: options.page,
-							limit: options.pageSize,
-							filter: options.filter,
-							sort: options.sort
-						};
-					} else {
-						return {models: kendo.stringify(options.models)};
-					}
-				}
-			},
-			schema 	: {
-				model: {
-					id: 'id'
-				},
-				data: 'results',
-				total: 'count'
-			},
-			filter: [
-				{ field:"account_type_id", value: 11 },
-				{ field:"status", value: 1 }
-			],
-			sort: { field:"number", dir:"asc" },
-			batch: true,
-			serverFiltering: true,
-			serverSorting: true,
-			serverPaging: true,
-			page:1,
-			pageSize: 100
-		}),
-		//Item Income / Item Revenue / Customer Revenue / Service Revenue Account
-		incomeAccountDS				: new kendo.data.DataSource({
-			transport: {
-				read 	: {
-					url: apiUrl + "accounts",
-					type: "GET",
-					headers: banhji.header,
-					dataType: 'json'
-				},				
-				parameterMap: function(options, operation) {
-					if(operation === 'read') {
-						return {
-							page: options.page,
-							limit: options.pageSize,
-							filter: options.filter,
-							sort: options.sort
-						};
-					} else {
-						return {models: kendo.stringify(options.models)};
-					}
-				}
-			},
-			schema 	: {
-				model: {
-					id: 'id'
-				},
-				data: 'results',
-				total: 'count'
-			},
-			filter: [
-					{ field:"account_type_id", operator:"where_in", value: [35,39] },
-					{ field:"status", value: 1 }
-			],
-			sort: { field:"number", dir:"asc" },
-			batch: true,
-			serverFiltering: true,
-			serverSorting: true,
-			serverPaging: true,
-			page:1,
-			pageSize: 100
-		}),
-		adjustmentAccountDS			: new kendo.data.DataSource({
-			transport: {
-				read 	: {
-					url: apiUrl + "accounts",
-					type: "GET",
-					headers: banhji.header,
-					dataType: 'json'
-				},				
-				parameterMap: function(options, operation) {
-					if(operation === 'read') {
-						return {
-							page: options.page,
-							limit: options.pageSize,
-							filter: options.filter,
-							sort: options.sort
-						};
-					} else {
-						return {models: kendo.stringify(options.models)};
-					}
-				}
-			},
-			schema 	: {
-				model: {
-					id: 'id'
-				},
-				data: 'results',
-				total: 'count'
-			},
-			filter: [
-				{ field:"id", value: 75 }
-			],
-			sort: { field:"number", dir:"asc" },
-			batch: true,
-			serverFiltering: true,
-			serverSorting: true,
-			serverPaging: true,
-			page:1,
-			pageSize: 100
-		}),
-		exemptionAccountDS			: new kendo.data.DataSource({
-			transport: {
-				read 	: {
-					url: apiUrl + "accounts",
-					type: "GET",
-					headers: banhji.header,
-					dataType: 'json'
-				},				
-				parameterMap: function(options, operation) {
-					if(operation === 'read') {
-						return {
-							page: options.page,
-							limit: options.pageSize,
-							filter: options.filter,
-							sort: options.sort
-						};
-					} else {
-						return {models: kendo.stringify(options.models)};
-					}
-				}
-			},
-			schema 	: {
-				model: {
-					id: 'id'
-				},
-				data: 'results',
-				total: 'count'
-			},
-			filter: [
-					{ field:"account_type_id", operator:"where_in", value: [35] },
-					{ field:"status", value: 1 }
-			],
-			sort: { field:"number", dir:"asc" },
-			batch: true,
-			serverFiltering: true,
-			serverSorting: true,
-			serverPaging: true,
-			page:1,
-			pageSize: 100
-		}),
-		//Expense Account
-		expenseAccountDS			: new kendo.data.DataSource({
-			transport: {
-				read 	: {
-					url: apiUrl + "accounts",
-					type: "GET",
-					headers: banhji.header,
-					dataType: 'json'
-				},				
-				parameterMap: function(options, operation) {
-					if(operation === 'read') {
-						return {
-							page: options.page,
-							limit: options.pageSize,
-							filter: options.filter,
-							sort: options.sort
-						};
-					} else {
-						return {models: kendo.stringify(options.models)};
-					}
-				}
-			},
-			schema 	: {
-				model: {
-					id: 'id'
-				},
-				data: 'results',
-				total: 'count'
-			},
-			filter: [
-					{ field:"account_type_id", operator:"where_in", value: [36,37,38,40,41,42,43] },
-					{ field:"status", value: 1 }
-			],
-			sort: { field:"number", dir:"asc" },
-			batch: true,
-			serverFiltering: true,
-			serverSorting: true,
-			serverPaging: true,
-			page:1,
-			pageSize: 100
-		}),
-		expenseInventoryAccountDS			: new kendo.data.DataSource({
-			transport: {
-				read 	: {
-					url: apiUrl + "accounts",
-					type: "GET",
-					headers: banhji.header,
-					dataType: 'json'
-				},				
-				parameterMap: function(options, operation) {
-					if(operation === 'read') {
-						return {
-							page: options.page,
-							limit: options.pageSize,
-							filter: options.filter,
-							sort: options.sort
-						};
-					} else {
-						return {models: kendo.stringify(options.models)};
-					}
-				}
-			},
-			schema 	: {
-				model: {
-					id: 'id'
-				},
-				data: 'results',
-				total: 'count'
-			},
-			filter: [
-					{ field:"account_type_id", operator:"where_in", value: [13,36,37,38,40,41,42,43] },
-					{ field:"status", value: 1 }
-			],
-			sort: { field:"number", dir:"asc" },
-			batch: true,
-			serverFiltering: true,
-			serverSorting: true,
-			serverPaging: true,
-			page:1,
-			pageSize: 100
-		}),
-		ARAccountDS					: new kendo.data.DataSource({
-			transport: {
-				read 	: {
-					url: apiUrl + "accounts",
-					type: "GET",
-					headers: banhji.header,
-					dataType: 'json'
-				},				
-				parameterMap: function(options, operation) {
-					if(operation === 'read') {
-						return {
-							page: options.page,
-							limit: options.pageSize,
-							filter: options.filter,
-							sort: options.sort
-						};
-					} else {
-						return {models: kendo.stringify(options.models)};
-					}
-				}
-			},
-			schema 	: {
-				model: {
-					id: 'id'
-				},
-				data: 'results',
-				total: 'count'
-			},
-			filter: [
-					{ field:"account_type_id", value: 12 },
-					{ field:"status", value: 1 }
-			],
-			sort: { field:"number", dir:"asc" },
-			batch: true,
-			serverFiltering: true,
-			serverSorting: true,
-			serverPaging: true,
-			page:1,
-			pageSize: 100
-		}),
-		APAccountDS					: new kendo.data.DataSource({
-			transport: {
-				read 	: {
-					url: apiUrl + "accounts",
-					type: "GET",
-					headers: banhji.header,
-					dataType: 'json'
-				},				
-				parameterMap: function(options, operation) {
-					if(operation === 'read') {
-						return {
-							page: options.page,
-							limit: options.pageSize,	
-							filter: options.filter,
-							sort: options.sort
-						};
-					} else {
-						return {models: kendo.stringify(options.models)};
-					}
-				}
-			},
-			schema 	: {
-				model: {
-					id: 'id'
-				},
-				data: 'results',
-				total: 'count'
-			},
-			filter: [
-					{ field:"account_type_id", operator:"where_in", value: [23,24] },
-					{ field:"status", value: 1 }
-			],
-			sort: { field:"number", dir:"asc" },
-			batch: true,
-			serverFiltering: true,
-			serverSorting: true,
-			serverPaging: true,
-			page:1,
-			pageSize: 100
-		}),		
-		tradeDiscountDS				: new kendo.data.DataSource({
-			transport: {
-				read 	: {
-					url: apiUrl + "accounts",
-					type: "GET",
-					headers: banhji.header,
-					dataType: 'json'
-				},				
-				parameterMap: function(options, operation) {
-					if(operation === 'read') {
-						return {
-							page: options.page,
-							limit: options.pageSize,
-							filter: options.filter,
-							sort: options.sort
-						};
-					} else {
-						return {models: kendo.stringify(options.models)};
-					}
-				}
-			},
-			schema 	: {
-				model: {
-					id: 'id'
-				},
-				data: 'results',
-				total: 'count'
-			},
-			filter: [
-					{ field:"id", value: 72 },
-					{ field:"status", value: 1 }
-			],
-			sort: { field:"number", dir:"asc" },
-			batch: true,
-			serverFiltering: true,
-			serverSorting: true,
-			serverPaging: true,
-			page:1,
-			pageSize: 100
-		}),
-		settlementDiscountDS		: new kendo.data.DataSource({
-			transport: {
-				read 	: {
-					url: apiUrl + "accounts",
-					type: "GET",
-					headers: banhji.header,
-					dataType: 'json'
-				},				
-				parameterMap: function(options, operation) {
-					if(operation === 'read') {
-						return {
-							page: options.page,
-							limit: options.pageSize,
-							filter: options.filter,
-							sort: options.sort
-						};
-					} else {
-						return {models: kendo.stringify(options.models)};
-					}
-				}
-			},
-			schema 	: {
-				model: {
-					id: 'id'
-				},
-				data: 'results',
-				total: 'count'
-			},
-			filter: [
-					{ field:"id", value:99 },
-					{ field:"status", value: 1 }
-			],
-			sort: { field:"number", dir:"asc" },
-			batch: true,
-			serverFiltering: true,
-			serverSorting: true,
-			serverPaging: true,
-			page:1,
-			pageSize: 100
-		}),
-		supplierTradeDiscountDS		: new kendo.data.DataSource({
-			transport: {
-				read 	: {
-					url: apiUrl + "accounts",
-					type: "GET",
-					headers: banhji.header,
-					dataType: 'json'
-				},				
-				parameterMap: function(options, operation) {
-					if(operation === 'read') {
-						return {
-							page: options.page,
-							limit: options.pageSize,
-							filter: options.filter,
-							sort: options.sort
-						};
-					} else {
-						return {models: kendo.stringify(options.models)};
-					}
-				}
-			},
-			schema 	: {
-				model: {
-					id: 'id'
-				},
-				data: 'results',
-				total: 'count'
-			},
-			filter: [
-					{ field:"account_type_id", value: 36 },
-					{ field:"status", value: 1 }
-			],
-			sort: { field:"number", dir:"asc" },
-			batch: true,
-			serverFiltering: true,
-			serverSorting: true,
-			serverPaging: true,
-			page:1,
-			pageSize: 100
-		}),
-		supplierSettlementDiscountDS: new kendo.data.DataSource({
-			transport: {
-				read 	: {
-					url: apiUrl + "accounts",
-					type: "GET",
-					headers: banhji.header,
-					dataType: 'json'
-				},				
-				parameterMap: function(options, operation) {
-					if(operation === 'read') {
-						return {
-							page: options.page,
-							limit: options.pageSize,
-							filter: options.filter,
-							sort: options.sort
-						};
-					} else {
-						return {models: kendo.stringify(options.models)};
-					}
-				}
-			},
-			schema 	: {
-				model: {
-					id: 'id'
-				},
-				data: 'results',
-				total: 'count'
-			},
-			filter: [
-					{ field:"id", value:109 },
-					{ field:"status", value: 1 }
-			],
-			sort: { field:"number", dir:"asc" },
-			batch: true,
-			serverFiltering: true,
-			serverSorting: true,
-			serverPaging: true,
-			page:1,
-			pageSize: 100
-		}),
-		prepaidAccountDS			: new kendo.data.DataSource({
-			transport: {
-				read 	: {
-					url: apiUrl + "accounts",
-					type: "GET",
-					headers: banhji.header,
-					dataType: 'json'
-				},				
-				parameterMap: function(options, operation) {
-					if(operation === 'read') {
-						return {
-							page: options.page,
-							limit: options.pageSize,
-							filter: options.filter,
-							sort: options.sort
-						};
-					} else {
-						return {models: kendo.stringify(options.models)};
-					}
-				}
-			},
-			schema 	: {
-				model: {
-					id: 'id'
-				},
-				data: 'results',
-				total: 'count'
-			},
-			filter: [
-					{ field:"account_type_id", operator:"where_in", value: [14,21] },
-					{ field:"status", value: 1 }
-			],
-			sort: { field:"number", dir:"asc" },
-			batch: true,
-			serverFiltering: true,
-			serverSorting: true,
-			serverPaging: true,
-			page:1,
-			pageSize: 100
-		}),
-		depositAccountDS			: new kendo.data.DataSource({
-			transport: {
-				read 	: {
-					url: apiUrl + "accounts",
-					type: "GET",
-					headers: banhji.header,
-					dataType: 'json'
-				},				
-				parameterMap: function(options, operation) {
-					if(operation === 'read') {
-						return {
-							page: options.page,
-							limit: options.pageSize,
-							filter: options.filter,
-							sort: options.sort
-						};
-					} else {
-						return {models: kendo.stringify(options.models)};
-					}
-				}
-			},
-			schema 	: {
-				model: {
-					id: 'id'
-				},
-				data: 'results',
-				total: 'count'
-			},
-			filter: [
-					{ field:"account_type_id", operator:"where_in", value: [25,30] },
-					{ field:"status", value: 1 }
-			],
-			sort: { field:"number", dir:"asc" },
-			batch: true,
-			serverFiltering: true,
-			serverSorting: true,
-			serverPaging: true,
-			page:1,
-			pageSize: 100
-		}),		
-		cogsAccountDS				: new kendo.data.DataSource({
-			transport: {
-				read 	: {
-					url: apiUrl + "accounts",
-					type: "GET",
-					headers: banhji.header,
-					dataType: 'json'
-				},				
-				parameterMap: function(options, operation) {
-					if(operation === 'read') {
-						return {
-							page: options.page,
-							limit: options.pageSize,
-							filter: options.filter,
-							sort: options.sort
-						};
-					} else {
-						return {models: kendo.stringify(options.models)};
-					}
-				}
-			},
-			schema 	: {
-				model: {
-					id: 'id'
-				},
-				data: 'results',
-				total: 'count'
-			},
-			filter: [
-					{ field:"account_type_id", value: 36 },
-					{ field:"status", value: 1 }
-			],
-			sort: { field:"number", dir:"asc" },
-			batch: true,
-			serverFiltering: true,
-			serverSorting: true,
-			serverPaging: true,
-			page:1,
-			pageSize: 100
-		}),
-		inventoryAccountDS			: new kendo.data.DataSource({
-			transport: {
-				read 	: {
-					url: apiUrl + "accounts",
-					type: "GET",
-					headers: banhji.header,
-					dataType: 'json'
-				},				
-				parameterMap: function(options, operation) {
-					if(operation === 'read') {
-						return {
-							page: options.page,
-							limit: options.pageSize,	
-							filter: options.filter,
-							sort: options.sort
-						};
-					} else {
-						return {models: kendo.stringify(options.models)};
-					}
-				}
-			},
-			schema 	: {
-				model: {
-					id: 'id'
-				},
-				data: 'results',
-				total: 'count'
-			},
-			filter: [
-					{ field:"account_type_id", value: 13 },
-					{ field:"status", value: 1 }
-			],
-			sort: { field:"number", dir:"asc" },
-			batch: true,
-			serverFiltering: true,
-			serverSorting: true,
-			serverPaging: true,
-			page:1,
-			pageSize: 100
-		}),
-		fixedAssetAccountDS			: new kendo.data.DataSource({
-			transport: {
-				read 	: {
-					url: apiUrl + "accounts",
-					type: "GET",
-					headers: banhji.header,
-					dataType: 'json'
-				},				
-				parameterMap: function(options, operation) {
-					if(operation === 'read') {
-						return {
-							page: options.page,
-							limit: options.pageSize,	
-							filter: options.filter,
-							sort: options.sort
-						};
-					} else {
-						return {models: kendo.stringify(options.models)};
-					}
-				}
-			},
-			schema 	: {
-				model: {
-					id: 'id'
-				},
-				data: 'results',
-				total: 'count'
-			},
-			filter: [
-					{ field:"account_type_id", value: 16 },
-					{ field:"status", value: 1 }
-			],
-			sort: { field:"number", dir:"asc" },
-			batch: true,
-			serverFiltering: true,
-			serverSorting: true,
-			serverPaging: true,
-			page:1,
-			pageSize: 100
-		}),
-		accumulatedAccountDS		: new kendo.data.DataSource({
-			transport: {
-				read 	: {
-					url: apiUrl + "accounts",
-					type: "GET",
-					headers: banhji.header,
-					dataType: 'json'
-				},				
-				parameterMap: function(options, operation) {
-					if(operation === 'read') {
-						return {
-							page: options.page,
-							limit: options.pageSize,	
-							filter: options.filter,
-							sort: options.sort
-						};
-					} else {
-						return {models: kendo.stringify(options.models)};
-					}
-				}
-			},
-			schema 	: {
-				model: {
-					id: 'id'
-				},
-				data: 'results',
-				total: 'count'
-			},
-			filter: [
-					{ field:"account_type_id", value: 18 },
-					{ field:"status", value: 1 }
-			],
-			sort: { field:"number", dir:"asc" },
-			batch: true,
-			serverFiltering: true,
-			serverSorting: true,
-			serverPaging: true,
-			page:1,
-			pageSize: 100
-		}),
-		deposalAccountDS			: new kendo.data.DataSource({
-			transport: {
-				read 	: {
-					url: apiUrl + "accounts",
-					type: "GET",
-					headers: banhji.header,
-					dataType: 'json'
-				},				
-				parameterMap: function(options, operation) {
-					if(operation === 'read') {
-						return {
-							page: options.page,
-							limit: options.pageSize,	
-							filter: options.filter,
-							sort: options.sort
-						};
-					} else {
-						return {models: kendo.stringify(options.models)};
-					}
-				}
-			},
-			schema 	: {
-				model: {
-					id: 'id'
-				},
-				data: 'results',
-				total: 'count'
-			},
-			filter: [
-					{ field:"account_type_id", value: 38 },
-					{ field:"status", value: 1 }
-			],
-			sort: { field:"number", dir:"asc" },
-			batch: true,
-			serverFiltering: true,
-			serverSorting: true,
-			serverPaging: true,
-			page:1,
-			pageSize: 100
-		}),
-		inventoryFixAssetAccountDS	: new kendo.data.DataSource({
-			transport: {
-				read 	: {
-					url: apiUrl + "accounts",
-					type: "GET",
-					headers: banhji.header,
-					dataType: 'json'
-				},				
-				parameterMap: function(options, operation) {
-					if(operation === 'read') {
-						return {
-							page: options.page,
-							limit: options.pageSize,	
-							filter: options.filter,
-							sort: options.sort
-						};
-					} else {
-						return {models: kendo.stringify(options.models)};
-					}
-				}
-			},
-			schema 	: {
-				model: {
-					id: 'id'
-				},
-				data: 'results',
-				total: 'count'
-			},
-			filter: [
-					{ field:"account_type_id", operator:"where_in", value:[13,16,19] },
-					{ field:"status", value: 1 }
-			],
-			sort: { field:"number", dir:"asc" },
-			batch: true,
 			serverFiltering: true,
 			serverSorting: true,
 			serverPaging: true,
@@ -45713,16 +44811,16 @@
     	
         	//Dates
         	if(start && end){
-            	para.push({ field:"issued_date >=", value: kendo.toString(new Date(start), "yyyy-MM-dd") });
-            	para.push({ field:"issued_date <=", value: kendo.toString(new Date(end), "yyyy-MM-dd") });
+            	para.push({ field:"issued_date >=", operator:"where_related_transaction", value: kendo.toString(new Date(start), "yyyy-MM-dd") });
+            	para.push({ field:"issued_date <=", operator:"where_related_transaction", value: kendo.toString(new Date(end), "yyyy-MM-dd") });
 
             	displayDate = "From " + kendo.toString(new Date(start), "dd-MM-yyyy") + " To " + kendo.toString(new Date(end), "dd-MM-yyyy");
             }else if(start){
-            	para.push({ field:"issued_date", value: kendo.toString(new Date(start), "yyyy-MM-dd") });
+            	para.push({ field:"issued_date", operator:"where_related_transaction", value: kendo.toString(new Date(start), "yyyy-MM-dd") });
 
             	displayDate = "On " + kendo.toString(new Date(start), "dd-MM-yyyy");
             }else if(end){
-            	para.push({ field:"issued_date <=", value: kendo.toString(new Date(end), "yyyy-MM-dd") });
+            	para.push({ field:"issued_date <=", operator:"where_related_transaction", value: kendo.toString(new Date(end), "yyyy-MM-dd") });
 
             	displayDate = "As Of " + kendo.toString(new Date(end), "dd-MM-yyyy");
             }else{
@@ -46370,7 +45468,10 @@
         itemDS 	 			: dataStore(apiUrl + "tax_items"),
         deleteDS 			: dataStore(apiUrl + "tax_items"),
         itemDeleteDS 		: dataStore(apiUrl + "item_lines"),
-        accountDS 			: banhji.source.accountDS,
+        accountDS  			: new kendo.data.DataSource({
+		  	data: banhji.source.accountList,
+			sort: { field:"number", dir:"asc" }
+		}),
         typeList			: [ 
 	 		{ id:"Invoice Based", name: "Invoice Based" },
 	 		{ id:"Payment Based", name: "Payment Based" },
@@ -49990,10 +49091,50 @@
 		countryDS 				: banhji.source.countryDS,
 		contactTypeDS  			: banhji.source.supplierTypeDS,
 		currencyDS 		  		: banhji.source.currencyDS,
-		apDS 		  			: banhji.source.APAccountDS,		
-		prepaidAccountDS 		: banhji.source.prepaidAccountDS,
-		tradeDiscountDS 		: banhji.source.supplierTradeDiscountDS,
-		settlementDiscountDS 	: banhji.source.supplierSettlementDiscountDS,
+		apDS 		  			: new kendo.data.DataSource({
+		  	data: banhji.source.accountList,
+			filter:[ 
+				{
+				    logic: "or",
+				    filters: [
+				      	{ field: "account_type_id", value: 23 },
+				      	{ field: "account_type_id", value: 24 }
+				    ]
+				},
+				{ field:"status", value: 1 }
+			],
+			sort: { field:"number", dir:"asc" }
+		}),		
+		prepaidAccountDS 		: new kendo.data.DataSource({
+		  	data: banhji.source.accountList,
+			filter:[ 
+				{
+				    logic: "or",
+				    filters: [
+				      	{ field: "account_type_id", value: 14 },
+				      	{ field: "account_type_id", value: 21 }
+				    ]
+				},
+				{ field:"status", value: 1 }
+			],
+			sort: { field:"number", dir:"asc" }
+		}),
+		tradeDiscountDS 		: new kendo.data.DataSource({
+		  	data: banhji.source.accountList,
+		  	filter: [
+				{ field:"account_type_id", value: 36 },
+				{ field:"status", value: 1 }
+			],
+		  	sort: { field:"number", dir:"asc" }
+		}),
+		settlementDiscountDS 	: new kendo.data.DataSource({
+		  	data: banhji.source.accountList,
+		  	filter: [
+				{ field:"account_type_id", value: 109 },
+				{ field:"status", value: 1 }
+			],
+		  	sort: { field:"number", dir:"asc" }
+		}),
 		genders					: banhji.source.genderList,
 		statusList 				: banhji.source.statusList,
 		confirmMessage 			: banhji.source.confirmMessage,
@@ -52684,7 +51825,10 @@
 			{ id:1, name:"Cash" },
 			{ id:0, name:"Credit" }
 		],
-		accountList 				: [],
+		additionalCostAccountDS 	: new kendo.data.DataSource({
+		  	data: banhji.source.accountList,
+			sort: { field:"number", dir:"asc" }
+		}),
 		amtDueColor 				: banhji.source.amtDueColor,
 	    confirmMessage 				: banhji.source.confirmMessage,
 		frequencyList 				: banhji.source.frequencyList,
@@ -52725,8 +51869,6 @@
 		original_deposit			: 0,
 		user_id						: banhji.source.user_id,
 		pageLoad 			: function(id){
-			this.loadCashAccount();
-
 			if(id){
 				this.set("isEdit", true);
 				this.loadObj(id);
@@ -53053,16 +52195,6 @@
 		    	}
 	        }                	        	
 		},
-		//Account
-		loadCashAccount 	: function(){
-			var self = this;
-
-			$.each(banhji.source.accountDS.data(), function(index, value){
-				if(value.account_type_id=="10"){
-					self.accountList.push(value);
-				}
-			});
-		},
 		addRowAccount		: function(){
 			var obj = this.get("obj");
 					
@@ -53093,6 +52225,7 @@
 
 			this.additionalCostDS.add({				
 				contact_id 			: "",
+				account_id 			: 1,
 				payment_term_id		: 0,				
 				reference_id 		: obj.id,
 				recurring_id 		: "",
@@ -53160,38 +52293,14 @@
 				data.set("status", 1);
 				this.set("showDueDateColumn", false);
 
-				//Add default cash account list
-				$.each(banhji.source.accountDS.data(), function(index, value){
-					if(value.account_type_id=="10"){
-						accountList.push(value);
-					}
-				});
+				//Cash Account
+				this.additionalCostAccountDS.filter({ field:"account_type_id", value:10 });
 			}else{
 				data.set("status", 0);
 				this.set("showDueDateColumn", true);
 
-				//Add default ap account list
-				$.each(banhji.source.accountDS.data(), function(index, value){
-					if(value.account_type_id=="23" || value.account_type_id=="24"){
-						accountList.push(value);
-					}
-				});				
-			}
-
-			data.set("accountList", accountList);
-		},			
-		typeChanges 		: function(){
-			var obj = this.get("obj");
-			obj.set("account_id", 0);
-
-			if(obj.type=="Cash_Purchase"){
-				this.set("isCash", true);				
-
-				this.accountDS.filter({ field:"account_type_id", value: 10 });
-			}else{
-				this.set("isCash", false);
-				
-				this.accountDS.filter({					
+				//AP Account
+				this.additionalCostAccountDS.filter({
 				    logic: "and",
 				    filters: [
 				      	{ field:"status", value: 1 },
@@ -53202,9 +52311,63 @@
 		      					{ field: "account_type_id", value: 24 }
 					        ]
 					    }
-				    ]						
-				});				
-			}			
+				    ]
+				});
+			}
+
+			data.set("account_id", 0);
+		},			
+		typeChanges 		: function(){
+			var obj = this.get("obj");			
+
+			if(obj.type=="Cash_Purchase"){
+				this.set("isCash", true);				
+
+				this.accountDS.filter({ field:"account_type_id", value: 10 });
+			}else{
+				this.set("isCash", false);
+				
+				this.accountDS.filter({
+				    logic: "and",
+				    filters: [
+				      	{ field:"status", value: 1 },
+					    {
+					        logic: "or",
+					        filters: [
+					            { field: "account_type_id", value: 23 },
+		      					{ field: "account_type_id", value: 24 }
+					        ]
+					    }
+				    ]
+				});
+			}
+
+			obj.set("account_id", 0);			
+		},
+		loadTypeChanges 	: function(){
+			var obj = this.get("obj");			
+
+			if(obj.type=="Cash_Purchase"){
+				this.set("isCash", true);				
+
+				this.accountDS.filter({ field:"account_type_id", value: 10 });
+			}else{
+				this.set("isCash", false);
+				
+				this.accountDS.filter({
+				    logic: "and",
+				    filters: [
+				      	{ field:"status", value: 1 },
+					    {
+					        logic: "or",
+					        filters: [
+					            { field: "account_type_id", value: 23 },
+		      					{ field: "account_type_id", value: 24 }
+					        ]
+					    }
+				    ]
+				});
+			}
 		},
 		//Segment
 		segmentChanges 		: function() {
@@ -53283,7 +52446,7 @@
 					}				
 
 					self.loadDeposit();
-					self.typeChanges();				
+					self.loadTypeChanges();				
 				});
 			}				
 		},
@@ -54243,7 +53406,14 @@
 		contactDS  			: banhji.source.supplierDS,
 		itemDS  			: banhji.source.itemForSupplierDS,
 		taxItemDS  			: banhji.source.supplierTaxDS,
-		accountDS  			: banhji.source.cashAccountDS,
+		accountDS  			: new kendo.data.DataSource({
+		  	data: banhji.source.accountList,
+		  	filter: [
+				{ field:"account_type_id", value: 10 },
+				{ field:"status", value: 1 }
+			],
+		  	sort: { field:"number", dir:"asc" }
+		}),
 		catalogDS			: dataStore(apiUrl + "items"),
 		assemblyDS			: dataStore(apiUrl + "items/assembly"),		
 		segmentItemDS		: banhji.source.segmentItemDS,
@@ -56767,11 +55937,58 @@
 		countryDS 				: banhji.source.countryDS,
 		contactTypeDS  			: banhji.source.customerTypeDS,
 		currencyDS 		  		: banhji.source.currencyDS,
-		arDS 		  			: banhji.source.ARAccountDS,
-		raDS 		  			: banhji.source.incomeAccountDS,
-		depositDS 		  		: banhji.source.depositAccountDS,
-		tradeDiscountDS 		: banhji.source.tradeDiscountDS,
-		settlementDiscountDS 	: banhji.source.settlementDiscountDS,
+		arDS 		  			: new kendo.data.DataSource({
+		  	data: banhji.source.accountList,
+		  	filter: [
+				{ field:"account_type_id", value: 12 },
+				{ field:"status", value: 1 }
+			],
+		  	sort: { field:"number", dir:"asc" }
+		}),
+		raDS 		  			: new kendo.data.DataSource({
+		  	data: banhji.source.accountList,
+			filter:[ 
+				{
+				    logic: "or",
+				    filters: [
+				      	{ field: "account_type_id", value: 35 },
+				      	{ field: "account_type_id", value: 39 }
+				    ]
+				},
+				{ field:"status", value: 1 }
+			],
+			sort: { field:"number", dir:"asc" }
+		}),
+		depositDS 		  		: new kendo.data.DataSource({
+		  	data: banhji.source.accountList,
+			filter:[ 
+				{
+				    logic: "or",
+				    filters: [
+				      	{ field: "account_type_id", value: 25 },
+				      	{ field: "account_type_id", value: 30 }
+				    ]
+				},
+				{ field:"status", value: 1 }
+			],
+			sort: { field:"number", dir:"asc" }
+		}),
+		tradeDiscountDS 		: new kendo.data.DataSource({
+		  	data: banhji.source.accountList,
+		  	filter: [
+				{ field:"account_type_id", value: 72 },
+				{ field:"status", value: 1 }
+			],
+		  	sort: { field:"number", dir:"asc" }
+		}),
+		settlementDiscountDS 	: new kendo.data.DataSource({
+		  	data: banhji.source.accountList,
+		  	filter: [
+				{ field:"account_type_id", value: 99 },
+				{ field:"status", value: 1 }
+			],
+		  	sort: { field:"number", dir:"asc" }
+		}),
 		genders					: banhji.source.genderList,
 		statusList 				: banhji.source.statusList,
 		confirmMessage 			: banhji.source.confirmMessage,
@@ -58930,12 +58147,44 @@
 			page:1,
 			pageSize: 100
 		}),
+		accountDS 			: new kendo.data.DataSource({
+		  	data: banhji.source.accountList,
+			filter:[ 
+				{
+				    logic: "or",
+				    filters: [
+				      	{ field: "account_type_id", value: 10 },//Cash
+				      	{ field: "account_type_id", value: 36 },//Expense
+				      	{ field: "account_type_id", value: 37 },
+				      	{ field: "account_type_id", value: 38 },
+				      	{ field: "account_type_id", value: 40 },
+				      	{ field: "account_type_id", value: 41 },
+				      	{ field: "account_type_id", value: 42 },
+				      	{ field: "account_type_id", value: 43 }
+				    ]
+				},
+				{ field:"status", value: 1 }
+			],
+			sort: { field:"number", dir:"asc" }
+		}),
+		depositAccountDS 	: new kendo.data.DataSource({
+		  	data: banhji.source.accountList,
+			filter:[ 
+				{
+				    logic: "or",
+				    filters: [
+				      	{ field: "account_type_id", value: 25 },
+				      	{ field: "account_type_id", value: 30 }
+				    ]
+				},
+				{ field:"status", value: 1 }
+			],
+			sort: { field:"number", dir:"asc" }
+		}),
 		jobDS				: banhji.source.jobDS,
 		contactDS 			: banhji.source.customerDS,
 		employeeDS  		: banhji.source.saleRepDS,
-		depositAccountDS 	: banhji.source.depositAccountDS,
 		segmentItemDS 		: banhji.source.segmentItemDS,
-		accountDS 			: banhji.source.expenseCashAccountDS,
 		amtDueColor 		: banhji.source.amtDueColor,
 	    confirmMessage 		: banhji.source.confirmMessage,
 		frequencyList 		: banhji.source.frequencyList,
@@ -59575,13 +58824,12 @@
 		lang 				: langVM,
 		dataSource 			: dataStore(apiUrl + "transactions"),
 		lineDS  			: dataStore(apiUrl + "item_lines"),
-		deleteDS 			: dataStore(apiUrl + "transactions"),
+		txnDS 				: dsRead(apiUrl + "transactions"),
 		journalLineDS		: dataStore(apiUrl + "journal_lines"),
 		recurringDS 		: dataStore(apiUrl + "transactions"),
 		recurringLineDS 	: dataStore(apiUrl + "item_lines"),
 		referenceDS			: dataStore(apiUrl + "transactions"),
 		referenceLineDS		: dataStore(apiUrl + "item_lines"),
-		balanceDS  			: dataStore(apiUrl + "transactions"),
 		depositDS  			: dataStore(apiUrl + "transactions"),
 		depositSumDS  		: new kendo.data.DataSource({
 			transport: {
@@ -59654,7 +58902,14 @@
 			pageSize: 100
 		}),
 		attachmentDS	 	: dataStore(apiUrl + "attachments"),
-		cashAccountDS  		: banhji.source.cashAccountDS,
+		cashAccountDS  		: new kendo.data.DataSource({
+		  	data: banhji.source.accountList,
+		  	filter: [
+				{ field:"account_type_id", value: 10 },
+				{ field:"status", value: 1 }
+			],
+		  	sort: { field:"number", dir:"asc" }
+		}),
 		currencyRateDS		: dataStore(apiUrl + "currencies/rate"),
 		jobDS				: banhji.source.jobDS,
 		contactDS  			: banhji.source.customerDS,
@@ -59905,36 +59160,56 @@
 		    this.changes();
 	    },
 	    loadBalance 		: function(){
-			var self = this, obj = this.get("obj");			
+			var self = this, 
+			obj = this.get("obj"),
+			contact = this.contactDS.get(obj.contact_id),
+			balance = 0, creditAllowed = 0;			
 
-			this.balanceDS.query({    			
+			this.txnDS.query({    			
 				filter:[
+					{ field:"amount", operator:"select_sum", value:"" },
 					{ field:"contact_id", value:obj.contact_id },
 					{ field:"type", operator:"where_in", value:["Commercial_Invoice", "Vat_Invoice", "Invoice"] },
 					{ field:"status", operator:"where_in", value:[0,2] }
-				],
-				page: 1,
-				pageSize: 10000
-			}).then(function(e){
-				var view = self.balanceDS.view(),				
-				contact = self.contactDS.get(obj.contact_id),
-				balance = 0,
-				creditAllowed = 0;
+				]
+			}).then(function(){
+				var view = self.txnDS.view();
 
+				balance += view[0].amount;
+
+		    	return self.txnDS.query({
+		    		filter:[
+						{ field:"contact_id", value:obj.contact_id },
+						{ field:"type", operator:"where_in", value:["Commercial_Invoice", "Vat_Invoice", "Invoice"] },
+						{ field:"status", value:2 }
+					]
+		    	});	
+			}).then(function(){
+				var view = self.txnDS.view();
+				
+				var idList = [];
 				$.each(view, function(index, value){
-					if(value.status==0){
-						balance += value.amount;
-					}else{
-						balance += (value.amount - value.amount_paid);
-					}
+					idList.push(value.id);
 				});
 
-				if(contact.credit_limit > balance){
+		    	return self.txnDS.query({
+		    		filter:[
+		    			{ field:"amount", operator:"select_sum", value:"" },
+						{ field:"reference_id", operator:"where_in", value: idList },
+						{ field:"type", value:"Cash_Receipt" }
+					]
+		    	});
+		    }).then(function(){
+		    	var view = self.txnDS.view();
+
+		    	balance -= view[0].amount;
+
+		    	if(contact.credit_limit > balance){
 					creditAllowed = contact.credit_limit - balance;
 				}
-						    	
+
 		    	self.set("balance", kendo.toString(balance, "c", obj.locale));
-		    	obj.set("credit_allowed", creditAllowed);		
+		    	obj.set("credit_allowed", creditAllowed);
 			});				
 		},
 	    //Currency Rate
@@ -60433,14 +59708,14 @@
 			var self = this, obj = this.get("obj");
 			this.set("showConfirm",false);			
 			
-	        this.deleteDS.query({
+	        this.txnDS.query({
 	        	filter:[
 	        		{ field:"reference_id", value:obj.id }
 	        	],
 	        	page:1,
 	        	pageSize:1
 	        }).then(function(){
-	        	var view = self.deleteDS.view();
+	        	var view = self.txnDS.view();
 
 	        	if(view.length>0){
 	        		alert("Sorry, you can not delete it.");
@@ -60934,13 +60209,12 @@
 		lang 				: langVM,
 		dataSource 			: dataStore(apiUrl + "transactions"),
 		lineDS  			: dataStore(apiUrl + "item_lines"),
-		deleteDS 			: dataStore(apiUrl + "transactions"),
+		txnDS 				: dsRead(apiUrl + "transactions"),
 		journalLineDS		: dataStore(apiUrl + "journal_lines"),
 		recurringDS 		: dataStore(apiUrl + "transactions"),
 		recurringLineDS 	: dataStore(apiUrl + "item_lines"),
 		referenceDS			: dataStore(apiUrl + "transactions"),
 		referenceLineDS		: dataStore(apiUrl + "item_lines"),
-		balanceDS  			: dataStore(apiUrl + "transactions"),
 		depositDS  			: dataStore(apiUrl + "transactions"),
 		attachmentDS	 	: dataStore(apiUrl + "attachments"),
 		contactDS  			: banhji.source.customerDS,
@@ -61276,36 +60550,56 @@
 		    this.changes();
 	    },
 	    loadBalance 		: function(){
-			var self = this, obj = this.get("obj");			
+			var self = this, 
+			obj = this.get("obj"),
+			contact = this.contactDS.get(obj.contact_id),
+			balance = 0, creditAllowed = 0;			
 
-			this.balanceDS.query({    			
+			this.txnDS.query({    			
 				filter:[
+					{ field:"amount", operator:"select_sum", value:"" },
 					{ field:"contact_id", value:obj.contact_id },
 					{ field:"type", operator:"where_in", value:["Commercial_Invoice", "Vat_Invoice", "Invoice"] },
 					{ field:"status", operator:"where_in", value:[0,2] }
-				],
-				page: 1,
-				pageSize: 100
-			}).then(function(e){
-				var view = self.balanceDS.view(),				
-				contact = self.contactDS.get(obj.contact_id),
-				balance = 0,
-				creditAllowed = 0;
+				]
+			}).then(function(){
+				var view = self.txnDS.view();
 
+				balance += view[0].amount;
+
+		    	return self.txnDS.query({
+		    		filter:[
+						{ field:"contact_id", value:obj.contact_id },
+						{ field:"type", operator:"where_in", value:["Commercial_Invoice", "Vat_Invoice", "Invoice"] },
+						{ field:"status", value:2 }
+					]
+		    	});	
+			}).then(function(){
+				var view = self.txnDS.view();
+				
+				var idList = [];
 				$.each(view, function(index, value){
-					if(value.status==0){
-						balance += value.amount;
-					}else{
-						balance += (value.amount - value.amount_paid);
-					}
+					idList.push(value.id);
 				});
 
-				if(contact.credit_limit > balance){
+		    	return self.txnDS.query({
+		    		filter:[
+		    			{ field:"amount", operator:"select_sum", value:"" },
+						{ field:"reference_id", operator:"where_in", value: idList },
+						{ field:"type", value:"Cash_Receipt" }
+					]
+		    	});
+		    }).then(function(){
+		    	var view = self.txnDS.view();
+
+		    	balance -= view[0].amount;
+
+		    	if(contact.credit_limit > balance){
 					creditAllowed = contact.credit_limit - balance;
 				}
-						    	
+
 		    	self.set("balance", kendo.toString(balance, "c", obj.locale));
-		    	obj.set("credit_allowed", creditAllowed);		
+		    	obj.set("credit_allowed", creditAllowed);
 			});				
 		},
 	    //Currency Rate
@@ -61817,7 +61111,7 @@
 			var self = this, obj = this.get("obj");
 			this.set("showConfirm",false);			
 			
-	        this.deleteDS.query({
+	        this.txnDS.query({
 	        	filter:[
 	        		{ field:"reference_id", value:obj.id }
 	        	],
@@ -61830,7 +61124,7 @@
 	        		alert("Sorry, you can not delete it.");
 	        	}else{
 	        		obj.set("deleted", 1);
-			        self.dataSource.sync();
+			        self.txnDS.sync();
 
 			        window.history.back();
 	        	}
@@ -63117,7 +62411,14 @@
 		contactDS  			: banhji.source.customerDS,
 		itemDS  			: banhji.source.itemForSaleDS,
 		taxItemDS  			: banhji.source.customerTaxDS,
-		accountDS  			: banhji.source.cashAccountDS,
+		accountDS  			: new kendo.data.DataSource({
+		  	data: banhji.source.accountList,
+		  	filter: [
+				{ field:"account_type_id", value: 10 },
+				{ field:"status", value: 1 }
+			],
+		  	sort: { field:"number", dir:"asc" }
+		}),
 		catalogDS			: dataStore(apiUrl + "items"),
 		assemblyDS			: dataStore(apiUrl + "items/assembly"),		
 		segmentItemDS		: banhji.source.segmentItemDS,
@@ -66629,7 +65930,14 @@
 	});
 	banhji.cashCenter = kendo.observable({
 		lang 				: langVM,
-		dataStore 			: banhji.source.cashAccountDS,
+		dataStore 			: new kendo.data.DataSource({
+		  	data: banhji.source.accountList,
+		  	filter: [
+				{ field:"account_type_id", value: 10 },
+				{ field:"status", value: 1 }
+			],
+		  	sort: { field:"number", dir:"asc" }
+		}),
 		summaryDS  			: dataStore(apiUrl + 'centers/accounting_summary'),
 		transactionDS  		: dataStore(apiUrl + 'centers/accounting_txn'),
 		accountTypeDS 		: banhji.source.accountTypeDS,
@@ -70348,9 +69656,36 @@
     	itemVendorDS 	 		: dataStore(apiUrl + "items/contact"),
     	itemCustomerDS 	 		: dataStore(apiUrl + "items/contact"),
     	currencyDS 	 			: banhji.source.currencyDS,  	
-    	incomeAccountDS 		: banhji.source.incomeAccountDS,
-    	cogsAccountDS 			: banhji.source.cogsAccountDS,
-    	inventoryAccountDS 		: banhji.source.inventoryAccountDS,
+    	incomeAccountDS 		: new kendo.data.DataSource({
+		  	data: banhji.source.accountList,
+			filter:[ 
+				{
+				    logic: "or",
+				    filters: [
+				      	{ field: "account_type_id", value: 35 },
+				      	{ field: "account_type_id", value: 39 }
+				    ]
+				},
+				{ field:"status", value: 1 }
+			],
+			sort: { field:"number", dir:"asc" }
+		}),
+    	cogsAccountDS 			: new kendo.data.DataSource({
+		  	data: banhji.source.accountList,
+		  	filter: [
+				{ field:"account_type_id", value: 36 },
+				{ field:"status", value: 1 }
+			],
+		  	sort: { field:"number", dir:"asc" }
+		}),
+    	inventoryAccountDS 		: new kendo.data.DataSource({
+		  	data: banhji.source.accountList,
+		  	filter: [
+				{ field:"account_type_id", value: 13 },
+				{ field:"status", value: 1 }
+			],
+		  	sort: { field:"number", dir:"asc" }
+		}),
     	statusList 				: banhji.source.statusList,
     	confirmMessage 			: banhji.source.confirmMessage,
     	obj 	 				: null,
@@ -71038,7 +70373,20 @@
     	deleteDS 				: dataStore(apiUrl + "transactions"),
     	existingDS 				: dataStore(apiUrl + "items"),
     	numberDS 				: dataStore(apiUrl + "items"),
-    	incomeAccountDS 		: banhji.source.incomeAccountDS,    	
+    	incomeAccountDS 		: new kendo.data.DataSource({
+		  	data: banhji.source.accountList,
+			filter:[ 
+				{
+				    logic: "or",
+				    filters: [
+				      	{ field: "account_type_id", value: 35 },
+				      	{ field: "account_type_id", value: 39 }
+				    ]
+				},
+				{ field:"status", value: 1 }
+			],
+			sort: { field:"number", dir:"asc" }
+		}),
     	itemDS 					: banhji.source.itemNonAssemblyDS,
     	currencyDS 				: banhji.source.currencyDS,
     	measurementDS 			: banhji.source.measurementDS,    	
@@ -71320,8 +70668,28 @@
     	itemCustomerDS 	 		: dataStore(apiUrl + "items/contact"),
     	itemPriceDS 			: dataStore(apiUrl + "item_prices"),
     	currencyDS 	 			: banhji.source.currencyDS,  	
-    	incomeAccountDS 		: banhji.source.incomeAccountDS,
-    	cogsAccountDS 			: banhji.source.cogsAccountDS,    	
+    	incomeAccountDS 		: new kendo.data.DataSource({
+		  	data: banhji.source.accountList,
+			filter:[ 
+				{
+				    logic: "or",
+				    filters: [
+				      	{ field: "account_type_id", value: 35 },
+				      	{ field: "account_type_id", value: 39 }
+				    ]
+				},
+				{ field:"status", value: 1 }
+			],
+			sort: { field:"number", dir:"asc" }
+		}),
+    	cogsAccountDS 			: new kendo.data.DataSource({
+		  	data: banhji.source.accountList,
+		  	filter: [
+				{ field:"account_type_id", value: 36 },
+				{ field:"status", value: 1 }
+			],
+		  	sort: { field:"number", dir:"asc" }
+		}),
     	statusList 				: banhji.source.statusList,
         confirmMessage 			: banhji.source.confirmMessage,
     	obj 	 				: null,
@@ -71711,7 +71079,14 @@
     	customerDS 	 			: banhji.source.customerDS,
     	itemVendorDS 	 		: dataStore(apiUrl + "items/contact"),
     	itemCustomerDS 	 		: dataStore(apiUrl + "items/contact"),
-    	inventoryAccountDS 		: banhji.source.inventoryAccountDS,
+    	inventoryAccountDS 		: new kendo.data.DataSource({
+		  	data: banhji.source.accountList,
+		  	filter: [
+				{ field:"account_type_id", value: 13 },
+				{ field:"status", value: 1 }
+			],
+		  	sort: { field:"number", dir:"asc" }
+		}),
     	statusList 				: banhji.source.statusList,
     	confirmMessage 			: banhji.source.confirmMessage,
     	obj 	 				: null,
@@ -72078,9 +71453,30 @@
     	numberDS 				: dataStore(apiUrl + "items"),
     	existingDS 				: dataStore(apiUrl + "items"),
     	itemPriceDS 			: dataStore(apiUrl + "item_prices"),
-    	fixedAssetAccountDS 	: banhji.source.fixedAssetAccountDS,
-    	accumulatedAccountDS 	: banhji.source.accumulatedAccountDS,
-    	deposalAccountDS 		: banhji.source.deposalAccountDS,
+    	fixedAssetAccountDS 	: new kendo.data.DataSource({
+		  	data: banhji.source.accountList,
+		  	filter: [
+				{ field:"account_type_id", value: 16 },
+				{ field:"status", value: 1 }
+			],
+		  	sort: { field:"number", dir:"asc" }
+		}),
+    	accumulatedAccountDS 	: new kendo.data.DataSource({
+		  	data: banhji.source.accountList,
+		  	filter: [
+				{ field:"account_type_id", value: 18 },
+				{ field:"status", value: 1 }
+			],
+		  	sort: { field:"number", dir:"asc" }
+		}),
+    	deposalAccountDS 		: new kendo.data.DataSource({
+		  	data: banhji.source.accountList,
+		  	filter: [
+				{ field:"account_type_id", value: 38 },
+				{ field:"status", value: 1 }
+			],
+		  	sort: { field:"number", dir:"asc" }
+		}),
     	statusList 				: banhji.source.statusList,
     	confirmMessage 			: banhji.source.confirmMessage,
     	obj 	 				: null,
@@ -72357,7 +71753,10 @@
     	numberDS 				: dataStore(apiUrl + "items"),
     	existingDS 				: dataStore(apiUrl + "items"),   	
     	currencyDS 	 			: banhji.source.currencyDS,  	
-    	accountDS 				: banhji.source.accountDS,   	
+    	accountDS  			: new kendo.data.DataSource({
+		  	data: banhji.source.accountList,
+			sort: { field:"number", dir:"asc" }
+		}),   	
     	statusList 				: banhji.source.statusList,
     	confirmMessage 			: banhji.source.confirmMessage,
     	obj 	 				: null,
@@ -72529,7 +71928,10 @@
     	journalLineDS			: dataStore(apiUrl + "journal_lines"),	
 		itemDS  				: dataStore(apiUrl + "items"),
 		contactDS 				: banhji.source.employeeDS,
-		accountDS 				: banhji.source.accountDS,		
+		accountDS  			: new kendo.data.DataSource({
+		  	data: banhji.source.accountList,
+			sort: { field:"number", dir:"asc" }
+		}),		
 		segmentItemDS			: banhji.source.segmentItemDS,
 		categoryDS 				: banhji.source.inventoryCategoryDS,
 		attachmentDS	 		: dataStore(apiUrl + "attachments"),
@@ -73070,8 +72472,25 @@
 			page:1,
 			pageSize: 100
 		}),
-		accountDS 				: banhji.source.accountDS,
-		inventoryFixAssetAccountDS 	: banhji.source.inventoryFixAssetAccountDS,
+		accountDS  			: new kendo.data.DataSource({
+		  	data: banhji.source.accountList,
+			sort: { field:"number", dir:"asc" }
+		}),
+		inventoryFixAssetAccountDS : new kendo.data.DataSource({
+		  	data: banhji.source.accountList,
+			filter:[ 
+				{
+				    logic: "or",
+				    filters: [
+				      	{ field: "account_type_id", value: 13 },
+				      	{ field: "account_type_id", value: 16 },
+				      	{ field: "account_type_id", value: 19 }
+				    ]
+				},
+				{ field:"status", value: 1 }
+			],
+			sort: { field:"number", dir:"asc" }
+		}),
 		amtDueColor 			: banhji.source.amtDueColor,
 	    confirmMessage 			: banhji.source.confirmMessage,
 		frequencyList 			: banhji.source.frequencyList,
@@ -74876,13 +74295,14 @@
 	});
 	banhji.importJournal = kendo.observable({
 		dataSource 	  : dataStore(apiUrl+"imports/journal"),
+		accountDS 	  : dataStore(apiUrl+"accounts"),
 		noneAccount   : [],
 		enabled 	  : false,
 		numberExists  : function(account) {
 			var existed = false;
 			
-			for(var i = 0; i < banhji.source.accountDS.data().length; i++) {
-				if(account == banhji.source.accountDS.data()[i].number) {
+			for(var i = 0; i < banhji.source.accountList.length; i++) {
+				if(account == banhji.source.accountList[i].number) {
 					existed = true;
 					break;
 				}
@@ -74890,6 +74310,7 @@
 			return existed;
 		},
 		onSelected    : function(e) {
+			var self = this;			
 			$('li.k-file').remove();
 	        var files = e.files;
 	        $("#loadImport").css("display","block");
@@ -74903,7 +74324,7 @@
 				var workbook = XLSX.read(data, {type : 'binary'});
 				workbook.SheetNames.forEach(function(sheetName) {
 					var roa = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
-					banhji.source.accountDS.fetch(function(){
+					self.accountDS.fetch(function(){
 						if(roa.length > 0){
 							result[sheetName] = roa;
 							for(var i = 0; i < roa.length; i++) {
@@ -83022,6 +82443,15 @@
 		banhji.router.start();
 		banhji.source.loadData();
 		console.log($(location).attr('hash').substr(2));
+
+		var cognitoUser = userPool.getCurrentUser();
+		cognitoUser.getSession(function(err, session) {
+          	if(session) {
+            	// window.location.replace(baseUrl + "rrd/");
+          	} else {
+            	window.location.replace(baseUrl + "login/");
+          	}
+        });
 
 		function createCookie(name,value,days) {
 		    if (days) {
