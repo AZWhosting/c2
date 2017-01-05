@@ -96,7 +96,7 @@ class Accounts extends REST_Controller {
 	//POST
 	function index_post() {
 		$models = json_decode($this->post('models'));				
-		$data["results"] = array();
+		$data["results"] = [];
 		$data["count"] = 0;				
 		
 		foreach ($models as $value) {
@@ -113,7 +113,7 @@ class Accounts extends REST_Controller {
 			isset($value->is_taxable) 			? $obj->is_taxable 			= $value->is_taxable : "";			
 			isset($value->status) 				? $obj->status 				= $value->status : "";
 			isset($value->is_system) 			? $obj->is_system 			= $value->is_system : "";
-
+			
 	   		if($obj->save()){
 			   	$data["results"][] = array(
 			   		"id" 					=> $obj->id,		 			

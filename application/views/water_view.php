@@ -4192,10 +4192,10 @@
 				Summary and detail cash receipt reports grouped by sources/ methods of receipts
 			</p>
 			<ul style="margin-left: -20px;">
-				<li><a href="#/wPayment_summary"><span >Cash Receipt By Summary</span></a></li> 
-				<li><a href="#/wPayment_detail"><span >Cash Receipt By Detail</span></a></li>  
-  				<li><a href="#/wPayment_by_source_summary"><span >Cash Receipt By Sources Summary</span></a></li>
-  				<li><a href="#/wPayment_by_source_detail"><span >Cash Receipt By Sources Detail</span></a></li> 
+				<li><a href="#/cash_receipt_summary"><span >Cash Receipt By Summary</span></a></li> 
+				<li><a href="#/cash_receipt_detail"><span >Cash Receipt By Detail</span></a></li>  
+  				<li><a href="#/cash_receipt_source_summary"><span >Cash Receipt By Sources Summary</span></a></li>
+  				<li><a href="#/cash_receipt_source_detail"><span >Cash Receipt By Sources Detail</span></a></li> 
 			</ul>
 
 		</div>
@@ -5181,9 +5181,134 @@
 			    		<span class="glyphicons no-js remove_2" 
 							data-bind="click: cancel"><i></i></span>	
 					</div>
-			        <h2 style="padding:0 15px;">Reconcile</h2>
-			        
-			        <div class="box-generic bg-action-button">
+			        <h2 >Reconcile</h2>
+			        <br>
+
+			        <div class="row-fluid reconcile">
+				        <table >
+				        	<thead>
+					        	<tr>
+					        		<th colspan="1">Actual Cash Count</th>
+					        	</tr>
+				        	</thead>
+				        	<tbody>
+					        	<tr>
+									<td colspan="2">
+										<div>
+											<table>
+												<tr>
+													<td colspan="2"></td>
+					        						<td>Khmer Riel</td>
+												</tr>
+												<tr>
+													<td style="background: #DBEEF3;">Note:</td>
+													<td style="background: #DBEEF3;" >Unit</td>
+													<td style="background: #DBEEF3;" >Total</td>
+												</tr>
+												<tr>
+													<td>1</td>
+													<td><input type="number"></td>
+													<td></td>
+												</tr>
+												<tr>
+													<td>2</td>
+													<td><input type="number"></td>
+													<td></td>
+												</tr>
+												<tr>
+													<td>5</td>
+													<td><input type="number"></td>
+													<td></td>
+												</tr>
+												<tr>
+													<td>10</td>
+													<td><input type="number"></td>
+													<td></td>
+												</tr>
+												<tr>
+													<td>20</td>
+													<td><input type="number"></td>
+													<td></td>
+												</tr>
+												<tr>
+													<td>50</td>
+													<td><input type="number"></td>
+													<td></td>
+												</tr>
+												<tr>
+													<td>100</td>
+													<td><input type="number"></td>
+													<td></td>
+												</tr>
+												<tr>
+													<td>500</td>
+													<td><input type="number"></td>
+													<td></td>
+												</tr>
+												<tr>
+													<td>1000</td>
+													<td><input type="number"></td>
+													<td></td>
+												</tr>
+												<tr>
+													<td>2000</td>
+													<td><input type="number"></td>
+													<td></td>
+												</tr>
+												<tr>
+													<td>5000</td>
+													<td><input type="number"></td>
+													<td></td>
+												</tr>
+												<tr>
+													<td>10000</td>
+													<td><input type="number"></td>
+													<td></td>
+												</tr>
+												<tr>
+													<td>20000</td>
+													<td><input type="number"></td>
+													<td></td>
+												</tr>
+												<tr>
+													<td>50000</td>
+													<td><input type="number"></td>
+													<td></td>
+												</tr>
+												<tr>
+													<td colspan="2">Subtotal</td>
+													<td></td>
+												</tr>
+											</table>
+										</div>
+									</td>
+					        	</tr>
+					        	<tr>
+					        		<td style="background: #F2F2F2; text-align: right;" colspan="2">Total<b>(A)</b></td>
+					        	</tr>
+								<tr>
+									<td colspan="2">Cash Reconciliation</td>
+								</tr>
+								<tr>
+									<td width="300">Exchange Rate</td>
+									<td><input type="number"></td>
+								</tr>
+								<tr>
+									<td width="200">Cash Receipt (B)</td>
+									<td></td>
+								</tr>
+								<tr>
+									<td width="200">Cash Receipt Vs Actual Cash count (A-B)</td>
+									<td></td>
+								</tr>
+								<tr>
+									<td width="200">Explanation of differences:</td>
+									<td></td>
+								</tr>
+					        </tbody>
+				        </table>
+			        </div>
+			        <!-- <div class="box-generic bg-action-button">
 						<div id="ntf1" data-role="notification"></div>
 				        <div class="row">
 							<div class="span12" align="right">
@@ -5193,7 +5318,7 @@
 													
 							</div>
 						</div>
-					</div>
+					</div> -->
 				</div>						
 			</div>
 		</div>
@@ -10074,8 +10199,6 @@
 	});
 
 	/* Invoice Section */
-	
-
 	banhji.transactionLine = kendo.observable({
 		dataSource 		: dataStore(apiUrl + "journal_lines"),
 		addById 		: function(transactionId, contactId, accountId, description, dr, cr, issuedDate) {
@@ -10113,8 +10236,8 @@
 		}
 	});
 	banhji.transaction = kendo.observable({
-		dataSource 					: dataStore(apiUrl + "transactions"),
-		makeInvoice 				: function(contactId, payment, amount, type) {
+		dataSource 		: dataStore(apiUrl + "transactions"),
+		makeInvoice 	: function(contactId, payment, amount, type) {
 			var duedate = new Date(), dfd = $.Deferred();
 			duedate.setDate(duedate.getDate() + 7);				
 
@@ -10519,7 +10642,7 @@
 			// 	start_date 			: null,
 			// 	installment_period 	: null,
 			// 	amountToBeRecieved 	: null		
-	  //   	});		
+	 		//   	});		
 			// var obj = this.dataSource.at(0);			
 			// this.set("obj", obj);	
 		},
@@ -13581,7 +13704,7 @@
 
 		Receipt: new kendo.Layout("#Receipt", {model: banhji.Receipt}),
 		Reports: new kendo.Layout("#Reports", {model: banhji.Reports}),
-
+		Reconcile: new kendo.Layout("#Reconcile", {model: banhji.Reconcile}),
 		//custom form
 		invoiceCustom: new kendo.Layout("#invoiceCustom", {model: banhji.invoiceCustom}),
 		invoiceForm: new kendo.Layout("#invoiceForm", {model: banhji.invoiceForm}),

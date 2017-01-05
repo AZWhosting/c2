@@ -108,3 +108,22 @@ p.addItem.glyphicons.circle_remove i:before {
 .font-small .cover-customer {
 	padding: 0;
 }
+
+.reconcile table{
+  width: 100%;
+  float: left;
+  text-align: center;
+  margin-bottom: 10px;
+}
+.reconcile table tr th{
+	background: #3C849A;
+	padding: 5px;
+	color: #fff; 
+	border: 1px solid #000;
+	text-align: center;
+}
+.reconcile table tr td{
+	padding: 5px;
+	border: 1px solid #000;
+	text-align: center;
+}

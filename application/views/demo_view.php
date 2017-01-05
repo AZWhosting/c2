@@ -952,38 +952,38 @@
 		<td>
 			<div class="media-body">
 				#if(sub_of_id==0){#
-					<span class="strong">#=number#</span>
+					<span class="strong" >#=number#</span>
 					-
-					<span class="strong">
+					<a class="strong" title='#=name#'>
 						#if(name.length>25){#
 							#=name.substring(0, 25)#...
 						#}else{#
 							#=name#
 						#}#
-					</span>
+					</a>
 				#}else{#
 					#if(banhji.accountingCenter.checkIsSub(sub_of_id)){#
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						<span>#=number#</span>
 						-
-						<span>
+						<a title='#=name#'>
 							#if(name.length>15){#
 								#=name.substring(0, 15)#...
 							#}else{#
 								#=name#
 							#}#
-						</span>
+						</a>
 					#}else{#
 						&nbsp;&nbsp;
 						<span>#=number#</span>
 						-
-						<span>
+						<a title='#=name#'>
 							#if(name.length>25){#
 								#=name.substring(0, 25)#...
 							#}else{#
 								#=name#
 							#}#
-						</span>
+						</a>
 					#}#
 				#}#				
 			</div>
@@ -1023,7 +1023,7 @@
 							</div>
 							<!-- // Group END -->
 						</div>
-				    	<div class="span6">														
+				    	<div class="span5" style="padding: 0 5px 0 15px;width: 46%;">														
 							<!-- Group -->
 							<div class="control-group">										
 								<label for="txtNumber"><span data-bind="text: lang.lang.account_code"></span><span style="color:red">*</span></label>
@@ -1034,6 +1034,9 @@
 										required data-required-msg="required" style="width: 100%;">
 							</div>
 							<!-- // Group END -->
+						</div>
+						<div class="span1" style="padding-left: 0;width: 25px;float: left;">
+							<a class="glyphicons no-js qrcode" data-bind="click: generateNumber" title="Generate Number" style="float: left; margin: 26px 0 0 0 ;"><i></i></a>
 						</div>
 				    </div>
 
@@ -1077,8 +1080,7 @@
 					                   data-text-field="name"
 					                   data-value-field="id"
 					                   data-bind="value: obj.sub_of_id,
-					                              source: subAccountDS,
-					                              events:{change: generateNumber}"
+					                              source: subAccountDS"
 					                   data-option-label="Select Sub Account..."
 					                   style="width: 100%;" />
 							</div>
@@ -42481,7 +42483,7 @@
 			page:1,
 			pageSize: 100
 		}),
-		cashSalePrefixDS				: new kendo.data.DataSource({
+		cashSalePrefixDS			: new kendo.data.DataSource({
 			transport: {
 				read 	: {
 					url: apiUrl + "prefixes",
@@ -44107,7 +44109,7 @@
 		selectCustomerMessage 		: "Please select a customer.",
 		selectSupplierMessage 		: "Please select a supplier.",
 		selectItemMessage 			: "Please select an item.",
-		duplicateSelectedItemMessage: "You already selected this item",
+		duplicateSelectedItemMessage: "You already selected this item.",
 		loadData 					: function(){
 			this.loadRate();
 			this.itemTypeDS.read();
@@ -44162,7 +44164,12 @@
 			return rate;
 		},
 		loadAccount 				: function(){
-			var self = this;
+			var self = this, raw = this.get("accountList");
+
+			//Clear array
+			if(raw.length>0){
+				raw.splice(0,raw.length);
+			}
 
 			var dataSource = new kendo.data.DataSource({
 			  	transport: {
@@ -44179,12 +44186,13 @@
 
 						if(response.results){
 							for (var i = 0; i < response.results.length; i++) {
-								self.accountList.push(response.results[i]);
+								raw.push(response.results[i]);
 							}
 						}
 					}
 			  	}
 			});
+
 			dataSource.fetch();
 		},
 		fetchAllItems				: function(){
@@ -44328,8 +44336,6 @@
 		nature 				: "",		
 		user_id 			: banhji.source.user_id,				
 		pageLoad 			: function(id){
-			var self = this;
-
 			if(id){
 				this.loadObj(id);
 			}
@@ -44619,10 +44625,10 @@
 
 			if(obj.sub_of_id>0){
 				para.push({ field:"sub_of_id", value: obj.sub_of_id });
-				para.push({ field:"id", operator:"or_like", value: obj.sub_of_id });
+				para.push({ field:"id", operator:"or_where", value: obj.sub_of_id });
+			}else{
+				para.push({ field:"account_type_id", value:obj.account_type_id });
 			}
-
-			para.push({ field:"account_type_id", value:obj.account_type_id });
 
 			this.numberDS.query({
 				filter: para,
@@ -44645,17 +44651,19 @@
     		var self = this;
 
     		this.dataSource.query({
-				filter: { field:"id", value: id }
+				filter: { field:"id", value: id },
+				page:1,
+				pageSize:1
 			}).then(function(e){
 				var view = self.dataSource.view();
 						    	
 		    	self.set("obj", view[0]);
 
-		    	//Sub accounts
-				self.subAccountDS.filter([
-					{ field:"account_type_id", value:view[0].account_type_id },
-					{ field:"status", value:1 }
-				]);
+		    	if(view[0].account_type_id==10){
+    				self.set("showBank", true);
+    			}else{
+    				self.set("showBank", false);
+    			}
 			});
     	},
     	typeChanges 			: function(){    		
@@ -44666,10 +44674,6 @@
     			if(obj.account_type_id==10){
     				this.set("showBank", true);
     			}
-    			this.subAccountDS.filter([
-    				{ field:"account_type_id", value:obj.account_type_id },
-    				{ field:"status", value:1 }
-    			]);
     			this.generateNumber();
     		}
     	},    	 	   	
@@ -44677,9 +44681,9 @@
       		this.dataSource.data([]);
 			
 			this.set("isEdit", false);
-			this.set("obj", null);
+			this.set("notDuplicateNumber", true);
 
-      		this.dataSource.insert(0,{
+      		this.dataSource.insert(0, {
       			account_type_id 		: 0,
       			sub_of_id 				: 0,
       			number 					: "",
@@ -44688,7 +44692,7 @@
       			description				: "",
       			bank_name 				: "",
       			bank_account_number 	: "",
-      			locale 					: "km-KH",
+      			locale 					: banhji.locale,
       			is_taxable 				: 0,
       			status 					: 1,
       			is_system				: 0
@@ -44735,7 +44739,8 @@
 					self.addEmpty();
 				}
 
-				banhji.source.accountDS.fetch();
+				//Refresh all account
+				banhji.source.loadAccount();
 			});
 		},
 		cancel 					: function(){
@@ -44764,8 +44769,13 @@
 		        		var data = self.dataSource.get(obj.id);
 		        		self.dataSource.remove(data);
 				        self.dataSource.sync();
-
-				        window.history.back();
+				        self.dataSource.bind("requestEnd", function(e){
+				        	if(e.type==="destroy"){
+				        		//Refresh all account
+						        banhji.source.loadAccount();
+						        window.history.back();
+				        	}
+				        });
 		        	}
 		        });
 			}	
