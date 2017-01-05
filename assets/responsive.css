@@ -140,9 +140,15 @@
   margin-top: 40px;
 }
 
+#cbbAccounts-list{
+  width: 550px !important;
+}
 
+<<<<<<< HEAD
 
 /*#cbbContact-list,*/
+>>>>>>> refs/remotes/origin/master
+=======
 >>>>>>> refs/remotes/origin/master
 #cbbAccount-list,
 #cbbCurrency-list,
@@ -155,7 +161,6 @@
 #ddlAP-list,
 #ddlTradeDiscountAccount-list,
 #ddlPrePaymentAccount-list,
-#cbbAccounts-list,
 #ddlVendor-list,
 #ddlPaymentMethod-list,
 #ddlAccount-list,
@@ -178,7 +183,6 @@
 #cbbContact-list{
   width: 350px !important;
 }
-
 
 
 /*#ccbItem-list,

@@ -4260,7 +4260,8 @@
 					                   data-option-label="Select Template..." />
 							</div>
 							<div class="span9" align="right">
-								<span class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit, click: save" style="width: 80px;"><i></i><span >Save</span></span>			
+								<span class="btn btn-icon btn-default glyphicons print" style="width: 120px;color:#444;margin-bottom: 0;"><i></i><span data-bind="click:printReciept, text: lang.lang.save_print">Save Print</span></span>
+								<span class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit, click: save" style="width: 100px;"><i></i><span >Save</span></span>			
 							</div>
 						</div>
 					</div>
@@ -4692,6 +4693,16 @@
 				    <br>	
 				    <div class="row" style="margin-left:0;">			   				
 						<div class="span4">	
+							<div class="span12">
+								<select class="span12 selectType" 
+									data-role="dropdownlist" 
+									data-value-primitive="true" 
+									data-text-field="name" 
+									data-value-field="id" 
+									data-bind="value: obj.type, 
+												source: selectTypeList, 
+												events:{change: onChange}" ></select>
+							</div>
 							<div class="span12" style="margin-bottom: 10px;">
 								<input type="text" id="formName" name="Form Name" class="k-textbox" placeholder="Form Name" required validationMessage="" data-bind="value: obj.name" style="width: 100%;" />
 							</div>
@@ -11400,10 +11411,10 @@
 			total = 0, subTotal = 0, discount = 0, pay = 0, remain = 0;											
 
 			$.each(this.dataSource.data(), function(index, value) {
-				//var amount = value.reference[0].amount - (value.amount_paid + value.reference[0].deposit);								
-				
+				//var amount = value.reference[0].amount - (value.amount_paid + value.reference[0].deposit);
 				subTotal += kendo.parseFloat(value.amount);					
-				discount += value.discount;
+				if(value.discount) { discount += value.discount; }
+				else{discount = 0; }
 				pay += value.amount;					
 	        });
 
@@ -11423,7 +11434,8 @@
         	.then(function(e){
         		if(self.dataSource.data().length > 0){
 	        		var view = self.dataSource.view();
-	        		console.log(view);
+	        		self.invoiceArrayDS.push(view[0]);
+	        		self.changes();
         		}
         	});
 		},
@@ -12253,6 +12265,10 @@
 		company 			: banhji.institute,
 		selectCustom		: "water_mg",
 		isEdit 				: false,
+		selectTypeList 		: [
+			{ id: "Invoice", name: "Invoice" },
+			{ id: "Cash_Receipt", name: "Cash Receipt" }
+	    ],
 		user_id				: banhji.source.user_id,
 		pageLoad 			: function(id){
 			if(id){
