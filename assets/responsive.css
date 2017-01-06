@@ -8,20 +8,23 @@
 .top-itemprice{
   width: 100%;
 }
-/*.k-icon.k-i-close{
-	display: none !important;
+
+#ddlCurrency-list{
+  width: 220px !important;
 }
-#ddlSegment_taglist li span .k-icon.k-i-close{
-  display: block !important;
-}*/
-/*.k-list-container.k-popup.k-group.k-reset{
-	overflow-y: scroll !important;
-}*/
+
+#ddlMeasurement-list{
+   width: 205px !important;
+}
+
 .padding-bottom-none-phone .glyphicons.user.userss i:before,
 .padding-bottom-none-phone .icon-play-circles:before{
   color: #fff !important;
 }
-
+#issuedDate_dateview,
+#txtDueDate_dateview{
+  margin-top: 40px!important;
+}
 .glyphicons.coins.addcolor-coins i:before{
   color: #31708f !important;
 }
@@ -142,7 +145,6 @@
 #ddlTradeDiscount-list,
 #ddlSettlementDiscount-list,
 #currency-list,
-#ddlCurrency-list,
 #ddlAP-list,
 #ddlTradeDiscountAccount-list,
 #ddlPrePaymentAccount-list,
@@ -237,7 +239,7 @@
 #ccbItem-list{
   width: 550px !important;
 }
-#ddlMeasurement-list,
+
 #ddlMesurement-list,
 #txtPrice-list,
 #ddlOption-list,

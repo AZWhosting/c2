@@ -17,8 +17,8 @@ class Branch extends DataMapper {
 			"class" => 'fee',
 			"other_field" => "branch"
 		),
-		'contact' => array(
-			"class" => 'contact',
+		'customer' => array(
+			"class" => 'customer',
 			"other_field" => "branch"
 		),
 		'location' => array(

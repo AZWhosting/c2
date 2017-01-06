@@ -8275,7 +8275,7 @@
 
 							    <!-- Widget Heading -->
 							    <div class="widget-head">
-							    	<input type="text" name="" data-bind="value: obj.name" style="border: none; width: 69%; font-size: 20px; font-weight: 600; margin-top: -11px; margin-left: 11px; " disabled="disabled">
+							    	<input type="text" name="" data-bind="value: obj.name" style="border: none; width: 69%; font-size: 20px; font-weight: 600; margin-top: -11px; margin-left: 11px; background: #fff; " disabled="disabled">
 							        <!-- Tabs -->
 							        <ul class="pull-right">
 							            <li class="glyphicons text_bigger active"><span data-toggle="tab" data-target="#tab1-4"><i></i></span>
@@ -15157,7 +15157,7 @@
 
 							    <!-- Widget Heading -->
 							    <div class="widget-head">
-							    	<input type="text" name="" data-bind="value: obj.name" disabled="disabled" style="border: none; width: 69%; font-size: 20px; font-weight: 600; margin-top: -11px; margin-left: 11px;">
+							    	<input type="text" name="" data-bind="value: obj.name" disabled="disabled" style="border: none; width: 69%; font-size: 20px; font-weight: 600; margin-top: -11px; margin-left: 11px; background: #fff;">
 							        <!-- Tabs -->
 							        <ul class="pull-right">
 
@@ -29370,7 +29370,7 @@
 
 							    <!-- Widget Heading -->
 							    <div class="widget-head">
-							    <input type="text" disabled="disabled" data-bind="value: obj.name" style="border: none; width: 76%; font-size: 20px; font-weight: 600; margin-top: -11px; margin-left: 11px;">
+							    <input type="text" disabled="disabled" data-bind="value: obj.name" style="border: none; width: 76%; font-size: 20px; font-weight: 600; margin-top: -11px; margin-left: 11px; background: #fff;">
 							        <!-- Tabs -->
 							        <ul class="pull-right">
 							            <li class="glyphicons circle_info active"><span data-toggle="tab" data-target="#tab1-3"><i></i></span>
@@ -56356,7 +56356,6 @@
 		itemDS  			: banhji.source.itemForSaleDS,
 		taxItemDS 			: banhji.source.customerTaxDS,
 		catalogDS			: dataStore(apiUrl + "items"),
-		itemListDS			: dataStore(apiUrl + "items"),
 		assemblyDS			: dataStore(apiUrl + "item_prices"),
 		txnTemplateDS		: new kendo.data.DataSource({
 			transport: {
@@ -56634,7 +56633,7 @@
 			}				
 		},
 		//Item		
-		itemChanges 		: function(e){								
+		itemChanges 		: function(e){
 			var self = this, 
 			data = e.data,
 			obj = this.get("obj");
@@ -56764,7 +56763,7 @@
 	        }else{
 	        	data.set("item_id", "");
 	        	alert(banhji.source.duplicateSelectedItemMessage);
-	        }                	        	
+	        }
 		},
 		measurementChanges 	: function(e){										
 			var data = e.data, obj = this.get("obj");			
@@ -57518,22 +57517,25 @@
 			}				
 		},
 		//Item		
-		itemChanges 		: function(e){								
+		itemChanges 		: function(e){
 			var self = this, 
 			data = e.data,
-			obj = this.get("obj"), 
-			item = this.itemDS.get(data.item_id);
+			obj = this.get("obj");
 
-			if(data.item_id>0){
-				var price = 0, rate = 1, measurement_id = item.measurement_id;
+			var notDuplicate = true, existingList = {};
+			$.each(this.lineDS.data(), function(index, value){
+				if(existingList[value.item_id]===undefined){
+					existingList[value.item_id]=value.item_id;											
+				}else{
+					notDuplicate = false;
 
-				if(item.item_type_id=="1" || item.item_type_id=="4"){
-					if(item.item_prices.length>0){
-						rate = obj.rate / banhji.source.getRate(item.item_prices[0].locale, new Date(obj.issued_date));
-						price = item.item_prices[0].price*rate;
-						measurement_id = item.item_prices[0].measurement_id;
-					}
+					return false;
 				}
+			});
+			
+			if(notDuplicate && data.item_id>0){
+				var item = this.itemDS.get(data.item_id),
+				price = item.price, unit_value = 1, rate = 1, measurement_id = item.measurement_id, locale = item.locale;
 
 		        if(item.is_catalog=="1"){
 		        	var catalogList = [];
@@ -57549,20 +57551,27 @@
 		        		self.lineDS.remove(data);
 
 		        		$.each(self.catalogDS.view(), function(index, value){
-		        			var catalogRate = obj.rate / banhji.source.getRate(value.item_prices[0].locale, new Date(obj.issued_date));										
-							
+							if(value.item_prices.length>0){
+								rate = obj.rate / banhji.source.getRate(item.item_prices[0].locale, new Date(obj.issued_date));
+								price = item.item_prices[0].price*rate;
+								unit_value = item.item_prices[0].unit_value;
+								measurement_id = item.item_prices[0].measurement_id;
+								locale = item.item_prices[0].locale;
+		        			}
+
 							self.lineDS.add({					
 								transaction_id 		: obj.id,
 								tax_item_id 		: 0,
 								item_id 			: value.id,
-								measurement_id 		: value.item_prices[0].measurement_id,								
+								measurement_id 		: measurement_id,								
 								description 		: value.sale_description,				
 								quantity 	 		: 1,
-								price 				: value.item_prices[0].price*catalogRate,												
-								amount 				: value.item_prices[0].price*catalogRate,
+								unit_value 			: unit_value,
+								price 				: price,												
+								amount 				: price,
 								discount 			: 0,
-								rate				: catalogRate,
-								locale				: value.locale,
+								rate				: rate,
+								locale				: locale,
 								movement 			: -1,								
 
 								item_prices 		: value.item_prices
@@ -57574,27 +57583,71 @@
 		        }else if(item.is_assembly=="1"){
 		        	rate = obj.rate / banhji.source.getRate(item.locale, new Date(obj.issued_date));
 
-		        	data.set("measurement_id", item.measurement_id);
+		        	data.set("measurement_id", measurement_id);
 		    		data.set("description", item.sale_description);
-		    		data.set("quantity", 1);		    			    		
-			        data.set("price", item.price);
+		    		data.set("quantity", 1);
+		    		data.set("unit_value", 1);		    			    		
+			        data.set("price", price*rate);
 			        data.set("rate", rate);
-			        data.set("locale", item.locale);
-			       	data.set("item_prices", []);
+			        data.set("locale", locale);
+			        data.set("movement", 0);
 
-			        this.changes();		     
-		        }else{	        	
+			        this.assemblyDS.query({
+		        		filter: { field:"assembly_id", value: data.item_id },
+		        		page:1,
+		        		pageSize:100
+		        	}).then(function(){
+		        		var view = self.assemblyDS.view();
+		        		
+		        		$.each(view, function(index, value){
+		        			rate = obj.rate / banhji.source.getRate(value.locale, new Date(obj.issued_date));
+
+							self.assemblyLineDS.add({					
+								transaction_id 		: obj.id,								
+								item_id 			: value.item_id,
+								assembly_id 		: value.assembly_id,
+								measurement_id 		: value.measurement_id,								
+								description 		: "",				
+								quantity 	 		: value.quantity,
+								unit_value 			: value.unit_value,
+								price 				: value.price,												
+								amount 				: value.price,
+								rate				: rate,
+								locale				: value.locale,
+								movement 			: -1,
+								
+								item_prices 		: []
+							});
+
+							self.changes();								
+		        		});
+		        	});		     
+		        }else{
+		        	if(item.item_type_id=="1" || item.item_type_id=="4"){
+						if(item.item_prices.length>0){
+							rate = obj.rate / banhji.source.getRate(item.item_prices[0].locale, new Date(obj.issued_date));
+							price = item.item_prices[0].price*rate;
+							unit_value = item.item_prices[0].unit_value;
+							measurement_id = item.item_prices[0].measurement_id;
+							locale = item.item_prices[0].locale;
+						}
+					}
+
 		    		data.set("measurement_id", measurement_id);
 		    		data.set("description", item.sale_description);
-		    		data.set("quantity", 1);		    			    		
+		    		data.set("quantity", 1);
+		    		data.set("unit_value", unit_value);
 			        data.set("price", price);
-			        data.set("rate", rate);
-			        data.set("locale", item.locale);
+			        data.set("rate", rate);	
+			        data.set("locale", locale);
 			        data.set("item_prices", item.item_prices);			        
 
 			        this.changes();
 		    	}
-	        }                	        	
+	        }else{
+	        	data.set("item_id", "");
+	        	alert(banhji.source.duplicateSelectedItemMessage);
+	        }
 		},
 		measurementChanges 	: function(e){										
 			var data = e.data, obj = this.get("obj");			

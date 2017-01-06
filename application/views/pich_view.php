@@ -2840,7 +2840,7 @@
     					<td colspan="4">
     						ប្រាក់ត្រូវបង់សរុប ខែនេះ
     						<span style="font-size: 10px;">
-    							Total amount due
+    							Total charge for this period
     						</span>
     					</td>
     					<td></td>
@@ -2849,7 +2849,7 @@
     					<td colspan="4">
     						ប្រាក់ត្រូវបង់សរុប
     						<span style="font-size: 10px;">
-    							Total charge for this period
+    							Total amount due
     						</span>
     					</td>
     					<td></td>

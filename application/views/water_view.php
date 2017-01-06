@@ -5582,14 +5582,14 @@
 								<tr>
 									<th><span>CustomerID</span></th>
 									<th><span>Customer Name</span></th>
-									<th><span>Type</span></th>
+									<th><span>License</span></th>
 									<th><span>Address</span></th>
 									<th><span>Phone</span></th>
 									<th><span>E-Mail</span></th>
 								</tr>
 							</thead>
 							<tbody data-role="listview"
-										 data-bind="source: contact"
+										 data-bind="source: dataSource"
 										 data-template="customerList-temp"
 							></tbody>
 						</table>
@@ -5604,8 +5604,8 @@
 	<tr style="font-weight: bold">
 		<td>#=number#</td>
 		<td data-bind="click: selectedRow">#=name#</td>
-		<td>#=contact_type#</td>
-		<td>#=address#</td>
+		<td>#=branch.name#</td>
+		<td>#=branch.address#</td>
 		<td>#=phone#</td>
 		<td>#=email#</td>
 	</tr>
@@ -13935,19 +13935,12 @@
 	banhji.customerList = kendo.observable({
 		lang 					: langVM,
 		institute 				: banhji.institute,
-		contact 				: dataStore(apiUrl + "customers"),
-		dataSource 				: dataStore(apiUrl+"contacts"),
+		dataSource 				: dataStore(apiUrl + "wreports/customer"),
 		licenseDS 				: dataStore(apiUrl+"branches"),
 		blocDS 					: dataStore(apiUrl+"locations"),
 		licenseSelect 			: null,
 		blocSelect 				: null,
-		contactTypeDS			: banhji.source.customerTypeDS,
-		contactAAA 				: banhji.source.customerDS,
-		statusList 				: banhji.source.statusList,
-		contact_type_id 		: null,
-		status 					: null,		
 		pageLoad 				: function(){
-			this.contact.filter({field: "use_water", value: 1});
 			this.licenseDS.read();
 		},
 		printGrid			: function() {
@@ -13997,27 +13990,23 @@
 		},
 		search 					: function(){
 			var para = [],
-			status = this.get("status"),
-			contact_type_id = this.get("contact_type_id");
+			license = this.get("licenseSelect"),
+			bloc = this.get("blocSelect");
 
-			if(status!==null){
-				para.push({ field:"status", value: status });
+			if(license){
+				para.push({ field:"branch_id", value: license.id });
 			}
 
-			if(contact_type_id){
-				para.push({ field:"contact_type_id", value: contact_type_id });
+			if(bloc){
+				para.push({ field:"location_id", value: bloc.id });
 			}
-
+			console.log(para);
 			this.dataSource.filter(para);
-			this.set("status", null);
-			this.set("contact_type_id", null);
 		}, 
-		selectedRow			: function(e){
-			var data = e.data;
-			
-			this.set("obj", data);
-			this.loadData();
-		},
+		cancel 			: function(){
+			this.contact.cancelChanges();
+			window.history.back();
+		}
 	});	
 	banhji.customerNoConnection = kendo.observable({
 		lang 					: langVM,
