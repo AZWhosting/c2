@@ -33499,7 +33499,7 @@
 					        		data-bind="source: dataSource"></tbody>
 					       	<tfoot>
 					       		<tr style="font-weight: bold; font-size: large;">
-					       			<td colspan="4">TOTAL</td>
+					       			<td colspan="5">TOTAL</td>
 					       			<td align="right" data-bind="text: totalAmount"></td>
 					       			<td align="right" data-bind="text: totalBalance"></td>
 					       		</tr>
