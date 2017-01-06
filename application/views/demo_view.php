@@ -39834,7 +39834,7 @@
 						<li class="active"><a class="glyphicons user" href="#tabContact" data-toggle="tab"><i></i><span style="line-height: 55px;">Contact</span></a></li>
 						<li><a class="glyphicons list" href="#tabInventery" data-toggle="tab"><i></i><span style="line-height: 55px;">Inventory</span></a></li>
 						<li><a class="glyphicons credit_card" href="#tabJournal" data-toggle="tab"><i></i><span style="line-height: 55px;">Journal</span></a></li>
-						<li><a class="glyphicons notes" href="#tabChartAccount" data-toggle="tab"><i></i><span style="line-height: 55px;">Chart of Account</span></a></li>
+						<!-- <li><a class="glyphicons notes" href="#tabChartAccount" data-toggle="tab"><i></i><span style="line-height: 55px;">Chart of Account</span></a></li> -->
 					</ul>
 				</div>
 				<!-- // Tabs Heading END -->
@@ -39926,7 +39926,7 @@
 						<!-- // Tab content END -->
 						
 						<!-- Tab content -->
-						<div id="tabChartAccount" style="border: 1px solid #ccc" class="tab-pane widget-body-regular">
+						<!-- <div id="tabChartAccount" style="border: 1px solid #ccc" class="tab-pane widget-body-regular">
 							
 							<h4 class="separator bottom" style="margin-top: 10px;">Please upload Inventory file</h4>
 							<a href="<?php echo base_url(); ?>assets/imports/items_import_form_excel.xlsx" download>
@@ -39943,7 +39943,7 @@
 							</div>
 							<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" style="width: 160px!important;"><i></i>
 							<span data-bind="click: caccount.save">Import Chart of Account</span></span>
-						</div>
+						</div> -->
 						<!-- // Tab content END -->
 						
 					</div>
@@ -43028,6 +43028,7 @@
 			pageSize: 100
 		}),
 		//Accounting
+		accountList 				: [],
 		accountTypeDS				: new kendo.data.DataSource({
 			transport: {
 				read 	: {
@@ -43184,7 +43185,6 @@
 			{ id: "Reimbursement", name: "Reimbursement" },
 			{ id: "Journal", name: "Journal" }
 	    ],
-	    accountList 				: [],
 		genderList					: ["M", "F"],
 		typeList 					: ['Invoice','Commercial_Invoice','Vat_Invoice','Electricity_Invoice','Water_Invoice','Cash_Sale','Commercial_Cash_Sale','Vat_Cash_Sale','Receipt_Allocation','Sale_Order','Quote','GDN','Sale_Return','Purchase_Order','GRN','Cash_Purchase','Credit_Purchase','Purchase_Return','Payment_Allocation','Deposit','Electricty_Deposit','Water_Deposit','Customer_Deposit','Vendor_Deposit','Withdraw','Transfer','Journal','Item_Adjustment','Cash_Advance','Reimbursement','Direct_Expense','Advance_Settlement','Additional_Cost','Cash_Payment','Cash_Receipt','Credit_Note','Debit_Note','Offset_Bill','Offset_Invoice','Cash_Transfer','Internal_Usage'],
 		user_id						: banhji.userData.id,
@@ -49130,7 +49130,7 @@
 		settlementDiscountDS 	: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
 		  	filter: [
-				{ field:"account_type_id", value: 109 },
+				{ field:"id", value: 109 },
 				{ field:"status", value: 1 }
 			],
 		  	sort: { field:"number", dir:"asc" }
@@ -55976,7 +55976,7 @@
 		tradeDiscountDS 		: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
 		  	filter: [
-				{ field:"account_type_id", value: 72 },
+				{ field:"id", value: 72 },
 				{ field:"status", value: 1 }
 			],
 		  	sort: { field:"number", dir:"asc" }
@@ -55984,7 +55984,7 @@
 		settlementDiscountDS 	: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
 		  	filter: [
-				{ field:"account_type_id", value: 99 },
+				{ field:"id", value: 99 },
 				{ field:"status", value: 1 }
 			],
 		  	sort: { field:"number", dir:"asc" }
