@@ -126,7 +126,7 @@ class Item_lines extends REST_Controller {
 				$item = new Item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 				$item->get_by_id($value->item_id);
 
-				if($item->item_type_id=="1"){
+				if($item->item_type_id=="1" && $item->is_assembly<>"1"){
 					$transaction = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 					$transaction->get_by_id($value->transaction_id);
 
@@ -154,6 +154,10 @@ class Item_lines extends REST_Controller {
 
 						$onHand = floatval($itemIn->quantity) - floatval($itemOut->quantity);
 						$totalQty = $onHand + floatval($value->quantity);
+
+						if($totalQty==0){
+							$totalQty = 1;
+						}
 
 						if($transaction->type=="Commercial_Invoice" || $transaction->type=="Vat_Invoice" || $transaction->type=="Invoice" || $transaction->type=="Commercial_Cash_Sale" || $transaction->type=="Vat_Cash_Sale" || $transaction->type=="Cash_Sale"){
 							//Avg Price

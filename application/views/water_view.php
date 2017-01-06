@@ -10241,54 +10241,50 @@
         	this.tariffItemDS.bind("requestEnd", function(e){
         		//if(e.type != 'read') {
 	        		if(e.response) {
+	        			if(self.tariffItemDS.data().length < 1){
 	        				self.addTariffItem();
+	        			}else{
+	        				alert("Tariff Item Usage already exist!");
+	        			}
 	        		}
 	        	//}
         	});
-        	this.tariffItemDS.bind("error", function(e){
-        		self.addTariffItem();
-        	});
         },
         addTariffItem 		: function(e){
-        	alert("a");
         	var data = e.data.id, self = this;
-        	if(this.tariffItemDS.data().length < 1){
-	        	this.tariffItemDS.data([]);
-	        	this.tariffItemDS.add({
-	        		name 		: this.get("tariffItemName"),
-	        		type     	: "tariff",
-	        		tariff_id	: this.get('current').id,
-	        		account   	: this.get('current').account,
-	        		is_flat   	: this.get("tariffItemFlat"),
-	        		unit 		: null,
-	        		usage 		: this.get("tariffItemUsage"),
-	        		amount 		: this.get("tariffItemAmount"),
-	        		currency 	: this.get("current").currency,
-	        		_currency   : []
-	        	});
-	        	this.tariffItemDS.sync();
-	        	this.tariffItemDS.bind("requestEnd", function(e){
-	        		if(e.type != 'read') {
-		        		if(e.response) {
-		        			self.set("tariffItemName", "");
-				        	self.set("tariffItemFlat", 0);
-				        	self.set("tariffItemUsage", "");
-				        	self.set("tariffItemAmount", "");
-				        	self.set("windowTariffItemVisible", false);
-				        	self.closeTariffWindowItem();
-				        	// console.log(e);
-				        	self.closeTariffWindowItem();
-				        	self.tariffItemDS.filter({field: "tariff_id", value: self.get('current').id});
-				        	//self.set("tariffNameShow", e.data.name);
-		        		}
-		        	}
-	        	});
-	        	this.tariffItemDS.bind("error", function(e){
-	        		console.log("error");
-	        	});
-	        }else{
-	        	alert("eerroorr");
-	        }
+        	this.tariffItemDS.data([]);
+        	this.tariffItemDS.add({
+        		name 		: this.get("tariffItemName"),
+        		type     	: "tariff",
+        		tariff_id	: this.get('current').id,
+        		account   	: this.get('current').account,
+        		is_flat   	: this.get("tariffItemFlat"),
+        		unit 		: null,
+        		usage 		: this.get("tariffItemUsage"),
+        		amount 		: this.get("tariffItemAmount"),
+        		currency 	: this.get("current").currency,
+        		_currency   : []
+        	});
+        	this.tariffItemDS.sync();
+        	this.tariffItemDS.bind("requestEnd", function(e){
+        		if(e.type != 'read') {
+	        		if(e.response) {
+	        			self.set("tariffItemName", "");
+			        	self.set("tariffItemFlat", 0);
+			        	self.set("tariffItemUsage", "");
+			        	self.set("tariffItemAmount", "");
+			        	self.set("windowTariffItemVisible", false);
+			        	self.closeTariffWindowItem();
+			        	// console.log(e);
+			        	self.closeTariffWindowItem();
+			        	self.tariffItemDS.filter({field: "tariff_id", value: self.get('current').id});
+			        	//self.set("tariffNameShow", e.data.name);
+	        		}
+	        	}
+        	});
+        	this.tariffItemDS.bind("error", function(e){
+        		console.log("error");
+        	});
         },
         addTariff 		: function(e){
         	var self = this;
