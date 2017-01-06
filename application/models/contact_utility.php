@@ -7,14 +7,22 @@ class Contact_utility extends DataMapper {
 	public $has_one = array(
 		'contact' => array(
 			'class' => "contact",
-			'other_field' => 'utility'
+			'other_field' => 'contact_utility'
+		),
+		'branch' => array(
+			'class' => "branch",
+			'other_field' => 'contact_utility'
+		),
+		'location' => array(
+			'class' => "location",
+			'other_field' => 'contact_utility'
 		)
 	);
 
 	// public $has_many = array(
-	// 	'journal_line' => array(
-	// 		'class' => "journal_line",
-	// 		'other_field' => 'account'
+	// 	'contact' => array(
+	// 		'class' => "contact",
+	// 		'other_field' => 'utility'
 	// 	)
 	// );
 

@@ -248,11 +248,13 @@ pre {
 }
 .table-content table tfoot tr{
 	border: 1px solid #30859C;
+	
 }
 .table-content table tfoot tr td{
 	color: #30859C;
 	padding: 5px;
 	border: 1px solid #30859C;
+	font-size: 11px;
 }
 
 .formstyle div img {

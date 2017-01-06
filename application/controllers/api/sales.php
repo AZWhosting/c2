@@ -117,7 +117,7 @@ class Sales extends REST_Controller {
 
 			// $obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$obj->where_in_related("contact", 'contact_type_id', $type);
-			$obj->where_in("type", array("Invoice", "Commercial_Invoice", "Vat_Invoice", "Commercial_Cash_Sale", "Vat_Cash_Sale", "Cash_Sale", "Sale_Return"));
+			$obj->where_in("type", array("Invoice", "Cash_Sale", "Commercial_Invoice", "Vat_Invoice", "Commercial_Cash_Sale", "Vat_Cash_Sale", "Cash_Sale", "Sale_Return"));
 			$obj->where('is_recurring', 0);
 			$obj->where("deleted",0);
 			
@@ -317,8 +317,10 @@ class Sales extends REST_Controller {
 					$obj->where($f['field'], $f['value']);
 				}
 			}
-			$obj->get_paged_iterated($page, $limit);
-			$data["count"] = $obj->paged->total_rows;
+			// $obj->get_paged_iterated($page, $limit);
+			// $data["count"] = $obj->paged->total_rows;
+			$obj->get_iterated();
+			$data["count"] = $obj->result_count();
 			
 			if($obj->result_count()>0){
 				foreach ($obj as $value) {
@@ -403,6 +405,7 @@ class Sales extends REST_Controller {
 		$customerBalance = 0;
 		$totalSale = 0;
 		$saleReturn =0;
+		$totalQuote	= 0;
 
 		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
@@ -456,7 +459,7 @@ class Sales extends REST_Controller {
 			foreach ($segmentItem as $seg) {
 				$txn = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
-				$txn->where_in("type", array("Invoice", "Cash_Sale", "Deposit", "Cash_Receipt", "Sale_Return", "Quote", "Sale_Order", "Commercial_Invoice", "Vat_Invoice", "Commercial_Cash_Sale", "Vat_Cash_Sale"));
+				$txn->where_in("type", array("Invoice", "Cash_Sale", "Customer_Deposit", "Cash_Receipt", "Sale_Return", "Quote", "Sale_Order", "Commercial_Invoice", "Vat_Invoice", "Commercial_Cash_Sale", "Vat_Cash_Sale"));
 				$txn->where_in("status", array(0,2));
 				$txn->like("segments", $seg->id, "both");
 				$txn->where("deleted",0);
@@ -500,7 +503,7 @@ class Sales extends REST_Controller {
 			}
 
 			$obj->where_in_related("contact", 'contact_type_id', $type);
-			$obj->where_in("type", array("Invoice", "Cash_Sale", "Deposit", "Cash_Receipt", "Sale_Return", "Quote", "Sale_Order", "Commercial_Invoice", "Vat_Invoice", "Commercial_Cash_Sale", "Vat_Cash_Sale"));
+			$obj->where_in("type", array("Invoice", "Cash_Sale", "Customer_Deposit", "Cash_Receipt", "Sale_Return", "Quote", "Sale_Order", "Commercial_Invoice", "Vat_Invoice", "Commercial_Cash_Sale", "Vat_Cash_Sale"));
 			$obj->where('is_recurring', 0);
 			$obj->where("deleted",0);
 
@@ -536,22 +539,27 @@ class Sales extends REST_Controller {
 								'amount' 	=> floatval($value->amount)/floatval($value->rate)
 							);
 						}
-						if($value->type == "Cash_Sale"){
+						if($value->type == "Cash_Sale" || $value->type == "Commercial_Cash_Sale" || $value->type == "Vat_Cash_Sale"){
 							$totalCashSale += floatval($value->amount)/floatval($value->rate);
 						}
 						if($value->type == "Cash_Receipt"){
 							$totalCashReceipt += floatval($value->amount)/floatval($value->rate);
 						}
-						if($value->type == "Invoice" || $value->type == "Cash_Sale"){
+						if($value->type == "Invoice" || $value->type == "Commercial_Invoice" || $value->type == "Vat_Invoice" || $value->type == "Cash_Sale" || $value->type == "Commercial_Cash_Sale" || $value->type == "Vat_Cash_Sale" ){
 							$totalSale += floatval($value->amount)/floatval($value->rate);
 						}
 						if($value->type == "Sale_Return"){
 							$saleReturn += floatval($value->amount)/floatval($value->rate);
 						}
-						if($value->type == "Invoice"){
+						if($value->type == "Invoice" || $value->type == "Commercial_Invoice" || $value->type == "Vat_Invoice"){
 							if($value->status !=1) {
+								if($value->delete !=1){
 								$customerBalance += floatval($value->amount)/floatval($value->rate);
+								}
 							};
+						}
+						if($value->type == "Quote"){
+							$totalQuote += floatval($value->amount)/floatval($value->rate);
 						}
 						$total += floatval($value->amount)/floatval($value->rate);
 					}
@@ -564,7 +572,7 @@ class Sales extends REST_Controller {
 			);
 		}
 
-		$data['total'] = $totalSale - $saleReturn;
+		$data['total'] = $totalSale + $totalCashSale + $totalCashReceipt + $totalQuote - $saleReturn;
 		$data['totalCashSale'] = $totalCashSale;
 		$data['totalCashReceipt'] = $totalCashReceipt;
 		$data['customerBalance'] = $customerBalance;
@@ -939,17 +947,19 @@ class Sales extends REST_Controller {
 							$temp += floatval($a);
 						}
 						if(isset($customers["$fullname"])) {
-							if($value->type == 'Invoice') {
+							if($value->type == 'Invoice' || $value->type == 'Commercial_Invoice' || $value->type == 'Vat_Invoice') {
 								$customers["$fullname"]['amount']+= floatval($value->amount);
 							} else {
-								$customers["$fullname"]['amount']-= floatval($value->amount);
+								$customers["$fullname"]['amount']= floatval($value->amount);
 							}
+							$customers["$fullname"]['invoiceCount'] += 1;
 						} else {
-							if($value->type == 'Invoice') {
+							if($value->type == 'Invoice' || $value->type == 'Commercial_Invoice' || $value->type == 'Vat_Invoice') {
 								$customers[$fullname]['amount']= floatval($value->amount)/ floatval($value->rate)  - $temp;
 							} else {
 								$customers[$fullname]['amount']= (floatval($value->amount)/ floatval($value->rate))  - $temp;
 							}
+							$customers["$fullname"]['invoiceCount'] = 1;
 						}
 						$total += (floatval($value->amount)/ floatval($value->rate)) - $temp;
 
@@ -960,7 +970,8 @@ class Sales extends REST_Controller {
 		foreach ($customers as $key => $value) {
 			$data["results"][] = array(
 				'customer' => $key,
-				'amount'	=> $value['amount']
+				'amount'	=> $value['amount'],
+				'invoice'	=> $value['invoiceCount'],
 
 			);
 		}
@@ -1140,7 +1151,7 @@ class Sales extends REST_Controller {
 							'amount' 	=> floatval($value->amount)/floatval($value->rate)- $temp
 						);
 					}
-					if($value->type == "Invoice") {
+					if($value->type == "Invoice" || $value->type == "Commercial_Invoice" || $value->type == "Vat_Invoice" ) {
 						if($value->status != 1) {
 							$invoiceOpen += 1;
 						}						
@@ -1245,12 +1256,14 @@ class Sales extends REST_Controller {
 		$totalQty = 0;
 		$totalCost= 0;
 		$totalCOS =0;
+		$totalQ = 0;
 		if($obj->result_count()>0){
 			foreach ($obj as $value) {				
 				$itemLine = $value->item_line->get();
 				foreach($itemLine as $line) {
 					$amount = $value->type =="Sale_Return"?floatval($line->amount)/floatval($line->rate)*-1:floatval($line->amount)/floatval($line->rate);
-					$item = $line->item->get();
+					$item = $line->item->where_in('item_type_id', array(1, 4))->get();
+
 					if(isset($items["$item->name"])) {
 						$items["$item->name"]['qty'] += intval($line->quantity);
 						$items["$item->name"]['amount'] += $amount;
@@ -1264,8 +1277,8 @@ class Sales extends REST_Controller {
 						$items["$item->name"]['gross_profit'] = (floatval($line->price)-floatval($line->cost)) * floatval($line->quantity);
 					}
 					$total += $amount;
-					$totalCOS += intval($line->quantity) * floatval($item->cost);
-					$totalAvg += $amount / intval($line->quantity);
+					$totalCOS += intval($line->quantity) * floatval($item->cost);					
+					$totalQ += $line->quantity;
 				}
 			}
 		}
@@ -1281,7 +1294,8 @@ class Sales extends REST_Controller {
 			);
 		}
 		$data['total_sale'] = $total;
-		$data['total_avg'] = $totalAvg;
+		$data['total_avg'] = $total / $totalQ;
+		$data['totalQ'] = $totalQ;
 		$data['gpm'] = $total > 0? ($total - $totalCOS) / $total : 0;
 		$data['count'] = count($items);
 		//Response Data
@@ -1366,10 +1380,12 @@ class Sales extends REST_Controller {
 		$productReturn =0;
 		if($obj->result_count()>0){
 			foreach ($obj as $value) {
-				$items = $value->item_line->include_related('item', array('name'))->get();
-				foreach($items as $item) {
-					$amount = $value->type =="Sale_Return"?floatval($item->amount)/floatval($value->rate)*-1:floatval($item->amount)/floatval($value->rate);
-					$quantity = $value->type =="Sale_Return"?$item->quantity*-1:$item->quantity;
+				$itemLine = $value->item_line->get();
+			
+				foreach($itemLine as $line) {
+					$amount = $value->type =="Sale_Return"?floatval($line->amount)/floatval($value->rate)*-1:floatval($line->amount)/floatval($value->rate);
+					$quantity = $value->type =="Sale_Return"?$line->quantity*-1:$line->quantity;
+					$item = $line->item->where_in('item_type_id', array(1, 4))->get();
 					$temp = array(
 						'id'   => $value->id,
 						'type' => $value->type,
@@ -1377,21 +1393,21 @@ class Sales extends REST_Controller {
 						'memo' => $value->memo2,
 						'number' 	=> $value->number,
 						'qty'  => $quantity,
-						'price'=> floatval($item->price)/floatval($value->rate),
+						'price'=> floatval($line->price)/floatval($value->rate),
 						'amount'=> $amount
 					);
-					if(isset($products["$item->item_name"])) {
-						$products["$item->item_name"][] = $temp;
+					if(isset($products["$item->name"])) {
+						$products["$item->name"][] = $temp;
 					} else {
-						$products["$item->item_name"][] = $temp;
+						$products["$item->name"][] = $temp;
 					}
 					
 					if($value->type == "Sale_Return"){
-						$totalReturn += floatval($item->amount)/floatval($value->rate);
-						$productReturn += $item->quantity;
+						$totalReturn += floatval($line->amount)/floatval($value->rate);
+						$productReturn += $line->quantity;
 					}else{
-						$total += floatval($item->amount)/floatval($value->rate);
-						$productSale += $item->quantity;
+						$total += floatval($line->amount)/floatval($value->rate);
+						$productSale += $line->quantity;
 						$totalQty == count($products);
 					}
 					
@@ -1681,46 +1697,23 @@ class Sales extends REST_Controller {
 						);
 					}
 				}
+					$data['results'][] = array(
+						'id' 		=> $value->id,
+						'job' 		=> $jobName,
+						'name'		=> $fullname,
+						'type'  	=> $value->type,
+						'date' 		=> $value->issued_date,
+						'number' 	=> $value->number,
+						'memo' 		=> $value->memo2,
+						'amount' 	=> floatval($value->amount)/floatval($value->rate)
+					);
 
-				if(isset($customers["$jobName"])) {
-					$customers["$jobName"]['amount'] += floatval($value->amount);
-					$customers["$jobName"]['transactions'][] = array(
-						'id'  		=> $value->id,
-						'name'		=> $fullname,
-						'type'  	=> $value->type,
-						'date' 		=> $value->issued_date,
-						'number' 	=> $value->number,
-						'memo' 		=> $value->memo2,
-						'amount' 	=> floatval($value->amount)/floatval($value->rate)
-					);
-				} else {
-					$customers["$jobName"]['amount'] = floatval($value->amount);
-					$customers["$jobName"]['transactions'][] = array(
-						'id'  		=> $value->id,
-						'name'		=> $fullname,
-						'type'  	=> $value->type,
-						'date' 		=> $value->issued_date,
-						'number' 	=> $value->number,
-						'memo' 		=> $value->memo2,
-						'amount' 	=> floatval($value->amount)/floatval($value->rate)
-					);
-			//Results
-				}
 			$total += floatval($value->amount)/ floatval($value->rate);
-			$saleNumber++;
 			}
 		}
-		foreach ($customers as $key => $value) {
-			$data["results"][] = array(
-				'group' 	=> $key,
-				'amount'	=> $value['amount'],
-				'items' 	=> $value['transactions']
 
-			);
-		}
 		$data['total'] = $total;
-		$data['count'] = count($customers);
-		$data['saleNumber'] = $saleNumber;
+		$data['count'] = count($jobName);
 		//Response Data
 		$this->response($data, 200);
 	}
@@ -1929,7 +1922,7 @@ class Sales extends REST_Controller {
 					}
 					$totalDay += $outstanding;
 					$total += floatval($value->amount)/ floatval($value->rate)- $temp;
-					$aging = $totalDay/ $totalInvoice;
+					$aging = $totalInvoice > 0? $totalDay/ $totalInvoice : 0;
 				}
 			}
 		}	
@@ -2408,10 +2401,10 @@ class Sales extends REST_Controller {
 							'amount' => floatval($value->amount) / floatval($value->rate)- $temp
 						);
 					}
-					if(isset($fullname)) {
-						$countCustomer +=1;
+					if(isset($name)) {
+						$countCustomer =1;
 					}else{
-						$countCustomer +=0;
+						$countCustomer = 0;
 					}
 					$totalDay += $dayOutsatanding;
 					$total += floatval($value->amount)/ floatval($value->rate)- $temp;
@@ -2430,7 +2423,7 @@ class Sales extends REST_Controller {
 		$data['totalDay'] = $totalDay;
 		$data['aging'] = $aging;
 		$data['totalInvoice'] = $totalInvoice;
-		$data['count'] = $countCustomer;
+		$data['count'] += $countCustomer;
 		//Response Data
 		$this->response($data, 200);
 	}
@@ -2814,7 +2807,7 @@ class Sales extends REST_Controller {
 			foreach ($segmentItem as $seg) {
 				$txn = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
-				$txn->where_in("type", array("Cash_Sale", "Commercial_Cash_Sale", "Vat_Cash_Sale"));
+				$txn->where("type", "Sale_Order");
 				$txn->where_in("status", array(0,2));
 				$txn->like("segments", $seg->id, "both");
 				$txn->where("deleted",0);
@@ -2852,7 +2845,8 @@ class Sales extends REST_Controller {
 
 			// $obj->where_related("contact", 'contact_type_id', $type);
 			$obj->where('is_recurring', 0);
-			$obj->where_in("type", array("Cash_Sale", "Commercial_Cash_Sale", "Vat_Cash_Sale"));
+			$obj->where("type", "Sale_Order");
+			$obj->where_in("status", array(0,2));
 
 			//Results
 			$obj->get_paged_iterated($page, $limit);

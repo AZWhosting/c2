@@ -44,7 +44,19 @@ class Contact extends DataMapper {
 		'payroll' => array(
 			'class' => 'payroll',
 			'other_field' => 'contact'
-		)
+		),
+		'utility' => array(
+			'class' => 'utility',
+			'other_field' => 'contact'
+		),
+		'contact_utility' => array(
+			'class' => 'contact_utility',
+			'other_field' => 'contact'
+		),
+		'branch' => array(
+			"class" => 'branch', 
+			"other_field" => "contact"
+		),
 	);
 
 	public $has_many = array(
@@ -90,10 +102,6 @@ class Contact extends DataMapper {
 		),
 		'attachment' => array(
 			'class' => 'attachment',
-			'other_field' => 'contact'
-		),
-		'utility' => array(
-			'class' => 'contact_utility',
 			'other_field' => 'contact'
 		)
 	);

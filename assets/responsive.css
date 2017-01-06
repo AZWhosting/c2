@@ -16,13 +16,16 @@
 #ddlMeasurement-list{
    width: 205px !important;
 }
-
+input.k-textbox{
+  text-indent: 0 !important;
+}
 .padding-bottom-none-phone .glyphicons.user.userss i:before,
 .padding-bottom-none-phone .icon-play-circles:before{
   color: #fff !important;
 }
 #issuedDate_dateview,
-#txtDueDate_dateview{
+#txtDueDate_dateview,
+#registeredDate_dateview{
   margin-top: 40px!important;
 }
 .glyphicons.coins.addcolor-coins i:before{
@@ -160,8 +163,8 @@
 #ddlCategory-list,
 #ddlName-list,
 #txtMeasurement-list,
-#ddlIncome-list
-{
+#ddlIncome-list,
+#ddlAR-list{
   width: 350px !important;
 }
 

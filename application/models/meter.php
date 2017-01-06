@@ -6,7 +6,7 @@ class Meter extends DataMapper {
 
 	public $has_one = array("branch", "location", "electricity_box",
 		"contact" => array(
-			'class' => 'contact',
+			'class' => 'customer',
 			'other_field' => 'meter'
 		),
 		'item' => array(
@@ -47,6 +47,10 @@ class Meter extends DataMapper {
         ),
         'currency' => array(
             'class' => "currency",
+            'other_field' => 'meter'
+        ),
+        'location' => array(
+            'class' => "location",
             'other_field' => 'meter'
         )
 	);

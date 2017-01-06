@@ -366,6 +366,7 @@ class Plans extends REST_Controller {
 			}
 		}
 		$table->where('is_deleted', 0);
+		$table->order_by('usage','desc');
 		$table->get();
 		if($table->exists()) {
 			$data = array();

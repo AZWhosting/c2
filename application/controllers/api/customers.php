@@ -458,7 +458,6 @@ class Customers extends REST_Controller {
 					"is_pattern" 				=> intval($obj->is_pattern),
 					"status" 					=> $obj->status,
 					"is_system"					=> $obj->is_system,
-
 					"fullname" 					=> $fullname,					
 					"contact_type"				=> $obj->contact_type->get_raw()->result()
 				);						
@@ -515,21 +514,25 @@ class Customers extends REST_Controller {
 				}
 			}
 		}
-		$obj->include_related('contact', array('name'));
+		$obj->include_related('contact', array('name','phone','email','locale'));
 		$obj->include_related('contact/utility', array('abbr', 'code'));
 		$obj->include_related('branch', array('name'));
-		$obj->include_related('branch/location', array('name'));
+		$obj->include_related('location', array('name'));
 		$obj->get_paged_iterated($page, $limit);
 		if($obj->exists()) {
 			$data = array();
 			foreach($obj as $row) {
+				//$utility = $row->contact->include_related('utility', array('abbr', 'code'))->get();
 				$data[] = array(
 					"id" => $row->id,
 					"number" => array('abbr'=> $row->contact_utility_abbr, 'code' => $row->contact_utility_code),
-					"fullname"=>$row->name,
+					"fullname"=>$row->contact_name,
 					"type" =>$row->contact_type,
 					"license" => $row->branch_name,
-					"bloc"=> $row->location_name
+					"address"=> $row->location_name,
+					"phone" => $row->contact_phone,
+					"email" => $row->contact_email,
+					"locale" => $row->contact_locale
 				);
 			}
 			$this->response(array('results' => $data, 'count' => $obj->paged->total_rows), 200);
@@ -547,7 +550,7 @@ class Customers extends REST_Controller {
 		$sort 	 	= $this->get("sort");		
 		$is_pattern = 0;
 
-		$obj = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
+		$obj = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
 
 		//Sort
 		if(!empty($sort) && isset($sort)){				
@@ -566,32 +569,33 @@ class Customers extends REST_Controller {
 				}
 			}
 		}
-		$obj->include_related('contact', array('id', 'name', 'deposit_account_id'));
-		$obj->include_related('contact/utility', array('abbr', 'code'));
-		$obj->include_related('branch', array('name'));
-		$obj->include_related('branch/location', array('name'));
-		$obj->get_paged_iterated($page, $limit);
+		$obj->where("use_water", 1);
+		// $obj->where_related('meter', 'id <', 1);
+		$obj->include_related('contact_utility', array('abbr', 'code'));
+		$obj->include_related('contact_type', array('name'));
+		$obj->include_related('contact_utility/branch', array('name'));
+		$obj->include_related('contact_utility/location', array('name'));
+		$obj->get_iterated();
 		if($obj->exists()) {
 			$data = array();
 			foreach($obj as $row) {
-				$account = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				$account->where('contact_id', $row->contact_id);
-				$account->where('account_id', $row->contact_deposit_account_id)->get_raw();
-				$data[] = array(
-					"id" => $row->id,
-					"register_date" => $row->contact_registered_date,
-					"number" => array('abbr'=> $row->contact_utility_abbr, 'code' => $row->contact_utility_code),
-					"meter" => $row->number,
-					"fullname"=>$row->name,
-					"type" =>$row->contact_type,
-					"license" => $row->branch_name,
-					"bloc"=> $row->location_name,
-					"deposit" => $account->exists() ? array_reduce($account, "_getAmount") : 0
-				);
+				$meter = $row->meter->get();
+				if(!$meter->exists()) {
+					$data[] = array(
+						"id" => $row->id,
+						"register_date" => $row->registered_date,
+						"number" => array('abbr'=> $row->contact_utility_abbr, 'code' => $row->contact_utility_code),
+						"locale" => $row->locale,
+						"name"=>$row->name,
+						"type" =>$row->contact_type_name,
+						"license" => $row->contact_utility_branch_name,
+						"bloc"=> $row->contact_utility_location_name
+					);
+				}
 			}
-			$this->response(array('results' => $data, 'count' => $obj->paged->total_rows), 200);
+			$this->response(array('results' => $data, 'count' => count($data)), 200);
 		} else {
-			$this->reponse(array('results'=> array(), 'msg'=> 'no meter found'), 404);
+			$this->response(array('results'=> array(), 'msg'=> 'no meter found'), 404);
 		}
 	}
 

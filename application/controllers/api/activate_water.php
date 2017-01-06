@@ -61,8 +61,8 @@ class Activate_water extends REST_Controller {
 		 			"abbr"				=> $value->abbr,
 		 			"code"				=> $value->code,
 		 			"contact_id" 			=> $value->contact_id,
-					"location_id" 			=> $value->location_id,
-					"license_id" 			=> $value->license_id,					
+					"branch_id" 			=> $value->branch_id,
+					"branch_id" 			=> $value->branch_id,					
 					"id_card" 			=> $value->id_card,
 					"family_member" 	=> $value->family_member,
 					"occupation" 		=> $value->occupation
@@ -85,7 +85,7 @@ class Activate_water extends REST_Controller {
 			isset($value->type) 				? $obj->type				= $value->type : "";
 			isset($value->code) 				? $obj->code 				= $value->code : "";	
 			isset($value->abbr) 				? $obj->abbr 				= $value->abbr : "";				
-			isset($value->location_id) 			? $obj->location_id 		= $value->location_id : "";
+			isset($value->branch_id) 			? $obj->branch_id 		= $value->branch_id : "";
 			isset($value->license_id) 			? $obj->license_id 			= $value->license_id : "";
 			isset($value->id_card) 				? $obj->id_card 			= $value->id_card : "";
 			isset($value->family_member) 		? $obj->family_member 		= $value->family_member : "";
@@ -102,7 +102,7 @@ class Activate_water extends REST_Controller {
 					"code" 					=> $obj->code,
 					"abbr"					=> $obj->abbr,						
 					"contact" 				=> $obj->contact_id,
-					"location_id" 			=> $obj->location_id,
+					"branch_id" 			=> $obj->branch_id,
 					"license_id" 			=> $obj->license_id,					
 					"id_card" 				=> $obj->id_card,
 					"family_member" 		=> $obj->family_member,

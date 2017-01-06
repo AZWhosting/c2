@@ -9,6 +9,10 @@ class Branch extends DataMapper {
 		'currency' => array(
 			"class" => 'currency', 
 			"other_field" => "branch"
+		),
+		'contact' => array(
+			"class" => 'contact', 
+			"other_field" => "branch"
 		)
 	);
 
@@ -31,6 +35,10 @@ class Branch extends DataMapper {
 		),
 		'wbranch' => array(
 			"class" => 'contact',
+			"other_field" => "branch"
+		),
+		'contact_utility' => array(
+			"class" => 'contact_utility',
 			"other_field" => "branch"
 		)
 	);

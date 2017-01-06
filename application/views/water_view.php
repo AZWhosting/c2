@@ -2544,7 +2544,7 @@
 			                   data-value-primitive="true"
 			                   data-text-field="name"
 			                   data-value-field="id"
-			                   data-bind="value: obj.license_id,
+			                   data-bind="value: obj.branch_id,
 			                              source: licenseDS,
 			                              events: {change : licenseChange}"/>
 			            </div>
@@ -2558,7 +2558,7 @@
 			                   data-value-primitive="true"
 			                   data-text-field="name"
 			                   data-value-field="id"
-			                   data-bind="value: obj.location_id,
+			                   data-bind="value: obj.branch_id,
 			                              source: blocDS,
 			                              events: {change : BlocChange}"/>
 			            </div>
@@ -2572,9 +2572,9 @@
 			        </div>
 			        <dvi class="span6">
 			        	<label for="ddlContactType"><span>Number of Family</span></label>
-			        	<input type="text" id="" name="Number of Family" class="k-textbox k-invalid" placeholder="Number of Family" required="" validationmessage="" style="width: 100%;margin-bottom: 10px" data-bind="value: obj.id_card" aria-invalid="true">
+			        	<input type="text" id="" name="Number of Family" class="k-textbox k-invalid" placeholder="Number of Family" required="" validationmessage="" style="width: 100%;margin-bottom: 10px" data-bind="value: obj.family_member" aria-invalid="true">
 			        	<label for="ddlContactType"><span>ID Card Number</span></label>
-			        	<input type="text" id="" name="ID Card Number" class="k-textbox k-invalid" placeholder="ID Card Number" required="" validationmessage="" style="width: 100%;margin-bottom: 10px;" data-bind="value: obj.national_id_number" aria-invalid="true">
+			        	<input type="text" id="" name="ID Card Number" class="k-textbox k-invalid" placeholder="ID Card Number" required="" validationmessage="" style="width: 100%;margin-bottom: 10px;" data-bind="value: obj.id_card" aria-invalid="true">
 			        	<label for="ddlContactType"><span>Occupation</span></label>
 			        	<input type="text" id="" name="Occupation" class="k-textbox k-invalid" placeholder="Occupation" required="" validationmessage="" style="width: 100%;margin-bottom: 20px;" data-bind="value: obj.occupation" aria-invalid="true">
 			        </dvi>
@@ -5602,10 +5602,10 @@
 <script id="customerList-temp" type="text/x-kendo-template" >
 	# kendo.culture(locale); #
 	<tr style="font-weight: bold">
-		<td>#=number#</td>
-		<td data-bind="click: selectedRow">#=name#</td>
-		<td>#=branch.name#</td>
-		<td>#=branch.address#</td>
+		<td>#=number.abbr# - #=number.code#</td>
+		<td>#=fullname#</td>
+		<td>#=license#</td>
+		<td>#=address#</td>
 		<td>#=phone#</td>
 		<td>#=email#</td>
 	</tr>
@@ -5659,10 +5659,55 @@
 		<div class="customer-background">
 			<div class="container-960">
 				<div id="example" class="k-content saleSummaryCustomer">
-			    	<span class="pull-right glyphicons no-js remove_2" data-bind="click: cancel"><i></i></span>
+			    	<span class="pull-right glyphicons no-js remove_2"
+						onclick="javascript:window.history.back()"><i></i></span>
 					<br>
 					<br>
-					<div class="row-fluid">						
+					<div class="row-fluid">
+					    <!-- Tabs -->
+						<div class="relativeWrap" data-toggle="source-code">
+							<div class="widget widget-tabs widget-tabs-gray report-tab">
+								<!-- Tabs Heading -->
+								<div class="widget-head">
+									<ul>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab" data-bind="click: printGrid"><i></i>Print/Export</a></li
+									</ul>
+								</div>
+								<!-- // Tabs Heading END -->								
+								<div class="widget-body">
+									<div class="tab-content">
+								        <div class="tab-pane active" id="tab-1">
+											<input 
+												data-role="dropdownlist" 
+												data-option-label="License ..." 
+												data-auto-bind="false" 
+												data-value-primitive="true" 
+												data-text-field="name" 
+												data-value-field="id" 
+												data-bind="
+													value: licenseSelect,
+				                  					source: licenseDS,
+				                  					events: {change: licenseChange}">
+
+									        <input 
+												data-role="dropdownlist" 
+												data-option-label="Location ..." 
+												data-auto-bind="false" 
+												data-value-primitive="false" 
+												data-text-field="name" 
+												data-value-field="id" 
+												data-bind="
+													value: blocSelect,
+				                  					source: blocDS">
+
+										  	 <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>							
+									    </div>									        							       
+								    </div>
+								</div>
+							</div>
+						</div>
+						<!-- // Tabs END -->						
 					</div>
 					<br>
 					<div id="invFormContent">
@@ -5670,11 +5715,39 @@
 							<h3 data-bind="text: institute.name"></h3>
 							<h2>New Customer List</h2>
 						</div>
+						<table class="table table-borderless table-condensed ">
+							<thead>
+								<tr>
+									<th><span>Register Date</span></th>
+									<th><span>Code</span></th>
+									<th><span>Name</span></th>
+									<th><span>Type</span></th>
+									<th><span>License</span></th>
+									<th><span>Location</span></th>
+								</tr>
+							</thead>
+							<tbody data-role="listview"
+								 data-bind="source: dataSource"
+								 data-template="newCustomerList-temp"
+							></tbody>
+						</table>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+</script>
+<script id="newCustomerList-temp" type="text/x-kendo-template" >
+	# kendo.culture(locale); #
+	<tr style="font-weight: bold">
+		<td>#=register_date#</td>
+		<td>#=number.abbr# - #=number.code#</td>
+		<td>#=name#</td>
+		<td>#=type#</td>
+		<td>#=license#</td>
+		<td>#=bloc#</td>
+		
+	</tr>
 </script>
 <script id="miniUsageList" type="text/x-kendo-template">
 	<div id="slide-form">
@@ -10163,40 +10236,59 @@
         	this.set('current', current);
         },
         saveTariffItem 		: function(e){
-        	var data = e.data.id, self = this;
-        	this.tariffItemDS.data([]);
-        	this.tariffItemDS.add({
-        		name 		: this.get("tariffItemName"),
-        		type     	: "tariff",
-        		tariff_id	: this.get('current').id,
-        		account   	: this.get('current').account,
-        		is_flat   	: this.get("tariffItemFlat"),
-        		unit 		: null,
-        		usage 		: this.get("tariffItemUsage"),
-        		amount 		: this.get("tariffItemAmount"),
-        		currency 	: this.get("current").currency,
-        		_currency   : []
-        	});
-        	this.tariffItemDS.sync();
+        	var self = this;
+        	this.tariffItemDS.filter([{field: "usage", value: this.get("tariffItemUsage")},{field: "tariff_id", value: this.get("current").id}]);
         	this.tariffItemDS.bind("requestEnd", function(e){
-        		if(e.type != 'read') {
+        		//if(e.type != 'read') {
 	        		if(e.response) {
-	        			self.set("tariffItemName", "");
-			        	self.set("tariffItemFlat", 0);
-			        	self.set("tariffItemUsage", "");
-			        	self.set("tariffItemAmount", "");
-			        	self.set("windowTariffItemVisible", false);
-			        	self.closeTariffWindowItem();
-			        	// console.log(e);
-			        	self.closeTariffWindowItem();
-			        	self.tariffItemDS.filter({field: "tariff_id", value: self.get('current').id});
-			        	//self.set("tariffNameShow", e.data.name);
+	        				self.addTariffItem();
 	        		}
-	        	}
+	        	//}
         	});
         	this.tariffItemDS.bind("error", function(e){
-        		console.log("error");
+        		self.addTariffItem();
         	});
+        },
+        addTariffItem 		: function(e){
+        	alert("a");
+        	var data = e.data.id, self = this;
+        	if(this.tariffItemDS.data().length < 1){
+	        	this.tariffItemDS.data([]);
+	        	this.tariffItemDS.add({
+	        		name 		: this.get("tariffItemName"),
+	        		type     	: "tariff",
+	        		tariff_id	: this.get('current').id,
+	        		account   	: this.get('current').account,
+	        		is_flat   	: this.get("tariffItemFlat"),
+	        		unit 		: null,
+	        		usage 		: this.get("tariffItemUsage"),
+	        		amount 		: this.get("tariffItemAmount"),
+	        		currency 	: this.get("current").currency,
+	        		_currency   : []
+	        	});
+	        	this.tariffItemDS.sync();
+	        	this.tariffItemDS.bind("requestEnd", function(e){
+	        		if(e.type != 'read') {
+		        		if(e.response) {
+		        			self.set("tariffItemName", "");
+				        	self.set("tariffItemFlat", 0);
+				        	self.set("tariffItemUsage", "");
+				        	self.set("tariffItemAmount", "");
+				        	self.set("windowTariffItemVisible", false);
+				        	self.closeTariffWindowItem();
+				        	// console.log(e);
+				        	self.closeTariffWindowItem();
+				        	self.tariffItemDS.filter({field: "tariff_id", value: self.get('current').id});
+				        	//self.set("tariffNameShow", e.data.name);
+		        		}
+		        	}
+	        	});
+	        	this.tariffItemDS.bind("error", function(e){
+	        		console.log("error");
+	        	});
+	        }else{
+	        	alert("eerroorr");
+	        }
         },
         addTariff 		: function(e){
         	var self = this;
@@ -10562,7 +10654,7 @@
 			this.dataSource.insert(0,{				
 				contact_id			: id,
 				code 				: null,
-				license_id 			: null,
+				branch_id 			: null,
 				abbr 				: null,
 				location_id  		: null,
 				type 				: "w",
@@ -13935,7 +14027,7 @@
 	banhji.customerList = kendo.observable({
 		lang 					: langVM,
 		institute 				: banhji.institute,
-		dataSource 				: dataStore(apiUrl + "wreports/customer"),
+		dataSource 				: dataStore(apiUrl + "customers/list"),
 		licenseDS 				: dataStore(apiUrl+"branches"),
 		blocDS 					: dataStore(apiUrl+"locations"),
 		licenseSelect 			: null,
@@ -14111,8 +14203,13 @@
 	banhji.newCustomerList = kendo.observable({
 		lang 					: langVM,
 		institute 				: banhji.institute,
-		dataSource 				: dataStore(apiUrl + "customers"),	
+		dataSource 				: dataStore(apiUrl + "customers/newlist"),
+		licenseDS 				: dataStore(apiUrl+"branches"),
+		blocDS 					: dataStore(apiUrl+"locations"),
+		licenseSelect 			: null,
+		blocSelect 				: null,
 		pageLoad 				: function(){
+			this.licenseDS.read();
 		},
 		printGrid			: function() {
 			var gridElement = $('#grid'),
@@ -14153,10 +14250,31 @@
 		    	win.close();
 		    },2000);
 		},
-		cancel				: function(e){
-			this.dataSource.cancelChanges();
-			window.history.back();
+		licenseChange 	: function(e) {
+			var data = e.data;
+			var license = this.licenseDS.at(e.sender.selectedIndex - 1);
+			this.set("licenseSelect", license);
+			this.blocDS.filter({field: "branch_id", value: license.id});
 		},
+		search 					: function(){
+			var para = [],
+			license = this.get("licenseSelect"),
+			bloc = this.get("blocSelect");
+
+			if(license){
+				para.push({ field:"branch_id", value: license.id });
+			}
+
+			if(bloc){
+				para.push({ field:"location_id", value: bloc.id });
+			}
+			console.log(para);
+			this.dataSource.filter(para);
+		}, 
+		cancel 			: function(){
+			this.contact.cancelChanges();
+			window.history.back();
+		}
 	});
 	banhji.miniUsageList = kendo.observable({
 		lang 					: langVM,

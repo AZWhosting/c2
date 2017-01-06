@@ -2843,7 +2843,7 @@
     							Total charge for this period
     						</span>
     					</td>
-    					<td></td>
+    					<td colspan="2" ></td>
     				</tr>
     				<tr>
     					<td colspan="4">
@@ -2852,10 +2852,32 @@
     							Total amount due
     						</span>
     					</td>
-    					<td></td>
+    					<td colspan="2"></td>
+    				</tr>
+    				<tr>
+    					<td colspan="2" rowspan="3"></td>
+    					<td colspan="2">ថ្ងៃដែលបានបង់ប្រាក់ PAY DATE</td>
+    					<td ></td>
+    				</tr>
+    				<tr>
+    					<td colspan="2">ប្រាក់ដែលបានបង់ AMOUNT PAID</td>
+    					<td ></td>
+    				</tr>
+    				<tr>
+    					<td colspan="2">ហត្ថលេខា និងឈ្មោះរបស់បេឡាករ</td>
+    					<td ></td>
     				</tr>
     			</tfoot>
-    		</table>
+    		</table>    		
+			<p style="float: left; margin: 10px 0 0 0; font-size: 11px;">
+				ក្នុងករណីដែលលោក លោកស្រីមិនបានមកបង់ប្រាក់ទាន់ពេលកំនត់ ក្រុមហ៊ិននឹងផ្អាក់ការប្រើប្រាស់របស់លោកអ្នក
+			</p>
+			<p style="float: left;font-size: 11px; padding-bottom: 8px; border-bottom: 2px dotted #000;">
+				ការភ្ជាប់ចរន្តជួនវិញ លុះត្រាតែអតិថិជនបានទូទាត់បំណុលសរុបក្នុងវិក្កយបត្រនេះដោយបូកបន្ថែមការប្រាក់១% និងសេវាភ្ជាប់ចរន្តរួចហើយ។
+			</p>
+			<div class="invoice-footer">
+				<p style="text-align: center; ">បង្កាន់ដៃបង់ប្រាក់ PAYMENT SLIP</p>
+			</div>
     	</div>
     </div>
 
