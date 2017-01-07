@@ -16014,10 +16014,10 @@
 										<td><span data-bind="text: lang.lang.customers"></span></td>
 										<td>
 											<input id="cbbContact" name="cbbContact"
-												   data-role="combobox"											                    
-								                   data-value-primitive="true"
+												   data-role="combobox"
 								                   data-header-template="contact-header-tmpl"
 								                   data-template="contact-list-tmpl"
+								                   data-value-primitive="true"
 								                   data-filter="like"
 								                   data-min-length="3"
 								                   data-text-field="name"
@@ -18387,11 +18387,11 @@
 									<tr>
 										<td><span data-bind="text: lang.lang.customers"></span></td>
 										<td>
-											<input id="ccbItem" name="cbbContact"
-												   data-role="combobox"										                    
-								                   data-value-primitive="true"
+											<input id="cbbContact" name="cbbContact"
+												   data-role="combobox"
 								                   data-header-template="contact-header-tmpl"
 								                   data-template="contact-list-tmpl"
+								                   data-value-primitive="true"
 								                   data-filter="like"
 								                   data-min-length="3"
 								                   data-text-field="name"
@@ -19037,7 +19037,7 @@
 									<tr>
 										<td><span data-bind="text: lang.lang.customers"></span></td>
 										<td>
-											<input id="ccbItem" name="cbbContact"
+											<input id="cbbContact" name="cbbContact"
 												   data-role="combobox"
 								                   data-value-primitive="true"
 								                   data-header-template="contact-header-tmpl"
@@ -19470,7 +19470,7 @@
 									<tr>
 										<td><span data-bind="text: lang.lang.customers"></span></td>
 										<td>
-											<input id="ccbItem" name="cbbContact"
+											<input id="cbbContact" name="cbbContact"
 												   data-role="combobox"
 								                   data-header-template="contact-header-tmpl"
 								                   data-template="contact-list-tmpl"
@@ -50069,7 +50069,10 @@
 				obj.set("ship_to", view[0].ship_to);
 				
 				self.setRate();
-				self.loadBalance();						
+				self.loadBalance();
+
+				var combobox = $("#cbbContact").data("kendoComboBox");
+				combobox.select(0);						
 			});
 		},
 		contactChanges 		: function(){
@@ -50834,7 +50837,10 @@
 				obj.set("ship_to", view[0].ship_to);
 				
 				self.setRate();
-				self.loadReference();						
+				self.loadReference();
+
+				var combobox = $("#cbbContact").data("kendoComboBox");
+				combobox.select(0);						
 			});
 		},
 		contactChanges 		: function(){
@@ -51581,6 +51587,9 @@
 				
 				self.setRate();
 				self.loadReference();
+
+				var combobox = $("#cbbContact").data("kendoComboBox");
+				combobox.select(0);
 			});
 		},
 		contactChanges 		: function(){
@@ -52436,6 +52445,9 @@
 				self.setRate();				
 				self.loadDeposit();
 				self.loadReference();
+
+				var combobox = $("#cbbContact").data("kendoComboBox");
+				combobox.select(0);
 			});
 		},
 		loadBalance 		: function(){
@@ -53997,7 +54009,10 @@
 				obj.set("ship_to", view[0].ship_to);
 				
 				self.setRate();
-				self.loadReference();		
+				self.loadReference();
+
+				var combobox = $("#cbbContact").data("kendoComboBox");
+				combobox.select(0);		
 			});
 		},
 		contactChanges 		: function(){
@@ -56909,24 +56924,27 @@
 	    },   
 		//Contact
 		loadContact 		: function(id){
-			var self = this, obj = self.get("obj");			
-			
+			var self = this, obj = this.get("obj");			
+
 			this.contactDS.query({    			
 				filter: { field:"id", value: id },
 				page: 1,
 				pageSize: 100
 			}).then(function(e){
 				var view = self.contactDS.view();
-		    	
-		    	obj.set("contact_id", view[0].id);		    	
+
+				obj.set("contact_id", view[0].id);
 		    	obj.set("locale", view[0].locale);				
 				obj.set("bill_to", view[0].bill_to);
 				obj.set("ship_to", view[0].ship_to);
 				
 				self.setRate();
 				self.loadBalance();
+
+				var combobox = $("#cbbContact").data("kendoComboBox");
+				combobox.select(0);
 			});
-		},		
+		},
 		contactChanges 		: function(){
 			var obj = this.get("obj");
 
@@ -56940,7 +56958,6 @@
 		    	this.setRate();
 		    	this.loadBalance();
 	    	}
-
 	    	this.lineDS.data([]);
 		    this.addRow();
 		    this.changes();
@@ -57837,9 +57854,12 @@
 				
 				self.setRate();
 				self.loadBalance();
-				self.loadReference();						
+				self.loadReference();
+
+				var combobox = $("#cbbContact").data("kendoComboBox");
+				combobox.select(0);						
 			});
-		},		
+		},
 		contactChanges 		: function(){
 			var obj = this.get("obj");
 			this.jobDS.filter({ field:"contact_id", value: obj.contact_id });
@@ -57853,9 +57873,8 @@
 
 		    	this.setRate();
 		    	this.loadBalance();
-		    	this.loadReference();   	
+		    	this.loadReference();
 	    	}
-
 	    	this.lineDS.data([]);
 		    this.addRow();
 		    this.changes();
@@ -58830,6 +58849,9 @@
 
 				self.setRate();
 				self.loadReference();
+
+				var combobox = $("#cbbContact").data("kendoComboBox");
+				combobox.select(0);
 			});
 		},
 		contactChanges 		: function(){
@@ -59649,7 +59671,10 @@
 				obj.set("bill_to", view[0].bill_to);
 				obj.set("ship_to", view[0].ship_to);				
 							
-				self.loadData();							
+				self.loadData();
+
+				var combobox = $("#cbbContact").data("kendoComboBox");
+				combobox.select(0);							
 			});
 		},
 		contactChanges 		: function(){
@@ -61118,7 +61143,10 @@
 				obj.set("bill_to", view[0].bill_to);
 				obj.set("ship_to", view[0].ship_to);
 				
-				self.loadData();							
+				self.loadData();
+
+				var combobox = $("#cbbContact").data("kendoComboBox");
+				combobox.select(0);							
 			});
 		},
 		contactChanges 		: function(){
@@ -62491,7 +62519,10 @@
 				obj.set("bill_to", view[0].bill_to);
 				obj.set("ship_to", view[0].ship_to);
 				
-				self.setRate();						
+				self.setRate();
+
+				var combobox = $("#cbbContact").data("kendoComboBox");
+				combobox.select(0);						
 			});
 		},
 		contactChanges 		: function(){
@@ -63352,7 +63383,10 @@
 				obj.set("ship_to", view[0].ship_to);
 				
 				self.setRate();
-				self.loadReference();		
+				self.loadReference();
+
+				var combobox = $("#cbbContact").data("kendoComboBox");
+				combobox.select(0);		
 			});
 		},
 		contactChanges 		: function(){
