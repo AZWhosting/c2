@@ -268,7 +268,191 @@ class Wreports extends REST_Controller {
 
 		$this->response(array('results' => $data, 'count' => count($data)), 200);
 	}
+	//Get customer list
+	//@param: number, fullname, type, location, license
+	function list_get() {
+		$filters 	= $this->get("filter");		
+		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
+		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;								
+		$sort 	 	= $this->get("sort");		
+		$is_pattern = 0;
 
+		$obj = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
+
+		//Sort
+		if(!empty($sort) && isset($sort)){				
+			foreach ($sort as $value) {
+				$obj->order_by($value["field"], $value["dir"]);
+			}
+		}
+
+		//Filter		
+		if(!empty($filters) && isset($filters['filters'])){
+	    	foreach ($filters['filters'] as $value) {
+	    		if(isset($value['operator'])) {
+					$obj->{$value['operator']}($value['field'], $value['value']);
+				} else {
+	    			$obj->where($value["field"], $value["value"]);
+				}
+			}
+		}
+		$obj->include_related('contact', array('name','phone','email','locale'));
+		$obj->include_related('contact/utility', array('abbr', 'code'));
+		$obj->include_related('branch', array('name'));
+		$obj->include_related('location', array('name'));
+		$obj->get_paged_iterated($page, $limit);
+		if($obj->exists()) {
+			$data = array();
+			foreach($obj as $row) {
+				//$utility = $row->contact->include_related('utility', array('abbr', 'code'))->get();
+				$data[] = array(
+					"id" => $row->id,
+					"number" => array('abbr'=> $row->contact_utility_abbr, 'code' => $row->contact_utility_code),
+					"fullname"=>$row->contact_name,
+					"type" =>$row->contact_type,
+					"license" => $row->branch_name,
+					"address"=> $row->location_name,
+					"phone" => $row->contact_phone,
+					"email" => $row->contact_email,
+					"locale" => $row->contact_locale
+				);
+			}
+			$this->response(array('results' => $data, 'count' => $obj->paged->total_rows), 200);
+		} else {
+			$this->reponse(array('results'=> array(), 'msg'=> 'no meter found'), 404);
+		}
+	}
+
+	//Get customer list
+	//@param: register_date, code, fullname, type, bloc, license, deposit (get from journal_line based on contact), meter
+	function newlist_get() {
+		$filters 	= $this->get("filter");		
+		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
+		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;								
+		$sort 	 	= $this->get("sort");		
+		$is_pattern = 0;
+
+		$obj = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
+
+		//Sort
+		if(!empty($sort) && isset($sort)){				
+			foreach ($sort as $value) {
+				$obj->order_by($value["field"], $value["dir"]);
+			}
+		}
+
+		//Filter		
+		if(!empty($filters) && isset($filters['filters'])){
+	    	foreach ($filters['filters'] as $value) {
+	    		if(isset($value['operator'])) {
+					$obj->{$value['operator']}($value['field'], $value['value']);
+				} else {
+	    			$obj->where($value["field"], $value["value"]);
+				}
+			}
+		}
+		$obj->where("use_water", 1);
+		// $obj->where_related('meter', 'id <', 1);
+		$obj->include_related('contact_utility', array('abbr', 'code'));
+		$obj->include_related('contact_type', array('name'));
+		$obj->include_related('contact_utility/branch', array('name'));
+		$obj->include_related('contact_utility/location', array('name'));
+		$obj->get_iterated();
+		if($obj->exists()) {
+			$data = array();
+			foreach($obj as $row) {
+				$meter = $row->meter->get();
+				if(!$meter->exists()) {
+					$data[] = array(
+						"id" => $row->id,
+						"register_date" => $row->registered_date,
+						"number" => array('abbr'=> $row->contact_utility_abbr, 'code' => $row->contact_utility_code),
+						"locale" => $row->locale,
+						"name"=>$row->name,
+						"type" =>$row->contact_type_name,
+						"license" => $row->contact_utility_branch_name,
+						"bloc"=> $row->contact_utility_location_name
+					);
+				}
+			}
+			$this->response(array('results' => $data, 'count' => count($data)), 200);
+		} else {
+			$this->response(array('results'=> array(), 'msg'=> 'no meter found'), 404);
+		}
+	}
+
+	//Get Water Sale Summary
+	//@param: License, location, m3, amount
+	function saleSummary_get() {}
+
+	//Get Water Sale Detail
+	//@param: Number, customer, type, location, usage, amount
+	function saleDetail_get() {}
+
+	//Get Payment Summary
+	//@param: Number, customer, type, location, usage, amount
+	function paymentSummary_get() {}
+
+	//Get Payment Detail
+	//@param: Number, customer, type, location, usage, amount
+	function paymentDetail_get() {}
+
+	//Get Payment Detail
+	//@param: Number, customer, type, location, usage, amount
+	function minimumWaterUsage_get() {}
+
+	//Get Payment Detail
+	//@param: Number, customer, type, location, usage, amount
+	function disconnect_get() {}
+
+	//Get Payment Detail
+	//@param: Number, customer, type, location, usage, amount
+	function accountReceivable_get() {}
+
+	//Get Payment Detail
+	//@param: Number, customer, type, location, usage, amount
+	function deposit_get() {}
+
+	//Get Payment Detail
+	//@param: Number, customer, type, location, usage, amount
+	function agingSummary_get() {}
+
+	//Get Payment Detail
+	//@param: Number, customer, type, location, usage, amount
+	function agingDetail_get() {}
+
+	//Get Payment Detail
+	//@param: Number, customer, type, location, usage, amount
+	function connectionRevenue_get() {}
+
+	//Get Payment Detail
+	//@param: Number, customer, type, location, usage, amount
+	function otherRevenue_get() {}
+
+	//Get Payment Detail
+	//@param: Number, customer, type, location, usage, amount
+	function cashReceiptSummary_get() {}
+
+	//Get Payment Detail
+	//@param: Number, customer, type, location, usage, amount
+	function cashReceiptDetail_get() {}
+
+	//Get Payment Detail
+	//@param: Number, customer, type, location, usage, amount
+	function cashReceiptSourceSummary_get() {}
+
+	//Get Payment Detail
+	//@param: Number, customer, type, location, usage, amount
+	function cashReceiptSourceDetail_get() {}
+
+	function _getAmount($carry, $item) {
+		if($item['dr'] !=0) {
+			$curry += $item['dr'];
+		} else {
+			$curry -= $item['cr'];
+		}
+		return $curry;
+	}
 }
 /* End of file winvoices.php */
 /* Location: ./application/controllers/api/categories.php */

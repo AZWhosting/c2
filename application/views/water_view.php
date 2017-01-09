@@ -5338,7 +5338,7 @@
 								</tr>
 								<tr>
 									<td width="50%">
-										<h3><a href="#/customer_no_connection">Customer List with No Connection</a></h3>
+										<h3><a href="#/disconnect_list">Disconnected List</a></h3>
 									</td>
 									<td width="50%">
 										<h3><a href="#/mini_usage_list">Minimum Water Usage List</a></h3>
@@ -5350,15 +5350,6 @@
 									</td>
 									<td width="50%">
 										<p></p>
-									</td>
-								</tr>
-
-								<tr>
-									<td width="50%">
-										<h3><a href="#/disconnect_list">Disconnected List</a></h3>
-									</td>
-									<td width="50%">
-										<!-- <h3><a href="#/">Period-End Closing Checklist</a></h3> -->
 									</td>
 								</tr>
 								<tr>
@@ -10219,7 +10210,6 @@
 			        }
 				}
 			});
-        	
         },
         goTariff    		: function(){
         	this.set("tariffSelect", false)
@@ -10237,17 +10227,14 @@
         },
         saveTariffItem 		: function(e){
         	var self = this;
-        	this.tariffItemDS.filter([{field: "usage", value: this.get("tariffItemUsage")},{field: "tariff_id", value: this.get("current").id}]);
-        	this.tariffItemDS.bind("requestEnd", function(e){
-        		//if(e.type != 'read') {
-	        		if(e.response) {
-	        			if(self.tariffItemDS.data().length < 1){
-	        				self.addTariffItem();
-	        			}else{
-	        				alert("Tariff Item Usage already exist!");
-	        			}
-	        		}
-	        	//}
+        	this.tariffItemDS.query({
+        		filter: [{field: "usage", value: this.get("tariffItemUsage")},{field: "tariff_id", value: this.get("current").id}]
+        	}).then(function(e){
+        		if(self.tariffItemDS.data().length > 0){
+        			alert("Usage is already exist!");
+        		}else{
+        			self.addTariff();
+        		}
         	});
         },
         addTariffItem 		: function(e){
@@ -14023,7 +14010,7 @@
 	banhji.customerList = kendo.observable({
 		lang 					: langVM,
 		institute 				: banhji.institute,
-		dataSource 				: dataStore(apiUrl + "customers/list"),
+		dataSource 				: dataStore(apiUrl + "wreports/list"),
 		licenseDS 				: dataStore(apiUrl+"branches"),
 		blocDS 					: dataStore(apiUrl+"locations"),
 		licenseSelect 			: null,
