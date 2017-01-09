@@ -15718,7 +15718,7 @@
 							            </tr>									            
 							            <tr>
 							            	<td>
-							            		<span for="txtBillTo" data-bind="click: copyBillTo"><span data-bind="text: lang.lang.bill_to"></span> <i class="icon-share"></i></span>											            
+							            		<span for="txtBillTo" data-bind="click: copyBillTo"><span data-bind="text: lang.lang.bill_to"></span> </span>											            
 							            	</td>
 							            	<td>
 							            		<textarea rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.bill_to" placeholder="billed to ..."></textarea>
@@ -39748,7 +39748,10 @@
 				        	</div>
 
 				        	<div class="tab-pane" id="tab-4">
-				        		<div class="row-fluid">
+				        		<div align="center" style="min-height: 150px;">
+				        			<h1 style="font-style: 30px; margin-top: 20px;">Coming Soon</h1>
+				        		</div>
+				        		<!-- <div class="row-fluid">
 									<div class="row-fluid sale-report" style="margin-top: 15px;">
 										<h2>CASH POSITION</h2>
 										<p>
@@ -39782,7 +39785,7 @@
 											</table>					
 										</div>
 									</div>									
-					        	</div>						        	
+					        	</div>	 -->					        	
 					        	<!-- <div class="row-fluid">
 									<div class="row-fluid sale-report" style="margin-top: 15px;">
 										<h2>CASH POSITION</h2>
@@ -82773,7 +82776,7 @@
 						
 			}
 
-			vm.pageLoad();
+			// vm.pageLoad();
 		}
 	});
 	banhji.router.route("/cash_position_report", function(){
