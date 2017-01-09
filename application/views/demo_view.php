@@ -9499,17 +9499,17 @@
 								<tbody>
 									<tr>
 										<td class="right"><span data-bind="text: lang.lang.subtotal"></span></td>
-										<td class="right strong" width="40%"><span data-bind="text: sub_total"></span></td>
+										<td class="right strong" width="40%"><span data-format="n" data-bind="text: obj.sub_total"></span></td>
 									</tr>								
 									<tr>
 										<td class="right"><span data-bind="text: lang.lang.total_discount"></span></td>
 										<td class="right strong">
-											<span data-bind="text: discount"></span>
+											<span data-format="n" data-bind="text: obj.discount"></span>
 	                   					</td>
 									</tr>
 									<tr>
 										<td class="right"><span data-bind="text: lang.lang.total_tax"></span></td>
-										<td class="right strong"><span data-bind="text: tax"></span></td>
+										<td class="right strong"><span data-format="n" data-bind="text: obj.tax"></span></td>
 									</tr>					
 									<tr>
 										<td class="right"><h4 data-bind="text: lang.lang.total"></h4></td>
@@ -9609,10 +9609,11 @@
 			<input id="ddlMesurement"
 				   data-role="dropdownlist"
 				   data-header-template="item-measurement-header-tmpl"                  
-                   data-text-field="name"
-                   data-value-field="id"
+                   data-text-field="measurement"
+                   data-value-field="measurement_id"
                    data-bind="value: measurement_id,
-                   			  source: measurementDS"
+                   			  source: item_prices,
+                   			  events:{ change: measurementChanges }"
                    data-option-label="UM"
                    style="width: 57%;" />
 		</td>					
@@ -10079,10 +10080,11 @@
 			<input id="ddlMesurement"
 					data-role="dropdownlist"
 					data-header-template="item-measurement-header-tmpl"            
-                   data-text-field="name"
-                   data-value-field="id"
+                   data-text-field="measurement"
+                   data-value-field="measurement_id"
                    data-bind="value: measurement_id,
-                   			  source: measurementDS"
+                   			  source: item_prices,
+                   			  events:{ change: measurementChanges }"
                    data-option-label="UM"
                    style="width: 57%;" />
 		</td>						
@@ -11365,10 +11367,11 @@
 			<input id="txtMeasurement" name="txtMeasurement-#:uid#"
 				   data-role="dropdownlist"
                    data-header-template="item-measurement-header-tmpl"
-                   data-text-field="name"
-                   data-value-field="id"
+                   data-text-field="measurement"
+                   data-value-field="measurement_id"
                    data-bind="value: measurement_id,
-                   			  source: measurementDS"
+                   			  source: item_prices,
+                   			  events:{ change: measurementChanges }"
                    data-option-label="UM"
                    style="width: 57%;" />
 		</td>					
@@ -12003,10 +12006,11 @@
 			<input id="ddlMesurement"
 				   data-role="dropdownlist"
                    data-header-template="item-measurement-header-tmpl"
-                   data-text-field="name"
-                   data-value-field="id"
+                   data-text-field="measurement"
+                   data-value-field="measurement_id"
                    data-bind="value: measurement_id,
-                   			  source: measurementDS"
+                   			  source: item_prices,
+                   			  events:{ change: measurementChanges }"
                    data-option-label="UM"
                    style="width: 57%;" />
 		</td>					
@@ -18289,7 +18293,7 @@
 					required data-required-msg="required" style="width: 40%;" />
 
 			<input id="ddlMesurement" data-role="dropdownlist"
-					data-header-template="item-measurement-header-tmpl"                  
+				   data-header-template="item-measurement-header-tmpl"                  
                    data-text-field="measurement"
                    data-value-field="measurement_id"
                    data-bind="value: measurement_id,
@@ -49909,7 +49913,6 @@
 		lang 				: langVM,
 		dataSource 			: dataStore(apiUrl + "transactions"),
 		lineDS  			: dataStore(apiUrl + "item_lines"),
-		assemblyLineDS 		: dataStore(apiUrl + "item_lines"),
 		txnDS  				: dataStore(apiUrl + "transactions"),
 		recurringDS 		: dataStore(apiUrl + "transactions"),
 		recurringLineDS 	: dataStore(apiUrl + "item_lines"),
@@ -50247,6 +50250,21 @@
 	        	alert(banhji.source.duplicateSelectedItemMessage);
 	        }
 		},
+		measurementChanges 	: function(e){
+			var data = e.data, obj = this.get("obj");
+
+			if(data.measurement_id>0){
+				$.each(data.item_prices, function(index, value){
+					if(value.measurement_id==data.measurement_id){
+				        data.set("unit_value", value.unit_value);
+				        
+						return false;
+					}
+				});
+
+		        this.changes();
+	        }
+		},
 		//Segment
 		segmentChanges 		: function(e) {
 			var dataArr = this.get("obj").segments,
@@ -50286,14 +50304,11 @@
 					page: 1,
 					pageSize: 100
 				}).then(function(e){
-					var view = self.dataSource.view();				
-
-					self.set("sub_total", kendo.toString(view[0].sub_total, "c", view[0].locale));
-					self.set("discount", kendo.toString(view[0].discount, "c", view[0].locale));
-			        self.set("tax", kendo.toString(view[0].tax, "c", view[0].locale));
-			        self.set("total", kendo.toString(view[0].amount, "c", view[0].locale));				
+					var view = self.dataSource.view();
 					
 					self.set("obj", view[0]);
+
+					self.set("total", kendo.toString(view[0].amount, "c", view[0].locale));
 
 					if(view[0].status=="1"){
 						self.set("statusSrc", banhji.source.approvedSrc);
@@ -50313,7 +50328,7 @@
 		},
 		changes				: function(){
 			var self = this, obj = this.get("obj"),
-			total = 0, subTotal = 0, discount =0, tax = 0, itemIds = [];											
+			total = 0, subTotal = 0, discount =0, tax = 0;											
 
 			$.each(this.lineDS.data(), function(index, value) {				
 				var amt = value.quantity * value.cost;					
@@ -50333,10 +50348,6 @@
 
 				value.set("amount", amt.toFixed(2));					
 				subTotal += amt;
-
-				if(value.item_id>0){
-					itemIds.push(value.item_id);
-				}					
 	        });
 
 	    	//Total
@@ -50354,18 +50365,7 @@
 	        obj.set("tax", tax);			
 			obj.set("amount", total);
 
-			this.set("total", kendo.toString(total, "c", obj.locale));									    	
-	    	
-			//Remove Assembly Item List
-			var raw = this.assemblyLineDS.data();			
-		    var item, i;
-		    for(i=raw.length-1; i>=0; i--){
-		    	item = raw[i];
-		    	
-		    	if (jQuery.inArray(kendo.parseInt(item.assembly_id), itemIds)==-1) {
-			       	this.assemblyLineDS.remove(item);			      	
-			    }
-		    }
+			this.set("total", kendo.toString(total, "c", obj.locale));
 		},
 		addEmpty 		 	: function(){			
 			this.dataSource.data([]);
@@ -50703,7 +50703,6 @@
 		lang 					: langVM,
 		dataSource 			: dataStore(apiUrl + "transactions"),
 		lineDS  			: dataStore(apiUrl + "item_lines"),
-		assemblyLineDS  	: dataStore(apiUrl + "item_lines"),
 		txnDS 				: dataStore(apiUrl + "transactions"),
 		recurringDS 		: dataStore(apiUrl + "transactions"),
 		recurringLineDS 	: dataStore(apiUrl + "item_lines"),
@@ -50924,15 +50923,24 @@
 			});						
 		},
 		//Item		
-		itemChanges 		: function(e){								
+		itemChanges 		: function(e){
 			var self = this, 
 			data = e.data,
 			obj = this.get("obj");
 
-			if(data.item_id>0){
-				var item = this.itemDS.get(data.item_id),
-				unit_value = 1,
-				rate = obj.rate / banhji.source.getRate(item.locale, new Date(obj.issued_date));
+			var notDuplicate = true, existingList = {};
+			$.each(this.lineDS.data(), function(index, value){
+				if(existingList[value.item_id]===undefined){
+					existingList[value.item_id]=value.item_id;											
+				}else{
+					notDuplicate = false;
+
+					return false;
+				}
+			});
+			
+			if(notDuplicate && data.item_id>0){
+				var item = this.itemDS.get(data.item_id);
 
 		        if(item.is_catalog=="1"){
 		        	var catalogList = [];
@@ -50947,13 +50955,9 @@
 		        	}).then(function(){
 		        		self.lineDS.remove(data);
 
-		        		$.each(self.catalogDS.view(), function(index, value){
-		        			rate = obj.rate / banhji.source.getRate(value.locale, new Date(obj.issued_date));
-
-		        			if(value.item_prices.length>0){
-		        				unit_value = value.item_prices[0].unit_value;
-		        			}
-
+		        		$.each(self.catalogDS.view(), function(index, value){							
+							var rate = obj.rate / banhji.source.getRate(value.locale, new Date(obj.issued_date));
+							
 							self.lineDS.add({					
 								transaction_id 		: obj.id,
 								tax_item_id 		: 0,
@@ -50961,7 +50965,7 @@
 								measurement_id 		: value.measurement_id,								
 								description 		: value.purchase_description,				
 								quantity 	 		: 1,
-								unit_value 			: unit_value,
+								unit_value 			: 1,
 								cost 				: value.cost*rate,												
 								amount 				: value.cost*rate,
 								discount 			: 0,
@@ -50969,29 +50973,45 @@
 								locale				: value.locale,
 								movement 			: 1,								
 
-								item_prices 		: []
+								item_prices 		: value.item_prices
 							});								
 		        		});
 
 		        		self.changes();
-		        	}); 
+		        	});
 		        }else{
-		        	//Unit Value
-					if(item.item_prices.length>0){
-	    				unit_value = item.item_prices[0].unit_value;
-	    			}
-
+		        	var rate = obj.rate / banhji.source.getRate(item.locale, new Date(obj.issued_date));
+					
 		    		data.set("measurement_id", item.measurement_id);
 		    		data.set("description", item.purchase_description);
 		    		data.set("quantity", 1);
-		    		data.set("unit_value", unit_value);	    		
+		    		data.set("unit_value", 1);
 			        data.set("cost", item.cost*rate);
-			        data.set("rate", rate);
+			        data.set("rate", rate);	
 			        data.set("locale", item.locale);
+			        data.set("item_prices", item.item_prices);			        
 
 			        this.changes();
 		    	}
-	        }                	        	
+	        }else{
+	        	data.set("item_id", "");
+	        	alert(banhji.source.duplicateSelectedItemMessage);
+	        }
+		},
+		measurementChanges 	: function(e){
+			var data = e.data, obj = this.get("obj");
+
+			if(data.measurement_id>0){
+				$.each(data.item_prices, function(index, value){
+					if(value.measurement_id==data.measurement_id){
+				        data.set("unit_value", value.unit_value);
+				        
+						return false;
+					}
+				});
+
+		        this.changes();
+	        }
 		},		
 		//Obj
 		loadObj 			: function(id){
@@ -51028,29 +51048,14 @@
 			}
 		},
 		changes				: function(){
-			var self = this, obj = this.get("obj"), total = 0, itemIds = [];										
+			var self = this, obj = this.get("obj"), total = 0;										
 
 			$.each(this.lineDS.data(), function(index, value) {				
 				total += value.quantity;
-
-				if(value.item_id>0){
-					itemIds.push(value.item_id);
-				}										
 	        });
 			
 			obj.set("amount", total);
 			this.set("total", kendo.toString(total, "n0"));
-
-			//Remove Assembly Item List
-			var raw = this.assemblyLineDS.data();			
-		    var item, i;
-		    for(i=raw.length-1; i>=0; i--){
-		    	item = raw[i];
-		    	
-		    	if (jQuery.inArray(kendo.parseInt(item.assembly_id), itemIds)==-1) {
-			       	this.assemblyLineDS.remove(item);			      	
-			    }
-		    }	    	
 		},					
 		addEmpty 		 	: function(){			
 			this.dataSource.data([]);
@@ -52165,7 +52170,6 @@
 		lang 						: langVM,
 		dataSource 					: dataStore(apiUrl + "transactions"),
 		lineDS  					: dataStore(apiUrl + "item_lines"),
-		assemblyLineDS  			: dataStore(apiUrl + "item_lines"),
 		txnDS 						: dataStore(apiUrl + "transactions"),
 		accountLineDS  				: dataStore(apiUrl + "account_lines"),
 		journalLineDS				: dataStore(apiUrl + "journal_lines"),
@@ -52599,15 +52603,24 @@
 			});							
 		},
 		//Item		
-		itemChanges 		: function(e){								
+		itemChanges 		: function(e){
 			var self = this, 
 			data = e.data,
 			obj = this.get("obj");
 
-			if(data.item_id>0){
-				var item = this.itemDS.get(data.item_id),
-				unit_value = 1,
-				rate = obj.rate / banhji.source.getRate(item.locale, new Date(obj.issued_date));
+			var notDuplicate = true, existingList = {};
+			$.each(this.lineDS.data(), function(index, value){
+				if(existingList[value.item_id]===undefined){
+					existingList[value.item_id]=value.item_id;											
+				}else{
+					notDuplicate = false;
+
+					return false;
+				}
+			});
+			
+			if(notDuplicate && data.item_id>0){
+				var item = this.itemDS.get(data.item_id);
 
 		        if(item.is_catalog=="1"){
 		        	var catalogList = [];
@@ -52622,13 +52635,9 @@
 		        	}).then(function(){
 		        		self.lineDS.remove(data);
 
-		        		$.each(self.catalogDS.view(), function(index, value){
-		        			rate = obj.rate / banhji.source.getRate(value.locale, new Date(obj.issued_date));
-
-		        			if(value.item_prices.length>0){
-		        				unit_value = value.item_prices[0].unit_value;
-		        			}
-
+		        		$.each(self.catalogDS.view(), function(index, value){							
+							var rate = obj.rate / banhji.source.getRate(value.locale, new Date(obj.issued_date));
+							
 							self.lineDS.add({					
 								transaction_id 		: obj.id,
 								tax_item_id 		: 0,
@@ -52636,7 +52645,7 @@
 								measurement_id 		: value.measurement_id,								
 								description 		: value.purchase_description,				
 								quantity 	 		: 1,
-								unit_value 			: unit_value,
+								unit_value 			: 1,
 								cost 				: value.cost*rate,												
 								amount 				: value.cost*rate,
 								discount 			: 0,
@@ -52644,29 +52653,45 @@
 								locale				: value.locale,
 								movement 			: 1,								
 
-								item_prices 		: []
+								item_prices 		: value.item_prices
 							});								
 		        		});
 
 		        		self.changes();
-		        	}); 
+		        	});
 		        }else{
-		        	//Unit Value
-					if(item.item_prices.length>0){
-	    				unit_value = item.item_prices[0].unit_value;
-	    			}
-
+		        	var rate = obj.rate / banhji.source.getRate(item.locale, new Date(obj.issued_date));
+					
 		    		data.set("measurement_id", item.measurement_id);
 		    		data.set("description", item.purchase_description);
 		    		data.set("quantity", 1);
-		    		data.set("unit_value", unit_value);	    		
+		    		data.set("unit_value", 1);
 			        data.set("cost", item.cost*rate);
-			        data.set("rate", rate);
+			        data.set("rate", rate);	
 			        data.set("locale", item.locale);
+			        data.set("item_prices", item.item_prices);			        
 
 			        this.changes();
 		    	}
-	        }                	        	
+	        }else{
+	        	data.set("item_id", "");
+	        	alert(banhji.source.duplicateSelectedItemMessage);
+	        }
+		},
+		measurementChanges 	: function(e){
+			var data = e.data, obj = this.get("obj");
+
+			if(data.measurement_id>0){
+				$.each(data.item_prices, function(index, value){
+					if(value.measurement_id==data.measurement_id){
+				        data.set("unit_value", value.unit_value);
+				        
+						return false;
+					}
+				});
+
+		        this.changes();
+	        }
 		},
 		addRowAccount		: function(){
 			var obj = this.get("obj");
@@ -52928,7 +52953,7 @@
 			var self = this, obj = this.get("obj"),
 			total = 0, subTotal = 0, discount =0, tax = 0, 
 			countAdditCheck = 0, amountAdditCheck = 0, additionalCost = 0, 
-			remaining = 0, amount_due = 0, itemIds = [];													
+			remaining = 0, amount_due = 0;													
 				
 			//Item
 			$.each(this.lineDS.data(), function(index, value) {				
@@ -52955,10 +52980,6 @@
 									
 				subTotal += amt;
 				value.set("amount", amt);
-
-				if(value.item_id>0){
-					itemids.push(value.item_id);
-				}					
 	        });
 
 			//Account
@@ -53063,17 +53084,6 @@
 			this.set("total", kendo.toString(total, "c", obj.locale));
 	        this.set("additional_cost", kendo.toString(additionalCost, "c", obj.locale));
 	        this.set("amount_due", kendo.toString(amount_due, "c", obj.locale));
-
-			//Remove Assembly Item List
-			var raw = this.assemblyLineDS.data();			
-		    var item, i;
-		    for(i=raw.length-1; i>=0; i--){
-		    	item = raw[i];
-		    	
-		    	if (jQuery.inArray(kendo.parseInt(item.assembly_id), itemIds)==-1) {
-			       	this.assemblyLineDS.remove(item);			      	
-			    }
-	    	}
 		},
 		discountChanges 	: function(){
 			var obj = this.get("obj");
@@ -53884,7 +53894,6 @@
 		lang 				: langVM,
 		dataSource 			: dataStore(apiUrl + "transactions"),
 		lineDS  			: dataStore(apiUrl + "item_lines"),
-		assemblyLineDS  	: dataStore(apiUrl + "item_lines"),		
 		journalLineDS		: dataStore(apiUrl + "journal_lines"),
 		referenceDS			: dataStore(apiUrl + "transactions"),
 		referenceLineDS		: dataStore(apiUrl + "item_lines"),
@@ -54148,15 +54157,24 @@
 			}				
 		},
 		//Item		
-		itemChanges 		: function(e){								
+		itemChanges 		: function(e){
 			var self = this, 
 			data = e.data,
 			obj = this.get("obj");
 
-			if(data.item_id>0){
-				var item = this.itemDS.get(data.item_id),
-				unit_value = 1,
-				rate = obj.rate / banhji.source.getRate(item.locale, new Date(obj.issued_date));
+			var notDuplicate = true, existingList = {};
+			$.each(this.lineDS.data(), function(index, value){
+				if(existingList[value.item_id]===undefined){
+					existingList[value.item_id]=value.item_id;											
+				}else{
+					notDuplicate = false;
+
+					return false;
+				}
+			});
+			
+			if(notDuplicate && data.item_id>0){
+				var item = this.itemDS.get(data.item_id);
 
 		        if(item.is_catalog=="1"){
 		        	var catalogList = [];
@@ -54171,13 +54189,9 @@
 		        	}).then(function(){
 		        		self.lineDS.remove(data);
 
-		        		$.each(self.catalogDS.view(), function(index, value){
-		        			rate = obj.rate / banhji.source.getRate(value.locale, new Date(obj.issued_date));
-
-		        			if(value.item_prices.length>0){
-		        				unit_value = value.item_prices[0].unit_value;
-		        			}
-
+		        		$.each(self.catalogDS.view(), function(index, value){							
+							var rate = obj.rate / banhji.source.getRate(value.locale, new Date(obj.issued_date));
+							
 							self.lineDS.add({					
 								transaction_id 		: obj.id,
 								tax_item_id 		: 0,
@@ -54185,7 +54199,7 @@
 								measurement_id 		: value.measurement_id,								
 								description 		: value.purchase_description,				
 								quantity 	 		: 1,
-								unit_value 			: unit_value,
+								unit_value 			: 1,
 								cost 				: value.cost*rate,												
 								amount 				: value.cost*rate,
 								discount 			: 0,
@@ -54193,29 +54207,45 @@
 								locale				: value.locale,
 								movement 			: 1,								
 
-								item_prices 		: []
+								item_prices 		: value.item_prices
 							});								
 		        		});
 
 		        		self.changes();
-		        	}); 
+		        	});
 		        }else{
-		        	//Unit Value
-					if(item.item_prices.length>0){
-	    				unit_value = item.item_prices[0].unit_value;
-	    			}
-
+		        	var rate = obj.rate / banhji.source.getRate(item.locale, new Date(obj.issued_date));
+					
 		    		data.set("measurement_id", item.measurement_id);
 		    		data.set("description", item.purchase_description);
 		    		data.set("quantity", 1);
-		    		data.set("unit_value", unit_value);
+		    		data.set("unit_value", 1);
 			        data.set("cost", item.cost*rate);
-			        data.set("rate", rate);
+			        data.set("rate", rate);	
 			        data.set("locale", item.locale);
+			        data.set("item_prices", item.item_prices);			        
 
 			        this.changes();
 		    	}
-	        }                	        	
+	        }else{
+	        	data.set("item_id", "");
+	        	alert(banhji.source.duplicateSelectedItemMessage);
+	        }
+		},
+		measurementChanges 	: function(e){
+			var data = e.data, obj = this.get("obj");
+
+			if(data.measurement_id>0){
+				$.each(data.item_prices, function(index, value){
+					if(value.measurement_id==data.measurement_id){
+				        data.set("unit_value", value.unit_value);
+				        
+						return false;
+					}
+				});
+
+		        this.changes();
+	        }
 		},
 		//Return Option
 		addRowOption 		: function(){				
@@ -54324,7 +54354,7 @@
 		},
 		changes				: function(){
 			var self = this, obj = this.get("obj"), 
-			subTotal = 0, discount = 0, tax = 0, returnAmount = 0, remaining = 0, itemIds = [];
+			subTotal = 0, discount = 0, tax = 0, returnAmount = 0, remaining = 0;
 			
 	        $.each(this.lineDS.data(), function(index, value) {				
 				var amt = value.quantity * value.cost;					
@@ -54344,10 +54374,6 @@
 
 				value.set("amount", amt);
 				subTotal += amt;
-
-				if(value.item_id>0){
-					itemIds.push(value.item_id);
-				}									
 	        });
 
 	        total = subTotal + tax;
@@ -54366,17 +54392,6 @@
 			obj.set("remaining", remaining);
 
 			this.set("total", kendo.toString(total, "c", obj.locale));
-
-			//Remove Assembly Item List
-			var raw = this.assemblyLineDS.data();			
-		    var item, i;
-		    for(i=raw.length-1; i>=0; i--){
-		    	item = raw[i];
-		    	
-		    	if (jQuery.inArray(kendo.parseInt(item.assembly_id), itemIds)==-1) {
-			       	this.assemblyLineDS.remove(item);			      	
-			    }
-		    }
 		},
 		addEmpty 		 	: function(){			
 			this.dataSource.data([]);
@@ -57290,21 +57305,23 @@
 	        	alert(banhji.source.duplicateSelectedItemMessage);
 	        }
 		},
-		measurementChanges 	: function(e){										
-			var data = e.data, obj = this.get("obj");			
+		measurementChanges 	: function(e){
+			var data = e.data, obj = this.get("obj");
 
 			if(data.measurement_id>0){
 				$.each(data.item_prices, function(index, value){
 					if(value.measurement_id==data.measurement_id){
-						var rate = obj.rate / banhji.source.getRate(value.locale, new Date(obj.issued_date));						
-				        data.set("price", value.price*rate);				       			       
+						var rate = obj.rate / banhji.source.getRate(value.locale, new Date(obj.issued_date));
+				        
+				        data.set("price", value.price*rate);
+				        data.set("unit_value", value.unit_value);
 				        
 						return false;
 					}
-				});	    		
-		        	        
+				});
+
 		        this.changes();
-	        }	                	        	
+	        }
 		},
 		//Obj
 		loadObj 			: function(id){
@@ -58198,8 +58215,10 @@
 				$.each(data.item_prices, function(index, value){
 					if(value.measurement_id==data.measurement_id){
 						var rate = obj.rate / banhji.source.getRate(value.locale, new Date(obj.issued_date));						
-				        data.set("price", value.price*rate);				       			       
 				        
+				        data.set("price", value.price*rate);				       			       
+				        data.set("unit_value", value.unit_value);
+
 						return false;
 					}
 				});	    		
@@ -60015,8 +60034,10 @@
 				$.each(data.item_prices, function(index, value){
 					if(value.measurement_id==data.measurement_id){
 						var rate = obj.rate / banhji.source.getRate(value.locale, new Date(obj.issued_date));						
-				        data.set("price", value.price*rate);				       			       
 				        
+				        data.set("price", value.price*rate);				       			       
+				        data.set("unit_value", value.unit_value);
+
 						return false;
 					}
 				});	    		
@@ -61499,8 +61520,10 @@
 				$.each(data.item_prices, function(index, value){
 					if(value.measurement_id==data.measurement_id){
 						var rate = obj.rate / banhji.source.getRate(value.locale, new Date(obj.issued_date));						
-				        data.set("price", value.price*rate);				       			       
 				        
+				        data.set("price", value.price*rate);				       			       
+				        data.set("unit_value", value.unit_value);
+
 						return false;
 					}
 				});	    		
@@ -62785,8 +62808,10 @@
 				$.each(data.item_prices, function(index, value){
 					if(value.measurement_id==data.measurement_id){
 						var rate = obj.rate / banhji.source.getRate(value.locale, new Date(obj.issued_date));						
-				        data.set("price", value.price*rate);				       			       
 				        
+				        data.set("price", value.price*rate);				       			       
+				        data.set("unit_value", value.unit_value);
+
 						return false;
 					}
 				});	    		
@@ -63683,8 +63708,10 @@
 				$.each(data.item_prices, function(index, value){
 					if(value.measurement_id==data.measurement_id){
 						var rate = obj.rate / banhji.source.getRate(value.locale, new Date(obj.issued_date));						
-				        data.set("price", value.price*rate);				       			       
 				        
+				        data.set("price", value.price*rate);				       			       
+				        data.set("unit_value", value.unit_value);
+
 						return false;
 					}
 				});	    		
