@@ -10225,19 +10225,19 @@
         setCurrent 			: function(current) {
         	this.set('current', current);
         },
+        // saveTariffItem 		: function(e){
+        // 	var self = this;
+        // 	this.tariffItemDS.query({
+        // 		filter: [{field: "usage", value: this.get("tariffItemUsage")},{field: "tariff_id", value: this.get("current").id}]
+        // 	}).then(function(e){
+        // 		if(self.tariffItemDS.data().length > 0){
+        // 			alert("Usage is already exist!");
+        // 		}else{
+        // 			self.addTariff();
+        // 		}
+        // 	});
+        // },
         saveTariffItem 		: function(e){
-        	var self = this;
-        	this.tariffItemDS.query({
-        		filter: [{field: "usage", value: this.get("tariffItemUsage")},{field: "tariff_id", value: this.get("current").id}]
-        	}).then(function(e){
-        		if(self.tariffItemDS.data().length > 0){
-        			alert("Usage is already exist!");
-        		}else{
-        			self.addTariff();
-        		}
-        	});
-        },
-        addTariffItem 		: function(e){
         	var data = e.data.id, self = this;
         	this.tariffItemDS.data([]);
         	this.tariffItemDS.add({
