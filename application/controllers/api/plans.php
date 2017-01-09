@@ -366,7 +366,7 @@ class Plans extends REST_Controller {
 			}
 		}
 		$table->where('is_deleted', 0);
-		$table->order_by('usage','desc');
+		$table->order_by('usage','asc');
 		$table->get();
 		if($table->exists()) {
 			$data = array();
@@ -405,7 +405,7 @@ class Plans extends REST_Controller {
 			$table->where("tariff_id", $row->tariff_id);
 			$table->get();
 			if($table->exists()) {
-				$this->response(array('results' => 'error', 'count' => count()), 205);
+				$this->response(array('results' => 'error', 'count' => count()), 400);
 			}else{
 				$table->is_flat = isset($row->is_flat) ? $row->is_flat : 0;
 				$table->currency_id = isset($row->currency) ? $row->currency : 1;

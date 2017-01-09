@@ -35057,7 +35057,7 @@
     	<td></td>
     	<td></td>
     	<td></td>
-    	<td></td>
+    	<td></td>    	
     	<td class="right strong" style="color: black;">
     		#=kendo.toString(balance_forward, "c", banhji.locale)#
     	</td>
@@ -35109,12 +35109,10 @@
     	<td></td>
     	<td></td>
     	<td></td>
+    	<td></td>
     	<td class="right" style="font-weight: bold; border-top: 1px solid black !important; color: black;">
     		#=kendo.toString(balance, "c", banhji.locale)#
     	</td>
-    </tr>
-    <tr>
-    	<td colspan="6">&nbsp;</td>
     </tr>  
 </script>
 <script id="cashCollectionReport" type="text/x-kendo-template">
@@ -39749,10 +39747,42 @@
 					        	</div>
 				        	</div>
 
-				        	<div class="tab-pane" id="tab-4">	
-				        		<div align="center" style="min-height: 150px;">
-				        			<h1 style="font-style: 30px; margin-top: 20px;">Coming Soon</h1>
-				        		</div>							        	
+				        	<div class="tab-pane" id="tab-4">
+				        		<div class="row-fluid">
+									<div class="row-fluid sale-report" style="margin-top: 15px;">
+										<h2>CASH POSITION</h2>
+										<p>
+											The following reports provide summary and detailed reports on employee related transactions.  
+										</p>
+										<div class="row-fluid">
+											<table class="span12">
+												<tr>
+													<td class="span4">
+														<h3><a href="#/cash_movement">Cash Movement</a></h3>
+													</td>													
+													<td class="span4">
+														<h3><a href="#/cash_collection_report">Cash Collection Report</a></h3>
+													</td>
+													<td class="span4">
+														<h3><a href="#/cash_payment_report">Cash Payment Report</a></h3>
+													</td>
+												</tr>
+												<tr>
+													<td class="span4">
+														Summarizes each inventory balance by quantity on hand, on purchase order and sale order. In addition, it also includes average cost and price. 
+													</td>
+													<td class="span4">
+														Lists individual inventory movement transactions by date for each inventory within a period of time.
+													</td>
+													<td class="span4">
+														Lists of all transactions related to and grouped by each inventory with analysis of average gross profit margin.
+													</td>
+													
+												</tr>
+											</table>					
+										</div>
+									</div>									
+					        	</div>						        	
 					        	<!-- <div class="row-fluid">
 									<div class="row-fluid sale-report" style="margin-top: 15px;">
 										<h2>CASH POSITION</h2>
@@ -49876,7 +49906,8 @@
 		lang 				: langVM,
 		dataSource 			: dataStore(apiUrl + "transactions"),
 		lineDS  			: dataStore(apiUrl + "item_lines"),
-		deleteDS  			: dataStore(apiUrl + "transactions"),
+		assemblyLineDS 		: dataStore(apiUrl + "item_lines"),
+		txnDS  				: dataStore(apiUrl + "transactions"),
 		recurringDS 		: dataStore(apiUrl + "transactions"),
 		recurringLineDS 	: dataStore(apiUrl + "item_lines"),
 		jobDS				: banhji.source.jobDS,
@@ -50137,23 +50168,32 @@
 				value.set("rate", itemRate);
 			});						
 		},
-		//Item		
-		itemChanges 		: function(e){								
+		//Item
+		itemChanges 		: function(e){
 			var self = this, 
 			data = e.data,
 			obj = this.get("obj");
 
-			if(data.item_id>0){
-				var item = this.itemDS.get(data.item_id),
-				unit_value = 1,
-				rate = obj.rate / banhji.source.getRate(item.locale, new Date(obj.issued_date));
+			var notDuplicate = true, existingList = {};
+			$.each(this.lineDS.data(), function(index, value){
+				if(existingList[value.item_id]===undefined){
+					existingList[value.item_id]=value.item_id;											
+				}else{
+					notDuplicate = false;
+
+					return false;
+				}
+			});
+			
+			if(notDuplicate && data.item_id>0){
+				var item = this.itemDS.get(data.item_id);
 
 		        if(item.is_catalog=="1"){
 		        	var catalogList = [];
 		        	$.each(item.catalogs, function(index, value){
 		        		catalogList.push(value);
 		        	});
-
+		        	
 		        	this.catalogDS.query({
 		        		filter: { field:"id", operator:"where_in", value:catalogList },
 		        		page:1,
@@ -50161,52 +50201,48 @@
 		        	}).then(function(){
 		        		self.lineDS.remove(data);
 
-		        		$.each(self.catalogDS.view(), function(index, value){
-		        			rate = obj.rate / banhji.source.getRate(value.locale, new Date(obj.issued_date));
-		        			
-		        			if(value.item_prices.length>0){
-		        				unit_value = value.item_prices[0].unit_value;
-		        			}
-
-							self.lineDS.add({
+		        		$.each(self.catalogDS.view(), function(index, value){							
+							var rate = obj.rate / banhji.source.getRate(value.locale, new Date(obj.issued_date));
+							
+							self.lineDS.add({					
 								transaction_id 		: obj.id,
 								tax_item_id 		: 0,
 								item_id 			: value.id,
-								measurement_id 		: value.measurement_id,
-								description 		: value.purchase_description,
+								measurement_id 		: value.measurement_id,								
+								description 		: value.purchase_description,				
 								quantity 	 		: 1,
-								unit_value 			: unit_value,
-								cost 				: value.cost*rate,
+								unit_value 			: 1,
+								cost 				: value.cost*rate,												
 								amount 				: value.cost*rate,
 								discount 			: 0,
 								rate				: rate,
 								locale				: value.locale,
-								movement 			: 1,
-								required_date 		: obj.issued_date,
+								movement 			: 1,								
 
-								item_prices 		: []
-							});
+								item_prices 		: value.item_prices
+							});								
 		        		});
 
 		        		self.changes();
 		        	});
 		        }else{
-		        	//Unit Value
-					if(item.item_prices.length>0){
-	    				unit_value = item.item_prices[0].unit_value;
-	    			}
-
+		        	var rate = obj.rate / banhji.source.getRate(item.locale, new Date(obj.issued_date));
+					
 		    		data.set("measurement_id", item.measurement_id);
 		    		data.set("description", item.purchase_description);
 		    		data.set("quantity", 1);
-		    		data.set("unit_value", unit_value);	    		
+		    		data.set("unit_value", 1);
 			        data.set("cost", item.cost*rate);
-			        data.set("rate", rate);
+			        data.set("rate", rate);	
 			        data.set("locale", item.locale);
+			        data.set("item_prices", item.item_prices);			        
 
 			        this.changes();
 		    	}
-	        }                	        	
+	        }else{
+	        	data.set("item_id", "");
+	        	alert(banhji.source.duplicateSelectedItemMessage);
+	        }
 		},
 		//Segment
 		segmentChanges 		: function(e) {
@@ -50273,51 +50309,60 @@
 			}				
 		},
 		changes				: function(){
-			var self = this, obj = this.get("obj");
+			var self = this, obj = this.get("obj"),
+			total = 0, subTotal = 0, discount =0, tax = 0, itemIds = [];											
 
-			if(this.lineDS.total()>0){			
-				var total = 0, subTotal = 0, discount =0, tax = 0;											
+			$.each(this.lineDS.data(), function(index, value) {				
+				var amt = value.quantity * value.cost;					
 
-				$.each(this.lineDS.data(), function(index, value) {				
-					var amt = value.quantity * value.cost;					
+				//Discount by line
+				if(value.discount>0){										
+					var discount_amount = amt * value.discount;
+					amt -= discount_amount;
+					discount += discount_amount;																	
+				}
 
-					//Discount by line
-					if(value.discount>0){										
-						var discount_amount = amt * value.discount;
-						amt -= discount_amount;
-						discount += discount_amount;																	
-					}
+				//Tax by line
+				if(value.tax_item_id>0){
+					var taxItem = self.taxItemDS.get(value.tax_item_id);										
+					tax += amt * taxItem.rate;																	
+				}					
 
-					//Tax by line
-					if(value.tax_item_id>0){
-						var taxItem = self.taxItemDS.get(value.tax_item_id);										
-						tax += amt * taxItem.rate;																	
-					}					
+				value.set("amount", amt.toFixed(2));					
+				subTotal += amt;
 
-					value.set("amount", amt.toFixed(2));					
-					subTotal += amt;					
-		        });				
+				if(value.item_id>0){
+					itemIds.push(value.item_id);
+				}					
+	        });
 
-		    	//Total
-		        total = subTotal + tax;		        
+	    	//Total
+	        total = subTotal + tax;		        
 
-		        //Warning over credit allowed
-		        if(obj.credit_allowed>0 && total>obj.credit_allowed){
-		        	this.set("amtDueColor", "Gold");		        	
-		        }else{
-		        	this.set("amtDueColor", banhji.source.amtDueColor);
-		        }
+	        //Warning over credit allowed
+	        if(obj.credit_allowed>0 && total>obj.credit_allowed){
+	        	this.set("amtDueColor", "Gold");		        	
+	        }else{
+	        	this.set("amtDueColor", banhji.source.amtDueColor);
+	        }
 
-		        this.set("sub_total", kendo.toString(subTotal, "c", obj.locale));
-		        this.set("discount", kendo.toString(discount, "c", obj.locale));
-		        this.set("tax", kendo.toString(tax, "c", obj.locale));
-		        this.set("total", kendo.toString(total, "c", obj.locale));
+	        obj.set("sub_total", subTotal);
+	        obj.set("discount", discount);
+	        obj.set("tax", tax);			
+			obj.set("amount", total);
 
-		        obj.set("sub_total", subTotal);
-		        obj.set("discount", discount);
-		        obj.set("tax", tax);			
-				obj.set("amount", total);									    	
-	    	}	
+			this.set("total", kendo.toString(total, "c", obj.locale));									    	
+	    	
+			//Remove Assembly Item List
+			var raw = this.assemblyLineDS.data();			
+		    var item, i;
+		    for(i=raw.length-1; i>=0; i--){
+		    	item = raw[i];
+		    	
+		    	if (jQuery.inArray(kendo.parseInt(item.assembly_id), itemIds)==-1) {
+			       	this.assemblyLineDS.remove(item);			      	
+			    }
+		    }
 		},
 		addEmpty 		 	: function(){			
 			this.dataSource.data([]);
@@ -50498,22 +50543,25 @@
 			var self = this, obj = this.get("obj");
 			this.set("showConfirm",false);			
 			
-	        this.deleteDS.query({
+	        this.txnDS.query({
 	        	filter:[
 	        		{ field:"reference_id", value:obj.id },
 	        	],
 	        	page:1,
 	        	pageSize:1
 	        }).then(function(){
-	        	var view = self.deleteDS.view();
+	        	var view = self.txnDS.view();
 
 	        	if(view.length>0){
 	        		alert("Sorry, you can not delete it.");
 	        	}else{
 	        		obj.set("deleted", 1);
 			        self.dataSource.sync();
-
-			        window.history.back();
+			        self.dataSource.bind("requestEnd", function(e){
+			        	if(e.type==="update"){
+			        		window.history.back();
+			        	}
+			        });
 	        	}
 	        });		    	    	
 		},
@@ -50652,7 +50700,8 @@
 		lang 					: langVM,
 		dataSource 			: dataStore(apiUrl + "transactions"),
 		lineDS  			: dataStore(apiUrl + "item_lines"),
-		deleteDS 			: dataStore(apiUrl + "transactions"),
+		assemblyLineDS  	: dataStore(apiUrl + "item_lines"),
+		txnDS 				: dataStore(apiUrl + "transactions"),
 		recurringDS 		: dataStore(apiUrl + "transactions"),
 		recurringLineDS 	: dataStore(apiUrl + "item_lines"),
 		referenceDS			: dataStore(apiUrl + "transactions"),
@@ -50976,14 +51025,29 @@
 			}
 		},
 		changes				: function(){
-			var self = this, obj = this.get("obj"), total = 0;										
+			var self = this, obj = this.get("obj"), total = 0, itemIds = [];										
 
 			$.each(this.lineDS.data(), function(index, value) {				
-				total += value.quantity;										
-	        });
+				total += value.quantity;
 
+				if(value.item_id>0){
+					itemIds.push(value.item_id);
+				}										
+	        });
+			
+			obj.set("amount", total);
 			this.set("total", kendo.toString(total, "n0"));
-			obj.set("amount", total);	    	
+
+			//Remove Assembly Item List
+			var raw = this.assemblyLineDS.data();			
+		    var item, i;
+		    for(i=raw.length-1; i>=0; i--){
+		    	item = raw[i];
+		    	
+		    	if (jQuery.inArray(kendo.parseInt(item.assembly_id), itemIds)==-1) {
+			       	this.assemblyLineDS.remove(item);			      	
+			    }
+		    }	    	
 		},					
 		addEmpty 		 	: function(){			
 			this.dataSource.data([]);
@@ -51174,8 +51238,11 @@
 	        	}else{
 	        		obj.set("deleted", 1);
 			        self.dataSource.sync();
-
-			        window.history.back();
+			        self.dataSource.bind("requestEnd", function(e){
+			        	if(e.type==="update"){
+			        		window.history.back();
+			        	}
+			        });
 	        	}
 	        });		    	    	
 		},
@@ -52095,7 +52162,8 @@
 		lang 						: langVM,
 		dataSource 					: dataStore(apiUrl + "transactions"),
 		lineDS  					: dataStore(apiUrl + "item_lines"),
-		deleteDS 					: dataStore(apiUrl + "transactions"),
+		assemblyLineDS  			: dataStore(apiUrl + "item_lines"),
+		txnDS 						: dataStore(apiUrl + "transactions"),
 		accountLineDS  				: dataStore(apiUrl + "account_lines"),
 		journalLineDS				: dataStore(apiUrl + "journal_lines"),
 		additionalCostDS 			: dataStore(apiUrl + "transactions"),
@@ -52854,141 +52922,154 @@
 			}				
 		},
 		changes				: function(){
-			var self = this, obj = this.get("obj");
-
-			if(this.lineDS.total()>0 || this.accountLineDS.total()>0 || this.additionalCostDS.total()>0){			
-				var total = 0, subTotal = 0, discount =0, tax = 0, 
-				countAdditCheck = 0, amountAdditCheck = 0, additionalCost = 0, remaining = 0, amount_due = 0;													
+			var self = this, obj = this.get("obj"),
+			total = 0, subTotal = 0, discount =0, tax = 0, 
+			countAdditCheck = 0, amountAdditCheck = 0, additionalCost = 0, 
+			remaining = 0, amount_due = 0, itemIds = [];													
 				
-				//Item
-				$.each(this.lineDS.data(), function(index, value) {				
-					var amt = value.quantity * value.cost;					
+			//Item
+			$.each(this.lineDS.data(), function(index, value) {				
+				var amt = value.quantity * value.cost;					
 
-					//Discount by line
-					if(value.discount>0){										
-						var discount_amount = amt * value.discount;
-						amt -= discount_amount;
-						discount += discount_amount;																	
-					}
+				//Discount by line
+				if(value.discount>0){										
+					var discount_amount = amt * value.discount;
+					amt -= discount_amount;
+					discount += discount_amount;																	
+				}
 
-					//Tax by line
-					if(value.tax_item_id>0){
-						var taxItem = self.taxItemDS.get(value.tax_item_id);										
-						tax += amt * taxItem.rate;																	
-					}
+				//Tax by line
+				if(value.tax_item_id>0){
+					var taxItem = self.taxItemDS.get(value.tax_item_id);										
+					tax += amt * taxItem.rate;																	
+				}
 
-					//Count additional cost and check
-					if(value.additional_applied){
-						amountAdditCheck += amt;
-						countAdditCheck++;
-					}
-										
-					subTotal += amt;
-					value.set("amount", amt);					
-		        });
+				//Count additional cost and check
+				if(value.additional_applied){
+					amountAdditCheck += amt;
+					countAdditCheck++;
+				}
+									
+				subTotal += amt;
+				value.set("amount", amt);
 
-				//Account
-		        $.each(this.accountLineDS.data(), function(index, value) {
-					//Tax by line
-					if(value.tax_item_id>0){
-						var taxItem = self.taxItemDS.get(value.tax_item_id);										
-						tax += value.amount * taxItem.rate;																	
-					}
+				if(value.item_id>0){
+					itemids.push(value.item_id);
+				}					
+	        });
 
-					subTotal += value.amount;					
-		        });
+			//Account
+	        $.each(this.accountLineDS.data(), function(index, value) {
+				//Tax by line
+				if(value.tax_item_id>0){
+					var taxItem = self.taxItemDS.get(value.tax_item_id);										
+					tax += value.amount * taxItem.rate;																	
+				}
 
-		        //Additional Cost
-		        $.each(this.additionalCostDS.data(), function(index, value) {
-		        	var additionalTax = 0;
-		        	//Tax by line
-					if(value.tax_item_id>0){
-						var taxItem = self.taxItemDS.get(value.tax_item_id);										
-						additionalTax += value.sub_total * taxItem.rate;
-						tax += additionalTax;																							
-					}
+				subTotal += value.amount;					
+	        });
 
-					additionalCost += value.sub_total / value.rate;
+	        //Additional Cost
+	        $.each(this.additionalCostDS.data(), function(index, value) {
+	        	var additionalTax = 0;
+	        	//Tax by line
+				if(value.tax_item_id>0){
+					var taxItem = self.taxItemDS.get(value.tax_item_id);										
+					additionalTax += value.sub_total * taxItem.rate;
+					tax += additionalTax;																							
+				}
 
-					value.set("amount", value.sub_total + additionalTax);									
-		        });
+				additionalCost += value.sub_total / value.rate;
 
-		        //Apply additional cost
-		        if(additionalCost>0){
-		        	this.set("showAdditionalCost", true);
+				value.set("amount", value.sub_total + additionalTax);									
+	        });
 
-		        	if(countAdditCheck>0){
-				        $.each(this.lineDS.data(), function(index, value) {
-							if(value.additional_applied){
-					        	if(obj.additional_apply=="Equal"){
-					        		//subTotal += singleAdditionalCost;
-					        		var singleAdditionalCost = additionalCost / countAdditCheck;
-					        		value.set("additional_cost", singleAdditionalCost);
-					        	}else{
-					        		var percentageAdditionalCheck = value.amount / amountAdditCheck;
-					        		var weightedAdditionalCost = additionalCost * percentageAdditionalCheck;
+	        //Apply additional cost
+	        if(additionalCost>0){
+	        	this.set("showAdditionalCost", true);
 
-					        		//subTotal += weightedAdditionalCost;
-					        		value.set("additional_cost", weightedAdditionalCost);
-				        		}
+	        	if(countAdditCheck>0){
+			        $.each(this.lineDS.data(), function(index, value) {
+						if(value.additional_applied){
+				        	if(obj.additional_apply=="Equal"){
+				        		//subTotal += singleAdditionalCost;
+				        		var singleAdditionalCost = additionalCost / countAdditCheck;
+				        		value.set("additional_cost", singleAdditionalCost);
 				        	}else{
-				        		value.set("additional_cost", 0);
-				        	}			        			        	
-				        });
-			    	}
-		        }else{
-		        	this.set("showAdditionalCost", false);
+				        		var percentageAdditionalCheck = value.amount / amountAdditCheck;
+				        		var weightedAdditionalCost = additionalCost * percentageAdditionalCheck;
 
-		        	$.each(this.lineDS.data(), function(index, value) {
-		        		value.set("additional_cost", 0);
-		        		value.set("additional_applied", false);
-		        	});
-		        }	
-
-		    	//Total
-		        total = subTotal + tax;
-		        amount_due = total - obj.deposit;
-
-		        //Apply Deposit
-		        if(obj.deposit>0){
-		        	if(obj.deposit <= this.get("total_deposit")){
-			        	if(obj.deposit <= total){
-			        		remaining = total - obj.deposit;
+				        		//subTotal += weightedAdditionalCost;
+				        		value.set("additional_cost", weightedAdditionalCost);
+			        		}
 			        	}else{
-			        		obj.set("deposit", total);
-			        	}
-			        }else{
-		        		alert("Over deposit to apply!");
-		        		obj.set("deposit", 0);
+			        		value.set("additional_cost", 0);
+			        	}			        			        	
+			        });
+		    	}
+	        }else{
+	        	this.set("showAdditionalCost", false);
+
+	        	$.each(this.lineDS.data(), function(index, value) {
+	        		value.set("additional_cost", 0);
+	        		value.set("additional_applied", false);
+	        	});
+	        }	
+
+	    	//Total
+	        total = subTotal + tax;
+	        amount_due = total - obj.deposit;
+
+	        //Apply Deposit
+	        if(obj.deposit>0){
+	        	if(obj.deposit <= this.get("total_deposit")){
+		        	if(obj.deposit <= total){
+		        		remaining = total - obj.deposit;
+		        	}else{
+		        		obj.set("deposit", total);
 		        	}
-
-		        	//Status
-			        if(remaining==0){
-			    		obj.set("status", 1);
-			    	}else if(remaining==total){
-			    		obj.set("status", 0);
-			    	}else{
-			    		obj.set("status", 2);
-			    	}
-		        }
-
-		        //Warning over credit allowed
-		        if(obj.credit_allowed>0 && total>obj.credit_allowed){
-		        	this.set("amtDueColor", "Gold");		        	
 		        }else{
-		        	this.set("amtDueColor", banhji.source.amtDueColor);
-		        }
-		        
-		        this.set("total", kendo.toString(total, "c", obj.locale));
-		        this.set("additional_cost", kendo.toString(additionalCost, "c", obj.locale));
-		        this.set("amount_due", kendo.toString(amount_due, "c", obj.locale));
+	        		alert("Over deposit to apply!");
+	        		obj.set("deposit", 0);
+	        	}
 
-		        obj.set("sub_total", subTotal);
-		        obj.set("discount", discount);
-		        obj.set("tax", tax);			
-				obj.set("amount", total);
-				obj.set("additional_cost", additionalCost);
-				obj.set("remaining", remaining);									    	
+	        	//Status
+		        if(remaining==0){
+		    		obj.set("status", 1);
+		    	}else if(remaining==total){
+		    		obj.set("status", 0);
+		    	}else{
+		    		obj.set("status", 2);
+		    	}
+	        }
+
+	        //Warning over credit allowed
+	        if(obj.credit_allowed>0 && total>obj.credit_allowed){
+	        	this.set("amtDueColor", "Gold");		        	
+	        }else{
+	        	this.set("amtDueColor", banhji.source.amtDueColor);
+	        }
+
+	        obj.set("sub_total", subTotal);
+	        obj.set("discount", discount);
+	        obj.set("tax", tax);			
+			obj.set("amount", total);
+			obj.set("additional_cost", additionalCost);
+			obj.set("remaining", remaining);
+
+			this.set("total", kendo.toString(total, "c", obj.locale));
+	        this.set("additional_cost", kendo.toString(additionalCost, "c", obj.locale));
+	        this.set("amount_due", kendo.toString(amount_due, "c", obj.locale));
+
+			//Remove Assembly Item List
+			var raw = this.assemblyLineDS.data();			
+		    var item, i;
+		    for(i=raw.length-1; i>=0; i--){
+		    	item = raw[i];
+		    	
+		    	if (jQuery.inArray(kendo.parseInt(item.assembly_id), itemIds)==-1) {
+			       	this.assemblyLineDS.remove(item);			      	
+			    }
 	    	}
 		},
 		discountChanges 	: function(){
@@ -53269,8 +53350,11 @@
 	        	}else{
 	        		obj.set("deleted", 1);
 			        self.dataSource.sync();
-
-			        window.history.back();
+			        self.dataSource.bind("requestEnd", function(e){
+			        	if(e.type==="update"){
+			        		window.history.back();
+			        	}
+			        });
 	        	}
 	        });		    	    	
 		},
@@ -53794,10 +53878,10 @@
 	    }
 	});
 	banhji.purchaseReturn =  kendo.observable({
-		lang 					: langVM,
+		lang 				: langVM,
 		dataSource 			: dataStore(apiUrl + "transactions"),
 		lineDS  			: dataStore(apiUrl + "item_lines"),
-		deleteDS 			: dataStore(apiUrl + "transactions"),		
+		assemblyLineDS  	: dataStore(apiUrl + "item_lines"),		
 		journalLineDS		: dataStore(apiUrl + "journal_lines"),
 		referenceDS			: dataStore(apiUrl + "transactions"),
 		referenceLineDS		: dataStore(apiUrl + "item_lines"),
@@ -54237,7 +54321,7 @@
 		},
 		changes				: function(){
 			var self = this, obj = this.get("obj"), 
-			subTotal = 0, discount = 0, tax = 0, returnAmount = 0, remaining = 0;
+			subTotal = 0, discount = 0, tax = 0, returnAmount = 0, remaining = 0, itemIds = [];
 			
 	        $.each(this.lineDS.data(), function(index, value) {				
 				var amt = value.quantity * value.cost;					
@@ -54256,7 +54340,11 @@
 				}					
 
 				value.set("amount", amt);
-				subTotal += amt;									
+				subTotal += amt;
+
+				if(value.item_id>0){
+					itemIds.push(value.item_id);
+				}									
 	        });
 
 	        total = subTotal + tax;
@@ -54266,19 +54354,26 @@
 				returnAmount += value.amount;					
 	        });
 	       
-	        remaining = obj.amount_paid - returnAmount;
-
-	        this.set("sub_total", kendo.toString(subTotal, "c", obj.locale));
-	        this.set("discount", kendo.toString(discount, "c", obj.locale));
-	        this.set("tax", kendo.toString(tax, "c", obj.locale));
-	        this.set("total", kendo.toString(total, "c", obj.locale));
-	        this.set("remaining", remaining);
+	        remaining = obj.amount_paid - returnAmount;	        
 
 	        obj.set("sub_total", subTotal);
 	        obj.set("discount", discount);
 	        obj.set("tax", tax);			
 			obj.set("amount", total);
-			obj.set("remaining", remaining);    	
+			obj.set("remaining", remaining);
+
+			this.set("total", kendo.toString(total, "c", obj.locale));
+
+			//Remove Assembly Item List
+			var raw = this.assemblyLineDS.data();			
+		    var item, i;
+		    for(i=raw.length-1; i>=0; i--){
+		    	item = raw[i];
+		    	
+		    	if (jQuery.inArray(kendo.parseInt(item.assembly_id), itemIds)==-1) {
+			       	this.assemblyLineDS.remove(item);			      	
+			    }
+		    }
 		},
 		addEmpty 		 	: function(){			
 			this.dataSource.data([]);
@@ -57095,11 +57190,11 @@
 
 		        		$.each(self.catalogDS.view(), function(index, value){
 							if(value.item_prices.length>0){
-								rate = obj.rate / banhji.source.getRate(item.item_prices[0].locale, new Date(obj.issued_date));
-								price = item.item_prices[0].price*rate;
-								unit_value = item.item_prices[0].unit_value;
-								measurement_id = item.item_prices[0].measurement_id;
-								locale = item.item_prices[0].locale;
+								rate = obj.rate / banhji.source.getRate(value.item_prices[0].locale, new Date(obj.issued_date));
+								price = value.item_prices[0].price*rate;
+								unit_value = value.item_prices[0].unit_value;
+								measurement_id = value.item_prices[0].measurement_id;
+								locale = value.item_prices[0].locale;
 		        			}
 
 							self.lineDS.add({					
@@ -57260,49 +57355,61 @@
 			}
 		},
 		changes				: function(){
-			var self = this, obj = this.get("obj");
+			var self = this, obj = this.get("obj"),
+			total = 0, subTotal = 0, discount = 0, tax = 0, itemIds = [];
 
-			if(this.lineDS.total()>0){
-				var total = 0, subTotal = 0, discount = 0, tax = 0;
+			$.each(this.lineDS.data(), function(index, value) {					
+				var amt = value.quantity * value.price;
 
-				$.each(this.lineDS.data(), function(index, value) {
-					var amt = value.quantity * value.price;
+				//Discount by line
+				if(value.discount>0){
+					var discount_amount = amt * value.discount;
+					amt -= discount_amount;
+					discount += discount_amount;
+				}
 
-					//Discount by line
-					if(value.discount>0){
-						var discount_amount = amt * value.discount;
-						amt -= discount_amount;
-						discount += discount_amount;
-					}
+				//Tax by line
+				if(value.tax_item_id>0){
+					var taxItem = self.taxItemDS.get(value.tax_item_id);
+					tax += amt * taxItem.rate;
+				}					
 
-					//Tax by line
-					if(value.tax_item_id>0){
-						var taxItem = self.taxItemDS.get(value.tax_item_id);
-						tax += amt * taxItem.rate;
-					}					
+				value.set("amount", amt);
+				subTotal += amt;
 
-					value.set("amount", amt);
-					subTotal += amt;	
-		        });				
+				if(value.item_id>0){
+					itemIds.push(value.item_id);
+				}
+	        });
 
-		    	//Total
-		        total = subTotal + tax;
+	    	//Total
+	        total = subTotal + tax;
 
-		        //Warning over credit allowed
-		        if(obj.credit_allowed>0 && total>obj.credit_allowed){
-		        	this.set("amtDueColor", "Gold");
-		        }else{
-		        	this.set("amtDueColor", banhji.source.amtDueColor);
-		        }
+	        //Warning over credit allowed
+	        if(obj.credit_allowed>0 && total>obj.credit_allowed){
+	        	this.set("amtDueColor", "Gold");
+	        }else{
+	        	this.set("amtDueColor", banhji.source.amtDueColor);
+	        }
 
-		        obj.set("sub_total", subTotal);
-		        obj.set("discount", discount);
-		        obj.set("tax", tax);
-				obj.set("amount", total);
+	        obj.set("sub_total", subTotal);
+	        obj.set("discount", discount);
+	        obj.set("tax", tax);
+			obj.set("amount", total);
 
-				this.set("total", kendo.toString(total, "c", obj.locale));
-	    	}	
-		},					
+			this.set("total", kendo.toString(total, "c", obj.locale));	    	
+
+	    	//Remove Assembly Item List
+			var raw = this.assemblyLineDS.data();			
+		    var item, i;
+		    for(i=raw.length-1; i>=0; i--){
+		    	item = raw[i];
+		    	
+		    	if (jQuery.inArray(kendo.parseInt(item.assembly_id), itemIds)==-1) {
+			       	this.assemblyLineDS.remove(item);
+			    }
+		    }
+		},
 		addEmpty 		 	: function(){			
 			this.dataSource.data([]);
 			this.lineDS.data([]);
@@ -57384,20 +57491,6 @@
 			var data = e.data;
 			
 			if(this.lineDS.total()>1){
-				//Remove Assembly Item List
-				if(data.item_id>0){
-					var raw = this.assemblyLineDS.data();
-				    
-				    var item, i;
-				    for(i=raw.length-1; i>=0; i--){
-				      	item = raw[i];
-				      	if (item.assembly_id==data.item_id){
-				       	 	this.assemblyLineDS.remove(item);
-				      	}
-
-				    }
-				}
-
 				this.lineDS.remove(data);
 		        this.changes();
 	        }		        
@@ -57998,11 +58091,11 @@
 
 		        		$.each(self.catalogDS.view(), function(index, value){
 							if(value.item_prices.length>0){
-								rate = obj.rate / banhji.source.getRate(item.item_prices[0].locale, new Date(obj.issued_date));
-								price = item.item_prices[0].price*rate;
-								unit_value = item.item_prices[0].unit_value;
-								measurement_id = item.item_prices[0].measurement_id;
-								locale = item.item_prices[0].locale;
+								rate = obj.rate / banhji.source.getRate(value.item_prices[0].locale, new Date(obj.issued_date));
+								price = value.item_prices[0].price;
+								unit_value = value.item_prices[0].unit_value;
+								measurement_id = value.item_prices[0].measurement_id;
+								locale = value.item_prices[0].locale;
 		        			}
 
 							self.lineDS.add({					
@@ -58013,8 +58106,8 @@
 								description 		: value.sale_description,				
 								quantity 	 		: 1,
 								unit_value 			: unit_value,
-								price 				: price,												
-								amount 				: price,
+								price 				: price*rate,												
+								amount 				: price*rate,
 								discount 			: 0,
 								rate				: rate,
 								locale				: locale,
@@ -58072,7 +58165,7 @@
 		        	if(item.item_type_id=="1" || item.item_type_id=="4"){
 						if(item.item_prices.length>0){
 							rate = obj.rate / banhji.source.getRate(item.item_prices[0].locale, new Date(obj.issued_date));
-							price = item.item_prices[0].price*rate;
+							price = item.item_prices[0].price;
 							unit_value = item.item_prices[0].unit_value;
 							measurement_id = item.item_prices[0].measurement_id;
 							locale = item.item_prices[0].locale;
@@ -58083,7 +58176,7 @@
 		    		data.set("description", item.sale_description);
 		    		data.set("quantity", 1);
 		    		data.set("unit_value", unit_value);
-			        data.set("price", price);
+			        data.set("price", price*rate);
 			        data.set("rate", rate);	
 			        data.set("locale", locale);
 			        data.set("item_prices", item.item_prices);			        
@@ -58163,48 +58256,60 @@
 			}				
 		},
 		changes				: function(){
-			var self = this, obj = this.get("obj");
+			var self = this, obj = this.get("obj"),
+			total = 0, subTotal = 0, discount =0, tax = 0, itemIds = [];											
 
-			if(this.lineDS.total()>0){			
-				var total = 0, subTotal = 0, discount =0, tax = 0;											
+			$.each(this.lineDS.data(), function(index, value) {				
+				var amt = value.quantity * value.price;					
 
-				$.each(this.lineDS.data(), function(index, value) {				
-					var amt = value.quantity * value.price;					
+				//Discount by line
+				if(value.discount>0){										
+					var discount_amount = amt * value.discount;
+					amt -= discount_amount;
+					discount += discount_amount;																	
+				}
 
-					//Discount by line
-					if(value.discount>0){										
-						var discount_amount = amt * value.discount;
-						amt -= discount_amount;
-						discount += discount_amount;																	
-					}
+				//Tax by line
+				if(value.tax_item_id>0){
+					var taxItem = self.taxItemDS.get(value.tax_item_id);										
+					tax += amt * taxItem.rate;																	
+				}					
 
-					//Tax by line
-					if(value.tax_item_id>0){
-						var taxItem = self.taxItemDS.get(value.tax_item_id);										
-						tax += amt * taxItem.rate;																	
-					}					
+				value.set("amount", amt);					
+				subTotal += amt;
 
-					value.set("amount", amt);					
-					subTotal += amt;					
-		        });				
+				if(value.item_id>0){
+					itemIds.push(value.item_id);
+				}					
+	        });				
 
-		    	//Total
-		        total = subTotal + tax;		        
+	    	//Total
+	        total = subTotal + tax;		        
 
-		        //Warning over credit allowed
-		        if(obj.credit_allowed>0 && total>obj.credit_allowed){
-		        	this.set("amtDueColor", "Gold");		        	
-		        }else{
-		        	this.set("amtDueColor", banhji.source.amtDueColor);
-		        }
+	        //Warning over credit allowed
+	        if(obj.credit_allowed>0 && total>obj.credit_allowed){
+	        	this.set("amtDueColor", "Gold");		        	
+	        }else{
+	        	this.set("amtDueColor", banhji.source.amtDueColor);
+	        }
 
-		        obj.set("sub_total", subTotal);
-		        obj.set("discount", discount);
-		        obj.set("tax", tax);			
-				obj.set("amount", total);
+	        obj.set("sub_total", subTotal);
+	        obj.set("discount", discount);
+	        obj.set("tax", tax);			
+			obj.set("amount", total);
 
-				this.set("total", kendo.toString(total, "c", obj.locale));									    	
-	    	}	
+			this.set("total", kendo.toString(total, "c", obj.locale));									    	
+	    	
+	    	//Remove Assembly Item List
+			var raw = this.assemblyLineDS.data();			
+		    var item, i;
+		    for(i=raw.length-1; i>=0; i--){
+		    	item = raw[i];
+		    	
+		    	if (jQuery.inArray(kendo.parseInt(item.assembly_id), itemIds)==-1) {
+			       	this.assemblyLineDS.remove(item);			      	
+			    }
+		    }	
 		},					
 		addEmpty 		 	: function(){			
 			this.dataSource.data([]);
@@ -58289,20 +58394,6 @@
 		removeRow 			: function(e){						
 			var data = e.data;
 			if(this.lineDS.total()>1){
-				//Remove Assembly Item List
-				if(data.item_id>0){
-					var raw = this.assemblyLineDS.data();
-				    
-				    var item, i;
-				    for(i=raw.length-1; i>=0; i--){
-				      	item = raw[i];
-				      	if (item.assembly_id==data.item_id){
-				       	 	this.assemblyLineDS.remove(item);
-				      	}
-
-				    }
-				}
-
 				this.lineDS.remove(data);
 		        this.changes();
 	        }
@@ -59817,11 +59908,11 @@
 
 		        		$.each(self.catalogDS.view(), function(index, value){
 							if(value.item_prices.length>0){
-								rate = obj.rate / banhji.source.getRate(item.item_prices[0].locale, new Date(obj.issued_date));
-								price = item.item_prices[0].price*rate;
-								unit_value = item.item_prices[0].unit_value;
-								measurement_id = item.item_prices[0].measurement_id;
-								locale = item.item_prices[0].locale;
+								rate = obj.rate / banhji.source.getRate(value.item_prices[0].locale, new Date(obj.issued_date));
+								price = value.item_prices[0].price;
+								unit_value = value.item_prices[0].unit_value;
+								measurement_id = value.item_prices[0].measurement_id;
+								locale = value.item_prices[0].locale;
 		        			}
 
 							self.lineDS.add({					
@@ -59832,8 +59923,8 @@
 								description 		: value.sale_description,				
 								quantity 	 		: 1,
 								unit_value 			: unit_value,
-								price 				: price,												
-								amount 				: price,
+								price 				: price*rate,												
+								amount 				: price*rate,
 								discount 			: 0,
 								rate				: rate,
 								locale				: locale,
@@ -59891,7 +59982,7 @@
 		        	if(item.item_type_id=="1" || item.item_type_id=="4"){
 						if(item.item_prices.length>0){
 							rate = obj.rate / banhji.source.getRate(item.item_prices[0].locale, new Date(obj.issued_date));
-							price = item.item_prices[0].price*rate;
+							price = item.item_prices[0].price;
 							unit_value = item.item_prices[0].unit_value;
 							measurement_id = item.item_prices[0].measurement_id;
 							locale = item.item_prices[0].locale;
@@ -59902,7 +59993,7 @@
 		    		data.set("description", item.sale_description);
 		    		data.set("quantity", 1);
 		    		data.set("unit_value", unit_value);
-			        data.set("price", price);
+			        data.set("price", price*rate);
 			        data.set("rate", rate);	
 			        data.set("locale", locale);
 			        data.set("item_prices", item.item_prices);			        
@@ -59988,79 +60079,91 @@
 			}				
 		},
 		changes				: function(){
-			var self = this, obj = this.get("obj");
+			var self = this, obj = this.get("obj"),
+			total = 0, subTotal = 0, discount =0, tax = 0, remaining = 0, amount_due = 0, itemIds = [];
+							
+			if(kendo.parseInt(obj.tax_item_id)>0){
+				var selectedVat 					
+				vatAmt = kendo.parseFloat(selectedVat.item_prices[0].price);
+			}								
 
-			if(this.lineDS.total()>0){			
-				var total = 0, subTotal = 0, discount =0, tax = 0, remaining = 0, amount_due = 0;
-								
-				if(kendo.parseInt(obj.tax_item_id)>0){
-					var selectedVat 					
-					vatAmt = kendo.parseFloat(selectedVat.item_prices[0].price);
-				}								
+			$.each(this.lineDS.data(), function(index, value) {				
+				var amt = value.quantity * value.price;					
 
-				$.each(this.lineDS.data(), function(index, value) {				
-					var amt = value.quantity * value.price;					
+				//Discount by line
+				if(value.discount>0){										
+					var discount_amount = amt * value.discount;
+					amt -= discount_amount;
+					discount += discount_amount;																	
+				}
 
-					//Discount by line
-					if(value.discount>0){										
-						var discount_amount = amt * value.discount;
-						amt -= discount_amount;
-						discount += discount_amount;																	
-					}
+				//Tax by line
+				if(value.tax_item_id>0){
+					var taxItem = self.taxItemDS.get(value.tax_item_id);										
+					tax += amt * taxItem.rate;																	
+				}					
 
-					//Tax by line
-					if(value.tax_item_id>0){
-						var taxItem = self.taxItemDS.get(value.tax_item_id);										
-						tax += amt * taxItem.rate;																	
-					}					
+				value.set("amount", amt);					
+				subTotal += amt;
 
-					value.set("amount", amt);					
-					subTotal += amt;					
-		        });				
+				if(value.item_id>0){
+					itemIds.push(value.item_id);
+				}					
+	        });				
 
-		    	//Total
-		        total = subTotal + tax;
-		        amount_due = total - obj.deposit;
+	    	//Total
+	        total = subTotal + tax;
+	        amount_due = total - obj.deposit;
 
-		        //Apply Deposit
-		        if(obj.deposit>0){
-		        	if(obj.deposit <= this.get("total_deposit")){
-			        	if(obj.deposit <= total){
-			        		remaining = total - obj.deposit;
-			        	}else{
-			        		obj.set("deposit", total);
-			        	}
-			        }else{
-		        		alert("Over deposit to apply!");
-		        		obj.set("deposit", 0);
+	        //Apply Deposit
+	        if(obj.deposit>0){
+	        	if(obj.deposit <= this.get("total_deposit")){
+		        	if(obj.deposit <= total){
+		        		remaining = total - obj.deposit;
+		        	}else{
+		        		obj.set("deposit", total);
 		        	}
-
-		        	//Status
-			        if(remaining==0){
-			    		obj.set("status", 1);
-			    	}else if(remaining==total){
-			    		obj.set("status", 0);
-			    	}else{
-			    		obj.set("status", 2);
-			    	}
-		        }
-
-		        //Warning over credit allowed
-		        if(obj.credit_allowed>0 && total>obj.credit_allowed){
-		        	this.set("amtDueColor", "Gold");		        	
 		        }else{
-		        	this.set("amtDueColor", banhji.source.amtDueColor);
-		        }
+	        		alert("Over deposit to apply!");
+	        		obj.set("deposit", 0);
+	        	}
 
-		        obj.set("sub_total", subTotal);
-		        obj.set("discount", discount);
-		        obj.set("tax", tax);			
-				obj.set("amount", total);
-				obj.set("remaining", remaining);
+	        	//Status
+		        if(remaining==0){
+		    		obj.set("status", 1);
+		    	}else if(remaining==total){
+		    		obj.set("status", 0);
+		    	}else{
+		    		obj.set("status", 2);
+		    	}
+	        }
 
-				this.set("total", kendo.toString(total, "c", obj.locale));
-		        this.set("amount_due", kendo.toString(amount_due, "c", obj.locale));									    	
-	    	}	
+	        //Warning over credit allowed
+	        if(obj.credit_allowed>0 && total>obj.credit_allowed){
+	        	this.set("amtDueColor", "Gold");		        	
+	        }else{
+	        	this.set("amtDueColor", banhji.source.amtDueColor);
+	        }
+
+	        obj.set("sub_total", subTotal);
+	        obj.set("discount", discount);
+	        obj.set("tax", tax);			
+			obj.set("amount", total);
+			obj.set("remaining", remaining);
+
+			this.set("total", kendo.toString(total, "c", obj.locale));
+	        this.set("amount_due", kendo.toString(amount_due, "c", obj.locale));									    	
+	    	
+	    	//Remove Assembly Item List
+			var raw = this.assemblyLineDS.data();			
+		    var item, i;
+		    for(i=raw.length-1; i>=0; i--){
+		    	item = raw[i];
+		    	
+		    	if (jQuery.inArray(kendo.parseInt(item.assembly_id), itemIds)==-1) {
+			       	this.assemblyLineDS.remove(item);			      	
+			    }
+		    }	
 		},
 		typeChanges 		: function(){
 			var obj = this.get("obj");
@@ -60174,20 +60277,6 @@
 		removeRow 			: function(e){						
 			var data = e.data;
 			if(this.lineDS.total()>1){
-				//Remove Assembly Item List
-				if(data.item_id>0){
-					var raw = this.assemblyLineDS.data();
-				    
-				    var item, i;
-				    for(i=raw.length-1; i>=0; i--){
-				      	item = raw[i];
-				      	if (item.assembly_id==data.item_id){
-				       	 	this.assemblyLineDS.remove(item);
-				      	}
-
-				    }
-				}
-
 				this.lineDS.remove(data);
 		        this.changes();
 	        }		        
@@ -61303,11 +61392,11 @@
 
 		        		$.each(self.catalogDS.view(), function(index, value){
 							if(value.item_prices.length>0){
-								rate = obj.rate / banhji.source.getRate(item.item_prices[0].locale, new Date(obj.issued_date));
-								price = item.item_prices[0].price*rate;
-								unit_value = item.item_prices[0].unit_value;
-								measurement_id = item.item_prices[0].measurement_id;
-								locale = item.item_prices[0].locale;
+								rate = obj.rate / banhji.source.getRate(value.item_prices[0].locale, new Date(obj.issued_date));
+								price = value.item_prices[0].price;
+								unit_value = value.item_prices[0].unit_value;
+								measurement_id = value.item_prices[0].measurement_id;
+								locale = value.item_prices[0].locale;
 		        			}
 
 							self.lineDS.add({					
@@ -61318,8 +61407,8 @@
 								description 		: value.sale_description,				
 								quantity 	 		: 1,
 								unit_value 			: unit_value,
-								price 				: price,												
-								amount 				: price,
+								price 				: price*rate,												
+								amount 				: price*rate,
 								discount 			: 0,
 								rate				: rate,
 								locale				: locale,
@@ -61377,7 +61466,7 @@
 		        	if(item.item_type_id=="1" || item.item_type_id=="4"){
 						if(item.item_prices.length>0){
 							rate = obj.rate / banhji.source.getRate(item.item_prices[0].locale, new Date(obj.issued_date));
-							price = item.item_prices[0].price*rate;
+							price = item.item_prices[0].price;
 							unit_value = item.item_prices[0].unit_value;
 							measurement_id = item.item_prices[0].measurement_id;
 							locale = item.item_prices[0].locale;
@@ -61388,7 +61477,7 @@
 		    		data.set("description", item.sale_description);
 		    		data.set("quantity", 1);
 		    		data.set("unit_value", unit_value);
-			        data.set("price", price);
+			        data.set("price", price*rate);
 			        data.set("rate", rate);	
 			        data.set("locale", locale);
 			        data.set("item_prices", item.item_prices);			        
@@ -61475,74 +61564,86 @@
 			}				
 		},
 		changes				: function(){
-			var self = this, obj = this.get("obj");
+			var self = this, obj = this.get("obj"),
+			total = 0, subTotal = 0, discount =0, tax = 0, remaining = 0, amount_due = 0, itemIds = [];											
 
-			if(this.lineDS.total()>0){			
-				var total = 0, subTotal = 0, discount =0, tax = 0, remaining = 0, amount_due = 0;											
+			$.each(this.lineDS.data(), function(index, value) {				
+				var amt = value.quantity * value.price;					
 
-				$.each(this.lineDS.data(), function(index, value) {				
-					var amt = value.quantity * value.price;					
+				//Discount by line
+				if(value.discount>0){										
+					var discount_amount = amt * value.discount;
+					amt -= discount_amount;
+					discount += discount_amount;																	
+				}
 
-					//Discount by line
-					if(value.discount>0){										
-						var discount_amount = amt * value.discount;
-						amt -= discount_amount;
-						discount += discount_amount;																	
-					}
+				//Tax by line
+				if(value.tax_item_id>0){
+					var taxItem = self.taxItemDS.get(value.tax_item_id);										
+					tax += amt * taxItem.rate;																	
+				}					
 
-					//Tax by line
-					if(value.tax_item_id>0){
-						var taxItem = self.taxItemDS.get(value.tax_item_id);										
-						tax += amt * taxItem.rate;																	
-					}					
+				value.set("amount", amt);					
+				subTotal += amt;
 
-					value.set("amount", amt);					
-					subTotal += amt;					
-		        });				
+				if(value.item_id>0){
+					itemIds.push(value.item_id);
+				}					
+	        });				
 
-		    	//Total
-		        total = subTotal + tax;
-		        amount_due = total - obj.deposit;
+	    	//Total
+	        total = subTotal + tax;
+	        amount_due = total - obj.deposit;
 
-		        //Apply Deposit
-		        if(obj.deposit>0){
-		        	if(obj.deposit <= this.get("total_deposit")){
-			        	if(obj.deposit <= total){
-			        		remaining = total - obj.deposit;
-			        	}else{
-			        		obj.set("deposit", total);
-			        	}
-			        }else{
-		        		alert("Over deposit to apply!");
-		        		obj.set("deposit", 0);
+	        //Apply Deposit
+	        if(obj.deposit>0){
+	        	if(obj.deposit <= this.get("total_deposit")){
+		        	if(obj.deposit <= total){
+		        		remaining = total - obj.deposit;
+		        	}else{
+		        		obj.set("deposit", total);
 		        	}
-
-		        	//Status
-			        if(remaining==0){
-			    		obj.set("status", 1);
-			    	}else if(remaining==total){
-			    		obj.set("status", 0);
-			    	}else{
-			    		obj.set("status", 2);
-			    	}
-		        }
-
-		        //Warning over credit allowed
-		        if(obj.credit_allowed>0 && total>obj.credit_allowed){
-		        	this.set("amtDueColor", "Gold");		        	
 		        }else{
-		        	this.set("amtDueColor", banhji.source.amtDueColor);
-		        }
+	        		alert("Over deposit to apply!");
+	        		obj.set("deposit", 0);
+	        	}
 
-		        obj.set("sub_total", subTotal);
-		        obj.set("discount", discount);
-		        obj.set("tax", tax);			
-				obj.set("amount", total);
-				obj.set("remaining", remaining);
+	        	//Status
+		        if(remaining==0){
+		    		obj.set("status", 1);
+		    	}else if(remaining==total){
+		    		obj.set("status", 0);
+		    	}else{
+		    		obj.set("status", 2);
+		    	}
+	        }
 
-				this.set("total", kendo.toString(total, "c", obj.locale));
-		        this.set("amount_due", kendo.toString(amount_due, "c", obj.locale));									    	
-	    	}	
+	        //Warning over credit allowed
+	        if(obj.credit_allowed>0 && total>obj.credit_allowed){
+	        	this.set("amtDueColor", "Gold");		        	
+	        }else{
+	        	this.set("amtDueColor", banhji.source.amtDueColor);
+	        }
+
+	        obj.set("sub_total", subTotal);
+	        obj.set("discount", discount);
+	        obj.set("tax", tax);			
+			obj.set("amount", total);
+			obj.set("remaining", remaining);
+
+			this.set("total", kendo.toString(total, "c", obj.locale));
+	        this.set("amount_due", kendo.toString(amount_due, "c", obj.locale));									    	
+	    	
+	    	//Remove Assembly Item List
+			var raw = this.assemblyLineDS.data();			
+		    var item, i;
+		    for(i=raw.length-1; i>=0; i--){
+		    	item = raw[i];
+		    	
+		    	if (jQuery.inArray(kendo.parseInt(item.assembly_id), itemIds)==-1) {
+			       	this.assemblyLineDS.remove(item);			      	
+			    }
+		    }	
 		},
 		typeChanges 		: function(){
 			var obj = this.get("obj");
@@ -61657,20 +61758,6 @@
 		removeRow 			: function(e){						
 			var data = e.data;
 			if(this.lineDS.total()>1){
-				//Remove Assembly Item List
-				if(data.item_id>0){
-					var raw = this.assemblyLineDS.data();
-				    
-				    var item, i;
-				    for(i=raw.length-1; i>=0; i--){
-				      	item = raw[i];
-				      	if (item.assembly_id==data.item_id){
-				       	 	this.assemblyLineDS.remove(item);
-				      	}
-
-				    }
-				}
-
 				this.lineDS.remove(data);
 		        this.changes();
 	        }		        
@@ -62591,11 +62678,11 @@
 
 		        		$.each(self.catalogDS.view(), function(index, value){
 							if(value.item_prices.length>0){
-								rate = obj.rate / banhji.source.getRate(item.item_prices[0].locale, new Date(obj.issued_date));
-								price = item.item_prices[0].price*rate;
-								unit_value = item.item_prices[0].unit_value;
-								measurement_id = item.item_prices[0].measurement_id;
-								locale = item.item_prices[0].locale;
+								rate = obj.rate / banhji.source.getRate(value.item_prices[0].locale, new Date(obj.issued_date));
+								price = value.item_prices[0].price;
+								unit_value = value.item_prices[0].unit_value;
+								measurement_id = value.item_prices[0].measurement_id;
+								locale = value.item_prices[0].locale;
 		        			}
 
 							self.lineDS.add({					
@@ -62606,8 +62693,8 @@
 								description 		: value.sale_description,				
 								quantity 	 		: 1,
 								unit_value 			: unit_value,
-								price 				: price,												
-								amount 				: price,
+								price 				: price*rate,												
+								amount 				: price*rate,
 								discount 			: 0,
 								rate				: rate,
 								locale				: locale,
@@ -62665,7 +62752,7 @@
 		        	if(item.item_type_id=="1" || item.item_type_id=="4"){
 						if(item.item_prices.length>0){
 							rate = obj.rate / banhji.source.getRate(item.item_prices[0].locale, new Date(obj.issued_date));
-							price = item.item_prices[0].price*rate;
+							price = item.item_prices[0].price;
 							unit_value = item.item_prices[0].unit_value;
 							measurement_id = item.item_prices[0].measurement_id;
 							locale = item.item_prices[0].locale;
@@ -62676,7 +62763,7 @@
 		    		data.set("description", item.sale_description);
 		    		data.set("quantity", 1);
 		    		data.set("unit_value", unit_value);
-			        data.set("price", price);
+			        data.set("price", price*rate);
 			        data.set("rate", rate);	
 			        data.set("locale", locale);
 			        data.set("item_prices", item.item_prices);			        
@@ -62746,14 +62833,29 @@
 			}				
 		},
 		changes				: function(){
-			var self = this, obj = this.get("obj"), total = 0;												
+			var self = this, obj = this.get("obj"), total = 0, itemIds = [];												
 
 			$.each(this.lineDS.data(), function(index, value) {				
-				total += value.quantity;										
+				total += value.quantity;
+
+				if(value.item_id>0){
+					itemIds.push(value.item_id);
+				}										
 	        });
 
 	        this.set("total", kendo.toString(total, "n0"));
-	        obj.set("amount", total);	    	
+	        obj.set("amount", total);
+
+	        //Remove Assembly Item List
+			var raw = this.assemblyLineDS.data();			
+		    var item, i;
+		    for(i=raw.length-1; i>=0; i--){
+		    	item = raw[i];
+		    	
+		    	if (jQuery.inArray(kendo.parseInt(item.assembly_id), itemIds)==-1) {
+			       	this.assemblyLineDS.remove(item);			      	
+			    }
+		    }	    	
 		},					
 		addEmpty 		 	: function(){			
 			this.dataSource.data([]);
@@ -63474,11 +63576,11 @@
 
 		        		$.each(self.catalogDS.view(), function(index, value){
 							if(value.item_prices.length>0){
-								rate = obj.rate / banhji.source.getRate(item.item_prices[0].locale, new Date(obj.issued_date));
-								price = item.item_prices[0].price*rate;
-								unit_value = item.item_prices[0].unit_value;
-								measurement_id = item.item_prices[0].measurement_id;
-								locale = item.item_prices[0].locale;
+								rate = obj.rate / banhji.source.getRate(value.item_prices[0].locale, new Date(obj.issued_date));
+								price = value.item_prices[0].price;
+								unit_value = value.item_prices[0].unit_value;
+								measurement_id = value.item_prices[0].measurement_id;
+								locale = value.item_prices[0].locale;
 		        			}
 
 							self.lineDS.add({					
@@ -63489,8 +63591,8 @@
 								description 		: value.sale_description,				
 								quantity 	 		: 1,
 								unit_value 			: unit_value,
-								price 				: price,												
-								amount 				: price,
+								price 				: price*rate,												
+								amount 				: price*rate,
 								discount 			: 0,
 								rate				: rate,
 								locale				: locale,
@@ -63548,7 +63650,7 @@
 		        	if(item.item_type_id=="1" || item.item_type_id=="4"){
 						if(item.item_prices.length>0){
 							rate = obj.rate / banhji.source.getRate(item.item_prices[0].locale, new Date(obj.issued_date));
-							price = item.item_prices[0].price*rate;
+							price = item.item_prices[0].price;
 							unit_value = item.item_prices[0].unit_value;
 							measurement_id = item.item_prices[0].measurement_id;
 							locale = item.item_prices[0].locale;
@@ -63559,7 +63661,7 @@
 		    		data.set("description", item.sale_description);
 		    		data.set("quantity", 1);
 		    		data.set("unit_value", unit_value);
-			        data.set("price", price);
+			        data.set("price", price*rate);
 			        data.set("rate", rate);	
 			        data.set("locale", locale);
 			        data.set("item_prices", item.item_prices);			        
@@ -63721,7 +63823,7 @@
 		},
 		changes				: function(){
 			var self = this, obj = this.get("obj"), 
-			subTotal = 0, discount =0, tax = 0, returnAmount = 0, remaining = 0;
+			subTotal = 0, discount =0, tax = 0, returnAmount = 0, remaining = 0, itemIds = [];
 			
 	        $.each(this.lineDS.data(), function(index, value) {				
 				var amt = value.quantity * value.price;					
@@ -63740,7 +63842,11 @@
 				}					
 
 				value.set("amount", amt);
-				subTotal += amt;									
+				subTotal += amt;
+
+				if(value.item_id>0){
+					itemIds.push(value.item_id);
+				}									
 	        });
 
 	        total = subTotal + tax;
@@ -63758,7 +63864,18 @@
 			obj.set("amount", total);
 			obj.set("remaining", remaining);
 
-			this.set("total", kendo.toString(total, "c", obj.locale));			    	
+			this.set("total", kendo.toString(total, "c", obj.locale));
+
+			//Remove Assembly Item List
+			var raw = this.assemblyLineDS.data();			
+		    var item, i;
+		    for(i=raw.length-1; i>=0; i--){
+		    	item = raw[i];
+		    	
+		    	if (jQuery.inArray(kendo.parseInt(item.assembly_id), itemIds)==-1) {
+			       	this.assemblyLineDS.remove(item);			      	
+			    }
+		    }			    	
 		},
 		addEmpty 		 	: function(){			
 			this.dataSource.data([]);

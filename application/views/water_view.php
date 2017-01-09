@@ -5298,8 +5298,9 @@
 <!-- Report -->
 <script id="Reports" type="text/x-kendo-template">
 	<div class="row-fluid customer-report-center">
-		<div class="span12">
-			<div class="row-fluid" style="margin-bottom: 20px;">
+	
+		<div class="rowfluid" style="margin-bottom: 20px;">
+			<div class="span12">
 				<p>Key Performance Indicators (KPIs)</p> 
 				<input id="ddlCashAccount" name="ddlCashAccount" 
 					data-role="dropdownlist"
@@ -5311,196 +5312,289 @@
 	  				data-option-label="Select Licenses..."
 	  				/>
 	  		</div>
-	  		<div class="row-fluid">
-	  			<div class="span6">
-					<div class="row-fluid sale-report">
-						<h2>Customer Management Report</h2>
-						<p>
-							These reports are useful for customer information management, meter connections, and usage managements 
-						</p>
-						<div class="row-fluid">
-							<table class="table table-borderless table-condensed">
-								<tr>
-									<td width="50%">
-										<h3><a href="#/customer_list">Customer List</a></h3>
-									</td>
-									<td width="50%">
-										<h3><a href="#/new_customer_list">New Customer List</a></h3>
-									</td>						
-								</tr>
-								<tr>
-									<td width="50%">
-										<p></p>
-									</td>
-									<td width="50%">
-										<p></p>
-									</td>
-								</tr>
-								<tr>
-									<td width="50%">
-										<h3><a href="#/disconnect_list">Disconnected List</a></h3>
-									</td>
-									<td width="50%">
-										<h3><a href="#/mini_usage_list">Minimum Water Usage List</a></h3>
-									</td>
-								</tr>
-								<tr>
-									<td width="50%">
-										<p></p>
-									</td>
-									<td width="50%">
-										<p></p>
-									</td>
-								</tr>
-								<tr>
-									<td width="50%">
-										<p></p>
-									</td>
-									<td width="50%">
-										<p></p>
-									</td>
-								</tr>
-							</table>
-						</div>
-					</div>
-				</div>
-				<div class="span6">
-					<div class="row-fluid recevable-report">
-						<h2>Receiveable and Deposits</h2>
-						<p>
-							These would be the most common reports that you will be using. It includes receivables balance and its aging in both summary and detail list and the security deposit made by the customers for their water connection.
-						</p>
-						<div class="row-fluid">
-							<table class="table table-borderless table-condensed">
-								<tr>
-									<td >
-										<h3><a href="#/account_receivable_list">Accounts Receivable Listing</a></h3>
-									</td>
-									<td >
-										<h3><a href="#/customer_deposit_report">Customer Deposit</a></h3>								
-									</td>						
-								</tr>
-								<tr>
-									<td >
-										<p></p>
-										
-									</td>
-									<td >
-										<p></p>
-									</td>							
-								</tr>
+  		</div>
 
-								<tr>
-									<td >
-										<h3><a href="#/customer_aging_sum_list">Customer Aging Summary List</a></h3>
-									</td>
-									<td >
-										<h3><a href="#/customer_aging_detail">Customer Aging Detail List</a></h3>								
-									</td>						
-								</tr>
-								<tr>
-									<td >
-										<p></p>
-										
-									</td>
-									<td >
-										<p></p>
-									</td>							
-								</tr>
-							</table>
-						</div>
+  		<div style="float: left; margin-bottom: 15px; clear: both;"></div>
+
+  		<div class="row-fluid">
+  			<div class="span2" >
+		
+				<!-- Stats Widget -->
+				<span class="widget-stats widget-stats-gray widget-stats-2" style="background: #496cad;">
+					<span class="count" style="font-size: 25px; "><a style="color: #fff;">100.00</a></span>
+					<span class="txt" style="font-size: small; color: #fff;"><span >Total No. of Customer</span></span>
+				</span>
+				<!-- // Stats Widget END -->
+				
+			</div>
+			<div class="span2" style="padding: 0; ">
+		
+				<!-- Stats Widget -->
+				<span class="widget-stats widget-stats-2" style="background: #d9edf7;">
+					<span class="count" style="font-size: 25px;"><a style="color: #31708f;" data-format="p">10.00</a></span>
+					<span class="txt" style="font-size: small; color: #31708f;"><span >Total Customer Ratio</span></span>
+				</span>
+				<!-- // Stats Widget END -->
+				
+			</div>
+			<div class="span3" style="padding-right: 0; ">
+		
+				<!-- Stats Widget -->
+				<span class="widget-stats widget-stats-gray widget-stats-2" style="background: #D3D3D3;">
+					<span class="count" style="font-size: 25px;"><a style="color: #000;" data-format="p" >100.00</a></span>
+					<span class="txt" style="font-size: small;"><span >Active Customer Ratio</span></span>
+				</span>
+				<!-- // Stats Widget END -->
+				
+			</div>
+			<div class="span5" >
+			
+				<!-- Stats Widget -->
+				<span class="widget-stats widget-stats-2" style="background: #113051;">
+					<span class="count" style="font-size: 25px;"><a style="color: #fff;" data-format="c0" >100.00</a></span>
+					<span class="txt" style="font-size: small; color: #fff;"><span >Total Water Revenue</span></span>
+				</span>
+				<!-- // Stats Widget END -->
+				
+			</div>
+  		</div>
+
+  		<div style="float: left; margin-bottom: 15px; clear: both;"></div>
+
+  		<div class="row-fluid">		
+			<div class="span2" >
+			
+				<!-- Stats Widget -->			
+				<span class="widget-stats widget-stats-default widget-stats-2"  style="background: #496cad;">
+					<span class="count" style="font-size: 25px; "><a style="color: #fff;">100.00</a></span>
+					<span class="txt" style="font-size: small;"><span >Water Sold (M3)</span></span>
+				</span>
+				<!-- // Stats Widget END -->
+				
+			</div>
+			<div class="span2" style="padding: 0; ">
+			
+				<!-- Stats Widget -->
+				<span class="widget-stats widget-stats-2" style="background: #d9edf7;">
+					<span class="count" style="font-size: 25px;"><a data-format="n2" style="color: #31708f;">100.00</a></span>
+					<span class="txt" style="font-size: small; color: #31708f;"><span >Average Water Usage Per Connection</span></span>
+				</span>
+				<!-- // Stats Widget END -->
+				
+			</div>
+			<div class="span3" style="padding-right: 0; ">
+			
+				<!-- Stats Widget -->
+				<span class="widget-stats widget-stats-default widget-stats-2" style="background: #D3D3D3;">
+					<span class="count" style="font-size: 25px;"><a style="color: #000;" data-format="c0" >100.00</a></span>
+					<span class="txt" style="font-size: small; color: #000; "><span >Avarage Reveune Per Connection</span></span>
+				</span>
+				<!-- // Stats Widget END -->
+				
+			</div>
+			<div class="span5">
+			
+				<!-- Stats Widget -->
+				<span class="widget-stats widget-stats-2" style="background: #113051;">
+					<span class="count" style="font-size: 25px;"><a style="color: #fff;" data-format="c0" >100.00</a></span>
+					<span class="txt" style="font-size: small; color: #fff;"><span >Total Deposit</span></span>
+				</span>
+				<!-- // Stats Widget END -->
+				
+			</div>							
+		</div>
+
+		<div style="float: left; margin-bottom: 15px; clear: both;"></div>
+
+  		<div class="row-fluid">
+  			<div class="span6">
+				<div class="row-fluid sale-report">
+					<h2>Customer Management Report</h2>
+					<p>
+						These reports are useful for customer information management, meter connections, and usage managements 
+					</p>
+					<div class="row-fluid">
+						<table class="table table-borderless table-condensed">
+							<tr>
+								<td width="50%">
+									<h3><a href="#/customer_list">Customer List</a></h3>
+								</td>
+								<td width="50%">
+									<h3><a href="#/new_customer_list">New Customer List</a></h3>
+								</td>						
+							</tr>
+							<tr>
+								<td width="50%">
+									<p></p>
+								</td>
+								<td width="50%">
+									<p></p>
+								</td>
+							</tr>
+							<tr>
+								<td width="50%">
+									<h3><a href="#/disconnect_list">Disconnected List</a></h3>
+								</td>
+								<td width="50%">
+									<h3><a href="#/mini_usage_list">Minimum Water Usage List</a></h3>
+								</td>
+							</tr>
+							<tr>
+								<td width="50%">
+									<p></p>
+								</td>
+								<td width="50%">
+									<p></p>
+								</td>
+							</tr>
+							<tr>
+								<td width="50%">
+									<p></p>
+								</td>
+								<td width="50%">
+									<p></p>
+								</td>
+							</tr>
+						</table>
 					</div>
 				</div>
 			</div>
-			<div class="row-fluid">
-				<div class="span6">
-					<div class="row-fluid sale-report">
-						<h2>Sale Report</h2>
-						<p>
-							Summary and detail sale report broken down by Licenses, bloc, and types of reveneues.	
-						</p>
-						<div class="row-fluid">
-							<table class="table table-borderless table-condensed">
-								<tr>
-									<td>
-										<h3><a href="#/sale_summary">Sale Summary Report</a></h3>
-									</td>
-									<td >
-										<h3><a href="#/sale_detail">Sale Detail Report</a></h3>								
-									</td>						
-								</tr>
-								<tr>
-									<td >
-										<p></p>
-										
-									</td>
-									<td >
-										<p></p>
-									</td>							
-								</tr>
-								<tr>
-									<td >
-										<h3><a href="#/connect_service_revenue">Connection Service Revenue Report</a></h3>
-									</td>
-									<td >
-										<h3><a href="#/other_revenues">Other Revenues</a></h3>
-									</td>
-								</tr>
-								<tr>
-									<td >
-										<p></p>
-									</td>
-									<td >
-										<p></p>
-									</td>
-								</tr>
-							</table>					
-						</div>
+			<div class="span6">
+				<div class="row-fluid recevable-report">
+					<h2>Receiveable and Deposits</h2>
+					<p>
+						These would be the most common reports that you will be using. It includes receivables balance and its aging in both summary and detail list and the security deposit made by the customers for their water connection.
+					</p>
+					<div class="row-fluid">
+						<table class="table table-borderless table-condensed">
+							<tr>
+								<td >
+									<h3><a href="#/account_receivable_list">Accounts Receivable Listing</a></h3>
+								</td>
+								<td >
+									<h3><a href="#/customer_deposit_report">Customer Deposit</a></h3>								
+								</td>						
+							</tr>
+							<tr>
+								<td >
+									<p></p>
+									
+								</td>
+								<td >
+									<p></p>
+								</td>							
+							</tr>
+
+							<tr>
+								<td >
+									<h3><a href="#/customer_aging_sum_list">Customer Aging Summary List</a></h3>
+								</td>
+								<td >
+									<h3><a href="#/customer_aging_detail">Customer Aging Detail List</a></h3>								
+								</td>						
+							</tr>
+							<tr>
+								<td >
+									<p></p>
+									
+								</td>
+								<td >
+									<p></p>
+								</td>							
+							</tr>
+						</table>
 					</div>
 				</div>
-				<div class="span6">
-					<div class="row-fluid recevable-report">
-						<h2>Cash Receipt Report</h2>
-						<p>
-							Summary and detail cash receipt reports grouped by sources/ methods of receipts 
-						</p>
-						<div class="row-fluid">
-							<table class="table table-borderless table-condensed">
-								<tr>
-									<td>
-										<h3><a href="#/cash_receipt_summary">Cash Receipt By Summary</a></h3>
-									</td>
-									<td >
-										<h3><a href="#/cash_receipt_detail">Cash Receipt By Detail</a></h3>								
-									</td>						
-								</tr>
-								<tr>
-									<td >
-										<p></p>
-										
-									</td>
-									<td >
-										<p></p>
-									</td>							
-								</tr>
-								<tr>
-									<td >
-										<h3><a href="#/cash_receipt_source_summary">Cash Receipt By Sources Summary</a></h3>
-									</td>
-									<td >
-										<h3><a href="#/cash_receipt_source_detail">Cash Receipt By Sources Detail</a></h3>
-									</td>
-								</tr>
-								<tr>
-									<td >
-										<p></p>
-									</td>
-									<td >
-										<p></p>
-									</td>
-								</tr>
-							</table>					
-						</div>
+			</div>
+		</div>
+		<div class="row-fluid">
+			<div class="span6">
+				<div class="row-fluid sale-report">
+					<h2>Sale Report</h2>
+					<p>
+						Summary and detail sale report broken down by Licenses, bloc, and types of reveneues.	
+					</p>
+					<div class="row-fluid">
+						<table class="table table-borderless table-condensed">
+							<tr>
+								<td>
+									<h3><a href="#/sale_summary">Sale Summary Report</a></h3>
+								</td>
+								<td >
+									<h3><a href="#/sale_detail">Sale Detail Report</a></h3>								
+								</td>						
+							</tr>
+							<tr>
+								<td >
+									<p></p>
+									
+								</td>
+								<td >
+									<p></p>
+								</td>							
+							</tr>
+							<tr>
+								<td >
+									<h3><a href="#/connect_service_revenue">Connection Service Revenue Report</a></h3>
+								</td>
+								<td >
+									<h3><a href="#/other_revenues">Other Revenues</a></h3>
+								</td>
+							</tr>
+							<tr>
+								<td >
+									<p></p>
+								</td>
+								<td >
+									<p></p>
+								</td>
+							</tr>
+						</table>					
+					</div>
+				</div>
+			</div>
+			<div class="span6">
+				<div class="row-fluid recevable-report">
+					<h2>Cash Receipt Report</h2>
+					<p>
+						Summary and detail cash receipt reports grouped by sources/ methods of receipts 
+					</p>
+					<div class="row-fluid">
+						<table class="table table-borderless table-condensed">
+							<tr>
+								<td>
+									<h3><a href="#/cash_receipt_summary">Cash Receipt By Summary</a></h3>
+								</td>
+								<td >
+									<h3><a href="#/cash_receipt_detail">Cash Receipt By Detail</a></h3>								
+								</td>						
+							</tr>
+							<tr>
+								<td >
+									<p></p>
+									
+								</td>
+								<td >
+									<p></p>
+								</td>							
+							</tr>
+							<tr>
+								<td >
+									<h3><a href="#/cash_receipt_source_summary">Cash Receipt By Sources Summary</a></h3>
+								</td>
+								<td >
+									<h3><a href="#/cash_receipt_source_detail">Cash Receipt By Sources Detail</a></h3>
+								</td>
+							</tr>
+							<tr>
+								<td >
+									<p></p>
+								</td>
+								<td >
+									<p></p>
+								</td>
+							</tr>
+						</table>					
 					</div>
 				</div>
 			</div>
@@ -5628,17 +5722,78 @@
 		<div class="customer-background">
 			<div class="container-960">
 				<div id="example" class="k-content saleSummaryCustomer">
-			    	<span class="pull-right glyphicons no-js remove_2" data-bind="click: cancel"><i></i></span>
+			    	<span class="pull-right glyphicons no-js remove_2"
+						onclick="javascript:window.history.back()"><i></i></span>
 					<br>
 					<br>
-					<div class="row-fluid">						
+					<div class="row-fluid">
+					    <!-- Tabs -->
+						<div class="relativeWrap" data-toggle="source-code">
+							<div class="widget widget-tabs widget-tabs-gray report-tab">
+								<!-- Tabs Heading -->
+								<div class="widget-head">
+									<ul>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab" data-bind="click: printGrid"><i></i>Print/Export</a></li
+									</ul>
+								</div>
+								<!-- // Tabs Heading END -->								
+								<div class="widget-body">
+									<div class="tab-content">
+								        <div class="tab-pane active" id="tab-1">
+											<input 
+												data-role="dropdownlist" 
+												data-option-label="License ..." 
+												data-auto-bind="false" 
+												data-value-primitive="true" 
+												data-text-field="name" 
+												data-value-field="id" 
+												data-bind="
+													value: licenseSelect,
+				                  					source: licenseDS,
+				                  					events: {change: licenseChange}">
+
+									        <input 
+												data-role="dropdownlist" 
+												data-option-label="Location ..." 
+												data-auto-bind="false" 
+												data-value-primitive="false" 
+												data-text-field="name" 
+												data-value-field="id" 
+												data-bind="
+													value: blocSelect,
+				                  					source: blocDS">
+
+										  	 <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>							
+									    </div>									        							       
+								    </div>
+								</div>
+							</div>
+						</div>
+						<!-- // Tabs END -->						
 					</div>
 					<br>
 					<div id="invFormContent">
 						<div class="block-title">
 							<h3 data-bind="text: institute.name"></h3>
-							<h2>Disconnect List</h2>
+							<h2>Disconnect Customer List</h2>
 						</div>
+						<table class="table table-borderless table-condensed ">
+							<thead>
+								<tr>
+									<th><span>CustomerID</span></th>
+									<th><span>Customer Name</span></th>
+									<th><span>License</span></th>
+									<th><span>Address</span></th>
+									<th><span>Phone</span></th>
+									<th><span>E-Mail</span></th>
+								</tr>
+							</thead>
+							<tbody data-role="listview"
+										 data-bind="source: dataSource"
+										 data-template="customerList-temp"
+							></tbody>
+						</table>
 					</div>
 				</div>
 			</div>
@@ -5745,10 +5900,65 @@
 		<div class="customer-background">
 			<div class="container-960">
 				<div id="example" class="k-content saleSummaryCustomer">
-			    	<span class="pull-right glyphicons no-js remove_2" data-bind="click: cancel"><i></i></span>
+			    	<span class="pull-right glyphicons no-js remove_2"
+						onclick="javascript:window.history.back()"><i></i></span>
 					<br>
 					<br>
-					<div class="row-fluid">						
+					<div class="row-fluid">
+					    <!-- Tabs -->
+						<div class="relativeWrap" data-toggle="source-code">
+							<div class="widget widget-tabs widget-tabs-gray report-tab">
+								<!-- Tabs Heading -->
+								<div class="widget-head">
+									<ul>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab" data-bind="click: printGrid"><i></i>Print/Export</a></li
+									</ul>
+								</div>
+								<!-- // Tabs Heading END -->								
+								<div class="widget-body">
+									<div class="tab-content">
+								        <div class="tab-pane active" id="tab-1">
+											<input 
+												data-role="dropdownlist" 
+												data-option-label="License ..." 
+												data-auto-bind="false" 
+												data-value-primitive="true" 
+												data-text-field="name" 
+												data-value-field="id" 
+												data-bind="
+													value: licenseSelect,
+				                  					source: licenseDS,
+				                  					events: {change: licenseChange}">
+
+									        <input 
+												data-role="dropdownlist" 
+												data-option-label="Location ..." 
+												data-auto-bind="false" 
+												data-value-primitive="false" 
+												data-text-field="name" 
+												data-value-field="id" 
+												data-bind="
+													value: blocSelect,
+				                  					source: blocDS">
+				                  			<input type="text" 
+							                	data-role="datepicker"
+							                	data-format="MM-yyyy"
+							                	data-start="year" 
+								  				data-depth="year" 
+							                	placeholder="Moth of ..." 
+									           	data-bind="value: monthSelect" />
+				                  			<input 
+												class="k-textbox k-invalid" 
+												data-bind="
+													value: miniNumber">
+										  	 <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>							
+									    </div>									        							       
+								    </div>
+								</div>
+							</div>
+						</div>
+						<!-- // Tabs END -->						
 					</div>
 					<br>
 					<div id="invFormContent">
@@ -5756,6 +5966,22 @@
 							<h3 data-bind="text: institute.name"></h3>
 							<h2>Minimum Water Usage List</h2>
 						</div>
+						<table class="table table-borderless table-condensed ">
+							<thead>
+								<tr>
+									<th><span>CustomerID</span></th>
+									<th><span>Customer Name</span></th>
+									<th><span>License</span></th>
+									<th><span>Address</span></th>
+									<th><span>Phone</span></th>
+									<th><span>E-Mail</span></th>
+								</tr>
+							</thead>
+							<tbody data-role="listview"
+										 data-bind="source: dataSource"
+										 data-template="customerList-temp"
+							></tbody>
+						</table>
 					</div>
 				</div>
 			</div>
@@ -10270,7 +10496,7 @@
 	        	}
         	});
         	this.tariffItemDS.bind("error", function(e){
-        		console.log("error");
+        		alert("Usage is already exist!");
         	});
         },
         addTariff 		: function(e){
@@ -14136,57 +14362,7 @@
 	banhji.disconnectList = kendo.observable({
 		lang 					: langVM,
 		institute 				: banhji.institute,
-		dataSource 				: dataStore(apiUrl + "customers"),	
-		pageLoad 				: function(){
-		},
-		printGrid			: function() {
-			var gridElement = $('#grid'),
-		        printableContent = '',
-		        win = window.open('', '', 'width=900, height=700'),
-		        doc = win.document.open();
-		    var htmlStart =
-		            '<!DOCTYPE html>' +
-		            '<html>' +
-		            '<head>' +
-		            '<meta charset="utf-8" />' +
-		            '<title></title>' +
-		            '<link href="http://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />'+
-		            '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/bootstrap.css">' +
-		            '<link href="https://fonts.googleapis.com/css?family=Content:400,700" rel="stylesheet" type="text/css">' +
-		            '<link href="<?php echo base_url(); ?>assets/responsive.css" rel="stylesheet" >' +
-		            '<link href="https://fonts.googleapis.com/css?family=Moul" rel="stylesheet">' +
-		            '<style>' +
-		            '*{  } html { font: 11pt sans-serif; }' +
-		            '.k-grid { border-top-width: 0; }' +
-		            '.k-grid, .k-grid-content { height: auto !important; }' +
-		            '.k-grid-content { overflow: visible !important; }' +
-		            'div.k-grid table { table-layout: auto; width: 100% !important; }' +
-		            '.k-grid .k-grid-header th { border-top: 1px solid; }' +
-		            '.k-grid-toolbar, .k-grid-pager > .k-link { display: none; }' +
-		            '</style><style type="text/css" media="print"> @page { size: landscape; margin:0mm; } .saleSummaryCustomer .total-customer, .saleSummaryCustomer .total-sale { background-color: #DDEBF7!important; -webkit-print-color-adjust:exact; }.saleSummaryCustomer .table.table-borderless.table-condensed  tr th { background-color: #1E4E78!important;-webkit-print-color-adjust:exact;}.saleSummaryCustomer .table.table-borderless.table-condensed  tr th span{ color: #fff!important; }.saleSummaryCustomer .table.table-borderless.table-condensed tr:nth-child(2n+1) td {  background-color: #fff!important; -webkit-print-color-adjust:exact;} .saleSummaryCustomer .table.table-borderless.table-condensed tr td { background-color: #F2F2F2!important;-webkit-print-color-adjust:exact; } </style>' +
-		            '</head>' +
-		            '<body><div id="example" class="k-content saleSummaryCustomer" style="padding: 30px;">';
-		    var htmlEnd =
-		            '</div></body>' +
-		            '</html>';
-		    
-		    printableContent = $('#invFormContent').html();
-		    doc.write(htmlStart + printableContent + htmlEnd);
-		    doc.close();
-		    setTimeout(function(){
-		    	win.print();
-		    	win.close();
-		    },2000);
-		},
-		cancel				: function(e){
-			this.dataSource.cancelChanges();
-			window.history.back();
-		},
-	});	
-	banhji.newCustomerList = kendo.observable({
-		lang 					: langVM,
-		institute 				: banhji.institute,
-		dataSource 				: dataStore(apiUrl + "customers/newlist"),
+		dataSource 				: dataStore(apiUrl + "wreports/disconnectlist"),
 		licenseDS 				: dataStore(apiUrl+"branches"),
 		blocDS 					: dataStore(apiUrl+"locations"),
 		licenseSelect 			: null,
@@ -14258,12 +14434,17 @@
 			this.contact.cancelChanges();
 			window.history.back();
 		}
-	});
-	banhji.miniUsageList = kendo.observable({
+	});	
+	banhji.newCustomerList = kendo.observable({
 		lang 					: langVM,
 		institute 				: banhji.institute,
-		dataSource 				: dataStore(apiUrl + "customers"),	
+		dataSource 				: dataStore(apiUrl + "wreports/newlist"),
+		licenseDS 				: dataStore(apiUrl+"branches"),
+		blocDS 					: dataStore(apiUrl+"locations"),
+		licenseSelect 			: null,
+		blocSelect 				: null,
 		pageLoad 				: function(){
+			this.licenseDS.read();
 		},
 		printGrid			: function() {
 			var gridElement = $('#grid'),
@@ -14304,10 +14485,126 @@
 		    	win.close();
 		    },2000);
 		},
-		cancel				: function(e){
-			this.dataSource.cancelChanges();
-			window.history.back();
+		licenseChange 	: function(e) {
+			var data = e.data;
+			var license = this.licenseDS.at(e.sender.selectedIndex - 1);
+			this.set("licenseSelect", license);
+			this.blocDS.filter({field: "branch_id", value: license.id});
 		},
+		search 					: function(){
+			var para = [],
+			license = this.get("licenseSelect"),
+			bloc = this.get("blocSelect");
+
+			if(license){
+				para.push({ field:"branch_id", operator: "where_related_contact_utility", value: license.id });
+			}
+
+			if(bloc){
+				para.push({ field:"location_id", operator: "where_related_contact_utility", value: bloc.id });
+			}
+			console.log(para);
+			this.dataSource.filter(para);
+		}, 
+		cancel 			: function(){
+			this.contact.cancelChanges();
+			window.history.back();
+		}
+	});
+	banhji.miniUsageList = kendo.observable({
+		lang 					: langVM,
+		institute 				: banhji.institute,
+		dataSource 				: dataStore(apiUrl + "wreports/miniusage"),
+		licenseDS 				: dataStore(apiUrl+"branches"),
+		blocDS 					: dataStore(apiUrl+"locations"),
+		miniNumber 				: 20,
+		licenseSelect 			: null,
+		blocSelect 				: null,
+		pageLoad 				: function(){
+			this.licenseDS.read();
+			this.dataSource.filter({field: "usage <=", operator: "where_related_record" ,value: this.get("miniNumber")});
+		},
+		printGrid			: function() {
+			var gridElement = $('#grid'),
+		        printableContent = '',
+		        win = window.open('', '', 'width=900, height=700'),
+		        doc = win.document.open();
+		    var htmlStart =
+		            '<!DOCTYPE html>' +
+		            '<html>' +
+		            '<head>' +
+		            '<meta charset="utf-8" />' +
+		            '<title></title>' +
+		            '<link href="http://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />'+
+		            '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/bootstrap.css">' +
+		            '<link href="https://fonts.googleapis.com/css?family=Content:400,700" rel="stylesheet" type="text/css">' +
+		            '<link href="<?php echo base_url(); ?>assets/responsive.css" rel="stylesheet" >' +
+		            '<link href="https://fonts.googleapis.com/css?family=Moul" rel="stylesheet">' +
+		            '<style>' +
+		            '*{  } html { font: 11pt sans-serif; }' +
+		            '.k-grid { border-top-width: 0; }' +
+		            '.k-grid, .k-grid-content { height: auto !important; }' +
+		            '.k-grid-content { overflow: visible !important; }' +
+		            'div.k-grid table { table-layout: auto; width: 100% !important; }' +
+		            '.k-grid .k-grid-header th { border-top: 1px solid; }' +
+		            '.k-grid-toolbar, .k-grid-pager > .k-link { display: none; }' +
+		            '</style><style type="text/css" media="print"> @page { size: landscape; margin:0mm; } .saleSummaryCustomer .total-customer, .saleSummaryCustomer .total-sale { background-color: #DDEBF7!important; -webkit-print-color-adjust:exact; }.saleSummaryCustomer .table.table-borderless.table-condensed  tr th { background-color: #1E4E78!important;-webkit-print-color-adjust:exact;}.saleSummaryCustomer .table.table-borderless.table-condensed  tr th span{ color: #fff!important; }.saleSummaryCustomer .table.table-borderless.table-condensed tr:nth-child(2n+1) td {  background-color: #fff!important; -webkit-print-color-adjust:exact;} .saleSummaryCustomer .table.table-borderless.table-condensed tr td { background-color: #F2F2F2!important;-webkit-print-color-adjust:exact; } </style>' +
+		            '</head>' +
+		            '<body><div id="example" class="k-content saleSummaryCustomer" style="padding: 30px;">';
+		    var htmlEnd =
+		            '</div></body>' +
+		            '</html>';
+		    
+		    printableContent = $('#invFormContent').html();
+		    doc.write(htmlStart + printableContent + htmlEnd);
+		    doc.close();
+		    setTimeout(function(){
+		    	win.print();
+		    	win.close();
+		    },2000);
+		},
+		licenseChange 	: function(e) {
+			var data = e.data;
+			var license = this.licenseDS.at(e.sender.selectedIndex - 1);
+			this.set("licenseSelect", license);
+			this.blocDS.filter({field: "branch_id", value: license.id});
+		},
+		search 					: function(){
+			var para = [],
+			license = this.get("licenseSelect"),
+			bloc = this.get("blocSelect"),
+			monthOfSearch = this.get("monthSelect"),
+			miniNumber = this.get("miniNumber");
+			if(license){
+				para.push({ field:"branch_id", value: license.id });
+			}
+
+			if(bloc){
+				para.push({ field:"location_id", value: bloc.id });
+			}
+			if(monthOfSearch){
+				var monthOf = new Date(monthOfSearch);
+				monthOf.setDate(1);
+				monthOf = kendo.toString(monthOf, "yyyy-MM-dd");
+				var monthL = new Date(monthOfSearch);
+				monthL.setDate(31);
+				monthL = kendo.toString(monthL, "yyyy-MM-dd");
+				
+				para.push(
+					{field: "month_of >=", operator: "where_related_record", value: monthOf},
+					{field: "month_of <=", operator: "where_related_record", value: monthL}
+				);
+			}
+			if(miniNumber){
+				para.push({field: "usage <=", operator: "where_related_record" ,value: this.get("miniNumber")});
+			}
+			console.log(para);
+			this.dataSource.filter(para);
+		}, 
+		cancel 			: function(){
+			this.contact.cancelChanges();
+			window.history.back();
+		}
 	});
 	banhji.customerNoMeter = kendo.observable({
 		lang 					: langVM,

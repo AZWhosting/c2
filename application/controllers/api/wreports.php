@@ -353,7 +353,7 @@ class Wreports extends REST_Controller {
 		}
 		$obj->where("use_water", 1);
 		// $obj->where_related('meter', 'id <', 1);
-		$obj->include_related('contact_utility', array('abbr', 'code'));
+		$obj->include_related('contact_utility', array('abbr', 'code', 'branch_id', 'location_id'));
 		$obj->include_related('contact_type', array('name'));
 		$obj->include_related('contact_utility/branch', array('name'));
 		$obj->include_related('contact_utility/location', array('name'));
@@ -380,7 +380,112 @@ class Wreports extends REST_Controller {
 			$this->response(array('results'=> array(), 'msg'=> 'no meter found'), 404);
 		}
 	}
+	function disconnectlist_get() {
+		$filters 	= $this->get("filter");		
+		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
+		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;								
+		$sort 	 	= $this->get("sort");		
+		$is_pattern = 0;
 
+		$obj = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
+
+		//Sort
+		if(!empty($sort) && isset($sort)){				
+			foreach ($sort as $value) {
+				$obj->order_by($value["field"], $value["dir"]);
+			}
+		}
+
+		//Filter		
+		if(!empty($filters) && isset($filters['filters'])){
+	    	foreach ($filters['filters'] as $value) {
+	    		if(isset($value['operator'])) {
+					$obj->{$value['operator']}($value['field'], $value['value']);
+				} else {
+	    			$obj->where($value["field"], $value["value"]);
+				}
+			}
+		}
+		$obj->include_related('contact', array('name','phone','email','locale'));
+		$obj->include_related('contact/utility', array('abbr', 'code'));
+		$obj->include_related('branch', array('name'));
+		$obj->include_related('location', array('name'));
+		$obj->where("status", 0);
+		$obj->get_paged_iterated($page, $limit);
+		if($obj->exists()) {
+			$data = array();
+			foreach($obj as $row) {
+				//$utility = $row->contact->include_related('utility', array('abbr', 'code'))->get();
+				$data[] = array(
+					"id" => $row->id,
+					"meter_number" => $row->number,
+					"number" => array('abbr'=> $row->contact_utility_abbr, 'code' => $row->contact_utility_code),
+					"fullname"=>$row->contact_name,
+					"type" =>$row->contact_type,
+					"license" => $row->branch_name,
+					"address"=> $row->location_name,
+					"phone" => $row->contact_phone,
+					"email" => $row->contact_email,
+					"locale" => $row->contact_locale
+				);
+			}
+			$this->response(array('results' => $data, 'count' => $obj->paged->total_rows), 200);
+		} else {
+			$this->reponse(array('results'=> array(), 'msg'=> 'no meter found'), 404);
+		}
+	}
+	function miniusage_get() {
+		$filters 	= $this->get("filter");		
+		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
+		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;								
+		$sort 	 	= $this->get("sort");		
+		$is_pattern = 0;
+
+		$obj = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
+
+		//Sort
+		if(!empty($sort) && isset($sort)){				
+			foreach ($sort as $value) {
+				$obj->order_by($value["field"], $value["dir"]);
+			}
+		}
+
+		//Filter		
+		if(!empty($filters) && isset($filters['filters'])){
+	    	foreach ($filters['filters'] as $value) {
+	    		if(isset($value['operator'])) {
+					$obj->{$value['operator']}($value['field'], $value['value']);
+				} else {
+	    			$obj->where($value["field"], $value["value"]);
+				}
+			}
+		}
+		$obj->include_related('contact', array('name','phone','email','locale'));
+		$obj->include_related('contact/utility', array('abbr', 'code'));
+		$obj->include_related('branch', array('name'));
+		$obj->include_related('location', array('name'));
+		$obj->get_paged_iterated($page, $limit);
+		if($obj->exists()) {
+			$data = array();
+			foreach($obj as $row) {
+				//$utility = $row->contact->include_related('utility', array('abbr', 'code'))->get();
+				$data[] = array(
+					"id" => $row->id,
+					"number" => array('abbr'=> $row->contact_utility_abbr, 'code' => $row->contact_utility_code),
+					"fullname"=>$row->contact_name,
+					"type" =>$row->contact_type,
+					"license" => $row->branch_name,
+					"address"=> $row->location_name,
+					"phone" => $row->contact_phone,
+					"email" => $row->contact_email,
+					"locale" => $row->contact_locale
+				);
+			}
+			$this->response(array('results' => $data, 'count' => $obj->paged->total_rows), 200);
+		} else {
+			$this->reponse(array('results'=> array(), 'msg'=> 'no meter found'), 404);
+		}
+	}
 	//Get Water Sale Summary
 	//@param: License, location, m3, amount
 	function saleSummary_get() {}
@@ -397,13 +502,6 @@ class Wreports extends REST_Controller {
 	//@param: Number, customer, type, location, usage, amount
 	function paymentDetail_get() {}
 
-	//Get Payment Detail
-	//@param: Number, customer, type, location, usage, amount
-	function minimumWaterUsage_get() {}
-
-	//Get Payment Detail
-	//@param: Number, customer, type, location, usage, amount
-	function disconnect_get() {}
 
 	//Get Payment Detail
 	//@param: Number, customer, type, location, usage, amount
