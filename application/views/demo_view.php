@@ -8804,15 +8804,15 @@
 							            	<td><span data-bind="text: lang.lang.post_code"></span></td>
 							              	<td><input class="k-textbox" data-bind="value: obj.post_code" placeholder="e.g. 12345" style="width: 100%;" />
 							            </tr>							            
-							            <tr>
+							            <tr style="vertical-align: top;">
 							            	<td><span data-bind="text: lang.lang.address"></span></td>
-							              	<td><input class="k-textbox" data-bind="value: obj.address" placeholder="where you live ..." style="width: 100%;" />									            								              	
+							              	<td><textarea class="k-textbox" data-bind="value: obj.address" placeholder="where you live ..." style="width: 100%;" /></textarea></td>									            								              	
 							            	<td><span data-bind="text: lang.lang.memo"></span></td>
-							              	<td><input class="k-textbox" data-bind="value: obj.memo" placeholder="memo ..." style="width: 100%;" /></td>							              	
+							              	<td><textarea rows="2" class="k-textbox" data-bind="value: obj.memo" placeholder="memo ..." style="width: 100%;" ></textarea></td>							              	
 							            </tr>									            
-							            <tr>
+							            <tr  style="vertical-align: top;">
 							            	<td>
-							            		<label for="txtBillTo" data-bind="click: copyBillTo"><span data-bind="text: lang.lang.bill_to"></span> <i class="icon-share"></i></label>											            
+							            		<span for="txtBillTo" data-bind="click: copyBillTo"><span data-bind="text: lang.lang.bill_to"></span> </span>											            
 							            	</td>
 							            	<td>
 							            		<textarea rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.bill_to" placeholder="billed to ..."></textarea>
@@ -8821,7 +8821,7 @@
 							            	<td>
 							            		<textarea rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.ship_to" placeholder="delivered to ..."></textarea>
 							            	</td>
-							            </tr>							            							            							            								            								            			            
+							            </tr>								            							            							            								            								            			            
 							        </table>
 					        	</div>
 						        <!-- //GENERAL INFO END -->
@@ -15710,17 +15710,17 @@
 							            </tr>
 							            <tr>
 							            	<td><span data-bind="text: lang.lang.city"></span></td>
-							              	<td><input class="k-textbox" data-bind="value: obj.city" placeholder="city name ..." style="width: 100%;" />							              	
+							              	<td><input class="k-textbox" data-bind="value: obj.city" placeholder="city name ..." style="width: 100%;" /></td>							              	
 							            	<td><span data-bind="text: lang.lang.post_code"></span></td>
-							              	<td><input class="k-textbox" data-bind="value: obj.post_code" placeholder="e.g. 12345" style="width: 100%;" />
+							              	<td><input class="k-textbox" data-bind="value: obj.post_code" placeholder="e.g. 12345" style="width: 100%;" /></td>
 							            </tr>							            
-							            <tr>
+							            <tr style="vertical-align: top;">
 							            	<td><span data-bind="text: lang.lang.address"></span></td>
-							              	<td><input class="k-textbox" data-bind="value: obj.address" placeholder="where you live ..." style="width: 100%;" />									            								              	
+							              	<td><textarea class="k-textbox" data-bind="value: obj.address" placeholder="where you live ..." style="width: 100%;" /></textarea></td>									            								              	
 							            	<td><span data-bind="text: lang.lang.memo"></span></td>
 							              	<td><textarea rows="2" class="k-textbox" data-bind="value: obj.memo" placeholder="memo ..." style="width: 100%;" ></textarea></td>							              	
 							            </tr>									            
-							            <tr>
+							            <tr  style="vertical-align: top;">
 							            	<td>
 							            		<span for="txtBillTo" data-bind="click: copyBillTo"><span data-bind="text: lang.lang.bill_to"></span> </span>											            
 							            	</td>
@@ -37682,19 +37682,19 @@
 													</div>
 													<div class="select2-container" style="width: 100%;">								
 														<input id="ccbItem" name="cbbContact"
-															   data-role="combobox"
-											                   data-header-template="contact-header-tmpl"
-											                   data-template="contact-list-tmpl"
-											                   data-value-primitive="true"
-											                   data-filter="like"
-											                   data-min-length="3"
-											                   data-text-field="name"
-											                   data-value-field="id"
-											                   data-bind="value: contact_id,
-											                              source: contactDS,
-											                              events:{ change: contactChanges }"
-											                   data-placeholder="Customer..."                    
-											                   style="width: 100%; height: 29px;" />									
+														   	data-role="combobox"
+										                   	data-header-template="contact-header-tmpl"
+										                   	data-template="contact-list-tmpl"
+										                   	data-value-primitive="true"
+										                   	data-filter="like"
+										                   	data-min-length="3"
+										                   	data-text-field="name"
+										                   	data-value-field="id"
+										                   	data-bind="value: contact_id,
+										                              source: contactDS,
+										                              events:{ change: contactChanges }"
+										                   	data-placeholder="Customer..."                    
+										                   	style="width: 100%; height: 29px;" />									
 													</div>
 												</form>					
 											</div>
@@ -37957,6 +37957,7 @@
 		<td class="center">
 			<input data-role="numerictextbox"
 				   data-spinners="false"
+				   data-format="c"
 				   data-culture="#:locale#"
                    data-decimals="2"
                    data-min="0"                   
@@ -37967,6 +37968,7 @@
 		<td class="center">
 			<input data-role="numerictextbox"
 				   data-spinners="false"
+				   data-format="c"
 				   data-culture="#:locale#"
                    data-decimals="2"
                    data-min="0"                   
