@@ -460,9 +460,10 @@ class Wreports extends REST_Controller {
 				}
 			}
 		}
-		$obj->include_related('contact', array('name','phone','email','locale'));
+		$obj->include_related('contact', array('locale'));
 		$obj->include_related('contact/utility', array('abbr', 'code'));
 		$obj->include_related('branch', array('name'));
+		$obj->include_related('record', array('from_date', 'to_date', 'usage'));
 		$obj->include_related('location', array('name'));
 		$obj->get_paged_iterated($page, $limit);
 		if($obj->exists()) {
@@ -471,13 +472,12 @@ class Wreports extends REST_Controller {
 				//$utility = $row->contact->include_related('utility', array('abbr', 'code'))->get();
 				$data[] = array(
 					"id" => $row->id,
-					"number" => array('abbr'=> $row->contact_utility_abbr, 'code' => $row->contact_utility_code),
-					"fullname"=>$row->contact_name,
-					"type" =>$row->contact_type,
+					"meter_number" => $row->number,
+					"from_date"=>$row->record_from_date,
+					"to_date" =>$row->record_to_date,
 					"license" => $row->branch_name,
 					"address"=> $row->location_name,
-					"phone" => $row->contact_phone,
-					"email" => $row->contact_email,
+					"usage" => $row->record_usage,
 					"locale" => $row->contact_locale
 				);
 			}
@@ -488,7 +488,59 @@ class Wreports extends REST_Controller {
 	}
 	//Get Water Sale Summary
 	//@param: License, location, m3, amount
-	function saleSummary_get() {}
+	function salesummary_get() {
+		$filters 	= $this->get("filter");		
+		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
+		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;								
+		$sort 	 	= $this->get("sort");		
+		$is_pattern = 0;
+
+		$obj = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
+
+		//Sort
+		if(!empty($sort) && isset($sort)){				
+			foreach ($sort as $value) {
+				$obj->order_by($value["field"], $value["dir"]);
+			}
+		}
+
+		//Filter		
+		if(!empty($filters) && isset($filters['filters'])){
+	    	foreach ($filters['filters'] as $value) {
+	    		if(isset($value['operator'])) {
+					$obj->{$value['operator']}($value['field'], $value['value']);
+				} else {
+	    			$obj->where($value["field"], $value["value"]);
+				}
+			}
+		}
+		$obj->include_related('contact', array('locale'));
+		$obj->include_related('contact/utility', array('abbr', 'code'));
+		$obj->include_related('branch', array('name'));
+		$obj->include_related('record', array('from_date', 'to_date', 'usage'));
+		$obj->include_related('location', array('name'));
+		$obj->get_paged_iterated($page, $limit);
+		if($obj->exists()) {
+			$data = array();
+			foreach($obj as $row) {
+				//$utility = $row->contact->include_related('utility', array('abbr', 'code'))->get();
+				$data[] = array(
+					"id" => $row->id,
+					"meter_number" => $row->number,
+					"from_date"=>$row->record_from_date,
+					"to_date" =>$row->record_to_date,
+					"License" => $row->branch_name,
+					"Location"=> $row->location_name,
+					"Usage" => $row->record_usage,
+					"locale" => $row->contact_locale,
+					"Amount" => 0
+				);
+			}
+			$this->response(array('results' => $data, 'count' => $obj->paged->total_rows), 200);
+		} else {
+			$this->reponse(array('results'=> array(), 'msg'=> 'no meter found'), 404);
+		}
+	}
 
 	//Get Water Sale Detail
 	//@param: Number, customer, type, location, usage, amount

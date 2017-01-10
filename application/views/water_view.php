@@ -6319,7 +6319,7 @@
 	  		<a class='dropdown-toggle glyphicons text_bigger' data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false'><i></i> <span class='caret'></span></a>
   			<ul class='dropdown-menu'>
   				<li><a href='<?php echo base_url(); ?>/c2/rrd/#/customer' target="_blank"><span >New Customer</span></a></li> 
-  				<li ><a href='#/reorder'><span >Reorder Customer Number</span></a></li>  				
+  				<li ><a href='#/reorder'><span >Reorder Meter</span></a></li>  				
   				<li><span class="li-line"></span></li>
   				<li><a href='#/reading'><span >Meter Reading</span></a></li> 
   				<!--li><a href='#/edit_reading'><span >Edit Reading</span></a></li-->
@@ -15859,6 +15859,18 @@
 			vm.pageLoad(id);		
 		};
 	});	
+	banhji.router.route("/reorder", function(id){
+		banhji.view.layout.showIn("#content", banhji.view.Reorder);
+		banhji.view.layout.showIn('#menu', banhji.view.menu);
+		banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
+		var vm = banhji.Reorder;
+		banhji.userManagement.addMultiTask("Reorder","reports",null);
+		if(banhji.pageLoaded["reorder"]==undefined){
+			banhji.pageLoaded["reorder"] = true;
+		}
+		vm.pageLoad();
+	});	
+	
 	//////Report Router/////
 	banhji.router.route("/customer_list", function(){
 		if(!banhji.userManagement.getLogin()){

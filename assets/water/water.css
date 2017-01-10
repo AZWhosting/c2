@@ -130,3 +130,9 @@ p.addItem.glyphicons.circle_remove i:before {
 .reconcile2{
 	padding: 0;
 }
+.saleSummaryCustomer .k-grid-header-wrap table tr .k-header {
+	display: table-cell;
+	background: #1E4E78;
+	color: #fff;
+	font-weight: bold;
+}

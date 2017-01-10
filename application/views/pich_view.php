@@ -2869,7 +2869,7 @@
     				</tr>
     			</tfoot>
     		</table>    		
-			<p style="float: left; margin: 10px 0 0 0; font-size: 11px;">
+			<p style="float: left; margin: 10px 0 0 0; font-size: 11px; width: 100%;">
 				ក្នុងករណីដែលលោក លោកស្រីមិនបានមកបង់ប្រាក់ទាន់ពេលកំនត់ ក្រុមហ៊ិននឹងផ្អាក់ការប្រើប្រាស់របស់លោកអ្នក
 			</p>
 			<p style="float: left;font-size: 11px; padding-bottom: 8px; border-bottom: 2px dotted #000;">
@@ -2877,6 +2877,12 @@
 			</p>
 			<div class="invoice-footer">
 				<p style="text-align: center; ">បង្កាន់ដៃបង់ប្រាក់ PAYMENT SLIP</p>
+			</div>
+			<div class="row-fluid">
+				<div class="span1">
+					<div style="float: left; width: 92px; height: 92px; margin-right: 15px;">
+					</div>
+				</div>
 			</div>
     	</div>
     </div>
