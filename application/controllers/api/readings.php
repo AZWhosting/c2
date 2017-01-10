@@ -79,7 +79,7 @@ class Readings extends REST_Controller {
 					"from_date" 	=> $value->from_date,
 					"to_date" 		=> $value->to_date,
 					"date"			=> $value->from_date." - ".$value->to_date,
-					"number" 		=> $meter->number,
+					"meter_number" 		=> $meter->number,
 					"invoiced"   	=> $value->invoiced == 0 ? FALSE:TRUE,
 					"consumption" 	=> $value->usage,
 					"status"		=> "n",
@@ -99,7 +99,7 @@ class Readings extends REST_Controller {
 		foreach ($models as $value) {
 			$obj = new Meter_record(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$meter = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			$meter->where('id', $value->number)->get();
+			$meter->where('number', $value->meter_number)->get();
 			if($value->status == "n") {
 				$obj->meter_id 				= isset($meter->id)					?$meter->id: "";
 				$obj->previous 				= isset($value->previous)			?$value->previous: "";
@@ -125,7 +125,7 @@ class Readings extends REST_Controller {
 				$data["results"][] = array(
 					"id"			=> $obj->id,
 					"meter_id" 		=> $obj->meter_id,
-					"number" 		=> intval($meter->number),
+					"meter_number" 	=> $meter->number,
 					"prev"			=> $obj->previous,
 					"current"		=> $obj->current,
 					"from_date"		=> $obj->from_date,
@@ -158,7 +158,7 @@ class Readings extends REST_Controller {
 				if($obj->save()){
 					$data["results"][] = array(
 						"meter_id" 		=> $obj->meter_id,
-						"number" 		=> intval($value->number),
+						"meter_number" 		=> intval($value->number),
 						"month_of"		=> $obj->month_of,
 						"prev"			=> $obj->previous,
 						"current"		=> $obj->current,
@@ -192,7 +192,7 @@ class Readings extends REST_Controller {
 							"id"			=> $newObj->id,
 							"meter_id" 		=> $newObj->meter_id,
 							"month_of"		=> $newObj->month_of,
-							"number" 		=> intval($value->number),
+							"meter_number" 		=> intval($value->number),
 							"prev"			=> $newObj->previous,
 							"current"		=> $newObj->current,
 							"from_date"		=> $newObj->from_date,

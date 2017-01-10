@@ -68,7 +68,7 @@ class Meters extends REST_Controller {
 												"code" => $currency->code,
 												"locale" => $currency->locale
 					),
-					"number" 				=> $value->number,
+					"meter_number" 				=> $value->number,
 					"status" 				=> $value->status,
 					"contact" 				=> $contact->result(),
 					"number_digit"			=> $value->number_digit,
@@ -109,7 +109,7 @@ class Meters extends REST_Controller {
 			$obj->maintenance_id 		= isset($value->maintenance_id)		?$value->maintenance_id:0;
 			$obj->reactive_of 			= isset($value->reactive_of)		?$value->reactive_of:0;
 			$obj->backup_of 			= isset($value->backup_of)			?$value->backup_of:0;
-			$obj->number 				= isset($value->number) 			? $value->number:0;			
+			$obj->number 				= isset($value->meter_number) 			? $value->meter_number:0;			
 			$obj->multiplier 			= isset($value->multiplier) 		? $value->multiplier: 1;
 			$obj->max_number 			= isset($value->max_number) 		? $value->max_number:0;
 			$obj->contact_id 			= isset($value->contact_id) 		? $value->contact_id:0;
@@ -130,7 +130,7 @@ class Meters extends REST_Controller {
 			if($obj->save()){	
 				$data[] = array(
 					"id" 					=> $obj->id,
-					"number" 				=> $obj->number,
+					"meter_number" 			=> $obj->number,
 					"status" 				=> $obj->status,
 					"number_digit" 			=> $obj->number_digit,
 					"latitute" 				=> $obj->map,	
@@ -177,7 +177,7 @@ class Meters extends REST_Controller {
 			$obj->maintenance_id 		= isset($value->maintenance_id)		?$value->maintenance_id:0;
 			$obj->reactive_of 			= isset($value->reactive_of)		?$value->reactive_of:0;
 			$obj->backup_of 			= isset($value->backup_of)			?$value->backup_of:0;
-			$obj->number 				= isset($value->number) 			? $value->number:0;			
+			$obj->number 				= isset($value->meter_number) 			? $value->meter_number:0;			
 			$obj->multiplier 			= isset($value->multiplier) 		? $value->multiplier: 1;
 			$obj->max_number 			= isset($value->max_number) 		? $value->max_number:0;
 			// $obj->contact_id 			= isset($value->contact_id) 		? $value->contact_id:0;
@@ -193,7 +193,6 @@ class Meters extends REST_Controller {
 			$obj->location_id 			= isset($value->location_id)		?$value->location_id:"";
 			$obj->brand_id 				= isset($value->brand_id)			?$value->brand_id:"";
 			$obj->date_used = isset($value->date_used)?date("Y-m-d", strtotime($value->date_used)):'0000-00-00';
-			echo $obj->date_used;
 			$obj->number_digit 			= isset($value->number_digit)		?$value->number_digit:4;
 			$obj->plan_id 				= isset($value->plan_id)			?$value->plan_id:0;
 
@@ -201,7 +200,7 @@ class Meters extends REST_Controller {
 				//Results
 				$data[] = array(
 					"id" 					=> $obj->id,
-					"number" 				=> $obj->number,
+					"meter_number" 				=> $obj->number,
 					"status" 				=> $obj->status,
 					"number_digit" 			=> $obj->number_digit,
 					"latitute" 				=> $obj->map,	
