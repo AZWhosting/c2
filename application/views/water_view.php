@@ -5152,7 +5152,7 @@
 				# for(var i=0; i < items.length; i++) {#
 					<tr>
 						<td>#=items[i].number#</td>
-						<td><input type="number" data-bind="value: items[i].unit"></td>
+						<td><input type="number" value="#=items[i].unit#"></td>
 						<td></td>
 					</tr>
 					
