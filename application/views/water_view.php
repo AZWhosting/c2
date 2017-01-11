@@ -5144,11 +5144,13 @@
 					<td colspan="2"></td>
 					<td>#=code#</td>
 				</tr>
+				<thead>
 				<tr>
 					<td style="background: olive;">Note:</td>
 					<td style="background: olive;" >Unit</td>
 					<td style="background: olive;" >Total</td>
 				</tr>
+				</thead>
 				# for(var i=0; i < items.length; i++) {#
 					<tr>
 						<td>#=items[i].number#</td>

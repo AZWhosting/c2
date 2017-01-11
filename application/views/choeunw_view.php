@@ -11106,11 +11106,11 @@
 				})
 				.then(function(lines){
 					// then change meter activated field to 1
+					console.log(lines);
 					var status = false;
 					if(lines.length > 0) {
 						status = true;
 						banhji.ActivateMeter.get('meterObj').set('activated', 1);
-
 						banhji.ActivateMeter.meterDS.sync();
 						banhji.ActivateMeter.meterDS.bind('requestEnd', function(e){
 							if(e.response) {

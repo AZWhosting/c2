@@ -52200,6 +52200,8 @@
 				    logic: "or",
 				    filters: [
 				      	{ field: "account_type_id", value: 13 },//Inventory
+				      	{ field: "account_type_id", value: 16 },//Fixed Asset
+				      	{ field: "account_type_id", value: 17 },//Intangible Assets
 				      	{ field: "account_type_id", value: 36 },//Expense
 				      	{ field: "account_type_id", value: 37 },
 				      	{ field: "account_type_id", value: 38 },
@@ -71909,13 +71911,24 @@
 			],
 			sort: { field:"number", dir:"asc" }
 		}),
-    	cogsAccountDS 			: new kendo.data.DataSource({
+		cogsAccountDS  			: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
-		  	filter: [
-				{ field:"account_type_id", value: 36 },
+			filter:[ 
+				{
+				    logic: "or",
+				    filters: [
+				      	{ field: "account_type_id", value: 36 },//Expense
+				      	{ field: "account_type_id", value: 37 },
+				      	{ field: "account_type_id", value: 38 },
+				      	{ field: "account_type_id", value: 40 },
+				      	{ field: "account_type_id", value: 41 },
+				      	{ field: "account_type_id", value: 42 },
+				      	{ field: "account_type_id", value: 43 }
+				    ]
+				},
 				{ field:"status", value: 1 }
 			],
-		  	sort: { field:"number", dir:"asc" }
+			sort: { field:"number", dir:"asc" }
 		}),
     	statusList 				: banhji.source.statusList,
         confirmMessage 			: banhji.source.confirmMessage,
