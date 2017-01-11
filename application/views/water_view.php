@@ -2843,7 +2843,7 @@
 												</tr>
 												<tr>
 													<td>Meter Number</td>
-													<td data-bind="text: meterObj.number"></td>
+													<td data-bind="text: meterObj.meter_number"></td>
 												</tr>
 												<tr>
 													<td>Activation Date</td>
@@ -6884,6 +6884,8 @@
 			});
 		return o;
 	};	
+
+	banhji.reconcile = dataStore(apiUrl+"reconciles");
 	banhji.userManagement = kendo.observable({
 		lang : langVM,
 		multiTaskList 		: [],
@@ -10293,7 +10295,6 @@
 				pageSize:100
 			}).then(function(){
 				var view = self.contactDS.view();
-
 				if(view.length>0){
 					self.set("obj", view[0]);
 					self.loadData();
@@ -10302,7 +10303,7 @@
 		},
 		licenseChange 			: function(e){
 			var obj = this.get("obj"), self = this;
-			this.blocDS.filter({field: "branch_id", value: obj.license_id});
+			this.blocDS.filter({field: "branch_id", value: obj.branch_id});
 		},
 		loadContact 		: function(id){
 			var self = this;
@@ -10830,7 +10831,14 @@
 		meterDS     		: dataStore(apiUrl + "meters"),
 		dataSource 			: null,
 		planDS 				: dataStore(apiUrl + "plans"),
-		cashAccountDS  		: banhji.source.cashAccountDS,
+		cashAccountDS  		: new kendo.data.DataSource({
+		  	data: banhji.source.accountList,
+		  	filter: [
+				{ field:"account_type_id", value: 10 },
+				{ field:"status", value: 1 }
+			],
+		  	sort: { field:"number", dir:"asc" }
+		}),
 		paymentMethodDS 	: dataStore(apiUrl + "payment_methods"),
 		meterObj	 		: null,
 		isEdit 				: false,
@@ -15311,6 +15319,90 @@
 			this.dataSource.cancelChanges();
 			window.history.back();
 		},
+	});
+
+	banhji.reconcileVM = kendo.observable({
+		currencyDS 		: null,
+		addNew 			: function() {
+			this.dataSource.insert(0, {
+				cashier: banhji.userData.id,
+				rate: 1,
+				memo: "",
+				currencies: null,
+				units: null
+			});
+			this.setCurrent(this.dataSource.at(0));
+		},
+		currencyUnits 	: [
+			{ number: 1, unit: 0 },
+			{ number: 2, unit: 0 },
+			{ number: 5, unit: 0 },
+			{ number: 10, unit: 0 },
+			{ number: 20, unit: 0 },
+			{ number: 50, unit: 0 },
+			{ number: 100, unit: 0 },
+			{ number: 200, unit: 0 },
+			{ number: 500, unit: 0 },
+			{ number: 1000, unit: 0 },
+			{ number: 2000, unit: 0 },
+			{ number: 5000, unit: 0 },
+			{ number: 10000, unit: 0 },
+			{ number: 50000, unit: 0 },
+			{ number: 100000, unit: 0 }
+		],
+		dataSource 		: new kendo.data.DataSource({
+			transport: {
+				read 	: {
+					url: url,
+					type: "GET",
+					headers: banhji.header,
+					dataType: 'json'
+				},
+				create 	: {
+					url: url,
+					type: "POST",
+					headers: banhji.header,
+					dataType: 'json'
+				},
+				update 	: {
+					url: url,
+					type: "PUT",
+					headers: banhji.header,
+					dataType: 'json'
+				},
+				destroy 	: {
+					url: url,
+					type: "DELETE",
+					headers: banhji.header,
+					dataType: 'json'
+				},
+				parameterMap: function(options, operation) {
+					if(operation === 'read') {
+						return {
+							page: options.page,
+							limit: options.pageSize,								
+							filter: options.filter,
+							sort: options.sort
+						};
+					} else {
+						return {models: kendo.stringify(options.models)};
+					}
+				}
+			},
+			schema 	: {
+				model: {
+					id: 'id'
+				},
+				data: 'results',
+				total: 'count'
+			},
+			batch: true,
+			serverFiltering: true,
+			serverSorting: true,
+			serverPaging: true,
+			page: 1,
+			pageSize: 100
+		})
 	});
 	/* views and layout */
 	banhji.view = {

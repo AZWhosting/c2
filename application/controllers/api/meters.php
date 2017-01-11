@@ -58,7 +58,7 @@ class Meters extends REST_Controller {
 			foreach ($obj as $value) {
 				$contact = $value->contact->get_raw();
 				$currency= $value->currency->get();
-
+				$contacts = $value->contact->get();
 				//Results				
 				$data["results"][] = array(
 					"id" 					=> $value->id,
@@ -69,6 +69,8 @@ class Meters extends REST_Controller {
 												"locale" => $currency->locale
 					),
 					"meter_number" 				=> $value->number,
+					"worder" 				=> $value->worder,
+					"contact_name" 			=> $contacts->name,
 					"status" 				=> $value->status,
 					"contact" 				=> $contact->result(),
 					"number_digit"			=> $value->number_digit,

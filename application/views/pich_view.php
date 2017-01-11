@@ -2748,6 +2748,7 @@
 	    	</div>
     	</div>
     </div>
+
     <div class="row-fluid">
     	<div class="span5">
     	</div>
@@ -2755,8 +2756,8 @@
     		<div class="row">
     			<div class="span5" style="padding-right: 0">
     				<p style="list-style: 20px; margin-bottom: 0;">
-    					<b>យនិ អចុិ </b><br>
-    					ភូមសាិ មគគីឃុអំ ងគរជ័យ
+    					<b>យិន អ៊ិច</b><br>
+    					ភូមិសាមគ្គី ឃុំអង្គរជ័យ
     				</p>
 		    	</div>
 		    	<div class="span6" style="padding-left: 0; margin-left: 15px;">
@@ -2766,6 +2767,7 @@
     		</div>
     	</div>
     </div>
+
     <div class="row-fluid">
     	<div class="span4" style="padding-left: 15px; padding-left: 8px;">
     		<p >ប្រវត្តិប្រើប្រាស់របស់អ្នកក្នុងឆ្នាំនេះ</p>
@@ -2855,7 +2857,10 @@
     					<td colspan="2"></td>
     				</tr>
     				<tr>
-    					<td colspan="2" rowspan="3"></td>
+    					<td colspan="2" rowspan="3" style="vertical-align: middle;">
+    						<div style="margin: 0 auto; width: 92px; height: 92px; border: 1px solid #A8B8CB; border-radius: 50%;">
+							</div>
+    					</td>
     					<td colspan="2">ថ្ងៃដែលបានបង់ប្រាក់ PAY DATE</td>
     					<td ></td>
     				</tr>
@@ -2869,25 +2874,59 @@
     				</tr>
     			</tfoot>
     		</table>    		
-			<p style="float: left; margin: 10px 0 0 0; font-size: 11px; width: 100%;">
-				ក្នុងករណីដែលលោក លោកស្រីមិនបានមកបង់ប្រាក់ទាន់ពេលកំនត់ ក្រុមហ៊ិននឹងផ្អាក់ការប្រើប្រាស់របស់លោកអ្នក
-			</p>
-			<p style="float: left;font-size: 11px; padding-bottom: 8px; border-bottom: 2px dotted #000;">
-				ការភ្ជាប់ចរន្តជួនវិញ លុះត្រាតែអតិថិជនបានទូទាត់បំណុលសរុបក្នុងវិក្កយបត្រនេះដោយបូកបន្ថែមការប្រាក់១% និងសេវាភ្ជាប់ចរន្តរួចហើយ។
-			</p>
-			<div class="invoice-footer">
-				<p style="text-align: center; ">បង្កាន់ដៃបង់ប្រាក់ PAYMENT SLIP</p>
-			</div>
-			<div class="row-fluid">
-				<div class="span1">
-					<div style="float: left; width: 92px; height: 92px; margin-right: 15px;">
-					</div>
-				</div>
-			</div>
-    	</div>
+    	</div>    	
     </div>
 
-
+    <div class="row-fluid" style="float: left; border-bottom: 2px dotted #B9CDE4;">
+		<a href="#" style="float: left; margin-left: 15px; " class="glyphicons no-js share"><i></i></a>
+		<div class="span11" style="padding-left: 0;">    			
+    		<p style="float: left; margin: 0; font-size: 11px; width: 100%;">
+				ក្នុងករណីដែលលោក លោកស្រីមិនបានមកបង់ប្រាក់ទាន់ពេលកំនត់ ក្រុមហ៊ិននឹងផ្អាក់ការប្រើប្រាស់របស់លោកអ្នក
+			</p>
+			<p style="float: left; font-size: 11px; padding-bottom: 8px;">
+				ការភ្ជាប់ចរន្តជួនវិញ លុះត្រាតែអតិថិជនបានទូទាត់បំណុលសរុបក្នុងវិក្កយបត្រនេះដោយបូកបន្ថែមការប្រាក់១% និងសេវាភ្ជាប់ចរន្តរួចហើយ។
+			</p>
+		</div>
+	</div>
+	<div class="row-fluid">
+		<div class="invoice-footer" style="float: left; width: 100%; text-align: center;">
+			<p style="text-align: center; margin-top: 10px; font-weight: 600; ">បង្កាន់ដៃបង់ប្រាក់ PAYMENT SLIP</p>
+		</div>		
+		<div class="span1" style="width: 108px;float: left;padding-right: 0;text-align: center;">
+			<div style="float: left; width: 92px; height: 92px; margin:0 0 5px 0; border: 1px solid #A8B8CB; border-radius: 50%;">
+			</div>
+			<p style="font-size: 10px; float: left;">ហត្ថលេខា និងត្រា របស់បេឡាករ </p>
+			<p style="display: inline-block; text-align: center; margin-top: 40px; border-bottom: 1px solid #000; width: 75px;"></p>
+		</div>
+		<div class="row-fluid" style="width: 489px;float: left;clear: initial; margin-left: 15px;">
+			<div class="span4">
+				<p style="text-align: center; font-size: 12px; margin-bottom: 5px;">លេខវិក្កយបត្រ INVOICE NO</p>
+				<p style="padding: 8px; background: #fff; margin-bottom: 0; border: 1px solid #A8B8CB; width: 155px; float: left;font-size: 15px; color: #000;font-weight: 600; text-align: center; ">INV1305-00001</p> 
+			</div>
+			<div class="span4">
+				<p style="text-align: center; font-size: 12px; margin-bottom: 5px;">ប្រាក់ត្រូវបង់ AMOUNT DUE</p>
+				<p style="padding: 8px; background: #fff; margin-bottom: 0; margin-left: -9px; border: 1px solid #A8B8CB; width: 155px; float: left;font-size: 15px; color: #000;font-weight: 600; text-align: center; ">38,808,900</p> 
+			</div>
+			<div class="span4">
+				<p style="text-align: center; font-size: 12px; margin-bottom: 5px;">ថ្ងៃបង់ប្រាក់ PAY DATE</p>
+				<p style="padding: 8px; background: #fff; margin-bottom: 0; border: 1px solid #A8B8CB; width: 155px; float: left;font-size: 15px; color: #000;font-weight: 600; text-align: center; ">38,808,900</p> 
+			</div>
+		</div>
+		<div class="row-fluid" style="width: 489px;float: left;clear: initial; margin-left: 15px;">
+			<div class="span8">
+				<p style="float: left; margin-top: 5px; clear: both;"><b>យិន អ៊ិច</b> <br/> ភូមិសាមគ្គី ឃុំអង្គរជ័យ</p>
+				<div style=" float: left;">
+		    		<img style="width: 257px; height: auto; " src="<?php echo base_url();?>/assets/barcode.png">
+		    		<p style="margin-bottom: 0; margin-top: 5px; font-size: 12px; margin-left: 8px;">លេខកូដអតិថិជន ០០៤៣៣៦</p>
+		    	</div>
+		    </div>
+		    <div class="span4" style="padding: 0;">
+		    	<p style="text-align: center; font-size: 12px; margin-bottom: 0px; margin-top: 8px;">ប្រាក់បានបង់ AMOUNT DUE</p>
+		    	<p style="padding: 8px; height: 40px; background: #fff; margin-bottom: 0; border: 5px solid #000; width: 155px; float: left;font-size: 15px; color: #000;font-weight: 600; text-align: center; "></p>
+		    	<p style="font-size: 11px; font-weight: 600; margin-top: 10px; float: left;">សហគ្រាសបន្ទាយមាស អេឡិទ្រីស៊ីធី</p>
+		    </div>
+		</div>
+	</div>
 </script>
 <script id="invoiceForm2" type="text/x-kendo-template">
 	<div class="inv1">

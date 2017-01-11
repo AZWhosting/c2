@@ -176,13 +176,13 @@ class Plans extends REST_Controller {
 	}
 
 	function items_get() {
-		$getData = $this->get('filter');
-		$filters = $getData['filters'];
+		$filters = $this->get('filter');
+		// $filters = $getData['filters'];
 		$table = new Plan_item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$data = array();
 
-		if(isset($filters)) {
-			foreach($filters as $filter) {
+		if(isset($filters) && $filters['filters']) {
+			foreach($filters['filters'] as $filter) {
 				if(isset($filter['operator'])) {
 					$table->{$filter['operator']}($filter['field'], $filter['value']);
 				} else {
