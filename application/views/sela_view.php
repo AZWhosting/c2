@@ -25345,39 +25345,7 @@
 						</tr>
 					</table>
 				</div>
-			</div>
-
-			
-			<!-- <div class="row-fluid recevable-report">
-				<h2>OTHER REPORTS/ LISTS</h2>
-				<div class="row-fluid">
-					<table class="table table-borderless table-condensed">
-						<tr>
-							<td style="width: 48%; padding-right: 8px !important;">
-								<h3><a href="#/customer_recurring">Recurring Customer Template List</a></h3>
-							</td>
-							<td >
-								<h3><a href="#/customer_setting">Payment Method & Term List</a></h3>								
-							</td>						
-						</tr>
-						<tr>
-							<td style="width: 48%; padding-right: 8px !important;">
-								<p></p>								
-							</td>
-							<td>
-								<p>
-									List the types of payments and the term that determine due date for payment from customers.
-								</p>
-							</td>
-							
-						</tr>
-						<tr >
-							<td></td>														
-						</tr>
-
-					</table>
-				</div>
-			</div> -->
+			</div>			
 		</div>
 		<div class="span5">
 			<span class="pull-right glyphicons no-js remove_2" 

@@ -40105,7 +40105,7 @@
 		#}#
 	</span>
 	<span style="width:35%; text-align: center;">#=category#</span>
-	<span style="width:20%; text-align: right;" class="pull-right">#=on_hand#</span> 	
+	<span style="width:20%; text-align: right;" data-format="n" class="pull-right">#=on_hand#</span> 	
 </script>
 <script id="item-group-header-tmpl" type="text/x-kendo-tmpl">
     <strong>
@@ -50325,6 +50325,7 @@
 					self.lineDS.filter({ field: "transaction_id", value: id });
 					// self.jobDS.filter({ field: "contact_id", value: view[0].contact_id });
 					self.attachmentDS.filter({ field: "transaction_id", value: id });
+					self.loadContact(view[0].id);
 				});
 			}				
 		},
@@ -51046,6 +51047,7 @@
 					self.lineDS.filter({ field: "transaction_id", value: id });
 					self.attachmentDS.filter({ field: "transaction_id", value: id });
 					self.referenceDS.filter({ field: "id", value: view[0].reference_id });
+					self.loadContact(view[0].id);
 				});
 			}
 		},
@@ -51828,6 +51830,7 @@
 					self.lineDS.filter({ field: "transaction_id", value: id });
 					self.journalLineDS.filter({ field: "transaction_id", value: id });
 					self.referenceDS.filter({ field: "id", value: view[0].reference_id });
+					self.loadContact(view[0].id);
 				});
 			}				
 		},			  
@@ -52947,6 +52950,7 @@
 					}				
 
 					self.loadDeposit();
+					self.loadContact(view[0].id);
 					self.loadTypeChanges();				
 				});
 			}				
@@ -54352,6 +54356,7 @@
 				self.lineDS.filter({ field: "transaction_id", value: view[0].id });
 				self.journalLineDS.filter({ field: "transaction_id", value: view[0].id });
 				self.referenceDS.filter({ field: "id", value: view[0].reference_id });
+				self.loadContact(view[0].id);
 			});				
 		},
 		changes				: function(){
@@ -55818,7 +55823,7 @@
 			this.summaryDS.query({
 				filter: [
 					{ field:"issued_date >=", value: kendo.toString(firstDayOfYear, "yyyy-MM-dd") },
-					{ field:"issued_date <=", value:  kendo.toString(today, "yyyy-MM-dd") }
+					{ field:"issued_date <=", value: kendo.toString(today, "yyyy-MM-dd") }
 				],								
 				page: 1,
 				pageSize: 5
@@ -57362,7 +57367,7 @@
 						self.set("showDiscount", true);
 					}
 
-					self.contactDS.filter({ field: "id", value: view[0].contact_id });
+					// self.contactDS.filter({ field: "id", value: view[0].contact_id });
 					self.lineDS.filter([
 						{ field: "transaction_id", value: view[0].id },
 						{ field: "assembly_id", value: 0 }
@@ -58265,7 +58270,7 @@
 						self.set("showDiscount", true);
 					}
 
-					self.contactDS.filter({ field: "id", value: view[0].contact_id });
+					// self.contactDS.filter({ field: "id", value: view[0].contact_id });
 					self.lineDS.filter([
 						{ field: "transaction_id", value: view[0].id },
 						{ field: "assembly_id", value: 0 }
@@ -58276,6 +58281,7 @@
 					]);
 					self.attachmentDS.filter({ field: "transaction_id", value: view[0].id });
 					self.referenceDS.filter({ field: "id", value: view[0].reference_id });
+					self.loadContact(view[0].id);
 				});
 			}				
 		},
@@ -59042,10 +59048,11 @@
 					self.set("original_total", view[0].amount);
 					self.set("total", kendo.toString(view[0].amount, "c", view[0].locale));
 					
-					self.contactDS.filter({ field: "id", value: view[0].contact_id });
+					// self.contactDS.filter({ field: "id", value: view[0].contact_id });
 					self.lineDS.filter({ field: "transaction_id", value: id });				
 					self.journalLineDS.filter({ field: "transaction_id", value: id });
 					self.referenceDS.filter({ field: "id", value: view[0].reference_id });
+					self.loadContact(view[0].id);
 				});
 			}
 		},
@@ -60080,7 +60087,7 @@
 						self.set("showDiscount", true);
 					}
 									
-					self.contactDS.filter({ field: "id", value: view[0].contact_id });				
+					// self.contactDS.filter({ field: "id", value: view[0].contact_id });				
 					self.lineDS.filter([
 						{ field: "transaction_id", value: view[0].id },
 						{ field: "assembly_id", value: 0 }
@@ -60101,6 +60108,7 @@
 					self.set("original_credit", view[0].credit);
 
 					self.loadDeposit();
+					self.loadContact(view[0].id);
 				});
 			}				
 		},
@@ -61574,7 +61582,7 @@
 			        self.set("total", kendo.toString(view[0].amount, "c", view[0].locale));
 			        self.set("amount_due", kendo.toString(view[0].amount - view[0].deposit, "c", view[0].locale));
 												
-					self.contactDS.filter({ field: "id", value: view[0].contact_id });
+					// self.contactDS.filter({ field: "id", value: view[0].contact_id });
 					self.lineDS.filter([
 						{ field: "transaction_id", value: view[0].id },
 						{ field: "assembly_id", value: 0 }
@@ -61587,7 +61595,8 @@
 					self.attachmentDS.filter({ field: "transaction_id", value: view[0].id });
 					self.referenceDS.filter({ field: "id", value: view[0].reference_id });				
 					
-					self.loadDeposit();				
+					self.loadDeposit();
+					self.loadContact(view[0].id);				
 				});
 			}				
 		},
@@ -62848,7 +62857,7 @@
 					
 					self.set("statusSrc", banhji.source.deliveredSrc);
 								
-					self.contactDS.filter({ field: "id", value: view[0].contact_id });
+					// self.contactDS.filter({ field: "id", value: view[0].contact_id });
 					self.lineDS.filter([
 						{ field: "transaction_id", value: view[0].id },
 						{ field: "assembly_id", value: 0 }
@@ -62859,6 +62868,7 @@
 					]);
 					self.attachmentDS.filter({ field: "transaction_id", value: id });
 					self.referenceDS.filter({ field: "id", value: view[0].reference_id });
+					self.loadContact(view[0].id);
 				});
 			}				
 		},
@@ -63818,7 +63828,7 @@
 
 		        self.set("original_total", view[0].amount);
 				
-				self.contactDS.filter({ field: "id", value: view[0].contact_id });
+				// self.contactDS.filter({ field: "id", value: view[0].contact_id });
 				self.lineDS.filter([
 					{ field: "transaction_id", value: view[0].id },
 					{ field: "assembly_id", value: 0 }
@@ -63830,6 +63840,8 @@
 				self.journalLineDS.filter({ field: "transaction_id", value: view[0].id });
 				self.attachmentDS.filter({ field: "transaction_id", value: view[0].id });
 				self.referenceDS.filter({ field: "id", value: view[0].reference_id });
+
+				self.loadContact(view[0].id);
 
 				self.returnDS.query({
 					filter:{ field: "return_id", value: view[0].id },

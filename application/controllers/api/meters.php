@@ -68,7 +68,8 @@ class Meters extends REST_Controller {
 												"code" => $currency->code,
 												"locale" => $currency->locale
 					),
-					"meter_number" 				=> $value->number,
+					"meter_number" 			=> $value->number,
+					"number" 				=> $value->number,
 					"worder" 				=> $value->worder,
 					"contact_name" 			=> $contacts->name,
 					"status" 				=> $value->status,
@@ -79,6 +80,7 @@ class Meters extends REST_Controller {
 					"starting_no" 			=> $value->startup_reading,
 					"location_id" 			=> $value->location_id,
 					"brand_id" 				=> $value->brand_id,
+					"branch_id" 			=> $value->branch_id,
 					"activated" 			=> $value->activated,
 					"latitute" 				=> $value->latitute,
 					"longtitute" 			=> $value->longtitute,

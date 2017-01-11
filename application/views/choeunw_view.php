@@ -2527,7 +2527,7 @@
 			    		<span class="glyphicons no-js remove_2" 
 							data-bind="click: cancel"><i></i></span>						
 					</div>
-			        <h2 style="padding:0 15px;">Activate Water User</h2><br>
+			        <h2 style="padding:0 15px;">Name : <strong data-bind="text: contactOBJ.name"></strong></h2><br>
 			        <div class="span6 row-fluid well" style="overflow: hidden;">
 			        	<div class="control-group">										
 							<label for="ddlContactType"><span>License</span> <span style="color:red">*</span></label>
@@ -2553,7 +2553,7 @@
 			                   data-value-primitive="true"
 			                   data-text-field="name"
 			                   data-value-field="id"
-			                   data-bind="value: obj.branch_id,
+			                   data-bind="value: obj.location_id,
 			                              source: blocDS,
 			                              events: {change : BlocChange}"/>
 			            </div>
@@ -6982,6 +6982,8 @@
 			});
 		return o;
 	};	
+
+	banhji.reconcile = dataStore(apiUrl+"reconciles");
 	banhji.userManagement = kendo.observable({
 		lang : langVM,
 		multiTaskList 		: [],
@@ -10374,27 +10376,21 @@
 		existingDS	  		: dataStore(apiUrl + "activate_water"),
 		licenseDS 			: dataStore(apiUrl + "branches"),
 		blocDS 				: dataStore(apiUrl + "locations"),
+		contactDS 			: dataStore(apiUrl + "contacts"),
 		obj 				: null,
+		contactOBJ 			: null,
 		Codeabbr 			: null,
 		Codenumber 			: null,
 		notDuplicateNumber 	: true,
 		isEdit 				: false,
 		pageLoad 			: function(id){
+			var self = this;
 			this.addEmpty(id);
 			this.licenseDS.read();
-		},
-		loadObj 			: function(id){
-			var self = this;
-			this.contactDS.query({
-				filter: { field:"id", value:id},
-				page:1,
-				pageSize:100
-			}).then(function(){
-				var view = self.contactDS.view();
-				if(view.length>0){
-					self.set("obj", view[0]);
-					self.loadData();
-				}
+			this.contactDS.query({filter: [{ field: "id", value: id}]})
+			.then(function(){
+				var view = self.contactDS.data();
+				self.set("contactOBJ", view[0]);
 			});
 		},
 		licenseChange 			: function(e){
@@ -10431,9 +10427,9 @@
 				family_member 		: null,
 				id_card 			: null,
 				occupation 			: null
-	    	});		
+	    	});
 			var obj = this.dataSource.at(0);			
-			this.set("obj", obj);		
+			this.set("obj", obj);
 		},
 		BlocChange 			: function(e) {
 			var obj = this.get("obj"), self = this;
@@ -10465,7 +10461,7 @@
 				}
 				if(lastNo){
 					obj.set("code",lastNo);
-					self.set("Codenumber", kendo.toString(lastNo, "00000"));
+					self.set("Codenumber", lastNo);
 				}
 			});
 		},
@@ -10777,6 +10773,7 @@
 		lang 				: langVM,
 		dataSource  		: dataStore(apiUrl + "meters"),
 		planDS 				: dataStore(apiUrl + "plans"),
+		userActivatDS 		: dataStore(apiUrl + "activate_water"),
 		brandDS 			: banhji.source.brandDS,
 		locationDS 			: dataStore(apiUrl + "locations"),
 		itemDS 				: null,
@@ -10831,30 +10828,37 @@
 				});
 			} 
 		},
-		addEmpty 		 	: function(id){			
+		addEmpty 		 	: function(id){		
+			var self = this;	
 			this.dataSource.data([]);		
 			this.set("obj", null);		
-			this.set("isEdit", false);		
-			this.dataSource.insert(0,{				
-				contact_id		: id,
-				meter_number 	: null,
-				status 			: 1,
-				location_id 	: 0,
-				brand_id 		: 0,
-				latitute 		: null,
-				longtitute  	: null,
-				plan_id 		: 0,
-				date_used 		: null,
-				map 			: null,
-				memo 			: null,
-				type 			: {id: "w", name: "Water"},
-				starting_no 	: null,
-				activated 		: 0,
-				number_digit 	: null,
-				image_url 		: "https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/no_image.jpg"
-	    	});		
-			var obj = this.dataSource.at(0);			
-			this.set("obj", obj);	
+			this.set("isEdit", false);	
+			this.userActivatDS.query({filter: [{field: "contact_id", value: id}]})
+			.then(function(){
+				var view = self.userActivatDS.data();
+				self.dataSource.insert(0,{				
+					contact_id		: id,
+					meter_number 	: null,
+					status 			: 1,
+					location_id 	: 0,
+					branch_id 		: view[0].branch_id,
+					brand_id 		: 0,
+					latitute 		: null,
+					longtitute  	: null,
+					plan_id 		: 0,
+					date_used 		: null,
+					map 			: null,
+					memo 			: null,
+					type 			: {id: "w", name: "Water"},
+					starting_no 	: null,
+					activated 		: 0,
+					number_digit 	: null,
+					image_url 		: "https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/no_image.jpg"
+		    	});		
+				var obj = self.dataSource.at(0);			
+				self.set("obj", obj);
+			});	
+				
 		},
 		onSelect 				: function(e){
 	        // Array with information about the uploaded files
@@ -10945,6 +10949,7 @@
 		period 				: 12,
 		showInstallment 	: false,
 		pageLoad 			: function(id){
+			$("#loadImport").css("display","block");
 			var self = this;				
 			this.meterDS.query({    			
 				filter: { field:"id", value: id },
@@ -10955,7 +10960,9 @@
 				self.set("meterObj", view[0]);
 				self.setObj(view[0].plan_id);
 				self.addEmpty(view[0].id);
+				self.goWorder(view[0].branch_id, view[0].location_id);
 			});	
+			
 		},
 		cashAccount 		: null,
 		paymentMethod 		: null,
@@ -10984,6 +10991,30 @@
 			}
 		},
 		items :[],
+		lWorder: 0,
+		goWorder 			: function(branch_id, location_id) {
+			var self = this, meterObj = this.get("meterObj");
+			this.meterDS.query({    			
+				filter: [{ field:"branch_id", value: branch_id },{field:"location_id", value: location_id}],
+				sort: { field:"worder", dir:"desc" },
+				page: 1,
+				take: 100
+			}).then(function(e){
+				var view = self.meterDS.view();
+				var lastNo;
+				if(self.meterDS._total > 0){
+					lastNo = kendo.parseInt(view[0].worder) + 1;
+				}else{
+					lastNo = 1;
+				}
+				if(lastNo){
+					console.log(lastNo);
+					$("#loadImport").css("display","none");
+					//self.set("lWorder", lastNo);
+					banhji.ActivateMeter.get('meterObj').set('worder',lastNo );
+				}
+			});
+		},
 		amountToBeRecieved 	: 0.0,
 		amountBilled 		: 0.0,
 		amountRemain 		: 0.00,
@@ -11079,6 +11110,7 @@
 					if(lines.length > 0) {
 						status = true;
 						banhji.ActivateMeter.get('meterObj').set('activated', 1);
+
 						banhji.ActivateMeter.meterDS.sync();
 						banhji.ActivateMeter.meterDS.bind('requestEnd', function(e){
 							if(e.response) {
@@ -11111,7 +11143,7 @@
 						banhji.ActivateMeter.set('amountToBeRecieved', 0.00);
 						banhji.ActivateMeter.set('amountRemain', 0.00);
 						$("#ntf1").data("kendoNotification").success("Successfully!");
-						banhji.router.navigate("/center");
+						banhji.ActivateMeter.cancel();
 						banhji.waterCenter.meterDS.read();
 					} else {
 						// show error
@@ -11174,7 +11206,7 @@
 						banhji.ActivateMeter.set('amountRemain', 0.00);
 						$("#ntf1").data("kendoNotification").success("Successfully!");
 						$("#loadImport").css("display","none");
-						banhji.router.navigate("/center");
+						banhji.ActivateMeter.cancel();
 					} else {
 						status = false;
 						$("#ntf1").data("kendoNotification").error("Error!"); 
@@ -11184,9 +11216,10 @@
 			}		
 		},
 		cancel 				: function(){
+			$("#loadImport").css("display","none");
 			this.meterDS.cancelChanges();	
 			this.planDS.cancelChanges();
-			this.paymentMethodDS.cancelChanges();	
+			this.paymentMethodDS.cancelChanges();
 			banhji.router.navigate("/center");
 		}
 	});
@@ -12731,6 +12764,8 @@
 			window.history.back();
 		}
 	});
+	
+
 	banhji.customerDeposit =  kendo.observable({
 		lang 				: langVM,
 		dataSource 			: dataStore(apiUrl + "transactions"),
@@ -14003,7 +14038,7 @@
 			});
 		},
 		//Upload
-		onSelect 			: function(e){			
+		onSelect 			: function(e){
 	        // Array with information about the uploaded files
 	        var self = this, 
 	        files = e.files,
@@ -15527,6 +15562,37 @@
 			this.dataSource.cancelChanges();
 			window.history.back();
 		},
+	});
+
+	banhji.reconcileVM = kendo.observable({
+		currencyDS 		: null,
+		addNew 			: function() {
+			this.dataSource.insert(0, {
+				cashier: banhji.userData.id,
+				rate: 1,
+				memo: "",
+				currencies: null,
+				units: null
+			});
+			this.setCurrent(this.dataSource.at(0));
+		},
+		currencyUnits 	: [
+			{ number: 1, unit: 0 },
+			{ number: 2, unit: 0 },
+			{ number: 5, unit: 0 },
+			{ number: 10, unit: 0 },
+			{ number: 20, unit: 0 },
+			{ number: 50, unit: 0 },
+			{ number: 100, unit: 0 },
+			{ number: 200, unit: 0 },
+			{ number: 500, unit: 0 },
+			{ number: 1000, unit: 0 },
+			{ number: 2000, unit: 0 },
+			{ number: 5000, unit: 0 },
+			{ number: 10000, unit: 0 },
+			{ number: 50000, unit: 0 },
+			{ number: 100000, unit: 0 }
+		]
 	});
 	/* views and layout */
 	banhji.view = {
