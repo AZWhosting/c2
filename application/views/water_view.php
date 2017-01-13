@@ -12246,21 +12246,40 @@
 		onChange 		: function(e) {
 			e.data.set('total', e.data.note * e.data.unit);
 			
-			if(banhji.reconList.cashReceiptArr.length > 0) {
+			// if(banhji.reconList.cashReceiptArr.length > 0) {
 				
-				$.each(banhji.reconList.cashReceiptArr, function(x, y) {
-					$.each(banhji.reconList.dataSource.data(), function(i, v){
-						if(banhji.reconList.cashReceiptArr[x].code == banhji.reconList.dataSource.data()[i].code) {
+			// 	$.each(banhji.reconList.cashReceiptArr, function(x, y) {
+			// 		$.each(banhji.reconList.dataSource.data(), function(i, v){
+			// 			if(banhji.reconList.cashReceiptArr[x].code == banhji.reconList.dataSource.data()[i].code) {
 							
-							banhji.reconList.cashReceiptArr[x].total += v.total; 
-						} else {
-							banhji.reconList.cashReceiptArr.push(v);
-						}
-					});
+			// 				banhji.reconList.cashReceiptArr[x].total += v.total; 
+			// 			} else {
+			// 				banhji.reconList.cashReceiptArr.push(v);
+			// 			}
+			// 		});
+			// 	});
+			// } else {
+			// 	banhji.reconList.cashReceiptArr.push(e.data);
+			// }			
+		},
+		countActual 	: function() {
+			if(banhji.reconList.dataSource.data().length > 0) {
+				banhji.reconList.cashReceiptArr.splice(0, banhji.reconList.cashReceiptArr.length);
+				$.each(banhji.reconList.dataSource.data(), function(i, v){
+					if(banhji.reconList.cashReceiptArr.length > 0) {
+						$.each(banhji.reconList.cashReceiptArr, function(index, value){
+							if(banhji.reconList.cashReceiptArr[index].code == v.code) {
+								banhji.reconList.cashReceiptArr[index].total += v.total;
+							} else {
+								banhji.reconList.cashReceiptArr.push(v);
+							}
+						});
+					} else {
+						banhji.reconList.cashReceiptArr.push(v);
+					}
 				});
-			} else {
-				banhji.reconList.cashReceiptArr.push(e.data);
-			}			
+			}
+			console.log(banhji.reconList.cashReceiptArr);
 		},
 		sync 			: function(id) {
 			var dfd = $.Deferred();
@@ -12337,10 +12356,10 @@
 		receiptDS 		: [],
 		currencyDS 		: [],
 		currencyList 	: [],
-
 		list 			: banhji.reconList,
 		currencyVM 		: banhji.reconReceipt,
 		search 			: function() {
+			banhji.reconcileVM.receiptDS.splice(0, banhji.reconcileVM.receiptDS.length);
 			this.currencyVM.search()
 			.then(function(success) {
 				$.each(banhji.reconcileVM.currencyVM.dataSource.data(), function(i, v) {
@@ -12352,6 +12371,7 @@
 			this.set('current', current);
 		},
 		verify 			: function() {
+			this.list.countActual();
 			this.search();
 		},
 		sync 			: function() {

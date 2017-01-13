@@ -32055,7 +32055,10 @@
         <td>
 			<a href="\#/#=transaction_type.toLowerCase()#/#=id#">#=transaction_number#</a>
         </td>
-    	<td>#=kendo.toString(quantity, "n0")#</td>
+    	<td align="center">
+    		#=kendo.toString(quantity*movement, "n0")#
+    		#=measurement#
+    	</td>
     	<td align="right">
     		#if(cost>0){#
     			#=kendo.toString((cost+additional_cost)/rate, "c", locale)#

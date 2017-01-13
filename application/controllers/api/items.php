@@ -1443,6 +1443,7 @@ class Items extends REST_Controller {
 			}
 		}
 		
+		$obj->include_related("measurement","name");
 		$obj->include_related("transaction", array("number","type","issued_date"));
 		$obj->where_related("transaction","is_recurring <>", 1);
 		$obj->where_related("transaction","deleted <>", 1);
@@ -1468,6 +1469,7 @@ class Items extends REST_Controller {
 					"locale" 					=> $value->locale,
 					"movement" 					=> $value->movement,
 					
+					"measurement"				=> $value->measurement_name,
 					"transaction_number"		=> $value->transaction_number,
 					"transaction_type"			=> $value->transaction_type,
 					"transaction_issued_date"	=> $value->transaction_issued_date						
