@@ -49661,7 +49661,7 @@
 		contactDS  			: banhji.source.supplierDS,
 		itemDS  			: new kendo.data.DataSource({
 		  	data: banhji.source.itemList,
-		  	filter: { field:"is_assembly", value: 0 },
+		  	filter: { field:"is_assembly", operator:"neq", value: 1 },
 			sort: [
 				{ field:"item_type_id", dir:"asc" },
 				{ field:"number", dir:"asc" }
@@ -50460,7 +50460,7 @@
 		contactDS  			: banhji.source.supplierDS,					
 		itemDS  			: new kendo.data.DataSource({
 		  	data: banhji.source.itemList,
-		  	filter: { field:"is_assembly", value: 0 },
+		  	filter: { field:"is_assembly", operator:"neq", value: 1 },
 			sort: [
 				{ field:"item_type_id", dir:"asc" },
 				{ field:"number", dir:"asc" }
@@ -51922,9 +51922,9 @@
 			},
 			sort: { field:"number", dir:"asc" }
 		}),
-		itemDS  			: new kendo.data.DataSource({
+		itemDS  					: new kendo.data.DataSource({
 		  	data: banhji.source.itemList,
-		  	filter: { field:"is_assembly", value: 0 },
+		  	filter: { field:"is_assembly", operator:"neq", value: 1 },
 			sort: [
 				{ field:"item_type_id", dir:"asc" },
 				{ field:"number", dir:"asc" }
@@ -53610,7 +53610,7 @@
 		contactDS  			: banhji.source.supplierDS,
 		itemDS  			: new kendo.data.DataSource({
 		  	data: banhji.source.itemList,
-		  	filter: { field:"is_assembly", value: 1 },
+		  	filter: { field:"is_assembly", operator:"neq", value: 1 },
 			sort: [
 				{ field:"item_type_id", dir:"asc" },
 				{ field:"number", dir:"asc" }
