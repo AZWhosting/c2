@@ -237,6 +237,9 @@ class Imports extends REST_Controller {
 			$cat = new Category(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$cat->where('name', $value->category)->get();
 
+			$uom = new Measurement(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$uom->where('name', $value->measurement)->get();
+
 
 			isset($value->company_id) 				? $obj->company_id 				= $value->company_id : "";
 			isset($value->contact_id) 				? $obj->contact_id 				= $value->contact_id : "";
@@ -246,7 +249,7 @@ class Imports extends REST_Controller {
 			isset($value->item_group_id) 			? $obj->item_group_id 			= $value->item_group_id : "";
 			isset($value->item_sub_group_id) 		? $obj->item_sub_group_id 		= $value->item_sub_group_id : "";
 			isset($value->brand_id) 				? $obj->brand_id 				= $value->brand_id : "";
-			isset($value->measurement_id) 			? $obj->measurement_id 			= $value->measurement_id : "";
+			isset($value->measurement) 				? $obj->measurement_id 			= $uom->id : 1;
 			isset($value->main_id) 					? $obj->main_id 				= $value->main_id : "";
 			isset($value->abbr) 					? $obj->abbr 					= $value->abbr : "";
 			isset($value->number) 					? $obj->number 					= $value->number : "";

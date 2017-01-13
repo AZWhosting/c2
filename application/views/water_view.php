@@ -3502,8 +3502,7 @@
 										data-value-field="id" 
 										data-bind="
 											value: blocSelect,
-		                  					source: blocDS,
-		                  					events: {change: blocChange}">
+		                  					source: blocDS">
 		                  		</div>
 							</div>
 							<div class="span4">
@@ -3637,7 +3636,7 @@
 <script id="runbill-footer-template" type="text/x-kendo-template">
     <tr>    	
         <td class="right" colspan="8" style="font-size:30px;">
-            <span data-bind="text: lang.lang.total"></span>:  m<sup>3</sup>
+            <span data-bind="text: lang.lang.total"></span>: <span data-bind="text: meterSold"></span>  m<sup>3</sup>
         </td>
     </tr>
 </script>
@@ -11841,7 +11840,7 @@
 	    },
 	    showButton 			: false,
 	    makeBilled 			: function(){
-	    	var mSold = 0;
+	    	var mSold = 0, self = this;
 	    	if(this.invoiceArray.length > 0) {
 	    		this.set('showButton', true);
 	    	} else {
@@ -11850,8 +11849,19 @@
 	    	this.set('totalOfInv', this.invoiceArray.length);
 	    	$.each(this.invoiceArray, function(i, v){
 	    		mSold += kendo.parseInt(v.items[0].line.usage);
+	    		$.each(v.items, function(j, v){
+	    			if(v.type == "tariff"){
+		    			self.calTariff(v);
+		    		}
+	    		});
+	    		
 	    	});
 	    	this.set("meterSold", mSold);
+	    },
+	    calTariff 			: function(tariff) {
+	    	console.log(banhji.runBill.meterSold);
+	    	var totalAmount = kendo.parseFloat(tariff.line.amount) * kendo.parseInt(this.meterSold);
+	    	this.set("amountSold", totalAmount);
 	    },
 		save 				: function() {
 			var self = this,
@@ -11888,6 +11898,22 @@
 				}else{
 					dueDate = date.setDate(date.getDate() + 7);
 				}
+
+				v.items.filter(function(data) {
+					if(data.type === 'tariff') {
+						return true;
+					} else {
+						return false
+					}
+				}).sort(function(aValue, bValue){
+					if(aValue.usage < bValue.user) {
+						return -1;
+					} else {
+						return 1;
+					}
+					return 0;
+				});
+
 				$.each(v.items, function(index, value) {
 					if(value.type == "tariff") {
 						invoiceItems.push({				

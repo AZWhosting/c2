@@ -56,7 +56,7 @@ class Winvoices extends REST_Controller {
 
 			if(isset($tmp["$meter->number"])){
 				$tmp["$meter->number"]['items'][] = array(
-					'							type' => 'usage',
+					'type' => 'usage',
 												'line' => array(
 													'id'   => $row->id,
 													'name' => 'usage',
@@ -99,21 +99,45 @@ class Winvoices extends REST_Controller {
 				foreach($items as $item) {
 					$types = array('tariff', 'exemption', 'maintenance');
 					if(in_array($item->type, $types)) {
-						$tmp["$meter->number"]['items'][] = array(
-							"type" => "$item->type",
-							"line" => array(
-								'id'   => $item->id,
-								'from' => $item->from,
-								'to'   => $item->to,
-								'name' => $item->name,
-								'prev' =>0,
-								'current'=>0,
-								'usage' => 0,
-								'is_flat' => $item->is_flat == 0 ? FALSE:TRUE,
-								'unit'  => $item->unit,
-								'amount'=> $item->amount
-							)
-						);
+						if($item->type === 'tariff') {
+							$tariff = new Plan_item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+							$tariff->where('tariff_id', $item->id)->get();
+							if($tariff->exists()) {
+								foreach($tariff as $t) {
+									$tmp["$meter->number"]['items'][] = array(
+										"type" => "$item->type",
+										"line" => array(
+											'id'   => $t->id,
+											'from' => $t->from,
+											'to'   => $t->to,
+											'name' => $t->name,
+											'prev' =>0,
+											'current'=>0,
+											'usage' => 0,
+											'is_flat' => $t->is_flat == 0 ? FALSE:TRUE,
+											'usage'  => $t->usage,
+											'amount'=> $t->amount
+										)
+									);
+								}									
+							}
+						} else {
+							$tmp["$meter->number"]['items'][] = array(
+								"type" => "$item->type",
+								"line" => array(
+									'id'   => $item->id,
+									'from' => $item->from,
+									'to'   => $item->to,
+									'name' => $item->name,
+									'prev' =>0,
+									'current'=>0,
+									'usage' => 0,
+									'is_flat' => $item->is_flat == 0 ? FALSE:TRUE,
+									'unit'  => $item->unit,
+									'amount'=> $item->amount
+								)
+							);
+						}							
 					}						
 				}
 
