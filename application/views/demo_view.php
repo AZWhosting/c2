@@ -62020,7 +62020,7 @@
 					itemRate = banhji.source.getRate(item.locale, new Date(obj.issued_date));
 
 					if(item.item_type_id==1 || item.item_type_id==4){
-						cogsAmount = value.quantity*item.cost;						
+						cogsAmount = (value.quantity*value.unit_value)*item.cost;						
 					}else{
 						cogsAmount = value.amount;
 					}					
@@ -62045,7 +62045,7 @@
 					itemRate = banhji.source.getRate(item.locale, new Date(obj.issued_date));
 
 					if(item.item_type_id==1 || item.item_type_id==4){
-						inventoryAmount = value.quantity*item.cost;						
+						inventoryAmount = (value.quantity*value.unit_value)*item.cost;						
 					}else{
 						inventoryAmount = value.amount;
 					}
