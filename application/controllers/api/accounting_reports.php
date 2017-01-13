@@ -909,7 +909,7 @@ class Accounting_reports extends REST_Controller {
 				}
 			}
 
-			foreach ($objList as $value) {				
+			foreach ($objList as $value) {
 				$data["results"][] = $value;
 			}
 

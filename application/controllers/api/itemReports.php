@@ -34,18 +34,17 @@ class Itemreports extends REST_Controller {
 	}
 
 	function position_summary_get() {
-		$filters 	= $this->get("filter");
-		$page 		= $this->get('page') !== false ? $this->get('page') : 1;
-		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;
+		$filter 	= $this->get("filter");
+		$page 		= $this->get('page');
+		$limit 		= $this->get('limit');
 		$sort 	 	= $this->get("sort");
-		$data["results"] = array();
+		$data["results"] = [];
 		$data["count"] = 0;
 		$is_pattern = 0;
 		$deleted = 0;
 		$temp = array();
 		$onHand = 0;
 		$total =0;
-		$totalService =0;
 		$totalProduct = 0;
 		$totalOnhand =0;
 		$totalQOH = 0;
@@ -63,12 +62,12 @@ class Itemreports extends REST_Controller {
 		}
 
 		//Filter		
-		if(!empty($filters) && isset($filters)){
-	    	foreach ($filters['filters'] as $f) {
-	    		if(isset($f['operator'])) {
-					$obj->{$f['operator']}($f['field'], $f['value']);
+		if(!empty($filter) && isset($filter)){
+	    	foreach ($filter['filters'] as $value) {
+	    		if(isset($value['operator'])) {
+					$obj->{$value['operator']}($value['field'], $value['value']);
 				} else {
-	    			$obj->where($f["field"], $f["value"]);
+	    			$obj->where($value["field"], $value["value"]);
 				}
 			}
 		}
@@ -80,8 +79,8 @@ class Itemreports extends REST_Controller {
 		// $obj->include_related("contact_type", "name");
 
 		//Results
-		$obj->get_paged_iterated($page, $limit);
-		$data["count"] = $obj->paged->total_rows;
+		$obj->get_iterated();
+		$data["count"] = $obj->result_count();
 		
 		if($obj->result_count()>0){
 			foreach ($obj as $value) {
@@ -159,121 +158,113 @@ class Itemreports extends REST_Controller {
 	}
 
 	function position_detail_get() {
-		$filters 	= $this->get("filter");
-		$page 		= $this->get('page') !== false ? $this->get('page') : 1;
-		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;
+		$filter 	= $this->get("filter");
+		$page 		= $this->get('page');
+		$limit 		= $this->get('limit');
 		$sort 	 	= $this->get("sort");
-		$data["results"] = array();
+		$data["results"] = [];
 		$data["count"] = 0;
-		$is_pattern = 0;
-		$deleted = 0;
-		$itemSale = 0;
-		$service = 0;
-		$onHand = 0;
-		$totalOnhand = 0;
-		$total =0;
-		$temp = array();
 
-		$line = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$line->where_in("type", array("Cash_Purchase", "Credit_Purchase", "Purchase_Return", "invoice", "Sale_Return", "Item_Adjustment") );
-		$line->where('is_recurring <>', 1);
-		$line->where('deleted <>', 1);
-		
+		$obj = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				
 		if(!empty($sort) && isset($sort)){					
 			foreach ($sort as $value) {
-				$line->order_by($value["field"], $value["dir"]);
+				$obj->order_by($value["field"], $value["dir"]);
 			}
 		}
 		
 		//Filter		
-		if(!empty($filters) && isset($filters)){
-	    	foreach ($filters['filters']  as $value) {
+		if(!empty($filter) && isset($filter)){
+	    	foreach ($filter['filters'] as $value) {
 	    		if(isset($value['operator'])) {
-					$line->{$value['operator']}($value['field'], $value['value']);
+					$obj->{$value['operator']}($value['field'], $value['value']);
 				} else {
-	    			$line->where($value["field"], $value["value"]);
+	    			$obj->where($value["field"], $value["value"]);
 				}
 			}
 		}
 
-		// $obj->include_related("contact_type", "name");
+		$obj->include_related("item", array("abbr", "number", "name"));
+		$obj->include_related("transaction", array("number", "type", "issued_date", "rate"));
+		$obj->where_in_related("transaction", "type", array("Cash_Purchase", "Credit_Purchase", "Purchase_Return", "Commercial_Invoice", "Vat_Invoice", "Invoice", "Commercial_Cash_Sale", "Vat_Cash_Sale", "Cash_Sale", "Sale_Return", "Item_Adjustment", "Internal_Usage"));
+		$obj->where_related("transaction", "is_recurring <>", 1);
+		$obj->where_related("transaction", "deleted <>", 1);
+		$obj->where_related("item", "item_type_id", 1);		
+		$obj->order_by_related("transaction", "issued_date", "asc");
 
 		//Results
-		$line->get_paged_iterated($page, $limit);
+		$obj->get_iterated();		
 		
-		$data["count"] = $line->paged->total_rows;
-		
-		if($line->result_count()>0){
-			foreach ($line as $value) {				
-					$itemLine = $value->item_line->get();
-					$inventory = $itemLine->item->get();
-					if(isset($temp["$itemLine->item_id"])) {
-						$temp["$itemLine->item_id"]['transactions'][] = array(
-							'id' => $value->id,
-							'date' => $value->issued_date,
-							'type' 	=> $value->type,
-							'ref'	=> $value->number,
-							'qty'	=> $itemLine->quantity * $itemLine->movement,
-							'cost'  => floatval($itemLine->cost),
-							'price' => $itemLine->price
+		if($obj->exists()){
+			$objList = [];
+			foreach ($obj as $value) {	
+				if(isset($objList[$value->item_id])){
+					$objList[$value->item_id]["line"][] = array(
+						"id" 				=> $value->transaction_id,
+						"type" 				=> $value->transaction_type,
+						"number" 			=> $value->transaction_number,
+						"issued_date" 		=> $value->transaction_issued_date,
+						"quantity" 			=> $value->quantity*$value->unit_value*$value->movement,
+						"cost" 				=> $value->cost*$value->rate,
+						"price" 			=> $value->price*$value->rate,
+						"amount" 			=> $value->quantity*$value->unit_value*$value->movement*$value->cost*$value->rate
+					);
+				}else{
+					//Balance Forward
+					$bf = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
+					$bf->where_in_related("transaction", "type", array("Cash_Purchase", "Credit_Purchase", "Purchase_Return", "Commercial_Invoice", "Vat_Invoice", "Invoice", "Commercial_Cash_Sale", "Vat_Cash_Sale", "Cash_Sale", "Sale_Return", "Item_Adjustment", "Internal_Usage"));
+					$bf->where_related("transaction", "issued_date <", $value->transaction_issued_date);
+					$bf->where_related("transaction", "is_recurring <>", 1);
+					$bf->where_related("transaction", "deleted <>", 1);
+					$bf->where("item_id", $value->item_id);
+					$bf->get_iterated();
+					
+					$balance_forward = 0; $sumOnHand = 0; $sumAmount = 0; $sumQtyPurchase = 0; $sumAmountPurchase = 0;
+					foreach ($bf as $val) {
+						$qty = $val->quantity * $val->unit_value * $val->movement;
+						$amt = $val->quantity * $val->unit_value * $val->cost * $val->rate;
 
-						);
-					} else {
-						$in = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-						$in->select_sum('quantity');
-						$in->where_in_related("transaction", "type", array("Cash_Purchase", "Credit_Purchase", "Item_Adjustment"));
-						$in->where_related("transaction", "is_recurring", 0);
-						$in->where_related("transaction", "deleted", 0);
-						$in->where('item_id', $itemLine->item_id);
-						$in->where('movement', 1);
-						$in->get();
+						$sumOnHand += $qty;
 
-						$out = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-						$out->select_sum('quantity');
-						$out->where_in_related("transaction", "type", array("Invoice", "Cash_Sale", "Item_Adjustment"));
-						$out->where_related("transaction", "is_recurring", 0);
-						$out->where_related("transaction", "deleted", 0);
-						$out->where('item_id', $itemLine->item_id);
-						$out->where('movement', -1);
-						$out->get();
-						
-						$temp["$itemLine->item_id"]['name'] = $inventory->name;
-						$temp["$itemLine->item_id"]['avg_cost'] = floatval($inventory->cost);
-						$temp["$itemLine->item_id"]['price'] = $inventory->price;
-						$temp["$itemLine->item_id"]['onHand'] = $in->quantity - $out->quantity; 
-						$temp["$itemLine->item_id"]['currency_code'] = $inventory->locale;
-						$temp["$itemLine->item_id"]['transactions'][] = array(
-							'id' => $value->id,
-							'date' => $value->issued_date,
-							'type' 	=> $value->type,
-							'ref'	=> $value->number,
-							'qty'	=> $in->quantity - $out->quantity,
-							'cost'  => floatval($itemLine->cost),
-							'price' => floatval($itemLine->price)
-						);
-						
+						if($val->transaction_type=="Cash_Purchase" || $val->transaction_type=="Credit_Purchase"){
+							$sumQtyPurchase += $qty;
+							$sumAmountPurchase += $amt;
+						}
 					}
-			}
-		}
-		foreach ($temp as $key => $value) {
-			$data["results"][] = array(
-				'id' 		=> $key,
-				'item' 		=> $value['name'],			
-				'avg_cost'	=> floatval($value['avg_cost']),
-				'price'		=> floatval($value['price']),
-				'onHand'	=> $value['onHand'],
-				'currency'	=> $value['currency_code'],
-				'transactions' => $value['transactions']
-			);
-			$onHand +=  $value['onHand'];
-			$total += $onHand * floatval($value['avg_cost']);
-		}
 
-		// Response Data
-		$data['total'] = $total;
-		$data['item'] = $itemSale;
-		$data['count'] = count($temp);
-		$data['totalOnhand'] = $onHand;
+					if($sumQtyPurchase==0){
+						$avgCost = 0;
+					}else{
+						$avgCost = $sumAmountPurchase / $sumQtyPurchase;
+					}
+
+					$balance_forward = $avgCost * $sumOnHand;
+					//End Balance Forward
+
+					$objList[$value->item_id]["id"] 				= $value->item_id;
+					$objList[$value->item_id]["number"] 			= $value->item_abbr . $value->item_number;
+					$objList[$value->item_id]["name"] 				= $value->item_name;
+					$objList[$value->item_id]["on_hand"] 			= $sumOnHand;
+					$objList[$value->item_id]["balance_forward"] 	= $balance_forward;
+					$objList[$value->item_id]["line"][] 			= array(
+						"id" 				=> $value->transaction_id,
+						"type" 				=> $value->transaction_type,
+						"number" 			=> $value->transaction_number,
+						"issued_date" 		=> $value->transaction_issued_date,
+						"quantity" 			=> $value->quantity*$value->unit_value*$value->movement,
+						"cost" 				=> $value->cost*$value->rate,
+						"price" 			=> $value->price*$value->rate,
+						"amount" 			=> $value->quantity*$value->unit_value*$value->movement*$value->cost*$value->rate
+					);			
+				}
+			}
+
+			foreach ($objList as $value) {
+				$data["results"][] = $value;
+			}
+			$data["count"] = count($data["results"]);
+		}
+		
 		$this->response($data, 200);
 	}
 
