@@ -53435,7 +53435,7 @@
 				//Add Inventory list
 				var inventoryID = kendo.parseInt(item.inventory_account_id);
 				if(inventoryID>0){
-					var inventoryAmount = (value.quantity*value.cost) + value.additional_cost,
+					var inventoryAmount = (value.quantity*value.unit_value*value.cost) + value.additional_cost,
 					itemRate = obj.rate / banhji.source.getRate(item.locale, new Date(obj.issued_date));
 
 					if(inventoryList[inventoryID]===undefined){
@@ -54665,15 +54665,16 @@
 				//Add Inventory list
 				var inventoryID = kendo.parseInt(item.inventory_account_id);
 				if(inventoryID>0){
-					var itemRate = banhji.source.getRate(item.locale, new Date(obj.issued_date));
+					var itemRate = banhji.source.getRate(item.locale, new Date(obj.issued_date)),
+					inventoryAmount = amount*value.unit_value;
 
 					if(inventoryList[inventoryID]===undefined){
-						inventoryList[inventoryID]={"id": inventoryID, "amount": amount, "rate": itemRate, "locale": item.locale};						
+						inventoryList[inventoryID]={"id": inventoryID, "amount": inventoryAmount, "rate": itemRate, "locale": item.locale};						
 					}else{											
 						if(inventoryList[inventoryID].id===inventoryID){
-							inventoryList[inventoryID].amount += amount;
+							inventoryList[inventoryID].amount += inventoryAmount;
 						}else{
-							inventoryList[inventoryID]={"id": inventoryID, "amount": amount, "rate": itemRate, "locale": item.locale};
+							inventoryList[inventoryID]={"id": inventoryID, "amount": inventoryAmount, "rate": itemRate, "locale": item.locale};
 						}
 					}
 				}					  	
@@ -60533,7 +60534,7 @@
 					itemRate = banhji.source.getRate(item.locale, new Date(obj.issued_date));
 
 					if(item.item_type_id==1 || item.item_type_id==4){
-						cogsAmount = value.quantity*item.cost;						
+						cogsAmount = (value.quantity*value.unit_value)*item.cost;						
 					}else{
 						cogsAmount = value.amount;
 					}					
@@ -60558,7 +60559,7 @@
 					itemRate = banhji.source.getRate(item.locale, new Date(obj.issued_date));
 
 					if(item.item_type_id==1 || item.item_type_id==4){
-						inventoryAmount = value.quantity*item.cost;						
+						inventoryAmount = (value.quantity*value.unit_value)*item.cost;						
 					}else{
 						inventoryAmount = value.amount;
 					}
@@ -64217,7 +64218,7 @@
 					itemRate = banhji.source.getRate(item.locale, new Date(obj.issued_date));
 
 					if(item.item_type_id==1 || item.item_type_id==4){
-						cogsAmount = value.quantity*item.cost;						
+						cogsAmount = (value.quantity*value.unit_value)*item.cost;						
 					}else{
 						cogsAmount = value.amount;
 					}					
@@ -64240,7 +64241,7 @@
 					itemRate = banhji.source.getRate(item.locale, new Date(obj.issued_date));
 
 					if(item.item_type_id==1 || item.item_type_id==4){
-						inventoryAmount = value.quantity*item.cost;						
+						inventoryAmount = (value.quantity*value.unit_value)*item.cost;						
 					}else{
 						inventoryAmount = value.amount;
 					}
@@ -73587,9 +73588,9 @@
 				accountID = item.inventory_account_id,
 				itemRate = banhji.source.getRate(item.locale, new Date(obj.issued_date));
 
-				var itemCost = value.quantity*(kendo.parseFloat(item.cost)/itemRate);
+				var itemCost = (value.quantity*value.unit_value)*(kendo.parseFloat(item.cost)/itemRate);
 				if(itemCost==0){
-					itemCost = value.quantity*(value.cost/itemRate);
+					itemCost = (value.quantity*value.unit_value)*(value.cost/itemRate);
 				}
 				
 				if(inventoryList[accountID]===undefined){
@@ -74317,7 +74318,7 @@
 			$.each(this.lineDS.data(), function(index, value){										
 				var item = self.itemDS.get(value.item_id),
 				accountID = item.inventory_account_id,
-				cost = value.quantity*value.cost;
+				cost = value.quantity*value.unit_value*value.cost;
 
 				if(inventoryList[accountID]===undefined){
 					inventoryList[accountID]={ "id": accountID, "amount": cost, "rate": value.rate, "locale": value.locale };						

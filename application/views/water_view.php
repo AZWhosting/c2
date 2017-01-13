@@ -5129,6 +5129,7 @@
 						<div id="ntf1" data-role="notification"></div>
 				        <div class="row">
 							<div class="span12" align="right">
+								<span class="btn btn-icon btn-primary glyphicons ok_2" data-bind="click: verify" style="width: 110px;margin-bottom: 0;"><i></i> <span>Verify</span></span>
 								<span class="btn btn-icon btn-primary glyphicons ok_2" data-bind="click: runBill" style="width: 110px;margin-bottom: 0;"><i></i> <span>Record</span></span>
 								
 								<span class="btn btn-icon btn-warning glyphicons remove_2" data-bind="click: cancel" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.cancel"></span></span>
@@ -12246,9 +12247,10 @@
 			e.data.set('total', e.data.note * e.data.unit);
 			
 			if(banhji.reconList.cashReceiptArr.length > 0) {
+				
 				$.each(banhji.reconList.cashReceiptArr, function(x, y) {
 					$.each(banhji.reconList.dataSource.data(), function(i, v){
-						if(jQuery.inArray(banhji.reconList.cashReceiptArr[x].code, banhji.reconList.dataSource.data())) {
+						if(banhji.reconList.cashReceiptArr[x].code == banhji.reconList.dataSource.data()[i].code) {
 							
 							banhji.reconList.cashReceiptArr[x].total += v.total; 
 						} else {
@@ -12256,16 +12258,6 @@
 						}
 					});
 				});
-				// $.each(banhji.reconList.cashReceiptArr, function(x, y) {
-				// 	$.each(banhji.reconList.dataSource.data(), function(i, v){
-				// 		if(banhji.reconList.cashReceiptArr[x].code == banhji.reconList.dataSource.data()[i].code) {
-							
-				// 			banhji.reconList.cashReceiptArr[x].total += v.total; 
-				// 		} else {
-				// 			banhji.reconList.cashReceiptArr.push(v);
-				// 		}
-				// 	});
-				// });
 			} else {
 				banhji.reconList.cashReceiptArr.push(e.data);
 			}			
@@ -12345,6 +12337,7 @@
 		receiptDS 		: [],
 		currencyDS 		: [],
 		currencyList 	: [],
+
 		list 			: banhji.reconList,
 		currencyVM 		: banhji.reconReceipt,
 		search 			: function() {
@@ -12357,6 +12350,9 @@
 		},
 		setCurrent 		: function(current) {
 			this.set('current', current);
+		},
+		verify 			: function() {
+			this.search();
 		},
 		sync 			: function() {
 			var dfd = $.Deferred();
