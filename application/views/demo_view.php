@@ -7227,7 +7227,6 @@
                    data-bind="value: account_id,
                               source: advAccountDS"
                    data-placeholder="Add Account.."
-                   data-list-width="400"                    
                    required data-required-msg="required" style="width: 100%" />	
 		</td>		
 		<td>
@@ -9581,8 +9580,7 @@
 			<input id="ccbItem" name="ccbItem-#:uid#"
 				   data-role="combobox"				   
 				   data-template="item-list-tmpl"
-				   data-filter="like"
-                   data-min-length="3"                 			   
+				   data-value-primitive="true"
                    data-text-field="name"
                    data-value-field="id"
                    data-bind="value: item_id, 
@@ -9600,7 +9598,7 @@
 		<td>
 			<input id="txtQuantity-#:uid#" name="txtQuantity-#:uid#" 
 					data-role="numerictextbox" 
-					data-format="n0" 
+					data-format="n" 
 					data-min="0"
 					data-spinners="false"
 					data-bind="value: quantity, events: {change : changes}"
@@ -9608,7 +9606,8 @@
 
 			<input id="ddlMesurement"
 				   data-role="dropdownlist"
-				   data-header-template="item-measurement-header-tmpl"                  
+				   data-header-template="item-measurement-header-tmpl"
+				   data-value-primitive="true"                  
                    data-text-field="measurement"
                    data-value-field="measurement_id"
                    data-bind="value: measurement_id,
@@ -9620,7 +9619,7 @@
 		<td>
 			<input id="txtPrice-#:uid#" name="txtPrice-#:uid#" 
 					data-role="numerictextbox" 
-					data-decimals="2"
+					data-format="n"
 					data-min="0"
 					data-spinners="false"
 					data-bind="value: cost, events: {change : changes}" 
@@ -9650,8 +9649,7 @@
 			<input id="ccbTaxItem" name="ccbTaxItem-#:uid#"
 				   data-role="combobox"
 				   data-header-template="tax-header-tmpl"
-				   data-filter="like"
-                   data-min-length="3"			   
+				   data-value-primitive="true"
                    data-text-field="name"
                    data-value-field="id"
                    data-bind="value: tax_item_id, 
@@ -10053,8 +10051,7 @@
 			<input id="ccbItem" name="ccbItem-#:uid#"
 				   data-role="combobox"				   
 				   data-template="item-list-tmpl"
-				   data-filter="like"
-                   data-min-length="3"                 			   
+				   data-value-primitive="true"
                    data-text-field="name"
                    data-value-field="id"
                    data-bind="value: item_id, 
@@ -10072,21 +10069,23 @@
 		<td>
 			<input id="txtQuantity-#:uid#" name="txtQuantity-#:uid#" 
 					data-role="numerictextbox" 
-					data-format="n0" data-min="0"
+					data-format="n" 
+					data-min="0"
 					data-spinners="false"
 					data-bind="value: quantity, events: {change : changes}"
 					required data-required-msg="required" style="width: 40%;" />
 
 			<input id="ddlMesurement"
 					data-role="dropdownlist"
-					data-header-template="item-measurement-header-tmpl"            
-                   data-text-field="measurement"
-                   data-value-field="measurement_id"
-                   data-bind="value: measurement_id,
+					data-header-template="item-measurement-header-tmpl"
+					data-value-primitive="true"            
+                    data-text-field="measurement"
+                    data-value-field="measurement_id"
+                    data-bind="value: measurement_id,
                    			  source: item_prices,
                    			  events:{ change: measurementChanges }"
-                   data-option-label="UM"
-                   style="width: 57%;" />
+                    data-option-label="UM"
+                    style="width: 57%;" />
 		</td>						
     </tr>   
 </script>
@@ -10539,7 +10538,6 @@
                    data-bind="value: account_id,
                               source: accountDS"
                    data-placeholder="Add Account.."
-                   data-list-width="400"                    
                    required data-required-msg="required" style="width: 100%" />	
 		</td>		
 		<td>
@@ -10556,7 +10554,7 @@
 		<td class="right">
 			<input id="txtAmount" name="txtAmount" 
 					data-role="numerictextbox" 
-					data-decimals="2"
+					data-format="n"
 					data-min="0"
 					data-spinners="false"
 					data-bind="value: amount, events: {change : changes}" 
@@ -11340,8 +11338,7 @@
 			<input id="ccbItem" name="ccbItem-#:uid#"
 				   data-role="combobox"
 				   data-template="item-list-tmpl"
-				   data-filter="like"
-                   data-min-length="3"                   			   
+				   data-value-primitive="true"
                    data-text-field="name"
                    data-value-field="id"
                    data-bind="value: item_id, 
@@ -11359,7 +11356,8 @@
 		<td>
 			<input id="txtQuantity-#:uid#" name="txtQuantity-#:uid#" 
 					data-role="numerictextbox" 
-					data-format="n0" data-min="0"
+					data-format="n" 
+					data-min="0"
 					data-spinners="false"
 					data-bind="value: quantity, events: {change : changes}"
 					required data-required-msg="required" style="width: 40%;" />
@@ -11367,6 +11365,7 @@
 			<input id="txtMeasurement" name="txtMeasurement-#:uid#"
 				   data-role="dropdownlist"
                    data-header-template="item-measurement-header-tmpl"
+                   data-value-primitive="true"
                    data-text-field="measurement"
                    data-value-field="measurement_id"
                    data-bind="value: measurement_id,
@@ -11378,7 +11377,7 @@
 		<td>
 			<input id="txtPrice" name="txtPrice-#:uid#" 
 					data-role="numerictextbox" 
-					data-decimals="2"
+					data-format="n"
 					data-min="0"
 					data-spinners="false"
 					data-bind="value: cost, events: {change : changes}" 
@@ -11401,8 +11400,7 @@
 			<input id="ccbTaxItem" name="ccbTaxItem-#:uid#"
 				   data-role="combobox"
 				   data-header-template="tax-header-tmpl"
-				   data-filter="like"
-                   data-min-length="3"                  			   
+				   data-value-primitive="true"
                    data-text-field="name"
                    data-value-field="id"                   
                    data-bind="value: tax_item_id, 
@@ -11411,7 +11409,7 @@
                    style="width: 100%" />			
 		</td>
 		<td class="center" data-bind="visible: showAdditionalCost">
-			<span data-decimals="2" data-bind="text: additional_cost"></span>
+			<span data-format="n" data-bind="text: additional_cost"></span>
 						
 			<input type="checkbox" data-bind="checked: additional_applied,
 										events:{ change: changes }" />
@@ -11464,7 +11462,7 @@
 			<input id="txtAmount-#:uid#" name="txtAmount-#:uid#" 
 					data-role="numerictextbox"
 					data-spinners="false" 
-					data-decimals="2"
+					data-format="n"
 					data-min="0" 
 					data-bind="value: amount, events: {change : changes}" 
 					required data-required-msg="required" style="width: 100%;" /> 						
@@ -11473,8 +11471,7 @@
 			<input id="ccbTaxItem" name="ccbTaxItemAccount-#:uid#"
 				   data-role="combobox"
                    data-header-template="tax-header-tmpl"
-				   data-filter="like"
-                   data-min-length="3"                  			   
+				   data-value-primitive="true"
                    data-text-field="name"
                    data-value-field="id"
                    data-bind="value: tax_item_id, 
@@ -11521,8 +11518,6 @@
 				   data-header-template="vendor-header-tmpl"
                    data-template="contact-list-tmpl"                 
                    data-value-primitive="true"
-                   data-filter="like"
-                   data-min-length="3"
                    data-text-field="name"
                    data-value-field="id"
                    data-bind="value: contact_id,
@@ -11560,7 +11555,7 @@
 			<input id="txtSubTotal-#:uid#" name="txtSubTotal-#:uid#" 
 					data-role="numerictextbox"
 					data-spinners="false" 
-					data-decimals="2"
+					data-format="2"
 					data-min="0"
 					data-bind="value: sub_total, events: {change : changes}" 
 					required data-required-msg="required" style="width: 100%;" /> 						
@@ -11568,8 +11563,7 @@
 		<td>
 			<input id="ccbTaxItem" name="ccbTaxItem-#:uid#"
 				   data-role="combobox"
-				   data-filter="like"
-                   data-min-length="3"                			   
+				   data-value-primitive="true"
                    data-text-field="name"
                    data-value-field="id"
                    data-header-template="tax-header-tmpl"
@@ -11979,8 +11973,7 @@
 			<input id="ccbItem" name="ccbItem-#:uid#"
 				   data-role="combobox"
 				   data-template="item-list-tmpl"
-				   data-filter="like"
-                   data-min-length="3"                   			   
+				   data-value-primitive="true"
                    data-text-field="name"
                    data-value-field="id"
                    data-bind="value: item_id, 
@@ -11998,7 +11991,8 @@
 		<td>
 			<input id="txtQuantity-#:uid#" name="txtQuantity-#:uid#" 
 					data-role="numerictextbox" 
-					data-format="n0" data-min="0"
+					data-format="n" 
+					data-min="0"
 					data-spinners="false"
 					data-bind="value: quantity, events: {change : changes}"
 					required data-required-msg="required" style="width: 40%;" />
@@ -12006,6 +12000,7 @@
 			<input id="ddlMesurement"
 				   data-role="dropdownlist"
                    data-header-template="item-measurement-header-tmpl"
+                   data-value-primitive="true"
                    data-text-field="measurement"
                    data-value-field="measurement_id"
                    data-bind="value: measurement_id,
@@ -12018,7 +12013,7 @@
 			<input id="txtPrice-#:uid#" name="txtPrice-#:uid#" 
 					data-role="numerictextbox"
 					data-spinners="false" 
-					data-decimals="2"
+					data-format="n"
 					data-min="0" 
 					data-bind="value: cost, events: {change : changes}" 
 					required data-required-msg="required" style="width: 100%;" />
@@ -12040,8 +12035,7 @@
 			<input id="ccbTaxItem" name="ccbTaxItem-#:uid#"
 				   data-role="combobox"
 				   data-header-template="tax-header-tmpl"
-				   data-filter="like"
-                   data-min-length="3"                  			   
+				   data-value-primitive="true"
                    data-text-field="name"
                    data-value-field="id"
                    data-bind="value: tax_item_id, 
@@ -12058,7 +12052,8 @@
 		</td>			
 		<td>
 			<input id="ddlOption" name="ddlOption-#:uid#"
-				   data-role="dropdownlist"				                      			   
+				   data-role="dropdownlist"
+				   data-value-primitive="true"				                      			   
                    data-text-field="name"
                    data-value-field="id"
                    data-bind="value: type, 
@@ -12071,9 +12066,8 @@
 			<input id="cbbInvoice" name="cbbInvoice-#:uid#"
 				   data-role="combobox"
 				   data-template="reference-list-tmpl"
-				   data-filter="like"
+				   data-value-primitive="true"
                    data-auto-bind="false"
-                   data-min-length="3"			                      			   
                    data-text-field="number"
                    data-value-field="id"
                    data-bind="value: reference_id, 
@@ -12085,7 +12079,8 @@
 
             <input id="ddlAccount" name="ddlAccount-#:uid#"
 				   data-role="dropdownlist"
-				   data-template="account-list-tmpl"				                      			   
+				   data-template="account-list-tmpl"
+				   data-value-primitive="true"				                      			   
                    data-text-field="name"
                    data-value-field="id"
                    data-bind="value: account_id, 
@@ -12097,7 +12092,7 @@
 			<input id="txtAmount-#:uid#" name="txtAmount-#:uid#" 
 					data-role="numerictextbox"
 					data-spinners="false" 
-					data-decimals="2"
+					data-format="n"
 					data-min="0" 
 					data-bind="value: amount, events: {change : changes}" 
 					required data-required-msg="required" style="width: 100%;" />
@@ -16481,8 +16476,7 @@
 			<input id="ccbItem" name="ccbItem-#:uid#"
 				   data-role="combobox"				   
 				   data-template="item-list-tmpl"
-				   data-filter="like"
-                   data-min-length="3"
+				   data-value-primitive="true"
                    data-text-field="name"
                    data-value-field="id"
                    data-bind="value: item_id, 
@@ -16501,7 +16495,7 @@
 			<input id="txtQuantity-#:uid#" 
 					name="txtQuantity-#:uid#" 
 					data-role="numerictextbox" 
-					data-format="n0" 
+					data-format="n" 
 					data-min="0"
 					data-spinners="false"
 					data-bind="value: quantity, events: {change : changes}"
@@ -16510,7 +16504,8 @@
 
 			<input 	id="ddlMesurement"
 					data-role="dropdownlist"					
-					data-header-template="item-measurement-header-tmpl"                 
+					data-header-template="item-measurement-header-tmpl"
+					data-value-primitive="true"                 
                 	data-text-field="measurement"
                    	data-value-field="measurement_id"
                    	data-bind="value: measurement_id,
@@ -16523,7 +16518,7 @@
 			<input 	id="txtPrice-#:uid#" 
 					name="txtPrice-#:uid#" 
 					data-role="numerictextbox" 
-					data-decimals="2"
+					data-format="n"
 					data-min="0"
 					data-spinners="false"
 					data-bind="value: price, events: {change : changes}" 
@@ -16547,8 +16542,7 @@
 					name="ccbTaxItem-#:uid#"
 					data-header-template="tax-header-tmpl"
 				   	data-role="combobox"   
-				   	data-filter="like"
-                    data-min-length="3"                			   
+				   	data-value-primitive="true"
                    	data-text-field="name"
                    	data-value-field="id"
                    	data-bind="value: tax_item_id, 
@@ -17068,8 +17062,7 @@
 			<input id="ccbItem" name="ccbItem-#:uid#"
 				   data-role="combobox"				   
 				   data-template="item-list-tmpl"
-				   data-filter="like"
-                   data-min-length="3"                   			   
+				   data-value-primitive="true"
                    data-text-field="name"
                    data-value-field="id"
                    data-bind="value: item_id, 
@@ -17087,38 +17080,35 @@
 		<td>
 			<input id="txtQuantity-#:uid#" name="txtQuantity-#:uid#" 
 					data-role="numerictextbox" 
-					data-format="n0" 
+					data-format="n" 
 					data-min="0"
 					data-spinners="false"
 					data-bind="value: quantity, events: {change : changes}"
 					required data-required-msg="required" style="width: 40%;" />
 
-			<input id="ddlMesurement"  data-role="dropdownlist"
-					data-header-template="item-measurement-header-tmpl"                
-                   data-text-field="measurement"
-                   data-value-field="measurement_id"
-                   data-bind="value: measurement_id,
+			<input id="ddlMesurement" name="ddlMesurement"
+					data-role="dropdownlist"
+					data-header-template="item-measurement-header-tmpl"
+					data-value-primitive="true"                
+                    data-text-field="measurement"
+                    data-value-field="measurement_id"
+                    data-bind="value: measurement_id,
                    			  source: item_prices,
                    			  events:{ change: measurementChanges }"
-                   data-option-label="UM"
-                   style="width: 57%;" />
+                    data-option-label="UM"
+                    style="width: 57%;" />
 		</td>					
 		<td>
 			<input id="txtPrice-#:uid#" name="txtPrice-#:uid#" 
 					data-role="numerictextbox" 
-					data-decimals="2"
+					data-format="n"
 					data-min="0"
 					data-spinners="false" 
 					data-bind="value: price, events: {change : changes}" 
 					required data-required-msg="required" style="width: 100%;" />
 		</td>
 		<td class="center" data-bind="visible: showCost">
-			<input  
-					data-role="numerictextbox" 
-					data-format="n"
-					data-spinners="false" 
-					data-bind="value: price, events: {change : changes}" 
-					required data-required-msg="required" style="width: 100%;" />		
+			<span data-format="n" data-bind="text: cost"></span>
 		</td>
 		<td class="center" data-bind="visible: showDiscount">
 			<input data-role="numerictextbox"
@@ -17142,10 +17132,9 @@
 		</td>
 		<td>
 			<input id="ccbTaxItem" name="ccbTaxItem-#:uid#"
+				   data-role="combobox"
 				   data-header-template="tax-header-tmpl"
-				   data-role="combobox"  
-				   data-filter="like"
-                   data-min-length="3"                 			   
+				   data-value-primitive="true"
                    data-text-field="name"
                    data-value-field="id"
                    data-bind="value: tax_item_id, 
@@ -17632,18 +17621,15 @@
 		</td>				
 		<td>
 			<input id="cbbAccounts" name="cbbAccounts"
-				   data-role="combobox"                   
-                   data-value-primitive="true"
+				   data-role="combobox"
                    data-header-template="account-header-tmpl"                   
                    data-template="account-list-tmpl"
-                   data-filter="like"
-                   data-min-length="3"
+                   data-value-primitive="true"
                    data-text-field="name"
                    data-value-field="id"
                    data-bind="value: account_id,
                               source: accountDS"
                    data-placeholder="Add Account.."
-                   data-list-width="400"                    
                    required data-required-msg="required" style="width: 100%" />	
 		</td>		
 		<td>
@@ -17661,7 +17647,7 @@
 			<input id="txtAmount" name="txtAmount" 
 					data-role="numerictextbox"
 					data-spinners="false" 
-					data-decimals="2"
+					data-format="n"
 					data-min="0" 
 					data-bind="value: amount, events: {change : changes}" 
 					required data-required-msg="required" style="width: 100%; text-align: right;" /> 						
@@ -18268,8 +18254,7 @@
 			<input id="ccbItem" name="ccbItem-#:uid#"
 				   data-role="combobox"
 				   data-template="item-list-tmpl"
-				   data-filter="like"
-                   data-min-length="3"                  			   
+				   data-value-primitive="true"
                    data-text-field="name"
                    data-value-field="id"
                    data-bind="value: item_id, 
@@ -18287,13 +18272,16 @@
 		<td>
 			<input id="txtQuantity-#:uid#" name="txtQuantity-#:uid#" 
 					data-role="numerictextbox" 
-					data-format="n0" data-min="0"
+					data-format="n" 
+					data-min="0"
 					data-spinners="false"
 					data-bind="value: quantity, events: {change : changes}"
 					required data-required-msg="required" style="width: 40%;" />
 
-			<input id="ddlMesurement" data-role="dropdownlist"
-				   data-header-template="item-measurement-header-tmpl"                  
+			<input id="ddlMesurement" name="ddlMesurement"
+				   data-role="dropdownlist"
+				   data-header-template="item-measurement-header-tmpl"
+				   data-value-primitive="true"                  
                    data-text-field="measurement"
                    data-value-field="measurement_id"
                    data-bind="value: measurement_id,
@@ -18305,7 +18293,7 @@
 		<td>
 			<input id="txtPrice-#:uid#" name="txtPrice-#:uid#" 
 					data-role="numerictextbox" 
-					data-decimals="2"
+					data-format="n"
 					data-min="0"
 					data-spinners="false" 
 					data-bind="value: price, events: {change : changes}" 
@@ -18326,10 +18314,9 @@
 		</td>
 		<td>
 			<input id="ccbTaxItem" name="ccbTaxItem-#:uid#"
-					data-header-template="tax-header-tmpl"
-				   data-role="combobox"  
-				   data-filter="like"
-                   data-min-length="3"                 			   
+				   data-role="combobox"
+				   data-header-template="tax-header-tmpl"				     
+				   data-value-primitive="true"
                    data-text-field="name"
                    data-value-field="id"
                    data-bind="value: tax_item_id, 
@@ -18930,8 +18917,7 @@
 			<input id="ccbItem" name="ccbItem-#:uid#"
 				   data-role="combobox"
 				   data-template="item-list-tmpl"
-				   data-filter="like"
-                   data-min-length="3"
+				   data-value-primitive="true"
                    data-text-field="name"
                    data-value-field="id"
                    data-bind="value: item_id, 
@@ -18949,13 +18935,16 @@
 		<td>
 			<input id="txtQuantity-#:uid#" name="txtQuantity-#:uid#" 
 					data-role="numerictextbox" 
-					data-format="n0" data-min="0"
+					data-format="n" 
+					data-min="0"
 					data-spinners="false"
 					data-bind="value: quantity, events: {change : changes}"
 					required data-required-msg="required" style="width: 40%;" />
 
-			<input id="ddlMesurement" data-role="dropdownlist"
-					data-header-template="item-measurement-header-tmpl"                  
+			<input id="ddlMesurement" name="ddlMesurement"
+				   data-role="dropdownlist"
+				   data-header-template="item-measurement-header-tmpl"
+				   data-value-primitive="true"                  
                    data-text-field="measurement"
                    data-value-field="measurement_id"
                    data-bind="value: measurement_id,
@@ -18967,7 +18956,7 @@
 		<td>
 			<input id="txtPrice-#:uid#" name="txtPrice-#:uid#" 
 					data-role="numerictextbox" 
-					data-decimals="2"
+					data-format="n"
 					data-min="0"
 					data-spinners="false" 
 					data-bind="value: price, events: {change : changes}" 
@@ -18988,10 +18977,9 @@
 		</td>
 		<td>
 			<input id="ccbTaxItem" name="ccbTaxItem-#:uid#"
-					data-header-template="tax-header-tmpl"
 				   data-role="combobox"
-				   data-filter="like"
-                   data-min-length="3"                  			   
+				   data-header-template="tax-header-tmpl"				   
+				   data-value-primitive="true"
                    data-text-field="name"
                    data-value-field="id"
                    data-bind="value: tax_item_id, 
@@ -19400,8 +19388,7 @@
 			<input id="ccbItem" name="ccbItem-#:uid#"
 				   data-role="combobox"
 				   data-template="item-list-tmpl"
-				   data-filter="like"
-                   data-min-length="3"                  			   
+				   data-value-primitive="true"
                    data-text-field="name"
                    data-value-field="id"
                    data-bind="value: item_id, 
@@ -19419,13 +19406,16 @@
 		<td>
 			<input id="txtQuantity-#:uid#" name="txtQuantity-#:uid#" 
 					data-role="numerictextbox" 
-					data-format="n0" data-min="0"
+					data-format="n" 
+					data-min="0"
 					data-spinners="false"
 					data-bind="value: quantity, events: {change : changes}"
 					required data-required-msg="required" style="width: 40%;" />
 
-			<input id="ddlMesurement" data-role="dropdownlist"
-					data-header-template="item-measurement-header-tmpl"                  
+			<input id="ddlMesurement" name="ddlMesurement"
+				   data-role="dropdownlist"
+				   data-header-template="item-measurement-header-tmpl"
+				   data-value-primitive="true"                  
                    data-text-field="measurement"
                    data-value-field="measurement_id"
                    data-bind="value: measurement_id,
@@ -19833,8 +19823,7 @@
 			<input id="ccbItem" name="ccbItem-#:uid#"
 				   data-role="combobox"
 				   data-template="item-list-tmpl"
-				   data-filter="like"
-                   data-min-length="3"                   			   
+				   data-value-primitive="true"
                    data-text-field="name"
                    data-value-field="id"
                    data-bind="value: item_id, 
@@ -19852,13 +19841,16 @@
 		<td>
 			<input id="txtQuantity-#:uid#" name="txtQuantity-#:uid#" 
 					data-role="numerictextbox" 
-					data-format="n0" data-min="0"
+					data-format="n" 
+					data-min="0"
 					data-spinners="false"
 					data-bind="value: quantity, events: {change : changes}"
 					required data-required-msg="required" style="width: 40%;" />
 
-			<input id="ddlMesurement" data-role="dropdownlist"
-					data-header-template="item-measurement-header-tmpl"                  
+			<input id="ddlMesurement" name="ddlMesurement" 
+				   data-role="dropdownlist"
+				   data-header-template="item-measurement-header-tmpl"
+				   data-value-primitive="true"                  
                    data-text-field="measurement"
                    data-value-field="measurement_id"
                    data-bind="value: measurement_id,
@@ -19870,7 +19862,7 @@
 		<td>
 			<input id="txtPrice-#:uid#" name="txtPrice-#:uid#" 
 					data-role="numerictextbox" 
-					data-decimals="2"
+					data-format="n"
 					data-min="0"
 					data-spinners="false"
 					data-bind="value: price, events: {change : changes}" 
@@ -37591,7 +37583,6 @@
                    data-bind="value: account_id,
                               source: accountDS"
                    data-placeholder="Add Account.."
-                   data-list-width="400"                    
                    required data-required-msg="required" style="width: 100%" />	
 		</td>
 		<td>
@@ -37603,7 +37594,6 @@
                    data-bind="value: payment_method_id,
                               source: paymentMethodDS"
                    data-option-label="Select method.."
-                   data-list-width="400"                    
                    required data-required-msg="required" style="width: 100%" />	
 		</td>		
 		<td>
@@ -40108,7 +40098,7 @@
 		#}#
 	</span>
 	<span style="width:35%; text-align: center;">#=category#</span>
-	<span style="width:20%; text-align: right;" data-format="n" class="pull-right">#=on_hand#</span> 	
+	<span style="width:20%; text-align: right;" class="pull-right">#=kendo.toString(on_hand, "n")#</span> 	
 </script>
 <script id="item-group-header-tmpl" type="text/x-kendo-tmpl">
     <strong>
@@ -42984,6 +42974,7 @@
 			pageSize: 100
 		}),
 		//Item
+		itemList 					: [],
 		itemDS						: dataStore(apiUrl + "items"),
 		itemTypeDS					: dataStore(apiUrl + "item_types"),
 		itemGroupDS					: dataStore(apiUrl + "items/group"),
@@ -43645,7 +43636,8 @@
 				page:1,
 				pageSize:100
 			});
-			this.loadAccount();
+			this.loadAccounts();
+			this.loadItems();
 			this.accountTypeDS.read();
 			this.fixedAssetCategoryDS.read();
 		},
@@ -43663,9 +43655,7 @@
 		loadRate 					: function(){
 			this.currencyRateDS.query({
 				filter:[],
-				sort:{ field:"date", dir:"desc"},
-				page:1,
-				pageSize:1000
+				sort:{ field:"date", dir:"desc"}
 			});
 		},
 		getRate						: function(locale, date){
@@ -43695,7 +43685,7 @@
 				dfd.resolve(this.accountList);
 			} else {
 				this.accountDS.query({
-					filter:[]
+					filter:{ field:"status", value:1 },
 				}).then(function(){
 					var view = self.accountDS.view();
 
@@ -43707,7 +43697,7 @@
 			}
 			return dfd.promise();
 		},
-		loadAccount 				: function(){
+		loadAccounts 				: function(){
 			var self = this, raw = this.get("accountList");
 
 			//Clear array
@@ -43716,9 +43706,27 @@
 			}
 
 			this.accountDS.query({
-				filter:[]
+				filter: { field:"status", value:1 },
 			}).then(function(){
 				var view = self.accountDS.view();
+
+				$.each(view, function(index, value){
+					raw.push(value);
+				});
+			});
+		},
+		loadItems 				: function(){
+			var self = this, raw = this.get("itemList");
+
+			//Clear array
+			if(raw.length>0){
+				raw.splice(0,raw.length);
+			}
+
+			this.itemDS.query({
+				filter:{ field:"status", value:1 },
+			}).then(function(){
+				var view = self.itemDS.view();
 
 				$.each(view, function(index, value){
 					raw.push(value);
@@ -43730,8 +43738,6 @@
 			this.itemForSaleDS.fetch();
 			this.itemForSupplierDS.fetch();
 			this.inventoryForSaleDS.fetch();
-		},
-		fetchAllAccounts			: function(){
 		},
 		fetchAllTaxes 				: function(){
 			this.customerTaxDS.fetch();
@@ -44270,7 +44276,7 @@
 				}
 
 				//Refresh all account
-				banhji.source.loadAccount();
+				banhji.source.loadAccounts();
 			});
 		},
 		cancel 					: function(){
@@ -44302,7 +44308,7 @@
 				        self.dataSource.bind("requestEnd", function(e){
 				        	if(e.type==="destroy"){
 				        		//Refresh all account
-						        banhji.source.loadAccount();
+						        banhji.source.loadAccounts();
 						        window.history.back();
 				        	}
 				        });
@@ -47379,18 +47385,12 @@
 		}),
 		cashAccountDS 			: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
-		  	filter: [
-				{ field:"account_type_id", value: 10 },
-				{ field:"status", value: 1 }
-			],
+		  	filter: { field:"account_type_id", value: 10 },
 		  	sort: { field:"number", dir:"asc" }
 		}),
 		advAccountDS 			: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
-		  	filter: [
-				{ field:"account_type_id", value: 11 },
-				{ field:"status", value: 1 }
-			],
+		  	filter: { field:"account_type_id", value: 11 },
 		  	sort: { field:"number", dir:"asc" }
 		}),
 		attachmentDS	 	: dataStore(apiUrl + "attachments"),
@@ -48007,29 +48007,23 @@
 		jobDS				: banhji.source.jobDS,		
 		accountDS 			: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
-			filter:[ 
-				{
-				    logic: "or",
-				    filters: [
-				      	{ field: "account_type_id", value: 36 },
-				      	{ field: "account_type_id", value: 37 },
-				      	{ field: "account_type_id", value: 38 },
-				      	{ field: "account_type_id", value: 40 },
-				      	{ field: "account_type_id", value: 41 },
-				      	{ field: "account_type_id", value: 42 },
-				      	{ field: "account_type_id", value: 43 }
-				    ]
-				},
-				{ field:"status", value: 1 }
-			],
+			filter:{
+			    logic: "or",
+			    filters: [
+			      	{ field: "account_type_id", value: 36 },
+			      	{ field: "account_type_id", value: 37 },
+			      	{ field: "account_type_id", value: 38 },
+			      	{ field: "account_type_id", value: 40 },
+			      	{ field: "account_type_id", value: 41 },
+			      	{ field: "account_type_id", value: 42 },
+			      	{ field: "account_type_id", value: 43 }
+			    ]
+			},
 			sort: { field:"number", dir:"asc" }
 		}),
 		cashAccountDS 			: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
-		  	filter: [
-				{ field:"account_type_id", value: 10 },
-				{ field:"status", value: 1 }
-			],
+		  	filter: { field:"account_type_id", value: 10 },
 		  	sort: { field:"number", dir:"asc" }
 		}),
 		taxItemDS  			: dataStore(apiUrl + "tax_items"),
@@ -49525,46 +49519,34 @@
 		currencyDS 		  		: banhji.source.currencyDS,
 		apDS 		  			: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
-			filter:[ 
-				{
-				    logic: "or",
-				    filters: [
-				      	{ field: "account_type_id", value: 23 },
-				      	{ field: "account_type_id", value: 24 }
-				    ]
-				},
-				{ field:"status", value: 1 }
-			],
+			filter:{
+			    logic: "or",
+			    filters: [
+			      	{ field: "account_type_id", value: 23 },
+			      	{ field: "account_type_id", value: 24 }
+			    ]
+			},
 			sort: { field:"number", dir:"asc" }
 		}),		
 		prepaidAccountDS 		: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
-			filter:[ 
-				{
-				    logic: "or",
-				    filters: [
-				      	{ field: "account_type_id", value: 14 },
-				      	{ field: "account_type_id", value: 21 }
-				    ]
-				},
-				{ field:"status", value: 1 }
-			],
+			filter:{
+			    logic: "or",
+			    filters: [
+			      	{ field: "account_type_id", value: 14 },
+			      	{ field: "account_type_id", value: 21 }
+			    ]
+			},
 			sort: { field:"number", dir:"asc" }
 		}),
 		tradeDiscountDS 		: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
-		  	filter: [
-				{ field:"account_type_id", value: 36 },
-				{ field:"status", value: 1 }
-			],
+		  	filter: { field:"account_type_id", value: 36 },
 		  	sort: { field:"number", dir:"asc" }
 		}),
 		settlementDiscountDS 	: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
-		  	filter: [
-				{ field:"id", value: 109 },
-				{ field:"status", value: 1 }
-			],
+		  	filter: { field:"id", value: 109 },
 		  	sort: { field:"number", dir:"asc" }
 		}),
 		genders					: banhji.source.genderList,
@@ -49962,7 +49944,14 @@
 		}),		
 		balanceDS  			: dataStore(apiUrl + "transactions"),
 		contactDS  			: banhji.source.supplierDS,
-		itemDS  			: banhji.source.itemForSupplierDS,
+		itemDS  			: new kendo.data.DataSource({
+		  	data: banhji.source.itemList,
+		  	filter: { field:"is_assembly", value: 0 },
+			sort: [
+				{ field:"item_type_id", dir:"asc" },
+				{ field:"number", dir:"asc" }
+			]
+		}),
 		taxItemDS  			: banhji.source.supplierTaxDS,
 		catalogDS			: dataStore(apiUrl + "items"),
 		assemblyDS			: dataStore(apiUrl + "item_prices"),
@@ -50328,7 +50317,7 @@
 					self.lineDS.filter({ field: "transaction_id", value: id });
 					// self.jobDS.filter({ field: "contact_id", value: view[0].contact_id });
 					self.attachmentDS.filter({ field: "transaction_id", value: id });
-					self.loadContact(view[0].id);
+					self.loadContact(view[0].contact_id);
 				});
 			}				
 		},
@@ -51050,7 +51039,7 @@
 					self.lineDS.filter({ field: "transaction_id", value: id });
 					self.attachmentDS.filter({ field: "transaction_id", value: id });
 					self.referenceDS.filter({ field: "id", value: view[0].reference_id });
-					self.loadContact(view[0].id);
+					self.loadContact(view[0].contact_id);
 				});
 			}
 		},
@@ -51500,36 +51489,30 @@
 		}),
 		accountDS 			: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
-			filter:[ 
-				{
-				    logic: "or",
-				    filters: [
-				      	{ field: "account_type_id", value: 10 },//Cash
-				      	{ field: "account_type_id", value: 36 },//Expense
-				      	{ field: "account_type_id", value: 37 },
-				      	{ field: "account_type_id", value: 38 },
-				      	{ field: "account_type_id", value: 40 },
-				      	{ field: "account_type_id", value: 41 },
-				      	{ field: "account_type_id", value: 42 },
-				      	{ field: "account_type_id", value: 43 }
-				    ]
-				},
-				{ field:"status", value: 1 }
-			],
+			filter:{
+			    logic: "or",
+			    filters: [
+			      	{ field: "account_type_id", value: 10 },//Cash
+			      	{ field: "account_type_id", value: 36 },//Expense
+			      	{ field: "account_type_id", value: 37 },
+			      	{ field: "account_type_id", value: 38 },
+			      	{ field: "account_type_id", value: 40 },
+			      	{ field: "account_type_id", value: 41 },
+			      	{ field: "account_type_id", value: 42 },
+			      	{ field: "account_type_id", value: 43 }
+			    ]
+			},
 			sort: { field:"number", dir:"asc" }
 		}),
 		depositAccountDS 	: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
-			filter:[ 
-				{
-				    logic: "or",
-				    filters: [
-				      	{ field: "account_type_id", value: 14 },
-				      	{ field: "account_type_id", value: 21 }
-				    ]
-				},
-				{ field:"status", value: 1 }
-			],
+			filter:{
+			    logic: "or",
+			    filters: [
+			      	{ field: "account_type_id", value: 14 },
+			      	{ field: "account_type_id", value: 21 }
+			    ]
+			},
 			sort: { field:"number", dir:"asc" }
 		}),
 		amtDueColor 		: banhji.source.amtDueColor,
@@ -51833,7 +51816,7 @@
 					self.lineDS.filter({ field: "transaction_id", value: id });
 					self.journalLineDS.filter({ field: "transaction_id", value: id });
 					self.referenceDS.filter({ field: "id", value: view[0].reference_id });
-					self.loadContact(view[0].id);
+					self.loadContact(view[0].contact_id);
 				});
 			}				
 		},			  
@@ -52198,24 +52181,21 @@
 		}),
 		expenseAccountDS  			: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
-			filter:[ 
-				{
-				    logic: "or",
-				    filters: [
-				      	{ field: "account_type_id", value: 13 },//Inventory
-				      	{ field: "account_type_id", value: 16 },//Fixed Asset
-				      	{ field: "account_type_id", value: 17 },//Intangible Assets
-				      	{ field: "account_type_id", value: 36 },//Expense
-				      	{ field: "account_type_id", value: 37 },
-				      	{ field: "account_type_id", value: 38 },
-				      	{ field: "account_type_id", value: 40 },
-				      	{ field: "account_type_id", value: 41 },
-				      	{ field: "account_type_id", value: 42 },
-				      	{ field: "account_type_id", value: 43 }
-				    ]
-				},
-				{ field:"status", value: 1 }
-			],
+			filter:{
+			    logic: "or",
+			    filters: [
+			      	{ field: "account_type_id", value: 13 },//Inventory
+			      	{ field: "account_type_id", value: 16 },//Fixed Asset
+			      	{ field: "account_type_id", value: 17 },//Intangible Assets
+			      	{ field: "account_type_id", value: 36 },//Expense
+			      	{ field: "account_type_id", value: 37 },
+			      	{ field: "account_type_id", value: 38 },
+			      	{ field: "account_type_id", value: 40 },
+			      	{ field: "account_type_id", value: 41 },
+			      	{ field: "account_type_id", value: 42 },
+			      	{ field: "account_type_id", value: 43 }
+			    ]
+			},
 			sort: { field:"number", dir:"asc" }
 		}),
 		itemDS  					: banhji.source.itemForSupplierDS,
@@ -52810,17 +52790,13 @@
 
 				//AP Account
 				this.additionalCostAccountDS.filter({
-				    logic: "and",
-				    filters: [
-				      	{ field:"status", value: 1 },
-					    {
-					        logic: "or",
-					        filters: [
-					            { field: "account_type_id", value: 23 },
-		      					{ field: "account_type_id", value: 24 }
-					        ]
-					    }
-				    ]
+				    filter: {
+				        logic: "or",
+				        filters: [
+				            { field: "account_type_id", value: 23 },
+	      					{ field: "account_type_id", value: 24 }
+				        ]
+				    }
 				});
 			}
 
@@ -52837,17 +52813,13 @@
 				this.set("isCash", false);
 				
 				this.accountDS.filter({
-				    logic: "and",
-				    filters: [
-				      	{ field:"status", value: 1 },
-					    {
-					        logic: "or",
-					        filters: [
-					            { field: "account_type_id", value: 23 },
-		      					{ field: "account_type_id", value: 24 }
-					        ]
-					    }
-				    ]
+				    filter: {
+				        logic: "or",
+				        filters: [
+				            { field: "account_type_id", value: 23 },
+	      					{ field: "account_type_id", value: 24 }
+				        ]
+				    }
 				});
 			}
 
@@ -52864,17 +52836,13 @@
 				this.set("isCash", false);
 				
 				this.accountDS.filter({
-				    logic: "and",
-				    filters: [
-				      	{ field:"status", value: 1 },
-					    {
-					        logic: "or",
-					        filters: [
-					            { field: "account_type_id", value: 23 },
-		      					{ field: "account_type_id", value: 24 }
-					        ]
-					    }
-				    ]
+				    filter: {
+				        logic: "or",
+				        filters: [
+				            { field: "account_type_id", value: 23 },
+	      					{ field: "account_type_id", value: 24 }
+				        ]
+				    }
 				});
 			}
 		},
@@ -52955,7 +52923,7 @@
 					}				
 
 					self.loadDeposit();
-					self.loadContact(view[0].id);
+					self.loadContact(view[0].contact_id);
 					self.loadTypeChanges();				
 				});
 			}				
@@ -53918,10 +53886,7 @@
 		taxItemDS  			: banhji.source.supplierTaxDS,
 		accountDS  			: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
-		  	filter: [
-				{ field:"account_type_id", value: 10 },
-				{ field:"status", value: 1 }
-			],
+		  	filter: { field:"account_type_id", value: 10 },
 		  	sort: { field:"number", dir:"asc" }
 		}),
 		catalogDS			: dataStore(apiUrl + "items"),
@@ -54361,7 +54326,7 @@
 				self.lineDS.filter({ field: "transaction_id", value: view[0].id });
 				self.journalLineDS.filter({ field: "transaction_id", value: view[0].id });
 				self.referenceDS.filter({ field: "id", value: view[0].reference_id });
-				self.loadContact(view[0].id);
+				self.loadContact(view[0].contact_id);
 			});				
 		},
 		changes				: function(){
@@ -56471,54 +56436,39 @@
 		currencyDS 		  		: banhji.source.currencyDS,
 		arDS 		  			: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
-		  	filter: [
-				{ field:"account_type_id", value: 12 },
-				{ field:"status", value: 1 }
-			],
+		  	filter: { field:"account_type_id", value: 12 },
 		  	sort: { field:"number", dir:"asc" }
 		}),
 		raDS 		  			: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
-			filter:[ 
-				{
-				    logic: "or",
-				    filters: [
-				      	{ field: "account_type_id", value: 35 },
-				      	{ field: "account_type_id", value: 39 }
-				    ]
-				},
-				{ field:"status", value: 1 }
-			],
+			filter:{
+			    logic: "or",
+			    filters: [
+			      	{ field: "account_type_id", value: 35 },
+			      	{ field: "account_type_id", value: 39 }
+			    ]
+			},
 			sort: { field:"number", dir:"asc" }
 		}),
 		depositDS 		  		: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
-			filter:[ 
-				{
-				    logic: "or",
-				    filters: [
-				      	{ field: "account_type_id", value: 25 },
-				      	{ field: "account_type_id", value: 30 }
-				    ]
-				},
-				{ field:"status", value: 1 }
-			],
+			filter:{
+			    logic: "or",
+			    filters: [
+			      	{ field: "account_type_id", value: 25 },
+			      	{ field: "account_type_id", value: 30 }
+			    ]
+			},
 			sort: { field:"number", dir:"asc" }
 		}),
 		tradeDiscountDS 		: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
-		  	filter: [
-				{ field:"id", value: 72 },
-				{ field:"status", value: 1 }
-			],
+		  	filter: { field:"id", value: 72 },
 		  	sort: { field:"number", dir:"asc" }
 		}),
 		settlementDiscountDS 	: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
-		  	filter: [
-				{ field:"id", value: 99 },
-				{ field:"status", value: 1 }
-			],
+		  	filter: { field:"id", value: 99 },
 		  	sort: { field:"number", dir:"asc" }
 		}),
 		genders					: banhji.source.genderList,
@@ -58287,7 +58237,7 @@
 					]);
 					self.attachmentDS.filter({ field: "transaction_id", value: view[0].id });
 					self.referenceDS.filter({ field: "id", value: view[0].reference_id });
-					self.loadContact(view[0].id);
+					self.loadContact(view[0].contact_id);
 				});
 			}				
 		},
@@ -58802,36 +58752,30 @@
 		}),
 		accountDS 			: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
-			filter:[ 
-				{
-				    logic: "or",
-				    filters: [
-				      	{ field: "account_type_id", value: 10 },//Cash
-				      	{ field: "account_type_id", value: 36 },//Expense
-				      	{ field: "account_type_id", value: 37 },
-				      	{ field: "account_type_id", value: 38 },
-				      	{ field: "account_type_id", value: 40 },
-				      	{ field: "account_type_id", value: 41 },
-				      	{ field: "account_type_id", value: 42 },
-				      	{ field: "account_type_id", value: 43 }
-				    ]
-				},
-				{ field:"status", value: 1 }
-			],
+			filter:{
+			    logic: "or",
+			    filters: [
+			      	{ field: "account_type_id", value: 10 },//Cash
+			      	{ field: "account_type_id", value: 36 },//Expense
+			      	{ field: "account_type_id", value: 37 },
+			      	{ field: "account_type_id", value: 38 },
+			      	{ field: "account_type_id", value: 40 },
+			      	{ field: "account_type_id", value: 41 },
+			      	{ field: "account_type_id", value: 42 },
+			      	{ field: "account_type_id", value: 43 }
+			    ]
+			},
 			sort: { field:"number", dir:"asc" }
 		}),
 		depositAccountDS 	: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
-			filter:[ 
-				{
-				    logic: "or",
-				    filters: [
-				      	{ field: "account_type_id", value: 25 },
-				      	{ field: "account_type_id", value: 30 }
-				    ]
-				},
-				{ field:"status", value: 1 }
-			],
+			filter:{
+			    logic: "or",
+			    filters: [
+			      	{ field: "account_type_id", value: 25 },
+			      	{ field: "account_type_id", value: 30 }
+			    ]
+			},
 			sort: { field:"number", dir:"asc" }
 		}),
 		jobDS				: banhji.source.jobDS,
@@ -59058,7 +59002,7 @@
 					self.lineDS.filter({ field: "transaction_id", value: id });				
 					self.journalLineDS.filter({ field: "transaction_id", value: id });
 					self.referenceDS.filter({ field: "id", value: view[0].reference_id });
-					self.loadContact(view[0].id);
+					self.loadContact(view[0].contact_id);
 				});
 			}
 		},
@@ -59568,10 +59512,7 @@
 		attachmentDS	 	: dataStore(apiUrl + "attachments"),
 		cashAccountDS  		: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
-		  	filter: [
-				{ field:"account_type_id", value: 10 },
-				{ field:"status", value: 1 }
-			],
+		  	filter: { field:"account_type_id", value: 10 },
 		  	sort: { field:"number", dir:"asc" }
 		}),
 		currencyRateDS		: dataStore(apiUrl + "currencies/rate"),
@@ -60114,7 +60055,7 @@
 					self.set("original_credit", view[0].credit);
 
 					self.loadDeposit();
-					self.loadContact(view[0].id);
+					self.loadContact(view[0].contact_id);
 				});
 			}				
 		},
@@ -61602,7 +61543,7 @@
 					self.referenceDS.filter({ field: "id", value: view[0].reference_id });				
 					
 					self.loadDeposit();
-					self.loadContact(view[0].id);				
+					self.loadContact(view[0].contact_id);				
 				});
 			}				
 		},
@@ -62874,7 +62815,7 @@
 					]);
 					self.attachmentDS.filter({ field: "transaction_id", value: id });
 					self.referenceDS.filter({ field: "id", value: view[0].reference_id });
-					self.loadContact(view[0].id);
+					self.loadContact(view[0].contact_id);
 				});
 			}				
 		},
@@ -63333,10 +63274,7 @@
 		taxItemDS  			: banhji.source.customerTaxDS,
 		accountDS  			: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
-		  	filter: [
-				{ field:"account_type_id", value: 10 },
-				{ field:"status", value: 1 }
-			],
+		  	filter: { field:"account_type_id", value: 10 },
 		  	sort: { field:"number", dir:"asc" }
 		}),
 		catalogDS			: dataStore(apiUrl + "items"),
@@ -63847,7 +63785,7 @@
 				self.attachmentDS.filter({ field: "transaction_id", value: view[0].id });
 				self.referenceDS.filter({ field: "id", value: view[0].reference_id });
 
-				self.loadContact(view[0].id);
+				self.loadContact(view[0].contact_id);
 
 				self.returnDS.query({
 					filter:{ field: "return_id", value: view[0].id },
@@ -66926,10 +66864,7 @@
 		lang 				: langVM,
 		dataStore 			: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
-		  	filter: [
-				{ field:"account_type_id", value: 10 },
-				{ field:"status", value: 1 }
-			],
+		  	filter: { field:"account_type_id", value: 10 },
 		  	sort: { field:"number", dir:"asc" }
 		}),
 		summaryDS  			: dataStore(apiUrl + 'centers/accounting_summary'),
@@ -67825,10 +67760,7 @@
 		paymentMethodDS		: banhji.source.paymentMethodDS,
 		accountDS 			: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
-		  	filter: [
-				{ field:"account_type_id", value: 10 },
-				{ field:"status", value: 1 }
-			],
+		  	filter: { field:"account_type_id", value: 10 },
 		  	sort: { field:"number", dir:"asc" }
 		}),
 		segmentItemDS 		: banhji.source.segmentItemDS,
@@ -68514,10 +68446,7 @@
 		employeeDS  		: banhji.source.saleRepDS,
 		accountDS  			: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
-		  	filter: [
-				{ field:"account_type_id", value: 10 },
-				{ field:"status", value: 1 }
-			],
+		  	filter: { field:"account_type_id", value: 10 },
 		  	sort: { field:"number", dir:"asc" }
 		}),		
 		paymentTermDS 		: banhji.source.paymentTermDS,
@@ -69041,10 +68970,7 @@
 		employeeDS  		: banhji.source.saleRepDS,
 		accountDS  			: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
-		  	filter: [
-				{ field:"account_type_id", value: 10 },
-				{ field:"status", value: 1 }
-			],
+		  	filter: { field:"account_type_id", value: 10 },
 		  	sort: { field:"number", dir:"asc" }
 		}),		
 		paymentTermDS 		: banhji.source.paymentTermDS,
@@ -70891,32 +70817,23 @@
     	currencyDS 	 			: banhji.source.currencyDS,  	
     	incomeAccountDS 		: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
-			filter:[ 
-				{
-				    logic: "or",
-				    filters: [
-				      	{ field: "account_type_id", value: 35 },
-				      	{ field: "account_type_id", value: 39 }
-				    ]
-				},
-				{ field:"status", value: 1 }
-			],
+			filter:{
+			    logic: "or",
+			    filters: [
+			      	{ field: "account_type_id", value: 35 },
+			      	{ field: "account_type_id", value: 39 }
+			    ]
+			},
 			sort: { field:"number", dir:"asc" }
 		}),
     	cogsAccountDS 			: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
-		  	filter: [
-				{ field:"account_type_id", value: 36 },
-				{ field:"status", value: 1 }
-			],
+		  	filter: { field:"account_type_id", value: 36 },
 		  	sort: { field:"number", dir:"asc" }
 		}),
     	inventoryAccountDS 		: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
-		  	filter: [
-				{ field:"account_type_id", value: 13 },
-				{ field:"status", value: 1 }
-			],
+		  	filter: { field:"account_type_id", value: 13 },
 		  	sort: { field:"number", dir:"asc" }
 		}),
     	statusList 				: banhji.source.statusList,
@@ -71608,16 +71525,13 @@
     	numberDS 				: dataStore(apiUrl + "items"),
     	incomeAccountDS 		: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
-			filter:[ 
-				{
-				    logic: "or",
-				    filters: [
-				      	{ field: "account_type_id", value: 35 },
-				      	{ field: "account_type_id", value: 39 }
-				    ]
-				},
-				{ field:"status", value: 1 }
-			],
+			filter:{
+			    logic: "or",
+			    filters: [
+			      	{ field: "account_type_id", value: 35 },
+			      	{ field: "account_type_id", value: 39 }
+			    ]
+			},
 			sort: { field:"number", dir:"asc" }
 		}),
     	itemDS 					: banhji.source.itemNonAssemblyDS,
@@ -71903,35 +71817,29 @@
     	currencyDS 	 			: banhji.source.currencyDS,  	
     	incomeAccountDS 		: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
-			filter:[ 
-				{
-				    logic: "or",
-				    filters: [
-				      	{ field: "account_type_id", value: 35 },
-				      	{ field: "account_type_id", value: 39 }
-				    ]
-				},
-				{ field:"status", value: 1 }
-			],
+			filter:{
+			    logic: "or",
+			    filters: [
+			      	{ field: "account_type_id", value: 35 },
+			      	{ field: "account_type_id", value: 39 }
+			    ]
+			},
 			sort: { field:"number", dir:"asc" }
 		}),
 		cogsAccountDS  			: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
-			filter:[ 
-				{
-				    logic: "or",
-				    filters: [
-				      	{ field: "account_type_id", value: 36 },//Expense
-				      	{ field: "account_type_id", value: 37 },
-				      	{ field: "account_type_id", value: 38 },
-				      	{ field: "account_type_id", value: 40 },
-				      	{ field: "account_type_id", value: 41 },
-				      	{ field: "account_type_id", value: 42 },
-				      	{ field: "account_type_id", value: 43 }
-				    ]
-				},
-				{ field:"status", value: 1 }
-			],
+			filter:{
+			    logic: "or",
+			    filters: [
+			      	{ field: "account_type_id", value: 36 },//Expense
+			      	{ field: "account_type_id", value: 37 },
+			      	{ field: "account_type_id", value: 38 },
+			      	{ field: "account_type_id", value: 40 },
+			      	{ field: "account_type_id", value: 41 },
+			      	{ field: "account_type_id", value: 42 },
+			      	{ field: "account_type_id", value: 43 }
+			    ]
+			},
 			sort: { field:"number", dir:"asc" }
 		}),
     	statusList 				: banhji.source.statusList,
@@ -72325,10 +72233,7 @@
     	itemCustomerDS 	 		: dataStore(apiUrl + "items/contact"),
     	inventoryAccountDS 		: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
-		  	filter: [
-				{ field:"account_type_id", value: 13 },
-				{ field:"status", value: 1 }
-			],
+		  	filter: { field:"account_type_id", value: 13 },
 		  	sort: { field:"number", dir:"asc" }
 		}),
     	statusList 				: banhji.source.statusList,
@@ -72699,26 +72604,17 @@
     	itemPriceDS 			: dataStore(apiUrl + "item_prices"),
     	fixedAssetAccountDS 	: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
-		  	filter: [
-				{ field:"account_type_id", value: 16 },
-				{ field:"status", value: 1 }
-			],
+		  	filter: { field:"account_type_id", value: 16 },
 		  	sort: { field:"number", dir:"asc" }
 		}),
     	accumulatedAccountDS 	: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
-		  	filter: [
-				{ field:"account_type_id", value: 18 },
-				{ field:"status", value: 1 }
-			],
+		  	filter: { field:"account_type_id", value: 18 },
 		  	sort: { field:"number", dir:"asc" }
 		}),
     	deposalAccountDS 		: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
-		  	filter: [
-				{ field:"account_type_id", value: 38 },
-				{ field:"status", value: 1 }
-			],
+		  	filter: { field:"account_type_id", value: 38 },
 		  	sort: { field:"number", dir:"asc" }
 		}),
     	statusList 				: banhji.source.statusList,
@@ -73722,17 +73618,14 @@
 		}),
 		inventoryFixAssetAccountDS : new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
-			filter:[ 
-				{
-				    logic: "or",
-				    filters: [
-				      	{ field: "account_type_id", value: 13 },
-				      	{ field: "account_type_id", value: 16 },
-				      	{ field: "account_type_id", value: 19 }
-				    ]
-				},
-				{ field:"status", value: 1 }
-			],
+			filter:{
+			    logic: "or",
+			    filters: [
+			      	{ field: "account_type_id", value: 13 },
+			      	{ field: "account_type_id", value: 16 },
+			      	{ field: "account_type_id", value: 19 }
+			    ]
+			},
 			sort: { field:"number", dir:"asc" }
 		}),
 		amtDueColor 			: banhji.source.amtDueColor,

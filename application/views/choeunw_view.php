@@ -3502,7 +3502,8 @@
 										data-value-field="id" 
 										data-bind="
 											value: blocSelect,
-		                  					source: blocDS">
+		                  					source: blocDS,
+		                  					events: {change: blocChange}">
 		                  		</div>
 							</div>
 							<div class="span4">
@@ -3636,7 +3637,7 @@
 <script id="runbill-footer-template" type="text/x-kendo-template">
     <tr>    	
         <td class="right" colspan="8" style="font-size:30px;">
-            <span data-bind="text: lang.lang.total"></span>:  <span data-bind="text: meterSold"></span>m<sup>3</sup>
+            <span data-bind="text: lang.lang.total"></span>:  m<sup>3</sup>
         </td>
     </tr>
 </script>
@@ -5128,6 +5129,7 @@
 						<div id="ntf1" data-role="notification"></div>
 				        <div class="row">
 							<div class="span12" align="right">
+								<span class="btn btn-icon btn-primary glyphicons ok_2" data-bind="click: verify" style="width: 110px;margin-bottom: 0;"><i></i> <span>Verify</span></span>
 								<span class="btn btn-icon btn-primary glyphicons ok_2" data-bind="click: runBill" style="width: 110px;margin-bottom: 0;"><i></i> <span>Record</span></span>
 								
 								<span class="btn btn-icon btn-warning glyphicons remove_2" data-bind="click: cancel" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.cancel"></span></span>
@@ -12209,7 +12211,7 @@
 				]
 			}).then(function(e){
 				if(banhji.reconReceipt.dataSource.data().length > 0) {
-					dfd.resolve(true);
+					dfd.resolve(banhji.reconReceipt.dataSource.data());
 				} else {
 					dfd.reject(false);
 				}
@@ -12226,7 +12228,9 @@
 		rmCurrencyRow  	: function(e) {
 			banhji.reconReceipt.dataSource.remove(e.data);
 		},
-		sync 			: function() {}
+		sync 			: function() {
+			banhji.reconReceipt.dataSource.sync();
+		}
 	});
 	banhji.reconList   = kendo.observable({
 		dataSource 		: dataStore(apiUrl + 'reconciles/item'),
@@ -12244,30 +12248,39 @@
 		onChange 		: function(e) {
 			e.data.set('total', e.data.note * e.data.unit);
 			
-			if(banhji.reconList.cashReceiptArr.length > 0) {
-				$.each(banhji.reconList.cashReceiptArr, function(x, y) {
-					$.each(banhji.reconList.dataSource.data(), function(i, v){
-						if(jQuery.inArray(banhji.reconList.cashReceiptArr[x].code, banhji.reconList.dataSource.data())) {
+			// if(banhji.reconList.cashReceiptArr.length > 0) {
+				
+			// 	$.each(banhji.reconList.cashReceiptArr, function(x, y) {
+			// 		$.each(banhji.reconList.dataSource.data(), function(i, v){
+			// 			if(banhji.reconList.cashReceiptArr[x].code == banhji.reconList.dataSource.data()[i].code) {
 							
-							banhji.reconList.cashReceiptArr[x].total += v.total; 
-						} else {
-							banhji.reconList.cashReceiptArr.push(v);
-						}
-					});
+			// 				banhji.reconList.cashReceiptArr[x].total += v.total; 
+			// 			} else {
+			// 				banhji.reconList.cashReceiptArr.push(v);
+			// 			}
+			// 		});
+			// 	});
+			// } else {
+			// 	banhji.reconList.cashReceiptArr.push(e.data);
+			// }			
+		},
+		countActual 	: function(data) {
+			var self = this, temp =[];
+			banhji.reconList.cashReceiptArr.splice(0, banhji.reconList.cashReceiptArr.length);
+			$.each(data, function(i, v){
+				temp.push({code: v.code, total: 0});
+			});
+			console.log(temp);
+			$.each(temp, function(x, y){
+				$.each(banhji.reconList.dataSource.data(), function(i, v){
+					if(temp[x].code == v.code) {
+						temp[x].total += v.total;
+					}
 				});
-				// $.each(banhji.reconList.cashReceiptArr, function(x, y) {
-				// 	$.each(banhji.reconList.dataSource.data(), function(i, v){
-				// 		if(banhji.reconList.cashReceiptArr[x].code == banhji.reconList.dataSource.data()[i].code) {
-							
-				// 			banhji.reconList.cashReceiptArr[x].total += v.total; 
-				// 		} else {
-				// 			banhji.reconList.cashReceiptArr.push(v);
-				// 		}
-				// 	});
-				// });
-			} else {
-				banhji.reconList.cashReceiptArr.push(e.data);
-			}			
+			});
+			$.each(temp, function(i,v) {
+				banhji.reconList.cashReceiptArr.push(v);
+			});
 		},
 		sync 			: function(id) {
 			var dfd = $.Deferred();
@@ -12347,6 +12360,7 @@
 		list 			: banhji.reconList,
 		currencyVM 		: banhji.reconReceipt,
 		search 			: function() {
+			banhji.reconcileVM.receiptDS.splice(0, banhji.reconcileVM.receiptDS.length);
 			this.currencyVM.search()
 			.then(function(success) {
 				$.each(banhji.reconcileVM.currencyVM.dataSource.data(), function(i, v) {
@@ -12357,15 +12371,30 @@
 		setCurrent 		: function(current) {
 			this.set('current', current);
 		},
+		verify 			: function() {
+			banhji.reconcileVM.receiptDS.splice(0, banhji.reconcileVM.receiptDS.length);
+			this.currencyVM.search()
+			.then(function(data) {
+				$.each(data, function(i,v){
+					banhji.reconcileVM.receiptDS.push(v);
+				});
+
+				banhji.reconcileVM.list.countActual(data);
+			
+			}, function(error){});
+		},
 		sync 			: function() {
 			var dfd = $.Deferred();
+
 			banhji.banhji.reconcileVM.add({
 				cashier: banhji.userData.id,
 				memo: "",
 				currencies: banhji.reconcileVM.currencyList
 			});
 			banhji.reconcileVM.dataSource.sync();
-			banhji.reconcileVM.dataSource.bind('requestEnd', function(e){});
+			banhji.reconcileVM.dataSource.bind('requestEnd', function(e){
+				banhji.reconcileVM.list.sync(e.response.results[0].id);
+			});
 			banhji.reconcileVM.dataSource.bind('error', function(e){});
 		}
 	});
@@ -12783,7 +12812,8 @@
 				return data;
 			}, function(reason) { //Error
 				$("#ntf1").data("kendoNotification").error(reason);
-			}).then(function(result){				
+			}).then(function(result){
+
 				$("#ntf1").data("kendoNotification").success(banhji.source.successMessage);
 				self.set('paymentReceiptToday', self.get('paymentReceiptToday') + self.get('total'));
 				self.set('total', 0);
