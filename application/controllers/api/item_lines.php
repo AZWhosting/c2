@@ -164,13 +164,13 @@ class Item_lines extends REST_Controller {
 
 							$item->price = ($lastPrice + $currentPrice) / $totalQty;
 							$obj->cost = floatval($item->cost)* $value->unit_value * floatval($value->rate);
-							$obj->price_avg = ($lastPrice + $currentPrice) / $totalQty;;
+							$obj->price_avg = ($lastPrice + $currentPrice) / $totalQty;
 						}
 
 						if($transaction->type=="Cash_Purchase" || $transaction->type=="Credit_Purchase" || $transaction->type=="Item_Adjustment"){
 							//Avg Cost
 							$lastCost = $onHand * floatval($item->cost);
-							$currentCost = (floatval($value->amount) + floatval($value->additional_cost)) / floatval($value->rate);
+							$currentCost = ($currentQuantity*floatval($value->cost) + floatval($value->additional_cost)) / floatval($value->rate);
 
 							if($onHand>0){
 								$item->cost = ($lastCost + $currentCost) / $totalQty;

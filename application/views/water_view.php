@@ -12262,22 +12262,27 @@
 			// 	banhji.reconList.cashReceiptArr.push(e.data);
 			// }			
 		},
-		countActual 	: function() {
+		countActual 	: function(data) {
 			if(banhji.reconList.dataSource.data().length > 0) {
 				banhji.reconList.cashReceiptArr.splice(0, banhji.reconList.cashReceiptArr.length);
-				$.each(banhji.reconList.dataSource.data(), function(i, v){
-					if(banhji.reconList.cashReceiptArr.length > 0) {
-						$.each(banhji.reconList.cashReceiptArr, function(index, value){
-							if(banhji.reconList.cashReceiptArr[index].code == v.code) {
-								banhji.reconList.cashReceiptArr[index].total += v.total;
-							} else {
-								banhji.reconList.cashReceiptArr.push(v);
-							}
-						});
-					} else {
-						banhji.reconList.cashReceiptArr.push(v);
-					}
+				$.each(banhji.reconcileVM.currencyDS, function(i, v){
+ 					$.each(banhji.reconList.dataSource.data(), function(i, v){
+						console.log(v);
+					});
 				});
+				// $.each(banhji.reconList.dataSource.data(), function(i, v){
+				// 	if(banhji.reconList.cashReceiptArr.length > 0) {
+				// 		$.each(banhji.reconList.cashReceiptArr, function(index, value){
+				// 			if(banhji.reconList.cashReceiptArr[index].code == v.code) {
+				// 				banhji.reconList.cashReceiptArr[index].total += v.total;
+				// 			} else {
+				// 				banhji.reconList.cashReceiptArr.push(v);
+				// 			}
+				// 		});
+				// 	} else {
+				// 		banhji.reconList.cashReceiptArr.push(v);
+				// 	}
+				// });
 			}
 			console.log(banhji.reconList.cashReceiptArr);
 		},
