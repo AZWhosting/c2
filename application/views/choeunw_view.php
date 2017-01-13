@@ -202,7 +202,7 @@
 	   </div>
 	</div>
 	<div class="span12 water-tableList" style="padding-left: 0;">
-		<table class=" table table-borderless table-condensed ">
+		<table class="table table-borderless table-condensed ">
 			<thead>
 				<tr>
 					<th><span>No.</span></th>
@@ -216,58 +216,25 @@
 					<th><span>Balance</span></th>
 				</tr>
 			</thead>
-			<tbody>
-				<tr>
-					<td>1</td>
-					<td>test</td>
-					<td>11</td>
-					<td>3,000</td>
-					<td>10</td>
-					<td>5,000,000</td>
-					<td>10,000</td>
-					<td>2,500,000</td>
-					<td>3,000,000</td>
-				</tr>
-				<tr>
-					<td>1</td>
-					<td>test</td>
-					<td>11</td>
-					<td>3,000</td>
-					<td>10</td>
-					<td>5,000,000</td>
-					<td>10,000</td>
-					<td>2,500,000</td>
-					<td>3,000,000</td>
-				</tr>
-			</tbody>
+			<tbody data-role="listview"
+				data-auto-bind="false"         				
+                data-template="Dashboard-template"
+                data-bind="source: dataSource">
+            </tbody>
 		</table>
 	</div>
-
 </script>
-<script id="wsale-by-branch-row-template" type="text/x-kendo-tmpl">		
+<script id="Dashboard-template" type="text/x-kendo-tmpl">		
 	<tr>		
 		<td class="sno">1</td>
 		<td>#=name#</td>
-		<td>#=location#</td>		
+		<td>#=location_count#</td>		
 		<td align="right">#=kendo.toString(active_customer, "n0")#</td>
 		<td align="right">#=kendo.toString(inactive_customer, "n0")#​</td>				
 		<td align="right">#=kendo.toString(deposit, "c0", banhji.institute.locale)#</td>
 		<td align="right">#=kendo.toString(usage, "n0")# m<sup>3</sup></td>		
 		<td align="right">#=kendo.toString(sale, "c0", banhji.institute.locale)#</td>
-		<td align="right">#=kendo.toString(unpaid, "c0", banhji.institute.locale)#</td>					
-    </tr>   
-</script>
-<script id="wsale-by-location-row-template" type="text/x-kendo-tmpl">		
-	<tr>		
-		<td class="snoo">1</td>
-		<td>#=branch_name#</td>
-		<td>#=location_name#</td>		
-		<td align="right">#=kendo.toString(active_customer, "n0")# </td>
-		<td align="right">#=kendo.toString(inactive_customer, "n0")#​ </td>				
-		<td align="right">#=kendo.toString(deposit, "c0", banhji.eDashBoard.locale)#</td>
-		<td align="right">#=kendo.toString(usage, "n0")# m<sup>3</sup></td>		
-		<td align="right">#=kendo.toString(sale, "c0", banhji.eDashBoard.locale)#</td>
-		<td align="right">#=kendo.toString(unpaid, "c0", banhji.eDashBoard.locale)#</td>						
+		<td align="right">#=kendo.toString(unpaid, "c0", banhji.institute.locale)#</td>	
     </tr>   
 </script>
 
@@ -365,7 +332,6 @@
 	            		</thead>
 	            		<tbody data-role="listview"	            				
 				                data-template="licenseSetting-template"
-				                data-template="customerSetting-contact-type-template"
 				                data-bind="source: licenseDS"></tbody>
 	            	</table>
 	            </div>
@@ -464,8 +430,10 @@
 		                   data-value-field="id"
 		                   data-bind="value: exCurrency,
 		                              source: currencyDS"/>
-		            	<input data-bind="invisible: percentUnit, value: exPrice" type="text" placeholder="Price" style="height: 32px;" class="span2 k-textbox k-invalid" />
+		            	<input data-bind="visible: priceUnit, value: exPrice" type="text" placeholder="Price" style="height: 32px;" class="span2 k-textbox k-invalid" />
 		            	<input data-bind="visible: percentUnit, value: exPrice" type="text" placeholder="%" data-spinners="false" data-role="numerictextbox" max="100" min="1" style="padding:0;" class="span2 k-input k-valid" />
+		            	<input data-bind="visible: meterUnit, value: exPrice" type="text" placeholder="m3" data-spinners="false" data-role="numerictextbox" max="100" min="1" style="padding:0;" class="span2 k-input k-valid" />
+
 		            	<a class="btn btn-default glyphicons circle_plus cutype-icon" style="width: 80px;margin-left: 2px;" data-bind="click: addEx"><i></i>Add</a>
 		            </div>
 	            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
@@ -823,7 +791,7 @@
 	            </div>
 	        </div>
 	    </div>
-
+	    <div id="ntf1" data-role="notification"></div>
 	</div>
 </script>
 
@@ -2469,7 +2437,7 @@
 			#:kendo.toString(new Date(month_of), "D")#
 		</td>
 		<td>
-			#=number#
+			#=meter_number#
 		</td>
 		<td>
 			#=previous#
@@ -3070,7 +3038,7 @@
 								
 							</div>
 							<div class="span9" align="right">
-								<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save_new">Save New</span></span>
+								<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" style="width: 80px;"><i></i> <span data-bind="click: save, text: lang.lang.save_new">Save New</span></span>
 								<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;margin-bottom: 10px"><i></i> <span data-bind="text: lang.lang.cancel, click: cancel">Cancel</span></span>		
 							</div>
 						</div>
@@ -3522,21 +3490,21 @@
 									<div class="total-customer">
 										<div class="span12">
 											<p>Total Number of Invoices</p>
-											<span>0</span>
+											<span data-bind="text: totalOfInv"></span>
 										</div>	
 									</div>
 								</div>
 								<div class="span4">
 									<div class="total-customer">
 										<p>m<sup>3</sup> Sold</p>
-										<span >0</span>
+										<span data-bind="text: meterSold"></span>
 									</div>
 								</div>
 								<div class="span4">
 									<div class="total-customer">
 										<div class="span12">
 											<p>Amount</p>
-											<span >10000.00$</span>
+											<span data-bind="text: amountSold"></span>
 										</div>	
 									</div>
 								</div>
@@ -3593,17 +3561,6 @@
 						           	data-bind="value: BillingDate" />
 	                  		</div>
 						</div>	
-						<!-- <div class="span3">
-							<div class="control-group">								
-								<label ><span >Payment Date</span></label>
-								<input type="text" 
-				                	style="width: 100%;" 
-				                	data-role="datepicker"
-				                	data-format="dd-MM-yyyy"
-				                	placeholder="Payment Date ..." 
-						           	data-bind="value: PaymentDate" />
-	                  		</div>
-						</div> -->
 						<div class="span3">
 							<div class="control-group">								
 								<label ><span >Due Date</span></label>
@@ -3644,6 +3601,7 @@
 		<td class="right">#= items[0].line.current - items[0].line.prev # m<sup>3</sup></td>		
     </tr>
 </script>
+
 <script id="runbill-footer-template" type="text/x-kendo-template">
     <tr>    	
         <td class="right" colspan="8" style="font-size:30px;">
@@ -4680,7 +4638,7 @@
 </script>
 <script id="cash-currency-template" type="text/x-kendo-template">
 	<tr>
-		<td><i class="icon-trash" data-bind="events: { click: removeRow }"></i>
+		<td><i class="icon-trash" data-bind="events: { click: removeCurrencyRow }"></i>
 			#:banhji.Receipt.cashCurrencyDS.indexOf(data)+1#	</td>
 		<td>
 			<input data-role="dropdownlist"
@@ -4690,7 +4648,7 @@
                data-value-primitive="true"
                data-text-field="code"
                data-value-field="id"
-               data-bind="value: currency,
+               data-bind="value: id,
                           source: currencyDS"/>
 		</td>
 		<td>
@@ -5078,9 +5036,8 @@
 			    		<span class="glyphicons no-js remove_2" 
 							data-bind="click: cancel"><i></i></span>	
 					</div>
-			        <h2 >Reconcile</h2>
+			        <h2>Reconcile</h2>
 			        <br>
-
 			        <div class="row-fluid reconcile">
 				        <table class="span12">
 				        	<thead>
@@ -5091,180 +5048,18 @@
 				        	<tbody>
 					        	<tr>
 									<td colspan="2" style="padding: 0;">
-										<div class="span6 reconcile2 pull-left" >
-											<table>
-												<tr>
-													<td colspan="2"></td>
-					        						<td>Khmer Riel</td>
-												</tr>
-												<tr>
-													<td style="background: #DBEEF3;">Note:</td>
-													<td style="background: #DBEEF3;" >Unit</td>
-													<td style="background: #DBEEF3;" >Total</td>
-												</tr>
-												<tr>
-													<td>1</td>
-													<td><input type="number"></td>
-													<td></td>
-												</tr>
-												<tr>
-													<td>2</td>
-													<td><input type="number"></td>
-													<td></td>
-												</tr>
-												<tr>
-													<td>5</td>
-													<td><input type="number"></td>
-													<td></td>
-												</tr>
-												<tr>
-													<td>10</td>
-													<td><input type="number"></td>
-													<td></td>
-												</tr>
-												<tr>
-													<td>20</td>
-													<td><input type="number"></td>
-													<td></td>
-												</tr>
-												<tr>
-													<td>50</td>
-													<td><input type="number"></td>
-													<td></td>
-												</tr>
-												<tr>
-													<td>100</td>
-													<td><input type="number"></td>
-													<td></td>
-												</tr>
-												<tr>
-													<td>500</td>
-													<td><input type="number"></td>
-													<td></td>
-												</tr>
-												<tr>
-													<td>1000</td>
-													<td><input type="number"></td>
-													<td></td>
-												</tr>
-												<tr>
-													<td>2000</td>
-													<td><input type="number"></td>
-													<td></td>
-												</tr>
-												<tr>
-													<td>5000</td>
-													<td><input type="number"></td>
-													<td></td>
-												</tr>
-												<tr>
-													<td>10000</td>
-													<td><input type="number"></td>
-													<td></td>
-												</tr>
-												<tr>
-													<td>20000</td>
-													<td><input type="number"></td>
-													<td></td>
-												</tr>
-												<tr>
-													<td>50000</td>
-													<td><input type="number"></td>
-													<td></td>
-												</tr>
-												<tr>
-													<td colspan="2">Subtotal</td>
-													<td></td>
-												</tr>
-											</table>
-										</div>
-										<div class="span6 reconcile2 pull-left" >
-											<table>
-												<tr>
-													<td colspan="2"></td>
-					        						<td>Khmer Riel</td>
-												</tr>
-												<tr>
-													<td style="background: #DBEEF3;">Note:</td>
-													<td style="background: #DBEEF3;" >Unit</td>
-													<td style="background: #DBEEF3;" >Total</td>
-												</tr>
-												<tr>
-													<td>1</td>
-													<td><input type="number"></td>
-													<td></td>
-												</tr>
-												<tr>
-													<td>2</td>
-													<td><input type="number"></td>
-													<td></td>
-												</tr>
-												<tr>
-													<td>5</td>
-													<td><input type="number"></td>
-													<td></td>
-												</tr>
-												<tr>
-													<td>10</td>
-													<td><input type="number"></td>
-													<td></td>
-												</tr>
-												<tr>
-													<td>20</td>
-													<td><input type="number"></td>
-													<td></td>
-												</tr>
-												<tr>
-													<td>50</td>
-													<td><input type="number"></td>
-													<td></td>
-												</tr>
-												<tr>
-													<td>100</td>
-													<td><input type="number"></td>
-													<td></td>
-												</tr>
-												<tr>
-													<td>500</td>
-													<td><input type="number"></td>
-													<td></td>
-												</tr>
-												<tr>
-													<td>1000</td>
-													<td><input type="number"></td>
-													<td></td>
-												</tr>
-												<tr>
-													<td>2000</td>
-													<td><input type="number"></td>
-													<td></td>
-												</tr>
-												<tr>
-													<td>5000</td>
-													<td><input type="number"></td>
-													<td></td>
-												</tr>
-												<tr>
-													<td>10000</td>
-													<td><input type="number"></td>
-													<td></td>
-												</tr>
-												<tr>
-													<td>20000</td>
-													<td><input type="number"></td>
-													<td></td>
-												</tr>
-												<tr>
-													<td>50000</td>
-													<td><input type="number"></td>
-													<td></td>
-												</tr>
-												<tr>
-													<td colspan="2">Subtotal</td>
-													<td></td>
-												</tr>
-											</table>
-										</div>
+										<table>
+											<thead>
+											<tr>
+												<td></td>
+												<td style="background: olive;">Currency:</td>
+												<td style="background: olive;">Note:</td>
+												<td style="background: olive;" >Unit</td>
+												<td style="background: olive;" >Total</td>
+											</tr>
+											</thead>
+											<tbody data-role="listview" data-bind="source: list" data-template="Reconcile-list-tmpl"></tbody>
+										</table>
 									</td>
 					        	</tr>
 					        	<tr>
@@ -5307,6 +5102,16 @@
 			</div>
 		</div>
 	</div>				  	
+</script>
+
+<script id="Reconcile-list-tmpl" type="text/x-kendo-template">
+	<tr>
+		<td><i class="icon-trash" data-bind="click: removeRow"></i></td>
+		<td><input type="text" data-role="combobox" data-bind="source: currencyDS, value: code" data-text-field="code" data-value-field="code"></td>
+		<td><input type="number" class="k-textbox" data-bind="value: note, events: {change: onChange}"></td>
+		<td><input type="number" class="k-textbox" data-bind="value: unit, events: {change: onChange}"></td>
+		<td><input type="number" data-bind="value:total"></td>
+	</tr>
 </script>
 
 <!-- ***************************
@@ -6982,8 +6787,6 @@
 			});
 		return o;
 	};	
-
-	banhji.reconcile = dataStore(apiUrl+"reconciles");
 	banhji.userManagement = kendo.observable({
 		lang : langVM,
 		multiTaskList 		: [],
@@ -9503,11 +9306,139 @@
 		getPaymentTerm 				: function(id){
 			var data = this.paymentTermDS.get(id);
 			return data.name;
-		}
+		},
+		//Water
+		tradeDiscountDS 			: new kendo.data.DataSource({
+			transport: {
+				read 	: {
+					url: apiUrl + "accounts",
+					type: "GET",
+					headers: banhji.header,
+					dataType: 'json'
+				},				
+				parameterMap: function(options, operation) {
+					if(operation === 'read') {
+						return {
+							page: options.page,
+							limit: options.pageSize,
+							filter: options.filter,
+							sort: options.sort
+						};
+					} else {
+						return {models: kendo.stringify(options.models)};
+					}
+				}
+			},
+			schema 	: {
+				model: {
+					id: 'id'
+				},
+				data: 'results',
+				total: 'count'
+			},
+			filter: [
+				{ field:"id", value: 72 },
+				{ field:"status", value: 1 }
+			],
+		  	sort: { field:"number", dir:"asc" },
+			batch: true,
+			serverFiltering: true,
+			serverSorting: true,
+			serverPaging: true,
+			page:1,
+			pageSize: 100
+		}),
+		depositAccountDS 			: new kendo.data.DataSource({
+			transport: {
+				read 	: {
+					url: apiUrl + "accounts",
+					type: "GET",
+					headers: banhji.header,
+					dataType: 'json'
+				},				
+				parameterMap: function(options, operation) {
+					if(operation === 'read') {
+						return {
+							page: options.page,
+							limit: options.pageSize,
+							filter: options.filter,
+							sort: options.sort
+						};
+					} else {
+						return {models: kendo.stringify(options.models)};
+					}
+				}
+			},
+			schema 	: {
+				model: {
+					id: 'id'
+				},
+				data: 'results',
+				total: 'count'
+			},
+			filter: [
+					{ field:"account_type_id", operator:"where_in", value: [25,30] },
+					{ field:"status", value: 1 }
+			],
+		  	sort: { field:"number", dir:"asc" },
+			batch: true,
+			serverFiltering: true,
+			serverSorting: true,
+			serverPaging: true,
+			page:1,
+			pageSize: 100
+		}),
+		incomeAccountDS 			: new kendo.data.DataSource({
+			transport: {
+				read 	: {
+					url: apiUrl + "accounts",
+					type: "GET",
+					headers: banhji.header,
+					dataType: 'json'
+				},				
+				parameterMap: function(options, operation) {
+					if(operation === 'read') {
+						return {
+							page: options.page,
+							limit: options.pageSize,
+							filter: options.filter,
+							sort: options.sort
+						};
+					} else {
+						return {models: kendo.stringify(options.models)};
+					}
+				}
+			},
+			schema 	: {
+				model: {
+					id: 'id'
+				},
+				data: 'results',
+				total: 'count'
+			},
+			filter: [
+					{ field:"account_type_id", operator:"where_in", value: [35,39] },
+					{ field:"status", value: 1 }
+			],
+		  	sort: { field:"number", dir:"asc" },
+			batch: true,
+			serverFiltering: true,
+			serverSorting: true,
+			serverPaging: true,
+			page:1,
+			pageSize: 100
+		})
 	});
 	/*************************
 	*	Water Section   	* 
 	**************************/
+	banhji.wDashBoard = kendo.observable({
+		dataSource 	: dataStore(apiUrl + "branches/dashboard"),
+		obj 		: null,
+		pageLoad    : function(id){
+			this.dataSource.read();
+		}
+	});
 	//Setting
 	banhji.plan = kendo.observable({
 		dataSource 	: new kendo.data.DataSource({
@@ -9749,7 +9680,6 @@
 	    	if(id){
 	    		this.attachmentDS.pushUpdate({license_id: id});
 	    	}
-	    	//console.log();
 	    	$.each(this.attachmentDS.data(), function(index, value){	    		
 		    	if(!value.id){
 			    	var params = { 
@@ -9801,33 +9731,36 @@
 	    },
 		save 		: function() {
 			var self = this;
-			
-			if(this.dataSource.data().length > 0) {
-				if(this.dataSource.hasChanges() == true ){
-					this.dataSource.sync();
-					this.dataSource.bind("requestEnd", function(e){
-						if(e.type != 'read') {
-							if(e.response){				
-					    		$("#ntf1").data("kendoNotification").success("Successfully!");
-					    		//self.dataSource.addNew();
-								banhji.router.navigate("/setting");
-								banhji.setting.licenseDS.fetch();
-								self.uploadFile(e.response.results[0].id);
-							}
-						}else{
-							console.log("Read");
-						}					  				
-				    });
-				    this.dataSource.bind("error", function(e){		    		    	
-						$("#ntf1").data("kendoNotification").error("Error!"); 			
-				    });
-				}else{
-					if(this.attachmentDS.hasChanges() == true) {
-						banhji.router.navigate("/setting");
-						banhji.setting.licenseDS.fetch();
-						this.uploadFile();
+			if(this.get("obj").number){
+				if(this.dataSource.data().length > 0) {
+					if(this.dataSource.hasChanges() == true ){
+						this.dataSource.sync();
+						this.dataSource.bind("requestEnd", function(e){
+							if(e.type != 'read') {
+								if(e.response){				
+						    		$("#ntf1").data("kendoNotification").success("Successfully!");
+						    		//self.dataSource.addNew();
+									banhji.router.navigate("/setting");
+									banhji.setting.licenseDS.fetch();
+									self.uploadFile(e.response.results[0].id);
+								}
+							}else{
+								console.log("Read");
+							}					  				
+					    });
+					    this.dataSource.bind("error", function(e){		    		    	
+							$("#ntf1").data("kendoNotification").error("Error!"); 			
+					    });
+					}else{
+						if(this.attachmentDS.hasChanges() == true) {
+							banhji.router.navigate("/setting");
+							banhji.setting.licenseDS.fetch();
+							this.uploadFile();
+						}
 					}
 				}
+			}else{
+				alert("License Number required!");
 			}
 		},
 		cancel 				: function(){
@@ -9838,6 +9771,7 @@
 			window.history.back();
 		}
 	});
+	
 	banhji.setting = kendo.observable({
 		lang 				: langVM,
 		contactTypeName 	: "",
@@ -9866,7 +9800,9 @@
 		tariffNameShow 		: null,
 		exCurrency 			: null,
 		planSelect 			: false,
+		priceUnit 			: true,
 		percentUnit 		: false,
+		meterUnit 			: false,
 		windowTariffItemVisible : false,
 		prefixDS			: new kendo.data.DataSource({
 			transport: {
@@ -9931,15 +9867,22 @@
 		unitChange 			: function(e){
 			this.set("exPrice","");
 			if(this.exUnit === "%"){
-				console.log(this.exUnit);
 				this.set("percentUnit", true);
+				this.set("priceUnit", false);
+				this.set("meterUnit", false);
+			}else if(this.exUnit === "m3"){
+				this.set("percentUnit", false);
+				this.set("priceUnit", false);
+				this.set("meterUnit", true);
 			}else{
 				this.set("percentUnit", false);
+				this.set("priceUnit", true);
+				this.set("meterUnit", false);
 			}
 		},
 		addContactType 		: function(){
-        	var name = this.get("contactTypeName");
-        	if(name!==""){
+        	var name = this.get("contactTypeName"), self = this;
+        	if(name && this.get("contactTypeAbbr")){
 	        	this.contactTypeDS.add({
 	        		parent_id 	: 1,
 	        		name 		: name,
@@ -9949,25 +9892,42 @@
 	        		is_system 	: 0
 	        	});
 	        	this.contactTypeDS.sync();
-	        	this.set("contactTypeName", "");
-	        	this.set("contactTypeAbbr", "");
-	        	this.set("contactTypeCompany", 0);
+	        	this.contactTypeDS.bind("requestEnd", function(e){
+					if(e.type != 'read') {
+						if(e.response){
+							$("#ntf1").data("kendoNotification").success("Successfully!");
+							self.set("contactTypeName", "");
+				        	self.set("contactTypeAbbr", "");
+				        	self.set("contactTypeCompany", 0);
+						}
+					}
+				});
+        	}else{
+        		alert("Fiels Required!");
         	}
         },
         addBloc 			: function(){
-        	var branch = this.get("blockCompanyId");
-        	console.log(branch);
-        	if(branch!= ""){
+        	var branch = this.get("blockCompanyId"),
+        	self = this;
+        	if(branch && this.get("blocName") && this.get("blocAbbr")){
 	        	this.blocDS.add({
 	        		branch 		: {id : branch.id, name: branch.name},
 	        		name 		: this.get("blocName"),
 	        		abbr 		: this.get("blocAbbr")
 	        	});
-
 	        	this.blocDS.sync();
-	        	this.set("blocName", "");
-	        	this.set("blocAbbr", "");
-	        	this.set("blockCompanyId", 0);
+	        	this.blocDS.bind("requestEnd", function(e){
+					if(e.type != 'read') {
+						if(e.response){
+							$("#ntf1").data("kendoNotification").success("Successfully!");
+							self.set("blocName", "");
+				        	self.set("blocAbbr", "");
+				        	self.set("blockCompanyId", 0);
+						}
+					}
+				});
+        	}else{
+        		alert("Fiels Required!");
         	}
         },
         goExemption    		: function(){
@@ -9976,30 +9936,34 @@
         },
         addEx 				: function(){
         	var self = this;
-        	this.planItemDS.add({
-        		name 		: this.get("exName"),
-        		type     	: "exemption",
-        		is_flat 	: false,
-        		usage 		: 0,
-        		account 	: this.get("exAccount"),
-        		unit 		: this.get("exUnit"),
-        		currency 	: this.get("exCurrency"),
-        		amount 		: this.get("exPrice"),
-        		_currency 	: []
-        	});
-        	this.planItemDS.sync();
-        	this.planItemDS.bind("requestEnd", function(e){
-				if(e.type != 'read') {
-					if(e.response){				
-						//$("#ntf1").data("kendoNotification").success("Successfully!");
-						self.set("exName", "");
-			        	self.set("exAccount", "");
-			        	self.set("exPrice", "");
-			        	self.set("exUnit", "");
-			        	self.set("exCurrency", "");
-			        }
-				}
-			});
+        	if(this.get("exName") && this.get("exAccount") && this.get("exUnit") && this.get("exCurrency") && this.get("exPrice")){
+	        	this.planItemDS.add({
+	        		name 		: this.get("exName"),
+	        		type     	: "exemption",
+	        		is_flat 	: false,
+	        		usage 		: 0,
+	        		account 	: this.get("exAccount"),
+	        		unit 		: this.get("exUnit"),
+	        		currency 	: this.get("exCurrency"),
+	        		amount 		: this.get("exPrice"),
+	        		_currency 	: []
+	        	});
+	        	this.planItemDS.sync();
+	        	this.planItemDS.bind("requestEnd", function(e){
+					if(e.type != 'read') {
+						if(e.response){				
+							$("#ntf1").data("kendoNotification").success("Successfully!");
+							self.set("exName", "");
+				        	self.set("exAccount", "");
+				        	self.set("exPrice", "");
+				        	self.set("exUnit", "");
+				        	self.set("exCurrency", "");
+				        }
+					}
+				});
+			}else{
+				alert("Fields Required!");
+			}
         },
         goTariff    		: function(){
         	this.set("tariffSelect", false)
@@ -10015,81 +9979,91 @@
         setCurrent 			: function(current) {
         	this.set('current', current);
         },
-        // saveTariffItem 		: function(e){
-        // 	var self = this;
-        // 	this.tariffItemDS.query({
-        // 		filter: [{field: "usage", value: this.get("tariffItemUsage")},{field: "tariff_id", value: this.get("current").id}]
-        // 	}).then(function(e){
-        // 		if(self.tariffItemDS.data().length > 0){
-        // 			alert("Usage is already exist!");
-        // 		}else{
-        // 			self.addTariff();
-        // 		}
-        // 	});
-        // },
         saveTariffItem 		: function(e){
         	var data = e.data.id, self = this;
-        	this.tariffItemDS.data([]);
-        	this.tariffItemDS.add({
-        		name 		: this.get("tariffItemName"),
-        		type     	: "tariff",
-        		tariff_id	: this.get('current').id,
-        		account   	: this.get('current').account,
-        		is_flat   	: this.get("tariffItemFlat"),
-        		unit 		: null,
-        		usage 		: this.get("tariffItemUsage"),
-        		amount 		: this.get("tariffItemAmount"),
-        		currency 	: this.get("current").currency,
-        		_currency   : []
-        	});
+        	if(this.get("tariffItemName") && this.get("tariffItemUsage") && this.get("tariffItemAmount")){
+	        	this.tariffItemDS.data([]);
+	        	this.tariffItemDS.add({
+	        		name 		: this.get("tariffItemName"),
+	        		type     	: "tariff",
+	        		tariff_id	: this.get('current').id,
+	        		account   	: this.get('current').account,
+	        		is_flat   	: this.get("tariffItemFlat"),
+	        		unit 		: null,
+	        		usage 		: this.get("tariffItemUsage"),
+	        		amount 		: this.get("tariffItemAmount"),
+	        		currency 	: this.get("current").currency,
+	        		_currency   : []
+	        	});
+	        	this.tariffItemDS.sync();
+	        	this.tariffItemDS.bind("requestEnd", function(e){
+	        		if(e.type != 'read') {
+		        		if(e.response) {
+		        			$("#ntf1").data("kendoNotification").success("Successfully!");
+		        			self.set("tariffItemName", "");
+				        	self.set("tariffItemFlat", 0);
+				        	self.set("tariffItemUsage", "");
+				        	self.set("tariffItemAmount", "");
+				        	self.set("windowTariffItemVisible", false);
+				        	self.closeTariffWindowItem();
+				        	self.closeTariffWindowItem();
+				        	self.tariffItemDS.filter({field: "tariff_id", value: self.get('current').id});
+		        		}
+		        	}
+	        	});
+	        	this.tariffItemDS.bind("error", function(e){
+	        		alert("Usage is already exist!");
+	        	});
+	        }else{
+	        	alert("Fields Required!");
+	        }
+        },
+        updateTariffItem : function(e){
         	this.tariffItemDS.sync();
-        	this.tariffItemDS.bind("requestEnd", function(e){
-        		if(e.type != 'read') {
-	        		if(e.response) {
-	        			self.set("tariffItemName", "");
-			        	self.set("tariffItemFlat", 0);
-			        	self.set("tariffItemUsage", "");
-			        	self.set("tariffItemAmount", "");
-			        	self.set("windowTariffItemVisible", false);
-			        	self.closeTariffWindowItem();
-			        	// console.log(e);
-			        	self.closeTariffWindowItem();
-			        	self.tariffItemDS.filter({field: "tariff_id", value: self.get('current').id});
-			        	//self.set("tariffNameShow", e.data.name);
-	        		}
-	        	}
-        	});
-        	this.tariffItemDS.bind("error", function(e){
-        		alert("Usage is already exist!");
-        	});
+	        	this.tariffItemDS.bind("requestEnd", function(e){
+	        		if(e.type != 'read') {
+		        		if(e.response) {
+		        			$("#ntf1").data("kendoNotification").success("Successfully!");
+				        	self.tariffItemDS.filter({field: "tariff_id", value: self.get('current').id});
+		        		}
+		        	}
+	        	});
+	        	this.tariffItemDS.bind("error", function(e){
+	        		alert("Usage is already exist!");
+	        	});
         },
         addTariff 		: function(e){
         	var self = this;
-        	this.planItemDS.add({
-        		name 		: this.get("tariffName"),
-        		type     	: "tariff",
-        		is_flat   	: 0,
-        		tariff_id 	: 0,
-        		unit 		: 0,
-        		currency 	: this.get("tariffCurrency"),
-        		account 	: this.get("tariffAccount"),
-        		usage 		: 0,
-        		amount 		: 0,
-        		_currency 	: []
-        	});
-        	this.planItemDS.sync();
-        	this.planItemDS.bind("requestEnd", function(e){
-        		if(e.type != 'read') {
-	        		if(e.response) {
-	        			self.set("tariffName", "");
-	        			self.set("tariffAccount", "");
-	        			self.set("tariffCurrency", "");
+        	if(this.get("tariffName") && this.get("tariffAccount") && this.get("tariffCurrency")){
+	        	this.planItemDS.add({
+	        		name 		: this.get("tariffName"),
+	        		type     	: "tariff",
+	        		is_flat   	: 0,
+	        		tariff_id 	: 0,
+	        		unit 		: 0,
+	        		currency 	: this.get("tariffCurrency"),
+	        		account 	: this.get("tariffAccount"),
+	        		usage 		: 0,
+	        		amount 		: 0,
+	        		_currency 	: []
+	        	});
+	        	this.planItemDS.sync();
+	        	this.planItemDS.bind("requestEnd", function(e){
+	        		if(e.type != 'read') {
+		        		if(e.response) {
+		        			$("#ntf1").data("kendoNotification").success("Successfully!");
+		        			self.set("tariffName", "");
+		        			self.set("tariffAccount", "");
+		        			self.set("tariffCurrency", "");
+		        		}
 	        		}
-        		}
-        	});
-        	this.planItemDS.bind("error", function(e){
-        		console.log("error");
-        	});
+	        	});
+	        	this.planItemDS.bind("error", function(e){
+	        		console.log("error");
+	        	});
+	        }else{
+	        	alert("Fields Required!");
+	        }
         },
         closeTariffWindowItem 	: function(){
         	this.set("windowTariffItemVisible", false);
@@ -10107,57 +10081,67 @@
         },
         addDeposit			: function(){
         	var self = this;
-        	this.planItemDS.add({
-        		name 		: this.get("depositName"),
-        		type     	: "deposit",
-        		is_flat   	: false,
-        		unit 		: null,
-        		account 	: this.get("depositAccount"),
-        		usage 		: 0,
-        		currency 	: this.get("depositCurrency"),
-        		amount 		: this.get("depositPrice"),
-        		_currency 	: []
-        	});
-        	this.planItemDS.sync();
-        	this.planItemDS.bind("requestEnd", function(e){
-        		if(e.type != 'read') {
-	        		if(e.response) {
-			        	self.set("depositName", "");
-			        	self.set("depositPrice", "");
-			        	self.set("depositCurrency", "");
-			        	self.set("depositAccount", "");
-			        }
-			    }
-			});
+        	if(this.get("depositName") && this.get("depositAccount") && this.get("depositCurrency") && this.get("depositPrice")){
+	        	this.planItemDS.add({
+	        		name 		: this.get("depositName"),
+	        		type     	: "deposit",
+	        		is_flat   	: false,
+	        		unit 		: null,
+	        		account 	: this.get("depositAccount"),
+	        		usage 		: 0,
+	        		currency 	: this.get("depositCurrency"),
+	        		amount 		: this.get("depositPrice"),
+	        		_currency 	: []
+	        	});
+	        	this.planItemDS.sync();
+	        	this.planItemDS.bind("requestEnd", function(e){
+	        		if(e.type != 'read') {
+		        		if(e.response) {
+		        			$("#ntf1").data("kendoNotification").success("Successfully!");
+				        	self.set("depositName", "");
+				        	self.set("depositPrice", "");
+				        	self.set("depositCurrency", "");
+				        	self.set("depositAccount", "");
+				        }
+				    }
+				});
+			}else{
+				alert("Fields Required!");
+			}
         },
         goService    		: function(){
         	this.planItemDS.data([]);
         	this.planItemDS.filter({field: "type", value: "service"});
         },
         addService			: function(){
-        	var self = tself
-        	this.planItemDS.add({
-        		name 		: this.get("serviceName"),
-        		type     	: "service",
-        		is_flat   	: false,
-        		unit 		: null,
-        		account 	: this.get("serviceAccount"),
-        		usage 		: 0,
-        		currency 	: this.get("serviceCurrency"),
-        		amount 		: this.get("servicePrice"),
-        		_currency  	: []
-        	});
-        	this.planItemDS.sync();
-        	this.planItemDS.bind("requestEnd", function(e){
-        		if(e.type != 'read') {
-	        		if(e.response) {
-			        	self.set("serviceName", "");
-			        	self.set("servicePrice", "");
-			        	self.set("serviceCurrency","");
-			        	self.set("serviceAccount", "");
-			       	}
-			    }
-			});
+        	var self = this;
+        	if(this.get("serviceName") && this.get("serviceAccount") && this.get("serviceCurrency") && this.get("servicePrice")){
+	        	this.planItemDS.add({
+	        		name 		: this.get("serviceName"),
+	        		type     	: "service",
+	        		is_flat   	: false,
+	        		unit 		: null,
+	        		account 	: this.get("serviceAccount"),
+	        		usage 		: 0,
+	        		currency 	: this.get("serviceCurrency"),
+	        		amount 		: this.get("servicePrice"),
+	        		_currency  	: []
+	        	});
+	        	this.planItemDS.sync();
+	        	this.planItemDS.bind("requestEnd", function(e){
+	        		if(e.type != 'read') {
+		        		if(e.response) {
+		        			$("#ntf1").data("kendoNotification").success("Successfully!");
+				        	self.set("serviceName", "");
+				        	self.set("servicePrice", "");
+				        	self.set("serviceCurrency","");
+				        	self.set("serviceAccount", "");
+				       	}
+				    }
+				});
+			}else{
+				alert("Fields Required!");
+			}
         },
         goMaintenance    		: function(){
         	this.planItemDS.data([]);
@@ -10165,28 +10149,33 @@
         },
         addMaintenance			: function(){
         	var self = this;
-        	this.planItemDS.add({
-        		name 		: this.get("maintenanceName"),
-        		type     	: "maintenance",
-        		is_flat   	: false,
-        		unit 		: null,
-        		account 	: this.get("maintenanceAccount"),
-        		usage 		: 0,
-        		currency 	: this.get("maintenanceCurrency"),
-        		amount 		: this.get("maintenancePrice"),
-        		_currency   : []
-        	});
-        	this.planItemDS.sync();
-        	this.planItemDS.bind("requestEnd", function(e){
-        		if(e.type != 'read') {
-	        		if(e.response) {
-			        	self.set("maintenanceName", "");
-			        	self.set("maintenancePrice", "");
-			        	self.set("maintenanceAccount", "");
-			        	self.set("maintenanceCurrency","");
-			       	}
-			    }
-			});
+        	if(this.get("maintenanceName") && this.get("maintenanceAccount") && this.get("maintenanceCurrency") && this.get("maintenancePrice")){
+	        	this.planItemDS.add({
+	        		name 		: this.get("maintenanceName"),
+	        		type     	: "maintenance",
+	        		is_flat   	: false,
+	        		unit 		: null,
+	        		account 	: this.get("maintenanceAccount"),
+	        		usage 		: 0,
+	        		currency 	: this.get("maintenanceCurrency"),
+	        		amount 		: this.get("maintenancePrice"),
+	        		_currency   : []
+	        	});
+	        	this.planItemDS.sync();
+	        	this.planItemDS.bind("requestEnd", function(e){
+	        		if(e.type != 'read') {
+		        		if(e.response) {
+		        			$("#ntf1").data("kendoNotification").success("Successfully!");
+				        	self.set("maintenanceName", "");
+				        	self.set("maintenancePrice", "");
+				        	self.set("maintenanceAccount", "");
+				        	self.set("maintenanceCurrency","");
+				       	}
+				    }
+				});
+			}else{
+				alert("Fields Required!");
+			}
         },
         goPlan 				: function(){
         	this.planDS.read();
@@ -10212,7 +10201,7 @@
         },
         addBrand 			: function(){
         	var self = this;
-        	if(this.get("brandCode") !== "" && this.get("brandName") !== ""){
+        	if(this.get("brandCode") && this.get("brandName") && this.get("brandAbbr")){
 	        	this.brandDS.add({
 	        		sub_of 		: "water",
 	        		code 		: this.get("brandCode"),        		
@@ -10223,6 +10212,7 @@
 	        	this.brandDS.bind("requestEnd", function(e){
 	        		if(e.type != 'read') {
 		        		if(e.response) {
+		        			$("#ntf1").data("kendoNotification").success("Successfully!");
 			    			self.set("brandCode", "");
 			    			self.set("brandName", "");
 			    			self.set("brandAbbr", "");	
@@ -10230,7 +10220,7 @@
 			    	}
 			    });
         	}else{
-        		alert("required number and name!");
+        		alert("Fields Required!");
         	}
         },
 		pageLoad 			: function(){
@@ -10250,6 +10240,7 @@
         	}
         },
 	});
+
 	banhji.addAccountingprefix =  kendo.observable({
 		lang 				: langVM,
 		selectTypeList 		: banhji.source.typeList,
@@ -10369,6 +10360,8 @@
 			window.history.back();
 		}
     });
+
+    //Activate User
 	banhji.waterActivateUser = kendo.observable({
 		lang 				: langVM,
 		dataSource  		: dataStore(apiUrl + "activate_water"),
@@ -10929,6 +10922,7 @@
 	banhji.ActivateMeter = kendo.observable({
 		lang 				: langVM,
 		meterDS     		: dataStore(apiUrl + "meters"),
+		worderDS     		: dataStore(apiUrl + "meters"),
 		dataSource 			: null,
 		planDS 				: dataStore(apiUrl + "plans"),
 		cashAccountDS  		: new kendo.data.DataSource({
@@ -10959,7 +10953,6 @@
 				var view = self.meterDS.view();	
 				self.set("meterObj", view[0]);
 				self.setObj(view[0].plan_id);
-				self.addEmpty(view[0].id);
 				self.goWorder(view[0].branch_id, view[0].location_id);
 			});	
 			
@@ -10967,20 +10960,6 @@
 		cashAccount 		: null,
 		paymentMethod 		: null,
 		checkNumber 		: null,
-		addEmpty 			: function(id){
-			//this.dataSource.data([]);	
-			// var self = this;	
-			// this.set("obj", null);		
-			// this.set("isEdit", false);		
-			// this.dataSource.insert(0,{				
-			// 	meter_id			: id,
-			// 	start_date 			: null,
-			// 	installment_period 	: null,
-			// 	amountToBeRecieved 	: null		
-	 		//   	});		
-			// var obj = this.dataSource.at(0);			
-			// this.set("obj", obj);	
-		},
 		amountRecievChange 	: function(e){
 			var amount = this.get("NamountToBeRecieved");
 			var new_amount = e.data.amountToBeRecieved;
@@ -10994,15 +10973,15 @@
 		lWorder: 0,
 		goWorder 			: function(branch_id, location_id) {
 			var self = this, meterObj = this.get("meterObj");
-			this.meterDS.query({    			
-				filter: [{ field:"branch_id", value: branch_id },{field:"location_id", value: location_id}],
+			this.worderDS.query({    			
+				filter: [{field:"activated", value: 1},{ field:"branch_id", value: branch_id },{field:"location_id", value: location_id}],
 				sort: { field:"worder", dir:"desc" },
 				page: 1,
 				take: 100
 			}).then(function(e){
-				var view = self.meterDS.view();
+				var view = self.worderDS.view();
 				var lastNo;
-				if(self.meterDS._total > 0){
+				if(self.worderDS._total > 0){
 					lastNo = kendo.parseInt(view[0].worder) + 1;
 				}else{
 					lastNo = 1;
@@ -11011,7 +10990,7 @@
 					console.log(lastNo);
 					$("#loadImport").css("display","none");
 					//self.set("lWorder", lastNo);
-					banhji.ActivateMeter.get('meterObj').set('worder',lastNo );
+					meterObj.set('worder',lastNo );
 				}
 			});
 		},
@@ -11106,13 +11085,14 @@
 				})
 				.then(function(lines){
 					// then change meter activated field to 1
-					console.log(lines);
+					console.log(lines.length);
 					var status = false;
 					if(lines.length > 0) {
 						status = true;
-						banhji.ActivateMeter.get('meterObj').set('activated', 1);
-						banhji.ActivateMeter.meterDS.sync();
-						banhji.ActivateMeter.meterDS.bind('requestEnd', function(e){
+						self.get('meterObj').set('activated', 1);
+						console.log(self.meterDS.data());
+						self.meterDS.sync();
+						self.meterDS.bind('requestEnd', function(e){
 							if(e.response) {
 								// show success message
 							} else {
@@ -11232,7 +11212,6 @@
 		blocSelect			: null,
 		selectMeter 		: false,
 		pageLoad 			: function(id){
-
 		},
 		onLicenseChange 	: function(e) {
 			var data = e.data;
@@ -11248,7 +11227,7 @@
 		search 		 		: function(){	
 			license_id = this.get("licenseSelect"),
 			bloc_id = this.get("blocSelect");
-			var para = [];	
+			var para = [{field: "activated", value: 1}];	
 			
 			if(license_id){
 				para.push({field: "branch_id", value: license_id.id});
@@ -11269,66 +11248,20 @@
 				alert("Please Select License");
 			}
 		},
-		gridData			: function() {
-			var grid = $("#grid").kendoGrid({
-                dataSource: this.dataSource,
-                autoBind: false,
-                scrollable: false,
-                columns: [
-                    { field:"worder", title: "Order" },				    	
-			    	{ field:"meter_number", title: "Meter Number" },
-			    	{ field:"contact_name", title: "Customer Name" }
-                ]
-            }).data("kendoGrid");
-            grid.table.kendoSortable({
-                filter: ">tbody >tr",
-                hint: $.noop,
-                cursor: "move",
-                placeholder: function(element) {
-                    return element.clone().addClass("k-state-hover").css("opacity", 0.65);
-                },
-                container: "#grid tbody",
-                change: function(e) {
-                    var skip = grid.dataSource.skip(),
-                        oldIndex = e.oldIndex + skip,
-                        newIndex = e.newIndex + skip,
-                        data = grid.dataSource.data(),
-                        dataItem = grid.dataSource.getByUid(e.item.data("uid"));
-					
-                    grid.dataSource.remove(dataItem);
-                    grid.dataSource.insert(newIndex, dataItem);
-                }
-            });
-		},
 		save 				: function() {
-			var self = this;
-			var dfd = $.Deferred();
-			if(banhji.reading.dataSource.data().length > 0) {
-				$("#loadImport").css("display","block");
-				banhji.reading.dataSource.sync();
-				banhji.reading.dataSource.bind("requestEnd", function(e){
-					if(e.type != 'read') {
-						if(e.type == 'update') {
-							// update current invoice
-							banhji.invoice.dataSource.query({
-								filter: {field: 'meter_record_id', operator: 'where_related_winvoice_line', value: e.response.results[0]._meta.id}
-							}).then(function(e){
-								console.log(banhji.invoice.dataSource.data());
-							});
-							// create new invoice
-						}
-				    	if(e.response){	
-				    		dfd.resolve(e.response.results);			
-				    		// self.cancel();
-							$("#loadImport").css("display","none");
-						}	
-					}			  				
-			    });
-			    banhji.reading.dataSource.bind("error", function(e){
-			    	dfd.reject(e);		    		    				
-			    });
-			}
-			return dfd.promise();	
+			$.each(this.dataSource.data(), function(index, value){
+				value.set("worder", index);
+			});
+
+			this.dataSource.sync();
+			var saved = false;
+			this.dataSource.bind("requestEnd", function(e){				
+				if(e.type=="update" && saved==false){
+					saved = true;
+					//$("#ntf1").data("kendoNotification").info("Saved Successful");
+				}
+				$("#ntf1").data("kendoNotification").info("Saved Successful");
+			});
 		},
 		cancel 				: function(){
 			this.dataSource.cancelChanges();	
@@ -11800,28 +11733,38 @@
 		licenseSelect 		: null,	
 		monthSelect 		: null,	
 		blocSelect 			: null,
+		totalOfInv 			: 0,
+		meterSold 			: 0,
+		amountSold 			: 0,
 		pageLoad 			: function(id){
-			
 		},   
+		invoiceArray 		: [],
 		checkAll 		: function(e){
+			var self = this;
 			e.preventDefault();
-
+			this.set("invoiceArray",[]);
 			var bolValue = this.get("chkAll");
-			var data = this.readingDS.data();
-			
-			if(data.length>0){						
-		        $.each(data, function(index, value){		        			        	
-		        	value.set("isCheck", bolValue);		        	
-		        });		        			        
-	        }							
+			var data = this.invoiceDS.data();
+			if(bolValue == true){
+				if(data.length>0){						
+			        $.each(data, function(index, value){	
+			        	value.set("invoiced", bolValue);
+			        	self.invoiceArray.push(value);      	
+			        });		        			        
+		        }
+		    }else{
+	        	this.set("invoiceArray",[]);
+	        	$.each(data, function(index, value){	
+		        	value.set("invoiced", bolValue);      	
+		        });
+	        }
+	        this.makeBilled();					
 		},	
 		total 			: function(){      		
 	        var sum = 0;
-
-	        $.each(this.readingDS.data(), function(index, value) {	        		            
-	        	sum += kendo.parseInt(value.usage);		        	          
+	        $.each(this.readingDS.data(), function(index, value) {	  
+	        	sum += kendo.parseInt(value.usage);
 	        });
-
 	        return kendo.toString(sum, "n0");
 	    },	 
 	    licenseChange 		: function(e) {
@@ -11833,11 +11776,6 @@
 			this.blocDS.filter({field: "branch_id",value: license.id});
 	    	//this.invoiceDS.filter({field: "branch_id",value: license.id});
 	    },
-	    blocChange 			: function(e) {
-	    	//var bloc = this.blocDS.at(e.sender.selectedIndex - 1);
-			//this.set("blocSelect", bloc.id);
-	    },
-	    invoiceArray 		: [],
 	    search 				: function(){
 	    	this.invoiceDS.filter([
 	    		{field: 'branch_id', operator: 'where_related_meter', value: this.licenseSelect},
@@ -11856,16 +11794,21 @@
 	    			}
 	    		});
 	    	}
-
 	    	this.makeBilled();
 	    },
 	    showButton 			: false,
 	    makeBilled 			: function(){
+	    	var mSold = 0;
 	    	if(this.invoiceArray.length > 0) {
 	    		this.set('showButton', true);
 	    	} else {
 	    		this.set('showButton', false);
 	    	}
+	    	this.set('totalOfInv', this.invoiceArray.length);
+	    	$.each(this.invoiceArray, function(i, v){
+	    		mSold += kendo.parseInt(v.items[0].line.usage);
+	    	});
+	    	this.set("meterSold", mSold);
 	    },
 		save 				: function() {
 			var self = this,
@@ -11902,9 +11845,7 @@
 				}else{
 					dueDate = date.setDate(date.getDate() + 7);
 				}
-				
 				$.each(v.items, function(index, value) {
-				
 					if(value.type == "tariff") {
 						invoiceItems.push({				
 					   		"invoice_id"		: 0,
@@ -11979,8 +11920,7 @@
 		    this.invoiceCollection.dataSource.bind("error", function(e){		    		    	
 				$("#ntf1").data("kendoNotification").error("Error!"); 
 				$("#loadImport").css("display","none");				
-		    });
-				
+		    });	
 		},
 		cancel 				: function(){
 			this.invoiceCollection.dataSource.cancelChanges();		
@@ -12046,7 +11986,6 @@
 	    licenseChange 	: function(e) {
 			var data = e.data;
 			var license = this.licenseDS.at(e.sender.selectedIndex - 1);
-			//banhji.reading.set("licenseSelect", license);
 			this.blocDS.filter({field: "branch_id", value: license.id});
 		},
 		blocChange 			: function(e){
@@ -12219,7 +12158,23 @@
 		lang 				: langVM,
 		numCustomer			: 0,
 		paymentReceiptToday : 0,
-		dataSource 			: dataStore(apiUrl + "transactions"),
+		currencyDS 			: banhji.source.currencyDS,
+		cashCurrencyDS 		: [],
+		addRow 				: function() {
+			this.cashCurrencyDS.push({id:1, code: "USD", cash_receipt: 0});
+			this.cashCurrencyDS.push({id:3, code: "KHR", cash_receipt: 0});
+		},
+		removeCurrencyRow 	: function(e) {
+			var that = this;
+			$.each(this.cashCurrencyDS, function(i, v){
+				if(v === e.data) {
+					that.cashCurrencyDS.splice(i, 1);
+					return false;
+				}
+			});
+			// console.log(e.data);
+		},
+ 		dataSource 			: dataStore(apiUrl + "transactions"),
 		deleteDS 			: dataStore(apiUrl + "transactions"),
 		invoiceDS 			: dataStore(apiUrl + "transactions"),
 		creditDS 			: dataStore(apiUrl + "transactions"),		
@@ -14038,7 +13993,7 @@
 			});
 		},
 		//Upload
-		onSelect 			: function(e){
+		onSelect 			: function(e){			
 	        // Array with information about the uploaded files
 	        var self = this, 
 	        files = e.files,
@@ -15565,16 +15520,92 @@
 	});
 
 	banhji.reconcileVM = kendo.observable({
-		currencyDS 		: null,
+		dataSource 		: new kendo.data.DataSource({
+			transport: {
+				read 	: {
+					url: apiUrl + 'reconciles',
+					type: "GET",
+					headers: banhji.header,
+					dataType: 'json'
+				},
+				create 	: {
+					url: apiUrl + 'reconciles',
+					type: "POST",
+					headers: banhji.header,
+					dataType: 'json'
+				},
+				update 	: {
+					url: apiUrl + 'reconciles',
+					type: "PUT",
+					headers: banhji.header,
+					dataType: 'json'
+				},
+				destroy 	: {
+					url: apiUrl + 'reconciles',
+					type: "DELETE",
+					headers: banhji.header,
+					dataType: 'json'
+				},
+				parameterMap: function(options, operation) {
+					if(operation === 'read') {
+						return {
+							page: options.page,
+							limit: options.pageSize,								
+							filter: options.filter,
+							sort: options.sort
+						};
+					} else {
+						return {models: kendo.stringify(options.models)};
+					}
+				}
+			},
+			schema 	: {
+				model: {
+					id: 'id'
+				},
+				data: 'results',
+				total: 'count'
+			},
+			batch: true,
+			serverFiltering: true,
+			serverSorting: true,
+			serverPaging: true,
+			page: 1,
+			pageSize: 100
+		}),
+		currencyDS 		: [],
+		list 			: new kendo.data.DataSource({
+		  	data: []
+		}),
+		addRow 			: function() {
+			this.list.add({code: null, note: 1, unit: 0, total: 0});
+		},
+		removeRow 		: function(e) {
+			this.list.remove(e.data);
+		},
+		onChange 		: function(e) {
+			e.data.set('total', e.data.note * e.data.unit);
+		},
 		addNew 			: function() {
-			this.dataSource.insert(0, {
-				cashier: banhji.userData.id,
-				rate: 1,
-				memo: "",
-				currencies: null,
-				units: null
-			});
-			this.setCurrent(this.dataSource.at(0));
+			// var c = [], units = [], that = this;
+			// if(banhji.Receipt.cashCurrencyDS.length > 0) {
+			// 	$.each(banhji.Receipt.cashCurrencyDS, function(i, v){
+			// 		var code = v.code;
+			// 		c.push({currency: v.code, amount: v.cash_receipt});
+			// 		that.list.add({code: v.code, items: that.currencyUnits});
+			// 	});
+			// }
+			// this.dataSource.insert(0, {
+			// 	cashier: banhji.userData.id,
+			// 	rate: 1,
+			// 	memo: "",
+			// 	currencies: c,
+			// 	units: units
+			// });
+			// this.setCurrent(this.dataSource.at(0));
+		},
+		setCurrent 		: function(current) {
+			this.set('current', current);
 		},
 		currencyUnits 	: [
 			{ number: 1, unit: 0 },
@@ -15623,7 +15654,7 @@
 
 		Receipt: new kendo.Layout("#Receipt", {model: banhji.Receipt}),
 		Reports: new kendo.Layout("#Reports", {model: banhji.Reports}),
-		Reconcile: new kendo.Layout("#Reconcile", {model: banhji.Reconcile}),
+		Reconcile: new kendo.Layout("#Reconcile", {model: banhji.reconcileVM}),
 		Reorder: new kendo.Layout("#Reorder", {model: banhji.Reorder}),
 		//custom form
 		invoiceCustom: new kendo.Layout("#invoiceCustom", {model: banhji.invoiceCustom}),
@@ -15708,17 +15739,28 @@
 			console.log("no resource found.")
 		}
 	});
+
 	/* Login page */
 	banhji.router.route('/', function(){
-		var blank = new kendo.View('#blank-tmpl');
-		banhji.view.layout.showIn('#content', banhji.view.wDashBoard);
-		//banhji.view.layout.showIn('#menu', banhji.view.menu);
+		banhji.view.layout.showIn("#content", banhji.view.wDashBoard);
+		banhji.view.layout.showIn('#menu', banhji.view.menu);
 		banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
-		// $('#main-top-navigation').append('<li><a href="\#">Home</a></li>');
-		// $('#current-section').text("");
-		// $("#secondary-menu").html("");
-		banhji.index.getLogo();
-		banhji.index.pageLoad();
+		
+		var vm = banhji.wDashBoard;
+		vm.pageLoad();
+		// var blank = new kendo.View('#blank-tmpl');
+		// banhji.view.layout.showIn('#content', banhji.view.wDashBoard);
+		// banhji.view.layout.showIn('#menu', banhji.view.menu);
+		// banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
+
+		// var vm = banhji.wDashBoard;
+
+		// // $('#main-top-navigation').append('<li><a href="\#">Home</a></li>');
+		// // $('#current-section').text("");
+		// // $("#secondary-menu").html("");
+		// //banhji.index.getLogo();
+		// //banhji.index.pageLoad();
+		// vm.pageLoad();
 	});
 	banhji.router.route('/setting', function(){
 		banhji.view.layout.showIn("#content", banhji.view.setting);
@@ -15931,6 +15973,14 @@
 		vm.pageLoad();
 	});
 	banhji.router.route("/reconcile", function(){
+		if(banhji.Receipt.currencyDS.data().length <= 0) {
+			banhji.Receipt.currencyDS.read()
+			.then(function(e){
+				$.each(banhji.Receipt.currencyDS.data(), function(i, v){
+					banhji.reconcileVM.currencyDS.push(v);
+				});
+			});
+		}		
 		banhji.view.layout.showIn("#content", banhji.view.Reconcile);
 		banhji.view.layout.showIn('#menu', banhji.view.menu);
 		banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
@@ -16152,35 +16202,35 @@
 			banhji.pageLoaded["reorder"] = true;
 
 			var grid = $("#grid").kendoGrid({
-                    dataSource: vm.dataSource,
-                    autoBind: false,
-                    scrollable: false,
-                    columns: [
-                        { field:"worder", title: vm.lang.lang.order1 },				    	
-				    	{ field:"meter_number", title:vm.lang.lang.number },
-				    	{ field:"contact_name", title:vm.lang.lang.customer }
-                    ]
-                }).data("kendoGrid");
+                dataSource: vm.dataSource,
+                autoBind: false,
+                scrollable: false,
+                columns: [
+                    { field:"worder", title: vm.lang.lang.order1 },				    	
+			    	{ field:"meter_number", title:vm.lang.lang.number },
+			    	{ field:"contact_name", title:vm.lang.lang.customer }
+                ]
+            }).data("kendoGrid");
 
-                grid.table.kendoSortable({
-                    filter: ">tbody >tr",
-                    hint: $.noop,
-                    cursor: "move",
-                    placeholder: function(element) {
-                        return element.clone().addClass("k-state-hover").css("opacity", 0.65);
-                    },
-                    container: "#grid tbody",
-                    change: function(e) {
-                        var skip = grid.dataSource.skip(),
-                            oldIndex = e.oldIndex + skip,
-                            newIndex = e.newIndex + skip,
-                            data = grid.dataSource.data(),
-                            dataItem = grid.dataSource.getByUid(e.item.data("uid"));
-						
-                        grid.dataSource.remove(dataItem);
-                        grid.dataSource.insert(newIndex, dataItem);
-                    }
-                });
+            grid.table.kendoSortable({
+                filter: ">tbody >tr",
+                hint: $.noop,
+                cursor: "move",
+                placeholder: function(element) {
+                    return element.clone().addClass("k-state-hover").css("opacity", 0.65);
+                },
+                container: "#grid tbody",
+                change: function(e) {
+                    var skip = grid.dataSource.skip(),
+                        oldIndex = e.oldIndex + skip,
+                        newIndex = e.newIndex + skip,
+                        data = grid.dataSource.data(),
+                        dataItem = grid.dataSource.getByUid(e.item.data("uid"));
+					
+                    grid.dataSource.remove(dataItem);
+                    grid.dataSource.insert(newIndex, dataItem);
+                }
+            });
 		}
 		vm.pageLoad();
 	});	

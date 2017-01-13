@@ -51,6 +51,7 @@ class Meters extends REST_Controller {
 		}			
 
 		//Get Result
+		$obj->order_by('worder','asc');
 		$obj->get_paged_iterated($page, $limit);
 		$data["count"] = $obj->paged->total_rows;		
 
@@ -141,7 +142,7 @@ class Meters extends REST_Controller {
 					"plan_id" 				=> $obj->plan_id,	
 					"location_id" 			=> $obj->location_id,
 					"brand_id" 				=> $obj->brand_id,
-					"activated" 			=> $obj->activated,
+					"activated" 			=> 0,
 					"latitute" 				=> $obj->latitute,
 					"longtitute" 			=> $obj->longtitute,
 					"date_used" 			=> $obj->date_used
@@ -196,6 +197,7 @@ class Meters extends REST_Controller {
 			$obj->branch_id 			= isset($value->branch_id)			?$value->branch_id:"";
 			$obj->location_id 			= isset($value->location_id)		?$value->location_id:"";
 			$obj->brand_id 				= isset($value->brand_id)			?$value->brand_id:"";
+			$obj->worder 				= isset($value->worder)			?$value->worder:0;
 			$obj->date_used = isset($value->date_used)?date("Y-m-d", strtotime($value->date_used)):'0000-00-00';
 			$obj->number_digit 			= isset($value->number_digit)		?$value->number_digit:4;
 			$obj->plan_id 				= isset($value->plan_id)			?$value->plan_id:0;
@@ -212,6 +214,7 @@ class Meters extends REST_Controller {
 					"location_id" 			=> $obj->location_id,
 					"brand_id" 				=> $obj->brand_id,
 					"activated" 			=> $obj->activated,
+					"worder" 				=> $obj->worder,
 					"latitute" 				=> $obj->latitute,
 					"longtitute" 			=> $obj->longtitute,
 					"date_used" 			=> $obj->date_used

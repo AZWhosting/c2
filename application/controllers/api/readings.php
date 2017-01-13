@@ -81,7 +81,7 @@ class Readings extends REST_Controller {
 					"date"			=> $value->from_date." - ".$value->to_date,
 					"meter_number" 		=> $meter->number,
 					"invoiced"   	=> $value->invoiced == 0 ? FALSE:TRUE,
-					"consumption" 	=> $value->usage,
+					"usage" 		=> $value->usage,
 					"status"		=> "n",
 					"_meta" 		=> array()
 				);
@@ -128,6 +128,7 @@ class Readings extends REST_Controller {
 					"meter_number" 	=> $meter->number,
 					"prev"			=> $obj->previous,
 					"current"		=> $obj->current,
+					"usage"	 		=> $obj->current - $obj->previous,
 					"from_date"		=> $obj->from_date,
 					"to_date"		=> $obj->to_date
 				);				
@@ -155,13 +156,16 @@ class Readings extends REST_Controller {
 				$obj->current 				= isset($value->current)			?$value->current: "";
 				$obj->from_date 			= isset($value->from_date)			?$value->from_date: "";
 				$obj->to_date 				= isset($value->to_date)			?$value->to_date: "";
+				$obj->meter_number 			= isset($value->meter_number)		?$value->meter_number: "";
+				$obj->usage 				= $obj->current - $obj->previous;
 				if($obj->save()){
 					$data["results"][] = array(
 						"meter_id" 		=> $obj->meter_id,
-						"meter_number" 		=> intval($value->number),
+						"meter_number" 	=> $obj->meter_number,
 						"month_of"		=> $obj->month_of,
 						"prev"			=> $obj->previous,
 						"current"		=> $obj->current,
+						"usage" 		=> $obj->usage,
 						"from_date"		=> $obj->from_date,
 						"to_date"		=> $obj->to_date,
 						"_meta" 		=> array()
@@ -186,15 +190,16 @@ class Readings extends REST_Controller {
 					$newObj->from_date 				= isset($value->from_date)			? $value->from_date: "";
 					$newObj->to_date 				= isset($value->to_date)			? $value->to_date: "";
 					$newObj->invoiced 				= 1;
-					if($newObj->save()){
-											
+					$newObj->usage = $newObj->current - $newObj->previous;
+					if($newObj->save()){		
 						$data["results"][] = array(
 							"id"			=> $newObj->id,
 							"meter_id" 		=> $newObj->meter_id,
 							"month_of"		=> $newObj->month_of,
-							"meter_number" 		=> intval($value->number),
+							"meter_number" 	=> $newObj->meter_number,
 							"prev"			=> $newObj->previous,
 							"current"		=> $newObj->current,
+							"usage" 		=> $newObj->usage,
 							"from_date"		=> $newObj->from_date,
 							"to_date"		=> $newObj->to_date,
 							"_meta" 		=> array('id' => $winvioceLine)

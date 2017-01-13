@@ -58,28 +58,11 @@ class Reconciles extends REST_Controller {
 		if($obj->result_count()>0){
 			foreach ($obj as $value) {				
 		 		$data["results"][] = array(
-		 			"id" 						=> $value->id,
-					// "company_id" 				=> $value->company_id,
-					"transfer_account_id" 		=> $value->transfer_account_id,			   			   						   
+		 			"id" 						=> $value->id,		   			   						   
 				   	"cashier" 					=> $value->cashier,				   	
-				   	"rate" 						=> $value->rate,
+				   	// "rate" 						=> $value->rate,
 				   	"currencies"				=> $value->currencies,
-				   	// "received_amount" 			=> $value->received_amount,
-				   	// "previous_amount" 			=> $value->previous_amount,
-				   	// "total_cash1" 				=> $value->total_cash1,
-				   	// "usd_amount" 				=> $value->usd_amount,
-				   	// "usd2khr_amount" 			=> $value->usd2khr_amount,
-				   	// "khr_amount" 				=> $value->khr_amount,
-				   	// "total_cash2" 				=> $value->total_cash2,				   
-				   	// "reconciled_amount" 		=> $value->reconciled_amount,
-				   	// "transfer_usd" 				=> $value->transfer_usd,
-				   	// "usd2khr_transfer_amount"	=> $value->usd2khr_transfer_amount,
-				   	// "transfer_khr" 				=> $value->transfer_khr,				   	
-				   	// "transfered_amount" 		=> $value->transfered_amount,
-				   	// "balance" 					=> $value->balance,
-				   	"memo" 						=> $value->memo,
-				   	"reconciled_date" 			=> $value->reconciled_date,
-				   	"status" 					=> $value->status
+				   	"created_at"				=> $value->created_at
 		 		);
 			}
 		}
@@ -95,54 +78,18 @@ class Reconciles extends REST_Controller {
 		foreach ($models as $value) {
 			$obj = new Reconcile(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			// $obj->transfer_account_id 		= $value->transfer_account_id;			
-			$obj->cashier 					= $value->cashier;
-			$obj->rate 						= $value->rate;
-			// $obj->received_amount 			= $value->received_amount;
-			// $obj->previous_amount 			= $value->previous_amount;			
-			// $obj->total_cash1 				= $value->total_cash1;
-			// $obj->usd_amount 				= $value->usd_amount;
-			// $obj->usd2khr_amount 			= $value->usd2khr_amount;
-			// $obj->khr_amount 				= $value->khr_amount;
-			// $obj->total_cash2 				= $value->total_cash2;			
-			// $obj->reconciled_amount 		= $value->reconciled_amount;
-			// $obj->transfer_usd 				= $value->transfer_usd;
-			// $obj->usd2khr_transfer_amount 	= $value->usd2khr_transfer_amount;
-			// $obj->transfer_khr 				= $value->transfer_khr;
-			// $obj->transfered_amount 		= $value->transfered_amount;			
-			// $obj->balance 					= $value->balance;
-			// $obj->memo 						= $value->memo;
+			$obj->cashier 						= $value->cashier;
 			$obj->currencies 					= json_encode($value->currencies);
-			$obj->units 						= json_encode($value->units);
-			$obj->created_at 					= $value->created_at;
-			// $obj->reconciled_date 			= $value->reconciled_date;
-			// $obj->status 					= $value->status;			
+			$obj->created_at 					= $value->created_at;			
 
 			if($obj->save()){
 				//Respsone				
 				$data["results"][] = array(					
-					"id" 						=> $obj->id,
-					// "company_id" 				=> $obj->company_id,
-					// "transfer_account_id" 		=> $obj->transfer_account_id,			   			   						   
+					"id" 						=> $obj->id,		   			   						   
 				   	"cashier" 					=> $obj->cashier,				   	
-				   	"rate" 						=> $obj->rate,
+				   	// "rate" 						=> $obj->rate,
 				   	"currencies"				=> $obj->currencies,
-				   	"unit" 						=> $obj->unit,
-				   	// "received_amount" 			=> $obj->received_amount,
-				   	// "previous_amount" 			=> $obj->previous_amount,
-				   	// "total_cash1" 				=> $obj->total_cash1,
-				   	// "usd_amount" 				=> $obj->usd_amount,
-				   	// "usd2khr_amount" 			=> $obj->usd2khr_amount,
-				   	// "khr_amount" 				=> $obj->khr_amount,
-				   	// "total_cash2" 				=> $obj->total_cash2,				   
-				   	// "reconciled_amount" 		=> $obj->reconciled_amount,
-				   	// "transfer_usd" 				=> $obj->transfer_usd,
-				   	// "usd2khr_transfer_amount"	=> $obj->usd2khr_transfer_amount,
-				   	// "transfer_khr" 				=> $obj->transfer_khr,				   	
-				   	// "transfered_amount" 		=> $obj->transfered_amount,
-				   	// "balance" 					=> $obj->balance,
-				   	"memo" 						=> $obj->memo,
-				   	// "reconciled_date" 			=> $obj->reconciled_date,
-				   	// "status" 					=> $obj->status
+				   	"created_at"				=> $obj->created_at
 				);				
 			}		
 		}
@@ -161,51 +108,17 @@ class Reconciles extends REST_Controller {
 			$obj = new Reconcile(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$obj->get_by_id($value->id);
 			
-			$obj->company_id 				= $value->company_id;
-			$obj->transfer_account_id 		= $value->transfer_account_id;			
-			$obj->cashier 					= $value->cashier;
-			$obj->rate 						= $value->rate;
-			$obj->received_amount 			= $value->received_amount;
-			$obj->previous_amount 			= $value->previous_amount;			
-			$obj->total_cash1 				= $value->total_cash1;
-			$obj->usd_amount 				= $value->usd_amount;
-			$obj->usd2khr_amount 			= $value->usd2khr_amount;
-			$obj->khr_amount 				= $value->khr_amount;
-			$obj->total_cash2 				= $value->total_cash2;			
-			$obj->reconciled_amount 		= $value->reconciled_amount;
-			$obj->transfer_usd 				= $value->transfer_usd;
-			$obj->usd2khr_transfer_amount 	= $value->usd2khr_transfer_amount;
-			$obj->transfer_khr 				= $value->transfer_khr;
-			$obj->transfered_amount 		= $value->transfered_amount;			
-			$obj->balance 					= $value->balance;
-			$obj->memo 						= $value->memo;
-			$obj->reconciled_date 			= $value->reconciled_date;
-			$obj->status 					= $value->status;
+			$obj->cashier 						= $value->cashier;
+			$obj->currencies 					= json_encode($value->currencies);	
 
 			if($obj->save()){				
 				//Results
 				$data["results"][] = array(
-					"id" 						=> $obj->id,
-					"company_id" 				=> $obj->company_id,
-					"transfer_account_id" 		=> $obj->transfer_account_id,			   			   						   
+					"id" 						=> $obj->id,		   			   						   
 				   	"cashier" 					=> $obj->cashier,				   	
-				   	"rate" 						=> $obj->rate,
-				   	"received_amount" 			=> $obj->received_amount,
-				   	"previous_amount" 			=> $obj->previous_amount,
-				   	"total_cash1" 				=> $obj->total_cash1,
-				   	"usd_amount" 				=> $obj->usd_amount,
-				   	"usd2khr_amount" 			=> $obj->usd2khr_amount,
-				   	"khr_amount" 				=> $obj->khr_amount,
-				   	"total_cash2" 				=> $obj->total_cash2,				   
-				   	"reconciled_amount" 		=> $obj->reconciled_amount,
-				   	"transfer_usd" 				=> $obj->transfer_usd,
-				   	"usd2khr_transfer_amount"	=> $obj->usd2khr_transfer_amount,
-				   	"transfer_khr" 				=> $obj->transfer_khr,				   	
-				   	"transfered_amount" 		=> $obj->transfered_amount,
-				   	"balance" 					=> $obj->balance,
-				   	"memo" 						=> $obj->memo,
-				   	"reconciled_date" 			=> $obj->reconciled_date,
-				   	"status" 					=> $obj->status
+				   	// "rate" 						=> $obj->rate,
+				   	"currencies"				=> $obj->currencies,
+				   	"created_at"				=> $obj->created_at
 				);						
 			}
 		}
@@ -269,17 +182,13 @@ class Reconciles extends REST_Controller {
 		if($obj->result_count()>0){
 			foreach ($obj as $value) {				
 		 		$data["results"][] = array(
-		 			"id" 					=> $value->id,
-					"reconcile_id" 			=> $value->reconcile_id,
-					"denomination" 			=> $value->denomination,			   			   						   
-				   	"khr_qty" 				=> $value->khr_qty,
-				   	"khr_amount"			=> $value->khr_amount,		   	
-				   	"usd_qty" 				=> $value->usd_qty,
-				   	"usd_amount"			=> $value->usd_amount,
-				   	"khr_transfer" 			=> $value->khr_transfer,
-				   	"khr_transfer_amount" 	=> $value->khr_transfer_amount,
-				   	"usd_transfer" 			=> $value->usd_transfer,
-				   	"usd_transfer_amount" 	=> $value->usd_transfer_amount
+		 			"id" 				=> $value->id,
+					"reconcile_id" 		=> $value->reconcile_id,
+					"denomination" 		=> $value->denomination,			   			   						   
+				   	"code" 				=> $obj->code,
+				   	"note"				=> $value->note,		   	
+				   	"unit" 				=> $value->unit,
+				   	"created_at"		=> $value->created_at
 		 		);
 			}
 		}
@@ -296,29 +205,21 @@ class Reconciles extends REST_Controller {
 			$obj = new Reconcile_item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$obj->reconcile_id 			= $value->reconcile_id;
 			$obj->denomination 			= $value->denomination;			
-			$obj->khr_qty 				= $value->khr_qty;
-			$obj->khr_amount 			= $value->khr_amount;
-			$obj->usd_qty 				= $value->usd_qty;
-			$obj->usd_amount 			= $value->usd_amount;
-			$obj->khr_transfer 			= $value->khr_transfer;
-			$obj->khr_transfer_amount 	= $value->khr_transfer_amount;
-			$obj->usd_transfer 			= $value->usd_transfer;
-			$obj->usd_transfer_amount 	= $value->usd_transfer_amount;						
+			$obj->code 					= $value->code;
+			$obj->note 					= $value->note;
+			$obj->unit 					= $value->unit;
+			$obj->created_at 			= $value->created_at;					
 
 			if($obj->save()){
 				//Respsone				
 				$data["results"][] = array(					
-					"id" 					=> $obj->id,
-					"reconcile_id" 			=> $obj->reconcile_id,
-					"denomination" 			=> $obj->denomination,			   			   						   
-				   	"khr_qty" 				=> $obj->khr_qty,
-				   	"khr_amount"			=> $obj->khr_amount,		   	
-				   	"usd_qty" 				=> $obj->usd_qty,
-				   	"usd_amount"			=> $obj->usd_amount,
-				   	"khr_transfer" 			=> $obj->khr_transfer,
-				   	"khr_transfer_amount" 	=> $obj->khr_transfer_amount,
-				   	"usd_transfer" 			=> $obj->usd_transfer,
-				   	"usd_transfer_amount" 	=> $obj->usd_transfer_amount	
+					"id" 				=> $obj->id,
+					"reconcile_id" 		=> $obj->reconcile_id,
+					"denomination" 		=> $obj->denomination,			   			   						   
+				   	"code" 				=> $obj->code,
+				   	"note"				=> $obj->note,		   	
+				   	"unit" 				=> $obj->unit,
+				   	"created_at"		=> $obj->created_at
 				);				
 			}		
 		}
@@ -333,35 +234,32 @@ class Reconciles extends REST_Controller {
 		$data["results"] = array();
 		$data["count"] = 0;
 
-		foreach ($models as $value) {			
-			$obj = new Reconcile_item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			$obj->get_by_id($value->id);
+		foreach ($models as $value) {
+			$t = time();		
+			$old = new Reconcile_item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$old->get_by_id($value->id);
+			$old->status = 0;
+			$old->updated_at = $t;
+			$old->save();
 
+			$obj = new Reconcile_item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$obj->reconcile_id 			= $value->reconcile_id;
 			$obj->denomination 			= $value->denomination;			
-			$obj->khr_qty 				= $value->khr_qty;
-			$obj->khr_amount 			= $value->khr_amount;
-			$obj->usd_qty 				= $value->usd_qty;
-			$obj->usd_amount 			= $value->usd_amount;
-			$obj->khr_transfer 			= $value->khr_transfer;
-			$obj->khr_transfer_amount 	= $value->khr_transfer_amount;
-			$obj->usd_transfer 			= $value->usd_transfer;
-			$obj->usd_transfer_amount 	= $value->usd_transfer_amount;	
+			$obj->code 					= $value->code;
+			$obj->note 					= $value->note;
+			$obj->unit 					= $value->unit;
+			$obj->created_at 			= $t;
 
 			if($obj->save()){				
 				//Results
 				$data["results"][] = array(
-					"id" 					=> $obj->id,
-					"reconcile_id" 			=> $obj->reconcile_id,
-					"denomination" 			=> $obj->denomination,			   			   						   
-				   	"khr_qty" 				=> $obj->khr_qty,
-				   	"khr_amount"			=> $obj->khr_amount,		   	
-				   	"usd_qty" 				=> $obj->usd_qty,
-				   	"usd_amount"			=> $obj->usd_amount,
-				   	"khr_transfer" 			=> $obj->khr_transfer,
-				   	"khr_transfer_amount" 	=> $obj->khr_transfer_amount,
-				   	"usd_transfer" 			=> $obj->usd_transfer,
-				   	"usd_transfer_amount" 	=> $obj->usd_transfer_amount
+					"id" 				=> $obj->id,
+					"reconcile_id" 		=> $obj->reconcile_id,
+					"denomination" 		=> $obj->denomination,			   			   						   
+				   	"code" 				=> $obj->code,
+				   	"note"				=> $obj->note,		   	
+				   	"unit" 				=> $obj->unit,
+				   	"created_at"		=> $obj->created_at
 				);						
 			}
 		}
@@ -386,6 +284,104 @@ class Reconciles extends REST_Controller {
 
 		//Response data
 		$this->response($data, 200);
+	}
+
+	function receipt_get() {
+		$filters 	= $this->get("filter")["filters"];		
+		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
+		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;								
+		$sort 	 	= $this->get("sort");		
+		$data["results"] = array();
+		$data["count"] = 0;
+
+		$obj = new Reconcilereceipt(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
+		// $obj->select('id, cashier, rate, json_array(memo)');
+		//Sort
+		if(!empty($sort) && isset($sort)){					
+			foreach ($sort as $value) {
+				$obj->order_by($value["field"], $value["dir"]);
+			}
+		}
+
+		//Filter		
+		if(!empty($filters) && isset($filters)){
+	    	foreach ($filters as $value) {
+	    		if(isset($value['operator'])) {
+					$obj->{$value['operator']}($value['field'], $value['value']);
+				} else {
+	    			$obj->where($value["field"], $value["value"]);
+				}
+			}
+		}
+
+		$obj->get_paged_iterated($page, $limit);
+
+		if($obj->exists()) {
+			foreach($obj as $value) {
+				$data["results"][] = array(
+					'id' => $value->id,
+					'code' => $value->code,
+					'amount' => $value->amount,
+					'status' => $value->status,
+					'_date'  => $value->created_at
+				);
+			}
+			$this->response($data, 200);
+		} else {
+			$this->response($data, 404);
+		}
+	}
+
+	function receipt_post() {
+		$models = json_decode($this->post('models'));
+
+		$data = array();
+
+		foreach($models as $value) {
+			$obj = new Reconcilereceipt(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$obj->code = $value->code;
+			$obj->amount = $value->amount;
+			$obj->created_at = $value->_date;
+
+			if($obj->save()) {
+				$data[] = array(
+					'id' => $obj->id,
+					'code' => $obj->code,
+					'amount' => $obj->amount,
+					'status' => $obj->status,
+					'_date'  => $obj->created_at
+				);
+			}
+		}
+
+		$this->response(array('results' => $data, 'count' => count($data)), 201);
+	}
+
+	function receipt_put() {
+		$models = json_decode($this->put('models'));
+
+		$data = array();
+
+		foreach($models as $value) {
+			$obj = new Reconcilereceipt(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$obj->where('id', $value->id)->get();
+			$obj->status = 1;
+			// $obj->code = $value->code;
+			// $obj->amount = $value->amount;
+			// $obj->created_at = $value->_date;
+
+			if($obj->save()) {
+				$data[] = array(
+					'id' => $obj->id,
+					'code' => $obj->code,
+					'amount' => $obj->amount,
+					'status' => $obj->status,
+					'_date'  => $obj->created_at
+				);
+			}
+		}
+
+		$this->response(array('results' => $data, 'count' => count($data)), 201);
 	}
 }
 /* End of file reconciles.php */

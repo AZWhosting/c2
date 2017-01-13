@@ -211,6 +211,80 @@ class Branches extends REST_Controller {
 		//Response data
 		$this->response($data, 200);
 	}
+
+	//Dashboard GET
+	function dashboard_get() {		
+		$filters 	= $this->get("filter");		
+		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
+		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;								
+		$sort 	 	= $this->get("sort");		
+		$data["results"] = array();
+		$data["count"] = 0;
+
+		$obj = new Branch(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
+
+		//Sort
+		if(!empty($sort) && isset($sort)){					
+			foreach ($sort as $value) {
+				$obj->order_by($value["field"], $value["dir"]);
+			}
+		}
+
+		//Filter		
+		if(!empty($filters) && isset($filters["filters"])){
+	    	foreach ($filters["filters"] as $value) {
+	    		if(isset($value['operator'])) {
+					$obj->{$value['operator']}($value['field'], $value['value']);
+				} else {
+	    			$obj->where($value["field"], $value["value"]);
+				}
+			}
+		}
+
+		//Results
+		
+		$locationCount = $obj->include_related('location')->result_count();
+		$obj->get_paged_iterated($page, $limit);
+		$data["count"] = $obj->paged->total_rows;		
+		
+		if($obj->result_count()>0){
+			foreach ($obj as $value) {				
+		 		$data["results"][] = array(
+		 			"id" 				=> $value->id,		
+		 			"number" 			=> $value->number,	
+		 			"name"				=> $value->name,
+		 			"abbr"				=> $value->abbr,
+		 			"representative"	=> $value->representative,
+		 			"currency"			=> $value->currency->get_raw()->result(),
+		 			"status"			=> $value->status,
+		 			"expire_date"		=> $value->expire_date,
+		 			"max_customer"		=> $value->max_customer,
+		 			"description"		=> $value->description,
+		 			"address"			=> $value->address,
+		 			"province"			=> $value->province,
+		 			"district"			=> $value->district,
+		 			"email"				=> $value->email,
+		 			"mobile"			=> $value->mobile,
+
+		 			"location_count" 	=> $locationCount,
+
+		 			"active_customer" 	=> "",
+		 			"inactive_customer" => "",
+		 			"deposit"			=> "",
+		 			"usage"				=> "",
+		 			"sale"				=> "",
+		 			"unpaid" 			=> "",
+
+		 			"telephone"			=> $value->telephone,
+		 			"term_of_condition"	=> $value->term_of_condition
+
+		 		);
+			}
+		}
+
+		//Response Data		
+		$this->response($data, 200);			
+	}
 }
 
 /* End of file branches.php */

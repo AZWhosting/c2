@@ -385,6 +385,7 @@ class Plans extends REST_Controller {
 					'is_flat' => $row->is_flat,
 					'type' => $row->type,
 					'usage' 	=> $row->usage,
+					'tariff_id' => $row->tariff_id,
 					"account" => $account->exists() ? array('id' => $account->id, 'name' => $account->name) : array('id'=>null, 'name'=> null),
 					'amount'=> $row->amount
 				);
@@ -452,47 +453,53 @@ class Plans extends REST_Controller {
 		$array = array();
 
 		foreach($requestedData as $row) {
-			$table = new Plan_item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			$table->where('id', $row->id)->get();
-			$table->currency_id = $row->currency;
-			$table->is_flat = isset($row->is_flat) ? $row->is_flat : 0;
-			$table->type = isset($row->type) ? $row->type : null;
-			$table->unit = isset($row->unit)?$row->unit:null;
-			$table->amount = isset($row->amount) ? $row->amount : 0;
-			$table->usage = isset($row->usage)?$row->usage:0;
-			$table->name = isset($row->name)?$row->name:null;
-			$table->account_id = isset($row->account->id)?$row->account->id:0;
-			$table->is_active = isset($row->is_active) ? $row->is_active : 1;
-			$table->is_deleted = 0;
-			if($table->save()) {
-				$currency= $table->currency->get();
-				$data[] = array(
-					"id"  	  => $table->id,
-					"is_flat" => $table->is_flat,
-					"currency"				=> $value->currency_id,
-					"_currency"				=> array(
-												"id" => $currency->id,
-												"code" => $currency->code,
-												"locale" => $currency->locale
-					),
-					"tariff_id" => $table->tariff_id,
-					"type" 	  => $table->type,
-					"unit" 	  => $table->unit,
-					"amount"  => $table->amount,
-					"usage"   => $table->usage,
-					"account" => $row->account,
-					"is_active"=>$table->is_active == 1 ? TRUE:FALSE
-				);
+			$usageCh = new Plan_item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$usageCh->where('tariff_id', $row->tariff_id);
+			$usageCh->where('usage', $row->usage);
+			$usageCh->get();
+			if($usageCh->exists()) {
+				$this->response(array('results' => 'error', 'count' => ''), 400);
+			}else{
+				$table = new Plan_item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$table->where('id', $row->id)->get();
+				$table->currency_id = $row->currency;
+				$table->is_flat = isset($row->is_flat) ? $row->is_flat : 0;
+				$table->type = isset($row->type) ? $row->type : null;
+				$table->unit = isset($row->unit)?$row->unit:null;
+				$table->amount = isset($row->amount) ? $row->amount : 0;
+				$table->usage = isset($row->usage)?$row->usage:0;
+				$table->name = isset($row->name)?$row->name:null;
+				$table->account_id = isset($row->account->id)?$row->account->id:0;
+				$table->is_active = isset($row->is_active) ? $row->is_active : 1;
+				$table->is_deleted = 0;
+				if($table->save()) {
+					$currency= $table->currency->get();
+					$data[] = array(
+						"id"  	  => $table->id,
+						"is_flat" => $table->is_flat,
+						"currency"				=> $table->currency,
+						"_currency"				=> array(
+							"id" => $currency->id,
+							"code" => $currency->code,
+							"locale" => $currency->locale
+						),
+						"tariff_id" => $table->tariff_id,
+						"type" 	  => $table->type,
+						"unit" 	  => $table->unit,
+						"amount"  => $table->amount,
+						"usage"   => $table->usage,
+						"account" => $row->account,
+						"is_active"=>$table->is_active == 1 ? TRUE:FALSE
+					);
+				}
+				if(count($data)>0) {
+					$this->response(array('results' => $data, 'count' => count($data)), 201);
+				} else {
+					$this->response(array('results' => $data, 'count' => count($data)), 200);
+				}
 			}
 		}
-
-		if(count($data)>0) {
-			$this->response(array('results' => $data, 'count' => count($data)), 201);
-		} else {
-			$this->response(array('results' => $data, 'count' => count($data)), 200);
-		}
 	}
-
 	function tariff_delete() {
 		$requestedData = json_decode($this->delete('models'));
 		$array = array();
