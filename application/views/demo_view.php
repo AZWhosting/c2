@@ -1255,8 +1255,6 @@
 												   data-role="combobox"				                
 								                   data-value-primitive="true"
 								                   data-template="currency-list-tmpl"
-								                   data-filter="like"
-								                   data-min-length="3"				   
 								                   data-text-field="code"
 								                   data-value-field="locale"
 								                   data-bind="value: obj.locale, 
@@ -1595,8 +1593,6 @@
 			<input data-role="combobox" id="ddlName"                  
                    data-value-primitive="true"
                    data-template="contact-list-tmpl"
-                   data-filter="like"
-                   data-min-length="3"                  
                    data-text-field="name"
                    data-value-field="id"
                    data-bind="value: contact_id,
@@ -6803,8 +6799,6 @@
 											   data-role="combobox"				                
 							                   data-value-primitive="true"
 							                   data-template="currency-list-tmpl"
-							                   data-filter="like"
-							                   data-min-length="3"				   
 							                   data-text-field="code"
 							                   data-value-field="locale"
 							                   data-bind="value: obj.locale, 
@@ -6823,8 +6817,6 @@
 											   data-header-template="employee-header-tmpl"                  
 							                   data-value-primitive="true"
 							                   data-template="contact-list-tmpl"
-							                   data-filter="like"
-							                   data-min-length="3"
 							                   data-text-field="name"
 							                   data-value-field="id"
 							                   data-bind="value: obj.contact_id,
@@ -6907,8 +6899,6 @@
 									                   data-value-primitive="true"
 									                   data-header-template="account-header-tmpl"                  
 									                   data-template="account-list-tmpl"
-									                   data-filter="like"
-									                   data-min-length="3"
 									                   data-text-field="name"
 									                   data-value-field="id"
 									                   data-bind="value: obj.account_id,
@@ -7220,8 +7210,6 @@
                    data-value-primitive="true"
                    data-header-template="account-header-tmpl"                  
                    data-template="account-list-tmpl"
-                   data-filter="like"
-                   data-min-length="3"
                    data-text-field="name"
                    data-value-field="id"
                    data-bind="value: account_id,
@@ -7255,7 +7243,7 @@
 		<td class="right">
 			<input id="txtAmount" name="txtAmount" 
 					data-role="numerictextbox" 
-					data-decimals="2"
+					data-format="n"
 					data-min="0"
 					data-spinners="false"
 					data-bind="value: amount, events: {change : changes}" 
@@ -7306,8 +7294,6 @@
 											   data-role="combobox"										                    
 							                   data-value-primitive="true"
 							                   data-template="currency-list-tmpl"
-							                   data-filter="like"
-							                   data-min-length="3"
 							                   data-text-field="code"
 							                   data-value-field="locale"
 							                   data-bind="value: obj.locale,
@@ -7325,8 +7311,6 @@
 							                   data-value-primitive="true"
 							                   data-header-template="employee-header-tmpl"
 							                   data-template="contact-list-tmpl"
-							                   data-filter="like"
-							                   data-min-length="3"
 							                   data-text-field="name"
 							                   data-value-field="id"
 							                   data-bind="value: obj.contact_id,
@@ -7694,7 +7678,7 @@
 									<td class="right"><span data-bind="text: lang.lang.amount_received"></span></td>
 									<td class="right strong">
 										<input data-role="numerictextbox" 
-												data-decimals="2"
+												data-format="n"
 												data-min="0"
 												data-spinners="false"
 												data-bind="value: obj.received,
@@ -7811,11 +7795,9 @@
 		<td>
 			<input id="ddlVendor" name="ddlVendor"
 				   data-role="combobox"
-                   data-value-primitive="true" 
                    data-header-template="vendor-header-tmpl"                  
                    data-template="contact-list-tmpl"
-                   data-filter="like"
-                   data-min-length="3"
+                   data-value-primitive="true"
                    data-text-field="name"
                    data-value-field="id"
                    data-bind="value: contact_id,
@@ -7866,7 +7848,7 @@
 		<td class="right">
 			<input id="txtAmount-#:uid#" name="txtAmount-#:uid#" 
 					data-role="numerictextbox" 
-					data-decimals="2"
+					data-format="n"
 					data-min="0"
 					data-spinners="false"
 					data-bind="value: amount, events: {change : changes}" 
@@ -7876,8 +7858,6 @@
 			<input id="ccbTaxItem"
 					data-role="combobox"
 					data-header-template="tax-header-tmpl"
-					data-filter="like"
-                   	data-min-length="3"               			   
                    	data-text-field="name"                   
                    	data-value-field="id"                   	
                    	data-bind="value: tax_item_id, 
@@ -9152,11 +9132,9 @@
 										<td>
 											<input id="cbbContact" name="cbbContact"
 												   data-role="combobox"
-												   data-header-template="vendor-header-tmpl"									                    
+												   data-header-template="vendor-header-tmpl"
+												   data-template="contact-list-tmpl"									                    
 								                   data-value-primitive="true"
-								                   data-filter="like"
-								                   data-min-length="3"								                   
-								                   data-template="contact-list-tmpl"
 								                   data-text-field="name"
 								                   data-value-field="id"
 								                   data-bind="value: obj.contact_id,
@@ -9703,8 +9681,6 @@
 											   data-header-template="vendor-header-tmpl"
 											   data-template="contact-list-tmpl"										                    
 							                   data-value-primitive="true"
-							                   data-filter="like"
-							                   data-min-length="3"							                   
 							                   data-text-field="name"
 							                   data-value-field="id"
 							                   data-bind="value: obj.contact_id,
@@ -9770,8 +9746,6 @@
 															data-template="reference-list-tmpl"
 															data-value-primitive="true"
 															data-auto-bind="false"
-															data-filter="like"
-										                    data-min-length="3"
 															data-text-field="number" 
 								              				data-value-field="id"						              				 
 								              				data-bind="value: obj.reference_id,
@@ -10133,8 +10107,6 @@
 							                   data-value-primitive="true"
 							                   data-header-template="vendor-header-tmpl"
 							                   data-template="contact-list-tmpl"
-							                   data-filter="like"
-							                   data-min-length="3"
 							                   data-text-field="name"
 							                   data-value-field="id"
 							                   data-bind="value: obj.contact_id,
@@ -10188,8 +10160,6 @@
 									                   data-value-primitive="true"
 									                   data-header-template="account-header-tmpl"                
 									                   data-template="account-list-tmpl"
-									                   data-filter="like"
-									                   data-min-length="3"
 									                   data-text-field="name"								                  
 									                   data-value-field="id"
 									                   data-bind="value: obj.account_id,
@@ -10223,8 +10193,6 @@
 														data-template="reference-list-tmpl"
 														data-value-primitive="true"
 														data-auto-bind="false"
-														data-filter="like"
-									                    data-min-length="3"							              				
 														data-text-field="number" 
 							              				data-value-field="id"	 
 							              				data-bind="value: obj.reference_id,
@@ -10605,8 +10573,6 @@
 								                   data-header-template="vendor-header-tmpl"
 								                   data-template="contact-list-tmpl"
 								                   data-value-primitive="true"
-								                   data-filter="like"
-								                   data-min-length="3"
 								                   data-text-field="name"
 								                   data-value-field="id"
 								                   data-bind="value: obj.contact_id,
@@ -10723,8 +10689,6 @@
 															data-template="reference-list-tmpl"
 															data-value-primitive="true"
 															data-auto-bind="false"
-															data-filter="like"
-										                    data-min-length="3"
 															data-text-field="number" 
 								              				data-value-field="id"						              				 
 								              				data-bind="value: obj.reference_id,
@@ -11619,8 +11583,6 @@
 								                   data-header-template="vendor-header-tmpl"
 								                   data-template="contact-list-tmpl"
 								                   data-value-primitive="true"
-								                   data-filter="like"
-								                   data-min-length="3"
 								                   data-text-field="name"
 								                   data-value-field="id"
 								                   data-bind="value: obj.contact_id,
@@ -11673,8 +11635,6 @@
 								              				data-template="reference-list-tmpl"
 								              				data-value-primitive="true"
 								              				data-auto-bind="false"
-								              				data-filter="like"
-										                    data-min-length="3"
 															data-text-field="number" 
 								              				data-value-field="id"						              				 
 								              				data-bind="value: obj.reference_id,
@@ -12389,8 +12349,6 @@
 								                   data-value-primitive="true"
 								                   data-header-template="contact-header-tmpl"
 								                   data-template="contact-list-tmpl"
-								                   data-filter="like"
-								                   data-min-length="3"
 								                   data-text-field="name"
 								                   data-value-field="id"
 								                   data-bind="value: contact_id,
@@ -16017,8 +15975,6 @@
 								                   data-header-template="contact-header-tmpl"
 								                   data-template="contact-list-tmpl"
 								                   data-value-primitive="true"
-								                   data-filter="like"
-								                   data-min-length="3"
 								                   data-text-field="name"
 								                   data-value-field="id"
 								                   data-bind="value: obj.contact_id,
@@ -16134,8 +16090,6 @@
 										                   data-value-primitive="true"
 										                   data-header-template="employee-header-tmpl"
 										                   data-template="contact-list-tmpl"
-										                   data-filter="like"
-										                   data-min-length="3"
 										                   data-text-field="name"
 										                   data-value-field="id"
 										                   data-bind="value: obj.employee_id,
@@ -16596,8 +16550,6 @@
 								                   data-header-template="contact-header-tmpl"
 								                   data-template="contact-list-tmpl"
 								                   data-value-primitive="true"
-								                   data-filter="like"
-								                   data-min-length="3"
 								                   data-text-field="name"
 								                   data-value-field="id"
 								                   data-bind="value: obj.contact_id,
@@ -16673,8 +16625,6 @@
 															data-template="reference-list-tmpl"
 								              				data-value-primitive="true"
 								              				data-auto-bind="false"
-								              				data-filter="like"
-												            data-min-length="3"
 															data-text-field="number" 
 								              				data-value-field="id"						              				 
 								              				data-bind="value: obj.reference_id,
@@ -16711,8 +16661,6 @@
 										                   data-value-primitive="true"
 										                   data-header-template="employee-header-tmpl"
 										                   data-template="contact-list-tmpl"
-										                   data-filter="like"
-										                   data-min-length="3"
 										                   data-text-field="name"
 										                   data-value-field="id"
 										                   data-bind="value: obj.employee_id,
@@ -17188,8 +17136,6 @@
 								                   data-value-primitive="true"
 								                   data-header-template="contact-header-tmpl"
 								                   data-template="contact-list-tmpl"
-								                   data-filter="like"
-										           data-min-length="3"
 								                   data-text-field="name"
 								                   data-value-field="id"
 								                   data-bind="value: obj.contact_id,
@@ -17254,9 +17200,7 @@
 													<input data-role="combobox"
 															data-template="reference-list-tmpl"
 								              				data-value-primitive="true"
-								              				data-filter="like"
 												            data-auto-bind="false"
-												            data-min-length="3"
 															data-text-field="number" 
 								              				data-value-field="id"						              				 
 								              				data-bind="value: obj.reference_id,
@@ -17293,8 +17237,6 @@
 										                   data-value-primitive="true"
 										                   data-header-template="employee-header-tmpl"
 										                   data-template="contact-list-tmpl"
-										                   data-filter="like"
-										                   data-min-length="3"
 										                   data-text-field="name"
 										                   data-value-field="id"
 										                   data-bind="value: obj.employee_id,
@@ -17712,8 +17654,6 @@
 								                   data-header-template="contact-header-tmpl"
 								                   data-template="contact-list-tmpl"
 								                   data-value-primitive="true"
-								                   data-filter="like"
-										           data-min-length="3"
 								                   data-text-field="name"
 								                   data-value-field="id"
 								                   data-bind="value: obj.contact_id,
@@ -17816,9 +17756,7 @@
 													<input data-role="combobox"
 															data-template="reference-list-tmpl"															
 								              				data-value-primitive="true"
-								              				data-filter="like"
 										                    data-auto-bind="false"
-										                    data-min-length="3"
 															data-text-field="number" 
 								              				data-value-field="id"						              				 
 								              				data-bind="value: obj.reference_id,
@@ -17856,8 +17794,6 @@
 										                   data-value-primitive="true"
 										                   data-header-template="employee-header-tmpl"
 										                   data-template="contact-list-tmpl"
-										                   data-filter="like"
-										                   data-min-length="3"
 										                   data-text-field="name"
 										                   data-value-field="id"
 										                   data-bind="value: obj.employee_id,
@@ -18383,8 +18319,6 @@
 								                   data-header-template="contact-header-tmpl"
 								                   data-template="contact-list-tmpl"
 								                   data-value-primitive="true"
-								                   data-filter="like"
-								                   data-min-length="3"
 								                   data-text-field="name"
 								                   data-value-field="id"
 								                   data-bind="value: obj.contact_id,
@@ -18479,9 +18413,7 @@
 													<input data-role="combobox"
 															data-template="reference-list-tmpl"
 								              				data-value-primitive="true"
-								              				data-filter="like"
 										                    data-auto-bind="false"
-										                    data-min-length="3"
 															data-text-field="number" 
 								              				data-value-field="id"						              				 
 								              				data-bind="value: obj.reference_id,
@@ -18519,8 +18451,6 @@
 										                   data-value-primitive="true"
 										                   data-header-template="employee-header-tmpl"
 										                   data-template="contact-list-tmpl"
-										                   data-filter="like"
-										                   data-min-length="3"
 										                   data-text-field="name"
 										                   data-value-field="id"
 										                   data-bind="value: obj.employee_id,
@@ -19034,8 +18964,6 @@
 								                   data-value-primitive="true"
 								                   data-header-template="contact-header-tmpl"
 								                   data-template="contact-list-tmpl"
-								                   data-filter="like"
-								                   data-min-length="3"
 								                   data-text-field="name"
 								                   data-value-field="id"
 								                   data-bind="value: obj.contact_id,
@@ -19100,9 +19028,7 @@
 													<input data-role="combobox"
 															data-template="reference-list-tmpl"
 								              				data-value-primitive="true"
-								              				data-filter="like"
 										                    data-auto-bind="false"
-										                    data-min-length="3"
 															data-text-field="number" 
 								              				data-value-field="id"						              				 
 								              				data-bind="value: obj.reference_id,
@@ -19469,8 +19395,6 @@
 								                   data-header-template="contact-header-tmpl"
 								                   data-template="contact-list-tmpl"
 								                   data-value-primitive="true"
-								                   data-filter="like"
-								                   data-min-length="3"
 								                   data-text-field="name"
 								                   data-value-field="id"
 								                   data-bind="value: obj.contact_id,
@@ -19522,9 +19446,7 @@
 													<input data-role="combobox"
 								              				data-value-primitive="true"
 								              				data-template="reference-list-tmpl"
-								              				data-filter="like"
 										                    data-auto-bind="false"
-										                    data-min-length="3"
 															data-text-field="number" 
 								              				data-value-field="id"						              				 
 								              				data-bind="value: obj.reference_id,
@@ -19883,10 +19805,9 @@
 		</td>
 		<td>
 			<input id="ccbTaxItem" name="ccbTaxItem-#:uid#"
-					data-header-template="tax-header-tmpl"
+				   data-header-template="tax-header-tmpl"
 				   data-role="combobox"
-				   data-filter="like"
-                   data-min-length="3"                  			   
+				   data-value-primitive="true"
                    data-text-field="name"
                    data-value-field="id"
                    data-bind="value: tax_item_id, 
@@ -19903,7 +19824,8 @@
 		</td>			
 		<td>
 			<input id="ddlOption" name="ddlOption-#:uid#"
-				   data-role="dropdownlist"				                      			   
+				   data-role="dropdownlist"
+				   data-value-primitive="true"				                      			   
                    data-text-field="name"
                    data-value-field="id"
                    data-bind="value: type, 
@@ -19916,9 +19838,8 @@
 			<input id="cbbInvoice" name="cbbInvoice-#:uid#"
 				   data-role="combobox"
 				   data-template="reference-list-tmpl"
-				   data-filter="like"
+				   data-value-primitive="true"
                    data-auto-bind="false"
-                   data-min-length="3"			                      			   
                    data-text-field="number"                   
                    data-value-field="id"
                    data-bind="value: reference_id, 
@@ -19930,7 +19851,8 @@
 
             <input id="ddlAccount" name="ddlAccount-#:uid#"
 				   data-role="dropdownlist"
-				   data-template="account-list-tmpl"				                      			   
+				   data-template="account-list-tmpl"
+				   data-value-primitive="true"				                      			   
                    data-text-field="name"
                    data-value-field="id"
                    data-bind="value: account_id, 
@@ -19942,7 +19864,7 @@
 			<input id="txtAmount-#:uid#" name="txtAmount-#:uid#" 
 					data-role="numerictextbox"
 					data-spinners="false" 
-					data-decimals="2"
+					data-format="n"
 					data-spinners="false"
 					data-bind="value: amount, events: {change : changes}" 
 					required data-required-msg="required" style="width: 100%;" />
@@ -19981,8 +19903,6 @@
 								                   data-header-template="contact-header-tmpl"
 								                   data-template="contact-list-tmpl"
 								                   data-value-primitive="true"
-								                   data-filter="like"
-								                   data-min-length="3"
 								                   data-text-field="name"
 								                   data-value-field="id"
 								                   data-bind="value: contact_id,
@@ -20472,8 +20392,6 @@
 								                   data-header-template="contact-header-tmpl"
 								                   data-template="contact-list-tmpl"
 								                   data-value-primitive="true"
-								                   data-filter="like"
-								                   data-min-length="3"
 								                   data-text-field="name"
 								                   data-value-field="id"
 								                   data-bind="value: contact_id,
@@ -20573,8 +20491,6 @@
 									<input data-role="combobox"
 										   data-template="contact-list-tmpl"				            			               			   		                   
 						                   data-value-primitive="true"
-						                   data-filter="like"
-						                   data-min-length="3"
 						                   data-text-field="name"
 						                   data-value-field="id"
 						                   data-bind="value: obj.contact_id,
@@ -23965,8 +23881,6 @@
 								                   data-header-template="contact-header-tmpl"
 								                   data-template="contact-list-tmpl"
 								                   data-value-primitive="true"
-								                   data-filter="like"
-								                   data-min-length="3"
 								                   data-text-field="name"
 								                   data-value-field="id"
 								                   data-bind="value: contact_id,
@@ -30040,8 +29954,6 @@
 			   data-header-template="vendor-header-tmpl"
 			   data-template="contact-list-tmpl"
                data-value-primitive="true"
-               data-filter="like"							                   
-               data-min-length="3"							                   
                data-text-field="name"
                data-value-field="id"										                   
                data-bind="value: contact_id,
@@ -30065,8 +29977,6 @@
 			   data-header-template="contact-header-tmpl"
 			   data-template="contact-list-tmpl"
                data-value-primitive="true"
-               data-filter="like"							                   
-               data-min-length="3"							                   
                data-text-field="name"
                data-value-field="id"										                   
                data-bind="value: contact_id,
@@ -30474,8 +30384,6 @@
 			<input id="ccbItem" name="ccbItem-#:uid#"
 				   data-role="combobox"
 				   data-template="item-list-tmpl"
-				   data-filter="like"
-                   data-min-length="3"                   			   
                    data-text-field="name"
                    data-value-field="id"
                    data-bind="value: item_id, 
@@ -30877,8 +30785,6 @@
 			   data-header-template="vendor-header-tmpl"
 			   data-template="contact-list-tmpl"
                data-value-primitive="true"
-               data-filter="like"							                   
-               data-min-length="3"							                   
                data-text-field="name"
                data-value-field="id"										                   
                data-bind="value: contact_id,
@@ -30902,8 +30808,6 @@
 			   data-header-template="contact-header-tmpl"
 			   data-template="contact-list-tmpl"
                data-value-primitive="true"
-               data-filter="like"							                   
-               data-min-length="3"							                   
                data-text-field="name"
                data-value-field="id"										                   
                data-bind="value: contact_id,
@@ -31306,8 +31210,6 @@
 			   data-header-template="vendor-header-tmpl"
 			   data-template="contact-list-tmpl"
                data-value-primitive="true"
-               data-filter="like"							                   
-               data-min-length="3"                   
                data-text-field="name"
                data-value-field="id"										                   
                data-bind="value: contact_id,
@@ -31331,8 +31233,6 @@
 			   data-header-template="vendor-header-tmpl"
 			   data-template="contact-list-tmpl"
                data-value-primitive="true"
-               data-filter="like"							                   
-               data-min-length="3"							                   
                data-text-field="name"
                data-value-field="id"										                   
                data-bind="value: contact_id,
@@ -32157,8 +32057,6 @@
 													<input id="cbbReader" name="cbbReader" 
 									    				   data-role="combobox"
 										                   data-value-primitive="true"
-										                   data-filter="like"							                   
-										                   data-min-length="3"							                   
 										                   data-text-field="name"
 										                   data-value-field="id"							                   
 										                   data-bind="value: obj.contact_id,
@@ -32175,8 +32073,6 @@
 														   data-header-template="account-header-tmpl"
 														   data-template="account-list-tmpl"							                   
 										                   data-value-primitive="true"
-										                   data-filter="like"
-										                   data-min-length="3"
 										                   data-text-field="name"
 										                   data-value-field="id"									                   
 										                   data-bind="value: obj.account_id,
@@ -32360,7 +32256,7 @@
     	<td align="right">
     		<input class="txt#=uid#"
     			   data-role="numerictextbox"
-                   data-format="n0"
+                   data-format="n"
                    data-min="0"
                    data-spinners="false"                   
                    data-bind="value: quantity_adjusted,
@@ -32368,7 +32264,7 @@
                    style="text-align: right; width: 100px;">    		
     	</td>
     	<td align="right">
-    		<span data-format="n0" data-bind="text: quantity"></span>
+    		<span data-format="n" data-bind="text: quantity"></span>
     	</td>
     </tr>
 </script>
@@ -32761,8 +32657,7 @@
 				<input id="ccbItem" name="ccbItem-#:uid#"
 					   data-role="combobox"
 					   data-template="item-list-tmpl"
-					   data-filter="like"
-	                   data-min-length="3"                  			   
+					   data-value-primitive="true"
 	                   data-text-field="name"
 	                   data-value-field="id"
 	                   data-bind="value: item_id, 
@@ -32780,14 +32675,16 @@
 			<td>
 				<input id="txtQuantity-#:uid#" name="txtQuantity-#:uid#" 
 						data-role="numerictextbox" 
-						data-format="n0" data-min="0"
+						data-format="n" 
+						data-min="0"
 						data-spinners="false"
 						data-bind="value: quantity, events: {change : changes}"
 						required data-required-msg="required" style="width: 40%;" />
 
-				<input id="ddlMesurement" 
+				<input id="ddlMesurement" name="ddlMesurement"
 					   data-role="dropdownlist"
-					   data-header-template="item-measurement-header-tmpl"                  
+					   data-header-template="item-measurement-header-tmpl"
+					   data-value-primitive="true"                  
 	                   data-text-field="name"
 	                   data-value-field="id"
 	                   data-bind="value: measurement_id,
@@ -32813,8 +32710,6 @@
 	                   data-header-template="account-header-tmpl"                 
 	                   data-template="account-list-tmpl"
 	                   data-value-primitive="true"
-	                   data-filter="like"
-	                   data-min-length="3"
 	                   data-text-field="name"
 	                   data-value-field="id"
 	                   data-bind="value: account_id,
@@ -32844,8 +32739,7 @@
 				<input id="ccbItem" name="ccbItem-#:uid#"
 					   data-role="combobox"
 					   data-template="item-list-tmpl"
-					   data-filter="like"
-	                   data-min-length="3"                  			   
+					   data-value-primitive="true"
 	                   data-text-field="name"
 	                   data-value-field="id"
 	                   data-bind="value: item_id, 
@@ -32863,14 +32757,16 @@
 			<td>
 				<input id="txtQuantity-#:uid#" name="txtQuantity-#:uid#" 
 						data-role="numerictextbox" 
-						data-format="n0" data-min="0"
+						data-format="n" 
+						data-min="0"
 						data-spinners="false"
 						data-bind="value: quantity, events: {change : changes}"
 						required data-required-msg="required" style="width: 40%;" />
 
-				<input id="ddlMesurement" 
+				<input id="ddlMesurement" name="ddlMesurement"
 					   data-role="dropdownlist"
-					   data-header-template="item-measurement-header-tmpl"                  
+					   data-header-template="item-measurement-header-tmpl"
+					   data-value-primitive="true"                  
 	                   data-text-field="name"
 	                   data-value-field="id"
 	                   data-bind="value: measurement_id,
@@ -32897,8 +32793,6 @@
 	                   data-header-template="account-header-tmpl"                 
 	                   data-template="account-list-tmpl"
 	                   data-value-primitive="true"
-	                   data-filter="like"
-	                   data-min-length="3"
 	                   data-text-field="name"
 	                   data-value-field="id"
 	                   data-bind="value: account_id,
@@ -32914,7 +32808,7 @@
 			<td class="right">
 				<input id="txtAmount-#:uid#" name="txtAmount-#:uid#" 
 						data-role="numerictextbox" 
-						data-decimals="2"
+						data-format="n"
 						data-min="0"
 						data-spinners="false"
 						data-bind="value: amount, events: {change : changes}" 
@@ -35667,8 +35561,6 @@
 									<input data-role="combobox"
 										   data-template="contact-list-tmpl"				            			               			   		                   
 						                   data-value-primitive="true"
-						                   data-filter="like"
-						                   data-min-length="3"
 						                   data-text-field="name"						                   
 						                   data-value-field="id"
 						                   data-bind="value: obj.contact_id,
@@ -37422,8 +37314,6 @@
 					                   data-header-template="account-header-tmpl"                 
 					                   data-template="account-list-tmpl"
 					                   data-value-primitive="true"
-					                   data-filter="like"
-					                   data-min-length="3"
 					                   data-text-field="name"					                   
 					                   data-value-field="id"
 					                   data-bind="value: obj.account_id,
@@ -37576,8 +37466,6 @@
                    data-header-template="account-header-tmpl"                 
                    data-template="account-list-tmpl"
                    data-value-primitive="true"
-                   data-filter="like"
-                   data-min-length="3"
                    data-text-field="name"
                    data-value-field="id"
                    data-bind="value: account_id,
@@ -37611,8 +37499,6 @@
 			<input data-role="combobox" id="showName"                  
                    data-value-primitive="true"
                    data-template="contact-list-tmpl"
-                   data-filter="like"
-                   data-min-length="3"
                    data-text-field="name"
                    data-value-field="id"
                    data-bind="value: contact_id,
@@ -37635,7 +37521,7 @@
 		<td class="right">
 			<input id="txtAmount" name="txtAmount" 
 					data-role="numerictextbox" 
-					data-decimals="2"
+					data-format="n"
 					data-min="0"
 					data-spinners="false"
 					data-bind="value: amount, events: {change : changes}" 
@@ -37679,8 +37565,6 @@
 										                   	data-header-template="contact-header-tmpl"
 										                   	data-template="contact-list-tmpl"
 										                   	data-value-primitive="true"
-										                   	data-filter="like"
-										                   	data-min-length="3"
 										                   	data-text-field="name"
 										                   	data-value-field="id"
 										                   	data-bind="value: contact_id,
@@ -37952,7 +37836,6 @@
 				   data-spinners="false"
 				   data-format="c"
 				   data-culture="#:locale#"
-                   data-decimals="2"
                    data-min="0"                   
                    data-bind="value: discount,
                               events: { change: changes }"
@@ -37963,7 +37846,6 @@
 				   data-spinners="false"
 				   data-format="c"
 				   data-culture="#:locale#"
-                   data-decimals="2"
                    data-min="0"                   
                    data-bind="value: amount,
                               events: { change: changes }"
@@ -38007,8 +37889,6 @@
 														   data-header-template="vendor-header-tmpl"
 										                   data-template="contact-list-tmpl"
 										                   data-value-primitive="true"
-										                   data-filter="like"
-										                   data-min-length="3"
 										                   data-text-field="name"
 										                   data-value-field="id"
 										                   data-bind="value: contact_id,
@@ -38281,7 +38161,7 @@
 			<input data-role="numerictextbox"
 				   data-spinners="false"
 				   data-culture="#:locale#"
-                   data-decimals="2"
+                   data-format="n"
                    data-min="0"                   
                    data-bind="value: discount,
                               events: { change: changes }"
@@ -38291,7 +38171,7 @@
 			<input data-role="numerictextbox"
 				   data-spinners="false"
 				   data-culture="#:locale#"
-                   data-decimals="2"
+                   data-format="n"
                    data-min="0"                   
                    data-bind="value: amount,
                               events: { change: changes }"
@@ -52790,13 +52670,11 @@
 
 				//AP Account
 				this.additionalCostAccountDS.filter({
-				    filter: {
-				        logic: "or",
-				        filters: [
-				            { field: "account_type_id", value: 23 },
-	      					{ field: "account_type_id", value: 24 }
-				        ]
-				    }
+			        logic: "or",
+			        filters: [
+			            { field: "account_type_id", value: 23 },
+      					{ field: "account_type_id", value: 24 }
+			        ]
 				});
 			}
 
@@ -52813,13 +52691,11 @@
 				this.set("isCash", false);
 				
 				this.accountDS.filter({
-				    filter: {
-				        logic: "or",
-				        filters: [
-				            { field: "account_type_id", value: 23 },
-	      					{ field: "account_type_id", value: 24 }
-				        ]
-				    }
+				    logic: "or",
+				    filters: [
+				      { field: "account_type_id", value: 23 },
+				      { field: "account_type_id", value: 24 }
+				    ]
 				});
 			}
 
@@ -52836,13 +52712,11 @@
 				this.set("isCash", false);
 				
 				this.accountDS.filter({
-				    filter: {
-				        logic: "or",
-				        filters: [
-				            { field: "account_type_id", value: 23 },
-	      					{ field: "account_type_id", value: 24 }
-				        ]
-				    }
+			        logic: "or",
+			        filters: [
+			            { field: "account_type_id", value: 23 },
+      					{ field: "account_type_id", value: 24 }
+			        ]
 				});
 			}
 		},
