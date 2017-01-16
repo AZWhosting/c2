@@ -11840,7 +11840,7 @@
 	    },
 	    showButton 			: false,
 	    makeBilled 			: function(){
-	    	var mSold = 0, self = this;
+	    	var mSold = 0, self = this, rUsage, tUsage, aTariff;
 	    	if(this.invoiceArray.length > 0) {
 	    		this.set('showButton', true);
 	    	} else {
@@ -11849,17 +11849,33 @@
 	    	this.set('totalOfInv', this.invoiceArray.length);
 	    	$.each(this.invoiceArray, function(i, v){
 	    		mSold += kendo.parseInt(v.items[0].line.usage);
-	    		$.each(v.items, function(j, v){
-	    			if(v.type == "tariff"){
-		    			self.calTariff(v);
-		    		}
+	    		//Calculate Exemption
+	    		if(v.exemption){
+	    			var Usage = kendo.parseInt(v.items[0].line.usage),
+	    			AmountEx = kendo.parseInt(v.exemption[0].line.amount);
+	    			if(v.exemption[0].line.unit == 'm3'){
+	    				rUsage = Usage - AmountEx;
+	    				
+	    			}else if(v.exemption[0].line.unit == '%'){
+	    				rUsage = (Usage * AmountEx) / 100;
+	    			}
+	    			tUsage = Usage - rUsage;
+	    		}
+	    		console.log(tUsage);
+	    		//Calculate Tariff
+	    		$.each(v.tariff, function(j, v){
+	    			if(kendo.parseInt(tUsage) > kendo.parseInt(v.line.usage)){
+	    				aTariff = v.line.amount;
+	    			}	
 	    		});
+
 	    		
 	    	});
 	    	this.set("meterSold", mSold);
 	    },
 	    calTariff 			: function(tariff) {
-	    	console.log(banhji.runBill.meterSold);
+	    	var MM = this.get("meterSold");
+	    	console.log(MM);
 	    	var totalAmount = kendo.parseFloat(tariff.line.amount) * kendo.parseInt(this.meterSold);
 	    	this.set("amountSold", totalAmount);
 	    },

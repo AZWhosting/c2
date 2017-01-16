@@ -455,6 +455,7 @@ class Plans extends REST_Controller {
 		foreach($requestedData as $row) {
 			$usageCh = new Plan_item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$usageCh->where('tariff_id', $row->tariff_id);
+			$usageCh->where('id !=', $row->id);
 			$usageCh->where('usage', $row->usage);
 			$usageCh->get();
 			if($usageCh->exists()) {

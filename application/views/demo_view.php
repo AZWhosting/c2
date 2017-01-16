@@ -42404,152 +42404,13 @@
 		lang 						: langVM,
 		countryDS					: dataStore(apiUrl + "countries"),
 		//Contact
-		contactDS					: new kendo.data.DataSource({
-			transport: {
-				read 	: {
-					url: apiUrl + "contacts",
-					type: "GET",
-					headers: banhji.header,
-					dataType: 'json'
-				},				
-				parameterMap: function(options, operation) {
-					if(operation === 'read') {
-						return {
-							page: options.page,
-							limit: options.pageSize,
-							filter: options.filter,
-							sort: options.sort
-						};
-					} else {
-						return {models: kendo.stringify(options.models)};
-					}
-				}				
-			},
-			schema 	: {
-				model: {
-					id: 'id'
-				},
-				data: 'results',
-				total: 'count'
-			},
-			// group: { field: "contact_type" },
-			batch: true,
-			serverFiltering: true,
-			serverSorting: true,
-			serverPaging: true,
-			page:1,
-			pageSize: 100
-		}),
-		customerDS					: new kendo.data.DataSource({
-			transport: {
-				read 	: {
-					url: apiUrl + "contacts",
-					type: "GET",
-					headers: banhji.header,
-					dataType: 'json'
-				},
-				create 	: {
-					url: apiUrl + "contacts",
-					type: "POST",
-					headers: banhji.header,
-					dataType: 'json'
-				},
-				update 	: {
-					url: apiUrl + "contacts",
-					type: "PUT",
-					headers: banhji.header,
-					dataType: 'json'
-				},
-				destroy 	: {
-					url: apiUrl + "contacts",
-					type: "DELETE",
-					headers: banhji.header,
-					dataType: 'json'
-				},				
-				parameterMap: function(options, operation) {
-					if(operation === 'read') {
-						return {
-							page: options.page,
-							limit: options.pageSize,
-							filter: options.filter,
-							sort: options.sort
-						};
-					} else {
-						return {models: kendo.stringify(options.models)};
-					}
-				}
-			},
-			schema 	: {
-				model: {
-					id: 'id'
-				},
-				data: 'results',
-				total: 'count'
-			},
-			filter: { field:"parent_id", operator:"where_related_contact_type", value:1 },
-			// group: { field: "contact_type" },
-			batch: true,
-			serverFiltering: true,
-			serverSorting: true,
-			serverPaging: true,
-			page:1,
-			pageSize: 100
-		}),
-		supplierDS					: new kendo.data.DataSource({
-			transport: {
-				read 	: {
-					url: apiUrl + "contacts",
-					type: "GET",
-					headers: banhji.header,
-					dataType: 'json'
-				},
-				create 	: {
-					url: apiUrl + "contacts",
-					type: "POST",
-					headers: banhji.header,
-					dataType: 'json'
-				},
-				update 	: {
-					url: apiUrl + "contacts",
-					type: "PUT",
-					headers: banhji.header,
-					dataType: 'json'
-				},
-				destroy 	: {
-					url: apiUrl + "contacts",
-					type: "DELETE",
-					headers: banhji.header,
-					dataType: 'json'
-				},				
-				parameterMap: function(options, operation) {
-					if(operation === 'read') {
-						return {
-							page: options.page,
-							limit: options.pageSize,
-							filter: options.filter,
-							sort: options.sort
-						};
-					} else {
-						return {models: kendo.stringify(options.models)};
-					}
-				}
-			},
-			schema 	: {
-				model: {
-					id: 'id'
-				},
-				data: 'results',
-				total: 'count'
-			},
-			filter: { field:"parent_id", operator:"where_related_contact_type", value:2 },
-			// group: { field: "contact_type" },
-			batch: true,
-			serverFiltering: true,
-			serverSorting: true,
-			serverPaging: true,
-			page:1,
-			pageSize: 100
-		}),
+		customerList 				: [],
+		supplierList 				: [],
+		employeeList 				: [],
+		contactDS					: dataStore(apiUrl + "contacts"),
+		customerDS					: dataStore(apiUrl + "contacts"),
+		supplierDS					: dataStore(apiUrl + "contacts"),
+		employeeDS					: dataStore(apiUrl + "contacts"),
 		supplierListDS				: new kendo.data.DataSource({
 			transport: {
 				read 	: {
@@ -42579,43 +42440,6 @@
 				total: 'count'
 			},
 			filter: { field:"parent_id", operator:"where_related_contact_type", value:2 },
-			// group: { field: "contact_type" },
-			batch: true,
-			serverFiltering: true,
-			serverSorting: true,
-			serverPaging: true,
-			page:1,
-			pageSize: 100
-		}),
-		employeeDS					: new kendo.data.DataSource({
-			transport: {
-				read 	: {
-					url: apiUrl + "contacts",
-					type: "GET",
-					headers: banhji.header,
-					dataType: 'json'
-				},				
-				parameterMap: function(options, operation) {
-					if(operation === 'read') {
-						return {
-							page: options.page,
-							limit: options.pageSize,
-							filter: options.filter,
-							sort: options.sort
-						};
-					} else {
-						return {models: kendo.stringify(options.models)};
-					}
-				}
-			},
-			schema 	: {
-				model: {
-					id: 'id'
-				},
-				data: 'results',
-				total: 'count'
-			},
-			filter: { field:"parent_id", operator:"where_related_contact_type", value:3 },
 			// group: { field: "contact_type" },
 			batch: true,
 			serverFiltering: true,
@@ -43305,6 +43129,9 @@
 			});
 			this.loadAccounts();
 			this.loadItems();
+			this.loadCustomers();
+			this.loadSuppliers();
+			this.loadEmployees();
 			this.accountTypeDS.read();
 			this.fixedAssetCategoryDS.read();
 		},
@@ -43394,6 +43221,69 @@
 				filter:{ field:"status", value:1 },
 			}).then(function(){
 				var view = self.itemDS.view();
+
+				$.each(view, function(index, value){
+					raw.push(value);
+				});
+			});
+		},
+		loadCustomers 				: function(){
+			var self = this, raw = this.get("customerList");
+
+			//Clear array
+			if(raw.length>0){
+				raw.splice(0,raw.length);
+			}
+
+			this.customerDS.query({
+				filter:[
+					{ field:"parent_id", operator:"where_related_contact_type", value:1 },
+					{ field:"status", value:1 }
+				]
+			}).then(function(){
+				var view = self.customerDS.view();
+
+				$.each(view, function(index, value){
+					raw.push(value);
+				});
+			});
+		},
+		loadSuppliers 				: function(){
+			var self = this, raw = this.get("supplierList");
+
+			//Clear array
+			if(raw.length>0){
+				raw.splice(0,raw.length);
+			}
+
+			this.supplierDS.query({
+				filter:[
+					{ field:"parent_id", operator:"where_related_contact_type", value:2 },
+					{ field:"status", value:1 }
+				]
+			}).then(function(){
+				var view = self.supplierDS.view();
+
+				$.each(view, function(index, value){
+					raw.push(value);
+				});
+			});
+		},
+		loadEmployees 				: function(){
+			var self = this, raw = this.get("employeeList");
+
+			//Clear array
+			if(raw.length>0){
+				raw.splice(0,raw.length);
+			}
+
+			this.employeeDS.query({
+				filter:[
+					{ field:"parent_id", operator:"where_related_contact_type", value:3 },
+					{ field:"status", value:1 }
+				]
+			}).then(function(){
+				var view = self.employeeDS.view();
 
 				$.each(view, function(index, value){
 					raw.push(value);
@@ -49475,7 +49365,7 @@
 					self.addEmpty();
 				}
 
-				banhji.source.supplierDS.fetch();
+				banhji.source.loadSuppliers();
 			});
 		},
 		cancel 					: function(){
@@ -49604,7 +49494,10 @@
 			pageSize: 100
 		}),		
 		balanceDS  			: dataStore(apiUrl + "transactions"),
-		contactDS  			: banhji.source.supplierDS,
+		contactDS  					: new kendo.data.DataSource({
+		  	data: banhji.source.supplierList,
+			sort: { field:"number", dir:"asc" }
+		}),
 		itemDS  			: new kendo.data.DataSource({
 		  	data: banhji.source.itemList,
 		  	filter: { field:"is_assembly", operator:"neq", value: 1 },
@@ -49745,28 +49638,11 @@
 	    },
 		//Contact
 		loadContact 		: function(id){
-			var self = this;
+			var obj = this.get("obj");
 
-			this.contactDS.query({    			
-				filter: { field:"id", value: id },
-				page: 1,
-				pageSize: 100
-			}).then(function(e){
-				var view = self.contactDS.view(),
-				obj = self.get("obj");
-		    	
-		    	obj.set("contact_id", view[0].id);
-		    	obj.set("locale", view[0].locale);				
-				obj.set("bill_to", view[0].bill_to);
-				obj.set("ship_to", view[0].ship_to);
-				
-				self.setRate();
-				self.loadBalance();
-
-				var combobox = $("#cbbContact").data("kendoComboBox");
-				combobox.select(0);						
-			});
-		},
+		    obj.set("contact_id", id);
+		    this.contactChanges();
+	    },
 		contactChanges 		: function(){
 			var obj = this.get("obj");
 			
@@ -49782,6 +49658,10 @@
 	    	}else{
 	    		this.set("total_credit", 0);
 	    	}
+
+	    	this.lineDS.data([]);
+		    this.addRow();
+		    this.changes();
 	    },
 	    loadBalance 		: function(){
 			var self = this, obj = this.get("obj");			
@@ -49978,7 +49858,6 @@
 					self.lineDS.filter({ field: "transaction_id", value: id });
 					// self.jobDS.filter({ field: "contact_id", value: view[0].contact_id });
 					self.attachmentDS.filter({ field: "transaction_id", value: id });
-					self.loadContact(view[0].contact_id);
 				});
 			}				
 		},
@@ -50182,7 +50061,6 @@
 				}
 
 				//Refresh
-				self.contactDS.filter({ field:"parent_id", operator:"where_related_contact_type", value:2 });
 				banhji.source.loadItems();
 			});			
 		},
@@ -50194,8 +50072,6 @@
 			this.dataSource.data([]);
 			this.lineDS.data([]);
 			this.attachmentDS.data([]);
-
-			this.contactDS.filter({ field:"parent_id", operator:"where_related_contact_type", value:2 });			
 
 			banhji.userManagement.removeMultiTask("purchase_order");
 		},
@@ -50403,7 +50279,10 @@
 			page:1,
 			pageSize: 100
 		}),
-		contactDS  			: banhji.source.supplierDS,					
+		contactDS  			: new kendo.data.DataSource({
+		  	data: banhji.source.supplierList,
+			sort: { field:"number", dir:"asc" }
+		}),
 		itemDS  			: new kendo.data.DataSource({
 		  	data: banhji.source.itemList,
 		  	filter: { field:"is_assembly", operator:"neq", value: 1 },
@@ -50536,35 +50415,17 @@
 	    },
 		//Contact
 		loadContact 		: function(id){
-			var self = this, obj = this.get("obj");
-			// this.jobDS.filter({ field:"contact_id", value:id });			
+			var obj = this.get("obj");
 
-			this.contactDS.query({    			
-				filter: { field:"id", value: id },
-				page: 1,
-				pageSize: 100
-			}).then(function(e){
-				var view = self.contactDS.view();
-		    	
-		    	obj.set("contact_id", view[0].id);
-		    	obj.set("locale", view[0].locale);				
-				obj.set("bill_to", view[0].bill_to);
-				obj.set("ship_to", view[0].ship_to);
-				
-				self.setRate();
-				self.loadReference();
-
-				var combobox = $("#cbbContact").data("kendoComboBox");
-				combobox.select(0);						
-			});
-		},
+		    obj.set("contact_id", id);
+		    this.contactChanges();
+	    },
 		contactChanges 		: function(){
 			var obj = this.get("obj");
 			
 	    	if(obj.contact_id>0){		    			    	
 		    	contact = this.contactDS.get(obj.contact_id);
 		    	
-		    	obj.set("vat_id", contact.tax_item_id);
 		    	obj.set("locale", contact.locale);
 		    	obj.set("bill_to", contact.bill_to);
 		    	obj.set("ship_to", contact.ship_to);
@@ -50572,6 +50433,10 @@
 		    	this.setRate();
 		    	this.loadReference();
 	    	}
+
+	    	this.lineDS.data([]);
+		    this.addRow();
+		    this.changes();
 	    },
 		//Currency Rate
 		setRate 			: function(){
@@ -50708,7 +50573,6 @@
 					self.lineDS.filter({ field: "transaction_id", value: id });
 					self.attachmentDS.filter({ field: "transaction_id", value: id });
 					self.referenceDS.filter({ field: "id", value: view[0].reference_id });
-					self.loadContact(view[0].contact_id);
 				});
 			}
 		},
@@ -50877,7 +50741,6 @@
 				}
 
 				//Refresh
-				self.contactDS.filter({ field:"parent_id", operator:"where_related_contact_type", value:2 });
 				banhji.source.loadItems();
 			});			
 		},
@@ -50889,8 +50752,6 @@
 			this.dataSource.data([]);
 			this.lineDS.data([]);
 			this.attachmentDS.data([]);
-
-			this.contactDS.filter({ field:"parent_id", operator:"where_related_contact_type", value:2 });			
 
 			banhji.userManagement.removeMultiTask("grn");
 		},
@@ -51119,7 +50980,10 @@
 		currencyRateDS		: dataStore(apiUrl + "currencies/rate"),
 		paymentMethodDS		: dataStore(apiUrl + "payment_methods"),
 		attachmentDS	 	: dataStore(apiUrl + "attachments"),
-		contactDS 			: banhji.source.supplierDS,
+		contactDS  			: new kendo.data.DataSource({
+		  	data: banhji.source.supplierList,
+			sort: { field:"number", dir:"asc" }
+		}),
 		segmentItemDS 		: banhji.source.segmentItemDS,
 		txnTemplateDS		: new kendo.data.DataSource({
 			transport: {
@@ -51306,27 +51170,11 @@
 	    },
 		//Contact
 		loadContact 		: function(id){
-			var self = this;
+			var obj = this.get("obj");
 
-			this.contactDS.query({
-				filter: { field:"id", value: id },
-				page: 1,
-				pageSize: 100
-			}).then(function(e){
-				var view = self.contactDS.view(),
-				obj = self.get("obj");
-		    	
-		    	obj.set("contact_id", view[0].id);
-		    	obj.set("account_id", view[0].deposit_account_id);
-		    	obj.set("locale", view[0].locale);
-				
-				self.setRate();
-				self.loadReference();
-
-				var combobox = $("#cbbContact").data("kendoComboBox");
-				combobox.select(0);
-			});
-		},
+		    obj.set("contact_id", id);
+		    this.contactChanges();
+	    },
 		contactChanges 		: function(){
 			var obj = this.get("obj");
 
@@ -51486,7 +51334,6 @@
 					self.lineDS.filter({ field: "transaction_id", value: id });
 					self.journalLineDS.filter({ field: "transaction_id", value: id });
 					self.referenceDS.filter({ field: "id", value: view[0].reference_id });
-					self.loadContact(view[0].contact_id);
 				});
 			}				
 		},			  
@@ -51583,9 +51430,6 @@
 					//Save New
 					self.addEmpty();
 				}
-
-				// Refresh Customer
-				self.contactDS.filter({ field:"parent_id", operator:"where_related_contact_type", value:2 });
 			});			
 		},
 		cancel 				: function(){
@@ -51597,8 +51441,6 @@
 			this.lineDS.data([]);
 			this.attachmentDS.data([]);
 
-			this.contactDS.filter({ field:"parent_id", operator:"where_related_contact_type", value:2 });
-			
 			banhji.userManagement.removeMultiTask("vendor_deposit");
 		},
 		delete 				: function(){
@@ -51843,8 +51685,14 @@
 		referenceLineDS				: dataStore(apiUrl + "item_lines"),
 		jobDS						: banhji.source.jobDS,	
 		balanceDS  					: dataStore(apiUrl + "transactions"),
-		contactListDS 				: banhji.source.supplierListDS,
-		contactDS  					: banhji.source.supplierDS,
+		contactListDS  				: new kendo.data.DataSource({
+		  	data: banhji.source.supplierList,
+			sort: { field:"number", dir:"asc" }
+		}),
+		contactDS  					: new kendo.data.DataSource({
+		  	data: banhji.source.supplierList,
+			sort: { field:"number", dir:"asc" }
+		}),
 		accountDS  					: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
 			sort: { field:"number", dir:"asc" }
@@ -52166,33 +52014,38 @@
 		},
 		//Contact
 		loadContact 		: function(id){
-			var self = this;
-			// this.jobDS.filter({ field:"contact_id", value:id });			
+			var obj = this.get("obj");
 
-			this.contactDS.query({    			
-				filter: { field:"id", value: id },
-				page: 1,
-				pageSize: 100
-			}).then(function(e){
-				var view = self.contactDS.view(),
-				obj = self.get("obj");
+		    obj.set("contact_id", id);
+		    this.contactChanges();
+	    },
+		contactChanges 		: function(){
+			var obj = this.get("obj");
+			
+	    	if(obj.contact_id>0){		    			    	
+		    	var contact = this.contactDS.get(obj.contact_id);		    	
 		    	
-		    	obj.set("contact_id", view[0].id);
-		    	obj.set("payment_term_id", view[0].payment_term_id);
-		    	obj.set("payment_method_id", view[0].payment_method_id);		    	
-		    	obj.set("locale", view[0].locale);				
-				obj.set("bill_to", view[0].bill_to);
-				obj.set("ship_to", view[0].ship_to);
-				
-				self.setRate();				
-				self.loadDeposit();
-				self.loadReference();
+		    	obj.set("account_id", contact.account_id);
+		    	obj.set("payment_term_id", contact.payment_term_id);
+		    	obj.set("payment_method_id", contact.payment_method_id);		    	
+		    	obj.set("locale", contact.locale);
+		    	obj.set("bill_to", contact.bill_to);
+		    	obj.set("ship_to", contact.ship_to);
 
-				var combobox = $("#cbbContact").data("kendoComboBox");
-				combobox.select(0);
-			});
-		},
-		loadBalance 		: function(){
+		    	this.setRate();		    	
+		    	this.loadDeposit();
+		    	this.loadBalance();
+		    	this.loadReference();
+	    	}
+
+	    	this.lineDS.data([]);
+	    	this.accountLineDS.data([]);
+	    	this.additionalCostDS.data([]);
+
+		    this.addRow();
+		    this.changes();
+	    },
+	    loadBalance 		: function(){
 			var self = this, obj = this.get("obj");			
 
 			this.balanceDS.query({    			
@@ -52225,32 +52078,6 @@
 		    	obj.set("credit_allowed", creditAllowed);		
 			});				
 		},
-		contactChanges 		: function(){
-			var obj = this.get("obj");
-			
-	    	if(obj.contact_id>0){		    			    	
-		    	var contact = this.contactDS.get(obj.contact_id);		    	
-		    	
-		    	obj.set("account_id", contact.account_id);
-		    	obj.set("payment_term_id", contact.payment_term_id);
-		    	obj.set("payment_method_id", contact.payment_method_id);		    	
-		    	obj.set("locale", contact.locale);
-		    	obj.set("bill_to", contact.bill_to);
-		    	obj.set("ship_to", contact.ship_to);
-
-		    	this.setRate();		    	
-		    	this.loadDeposit();
-		    	this.loadBalance();
-		    	this.loadReference();
-	    	}
-
-	    	this.lineDS.data([]);
-	    	this.accountLineDS.data([]);
-	    	this.additionalCostDS.data([]);
-
-		    this.addRow();
-		    this.changes();
-	    },
 		//Currency Rate
 		setRate 			: function(){
 			var obj = this.get("obj"), 
@@ -52594,7 +52421,6 @@
 					}				
 
 					self.loadDeposit();
-					self.loadContact(view[0].contact_id);
 					self.loadTypeChanges();				
 				});
 			}				
@@ -52971,7 +52797,6 @@
 				}
 
 				//Refresh
-				self.contactDS.filter({ field:"parent_id", operator:"where_related_contact_type", value:2 });
 				banhji.source.loadItems();
 			});
 		},
@@ -52987,8 +52812,6 @@
 			this.accountLineDS.data([]);
 			this.additionalCostDS.data([]);
 			this.attachmentDS.data([]);
-
-			this.contactDS.filter({ field:"parent_id", operator:"where_related_contact_type", value:2 });
 
 			banhji.userManagement.removeMultiTask("purchase");
 		},
@@ -53553,7 +53376,10 @@
 		measurementDS		: dataStore(apiUrl + "measurements"),
 		jobDS				: banhji.source.jobDS,
 		currencyRateDS		: dataStore(apiUrl + "currencies/rate"),
-		contactDS  			: banhji.source.supplierDS,
+		contactDS  			: new kendo.data.DataSource({
+		  	data: banhji.source.supplierList,
+			sort: { field:"number", dir:"asc" }
+		}),
 		itemDS  			: new kendo.data.DataSource({
 		  	data: banhji.source.itemList,
 		  	filter: { field:"is_assembly", operator:"neq", value: 1 },
@@ -53743,34 +53569,16 @@
 	    },
 		//Contact
 		loadContact 		: function(id){
-			var self = this;
-			// this.jobDS.filter({ field:"contact_id", value:id });			
+			var obj = this.get("obj");
 
-			this.contactDS.query({    			
-				filter: { field:"id", value: id },
-				page: 1,
-				pageSize: 100
-			}).then(function(e){
-				var view = self.contactDS.view(),
-				obj = self.get("obj");
-		    	
-		    	obj.set("contact_id", view[0].id);		    		    	
-		    	obj.set("locale", view[0].locale);				
-				obj.set("bill_to", view[0].bill_to);
-				obj.set("ship_to", view[0].ship_to);
-				
-				self.setRate();
-				self.loadReference();
-
-				var combobox = $("#cbbContact").data("kendoComboBox");
-				combobox.select(0);		
-			});
-		},
+		    obj.set("contact_id", id);
+		    this.contactChanges();
+	    },
 		contactChanges 		: function(){
 			var obj = this.get("obj");
 			
 	    	if(obj.contact_id>0){		    			    	
-		    	contact = this.contactDS.get(obj.contact_id);   	
+		    	var contact = this.contactDS.get(obj.contact_id);   	
 		    		    	
 		    	obj.set("locale", contact.locale);
 		    	obj.set("bill_to", contact.bill_to);
@@ -54005,7 +53813,6 @@
 				self.lineDS.filter({ field: "transaction_id", value: view[0].id });
 				self.journalLineDS.filter({ field: "transaction_id", value: view[0].id });
 				self.referenceDS.filter({ field: "id", value: view[0].reference_id });
-				self.loadContact(view[0].contact_id);
 			});				
 		},
 		changes				: function(){
@@ -54238,7 +54045,6 @@
 				}
 
 				//Refresh
-				self.contactDS.filter({ field:"parent_id", operator:"where_related_contact_type", value:2 });
 				banhji.source.loadItems();
 			});
 		},
@@ -54250,8 +54056,6 @@
 			this.dataSource.data([]);
 			this.lineDS.data([]);
 			this.attachmentDS.data([]);
-
-			this.contactDS.filter({ field:"parent_id", operator:"where_related_contact_type", value:2 });			
 
 			banhji.userManagement.removeMultiTask("purchase_return");
 		},
@@ -56418,7 +56222,7 @@
 					self.addEmpty();
 				}
 
-				banhji.source.customerDS.fetch();
+				banhji.source.loadCustomers();
 			});
 		},
 		cancel 					: function(){
@@ -56512,8 +56316,15 @@
 		attachmentDS	 	: dataStore(apiUrl + "attachments"),
 		jobDS				: banhji.source.jobDS,
 		paymentTermDS 		: banhji.source.paymentTermDS,
-		contactDS  			: banhji.source.customerDS,
-		employeeDS  		: banhji.source.saleRepDS,
+		contactDS  			: new kendo.data.DataSource({
+		  	data: banhji.source.customerList,
+			sort: { field:"number", dir:"asc" }
+		}),
+		employeeDS  		: new kendo.data.DataSource({
+		  	data: banhji.source.employeeList,
+		  	filter:{ field: "item_type_id", value: 10 },//Sale Rep.
+			sort: { field:"number", dir:"asc" }
+		}),
 		itemDS  			: new kendo.data.DataSource({
 		  	data: banhji.source.itemList,
 			filter:{ field: "item_type_id", operator:"neq", value: 3 },
@@ -56687,31 +56498,15 @@
 	    },   
 		//Contact
 		loadContact 		: function(id){
-			var self = this, obj = this.get("obj");			
-
-			this.contactDS.query({    			
-				filter: { field:"id", value: id },
-				page: 1,
-				pageSize: 100
-			}).then(function(e){
-				var view = self.contactDS.view();
-
-				obj.set("contact_id", view[0].id);
-		    	obj.set("locale", view[0].locale);				
-				obj.set("bill_to", view[0].bill_to);
-				obj.set("ship_to", view[0].ship_to);
-				
-				self.setRate();
-				self.loadBalance();
-
-				var combobox = $("#cbbContact").data("kendoComboBox");
-				combobox.select(0);
-			});
-		},
-		contactChanges 		: function(){
 			var obj = this.get("obj");
 
-	    	if(obj.contact_id>0){		    			    	
+		    obj.set("contact_id", id);
+		    this.contactChanges();
+	    },
+	    contactChanges 		: function(id){
+			var self = this, obj = this.get("obj");
+
+	    	if(obj.contact_id>0){
 		    	var contact = this.contactDS.get(obj.contact_id);
 		    		    	
 		    	obj.set("locale", contact.locale);
@@ -56722,6 +56517,7 @@
 		    	this.loadBalance();
 	    	}
 	    	this.lineDS.data([]);
+	    	this.assemblyLineDS.data([]);
 		    this.addRow();
 		    this.changes();
 	    },
@@ -57020,7 +56816,6 @@
 						{ field: "assembly_id >", value: 0 }
 					]);
 					self.attachmentDS.filter({ field: "transaction_id", value: view[0].id });
-					self.loadContact(view[0].contact_id);
 				});
 			}
 		},
@@ -57242,7 +57037,6 @@
 				}
 
 				//Refresh
-				self.contactDS.filter({ field:"parent_id", operator:"where_related_contact_type", value:1 });
 				banhji.source.loadItems();
 			});			
 		},
@@ -57256,8 +57050,6 @@
 			this.lineDS.data([]);
 			this.assemblyLineDS.data([]);
 			this.attachmentDS.data([]);
-
-			this.contactDS.filter({ field:"parent_id", operator:"where_related_contact_type", value:1 });
 			
 			banhji.userManagement.removeMultiTask("quote");
 		},
@@ -57465,8 +57257,15 @@
 		}),
 		jobDS				: banhji.source.jobDS,
 		currencyRateDS		: dataStore(apiUrl + "currencies/rate"),
-		contactDS  			: banhji.source.customerDS,
-		employeeDS  		: banhji.source.saleRepDS,
+		contactDS  			: new kendo.data.DataSource({
+		  	data: banhji.source.customerList,
+			sort: { field:"number", dir:"asc" }
+		}),
+		employeeDS  		: new kendo.data.DataSource({
+		  	data: banhji.source.employeeList,
+		  	filter:{ field: "item_type_id", value: 10 },//Sale Rep.
+			sort: { field:"number", dir:"asc" }
+		}),
 		itemDS  			: new kendo.data.DataSource({
 		  	data: banhji.source.itemList,
 			filter:{ field: "item_type_id", operator:"neq", value: 3 },
@@ -57607,35 +57406,16 @@
 	    },
 		//Contact
 		loadContact 		: function(id){
-			var self = this;
-			this.jobDS.filter({ field:"contact_id", value:id });			
-
-			this.contactDS.query({    			
-				filter: { field:"id", value: id },
-				page: 1,
-				pageSize: 100
-			}).then(function(e){
-				var view = self.contactDS.view(),
-				obj = self.get("obj");
-		    	
-		    	obj.set("contact_id", view[0].id);
-		    	obj.set("locale", view[0].locale);				
-				obj.set("bill_to", view[0].bill_to);
-				obj.set("ship_to", view[0].ship_to);
-				
-				self.setRate();
-				self.loadBalance();
-				self.loadReference();
-
-				var combobox = $("#cbbContact").data("kendoComboBox");
-				combobox.select(0);						
-			});
-		},
-		contactChanges 		: function(){
 			var obj = this.get("obj");
-			this.jobDS.filter({ field:"contact_id", value: obj.contact_id });
 
-	    	if(obj.contact_id>0){		    			    	
+		    obj.set("contact_id", id);
+		    this.contactChanges();
+	    },
+		contactChanges 		: function(){
+			var self = this, obj = this.get("obj");
+
+	    	if(obj.contact_id>0){
+	    		this.jobDS.filter({ field:"contact_id", value: obj.contact_id });		    			    	
 		    	var contact = this.contactDS.get(obj.contact_id);
 		    	
 		    	obj.set("locale", contact.locale);
@@ -57647,6 +57427,7 @@
 		    	this.loadReference();
 	    	}
 	    	this.lineDS.data([]);
+	    	this.assemblyLineDS.data([]);
 		    this.addRow();
 		    this.changes();
 	    },
@@ -57932,7 +57713,6 @@
 					]);
 					self.attachmentDS.filter({ field: "transaction_id", value: view[0].id });
 					self.referenceDS.filter({ field: "id", value: view[0].reference_id });
-					self.loadContact(view[0].contact_id);
 				});
 			}				
 		},
@@ -58165,7 +57945,6 @@
 				}
 
 				//Refresh
-				self.contactDS.filter({ field:"parent_id", operator:"where_related_contact_type", value:1 });
 				banhji.source.loadItems();
 			});
 		},
@@ -58179,8 +57958,6 @@
 			this.lineDS.data([]);
 			this.assemblyLineDS.data([]);
 			this.attachmentDS.data([]);
-
-			this.contactDS.filter({ field:"parent_id", operator:"where_related_contact_type", value:1 });			
 
 			banhji.userManagement.removeMultiTask("sale_order");
 		},
@@ -58475,8 +58252,15 @@
 			sort: { field:"number", dir:"asc" }
 		}),
 		jobDS				: banhji.source.jobDS,
-		contactDS 			: banhji.source.customerDS,
-		employeeDS  		: banhji.source.saleRepDS,
+		contactDS  			: new kendo.data.DataSource({
+		  	data: banhji.source.customerList,
+			sort: { field:"number", dir:"asc" }
+		}),
+		employeeDS  		: new kendo.data.DataSource({
+		  	data: banhji.source.employeeList,
+		  	filter:{ field: "item_type_id", value: 10 },//Sale Rep.
+			sort: { field:"number", dir:"asc" }
+		}),
 		segmentItemDS 		: banhji.source.segmentItemDS,
 		amtDueColor 		: banhji.source.amtDueColor,
 	    confirmMessage 		: banhji.source.confirmMessage,
@@ -58600,27 +58384,11 @@
 	    },
 		//Contact
 		loadContact 		: function(id){
-			var self = this;
+			var obj = this.get("obj");
 
-			this.contactDS.query({
-				filter: { field:"id", value: id },
-				page: 1,
-				pageSize: 100
-			}).then(function(e){
-				var view = self.contactDS.view(),
-				obj = self.get("obj");
-		    	
-		    	obj.set("contact_id", view[0].id);
-		    	obj.set("account_id", view[0].deposit_account_id);
-		    	obj.set("locale", view[0].locale);
-
-				self.setRate();
-				self.loadReference();
-
-				var combobox = $("#cbbContact").data("kendoComboBox");
-				combobox.select(0);
-			});
-		},
+		    obj.set("contact_id", id);
+		    this.contactChanges();
+	    },
 		contactChanges 		: function(){
 			var obj = this.get("obj");
 
@@ -58694,11 +58462,9 @@
 					self.set("original_total", view[0].amount);
 					self.set("total", kendo.toString(view[0].amount, "c", view[0].locale));
 					
-					// self.contactDS.filter({ field: "id", value: view[0].contact_id });
 					self.lineDS.filter({ field: "transaction_id", value: id });				
 					self.journalLineDS.filter({ field: "transaction_id", value: id });
 					self.referenceDS.filter({ field: "id", value: view[0].reference_id });
-					self.loadContact(view[0].contact_id);
 				});
 			}
 		},
@@ -58876,9 +58642,6 @@
 					//Save New
 					self.addEmpty();
 				}
-
-				// Refresh Customer
-				self.contactDS.filter({ field:"parent_id", operator:"where_related_contact_type", value:1 });
 			});			
 		},
 		cancel 				: function(){
@@ -58890,8 +58653,6 @@
 			this.lineDS.data([]);
 			this.attachmentDS.data([]);
 
-			this.contactDS.filter({ field:"parent_id", operator:"where_related_contact_type", value:1 });
-			
 			banhji.userManagement.removeMultiTask("customer_deposit");
 		},
 		delete 				: function(){
@@ -59213,8 +58974,15 @@
 		}),
 		currencyRateDS		: dataStore(apiUrl + "currencies/rate"),
 		jobDS				: banhji.source.jobDS,
-		contactDS  			: banhji.source.customerDS,
-		employeeDS  		: banhji.source.saleRepDS,
+		contactDS  			: new kendo.data.DataSource({
+		  	data: banhji.source.customerList,
+			sort: { field:"number", dir:"asc" }
+		}),
+		employeeDS  		: new kendo.data.DataSource({
+		  	data: banhji.source.employeeList,
+		  	filter:{ field: "item_type_id", value: 10 },//Sale Rep.
+			sort: { field:"number", dir:"asc" }
+		}),
 		itemDS  			: new kendo.data.DataSource({
 		  	data: banhji.source.itemList,
 			filter:{ field: "item_type_id", operator:"neq", value: 3 },
@@ -59426,37 +59194,19 @@
 		},
 		//Contact
 		loadContact 		: function(id){
-			var self = this;
-			this.jobDS.filter({ field:"contact_id", value:id });			
+			var obj = this.get("obj");
 
-			this.contactDS.query({    			
-				filter: { field:"id", value: id },
-				page: 1,
-				pageSize: 100
-			}).then(function(e){
-				var view = self.contactDS.view(),
-				obj = self.get("obj");
-		    	
-		    	obj.set("contact_id", view[0].id);
-		    	obj.set("payment_method_id", view[0].payment_method_id);		    	
-		    	obj.set("locale", view[0].locale);				
-				obj.set("bill_to", view[0].bill_to);
-				obj.set("ship_to", view[0].ship_to);				
-							
-				self.loadData();
-
-				var combobox = $("#cbbContact").data("kendoComboBox");
-				combobox.select(0);							
-			});
-		},
+		    obj.set("contact_id", id);
+		    this.contactChanges();
+	    },
 		contactChanges 		: function(){
 			var obj = this.get("obj");
-			this.jobDS.filter({ field:"contact_id", value: obj.contact_id });
 
-	    	if(obj.contact_id>0){		    			    	
+	    	if(obj.contact_id>0){
+	    		this.jobDS.filter({ field:"contact_id", value: obj.contact_id });		    			    	
 		    	var contact = this.contactDS.get(obj.contact_id);		    			    	
 		    	
-		    	obj.set("payment_method_id", contact.payment_method_id);		    	
+		    	obj.set("payment_method_id", contact.payment_method_id);
 		    	obj.set("locale", contact.locale);
 		    	obj.set("bill_to", contact.bill_to);
 		    	obj.set("ship_to", contact.ship_to);
@@ -59467,6 +59217,7 @@
 	    	}
 
 	    	this.lineDS.data([]);
+	    	this.assemblyLineDS.data([]);
 		    this.addRow();
 		    this.changes();
 	    },
@@ -59737,7 +59488,6 @@
 						self.set("showDiscount", true);
 					}
 									
-					// self.contactDS.filter({ field: "id", value: view[0].contact_id });				
 					self.lineDS.filter([
 						{ field: "transaction_id", value: view[0].id },
 						{ field: "assembly_id", value: 0 }
@@ -59758,7 +59508,6 @@
 					self.set("original_credit", view[0].credit);
 
 					self.loadDeposit();
-					self.loadContact(view[0].contact_id);
 				});
 			}				
 		},
@@ -60072,7 +59821,6 @@
 				}
 
 				//Refresh
-				self.contactDS.filter({ field:"parent_id", operator:"where_related_contact_type", value:1 });
 				banhji.source.loadItems();
 			});
 		},
@@ -60086,8 +59834,6 @@
 			this.lineDS.data([]);
 			this.assemblyLineDS.data([]);
 			this.attachmentDS.data([]);
-
-			this.contactDS.filter({ field:"parent_id", operator:"where_related_contact_type", value:1 });
 
 			banhji.userManagement.removeMultiTask("cash_sale");
 		},
@@ -60609,8 +60355,15 @@
 		referenceLineDS		: dataStore(apiUrl + "item_lines"),
 		depositDS  			: dataStore(apiUrl + "transactions"),
 		attachmentDS	 	: dataStore(apiUrl + "attachments"),
-		contactDS  			: banhji.source.customerDS,
-		employeeDS  		: banhji.source.saleRepDS,
+		contactDS  			: new kendo.data.DataSource({
+		  	data: banhji.source.customerList,
+			sort: { field:"number", dir:"asc" }
+		}),
+		employeeDS  		: new kendo.data.DataSource({
+		  	data: banhji.source.employeeList,
+		  	filter:{ field: "item_type_id", value: 10 },//Sale Rep.
+			sort: { field:"number", dir:"asc" }
+		}),
 		itemDS  			: new kendo.data.DataSource({
 		  	data: banhji.source.itemList,
 			filter:{ field: "item_type_id", operator:"neq", value: 3 },
@@ -60907,34 +60660,16 @@
 		},
 		//Contact
 		loadContact 		: function(id){
-			var self = this;
-			this.jobDS.filter({ field:"contact_id", value:id });			
-
-			this.contactDS.query({    			
-				filter: { field:"id", value: id },
-				page: 1,
-				pageSize: 100
-			}).then(function(e){
-				var view = self.contactDS.view(),
-				obj = self.get("obj");
-		    	
-		    	obj.set("contact_id", view[0].id);
-		    	obj.set("payment_term_id", view[0].payment_term_id);		    	
-		    	obj.set("locale", view[0].locale);				
-				obj.set("bill_to", view[0].bill_to);
-				obj.set("ship_to", view[0].ship_to);
-				
-				self.loadData();
-
-				var combobox = $("#cbbContact").data("kendoComboBox");
-				combobox.select(0);							
-			});
-		},
-		contactChanges 		: function(){
 			var obj = this.get("obj");
-			this.jobDS.filter({ field:"contact_id", value: obj.contact_id });
 
-	    	if(obj.contact_id>0){		    			    	
+		    obj.set("contact_id", id);
+		    this.contactChanges();
+	    },
+		contactChanges 		: function(){
+			var obj = this.get("obj");			
+
+	    	if(obj.contact_id>0){
+	    		this.jobDS.filter({ field:"contact_id", value: obj.contact_id });		    			    	
 		    	var contact = this.contactDS.get(obj.contact_id);		    	 	
 		    	
 		    	obj.set("payment_term_id", contact.payment_term_id);
@@ -60948,6 +60683,7 @@
 	    	}
 
 	    	this.lineDS.data([]);
+	    	this.assemblyLineDS.data([]);
 		    this.addRow();
 		    this.changes();
 	    },
@@ -61254,7 +60990,6 @@
 					self.referenceDS.filter({ field: "id", value: view[0].reference_id });				
 					
 					self.loadDeposit();
-					self.loadContact(view[0].contact_id);				
 				});
 			}				
 		},
@@ -61563,7 +61298,6 @@
 				}
 
 				//Refresh Customer
-				self.contactDS.filter({ field:"parent_id", operator:"where_related_contact_type", value:1 });
 				banhji.source.loadItems();
 			});
 		},
@@ -61577,8 +61311,6 @@
 			this.lineDS.data([]);
 			this.assemblyLineDS.data([]);
 			this.attachmentDS.data([]);
-
-			this.contactDS.filter({ field:"parent_id", operator:"where_related_contact_type", value:1 });			
 
 			banhji.userManagement.removeMultiTask("invoice");
 		},
@@ -62110,7 +61842,10 @@
 		recurringLineDS 	: dataStore(apiUrl + "item_lines"),
 		referenceDS			: dataStore(apiUrl + "transactions"),
 		referenceLineDS		: dataStore(apiUrl + "item_lines"),
-		contactDS  			: banhji.source.customerDS,
+		contactDS  			: new kendo.data.DataSource({
+		  	data: banhji.source.customerList,
+			sort: { field:"number", dir:"asc" }
+		}),
 		itemDS  			: new kendo.data.DataSource({
 		  	data: banhji.source.itemList,
 			filter:{ field: "item_type_id", operator:"neq", value: 3 },
@@ -62294,27 +62029,11 @@
 	    },
 		//Contact
 		loadContact 		: function(id){
-			var self = this;			
+			var obj = this.get("obj");
 
-			this.contactDS.query({    			
-				filter: { field:"id", value: id },
-				page: 1,
-				pageSize: 100
-			}).then(function(e){
-				var view = self.contactDS.view(),
-				obj = self.get("obj");
-		    	
-		    	obj.set("contact_id", view[0].id);
-		    	obj.set("locale", view[0].locale);				
-				obj.set("bill_to", view[0].bill_to);
-				obj.set("ship_to", view[0].ship_to);
-				
-				self.setRate();
-
-				var combobox = $("#cbbContact").data("kendoComboBox");
-				combobox.select(0);						
-			});
-		},
+		    obj.set("contact_id", id);
+		    this.contactChanges();
+	    },
 		contactChanges 		: function(){
 			var obj = this.get("obj");
 
@@ -62330,6 +62049,7 @@
 	    	}
 
 	    	this.lineDS.data([]);
+	    	this.assemblyLineDS.data([]);
 		    this.addRow();
 		    this.changes();
 	    },
@@ -62523,7 +62243,6 @@
 					
 					self.set("statusSrc", banhji.source.deliveredSrc);
 								
-					// self.contactDS.filter({ field: "id", value: view[0].contact_id });
 					self.lineDS.filter([
 						{ field: "transaction_id", value: view[0].id },
 						{ field: "assembly_id", value: 0 }
@@ -62534,7 +62253,6 @@
 					]);
 					self.attachmentDS.filter({ field: "transaction_id", value: id });
 					self.referenceDS.filter({ field: "id", value: view[0].reference_id });
-					self.loadContact(view[0].contact_id);
 				});
 			}				
 		},
@@ -62743,7 +62461,6 @@
 				}
 
 				//Refresh
-				self.contactDS.filter({ field:"parent_id", operator:"where_related_contact_type", value:1 });
 				banhji.source.loadItems();
 			});
 		},
@@ -62757,8 +62474,6 @@
 			this.lineDS.data([]);
 			this.assemblyLineDS.data([]);
 			this.attachmentDS.data([]);
-
-			this.contactDS.filter({ field:"parent_id", operator:"where_related_contact_type", value:1 });			
 
 			banhji.userManagement.removeMultiTask("gdn");
 		},
@@ -62989,7 +62704,10 @@
 		invoiceDS			: dataStore(apiUrl + "transactions"),
 		currencyRateDS		: dataStore(apiUrl + "currencies/rate"),
 		jobDS				: banhji.source.jobDS,
-		contactDS  			: banhji.source.customerDS,
+		contactDS  			: new kendo.data.DataSource({
+		  	data: banhji.source.customerList,
+			sort: { field:"number", dir:"asc" }
+		}),
 		itemDS  			: new kendo.data.DataSource({
 		  	data: banhji.source.itemList,
 			filter:{ field: "item_type_id", operator:"neq", value: 3 },
@@ -63179,34 +62897,16 @@
 	    },
 		//Contact
 		loadContact 		: function(id){
-			var self = this;
-			this.jobDS.filter({ field:"contact_id", value:id });			
+			var obj = this.get("obj");
 
-			this.contactDS.query({    			
-				filter: { field:"id", value: id },
-				page: 1,
-				pageSize: 100
-			}).then(function(e){
-				var view = self.contactDS.view(),
-				obj = self.get("obj");
-		    	
-		    	obj.set("contact_id", view[0].id);		    		    	
-		    	obj.set("locale", view[0].locale);				
-				obj.set("bill_to", view[0].bill_to);
-				obj.set("ship_to", view[0].ship_to);
-				
-				self.setRate();
-				self.loadReference();
-
-				var combobox = $("#cbbContact").data("kendoComboBox");
-				combobox.select(0);		
-			});
-		},
+		    obj.set("contact_id", id);
+		    this.contactChanges();
+	    },
 		contactChanges 		: function(){
 			var obj = this.get("obj");
-			this.jobDS.filter({ field:"contact_id", value: obj.contact_id });
 
-	    	if(obj.contact_id>0){		    			    	
+	    	if(obj.contact_id>0){
+	    		this.jobDS.filter({ field:"contact_id", value: obj.contact_id });		    			    	
 		    	contact = this.contactDS.get(obj.contact_id);   	
 		    		    	
 		    	obj.set("locale", contact.locale);
@@ -63218,6 +62918,7 @@
 	    	}
 
 	    	this.lineDS.data([]);
+	    	this.assemblyLineDS.data([]);
 		    this.addRow();
 		    this.changes();
 	    },
@@ -63499,7 +63200,6 @@
 
 		        self.set("original_total", view[0].amount);
 				
-				// self.contactDS.filter({ field: "id", value: view[0].contact_id });
 				self.lineDS.filter([
 					{ field: "transaction_id", value: view[0].id },
 					{ field: "assembly_id", value: 0 }
@@ -63511,8 +63211,6 @@
 				self.journalLineDS.filter({ field: "transaction_id", value: view[0].id });
 				self.attachmentDS.filter({ field: "transaction_id", value: view[0].id });
 				self.referenceDS.filter({ field: "id", value: view[0].reference_id });
-
-				self.loadContact(view[0].contact_id);
 
 				self.returnDS.query({
 					filter:{ field: "return_id", value: view[0].id },
@@ -63807,7 +63505,6 @@
 				}
 
 				//Refresh
-				self.contactDS.filter({ field:"parent_id", operator:"where_related_contact_type", value:1 });
 				banhji.source.loadItems();
 			});
 		},
@@ -63821,8 +63518,6 @@
 			this.lineDS.data([]);
 			this.assemblyLineDS.data([]);
 			this.attachmentDS.data([]);
-
-			this.contactDS.filter({ field:"parent_id", operator:"where_related_contact_type", value:1 });			
 
 			banhji.userManagement.removeMultiTask("sale_return");
 		},
@@ -64181,7 +63876,10 @@
 		lang 				: langVM,
 		dataSource 			: dataStore(apiUrl + "transactions/statement"),
 		agingDS 			: dataStore(apiUrl + "transactions/statement_aging"),
-		contactDS 			: banhji.source.customerDS,
+		contactDS  			: new kendo.data.DataSource({
+		  	data: banhji.source.customerList,
+			sort: { field:"number", dir:"asc" }
+		}),
 		sortList 			: banhji.source.sortList,
 		sorter 				: "all",
 		sdate 				: "",
@@ -64227,6 +63925,10 @@
 				  	this.set("edate", "");									  
 			}
 		},
+		loadContact 		: function(id){
+		    this.set("contact_id", id);
+		    this.search();
+	    },
 		search				: function(){
 			var self = this, para = [], displayDate = "",
 				contact_id = this.get("contact_id"),
