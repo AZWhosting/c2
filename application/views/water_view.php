@@ -11840,7 +11840,7 @@
 	    },
 	    showButton 			: false,
 	    makeBilled 			: function(){
-	    	var mSold = 0, self = this, rUsage, tUsage, aTariff;
+	    	var mSold = 0, self = this, rUsage, tUsage, aTariff, AmountTmpTotal = 0;
 	    	if(this.invoiceArray.length > 0) {
 	    		this.set('showButton', true);
 	    	} else {
@@ -11861,19 +11861,72 @@
 	    			}
 	    			tUsage = Usage - rUsage;
 	    		}
-	    		console.log(tUsage);
 	    		//Calculate Tariff
 	    		$.each(v.tariff, function(j, v){
 	    			if(kendo.parseInt(tUsage) > kendo.parseInt(v.line.usage)){
 	    				aTariff = v.line.amount;
 	    			}	
 	    		});
-	    		self.calInvoice(aTariff, tUsage);
+	    		//Add Invocie Itme
+	    		var date = new Date();
+				var rate = banhji.source.getRate(banhji.locale, date);
+				var locale = banhji.locale;
+				var usage = v.items[0].line.usage * v.meter.multiplier;
+				var record_id = v.items[0].line.id;
 
+				v.items.filter(function(data) {
+					if(data.type === 'tariff') {
+						return true;
+					} else {
+						return false
+					}
+				}).sort(function(aValue, bValue){
+					if(aValue.usage < bValue.user) {
+						return -1;
+					} else {
+						return 1;
+					}
+					return 0;
+				});
+				var invoiceItems = [];
+				$.each(v.items, function(index, value) {
+					if(value.type == "tariff") {
+						invoiceItems.push({			
+							"item_id" 			: value.line.id,
+					   		"invoice_id"		: 0,														
+						   	"meter_record_id"	: record_id,
+						   	"description" 		: value.line.name,					   	
+						   	"quantity" 			: usage,
+						   	"price"				: value.line.amount,					   	
+						   	"amount" 			: AmountTariff,
+						   	"rate"				: rate,
+						   	"locale" 			: locale,
+						   	"has_vat" 			: false,
+					   		"type" 				: value.type
+						});
+					} else {
+						invoiceItems.push({				
+							"item_id" 			: value.line.id,
+					   		"invoice_id"		: 0,														
+						   	"meter_record_id"	: record_id,
+						   	"description" 		: value.line.name,					   	
+						   	"quantity" 			: value.type == 'usage' ? value.line.usage : 1,
+						   	"price"				: value.line.amount,					   	
+						   	"amount" 			: value.line.amount,
+						   	"rate"				: rate,
+						   	"locale" 			: locale,
+						   	"has_vat" 			: false,
+					   		"type" 				: value.type
+						});
+					}	
+				});	
+	    		self.calInvoice(aTariff, tUsage, v.contact.id, v.contact.account_id, v.contact.vat, invoiceItems);
+	    		AmountTmpTotal = AmountTmpTotal + (kendo.parseInt(tUsage) * kendo.parseFloat(aTariff));
 	    	});
+	    	this.set("amountSold", AmountTmpTotal);
 	    	this.set("meterSold", mSold);
 	    },
-	    calInvoice 			: function(AmountTariff, TotalUsage){
+	    calInvoice 			: function(AmountTariff, TotalUsage, ContactID, AccountID, VatID, invoiceItems){
 	    	var self =this,
 	    	monthOF,
 			issueDate,
@@ -11881,223 +11934,62 @@
 			billDate,
 			dueDate,
 			AmountAfterTariff = kendo.parseInt(TotalUsage) * kendo.parseFloat(AmountTariff);
-			console.log(AmountAfterTariff);
-			// $.each(this.invoiceArray, function(i, v){
-			// 	var invoiceItems = [];
-			// 	var rate = banhji.source.getRate(banhji.locale, date);
-			// 	var locale = banhji.locale;
-			// 	var usage = v.items[0].line.usage * v.meter.multiplier;
-			// 	var record_id = v.items[0].line.id;
-			// 	var amount = 0.00;
-			// 	var date = new Date();
-			// 	if(self.get("FmonthSelect")){
-			// 		monthOF = self.get("FmonthSelect");
-			// 	}else{
-			// 		monthOF = null;
-			// 	}
-			// 	if(self.get("BillingDate")){
-			// 		billDate = self.get("BillingDate");
-			// 	}else{
-			// 		billDate = null;
-			// 	}
-			// 	if(self.get("PaymentDate")){
-			// 		paymentDate = self.get("PaymentDate");
-			// 	}else{
-			// 		paymentDate = null;
-			// 	}
-			// 	if(self.get("DueDate")){
-			// 		dueDate = self.get("DueDate");
-			// 	}else{
-			// 		dueDate = date.setDate(date.getDate() + 7);
-			// 	}
-
-			// 	v.items.filter(function(data) {
-			// 		if(data.type === 'tariff') {
-			// 			return true;
-			// 		} else {
-			// 			return false
-			// 		}
-			// 	}).sort(function(aValue, bValue){
-			// 		if(aValue.usage < bValue.user) {
-			// 			return -1;
-			// 		} else {
-			// 			return 1;
-			// 		}
-			// 		return 0;
-			// 	});
-
-			// 	$.each(v.items, function(index, value) {
-			// 		if(value.type == "tariff") {
-			// 			invoiceItems.push({				
-			// 		   		"invoice_id"		: 0,
-			// 				"item_id" 			: 0,														
-			// 			   	"meter_record_id"	: record_id,
-			// 			   	"description" 		: value.line.name,					   	
-			// 			   	"quantity" 			: usage,
-			// 			   	"price"				: value.line.amount,					   	
-			// 			   	"amount" 			: value.line.is_flat == false ? usage * kendo.parseFloat(value.line.amount) : kendo.parseFloat(value.line.amount),
-			// 			   	"rate"				: rate,
-			// 			   	"locale" 			: locale,
-			// 			   	"has_vat" 			: false,
-			// 		   		"type" 				: value.type
-			// 			});
-			// 			amount += value.line.is_flat == false ? usage * kendo.parseFloat(value.line.amount) : kendo.parseFloat(value.line.amount);
-			// 		} else {
-			// 			invoiceItems.push({				
-			// 		   		"invoice_id"		: 0,
-			// 				"item_id" 			: 0,														
-			// 			   	"meter_record_id"	: record_id,
-			// 			   	"description" 		: value.line.name,					   	
-			// 			   	"quantity" 			: value.type == 'usage' ? value.line.usage : 1,
-			// 			   	"price"				: value.line.amount,					   	
-			// 			   	"amount" 			: value.line.amount,
-			// 			   	"rate"				: rate,
-			// 			   	"locale" 			: locale,
-			// 			   	"has_vat" 			: false,
-			// 		   		"type" 				: value.type
-			// 			});
-			// 			amount += kendo.parseFloat(value.line.amount);
-			// 		}	
-			// 	});
-
-			// 	self.invoiceCollection.dataSource.add({
-			// 		contact_id 			: v.contact.id,
-			// 		payment_term_id		: null,
-			// 		payment_method_id 	: null,
-			// 		reference_id 		: null,
-			// 		account_id 			: v.contact.account_id,
-			// 		vat_id 				: v.contact.vat_id,
-			// 		biller_id 			: banhji.userData.id,
-			// 		number 				: null,
-			// 		type 				: "Water_Invoice",
-			// 		amount 				: amount,
-			// 		vat 				: null,
-			// 		rate 				: rate,
-			// 		locale 				: locale,
-			// 		month_of 			: monthOF,
-			// 		issued_date 		: date,
-			// 		payment_date 		: null,
-			// 		bill_date 			: billDate,
-			// 		due_date 			: dueDate,
-			// 		check_no 			: null,
-			// 		memo 				: null,
-			// 		memo2 				: null,
-			// 		status 				: null,
-			// 		invoice_lines    	: invoiceItems
-			// 	});
-			// });
+			//var invoiceItems = [];
+			var rate = banhji.source.getRate(banhji.locale, date);
+			var locale = banhji.locale;
+			//var usage = v.items[0].line.usage * v.meter.multiplier;
+			//var record_id = v.items[0].line.id;
+			var amount = 0.00;
+			var date = new Date();
+			if(self.get("FmonthSelect")){
+				monthOF = self.get("FmonthSelect");
+			}else{
+				monthOF = null;
+			}
+			if(self.get("BillingDate")){
+				billDate = self.get("BillingDate");
+			}else{
+				billDate = null;
+			}
+			if(self.get("PaymentDate")){
+				paymentDate = self.get("PaymentDate");
+			}else{
+				paymentDate = null;
+			}
+			if(self.get("DueDate")){
+				dueDate = self.get("DueDate");
+			}else{
+				dueDate = date.setDate(date.getDate() + 7);
+			}
+			this.invoiceCollection.dataSource.add({
+				contact_id 			: ContactID,
+				payment_term_id		: null,
+				payment_method_id 	: null,
+				reference_id 		: null,
+				account_id 			: AccountID,
+				vat_id 				: VatID,
+				biller_id 			: banhji.userData.id,
+				number 				: null,
+				type 				: "Water_Invoice",
+				amount 				: AmountAfterTariff,
+				vat 				: null,
+				rate 				: rate,
+				locale 				: locale,
+				month_of 			: monthOF,
+				issued_date 		: date,
+				payment_date 		: null,
+				bill_date 			: billDate,
+				due_date 			: dueDate,
+				check_no 			: null,
+				memo 				: null,
+				memo2 				: null,
+				status 				: null,
+				invoice_lines    	: invoiceItems
+			});
+			console.log(invoiceItems);
 	    },
 		save 				: function() {
-			// var self = this,
-			// monthOF,
-			// issueDate,
-			// paymentDate,
-			// billDate,
-			// dueDate;
-			// $.each(this.invoiceArray, function(i, v){
-			// 	var invoiceItems = [];
-			// 	var rate = banhji.source.getRate(banhji.locale, date);
-			// 	var locale = banhji.locale;
-			// 	var usage = v.items[0].line.usage * v.meter.multiplier;
-			// 	var record_id = v.items[0].line.id;
-			// 	var amount = 0.00;
-			// 	var date = new Date();
-			// 	if(self.get("FmonthSelect")){
-			// 		monthOF = self.get("FmonthSelect");
-			// 	}else{
-			// 		monthOF = null;
-			// 	}
-			// 	if(self.get("BillingDate")){
-			// 		billDate = self.get("BillingDate");
-			// 	}else{
-			// 		billDate = null;
-			// 	}
-			// 	if(self.get("PaymentDate")){
-			// 		paymentDate = self.get("PaymentDate");
-			// 	}else{
-			// 		paymentDate = null;
-			// 	}
-			// 	if(self.get("DueDate")){
-			// 		dueDate = self.get("DueDate");
-			// 	}else{
-			// 		dueDate = date.setDate(date.getDate() + 7);
-			// 	}
-
-			// 	v.items.filter(function(data) {
-			// 		if(data.type === 'tariff') {
-			// 			return true;
-			// 		} else {
-			// 			return false
-			// 		}
-			// 	}).sort(function(aValue, bValue){
-			// 		if(aValue.usage < bValue.user) {
-			// 			return -1;
-			// 		} else {
-			// 			return 1;
-			// 		}
-			// 		return 0;
-			// 	});
-
-			// 	$.each(v.items, function(index, value) {
-			// 		if(value.type == "tariff") {
-			// 			invoiceItems.push({				
-			// 		   		"invoice_id"		: 0,
-			// 				"item_id" 			: 0,														
-			// 			   	"meter_record_id"	: record_id,
-			// 			   	"description" 		: value.line.name,					   	
-			// 			   	"quantity" 			: usage,
-			// 			   	"price"				: value.line.amount,					   	
-			// 			   	"amount" 			: value.line.is_flat == false ? usage * kendo.parseFloat(value.line.amount) : kendo.parseFloat(value.line.amount),
-			// 			   	"rate"				: rate,
-			// 			   	"locale" 			: locale,
-			// 			   	"has_vat" 			: false,
-			// 		   		"type" 				: value.type
-			// 			});
-			// 			amount += value.line.is_flat == false ? usage * kendo.parseFloat(value.line.amount) : kendo.parseFloat(value.line.amount);
-			// 		} else {
-			// 			invoiceItems.push({				
-			// 		   		"invoice_id"		: 0,
-			// 				"item_id" 			: 0,														
-			// 			   	"meter_record_id"	: record_id,
-			// 			   	"description" 		: value.line.name,					   	
-			// 			   	"quantity" 			: value.type == 'usage' ? value.line.usage : 1,
-			// 			   	"price"				: value.line.amount,					   	
-			// 			   	"amount" 			: value.line.amount,
-			// 			   	"rate"				: rate,
-			// 			   	"locale" 			: locale,
-			// 			   	"has_vat" 			: false,
-			// 		   		"type" 				: value.type
-			// 			});
-			// 			amount += kendo.parseFloat(value.line.amount);
-			// 		}	
-			// 	});
-
-			// 	self.invoiceCollection.dataSource.add({
-			// 		contact_id 			: v.contact.id,
-			// 		payment_term_id		: null,
-			// 		payment_method_id 	: null,
-			// 		reference_id 		: null,
-			// 		account_id 			: v.contact.account_id,
-			// 		vat_id 				: v.contact.vat_id,
-			// 		biller_id 			: banhji.userData.id,
-			// 		number 				: null,
-			// 		type 				: "Water_Invoice",
-			// 		amount 				: amount,
-			// 		vat 				: null,
-			// 		rate 				: rate,
-			// 		locale 				: locale,
-			// 		month_of 			: monthOF,
-			// 		issued_date 		: date,
-			// 		payment_date 		: null,
-			// 		bill_date 			: billDate,
-			// 		due_date 			: dueDate,
-			// 		check_no 			: null,
-			// 		memo 				: null,
-			// 		memo2 				: null,
-			// 		status 				: null,
-			// 		invoice_lines    	: invoiceItems
-			// 	});
-			// });
+			var self = this;
 			$("#loadImport").css("display","block");
 			this.invoiceCollection.save();
 			
@@ -12116,7 +12008,8 @@
 		    });	
 		},
 		cancel 				: function(){
-			this.invoiceCollection.dataSource.cancelChanges();		
+			this.invoiceCollection.dataSource.cancelChanges();
+			this.invoiceArray = [];	
 			window.history.back();
 		}
 	});

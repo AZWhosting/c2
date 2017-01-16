@@ -217,7 +217,8 @@ class Winvoices extends REST_Controller {
 						'id' => $contact->id,
 						'account_id' => $contact->account_id,
 						'ra_id' => $contact->ra_id,
-						'name' => $contact->name
+						'name' => $contact->name,
+						'vat' => $contact->vat_no
 												);
 				$tmp["$meter->number"]['meter'] = array(
 					'id' => $meter->id,
@@ -372,7 +373,7 @@ class Winvoices extends REST_Controller {
 		   			}
 		   			$line = new Winvoice_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		   			$line->transaction_id 	= $obj->id;
-		   			$line->item_id 			= $row->item_id;
+		   			//$line->item_id 			= $row->item_id;
 		   			$line->meter_record_id 	= $row->meter_record_id;
 		   			$line->description 		= $row->description;
 		   			$line->quantity 		= $row->quantity;
@@ -382,6 +383,7 @@ class Winvoices extends REST_Controller {
 		   			$line->locale 			= $row->locale;
 		   			$line->has_vat 			= $row->has_vat;
 		   			$line->type 			= isset($row->type)?$row->type:"";
+		   			$line->item_id 			= isset($row->item_id)?$row->item_id:"";
 
 		   			//to do: add to accouting line
 
@@ -399,7 +401,8 @@ class Winvoices extends REST_Controller {
 				   			"rate"				=> floatval($line->rate),
 				   			"locale" 			=> $line->locale,
 				   			"has_vat" 			=> $line->has_vat=="true"?true:false,
-				   			"type" 				=> $line->type
+				   			"type" 				=> $line->type,
+				   			"item_id" 			=> $line->item_id
 		   				);
 		   			}
 		   		}

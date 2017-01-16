@@ -11469,7 +11469,7 @@
       				data-template="account-list-tmpl"
 					data-value-primitive="true"
 					data-text-field="name" 
-      				data-value-field="id"						              				 
+      				data-value-field="id"
       				data-bind="value: account_id,
       							source: additionalCostAccountDS"
       				data-option-label="Select Account..."
@@ -11485,14 +11485,14 @@
                    data-text-field="name"
                    data-value-field="id"
                    data-bind="value: contact_id,
-                              source: contactListDS,
+                              source: additionalContactDS,
                               events:{ change : contactColumnChanges }"
                    data-placeholder="Add Name.."                    
                    style="width: 100%" />
 		</td>
 		<td>
 			<input type="text" class="k-textbox" 
-					data-bind="value: reference_no"				
+					data-bind="value: reference_no"
 					style="width: 100%; margin-bottom: 0;" />		
 		</td>
 		<td>
@@ -11512,14 +11512,14 @@
 		</td>		
 		<td data-bind="visible: showDescriptionColumn">
 			<input type="text" class="k-textbox" 
-					data-bind="value: memo"					
+					data-bind="value: memo"
 					style="width: 100%; margin-bottom: 0;" />
 		</td>				
 		<td class="right">
 			<input id="txtSubTotal-#:uid#" name="txtSubTotal-#:uid#" 
 					data-role="numerictextbox"
 					data-spinners="false" 
-					data-format="2"
+					data-format="n"
 					data-min="0"
 					data-bind="value: sub_total, events: {change : changes}" 
 					required data-required-msg="required" style="width: 100%;" /> 						
@@ -49494,7 +49494,7 @@
 			pageSize: 100
 		}),		
 		balanceDS  			: dataStore(apiUrl + "transactions"),
-		contactDS  					: new kendo.data.DataSource({
+		contactDS  			: new kendo.data.DataSource({
 		  	data: banhji.source.supplierList,
 			sort: { field:"number", dir:"asc" }
 		}),
@@ -49659,9 +49659,7 @@
 	    		this.set("total_credit", 0);
 	    	}
 
-	    	this.lineDS.data([]);
-		    this.addRow();
-		    this.changes();
+	    	this.changes();
 	    },
 	    loadBalance 		: function(){
 			var self = this, obj = this.get("obj");			
@@ -49881,7 +49879,7 @@
 					tax += amt * taxItem.rate;																	
 				}					
 
-				value.set("amount", amt.toFixed(2));					
+				value.set("amount", amt);					
 				subTotal += amt;
 	        });
 
@@ -50424,7 +50422,7 @@
 			var obj = this.get("obj");
 			
 	    	if(obj.contact_id>0){		    			    	
-		    	contact = this.contactDS.get(obj.contact_id);
+		    	var contact = this.contactDS.get(obj.contact_id);
 		    	
 		    	obj.set("locale", contact.locale);
 		    	obj.set("bill_to", contact.bill_to);
@@ -50433,9 +50431,7 @@
 		    	this.setRate();
 		    	this.loadReference();
 	    	}
-
-	    	this.lineDS.data([]);
-		    this.addRow();
+	    	
 		    this.changes();
 	    },
 		//Currency Rate
@@ -51186,9 +51182,7 @@
 		    	this.setRate();
 		    	this.loadReference();
 	    	}
-
-	    	this.lineDS.data([]);
-		    this.addRow();
+	    	
 		    this.changes();
 	    },
 		//Currency Rate
@@ -51685,11 +51679,11 @@
 		referenceLineDS				: dataStore(apiUrl + "item_lines"),
 		jobDS						: banhji.source.jobDS,	
 		balanceDS  					: dataStore(apiUrl + "transactions"),
-		contactListDS  				: new kendo.data.DataSource({
+		contactDS  					: new kendo.data.DataSource({
 		  	data: banhji.source.supplierList,
 			sort: { field:"number", dir:"asc" }
 		}),
-		contactDS  					: new kendo.data.DataSource({
+		additionalContactDS  		: new kendo.data.DataSource({
 		  	data: banhji.source.supplierList,
 			sort: { field:"number", dir:"asc" }
 		}),
@@ -52037,12 +52031,7 @@
 		    	this.loadBalance();
 		    	this.loadReference();
 	    	}
-
-	    	this.lineDS.data([]);
-	    	this.accountLineDS.data([]);
-	    	this.additionalCostDS.data([]);
-
-		    this.addRow();
+	    	
 		    this.changes();
 	    },
 	    loadBalance 		: function(){
@@ -52252,7 +52241,7 @@
 			   	is_recurring 		: 0				
 	    	});
 
-			//Apply additional cost to item line
+			// Apply additional cost to item line
 	    	$.each(this.lineDS.data(), function(index, value) {	    		
 	    		if(value.item_id>0){
 	    			var item = self.itemDS.get(value.item_id);
@@ -56516,9 +56505,7 @@
 		    	this.setRate();
 		    	this.loadBalance();
 	    	}
-	    	this.lineDS.data([]);
-	    	this.assemblyLineDS.data([]);
-		    this.addRow();
+	    	
 		    this.changes();
 	    },
 		loadBalance 		: function(){
@@ -57426,9 +57413,7 @@
 		    	this.loadBalance();
 		    	this.loadReference();
 	    	}
-	    	this.lineDS.data([]);
-	    	this.assemblyLineDS.data([]);
-		    this.addRow();
+	    	
 		    this.changes();
 	    },
 	    loadBalance 		: function(){
@@ -58400,9 +58385,7 @@
 		    	this.setRate();
 		    	this.loadReference();
 	    	}
-
-	    	this.lineDS.data([]);
-		    this.addRow();
+	    	
 		    this.changes();
 	    },
 		//Currency Rate
@@ -59215,10 +59198,7 @@
 	    	}else{
 	    		this.set("total_deposit", 0);
 	    	}
-
-	    	this.lineDS.data([]);
-	    	this.assemblyLineDS.data([]);
-		    this.addRow();
+	    	
 		    this.changes();
 	    },
 	    loadBalance 		: function(){
@@ -60682,9 +60662,6 @@
 	    		this.set("total_deposit", 0);
 	    	}
 
-	    	this.lineDS.data([]);
-	    	this.assemblyLineDS.data([]);
-		    this.addRow();
 		    this.changes();
 	    },
 	    loadBalance 		: function(){
@@ -62048,9 +62025,6 @@
 		    	this.loadReference(); 			    	
 	    	}
 
-	    	this.lineDS.data([]);
-	    	this.assemblyLineDS.data([]);
-		    this.addRow();
 		    this.changes();
 	    },
 	    //Currency Rate
@@ -62907,7 +62881,7 @@
 
 	    	if(obj.contact_id>0){
 	    		this.jobDS.filter({ field:"contact_id", value: obj.contact_id });		    			    	
-		    	contact = this.contactDS.get(obj.contact_id);   	
+		    	var contact = this.contactDS.get(obj.contact_id);   	
 		    		    	
 		    	obj.set("locale", contact.locale);
 		    	obj.set("bill_to", contact.bill_to);
@@ -62917,9 +62891,6 @@
 		    	this.loadReference();		    		    			    	
 	    	}
 
-	    	this.lineDS.data([]);
-	    	this.assemblyLineDS.data([]);
-		    this.addRow();
 		    this.changes();
 	    },
 		//Currency Rate		
