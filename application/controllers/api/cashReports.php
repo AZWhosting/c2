@@ -338,14 +338,14 @@ class Cashreports extends REST_Controller {
 			if($obj->result_count()>0){
 				foreach ($obj as $value) {
 					// $accounts = $value->account_line->include_related('account', 'name')->get();
-					$accounts = $value->account_line->get_raw();
+					$line = $value->journal_line->include_related('account', array('number', 'name'))->get();
 					$customer= $value->contact->get();
 					// foreach($accounts as $account) {
 						$data['results'][] = array(
 							'id' 		=> $value->id,
 							'contact'  	=> $customer->name,
 							'number'	=> $value->number,
-							'account'   => $accounts->result(),//$account->account_line_name,
+							'account'   => $line->account_number."-".$line->account_name,//$account->account_line_name,
 							'date' 		=> $value->issued_date,
 							'type' 		=> $value->type,
 							'amount'	=> floatval($value->amount)/floatval($value->rate)
@@ -421,7 +421,7 @@ class Cashreports extends REST_Controller {
 			foreach ($segmentItem as $seg) {
 				$txn = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
-				$txn->where("type", "Cash_Payment");
+				$obj->where("type","Cash_Payment");
 				$txn->where_in("status", array(0,2));
 				$txn->like("segments", $seg->id, "both");
 				$txn->where("deleted",0);
@@ -459,7 +459,7 @@ class Cashreports extends REST_Controller {
 
 			$obj->where_in_related("contact", 'contact_type_id', $types);
 			$obj->where('is_recurring', 0);
-			$obj->where("type", "Cash_Payment");
+			$obj->where("type","Cash_Payment");
 
 			//Results
 			$obj->get_paged_iterated($page, $limit);
@@ -472,14 +472,14 @@ class Cashreports extends REST_Controller {
 			if($obj->result_count()>0){
 				foreach ($obj as $value) {
 					// $accounts = $value->account_line->include_related('account', 'name')->get();
-					$accounts = $value->account_line->get_raw();
+					$line = $value->journal_line->include_related('account', array('number', 'name'))->get();
 					$customer= $value->contact->get();
 					// foreach($accounts as $account) {
 						$data['results'][] = array(
 							'id' 		=> $value->id,
 							'contact'  	=> $customer->name,
 							'number'	=> $value->number,
-							'account'   => $accounts->result(),//$account->account_line_name,
+							'account'   => $line->account_number."-".$line->account_name,//$account->account_line_name,
 							'date' 		=> $value->issued_date,
 							'type' 		=> $value->type,
 							'amount'	=> floatval($value->amount)/floatval($value->rate)
@@ -492,4 +492,5 @@ class Cashreports extends REST_Controller {
 		//Response Data
 		$this->response($data, 200);
 	}
+
 }//End Of Class

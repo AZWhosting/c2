@@ -98,3 +98,41 @@ p.addItem.glyphicons.circle_remove i:before {
 	position: relative;
 	clear: both;
 }
+.customer-report-center table tr td h3 {
+	line-height: 14px;
+	margin-bottom: 0;
+}
+.font-small * {
+	font-size: 10px;
+}
+.font-small .cover-customer {
+	padding: 0;
+}
+
+.reconcile table{
+  width: 100%;
+  float: left;
+  text-align: center;
+}
+.reconcile table tr th{
+	background: #3C849A;
+	padding: 5px;
+	color: #fff; 
+	border: 1px solid #000;
+	text-align: center;
+}
+.reconcile table tr td{
+	padding: 5px;
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.reconcile2{
+	padding: 0;
+}
+.saleSummaryCustomer .k-grid-header-wrap table tr .k-header {
+	display: table-cell;
+	background: #1E4E78;
+	color: #fff;
+	font-weight: bold;
+}

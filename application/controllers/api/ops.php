@@ -4,6 +4,24 @@ require APPPATH.'/libraries/REST_Controller.php';
 
 class Ops extends REST_Controller {
 
+	function index_get() {
+
+		$list = array(
+			'name' => "Roberto",
+			'surname'=>"Ritchie",
+			'account' => array('id'=>1, 'name'=> 'Roberto', 'number' => '0112354', 'amount' => 12,21554.23),
+			'address' => array('id'=>12, 'street'=> "King's Landing", 'zip' => '21456', 'house' => '#25'),
+			'website' => array('url' => 'app.banhji.com', 'title'=> "cloud accounting", 'tags' => 'cloude, accounting, finance')
+		);
+
+		$loop = 100000;
+		$data = array();
+		for($i=0; $i<$loop; $i++) {
+			$data[][$i] = $list;
+		}
+
+		$this->response(array('result'=>$data,'count'=>count($data)), 200);
+	}
 	// function destroyCol_get() {
 	// 	$this->load->dbutil();
 	// 	$dbs = $this->dbutil->list_databases();
@@ -27,27 +45,50 @@ class Ops extends REST_Controller {
 	// 	}
 	// }
 
-	function items_get() {
-		$this->load->dbutil();
-		$dbs = $this->dbutil->list_databases();
+	// function runs_get() {
+	// 	$this->load->dbutil();
+	// 	$dbs = $this->dbutil->list_databases();
 
-		$companyList = array("banhji","banhji_mac", "db_banhji", "information_schema","innodb","mysql","performance_schema","tmp");
-		$data = array();
-		foreach ($dbs as $db)
-		{	
-			if (!in_array("$db", $companyList)) {
-			    $data[] = $db;
-			    $connection = 'use '.$db;
-			    $this->db->query($connection);
-			    
-			    $this->dbforge->modify_column('transaction_templates', array('type' => array('name' => 'type', 'type' => "ENUM('Invoice','Commercial_Invoice','Vat_Invoice','Electricity_Invoice','Water_Invoice','Cash_Sale','Commercial_Cash_Sale','Vat_Cash_Sale','Receipt_Allocation','Sale_Order','Quote','GDN','Sale_Return','Purchase_Order','GRN','Cash_Purchase','Credit_Purchase','Purchase_Return','Payment_Allocation','Deposit','Electricty_Deposit','Water_Deposit','Customer_Deposit','Vendor_Deposit','Withdraw','Transfer','Journal','Item_Adjustment','Cash_Advance','Reimbursement','Direct_Expense','Advance_Settlement','Additional_Cost','Cash_Payment','Cash_Receipt','Credit_Note','Debit_Note','Offset_Bill','Offset_Invoice','Cash_Transfer','Internal_Usage')")));
-			    
-			    // $this->db->where('id', 23);
-			    // $this->db->update('prefixes', array('type'=> 'Withdraw', 'name'=>"Withdraw"));
-			}
-		}
+	// 	$companyList = array("banhji","banhji_mac", "db_banhji", "information_schema","innodb","mysql","performance_schema","tmp");
+	// 	$data = array();
+	// 	foreach ($dbs as $db)
+	// 	{	
+	// 		if (!in_array("$db", $companyList)) {
+	// 		    $data[] = $db;
+	// 		    $connection = 'use '.$db;
+	// 		    $this->db->query($connection);
 
-	}
+ //                // $this->dbforge->add_column(
+ //                // 	"item_lines", array(
+	//                //  	'is_assembly'=> array(
+	//                //  			'type'=> 'TINYINT', 
+	//                //  			'constraint'=> 1
+	//                //  	)
+ //                // 	)
+ //                // );
+
+			    
+ //                // $this->dbforge->modify_column(
+ //                // 	'item_lines', array(
+ //                // 					'assembly_id' => array(
+ //                // 								'name' 		=> 'assembly_id', 
+ //                // 								'type'		=> 'INT',
+ //                // 								'constraint'=> 11,
+ //                // 								'unsigned' 	=> TRUE,
+ //                // 								'null' 		=> FALSE,
+ //                // 								'default' 	=> 0,
+ //                // 					)
+ //                // 	)
+ //                // );
+			    
+	// 		    // $this->dbforge->modify_column('transaction_templates', array('type' => array('name' => 'type', 'type' => "ENUM('Invoice','Commercial_Invoice','Vat_Invoice','Electricity_Invoice','Water_Invoice','Cash_Sale','Commercial_Cash_Sale','Vat_Cash_Sale','Receipt_Allocation','Sale_Order','Quote','GDN','Sale_Return','Purchase_Order','GRN','Cash_Purchase','Credit_Purchase','Purchase_Return','Payment_Allocation','Deposit','Electricty_Deposit','Water_Deposit','Customer_Deposit','Vendor_Deposit','Withdraw','Transfer','Journal','Item_Adjustment','Cash_Advance','Reimbursement','Direct_Expense','Advance_Settlement','Additional_Cost','Cash_Payment','Cash_Receipt','Credit_Note','Debit_Note','Offset_Bill','Offset_Invoice','Cash_Transfer','Internal_Usage')")));
+			    
+	// 		    // $this->db->where('id', 23);
+	// 		    // $this->db->update('prefixes', array('type'=> 'Withdraw', 'name'=>"Withdraw"));
+	// 		}
+	// 	}
+
+	// }
 
 	// function create_get() {
 	// 	$this->load->dbutil();
@@ -307,4 +348,34 @@ class Ops extends REST_Controller {
 		// }
 
 	// 	// $this->response(array('results'=>$data), 200);
+
+
+	//Made by Great Mighty Dawine ^_^
+	// function add_new_field_get() {
+	// 	$this->load->dbutil();
+	// 	$dbs = $this->dbutil->list_databases();
+
+	// 	$companyList = array("banhji","banhji_mac", "db_banhji", "information_schema","innodb","mysql","performance_schema","tmp");
+	// 	$data = array();
+	// 	foreach ($dbs as $db)
+	// 	{	
+	// 		if (!in_array("$db", $companyList)) {
+	// 		    $data[] = $db;
+	// 		    $connection = 'use '.$db;
+	// 		    $this->db->query($connection);
+
+ //                $this->dbforge->add_column(
+ //                	"account_lines", array(//Table Name
+	//                 	'movement'=> array(//New Field Name
+	//                 			'type'=> 'TINYINT', 
+	//                 			'constraint'=> 1, 
+	//                 			'unsigned'=> TRUE
+	//                 	)
+ //                	)
+ //                );
+	// 		}
+	// 	}
+
+	// }
+	//End made by Great Mighty Dawine ^_^
 }

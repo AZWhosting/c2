@@ -125,6 +125,21 @@ class Users extends REST_Controller {
 		}
 	}
 
+	function index_delete() {
+		$requested_data = json_decode($this->delete('models'));
+		foreach($requested_data as $row) {
+			$institute = new Institute();
+			$institute->where('id', $row->company->id)->get();
+
+			$user = new User();
+			$user->where('id', $row->id)->get();
+
+			$user->delete($institute);
+		}
+		
+		$this->response($data, 200);
+	}
+
 	// create user information
 	// @param: user data
 	// return userdata
@@ -220,32 +235,6 @@ class Users extends REST_Controller {
 					'profile_photo' => $User->profile_photo_url,
 					'email' => $User->email,
 					'mobile' => $User->mobile
-				);
-			}
-		}
-		if(count($data) > 0) {
-			$this->response(array('results'=>$data, 'count'=> count($data)), 201);
-		} else {
-			$this->response(array('results'=>array(), 'count'=> 0), 201);
-		}
-	}
-
-	// delete user information
-	// @param: user data
-	// return true: successful, false: failed
-	function index_delete() {
-		$$requested_data = json_decode($this->post('models'));
-		foreach($requested_data as $user) {
-			$User = new User(null, $this->entity);
-			$User->status = 0;
-			if($User->save()) {
-				$data[] = array(
-					'id' => $User->id,
-					'username' => $User->username,
-					'password' => '*******',
-					'status'   => $User->status,
-					'created_at'=> $User->created_at,
-					'updated_at'=> $User->updated_at
 				);
 			}
 		}

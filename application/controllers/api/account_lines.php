@@ -71,6 +71,7 @@ class Account_lines extends REST_Controller {
 				   	"rate"				=> floatval($value->rate),
 				   	"locale" 			=> $value->locale,
 				   	"reference_date" 	=> $value->reference_date,
+				   	"movement" 			=> intval($value->movement),
 
 				   	"account" 			=> $value->account->get_raw()->result(),
 				   	"contact" 			=> $value->contact->get_raw()->result()
@@ -101,6 +102,7 @@ class Account_lines extends REST_Controller {
 		   	isset($value->rate)				? $obj->rate 				= $value->rate : "";
 		   	isset($value->locale)			? $obj->locale 				= $value->locale : "";
 		   	isset($value->reference_date)	? $obj->reference_date 		= $value->reference_date : "";
+		   	isset($value->movement)			? $obj->movement 			= $value->movement : "";
 		   			   	
 		   	if($obj->save()){
 			   	$data["results"][] = array(
@@ -117,6 +119,7 @@ class Account_lines extends REST_Controller {
 				   	"rate"				=> floatval($obj->rate),
 				   	"locale" 			=> $obj->locale,
 				   	"reference_date" 	=> $obj->reference_date,
+				   	"movement" 			=> intval($obj->movement),
 
 				   	"account" 			=> $obj->account->get_raw()->result(),
 				   	"contact" 			=> $obj->contact->get_raw()->result()			   	
@@ -150,6 +153,7 @@ class Account_lines extends REST_Controller {
 		   	isset($value->rate)				? $obj->rate 				= $value->rate : "";
 		   	isset($value->locale)			? $obj->locale 				= $value->locale : "";
 		   	isset($value->reference_date)	? $obj->reference_date 		= $value->reference_date : "";
+		   	isset($value->movement)			? $obj->movement 			= $value->movement : "";
 		   
 			if($obj->save()){				
 				//Results
@@ -167,6 +171,7 @@ class Account_lines extends REST_Controller {
 				   	"rate"				=> floatval($obj->rate),
 				   	"locale" 			=> $obj->locale,
 				   	"reference_date" 	=> $obj->reference_date,
+				   	"movement" 			=> intval($obj->movement),
 
 				   	"account" 			=> $obj->account->get_raw()->result(),
 				   	"contact" 			=> $obj->contact->get_raw()->result()

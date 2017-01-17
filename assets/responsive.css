@@ -1,11 +1,33 @@
+.k-pager-wrap .k-pager-nav.k-pager-last{
+  border-radius: 50% !important;
+}
+.top-itemprice tr td{
+  padding: 5px;
+
+}
+.top-itemprice{
+  width: 100%;
+}
+
+#ddlCurrency-list{
+  width: 220px !important;
+}
+
+#ddlMeasurement-list{
+   width: 205px !important;
+}
+input.k-textbox{
+  text-indent: 0 !important;
+}
 .padding-bottom-none-phone .glyphicons.user.userss i:before,
 .padding-bottom-none-phone .icon-play-circles:before{
   color: #fff !important;
 }
-.btn-received-payment{
-  background: 
+#issuedDate_dateview,
+#txtDueDate_dateview,
+#registeredDate_dateview{
+  margin-top: 40px!important;
 }
-
 .glyphicons.coins.addcolor-coins i:before{
   color: #31708f !important;
 }
@@ -109,7 +131,16 @@
   padding: 5px 10px;
 }
 
-/*#cbbContact-list,*/
+
+.k-animation-container .k-list-container.k-popup.k-group.k-reset{
+  border-color: #f9fafc !important;
+  margin-top: 40px;
+}
+
+#cbbAccounts-list{
+  width: 550px !important;
+}
+
 #cbbAccount-list,
 #cbbCurrency-list,
 #ddlRA-list,
@@ -117,11 +148,9 @@
 #ddlTradeDiscount-list,
 #ddlSettlementDiscount-list,
 #currency-list,
-#ddlCurrency-list,
 #ddlAP-list,
 #ddlTradeDiscountAccount-list,
 #ddlPrePaymentAccount-list,
-#cbbAccounts-list,
 #ddlVendor-list,
 #ddlPaymentMethod-list,
 #ddlAccount-list,
@@ -134,14 +163,34 @@
 #ddlCategory-list,
 #ddlName-list,
 #txtMeasurement-list,
-#ddlIncome-list
-{
+#ddlIncome-list,
+#ddlAR-list{
   width: 350px !important;
 }
 
 #cbbContact-list{
   width: 350px !important;
 }
+
+
+
+/*#ccbItem-list,
+#ddlMesurement-list,
+#cbbReader-list,
+#ccbTaxItem-list{
+  border-color: #f9fafc !important;
+}*/
+
+/*.k-animation-container #cbbContact-list,
+.k-animation-container #ccbItem-list,
+.k-animation-container #cbbAccounts-list,
+.k-animation-container #ddlMesurement-list,
+.k-animation-container #ddlCategory-list,
+.k-animation-container #cbbReader-list,
+.k-animation-container #ccbTaxItem-list{
+  margin-top: 40px;
+}
+*/
 
 .k-grid tbody tr {
     cursor: pointer !important;
@@ -193,7 +242,7 @@
 #ccbItem-list{
   width: 550px !important;
 }
-#ddlMeasurement-list,
+
 #ddlMesurement-list,
 #txtPrice-list,
 #ddlOption-list,
@@ -236,7 +285,7 @@
  
 }
 #cbbContact-list strong a{
-  padding: 5px 200px 5px 0;
+  padding: 5px 0 5px 0;
   display: inline-block;
 
 }
@@ -274,7 +323,7 @@
   height: auto; 
   margin-bottom: 15px; 
   overflow: hidden;
-  min-height: 190px;
+  /*min-height: 190px;*/
 }
 .box-generic-noborder .tab-content{
  padding:0 15px ;
@@ -1287,7 +1336,7 @@ width: 50% !important;
   border-bottom: 0;
 }
 .accounCetner-textedit table tr td .k-checkbox-label{
-  margin-top: -11px;
+  margin-top: 3px;
 }
 .media, .media-body{
     border-bottom: 1px solid #ccc;
@@ -1682,7 +1731,7 @@ width: 50% !important;
   cursor: pointer;
 }
 .widget-body>div{
-  margin-bottom: 15px;
+  margin-bottom: 10px;
 }
 
 

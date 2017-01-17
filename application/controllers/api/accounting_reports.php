@@ -681,9 +681,9 @@ class Accounting_reports extends REST_Controller {
 		$obj->include_related("account", array("number","name"));
 		$obj->include_related("contact", array("abbr","number","name"));
 		$obj->where_related("transaction", "is_journal", 1);
-		$obj->where_related("transaction", "is_recurring", 0);		
-		$obj->where_related("transaction", "deleted", 0);
-		$obj->where("deleted", 0);
+		$obj->where_related("transaction", "is_recurring <>", 1);		
+		$obj->where_related("transaction", "deleted <>", 1);
+		$obj->where("deleted <>", 1);
 		$obj->order_by("dr", "desc");
 		
 		//Results
@@ -803,7 +803,7 @@ class Accounting_reports extends REST_Controller {
 
 	//GET GENERAL LEDGER
 	function general_ledger_get() {		
-		$filters 	= $this->get("filter")["filters"];		
+		$filters 	= $this->get("filter");		
 		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
 		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;
 		$sort 	 	= $this->get("sort");		
@@ -825,12 +825,14 @@ class Accounting_reports extends REST_Controller {
 		}
 		
 		//Filter		
-		if(!empty($filters) && isset($filters)){			
-	    	foreach ($filters as $value) {
-	    		$obj->where_related("transaction", $value["field"], $value["value"]);
-
-	    		if($value["field"]=="issued_date >=" || $value["field"]=="issued_date"){
+		if(!empty($filters) && isset($filters["filters"])){			
+	    	foreach ($filters["filters"] as $value) {
+	    		if(isset($value['operator'])){
+	    			$obj->{$value['operator']}($value['field'], $value['value']);
+	    		} else if($value["field"]=="issued_date >=" || $value["field"]=="issued_date"){
 	    			$startDate = $value["value"];
+	    		} else {
+	    			$obj->where($value['field'], $value['value']);
 	    		}
 			}									 			
 		}
@@ -907,7 +909,7 @@ class Accounting_reports extends REST_Controller {
 				}
 			}
 
-			foreach ($objList as $value) {				
+			foreach ($objList as $value) {
 				$data["results"][] = $value;
 			}
 

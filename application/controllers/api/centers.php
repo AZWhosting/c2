@@ -64,12 +64,14 @@ class Centers extends REST_Controller {
 				}
 			}
 		}
-				
+		
+		$obj->where_related("transaction", "is_recurring <>", 1);
+		$obj->where_related("transaction", "deleted <>", 1);		
 		$obj->where("deleted <>", 1);			
 		
 		//Results
-		$obj->get_paged_iterated($page, $limit);
-		$data["count"] = $obj->paged->total_rows;
+		$obj->get_iterated();
+		$data["count"] = $obj->result_count();
 
 		if($obj->exists()){
 			//Sum dr and cr
@@ -80,8 +82,8 @@ class Centers extends REST_Controller {
 			foreach ($obj as $value) {
 				$account_id = $value->account_id;
 				$locale = $value->locale;
-
-				if($value->dr>0 || $value->cr>0){
+				
+				if($value->dr<>0 || $value->cr<>0){
 					$sumDr += floatval($value->dr) / floatval($value->rate);
 					$sumCr += floatval($value->cr) / floatval($value->rate);					
 				}
@@ -145,8 +147,8 @@ class Centers extends REST_Controller {
 		$obj->order_by_related("transaction", "issued_date", "desc");		
 		
 		//Results
-		$obj->get_paged_iterated($page, $limit);
-		$data["count"] = $obj->paged->total_rows;		
+		$obj->get_iterated();
+		$data["count"] = $obj->result_count();		
 		
 		if($obj->result_count()>0){			
 			foreach ($obj as $value) {

@@ -14,8 +14,7 @@
 			</ul>
 			<form class="navbar-form pull-left">
 				<div class="btn-group">
-				  	<a class="btn btn-inverse dropdown-toggle" data-toggle="dropdown" href="#">
-				    	<i class="icon-th"></i>
+				  	<a class="btn btn-inverse dropdown-toggle" data-toggle="dropdown" href="#"> <i class="icon-th"></i>
 				    	<span class="caret"></span>
 				  	</a>
 				  	<ul class="dropdown-menu">
@@ -1211,7 +1210,7 @@
 		    				onclick="javascript:window.history.back()"
 							data-bind="click: cancel"><i></i></span>
 
-				    <h2 span data-bind="text: lang.lang.journal_entry"></h2>				        				        				        	
+				    <h2 span data-bind="text: lang.lang.journal_entry"></h2>
 				   
 				    <br>				   				
 						
@@ -5143,7 +5142,7 @@
 </script>
 
 
-<script id="taxReportCenter" type="text/x-kendo-template">
+<!-- <script id="taxReportCenter" type="text/x-kendo-template">
 	<div class="row-fluid customer-report-center">
 		<div class="span7">
 			<div class="row-fluid sale-report">
@@ -5186,7 +5185,7 @@
 			
 		</div>
 	</div>
-</script>
+</script> -->
 <script id="saleJournal" type="text/x-kendo-template">
 	<div id="slide-form">
 		<div class="customer-background">
@@ -5566,7 +5565,7 @@
 							<span style="margin-top: 7px; display: inline-block; text-transform: uppercase;">Payroll List</span>
 						</a>						
 					</td>					
-				</tr>				
+				</tr>		
 			</table>
 
 		</div>
@@ -5781,230 +5780,203 @@
 	<div id="slide-form">
 		<div class="customer-background">
 			<div class="container-960" style="overflow: hidden;">					
-			<div id="example" class="k-content">
-				
-		    	<span class="glyphicons no-js remove_2 pull-right" 
-						onclick="javascript: window.history.back()"><i></i></span>
+				<div id="example" class="k-content">
+					
+			    	<span class="glyphicons no-js remove_2 pull-right" 
+							onclick="javascript: window.history.back()"><i></i></span>
 
-		        <h2 span data-bind="text: lang.lang.tax"></h2>
+			        <h2 span data-bind="text: lang.lang.tax"></h2>
 
-			    <div class="row">
-			        <div class="span6">
-			        	<p>
-				        	<span data-bind="text: lang.lang.these_are_the_tax_items_required_by_your_countries"></span>
-				        </p>
-			        </div>
-			        <div class="span6">
-			         	<button class="btn btn-inverse" data-bind="click: openWindow"><i class="icon-plus icon-white"></i>&nbsp&nbsp <span data-bind="text: lang.lang.add_tax_type"></span></button>
-						
-			        </div>		        				        				        	
-			    </div>			   
+				    <div class="row">
+				        <div class="span6">
+				        	<p>
+					        	<span data-bind="text: lang.lang.these_are_the_tax_items_required_by_your_countries"></span>
+					        </p>
+				        </div>
+				        <div class="span6">
+				         	<button class="btn btn-inverse" data-bind="click: openWindow"><i class="icon-plus icon-white"></i>&nbsp&nbsp <span data-bind="text: lang.lang.add_tax_type"></span></button>
+							
+				        </div>		        				        				        	
+				    </div>			   
 
-			    <br>
+				    <br>
 
-			    <div data-role="window"
-		                 data-title="Tax Type"		                 
-		                 data-width="350"
-		                 data-height="290"
-		                 data-actions="{}"
-		                 data-position="{top: '30%', left: '35%'}"
-		                 data-bind="visible: windowVisible">
-		    		<table>
-						<tr style="border-bottom: 8px #fff solid;">
-							<td width="50%"><span data-bind="text: lang.lang.tax_system"></span></td>
-							<td width="50%">
-								<input data-role="dropdownlist"				            			               			   		                   
-				                   data-value-primitive="true"
-				                   data-text-field="name"
-				                   data-value-field="id"
-				                   data-bind="value: obj.tax_system,
-				                              source: typeList"
-				                   style="width: 100%;" />
-							</td>
-						</tr>
-						<tr style="border-bottom: 8px #fff solid;">
-							<td><span data-bind="text: lang.lang.tax_registration_no"></span></td>
-							<td>
-								<input class="k-textbox" placeholder="type number ..." data-bind="value: obj.number" style="width: 100%;">
-							</td>
-						</tr>
-						<tr style="border-bottom: 8px #fff solid;">
-							<td><span data-bind="text: lang.lang.agency"></span></td>
-							<td>
-								<input class="k-textbox" placeholder="type agency ..." data-bind="value: obj.agency" style="width: 100%;">
-							</td>
-						</tr>
-						<tr style="border-bottom: 8px #fff solid;">
-							<td><span data-bind="text: lang.lang.name"></span></td>
-							<td>
-								<input class="k-textbox" placeholder="type name ..." data-bind="value: obj.name" style="width: 100%;">
-							</td>
-						</tr >
-						<tr style="border-bottom: 8px #fff solid;">
-							<td><span data-bind="text: lang.lang.last_end_date"></span></td>
-							<td>
-								<input data-role="datepicker"
-									data-format="dd-MM-yyyy"
-									data-parse-formats="yyyy-MM-dd" 
-									data-bind="value: obj.end_date"
-									style="width: 100%;" />
-							</td>
-						</tr>
-						<tr>
-							<td><span data-bind="text: lang.lang.last_submission_date"></span></td>
-							<td>
-								<input data-role="datepicker"
-									data-format="dd-MM-yyyy"
-									data-parse-formats="yyyy-MM-dd" 
-									data-bind="value: obj.submission_date"
-									style="width: 100%;" />
-						</td>
-						</tr>
-					</table>
-
-					<br>
-					<div style="text-align: center;">
-						<span class="btn btn-success btn-icon glyphicons ok_2" data-bind="click: save"><i></i>Save</span>
-						<span class="btn btn-danger btn-icon glyphicons remove_2" data-bind="click: closeWindow"><i></i><span data-bind="text: lang.lang.close"></span></span> 
-					</div> 
-				</div>
-						
-                <div class="row">
-	                <div class="span12 table-tax">	                					
-		            	<table class="table table-condensed">
-		            		<thead style="background-color: #1E4E78; color: #fff; font-weight: bold">
-		            			<tr>
-		            				<th style="padding-left: 8px !important; width: 50px;"><span data-bind="text: lang.lang.no_"></span></th>
-		            				<th data-bind="text: lang.lang.name"></th>
-		            				<th data-bind="text: lang.lang.system"></th>
-		            				<th data-bind="text: lang.lang.agency"></th>
-		            				<th style="text-align: center;"><span data-bind="text: lang.lang.end_date"></span></th>
-		            				<th style="text-align: center;"><span data-bind="text: lang.lang.submission_date"></span></th>
-		            				<th></th>
-		            			</tr>
-		            		</thead>
-		            		<tbody data-role="listview"			            			
-					                data-template="tax-type-template"
-					                data-bind="source: dataSource"></tbody>
-		            	</table>
-	            	</div>
-
-	      
-	            <div data-role="window"
-		                 data-title="Tax Item"		                 
-		                 data-width="285"
-		                 data-height="220"
-		                 data-actions="{}"
-		                 data-position="{top: '30%', left: '37%'}"
-		                 data-bind="visible: windowItemVisible">
-
-            		<table>
-						<tr style="border-bottom: 8px solid #fff;">
-							<td width="34%"><span data-bind="text: lang.lang.item_name"></span></td>
-							<td>
-								<input class="k-textbox" placeholder="type name ..." data-bind="value: item.name" style="width: 100%;">
-							</td>
-						</tr>
-						<tr style="border-bottom: 8px solid #fff;">
-							<td width="34%"><span data-bind="text: lang.lang.description"></span></td>
-							<td>
-								<input class="k-textbox" placeholder="type description ..." data-bind="value: item.description" style="width: 100%;">
-							</td>
-						</tr>
-						<tr style="border-bottom: 8px solid #fff;">
-							<td><span data-bind="text: lang.lang.item_rate"></span></td>
-							<td>
-								<input data-role="numerictextbox"
-				                   data-format="p"
-				                   data-min="0"
-				                   data-max="0.99"
-				                   data-step="0.1"                   
-				                   data-bind="value: item.rate"
-				                   style="width: 100%;">
-							</td>
-						</tr>
-						<tr>
-							<td><span data-bind="text: lang.lang.account"></span></td>
-							<td>
-								<input data-role="dropdownlist" id="ddlAccount"
-					                   data-option-label="Select Account..."
-					                   data-header-template="account-header-tmpl"
-					                   data-template="account-list-tmpl"
-					                   data-value-primitive="true"					                   
+				    <div data-role="window"
+			                 data-title="Tax Type"		                 
+			                 data-width="350"
+			                 data-height="290"
+			                 data-actions="{}"
+			                 data-position="{top: '30%', left: '35%'}"
+			                 data-bind="visible: windowVisible">
+			    		<table>
+							<tr style="border-bottom: 8px #fff solid;">
+								<td width="50%"><span data-bind="text: lang.lang.tax_system"></span></td>
+								<td width="50%">
+									<input data-role="dropdownlist"				            			               			   		                   
+					                   data-value-primitive="true"
 					                   data-text-field="name"
 					                   data-value-field="id"
-					                   data-bind="value: item.account_id,
-					                              source: accountDS"
-					                   style="width: 100%" />
+					                   data-bind="value: obj.tax_system,
+					                              source: typeList"
+					                   style="width: 100%;" />
+								</td>
+							</tr>
+							<tr style="border-bottom: 8px #fff solid;">
+								<td><span data-bind="text: lang.lang.tax_registration_no"></span></td>
+								<td>
+									<input class="k-textbox" placeholder="type number ..." data-bind="value: obj.number" style="width: 100%;">
+								</td>
+							</tr>
+							<tr style="border-bottom: 8px #fff solid;">
+								<td><span data-bind="text: lang.lang.agency"></span></td>
+								<td>
+									<input class="k-textbox" placeholder="type agency ..." data-bind="value: obj.agency" style="width: 100%;">
+								</td>
+							</tr>
+							<tr style="border-bottom: 8px #fff solid;">
+								<td><span data-bind="text: lang.lang.name"></span></td>
+								<td>
+									<input class="k-textbox" placeholder="type name ..." data-bind="value: obj.name" style="width: 100%;">
+								</td>
+							</tr >
+							<tr style="border-bottom: 8px #fff solid;">
+								<td><span data-bind="text: lang.lang.last_end_date"></span></td>
+								<td>
+									<input data-role="datepicker"
+										data-format="dd-MM-yyyy"
+										data-parse-formats="yyyy-MM-dd" 
+										data-bind="value: obj.end_date"
+										style="width: 100%;" />
+								</td>
+							</tr>
+							<tr>
+								<td><span data-bind="text: lang.lang.last_submission_date"></span></td>
+								<td>
+									<input data-role="datepicker"
+										data-format="dd-MM-yyyy"
+										data-parse-formats="yyyy-MM-dd" 
+										data-bind="value: obj.submission_date"
+										style="width: 100%;" />
 							</td>
-						</tr>
-						
-					</table>
+							</tr>
+						</table>
 
-					<br>
-					<div style="text-align: center;">
-						<span class="btn btn-success btn-icon glyphicons ok_2" data-bind="click: saveItem"><i></i><span data-bind="text: lang.lang.save"></span></span>
-						<span class="btn btn-danger btn-icon glyphicons remove_2" data-bind="click: closeWindowItem"><i></i><span data-bind="text: lang.lang.close"></span></span>
-					</div>  
-				</div>
+						<br>
+						<div style="text-align: center;">
+							<span class="btn btn-success btn-icon glyphicons ok_2" data-bind="click: save"><i></i>Save</span>
+							<span class="btn btn-danger btn-icon glyphicons remove_2" data-bind="click: closeWindow"><i></i><span data-bind="text: lang.lang.close"></span></span> 
+						</div> 
+					</div>
+							
+	                <div class="row">
+		                <div class="span12 table-tax">	                					
+			            	<table class="table table-condensed">
+			            		<thead style="background-color: #1E4E78; color: #fff; font-weight: bold">
+			            			<tr>
+			            				<th style="padding-left: 8px !important; width: 50px;"><span data-bind="text: lang.lang.no_"></span></th>
+			            				<th data-bind="text: lang.lang.name"></th>
+			            				<th data-bind="text: lang.lang.system"></th>
+			            				<th data-bind="text: lang.lang.agency"></th>
+			            				<th style="text-align: center;"><span data-bind="text: lang.lang.end_date"></span></th>
+			            				<th style="text-align: center;"><span data-bind="text: lang.lang.submission_date"></span></th>
+			            				<th></th>
+			            			</tr>
+			            		</thead>
+			            		<tbody data-role="listview"			            			
+						                data-template="tax-type-template"
+						                data-bind="source: dataSource"></tbody>
+			            	</table>
+		            	</div>
 
-				<h3 data-bind="text: taxName" style="margin-left: 20px;"></h3>
+		      
+		            <div data-role="window"
+			                 data-title="Tax Item"		                 
+			                 data-width="285"
+			                 data-height="220"
+			                 data-actions="{}"
+			                 data-position="{top: '30%', left: '37%'}"
+			                 data-bind="visible: windowItemVisible">
 
-				<div class="row">
-	            	<div class="span12" style="padding-left: 30px;">		                	
-					    <table class="table table-bordered table-white" style="width: 98%;">
-		            		<thead>
-		            			<tr>
-		            				<th style="width:15%"><span data-bind="text: lang.lang.name"></span></th>
-		            				<th style="width: 45%;"><span data-bind="text: lang.lang.description"></span></th>
-		            				<th data-bind="text: lang.lang.rate"></th>
-		            				<th data-bind="text: lang.lang.account"></th>		            					            		
-		            				<th></th>
-		            			</tr>
-		            		</thead>
-		            		<tbody data-role="listview"			            				
-					                data-template="tax-item-template"
-					                data-auto-bind="false"
-					                data-bind="source: itemDS"></tbody>
-		            	</table>
+	            		<table>
+							<tr style="border-bottom: 8px solid #fff;">
+								<td width="34%"><span data-bind="text: lang.lang.item_name"></span></td>
+								<td>
+									<input class="k-textbox" placeholder="type name ..." data-bind="value: item.name" style="width: 100%;">
+								</td>
+							</tr>
+							<tr style="border-bottom: 8px solid #fff;">
+								<td width="34%"><span data-bind="text: lang.lang.description"></span></td>
+								<td>
+									<input class="k-textbox" placeholder="type description ..." data-bind="value: item.description" style="width: 100%;">
+								</td>
+							</tr>
+							<tr style="border-bottom: 8px solid #fff;">
+								<td><span data-bind="text: lang.lang.item_rate"></span></td>
+								<td>
+									<input data-role="numerictextbox"
+					                   data-format="p"
+					                   data-min="0"
+					                   data-max="0.99"
+					                   data-step="0.1"                   
+					                   data-bind="value: item.rate"
+					                   style="width: 100%;">
+								</td>
+							</tr>
+							<tr>
+								<td><span data-bind="text: lang.lang.account"></span></td>
+								<td>
+									<input data-role="dropdownlist" id="ddlAccount"
+						                   data-option-label="Select Account..."
+						                   data-header-template="account-header-tmpl"
+						                   data-template="account-list-tmpl"
+						                   data-value-primitive="true"					                   
+						                   data-text-field="name"
+						                   data-value-field="id"
+						                   data-bind="value: item.account_id,
+						                              source: accountDS"
+						                   style="width: 100%" />
+								</td>
+							</tr>
+							
+						</table>
+
+						<br>
+						<div style="text-align: center;">
+							<span class="btn btn-success btn-icon glyphicons ok_2" data-bind="click: saveItem"><i></i><span data-bind="text: lang.lang.save"></span></span>
+							<span class="btn btn-danger btn-icon glyphicons remove_2" data-bind="click: closeWindowItem"><i></i><span data-bind="text: lang.lang.close"></span></span>
+						</div>  
+					</div>
+
+					<h3 data-bind="text: taxName" style="margin-left: 20px;"></h3>
+
+					<div class="row">
+		            	<div class="span12" style="padding-left: 30px;">		                	
+						    <table class="table table-bordered table-white" style="width: 98%;">
+			            		<thead>
+			            			<tr>
+			            				<th style="width:15%"><span data-bind="text: lang.lang.name"></span></th>
+			            				<th style="width: 45%;"><span data-bind="text: lang.lang.description"></span></th>
+			            				<th data-bind="text: lang.lang.rate"></th>
+			            				<th data-bind="text: lang.lang.account"></th>		            					            		
+			            				<th></th>
+			            			</tr>
+			            		</thead>
+			            		<tbody data-role="listview"			            				
+						                data-template="tax-item-template"
+						                data-auto-bind="false"
+						                data-bind="source: itemDS"></tbody>
+			            	</table>
+		            	</div>
 	            	</div>
-            	</div>
-			</div>							
+				</div>							
 			</div>
 		</div>
 	</div>
 </script> -->
-<script id="tax-type-template" type="text/x-kendo-tmpl">                    
-    <tr>
-    	<td>#=number#</td>
-    	<td>#=name#</td>
-    	<td>#=tax_system#</td>
-    	<td>#=agency#</td>
-    	<td>#=kendo.toString(new Date(end_date), "dd-MM-yyyy")#</td>
-    	<td align="center">#=kendo.toString(new Date(submission_date), "dd-MM-yyyy")#</td>
-    	<td align="center">
-    		<span data-bind="click: edit"><i class="icon-edit"></i> <span data-bind="text: lang.lang.edit"></span></span>
-    		|
-    		<span data-bind="click: view"><i class="icon-view"></i> <span data-bind="text: lang.lang.view_item"></span></span>
-    		|
-    		<span data-bind="click: addItem"><i class="icon-plus icon-white"></i> <span data-bind="text: lang.lang.add_tax_item"></span>
-    	</td>
-   	</tr>
-</script>
-<script id="tax-item-template" type="text/x-kendo-tmpl">                    
-    <tr>
-    	<td>#=name#</td>
-    	<td>#=description#</td>
-    	<td>#=rate#</td>
-    	<td>#=account[0].name#</td>     	 		
-   		<td>
-    		<span data-bind="click: editItem"><i class="icon-edit"></i> <span data-bind="text: lang.lang.edit"></span></span>
-    	</td>
-   	</tr>
-</script>
+
 <script id="taxCenter" type="text/x-kendo-template">
 	<div style="margin: 0 auto; text-align: center;">
-		<h1 style="font-size: 35px; font-weight: 600;">Comoing Soon</h1>
+		<h1 style="font-size: 35px; font-weight: 600;">Coming Soon</h1>
 	</div>
 </script>
 <script id="taxSetting" type="text/x-kendo-template">
@@ -6015,7 +5987,7 @@
 
 	<br>
 
-	<div class="widget widget-tabs widget-tabs-double widget-tabs-vertical row-fluid row-merge widget-tabs-gray">
+	<div class="widget widget-tabs widget-tabs-double widget-tabs-vertical row-fluid row-merge widget-tabs-gray" style="border: none !important;">
 
 	    <!-- Tabs Heading -->
 	    <div class="widget-head span3">
@@ -6032,13 +6004,196 @@
 	    </div>
 	    <!-- // Tabs Heading END -->
 
-	    <div class="widget-body span9">
-	        <div class="tab-content">
+	    <div class="widget-body span9" >
+	        <div class="tab-content" style="padding-top: 0;">
 
 	            <!-- CUSTOMER TYPE -->
-	            <div class="tab-pane active" id="tab1-4">
-	            	<div style="margin: 0 auto; text-align: center;">
-						<h1 style="font-size: 35px; font-weight: 600;">Comoing Soon</h1>
+	            <div class="tab-pane active" id="tab1-4" style=" background: #fff;">
+	            	<div style="margin: 0 auto; padding: 15px; border: 1px solid #efefef;">
+						<h2>Tax</h2>
+						<div class="row">
+					        <div class="span6">
+					        	<p>
+						        	These are the tax items required by your countries.You can add more tax items or edit the existing items. 
+						        	If you are not sure, please consult with your tax advisor.
+						        </p>
+					        </div>
+					        <div class="span6">
+					         	<button class="btn btn-inverse" data-bind="click: openWindow"><i class="icon-plus icon-white"></i>&nbsp&nbsp <span >Add Tax Type</span></button>
+								
+					        </div>		        				        				        	
+					    </div>
+
+
+
+						<div data-role="window"
+			                 data-title="Tax Type"		                 
+			                 data-width="350"
+			                 data-height="290"
+			                 data-actions="{}"
+			                 data-position="{top: '30%', left: '35%'}"
+			                 data-bind="visible: windowVisible">
+
+				    		<table>
+								<tr style="border-bottom: 8px #fff solid;">
+									<td width="50%"><span data-bind="text: lang.lang.tax_system"></span></td>
+									<td width="50%">
+										<input data-role="dropdownlist"				            			               			   		                   
+						                   data-value-primitive="true"
+						                   data-text-field="name"
+						                   data-value-field="id"
+						                   data-bind="value: obj.tax_system,
+						                              source: typeList"
+						                   style="width: 100%;" />
+									</td>
+								</tr>
+								<tr style="border-bottom: 8px #fff solid;">
+									<td><span data-bind="text: lang.lang.tax_registration_no"></span></td>
+									<td>
+										<input class="k-textbox" placeholder="type number ..." data-bind="value: obj.number" style="width: 100%;">
+									</td>
+								</tr>
+								<tr style="border-bottom: 8px #fff solid;">
+									<td><span data-bind="text: lang.lang.agency"></span></td>
+									<td>
+										<input class="k-textbox" placeholder="type agency ..." data-bind="value: obj.agency" style="width: 100%;">
+									</td>
+								</tr>
+								<tr style="border-bottom: 8px #fff solid;">
+									<td><span data-bind="text: lang.lang.name"></span></td>
+									<td>
+										<input class="k-textbox" placeholder="type name ..." data-bind="value: obj.name" style="width: 100%;">
+									</td>
+								</tr >
+								<tr style="border-bottom: 8px #fff solid;">
+									<td><span data-bind="text: lang.lang.last_end_date"></span></td>
+									<td>
+										<input data-role="datepicker"
+											data-format="dd-MM-yyyy"
+											data-parse-formats="yyyy-MM-dd" 
+											data-bind="value: obj.end_date"
+											style="width: 100%;" />
+									</td>
+								</tr>
+								<tr>
+									<td><span data-bind="text: lang.lang.last_submission_date"></span></td>
+									<td>
+										<input data-role="datepicker"
+											data-format="dd-MM-yyyy"
+											data-parse-formats="yyyy-MM-dd" 
+											data-bind="value: obj.submission_date"
+											style="width: 100%;" />
+								</td>
+								</tr>
+							</table>
+
+							<br>
+							<div style="text-align: center;">
+								<span class="btn btn-success btn-icon glyphicons ok_2" data-bind="click: save"><i></i>Save</span>
+								<span class="btn btn-danger btn-icon glyphicons remove_2" data-bind="click: closeWindow"><i></i><span data-bind="text: lang.lang.close"></span></span> 
+							</div> 
+						</div>
+								
+		                <div class="row">
+			                <div class="span12 table-tax">	                					
+				            	<table class="table table-condensed">
+				            		<thead style="background-color: #1E4E78; color: #fff; font-weight: bold">
+				            			<tr>
+				            				<th style="padding-left: 8px !important; width: 50px;"><span >No.</span></th>
+				            				<th >Name</th>
+				            				<th >System</th>
+				            				<th >Agency</th>
+				            				<th style="text-align: center;"><span >End Date</span></th>
+				            				<th style="text-align: center;"><span >Submission Date</span></th>
+				            				<th></th>
+				            			</tr>
+				            		</thead>
+				            		<tbody data-role="listview"			            			
+							                data-template="tax-type-template"
+							                data-bind="source: dataSource"></tbody>
+				            	</table>
+			            	</div>
+			            </div>
+			      
+			            <div data-role="window"
+				                 data-title="Tax Item"
+				                 data-width="285"
+				                 data-height="220"
+				                 data-actions="{}"
+				                 data-position="{top: '30%', left: '37%'}"
+				                 data-bind="visible: windowItemVisible">
+
+		            		<table>
+								<tr style="border-bottom: 8px solid #fff;">
+									<td width="34%"><span data-bind="text: lang.lang.item_name"></span></td>
+									<td>
+										<input class="k-textbox" placeholder="type name ..." data-bind="value: item.name" style="width: 100%;">
+									</td>
+								</tr>
+								<tr style="border-bottom: 8px solid #fff;">
+									<td width="34%"><span data-bind="text: lang.lang.description"></span></td>
+									<td>
+										<input class="k-textbox" placeholder="type description ..." data-bind="value: item.description" style="width: 100%;">
+									</td>
+								</tr>
+								<tr style="border-bottom: 8px solid #fff;">
+									<td><span data-bind="text: lang.lang.item_rate"></span></td>
+									<td>
+										<input data-role="numerictextbox"
+						                   data-format="p"
+						                   data-min="0"
+						                   data-max="0.99"
+						                   data-step="0.1"                   
+						                   data-bind="value: item.rate"
+						                   style="width: 100%;">
+									</td>
+								</tr>
+								<tr>
+									<td><span data-bind="text: lang.lang.account"></span></td>
+									<td>
+										<input data-role="dropdownlist" id="ddlAccount"
+							                   data-option-label="Select Account..."
+							                   data-header-template="account-header-tmpl"
+							                   data-template="account-list-tmpl"
+							                   data-value-primitive="true"					                   
+							                   data-text-field="name"
+							                   data-value-field="id"
+							                   data-bind="value: item.account_id,
+							                              source: accountDS"
+							                   style="width: 100%" />
+									</td>
+								</tr>
+								
+							</table>
+
+							<br>
+							<div style="text-align: center;">
+								<span class="btn btn-success btn-icon glyphicons ok_2" data-bind="click: saveItem"><i></i><span data-bind="text: lang.lang.save"></span></span>
+								<span class="btn btn-danger btn-icon glyphicons remove_2" data-bind="click: closeWindowItem"><i></i><span data-bind="text: lang.lang.close"></span></span>
+							</div>  
+						</div>
+
+						<h3 data-bind="text: taxName" style="margin-left: 20px;"></h3>
+
+						<div class="row">
+			            	<div class="span12" style="padding-left: 15px;">		                	
+							    <table class="table table-bordered table-white" style="width: 100%;">
+				            		<thead>
+				            			<tr>
+				            				<th style="width:15%"><span >Name</span></th>
+				            				<th style="width: 45%;"><span >Description</span></th>
+				            				<th >Rate</th>
+				            				<th >Accounts</th>		            					            		
+				            				<th></th>
+				            			</tr>
+				            		</thead>
+				            		<tbody data-role="listview"			            				
+							                data-template="tax-item-template"
+							                data-auto-bind="false"
+							                data-bind="source: itemDS"></tbody>
+				            	</table>
+			            	</div>
+		            	</div>
 					</div>		            
 	            </div>
 	            <!-- // CUSTOMER TYPE END -->
@@ -6074,15 +6229,43 @@
 
 	</div>
 </script>
+<script id="tax-type-template" type="text/x-kendo-tmpl">                    
+    <tr>
+    	<td>#=number#</td>
+    	<td>#=name#</td>
+    	<td>#=tax_system#</td>
+    	<td>#=agency#</td>
+    	<td>#=kendo.toString(new Date(end_date), "dd-MM-yyyy")#</td>
+    	<td align="center">#=kendo.toString(new Date(submission_date), "dd-MM-yyyy")#</td>
+    	<td align="center">
+    		<span data-bind="click: edit"><i class="icon-edit"></i> <span data-bind="text: lang.lang.edit"></span></span>
+    		|
+    		<span data-bind="click: view"><i class="icon-view"></i> <span data-bind="text: lang.lang.view_item"></span></span>
+    		|
+    		<span data-bind="click: addItem"><i class="icon-plus icon-white"></i> <span data-bind="text: lang.lang.add_tax_item"></span>
+    	</td>
+   	</tr>
+</script>
+<script id="tax-item-template" type="text/x-kendo-tmpl">                    
+    <tr>
+    	<td>#=name#</td>
+    	<td>#=description#</td>
+    	<td>#=rate#</td>
+    	<td>#=account[0].name#</td>     	 		
+   		<td>
+    		<span data-bind="click: editItem"><i class="icon-edit"></i> <span data-bind="text: lang.lang.edit"></span></span>
+    	</td>
+   	</tr>
+</script>
 <script id="taxReportCenter" type="text/x-kendo-template">
 	<span class="pull-right glyphicons no-js remove_2" 
 			onclick="javascript:window.history.back()"><i></i></span>
 
-	<h2 >General Tax Setting</h2>
-
+	<h2 >Monthly Tax Files</h2>
+	
 	<br>
 
-	<div class="widget widget-tabs widget-tabs-double widget-tabs-vertical row-fluid row-merge widget-tabs-gray">
+	<div class="widget widget-tabs widget-tabs-double widget-tabs-vertical row-fluid row-merge widget-tabs-gray" style="border: none !important;">
 
 	    <!-- Tabs Heading -->
 	    <div class="widget-head span3">
@@ -6100,12 +6283,23 @@
 	    <!-- // Tabs Heading END -->
 
 	    <div class="widget-body span9">
-	        <div class="tab-content">
+	    	<div class="span3" style="font-weight: 600; margin-bottom: 20px; width: 15%; padding-right: 0; line-height: 25px;">Select Tax Files</div>
+			<div class="span4" >
+				<input id="ddlContactType" name="ddlContactType"
+				   data-role="dropdownlist"      
+                   data-value-primitive="true"
+                   data-text-field="name"
+                   data-value-field="id"
+                   data-bind=""
+                   data-option-label="(--- Select ---)"
+                   required data-required-msg="required" style="width: 100%;" />
+			</div>
+	        <div class="tab-content" style="background: #fff; border: 1px solid #efefef; margin-left: 15px; float: left; width: 100%">
 
 	            <!-- CUSTOMER TYPE -->
 	            <div class="tab-pane active" id="tab1-4">
 	            	<div style="margin: 0 auto; text-align: center;">
-						<h1 style="font-size: 35px; font-weight: 600;">Comoing Soon</h1>
+						<iframe src="<?php echo base_url(); ?>assets/fwdform/4-PPT_F.pdf" style="width: 100%; height:800px;" frameborder="0"></iframe>
 					</div>		            
 	            </div>
 	            <!-- // CUSTOMER TYPE END -->
@@ -6113,7 +6307,7 @@
 	            <!-- PAYMENT METHOD -->
 	            <div class="tab-pane" id="tab2-4">
 	            	<div style="margin: 0 auto; text-align: center;">
-						<h1 style="font-size: 35px; font-weight: 600;">Comoing Soon</h1>
+						<iframe src="<?php echo base_url(); ?>assets/fwdform/1-VAT_F.pdf" style="width: 100%; height:800px;" frameborder="0"></iframe>
 					</div>			            
 	            </div>
 	            <!-- // PAYMENT METHOD END -->
@@ -6121,7 +6315,7 @@
 	            <!-- PAYMENT TERM -->
 	            <div class="tab-pane" id="tab3-4">
             		<div style="margin: 0 auto; text-align: center;">
-						<h1 style="font-size: 35px; font-weight: 600;">Comoing Soon</h1>
+						<iframe src="<?php echo base_url(); ?>assets/fwdform/2-WT_F.pdf" style="width: 100%; height:800px;" frameborder="0"></iframe>
 					</div>
 	            </div>
 	            <!-- // PAYMENT TERM END -->
@@ -6130,7 +6324,7 @@
 	            <div class="tab-pane" id="tab4-4">
             		
 	            	<div style="margin: 0 auto; text-align: center;">
-						<h1 style="font-size: 35px; font-weight: 600;">Comoing Soon</h1>
+						<iframe src="<?php echo base_url(); ?>assets/fwdform/3-TOS_F_20150113.pdf" style="width: 100%; height:800px;" frameborder="0"></iframe>
 					</div>
 
 	            </div>
@@ -6742,7 +6936,7 @@
 				    		<thead>
 					    		<tr>
 					    			<td >ល.រ <br> No.</td>
-					    			<td style="width: 10%">ឈ្មោះនិយោជិក <br> Name of Emplyee</td>
+					    			<td style="width: 10%;">ឈ្មោះនិយោជិក <br> Name of Emplyee</td>
 					    			<td >សញ្ជាតិ <br> Nationlity</td>
 					    			<td >មុខងារ <br> Function</td> 
 					    			<td >ប្រាក់បៀវត្សត្រូវបើក <br> Salary to be Paid (USD)</td>
@@ -6821,7 +7015,112 @@
 						    	</tr>
 					    	</tfoot>
 				    	</table>
-				    </div>					
+				    </div>
+
+				    <br>
+				    <p>
+				    	តារាងលម្អិតអំពីពន្ធលើប្រាក់បៀវត្សចំពោះនិយោជិក អនិវាសនជន និងពន្ធលើប្រាក់បៀវត្សចំពោះអត្ថប្រយោជន៍បន្ថែម <br/>
+				    	Details on the Tax on Salary on Non-Resident Employees and Tax on Salary on Fringe Benefit:
+				   	</p>
+				    <div class="row sale-record">
+				    	<table >				    		
+				    		<thead>
+					    		<tr>
+					    			<td >ល.រ <br> No.</td>
+					    			<td style="width: 10%;">ឈ្មោះនិយោជិក <br> Name of Emplyee</td>
+					    			<td >សញ្ជាតិ <br> Nationlity</td>
+					    			<td >មុខងារ <br> Function</td> 
+					    			<td colspan="2">ប្រាក់បៀវត្សត្រូវបើក/អត្ថប្រយោជន៍បន្ថែម	 <br> Salary to be Paid/Fringe Benefit</td>
+					    			<td >អត្រាពន្ធ <br> Tax Rate</td>
+					    			<td colspan="2">ពន្ធលើប្រាក់បៀវត្ស <br> Tax on Salary</td> 
+					    			<td >កំណត់សម្គាល់ <br> Remarks</td>					    			
+					    		</tr>
+					    		<tr>
+					    			<td rowspan="2"></td>
+					    			<td rowspan="2">A</td>
+					    			<td rowspan="2">C-22160910</td>
+					    			<td rowspan="2">C</td>					    			
+					    			<td >D</td>
+					    			<td >E</td>
+					    			<td rowspan="2">F</td>
+					    			<td >G = D x F</td>
+					    			<td >H = E x F</td>
+					    			<td rowspan="2">I</td>
+					    		</tr>	
+					    		<tr>				    			
+					    			<td >USD</td>
+					    			<td >KHR</td>
+					    			<td >USD</td>
+					    			<td >KHR</td>
+					    		</tr>				    		
+					    	</thead>
+					    	<tbody>
+					    		<tr>
+					    			<td >1</td>
+					    			<td >A</td>
+					    			<td >B</td>
+					    			<td >C</td> 
+					    			<td >D</td>
+					    			<td >E</td>
+					    			<td >F</td>
+					    			<td >G</td> 
+					    			<td >H</td>
+					    			<td >I</td>
+					    		</tr>
+					    		<tr>
+					    			<td >2</td>
+					    			<td >A</td>
+					    			<td >B</td>
+					    			<td >C</td> 
+					    			<td >D</td>
+					    			<td >E</td>
+					    			<td >F</td>
+					    			<td >G</td> 
+					    			<td >H</td>
+					    			<td >I</td>
+					    		</tr>
+					    		<tr>
+					    			<td >3</td>
+					    			<td >A</td>
+					    			<td >B</td>
+					    			<td >C</td> 
+					    			<td >D</td>
+					    			<td >E</td>
+					    			<td >F</td>
+					    			<td >G</td> 
+					    			<td >H</td>
+					    			<td >I</td>
+					    		</tr>
+					    		<tr>
+					    			<td >4</td>
+					    			<td >A</td>
+					    			<td >B</td>
+					    			<td >C</td> 
+					    			<td >D</td>
+					    			<td >E</td>
+					    			<td >F</td>
+					    			<td >G</td> 
+					    			<td >H</td>
+					    			<td >I</td>
+					    		</tr>
+					    	</tbody>
+					    	<tfoot>
+					    		<tr>
+						    		<td colspan="4" style="text-align: center;">សរុប (Total)</td>
+					    			<td ></td>
+					    			<td ></td>
+					    			<td ></td> 
+					    			<td ></td>
+					    			<td ></td>
+					    			<td ></td>
+						    	</tr>
+					    	</tfoot>
+				    	</table>				    	
+				    </div>
+				    <br>
+				    <p><u>កំណត់សម្គាល់ៈ</u> ប្រសិនបើសរសេរមិនអស់ សូមភ្ជាប់ជាមួយក្នុងក្រដាសដោយឡែក។</p>
+				    <p><b>Notes:</b> Please use separate sheets if the space is insufficient.</p>
+
 			    	
 				</div>							
 			</div>
@@ -24082,10 +24381,21 @@
 							<img title="Add Catalog" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/catalog.png" width="110" height="200" />
 							<span data-bind="text: lang.lang.catalog" style="margin-top: 7px; display: inline-block; text-transform: uppercase;"></span>
 						</a>
-					</td>
-										
+					</td>									
 				</tr>
 				
+				<tr>
+					<td class="center">
+						<a href="#/purchase_order">
+							<img title="Add Purchase Order" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/purchase_order.png" width="110" height="200">
+							<span data-bind="text: lang.lang.po" style="margin-top: 7px; display: inline-block; text-transform: uppercase;">PO</span>
+						</a>						
+					</td>
+					<td class="center">
+					</td>
+					<td class="center">
+					</td>
+				</tr>	
 							
 			</table>
 
@@ -25035,39 +25345,7 @@
 						</tr>
 					</table>
 				</div>
-			</div>
-
-			
-			<div class="row-fluid recevable-report">
-				<h2>OTHER REPORTS/ LISTS</h2>
-				<div class="row-fluid">
-					<table class="table table-borderless table-condensed">
-						<tr>
-							<td style="width: 48%; padding-right: 8px !important;">
-								<h3><a href="#/customer_recurring">Recurring Customer Template List</a></h3>
-							</td>
-							<td >
-								<h3><a href="#/customer_setting">Payment Method & Term List</a></h3>								
-							</td>						
-						</tr>
-						<tr>
-							<td style="width: 48%; padding-right: 8px !important;">
-								<p></p>								
-							</td>
-							<td>
-								<p>
-									List the types of payments and the term that determine due date for payment from customers.
-								</p>
-							</td>
-							
-						</tr>
-						<tr >
-							<td></td>														
-						</tr>
-
-					</table>
-				</div>
-			</div>
+			</div>			
 		</div>
 		<div class="span5">
 			<span class="pull-right glyphicons no-js remove_2" 
@@ -47202,7 +47480,7 @@
     /*********************
 	*   Tax Section   *
 	**********************/
-	banhji.taxes =  kendo.observable({
+	banhji.taxSetting =  kendo.observable({
 		lang 				: langVM,
         dataSource 			: dataStore(apiUrl + "tax_types"),
         itemDS 	 			: dataStore(apiUrl + "tax_items"),

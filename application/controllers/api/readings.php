@@ -17,9 +17,9 @@ class Readings extends REST_Controller {
 			$this->server_host = $conn->server_name;
 			$this->server_user = $conn->username;
 			$this->server_pwd = $conn->password;	
-			// $this->_database = $conn->inst_database;
+			$this->_database = $conn->inst_database;
 		}
-		$this->_database = 'db_banhji';
+		// $this->_database = 'db_banhji';
 	}
 	
 	//GET 
@@ -62,7 +62,7 @@ class Readings extends REST_Controller {
 			foreach ($obj as $value) {
 				//Results
 				$meter  = $value->meter->get();
-
+				//$license = $value->branch->get();
 				// 			$data["meta"] = array(
 				// 						'meter_id' => $meter->id,
 				// 						'meter_number' => $meter_number,
@@ -70,14 +70,19 @@ class Readings extends REST_Controller {
 				// 					);	
 				$data["results"][] = array(
 					"id" 			=> $value->id,
+					"branch_id" 	=> $meter->branch_id,
+					"location_id" 	=> $meter->location_id,
 					"previous"		=> $value->previous,
 					"meter_id"		=> $meter->id,
 					"current"		=> $value->current,
 					"month_of"		=> $value->month_of,
+					"from_date" 	=> $value->from_date,
+					"to_date" 		=> $value->to_date,
 					"date"			=> $value->from_date." - ".$value->to_date,
-					"number" 		=> $meter->number,
+					"meter_number" 		=> $meter->number,
 					"invoiced"   	=> $value->invoiced == 0 ? FALSE:TRUE,
-					"consumption" 	=> $value->usage,
+					"usage" 		=> $value->usage,
+					"status"		=> "n",
 					"_meta" 		=> array()
 				);
 			}
@@ -94,8 +99,8 @@ class Readings extends REST_Controller {
 		foreach ($models as $value) {
 			$obj = new Meter_record(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$meter = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			$meter->where('id', $value->number->id)->get();
-			//if($value->status == "n") {
+			$meter->where('number', $value->meter_number)->get();
+			if($value->status == "n") {
 				$obj->meter_id 				= isset($meter->id)					?$meter->id: "";
 				$obj->previous 				= isset($value->previous)			?$value->previous: "";
 				$obj->current 				= isset($value->current)			?$value->current: "";
@@ -103,16 +108,16 @@ class Readings extends REST_Controller {
 				$obj->to_date 				= isset($value->to_date)			?$value->to_date: "";
 				
 				$obj->usage    = intval($value->current) - intval($value->previous);
-			// } elseif($value->status == "u") {
-			// 	$obj->where('meter_id', $value->meter_id);
-			// 	$obj->where('from_date', $value->from_date);
-			// 	$obj->where('to_date', $value->to_date);
-			// 	$obj->get();
-			// 	// update with new value
-			// 	$obj->previous = $value->prev;
-			// 	$obj->current  = $value->current;
-			// 	$obj->usage    = intval($value->current) - intval($value->prev);
-			// }
+			} elseif($value->status == "u") {
+				$obj->where('meter_id', $value->meter_id);
+				$obj->where('from_date', $value->from_date);
+				$obj->where('to_date', $value->to_date);
+				$obj->get();
+				// update with new value
+				$obj->previous = $value->prev;
+				$obj->current  = $value->current;
+				$obj->usage    = intval($value->current) - intval($value->prev);
+			}
 			
 			
 			if($obj->save()){								
@@ -120,9 +125,10 @@ class Readings extends REST_Controller {
 				$data["results"][] = array(
 					"id"			=> $obj->id,
 					"meter_id" 		=> $obj->meter_id,
-					"number" 		=> intval($meter->number),
+					"meter_number" 	=> $meter->number,
 					"prev"			=> $obj->previous,
 					"current"		=> $obj->current,
+					"usage"	 		=> $obj->current - $obj->previous,
 					"from_date"		=> $obj->from_date,
 					"to_date"		=> $obj->to_date
 				);				
@@ -150,13 +156,16 @@ class Readings extends REST_Controller {
 				$obj->current 				= isset($value->current)			?$value->current: "";
 				$obj->from_date 			= isset($value->from_date)			?$value->from_date: "";
 				$obj->to_date 				= isset($value->to_date)			?$value->to_date: "";
+				$obj->meter_number 			= isset($value->meter_number)		?$value->meter_number: "";
+				$obj->usage 				= $obj->current - $obj->previous;
 				if($obj->save()){
 					$data["results"][] = array(
 						"meter_id" 		=> $obj->meter_id,
-						"number" 		=> intval($value->number),
+						"meter_number" 	=> $obj->meter_number,
 						"month_of"		=> $obj->month_of,
 						"prev"			=> $obj->previous,
 						"current"		=> $obj->current,
+						"usage" 		=> $obj->usage,
 						"from_date"		=> $obj->from_date,
 						"to_date"		=> $obj->to_date,
 						"_meta" 		=> array()
@@ -181,15 +190,16 @@ class Readings extends REST_Controller {
 					$newObj->from_date 				= isset($value->from_date)			? $value->from_date: "";
 					$newObj->to_date 				= isset($value->to_date)			? $value->to_date: "";
 					$newObj->invoiced 				= 1;
-					if($newObj->save()){
-											
+					$newObj->usage = $newObj->current - $newObj->previous;
+					if($newObj->save()){		
 						$data["results"][] = array(
 							"id"			=> $newObj->id,
 							"meter_id" 		=> $newObj->meter_id,
 							"month_of"		=> $newObj->month_of,
-							"number" 		=> intval($value->number),
+							"meter_number" 	=> $newObj->meter_number,
 							"prev"			=> $newObj->previous,
 							"current"		=> $newObj->current,
+							"usage" 		=> $newObj->usage,
 							"from_date"		=> $newObj->from_date,
 							"to_date"		=> $newObj->to_date,
 							"_meta" 		=> array('id' => $winvioceLine)

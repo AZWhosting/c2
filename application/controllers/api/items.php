@@ -24,11 +24,11 @@ class Items extends REST_Controller {
 
 	//GET 
 	function index_get() {		
-		$filters 	= $this->get("filter");
-		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
-		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;
+		$filter 	= $this->get("filter");
+		$page 		= $this->get('page');		
+		$limit 		= $this->get('limit');
 		$sort 	 	= $this->get("sort");		
-		$data["results"] = array();
+		$data["results"] = [];
 		$data["count"] = 0;
 		$is_pattern = 0;
 
@@ -42,8 +42,8 @@ class Items extends REST_Controller {
 		}
 		
 		//Filter		
-		if(!empty($filters) && isset($filters)){
-	    	foreach ($filters['filters'] as $value) {
+		if(!empty($filter) && isset($filter)){
+	    	foreach ($filter['filters'] as $value) {
 	    		if(isset($value['operator'])) {
 					$obj->{$value['operator']}($value['field'], $value['value']);
 				} else {
@@ -61,10 +61,15 @@ class Items extends REST_Controller {
 		$obj->where("deleted <>", 1);			
 		
 		//Results
-		$obj->get_paged_iterated($page, $limit);
-		$data["count"] = $obj->paged->total_rows;							
+		if($page && $limit){
+			$obj->get_paged_iterated($page, $limit);
+			$data["count"] = $obj->paged->total_rows;
+		}else{
+			$obj->get_iterated();
+			$data["count"] = $obj->result_count();
+		}
 
-		if($obj->result_count()>0){
+		if($obj->exists()){
 			foreach ($obj as $value) {
 				$itemPrice = [];				
 				foreach ($value->item_price->get() as $p) {					
@@ -84,27 +89,19 @@ class Items extends REST_Controller {
 				}
 
 				//Sum On Hand
-				$on_hand = 0;
+				$onHand = 0;
 				if($value->item_type_id=="1"){					
-					$itemIn = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-					$itemIn->select_sum("quantity");
-					$itemIn->where_in_related("transaction", "type", array("Cash_Purchase", "Credit_Purchase", "Item_Adjustment","Sale_Return"));
-					$itemIn->where_related("transaction", "is_recurring <>", 1);
-					$itemIn->where_related("transaction", "deleted <>", 1);
-					$itemIn->where("item_id", $value->id);
-					$itemIn->where("movement", 1);
-					$itemIn->get();
+					//Sum On Hand
+					$itemMovement = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);						
+					$itemMovement->where_in_related("transaction", "type", array("Cash_Purchase", "Credit_Purchase", "Commercial_Invoice", "Vat_Invoice", "Invoice", "Commercial_Cash_Sale", "Vat_Cash_Sale", "Cash_Sale", "Adjustment"));
+					$itemMovement->where("item_id", $value->id);
+					$itemMovement->where_related("transaction", "is_recurring <>", 1);
+					$itemMovement->where_related("transaction", "deleted <>", 1);
+					$itemMovement->get_iterated();
 					
-					$itemOut = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-					$itemOut->select_sum("quantity");
-					$itemOut->where_in_related("transaction", "type", array("Commercial_Invoice","Vat_Invoice","Invoice", "Commercial_Cash_Sale", "Vat_Cash_Sale", "Cash_Sale", "Item_Adjustment","Purchase_Return"));
-					$itemOut->where_related("transaction", "is_recurring <>", 1);
-					$itemOut->where_related("transaction", "deleted <>", 1);
-					$itemOut->where("item_id", $value->id);
-					$itemOut->where("movement", -1);
-					$itemOut->get();					
-					
-					$on_hand = floatval($itemIn->quantity) - floatval($itemOut->quantity);
+					foreach ($itemMovement as $val) {
+						$onHand += ($val->quantity * $val->unit_value * $val->movement);
+					}
 				}
 
 				$data["results"][] = array(
@@ -135,7 +132,7 @@ class Items extends REST_Controller {
 				   	"amount" 					=> floatval($value->amount),
 				   	"rate" 						=> floatval($value->rate),
 				   	"locale" 					=> $value->locale,
-				   	"on_hand" 					=> $on_hand,
+				   	"on_hand" 					=> $onHand,
 				   	"on_po" 					=> floatval($value->on_po),
 				   	"on_so" 					=> floatval($value->on_so),
 				   	"order_point" 				=> intval($value->order_point),
@@ -1451,6 +1448,7 @@ class Items extends REST_Controller {
 			}
 		}
 		
+		$obj->include_related("measurement","name");
 		$obj->include_related("transaction", array("number","type","issued_date"));
 		$obj->where_related("transaction","is_recurring <>", 1);
 		$obj->where_related("transaction","deleted <>", 1);
@@ -1476,6 +1474,7 @@ class Items extends REST_Controller {
 					"locale" 					=> $value->locale,
 					"movement" 					=> $value->movement,
 					
+					"measurement"				=> $value->measurement_name,
 					"transaction_number"		=> $value->transaction_number,
 					"transaction_type"			=> $value->transaction_type,
 					"transaction_issued_date"	=> $value->transaction_issued_date						

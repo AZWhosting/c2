@@ -24,9 +24,9 @@ class Transactions extends REST_Controller {
 
 	//GET
 	function index_get() {
-		$filters 	= $this->get("filter")["filters"];
-		$page 		= $this->get('page') !== false ? $this->get('page') : 1;
-		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;
+		$filter 	= $this->get("filter");
+		$page 		= $this->get('page');
+		$limit 		= $this->get('limit');
 		$sort 	 	= $this->get("sort");
 		$data["results"] = array();
 		$data["count"] = 0;
@@ -42,8 +42,8 @@ class Transactions extends REST_Controller {
 		}
 
 		//Filter
-		if(!empty($filters) && isset($filters)){
-	    	foreach ($filters as $value) {
+		if(!empty($filter) && isset($filter)){
+	    	foreach ($filter['filters'] as $value) {
 	    		if(isset($value['operator'])) {
 					$obj->{$value['operator']}($value['field'], $value['value']);
 				} else {
@@ -60,8 +60,13 @@ class Transactions extends REST_Controller {
 		$obj->where("deleted <>", 1);
 
 		//Results
-		$obj->get_paged_iterated($page, $limit);
-		$data["count"] = $obj->paged->total_rows;
+		if($page && $limit){
+			$obj->get_paged_iterated($page, $limit);
+			$data["count"] = $obj->paged->total_rows;
+		}else{
+			$obj->get_iterated();
+			$data["count"] = $obj->result_count();
+		}
 
 		if($obj->exists()){
 			foreach ($obj as $value) {
@@ -536,582 +541,7 @@ class Transactions extends REST_Controller {
 		//Response data
 		$this->response($data, 200);
 	}
-
-
-	//TXN PRINT GET --> Choeun
-	function txn_print_get() {
-		$filters 	= $this->get("filter")["filters"];
-		$page 		= $this->get('page') !== false ? $this->get('page') : 1;
-		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;
-		$sort 	 	= $this->get("sort");
-		$data["results"] = array();
-		$data["count"] = 0;
-		$is_recurring = 0;
-
-		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-
-		//Sort
-		if(!empty($sort) && isset($sort)){
-			foreach ($sort as $value) {
-				$obj->order_by($value["field"], $value["dir"]);
-			}
-		}
-
-		//Filter
-		if(!empty($filters) && isset($filters)){
-	    	foreach ($filters as $value) {
-	    		if(isset($value['operator'])) {
-					$obj->{$value['operator']}($value['field'], $value['value']);
-				} else {
-					if($value["field"]=="is_recurring"){
-	    				$is_recurring = $value["value"];
-	    			}else{
-	    				$obj->where($value["field"], $value["value"]);
-	    			}
-				}
-			}
-		}
-
-		$obj->where("is_recurring", $is_recurring);
-		$obj->where("deleted <>", 0);
-
-		//Results
-		$obj->get_paged_iterated($page, $limit);
-		$data["count"] = $obj->paged->total_rows;
-
-		if($obj->exists()){
-			foreach ($obj as $value) {
-
-				//Sum amount paid
-				$amount_paid = 0;
-				if($value->type=="Commercial_Invoice" || $value->type=="Vat_Invoice" || $value->type=="Invoice" || $value->type=="Credit_Purchase" || $value->type=="Cash_Receipt" || $value->type=="Cash_Payment"){
-					$paid = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-					$paid->select_sum("amount");
-					$paid->select_sum("discount");
-					$paid->where_in("type", array("Cash_Receipt", "Cash_Payment"));
-					if($value->type=="Cash_Receipt" || $value->type=="Cash_Payment"){
-						$paid->where("reference_id", $value->reference_id);
-						$paid->where_not_in("id", array($value->id));
-					}else{
-						$paid->where("reference_id", $value->id);
-					}
-					$paid->where("is_recurring <>", 1);
-					$paid->where("deleted <>", 1);
-					$paid->get();
-					$amount_paid = floatval($paid->amount) + floatval($paid->discount);
-				}
-
-				$data["results"][] = array(
-					"id" 						=> $value->id,
-					"company_id" 				=> $value->company_id,
-					"location_id" 				=> $value->location_id,
-					"contact_id" 				=> $value->contact_id,
-					"payment_term_id" 			=> $value->payment_term_id,
-					"payment_method_id" 		=> $value->payment_method_id,
-					"transaction_template_id" 	=> $value->transaction_template_id,
-					"reference_id" 				=> $value->reference_id,
-					"recurring_id" 				=> $value->recurring_id,
-					"return_id" 				=> $value->return_id,
-					"job_id" 					=> $value->job_id,
-					"account_id" 				=> $value->account_id,
-					"item_id" 					=> $value->item_id,
-					"tax_item_id" 				=> $value->tax_item_id,
-					"user_id" 					=> $value->user_id,
-					"employee_id" 				=> $value->employee_id,
-				   	"number" 					=> $value->number,
-				   	"reference_no" 				=> $value->reference_no,
-				   	"type" 						=> $value->type,
-				   	"journal_type" 				=> $value->journal_type,
-				   	"sub_total"					=> floatval($value->sub_total),
-				   	"discount" 					=> floatval($value->discount),
-				   	"tax" 						=> floatval($value->tax),
-				   	"amount" 					=> floatval($value->amount),
-				   	"fine" 						=> floatval($value->fine),
-				   	"deposit"					=> floatval($value->deposit),
-				   	"remaining" 				=> floatval($value->remaining),
-				   	"credit_allowed"			=> floatval($value->credit_allowed),
-				   	"additional_cost" 			=> floatval($value->additional_cost),
-				   	"additional_apply" 			=> $value->additional_apply,
-				   	"rate" 						=> floatval($value->rate),
-				   	"locale" 					=> $value->locale,
-				   	"month_of"					=> $value->month_of,
-				   	"issued_date"				=> $value->issued_date,
-				   	"bill_date"					=> $value->bill_date,
-				   	"payment_date" 				=> $value->payment_date,
-				   	"due_date" 					=> $value->due_date,
-				   	"deposit_date" 				=> $value->deposit_date,
-				   	"check_no" 					=> $value->check_no,
-				   	"segments" 					=> explode(",", $value->segments),
-				   	"bill_to" 					=> $value->bill_to,
-				   	"ship_to" 					=> $value->ship_to,
-				   	"memo" 						=> $value->memo,
-				   	"memo2" 					=> $value->memo2,
-				   	"recurring_name" 			=> $value->recurring_name,
-				   	"start_date"				=> $value->start_date,
-				   	"frequency"					=> $value->frequency,
-					"month_option"				=> $value->month_option,
-					"interval" 					=> $value->interval,
-					"day" 						=> $value->day,
-					"week" 						=> $value->week,
-					"month" 					=> $value->month,
-				   	"status" 					=> $value->status,
-				   	"is_recurring" 				=> $value->is_recurring,
-				   	"is_journal" 				=> $value->is_journal,
-				   	"print_count" 				=> $value->print_count,
-				   	"printed_by" 				=> $value->printed_by,
-				   	"deleted" 					=> $value->deleted,
-
-				   	"contact" 					=> $value->contact->get_raw()->result(),
-				   	"reference" 				=> $value->reference->get_raw()->result(),
-				   	"amount_paid"				=> $amount_paid,
-				   	"payment_term" 				=> $value->payment_term->get_raw()->result(),
-				   	"payment_method" 			=> $value->payment_method->get_raw()->result()
-
-				);
-			}
-		}
-
-		//Response Data
-		$this->response($data, 200);
-	}
-
-	//ITMES LINE PRINT GET --> Choeun
-	function line_print_get() {
-		$filters 	= $this->get("filter")["filters"];
-		$page 		= $this->get('page') !== false ? $this->get('page') : 1;
-		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;
-		$sort 	 	= $this->get("sort");
-		$data["results"] = array();
-		$data["count"] = 0;
-
-		$obj = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-
-		//Sort
-		if(!empty($sort) && isset($sort)){
-			foreach ($sort as $value) {
-				$obj->order_by($value["field"], $value["dir"]);
-			}
-		}
-
-		//Filter
-		if(!empty($filters) && isset($filters)){
-	    	foreach ($filters as $value) {
-	    		if(isset($value['operator'])) {
-					$obj->{$value['operator']}($value['field'], $value['value']);
-				} else {
-	    			$obj->where($value["field"], $value["value"]);
-				}
-			}
-		}
-
-		//Results
-		$obj->get_paged_iterated($page, $limit);
-		$data["count"] = $obj->paged->total_rows;
-
-		if($obj->result_count()>0){
-			foreach ($obj as $value) {
-				$itemPrice = [];
-				if($value->item_id>0){
-					$pl = new Item_price(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-					$pl->where("item_id", $value->item_id);
-					$pl->get();
-					foreach ($pl as $p) {
-						$itemPrice[] = array(
-							"id" 			=> $p->id,
-							"item_id" 		=> $p->item_id,
-							"assembly_id"	=> $p->assembly_id,
-							"measurement_id"=> $p->measurement_id,
-							"quantity"		=> floatval($p->quantity),
-							"unit_value" 	=> floatval($p->unit_value),
-							"price" 		=> floatval($p->price),
-							"amount" 		=> floatval($p->amount),
-							"locale" 		=> $p->locale,
-
-							"measurement" 	=> $p->measurement->get()->name
-						);
-					}
-				}
-
-				$data["results"][] = array(
-					"id" 				=> $value->id,
-			   		"transaction_id"	=> $value->transaction_id,
-			   		"measurement_id" 	=> $value->measurement_id,
-					"tax_item_id" 		=> $value->tax_item_id,
-					"item_id" 			=> $value->item_id,
-				   	"description" 		=> $value->description,
-				   	"on_hand" 			=> floatval($value->on_hand),
-					"on_po" 			=> floatval($value->on_po),
-					"on_so" 			=> floatval($value->on_so),
-					"quantity" 			=> floatval($value->quantity),
-				   	"quantity_adjusted" => floatval($value->quantity_adjusted),
-				   	"cost"				=> floatval($value->cost),
-				   	"price"				=> floatval($value->price),
-				   	"price_avg" 		=> floatval($value->price_avg),
-				   	"amount" 			=> floatval($value->amount),
-				   	"discount" 			=> floatval($value->discount),
-				   	"fine" 				=> floatval($value->fine),
-				   	"additional_cost" 	=> floatval($value->additional_cost),
-				   	"additional_applied"=> $value->additional_applied,
-				   	"rate"				=> floatval($value->rate),
-				   	"locale" 			=> $value->locale,
-				   	"movement" 			=> $value->movement,
-				   	"required_date"		=> $value->required_date,
-
-				   	"item_prices" 		=> $itemPrice,
-				   	"item" 		=> $value->item->get_raw()->result(),
-				   	"journal" 			=> $value->journal->get_raw()->result()
-				);
-			}
-		}
-		$this->response($data, 200);
-	}
-
-
-	//LINE GET
-	function line_get() {
-		$filters 	= $this->get("filter")["filters"];
-		$page 		= $this->get('page') !== false ? $this->get('page') : 1;
-		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;
-		$sort 	 	= $this->get("sort");
-		$data["results"] = array();
-		$data["count"] = 0;
-
-		$obj = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-
-		//Sort
-		if(!empty($sort) && isset($sort)){
-			foreach ($sort as $value) {
-				$obj->order_by($value["field"], $value["dir"]);
-			}
-		}
-
-		//Filter
-		if(!empty($filters) && isset($filters)){
-	    	foreach ($filters as $value) {
-	    		if(isset($value['operator'])) {
-					$obj->{$value['operator']}($value['field'], $value['value']);
-				} else {
-	    			$obj->where($value["field"], $value["value"]);
-				}
-			}
-		}
-
-		//Results
-		$obj->get_paged_iterated($page, $limit);
-		$data["count"] = $obj->paged->total_rows;
-
-		if($obj->result_count()>0){
-			foreach ($obj as $value) {
-				$itemPrice = [];
-				if($value->item_id>0){
-					$pl = new Item_price(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-					$pl->where("item_id", $value->item_id);
-					$pl->get();
-					foreach ($pl as $p) {
-						$itemPrice[] = array(
-							"id" 			=> $p->id,
-							"item_id" 		=> $p->item_id,
-							"assembly_id"	=> $p->assembly_id,
-							"measurement_id"=> $p->measurement_id,
-							"quantity"		=> floatval($p->quantity),
-							"unit_value" 	=> floatval($p->unit_value),
-							"price" 		=> floatval($p->price),
-							"amount" 		=> floatval($p->amount),
-							"locale" 		=> $p->locale,
-
-							"measurement" 	=> $p->measurement->get()->name
-						);
-					}
-				}
-
-				$data["results"][] = array(
-					"id" 				=> $value->id,
-			   		"transaction_id"	=> $value->transaction_id,
-			   		"measurement_id" 	=> $value->measurement_id,
-					"tax_item_id" 		=> $value->tax_item_id,
-					"item_id" 			=> $value->item_id,
-				   	"description" 		=> $value->description,
-				   	"on_hand" 			=> floatval($value->on_hand),
-					"on_po" 			=> floatval($value->on_po),
-					"on_so" 			=> floatval($value->on_so),
-					"quantity" 			=> floatval($value->quantity),
-				   	"quantity_adjusted" => floatval($value->quantity_adjusted),
-				   	"cost"				=> floatval($value->cost),
-				   	"price"				=> floatval($value->price),
-				   	"price_avg" 		=> floatval($value->price_avg),
-				   	"amount" 			=> floatval($value->amount),
-				   	"discount" 			=> floatval($value->discount),
-				   	"fine" 				=> floatval($value->fine),
-				   	"additional_cost" 	=> floatval($value->additional_cost),
-				   	"additional_applied"=> $value->additional_applied,
-				   	"rate"				=> floatval($value->rate),
-				   	"locale" 			=> $value->locale,
-				   	"movement" 			=> $value->movement,
-				   	"required_date"		=> $value->required_date,
-
-				   	"item_prices" 		=> $itemPrice
-				);
-			}
-		}
-		$this->response($data, 200);
-	}
-
-	//LINE POST
-	function line_post() {
-		$models = json_decode($this->post('models'));
-		$data["results"] = [];
-		$data["count"] = 0;
-
-		foreach ($models as $value) {
-			$obj = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-
-			//Record Item
-			if($value->item_id>0){
-				$item = new Item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				$item->get_by_id($value->item_id);
-
-				if($item->item_type_id=="1"){
-					$transaction = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-					$transaction->get_by_id($value->transaction_id);
-
-					if($transaction->is_recurring!=="1"){
-						//Sum On Hand
-						$itemIn = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-						$itemIn->select_sum("quantity");
-						$itemIn->where_in_related("transaction", "type", array("Cash_Purchase", "Credit_Purchase", "Adjustment"));
-						$itemIn->where("item_id", $value->item_id);
-						$itemIn->where("movement", 1);
-						$itemIn->where_related("transaction", "issued_date <=", $transaction->issued_date);
-						$itemIn->where_related("transaction", "is_recurring <>", 1);
-						$itemIn->where_related("transaction", "deleted <>", 1);
-						$itemIn->get();
-
-						$itemOut = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-						$itemOut->select_sum("quantity");
-						$itemOut->where_in_related("transaction", "type", array("Commercial_Invoice", "Vat_Invoice", "Invoice", "Commercial_Cash_Sale", "Vat_Cash_Sale", "Cash_Sale", "Adjustment"));
-						$itemOut->where("item_id", $value->item_id);
-						$itemOut->where("movement", -1);
-						$itemOut->where_related("transaction", "issued_date <=", $transaction->issued_date);
-						$itemOut->where_related("transaction", "is_recurring <>", 1);
-						$itemOut->where_related("transaction", "deleted <>", 1);
-						$itemOut->get();
-
-						$onHand = floatval($itemIn->quantity) - floatval($itemOut->quantity);
-						$totalQty = $onHand + floatval($value->quantity);
-
-						if($transaction->type=="Commercial_Invoice" || $transaction->type=="Vat_Invoice" || $transaction->type=="Invoice" || $transaction->type=="Commercial_Cash_Sale" || $transaction->type=="Vat_Cash_Sale" || $transaction->type=="Cash_Sale"){
-							//Avg Price
-							$lastPrice = $onHand * floatval($item->price);
-							$currentPrice = floatval($value->quantity) * (floatval($value->price) / floatval($value->rate));
-
-							$item->price = ($lastPrice + $currentPrice) / $totalQty;
-							$obj->cost = floatval($item->cost) * floatval($value->rate);
-							$obj->price_avg = ($lastPrice + $currentPrice) / $totalQty;;
-						}
-
-						if($transaction->type=="Cash_Purchase" || $transaction->type=="Credit_Purchase" || $transaction->type=="Item_Adjustment"){
-							//Avg Cost
-							$lastCost = $onHand * floatval($item->cost);
-							$currentCost = (floatval($value->amount) + floatval($value->additional_cost)) / floatval($value->rate);
-
-							if($onHand>0){
-								$item->cost = ($lastCost + $currentCost) / $totalQty;
-							}else{
-								$item->cost = $currentCost / floatval($value->quantity);
-							}
-						}
-
-						if($transaction->type=="Item_Adjustment" && $item->cost==0){
-							//Avg Cost
-							$item->cost = floatval($value->cost);
-						}						
-
-						if($item->save()){
-							$po = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-							$po->select_sum("quantity");
-							$po->where_related("transaction", "type", "Purchase_Order");
-							$po->where_related("transaction", "issued_date <=", $transaction->issued_date);
-							$po->where_related("transaction", "status", 0);
-							$po->where_related("transaction", "is_recurring <>", 1);
-							$po->where_related("transaction", "deleted <>", 1);
-							$po->get();
-
-							$so = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-							$so->select_sum("quantity");
-							$so->where_related("transaction", "type", "Sale_Order");
-							$po->where_related("transaction", "issued_date <=", $transaction->issued_date);
-							$so->where_related("transaction", "status", 0);
-							$so->where_related("transaction", "is_recurring <>", 1);
-							$so->where_related("transaction", "deleted <>", 1);
-							$so->get();
-
-							$obj->on_po = $po->quantity;
-							$obj->on_so = $so->quantity;
-						}
-					}
-				}
-			}
-
-			isset($value->transaction_id) 	? $obj->transaction_id 		= $value->transaction_id : "";
-			isset($value->item_id)			? $obj->item_id				= $value->item_id : "";
-			isset($value->measurement_id)	? $obj->measurement_id		= $value->measurement_id : "";
-			isset($value->tax_item_id)		? $obj->tax_item_id			= $value->tax_item_id : "";
-		   	isset($value->description)		? $obj->description 		= $value->description : "";
-		   	// isset($value->on_hand)			? $obj->on_hand 			= $value->on_hand : "";
-		   	// isset($value->on_po)			? $obj->on_po 				= $value->on_po : "";
-		   	// isset($value->on_so)			? $obj->on_so 				= $value->on_so : "";
-		   	isset($value->quantity)			? $obj->quantity 			= $value->quantity : "";
-		   	isset($value->quantity_adjusted)? $obj->quantity_adjusted 	= $value->quantity_adjusted : "";
-		   	isset($value->cost)				? $obj->cost 				= $value->cost : "";
-		   	isset($value->price)			? $obj->price 				= $value->price : "";
-		   	//isset($value->price_avg)		? $obj->price_avg 			= $value->price_avg : "";
-		   	isset($value->amount)			? $obj->amount 				= $value->amount : "";
-		   	isset($value->discount)			? $obj->discount 			= $value->discount : "";
-		   	isset($value->fine)				? $obj->fine 				= $value->fine : "";
-		   	isset($value->rate)				? $obj->rate 				= $value->rate : "";
-		   	isset($value->locale)			? $obj->locale 				= $value->locale : "";
-		   	isset($value->additional_cost)	? $obj->additional_cost  	= $value->additional_cost : "";
-		   	isset($value->movement)			? $obj->movement 			= $value->movement : "";
-		   	isset($value->required_date)	? $obj->required_date 		= $value->required_date : "";
-
-		   	if($obj->save()){
-			   	$data["results"][] = array(
-			   		"id" 				=> $obj->id,
-			   		"transaction_id"	=> $obj->transaction_id,
-			   		"measurement_id" 	=> $obj->measurement_id,
-			   		"tax_item_id" 		=> $obj->tax_item_id,
-					"item_id" 			=> $obj->item_id,
-				   	"description" 		=> $obj->description,
-				   	"on_hand" 			=> floatval($obj->on_hand),
-					"on_po" 			=> floatval($obj->on_po),
-					"on_so" 			=> floatval($obj->on_so),
-					"quantity" 			=> floatval($obj->quantity),
-				   	"quantity_adjusted" => floatval($obj->quantity_adjusted),
-				   	"cost"				=> floatval($obj->cost),
-				   	"price"				=> floatval($obj->price),
-				   	"price_avg" 		=> floatval($obj->price_avg),
-				   	"amount" 			=> floatval($obj->amount),
-				   	"discount" 			=> floatval($obj->discount),
-				   	"fine" 				=> floatval($obj->fine),
-				   	"additional_cost" 	=> floatval($obj->additional_cost),
-				   	"additional_applied"=> $obj->additional_applied,
-				   	"rate"				=> floatval($obj->rate),
-				   	"locale" 			=> $obj->locale,
-				   	"movement" 			=> $obj->movement,
-				   	"required_date"		=> $obj->required_date
-			   	);
-		    }
-		}
-
-		$data["count"] = count($data["results"]);
-		$this->response($data, 201);
-	}
-
-	//LINE PUT
-	function line_put() {
-		$models = json_decode($this->put('models'));
-		$data["results"] = [];
-		$data["count"] = 0;
-
-		foreach ($models as $value) {
-			$obj = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			$obj->get_by_id($value->id);
-
-			//Updat record item: old - new
-			// if(isset($value->item_id)){
-			// 	if($value->item_id>0){
-			// 		$item = new Item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			// 		$item->get_by_id($value->item_id);
-
-			// 		if($item->item_type_id=="1"){
-			// 			$transaction = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			// 			$transaction->get_by_id($value->transaction_id);
-
-			// 			if($transaction->type=='Invoice' || $transaction->type=='Cash_Sale' || $transaction->type=='Cash_Purchase' || $transaction->type=='Credit_Purchase'){
-			// 			    $item->on_hand += floatval($obj->quantity) - floatval($value->quantity);
-			// 			}else if($transaction->type=='Adjustment'){
-			// 			    $item->on_hand += floatval($obj->quantity) - (floatval($value->quantity) * floatval($value->movement));
-			// 			}
-
-			// 			$item->save();
-			// 		}
-			// 	}
-			// }
-
-			isset($value->transaction_id) 	? $obj->transaction_id 		= $value->transaction_id : "";
-			isset($value->item_id)			? $obj->item_id				= $value->item_id : "";
-			isset($value->measurement_id)	? $obj->measurement_id		= $value->measurement_id : "";
-			isset($value->tax_item_id)		? $obj->tax_item_id			= $value->tax_item_id : "";
-		   	isset($value->description)		? $obj->description 		= $value->description : "";
-		   	// isset($value->on_hand)		? $obj->on_hand 			= $value->on_hand : "";
-		   	isset($value->on_po)			? $obj->on_po 				= $value->on_po : "";
-		   	isset($value->on_so)			? $obj->on_so 				= $value->on_so : "";
-		   	isset($value->quantity)			? $obj->quantity 			= $value->quantity : "";
-		   	isset($value->quantity_adjusted)? $obj->quantity_adjusted 	= $value->quantity_adjusted : "";
-		   	isset($value->cost)				? $obj->cost 				= $value->cost : "";
-		   	isset($value->price)			? $obj->price 				= $value->price : "";
-		   	isset($value->price_avg)		? $obj->price_avg 			= $value->price_avg : "";
-		   	isset($value->amount)			? $obj->amount 				= $value->amount : "";
-		   	isset($value->discount)			? $obj->discount 			= $value->discount : "";
-		   	isset($value->fine)				? $obj->fine 				= $value->fine : "";
-		   	isset($value->rate)				? $obj->rate 				= $value->rate : "";
-		   	isset($value->locale)			? $obj->locale 				= $value->locale : "";
-		   	isset($value->additional_cost)	? $obj->additional_cost  	= $value->additional_cost : "";
-		   	isset($value->movement)			? $obj->movement 			= $value->movement : "";
-		   	isset($value->required_date)	? $obj->required_date 		= $value->required_date : "";
-
-			if($obj->save()){
-				//Results
-				$data["results"][] = array(
-					"id" 				=> $obj->id,
-			   		"transaction_id"	=> $obj->transaction_id,
-			   		"measurement_id" 	=> $obj->measurement_id,
-			   		"tax_item_id" 		=> $obj->tax_item_id,
-					"item_id" 			=> $obj->item_id,
-				   	"description" 		=> $obj->description,
-				   	"on_hand" 			=> floatval($obj->on_hand),
-					"on_po" 			=> floatval($obj->on_po),
-					"on_so" 			=> floatval($obj->on_so),
-					"quantity" 			=> floatval($obj->quantity),
-				   	"quantity_adjusted" => floatval($obj->quantity_adjusted),
-				   	"cost"				=> floatval($obj->cost),
-				   	"price"				=> floatval($obj->price),
-				   	"price_avg" 		=> floatval($obj->price_avg),
-				   	"amount" 			=> floatval($obj->amount),
-				   	"discount" 			=> floatval($obj->discount),
-				   	"fine" 				=> floatval($obj->fine),
-				   	"additional_cost" 	=> floatval($obj->additional_cost),
-				   	"additional_applied"=> $obj->additional_applied,
-				   	"rate"				=> floatval($obj->rate),
-				   	"locale" 			=> $obj->locale,
-				   	"movement" 			=> $obj->movement,
-				   	"required_date"		=> $obj->required_date
-				);
-			}
-		}
-		$data["count"] = count($data["results"]);
-
-		$this->response($data, 200);
-	}
-
-	//LINE DELETE
-	function line_delete() {
-		$models = json_decode($this->delete('models'));
-
-		foreach ($models as $key => $value) {
-			$obj = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			$obj->where("id", $value->id)->get();
-
-			$data["results"][] = array(
-				"data"   => $value,
-				"status" => $obj->delete()
-			);
-		}
-
-		//Response data
-		$this->response($data, 200);
-	}
-
+	
 
     //Generate invoice number
 	public function _generate_number($type, $date){
@@ -1404,6 +834,235 @@ class Transactions extends REST_Controller {
 		);
 
 		//Response Data
+		$this->response($data, 200);
+	}
+
+	//BY CHOEUN
+	//TXN PRINT GET --> Choeun
+	function txn_print_get() {
+		$filters 	= $this->get("filter")["filters"];
+		$page 		= $this->get('page') !== false ? $this->get('page') : 1;
+		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;
+		$sort 	 	= $this->get("sort");
+		$data["results"] = array();
+		$data["count"] = 0;
+		$is_recurring = 0;
+
+		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+		//Sort
+		if(!empty($sort) && isset($sort)){
+			foreach ($sort as $value) {
+				$obj->order_by($value["field"], $value["dir"]);
+			}
+		}
+
+		//Filter
+		if(!empty($filters) && isset($filters)){
+	    	foreach ($filters as $value) {
+	    		if(isset($value['operator'])) {
+					$obj->{$value['operator']}($value['field'], $value['value']);
+				} else {
+					if($value["field"]=="is_recurring"){
+	    				$is_recurring = $value["value"];
+	    			}else{
+	    				$obj->where($value["field"], $value["value"]);
+	    			}
+				}
+			}
+		}
+
+		$obj->where("is_recurring", $is_recurring);
+		$obj->where("deleted <>", 0);
+
+		//Results
+		$obj->get_paged_iterated($page, $limit);
+		$data["count"] = $obj->paged->total_rows;
+
+		if($obj->exists()){
+			foreach ($obj as $value) {
+
+				//Sum amount paid
+				$amount_paid = 0;
+				if($value->type=="Commercial_Invoice" || $value->type=="Vat_Invoice" || $value->type=="Invoice" || $value->type=="Credit_Purchase" || $value->type=="Cash_Receipt" || $value->type=="Cash_Payment"){
+					$paid = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					$paid->select_sum("amount");
+					$paid->select_sum("discount");
+					$paid->where_in("type", array("Cash_Receipt", "Cash_Payment"));
+					if($value->type=="Cash_Receipt" || $value->type=="Cash_Payment"){
+						$paid->where("reference_id", $value->reference_id);
+						$paid->where_not_in("id", array($value->id));
+					}else{
+						$paid->where("reference_id", $value->id);
+					}
+					$paid->where("is_recurring <>", 1);
+					$paid->where("deleted <>", 1);
+					$paid->get();
+					$amount_paid = floatval($paid->amount) + floatval($paid->discount);
+				}
+
+				$data["results"][] = array(
+					"id" 						=> $value->id,
+					"company_id" 				=> $value->company_id,
+					"location_id" 				=> $value->location_id,
+					"contact_id" 				=> $value->contact_id,
+					"payment_term_id" 			=> $value->payment_term_id,
+					"payment_method_id" 		=> $value->payment_method_id,
+					"transaction_template_id" 	=> $value->transaction_template_id,
+					"reference_id" 				=> $value->reference_id,
+					"recurring_id" 				=> $value->recurring_id,
+					"return_id" 				=> $value->return_id,
+					"job_id" 					=> $value->job_id,
+					"account_id" 				=> $value->account_id,
+					"item_id" 					=> $value->item_id,
+					"tax_item_id" 				=> $value->tax_item_id,
+					"user_id" 					=> $value->user_id,
+					"employee_id" 				=> $value->employee_id,
+				   	"number" 					=> $value->number,
+				   	"reference_no" 				=> $value->reference_no,
+				   	"type" 						=> $value->type,
+				   	"journal_type" 				=> $value->journal_type,
+				   	"sub_total"					=> floatval($value->sub_total),
+				   	"discount" 					=> floatval($value->discount),
+				   	"tax" 						=> floatval($value->tax),
+				   	"amount" 					=> floatval($value->amount),
+				   	"fine" 						=> floatval($value->fine),
+				   	"deposit"					=> floatval($value->deposit),
+				   	"remaining" 				=> floatval($value->remaining),
+				   	"credit_allowed"			=> floatval($value->credit_allowed),
+				   	"additional_cost" 			=> floatval($value->additional_cost),
+				   	"additional_apply" 			=> $value->additional_apply,
+				   	"rate" 						=> floatval($value->rate),
+				   	"locale" 					=> $value->locale,
+				   	"month_of"					=> $value->month_of,
+				   	"issued_date"				=> $value->issued_date,
+				   	"bill_date"					=> $value->bill_date,
+				   	"payment_date" 				=> $value->payment_date,
+				   	"due_date" 					=> $value->due_date,
+				   	"deposit_date" 				=> $value->deposit_date,
+				   	"check_no" 					=> $value->check_no,
+				   	"segments" 					=> explode(",", $value->segments),
+				   	"bill_to" 					=> $value->bill_to,
+				   	"ship_to" 					=> $value->ship_to,
+				   	"memo" 						=> $value->memo,
+				   	"memo2" 					=> $value->memo2,
+				   	"recurring_name" 			=> $value->recurring_name,
+				   	"start_date"				=> $value->start_date,
+				   	"frequency"					=> $value->frequency,
+					"month_option"				=> $value->month_option,
+					"interval" 					=> $value->interval,
+					"day" 						=> $value->day,
+					"week" 						=> $value->week,
+					"month" 					=> $value->month,
+				   	"status" 					=> $value->status,
+				   	"is_recurring" 				=> $value->is_recurring,
+				   	"is_journal" 				=> $value->is_journal,
+				   	"print_count" 				=> $value->print_count,
+				   	"printed_by" 				=> $value->printed_by,
+				   	"deleted" 					=> $value->deleted,
+
+				   	"contact" 					=> $value->contact->get_raw()->result(),
+				   	"reference" 				=> $value->reference->get_raw()->result(),
+				   	"amount_paid"				=> $amount_paid,
+				   	"payment_term" 				=> $value->payment_term->get_raw()->result(),
+				   	"payment_method" 			=> $value->payment_method->get_raw()->result()
+
+				);
+			}
+		}
+
+		//Response Data
+		$this->response($data, 200);
+	}
+
+	//ITMES LINE PRINT GET --> Choeun
+	function line_print_get() {
+		$filters 	= $this->get("filter")["filters"];
+		$page 		= $this->get('page') !== false ? $this->get('page') : 1;
+		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;
+		$sort 	 	= $this->get("sort");
+		$data["results"] = array();
+		$data["count"] = 0;
+
+		$obj = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+		//Sort
+		if(!empty($sort) && isset($sort)){
+			foreach ($sort as $value) {
+				$obj->order_by($value["field"], $value["dir"]);
+			}
+		}
+
+		//Filter
+		if(!empty($filters) && isset($filters)){
+	    	foreach ($filters as $value) {
+	    		if(isset($value['operator'])) {
+					$obj->{$value['operator']}($value['field'], $value['value']);
+				} else {
+	    			$obj->where($value["field"], $value["value"]);
+				}
+			}
+		}
+
+		//Results
+		$obj->get_paged_iterated($page, $limit);
+		$data["count"] = $obj->paged->total_rows;
+
+		if($obj->result_count()>0){
+			foreach ($obj as $value) {
+				$itemPrice = [];
+				if($value->item_id>0){
+					$pl = new Item_price(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					$pl->where("item_id", $value->item_id);
+					$pl->get();
+					foreach ($pl as $p) {
+						$itemPrice[] = array(
+							"id" 			=> $p->id,
+							"item_id" 		=> $p->item_id,
+							"assembly_id"	=> $p->assembly_id,
+							"measurement_id"=> $p->measurement_id,
+							"quantity"		=> floatval($p->quantity),
+							"unit_value" 	=> floatval($p->unit_value),
+							"price" 		=> floatval($p->price),
+							"amount" 		=> floatval($p->amount),
+							"locale" 		=> $p->locale,
+
+							"measurement" 	=> $p->measurement->get()->name
+						);
+					}
+				}
+
+				$data["results"][] = array(
+					"id" 				=> $value->id,
+			   		"transaction_id"	=> $value->transaction_id,
+			   		"measurement_id" 	=> $value->measurement_id,
+					"tax_item_id" 		=> $value->tax_item_id,
+					"item_id" 			=> $value->item_id,
+				   	"description" 		=> $value->description,
+				   	"on_hand" 			=> floatval($value->on_hand),
+					"on_po" 			=> floatval($value->on_po),
+					"on_so" 			=> floatval($value->on_so),
+					"quantity" 			=> floatval($value->quantity),
+				   	"quantity_adjusted" => floatval($value->quantity_adjusted),
+				   	"cost"				=> floatval($value->cost),
+				   	"price"				=> floatval($value->price),
+				   	"price_avg" 		=> floatval($value->price_avg),
+				   	"amount" 			=> floatval($value->amount),
+				   	"discount" 			=> floatval($value->discount),
+				   	"fine" 				=> floatval($value->fine),
+				   	"additional_cost" 	=> floatval($value->additional_cost),
+				   	"additional_applied"=> $value->additional_applied,
+				   	"rate"				=> floatval($value->rate),
+				   	"locale" 			=> $value->locale,
+				   	"movement" 			=> $value->movement,
+				   	"required_date"		=> $value->required_date,
+
+				   	"item_prices" 		=> $itemPrice,
+				   	"item" 		=> $value->item->get_raw()->result(),
+				   	"journal" 			=> $value->journal->get_raw()->result()
+				);
+			}
+		}
 		$this->response($data, 200);
 	}
 
@@ -1886,1695 +1545,1695 @@ class Transactions extends REST_Controller {
 
 	//ELECTRICITY
 	//GET ELECTRICTY MONTHLY
-	function emonthly_get() {
-		$filters 	= $this->get("filter")["filters"];
-		$page 		= $this->get('page') !== false ? $this->get('page') : 1;
-		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;
-		$sort 	 	= $this->get("sort");
-		$data["results"] = array();
-		$data["count"] = 0;
-
-		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$obj->where_in("type", array("invoice", "receipt", "eInvoice"));
-		$obj->where("issued_date >=", date("Y")."-01-01");
-		$obj->where("issued_date <=", date("Y")."-12-31");
-		$obj->where_in("type", array('invoice','eInvoice','wInvoice'));
-		$obj->order_by("issued_date");
-		$obj->get();
-
-		if($obj->result_count()>0){
-			foreach ($obj as $value) {
-				$data["results"][] = array(
-				   	"amount" 		=> floatval($value->amount),
-				   	"issued_date"	=> date('F', strtotime($value->issued_date))
-				);
-			}
-		}
-
-		//Response Data
-		$this->response($data, 200);
-	}
-
-	//GET ELECTRICYT DASHBOARD
-	function edashboard_get() {
-		$filters 	= $this->get("filter")["filters"];
-		$page 		= $this->get('page') !== false ? $this->get('page') : 1;
-		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 50;
-		$sort 	 	= $this->get("sort");
-		$data["results"] = array();
-		$data["count"] = 0;
-
-		// 0 Balance
-		$balance = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$balance->select_sum("amount");
-		$balance->where_in("type", array("eInvoice",));
-		$balance->get();
-		$data["results"][] = floatval($balance->amount);
-
-		// 1 Deposit
-		$deposit = new Payment(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$deposit->select_sum("amount");
-		$deposit->where("type", "deposit");
-		$deposit->where_related("meter", "utility_id", 1);
-		$deposit->get();
-		$data["results"][] = floatval($deposit->amount);
-
-		// 2 Active Customer
-		$activeCustomer = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$activeCustomer->where("status", 1);
-		$activeCustomer->where("deleted", 0);
-		$activeCustomer->where_in("contact_type_id", array(3,4,5,6,7));
-		$activeCustomer->where_related("meter", "utility_id", 1);
-		$data["results"][] = intval($activeCustomer->count());
-
-		// 3 Inactive Customer
-		$inactiveCustomer = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$inactiveCustomer->where("status", 0);
-		$inactiveCustomer->where("deleted", 0);
-		$inactiveCustomer->where_in("contact_type_id", array(3,4,5,6,7));
-		$inactiveCustomer->where_related("meter", "utility_id", 1);
-		$data["results"][] = intval($inactiveCustomer->count());
-
-		// 4 Void Customer
-		$voidCustomer = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$voidCustomer->where("status", 2);
-		$voidCustomer->where("deleted", 0);
-		$voidCustomer->where_in("contact_type_id", array(3,4,5,6,7));
-		$voidCustomer->where_related("meter", "utility_id", 1);
-		$data["results"][] = intval($voidCustomer->count());
-
-		// 5 Total Customer
-		$totalCustomer = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$totalCustomer->where("deleted", 0);
-		$totalCustomer->where_in("contact_type_id", array(3,4,5,6,7));
-		$totalCustomer->where_related("meter", "utility_id", 1);
-		$data["results"][] = intval($totalCustomer->count());
-
-		// 6 Unpaid
-		$unpaid = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$unpaid->where("type", "eInvoice");
-		$unpaid->where("status", 0);
-		$unpaid->group_by("contact_id");
-		$unpaid->get();
-		$data["results"][] = intval($unpaid->result_count());
-
-		// 7 Disconnect
-		$dc = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$dc->where("type", "eInvoice");
-		$dc->where("status", 0);
-		$dc->where("due_date <", date("Y-m-d"));
-		$dc->group_by("contact_id");
-		$dc->get();
-		$data["results"][] = intval($dc->result_count());
-
-		//Response Data
-		$this->response($data, 200);
-	}
-
-	//GET ELECTRICYT SALE BY LOCATION
-	function esale_by_location_get() {
-		$filters 	= $this->get("filter")["filters"];
-		$page 		= $this->get('page') !== false ? $this->get('page') : 1;
-		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 50;
-		$sort 	 	= $this->get("sort");
-		$data["results"] = array();
-		$data["count"] = 1;
-
-		$sale = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$usage = new Meter_record(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$unpaid = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$deposit = new Payment(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-
-		//Filter
-		if(!empty($filters) && isset($filters)){
-	    	foreach ($filters as $value) {
-	    		$sale->where($value["field"], $value["value"]);
-	    		$unpaid->where($value["field"], $value["value"]);
-	    		$deposit->where("payment_date", $value["value"]);
-			}
-		}
-
-		//Location
-		$location = new Location(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$location->where("utility_id", 1);
-		$location->get();
-
-		foreach ($location as $value){
-			//Active Customer
-			$activeCustomer = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			$activeCustomer->where("status", 1);
-			$activeCustomer->where("deleted", 0);
-			$activeCustomer->where_related("meter", "location_id", $value->id);
-
-			//Inactive Customer
-			$inactiveCustomer = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			$inactiveCustomer->where("status", 0);
-			$inactiveCustomer->where("deleted", 0);
-			$inactiveCustomer->where_related("meter", "location_id", $value->id);
-
-			//Deposit
-			$deposit->select_sum('amount');
-			$deposit->where("type", "deposit");
-			$deposit->where_related("meter", "location_id", $value->id);
-			$deposit->where("deleted", 0);
-			$deposit->get();
-
-			//Usage
-			$usage->select_sum('usage', 'totalUsage');
-			$usage->where_related("meter", "location_id", $value->id);
-			$usage->get();
-
-			//Sale
-			$sale->select_sum('amount');
-			$sale->where("type", "eInvoice");
-			$sale->where("location_id", $value->id);
-			$sale->where("deleted", 0);
-			$sale->get();
-
-			//Unpaid
-			$unpaid->select_sum('amount');
-			$unpaid->where("type", "eInvoice");
-			$unpaid->where("location_id", $value->id);
-			$unpaid->where("status", 0);
-			$unpaid->where("deleted", 0);
-			$unpaid->get();
-
-			$data["results"][] = array(
-				"location_name"		=> $value->name,
-				"active_customer" 	=> intval($activeCustomer->count()),
-				"inactive_customer" => intval($inactiveCustomer->count()),
-				"deposit" 			=> floatval($deposit->amount),
-				"usage" 			=> intval($usage->totalUsage),
-				"sale"				=> floatval($sale->amount),
-				"unpaid"			=> floatval($unpaid->amount)
-			);
-		}
-
-		//Response Data
-		$this->response($data, 200);
-	}
-
-
-	//WATER
-	//POST UINVOICE
-	function uInvoice_post() {
-		$models = json_decode($this->post('models'));
-		$data["results"] = array();
-		$data["count"] = 0;
-
-		$number = "";
-		foreach ($models as $value) {
-			if($number==""){
-				$number = $this->_generate_number($value->type);
-			}else{
-				$last_no = $number;
-				$header = substr($last_no, 0, -5);
-				$no = intval(substr($last_no, strlen($last_no) - 5));
-				$no++;
-				$number = $header . str_pad($no, 5, "0", STR_PAD_LEFT);
-			}
-
-			$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			$obj->company_id 		= $value->company_id;
-			$obj->location_id 		= $value->location_id;
-			$obj->contact_id 		= $value->contact_id;
-			$obj->payment_term_id	= $value->payment_term_id;
-			$obj->payment_method_id = $value->payment_method_id;
-			$obj->reference_id 		= $value->reference_id;
-			$obj->account_id 		= $value->account_id;
-			$obj->vat_id 			= $value->vat_id;
-			$obj->biller_id 		= $value->biller_id;
-		   	$obj->number 			= $number;
-		   	$obj->type 				= $value->type;
-		   	$obj->amount 			= $value->amount;
-		   	$obj->vat 				= $value->vat;
-		   	$obj->rate 				= $value->rate;
-		   	$obj->locale 			= $value->locale;
-		   	$obj->month_of 			= $value->month_of;
-		   	$obj->issued_date 		= $value->issued_date;
-		   	$obj->payment_date 		= $value->payment_date;
-		   	$obj->due_date 			= $value->due_date;
-		   	$obj->check_no 			= $value->check_no;
-		   	$obj->memo 				= $value->memo;
-		   	$obj->memo2 			= $value->memo2;
-		   	$obj->status 			= $value->status;
-
-	   		if($obj->save()){
-	   			$invoice_lines = [];
-		   		foreach ($value->invoice_lines as $row) {
-		   			$line = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		   			$line->invoice_id 		= $obj->id;
-		   			$line->item_id 			= $row->item_id;
-		   			$line->meter_record_id 	= $row->meter_record_id;
-		   			$line->description 		= $row->description;
-		   			$line->unit 			= $row->unit;
-		   			$line->price 			= $row->price;
-		   			$line->amount 			= $row->amount;
-		   			$line->rate 			= $row->rate;
-		   			$line->locale 			= $row->locale;
-		   			$line->has_vat 			= $row->has_vat;
-		   			$line->type 			= isset($row->type)?$row->type:"";
-
-		   			if($line->save()){
-		   				$invoice_lines[] = array(
-		   					"id" 				=> $line->id,
-		   					"invoice_id"		=> $line->invoice_id,
-				   			"item_id"			=> $line->item_id,
-				   			"measurement_id" 	=> isset($line->measurement_id)?$line->measurement_id:0,
-				   			"meter_record_id" 	=> $line->meter_record_id,
-				   			"description" 		=> $line->description,
-				   			"unit"				=> $line->unit,
-				   			"price" 			=> floatval($line->price),
-				   			"amount" 			=> floatval($line->amount),
-				   			"rate"				=> floatval($line->rate),
-				   			"locale" 			=> $line->locale,
-				   			"has_vat" 			=> $line->has_vat=="true"?true:false,
-				   			"type" 				=> $line->type
-		   				);
-		   			}
-		   		}
-
-			   	$data["results"][] = array(
-			   		"id" 				=> $obj->id,
-					"company_id" 		=> $obj->company_id,
-					"location_id" 		=> $obj->location_id,
-					"contact_id" 		=> $obj->contact_id,
-					"payment_term_id" 	=> $obj->payment_term_id,
-					"payment_method_id" => $obj->payment_method_id,
-					"reference_id" 		=> $obj->reference_id,
-					"account_id" 		=> $obj->account_id,
-					"vat_id"			=> $obj->vat_id,
-					"biller_id" 		=> $obj->biller_id,
-				   	"number" 			=> $obj->number,
-				   	"type" 				=> $obj->type,
-				   	"amount" 			=> floatval($obj->amount),
-				   	"vat" 				=> floatval($obj->vat),
-				   	"rate" 				=> floatval($obj->rate),
-				   	"locale" 			=> $obj->locale,
-				   	"month_of"			=> $obj->month_of,
-				   	"issued_date"		=> $obj->issued_date,
-				   	"payment_date" 		=> $obj->payment_date,
-				   	"due_date" 			=> $obj->due_date,
-				   	"check_no" 			=> $obj->check_no,
-				   	"memo" 				=> $obj->memo,
-				   	"memo2" 			=> $obj->memo2,
-				   	"status" 			=> $obj->status,
-
-				   	"invoice_lines" 	=> $invoice_lines
-			   	);
-		    }
-		}
-
-		$data["count"] = count($data["results"]);
-		$this->response($data, 201);
-	}
-
-	//GET WATER INVOICE PRINT
-	function wInvoice_print_get() {
-		$filters 	= $this->get("filter")["filters"];
-		$page 		= $this->get('page') !== false ? $this->get('page') : 1;
-		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;
-		$sort 	 	= $this->get("sort");
-		$data["results"] = array();
-		$data["count"] = 0;
-
-		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-
-		//Sort
-		if(!empty($sort) && isset($sort)){
-			foreach ($sort as $value) {
-				$obj->order_by($value["field"], $value["dir"]);
-			}
-		}
-
-		//Filter
-		if(!empty($filters) && isset($filters)){
-	    	foreach ($filters as $value) {
-	    		if(!empty($value["operator"]) && isset($value["operator"])){
-		    		if($value["operator"]=="where_in"){
-		    			$obj->where_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_where_in"){
-		    			$obj->or_where_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="where_not_in"){
-		    			$obj->where_not_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_where_not_in"){
-		    			$obj->or_where_not_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="like"){
-		    			$obj->like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_like"){
-		    			$obj->or_like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="not_like"){
-		    			$obj->not_like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_not_like"){
-		    			$obj->or_not_like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="startswith"){
-		    			$obj->like($value["field"], $value["value"], "after");
-		    		}else if($value["operator"]=="endswith"){
-		    			$obj->like($value["field"], $value["value"], "before");
-		    		}else if($value["operator"]=="contains"){
-		    			$obj->like($value["field"], $value["value"], "both");
-		    		}else if($value["operator"]=="or_where"){
-		    			$obj->or_where($value["field"], $value["value"]);
-		    		}else{
-		    			$obj->where($value["field"].' '.$value["operator"], $value["value"]);
-		    		}
-	    		}else{
-	    			$obj->where($value["field"], $value["value"]);
-	    		}
-			}
-		}
-
-		//Order
-		$obj->order_by_related("contact", "worder", "asc");
-
-		//Results
-		$obj->get();
-
-		if($obj->exists()){
-			foreach ($obj as $value) {
-				//Balance forward
-				$bf = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				$bf->select_sum('amount');
-				$bf->where('contact_id', $value->contact_id);
-				$bf->where('status', 0);
-				$bf->where_in('type', array('Invoice','wInvoice'));
-				$bf->where('month_of <', $value->month_of);
-				$bf->get();
-
-				$total = floatval($value->amount) + floatval($bf->amount);
-
-				//Invoice lines
-				$lines = $value->item_line->get();
-				$invoiceLines = [];
-				foreach ($lines as $l) {
-					$record = [];
-					$meter = [];
-					if($l->type=="tariff"){
-						$record = $l->meter_record->get_raw()->result();
-					   	$meter = $l->meter_record->get()->meter->get_raw()->result();
-					}
-
-					$invoiceLines[] = array(
-						"id" 				=> $l->id,
-				   		"invoice_id"		=> $l->invoice_id,
-						"item_id" 			=> $l->item_id,
-						"meter_record_id" 	=> $l->meter_record_id,
-					   	"description" 		=> $l->description,
-					   	"unit" 				=> intval($l->unit),
-					   	"price"				=> floatval($l->price),
-					   	"amount" 			=> floatval($l->amount),
-					   	"rate"				=> floatval($l->rate),
-					   	"locale" 			=> $l->locale,
-					   	"has_vat" 			=> $l->has_vat,
-					   	"type" 				=> $l->type,
-
-					   	"record" 			=> $record,
-					   	"meter" 			=> $meter
-					);
-				}
-
-				$data["results"][] = array(
-					"id" 				=> $value->id,
-					"company_id" 		=> $value->company_id,
-					"location_id" 		=> $value->location_id,
-					"contact_id" 		=> $value->contact_id,
-					"payment_term_id" 	=> $value->payment_term_id,
-					"payment_method_id" => $value->payment_method_id,
-					"reference_id" 		=> $value->reference_id,
-					"account_id" 		=> $value->account_id,
-					"vat_id"			=> $value->vat_id,
-					"biller_id" 		=> $value->biller_id,
-				   	"number" 			=> $value->number,
-				   	"type" 				=> $value->type,
-				   	"amount" 			=> floatval($value->amount),
-				   	"vat" 				=> floatval($value->vat),
-				   	"rate" 				=> floatval($value->rate),
-				   	"locale" 			=> $value->locale,
-				   	"month_of"			=> $value->month_of,
-				   	"issued_date"		=> $value->issued_date,
-				   	"payment_date" 		=> $value->payment_date,
-				   	"due_date" 			=> $value->due_date,
-				   	"check_no" 			=> $value->check_no,
-				   	"memo" 				=> $value->memo,
-				   	"memo2" 			=> $value->memo2,
-				   	"status" 			=> $value->status,
-				   	"print_count" 		=> $value->print_count,
-				   	"printed_by" 		=> $value->printed_by,
-
-				   	"total" 			=> $total,
-				   	"balance_forward" 	=> floatval($bf->amount),
-
-				   	"company" 			=> $value->company->get_raw()->result(),
-				   	"location" 			=> $value->location->get_raw()->result(),
-				   	"contact" 			=> $value->contact->get_raw()->result(),
-				   	"invoiceLines" 		=> $invoiceLines
-				);
-			}
-		}
-
-		$data["count"] = count($data["results"]);
-
-		//Response Data
-		$this->response($data, 200);
-	}
-
-	//PUT WATER INVOICE PRINT
-	function wInvoice_print_put() {
-		$models = json_decode($this->put('models'));
-		$data["results"] = array();
-		$data["count"] = 0;
-
-		foreach ($models as $value) {
-			$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			$obj->get_by_id($value->id);
-
-		   	$obj->print_count 		= isset($value->print_count) ? $value->print_count : 0;
-		   	$obj->printed_by 		= isset($value->printed_by) ? $value->printed_by : 0;
-
-			if($obj->save()){
-				//Results
-				$data["results"][] = array(
-					"id" 				=> $obj->id,
-				   	"print_count" 		=> $obj->print_count,
-				   	"printed_by" 		=> $obj->printed_by
-				);
-			}
-		}
-		$data["count"] = count($data["results"]);
-
-		$this->response($data, 200);
-	}
-
-	//GET WATER PRINT
-	function wprint_get() {
-		$filters 	= $this->get("filter")["filters"];
-		$page 		= $this->get('page') !== false ? $this->get('page') : 1;
-		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;
-		$sort 	 	= $this->get("sort");
-		$data["results"] = array();
-		$data["count"] = 0;
-
-		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-
-		//Sort
-		if(!empty($sort) && isset($sort)){
-			foreach ($sort as $value) {
-				$obj->order_by($value["field"], $value["dir"]);
-			}
-		}
-
-		//Filter
-		if(!empty($filters) && isset($filters)){
-	    	foreach ($filters as $value) {
-	    		if(!empty($value["operator"]) && isset($value["operator"])){
-		    		if($value["operator"]=="where_in"){
-		    			$obj->where_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_where_in"){
-		    			$obj->or_where_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="where_not_in"){
-		    			$obj->where_not_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_where_not_in"){
-		    			$obj->or_where_not_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="like"){
-		    			$obj->like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_like"){
-		    			$obj->or_like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="not_like"){
-		    			$obj->not_like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_not_like"){
-		    			$obj->or_not_like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="startswith"){
-		    			$obj->like($value["field"], $value["value"], "after");
-		    		}else if($value["operator"]=="endswith"){
-		    			$obj->like($value["field"], $value["value"], "before");
-		    		}else if($value["operator"]=="contains"){
-		    			$obj->like($value["field"], $value["value"], "both");
-		    		}else if($value["operator"]=="or_where"){
-		    			$obj->or_where($value["field"], $value["value"]);
-		    		}else{
-		    			$obj->where($value["field"].' '.$value["operator"], $value["value"]);
-		    		}
-	    		}else{
-	    			$obj->where($value["field"], $value["value"]);
-	    		}
-			}
-		}
-
-		//Only water invoice
-		$obj->where("type", "wInvoice");
-		$obj->order_by_related("contact", "worder", "asc");
-
-		//Results
-		$obj->get_paged_iterated($page, $limit);
-		$data["count"] = $obj->paged->total_rows;
-
-		if($obj->result_count()>0){
-			foreach ($obj as $value) {
-				$data["results"][] = array(
-					"id" 				=> $value->id,
-				   	"number" 			=> $value->number,
-				   	"amount" 			=> floatval($value->amount),
-				   	"amount_paid"		=> floatval($value->amount_paid),
-				   	"status" 			=> $value->status,
-				   	"print_count" 		=> $value->print_count,
-
-				   	"contact" 			=> $value->contact->get_raw()->result()
-				);
-			}
-		}
-
-		//Response Data
-		$this->response($data, 200);
-	}
-
-	//GET WATER PRINT SNAPSHOT
-	function wprint_snapshot_get() {
-		$filters 	= $this->get("filter")["filters"];
-		$page 		= $this->get('page') !== false ? $this->get('page') : 1;
-		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;
-		$sort 	 	= $this->get("sort");
-		$data["results"] = array();
-		$data["count"] = 0;
-
-		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-
-		//Sort
-		if(!empty($sort) && isset($sort)){
-			foreach ($sort as $value) {
-				$obj->order_by($value["field"], $value["dir"]);
-			}
-		}
-
-		//Filter
-		if(!empty($filters) && isset($filters)){
-	    	foreach ($filters as $value) {
-	    		if(!empty($value["operator"]) && isset($value["operator"])){
-		    		if($value["operator"]=="where_in"){
-		    			$obj->where_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_where_in"){
-		    			$obj->or_where_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="where_not_in"){
-		    			$obj->where_not_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_where_not_in"){
-		    			$obj->or_where_not_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="like"){
-		    			$obj->like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_like"){
-		    			$obj->or_like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="not_like"){
-		    			$obj->not_like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_not_like"){
-		    			$obj->or_not_like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="startswith"){
-		    			$obj->like($value["field"], $value["value"], "after");
-		    		}else if($value["operator"]=="endswith"){
-		    			$obj->like($value["field"], $value["value"], "before");
-		    		}else if($value["operator"]=="contains"){
-		    			$obj->like($value["field"], $value["value"], "both");
-		    		}else if($value["operator"]=="or_where"){
-		    			$obj->or_where($value["field"], $value["value"]);
-		    		}else{
-		    			$obj->where($value["field"].' '.$value["operator"], $value["value"]);
-		    		}
-	    		}else{
-	    			$obj->where($value["field"], $value["value"]);
-	    		}
-			}
-		}
-
-		//Only water invoice
-		$obj->where("type", "wInvoice");
-
-		//Results
-		$obj->get();
-
-		$totalInvoice = 0;
-		$totalUnprint = 0;
-		$totalUsage = 0;
-		$totalAmount = 0;
-		$ids = [];
-		if($obj->result_count()>0){
-			foreach ($obj as $value) {
-				array_push($ids, $value->id);
-				$totalInvoice++;
-				if($value->print_count==0){
-					$totalUnprint++;
-				}
-				$totalAmount += $value->amount;
-			}
-
-			$line = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			$line->select_sum("unit");
-			$line->where_in("invoice_id", $ids);
-			$line->where("type", "tariff");
-			$line->get();
-		}
-
-		$data["results"][] = array(
-			"id" 			=> 0,
-			"totalInvoice" 	=> $totalInvoice,
-			"totalUnprint" 	=> $totalUnprint,
-			"totalUsage" 	=> intval($line->unit),
-			"totalAmount" 	=> $totalAmount
-		);
-		$data["count"] = count($data["results"]);
-
-		//Response Data
-		$this->response($data, 200);
-	}
-
-	//GET WATER DASHBOARD
-	function wdashboard_get() {
-		$filters 	= $this->get("filter")["filters"];
-		$page 		= $this->get('page') !== false ? $this->get('page') : 1;
-		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 50;
-		$sort 	 	= $this->get("sort");
-		$data["results"] = array();
-		$data["count"] = 0;
-
-		// 0 Balance
-		$balance = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$balance->select_sum("amount");
-		$balance->where("type", "wInvoice");
-		$balance->get();
-		$data["results"][] = floatval($balance->amount);
-
-		// 1 Deposit
-		$deposit = new Payment(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$deposit->select_sum("amount");
-		$deposit->where("type", "wdeposit");
-		$deposit->get();
-		$data["results"][] = floatval($deposit->amount);
-
-		// 2 Active Customer
-		$activeCustomer = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$activeCustomer->where("status", 1);
-		$activeCustomer->where("deleted", 0);
-		$activeCustomer->where("use_water", 1);
-		$data["results"][] = intval($activeCustomer->count());
-
-		// 3 Inactive Customer
-		$inactiveCustomer = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$inactiveCustomer->where("status", 0);
-		$inactiveCustomer->where("deleted", 0);
-		$inactiveCustomer->where("use_water", 1);
-		$data["results"][] = intval($inactiveCustomer->count());
-
-		// 4 Disconnect Customer
-		$voidCustomer = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$voidCustomer->where("status", 2);
-		$voidCustomer->where("deleted", 0);
-		$voidCustomer->where("use_water", 1);
-		$data["results"][] = intval($voidCustomer->count());
-
-		// 5 Total Customer
-		$totalCustomer = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$totalCustomer->where("deleted", 0);
-		$totalCustomer->where("use_water", 1);
-		$data["results"][] = intval($totalCustomer->count());
-
-		// 6 Unpaid
-		$unpaid = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$unpaid->where("type", "wInvoice");
-		$unpaid->where_in("status", array(0,2));
-		$unpaid->group_by("contact_id");
-		$unpaid->get();
-		$data["results"][] = intval($unpaid->result_count());
-
-		// 7 No meter
-		$contact = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$sub_contact = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$contact->where("use_water", 1);
-		$sub_contact->select("id")->where_related_meter("utility_id", 2);
-		$contact->where_not_in_subquery('id', $sub_contact);
-		$contact->get();
-
-		$data["results"][] = intval($contact->result_count());
-
-		//Response Data
-		$this->response($data, 200);
-	}
-
-	//GET WATER MONTHLY
-	function wmonthly_get() {
-		$filters 	= $this->get("filter")["filters"];
-		$page 		= $this->get('page') !== false ? $this->get('page') : 1;
-		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;
-		$sort 	 	= $this->get("sort");
-		$data["results"] = array();
-		$data["count"] = 0;
-
-		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$reading = new Meter_record(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-
-		//Filter
-		if(!empty($filters) && isset($filters)){
-	    	foreach ($filters as $value) {
-	    		$obj->where($value["field"], $value["value"]);
-	    		$reading->where_related("meter", $value["field"], $value["value"]);
-			}
-		}
-
-		$obj->where("type", "wInvoice");
-		$obj->where("issued_date >=", date("Y")."-01-01");
-		$obj->where("issued_date <=", date("Y")."-12-31");
-		$obj->order_by("issued_date");
-		$obj->get();
-
-		$reading->where("month_of >=", date("Y")."-01-01");
-		$reading->where("month_of <=", date("Y")."-12-31");
-		$reading->order_by("month_of");
-		$reading->get();
-
-		if($obj->result_count() > $reading->result_count()){
-			foreach ($obj as $value) {
-				$usage = 0;
-				$invoiceMonth = date('F', strtotime($value->issued_date));
-
-				foreach ($reading as $v) {
-					$readingMonth = date('F', strtotime($v->month_of));
-
-					if($readingMonth===$invoiceMonth){
-						$usage += floatval($v->usage);
-					}
-				}
-
-				$data["results"][] = array(
-				   	"amount" 		=> floatval($value->amount),
-				   	"usage" 		=> $usage,
-				   	"month"			=> $invoiceMonth
-				);
-			}
-		}else{
-			foreach ($reading as $value) {
-				$amount = 0;
-				$readingMonth = date('F', strtotime($value->month_of));
-
-				foreach ($obj as $v) {
-					$invoiceMonth = date('F', strtotime($v->issued_date));
-
-					if($readingMonth===$invoiceMonth){
-						$amount += floatval($v->amount);
-					}
-				}
-
-				$data["results"][] = array(
-				   	"amount" 		=> $amount,
-				   	"usage" 		=> floatval($value->usage),
-				   	"month"			=> $readingMonth
-				);
-			}
-		}
-
-		//Response Data
-		$this->response($data, 200);
-	}
-
-	//GET WATER SALE BY BRANCH
-	function wsale_by_branch_get() {
-		$filters 	= $this->get("filter")["filters"];
-		$page 		= $this->get('page') !== false ? $this->get('page') : 1;
-		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 50;
-		$sort 	 	= $this->get("sort");
-		$data["results"] = array();
-		$data["count"] = 1;
-
-		//Branch
-		$branch = new Company(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$branch->where("utility_id", 2);
-		$branch->get();
-
-		foreach ($branch as $value){
-			$location = new Location(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			$sale = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			$usage = new Meter_record(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			$unpaid = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			$deposit = new Payment(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-
-			$activeCustomer = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			$inactiveCustomer = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-
-			//Filter
-			if(!empty($filters) && isset($filters)){
-		    	foreach ($filters as $val) {
-		    		if($val["field"]=="start_date"){
-		    			$sale->where("issued_date >=", $val["value"]);
-			    		$usage->where("month_of >=", $val["value"]);
-		    		}
-
-		    		if($val["field"]=="end_date"){
-		    			$sale->where("issued_date <=", $val["value"]);
-			    		$usage->where("month_of <=", $val["value"]);
-
-			    		$location->where("created_at <=", $val["value"]);
-			    		$activeCustomer->where("registered_date <=", $val["value"]);
-			    		$inactiveCustomer->where("registered_date <=", $val["value"]);
-			    		$deposit->where("payment_date <=", $val["value"]);
-			    		$unpaid->where("issued_date <=", $val["value"]);
-		    		}
-				}
-			}
-
-			//Count location
-			$location->where("company_id", $value->id);
-
-			//Active Customer
-			$activeCustomer->where("status", 1);
-			$activeCustomer->where("deleted", 0);
-			$activeCustomer->where_related("meter", "company_id", $value->id);
-
-			//Inactive Customer
-			$inactiveCustomer->where("status", 0);
-			$inactiveCustomer->where("deleted", 0);
-			$inactiveCustomer->where_related("meter", "company_id", $value->id);
-
-			//Deposit
-			$deposit->select_sum('amount');
-			$deposit->where("type", "deposit");
-			$deposit->where("company_id", $value->id);
-			$deposit->where("deleted", 0);
-			$deposit->get();
-
-			//Usage
-			$usage->select_sum('usage', 'totalUsage');
-			$usage->where_related("meter", "company_id", $value->id);
-			$usage->get();
-
-			//Sale
-			$sale->select_sum('amount');
-			$sale->where("type", "wInvoice");
-			$sale->where("company_id", $value->id);
-			$sale->where("deleted", 0);
-			$sale->get();
-
-			//Unpaid
-			$unpaid->select_sum('amount');
-			$unpaid->where("type", "wInvoice");
-			$unpaid->where("company_id", $value->id);
-			$unpaid->where("status", 0);
-			$unpaid->where("deleted", 0);
-			$unpaid->get();
-
-			$data["results"][] = array(
-				"name" 				=> $value->name,
-				"location"			=> intval($location->count()),
-				"active_customer" 	=> intval($activeCustomer->count()),
-				"inactive_customer" => intval($inactiveCustomer->count()),
-				"deposit" 			=> floatval($deposit->amount),
-				"usage" 			=> intval($usage->totalUsage),
-				"sale"				=> floatval($sale->amount),
-				"unpaid"			=> floatval($unpaid->amount)
-			);
-		}
-
-		//Response Data
-		$this->response($data, 200);
-	}
-
-	//GET WATER SALE BY LOCATION
-	function wsale_by_location_get() {
-		$filters 	= $this->get("filter")["filters"];
-		$page 		= $this->get('page') !== false ? $this->get('page') : 1;
-		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 50;
-		$sort 	 	= $this->get("sort");
-		$data["results"] = array();
-		$data["count"] = 1;
-
-		//Location
-		$location = new Location(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$location->where("utility_id", 2);
-		$location->order_by("company_id");
-		$location->get();
-
-		foreach ($location as $value){
-			$sale = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			$usage = new Meter_record(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			$unpaid = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			$deposit = new Payment(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-
-			$activeCustomer = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			$inactiveCustomer = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-
-			//Filter
-			if(!empty($filters) && isset($filters)){
-		    	foreach ($filters as $val) {
-		    		if($val["field"]=="start_date"){
-		    			$sale->where("issued_date >=", $val["value"]);
-			    		$usage->where("month_of >=", $val["value"]);
-		    		}
-
-		    		if($val["field"]=="end_date"){
-		    			$sale->where("issued_date <=", $val["value"]);
-			    		$usage->where("month_of <=", $val["value"]);
-
-			    		$activeCustomer->where("registered_date <=", $val["value"]);
-			    		$inactiveCustomer->where("registered_date <=", $val["value"]);
-			    		$deposit->where("payment_date <=", $val["value"]);
-			    		$unpaid->where("issued_date <=", $val["value"]);
-		    		}
-				}
-			}
-
-			//Active Customer
-			$activeCustomer->where("status", 1);
-			$activeCustomer->where("deleted", 0);
-			$activeCustomer->where_related("meter", "location_id", $value->id);
-
-			//Inactive Customer
-			$inactiveCustomer->where("status", 0);
-			$inactiveCustomer->where("deleted", 0);
-			$inactiveCustomer->where_related("meter", "location_id", $value->id);
-
-			//Deposit
-			$deposit->select_sum('amount');
-			$deposit->where("type", "wdeposit");
-			$deposit->where_related("meter", "location_id", $value->id);
-			$deposit->where("deleted", 0);
-			$deposit->get();
-
-			//Usage
-			$usage->select_sum('usage', 'totalUsage');
-			$usage->where_related("meter", "location_id", $value->id);
-			$usage->get();
-
-			//Sale
-			$sale->select_sum('amount');
-			$sale->where("type", "wInvoice");
-			$sale->where("location_id", $value->id);
-			$sale->where("deleted", 0);
-			$sale->get();
-
-			//Unpaid
-			$unpaid->select_sum('amount');
-			$unpaid->where("type", "wInvoice");
-			$unpaid->where("location_id", $value->id);
-			$unpaid->where("status", 0);
-			$unpaid->where("deleted", 0);
-			$unpaid->get();
-
-			$data["results"][] = array(
-				"branch_name"		=> $value->company->get()->name,
-				"location_name"		=> $value->name,
-				"active_customer" 	=> intval($activeCustomer->count()),
-				"inactive_customer" => intval($inactiveCustomer->count()),
-				"deposit" 			=> floatval($deposit->amount),
-				"usage" 			=> intval($usage->totalUsage),
-				"sale"				=> floatval($sale->amount),
-				"unpaid"			=> floatval($unpaid->amount)
-			);
-		}
-
-		//Response Data
-		$this->response($data, 200);
-	}
-
-	//GET WATER OUTSTANDING
-	function woutstanding_get(){
-		$filters 	= $this->get("filter")["filters"];
-		$page 		= $this->get('page') !== false ? $this->get('page') : 1;
-		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;
-		$sort 	 	= $this->get("sort");
-		$data["results"] = array();
-		$data["count"] = 4;
-
-		$inv = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$deposit = new Payment(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-
-		//Filter
-		if(!empty($filters) && isset($filters)){
-	    	foreach ($filters as $value) {
-		    	$inv->where($value["field"], $value["value"]);
-		    	$deposit->where($value["field"], $value["value"]);
-			}
-		}
-
-		//Deposit
-		$deposit->select_sum('amount');
-		$deposit->where("type", "wdeposit");
-		$deposit->get();
-		$data["results"][] = array("deposit"=>floatval($deposit->amount));
-
-		//Out standing invoice and wInvoice
-		$inv->where_in("type", array("invoice", "wInvoice"));
-		$inv->where_in("status", array(0,2));
-		$inv->get();
-		$data["results"][] = array("outInvoice"=>intval($inv->result_count()));
-
-		$overDue = 0;
-		$overBal = 0;
-		foreach ($inv as $value) {
-			$overBal += (floatval($value->amount)-floatval($value->amount_paid));
-			$today = new DateTime();
-			$dueDate = new DateTime($value->due_date);
-			if($dueDate<$today){
-				$overDue++;
-			}
-		}
-		$data["results"][] = array("overInvoice"=>$overDue);
-		$data["results"][] = array("balance"=>$overBal);
-
-		$this->response($data, 200);
-	}
-
-	//GET WATER TRANSACTION
-	function wtransaction_get(){
-		$filters 	= $this->get("filter")["filters"];
-		$page 		= $this->get('page') !== false ? $this->get('page') : 1;
-		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;
-		$sort 	 	= $this->get("sort");
-		$data["results"] = array();
-		$data["count"] = 0;
-
-		$inv = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$pay = new Payment(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-
-		//Sort
-		if(!empty($sort) && isset($sort)){
-			foreach ($sort as $value) {
-				$inv->order_by("issued_date", $value["dir"]);
-				$pay->order_by("payment_date", $value["dir"]);
-			}
-		}
-
-		//Filter
-		if(!empty($filters) && isset($filters)){
-	    	foreach ($filters as $value) {
-	    		if(!empty($value["operator"]) && isset($value["operator"])){
-		    		if($value["operator"]=="where_in"){
-		    			$inv->where_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="payment"){
-		    			$pay->where($value["field"], $value["value"]);
-		    		}else{
-		    			$inv->where($value["field"], $value["value"]);
-		    		}
-	    		}else{
-		    		if($value["field"]=="start_date"){
-		    			$inv->where("issued_date >=", $value["value"]);
-			    		$pay->where("payment_date >=", $value["value"]);
-			    	}else if($value["field"]=="end_date"){
-			    		$inv->where("issued_date <=", $value["value"]);
-			    		$pay->where("payment_date <=", $value["value"]);
-		    		}else{
-		    			$inv->where($value["field"], $value["value"]);
-			    		$pay->where($value["field"], $value["value"]);
-		    		}
-		    	}
-			}
-		}
-
-		$pay->where_in("type", array("invoice", "deposit", "edeposit", "wdeposit"));
-
-		//Results
-		$inv->get_paged_iterated($page, $limit);
-		$pay->get();
-
-		if($inv->result_count()>0){
-			foreach ($inv as $value) {
-				$data["results"][] = array(
-					"id" 			=> $value->id,
-			   		"type"			=> $value->type,
-					"number" 		=> $value->number,
-					"amount" 		=> floatval($value->amount),
-				   	"issued_date" 	=> $value->issued_date,
-				   	"due_date" 		=> $value->due_date,
-				   	"status" 		=> $value->status,
-				   	"rate"			=> floatval($value->rate),
-				   	"locale" 		=> $value->locale
-				);
-			}
-		}
-
-		if($pay->result_count()>0){
-			foreach ($pay as $value) {
-				$data["results"][] = array(
-					"id" 			=> $value->id,
-			   		"type"			=> $value->type=="invoice"?"Payment":"Deposit",
-					"number" 		=> "",
-					"amount" 		=> floatval($value->amount),
-				   	"issued_date" 	=> $value->payment_date,
-				   	"due_date" 		=> $value->payment_date,
-				   	"status" 		=> 0,
-				   	"rate"			=> floatval($value->rate),
-				   	"locale" 		=> $value->locale
-				);
-			}
-		}
-
-		$data["count"] = count($data["results"]);
-
-		$this->response($data, 200);
-	}
-
-	//GET WATER KPI
-	function wkpi_get() {
-		$filters 	= $this->get("filter")["filters"];
-		$page 		= $this->get('page') !== false ? $this->get('page') : 1;
-		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;
-		$sort 	 	= $this->get("sort");
-		$data["results"] = [];
-		$data["count"] = 0;
-
-		$contact = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$activeContact = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$branch = new Company(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$income = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$avgIncome = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$usage = new Transaction(null, $this->entity);
-		$avgUsage = new Meter_record(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$deposit = new Payment(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-
-		//Filter
-		if(!empty($filters) && isset($filters)){
-	    	foreach ($filters as $value) {
-	    		$contact->where("wbranch_id", $value["value"]);
-	    		$activeContact->where("wbranch_id", $value["value"]);
-	    		$branch->where("id", $value["value"]);
-	    		$income->where($value["field"], $value["value"]);
-	    		$avgIncome->where($value["field"], $value["value"]);
-	    		$usage->where_related("invoice", $value["field"], $value["value"]);
-	    		$avgUsage->where_related("meter", $value["field"], $value["value"]);
-	    		$deposit->where($value["field"], $value["value"]);
-			}
-		}
-
-		$contact->where_in("status", array(0,1));
-		$branch->get();
-
-		$totalCustomer = $contact->count();
-		$totalAllowCustomer = $totalCustomer / intval($branch->max_customer);
-		$totalActiveCustomer = $activeContact->count() / $totalCustomer;
-
-		$income->select_sum("amount");
-		$income->where("type", "wInvoice");
-		$income->get();
-
-		$avgIncome->select_avg("amount");
-		$avgIncome->where("type", "wInvoice");
-		$avgIncome->get();
-
-		$usage->select_sum("unit");
-		$usage->where("type", "tariff");
-		$usage->get();
-
-		$avgUsage->select_avg("usage", "reading");
-		$avgUsage->get();
-
-		$deposit->select_sum("amount");
-		$deposit->where("type", "wdeposit");
-		$deposit->get();
-
-		$data["results"][] = array(
-			"id" 						=> 0,
-			"totalCustomer" 			=> $totalCustomer,
-			"totalAllowCustomer" 		=> $totalAllowCustomer,
-			"totalActiveCustomer" 		=> $totalActiveCustomer,
-			"totalIncome" 				=> floatval($income->amount),
-			"avgIncome" 				=> floatval($avgIncome->amount),
-			"totalUsage" 				=> intval($usage->unit),
-			"avgUsage" 					=> floatval($avgUsage->reading),
-			"totalDeposit" 				=> floatval($deposit->amount)
-		);
-
-
-		//Response Data
-		$this->response($data, 200);
-	}
-
-	//GET WATER DISCONNECT LIST
-	function wdisconnect_get() {
-		$filters 	= $this->get("filter")["filters"];
-		$page 		= $this->get('page') !== false ? $this->get('page') : 1;
-		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;
-		$sort 	 	= $this->get("sort");
-		$data["results"] = array();
-		$data["count"] = 0;
-
-		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$today = new DateTime();
-		$days = 0;
-
-		//Sort
-		if(!empty($sort) && isset($sort)){
-			foreach ($sort as $value) {
-				if($value["field"]=="days"){
-					$obj->order_by("due_date", $value["dir"]);
-				}else if($value["field"]=="location_name"){
-					$obj->order_by("location_id", $value["dir"]);
-				}else if($value["field"]=="contact_number" || $value["field"]=="fullname"){
-					$obj->order_by("contact_id", $value["dir"]);
-				}else{
-					$obj->order_by($value["field"], $value["dir"]);
-				}
-			}
-		}
-
-		//Filter
-		if(!empty($filters) && isset($filters)){
-	    	foreach ($filters as $value) {
-	    		if(!empty($value["operator"]) && isset($value["operator"])){
-		    		if($value["operator"]=="where_in"){
-		    			$obj->where_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_where_in"){
-		    			$obj->or_where_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="where_not_in"){
-		    			$obj->where_not_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_where_not_in"){
-		    			$obj->or_where_not_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="like"){
-		    			$obj->like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_like"){
-		    			$obj->or_like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="not_like"){
-		    			$obj->not_like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_not_like"){
-		    			$obj->or_not_like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="startswith"){
-		    			$obj->like($value["field"], $value["value"], "after");
-		    		}else if($value["operator"]=="endswith"){
-		    			$obj->like($value["field"], $value["value"], "before");
-		    		}else if($value["operator"]=="contains"){
-		    			$obj->like($value["field"], $value["value"], "both");
-		    		}else if($value["operator"]=="or_where"){
-		    			$obj->or_where($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="days"){
-		    			$days = $value["value"];
-		    		}else{
-		    			$obj->where($value["field"].' '.$value["operator"], $value["value"]);
-		    		}
-	    		}else{
-	    			$obj->where($value["field"], $value["value"]);
-	    		}
-			}
-		}
-
-		$obj->where_in("status", array(0,2));
-
-		//Join other tables
-		$obj->include_related("location", "name");
-		$obj->include_related("company", "name");
-		$obj->include_related("contact", array("contact_type_id", "wnumber", "surname", "name", "company"));
-
-		//Results
-		$obj->get_paged_iterated($page, $limit);
-		$data["count"] = $obj->paged->total_rows;
-
-		if($obj->exists()){
-			foreach ($obj as $value) {
-				$fullname = $value->contact_surname.' '.$value->contact_name;
-				if($value->contact_contact_type_id=="6" || $value->contact_contact_type_id=="7" || $value->contact_contact_type_id=="8"){
-					$fullname = $value->contact_company;
-				}
-
-				$dueDate = new DateTime($value->due_date);
-				$diff = $today->diff($dueDate)->format("%a");
-
-				if($dueDate<$today && $diff<=$days){
-					$data["results"][] = array(
-						"id" 				=> $value->id,
-						"number" 			=> $value->number,
-						"amount" 			=> floatval($value->amount),
-						"due_date" 			=> $value->due_date,
-						"days"				=> $diff,
-						"contact_number" 	=> $value->contact_wnumber,
-						"fullname" 			=> $fullname,
-						"location_name"		=> $value->location_name,
-						"branch_name" 		=> $value->company_name
-					);
-				}
-			}
-		}
-
-		//Response Data
-		$this->response($data, 200);
-	}
-
-	//GET WATER AGING SUMMARY
-	function waging_summary_get() {
-		$filters 	= $this->get("filter")["filters"];
-		$page 		= $this->get('page') !== false ? $this->get('page') : 1;
-		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;
-		$sort 	 	= $this->get("sort");
-		$data["results"] = array();
-		$data["count"] = 0;
-
-		$contact = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-
-		//Filter
-		$search_date = new DateTime();
-		if(!empty($filters) && isset($filters)){
-	    	foreach ($filters as $value){
-	    		if($value["field"]==="search_date"){
-	    			$search_date = date("Y-m-d", strtotime($value["value"]));
-	    		}else{
-	    			$contact->where($value["field"], $value["value"]);
-	    		}
-			}
-		}
-
-		$contact->where("use_water", 1);
-
-		//Results
-		$contact->get_paged_iterated($page, $limit);
-		$data["count"] = $contact->paged->total_rows;
-
-		if($contact->exists()){
-			foreach ($contact as $value) {
-				//Fullname
-				$fullname = $value->surname.' '.$value->name;
-				if($value->contact_type_id=="5" || $value->contact_type_id=="6" || $value->contact_type_id=="7"){
-					$fullname = $value->company;
-				}
-
-				//Invoice
-				$invoice = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				$invoice->where("contact_id", $value->id);
-				$invoice->where("type", "wInvoice");
-				$invoice->where_in("status", array(0,2));
-				$invoice->where("issued_date <=", $search_date);
-				$invoice->get();
-
-				$amount = 0;
-				$current = 0;
-				$oneMonth = 0;
-				$twoMonth = 0;
-				$threeMonth = 0;
-				$overMonth = 0;
-
-				if($invoice->exists()){
-					foreach ($invoice as $valInv) {
-						$today = new DateTime();
-						$dueDate = new DateTime($valInv->due_date);
-						$diff = $today->diff($dueDate)->format("%a");
-
-						$amount += floatval($valInv->amount);
-
-						if($dueDate<$today){
-							if(intval($diff)>90){
-								$overMonth += floatval($valInv->amount);
-							}else if(intval($diff)>60){
-								$threeMonth += floatval($valInv->amount);
-							}else if(intval($diff)>30){
-								$twoMonth += floatval($valInv->amount);
-							}else{
-								$oneMonth += floatval($valInv->amount);
-							}
-						}else{
-							$current += floatval($valInv->amount);
-						}
-
-					}
-
-					$data["results"][] = array(
-						"id" 			=> $value->id,
-						"fullIdName"	=> $value->wnumber. " " .$fullname,
-						"current" 		=> $current,
-						"oneMonth" 		=> $oneMonth,
-						"twoMonth" 		=> $twoMonth,
-						"threeMonth" 	=> $threeMonth,
-						"overMonth" 	=> $overMonth,
-						"amount" 		=> $amount
-					);
-				}
-			}
-		}
-
-		//Response Data
-		$this->response($data, 200);
-	}
-
-	//GET WATER AGING DETAIL
-	function waging_detail_get() {
-		$filters 	= $this->get("filter")["filters"];
-		$page 		= $this->get('page') !== false ? $this->get('page') : 1;
-		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;
-		$sort 	 	= $this->get("sort");
-		$data["results"] = array();
-		$data["count"] = 0;
-
-		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-
-		//Sort
-		if(!empty($sort) && isset($sort)){
-			foreach ($sort as $value) {
-				$obj->order_by($value["field"], $value["dir"]);
-			}
-		}
-
-		//Filter
-		if(!empty($filters) && isset($filters)){
-	    	foreach ($filters as $value) {
-	    		if(!empty($value["operator"]) && isset($value["operator"])){
-		    		if($value["operator"]=="where_in"){
-		    			$obj->where_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_where_in"){
-		    			$obj->or_where_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="where_not_in"){
-		    			$obj->where_not_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_where_not_in"){
-		    			$obj->or_where_not_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="like"){
-		    			$obj->like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_like"){
-		    			$obj->or_like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="not_like"){
-		    			$obj->not_like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_not_like"){
-		    			$obj->or_not_like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="startswith"){
-		    			$obj->like($value["field"], $value["value"], "after");
-		    		}else if($value["operator"]=="endswith"){
-		    			$obj->like($value["field"], $value["value"], "before");
-		    		}else if($value["operator"]=="contains"){
-		    			$obj->like($value["field"], $value["value"], "both");
-		    		}else if($value["operator"]=="or_where"){
-		    			$obj->or_where($value["field"], $value["value"]);
-		    		}else{
-		    			$obj->where($value["field"].' '.$value["operator"], $value["value"]);
-		    		}
-	    		}else{
-	    			$obj->where($value["field"], $value["value"]);
-	    		}
-			}
-		}
-
-		//Results
-		$obj->get_paged_iterated($page, $limit);
-		$data["count"] = $obj->paged->total_rows;
-
-		if($obj->exists()){
-			foreach ($obj as $value) {
-				//Fullname
-				$contact = $value->contact->get();
-				$fullname = $contact->surname.' '.$contact->name;
-				if($contact->contact_type_id=="5" || $contact->contact_type_id=="6" || $contact->contact_type_id=="7"){
-					$fullname = $contact->company;
-				}
-
-				//Age
-				$ageGroup = "0-បច្ចុប្បន្ន";
-				$today = new DateTime();
-				$dueDate = new DateTime($value->due_date);
-				$diff = $today->diff($dueDate)->format("%a");
-
-				if($dueDate<$today){
-					if(intval($diff)>90){
-						$ageGroup = "91->∞";
-					}else if(intval($diff)>60){
-						$ageGroup = "61-90";
-					}else if(intval($diff)>30){
-						$ageGroup = "31-60";
-					}else{
-						$ageGroup = "1-30";
-					}
-				}
-
-				$data["results"][] = array(
-					"id" 			=> $value->id,
-					"number" 		=> $value->number,
-					"amount"		=> floatval($value->amount),
-					"issued_date" 	=> $value->issued_date,
-					"due_date" 		=> $value->due_date,
-
-					"fullIdName"	=> $contact->wnumber ." ". $fullname,
-					"age"			=> $diff,
-					"អាយុកាល" 		=> $ageGroup
-				);
-			}
-		}
-
-		//Response Data
-		$this->response($data, 200);
-	}
-
-	//GET WATER SALE SUMMARY
-	function wsale_summary_get() {
-		$filters 	= $this->get("filter")["filters"];
-		$page 		= $this->get('page') !== false ? $this->get('page') : 1;
-		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;
-		$sort 	 	= $this->get("sort");
-		$data["results"] = array();
-		$data["count"] = 0;
-
-		//Location
-		$location = new Location(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$location->where("utility_id", 2);
-		$location->order_by("company_id");
-		$location->get();
-
-		foreach ($location as $loc){
-			$sale = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			$usage = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-
-			//Filter
-			if(!empty($filters) && isset($filters)){
-		    	foreach ($filters as $value) {
-		    		if(!empty($value["operator"]) && isset($value["operator"])){
-			    		if($value["operator"]=="between"){
-			    			$sale->where_between($value["field"], $value["value1"], $value["value2"]);
-			    			$usage->where_between_related("invoice", $value["field"], $value["value1"], $value["value2"]);
-			    		}else{
-			    			$sale->where($value["field"].' '.$value["operator"], $value["value"]);
-			    			$usage->where($value["field"].' '.$value["operator"], $value["value"]);
-			    		}
-		    		}else{
-		    			$sale->where($value["field"], $value["value"]);
-		    			$usage->where($value["field"], $value["value"]);
-		    		}
-				}
-			}
-
-			//Sale
-			$sale->select_sum('amount');
-			$sale->where("type", "wInvoice");
-			$sale->where("location_id", $loc->id);
-			$sale->where("deleted", 0);
-			$sale->get();
-
-			//Usage
-			$usage->select_sum('unit');
-			$usage->where_related("invoice", "type", "wInvoice");
-			$usage->where_related("invoice", "location_id", $loc->id);
-			$usage->where_related("invoice", "deleted", 0);
-			$usage->get();
-
-			$data["results"][] = array(
-				"branch_name"		=> $loc->company->get()->name,
-				"location_name"		=> $loc->name,
-				"usage"				=> intval($usage->unit1),
-				"amount"			=> floatval($sale->amount)
-			);
-		}
-
-		$data["count"] = count($data["results"]);
-
-		//Response Data
-		$this->response($data, 200);
-	}
-
-	//GET WATER SALE DETAIL
-	function wsale_detail_get() {
-		$filters 	= $this->get("filter")["filters"];
-		$page 		= $this->get('page') !== false ? $this->get('page') : 1;
-		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;
-		$sort 	 	= $this->get("sort");
-		$data["results"] = array();
-		$data["count"] = 0;
-
-		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-
-		//Sort
-		if(!empty($sort) && isset($sort)){
-			foreach ($sort as $value) {
-				if($value["field"]=="contact_type_name"){
-					$obj->order_by_related("contact", "contact_type_id", $value["dir"]);
-				}else if($value["field"]=="location_name"){
-					$obj->order_by("location_id", $value["dir"]);
-				}else if($value["field"]=="contact_number" || $value["field"]=="fullname"){
-					$obj->order_by("contact_id", $value["dir"]);
-				}else{
-					$obj->order_by($value["field"], $value["dir"]);
-				}
-			}
-		}
-
-		//Filter
-		if(!empty($filters) && isset($filters)){
-	    	foreach ($filters as $value) {
-	    		if(!empty($value["operator"]) && isset($value["operator"])){
-		    		if($value["operator"]=="where_in"){
-		    			$obj->where_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_where_in"){
-		    			$obj->or_where_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="where_not_in"){
-		    			$obj->where_not_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_where_not_in"){
-		    			$obj->or_where_not_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="like"){
-		    			$obj->like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_like"){
-		    			$obj->or_like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="not_like"){
-		    			$obj->not_like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_not_like"){
-		    			$obj->or_not_like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="startswith"){
-		    			$obj->like($value["field"], $value["value"], "after");
-		    		}else if($value["operator"]=="endswith"){
-		    			$obj->like($value["field"], $value["value"], "before");
-		    		}else if($value["operator"]=="contains"){
-		    			$obj->like($value["field"], $value["value"], "both");
-		    		}else if($value["operator"]=="or_where"){
-		    			$obj->or_where($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="between"){
-		    			$obj->where_between($value["field"], $value["value1"], $value["value2"]);
-		    		}else{
-		    			$obj->where($value["field"].' '.$value["operator"], $value["value"]);
-		    		}
-	    		}else{
-	    			$obj->where($value["field"], $value["value"]);
-	    		}
-			}
-		}
-
-		//Join other tables
-		$obj->include_related("location", "name");
-		$obj->include_related("contact/contact_type", "name");
-		$obj->include_related("contact", array("contact_type_id", "wnumber", "surname", "name", "company"));
-
-		//Results
-		$obj->get_paged_iterated($page, $limit);
-		$data["count"] = $obj->paged->total_rows;
-
-		if($obj->result_count()>0){
-			foreach ($obj as $value) {
-				$fullname = $value->contact_surname.' '.$value->contact_name;
-				if($value->contact_contact_type_id=="6" || $value->contact_contact_type_id=="7" || $value->contact_contact_type_id=="8"){
-					$fullname = $value->contact_company;
-				}
-
-				$usage = 0;
-				$lines = $value->item_line->get();
-				foreach ($lines as $l) {
-					if($l->type=="tariff"){
-						$usage += intval($l->unit);
-					}
-				}
-
-				$data["results"][] = array(
-					"id" 					=> $value->id,
-					"contact_number" 		=> $value->contact_wnumber,
-					"fullname" 				=> $fullname,
-					"contact_type_name" 	=> $value->contact_contact_type_name,
-					"location_name" 		=> $value->location_name,
-					"usage" 				=> $usage,
-					"amount" 				=> floatval($value->amount)
-				);
-			}
-		}
-
-		//Response Data
-		$this->response($data, 200);
-	}
+	// function emonthly_get() {
+	// 	$filters 	= $this->get("filter")["filters"];
+	// 	$page 		= $this->get('page') !== false ? $this->get('page') : 1;
+	// 	$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;
+	// 	$sort 	 	= $this->get("sort");
+	// 	$data["results"] = array();
+	// 	$data["count"] = 0;
+
+	// 	$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+	// 	$obj->where_in("type", array("invoice", "receipt", "eInvoice"));
+	// 	$obj->where("issued_date >=", date("Y")."-01-01");
+	// 	$obj->where("issued_date <=", date("Y")."-12-31");
+	// 	$obj->where_in("type", array('invoice','eInvoice','wInvoice'));
+	// 	$obj->order_by("issued_date");
+	// 	$obj->get();
+
+	// 	if($obj->result_count()>0){
+	// 		foreach ($obj as $value) {
+	// 			$data["results"][] = array(
+	// 			   	"amount" 		=> floatval($value->amount),
+	// 			   	"issued_date"	=> date('F', strtotime($value->issued_date))
+	// 			);
+	// 		}
+	// 	}
+
+	// 	//Response Data
+	// 	$this->response($data, 200);
+	// }
+
+	// //GET ELECTRICYT DASHBOARD
+	// function edashboard_get() {
+	// 	$filters 	= $this->get("filter")["filters"];
+	// 	$page 		= $this->get('page') !== false ? $this->get('page') : 1;
+	// 	$limit 		= $this->get('limit') !== false ? $this->get('limit') : 50;
+	// 	$sort 	 	= $this->get("sort");
+	// 	$data["results"] = array();
+	// 	$data["count"] = 0;
+
+	// 	// 0 Balance
+	// 	$balance = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+	// 	$balance->select_sum("amount");
+	// 	$balance->where_in("type", array("eInvoice",));
+	// 	$balance->get();
+	// 	$data["results"][] = floatval($balance->amount);
+
+	// 	// 1 Deposit
+	// 	$deposit = new Payment(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+	// 	$deposit->select_sum("amount");
+	// 	$deposit->where("type", "deposit");
+	// 	$deposit->where_related("meter", "utility_id", 1);
+	// 	$deposit->get();
+	// 	$data["results"][] = floatval($deposit->amount);
+
+	// 	// 2 Active Customer
+	// 	$activeCustomer = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+	// 	$activeCustomer->where("status", 1);
+	// 	$activeCustomer->where("deleted", 0);
+	// 	$activeCustomer->where_in("contact_type_id", array(3,4,5,6,7));
+	// 	$activeCustomer->where_related("meter", "utility_id", 1);
+	// 	$data["results"][] = intval($activeCustomer->count());
+
+	// 	// 3 Inactive Customer
+	// 	$inactiveCustomer = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+	// 	$inactiveCustomer->where("status", 0);
+	// 	$inactiveCustomer->where("deleted", 0);
+	// 	$inactiveCustomer->where_in("contact_type_id", array(3,4,5,6,7));
+	// 	$inactiveCustomer->where_related("meter", "utility_id", 1);
+	// 	$data["results"][] = intval($inactiveCustomer->count());
+
+	// 	// 4 Void Customer
+	// 	$voidCustomer = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+	// 	$voidCustomer->where("status", 2);
+	// 	$voidCustomer->where("deleted", 0);
+	// 	$voidCustomer->where_in("contact_type_id", array(3,4,5,6,7));
+	// 	$voidCustomer->where_related("meter", "utility_id", 1);
+	// 	$data["results"][] = intval($voidCustomer->count());
+
+	// 	// 5 Total Customer
+	// 	$totalCustomer = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+	// 	$totalCustomer->where("deleted", 0);
+	// 	$totalCustomer->where_in("contact_type_id", array(3,4,5,6,7));
+	// 	$totalCustomer->where_related("meter", "utility_id", 1);
+	// 	$data["results"][] = intval($totalCustomer->count());
+
+	// 	// 6 Unpaid
+	// 	$unpaid = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+	// 	$unpaid->where("type", "eInvoice");
+	// 	$unpaid->where("status", 0);
+	// 	$unpaid->group_by("contact_id");
+	// 	$unpaid->get();
+	// 	$data["results"][] = intval($unpaid->result_count());
+
+	// 	// 7 Disconnect
+	// 	$dc = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+	// 	$dc->where("type", "eInvoice");
+	// 	$dc->where("status", 0);
+	// 	$dc->where("due_date <", date("Y-m-d"));
+	// 	$dc->group_by("contact_id");
+	// 	$dc->get();
+	// 	$data["results"][] = intval($dc->result_count());
+
+	// 	//Response Data
+	// 	$this->response($data, 200);
+	// }
+
+	// //GET ELECTRICYT SALE BY LOCATION
+	// function esale_by_location_get() {
+	// 	$filters 	= $this->get("filter")["filters"];
+	// 	$page 		= $this->get('page') !== false ? $this->get('page') : 1;
+	// 	$limit 		= $this->get('limit') !== false ? $this->get('limit') : 50;
+	// 	$sort 	 	= $this->get("sort");
+	// 	$data["results"] = array();
+	// 	$data["count"] = 1;
+
+	// 	$sale = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+	// 	$usage = new Meter_record(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+	// 	$unpaid = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+	// 	$deposit = new Payment(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+	// 	//Filter
+	// 	if(!empty($filters) && isset($filters)){
+	//     	foreach ($filters as $value) {
+	//     		$sale->where($value["field"], $value["value"]);
+	//     		$unpaid->where($value["field"], $value["value"]);
+	//     		$deposit->where("payment_date", $value["value"]);
+	// 		}
+	// 	}
+
+	// 	//Location
+	// 	$location = new Location(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+	// 	$location->where("utility_id", 1);
+	// 	$location->get();
+
+	// 	foreach ($location as $value){
+	// 		//Active Customer
+	// 		$activeCustomer = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+	// 		$activeCustomer->where("status", 1);
+	// 		$activeCustomer->where("deleted", 0);
+	// 		$activeCustomer->where_related("meter", "location_id", $value->id);
+
+	// 		//Inactive Customer
+	// 		$inactiveCustomer = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+	// 		$inactiveCustomer->where("status", 0);
+	// 		$inactiveCustomer->where("deleted", 0);
+	// 		$inactiveCustomer->where_related("meter", "location_id", $value->id);
+
+	// 		//Deposit
+	// 		$deposit->select_sum('amount');
+	// 		$deposit->where("type", "deposit");
+	// 		$deposit->where_related("meter", "location_id", $value->id);
+	// 		$deposit->where("deleted", 0);
+	// 		$deposit->get();
+
+	// 		//Usage
+	// 		$usage->select_sum('usage', 'totalUsage');
+	// 		$usage->where_related("meter", "location_id", $value->id);
+	// 		$usage->get();
+
+	// 		//Sale
+	// 		$sale->select_sum('amount');
+	// 		$sale->where("type", "eInvoice");
+	// 		$sale->where("location_id", $value->id);
+	// 		$sale->where("deleted", 0);
+	// 		$sale->get();
+
+	// 		//Unpaid
+	// 		$unpaid->select_sum('amount');
+	// 		$unpaid->where("type", "eInvoice");
+	// 		$unpaid->where("location_id", $value->id);
+	// 		$unpaid->where("status", 0);
+	// 		$unpaid->where("deleted", 0);
+	// 		$unpaid->get();
+
+	// 		$data["results"][] = array(
+	// 			"location_name"		=> $value->name,
+	// 			"active_customer" 	=> intval($activeCustomer->count()),
+	// 			"inactive_customer" => intval($inactiveCustomer->count()),
+	// 			"deposit" 			=> floatval($deposit->amount),
+	// 			"usage" 			=> intval($usage->totalUsage),
+	// 			"sale"				=> floatval($sale->amount),
+	// 			"unpaid"			=> floatval($unpaid->amount)
+	// 		);
+	// 	}
+
+	// 	//Response Data
+	// 	$this->response($data, 200);
+	// }
+
+
+	// //WATER
+	// //POST UINVOICE
+	// function uInvoice_post() {
+	// 	$models = json_decode($this->post('models'));
+	// 	$data["results"] = array();
+	// 	$data["count"] = 0;
+
+	// 	$number = "";
+	// 	foreach ($models as $value) {
+	// 		if($number==""){
+	// 			$number = $this->_generate_number($value->type);
+	// 		}else{
+	// 			$last_no = $number;
+	// 			$header = substr($last_no, 0, -5);
+	// 			$no = intval(substr($last_no, strlen($last_no) - 5));
+	// 			$no++;
+	// 			$number = $header . str_pad($no, 5, "0", STR_PAD_LEFT);
+	// 		}
+
+	// 		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+	// 		$obj->company_id 		= $value->company_id;
+	// 		$obj->location_id 		= $value->location_id;
+	// 		$obj->contact_id 		= $value->contact_id;
+	// 		$obj->payment_term_id	= $value->payment_term_id;
+	// 		$obj->payment_method_id = $value->payment_method_id;
+	// 		$obj->reference_id 		= $value->reference_id;
+	// 		$obj->account_id 		= $value->account_id;
+	// 		$obj->vat_id 			= $value->vat_id;
+	// 		$obj->biller_id 		= $value->biller_id;
+	// 	   	$obj->number 			= $number;
+	// 	   	$obj->type 				= $value->type;
+	// 	   	$obj->amount 			= $value->amount;
+	// 	   	$obj->vat 				= $value->vat;
+	// 	   	$obj->rate 				= $value->rate;
+	// 	   	$obj->locale 			= $value->locale;
+	// 	   	$obj->month_of 			= $value->month_of;
+	// 	   	$obj->issued_date 		= $value->issued_date;
+	// 	   	$obj->payment_date 		= $value->payment_date;
+	// 	   	$obj->due_date 			= $value->due_date;
+	// 	   	$obj->check_no 			= $value->check_no;
+	// 	   	$obj->memo 				= $value->memo;
+	// 	   	$obj->memo2 			= $value->memo2;
+	// 	   	$obj->status 			= $value->status;
+
+	//    		if($obj->save()){
+	//    			$invoice_lines = [];
+	// 	   		foreach ($value->invoice_lines as $row) {
+	// 	   			$line = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+	// 	   			$line->invoice_id 		= $obj->id;
+	// 	   			$line->item_id 			= $row->item_id;
+	// 	   			$line->meter_record_id 	= $row->meter_record_id;
+	// 	   			$line->description 		= $row->description;
+	// 	   			$line->unit 			= $row->unit;
+	// 	   			$line->price 			= $row->price;
+	// 	   			$line->amount 			= $row->amount;
+	// 	   			$line->rate 			= $row->rate;
+	// 	   			$line->locale 			= $row->locale;
+	// 	   			$line->has_vat 			= $row->has_vat;
+	// 	   			$line->type 			= isset($row->type)?$row->type:"";
+
+	// 	   			if($line->save()){
+	// 	   				$invoice_lines[] = array(
+	// 	   					"id" 				=> $line->id,
+	// 	   					"invoice_id"		=> $line->invoice_id,
+	// 			   			"item_id"			=> $line->item_id,
+	// 			   			"measurement_id" 	=> isset($line->measurement_id)?$line->measurement_id:0,
+	// 			   			"meter_record_id" 	=> $line->meter_record_id,
+	// 			   			"description" 		=> $line->description,
+	// 			   			"unit"				=> $line->unit,
+	// 			   			"price" 			=> floatval($line->price),
+	// 			   			"amount" 			=> floatval($line->amount),
+	// 			   			"rate"				=> floatval($line->rate),
+	// 			   			"locale" 			=> $line->locale,
+	// 			   			"has_vat" 			=> $line->has_vat=="true"?true:false,
+	// 			   			"type" 				=> $line->type
+	// 	   				);
+	// 	   			}
+	// 	   		}
+
+	// 		   	$data["results"][] = array(
+	// 		   		"id" 				=> $obj->id,
+	// 				"company_id" 		=> $obj->company_id,
+	// 				"location_id" 		=> $obj->location_id,
+	// 				"contact_id" 		=> $obj->contact_id,
+	// 				"payment_term_id" 	=> $obj->payment_term_id,
+	// 				"payment_method_id" => $obj->payment_method_id,
+	// 				"reference_id" 		=> $obj->reference_id,
+	// 				"account_id" 		=> $obj->account_id,
+	// 				"vat_id"			=> $obj->vat_id,
+	// 				"biller_id" 		=> $obj->biller_id,
+	// 			   	"number" 			=> $obj->number,
+	// 			   	"type" 				=> $obj->type,
+	// 			   	"amount" 			=> floatval($obj->amount),
+	// 			   	"vat" 				=> floatval($obj->vat),
+	// 			   	"rate" 				=> floatval($obj->rate),
+	// 			   	"locale" 			=> $obj->locale,
+	// 			   	"month_of"			=> $obj->month_of,
+	// 			   	"issued_date"		=> $obj->issued_date,
+	// 			   	"payment_date" 		=> $obj->payment_date,
+	// 			   	"due_date" 			=> $obj->due_date,
+	// 			   	"check_no" 			=> $obj->check_no,
+	// 			   	"memo" 				=> $obj->memo,
+	// 			   	"memo2" 			=> $obj->memo2,
+	// 			   	"status" 			=> $obj->status,
+
+	// 			   	"invoice_lines" 	=> $invoice_lines
+	// 		   	);
+	// 	    }
+	// 	}
+
+	// 	$data["count"] = count($data["results"]);
+	// 	$this->response($data, 201);
+	// }
+
+	// //GET WATER INVOICE PRINT
+	// function wInvoice_print_get() {
+	// 	$filters 	= $this->get("filter")["filters"];
+	// 	$page 		= $this->get('page') !== false ? $this->get('page') : 1;
+	// 	$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;
+	// 	$sort 	 	= $this->get("sort");
+	// 	$data["results"] = array();
+	// 	$data["count"] = 0;
+
+	// 	$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+	// 	//Sort
+	// 	if(!empty($sort) && isset($sort)){
+	// 		foreach ($sort as $value) {
+	// 			$obj->order_by($value["field"], $value["dir"]);
+	// 		}
+	// 	}
+
+	// 	//Filter
+	// 	if(!empty($filters) && isset($filters)){
+	//     	foreach ($filters as $value) {
+	//     		if(!empty($value["operator"]) && isset($value["operator"])){
+	// 	    		if($value["operator"]=="where_in"){
+	// 	    			$obj->where_in($value["field"], $value["value"]);
+	// 	    		}else if($value["operator"]=="or_where_in"){
+	// 	    			$obj->or_where_in($value["field"], $value["value"]);
+	// 	    		}else if($value["operator"]=="where_not_in"){
+	// 	    			$obj->where_not_in($value["field"], $value["value"]);
+	// 	    		}else if($value["operator"]=="or_where_not_in"){
+	// 	    			$obj->or_where_not_in($value["field"], $value["value"]);
+	// 	    		}else if($value["operator"]=="like"){
+	// 	    			$obj->like($value["field"], $value["value"]);
+	// 	    		}else if($value["operator"]=="or_like"){
+	// 	    			$obj->or_like($value["field"], $value["value"]);
+	// 	    		}else if($value["operator"]=="not_like"){
+	// 	    			$obj->not_like($value["field"], $value["value"]);
+	// 	    		}else if($value["operator"]=="or_not_like"){
+	// 	    			$obj->or_not_like($value["field"], $value["value"]);
+	// 	    		}else if($value["operator"]=="startswith"){
+	// 	    			$obj->like($value["field"], $value["value"], "after");
+	// 	    		}else if($value["operator"]=="endswith"){
+	// 	    			$obj->like($value["field"], $value["value"], "before");
+	// 	    		}else if($value["operator"]=="contains"){
+	// 	    			$obj->like($value["field"], $value["value"], "both");
+	// 	    		}else if($value["operator"]=="or_where"){
+	// 	    			$obj->or_where($value["field"], $value["value"]);
+	// 	    		}else{
+	// 	    			$obj->where($value["field"].' '.$value["operator"], $value["value"]);
+	// 	    		}
+	//     		}else{
+	//     			$obj->where($value["field"], $value["value"]);
+	//     		}
+	// 		}
+	// 	}
+
+	// 	//Order
+	// 	$obj->order_by_related("contact", "worder", "asc");
+
+	// 	//Results
+	// 	$obj->get();
+
+	// 	if($obj->exists()){
+	// 		foreach ($obj as $value) {
+	// 			//Balance forward
+	// 			$bf = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+	// 			$bf->select_sum('amount');
+	// 			$bf->where('contact_id', $value->contact_id);
+	// 			$bf->where('status', 0);
+	// 			$bf->where_in('type', array('Invoice','wInvoice'));
+	// 			$bf->where('month_of <', $value->month_of);
+	// 			$bf->get();
+
+	// 			$total = floatval($value->amount) + floatval($bf->amount);
+
+	// 			//Invoice lines
+	// 			$lines = $value->item_line->get();
+	// 			$invoiceLines = [];
+	// 			foreach ($lines as $l) {
+	// 				$record = [];
+	// 				$meter = [];
+	// 				if($l->type=="tariff"){
+	// 					$record = $l->meter_record->get_raw()->result();
+	// 				   	$meter = $l->meter_record->get()->meter->get_raw()->result();
+	// 				}
+
+	// 				$invoiceLines[] = array(
+	// 					"id" 				=> $l->id,
+	// 			   		"invoice_id"		=> $l->invoice_id,
+	// 					"item_id" 			=> $l->item_id,
+	// 					"meter_record_id" 	=> $l->meter_record_id,
+	// 				   	"description" 		=> $l->description,
+	// 				   	"unit" 				=> intval($l->unit),
+	// 				   	"price"				=> floatval($l->price),
+	// 				   	"amount" 			=> floatval($l->amount),
+	// 				   	"rate"				=> floatval($l->rate),
+	// 				   	"locale" 			=> $l->locale,
+	// 				   	"has_vat" 			=> $l->has_vat,
+	// 				   	"type" 				=> $l->type,
+
+	// 				   	"record" 			=> $record,
+	// 				   	"meter" 			=> $meter
+	// 				);
+	// 			}
+
+	// 			$data["results"][] = array(
+	// 				"id" 				=> $value->id,
+	// 				"company_id" 		=> $value->company_id,
+	// 				"location_id" 		=> $value->location_id,
+	// 				"contact_id" 		=> $value->contact_id,
+	// 				"payment_term_id" 	=> $value->payment_term_id,
+	// 				"payment_method_id" => $value->payment_method_id,
+	// 				"reference_id" 		=> $value->reference_id,
+	// 				"account_id" 		=> $value->account_id,
+	// 				"vat_id"			=> $value->vat_id,
+	// 				"biller_id" 		=> $value->biller_id,
+	// 			   	"number" 			=> $value->number,
+	// 			   	"type" 				=> $value->type,
+	// 			   	"amount" 			=> floatval($value->amount),
+	// 			   	"vat" 				=> floatval($value->vat),
+	// 			   	"rate" 				=> floatval($value->rate),
+	// 			   	"locale" 			=> $value->locale,
+	// 			   	"month_of"			=> $value->month_of,
+	// 			   	"issued_date"		=> $value->issued_date,
+	// 			   	"payment_date" 		=> $value->payment_date,
+	// 			   	"due_date" 			=> $value->due_date,
+	// 			   	"check_no" 			=> $value->check_no,
+	// 			   	"memo" 				=> $value->memo,
+	// 			   	"memo2" 			=> $value->memo2,
+	// 			   	"status" 			=> $value->status,
+	// 			   	"print_count" 		=> $value->print_count,
+	// 			   	"printed_by" 		=> $value->printed_by,
+
+	// 			   	"total" 			=> $total,
+	// 			   	"balance_forward" 	=> floatval($bf->amount),
+
+	// 			   	"company" 			=> $value->company->get_raw()->result(),
+	// 			   	"location" 			=> $value->location->get_raw()->result(),
+	// 			   	"contact" 			=> $value->contact->get_raw()->result(),
+	// 			   	"invoiceLines" 		=> $invoiceLines
+	// 			);
+	// 		}
+	// 	}
+
+	// 	$data["count"] = count($data["results"]);
+
+	// 	//Response Data
+	// 	$this->response($data, 200);
+	// }
+
+	// //PUT WATER INVOICE PRINT
+	// function wInvoice_print_put() {
+	// 	$models = json_decode($this->put('models'));
+	// 	$data["results"] = array();
+	// 	$data["count"] = 0;
+
+	// 	foreach ($models as $value) {
+	// 		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+	// 		$obj->get_by_id($value->id);
+
+	// 	   	$obj->print_count 		= isset($value->print_count) ? $value->print_count : 0;
+	// 	   	$obj->printed_by 		= isset($value->printed_by) ? $value->printed_by : 0;
+
+	// 		if($obj->save()){
+	// 			//Results
+	// 			$data["results"][] = array(
+	// 				"id" 				=> $obj->id,
+	// 			   	"print_count" 		=> $obj->print_count,
+	// 			   	"printed_by" 		=> $obj->printed_by
+	// 			);
+	// 		}
+	// 	}
+	// 	$data["count"] = count($data["results"]);
+
+	// 	$this->response($data, 200);
+	// }
+
+	// //GET WATER PRINT
+	// function wprint_get() {
+	// 	$filters 	= $this->get("filter")["filters"];
+	// 	$page 		= $this->get('page') !== false ? $this->get('page') : 1;
+	// 	$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;
+	// 	$sort 	 	= $this->get("sort");
+	// 	$data["results"] = array();
+	// 	$data["count"] = 0;
+
+	// 	$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+	// 	//Sort
+	// 	if(!empty($sort) && isset($sort)){
+	// 		foreach ($sort as $value) {
+	// 			$obj->order_by($value["field"], $value["dir"]);
+	// 		}
+	// 	}
+
+	// 	//Filter
+	// 	if(!empty($filters) && isset($filters)){
+	//     	foreach ($filters as $value) {
+	//     		if(!empty($value["operator"]) && isset($value["operator"])){
+	// 	    		if($value["operator"]=="where_in"){
+	// 	    			$obj->where_in($value["field"], $value["value"]);
+	// 	    		}else if($value["operator"]=="or_where_in"){
+	// 	    			$obj->or_where_in($value["field"], $value["value"]);
+	// 	    		}else if($value["operator"]=="where_not_in"){
+	// 	    			$obj->where_not_in($value["field"], $value["value"]);
+	// 	    		}else if($value["operator"]=="or_where_not_in"){
+	// 	    			$obj->or_where_not_in($value["field"], $value["value"]);
+	// 	    		}else if($value["operator"]=="like"){
+	// 	    			$obj->like($value["field"], $value["value"]);
+	// 	    		}else if($value["operator"]=="or_like"){
+	// 	    			$obj->or_like($value["field"], $value["value"]);
+	// 	    		}else if($value["operator"]=="not_like"){
+	// 	    			$obj->not_like($value["field"], $value["value"]);
+	// 	    		}else if($value["operator"]=="or_not_like"){
+	// 	    			$obj->or_not_like($value["field"], $value["value"]);
+	// 	    		}else if($value["operator"]=="startswith"){
+	// 	    			$obj->like($value["field"], $value["value"], "after");
+	// 	    		}else if($value["operator"]=="endswith"){
+	// 	    			$obj->like($value["field"], $value["value"], "before");
+	// 	    		}else if($value["operator"]=="contains"){
+	// 	    			$obj->like($value["field"], $value["value"], "both");
+	// 	    		}else if($value["operator"]=="or_where"){
+	// 	    			$obj->or_where($value["field"], $value["value"]);
+	// 	    		}else{
+	// 	    			$obj->where($value["field"].' '.$value["operator"], $value["value"]);
+	// 	    		}
+	//     		}else{
+	//     			$obj->where($value["field"], $value["value"]);
+	//     		}
+	// 		}
+	// 	}
+
+	// 	//Only water invoice
+	// 	$obj->where("type", "wInvoice");
+	// 	$obj->order_by_related("contact", "worder", "asc");
+
+	// 	//Results
+	// 	$obj->get_paged_iterated($page, $limit);
+	// 	$data["count"] = $obj->paged->total_rows;
+
+	// 	if($obj->result_count()>0){
+	// 		foreach ($obj as $value) {
+	// 			$data["results"][] = array(
+	// 				"id" 				=> $value->id,
+	// 			   	"number" 			=> $value->number,
+	// 			   	"amount" 			=> floatval($value->amount),
+	// 			   	"amount_paid"		=> floatval($value->amount_paid),
+	// 			   	"status" 			=> $value->status,
+	// 			   	"print_count" 		=> $value->print_count,
+
+	// 			   	"contact" 			=> $value->contact->get_raw()->result()
+	// 			);
+	// 		}
+	// 	}
+
+	// 	//Response Data
+	// 	$this->response($data, 200);
+	// }
+
+	// //GET WATER PRINT SNAPSHOT
+	// function wprint_snapshot_get() {
+	// 	$filters 	= $this->get("filter")["filters"];
+	// 	$page 		= $this->get('page') !== false ? $this->get('page') : 1;
+	// 	$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;
+	// 	$sort 	 	= $this->get("sort");
+	// 	$data["results"] = array();
+	// 	$data["count"] = 0;
+
+	// 	$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+	// 	//Sort
+	// 	if(!empty($sort) && isset($sort)){
+	// 		foreach ($sort as $value) {
+	// 			$obj->order_by($value["field"], $value["dir"]);
+	// 		}
+	// 	}
+
+	// 	//Filter
+	// 	if(!empty($filters) && isset($filters)){
+	//     	foreach ($filters as $value) {
+	//     		if(!empty($value["operator"]) && isset($value["operator"])){
+	// 	    		if($value["operator"]=="where_in"){
+	// 	    			$obj->where_in($value["field"], $value["value"]);
+	// 	    		}else if($value["operator"]=="or_where_in"){
+	// 	    			$obj->or_where_in($value["field"], $value["value"]);
+	// 	    		}else if($value["operator"]=="where_not_in"){
+	// 	    			$obj->where_not_in($value["field"], $value["value"]);
+	// 	    		}else if($value["operator"]=="or_where_not_in"){
+	// 	    			$obj->or_where_not_in($value["field"], $value["value"]);
+	// 	    		}else if($value["operator"]=="like"){
+	// 	    			$obj->like($value["field"], $value["value"]);
+	// 	    		}else if($value["operator"]=="or_like"){
+	// 	    			$obj->or_like($value["field"], $value["value"]);
+	// 	    		}else if($value["operator"]=="not_like"){
+	// 	    			$obj->not_like($value["field"], $value["value"]);
+	// 	    		}else if($value["operator"]=="or_not_like"){
+	// 	    			$obj->or_not_like($value["field"], $value["value"]);
+	// 	    		}else if($value["operator"]=="startswith"){
+	// 	    			$obj->like($value["field"], $value["value"], "after");
+	// 	    		}else if($value["operator"]=="endswith"){
+	// 	    			$obj->like($value["field"], $value["value"], "before");
+	// 	    		}else if($value["operator"]=="contains"){
+	// 	    			$obj->like($value["field"], $value["value"], "both");
+	// 	    		}else if($value["operator"]=="or_where"){
+	// 	    			$obj->or_where($value["field"], $value["value"]);
+	// 	    		}else{
+	// 	    			$obj->where($value["field"].' '.$value["operator"], $value["value"]);
+	// 	    		}
+	//     		}else{
+	//     			$obj->where($value["field"], $value["value"]);
+	//     		}
+	// 		}
+	// 	}
+
+	// 	//Only water invoice
+	// 	$obj->where("type", "wInvoice");
+
+	// 	//Results
+	// 	$obj->get();
+
+	// 	$totalInvoice = 0;
+	// 	$totalUnprint = 0;
+	// 	$totalUsage = 0;
+	// 	$totalAmount = 0;
+	// 	$ids = [];
+	// 	if($obj->result_count()>0){
+	// 		foreach ($obj as $value) {
+	// 			array_push($ids, $value->id);
+	// 			$totalInvoice++;
+	// 			if($value->print_count==0){
+	// 				$totalUnprint++;
+	// 			}
+	// 			$totalAmount += $value->amount;
+	// 		}
+
+	// 		$line = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+	// 		$line->select_sum("unit");
+	// 		$line->where_in("invoice_id", $ids);
+	// 		$line->where("type", "tariff");
+	// 		$line->get();
+	// 	}
+
+	// 	$data["results"][] = array(
+	// 		"id" 			=> 0,
+	// 		"totalInvoice" 	=> $totalInvoice,
+	// 		"totalUnprint" 	=> $totalUnprint,
+	// 		"totalUsage" 	=> intval($line->unit),
+	// 		"totalAmount" 	=> $totalAmount
+	// 	);
+	// 	$data["count"] = count($data["results"]);
+
+	// 	//Response Data
+	// 	$this->response($data, 200);
+	// }
+
+	// //GET WATER DASHBOARD
+	// function wdashboard_get() {
+	// 	$filters 	= $this->get("filter")["filters"];
+	// 	$page 		= $this->get('page') !== false ? $this->get('page') : 1;
+	// 	$limit 		= $this->get('limit') !== false ? $this->get('limit') : 50;
+	// 	$sort 	 	= $this->get("sort");
+	// 	$data["results"] = array();
+	// 	$data["count"] = 0;
+
+	// 	// 0 Balance
+	// 	$balance = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+	// 	$balance->select_sum("amount");
+	// 	$balance->where("type", "wInvoice");
+	// 	$balance->get();
+	// 	$data["results"][] = floatval($balance->amount);
+
+	// 	// 1 Deposit
+	// 	$deposit = new Payment(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+	// 	$deposit->select_sum("amount");
+	// 	$deposit->where("type", "wdeposit");
+	// 	$deposit->get();
+	// 	$data["results"][] = floatval($deposit->amount);
+
+	// 	// 2 Active Customer
+	// 	$activeCustomer = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+	// 	$activeCustomer->where("status", 1);
+	// 	$activeCustomer->where("deleted", 0);
+	// 	$activeCustomer->where("use_water", 1);
+	// 	$data["results"][] = intval($activeCustomer->count());
+
+	// 	// 3 Inactive Customer
+	// 	$inactiveCustomer = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+	// 	$inactiveCustomer->where("status", 0);
+	// 	$inactiveCustomer->where("deleted", 0);
+	// 	$inactiveCustomer->where("use_water", 1);
+	// 	$data["results"][] = intval($inactiveCustomer->count());
+
+	// 	// 4 Disconnect Customer
+	// 	$voidCustomer = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+	// 	$voidCustomer->where("status", 2);
+	// 	$voidCustomer->where("deleted", 0);
+	// 	$voidCustomer->where("use_water", 1);
+	// 	$data["results"][] = intval($voidCustomer->count());
+
+	// 	// 5 Total Customer
+	// 	$totalCustomer = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+	// 	$totalCustomer->where("deleted", 0);
+	// 	$totalCustomer->where("use_water", 1);
+	// 	$data["results"][] = intval($totalCustomer->count());
+
+	// 	// 6 Unpaid
+	// 	$unpaid = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+	// 	$unpaid->where("type", "wInvoice");
+	// 	$unpaid->where_in("status", array(0,2));
+	// 	$unpaid->group_by("contact_id");
+	// 	$unpaid->get();
+	// 	$data["results"][] = intval($unpaid->result_count());
+
+	// 	// 7 No meter
+	// 	$contact = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+	// 	$sub_contact = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+	// 	$contact->where("use_water", 1);
+	// 	$sub_contact->select("id")->where_related_meter("utility_id", 2);
+	// 	$contact->where_not_in_subquery('id', $sub_contact);
+	// 	$contact->get();
+
+	// 	$data["results"][] = intval($contact->result_count());
+
+	// 	//Response Data
+	// 	$this->response($data, 200);
+	// }
+
+	// //GET WATER MONTHLY
+	// function wmonthly_get() {
+	// 	$filters 	= $this->get("filter")["filters"];
+	// 	$page 		= $this->get('page') !== false ? $this->get('page') : 1;
+	// 	$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;
+	// 	$sort 	 	= $this->get("sort");
+	// 	$data["results"] = array();
+	// 	$data["count"] = 0;
+
+	// 	$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+	// 	$reading = new Meter_record(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+	// 	//Filter
+	// 	if(!empty($filters) && isset($filters)){
+	//     	foreach ($filters as $value) {
+	//     		$obj->where($value["field"], $value["value"]);
+	//     		$reading->where_related("meter", $value["field"], $value["value"]);
+	// 		}
+	// 	}
+
+	// 	$obj->where("type", "wInvoice");
+	// 	$obj->where("issued_date >=", date("Y")."-01-01");
+	// 	$obj->where("issued_date <=", date("Y")."-12-31");
+	// 	$obj->order_by("issued_date");
+	// 	$obj->get();
+
+	// 	$reading->where("month_of >=", date("Y")."-01-01");
+	// 	$reading->where("month_of <=", date("Y")."-12-31");
+	// 	$reading->order_by("month_of");
+	// 	$reading->get();
+
+	// 	if($obj->result_count() > $reading->result_count()){
+	// 		foreach ($obj as $value) {
+	// 			$usage = 0;
+	// 			$invoiceMonth = date('F', strtotime($value->issued_date));
+
+	// 			foreach ($reading as $v) {
+	// 				$readingMonth = date('F', strtotime($v->month_of));
+
+	// 				if($readingMonth===$invoiceMonth){
+	// 					$usage += floatval($v->usage);
+	// 				}
+	// 			}
+
+	// 			$data["results"][] = array(
+	// 			   	"amount" 		=> floatval($value->amount),
+	// 			   	"usage" 		=> $usage,
+	// 			   	"month"			=> $invoiceMonth
+	// 			);
+	// 		}
+	// 	}else{
+	// 		foreach ($reading as $value) {
+	// 			$amount = 0;
+	// 			$readingMonth = date('F', strtotime($value->month_of));
+
+	// 			foreach ($obj as $v) {
+	// 				$invoiceMonth = date('F', strtotime($v->issued_date));
+
+	// 				if($readingMonth===$invoiceMonth){
+	// 					$amount += floatval($v->amount);
+	// 				}
+	// 			}
+
+	// 			$data["results"][] = array(
+	// 			   	"amount" 		=> $amount,
+	// 			   	"usage" 		=> floatval($value->usage),
+	// 			   	"month"			=> $readingMonth
+	// 			);
+	// 		}
+	// 	}
+
+	// 	//Response Data
+	// 	$this->response($data, 200);
+	// }
+
+	// //GET WATER SALE BY BRANCH
+	// function wsale_by_branch_get() {
+	// 	$filters 	= $this->get("filter")["filters"];
+	// 	$page 		= $this->get('page') !== false ? $this->get('page') : 1;
+	// 	$limit 		= $this->get('limit') !== false ? $this->get('limit') : 50;
+	// 	$sort 	 	= $this->get("sort");
+	// 	$data["results"] = array();
+	// 	$data["count"] = 1;
+
+	// 	//Branch
+	// 	$branch = new Company(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+	// 	$branch->where("utility_id", 2);
+	// 	$branch->get();
+
+	// 	foreach ($branch as $value){
+	// 		$location = new Location(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+	// 		$sale = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+	// 		$usage = new Meter_record(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+	// 		$unpaid = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+	// 		$deposit = new Payment(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+	// 		$activeCustomer = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+	// 		$inactiveCustomer = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+	// 		//Filter
+	// 		if(!empty($filters) && isset($filters)){
+	// 	    	foreach ($filters as $val) {
+	// 	    		if($val["field"]=="start_date"){
+	// 	    			$sale->where("issued_date >=", $val["value"]);
+	// 		    		$usage->where("month_of >=", $val["value"]);
+	// 	    		}
+
+	// 	    		if($val["field"]=="end_date"){
+	// 	    			$sale->where("issued_date <=", $val["value"]);
+	// 		    		$usage->where("month_of <=", $val["value"]);
+
+	// 		    		$location->where("created_at <=", $val["value"]);
+	// 		    		$activeCustomer->where("registered_date <=", $val["value"]);
+	// 		    		$inactiveCustomer->where("registered_date <=", $val["value"]);
+	// 		    		$deposit->where("payment_date <=", $val["value"]);
+	// 		    		$unpaid->where("issued_date <=", $val["value"]);
+	// 	    		}
+	// 			}
+	// 		}
+
+	// 		//Count location
+	// 		$location->where("company_id", $value->id);
+
+	// 		//Active Customer
+	// 		$activeCustomer->where("status", 1);
+	// 		$activeCustomer->where("deleted", 0);
+	// 		$activeCustomer->where_related("meter", "company_id", $value->id);
+
+	// 		//Inactive Customer
+	// 		$inactiveCustomer->where("status", 0);
+	// 		$inactiveCustomer->where("deleted", 0);
+	// 		$inactiveCustomer->where_related("meter", "company_id", $value->id);
+
+	// 		//Deposit
+	// 		$deposit->select_sum('amount');
+	// 		$deposit->where("type", "deposit");
+	// 		$deposit->where("company_id", $value->id);
+	// 		$deposit->where("deleted", 0);
+	// 		$deposit->get();
+
+	// 		//Usage
+	// 		$usage->select_sum('usage', 'totalUsage');
+	// 		$usage->where_related("meter", "company_id", $value->id);
+	// 		$usage->get();
+
+	// 		//Sale
+	// 		$sale->select_sum('amount');
+	// 		$sale->where("type", "wInvoice");
+	// 		$sale->where("company_id", $value->id);
+	// 		$sale->where("deleted", 0);
+	// 		$sale->get();
+
+	// 		//Unpaid
+	// 		$unpaid->select_sum('amount');
+	// 		$unpaid->where("type", "wInvoice");
+	// 		$unpaid->where("company_id", $value->id);
+	// 		$unpaid->where("status", 0);
+	// 		$unpaid->where("deleted", 0);
+	// 		$unpaid->get();
+
+	// 		$data["results"][] = array(
+	// 			"name" 				=> $value->name,
+	// 			"location"			=> intval($location->count()),
+	// 			"active_customer" 	=> intval($activeCustomer->count()),
+	// 			"inactive_customer" => intval($inactiveCustomer->count()),
+	// 			"deposit" 			=> floatval($deposit->amount),
+	// 			"usage" 			=> intval($usage->totalUsage),
+	// 			"sale"				=> floatval($sale->amount),
+	// 			"unpaid"			=> floatval($unpaid->amount)
+	// 		);
+	// 	}
+
+	// 	//Response Data
+	// 	$this->response($data, 200);
+	// }
+
+	// //GET WATER SALE BY LOCATION
+	// function wsale_by_location_get() {
+	// 	$filters 	= $this->get("filter")["filters"];
+	// 	$page 		= $this->get('page') !== false ? $this->get('page') : 1;
+	// 	$limit 		= $this->get('limit') !== false ? $this->get('limit') : 50;
+	// 	$sort 	 	= $this->get("sort");
+	// 	$data["results"] = array();
+	// 	$data["count"] = 1;
+
+	// 	//Location
+	// 	$location = new Location(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+	// 	$location->where("utility_id", 2);
+	// 	$location->order_by("company_id");
+	// 	$location->get();
+
+	// 	foreach ($location as $value){
+	// 		$sale = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+	// 		$usage = new Meter_record(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+	// 		$unpaid = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+	// 		$deposit = new Payment(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+	// 		$activeCustomer = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+	// 		$inactiveCustomer = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+	// 		//Filter
+	// 		if(!empty($filters) && isset($filters)){
+	// 	    	foreach ($filters as $val) {
+	// 	    		if($val["field"]=="start_date"){
+	// 	    			$sale->where("issued_date >=", $val["value"]);
+	// 		    		$usage->where("month_of >=", $val["value"]);
+	// 	    		}
+
+	// 	    		if($val["field"]=="end_date"){
+	// 	    			$sale->where("issued_date <=", $val["value"]);
+	// 		    		$usage->where("month_of <=", $val["value"]);
+
+	// 		    		$activeCustomer->where("registered_date <=", $val["value"]);
+	// 		    		$inactiveCustomer->where("registered_date <=", $val["value"]);
+	// 		    		$deposit->where("payment_date <=", $val["value"]);
+	// 		    		$unpaid->where("issued_date <=", $val["value"]);
+	// 	    		}
+	// 			}
+	// 		}
+
+	// 		//Active Customer
+	// 		$activeCustomer->where("status", 1);
+	// 		$activeCustomer->where("deleted", 0);
+	// 		$activeCustomer->where_related("meter", "location_id", $value->id);
+
+	// 		//Inactive Customer
+	// 		$inactiveCustomer->where("status", 0);
+	// 		$inactiveCustomer->where("deleted", 0);
+	// 		$inactiveCustomer->where_related("meter", "location_id", $value->id);
+
+	// 		//Deposit
+	// 		$deposit->select_sum('amount');
+	// 		$deposit->where("type", "wdeposit");
+	// 		$deposit->where_related("meter", "location_id", $value->id);
+	// 		$deposit->where("deleted", 0);
+	// 		$deposit->get();
+
+	// 		//Usage
+	// 		$usage->select_sum('usage', 'totalUsage');
+	// 		$usage->where_related("meter", "location_id", $value->id);
+	// 		$usage->get();
+
+	// 		//Sale
+	// 		$sale->select_sum('amount');
+	// 		$sale->where("type", "wInvoice");
+	// 		$sale->where("location_id", $value->id);
+	// 		$sale->where("deleted", 0);
+	// 		$sale->get();
+
+	// 		//Unpaid
+	// 		$unpaid->select_sum('amount');
+	// 		$unpaid->where("type", "wInvoice");
+	// 		$unpaid->where("location_id", $value->id);
+	// 		$unpaid->where("status", 0);
+	// 		$unpaid->where("deleted", 0);
+	// 		$unpaid->get();
+
+	// 		$data["results"][] = array(
+	// 			"branch_name"		=> $value->company->get()->name,
+	// 			"location_name"		=> $value->name,
+	// 			"active_customer" 	=> intval($activeCustomer->count()),
+	// 			"inactive_customer" => intval($inactiveCustomer->count()),
+	// 			"deposit" 			=> floatval($deposit->amount),
+	// 			"usage" 			=> intval($usage->totalUsage),
+	// 			"sale"				=> floatval($sale->amount),
+	// 			"unpaid"			=> floatval($unpaid->amount)
+	// 		);
+	// 	}
+
+	// 	//Response Data
+	// 	$this->response($data, 200);
+	// }
+
+	// //GET WATER OUTSTANDING
+	// function woutstanding_get(){
+	// 	$filters 	= $this->get("filter")["filters"];
+	// 	$page 		= $this->get('page') !== false ? $this->get('page') : 1;
+	// 	$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;
+	// 	$sort 	 	= $this->get("sort");
+	// 	$data["results"] = array();
+	// 	$data["count"] = 4;
+
+	// 	$inv = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+	// 	$deposit = new Payment(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+	// 	//Filter
+	// 	if(!empty($filters) && isset($filters)){
+	//     	foreach ($filters as $value) {
+	// 	    	$inv->where($value["field"], $value["value"]);
+	// 	    	$deposit->where($value["field"], $value["value"]);
+	// 		}
+	// 	}
+
+	// 	//Deposit
+	// 	$deposit->select_sum('amount');
+	// 	$deposit->where("type", "wdeposit");
+	// 	$deposit->get();
+	// 	$data["results"][] = array("deposit"=>floatval($deposit->amount));
+
+	// 	//Out standing invoice and wInvoice
+	// 	$inv->where_in("type", array("invoice", "wInvoice"));
+	// 	$inv->where_in("status", array(0,2));
+	// 	$inv->get();
+	// 	$data["results"][] = array("outInvoice"=>intval($inv->result_count()));
+
+	// 	$overDue = 0;
+	// 	$overBal = 0;
+	// 	foreach ($inv as $value) {
+	// 		$overBal += (floatval($value->amount)-floatval($value->amount_paid));
+	// 		$today = new DateTime();
+	// 		$dueDate = new DateTime($value->due_date);
+	// 		if($dueDate<$today){
+	// 			$overDue++;
+	// 		}
+	// 	}
+	// 	$data["results"][] = array("overInvoice"=>$overDue);
+	// 	$data["results"][] = array("balance"=>$overBal);
+
+	// 	$this->response($data, 200);
+	// }
+
+	// //GET WATER TRANSACTION
+	// function wtransaction_get(){
+	// 	$filters 	= $this->get("filter")["filters"];
+	// 	$page 		= $this->get('page') !== false ? $this->get('page') : 1;
+	// 	$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;
+	// 	$sort 	 	= $this->get("sort");
+	// 	$data["results"] = array();
+	// 	$data["count"] = 0;
+
+	// 	$inv = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+	// 	$pay = new Payment(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+	// 	//Sort
+	// 	if(!empty($sort) && isset($sort)){
+	// 		foreach ($sort as $value) {
+	// 			$inv->order_by("issued_date", $value["dir"]);
+	// 			$pay->order_by("payment_date", $value["dir"]);
+	// 		}
+	// 	}
+
+	// 	//Filter
+	// 	if(!empty($filters) && isset($filters)){
+	//     	foreach ($filters as $value) {
+	//     		if(!empty($value["operator"]) && isset($value["operator"])){
+	// 	    		if($value["operator"]=="where_in"){
+	// 	    			$inv->where_in($value["field"], $value["value"]);
+	// 	    		}else if($value["operator"]=="payment"){
+	// 	    			$pay->where($value["field"], $value["value"]);
+	// 	    		}else{
+	// 	    			$inv->where($value["field"], $value["value"]);
+	// 	    		}
+	//     		}else{
+	// 	    		if($value["field"]=="start_date"){
+	// 	    			$inv->where("issued_date >=", $value["value"]);
+	// 		    		$pay->where("payment_date >=", $value["value"]);
+	// 		    	}else if($value["field"]=="end_date"){
+	// 		    		$inv->where("issued_date <=", $value["value"]);
+	// 		    		$pay->where("payment_date <=", $value["value"]);
+	// 	    		}else{
+	// 	    			$inv->where($value["field"], $value["value"]);
+	// 		    		$pay->where($value["field"], $value["value"]);
+	// 	    		}
+	// 	    	}
+	// 		}
+	// 	}
+
+	// 	$pay->where_in("type", array("invoice", "deposit", "edeposit", "wdeposit"));
+
+	// 	//Results
+	// 	$inv->get_paged_iterated($page, $limit);
+	// 	$pay->get();
+
+	// 	if($inv->result_count()>0){
+	// 		foreach ($inv as $value) {
+	// 			$data["results"][] = array(
+	// 				"id" 			=> $value->id,
+	// 		   		"type"			=> $value->type,
+	// 				"number" 		=> $value->number,
+	// 				"amount" 		=> floatval($value->amount),
+	// 			   	"issued_date" 	=> $value->issued_date,
+	// 			   	"due_date" 		=> $value->due_date,
+	// 			   	"status" 		=> $value->status,
+	// 			   	"rate"			=> floatval($value->rate),
+	// 			   	"locale" 		=> $value->locale
+	// 			);
+	// 		}
+	// 	}
+
+	// 	if($pay->result_count()>0){
+	// 		foreach ($pay as $value) {
+	// 			$data["results"][] = array(
+	// 				"id" 			=> $value->id,
+	// 		   		"type"			=> $value->type=="invoice"?"Payment":"Deposit",
+	// 				"number" 		=> "",
+	// 				"amount" 		=> floatval($value->amount),
+	// 			   	"issued_date" 	=> $value->payment_date,
+	// 			   	"due_date" 		=> $value->payment_date,
+	// 			   	"status" 		=> 0,
+	// 			   	"rate"			=> floatval($value->rate),
+	// 			   	"locale" 		=> $value->locale
+	// 			);
+	// 		}
+	// 	}
+
+	// 	$data["count"] = count($data["results"]);
+
+	// 	$this->response($data, 200);
+	// }
+
+	// //GET WATER KPI
+	// function wkpi_get() {
+	// 	$filters 	= $this->get("filter")["filters"];
+	// 	$page 		= $this->get('page') !== false ? $this->get('page') : 1;
+	// 	$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;
+	// 	$sort 	 	= $this->get("sort");
+	// 	$data["results"] = [];
+	// 	$data["count"] = 0;
+
+	// 	$contact = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+	// 	$activeContact = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+	// 	$branch = new Company(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+	// 	$income = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+	// 	$avgIncome = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+	// 	$usage = new Transaction(null, $this->entity);
+	// 	$avgUsage = new Meter_record(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+	// 	$deposit = new Payment(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+	// 	//Filter
+	// 	if(!empty($filters) && isset($filters)){
+	//     	foreach ($filters as $value) {
+	//     		$contact->where("wbranch_id", $value["value"]);
+	//     		$activeContact->where("wbranch_id", $value["value"]);
+	//     		$branch->where("id", $value["value"]);
+	//     		$income->where($value["field"], $value["value"]);
+	//     		$avgIncome->where($value["field"], $value["value"]);
+	//     		$usage->where_related("invoice", $value["field"], $value["value"]);
+	//     		$avgUsage->where_related("meter", $value["field"], $value["value"]);
+	//     		$deposit->where($value["field"], $value["value"]);
+	// 		}
+	// 	}
+
+	// 	$contact->where_in("status", array(0,1));
+	// 	$branch->get();
+
+	// 	$totalCustomer = $contact->count();
+	// 	$totalAllowCustomer = $totalCustomer / intval($branch->max_customer);
+	// 	$totalActiveCustomer = $activeContact->count() / $totalCustomer;
+
+	// 	$income->select_sum("amount");
+	// 	$income->where("type", "wInvoice");
+	// 	$income->get();
+
+	// 	$avgIncome->select_avg("amount");
+	// 	$avgIncome->where("type", "wInvoice");
+	// 	$avgIncome->get();
+
+	// 	$usage->select_sum("unit");
+	// 	$usage->where("type", "tariff");
+	// 	$usage->get();
+
+	// 	$avgUsage->select_avg("usage", "reading");
+	// 	$avgUsage->get();
+
+	// 	$deposit->select_sum("amount");
+	// 	$deposit->where("type", "wdeposit");
+	// 	$deposit->get();
+
+	// 	$data["results"][] = array(
+	// 		"id" 						=> 0,
+	// 		"totalCustomer" 			=> $totalCustomer,
+	// 		"totalAllowCustomer" 		=> $totalAllowCustomer,
+	// 		"totalActiveCustomer" 		=> $totalActiveCustomer,
+	// 		"totalIncome" 				=> floatval($income->amount),
+	// 		"avgIncome" 				=> floatval($avgIncome->amount),
+	// 		"totalUsage" 				=> intval($usage->unit),
+	// 		"avgUsage" 					=> floatval($avgUsage->reading),
+	// 		"totalDeposit" 				=> floatval($deposit->amount)
+	// 	);
+
+
+	// 	//Response Data
+	// 	$this->response($data, 200);
+	// }
+
+	// //GET WATER DISCONNECT LIST
+	// function wdisconnect_get() {
+	// 	$filters 	= $this->get("filter")["filters"];
+	// 	$page 		= $this->get('page') !== false ? $this->get('page') : 1;
+	// 	$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;
+	// 	$sort 	 	= $this->get("sort");
+	// 	$data["results"] = array();
+	// 	$data["count"] = 0;
+
+	// 	$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+	// 	$today = new DateTime();
+	// 	$days = 0;
+
+	// 	//Sort
+	// 	if(!empty($sort) && isset($sort)){
+	// 		foreach ($sort as $value) {
+	// 			if($value["field"]=="days"){
+	// 				$obj->order_by("due_date", $value["dir"]);
+	// 			}else if($value["field"]=="location_name"){
+	// 				$obj->order_by("location_id", $value["dir"]);
+	// 			}else if($value["field"]=="contact_number" || $value["field"]=="fullname"){
+	// 				$obj->order_by("contact_id", $value["dir"]);
+	// 			}else{
+	// 				$obj->order_by($value["field"], $value["dir"]);
+	// 			}
+	// 		}
+	// 	}
+
+	// 	//Filter
+	// 	if(!empty($filters) && isset($filters)){
+	//     	foreach ($filters as $value) {
+	//     		if(!empty($value["operator"]) && isset($value["operator"])){
+	// 	    		if($value["operator"]=="where_in"){
+	// 	    			$obj->where_in($value["field"], $value["value"]);
+	// 	    		}else if($value["operator"]=="or_where_in"){
+	// 	    			$obj->or_where_in($value["field"], $value["value"]);
+	// 	    		}else if($value["operator"]=="where_not_in"){
+	// 	    			$obj->where_not_in($value["field"], $value["value"]);
+	// 	    		}else if($value["operator"]=="or_where_not_in"){
+	// 	    			$obj->or_where_not_in($value["field"], $value["value"]);
+	// 	    		}else if($value["operator"]=="like"){
+	// 	    			$obj->like($value["field"], $value["value"]);
+	// 	    		}else if($value["operator"]=="or_like"){
+	// 	    			$obj->or_like($value["field"], $value["value"]);
+	// 	    		}else if($value["operator"]=="not_like"){
+	// 	    			$obj->not_like($value["field"], $value["value"]);
+	// 	    		}else if($value["operator"]=="or_not_like"){
+	// 	    			$obj->or_not_like($value["field"], $value["value"]);
+	// 	    		}else if($value["operator"]=="startswith"){
+	// 	    			$obj->like($value["field"], $value["value"], "after");
+	// 	    		}else if($value["operator"]=="endswith"){
+	// 	    			$obj->like($value["field"], $value["value"], "before");
+	// 	    		}else if($value["operator"]=="contains"){
+	// 	    			$obj->like($value["field"], $value["value"], "both");
+	// 	    		}else if($value["operator"]=="or_where"){
+	// 	    			$obj->or_where($value["field"], $value["value"]);
+	// 	    		}else if($value["operator"]=="days"){
+	// 	    			$days = $value["value"];
+	// 	    		}else{
+	// 	    			$obj->where($value["field"].' '.$value["operator"], $value["value"]);
+	// 	    		}
+	//     		}else{
+	//     			$obj->where($value["field"], $value["value"]);
+	//     		}
+	// 		}
+	// 	}
+
+	// 	$obj->where_in("status", array(0,2));
+
+	// 	//Join other tables
+	// 	$obj->include_related("location", "name");
+	// 	$obj->include_related("company", "name");
+	// 	$obj->include_related("contact", array("contact_type_id", "wnumber", "surname", "name", "company"));
+
+	// 	//Results
+	// 	$obj->get_paged_iterated($page, $limit);
+	// 	$data["count"] = $obj->paged->total_rows;
+
+	// 	if($obj->exists()){
+	// 		foreach ($obj as $value) {
+	// 			$fullname = $value->contact_surname.' '.$value->contact_name;
+	// 			if($value->contact_contact_type_id=="6" || $value->contact_contact_type_id=="7" || $value->contact_contact_type_id=="8"){
+	// 				$fullname = $value->contact_company;
+	// 			}
+
+	// 			$dueDate = new DateTime($value->due_date);
+	// 			$diff = $today->diff($dueDate)->format("%a");
+
+	// 			if($dueDate<$today && $diff<=$days){
+	// 				$data["results"][] = array(
+	// 					"id" 				=> $value->id,
+	// 					"number" 			=> $value->number,
+	// 					"amount" 			=> floatval($value->amount),
+	// 					"due_date" 			=> $value->due_date,
+	// 					"days"				=> $diff,
+	// 					"contact_number" 	=> $value->contact_wnumber,
+	// 					"fullname" 			=> $fullname,
+	// 					"location_name"		=> $value->location_name,
+	// 					"branch_name" 		=> $value->company_name
+	// 				);
+	// 			}
+	// 		}
+	// 	}
+
+	// 	//Response Data
+	// 	$this->response($data, 200);
+	// }
+
+	// //GET WATER AGING SUMMARY
+	// function waging_summary_get() {
+	// 	$filters 	= $this->get("filter")["filters"];
+	// 	$page 		= $this->get('page') !== false ? $this->get('page') : 1;
+	// 	$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;
+	// 	$sort 	 	= $this->get("sort");
+	// 	$data["results"] = array();
+	// 	$data["count"] = 0;
+
+	// 	$contact = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+	// 	//Filter
+	// 	$search_date = new DateTime();
+	// 	if(!empty($filters) && isset($filters)){
+	//     	foreach ($filters as $value){
+	//     		if($value["field"]==="search_date"){
+	//     			$search_date = date("Y-m-d", strtotime($value["value"]));
+	//     		}else{
+	//     			$contact->where($value["field"], $value["value"]);
+	//     		}
+	// 		}
+	// 	}
+
+	// 	$contact->where("use_water", 1);
+
+	// 	//Results
+	// 	$contact->get_paged_iterated($page, $limit);
+	// 	$data["count"] = $contact->paged->total_rows;
+
+	// 	if($contact->exists()){
+	// 		foreach ($contact as $value) {
+	// 			//Fullname
+	// 			$fullname = $value->surname.' '.$value->name;
+	// 			if($value->contact_type_id=="5" || $value->contact_type_id=="6" || $value->contact_type_id=="7"){
+	// 				$fullname = $value->company;
+	// 			}
+
+	// 			//Invoice
+	// 			$invoice = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+	// 			$invoice->where("contact_id", $value->id);
+	// 			$invoice->where("type", "wInvoice");
+	// 			$invoice->where_in("status", array(0,2));
+	// 			$invoice->where("issued_date <=", $search_date);
+	// 			$invoice->get();
+
+	// 			$amount = 0;
+	// 			$current = 0;
+	// 			$oneMonth = 0;
+	// 			$twoMonth = 0;
+	// 			$threeMonth = 0;
+	// 			$overMonth = 0;
+
+	// 			if($invoice->exists()){
+	// 				foreach ($invoice as $valInv) {
+	// 					$today = new DateTime();
+	// 					$dueDate = new DateTime($valInv->due_date);
+	// 					$diff = $today->diff($dueDate)->format("%a");
+
+	// 					$amount += floatval($valInv->amount);
+
+	// 					if($dueDate<$today){
+	// 						if(intval($diff)>90){
+	// 							$overMonth += floatval($valInv->amount);
+	// 						}else if(intval($diff)>60){
+	// 							$threeMonth += floatval($valInv->amount);
+	// 						}else if(intval($diff)>30){
+	// 							$twoMonth += floatval($valInv->amount);
+	// 						}else{
+	// 							$oneMonth += floatval($valInv->amount);
+	// 						}
+	// 					}else{
+	// 						$current += floatval($valInv->amount);
+	// 					}
+
+	// 				}
+
+	// 				$data["results"][] = array(
+	// 					"id" 			=> $value->id,
+	// 					"fullIdName"	=> $value->wnumber. " " .$fullname,
+	// 					"current" 		=> $current,
+	// 					"oneMonth" 		=> $oneMonth,
+	// 					"twoMonth" 		=> $twoMonth,
+	// 					"threeMonth" 	=> $threeMonth,
+	// 					"overMonth" 	=> $overMonth,
+	// 					"amount" 		=> $amount
+	// 				);
+	// 			}
+	// 		}
+	// 	}
+
+	// 	//Response Data
+	// 	$this->response($data, 200);
+	// }
+
+	// //GET WATER AGING DETAIL
+	// function waging_detail_get() {
+	// 	$filters 	= $this->get("filter")["filters"];
+	// 	$page 		= $this->get('page') !== false ? $this->get('page') : 1;
+	// 	$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;
+	// 	$sort 	 	= $this->get("sort");
+	// 	$data["results"] = array();
+	// 	$data["count"] = 0;
+
+	// 	$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+	// 	//Sort
+	// 	if(!empty($sort) && isset($sort)){
+	// 		foreach ($sort as $value) {
+	// 			$obj->order_by($value["field"], $value["dir"]);
+	// 		}
+	// 	}
+
+	// 	//Filter
+	// 	if(!empty($filters) && isset($filters)){
+	//     	foreach ($filters as $value) {
+	//     		if(!empty($value["operator"]) && isset($value["operator"])){
+	// 	    		if($value["operator"]=="where_in"){
+	// 	    			$obj->where_in($value["field"], $value["value"]);
+	// 	    		}else if($value["operator"]=="or_where_in"){
+	// 	    			$obj->or_where_in($value["field"], $value["value"]);
+	// 	    		}else if($value["operator"]=="where_not_in"){
+	// 	    			$obj->where_not_in($value["field"], $value["value"]);
+	// 	    		}else if($value["operator"]=="or_where_not_in"){
+	// 	    			$obj->or_where_not_in($value["field"], $value["value"]);
+	// 	    		}else if($value["operator"]=="like"){
+	// 	    			$obj->like($value["field"], $value["value"]);
+	// 	    		}else if($value["operator"]=="or_like"){
+	// 	    			$obj->or_like($value["field"], $value["value"]);
+	// 	    		}else if($value["operator"]=="not_like"){
+	// 	    			$obj->not_like($value["field"], $value["value"]);
+	// 	    		}else if($value["operator"]=="or_not_like"){
+	// 	    			$obj->or_not_like($value["field"], $value["value"]);
+	// 	    		}else if($value["operator"]=="startswith"){
+	// 	    			$obj->like($value["field"], $value["value"], "after");
+	// 	    		}else if($value["operator"]=="endswith"){
+	// 	    			$obj->like($value["field"], $value["value"], "before");
+	// 	    		}else if($value["operator"]=="contains"){
+	// 	    			$obj->like($value["field"], $value["value"], "both");
+	// 	    		}else if($value["operator"]=="or_where"){
+	// 	    			$obj->or_where($value["field"], $value["value"]);
+	// 	    		}else{
+	// 	    			$obj->where($value["field"].' '.$value["operator"], $value["value"]);
+	// 	    		}
+	//     		}else{
+	//     			$obj->where($value["field"], $value["value"]);
+	//     		}
+	// 		}
+	// 	}
+
+	// 	//Results
+	// 	$obj->get_paged_iterated($page, $limit);
+	// 	$data["count"] = $obj->paged->total_rows;
+
+	// 	if($obj->exists()){
+	// 		foreach ($obj as $value) {
+	// 			//Fullname
+	// 			$contact = $value->contact->get();
+	// 			$fullname = $contact->surname.' '.$contact->name;
+	// 			if($contact->contact_type_id=="5" || $contact->contact_type_id=="6" || $contact->contact_type_id=="7"){
+	// 				$fullname = $contact->company;
+	// 			}
+
+	// 			//Age
+	// 			$ageGroup = "0-បច្ចុប្បន្ន";
+	// 			$today = new DateTime();
+	// 			$dueDate = new DateTime($value->due_date);
+	// 			$diff = $today->diff($dueDate)->format("%a");
+
+	// 			if($dueDate<$today){
+	// 				if(intval($diff)>90){
+	// 					$ageGroup = "91->∞";
+	// 				}else if(intval($diff)>60){
+	// 					$ageGroup = "61-90";
+	// 				}else if(intval($diff)>30){
+	// 					$ageGroup = "31-60";
+	// 				}else{
+	// 					$ageGroup = "1-30";
+	// 				}
+	// 			}
+
+	// 			$data["results"][] = array(
+	// 				"id" 			=> $value->id,
+	// 				"number" 		=> $value->number,
+	// 				"amount"		=> floatval($value->amount),
+	// 				"issued_date" 	=> $value->issued_date,
+	// 				"due_date" 		=> $value->due_date,
+
+	// 				"fullIdName"	=> $contact->wnumber ." ". $fullname,
+	// 				"age"			=> $diff,
+	// 				"អាយុកាល" 		=> $ageGroup
+	// 			);
+	// 		}
+	// 	}
+
+	// 	//Response Data
+	// 	$this->response($data, 200);
+	// }
+
+	// //GET WATER SALE SUMMARY
+	// function wsale_summary_get() {
+	// 	$filters 	= $this->get("filter")["filters"];
+	// 	$page 		= $this->get('page') !== false ? $this->get('page') : 1;
+	// 	$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;
+	// 	$sort 	 	= $this->get("sort");
+	// 	$data["results"] = array();
+	// 	$data["count"] = 0;
+
+	// 	//Location
+	// 	$location = new Location(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+	// 	$location->where("utility_id", 2);
+	// 	$location->order_by("company_id");
+	// 	$location->get();
+
+	// 	foreach ($location as $loc){
+	// 		$sale = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+	// 		$usage = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+	// 		//Filter
+	// 		if(!empty($filters) && isset($filters)){
+	// 	    	foreach ($filters as $value) {
+	// 	    		if(!empty($value["operator"]) && isset($value["operator"])){
+	// 		    		if($value["operator"]=="between"){
+	// 		    			$sale->where_between($value["field"], $value["value1"], $value["value2"]);
+	// 		    			$usage->where_between_related("invoice", $value["field"], $value["value1"], $value["value2"]);
+	// 		    		}else{
+	// 		    			$sale->where($value["field"].' '.$value["operator"], $value["value"]);
+	// 		    			$usage->where($value["field"].' '.$value["operator"], $value["value"]);
+	// 		    		}
+	// 	    		}else{
+	// 	    			$sale->where($value["field"], $value["value"]);
+	// 	    			$usage->where($value["field"], $value["value"]);
+	// 	    		}
+	// 			}
+	// 		}
+
+	// 		//Sale
+	// 		$sale->select_sum('amount');
+	// 		$sale->where("type", "wInvoice");
+	// 		$sale->where("location_id", $loc->id);
+	// 		$sale->where("deleted", 0);
+	// 		$sale->get();
+
+	// 		//Usage
+	// 		$usage->select_sum('unit');
+	// 		$usage->where_related("invoice", "type", "wInvoice");
+	// 		$usage->where_related("invoice", "location_id", $loc->id);
+	// 		$usage->where_related("invoice", "deleted", 0);
+	// 		$usage->get();
+
+	// 		$data["results"][] = array(
+	// 			"branch_name"		=> $loc->company->get()->name,
+	// 			"location_name"		=> $loc->name,
+	// 			"usage"				=> intval($usage->unit1),
+	// 			"amount"			=> floatval($sale->amount)
+	// 		);
+	// 	}
+
+	// 	$data["count"] = count($data["results"]);
+
+	// 	//Response Data
+	// 	$this->response($data, 200);
+	// }
+
+	// //GET WATER SALE DETAIL
+	// function wsale_detail_get() {
+	// 	$filters 	= $this->get("filter")["filters"];
+	// 	$page 		= $this->get('page') !== false ? $this->get('page') : 1;
+	// 	$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;
+	// 	$sort 	 	= $this->get("sort");
+	// 	$data["results"] = array();
+	// 	$data["count"] = 0;
+
+	// 	$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+	// 	//Sort
+	// 	if(!empty($sort) && isset($sort)){
+	// 		foreach ($sort as $value) {
+	// 			if($value["field"]=="contact_type_name"){
+	// 				$obj->order_by_related("contact", "contact_type_id", $value["dir"]);
+	// 			}else if($value["field"]=="location_name"){
+	// 				$obj->order_by("location_id", $value["dir"]);
+	// 			}else if($value["field"]=="contact_number" || $value["field"]=="fullname"){
+	// 				$obj->order_by("contact_id", $value["dir"]);
+	// 			}else{
+	// 				$obj->order_by($value["field"], $value["dir"]);
+	// 			}
+	// 		}
+	// 	}
+
+	// 	//Filter
+	// 	if(!empty($filters) && isset($filters)){
+	//     	foreach ($filters as $value) {
+	//     		if(!empty($value["operator"]) && isset($value["operator"])){
+	// 	    		if($value["operator"]=="where_in"){
+	// 	    			$obj->where_in($value["field"], $value["value"]);
+	// 	    		}else if($value["operator"]=="or_where_in"){
+	// 	    			$obj->or_where_in($value["field"], $value["value"]);
+	// 	    		}else if($value["operator"]=="where_not_in"){
+	// 	    			$obj->where_not_in($value["field"], $value["value"]);
+	// 	    		}else if($value["operator"]=="or_where_not_in"){
+	// 	    			$obj->or_where_not_in($value["field"], $value["value"]);
+	// 	    		}else if($value["operator"]=="like"){
+	// 	    			$obj->like($value["field"], $value["value"]);
+	// 	    		}else if($value["operator"]=="or_like"){
+	// 	    			$obj->or_like($value["field"], $value["value"]);
+	// 	    		}else if($value["operator"]=="not_like"){
+	// 	    			$obj->not_like($value["field"], $value["value"]);
+	// 	    		}else if($value["operator"]=="or_not_like"){
+	// 	    			$obj->or_not_like($value["field"], $value["value"]);
+	// 	    		}else if($value["operator"]=="startswith"){
+	// 	    			$obj->like($value["field"], $value["value"], "after");
+	// 	    		}else if($value["operator"]=="endswith"){
+	// 	    			$obj->like($value["field"], $value["value"], "before");
+	// 	    		}else if($value["operator"]=="contains"){
+	// 	    			$obj->like($value["field"], $value["value"], "both");
+	// 	    		}else if($value["operator"]=="or_where"){
+	// 	    			$obj->or_where($value["field"], $value["value"]);
+	// 	    		}else if($value["operator"]=="between"){
+	// 	    			$obj->where_between($value["field"], $value["value1"], $value["value2"]);
+	// 	    		}else{
+	// 	    			$obj->where($value["field"].' '.$value["operator"], $value["value"]);
+	// 	    		}
+	//     		}else{
+	//     			$obj->where($value["field"], $value["value"]);
+	//     		}
+	// 		}
+	// 	}
+
+	// 	//Join other tables
+	// 	$obj->include_related("location", "name");
+	// 	$obj->include_related("contact/contact_type", "name");
+	// 	$obj->include_related("contact", array("contact_type_id", "wnumber", "surname", "name", "company"));
+
+	// 	//Results
+	// 	$obj->get_paged_iterated($page, $limit);
+	// 	$data["count"] = $obj->paged->total_rows;
+
+	// 	if($obj->result_count()>0){
+	// 		foreach ($obj as $value) {
+	// 			$fullname = $value->contact_surname.' '.$value->contact_name;
+	// 			if($value->contact_contact_type_id=="6" || $value->contact_contact_type_id=="7" || $value->contact_contact_type_id=="8"){
+	// 				$fullname = $value->contact_company;
+	// 			}
+
+	// 			$usage = 0;
+	// 			$lines = $value->item_line->get();
+	// 			foreach ($lines as $l) {
+	// 				if($l->type=="tariff"){
+	// 					$usage += intval($l->unit);
+	// 				}
+	// 			}
+
+	// 			$data["results"][] = array(
+	// 				"id" 					=> $value->id,
+	// 				"contact_number" 		=> $value->contact_wnumber,
+	// 				"fullname" 				=> $fullname,
+	// 				"contact_type_name" 	=> $value->contact_contact_type_name,
+	// 				"location_name" 		=> $value->location_name,
+	// 				"usage" 				=> $usage,
+	// 				"amount" 				=> floatval($value->amount)
+	// 			);
+	// 		}
+	// 	}
+
+	// 	//Response Data
+	// 	$this->response($data, 200);
+	// }
 }
 /* End of file transactions.php */
 /* Location: ./application/controllers/api/transaction.php */

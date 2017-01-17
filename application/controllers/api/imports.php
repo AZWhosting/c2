@@ -120,7 +120,7 @@ class Imports extends REST_Controller {
 			isset($value->use_water)				? $obj->use_water				= $value->use_water : "";
 			isset($value->is_local)					? $obj->is_local				= $value->is_local : "";
 			isset($value->is_pattern)				? $obj->is_pattern				= $value->is_pattern : "";
-			isset($value->status)					? $obj->status					= $value->status : "";
+			isset($value->status)					? $obj->status					= $value->status : 1;
 			isset($value->deleted)					? $obj->deleted					= $value->deleted : "";
 			isset($value->is_system)				? $obj->is_system				= $value->is_system : "";
 
@@ -231,16 +231,25 @@ class Imports extends REST_Controller {
 			$inventory = new Account(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$inventory->where('number', $value->inventory_account)->get();
 
+			$type = new Item_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$type->where('name', $value->type)->get();
+
+			$cat = new Category(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$cat->where('name', $value->category)->get();
+
+			$uom = new Measurement(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$uom->where('name', $value->measurement)->get();
+
 
 			isset($value->company_id) 				? $obj->company_id 				= $value->company_id : "";
 			isset($value->contact_id) 				? $obj->contact_id 				= $value->contact_id : "";
 			isset($value->currency_id) 				? $obj->currency_id 			= $value->currency_id : "";
-			isset($value->item_type_id) 			? $obj->item_type_id			= $value->item_type_id : 1;
-			isset($value->category_id) 				? $obj->category_id 			= $value->category_id : 1;
+			isset($value->$value->type) 			? $obj->item_type_id			= $type->id : 1;
+			isset($value->category) 				? $obj->category_id 			= $cat->id : 1;
 			isset($value->item_group_id) 			? $obj->item_group_id 			= $value->item_group_id : "";
 			isset($value->item_sub_group_id) 		? $obj->item_sub_group_id 		= $value->item_sub_group_id : "";
 			isset($value->brand_id) 				? $obj->brand_id 				= $value->brand_id : "";
-			isset($value->measurement_id) 			? $obj->measurement_id 			= $value->measurement_id : "";
+			isset($value->measurement) 				? $obj->measurement_id 			= $uom->id : 1;
 			isset($value->main_id) 					? $obj->main_id 				= $value->main_id : "";
 			isset($value->abbr) 					? $obj->abbr 					= $value->abbr : "";
 			isset($value->number) 					? $obj->number 					= $value->number : "";
@@ -271,7 +280,7 @@ class Imports extends REST_Controller {
 		   	isset($value->is_catalog) 				? $obj->is_catalog 				= $value->is_catalog : "";
 		   	isset($value->is_assembly) 				? $obj->is_assembly 			= $value->is_assembly : "";
 		   	isset($value->is_pattern) 				? $obj->is_pattern 				= $value->is_pattern : "";
-		   	isset($value->status) 					? $obj->status 					= $value->status : "";
+		   	isset($value->status) 					? $obj->status 					= $value->status : 1;
 		   	isset($value->deleted) 					? $obj->deleted 				= $value->deleted : "";
 
 	   		if($obj->save()){

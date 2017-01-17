@@ -17,8 +17,8 @@
     <link rel="stylesheet" href="<?php echo base_url()?>assets/css/main.css">
 
     <!-- Custom styling plus plugins -->
-    <link rel="stylesheet" href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/kendoui/styles/kendo.common.min.css">
-    <link rel="stylesheet" href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/kendoui/styles/kendo.material.min.css">
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/libraries/kendoui/styles/kendo.common.min.css">
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/libraries/kendoui/styles/kendo.material.min.css">
 
      <!-- Custom style -->
     <link rel="stylesheet" href="<?php echo base_url()?>assets/admin-style.css">
@@ -951,6 +951,7 @@
             Confirm: <input type="checkbox" data-bind="checked: is_confirmed" disabled="true">
           </div>
           <div class="profile-card-location">
+           <button class="btn btn-alert btn-block" style="margin-bottom: 5px;" data-bind="click: removeUser">Remove</button>
             <a href="\#assignto/#=id#"><button class="btn btn-alert btn-block" style="margin-bottom: 5px;">Assign/Reassign</button></a>
             <button class="btn btn-alert btn-block" style="margin-bottom: 5px;" data-bind="click: showFormEdit">Edit</button>
             # if(username == userPool.getCurrentUser().username) {#
@@ -1296,7 +1297,7 @@
     <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/gentelella/js/custom.js"></script>
 
     <!-- kendoui-->
-    <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/kendoui/js/kendo.all.min.js"></script>
+    <script src="<?php echo base_url()?>assets/libraries/kendoui/js/kendo.all.min.js"></script>
 
     <!-- kendoui-->
     <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/js/libs/localforage.min.js"></script>
@@ -1737,6 +1738,11 @@
             type: "POST",
             dataType: 'json'
           },
+          destroy  : {
+            url: baseUrl + 'api/users',
+            type: "DELETE",
+            dataType: 'json'
+          },
           update  : {
             url: baseUrl + 'api/users',
             type: "PUT",
@@ -1949,7 +1955,7 @@
         checkRole  : function(e) {
           e.preventDefault();
         if(JSON.parse(localStorage.getItem('userData/user')).role == 1) {
-                banhji.router.navigate("");
+                window.location.replace(baseUrl + "rrd/");
               } else {
                 window.location.replace("<?php echo base_url(); ?>admin");
               }
@@ -2512,7 +2518,6 @@
           }
           // return true;
         },
-
         modules: new kendo.data.DataSource({
           transport: {
             read  : {
@@ -2596,27 +2601,6 @@
           }
         },
         removeFrom: function(e) {
-          // this.users.remove(e.data);
-          // var that = this;
-          // var userData = {
-          //     Username : e.data.username,
-          //     Pool : userPool
-          // };
-          // var cognitoUser = new AWSCognito.CognitoIdentityServiceProvider.CognitoUser(userData);
-          // cognitoUser.deleteUser(function(err, result) {
-          //   if (err) {
-          //       alert(err);
-          //       return;
-          //   }
-            
-          // });
-          // that.users.remove(e.data);
-          // that.users.sync();
-          // that.users.bind('requestEnd', function(e){
-          //   if(e.type == 'delete') {
-          //     console.log('deleted');
-          //   }
-          // });
           this.modules.remove(e.data);
         },
         upload: function(e) {
@@ -2852,6 +2836,15 @@
           });
           banhji.users.setCurrent(banhji.users.users.at(0));
           banhji.router.navigate('userlist/new');
+        },
+        removeUser: function(e) {
+          this.users.remove(e.data);
+          this.users.sync();
+          this.users.bind('requestEnd', function(e){
+            if(e.type == 'destroy') {
+               $("#ntf1").data("kendoNotification").success("user has been removed.");
+            }
+          });
         },
         edit: function(e) {
           banhji.router.navigate('userlist/' + e.data.id);
@@ -3317,15 +3310,8 @@
         }).catch(function(err) {
           console.log(err);
         });
-        // localforage.getItem('user', function(err, value) {
-        //     if(err) {
-        //        window.location.replace(baseUrl + "login");
-        //        console.log(err);
-        //     } else {
-        //       console.log(value);
-        //     }
-        //     console.log('getlocal');
-        // });
+  
+        var cognitoUser = userPool.getCurrentUser();
       });
     </script>
   </body>

@@ -23,11 +23,11 @@ class Contacts extends REST_Controller {
 
 	//GET 
 	function index_get() {		
-		$filters 	= $this->get("filter")["filters"];		
-		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
-		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;								
+		$filter 	= $this->get("filter");		
+		$page 		= $this->get('page');		
+		$limit 		= $this->get('limit');								
 		$sort 	 	= $this->get("sort");		
-		$data["results"] = array();
+		$data["results"] = [];
 		$data["count"] = 0;
 		$is_pattern = 0;
 
@@ -41,8 +41,8 @@ class Contacts extends REST_Controller {
 		}
 
 		//Filter		
-		if(!empty($filters) && isset($filters)){
-	    	foreach ($filters as $value) {
+		if(!empty($filter) && isset($filter)){
+	    	foreach ($filter['filters'] as $value) {
 	    		if(isset($value['operator'])) {
 					$obj->{$value['operator']}($value['field'], $value['value']);
 				} else {
@@ -60,13 +60,18 @@ class Contacts extends REST_Controller {
 		$obj->include_related("contact_type", "name");		
 
 		//Results
-		$obj->get_paged_iterated($page, $limit);
-		$data["count"] = $obj->paged->total_rows;		
+		if($page && $limit){
+			$obj->get_paged_iterated($page, $limit);
+			$data["count"] = $obj->paged->total_rows;
+		}else{
+			$obj->get_iterated();
+			$data["count"] = $obj->result_count();
+		}
 		
 		if($obj->result_count()>0){
 			foreach ($obj as $value) {
 		 		$data["results"][] = array(
-		 			"id" 						=> $value->id,		 			
+		 			"id" 						=> $value->id,
 					"branch_id" 				=> $value->branch_id,
 					"country_id" 				=> $value->country_id,
 					"ebranch_id" 				=> $value->ebranch_id,
@@ -209,7 +214,7 @@ class Contacts extends REST_Controller {
 			isset($value->salary_account_id)		? $obj->salary_account_id		= $value->salary_account_id : "";
 			isset($value->account_id)				? $obj->account_id				= $value->account_id : "";
 			isset($value->ra_id)					? $obj->ra_id					= $value->ra_id : "";
-			isset($value->tax_item_id)				? $obj->tax_item_id				= $value->tax_item_id : "";
+			isset($value->tax_item_id)				? $obj->tax_item_id				= $value->tax_item_id : $obj->tax_item_id = 0;
 			isset($value->phase_id)					? $obj->phase_id				= $value->phase_id : "";
 			isset($value->voltage_id)				? $obj->voltage_id				= $value->voltage_id : "";
 			isset($value->ampere_id)				? $obj->ampere_id				= $value->ampere_id : "";
@@ -372,7 +377,7 @@ class Contacts extends REST_Controller {
 			isset($value->salary_account_id)		? $obj->salary_account_id		= $value->salary_account_id : "";
 			isset($value->account_id)				? $obj->account_id				= $value->account_id : "";
 			isset($value->ra_id)					? $obj->ra_id					= $value->ra_id : "";
-			isset($value->tax_item_id)				? $obj->tax_item_id				= $value->tax_item_id : "";
+			isset($value->tax_item_id)				? $obj->tax_item_id				= $value->tax_item_id : $obj->tax_item_id = 0;
 			isset($value->phase_id)					? $obj->phase_id				= $value->phase_id : "";
 			isset($value->voltage_id)				? $obj->voltage_id				= $value->voltage_id : "";
 			isset($value->ampere_id)				? $obj->ampere_id				= $value->ampere_id : "";
@@ -462,7 +467,7 @@ class Contacts extends REST_Controller {
 
 					"fullname" 					=> $fullname,					
 					"contact_type"				=> $obj->contact_type->get_raw()->result()
-				);						
+				);
 			}
 		}
 		$data["count"] = count($data["results"]);

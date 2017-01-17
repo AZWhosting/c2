@@ -25,7 +25,7 @@
           height: auto;
       }
       .login-content{
-          margin: 200px 0 50px;
+          margin: 17% 0 50px;
           display: inline-block;
           width: 100%;
       }
@@ -66,18 +66,18 @@
         font-size: 30px !important;
       }
       .footer-list ul li{
-            float: right;
-    width: 120px;
-    margin-left: 25px;
-    font-size: 12px;
-    list-style: none;
-    border-right: 1px solid #fff;
-}
- .footer-list ul li:first-child{ border-right: 0; }
-.footer-list ul li a,
-.footer-list ul li a:hover{
-  color: #839ABA;
-}
+          float: right;
+          width: 120px;
+          margin-left: 25px;
+          font-size: 12px;
+          list-style: none;
+          border-right: 1px solid #fff;
+      }
+       .footer-list ul li:first-child{ border-right: 0; }
+      .footer-list ul li a,
+      .footer-list ul li a:hover{
+        color: #839ABA;
+      }
 
       
       
@@ -236,9 +236,9 @@ a.enquiries:hover .enquiry-content, .enquiry-content:hover {
                         <input type="password" data-bind="value: password" placeholder="Password " class="login-email"><br>                    
 
                         <input id="loginBtn" type="button" data-bind="click: btnSignIn" class="btn-login" value="Login"><br><br>
-                        <div id="loginInformation"></div>
+                        <div id="loginInformation" style="text-align: center;margin-bottom: 15px;color: #a22314"></div>
                     </form> 
-                    <p>By clicking Login,you agree to our <a href="https://www.banhji.com/terms" target="_blank">Term of Service.</a></p>
+                    <p>By clicking Login, you agree to our <a href="https://www.banhji.com/terms" target="_blank">Term of Service.</a></p>
                     <a href="<?php echo base_url(); ?>forgetpassword">Forget Password</a> | <a href="<?php echo base_url(); ?>signup"> Sign Up</a>
                 </div>
               </div>
@@ -272,7 +272,7 @@ a.enquiries:hover .enquiry-content, .enquiry-content:hover {
 
             </div>           
           </div>
-           <p style="width: 35%; font-size: 11px; margin-top: 10px; margin-left: 140px; float: left;">©2016 BanhJi Pte. Ltd. All rights reserved. Terms, conditions, features, support, pricing and service options subject to change without notice.</p>
+           <p style="width: 35%; font-size: 11px; margin-top: 10px; margin-left: 140px; float: left;">©<?php echo date("Y"); ?> BanhJi Pte. Ltd. All rights reserved. Terms, conditions, features, support, pricing and service options subject to change without notice.</p>
             <span style="float: right; width: 45%; text-align: right; margin-right: 35px;" id="siteseal"><script async type="text/javascript" src="https://seal.godaddy.com/getSeal?sealID=lNpq2OuFwU0nDcZ5f7uSQ9D1rwgIIgTNOoYBNRt4BqE4CMLt8GMhEDKt66EL"></script></span>
          </div>
      </div>
@@ -308,6 +308,93 @@ a.enquiries:hover .enquiry-content, .enquiry-content:hover {
         });
         // Initialize aws userpool
         var userPool = new AWSCognito.CognitoIdentityServiceProvider.CognitoUserPool(poolData);
+        let banhjiAuth = kendo.Class.extend({
+          userPool: null,
+          cognitoUser: null,
+          companyDatastore: new kendo.data.DataSource({
+            transport: {
+              read  : {
+                url: apiUrl + "profiles/company",
+                type: "GET",
+                dataType: 'json'
+              },
+              update  : {
+                url: apiUrl + "profiles/company",
+                type: "PUT",
+                dataType: 'json'
+              },
+              parameterMap: function(options, operation) {
+                if(operation === 'read') {
+                  return {
+                    limit: options.take,
+                    page: options.page,
+                    filter: options.filter
+                  };
+                } else {
+                  return {models: kendo.stringify(options.models)};
+                }
+              }
+            },
+            schema  : {
+              model: {
+                id: 'id'
+              },
+              data: 'results',
+              total: 'count'
+            },
+            batch: true,
+            serverFiltering: true,
+            serverPaging: true,
+            pageSize: 1
+          }),
+          profileDatastore: new kendo.data.DataSource({
+            transport: {
+              read  : {
+                url: baseUrl + 'api/profiles/login',
+                type: "POST",
+                dataType: 'json'
+              },
+              parameterMap: function(options, operation) {
+                if(operation === 'read') {
+                  return {
+                    limit: options.take,
+                    page: options.page,
+                    filter: options.filter
+                  };
+                } else {
+                  return {models: kendo.stringify(options.models)};
+                }
+              }
+            },
+            schema  : {
+              model: {
+                id: 'id'
+              },
+              data: 'results',
+              total: 'count'
+            },
+            batch: true,
+            serverFiltering: true,
+            serverPaging: true,
+            pageSize: 100
+          }),
+          getSession: function() {
+            // this.cognitoUser.getSession(function(err, session) {
+            //   if(session) {
+            //     window.location.replace(baseUrl + "rrd/");
+            //   } else {
+            //     console.log(err);
+            //   }
+            // });
+          },
+          init: function(jsonArr) {
+            if(jsonArr === null) {
+              this.userPool = new AWSCognito.CognitoIdentityServiceProvider.CognitoUserPool(poolData);
+            }
+            this.cognitoUser = userPool.getCurrentUser();
+          }
+        });
+        var auth = new banhjiAuth();
         var baseUrl = "<?php echo base_url(); ?>"
         var apiUrl = baseUrl + "api/";
         banhji.companyDS = new kendo.data.DataSource({
@@ -393,7 +480,7 @@ a.enquiries:hover .enquiry-content, .enquiry-content:hover {
             console.log(this.get('password')); 
           },
           btnSignIn: function() {
-            $("#loginBtn").val("Loging in...");
+            $("#loginBtn").val("Logging in...");
             var authenticationData = {
                 Username : this.get('email'),
                 Password : this.get('password')
@@ -406,6 +493,22 @@ a.enquiries:hover .enquiry-content, .enquiry-content:hover {
             var cognitoUser = new AWSCognito.CognitoIdentityServiceProvider.CognitoUser(userData);
             cognitoUser.authenticateUser(authenticationDetails, {
               onSuccess: function (result) {
+                // success
+                AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+                  IdentityPoolId : 'us-east-1:35445541-da4c-4dbb-b83f-d1d0301a26a9',
+                  Logins : {
+                      'cognito-idp.us-east-1.amazonaws.com/us-east-1_56S0nUDS4' : result.getIdToken().getJwtToken()
+                  }
+                });
+                if (cognitoUser != null) {
+                    cognitoUser.getSession(function(err, session) {
+                        if (err) {
+                          alert(err);
+                            return;
+                        }                        
+                    });
+                }
+                
                 banhji.companyDS.filter({field: 'username', value: userPool.getCurrentUser() == null ? '': userPool.getCurrentUser().username});
                     banhji.companyDS.bind('requestEnd', function(e) {
                       var res = e.response;
@@ -479,7 +582,9 @@ a.enquiries:hover .enquiry-content, .enquiry-content:hover {
               return cognitoUser;
           }
         });
+        
       $(function(){
+        auth.getSession();
         kendo.bind($('.login'), banhji.aws);
       });
     </script>
