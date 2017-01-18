@@ -117,7 +117,6 @@ class Transactions extends REST_Controller {
 					"tax_item_id" 				=> $value->tax_item_id,
 					"user_id" 					=> $value->user_id,
 					"employee_id" 				=> $value->employee_id,
-				   	"abbr" 						=> $value->abbr,
 				   	"number" 					=> $value->number,
 				   	"reference_no" 				=> $value->reference_no,
 				   	"type" 						=> $value->type,
@@ -207,7 +206,6 @@ class Transactions extends REST_Controller {
 			isset($value->tax_item_id) 				? $obj->tax_item_id 				= $value->tax_item_id : "";
 			isset($value->user_id) 					? $obj->user_id 					= $value->user_id : "";
 			isset($value->employee_id) 				? $obj->employee_id 				= $value->employee_id : "";
-			isset($value->abbr) 					? $obj->abbr 						= $value->abbr : "";
 			isset($value->number) 					? $obj->number 						= $value->number : $obj->number = $number;
 		   	isset($value->reference_no) 			? $obj->reference_no 				= $value->reference_no : "";
 		   	isset($value->type) 					? $obj->type 						= $value->type : "";
@@ -300,8 +298,7 @@ class Transactions extends REST_Controller {
 					"tax_item_id" 				=> $obj->tax_item_id,
 					"user_id" 					=> $obj->user_id,
 					"employee_id" 				=> $obj->employee_id,
-					"abbr" 						=> $obj->abbr,
-				   	"number" 					=> $obj->number,
+					"number" 					=> $obj->number,
 				   	"reference_no" 				=> $obj->reference_no,
 				   	"type" 						=> $obj->type,
 				   	"journal_type" 				=> $obj->journal_type,
@@ -381,7 +378,6 @@ class Transactions extends REST_Controller {
 			isset($value->tax_item_id) 				? $obj->tax_item_id 				= $value->tax_item_id : "";
 			isset($value->user_id) 					? $obj->user_id 					= $value->user_id : "";
 			isset($value->employee_id) 				? $obj->employee_id 				= $value->employee_id : "";
-			isset($value->abbr) 					? $obj->abbr 						= $value->abbr : "";
 			isset($value->number) 					? $obj->number 						= $value->number : "";
 		   	isset($value->reference_no) 			? $obj->reference_no 				= $value->reference_no : "";
 		   	isset($value->type) 					? $obj->type 						= $value->type : "";
@@ -473,8 +469,7 @@ class Transactions extends REST_Controller {
 					"tax_item_id" 				=> $obj->tax_item_id,
 					"user_id" 					=> $obj->user_id,
 					"employee_id" 				=> $obj->employee_id,
-					"abbr" 						=> $obj->abbr,
-				   	"number" 					=> $obj->number,
+					"number" 					=> $obj->number,
 				   	"reference_no" 				=> $obj->reference_no,
 				   	"type" 						=> $obj->type,
 				   	"journal_type" 				=> $obj->journal_type,

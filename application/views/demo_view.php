@@ -47210,7 +47210,6 @@
 					para.push({ field:"id", operator:"where_not_in", value: [obj.id] });
 				}
 				
-				para.push({ field:"abbr", value: obj.abbr });
 				para.push({ field:"number", value: obj.number });
 				para.push({ field:"type", value: obj.type });
 
@@ -47244,13 +47243,10 @@
 				if(view.length>0){
 					var numberSplited = view[0].number.match(/(\d+)/g);
 					number = kendo.parseInt(numberSplited[numberSplited.length-1])+1;
-				}else{
-					number = banhji.source.getPrefixNumber(obj.type);
 				}
 
-				// str = d.getFullYear().toString().substr(2,2) + kendo.toString(d.getMonth()+1, "00") + kendo.toString(number, "00000");
-				
-				str = banhji.source.getPrefixAbbr(obj.type) + kendo.toString(number, "00000");
+				str = d.getFullYear().toString().substr(2,2) + kendo.toString(d.getMonth()+1, "00") + kendo.toString(number, "00000");
+								
 				obj.set("number", str);
 			});
 		},
@@ -47689,7 +47685,7 @@
 			},
 			sort: { field:"number", dir:"asc" }
 		}),
-		cashAccountDS 			: new kendo.data.DataSource({
+		cashAccountDS 		: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
 		  	filter: { field:"account_type_id", value: 10 },
 		  	sort: { field:"number", dir:"asc" }
@@ -47955,7 +47951,6 @@
 					para.push({ field:"id", operator:"where_not_in", value: [obj.id] });
 				}
 				
-				para.push({ field:"abbr", value: obj.abbr });
 				para.push({ field:"number", value: obj.number });
 				para.push({ field:"type", value: obj.type });
 
