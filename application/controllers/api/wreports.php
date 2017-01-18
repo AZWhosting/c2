@@ -20,7 +20,7 @@ class Wreports extends REST_Controller {
 			$this->server_pwd = $conn->password;
 			$this->_database = $conn->inst_database;
 		}
-		// $this->_database = "db_banhji";
+		$this->_database = "db_banhji";
 	}
 
 	// based on meter
@@ -542,6 +542,1011 @@ class Wreports extends REST_Controller {
 		}
 	}
 
+	function kpi_get() {		
+		$filters 	= $this->get("filter")["filters"];		
+		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
+		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;								
+		$sort 	 	= $this->get("sort");		
+		$data["results"] = [];
+		$data["count"] = 1;
+
+		$contact = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$activeContact = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$branch = new Branch(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$income = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$avgIncome = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$usage = new Winvoice_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$avgUsage = new Meter_record(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		// $deposit = new Payment(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
+		
+		//Filter		
+		if(!empty($filters) && isset($filters)){			
+	    	foreach ($filters as $value) {	    		    			
+	    		$contact->where("branch_id", $value["value"]);
+	    		$activeContact->where("branch_id", $value["value"]);
+	    		$branch->where("id", $value["value"]);
+	    		$income->where($value["field"], $value["value"]);
+	    		$avgIncome->where($value["field"], $value["value"]);
+	    		$usage->where_related("transaction", $value["field"], $value["value"]);
+	    		$avgUsage->where_related("meter", $value["field"], $value["value"]);
+	    		// $deposit->where($value["field"], $value["value"]);	    		
+			}									 			
+		}		
+		
+		$contact->where_in("status", array(0,1));		
+		$branch->get();
+
+		$totalCustomer = $contact->count();
+		$totalAllowCustomer = $totalCustomer / intval($branch->max_customer);
+		$totalActiveCustomer = $activeContact->count() / $totalCustomer;
+
+		$income->select_sum("amount");
+		$income->where("type", "Water_Invoice");
+		$income->get();
+		
+		$avgIncome->select_avg("amount");
+		$avgIncome->where("type", "Water_Invoice");
+		$avgIncome->get();
+
+		$usage->select_sum("quantity");
+		$usage->where("type", "tariff");
+		$usage->get();
+
+		$avgUsage->select_avg("usage", "reading");
+		$avgUsage->get();
+
+		// $deposit->select_sum("amount");
+		// $deposit->where("type", "wdeposit");
+		// $deposit->get();
+				
+		$data["results"][] = array(
+			"id" 						=> 0,
+			"totalCustomer" 			=> $totalCustomer,
+			"totalAllowCustomer" 		=> $totalAllowCustomer,
+			"totalActiveCustomer" 		=> $totalActiveCustomer,
+			"totalIncome" 				=> floatval($income->amount),
+			"avgIncome" 				=> floatval($avgIncome->amount),
+			"totalUsage" 				=> intval($usage->quanity),
+			"avgUsage" 					=> floatval($avgUsage->reading)			
+			// "totalDeposit" 				=> floatval($deposit->amount)							
+		);
+			
+
+		//Response Data		
+		$this->response($data, 200);	
+	}
+
+	//GET WATER AGING SUMMARY
+	function aging_summary_get() {		
+		$filters 	= $this->get("filter")["filters"];		
+		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
+		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;								
+		$sort 	 	= $this->get("sort");		
+		$data["results"] = array();
+		$data["count"] = 0;
+
+		$contact = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				
+		//Filter
+		$search_date = new DateTime();		
+		if(!empty($filters) && isset($filters)){			
+	    	foreach ($filters as $value){
+	    		if($value["field"]==="search_date"){	    		
+	    			$search_date = date("Y-m-d", strtotime($value["value"]));
+	    		}else{
+	    			$contact->where($value["field"], $value["value"]);
+	    		}	    			    		
+			}									 			
+		}
+
+		$contact->where("use_water", 1);
+						
+		//Results
+		$contact->get_paged_iterated($page, $limit);
+		$data["count"] = $contact->paged->total_rows;
+
+		if($contact->exists()){
+			foreach ($contact as $value) {
+				//Fullname				
+				$fullname = $value->surname.' '.$value->name;
+				if($value->contact_type_id=="5" || $value->contact_type_id=="6" || $value->contact_type_id=="7"){
+					$fullname = $value->company;
+				}
+
+				//Invoice
+				$invoice = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$invoice->where("contact_id", $value->id);
+				$invoice->where("type", "Water_Invoice");
+				$invoice->where_in("status", array(0,2));
+				$invoice->where("issued_date <=", $search_date);
+				$invoice->get();				
+
+				$amount = 0;
+				$current = 0;
+				$oneMonth = 0;
+				$twoMonth = 0;
+				$threeMonth = 0;
+				$overMonth = 0;
+
+				if($invoice->exists()){
+					foreach ($invoice as $valInv) {
+						$today = new DateTime();
+						$dueDate = new DateTime($valInv->due_date);
+						$diff = $today->diff($dueDate)->format("%a");
+
+						$amount += floatval($valInv->amount);
+
+						if($dueDate<$today){
+							if(intval($diff)>90){
+								$overMonth += floatval($valInv->amount);
+							}else if(intval($diff)>60){
+								$threeMonth += floatval($valInv->amount);
+							}else if(intval($diff)>30){
+								$twoMonth += floatval($valInv->amount);
+							}else{
+								$oneMonth += floatval($valInv->amount);
+							}
+						}else{
+							$current += floatval($valInv->amount);
+						}
+
+					}
+
+					$data["results"][] = array(
+						"id" 			=> $value->id,
+						"fullIdName"	=> $value->wnumber. " " .$fullname,
+						"current" 		=> $current,
+						"oneMonth" 		=> $oneMonth,
+						"twoMonth" 		=> $twoMonth,
+						"threeMonth" 	=> $threeMonth,
+						"overMonth" 	=> $overMonth,
+						"amount" 		=> $amount
+					);
+				}				
+			}
+		}		
+
+		//Response Data		
+		$this->response($data, 200);	
+	}
+
+	function aging_detail_get() {		
+		$filters 	= $this->get("filter")["filters"];		
+		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
+		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;								
+		$sort 	 	= $this->get("sort");		
+		$data["results"] = array();
+		$data["count"] = 0;
+
+		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
+
+		//Sort
+		if(!empty($sort) && isset($sort)){					
+			foreach ($sort as $value) {
+				$obj->order_by($value["field"], $value["dir"]);
+			}
+		}
+		
+		//Filter		
+		if(!empty($filters) && isset($filters)){			
+	    	foreach ($filters as $value) {
+	    		if(!empty($value["operator"]) && isset($value["operator"])){
+		    		if($value["operator"]=="where_in"){
+		    			$obj->where_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_where_in"){
+		    			$obj->or_where_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="where_not_in"){
+		    			$obj->where_not_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_where_not_in"){
+		    			$obj->or_where_not_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="like"){
+		    			$obj->like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_like"){
+		    			$obj->or_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="not_like"){
+		    			$obj->not_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_not_like"){
+		    			$obj->or_not_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="startswith"){
+		    			$obj->like($value["field"], $value["value"], "after");
+		    		}else if($value["operator"]=="endswith"){
+		    			$obj->like($value["field"], $value["value"], "before");
+		    		}else if($value["operator"]=="contains"){
+		    			$obj->like($value["field"], $value["value"], "both");
+		    		}else if($value["operator"]=="or_where"){
+		    			$obj->or_where($value["field"], $value["value"]);		    			    		
+		    		}else{
+		    			$obj->where($value["field"].' '.$value["operator"], $value["value"]);
+		    		}
+	    		}else{	    			
+	    			$obj->where($value["field"], $value["value"]);	    				    			
+	    		}
+			}									 			
+		}		
+		
+		//Results
+		$obj->where("type", "Water_Invoice");
+		$obj->where_in("status", array(0,2));
+		$obj->get_paged_iterated($page, $limit);
+		$data["count"] = $obj->paged->total_rows;
+		
+		if($obj->exists()){
+			foreach ($obj as $value) {
+				//Fullname		
+				$contact = $value->contact->get();
+				$fullname = $contact->surname.' '.$contact->name;
+				if($contact->contact_type_id=="5" || $contact->contact_type_id=="6" || $contact->contact_type_id=="7"){
+					$fullname = $contact->company;
+				}
+
+				//Age
+				$ageGroup = "0-បច្ចុប្បន្ន";								
+				$today = new DateTime();
+				$dueDate = new DateTime($value->due_date);
+				$diff = $today->diff($dueDate)->format("%a");
+
+				if($dueDate<$today){
+					if(intval($diff)>90){						
+						$ageGroup = "91->∞";						
+					}else if(intval($diff)>60){
+						$ageGroup = "61-90";
+					}else if(intval($diff)>30){
+						$ageGroup = "31-60";
+					}else{
+						$ageGroup = "1-30";
+					}					
+				}
+
+				$data["results"][] = array(
+					"id" 			=> $value->id,
+					"number" 		=> $value->number,
+					"amount"		=> floatval($value->amount),
+					"issued_date" 	=> $value->issued_date,
+					"due_date" 		=> $value->due_date,
+
+					"fullIdName"	=> $contact->wnumber ." ". $fullname,
+					"age"			=> $diff,
+					"អាយុកាល" 		=> $ageGroup	
+				);
+			}			
+		}		
+
+		//Response Data		
+		$this->response($data, 200);	
+	}
+
+	// Todo:
+
+	//GET WATER SALE SUMMARY
+	function wsale_summary_get() {		
+		$filters 	= $this->get("filter")["filters"];		
+		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
+		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;								
+		$sort 	 	= $this->get("sort");		
+		$data["results"] = array();
+		$data["count"] = 0;
+
+		//Location
+		$location = new Location(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$location->where("type", "w");
+		// $location->order_by("company_id");
+		$location->get();							
+
+		foreach ($location as $loc){		
+			$sale = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$usage = new Winvoice_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);			
+			
+			//Filter		
+			if(!empty($filters) && isset($filters)){
+		    	foreach ($filters as $value) {
+		    		if(!empty($value["operator"]) && isset($value["operator"])){
+			    		if($value["operator"]=="between"){
+			    			$sale->where_between($value["field"], $value["value1"], $value["value2"]);
+			    			$usage->where_between_related("invoice", $value["field"], $value["value1"], $value["value2"]);
+			    		}else{
+			    			$sale->where($value["field"].' '.$value["operator"], $value["value"]);
+			    			$usage->where($value["field"].' '.$value["operator"], $value["value"]);
+			    		}		    			
+		    		}else{	    			
+		    			$sale->where($value["field"], $value["value"]);
+		    			$usage->where($value["field"], $value["value"]);	    				    			
+		    		}		    		
+				}												 			
+			}			
+
+			//Sale
+			$sale->select_sum('amount');		
+			$sale->where("type", "Water_Invoice");
+			$sale->where("location_id", $loc->id);
+			$sale->where("deleted", 0);		
+			$sale->get();
+
+			//Usage
+			$usage->select_sum('unit');		
+			$usage->where_related("transaction", "type", "Water_Invoice");
+			$usage->where_related("transaction", "location_id", $loc->id);
+			$usage->where_related("transaction", "deleted", 0);		
+			$usage->get();
+
+			$data["results"][] = array(
+				"branch_name"		=> $loc->branch->get()->name,
+				"location_name"		=> $loc->name,				
+				"usage"				=> intval($usage->unit),
+				"amount"			=> floatval($sale->amount)			
+			);
+		}
+
+		$data["count"] = count($data["results"]);		
+
+		//Response Data		
+		$this->response($data, 200);	
+	}
+
+	//GET WATER SALE DETAIL 
+	function wsale_detail_get() {		
+		$filters 	= $this->get("filter")["filters"];		
+		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
+		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;								
+		$sort 	 	= $this->get("sort");		
+		$data["results"] = array();
+		$data["count"] = 0;
+
+		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
+
+		//Sort
+		if(!empty($sort) && isset($sort)){					
+			foreach ($sort as $value) {
+				if($value["field"]=="contact_type_name"){
+					$obj->order_by_related("contact", "contact_type_id", $value["dir"]);				
+				}else if($value["field"]=="location_name"){
+					$obj->order_by("location_id", $value["dir"]);
+				}else if($value["field"]=="contact_number" || $value["field"]=="fullname"){
+					$obj->order_by("contact_id", $value["dir"]);
+				}else{
+					$obj->order_by($value["field"], $value["dir"]);
+				}
+			}
+		}
+		
+		//Filter		
+		if(!empty($filters) && isset($filters)){			
+	    	foreach ($filters as $value) {
+	    		if(!empty($value["operator"]) && isset($value["operator"])){
+		    		if($value["operator"]=="where_in"){
+		    			$obj->where_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_where_in"){
+		    			$obj->or_where_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="where_not_in"){
+		    			$obj->where_not_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_where_not_in"){
+		    			$obj->or_where_not_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="like"){
+		    			$obj->like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_like"){
+		    			$obj->or_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="not_like"){
+		    			$obj->not_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_not_like"){
+		    			$obj->or_not_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="startswith"){
+		    			$obj->like($value["field"], $value["value"], "after");
+		    		}else if($value["operator"]=="endswith"){
+		    			$obj->like($value["field"], $value["value"], "before");
+		    		}else if($value["operator"]=="contains"){
+		    			$obj->like($value["field"], $value["value"], "both");
+		    		}else if($value["operator"]=="or_where"){
+		    			$obj->or_where($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="between"){
+		    			$obj->where_between($value["field"], $value["value1"], $value["value2"]);
+		    		}else{
+		    			$obj->where($value["field"].' '.$value["operator"], $value["value"]);
+		    		}
+	    		}else{	    			
+	    			$obj->where($value["field"], $value["value"]);	    				    			
+	    		}
+			}									 			
+		}
+
+		//Join other tables
+		$obj->include_related("location", "name");
+		$obj->include_related("contact/contact_type", "name");
+		$obj->include_related("contact", array("contact_type_id", "name"));
+		
+		//Results
+		$obj->get_paged_iterated($page, $limit);
+		$data["count"] = $obj->paged->total_rows;							
+
+		if($obj->result_count()>0){
+			foreach ($obj as $value) {
+				$fullname = $value->contact_surname.' '.$value->contact_name;
+				if($value->contact_contact_type_id=="6" || $value->contact_contact_type_id=="7" || $value->contact_contact_type_id=="8"){
+					$fullname = $value->contact_company;
+				}
+
+				$usage = 0;
+				$lines = $value->winvoice_line->get();				
+				foreach ($lines as $l) {
+					if($l->type=="tariff"){
+						$usage += intval($l->unit);
+					}
+				}
+
+				$data["results"][] = array(
+					"id" 					=> $value->id,
+					"contact_number" 		=> $value->contact_wnumber,
+					"fullname" 				=> $fullname,
+					"contact_type_name" 	=> $value->contact_contact_type_name,
+					"location_name" 		=> $value->location_name,
+					"usage" 				=> $usage,
+					"amount" 				=> floatval($value->amount)		
+				);
+			}
+		}		
+
+		//Response Data		
+		$this->response($data, 200);	
+	}
+
+	//GET Cash Receipt DETAIL
+	function cr_summary_get() {		
+		$filters 	= $this->get("filter")["filters"];		
+		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
+		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;								
+		$sort 	 	= $this->get("sort");		
+		$data["results"] = array();
+		$data["count"] = 0;
+		
+		//Location
+		$location = new Location(null, $this->entity);
+		$location->where("type", 'w');
+		$location->order_by("company_id");
+		$location->get();							
+
+		foreach ($location as $loc){		
+			$sale = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);			
+			$paid = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);	
+
+			//Filter		
+			if(!empty($filters) && isset($filters)){
+		    	foreach ($filters as $value) {
+		    		$sale->where("issued_date ".$value["operation"], $value["value"]);
+		    		$paid->where("payment_date ".$value["operation"], $value["value"]);
+				}												 			
+			}			
+
+			//Sale
+			$sale->select_sum('amount');		
+			$sale->where("type", "Water_Invoice");
+			$sale->where("location_id", $loc->id);
+			$sale->where("deleted", 0);		
+			$sale->get();
+
+			//Paid
+			$paid->select_sum('amount');		
+			$paid->where("reference_id >", 0);
+			$paid->where_related('contact/contact_utility', 'type', 'w');
+			$paid->where_related("contact/contact_utility", "location_id", $loc->id);					
+			$paid->get();
+
+			$data["results"][] = array(
+				"branch_name"		=> $loc->branch->get()->name,
+				"location_name"		=> $loc->name,				
+				"sale"				=> floatval($sale->amount),
+				"paid"				=> floatval($paid->amount)			
+			);
+		}		
+
+		//Response Data		
+		$this->response($data, 200);	
+	}
+
+	//GET Cash Receipt DETAIL
+	function cr_detail_get() {		
+		$filters 	= $this->get("filter")["filters"];		
+		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
+		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;								
+		$sort 	 	= $this->get("sort");		
+		$data["results"] = array();
+		$data["count"] = 0;
+
+		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);	
+
+		//Sort
+		if(!empty($sort) && isset($sort)){					
+			foreach ($sort as $value) {
+				$obj->order_by($value["field"], $value["dir"]);
+			}
+		}
+		
+		//Filter		
+		if(!empty($filters) && isset($filters)){			
+	    	foreach ($filters as $value) {
+	    		if(!empty($value["operator"]) && isset($value["operator"])){
+		    		if($value["operator"]=="where_in"){
+		    			$obj->where_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_where_in"){
+		    			$obj->or_where_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="where_not_in"){
+		    			$obj->where_not_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_where_not_in"){
+		    			$obj->or_where_not_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="like"){
+		    			$obj->like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_like"){
+		    			$obj->or_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="not_like"){
+		    			$obj->not_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_not_like"){
+		    			$obj->or_not_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="startswith"){
+		    			$obj->like($value["field"], $value["value"], "after");
+		    		}else if($value["operator"]=="endswith"){
+		    			$obj->like($value["field"], $value["value"], "before");
+		    		}else if($value["operator"]=="contains"){
+		    			$obj->like($value["field"], $value["value"], "both");
+		    		}else if($value["operator"]=="or_where"){
+		    			$obj->or_where($value["field"], $value["value"]);		    				    		
+		    		}else{
+		    			$obj->where($value["field"].' '.$value["operator"], $value["value"]);
+		    		}
+	    		}else{	    			
+	    			$obj->where($value["field"], $value["value"]);	    				    			
+	    		}
+			}									 			
+		}		
+		
+		//Results
+		$obj->get_paged_iterated($page, $limit);
+		$data["count"] = $obj->paged->total_rows;							
+
+		if($obj->result_count()>0){
+			foreach ($obj as $value) {
+				$employee = $value->employee->get();
+				// $employee->get_by_id($value->cashier);
+
+				$invoice = new Invoice(null, $this->entity);
+				$invoice->get_by_id($value->reference_id);
+
+				$data["results"][] = array(
+					"id" 				=> $value->id,
+					"payment_date" 		=> $value->payment_date,					
+				   	"employee" 			=> $employee->name,
+				   	"contact" 			=> $value->contact->get_raw()->result(),
+				   	"invoice" 			=> $invoice->number,
+				   	"amount" 			=> floatval($value->amount)				   
+				);
+			}
+		}		
+
+		//Response Data		
+		$this->response($data, 200);	
+	}
+
+	//GET WATER Cash Receipt BY SOURCE SUMMARY
+	function wsource_summary_get() {		
+		$filters 	= $this->get("filter")["filters"];		
+		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
+		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;								
+		$sort 	 	= $this->get("sort");		
+		$data["results"] = array();
+		$data["count"] = 0;
+
+		//Location
+		$location = new Location(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$location->where("type", 'w');
+		// $location->order_by("company_id");
+		$location->order_by("id");		
+		$location->get();							
+
+		foreach ($location as $loc){		
+			$payment = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);			
+			
+			//Filter		
+			if(!empty($filters) && isset($filters)){
+		    	foreach ($filters as $value) {
+		    		if(!empty($value["operator"]) && isset($value["operator"])){
+			    		if($value["operator"]=="between"){
+			    			$payment->where_between($value["field"], $value["value1"], $value["value2"]);			    			
+			    		}else{
+			    			$payment->where($value["field"].' '.$value["operator"], $value["value"]);			    			
+			    		}		    			
+		    		}else{	    			
+		    			$payment->where($value["field"], $value["value"]);		    							    			
+		    		}		    		
+				}												 			
+			}			
+
+			//Sale			
+			$payment->where("type", "Water_Invoice");
+			$payment->where_related("contact", "location_id", $loc->id);
+			$payment->where("deleted", 0);		
+			$payment->get();
+
+			
+			$cash = 0;
+			$check = 0;
+			$bank = 0;
+			$direct = 0;
+			$internet = 0;
+			foreach ($payment as $p) {
+				if($p->payment_method_id==2){
+					$check += floatval($p->amount);
+				}else if($p->payment_method_id==3){
+					$bank += floatval($p->amount);
+				}else if($p->payment_method_id==4){
+					$direct += floatval($p->amount);
+				}else if($p->payment_method_id==5){
+					$internet += floatval($p->amount);
+				}else{
+					$cash += floatval($p->amount);
+				}				
+			}			
+
+			$data["results"][] = array(
+				"branch_name"		=> $loc->branch->get()->name,
+				"location_name"		=> $loc->name,				
+				"cash"				=> $cash,
+				"check"				=> $check,
+				"bank"				=> $bank,
+				"direct"			=> $direct,
+				"internet"			=> $internet			
+			);			
+		}
+
+		$data["count"] = count($data["results"]);		
+
+		//Response Data		
+		$this->response($data, 200);	
+	}
+
+	//GET WATER Cash Receipt BY SOURCE DETAIL 
+	function wsource_detail_get() {		
+		$filters 	= $this->get("filter")["filters"];		
+		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
+		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;								
+		$sort 	 	= $this->get("sort");		
+		$data["results"] = array();
+		$data["count"] = 0;
+
+		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
+
+		//Sort
+		if(!empty($sort) && isset($sort)){					
+			foreach ($sort as $value) {								
+				if($value["field"]=="contact_type_name"){
+					$obj->order_by_related("contact", "contact_type_id", $value["dir"]);				
+				}else{
+					$obj->order_by($value["field"], $value["dir"]);
+				}
+			}
+		}
+		
+		//Filter		
+		if(!empty($filters) && isset($filters)){			
+	    	foreach ($filters as $value) {
+	    		if(!empty($value["operator"]) && isset($value["operator"])){
+		    		if($value["operator"]=="where_in"){
+		    			$obj->where_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_where_in"){
+		    			$obj->or_where_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="where_not_in"){
+		    			$obj->where_not_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_where_not_in"){
+		    			$obj->or_where_not_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="like"){
+		    			$obj->like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_like"){
+		    			$obj->or_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="not_like"){
+		    			$obj->not_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_not_like"){
+		    			$obj->or_not_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="startswith"){
+		    			$obj->like($value["field"], $value["value"], "after");
+		    		}else if($value["operator"]=="endswith"){
+		    			$obj->like($value["field"], $value["value"], "before");
+		    		}else if($value["operator"]=="contains"){
+		    			$obj->like($value["field"], $value["value"], "both");
+		    		}else if($value["operator"]=="or_where"){
+		    			$obj->or_where($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="where_related"){
+		    			$obj->where_related($value["model"] ,$value["field"], $value["value"]);
+		    		}else if($value["operator"]=="between"){
+		    			$obj->where_between($value["field"], $value["value1"], $value["value2"]);
+		    		}else{
+		    			$obj->where($value["field"].' '.$value["operator"], $value["value"]);
+		    		}
+	    		}else{	    			
+	    			$obj->where($value["field"], $value["value"]);	    				    			
+	    		}
+			}									 			
+		}
+
+		//Join other tables		
+		$obj->include_related("payment_method", "name");
+		$obj->include_related("contact/contact_type", "name");
+		$obj->include_related("contact/contact_utility", array("abbr", "code"));
+		
+		//Results
+		$obj->get_paged_iterated($page, $limit);
+		$data["count"] = $obj->paged->total_rows;							
+
+		if($obj->exists()){
+			foreach ($obj as $value) {
+				$fullname = $value->contact_surname.' '.$value->contact_name;
+				if($value->contact_contact_type_id=="6" || $value->contact_contact_type_id=="7" || $value->contact_contact_type_id=="8"){
+					$fullname = $value->contact_company;
+				}
+				$cashier = $value->employee->get();
+				$contact = $value->contact->get();
+				// $cashier = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				// $cashier->get_by_user_id($value->cashier_id);				
+
+				$data["results"][] = array(
+					"id" 					=> $value->id,
+					"cashier_id" 			=> $value->cashier_id,
+					"contact_id" 			=> $value->contact_id,
+					"payment_method_id" 	=> $value->payment_method_id,
+					"contact_number" 		=> $value->contact_abbr . "-" . $value->contact_code,
+					"fullname" 				=> $contact->name,
+					"contact_type_name" 	=> $value->contact_contact_type_name,
+					"cashier_name" 			=> $cashier->name,					
+					"payment_method_name" 	=> $value->payment_method_name,
+					"amount" 				=> floatval($value->amount)							
+				);
+			}
+		}		
+
+		//Response Data		
+		$this->response($data, 200);	
+	}
+
+	//GET WATER CUSTOMER BALANCE
+	function wbalance_get() {		
+		$filters 	= $this->get("filter")["filters"];		
+		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
+		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;								
+		$sort 	 	= $this->get("sort");		
+		$data["results"] = array();
+		$data["count"] = 0;
+
+		$obj = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
+
+		//Sort
+		if(!empty($sort) && isset($sort)){					
+			foreach ($sort as $value) {
+				$obj->order_by($value["field"], $value["dir"]);
+			}
+		}
+
+		//Filter
+		if(!empty($filters) && isset($filters)){			
+	    	foreach ($filters as $value) {
+	    		if(!empty($value["operator"]) && isset($value["operator"])){
+		    		if($value["operator"]=="where_in"){
+		    			$obj->where_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_where_in"){
+		    			$obj->or_where_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="where_not_in"){
+		    			$obj->where_not_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_where_not_in"){
+		    			$obj->or_where_not_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="like"){
+		    			$obj->like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_like"){
+		    			$obj->or_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="not_like"){
+		    			$obj->not_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_not_like"){
+		    			$obj->or_not_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="startswith"){
+		    			$obj->like($value["field"], $value["value"], "after");
+		    		}else if($value["operator"]=="endswith"){
+		    			$obj->like($value["field"], $value["value"], "before");
+		    		}else if($value["operator"]=="contains"){
+		    			$obj->like($value["field"], $value["value"], "both");
+		    		}else if($value["operator"]=="or_where"){
+		    			$obj->or_where($value["field"], $value["value"]);		    		
+		    		}else{
+		    			$obj->where($value["field"].' '.$value["operator"], $value["value"]);
+		    		}
+	    		}else{
+	    			$obj->where($value["field"], $value["value"]);
+	    		}
+			}									 			
+		}
+
+		//Only water customer
+		$obj->where("use_water", 1);
+		$obj->include_related("contact_type", "name");
+		$obj->where_related("contact_type", "parent_id", 1);				
+
+		//Results
+		$obj->get_paged_iterated($page, $limit);
+		$data["count"] = $obj->paged->total_rows;
+
+		if($obj->exists()){
+			foreach ($obj as $value) {
+				$fullname = $value->surname.' '.$value->name;
+				if($value->contact_type_id=="6" || $value->contact_type_id=="7" || $value->contact_type_id=="8"){
+					$fullname = $value->company;
+				}
+
+				$balance = $value->transaction;
+				$balance->select_sum("amount");
+				$balance->where("type", "Water_Invoice");
+				$balance->where("status", 0);
+				$balance->get();
+								
+		 		$data["results"][] = array(
+		 			"id" 					=> $value->id,		 			
+		 			"wnumber" 				=> $value->wnumber,
+					"fullname" 				=> $fullname,									
+					"contact_type_name"		=> $value->contact_type_name,					
+					"branch_name" 			=> $value->branch->get()->name,					
+					"location_name" 		=> $value->location->get()->name,
+					"balance" 				=> floatval($balance->amount)												
+		 		);
+			}
+		}
+
+		//Response Data		
+		$this->response($data, 200);			
+	}
+
+	//Get Payment Detail
+	//@param: Number, customer, type, location, usage, amount
+	function accountReceivable_get() {
+		$filters 	= $this->get("filter")["filters"];		
+		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
+		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;								
+		$sort 	 	= $this->get("sort");		
+		$data["results"] = array();
+		$data["count"] = 0;
+
+		$obj = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
+
+		//Sort
+		if(!empty($sort) && isset($sort)){					
+			foreach ($sort as $value) {
+				$obj->order_by($value["field"], $value["dir"]);
+			}
+		}
+
+		//Filter
+		if(!empty($filters) && isset($filters)){			
+	    	foreach ($filters as $value) {
+	    		if(!empty($value["operator"]) && isset($value["operator"])){
+	    			$obj->{$value["operator"]}($value["field"], $value["value"]);
+	    		}else{
+	    			$obj->where($value["field"], $value["value"]);
+	    		}
+			}									 			
+		}
+
+		$obj->include_related('contact_utility', array("abbr", "code"));
+		$obj->include_related('contact_type', "name");
+		$obj->include_related('location', "name");
+		$obj->include_related('transaction', "amount");
+		$obj->include_related('transaction/winvoice_line', "unit");
+		$obj->where_related('transaction/winvoice_line', "type", "usage");
+		$obj->where_related_transction('type', "Water_Invoice");
+		$obj->where_related_transction('status <>', 1);
+		$obj->get_paged_iterated($page, $limit);
+
+		if($obj->exists()) {
+			foreach($obj as $value) {
+				$data['results'][] = array(
+					'number' 	=> $value->contact_utility_abbr ."-".$value->contact_utility_code,
+					'customer' 	=> $value->name,
+					'type' 		=> $value->contact_type_name,
+					'location'  => $value->location_name,
+					'usage' 	=> $value->transaction_winvoice_line_usage,
+					'amount' 	=> $value->transaction_amount
+				)
+			}
+			$data["count"] = $obj->paged->total_rows;
+			$this->response($data, 200);
+		} else {
+			$this->response($data, 400);
+		}
+	}
+
+	//GET BRANCH
+	// Water Customer Balance
+	// function branch_get() {		
+	// 	$filters 	= $this->get("filter")["filters"];		
+	// 	$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
+	// 	$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;								
+	// 	$sort 	 	= $this->get("sort");		
+	// 	$data["results"] = array();
+	// 	$data["count"] = 0;
+
+	// 	$obj = new Branch(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
+
+	// 	//Sort
+	// 	if(!empty($sort) && isset($sort)){					
+	// 		foreach ($sort as $value) {
+	// 			$obj->order_by($value["field"], $value["dir"]);
+	// 		}
+	// 	}
+
+	// 	//Filter
+	// 	if(!empty($filters) && isset($filters)){			
+	//     	foreach ($filters as $value) {
+	//     		if(!empty($value["operator"]) && isset($value["operator"])){
+	// 	    		if($value["operator"]=="where_in"){
+	// 	    			$obj->where_in($value["field"], $value["value"]);
+	// 	    		}else if($value["operator"]=="or_where_in"){
+	// 	    			$obj->or_where_in($value["field"], $value["value"]);
+	// 	    		}else if($value["operator"]=="where_not_in"){
+	// 	    			$obj->where_not_in($value["field"], $value["value"]);
+	// 	    		}else if($value["operator"]=="or_where_not_in"){
+	// 	    			$obj->or_where_not_in($value["field"], $value["value"]);
+	// 	    		}else if($value["operator"]=="like"){
+	// 	    			$obj->like($value["field"], $value["value"]);
+	// 	    		}else if($value["operator"]=="or_like"){
+	// 	    			$obj->or_like($value["field"], $value["value"]);
+	// 	    		}else if($value["operator"]=="not_like"){
+	// 	    			$obj->not_like($value["field"], $value["value"]);
+	// 	    		}else if($value["operator"]=="or_not_like"){
+	// 	    			$obj->or_not_like($value["field"], $value["value"]);
+	// 	    		}else if($value["operator"]=="startswith"){
+	// 	    			$obj->like($value["field"], $value["value"], "after");
+	// 	    		}else if($value["operator"]=="endswith"){
+	// 	    			$obj->like($value["field"], $value["value"], "before");
+	// 	    		}else if($value["operator"]=="contains"){
+	// 	    			$obj->like($value["field"], $value["value"], "both");
+	// 	    		}else if($value["operator"]=="or_where"){
+	// 	    			$obj->or_where($value["field"], $value["value"]);		    		
+	// 	    		}else{
+	// 	    			$obj->where($value["field"].' '.$value["operator"], $value["value"]);
+	// 	    		}
+	//     		}else{
+	//     			$obj->where($value["field"], $value["value"]);
+	//     		}
+	// 		}									 			
+	// 	}
+
+	// 	//Results
+	// 	$obj->get_paged_iterated($page, $limit);
+	// 	$data["count"] = $obj->paged->total_rows;		
+		
+	// 	if($obj->result_count()>0){
+	// 		foreach ($obj as $value) {				
+	// 	 		$data["results"][] = array(
+	// 	 			"id" 				=> $value->id,					
+	// 				"utility_id" 		=> $value->utility_id,
+	// 				"currency_id" 		=> $value->currency_id,
+	// 				// "province_id" 		=> $value->province_id,
+	// 				// "country_id" 		=> $value->country_id,
+	// 				"name" 				=> $value->name,
+	// 				"description" 		=> $value->description,
+	// 				"abbr" 				=> $value->abbr,
+	// 				"representative" 	=> $value->representative,
+	// 				"email" 			=> $value->email,
+	// 				"mobile" 			=> $value->mobile,
+	// 				"phone" 			=> $value->phone,
+	// 				"address" 			=> $value->address,						
+	// 				"expire_date" 		=> $value->expire_date,
+	// 				"max_customer" 		=> $value->max_customer,
+	// 				"operation_license" => $value->operation_license,
+	// 				"term_of_condition" => $value->term_of_condition,
+	// 				"image_url" 		=> $value->image_url,
+	// 				"status" 			=> $value->status,
+
+	// 				"currency"			=> $value->currency->get_raw()->result(),			
+	// 	 		);
+	// 		}
+	// 	}
+
+	// 	//Response Data		
+	// 	$this->response($data, 200);			
+	// }
+
+
+	// Checklist
+
 	//Get Water Sale Detail
 	//@param: Number, customer, type, location, usage, amount
 	function saleDetail_get() {}
@@ -555,9 +1560,7 @@ class Wreports extends REST_Controller {
 	function paymentDetail_get() {}
 
 
-	//Get Payment Detail
-	//@param: Number, customer, type, location, usage, amount
-	function accountReceivable_get() {}
+	
 
 	//Get Payment Detail
 	//@param: Number, customer, type, location, usage, amount
@@ -594,6 +1597,7 @@ class Wreports extends REST_Controller {
 	//Get Payment Detail
 	//@param: Number, customer, type, location, usage, amount
 	function cashReceiptSourceDetail_get() {}
+
 
 	function _getAmount($carry, $item) {
 		if($item['dr'] !=0) {

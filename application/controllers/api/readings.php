@@ -70,6 +70,7 @@ class Readings extends REST_Controller {
 				// 					);	
 				$data["results"][] = array(
 					"id" 			=> $value->id,
+					"meter_id" 		=> $value->meter_id,
 					"branch_id" 	=> $meter->branch_id,
 					"location_id" 	=> $meter->location_id,
 					"previous"		=> $value->previous,

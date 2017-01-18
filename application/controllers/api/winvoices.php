@@ -222,7 +222,8 @@ class Winvoices extends REST_Controller {
 												);
 				$tmp["$meter->number"]['meter'] = array(
 					'id' => $meter->id,
-					'number' => $meter->number,
+					'meter_number' => $meter->number,
+					'location_id' => $meter->location_id,
 					'multiplier' => $meter->multiplier
 				);
 				$tmp["$meter->number"]['items'][] = array(
@@ -465,14 +466,14 @@ class Winvoices extends REST_Controller {
 
 		foreach($table as $row) {
 			$meter = null;
-			$contact = $row->contact->include_related('utility', array('abbr', 'code'))->select('id, name, abbr, number, address')->get();
+			$contact = $row->contact->include_related('contact_utility', array('abbr', 'code'))->select('id, name, abbr, number, address')->get();
 
 			$items  = $row->winvoice_line->get();
 			$lines  = array();
 			$m = $contact->meter->get();
 			$usage = 0;	
 			$meter = array(
-				'number'   => $m->number,
+				'meter_number'   => $m->number,
 				'location' => $m->location->get_raw()->result(),
 			);
 

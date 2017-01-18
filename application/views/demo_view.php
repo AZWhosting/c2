@@ -6775,9 +6775,15 @@
 					<div class="span4">
 						<div class="box-generic well" style="height: 150px;">				
 							<table class="table table-borderless table-condensed cart_total">									
-								<tr data-bind="visible: isEdit">				
+								<tr>				
 									<td style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></td>
-									<td><input class="k-textbox" data-bind="value: obj.number" style="width:100%;" /></td>
+									<td>
+										<input id="txtNumber" name="txtNumber" class="k-textbox" 
+												data-bind="value: obj.number,
+															events:{change:checkExistingNumber}" 
+												required data-required-msg="required" 
+												placeholder="eg. ABC00001" style="width:100%;" />
+									</td>
 								</tr>
 								<tr>
 									<td><span data-bind="text: lang.lang.date"></span></td>
@@ -7270,9 +7276,15 @@
 					<div class="span4">
 						<div class="box-generic well" style="height: 190px;">				
 							<table class="table table-borderless table-condensed cart_total">									
-								<tr data-bind="visible: isEdit">				
+								<tr>				
 									<td style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></td>
-									<td><input class="k-textbox" data-bind="value: obj.number" style="width:100%;" /></td>
+									<td>
+										<input id="txtNumber" name="txtNumber" class="k-textbox" 
+												data-bind="value: obj.number,
+															events:{change:checkExistingNumber}" 
+												required data-required-msg="required" 
+												placeholder="eg. ABC00001" style="width:100%;" />
+									</td>
 								</tr>
 								<tr>
 									<td><span data-bind="text: lang.lang.date"></span></td>
@@ -15519,7 +15531,8 @@
 					              				placeholder="eg. AB" required data-required-msg="required"
 					              				style="width: 55px;" />
 					              		-					              		
-					              		<input id="txtNumber" name="txtNumber" class="k-textbox"					              			   					                   
+					              		<input id="txtNumber" name="txtNumber"
+					              			   class="k-textbox"					              			   					                   
 							                   data-bind="value: obj.number, 
 							                   			  disabled: obj.is_pattern,
 							                   			  events:{change:checkExistingNumber}"
@@ -33673,7 +33686,7 @@
 						<div class="block-title">
 							<h3 data-bind="text: company.name"></h3>
 							<h2>Inventory Position Detail</h2>
-							<p>From <span data-bind="text: displayDateStart"></span> to <span data-bind="text: displayDateEnd"></p>
+							<p data-bind="text: displayDate"></p>
 						</div>
 
 						<div class="row-fluid">
@@ -40003,15 +40016,11 @@
     </strong>
 </script>
 <script id="item-list-tmpl" type="text/x-kendo-tmpl">
-	<span style="width:45%; float: left">
-		#if(name.length>20){#
-			#=abbr##=number# #=name.substring(0, 20)#...
-		#}else{#
-			#=abbr##=number# #=name#
-		#}#
+	<span style="width:65%; float: left">
+		#=abbr##=number# #=name#
 	</span>
-	<span style="width:35%; text-align: center;">#=category#</span>
-	<span style="width:20%; text-align: right;" class="pull-right">#=kendo.toString(on_hand, "n")#</span> 	
+	<span style="width:17%; text-align: center;">#=category#</span>
+	<span style="width:10%; text-align: right;" class="pull-right">#=kendo.toString(on_hand, "n")#</span> 	
 </script>
 <script id="item-group-header-tmpl" type="text/x-kendo-tmpl">
     <strong>
@@ -42981,7 +42990,9 @@
 		paymentMethodDS				: dataStore(apiUrl + "payment_methods"),
 		//Segment
 		segmentItemDS				: dataStore(apiUrl + "segments/item"),
-		//Recurring
+		//Prefixes
+		prefixList 					: [],
+		prefixDS					: dataStore(apiUrl + "prefixes"),
 		frequencyList 				: [
 			{ id: 'Daily', name: 'Day' },
 			{ id: 'Weekly', name: 'Week' },
@@ -43119,7 +43130,7 @@
 		selectSupplierMessage 		: "Please select a supplier.",
 		selectItemMessage 			: "Please select an item.",
 		duplicateSelectedItemMessage: "You already selected this item.",
-		loadData 					: function(){
+		pageLoad 					: function(){
 			this.loadRate();
 			this.itemTypeDS.read();
 			this.measurementDS.query({
@@ -43127,6 +43138,7 @@
 				page:1,
 				pageSize:100
 			});
+			this.loadPrefixes();
 			this.loadAccounts();
 			this.loadItems();
 			this.loadCustomers();
@@ -43145,7 +43157,24 @@
 
 			return fDate;
 		},
-		//Rate
+		loadPrefixes 				: function(){
+			var self = this, raw = this.get("prefixList");
+
+			//Clear array
+			if(raw.length>0){
+				raw.splice(0,raw.length);
+			}
+
+			this.prefixDS.query({
+				filter: [],
+			}).then(function(){
+				var view = self.prefixDS.view();
+
+				$.each(view, function(index, value){
+					raw.push(value);
+				});
+			});
+		},
 		loadRate 					: function(){
 			this.currencyRateDS.query({
 				filter:[],
@@ -43297,7 +43326,31 @@
 		getPaymentTerm 				: function(id){
 			var data = this.paymentTermDS.get(id);
 			return data.name;
-		}
+		},
+		getPrefixAbbr 				: function(type){
+			var abbr = "";
+			$.each(this.prefixList, function(index, value){
+				if(value.type==type){
+					abbr = value.abbr;
+
+					return false;
+				}
+			});
+
+			return abbr;
+		},
+		getPrefixNumber 			: function(type){
+			var number = 1;
+			$.each(this.prefixList, function(index, value){
+				if(value.type==type){
+					abbr = value.number;
+
+					return false;
+				}
+			});
+
+			return number;
+		}			
 	});
 
 
@@ -46923,7 +46976,7 @@
 		dataSource 			: dataStore(apiUrl + "transactions"),
 		lineDS  			: dataStore(apiUrl + "account_lines"),
 		journalLineDS		: dataStore(apiUrl + "journal_lines"),
-		deleteDS 			: dataStore(apiUrl + "transactions"),
+		txnDS 				: dataStore(apiUrl + "transactions"),
 		recurringDS 		: dataStore(apiUrl + "transactions"),
 		recurringLineDS 	: dataStore(apiUrl + "account_lines"),
 		contactDS 			: banhji.source.employeeDS,
@@ -46934,12 +46987,12 @@
 		  	data: banhji.source.accountList,
 			sort: { field:"number", dir:"asc" }
 		}),
-		cashAccountDS 			: new kendo.data.DataSource({
+		cashAccountDS 		: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
 		  	filter: { field:"account_type_id", value: 10 },
 		  	sort: { field:"number", dir:"asc" }
 		}),
-		advAccountDS 			: new kendo.data.DataSource({
+		advAccountDS 		: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
 		  	filter: { field:"account_type_id", value: 11 },
 		  	sort: { field:"number", dir:"asc" }
@@ -47007,6 +47060,7 @@
 		showSegment 		: false,
 		total				: 0,
 		original_total 		: 0,
+		notDuplicateNumber  : true,
 		user_id				: banhji.source.user_id,
 		pageLoad 			: function(id){
 			if(id){
@@ -47145,6 +47199,61 @@
 				}
 			}
 		},
+		//Number      	
+		checkExistingNumber 	: function(){
+			var self = this, para = [], 
+			obj = this.get("obj");
+			
+			if(obj.number!==""){
+
+				if(obj.isNew()==false){
+					para.push({ field:"id", operator:"where_not_in", value: [obj.id] });
+				}
+				
+				para.push({ field:"abbr", value: obj.abbr });
+				para.push({ field:"number", value: obj.number });
+				para.push({ field:"type", value: obj.type });
+
+				this.txnDS.query({
+					filter: para,
+					page: 1,
+					pageSize: 1
+				}).then(function(e){
+					var view = self.txnDS.view();
+					
+					if(view.length>0){
+				 		self.set("notDuplicateNumber", false);
+					}else{
+						self.set("notDuplicateNumber", true);
+					}
+				});
+			}
+		},
+		generateNumber 			: function(){
+			var self = this, obj = this.get("obj");
+
+			this.txnDS.query({
+				filter:{ field:"type", value:obj.type },
+				sort: { field:"number", dir:"desc" },
+				page:1,
+				pageSize:1
+			}).then(function(){
+				var view = self.txnDS.view();
+
+				var number = 0, str = "", d = new Date();
+				if(view.length>0){
+					var numberSplited = view[0].number.match(/(\d+)/g);
+					number = kendo.parseInt(numberSplited[numberSplited.length-1])+1;
+				}else{
+					number = banhji.source.getPrefixNumber(obj.type);
+				}
+
+				// str = d.getFullYear().toString().substr(2,2) + kendo.toString(d.getMonth()+1, "00") + kendo.toString(number, "00000");
+				
+				str = banhji.source.getPrefixAbbr(obj.type) + kendo.toString(number, "00000");
+				obj.set("number", str);
+			});
+		},
 	    //Obj
 		loadObj 			: function(id){
 			var self = this, para = [];
@@ -47192,7 +47301,8 @@
 				account_id 			: 1,
 				payment_method_id 	: 1,				
 				user_id 			: this.get("uer_id"), 	    			    		
-			   	type				: "Cash_Advance", //required			   		   				   		   					   				   	
+			   	type				: "Cash_Advance", //required
+			   	number 				: "",			   		   				   		   					   				   	
 			   	amount				: 0,
 			   	rate				: 1,			   	
 			   	locale 				: banhji.locale,			   	
@@ -47217,6 +47327,7 @@
 			var obj = this.dataSource.at(0);
 			this.set("obj", obj);
 			
+			this.generateNumber();
 			this.setRate();
 			this.addRow();
 		},
@@ -47283,6 +47394,8 @@
 	    	if(this.get("saveRecurring")){
 	    		this.set("saveRecurring", false);
 	    		
+	    		obj.set("abbr", "");
+	    		obj.set("number", "");
 	    		obj.set("is_recurring", 1);
 	    	}	    	
 
@@ -47367,22 +47480,26 @@
 			var self = this, obj = this.get("obj");
 			this.set("showConfirm",false);			
 			
-	        this.deleteDS.query({
+	        this.txnDS.query({
 	        	filter:[
 	        		{ field:"reference_id", value:obj.id },
 	        	],
 	        	page:1,
 	        	pageSize:1
 	        }).then(function(){
-	        	var view = self.deleteDS.view();
+	        	var view = self.txnDS.view();
 
 	        	if(view.length>0){
 	        		alert("Sorry, you can not delete it.");
 	        	}else{
 	        		obj.set("deleted", 1);
-			        self.dataSource.sync();
 
-			        window.history.back();
+			        self.dataSource.sync();
+			        self.dataSource.bind("requestEnd", function(e){
+			        	if(e.type==="update"){
+			        		window.history.back();
+			        	}
+			        });
 	        	}
 	        });		    	    	
 		},
@@ -47545,7 +47662,7 @@
 		dataSource 			: dataStore(apiUrl + "transactions"),						
 		lineDS  			: dataStore(apiUrl + "account_lines"),
 		journalLineDS		: dataStore(apiUrl + "journal_lines"),
-		deleteDS 			: dataStore(apiUrl + "transactions"),
+		txnDS 				: dataStore(apiUrl + "transactions"),
 		referenceDS			: dataStore(apiUrl + "transactions"),
 		referenceLineDS  	: dataStore(apiUrl + "account_lines"),
 		recurringDS 		: dataStore(apiUrl + "transactions"),
@@ -47639,7 +47756,8 @@
 		isExistingInvoice 	: false,
 		showJob 			: false,
 		showSegment 		: false,
-		showCashAdvance 	: false,		
+		showCashAdvance 	: false,
+		notDuplicateNumber 	: true,		
 		sub_total 			: 0,
 		tax 				: 0,
 		total				: 0,
@@ -47794,6 +47912,8 @@
 			        obj.set("deposit", 0);
 			        obj.set("received", 0);
 			}
+
+			this.generateNumber();
 	    },
 	    //Segment
 		segmentChanges  	: function(e) {					
@@ -47823,6 +47943,61 @@
 					}
 				}
 			}				
+		},
+		//Number      	
+		checkExistingNumber 	: function(){
+			var self = this, para = [], 
+			obj = this.get("obj");
+			
+			if(obj.number!==""){
+
+				if(obj.isNew()==false){
+					para.push({ field:"id", operator:"where_not_in", value: [obj.id] });
+				}
+				
+				para.push({ field:"abbr", value: obj.abbr });
+				para.push({ field:"number", value: obj.number });
+				para.push({ field:"type", value: obj.type });
+
+				this.txnDS.query({
+					filter: para,
+					page: 1,
+					pageSize: 1
+				}).then(function(e){
+					var view = self.txnDS.view();
+					
+					if(view.length>0){
+				 		self.set("notDuplicateNumber", false);
+					}else{
+						self.set("notDuplicateNumber", true);
+					}
+				});
+			}
+		},
+		generateNumber 			: function(){
+			var self = this, obj = this.get("obj");
+
+			this.txnDS.query({
+				filter:{ field:"type", value:obj.type },
+				sort: { field:"number", dir:"desc" },
+				page:1,
+				pageSize:1
+			}).then(function(){
+				var view = self.txnDS.view();
+
+				var number = 0, str = "", d = new Date();
+				if(view.length>0){
+					var numberSplited = view[0].number.match(/(\d+)/g);
+					number = kendo.parseInt(numberSplited[numberSplited.length-1])+1;
+				}else{
+					number = banhji.source.getPrefixNumber(obj.type);
+				}
+
+				// str = d.getFullYear().toString().substr(2,2) + kendo.toString(d.getMonth()+1, "00") + kendo.toString(number, "00000");
+				
+				str = banhji.source.getPrefixAbbr(obj.type) + kendo.toString(number, "00000");
+				obj.set("number", str);
+			});
 		},
 	    //Obj
 	    checkExistingInvoice: function(){
@@ -47906,7 +48081,8 @@
 				job_id 				: 0,
 				contact_id 			: "",				
 				user_id 			: this.get("user_id"), 	    			    		
-			   	type				: "Direct_Expense", //required			   	
+			   	type				: "Direct_Expense", //required
+			   	number 				: "",			   	
 			   	sub_total 			: 0,
 			   	tax 				: 0,
 			   	deposit 			: 0,			   		   				   		   					   				   	
@@ -47935,6 +48111,7 @@
 			var obj = this.dataSource.at(0);
 			this.set("obj", obj);
 			
+			this.generateNumber();
 			this.setRate();
 			this.addRow();
 		},
@@ -48114,22 +48291,26 @@
 			var self = this, obj = this.get("obj");
 			this.set("showConfirm",false);			
 			
-	        this.deleteDS.query({
+	        this.txnDS.query({
 	        	filter:[
 	        		{ field:"reference_id", value:obj.id },
 	        	],
 	        	page:1,
 	        	pageSize:1
 	        }).then(function(){
-	        	var view = self.deleteDS.view();
+	        	var view = self.txnDS.view();
 
 	        	if(view.length>0){
 	        		alert("Sorry, you can not delete it.");
 	        	}else{
 	        		obj.set("deleted", 1);
-			        self.dataSource.sync();
 
-			        window.history.back();
+			        self.dataSource.sync();
+					self.dataSource.bind("requestEnd", function(e){
+			        	if(e.type==="update"){
+			        		window.history.back();
+			        	}
+			        });
 	        	}
 	        });		    	    	
 		},
@@ -67843,8 +68024,15 @@
 		creditDS 			: dataStore(apiUrl + "transactions"),		
 		journalLineDS		: dataStore(apiUrl + "journal_lines"),
 		currencyRateDS		: dataStore(apiUrl + "currencies/rate"),
-		contactDS  			: banhji.source.customerDS,
-		employeeDS  		: banhji.source.saleRepDS,
+		contactDS  			: new kendo.data.DataSource({
+		  	data: banhji.source.customerList,
+			sort: { field:"number", dir:"asc" }
+		}),
+		employeeDS  		: new kendo.data.DataSource({
+		  	data: banhji.source.employeeList,
+		  	filter:{ field: "item_type_id", value: 10 },//Sale Rep.
+			sort: { field:"number", dir:"asc" }
+		}),
 		accountDS  			: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
 		  	filter: { field:"account_type_id", value: 10 },
@@ -68367,8 +68555,15 @@
 		creditDS 			: dataStore(apiUrl + "transactions"),		
 		journalLineDS		: dataStore(apiUrl + "journal_lines"),
 		currencyRateDS		: dataStore(apiUrl + "currencies/rate"),
-		contactDS  			: banhji.source.supplierDS,
-		employeeDS  		: banhji.source.saleRepDS,
+		contactDS  			: new kendo.data.DataSource({
+		  	data: banhji.source.supplierList,
+			sort: { field:"number", dir:"asc" }
+		}),
+		employeeDS  		: new kendo.data.DataSource({
+		  	data: banhji.source.employeeList,
+		  	filter:{ field: "item_type_id", value: 10 },//Sale Rep.
+			sort: { field:"number", dir:"asc" }
+		}),
 		accountDS  			: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
 		  	filter: { field:"account_type_id", value: 10 },
@@ -75657,10 +75852,17 @@
 					            	return $.trim(input.val()) !== "";
 					          	}
 					          	return true;
+					        },
+					        customRule2: function(input){
+					          	if (input.is("[name=txtNumber]")) {	
+						            return vm.get("notDuplicateNumber");
+						        }
+						        return true;
 					        }
 					    },
 					    messages: {
-					        customRule1: banhji.source.requiredMessage
+					        customRule1: banhji.source.requiredMessage,
+					        customRule2: banhji.source.duplicateNumber
 					    }
 			        }).data("kendoValidator");
 
@@ -75753,11 +75955,18 @@
 					            	return $.trim(input.val()) !== "" && vm.isExistingInvoice==false;
 					          	}
 					          	return true;
+					        },
+					        customRule3: function(input){
+					          	if (input.is("[name=txtNumber]")) {	
+						            return vm.get("notDuplicateNumber");
+						        }
+						        return true;
 					        }
 					    },
 					    messages: {
 					        customRule1: banhji.source.requiredMessage,
-					        customRule2: banhji.source.duplicateInvoice
+					        customRule2: banhji.source.duplicateInvoice,
+					        customRule3: banhji.source.duplicateNumber
 					    }
 			        }).data("kendoValidator");
 
@@ -83218,7 +83427,7 @@
 
 	$(function() {	
 		banhji.router.start();
-		banhji.source.loadData();
+		banhji.source.pageLoad();
 		console.log($(location).attr('hash').substr(2));
 
 		var cognitoUser = userPool.getCurrentUser();
