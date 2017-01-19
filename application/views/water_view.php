@@ -360,7 +360,7 @@
 	            				<th class="center" width="160"><span>Representive</span></th>
 	            				<th class="center" width="180"><span>Expire Date</span></th>
 	            				<th class="center" width="100"><span>Max Con.</span></th>
-	            				<th class="center">Status</th>
+	            				<th class="center" width="100">Status</th>
 	            			</tr>
 	            		</thead>
 	            		<tbody data-role="listview"	            				
@@ -830,11 +830,11 @@
 
 <script id="licenseSetting-template" type="text/x-kendo-tmpl">
 	<tr>
-		<td>#= number #</td>
+		<td align="center">#= number #</td>
 		<td>#= name #</td>
 		<td>#= abbr #</td>
 		<td>#= representative #</td>
-		<td>#= expire_date #</td>
+		<td align="center">#= kendo.toString(new Date(expire_date), "dd-MM-yyyy") #</td>
 		<td>#= max_customer #</td>
 		<td style="text-align: center;">
 			#if(status==1){#
@@ -864,10 +864,7 @@
     		#}#
    		</td>
    		<td align="center">   			   
-		        <a class="btn-action glyphicons pencil btn-success k-edit-button" href="\\#"><i></i></a>
-		        #if(is_system=="0"){#
-			        <a class="btn-action glyphicons remove_2 btn-danger k-delete-button" href="\\#"><i></i></a>				        
-		        #}#	   	
+		    <a class="btn-action glyphicons pencil btn-success k-edit-button" href="\\#"><i></i></a>
    		</td>   		
    	</tr>
 </script>

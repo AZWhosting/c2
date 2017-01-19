@@ -1793,12 +1793,12 @@ class Vendorreports extends REST_Controller {
 			foreach ($segmentItem as $seg) {
 				$txn = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
-				$txn->where("type", "Credit_Purchase");
+				$txn->where_in("type", array("Credit_Purchase", "Cash_Payment"));
 				$txn->where_in("status", array(0,2));
 				// $txn->where('job_id <> ' 0);
 				$txn->like("segments", $seg->id, "both");
 				$txn->where("deleted", 0);
-				$txn->where("is_recurring",0);
+				$txn->where("is_recurring", 0);
 				$txn->get_iterated();
 				if($txn->exists()) {
 					foreach ($txn as $t) {
@@ -1806,40 +1806,40 @@ class Vendorreports extends REST_Controller {
 						$today = new DateTime();
 						$dueDate = new DateTime($t->due_date);
 						$diff = $today->diff($dueDate)->format("%a");
-
+						$amount = $t->type =="Cash_Payment"?floatval($t->amount)/floatval($t->rate)*-1:floatval($t->amount)/floatval($t->rate);
 						if(isset($customers["$segment->name"])) {
-							$customers["$segment->name"]['amount']	+= floatval($t->amount) / floatval($t->rate);
+							$customers["$segment->name"]['amount']	+= $amount  / floatval($t->rate);
 							if($dueDate<$today){
 								if(intval($diff)>90){
-									$customers["$segment->name"]['>90']+= floatval($t->amount) / floatval($t->rate);
+									$customers["$segment->name"]['>90']+= $amount  / floatval($t->rate);
 								}else if(intval($diff)>60){
-									$customers["$segment->name"]['90'] += floatval($t->amount) / floatval($t->rate);
+									$customers["$segment->name"]['90'] += $amount / floatval($t->rate);
 								}else if(intval($diff)>30){
-									$customers["$segment->name"]['60'] += floatval($t->amount) / floatval($t->rate);
+									$customers["$segment->name"]['60'] +=$amount / floatval($t->rate);
 								}else{
-									$customers["$segment->name"]['30'] += floatval($t->amount) / floatval($t->rate);
+									$customers["$segment->name"]['30'] += $amount  / floatval($t->rate);
 								}
 							}else{
 								// $customers["$fullname"]['<30'] += floatval($value->amount) / floatval($value->rate);
 							}
 						} else {
-							$customers["$segment->name"]['amount']	= floatval($t->amount) / floatval($t->rate);
+							$customers["$segment->name"]['amount']	= $amount  / floatval($t->rate);
 							if($dueDate<$today){
 								if(intval($diff)>90){
-									$customers["$segment->name"]['>90']= floatval($t->amount) / floatval($t->rate);
+									$customers["$segment->name"]['>90']= $amount  / floatval($t->rate);
 								}else if(intval($diff)>60){
-									$customers["$segment->name"]['90'] = floatval($t->amount) / floatval($t->rate);
+									$customers["$segment->name"]['90'] = $amount / floatval($t->rate);
 								}else if(intval($diff)>30){
-									$customers["$segment->name"]['60'] = floatval($t->amount) / floatval($t->rate);
+									$customers["$segment->name"]['60'] = $amount / floatval($t->rate);
 								}else{
-									$customers["$segment->name"]['30'] = floatval($t->amount) / floatval($t->rate);
+									$customers["$segment->name"]['30'] = $amount  / floatval($t->rate);
 								}
 							}else{
-								$customers["$segment->name"]['<30'] = floatval($t->amount) / floatval($t->rate);
+								$customers["$segment->name"]['<30'] = $amount  / floatval($t->rate);
 							}
 					//Results
 						}
-						$total += floatval($t->amount)/ floatval($t->rate);
+						$total += $amount / floatval($t->rate);
 					}
 				}	
 			}
@@ -1853,7 +1853,7 @@ class Vendorreports extends REST_Controller {
 			}
 
 			$obj->where_in_related("contact", 'contact_type_id', $type);
-			$obj->where("type", "Credit_Purchase");
+			$obj->where_in("type", array("Credit_Purchase", "Cash_Payment"));
 			$obj->where('is_recurring', 0);
 			$obj->where("deleted", 0);
 
@@ -1876,17 +1876,18 @@ class Vendorreports extends REST_Controller {
 					$today = new DateTime();
 					$dueDate = new DateTime($value->due_date);
 					$diff = $today->diff($dueDate)->format("%a");
-
+					$amount = $value->type =="Cash_Payment"?floatval($value->amount)/floatval($value->rate)*-1:floatval($value->amount)/floatval($value->rate);
 					if(isset($customers["$fullname"])) {
-						$customers["$fullname"]['amount']	+= floatval($value->amount) / floatval($value->rate);
+						
+						$customers["$fullname"]['amount']	+= $amount;
 						if($dueDate<$today){
 							$outstanding = $today->diff($dueDate)->format("%a");
 							if(intval($diff)>90){
-								$customers["$fullname"]['>90']+= floatval($value->amount) / floatval($value->rate);
+								$customers["$fullname"]['>90']+= $amount;
 							}else if(intval($diff)>60){
-								$customers["$fullname"]['90'] += floatval($value->amount) / floatval($value->rate);
+								$customers["$fullname"]['90'] += $amount;
 							}else if(intval($diff)>30){
-								$customers["$fullname"]['60'] += floatval($value->amount) / floatval($value->rate);
+								$customers["$fullname"]['60'] += $amount;
 							}
 							// }else{
 							// 	$customers["$fullname"]['30'] += floatval($value->amount) / floatval($value->rate);
@@ -1896,33 +1897,34 @@ class Vendorreports extends REST_Controller {
 							// $customers["$fullname"]['<30'] += floatval($value->amount) / floatval($value->rate);
 						}
 					} else {
-						$customers["$fullname"]['amount']	= floatval($value->amount) / floatval($value->rate);
+						$customers["$fullname"]['amount']	= $amount;
 						if($dueDate<$today){
 							$outstanding = $today->diff($dueDate)->format("%a");
 							if(intval($diff)>90){
-								$customers["$fullname"]['>90']= floatval($value->amount) / floatval($value->rate);
+								$customers["$fullname"]['>90']= $amount;
 							}else if(intval($diff)>60){
-								$customers["$fullname"]['90'] = floatval($value->amount) / floatval($value->rate);
+								$customers["$fullname"]['90'] = $amount;
 							}else if(intval($diff)>30){
-								$customers["$fullname"]['60'] = floatval($value->amount) / floatval($value->rate);
+								$customers["$fullname"]['60'] = $amount;
 							}else{
-								$customers["$fullname"]['30'] = floatval($value->amount) / floatval($value->rate);
+								$customers["$fullname"]['30'] = $amount;
 							}
 						}else{
-							$customers["$fullname"]['<30'] = floatval($value->amount) / floatval($value->rate);
+							$customers["$fullname"]['<30'] = $amount;
 							$outstanding =0;
 						}
 				//Results
 					}
 				
 					$totalDay += $outstanding;
-					$total += floatval($value->amount)/ floatval($value->rate);
+					$total += $amount;
 					$aging = $totalDay/ $totalPurchase;
 				}
 			}
 		}
 		foreach ($customers as $key => $value) {
 			$data["results"][] = array(
+
 				'group' 		=> $key,
 				'amount'		=> $value['amount'],
 				'underThirty' 	=> isset($value['<30']) ? $value['<30'] : 0,
@@ -2023,7 +2025,7 @@ class Vendorreports extends REST_Controller {
 			foreach ($segmentItem as $seg) {
 				$txn = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
-				$txn->where("type", "Credit_Purchase");
+				$txn->where_in("type", array("Credit_Purchase", "Cash_Payment"));
 				$txn->where_in("status", array(0,2));
 				// $txn->where('job_id <> ' 0);
 				$txn->like("segments", $seg->id, "both");
@@ -2036,9 +2038,9 @@ class Vendorreports extends REST_Controller {
 						$today = new DateTime();
 						$dueDate = new DateTime($t->due_date);
 						$diff = $today->diff($dueDate)->format("%a");
-
+						$amount = $t->type =="Cash_Payment"?floatval($t->amount)/floatval($t->rate)*-1:floatval($t->amount)/floatval($t->rate);
 						if(isset($customers["$seg->name"])) {
-							$customers["$seg->name"]['amount']	+= floatval($t->amount) / floatval($t->rate);
+							$customers["$seg->name"]['amount']	+= $amount  / floatval($t->rate);
 							$outstanding = 0; // days
 							if($dueDate<$today){
 								$outstandingDay = $today->diff($dueDate)->format("%a");
@@ -2062,10 +2064,10 @@ class Vendorreports extends REST_Controller {
 								'number' => $t->number,
 								'memo' => $t->memo2,
 								'outstanding' => $diff,
-								'amount' => floatval($t->amount) / floatval($t->rate)
+								'amount' => $amount / floatval($t->rate)
 							);
 						} else {
-							$customers["$seg->name"]['amount']	= floatval($t->amount) / floatval($t->rate);
+							$customers["$seg->name"]['amount']	= $amount / floatval($t->rate);
 							$outstanding = 0; // days
 							if($dueDate<$today){
 								$outstandingDay = $today->diff($dueDate)->format("%a");
@@ -2089,11 +2091,11 @@ class Vendorreports extends REST_Controller {
 								'number' => $t->number,
 								'memo' => $t->memo2,
 								'outstanding' => $diff,
-								'amount' => floatval($t->amount) / floatval($t->rate)
+								'amount' => $amount  / floatval($t->rate)
 							);
 					//Results
 						}
-						$total += floatval($t->amount)/ floatval($t->rate);
+						$total += $amount / floatval($t->rate);
 					}
 				}	
 			}
@@ -2107,7 +2109,7 @@ class Vendorreports extends REST_Controller {
 			}
 
 			$obj->where_in_related("contact", 'contact_type_id', $type);
-			$obj->where("type", "Credit_Purchase");
+			$obj->where_in("type", array("Credit_Purchase", "Cash_Payment"));
 			$obj->where('is_recurring', 0);
 			$obj->where("deleted", 0);
 
@@ -2131,9 +2133,9 @@ class Vendorreports extends REST_Controller {
 					$today = new DateTime();
 					$dueDate = new DateTime($value->due_date);
 					$diff = $today->diff($dueDate)->format("%a");
-
+					$amount = $value->type =="Cash_Payment"?floatval($value->amount)/floatval($value->rate)*-1:floatval($value->amount)/floatval($value->rate);
 					if(isset($customers["$fullname"])) {
-						$customers["$fullname"]['amount']	+= floatval($value->amount) / floatval($value->rate);
+						$customers["$fullname"]['amount']	+= $amount / floatval($value->rate);
 						$outstanding = 0; // days
 						if($dueDate<$today){
 							$outstandingDay = $today->diff($dueDate)->format("%a");
@@ -2157,10 +2159,10 @@ class Vendorreports extends REST_Controller {
 							'number' => $value->number,
 							'memo' => $value->memo2,
 							'outstanding' => $diff,
-							'amount' => floatval($value->amount) / floatval($value->rate)
+							'amount' => $amount/ floatval($value->rate)
 						);
 					} else {
-						$customers["$fullname"]['amount']	= floatval($value->amount) / floatval($value->rate);
+						$customers["$fullname"]['amount']	= $amount ;
 						$outstanding = 0; // days
 						if($dueDate<$today){
 							$outstandingDay = $today->diff($dueDate)->format("%a");
@@ -2184,13 +2186,13 @@ class Vendorreports extends REST_Controller {
 							'number' => $value->number,
 							'memo' => $value->memo2,
 							'outstanding' => $diff,
-							'amount' => floatval($value->amount) / floatval($value->rate)
+							'amount' => $amount
 						);
 				//Results
 					}
 
 					$totalDay += $outstandingDay;
-					$total += floatval($value->amount)/ floatval($value->rate);
+					$total += $amount;
 					$aging = $totalDay/ $totalPurchase;
 				}
 			}

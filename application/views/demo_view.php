@@ -11705,7 +11705,7 @@
 								              							source: referenceDS,						              							
 								              							events:{change: referenceChanges}"
 								              				placeholder="Type number..." 
-								              				style="width: 100%" />
+								              				required data-required-msg="required" style="width: 100%" />
 												</td>
 											</tr>		            	
 											<tr>
@@ -14015,28 +14015,16 @@
 						</div>
 
 						<div class="row-fluid">
-							<div class="span5">
+							<div class="span3">
 								<div class="total-customer">
-									<div class="span6">
-										<p>Total Supplier</p>
-										<span data-bind="text: supplierCount"></span>
-									</div>	
-									<div class="span6">
-										<p>NUmber of Supplier</p>
-										<span data-bind="text: count"></span>
-									</div>
+									<p>NUmber of Supplier</p>
+									<span data-bind="text: count"></span>
 								</div>
 							</div>
-							<div class="span7">
+							<div class="span9">
 								<div class="total-customer">
-									<div class="span6">
-										<p>Supplier Balance</p>
-										<span data-bind="text: total"></span>
-									</div>									
-									<div class="span6">
-										<p>Average Aging</p>
-										<span data-bind="text: aging"></span>
-									</div>
+									<p>Supplier Balance</p>
+									<span data-bind="text: total"></span>
 								</div>
 							</div>
 						</div>
@@ -14045,17 +14033,18 @@
 							<thead>
 								<tr>
 									<th><span>Supplier</span></th>
-									<th><span>CURRENT</span></th>
-									<th><span>1-30</span></th>
-									<th><span>31-60</span></th>
-									<th><span>61-90</span></th>
-									<th><span>OVER 90</span></th>
-									<th><span>TOTAL</span></th>							
+									<th style="text-align: right"><span>CURRENT</span></th>
+									<th style="text-align: right"><span>1-30</span></th>
+									<th style="text-align: right"><span>31-60</span></th>
+									<th style="text-align: right"><span>61-90</span></th>
+									<th style="text-align: right"><span>OVER 90</span></th>
+									<th style="text-align: right"><span>TOTAL</span></th>							
 								</tr>
 							</thead>
 							<tbody data-role="listview"
 										 data-bind="source: payablesAging.dataSource"
 										 data-template="payablesAgingSummary-temp"
+										 data-auto-bind="false"
 							></tbody>
 							<tfoot>
 								<tr>
@@ -14072,7 +14061,7 @@
 </script>
 <script id="payablesAgingSummary-temp" type="text/x-kendo-template" >
 	# kendo.culture(banhji.customerSale.locale); #
-	<tr style="font-weight: bold">
+	<tr>
 		<td>#=group#</td>
 		<td style="text-align: right;">#=kendo.toString(underThirty, 'c2')#</td>
 		<td style="text-align: right;">#=kendo.toString(thirty, 'c2')#</td>
@@ -14127,7 +14116,7 @@
 										           data-bind="value: endDate, events: {change: dateMin}"
 										           placeholder="To ..." />
 
-										  	 <button type="button" data-role="button" data-bind="click: payablesAging.search"><i class="icon-search"></i></button>							
+										  	 <button type="button" data-role="button" data-bind="click: payablesAgingDetail.search"><i class="icon-search"></i></button>							
 									    </div>									        							       
 								    </div>
 								</div>
@@ -14146,28 +14135,16 @@
 
 					
 					<div class="row-fluid">
-							<div class="span5">
+							<div class="span3">
 								<div class="total-customer">
-									<div class="span6">
-										<p>Total Supplier</p>
-									<span data-bind="text: supplierCount"></span>
-									</div>	
-									<div class="span6">
-										<p>Supplier Balance</p>
-									<span data-bind="text: total"></span>
-									</div>
+									<p>No. Supplier</p>
+									<span data-bind="text: count"></span>								
 								</div>
 							</div>
-							<div class="span7">
+							<div class="span9">
 								<div class="total-customer">
-									<div class="span6">
-										<p>Number Supplier</p>
-									<span data-bind="text: count"></span>
-									</div>									
-									<div class="span6">
-										<p>Average Aging</p>
-									<span data-bind="text: aging"></span>
-									</div>
+									<p>Supplier Balance</p>
+									<span data-bind="text: total"></span>
 								</div>
 							</div>
 						</div>
@@ -14176,11 +14153,10 @@
 						<thead>
 							<tr>
 								<th><span data-bind="text: lang.lang.type"></span></th>
-								<th><span data-bind="text: lang.lang.date"></span></th>
-								<th style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></th>
-								<th><span data-bind="text: lang.lang.memo"></span></th>
-								<th><span data-bind="text: lang.lang.aging"></span></th>
-								<th><span data-bind="text: lang.lang.balance"></span></th>
+								<th style="text-align: right;"><span data-bind="text: lang.lang.date"></span></th>
+								<th style="text-align: right;"><span data-bind="text: lang.lang.no_"></span></th>
+								<th style="text-align: right;"><span data-bind="text: lang.lang.aging"></span></th>
+								<th style="text-align: right;"><span data-bind="text: lang.lang.balance"></span></th>
 							</tr>
 						</thead>
 						<tbody data-role="listview"
@@ -14208,19 +14184,17 @@
 		<td></td>
 		<td></td>
 		<td></td>
-		<td></td>
 	</tr>
 	# if (items.length) {#
 		#for(var i= 0; i <items.length; i++) {#
 			<tr>
 				# var myDate = kendo.toString(new Date(items[i].date),'dd-MM-yyyy'); #
 				<td>&nbsp;&nbsp;#=items[i].type#</td>
-				<td>#=myDate#</td>
-				<td>
+				<td style="text-align: right;">#=myDate#</td>
+				<td style="text-align: right;">
 					<a href="\#/purchase/#=items[i].id#">#=items[i].number#</a>
 				</td>
-				<td>#=items[i].memo#</td>
-				<td>#=items[i].outstanding#</td>
+				<td style="text-align: right;">#=items[i].outstanding# days</td>
 				<td style="text-align: right;">#=kendo.toString(items[i].amount, 'c2')#</td>
 			</tr>
 
@@ -19581,7 +19555,7 @@
 								              							enabled: enableRef,						              							
 								              							events:{change: referenceChanges}"
 								              				placeholder="Select Invoice..." 
-								              				style="width: 100%" />
+								              				required data-required-msg="required" style="width: 100%" />
 												</td>
 											</tr>			            	
 											<tr>
@@ -43002,8 +42976,10 @@
 			page:1,
 			pageSize: 100
 		}),
-		//Measurement
-		measurementDS				: dataStore(apiUrl + "measurements"),		
+		itemPriceList 				: [],
+		itemPriceDS					: dataStore(apiUrl + "item_prices"),
+		measurementList 			: [],
+		measurementDS				: dataStore(apiUrl + "measurements"),
 		//Tax
 		taxItemDS					: dataStore(apiUrl + "tax_items"),
 		customerTaxDS				: new kendo.data.DataSource({
@@ -43265,17 +43241,14 @@
 		selectItemMessage 			: "Please select an item.",
 		duplicateSelectedItemMessage: "You already selected this item.",
 		pageLoad 					: function(){
-			this.loadRate();
-			this.itemTypeDS.read();
-			this.measurementDS.query({
-				filter:[],
-				page:1,
-				pageSize:100
-			});
+			this.loadRate();						
 			this.loadPrefixes();
 			this.loadTxnTemplates();
 			this.loadAccounts();
 			this.loadItems();
+			this.itemTypeDS.read();
+			this.loadItemPrices();
+			this.loadMeasurements();
 			this.loadCustomers();
 			this.loadSuppliers();
 			this.loadEmployees();
@@ -43403,6 +43376,42 @@
 				filter:{ field:"status", value:1 },
 			}).then(function(){
 				var view = self.itemDS.view();
+
+				$.each(view, function(index, value){
+					raw.push(value);
+				});
+			});
+		},
+		loadItemPrices 				: function(){
+			var self = this, raw = this.get("itemPriceList");
+
+			//Clear array
+			if(raw.length>0){
+				raw.splice(0,raw.length);
+			}
+
+			this.itemPriceDS.query({
+				filter:{ field:"status", operator:"where_related_item", value:1 },
+			}).then(function(){
+				var view = self.itemPriceDS.view();
+
+				$.each(view, function(index, value){
+					raw.push(value);
+				});
+			});
+		},
+		loadMeasurements 			: function(){
+			var self = this, raw = this.get("measurementList");
+
+			//Clear array
+			if(raw.length>0){
+				raw.splice(0,raw.length);
+			}
+
+			this.measurementDS.query({
+				filter:[],
+			}).then(function(){
+				var view = self.measurementDS.view();
 
 				$.each(view, function(index, value){
 					raw.push(value);
@@ -49743,14 +49752,15 @@
 		txnDS  				: dataStore(apiUrl + "transactions"),
 		recurringDS 		: dataStore(apiUrl + "transactions"),
 		recurringLineDS 	: dataStore(apiUrl + "item_lines"),
-		jobDS				: banhji.source.jobDS,
+		catalogDS			: dataStore(apiUrl + "items"),
+		assemblyDS			: dataStore(apiUrl + "item_prices"),
+		balanceDS  			: dataStore(apiUrl + "transactions"),
 		measurementDS	 	: dataStore(apiUrl + "measurements"),
 		attachmentDS	 	: dataStore(apiUrl + "attachments"),
 		txnTemplateDS 		: new kendo.data.DataSource({
 		  	data: banhji.source.txnTemplateList,
 		  	filter:{ field: "type", value: "Purchase_Order" }
-		}),
-		balanceDS  			: dataStore(apiUrl + "transactions"),
+		}),		
 		contactDS  			: new kendo.data.DataSource({
 		  	data: banhji.source.supplierList,
 			sort: { field:"number", dir:"asc" }
@@ -49763,9 +49773,8 @@
 				{ field:"number", dir:"asc" }
 			]
 		}),
-		taxItemDS  			: banhji.source.supplierTaxDS,
-		catalogDS			: dataStore(apiUrl + "items"),
-		assemblyDS			: dataStore(apiUrl + "item_prices"),
+		jobDS				: banhji.source.jobDS,
+		taxItemDS  			: banhji.source.supplierTaxDS,		
 		segmentItemDS		: banhji.source.segmentItemDS,
 		amtDueColor 		: banhji.source.amtDueColor,
 	    confirmMessage 		: banhji.source.confirmMessage,
@@ -55427,12 +55436,14 @@
 			{id: 'date', name: 'Date'}
 		],
 		search 	: function() {
+			var endDate = new Date(this.endDate);
+			endDate.setDate(endDate.getDate()+1);
 
 			banhji.payablesAgingSupplier.dataSource.filter({
 				logic: banhji.payablesAgingSupplier.get('filteredBy'),
 				filters: [			
 					{field: "issued_date >=", value: kendo.toString(this.startDate, "yyyy-MM-dd")},
-					{field: "issued_date <=", value: kendo.toString(this.endDate, "yyyy-MM-dd")}
+					{field: "issued_date <", value: kendo.toString(endDate, "yyyy-MM-dd")}
 				]
 			});
 		}, 
@@ -76189,6 +76200,7 @@
 		$("#secondary-menu").html("");
 		banhji.index.getLogo();
 		banhji.index.pageLoad();
+		banhji.pageLoaded["index"] = true;
 	});
 	banhji.router.route("/search_advanced", function(){
 		if(!banhji.userManagement.getLogin()){
@@ -76431,206 +76443,172 @@
 		// 	}				
 		// });	
 	});
-	banhji.router.route("/cash_advance(/:id)", function(id){
-		// banhji.accessMod.query({
-		// 	filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
-		// }).then(function(e){
-		// 	var allowed = false;
-		// 	if(banhji.accessMod.data().length > 0) {
-		// 		for(var i = 0; i < banhji.accessMod.data().length; i++) {
-		// 			if("accounting" == banhji.accessMod.data()[i].name.toLowerCase()) {
-		// 				allowed = true;
-		// 				break;
-		// 			}
-		// 		}
-		// 	} 
-		// 	if(allowed) {
-				banhji.view.layout.showIn("#content", banhji.view.cashAdvance);
-				kendo.fx($("#slide-form")).slideIn("down").play();
+	banhji.router.route("/cash_advance(/:id)", function(id){		
+		banhji.view.layout.showIn("#content", banhji.view.cashAdvance);
+		kendo.fx($("#slide-form")).slideIn("down").play();
 
-				var vm = banhji.cashAdvance;
-				banhji.userManagement.addMultiTask("Cash Advance","cash_advance",vm);
+		var vm = banhji.cashAdvance;
+		banhji.userManagement.addMultiTask("Cash Advance","cash_advance",vm);
+		
+		if(banhji.pageLoaded["cash_advance"]==undefined){
+			banhji.pageLoaded["cash_advance"] = true;
+
+			var validator = $("#example").kendoValidator({
+	        	rules: {
+			        customRule1: function(input) {
+			          	if (input.is("[name=txtRecurringName]") && vm.recurring_validate) {
+			          		vm.set("recurring_validate", false);
+			            	return $.trim(input.val()) !== "";
+			          	}
+			          	return true;
+			        },
+			        customRule2: function(input){
+			          	if (input.is("[name=txtNumber]")) {	
+				            return vm.get("notDuplicateNumber");
+				        }
+				        return true;
+			        }
+			    },
+			    messages: {
+			        customRule1: banhji.source.requiredMessage,
+			        customRule2: banhji.source.duplicateNumber
+			    }
+	        }).data("kendoValidator");
+
+	        $("#saveNew").click(function(e){
+				e.preventDefault();
+
+				if(validator.validate()){
+	            	vm.save();
+		        }else{
+		        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+		        }		            
+			});
+
+			$("#saveClose").click(function(e){
+				e.preventDefault();
+
+				if(validator.validate()){
+					vm.set("saveClose", true);
+	            	vm.save();
+		        }else{
+		        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+		        }
+			});
+
+			$("#savePrint").click(function(e){
+				e.preventDefault();
 				
-				if(banhji.pageLoaded["cash_advance"]==undefined){
-					banhji.pageLoaded["cash_advance"] = true;
-	   
-					var validator = $("#example").kendoValidator({
-			        	rules: {
-					        customRule1: function(input) {
-					          	if (input.is("[name=txtRecurringName]") && vm.recurring_validate) {
-					          		vm.set("recurring_validate", false);
-					            	return $.trim(input.val()) !== "";
-					          	}
-					          	return true;
-					        },
-					        customRule2: function(input){
-					          	if (input.is("[name=txtNumber]")) {	
-						            return vm.get("notDuplicateNumber");
-						        }
-						        return true;
-					        }
-					    },
-					    messages: {
-					        customRule1: banhji.source.requiredMessage,
-					        customRule2: banhji.source.duplicateNumber
-					    }
-			        }).data("kendoValidator");
+				if(validator.validate()){
+					vm.set("savePrint", true);
+	            	vm.save();
+		        }else{
+		        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+		        }
+			});
 
-			        $("#saveNew").click(function(e){
-						e.preventDefault();
+			$("#saveRecurring").click(function(e){
+				e.preventDefault();
 
-						if(validator.validate()){
-			            	vm.save();
-				        }else{
-				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-				        }		            
-					});
+				vm.set("recurring_validate", true);
 
-					$("#saveClose").click(function(e){
-						e.preventDefault();
+				if(validator.validate()){
+	            	vm.set("saveRecurring", true);
+	            	vm.save();
+		        }else{
+		        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+		        }
+			});
+		}
 
-						if(validator.validate()){
-							vm.set("saveClose", true);
-			            	vm.save();
-				        }else{
-				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-				        }
-					});
-
-					$("#savePrint").click(function(e){
-						e.preventDefault();
-						
-						if(validator.validate()){
-							vm.set("savePrint", true);
-			            	vm.save();
-				        }else{
-				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-				        }
-					});
-
-					$("#saveRecurring").click(function(e){
-						e.preventDefault();
-
-						vm.set("recurring_validate", true);
-
-						if(validator.validate()){
-			            	vm.set("saveRecurring", true);
-			            	vm.save();
-				        }else{
-				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-				        }
-					});
-				}
-
-				vm.pageLoad(id);
-		// 	} else {
-		// 		window.location.replace(baseUrl + "admin");
-		// 	}				
-		// });			
+		vm.pageLoad(id);
 	});
 	banhji.router.route("/expense(/:id)", function(id){
-		// banhji.accessMod.query({
-		// 	filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
-		// }).then(function(e){
-		// 	var allowed = false;
-		// 	if(banhji.accessMod.data().length > 0) {
-		// 		for(var i = 0; i < banhji.accessMod.data().length; i++) {
-		// 			if("accounting" == banhji.accessMod.data()[i].name.toLowerCase()) {
-		// 				allowed = true;
-		// 				break;
-		// 			}
-		// 		}
-		// 	} 
-		// 	if(allowed) {							
-				banhji.view.layout.showIn("#content", banhji.view.expense);
-				kendo.fx($("#slide-form")).slideIn("down").play();
+		banhji.view.layout.showIn("#content", banhji.view.expense);
+		kendo.fx($("#slide-form")).slideIn("down").play();
 
-				var vm = banhji.expense;
-				banhji.userManagement.addMultiTask("Expense","expense",vm);
+		var vm = banhji.expense;
+		banhji.userManagement.addMultiTask("Expense","expense",vm);
+		
+		if(banhji.pageLoaded["expense"]==undefined){
+			banhji.pageLoaded["expense"] = true;
+
+			var validator = $("#example").kendoValidator({
+	        	rules: {
+			        customRule1: function(input) {
+			          	if (input.is("[name=txtRecurringName]") && vm.recurring_validate) {
+			          		vm.set("recurring_validate", false);
+			            	return $.trim(input.val()) !== "";
+			          	}
+			          	return true;
+			        },
+			        customRule2: function(input) {
+			          	if (input.is("[name=txtReferenceNo]")) {
+			            	return $.trim(input.val()) !== "" && vm.isExistingInvoice==false;
+			          	}
+			          	return true;
+			        },
+			        customRule3: function(input){
+			          	if (input.is("[name=txtNumber]")) {	
+				            return vm.get("notDuplicateNumber");
+				        }
+				        return true;
+			        }
+			    },
+			    messages: {
+			        customRule1: banhji.source.requiredMessage,
+			        customRule2: banhji.source.duplicateInvoice,
+			        customRule3: banhji.source.duplicateNumber
+			    }
+	        }).data("kendoValidator");
+
+	        $("#saveNew").click(function(e){
+				e.preventDefault();
+
+				if(validator.validate()){
+	            	vm.save();
+		        }else{
+		        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+		        }
+			});
+
+			$("#saveClose").click(function(e){
+				e.preventDefault();
+
+				if(validator.validate()){
+					vm.set("saveClose", true);
+	            	vm.save();
+		        }else{
+		        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+		        }
+			});
+
+			$("#savePrint").click(function(e){
+				e.preventDefault();
 				
-				if(banhji.pageLoaded["expense"]==undefined){
-					banhji.pageLoaded["expense"] = true;
-	   
-					var validator = $("#example").kendoValidator({
-			        	rules: {
-					        customRule1: function(input) {
-					          	if (input.is("[name=txtRecurringName]") && vm.recurring_validate) {
-					          		vm.set("recurring_validate", false);
-					            	return $.trim(input.val()) !== "";
-					          	}
-					          	return true;
-					        },
-					        customRule2: function(input) {
-					          	if (input.is("[name=txtReferenceNo]")) {
-					            	return $.trim(input.val()) !== "" && vm.isExistingInvoice==false;
-					          	}
-					          	return true;
-					        },
-					        customRule3: function(input){
-					          	if (input.is("[name=txtNumber]")) {	
-						            return vm.get("notDuplicateNumber");
-						        }
-						        return true;
-					        }
-					    },
-					    messages: {
-					        customRule1: banhji.source.requiredMessage,
-					        customRule2: banhji.source.duplicateInvoice,
-					        customRule3: banhji.source.duplicateNumber
-					    }
-			        }).data("kendoValidator");
+				if(validator.validate()){
+					vm.set("savePrint", true);
+	            	vm.save();
+		        }else{
+		        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+		        }
+			});
 
-			        $("#saveNew").click(function(e){
-						e.preventDefault();
+			$("#saveRecurring").click(function(e){
+				e.preventDefault();
 
-						if(validator.validate()){
-			            	vm.save();
-				        }else{
-				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-				        }
-					});
+				vm.set("recurring_validate", true);
 
-					$("#saveClose").click(function(e){
-						e.preventDefault();
+				if(validator.validate()){
+	            	vm.set("saveRecurring", true);
+	            	vm.save();
+		        }else{
+		        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+		        }
+			});
+		}
 
-						if(validator.validate()){
-							vm.set("saveClose", true);
-			            	vm.save();
-				        }else{
-				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-				        }
-					});
-
-					$("#savePrint").click(function(e){
-						e.preventDefault();
-						
-						if(validator.validate()){
-							vm.set("savePrint", true);
-			            	vm.save();
-				        }else{
-				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-				        }
-					});
-
-					$("#saveRecurring").click(function(e){
-						e.preventDefault();
-
-						vm.set("recurring_validate", true);
-
-						if(validator.validate()){
-			            	vm.set("saveRecurring", true);
-			            	vm.save();
-				        }else{
-				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-				        }
-					});
-				}
-
-				vm.pageLoad(id);
-		// 	} else {
-		// 		window.location.replace(baseUrl + "admin");
-		// 	}				
-		// });		
+		vm.pageLoad(id);
 	});
 	banhji.router.route("/direct_expense(/:id)", function(id){
 		// banhji.accessMod.query({
