@@ -22,155 +22,6 @@ class Winvoices extends REST_Controller {
 		}
 		// $this->_database = "db_banhji";
 	}
-
-	// based on meter
-	// with contact detail
-	// and items based on meter record &
-	// plan
-	// installment
-	// function make_get() {
-	// 	$getData = $this->get('filter');
-	// 	$filters = $getData['filters'];
-	// 	$table = new Meter_record(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-	// 	$data = array();
-
-	// 	if(isset($filters)) {
-	// 		foreach($filters as $filter) {
-	// 			if(isset($filter['operator'])) {
-	// 				$table->{$filter['operator']}($filter['field'], $filter['value']);
-	// 			} else {
-	// 				$table->where($filter['field'], $filter['value']);
-	// 			}
-	// 		}
-	// 	}
-	// 	$table->where('invoiced <>', 1);
-	// 	$table->get();
-
-	// 	$tmp = array();
-
-	// 	foreach($table as $row) {
-	// 		$meter = $row->meter->get();
-	// 		$contact = $meter->contact->get();
-
-	// 		$plan  = $meter->plan->get();
-
-	// 		if(isset($tmp["$meter->number"])){
-	// 			$tmp["$meter->number"]['items'][] = array(
-	// 				'type' => 'usage',
-	// 					'line' => array(
-	// 						'id'   => $row->id,
-	// 						'name' => 'usage',
-	// 						'from' => $row->from_date,
-	// 						'to'   => $row->to_date,
-	// 						'prev'=>$row->previous,
-	// 						'current'=>$row->current,
-	// 						'usage' => $row->usage,
-	// 						'unit' => 'm3',
-	// 						'amount'=> 0
-	// 					));
-	// 		} else {
-	// 			$tmp["$meter->number"]['type'] = 'water_invoice';
-	// 			$tmp["$meter->number"]['contact'] = array(
-	// 					'id' => $contact->id,
-	// 					'account_id' => $contact->account_id,
-	// 					'ra_id' => $contact->ra_id,
-	// 					'name' => $contact->name
-	// 											);
-	// 			$tmp["$meter->number"]['meter'] = array(
-	// 												'id' => $meter->id,
-	// 												'number' => $meter->number,
-	// 												'multiplier' => $meter->multiplier
-	// 											);
-	// 			$tmp["$meter->number"]['items'][] = array(
-	// 											'type' => 'usage',
-	// 											'line' => array(													
-	// 												'id'   => $row->id,
-	// 												'name' => 'Usage',
-	// 												'from' => $row->from_date,
-	// 												'to'   => $row->to_date,
-	// 												'prev'=>$row->previous,
-	// 												'current'=>$row->current,
-	// 												'usage' => $row->usage,
-	// 												'unit' => 'm3',
-	// 												'amount'=> 0
-	// 											));
-	// 			// plan items
-	// 			$items = $plan->plan_item->get();
-	// 			foreach($items as $item) {
-	// 				$types = array('tariff', 'exemption', 'maintenance');
-	// 				if(in_array($item->type, $types)) {
-	// 					if($item->type === 'tariff') {
-	// 						$tariff = new Plan_item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-	// 						$tariff->where('tariff_id', $item->id)->get();
-	// 						if($tariff->exists()) {
-	// 							foreach($tariff as $t) {
-	// 								$tmp["$meter->number"]['items'][] = array(
-	// 									"type" => "$item->type",
-	// 									"line" => array(
-	// 										'id'   => $t->id,
-	// 										'from' => $t->from,
-	// 										'to'   => $t->to,
-	// 										'name' => $t->name,
-	// 										'prev' =>0,
-	// 										'current'=>0,
-	// 										'usage' => 0,
-	// 										'is_flat' => $t->is_flat == 0 ? FALSE:TRUE,
-	// 										'usage'  => $t->usage,
-	// 										'amount'=> $t->amount
-	// 									)
-	// 								);
-	// 							}									
-	// 						}
-	// 					} else {
-	// 						$tmp["$meter->number"]['items'][] = array(
-	// 							"type" => "$item->type",
-	// 							"line" => array(
-	// 								'id'   => $item->id,
-	// 								'from' => $item->from,
-	// 								'to'   => $item->to,
-	// 								'name' => $item->name,
-	// 								'prev' =>0,
-	// 								'current'=>0,
-	// 								'usage' => 0,
-	// 								'is_flat' => $item->is_flat == 0 ? FALSE:TRUE,
-	// 								'unit'  => $item->unit,
-	// 								'amount'=> $item->amount
-	// 							)
-	// 						);
-	// 					}							
-	// 				}						
-	// 			}
-
-	// 			// installment
-	// 			$installment = $meter->installment->get();
-	// 			$tmp["$meter->number"]['items'][] = array(
-	// 										"type" => 'installment',
-	// 										"line" => array(
-	// 											'id'   => $installment->id,
-	// 											'name' => 'Installment',
-	// 											'from' => 0,
-	// 											'to'   => 0,
-	// 											'prev' =>0,
-	// 											'current'=>0,
-	// 											'usage' => 0,
-	// 											'unit'  => 'money',
-	// 											'amount'=> $installment->amount
-	// 										));
-	// 		}
-	// 	}
-
-	// 	foreach($tmp as $t) {
-	// 		$data[] = array(
-	// 			'type' => $t['type'],
-	// 			'invoiced'=> FALSE,
-	// 			'contact' => $t['contact'],
-	// 			'meter'=> $t['meter'],
-	// 			'items'=> $t['items']
-	// 		);
-	// 	}
-
-	// 	$this->response(array('results' => $data, 'count' => count($data)), 200);
-	// }
 	function make_get() {
 		$getData = $this->get('filter');
 		$filters = $getData['filters'];
@@ -340,7 +191,7 @@ class Winvoices extends REST_Controller {
 
 			$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			// $obj->company_id 		= $value->company_id;
-			// $obj->location_id 		= $value->location_id;
+			$obj->location_id 		= $value->location_id;
 			$obj->contact_id 		= $value->contact_id;
 			$obj->payment_term_id	= $value->payment_term_id;
 			$obj->payment_method_id = $value->payment_method_id;
@@ -356,7 +207,7 @@ class Winvoices extends REST_Controller {
 		   	$obj->locale 			= $value->locale;
 		   	$obj->month_of 			= $value->month_of;
 		   	$obj->issued_date 		= $value->issued_date;
-		   	$obj->payment_date 		= $value->payment_date;
+		   	$obj->bill_date 		= $value->bill_date;
 		   	$obj->due_date 			= date('Y-m-d', strtotime($value->due_date));
 		   	$obj->check_no 			= $value->check_no;
 		   	$obj->memo 				= $value->memo;
@@ -427,7 +278,7 @@ class Winvoices extends REST_Controller {
 				   	"locale" 			=> $obj->locale,
 				   	"month_of"			=> $obj->month_of,
 				   	"issued_date"		=> $obj->issued_date,
-				   	"payment_date" 		=> $obj->payment_date,
+				   	"bill_date" 		=> $obj->bill_date,
 				   	"due_date" 			=> $obj->due_date,
 				   	"check_no" 			=> $obj->check_no,
 				   	"memo" 				=> $obj->memo,
@@ -471,15 +322,19 @@ class Winvoices extends REST_Controller {
 			$items  = $row->winvoice_line->get();
 			$lines  = array();
 			$m = $contact->meter->get();
+
+			$ml = $row->location->include_related('branch', array('term_of_condition'))->select('term_of_condition')->get();
+			$license = $ml->branch->get();
 			$usage = 0;	
 			$meter = array(
 				'meter_number'   => $m->number,
 				'location' => $m->location->get_raw()->result(),
+				'license' => $license->get_raw()->result(),
 			);
 
 			foreach($items as $item) {
 				
-				 if($item->type == '') {
+				 if($item->type == 'usage') {
 					$record = $item->meter_record->limit(1)->get();
 					$usage = $record->usage;
 					$lines[] = array(
@@ -488,16 +343,16 @@ class Winvoices extends REST_Controller {
 						'current'  => $record->current,
 						'consumption' => $record->usage,
 						'rate' => $item->rate,
-						'amount' => $item->amount
+						'amount' => floatval($item->amount)
 					);
 				} else {
 					$lines[] = array(
 						'number' => $item->description,
-						'previous' => 0,
-						'current'  => 0,
-						'consumption' => 0,
+						'previous' => $item->previous,
+						'current'  => $item->current,
+						'consumption' => $item->quantity,
 						'rate' => 0,
-						'amount' => $item->amount
+						'amount' => floatval($item->amount)
 					);
 				}
 			}
@@ -509,11 +364,14 @@ class Winvoices extends REST_Controller {
 				'status'=> $row->status,
 				'issue_date' => $row->issued_date,
 				'due_date' => $row->due_date,
-				'amount'  => $row->amount,
+				'bill_date' => $row->bill_date,
+				'amount'  => floatval($row->amount),
+				'locale' => $row->locale,
 				'consumption' => $usage,
 				'contact' => array(
 					'id' => $contact->id,
 					'name' => $contact->name,
+					'phone' => $contact->phone,
 					'abbr' => $contact->abbr,
 					'number' => $contact->number,
 					'address'=> $contact->address,

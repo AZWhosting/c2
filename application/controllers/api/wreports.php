@@ -20,7 +20,7 @@ class Wreports extends REST_Controller {
 			$this->server_pwd = $conn->password;
 			$this->_database = $conn->inst_database;
 		}
-		$this->_database = "db_banhji";
+		// $this->_database = "db_banhji";
 	}
 
 	// based on meter
@@ -494,6 +494,7 @@ class Wreports extends REST_Controller {
 		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;								
 		$sort 	 	= $this->get("sort");		
 		$is_pattern = 0;
+		$temp = array();
 
 		$obj = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
 
@@ -518,22 +519,42 @@ class Wreports extends REST_Controller {
 		$obj->include_related('contact/utility', array('abbr', 'code'));
 		$obj->include_related('branch', array('name'));
 		$obj->include_related('record', array('from_date', 'to_date', 'usage'));
+		$obj->include_related('record/winvoice_line', 'amount');
 		$obj->include_related('location', array('name'));
 		$obj->get_paged_iterated($page, $limit);
 		if($obj->exists()) {
 			$data = array();
 			foreach($obj as $row) {
 				//$utility = $row->contact->include_related('utility', array('abbr', 'code'))->get();
+				// $transaction = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				// $transaction->where('id', $row->record_transaction_id)->get();
+				if(isset($temp["$row->location_name"])) {
+					$temp["$row->location_name"]['Usage'] += isset($row->record_usage) ? $row->record_usage:0;
+					$temp["$row->location_name"]['Amount'] += $row->record_winvoice_line_amount;
+				} else {
+					$temp["$row->location_name"]['License'] = $row->branch_name;
+					$temp["$row->location_name"]['Usage'] = isset($row->record_usage) ? $row->record_usage:0;
+					$temp["$row->location_name"]['Amount'] = $row->record_winvoice_line_amount;
+					// array(
+					// "id" => $row->id,
+					// "meter_number" => $row->number,
+					// "from_date"=>$row->record_from_date,
+					// "to_date" =>$row->record_to_date,
+					// "License" => $row->branch_name,
+					// "Location"=> $row->location_name,
+					// "Usage" => isset($row->record_usage) ? $row->record_usage:0,
+					// "locale" => $row->contact_locale,
+					// "Amount" => $row->record_winvoice_line_amount
+				// );
+				}
+				
+			}
+			foreach($temp as $key => $value) {
 				$data[] = array(
-					"id" => $row->id,
-					"meter_number" => $row->number,
-					"from_date"=>$row->record_from_date,
-					"to_date" =>$row->record_to_date,
-					"License" => $row->branch_name,
-					"Location"=> $row->location_name,
-					"Usage" => $row->record_usage,
-					"locale" => $row->contact_locale,
-					"Amount" => 0
+					'License' => $value['License'],
+					'Location'=> $key,
+					'Usage'   => $value['Usage'],
+					'Amount'  => $value['Amount']
 				);
 			}
 			$this->response(array('results' => $data, 'count' => $obj->paged->total_rows), 200);
@@ -628,7 +649,8 @@ class Wreports extends REST_Controller {
 		$contact = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 				
 		//Filter
-		$search_date = new DateTime();		
+		$search_date = new DateTime();
+		$search_date = date('Y-m-d');	
 		if(!empty($filters) && isset($filters)){			
 	    	foreach ($filters as $value){
 	    		if($value["field"]==="search_date"){	    		
@@ -671,7 +693,7 @@ class Wreports extends REST_Controller {
 				if($invoice->exists()){
 					foreach ($invoice as $valInv) {
 						$today = new DateTime();
-						$dueDate = new DateTime($valInv->due_date);
+						$dueDate = new DateTime($value->due_date);
 						$diff = $today->diff($dueDate)->format("%a");
 
 						$amount += floatval($valInv->amount);
@@ -694,7 +716,7 @@ class Wreports extends REST_Controller {
 
 					$data["results"][] = array(
 						"id" 			=> $value->id,
-						"fullIdName"	=> $value->wnumber. " " .$fullname,
+						"fullIdName"	=> $value->namue,
 						"current" 		=> $current,
 						"oneMonth" 		=> $oneMonth,
 						"twoMonth" 		=> $twoMonth,
@@ -702,6 +724,7 @@ class Wreports extends REST_Controller {
 						"overMonth" 	=> $overMonth,
 						"amount" 		=> $amount
 					);
+
 				}				
 			}
 		}		
@@ -887,9 +910,12 @@ class Wreports extends REST_Controller {
 		$filters 	= $this->get("filter")["filters"];		
 		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
 		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;								
-		$sort 	 	= $this->get("sort");		
-		$data["results"] = array();
-		$data["count"] = 0;
+		$sort 	 	= $this->get("sort");
+		$data       = array();		
+		// $data["results"] = array();
+		// $data["count"] = 0;
+
+		$temp = array();
 
 		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
 
@@ -912,35 +938,7 @@ class Wreports extends REST_Controller {
 		if(!empty($filters) && isset($filters)){			
 	    	foreach ($filters as $value) {
 	    		if(!empty($value["operator"]) && isset($value["operator"])){
-		    		if($value["operator"]=="where_in"){
-		    			$obj->where_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_where_in"){
-		    			$obj->or_where_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="where_not_in"){
-		    			$obj->where_not_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_where_not_in"){
-		    			$obj->or_where_not_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="like"){
-		    			$obj->like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_like"){
-		    			$obj->or_like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="not_like"){
-		    			$obj->not_like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_not_like"){
-		    			$obj->or_not_like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="startswith"){
-		    			$obj->like($value["field"], $value["value"], "after");
-		    		}else if($value["operator"]=="endswith"){
-		    			$obj->like($value["field"], $value["value"], "before");
-		    		}else if($value["operator"]=="contains"){
-		    			$obj->like($value["field"], $value["value"], "both");
-		    		}else if($value["operator"]=="or_where"){
-		    			$obj->or_where($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="between"){
-		    			$obj->where_between($value["field"], $value["value1"], $value["value2"]);
-		    		}else{
-		    			$obj->where($value["field"].' '.$value["operator"], $value["value"]);
-		    		}
+		    		$obj->{$value["operator"]}($value["field"], $value["value"]);
 	    		}else{	    			
 	    			$obj->where($value["field"], $value["value"]);	    				    			
 	    		}
@@ -949,42 +947,60 @@ class Wreports extends REST_Controller {
 
 		//Join other tables
 		$obj->include_related("location", "name");
+		$obj->include_related("winvoice_line", array("quantity", "amount"));
 		$obj->include_related("contact/contact_type", "name");
+		$obj->include_related("contact/meter", "number");
+		$obj->include_related("contact/contact_utility", array("abbr", "code"));
 		$obj->include_related("contact", array("contact_type_id", "name"));
 		
 		//Results
-		$obj->get_paged_iterated($page, $limit);
-		$data["count"] = $obj->paged->total_rows;							
+		$obj->where('type', 'Water_Invoice');
+		$obj->get_paged_iterated($page, $limit);						
 
 		if($obj->result_count()>0){
 			foreach ($obj as $value) {
-				$fullname = $value->contact_surname.' '.$value->contact_name;
-				if($value->contact_contact_type_id=="6" || $value->contact_contact_type_id=="7" || $value->contact_contact_type_id=="8"){
-					$fullname = $value->contact_company;
+				// $fullname = $value->contact_surname.' '.$value->contact_name;
+				// if($value->contact_contact_type_id=="6" || $value->contact_contact_type_id=="7" || $value->contact_contact_type_id=="8"){
+				// 	$fullname = $value->contact_company;
+				// }
+
+				// $usage = 0;
+				// $lines = $value->winvoice_line->get();				
+				// foreach ($lines as $l) {
+				// 	if($l->type=="tariff"){
+				// 		$usage += intval($l->unit);
+				// 	}
+				// }
+
+				// $meter = $value->contact_contact_utility_abbr ."-". $value->contact_contact_utility_code;
+				
+				if(isset($temp["$value->contact_meter_number"])){
+					$temp["$value->contact_meter_number"]["usage"] += $value->winvoice_line_quantity;
+					$temp["$value->contact_meter_number"]["amount"] += floatval($value->winvoice_line_amount);
+				} else {
+					$temp["$value->contact_meter_number"]["fullname"] = $value->contact_name;
+					$temp["$value->contact_meter_number"]["contact_type_name"] = $value->contact_contact_type_name;
+					$temp["$value->contact_meter_number"]["location_name"] = $value->location_name;
+					$temp["$value->contact_meter_number"]["usage"] = $value->winvoice_line_quantity;
+					$temp["$value->contact_meter_number"]["amount"] = floatval($value->winvoice_line_amount);
 				}
 
-				$usage = 0;
-				$lines = $value->winvoice_line->get();				
-				foreach ($lines as $l) {
-					if($l->type=="tariff"){
-						$usage += intval($l->unit);
-					}
-				}
-
-				$data["results"][] = array(
-					"id" 					=> $value->id,
-					"contact_number" 		=> $value->contact_wnumber,
-					"fullname" 				=> $fullname,
-					"contact_type_name" 	=> $value->contact_contact_type_name,
-					"location_name" 		=> $value->location_name,
-					"usage" 				=> $usage,
-					"amount" 				=> floatval($value->amount)		
+				
+			}
+			foreach($temp as $key => $value) {
+				$data[] = array(
+					'contact_number' => $key,
+					'location_name'  => $value['location_name'],
+					'fullname' 		 => $value['fullname'],
+					'contact_type_name'=>$value['contact_type_name'],
+					'usage' 		 => $value['usage'],
+					'amount' 		 => $value['amount']
 				);
 			}
 		}		
 
 		//Response Data		
-		$this->response($data, 200);	
+		$this->response(array('results' => $data, 'count' => count($temp)), 200);	
 	}
 
 	//GET Cash Receipt DETAIL
@@ -997,7 +1013,7 @@ class Wreports extends REST_Controller {
 		$data["count"] = 0;
 		
 		//Location
-		$location = new Location(null, $this->entity);
+		$location = new Location(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$location->where("type", 'w');
 		$location->order_by("company_id");
 		$location->get();							
@@ -1104,15 +1120,15 @@ class Wreports extends REST_Controller {
 				$employee = $value->employee->get();
 				// $employee->get_by_id($value->cashier);
 
-				$invoice = new Invoice(null, $this->entity);
-				$invoice->get_by_id($value->reference_id);
+				// $invoice = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				// $invoice->get_by_id($value->reference_id);
 
 				$data["results"][] = array(
 					"id" 				=> $value->id,
 					"payment_date" 		=> $value->payment_date,					
 				   	"employee" 			=> $employee->name,
-				   	"contact" 			=> $value->contact->get_raw()->result(),
-				   	"invoice" 			=> $invoice->number,
+				   	"contact" 			=> $value->contact->select('name')->get_raw()->result(),
+				   	// "invoice" 			=> $invoice->number,
 				   	"amount" 			=> floatval($value->amount)				   
 				);
 			}
@@ -1443,7 +1459,7 @@ class Wreports extends REST_Controller {
 					'location'  => $value->location_name,
 					'usage' 	=> $value->transaction_winvoice_line_usage,
 					'amount' 	=> $value->transaction_amount
-				)
+				);
 			}
 			$data["count"] = $obj->paged->total_rows;
 			$this->response($data, 200);

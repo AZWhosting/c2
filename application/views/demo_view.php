@@ -6775,14 +6775,17 @@
 					<div class="span4">
 						<div class="box-generic well" style="height: 150px;">				
 							<table class="table table-borderless table-condensed cart_total">									
-								<tr>				
+								<tr>
 									<td style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></td>
 									<td>
 										<input id="txtNumber" name="txtNumber" class="k-textbox" 
 												data-bind="value: obj.number,
 															events:{change:checkExistingNumber}" 
 												required data-required-msg="required" 
-												placeholder="eg. ABC00001" style="width:100%;" />
+												placeholder="eg. ABC00001" style="width: 83%; float: left; margin-right: 5px;"" />
+										<div style="padding-left: 0; width: 25px; float: left;">
+											<a class="glyphicons no-js qrcode" data-bind="click: generateNumber" title="Generate Number" style="float: left; margin: 2px 0 0 0 ;"><i></i></a>
+										</div>
 									</td>
 								</tr>
 								<tr>
@@ -7276,14 +7279,17 @@
 					<div class="span4">
 						<div class="box-generic well" style="height: 190px;">				
 							<table class="table table-borderless table-condensed cart_total">									
-								<tr>				
+								<tr>
 									<td style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></td>
 									<td>
 										<input id="txtNumber" name="txtNumber" class="k-textbox" 
 												data-bind="value: obj.number,
 															events:{change:checkExistingNumber}" 
 												required data-required-msg="required" 
-												placeholder="eg. ABC00001" style="width:100%;" />
+												placeholder="eg. ABC00001" style="width: 83%; float: left; margin-right: 5px;"" />
+										<div style="padding-left: 0; width: 25px; float: left;">
+											<a class="glyphicons no-js qrcode" data-bind="click: generateNumber" title="Generate Number" style="float: left; margin: 2px 0 0 0 ;"><i></i></a>
+										</div>
 									</td>
 								</tr>
 								<tr>
@@ -9122,9 +9128,18 @@
 						<div class="span4">
 							<div class="box-generic well" style="height: 190px;">				
 								<table class="table table-borderless table-condensed cart_total">									
-									<tr data-bind="visible: isEdit">				
-										<td style="width: 50px;"><span data-bind="text: lang.lang.no_"></span>.</td>
-										<td><input class="k-textbox" data-bind="value: obj.number" style="width:100%;" /></td>
+									<tr>
+										<td style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></td>
+										<td>
+											<input id="txtNumber" name="txtNumber" class="k-textbox" 
+													data-bind="value: obj.number,
+																events:{change:checkExistingNumber}" 
+													required data-required-msg="required" 
+													placeholder="eg. ABC00001" style="width: 83%; float: left; margin-right: 5px;"" />
+											<div style="padding-left: 0; width: 25px; float: left;">
+												<a class="glyphicons no-js qrcode" data-bind="click: generateNumber" title="Generate Number" style="float: left; margin: 2px 0 0 0 ;"><i></i></a>
+											</div>
+										</td>
 									</tr>
 									<tr>
 										<td><span data-bind="text: lang.lang.date"></span></td>
@@ -9668,9 +9683,18 @@
 					<div class="span4">
 						<div class="box-generic well" style="height: 190px;">				
 							<table class="table table-borderless table-condensed cart_total">									
-								<tr data-bind="visible: isEdit">				
-									<td style="width: 50px;"><span data-bind="text: lang.lang.no_"></span>.</td>
-									<td><input class="k-textbox" data-bind="value: obj.number" style="width:100%;" /></td>
+								<tr>
+									<td style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></td>
+									<td>
+										<input id="txtNumber" name="txtNumber" class="k-textbox" 
+												data-bind="value: obj.number,
+															events:{change:checkExistingNumber}" 
+												required data-required-msg="required" 
+												placeholder="eg. ABC00001" style="width: 83%; float: left; margin-right: 5px;"" />
+										<div style="padding-left: 0; width: 25px; float: left;">
+											<a class="glyphicons no-js qrcode" data-bind="click: generateNumber" title="Generate Number" style="float: left; margin: 2px 0 0 0 ;"><i></i></a>
+										</div>
+									</td>
 								</tr>
 								<tr>
 									<td><span data-bind="text: lang.lang.date"></span></td>
@@ -10094,9 +10118,18 @@
 					<div class="span4">
 						<div class="box-generic well" style="height: 150px;">				
 							<table class="table table-borderless table-condensed cart_total">									
-								<tr data-bind="visible: isEdit">				
+								<tr>
 									<td style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></td>
-									<td><input class="k-textbox" data-bind="value: obj.number" style="width:100%;" /></td>
+									<td>
+										<input id="txtNumber" name="txtNumber" class="k-textbox" 
+												data-bind="value: obj.number,
+															events:{change:checkExistingNumber}" 
+												required data-required-msg="required" 
+												placeholder="eg. ABC00001" style="width: 83%; float: left; margin-right: 5px;"" />
+										<div style="padding-left: 0; width: 25px; float: left;">
+											<a class="glyphicons no-js qrcode" data-bind="click: generateNumber" title="Generate Number" style="float: left; margin: 2px 0 0 0 ;"><i></i></a>
+										</div>
+									</td>
 								</tr>
 								<tr>
 									<td><span data-bind="text: lang.lang.date"></span></td>
@@ -10560,9 +10593,18 @@
 						<div class="span4">
 							<div class="box-generic well" style="height: 190px;">				
 								<table class="table table-borderless table-condensed cart_total">									
-									<tr>				
+									<tr>
 										<td style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></td>
-										<td><input class="k-textbox" data-bind="value: obj.number" style="width:100%;" /></td>
+										<td>
+											<input id="txtNumber" name="txtNumber" class="k-textbox" 
+													data-bind="value: obj.number,
+																events:{change:checkExistingNumber}" 
+													required data-required-msg="required" 
+													placeholder="eg. ABC00001" style="width: 83%; float: left; margin-right: 5px;"" />
+											<div style="padding-left: 0; width: 25px; float: left;">
+												<a class="glyphicons no-js qrcode" data-bind="click: generateNumber" title="Generate Number" style="float: left; margin: 2px 0 0 0 ;"><i></i></a>
+											</div>
+										</td>
 									</tr>
 									<tr>
 										<td><span data-bind="text: lang.lang.date"></span></td>
@@ -11570,9 +11612,18 @@
 						<div class="span4">
 							<div class="box-generic well" style="height: 190px;">				
 								<table class="table table-borderless table-condensed cart_total">									
-									<tr data-bind="visible: isEdit">				
+									<tr>
 										<td style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></td>
-										<td><input class="k-textbox" data-bind="value: obj.number" style="width:100%;" /></td>
+										<td>
+											<input id="txtNumber" name="txtNumber" class="k-textbox" 
+													data-bind="value: obj.number,
+																events:{change:checkExistingNumber}" 
+													required data-required-msg="required" 
+													placeholder="eg. ABC00001" style="width: 83%; float: left; margin-right: 5px;"" />
+											<div style="padding-left: 0; width: 25px; float: left;">
+												<a class="glyphicons no-js qrcode" data-bind="click: generateNumber" title="Generate Number" style="float: left; margin: 2px 0 0 0 ;"><i></i></a>
+											</div>
+										</td>
 									</tr>
 									<tr>
 										<td><span data-bind="text: lang.lang.date"></span></td>
@@ -15963,9 +16014,18 @@
 						<div class="span4">
 							<div class="box-generic well" style="height: 190px;">				
 								<table class="table table-borderless table-condensed cart_total">									
-									<tr data-bind="visible: isEdit">				
+									<tr>
 										<td style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></td>
-										<td><input class="k-textbox" data-bind="value: obj.number" style="width:100%;" /></td>
+										<td>
+											<input id="txtNumber" name="txtNumber" class="k-textbox" 
+													data-bind="value: obj.number,
+																events:{change:checkExistingNumber}" 
+													required data-required-msg="required" 
+													placeholder="eg. ABC00001" style="width: 83%; float: left; margin-right: 5px;"" />
+											<div style="padding-left: 0; width: 25px; float: left;">
+												<a class="glyphicons no-js qrcode" data-bind="click: generateNumber" title="Generate Number" style="float: left; margin: 2px 0 0 0 ;"><i></i></a>
+											</div>
+										</td>
 									</tr>
 									<tr>
 										<td><span data-bind="text: lang.lang.date"></span></td>
@@ -16538,9 +16598,18 @@
 						<div class="span4">
 							<div class="box-generic well" style="height: 190px;">				
 								<table class="table table-borderless table-condensed cart_total">									
-									<tr data-bind="visible: isEdit">				
+									<tr>
 										<td style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></td>
-										<td><input class="k-textbox" data-bind="value: obj.number" style="width:100%;" /></td>
+										<td>
+											<input id="txtNumber" name="txtNumber" class="k-textbox" 
+													data-bind="value: obj.number,
+																events:{change:checkExistingNumber}" 
+													required data-required-msg="required" 
+													placeholder="eg. ABC00001" style="width: 83%; float: left; margin-right: 5px;"" />
+											<div style="padding-left: 0; width: 25px; float: left;">
+												<a class="glyphicons no-js qrcode" data-bind="click: generateNumber" title="Generate Number" style="float: left; margin: 2px 0 0 0 ;"><i></i></a>
+											</div>
+										</td>
 									</tr>
 									<tr>
 										<td><span data-bind="text: lang.lang.date"></span></td>
@@ -17124,9 +17193,18 @@
 						<div class="span4">
 							<div class="box-generic well" style="height: 150px;">				
 								<table class="table table-borderless table-condensed cart_total">									
-									<tr data-bind="visible: isEdit">				
+									<tr>
 										<td style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></td>
-										<td><input class="k-textbox" data-bind="value: obj.number" style="width:100%;" /></td>
+										<td>
+											<input id="txtNumber" name="txtNumber" class="k-textbox" 
+													data-bind="value: obj.number,
+																events:{change:checkExistingNumber}" 
+													required data-required-msg="required" 
+													placeholder="eg. ABC00001" style="width: 83%; float: left; margin-right: 5px;"" />
+											<div style="padding-left: 0; width: 25px; float: left;">
+												<a class="glyphicons no-js qrcode" data-bind="click: generateNumber" title="Generate Number" style="float: left; margin: 2px 0 0 0 ;"><i></i></a>
+											</div>
+										</td>
 									</tr>
 									<tr>
 										<td><span data-bind="text: lang.lang.date"></span></td>
@@ -17628,9 +17706,18 @@
 						<div class="span4">
 							<div class="box-generic well" style="height: 190px;">				
 								<table class="table table-borderless table-condensed cart_total">									
-									<tr data-bind="visible: isEdit">				
+									<tr>
 										<td style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></td>
-										<td><input class="k-textbox" data-bind="value: obj.number" style="width:100%;" /></td>
+										<td>
+											<input id="txtNumber" name="txtNumber" class="k-textbox" 
+													data-bind="value: obj.number,
+																events:{change:checkExistingNumber}" 
+													required data-required-msg="required" 
+													placeholder="eg. ABC00001" style="width: 83%; float: left; margin-right: 5px;"" />
+											<div style="padding-left: 0; width: 25px; float: left;">
+												<a class="glyphicons no-js qrcode" data-bind="click: generateNumber" title="Generate Number" style="float: left; margin: 2px 0 0 0 ;"><i></i></a>
+											</div>
+										</td>
 									</tr>
 									<tr>
 										<td><span data-bind="text: lang.lang.date"></span></td>
@@ -18293,9 +18380,18 @@
 						<div class="span4">
 							<div class="box-generic well" style="height: 190px;">				
 								<table class="table table-borderless table-condensed cart_total">
-									<tr data-bind="visible: isEdit">				
+									<tr>
 										<td style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></td>
-										<td><input class="k-textbox" data-bind="value: obj.number" style="width:100%;" /></td>
+										<td>
+											<input id="txtNumber" name="txtNumber" class="k-textbox" 
+													data-bind="value: obj.number,
+																events:{change:checkExistingNumber}" 
+													required data-required-msg="required" 
+													placeholder="eg. ABC00001" style="width: 83%; float: left; margin-right: 5px;"" />
+											<div style="padding-left: 0; width: 25px; float: left;">
+												<a class="glyphicons no-js qrcode" data-bind="click: generateNumber" title="Generate Number" style="float: left; margin: 2px 0 0 0 ;"><i></i></a>
+											</div>
+										</td>
 									</tr>
 									<tr>
 										<td><span data-bind="text: lang.lang.date"></span></td>
@@ -18952,9 +19048,18 @@
 						<div class="span4">
 							<div class="box-generic well" style="height: 190px;">				
 								<table class="table table-borderless table-condensed cart_total">									
-									<tr data-bind="visible: isEdit">				
+									<tr>
 										<td style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></td>
-										<td><input class="k-textbox" data-bind="value: obj.number" style="width:100%;" /></td>
+										<td>
+											<input id="txtNumber" name="txtNumber" class="k-textbox" 
+													data-bind="value: obj.number,
+																events:{change:checkExistingNumber}" 
+													required data-required-msg="required" 
+													placeholder="eg. ABC00001" style="width: 83%; float: left; margin-right: 5px;"" />
+											<div style="padding-left: 0; width: 25px; float: left;">
+												<a class="glyphicons no-js qrcode" data-bind="click: generateNumber" title="Generate Number" style="float: left; margin: 2px 0 0 0 ;"><i></i></a>
+											</div>
+										</td>
 									</tr>
 									<tr>
 										<td><span data-bind="text: lang.lang.date"></span></td>
@@ -19383,9 +19488,18 @@
 						<div class="span4">
 							<div class="box-generic well" style="height: 190px;">				
 								<table class="table table-borderless table-condensed cart_total">									
-									<tr data-bind="visible: isEdit">				
+									<tr>
 										<td style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></td>
-										<td><input class="k-textbox" data-bind="value: obj.number" style="width:100%;" /></td>
+										<td>
+											<input id="txtNumber" name="txtNumber" class="k-textbox" 
+													data-bind="value: obj.number,
+																events:{change:checkExistingNumber}" 
+													required data-required-msg="required" 
+													placeholder="eg. ABC00001" style="width: 83%; float: left; margin-right: 5px;"" />
+											<div style="padding-left: 0; width: 25px; float: left;">
+												<a class="glyphicons no-js qrcode" data-bind="click: generateNumber" title="Generate Number" style="float: left; margin: 2px 0 0 0 ;"><i></i></a>
+											</div>
+										</td>
 									</tr>
 									<tr>
 										<td><span data-bind="text: lang.lang.date"></span></td>
@@ -32301,9 +32415,18 @@
 						<div class="span4">
 							<div class="box-generic well" style="height: 150px;">				
 								<table class="table table-borderless table-condensed cart_total">									
-									<tr data-bind="visible: isEdit">				
+									<tr>
 										<td style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></td>
-										<td><input class="k-textbox" data-bind="value: obj.number" style="width:100%;" /></td>
+										<td>
+											<input id="txtNumber" name="txtNumber" class="k-textbox" 
+													data-bind="value: obj.number,
+																events:{change:checkExistingNumber}" 
+													required data-required-msg="required" 
+													placeholder="eg. ABC00001" style="width: 83%; float: left; margin-right: 5px;"" />
+											<div style="padding-left: 0; width: 25px; float: left;">
+												<a class="glyphicons no-js qrcode" data-bind="click: generateNumber" title="Generate Number" style="float: left; margin: 2px 0 0 0 ;"><i></i></a>
+											</div>
+										</td>
 									</tr>
 									<tr>
 										<td><span data-bind="text: lang.lang.date"></span></td>
@@ -37108,9 +37231,18 @@
 						<div class="span4">
 							<div class="box-generic well" style="height: 150px;">				
 								<table class="table table-borderless table-condensed cart_total">									
-									<tr data-bind="visible: isEdit">				
+									<tr>
 										<td style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></td>
-										<td><input class="k-textbox" data-bind="value: obj.number" style="width:100%;" /></td>
+										<td>
+											<input id="txtNumber" name="txtNumber" class="k-textbox" 
+													data-bind="value: obj.number,
+																events:{change:checkExistingNumber}" 
+													required data-required-msg="required" 
+													placeholder="eg. ABC00001" style="width: 83%; float: left; margin-right: 5px;"" />
+											<div style="padding-left: 0; width: 25px; float: left;">
+												<a class="glyphicons no-js qrcode" data-bind="click: generateNumber" title="Generate Number" style="float: left; margin: 2px 0 0 0 ;"><i></i></a>
+											</div>
+										</td>
 									</tr>
 									<tr>
 										<td><span data-bind="text: lang.lang.date"></span></td>
@@ -42991,6 +43123,8 @@
 		//Segment
 		segmentItemDS				: dataStore(apiUrl + "segments/item"),
 		//Prefixes
+		txnTemplateList 			: [],
+		txnTemplateDS				: dataStore(apiUrl + "transaction_templates"),
 		prefixList 					: [],
 		prefixDS					: dataStore(apiUrl + "prefixes"),
 		frequencyList 				: [
@@ -43139,6 +43273,7 @@
 				pageSize:100
 			});
 			this.loadPrefixes();
+			this.loadTxnTemplates();
 			this.loadAccounts();
 			this.loadItems();
 			this.loadCustomers();
@@ -43169,6 +43304,24 @@
 				filter: [],
 			}).then(function(){
 				var view = self.prefixDS.view();
+
+				$.each(view, function(index, value){
+					raw.push(value);
+				});
+			});
+		},
+		loadTxnTemplates 			: function(){
+			var self = this, raw = this.get("txnTemplateList");
+
+			//Clear array
+			if(raw.length>0){
+				raw.splice(0,raw.length);
+			}
+
+			this.txnTemplateDS.query({
+				filter:[]
+			}).then(function(){
+				var view = self.txnTemplateDS.view();
 
 				$.each(view, function(index, value){
 					raw.push(value);
@@ -43338,19 +43491,7 @@
 			});
 
 			return abbr;
-		},
-		getPrefixNumber 			: function(type){
-			var number = 1;
-			$.each(this.prefixList, function(index, value){
-				if(value.type==type){
-					abbr = value.number;
-
-					return false;
-				}
-			});
-
-			return number;
-		}			
+		}
 	});
 
 
@@ -47229,24 +47370,40 @@
 			}
 		},
 		generateNumber 			: function(){
-			var self = this, obj = this.get("obj");
+			var self = this, obj = this.get("obj"),
+			issueDate = new Date(obj.issued_date),
+			startDate = new Date(obj.issued_date),
+			endDate = new Date(obj.issued_date);
+
+			this.set("notDuplicateNumber", true);
+
+			startDate.setDate(1);
+			startDate.setMonth(0);//Set to January
+			endDate.setDate(31);
+			endDate.setMonth(11);//Set to November
 
 			this.txnDS.query({
-				filter:{ field:"type", value:obj.type },
+				filter:[
+					{ field:"type", value:obj.type },
+					{ field:"issued_date >=", value:kendo.toString(startDate, "yyyy-MM-dd") },
+					{ field:"issued_date <=", value:kendo.toString(endDate, "yyyy-MM-dd") }
+				],
 				sort: { field:"number", dir:"desc" },
 				page:1,
 				pageSize:1
 			}).then(function(){
-				var view = self.txnDS.view();
+				var view = self.txnDS.view(),				
+				number = 0, str = "";
 
-				var number = 0, str = "", d = new Date();
 				if(view.length>0){
-					var numberSplited = view[0].number.match(/(\d+)/g);
-					number = kendo.parseInt(numberSplited[numberSplited.length-1])+1;
+					str = view[0].number;
+					str = str.substring(str.length-4, str.length);
+					number = kendo.parseInt(str);
 				}
-
-				str = d.getFullYear().toString().substr(2,2) + kendo.toString(d.getMonth()+1, "00") + kendo.toString(number, "00000");
-								
+				
+				number++;
+				str = banhji.source.getPrefixAbbr(obj.type) + kendo.toString(issueDate, "yy") + kendo.toString(issueDate, "MM") + kendo.toString(number, "00000");
+				
 				obj.set("number", str);
 			});
 		},
@@ -47970,27 +48127,40 @@
 			}
 		},
 		generateNumber 			: function(){
-			var self = this, obj = this.get("obj");
+			var self = this, obj = this.get("obj"),
+			issueDate = new Date(obj.issued_date),
+			startDate = new Date(obj.issued_date),
+			endDate = new Date(obj.issued_date);
+
+			this.set("notDuplicateNumber", true);
+
+			startDate.setDate(1);
+			startDate.setMonth(0);//Set to January
+			endDate.setDate(31);
+			endDate.setMonth(11);//Set to November
 
 			this.txnDS.query({
-				filter:{ field:"type", value:obj.type },
+				filter:[
+					{ field:"type", value:obj.type },
+					{ field:"issued_date >=", value:kendo.toString(startDate, "yyyy-MM-dd") },
+					{ field:"issued_date <=", value:kendo.toString(endDate, "yyyy-MM-dd") }
+				],
 				sort: { field:"number", dir:"desc" },
 				page:1,
 				pageSize:1
 			}).then(function(){
-				var view = self.txnDS.view();
+				var view = self.txnDS.view(),				
+				number = 0, str = "";
 
-				var number = 0, str = "", d = new Date();
 				if(view.length>0){
-					var numberSplited = view[0].number.match(/(\d+)/g);
-					number = kendo.parseInt(numberSplited[numberSplited.length-1])+1;
-				}else{
-					number = banhji.source.getPrefixNumber(obj.type);
+					str = view[0].number;
+					str = str.substring(str.length-4, str.length);
+					number = kendo.parseInt(str);
 				}
-
-				// str = d.getFullYear().toString().substr(2,2) + kendo.toString(d.getMonth()+1, "00") + kendo.toString(number, "00000");
 				
-				str = banhji.source.getPrefixAbbr(obj.type) + kendo.toString(number, "00000");
+				number++;
+				str = banhji.source.getPrefixAbbr(obj.type) + kendo.toString(issueDate, "yy") + kendo.toString(issueDate, "MM") + kendo.toString(number, "00000");
+				
 				obj.set("number", str);
 			});
 		},
@@ -49703,6 +49873,7 @@
 		savePrint 			: false,
 		saveRecurring 		: false,
 		showConfirm   		: false,
+		notDuplicateNumber 	: true,
 		statusSrc 			: "",
 		recurring 			: "",
 		recurring_validate 	: false,
@@ -49992,6 +50163,73 @@
 				}
 			}				
 		},
+		//Number      	
+		checkExistingNumber 	: function(){
+			var self = this, para = [], 
+			obj = this.get("obj");
+			
+			if(obj.number!==""){
+
+				if(obj.isNew()==false){
+					para.push({ field:"id", operator:"where_not_in", value: [obj.id] });
+				}
+				
+				para.push({ field:"number", value: obj.number });
+				para.push({ field:"type", value: obj.type });
+
+				this.txnDS.query({
+					filter: para,
+					page: 1,
+					pageSize: 1
+				}).then(function(e){
+					var view = self.txnDS.view();
+					
+					if(view.length>0){
+				 		self.set("notDuplicateNumber", false);
+					}else{
+						self.set("notDuplicateNumber", true);
+					}
+				});
+			}
+		},
+		generateNumber 			: function(){
+			var self = this, obj = this.get("obj"),
+			issueDate = new Date(obj.issued_date),
+			startDate = new Date(obj.issued_date),
+			endDate = new Date(obj.issued_date);
+
+			this.set("notDuplicateNumber", true);
+
+			startDate.setDate(1);
+			startDate.setMonth(0);//Set to January
+			endDate.setDate(31);
+			endDate.setMonth(11);//Set to November
+
+			this.txnDS.query({
+				filter:[
+					{ field:"type", value:obj.type },
+					{ field:"issued_date >=", value:kendo.toString(startDate, "yyyy-MM-dd") },
+					{ field:"issued_date <=", value:kendo.toString(endDate, "yyyy-MM-dd") }
+				],
+				sort: { field:"number", dir:"desc" },
+				page:1,
+				pageSize:1
+			}).then(function(){
+				var view = self.txnDS.view(),				
+				number = 0, str = "";
+
+				if(view.length>0){
+					str = view[0].number;
+					str = str.substring(str.length-4, str.length);
+					number = kendo.parseInt(str);
+				}
+				
+				number++;
+				str = banhji.source.getPrefixAbbr(obj.type) + kendo.toString(issueDate, "yy") + kendo.toString(issueDate, "MM") + kendo.toString(number, "00000");
+				
+				obj.set("number", str);
+			});
+		},
 		//Obj
 		loadObj 			: function(id){
 			var self = this, para = [];
@@ -50083,9 +50321,6 @@
 
 			this.set("isEdit", false);
 			this.set("obj", null);
-			this.set("sub_total", 0);
-			this.set("discount", 0);
-			this.set("tax", 0);
 			this.set("total", 0);
 
 			//Set Date
@@ -50098,7 +50333,8 @@
 				recurring_id 		: "",
 				job_id 				: "",			
 				user_id 			: this.get("user_id"),
-			   	type				: "Purchase_Order",
+			   	type				: "Purchase_Order",//Required
+			   	number 				: "",
 			   	sub_total 			: 0,
 			   	discount 			: 0,
 			   	tax 				: 0,			   				   	
@@ -50132,6 +50368,7 @@
 			var obj = this.dataSource.at(0);					
 			this.set("obj", obj);
 
+			this.generateNumber();
 			this.setRate();
 			this.addRow();
 		},
@@ -50484,6 +50721,7 @@
 		savePrint 			: false,
 		saveRecurring 		: false,
 		showConfirm   		: false,
+		notDuplicateNumber	: true,
 		statusSrc 			: "",
 		recurring 			: "",
 		recurring_validate 	: false,
@@ -50713,6 +50951,73 @@
 
 		        this.changes();
 	        }
+		},
+		//Number      	
+		checkExistingNumber 	: function(){
+			var self = this, para = [], 
+			obj = this.get("obj");
+			
+			if(obj.number!==""){
+
+				if(obj.isNew()==false){
+					para.push({ field:"id", operator:"where_not_in", value: [obj.id] });
+				}
+				
+				para.push({ field:"number", value: obj.number });
+				para.push({ field:"type", value: obj.type });
+
+				this.txnDS.query({
+					filter: para,
+					page: 1,
+					pageSize: 1
+				}).then(function(e){
+					var view = self.txnDS.view();
+					
+					if(view.length>0){
+				 		self.set("notDuplicateNumber", false);
+					}else{
+						self.set("notDuplicateNumber", true);
+					}
+				});
+			}
+		},
+		generateNumber 			: function(){
+			var self = this, obj = this.get("obj"),
+			issueDate = new Date(obj.issued_date),
+			startDate = new Date(obj.issued_date),
+			endDate = new Date(obj.issued_date);
+
+			this.set("notDuplicateNumber", true);
+
+			startDate.setDate(1);
+			startDate.setMonth(0);//Set to January
+			endDate.setDate(31);
+			endDate.setMonth(11);//Set to November
+
+			this.txnDS.query({
+				filter:[
+					{ field:"type", value:obj.type },
+					{ field:"issued_date >=", value:kendo.toString(startDate, "yyyy-MM-dd") },
+					{ field:"issued_date <=", value:kendo.toString(endDate, "yyyy-MM-dd") }
+				],
+				sort: { field:"number", dir:"desc" },
+				page:1,
+				pageSize:1
+			}).then(function(){
+				var view = self.txnDS.view(),				
+				number = 0, str = "";
+
+				if(view.length>0){
+					str = view[0].number;
+					str = str.substring(str.length-4, str.length);
+					number = kendo.parseInt(str);
+				}
+				
+				number++;
+				str = banhji.source.getPrefixAbbr(obj.type) + kendo.toString(issueDate, "yy") + kendo.toString(issueDate, "MM") + kendo.toString(number, "00000");
+				
+				obj.set("number", str);
+			});
 		},		
 		//Obj
 		loadObj 			: function(id){
@@ -50773,7 +51078,8 @@
 				reference_id 		: "",
 				recurring_id 		: "",
 				user_id 			: this.get("user_id"),
-			   	type				: "GRN",
+			   	type				: "GRN",//Required
+			   	number 				: "",
 			   	sub_total 			: 0,				   		   					   				   	
 			   	amount				: 0,
 			   	discount 			: 0,
@@ -50805,6 +51111,7 @@
 
 			this.setRate();
 			this.addRow();
+			this.generateNumber();
 		},
 		addRow 				: function(){
 			var obj = this.get("obj");
@@ -50931,14 +51238,14 @@
 			var self = this, obj = this.get("obj");
 			this.set("showConfirm",false);			
 			
-	        this.deleteDS.query({
+	        this.txnDS.query({
 	        	filter:[
 	        		{ field:"reference_id", value:obj.id },
 	        	],
 	        	page:1,
 	        	pageSize:1
 	        }).then(function(){
-	        	var view = self.deleteDS.view();
+	        	var view = self.txnDS.view();
 
 	        	if(view.length>0){
 	        		alert("Sorry, you can not delete it.");
@@ -51143,7 +51450,7 @@
 		lang 				: langVM,
 		dataSource 			: dataStore(apiUrl + "transactions"),
 		lineDS  			: dataStore(apiUrl + "account_lines"),
-		deleteDS 			: dataStore(apiUrl + "transactions"),
+		txnDS 				: dataStore(apiUrl + "transactions"),
 		referenceLineDS		: dataStore(apiUrl + "account_lines"),
 		referenceDS			: dataStore(apiUrl + "transactions"),
 		journalLineDS		: dataStore(apiUrl + "journal_lines"),
@@ -51238,6 +51545,7 @@
 		savePrint 			: false,
 		saveRecurring 		: false,
 		showConfirm 		: false,
+		notDuplicateNumber  : true,
 		statusSrc 			: "",
 		recurring 			: "",
 		recurring_validate 	: false,
@@ -51391,6 +51699,73 @@
 				}
 			}
 		},
+		//Number      	
+		checkExistingNumber 	: function(){
+			var self = this, para = [], 
+			obj = this.get("obj");
+			
+			if(obj.number!==""){
+
+				if(obj.isNew()==false){
+					para.push({ field:"id", operator:"where_not_in", value: [obj.id] });
+				}
+				
+				para.push({ field:"number", value: obj.number });
+				para.push({ field:"type", value: obj.type });
+
+				this.txnDS.query({
+					filter: para,
+					page: 1,
+					pageSize: 1
+				}).then(function(e){
+					var view = self.txnDS.view();
+					
+					if(view.length>0){
+				 		self.set("notDuplicateNumber", false);
+					}else{
+						self.set("notDuplicateNumber", true);
+					}
+				});
+			}
+		},
+		generateNumber 			: function(){
+			var self = this, obj = this.get("obj"),
+			issueDate = new Date(obj.issued_date),
+			startDate = new Date(obj.issued_date),
+			endDate = new Date(obj.issued_date);
+
+			this.set("notDuplicateNumber", true);
+
+			startDate.setDate(1);
+			startDate.setMonth(0);//Set to January
+			endDate.setDate(31);
+			endDate.setMonth(11);//Set to November
+
+			this.txnDS.query({
+				filter:[
+					{ field:"type", value:obj.type },
+					{ field:"issued_date >=", value:kendo.toString(startDate, "yyyy-MM-dd") },
+					{ field:"issued_date <=", value:kendo.toString(endDate, "yyyy-MM-dd") }
+				],
+				sort: { field:"number", dir:"desc" },
+				page:1,
+				pageSize:1
+			}).then(function(){
+				var view = self.txnDS.view(),				
+				number = 0, str = "";
+
+				if(view.length>0){
+					str = view[0].number;
+					str = str.substring(str.length-4, str.length);
+					number = kendo.parseInt(str);
+				}
+				
+				number++;
+				str = banhji.source.getPrefixAbbr(obj.type) + kendo.toString(issueDate, "yy") + kendo.toString(issueDate, "MM") + kendo.toString(number, "00000");
+				
+				obj.set("number", str);
+			});
+		},
 		//Obj															
 		addEmpty 		 	: function(){			
 			this.dataSource.data([]);
@@ -51409,7 +51784,8 @@
 				account_id 			: "",				
 				user_id 			: this.get("user_id"), 	
 				reference_id	 	: "",    			    		
-			   	type				: "Vendor_Deposit", //required				   				   	
+			   	type				: "Vendor_Deposit", //required
+			   	number 				: "",				   				   	
 			   	amount				: 0,
 			   	rate				: 1,			   	
 			   	locale 				: banhji.locale,			   	
@@ -51434,7 +51810,8 @@
 			this.set("obj", obj);
 			
 			this.setRate();
-			this.addRow();				
+			this.addRow();
+			this.generateNumber();				
 		},
 		addRow 				: function(){				
 			var obj = this.get("obj");
@@ -51617,22 +51994,25 @@
 			var self = this, obj = this.get("obj");
 			this.set("showConfirm",false);			
 			
-	        this.deleteDS.query({
+	        this.txnDS.query({
 	        	filter:[
 	        		{ field:"reference_id", value:obj.id }
 	        	],
 	        	page:1,
 	        	pageSize:1
 	        }).then(function(){
-	        	var view = self.deleteDS.view();
+	        	var view = self.txnDS.view();
 
 	        	if(view.length>0){
 	        		alert("Sorry, you can not delete it.");
 	        	}else{
 	        		obj.set("deleted", 1);
 			        self.dataSource.sync();
-
-			        window.history.back();
+					self.dataSource.bind("requestEnd", function(e){
+						if(e.type==="update"){
+							window.history.back();
+						}
+					});
 	        	}
 	        });		    	    	
 		},
@@ -52005,6 +52385,7 @@
 		savePrint 					: false,
 		saveRecurring 				: false,
 		showConfirm 				: false,
+		notDuplicateNumber 			: true,
 		statusSrc 					: "",
 		recurring 					: "",
 		recurring_validate 			: false,
@@ -52438,7 +52819,7 @@
 			var data = e.data, obj = this.get("obj");
 
 			if(data.contact_id>0){
-				var contact = this.contactListDS.get(data.contact_id),
+				var contact = this.additionalContactDS.get(data.contact_id),
 				rate = banhji.source.getRate(contact.locale, new Date(data.issued_date)) / obj.rate;
 
 				data.set("rate", rate);
@@ -52488,7 +52869,8 @@
 				});
 			}
 
-			obj.set("account_id", 0);			
+			obj.set("account_id", 0);
+			this.generateNumber();			
 		},
 		loadTypeChanges 	: function(){
 			var obj = this.get("obj");			
@@ -52526,6 +52908,73 @@
 					}
 				}
 			}
+		},
+		//Number      	
+		checkExistingNumber 	: function(){
+			var self = this, para = [], 
+			obj = this.get("obj");
+			
+			if(obj.number!==""){
+
+				if(obj.isNew()==false){
+					para.push({ field:"id", operator:"where_not_in", value: [obj.id] });
+				}
+				
+				para.push({ field:"number", value: obj.number });
+				para.push({ field:"type", value: obj.type });
+
+				this.txnDS.query({
+					filter: para,
+					page: 1,
+					pageSize: 1
+				}).then(function(e){
+					var view = self.txnDS.view();
+					
+					if(view.length>0){
+				 		self.set("notDuplicateNumber", false);
+					}else{
+						self.set("notDuplicateNumber", true);
+					}
+				});
+			}
+		},
+		generateNumber 			: function(){
+			var self = this, obj = this.get("obj"),
+			issueDate = new Date(obj.issued_date),
+			startDate = new Date(obj.issued_date),
+			endDate = new Date(obj.issued_date);
+
+			this.set("notDuplicateNumber", true);
+
+			startDate.setDate(1);
+			startDate.setMonth(0);//Set to January
+			endDate.setDate(31);
+			endDate.setMonth(11);//Set to November
+
+			this.txnDS.query({
+				filter:[
+					{ field:"type", value:obj.type },
+					{ field:"issued_date >=", value:kendo.toString(startDate, "yyyy-MM-dd") },
+					{ field:"issued_date <=", value:kendo.toString(endDate, "yyyy-MM-dd") }
+				],
+				sort: { field:"number", dir:"desc" },
+				page:1,
+				pageSize:1
+			}).then(function(){
+				var view = self.txnDS.view(),				
+				number = 0, str = "";
+
+				if(view.length>0){
+					str = view[0].number;
+					str = str.substring(str.length-4, str.length);
+					number = kendo.parseInt(str);
+				}
+				
+				number++;
+				str = banhji.source.getPrefixAbbr(obj.type) + kendo.toString(issueDate, "yy") + kendo.toString(issueDate, "MM") + kendo.toString(number, "00000");
+				
+				obj.set("number", str);
+			});
 		},
 		//Obj
 		loadObj 			: function(id){
@@ -52747,11 +53196,7 @@
 
 			this.set("isEdit", false);
 			this.set("obj", null);
-			this.set("sub_total", 0);
-			this.set("discount", 0);
-			this.set("tax", 0);						
 			this.set("total", 0);
-			this.set("remaining", 0);
 			this.set("amount_due", 0);
 			this.set("additional_cost", 0);
 			this.set("amtDueColor", banhji.source.amtDueColor);
@@ -52771,6 +53216,7 @@
 				job_id 				: 0,				
 				user_id 			: this.get("user_id"),	    		
 			   	type				: "Cash_Purchase", //Required
+			   	number 				: "",
 			   	sub_total 			: 0,
 			   	discount 			: 0,
 			   	tax 				: 0,				   		   					   				   	
@@ -52811,7 +53257,8 @@
 						
 			this.setRate();
 			this.addRow();
-			this.typeChanges();			
+			this.typeChanges();
+			this.generateNumber();			
 		},
 		addRow 				: function(){
 			var obj = this.get("obj");
@@ -53533,6 +53980,7 @@
 		lang 				: langVM,
 		dataSource 			: dataStore(apiUrl + "transactions"),
 		lineDS  			: dataStore(apiUrl + "item_lines"),
+		txnDS 				: dataStore(apiUrl + "transactions"),
 		journalLineDS		: dataStore(apiUrl + "journal_lines"),
 		referenceDS			: dataStore(apiUrl + "transactions"),
 		referenceLineDS		: dataStore(apiUrl + "item_lines"),
@@ -53610,6 +54058,7 @@
 		saveClose 			: false,
 		savePrint 			: false,
 		saveRecurring 		: false,
+		notDuplicateNumber  : true,
 		statusSrc 			: "",
 		enableRef 			: false,
 		showReturn 			: true,
@@ -53952,6 +54401,73 @@
 			        data.set("showInvoice", false);
 			        data.set("showAccount", false);
 			}			
+		},
+		//Number      	
+		checkExistingNumber 	: function(){
+			var self = this, para = [], 
+			obj = this.get("obj");
+			
+			if(obj.number!==""){
+
+				if(obj.isNew()==false){
+					para.push({ field:"id", operator:"where_not_in", value: [obj.id] });
+				}
+				
+				para.push({ field:"number", value: obj.number });
+				para.push({ field:"type", value: obj.type });
+
+				this.txnDS.query({
+					filter: para,
+					page: 1,
+					pageSize: 1
+				}).then(function(e){
+					var view = self.txnDS.view();
+					
+					if(view.length>0){
+				 		self.set("notDuplicateNumber", false);
+					}else{
+						self.set("notDuplicateNumber", true);
+					}
+				});
+			}
+		},
+		generateNumber 			: function(){
+			var self = this, obj = this.get("obj"),
+			issueDate = new Date(obj.issued_date),
+			startDate = new Date(obj.issued_date),
+			endDate = new Date(obj.issued_date);
+
+			this.set("notDuplicateNumber", true);
+
+			startDate.setDate(1);
+			startDate.setMonth(0);//Set to January
+			endDate.setDate(31);
+			endDate.setMonth(11);//Set to November
+
+			this.txnDS.query({
+				filter:[
+					{ field:"type", value:obj.type },
+					{ field:"issued_date >=", value:kendo.toString(startDate, "yyyy-MM-dd") },
+					{ field:"issued_date <=", value:kendo.toString(endDate, "yyyy-MM-dd") }
+				],
+				sort: { field:"number", dir:"desc" },
+				page:1,
+				pageSize:1
+			}).then(function(){
+				var view = self.txnDS.view(),				
+				number = 0, str = "";
+
+				if(view.length>0){
+					str = view[0].number;
+					str = str.substring(str.length-4, str.length);
+					number = kendo.parseInt(str);
+				}
+				
+				number++;
+				str = banhji.source.getPrefixAbbr(obj.type) + kendo.toString(issueDate, "yy") + kendo.toString(issueDate, "MM") + kendo.toString(number, "00000");
+				
+				obj.set("number", str);
+			});
 		},		
 		//Obj
 		loadObj 			: function(id){
@@ -54043,6 +54559,7 @@
 				job_id 				: 0,				
 				user_id 			: this.get("user_id"),
 			   	type				: "Purchase_Return", //Require
+			   	number 				: "",
 			   	sub_total 			: 0,
 			   	discount 			: 0,
 			   	tax 				: 0,				   		   					   				   	
@@ -54078,6 +54595,7 @@
 			this.setRate();
 			this.addRow();
 			this.addRowOption();
+			this.generateNumber();
 		},
 		addRow 				: function(){				
 			var obj = this.get("obj");
@@ -56555,9 +57073,9 @@
 		savePrint 			: false,
 		saveRecurring 		: false,
 		showConfirm 		: false,
+		notDuplicateNumber 	: true,
 		statusSrc 			: "",
 		recurring 			: "",
-		recurring_validate 	: false,
 		recurring_validate 	: false,
 		showDiscount 		: false,
 		sub_total 			: 0,		
@@ -56932,6 +57450,73 @@
 		        this.changes();
 	        }
 		},
+		//Number      	
+		checkExistingNumber 	: function(){
+			var self = this, para = [], 
+			obj = this.get("obj");
+			
+			if(obj.number!==""){
+
+				if(obj.isNew()==false){
+					para.push({ field:"id", operator:"where_not_in", value: [obj.id] });
+				}
+				
+				para.push({ field:"number", value: obj.number });
+				para.push({ field:"type", value: obj.type });
+
+				this.txnDS.query({
+					filter: para,
+					page: 1,
+					pageSize: 1
+				}).then(function(e){
+					var view = self.txnDS.view();
+					
+					if(view.length>0){
+				 		self.set("notDuplicateNumber", false);
+					}else{
+						self.set("notDuplicateNumber", true);
+					}
+				});
+			}
+		},
+		generateNumber 			: function(){
+			var self = this, obj = this.get("obj"),
+			issueDate = new Date(obj.issued_date),
+			startDate = new Date(obj.issued_date),
+			endDate = new Date(obj.issued_date);
+
+			this.set("notDuplicateNumber", true);
+
+			startDate.setDate(1);
+			startDate.setMonth(0);//Set to January
+			endDate.setDate(31);
+			endDate.setMonth(11);//Set to November
+
+			this.txnDS.query({
+				filter:[
+					{ field:"type", value:obj.type },
+					{ field:"issued_date >=", value:kendo.toString(startDate, "yyyy-MM-dd") },
+					{ field:"issued_date <=", value:kendo.toString(endDate, "yyyy-MM-dd") }
+				],
+				sort: { field:"number", dir:"desc" },
+				page:1,
+				pageSize:1
+			}).then(function(){
+				var view = self.txnDS.view(),				
+				number = 0, str = "";
+
+				if(view.length>0){
+					str = view[0].number;
+					str = str.substring(str.length-4, str.length);
+					number = kendo.parseInt(str);
+				}
+				
+				number++;
+				str = banhji.source.getPrefixAbbr(obj.type) + kendo.toString(issueDate, "yy") + kendo.toString(issueDate, "MM") + kendo.toString(number, "00000");
+				
+				obj.set("number", str);
+			});
+		},
 		//Obj
 		loadObj 			: function(id){
 			var self = this, para = [];
@@ -57060,7 +57645,8 @@
 				recurring_id 			: "",				
 				user_id 				: this.get("user_id"),
 				employee_id 			: "", 	    		
-			   	type					: "Quote",
+			   	type					: "Quote",//Required
+			   	number 					: "",
 			   	sub_total 				: 0,			   			   	
 			   	amount					: 0,
 			   	discount 				: 0,
@@ -57090,6 +57676,7 @@
 			var obj = this.dataSource.at(0);					
 			this.set("obj", obj);
 			
+			this.generateNumber();
 			this.setRate();
 			this.addRow();
 		},
@@ -57459,6 +58046,7 @@
 		savePrint 			: false,
 		saveRecurring 		: false,
 		showConfirm 		: false,
+		notDuplicateNumber  : true,
 		statusSrc 			: "",
 		recurring 			: "",
 		recurring_validate 	: false,
@@ -57826,6 +58414,73 @@
 		        this.changes();
 	        }	                	        	
 		},
+		//Number      	
+		checkExistingNumber 	: function(){
+			var self = this, para = [], 
+			obj = this.get("obj");
+			
+			if(obj.number!==""){
+
+				if(obj.isNew()==false){
+					para.push({ field:"id", operator:"where_not_in", value: [obj.id] });
+				}
+				
+				para.push({ field:"number", value: obj.number });
+				para.push({ field:"type", value: obj.type });
+
+				this.txnDS.query({
+					filter: para,
+					page: 1,
+					pageSize: 1
+				}).then(function(e){
+					var view = self.txnDS.view();
+					
+					if(view.length>0){
+				 		self.set("notDuplicateNumber", false);
+					}else{
+						self.set("notDuplicateNumber", true);
+					}
+				});
+			}
+		},
+		generateNumber 			: function(){
+			var self = this, obj = this.get("obj"),
+			issueDate = new Date(obj.issued_date),
+			startDate = new Date(obj.issued_date),
+			endDate = new Date(obj.issued_date);
+
+			this.set("notDuplicateNumber", true);
+
+			startDate.setDate(1);
+			startDate.setMonth(0);//Set to January
+			endDate.setDate(31);
+			endDate.setMonth(11);//Set to November
+
+			this.txnDS.query({
+				filter:[
+					{ field:"type", value:obj.type },
+					{ field:"issued_date >=", value:kendo.toString(startDate, "yyyy-MM-dd") },
+					{ field:"issued_date <=", value:kendo.toString(endDate, "yyyy-MM-dd") }
+				],
+				sort: { field:"number", dir:"desc" },
+				page:1,
+				pageSize:1
+			}).then(function(){
+				var view = self.txnDS.view(),				
+				number = 0, str = "";
+
+				if(view.length>0){
+					str = view[0].number;
+					str = str.substring(str.length-4, str.length);
+					number = kendo.parseInt(str);
+				}
+				
+				number++;
+				str = banhji.source.getPrefixAbbr(obj.type) + kendo.toString(issueDate, "yy") + kendo.toString(issueDate, "MM") + kendo.toString(number, "00000");
+				
+				obj.set("number", str);
+			});
+		},
 		//Obj
 		loadObj 			: function(id){
 			var self = this, para = [];
@@ -57956,7 +58611,8 @@
 				job_id 				: 0,				
 				user_id 			: this.get("user_id"),
 				employee_id			: "", 	    		
-			   	type				: "Sale_Order",
+			   	type				: "Sale_Order",//Required
+			   	number 				: "",
 			   	sub_total 			: 0,
 			   	amount				: 0,
 			   	credit_allowed 		: 0,			   	
@@ -57989,6 +58645,7 @@
 			
 			this.setRate();
 			this.addRow();
+			this.generateNumber();
 		},
 		addRow 				: function(){				
 			var obj = this.get("obj");
@@ -58339,7 +58996,7 @@
 	banhji.customerDeposit =  kendo.observable({
 		lang 				: langVM,
 		dataSource 			: dataStore(apiUrl + "transactions"),
-		deleteDS 			: dataStore(apiUrl + "transactions"),
+		txnDS 				: dataStore(apiUrl + "transactions"),
 		lineDS  			: dataStore(apiUrl + "account_lines"),
 		referenceDS			: dataStore(apiUrl + "transactions"),
 		referenceLineDS		: dataStore(apiUrl + "account_lines"),
@@ -58440,6 +59097,7 @@
 		savePrint 			: false,
 		saveRecurring 		: false,
 		showConfirm 		: false,
+		notDuplicateNumber  : true,
 		statusSrc 			: "",
 		recurring 			: "",
 		recurring_validate 	: false,
@@ -58594,6 +59252,73 @@
 				}
 			}
 		},
+		//Number      	
+		checkExistingNumber 	: function(){
+			var self = this, para = [], 
+			obj = this.get("obj");
+			
+			if(obj.number!==""){
+
+				if(obj.isNew()==false){
+					para.push({ field:"id", operator:"where_not_in", value: [obj.id] });
+				}
+				
+				para.push({ field:"number", value: obj.number });
+				para.push({ field:"type", value: obj.type });
+
+				this.txnDS.query({
+					filter: para,
+					page: 1,
+					pageSize: 1
+				}).then(function(e){
+					var view = self.txnDS.view();
+					
+					if(view.length>0){
+				 		self.set("notDuplicateNumber", false);
+					}else{
+						self.set("notDuplicateNumber", true);
+					}
+				});
+			}
+		},
+		generateNumber 			: function(){
+			var self = this, obj = this.get("obj"),
+			issueDate = new Date(obj.issued_date),
+			startDate = new Date(obj.issued_date),
+			endDate = new Date(obj.issued_date);
+
+			this.set("notDuplicateNumber", true);
+
+			startDate.setDate(1);
+			startDate.setMonth(0);//Set to January
+			endDate.setDate(31);
+			endDate.setMonth(11);//Set to November
+
+			this.txnDS.query({
+				filter:[
+					{ field:"type", value:obj.type },
+					{ field:"issued_date >=", value:kendo.toString(startDate, "yyyy-MM-dd") },
+					{ field:"issued_date <=", value:kendo.toString(endDate, "yyyy-MM-dd") }
+				],
+				sort: { field:"number", dir:"desc" },
+				page:1,
+				pageSize:1
+			}).then(function(){
+				var view = self.txnDS.view(),				
+				number = 0, str = "";
+
+				if(view.length>0){
+					str = view[0].number;
+					str = str.substring(str.length-4, str.length);
+					number = kendo.parseInt(str);
+				}
+				
+				number++;
+				str = banhji.source.getPrefixAbbr(obj.type) + kendo.toString(issueDate, "yy") + kendo.toString(issueDate, "MM") + kendo.toString(number, "00000");
+				
+				obj.set("number", str);
+			});
+		},
 		//Obj
 		loadObj 			: function(id){
 			var self = this, para = [];
@@ -58662,6 +59387,7 @@
 				account_id 				: "",
 				user_id 				: this.get("uer_id"),
 			   	type					: "Customer_Deposit", //required
+			   	number 					: "",
 			   	amount					: 0,
 			   	rate					: 1,
 			   	locale 					: banhji.locale,
@@ -58687,6 +59413,7 @@
 
 			this.setRate();
 			this.addRow();
+			this.generateNumber();
 		},
 		addRow 				: function(){
 			var obj = this.get("obj");
@@ -58818,14 +59545,14 @@
 			var self = this, obj = this.get("obj");
 			this.set("showConfirm",false);			
 			
-	        this.deleteDS.query({
+	        this.txnDS.query({
 	        	filter:[
 	        		{ field:"reference_id", value:obj.id }
 	        	],
 	        	page:1,
 	        	pageSize:1
 	        }).then(function(){
-	        	var view = self.deleteDS.view();
+	        	var view = self.txnDS.view();
 
 	        	if(view.length>0){
 	        		alert("Sorry, you can not delete it.");
@@ -59173,6 +59900,7 @@
 		savePrint 			: false,
 		saveRecurring 		: false,
 		showConfirm 		: false,
+		notDuplicateNumber  : true,
 		statusSrc 			: "",
 		recurring 			: "",
 		recurring_validate 	: false,
@@ -59611,6 +60339,73 @@
 		        this.changes();
 	        }	                	        	
 		},
+		//Number      	
+		checkExistingNumber 	: function(){
+			var self = this, para = [], 
+			obj = this.get("obj");
+			
+			if(obj.number!==""){
+
+				if(obj.isNew()==false){
+					para.push({ field:"id", operator:"where_not_in", value: [obj.id] });
+				}
+				
+				para.push({ field:"number", value: obj.number });
+				para.push({ field:"type", value: obj.type });
+
+				this.txnDS.query({
+					filter: para,
+					page: 1,
+					pageSize: 1
+				}).then(function(e){
+					var view = self.txnDS.view();
+					
+					if(view.length>0){
+				 		self.set("notDuplicateNumber", false);
+					}else{
+						self.set("notDuplicateNumber", true);
+					}
+				});
+			}
+		},
+		generateNumber 			: function(){
+			var self = this, obj = this.get("obj"),
+			issueDate = new Date(obj.issued_date),
+			startDate = new Date(obj.issued_date),
+			endDate = new Date(obj.issued_date);
+
+			this.set("notDuplicateNumber", true);
+
+			startDate.setDate(1);
+			startDate.setMonth(0);//Set to January
+			endDate.setDate(31);
+			endDate.setMonth(11);//Set to November
+
+			this.txnDS.query({
+				filter:[
+					{ field:"type", value:obj.type },
+					{ field:"issued_date >=", value:kendo.toString(startDate, "yyyy-MM-dd") },
+					{ field:"issued_date <=", value:kendo.toString(endDate, "yyyy-MM-dd") }
+				],
+				sort: { field:"number", dir:"desc" },
+				page:1,
+				pageSize:1
+			}).then(function(){
+				var view = self.txnDS.view(),				
+				number = 0, str = "";
+
+				if(view.length>0){
+					str = view[0].number;
+					str = str.substring(str.length-4, str.length);
+					number = kendo.parseInt(str);
+				}
+				
+				number++;
+				str = banhji.source.getPrefixAbbr(obj.type) + kendo.toString(issueDate, "yy") + kendo.toString(issueDate, "MM") + kendo.toString(number, "00000");
+				
+				obj.set("number", str);
+			});
+		},
 		//Obj
 		loadObj 			: function(id){
 			var self = this, para = [];
@@ -59804,6 +60599,7 @@
 				user_id 			: this.get("user_id"),
 				employee_id			: "",//Sale Rep 	    		
 			   	type				: "Commercial_Cash_Sale",//Required
+			   	number 				: "",
 			   	sub_total 			: 0,
 			   	discount 			: 0,
 			   	tax 				: 0,  					   				   	
@@ -59840,6 +60636,7 @@
 			
 			this.addRow();
 			this.setRate();
+			this.generateNumber();
 		},
 		addRow 				: function(){
 			var obj = this.get("obj");
@@ -60622,6 +61419,7 @@
 		savePrint 			: false,
 		saveRecurring 		: false,
 		showConfirm 		: false,
+		notDuplicateNumber  : true,
 		statusSrc 			: "",
 		recurring 			: "",
 		recurring_validate 	: false,
@@ -61088,6 +61886,73 @@
 		        this.changes();
 	        }	                	        	
 		},
+		//Number      	
+		checkExistingNumber 	: function(){
+			var self = this, para = [], 
+			obj = this.get("obj");
+			
+			if(obj.number!==""){
+
+				if(obj.isNew()==false){
+					para.push({ field:"id", operator:"where_not_in", value: [obj.id] });
+				}
+				
+				para.push({ field:"number", value: obj.number });
+				para.push({ field:"type", value: obj.type });
+
+				this.txnDS.query({
+					filter: para,
+					page: 1,
+					pageSize: 1
+				}).then(function(e){
+					var view = self.txnDS.view();
+					
+					if(view.length>0){
+				 		self.set("notDuplicateNumber", false);
+					}else{
+						self.set("notDuplicateNumber", true);
+					}
+				});
+			}
+		},
+		generateNumber 			: function(){
+			var self = this, obj = this.get("obj"),
+			issueDate = new Date(obj.issued_date),
+			startDate = new Date(obj.issued_date),
+			endDate = new Date(obj.issued_date);
+
+			this.set("notDuplicateNumber", true);
+
+			startDate.setDate(1);
+			startDate.setMonth(0);//Set to January
+			endDate.setDate(31);
+			endDate.setMonth(11);//Set to November
+
+			this.txnDS.query({
+				filter:[
+					{ field:"type", value:obj.type },
+					{ field:"issued_date >=", value:kendo.toString(startDate, "yyyy-MM-dd") },
+					{ field:"issued_date <=", value:kendo.toString(endDate, "yyyy-MM-dd") }
+				],
+				sort: { field:"number", dir:"desc" },
+				page:1,
+				pageSize:1
+			}).then(function(){
+				var view = self.txnDS.view(),				
+				number = 0, str = "";
+
+				if(view.length>0){
+					str = view[0].number;
+					str = str.substring(str.length-4, str.length);
+					number = kendo.parseInt(str);
+				}
+				
+				number++;
+				str = banhji.source.getPrefixAbbr(obj.type) + kendo.toString(issueDate, "yy") + kendo.toString(issueDate, "MM") + kendo.toString(number, "00000");
+				
+				obj.set("number", str);
+			});
+		},
 		//Obj
 		loadObj 			: function(id){
 			var self = this, para = [];
@@ -61280,6 +62145,7 @@
 				user_id 			: this.get("user_id"),
 				employee_id 		: "",//Sale Rep 	    		
 			   	type				: "Commercial_Invoice",//Required
+			   	number 				: "",
 			   	sub_total 			: 0,
 			   	discount 			: 0,
 			   	tax 				: 0,
@@ -61315,6 +62181,7 @@
 
 			this.setRate();	
 			this.addRow();
+			this.generateNumber();
 		},
 		addRow 				: function(){				
 			var obj = this.get("obj");
@@ -62063,6 +62930,7 @@
 		savePrint 			: false,
 		saveRecurring 		: false,
 		showConfirm 		: false,
+		notDuplicateNumber  : true,
 		statusSrc 			: "",
 		recurring 			: "",
 		recurring_validate 	: false,
@@ -62366,6 +63234,73 @@
 		        this.changes();
 	        }	                	        	
 		},
+		//Number      	
+		checkExistingNumber 	: function(){
+			var self = this, para = [], 
+			obj = this.get("obj");
+			
+			if(obj.number!==""){
+
+				if(obj.isNew()==false){
+					para.push({ field:"id", operator:"where_not_in", value: [obj.id] });
+				}
+				
+				para.push({ field:"number", value: obj.number });
+				para.push({ field:"type", value: obj.type });
+
+				this.txnDS.query({
+					filter: para,
+					page: 1,
+					pageSize: 1
+				}).then(function(e){
+					var view = self.txnDS.view();
+					
+					if(view.length>0){
+				 		self.set("notDuplicateNumber", false);
+					}else{
+						self.set("notDuplicateNumber", true);
+					}
+				});
+			}
+		},
+		generateNumber 			: function(){
+			var self = this, obj = this.get("obj"),
+			issueDate = new Date(obj.issued_date),
+			startDate = new Date(obj.issued_date),
+			endDate = new Date(obj.issued_date);
+
+			this.set("notDuplicateNumber", true);
+
+			startDate.setDate(1);
+			startDate.setMonth(0);//Set to January
+			endDate.setDate(31);
+			endDate.setMonth(11);//Set to November
+
+			this.txnDS.query({
+				filter:[
+					{ field:"type", value:obj.type },
+					{ field:"issued_date >=", value:kendo.toString(startDate, "yyyy-MM-dd") },
+					{ field:"issued_date <=", value:kendo.toString(endDate, "yyyy-MM-dd") }
+				],
+				sort: { field:"number", dir:"desc" },
+				page:1,
+				pageSize:1
+			}).then(function(){
+				var view = self.txnDS.view(),				
+				number = 0, str = "";
+
+				if(view.length>0){
+					str = view[0].number;
+					str = str.substring(str.length-4, str.length);
+					number = kendo.parseInt(str);
+				}
+				
+				number++;
+				str = banhji.source.getPrefixAbbr(obj.type) + kendo.toString(issueDate, "yy") + kendo.toString(issueDate, "MM") + kendo.toString(number, "00000");
+				
+				obj.set("number", str);
+			});
+		},
 		//Obj
 		loadObj 			: function(id){
 			var self = this, para = [];
@@ -62453,7 +63388,8 @@
 				job_id 				: 0,				
 				user_id 			: this.get("user_id"),
 				employee_id 		: "",
-			   	type				: "GDN",	   				   	
+			   	type				: "GDN",//Required
+			   	number 				: "",	   				   	
 			   	amount				: 0,
 			   	rate				: 1,			   	
 			   	locale 				: banhji.locale,			   	
@@ -62481,6 +63417,7 @@
 
 			this.setRate();
 			this.addRow();
+			this.generateNumber();
 		},
 		addRow 				: function(){
 			var obj = this.get("obj");
@@ -62847,6 +63784,7 @@
 		dataSource 			: dataStore(apiUrl + "transactions"),
 		lineDS  			: dataStore(apiUrl + "item_lines"),
 		assemblyLineDS  	: dataStore(apiUrl + "item_lines"),
+		txnDS 				: dataStore(apiUrl + "transactions"),
 		journalLineDS		: dataStore(apiUrl + "journal_lines"),
 		referenceDS			: dataStore(apiUrl + "transactions"),
 		referenceLineDS		: dataStore(apiUrl + "item_lines"),
@@ -63325,6 +64263,73 @@
 			        data.set("showInvoice", false);
 			        data.set("showAccount", false);
 			}			
+		},
+		//Number      	
+		checkExistingNumber 	: function(){
+			var self = this, para = [], 
+			obj = this.get("obj");
+			
+			if(obj.number!==""){
+
+				if(obj.isNew()==false){
+					para.push({ field:"id", operator:"where_not_in", value: [obj.id] });
+				}
+				
+				para.push({ field:"number", value: obj.number });
+				para.push({ field:"type", value: obj.type });
+
+				this.txnDS.query({
+					filter: para,
+					page: 1,
+					pageSize: 1
+				}).then(function(e){
+					var view = self.txnDS.view();
+					
+					if(view.length>0){
+				 		self.set("notDuplicateNumber", false);
+					}else{
+						self.set("notDuplicateNumber", true);
+					}
+				});
+			}
+		},
+		generateNumber 			: function(){
+			var self = this, obj = this.get("obj"),
+			issueDate = new Date(obj.issued_date),
+			startDate = new Date(obj.issued_date),
+			endDate = new Date(obj.issued_date);
+
+			this.set("notDuplicateNumber", true);
+
+			startDate.setDate(1);
+			startDate.setMonth(0);//Set to January
+			endDate.setDate(31);
+			endDate.setMonth(11);//Set to November
+
+			this.txnDS.query({
+				filter:[
+					{ field:"type", value:obj.type },
+					{ field:"issued_date >=", value:kendo.toString(startDate, "yyyy-MM-dd") },
+					{ field:"issued_date <=", value:kendo.toString(endDate, "yyyy-MM-dd") }
+				],
+				sort: { field:"number", dir:"desc" },
+				page:1,
+				pageSize:1
+			}).then(function(){
+				var view = self.txnDS.view(),				
+				number = 0, str = "";
+
+				if(view.length>0){
+					str = view[0].number;
+					str = str.substring(str.length-4, str.length);
+					number = kendo.parseInt(str);
+				}
+				
+				number++;
+				str = banhji.source.getPrefixAbbr(obj.type) + kendo.toString(issueDate, "yy") + kendo.toString(issueDate, "MM") + kendo.toString(number, "00000");
+				
+				obj.set("number", str);
+			});
 		},		
 		//Obj
 		loadObj 			: function(id){
@@ -63457,6 +64462,7 @@
 				job_id 				: 0,				
 				user_id 			: this.get("user_id"),
 			   	type				: "Sale_Return", //Require
+			   	number 				: "",
 			   	sub_total 			: 0,
 			   	discount 			: 0,
 			   	tax 				: 0,				   		   					   				   	
@@ -63493,6 +64499,7 @@
 			this.setRate();
 			this.addRow();
 			this.addRowOption();
+			this.generateNumber();
 		},
 		addRow 				: function(){				
 			var obj = this.get("obj");
@@ -67327,7 +68334,7 @@
 		lang 				: langVM,
 		dataSource 			: dataStore(apiUrl + "transactions"),						
 		lineDS  			: dataStore(apiUrl + "account_lines"),
-		deleteDS 			: dataStore(apiUrl + "transactions"),
+		txnDS 				: dataStore(apiUrl + "transactions"),
 		journalLineDS		: dataStore(apiUrl + "journal_lines"),
 		recurringDS 		: dataStore(apiUrl + "transactions"),
 		recurringLineDS 	: dataStore(apiUrl + "account_lines"),		
@@ -67399,6 +68406,7 @@
 		savePrint 			: false,
 		saveRecurring 		: false,
 		showConfirm 		: false,
+		notDuplicateNumber  : true,
 		showRef 			: true,
 		showName 			: false,
 		showSegment 		: false,
@@ -67566,6 +68574,73 @@
 					}
 				}
 			}				
+		},
+		//Number      	
+		checkExistingNumber 	: function(){
+			var self = this, para = [], 
+			obj = this.get("obj");
+			
+			if(obj.number!==""){
+
+				if(obj.isNew()==false){
+					para.push({ field:"id", operator:"where_not_in", value: [obj.id] });
+				}
+				
+				para.push({ field:"number", value: obj.number });
+				para.push({ field:"type", value: obj.type });
+
+				this.txnDS.query({
+					filter: para,
+					page: 1,
+					pageSize: 1
+				}).then(function(e){
+					var view = self.txnDS.view();
+					
+					if(view.length>0){
+				 		self.set("notDuplicateNumber", false);
+					}else{
+						self.set("notDuplicateNumber", true);
+					}
+				});
+			}
+		},
+		generateNumber 			: function(){
+			var self = this, obj = this.get("obj"),
+			issueDate = new Date(obj.issued_date),
+			startDate = new Date(obj.issued_date),
+			endDate = new Date(obj.issued_date);
+
+			this.set("notDuplicateNumber", true);
+
+			startDate.setDate(1);
+			startDate.setMonth(0);//Set to January
+			endDate.setDate(31);
+			endDate.setMonth(11);//Set to November
+
+			this.txnDS.query({
+				filter:[
+					{ field:"type", value:obj.type },
+					{ field:"issued_date >=", value:kendo.toString(startDate, "yyyy-MM-dd") },
+					{ field:"issued_date <=", value:kendo.toString(endDate, "yyyy-MM-dd") }
+				],
+				sort: { field:"number", dir:"desc" },
+				page:1,
+				pageSize:1
+			}).then(function(){
+				var view = self.txnDS.view(),				
+				number = 0, str = "";
+
+				if(view.length>0){
+					str = view[0].number;
+					str = str.substring(str.length-4, str.length);
+					number = kendo.parseInt(str);
+				}
+				
+				number++;
+				str = banhji.source.getPrefixAbbr(obj.type) + kendo.toString(issueDate, "yy") + kendo.toString(issueDate, "MM") + kendo.toString(number, "00000");
+				
+				obj.set("number", str);
+			});
 		},
 		//Obj
 		loadObj 			: function(id){
@@ -67819,22 +68894,25 @@
 			var self = this, obj = this.get("obj");
 			this.set("showConfirm",false);			
 			
-	        this.deleteDS.query({
+	        this.txnDS.query({
 	        	filter:[
 	        		{ field:"reference_id", value:obj.id }
 	        	],
 	        	page:1,
 	        	pageSize:1
 	        }).then(function(){
-	        	var view = self.deleteDS.view();
+	        	var view = self.txnDS.view();
 
 	        	if(view.length>0){
 	        		alert("Sorry, you can not delete it.");
 	        	}else{
 	        		obj.set("deleted", 1);
 			        self.dataSource.sync();
-
-			        window.history.back();
+					self.dataSource.bind("requestEnd", function(e){
+						if(e.type==="update"){
+							window.history.back();
+						}
+					});
 	        	}
 	        });		    	    	
 		},
@@ -73214,6 +74292,7 @@
     	lang 					: langVM,
     	dataSource  			: dataStore(apiUrl + "transactions"),	
     	lineDS  				: dataStore(apiUrl + "item_lines"),
+    	txnDS  					: dataStore(apiUrl + "transactions"),
     	accountLineDS  			: dataStore(apiUrl + "account_lines"),
     	toItemLineDS  			: dataStore(apiUrl + "item_lines"),
     	toAccountLineDS  		: dataStore(apiUrl + "account_lines"),
@@ -73299,6 +74378,7 @@
 		savePrint 				: false,
 		saveRecurring 			: false,
 		showConfirm 			: false,
+		notDuplicateNumber 		: true,
 		type 					: "Item",
 		isItemType 				: false,
 		total 					: 0,
@@ -73633,6 +74713,73 @@
 			this.accountLineDS.remove(data);
 	        this.changes();
 		},
+		//Number      	
+		checkExistingNumber 	: function(){
+			var self = this, para = [], 
+			obj = this.get("obj");
+			
+			if(obj.number!==""){
+
+				if(obj.isNew()==false){
+					para.push({ field:"id", operator:"where_not_in", value: [obj.id] });
+				}
+				
+				para.push({ field:"number", value: obj.number });
+				para.push({ field:"type", value: obj.type });
+
+				this.txnDS.query({
+					filter: para,
+					page: 1,
+					pageSize: 1
+				}).then(function(e){
+					var view = self.txnDS.view();
+					
+					if(view.length>0){
+				 		self.set("notDuplicateNumber", false);
+					}else{
+						self.set("notDuplicateNumber", true);
+					}
+				});
+			}
+		},
+		generateNumber 			: function(){
+			var self = this, obj = this.get("obj"),
+			issueDate = new Date(obj.issued_date),
+			startDate = new Date(obj.issued_date),
+			endDate = new Date(obj.issued_date);
+
+			this.set("notDuplicateNumber", true);
+
+			startDate.setDate(1);
+			startDate.setMonth(0);//Set to January
+			endDate.setDate(31);
+			endDate.setMonth(11);//Set to November
+
+			this.txnDS.query({
+				filter:[
+					{ field:"type", value:obj.type },
+					{ field:"issued_date >=", value:kendo.toString(startDate, "yyyy-MM-dd") },
+					{ field:"issued_date <=", value:kendo.toString(endDate, "yyyy-MM-dd") }
+				],
+				sort: { field:"number", dir:"desc" },
+				page:1,
+				pageSize:1
+			}).then(function(){
+				var view = self.txnDS.view(),				
+				number = 0, str = "";
+
+				if(view.length>0){
+					str = view[0].number;
+					str = str.substring(str.length-4, str.length);
+					number = kendo.parseInt(str);
+				}
+				
+				number++;
+				str = banhji.source.getPrefixAbbr(obj.type) + kendo.toString(issueDate, "yy") + kendo.toString(issueDate, "MM") + kendo.toString(number, "00000");
+				
+				obj.set("number", str);
+			});
+		},
 		//Obj
 		loadObj 				: function(id){
     		var self = this;
@@ -73712,6 +74859,7 @@
 				job_id 				: 0,				
 				user_id 			: this.get("user_id"),
 			   	type				: "Internal_Usage",//Required
+			   	number 				: "",
 			   	amount				: 0,
 			   	rate				: 1,			   	
 			   	locale 				: banhji.locale,			   	
@@ -73741,6 +74889,7 @@
 			this.setRate();	
 			this.addRow();
 			this.typeChanges();
+			this.generateNumber();
 		},	
 	    objSync 				: function(){
 	    	var dfd = $.Deferred();	        
@@ -76054,11 +77203,18 @@
 					            	return $.trim(input.val()) !== "" && vm.isExistingInvoice==false;
 					          	}
 					          	return true;
+					        },
+					        customRule3: function(input){
+					          	if (input.is("[name=txtNumber]")) {	
+						            return vm.get("notDuplicateNumber");
+						        }
+						        return true;
 					        }
 					    },
 					    messages: {
 					        customRule1: banhji.source.requiredMessage,
-					        customRule2: banhji.source.duplicateInvoice
+					        customRule2: banhji.source.duplicateInvoice,
+					        customRule3: banhji.source.duplicateNumber
 					    }
 			        }).data("kendoValidator");
 
@@ -76151,11 +77307,18 @@
 					            	return $.trim(input.val()) !== "" && vm.isExistingInvoice==false;
 					          	}
 					          	return true;
+					        },
+					        customRule3: function(input){
+					          	if (input.is("[name=txtNumber]")) {	
+						            return vm.get("notDuplicateNumber");
+						        }
+						        return true;
 					        }
 					    },
 					    messages: {
 					        customRule1: banhji.source.requiredMessage,
-					        customRule2: banhji.source.duplicateInvoice
+					        customRule2: banhji.source.duplicateInvoice,
+					        customRule3: banhji.source.duplicateNumber
 					    }
 			        }).data("kendoValidator");
 
@@ -76248,11 +77411,18 @@
 					            	return $.trim(input.val()) !== "" && vm.isExistingInvoice==false;
 					          	}
 					          	return true;
+					        },
+					        customRule3: function(input){
+					          	if (input.is("[name=txtNumber]")) {	
+						            return vm.get("notDuplicateNumber");
+						        }
+						        return true;
 					        }
 					    },
 					    messages: {
 					        customRule1: banhji.source.requiredMessage,
-					        customRule2: banhji.source.duplicateInvoice
+					        customRule2: banhji.source.duplicateInvoice,
+					        customRule3: banhji.source.duplicateNumber
 					    }
 			        }).data("kendoValidator");
 
@@ -78200,10 +79370,17 @@
 					            	return $.trim(input.val()) !== "";
 					          	}
 					          	return true;
+					        },
+					        customRule2: function(input){
+					          	if (input.is("[name=txtNumber]")) {	
+						            return vm.get("notDuplicateNumber");
+						        }
+						        return true;
 					        }
 					    },
 					    messages: {
-					        customRule1: banhji.source.requiredMessage
+					        customRule1: banhji.source.requiredMessage,
+					        customRule2: banhji.source.duplicateNumber
 					    }
 			        }).data("kendoValidator");
 
@@ -78279,10 +79456,17 @@
 				            	return $.trim(input.val()) !== "";
 				          	}
 				          	return true;
+				        },
+				        customRule2: function(input){
+				          	if (input.is("[name=txtNumber]")) {	
+					            return vm.get("notDuplicateNumber");
+					        }
+					        return true;
 				        }
 				    },
 				    messages: {
-				        customRule1: banhji.source.requiredMessage
+				        customRule1: banhji.source.requiredMessage,
+				        customRule2: banhji.source.duplicateNumber
 				    }
 		        }).data("kendoValidator");
 
@@ -78366,10 +79550,17 @@
 					            	return $.trim(input.val()) !== "";
 					          	}
 					          	return true;
+					        },
+					        customRule2: function(input){
+					          	if (input.is("[name=txtNumber]")) {	
+						            return vm.get("notDuplicateNumber");
+						        }
+						        return true;
 					        }
 					    },
 					    messages: {
-					        customRule1: banhji.source.requiredMessage
+					        customRule1: banhji.source.requiredMessage,
+					        customRule2: banhji.source.duplicateNumber
 					    }
 			        }).data("kendoValidator");
 
@@ -78456,10 +79647,17 @@
 					            	return $.trim(input.val()) !== "";
 					          	}
 					          	return true;
+					        },
+					        customRule2: function(input){
+					          	if (input.is("[name=txtNumber]")) {	
+						            return vm.get("notDuplicateNumber");
+						        }
+						        return true;
 					        }
 					    },
 					    messages: {
-					        customRule1: banhji.source.requiredMessage
+					        customRule1: banhji.source.requiredMessage,
+					        customRule2: banhji.source.duplicateNumber
 					    }
 			        }).data("kendoValidator");
 
@@ -78546,10 +79744,17 @@
 					            	return $.trim(input.val()) !== "";
 					          	}
 					          	return true;
+					        },
+					        customRule2: function(input){
+					          	if (input.is("[name=txtNumber]")) {	
+						            return vm.get("notDuplicateNumber");
+						        }
+						        return true;
 					        }
 					    },
 					    messages: {
-					        customRule1: banhji.source.requiredMessage
+					        customRule1: banhji.source.requiredMessage,
+					        customRule2: banhji.source.duplicateNumber
 					    }
 			        }).data("kendoValidator");
 
@@ -78636,10 +79841,17 @@
 					            	return $.trim(input.val()) !== "";
 					          	}
 					          	return true;
+					        },
+					        customRule2: function(input){
+					          	if (input.is("[name=txtNumber]")) {	
+						            return vm.get("notDuplicateNumber");
+						        }
+						        return true;
 					        }
 					    },
 					    messages: {
-					        customRule1: banhji.source.requiredMessage
+					        customRule1: banhji.source.requiredMessage,
+					        customRule2: banhji.source.duplicateNumber
 					    }
 			        }).data("kendoValidator");
 
@@ -78718,7 +79930,20 @@
 				if(banhji.pageLoaded["purchase_return"]==undefined){
 					banhji.pageLoaded["purchase_return"] = true;
 
-					var validator = $("#example").kendoValidator().data("kendoValidator");
+					var validator = $("#example").kendoValidator({
+			        	rules: {
+					        customRule1: function(input){
+					          	if (input.is("[name=txtNumber]")) {	
+						            return vm.get("notDuplicateNumber");
+						        }
+						        return true;
+					        }
+					    },
+					    messages: {
+					        customRule1: banhji.source.duplicateNumber
+					    }
+			        }).data("kendoValidator");
+
 			        $("#saveNew").click(function(e){
 						e.preventDefault();
 						
@@ -79489,10 +80714,17 @@
 					            	return $.trim(input.val()) !== "";
 					          	}
 					          	return true;
+					        },
+					        customRule2: function(input){
+					          	if (input.is("[name=txtNumber]")) {	
+						            return vm.get("notDuplicateNumber");
+						        }
+						        return true;
 					        }
 					    },
 					    messages: {
-					        customRule1: banhji.source.requiredMessage
+					        customRule1: banhji.source.requiredMessage,
+					        customRule2: banhji.source.duplicateNumber
 					    }
 			        }).data("kendoValidator");
 			        
@@ -79579,10 +80811,17 @@
 					            	return $.trim(input.val()) !== "";
 					          	}
 					          	return true;
+					        },
+					        customRule2: function(input){
+					          	if (input.is("[name=txtNumber]")) {	
+						            return vm.get("notDuplicateNumber");
+						        }
+						        return true;
 					        }
 					    },
 					    messages: {
-					        customRule1: banhji.source.requiredMessage
+					        customRule1: banhji.source.requiredMessage,
+					        customRule2: banhji.source.duplicateNumber
 					    }
 			        }).data("kendoValidator");
 
@@ -79669,10 +80908,17 @@
 					            	return $.trim(input.val()) !== "";
 					          	}
 					          	return true;
+					        },
+					        customRule2: function(input){
+					          	if (input.is("[name=txtNumber]")) {	
+						            return vm.get("notDuplicateNumber");
+						        }
+						        return true;
 					        }
 					    },
 					    messages: {
-					        customRule1: banhji.source.requiredMessage
+					        customRule1: banhji.source.requiredMessage,
+					        customRule2: banhji.source.duplicateNumber
 					    }
 			        }).data("kendoValidator");
 
@@ -79759,10 +81005,17 @@
 					            	return $.trim(input.val()) !== "";
 					          	}
 					          	return true;
+					        },
+					        customRule2: function(input){
+					          	if (input.is("[name=txtNumber]")) {	
+						            return vm.get("notDuplicateNumber");
+						        }
+						        return true;
 					        }
 					    },
 					    messages: {
-					        customRule1: banhji.source.requiredMessage
+					        customRule1: banhji.source.requiredMessage,
+					        customRule2: banhji.source.duplicateNumber
 					    }
 			        }).data("kendoValidator");
 
@@ -79850,10 +81103,17 @@
 					            	return $.trim(input.val()) !== "";
 					          	}
 					          	return true;
+					        },
+					        customRule2: function(input){
+					          	if (input.is("[name=txtNumber]")) {	
+						            return vm.get("notDuplicateNumber");
+						        }
+						        return true;
 					        }
 					    },
 					    messages: {
-					        customRule1: banhji.source.requiredMessage
+					        customRule1: banhji.source.requiredMessage,
+					        customRule2: banhji.source.duplicateNumber
 					    }
 			        }).data("kendoValidator");
 
@@ -79941,10 +81201,17 @@
 					            	return $.trim(input.val()) !== "";
 					          	}
 					          	return true;
+					        },
+					        customRule2: function(input){
+					          	if (input.is("[name=txtNumber]")) {	
+						            return vm.get("notDuplicateNumber");
+						        }
+						        return true;
 					        }
 					    },
 					    messages: {
-					        customRule1: banhji.source.requiredMessage
+					        customRule1: banhji.source.requiredMessage,
+					        customRule2: banhji.source.duplicateNumber
 					    }
 			        }).data("kendoValidator");
 
@@ -80032,10 +81299,17 @@
 					            	return $.trim(input.val()) !== "";
 					          	}
 					          	return true;
+					        },
+					        customRule2: function(input){
+					          	if (input.is("[name=txtNumber]")) {	
+						            return vm.get("notDuplicateNumber");
+						        }
+						        return true;
 					        }
 					    },
 					    messages: {
-					        customRule1: banhji.source.requiredMessage
+					        customRule1: banhji.source.requiredMessage,
+					        customRule2: banhji.source.duplicateNumber
 					    }
 			        }).data("kendoValidator");
 
@@ -80122,10 +81396,17 @@
 					            	return $.trim(input.val()) !== "";
 					          	}
 					          	return true;
+					        },
+					        customRule2: function(input){
+					          	if (input.is("[name=txtNumber]")) {	
+						            return vm.get("notDuplicateNumber");
+						        }
+						        return true;
 					        }
 					    },
 					    messages: {
-					        customRule1: banhji.source.requiredMessage
+					        customRule1: banhji.source.requiredMessage,
+					        customRule2: banhji.source.duplicateNumber
 					    }
 			        }).data("kendoValidator");
 
@@ -80212,10 +81493,17 @@
 					            	return $.trim(input.val()) !== "";
 					          	}
 					          	return true;
+					        },
+					        customRule2: function(input){
+					          	if (input.is("[name=txtNumber]")) {	
+						            return vm.get("notDuplicateNumber");
+						        }
+						        return true;
 					        }
 					    },
 					    messages: {
-					        customRule1: banhji.source.requiredMessage
+					        customRule1: banhji.source.requiredMessage,
+					        customRule2: banhji.source.duplicateNumber
 					    }
 			        }).data("kendoValidator");
 
@@ -80285,19 +81573,26 @@
 				banhji.pageLoaded["gdn"] = true;
 
 				var validator = $("#example").kendoValidator({
-		        	rules: {
-				        customRule1: function(input) {
-				          	if (input.is("[name=txtRecurringName]") && vm.recurring_validate) {
-				          		vm.set("recurring_validate", false);
-				            	return $.trim(input.val()) !== "";
-				          	}
-				          	return true;
-				        }
-				    },
-				    messages: {
-				        customRule1: banhji.source.requiredMessage
-				    }
-		        }).data("kendoValidator");
+			        	rules: {
+					        customRule1: function(input) {
+					          	if (input.is("[name=txtRecurringName]") && vm.recurring_validate) {
+					          		vm.set("recurring_validate", false);
+					            	return $.trim(input.val()) !== "";
+					          	}
+					          	return true;
+					        },
+					        customRule2: function(input){
+					          	if (input.is("[name=txtNumber]")) {	
+						            return vm.get("notDuplicateNumber");
+						        }
+						        return true;
+					        }
+					    },
+					    messages: {
+					        customRule1: banhji.source.requiredMessage,
+					        customRule2: banhji.source.duplicateNumber
+					    }
+			        }).data("kendoValidator");
 
 		        $("#saveNew").click(function(e){
 					e.preventDefault();
@@ -80370,7 +81665,20 @@
 				if(banhji.pageLoaded["sale_return"]==undefined){
 					banhji.pageLoaded["sale_return"] = true;
 					
-			        var validator = $("#example").kendoValidator().data("kendoValidator");
+			        var validator = $("#example").kendoValidator({
+			        	rules: {
+					        customRule1: function(input){
+					          	if (input.is("[name=txtNumber]")) {	
+						            return vm.get("notDuplicateNumber");
+						        }
+						        return true;
+					        }
+					    },
+					    messages: {
+					        customRule1: banhji.source.duplicateNumber
+					    }
+			        }).data("kendoValidator");
+
 			        $("#saveNew").click(function(e){
 						e.preventDefault();
 						
@@ -81941,7 +83249,20 @@
 				if(banhji.pageLoaded["internal_usage"]==undefined){
 					banhji.pageLoaded["internal_usage"] = true;
 					
-					var validator = $("#example").kendoValidator().data("kendoValidator");
+					var validator = $("#example").kendoValidator({
+			        	rules: {
+					        customRule1: function(input){
+					          	if (input.is("[name=txtNumber]")) {	
+						            return vm.get("notDuplicateNumber");
+						        }
+						        return true;
+					        }
+					    },
+					    messages: {
+					        customRule1: banhji.source.duplicateNumber
+					    }
+			        }).data("kendoValidator");
+
 			        $("#saveNew").click(function(e){
 						e.preventDefault();
 
@@ -82865,10 +84186,17 @@
 				            	return $.trim(input.val()) !== "";
 				          	}
 				          	return true;
+				        },
+				        customRule2: function(input){
+				          	if (input.is("[name=txtNumber]")) {	
+					            return vm.get("notDuplicateNumber");
+					        }
+					        return true;
 				        }
 				    },
 				    messages: {
-				        customRule1: banhji.source.requiredMessage
+				        customRule1: banhji.source.requiredMessage,
+				        customRule2: banhji.source.duplicateNumber
 				    }
 		        }).data("kendoValidator");
 
@@ -82942,10 +84270,17 @@
 				            	return $.trim(input.val()) !== "";
 				          	}
 				          	return true;
+				        },
+				        customRule2: function(input){
+				          	if (input.is("[name=txtNumber]")) {	
+					            return vm.get("notDuplicateNumber");
+					        }
+					        return true;
 				        }
 				    },
 				    messages: {
-				        customRule1: banhji.source.requiredMessage
+				        customRule1: banhji.source.requiredMessage,
+				        customRule2: banhji.source.duplicateNumber
 				    }
 		        }).data("kendoValidator");
 
@@ -83019,10 +84354,17 @@
 				            	return $.trim(input.val()) !== "";
 				          	}
 				          	return true;
+				        },
+				        customRule2: function(input){
+				          	if (input.is("[name=txtNumber]")) {	
+					            return vm.get("notDuplicateNumber");
+					        }
+					        return true;
 				        }
 				    },
 				    messages: {
-				        customRule1: banhji.source.requiredMessage
+				        customRule1: banhji.source.requiredMessage,
+				        customRule2: banhji.source.duplicateNumber
 				    }
 		        }).data("kendoValidator");
 
@@ -83096,10 +84438,17 @@
 				            	return $.trim(input.val()) !== "";
 				          	}
 				          	return true;
+				        },
+				        customRule2: function(input){
+				          	if (input.is("[name=txtNumber]")) {	
+					            return vm.get("notDuplicateNumber");
+					        }
+					        return true;
 				        }
 				    },
 				    messages: {
-				        customRule1: banhji.source.requiredMessage
+				        customRule1: banhji.source.requiredMessage,
+				        customRule2: banhji.source.duplicateNumber
 				    }
 		        }).data("kendoValidator");
 
