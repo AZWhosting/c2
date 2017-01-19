@@ -952,30 +952,17 @@ class Wreports extends REST_Controller {
 		$obj->include_related("contact/meter", "number");
 		$obj->include_related("contact/contact_utility", array("abbr", "code"));
 		$obj->include_related("contact", array("contact_type_id", "name"));
+		$obj->where_related("winvoice_line", 'type', 'usage');
+		$obj->where_related("contact/meter", "activated", 1);
 		
 		//Results
 		$obj->where('type', 'Water_Invoice');
 		$obj->get_paged_iterated($page, $limit);						
 
 		if($obj->result_count()>0){
-			foreach ($obj as $value) {
-				// $fullname = $value->contact_surname.' '.$value->contact_name;
-				// if($value->contact_contact_type_id=="6" || $value->contact_contact_type_id=="7" || $value->contact_contact_type_id=="8"){
-				// 	$fullname = $value->contact_company;
-				// }
-
-				// $usage = 0;
-				// $lines = $value->winvoice_line->get();				
-				// foreach ($lines as $l) {
-				// 	if($l->type=="tariff"){
-				// 		$usage += intval($l->unit);
-				// 	}
-				// }
-
-				// $meter = $value->contact_contact_utility_abbr ."-". $value->contact_contact_utility_code;
-				
+			foreach ($obj as $value) {				
 				if(isset($temp["$value->contact_meter_number"])){
-					$temp["$value->contact_meter_number"]["usage"] += $value->winvoice_line_quantity;
+					$temp["$value->contact_meter_number"]["usage"] +=$value->winvoice_line_quantity;
 					$temp["$value->contact_meter_number"]["amount"] += floatval($value->winvoice_line_amount);
 				} else {
 					$temp["$value->contact_meter_number"]["fullname"] = $value->contact_name;
@@ -1000,7 +987,7 @@ class Wreports extends REST_Controller {
 		}		
 
 		//Response Data		
-		$this->response(array('results' => $data, 'count' => count($temp)), 200);	
+		$this->response(array('results' => $data, 'count' => count($data)), 200);	
 	}
 
 	//GET Cash Receipt DETAIL

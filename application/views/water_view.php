@@ -3583,7 +3583,8 @@
 				                	data-start="year" 
 					  				data-depth="year" 
 				                	placeholder="Moth of ..." 
-						           	data-bind="value: FmonthSelect" />
+						           	data-bind="value: FmonthSelect,
+						           			events: {change: makeBilled}" />
 							</div>	
 						</div>
 						<div class="span3" style="padding-left: 0;">
@@ -3594,7 +3595,8 @@
 				                	data-role="datepicker"
 				                	data-format="dd-MM-yyyy"
 				                	placeholder="Bill Date ..." 
-						           	data-bind="value: BillingDate" />
+						           	data-bind="value: BillingDate,
+						           	events: {change: makeBilled}" />
 	                  		</div>
 						</div>	
 						<div class="span3">
@@ -3605,7 +3607,8 @@
 				                	data-role="datepicker"
 				                	data-format="dd-MM-yyyy"
 				                	placeholder="Due Date ..." 
-						           	data-bind="value: DueDate" />
+						           	data-bind="value: DueDate,
+						           	events: {change: makeBilled}" />
 	                  		</div>
 						</div>	
 			        </div>
@@ -3761,8 +3764,8 @@
 					                <th style="text-align:center"><input type="checkbox" data-bind="checked: chkAll, events: {change : checkAll}" /></th>                
 					                <th><span data-bind="text: lang.lang.customer"></span></th>		         
 					                <th><span data-bind="text: lang.lang.number"></span></th>
-					                <th><span data-bind="text: lang.lang.amount"></span></th>
-					                <th><span data-bind="text: lang.lang.status"></span></th>                    
+					                <th align="center"><span >m<sup>3</sup></span></th>
+					                <th align="right"><span data-bind="text: lang.lang.amount"></span></th>
 					            </tr>
 					        </thead>
 					        <tbody data-role="listview" 
@@ -3816,14 +3819,14 @@
 		<td align="center"><input type="checkbox" data-bind="checked: printed, events: {change: isCheck}" /></td>
 		<td>#= contact.name#</td>
 		<td>#= meter.meter_number#</td>
-		<td>#= amount#</td>
-		<td>#= status#</td>
+		<td align="center">#= items[0].consumption#</td>
+		<td align="right">#= kendo.toString(amount, "c0", locale)#</td>
 	</tr>
 </script>
 <script id="printbill-footer-template" type="text/x-kendo-template">
     <tr>    	
         <td class="right" colspan="8" style="font-size:30px;">
-            <span data-bind="text: lang.lang.total"></span>:  m<sup>3</sup>
+            <span data-bind="text: lang.lang.total"></span>: <span data-bind="text: totalMeter"></span>m<sup>3</sup>
         </td>
     </tr>
 </script>
@@ -3869,27 +3872,27 @@
 		<div class="span12 cover-customer">
 			
 			<div class="span7">
-				<span id="secondwnumber#= id#" style="margin-left: -14px;"></span>
+				<span id="secondwnumber#= id#" style="margin-left: -14px;"></span><br />
 				<div class="span12">
 					<p>អតិថិជន​ #=contact.number#</p>
 					<p>#:contact.name#</p>
 					<p>#: typeof contact.address != 'null' ? contact.address: ''#</p>
-					<p style="font-size: 10px;"><i>ថ្ងៃ​ចាប់​ផ្តើម​ទទួល​ប្រាក់ #=kendo.toString(new Date(issue_date), "dd-MM-yyyy")#</i></p>
+					<p style="font-size: 10px;"><i>ថ្ងៃ​ចាប់​ផ្តើម​ទទួល​ប្រាក់ #=kendo.toString(new Date(bill_date), "dd-MM-yyyy")#</i></p>
 				</div>
 			</div>
 			<div class="span4">
 				<table >
 					<tr>
-						<td width="200"><p>លេខ​វិក្កយ​បត្រ</p></td>
+						<td width="140"><p>លេខ​វិក្កយ​បត្រ</p></td>
 						<td><p>#:number#</p></td>
 					</tr>
 					<tr>
 						<td><p>ថ្ងៃ​ចេញ វិក្កយ​បត្រ</p></td>
-						<td><p>#:issue_date#</p></td>
+						<td><p>#=kendo.toString(new Date(issue_date), "dd-MM-yyyy")#</p></td>
 					</tr>
 					<tr>
 						<td><p>តំបន់</p></td>
-						<td><p>#:contact.code#</p></td>
+						<td><p>#:meter.location[0].abbr# - #:meter.location[0].name#</p></td>
 					</tr>
 					<!-- <tr>
 						<td><p>លេខ​ទី​តាំង​</p></td>
@@ -3897,11 +3900,11 @@
 					</tr> -->
 					<tr>
 						<td><p>គិត​ចាប់​ពី​ថ្ងៃ​ទី</p></td>
-						<td><p>#:due_date#</p></td>
+						<td><p>#=kendo.toString(new Date(bill_date), "dd-MM-yyyy")#</p></td>
 					</tr>
 					<tr>
 						<td><p>ដល់​ថ្ងៃ​ទី</p></td>
-						<td><p>#:due_date#</p></td>
+						<td><p>#=kendo.toString(new Date(due_date), "dd-MM-yyyy")#</p></td>
 					</tr>
 				</table>		
 			</div>			
@@ -3919,11 +3922,11 @@
 			</thead>
 			<tbody>
 				<tr>
-					<td style="vertical-align: middle;">#: issue_date#</td>
+					<td style="vertical-align: middle;"></td>
 					<td colspan="4" style="text-align: right">
-						ប្រាក់​ជំ​ពាក់​ពេល​មុន Balance brought forward . រ<br>
-						ប្រាក់​បាន​ទទួល​ Payment Recieve - THANK YOU . រ<br>
-						ជំពាក់​សរុប​នៅ​ថ្ងៃ​ធ្វើ​វិក្កយបត្រ Balance as at billing date .រ
+						ប្រាក់​ជំ​ពាក់​ពេល​មុន Balance brought forward .<br>
+						ប្រាក់​បាន​ទទួល​ Payment Recieve #=kendo.toString(new Date(bill_date), "dd-MM-yyyy")# .<br>
+						ជំពាក់​សរុប​នៅ​ថ្ងៃ​ធ្វើ​វិក្កយបត្រ Balance as at billing date .
 					</td>
 					<td>
 						<br>
@@ -3932,7 +3935,7 @@
 					</td>
 				</tr>
 				<tr>
-					<td>#: meter.location[0].abbr##: meter.number#</td>
+					<td>#: meter.location[0].abbr# - #: meter.meter_number#</td>
 					<td align="center">#: items[0].previous#</td>
 					<td align="center">#: items[0].current#</td>
 					<td align="center">#: items[0].consumption#</td>
@@ -3943,7 +3946,7 @@
 				#for(var j=1; j< items.length; j++) {#
 				<tr>
 					<td>#: items[j].number#</td>
-					<td align="center">#: items[j].amount#</td>
+					<td align="center">#= kendo.toString(items[j].amount, "c", locale)#</td>
 					<td align="center"></td>
 					<td align="center"></td>
 					<td></td>
@@ -3955,20 +3958,20 @@
 				#}#
 				<tr>
 					<td colspan="5" style="padding-right: 10px;background: \\#355176;color: \\#fff;text-align: right;" class="darkbblue">បំណុល​សរុប TOTAL BALANCE</td>
-					<td style="border: 1px solid;text-align: right">#: amount#</td>
+					<td style="border: 1px solid;text-align: right">#= kendo.toString(amount, "c", locale)#</td>
 				</tr>
 				<tr>
-					<td rowspan="4" colspan="3"></td>
+					<td rowspan="4" colspan="3">#= meter.license[0].term_of_condition#</td>
 					<td colspan="2" class="greyy" style="background: \\#ccc;">ប្រាក់​ត្រូវ​បង់ TOTAL DUE</td>
-					<td style="text-align: right"><strong>#: amount#</strong></td>
+					<td style="text-align: right"><strong>#= kendo.toString(amount, "c", locale)#</strong></td>
 				</tr>
 				<tr>
-					<td colspan="2" class="greyy" style="background: \\#ccc;">ថ្ងៃផុតកំណត់ DUE DATE</td>
-					<td>#=kendo.toString(new Date(due_date), "dd-MM-yyyy")#</td>
+					<td colspan="2" class="greyy"  style="background: \\#ccc;">ថ្ងៃផុតកំណត់ DUE DATE</td>
+					<td align="center">#=kendo.toString(new Date(due_date), "dd-MM-yyyy")#</td>
 				</tr>
 				<tr>
 					<td colspan="2" class="greyy" style="background: \\#ccc;">ថ្ងៃបង់ប្រាក់ PAY DATE</td>
-					<td></td>
+					<td align="center">#=kendo.toString(new Date(bill_date), "dd-MM-yyyy")#</td>
 				</tr>
 				<tr>
 					<td colspan="2" class="greyy" style="background: \\#ccc;">ប្រាក់បានបង់ PAY AMOUNT</td>
@@ -3984,14 +3987,14 @@
 					<th width="390" style="border: none">
 						<span style="margin-left: -15px;" id="footwnumber#:id#"></span>
 					</th>
-					<td width="270" class="greyy" style="background: \\#ccc;border-bottom:1px solid \\#fff;">ប្រាក់​ត្រូវ​បង់ TOTAL DUE</td>
-					<td width="180">#: amount#</td>
+					<td width="270" class="greyy"  style="background: \\#ccc;border-bottom:1px solid \\#fff;">ប្រាក់​ត្រូវ​បង់ TOTAL DUE</td>
+					<td width="180" align="right">#= kendo.toString(amount, "c", locale)#</td>
 				</tr>
 				<tr>
 					<td><p>វិក្កយបត្រ</p></td>
 					<td>#: issue_date# - #: number#</td>
 					<td class="greyy" style="background: \\#ccc;border-bottom:1px solid \\#fff;">ថ្ងៃបង់ប្រាក់ PAY DATE</td>
-					<td></td>
+					<td align="center">#=kendo.toString(new Date(bill_date), "dd-MM-yyyy")#</td>
 				</tr>
 				<tr>
 					<td><p>អតិថិជន</p></td>
@@ -4001,13 +4004,13 @@
 				</tr>
 				<tr>
 					<td>លេខ​ទី​តាំង</td>
-					<td>#: contact.code#</td>
+					<td>#:meter.location[0].abbr# - #:meter.location[0].name#</td>
 					<td rowspan="2" class="greyy" style="background: \\#ccc;">អ្នកទទួលប្រាក់ RECEIVER</td>
 					<td rowspan="2"></td>
 				</tr>
 				<tr>
 					<td>លេខ​កុនង​ទ័រ</td>
-					<td>#: meter.number#</td>
+					<td>#: meter.meter_number#</td>
 				</tr>
 			</tbody>
 		</table>
@@ -12196,11 +12199,6 @@
 			}else{
 				alert("Please Select Month Of");
 			}
-			/////////////
-	    	// this.invoiceDS.filter([
-	    	// 	{field: 'branch_id', operator: 'where_related_meter', value: this.licenseSelect},
-	    	// 	{field: 'location_id', operator: 'where_related_meter', value: this.blocSelect}
-	    	// ]);
 	    },
 	    makeInvoice 		: function(e) {
 	    	var that = this;
@@ -12271,6 +12269,25 @@
 					}
 					return 0;
 				});
+				//Total after Tariff
+				var Total = 0;
+				// console.log("exT = " + exT + "; aTariff = " + aTariff + "; exU = " + exU);
+				if(exT == '%'){
+					exU = kendo.parseInt(exU) * kendo.parseFloat(aTariff);
+					var exP = (kendo.parseFloat(exU) * kendo.parseFloat(exA)) / 100;
+					Total = kendo.parseFloat(exU) - kendo.parseFloat(exP);
+				}else if(exT == 'money'){
+					exU = kendo.parseInt(exU) * kendo.parseFloat(aTariff);
+					Total = kendo.parseFloat(exU) - kendo.parseFloat(exA);
+				}else{
+					Total = kendo.parseInt(tUsage) * kendo.parseFloat(aTariff);
+				}
+				//Meter Location
+				var MeterLocation = v.meter.location_id;
+				console.log(MeterLocation);
+				
+	    		aSold += Total;
+	    		//Add to Itmes
 				var invoiceItems = [];
 				$.each(v.items, function(index, value) {
 					if(value.type == "tariff") {
@@ -12295,7 +12312,7 @@
 						   	"description" 		: value.line.name,					   	
 						   	"quantity" 			: value.type == 'usage' ? value.line.usage : 1,
 						   	"price"				: value.line.amount,	
-						   	"amount" 			: value.line.amount,
+						   	"amount" 			: Total,
 						   	"rate"				: rate,
 						   	"locale" 			: locale,
 						   	"has_vat" 			: false,
@@ -12303,22 +12320,8 @@
 						});
 					}	
 				});	
-				var Total = 0;
-				//console.log("exT = " + exT + "; aTariff = " + aTariff + "; exU = " + exU);
-				if(exT == '%'){
-					exU = kendo.parseInt(exU) * kendo.parseFloat(aTariff);
-					var exP = (kendo.parseFloat(exU) * kendo.parseFloat(exA)) / 100;
-					Total = kendo.parseFloat(exU) - kendo.parseFloat(exP);
-				}else if(exT == 'money'){
-					exU = kendo.parseInt(exU) * kendo.parseFloat(aTariff);
-					Total = kendo.parseFloat(exU) - kendo.parseFloat(exA);
-				}else{
-					Total = kendo.parseInt(tUsage) * kendo.parseFloat(aTariff);
-				}
-				var MeterLocation = v.meter.location_id;
-				console.log(MeterLocation);
+				//set INV
 	    		self.calInvoice(Total, aTariff, tUsage, v.contact.id, v.contact.account_id, v.contact.vat, invoiceItems, MeterLocation);
-	    		aSold += Total;
 	    	});
 	    	this.set("amountSold", aSold);
 	    	this.set("meterSold", mSold);
@@ -12331,33 +12334,10 @@
 			billDate,
 			dueDate,
 			AmountAfterTariff = Total;
-			//var invoiceItems = [];
 			var rate = banhji.source.getRate(banhji.locale, date);
 			var locale = banhji.locale;
-			//var usage = v.items[0].line.usage * v.meter.multiplier;
-			//var record_id = v.items[0].line.id;
 			var amount = 0.00;
 			var date = new Date();
-			if(self.get("FmonthSelect")){
-				monthOF = self.get("FmonthSelect");
-			}else{
-				monthOF = null;
-			}
-			if(self.get("BillingDate")){
-				billDate = self.get("BillingDate");
-			}else{
-				billDate = null;
-			}
-			if(self.get("PaymentDate")){
-				paymentDate = self.get("PaymentDate");
-			}else{
-				paymentDate = null;
-			}
-			if(self.get("DueDate")){
-				dueDate = self.get("DueDate");
-			}else{
-				dueDate = date.setDate(date.getDate() + 7);
-			}
 			this.invoiceCollection.dataSource.add({
 				contact_id 			: ContactID,
 				payment_term_id		: null,
@@ -12373,38 +12353,40 @@
 				rate 				: rate,
 				locale 				: locale,
 				location_id 		: MeterLocation,
-				month_of 			: monthOF,
+				month_of 			: this.get("FmonthSelect"),
 				issued_date 		: date,
 				payment_date 		: null,
-				bill_date 			: billDate,
-				due_date 			: dueDate,
+				bill_date 			: this.get("BillingDate"),
+				due_date 			: this.get("DueDate"),
 				check_no 			: null,
 				memo 				: null,
 				memo2 				: null,
 				status 				: null,
-
 				invoice_lines    	: invoiceItems
 			});
 			console.log(invoiceItems);
 	    },
 		save 				: function() {
 			var self = this;
-			$("#loadImport").css("display","block");
-			this.invoiceCollection.save();
-			
-			this.invoiceCollection.dataSource.bind("requestEnd", function(e){
-				if(e.type != 'read') {
-			    	if(e.response){				
-			    		$("#ntf1").data("kendoNotification").success("Successfully!");
-			    		self.cancel();
-						$("#loadImport").css("display","none");
+			if(this.get("FmonthSelect") && this.get("BillingDate") && this.get("DueDate")){
+				$("#loadImport").css("display","block");
+				this.invoiceCollection.save();
+				this.invoiceCollection.dataSource.bind("requestEnd", function(e){
+					if(e.type != 'read') {
+				    	if(e.response){				
+				    		$("#ntf1").data("kendoNotification").success("Successfully!");
+				    		self.cancel();
+							$("#loadImport").css("display","none");
+						}
 					}
-				}
-		    });
-		    this.invoiceCollection.dataSource.bind("error", function(e){
-				$("#ntf1").data("kendoNotification").error("Error!"); 
-				$("#loadImport").css("display","none");				
-		    });	
+			    });
+			    this.invoiceCollection.dataSource.bind("error", function(e){
+					$("#ntf1").data("kendoNotification").error("Error!"); 
+					$("#loadImport").css("display","none");				
+			    });
+			}else{
+				alert("Fields Required!");
+			}
 		},
 		cancel 				: function(){
 			this.invoiceCollection.dataSource.cancelChanges();
@@ -12425,7 +12407,7 @@
 		chkAll 				: false,
 		licenseSelect 		: null,	
 		monthSelect 		: null,	
-		TemplateSelect 		: 1,
+		TemplateSelect 		: null,
 		SelectSize 			: null,
 		SizePaper 			: [{id: "A4", name: "A4"},{id: "A5", name: "A5"}],
 		obj 				: [],
@@ -12475,7 +12457,15 @@
 	    	this.preparePrint();
 	    },
 	    preparePrint 	: function() {
-	    	console.log(this.printArray);
+	    	var self = this, AmountT = 0, AmountTA = 0, tMeter = 0;
+	    	$.each(this.printArray, function(i, v){
+	    		tMeter += kendo.parseInt(v.items[0].consumption);
+	    		AmountT += kendo.parseFloat(v.amount);
+	    		AmountTA = kendo.toString(AmountT, "c", v.locale);
+	    	});
+	    	this.set("amountTotal", AmountTA);
+	    	this.set("totalMeter", tMeter);
+	    	this.set("totalInv", this.printArray.length);
 	    },
 	    licenseChange 	: function(e) {
 			var data = e.data;
@@ -12521,20 +12511,26 @@
 			}
 	    },
 		printBill 			: function(){
-	  		if(this.invoiceCollection.dataSource.total()>0){
-				if(this.printArray.length>0){
-				  	var self = this;
-				  	$.each(this.printArray, function(index, value){
-				  		banhji.InvoicePrint.dataSource.push(self.printArray[index]);
-				  	});
-				  	banhji.InvoicePrint.PaperSize = this.SelectSize;
-			        banhji.router.navigate('/invoice_print');
+			if(this.get("TemplateSelect")){
+		  		if(this.invoiceCollection.dataSource.total()>0){
+					if(this.printArray.length>0){
+					  	var self = this;
+					  	banhji.InvoicePrint.dataSource = [];
+					  	$.each(this.printArray, function(index, value){
+					  		banhji.InvoicePrint.dataSource.push(self.printArray[index]);
+					  	});
+					  	banhji.InvoicePrint.PaperSize = this.SelectSize;
+					  	banhji.InvoicePrint.TemplateSelect = this.get("TemplateSelect");
+				        banhji.router.navigate('/invoice_print');
 
-		    	}else{
-		    		alert("Please check the box!");
-		    	}
+			    	}else{
+			    		alert("Please check the box!");
+			    	}
+				}else{
+					alert("No data found");
+				}
 			}else{
-				alert("No data found");
+				alert("Please Select Template!");
 			}
 		},
 		save 				: function() {
@@ -12552,6 +12548,7 @@
 		isVisible 			: true,
 		company 			: banhji.institute,
 		PaperSize 			: "A4",
+		TemplateSelect 		: null,
 		user_id 			: banhji.userManagement.getLogin() === null ? '':banhji.userManagement.getLogin().id,
 		pageLoad 			: function(id){	
 			this.barcod();
@@ -12564,20 +12561,20 @@
 				var d = view[i];
 				$("#secondwnumber"+d.id).kendoBarcode({
 					renderAs: "svg",
-				  	value: d.meter_number,
+				  	value: d.meter.meter_number,
 				  	type: "code128",
 				  	width: 200,
-					height: 40,
+					height: 25,
 					text:{
 					    visible: false
 					}
 				});
 				$("#footwnumber"+d.id).kendoBarcode({
 					renderAs: "svg",
-				  	value: d.meter_number,
+				  	value: d.meter.meter_number,
 				  	type: "code128",
 				  	width: 200,
-					height: 40,
+					height: 25,
 					text:{
 					    visible: false
 					}	

@@ -47138,44 +47138,12 @@
 		  	filter: { field:"account_type_id", value: 11 },
 		  	sort: { field:"number", dir:"asc" }
 		}),
+		txnTemplateDS 		: new kendo.data.DataSource({
+		  	data: banhji.source.txnTemplateList,
+		  	filter: { field: "type", value:"Cash_Advance" }
+		}),
 		attachmentDS	 	: dataStore(apiUrl + "attachments"),
 		segmentItemDS 		: banhji.source.segmentItemDS,
-		txnTemplateDS		: new kendo.data.DataSource({
-			transport: {
-				read 	: {
-					url: apiUrl + "transaction_templates",
-					type: "GET",
-					headers: banhji.header,
-					dataType: 'json'
-				},				
-				parameterMap: function(options, operation) {
-					if(operation === 'read') {
-						return {
-							page: options.page,
-							limit: options.pageSize,
-							filter: options.filter,
-							sort: options.sort
-						};
-					} else {
-						return {models: kendo.stringify(options.models)};
-					}
-				}
-			},
-			schema 	: {
-				model: {
-					id: 'id'
-				},
-				data: 'results',
-				total: 'count'
-			},
-			filter: { field: "type", value:"Cash_Advance" },
-			batch: true,
-			serverFiltering: true,
-			serverSorting: true,
-			serverPaging: true,
-			page:1,
-			pageSize: 100
-		}),
 		amtDueColor 		: banhji.source.amtDueColor,
 	    confirmMessage 		: banhji.source.confirmMessage,
 		frequencyList 		: banhji.source.frequencyList,
@@ -47847,43 +47815,18 @@
 		  	filter: { field:"account_type_id", value: 10 },
 		  	sort: { field:"number", dir:"asc" }
 		}),
-		taxItemDS  			: dataStore(apiUrl + "tax_items"),
-		txnTemplateDS		: new kendo.data.DataSource({
-			transport: {
-				read 	: {
-					url: apiUrl + "transaction_templates",
-					type: "GET",
-					headers: banhji.header,
-					dataType: 'json'
-				},				
-				parameterMap: function(options, operation) {
-					if(operation === 'read') {
-						return {
-							page: options.page,
-							limit: options.pageSize,
-							filter: options.filter,
-							sort: options.sort
-						};
-					} else {
-						return {models: kendo.stringify(options.models)};
-					}
-				}
-			},
-			schema 	: {
-				model: {
-					id: 'id'
-				},
-				data: 'results',
-				total: 'count'
-			},
-			filter: { field: "type", value:"Direct_Expense" },
-			batch: true,
-			serverFiltering: true,
-			serverSorting: true,
-			serverPaging: true,
-			page:1,
-			pageSize: 100
+		txnTemplateDS 		: new kendo.data.DataSource({
+		  	data: banhji.source.txnTemplateList,
+		  	filter:{
+			    logic: "or",
+			    filters: [
+			      	{ field: "type", value: "Direct_Expense" },
+			      	{ field: "type", value: "Reimbursement" },
+			      	{ field: "type", value: "Advance_Settlement" }
+			    ]
+			}
 		}),
+		taxItemDS  			: dataStore(apiUrl + "tax_items"),
 		attachmentDS	 	: dataStore(apiUrl + "attachments"),
 		segmentItemDS 		: banhji.source.segmentItemDS,		
 		amtDueColor 		: banhji.source.amtDueColor,
@@ -49803,42 +49746,10 @@
 		jobDS				: banhji.source.jobDS,
 		measurementDS	 	: dataStore(apiUrl + "measurements"),
 		attachmentDS	 	: dataStore(apiUrl + "attachments"),
-		txnTemplateDS		: new kendo.data.DataSource({
-			transport: {
-				read 	: {
-					url: apiUrl + "transaction_templates",
-					type: "GET",
-					headers: banhji.header,
-					dataType: 'json'
-				},				
-				parameterMap: function(options, operation) {
-					if(operation === 'read') {
-						return {
-							page: options.page,
-							limit: options.pageSize,
-							filter: options.filter,
-							sort: options.sort
-						};
-					} else {
-						return {models: kendo.stringify(options.models)};
-					}
-				}
-			},
-			schema 	: {
-				model: {
-					id: 'id'
-				},
-				data: 'results',
-				total: 'count'
-			},
-			filter: { field: "type", value:"Purchase_Order" },
-			batch: true,
-			serverFiltering: true,
-			serverSorting: true,
-			serverPaging: true,
-			page:1,
-			pageSize: 100
-		}),		
+		txnTemplateDS 		: new kendo.data.DataSource({
+		  	data: banhji.source.txnTemplateList,
+		  	filter:{ field: "type", value: "Purchase_Order" }
+		}),
 		balanceDS  			: dataStore(apiUrl + "transactions"),
 		contactDS  			: new kendo.data.DataSource({
 		  	data: banhji.source.supplierList,
@@ -50654,41 +50565,9 @@
 		referenceLineDS		: dataStore(apiUrl + "item_linese"),
 		measurementDS	 	: dataStore(apiUrl + "measurements"),
 		attachmentDS	 	: dataStore(apiUrl + "attachments"),
-		txnTemplateDS		: new kendo.data.DataSource({
-			transport: {
-				read 	: {
-					url: apiUrl + "transaction_templates",
-					type: "GET",
-					headers: banhji.header,
-					dataType: 'json'
-				},				
-				parameterMap: function(options, operation) {
-					if(operation === 'read') {
-						return {
-							page: options.page,
-							limit: options.pageSize,
-							filter: options.filter,
-							sort: options.sort
-						};
-					} else {
-						return {models: kendo.stringify(options.models)};
-					}
-				}
-			},
-			schema 	: {
-				model: {
-					id: 'id'
-				},
-				data: 'results',
-				total: 'count'
-			},
-			filter: { field: "type", value:"GRN" },
-			batch: true,
-			serverFiltering: true,
-			serverSorting: true,
-			serverPaging: true,
-			page:1,
-			pageSize: 100
+		txnTemplateDS 		: new kendo.data.DataSource({
+		  	data: banhji.source.txnTemplateList,
+		  	filter:{ field: "type", value: "GRN" }
 		}),
 		contactDS  			: new kendo.data.DataSource({
 		  	data: banhji.source.supplierList,
@@ -51464,41 +51343,9 @@
 			sort: { field:"number", dir:"asc" }
 		}),
 		segmentItemDS 		: banhji.source.segmentItemDS,
-		txnTemplateDS		: new kendo.data.DataSource({
-			transport: {
-				read 	: {
-					url: apiUrl + "transaction_templates",
-					type: "GET",
-					headers: banhji.header,
-					dataType: 'json'
-				},				
-				parameterMap: function(options, operation) {
-					if(operation === 'read') {
-						return {
-							page: options.page,
-							limit: options.pageSize,
-							filter: options.filter,
-							sort: options.sort
-						};
-					} else {
-						return {models: kendo.stringify(options.models)};
-					}
-				}
-			},
-			schema 	: {
-				model: {
-					id: 'id'
-				},
-				data: 'results',
-				total: 'count'
-			},
-			filter: { field: "type", value:"Deposit" },
-			batch: true,
-			serverFiltering: true,
-			serverSorting: true,
-			serverPaging: true,
-			page:1,
-			pageSize: 100
+		txnTemplateDS 		: new kendo.data.DataSource({
+		  	data: banhji.source.txnTemplateList,
+		  	filter:{ field: "type", value: "Deposit" }
 		}),
 		accountDS 			: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
@@ -52274,6 +52121,16 @@
 				{ field:"number", dir:"asc" }
 			]
 		}),
+		txnTemplateDS 		: new kendo.data.DataSource({
+		  	data: banhji.source.txnTemplateList,
+		  	filter:{
+			    logic: "or",
+			    filters: [
+			      	{ field: "type", value: "Cash_Purchase" },
+			      	{ field: "type", value: "Credit_Purchase" }
+			    ]
+			}
+		}),
 		depositDS  					: dataStore(apiUrl + "transactions"),
 		depositSumDS  				: new kendo.data.DataSource({
 			transport: {
@@ -52316,42 +52173,6 @@
 		measurementDS				: banhji.source.measurementDS,
 		attachmentDS	 			: dataStore(apiUrl + "attachments"),
 		segmentItemDS				: banhji.source.segmentItemDS,
-		txnTemplateDS				: new kendo.data.DataSource({
-			transport: {
-				read 	: {
-					url: apiUrl + "transaction_templates",
-					type: "GET",
-					headers: banhji.header,
-					dataType: 'json'
-				},				
-				parameterMap: function(options, operation) {
-					if(operation === 'read') {
-						return {
-							page: options.page,
-							limit: options.pageSize,
-							filter: options.filter,
-							sort: options.sort
-						};
-					} else {
-						return {models: kendo.stringify(options.models)};
-					}
-				}
-			},
-			schema 	: {
-				model: {
-					id: 'id'
-				},
-				data: 'results',
-				total: 'count'
-			},
-			filter: { field: "type", value:"Purchase" },
-			batch: true,
-			serverFiltering: true,
-			serverSorting: true,
-			serverPaging: true,
-			page:1,
-			pageSize: 100
-		}),	
 		referenceTypes 				: [
 			{ id:"Purchase_Order", name:"Purchase Order" },
 			{ id:"GRN", name:"Goods Received Note" }
@@ -54007,46 +53828,14 @@
 		  	filter: { field:"account_type_id", value: 10 },
 		  	sort: { field:"number", dir:"asc" }
 		}),
+		txnTemplateDS 		: new kendo.data.DataSource({
+		  	data: banhji.source.txnTemplateList,
+		  	filter:{ field: "type", value: "Purchase_Return" }
+		}),
 		catalogDS			: dataStore(apiUrl + "items"),
 		assemblyDS			: dataStore(apiUrl + "items/assembly"),		
 		segmentItemDS		: banhji.source.segmentItemDS,
 		attachmentDS	 	: dataStore(apiUrl + "attachments"),
-		txnTemplateDS		: new kendo.data.DataSource({
-			transport: {
-				read 	: {
-					url: apiUrl + "transaction_templates",
-					type: "GET",
-					headers: banhji.header,
-					dataType: 'json'
-				},				
-				parameterMap: function(options, operation) {
-					if(operation === 'read') {
-						return {
-							page: options.page,
-							limit: options.pageSize,
-							filter: options.filter,
-							sort: options.sort
-						};
-					} else {
-						return {models: kendo.stringify(options.models)};
-					}
-				}
-			},
-			schema 	: {
-				model: {
-					id: 'id'
-				},
-				data: 'results',
-				total: 'count'
-			},
-			filter: { field: "type", value:"Purchase_Return" },
-			batch: true,
-			serverFiltering: true,
-			serverSorting: true,
-			serverPaging: true,
-			page:1,
-			pageSize: 100
-		}),
 		optionList 			: [
 			{ id:"Offset_Bill", name:"Charge Against Bill" },
 			{ id:"Deposit", name:"Add To Deposit" },
@@ -57016,45 +56805,13 @@
 				{ field:"number", dir:"asc" }
 			]
 		}),
+		txnTemplateDS 		: new kendo.data.DataSource({
+		  	data: banhji.source.txnTemplateList,
+		  	filter:{ field: "type", value: "Quote" }
+		}),
 		taxItemDS 			: banhji.source.customerTaxDS,
 		catalogDS			: dataStore(apiUrl + "items"),
 		assemblyDS			: dataStore(apiUrl + "item_prices"),
-		txnTemplateDS		: new kendo.data.DataSource({
-			transport: {
-				read 	: {
-					url: apiUrl + "transaction_templates",
-					type: "GET",
-					headers: banhji.header,
-					dataType: 'json'
-				},				
-				parameterMap: function(options, operation) {
-					if(operation === 'read') {
-						return {
-							page: options.page,
-							limit: options.pageSize,
-							filter: options.filter,
-							sort: options.sort
-						};
-					} else {
-						return {models: kendo.stringify(options.models)};
-					}
-				}
-			},
-			schema 	: {
-				model: {
-					id: 'id'
-				},
-				data: 'results',
-				total: 'count'
-			},
-			filter: { field: "type", value:"Quote" },
-			batch: true,
-			serverFiltering: true,
-			serverSorting: true,
-			serverPaging: true,
-			page:1,
-			pageSize: 100
-		}),		
 		segmentItemDS		: banhji.source.segmentItemDS,
 		amtDueColor 		: banhji.source.amtDueColor,
 	    confirmMessage 		: banhji.source.confirmMessage,		
@@ -57969,41 +57726,9 @@
 		referenceDS			: dataStore(apiUrl + "transactions"),
 		referenceLineDS		: dataStore(apiUrl + "item_lines"),
 		attachmentDS	 	: dataStore(apiUrl + "attachments"),
-		txnTemplateDS		: new kendo.data.DataSource({
-			transport: {
-				read 	: {
-					url: apiUrl + "transaction_templates",
-					type: "GET",
-					headers: banhji.header,
-					dataType: 'json'
-				},				
-				parameterMap: function(options, operation) {
-					if(operation === 'read') {
-						return {
-							page: options.page,
-							limit: options.pageSize,
-							filter: options.filter,
-							sort: options.sort
-						};
-					} else {
-						return {models: kendo.stringify(options.models)};
-					}
-				}
-			},
-			schema 	: {
-				model: {
-					id: 'id'
-				},
-				data: 'results',
-				total: 'count'
-			},
-			filter: { field: "type", value:"Sale_Order" },
-			batch: true,
-			serverFiltering: true,
-			serverSorting: true,
-			serverPaging: true,
-			page:1,
-			pageSize: 100
+		txnTemplateDS 		: new kendo.data.DataSource({
+		  	data: banhji.source.txnTemplateList,
+		  	filter:{ field: "type", value: "Sale_Order" }
 		}),
 		jobDS				: banhji.source.jobDS,
 		currencyRateDS		: dataStore(apiUrl + "currencies/rate"),
@@ -59005,41 +58730,9 @@
 		journalLineDS		: dataStore(apiUrl + "journal_lines"),
 		currencyRateDS		: dataStore(apiUrl + "currencies/rate"),
 		attachmentDS	 	: dataStore(apiUrl + "attachments"),
-		txnTemplateDS		: new kendo.data.DataSource({
-			transport: {
-				read 	: {
-					url: apiUrl + "transaction_templates",
-					type: "GET",
-					headers: banhji.header,
-					dataType: 'json'
-				},				
-				parameterMap: function(options, operation) {
-					if(operation === 'read') {
-						return {
-							page: options.page,
-							limit: options.pageSize,
-							filter: options.filter,
-							sort: options.sort
-						};
-					} else {
-						return {models: kendo.stringify(options.models)};
-					}
-				}
-			},
-			schema 	: {
-				model: {
-					id: 'id'
-				},
-				data: 'results',
-				total: 'count'
-			},
-			filter: { field: "type", value:"Customer_Deposit" },
-			batch: true,
-			serverFiltering: true,
-			serverSorting: true,
-			serverPaging: true,
-			page:1,
-			pageSize: 100
+		txnTemplateDS 		: new kendo.data.DataSource({
+		  	data: banhji.source.txnTemplateList,
+		  	filter:{ field: "type", value: "Customer_Deposit" }
 		}),
 		accountDS 			: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
@@ -59816,41 +59509,16 @@
 			serverPaging: true,
 			pageSize: 100
 		}),
-		txnTemplateDS		: new kendo.data.DataSource({
-			transport: {
-				read 	: {
-					url: apiUrl + "transaction_templates",
-					type: "GET",
-					headers: banhji.header,
-					dataType: 'json'
-				},				
-				parameterMap: function(options, operation) {
-					if(operation === 'read') {
-						return {
-							page: options.page,
-							limit: options.pageSize,
-							filter: options.filter,
-							sort: options.sort
-						};
-					} else {
-						return {models: kendo.stringify(options.models)};
-					}
-				}
-			},
-			schema 	: {
-				model: {
-					id: 'id'
-				},
-				data: 'results',
-				total: 'count'
-			},
-			filter: { field: "type", operator:"where_in", value:["Commercial_Cash_Sale","Vat_Cash_Sale","Cash_Sale"] },
-			batch: true,
-			serverFiltering: true,
-			serverSorting: true,
-			serverPaging: true,
-			page:1,
-			pageSize: 100
+		txnTemplateDS 		: new kendo.data.DataSource({
+		  	data: banhji.source.txnTemplateList,
+		  	filter:{
+			    logic: "or",
+			    filters: [
+			      	{ field: "type", value: "Commercial_Cash_Sale" },
+			      	{ field: "type", value: "Vat_Cash_Sale" },
+			      	{ field: "type", value: "Cash_Sale" }
+			    ]
+			}
 		}),
 		attachmentDS	 	: dataStore(apiUrl + "attachments"),
 		cashAccountDS  		: new kendo.data.DataSource({
@@ -61308,6 +60976,17 @@
 		referenceLineDS		: dataStore(apiUrl + "item_lines"),
 		depositDS  			: dataStore(apiUrl + "transactions"),
 		attachmentDS	 	: dataStore(apiUrl + "attachments"),
+		txnTemplateDS 		: new kendo.data.DataSource({
+		  	data: banhji.source.txnTemplateList,
+		  	filter:{
+			    logic: "or",
+			    filters: [
+			      	{ field: "type", value: "Commercial_Invoice" },
+			      	{ field: "type", value: "Vat_Invoice" },
+			      	{ field: "type", value: "Invoice" }
+			    ]
+			}
+		}),
 		contactDS  			: new kendo.data.DataSource({
 		  	data: banhji.source.customerList,
 			sort: { field:"number", dir:"asc" }
@@ -61360,42 +61039,6 @@
 			serverFiltering: true,
 			serverSorting: true,
 			serverPaging: true,
-			pageSize: 100
-		}),
-		txnTemplateDS		: new kendo.data.DataSource({
-			transport: {
-				read 	: {
-					url: apiUrl + "transaction_templates",
-					type: "GET",
-					headers: banhji.header,
-					dataType: 'json'
-				},				
-				parameterMap: function(options, operation) {
-					if(operation === 'read') {
-						return {
-							page: options.page,
-							limit: options.pageSize,
-							filter: options.filter,
-							sort: options.sort
-						};
-					} else {
-						return {models: kendo.stringify(options.models)};
-					}
-				}
-			},
-			schema 	: {
-				model: {
-					id: 'id'
-				},
-				data: 'results',
-				total: 'count'
-			},
-			filter: { field: "type", operator:"where_in", value:["Commercial_Invoice","Vat_Invoice","Invoice"] },
-			batch: true,
-			serverFiltering: true,
-			serverSorting: true,
-			serverPaging: true,
-			page:1,
 			pageSize: 100
 		}),
 		jobDS				: banhji.source.jobDS,
@@ -62862,6 +62505,10 @@
 		recurringLineDS 	: dataStore(apiUrl + "item_lines"),
 		referenceDS			: dataStore(apiUrl + "transactions"),
 		referenceLineDS		: dataStore(apiUrl + "item_lines"),
+		txnTemplateDS 		: new kendo.data.DataSource({
+		  	data: banhji.source.txnTemplateList,
+		  	filter:{ field: "type", value: "GDN" }
+		}),
 		contactDS  			: new kendo.data.DataSource({
 		  	data: banhji.source.customerList,
 			sort: { field:"number", dir:"asc" }
@@ -62877,42 +62524,6 @@
 		catalogDS			: dataStore(apiUrl + "items"),
 		assemblyDS			: dataStore(apiUrl + "item_prices"),
 		attachmentDS	 	: dataStore(apiUrl + "attachments"),
-		txnTemplateDS		: new kendo.data.DataSource({
-			transport: {
-				read 	: {
-					url: apiUrl + "transaction_templates",
-					type: "GET",
-					headers: banhji.header,
-					dataType: 'json'
-				},				
-				parameterMap: function(options, operation) {
-					if(operation === 'read') {
-						return {
-							page: options.page,
-							limit: options.pageSize,
-							filter: options.filter,
-							sort: options.sort
-						};
-					} else {
-						return {models: kendo.stringify(options.models)};
-					}
-				}
-			},
-			schema 	: {
-				model: {
-					id: 'id'
-				},
-				data: 'results',
-				total: 'count'
-			},
-			filter: { field: "type", value:"GDN" },
-			batch: true,
-			serverFiltering: true,
-			serverSorting: true,
-			serverPaging: true,
-			page:1,
-			pageSize: 100
-		}),
 		amtDueColor 		: banhji.source.amtDueColor,
 	    confirmMessage 		: banhji.source.confirmMessage,
 		frequencyList 		: banhji.source.frequencyList,
@@ -63792,6 +63403,10 @@
 		invoiceDS			: dataStore(apiUrl + "transactions"),
 		currencyRateDS		: dataStore(apiUrl + "currencies/rate"),
 		jobDS				: banhji.source.jobDS,
+		txnTemplateDS 		: new kendo.data.DataSource({
+		  	data: banhji.source.txnTemplateList,
+		  	filter:{ field: "type", value: "Sale_Return" }
+		}),
 		contactDS  			: new kendo.data.DataSource({
 		  	data: banhji.source.customerList,
 			sort: { field:"number", dir:"asc" }
@@ -63814,42 +63429,6 @@
 		assemblyDS			: dataStore(apiUrl + "item_prices"),		
 		segmentItemDS		: banhji.source.segmentItemDS,
 		attachmentDS	 	: dataStore(apiUrl + "attachments"),
-		txnTemplateDS		: new kendo.data.DataSource({
-			transport: {
-				read 	: {
-					url: apiUrl + "transaction_templates",
-					type: "GET",
-					headers: banhji.header,
-					dataType: 'json'
-				},				
-				parameterMap: function(options, operation) {
-					if(operation === 'read') {
-						return {
-							page: options.page,
-							limit: options.pageSize,
-							filter: options.filter,
-							sort: options.sort
-						};
-					} else {
-						return {models: kendo.stringify(options.models)};
-					}
-				}
-			},
-			schema 	: {
-				model: {
-					id: 'id'
-				},
-				data: 'results',
-				total: 'count'
-			},
-			filter: { field: "type", value:"Sale_Return" },
-			batch: true,
-			serverFiltering: true,
-			serverSorting: true,
-			serverPaging: true,
-			page:1,
-			pageSize: 100
-		}),
 		optionList 			: [
 			{ id:"Offset_Invoice", name:"Charge Against Invoice" },
 			{ id:"Customer_Deposit", name:"Add To Deposit" },
@@ -68348,42 +67927,17 @@
 		  	sort: { field:"number", dir:"asc" }
 		}),
 		segmentItemDS 		: banhji.source.segmentItemDS,
-		txnTemplateDS		: new kendo.data.DataSource({
-			transport: {
-				read 	: {
-					url: apiUrl + "transaction_templates",
-					type: "GET",
-					headers: banhji.header,
-					dataType: 'json'
-				},				
-				parameterMap: function(options, operation) {
-					if(operation === 'read') {
-						return {
-							page: options.page,
-							limit: options.pageSize,
-							filter: options.filter,
-							sort: options.sort
-						};
-					} else {
-						return {models: kendo.stringify(options.models)};
-					}
-				}
-			},
-			schema 	: {
-				model: {
-					id: 'id'
-				},
-				data: 'results',
-				total: 'count'
-			},
-			filter: { field: "type", value:"Deposit" },
-			batch: true,
-			serverFiltering: true,
-			serverSorting: true,
-			serverPaging: true,
-			page:1,
-			pageSize: 100
-		}),					
+		txnTemplateDS 		: new kendo.data.DataSource({
+		  	data: banhji.source.txnTemplateList,
+		  	filter:{
+			    logic: "or",
+			    filters: [
+			      	{ field: "type", value: "Deposit" },
+			      	{ field: "type", value: "Withdraw" },
+			      	{ field: "type", value: "Transfer" }
+			    ]
+			}
+		}),				
 		types 				: [
 			{id: 'Deposit', name: 'Deposit'},
 			{id: 'Withdraw', name: 'Withdraw'},
@@ -69097,6 +68651,10 @@
 		creditDS 			: dataStore(apiUrl + "transactions"),		
 		journalLineDS		: dataStore(apiUrl + "journal_lines"),
 		currencyRateDS		: dataStore(apiUrl + "currencies/rate"),
+		txnTemplateDS 		: new kendo.data.DataSource({
+		  	data: banhji.source.txnTemplateList,
+		  	filter:{ field: "type", value: "Cash_Receipt" }
+		}),
 		contactDS  			: new kendo.data.DataSource({
 		  	data: banhji.source.customerList,
 			sort: { field:"number", dir:"asc" }
@@ -69112,43 +68670,7 @@
 		  	sort: { field:"number", dir:"asc" }
 		}),		
 		paymentTermDS 		: banhji.source.paymentTermDS,
-		paymentMethodDS 	: banhji.source.paymentMethodDS,	
-		txnTemplateDS		: new kendo.data.DataSource({
-			transport: {
-				read 	: {
-					url: apiUrl + "transaction_templates",
-					type: "GET",
-					headers: banhji.header,
-					dataType: 'json'
-				},				
-				parameterMap: function(options, operation) {
-					if(operation === 'read') {
-						return {
-							page: options.page,
-							limit: options.pageSize,
-							filter: options.filter,
-							sort: options.sort
-						};
-					} else {
-						return {models: kendo.stringify(options.models)};
-					}
-				}
-			},
-			schema 	: {
-				model: {
-					id: 'id'
-				},
-				data: 'results',
-				total: 'count'
-			},
-			filter: { field: "type", value:"Cash_Receipt" },
-			batch: true,
-			serverFiltering: true,
-			serverSorting: true,
-			serverPaging: true,
-			page:1,
-			pageSize: 100
-		}),
+		paymentMethodDS 	: banhji.source.paymentMethodDS,		
 		segmentItemDS		: banhji.source.segmentItemDS,
 		amtDueColor 		: banhji.source.amtDueColor,
 		showCheckNo 		: false,
@@ -69628,6 +69150,10 @@
 		creditDS 			: dataStore(apiUrl + "transactions"),		
 		journalLineDS		: dataStore(apiUrl + "journal_lines"),
 		currencyRateDS		: dataStore(apiUrl + "currencies/rate"),
+		txnTemplateDS 		: new kendo.data.DataSource({
+		  	data: banhji.source.txnTemplateList,
+		  	filter:{ field: "type", value: "Cash_Payment" }
+		}),
 		contactDS  			: new kendo.data.DataSource({
 		  	data: banhji.source.supplierList,
 			sort: { field:"number", dir:"asc" }
@@ -69643,43 +69169,7 @@
 		  	sort: { field:"number", dir:"asc" }
 		}),		
 		paymentTermDS 		: banhji.source.paymentTermDS,
-		paymentMethodDS 	: banhji.source.paymentMethodDS,	
-		txnTemplateDS		: new kendo.data.DataSource({
-			transport: {
-				read 	: {
-					url: apiUrl + "transaction_templates",
-					type: "GET",
-					headers: banhji.header,
-					dataType: 'json'
-				},				
-				parameterMap: function(options, operation) {
-					if(operation === 'read') {
-						return {
-							page: options.page,
-							limit: options.pageSize,
-							filter: options.filter,
-							sort: options.sort
-						};
-					} else {
-						return {models: kendo.stringify(options.models)};
-					}
-				}
-			},
-			schema 	: {
-				model: {
-					id: 'id'
-				},
-				data: 'results',
-				total: 'count'
-			},
-			filter: { field: "type", value:"Cash_Payment" },
-			batch: true,
-			serverFiltering: true,
-			serverSorting: true,
-			serverPaging: true,
-			page:1,
-			pageSize: 100
-		}),
+		paymentMethodDS 	: banhji.source.paymentMethodDS,
 		segmentItemDS		: banhji.source.segmentItemDS,
 		amtDueColor 		: banhji.source.amtDueColor,
 		showCheckNo 		: false,
@@ -74297,7 +73787,19 @@
     	toItemLineDS  			: dataStore(apiUrl + "item_lines"),
     	toAccountLineDS  		: dataStore(apiUrl + "account_lines"),
     	journalLineDS			: dataStore(apiUrl + "journal_lines"),	
-		itemDS  			: new kendo.data.DataSource({
+		txnTemplateDS 			: new kendo.data.DataSource({
+		  	data: banhji.source.txnTemplateList,
+		  	filter:{
+			    logic: "or",
+			    filters: [
+			      	{ field: "type", value: "Internal_Usage" },
+			      	{ field: "type", value: "Transfer_In" },
+			      	{ field: "type", value: "Transfer_Out" },
+			      	{ field: "type", value: "Usage_Disposal" }
+			    ]
+			}
+		}),
+		itemDS  				: new kendo.data.DataSource({
 		  	data: banhji.source.itemList,
 			filter:{ field: "item_type_id", operator:"neq", value: 3 },
 			sort: [
@@ -74305,47 +73807,7 @@
 				{ field:"number", dir:"asc" }
 			]
 		}),
-		measurementDS			: dataStore(apiUrl + "measurements"),		
-		segmentItemDS			: banhji.source.segmentItemDS,
-		attachmentDS	 		: dataStore(apiUrl + "attachments"),
-		jobDS					: banhji.source.jobDS,
-		txnTemplateDS			: new kendo.data.DataSource({
-			transport: {
-				read 	: {
-					url: apiUrl + "transaction_templates",
-					type: "GET",
-					headers: banhji.header,
-					dataType: 'json'
-				},				
-				parameterMap: function(options, operation) {
-					if(operation === 'read') {
-						return {
-							page: options.page,
-							limit: options.pageSize,
-							filter: options.filter,
-							sort: options.sort
-						};
-					} else {
-						return {models: kendo.stringify(options.models)};
-					}
-				}
-			},
-			schema 	: {
-				model: {
-					id: 'id'
-				},
-				data: 'results',
-				total: 'count'
-			},
-			filter: { field: "type", operator:"where_in", value:["Transfer_In","Transfer_Out","Usage_Disposal"] },
-			batch: true,
-			serverFiltering: true,
-			serverSorting: true,
-			serverPaging: true,
-			page:1,
-			pageSize: 100
-		}),
-		accountDS  			: new kendo.data.DataSource({
+		accountDS  				: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
 			sort: { field:"number", dir:"asc" }
 		}),
@@ -74361,6 +73823,10 @@
 			},
 			sort: { field:"number", dir:"asc" }
 		}),
+		measurementDS			: dataStore(apiUrl + "measurements"),		
+		segmentItemDS			: banhji.source.segmentItemDS,
+		attachmentDS	 		: dataStore(apiUrl + "attachments"),
+		jobDS					: banhji.source.jobDS,		
 		amtDueColor 			: banhji.source.amtDueColor,
 	    confirmMessage 			: banhji.source.confirmMessage,
 		frequencyList 			: banhji.source.frequencyList,
