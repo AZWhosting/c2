@@ -52628,7 +52628,7 @@
 			        data.set("cost", item.cost*rate);
 			        data.set("rate", rate);	
 			        data.set("locale", item.locale);
-			        data.set("item_prices", item.item_prices);			        
+			        data.set("item_prices", itemPriceList);			        
 
 			        this.changes();
 		    	}
