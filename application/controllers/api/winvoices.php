@@ -327,7 +327,7 @@ class Winvoices extends REST_Controller {
 			$license = $ml->branch->get();
 			$usage = 0;	
 			$meter = array(
-				'meter_number'   => $m->number,
+				'meter_number'   => $m->meter_number,
 				'location' => $m->location->get_raw()->result(),
 				'license' => $license->get_raw()->result(),
 			);
@@ -338,7 +338,7 @@ class Winvoices extends REST_Controller {
 					$record = $item->meter_record->limit(1)->get();
 					$usage = $record->usage;
 					$lines[] = array(
-						'number' => $m->number,
+						'number' => $m,
 						'previous' => $record->previous,
 						'current'  => $record->current,
 						'consumption' => $record->usage,

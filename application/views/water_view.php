@@ -6,6 +6,7 @@
 </script>
 <script type="text/x-kendo-template" id="blank-tmpl">
 </script>
+abc
 <script type="text/x-kendo-template" id="menu-tmpl">
 	<div class="menu-hidden sidebar-hidden-phone menu-left hidden-print">
 		<div class="navbar main navbar-fixed-top" id="main-menu">
@@ -5047,7 +5048,7 @@
 		
 				<!-- Stats Widget -->
 				<span class="widget-stats widget-stats-gray widget-stats-2" style="background: #496cad;">
-					<span class="count" style="font-size: 25px; "><a style="color: #fff;">100.00</a></span>
+					<span class="count" style="font-size: 25px; "><a style="color: #fff;"><span data-bind="text: nCustomer"></span></a></span>
 					<span class="txt" style="font-size: small; color: #fff;"><span >Total No. of Customer</span></span>
 				</span>
 				<!-- // Stats Widget END -->
@@ -5057,7 +5058,7 @@
 		
 				<!-- Stats Widget -->
 				<span class="widget-stats widget-stats-2" style="background: #d9edf7;">
-					<span class="count" style="font-size: 25px;"><a style="color: #31708f;" data-format="p">10.00</a></span>
+					<span class="count" style="font-size: 25px;"><a style="color: #31708f;" data-format="p"><span data-bind="text: tCustomer"></span></a></span>
 					<span class="txt" style="font-size: small; color: #31708f;"><span >Total Customer Ratio</span></span>
 				</span>
 				<!-- // Stats Widget END -->
@@ -5067,7 +5068,7 @@
 		
 				<!-- Stats Widget -->
 				<span class="widget-stats widget-stats-gray widget-stats-2" style="background: #D3D3D3;">
-					<span class="count" style="font-size: 25px;"><a style="color: #000;" data-format="p" >100.00</a></span>
+					<span class="count" style="font-size: 25px;"><a style="color: #000;" data-format="p" ><span data-bind="text: activeCustomer"></span></a></span>
 					<span class="txt" style="font-size: small;"><span >Active Customer Ratio</span></span>
 				</span>
 				<!-- // Stats Widget END -->
@@ -5077,7 +5078,7 @@
 			
 				<!-- Stats Widget -->
 				<span class="widget-stats widget-stats-2" style="background: #113051;">
-					<span class="count" style="font-size: 25px;"><a style="color: #fff;" data-format="c0" >100.00</a></span>
+					<span class="count" style="font-size: 25px;"><a style="color: #fff;" data-format="c0" ><span data-bind="text: nCustome"></span></a></span>
 					<span class="txt" style="font-size: small; color: #fff;"><span >Total Water Revenue</span></span>
 				</span>
 				<!-- // Stats Widget END -->
@@ -5092,7 +5093,7 @@
 			
 				<!-- Stats Widget -->			
 				<span class="widget-stats widget-stats-default widget-stats-2"  style="background: #496cad;">
-					<span class="count" style="font-size: 25px; "><a style="color: #fff;">100.00</a></span>
+					<span class="count" style="font-size: 25px; "><a style="color: #fff;"><span data-bind="text: waterSold"></span></a></span>
 					<span class="txt" style="font-size: small;"><span >Water Sold (M3)</span></span>
 				</span>
 				<!-- // Stats Widget END -->
@@ -5429,7 +5430,48 @@
 			    	<span class="pull-right glyphicons no-js remove_2" data-bind="click: cancel"><i></i></span>
 					<br>
 					<br>
-					<div class="row-fluid">						
+					<div class="row-fluid">
+					    <!-- Tabs -->
+						<div class="relativeWrap" data-toggle="source-code">
+							<div class="widget widget-tabs widget-tabs-gray report-tab">
+								<!-- Tabs Heading -->
+								<div class="widget-head">
+									<ul>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab" data-bind="click: printGrid"><i></i>Print/Export</a></li
+									</ul>
+								</div>
+								<!-- // Tabs Heading END -->								
+								<div class="widget-body">
+									<div class="tab-content">
+								        <div class="tab-pane active" id="tab-1">
+											<input data-role="dropdownlist"
+							                   data-value-primitive="true"
+							                   data-text-field="text"
+							                   data-value-field="value"
+							                   data-bind="value: sorter,
+							                              source: sortList,             
+							                              events: { change: sorterChanges }" />
+							                                           
+						                    <input data-role="datepicker"
+						                       data-format="dd-MM-yyyy"
+						                       data-parse-formats="yyyy-MM-dd"
+							                   data-bind="value: sdate"
+							                   placeholder="From" />
+
+						                   	<input data-role="datepicker"
+						                       data-format="dd-MM-yyyy"
+						                       data-parse-formats="yyyy-MM-dd"
+							                   data-bind="value: edate"
+							                   placeholder="To" />
+
+							          		<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>							
+									    </div>									        							       
+								    </div>
+								</div>
+							</div>
+						</div>
+						<!-- // Tabs END -->						
 					</div>
 					<br>
 					<div id="invFormContent">
@@ -5803,7 +5845,48 @@
 			    	<span class="pull-right glyphicons no-js remove_2" data-bind="click: cancel"><i></i></span>
 					<br>
 					<br>
-					<div class="row-fluid">						
+					<div class="row-fluid">
+					    <!-- Tabs -->
+						<div class="relativeWrap" data-toggle="source-code">
+							<div class="widget widget-tabs widget-tabs-gray report-tab">
+								<!-- Tabs Heading -->
+								<div class="widget-head">
+									<ul>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab" data-bind="click: printGrid"><i></i>Print/Export</a></li
+									</ul>
+								</div>
+								<!-- // Tabs Heading END -->								
+								<div class="widget-body">
+									<div class="tab-content">
+								        <div class="tab-pane active" id="tab-1">
+											<input data-role="dropdownlist"
+							                   data-value-primitive="true"
+							                   data-text-field="text"
+							                   data-value-field="value"
+							                   data-bind="value: sorter,
+							                              source: sortList,             
+							                              events: { change: sorterChanges }" />
+							                                           
+						                    <input data-role="datepicker"
+						                       data-format="dd-MM-yyyy"
+						                       data-parse-formats="yyyy-MM-dd"
+							                   data-bind="value: sdate"
+							                   placeholder="From" />
+
+						                   	<input data-role="datepicker"
+						                       data-format="dd-MM-yyyy"
+						                       data-parse-formats="yyyy-MM-dd"
+							                   data-bind="value: edate"
+							                   placeholder="To" />
+
+							          		<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>							
+									    </div>									        							       
+								    </div>
+								</div>
+							</div>
+						</div>
+						<!-- // Tabs END -->						
 					</div>
 					<br>
 					<div id="invFormContent">
@@ -5825,7 +5908,7 @@
 			    	<span class="pull-right glyphicons no-js remove_2" data-bind="click: cancel"><i></i></span>
 					<br>
 					<br>
-					<div class="row-fluid">
+					<!-- <div class="row-fluid">
 						<table>
 							<tr>
 								<td>
@@ -5878,6 +5961,49 @@
 								</td>
 							</tr>
 						</table>					
+					</div> -->
+					<div class="row-fluid">
+					    <!-- Tabs -->
+						<div class="relativeWrap" data-toggle="source-code">
+							<div class="widget widget-tabs widget-tabs-gray report-tab">
+								<!-- Tabs Heading -->
+								<div class="widget-head">
+									<ul>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab" data-bind="click: printGrid"><i></i>Print/Export</a></li
+									</ul>
+								</div>
+								<!-- // Tabs Heading END -->								
+								<div class="widget-body">
+									<div class="tab-content">
+								        <div class="tab-pane active" id="tab-1">
+											<input data-role="dropdownlist"
+							                   data-value-primitive="true"
+							                   data-text-field="text"
+							                   data-value-field="value"
+							                   data-bind="value: sorter,
+							                              source: sortList,             
+							                              events: { change: sorterChanges }" />
+							                                           
+						                    <input data-role="datepicker"
+						                       data-format="dd-MM-yyyy"
+						                       data-parse-formats="yyyy-MM-dd"
+							                   data-bind="value: sdate"
+							                   placeholder="From" />
+
+						                   	<input data-role="datepicker"
+						                       data-format="dd-MM-yyyy"
+						                       data-parse-formats="yyyy-MM-dd"
+							                   data-bind="value: edate"
+							                   placeholder="To" />
+
+							          		<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>							
+									    </div>									        							       
+								    </div>
+								</div>
+							</div>
+						</div>
+						<!-- // Tabs END -->						
 					</div>
 					<br>
 					<div id="invFormContent">
@@ -5921,7 +6047,48 @@
 			    	<span class="pull-right glyphicons no-js remove_2" data-bind="click: cancel"><i></i></span>
 					<br>
 					<br>
-					<div class="row-fluid">						
+					<div class="row-fluid">
+					    <!-- Tabs -->
+						<div class="relativeWrap" data-toggle="source-code">
+							<div class="widget widget-tabs widget-tabs-gray report-tab">
+								<!-- Tabs Heading -->
+								<div class="widget-head">
+									<ul>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab" data-bind="click: printGrid"><i></i>Print/Export</a></li
+									</ul>
+								</div>
+								<!-- // Tabs Heading END -->								
+								<div class="widget-body">
+									<div class="tab-content">
+								        <div class="tab-pane active" id="tab-1">
+											<input data-role="dropdownlist"
+							                   data-value-primitive="true"
+							                   data-text-field="text"
+							                   data-value-field="value"
+							                   data-bind="value: sorter,
+							                              source: sortList,             
+							                              events: { change: sorterChanges }" />
+							                                           
+						                    <input data-role="datepicker"
+						                       data-format="dd-MM-yyyy"
+						                       data-parse-formats="yyyy-MM-dd"
+							                   data-bind="value: sdate"
+							                   placeholder="From" />
+
+						                   	<input data-role="datepicker"
+						                       data-format="dd-MM-yyyy"
+						                       data-parse-formats="yyyy-MM-dd"
+							                   data-bind="value: edate"
+							                   placeholder="To" />
+
+							          		<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>							
+									    </div>									        							       
+								    </div>
+								</div>
+							</div>
+						</div>
+						<!-- // Tabs END -->						
 					</div>
 					<br>
 					<div id="invFormContent">
@@ -6033,7 +6200,48 @@
 			    	<span class="pull-right glyphicons no-js remove_2" data-bind="click: cancel"><i></i></span>
 					<br>
 					<br>
-					<div class="row-fluid">						
+					<div class="row-fluid">
+					    <!-- Tabs -->
+						<div class="relativeWrap" data-toggle="source-code">
+							<div class="widget widget-tabs widget-tabs-gray report-tab">
+								<!-- Tabs Heading -->
+								<div class="widget-head">
+									<ul>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab" data-bind="click: printGrid"><i></i>Print/Export</a></li
+									</ul>
+								</div>
+								<!-- // Tabs Heading END -->								
+								<div class="widget-body">
+									<div class="tab-content">
+								        <div class="tab-pane active" id="tab-1">
+											<input data-role="dropdownlist"
+							                   data-value-primitive="true"
+							                   data-text-field="text"
+							                   data-value-field="value"
+							                   data-bind="value: sorter,
+							                              source: sortList,             
+							                              events: { change: sorterChanges }" />
+							                                           
+						                    <input data-role="datepicker"
+						                       data-format="dd-MM-yyyy"
+						                       data-parse-formats="yyyy-MM-dd"
+							                   data-bind="value: sdate"
+							                   placeholder="From" />
+
+						                   	<input data-role="datepicker"
+						                       data-format="dd-MM-yyyy"
+						                       data-parse-formats="yyyy-MM-dd"
+							                   data-bind="value: edate"
+							                   placeholder="To" />
+
+							          		<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>							
+									    </div>									        							       
+								    </div>
+								</div>
+							</div>
+						</div>
+						<!-- // Tabs END -->						
 					</div>
 					<br>
 					<div id="invFormContent">
@@ -6056,7 +6264,48 @@
 			    	<span class="pull-right glyphicons no-js remove_2" data-bind="click: cancel"><i></i></span>
 					<br>
 					<br>
-					<div class="row-fluid">						
+					<div class="row-fluid">
+					    <!-- Tabs -->
+						<div class="relativeWrap" data-toggle="source-code">
+							<div class="widget widget-tabs widget-tabs-gray report-tab">
+								<!-- Tabs Heading -->
+								<div class="widget-head">
+									<ul>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab" data-bind="click: printGrid"><i></i>Print/Export</a></li
+									</ul>
+								</div>
+								<!-- // Tabs Heading END -->								
+								<div class="widget-body">
+									<div class="tab-content">
+								        <div class="tab-pane active" id="tab-1">
+											<input data-role="dropdownlist"
+							                   data-value-primitive="true"
+							                   data-text-field="text"
+							                   data-value-field="value"
+							                   data-bind="value: sorter,
+							                              source: sortList,             
+							                              events: { change: sorterChanges }" />
+							                                           
+						                    <input data-role="datepicker"
+						                       data-format="dd-MM-yyyy"
+						                       data-parse-formats="yyyy-MM-dd"
+							                   data-bind="value: sdate"
+							                   placeholder="From" />
+
+						                   	<input data-role="datepicker"
+						                       data-format="dd-MM-yyyy"
+						                       data-parse-formats="yyyy-MM-dd"
+							                   data-bind="value: edate"
+							                   placeholder="To" />
+
+							          		<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>							
+									    </div>									        							       
+								    </div>
+								</div>
+							</div>
+						</div>
+						<!-- // Tabs END -->						
 					</div>
 					<br>
 					<div id="invFormContent">
@@ -6078,7 +6327,48 @@
 			    	<span class="pull-right glyphicons no-js remove_2" data-bind="click: cancel"><i></i></span>
 					<br>
 					<br>
-					<div class="row-fluid">						
+					<div class="row-fluid">
+					    <!-- Tabs -->
+						<div class="relativeWrap" data-toggle="source-code">
+							<div class="widget widget-tabs widget-tabs-gray report-tab">
+								<!-- Tabs Heading -->
+								<div class="widget-head">
+									<ul>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab" data-bind="click: printGrid"><i></i>Print/Export</a></li
+									</ul>
+								</div>
+								<!-- // Tabs Heading END -->								
+								<div class="widget-body">
+									<div class="tab-content">
+								        <div class="tab-pane active" id="tab-1">
+											<input data-role="dropdownlist"
+							                   data-value-primitive="true"
+							                   data-text-field="text"
+							                   data-value-field="value"
+							                   data-bind="value: sorter,
+							                              source: sortList,             
+							                              events: { change: sorterChanges }" />
+							                                           
+						                    <input data-role="datepicker"
+						                       data-format="dd-MM-yyyy"
+						                       data-parse-formats="yyyy-MM-dd"
+							                   data-bind="value: sdate"
+							                   placeholder="From" />
+
+						                   	<input data-role="datepicker"
+						                       data-format="dd-MM-yyyy"
+						                       data-parse-formats="yyyy-MM-dd"
+							                   data-bind="value: edate"
+							                   placeholder="To" />
+
+							          		<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>							
+									    </div>									        							       
+								    </div>
+								</div>
+							</div>
+						</div>
+						<!-- // Tabs END -->						
 					</div>
 					<br>
 					<div id="invFormContent">
@@ -6101,7 +6391,48 @@
 			    	<span class="pull-right glyphicons no-js remove_2" data-bind="click: cancel"><i></i></span>
 					<br>
 					<br>
-					<div class="row-fluid">						
+					<div class="row-fluid">
+					    <!-- Tabs -->
+						<div class="relativeWrap" data-toggle="source-code">
+							<div class="widget widget-tabs widget-tabs-gray report-tab">
+								<!-- Tabs Heading -->
+								<div class="widget-head">
+									<ul>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab" data-bind="click: printGrid"><i></i>Print/Export</a></li
+									</ul>
+								</div>
+								<!-- // Tabs Heading END -->								
+								<div class="widget-body">
+									<div class="tab-content">
+								        <div class="tab-pane active" id="tab-1">
+											<input data-role="dropdownlist"
+							                   data-value-primitive="true"
+							                   data-text-field="text"
+							                   data-value-field="value"
+							                   data-bind="value: sorter,
+							                              source: sortList,             
+							                              events: { change: sorterChanges }" />
+							                                           
+						                    <input data-role="datepicker"
+						                       data-format="dd-MM-yyyy"
+						                       data-parse-formats="yyyy-MM-dd"
+							                   data-bind="value: sdate"
+							                   placeholder="From" />
+
+						                   	<input data-role="datepicker"
+						                       data-format="dd-MM-yyyy"
+						                       data-parse-formats="yyyy-MM-dd"
+							                   data-bind="value: edate"
+							                   placeholder="To" />
+
+							          		<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>							
+									    </div>									        							       
+								    </div>
+								</div>
+							</div>
+						</div>
+						<!-- // Tabs END -->						
 					</div>
 					<br>
 					<div id="invFormContent">
@@ -13427,7 +13758,15 @@
 	});
 	banhji.Reports = kendo.observable({
 		lang 				: langVM,
-		dataSource 			: banhji.invoice.dataSource,
+		nCustomer 			: 0,
+		tCustomer 			: 0,
+		activeCustomer 		: 0,
+		waterSold 			: 0,
+		avgUsage 			: 0,
+		avgRevenue 			: 0,
+		waterRevenue 		: 0,
+		totalDeposit		: 0,
+		dataSource 			: dataStore(apiUrl + "wreports/kpi"),
 		licenseDS 			: dataStore(apiUrl + "branches"),
 		pageLoad 			: function(){
 		},
@@ -16764,170 +17103,3 @@
 		}
 	});
 </script>
-
-
-
-<!-- wSaleDetail: new kendo.Layout("#wSaleDetail", {model: banhji.wSaleDetail}),
-
-banhji.wSaleDetail = kendo.observable({
-	lang 				: langVM,
-	dataSource 			: dataStore(baseUrl + "invoices/wsale_detail"),
-	branchDS 			: dataStore(baseUrl + "contacts/branch"),
-	locationDS 			: dataStore(baseUrl + "locations"),
-	sortList			: [ 
- 		{ text:"All", 	value: "all" }, 
- 		{ text:"Today", 	value: "today" }, 
- 		{ text:"This Week",value: "week" }, 
- 		{ text:"This Month", 		value: "month" }, 
- 		{ text:"This Year", 	value: "year" } 
-	],
-	sorter 				: "all",
-	sdate 				: "",
-	edate 				: "",
-	branch_id 			: null,
-	selectedLocations 	: [],
-	isBranchSelected	: false,
-	pageLoad 			: function(){
-		
-	},
-	sorterChanges 		: function(){
-		var value = this.get("sorter"),
-		today = new Date();
-
-		switch(value){
-		case "today":								
-			this.set("sdate", today);
-			this.set("edate", "");
-						  					
-		  	break;
-		case "week":			  	
-			var first = today.getDate() - today.getDay(),
-			last = first + 6;
-
-			var firstDayOfWeek = new Date(today.setDate(first)),
-			lastDayOfWeek = new Date(today.setDate(last));				
-
-			this.set("sdate", firstDayOfWeek);
-			this.set("edate", lastDayOfWeek);
-			
-		  	break;
-		case "month":							  	
-			var firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1),
-			lastDayOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0);
-
-			this.set("sdate", firstDayOfMonth);
-			this.set("edate", lastDayOfMonth);
-
-		  	break;
-		case "year":				
-		  	var firstDayOfYear = new Date(today.getFullYear(), 0, 1),
-		  	lastDayOfYear = new Date(today.getFullYear(), 11, 31);
-
-			this.set("sdate", firstDayOfYear);
-			this.set("edate", lastDayOfYear);
-
-		  	break;
-		default:
-			this.set("sdate", "");
-			this.set("edate", "");					  
-		}
-	},		
-	strDate 			: function(){
-		var strDate = "",
-		sdate = this.get("sdate"),
-		edate = this.get("edate");
-
-		if(sdate && edate){
-			strDate = "From " + kendo.toString(new Date(sdate), "dd-MM-yyyy") + " To " + kendo.toString(new Date(edate), "dd-MM-yyyy");
-		}else if(sdate){
-			strDate = "On " + kendo.toString(new Date(sdate),"dd-MM-yyyy");
-		}else if(edate){
-			strDate = "As Of " + kendo.toString(new Date(edate),"dd-MM-yyyy");
-		}else{
-			strDate = "";
-		}
-
-		return strDate;
-	},
-	branchChanges 		: function(){
-		var branch_id = this.get("branch_id");
-
-		if(branch_id){
-			this.set("isBranchSelected", true);
-			this.locationDS.filter({ field:"company_id", value: branch_id });
-		}else{
-			this.set("isBranchSelected", false);
-			this.set("selectedLocations", []);
-		}        	
-    },
-	search 				: function(){
-		var self = this,
-		para = [], 
-		start = kendo.toString(this.get("sdate"), "yyyy-MM-dd"), 
-		end = kendo.toString(this.get("edate"), "yyyy-MM-dd"),
-		branch_id = this.get("branch_id"),
-		selectedLocations = this.get("selectedLocations");
-
-    	//Dates
-    	if(start && end){        		
-        	para.push({ field:"issued_date", operator:"between", value1:"'"+start+"'", value2:"'"+end+"'" });            	          	            	
-        }else if(start){
-        	para.push({ field:"issued_date", value: start });
-        }else if(end){
-        	para.push({ field:"issued_date <=", value: end });
-        }else{
-        	
-        }
-
-        if(selectedLocations.length>0){
-			var ids = [];
-			$.each(selectedLocations, function(index, value){
-				ids.push(value);
-			});
-			
-			para.push({ field:"location_id", operator:"where_in", value:ids });
-		}else if(branch_id){
-			para.push({ field:"company_id", value:branch_id });
-		}          
-
-        this.dataSource.filter(para);
-	}
-});
-
-banhji.router.route("/wSale_detail", function(){
-	if(!banhji.userManagement.getLogin()){
-		banhji.router.navigate('/manage');
-	}else{
-		banhji.view.layout.showIn("#content", banhji.view.wSaleDetail);
-		banhji.view.layout.showIn('#menu', banhji.view.menu);
-		banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);			
-		
-		var vm = banhji.wSaleDetail;
-
-		if(banhji.pageLoaded["wSale_detail"]==undefined){
-			banhji.pageLoaded["wSale_detail"] = true;
-
-			vm.branchDS.filter({ field:"utility_id", value:2 });
-							
-			$("#grid").kendoGrid({
-	            toolbar: ["excel"],
-	            excel: {
-	                fileName: "sale_detail.xlsx"
-	            },		            		           
-	            dataSource: vm.dataSource,
-	            groupable: true,
-	            sortable: true,		           		                        
-	            reorderable: true,
-	            resizable: true,
-	            columns: [		                
-	                { field: "contact_number", title: "Number" },
-	                { field: "fullname", title: "Customer" },
-	                { field: "contact_type_name", title: "Type" },
-	                { field: "location_name", title: "Location" },		                
-	                { field: "usage", title:"Usage", template:'#=kendo.toString(usage, "n0")#', attributes:{style:"text-align:right;"}, sortable: false },		                
-	                { field: "amount", title:"Amount", template:'#=kendo.toString(amount, "c0", banhji.institute.locale)#', attributes:{style:"text-align:right;"} },
-	            ]
-	        });		       			
-		}
-	}		
-}); -->
