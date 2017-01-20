@@ -34,9 +34,9 @@ class Customer extends DataMapper {
 			'class' => 'branch',
 			'other_field' => 'wbranch'
 		),
-		'elocation' => array(
+		'location' => array(
 			'class' => 'location',
-			'other_field' => 'elocation'
+			'other_field' => 'customer'
 		),
 		'wlocation' => array(
 			'class' => 'location',
@@ -97,9 +97,9 @@ class Customer extends DataMapper {
 			'class' => 'attachment',
 			'other_field' => 'contact'
 		),
-		'utility' => array(
+		'contact_utility' => array(
 			'class' => 'contact_utility',
-			'other_field' => 'contact'
+			'other_field' => 'customer'
 		)
 	);
 

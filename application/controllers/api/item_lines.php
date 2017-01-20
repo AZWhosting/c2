@@ -23,9 +23,9 @@ class Item_lines extends REST_Controller {
 
 	//GET
 	function index_get() {
-		$filters 	= $this->get("filter")["filters"];
-		$page 		= $this->get('page') !== false ? $this->get('page') : 1;
-		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;
+		$filter 	= $this->get("filter");
+		$page 		= $this->get('page');
+		$limit 		= $this->get('limit');
 		$sort 	 	= $this->get("sort");
 		$data["results"] = [];
 		$data["count"] = 0;
@@ -39,44 +39,49 @@ class Item_lines extends REST_Controller {
 			}
 		}
 
-		//Filter
-		if(!empty($filters) && isset($filters)){
-	    	foreach ($filters as $value) {
+		//Filter		
+		if(!empty($filter) && isset($filter)){
+	    	foreach ($filter['filters'] as $value) {
 	    		if(isset($value['operator'])) {
 					$obj->{$value['operator']}($value['field'], $value['value']);
 				} else {
-	    			$obj->where($value["field"], $value["value"]);
+					$obj->where($value["field"], $value["value"]);
 				}
 			}
 		}
 
 		//Results
-		$obj->get_paged_iterated($page, $limit);
-		$data["count"] = $obj->paged->total_rows;
+		if($page && $limit){
+			$obj->get_paged_iterated($page, $limit);
+			$data["count"] = $obj->paged->total_rows;
+		}else{
+			$obj->get_iterated();
+			$data["count"] = $obj->result_count();
+		}
 
-		if($obj->result_count()>0){
+		if($obj->exists()){
 			foreach ($obj as $value) {
 				$itemPrice = [];
-				if($value->item_id>0){
-					$pl = new Item_price(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-					$pl->where("item_id", $value->item_id);
-					$pl->get();
-					foreach ($pl as $p) {
-						$itemPrice[] = array(
-							"id" 			=> $p->id,
-							"item_id" 		=> $p->item_id,
-							"assembly_id"	=> $p->assembly_id,
-							"measurement_id"=> $p->measurement_id,
-							"quantity"		=> floatval($p->quantity),
-							"unit_value" 	=> floatval($p->unit_value),
-							"price" 		=> floatval($p->price),
-							"amount" 		=> floatval($p->amount),
-							"locale" 		=> $p->locale,
+				// if($value->item_id>0){
+				// 	$pl = new Item_price(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				// 	$pl->where("item_id", $value->item_id);
+				// 	$pl->get();
+				// 	foreach ($pl as $p) {
+				// 		$itemPrice[] = array(
+				// 			"id" 			=> $p->id,
+				// 			"item_id" 		=> $p->item_id,
+				// 			"assembly_id"	=> $p->assembly_id,
+				// 			"measurement_id"=> $p->measurement_id,
+				// 			"quantity"		=> floatval($p->quantity),
+				// 			"unit_value" 	=> floatval($p->unit_value),
+				// 			"price" 		=> floatval($p->price),
+				// 			"amount" 		=> floatval($p->amount),
+				// 			"locale" 		=> $p->locale,
 
-							"measurement" 	=> $p->measurement->get()->name
-						);
-					}
-				}
+				// 			"measurement" 	=> $p->measurement->get()->name
+				// 		);
+				// 	}
+				// }
 
 				$data["results"][] = array(
 					"id" 				=> $value->id,

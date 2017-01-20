@@ -68,18 +68,18 @@ class Ops extends REST_Controller {
  //                // );
 
 			    
- //                // $this->dbforge->modify_column(
- //                // 	'item_lines', array(
- //                // 					'assembly_id' => array(
- //                // 								'name' 		=> 'assembly_id', 
- //                // 								'type'		=> 'INT',
- //                // 								'constraint'=> 11,
- //                // 								'unsigned' 	=> TRUE,
- //                // 								'null' 		=> FALSE,
- //                // 								'default' 	=> 0,
- //                // 					)
- //                // 	)
- //                // );
+ //                $this->dbforge->modify_column(
+ //                	'item_prices', array(
+ //                					'assembly_id' => array(
+ //                								'name' 		=> 'assembly_id', 
+ //                								'type'		=> 'INT',
+ //                								'constraint'=> 11,
+ //                								'unsigned' 	=> TRUE,
+ //                								'null' 		=> FALSE,
+ //                								'default' 	=> 0
+ //                					)
+ //                	)
+ //                );
 			    
 	// 		    // $this->dbforge->modify_column('transaction_templates', array('type' => array('name' => 'type', 'type' => "ENUM('Invoice','Commercial_Invoice','Vat_Invoice','Electricity_Invoice','Water_Invoice','Cash_Sale','Commercial_Cash_Sale','Vat_Cash_Sale','Receipt_Allocation','Sale_Order','Quote','GDN','Sale_Return','Purchase_Order','GRN','Cash_Purchase','Credit_Purchase','Purchase_Return','Payment_Allocation','Deposit','Electricty_Deposit','Water_Deposit','Customer_Deposit','Vendor_Deposit','Withdraw','Transfer','Journal','Item_Adjustment','Cash_Advance','Reimbursement','Direct_Expense','Advance_Settlement','Additional_Cost','Cash_Payment','Cash_Receipt','Credit_Note','Debit_Note','Offset_Bill','Offset_Invoice','Cash_Transfer','Internal_Usage')")));
 			    

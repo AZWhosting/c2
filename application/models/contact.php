@@ -41,9 +41,9 @@ class Contact extends DataMapper {
 			'class' => 'location',
 			'other_field' => 'elocation'
 		),
-		'wlocation' => array(
+		'location' => array(
 			'class' => 'location',
-			'other_field' => 'wlocation'
+			'other_field' => 'contact'
 		),
 		'payroll' => array(
 			'class' => 'payroll',

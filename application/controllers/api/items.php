@@ -25,9 +25,9 @@ class Items extends REST_Controller {
 	//GET 
 	function index_get() {		
 		$filter 	= $this->get("filter");
-		$page 		= $this->get('page');		
+		$page 		= $this->get('page');
 		$limit 		= $this->get('limit');
-		$sort 	 	= $this->get("sort");		
+		$sort 	 	= $this->get("sort");
 		$data["results"] = [];
 		$data["count"] = 0;
 		$is_pattern = 0;

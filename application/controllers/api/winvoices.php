@@ -69,7 +69,8 @@ class Winvoices extends REST_Controller {
 						'account_id' => $contact->account_id,
 						'ra_id' => $contact->ra_id,
 						'name' => $contact->name,
-						'vat' => $contact->vat_no
+						'vat' => $contact->vat_no,
+						'locale' => $contact->locale
 												);
 				$tmp["$meter->number"]['meter'] = array(
 					'id' => $meter->id,
@@ -107,7 +108,7 @@ class Winvoices extends REST_Controller {
 											'name' => $t->name,
 											'is_flat' => $t->is_flat == 0 ? FALSE:TRUE,
 											'usage'  => $t->usage,
-											'amount'=> $t->amount
+											'amount'=> floatval($t->amount)
 										)
 									);
 								}									
@@ -327,7 +328,7 @@ class Winvoices extends REST_Controller {
 			$license = $ml->branch->get();
 			$usage = 0;	
 			$meter = array(
-				'meter_number'   => $m->meter_number,
+				'meter_number'   => $m,
 				'location' => $m->location->get_raw()->result(),
 				'license' => $license->get_raw()->result(),
 			);
@@ -338,7 +339,7 @@ class Winvoices extends REST_Controller {
 					$record = $item->meter_record->limit(1)->get();
 					$usage = $record->usage;
 					$lines[] = array(
-						'number' => $m,
+						'number' => $m->number,
 						'previous' => $record->previous,
 						'current'  => $record->current,
 						'consumption' => $record->usage,

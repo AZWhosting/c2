@@ -6,7 +6,6 @@
 </script>
 <script type="text/x-kendo-template" id="blank-tmpl">
 </script>
-abc
 <script type="text/x-kendo-template" id="menu-tmpl">
 	<div class="menu-hidden sidebar-hidden-phone menu-left hidden-print">
 		<div class="navbar main navbar-fixed-top" id="main-menu">
@@ -5078,7 +5077,7 @@ abc
 			
 				<!-- Stats Widget -->
 				<span class="widget-stats widget-stats-2" style="background: #113051;">
-					<span class="count" style="font-size: 25px;"><a style="color: #fff;" data-format="c0" ><span data-bind="text: nCustome"></span></a></span>
+					<span class="count" style="font-size: 25px;"><a style="color: #fff;" data-format="c0" ><span data-bind="text: waterRevenue"></span></a></span>
 					<span class="txt" style="font-size: small; color: #fff;"><span >Total Water Revenue</span></span>
 				</span>
 				<!-- // Stats Widget END -->
@@ -5103,7 +5102,7 @@ abc
 			
 				<!-- Stats Widget -->
 				<span class="widget-stats widget-stats-2" style="background: #d9edf7;">
-					<span class="count" style="font-size: 25px;"><a data-format="n2" style="color: #31708f;">100.00</a></span>
+					<span class="count" style="font-size: 25px;"><a data-format="n2" style="color: #31708f;"><span data-bind="text: avgUsage"></span></a></span>
 					<span class="txt" style="font-size: small; color: #31708f;"><span >Average Water Usage Per Connection</span></span>
 				</span>
 				<!-- // Stats Widget END -->
@@ -5113,7 +5112,7 @@ abc
 			
 				<!-- Stats Widget -->
 				<span class="widget-stats widget-stats-default widget-stats-2" style="background: #D3D3D3;">
-					<span class="count" style="font-size: 25px;"><a style="color: #000;" data-format="c0" >100.00</a></span>
+					<span class="count" style="font-size: 25px;"><a style="color: #000;" data-format="c0" ><span data-bind="text: avgRevenue"></span></a></span>
 					<span class="txt" style="font-size: small; color: #000; "><span >Avarage Reveune Per Connection</span></span>
 				</span>
 				<!-- // Stats Widget END -->
@@ -5123,7 +5122,7 @@ abc
 			
 				<!-- Stats Widget -->
 				<span class="widget-stats widget-stats-2" style="background: #113051;">
-					<span class="count" style="font-size: 25px;"><a style="color: #fff;" data-format="c0" >100.00</a></span>
+					<span class="count" style="font-size: 25px;"><a style="color: #fff;" data-format="c0" ><span data-bind="text: totalDeposit"></span></a></span>
 					<span class="txt" style="font-size: small; color: #fff;"><span >Total Deposit</span></span>
 				</span>
 				<!-- // Stats Widget END -->
@@ -5894,6 +5893,8 @@ abc
 							<h3 data-bind="text: institute.name"></h3>
 							<h2>Connect Service Revenue</h2>
 						</div>
+						<div data-role="grid" data-bind="source: dataSource">
+						</div>
 					</div>
 				</div>
 			</div>
@@ -6163,6 +6164,7 @@ abc
 							<h3 data-bind="text: institute.name"></h3>
 							<h2>Customer Deposit Report</h2>
 						</div>
+						<div data-role="grid" data-bind="source: dataSource">
 					</div>
 				</div>
 			</div>
@@ -12547,7 +12549,7 @@ abc
 	    exUnitAmount 		: null,
 	    makeBilled 			: function(){
 	    	this.invoiceCollection.dataSource.data([]);
-	    	var mSold = 0, aSold = 0, self = this, rUsage = 0, tUsage = 0, aTariff = 0, exT, exA, exU;
+	    	var mSold = 0, aSold = 0, self = this, rUsage = 0, tUsage = 0,aSoldL = 0, aTariff = 0, exT, exA, exU;
 	    	if(this.invoiceArray.length > 0) {
 	    		this.set('showButton', true);
 	    	} else {
@@ -12648,10 +12650,12 @@ abc
 						});
 					}	
 				});	
+				console.log(v.contact.locale);
+				aSoldL = kendo.toString(aSold, "c", v.contact.locale);
 				//set INV
 	    		self.calInvoice(Total, aTariff, tUsage, v.contact.id, v.contact.account_id, v.contact.vat, invoiceItems, MeterLocation);
 	    	});
-	    	this.set("amountSold", aSold);
+	    	this.set("amountSold", aSoldL);
 	    	this.set("meterSold", mSold);
 	    },
 	    calInvoice 			: function(Total, AmountTariff, TotalUsage, ContactID, AccountID, VatID, invoiceItems, MeterLocation){
@@ -13769,6 +13773,19 @@ abc
 		dataSource 			: dataStore(apiUrl + "wreports/kpi"),
 		licenseDS 			: dataStore(apiUrl + "branches"),
 		pageLoad 			: function(){
+			var that = this;
+			this.dataSource.read()
+			.then(function(e){
+				let data = that.dataSource.data();
+				that.set('nCustomer', kendo.toString(data[0].totalAllowCustomer, 'n'));
+				that.set('tCustomer', kendo.toString(data[0].totalCustomer, 'n'));
+				that.set('activeCustomer', kendo.toString(data[0].totalActiveCustomer, 'n'));
+				that.set('waterSold', kendo.toString(data[0].totalUsage, 'n'));
+				that.set('avgUsage', kendo.toString(data[0].avgUsage, 'n'));
+				that.set('avgRevenue', kendo.toString(data[0].avgIncome, 'n'));
+				that.set('waterRevenue', kendo.toString(data[0].totalIncome, 'n'));
+				that.set('totalDeposit', 0);
+			});
 		},
 		save 				: function() {
 			var self = this;
@@ -15518,7 +15535,7 @@ abc
 	banhji.connectServiceRevenue = kendo.observable({
 		lang 					: langVM,
 		institute 				: banhji.institute,
-		dataSource 				: dataStore(apiUrl + "customers"),	
+		dataSource 				: dataStore(apiUrl + "wreports/connectionRevenue"),	
 		pageLoad 				: function(){
 		},
 		printGrid			: function() {
@@ -15881,7 +15898,7 @@ abc
 	banhji.customerDepositReport = kendo.observable({
 		lang 					: langVM,
 		institute 				: banhji.institute,
-		dataSource 				: dataStore(apiUrl + "customers"),	
+		dataSource 				: dataStore(apiUrl + "wreports/deposit"),	
 		pageLoad 				: function(){
 		},
 		printGrid			: function() {

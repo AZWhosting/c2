@@ -1550,56 +1550,147 @@ class Wreports extends REST_Controller {
 
 	// Checklist
 
-	//Get Water Sale Detail
-	//@param: Number, customer, type, location, usage, amount
-	function saleDetail_get() {}
-
-	//Get Payment Summary
-	//@param: Number, customer, type, location, usage, amount
-	function paymentSummary_get() {}
-
-	//Get Payment Detail
-	//@param: Number, customer, type, location, usage, amount
-	function paymentDetail_get() {}
-
-
 	
+	//Get Payment Detail
+	//@param: Number, customer, type, location, usage, amount
+	function deposit_get() {
+		$filters 	= $this->get("filter")["filters"];		
+		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
+		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;								
+		$sort 	 	= $this->get("sort");		
+		$data["results"] = array();
+		$data["count"] = 0;
+
+		$obj = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
+
+		//Sort
+		if(!empty($sort) && isset($sort)){					
+			foreach ($sort as $value) {
+				$obj->order_by($value["field"], $value["dir"]);
+			}
+		}
+
+		//Filter
+		if(!empty($filters) && isset($filters)){			
+	    	foreach ($filters as $value) {
+	    		if(!empty($value["operator"]) && isset($value["operator"])){
+	    			$obj->{$value["operator"]}($value["field"], $value["value"]);
+	    		}else{
+	    			$obj->where($value["field"], $value["value"]);
+	    		}
+			}									 			
+		}
+
+		$obj->include_related('contact', array('id','name', 'deposit_account_id'));
+		$obj->include_related('contact/contact_utility', array("abbr", "code"));
+		$obj->include_related('contact/contact_type', "name");
+		$obj->include_related('contact/location', "name");
+		$obj->include_related('contact/location/branch', "name");
+		// $obj->where_related_transction('type', "Water_Invoice");
+		$obj->where('status', 1);
+		$obj->get_paged_iterated($page, $limit);
+		if($obj->exists()) {
+			foreach($obj as $value) {
+				$line = new journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$line->where('contact_id', $value->contact_id);
+				$line->where('account_id', $value->deposit_account_id);
+				$line->get();
+				$deposit = 0;
+				foreach($line as $l) {
+					if($l->dr != 0.00) {
+						$deposit += $l->dr;
+					} else {
+						$deposit -= $l->cr;
+					}
+				}
+				$data["results"][]  = array(
+					'id' => $value->id,
+					'location_name' => $value->contact_location_name,
+					'contact_type_name' => $value->contact_contact_type_name,
+					'fullname' => $value->contact_name,
+					'branch_name' => $value->contact_location_branch_name,
+					'meter_number' => $value->number,
+					'customer_number' => $value->contact_customer_utility_abbr."-".$value->contact_customer_utility_code,
+					'deposit' => $deposit
+				);
+			}
+			$this->response($data, 200);
+		} else {
+			$this->response($data, 400);
+		}
+
+
+	}
+
 
 	//Get Payment Detail
 	//@param: Number, customer, type, location, usage, amount
-	function deposit_get() {}
+	function connectionRevenue_get() {
+		$filters 	= $this->get("filter")["filters"];		
+		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
+		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;								
+		$sort 	 	= $this->get("sort");		
+		$data["results"] = array();
+		$data["count"] = 0;
 
-	//Get Payment Detail
-	//@param: Number, customer, type, location, usage, amount
-	function agingSummary_get() {}
+		$obj = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
 
-	//Get Payment Detail
-	//@param: Number, customer, type, location, usage, amount
-	function agingDetail_get() {}
+		//Sort
+		if(!empty($sort) && isset($sort)){					
+			foreach ($sort as $value) {
+				$obj->order_by($value["field"], $value["dir"]);
+			}
+		}
 
-	//Get Payment Detail
-	//@param: Number, customer, type, location, usage, amount
-	function connectionRevenue_get() {}
+		//Filter
+		if(!empty($filters) && isset($filters)){			
+	    	foreach ($filters as $value) {
+	    		if(!empty($value["operator"]) && isset($value["operator"])){
+	    			$obj->{$value["operator"]}($value["field"], $value["value"]);
+	    		}else{
+	    			$obj->where($value["field"], $value["value"]);
+	    		}
+			}									 			
+		}
 
-	//Get Payment Detail
-	//@param: Number, customer, type, location, usage, amount
-	function otherRevenue_get() {}
-
-	//Get Payment Detail
-	//@param: Number, customer, type, location, usage, amount
-	function cashReceiptSummary_get() {}
-
-	//Get Payment Detail
-	//@param: Number, customer, type, location, usage, amount
-	function cashReceiptDetail_get() {}
-
-	//Get Payment Detail
-	//@param: Number, customer, type, location, usage, amount
-	function cashReceiptSourceSummary_get() {}
-
-	//Get Payment Detail
-	//@param: Number, customer, type, location, usage, amount
-	function cashReceiptSourceDetail_get() {}
+		// $obj->include_related('customer', array('id','name', 'ra_id'));
+		$obj->include_related('customer/contact_utility', array("abbr", "code"));
+		$obj->include_related('customer/contact_type', "name");
+		$obj->include_related('customer/location', "name");
+		$obj->include_related('customer/location/branch', "name");
+		// $obj->where_related_transction('type', "Water_Invoice");
+		$obj->where('status', 1);
+		$obj->get_paged_iterated($page, $limit);
+		if($obj->exists()) {
+			foreach($obj as $value) {
+				$line = new journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$line->where('contact_id', $value->contact_id);
+				$line->where('account_id', $value->ra_id);
+				$line->get();
+				$deposit = 0;
+				foreach($line as $l) {
+					if($l->dr != 0.00) {
+						$deposit -= $l->dr;
+					} else {
+						$deposit += $l->cr;
+					}
+				}
+				$data["results"][]  = array(
+					'id' => $value->id,
+					'location_name' => $value->contact_location_name,
+					'contact_type_name' => $value->contact_contact_type_name,
+					// 'fullname' => $value->contact_name,
+					'branch_name' => $value->contact_location_branch_name,
+					'meter_number' => $value->number,
+					'customer_number' => $value->contact_customer_utility_abbr."-".$value->contact_customer_utility_code,
+					'revenue' => $deposit
+				);
+			}
+			$this->response($data, 200);
+		} else {
+			$this->response($data, 400);
+		}
+	}
 
 
 	function _getAmount($carry, $item) {
