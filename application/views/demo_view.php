@@ -43398,7 +43398,7 @@
 				filter:[
 					{ field:"assembly_id", value:0 },
 					{ field:"status", operator:"where_related_item", value:1 }
-				],
+				]
 			}).then(function(){
 				var view = self.itemPriceDS.view();
 
