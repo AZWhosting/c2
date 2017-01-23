@@ -9,6 +9,7 @@ class Imports extends REST_Controller {
 	public $server_user;
 	public $server_pwd;
 	public $locale;
+	public $currency;
 	//CONSTRUCTOR
 	function __construct() {
 		parent::__construct();
@@ -21,6 +22,7 @@ class Imports extends REST_Controller {
 			$this->server_pwd = $conn->password;
 			$this->_database = $conn->inst_database;
 			$this->locale = $institute->locale;
+			$this->currency = $institute->monetary_id;
 		}
 	}
 	function contact_post() {
@@ -226,7 +228,7 @@ class Imports extends REST_Controller {
 			$income->where('number', $value->income_account)->get();
 
 			$expense = new Account(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			$expense->where('number', $value->expense_account)->get();
+			$expense->where('number', $value->cogs_account)->get();
 
 			$inventory = new Account(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$inventory->where('number', $value->inventory_account)->get();
@@ -241,13 +243,13 @@ class Imports extends REST_Controller {
 			$uom->where('name', $value->measurement)->get();
 
 
-			isset($value->company_id) 				? $obj->company_id 				= $value->company_id : "";
-			isset($value->contact_id) 				? $obj->contact_id 				= $value->contact_id : "";
-			isset($value->currency_id) 				? $obj->currency_id 			= $value->currency_id : "";
-			isset($value->$value->type) 			? $obj->item_type_id			= $type->id : 1;
+			isset($value->company_id) 				? $obj->company_id 				= $value->company_id : 0;
+			isset($value->contact_id) 				? $obj->contact_id 				= $value->contact_id : 0;
+			$obj->currency_id 						= $this->currency;
+			isset($value->type) 					? $obj->item_type_id			= $type->id : 1;
 			isset($value->category) 				? $obj->category_id 			= $cat->id : 1;
-			isset($value->item_group_id) 			? $obj->item_group_id 			= $value->item_group_id : "";
-			isset($value->item_sub_group_id) 		? $obj->item_sub_group_id 		= $value->item_sub_group_id : "";
+			isset($value->item_group_id) 			? $obj->item_group_id 			= $value->item_group_id : 0;
+			isset($value->item_sub_group_id) 		? $obj->item_sub_group_id 		= $value->item_sub_group_id : 0;
 			isset($value->brand_id) 				? $obj->brand_id 				= $value->brand_id : "";
 			isset($value->measurement) 				? $obj->measurement_id 			= $uom->id : 1;
 			isset($value->main_id) 					? $obj->main_id 				= $value->main_id : "";
@@ -266,21 +268,21 @@ class Imports extends REST_Controller {
 		   	isset($value->price) 					? $obj->price 					= $value->price : "";
 		   	isset($value->amount) 					? $obj->amount 					= $value->amount : "";
 		   	isset($value->rate) 					? $obj->rate 					= $value->rate : "";
-		   	isset($value->locale) 					? $obj->locale 					= $value->locale : $this->locale;
+		   	$obj->locale 							= $this->locale;
 		   	isset($value->on_hand) 					? $obj->on_hand 				= $value->on_hand : "";
 		   	isset($value->on_po) 					? $obj->on_po 					= $value->on_po : "";
 		   	isset($value->on_so) 					? $obj->on_so 					= $value->on_so : "";
 		   	isset($value->order_point) 				? $obj->order_point 			= $value->order_point : "";
 		   	isset($value->income_account) 			? $obj->income_account_id 		= $income->id : "";
-		   	isset($value->expense_account) 			? $obj->expense_account_id 		= $expense->id : "";
+		   	isset($value->cogs_account) 			? $obj->expense_account_id 		= $expense->id : "";
 		   	isset($value->inventory_account) 		? $obj->inventory_account_id 	= $inventory->id : "";
 		   	isset($value->preferred_vendor_id) 		? $obj->preferred_vendor_id 	= $value->preferred_vendor_id : "";
-		   	isset($value->image_url) 				? $obj->image_url				= $value->image_url : "";
+		   	$obj->image_url							= isset($value->image_url) 				? $value->image_url : "https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/no_image.jpg";
 		   	isset($value->favorite) 				? $obj->favorite 				= $value->favorite : "";
 		   	isset($value->is_catalog) 				? $obj->is_catalog 				= $value->is_catalog : "";
 		   	isset($value->is_assembly) 				? $obj->is_assembly 			= $value->is_assembly : "";
 		   	isset($value->is_pattern) 				? $obj->is_pattern 				= $value->is_pattern : "";
-		   	isset($value->status) 					? $obj->status 					= $value->status : 1;
+		   	$obj->status 							= isset($value->status) ? $value->status : 1;
 		   	isset($value->deleted) 					? $obj->deleted 				= $value->deleted : "";
 
 	   		if($obj->save()){

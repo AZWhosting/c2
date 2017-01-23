@@ -3046,7 +3046,7 @@
 								<div class="widget-head">
 									<ul>
 										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>
-										<li><a class="glyphicons print" data-bind="click: printGrid"><i></i>Print/Export</a></li>
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i>Print/Export</a></li>
 									</ul>
 								</div>
 							    <!-- // Tabs Heading END -->
@@ -3064,24 +3064,18 @@
 								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
 							
 							        	</div>
-								        <!-- //GENERAL INFO END -->
-
-								        <!-- //ACCOUNTING -->
-								        <!--div class="tab-pane" id="tab-2">
-								        	
-								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
-								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
+								        <!-- PRINT/EXPORT  -->
+								        <div class="tab-pane" id="tab-2">								        	
+								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: printGrid" style="width: 80px;"><i></i> Print</span>
+								        	<!-- <span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
 								        		<i class="fa fa-file-pdf-o"></i>
 								        		Print as PDF
-								        	</span>
-								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: cancel" style="width: 80px;">
+								        	</span> -->
+								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: ExportExcel" style="width: 80px;">
 								        		<i class="fa fa-file-excel-o"></i>
 								        		Export to Excel
 								        	</span>
-							        	</div-->
-								        <!-- //ACCOUNTING END -->						       
-
-								       
+							        	</div>
 								    </div>
 								</div>
 							</div>
@@ -3297,11 +3291,11 @@
 								        	<!-- <span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
 								        		<i class="fa fa-file-pdf-o"></i>
 								        		<span data-bind="text: lang.lang.print_as_pdf"></span>
-								        	</span>
-								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: cancel" style="width: 80px;">
+								        	</span-->
+								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: ExportExcel" style="width: 80px;">
 								        		<i class="fa fa-file-excel-o"></i>
 								        		<span data-bind="text: lang.lang.export_to_excel"></span>
-								        	</span> -->
+								        	</span>
 							        	</div>
 
 								    </div>
@@ -3310,22 +3304,22 @@
 						</div>
 						<!-- // Tabs END -->						
 					</div>
-<div id="invFormContent">
-					<div class="block-title">
-						<h3 data-bind="text: company.name"></h3>
-						<h2>Statement of Profit or Loss</h2>
-						<p data-bind="text: displayDate"></p>
-					</div>
-			    
-					<table class="table table-borderless table-condensed" style="width: 70%; margin:0 auto;">
-						<tbody data-role="listview"
-				        		data-auto-bind="false"
-				        		data-template="statementProfitLoss-template"			        		
-				        		data-bind="source: dataSource"></tbody>
-					</table>
+					<div id="invFormContent">
+						<div class="block-title">
+							<h3 data-bind="text: company.name"></h3>
+							<h2>Statement of Profit or Loss</h2>
+							<p data-bind="text: displayDate"></p>
+						</div>
+				    
+						<table class="table table-borderless table-condensed" style="width: 70%; margin:0 auto;">
+							<tbody data-role="listview"
+					        		data-auto-bind="false"
+					        		data-template="statementProfitLoss-template"			        		
+					        		data-bind="source: dataSource"></tbody>
+						</table>
 
-					<br><br>
-</div>
+						<br><br>
+					</div>
 		        </div>		        
 			</div>							
 		</div>
@@ -45135,11 +45129,11 @@
 					        ]
 					    });
 					    balanceCal = response.results[i].balance_forward;
-					    for(var j = 1; j < response.results[i].line.length; j++){
+					    for(var j = 0; j < response.results[i].line.length; j++){
 					    	balanceCal += response.results[i].line[j].amount;
 				          	self.exArray.push({
 				          		cells: [
-				          	  		{ value: response.results[i].line[j].type },
+				          	  		{ value: "'    "+response.results[i].line[j].type },
 				              		{ value: kendo.toString(new Date(response.results[i].line[j].issued_date), "dd-MM-yyyy")  },
 				              		{ value: response.results[i].line[j].number },
 				              		{ value: response.results[i].line[j].memo },
@@ -45155,11 +45149,20 @@
 					            { value: "" },
 					            { value: "" },
 					            { value: "" },
-					            { value: kendo.toString(balanceCal, "c2", banhji.locale), bold: true },
+					            { value: kendo.toString(balanceCal, "c2", banhji.locale), bold: true, borderTop: { color: "#000000", size: 1 }  },
 					        ]
 					    });
 					}
-					console.log(self.exArray);
+					self.exArray.push({
+				        cells: [
+				          	{ value: "TOTAL", bold: true,fontSize: 16 },
+				            { value: "" },
+				            { value: "" },
+				            { value: "" },
+				            { value: kendo.toString(response.totalAmount, "c2", banhji.locale), bold: true, fontSize: 16 },
+				            { value: kendo.toString(response.totalBalance, "c2", banhji.locale), bold: true, fontSize: 16 },
+				        ]
+				    });
 				}
 			});            
 		},
@@ -45308,6 +45311,7 @@
 				  	this.set("edate", "");									  
 			}
 		},
+		exArray 			: [],
 		search				: function(){
 			var self = this, para = [], displayDate = "",
 				start = this.get("sdate"),
@@ -45334,6 +45338,66 @@
             this.set("displayDate", displayDate);
 
             this.dataSource.filter(para);
+            this.dataSource.bind("requestEnd", function(e){				
+				if(e.type=="read"){
+					var response = e.response;
+					for (var i = 0; i < response.results.length; i++){
+						
+					    if(response.results[i].line){
+					    	self.exArray.push({
+						        cells: [
+						          	{ value: response.results[i].type, bold: true, },
+						            { value: "" },
+						            { value: "" }
+						        ]
+						    });
+						    for(var j = 0; j < response.results[i].line.length; j++){
+					          	self.exArray.push({
+					          		cells: [
+					          	  		{ value: response.results[i].line[j].number + " - " + response.results[i].line[j].name },
+					              		{ value: kendo.toString(response.results[i].line[j].amount, "c", banhji.locale)  },
+					              		{ value: "" }
+					            	]
+					          	});
+					        }
+					        self.exArray.push({
+						        cells: [
+						          	{ value: "Total " + response.results[i].type, bold: true, },
+						            { value: "" },
+						            { value: kendo.toString(response.results[i].amount, "c2", banhji.locale), bold: true, borderTop: { color: "#000000", size: 1 }  },
+						        ]
+						    });
+						}else{
+							self.exArray.push({
+						        cells: [
+						          	{ value: response.results[i].name, bold: true, },
+						            { value: "" },
+						            { value: kendo.toString(response.results[i].amount, "c2", banhji.locale), bold: true, borderTop: { color: "#000000", size: 1 }  },
+						        ]
+						    });
+						}
+					}
+					
+				}
+			});
+		},
+		ExportExcel 		: function(){
+			//console.log(this.exArray);
+	        var workbook = new kendo.ooxml.Workbook({
+	          sheets: [
+	            {
+	              columns: [
+	                { autoWidth: true },
+	                { autoWidth: true },
+	                { autoWidth: true }
+	              ],
+	              title: "Statement of Profit or Loss",
+	              rows: this.exArray
+	            }
+	          ]
+	        });
+	        //save the file as Excel file with extension xlsx
+	        kendo.saveAs({dataURI: workbook.toDataURL(), fileName: "StatementOfProfitOrLoss.xlsx"});
 		},
 		printGrid			: function() {
 			var gridElement = $('#grid'),
@@ -45528,6 +45592,14 @@
 		company 			: banhji.institute,
 		dr 					: 0,
 		cr 					: 0,
+		exArray 			: [{ cells: [
+			{ value: "Code", background: "#496cad", color: "#ffffff" },
+			{ value: "Name", background: "#496cad", color: "#ffffff" },
+			{ value: "Type", background: "#496cad", color: "#ffffff" },
+			{ value: "Debit", background: "#496cad", color: "#ffffff" },
+			{ value: "Credit", background: "#496cad", color: "#ffffff" }
+			]
+		}],
 		pageLoad 			: function(){
 			this.search();
 		},
@@ -45558,13 +45630,41 @@
 			this.dataSource.sort({ field:col, dir:this.get("currentSort") });
 		},
 		search 				: function(){
-			var as_of = this.get("as_of");
+			var as_of = this.get("as_of"), self = this, totalDR = 0, totalCR = 0;
 
 			if(as_of){
 				var displayDate = "As Of " + kendo.toString(as_of, "dd-MM-yyyy");
 				this.set("displayDate", displayDate);
 
 				this.dataSource.filter({ field:"issued_date", value:kendo.toString(new Date(as_of), "yyyy-MM-dd") });
+
+				this.dataSource.bind("requestEnd", function(e){				
+					if(e.type=="read"){
+						var response = e.response;
+						for (var i = 0; i < response.results.length; i++){
+							self.exArray.push({
+						        cells: [
+						          	{ value: response.results[i].number },
+						            { value: response.results[i].name },
+						            { value: response.results[i].type },
+						            { value: response.results[i].dr ? kendo.toString(response.results[i].dr, "c2", banhji.locale) : "" },
+						            { value: response.results[i].cr ? kendo.toString(response.results[i].cr, "c2", banhji.locale) : "" }
+						        ]
+						    });
+							totalDR += kendo.parseFloat(response.results[i].dr);
+							totalCR += kendo.parseFloat(response.results[i].cr);
+						}
+						self.exArray.push({
+					        cells: [
+					          	{ value: "TOTAL:", color: "#ffffff", background: "#333333", bold: true, fontSize: 16 },
+					            { value: "",background: "#333333" },
+					            { value: "",background: "#333333" },
+					            { value: kendo.toString(totalDR, "c", banhji.locale), color: "#ffffff", background: "#333333", bold: true, fontSize: 16 },
+					            { value: kendo.toString(totalCR, "c", banhji.locale), color: "#ffffff", background: "#333333", bold: true, fontSize: 16 }
+					        ]
+					    });
+					}
+				});
 			}
 		},				
 		totalDr 			: function() {
@@ -45662,6 +45762,26 @@
 		    	win.print();
 		    	win.close();
 		    },2000);
+		},
+		ExportExcel 		: function(){
+			//console.log(this.exArray);
+	        var workbook = new kendo.ooxml.Workbook({
+	          sheets: [
+	            {
+	              columns: [
+	                { autoWidth: true },
+	                { autoWidth: true },
+	                { autoWidth: true },
+	                { autoWidth: true },
+	                { autoWidth: true }
+	              ],
+	              title: "Trial Balance",
+	              rows: this.exArray
+	            }
+	          ]
+	        });
+	        //save the file as Excel file with extension xlsx
+	        kendo.saveAs({dataURI: workbook.toDataURL(), fileName: "TrialBalance.xlsx"});
 		}
 	});
 	banhji.statementFinancialPosition =  kendo.observable({
