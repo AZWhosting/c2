@@ -45146,106 +45146,100 @@
             }else{
             	
             }
+            this.set("displayDate", displayDate);
+            
+            this.dataSource.filter(para);
+            this.dataSource.bind("requestEnd", function(e){				
+				if(e.type=="read"){
+					var response = e.response, balanceCal = 0;
+					self.exArray = [];
+					self.set("totalAmount", kendo.toString(response.totalAmount, "c", banhji.locale));
+					self.set("totalBalance", kendo.toString(response.totalBalance, "c", banhji.locale));
 
-            this.set("displayDate", displayDate);            
-
-            this.dataSource.query({
-            	filter: para,
-            	sort:[
-            		{ field:"account_type_id", operator:"order_by_related_account", dir:"desc" },
-            		{ field:"number", operator:"order_by_related_account", dir:"asc" },
-            		{ field:"issued_date", operator:"order_by_related_transaction", dir:"desc" },
-            		{ field:"number", operator:"order_by_related_transaction", dir:"asc" }
-            	]
-            }).then(function(){
-            	var response = self.dataSource.view(), balanceCal = 0;
-				self.exArray = [];
-				self.set("totalAmount", kendo.toString(response.totalAmount, "c", banhji.locale));
-				self.set("totalBalance", kendo.toString(response.totalBalance, "c", banhji.locale));
-
-				self.exArray.push({
-            		cells: [
-            			{ value: self.company.name, textAlign: "center", colSpan: 6 }
-            		]
-            	});
-            	self.exArray.push({
-            		cells: [
-            			{ value: "General Ledger",bold: true, fontSize: 20, textAlign: "center", colSpan: 6 }
-            		]
-            	});
-            	if(self.displayDate){
-	            	self.exArray.push({
+					self.exArray.push({
 	            		cells: [
-	            			{ value: self.displayDate, textAlign: "center", colSpan: 6 }
+	            			{ value: self.company.name, textAlign: "center", colSpan: 6 }
 	            		]
 	            	});
-	            }
-            	self.exArray.push({
-            		cells: [
-            			{ value: "", colSpan: 6 }
-            		]
-            	});
-            	self.exArray.push({ 
-            		cells: [
-						{ value: "Type", background: "#496cad", color: "#ffffff" },
-						{ value: "Date", background: "#496cad", color: "#ffffff" },
-						{ value: "Reference No", background: "#496cad", color: "#ffffff" },
-						{ value: "Description", background: "#496cad", color: "#ffffff" },
-						{ value: "Amount", background: "#496cad", color: "#ffffff" },
-						{ value: "Balance", background: "#496cad", color: "#ffffff" }
-					]
-				});
-				for (var i = 0; i < response.length; i++){
+	            	self.exArray.push({
+	            		cells: [
+	            			{ value: "General Ledger",bold: true, fontSize: 20, textAlign: "center", colSpan: 6 }
+	            		]
+	            	});
+	            	if(self.displayDate){
+		            	self.exArray.push({
+		            		cells: [
+		            			{ value: self.displayDate, textAlign: "center", colSpan: 6 }
+		            		]
+		            	});
+		            }
+	            	self.exArray.push({
+	            		cells: [
+	            			{ value: "", colSpan: 6 }
+	            		]
+	            	});
+	            	self.exArray.push({ 
+	            		cells: [
+							{ value: "Type", background: "#496cad", color: "#ffffff" },
+							{ value: "Date", background: "#496cad", color: "#ffffff" },
+							{ value: "Reference No", background: "#496cad", color: "#ffffff" },
+							{ value: "Description", background: "#496cad", color: "#ffffff" },
+							{ value: "Amount", background: "#496cad", color: "#ffffff" },
+							{ value: "Balance", background: "#496cad", color: "#ffffff" }
+						]
+					});
+					for (var i = 0; i < response.results.length; i++){
+						self.exArray.push({
+					        cells: [
+					          	{ value: response.results[i].number + " " + response.results[i].name, bold: true, },
+					            { value: "" },
+					            { value: "" },
+					            { value: "" },
+					            { value: "" },
+					            { value: kendo.toString(response.results[i].balance_forward, "c2", banhji.locale), bold: true },
+					        ]
+					    });
+					    balanceCal = response.results[i].balance_forward;
+					    for(var j = 0; j < response.results[i].line.length; j++){
+					    	balanceCal += response.results[i].line[j].amount;
+				          	self.exArray.push({
+				          		cells: [
+				          	  		{ value: "    "+response.results[i].line[j].type },
+				              		{ value: kendo.toString(new Date(response.results[i].line[j].issued_date), "dd-MM-yyyy")  },
+				              		{ value: response.results[i].line[j].number },
+				              		{ value: response.results[i].line[j].memo },
+				              		{ value: kendo.toString(response.results[i].line[j].amount, "c", banhji.locale), format: "float"},
+				              		{ value: kendo.toString(balanceCal, "c", banhji.locale) , format: "float"}
+				            	]
+				          	});
+				        }
+				        self.exArray.push({
+					        cells: [
+					          	{ value: "Total " + response.results[i].number + " " + response.results[i].name, bold: true, },
+					            { value: "" },
+					            { value: "" },
+					            { value: "" },
+					            { value: "" },
+					            { value: kendo.toString(balanceCal, "c2", banhji.locale), bold: true, borderTop: { color: "#000000", size: 1 }, format: "float"  },
+					        ]
+					    });
+					    self.exArray.push({
+					        cells: [
+					          	{ value: "", colSpan: 6 }
+					        ]
+					    });
+					}
 					self.exArray.push({
 				        cells: [
-				          	{ value: response[i].number + " " + response[i].name, bold: true, },
+				          	{ value: "TOTAL", bold: true,fontSize: 16 },
 				            { value: "" },
 				            { value: "" },
 				            { value: "" },
-				            { value: "" },
-				            { value: kendo.toString(response[i].balance_forward, "c2", banhji.locale), bold: true },
-				        ]
-				    });
-				    balanceCal = response[i].balance_forward;
-				    for(var j = 0; j < response[i].line.length; j++){
-				    	balanceCal += response[i].line[j].amount;
-			          	self.exArray.push({
-			          		cells: [
-			          	  		{ value: "    "+response[i].line[j].type },
-			              		{ value: kendo.toString(new Date(response[i].line[j].issued_date), "dd-MM-yyyy")  },
-			              		{ value: response[i].line[j].number },
-			              		{ value: response[i].line[j].memo },
-			              		{ value: kendo.toString(response[i].line[j].amount, "c", banhji.locale), format: "float"},
-			              		{ value: kendo.toString(balanceCal, "c", banhji.locale) , format: "float"}
-			            	]
-			          	});
-			        }
-			        self.exArray.push({
-				        cells: [
-				          	{ value: "Total " + response[i].number + " " + response[i].name, bold: true, },
-				            { value: "" },
-				            { value: "" },
-				            { value: "" },
-				            { value: "" },
-				            { value: kendo.toString(balanceCal, "c2", banhji.locale), bold: true, borderTop: { color: "#000000", size: 1 }, format: "float"  },
-				        ]
-				    });
-				    self.exArray.push({
-				        cells: [
-				          	{ value: "", colSpan: 6 }
+				            { value: kendo.toString(response.totalAmount, "c2", banhji.locale), bold: true, fontSize: 16 },
+				            { value: kendo.toString(response.totalBalance, "c2", banhji.locale), bold: true, fontSize: 16 },
 				        ]
 				    });
 				}
-				self.exArray.push({
-			        cells: [
-			          	{ value: "TOTAL", bold: true,fontSize: 16 },
-			            { value: "" },
-			            { value: "" },
-			            { value: "" },
-			            { value: kendo.toString(response.totalAmount, "c2", banhji.locale), bold: true, fontSize: 16 },
-			            { value: kendo.toString(response.totalBalance, "c2", banhji.locale), bold: true, fontSize: 16 },
-			        ]
-			    });
 			});            
 		},
 		printGrid			: function() {
