@@ -2406,7 +2406,7 @@
 						<div class="row-fluid journal_block">
 							<div class="span4" style="width: 16.66666667%;">
 								<p>No. of Txn</p>
-								<span data-bind="text: totalTxn"></span>
+								<span data-format="n" data-bind="text: dataSource.total"></span>
 							</div>
 							<div class="span4" style="width: 41.66666667%;">
 								<p>Total Dr. Balance</p>
@@ -2414,7 +2414,7 @@
 							</div>
 							<div class="span4" style="width: 41.66666667%;">
 								<p>Total Cr. Balance</p>
-								<span data-bind="text: dr"></span>
+								<span data-bind="text: cr"></span>
 							</div>
 						</div>
 
@@ -44788,7 +44788,6 @@
 		lang 				: langVM,
 		dataSource 			: dataStore(apiUrl + "accounting_reports/journal"),
 		exdataSource 		: dataStore(apiUrl + "accounting_reports/journal"),
-		summaryDS 			: dataStore(apiUrl + "accounting_reports/journal_summary"),		
 		sortList			: banhji.source.sortList,
 		sorter 				: "all",
 		sdate 				: "",
@@ -44849,16 +44848,16 @@
     	
         	//Dates
         	if(start && end){
-            	para.push({ field:"issued_date >=", value: kendo.toString(new Date(start), "yyyy-MM-dd") });
-            	para.push({ field:"issued_date <=", value: kendo.toString(new Date(end), "yyyy-MM-dd") });
+            	para.push({ field:"issued_date >=", operator:"where_related_transaction", value: kendo.toString(new Date(start), "yyyy-MM-dd") });
+            	para.push({ field:"issued_date <=", operator:"where_related_transaction", value: kendo.toString(new Date(end), "yyyy-MM-dd") });
 
             	displayDate = "From " + kendo.toString(new Date(start), "dd-MM-yyyy") + " To " + kendo.toString(new Date(end), "dd-MM-yyyy");
             }else if(start){
-            	para.push({ field:"issued_date", value: kendo.toString(new Date(start), "yyyy-MM-dd") });
+            	para.push({ field:"issued_date", operator:"where_related_transaction", value: kendo.toString(new Date(start), "yyyy-MM-dd") });
 
             	displayDate = "On " + kendo.toString(new Date(start), "dd-MM-yyyy");
             }else if(end){
-            	para.push({ field:"issued_date <=", value: kendo.toString(new Date(end), "yyyy-MM-dd") });
+            	para.push({ field:"issued_date <=", operator:"where_related_transaction", value: kendo.toString(new Date(end), "yyyy-MM-dd") });
 
             	displayDate = "As Of " + kendo.toString(new Date(end), "dd-MM-yyyy");
             }else{
@@ -44870,18 +44869,25 @@
             this.dataSource.query({
             	filter: para,
             	sort: [
-			  		{ field: "issued_date", dir: "desc" },
-			  		{ field: "id", dir: "desc" }
-			  	],
-            	page: 1,
-            	pageSize: 50
+			  		{ field: "issued_date", operator:"order_by_related_transaction", dir: "desc" },
+			  		{ field: "number", operator:"order_by_related_transaction", dir: "desc" }
+			  	]
             });
+            var saved = false;
+            this.dataSource.bind("requestEnd", function(e){
+            	if(e.type==="read" && saved==false){
+            		saved = true;
+            		var response = e.response;
+            		self.set("dr", kendo.toString(response.dr, "c", banhji.locale));
+	            	self.set("cr", kendo.toString(response.cr, "c", banhji.locale));
+	            }
+	        });
 			
 			this.exdataSource.query({
 				filter: para,
             	sort: [
-			  		{ field: "issued_date", dir: "desc" },
-			  		{ field: "id", dir: "desc" }
+			  		{ field: "issued_date", operator:"order_by_related_transaction", dir: "desc" },
+			  		{ field: "number", operator:"order_by_related_transaction", dir: "desc" }
 			  	]
 			})
 			.then(function(e){
@@ -44958,22 +44964,7 @@
 		          });
 		        }
 		        console.log();
-            });
-            this.summaryDS.query({
-            	filter: para,
-            	sort: [
-			  		{ field: "issued_date", dir: "desc" },
-			  		{ field: "id", dir: "desc" }
-			  	],
-            	page: 1,
-            	pageSize: 50
-            }).then(function(){
-            	var view = self.summaryDS.view();
-
-            	self.set("dr", kendo.toString(view[0].dr, "c", banhji.locale));
-            	self.set("cr", kendo.toString(view[0].cr, "c", banhji.locale));
-            	self.set("totalTxn", kendo.toString(view[0].totalTxn, "n0"));
-            });	                  
+            });                           
 		},
 		printGrid			: function() {
 			var gridElement = $('#grid'),
@@ -45148,7 +45139,15 @@
             }
             this.set("displayDate", displayDate);
             
-            this.dataSource.filter(para);
+            this.dataSource.query({
+            	filter:para,
+            	sort:[
+            		{ field:"account_type_id", operator:"order_by_related_account", dir:"asc" },
+            		{ field:"number", operator:"order_by_related_account", dir:"asc" },
+            		{ field:"issued_date", operator:"order_by_related_transaction", dir:"asc" },
+            		{ field:"number", operator:"order_by_related_transaction", dir:"asc" }            		
+            	]
+            });
             this.dataSource.bind("requestEnd", function(e){				
 				if(e.type=="read"){
 					var response = e.response, balanceCal = 0;

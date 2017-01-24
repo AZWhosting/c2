@@ -697,15 +697,20 @@ class Accounting_reports extends REST_Controller {
 		//Results
 		if($page && $limit){
 			$obj->get_paged_iterated($page, $limit);
-			$data["count"] = $obj->paged->total_rows;
+			// $data["count"] = $obj->paged->total_rows;
 		}else{
 			$obj->get_iterated();
-			$data["count"] = $obj->result_count();
+			// $data["count"] = $obj->result_count();
 		}
 		
 		if($obj->exists()){
 			$objList = [];
+			$totalDr = 0;
+			$totalCr = 0;
 			foreach ($obj as $value) {
+				$totalDr += floatval($value->dr) / floatval($value->transaction_rate);
+				$totalCr += floatval($value->cr) / floatval($value->transaction_rate);
+
 				if(isset($objList[$value->transaction_id])){
 					$objList[$value->transaction_id]["line"][] = array(
 						"id" 			=> $value->id,
@@ -714,7 +719,6 @@ class Accounting_reports extends REST_Controller {
 						"segments" 		=> $value->segments,
 						"dr" 			=> floatval($value->dr),
 						"cr" 			=> floatval($value->cr),
-						"rate" 			=> floatval($value->rate),
 						"locale" 		=> $value->locale,
 						"account" 		=> $value->account_name,
 						"contact" 		=> $value->contact_name
@@ -733,90 +737,30 @@ class Accounting_reports extends REST_Controller {
 						"segments" 		=> $value->segments,
 						"dr" 			=> floatval($value->dr),
 						"cr" 			=> floatval($value->cr),
-						"rate" 			=> floatval($value->rate),
 						"locale" 		=> $value->locale,
 						"account" 		=> $value->account_name,
 						"contact" 		=> $value->contact_name
 					);			
 				}
-			}
+			}			
 
 			foreach ($objList as $value) {				
 				$data["results"][] = $value;
-			}			
+			}
+
+			$data["dr"] = $totalDr;
+			$data["cr"] = $totalCr;
+			$data["count"] = count($data["results"]);			
 		}		
 
 		//Response Data		
 		$this->response($data, 200);	
 	}
-
-	//GET JOURNAL SUMMARY
-	function journal_summary_get() {		
-		$filters 	= $this->get("filter")["filters"];		
-		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
-		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;
-		$sort 	 	= $this->get("sort");		
-		$data["results"] = array();
-		$data["count"] = 0;
-		$is_recurring = 0;
-		$deleted = 0;
-
-		$obj = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$txn = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
-		
-		//Sort
-		if(!empty($sort) && isset($sort)){					
-			foreach ($sort as $value) {
-				$obj->order_by_related("transaction", $value["field"], $value["dir"]);
-				$txn->order_by($value["field"], $value["dir"]);
-			}
-		}
-		
-		//Filter		
-		if(!empty($filters) && isset($filters)){			
-	    	foreach ($filters as $value) {
-	    		$obj->where_related("transaction", $value["field"], $value["value"]);
-	    		$txn->where($value["field"], $value["value"]);
-			}									 			
-		}
-		
-		$obj->where_related("transaction", "is_journal", 1);
-		$obj->where_related("transaction", "is_recurring", 0);		
-		$obj->where_related("transaction", "deleted", 0);
-		$obj->where("deleted", 0);
-		
-		//Results
-		$obj->get_iterated();
-
-		//Txn
-		$txn->where("is_journal", 1);
-		$txn->where("is_recurring", 0);
-		$txn->where("deleted", 0);
-		
-
-		$totalDr = 0;
-		$totalCr = 0;
-		foreach ($obj as $value) {
-			$totalDr += floatval($value->dr) / floatval($value->rate);
-			$totalCr += floatval($value->cr) / floatval($value->rate);
-		}
-
-		$data["results"][] = array(
-			"id" 		=> 0,
-			"dr" 		=> $totalDr,				
-		   	"cr" 		=> $totalCr,
-		   	"totalTxn" 	=> $txn->count()
-		);			
-
-		$data["count"] = count($data["results"]);		
-
-		//Response Data		
-		$this->response($data, 200);	
-	}
+	
 
 	//GET GENERAL LEDGER
 	function general_ledger_get() {		
-		$filters 	= $this->get("filter");		
+		$filter 	= $this->get("filter");		
 		$page 		= $this->get('page');		
 		$limit 		= $this->get('limit');
 		$sort 	 	= $this->get("sort");		
@@ -842,19 +786,17 @@ class Accounting_reports extends REST_Controller {
 		}
 		
 		//Filter		
-		if(!empty($filters) && isset($filters["filters"])){			
-	    	foreach ($filters["filters"] as $value) {
+		if(!empty($filter) && isset($filter)){			
+	    	foreach ($filter["filters"] as $value) {
 	    		if(isset($value['operator'])){
-	    			$obj->{$value['operator']}($value['field'], $value['value']);
-	    		} else if($value["field"]=="issued_date >=" || $value["field"]=="issued_date"){
-	    			$startDate = $value["value"];
+	    			$obj->{$value['operator']}($value['field'], $value['value']);	    		
 	    		} else {
 	    			$obj->where($value['field'], $value['value']);
 	    		}
 			}									 			
 		}
 		
-		$obj->include_related("transaction", array("type", "number", "issued_date", "memo"));
+		$obj->include_related("transaction", array("type", "number", "issued_date", "memo", "rate"));
 		$obj->include_related("account", array("number","name"));
 		$obj->include_related("account/account_type", array("name","nature"));
 		$obj->where_related("transaction", "is_journal", 1);
@@ -870,9 +812,9 @@ class Accounting_reports extends REST_Controller {
 			foreach ($obj as $value) {
 				$amount = 0;
 				if($value->account_account_type_nature=="Dr"){
-					$amount = (floatval($value->dr) - floatval($value->cr)) / floatval($value->rate);				
+					$amount = (floatval($value->dr) - floatval($value->cr)) / floatval($value->transaction_rate);				
 				}else{
-					$amount = (floatval($value->cr) - floatval($value->dr)) / floatval($value->rate);					
+					$amount = (floatval($value->cr) - floatval($value->dr)) / floatval($value->transaction_rate);					
 				}
 
 				$totalAmount += $amount;
@@ -890,18 +832,22 @@ class Accounting_reports extends REST_Controller {
 				}else{
 					//Balance Forward
 					$balance_forward = 0;
-					if($startDate!==""){
-						$bf = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
-						$bf->include_related("account/account_type", array("nature"));
-						$bf->where_related("transaction", "issued_date <", $startDate);
-						$bf->get_iterated();
+					$bf = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
+					$bf->include_related("transaction", "rate");
+					$bf->include_related("account/account_type", "nature");
+					$bf->where_related("transaction", "issued_date <", $value->transaction_issued_date);
+					$bf->where("account_id", $value->account_id);
+					$bf->where_related("transaction", "is_journal", 1);
+					$bf->where_related("transaction", "is_recurring <>", 1);		
+					$bf->where_related("transaction", "deleted <>", 1);
+					$bf->where("deleted <>", 1);
+					$bf->get_iterated();
 
-						foreach ($bf as $val) {
-							if($val->account_account_type_nature=="Dr"){
-								$balance_forward += (floatval($val->dr) - floatval($val->cr)) / floatval($val->rate);				
-							}else{
-								$balance_forward += (floatval($val->cr) - floatval($val->dr)) / floatval($val->rate);					
-							}
+					foreach ($bf as $val) {
+						if($val->account_account_type_nature=="Dr"){
+							$balance_forward += (floatval($val->dr) - floatval($val->cr)) / floatval($val->transaction_rate);				
+						}else{
+							$balance_forward += (floatval($val->cr) - floatval($val->dr)) / floatval($val->transaction_rate);					
 						}
 					}
 

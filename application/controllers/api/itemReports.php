@@ -167,9 +167,14 @@ class Itemreports extends REST_Controller {
 
 		$obj = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 				
-		if(!empty($sort) && isset($sort)){					
+		//Sort
+		if(!empty($sort) && isset($sort)){
 			foreach ($sort as $value) {
-				$obj->order_by($value["field"], $value["dir"]);
+				if(isset($value['operator'])){
+					$obj->{$value['operator']}($value["field"], $value["dir"]);
+				}else{
+					$obj->order_by($value["field"], $value["dir"]);
+				}
 			}
 		}
 		
