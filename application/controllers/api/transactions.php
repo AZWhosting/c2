@@ -28,7 +28,7 @@ class Transactions extends REST_Controller {
 		$page 		= $this->get('page');
 		$limit 		= $this->get('limit');
 		$sort 	 	= $this->get("sort");
-		$data["results"] = array();
+		$data["results"] = [];
 		$data["count"] = 0;
 		$is_recurring = 0;
 
@@ -298,7 +298,7 @@ class Transactions extends REST_Controller {
 					"tax_item_id" 				=> $obj->tax_item_id,
 					"user_id" 					=> $obj->user_id,
 					"employee_id" 				=> $obj->employee_id,
-				   	"number" 					=> $obj->number,
+					"number" 					=> $obj->number,
 				   	"reference_no" 				=> $obj->reference_no,
 				   	"type" 						=> $obj->type,
 				   	"journal_type" 				=> $obj->journal_type,
@@ -469,7 +469,7 @@ class Transactions extends REST_Controller {
 					"tax_item_id" 				=> $obj->tax_item_id,
 					"user_id" 					=> $obj->user_id,
 					"employee_id" 				=> $obj->employee_id,
-				   	"number" 					=> $obj->number,
+					"number" 					=> $obj->number,
 				   	"reference_no" 				=> $obj->reference_no,
 				   	"type" 						=> $obj->type,
 				   	"journal_type" 				=> $obj->journal_type,

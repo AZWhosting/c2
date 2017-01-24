@@ -25,9 +25,9 @@ class Items extends REST_Controller {
 	//GET 
 	function index_get() {		
 		$filter 	= $this->get("filter");
-		$page 		= $this->get('page');		
+		$page 		= $this->get('page');
 		$limit 		= $this->get('limit');
-		$sort 	 	= $this->get("sort");		
+		$sort 	 	= $this->get("sort");
 		$data["results"] = [];
 		$data["count"] = 0;
 		$is_pattern = 0;
@@ -72,37 +72,37 @@ class Items extends REST_Controller {
 		if($obj->exists()){
 			foreach ($obj as $value) {
 				$itemPrice = [];				
-				foreach ($value->item_price->get() as $p) {					
-					$itemPrice[] = array(
-						"id" 			=> $p->id,				
-						"item_id" 		=> $p->item_id,
-						"assembly_id"	=> $p->assembly_id,
-						"measurement_id"=> $p->measurement_id,
-						"quantity"		=> floatval($p->quantity),					
-						"unit_value" 	=> floatval($p->unit_value),
-						"price" 		=> floatval($p->price),
-						"amount" 		=> floatval($p->amount),
-						"locale" 		=> $p->locale,
+				// foreach ($value->item_price->get() as $p) {					
+				// 	$itemPrice[] = array(
+				// 		"id" 			=> $p->id,				
+				// 		"item_id" 		=> $p->item_id,
+				// 		"assembly_id"	=> $p->assembly_id,
+				// 		"measurement_id"=> $p->measurement_id,
+				// 		"quantity"		=> floatval($p->quantity),					
+				// 		"unit_value" 	=> floatval($p->unit_value),
+				// 		"price" 		=> floatval($p->price),
+				// 		"amount" 		=> floatval($p->amount),
+				// 		"locale" 		=> $p->locale,
 						
-						"measurement" 	=> $p->measurement->get()->name
-					); 
-				}
+				// 		"measurement" 	=> $p->measurement->get()->name
+				// 	); 
+				// }
 
 				//Sum On Hand
 				$onHand = 0;
-				if($value->item_type_id=="1"){					
-					//Sum On Hand
-					$itemMovement = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);						
-					$itemMovement->where_in_related("transaction", "type", array("Cash_Purchase", "Credit_Purchase", "Commercial_Invoice", "Vat_Invoice", "Invoice", "Commercial_Cash_Sale", "Vat_Cash_Sale", "Cash_Sale", "Adjustment"));
-					$itemMovement->where("item_id", $value->id);
-					$itemMovement->where_related("transaction", "is_recurring <>", 1);
-					$itemMovement->where_related("transaction", "deleted <>", 1);
-					$itemMovement->get_iterated();
+				// if($value->item_type_id=="1"){					
+				// 	//Sum On Hand
+				// 	$itemMovement = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);						
+				// 	$itemMovement->where_in_related("transaction", "type", array("Cash_Purchase", "Credit_Purchase", "Commercial_Invoice", "Vat_Invoice", "Invoice", "Commercial_Cash_Sale", "Vat_Cash_Sale", "Cash_Sale", "Adjustment"));
+				// 	$itemMovement->where("item_id", $value->id);
+				// 	$itemMovement->where_related("transaction", "is_recurring <>", 1);
+				// 	$itemMovement->where_related("transaction", "deleted <>", 1);
+				// 	$itemMovement->get_iterated();
 					
-					foreach ($itemMovement as $val) {
-						$onHand += ($val->quantity * $val->unit_value * $val->movement);
-					}
-				}
+				// 	foreach ($itemMovement as $val) {
+				// 		$onHand += ($val->quantity * $val->unit_value * $val->movement);
+				// 	}
+				// }
 
 				$data["results"][] = array(
 					"id" 						=> $value->id,
@@ -148,9 +148,8 @@ class Items extends REST_Controller {
 				   	"status" 					=> $value->status,
 				   	"deleted" 					=> $value->deleted,
 				   	"is_system" 				=> $value->is_system,
- 					
- 					"category" 					=> $value->category_name,
-				   	"item_prices"				=> $itemPrice
+
+				   	"category" 					=> $value->category_name
 				);
 			}
 		}

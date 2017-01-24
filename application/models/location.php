@@ -28,9 +28,9 @@ class Location extends DataMapper {
 			'class' => "electricity_box",
 			'other_field' => 'location'
 		),
-		'elocation' => array(
+		'contact' => array(
 			'class' => 'contact',
-			'other_field' => 'elocation'
+			'other_field' => 'location'
 		),
 		'wlocation' => array(
 			'class' => 'contact',

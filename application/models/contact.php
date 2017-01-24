@@ -9,6 +9,10 @@ class Contact extends DataMapper {
 			'class' => 'contact_type',
 			'other_field' => 'contact'
 		),
+		'transaction' => array(
+			"class" => 'transaction',
+			"other_field" => "employee"
+		),
 		'account' => array(
 			'class' => 'account',
 			'other_field' => 'contact'
@@ -37,9 +41,9 @@ class Contact extends DataMapper {
 			'class' => 'location',
 			'other_field' => 'elocation'
 		),
-		'wlocation' => array(
+		'location' => array(
 			'class' => 'location',
-			'other_field' => 'wlocation'
+			'other_field' => 'contact'
 		),
 		'payroll' => array(
 			'class' => 'payroll',

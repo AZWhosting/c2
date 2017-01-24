@@ -70,7 +70,6 @@ class Meters extends REST_Controller {
 												"locale" => $currency->locale
 					),
 					"meter_number" 			=> $value->number,
-					"number" 				=> $value->number,
 					"worder" 				=> $value->worder,
 					"contact_name" 			=> $contacts->name,
 					"status" 				=> $value->status,
@@ -135,7 +134,7 @@ class Meters extends REST_Controller {
 			if($obj->save()){	
 				$data[] = array(
 					"id" 					=> $obj->id,
-					"meter_number" 			=> $obj->number,
+					"number" 				=> $obj->number,
 					"status" 				=> $obj->status,
 					"number_digit" 			=> $obj->number_digit,
 					"latitute" 				=> $obj->map,	
@@ -206,7 +205,7 @@ class Meters extends REST_Controller {
 				//Results
 				$data[] = array(
 					"id" 					=> $obj->id,
-					"meter_number" 				=> $obj->number,
+					"number" 				=> $obj->number,
 					"status" 				=> $obj->status,
 					"number_digit" 			=> $obj->number_digit,
 					"latitute" 				=> $obj->map,	
@@ -537,7 +536,7 @@ class Meters extends REST_Controller {
 
 			    	$data["results"][] = array(
 						"id" 		=> $value->id,
-						"number" 	=> $value->number,			
+						"meter_number" 	=> $value->number,			
 						"multiplier"=> $value->multiplier,			
 						"max_number"=> $value->max_number,
 						
@@ -549,7 +548,7 @@ class Meters extends REST_Controller {
 						"index" 	=> $key,
 						"isValid" 	=> true,
 						"fullname" 	=> $value->surname.' '.$value->name,
-						"electricity_box_number" => $value->electricity_box_number					
+						"electricity_box_number" => $value->electricity_box_number
 					);
 			    }
 			}
@@ -774,7 +773,7 @@ class Meters extends REST_Controller {
 
 			    	$data["results"][] = array(
 						"id" 		=> $value->id,
-						"number" 	=> $value->number,			
+						"meter_number" 	=> $value->number,			
 						"multiplier"=> $value->multiplier,			
 						"max_number"=> $value->max_number,
 						
@@ -849,7 +848,7 @@ class Meters extends REST_Controller {
 				//Results				
 				$data["results"][] = array(
 					"id" 				=> $value->id,
-					"number" 			=> $value->number,
+					"meter_number" 		=> $value->number,
 					"reading" 			=> $reading,
 					"month_of" 			=> $month_of,
 

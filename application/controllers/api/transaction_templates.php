@@ -24,12 +24,13 @@ class Transaction_templates extends REST_Controller {
 	
 	//GET 
 	function index_get() {		
-		$filters 	= $this->get("filter")["filters"];		
-		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
-		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;								
-		$sort 	 	= $this->get("sort");		
-		$data["results"] = array();
+		$filter 	= $this->get("filter");
+		$page 		= $this->get('page');
+		$limit 		= $this->get('limit');
+		$sort 	 	= $this->get("sort");
+		$data["results"] = [];
 		$data["count"] = 0;
+		$is_recurring = 0;
 
 		$obj = new Transaction_template(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
 
@@ -40,20 +41,31 @@ class Transaction_templates extends REST_Controller {
 			}
 		}
 		
-		//Filter		
-		if(!empty($filters) && isset($filters)){
-	    	foreach ($filters as $value) {
+		//Filter
+		if(!empty($filter) && isset($filter)){
+	    	foreach ($filter['filters'] as $value) {
 	    		if(isset($value['operator'])) {
 					$obj->{$value['operator']}($value['field'], $value['value']);
 				} else {
-	    			$obj->where($value["field"], $value["value"]);
+					if($value["field"]=="is_recurring"){
+	    				$is_recurring = $value["value"];
+	    			}else{
+	    				$obj->where($value["field"], $value["value"]);
+	    			}
 				}
 			}
 		}
 		
 		$obj->order_by("type","desc");
-		$obj->get_paged_iterated($page, $limit);
-		$data["count"] = $obj->paged->total_rows;		
+		
+		//Results
+		if($page && $limit){
+			$obj->get_paged_iterated($page, $limit);
+			$data["count"] = $obj->paged->total_rows;
+		}else{
+			$obj->get_iterated();
+			$data["count"] = $obj->result_count();
+		}		
 
 		if($obj->result_count()>0){			
 			foreach ($obj as $value) {				

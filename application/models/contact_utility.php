@@ -9,6 +9,10 @@ class Contact_utility extends DataMapper {
 			'class' => "contact",
 			'other_field' => 'contact_utility'
 		),
+		'customer' => array(
+			'class' => "customer",
+			'other_field' => 'contact_utility'
+		),
 		'branch' => array(
 			'class' => "branch",
 			'other_field' => 'contact_utility'
