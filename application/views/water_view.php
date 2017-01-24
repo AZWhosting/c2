@@ -216,33 +216,25 @@
 					<th><span>Balance</span></th>
 				</tr>
 			</thead>
-			<tbody>
-				<tr>
-					<td>1</td>
-					<td>test</td>
-					<td>11</td>
-					<td>3,000</td>
-					<td>10</td>
-					<td>5,000,000</td>
-					<td>10,000</td>
-					<td>2,500,000</td>
-					<td>3,000,000</td>
-				</tr>
-				<tr>
-					<td>1</td>
-					<td>test</td>
-					<td>11</td>
-					<td>3,000</td>
-					<td>10</td>
-					<td>5,000,000</td>
-					<td>10,000</td>
-					<td>2,500,000</td>
-					<td>3,000,000</td>
-				</tr>
+			<tbody data-role="listview" data-bind="source: dataSource" data-template="dashboard-template-table-list">
+				
 			</tbody>
 		</table>
 	</div>
 
+</script>
+<script id="dashboard-template-table-list" type="text/x-kendo-tmpl">
+	<tr>
+		<td>#=banhji.wDashBoard.dataSource.indexOf(id) +1 #</td>
+		<td>#=name#</td>
+		<td>#=blocCount#</td>
+		<td>#=activeCustomer#</td>
+		<td>#=inActiveCustomer#</td>
+		<td>#=deposit#</td>
+		<td>#=usage#</td>
+		<td>#=sale#</td>
+		<td>3,000,000</td>
+	</tr>
 </script>
 <script id="wsale-by-branch-row-template" type="text/x-kendo-tmpl">		
 	<tr>		
@@ -10029,6 +10021,40 @@
 	/*************************
 	*	Water Section   	* 
 	**************************/
+	banhji.wDashBoard = kendo.observable({
+		dataSource: new kendo.data.DataSource({
+	      transport: {
+	        read  : {
+	          url: baseUrl + 'api/waterdash/license',
+	          type: "GET",
+	          dataType: 'json',
+	          headers: { Institute: JSON.parse(localStorage.getItem('userData/user')).institute.id }
+	        },
+	        parameterMap: function(options, operation) {
+	          if(operation === 'read') {
+	            return {
+	              limit: options.take,
+	              page: options.page,
+	              filter: options.filter
+	            };
+	          } else {
+	            return {models: kendo.stringify(options.models)};
+	          }
+	        }
+	      },
+	      schema  : {
+	        model: {
+	          id: 'id'
+	        },
+	        data: 'results',
+	        total: 'count'
+	      },
+	      batch: true,
+	      serverFiltering: true,
+	      serverPaging: true,
+	      pageSize: 100
+	    })
+	});
 	banhji.waterCenter = kendo.observable({
 		lang 				: langVM,
 		transactionDS  		: dataStore(apiUrl + 'transactions'),
@@ -16260,7 +16286,7 @@
 		saleTaxMenu: new kendo.View("#saleTaxMenu", {model: langVM}),
 		saleMenu: new kendo.View("#saleMenu", {model: langVM}),
 
-		wDashBoard: new kendo.View("#wDashBoard", {model: wDashBoard}),
+		wDashBoard: new kendo.View("#wDashBoard", {model: banhji.wDashBoard}),
 		customer: new kendo.Layout("#customer", {model: banhji.customer}),	
 		//Report
 		customerList : new kendo.Layout("#customerList", {model: banhji.customerList}),

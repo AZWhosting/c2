@@ -44,7 +44,7 @@ class Waterdash extends REST_Controller {
 		$data["results"] = array();
 		$data["count"] = 0;
 
-		$obj = new Branch(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_banhji');		
+		$obj = new Branch(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
 
 		//Sort
 		if(!empty($sort) && isset($sort)){					
@@ -64,22 +64,49 @@ class Waterdash extends REST_Controller {
 			}
 		}
 		$obj->where('type', 'w');
-		$obj->include_related('location', 'id');
+		// $obj->include_related('location', 'id');
 		$obj->include_related_count('location');
 		// $obj->include_related_count('location/contact');
 		$obj->get();
 		if($obj->exists()) {
 			foreach($obj as $value) {
-				$activeCustomer = new Customer(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_banhji');
-				$locations = [];
-				foreach()
-				// $activeCustomer->where('branch_id', $value->id)->count();
+				$location = new Location(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_banhji');
+				$location->include_related('contact', array('id', 'status'));
+				$location->where('branch_id', $value->id);
+
+				$location->get();
+				$activeCount = 0;
+				$inActiveCount = 0;
+				foreach($location as $loc) {
+					if($loc->contact_status == 1) {
+						$activeCount += 1;
+					} else {
+						$inActiveCount +=1;
+					}					
+				}
+				$line = new journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$line->where('contact_id', $value->contact_id);
+				$line->where('account_id', $value->deposit_account_id);
+				$line->get();
+				$deposit = 0;
+				foreach($line as $l) {
+					if($l->dr != 0.00) {
+						$deposit += $l->dr;
+					} else {
+						$deposit -= $l->cr;
+					}
+				}
+
+				// $contact = new Customer(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_banhji');
 				$data['results'][] = array(
 					'id' => $value->id,
 					'name'=>$value->name,
 					'blocCount' => $value->location_count,
-					't' => $value->location_id
-					// 'activeCustomer' => $activeCustomer->where('location_id', $value->id)->count()
+					'activeCustomer' => $activeCount,
+					'inActiveCustomer' => $inActiveCount,
+					'deposit' => 0,
+					'usage' => 0,
+					'sale' => 0
 				);
 			}
 			$this->response($data, 200);

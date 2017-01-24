@@ -1198,9 +1198,18 @@
 						<div class="span4">
 							<div class="box-generic well" style="height: 150px;">				
 								<table class="table table-borderless table-condensed cart_total">									
-									<tr>				
+									<tr>
 										<td style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></td>
-										<td><input class="k-textbox" data-bind="value: obj.number" style="width:100%;" /></td>
+										<td>
+											<input id="txtNumber" name="txtNumber" class="k-textbox" 
+													data-bind="value: obj.number,
+																events:{change:checkExistingNumber}" 
+													required data-required-msg="required" 
+													placeholder="eg. ABC00001" style="width: 84%; float: left; margin-right: 5px;"" />
+											<div style="padding-left: 0; width: 25px; float: left;">
+												<a class="glyphicons no-js qrcode" data-bind="click: generateNumber" title="Generate Number" style="float: left; margin: 2px 0 0 0 ;"><i></i></a>
+											</div>
+										</td>
 									</tr>
 									<tr>
 										<td><span data-bind="text: lang.lang.date"></span></td>
@@ -1578,7 +1587,7 @@
                    data-text-field="name"
                    data-value-field="id"
                    data-bind="value: contact_id,
-                              source: contactDS"
+                              source: contactList"
                    data-placeholder="Add Name.."                    
                    style="width: 100%" />
 		</td>
@@ -44028,7 +44037,7 @@
 	banhji.journal =  kendo.observable({
 		lang 				: langVM,
 		dataSource 			: dataStore(apiUrl + "transactions"),
-		deleteDS 			: dataStore(apiUrl + "transactions"),
+		txnDS 				: dataStore(apiUrl + "transactions"),
 		lineDS  			: dataStore(apiUrl + "journal_lines"),
 		recurringDS 		: dataStore(apiUrl + "transactions"),
 		recurringLineDS 	: dataStore(apiUrl + "journal_lines"),
@@ -44039,46 +44048,14 @@
 			  	{ field: "number", dir: "asc" }
 			]
 		}),
-		jobDS 				: banhji.source.jobDS,
-		contactDS 			: banhji.source.contactDS,				
+		jobDS 				: banhji.source.jobDS,			
 		currencyDS 			: banhji.source.currencyDS,
 		segmentItemDS 		: banhji.source.segmentItemDS,
 		attachmentDS	 	: dataStore(apiUrl + "attachments"),
-		txnTemplateDS		: new kendo.data.DataSource({
-			transport: {
-				read 	: {
-					url: apiUrl + "transaction_templates",
-					type: "GET",
-					headers: banhji.header,
-					dataType: 'json'
-				},				
-				parameterMap: function(options, operation) {
-					if(operation === 'read') {
-						return {
-							page: options.page,
-							limit: options.pageSize,
-							filter: options.filter,
-							sort: options.sort
-						};
-					} else {
-						return {models: kendo.stringify(options.models)};
-					}
-				}
-			},
-			schema 	: {
-				model: {
-					id: 'id'
-				},
-				data: 'results',
-				total: 'count'
-			},
-			filter: { field: "type", value:"Journal" },
-			batch: true,
-			serverFiltering: true,
-			serverSorting: true,
-			serverPaging: true,
-			page:1,
-			pageSize: 100
+		contactList 		: [],
+		txnTemplateDS 		: new kendo.data.DataSource({
+		  	data: banhji.source.txnTemplateList,
+		  	filter:{ field: "type", value: "Journal" }
 		}),
 		types 				: [
 			{id: 'Journal', name: 'General Journal'},
@@ -44117,6 +44094,8 @@
 		isValid 			: true,			
 		user_id				: banhji.source.user_id,
 		pageLoad 			: function(id){
+			this.loadContactList();
+
 			if(id){
 				this.set("isEdit", true);						
 				this.loadObj(id);
@@ -44125,6 +44104,27 @@
 					this.addEmpty();
 				}								
 			}
+		},
+		//Conatct
+		loadContactList 	: function(){
+			var raw = this.get("contactList");
+
+			//Clear array
+			if(raw.length>0){
+				raw.splice(0,raw.length);
+			}			
+
+			$.each(banhji.source.customerList, function(index, value){
+				raw.push(value);
+			});
+
+			// $.each(banhji.source.supplierList, function(index, value){
+			// 	raw.push(value);
+			// });
+
+			// $.each(banhji.source.employeelist, function(index, value){
+			// 	raw.push(value);
+			// });
 		},
 		//Upload
 		onSelect 			: function(e){			
@@ -44239,6 +44239,73 @@
 				}
 			}				
 		},
+		//Number      	
+		checkExistingNumber 	: function(){
+			var self = this, para = [], 
+			obj = this.get("obj");
+			
+			if(obj.number!==""){
+
+				if(obj.isNew()==false){
+					para.push({ field:"id", operator:"where_not_in", value: [obj.id] });
+				}
+				
+				para.push({ field:"number", value: obj.number });
+				para.push({ field:"type", value: obj.type });
+
+				this.txnDS.query({
+					filter: para,
+					page: 1,
+					pageSize: 1
+				}).then(function(e){
+					var view = self.txnDS.view();
+					
+					if(view.length>0){
+				 		self.set("notDuplicateNumber", false);
+					}else{
+						self.set("notDuplicateNumber", true);
+					}
+				});
+			}
+		},
+		generateNumber 			: function(){
+			var self = this, obj = this.get("obj"),
+			issueDate = new Date(obj.issued_date),
+			startDate = new Date(obj.issued_date),
+			endDate = new Date(obj.issued_date);
+
+			this.set("notDuplicateNumber", true);
+
+			startDate.setDate(1);
+			startDate.setMonth(0);//Set to January
+			endDate.setDate(31);
+			endDate.setMonth(11);//Set to November
+
+			this.txnDS.query({
+				filter:[
+					{ field:"type", value:obj.type },
+					{ field:"issued_date >=", value:kendo.toString(startDate, "yyyy-MM-dd") },
+					{ field:"issued_date <=", value:kendo.toString(endDate, "yyyy-MM-dd") }
+				],
+				sort: { field:"number", dir:"desc" },
+				page:1,
+				pageSize:1
+			}).then(function(){
+				var view = self.txnDS.view(),				
+				number = 0, str = "";
+
+				if(view.length>0){
+					str = view[0].number;
+					str = str.substring(str.length-4, str.length);
+					number = kendo.parseInt(str);
+				}
+				
+				number++;
+				str = banhji.source.getPrefixAbbr(obj.type) + kendo.toString(issueDate, "yy") + kendo.toString(issueDate, "MM") + kendo.toString(number, "00000");
+				
+				obj.set("number", str);
+			});
+		},
 		//Obj
 		loadObj 			: function(id){
 			var self = this, para = [];
@@ -44285,7 +44352,8 @@
 				transaction_template_id : 13,
 				user_id 			: this.get("user_id"), 	    			    		
 			   	type				: "Journal", //required
-			   	journal_type 		: "Journal",			   				   		   					   				   	
+			   	journal_type 		: "Journal",
+			   	number 				: "",			   				   		   					   				   	
 			   	amount				: 0,
 			   	rate				: 1,			   	
 			   	locale 				: banhji.locale,			   	
@@ -44310,7 +44378,8 @@
 
 			this.setRate();
 			this.addRow();
-			this.addRow();						
+			this.addRow();
+			this.generateNumber();						
 		},
 		addRow 				: function(){				
 			var obj = this.get("obj");
@@ -44483,22 +44552,26 @@
 			var self = this, obj = this.get("obj");
 			this.set("showConfirm",false);			
 			
-	        this.deleteDS.query({
+	        this.txnDS.query({
 	        	filter:[
 	        		{ field:"reference_id", value:obj.id },
 	        	],
 	        	page:1,
 	        	pageSize:1
 	        }).then(function(){
-	        	var view = self.deleteDS.view();
+	        	var view = self.txnDS.view();
 
 	        	if(view.length>0){
 	        		alert("Sorry, you can not delete it.");
 	        	}else{
 	        		obj.set("deleted", 1);
-			        self.dataSource.sync();
 
-			        window.history.back();
+			        self.dataSource.sync();
+					self.dataSource.bind("requestEnd", function(e){
+			        	if(e.type==="update"){
+			        		window.history.back();
+			        	}
+			        });
 	        	}
 	        });		    	    	
 		},
@@ -44775,16 +44848,16 @@
     	
         	//Dates
         	if(start && end){
-            	para.push({ field:"issued_date >=", value: kendo.toString(new Date(start), "yyyy-MM-dd") });
-            	para.push({ field:"issued_date <=", value: kendo.toString(new Date(end), "yyyy-MM-dd") });
+            	para.push({ field:"issued_date >=", operator:"where_related_transaction", value: kendo.toString(new Date(start), "yyyy-MM-dd") });
+            	para.push({ field:"issued_date <=", operator:"where_related_transaction", value: kendo.toString(new Date(end), "yyyy-MM-dd") });
 
             	displayDate = "From " + kendo.toString(new Date(start), "dd-MM-yyyy") + " To " + kendo.toString(new Date(end), "dd-MM-yyyy");
             }else if(start){
-            	para.push({ field:"issued_date", value: kendo.toString(new Date(start), "yyyy-MM-dd") });
+            	para.push({ field:"issued_date", operator:"where_related_transaction", value: kendo.toString(new Date(start), "yyyy-MM-dd") });
 
             	displayDate = "On " + kendo.toString(new Date(start), "dd-MM-yyyy");
             }else if(end){
-            	para.push({ field:"issued_date <=", value: kendo.toString(new Date(end), "yyyy-MM-dd") });
+            	para.push({ field:"issued_date <=", operator:"where_related_transaction", value: kendo.toString(new Date(end), "yyyy-MM-dd") });
 
             	displayDate = "As Of " + kendo.toString(new Date(end), "dd-MM-yyyy");
             }else{
@@ -44796,13 +44869,12 @@
             this.dataSource.query({
             	filter: para,
             	sort: [
-			  		{ field: "issued_date", dir: "desc" },
-			  		{ field: "id", dir: "desc" }
+			  		{ field: "issued_date", operator:"order_by_related_transaction", dir: "desc" },
+			  		{ field: "dr", dir: "desc" }
 			  	],
             	page: 1,
             	pageSize: 50
-            })
-            .then(function(e){
+            }).then(function(e){
             	var sumDR = 0, sumCR = 0;
             	self.exArray = [];
             	self.exArray.push({
@@ -45066,98 +45138,103 @@
             }
             this.set("displayDate", displayDate);
             
-            this.dataSource.filter(para);
-            this.dataSource.bind("requestEnd", function(e){				
-				if(e.type=="read"){
-					var response = e.response, balanceCal = 0;
-					self.exArray = [];
-					self.set("totalAmount", kendo.toString(response.totalAmount, "c", banhji.locale));
-					self.set("totalBalance", kendo.toString(response.totalBalance, "c", banhji.locale));
+            this.dataSource.query({
+            	filter: para,
+            	sort:[
+            		{ field:"account_type_id", operator:"where_related_account", dir:"desc" },
+            		{ field:"number", operator:"where_related_account", dir:"asc" },
+            		{ field:"issued_date", operator:"where_related_transaction", dir:"desc" },
+            		{ field:"number", operator:"where_related_transaction", dir:"asc" }
+            	]
+            }).then(function(){
+            	var response = self.dataSource.view(), balanceCal = 0;
+				self.exArray = [];
+				self.set("totalAmount", kendo.toString(response.totalAmount, "c", banhji.locale));
+				self.set("totalBalance", kendo.toString(response.totalBalance, "c", banhji.locale));
 
-					self.exArray.push({
-	            		cells: [
-	            			{ value: self.company.name, textAlign: "center", colSpan: 6 }
-	            		]
-	            	});
+				self.exArray.push({
+            		cells: [
+            			{ value: self.company.name, textAlign: "center", colSpan: 6 }
+            		]
+            	});
+            	self.exArray.push({
+            		cells: [
+            			{ value: "General Ledger",bold: true, fontSize: 20, textAlign: "center", colSpan: 6 }
+            		]
+            	});
+            	if(self.displayDate){
 	            	self.exArray.push({
 	            		cells: [
-	            			{ value: "General Ledger",bold: true, fontSize: 20, textAlign: "center", colSpan: 6 }
+	            			{ value: self.displayDate, textAlign: "center", colSpan: 6 }
 	            		]
 	            	});
-	            	if(self.displayDate){
-		            	self.exArray.push({
-		            		cells: [
-		            			{ value: self.displayDate, textAlign: "center", colSpan: 6 }
-		            		]
-		            	});
-		            }
-	            	self.exArray.push({
-	            		cells: [
-	            			{ value: "", colSpan: 6 }
-	            		]
-	            	});
-	            	self.exArray.push({ 
-	            		cells: [
-							{ value: "Type", background: "#496cad", color: "#ffffff" },
-							{ value: "Date", background: "#496cad", color: "#ffffff" },
-							{ value: "Reference No", background: "#496cad", color: "#ffffff" },
-							{ value: "Description", background: "#496cad", color: "#ffffff" },
-							{ value: "Amount", background: "#496cad", color: "#ffffff" },
-							{ value: "Balance", background: "#496cad", color: "#ffffff" }
-						]
-					});
-					for (var i = 0; i < response.results.length; i++){
-						self.exArray.push({
-					        cells: [
-					          	{ value: response.results[i].number + " " + response.results[i].name, bold: true, },
-					            { value: "" },
-					            { value: "" },
-					            { value: "" },
-					            { value: "" },
-					            { value: kendo.toString(response.results[i].balance_forward, "c2", banhji.locale), bold: true },
-					        ]
-					    });
-					    balanceCal = response.results[i].balance_forward;
-					    for(var j = 0; j < response.results[i].line.length; j++){
-					    	balanceCal += response.results[i].line[j].amount;
-				          	self.exArray.push({
-				          		cells: [
-				          	  		{ value: "    "+response.results[i].line[j].type },
-				              		{ value: kendo.toString(new Date(response.results[i].line[j].issued_date), "dd-MM-yyyy")  },
-				              		{ value: response.results[i].line[j].number },
-				              		{ value: response.results[i].line[j].memo },
-				              		{ value: kendo.toString(response.results[i].line[j].amount, "c", banhji.locale), format: "float"},
-				              		{ value: kendo.toString(balanceCal, "c", banhji.locale) , format: "float"}
-				            	]
-				          	});
-				        }
-				        self.exArray.push({
-					        cells: [
-					          	{ value: "Total " + response.results[i].number + " " + response.results[i].name, bold: true, },
-					            { value: "" },
-					            { value: "" },
-					            { value: "" },
-					            { value: "" },
-					            { value: kendo.toString(balanceCal, "c2", banhji.locale), bold: true, borderTop: { color: "#000000", size: 1 }, format: "float"  },
-					        ]
-					    });
-					    self.exArray.push({
-					        cells: [
-					          	{ value: "", colSpan: 6 }
-					        ]
-					    });
-					}
+	            }
+            	self.exArray.push({
+            		cells: [
+            			{ value: "", colSpan: 6 }
+            		]
+            	});
+            	self.exArray.push({ 
+            		cells: [
+						{ value: "Type", background: "#496cad", color: "#ffffff" },
+						{ value: "Date", background: "#496cad", color: "#ffffff" },
+						{ value: "Reference No", background: "#496cad", color: "#ffffff" },
+						{ value: "Description", background: "#496cad", color: "#ffffff" },
+						{ value: "Amount", background: "#496cad", color: "#ffffff" },
+						{ value: "Balance", background: "#496cad", color: "#ffffff" }
+					]
+				});
+				for (var i = 0; i < response.length; i++){
 					self.exArray.push({
 				        cells: [
-				          	{ value: "TOTAL", bold: true,fontSize: 16 },
+				          	{ value: response[i].number + " " + response[i].name, bold: true, },
 				            { value: "" },
 				            { value: "" },
 				            { value: "" },
-				            { value: kendo.toString(response.totalAmount, "c2", banhji.locale), bold: true, fontSize: 16 },
-				            { value: kendo.toString(response.totalBalance, "c2", banhji.locale), bold: true, fontSize: 16 },
+				            { value: "" },
+				            { value: kendo.toString(response[i].balance_forward, "c2", banhji.locale), bold: true },
+				        ]
+				    });
+				    balanceCal = response[i].balance_forward;
+				    for(var j = 0; j < response[i].line.length; j++){
+				    	balanceCal += response[i].line[j].amount;
+			          	self.exArray.push({
+			          		cells: [
+			          	  		{ value: "    "+response[i].line[j].type },
+			              		{ value: kendo.toString(new Date(response[i].line[j].issued_date), "dd-MM-yyyy")  },
+			              		{ value: response[i].line[j].number },
+			              		{ value: response[i].line[j].memo },
+			              		{ value: kendo.toString(response[i].line[j].amount, "c", banhji.locale), format: "float"},
+			              		{ value: kendo.toString(balanceCal, "c", banhji.locale) , format: "float"}
+			            	]
+			          	});
+			        }
+			        self.exArray.push({
+				        cells: [
+				          	{ value: "Total " + response[i].number + " " + response[i].name, bold: true, },
+				            { value: "" },
+				            { value: "" },
+				            { value: "" },
+				            { value: "" },
+				            { value: kendo.toString(balanceCal, "c2", banhji.locale), bold: true, borderTop: { color: "#000000", size: 1 }, format: "float"  },
+				        ]
+				    });
+				    self.exArray.push({
+				        cells: [
+				          	{ value: "", colSpan: 6 }
 				        ]
 				    });
 				}
+				self.exArray.push({
+			        cells: [
+			          	{ value: "TOTAL", bold: true,fontSize: 16 },
+			            { value: "" },
+			            { value: "" },
+			            { value: "" },
+			            { value: kendo.toString(response.totalAmount, "c2", banhji.locale), bold: true, fontSize: 16 },
+			            { value: kendo.toString(response.totalBalance, "c2", banhji.locale), bold: true, fontSize: 16 },
+			        ]
+			    });
 			});            
 		},
 		printGrid			: function() {
@@ -47550,9 +47627,14 @@
 		txnDS 				: dataStore(apiUrl + "transactions"),
 		recurringDS 		: dataStore(apiUrl + "transactions"),
 		recurringLineDS 	: dataStore(apiUrl + "account_lines"),
-		contactDS 			: banhji.source.employeeDS,
+		attachmentDS	 	: dataStore(apiUrl + "attachments"),
+		segmentItemDS 		: banhji.source.segmentItemDS,
 		currencyDS 			: banhji.source.currencyDS,
 		jobDS				: banhji.source.jobDS,
+		contactDS 			: new kendo.data.DataSource({
+		  	data: banhji.source.employeeList,
+		  	sort: { field:"number", dir:"asc" }
+		}),
 		paymentMethodDS		: banhji.source.paymentMethodDS,
 		accountDS  			: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
@@ -47572,8 +47654,6 @@
 		  	data: banhji.source.txnTemplateList,
 		  	filter: { field: "type", value:"Cash_Advance" }
 		}),
-		attachmentDS	 	: dataStore(apiUrl + "attachments"),
-		segmentItemDS 		: banhji.source.segmentItemDS,
 		amtDueColor 		: banhji.source.amtDueColor,
 	    confirmMessage 		: banhji.source.confirmMessage,
 		frequencyList 		: banhji.source.frequencyList,
@@ -48009,9 +48089,6 @@
 					//Save New
 					self.addEmpty();
 				}
-
-				//Refresh Supplier
-				self.contactDS.filter({ field:"parent_id", operator:"where_related_contact_type", value:3 });
 			});
 		},
 		cancel 				: function(){
@@ -48022,8 +48099,6 @@
 			this.dataSource.data([]);
 			this.lineDS.data([]);
 			this.attachmentDS.data([]);
-
-			this.contactDS.filter({ field:"parent_id", operator:"where_related_contact_type", value:3 });
 
 			banhji.userManagement.removeMultiTask("expense");
 		},
@@ -48218,12 +48293,18 @@
 		referenceLineDS  	: dataStore(apiUrl + "account_lines"),
 		recurringDS 		: dataStore(apiUrl + "transactions"),
 		recurringLineDS 	: dataStore(apiUrl + "account_lines"),
-		existingInvoiceDS 	: dataStore(apiUrl + "account_lines"),		
-		contactDS  			: banhji.source.employeeDS,
-		supplierDS  		: banhji.source.supplierDS,
+		existingInvoiceDS 	: dataStore(apiUrl + "account_lines"),
 		currencyDS  		: banhji.source.currencyDS,
 		currencyRateDS		: dataStore(apiUrl + "currencies/rate"),
-		jobDS				: banhji.source.jobDS,		
+		jobDS				: banhji.source.jobDS,
+		contactDS 			: new kendo.data.DataSource({
+		  	data: banhji.source.employeeList,
+		  	sort: { field:"number", dir:"asc" }
+		}),
+		supplierDS  			: new kendo.data.DataSource({
+		  	data: banhji.source.supplierList,
+			sort: { field:"number", dir:"asc" }
+		}),		
 		accountDS 			: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
 			filter:{
@@ -48400,20 +48481,10 @@
 		},
 		//Contact
 		loadContact 		: function(id){
-			var self = this;			
+			var self = this, obj = self.get("obj");
 
-			this.contactDS.query({    			
-				filter: { field:"id", value: id },
-				page: 1,
-				pageSize: 100
-			}).then(function(e){
-				var view = self.contactDS.view(),
-				obj = self.get("obj");
-		    	
-		    	obj.set("contact_id", view[0].id);			
-				
-				self.setRate();											
-			});
+			obj.set("contact_id", id);
+		    this.contactChanges();
 		},		
 		contactChanges 		: function(){
 			var obj = this.get("obj");
@@ -48803,9 +48874,6 @@
 					//Save New
 					self.addEmpty();
 				}
-
-				//Refresh Supplier
-				self.contactDS.filter({ field:"parent_id", operator:"where_related_contact_type", value:3 });
 			});
 		},
 		clear 				: function(){
@@ -48816,8 +48884,6 @@
 			this.dataSource.data([]);
 			this.lineDS.data([]);
 			this.attachmentDS.data([]);
-
-			this.contactDS.filter({ field:"parent_id", operator:"where_related_contact_type", value:3 });
 
 			banhji.userManagement.removeMultiTask("expense");
 		},
@@ -55569,7 +55635,10 @@
     banhji.vendorRecurring = kendo.observable({
 		lang 				: langVM,
 		dataSource 			: dataStore(apiUrl + "transactions"),
-		contactDS  			: banhji.source.supplierDS,
+		contactDS  			: new kendo.data.DataSource({
+		  	data: banhji.source.supplierList,
+			sort: { field:"number", dir:"asc" }
+		}),
 		contact_id 			: "",
 		pageLoad 			: function(){
 			this.search();
@@ -77162,10 +77231,17 @@
 					            	return $.trim(input.val()) !== "";
 					          	}
 					          	return true;
+					        },
+					        customRule2: function(input){
+					          	if (input.is("[name=txtNumber]")) {	
+						            return vm.get("notDuplicateNumber");
+						        }
+						        return true;
 					        }
 					    },
 					    messages: {
-					        customRule1: banhji.source.requiredMessage
+					        customRule1: banhji.source.requiredMessage,
+			        		customRule2: banhji.source.duplicateNumber
 					    }
 			        }).data("kendoValidator");
 
