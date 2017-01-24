@@ -45141,10 +45141,10 @@
             this.dataSource.query({
             	filter: para,
             	sort:[
-            		{ field:"account_type_id", operator:"where_related_account", dir:"desc" },
-            		{ field:"number", operator:"where_related_account", dir:"asc" },
-            		{ field:"issued_date", operator:"where_related_transaction", dir:"desc" },
-            		{ field:"number", operator:"where_related_transaction", dir:"asc" }
+            		{ field:"account_type_id", operator:"order_by_related_account", dir:"desc" },
+            		{ field:"number", operator:"order_by_related_account", dir:"asc" },
+            		{ field:"issued_date", operator:"order_by_related_transaction", dir:"desc" },
+            		{ field:"number", operator:"order_by_related_transaction", dir:"asc" }
             	]
             }).then(function(){
             	var response = self.dataSource.view(), balanceCal = 0;
