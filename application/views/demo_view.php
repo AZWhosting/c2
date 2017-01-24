@@ -44787,6 +44787,7 @@
 	banhji.journalReport =  kendo.observable({
 		lang 				: langVM,
 		dataSource 			: dataStore(apiUrl + "accounting_reports/journal"),
+		exdataSource 		: dataStore(apiUrl + "accounting_reports/journal"),
 		summaryDS 			: dataStore(apiUrl + "accounting_reports/journal_summary"),		
 		sortList			: banhji.source.sortList,
 		sorter 				: "all",
@@ -44848,16 +44849,16 @@
     	
         	//Dates
         	if(start && end){
-            	para.push({ field:"issued_date >=", operator:"where_related_transaction", value: kendo.toString(new Date(start), "yyyy-MM-dd") });
-            	para.push({ field:"issued_date <=", operator:"where_related_transaction", value: kendo.toString(new Date(end), "yyyy-MM-dd") });
+            	para.push({ field:"issued_date >=", value: kendo.toString(new Date(start), "yyyy-MM-dd") });
+            	para.push({ field:"issued_date <=", value: kendo.toString(new Date(end), "yyyy-MM-dd") });
 
             	displayDate = "From " + kendo.toString(new Date(start), "dd-MM-yyyy") + " To " + kendo.toString(new Date(end), "dd-MM-yyyy");
             }else if(start){
-            	para.push({ field:"issued_date", operator:"where_related_transaction", value: kendo.toString(new Date(start), "yyyy-MM-dd") });
+            	para.push({ field:"issued_date", value: kendo.toString(new Date(start), "yyyy-MM-dd") });
 
             	displayDate = "On " + kendo.toString(new Date(start), "dd-MM-yyyy");
             }else if(end){
-            	para.push({ field:"issued_date <=", operator:"where_related_transaction", value: kendo.toString(new Date(end), "yyyy-MM-dd") });
+            	para.push({ field:"issued_date <=", value: kendo.toString(new Date(end), "yyyy-MM-dd") });
 
             	displayDate = "As Of " + kendo.toString(new Date(end), "dd-MM-yyyy");
             }else{
@@ -44869,12 +44870,21 @@
             this.dataSource.query({
             	filter: para,
             	sort: [
-			  		{ field: "issued_date", operator:"order_by_related_transaction", dir: "desc" },
-			  		{ field: "dr", dir: "desc" }
+			  		{ field: "issued_date", dir: "desc" },
+			  		{ field: "id", dir: "desc" }
 			  	],
             	page: 1,
             	pageSize: 50
-            }).then(function(e){
+            });
+			
+			this.exdataSource.query({
+				filter: para,
+            	sort: [
+			  		{ field: "issued_date", dir: "desc" },
+			  		{ field: "id", dir: "desc" }
+			  	]
+			})
+			.then(function(e){
             	var sumDR = 0, sumCR = 0;
             	self.exArray = [];
             	self.exArray.push({
@@ -44910,30 +44920,30 @@
 						{ value: "Credits(CR)", background: "#496cad", color: "#ffffff" }
 					]}
 				);
-            	for (var i = 0; i < self.dataSource.data().length; i++){
+            	for (var i = 0; i < self.exdataSource.data().length; i++){
 		          self.exArray.push({
 		            cells: [
-		              { value: self.dataSource.data()[i].type, rowSpan: self.dataSource.data()[i].line.length, verticalAlign: "center" },
-		              { value: kendo.toString(new Date(self.dataSource.data()[i].issued_date), "dd-MMMM-yyyy"), rowSpan: self.dataSource.data()[i].line.length, verticalAlign: "center" },
-		              { value: self.dataSource.data()[i].number, rowSpan: self.dataSource.data()[i].line.length, verticalAlign: "center" },
-		              { value: self.dataSource.data()[i].memo, rowSpan: self.dataSource.data()[i].line.length, verticalAlign: "center" },
-		              { value: self.dataSource.data()[i].line[0].account },
-		              { value: self.dataSource.data()[i].line[0].dr ? kendo.toString(self.dataSource.data()[i].line[0].dr / self.dataSource.data()[i].line[0].rate, "c2", banhji.locale) : "",  },
-		              { value: self.dataSource.data()[i].line[0].cr ? kendo.toString(self.dataSource.data()[i].line[0].cr / self.dataSource.data()[i].line[0].rate, "c2", banhji.locale) : "" }
+		              { value: self.exdataSource.data()[i].type, rowSpan: self.exdataSource.data()[i].line.length, verticalAlign: "center" },
+		              { value: kendo.toString(new Date(self.exdataSource.data()[i].issued_date), "dd-MMMM-yyyy"), rowSpan: self.exdataSource.data()[i].line.length, verticalAlign: "center" },
+		              { value: self.exdataSource.data()[i].number, rowSpan: self.exdataSource.data()[i].line.length, verticalAlign: "center" },
+		              { value: self.exdataSource.data()[i].memo, rowSpan: self.exdataSource.data()[i].line.length, verticalAlign: "center" },
+		              { value: self.exdataSource.data()[i].line[0].account },
+		              { value: self.exdataSource.data()[i].line[0].dr ? kendo.toString(self.exdataSource.data()[i].line[0].dr / self.exdataSource.data()[i].line[0].rate, "c2", banhji.locale) : "",  },
+		              { value: self.exdataSource.data()[i].line[0].cr ? kendo.toString(self.exdataSource.data()[i].line[0].cr / self.exdataSource.data()[i].line[0].rate, "c2", banhji.locale) : "" }
 		            ]
 		          });
-		          sumDR = kendo.parseFloat(self.dataSource.data()[i].line[0].dr);
-		          sumCR = kendo.parseFloat(self.dataSource.data()[i].line[0].cr);
-		          for(var j = 1; j < self.dataSource.data()[i].line.length; j++){
+		          sumDR = kendo.parseFloat(self.exdataSource.data()[i].line[0].dr);
+		          sumCR = kendo.parseFloat(self.exdataSource.data()[i].line[0].cr);
+		          for(var j = 1; j < self.exdataSource.data()[i].line.length; j++){
 			          self.exArray.push({
 			          	cells: [
-			              { value: self.dataSource.data()[i].line[j].account },
-			              { value: self.dataSource.data()[i].line[j].dr ? kendo.toString(self.dataSource.data()[i].line[j].dr / self.dataSource.data()[i].line[j].rate, "c2", banhji.locale) : "" },
-			              { value: self.dataSource.data()[i].line[j].cr ? kendo.toString(self.dataSource.data()[i].line[j].cr / self.dataSource.data()[i].line[j].rate, "c2", banhji.locale) : "" }
+			              { value: self.exdataSource.data()[i].line[j].account },
+			              { value: self.exdataSource.data()[i].line[j].dr ? kendo.toString(self.exdataSource.data()[i].line[j].dr / self.exdataSource.data()[i].line[j].rate, "c2", banhji.locale) : "" },
+			              { value: self.exdataSource.data()[i].line[j].cr ? kendo.toString(self.exdataSource.data()[i].line[j].cr / self.exdataSource.data()[i].line[j].rate, "c2", banhji.locale) : "" }
 			            ]
 			          });
-			        sumDR += kendo.parseFloat(self.dataSource.data()[i].line[j].dr);
-			        sumCR += kendo.parseFloat(self.dataSource.data()[i].line[j].cr);
+			        sumDR += kendo.parseFloat(self.exdataSource.data()[i].line[j].dr);
+			        sumCR += kendo.parseFloat(self.exdataSource.data()[i].line[j].cr);
 			      }
 			      self.exArray.push({
 		          	cells: [
@@ -44947,8 +44957,8 @@
 		            ]
 		          });
 		        }
+		        console.log();
             });
-
             this.summaryDS.query({
             	filter: para,
             	sort: [
@@ -45138,103 +45148,98 @@
             }
             this.set("displayDate", displayDate);
             
-            this.dataSource.query({
-            	filter: para,
-            	sort:[
-            		{ field:"account_type_id", operator:"where_related_account", dir:"desc" },
-            		{ field:"number", operator:"where_related_account", dir:"asc" },
-            		{ field:"issued_date", operator:"where_related_transaction", dir:"desc" },
-            		{ field:"number", operator:"where_related_transaction", dir:"asc" }
-            	]
-            }).then(function(){
-            	var response = self.dataSource.view(), balanceCal = 0;
-				self.exArray = [];
-				self.set("totalAmount", kendo.toString(response.totalAmount, "c", banhji.locale));
-				self.set("totalBalance", kendo.toString(response.totalBalance, "c", banhji.locale));
+            this.dataSource.filter(para);
+            this.dataSource.bind("requestEnd", function(e){				
+				if(e.type=="read"){
+					var response = e.response, balanceCal = 0;
+					self.exArray = [];
+					self.set("totalAmount", kendo.toString(response.totalAmount, "c", banhji.locale));
+					self.set("totalBalance", kendo.toString(response.totalBalance, "c", banhji.locale));
 
-				self.exArray.push({
-            		cells: [
-            			{ value: self.company.name, textAlign: "center", colSpan: 6 }
-            		]
-            	});
-            	self.exArray.push({
-            		cells: [
-            			{ value: "General Ledger",bold: true, fontSize: 20, textAlign: "center", colSpan: 6 }
-            		]
-            	});
-            	if(self.displayDate){
-	            	self.exArray.push({
+					self.exArray.push({
 	            		cells: [
-	            			{ value: self.displayDate, textAlign: "center", colSpan: 6 }
+	            			{ value: self.company.name, textAlign: "center", colSpan: 6 }
 	            		]
 	            	});
-	            }
-            	self.exArray.push({
-            		cells: [
-            			{ value: "", colSpan: 6 }
-            		]
-            	});
-            	self.exArray.push({ 
-            		cells: [
-						{ value: "Type", background: "#496cad", color: "#ffffff" },
-						{ value: "Date", background: "#496cad", color: "#ffffff" },
-						{ value: "Reference No", background: "#496cad", color: "#ffffff" },
-						{ value: "Description", background: "#496cad", color: "#ffffff" },
-						{ value: "Amount", background: "#496cad", color: "#ffffff" },
-						{ value: "Balance", background: "#496cad", color: "#ffffff" }
-					]
-				});
-				for (var i = 0; i < response.length; i++){
+	            	self.exArray.push({
+	            		cells: [
+	            			{ value: "General Ledger",bold: true, fontSize: 20, textAlign: "center", colSpan: 6 }
+	            		]
+	            	});
+	            	if(self.displayDate){
+		            	self.exArray.push({
+		            		cells: [
+		            			{ value: self.displayDate, textAlign: "center", colSpan: 6 }
+		            		]
+		            	});
+		            }
+	            	self.exArray.push({
+	            		cells: [
+	            			{ value: "", colSpan: 6 }
+	            		]
+	            	});
+	            	self.exArray.push({ 
+	            		cells: [
+							{ value: "Type", background: "#496cad", color: "#ffffff" },
+							{ value: "Date", background: "#496cad", color: "#ffffff" },
+							{ value: "Reference No", background: "#496cad", color: "#ffffff" },
+							{ value: "Description", background: "#496cad", color: "#ffffff" },
+							{ value: "Amount", background: "#496cad", color: "#ffffff" },
+							{ value: "Balance", background: "#496cad", color: "#ffffff" }
+						]
+					});
+					for (var i = 0; i < response.results.length; i++){
+						self.exArray.push({
+					        cells: [
+					          	{ value: response.results[i].number + " " + response.results[i].name, bold: true, },
+					            { value: "" },
+					            { value: "" },
+					            { value: "" },
+					            { value: "" },
+					            { value: kendo.toString(response.results[i].balance_forward, "c2", banhji.locale), bold: true },
+					        ]
+					    });
+					    balanceCal = response.results[i].balance_forward;
+					    for(var j = 0; j < response.results[i].line.length; j++){
+					    	balanceCal += response.results[i].line[j].amount;
+				          	self.exArray.push({
+				          		cells: [
+				          	  		{ value: "    "+response.results[i].line[j].type },
+				              		{ value: kendo.toString(new Date(response.results[i].line[j].issued_date), "dd-MM-yyyy")  },
+				              		{ value: response.results[i].line[j].number },
+				              		{ value: response.results[i].line[j].memo },
+				              		{ value: kendo.toString(response.results[i].line[j].amount, "c", banhji.locale), format: "float"},
+				              		{ value: kendo.toString(balanceCal, "c", banhji.locale) , format: "float"}
+				            	]
+				          	});
+				        }
+				        self.exArray.push({
+					        cells: [
+					          	{ value: "Total " + response.results[i].number + " " + response.results[i].name, bold: true, },
+					            { value: "" },
+					            { value: "" },
+					            { value: "" },
+					            { value: "" },
+					            { value: kendo.toString(balanceCal, "c2", banhji.locale), bold: true, borderTop: { color: "#000000", size: 1 }, format: "float"  },
+					        ]
+					    });
+					    self.exArray.push({
+					        cells: [
+					          	{ value: "", colSpan: 6 }
+					        ]
+					    });
+					}
 					self.exArray.push({
 				        cells: [
-				          	{ value: response[i].number + " " + response[i].name, bold: true, },
+				          	{ value: "TOTAL", bold: true,fontSize: 16 },
 				            { value: "" },
 				            { value: "" },
 				            { value: "" },
-				            { value: "" },
-				            { value: kendo.toString(response[i].balance_forward, "c2", banhji.locale), bold: true },
-				        ]
-				    });
-				    balanceCal = response[i].balance_forward;
-				    for(var j = 0; j < response[i].line.length; j++){
-				    	balanceCal += response[i].line[j].amount;
-			          	self.exArray.push({
-			          		cells: [
-			          	  		{ value: "    "+response[i].line[j].type },
-			              		{ value: kendo.toString(new Date(response[i].line[j].issued_date), "dd-MM-yyyy")  },
-			              		{ value: response[i].line[j].number },
-			              		{ value: response[i].line[j].memo },
-			              		{ value: kendo.toString(response[i].line[j].amount, "c", banhji.locale), format: "float"},
-			              		{ value: kendo.toString(balanceCal, "c", banhji.locale) , format: "float"}
-			            	]
-			          	});
-			        }
-			        self.exArray.push({
-				        cells: [
-				          	{ value: "Total " + response[i].number + " " + response[i].name, bold: true, },
-				            { value: "" },
-				            { value: "" },
-				            { value: "" },
-				            { value: "" },
-				            { value: kendo.toString(balanceCal, "c2", banhji.locale), bold: true, borderTop: { color: "#000000", size: 1 }, format: "float"  },
-				        ]
-				    });
-				    self.exArray.push({
-				        cells: [
-				          	{ value: "", colSpan: 6 }
+				            { value: kendo.toString(response.totalAmount, "c2", banhji.locale), bold: true, fontSize: 16 },
+				            { value: kendo.toString(response.totalBalance, "c2", banhji.locale), bold: true, fontSize: 16 },
 				        ]
 				    });
 				}
-				self.exArray.push({
-			        cells: [
-			          	{ value: "TOTAL", bold: true,fontSize: 16 },
-			            { value: "" },
-			            { value: "" },
-			            { value: "" },
-			            { value: kendo.toString(response.totalAmount, "c2", banhji.locale), bold: true, fontSize: 16 },
-			            { value: kendo.toString(response.totalBalance, "c2", banhji.locale), bold: true, fontSize: 16 },
-			        ]
-			    });
 			});            
 		},
 		printGrid			: function() {
@@ -45412,6 +45417,29 @@
             this.dataSource.bind("requestEnd", function(e){				
 				if(e.type=="read"){
 					var response = e.response;
+					self.exArray = [];
+	            	self.exArray.push({
+	            		cells: [
+	            			{ value: self.company.name, textAlign: "center", colSpan: 3 }
+	            		]
+	            	});
+	            	self.exArray.push({
+	            		cells: [
+	            			{ value: "Statement of Profit or Loss",bold: true, fontSize: 20, textAlign: "center", colSpan: 3 }
+	            		]
+	            	});
+	            	if(self.displayDate){
+		            	self.exArray.push({
+		            		cells: [
+		            			{ value: self.displayDate, textAlign: "center", colSpan: 3 }
+		            		]
+		            	});
+		            }
+	            	self.exArray.push({
+	            		cells: [
+	            			{ value: "", colSpan: 3 }
+	            		]
+	            	});
 					for (var i = 0; i < response.results.length; i++){
 						
 					    if(response.results[i].line){
@@ -45871,6 +45899,7 @@
 			this.search();
 		},
 		exArray 			: [],
+		liArray 			: [],
 		search 				: function(){
 			var self = this, as_of = this.get("as_of");
 			this.set("totalLiabilityEquity", 0);
@@ -45891,7 +45920,30 @@
 
 						self.set("totalAsset", kendo.toString(response, "c", banhji.locale));
 
-						var response = e.response, totalCurrent = 0;
+						var response = e.response, totalCurrent = 0, tAsset = 0;
+						self.exArray = [];
+		            	self.exArray.push({
+		            		cells: [
+		            			{ value: self.company.name, textAlign: "center", colSpan: 3 }
+		            		]
+		            	});
+		            	self.exArray.push({
+		            		cells: [
+		            			{ value: "Statement of Financial Position",bold: true, fontSize: 20, textAlign: "center", colSpan: 3 }
+		            		]
+		            	});
+		            	if(self.displayDate){
+			            	self.exArray.push({
+			            		cells: [
+			            			{ value: self.displayDate, textAlign: "center", colSpan: 3 }
+			            		]
+			            	});
+			            }
+		            	self.exArray.push({
+		            		cells: [
+		            			{ value: "", colSpan: 3 }
+		            		]
+		            	});
 						self.exArray.push({
 					        cells: [
 					          	{ value: "ASSETS", bold: true, fontSize: 16 },
@@ -45924,6 +45976,7 @@
 								        ]
 								    });
 								    totalCurrent += kendo.parseFloat(response.results[i].typeLine[j].line[k].amount);
+							    	tAsset += kendo.parseFloat(response.results[i].typeLine[j].line[k].amount);
 							    }
 							    self.exArray.push({
 							        cells: [
@@ -45947,9 +46000,20 @@
 						            { value: kendo.toString(totalCurrent, "c", banhji.locale) , bold: true, borderTop: { color: "#000000", size: 1 } }
 						        ]
 						    });
-
+						    totalCurrent = 0;
 						}
-						console.log(self.exArray);
+						self.exArray.push({
+					        cells: [
+					          	{ value: "TOTAL ASSETS", bold: true, color: "#ffffff", background: "#1E4E78", fontSize: 20 },
+					            { value: "", background: "#1E4E78" },
+					            { value: kendo.toString(tAsset, "c", banhji.locale) , bold: true, color: "#ffffff", background: "#1E4E78", fontSize: 20 }
+					        ]
+					    });
+					    self.exArray.push({
+					        cells: [
+					          	{ value: "", colSpan: 3 },
+					        ]
+					    });
 					}
 				});
 
@@ -45967,6 +46031,79 @@
 						total += response;
 						self.set("totalLiabilityEquity", total);
 						self.set("totalLiability", kendo.toString(response, "c", banhji.locale));
+						//Excel Export
+
+						var response = e.response, totalCurrent = 0, tAsset = 0;
+						self.liArray = [];
+						self.liArray.push({
+					        cells: [
+					          	{ value: "LIABILITIES", bold: true, fontSize: 16 },
+					            { value: "" },
+					            { value: "" }
+					        ]
+					    });
+						for (var i = 0; i < response.results.length; i++){
+							self.liArray.push({
+						        cells: [
+						          	{ value: response.results[i].name, bold: true, italic: true },
+						            { value: "" },
+						            { value: "" }
+						        ]
+						    });
+						    for(var j = 0; j < response.results[i].typeLine.length; j++){
+						    	self.liArray.push({
+							        cells: [
+							          	{ value: response.results[i].typeLine[j].type, bold: true },
+							            { value: "" },
+							            { value: "" }
+							        ]
+							    });
+							    for(var k = 0; k < response.results[i].typeLine[j].line.length; k++){
+							    	self.liArray.push({
+								        cells: [
+								          	{ value: response.results[i].typeLine[j].line[k].number + " " + response.results[i].typeLine[j].line[k].name },
+								            { value: kendo.toString(response.results[i].typeLine[j].line[k].amount, "c", banhji.locale) },
+								            { value: "" }
+								        ]
+								    });
+								    totalCurrent += kendo.parseFloat(response.results[i].typeLine[j].line[k].amount);
+							    	tAsset += kendo.parseFloat(response.results[i].typeLine[j].line[k].amount);
+							    }
+							    self.liArray.push({
+							        cells: [
+							          	{ value: "Total " + response.results[i].typeLine[j].type, bold: true },
+							            { value: kendo.toString(totalCurrent, "c", banhji.locale), bold: true, borderTop: { color: "#000000", size: 1 } },
+							            { value: "" }
+							        ]
+							    });
+							    self.liArray.push({
+							        cells: [
+							          	{ value: "" },
+							            { value: "" },
+							            { value: "" }
+							        ]
+							    });
+						    }
+						    self.liArray.push({
+						        cells: [
+						          	{ value: "Total " + response.results[i].name, bold: true, italic: true },
+						            { value: "" },
+						            { value: kendo.toString(totalCurrent, "c", banhji.locale) , bold: true, borderTop: { color: "#000000", size: 1 } }
+						        ]
+						    });
+						}
+						self.liArray.push({
+					        cells: [
+					          	{ value: "TOTAL LIABILITIES", bold: true, color: "#000000", fontSize: 20 },
+					            { value: "" },
+					            { value: kendo.toString(totalCurrent, "c", banhji.locale) , bold: true, color: "#ffffff", fontSize: 20 }
+					        ]
+					    });
+					    self.liArray.push({
+					        cells: [
+					          	{ value: "", colSpan: 3 },
+					        ]
+					    });
 					}
 				});
 
@@ -46060,7 +46197,9 @@
 		    },2000);
 		},
 		ExportExcel 		: function(){
-			//console.log(this.exArray);
+			var row = this.exArray.concat(this.liArray);
+
+			console.log(row);
 	        var workbook = new kendo.ooxml.Workbook({
 	          sheets: [
 	            {
@@ -46070,7 +46209,7 @@
 	                { autoWidth: true }
 	              ],
 	              title: "Statement Financial Position",
-	              rows: this.exArray
+	              rows: row
 	            }
 	          ]
 	        });

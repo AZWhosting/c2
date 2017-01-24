@@ -71,18 +71,24 @@ class Waterdash extends REST_Controller {
 		if($obj->exists()) {
 			foreach($obj as $value) {
 				$location = new Location(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_banhji');
+				// $location->include_related('transaction', 'amount');
 				$location->include_related('contact', array('id', 'status'));
 				$location->where('branch_id', $value->id);
 
 				$location->get();
 				$activeCount = 0;
 				$inActiveCount = 0;
+
 				foreach($location as $loc) {
+					$trx = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_banhji');
+					$trx->select_sum('amount');
+					$trx->where('location_id', $loc->id)->get();
 					if($loc->contact_status == 1) {
 						$activeCount += 1;
 					} else {
-						$inActiveCount +=1;
-					}					
+						$inActiveCount +=1; 
+					}
+					// foreach($loc->transaction as)				
 				}
 				$line = new journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 				$line->where('contact_id', $value->contact_id);
