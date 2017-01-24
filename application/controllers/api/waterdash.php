@@ -78,11 +78,12 @@ class Waterdash extends REST_Controller {
 				$location->get();
 				$activeCount = 0;
 				$inActiveCount = 0;
-
+				$sale = 0;
 				foreach($location as $loc) {
 					$trx = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_banhji');
 					$trx->select_sum('amount');
 					$trx->where('location_id', $loc->id)->get();
+					$sale += $trx->amount;
 					if($loc->contact_status == 1) {
 						$activeCount += 1;
 					} else {
@@ -90,18 +91,18 @@ class Waterdash extends REST_Controller {
 					}
 					// foreach($loc->transaction as)				
 				}
-				$line = new journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				$line->where('contact_id', $value->contact_id);
-				$line->where('account_id', $value->deposit_account_id);
-				$line->get();
-				$deposit = 0;
-				foreach($line as $l) {
-					if($l->dr != 0.00) {
-						$deposit += $l->dr;
-					} else {
-						$deposit -= $l->cr;
-					}
-				}
+				// $line = new journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				// $line->where('contact_id', $value->contact_id);
+				// $line->where('account_id', $value->deposit_account_id);
+				// $line->get();
+				// $deposit = 0;
+				// foreach($line as $l) {
+				// 	if($l->dr != 0.00) {
+				// 		$deposit += $l->dr;
+				// 	} else {
+				// 		$deposit -= $l->cr;
+				// 	}
+				// }
 
 				// $contact = new Customer(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_banhji');
 				$data['results'][] = array(
@@ -112,7 +113,7 @@ class Waterdash extends REST_Controller {
 					'inActiveCustomer' => $inActiveCount,
 					'deposit' => 0,
 					'usage' => 0,
-					'sale' => 0
+					'sale' => $sale
 				);
 			}
 			$this->response($data, 200);
