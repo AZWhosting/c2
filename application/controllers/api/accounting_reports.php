@@ -652,10 +652,10 @@ class Accounting_reports extends REST_Controller {
 
 	//GET JOURNAL
 	function journal_get() {		
-		$filters 	= $this->get("filter")["filters"];		
-		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
-		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;
-		$sort 	 	= $this->get("sort");		
+		$filter 	= $this->get("filter");
+		$page 		= $this->get('page');
+		$limit 		= $this->get('limit');
+		$sort 	 	= $this->get("sort");
 		$data["results"] = [];
 		$data["count"] = 0;
 		$is_recurring = 0;
@@ -664,17 +664,25 @@ class Accounting_reports extends REST_Controller {
 		$obj = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
 		
 		//Sort
-		if(!empty($sort) && isset($sort)){					
+		if(!empty($sort) && isset($sort)){
 			foreach ($sort as $value) {
-				$obj->order_by_related("transaction", $value["field"], $value["dir"]);
+				if(isset($value['operator'])){
+					$obj->{$value['operator']}($value["field"], $value["dir"]);
+				}else{
+					$obj->order_by($value["field"], $value["dir"]);
+				}
 			}
 		}
 		
-		//Filter		
-		if(!empty($filters) && isset($filters)){			
-	    	foreach ($filters as $value) {
-	    		$obj->where_related("transaction", $value["field"], $value["value"]);
-			}									 			
+		//Filter
+		if(!empty($filter) && isset($filter)){
+	    	foreach ($filter['filters'] as $value) {
+	    		if(isset($value['operator'])) {
+					$obj->{$value['operator']}($value['field'], $value['value']);
+				} else {
+					$obj->where($value["field"], $value["value"]);
+				}
+			}
 		}
 		
 		$obj->include_related("transaction", array("type", "number", "issued_date", "memo","rate"));
@@ -687,8 +695,13 @@ class Accounting_reports extends REST_Controller {
 		$obj->order_by("dr", "desc");
 		
 		//Results
-		$obj->get_paged_iterated($page, $limit);
-		$data["count"] = $obj->paged->total_rows;
+		if($page && $limit){
+			$obj->get_paged_iterated($page, $limit);
+			$data["count"] = $obj->paged->total_rows;
+		}else{
+			$obj->get_iterated();
+			$data["count"] = $obj->result_count();
+		}
 		
 		if($obj->exists()){
 			$objList = [];
@@ -804,8 +817,8 @@ class Accounting_reports extends REST_Controller {
 	//GET GENERAL LEDGER
 	function general_ledger_get() {		
 		$filters 	= $this->get("filter");		
-		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
-		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;
+		$page 		= $this->get('page');		
+		$limit 		= $this->get('limit');
 		$sort 	 	= $this->get("sort");		
 		$data["results"] = [];
 		$data["count"] = 0;
@@ -818,9 +831,13 @@ class Accounting_reports extends REST_Controller {
 		$obj = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
 		
 		//Sort
-		if(!empty($sort) && isset($sort)){					
+		if(!empty($sort) && isset($sort)){
 			foreach ($sort as $value) {
-				$obj->order_by_related("transaction", $value["field"], $value["dir"]);
+				if(isset($value['operator'])){
+					$obj->{$value['operator']}($value["field"], $value["dir"]);
+				}else{
+					$obj->order_by($value["field"], $value["dir"]);
+				}
 			}
 		}
 		
@@ -841,13 +858,9 @@ class Accounting_reports extends REST_Controller {
 		$obj->include_related("account", array("number","name"));
 		$obj->include_related("account/account_type", array("name","nature"));
 		$obj->where_related("transaction", "is_journal", 1);
-		$obj->where_related("transaction", "is_recurring", 0);		
-		$obj->where_related("transaction", "deleted", 0);
-		$obj->where("deleted", 0);		
-		$obj->order_by_related("account", "account_type_id", "desc");
-		$obj->order_by_related("account", "number", "asc");
-		$obj->order_by_related("transaction", "issued_date", "asc");
-		$obj->order_by_related("transaction", "number", "asc");
+		$obj->where_related("transaction", "is_recurring <>", 1);		
+		$obj->where_related("transaction", "deleted <>", 1);
+		$obj->where("deleted <>", 1);
 		
 		//Results
 		$obj->get_iterated();		

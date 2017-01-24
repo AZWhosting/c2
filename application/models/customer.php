@@ -26,22 +26,22 @@ class Customer extends DataMapper {
 			'class' => 'account',
 			'other_field' => 'deposit'
 		),
-		'ebranch' => array(
-			'class' => 'branch',
-			'other_field' => 'ebranch'
-		),
-		'wbranch' => array(
-			'class' => 'branch',
-			'other_field' => 'wbranch'
-		),
+		// 'ebranch' => array(
+		// 	'class' => 'branch',
+		// 	'other_field' => 'ebranch'
+		// ),
+		// 'wbranch' => array(
+		// 	'class' => 'branch',
+		// 	'other_field' => 'wbranch'
+		// ),
 		'location' => array(
 			'class' => 'location',
-			'other_field' => 'customer'
+			'other_field' => 'contact'
 		),
-		'wlocation' => array(
-			'class' => 'location',
-			'other_field' => 'wlocation'
-		),
+		// 'wlocation' => array(
+		// 	'class' => 'location',
+		// 	'other_field' => 'wlocation'
+		// ),
 		'payroll' => array(
 			'class' => 'payroll',
 			'other_field' => 'contact'
@@ -53,38 +53,38 @@ class Customer extends DataMapper {
 	);
 
 	public $has_many = array(
-		'transaction' => array(
-			"class" => 'transaction',
-			"other_field" => "contact"
-		),
-		'journal_line' => array(
-			"class" => 'journal_line',
-			"other_field" => "contact"
-		),
-		'account_line' => array(
-			"class" => 'account_line',
-			"other_field" => "contact"
-		),
-		'item' => array(
-			'class' => 'item',
-			'other_field' => 'contact'
-		),
-		'item_contact' => array(
-			'class' => 'item_contact',
-			'other_field' => 'contact'
-		),
-		'contact_person' => array(
-			'class' => 'contact_person',
-			'other_field' => 'contact'
-		),
-		'note' => array(
-			'class' => 'note',
-			'other_field' => 'contact'
-		),
-		'job' => array(
-			'class' => 'job',
-			'other_field' => 'contact'
-		),
+		// 'transaction' => array(
+		// 	"class" => 'transaction',
+		// 	"other_field" => "contact"
+		// ),
+		// 'journal_line' => array(
+		// 	"class" => 'journal_line',
+		// 	"other_field" => "contact"
+		// ),
+		// 'account_line' => array(
+		// 	"class" => 'account_line',
+		// 	"other_field" => "contact"
+		// ),
+		// 'item' => array(
+		// 	'class' => 'item',
+		// 	'other_field' => 'contact'
+		// ),
+		// 'item_contact' => array(
+		// 	'class' => 'item_contact',
+		// 	'other_field' => 'contact'
+		// ),
+		// 'contact_person' => array(
+		// 	'class' => 'contact_person',
+		// 	'other_field' => 'contact'
+		// ),
+		// 'note' => array(
+		// 	'class' => 'note',
+		// 	'other_field' => 'contact'
+		// ),
+		// 'job' => array(
+		// 	'class' => 'job',
+		// 	'other_field' => 'contact'
+		// ),
 		'meter' => array(
 			'class' => 'meter',
 			'other_field' => 'contact'
@@ -99,7 +99,7 @@ class Customer extends DataMapper {
 		),
 		'contact_utility' => array(
 			'class' => 'contact_utility',
-			'other_field' => 'customer'
+			'other_field' => 'contact'
 		)
 	);
 

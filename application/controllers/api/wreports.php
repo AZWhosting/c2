@@ -1455,101 +1455,6 @@ class Wreports extends REST_Controller {
 		}
 	}
 
-	//GET BRANCH
-	// Water Customer Balance
-	// function branch_get() {		
-	// 	$filters 	= $this->get("filter")["filters"];		
-	// 	$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
-	// 	$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;								
-	// 	$sort 	 	= $this->get("sort");		
-	// 	$data["results"] = array();
-	// 	$data["count"] = 0;
-
-	// 	$obj = new Branch(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
-
-	// 	//Sort
-	// 	if(!empty($sort) && isset($sort)){					
-	// 		foreach ($sort as $value) {
-	// 			$obj->order_by($value["field"], $value["dir"]);
-	// 		}
-	// 	}
-
-	// 	//Filter
-	// 	if(!empty($filters) && isset($filters)){			
-	//     	foreach ($filters as $value) {
-	//     		if(!empty($value["operator"]) && isset($value["operator"])){
-	// 	    		if($value["operator"]=="where_in"){
-	// 	    			$obj->where_in($value["field"], $value["value"]);
-	// 	    		}else if($value["operator"]=="or_where_in"){
-	// 	    			$obj->or_where_in($value["field"], $value["value"]);
-	// 	    		}else if($value["operator"]=="where_not_in"){
-	// 	    			$obj->where_not_in($value["field"], $value["value"]);
-	// 	    		}else if($value["operator"]=="or_where_not_in"){
-	// 	    			$obj->or_where_not_in($value["field"], $value["value"]);
-	// 	    		}else if($value["operator"]=="like"){
-	// 	    			$obj->like($value["field"], $value["value"]);
-	// 	    		}else if($value["operator"]=="or_like"){
-	// 	    			$obj->or_like($value["field"], $value["value"]);
-	// 	    		}else if($value["operator"]=="not_like"){
-	// 	    			$obj->not_like($value["field"], $value["value"]);
-	// 	    		}else if($value["operator"]=="or_not_like"){
-	// 	    			$obj->or_not_like($value["field"], $value["value"]);
-	// 	    		}else if($value["operator"]=="startswith"){
-	// 	    			$obj->like($value["field"], $value["value"], "after");
-	// 	    		}else if($value["operator"]=="endswith"){
-	// 	    			$obj->like($value["field"], $value["value"], "before");
-	// 	    		}else if($value["operator"]=="contains"){
-	// 	    			$obj->like($value["field"], $value["value"], "both");
-	// 	    		}else if($value["operator"]=="or_where"){
-	// 	    			$obj->or_where($value["field"], $value["value"]);		    		
-	// 	    		}else{
-	// 	    			$obj->where($value["field"].' '.$value["operator"], $value["value"]);
-	// 	    		}
-	//     		}else{
-	//     			$obj->where($value["field"], $value["value"]);
-	//     		}
-	// 		}									 			
-	// 	}
-
-	// 	//Results
-	// 	$obj->get_paged_iterated($page, $limit);
-	// 	$data["count"] = $obj->paged->total_rows;		
-		
-	// 	if($obj->result_count()>0){
-	// 		foreach ($obj as $value) {				
-	// 	 		$data["results"][] = array(
-	// 	 			"id" 				=> $value->id,					
-	// 				"utility_id" 		=> $value->utility_id,
-	// 				"currency_id" 		=> $value->currency_id,
-	// 				// "province_id" 		=> $value->province_id,
-	// 				// "country_id" 		=> $value->country_id,
-	// 				"name" 				=> $value->name,
-	// 				"description" 		=> $value->description,
-	// 				"abbr" 				=> $value->abbr,
-	// 				"representative" 	=> $value->representative,
-	// 				"email" 			=> $value->email,
-	// 				"mobile" 			=> $value->mobile,
-	// 				"phone" 			=> $value->phone,
-	// 				"address" 			=> $value->address,						
-	// 				"expire_date" 		=> $value->expire_date,
-	// 				"max_customer" 		=> $value->max_customer,
-	// 				"operation_license" => $value->operation_license,
-	// 				"term_of_condition" => $value->term_of_condition,
-	// 				"image_url" 		=> $value->image_url,
-	// 				"status" 			=> $value->status,
-
-	// 				"currency"			=> $value->currency->get_raw()->result(),			
-	// 	 		);
-	// 		}
-	// 	}
-
-	// 	//Response Data		
-	// 	$this->response($data, 200);			
-	// }
-
-
-	// Checklist
-
 	
 	//Get Payment Detail
 	//@param: Number, customer, type, location, usage, amount
@@ -1584,8 +1489,8 @@ class Wreports extends REST_Controller {
 		$obj->include_related('contact', array('id','name', 'deposit_account_id'));
 		$obj->include_related('contact/contact_utility', array("abbr", "code"));
 		$obj->include_related('contact/contact_type', "name");
-		$obj->include_related('contact/location', "name");
-		$obj->include_related('contact/location/branch', "name");
+		$obj->include_related('location', "name");
+		$obj->include_related('location/branch', "name");
 		// $obj->where_related_transction('type', "Water_Invoice");
 		$obj->where('status', 1);
 		$obj->get_paged_iterated($page, $limit);
@@ -1605,12 +1510,12 @@ class Wreports extends REST_Controller {
 				}
 				$data["results"][]  = array(
 					'id' => $value->id,
-					'location_name' => $value->contact_location_name,
+					'location_name' => $value->location_name,
 					'contact_type_name' => $value->contact_contact_type_name,
 					'fullname' => $value->contact_name,
-					'branch_name' => $value->contact_location_branch_name,
+					'branch_name' => $value->location_branch_name,
 					'meter_number' => $value->number,
-					'customer_number' => $value->contact_customer_utility_abbr."-".$value->contact_customer_utility_code,
+					'customer_number' => $value->contact_contact_utility_abbr."-".$value->contact_contact_utility_code,
 					'deposit' => $deposit
 				);
 			}
@@ -1618,8 +1523,6 @@ class Wreports extends REST_Controller {
 		} else {
 			$this->response($data, 400);
 		}
-
-
 	}
 
 
@@ -1653,11 +1556,11 @@ class Wreports extends REST_Controller {
 			}									 			
 		}
 
-		// $obj->include_related('customer', array('id','name', 'ra_id'));
-		$obj->include_related('customer/contact_utility', array("abbr", "code"));
-		$obj->include_related('customer/contact_type', "name");
-		$obj->include_related('customer/location', "name");
-		$obj->include_related('customer/location/branch', "name");
+		$obj->include_related('contact', array('id','name', 'ra_id'));
+		$obj->include_related('contact/contact_utility', array("abbr", "code"));
+		$obj->include_related('contact/contact_type', "name");
+		$obj->include_related('location', "name");
+		$obj->include_related('location/branch', "name");
 		// $obj->where_related_transction('type', "Water_Invoice");
 		$obj->where('status', 1);
 		$obj->get_paged_iterated($page, $limit);
@@ -1677,13 +1580,36 @@ class Wreports extends REST_Controller {
 				}
 				$data["results"][]  = array(
 					'id' => $value->id,
-					'location_name' => $value->contact_location_name,
+					'location_name' => $value->location_name,
 					'contact_type_name' => $value->contact_contact_type_name,
-					// 'fullname' => $value->contact_name,
-					'branch_name' => $value->contact_location_branch_name,
+					'fullname' => $value->contact_name,
+					'branch_name' => $value->location_branch_name,
 					'meter_number' => $value->number,
-					'customer_number' => $value->contact_customer_utility_abbr."-".$value->contact_customer_utility_code,
+					'customer_number' => $value->contact_contact_utility_abbr."-".$value->contact_contact_utility_code,
 					'revenue' => $deposit
+				);
+			}
+			$this->response($data, 200);
+		} else {
+			$this->response($data, 400);
+		}
+	}
+
+	function test_get() {
+		$data = array();
+		$obj = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_banhji');
+
+		$obj->include_related('contact', array('id', 'name'));
+		$obj->include_related('location', array('id', 'name'));
+		$obj->where('activated', 1);
+		$obj->get();
+
+		if($obj->exists()) {
+			foreach($obj as $meter) {
+				$data['results'][] = array(
+					'id' => $meter->id,
+					'contact' => $meter->contact_id,
+					'location'=> array('id'=>$meter->location_id, 'name'=>$meter->location_name)
 				);
 			}
 			$this->response($data, 200);

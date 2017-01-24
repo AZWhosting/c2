@@ -954,36 +954,18 @@
 				#if(sub_of_id==0){#
 					<span class="strong" >#=number#</span>
 					-
-					<a class="strong" title='#=name#'>
-						#if(name.length>25){#
-							#=name.substring(0, 25)#...
-						#}else{#
-							#=name#
-						#}#
-					</a>
+					<span class="strong" >#=name#</span>
 				#}else{#
 					#if(banhji.accountingCenter.checkIsSub(sub_of_id)){#
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						<span>#=number#</span>
 						-
-						<a title='#=name#'>
-							#if(name.length>15){#
-								#=name.substring(0, 15)#...
-							#}else{#
-								#=name#
-							#}#
-						</a>
+						<span >#=name#</span>
 					#}else{#
 						&nbsp;&nbsp;
 						<span>#=number#</span>
 						-
-						<a title='#=name#'>
-							#if(name.length>25){#
-								#=name.substring(0, 25)#...
-							#}else{#
-								#=name#
-							#}#
-						</a>
+						<span >#=name#</span>
 					#}#
 				#}#				
 			</div>
@@ -1216,9 +1198,18 @@
 						<div class="span4">
 							<div class="box-generic well" style="height: 150px;">				
 								<table class="table table-borderless table-condensed cart_total">									
-									<tr>				
+									<tr>
 										<td style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></td>
-										<td><input class="k-textbox" data-bind="value: obj.number" style="width:100%;" /></td>
+										<td>
+											<input id="txtNumber" name="txtNumber" class="k-textbox" 
+													data-bind="value: obj.number,
+																events:{change:checkExistingNumber}" 
+													required data-required-msg="required" 
+													placeholder="eg. ABC00001" style="width: 84%; float: left; margin-right: 5px;"" />
+											<div style="padding-left: 0; width: 25px; float: left;">
+												<a class="glyphicons no-js qrcode" data-bind="click: generateNumber" title="Generate Number" style="float: left; margin: 2px 0 0 0 ;"><i></i></a>
+											</div>
+										</td>
 									</tr>
 									<tr>
 										<td><span data-bind="text: lang.lang.date"></span></td>
@@ -1596,7 +1587,7 @@
                    data-text-field="name"
                    data-value-field="id"
                    data-bind="value: contact_id,
-                              source: contactDS"
+                              source: contactList"
                    data-placeholder="Add Name.."                    
                    style="width: 100%" />
 		</td>
@@ -3377,7 +3368,7 @@
 								<div class="widget-head">
 									<ul>
 										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>
-										<li><a class="glyphicons print" data-bind="click: printGrid"><i></i>Print/Export</a></li>
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i>Print/Export</a></li>
 									</ul>
 								</div>
 							    <!-- // Tabs Heading END -->
@@ -3398,18 +3389,18 @@
 								        <!-- //GENERAL INFO END -->
 
 								        <!-- //ACCOUNTING -->
-								        <!--div class="tab-pane" id="tab-2">
+								        <div class="tab-pane" id="tab-2">
 								        	
-								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
-								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
+								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: printGrid" style="width: 80px;"><i></i> Print</span>
+								        	<!-- <span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
 								        		<i class="fa fa-file-pdf-o"></i>
 								        		Print as PDF
-								        	</span>
-								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: cancel" style="width: 80px;">
+								        	</span> -->
+								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: ExportExcel" style="width: 80px;">
 								        		<i class="fa fa-file-excel-o"></i>
 								        		Export to Excel
 								        	</span>
-							        	</div-->
+							        	</div>
 								        <!-- //ACCOUNTING END -->						       
 
 								       
@@ -12646,7 +12637,7 @@
 								<h3><a href="#/supplier_list">Supplier List</a></h3>								
 							</td>
 							<td >
-								<h3><a href="#/customer_recurring">Recurring Supplier Template List</a></h3>								
+								<h3><a href="#/vendor_recurring">Recurring Supplier Template List</a></h3>								
 							</td>						
 						</tr>
 						<tr>
@@ -12751,23 +12742,6 @@
 						</tr>
 					</table>
 				</div>
-				<!-- Graph -->
-				<div class="home-chart">
-					<div data-role="chart"
-		                 data-legend="{ position: 'top' }"
-		                 data-series-defaults="{ type: 'column' }"
-		                 data-tooltip='{
-		                    visible: true,
-		                    format: "{0}%",
-		                    template: "#= series.name #: #= kendo.toString(value, &#39;c&#39;, banhji.locale) #"
-		                 }'                 
-		                 data-series="[
-		                                 { field: 'sale', name: 'Monthly Sale', categoryField:'month', color: '#236DA4' },
-		                                 { field: 'order', name: 'Monthly Order', categoryField:'month', color: '#A6C9E3' }
-		                             ]"	                             
-		                 data-bind="source: graphDS"
-		                 style="height: 250px;" ></div>
-	            <!-- End Graph -->
 			</div>
 		</div>
 	</div>
@@ -12856,6 +12830,7 @@
 							</thead>
 							<tbody data-role="listview"
 										 data-bind="source: purchaseSummary.dataSource"
+										 data-auto-bind="false"
 										 data-template="expensesPurchaseSummarySupplier-temp"
 							></tbody>
 							<tfoot>
@@ -12969,20 +12944,20 @@
 						<thead>
 							<tr>
 								<th><span data-bind="text: lang.lang.type"></span></th>
-								<th><span data-bind="text: lang.lang.date"></span></th>
-								<th style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></th>
-								<th><span data-bind="text: lang.lang.memo"></span></th>
+								<th style="text-align: right;"><span data-bind="text: lang.lang.date"></span></th>
+								<th style="text-align: right;"><span data-bind="text: lang.lang.no_"></span></th>
 								<th><span data-bind="text: lang.lang.amount"></span></th>
 							</tr>
 						</thead>
 						<tbody data-role="listview"
 									 data-bind="source: supplierTransaction.dataSource"
+									   data-auto-bind="false"
 									 data-template="suppliersTransactionList-temp"
 						></tbody>
 						<tfoot>
 							<tr>
-								<th colspan="4"><span data-bind="text: lang.lang.total"></span></th>
-								<th colspan="4" data-bind="text: total"></th>
+								<th colspan="3"><span data-bind="text: lang.lang.total"></span></th>
+								<th colspan="3" data-bind="text: total"></th>
 							</tr>
 						</tfoot>
 					</table>
@@ -12998,15 +12973,14 @@
 		<td></td>
 		<td></td>
 		<td></td>
-		<td></td>
 	</tr>
 	# if (items.length) {#
 		#for(var i= 0; i <items.length; i++) {#
 			<tr>
 				# var myDate = kendo.toString(new Date(items[i].date),'dd-MM-yyyy'); #
 				<td>&nbsp;&nbsp;#=items[i].type#</td>
-				<td>#=myDate#</td>
-				<td  style="text-align: left;">		
+				<td style="text-align: right;">#=myDate#</td>
+				<td  style="text-align: right;">		
 					#if(items[i].type=="Cash_Purchase" || items[i].type=="Credit_Purchase"){#
 						<a href="\#/purchase/#=items[i].id#">#=items[i].number#</a>
 					#}else if(items[i].type=="Vendor_Deposit" && items[i].amount<0){#	
@@ -13015,7 +12989,6 @@
 						<a href="\#/#=items[i].type.toLowerCase()#/#=items[i].id#">#=items[i].number#</a>
 					#}#
 		        </td>
-				<td>#=items[i].memo#</td>
 				<td style="text-align: right;">#=kendo.toString(items[i].amount, 'c2')#</td>
 			</tr>
 
@@ -13103,8 +13076,8 @@
 						<thead>
 							<tr>
 								<th><span data-bind="text: lang.lang.type"></span></th>
-								<th><span data-bind="text: lang.lang.date"></span></th>
-								<th style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></th>							
+								<th  style="text-align: right;"><span data-bind="text: lang.lang.date"></span></th>
+								<th  style="text-align: right;"><span data-bind="text: lang.lang.no_"></span></th>							
 								<th><span data-bind="text: lang.lang.amount"></span></th>
 							</tr>
 						</thead>
@@ -13138,8 +13111,8 @@
 			<tr style="text-align: left;">
 				# var myDate = kendo.toString(new Date(items[i].date),'dd-MM-yyyy'); #
 				<td>&nbsp;&nbsp;#=items[i].type#</td>
-				<td>#=myDate#</td>
-				<td>		
+				<td  style="text-align: right;">#=myDate#</td>
+				<td  style="text-align: right;">		
 					#if(items[i].type=="Cash_Purchase" || items[i].type=="Credit_Purchase"){#
 						<a href="\#/purchase/#=items[i].id#">#=items[i].number#</a>
 					#}else{#
@@ -13240,19 +13213,19 @@
 									<th><span data-bind="text: lang.lang.type"></span></th>
 									<th><span data-bind="text: lang.lang.date"></span></th>
 									<th style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></th>
-									<th><span data-bind="text: lang.lang.memo"></span></th>
 									<th><span data-bind="text: lang.lang.amount"></span></th>
 
 								</tr>
 							</thead>
 							<tbody data-role="listview"
 										 data-bind="source: depositDetail.dataSource"
+										 data-auto-bind="false"
 										 data-template="depositDetailSupplier-temp"
 							></tbody>
 							<tfoot>
 								<tr>
-									<th colspan="4"><span>Total</span></th>
-									<th colspan="4"><span data-bind="text: total"></span></th>
+									<th colspan="3"><span>Total</span></th>
+									<th colspan="3"><span data-bind="text: total"></span></th>
 								</tr>
 							</tfoot>
 						</table>
@@ -13269,7 +13242,6 @@
 		<td></td>
 		<td></td>
 		<td></td>
-		<td></td>
 	</tr>
 	# if (items.length) {#
 		#for(var i= 0; i <items.length; i++) {#
@@ -13280,14 +13252,12 @@
 				<td>		
 					<a href="\#/#=items[i].type.toLowerCase()#/#=items[i].id#">#=items[i].number#</a>
 		        </td>
-				<td>#=items[i].memo#</td>
 				<td style="text-align: right;">#=kendo.toString(items[i].amount, 'c2')#</td>
 			</tr>
 
 		#}#
 	#}#
 	<tr style="font-weight: bold; color: black">
-		<td></td>
 		<td></td>
 		<td></td>
 		<td></td>
@@ -13386,15 +13356,16 @@
 							<thead>
 								<tr>
 									<th><span>ITEM</span></th>
-									<th><span>QTY</span></th>
-									<th><span>AMOUNT</span></th>
-									<th><span>AVG PRICE</span></th>
-									<th><span>AVG COST</span></th>
+									<th style="text-align: right;"><span>QTY</span></th>
+									<th style="text-align: right;"><span>AMOUNT</span></th>
+									<th style="text-align: right;"><span>AVG PRICE</span></th>
+									<th style="text-align: right;"><span>AVG COST</span></th>
 									<th><span>GROSS PROFIT MARGIN</span></th>								
 								</tr>
 							</thead>
 							<tbody data-role="listview"
 										 data-bind="source: summaryProduct.dataSource"
+										 data-auto-bind="false" 
 										 data-template="purchaseSummaryProductServices-temp"
 							></tbody>
 							<tfoot>
@@ -13412,9 +13383,9 @@
 </script>
 <script id="purchaseSummaryProductServices-temp" type="text/x-kendo-template" >
 	# kendo.culture(banhji.customerSale.locale); #
-	<tr style="font-weight: bold">
+	<tr>
 		<td>#=group#</td>
-		<td>#=qty#</td>
+		<td style="text-align: right;">#=qty#</td>
 		<td style="text-align: right;">#=kendo.toString(amount, 'c2')#</td>
 		<td style="text-align: right;">#=kendo.toString(avg_price, 'c')#</td>
 		<td style="text-align: right;">#=kendo.toString(cost, 'c2')#</td>			
@@ -13509,15 +13480,15 @@
 									<th><span>Customer</span></th>
 									<th><span>PO</span></th>
 									<th><span>Item</span></th>
-									<th><span>Memo</span></th>
-									<th><span>COST</span></th>								
-									<th><span>QTY</span></th>
-									<th><span>Price</span></th>	
+									<th style="text-align: right;"><span>COST</span></th>								
+									<th style="text-align: right;"><span>QTY</span></th>
+									<th style="text-align: right;"><span>Price</span></th>	
 									<th><span>Amount</span></th>							
 								</tr>
 							</thead>
 							<tbody data-role="listview"
 										 data-bind="source: purchaseOrder.dataSource"
+										 data-auto-bind="false" 
 										 data-template="openPurchaseOrder-temp"
 							></tbody>
 							<tfoot>
@@ -13535,11 +13506,10 @@
 </script>
 <script id="openPurchaseOrder-temp" type="text/x-kendo-template" >
 	# kendo.culture(banhji.customerSale.locale); #
-	<tr style="font-weight: bold">
+	<tr>
 		<td>#=customer#</td>
 		<td>#=PO#</td>
-		<td>#=item#</td>
-		<td>#=memo#</td>		
+		<td>#=item#</td>	
 		<td style="text-align: right;">#=kendo.toString(cost, 'c2')#</td>
 		<td style="text-align: right;">#=kendo.toString(qty, 'n')#</td>
 		<td style="text-align: right;">#=kendo.toString(price, 'c2')#</td>
@@ -13634,22 +13604,22 @@
 						<thead>
 							<tr>
 								<th><span data-bind="text: lang.lang.type"></span></th>
-								<th><span data-bind="text: lang.lang.date"></span></th>
-								<th style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></th>
-								<th><span data-bind="text: lang.lang.memo"></span></th>
-								<th><span data-bind="text: lang.lang.qty"></span></th>
-								<th><span data-bind="text: lang.lang.price"></span></th>
+								<th style="text-align: right;"><span data-bind="text: lang.lang.date"></span></th>
+								<th style="text-align: right;"><span data-bind="text: lang.lang.no_"></span></th>
+								<th style="text-align: right;"><span data-bind="text: lang.lang.qty"></span></th>
+								<th style="text-align: right;"><span data-bind="text: lang.lang.price"></span></th>
 								<th><span data-bind="text: lang.lang.amount"></span></th>
 							</tr>
 						</thead>
 						<tbody data-role="listview"
 									 data-bind="source: detailProduct.dataSource"
+									 data-auto-bind="false"
 									 data-template="purchaseDetailProductServices-temp"
 						></tbody>
 						<tfoot>
 							<tr>
 								<th colspan="3"><span data-bind="text: lang.lang.total"></span></th>
-								<th colspan="4" data-bind="text: total"></th>
+								<th colspan="3" data-bind="text: total"></th>
 							</tr>
 						</tfoot>
 					</table>
@@ -13668,22 +13638,20 @@
 		<td></td>
 		<td></td>
 		<td></td>
-		<td></td>
 	</tr>
 	# if (items.length) {#
 		#for(var i= 0; i <items.length; i++) {#
 			<tr>
 				# var myDate = kendo.toString(new Date(items[i].date),'dd-MM-yyyy'); #
 				<td>&nbsp;&nbsp;#=items[i].type#</td>
-				<td>#=myDate#</td>
-				<td>		
+				<td style="text-align: right;">#=myDate#</td>
+				<td style="text-align: right;">		
 					#if(items[i].type=="Cash_Purchase" || items[i].type=="Credit_Purchase"){#
 						<a href="\#/purchase/#=items[i].id#">#=items[i].number#</a>
 					#}else{#
 						<a href="\#/#=items[i].type.toLowerCase()#/#=items[i].id#">#=items[i].number#</a>
 					#}#
 		        </td>
-				<td>#=items[i].memo#</td>
 				<td style="text-align: right;">#=kendo.toString(items[i].qty, 'n0')#</td>
 				<td style="text-align: right;">#=items[i].price#</td>				
 				<td style="text-align: right;">#=kendo.toString(items[i].amount, 'c2')#</td>
@@ -13692,7 +13660,6 @@
 		#}#
 	#}#
 	<tr style="font-weight: bold; color: red">
-		<td></td>
 		<td></td>
 		<td></td>
 		<td></td>
@@ -13766,9 +13733,9 @@
 							<div class="span5">
 								<div class="total-customer">
 									<div class="span6">
-										<p>Total Suppliers</p>
-										<span data-bind="text: supplierCount"></span>
-									</div>	
+									<p>Open Credit Purchase</p>
+										<span data-bind="text: openPurchase"></span>
+									</div>
 									<div class="span6">
 										<p>Number Suppliers</p>
 										<span data-bind="text: count"></span>
@@ -13777,14 +13744,8 @@
 							</div>
 							<div class="span7">
 								<div class="total-customer">
-									<div class="span6">
-										<p>Total Suppliers Balance</p>
-										<span data-bind="text: total"></span>
-									</div>
-									<div class="span6">
-										<p>Open Credit Purchase</p>
-										<span data-bind="text: openPurchase"></span>
-									</div>
+									<p>Total Suppliers Balance</p>
+									<span data-bind="text: total"></span>									
 								</div>
 							</div>
 						</div>
@@ -13879,8 +13840,8 @@
 							<div class="span5">
 								<div class="total-customer">
 									<div class="span6">
-										<p>Total Supplier</p>
-										<span data-bind="text: supplierCount"></span>
+										<p>Opean Credit Purchase</p>
+										<span data-bind="text: openBill"></span>
 									</div>
 									<div class="span6">
 										<p>Number Supplier</p>
@@ -13890,14 +13851,11 @@
 							</div>
 							<div class="span7">
 								<div class="total-customer">
-									<div class="span6">
+		
 										<p>Total Supplier Balance</p>
 										<span data-bind="text: total"></span>
-									</div>
-									<div class="span6">
-										<p>Opean Credit Purchase</p>
-										<span data-bind="text: openBill"></span>
-									</div>
+						
+									
 								</div>
 							</div>
 						</div>
@@ -13907,19 +13865,19 @@
 							<tr>
 								<th><span data-bind="text: lang.lang.type"></span></th>
 								<th><span data-bind="text: lang.lang.date"></span></th>
-								<th style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></th>
-								<th><span data-bind="text: lang.lang.memo"></span></th>								
+								<th style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></th>					
 								<th><span data-bind="text: lang.lang.amount"></span></th>
 							</tr>
 						</thead>
 						<tbody data-role="listview"
 									 data-bind="source: balanceDetailSupplier.dataSource"
+									 data-auto-bind="false"
 									 data-template="suppliersBalanceDetail-temp"
 						></tbody>
 						<tfoot>
 							<tr>
-								<th colspan="4"><span data-bind="text: lang.lang.total"></span></th>
-								<th colspan="3"><span data-bind="text: total"></span></th>
+								<th colspan="3"><span data-bind="text: lang.lang.total"></span></th>
+								<th colspan="2"><span data-bind="text: total"></span></th>
 							</tr>
 						</tfoot>
 					</table>
@@ -13938,7 +13896,6 @@
 		<td></td>
 		<td></td>
 		<td></td>		
-		<td></td>
 	</tr>
 	# if (items.length) {#
 		#for(var i= 0; i <items.length; i++) {#
@@ -13948,8 +13905,7 @@
 				<td>#=myDate#</td>
 				<td>
 					<a href="\#/purchase/#=items[i].id#">#=items[i].number#</a>
-				</td>
-				<td>#=items[i].memo#</td>				
+				</td>			
 				<td style="text-align: right;">#=kendo.toString(items[i].amount, 'c2')#</td>
 			</tr>
 
@@ -14164,6 +14120,7 @@
 						</thead>
 						<tbody data-role="listview"
 									 data-bind="source: payablesAgingDetail.dataSource"
+									 data-auto-bind="false"
 									 data-template="payablesAgingDetail-temp"
 						></tbody>
 						<tfoot>
@@ -14269,25 +14226,19 @@
 							<div class="span5">
 								<div class="total-customer">
 									<div class="span6">
-										<p>Total Supplier</p>
-										<span data-bind="text: supplierCount"></span>
-									</div>
-									<div class="span6">
-										<p>Supplier Balance</p>
-										<span data-bind="text: total"></span>
-									</div>	
-								</div>
-							</div>
-							<div class="span7">
-								<div class="total-customer">
-									<div class="span6">
 										<p>Number of Supplier Balance</p>
 										<span data-bind="text: count"></span>
 									</div>
 									<div class="span6">
 										<p>Average Aging</p>
 										<span data-bind="text: aging"></span>
-									</div>
+									</div>	
+								</div>
+							</div>
+							<div class="span7">
+								<div class="total-customer">
+									<p>Supplier Balance</p>
+									<span data-bind="text: total"></span>
 								</div>
 							</div>
 						</div>
@@ -14297,18 +14248,18 @@
 								<tr>
 									<th><span>Type</span></th>
 									<th><span>Date</span></th>
-									<th><span>No</span></th>								
-									<th><span>Memo</span></th>								
+									<th><span>No</span></th>
 									<th><span>Balance</span></th>
 								</tr>
 							</thead>
 							<tbody data-role="listview"
 										 data-bind="source: listBillsPaid.dataSource"
+										 data-auto-bind="false"
 										 data-template="listBillsPaid-temp"
 							></tbody>
 							<tfoot>
 								<tr>
-									<th colspan="4"><span>Total</span></th>
+									<th colspan="3"><span>Total</span></th>
 									<th colspan="3"><span data-bind="text: total"></span></th>
 								</tr>
 							</tfoot>
@@ -14326,7 +14277,6 @@
 		<td></td>
 		<td></td>
 		<td></td>
-		<td></td>
 	</tr>
 	# if (items.length) {#
 		#for(var i= 0; i <items.length; i++) {#
@@ -14335,8 +14285,7 @@
 				<td>#=items[i].date#</td>
 				<td>
 					<a href="\#/purchase/#=items[i].id#">#=items[i].number#</a>
-				</td>				
-				<td>#=items[i].memo#</td>				
+				</td>							
 				<td style="text-align: right;">#=kendo.toString(items[i].amount, 'c2')#</td>
 			</tr>
 
@@ -14439,6 +14388,7 @@
 						</thead>
 						<tbody data-role="listview"
 									 data-bind="source: billPaymentList.dataSource"
+									 data-auto-bind="false"
 									 data-template="billPaymentList-temp"
 						></tbody>
 						<tfoot>
@@ -14740,7 +14690,7 @@
 </script>
 <script id="SupplierList-temp" type="text/x-kendo-template" >
 	# kendo.culture(banhji.customerSale.locale); #
-	<tr style="font-weight: bold">
+	<tr>
 		<td>#=number#</td>
 		<td>#=name#</td>
 		<td>#=contact_type#</td>
@@ -21044,12 +20994,12 @@
 						<table class="table table-borderless table-condensed ">
 							<thead>
 								<tr>
-									<th><span>Customer</span></th>
-									<th><span>Number Invoice</span></th>
-									<th><span>Total Sale</span></th>
+									<th ><span>Customer</span></th>
+									<th style="text-align: right;"><span>Number Invoice</span></th>
+									<th style="text-align: right;"><span>Total Sale</span></th>
 								</tr>
 							</thead>
-		            		<tbody data-role="listview"
+		            		<tbody  data-role="listview"
 		            				data-auto-bind="false"
 					                data-template="sale-summary-tmpl"
 					                data-bind="source: saleSummary.dataSource" >
@@ -21064,8 +21014,8 @@
 <script id="sale-summary-tmpl" type="text/x-kendo-template">
 	<tr>
 		<td>#=customer#</td>
-		<td align="left">#=invoice#</td>
-		<td align="right">#=kendo.toString(amount, 'c2')#</td>
+		<td style="text-align: right;">#=invoice#</td>
+		<td style="text-align: right;">#=kendo.toString(amount, 'c2')#</td>
 	</tr>
 </script>
 <script id="customerTransactionList" type="text/x-kendo-template">
@@ -21159,13 +21109,14 @@
 							<thead>
 								<tr>
 									<th><span>Type</span></th>
-									<th><span>Date</span></th>
-									<th><span>No</span></th>
-									<th><span>Amount</span></th>
+									<th style="text-align: right;"><span>Date</span></th>
+									<th style="text-align: right;"><span>No</span></th>
+									<th style="text-align: right;"><span>Amount</span></th>
 								</tr>
 							</thead>
 							<tbody data-role="listview"
 										 data-bind="source: customerTransaction.dataSource"
+										 data-auto-bind="false"
 										 data-template="customertransactionlist-temp"
 							></tbody>
 							<tfoot>
@@ -21194,8 +21145,8 @@
 			<tr>
 				# var myDate = kendo.toString(new Date(items[i].date),'dd-MM-yyyy'); #
 				<td>&nbsp;&nbsp;#=items[i].type#</td>
-				<td>#=myDate#</td>
-				<td>
+				<td style="text-align: right;">#=myDate#</td>
+				<td style="text-align: right;">
 					<a href="\#/#=items[i].type.toLowerCase()#/#=items[i].id#">#=items[i].number#</a>
 				</td>
 				<td style="text-align: right;">#=kendo.toString(items[i].amount, 'c2')#</td>
@@ -21284,11 +21235,11 @@
 							<thead>
 								<tr>
 									<th><span>Type</span></th>
-									<th><span>Date</span></th>
-									<th><span>No</span></th>
-									<th><span>Item/service</span></th>
-									<th><span>Qty</span></th>
-									<th><span>Price</span></th>
+									<th style="text-align: right;"><span>Date</span></th>
+									<th style="text-align: right;"><span>No</span></th>
+									<th style="text-align: right;"><span>Item/service</span></th>
+									<th style="text-align: right;"><span>Qty</span></th>
+									<th style="text-align: right;"><span>Price</span></th>
 									<th><span>Amount</span></th>
 								</tr>
 							</thead>
@@ -21327,14 +21278,14 @@
 			<tr>
 				# var myDate = kendo.toString(new Date(items[i].date),'dd-MM-yyyy'); #
 				<td>&nbsp;&nbsp;#=items[i].type#</td>
-				<td>#=myDate#</td>
-				<td>
+				<td style="text-align: right;">#=myDate#</td>
+				<td style="text-align: right;">
 					<a href="\#/#=items[i].type.toLowerCase()#/#=items[i].id#">#=items[i].number#</a>
 				</td>
-				<td>#=items[i].lines[x].name#</td>
-				<td>#=items[i].lines[x].quantity#</td>
-				<td align="right">#=kendo.toString(items[i].lines[x].price, 'c2')#</td>
-				<td align="right">#=kendo.toString(items[i].lines[x].amount, 'c2')#</td>
+				<td style="text-align: right;">#=items[i].lines[x].name#</td>
+				<td style="text-align: right;">#=items[i].lines[x].quantity#</td>
+				<td style="text-align: right;">#=kendo.toString(items[i].lines[x].price, 'c2')#</td>
+				<td style="text-align: right;">#=kendo.toString(items[i].lines[x].amount, 'c2')#</td>
 			</tr>
 			#}#
 		#}#
@@ -21449,6 +21400,7 @@
 							</thead>
 							<tbody data-role="listview"
 										 data-bind="source: summaryProductSale.dataSource"
+										 data-auto-bind="false"
 										 data-template="saleSummary-product-temp"
 							></tbody>
 							<tfoot>
@@ -21468,7 +21420,7 @@
 	# kendo.culture(banhji.customerSale.locale); #
 	<tr>
 		<td>#=group#</td>
-		<td>#=qty#</td>
+		<td style="text-align: right;">#=qty#</td>
 		<td style="text-align: right;">#=kendo.toString(amount, 'c2')#</td>
 		<td style="text-align: right;">#=kendo.toString(avg_price, 'c2')#</td>	
 		<td style="text-align: right;">#=kendo.toString(cost, 'c2')#</td>	
@@ -21554,20 +21506,20 @@
 							<thead>
 								<tr>
 									<th><span>Type</span></th>
-									<th><span>Date</span></th>
-									<th><span>No</span></th>
-									<th><span>Memo</span></th>
+									<th style="text-align: right;"><span>Date</span></th>
+									<th style="text-align: right;"><span>No</span></th>
 									<th><span>Amount</span></th>
 								</tr>
 							</thead>
 							<tbody data-role="listview"
 										 data-bind="source: depositDetail.dataSource"
+										 data-auto-bind="false"
 										 data-template="cusotmerDeposit-temp"
 							></tbody>
 							<tfoot>
 								<tr>
-									<th colspan="4">Total</th>
-									<th colspan="4"> <span data-bind="text: total"></span></th>
+									<th colspan="3">Total</th>
+									<th colspan="3"> <span data-bind="text: total"></span></th>
 								</tr>
 							</tfoot>
 						</table>
@@ -21584,7 +21536,6 @@
 		<td></td>
 		<td></td>
 		<td></td>
-		<td></td>
 	</tr>
 	# if (items.length > 0) {#
 		# var amount = 0;#
@@ -21592,17 +21543,15 @@
 			<tr>
 				# var myDate = kendo.toString(new Date(items[i].date),'dd-MM-yyyy'); #
 				<td>&nbsp;&nbsp;#=items[i].type#</td>
-				<td>#=myDate#</td>
-				<td>
+				<td style="text-align: right;">#=myDate#</td>
+				<td style="text-align: right;">
 					<a href="\#/#=items[i].type.toLowerCase()#/#=items[i].id#">#=items[i].number#</a>
 				</td>
-				<td>#=items[i].memo#</td>
 				<td style="text-align: right;">#=kendo.toString(items[i].amount, 'c2')#</td>
 			</tr>
 			# amount += kendo.parseFloat(items[i].amount);#
 		#}#
 		<tr style="font-weight: 700;">
-			<td></td>
 			<td></td>
 			<td></td>
 			<td></td>
@@ -21695,16 +21644,16 @@
 							<thead>
 								<tr>
 									<th><span>Type</span></th>
-									<th><span>INV Date</span></th>
-									<th><span>No</span></th>
-									<th><span>Memo</span></th>
-									<th><span>QTY</span></th>
-									<th><span>PRICE</span></th>
+									<th style="text-align: right;"><span>INV Date</span></th>
+									<th style="text-align: right;"><span>No</span></th>
+									<th style="text-align: right;"><span>QTY</span></th>
+									<th style="text-align: right;"><span>PRICE</span></th>
 									<th><span>AMOUNT</span></th>
 								</tr>
 							</thead>
 							<tbody data-role="listview"
 										 data-bind="source: detailCustomerSale.dataSource"
+										 data-auto-bind="false"
 										 data-template="productSale-temp"
 							></tbody>
 							<tfoot>
@@ -21729,18 +21678,16 @@
 		<td></td>
 		<td></td>
 		<td></td>
-		<td></td>
 	</tr>
 	# if (items.length) {#
 		#for(var i= 0; i <items.length; i++) {#
 			<tr>
 				# var myDate = kendo.toString(new Date(items[i].date),'dd-MM-yyyy'); #
 				<td>&nbsp;&nbsp;#=items[i].type#</td>
-				<td>#=myDate#</td>
-				<td>
+				<td style="text-align: right;">#=myDate#</td>
+				<td style="text-align: right;">
 					<a href="\#/#=items[i].type.toLowerCase()#/#=items[i].id#">#=items[i].number#</a>
 				</td>
-				<td>#=items[i].memo#</td>
 				<td style="text-align: right;">#=kendo.toString(items[i].qty, 'n0')#</td>
 				<td style="text-align: right;">#=kendo.toString(items[i].price, 'c2')#</td>
 				<td style="text-align: right;">#=kendo.toString(items[i].amount, 'c2')#</td>
@@ -21843,7 +21790,7 @@
 							<thead>
 								<tr>
 									<th><span>CUSTOMER NAME</span></th>
-									<th><span>NUM of TRANSACTIONS</span></th>
+									<th style="text-align: right;"><span>No.TRANSACTIONS</span></th>
 									<th><span>ACCOUNT RECEIVABLE BALANCE</span></th>
 								</tr>
 							</thead>
@@ -21868,7 +21815,7 @@
 <script id="balance-summary-tmpl" type="text/x-kendo-template">
 	<tr>
 		<td>#=customer#</td>
-		<td>#=invoice#</td>
+		<td style="text-align: right;">#=invoice#</td>
 		<td align="right">#=kendo.toString(amount, 'c2')#</td>
 	</tr>
 </script>	
@@ -21957,13 +21904,14 @@
 							<thead>
 								<tr>
 									<th><span>Type</span></th>
-									<th><span>Invoice Date</span></th>
-									<th><span>Invoice Num</span></th>								
+									<th style="text-align: right;"><span>Invoice Date</span></th>
+									<th style="text-align: right;"><span>Invoice Num</span></th>								
 									<th><span>Receivable Balance</span></th>
 								</tr>
 							</thead>
 							<tbody data-role="listview"
 										 data-bind="source: saleDetail.dataSource"
+										 data-auto-bind="false"
 										 data-template="customerBalanceDetail-temp"
 							></tbody>
 						</table>
@@ -21987,8 +21935,8 @@
 			<tr>
 				# var myDate = kendo.toString(new Date(items[i].date),'dd-MM-yyyy'); #
 				<td>&nbsp;&nbsp;#=items[i].type#</td>
-				<td>#=myDate#</td>
-				<td>
+				<td style="text-align: right;">#=myDate#</td>
+				<td style="text-align: right;">
 					<a href="\#/#=items[i].type.toLowerCase()#/#=items[i].id#">#=items[i].number#</a>
 				</td>			
 				<td style="text-align: right;">#=kendo.toString(items[i].amount, 'c2')#</td>
@@ -22098,6 +22046,7 @@
 							</thead>
 							<tbody data-role="listview"
 										 data-bind="source: receivableAging.dataSource"
+										  data-auto-bind="false"
 										 data-template="receivableAginglist-temp"
 							></tbody>
 							<tfoot>
@@ -22210,15 +22159,16 @@
 							<thead>
 								<tr>
 									<th><span>Type</span></th>
-									<th><span>Date</span></th>
-									<th><span>Due Date</span></th>
-									<th><span>No</span></th>
-									<th><span>Aging</span></th>
+									<th style="text-align: right;"><span>Date</span></th>
+									<th style="text-align: right;"><span>Due Date</span></th>
+									<th style="text-align: right;"><span>No</span></th>
+									<th style="text-align: right;"><span>Aging</span></th>
 									<th><span>Balance</span></th>
 								</tr>
 							</thead>
 							<tbody data-role="listview"
 										 data-bind="source: receivableDetail.dataSource"
+										  data-auto-bind="false"
 										 data-template="receivableAgingDetaillist-temp"
 							></tbody>
 							<tfoot>
@@ -22250,12 +22200,12 @@
 				# var myDate = kendo.toString(new Date(items[i].date),'dd-MM-yyyy'); #
 				# var dueDate = kendo.toString(new Date(items[i].dueDate),'dd-MM-yyyy'); #
 				<td>&nbsp;&nbsp;#=items[i].type#</td>
-				<td>#=myDate#</td>
-				<td>#=dueDate#</td>
-				<td>
+				<td style="text-align: right;">#=myDate#</td>
+				<td style="text-align: right;">#=dueDate#</td>
+				<td style="text-align: right;">
 					<a href="\#/#=items[i].type.toLowerCase()#/#=items[i].id#">#=items[i].number#</a>
 				</td>
-				<td>#=items[i].outstanding# days</td>
+				<td style="text-align: right;">#=items[i].outstanding# days</td>
 				<td style="text-align: right;">#=kendo.toString(items[i].amount, 'c2')#</td>
 			</tr>
 
@@ -22355,15 +22305,16 @@
 							<thead>
 								<tr>
 									<th><span>Type</span></th>
-									<th><span>Date</span></th>
-									<th><span>Name</span></th>
-									<th><span>No</span></th>
-									<th><span>Aging</span></th>									
+									<th style="text-align: right;"><span>Date</span></th>
+									<th style="text-align: right;"><span>Name</span></th>
+									<th style="text-align: right;"><span>No</span></th>
+									<th style="text-align: right;"><span>Aging</span></th>	
 									<th><span>Balance</span></th>
 								</tr>
 							</thead>
 							<tbody data-role="listview"
 										 data-bind="source: listInvoicesCollect.dataSource"
+										  data-auto-bind="false"
 										 data-template="listInvoicesCollectlist-temp"
 							></tbody>
 							<tfoot>
@@ -22387,12 +22338,12 @@
 			<tr>
 				# var myDate = kendo.toString(new Date(items[i].date),'dd-MM-yyyy'); #
 				<td>&nbsp;&nbsp;#=items[i].type#</td>
-				<td>#=myDate#</td>
-				<td>#=items[i].name#</td>
-				<td>
+				<td style="text-align: right;">#=myDate#</td>
+				<td style="text-align: right;">#=items[i].name#</td>
+				<td style="text-align: right;">
 					<a href="\#/#=items[i].type.toLowerCase()#/#=items[i].id#">#=items[i].number#</a>
 				</td>	
-				<td>#=items[i].agingkk# days</td>			
+				<td style="text-align: right;">#=items[i].agingkk# days</td>			
 				<td style="text-align: right;">#=kendo.toString(items[i].amount, 'c2')#</td>
 			</tr>
 		#}#
@@ -22493,6 +22444,7 @@
 							</thead>
 							<tbody data-role="listview"
 										 data-bind="source: collectReportDB.dataSource"
+										  data-auto-bind="false"
 										 data-template="collectReportlist-temp"
 							></tbody>
 							<tfoot>
@@ -22639,6 +22591,7 @@
 							</thead>
 							<tbody data-role="listview"
 										 data-bind="source: invoiceListDB.dataSource"
+										 data-auto-bind="false"
 										 data-template="invoice-list-temp"
 							></tbody>
 							<tfoot>
@@ -22742,7 +22695,7 @@
 </script>
 <script id="customerList-temp" type="text/x-kendo-template" >
 	# kendo.culture(banhji.customerSale.locale); #
-	<tr style="font-weight: bold">
+	<tr>
 		<td>#=number#</td>
 		<td data-bind="click: selectedRow">#=name#</td>
 		<td>#=contact_type#</td>
@@ -22921,11 +22874,10 @@
 							<thead>
 								<tr>
 									<th><span>Job</span></th>
-									<th><span>Name</span></th>
-									<th><span>Type</span></th>
-									<th><span>Date</span></th>
-									<th><span>No</span></th>
-									<th><span>Memo</span></th>
+									<th style="text-align: right;"><span>Name</span></th>
+									<th style="text-align: right;"><span>Type</span></th>
+									<th style="text-align: right;"><span>Date</span></th>
+									<th style="text-align: right;"><span>No</span></th>
 									<th><span>Amount</span></th>
 								</tr>
 							</thead>
@@ -22945,13 +22897,12 @@
 	<tr>
 		# var myDate = kendo.toString(new Date(date),'dd-MM-yyyy'); #
 		<td>#=job#</td>
-		<td>#=name#</td>
-		<td>#=type#</td>
-		<td>#=myDate#</td>
-		<td>
+		<td style="text-align: right;">#=name#</td>
+		<td style="text-align: right;">#=type#</td>
+		<td style="text-align: right;">#=myDate#</td>
+		<td style="text-align: right;">
 			<a href="\#/#=type.toLowerCase()#/#=id#">#=number#</a>
 		</td>	
-		<td align="right">#=memo#</td>
 		<td align="right">#=kendo.toString(amount, 'c2')#</td>
 	</tr>
 </script>
@@ -23045,11 +22996,11 @@
 							<thead>
 								<tr>
 									<th><span>Customer Name</span></th>
-									<th><span>Date</span></th>
-									<th><span>Sale Order</span></th>
-									<th><span>Item</span></th>									
-									<th><span>QTY</span></th>
-									<th><span>Price</span></th>
+									<th style="text-align: right;"><span>Date</span></th>
+									<th style="text-align: right;"><span>Sale Order</span></th>
+									<th style="text-align: right;"><span>Item</span></th>									
+									<th style="text-align: right;"><span>QTY</span></th>
+									<th style="text-align: right;"><span>Price</span></th>
 									<th><span>Balance</span></th>
 								</tr>
 							</thead>
@@ -23075,17 +23026,16 @@
 	<tr>
 		# var myDate = kendo.toString(new Date(date),'dd-MM-yyyy'); #
 		<td>#=customer#</td>
-		<td>#=myDate#</td>
-		<td>
+		<td style="text-align: right;">#=myDate#</td>
+		<td style="text-align: right;">
 			<a href="\#/#=type.toLowerCase()#/#=id#">#=SO#</a>
 		</td>
-		<td>#=item#</td>		
-		<td>#=kendo.toString(qty, 'n')#</td>
+		<td style="text-align: right;">#=item#</td>		
+		<td style="text-align: right;">#=kendo.toString(qty, 'n')#</td>
 		<td align="right">#=kendo.toString(price, 'c2')#</td>
 		<td align="right">#=kendo.toString(amount, 'c2')#</td>
 	</tr>
 </script>
-
 
 
 
@@ -31799,7 +31749,7 @@
 			        <div class="widget-body">
 
 				    	<div class="widget widget-heading-simple widget-body-simple">
-							<div class="widget-head" style="text-align: center; font-size: 25px; font-weight: bold;">
+							<div class="widget-head" style="text-align: center; font-size: 25px; font-weight: bold; height: auto !important;">
 								<span data-bind="text: obj.number"></span>
 								-
 								<span data-bind="text: obj.name"></span>
@@ -33862,19 +33812,19 @@
 				<a href="\#/#=line[i].type.toLowerCase()#/#=line[i].id#"><i></i> #=line[i].number#</a>
 			</td>		
 			<td align="right" style="color: black;">
-				#=kendo.toString(line[i].quantity, "n")#
+				#=kendo.toString(line[i].quantity, "n2")#
 			</td>
 			<td align="right" style="color: black;">
-				#=kendo.toString(line[i].cost, "c", banhji.locale)#
+				#=kendo.toString(line[i].cost, "c2", banhji.locale)#
 			</td>
 			<td align="right" style="color: black;">
-				#=kendo.toString(line[i].price, "c", banhji.locale)#
+				#=kendo.toString(line[i].price, "c2", banhji.locale)#
 			</td>
 			<td class="right" style="color: black;">
-				#=kendo.toString(onHand, "n")#
+				#=kendo.toString(onHand, "n2")#
 			</td>
 			<td class="right" style="color: black;">
-				#=kendo.toString(balance, "c", banhji.locale)#
+				#=kendo.toString(balance, "c2", banhji.locale)#
 			</td> 			
 	    </tr>    
     #}# 
@@ -44087,7 +44037,7 @@
 	banhji.journal =  kendo.observable({
 		lang 				: langVM,
 		dataSource 			: dataStore(apiUrl + "transactions"),
-		deleteDS 			: dataStore(apiUrl + "transactions"),
+		txnDS 				: dataStore(apiUrl + "transactions"),
 		lineDS  			: dataStore(apiUrl + "journal_lines"),
 		recurringDS 		: dataStore(apiUrl + "transactions"),
 		recurringLineDS 	: dataStore(apiUrl + "journal_lines"),
@@ -44098,46 +44048,14 @@
 			  	{ field: "number", dir: "asc" }
 			]
 		}),
-		jobDS 				: banhji.source.jobDS,
-		contactDS 			: banhji.source.contactDS,				
+		jobDS 				: banhji.source.jobDS,			
 		currencyDS 			: banhji.source.currencyDS,
 		segmentItemDS 		: banhji.source.segmentItemDS,
 		attachmentDS	 	: dataStore(apiUrl + "attachments"),
-		txnTemplateDS		: new kendo.data.DataSource({
-			transport: {
-				read 	: {
-					url: apiUrl + "transaction_templates",
-					type: "GET",
-					headers: banhji.header,
-					dataType: 'json'
-				},				
-				parameterMap: function(options, operation) {
-					if(operation === 'read') {
-						return {
-							page: options.page,
-							limit: options.pageSize,
-							filter: options.filter,
-							sort: options.sort
-						};
-					} else {
-						return {models: kendo.stringify(options.models)};
-					}
-				}
-			},
-			schema 	: {
-				model: {
-					id: 'id'
-				},
-				data: 'results',
-				total: 'count'
-			},
-			filter: { field: "type", value:"Journal" },
-			batch: true,
-			serverFiltering: true,
-			serverSorting: true,
-			serverPaging: true,
-			page:1,
-			pageSize: 100
+		contactList 		: [],
+		txnTemplateDS 		: new kendo.data.DataSource({
+		  	data: banhji.source.txnTemplateList,
+		  	filter:{ field: "type", value: "Journal" }
 		}),
 		types 				: [
 			{id: 'Journal', name: 'General Journal'},
@@ -44176,6 +44094,8 @@
 		isValid 			: true,			
 		user_id				: banhji.source.user_id,
 		pageLoad 			: function(id){
+			this.loadContactList();
+
 			if(id){
 				this.set("isEdit", true);						
 				this.loadObj(id);
@@ -44184,6 +44104,27 @@
 					this.addEmpty();
 				}								
 			}
+		},
+		//Conatct
+		loadContactList 	: function(){
+			var raw = this.get("contactList");
+
+			//Clear array
+			if(raw.length>0){
+				raw.splice(0,raw.length);
+			}			
+
+			$.each(banhji.source.customerList, function(index, value){
+				raw.push(value);
+			});
+
+			// $.each(banhji.source.supplierList, function(index, value){
+			// 	raw.push(value);
+			// });
+
+			// $.each(banhji.source.employeelist, function(index, value){
+			// 	raw.push(value);
+			// });
 		},
 		//Upload
 		onSelect 			: function(e){			
@@ -44298,6 +44239,73 @@
 				}
 			}				
 		},
+		//Number      	
+		checkExistingNumber 	: function(){
+			var self = this, para = [], 
+			obj = this.get("obj");
+			
+			if(obj.number!==""){
+
+				if(obj.isNew()==false){
+					para.push({ field:"id", operator:"where_not_in", value: [obj.id] });
+				}
+				
+				para.push({ field:"number", value: obj.number });
+				para.push({ field:"type", value: obj.type });
+
+				this.txnDS.query({
+					filter: para,
+					page: 1,
+					pageSize: 1
+				}).then(function(e){
+					var view = self.txnDS.view();
+					
+					if(view.length>0){
+				 		self.set("notDuplicateNumber", false);
+					}else{
+						self.set("notDuplicateNumber", true);
+					}
+				});
+			}
+		},
+		generateNumber 			: function(){
+			var self = this, obj = this.get("obj"),
+			issueDate = new Date(obj.issued_date),
+			startDate = new Date(obj.issued_date),
+			endDate = new Date(obj.issued_date);
+
+			this.set("notDuplicateNumber", true);
+
+			startDate.setDate(1);
+			startDate.setMonth(0);//Set to January
+			endDate.setDate(31);
+			endDate.setMonth(11);//Set to November
+
+			this.txnDS.query({
+				filter:[
+					{ field:"type", value:obj.type },
+					{ field:"issued_date >=", value:kendo.toString(startDate, "yyyy-MM-dd") },
+					{ field:"issued_date <=", value:kendo.toString(endDate, "yyyy-MM-dd") }
+				],
+				sort: { field:"number", dir:"desc" },
+				page:1,
+				pageSize:1
+			}).then(function(){
+				var view = self.txnDS.view(),				
+				number = 0, str = "";
+
+				if(view.length>0){
+					str = view[0].number;
+					str = str.substring(str.length-4, str.length);
+					number = kendo.parseInt(str);
+				}
+				
+				number++;
+				str = banhji.source.getPrefixAbbr(obj.type) + kendo.toString(issueDate, "yy") + kendo.toString(issueDate, "MM") + kendo.toString(number, "00000");
+				
+				obj.set("number", str);
+			});
+		},
 		//Obj
 		loadObj 			: function(id){
 			var self = this, para = [];
@@ -44344,7 +44352,8 @@
 				transaction_template_id : 13,
 				user_id 			: this.get("user_id"), 	    			    		
 			   	type				: "Journal", //required
-			   	journal_type 		: "Journal",			   				   		   					   				   	
+			   	journal_type 		: "Journal",
+			   	number 				: "",			   				   		   					   				   	
 			   	amount				: 0,
 			   	rate				: 1,			   	
 			   	locale 				: banhji.locale,			   	
@@ -44369,7 +44378,8 @@
 
 			this.setRate();
 			this.addRow();
-			this.addRow();						
+			this.addRow();
+			this.generateNumber();						
 		},
 		addRow 				: function(){				
 			var obj = this.get("obj");
@@ -44542,22 +44552,26 @@
 			var self = this, obj = this.get("obj");
 			this.set("showConfirm",false);			
 			
-	        this.deleteDS.query({
+	        this.txnDS.query({
 	        	filter:[
 	        		{ field:"reference_id", value:obj.id },
 	        	],
 	        	page:1,
 	        	pageSize:1
 	        }).then(function(){
-	        	var view = self.deleteDS.view();
+	        	var view = self.txnDS.view();
 
 	        	if(view.length>0){
 	        		alert("Sorry, you can not delete it.");
 	        	}else{
 	        		obj.set("deleted", 1);
-			        self.dataSource.sync();
 
-			        window.history.back();
+			        self.dataSource.sync();
+					self.dataSource.bind("requestEnd", function(e){
+			        	if(e.type==="update"){
+			        		window.history.back();
+			        	}
+			        });
 	        	}
 	        });		    	    	
 		},
@@ -44788,14 +44802,7 @@
 		dr 					: 0,
 		cr 					: 0,
 		totalTxn 			: 0,
-		exArray 			: [{ cells: [
-			{ value: "Type", background: "#496cad", color: "#ffffff" },
-			{ value: "Date", background: "#496cad", color: "#ffffff" },
-			{ value: "TXN#", background: "#496cad", color: "#ffffff" },
-			{ value: "TXN Description", background: "#496cad", color: "#ffffff" },
-			{ value: "Account", background: "#496cad", color: "#ffffff" },
-			{ value: "Debits(DR)", background: "#496cad", color: "#ffffff" },
-			{ value: "Credits(CR)", background: "#496cad", color: "#ffffff" }]}],
+		exArray 			: [],
 		pageLoad 			: function(){
 			this.search();
 		},
@@ -44841,42 +44848,75 @@
     	
         	//Dates
         	if(start && end){
-            	para.push({ field:"issued_date >=", value: kendo.toString(new Date(start), "yyyy-MM-dd") });
-            	para.push({ field:"issued_date <=", value: kendo.toString(new Date(end), "yyyy-MM-dd") });
+            	para.push({ field:"issued_date >=", operator:"where_related_transaction", value: kendo.toString(new Date(start), "yyyy-MM-dd") });
+            	para.push({ field:"issued_date <=", operator:"where_related_transaction", value: kendo.toString(new Date(end), "yyyy-MM-dd") });
 
             	displayDate = "From " + kendo.toString(new Date(start), "dd-MM-yyyy") + " To " + kendo.toString(new Date(end), "dd-MM-yyyy");
             }else if(start){
-            	para.push({ field:"issued_date", value: kendo.toString(new Date(start), "yyyy-MM-dd") });
+            	para.push({ field:"issued_date", operator:"where_related_transaction", value: kendo.toString(new Date(start), "yyyy-MM-dd") });
 
             	displayDate = "On " + kendo.toString(new Date(start), "dd-MM-yyyy");
             }else if(end){
-            	para.push({ field:"issued_date <=", value: kendo.toString(new Date(end), "yyyy-MM-dd") });
+            	para.push({ field:"issued_date <=", operator:"where_related_transaction", value: kendo.toString(new Date(end), "yyyy-MM-dd") });
 
             	displayDate = "As Of " + kendo.toString(new Date(end), "dd-MM-yyyy");
             }else{
             	
             }
-
+            
             this.set("displayDate", displayDate);
 
             this.dataSource.query({
             	filter: para,
             	sort: [
-			  		{ field: "issued_date", dir: "desc" },
-			  		{ field: "id", dir: "desc" }
+			  		{ field: "issued_date", operator:"order_by_related_transaction", dir: "desc" },
+			  		{ field: "dr", dir: "desc" }
 			  	],
             	page: 1,
             	pageSize: 50
-            })
-            .then(function(e){
+            }).then(function(e){
             	var sumDR = 0, sumCR = 0;
+            	self.exArray = [];
+            	self.exArray.push({
+            		cells: [
+            			{ value: self.company.name, textAlign: "center", colSpan: 7 }
+            		]
+            	});
+            	self.exArray.push({
+            		cells: [
+            			{ value: "JOURNAL ENTRY REPORTS",bold: true, fontSize: 20, textAlign: "center", colSpan: 7 }
+            		]
+            	});
+            	if(self.displayDate){
+	            	self.exArray.push({
+	            		cells: [
+	            			{ value: self.displayDate, textAlign: "center", colSpan: 7 }
+	            		]
+	            	});
+	            }
+            	self.exArray.push({
+            		cells: [
+            			{ value: "", colSpan: 7 }
+            		]
+            	});
+            	self.exArray.push(
+            		{ cells: [
+						{ value: "Type", background: "#496cad", color: "#ffffff" },
+						{ value: "Date", background: "#496cad", color: "#ffffff" },
+						{ value: "TXN#", background: "#496cad", color: "#ffffff" },
+						{ value: "TXN Description", background: "#496cad", color: "#ffffff" },
+						{ value: "Account", background: "#496cad", color: "#ffffff" },
+						{ value: "Debits(DR)", background: "#496cad", color: "#ffffff" },
+						{ value: "Credits(CR)", background: "#496cad", color: "#ffffff" }
+					]}
+				);
             	for (var i = 0; i < self.dataSource.data().length; i++){
 		          self.exArray.push({
 		            cells: [
-		              { value: self.dataSource.data()[i].type },
-		              { value: kendo.toString(new Date(self.dataSource.data()[i].issued_date), "dd-MMMM-yyyy") },
-		              { value: self.dataSource.data()[i].number },
-		              { value: self.dataSource.data()[i].memo },
+		              { value: self.dataSource.data()[i].type, rowSpan: self.dataSource.data()[i].line.length, verticalAlign: "center" },
+		              { value: kendo.toString(new Date(self.dataSource.data()[i].issued_date), "dd-MMMM-yyyy"), rowSpan: self.dataSource.data()[i].line.length, verticalAlign: "center" },
+		              { value: self.dataSource.data()[i].number, rowSpan: self.dataSource.data()[i].line.length, verticalAlign: "center" },
+		              { value: self.dataSource.data()[i].memo, rowSpan: self.dataSource.data()[i].line.length, verticalAlign: "center" },
 		              { value: self.dataSource.data()[i].line[0].account },
 		              { value: self.dataSource.data()[i].line[0].dr ? kendo.toString(self.dataSource.data()[i].line[0].dr / self.dataSource.data()[i].line[0].rate, "c2", banhji.locale) : "",  },
 		              { value: self.dataSource.data()[i].line[0].cr ? kendo.toString(self.dataSource.data()[i].line[0].cr / self.dataSource.data()[i].line[0].rate, "c2", banhji.locale) : "" }
@@ -44887,10 +44927,6 @@
 		          for(var j = 1; j < self.dataSource.data()[i].line.length; j++){
 			          self.exArray.push({
 			          	cells: [
-			          	  { value: "" },
-			              { value: "" },
-			              { value: "" },
-			              { value: "" },
 			              { value: self.dataSource.data()[i].line[j].account },
 			              { value: self.dataSource.data()[i].line[j].dr ? kendo.toString(self.dataSource.data()[i].line[j].dr / self.dataSource.data()[i].line[j].rate, "c2", banhji.locale) : "" },
 			              { value: self.dataSource.data()[i].line[j].cr ? kendo.toString(self.dataSource.data()[i].line[j].cr / self.dataSource.data()[i].line[j].rate, "c2", banhji.locale) : "" }
@@ -45039,14 +45075,7 @@
 		displayDate 		: "",
 		totalAmount 		: 0,
 		totalBalance 		: 0,
-		exArray 			: [{ cells: [
-			{ value: "Type", background: "#496cad", color: "#ffffff" },
-			{ value: "Date", background: "#496cad", color: "#ffffff" },
-			{ value: "Reference No", background: "#496cad", color: "#ffffff" },
-			{ value: "Description", background: "#496cad", color: "#ffffff" },
-			{ value: "Amount", background: "#496cad", color: "#ffffff" },
-			{ value: "Balance", background: "#496cad", color: "#ffffff" }
-		]}],
+		exArray 			: [],
 		pageLoad 			: function(){
 			this.search();
 		},
@@ -45107,63 +45136,105 @@
             }else{
             	
             }
-
             this.set("displayDate", displayDate);
+            
+            this.dataSource.query({
+            	filter: para,
+            	sort:[
+            		{ field:"account_type_id", operator:"where_related_account", dir:"desc" },
+            		{ field:"number", operator:"where_related_account", dir:"asc" },
+            		{ field:"issued_date", operator:"where_related_transaction", dir:"desc" },
+            		{ field:"number", operator:"where_related_transaction", dir:"asc" }
+            	]
+            }).then(function(){
+            	var response = self.dataSource.view(), balanceCal = 0;
+				self.exArray = [];
+				self.set("totalAmount", kendo.toString(response.totalAmount, "c", banhji.locale));
+				self.set("totalBalance", kendo.toString(response.totalBalance, "c", banhji.locale));
 
-            this.dataSource.filter(para);
-            this.dataSource.bind("requestEnd", function(e){				
-				if(e.type=="read"){
-					var response = e.response, balanceCal = 0;
-
-					self.set("totalAmount", kendo.toString(response.totalAmount, "c", banhji.locale));
-					self.set("totalBalance", kendo.toString(response.totalBalance, "c", banhji.locale));
-					for (var i = 0; i < response.results.length; i++){
-						self.exArray.push({
-					        cells: [
-					          	{ value: response.results[i].number + " " + response.results[i].name, bold: true, },
-					            { value: "" },
-					            { value: "" },
-					            { value: "" },
-					            { value: "" },
-					            { value: kendo.toString(response.results[i].balance_forward, "c2", banhji.locale), bold: true },
-					        ]
-					    });
-					    balanceCal = response.results[i].balance_forward;
-					    for(var j = 0; j < response.results[i].line.length; j++){
-					    	balanceCal += response.results[i].line[j].amount;
-				          	self.exArray.push({
-				          		cells: [
-				          	  		{ value: "'    "+response.results[i].line[j].type },
-				              		{ value: kendo.toString(new Date(response.results[i].line[j].issued_date), "dd-MM-yyyy")  },
-				              		{ value: response.results[i].line[j].number },
-				              		{ value: response.results[i].line[j].memo },
-				              		{ value: kendo.toString(response.results[i].line[j].amount, "c", banhji.locale)},
-				              		{ value: kendo.toString(balanceCal, "c", banhji.locale)}
-				            	]
-				          	});
-				        }
-				        self.exArray.push({
-					        cells: [
-					          	{ value: "Total " + response.results[i].number + " " + response.results[i].name, bold: true, },
-					            { value: "" },
-					            { value: "" },
-					            { value: "" },
-					            { value: "" },
-					            { value: kendo.toString(balanceCal, "c2", banhji.locale), bold: true, borderTop: { color: "#000000", size: 1 }  },
-					        ]
-					    });
-					}
+				self.exArray.push({
+            		cells: [
+            			{ value: self.company.name, textAlign: "center", colSpan: 6 }
+            		]
+            	});
+            	self.exArray.push({
+            		cells: [
+            			{ value: "General Ledger",bold: true, fontSize: 20, textAlign: "center", colSpan: 6 }
+            		]
+            	});
+            	if(self.displayDate){
+	            	self.exArray.push({
+	            		cells: [
+	            			{ value: self.displayDate, textAlign: "center", colSpan: 6 }
+	            		]
+	            	});
+	            }
+            	self.exArray.push({
+            		cells: [
+            			{ value: "", colSpan: 6 }
+            		]
+            	});
+            	self.exArray.push({ 
+            		cells: [
+						{ value: "Type", background: "#496cad", color: "#ffffff" },
+						{ value: "Date", background: "#496cad", color: "#ffffff" },
+						{ value: "Reference No", background: "#496cad", color: "#ffffff" },
+						{ value: "Description", background: "#496cad", color: "#ffffff" },
+						{ value: "Amount", background: "#496cad", color: "#ffffff" },
+						{ value: "Balance", background: "#496cad", color: "#ffffff" }
+					]
+				});
+				for (var i = 0; i < response.length; i++){
 					self.exArray.push({
 				        cells: [
-				          	{ value: "TOTAL", bold: true,fontSize: 16 },
+				          	{ value: response[i].number + " " + response[i].name, bold: true, },
 				            { value: "" },
 				            { value: "" },
 				            { value: "" },
-				            { value: kendo.toString(response.totalAmount, "c2", banhji.locale), bold: true, fontSize: 16 },
-				            { value: kendo.toString(response.totalBalance, "c2", banhji.locale), bold: true, fontSize: 16 },
+				            { value: "" },
+				            { value: kendo.toString(response[i].balance_forward, "c2", banhji.locale), bold: true },
+				        ]
+				    });
+				    balanceCal = response[i].balance_forward;
+				    for(var j = 0; j < response[i].line.length; j++){
+				    	balanceCal += response[i].line[j].amount;
+			          	self.exArray.push({
+			          		cells: [
+			          	  		{ value: "    "+response[i].line[j].type },
+			              		{ value: kendo.toString(new Date(response[i].line[j].issued_date), "dd-MM-yyyy")  },
+			              		{ value: response[i].line[j].number },
+			              		{ value: response[i].line[j].memo },
+			              		{ value: kendo.toString(response[i].line[j].amount, "c", banhji.locale), format: "float"},
+			              		{ value: kendo.toString(balanceCal, "c", banhji.locale) , format: "float"}
+			            	]
+			          	});
+			        }
+			        self.exArray.push({
+				        cells: [
+				          	{ value: "Total " + response[i].number + " " + response[i].name, bold: true, },
+				            { value: "" },
+				            { value: "" },
+				            { value: "" },
+				            { value: "" },
+				            { value: kendo.toString(balanceCal, "c2", banhji.locale), bold: true, borderTop: { color: "#000000", size: 1 }, format: "float"  },
+				        ]
+				    });
+				    self.exArray.push({
+				        cells: [
+				          	{ value: "", colSpan: 6 }
 				        ]
 				    });
 				}
+				self.exArray.push({
+			        cells: [
+			          	{ value: "TOTAL", bold: true,fontSize: 16 },
+			            { value: "" },
+			            { value: "" },
+			            { value: "" },
+			            { value: kendo.toString(response.totalAmount, "c2", banhji.locale), bold: true, fontSize: 16 },
+			            { value: kendo.toString(response.totalBalance, "c2", banhji.locale), bold: true, fontSize: 16 },
+			        ]
+			    });
 			});            
 		},
 		printGrid			: function() {
@@ -45799,6 +45870,7 @@
 		pageLoad 			: function(){
 			this.search();
 		},
+		exArray 			: [],
 		search 				: function(){
 			var self = this, as_of = this.get("as_of");
 			this.set("totalLiabilityEquity", 0);
@@ -45818,6 +45890,66 @@
 						var response = e.response.totalAmount;
 
 						self.set("totalAsset", kendo.toString(response, "c", banhji.locale));
+
+						var response = e.response, totalCurrent = 0;
+						self.exArray.push({
+					        cells: [
+					          	{ value: "ASSETS", bold: true, fontSize: 16 },
+					            { value: "" },
+					            { value: "" }
+					        ]
+					    });
+						for (var i = 0; i < response.results.length; i++){
+							self.exArray.push({
+						        cells: [
+						          	{ value: response.results[i].name, bold: true, italic: true },
+						            { value: "" },
+						            { value: "" }
+						        ]
+						    });
+						    for(var j = 0; j < response.results[i].typeLine.length; j++){
+						    	self.exArray.push({
+							        cells: [
+							          	{ value: response.results[i].typeLine[j].type, bold: true },
+							            { value: "" },
+							            { value: "" }
+							        ]
+							    });
+							    for(var k = 0; k < response.results[i].typeLine[j].line.length; k++){
+							    	self.exArray.push({
+								        cells: [
+								          	{ value: response.results[i].typeLine[j].line[k].number + " " + response.results[i].typeLine[j].line[k].name },
+								            { value: kendo.toString(response.results[i].typeLine[j].line[k].amount, "c", banhji.locale) },
+								            { value: "" }
+								        ]
+								    });
+								    totalCurrent += kendo.parseFloat(response.results[i].typeLine[j].line[k].amount);
+							    }
+							    self.exArray.push({
+							        cells: [
+							          	{ value: "Total " + response.results[i].typeLine[j].type, bold: true },
+							            { value: kendo.toString(totalCurrent, "c", banhji.locale), bold: true, borderTop: { color: "#000000", size: 1 } },
+							            { value: "" }
+							        ]
+							    });
+							    self.exArray.push({
+							        cells: [
+							          	{ value: "" },
+							            { value: "" },
+							            { value: "" }
+							        ]
+							    });
+						    }
+						    self.exArray.push({
+						        cells: [
+						          	{ value: "Total " + response.results[i].name, bold: true, italic: true },
+						            { value: "" },
+						            { value: kendo.toString(totalCurrent, "c", banhji.locale) , bold: true, borderTop: { color: "#000000", size: 1 } }
+						        ]
+						    });
+
+						}
+						console.log(self.exArray);
 					}
 				});
 
@@ -45926,6 +46058,24 @@
 		    	win.print();
 		    	win.close();
 		    },2000);
+		},
+		ExportExcel 		: function(){
+			//console.log(this.exArray);
+	        var workbook = new kendo.ooxml.Workbook({
+	          sheets: [
+	            {
+	              columns: [
+	                { autoWidth: true },
+	                { autoWidth: true },
+	                { autoWidth: true }
+	              ],
+	              title: "Statement Financial Position",
+	              rows: this.exArray
+	            }
+	          ]
+	        });
+	        //save the file as Excel file with extension xlsx
+	        kendo.saveAs({dataURI: workbook.toDataURL(), fileName: "StatementFinancialPosition.xlsx"});
 		}
 	});
 	banhji.chartOfAccount =  kendo.observable({
@@ -47477,9 +47627,14 @@
 		txnDS 				: dataStore(apiUrl + "transactions"),
 		recurringDS 		: dataStore(apiUrl + "transactions"),
 		recurringLineDS 	: dataStore(apiUrl + "account_lines"),
-		contactDS 			: banhji.source.employeeDS,
+		attachmentDS	 	: dataStore(apiUrl + "attachments"),
+		segmentItemDS 		: banhji.source.segmentItemDS,
 		currencyDS 			: banhji.source.currencyDS,
 		jobDS				: banhji.source.jobDS,
+		contactDS 			: new kendo.data.DataSource({
+		  	data: banhji.source.employeeList,
+		  	sort: { field:"number", dir:"asc" }
+		}),
 		paymentMethodDS		: banhji.source.paymentMethodDS,
 		accountDS  			: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
@@ -47499,8 +47654,6 @@
 		  	data: banhji.source.txnTemplateList,
 		  	filter: { field: "type", value:"Cash_Advance" }
 		}),
-		attachmentDS	 	: dataStore(apiUrl + "attachments"),
-		segmentItemDS 		: banhji.source.segmentItemDS,
 		amtDueColor 		: banhji.source.amtDueColor,
 	    confirmMessage 		: banhji.source.confirmMessage,
 		frequencyList 		: banhji.source.frequencyList,
@@ -47936,9 +48089,6 @@
 					//Save New
 					self.addEmpty();
 				}
-
-				//Refresh Supplier
-				self.contactDS.filter({ field:"parent_id", operator:"where_related_contact_type", value:3 });
 			});
 		},
 		cancel 				: function(){
@@ -47949,8 +48099,6 @@
 			this.dataSource.data([]);
 			this.lineDS.data([]);
 			this.attachmentDS.data([]);
-
-			this.contactDS.filter({ field:"parent_id", operator:"where_related_contact_type", value:3 });
 
 			banhji.userManagement.removeMultiTask("expense");
 		},
@@ -48145,12 +48293,18 @@
 		referenceLineDS  	: dataStore(apiUrl + "account_lines"),
 		recurringDS 		: dataStore(apiUrl + "transactions"),
 		recurringLineDS 	: dataStore(apiUrl + "account_lines"),
-		existingInvoiceDS 	: dataStore(apiUrl + "account_lines"),		
-		contactDS  			: banhji.source.employeeDS,
-		supplierDS  		: banhji.source.supplierDS,
+		existingInvoiceDS 	: dataStore(apiUrl + "account_lines"),
 		currencyDS  		: banhji.source.currencyDS,
 		currencyRateDS		: dataStore(apiUrl + "currencies/rate"),
-		jobDS				: banhji.source.jobDS,		
+		jobDS				: banhji.source.jobDS,
+		contactDS 			: new kendo.data.DataSource({
+		  	data: banhji.source.employeeList,
+		  	sort: { field:"number", dir:"asc" }
+		}),
+		supplierDS  			: new kendo.data.DataSource({
+		  	data: banhji.source.supplierList,
+			sort: { field:"number", dir:"asc" }
+		}),		
 		accountDS 			: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
 			filter:{
@@ -48327,20 +48481,10 @@
 		},
 		//Contact
 		loadContact 		: function(id){
-			var self = this;			
+			var self = this, obj = self.get("obj");
 
-			this.contactDS.query({    			
-				filter: { field:"id", value: id },
-				page: 1,
-				pageSize: 100
-			}).then(function(e){
-				var view = self.contactDS.view(),
-				obj = self.get("obj");
-		    	
-		    	obj.set("contact_id", view[0].id);			
-				
-				self.setRate();											
-			});
+			obj.set("contact_id", id);
+		    this.contactChanges();
 		},		
 		contactChanges 		: function(){
 			var obj = this.get("obj");
@@ -48730,9 +48874,6 @@
 					//Save New
 					self.addEmpty();
 				}
-
-				//Refresh Supplier
-				self.contactDS.filter({ field:"parent_id", operator:"where_related_contact_type", value:3 });
 			});
 		},
 		clear 				: function(){
@@ -48743,8 +48884,6 @@
 			this.dataSource.data([]);
 			this.lineDS.data([]);
 			this.attachmentDS.data([]);
-
-			this.contactDS.filter({ field:"parent_id", operator:"where_related_contact_type", value:3 });
 
 			banhji.userManagement.removeMultiTask("expense");
 		},
@@ -55496,7 +55635,10 @@
     banhji.vendorRecurring = kendo.observable({
 		lang 				: langVM,
 		dataSource 			: dataStore(apiUrl + "transactions"),
-		contactDS  			: banhji.source.supplierDS,
+		contactDS  			: new kendo.data.DataSource({
+		  	data: banhji.source.supplierList,
+			sort: { field:"number", dir:"asc" }
+		}),
 		contact_id 			: "",
 		pageLoad 			: function(){
 			this.search();
@@ -77089,10 +77231,17 @@
 					            	return $.trim(input.val()) !== "";
 					          	}
 					          	return true;
+					        },
+					        customRule2: function(input){
+					          	if (input.is("[name=txtNumber]")) {	
+						            return vm.get("notDuplicateNumber");
+						        }
+						        return true;
 					        }
 					    },
 					    messages: {
-					        customRule1: banhji.source.requiredMessage
+					        customRule1: banhji.source.requiredMessage,
+			        		customRule2: banhji.source.duplicateNumber
 					    }
 			        }).data("kendoValidator");
 

@@ -70,103 +70,103 @@
   </style>
   <style>
   /* FeedBack */
-a.rightfixed {
-        position: relative;
-    background: #1F4774;
-    padding: 15px 25px;
-    z-index: 99;
-    color: #fff;
-    border-radius: 3px;
-    font-size: 12px;
-    padding-left: 50px;
-    cursor: pointer;
-    -webkit-transition: all .5s;
-    transition: all .5s;
-    text-decoration: none;
-    opacity: 1;
-    margin-bottom: 1px;
-    clear: both;
-    float: none;
-    left: 0;
-}
-a.rightfixed:hover {
-  opacity: 1;
-}
-a.rightfixed i::before {
-    color: #fff;
-    top: 10px;
-    left: 7px;
-    font-size: 20px;
-}
-a.feedback {
-    background: #a22314;
-}
-a.referral {
-  background: #1b8330;
-}
-.popRightBlog {
-    width: 350px;
-    height: 260px;
-    left: 35%;
-    top: 10%;
-}
-.popRightBlog textarea{
-    height: 150px;
-    min-height: 150px;
-    max-height: 150px;
-    width: 100%;
-    min-width: 100%;
-    max-width: 100%;
-}
-.popRightBlog input[type=email], .popRightBlog input[type=text]{
-    width: 65%;
-    margin-bottom: 2px;
-    padding: 5px;
-    border: 1px solid #ccc;
-}
-.popRightBlog input[type=text] {
-  width: 34%;
-  margin-right: 2px;
-}
-a.feedback:hover {
-    margin-left: -66px;
-}
-a.enquiries {
-  background: url(//storage.googleapis.com/instapage-user-media/e315080c/8593373-0-s-bg.jpg) no-repeat 15px center #1F4774;
-    background-size: 23px;
-}
-a.enquiries:hover {
-    left: -95px;
-}
-a.referral:hover {
-    margin-left: -56px;
-}
-.cover-rightfixed {
-    position: fixed;
-    top: 40%;
-    right: -95px;
-    z-index: 99999;
-    text-align: left;
-}
-.enquiry-content {
-    background: #fff;
-    border: 1px solid #D7D7D7;
-    padding: 10px 10px 0;
-    position: absolute;
-    width: 142px;
-    right: -120px;
-    font-size: 12px;
-    text-align: center;
-    bottom: -134px;
-    -webkit-transition: all .5s;
-    transition: all .5s;
-    padding-bottom: 10px;
-    color: #444;
-    z-index: -1;
-}
-a.enquiries:hover .enquiry-content, .enquiry-content:hover {
-       right: 0;
-}
+        a.rightfixed {
+                position: relative;
+            background: #1F4774;
+            padding: 15px 25px;
+            z-index: 99;
+            color: #fff;
+            border-radius: 3px;
+            font-size: 12px;
+            padding-left: 50px;
+            cursor: pointer;
+            -webkit-transition: all .5s;
+            transition: all .5s;
+            text-decoration: none;
+            opacity: 1;
+            margin-bottom: 1px;
+            clear: both;
+            float: none;
+            left: 0;
+        }
+        a.rightfixed:hover {
+          opacity: 1;
+        }
+        a.rightfixed i::before {
+            color: #fff;
+            top: 10px;
+            left: 7px;
+            font-size: 20px;
+        }
+        a.feedback {
+            background: #a22314;
+        }
+        a.referral {
+          background: #1b8330;
+        }
+        .popRightBlog {
+            width: 350px;
+            height: 260px;
+            left: 35%;
+            top: 10%;
+        }
+        .popRightBlog textarea{
+            height: 150px;
+            min-height: 150px;
+            max-height: 150px;
+            width: 100%;
+            min-width: 100%;
+            max-width: 100%;
+        }
+        .popRightBlog input[type=email], .popRightBlog input[type=text]{
+            width: 65%;
+            margin-bottom: 2px;
+            padding: 5px;
+            border: 1px solid #ccc;
+        }
+        .popRightBlog input[type=text] {
+          width: 34%;
+          margin-right: 2px;
+        }
+        a.feedback:hover {
+            margin-left: -66px;
+        }
+        a.enquiries {
+          background: url(//storage.googleapis.com/instapage-user-media/e315080c/8593373-0-s-bg.jpg) no-repeat 15px center #1F4774;
+            background-size: 23px;
+        }
+        a.enquiries:hover {
+            left: -95px;
+        }
+        a.referral:hover {
+            margin-left: -56px;
+        }
+        .cover-rightfixed {
+            position: fixed;
+            top: 40%;
+            right: -95px;
+            z-index: 99999;
+            text-align: left;
+        }
+        .enquiry-content {
+            background: #fff;
+            border: 1px solid #D7D7D7;
+            padding: 10px 10px 0;
+            position: absolute;
+            width: 142px;
+            right: -120px;
+            font-size: 12px;
+            text-align: center;
+            bottom: -134px;
+            -webkit-transition: all .5s;
+            transition: all .5s;
+            padding-bottom: 10px;
+            color: #444;
+            z-index: -1;
+        }
+        a.enquiries:hover .enquiry-content, .enquiry-content:hover {
+               right: 0;
+        }
 </style>
 <script>
   window.fbAsyncInit = function() {
@@ -214,6 +214,9 @@ a.enquiries:hover .enquiry-content, .enquiry-content:hover {
             </div>
             <div class="col-sm-6">
               <div class="login-form" data-bind="invisible: showVerify">
+                <div id="loadImport" style="display:none;text-align: center;position: absolute;width: 580px; height: 100%;background: rgba(142, 159, 167, 0.8);z-index: 9999;margin-top: -30px;margin-left: -50px;">
+                  <p style="font-size: 20px;color: #fff;margin-top: 23%">Processing ...</p>
+                </div>
                 <h2 align="center">Forget Password</h2>
                   <form action="" method="">
 
@@ -405,6 +408,7 @@ a.enquiries:hover .enquiry-content, .enquiry-content:hover {
             }
           },
           forgotPassword: function(e) {
+            $("#loadImport").css("display","block"); 
             e.preventDefault();
             var that = this;
             var userData = {
@@ -422,6 +426,7 @@ a.enquiries:hover .enquiry-content, .enquiry-content:hover {
                     // var verificationCode = prompt('Please input verification code ' ,'');
                     // var newPassword = prompt('Enter new password ' ,'');
                     // cognitoUser.confirmPassword(verificationCode, newPassword, this);
+                    $("#loadImport").css("display","none"); 
                     banhji.aws.set("showVerify", true);
                     $("#changePasswordBtn").on('click', function(){
                       if(banhji.aws.get('newPassword')!== banhji.aws.get('cPassword')) {

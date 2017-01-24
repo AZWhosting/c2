@@ -28,6 +28,7 @@
             margin: 0 auto;
             background: #203864;
             height: auto;
+            padding-bottom: 100px;
         }
         .signup-content{
             margin: 25px 0;
@@ -993,7 +994,6 @@
                 if(this.get("cPassword")){
                     this.pwdChange();
                 }
-                
             },
             comChange   : function(e) {
                 var self = this;
@@ -1032,6 +1032,7 @@
                 }
             },
             create: function() {
+                var self = this;
                 if(this.err == null){
                     $("#signupBtn").val("Signing up...");
                     // create user
@@ -1089,7 +1090,7 @@
                                         banhji.index.set('type', null);
                                         // go to confirm
                                         //window.location.replace(baseUrl + "confirm/");
-                                        window.location.replace(baseUrl + "confirm/?e=" + this.get('email'));
+                                        window.location.replace(baseUrl + "confirm/?e=" + self.get('email'));
                                     });
                                 }
                             });

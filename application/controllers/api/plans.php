@@ -210,7 +210,7 @@ class Plans extends REST_Controller {
 					"is_flat" => $value->is_flat,
 					"type" 	  => $value->type,
 					"unit" 	  => $value->unit,
-					"amount"  => $value->amount,
+					"amount"  => floatval($value->amount),
 					"usage"   => $value->usage,
 					"name" 	  => $value->name,
 					"account" => array('id' => $account->id, 'name' => $account->name),

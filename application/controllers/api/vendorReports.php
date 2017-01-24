@@ -2691,7 +2691,7 @@ class Vendorreports extends REST_Controller {
 			}									 			
 		}
 
-		if($filters['logic'] == "segment") {
+		if($this->get("filter")['logic'] == "segment") {
 			$segmentItem = new Segmentitem(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			if(isset($filters['filters'])) {
 				foreach($filters['filters'] as $f) {
