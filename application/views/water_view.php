@@ -927,7 +927,7 @@
     		#= _currency.code#
    		</td>
    		<td align="right" >
-    		#= amount#
+    		#= kendo.toString(amount, _currency.locale=="km-KH"?"c0":"c", _currency.locale)#
    		</td>
    		<td align="center">   			   
 		    <a class="btn-action glyphicons pencil btn-success k-edit-button"><i></i></a>
@@ -5893,7 +5893,14 @@
 							<h3 data-bind="text: institute.name"></h3>
 							<h2>Connect Service Revenue</h2>
 						</div>
-						<div data-role="grid" data-bind="source: dataSource">
+						<div data-role="grid" data-bind="source: dataSource" data-columns="[
+							{title: 'Number', field: 'customer_number'},
+							{title: 'Name', field: 'fullname'},
+							{title: 'Type', field: 'contact_type_name'},
+							{title: 'Location', field: 'location_name'},
+							{title: 'License', field: 'branch_name'},
+							{title: 'Revenue', field: 'revenue'}
+						]">
 						</div>
 					</div>
 				</div>
@@ -6164,7 +6171,14 @@
 							<h3 data-bind="text: institute.name"></h3>
 							<h2>Customer Deposit Report</h2>
 						</div>
-						<div data-role="grid" data-bind="source: dataSource">
+						<div data-role="grid" data-bind="source: dataSource" data-columns="[
+							{title: 'Number', field: 'customer_number'},
+							{title: 'Name', field: 'fullname'},
+							{title: 'Type', field: 'contact_type_name'},
+							{title: 'Location', field: 'location_name'},
+							{title: 'License', field: 'branch_name'},
+							{title: 'Deposit', field: 'deposit'}
+						]">
 					</div>
 				</div>
 			</div>

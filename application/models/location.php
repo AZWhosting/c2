@@ -29,13 +29,13 @@ class Location extends DataMapper {
 			'other_field' => 'location'
 		),
 		'contact' => array(
-			'class' => 'contact',
+			'class' => 'customer',
 			'other_field' => 'location'
-		),
-		'wlocation' => array(
-			'class' => 'contact',
-			'other_field' => 'wlocation'
-		)		
+		)
+		// 'wlocation' => array(
+		// 	'class' => 'contact',
+		// 	'other_field' => 'wlocation'
+		// )		
 	);
 
 	public function __construct($id = null, $server_name = null, $db_username = null, $server_password = null, $db = null) {	
