@@ -2838,15 +2838,35 @@
           banhji.router.navigate('userlist/new');
         },
         removeUser: function(e) {
-          var newDiv = document.createElement("div");
-          $(newDiv).kendoWindow()
-          this.users.remove(e.data);
-          // this.users.sync();
-          // this.users.bind('requestEnd', function(e){
-          //   if(e.type == 'destroy') {
-          //      $("#ntf1").data("kendoNotification").success("user has been removed.");
-          //   }
-          // });
+          var win = $('<div/>', {id: 'myWin'});
+          win.html('Are you sure you want to remove this ' + e.data.username + ' user? <br><br><hr><button class="pull-right btn btn-info" id="cancelThisUser">Cancel</button>&nbsp;<button class="pull-right btn btn-warning" id="removeThisUser">Remove</button>');
+          var o = (win).kendoWindow({
+            width: "600px",
+            title: "Remove " + e.data.username,
+            visible: false,
+            actions: [
+                "Close"
+            ],
+            close: function() {
+              banhji.users.users.cancelChanges();
+              this.destroy();
+            }
+          }).data('kendoWindow');
+          o.center().open();
+
+          $('#cancelThisUser').click(function(){
+              o.close();
+          });  
+          $('#removeThisUser').click(function(){
+            banhji.users.users.remove(e.data);
+            banhji.users.users.sync();
+            banhji.users.users.bind('requestEnd', function(e){
+              if(e.type == 'destroy') {
+                 $("#ntf1").data("kendoNotification").success("user has been removed.");
+                 o.destroy();
+              }
+            });
+          });          
         },
         edit: function(e) {
           banhji.router.navigate('userlist/' + e.data.id);

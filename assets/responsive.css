@@ -164,6 +164,7 @@ input.k-textbox{
 #ddlName-list,
 #txtMeasurement-list,
 #ddlIncome-list,
+#cbbSegment-list,
 #ddlAR-list{
   width: 350px !important;
 }
