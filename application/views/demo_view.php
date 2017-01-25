@@ -44087,6 +44087,7 @@
 		showName 			: false,
 		showJob 			: false,
 		showSegment 		: false,
+		notDuplicateNumber 	: true,
 		recurring 			: "",
 		recurring_validate 	: false,
 		dr 					: 0,
@@ -44247,7 +44248,7 @@
 			if(obj.number!==""){
 
 				if(obj.isNew()==false){
-					para.push({ field:"id", operator:"where_not_in", value: [obj.id] });
+					para.push({ field:"id <>", value: obj.id });
 				}
 				
 				para.push({ field:"number", value: obj.number });
@@ -45903,7 +45904,7 @@
 		search 				: function(){
 			var self = this, as_of = this.get("as_of");
 			this.set("totalLiabilityEquity", 0);
-
+			var totalAll = 0, totalCurrent = 0, totalEq = 0;
 			if(as_of){
 				var displayDate = "As Of " + kendo.toString(as_of, "dd-MM-yyyy");
 				this.set("displayDate", displayDate);
@@ -45920,7 +45921,7 @@
 
 						self.set("totalAsset", kendo.toString(response, "c", banhji.locale));
 
-						var response = e.response, totalCurrent = 0, tAsset = 0;
+						var response = e.response;
 						self.exArray = [];
 		            	self.exArray.push({
 		            		cells: [
@@ -45976,7 +45977,7 @@
 								        ]
 								    });
 								    totalCurrent += kendo.parseFloat(response.results[i].typeLine[j].line[k].amount);
-							    	tAsset += kendo.parseFloat(response.results[i].typeLine[j].line[k].amount);
+							    	totalAll += kendo.parseFloat(response.results[i].typeLine[j].line[k].amount);
 							    }
 							    self.exArray.push({
 							        cells: [
@@ -46033,7 +46034,7 @@
 						self.set("totalLiability", kendo.toString(response, "c", banhji.locale));
 						//Excel Export
 
-						var response = e.response, totalCurrent = 0, tAsset = 0;
+						var response = e.response, totalCurrent = 0;
 						self.liArray = [];
 						self.liArray.push({
 					        cells: [
@@ -46066,13 +46067,13 @@
 								            { value: "" }
 								        ]
 								    });
-								    totalCurrent += kendo.parseFloat(response.results[i].typeLine[j].line[k].amount);
-							    	tAsset += kendo.parseFloat(response.results[i].typeLine[j].line[k].amount);
+								    totalLi += kendo.parseFloat(response.results[i].typeLine[j].line[k].amount);
+							    	totalAll += kendo.parseFloat(response.results[i].typeLine[j].line[k].amount);
 							    }
 							    self.liArray.push({
 							        cells: [
 							          	{ value: "Total " + response.results[i].typeLine[j].type, bold: true },
-							            { value: kendo.toString(totalCurrent, "c", banhji.locale), bold: true, borderTop: { color: "#000000", size: 1 } },
+							            { value: kendo.toString(totalLi, "c", banhji.locale), bold: true, borderTop: { color: "#000000", size: 1 } },
 							            { value: "" }
 							        ]
 							    });
@@ -46088,7 +46089,7 @@
 						        cells: [
 						          	{ value: "Total " + response.results[i].name, bold: true, italic: true },
 						            { value: "" },
-						            { value: kendo.toString(totalCurrent, "c", banhji.locale) , bold: true, borderTop: { color: "#000000", size: 1 } }
+						            { value: kendo.toString(totalLi, "c", banhji.locale) , bold: true, borderTop: { color: "#000000", size: 1 } }
 						        ]
 						    });
 						}
@@ -46096,7 +46097,7 @@
 					        cells: [
 					          	{ value: "TOTAL LIABILITIES", bold: true, color: "#000000", fontSize: 20 },
 					            { value: "" },
-					            { value: kendo.toString(totalCurrent, "c", banhji.locale) , bold: true, color: "#ffffff", fontSize: 20 }
+					            { value: kendo.toString(totalLi, "c", banhji.locale) , bold: true, color: "#ffffff", fontSize: 20 }
 					        ]
 					    });
 					    self.liArray.push({
@@ -46119,7 +46120,7 @@
 						self.set("totalLiabilityEquity", total);
 						self.set("totalEquity", kendo.toString(response, "c", banhji.locale));
 						//export Excel
-						var response = e.response, totalCurrent = 0, tAsset = 0;
+						var response = e.response, totalCurrent = 0;
 						self.eqArray = [];
 						self.eqArray.push({
 					        cells: [
@@ -46178,9 +46179,9 @@
 						        ]
 						    });
 						}
-						self.exArray.push({
+						self.eqArray.push({
 					        cells: [
-					          	{ value: "TOTAL LIABILITIES & ", bold: true, color: "#ffffff", background: "#1E4E78", fontSize: 20 },
+					          	{ value: "TOTAL LIABILITIES & EQUITY", bold: true, color: "#ffffff", background: "#1E4E78", fontSize: 20 },
 					            { value: "", background: "#1E4E78" },
 					            { value: kendo.toString(tAsset, "c", banhji.locale) , bold: true, color: "#ffffff", background: "#1E4E78", fontSize: 20 }
 					        ]
@@ -46188,6 +46189,7 @@
 					}
 				});
 			}
+			console.log(tAsset);
 		},
 		printGrid			: function() {
 			var gridElement = $('#grid'),
@@ -46264,7 +46266,7 @@
 		    },2000);
 		},
 		ExportExcel 		: function(){
-			var row = this.exArray.concat(this.liArray);
+			var row = this.exArray.concat(this.liArray.concat(this.eqArray));
 
 			console.log(row);
 	        var workbook = new kendo.ooxml.Workbook({

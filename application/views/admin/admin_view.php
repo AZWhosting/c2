@@ -2838,13 +2838,15 @@
           banhji.router.navigate('userlist/new');
         },
         removeUser: function(e) {
+          var newDiv = document.createElement("div");
+          $(newDiv).kendoWindow()
           this.users.remove(e.data);
-          this.users.sync();
-          this.users.bind('requestEnd', function(e){
-            if(e.type == 'destroy') {
-               $("#ntf1").data("kendoNotification").success("user has been removed.");
-            }
-          });
+          // this.users.sync();
+          // this.users.bind('requestEnd', function(e){
+          //   if(e.type == 'destroy') {
+          //      $("#ntf1").data("kendoNotification").success("user has been removed.");
+          //   }
+          // });
         },
         edit: function(e) {
           banhji.router.navigate('userlist/' + e.data.id);
