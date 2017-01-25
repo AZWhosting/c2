@@ -12162,6 +12162,7 @@
 	            			</tr>
 	            		</thead>
 	            		<tbody data-role="listview"
+	            				data-auto-bind="false"
 		            			data-edit-template="vendorSetting-edit-contact-type-template"
 				                data-template="vendorSetting-contact-type-template"
 				                data-bind="source: contactTypeDS"></tbody>
@@ -20157,7 +20158,8 @@
 	            				<th class="center"></th>
 	            			</tr>
 	            		</thead>
-	            		<tbody data-role="listview"	            				
+	            		<tbody data-role="listview"
+	            				data-auto-bind="false"	            				
 		            			data-edit-template="customerSetting-edit-contact-type-template"
 				                data-template="customerSetting-contact-type-template"
 				                data-bind="source: contactTypeDS"></tbody>
@@ -42482,115 +42484,8 @@
 		supplierDS					: dataStore(apiUrl + "contacts"),
 		employeeDS					: dataStore(apiUrl + "contacts"),
 		//Contact Type
+		contactTypeList 			: [],
 		contactTypeDS				: dataStore(apiUrl + "contacts/type"),
-		customerTypeDS				: new kendo.data.DataSource({
-			transport: {
-				read 	: {
-					url: apiUrl + "contacts/type",
-					type: "GET",
-					headers: banhji.header,
-					dataType: 'json'
-				},
-				create 	: {
-					url: apiUrl + "contacts/type",
-					type: "POST",
-					headers: banhji.header,
-					dataType: 'json'
-				},
-				update 	: {
-					url: apiUrl + "contacts/type",
-					type: "PUT",
-					headers: banhji.header,
-					dataType: 'json'
-				},
-				destroy 	: {
-					url: apiUrl + "contacts/type",
-					type: "DELETE",
-					headers: banhji.header,
-					dataType: 'json'
-				},				
-				parameterMap: function(options, operation) {
-					if(operation === 'read') {
-						return {
-							page: options.page,
-							limit: options.pageSize,
-							filter: options.filter,
-							sort: options.sort
-						};
-					} else {
-						return {models: kendo.stringify(options.models)};
-					}
-				}
-			},
-			schema 	: {
-				model: {
-					id: 'id'
-				},
-				data: 'results',
-				total: 'count'
-			},
-			filter: { field:"parent_id", value: 1 },
-			batch: true,
-			serverFiltering: true,
-			serverSorting: true,
-			serverPaging: true,
-			page:1,
-			pageSize: 100
-		}),
-		supplierTypeDS				: new kendo.data.DataSource({
-			transport: {
-				read 	: {
-					url: apiUrl + "contacts/type",
-					type: "GET",
-					headers: banhji.header,
-					dataType: 'json'
-				},
-				create 	: {
-					url: apiUrl + "contacts/type",
-					type: "POST",
-					headers: banhji.header,
-					dataType: 'json'
-				},
-				update 	: {
-					url: apiUrl + "contacts/type",
-					type: "PUT",
-					headers: banhji.header,
-					dataType: 'json'
-				},
-				destroy 	: {
-					url: apiUrl + "contacts/type",
-					type: "DELETE",
-					headers: banhji.header,
-					dataType: 'json'
-				},				
-				parameterMap: function(options, operation) {
-					if(operation === 'read') {
-						return {
-							page: options.page,
-							limit: options.pageSize,
-							filter: options.filter,
-							sort: options.sort
-						};
-					} else {
-						return {models: kendo.stringify(options.models)};
-					}
-				}
-			},
-			schema 	: {
-				model: {
-					id: 'id'
-				},
-				data: 'results',
-				total: 'count'
-			},
-			filter: { field:"parent_id", value: 2 },
-			batch: true,
-			serverFiltering: true,
-			serverSorting: true,
-			serverPaging: true,
-			page:1,
-			pageSize: 100
-		}),
 		//Job
 		jobList 					: [],
 		jobDS						: dataStore(apiUrl + "jobs"),
@@ -42865,78 +42760,6 @@
 		//Tax
 		taxList 					: [],
 		taxItemDS					: dataStore(apiUrl + "tax_items"),
-		customerTaxDS				: new kendo.data.DataSource({
-			transport: {
-				read 	: {
-					url: apiUrl + "tax_items",
-					type: "GET",
-					headers: banhji.header,
-					dataType: 'json'
-				},				
-				parameterMap: function(options, operation) {
-					if(operation === 'read') {
-						return {
-							page: options.page,
-							limit: options.pageSize,
-							filter: options.filter,
-							sort: options.sort
-						};
-					} else {
-						return {models: kendo.stringify(options.models)};
-					}
-				}
-			},
-			schema 	: {
-				model: {
-					id: 'id'
-				},
-				data: 'results',
-				total: 'count'
-			},
-			filter: { field: "tax_type_id", operator:"where_in", value:[3,9] },
-			batch: true,
-			serverFiltering: true,
-			serverSorting: true,
-			serverPaging: true,
-			page:1,
-			pageSize: 100
-		}),
-		supplierTaxDS				: new kendo.data.DataSource({
-			transport: {
-				read 	: {
-					url: apiUrl + "tax_items",
-					type: "GET",
-					headers: banhji.header,
-					dataType: 'json'
-				},				
-				parameterMap: function(options, operation) {
-					if(operation === 'read') {
-						return {
-							page: options.page,
-							limit: options.pageSize,
-							filter: options.filter,
-							sort: options.sort
-						};
-					} else {
-						return {models: kendo.stringify(options.models)};
-					}
-				}
-			},
-			schema 	: {
-				model: {
-					id: 'id'
-				},
-				data: 'results',
-				total: 'count'
-			},
-			filter: { field: "tax_type_id", operator:"where_in", value:[1,2,3,9] },
-			batch: true,
-			serverFiltering: true,
-			serverSorting: true,
-			serverPaging: true,
-			page:1,
-			pageSize: 100
-		}),
 		//Accounting
 		accountList 				: [],
 		accountDS					: dataStore(apiUrl + "accounts"),
@@ -42982,9 +42805,10 @@
 		//Segment
 		segmentItemList 			: [],
 		segmentItemDS				: dataStore(apiUrl + "segments/item"),
-		//Prefixes
+		//Txn Template
 		txnTemplateList 			: [],
 		txnTemplateDS				: dataStore(apiUrl + "transaction_templates"),
+		//Prefixes
 		prefixList 					: [],
 		prefixDS					: dataStore(apiUrl + "prefixes"),
 		frequencyList 				: [
@@ -43136,6 +42960,7 @@
 			this.itemTypeDS.read();
 			this.loadItemPrices();
 			this.loadMeasurements();
+			this.loadContactTypes();
 			this.loadCustomers();
 			this.loadSuppliers();
 			this.loadEmployees();
@@ -43356,6 +43181,24 @@
 				filter:[],
 			}).then(function(){
 				var view = self.measurementDS.view();
+
+				$.each(view, function(index, value){
+					raw.push(value);
+				});
+			});
+		},
+		loadContactTypes			: function(){
+			var self = this, raw = this.get("contactTypeList");
+
+			//Clear array
+			if(raw.length>0){
+				raw.splice(0,raw.length);
+			}
+
+			this.contactTypeDS.query({
+				filter:[]
+			}).then(function(){
+				var view = self.contactTypeDS.view();
 
 				$.each(view, function(index, value){
 					raw.push(value);
@@ -46681,7 +46524,8 @@
 	});
 	banhji.accountingSetting =  kendo.observable({
 		lang 				: langVM,		
-        contactTypeDS 		: banhji.source.customerTypeDS,
+        contactTypeDS 		: banhji.source.contactTypeDS,
+        patternDS			: dataStore(apiUrl + "contacts"),
         txnTemplateDS		: dataStore(apiUrl + "transaction_templates"),
         prefixDS			: new kendo.data.DataSource({
 			transport: {
@@ -46762,12 +46606,29 @@
 	        	});
 
 	        	this.contactTypeDS.sync();
+	        	this.contactTypeDS.bind("requestEnd", function(e){
+	        		if(e.type==="create" || e.type==="update"){
+	        			var response = e.response.results[0];
+    					self.addPattern(response.id);
+	        			banhji.source.loadContactTypes();
+	        		}
+	        	});
 
 	        	this.set("contactTypeName", "");
 	        	this.set("contactTypeAbbr", "");
 	        	this.set("contactTypeCompany", 0);
         	}
         },
+        addPattern 			: function(id){
+			this.patternDS.insert(0, {
+				"contact_type_id" 		: id,
+				"number"				: "",
+				"locale" 				: banhji.locale,					
+				"is_pattern" 			: 1,
+				"status"				: 1								
+			});
+			this.patternDS.sync();
+		},
         addPaymentMethod 		: function(){
         	var name = this.get("paymentMethodName");
 
@@ -47183,10 +47044,13 @@
 		lang 				: langVM,
 		transactionDS  		: dataStore(apiUrl + 'transactions'),
 		contactDS 			: dataStore(apiUrl + 'contacts'),
-		contactTypeDS		: banhji.source.supplierTypeDS,
 		noteDS 				: dataStore(apiUrl + 'notes'),
 		currencyDS 			: banhji.source.currencyDS,
 		summaryDS 			: dataStore(apiUrl + "transactions"),
+		contactTypeDS 			: new kendo.data.DataSource({
+		  	data: banhji.source.contactTypeList,
+		  	filter: { field:"parent_id", value: 2 }//Supplier
+		}),
 		sortList			: banhji.source.sortList,
 		sorter 				: "all",
 		sdate 				: "",
@@ -49540,7 +49404,10 @@
 			page:1,
 			pageSize: 100
 		}),
-		contactTypeDS		: banhji.source.supplierTypeDS,
+		contactTypeDS 			: new kendo.data.DataSource({
+		  	data: banhji.source.contactTypeList,
+		  	filter: { field:"parent_id", value: 2 }//Supplier
+		}),
 		noteDS 				: dataStore(apiUrl + 'notes'),
 		attachmentDS	 	: dataStore(apiUrl + "attachments"),
 		summaryDS 			: dataStore(apiUrl + "transactions"),
@@ -50054,8 +49921,11 @@
 		paymentTermDS			: banhji.source.paymentTermDS,
 		paymentMethodDS			: banhji.source.paymentMethodDS,
 		countryDS 				: banhji.source.countryDS,
-		contactTypeDS  			: banhji.source.supplierTypeDS,
 		currencyDS 		  		: banhji.source.currencyDS,
+		contactTypeDS 			: new kendo.data.DataSource({
+		  	data: banhji.source.contactTypeList,
+		  	filter: { field:"parent_id", value: 2 }//Supplier
+		}),
 		apDS 		  			: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
 			filter:{
@@ -55760,11 +55630,12 @@
 		}
 	});
 	banhji.vendorSetting =  kendo.observable({
-		lang 				: langVM,		
-        contactTypeDS 		: banhji.source.supplierTypeDS,
+		lang 				: langVM,
         paymentMethodDS		: banhji.source.paymentMethodDS,
-        paymentTermDS		: banhji.source.paymentTermDS,  
-        txnTemplateDS		: dataStore(apiUrl + "transaction_templates"),      
+        paymentTermDS		: banhji.source.paymentTermDS,          
+        txnTemplateDS		: dataStore(apiUrl + "transaction_templates"),
+        contactTypeDS 		: dataStore(apiUrl + "contacts/type"),
+        patternDS			: dataStore(apiUrl + "contacts"),
         contactTypeName 	: "",
         contactTypeAbbr 	: "",
         contactTypeCompany 	: 0,
@@ -55848,6 +55719,7 @@
 	        		if(e.type==="create"){
 	        			var response = e.response.results[0];
 	        			self.addPattern(response.id);
+	        			banhji.source.loadContactTypes();
 	        		}
 	        	});
 
@@ -56019,7 +55891,6 @@
 		institute 				: banhji.institute,
 		contact 				: dataStore(apiUrl + "vendorReports/supplier"),
 		dataSource 				: dataStore(apiUrl + "contacts/supplier"),
-		contactTypeDS			: banhji.source.customerTypeDS,
 		statusList 				: banhji.source.statusList,
 		contact_type_id 		: null,
 		status 					: null,		
@@ -56699,7 +56570,15 @@
 	});
 	banhji.customerCenter = kendo.observable({
 		lang 				: langVM,
-		transactionDS  		: dataStore(apiUrl + 'transactions'),
+		transactionDS  		: dataStore(apiUrl + 'transactions'),		
+		noteDS 				: dataStore(apiUrl + 'notes'),
+		attachmentDS	 	: dataStore(apiUrl + "attachments"),
+		currencyDS  		: banhji.source.currencyDS,
+		summaryDS 			: dataStore(apiUrl + "transactions"),
+		contactTypeDS 			: new kendo.data.DataSource({
+		  	data: banhji.source.contactTypeList,
+		  	filter: { field:"parent_id", value: 1 }//Customer
+		}),
 		contactDS			: new kendo.data.DataSource({
 			transport: {
 				read 	: {
@@ -56737,11 +56616,6 @@
 			page:1,
 			pageSize: 100
 		}),
-		contactTypeDS  		: banhji.source.customerTypeDS,
-		noteDS 				: dataStore(apiUrl + 'notes'),
-		attachmentDS	 	: dataStore(apiUrl + "attachments"),
-		currencyDS  		: banhji.source.currencyDS,
-		summaryDS 			: dataStore(apiUrl + "transactions"),
 		sortList			: banhji.source.sortList,
 		sorter 				: "all",
 		sdate 				: "",
@@ -57284,8 +57158,11 @@
 		paymentTermDS			: banhji.source.paymentTermDS,
 		paymentMethodDS			: banhji.source.paymentMethodDS,
 		countryDS 				: banhji.source.countryDS,
-		contactTypeDS  			: banhji.source.customerTypeDS,
 		currencyDS 		  		: banhji.source.currencyDS,
+		contactTypeDS 			: new kendo.data.DataSource({
+		  	data: banhji.source.contactTypeList,
+		  	filter: { field:"parent_id", value: 1 }//Customer
+		}),
 		arDS 		  			: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
 		  	filter: { field:"account_type_id", value: 12 },
@@ -66007,9 +65884,12 @@
 		institute 				: banhji.institute,
 		contact 				: dataStore(apiUrl + "sales/customer"),
 		dataSource 				: dataStore(apiUrl+"contacts"),
-		contactTypeDS			: banhji.source.customerTypeDS,
 		contactAAA 				: banhji.source.customerDS,
 		statusList 				: banhji.source.statusList,
+		contactTypeDS 			: new kendo.data.DataSource({
+		  	data: banhji.source.contactTypeList,
+		  	filter: { field:"parent_id", value: 1 }//Customer
+		}),
 		contact_type_id 		: null,
 		status 					: null,		
 		pageLoad 				: function(){
@@ -66081,7 +65961,10 @@
 		lang 					: langVM,
 		dataSource 				: dataStore(apiUrl+"contact_reports/balance"),
 		totalDS 				: dataStore(apiUrl+"contact_reports/balance_total"),
-		contactTypeDS			: banhji.source.customerTypeDS,
+		contactTypeDS 			: new kendo.data.DataSource({
+		  	data: banhji.source.contactTypeList,
+		  	filter: { field:"parent_id", value: 1 }//Customer
+		}),
 		statusList 				: banhji.source.statusList,
 		contact_type_id 		: null,
 		status 					: null,
@@ -66122,11 +66005,11 @@
 	});
 	banhji.customerSetting =  kendo.observable({
 		lang 				: langVM,
-        contactTypeDS 		: banhji.source.customerTypeDS,
+        contactTypeDS 		: dataStore(apiUrl + "contacts/type"),
+        patternDS 			: dataStore(apiUrl + "contacts"),
         paymentMethodDS		: banhji.source.paymentMethodDS,
         paymentTermDS		: banhji.source.paymentTermDS,
-        txnTemplateDS		: dataStore(apiUrl + "transaction_templates"),
-        patternDS 			: dataStore(apiUrl + "contacts"),
+        txnTemplateDS		: dataStore(apiUrl + "transaction_templates"),        
         contactTypeName 	: "",
         contactTypeAbbr 	: "",
         contactTypeCompany 	: 0,
@@ -66210,6 +66093,7 @@
 	        		if(e.type==="create"){
 	        			var response = e.response.results[0];
 	        			self.addPattern(response.id);
+	        			banhji.source.loadContactTypes();
 	        		}
 	        	});
 
@@ -67583,7 +67467,10 @@
 			page:1,
 			pageSize: 100
 		}),
-		contactTypeDS  		: banhji.source.customerTypeDS,
+		contactTypeDS 			: new kendo.data.DataSource({
+		  	data: banhji.source.contactTypeList,
+		  	filter: { field:"parent_id", value: 1 }//Customer
+		}),
 		noteDS 				: dataStore(apiUrl + 'notes'),
 		attachmentDS	 	: dataStore(apiUrl + "attachments"),
 		summaryDS 			: dataStore(apiUrl + "transactions"),
@@ -71129,9 +71016,10 @@
 	});
 	banhji.cashSetting =  kendo.observable({
 		lang 				: langVM,		
-        contactTypeDS 		: banhji.source.customerTypeDS,
+        contactTypeDS 		: banhji.source.contactTypeDS,
         paymentMethodDS		: banhji.source.paymentMethodDS,
         paymentTermDS		: banhji.source.paymentTermDS,
+        patternDS			: dataStore(apiUrl + "contacts"),
         txnTemplateDS		: dataStore(apiUrl + "transaction_templates"),
         contactTypeName 	: "",
         contactTypeAbbr 	: "",
@@ -71158,12 +71046,29 @@
 	        	});
 
 	        	this.contactTypeDS.sync();
+	        	this.contactTypeDS.bind("requestEnd", function(e){
+	        		if(e.type==="create"){
+	        			var response = e.response.results[0];
+		    			self.addPattern(response.id);
+		    			banhji.source.loadContactTypes();
+	        		}
+	        	});
 
 	        	this.set("contactTypeName", "");
 	        	this.set("contactTypeAbbr", "");
 	        	this.set("contactTypeCompany", 0);
         	}
         },
+        addPattern 			: function(id){
+			this.patternDS.insert(0, {
+				"contact_type_id" 		: id,
+				"number"				: "",
+				"locale" 				: banhji.locale,					
+				"is_pattern" 			: 1,
+				"status"				: 1								
+			});
+			this.patternDS.sync();
+		},
         addPaymentMethod 		: function(){
         	var name = this.get("paymentMethodName");
 
@@ -77490,9 +77395,8 @@
 			banhji.view.layout.showIn("#content", banhji.view.searchAdvanced);
 			
 			if(banhji.pageLoaded["search_advanced"]==undefined){
-				banhji.pageLoaded["search_advanced"] = true;
-		         
-		        vm.contactTypeDS.read();	
+				banhji.pageLoaded["search_advanced"] = true;		         
+		        	
 			}
 
 			vm.pageLoad();			
@@ -80737,6 +80641,7 @@
 				if(banhji.pageLoaded["vendor_setting"]==undefined){
 					banhji.pageLoaded["vendor_setting"] = true;
 
+					vm.contactTypeDS.filter({ field:"parent_id", value: 2 });
 				}
 
 				vm.pageLoad();
