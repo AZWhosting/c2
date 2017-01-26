@@ -44743,6 +44743,9 @@
 					]}
 				);
             	for (var i = 0; i < self.exdataSource.data().length; i++){
+            	  var RATE = self.exdataSource.data()[i].rate;
+            	  var DR = self.exdataSource.data()[i].line[0].dr / RATE;
+		          var CR = self.exdataSource.data()[i].line[0].cr / RATE;
 		          self.exArray.push({
 		            cells: [
 		              { value: self.exdataSource.data()[i].type, rowSpan: self.exdataSource.data()[i].line.length, verticalAlign: "center" },
@@ -44750,18 +44753,20 @@
 		              { value: self.exdataSource.data()[i].number, rowSpan: self.exdataSource.data()[i].line.length, verticalAlign: "center" },
 		              { value: self.exdataSource.data()[i].memo, rowSpan: self.exdataSource.data()[i].line.length, verticalAlign: "center" },
 		              { value: self.exdataSource.data()[i].line[0].account },
-		              { value: self.exdataSource.data()[i].line[0].dr ? kendo.toString(self.exdataSource.data()[i].line[0].dr / self.exdataSource.data()[i].line[0].rate, "c2", banhji.locale) : "",  },
-		              { value: self.exdataSource.data()[i].line[0].cr ? kendo.toString(self.exdataSource.data()[i].line[0].cr / self.exdataSource.data()[i].line[0].rate, "c2", banhji.locale) : "" }
+		              { value: self.exdataSource.data()[i].line[0].dr ? DR : "",  },
+		              { value: self.exdataSource.data()[i].line[0].cr ? CR : "" }
 		            ]
 		          });
 		          sumDR = kendo.parseFloat(self.exdataSource.data()[i].line[0].dr);
 		          sumCR = kendo.parseFloat(self.exdataSource.data()[i].line[0].cr);
 		          for(var j = 1; j < self.exdataSource.data()[i].line.length; j++){
+		          	var DR = self.exdataSource.data()[i].line[j].dr / RATE;
+		          	var CR = self.exdataSource.data()[i].line[j].cr / RATE;
 			          self.exArray.push({
 			          	cells: [
 			              { value: self.exdataSource.data()[i].line[j].account },
-			              { value: self.exdataSource.data()[i].line[j].dr ? kendo.toString(self.exdataSource.data()[i].line[j].dr / self.exdataSource.data()[i].line[j].rate, "c2", banhji.locale) : "" },
-			              { value: self.exdataSource.data()[i].line[j].cr ? kendo.toString(self.exdataSource.data()[i].line[j].cr / self.exdataSource.data()[i].line[j].rate, "c2", banhji.locale) : "" }
+			              { value: self.exdataSource.data()[i].line[j].dr ? DR : "" },
+			              { value: self.exdataSource.data()[i].line[j].cr ? CR : "" }
 			            ]
 			          });
 			        sumDR += kendo.parseFloat(self.exdataSource.data()[i].line[j].dr);
@@ -44774,12 +44779,11 @@
 		              { value: "", background: "#bbbbbb" },
 		              { value: "", background: "#bbbbbb" },
 		              { value: "", background: "#bbbbbb" },
-		              { value: kendo.toString(sumDR, "c2", banhji.locale), bold: true, background: "#bbbbbb" },
-		              { value: kendo.toString(sumCR, "c2", banhji.locale), bold: true, background: "#bbbbbb" }
+		              { value: kendo.parseFloat(sumDR), bold: true, background: "#bbbbbb" },
+		              { value: kendo.parseFloat(sumCR), bold: true, background: "#bbbbbb" }
 		            ]
 		          });
 		        }
-		        console.log();
             });                           
 		},
 		printGrid			: function() {
@@ -44858,7 +44862,6 @@
 		    },2000);
 		},
 		ExportExcel 		: function(){
-			//console.log(this.exArray);
 	        var workbook = new kendo.ooxml.Workbook({
 	          sheets: [
 	            {
@@ -45133,7 +45136,6 @@
 		    },2000);
 		},
 		ExportExcel 		: function(){
-			//console.log(this.exArray);
 	        var workbook = new kendo.ooxml.Workbook({
 	          sheets: [
 	            {
@@ -45296,7 +45298,6 @@
 			});
 		}, 
 		ExportExcel 		: function(){
-			//console.log(this.exArray);
 	        var workbook = new kendo.ooxml.Workbook({
 	          sheets: [
 	            {
@@ -45701,7 +45702,6 @@
 		    },2000);
 		},
 		ExportExcel 		: function(){
-			//console.log(this.exArray);
 	        var workbook = new kendo.ooxml.Workbook({
 	          sheets: [
 	            {
@@ -45850,7 +45850,6 @@
 					            { value: totalAsCu, bold: true, color: "#ffffff", background: "#1E4E78", fontSize: 20 }
 					        ]
 					    });
-					    console.log(totalAsCu);
 					    self.exArray.push({
 					        cells: [
 					          	{ value: "", colSpan: 3 },
@@ -46030,7 +46029,6 @@
 					}
 				});
 			}
-			console.log(totalAll);
 		},
 		printGrid			: function() {
 			var gridElement = $('#grid'),
@@ -46108,8 +46106,6 @@
 		},
 		ExportExcel 		: function(){
 			var row = this.exArray.concat(this.liArray.concat(this.eqArray));
-
-			console.log(row);
 	        var workbook = new kendo.ooxml.Workbook({
 	          sheets: [
 	            {
