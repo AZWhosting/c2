@@ -45011,7 +45011,7 @@
 					            { value: "" },
 					            { value: "" },
 					            { value: "" },
-					            { value: kendo.toString(response.results[i].balance_forward, "c2", banhji.locale), bold: true },
+					            { value: kendo.parseFloat(response.results[i].balance_forward), bold: true },
 					        ]
 					    });
 					    balanceCal = response.results[i].balance_forward;
@@ -45023,8 +45023,8 @@
 				              		{ value: kendo.toString(new Date(response.results[i].line[j].issued_date), "dd-MM-yyyy")  },
 				              		{ value: response.results[i].line[j].number },
 				              		{ value: response.results[i].line[j].memo },
-				              		{ value: kendo.toString(response.results[i].line[j].amount, "c", banhji.locale), format: "float"},
-				              		{ value: kendo.toString(balanceCal, "c", banhji.locale) , format: "float"}
+				              		{ value: kendo.parseFloat(response.results[i].line[j].amount)},
+				              		{ value: kendo.parseFloat(balanceCal)}
 				            	]
 				          	});
 				        }
@@ -45035,7 +45035,7 @@
 					            { value: "" },
 					            { value: "" },
 					            { value: "" },
-					            { value: kendo.toString(balanceCal, "c2", banhji.locale), bold: true, borderTop: { color: "#000000", size: 1 }, format: "float"  },
+					            { value: kendo.parseFloat(balanceCal), bold: true, borderTop: { color: "#000000", size: 1 }  },
 					        ]
 					    });
 					    self.exArray.push({
@@ -45050,8 +45050,8 @@
 				            { value: "" },
 				            { value: "" },
 				            { value: "" },
-				            { value: kendo.toString(response.totalAmount, "c2", banhji.locale), bold: true, fontSize: 16 },
-				            { value: kendo.toString(response.totalBalance, "c2", banhji.locale), bold: true, fontSize: 16 },
+				            { value: kendo.parseFloat(response.totalAmount), bold: true, fontSize: 16 },
+				            { value: kendo.parseFloat(response.totalBalance), bold: true, fontSize: 16 },
 				        ]
 				    });
 				}
@@ -45269,7 +45269,7 @@
 					          	self.exArray.push({
 					          		cells: [
 					          	  		{ value: response.results[i].line[j].number + " - " + response.results[i].line[j].name },
-					              		{ value: kendo.toString(response.results[i].line[j].amount, "c", banhji.locale)  },
+					              		{ value: kendo.parseFloat(response.results[i].line[j].amount)  },
 					              		{ value: "" }
 					            	]
 					          	});
@@ -45278,7 +45278,7 @@
 						        cells: [
 						          	{ value: "Total " + response.results[i].type, bold: true, },
 						            { value: "" },
-						            { value: kendo.toString(response.results[i].amount, "c2", banhji.locale), bold: true, borderTop: { color: "#000000", size: 1 }  },
+						            { value: kendo.parseFloat(response.results[i].amount), bold: true, borderTop: { color: "#000000", size: 1 }  },
 						        ]
 						    });
 						}else{
@@ -45286,7 +45286,7 @@
 						        cells: [
 						          	{ value: response.results[i].name, bold: true, },
 						            { value: "" },
-						            { value: kendo.toString(response.results[i].amount, "c2", banhji.locale), bold: true, borderTop: { color: "#000000", size: 1 }  },
+						            { value: kendo.parseFloat(response.results[i].amount), bold: true, borderTop: { color: "#000000", size: 1 }  },
 						        ]
 						    });
 						}
@@ -45294,7 +45294,7 @@
 					
 				}
 			});
-		},
+		}, 
 		ExportExcel 		: function(){
 			//console.log(this.exArray);
 	        var workbook = new kendo.ooxml.Workbook({
@@ -45584,8 +45584,8 @@
 						          	{ value: response.results[i].number },
 						            { value: response.results[i].name },
 						            { value: response.results[i].type },
-						            { value: response.results[i].dr ? kendo.toString(response.results[i].dr, "c2", banhji.locale) : "" },
-						            { value: response.results[i].cr ? kendo.toString(response.results[i].cr, "c2", banhji.locale) : "" }
+						            { value: response.results[i].dr ? kendo.parseFloat(response.results[i].dr) : "" },
+						            { value: response.results[i].cr ? kendo.parseFloat(response.results[i].cr) : "" }
 						        ]
 						    });
 							totalDR += kendo.parseFloat(response.results[i].dr);
@@ -45596,8 +45596,8 @@
 					          	{ value: "TOTAL:", color: "#ffffff", background: "#333333", bold: true, fontSize: 16 },
 					            { value: "",background: "#333333" },
 					            { value: "",background: "#333333" },
-					            { value: kendo.toString(totalDR, "c", banhji.locale), color: "#ffffff", background: "#333333", bold: true, fontSize: 16 },
-					            { value: kendo.toString(totalCR, "c", banhji.locale), color: "#ffffff", background: "#333333", bold: true, fontSize: 16 }
+					            { value: kendo.parseFloat(totalDR), color: "#ffffff", background: "#333333", bold: true, fontSize: 16 },
+					            { value: kendo.parseFloat(totalCR), color: "#ffffff", background: "#333333", bold: true, fontSize: 16 }
 					        ]
 					    });
 					}
@@ -45810,7 +45810,7 @@
 							    	self.exArray.push({
 								        cells: [
 								          	{ value: response.results[i].typeLine[j].line[k].number + " " + response.results[i].typeLine[j].line[k].name },
-								            { value: kendo.toString(response.results[i].typeLine[j].line[k].amount, "c", banhji.locale) },
+								            { value: kendo.parseFloat(response.results[i].typeLine[j].line[k].amount) },
 								            { value: "" }
 								        ]
 								    });
@@ -45822,7 +45822,7 @@
 							    self.exArray.push({
 							        cells: [
 							          	{ value: "Total " + response.results[i].typeLine[j].type, bold: true },
-							            { value: kendo.toString(totalCurrent, "c", banhji.locale), bold: true, borderTop: { color: "#000000", size: 1 } },
+							            { value: totalCurrent, bold: true, borderTop: { color: "#000000", size: 1 } },
 							            { value: "" }
 							        ]
 							    });
@@ -45838,7 +45838,7 @@
 						        cells: [
 						          	{ value: "Total " + response.results[i].name, bold: true, italic: true },
 						            { value: "" },
-						            { value: kendo.toString(totalCurrent, "c", banhji.locale) , bold: true, borderTop: { color: "#000000", size: 1 } }
+						            { value: totalCurrent , bold: true, borderTop: { color: "#000000", size: 1 } }
 						        ]
 						    });
 						    totalCurrent = 0;
@@ -45847,7 +45847,7 @@
 					        cells: [
 					          	{ value: "TOTAL ASSETS", bold: true, color: "#ffffff", background: "#1E4E78", fontSize: 20 },
 					            { value: "", background: "#1E4E78" },
-					            { value: kendo.toString(totalAsCu, "c", banhji.locale) , bold: true, color: "#ffffff", background: "#1E4E78", fontSize: 20 }
+					            { value: totalAsCu, bold: true, color: "#ffffff", background: "#1E4E78", fontSize: 20 }
 					        ]
 					    });
 					    console.log(totalAsCu);
@@ -45914,7 +45914,7 @@
 							    self.liArray.push({
 							        cells: [
 							          	{ value: "Total " + response.results[i].typeLine[j].type, bold: true },
-							            { value: kendo.toString(totalLi, "c", banhji.locale), bold: true, borderTop: { color: "#000000", size: 1 } },
+							            { value: totalLi, bold: true, borderTop: { color: "#000000", size: 1 } },
 							            { value: "" }
 							        ]
 							    });
@@ -45930,7 +45930,7 @@
 						        cells: [
 						          	{ value: "Total " + response.results[i].name, bold: true, italic: true },
 						            { value: "" },
-						            { value: kendo.toString(totalLi, "c", banhji.locale) , bold: true, borderTop: { color: "#000000", size: 1 } }
+						            { value: totalLi, bold: true, borderTop: { color: "#000000", size: 1 } }
 						        ]
 						    });
 						}
@@ -45938,7 +45938,7 @@
 					        cells: [
 					          	{ value: "TOTAL LIABILITIES", bold: true, color: "#000000", fontSize: 20 },
 					            { value: "" },
-					            { value: kendo.toString(totalLi, "c", banhji.locale) , bold: true, color: "#000000", fontSize: 20 }
+					            { value: totalLi, bold: true, color: "#000000", fontSize: 20 }
 					        ]
 					    });
 					    self.liArray.push({
@@ -45990,7 +45990,7 @@
 							    	self.eqArray.push({
 								        cells: [
 								          	{ value: response.results[i].typeLine[j].line[k].number + " " + response.results[i].typeLine[j].line[k].name },
-								            { value: kendo.toString(response.results[i].typeLine[j].line[k].amount, "c", banhji.locale) },
+								            { value: response.results[i].typeLine[j].line[k].amount },
 								            { value: "" }
 								        ]
 								    });
@@ -46000,7 +46000,7 @@
 							    self.eqArray.push({
 							        cells: [
 							          	{ value: "Total " + response.results[i].typeLine[j].type, bold: true },
-							            { value: kendo.toString(totalEq, "c", banhji.locale), bold: true, borderTop: { color: "#000000", size: 1 } },
+							            { value: totalEq, bold: true, borderTop: { color: "#000000", size: 1 } },
 							            { value: "" }
 							        ]
 							    });
@@ -46016,7 +46016,7 @@
 						        cells: [
 						          	{ value: "Total " + response.results[i].name, bold: true, italic: true },
 						            { value: "" },
-						            { value: kendo.toString(totalEq, "c", banhji.locale) , bold: true, borderTop: { color: "#000000", size: 1 } }
+						            { value: totalEq, bold: true, borderTop: { color: "#000000", size: 1 } }
 						        ]
 						    });
 						}
@@ -46024,7 +46024,7 @@
 					        cells: [
 					          	{ value: "TOTAL LIABILITIES & EQUITY", bold: true, color: "#ffffff", background: "#1E4E78", fontSize: 20 },
 					            { value: "", background: "#1E4E78" },
-					            { value: kendo.toString(totalAll, "c", banhji.locale) , bold: true, color: "#ffffff", background: "#1E4E78", fontSize: 20 }
+					            { value: totalAll, bold: true, color: "#ffffff", background: "#1E4E78", fontSize: 20 }
 					        ]
 					    });
 					}
