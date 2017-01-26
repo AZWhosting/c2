@@ -61566,62 +61566,49 @@
 			});//End Foreach Loop
 
 			//Assembly Item for cogs and inventory
-			$.each(assemblyItemList, function(ind, val){				
-				$.each(self.assemblyLineDS.data(), function(index, value){
-					if(value.assembly_id==val){
-						var item = self.itemDS.get(value.item_id),
-						amount = value.quantity * value.cost;				
-						
-						//Add COGS list
-						var cogsID = kendo.parseInt(item.expense_account_id);
-						if(cogsID>0){
-							var cogsAmount = 0, 
-							itemRate = banhji.source.getRate(item.locale, new Date(obj.issued_date));
+			$.each(self.assemblyLineDS.data(), function(index, value){
+				var item = self.itemDS.get(value.item_id);
+				
+				//Add COGS list
+				var cogsID = kendo.parseInt(item.expense_account_id);
+				if(cogsID>0){
+					var cogsAmount = 0, 
+					itemRate = banhji.source.getRate(item.locale, new Date(obj.issued_date));
+					
+					cogsAmount = value.quantity*item.cost;
 
-							if(item.item_type_id==1 || item.item_type_id==4){
-								cogsAmount = value.quantity*item.cost;						
+					if(cogsAmount>0){
+						if(cogsList[cogsID]===undefined){
+							cogsList[cogsID]={"id": cogsID, "amount": cogsAmount, "rate": itemRate, "locale": item.locale};						
+						}else{											
+							if(cogsList[cogsID].id===cogsID){
+								cogsList[cogsID].amount += cogsAmount;
 							}else{
-								cogsAmount = value.amount;
-							}					
-
-							if(cogsAmount>0){
-								if(cogsList[cogsID]===undefined){
-									cogsList[cogsID]={"id": cogsID, "amount": cogsAmount, "rate": itemRate, "locale": item.locale};						
-								}else{											
-									if(cogsList[cogsID].id===cogsID){
-										cogsList[cogsID].amount += cogsAmount;
-									}else{
-										cogsList[cogsID]={"id": cogsID, "amount": cogsAmount, "rate": itemRate, "locale": item.locale};
-									}
-								}
-							}
-						}
-
-						//Add Inventory list
-						var inventoryID = kendo.parseInt(item.inventory_account_id);
-						if(inventoryID>0){
-							var inventoryAmount = 0, 
-							itemRate = banhji.source.getRate(item.locale, new Date(obj.issued_date));
-
-							if(item.item_type_id==1 || item.item_type_id==4){
-								inventoryAmount = value.quantity*item.cost;						
-							}else{
-								inventoryAmount = value.amount;
-							}
-
-							if(inventoryList[inventoryID]===undefined){
-								inventoryList[inventoryID]={"id": inventoryID, "amount": inventoryAmount, "rate": itemRate, "locale": item.locale};						
-							}else{											
-								if(inventoryList[inventoryID].id===inventoryID){
-									inventoryList[inventoryID].amount += inventoryAmount;
-								}else{
-									inventoryList[inventoryID]={"id": inventoryID, "amount": inventoryAmount, "rate": itemRate, "locale": item.locale};
-								}
+								cogsList[cogsID]={"id": cogsID, "amount": cogsAmount, "rate": itemRate, "locale": item.locale};
 							}
 						}
 					}
-				});
-			});//End Assembly Item for cogs and inventory		
+				}
+
+				//Add Inventory list
+				var inventoryID = kendo.parseInt(item.inventory_account_id);
+				if(inventoryID>0){
+					var inventoryAmount = 0, 
+					itemRate = banhji.source.getRate(item.locale, new Date(obj.issued_date));
+
+					inventoryAmount = value.quantity*item.cost;
+
+					if(inventoryList[inventoryID]===undefined){
+						inventoryList[inventoryID]={"id": inventoryID, "amount": inventoryAmount, "rate": itemRate, "locale": item.locale};						
+					}else{											
+						if(inventoryList[inventoryID].id===inventoryID){
+							inventoryList[inventoryID].amount += inventoryAmount;
+						}else{
+							inventoryList[inventoryID]={"id": inventoryID, "amount": inventoryAmount, "rate": itemRate, "locale": item.locale};
+						}
+					}
+				}
+			});		
 
 			//Start journal
 			//Cash on Dr 
@@ -61989,7 +61976,7 @@
 			  	{ field: "code", dir: "asc" }
 			]
 		}),
-		taxItemDS 		: new kendo.data.DataSource({
+		taxItemDS 			: new kendo.data.DataSource({
 		  	data: banhji.source.taxList,
 		  	filter:{
 			    logic: "or",
@@ -63044,7 +63031,6 @@
 	    	var self = this,
 	    	obj = this.get("obj"),
 	    	contact = this.contactDS.get(obj.contact_id),
-	    	assemblyItemList = [];
 	    	taxList = {},
 	    	saleList = {},
 	    	cogsList = {},
@@ -63053,11 +63039,7 @@
 			//Arrange sale, cogs, inventory
 			$.each(this.lineDS.data(), function(index, value){
 				var item = self.itemDS.get(value.item_id),
-				amount = value.quantity * value.price;
-
-				if(item.is_assembly=="1"){
-					assemblyItemList.push(value.item_id);
-				}
+				amount = value.quantity * value.price;				
 
 				//Add Tax list
 				if(value.tax_item_id>0){
@@ -63140,53 +63122,49 @@
 			});//End Foreach Loop
 			
 			//Assembly Item for cogs and inventory
-			$.each(assemblyItemList, function(ind, val){				
-				$.each(self.assemblyLineDS.data(), function(index, value){
-					if(value.assembly_id==val){
-						var item = self.itemDS.get(value.item_id);				
-						
-						//Add COGS list
-						var cogsID = kendo.parseInt(item.expense_account_id);
-						if(cogsID>0){
-							var cogsAmount = 0, 
-							itemRate = banhji.source.getRate(item.locale, new Date(obj.issued_date));
-							
-							cogsAmount = value.quantity*item.cost;
+			$.each(self.assemblyLineDS.data(), function(index, value){
+				var item = self.itemDS.get(value.item_id);
+				
+				//Add COGS list
+				var cogsID = kendo.parseInt(item.expense_account_id);
+				if(cogsID>0){
+					var cogsAmount = 0, 
+					itemRate = banhji.source.getRate(item.locale, new Date(obj.issued_date));
+					
+					cogsAmount = value.quantity*item.cost;
 
-							if(cogsAmount>0){
-								if(cogsList[cogsID]===undefined){
-									cogsList[cogsID]={"id": cogsID, "amount": cogsAmount, "rate": itemRate, "locale": item.locale};						
-								}else{											
-									if(cogsList[cogsID].id===cogsID){
-										cogsList[cogsID].amount += cogsAmount;
-									}else{
-										cogsList[cogsID]={"id": cogsID, "amount": cogsAmount, "rate": itemRate, "locale": item.locale};
-									}
-								}
-							}
-						}
-
-						//Add Inventory list
-						var inventoryID = kendo.parseInt(item.inventory_account_id);
-						if(inventoryID>0){
-							var inventoryAmount = 0, 
-							itemRate = banhji.source.getRate(item.locale, new Date(obj.issued_date));
-
-							inventoryAmount = value.quantity*item.cost;
-
-							if(inventoryList[inventoryID]===undefined){
-								inventoryList[inventoryID]={"id": inventoryID, "amount": inventoryAmount, "rate": itemRate, "locale": item.locale};						
-							}else{											
-								if(inventoryList[inventoryID].id===inventoryID){
-									inventoryList[inventoryID].amount += inventoryAmount;
-								}else{
-									inventoryList[inventoryID]={"id": inventoryID, "amount": inventoryAmount, "rate": itemRate, "locale": item.locale};
-								}
+					if(cogsAmount>0){
+						if(cogsList[cogsID]===undefined){
+							cogsList[cogsID]={"id": cogsID, "amount": cogsAmount, "rate": itemRate, "locale": item.locale};						
+						}else{											
+							if(cogsList[cogsID].id===cogsID){
+								cogsList[cogsID].amount += cogsAmount;
+							}else{
+								cogsList[cogsID]={"id": cogsID, "amount": cogsAmount, "rate": itemRate, "locale": item.locale};
 							}
 						}
 					}
-				});
-			});//End Assembly Item for cogs and inventory
+				}
+
+				//Add Inventory list
+				var inventoryID = kendo.parseInt(item.inventory_account_id);
+				if(inventoryID>0){
+					var inventoryAmount = 0, 
+					itemRate = banhji.source.getRate(item.locale, new Date(obj.issued_date));
+
+					inventoryAmount = value.quantity*item.cost;
+
+					if(inventoryList[inventoryID]===undefined){
+						inventoryList[inventoryID]={"id": inventoryID, "amount": inventoryAmount, "rate": itemRate, "locale": item.locale};						
+					}else{											
+						if(inventoryList[inventoryID].id===inventoryID){
+							inventoryList[inventoryID].amount += inventoryAmount;
+						}else{
+							inventoryList[inventoryID]={"id": inventoryID, "amount": inventoryAmount, "rate": itemRate, "locale": item.locale};
+						}
+					}
+				}
+			});
 
 			//Start journal
 			//A/R on Dr
@@ -65462,6 +65440,51 @@
 				}					  	
 			});
 
+			//Assembly Item for cogs and inventory
+			$.each(self.assemblyLineDS.data(), function(index, value){
+				var item = self.itemDS.get(value.item_id);
+				
+				//Add COGS list
+				var cogsID = kendo.parseInt(item.expense_account_id);
+				if(cogsID>0){
+					var cogsAmount = 0, 
+					itemRate = banhji.source.getRate(item.locale, new Date(obj.issued_date));
+					
+					cogsAmount = value.quantity*item.cost;
+
+					if(cogsAmount>0){
+						if(cogsList[cogsID]===undefined){
+							cogsList[cogsID]={"id": cogsID, "amount": cogsAmount, "rate": itemRate, "locale": item.locale};						
+						}else{											
+							if(cogsList[cogsID].id===cogsID){
+								cogsList[cogsID].amount += cogsAmount;
+							}else{
+								cogsList[cogsID]={"id": cogsID, "amount": cogsAmount, "rate": itemRate, "locale": item.locale};
+							}
+						}
+					}
+				}
+
+				//Add Inventory list
+				var inventoryID = kendo.parseInt(item.inventory_account_id);
+				if(inventoryID>0){
+					var inventoryAmount = 0, 
+					itemRate = banhji.source.getRate(item.locale, new Date(obj.issued_date));
+
+					inventoryAmount = value.quantity*item.cost;
+
+					if(inventoryList[inventoryID]===undefined){
+						inventoryList[inventoryID]={"id": inventoryID, "amount": inventoryAmount, "rate": itemRate, "locale": item.locale};						
+					}else{											
+						if(inventoryList[inventoryID].id===inventoryID){
+							inventoryList[inventoryID].amount += inventoryAmount;
+						}else{
+							inventoryList[inventoryID]={"id": inventoryID, "amount": inventoryAmount, "rate": itemRate, "locale": item.locale};
+						}
+					}
+				}
+			});
+
 			//Group Account from returnDS
 			$.each(this.returnDS.data(), function(index, value){
 				//Offset Invoice
@@ -65489,7 +65512,7 @@
 						}
 					}
 				}
-			});		
+			});
 
 			//Start journal			
 			//Sale on Dr
