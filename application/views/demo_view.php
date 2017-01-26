@@ -74501,13 +74501,7 @@
     	journalLineDS			: dataStore(apiUrl + "journal_lines"),
     	attachmentDS	 		: dataStore(apiUrl + "attachments"),
     	categoryDS 				: banhji.source.inventoryCategoryDS,			
-		itemDS  				: new kendo.data.DataSource({
-		  	data: banhji.source.itemList,
-		  	sort: [
-				{ field:"item_type_id", dir:"asc" },
-				{ field:"number", dir:"asc" }
-			]
-		}),
+		itemDS  				: dataStore(apiUrl + "items"),
 		contactDS 				: banhji.source.employeeDS,
 		accountDS  				: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
@@ -74673,7 +74667,7 @@
 				);
 			}
 
-			if(category_id>0){
+			if(category_id){
 				para.push({ field:"category_id", value:category_id });
 			}
 
@@ -74682,11 +74676,11 @@
 			para.push({ field:"is_assembly", value: 0 });          
 
             this.itemDS.query({
-            	filter: para,
-            	page: 1,
-            	pageSize: 100
+            	filter: para
             }).then(function(data){
             	var view = self.itemDS.view();
+
+            	self.lineDS.data([]);
 
             	$.each(view, function(index, value){
             		self.lineDS.add({
