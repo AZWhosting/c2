@@ -43085,7 +43085,7 @@
 			}
 
 			this.segmentItemDS.query({
-				filter:[]
+				filter:{ field:"segment_id >", value: 0 }
 			}).then(function(){
 				var view = self.segmentItemDS.view();
 
