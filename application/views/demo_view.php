@@ -45903,7 +45903,7 @@
 							    	self.liArray.push({
 								        cells: [
 								          	{ value: response.results[i].typeLine[j].line[k].number + " " + response.results[i].typeLine[j].line[k].name },
-								            { value: kendo.toString(response.results[i].typeLine[j].line[k].amount, "c", banhji.locale) },
+								            { value: kendo.parseFloat(response.results[i].typeLine[j].line[k].amount) },
 								            { value: "" }
 								        ]
 								    });
