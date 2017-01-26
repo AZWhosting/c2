@@ -111,10 +111,10 @@
 							<span style="color: #9EA7B8;">Water Connection</span>
 						</div>
 						<div class="span5" style="color: #3F73A3; text-align: center; font-size: 35px; font-weight: 600; padding-left: 0; border-right: 1px solid #9DA9BF; ">
-							$50,000
+							<span data-bind="text: totalDeposit"></span>
 						</div>
 						<div class="span3" style="text-align: center; margin-top: 7px; padding-right: 0; color: #000; font-size: 35px;">
-							3,000
+							<span data-bind="text: totalUser"></span>
 						</div>					
 					</div>
 				</a>
@@ -124,10 +124,10 @@
 							<span style="font-size: 24px; color: #40546C;">TOTAL SALE</span>
 						</div>
 						<div class="span4" style="color: #3F73A3; text-align: center; font-size: 35px; font-weight: 600; padding-left: 0; border-right: 1px solid #9DA9BF; ">
-							$50,000
+							<span data-bind="text: totalSale"></span>
 						</div>
 						<div class="span4" style="text-align: center; margin-top: 7px; padding-right: 0; color: #000; font-size: 35px;">
-							10,000<span style="font-size: 25px;">m<sup >3</sup></span>
+							<span data-bind="text: totalUsage"></span><span style="font-size: 25px;">m<sup >3</sup></span>
 						</div>										
 					</div>
 				</a>
@@ -10023,37 +10023,55 @@
 	**************************/
 	banhji.wDashBoard = kendo.observable({
 		dataSource: new kendo.data.DataSource({
-	      transport: {
-	        read  : {
-	          url: baseUrl + 'api/waterdash/license',
-	          type: "GET",
-	          dataType: 'json',
-	          headers: { Institute: JSON.parse(localStorage.getItem('userData/user')).institute.id }
-	        },
-	        parameterMap: function(options, operation) {
-	          if(operation === 'read') {
-	            return {
-	              limit: options.take,
-	              page: options.page,
-	              filter: options.filter
-	            };
-	          } else {
-	            return {models: kendo.stringify(options.models)};
-	          }
-	        }
-	      },
-	      schema  : {
-	        model: {
-	          id: 'id'
-	        },
-	        data: 'results',
-	        total: 'count'
-	      },
-	      batch: true,
-	      serverFiltering: true,
-	      serverPaging: true,
-	      pageSize: 100
-	    })
+	      	transport: {
+		        read  : {
+		          url: baseUrl + 'api/waterdash/license',
+		          type: "GET",
+		          dataType: 'json',
+		          headers: { Institute: JSON.parse(localStorage.getItem('userData/user')).institute.id }
+		        },
+		        parameterMap: function(options, operation) {
+		          if(operation === 'read') {
+		            return {
+		              limit: options.take,
+		              page: options.page,
+		              filter: options.filter
+		            };
+		          } else {
+		            return {models: kendo.stringify(options.models)};
+		          }
+		        }
+		    },
+	      	schema  : {
+	        	model: {
+	          		id: 'id'
+	        	},
+	        	data: 'results',
+	        	total: 'count'
+	      	},
+	      	change: function(e) {
+	      		var vm = banhji.wDashboard;
+	      		var sale = 0, usage = 0, user = 0, deposit = 0;
+	      		$.each(this.data(), function(index, value){
+	      			sale += value.sale;
+	      			usage+= value.usage;
+	      			user += value.activeCustomer;
+	      			deposit+= value.deposit;
+	      		});
+	      		banhji.wDashBoard.set('totalSale', sale);
+	      		banhji.wDashBoard.set('totalUsage', usage);
+	      		banhji.wDashBoard.set('totalUser', user);
+	      		banhji.wDashBoard.set('totalDeposit', deposit);
+	      	},
+	      	batch: true,
+	      	serverFiltering: true,
+	      	serverPaging: true,
+	      	pageSize: 100
+	    }),
+	    totalSale: 0,
+	    totalUsage: 0,
+	    totalUser: 0,
+	    totalDeposit: 0
 	});
 	banhji.waterCenter = kendo.observable({
 		lang 				: langVM,

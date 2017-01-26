@@ -45506,14 +45506,7 @@
 		company 			: banhji.institute,
 		dr 					: 0,
 		cr 					: 0,
-		exArray 			: [{ cells: [
-			{ value: "Code", background: "#496cad", color: "#ffffff" },
-			{ value: "Name", background: "#496cad", color: "#ffffff" },
-			{ value: "Type", background: "#496cad", color: "#ffffff" },
-			{ value: "Debit", background: "#496cad", color: "#ffffff" },
-			{ value: "Credit", background: "#496cad", color: "#ffffff" }
-			]
-		}],
+		exArray 			: [],
 		pageLoad 			: function(){
 			this.search();
 		},
@@ -45555,6 +45548,36 @@
 				this.dataSource.bind("requestEnd", function(e){				
 					if(e.type=="read"){
 						var response = e.response;
+							self.exArray.push({
+		            		cells: [
+		            			{ value: self.company.name, textAlign: "center", colSpan: 5 }
+		            		]
+		            	});
+		            	self.exArray.push({
+		            		cells: [
+		            			{ value: "General Ledger",bold: true, fontSize: 20, textAlign: "center", colSpan: 5 }
+		            		]
+		            	});
+		            	if(self.displayDate){
+			            	self.exArray.push({
+			            		cells: [
+			            			{ value: self.displayDate, textAlign: "center", colSpan: 5 }
+			            		]
+			            	});
+			            }
+		            	self.exArray.push({
+		            		cells: [
+		            			{ value: "", colSpan: 5 }
+		            		]
+		            	});
+		            	self.exArray.push({ cells: [
+							{ value: "Code", background: "#496cad", color: "#ffffff" },
+							{ value: "Name", background: "#496cad", color: "#ffffff" },
+							{ value: "Type", background: "#496cad", color: "#ffffff" },
+							{ value: "Debit", background: "#496cad", color: "#ffffff" },
+							{ value: "Credit", background: "#496cad", color: "#ffffff" }
+							]
+						});
 						for (var i = 0; i < response.results.length; i++){
 							self.exArray.push({
 						        cells: [
@@ -45719,7 +45742,7 @@
 		search 				: function(){
 			var self = this, as_of = this.get("as_of");
 			this.set("totalLiabilityEquity", 0);
-			var totalAll = 0, totalCurrent = 0, totalEq = 0;
+			var totalAll = 0, totalCurrent = 0, totalLi = 0, totalEq = 0, totalAsCu = 0;
 			if(as_of){
 				var displayDate = "As Of " + kendo.toString(as_of, "dd-MM-yyyy");
 				this.set("displayDate", displayDate);
@@ -45791,8 +45814,10 @@
 								            { value: "" }
 								        ]
 								    });
+
 								    totalCurrent += kendo.parseFloat(response.results[i].typeLine[j].line[k].amount);
 							    	totalAll += kendo.parseFloat(response.results[i].typeLine[j].line[k].amount);
+							    	totalAsCu += kendo.parseFloat(response.results[i].typeLine[j].line[k].amount);
 							    }
 							    self.exArray.push({
 							        cells: [
@@ -45822,9 +45847,10 @@
 					        cells: [
 					          	{ value: "TOTAL ASSETS", bold: true, color: "#ffffff", background: "#1E4E78", fontSize: 20 },
 					            { value: "", background: "#1E4E78" },
-					            { value: kendo.toString(tAsset, "c", banhji.locale) , bold: true, color: "#ffffff", background: "#1E4E78", fontSize: 20 }
+					            { value: kendo.toString(totalAsCu, "c", banhji.locale) , bold: true, color: "#ffffff", background: "#1E4E78", fontSize: 20 }
 					        ]
 					    });
+					    console.log(totalAsCu);
 					    self.exArray.push({
 					        cells: [
 					          	{ value: "", colSpan: 3 },
@@ -45832,7 +45858,7 @@
 					    });
 					}
 				});
-
+				totalAll = 0;
 				//Liability
 				this.liabilityDS.filter([
 					{ field:"issued_date", value:kendo.toString(new Date(as_of), "yyyy-MM-dd") },
@@ -45849,7 +45875,7 @@
 						self.set("totalLiability", kendo.toString(response, "c", banhji.locale));
 						//Excel Export
 
-						var response = e.response, totalCurrent = 0;
+						var response = e.response;
 						self.liArray = [];
 						self.liArray.push({
 					        cells: [
@@ -45912,7 +45938,7 @@
 					        cells: [
 					          	{ value: "TOTAL LIABILITIES", bold: true, color: "#000000", fontSize: 20 },
 					            { value: "" },
-					            { value: kendo.toString(totalLi, "c", banhji.locale) , bold: true, color: "#ffffff", fontSize: 20 }
+					            { value: kendo.toString(totalLi, "c", banhji.locale) , bold: true, color: "#000000", fontSize: 20 }
 					        ]
 					    });
 					    self.liArray.push({
@@ -45935,7 +45961,7 @@
 						self.set("totalLiabilityEquity", total);
 						self.set("totalEquity", kendo.toString(response, "c", banhji.locale));
 						//export Excel
-						var response = e.response, totalCurrent = 0;
+						var response = e.response;
 						self.eqArray = [];
 						self.eqArray.push({
 					        cells: [
@@ -45968,13 +45994,13 @@
 								            { value: "" }
 								        ]
 								    });
-								    totalCurrent += kendo.parseFloat(response.results[i].typeLine[j].line[k].amount);
-							    	tAsset += kendo.parseFloat(response.results[i].typeLine[j].line[k].amount);
+								    totalEq += kendo.parseFloat(response.results[i].typeLine[j].line[k].amount);
+							    	totalAll += kendo.parseFloat(response.results[i].typeLine[j].line[k].amount);
 							    }
 							    self.eqArray.push({
 							        cells: [
 							          	{ value: "Total " + response.results[i].typeLine[j].type, bold: true },
-							            { value: kendo.toString(totalCurrent, "c", banhji.locale), bold: true, borderTop: { color: "#000000", size: 1 } },
+							            { value: kendo.toString(totalEq, "c", banhji.locale), bold: true, borderTop: { color: "#000000", size: 1 } },
 							            { value: "" }
 							        ]
 							    });
@@ -45990,7 +46016,7 @@
 						        cells: [
 						          	{ value: "Total " + response.results[i].name, bold: true, italic: true },
 						            { value: "" },
-						            { value: kendo.toString(totalCurrent, "c", banhji.locale) , bold: true, borderTop: { color: "#000000", size: 1 } }
+						            { value: kendo.toString(totalEq, "c", banhji.locale) , bold: true, borderTop: { color: "#000000", size: 1 } }
 						        ]
 						    });
 						}
@@ -45998,13 +46024,13 @@
 					        cells: [
 					          	{ value: "TOTAL LIABILITIES & EQUITY", bold: true, color: "#ffffff", background: "#1E4E78", fontSize: 20 },
 					            { value: "", background: "#1E4E78" },
-					            { value: kendo.toString(tAsset, "c", banhji.locale) , bold: true, color: "#ffffff", background: "#1E4E78", fontSize: 20 }
+					            { value: kendo.toString(totalAll, "c", banhji.locale) , bold: true, color: "#ffffff", background: "#1E4E78", fontSize: 20 }
 					        ]
 					    });
 					}
 				});
 			}
-			console.log(tAsset);
+			console.log(totalAll);
 		},
 		printGrid			: function() {
 			var gridElement = $('#grid'),
