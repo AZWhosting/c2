@@ -171,7 +171,7 @@
 							<div class="widget-body alert-info welcome-nopadding" style="width: 100%;">
 								<p style="color: #000;"><span>Active Customer</span></p>
 						
-								<div class="strong" align="center" style="color: #3475AF; font-size: 40px; margin-top: -15px; margin-bottom: 0;">$17,000</div>
+								<div class="strong" align="center" style="color: #3475AF; font-size: 40px; margin-top: -15px; margin-bottom: 0;"><span data-bind="text: totalUser"></span></div>
 							
 								<table width="100%" style="color: #8E9EAE;">
 									<tbody>
@@ -187,7 +187,7 @@
 												<span>Operation</span>
 											</td>
 											<td>
-												<span style="font-size: 25px;">1</span>
+												<span style="font-size: 25px;" data-bind="text: avgUsage"></span>
 												<br>
 												<span>Average Usage</span>
 											</td>
@@ -10062,6 +10062,7 @@
 	      		banhji.wDashBoard.set('totalUsage', usage);
 	      		banhji.wDashBoard.set('totalUser', user);
 	      		banhji.wDashBoard.set('totalDeposit', deposit);
+	      		banhji.wDashBoard.set('avgUsage', usage/user);
 	      	},
 	      	batch: true,
 	      	serverFiltering: true,
@@ -10071,7 +10072,8 @@
 	    totalSale: 0,
 	    totalUsage: 0,
 	    totalUser: 0,
-	    totalDeposit: 0
+	    totalDeposit: 0,
+	    avgUsage: 0
 	});
 	banhji.waterCenter = kendo.observable({
 		lang 				: langVM,

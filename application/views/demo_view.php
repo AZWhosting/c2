@@ -777,49 +777,108 @@
 				<div class="span9 detailsWrapper">
 					<div class="row-fluid">					
 						<div class="span6">
-							<div class="accounCetner-textedit">
-							<table width="100%">
-								<tr>
-									<td width="40%"><span data-bind="text: lang.lang.account_number"></span>:</td>
-									<td width="60%">
-										<span class="strong" data-bind="text: obj.number"></span>
-									</td>
-								</tr>
-								<tr>
-									<td><span data-bind="text: lang.lang.account_title"></span>:</td>
-									<td>
-										<span class="strong" data-bind="text: obj.name"></span>
-									</td>
-								</tr>
-								<tr>
-									<td><span data-bind="text: lang.lang.sub_account"></span>:</td>
-									<td>
-										<span data-bind="text: subName"></span>
-									</td>
-								</tr>
-								<tr>
-									<td><span data-bind="text: lang.lang.account_type"></span>:</td>
-									<td>
-										<span data-bind="text: typeName"></span>
-									</td>
-								</tr>								
-								<tr>
-									<td><span data-bind="text: lang.lang.description"></span>:</td>
-									<td>
-										<span data-bind="text: obj.description"></span>
-									</td>
-								</tr>
-								<tr>
-									<td><span data-bind="text: lang.lang.taxable"></span>:</td>
-									<td>										
-										<input type="checkbox" id="chbTaxable" class="k-checkbox" data-bind="checked: obj.is_taxable">
-          								<label class="k-checkbox-label" for="chbTaxable"></label>
-									</td>
-								</tr>
-							</table>
+							<div class="widget widget-4 widget-tabs-icons-only margin-bottom-none">
 
-							<span class="btn btn-primary btn-icon glyphicons edit pull-right" data-bind="click: goEdit"><i></i><span data-bind="text: lang.lang.edit"></span></span>
+							    <!-- Widget Heading -->
+							    <div class="widget-head">
+							    	<input type="text" name="" data-bind="value: obj.name" disabled="disabled" style="border: none; width: 69%; font-size: 20px; font-weight: 600; margin-top: -11px; margin-left: 11px; background: #fff;">
+							        <!-- Tabs -->
+							        <ul class="pull-right">
+							            <li class="glyphicons circle_info active"><span data-toggle="tab" data-target="#tab1-2"><i></i></span>
+							            </li>
+							            <li class="glyphicons paperclip"><span data-toggle="tab" data-target="#tab2-2"><i></i></span>
+							            </li>							            							            
+							        </ul>
+							        <div class="clearfix"></div>
+							        <!-- // Tabs END -->
 
+							    </div>
+							    <!-- Widget Heading END -->
+
+							    <div class="widget-body">
+							        <div class="tab-content">
+
+							            <!-- Info Tab content -->
+							            <div id="tab1-2" class="tab-pane active box-generic">
+							            	<div class="accounCetner-textedit">
+												<table width="100%">
+													<tr>
+														<td width="40%"><span data-bind="text: lang.lang.account_number"></span>:</td>
+														<td width="60%">
+															<span class="strong" data-bind="text: obj.number"></span>
+														</td>
+													</tr>
+													<tr>
+														<td><span data-bind="text: lang.lang.account_title"></span>:</td>
+														<td>
+															<span class="strong" data-bind="text: obj.name"></span>
+														</td>
+													</tr>
+													<tr>
+														<td><span data-bind="text: lang.lang.sub_account"></span>:</td>
+														<td>
+															<span data-bind="text: subName"></span>
+														</td>
+													</tr>
+													<tr>
+														<td><span data-bind="text: lang.lang.account_type"></span>:</td>
+														<td>
+															<span data-bind="text: typeName"></span>
+														</td>
+													</tr>								
+													<tr>
+														<td><span data-bind="text: lang.lang.description"></span>:</td>
+														<td>
+															<span data-bind="text: obj.description"></span>
+														</td>
+													</tr>
+													<tr>
+														<td><span data-bind="text: lang.lang.taxable"></span>:</td>
+														<td>										
+															<input type="checkbox" id="chbTaxable" class="k-checkbox" data-bind="checked: obj.is_taxable">
+					          								<label class="k-checkbox-label" for="chbTaxable"></label>
+														</td>
+													</tr>
+												</table>
+
+												<span class="btn btn-primary btn-icon glyphicons edit pull-right" data-bind="click: goEdit"><i></i><span data-bind="text: lang.lang.edit"></span></span>
+											</div>
+							            </div>
+							            <!-- // Transactions Tab content END -->
+
+							            <!-- Attach Tab content -->
+								        <div id="tab2-2" class="tab-pane">							            	
+								            <p><span data-bind="text: lang.lang.file_type"></span> [PDF, JPG, JPEG, TIFF, PNG, GIF]</p>
+								            <input id="files" name="files"
+							                   type="file"
+							                   data-role="upload"
+							                   data-show-file-list="false"
+							                   data-bind="events: { 
+					                   				select: onSelect
+							                   }">
+
+								            <table class="table table-bordered">
+										        <thead>
+										            <tr>			                
+										                <th><span data-bind="text: lang.lang.file_name"></span></th>
+										                <th><span data-bind="text: lang.lang.description"></span></th>
+										                <th><span data-bind="text: lang.lang.date"></span></th>
+										                <th style="width: 13%;"></th>                			                
+										            </tr> 
+										        </thead>
+										        <tbody data-role="listview" 
+										        		data-template="attachment-list-tmpl" 
+										        		data-auto-bind="false"
+										        		data-bind="source: attachmentDS"></tbody>			        
+										    </table>
+
+										    <span class="btn btn-icon btn-success glyphicons ok_2" data-bind="click: uploadFile" style="color: #fff; padding: 5px 38px; text-align: left; width: 98px !important; display: inline-block; margin-top: 10px;"><i></i> <span data-bind="text: lang.lang.save"></span></span>
+
+								        </div>
+								        <!-- // Attach Tab content END -->							            								            
+
+							        </div>
+							    </div>
 							</div>
 						</div>
 
@@ -32272,6 +32331,10 @@
 			                 data-bind="source: lineDS"></tbody>				        
 				    </table>
 
+				    <div id="pager" class="k-pager-wrap"
+				    	 data-auto-bind="false"
+			             data-role="pager" data-bind="source: lineDS"></div>
+
 					<!-- Form actions -->
 					<div class="box-generic bg-action-button">
 						<div id="ntf1" data-role="notification"></div>						
@@ -43395,7 +43458,8 @@
 		}),
 		accountTypeDS 		: banhji.source.accountTypeDS,
 		summaryDS  			: dataStore(apiUrl + 'centers/accounting_summary'),
-		transactionDS  		: dataStore(apiUrl + 'centers/accounting_txn'),		
+		transactionDS  		: dataStore(apiUrl + 'centers/accounting_txn'),
+		attachmentDS	 	: dataStore(apiUrl + "attachments"),		
 		sortList			: banhji.source.sortList,
 		sorter 				: "all",
 		sdate 				: "",
@@ -43419,6 +43483,97 @@
 				this.searchTransaction();
 			}						
 		},
+		//Upload
+		onSelect 			: function(e){			
+	        // Array with information about the uploaded files
+	        var self = this, 
+	        files = e.files,
+	        obj = this.get("obj");			
+			
+			if(obj!==null){
+		        // Check the extension of each file and abort the upload if it is not .jpg
+		        $.each(files, function(index, value){
+		            if (value.extension.toLowerCase() === ".jpg"
+		            	|| value.extension.toLowerCase() === ".jpeg"
+		            	|| value.extension.toLowerCase() === ".tiff"
+		            	|| value.extension.toLowerCase() === ".png" 
+		            	|| value.extension.toLowerCase() === ".gif"
+		            	|| value.extension.toLowerCase() === ".pdf"){
+
+		            	var key = 'ATTACH_' + banhji.institute.id + "_" + Math.floor(Math.random() * 100000000000000001) +'_'+ value.name;
+
+		            	self.attachmentDS.add({
+		            		user_id 		: self.get("user_id"),
+		            		account_id 		: obj.id,
+		            		type 			: "Account",
+		            		name 			: value.name,
+		            		description 	: "",
+		            		key 			: key,
+		            		url 			: banhji.s3 + key,
+		            		size 			: value.size,
+		            		created_at 		: new Date(),
+
+		            		file 			: value.rawFile
+		            	});	            			            		            
+		            }else{
+		            	alert("This type of file is not allowed to attach.");
+		            }
+		        });
+	    	}else{
+	    		alert("Please select an account!");
+	    	}
+	    },
+	    removeFile 			: function(e){
+	    	var data = e.data;
+
+	    	if (confirm(banhji.source.confirmMessage)) {
+	    		this.attachmentDS.remove(data);
+	    		this.attachmentDS.sync();
+	    	}	    	
+	    },
+	    uploadFile 			: function(){
+	    	$.each(this.attachmentDS.data(), function(index, value){	    		
+		    	if(!value.id){
+			    	var params = { 
+		            	Body: value.file, 
+		            	Key: value.key 
+		            };
+		            bucket.upload(params, function (err, data) {		                
+	                	// console.log(err, data);
+	                	// var url = data.Location;                
+	            	});
+            	}	            
+            });
+
+            this.attachmentDS.sync();
+            var saved = false;
+            this.attachmentDS.bind("requestEnd", function(e){
+            	//Delete File
+            	if(e.type=="destroy"){
+	            	if(saved==false && e.response){
+	            		saved = true;
+	            	
+	            		var response = e.response.results;
+	            		$.each(response, function(index, value){            			
+		            		var params = {
+							  	//Bucket: 'STRING_VALUE', /* required */
+							 	Delete: { /* required */
+								    Objects: [ /* required */
+								      	{
+									        Key: value.data.key /* required */
+								      	}
+								      /* more items */
+								    ]
+							  	}
+							};
+							bucket.deleteObjects(params, function(err, data) {
+							  	//console.log(err, data);
+							});
+						});
+	            	}
+            	}
+            });
+	    },
 		sorterChanges 		: function(){
 	        var today = new Date(),
         	sdate = "",
@@ -43535,6 +43690,8 @@
 			this.set("obj", data);
 			this.loadSummary();
 			this.searchTransaction();
+
+			this.attachmentDS.filter({ field:"account_id", value: data.id });
 		},		
 		enterSearch 		: function(e){
 			e.preventDefault();
@@ -49549,7 +49706,7 @@
 	        files = e.files,
 	        obj = this.get("obj");			
 			
-			if(obj.id>0){
+			if(obj!==null){
 		        // Check the extension of each file and abort the upload if it is not .jpg
 		        $.each(files, function(index, value){
 		            if (value.extension.toLowerCase() === ".jpg"
@@ -56755,7 +56912,7 @@
 	        files = e.files,
 	        obj = this.get("obj");			
 			
-			if(obj.id>0){
+			if(obj!==null){
 		        // Check the extension of each file and abort the upload if it is not .jpg
 		        $.each(files, function(index, value){
 		            if (value.extension.toLowerCase() === ".jpg"
@@ -67630,7 +67787,7 @@
 	        files = e.files,
 	        obj = this.get("obj");			
 			
-			if(obj.id>0){
+			if(obj!==null){
 		        // Check the extension of each file and abort the upload if it is not .jpg
 		        $.each(files, function(index, value){
 		            if (value.extension.toLowerCase() === ".jpg"
@@ -67840,7 +67997,7 @@
         		end = kendo.toString(this.get("edate"), "yyyy-MM-dd"),
         		para = [], obj = this.get("obj");
 
-        	if(obj.id>0){
+        	if(obj!==null){
         		para.push({ field:"contact_id", value: obj.id });
         	
 	        	//Dates
@@ -67900,7 +68057,7 @@
 		saveNote 			: function(){
 			var obj = this.get("obj");
 
-			if(obj.id>0 && this.get("note")!==""){
+			if(obj!==null && this.get("note")!==""){
 				this.noteDS.insert(0, {
 					contact_id 	: obj.id,
 					note 		: this.get("note"),
@@ -74526,11 +74683,11 @@
 		  	data: banhji.source.accountList,
 			sort: { field:"number", dir:"asc" }
 		}),
-		jobDS 				: new kendo.data.DataSource({
+		jobDS 					: new kendo.data.DataSource({
 		  	data: banhji.source.jobList,
 		  	sort: { field: "name", dir: "asc" }
 		}),
-		segmentItemDS 		: new kendo.data.DataSource({
+		segmentItemDS 			: new kendo.data.DataSource({
 		  	data: banhji.source.segmentItemList,
 		  	sort: [
 			  	{ field: "segment_id", dir: "asc" },
@@ -74673,9 +74830,9 @@
 		search 					: function(){
 			var self = this,
 			para = [],
-			obj = this.get("obj"),			
+			obj = this.get("obj"),
 			category_id = this.get("category_id"),
-			searchText = this.get("searchText");        	
+			searchText = this.get("searchText");
 
             if(searchText!==""){
 				var textParts = searchText.replace(/([a-z]+)/i, "$1 ").split(/[^0-9a-z]+/ig);
@@ -74692,7 +74849,7 @@
 
 			para.push({ field:"item_type_id", value:1 });
 			para.push({ field:"is_catalog", value: 0 });
-			para.push({ field:"is_assembly", value: 0 });          
+			para.push({ field:"is_assembly", value: 0 });
 
             this.itemDS.query({
             	filter: para
@@ -74705,7 +74862,7 @@
             		self.lineDS.add({
             			transaction_id 		: 0,
 						item_id 			: value.id,
-						measurement_id 		: value.measurement_id,						
+						measurement_id 		: value.measurement_id,
 						description 		: value.name,
 						on_hand 			: value.on_hand,
 						quantity_adjusted 	: "",				
@@ -74714,7 +74871,7 @@
 						additional_cost 	: 0,
 						rate				: banhji.source.getRate(value.locale, new Date(obj.issued_date)),
 						locale				: value.locale,
-						movement 			: 1				
+						movement 			: 1
             		});
             	});
             });

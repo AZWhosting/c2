@@ -68,7 +68,7 @@ class Contacts extends REST_Controller {
 			$data["count"] = $obj->result_count();
 		}
 		
-		if($obj->result_count()>0){
+		if($obj->exists()){
 			foreach ($obj as $value) {
 		 		$data["results"][] = array(
 		 			"id" 						=> $value->id,

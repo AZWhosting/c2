@@ -28,11 +28,11 @@ class Attachments extends REST_Controller {
 	
 	//GET 
 	function index_get() {		
-		$filters 	= $this->get("filter")["filters"];		
-		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
-		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;							
-		$sort 	 	= $this->get("sort");		
-		$data["results"] = array();
+		$filter 	= $this->get("filter");
+		$page 		= $this->get('page');
+		$limit 		= $this->get('limit');
+		$sort 	 	= $this->get("sort");
+		$data["results"] = [];
 		$data["count"] = 0;
 		$traNumber = 0;
 		$conNumber = 0;
@@ -49,28 +49,39 @@ class Attachments extends REST_Controller {
 		}
 
 		$obj = new Attachment(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
+		
 		//Sort
-		if(!empty($sort) && isset($sort)){					
+		if(!empty($sort) && isset($sort)){
 			foreach ($sort as $value) {
-				$obj->order_by($value["field"], $value["dir"]);
+				if(isset($value['operator'])){
+					$obj->{$value['operator']}($value["field"], $value["dir"]);
+				}else{
+					$obj->order_by($value["field"], $value["dir"]);
+				}
 			}
 		}
-		
-		//Filter		
-		if(!empty($filters) && isset($filters)){
-	    	foreach ($filters as $value) {
+
+		//Filter
+		if(!empty($filter) && isset($filter)){
+	    	foreach ($filter['filters'] as $value) {
 	    		if(isset($value['operator'])) {
 					$obj->{$value['operator']}($value['field'], $value['value']);
 				} else {
-	    			$obj->where($value["field"], $value["value"]);
+					$obj->where($value["field"], $value["value"]);
 				}
 			}
 		}
 		
-		$obj->get_paged_iterated($page, $limit);
-		$data["count"] = $obj->paged->total_rows;		
+		//Results
+		if($page && $limit){
+			$obj->get_paged_iterated($page, $limit);
+			$data["count"] = $obj->paged->total_rows;
+		}else{
+			$obj->get_iterated();
+			$data["count"] = $obj->result_count();
+		}
 
-		if($obj->result_count()>0){			
+		if($obj->exists()){			
 			foreach ($obj as $value) {				
 				//Results
 				$attachedTo = array('id' => null, 'name' => null, 'type' => null);
@@ -95,6 +106,7 @@ class Attachments extends REST_Controller {
 					"id" 				=> $value->id,					
 					"user_id" 			=> $value->user_id,
 					"transaction_id" 	=> $value->transaction_id,
+					"account_id" 		=> $value->account_id,
 					"contact_id" 		=> $value->contact_id,
 					"item_id" 			=> $value->item_id,
 					"type" 				=> $value->type,
@@ -131,6 +143,7 @@ class Attachments extends REST_Controller {
 			
 			isset($value->user_id) 			? $obj->user_id 		= $value->user_id : "";
 			isset($value->transaction_id) 	? $obj->transaction_id 	= $value->transaction_id : "";
+			isset($value->account_id) 		? $obj->account_id 		= $value->account_id : "";
 			isset($value->contact_id) 		? $obj->contact_id 		= $value->contact_id : "";
 			isset($value->item_id) 			? $obj->item_id 		= $value->item_id : "";
 			isset($value->type) 			? $obj->type 			= $value->type : "";
@@ -148,6 +161,7 @@ class Attachments extends REST_Controller {
 					"id" 				=> $obj->id,
 					"user_id" 			=> $obj->user_id,					
 					"transaction_id" 	=> $obj->transaction_id,
+					"account_id" 		=> $obj->account_id,
 					"contact_id" 		=> $obj->contact_id,
 					"item_id" 			=> $obj->item_id,
 					"type" 				=> $obj->type,
@@ -179,6 +193,7 @@ class Attachments extends REST_Controller {
 
 			isset($value->user_id) 			? $obj->user_id 		= $value->user_id : "";
 			isset($value->transaction_id) 	? $obj->transaction_id 	= $value->transaction_id : "";
+			isset($value->account_id) 		? $obj->account_id 		= $value->account_id : "";
 			isset($value->contact_id) 		? $obj->contact_id 		= $value->contact_id : "";
 			isset($value->item_id) 			? $obj->item_id 		= $value->item_id : "";
 			isset($value->type) 			? $obj->type 			= $value->type : "";
@@ -195,6 +210,7 @@ class Attachments extends REST_Controller {
 					"id" 				=> $obj->id,
 					"user_id" 			=> $obj->user_id,					
 					"transaction_id" 	=> $obj->transaction_id,
+					"account_id" 		=> $obj->account_id,
 					"contact_id" 		=> $obj->contact_id,
 					"item_id" 			=> $obj->item_id,
 					"type" 				=> $obj->type,
