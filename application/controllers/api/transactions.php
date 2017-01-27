@@ -265,8 +265,8 @@ class Transactions extends REST_Controller {
 					$paid->select_sum("discount");
 					$paid->where("reference_id", $obj->reference_id);
 					$paid->where_in("type", array("Cash_Receipt", "Cash_Payment"));
-					$paid->where("is_recurring",0);
-					$paid->where("deleted",0);
+					$paid->where("is_recurring <>", 1);
+					$paid->where("deleted <>", 1);
 					$paid->get();
 					$amount_paid = floatval($paid->amount) + floatval($paid->discount);
 
@@ -401,7 +401,7 @@ class Transactions extends REST_Controller {
 		   	isset($value->rate) 					? $obj->rate 						= $value->rate : "";
 		   	isset($value->locale) 					? $obj->locale 						= $value->locale : "";
 		   	isset($value->month_of) 				? $obj->month_of 					= $value->month_of : "";
-		   	isset($value->issued_date) 				? $obj->issued_date 				= date("Y-m-d", strtotime($value->issued_date)) : "";
+		   	isset($value->issued_date) 				? $obj->issued_date 				= $value->issued_date : "";
 		   	isset($value->bill_date) 				? $obj->bill_date 					= $value->bill_date : "";
 		   	isset($value->payment_date) 			? $obj->payment_date 				= $value->payment_date : "";
 		   	isset($value->due_date) 				? $obj->due_date 					= $value->due_date : "";

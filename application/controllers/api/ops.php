@@ -64,17 +64,27 @@ class Ops extends REST_Controller {
 			    $connection = 'use '.$db;
 			    $this->db->query($connection);
 
-                $this->dbforge->add_column(
-                	"attachments", array(
-	                	'account_id'=> array(
-	                			'type'=> 'TINYINT', 
-	                			'constraint'=> 11,
-	                			'unsigned' 	=> TRUE,
-								'null' 		=> FALSE,
-								'default' 	=> 0
-	                	)
+        //         $this->dbforge->add_column(
+        //         	"attachments", array(
+	       //          	'account_id'=> array(
+	       //          			'type'=> 'TINYINT', 
+	       //          			'constraint'=> 11,
+	       //          			'unsigned' 	=> TRUE,
+								// 'null' 		=> FALSE,
+								// 'default' 	=> 0
+	       //          	)
+        //         	)
+        //         );                
+
+                $this->dbforge->modify_column(
+                	'transactions', array(
+                					'issued_date' => array(
+                								'name' 		=> 'issued_date', 
+                								'type'		=> 'DATETIME',
+                								'null' 		=> FALSE
+                					)
                 	)
-                );                
+                );
 
                 // $this->dbforge->modify_column(
                 // 	'item_prices', array(
