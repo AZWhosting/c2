@@ -766,9 +766,6 @@ class Accounting_reports extends REST_Controller {
 		$sort 	 	= $this->get("sort");		
 		$data["results"] = [];
 		$data["count"] = 0;
-		$is_recurring = 0;
-		$deleted = 0;
-		$startDate = "";
 		$totalAmount = 0;
 		$totalBalance = 0;
 

@@ -4204,7 +4204,8 @@
 								<div class="widget-head">
 									<ul>
 										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i><span data-bind="text: lang.lang.date"></span></a></li>										
-										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i><span data-bind="text: lang.lang.print_export"></span></a></li>
+										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i>Filter</a></li>
+										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab"><i></i><span data-bind="text: lang.lang.print_export"></span></a></li>
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
@@ -4241,8 +4242,32 @@
 							
 							        	</div>
 
+							        	<!-- Filter -->
+								        <div class="tab-pane" id="tab-2">
+											<table class="table table-condensed">
+												<tr>
+													<td>
+														<select data-role="multiselect"
+															   data-value-primitive="true"
+															   data-header-template="segment-header-tmpl"
+															   data-item-template="segment-list-tmpl"
+															   data-value-field="id"
+															   data-text-field="code"
+															   data-bind="value: selectedSegment, 
+															   			source: segmentItemDS,
+															   			events:{ change: segmentChanges }"
+															   data-placeholder="Select Segments.."
+															   style="width: 100%" /></select>
+													</td>
+													<td>
+										  				<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+													</td>
+												</tr>
+											</table>
+							        	</div>
+
 							        	<!-- PRINT/EXPORT  -->
-								        <div class="tab-pane" id="tab-2">								        	
+								        <div class="tab-pane" id="tab-3">								        	
 								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: printGrid" style="width: 80px;"><i></i> Print</span>
 								        	<!-- <span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
 								        		<i class="fa fa-file-pdf-o"></i>
@@ -19046,14 +19071,14 @@
 												<td>
 													<select data-role="multiselect"
 														   data-value-primitive="true"
-														   data-header-template="segment-header-tmpl"								   
-														   data-item-template="segment-list-tmpl"				    
-														   data-value-field="id" 
+														   data-header-template="segment-header-tmpl"
+														   data-item-template="segment-list-tmpl"
+														   data-value-field="id"
 														   data-text-field="code"
 														   data-bind="value: obj.segments, 
 														   			source: segmentItemDS,
 														   			events:{ change: segmentChanges }"
-														   data-placeholder="Add Segment.."				   
+														   data-placeholder="Add Segment.."
 														   style="width: 100%" /></select>
 												</td>
 											</tr>
@@ -35373,465 +35398,6 @@
         visibility: hidden;
     }
 </style>
-<script id="cashPositionReport" type="text/x-kendo-template">
-	<div id="slide-form">
-		<div class="customer-background ">
-			<div class="container-960">	
-				<div id="example" class="k-content saleSummaryCustomer">
-
-					<span class="glyphicons no-js remove_2 pull-right" 
-							onclick="javascript: window.history.back()"><i></i></span>
-					<br>
-					<div class="block-title">
-						<h3 data-bind="text: company.name"></h3>
-						<h2>Cash Position Report</h2>
-						<p>As of Date: November 30 2016</p>
-					</div>	
-					<table class="table table-borderless table-condensed" style="width: 80%; margin: 0 auto;">
-						<tr>
-							<th colspan="4" style="text-align: right;">Cash Account</th>
-						</tr>
-						<tr>
-							<td>Opening Balance</td>
-							<td></td>
-							<td></td>
-							<td style="text-align: right;">210000</td>
-						</tr>
-						<tr>
-							<td>Cash Inflows</td>
-							<td></td>
-							<td></td>
-							<td style="text-align: right;"></td>
-						</tr>
-						<tr>
-							<td></td>
-							<td>cash sale</td>
-							<td><span data-bind="text: totalCashSale"></span></td>
-							<td style="text-align: right;"></td>
-						</tr>
-						<tr>
-							<td></td>
-							<td>cash receipt</td>
-							<td style="border-bottom: 1px solid #000 !important; "><span data-bind="text: totalCashReceipt"></span></td>
-							<td style="border-bottom: 1px solid #000 !important; text-align: right;"></td>
-						</tr>
-						<tr>
-							<td>Total Cash Inflows</td>
-							<td></td>
-							<td style="border-bottom: 3px double #000 !important; font-size: 20px;"><span data-bind="text: totalSale"></span></td>
-							<td style="border-bottom: 3px double #000 !important; text-align: right;"></td>
-						</tr>
-
-						<tr>
-							<td>Cash Outflows</td>
-							<td></td>
-							<td></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td></td>
-							<td>cash expense</td>
-							<td><span data-bind="text: cashExpense"></span></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td></td>
-							<td>cash payment</td>
-							<td><span data-bind="text: cashPayment"></span></td>
-						</tr>
-						<tr>
-							<td></td>
-							<td>cash purchase</td>
-							<td style="border-bottom: 1px solid #000 !important; "><span data-bind="text: cashPurchase"></span></td>
-							<td style="border-bottom: 1px solid #000 !important; text-align: right;"></td>
-						</tr>
-						<tr>
-							<td>Total Cash Outflows</td>
-							<td></td>
-							<td style="border-bottom: 3px double #000 !important; font-size: 20px;"><span data-bind="text: totalPurchase"></span></td>
-							<td style="border-bottom: 3px double #000 !important; text-align: right;"></td>
-						</tr>
-
-						<tr>
-							<td style="padding-left: 25px !important;">Net Cash Defisit/surplus</td>
-							<td></td>
-							<td style="border-bottom: 3px solid #000 !important;"><span data-bind="text: total"></span></td>
-							<td style="border-bottom: 3px solid #000 !important; text-align: right;"></td>
-						</tr>
-
-
-
-					</table>
-
-
-		        </div>		        
-			</div>							
-		</div>
-	</div>
-</script>
-<script id="cashMovement" type="text/x-kendo-template">
-	<div id="slide-form">
-		<div class="customer-background ">
-			<div class="container-960">					
-				<div id="example" class="k-content saleSummaryCustomer">			
-		    		<span class="glyphicons no-js remove_2 pull-right" 
-							onclick="javascript: window.history.back()"><i></i></span>
-					<br>
-					<br>
-					
-					<div class="row-fluid">
-					    <!-- Tabs -->
-						<div class="relativeWrap" data-toggle="source-code">
-							<div class="widget widget-tabs widget-tabs-gray report-tab">
-							
-								<!-- Tabs Heading -->
-								<div class="widget-head">
-									<ul>
-										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i><span data-bind="text: lang.lang.date"></span></a></li>										
-										<li><a class="glyphicons print" data-bind="click: printGrid"><i></i><span data-bind="text: lang.lang.print_export"></span></a></li>
-									</ul>
-								</div>
-								<!-- // Tabs Heading END -->								
-								<div class="widget-body">
-									<div class="tab-content">
-
-										<!-- Date -->
-								        <div class="tab-pane active" id="tab-1">									        	
-											
-											<input data-role="dropdownlist"
-												   class="sorter"                  
-										           data-value-primitive="true"
-										           data-text-field="text"
-										           data-value-field="value"
-										           data-bind="value: sorter,
-										                      source: sortList,                              
-										                      events: { change: sorterChanges }" />
-
-											<input data-role="datepicker"
-												   class="sdate"
-												   data-format="dd-MM-yyyy"
-										           data-bind="value: sdate,
-										           			  max: edate"
-										           placeholder="From ..." >
-
-										    <input data-role="datepicker"
-										    	   class="edate"
-										    	   data-format="dd-MM-yyyy"
-										           data-bind="value: edate,
-										                      min: sdate"
-										           placeholder="To ..." >
-
-										  	<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
-							
-							        	</div>
-
-							        	<!-- PRINT / EXPORT	-->
-								        <!--div class="tab-pane" id="tab-2">								        	
-								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" onclick="javascript: window.print();" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.print"></span></span>
-								        	< <span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-pdf-o"></i>
-								        		<span data-bind="text: lang.lang.print_as_pdf"></span>
-								        	</span>
-								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-excel-o"></i>
-								        		<span data-bind="text: lang.lang.export_to_excel"></span>
-								        	</span> >
-							        	</div-->
-
-								    </div>
-								</div>
-							</div>
-						</div>
-						<!-- // Tabs END -->						
-					</div>
-			    	<div id="invFormContent">
-						<div class="block-title">
-							<h3 data-bind="text: company.name"></h3>
-							<h2>Cash Movement</h2>
-							<p data-bind="text: displayDate"></p>
-						</div>
-
-						<table class="table table-borderless table-condensed">
-							<thead>
-								<tr>
-									<th><span data-bind="text: lang.lang.type"></span></th>
-									<th style="width: 10%;"><span data-bind="text: lang.lang.date"></span></th>
-									<th style="width: 15%;"><span data-bind="text: lang.lang.reference_no"></span></th>
-									<th><span data-bind="text: lang.lang.description"></span></th>
-									<th class="right"><span></span>In</th>
-									<th class="right"><span></span>Out</th>
-									<th class="right"><span data-bind="text: lang.lang.balance"></span></th>
-								</tr>
-							</thead>
-							<tbody data-role="listview"
-					        		data-auto-bind="false"
-					        		data-template="cashMovement-template"			        		
-					        		data-bind="source: dataSource"></tbody>
-					       	<tfoot>
-					       		<tr style="font-weight: bold; font-size: large;">
-					       			<td colspan="5">TOTAL</td>
-					       			<td align="right" data-bind="text: totalAmount"></td>
-					       			<td align="right" data-bind="text: totalBalance"></td>
-					       		</tr>
-					       	</tfoot>
-						</table>				  
-					</div>
-				</div>
-			</div>						
-		</div>
-	</div>
-</script>
-<script id="cashMovement-template" type="text/x-kendo-tmpl">
-	<tr>
-		<td style="font-weight: bold;">#: number # #: name #</td>
-    	<td></td>
-    	<td></td>
-    	<td></td>
-    	<td></td>
-    	<td></td>    	
-    	<td class="right strong" style="color: black;">
-    		#=kendo.toString(balance_forward, "c", banhji.locale)#
-    	</td>
-	</tr>
-	#var balance = balance_forward;#
-	#for(var i=0; i<line.length; i++){#
-	#balance += line[i].amount;#
-	<tr>
-		<td style="color: black;">
-			&nbsp;&nbsp; #=line[i].type#
-		</td>		
-		<td style="color: black;">
-			#=kendo.toString(new Date(line[i].issued_date), "dd-MM-yyyy")#
-		</td>
-		<td style="color: black;">
-			#if(line[i].type=="Cash_Purchase" || line[i].type=="Credit_Purchase"){#
-				<a href="\#/purchase/#=line[i].id#"><i></i> #=line[i].number#</a>
-			#}else if(line[i].type=="Deposit" || line[i].type=="Witdraw" || line[i].type=="Transfer"){#
-				<a href="\#/cash_transaction/#=line[i].id#"><i></i> #=line[i].number#</a>				
-			#}else{#
-				<a href="\#/#=line[i].type.toLowerCase()#/#=line[i].id#"><i></i> #=line[i].number#</a>
-			#}#
-		</td>		
-		<td style="color: black;">
-			#=line[i].memo#
-		</td>
-		<td class="right" style="color: black;">
-			#if(line[i].amount > 0){#
-				#=kendo.toString(line[i].amount, "c", banhji.locale)#
-			#}else{#
-				#=0#
-			#}#			
-		</td>
-		<td class="right" style="color: black;">
-			#if(line[i].amount < 0){#
-				#=kendo.toString(Math.abs(line[i].amount), "c", banhji.locale)#
-			#}else{#
-				#=0#
-			#}#	
-		</td>
-		<td class="right" style="color: black;">
-			#=kendo.toString(balance, "c", banhji.locale)#
-		</td> 			
-    </tr>    
-    #}# 
-    <tr>
-    	<td style="font-weight: bold; color: black;">Total #: number # #: name #</td>
-    	<td></td>
-    	<td></td>
-    	<td></td>
-    	<td></td>
-    	<td></td>
-    	<td class="right" style="font-weight: bold; border-top: 1px solid black !important; color: black;">
-    		#=kendo.toString(balance, "c", banhji.locale)#
-    	</td>
-    </tr>  
-</script>
-<script id="cashCollectionReport" type="text/x-kendo-template">
-	<div id="slide-form">
-		<div class="customer-background">
-			<div class="container-960">
-				<div id="example" class="k-content saleSummaryCustomer">		
-			    	<span class="pull-right glyphicons no-js remove_2" 
-						onclick="javascript:window.history.back()"><i></i></span>
-					<br>
-					<br>
-
-					<div class="row-fluid">
-					    <!-- Tabs -->
-						<div class="relativeWrap" data-toggle="source-code">
-							<div class="widget widget-tabs widget-tabs-gray report-tab">
-							
-								<!-- Tabs Heading -->
-								<div class="widget-head">
-									<ul>
-										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
-										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab" data-bind="click: printGrid"><i></i>Print/Export</a></li>
-									</ul>
-								</div>
-								<!-- // Tabs Heading END -->								
-								<div class="widget-body">
-									<div class="tab-content">
-								        <div class="tab-pane active" id="tab-1">
-											<input id="sorter" name="sorter"
-									    	   data-role="dropdownlist"
-									           data-value-primitive="true"
-									           data-text-field="text"
-									           data-value-field="value"
-									           data-bind="value: sorter,
-									                      source: sortList,
-									                      events: {change: dateChange}" />
-
-									        <input id="sdate" name="sdate"
-									        	   data-role="datepicker"
-										           data-bind="value: startDate, events: {change: dateMax}"
-										           placeholder="From ..." />
-
-									       	<input id="edate" name="edate"
-									       		   data-role="datepicker"
-										           data-bind="value: endDate, events: {change: dateMin}"
-										           placeholder="To ..." />
-
-										  	 <button type="button" data-role="button" data-bind="click: inventoryPositionDetail.search"><i class="icon-search"></i></button>							
-									    </div>
-								    </div>
-								</div>
-							</div>
-						</div>
-						<!-- // Tabs END -->						
-					</div>
-					<div id="invFormContent">
-						<div class="block-title">
-							<h3 data-bind="text: company.name"></h3>
-							<h2>Cash Collection Report</h2>
-							<p>From <span data-bind="text: displayDateStart"></span> to <span data-bind="text: displayDateEnd"></p>
-						</div>
-
-						<table class="table table-borderless table-condensed ">
-							<thead>
-								<tr>
-									<th><span>Account</span></th>
-									<th><span>Date</span></th>								
-									<th><span>Type</span></th>
-									<th><span>Customer</span></th>
-									<th><span>Invoice</span></th>
-									<th><span>Cash Receipt</span></th>
-								</tr>
-							</thead>
-		            		<tbody data-role="listview"
-		            				data-auto-bind="false"
-					                data-template="cashCollectionReport-row-template"
-					                data-bind="source: cashCollection.dataSource" >
-					        </tbody>
-		            	</table>
-		            </div>
-				</div>		
-			</div>
-		</div>
-	</div>
-</script>
-<script id="cashCollectionReport-row-template" type="text/x-kendo-tmpl">  
-	<tr>  
-	    <td>#=account#</td>      
-	    <td>#=date#</td>
-	    <td>#=type#</td>
-	    <td>#=contact#</td>
-	    <td><a href="\#/#=type.toLowerCase()#/#=id#">#=number#</a></td>
-	    <td align="right">#=kendo.toString(amount, 'c2')#</td>
-	</tr>
-</script>
-<script id="cashPaymentReport" type="text/x-kendo-template">
-	<div id="slide-form">
-		<div class="customer-background">
-			<div class="container-960">
-				<div id="example" class="k-content saleSummaryCustomer">		
-			    	<span class="pull-right glyphicons no-js remove_2" 
-						onclick="javascript:window.history.back()"><i></i></span>
-					<br>
-					<br>
-
-					<div class="row-fluid">
-					    <!-- Tabs -->
-						<div class="relativeWrap" data-toggle="source-code">
-							<div class="widget widget-tabs widget-tabs-gray report-tab">
-							
-								<!-- Tabs Heading -->
-								<div class="widget-head">
-									<ul>
-										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
-										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab" data-bind="click: printGrid"><i></i>Print/Export</a></li>
-									</ul>
-								</div>
-								<!-- // Tabs Heading END -->								
-								<div class="widget-body">
-									<div class="tab-content">
-								        <div class="tab-pane active" id="tab-1">
-											<input id="sorter" name="sorter"
-									    	   data-role="dropdownlist"
-									           data-value-primitive="true"
-									           data-text-field="text"
-									           data-value-field="value"
-									           data-bind="value: sorter,
-									                      source: sortList,
-									                      events: {change: dateChange}" />
-
-									        <input id="sdate" name="sdate"
-									        	   data-role="datepicker"
-										           data-bind="value: startDate, events: {change: dateMax}"
-										           placeholder="From ..." />
-
-									       	<input id="edate" name="edate"
-									       		   data-role="datepicker"
-										           data-bind="value: endDate, events: {change: dateMin}"
-										           placeholder="To ..." />
-
-										  	 <button type="button" data-role="button" data-bind="click: inventoryPositionDetail.search"><i class="icon-search"></i></button>							
-									    </div>
-								    </div>
-								</div>
-							</div>
-						</div>
-						<!-- // Tabs END -->						
-					</div>
-					<div id="invFormContent">
-						<div class="block-title">
-							<h3 data-bind="text: company.name"></h3>
-							<h2>Cash Payment Report</h2>
-							<p>From <span data-bind="text: displayDateStart"></span> to <span data-bind="text: displayDateEnd"></p>
-						</div>
-
-						<table class="table table-borderless table-condensed ">
-							<thead>
-								<tr>
-									<th><span>Account</span></th>
-									<th><span>Date</span></th>								
-									<th><span>Type</span></th>
-									<th><span>Supplier</span></th>
-									<th><span>Invoice</span></th>
-									<th><span>Cash Payment</span></th>
-								</tr>
-							</thead>
-		            		<tbody data-role="listview"
-		            				data-auto-bind="false"
-					                data-template="cashPaymentReport-row-template"
-					                data-bind="source: cashPaymentReport.dataSource" >
-					        </tbody>
-		            	</table>
-		            </div>
-				</div>		
-			</div>
-		</div>
-	</div>
-</script>
-<script id="cashPaymentReport-row-template" type="text/x-kendo-tmpl">  
-	<tr>  
-	    <td>#=account#</td>      
-	    <td>#=date#</td>
-	    <td>#=type#</td>
-	    <td>#=contact#</td>
-	    <td><a href="\#/#=type.toLowerCase()#/#=id#">#=number#</a></td>
-	    <td align="right">#=kendo.toString(amount, 'c2')#</td>
-	</tr>
-</script>
 <script id="inventoryMovementSummary" type="text/x-kendo-template">
 	<div class="container-fluid">
 		<div class="row-fluid">    
@@ -38693,7 +38259,6 @@
         </div>
     </div>
 </script>
-
 <script id="cashList" type="text/x-kendo-template">
 	<div id="slide-form">
 		<div class="container-fluid">
@@ -38727,7 +38292,7 @@
 		</div>
 	</div>	
 </script>
-
+<!-- Cash Reports -->
 <script id="cashReportCenter" type="text/x-kendo-template">
 	<div class="row-fluid customer-report-center">
 		<div class="span7">
@@ -38860,6 +38425,477 @@
 			</div>
 		</div>
 	</div>
+</script>
+<script id="cashPositionReport" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background ">
+			<div class="container-960">	
+				<div id="example" class="k-content saleSummaryCustomer">
+
+					<span class="glyphicons no-js remove_2 pull-right" 
+							onclick="javascript: window.history.back()"><i></i></span>
+					<br>
+					<div class="block-title">
+						<h3 data-bind="text: company.name"></h3>
+						<h2>Cash Position Report</h2>
+						<p>As of Date: November 30 2016</p>
+					</div>	
+					<table class="table table-borderless table-condensed" style="width: 80%; margin: 0 auto;">
+						<tr>
+							<th colspan="4" style="text-align: right;">Cash Account</th>
+						</tr>
+						<tr>
+							<td>Opening Balance</td>
+							<td></td>
+							<td></td>
+							<td style="text-align: right;">210000</td>
+						</tr>
+						<tr>
+							<td>Cash Inflows</td>
+							<td></td>
+							<td></td>
+							<td style="text-align: right;"></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td>cash sale</td>
+							<td><span data-bind="text: totalCashSale"></span></td>
+							<td style="text-align: right;"></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td>cash receipt</td>
+							<td style="border-bottom: 1px solid #000 !important; "><span data-bind="text: totalCashReceipt"></span></td>
+							<td style="border-bottom: 1px solid #000 !important; text-align: right;"></td>
+						</tr>
+						<tr>
+							<td>Total Cash Inflows</td>
+							<td></td>
+							<td style="border-bottom: 3px double #000 !important; font-size: 20px;"><span data-bind="text: totalSale"></span></td>
+							<td style="border-bottom: 3px double #000 !important; text-align: right;"></td>
+						</tr>
+
+						<tr>
+							<td>Cash Outflows</td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td>cash expense</td>
+							<td><span data-bind="text: cashExpense"></span></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td>cash payment</td>
+							<td><span data-bind="text: cashPayment"></span></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td>cash purchase</td>
+							<td style="border-bottom: 1px solid #000 !important; "><span data-bind="text: cashPurchase"></span></td>
+							<td style="border-bottom: 1px solid #000 !important; text-align: right;"></td>
+						</tr>
+						<tr>
+							<td>Total Cash Outflows</td>
+							<td></td>
+							<td style="border-bottom: 3px double #000 !important; font-size: 20px;"><span data-bind="text: totalPurchase"></span></td>
+							<td style="border-bottom: 3px double #000 !important; text-align: right;"></td>
+						</tr>
+
+						<tr>
+							<td style="padding-left: 25px !important;">Net Cash Defisit/surplus</td>
+							<td></td>
+							<td style="border-bottom: 3px solid #000 !important;"><span data-bind="text: total"></span></td>
+							<td style="border-bottom: 3px solid #000 !important; text-align: right;"></td>
+						</tr>
+
+
+
+					</table>
+
+
+		        </div>		        
+			</div>							
+		</div>
+	</div>
+</script>
+<script id="cashMovement" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background ">
+			<div class="container-960">					
+				<div id="example" class="k-content saleSummaryCustomer">			
+		    		<span class="glyphicons no-js remove_2 pull-right" 
+							onclick="javascript: window.history.back()"><i></i></span>
+					<br>
+					<br>
+					
+					<div class="row-fluid">
+					    <!-- Tabs -->
+						<div class="relativeWrap" data-toggle="source-code">
+							<div class="widget widget-tabs widget-tabs-gray report-tab">
+							
+								<!-- Tabs Heading -->
+								<div class="widget-head">
+									<ul>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i><span data-bind="text: lang.lang.date"></span></a></li>
+										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i>Filter</a></li>
+										<li><a class="glyphicons print" data-bind="click: printGrid"><i></i><span data-bind="text: lang.lang.print_export"></span></a></li>
+									</ul>
+								</div>
+								<!-- // Tabs Heading END -->								
+								<div class="widget-body">
+									<div class="tab-content">
+
+										<!-- Date -->
+								        <div class="tab-pane active" id="tab-1">									        	
+											
+											<input data-role="dropdownlist"
+												   class="sorter"                  
+										           data-value-primitive="true"
+										           data-text-field="text"
+										           data-value-field="value"
+										           data-bind="value: sorter,
+										                      source: sortList,                              
+										                      events: { change: sorterChanges }" />
+
+											<input data-role="datepicker"
+												   class="sdate"
+												   data-format="dd-MM-yyyy"
+										           data-bind="value: sdate,
+										           			  max: edate"
+										           placeholder="From ..." >
+
+										    <input data-role="datepicker"
+										    	   class="edate"
+										    	   data-format="dd-MM-yyyy"
+										           data-bind="value: edate,
+										                      min: sdate"
+										           placeholder="To ..." >
+
+										  	<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+							
+							        	</div>
+
+							        	<!-- Filter -->
+								        <div class="tab-pane" id="tab-2">
+											<table class="table table-condensed">
+												<tr>
+													<td>
+														<select data-role="multiselect"
+															   data-value-primitive="true"
+															   data-header-template="segment-header-tmpl"
+															   data-item-template="segment-list-tmpl"
+															   data-value-field="id"
+															   data-text-field="code"
+															   data-bind="value: selectedSegment, 
+															   			source: segmentItemDS,
+															   			events:{ change: segmentChanges }"
+															   data-placeholder="Select Segments.."
+															   style="width: 100%" /></select>
+													</td>
+													<td>
+										  				<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+													</td>
+												</tr>
+											</table>
+							        	</div>
+
+								    </div>
+								</div>
+							</div>
+						</div>
+						<!-- // Tabs END -->
+					</div>
+			    	<div id="invFormContent">
+						<div class="block-title">
+							<h3 data-bind="text: company.name"></h3>
+							<h2>Cash Movement</h2>
+							<p data-bind="text: displayDate"></p>
+						</div>
+
+						<table class="table table-borderless table-condensed">
+							<thead>
+								<tr>
+									<th><span data-bind="text: lang.lang.type"></span></th>
+									<th style="width: 10%;"><span data-bind="text: lang.lang.date"></span></th>
+									<th style="width: 15%;"><span data-bind="text: lang.lang.reference_no"></span></th>
+									<th><span data-bind="text: lang.lang.description"></span></th>
+									<th class="right"><span></span>In</th>
+									<th class="right"><span></span>Out</th>
+									<th class="right"><span data-bind="text: lang.lang.balance"></span></th>
+								</tr>
+							</thead>
+							<tbody data-role="listview"
+					        		data-auto-bind="false"
+					        		data-template="cashMovement-template"			        		
+					        		data-bind="source: dataSource"></tbody>
+					       	<tfoot>
+					       		<tr style="font-weight: bold; font-size: large;">
+					       			<td colspan="5">TOTAL</td>
+					       			<td align="right" data-bind="text: totalAmount"></td>
+					       			<td align="right" data-bind="text: totalBalance"></td>
+					       		</tr>
+					       	</tfoot>
+						</table>				  
+					</div>
+				</div>
+			</div>						
+		</div>
+	</div>
+</script>
+<script id="cashMovement-template" type="text/x-kendo-tmpl">
+	<tr>
+		<td style="font-weight: bold;">#: number # #: name #</td>
+    	<td></td>
+    	<td></td>
+    	<td></td>
+    	<td></td>
+    	<td></td>    	
+    	<td class="right strong" style="color: black;">
+    		#=kendo.toString(balance_forward, "c", banhji.locale)#
+    	</td>
+	</tr>
+	#var balance = balance_forward;#
+	#for(var i=0; i<line.length; i++){#
+	#balance += line[i].amount;#
+	<tr>
+		<td style="color: black;">
+			&nbsp;&nbsp; #=line[i].type#
+		</td>		
+		<td style="color: black;">
+			#=kendo.toString(new Date(line[i].issued_date), "dd-MM-yyyy")#
+		</td>
+		<td style="color: black;">
+			#if(line[i].type=="Cash_Purchase" || line[i].type=="Credit_Purchase"){#
+				<a href="\#/purchase/#=line[i].id#"><i></i> #=line[i].number#</a>
+			#}else if(line[i].type=="Deposit" || line[i].type=="Witdraw" || line[i].type=="Transfer"){#
+				<a href="\#/cash_transaction/#=line[i].id#"><i></i> #=line[i].number#</a>				
+			#}else{#
+				<a href="\#/#=line[i].type.toLowerCase()#/#=line[i].id#"><i></i> #=line[i].number#</a>
+			#}#
+		</td>		
+		<td style="color: black;">
+			#=line[i].memo#
+		</td>
+		<td class="right" style="color: black;">
+			#if(line[i].amount > 0){#
+				#=kendo.toString(line[i].amount, "c", banhji.locale)#
+			#}else{#
+				#=0#
+			#}#			
+		</td>
+		<td class="right" style="color: black;">
+			#if(line[i].amount < 0){#
+				#=kendo.toString(Math.abs(line[i].amount), "c", banhji.locale)#
+			#}else{#
+				#=0#
+			#}#	
+		</td>
+		<td class="right" style="color: black;">
+			#=kendo.toString(balance, "c", banhji.locale)#
+		</td> 			
+    </tr>    
+    #}# 
+    <tr>
+    	<td style="font-weight: bold; color: black;">Total #: number # #: name #</td>
+    	<td></td>
+    	<td></td>
+    	<td></td>
+    	<td></td>
+    	<td></td>
+    	<td class="right" style="font-weight: bold; border-top: 1px solid black !important; color: black;">
+    		#=kendo.toString(balance, "c", banhji.locale)#
+    	</td>
+    </tr>  
+</script>
+<script id="cashCollectionReport" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">
+				<div id="example" class="k-content saleSummaryCustomer">		
+			    	<span class="pull-right glyphicons no-js remove_2" 
+						onclick="javascript:window.history.back()"><i></i></span>
+					<br>
+					<br>
+
+					<div class="row-fluid">
+					    <!-- Tabs -->
+						<div class="relativeWrap" data-toggle="source-code">
+							<div class="widget widget-tabs widget-tabs-gray report-tab">
+							
+								<!-- Tabs Heading -->
+								<div class="widget-head">
+									<ul>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab" data-bind="click: printGrid"><i></i>Print/Export</a></li>
+									</ul>
+								</div>
+								<!-- // Tabs Heading END -->								
+								<div class="widget-body">
+									<div class="tab-content">
+								        <div class="tab-pane active" id="tab-1">
+											<input id="sorter" name="sorter"
+									    	   data-role="dropdownlist"
+									           data-value-primitive="true"
+									           data-text-field="text"
+									           data-value-field="value"
+									           data-bind="value: sorter,
+									                      source: sortList,
+									                      events: {change: dateChange}" />
+
+									        <input id="sdate" name="sdate"
+									        	   data-role="datepicker"
+										           data-bind="value: startDate, events: {change: dateMax}"
+										           placeholder="From ..." />
+
+									       	<input id="edate" name="edate"
+									       		   data-role="datepicker"
+										           data-bind="value: endDate, events: {change: dateMin}"
+										           placeholder="To ..." />
+
+										  	 <button type="button" data-role="button" data-bind="click: inventoryPositionDetail.search"><i class="icon-search"></i></button>							
+									    </div>
+								    </div>
+								</div>
+							</div>
+						</div>
+						<!-- // Tabs END -->						
+					</div>
+					<div id="invFormContent">
+						<div class="block-title">
+							<h3 data-bind="text: company.name"></h3>
+							<h2>Cash Collection Report</h2>
+							<p>From <span data-bind="text: displayDateStart"></span> to <span data-bind="text: displayDateEnd"></p>
+						</div>
+
+						<table class="table table-borderless table-condensed ">
+							<thead>
+								<tr>
+									<th><span>Account</span></th>
+									<th><span>Date</span></th>								
+									<th><span>Type</span></th>
+									<th><span>Customer</span></th>
+									<th><span>Invoice</span></th>
+									<th><span>Cash Receipt</span></th>
+								</tr>
+							</thead>
+		            		<tbody data-role="listview"
+		            				data-auto-bind="false"
+					                data-template="cashCollectionReport-row-template"
+					                data-bind="source: cashCollection.dataSource" >
+					        </tbody>
+		            	</table>
+		            </div>
+				</div>		
+			</div>
+		</div>
+	</div>
+</script>
+<script id="cashCollectionReport-row-template" type="text/x-kendo-tmpl">  
+	<tr>  
+	    <td>#=account#</td>      
+	    <td>#=date#</td>
+	    <td>#=type#</td>
+	    <td>#=contact#</td>
+	    <td><a href="\#/#=type.toLowerCase()#/#=id#">#=number#</a></td>
+	    <td align="right">#=kendo.toString(amount, 'c2')#</td>
+	</tr>
+</script>
+<script id="cashPaymentReport" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">
+				<div id="example" class="k-content saleSummaryCustomer">		
+			    	<span class="pull-right glyphicons no-js remove_2" 
+						onclick="javascript:window.history.back()"><i></i></span>
+					<br>
+					<br>
+
+					<div class="row-fluid">
+					    <!-- Tabs -->
+						<div class="relativeWrap" data-toggle="source-code">
+							<div class="widget widget-tabs widget-tabs-gray report-tab">
+							
+								<!-- Tabs Heading -->
+								<div class="widget-head">
+									<ul>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab" data-bind="click: printGrid"><i></i>Print/Export</a></li>
+									</ul>
+								</div>
+								<!-- // Tabs Heading END -->								
+								<div class="widget-body">
+									<div class="tab-content">
+								        <div class="tab-pane active" id="tab-1">
+											<input id="sorter" name="sorter"
+									    	   data-role="dropdownlist"
+									           data-value-primitive="true"
+									           data-text-field="text"
+									           data-value-field="value"
+									           data-bind="value: sorter,
+									                      source: sortList,
+									                      events: {change: dateChange}" />
+
+									        <input id="sdate" name="sdate"
+									        	   data-role="datepicker"
+										           data-bind="value: startDate, events: {change: dateMax}"
+										           placeholder="From ..." />
+
+									       	<input id="edate" name="edate"
+									       		   data-role="datepicker"
+										           data-bind="value: endDate, events: {change: dateMin}"
+										           placeholder="To ..." />
+
+										  	 <button type="button" data-role="button" data-bind="click: inventoryPositionDetail.search"><i class="icon-search"></i></button>							
+									    </div>
+								    </div>
+								</div>
+							</div>
+						</div>
+						<!-- // Tabs END -->						
+					</div>
+					<div id="invFormContent">
+						<div class="block-title">
+							<h3 data-bind="text: company.name"></h3>
+							<h2>Cash Payment Report</h2>
+							<p>From <span data-bind="text: displayDateStart"></span> to <span data-bind="text: displayDateEnd"></p>
+						</div>
+
+						<table class="table table-borderless table-condensed ">
+							<thead>
+								<tr>
+									<th><span>Account</span></th>
+									<th><span>Date</span></th>								
+									<th><span>Type</span></th>
+									<th><span>Supplier</span></th>
+									<th><span>Invoice</span></th>
+									<th><span>Cash Payment</span></th>
+								</tr>
+							</thead>
+		            		<tbody data-role="listview"
+		            				data-auto-bind="false"
+					                data-template="cashPaymentReport-row-template"
+					                data-bind="source: cashPaymentReport.dataSource" >
+					        </tbody>
+		            	</table>
+		            </div>
+				</div>		
+			</div>
+		</div>
+	</div>
+</script>
+<script id="cashPaymentReport-row-template" type="text/x-kendo-tmpl">  
+	<tr>  
+	    <td>#=account#</td>      
+	    <td>#=date#</td>
+	    <td>#=type#</td>
+	    <td>#=contact#</td>
+	    <td><a href="\#/#=type.toLowerCase()#/#=id#">#=number#</a></td>
+	    <td align="right">#=kendo.toString(amount, 'c2')#</td>
+	</tr>
 </script>
 
 
@@ -39777,10 +39813,10 @@
 				        	</div>
 
 				        	<div class="tab-pane" id="tab-4">
-				        		<div align="center" style="min-height: 150px;">
+				        		<!-- <div align="center" style="min-height: 150px;">
 				        			<h1 style="font-style: 30px; margin-top: 20px;">Coming Soon</h1>
-				        		</div>
-				        		<!-- <div class="row-fluid">
+				        		</div> -->
+				        		<div class="row-fluid">
 									<div class="row-fluid sale-report" style="margin-top: 15px;">
 										<h2>CASH POSITION</h2>
 										<p>
@@ -39814,8 +39850,8 @@
 											</table>					
 										</div>
 									</div>									
-					        	</div>	 -->					        	
-					        	<!-- <div class="row-fluid">
+					        	</div>						        	
+					        	<div class="row-fluid">
 									<div class="row-fluid sale-report" style="margin-top: 15px;">
 										<h2>CASH POSITION</h2>
 										<p>
@@ -39825,13 +39861,13 @@
 											<table class="span12">
 												<tr>
 													<td class="span4">
-														<h3><a href="#/">Cash Position Report</a></h3>
+														<h3><a href="#/cash_position_report">Cash Position Report</a></h3>
 													</td>
 													<td class="span4">
-														<h3><a href="#/">Cash Payment Report</a></h3>
+														<h3>Cash Payment Report (Coming Soon)</h3>
 													</td>
 													<td class="span4">
-														<h3><a href="#/">Cash Receipt Report</a></h3>
+														<h3>Cash Receipt Report (Coming Soon)</h3>
 													</td>
 												</tr>
 												<tr>
@@ -39845,20 +39881,20 @@
 														Lists individual inventory movement transactions by date for each inventory within a period of time.
 													</td>
 												</tr>
-												< <tr>													
+												<tr>													
 													<td class="span4">
-														<h3><a href="#/">Reconciliation Report</a></h3>
+														<h3>Reconciliation Report (Coming Soon)</h3>
 													</td>
 												</tr>
 												<tr>													
 													<td class="span4">
 														List of all cash related reconciliation reports.
 													</td>
-												</tr> >
+												</tr>
 											</table>					
 										</div>
 									</div>									
-					        	</div> -->
+					        	</div>
 				        	</div>
 
 				        	<div class="tab-pane" id="tab-5">								        	
@@ -46090,14 +46126,14 @@
 			  	{ field: "code", dir: "asc" }
 			]
 		}),
-		taxItemDS 		: new kendo.data.DataSource({
+		taxItemDS 			: new kendo.data.DataSource({
 		  	data: banhji.source.taxList,
 		  	sort: [
 			  	{ field: "tax_type_id", dir: "asc" },
 			  	{ field: "name", dir: "asc" }
 			]
 		}),
-		supplierDS  			: new kendo.data.DataSource({
+		supplierDS  		: new kendo.data.DataSource({
 		  	data: banhji.source.supplierList,
 			sort: { field:"number", dir:"asc" }
 		}),		
@@ -47380,12 +47416,20 @@
 	});
 	banhji.generalLedger =  kendo.observable({
 		lang 				: langVM,
-		dataSource 			: dataStore(apiUrl + "accounting_reports/general_ledger"),		
-		sortList			: banhji.source.sortList,
+		dataSource 			: dataStore(apiUrl + "accounting_reports/general_ledger"),
+		segmentItemDS 		: new kendo.data.DataSource({
+		  	data: banhji.source.segmentItemList,
+		  	sort: [
+			  	{ field: "segment_id", dir: "asc" },
+			  	{ field: "code", dir: "asc" }
+			]
+		}),		
+		sortList			: banhji.source.sortList,		
 		sorter 				: "all",
 		sdate 				: "",
 		edate 				: "",
 		obj 				: null,
+		selectedSegment 	: [],
 		company 			: banhji.institute,
 		displayDate 		: "",
 		totalAmount 		: 0,
@@ -47429,8 +47473,27 @@
 				  	this.set("edate", "");									  
 			}
 		},
+		segmentChanges 		: function() {
+			var dataArr = this.get("selectedSegment"),
+			lastIndex = dataArr.length - 1,
+			last = this.segmentItemDS.get(dataArr[lastIndex]);
+			
+			if(dataArr.length > 1) {
+				for(var i = 0; i < dataArr.length - 1; i++) {
+					var current_index = dataArr[i],
+					current = this.segmentItemDS.get(current_index);
+
+					if(current.segment_id === last.segment_id) {
+						dataArr.splice(lastIndex, 1);
+						break;
+					}
+				}
+			}
+		},
 		search				: function(){
-			var self = this, para = [], displayDate = "",
+			var self = this, para = [], 
+				selectedSegment = this.get("selectedSegment"),
+				displayDate = "",
 				start = this.get("sdate"),
         		end = this.get("edate");
     	
@@ -47452,6 +47515,14 @@
             	
             }
             this.set("displayDate", displayDate);
+
+            if(selectedSegment.length>0){
+            	var segments = [];
+            	$.each(selectedSegment, function(index, value){
+            		segments.push(value);
+            	});          	
+	            para.push({ field:"segments", operator:"like_related_transaction", value:segments.toString() });
+	        }
             
             this.dataSource.query({
             	filter:para,
@@ -53680,7 +53751,7 @@
 		  	data: banhji.source.jobList,
 		  	sort: { field: "name", dir: "asc" }
 		}),
-		segmentItemDS 		: new kendo.data.DataSource({
+		segmentItemDS 				: new kendo.data.DataSource({
 		  	data: banhji.source.segmentItemList,
 		  	sort: [
 			  	{ field: "segment_id", dir: "asc" },
@@ -84988,132 +85059,7 @@
 			vm.pageLoad(id);
 		}
 	});
-	banhji.router.route("/cash_movement", function(){
-		if(!banhji.userManagement.getLogin()){
-			banhji.router.navigate('/manage');
-		}else{
-			banhji.view.layout.showIn("#content", banhji.view.cashMovement);
-			banhji.view.layout.showIn('#menu', banhji.view.menu);
-			banhji.view.menu.showIn('#secondary-menu', banhji.view.accountingMenu);			
-			let self = this;
-			this.cashAccount= [];
-			var vm = banhji.generalLedger;
-			banhji.source.loadAcct()
-			.then(function(data){
-				self.cashAccount = data.filter(function(x){
-					return x.account_type_id == 10;
-				}).map(function(value){
-					return value.id;
-				});
-				vm.dataSource.filter({
-					field:'account_id', operator:'where_in', value:self.cashAccount
-				});
-				// console.log(self.cashAccount);
-			});
-			// if(banhji.source.accountList.length>0) {
-			// 	var cashAccount = banhji.source.accountList.map(function(x){
-			// 	return x;
-			// 	});
-			// 	console.log(cashAccount);
-			// } else {
-			// 	console.log('no data');
-			// }
-			
-			
-			banhji.userManagement.addMultiTask("Cash Movement","cash_movement",null);
-
-			if(banhji.pageLoaded["cash_movement"]==undefined){
-				banhji.pageLoaded["cash_movement"] = true;
-						
-			}
-
-			// vm.pageLoad();
-		}
-	});
-	banhji.router.route("/cash_position_report", function(){
-		if(!banhji.userManagement.getLogin()){
-			banhji.router.navigate('/manage');
-		}else{
-			var vm = banhji.cashPositionReport;
-			banhji.userManagement.addMultiTask("Cash Position Report","cash_position_report"); 
-
-			banhji.view.layout.showIn("#content", banhji.view.cashPositionReport);
-			banhji.cashSales.set('startDate', new Date().getFullYear() + "-01-01");
-			banhji.cashSales.cashPositionReport.dataSource.filter({
-				logic: banhji.saleSummaryCustomer.get('filteredBy'),
-				filters: [
-					{field: "issued_date >=", value: kendo.toString(new Date().getFullYear() + "-01-01", "yyyy-MM-dd")},
-					{field: "issued_date <=", value: kendo.toString(new Date(), "yyyy-MM-dd")}
-				]
-			});
-			banhji.cashSales.cashPositionReport.dataSource.bind('requestEnd', function(e){
-				if(e.response) {
-					banhji.cashSales.set('count', e.response.count);
-					kendo.culture(banhji.locale);
-					banhji.cashSales.set('total', kendo.toString(e.response.total, 'c2'));
-					banhji.cashSales.set('totalCashSale', kendo.toString(e.response.totalCashSale, 'n0'));
-					banhji.cashSales.set('totalCashReceipt', kendo.toString(e.response.totalCashReceipt, 'n0'));
-					banhji.cashSales.set('cashPayment', kendo.toString(e.response.cashPayment, 'n0'));
-					banhji.cashSales.set('cashExpense', kendo.toString(e.response.cashExpense, 'n0'));
-					banhji.cashSales.set('cashPurchase', kendo.toString(e.response.cashPurchase, 'n0'));
-					banhji.cashSales.set('totalSale', kendo.toString(e.response.totalSale, 'n0'));
-					banhji.cashSales.set('totalPurchase', kendo.toString(e.response.totalPurchase, 'n0'));
-				}
-			});
-		}
-	});	
-	banhji.router.route("/cash_collection_report", function(){
-		if(!banhji.userManagement.getLogin()){
-			banhji.router.navigate('/manage');
-		}else{
-			var vm = banhji.cashCollectionReport;
-			banhji.userManagement.addMultiTask("Cash Collection Report","cash_collection_report"); 
-
-			banhji.view.layout.showIn("#content", banhji.view.cashCollectionReport);
-			banhji.cashSales.set('startDate', new Date().getFullYear() + "-01-01");
-			banhji.cashSales.cashCollection.dataSource.filter({
-				logic: banhji.saleSummaryCustomer.get('filteredBy'),
-				filters: [
-					{field: "issued_date >=", value: kendo.toString(new Date().getFullYear() + "-01-01", "yyyy-MM-dd")},
-					{field: "issued_date <=", value: kendo.toString(new Date(), "yyyy-MM-dd")}
-				]
-			});
-			banhji.cashSales.cashCollection.dataSource.bind('requestEnd', function(e){
-				if(e.response) {
-					banhji.cashSales.set('count', e.response.count);
-					kendo.culture(banhji.locale);
-					banhji.cashSales.set('total', kendo.toString(e.response.total, 'c2'));
-					banhji.cashSales.set('segments', kendo.toString(e.response.segments, 'n0'));
-				}
-			});
-		}
-	});
-	banhji.router.route("/cash_payment_report", function(){
-		if(!banhji.userManagement.getLogin()){
-			banhji.router.navigate('/manage');
-		}else{
-			var vm = banhji.cashPaymentReport;
-			banhji.userManagement.addMultiTask("Cash Payment Report","cash_payment_report"); 
-
-			banhji.view.layout.showIn("#content", banhji.view.cashPaymentReport);
-			banhji.cashSales.set('startDate', new Date().getFullYear() + "-01-01");
-			banhji.cashSales.cashPaymentReport.dataSource.filter({
-				logic: banhji.saleSummaryCustomer.get('filteredBy'),
-				filters: [
-					{field: "issued_date >=", value: kendo.toString(new Date().getFullYear() + "-01-01", "yyyy-MM-dd")},
-					{field: "issued_date <=", value: kendo.toString(new Date(), "yyyy-MM-dd")}
-				]
-			});
-			banhji.cashSales.cashPaymentReport.dataSource.bind('requestEnd', function(e){
-				if(e.response) {
-					banhji.cashSales.set('count', e.response.count);
-					kendo.culture(banhji.locale);
-					banhji.cashSales.set('total', kendo.toString(e.response.total, 'c2'));
-					banhji.cashSales.set('segments', kendo.toString(e.response.segments, 'n0'));
-				}
-			});
-		}
-	});
+	
 
 
 	/*************************
@@ -85626,6 +85572,133 @@
 			}
 
 			vm.pageLoad();
+		}
+	});
+	//Cash Reports
+	banhji.router.route("/cash_movement", function(){
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{
+			banhji.view.layout.showIn("#content", banhji.view.cashMovement);
+			banhji.view.layout.showIn('#menu', banhji.view.menu);
+			banhji.view.menu.showIn('#secondary-menu', banhji.view.accountingMenu);			
+			let self = this;
+			this.cashAccount= [];
+			var vm = banhji.generalLedger;
+			banhji.source.loadAcct()
+			.then(function(data){
+				self.cashAccount = data.filter(function(x){
+					return x.account_type_id == 10;
+				}).map(function(value){
+					return value.id;
+				});
+				vm.dataSource.filter({
+					field:'account_id', operator:'where_in', value:self.cashAccount
+				});
+				// console.log(self.cashAccount);
+			});
+			// if(banhji.source.accountList.length>0) {
+			// 	var cashAccount = banhji.source.accountList.map(function(x){
+			// 	return x;
+			// 	});
+			// 	console.log(cashAccount);
+			// } else {
+			// 	console.log('no data');
+			// }
+			
+			
+			banhji.userManagement.addMultiTask("Cash Movement","cash_movement",null);
+
+			if(banhji.pageLoaded["cash_movement"]==undefined){
+				banhji.pageLoaded["cash_movement"] = true;
+						
+			}
+
+			// vm.pageLoad();
+		}
+	});
+	banhji.router.route("/cash_position_report", function(){
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{
+			var vm = banhji.cashPositionReport;
+			banhji.userManagement.addMultiTask("Cash Position Report","cash_position_report"); 
+
+			banhji.view.layout.showIn("#content", banhji.view.cashPositionReport);
+			banhji.cashSales.set('startDate', new Date().getFullYear() + "-01-01");
+			banhji.cashSales.cashPositionReport.dataSource.filter({
+				logic: banhji.saleSummaryCustomer.get('filteredBy'),
+				filters: [
+					{field: "issued_date >=", value: kendo.toString(new Date().getFullYear() + "-01-01", "yyyy-MM-dd")},
+					{field: "issued_date <=", value: kendo.toString(new Date(), "yyyy-MM-dd")}
+				]
+			});
+			banhji.cashSales.cashPositionReport.dataSource.bind('requestEnd', function(e){
+				if(e.response) {
+					banhji.cashSales.set('count', e.response.count);
+					kendo.culture(banhji.locale);
+					banhji.cashSales.set('total', kendo.toString(e.response.total, 'c2'));
+					banhji.cashSales.set('totalCashSale', kendo.toString(e.response.totalCashSale, 'n0'));
+					banhji.cashSales.set('totalCashReceipt', kendo.toString(e.response.totalCashReceipt, 'n0'));
+					banhji.cashSales.set('cashPayment', kendo.toString(e.response.cashPayment, 'n0'));
+					banhji.cashSales.set('cashExpense', kendo.toString(e.response.cashExpense, 'n0'));
+					banhji.cashSales.set('cashPurchase', kendo.toString(e.response.cashPurchase, 'n0'));
+					banhji.cashSales.set('totalSale', kendo.toString(e.response.totalSale, 'n0'));
+					banhji.cashSales.set('totalPurchase', kendo.toString(e.response.totalPurchase, 'n0'));
+				}
+			});
+		}
+	});	
+	banhji.router.route("/cash_collection_report", function(){
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{
+			var vm = banhji.cashCollectionReport;
+			banhji.userManagement.addMultiTask("Cash Collection Report","cash_collection_report"); 
+
+			banhji.view.layout.showIn("#content", banhji.view.cashCollectionReport);
+			banhji.cashSales.set('startDate', new Date().getFullYear() + "-01-01");
+			banhji.cashSales.cashCollection.dataSource.filter({
+				logic: banhji.saleSummaryCustomer.get('filteredBy'),
+				filters: [
+					{field: "issued_date >=", value: kendo.toString(new Date().getFullYear() + "-01-01", "yyyy-MM-dd")},
+					{field: "issued_date <=", value: kendo.toString(new Date(), "yyyy-MM-dd")}
+				]
+			});
+			banhji.cashSales.cashCollection.dataSource.bind('requestEnd', function(e){
+				if(e.response) {
+					banhji.cashSales.set('count', e.response.count);
+					kendo.culture(banhji.locale);
+					banhji.cashSales.set('total', kendo.toString(e.response.total, 'c2'));
+					banhji.cashSales.set('segments', kendo.toString(e.response.segments, 'n0'));
+				}
+			});
+		}
+	});
+	banhji.router.route("/cash_payment_report", function(){
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{
+			var vm = banhji.cashPaymentReport;
+			banhji.userManagement.addMultiTask("Cash Payment Report","cash_payment_report"); 
+
+			banhji.view.layout.showIn("#content", banhji.view.cashPaymentReport);
+			banhji.cashSales.set('startDate', new Date().getFullYear() + "-01-01");
+			banhji.cashSales.cashPaymentReport.dataSource.filter({
+				logic: banhji.saleSummaryCustomer.get('filteredBy'),
+				filters: [
+					{field: "issued_date >=", value: kendo.toString(new Date().getFullYear() + "-01-01", "yyyy-MM-dd")},
+					{field: "issued_date <=", value: kendo.toString(new Date(), "yyyy-MM-dd")}
+				]
+			});
+			banhji.cashSales.cashPaymentReport.dataSource.bind('requestEnd', function(e){
+				if(e.response) {
+					banhji.cashSales.set('count', e.response.count);
+					kendo.culture(banhji.locale);
+					banhji.cashSales.set('total', kendo.toString(e.response.total, 'c2'));
+					banhji.cashSales.set('segments', kendo.toString(e.response.segments, 'n0'));
+				}
+			});
 		}
 	});
 
