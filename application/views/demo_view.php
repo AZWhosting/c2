@@ -3106,10 +3106,8 @@
 						</div>
 
 						<br><br>
-						<div class="well">
-							<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.memo2" placeholder="memo for internal ..."></textarea>
-							<br>						
-							<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.memo" placeholder="memo for external ..."></textarea>
+						<div class="well">			
+							<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.memo" placeholder="memo ..."></textarea>
 						</div>
 					</div>
 					<!-- Column END -->
@@ -4246,22 +4244,41 @@
 								        <div class="tab-pane" id="tab-2">
 											<table class="table table-condensed">
 												<tr>
-													<td>
+									            	<td style="padding: 0 !important; width: 96%;">
+									            		<span data-bind="text: lang.lang.account"></span>
+														<input id="ddlAccount" name="ddlAccount" 
+																data-role="dropdownlist"
+									              				data-header-template="account-header-tmpl"
+									              				data-template="account-list-tmpl"
+									              				data-value-primitive="true"
+																data-text-field="name" 
+									              				data-value-field="id"
+									              				data-bind="value: obj.account_id,
+									              							source: accountDS"
+									              				data-option-label="Select Account..."
+									              				required data-required-msg="required" 
+									              				style="width: 100%" />
+													</td>
+													<td style="padding-top: 23px !important; float: left;">
+										  				<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+													</td>
+												</tr>
+												<tr>
+													<td style="padding: 8px 0 0 0 !important; ">
+														<span data-bind="text: lang.lang.segment"></span>
 														<select data-role="multiselect"
 															   data-value-primitive="true"
 															   data-header-template="segment-header-tmpl"
 															   data-item-template="segment-list-tmpl"
 															   data-value-field="id"
 															   data-text-field="code"
-															   data-bind="value: selectedSegment, 
+															   data-bind="value: obj.segments, 
 															   			source: segmentItemDS,
 															   			events:{ change: segmentChanges }"
 															   data-placeholder="Select Segments.."
 															   style="width: 100%" /></select>
 													</td>
-													<td>
-										  				<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
-													</td>
+													<td></td>
 												</tr>
 											</table>
 							        	</div>
@@ -6997,6 +7014,9 @@
 						                data-auto-bind="false"
 						                data-bind="source: itemDS"></tbody>
 			            	</table>
+			            	<div id="pager" class="k-pager-wrap"
+						    	 data-auto-bind="false"
+					             data-role="pager" data-bind="source: itemDS"></div>
 		            	</div>
 	            	</div>
 				</div>							
@@ -38583,22 +38603,41 @@
 								        <div class="tab-pane" id="tab-2">
 											<table class="table table-condensed">
 												<tr>
-													<td>
+									            	<td style="padding: 0 !important; width: 96%;">
+									            		<span data-bind="text: lang.lang.account"></span>
+														<input id="ddlAccount" name="ddlAccount" 
+																data-role="dropdownlist"
+									              				data-header-template="account-header-tmpl"
+									              				data-template="account-list-tmpl"
+									              				data-value-primitive="true"
+																data-text-field="name" 
+									              				data-value-field="id"
+									              				data-bind="value: obj.account_id,
+									              							source: accountDS"
+									              				data-option-label="Select Account..."
+									              				required data-required-msg="required" 
+									              				style="width: 100%" />
+													</td>
+													<td style="padding-top: 23px !important; float: left;">
+										  				<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+													</td>
+												</tr>
+												<tr>
+													<td style="padding: 8px 0 0 0 !important; ">
+														<span data-bind="text: lang.lang.segment"></span>
 														<select data-role="multiselect"
 															   data-value-primitive="true"
 															   data-header-template="segment-header-tmpl"
 															   data-item-template="segment-list-tmpl"
 															   data-value-field="id"
 															   data-text-field="code"
-															   data-bind="value: selectedSegment, 
+															   data-bind="value: obj.segments, 
 															   			source: segmentItemDS,
 															   			events:{ change: segmentChanges }"
 															   data-placeholder="Select Segments.."
 															   style="width: 100%" /></select>
 													</td>
-													<td>
-										  				<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
-													</td>
+													<td></td>
 												</tr>
 											</table>
 							        	</div>
@@ -43170,24 +43209,6 @@
 				});
 			});
 		},
-		loadAcct 					: function(){
-			var self = this, dfd = $.Deferred();
-			if(this.accountList.length>0) {
-				dfd.resolve(this.accountList);
-			} else {
-				this.accountDS.query({
-					filter:{ field:"status", value:1 }
-				}).then(function(){
-					var view = self.accountDS.view();
-
-					$.each(view, function(index, value){
-						self.accountList.push(value);
-					});
-					dfd.resolve(self.accountList);
-				});
-			}
-			return dfd.promise();
-		},
 		loadAccounts 				: function(){
 			var self = this, raw = this.get("accountList");
 
@@ -47417,6 +47438,11 @@
 	banhji.generalLedger =  kendo.observable({
 		lang 				: langVM,
 		dataSource 			: dataStore(apiUrl + "accounting_reports/general_ledger"),
+		accountDS  		: new kendo.data.DataSource({
+		  	data: banhji.source.accountList,
+		  	filter: { field:"account_type_id", value: 10 },
+		  	sort: { field:"number", dir:"asc" }
+		}),
 		segmentItemDS 		: new kendo.data.DataSource({
 		  	data: banhji.source.segmentItemList,
 		  	sort: [
@@ -47428,8 +47454,7 @@
 		sorter 				: "all",
 		sdate 				: "",
 		edate 				: "",
-		obj 				: null,
-		selectedSegment 	: [],
+		obj 				: { account_id: 0, segments: [] },
 		company 			: banhji.institute,
 		displayDate 		: "",
 		totalAmount 		: 0,
@@ -47474,7 +47499,7 @@
 			}
 		},
 		segmentChanges 		: function() {
-			var dataArr = this.get("selectedSegment"),
+			var dataArr = this.get("obj").segments,
 			lastIndex = dataArr.length - 1,
 			last = this.segmentItemDS.get(dataArr[lastIndex]);
 			
@@ -47492,10 +47517,24 @@
 		},
 		search				: function(){
 			var self = this, para = [], 
-				selectedSegment = this.get("selectedSegment"),
-				displayDate = "",
+				obj = this.get("obj"),
 				start = this.get("sdate"),
-        		end = this.get("edate");
+        		end = this.get("edate"),
+        		displayDate = "";
+
+        	//Account
+            if(obj.account_id>0){
+	            para.push({ field:"account_id", value:obj.account_id });
+	        }
+
+	        //Segment
+            if(obj.segments.length>0){
+            	var segments = [];
+            	$.each(obj.segments, function(index, value){
+            		segments.push(value);
+            	});          	
+	            para.push({ field:"segments", operator:"like_related_transaction", value:"%"+segments.toString()+"%" });
+	        }
     	
         	//Dates
         	if(start && end){
@@ -47516,13 +47555,7 @@
             }
             this.set("displayDate", displayDate);
 
-            if(selectedSegment.length>0){
-            	var segments = [];
-            	$.each(selectedSegment, function(index, value){
-            		segments.push(value);
-            	});          	
-	            para.push({ field:"segments", operator:"like_related_transaction", value:segments.toString() });
-	        }
+            para.push({ field:"account_type_id", value:10 });
             
             this.dataSource.query({
             	filter:para,
@@ -85583,20 +85616,21 @@
 			banhji.view.layout.showIn('#menu', banhji.view.menu);
 			banhji.view.menu.showIn('#secondary-menu', banhji.view.accountingMenu);			
 			let self = this;
-			this.cashAccount= [];
+			// this.cashAccount= [];
 			var vm = banhji.generalLedger;
-			banhji.source.loadAcct()
-			.then(function(data){
-				self.cashAccount = data.filter(function(x){
-					return x.account_type_id == 10;
-				}).map(function(value){
-					return value.id;
-				});
-				vm.dataSource.filter({
-					field:'account_id', operator:'where_in', value:self.cashAccount
-				});
-				// console.log(self.cashAccount);
-			});
+			// banhji.source.loadAcct()
+			// .then(function(data){
+			// 	self.cashAccount = data.filter(function(x){
+			// 		return x.account_type_id == 10;
+			// 	}).map(function(value){
+			// 		return value.id;
+			// 	});
+			// 	vm.dataSource.filter({
+			// 		field:'account_id', operator:'where_in', value:self.cashAccount
+			// 	});
+			// 	// console.log(self.cashAccount);
+			// });
+
 			// if(banhji.source.accountList.length>0) {
 			// 	var cashAccount = banhji.source.accountList.map(function(x){
 			// 	return x;
@@ -85604,8 +85638,7 @@
 			// 	console.log(cashAccount);
 			// } else {
 			// 	console.log('no data');
-			// }
-			
+			// }			
 			
 			banhji.userManagement.addMultiTask("Cash Movement","cash_movement",null);
 
@@ -85614,7 +85647,7 @@
 						
 			}
 
-			// vm.pageLoad();
+			vm.pageLoad();
 		}
 	});
 	banhji.router.route("/cash_position_report", function(){
