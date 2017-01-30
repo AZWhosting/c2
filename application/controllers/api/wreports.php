@@ -604,9 +604,12 @@ class Wreports extends REST_Controller {
 		$contact->get();
 
 		$location->include_related('transaction/winvoice_line', array('quantity'));
+		$location->where_related('transaction/winvoice_line', 'type', 'tariff');
 		$location->get();
 		$locs = array();
+		$usage = 0;
 		foreach($location as $loc) {
+			$usage += $loc_transaction_winvoice_line_quanity;
 			$locs[] $loc->id;
 		}
 
@@ -624,22 +627,22 @@ class Wreports extends REST_Controller {
 		$avgIncome->where("type", "Water_Invoice");
 		$avgIncome->get();
 
-		$usage = $meter;
-		$usage->include_related('winvoice_line', array('quantity'));
-		$usage->where_related_winvoice_line('type', 'tariff');
-		$usage->get();
+		// $usage = $meter;
+		// $usage->include_related('winvoice_line', array('quantity'));
+		// $usage->where_related_winvoice_line('type', 'tariff');
+		// $usage->get();
 
 		$avgUsage = $meter;
 		$avgUsage->include_related('meter_record', array('usage'));
 		// $avgUsage->where_related_winvoice_line('type', 'tariff');
 		$avgUsage->get();
 
-		$usage->select_sum("quantity");
-		$usage->where("type", "tariff");
-		$usage->get();
+		// $usage->select_sum("quantity");
+		// $usage->where("type", "tariff");
+		// $usage->get();
 
-		$avgUsage->select_avg("usage", "reading");
-		$avgUsage->get();
+		// $avgUsage->select_avg("usage", "reading");
+		// $avgUsage->get();
 
 		// $deposit->select_sum("amount");
 		// $deposit->where("type", "wdeposit");
@@ -652,7 +655,7 @@ class Wreports extends REST_Controller {
 			"totalActiveCustomer" 		=> $totalActiveCustomer,
 			"totalIncome" 				=> floatval($income->amount),
 			"avgIncome" 				=> floatval($avgIncome->amount),
-			"totalUsage" 				=> intval($usage->quanity),
+			"totalUsage" 				=> intval($usage),
 			"avgUsage" 					=> floatval($avgUsage->reading)			
 			// "totalDeposit" 				=> floatval($deposit->amount)							
 		);

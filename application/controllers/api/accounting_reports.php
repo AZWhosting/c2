@@ -1702,10 +1702,10 @@ class Accounting_reports extends REST_Controller {
 
 	//GET INCOME STATEMENT (Statement of Profit or Loss)
 	function income_statement_get() {		
-		$filters 	= $this->get("filter")["filters"];		
-		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
-		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;
-		$sort 	 	= $this->get("sort");		
+		$filter 	= $this->get("filter");
+		$page 		= $this->get('page');
+		$limit 		= $this->get('limit');
+		$sort 	 	= $this->get("sort");
 		$data["results"] = [];
 		$data["count"] = 0;
 		
