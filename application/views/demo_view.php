@@ -4333,9 +4333,9 @@
 			</td>
 			<td style="color: black;">
 				#for(var j=0; j<line[i].segments.length; j++){#
-					if(j>0){
+					#if(j>0){#
 						:
-					}
+					#}#
 					#=line[i].segments[j].code# #=line[i].segments[j].name#					
 				#}#
 			</td>
