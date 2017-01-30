@@ -610,11 +610,11 @@ class Wreports extends REST_Controller {
 		$usage = 0;
 		foreach($location as $loc) {
 			$usage += $loc_transaction_winvoice_line_quanity;
-			$locs[] $loc->id;
+			$locs[] = $loc->id;
 		}
 
 		$totalCustomer = $contact->result_count();
-		$totalAllowCustomer = $totalCustomer / intval($branch->max_customer);
+		$totalAllowCustomer = $totalCustomer / intval($contact->branch_max_customer);
 		$totalActiveCustomer = $activeContact->count() / $totalCustomer;
 
 		$income->select_sum("amount");
@@ -636,6 +636,10 @@ class Wreports extends REST_Controller {
 		$avgUsage->include_related('meter_record', array('usage'));
 		// $avgUsage->where_related_winvoice_line('type', 'tariff');
 		$avgUsage->get();
+		$avg = 0;
+		foreach($avgUsage as $avgUsg) {
+			$avg += $avgUsg->usage;
+		}
 
 		// $usage->select_sum("quantity");
 		// $usage->where("type", "tariff");
@@ -656,7 +660,7 @@ class Wreports extends REST_Controller {
 			"totalIncome" 				=> floatval($income->amount),
 			"avgIncome" 				=> floatval($avgIncome->amount),
 			"totalUsage" 				=> intval($usage),
-			"avgUsage" 					=> floatval($avgUsage->reading)			
+			"avgUsage" 					=> floatval($avg)			
 			// "totalDeposit" 				=> floatval($deposit->amount)							
 		);
 			

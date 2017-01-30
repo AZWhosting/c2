@@ -1275,7 +1275,7 @@
 											<input id="issuedDate" name="issuedDate" 
 													data-role="datepicker"
 													data-format="dd-MM-yyyy"
-													data-parse-formats="yyyy-MM-dd" 
+													data-parse-formats="yyyy-MM-dd HH:mm:ss"
 													data-bind="value: obj.issued_date, 
 																events:{ change : setRate }" 
 													required data-required-msg="required"
@@ -1729,7 +1729,7 @@
 											<input id="issuedDate" name="issuedDate" 
 													data-role="datepicker"
 													data-format="dd-MM-yyyy"
-													data-parse-formats="yyyy-MM-dd" 
+													data-parse-formats="yyyy-MM-dd HH:mm:ss"
 													data-bind="value: obj.issued_date, 
 																events:{ change : setRate }" 
 													required data-required-msg="required"
@@ -2224,7 +2224,7 @@
 										<input id="issuedDate" name="issuedDate" 
 												data-role="datepicker"
 												data-format="dd-MM-yyyy"
-												data-parse-formats="yyyy-MM-dd" 
+												data-parse-formats="yyyy-MM-dd HH:mm:ss"
 												data-bind="value: obj.issued_date, 
 															events:{ change : setRate }" 
 												required data-required-msg="required"
@@ -2727,7 +2727,7 @@
 										<input id="issuedDate" name="issuedDate" 
 												data-role="datepicker"
 												data-format="dd-MM-yyyy"
-												data-parse-formats="yyyy-MM-dd" 
+												data-parse-formats="yyyy-MM-dd HH:mm:ss"
 												data-bind="value: obj.issued_date, 
 															events:{ change : setRate }" 
 												required data-required-msg="required"
@@ -11053,7 +11053,7 @@
 										<input id="issuedDate" name="issuedDate" 
 												data-role="datepicker"
 												data-format="dd-MM-yyyy"
-												data-parse-formats="yyyy-MM-dd" 
+												data-parse-formats="yyyy-MM-dd HH:mm:ss"
 												data-bind="value: obj.issued_date, 
 															events:{ change : setRate }" 
 												required data-required-msg="required"
@@ -11488,7 +11488,7 @@
 										<input id="issuedDate" name="issuedDate" 
 												data-role="datepicker"
 												data-format="dd-MM-yyyy"
-												data-parse-formats="yyyy-MM-dd" 
+												data-parse-formats="yyyy-MM-dd HH:mm:ss"
 												data-bind="value: obj.issued_date, 
 															events:{ change : setRate }" 
 												required data-required-msg="required"
@@ -11963,7 +11963,7 @@
 											<input id="issuedDate" name="issuedDate" 
 													data-role="datepicker"
 													data-format="dd-MM-yyyy"
-													data-parse-formats="yyyy-MM-dd" 
+													data-parse-formats="yyyy-MM-dd HH:mm:ss"
 													data-bind="value: obj.issued_date, 
 																events:{ change : setRate }" 
 													required data-required-msg="required"
@@ -12989,7 +12989,7 @@
 											<input id="issuedDate" name="issuedDate" 
 													data-role="datepicker"
 													data-format="dd-MM-yyyy"
-													data-parse-formats="yyyy-MM-dd" 
+													data-parse-formats="yyyy-MM-dd HH:mm:ss"
 													data-bind="value: obj.issued_date, 
 																events:{ change : setRate }" 
 													required data-required-msg="required"
@@ -17324,7 +17324,7 @@
 											<input id="issuedDate" name="issuedDate" 
 													data-role="datepicker"
 													data-format="dd-MM-yyyy"
-													data-parse-formats="yyyy-MM-dd" 
+													data-parse-formats="yyyy-MM-dd HH:mm:ss" 
 													data-bind="value: obj.issued_date, 
 																events:{ change : setRate }" 
 													required data-required-msg="required"
@@ -17908,7 +17908,7 @@
 											<input id="issuedDate" name="issuedDate" 
 													data-role="datepicker"
 													data-format="dd-MM-yyyy"
-													data-parse-formats="yyyy-MM-dd" 
+													data-parse-formats="yyyy-MM-dd HH:mm:ss"
 													data-bind="value: obj.issued_date, 
 																events:{ change : setRate }" 
 													required data-required-msg="required"
@@ -18503,7 +18503,7 @@
 											<input id="issuedDate" name="issuedDate" 
 													data-role="datepicker"
 													data-format="dd-MM-yyyy"
-													data-parse-formats="yyyy-MM-dd" 
+													data-parse-formats="yyyy-MM-dd HH:mm:ss"
 													data-bind="value: obj.issued_date, 
 																events:{ change : setRate }" 
 													required data-required-msg="required"
@@ -19016,7 +19016,7 @@
 											<input id="issuedDate" name="issuedDate" 
 													data-role="datepicker"
 													data-format="dd-MM-yyyy"
-													data-parse-formats="yyyy-MM-dd" 
+													data-parse-formats="yyyy-MM-dd HH:mm:ss"
 													data-bind="value: obj.issued_date, 
 																events:{ change : setRate }" 
 													required data-required-msg="required"
@@ -19690,7 +19690,7 @@
 											<input id="issuedDate" name="issuedDate" 
 													data-role="datepicker"
 													data-format="dd-MM-yyyy"
-													data-parse-formats="yyyy-MM-dd" 
+													data-parse-formats="yyyy-MM-dd HH:mm:ss"
 													data-bind="value: obj.issued_date, 
 																events:{ change : setRate }" 
 													required data-required-msg="required"
@@ -20358,7 +20358,7 @@
 											<input id="issuedDate" name="issuedDate" 
 													data-role="datepicker"
 													data-format="dd-MM-yyyy"
-													data-parse-formats="yyyy-MM-dd" 
+													data-parse-formats="yyyy-MM-dd HH:mm:ss"
 													data-bind="value: obj.issued_date, 
 																events:{ change : setRate }" 
 													required data-required-msg="required"
@@ -20798,7 +20798,7 @@
 											<input id="issuedDate" name="issuedDate" 
 													data-role="datepicker"
 													data-format="dd-MM-yyyy"
-													data-parse-formats="yyyy-MM-dd" 
+													data-parse-formats="yyyy-MM-dd HH:mm:ss"
 													data-bind="value: obj.issued_date, 
 																events:{ change : setRate }" 
 													required data-required-msg="required"
@@ -33450,7 +33450,7 @@
 													<input id="issuedDate" name="issuedDate" 
 															data-role="datepicker"
 															data-format="dd-MM-yyyy"
-															data-parse-formats="yyyy-MM-dd" 
+															data-parse-formats="yyyy-MM-dd HH:mm:ss"
 															data-bind="value: obj.issued_date, 
 																		events:{ change : setRate }" 
 															required data-required-msg="required"
@@ -33719,7 +33719,7 @@
 											<input id="issuedDate" name="issuedDate" 
 													data-role="datepicker"
 													data-format="dd-MM-yyyy"
-													data-parse-formats="yyyy-MM-dd" 
+													data-parse-formats="yyyy-MM-dd HH:mm:ss"
 													data-bind="value: obj.issued_date, 
 																events:{ change : setRate }" 
 													required data-required-msg="required"
@@ -38121,7 +38121,7 @@
 													<input id="issuedDate" name="issuedDate" 
 															data-role="datepicker"
 															data-format="dd-MM-yyyy"
-															data-parse-formats="yyyy-MM-dd" 
+															data-parse-formats="yyyy-MM-dd HH:mm:ss"
 															data-bind="value: obj.issued_date, 
 																		events:{ change : issuedDateChanges }" 
 															required data-required-msg="required"
@@ -38445,7 +38445,7 @@
 												<input id="issuedDate" name="issuedDate" 
 														data-role="datepicker"
 														data-format="dd-MM-yyyy"
-														data-parse-formats="yyyy-MM-dd" 
+														data-parse-formats="yyyy-MM-dd HH:mm:ss"
 														data-bind="value: obj.issued_date, 
 																	events:{ change : issuedDateChanges }" 
 														required data-required-msg="required"
@@ -45294,6 +45294,7 @@
 	    },	    	    
 		save 				: function(){				
 	    	var self = this, obj = this.get("obj");
+	    	obj.set("issued_date", kendo.toString(new Date(obj.issued_date), "s"));
 
 	    	//Recurring
 	    	if(this.get("saveRecurring")){
@@ -45301,18 +45302,6 @@
 	    		
 	    		obj.set("number", "");
 	    		obj.set("is_recurring", 1);
-	    	}	    	
-
-	    	//Mode
-	    	if(obj.isNew()){
-		    	obj.set("issued_date", kendo.toString(new Date(obj.issued_date), "s"));
-	    	}else{
-	    		var today = new Date(), issuedDate = new Date(obj.issued_date);
-	    		issuedDate.setHours(today.getHours());
-	    		issuedDate.setMinutes(today.getMinutes());
-	    		issuedDate.setSeconds(today.getSeconds());
-
-	    		obj.set("issued_date", kendo.toString(issuedDate, "s"));
 	    	}
 	    	
 			//Save Obj
@@ -45952,6 +45941,7 @@
 	    },	    	    
 		save 				: function(){				
 	    	var self = this, obj = this.get("obj");
+	    	obj.set("issued_date", kendo.toString(new Date(obj.issued_date), "s"));
 
 	    	//Recurring
 	    	if(this.get("saveRecurring")){
@@ -45962,16 +45952,7 @@
 	    	}
 
 	    	//Mode
-	    	if(obj.isNew()){
-		    	obj.set("issued_date", kendo.toString(new Date(obj.issued_date), "s"));
-	    	}else{
-	    		var today = new Date(), issuedDate = new Date(obj.issued_date);
-	    		issuedDate.setHours(today.getHours());
-	    		issuedDate.setMinutes(today.getMinutes());
-	    		issuedDate.setSeconds(today.getSeconds());
-
-	    		obj.set("issued_date", kendo.toString(issuedDate, "s"));
-
+	    	if(obj.isNew()==false){
 	    		//Line has changed
 		    	if(obj.is_recurring==0){
 			    	$.each(this.journalLineDS.data(), function(index, value){
@@ -46652,6 +46633,7 @@
 	    },	    	    
 		save 				: function(){				
 	    	var self = this, obj = this.get("obj");
+	    	obj.set("issued_date", kendo.toString(new Date(obj.issued_date), "s"));
 
 	    	//Recurring
 	    	if(this.get("saveRecurring")){
@@ -46662,16 +46644,7 @@
 	    	}
 
 	    	//Mode
-	    	if(obj.isNew()){
-		    	obj.set("issued_date", kendo.toString(new Date(obj.issued_date), "s"));
-	    	}else{
-	    		var today = new Date(), issuedDate = new Date(obj.issued_date);
-	    		issuedDate.setHours(today.getHours());
-	    		issuedDate.setMinutes(today.getMinutes());
-	    		issuedDate.setSeconds(today.getSeconds());
-
-	    		obj.set("issued_date", kendo.toString(issuedDate, "s"));
-
+	    	if(obj.isNew()==false){
 	    		//Line has changed
 		    	if(obj.is_recurring==0){
 			    	$.each(this.journalLineDS.data(), function(index, value){
@@ -47446,6 +47419,7 @@
 	    },	    	    
 		save 				: function(){				
 	    	var self = this, obj = this.get("obj");
+	    	obj.set("issued_date", kendo.toString(new Date(obj.issued_date), "s"));
 
 	    	//Recurring
 	    	if(this.get("saveRecurring")){
@@ -47456,16 +47430,7 @@
 	    	}
 
 	    	//Mode
-	    	if(obj.isNew()){
-		    	obj.set("issued_date", kendo.toString(new Date(obj.issued_date), "s"));
-	    	}else{
-	    		var today = new Date(), issuedDate = new Date(obj.issued_date);
-	    		issuedDate.setHours(today.getHours());
-	    		issuedDate.setMinutes(today.getMinutes());
-	    		issuedDate.setSeconds(today.getSeconds());
-
-	    		obj.set("issued_date", kendo.toString(issuedDate, "s"));
-
+	    	if(obj.isNew()==false){
 	    		//Line has changed
 		    	if(obj.is_recurring==0){
 			    	$.each(this.journalLineDS.data(), function(index, value){
@@ -49137,7 +49102,7 @@
 		    	win.print();
 		    	win.close();
 		    },2000);
-		},
+		}
 	});
 	banhji.statementProfitLossBySegment =  kendo.observable({
 		lang 				: langVM,
@@ -53366,6 +53331,7 @@
 	    },
 		save 				: function(){				
 	    	var self = this, obj = this.get("obj");
+	    	obj.set("issued_date", kendo.toString(new Date(obj.issued_date), "s"));
 
 	    	//Recurring
 	    	if(this.get("saveRecurring")){
@@ -53373,18 +53339,6 @@
 
 	    		obj.set("number", "");
 	    		obj.set("is_recurring", 1);
-	    	}	    	
-	    	
-	    	//Mode
-	    	if(obj.isNew()){	    		
-		    	obj.set("issued_date", kendo.toString(new Date(obj.issued_date), "s"));
-	    	}else{
-	    		var today = new Date(), issuedDate = new Date(obj.issued_date);
-	    		issuedDate.setHours(today.getHours());
-	    		issuedDate.setMinutes(today.getMinutes());
-	    		issuedDate.setSeconds(today.getSeconds());
-
-	    		obj.set("issued_date", kendo.toString(issuedDate, "s"));
 	    	}
 	    	
     		//Save Obj
@@ -54099,6 +54053,7 @@
 	    },
 		save 				: function(){				
 	    	var self = this, obj = this.get("obj");
+	    	obj.set("issued_date", kendo.toString(new Date(obj.issued_date), "s"));
 
 	    	//Recurring
 	    	if(this.get("saveRecurring")){
@@ -54106,18 +54061,6 @@
 
 	    		obj.set("number", "");
 	    		obj.set("is_recurring", 1);
-	    	}
-
-	    	//Mode
-	    	if(obj.isNew()){	    		
-		    	obj.set("issued_date", kendo.toString(new Date(obj.issued_date), "s"));
-	    	}else{
-	    		var today = new Date(), issuedDate = new Date(obj.issued_date);
-	    		issuedDate.setHours(today.getHours());
-	    		issuedDate.setMinutes(today.getMinutes());
-	    		issuedDate.setSeconds(today.getSeconds());
-
-	    		obj.set("issued_date", kendo.toString(issuedDate, "s"));
 	    	}
 
 	    	//Reference
@@ -54822,6 +54765,7 @@
 	    },	    	    
 		save 				: function(){				
 	    	var self = this, obj = this.get("obj");
+	    	obj.set("issued_date", kendo.toString(new Date(obj.issued_date), "s"));
 
 	    	//Recurring
 	    	if(this.get("saveRecurring")){
@@ -54832,16 +54776,7 @@
 	    	}
 
 	    	//Mode
-	    	if(obj.isNew()){	    		
-		    	obj.set("issued_date", kendo.toString(new Date(obj.issued_date), "s"));
-	    	}else{
-	    		var today = new Date(), issuedDate = new Date(obj.issued_date);
-	    		issuedDate.setHours(today.getHours());
-	    		issuedDate.setMinutes(today.getMinutes());
-	    		issuedDate.setSeconds(today.getSeconds());
-
-	    		obj.set("issued_date", kendo.toString(issuedDate, "s"));
-
+	    	if(obj.isNew()==false){
 	    		//Line has changed
 		    	if(this.lineDS.hasChanges() && obj.is_recurring==0){
 			    	$.each(this.journalLineDS.data(), function(index, value){
@@ -56277,6 +56212,7 @@
 	    },
 		save 				: function(){				
 	    	var self = this, obj = this.get("obj");
+	    	obj.set("issued_date", kendo.toString(new Date(obj.issued_date), "s"));
 
 	    	//Warning over credit allowed
 	        if(obj.credit_limit>0 && obj.amount>obj.credit_allowed){
@@ -56296,16 +56232,7 @@
 	    	}
 
 	    	//Mode
-	    	if(obj.isNew()){
-		    	obj.set("issued_date", kendo.toString(new Date(obj.issued_date), "s"));
-	    	}else{
-	    		var today = new Date(), issuedDate = new Date(obj.issued_date);
-	    		issuedDate.setHours(today.getHours());
-	    		issuedDate.setMinutes(today.getMinutes());
-	    		issuedDate.setSeconds(today.getSeconds());
-
-	    		obj.set("issued_date", kendo.toString(issuedDate, "s"));
-
+	    	if(obj.isNew()==false){
 	    		//Line has changed
 		    	if(this.lineDS.hasChanges() && obj.is_recurring==0){
 			    	$.each(this.journalLineDS.data(), function(index, value){
@@ -57627,19 +57554,11 @@
 		    return dfd;	    		    	
 	    },	    	    
 		save 				: function(){				
-	    	var self = this, obj = this.get("obj");	    	
+	    	var self = this, obj = this.get("obj");
+	    	obj.set("issued_date", kendo.toString(new Date(obj.issued_date), "s"));	    	
 
 			//Mode
-	    	if(obj.isNew()){
-		    	obj.set("issued_date", kendo.toString(new Date(obj.issued_date), "s"));
-	    	}else{
-	    		var today = new Date(), issuedDate = new Date(obj.issued_date);
-	    		issuedDate.setHours(today.getHours());
-	    		issuedDate.setMinutes(today.getMinutes());
-	    		issuedDate.setSeconds(today.getSeconds());
-
-	    		obj.set("issued_date", kendo.toString(issuedDate, "s"));
-	    		
+	    	if(obj.isNew()==false){
 	    		//Journal
 		    	$.each(this.journalLineDS.data(), function(index, value){
 					value.set("deleted", 1);
@@ -60770,19 +60689,7 @@
 	    		
 	    		obj.set("number", "");
 	    		obj.set("is_recurring", 1);
-	    	}
-
-	    	//Mode
-	    	// if(obj.isNew()){
-		    	
-	    	// }else{
-	    	// 	var today = new Date(), issuedDate = new Date(obj.issued_date);
-	    	// 	issuedDate.setHours(today.getHours());
-	    	// 	issuedDate.setMinutes(today.getMinutes());
-	    	// 	issuedDate.setSeconds(today.getSeconds());
-
-	    	// 	obj.set("issued_date", kendo.toString(issuedDate, "s"));
-	    	// }
+	    	}	    	
 	    	
     		//Save Obj
 			this.objSync()
@@ -61754,6 +61661,7 @@
 	    },	    	    
 		save 				: function(){				
 	    	var self = this, obj = this.get("obj");
+	    	obj.set("issued_date", kendo.toString(new Date(obj.issued_date), "s"));
 
 	    	//Recurring
 	    	if(this.get("saveRecurring")){
@@ -61761,18 +61669,6 @@
 
 	    		obj.set("number", "");
 	    		obj.set("is_recurring", 1);
-	    	}
-
-	    	//Mode
-	    	if(obj.isNew()){
-		    	obj.set("issued_date", kendo.toString(new Date(obj.issued_date), "s"));
-	    	}else{
-	    		var today = new Date(), issuedDate = new Date(obj.issued_date);
-	    		issuedDate.setHours(today.getHours());
-	    		issuedDate.setMinutes(today.getMinutes());
-	    		issuedDate.setSeconds(today.getSeconds());
-
-	    		obj.set("issued_date", kendo.toString(issuedDate, "s"));
 	    	}
 
 	    	//Reference
@@ -62495,6 +62391,7 @@
 	    },	    	    
 		save 				: function(){				
 	    	var self = this, obj = this.get("obj");
+	    	obj.set("issued_date", kendo.toString(new Date(obj.issued_date), "s"));
 
 	    	//Recurring
 	    	if(this.get("saveRecurring")){
@@ -62505,16 +62402,7 @@
 	    	}
 
 	    	//Mode
-	    	if(obj.isNew()){
-		    	obj.set("issued_date", kendo.toString(new Date(obj.issued_date), "s"));
-	    	}else{
-	    		var today = new Date(), issuedDate = new Date(obj.issued_date);
-	    		issuedDate.setHours(today.getHours());
-	    		issuedDate.setMinutes(today.getMinutes());
-	    		issuedDate.setSeconds(today.getSeconds());
-
-	    		obj.set("issued_date", kendo.toString(issuedDate, "s"));
-
+	    	if(obj.isNew()==false){
 	    		//Line has changed
 		    	if(this.lineDS.hasChanges() && obj.is_recurring==0){
 			    	$.each(this.journalLineDS.data(), function(index, value){
@@ -63762,6 +63650,7 @@
 	    },	    	    
 		save 				: function(){				
 	    	var self = this, obj = this.get("obj");
+	    	obj.set("issued_date", kendo.toString(new Date(obj.issued_date), "s"));
 
 	    	//Warning over credit allowed
 	        if(obj.credit_limit>0 && obj.amount>obj.credit_allowed){
@@ -63777,16 +63666,7 @@
 	    	}
 
 	        //Mode
-	    	if(obj.isNew()){
-		    	obj.set("issued_date", kendo.toString(new Date(obj.issued_date), "s"));
-	    	}else{
-	    		var today = new Date(), issuedDate = new Date(obj.issued_date);
-	    		issuedDate.setHours(today.getHours());
-	    		issuedDate.setMinutes(today.getMinutes());
-	    		issuedDate.setSeconds(today.getSeconds());
-
-	    		obj.set("issued_date", kendo.toString(issuedDate, "s"));
-
+	    	if(obj.isNew()==false){
 	    		//Line has changed
 		    	if(obj.is_recurring==0){
 			    	$.each(this.journalLineDS.data(), function(index, value){
@@ -65325,7 +65205,8 @@
 	    },	    	    
 		save 				: function(){				
 	    	var self = this, obj = this.get("obj");
-	    	
+	    	obj.set("issued_date", kendo.toString(new Date(obj.issued_date), "s"));
+
 	    	//Warning over credit allowed
 	        if(obj.credit_limit>0 && obj.amount>obj.credit_allowed){
 	        	alert("Over credit allowed!");		        	
@@ -65340,16 +65221,7 @@
 	    	}
 
 	        //Mode
-	    	if(obj.isNew()){
-		    	obj.set("issued_date", kendo.toString(new Date(obj.issued_date), "s"));
-	    	}else{
-	    		var today = new Date(), issuedDate = new Date(obj.issued_date);
-	    		issuedDate.setHours(today.getHours());
-	    		issuedDate.setMinutes(today.getMinutes());
-	    		issuedDate.setSeconds(today.getSeconds());
-
-	    		obj.set("issued_date", kendo.toString(issuedDate, "s"));
-
+	    	if(obj.isNew()==false){
 	    		//Line has changed
 		    	if(obj.is_recurring==0){
 			    	$.each(this.journalLineDS.data(), function(index, value){
@@ -66568,6 +66440,7 @@
 	    },	    	    
 		save 				: function(){				
 	    	var self = this, obj = this.get("obj");
+	    	obj.set("issued_date", kendo.toString(new Date(obj.issued_date), "s"));
 
 	    	//Recurring
 	    	if(this.get("saveRecurring")){
@@ -66575,18 +66448,6 @@
 	    		
 	    		obj.set("number", "");
 	    		obj.set("is_recurring", 1);
-	    	}
-
-	    	//Mode
-	    	if(obj.isNew()){
-		    	obj.set("issued_date", kendo.toString(new Date(obj.issued_date), "s"));
-	    	}else{
-	    		var today = new Date(), issuedDate = new Date(obj.issued_date);
-	    		issuedDate.setHours(today.getHours());
-	    		issuedDate.setMinutes(today.getMinutes());
-	    		issuedDate.setSeconds(today.getSeconds());
-
-	    		obj.set("issued_date", kendo.toString(issuedDate, "s"));
 	    	}
 
 	    	//Reference
@@ -67675,18 +67536,10 @@
 	    },	    	    
 		save 				: function(){				
 	    	var self = this, obj = this.get("obj");
+	    	obj.set("issued_date", kendo.toString(new Date(obj.issued_date), "s"));
 
 	    	//Mode
-	    	if(obj.isNew()){
-		    	obj.set("issued_date", kendo.toString(new Date(obj.issued_date), "s"));
-	    	}else{
-	    		var today = new Date(), issuedDate = new Date(obj.issued_date);
-	    		issuedDate.setHours(today.getHours());
-	    		issuedDate.setMinutes(today.getMinutes());
-	    		issuedDate.setSeconds(today.getSeconds());
-
-	    		obj.set("issued_date", kendo.toString(issuedDate, "s"));
-
+	    	if(obj.isNew()==false){
 	    		//Journal
 	    		$.each(this.journalLineDS.data(), function(index, value){
 					value.set("deleted", 1);
@@ -71824,12 +71677,7 @@
 	    	
 	    	//Edit Mode
 	    	if(this.get("isEdit")){
-	    		var today = new Date(), issuedDate = new Date(obj.issued_date);
-	    		issuedDate.setHours(today.getHours());
-	    		issuedDate.setMinutes(today.getMinutes());
-	    		issuedDate.setSeconds(today.getSeconds());
-
-	    		obj.set("issued_date", kendo.toString(issuedDate, "s"));
+	    		obj.set("issued_date", kendo.toString(new Date(obj.issued_date), "s"));
 
 	    		//Update Journal
     			$.each(this.journalLineDS.data(), function(index, value){										
@@ -71854,14 +71702,12 @@
 					this.addCredit(obj.id);
 				}					    			    		
 	    	}else{
-	    		obj.set("issued_date", kendo.toString(new Date(obj.issued_date), "s"));
-
 	    		//Add brand new transaction
 	    		$.each(this.dataSource.data(), function(index, value){
 	    			value.set("transaction_template_id", obj.transaction_template_id);
 	    			value.set("account_id", obj.account_id);
-	    			value.set("payment_method_id", obj.payment_method_id);	    			
-	    			value.set("issued_date", obj.issued_date);
+	    			value.set("payment_method_id", obj.payment_method_id);
+	    			value.set("issued_date", kendo.toString(new Date(obj.issued_date), "s"));
 	    			value.set("memo", obj.memo);
 	    			value.set("memo2", obj.memo2);
 	    			value.set("segments", obj.segments);
@@ -72339,12 +72185,7 @@
 	    	var self = this, obj = this.get("obj");	    			
 	    	
 	    	if(this.get("isEdit")){
-	    		var today = new Date(), issuedDate = new Date(obj.issued_date);
-	    		issuedDate.setHours(today.getHours());
-	    		issuedDate.setMinutes(today.getMinutes());
-	    		issuedDate.setSeconds(today.getSeconds());
-
-	    		obj.set("issued_date", kendo.toString(issuedDate, "s"));
+	    		obj.set("issued_date", kendo.toString(new Date(obj.issued_date), "s"));
 
 	    		//Update Journal
     			$.each(this.journalLineDS.data(), function(index, value){										
@@ -72369,14 +72210,12 @@
 					this.addCredit(obj.id);
 				} 			    		
 	    	}else{
-	    		obj.set("issued_date", kendo.toString(new Date(obj.issued_date), "s"));
-
 	    		//Add brand new transaction
 	    		$.each(this.dataSource.data(), function(index, value){
 	    			value.set("transaction_template_id", obj.transaction_template_id);
 	    			value.set("account_id", obj.account_id);
-	    			value.set("payment_method_id", obj.payment_method_id);	    			
-	    			value.set("issued_date", obj.issued_date);
+	    			value.set("payment_method_id", obj.payment_method_id);
+	    			value.set("issued_date", kendo.toString(new Date(obj.issued_date), "s"));
 	    			value.set("memo", obj.memo);
 	    			value.set("memo2", obj.memo2);
 	    			value.set("segments", obj.segments);
@@ -76879,6 +76718,7 @@
 	    },			
 		save 					: function(){			
 			var self = this, obj = this.get("obj");
+			obj.set("issued_date", kendo.toString(new Date(obj.issued_date), "s"));
 
 			//Remove empty row
 			$.each(this.lineDS.view(), function(index, value){
@@ -77644,13 +77484,12 @@
 	    },			
 		save 					: function(){			
 			var self = this, obj = this.get("obj");					
+			obj.set("issued_date", kendo.toString(new Date(obj.issued_date), "s"));
 
-			//Edit Mode
-	    	if(this.get("isEdit")){
+			//Mode
+	    	if(obj.isNew()==false){
 	    		//Line has changes
-		    	if(this.lineDS.hasChanges() || this.accountLineDS.hasChanges() || this.toItemLineDS.hasChanges() || this.toAccountLineDS.hasChanges()){
-		    		obj.set("dirty", true);
-
+		    	if(this.lineDS.hasChanges() || this.accountLineDS.hasChanges() || this.toItemLineDS.hasChanges() || this.toAccountLineDS.hasChanges()){		    		
 		    		$.each(this.journalLineDS.data(), function(index, value){
 						value.set("deleted", 1);										
 					});
