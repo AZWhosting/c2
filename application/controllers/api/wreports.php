@@ -603,6 +603,7 @@ class Wreports extends REST_Controller {
 		$contact->where_related_contact('status', 1);
 		$contact->get();
 
+		$location->include_related('transaction/winvoice_line', array('quantity'));
 		$location->get();
 		$locs = array();
 		foreach($location as $loc) {
@@ -622,6 +623,16 @@ class Wreports extends REST_Controller {
 		$avgIncome->where_in('location_id', $locs);
 		$avgIncome->where("type", "Water_Invoice");
 		$avgIncome->get();
+
+		$usage = $meter;
+		$usage->include_related('winvoice_line', array('quantity'));
+		$usage->where_related_winvoice_line('type', 'tariff');
+		$usage->get();
+
+		$avgUsage = $meter;
+		$avgUsage->include_related('meter_record', array('usage'));
+		// $avgUsage->where_related_winvoice_line('type', 'tariff');
+		$avgUsage->get();
 
 		$usage->select_sum("quantity");
 		$usage->where("type", "tariff");

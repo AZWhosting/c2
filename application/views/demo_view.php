@@ -4364,6 +4364,7 @@
     	<td></td>    	
     	<td></td>
     	<td></td>
+    	<td></td>
     	<td></td>    	
     	<td class="right strong" style="border-top-color: black; color: black;">
     		#=kendo.toString(sumDr, "c2", banhji.locale)#
@@ -5389,168 +5390,419 @@
 							<h2>Statement of Profit or Loss by Segment</h2>
 							<p data-bind="text: displayDate"></p>
 						</div>
-				    	<div class="table-wrapper">
-							<table class="table table-borderless table-condensed statement-profit-loss-by-segment">
-								<thead>
-									<th class="td-fixed" style="width: 155px;">Account Name</th>
-									<th class="td-fixed" style="width: 100px;">Amount</th>
-									<th>Segment</th>
-									<th>Segment</th>
-									<th>Segment</th>
-									<th>Segment</th>
-									<th>Segment</th>
-									<th>Segment</th>
-									<th>Segment</th>
-									<th>Segment</th>
-									<th>Segment</th>
-									<th>Segment</th>
-									<th>Segment</th>
-									<th>Segment</th>
-									<th>Segment</th>
-									<th>Segment</th>
-									<th>Segment</th>
-									<th>Segment</th>
-								</thead>
-								<tbody>
-									<tr>
-										<th class="td-fixed" style="width: 155px;">ABC</th>
-										<th class="td-fixed" style="text-align: right;width: 100px;">5000.00</th>
-										<td style="text-align: right;">1</td>
-										<td style="text-align: right;">2</td>
-										<td style="text-align: right;">3</td>
-										<td style="text-align: right;">4</td>
-										<td style="text-align: right;">5</td>
-										<td style="text-align: right;">6</td>
-										<td style="text-align: right;">7</td>
-										<td style="text-align: right;">8</td>
-										<td style="text-align: right;">9</td>
-										<td style="text-align: right;">10</td>
-										<td style="text-align: right;">11</td>
-										<td style="text-align: right;">12</td>
-										<td style="text-align: right;">13</td>
-										<td style="text-align: right;">14</td>
-										<td style="text-align: right;">15</td>
-										<td style="text-align: right;">16</td>
-									</tr>
-									<tr>
-										<th class="td-fixed" style="width: 155px;">ABC</th>
-										<th class="td-fixed" style="text-align: right;">5000.00</th>
-										<td style="text-align: right;">1</td>
-										<td style="text-align: right;">2</td>
-										<td style="text-align: right;">3</td>
-										<td style="text-align: right;">4</td>
-										<td style="text-align: right;">5</td>
-										<td style="text-align: right;">6</td>
-										<td style="text-align: right;">7</td>
-										<td style="text-align: right;">8</td>
-										<td style="text-align: right;">9</td>
-										<td style="text-align: right;">10</td>
-										<td style="text-align: right;">11</td>
-										<td style="text-align: right;">12</td>
-										<td style="text-align: right;">13</td>
-										<td style="text-align: right;">14</td>
-										<td style="text-align: right;">15</td>
-										<td style="text-align: right;">16</td>
-									</tr>
-									<tr>
-										<th class="td-fixed" style="width: 155px;">ABC</th>
-										<th class="td-fixed" style="text-align: right;">5000.00</th>
-										<td style="text-align: right;">1</td>
-										<td style="text-align: right;">2</td>
-										<td style="text-align: right;">3</td>
-										<td style="text-align: right;">4</td>
-										<td style="text-align: right;">5</td>
-										<td style="text-align: right;">6</td>
-										<td style="text-align: right;">7</td>
-										<td style="text-align: right;">8</td>
-										<td style="text-align: right;">9</td>
-										<td style="text-align: right;">10</td>
-										<td style="text-align: right;">11</td>
-										<td style="text-align: right;">12</td>
-										<td style="text-align: right;">13</td>
-										<td style="text-align: right;">14</td>
-										<td style="text-align: right;">15</td>
-										<td style="text-align: right;">16</td>
-									</tr>
-								</tbody>
-							</table>
+
+						<div id="myTable">
+						    <div class="wrapper">
+						        <table>
+						            <tr>
+						                <th class="largerFont">Account Name</th>						                
+						                <td class="last-td pos">Amount</td>
+						                <td>Segment</td>
+						                <td>Segment</td>
+						                <td>Segment</td>
+						                <td>Segment</td>
+						                <td>Segment</td>
+						                <td>Segment</td>
+						                <td>Segment</td>
+						                <td>Segment</td>
+						                <td>Segment</td>
+						                <td>Segment</td>
+						                <td>Segment</td>
+						                <td>Segment</td>
+						                <td>Segment</td>
+						                <td>Segment</td>
+						                <td>Segment</td>
+						                <td>Segment</td>
+						                <td>Segment</td>
+						                <td>Segment</td>
+						                <td>Segment</td>
+						                <td>Segment</td>
+						                <td>Segment</td>
+						                <td>Segment</td>
+						                <td>Segment</td>
+						                <td>Segment</td>
+						                <td>Segment</td>
+						                <td>Segment</td>
+						                <td>Segment</td>
+						                <td>Segment</td>
+						                <td>Segment</td>
+						                <td>Segment</td>
+						                <td>Segment</td>
+						                <td>Segment</td>
+						                <td>Segment</td>
+						                <td>Segment</td>
+						                <td>Segment</td>
+						                <td>Segment</td>
+						                <td>Segment</td>
+						                <td>Segment</td>
+						                <td>Segment</td>
+						                <td>Segment</td>
+						                <td>Segment</td>
+						            </tr>
+						            <tr>
+						                <th>TODAY</th>						                
+						                <td class="last-td">80</td>
+						                <td >1</td>
+						                <td >2</td>
+						                <td >3</td>
+						                <td >4</td>
+						                <td >5</td>
+						                <td >6</td>
+						                <td >7</td>
+						                <td >8</td>
+						                <td >9</td>
+						                <td >10</td>
+						                <td >11</td>
+						                <td >12</td>
+						                <td >13</td>
+						                <td >14</td>
+						                <td >15</td>
+						                <td >16</td>
+						                <td >17</td>
+						                <td >18</td>
+						                <td >19</td>
+						                <td >20</td>
+						                <td >21</td>
+						                <td >22</td>
+						                <td >23</td>
+						                <td >24</td>
+						                <td >25</td>
+						                <td >26</td>
+						                <td >27</td>
+						                <td >28</td>
+						                <td >29</td>
+						                <td >30</td>
+						                <td >31</td>
+						                <td >32</td>
+						                <td >33</td>
+						                <td >34</td>
+						                <td >35</td>
+						                <td >36</td>
+						                <td >37</td>
+						                <td >38</td>
+						                <td >39</td>
+						                <td >40</td>
+						                <td >41</td>
+						            </tr>
+						            <tr>
+						                <th>20-Jan-2014</th>						                
+						                <td class="last-td">95</td>
+						                <td >1</td>
+						                <td >2</td>
+						                <td >3</td>
+						                <td >4</td>
+						                <td >5</td>
+						                <td >6</td>
+						                <td >7</td>
+						                <td >8</td>
+						                <td >9</td>
+						                <td >10</td>
+						                <td >11</td>
+						                <td >12</td>
+						                <td >13</td>
+						                <td >14</td>
+						                <td >15</td>
+						                <td >16</td>
+						                <td >17</td>
+						                <td >18</td>
+						                <td >19</td>
+						                <td >20</td>
+						                <td >21</td>
+						                <td >22</td>
+						                <td >23</td>
+						                <td >24</td>
+						                <td >25</td>
+						                <td >26</td>
+						                <td >27</td>
+						                <td >28</td>
+						                <td >29</td>
+						                <td >30</td>
+						                <td >31</td>
+						                <td >32</td>
+						                <td >33</td>
+						                <td >34</td>
+						                <td >35</td>
+						                <td >36</td>
+						                <td >37</td>
+						                <td >38</td>
+						                <td >39</td>
+						                <td >40</td>
+						                <td >41</td>
+						            </tr>
+						            <tr>
+						                <th>19-Jan-2014</th>						                
+						                <td class="last-td">60</td>
+						                <td >1</td>
+						                <td >2</td>
+						                <td >3</td>
+						                <td >4</td>
+						                <td >5</td>
+						                <td >6</td>
+						                <td >7</td>
+						                <td >8</td>
+						                <td >9</td>
+						                <td >10</td>
+						                <td >11</td>
+						                <td >12</td>
+						                <td >13</td>
+						                <td >14</td>
+						                <td >15</td>
+						                <td >16</td>
+						                <td >17</td>
+						                <td >18</td>
+						                <td >19</td>
+						                <td >20</td>
+						                <td >21</td>
+						                <td >22</td>
+						                <td >23</td>
+						                <td >24</td>
+						                <td >25</td>
+						                <td >26</td>
+						                <td >27</td>
+						                <td >28</td>
+						                <td >29</td>
+						                <td >30</td>
+						                <td >31</td>
+						                <td >32</td>
+						                <td >33</td>
+						                <td >34</td>
+						                <td >35</td>
+						                <td >36</td>
+						                <td >37</td>
+						                <td >38</td>
+						                <td >39</td>
+						                <td >40</td>
+						                <td >41</td>
+						            </tr>
+						            <tr>
+						                <th>18-Jan-2014</th>						                
+						                <td class="last-td">49</td>
+						                <td >1</td>
+						                <td >2</td>
+						                <td >3</td>
+						                <td >4</td>
+						                <td >5</td>
+						                <td >6</td>
+						                <td >7</td>
+						                <td >8</td>
+						                <td >9</td>
+						                <td >10</td>
+						                <td >11</td>
+						                <td >12</td>
+						                <td >13</td>
+						                <td >14</td>
+						                <td >15</td>
+						                <td >16</td>
+						                <td >17</td>
+						                <td >18</td>
+						                <td >19</td>
+						                <td >20</td>
+						                <td >21</td>
+						                <td >22</td>
+						                <td >23</td>
+						                <td >24</td>
+						                <td >25</td>
+						                <td >26</td>
+						                <td >27</td>
+						                <td >28</td>
+						                <td >29</td>
+						                <td >30</td>
+						                <td >31</td>
+						                <td >32</td>
+						                <td >33</td>
+						                <td >34</td>
+						                <td >35</td>
+						                <td >36</td>
+						                <td >37</td>
+						                <td >38</td>
+						                <td >39</td>
+						                <td >40</td>
+						                <td >41</td>
+						            </tr>
+						            <tr>
+						                <th>17-Jan-2014</th>						                
+						                <td class="last-td">91</td>
+						                <td >1</td>
+						                <td >2</td>
+						                <td >3</td>
+						                <td >4</td>
+						                <td >5</td>
+						                <td >6</td>
+						                <td >7</td>
+						                <td >8</td>
+						                <td >9</td>
+						                <td >10</td>
+						                <td >11</td>
+						                <td >12</td>
+						                <td >13</td>
+						                <td >14</td>
+						                <td >15</td>
+						                <td >16</td>
+						                <td >17</td>
+						                <td >18</td>
+						                <td >19</td>
+						                <td >20</td>
+						                <td >21</td>
+						                <td >22</td>
+						                <td >23</td>
+						                <td >24</td>
+						                <td >25</td>
+						                <td >26</td>
+						                <td >27</td>
+						                <td >28</td>
+						                <td >29</td>
+						                <td >30</td>
+						                <td >31</td>
+						                <td >32</td>
+						                <td >33</td>
+						                <td >34</td>
+						                <td >35</td>
+						                <td >36</td>
+						                <td >37</td>
+						                <td >38</td>
+						                <td >39</td>
+						                <td >40</td>
+						                <td >41</td>
+						            </tr>
+						            <tr>
+						                <th>16-Jan-2014</th>						                
+						                <td class="last-td">70</td>
+						                <td >1</td>
+						                <td >2</td>
+						                <td >3</td>
+						                <td >4</td>
+						                <td >5</td>
+						                <td >6</td>
+						                <td >7</td>
+						                <td >8</td>
+						                <td >9</td>
+						                <td >10</td>
+						                <td >11</td>
+						                <td >12</td>
+						                <td >13</td>
+						                <td >14</td>
+						                <td >15</td>
+						                <td >16</td>
+						                <td >17</td>
+						                <td >18</td>
+						                <td >19</td>
+						                <td >20</td>
+						                <td >21</td>
+						                <td >22</td>
+						                <td >23</td>
+						                <td >24</td>
+						                <td >25</td>
+						                <td >26</td>
+						                <td >27</td>
+						                <td >28</td>
+						                <td >29</td>
+						                <td >30</td>
+						                <td >31</td>
+						                <td >32</td>
+						                <td >33</td>
+						                <td >34</td>
+						                <td >35</td>
+						                <td >36</td>
+						                <td >37</td>
+						                <td >38</td>
+						                <td >39</td>
+						                <td >40</td>
+						                <td >41</td>
+						            </tr>
+						            <tr>
+						                <th>15-Jan-2014</th>						                
+						                <td class="last-td">21</td>
+						                <td >1</td>
+						                <td >2</td>
+						                <td >3</td>
+						                <td >4</td>
+						                <td >5</td>
+						                <td >6</td>
+						                <td >7</td>
+						                <td >8</td>
+						                <td >9</td>
+						                <td >10</td>
+						                <td >11</td>
+						                <td >12</td>
+						                <td >13</td>
+						                <td >14</td>
+						                <td >15</td>
+						                <td >16</td>
+						                <td >17</td>
+						                <td >18</td>
+						                <td >19</td>
+						                <td >20</td>
+						                <td >21</td>
+						                <td >22</td>
+						                <td >23</td>
+						                <td >24</td>
+						                <td >25</td>
+						                <td >26</td>
+						                <td >27</td>
+						                <td >28</td>
+						                <td >29</td>
+						                <td >30</td>
+						                <td >31</td>
+						                <td >32</td>
+						                <td >33</td>
+						                <td >34</td>
+						                <td >35</td>
+						                <td >36</td>
+						                <td >37</td>
+						                <td >38</td>
+						                <td >39</td>
+						                <td >40</td>
+						                <td >41</td>
+						            </tr>
+						            <tr>
+						                <th>14-Jan-2014</th>						                
+						                <td class="last-td">21</td>
+						                <td >1</td>
+						                <td >2</td>
+						                <td >3</td>
+						                <td >4</td>
+						                <td >5</td>
+						                <td >6</td>
+						                <td >7</td>
+						                <td >8</td>
+						                <td >9</td>
+						                <td >10</td>
+						                <td >11</td>
+						                <td >12</td>
+						                <td >13</td>
+						                <td >14</td>
+						                <td >15</td>
+						                <td >16</td>
+						                <td >17</td>
+						                <td >18</td>
+						                <td >19</td>
+						                <td >20</td>
+						                <td >21</td>
+						                <td >22</td>
+						                <td >23</td>
+						                <td >24</td>
+						                <td >25</td>
+						                <td >26</td>
+						                <td >27</td>
+						                <td >28</td>
+						                <td >29</td>
+						                <td >30</td>
+						                <td >31</td>
+						                <td >32</td>
+						                <td >33</td>
+						                <td >34</td>
+						                <td >35</td>
+						                <td >36</td>
+						                <td >37</td>
+						                <td >38</td>
+						                <td >39</td>
+						                <td >40</td>
+						                <td >41</td>
+						            </tr>
+						        </table>
+						    </div>
 						</div>
 						
-
-
-						<!-- <div id="tableContainer">
-						  <table class="all-table">
-						    <colgroup>
-						      <col style="width:54px;" />
-						      <col style="width:180px;" />
-						      <col style="width:180px;" />
-						      <col style="width:180px;" />
-						      <col style="width:30px;" />
-						    </colgroup>
-						    <thead>
-						      <tr>
-						        <td class="td-fixed gray-background">a</td>
-						        <td class="td-fixed td-fixed-margin gray-background">a</td>
-						        <td class="gray-background">aaaaaaaaaaaa</td>
-						        <td class="gray-background">aaaaaaaaaaaa</td>
-						        <td class="gray-background">aaaaaaaaaaaa</td>
-						        <td class="gray-background">aaaaaaaaaaaa</td>
-						      </tr>
-						      <tr>
-						        <td class="td-fixed gray-background">a</td>
-						        <td class="td-fixed td-fixed-margin gray-background">a</td>
-						        <td class="gray-background">aaaaaaaaaaaa</td>
-						        <td class="gray-background">aaaaaaaaaaaa</td>
-						        <td class="gray-background">aaaaaaaaaaaa</td>
-						        <td class="gray-background">aaaaaaaaaaaa</td>
-						      </tr>
-						    </thead>
-						    <tbody>
-						      <tr>
-						        <td class="td-fixed white-background">a</td>
-						        <td class="td-fixed td-fixed-margin white-background">a</td>
-						        <td>aaaaaaaaaaaa</td>
-						        <td>aaaaaaaaaaaa</td>
-						        <td>aaaaaaaaaaaa</td>
-						        <td>aaaaaaaaaaaa</td>
-						      </tr>
-						      <tr>
-						        <td class="td-fixed white-background">a</td>
-						        <td class="td-fixed td-fixed-margin white-background">a</td>
-						        <td>aaaaaaaaaaaa</td>
-						        <td>aaaaaaaaaaaa</td>
-						        <td>aaaaaaaaaaaa</td>
-						        <td>aaaaaaaaaaaa</td>
-						      </tr>
-						      <tr>
-						        <td class="td-fixed white-background">a</td>
-						        <td class="td-fixed td-fixed-margin white-background">a</td>
-						        <td>aaaaaaaaaaaa</td>
-						        <td>aaaaaaaaaaaa</td>
-						        <td>aaaaaaaaaaaa</td>
-						        <td>aaaaaaaaaaaa</td>
-						      </tr>
-						      <tr>
-						        <td class="td-fixed white-background">a</td>
-						        <td class="td-fixed td-fixed-margin white-background">a</td>
-						        <td>aaaaaaaaaaaa</td>
-						        <td>aaaaaaaaaaaa</td>
-						        <td>aaaaaaaaaaaa</td>
-						        <td>aaaaaaaaaaaa</td>
-						      </tr>
-						      <tr>
-						        <td class="td-fixed white-background">a</td>
-						        <td class="td-fixed td-fixed-margin white-background">a</td>
-						        <td>aaaaaaaaaaaa</td>
-						        <td>aaaaaaaaaaaa</td>
-						        <td>aaaaaaaaaaaa</td>
-						        <td>aaaaaaaaaaaa</td>
-						      </tr>
-						    </tbody>
-						  </table>
-						</div> -->
-
-						<br><br>
 					</div>
 		        </div>		        
 			</div>							
@@ -48707,16 +48959,16 @@
     	
         	//Dates
         	if(start && end){
-            	para.push({ field:"issued_date >=", value: kendo.toString(new Date(start), "yyyy-MM-dd") });
-            	para.push({ field:"issued_date <=", value: kendo.toString(new Date(end), "yyyy-MM-dd") });
+            	para.push({ field:"issued_date >=", operator:"where_related_transaction", value: kendo.toString(new Date(start), "yyyy-MM-dd") });
+            	para.push({ field:"issued_date <=", operator:"where_related_transaction", value: kendo.toString(new Date(end), "yyyy-MM-dd") });
 
             	displayDate = "From " + kendo.toString(new Date(start), "dd-MM-yyyy") + " To " + kendo.toString(new Date(end), "dd-MM-yyyy");
             }else if(start){
-            	para.push({ field:"issued_date", value: kendo.toString(new Date(start), "yyyy-MM-dd") });
+            	para.push({ field:"issued_date", operator:"where_related_transaction", value: kendo.toString(new Date(start), "yyyy-MM-dd") });
 
             	displayDate = "On " + kendo.toString(new Date(start), "dd-MM-yyyy");
             }else if(end){
-            	para.push({ field:"issued_date <=", value: kendo.toString(new Date(end), "yyyy-MM-dd") });
+            	para.push({ field:"issued_date <=", operator:"where_related_transaction", value: kendo.toString(new Date(end), "yyyy-MM-dd") });
 
             	displayDate = "As Of " + kendo.toString(new Date(end), "dd-MM-yyyy");
             }else{
@@ -48725,7 +48977,9 @@
 
             this.set("displayDate", displayDate);
 
-            this.dataSource.filter(para);
+            this.dataSource.query({
+            	filter:para
+            });
             this.dataSource.bind("requestEnd", function(e){				
 				if(e.type=="read"){
 					var response = e.response;
@@ -48941,16 +49195,16 @@
     	
         	//Dates
         	if(start && end){
-            	para.push({ field:"issued_date >=", value: kendo.toString(new Date(start), "yyyy-MM-dd") });
-            	para.push({ field:"issued_date <=", value: kendo.toString(new Date(end), "yyyy-MM-dd") });
+            	para.push({ field:"issued_date >=", operator:"where_related_transaction", value: kendo.toString(new Date(start), "yyyy-MM-dd") });
+            	para.push({ field:"issued_date <=", operator:"where_related_transaction", value: kendo.toString(new Date(end), "yyyy-MM-dd") });
 
             	displayDate = "From " + kendo.toString(new Date(start), "dd-MM-yyyy") + " To " + kendo.toString(new Date(end), "dd-MM-yyyy");
             }else if(start){
-            	para.push({ field:"issued_date", value: kendo.toString(new Date(start), "yyyy-MM-dd") });
+            	para.push({ field:"issued_date", operator:"where_related_transaction", value: kendo.toString(new Date(start), "yyyy-MM-dd") });
 
             	displayDate = "On " + kendo.toString(new Date(start), "dd-MM-yyyy");
             }else if(end){
-            	para.push({ field:"issued_date <=", value: kendo.toString(new Date(end), "yyyy-MM-dd") });
+            	para.push({ field:"issued_date <=", operator:"where_related_transaction", value: kendo.toString(new Date(end), "yyyy-MM-dd") });
 
             	displayDate = "As Of " + kendo.toString(new Date(end), "dd-MM-yyyy");
             }else{
@@ -48959,7 +49213,9 @@
 
             this.set("displayDate", displayDate);
 
-            this.dataSource.filter(para);
+            this.dataSource.query({
+            	filter:para
+            });
             this.dataSource.bind("requestEnd", function(e){				
 				if(e.type=="read"){
 					var response = e.response;
@@ -60506,6 +60762,7 @@
 	    },	    	    
 		save 				: function(){				
 	    	var self = this, obj = this.get("obj");
+	    	obj.set("issued_date", kendo.toString(new Date(obj.issued_date), "s"));
 
 	    	//Recurring
 	    	if(this.get("saveRecurring")){
@@ -60516,16 +60773,16 @@
 	    	}
 
 	    	//Mode
-	    	if(obj.isNew()){
-		    	obj.set("issued_date", kendo.toString(new Date(obj.issued_date), "s"));
-	    	}else{
-	    		var today = new Date(), issuedDate = new Date(obj.issued_date);
-	    		issuedDate.setHours(today.getHours());
-	    		issuedDate.setMinutes(today.getMinutes());
-	    		issuedDate.setSeconds(today.getSeconds());
+	    	// if(obj.isNew()){
+		    	
+	    	// }else{
+	    	// 	var today = new Date(), issuedDate = new Date(obj.issued_date);
+	    	// 	issuedDate.setHours(today.getHours());
+	    	// 	issuedDate.setMinutes(today.getMinutes());
+	    	// 	issuedDate.setSeconds(today.getSeconds());
 
-	    		obj.set("issued_date", kendo.toString(issuedDate, "s"));
-	    	}
+	    	// 	obj.set("issued_date", kendo.toString(issuedDate, "s"));
+	    	// }
 	    	
     		//Save Obj
 			this.objSync()
