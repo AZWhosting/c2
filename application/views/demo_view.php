@@ -4150,11 +4150,7 @@
 				#}#
 			</td>		
 			<td style="color: black;">
-				#if(i==0){#
-					#=memo#
-				#}else{#
-					#=line[i].description#
-				#}#
+				#=line[i].description#
 			</td>
 			<td style="color: black;">
 				#=line[i].account#
