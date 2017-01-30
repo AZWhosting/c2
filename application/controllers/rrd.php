@@ -16,6 +16,13 @@ class Rrd extends MY_Controller {
 		 */
 		$this->_render("demo_view");	
 	}
+	public function segment() {	
+		
+		/*
+		 *set up title and keywords (if not the default in custom.php config file will be set) 
+		 */
+		$this->_render("demo_view_segment");	
+	}
 
 	public function pich() {	
 		

@@ -179,17 +179,12 @@
 											<td>										
 												<span style="font-size: 25px;">10</span>
 												<br>
-												<span>Bills</span>
-											</td>
-											<td>
-												<span style="font-size: 25px;">2</span>
-												<br>
-												<span>Operation</span>
+												<span>Total</span>
 											</td>
 											<td>
 												<span style="font-size: 25px;" data-bind="text: avgUsage"></span>
 												<br>
-												<span>Average Usage</span>
+												<span>Void</span>
 											</td>
 										</tr>
 									</tbody>
@@ -10052,6 +10047,58 @@
 	      	change: function(e) {
 	      		var vm = banhji.wDashboard;
 	      		var sale = 0, usage = 0, user = 0, deposit = 0;
+	      		$.each(this.data(), function(index, value){
+	      			sale += value.sale;
+	      			usage+= value.usage;
+	      			user += value.activeCustomer;
+	      			deposit+= value.deposit;
+	      		});
+	      		banhji.wDashBoard.set('totalSale', sale);
+	      		banhji.wDashBoard.set('totalUsage', usage);
+	      		banhji.wDashBoard.set('totalUser', user);
+	      		banhji.wDashBoard.set('totalDeposit', deposit);
+	      		banhji.wDashBoard.set('avgUsage', usage/user);
+	      	},
+	      	batch: true,
+	      	serverFiltering: true,
+	      	serverPaging: true,
+	      	pageSize: 100
+	    }),
+	    invoice: 0,
+	    invCust: 0,
+	    overDue: 0,
+	    totalCust: 0,
+	    voidCust : 0,
+	    dashSource: new kendo.data.DataSource({
+	      	transport: {
+		        read  : {
+		          url: baseUrl + 'api/waterdash/dash',
+		          type: "GET",
+		          dataType: 'json',
+		          headers: { Institute: JSON.parse(localStorage.getItem('userData/user')).institute.id }
+		        },
+		        parameterMap: function(options, operation) {
+		          if(operation === 'read') {
+		            return {
+		              limit: options.take,
+		              page: options.page,
+		              filter: options.filter
+		            };
+		          } else {
+		            return {models: kendo.stringify(options.models)};
+		          }
+		        }
+		    },
+	      	schema  : {
+	        	model: {
+	          		id: 'id'
+	        	},
+	        	data: 'results',
+	        	total: 'count'
+	      	},
+	      	change: function(e) {
+	      		var vm = banhji.wDashboard;
+	      		var totalCust = 0, invCust = 0, overDue = 0, voided = 0;
 	      		$.each(this.data(), function(index, value){
 	      			sale += value.sale;
 	      			usage+= value.usage;

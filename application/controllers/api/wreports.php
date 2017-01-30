@@ -593,7 +593,7 @@ class Wreports extends REST_Controller {
 	    		// $deposit->where($value["field"], $value["value"]);	    		
 			}									 			
 		}		
-		
+		$contact->select('id');
 		$contact->where_in("status", array(0,1));		
 		$branch->get();
 

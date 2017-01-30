@@ -34,7 +34,81 @@ class Waterdash extends REST_Controller {
 		}
 	}
 
-	function board_get() {}
+	function board_get() {
+		$filters 	= $this->get("filter")["filters"];		
+		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
+		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;								
+		$sort 	 	= $this->get("sort");		
+		$data["results"] = array();
+		$data["count"] = 0;
+
+		$contact = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$icontact = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$acontact = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$trx = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+
+
+		//Sort
+		if(!empty($sort) && isset($sort)){					
+			foreach ($sort as $value) {
+				$obj->order_by($value["field"], $value["dir"]);
+			}
+		}
+
+		//Filter		
+		if(!empty($filters) && isset($filters)){
+	    	foreach ($filters as $value) {
+	    		if(isset($value['operator'])) {
+					$obj->{$value['operator']}($value['field'], $value['value']);
+				} else {
+	    			$obj->where($value["field"], $value["value"]);
+				}
+			}
+		}
+
+		$contact->where('use_water', 1);
+		$totalCust = $contact->count();
+
+		$icontact->where('use_water', 1);
+		$icontact->where('status', 0);
+		$totalICust = $icontact->count();
+
+		$acontact->where('use_water', 1);
+		$acontact->where('status', 1)
+		$totalACust = $acontact->count();
+
+		$voidedCust = $totalCust - ($totalICust - $totalACust);
+
+		$trx->where('type', 'Water_Invoice');
+		$trx->where('status <>', 1);
+		$trx->get();
+
+		$invoice = 0;
+		$customer = array();
+		$overDue = 0;
+		$today = date('Y-m-d');
+		foreach($trx as $invoice) {
+			if($invoce->due_date < $today) {
+				$overDue +=1;
+			}
+			if(!isset($customer["$invoice->contact_id"])) {
+				$customer["$invoice->contact_id"];
+			}
+			$invoice +=1;
+		}
+
+		$data[] = array(
+			'totalCustomer' => $totalCust,
+			'inActiveCustomer' => $totalICUst,
+			'activeCustomer' => $totalACust,
+			'invoiceCust' => count($customer),
+			'totalInvoice' => $invoice,
+			'overDue' => $overDue
+		);
+
+		$this->response(array('results' => $data, 'count' => 1), 200);
+	}
 
 	function license_get() {
 		$filters 	= $this->get("filter")["filters"];		

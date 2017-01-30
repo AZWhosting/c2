@@ -707,16 +707,27 @@ class Accounting_reports extends REST_Controller {
 			$objList = [];
 			$totalDr = 0;
 			$totalCr = 0;
-			foreach ($obj as $value) {
+			foreach ($obj as $value) {				
 				$totalDr += floatval($value->dr) / floatval($value->transaction_rate);
 				$totalCr += floatval($value->cr) / floatval($value->transaction_rate);
+
+				//Segment
+				$segments = [];
+				if(isset($value->segments)){
+					$segment = new Segmentitem(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					$segment->where_in("id", explode(",", $value->segments));
+					$segment->get();
+					foreach ($segment as $seg) {
+						$segments[] = array("code"=>$seg->code, "name"=>$seg->name);
+					}
+				}
 
 				if(isset($objList[$value->transaction_id])){
 					$objList[$value->transaction_id]["line"][] = array(
 						"id" 			=> $value->id,
 						"description" 	=> $value->description,
 						"reference_no" 	=> $value->reference_no,
-						"segments" 		=> $value->segments,
+						"segments" 		=> $segments,
 						"dr" 			=> floatval($value->dr),
 						"cr" 			=> floatval($value->cr),
 						"locale" 		=> $value->locale,
@@ -734,7 +745,7 @@ class Accounting_reports extends REST_Controller {
 						"id" 			=> $value->id,
 						"description" 	=> $value->description,
 						"reference_no" 	=> $value->reference_no,
-						"segments" 		=> $value->segments,
+						"segments" 		=> $segments,
 						"dr" 			=> floatval($value->dr),
 						"cr" 			=> floatval($value->cr),
 						"locale" 		=> $value->locale,
