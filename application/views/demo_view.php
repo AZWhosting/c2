@@ -4329,15 +4329,14 @@
 				#}#
 			</td>		
 			<td style="color: black;">
-				#if(i==0){#
-					#=memo#
-				#}else{#
-					#=line[i].description#
-				#}#
+				#=line[i].description#
 			</td>
 			<td style="color: black;">
 				#for(var j=0; j<line[i].segments.length; j++){#
-					#=line[i].segments[j].code# #=line[i].segments[j].name#
+					if(j>0){
+						:
+					}
+					#=line[i].segments[j].code# #=line[i].segments[j].name#					
 				#}#
 			</td>
 			<td style="color: black;">
