@@ -139,23 +139,23 @@
 							<div class="widget-body alert-info welcome-nopadding" style="width: 100%;">
 								<p style="color: #000;"><span>Expected due</span></p>
 						
-								<div class="strong" align="center" style="color: #3475AF; font-size: 40px; margin-top: -15px; margin-bottom: 0;">$35,000</div>
+								<div class="strong" align="center" style="color: #3475AF; font-size: 40px; margin-top: -15px; margin-bottom: 0;"><span data-bind="text: totalAmount"></span></div>
 							
 								<table width="100%" style="color: #8E9EAE;">
 									<tbody>
 										<tr align="center">
 											<td>										
-												<span style="font-size: 25px;">15</span>
+												<span style="font-size: 25px;"><span data-bind="text: invoice"></span></span>
 												<br>
 												<span>Invoices</span>
 											</td>
 											<td>
-												<span style="font-size: 25px;">5</span>
+												<span style="font-size: 25px;"><span data-bind="text: invCust"></span></span>
 												<br>
 												<span>Customers</span>
 											</td>
 											<td>
-												<span style="font-size: 25px;">3</span>
+												<span style="font-size: 25px;"><span data-bind="text: overDue"></span></span>
 												<br>
 												<span>Overdue</span>
 											</td>
@@ -171,18 +171,18 @@
 							<div class="widget-body alert-info welcome-nopadding" style="width: 100%;">
 								<p style="color: #000;"><span>Active Customer</span></p>
 						
-								<div class="strong" align="center" style="color: #3475AF; font-size: 40px; margin-top: -15px; margin-bottom: 0;"><span data-bind="text: totalUser"></span></div>
+								<div class="strong" align="center" style="color: #3475AF; font-size: 40px; margin-top: -15px; margin-bottom: 0;"><span data-bind="text: activeCust"></span></div>
 							
 								<table width="100%" style="color: #8E9EAE;">
 									<tbody>
 										<tr align="center">
 											<td>										
-												<span style="font-size: 25px;">10</span>
+												<span style="font-size: 25px;" data-bind="text: totalCust"></span>
 												<br>
 												<span>Total</span>
 											</td>
 											<td>
-												<span style="font-size: 25px;" data-bind="text: avgUsage"></span>
+												<span style="font-size: 25px;" data-bind="text: voidCust"></span>
 												<br>
 												<span>Void</span>
 											</td>
@@ -5021,7 +5021,7 @@
 					data-text-field="name" 
 	  				data-value-field="id"
 	  				data-bind="value: licenseSelect,
-	  							source: licenseDS"
+	  							source: licenseDS, events: {change: onLicenseChange}"
 	  				data-option-label="Select Licenses..."
 	  				/>
 	  		</div>
@@ -10065,14 +10065,16 @@
 	      	pageSize: 100
 	    }),
 	    invoice: 0,
+	    activeCust: 0,
 	    invCust: 0,
 	    overDue: 0,
 	    totalCust: 0,
 	    voidCust : 0,
+	    totalAmount: 0,
 	    dashSource: new kendo.data.DataSource({
 	      	transport: {
 		        read  : {
-		          url: baseUrl + 'api/waterdash/dash',
+		          url: baseUrl + 'api/waterdash/board',
 		          type: "GET",
 		          dataType: 'json',
 		          headers: { Institute: JSON.parse(localStorage.getItem('userData/user')).institute.id }
@@ -10098,18 +10100,25 @@
 	      	},
 	      	change: function(e) {
 	      		var vm = banhji.wDashboard;
-	      		var totalCust = 0, invCust = 0, overDue = 0, voided = 0;
+	      		var totalCust = 0, invCust = 0, overDue = 0, voided = 0, invoice = 0, amount = 0, activeCust = 0, inActiveCust = 0;
 	      		$.each(this.data(), function(index, value){
-	      			sale += value.sale;
-	      			usage+= value.usage;
-	      			user += value.activeCustomer;
-	      			deposit+= value.deposit;
+	      			activeCust += value.activeCustomer;
+	      			totalCust += value.totalCustomer;
+	      			invCust+= value.invoiceCust;
+	      			overDue += value.overDue;
+	      			invoice += value.totalInvoice;
+	      			inActiveCust += value.inActiveCustomer;
+	      			voided+= value.void;
+	      			amount+= value.total;
 	      		});
-	      		banhji.wDashBoard.set('totalSale', sale);
-	      		banhji.wDashBoard.set('totalUsage', usage);
-	      		banhji.wDashBoard.set('totalUser', user);
-	      		banhji.wDashBoard.set('totalDeposit', deposit);
-	      		banhji.wDashBoard.set('avgUsage', usage/user);
+	      		banhji.wDashBoard.set('activeCust', activeCust);
+	      		banhji.wDashBoard.set('inActiveCust', inActiveCust);
+	      		banhji.wDashBoard.set('invoice', invoice);
+	      		banhji.wDashBoard.set('invCust', invCust);
+	      		banhji.wDashBoard.set('overDue', overDue);
+	      		banhji.wDashBoard.set('totalCust', totalCust);
+	      		banhji.wDashBoard.set('voidCust', voided);
+	      		banhji.wDashBoard.set('totalAmount', amount);
 	      	},
 	      	batch: true,
 	      	serverFiltering: true,
@@ -13877,11 +13886,14 @@
 		avgRevenue 			: 0,
 		waterRevenue 		: 0,
 		totalDeposit		: 0,
+		licenseSelect 		: 0,
 		dataSource 			: dataStore(apiUrl + "wreports/kpi"),
 		licenseDS 			: dataStore(apiUrl + "branches"),
-		pageLoad 			: function(){
-			var that = this;
-			this.dataSource.read()
+		onLicenseChange 	: function() {
+			// console.log(this.get('licenseSelect'));
+			this.dataSource.query({
+				filter: {field: 'branch_id', value: this.get('licenseSelect')}
+			})
 			.then(function(e){
 				let data = that.dataSource.data();
 				that.set('nCustomer', kendo.toString(data[0].totalAllowCustomer, 'n'));
@@ -13893,6 +13905,9 @@
 				that.set('waterRevenue', kendo.toString(data[0].totalIncome, 'n'));
 				that.set('totalDeposit', 0);
 			});
+		},
+		pageLoad 			: function(){
+			var that = this;
 		},
 		save 				: function() {
 			var self = this;

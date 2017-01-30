@@ -39,12 +39,13 @@ class Waterdash extends REST_Controller {
 		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
 		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;								
 		$sort 	 	= $this->get("sort");		
-		$data["results"] = array();
-		$data["count"] = 0;
+		// $data["results"] = array();
+		// $data["count"] = 0;
 
 		$contact = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$icontact = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$acontact = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$vcontact = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$trx = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
 
@@ -68,43 +69,58 @@ class Waterdash extends REST_Controller {
 		}
 
 		$contact->where('use_water', 1);
+		$contact->where('deleted', 0);
 		$totalCust = $contact->count();
 
 		$icontact->where('use_water', 1);
+		$icontact->where('deleted', 0);
 		$icontact->where('status', 0);
 		$totalICust = $icontact->count();
 
 		$acontact->where('use_water', 1);
-		$acontact->where('status', 1)
+		$acontact->where('deleted', 0);
+		$acontact->where('status', 1);
 		$totalACust = $acontact->count();
 
-		$voidedCust = $totalCust - ($totalICust - $totalACust);
+		$vcontact->where('use_water', 1);
+		$vcontact->where('deleted', 0);
+		$vcontact->where('status', 2);
+		$totalVCust = $vcontact->count();
 
+		$voidedCust = $totalCust - ($totalICust - $totalACust);
+		$trx->select('amount, contact_id as contact');
 		$trx->where('type', 'Water_Invoice');
 		$trx->where('status <>', 1);
 		$trx->get();
 
-		$invoice = 0;
+		$invoices = 0;
 		$customer = array();
 		$overDue = 0;
 		$today = date('Y-m-d');
+		$amount = 0;
 		foreach($trx as $invoice) {
-			if($invoce->due_date < $today) {
+			if($invoice->due_date < $today) {
 				$overDue +=1;
 			}
-			if(!isset($customer["$invoice->contact_id"])) {
-				$customer["$invoice->contact_id"];
+			if(isset($customer[$invoice->contact])) {
+				$customer[$invoice->contact]['count'] +=1;
+			} else {
+				$customer[$invoice->contact]['count'] = 1;
 			}
-			$invoice +=1;
+
+			$invoices += 1;
+			$amount += $invoice->amount;
 		}
 
 		$data[] = array(
 			'totalCustomer' => $totalCust,
-			'inActiveCustomer' => $totalICUst,
+			'inActiveCustomer' => $totalICust,
 			'activeCustomer' => $totalACust,
 			'invoiceCust' => count($customer),
-			'totalInvoice' => $invoice,
-			'overDue' => $overDue
+			'void' => $totalVCust,
+			'totalInvoice' => $invoices,
+			'overDue' => $overDue,
+			'total' => $amount
 		);
 
 		$this->response(array('results' => $data, 'count' => 1), 200);

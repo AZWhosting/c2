@@ -4076,6 +4076,9 @@
 						</div>
 						<!-- // Tabs END -->						
 					</div>
+					<div id="loadImport" style="display:none;text-align: center;top:30px;position: absolute;width: 82%; height: 99.5%;background: rgba(142, 159, 167, 0.8);z-index: 9999;">
+						<i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 35%;left: 45%"></i>
+					</div>
 					<div id="invFormContent">
 						<div class="block-title">
 							<h3 data-bind="text: company.name"></h3>
@@ -4105,11 +4108,9 @@
 					                <th>DATE</th>
 					                <th>TXN#</th>
 					                <th>DESCRIPTION</th>
-					                <th>SEGMENT</th>
 					                <th>ACCOUNT</th>                		                
 					                <th class="right">DEBITS (Dr)</th>
 					                <th class="right">CREDITS (Cr)</th>
-					                <th><i class="icon-paper-clip"></i></th>		                
 					            </tr>
 				            </thead> 
 					        <tbody data-role="listview"
@@ -4140,7 +4141,190 @@
 			</td>		
 			<td style="color: black;">
 				#if(i==0){#
-					#=kendo.toString(new Date(issued_date), "dd-MMMM-yyyy")#
+					#=kendo.toString(new Date(issued_date), "dd-MM-yyyy")#
+				#}#
+			</td>
+			<td style="color: black;">
+				#if(i==0){#
+					<a href="\#/#=type.toLowerCase()#/#=id#"><i></i> #=number#</a>
+				#}#
+			</td>		
+			<td style="color: black;">
+				#if(i==0){#
+					#=memo#
+				#}else{#
+					#=line[i].description#
+				#}#
+			</td>
+			<td style="color: black;">
+				#=line[i].account#
+			</td>			
+			<td class="right" style="color: black;">
+				#if(line[i].dr>0){#
+					#=kendo.toString(line[i].dr / rate, "c2", banhji.locale)#
+				#}#
+			</td>
+			<td class="right" style="color: black;">
+				#if(line[i].cr>0){#
+					#=kendo.toString(line[i].cr / rate, "c2", banhji.locale)#
+				#}#
+			</td>
+	    </tr>    
+    #}# 
+    <tr>
+    	<td style="color: black;">Total:</td>
+    	<td></td>    	
+    	<td></td>
+    	<td></td>
+    	<td></td>    	
+    	<td class="right strong" style="border-top-color: black; color: black;">
+    		#=kendo.toString(sumDr, "c2", banhji.locale)#
+    	</td>
+    	<td class="right strong" style="border-top-color: black; color: black;">
+    		#=kendo.toString(sumCr, "c2", banhji.locale)#
+    	</td>	
+    </tr>  
+</script>
+<script id="journalReportBySegment" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background ">
+			<div class="container-960">					
+				<div id="example" class="k-content saleSummaryCustomer">			
+		    		<span class="glyphicons no-js remove_2 pull-right" 
+							onclick="javascript: window.history.back()"><i></i></span>
+					<br>
+					<br>
+
+					<!-- Search Taps -->
+					<div class="row-fluid">
+					    <!-- Tabs -->
+						<div class="relativeWrap" data-toggle="source-code">
+							<div class="widget widget-tabs widget-tabs-gray report-tab">
+							
+								<!-- Tabs Heading -->
+								<div class="widget-head">
+									<ul>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i>Print/Export</a></li>
+									</ul>
+								</div>
+								<!-- // Tabs Heading END -->								
+								<div class="widget-body">
+									<div class="tab-content">
+								        <div class="tab-pane active" id="tab-1">
+
+											<input data-role="dropdownlist"
+												   class="sorter"                  
+										           data-value-primitive="true"
+										           data-text-field="text"
+										           data-value-field="value"
+										           data-bind="value: sorter,
+										                      source: sortList,                              
+										                      events: { change: sorterChanges }" />
+
+											<input data-role="datepicker"
+												   class="sdate"
+												   data-format="dd-MM-yyyy"
+										           data-bind="value: sdate,
+										           			  max: edate"
+										           placeholder="From ..." >
+
+										    <input data-role="datepicker"
+										    	   class="edate"
+										    	   data-format="dd-MM-yyyy"
+										           data-bind="value: edate,
+										                      min: sdate"
+										           placeholder="To ..." >
+
+										  	<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+																		
+							        	</div>
+
+							        	<!-- PRINT/EXPORT  -->
+								        <div class="tab-pane" id="tab-2">								        	
+								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: printGrid" style="width: 80px;"><i></i> Print</span>
+								        	<!-- <span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
+								        		<i class="fa fa-file-pdf-o"></i>
+								        		Print as PDF
+								        	</span> -->
+								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: ExportExcel" style="width: 80px;">
+								        		<i class="fa fa-file-excel-o"></i>
+								        		Export to Excel
+								        	</span>
+							        	</div>								       
+								    </div>
+								</div>
+							</div>
+						</div>
+						<!-- // Tabs END -->						
+					</div>
+					<div id="loadImport" style="display:none;text-align: center;top:30px;position: absolute;width: 82%; height: 99.5%;background: rgba(142, 159, 167, 0.8);z-index: 9999;">
+						<i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 35%;left: 45%"></i>
+					</div>
+					<div id="invFormContent">
+						<div class="block-title">
+							<h3 data-bind="text: company.name"></h3>
+							<h2>JOURNAL ENTRY REPORTS WITH SEGMENT</h2>
+							<p data-bind="text: displayDate"></p>
+						</div>
+
+						<div class="row-fluid journal_block">
+							<div class="span4" style="width: 16.66666667%;">
+								<p>No. of Txn</p>
+								<span data-format="n" data-bind="text: dataSource.total"></span>
+							</div>
+							<div class="span4" style="width: 41.66666667%;">
+								<p>Total Dr. Balance</p>
+								<span data-bind="text: dr"></span>
+							</div>
+							<div class="span4" style="width: 41.66666667%;">
+								<p>Total Cr. Balance</p>
+								<span data-bind="text: cr"></span>
+							</div>
+						</div>
+
+						<table class="table table-borderless table-condensed">
+				            <thead>
+					            <tr>
+					                <th>TYPE</th>
+					                <th>DATE</th>
+					                <th>TXN#</th>
+					                <th>DESCRIPTION</th>
+					                <th>SEGMENT</th>
+					                <th>ACCOUNT</th>                		                
+					                <th class="right">DEBITS (Dr)</th>
+					                <th class="right">CREDITS (Cr)</th>		                
+					            </tr>
+				            </thead> 
+					        <tbody data-role="listview"
+					        		data-auto-bind="false"
+					        		data-template="journalReportBySegment-template"			        		
+					        		data-bind="source: dataSource"></tbody>			        
+					    </table>
+					</div>
+		            <div data-role="pager"
+		            	data-auto-bind="false" 
+		            	data-bind="source: dataSource"></div>					  
+
+				</div>
+			</div>						
+		</div>
+	</div>
+</script>
+<script id="journalReportBySegment-template" type="text/x-kendo-tmpl">
+	#var sumDr =0, sumCr = 0;#
+	#for(var i=0; i<line.length; i++){#
+		#sumDr += line[i].dr / rate;#
+		#sumCr += line[i].cr / rate;#
+		<tr>
+			<td style="color: black;">
+				#if(i==0){#
+					<a href="\#/#=type.toLowerCase()#/#=id#"><i></i> #=type#</a>
+				#}#
+			</td>		
+			<td style="color: black;">
+				#if(i==0){#
+					#=kendo.toString(new Date(issued_date), "dd-MM-yyyy")#
 				#}#
 			</td>
 			<td style="color: black;">
@@ -4172,8 +4356,7 @@
 				#if(line[i].cr>0){#
 					#=kendo.toString(line[i].cr / rate, "c2", banhji.locale)#
 				#}#
-			</td>
-			<td></td>  			
+			</td> 			
 	    </tr>    
     #}# 
     <tr>
@@ -4187,8 +4370,7 @@
     	</td>
     	<td class="right strong" style="border-top-color: black; color: black;">
     		#=kendo.toString(sumCr, "c2", banhji.locale)#
-    	</td>
-    	<td class="right" style="padding-right: 8px !important;"><i class="icon-paper-clip"></i></td>  	
+    	</td>  	
     </tr>  
 </script>
 <script id="generalLedger" type="text/x-kendo-template">
@@ -5100,7 +5282,8 @@
 								<div class="widget-head">
 									<ul>
 										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i><span data-bind="text: lang.lang.date"></span></a></li>										
-										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i><span data-bind="text: lang.lang.print_export"></span></a></li>
+										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i>Filter</a></li>
+										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab"><i></i><span data-bind="text: lang.lang.print_export"></span></a></li>
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
@@ -5137,16 +5320,59 @@
 							
 							        	</div>
 
-							        	<!-- PRINT / EXPORT -->
-								        <div class="tab-pane" id="tab-2">								        	
-								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: printGrid" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.print"></span></span>
+							        	<!-- Filter -->
+								        <div class="tab-pane" id="tab-2">
+											<table class="table table-condensed">
+												<tr>
+									            	<td style="padding: 0 !important; width: 96%;">
+									            		<span data-bind="text: lang.lang.account"></span>
+														<input id="ddlAccount" name="ddlAccount" 
+																data-role="dropdownlist"
+									              				data-header-template="account-header-tmpl"
+									              				data-template="account-list-tmpl"
+									              				data-value-primitive="true"
+																data-text-field="name" 
+									              				data-value-field="id"
+									              				data-bind="value: obj.account_id,
+									              							source: accountDS"
+									              				data-option-label="Select Account..."
+									              				required data-required-msg="required" 
+									              				style="width: 100%" />
+													</td>
+													<td style="padding-top: 23px !important; float: left;">
+										  				<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+													</td>
+												</tr>
+												<tr>
+													<td style="padding: 8px 0 0 0 !important; ">
+														<span data-bind="text: lang.lang.segment"></span>
+														<select data-role="multiselect"
+															   data-value-primitive="true"
+															   data-header-template="segment-header-tmpl"
+															   data-item-template="segment-list-tmpl"
+															   data-value-field="id"
+															   data-text-field="code"
+															   data-bind="value: obj.segments, 
+															   			source: segmentItemDS,
+															   			events:{ change: segmentChanges }"
+															   data-placeholder="Select Segments.."
+															   style="width: 100%" /></select>
+													</td>
+													<td></td>
+												</tr>
+											</table>
+							        	</div>
+
+							        	<!-- PRINT/EXPORT  -->
+								        <div class="tab-pane" id="tab-3">								        	
+								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: printGrid" style="width: 80px;"><i></i> Print</span>
 								        	<!-- <span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
 								        		<i class="fa fa-file-pdf-o"></i>
-								        		<span data-bind="text: lang.lang.print_as_pdf"></span>
-								        	</span-->
+								        		Print as PDF
+								        	</span> -->
 								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: ExportExcel" style="width: 80px;">
 								        		<i class="fa fa-file-excel-o"></i>
-								        		<span data-bind="text: lang.lang.export_to_excel"></span>
+								        		Export to Excel
 								        	</span>
 							        	</div>
 
@@ -5156,6 +5382,7 @@
 						</div>
 						<!-- // Tabs END -->						
 					</div>
+					
 					<div id="invFormContent" class="hello">
 						<div class="block-title">
 							<h3 data-bind="text: company.name"></h3>
@@ -40165,7 +40392,7 @@
 									<div class="row-fluid sale-report" style="margin-top: 15px;">
 										<h2>CASH POSITION</h2>
 										<p>
-											The following reports provide summary and detailed reports on employee related transactions.  
+											The following reports provide summary and detailed reports on your cash position and related cash transactions.  
 										</p>
 										<div class="row-fluid">
 											<table class="span12">
@@ -40182,13 +40409,13 @@
 												</tr>
 												<tr>
 													<td class="span4">
-														Summarizes each inventory balance by quantity on hand, on purchase order and sale order. In addition, it also includes average cost and price. 
+														List of detail movement transaction by each Cash & Cash Equivalent accounts 
 													</td>
 													<td class="span4">
-														Lists individual inventory movement transactions by date for each inventory within a period of time.
+														Lists of collected invoices for the select period of time, group by method of payment.
 													</td>
 													<td class="span4">
-														Lists of all transactions related to and grouped by each inventory with analysis of average gross profit margin.
+														Lists of paid bills for the select period of time, group by method of payments.
 													</td>
 													
 												</tr>
@@ -40196,7 +40423,7 @@
 										</div>
 									</div>									
 					        	</div>						        	
-					        	<div class="row-fluid">
+					        	<!-- <div class="row-fluid">
 									<div class="row-fluid sale-report" style="margin-top: 15px;">
 										<h2>CASH POSITION</h2>
 										<p>
@@ -40239,7 +40466,7 @@
 											</table>					
 										</div>
 									</div>									
-					        	</div>
+					        	</div> -->
 				        	</div>
 
 				        	<div class="tab-pane" id="tab-5">								        	
@@ -40416,7 +40643,7 @@
 											<table class="span12">
 												<tr>
 													<td class="span4">
-														<h3><a href="#/statement_profit_loss_by_segment">Statement of Profit or Loss by Segment</a></h3>
+														<h3><a href="#/journal_report_by_segment">Journal Entry Report With Segment</a></h3>
 													</td>
 													<td class="span4">							
 													</td>
@@ -47478,6 +47705,7 @@
 	banhji.journalReport =  kendo.observable({
 		lang 				: langVM,
 		dataSource 			: dataStore(apiUrl + "accounting_reports/journal"),
+		exdataSource 			: dataStore(apiUrl + "accounting_reports/journal"),
 		sortList			: banhji.source.sortList,
 		sorter 				: "all",
 		sdate 				: "",
@@ -47563,84 +47791,6 @@
 			  		{ field: "issued_date", operator:"order_by_related_transaction", dir: "desc" },
 			  		{ field: "number", operator:"order_by_related_transaction", dir: "desc" }
 			  	]
-            }).then(function(e){
-            	var sumDR = 0, sumCR = 0;
-            	self.exArray = [];
-            	self.exArray.push({
-            		cells: [
-            			{ value: self.company.name, textAlign: "center", colSpan: 7 }
-            		]
-            	});
-            	self.exArray.push({
-            		cells: [
-            			{ value: "JOURNAL ENTRY REPORTS",bold: true, fontSize: 20, textAlign: "center", colSpan: 7 }
-            		]
-            	});
-            	if(self.displayDate){
-	            	self.exArray.push({
-	            		cells: [
-	            			{ value: self.displayDate, textAlign: "center", colSpan: 7 }
-	            		]
-	            	});
-	            }
-            	self.exArray.push({
-            		cells: [
-            			{ value: "", colSpan: 7 }
-            		]
-            	});
-            	self.exArray.push(
-            		{ cells: [
-						{ value: "Type", background: "#496cad", color: "#ffffff" },
-						{ value: "Date", background: "#496cad", color: "#ffffff" },
-						{ value: "TXN#", background: "#496cad", color: "#ffffff" },
-						{ value: "TXN Description", background: "#496cad", color: "#ffffff" },
-						{ value: "Account", background: "#496cad", color: "#ffffff" },
-						{ value: "Debits(DR)", background: "#496cad", color: "#ffffff" },
-						{ value: "Credits(CR)", background: "#496cad", color: "#ffffff" }
-					]}
-				);
-            	for (var i = 0; i < self.dataSource.data().length; i++){
-            	  var RATE = self.dataSource.data()[i].rate;
-            	  var DR = self.dataSource.data()[i].line[0].dr / RATE;
-		          var CR = self.dataSource.data()[i].line[0].cr / RATE;
-		          self.exArray.push({
-		            cells: [
-		              { value: self.dataSource.data()[i].type, rowSpan: self.dataSource.data()[i].line.length, verticalAlign: "center" },
-		              { value: kendo.toString(new Date(self.dataSource.data()[i].issued_date), "dd-MMMM-yyyy"), rowSpan: self.dataSource.data()[i].line.length, verticalAlign: "center" },
-		              { value: self.dataSource.data()[i].number, rowSpan: self.dataSource.data()[i].line.length, verticalAlign: "center" },
-		              { value: self.dataSource.data()[i].memo, rowSpan: self.dataSource.data()[i].line.length, verticalAlign: "center" },
-		              { value: self.dataSource.data()[i].line[0].account },
-		              { value: self.dataSource.data()[i].line[0].dr ? DR : "",  },
-		              { value: self.dataSource.data()[i].line[0].cr ? CR : "" }
-		            ]
-		          });
-		          sumDR = kendo.parseFloat(self.dataSource.data()[i].line[0].dr);
-		          sumCR = kendo.parseFloat(self.dataSource.data()[i].line[0].cr);
-		          for(var j = 1; j < self.dataSource.data()[i].line.length; j++){
-		          	var DR = self.dataSource.data()[i].line[j].dr / RATE;
-		          	var CR = self.dataSource.data()[i].line[j].cr / RATE;
-			          self.exArray.push({
-			          	cells: [
-			              { value: self.dataSource.data()[i].line[j].account },
-			              { value: self.dataSource.data()[i].line[j].dr ? DR : "" },
-			              { value: self.dataSource.data()[i].line[j].cr ? CR : "" }
-			            ]
-			          });
-			        sumDR += kendo.parseFloat(self.dataSource.data()[i].line[j].dr);
-			        sumCR += kendo.parseFloat(self.dataSource.data()[i].line[j].cr);
-			      }
-			      self.exArray.push({
-		          	cells: [
-		          	  { value: "Total", bold: true, background: "#bbbbbb" },
-		              { value: "", background: "#bbbbbb" },
-		              { value: "", background: "#bbbbbb" },
-		              { value: "", background: "#bbbbbb" },
-		              { value: "", background: "#bbbbbb" },
-		              { value: kendo.parseFloat(sumDR), bold: true, background: "#bbbbbb" },
-		              { value: kendo.parseFloat(sumCR), bold: true, background: "#bbbbbb" }
-		            ]
-		          });
-		        }
             });
             var saved = false;
             this.dataSource.bind("requestEnd", function(e){
@@ -47729,25 +47879,459 @@
 		    },2000);
 		},
 		ExportExcel 		: function(){
-	        var workbook = new kendo.ooxml.Workbook({
-	          sheets: [
-	            {
-	              columns: [
-	                { autoWidth: true },
-	                { autoWidth: true },
-	                { autoWidth: true },
-	                { autoWidth: true },
-	                { autoWidth: true },
-	                { autoWidth: true },
-	                { autoWidth: true }
-	              ],
-	              title: "Journal Entry Reports",
-	              rows: this.exArray
+								// $("#loadImport").css("display","block");
+								// var self = this, para = [],
+								// 	start = this.get("sdate"),
+					   //      		end = this.get("edate"),
+					   //      		displayDate = "";
+					    	
+					   //      	//Dates
+					   //      	if(start && end){
+					   //          	para.push({ field:"issued_date >=", operator:"where_related_transaction", value: kendo.toString(new Date(start), "yyyy-MM-dd") });
+					   //          	para.push({ field:"issued_date <=", operator:"where_related_transaction", value: kendo.toString(new Date(end), "yyyy-MM-dd") });
+
+					   //          	displayDate = "From " + kendo.toString(new Date(start), "dd-MM-yyyy") + " To " + kendo.toString(new Date(end), "dd-MM-yyyy");
+					   //          }else if(start){
+					   //          	para.push({ field:"issued_date", operator:"where_related_transaction", value: kendo.toString(new Date(start), "yyyy-MM-dd") });
+
+					   //          	displayDate = "On " + kendo.toString(new Date(start), "dd-MM-yyyy");
+					   //          }else if(end){
+					   //          	para.push({ field:"issued_date <=", operator:"where_related_transaction", value: kendo.toString(new Date(end), "yyyy-MM-dd") });
+
+					   //          	displayDate = "As Of " + kendo.toString(new Date(end), "dd-MM-yyyy");
+					   //          }else{
+					            	
+					   //          }
+					            
+					   //          this.set("displayDate", displayDate);
+
+					   //          this.exdataSource.query({
+					   //          	filter: para,
+					   //          	sort: [
+								//   		{ field: "issued_date", operator:"order_by_related_transaction", dir: "desc" },
+								//   		{ field: "number", operator:"order_by_related_transaction", dir: "desc" }
+								//   	]
+					   //          })
+					   //          .then(function(e){
+					   //          	var sumDR = 0, sumCR = 0;
+					   //          	self.exArray = [];
+					   //          	self.exArray.push({
+					   //          		cells: [
+					   //          			{ value: self.company.name, textAlign: "center", colSpan: 7 }
+					   //          		]
+					   //          	});
+					   //          	self.exArray.push({
+					   //          		cells: [
+					   //          			{ value: "JOURNAL ENTRY REPORTS",bold: true, fontSize: 20, textAlign: "center", colSpan: 7 }
+					   //          		]
+					   //          	});
+					   //          	if(self.displayDate){
+						  //           	self.exArray.push({
+						  //           		cells: [
+						  //           			{ value: self.displayDate, textAlign: "center", colSpan: 7 }
+						  //           		]
+						  //           	});
+						  //           }
+					   //          	self.exArray.push({
+					   //          		cells: [
+					   //          			{ value: "", colSpan: 7 }
+					   //          		]
+					   //          	});
+					   //          	self.exArray.push(
+					   //          		{ cells: [
+								// 			{ value: "Type", background: "#496cad", color: "#ffffff" },
+								// 			{ value: "Date", background: "#496cad", color: "#ffffff" },
+								// 			{ value: "TXN#", background: "#496cad", color: "#ffffff" },
+								// 			{ value: "TXN Description", background: "#496cad", color: "#ffffff" },
+								// 			{ value: "Account", background: "#496cad", color: "#ffffff" },
+								// 			{ value: "Debits(DR)", background: "#496cad", color: "#ffffff" },
+								// 			{ value: "Credits(CR)", background: "#496cad", color: "#ffffff" }
+								// 		]}
+								// 	);
+					   //          	for (var i = 0; i < self.exdataSource.data().length; i++){
+					   //          	  var RATE = self.exdataSource.data()[i].rate;
+					   //          	  var DR = self.exdataSource.data()[i].line[0].dr / RATE;
+							 //          var CR = self.exdataSource.data()[i].line[0].cr / RATE;
+							 //          self.exArray.push({
+							 //            cells: [
+							 //              { value: self.exdataSource.data()[i].type, rowSpan: self.exdataSource.data()[i].line.length, verticalAlign: "center" },
+							 //              { value: kendo.toString(new Date(self.exdataSource.data()[i].issued_date), "dd-MMMM-yyyy"), rowSpan: self.exdataSource.data()[i].line.length, verticalAlign: "center" },
+							 //              { value: self.exdataSource.data()[i].number, rowSpan: self.exdataSource.data()[i].line.length, verticalAlign: "center" },
+							 //              { value: self.exdataSource.data()[i].memo, rowSpan: self.exdataSource.data()[i].line.length, verticalAlign: "center" },
+							 //              { value: self.exdataSource.data()[i].line[0].account },
+							 //              { value: self.exdataSource.data()[i].line[0].dr ? DR : "",  },
+							 //              { value: self.exdataSource.data()[i].line[0].cr ? CR : "" }
+							 //            ]
+							 //          });
+							 //          sumDR = kendo.parseFloat(self.exdataSource.data()[i].line[0].dr);
+							 //          sumCR = kendo.parseFloat(self.exdataSource.data()[i].line[0].cr);
+							 //          for(var j = 1; j < self.exdataSource.data()[i].line.length; j++){
+							 //          	var DR = self.exdataSource.data()[i].line[j].dr / RATE;
+							 //          	var CR = self.exdataSource.data()[i].line[j].cr / RATE;
+								//           self.exArray.push({
+								//           	cells: [
+								//               { value: self.exdataSource.data()[i].line[j].account },
+								//               { value: self.exdataSource.data()[i].line[j].dr ? DR : "" },
+								//               { value: self.exdataSource.data()[i].line[j].cr ? CR : "" }
+								//             ]
+								//           });
+								//         sumDR += kendo.parseFloat(self.exdataSource.data()[i].line[j].dr);
+								//         sumCR += kendo.parseFloat(self.exdataSource.data()[i].line[j].cr);
+								//       }
+								//       self.exArray.push({
+							 //          	cells: [
+							 //          	  { value: "Total", bold: true, background: "#bbbbbb" },
+							 //              { value: "", background: "#bbbbbb" },
+							 //              { value: "", background: "#bbbbbb" },
+							 //              { value: "", background: "#bbbbbb" },
+							 //              { value: "", background: "#bbbbbb" },
+							 //              { value: kendo.parseFloat(sumDR), bold: true, background: "#bbbbbb" },
+							 //              { value: kendo.parseFloat(sumCR), bold: true, background: "#bbbbbb" }
+							 //            ]
+							 //          });
+							 //        }
+					   //          });
+					   //          this.exdataSource.bind("requestEnd", function(e){
+					   //          	//if(e.type==="read"){
+					   //          		$("#loadImport").css("display","none");
+					   //          		var workbook = new kendo.ooxml.Workbook({
+								//           sheets: [
+								//             {
+								//               columns: [
+								//                 { autoWidth: true },
+								//                 { autoWidth: true },
+								//                 { autoWidth: true },
+								//                 { autoWidth: true },
+								//                 { autoWidth: true },
+								//                 { autoWidth: true },
+								//                 { autoWidth: true }
+								//               ],
+								//               title: "Journal Entry Reports",
+								//               rows: self.exArray
+								//             }
+								//           ]
+								//         });
+								//         //save the file as Excel file with extension xlsx
+								//         kendo.saveAs({dataURI: workbook.toDataURL(), fileName: "JournalEntryReports.xlsx"});
+						  //           //}
+						  //       });
+	        
+		}
+	});
+	banhji.journalReportBySegment =  kendo.observable({
+		lang 				: langVM,
+		dataSource 			: dataStore(apiUrl + "accounting_reports/journal_by_segment"),
+		exdataSource 		: dataStore(apiUrl + "accounting_reports/journal_by_segment"),
+		sortList			: banhji.source.sortList,
+		sorter 				: "all",
+		sdate 				: "",
+		edate 				: "",
+		obj 				: null,
+		company 			: banhji.institute,
+		displayDate 		: "",
+		showDescription 	: false,
+		showRef 			: true,
+		showName 			: false,
+		showSegment 		: false,
+		dr 					: 0,
+		cr 					: 0,
+		totalTxn 			: 0,
+		exArray 			: [],
+		pageLoad 			: function(){
+			this.search();
+		},
+		sorterChanges 		: function(){
+	        var today = new Date(),
+        	sdate = "",
+        	edate = "",
+        	sorter = this.get("sorter");
+        	
+			switch(sorter){
+				case "today":								
+					this.set("sdate", today);
+					this.set("edate", "");
+													  					
+				  	break;
+				case "week":			  	
+					var first = today.getDate() - today.getDay(),
+					last = first + 6;
+
+					this.set("sdate", new Date(today.setDate(first)));
+					this.set("edate", new Date(today.setDate(last)));						
+					
+				  	break;
+				case "month":							  	
+					this.set("sdate", new Date(today.getFullYear(), today.getMonth(), 1));
+					this.set("edate", new Date(today.getFullYear(), today.getMonth() + 1, 0));
+
+				  	break;
+				case "year":				
+				  	this.set("sdate", new Date(today.getFullYear(), 0, 1));
+				  	this.set("edate", new Date(today.getFullYear(), 11, 31));
+
+				  	break;
+				default:
+					this.set("sdate", "");
+				  	this.set("edate", "");									  
+			}
+		},
+		search				: function(){
+			var self = this, para = [],
+				start = this.get("sdate"),
+        		end = this.get("edate"),
+        		displayDate = "";
+    	
+        	//Dates
+        	if(start && end){
+            	para.push({ field:"issued_date >=", operator:"where_related_transaction", value: kendo.toString(new Date(start), "yyyy-MM-dd") });
+            	para.push({ field:"issued_date <=", operator:"where_related_transaction", value: kendo.toString(new Date(end), "yyyy-MM-dd") });
+
+            	displayDate = "From " + kendo.toString(new Date(start), "dd-MM-yyyy") + " To " + kendo.toString(new Date(end), "dd-MM-yyyy");
+            }else if(start){
+            	para.push({ field:"issued_date", operator:"where_related_transaction", value: kendo.toString(new Date(start), "yyyy-MM-dd") });
+
+            	displayDate = "On " + kendo.toString(new Date(start), "dd-MM-yyyy");
+            }else if(end){
+            	para.push({ field:"issued_date <=", operator:"where_related_transaction", value: kendo.toString(new Date(end), "yyyy-MM-dd") });
+
+            	displayDate = "As Of " + kendo.toString(new Date(end), "dd-MM-yyyy");
+            }else{
+            	
+            }
+            
+            this.set("displayDate", displayDate);
+
+            this.dataSource.query({
+            	filter: para,
+            	sort: [
+			  		{ field: "issued_date", operator:"order_by_related_transaction", dir: "desc" },
+			  		{ field: "number", operator:"order_by_related_transaction", dir: "desc" }
+			  	]
+            });
+            var saved = false;
+            this.dataSource.bind("requestEnd", function(e){
+            	if(e.type==="read" && saved==false){
+            		saved = true;
+            		var response = e.response;
+            		self.set("dr", kendo.toString(response.dr, "c", banhji.locale));
+	            	self.set("cr", kendo.toString(response.cr, "c", banhji.locale));
 	            }
-	          ]
 	        });
-	        //save the file as Excel file with extension xlsx
-	        kendo.saveAs({dataURI: workbook.toDataURL(), fileName: "JournalEntryReports.xlsx"});
+			                           
+		},
+		printGrid			: function() {
+			var gridElement = $('#grid'),
+		        printableContent = '',
+		        win = window.open('', '', 'width=990, height=900'),
+		        doc = win.document.open();
+		    var htmlStart =
+		            '<!DOCTYPE html>' +
+		            '<html>' +
+		            '<head>' +
+		            '<meta charset="utf-8" />' +
+		            '<title></title>' +
+		            '<link href="http://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />'+
+		            '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/bootstrap.css">' +
+		            '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/responsive.css">' +
+		            '<link href="<?php echo base_url(); ?>assets/invoice/invoice.css" rel="stylesheet" />'+
+		            '<link href="https://fonts.googleapis.com/css?family=Content:400,700" rel="stylesheet" type="text/css">' +
+		            '<link href="https://fonts.googleapis.com/css?family=Moul" rel="stylesheet">' +
+		            '<style>' +
+		            'html { font: 11pt sans-serif; }' +
+		            '.k-grid { border-top-width: 0; }' +
+		            '.k-grid, .k-grid-content { height: auto !important; }' +
+		            '.k-grid-content { overflow: visible !important; }' +
+		            'div.k-grid table { table-layout: auto; width: 100% !important; }' +
+		            '.k-grid .k-grid-header th { border-top: 1px solid; }' +
+		            '.k-grid-toolbar, .k-grid-pager > .k-link { display: none; }' +
+		            '</style><style type="text/css" media="print"> @page { size: portrait; margin:1mm; }'+
+		            	'.inv1 .main-color {' +
+		            		
+		            		'-webkit-print-color-adjust:exact; ' +
+		            	'} ' +
+		            	'.table.table-borderless.table-condensed  tr th { background-color: #1E4E78!important;' +
+		            	'-webkit-print-color-adjust:exact; color:#fff!important;}' +
+		            	'.inv1 .light-blue-td { ' +
+		            		'background-color: #c6d9f1!important;' +
+		            		'text-align: left;' +
+		            		'padding-left: 5px;' +
+		            		'-webkit-print-color-adjust:exact; ' +
+		            	'}' +
+		            	'.saleSummaryCustomer .table.table-borderless.table-condensed tr td { ' +
+    						'background-color: #F2F2F2!important; -webkit-print-color-adjust:exact;' +
+						'}'+
+						'.saleSummaryCustomer .table.table-borderless.table-condensed tr:nth-child(2n+1) td { ' +
+    						' background-color: #fff!important; -webkit-print-color-adjust:exact;' +
+						'}' +
+						'.journal_block>.span4 * {color: #fff!important;}' +
+		            	'.journal_block>.span4:first-child { ' +
+    						'background-color: #bbbbbb!important; -webkit-print-color-adjust:exact;' +
+						'}' +
+						'.journal_block>.span4:last-child {' +
+							'background-color: #496cad!important; color: #fff!important; -webkit-print-color-adjust:exact; ' +
+						'}' +
+						'.journal_block>.span4 {' +
+							'background-color: #5cc7dd!important; color: #fff!important; -webkit-print-color-adjust:exact;' +
+						'}' +
+		            	'.pcg .mid-header {' +
+		            		'background-color: #dce6f2!important; ' +
+		            		'-webkit-print-color-adjust:exact; ' +
+		            	'}'+
+		            	'.inv1 span.total-amount { ' +
+		            		'color:#fff!important;' +
+		            	'}</style>' +
+		            '</head>' +
+		            '<body><div class="saleSummaryCustomer" style="padding: 0 10px;">';
+		    var htmlEnd =
+		            '</div></body>' +
+		            '</html>';
+		    
+		    printableContent = $('#invFormContent').html();
+		    doc.write(htmlStart + printableContent + htmlEnd);
+		    doc.close();
+		    setTimeout(function(){
+		    	win.print();
+		    	win.close();
+		    },2000);
+		},
+		ExportExcel 		: function(){
+								// $("#loadImport").css("display","block");
+								// var self = this, para = [],
+								// 	start = this.get("sdate"),
+					   //      		end = this.get("edate"),
+					   //      		displayDate = "";
+					    	
+					   //      	//Dates
+					   //      	if(start && end){
+					   //          	para.push({ field:"issued_date >=", operator:"where_related_transaction", value: kendo.toString(new Date(start), "yyyy-MM-dd") });
+					   //          	para.push({ field:"issued_date <=", operator:"where_related_transaction", value: kendo.toString(new Date(end), "yyyy-MM-dd") });
+
+					   //          	displayDate = "From " + kendo.toString(new Date(start), "dd-MM-yyyy") + " To " + kendo.toString(new Date(end), "dd-MM-yyyy");
+					   //          }else if(start){
+					   //          	para.push({ field:"issued_date", operator:"where_related_transaction", value: kendo.toString(new Date(start), "yyyy-MM-dd") });
+
+					   //          	displayDate = "On " + kendo.toString(new Date(start), "dd-MM-yyyy");
+					   //          }else if(end){
+					   //          	para.push({ field:"issued_date <=", operator:"where_related_transaction", value: kendo.toString(new Date(end), "yyyy-MM-dd") });
+
+					   //          	displayDate = "As Of " + kendo.toString(new Date(end), "dd-MM-yyyy");
+					   //          }else{
+					            	
+					   //          }
+					            
+					   //          this.set("displayDate", displayDate);
+
+					   //          this.exdataSource.query({
+					   //          	filter: para,
+					   //          	sort: [
+								//   		{ field: "issued_date", operator:"order_by_related_transaction", dir: "desc" },
+								//   		{ field: "number", operator:"order_by_related_transaction", dir: "desc" }
+								//   	]
+					   //          })
+					   //          .then(function(e){
+					   //          	var sumDR = 0, sumCR = 0;
+					   //          	self.exArray = [];
+					   //          	self.exArray.push({
+					   //          		cells: [
+					   //          			{ value: self.company.name, textAlign: "center", colSpan: 7 }
+					   //          		]
+					   //          	});
+					   //          	self.exArray.push({
+					   //          		cells: [
+					   //          			{ value: "JOURNAL ENTRY REPORTS",bold: true, fontSize: 20, textAlign: "center", colSpan: 7 }
+					   //          		]
+					   //          	});
+					   //          	if(self.displayDate){
+						  //           	self.exArray.push({
+						  //           		cells: [
+						  //           			{ value: self.displayDate, textAlign: "center", colSpan: 7 }
+						  //           		]
+						  //           	});
+						  //           }
+					   //          	self.exArray.push({
+					   //          		cells: [
+					   //          			{ value: "", colSpan: 7 }
+					   //          		]
+					   //          	});
+					   //          	self.exArray.push(
+					   //          		{ cells: [
+								// 			{ value: "Type", background: "#496cad", color: "#ffffff" },
+								// 			{ value: "Date", background: "#496cad", color: "#ffffff" },
+								// 			{ value: "TXN#", background: "#496cad", color: "#ffffff" },
+								// 			{ value: "TXN Description", background: "#496cad", color: "#ffffff" },
+								// 			{ value: "Account", background: "#496cad", color: "#ffffff" },
+								// 			{ value: "Debits(DR)", background: "#496cad", color: "#ffffff" },
+								// 			{ value: "Credits(CR)", background: "#496cad", color: "#ffffff" }
+								// 		]}
+								// 	);
+					   //          	for (var i = 0; i < self.exdataSource.data().length; i++){
+					   //          	  var RATE = self.exdataSource.data()[i].rate;
+					   //          	  var DR = self.exdataSource.data()[i].line[0].dr / RATE;
+							 //          var CR = self.exdataSource.data()[i].line[0].cr / RATE;
+							 //          self.exArray.push({
+							 //            cells: [
+							 //              { value: self.exdataSource.data()[i].type, rowSpan: self.exdataSource.data()[i].line.length, verticalAlign: "center" },
+							 //              { value: kendo.toString(new Date(self.exdataSource.data()[i].issued_date), "dd-MMMM-yyyy"), rowSpan: self.exdataSource.data()[i].line.length, verticalAlign: "center" },
+							 //              { value: self.exdataSource.data()[i].number, rowSpan: self.exdataSource.data()[i].line.length, verticalAlign: "center" },
+							 //              { value: self.exdataSource.data()[i].memo, rowSpan: self.exdataSource.data()[i].line.length, verticalAlign: "center" },
+							 //              { value: self.exdataSource.data()[i].line[0].account },
+							 //              { value: self.exdataSource.data()[i].line[0].dr ? DR : "",  },
+							 //              { value: self.exdataSource.data()[i].line[0].cr ? CR : "" }
+							 //            ]
+							 //          });
+							 //          sumDR = kendo.parseFloat(self.exdataSource.data()[i].line[0].dr);
+							 //          sumCR = kendo.parseFloat(self.exdataSource.data()[i].line[0].cr);
+							 //          for(var j = 1; j < self.exdataSource.data()[i].line.length; j++){
+							 //          	var DR = self.exdataSource.data()[i].line[j].dr / RATE;
+							 //          	var CR = self.exdataSource.data()[i].line[j].cr / RATE;
+								//           self.exArray.push({
+								//           	cells: [
+								//               { value: self.exdataSource.data()[i].line[j].account },
+								//               { value: self.exdataSource.data()[i].line[j].dr ? DR : "" },
+								//               { value: self.exdataSource.data()[i].line[j].cr ? CR : "" }
+								//             ]
+								//           });
+								//         sumDR += kendo.parseFloat(self.exdataSource.data()[i].line[j].dr);
+								//         sumCR += kendo.parseFloat(self.exdataSource.data()[i].line[j].cr);
+								//       }
+								//       self.exArray.push({
+							 //          	cells: [
+							 //          	  { value: "Total", bold: true, background: "#bbbbbb" },
+							 //              { value: "", background: "#bbbbbb" },
+							 //              { value: "", background: "#bbbbbb" },
+							 //              { value: "", background: "#bbbbbb" },
+							 //              { value: "", background: "#bbbbbb" },
+							 //              { value: kendo.parseFloat(sumDR), bold: true, background: "#bbbbbb" },
+							 //              { value: kendo.parseFloat(sumCR), bold: true, background: "#bbbbbb" }
+							 //            ]
+							 //          });
+							 //        }
+					   //          });
+					   //          this.exdataSource.bind("requestEnd", function(e){
+					   //          	//if(e.type==="read"){
+					   //          		$("#loadImport").css("display","none");
+					   //          		var workbook = new kendo.ooxml.Workbook({
+								//           sheets: [
+								//             {
+								//               columns: [
+								//                 { autoWidth: true },
+								//                 { autoWidth: true },
+								//                 { autoWidth: true },
+								//                 { autoWidth: true },
+								//                 { autoWidth: true },
+								//                 { autoWidth: true },
+								//                 { autoWidth: true }
+								//               ],
+								//               title: "Journal Entry Reports",
+								//               rows: self.exArray
+								//             }
+								//           ]
+								//         });
+								//         //save the file as Excel file with extension xlsx
+								//         kendo.saveAs({dataURI: workbook.toDataURL(), fileName: "JournalEntryReports.xlsx"});
+						  //           //}
+						  //       });
+	        
 		}
 	});
 	banhji.generalLedger =  kendo.observable({
@@ -78351,6 +78935,7 @@
 		currencyRate: new kendo.Layout("#currencyRate", {model: banhji.currencyRate}),
 		recurring: new kendo.Layout("#recurring", {model: banhji.recurring}),
 		journalReport: new kendo.Layout("#journalReport", {model: banhji.journalReport}),
+		journalReportBySegment: new kendo.Layout("#journalReportBySegment", {model: banhji.journalReportBySegment}),
 		generalLedger: new kendo.Layout("#generalLedger", {model: banhji.generalLedger}),
 		trialBalance: new kendo.Layout("#trialBalance", {model: banhji.trialBalance}),
 		chartOfAccount: new kendo.Layout("#chartOfAccount", {model: banhji.chartOfAccount}),
@@ -79901,6 +80486,25 @@
 
 			if(banhji.pageLoaded["journal_report"]==undefined){
 				banhji.pageLoaded["journal_report"] = true;									
+						
+			}
+
+			vm.pageLoad();
+		}
+	});
+	banhji.router.route("/journal_report_by_segment", function(){
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{
+			banhji.view.layout.showIn("#content", banhji.view.journalReportBySegment);
+			banhji.view.layout.showIn('#menu', banhji.view.menu);
+			banhji.view.menu.showIn('#secondary-menu', banhji.view.accountingMenu);			
+			
+			var vm = banhji.journalReportBySegment;
+			banhji.userManagement.addMultiTask("Journal Entry Reports By Segment","journal_report_by_segment",null);
+
+			if(banhji.pageLoaded["journal_report_by_segment"]==undefined){
+				banhji.pageLoaded["journal_report_by_segment"] = true;									
 						
 			}
 

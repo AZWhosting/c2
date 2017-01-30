@@ -38848,7 +38848,7 @@
 									<ul>
 										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i><span data-bind="text: lang.lang.date"></span></a></li>
 										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i>Filter</a></li>
-										<li><a class="glyphicons print" data-bind="click: printGrid"><i></i><span data-bind="text: lang.lang.print_export"></span></a></li>
+										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab"><i></i><span data-bind="text: lang.lang.print_export"></span></a></li>
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
@@ -38928,6 +38928,18 @@
 											</table>
 							        	</div>
 
+							        	<!-- PRINT/EXPORT  -->
+								        <div class="tab-pane" id="tab-3">								        	
+								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: printGrid" style="width: 80px;"><i></i> Print</span>
+								        	<!-- <span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
+								        		<i class="fa fa-file-pdf-o"></i>
+								        		Print as PDF
+								        	</span> -->
+								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: ExportExcel" style="width: 80px;">
+								        		<i class="fa fa-file-excel-o"></i>
+								        		Export to Excel
+								        	</span>
+							        	</div>
 								    </div>
 								</div>
 							</div>
@@ -72230,10 +72242,10 @@
             });
             this.dataSource.bind("requestEnd", function(e){				
 				if(e.type=="read"){
-					var response = e.response, balanceCal = 0;
+					var response = e.response.results, res = e.response, balanceCal = 0;
 					self.exArray = [];
-					self.set("totalAmount", kendo.toString(response.totalAmount, "c", banhji.locale));
-					self.set("totalBalance", kendo.toString(response.totalBalance, "c", banhji.locale));
+					self.set("totalAmount", kendo.toString(res.totalAmount, "c", banhji.locale));
+					self.set("totalBalance", kendo.toString(res.totalBalance, "c", banhji.locale));
 
 					self.exArray.push({
 	            		cells: [
@@ -72261,51 +72273,66 @@
 							{ value: "Balance", background: "#496cad", color: "#ffffff" }
 						]
 					});
-					//for (var i = 0; i < response.results.length; i++){
-					self.exArray.push({
-				        cells: [
-				          	{ value: response.number + " " + response.name, bold: true, },
-				            { value: "" },
-				            { value: "" },
-				            { value: "" },
-				            { value: "" },
-				            { value: "" },
-				            { value: kendo.parseFloat(response.results[i].balance_forward), bold: true },
-				        ]
-				    });
-				    balanceCal = response.results[i].balance_forward;
-				    for (var i = 0; i < response.line.length; i++){
-					    
-					    //for(var j = 0; j < response.results[i].line.length; j++){
-					    var IN, OUT;	
-					    if(kendo.parseFloat(response.line[i].amount) > 0){
-					    	IN = kendo.parseFloat(response.line[i].amount);
-					    	OUT = 0;
-					    }else{
-					    	IN = 0;
-					    	OUT = kendo.parseFloat(response.line[i].amount);
+					for (var j = 0; j < response.length; j++){
+						self.exArray.push({
+					        cells: [
+					          	{ value: response[j].number + " " + response[j].name, bold: true, },
+					            { value: "" },
+					            { value: "" },
+					            { value: "" },
+					            { value: "" },
+					            { value: "" },
+					            { value: kendo.parseFloat(response[j].balance_forward), bold: true },
+					        ]
+					    });
+					    balanceCal = response[j].balance_forward;
+					    for (var i = 0; i < response[j].line.length; i++){
+						    
+						    //for(var j = 0; j < response.results[i].line.length; j++){
+						    var IN, OUT;	
+						    if(kendo.parseFloat(response[j].line[i].amount) > 0){
+						    	IN = kendo.parseFloat(response[j].line[i].amount);
+						    	OUT = 0;
+						    	//totalA += kendo.parseFloat(response[j].line[i].amount);
+						    }else{
+						    	IN = 0;
+						    	OUT = kendo.parseFloat(Math.abs(response[j].line[i].amount));
+						    	//totalB += kendo.parseFloat(response[j].line[i].amount);
+						    }
+					    	balanceCal += response[j].line[i].amount;
+				          	self.exArray.push({
+				          		cells: [
+				          	  		{ value: response[j].line[i].type ? response[j].line[i].type: ""},
+				              		{ value: kendo.toString(new Date(response[j].line[i].issued_date), "dd-MM-yyyy")  },
+				              		{ value: response[j].line[i].number },
+				              		{ value: response[j].line[i].memo },
+				              		{ value: IN},
+				              		{ value: OUT},
+				              		{ value: kendo.parseFloat(balanceCal)}
+				            	]
+				          	});
 					    }
-				    	balanceCal += response.line[i].amount;
-			          	self.exArray.push({
-			          		cells: [
-			          	  		{ value: response.line[i].type ? response.line[i].type: ""},
-			              		{ value: kendo.toString(new Date(response.line[i].issued_date), "dd-MM-yyyy")  },
-			              		{ value: response.line[i].number },
-			              		{ value: response.line[i].memo },
-			              		{ value: IN},
-			              		{ value: OUT},
-			              		{ value: kendo.parseFloat(balanceCal)}
-			            	]
-			          	});
-				    }
+					    self.exArray.push({
+					        cells: [
+					          	{ value: "TOTAL " + response[j].number + " " + response[j].name, bold: true, },
+					            { value: "" },
+					            { value: "" },
+					            { value: "" },
+					            { value: "" },
+					            { value: "" },
+					            { value: kendo.parseFloat(balanceCal), bold: true },
+					        ]
+					    });
+					}
 					self.exArray.push({
 				        cells: [
 				          	{ value: "TOTAL", bold: true,fontSize: 16 },
 				            { value: "" },
 				            { value: "" },
 				            { value: "" },
-				            { value: kendo.parseFloat(response.totalAmount), bold: true, fontSize: 16 },
-				            { value: kendo.parseFloat(response.totalBalance), bold: true, fontSize: 16 },
+				            { value: "" },
+				            { value: kendo.parseFloat(res.totalAmount), bold: true, fontSize: 16 },
+				            { value: kendo.parseFloat(res.totalBalance), bold: true, fontSize: 16 },
 				        ]
 				    });
 				}

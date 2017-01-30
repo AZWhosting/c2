@@ -571,7 +571,9 @@ class Wreports extends REST_Controller {
 		$data["results"] = [];
 		$data["count"] = 1;
 
-		$contact = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$contact = new contact_utility(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$location = new Location(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$meter = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$activeContact = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$branch = new Branch(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$income = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
@@ -584,28 +586,40 @@ class Wreports extends REST_Controller {
 		if(!empty($filters) && isset($filters)){			
 	    	foreach ($filters as $value) {	    		    			
 	    		$contact->where("branch_id", $value["value"]);
-	    		$activeContact->where("branch_id", $value["value"]);
-	    		$branch->where("id", $value["value"]);
-	    		$income->where($value["field"], $value["value"]);
-	    		$avgIncome->where($value["field"], $value["value"]);
-	    		$usage->where_related("transaction", $value["field"], $value["value"]);
-	    		$avgUsage->where_related("meter", $value["field"], $value["value"]);
-	    		// $deposit->where($value["field"], $value["value"]);	    		
+	    		$location->where("branch_id", $value["value"]);
+	    		$meter->where("branch_id", $value["value"]);
+	    		// $activeContact->where("branch_id", $value["value"]);
+	    		// $branch->where("id", $value["value"]);
+	    		// $income->where($value["field"], $value["value"]);
+	    		// $avgIncome->where($value["field"], $value["value"]);
+	    		// $usage->where_related("transaction", $value["field"], $value["value"]);
+	    		// $avgUsage->where_related("meter", $value["field"], $value["value"]);
+	    		// $deposit->where($value["field"], $value["value"]);    		
 			}									 			
 		}		
 		$contact->select('id');
-		$contact->where_in("status", array(0,1));		
-		$branch->get();
+		$contact->include_related('branch', array('max_customer'));
+		$contact->where('type', 'w');
+		$contact->where_related_contact('status', 1);
+		$contact->get();
 
-		$totalCustomer = $contact->count();
+		$location->get();
+		$locs = array();
+		foreach($location as $loc) {
+			$locs[] $loc->id;
+		}
+
+		$totalCustomer = $contact->result_count();
 		$totalAllowCustomer = $totalCustomer / intval($branch->max_customer);
 		$totalActiveCustomer = $activeContact->count() / $totalCustomer;
 
 		$income->select_sum("amount");
+		$income->where_in('location_id', $locs);
 		$income->where("type", "Water_Invoice");
 		$income->get();
 		
 		$avgIncome->select_avg("amount");
+		$avgIncome->where_in('location_id', $locs);
 		$avgIncome->where("type", "Water_Invoice");
 		$avgIncome->get();
 

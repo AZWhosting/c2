@@ -5154,11 +5154,11 @@
 							<h2>Statement of Profit or Loss by Segment</h2>
 							<p data-bind="text: displayDate"></p>
 						</div>
-				    	<div class="table-wrapper">
+				    <!-- 	<div class="table-wrapper">
 							<table class="table table-borderless table-condensed statement-profit-loss-by-segment">
 								<thead>
 									<th class="td-fixed" style="width: 155px;">Account Name</th>
-									<th style="width: 100px; margin-left: 155px;float: left;">Amount</th>
+									<th style="width: 100px;">Amount</th>
 									<th>Segment</th>
 									<th>Segment</th>
 									<th>Segment</th>
@@ -5179,7 +5179,7 @@
 								<tbody>
 									<tr>
 										<th class="td-fixed" style="width: 155px;">ABC</th>
-										<th style="text-align: right; width: 100px; margin-left: 155px;float: left;">5000.00</th>
+										<th  style="text-align: right; width: 100px; ">5000.00</th>
 										<td style="text-align: right;">1</td>
 										<td style="text-align: right;">2</td>
 										<td style="text-align: right;">3</td>
@@ -5199,7 +5199,7 @@
 									</tr>
 									<tr>
 										<th class="td-fixed" style="width: 155px;">ABC</th>
-										<th style="text-align: right; width: 100px; margin-left: 155px; float: left;">5000.00</th>
+										<th  style="text-align: right; width: 100px; ">5000.00</th>
 										<td style="text-align: right;">1</td>
 										<td style="text-align: right;">2</td>
 										<td style="text-align: right;">3</td>
@@ -5219,7 +5219,7 @@
 									</tr>
 									<tr>
 										<th class="td-fixed" style="width: 155px;">ABC</th>
-										<th style="text-align: right; width: 100px; margin-left: 155px; float: left;">5000.00</th>
+										<th style="text-align: right; width: 100px; ">5000.00</th>
 										<td style="text-align: right;">1</td>
 										<td style="text-align: right;">2</td>
 										<td style="text-align: right;">3</td>
@@ -5239,7 +5239,7 @@
 									</tr>
 								</tbody>
 							</table>
-						</div>
+						</div> -->
 						
 
 
@@ -5315,12 +5315,431 @@
 						  </table>
 						</div> -->
 
+
+
+						<div id="myTable">
+						    <div class="wrapper">
+						        <table>
+						            <tr>
+						                <th class="largerFont">Account Name</th>						                
+						                <td class="last-td pos">Amount</td>
+						                <td>Segment</td>
+						                <td>Segment</td>
+						                <td>Segment</td>
+						                <td>Segment</td>
+						                <td>Segment</td>
+						                <td>Segment</td>
+						                <td>Segment</td>
+						                <td>Segment</td>
+						                <td>Segment</td>
+						                <td>Segment</td>
+						                <td>Segment</td>
+						                <td>Segment</td>
+						                <td>Segment</td>
+						                <td>Segment</td>
+						                <td>Segment</td>
+						                <td>Segment</td>
+						                <td>Segment</td>
+						                <td>Segment</td>
+						                <td>Segment</td>
+						                <td>Segment</td>
+						                <td>Segment</td>
+						                <td>Segment</td>
+						                <td>Segment</td>
+						                <td>Segment</td>
+						                <td>Segment</td>
+						                <td>Segment</td>
+						                <td>Segment</td>
+						                <td>Segment</td>
+						                <td>Segment</td>
+						                <td>Segment</td>
+						                <td>Segment</td>
+						                <td>Segment</td>
+						                <td>Segment</td>
+						                <td>Segment</td>
+						                <td>Segment</td>
+						                <td>Segment</td>
+						                <td>Segment</td>
+						                <td>Segment</td>
+						                <td>Segment</td>
+						                <td>Segment</td>
+						                <td>Segment</td>
+						            </tr>
+						            <tr>
+						                <th>TODAY</th>						                
+						                <td class="last-td">80</td>
+						                <td class="green"></td>
+						                <td class="red"></td>
+						                <td class="green"></td>
+						                <td class="green"></td>
+						                <td class="red"></td>
+						                <td class="green"></td>
+						                <td class="red"></td>
+						                <td class="red"></td>
+						                <td class="red"></td>
+						                <td class="green"></td>
+						                <td class="red"></td>
+						                <td class="red"></td>
+						                <td class="green"></td>
+						                <td class="red"></td>
+						                <td class="red"></td>
+						                <td class="red"></td>
+						                <td class="green"></td>
+						                <td class="red"></td>
+						                <td class="green"></td>
+						                <td class="red"></td>
+						                <td class="green"></td>
+						                <td class="red"></td>
+						                <td class="red"></td>
+						                <td class="green"></td>
+						                <td class="red"></td>
+						                <td class="red"></td>
+						                <td class="red"></td>
+						                <td class="green"></td>
+						                <td class="red"></td>
+						                <td class="green"></td>
+						                <td class="red"></td>
+						                <td class="green"></td>
+						                <td class="red"></td>
+						                <td class="red"></td>
+						                <td class="green"></td>
+						                <td class="red"></td>
+						                <td class="red"></td>
+						                <td class="red"></td>
+						                <td class="green"></td>
+						                <td class="red"></td>
+						                <td class="green"></td>
+						            </tr>
+						            <tr>
+						                <th>20-Jan-2014</th>						                
+						                <td class="last-td">95</td>
+						                <td class="green"></td>
+						                <td class="red"></td>
+						                <td class="green"></td>
+						                <td class="green"></td>
+						                <td class="red"></td>
+						                <td class="green"></td>
+						                <td class="red"></td>
+						                <td class="red"></td>
+						                <td class="red"></td>
+						                <td class="green"></td>
+						                <td class="red"></td>
+						                <td class="red"></td>
+						                <td class="green"></td>
+						                <td class="red"></td>
+						                <td class="red"></td>
+						                <td class="red"></td>
+						                <td class="green"></td>
+						                <td class="red"></td>
+						                <td class="green"></td>
+						                <td class="red"></td>
+						                <td class="green"></td>
+						                <td class="red"></td>
+						                <td class="red"></td>
+						                <td class="green"></td>
+						                <td class="red"></td>
+						                <td class="red"></td>
+						                <td class="red"></td>
+						                <td class="green"></td>
+						                <td class="red"></td>
+						                <td class="green"></td>
+						                <td class="red"></td>
+						                <td class="green"></td>
+						                <td class="red"></td>
+						                <td class="red"></td>
+						                <td class="green"></td>
+						                <td class="red"></td>
+						                <td class="red"></td>
+						                <td class="red"></td>
+						                <td class="green"></td>
+						                <td class="red"></td>
+						                <td class="green"></td>
+						            </tr>
+						            <tr>
+						                <th>19-Jan-2014</th>						                
+						                <td class="last-td">60</td>
+						                <td class="green"></td>
+						                <td class="red"></td>
+						                <td class="green"></td>
+						                <td class="green"></td>
+						                <td class="red"></td>
+						                <td class="green"></td>
+						                <td class="red"></td>
+						                <td class="red"></td>
+						                <td class="red"></td>
+						                <td class="green"></td>
+						                <td class="red"></td>
+						                <td class="red"></td>
+						                <td class="green"></td>
+						                <td class="red"></td>
+						                <td class="red"></td>
+						                <td class="red"></td>
+						                <td class="green"></td>
+						                <td class="red"></td>
+						                <td class="green"></td>
+						                <td class="red"></td>
+						                <td class="green"></td>
+						                <td class="red"></td>
+						                <td class="red"></td>
+						                <td class="green"></td>
+						                <td class="red"></td>
+						                <td class="red"></td>
+						                <td class="red"></td>
+						                <td class="green"></td>
+						                <td class="red"></td>
+						                <td class="green"></td>
+						                <td class="red"></td>
+						                <td class="green"></td>
+						                <td class="red"></td>
+						                <td class="red"></td>
+						                <td class="green"></td>
+						                <td class="red"></td>
+						                <td class="red"></td>
+						                <td class="red"></td>
+						                <td class="green"></td>
+						                <td class="red"></td>
+						                <td class="green"></td>
+						            </tr>
+						            <tr>
+						                <th>18-Jan-2014</th>						                
+						                <td class="last-td">49</td>
+						                <td class="green"></td>
+						                <td class="red"></td>
+						                <td class="green"></td>
+						                <td class="green"></td>
+						                <td class="red"></td>
+						                <td class="green"></td>
+						                <td class="red"></td>
+						                <td class="red"></td>
+						                <td class="red"></td>
+						                <td class="green"></td>
+						                <td class="red"></td>
+						                <td class="red"></td>
+						                <td class="green"></td>
+						                <td class="red"></td>
+						                <td class="red"></td>
+						                <td class="red"></td>
+						                <td class="green"></td>
+						                <td class="red"></td>
+						                <td class="green"></td>
+						                <td class="red"></td>
+						                <td class="green"></td>
+						                <td class="red"></td>
+						                <td class="red"></td>
+						                <td class="green"></td>
+						                <td class="red"></td>
+						                <td class="red"></td>
+						                <td class="red"></td>
+						                <td class="green"></td>
+						                <td class="red"></td>
+						                <td class="green"></td>
+						                <td class="red"></td>
+						                <td class="green"></td>
+						                <td class="red"></td>
+						                <td class="red"></td>
+						                <td class="green"></td>
+						                <td class="red"></td>
+						                <td class="red"></td>
+						                <td class="red"></td>
+						                <td class="green"></td>
+						                <td class="red"></td>
+						                <td class="green"></td>
+						            </tr>
+						            <tr>
+						                <th>17-Jan-2014</th>						                
+						                <td class="last-td">91</td>
+						                <td class="green"></td>
+						                <td class="red"></td>
+						                <td class="green"></td>
+						                <td class="green"></td>
+						                <td class="red"></td>
+						                <td class="green"></td>
+						                <td class="red"></td>
+						                <td class="red"></td>
+						                <td class="red"></td>
+						                <td class="green"></td>
+						                <td class="red"></td>
+						                <td class="red"></td>
+						                <td class="green"></td>
+						                <td class="red"></td>
+						                <td class="red"></td>
+						                <td class="red"></td>
+						                <td class="green"></td>
+						                <td class="red"></td>
+						                <td class="green"></td>
+						                <td class="red"></td>
+						                <td class="green"></td>
+						                <td class="red"></td>
+						                <td class="red"></td>
+						                <td class="green"></td>
+						                <td class="red"></td>
+						                <td class="red"></td>
+						                <td class="red"></td>
+						                <td class="green"></td>
+						                <td class="red"></td>
+						                <td class="green"></td>
+						                <td class="red"></td>
+						                <td class="green"></td>
+						                <td class="red"></td>
+						                <td class="red"></td>
+						                <td class="green"></td>
+						                <td class="red"></td>
+						                <td class="red"></td>
+						                <td class="red"></td>
+						                <td class="green"></td>
+						                <td class="red"></td>
+						                <td class="green"></td>
+						            </tr>
+						            <tr>
+						                <th>16-Jan-2014</th>						                
+						                <td class="last-td">70</td>
+						                <td class="green"></td>
+						                <td class="red"></td>
+						                <td class="green"></td>
+						                <td class="green"></td>
+						                <td class="red"></td>
+						                <td class="green"></td>
+						                <td class="red"></td>
+						                <td class="red"></td>
+						                <td class="red"></td>
+						                <td class="green"></td>
+						                <td class="red"></td>
+						                <td class="red"></td>
+						                <td class="green"></td>
+						                <td class="red"></td>
+						                <td class="red"></td>
+						                <td class="red"></td>
+						                <td class="green"></td>
+						                <td class="red"></td>
+						                <td class="green"></td>
+						                <td class="red"></td>
+						                <td class="green"></td>
+						                <td class="red"></td>
+						                <td class="red"></td>
+						                <td class="green"></td>
+						                <td class="red"></td>
+						                <td class="red"></td>
+						                <td class="red"></td>
+						                <td class="green"></td>
+						                <td class="red"></td>
+						                <td class="green"></td>
+						                <td class="red"></td>
+						                <td class="green"></td>
+						                <td class="red"></td>
+						                <td class="red"></td>
+						                <td class="green"></td>
+						                <td class="red"></td>
+						                <td class="red"></td>
+						                <td class="red"></td>
+						                <td class="green"></td>
+						                <td class="red"></td>
+						                <td class="green"></td>
+						            </tr>
+						            <tr>
+						                <th>15-Jan-2014</th>						                
+						                <td class="last-td">21</td>
+						                <td class="green"></td>
+						                <td class="red"></td>
+						                <td class="green"></td>
+						                <td class="green"></td>
+						                <td class="red"></td>
+						                <td class="green"></td>
+						                <td class="red"></td>
+						                <td class="red"></td>
+						                <td class="red"></td>
+						                <td class="green"></td>
+						                <td class="red"></td>
+						                <td class="red"></td>
+						                <td class="green"></td>
+						                <td class="red"></td>
+						                <td class="red"></td>
+						                <td class="red"></td>
+						                <td class="green"></td>
+						                <td class="red"></td>
+						                <td class="green"></td>
+						                <td class="red"></td>
+						                <td class="green"></td>
+						                <td class="red"></td>
+						                <td class="red"></td>
+						                <td class="green"></td>
+						                <td class="red"></td>
+						                <td class="red"></td>
+						                <td class="red"></td>
+						                <td class="green"></td>
+						                <td class="red"></td>
+						                <td class="green"></td>
+						                <td class="red"></td>
+						                <td class="green"></td>
+						                <td class="red"></td>
+						                <td class="red"></td>
+						                <td class="green"></td>
+						                <td class="red"></td>
+						                <td class="red"></td>
+						                <td class="red"></td>
+						                <td class="green"></td>
+						                <td class="red"></td>
+						                <td class="green"></td>
+						            </tr>
+						            <tr>
+						                <th>14-Jan-2014</th>						                
+						                <td class="last-td">21</td>
+						                <td class="green"></td>
+						                <td class="red"></td>
+						                <td class="green"></td>
+						                <td class="green"></td>
+						                <td class="red"></td>
+						                <td class="green"></td>
+						                <td class="red"></td>
+						                <td class="red"></td>
+						                <td class="red"></td>
+						                <td class="green"></td>
+						                <td class="red"></td>
+						                <td class="red"></td>
+						                <td class="green"></td>
+						                <td class="red"></td>
+						                <td class="red"></td>
+						                <td class="red"></td>
+						                <td class="green"></td>
+						                <td class="red"></td>
+						                <td class="green"></td>
+						                <td class="red"></td>
+						                <td class="green"></td>
+						                <td class="red"></td>
+						                <td class="red"></td>
+						                <td class="green"></td>
+						                <td class="red"></td>
+						                <td class="red"></td>
+						                <td class="red"></td>
+						                <td class="green"></td>
+						                <td class="red"></td>
+						                <td class="green"></td>
+						                <td class="red"></td>
+						                <td class="green"></td>
+						                <td class="red"></td>
+						                <td class="red"></td>
+						                <td class="green"></td>
+						                <td class="red"></td>
+						                <td class="red"></td>
+						                <td class="red"></td>
+						                <td class="green"></td>
+						                <td class="red"></td>
+						                <td class="green"></td>
+						            </tr>
+						        </table>
+						    </div>
+						</div>
+
+
+
+
 						<br><br>
 					</div>
 		        </div>		        
 			</div>							
 		</div>
 	</div>
+
+
 </script>
 <!-- <script id="statementProfitLossBySegment-template" type="text/x-kendo-tmpl">
 	#if(id>0){#
