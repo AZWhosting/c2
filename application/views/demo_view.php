@@ -78002,7 +78002,7 @@
 		inventoryPurchaseByVendorDetail: new kendo.Layout("#inventoryPurchaseByVendorDetail", {model: banhji.inventoryPurchaseByVendorDetail}),
 		fixedAssets: new kendo.Layout("#fixedAssets", {model: banhji.fixedAssets}),
 		itemRecurring: new kendo.Layout("#itemRecurring", {model: banhji.itemRecurring}),
-		cashMovement: new kendo.Layout("#cashMovement", {model: banhji.generalLedger}),
+		cashMovement: new kendo.Layout("#cashMovement", {model: banhji.cashMovement}),
 		cashPositionReport: new kendo.Layout("#cashPositionReport", {model: banhji.cashPositionReport}),
 		cashCollectionReport: new kendo.Layout("#cashCollectionReport", {model: banhji.cashSales}),
 		cashPaymentReport: new kendo.Layout("#cashPaymentReport", {model: banhji.cashPaymentReport}),
