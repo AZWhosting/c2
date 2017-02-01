@@ -465,7 +465,6 @@
 
 
 
-
 <!-- ***************************
 *	Accounting Section        *
 **************************** -->
@@ -22306,7 +22305,8 @@
 								<!-- Tabs Heading -->
 								<div class="widget-head">
 									<ul>
-										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>							<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i><span data-bind="text: lang.lang.print_export"></span></a></li>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>							
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i><span data-bind="text: lang.lang.print_export"></span></a></li>
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
@@ -22341,7 +22341,7 @@
 								        		<i class="fa fa-file-pdf-o"></i>
 								        		Print as PDF
 								        	</span> -->
-								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: ExportExcel" style="width: 80px;">
+								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: ExportExcelSSC" style="width: 80px;">
 								        		<i class="fa fa-file-excel-o"></i>
 								        		Export to Excel
 								        	</span>
@@ -69141,6 +69141,7 @@
 		sortDB 				: [
 			{id: 'date', name: 'Date'}
 		],
+		exArray : [],
 		search 	: function() {
 
 			banhji.saleSummaryCustomer.dataSource.filter({
@@ -69149,6 +69150,48 @@
 					{field: "issued_date >=", value: kendo.toString(this.startDate, "yyyy-MM-dd")},
 					{field: "issued_date <=", value: kendo.toString(this.endDate, "yyyy-MM-dd")}
 				]
+			});
+			banhji.saleSummaryCustomer.dataSource.bind("requestEnd", function(e){
+				var response = e.response, balanceCal = 0;
+				//banhji.saleSummaryCustomer.exArray = [];
+				banhji.saleSummaryCustomer.exArray.push({
+            		cells: [
+            			{ value: banhji.institute.name, textAlign: "center", colSpan: 3 }
+            		]
+            	});
+            	banhji.saleSummaryCustomer.exArray.push({
+            		cells: [
+            			{ value: "Sale Summary by Customer",bold: true, fontSize: 20, textAlign: "center", colSpan: 3 }
+            		]
+            	});
+            	if(banhji.customerSale.displayDateStart){
+	            	banhji.saleSummaryCustomer.exArray.push({
+	            		cells: [
+	            			{ value: "From " + kendo.toString(banhji.customerSale.startDate, "dd-MM-yyyy") + " to " + kendo.toString(banhji.customerSale.endDate, "dd-MM-yyyy"), textAlign: "center", colSpan: 3 }
+	            		]
+	            	});
+	            }
+            	banhji.saleSummaryCustomer.exArray.push({
+            		cells: [
+            			{ value: "", colSpan: 3 }
+            		]
+            	});
+            	banhji.saleSummaryCustomer.exArray.push({ 
+            		cells: [
+						{ value: "Customer", background: "#496cad", color: "#ffffff" },
+						{ value: "Number Invoice", background: "#496cad", color: "#ffffff" },
+						{ value: "Total Sale", background: "#496cad", color: "#ffffff" }
+					]
+				});
+				for (var i = 0; i < response.results.length; i++){
+					banhji.saleSummaryCustomer.exArray.push({
+				        cells: [
+				          	{ value: response.results[i].customer },
+				            { value: kendo.parseInt(response.results[i].invoice) },
+				            { value: kendo.parseFloat(response.results[i].amount), bold: true },
+				        ]
+				    });
+				}
 			});
 		}, 
 		filterChange  : function(e){
@@ -69166,6 +69209,7 @@
 		sortDB 				: [
 			{id: 'date', name: 'Date'}
 		],
+		exArray : [],
 		search 	: function() {
 
 			banhji.saleDetailCustomer.dataSource.filter({
@@ -69174,6 +69218,83 @@
 					{field: "issued_date >=", value: kendo.toString(this.startDate, "yyyy-MM-dd")},
 					{field: "issued_date <=", value: kendo.toString(this.endDate, "yyyy-MM-dd")}
 				]
+			});
+			banhji.saleDetailCustomer.dataSource.bind('requestEnd', function(e){
+				if(e.response) {
+					banhji.customerSale.set('count', e.response.count);
+					kendo.culture(banhji.locale);
+					banhji.customerSale.set('total', kendo.toString(e.response.total, 'c2'));
+
+					//Export Excel
+					var response = e.response, balanceCal = 0;
+					//banhji.saleSummaryCustomer.exArray = [];
+					banhji.saleDetailCustomer.exArray.push({
+	            		cells: [
+	            			{ value: banhji.institute.name, textAlign: "center", colSpan: 7 }
+	            		]
+	            	});
+	            	banhji.saleDetailCustomer.exArray.push({
+	            		cells: [
+	            			{ value: "Sale Detail by Customer",bold: true, fontSize: 20, textAlign: "center", colSpan: 7 }
+	            		]
+	            	});
+	            	if(banhji.customerSale.displayDateStart){
+		            	banhji.saleDetailCustomer.exArray.push({
+		            		cells: [
+		            			{ value: "From " + kendo.toString(banhji.customerSale.startDate, "dd-MM-yyyy") + " to " + kendo.toString(banhji.customerSale.endDate, "dd-MM-yyyy"), textAlign: "center", colSpan: 7 }
+		            		]
+		            	});
+		            }
+	            	banhji.saleDetailCustomer.exArray.push({
+	            		cells: [
+	            			{ value: "", colSpan: 7 }
+	            		]
+	            	});
+	            	banhji.saleDetailCustomer.exArray.push({ 
+	            		cells: [
+							{ value: "TYPE", background: "#496cad", color: "#ffffff" },
+							{ value: "DATE", background: "#496cad", color: "#ffffff" },
+							{ value: "NO", background: "#496cad", color: "#ffffff" },
+							{ value: "ITEM/SERVICE	", background: "#496cad", color: "#ffffff" },
+							{ value: "QTY", background: "#496cad", color: "#ffffff" },
+							{ value: "PRICE", background: "#496cad", color: "#ffffff" },
+							{ value: "AMOUNT", background: "#496cad", color: "#ffffff" },
+						]
+					});
+					for (var i = 0; i < response.results.length; i++){
+						banhji.saleDetailCustomer.exArray.push({
+					        cells: [
+					          	{ value: response.results[i].group, bold: true, colSpan: 7 }
+					        ]
+					    });
+					    for(var j = 0; j < response.results[i].items.length; j++){
+					    	for(var k = 0; k < response.results[i].items[j].lines.length; k++){
+						    	banhji.saleDetailCustomer.exArray.push({
+							        cells: [
+							          	{ value: response.results[i].items[j].type },
+							          	{ value: kendo.toString(response.results[i].items[j].date, "dd-MM-yyyy") },
+							          	{ value: response.results[i].items[j].number },
+							          	{ value: response.results[i].items[j].lines[k].name },
+							          	{ value: kendo.parseInt(response.results[i].items[j].lines[k].quantity) },
+							          	{ value: response.results[i].items[j].lines[k].price },
+							          	{ value: response.results[i].items[j].lines[k].amount }
+							        ]
+							    });
+							}
+					    }
+					    banhji.saleDetailCustomer.exArray.push({
+					        cells: [
+					          	{ value: response.results[i].amount, bold: true, colSpan: 7, textAlign: "right" }
+					        ]
+					    });
+					}
+					banhji.saleDetailCustomer.exArray.push({
+				        cells: [
+				          	{ value: "TOTAL", background: "#496cad", bold: true, color: "#ffffff", colSpan: 6 },
+				          	{ value: kendo.parseFloat(e.response.total),bold: true, background: "#496cad", color: "#ffffff" }
+				        ]
+				    });
+				}
 			});
 		}, 
 		filterChange  : function(e){
@@ -69641,6 +69762,46 @@
 		    	win.print();
 		    	win.close();
 		    },2000);
+		},
+		ExportExcelSSC 		: function(){
+			console.log(banhji.saleSummaryCustomer.exArray);
+	        var workbook = new kendo.ooxml.Workbook({
+	          sheets: [
+	            {
+	              columns: [
+	                { autoWidth: true },
+	                { autoWidth: true },
+	                { autoWidth: true }
+	              ],
+	              title: "Sale Summary by Customer",
+	              rows: banhji.saleSummaryCustomer.exArray
+	            }
+	          ]
+	        });
+	        //save the file as Excel file with extension xlsx
+	        kendo.saveAs({dataURI: workbook.toDataURL(), fileName: "SaleSummaryCustomer.xlsx"});
+		},
+		ExportExcelSDC 		: function(){
+			console.log(banhji.saleDetailCustomer.exArray);
+	        var workbook = new kendo.ooxml.Workbook({
+	          sheets: [
+	            {
+	              columns: [
+	                { autoWidth: true },
+	                { autoWidth: true },
+	                { autoWidth: true },
+	                { autoWidth: true },
+	                { autoWidth: true },
+	                { autoWidth: true },
+	                { autoWidth: true }
+	              ],
+	              title: "Sale Detail by Customer",
+	              rows: banhji.saleDetailCustomer.exArray
+	            }
+	          ]
+	        });
+	        //save the file as Excel file with extension xlsx
+	        kendo.saveAs({dataURI: workbook.toDataURL(), fileName: "SaleDetailCustomer.xlsx"});
 		},
 		dateChange 			: function(){
 			// var strDate = "";
@@ -84947,7 +85108,53 @@
 					{field: "issued_date <=", value: kendo.toString(new Date(), "yyyy-MM-dd")}
 				]
 			});
-		
+			
+			//Export Excel
+			banhji.saleSummaryCustomer.dataSource.bind("requestEnd", function(e){
+				if(e.response.results.length > 0) {
+					var response = e.response, balanceCal = 0;
+					//banhji.saleSummaryCustomer.exArray = [];
+					banhji.saleSummaryCustomer.exArray.push({
+	            		cells: [
+	            			{ value: banhji.institute.name, textAlign: "center", colSpan: 3 }
+	            		]
+	            	});
+	            	banhji.saleSummaryCustomer.exArray.push({
+	            		cells: [
+	            			{ value: "Sale Summary by Customer",bold: true, fontSize: 20, textAlign: "center", colSpan: 3 }
+	            		]
+	            	});
+	            	if(banhji.customerSale.displayDateStart){
+		            	banhji.saleSummaryCustomer.exArray.push({
+		            		cells: [
+		            			{ value: "From " + kendo.toString(banhji.customerSale.startDate, "dd-MM-yyyy") + " to " + kendo.toString(banhji.customerSale.endDate, "dd-MM-yyyy"), textAlign: "center", colSpan: 3 }
+		            		]
+		            	});
+		            }
+	            	banhji.saleSummaryCustomer.exArray.push({
+	            		cells: [
+	            			{ value: "", colSpan: 3 }
+	            		]
+	            	});
+	            	banhji.saleSummaryCustomer.exArray.push({ 
+	            		cells: [
+							{ value: "Customer", background: "#496cad", color: "#ffffff" },
+							{ value: "Number Invoice", background: "#496cad", color: "#ffffff" },
+							{ value: "Total Sale", background: "#496cad", color: "#ffffff" }
+						]
+					});
+					for (var i = 0; i < response.results.length; i++){
+						banhji.saleSummaryCustomer.exArray.push({
+					        cells: [
+					          	{ value: response.results[i].customer },
+					            { value: kendo.parseInt(response.results[i].invoice) },
+					            { value: kendo.parseFloat(response.results[i].amount), bold: true },
+					        ]
+					    });
+					}
+				}
+			});
+
 			banhji.customerSale.saleSummary.dataSource.bind('requestEnd', function(e){
 				if(e.response) {
 					banhji.customerSale.set('count', e.response.count);
@@ -84978,6 +85185,76 @@
 					banhji.customerSale.set('count', e.response.count);
 					kendo.culture(banhji.locale);
 					banhji.customerSale.set('total', kendo.toString(e.response.total, 'c2'));
+
+					//Export Excel
+					var response = e.response, balanceCal = 0;
+					//banhji.saleSummaryCustomer.exArray = [];
+					banhji.saleDetailCustomer.exArray.push({
+	            		cells: [
+	            			{ value: banhji.institute.name, textAlign: "center", colSpan: 7 }
+	            		]
+	            	});
+	            	banhji.saleDetailCustomer.exArray.push({
+	            		cells: [
+	            			{ value: "Sale Detail by Customer",bold: true, fontSize: 20, textAlign: "center", colSpan: 7 }
+	            		]
+	            	});
+	            	if(banhji.customerSale.displayDateStart){
+		            	banhji.saleDetailCustomer.exArray.push({
+		            		cells: [
+		            			{ value: "From " + kendo.toString(banhji.customerSale.startDate, "dd-MM-yyyy") + " to " + kendo.toString(banhji.customerSale.endDate, "dd-MM-yyyy"), textAlign: "center", colSpan: 7 }
+		            		]
+		            	});
+		            }
+	            	banhji.saleDetailCustomer.exArray.push({
+	            		cells: [
+	            			{ value: "", colSpan: 7 }
+	            		]
+	            	});
+	            	banhji.saleDetailCustomer.exArray.push({ 
+	            		cells: [
+							{ value: "TYPE", background: "#496cad", color: "#ffffff" },
+							{ value: "DATE", background: "#496cad", color: "#ffffff" },
+							{ value: "NO", background: "#496cad", color: "#ffffff" },
+							{ value: "ITEM/SERVICE	", background: "#496cad", color: "#ffffff" },
+							{ value: "QTY", background: "#496cad", color: "#ffffff" },
+							{ value: "PRICE", background: "#496cad", color: "#ffffff" },
+							{ value: "AMOUNT", background: "#496cad", color: "#ffffff" },
+						]
+					});
+					for (var i = 0; i < response.results.length; i++){
+						banhji.saleDetailCustomer.exArray.push({
+					        cells: [
+					          	{ value: response.results[i].group, bold: true, colSpan: 7 }
+					        ]
+					    });
+					    for(var j = 0; j < response.results[i].items.length; j++){
+					    	for(var k = 0; k < response.results[i].items[j].lines.length; k++){
+						    	banhji.saleDetailCustomer.exArray.push({
+							        cells: [
+							          	{ value: response.results[i].items[j].type },
+							          	{ value: kendo.toString(response.results[i].items[j].date, "dd-MM-yyyy") },
+							          	{ value: response.results[i].items[j].number },
+							          	{ value: response.results[i].items[j].lines[k].name },
+							          	{ value: kendo.parseInt(response.results[i].items[j].lines[k].quantity) },
+							          	{ value: response.results[i].items[j].lines[k].price },
+							          	{ value: response.results[i].items[j].lines[k].amount }
+							        ]
+							    });
+							}
+					    }
+					    banhji.saleDetailCustomer.exArray.push({
+					        cells: [
+					          	{ value: response.results[i].amount, bold: true, colSpan: 7, textAlign: "right" }
+					        ]
+					    });
+					}
+					banhji.saleDetailCustomer.exArray.push({
+				        cells: [
+				          	{ value: "TOTAL", background: "#496cad", bold: true, color: "#ffffff", colSpan: 6 },
+				          	{ value: kendo.parseFloat(e.response.total),bold: true, background: "#496cad", color: "#ffffff" }
+				        ]
+				    });
 				}
 			});
 		}
