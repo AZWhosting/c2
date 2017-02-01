@@ -96,7 +96,7 @@
 						<li style="text-align:center;">
 							<a href="#/accounting">
 								<img title="Accounting Module" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/accounting.jpg" alt="Customer">							
-								<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><h5 data-bind="text: lang.lang.accounting" style="margin-top: 8px; display: inline-block;" style="margin-top: 5px; display: inline-block;"></h5></span>
+								<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><h5 data-bind="text: lang.lang.accounting" style="margin-top: 5px; display: inline-block;" style="margin-top: 5px; display: inline-block;"></h5></span>
 							</a>
 						</li>
 						<li style="text-align:center;">
@@ -49542,7 +49542,7 @@
 		            	});
 		            	self.exArray.push({
 		            		cells: [
-		            			{ value: "General Ledger",bold: true, fontSize: 20, textAlign: "center", colSpan: 5 }
+		            			{ value: "Trial Balance",bold: true, fontSize: 20, textAlign: "center", colSpan: 5 }
 		            		]
 		            	});
 		            	if(self.displayDate){
