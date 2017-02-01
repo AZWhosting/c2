@@ -588,6 +588,7 @@ class Wreports extends REST_Controller {
 	    		$contact->where("branch_id", $value["value"]);
 	    		$location->where("branch_id", $value["value"]);
 	    		$meter->where("branch_id", $value["value"]);
+
 	    		// $activeContact->where("branch_id", $value["value"]);
 	    		// $branch->where("id", $value["value"]);
 	    		// $income->where($value["field"], $value["value"]);
@@ -597,25 +598,40 @@ class Wreports extends REST_Controller {
 	    		// $deposit->where($value["field"], $value["value"]);    		
 			}									 			
 		}		
-		$contact->select('id');
+		$contact->select('id, contact_id');
 		$contact->include_related('branch', array('max_customer'));
+		$contact->include_related('contact', array('deposit_account_id'));
 		$contact->where('type', 'w');
 		$contact->where_related_contact('status', 1);
 		$contact->get();
+		$deposit = 0;
+		foreach($contact as $c) {
+			$journal = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$journal->where('contact_id', $c->contact_id);
+			$journal->where('account_id', $c->contact_deposit_account_id);
+			$journal->get();
+			if($journal->exists()) {
+				if($journal->dr > 0.00) {
+					$deposit -= $journal->dr;
+				} else {
+				 	$deposit += $journal->cr;
+				}
+			}
+		}
 
-		$location->include_related('transaction/winvoice_line', array('quantity'));
-		$location->where_related('transaction/winvoice_line', 'type', 'tariff');
+		// $location->include_related('transaction/winvoice_line', array('quantity'));
+		// $location->where_related('transaction/winvoice_line', 'type', 'tariff');
 		$location->get();
 		$locs = array();
 		$usage = 0;
 		foreach($location as $loc) {
-			$usage += $loc_transaction_winvoice_line_quanity;
+			// $usage += $loc_transaction_winvoice_line_quanity;
 			$locs[] = $loc->id;
 		}
 
 		$totalCustomer = $contact->result_count();
-		$totalAllowCustomer = $totalCustomer / intval($contact->branch_max_customer);
-		$totalActiveCustomer = $activeContact->count() / $totalCustomer;
+		$totalAllowCustomer = $contact->branch_max_customer == 0 ? 0:$totalCustomer / intval($contact->branch_max_customer);
+		$totalActiveCustomer = $totalCustomer == 0 ? 0 : $activeContact->count() / $totalCustomer;
 
 		$income->select_sum("amount");
 		$income->where_in('location_id', $locs);
@@ -633,13 +649,15 @@ class Wreports extends REST_Controller {
 		// $usage->get();
 
 		$avgUsage = $meter;
-		$avgUsage->include_related('meter_record', array('usage'));
+		$avgUsage->include_related('record', array('usage'));
 		// $avgUsage->where_related_winvoice_line('type', 'tariff');
 		$avgUsage->get();
+		$totalUsage = 0;
 		$avg = 0;
 		foreach($avgUsage as $avgUsg) {
-			$avg += $avgUsg->usage;
+			$totalUsage += $avgUsg->record_usage;
 		}
+		$avg = $totalCustomer == 0 ? 0:$totalUsage / $totalCustomer;
 
 		// $usage->select_sum("quantity");
 		// $usage->where("type", "tariff");
@@ -660,8 +678,9 @@ class Wreports extends REST_Controller {
 			"totalIncome" 				=> floatval($income->amount),
 			"avgIncome" 				=> floatval($avgIncome->amount),
 			"totalUsage" 				=> intval($usage),
-			"avgUsage" 					=> floatval($avg)			
-			// "totalDeposit" 				=> floatval($deposit->amount)							
+			"avgUsage" 					=> floatval($avg),
+			"totalUsage"				=> floatval($totalUsage),			
+			"totalDeposit" 				=> floatval($deposit)							
 		);
 			
 

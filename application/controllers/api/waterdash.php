@@ -225,6 +225,90 @@ class Waterdash extends REST_Controller {
 			$this->response($data, 400);
 		}
 	}
+
+	function graph_get() {
+		$filters 	= $this->get("filter")["filters"];		
+		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
+		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;								
+		$sort 	 	= $this->get("sort");		
+		// $data["results"] = array();
+		// $data["count"] = 0;
+
+		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$reading = new Meter_record(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+
+		//Sort
+		if(!empty($sort) && isset($sort)){					
+			foreach ($sort as $value) {
+				$obj->order_by($value["field"], $value["dir"]);
+			}
+		}
+
+		//Filter		
+		if(!empty($filters) && isset($filters)){
+	    	foreach ($filters as $value) {
+	    		if(isset($value['operator'])) {
+					$obj->{$value['operator']}($value['field'], $value['value']);
+				} else {
+	    			$obj->where($value["field"], $value["value"]);
+				}
+			}
+		}
+
+		$obj->where('type', 'Water_Invoice');
+		$obj->where("issued_date >=", date("Y")."-01-01");
+		$obj->where("issued_date <=", date("Y")."-12-31");						
+		$obj->order_by("issued_date");	
+		$obj->get();
+
+		$reading->where("month_of >=", date("Y")."-01-01");
+		$reading->where("month_of <=", date("Y")."-12-31");
+		$reading->order_by("month_of");								
+		$reading->get();
+
+		if($obj->result_count() > $reading->result_count()){
+			foreach ($obj as $value) {
+				$usage = 0;
+				$invoiceMonth = date('F', strtotime($value->issued_date));
+
+				foreach ($reading as $v) {
+					$readingMonth = date('F', strtotime($v->month_of));
+
+					if($readingMonth===$invoiceMonth){
+						$usage += floatval($v->usage);
+					}
+				}
+
+				$data["results"][] = array(					
+				   	"amount" 		=> floatval($value->amount),
+				   	"usage" 		=> $usage,				   	
+				   	"month"			=> $invoiceMonth				   	
+				);
+			}
+		}else{
+			foreach ($reading as $value) {
+				$amount = 0;
+				$readingMonth = date('F', strtotime($value->month_of));
+
+				foreach ($obj as $v) {
+					$invoiceMonth = date('F', strtotime($v->issued_date));
+
+					if($readingMonth===$invoiceMonth){
+						$amount += floatval($v->amount);
+					}
+				}
+
+				$data["results"][] = array(					
+				   	"amount" 		=> $amount,
+				   	"usage" 		=> floatval($value->usage),				   	
+				   	"month"			=> $readingMonth				   	
+				);
+			}
+		}
+
+		$this->response($data, 200);
+	}
 	
 }
 /* End of file waterdash.php */

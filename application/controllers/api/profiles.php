@@ -336,7 +336,7 @@ class Profiles extends REST_Controller {
 					'logo' => array('id' => $profile_photo->id, 'url' => $profile_photo->url),
 					'description' => $u->institute->description,
 					'vat_number' => $u->institute->vat_number,
-					'fiscal_date'=> $u->institute->fiscal_date,
+					'fiscal_date'=> intval($u->institute->fiscal_date),
 					'tax_regime' => $u->institute->tax_regime,
 					'year_founded'=>$u->institute->year_founded,
 					'locale' => $u->institute->locale,
@@ -456,7 +456,7 @@ class Profiles extends REST_Controller {
 			$company->telephone = isset($req->telephone) ? $req->telephone : "";
 			$company->description= isset($req->description) ? $req->description : "";
 			$company->vat_number = isset($req->vat_number) ? $req->vat_number : "";
-			$company->fiscal_date= isset($req->fiscal_date) ? date('m-d', strtotime($req->fiscal_date)) : '01-01';
+			$company->fiscal_date= $req->fiscal_date;//isset($req->fiscal_date) ? date('m-d', strtotime($req->fiscal_date)) : '01-01';
 			$company->tax_regime= isset($req->tax_regime) ? $req->tax_regime : "";
 			$company->year_founded = isset($req->year_founded) ? $req->year_founded : "";
 			$company->accounting_standard = isset($req->accounting_standard) ? $req->accounting_standard : "";

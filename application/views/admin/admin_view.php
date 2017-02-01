@@ -2968,11 +2968,11 @@
         data: '',
         checkRole  : function() {
           // e.preventDefault();
-        if(JSON.parse(localStorage.getItem('userData/user')).role == 1) {
-                window.location.replace(baseUrl + "rrd/");
-              } else {
-                window.location.replace("<?php echo base_url(); ?>admin");
-              }
+          if(JSON.parse(localStorage.getItem('userData/user')).role == 1) {
+            window.location.replace(baseUrl + "rrd/");
+          } else {
+            window.location.replace("<?php echo base_url(); ?>admin");
+          }
         },
         media: new image(),
         modules: banhji.moduleDS,
@@ -3077,6 +3077,8 @@
           banhji.router.navigate('');
         },
         save: function() {
+          let dd = new Date(banhji.company.get('current').fiscal_date);
+          banhji.company.get('current').fiscal_date = dd.getTime();
           if(banhji.company.media.dataSource.hasChanges()) {
             banhji.company.media.save().then(function(data){
               banhji.company.get('current').set('logo', {id: data.id, url: data.url});
@@ -3178,6 +3180,13 @@
             banhji.moduleDS.bind('requestEnd', function(e){
               if(e.response) {
                 banhji.company.setCurrent(banhji.companyDS.data()[0]);
+                //
+                let d = new Date(banhji.company.get('current').fiscal_date);
+                let day = d.getDate() < 10 ? '0'+ d.getDate() : d.getDate();
+                let mnth= (d.getMonth() +1);
+                let m = mnth < 10 ? '0'+mnth : mnth;
+                banhji.company.get('current').set('fiscal_date', day +"-"+m);
+                //
                 banhji.company.set('appSub', e.response.results.length || 0);
                 banhji.company.set('data', banhji.companyDS.data()[0].users);
                 banhji.company.set('lastLogin', banhji.companyDS.data()[0].lastLogin);
@@ -3300,7 +3309,6 @@
 
       $(document).ready(function() {
         banhji.profileDS.read().then(function(e){
-
           banhji.profile.set('currentID', banhji.profileDS.data()[0]);
           layout.showIn('#menu', menu);
           if(banhji.profileDS.data()[0].role == 1) {

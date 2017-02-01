@@ -22300,8 +22300,7 @@
 								<!-- Tabs Heading -->
 								<div class="widget-head">
 									<ul>
-										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
-										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab" data-bind="click: printGrid"><i></i>Print/Export</a></li>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>							<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i><span data-bind="text: lang.lang.print_export"></span></a></li>
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
@@ -22328,7 +22327,19 @@
 										           placeholder="To ..." />
 
 										  	 <button type="button" data-role="button" data-bind="click: saleSummary.search"><i class="icon-search"></i></button>							
-									    </div>							        							       
+									    </div>
+									    <!-- PRINT/EXPORT  -->
+								        <div class="tab-pane" id="tab-2">								        	
+								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: printGrid" style="width: 80px;"><i></i> Print</span>
+								        	<!-- <span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
+								        		<i class="fa fa-file-pdf-o"></i>
+								        		Print as PDF
+								        	</span> -->
+								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: ExportExcel" style="width: 80px;">
+								        		<i class="fa fa-file-excel-o"></i>
+								        		Export to Excel
+								        	</span>
+							        	</div>
 								    </div>
 								</div>
 							</div>
@@ -47979,22 +47990,29 @@
     	
         	//Dates
         	if(start && end){
-            	para.push({ field:"issued_date >=", operator:"where_related_transaction", value: kendo.toString(new Date(start), "yyyy-MM-dd") });
-            	para.push({ field:"issued_date <=", operator:"where_related_transaction", value: kendo.toString(new Date(end), "yyyy-MM-dd") });
+        		start = new Date(start);
+        		end = new Date(end);
+        		end.setDate(end.getDate()+1);
 
-            	displayDate = "From " + kendo.toString(new Date(start), "dd-MM-yyyy") + " To " + kendo.toString(new Date(end), "dd-MM-yyyy");
+            	para.push({ field:"issued_date >=", operator:"where_related_transaction", value: kendo.toString(start, "yyyy-MM-dd") });
+            	para.push({ field:"issued_date <", operator:"where_related_transaction", value: kendo.toString(end, "yyyy-MM-dd") });
+
+            	displayDate = "From " + kendo.toString(start, "dd-MM-yyyy") + " To " + kendo.toString(end, "dd-MM-yyyy");
             }else if(start){
-            	para.push({ field:"issued_date", operator:"where_related_transaction", value: kendo.toString(new Date(start), "yyyy-MM-dd") });
+            	start = new Date(start);
+            	para.push({ field:"issued_date", operator:"where_related_transaction", value: kendo.toString(start, "yyyy-MM-dd") });
 
-            	displayDate = "On " + kendo.toString(new Date(start), "dd-MM-yyyy");
+            	displayDate = "On " + kendo.toString(start, "dd-MM-yyyy");
             }else if(end){
-            	para.push({ field:"issued_date <=", operator:"where_related_transaction", value: kendo.toString(new Date(end), "yyyy-MM-dd") });
+            	end = new Date(end);
+        		end.setDate(end.getDate()+1);
 
-            	displayDate = "As Of " + kendo.toString(new Date(end), "dd-MM-yyyy");
+            	para.push({ field:"issued_date <", operator:"where_related_transaction", value: kendo.toString(end, "yyyy-MM-dd") });
+
+            	displayDate = "As Of " + kendo.toString(end, "dd-MM-yyyy");
             }else{
             	
             }
-            
             this.set("displayDate", displayDate);
 
             this.dataSource.query({
@@ -48648,18 +48666,26 @@
     	
         	//Dates
         	if(start && end){
-            	para.push({ field:"issued_date >=", operator:"where_related_transaction", value: kendo.toString(new Date(start), "yyyy-MM-dd") });
-            	para.push({ field:"issued_date <=", operator:"where_related_transaction", value: kendo.toString(new Date(end), "yyyy-MM-dd") });
+        		start = new Date(start);
+        		end = new Date(end);
+        		end.setDate(end.getDate()+1);
 
-            	displayDate = "From " + kendo.toString(new Date(start), "dd-MM-yyyy") + " To " + kendo.toString(new Date(end), "dd-MM-yyyy");
+            	para.push({ field:"issued_date >=", operator:"where_related_transaction", value: kendo.toString(start, "yyyy-MM-dd") });
+            	para.push({ field:"issued_date <", operator:"where_related_transaction", value: kendo.toString(end, "yyyy-MM-dd") });
+
+            	displayDate = "From " + kendo.toString(start, "dd-MM-yyyy") + " To " + kendo.toString(end, "dd-MM-yyyy");
             }else if(start){
-            	para.push({ field:"issued_date", operator:"where_related_transaction", value: kendo.toString(new Date(start), "yyyy-MM-dd") });
+            	start = new Date(start);
+            	para.push({ field:"issued_date", operator:"where_related_transaction", value: kendo.toString(start, "yyyy-MM-dd") });
 
-            	displayDate = "On " + kendo.toString(new Date(start), "dd-MM-yyyy");
+            	displayDate = "On " + kendo.toString(start, "dd-MM-yyyy");
             }else if(end){
-            	para.push({ field:"issued_date <=", operator:"where_related_transaction", value: kendo.toString(new Date(end), "yyyy-MM-dd") });
+            	end = new Date(end);
+        		end.setDate(end.getDate()+1);
 
-            	displayDate = "As Of " + kendo.toString(new Date(end), "dd-MM-yyyy");
+            	para.push({ field:"issued_date <", operator:"where_related_transaction", value: kendo.toString(end, "yyyy-MM-dd") });
+
+            	displayDate = "As Of " + kendo.toString(end, "dd-MM-yyyy");
             }else{
             	
             }
@@ -48919,18 +48945,26 @@
     	
         	//Dates
         	if(start && end){
-            	para.push({ field:"issued_date >=", operator:"where_related_transaction", value: kendo.toString(new Date(start), "yyyy-MM-dd") });
-            	para.push({ field:"issued_date <=", operator:"where_related_transaction", value: kendo.toString(new Date(end), "yyyy-MM-dd") });
+        		start = new Date(start);
+        		end = new Date(end);
+        		end.setDate(end.getDate()+1);
 
-            	displayDate = "From " + kendo.toString(new Date(start), "dd-MM-yyyy") + " To " + kendo.toString(new Date(end), "dd-MM-yyyy");
+            	para.push({ field:"issued_date >=", operator:"where_related_transaction", value: kendo.toString(start, "yyyy-MM-dd") });
+            	para.push({ field:"issued_date <", operator:"where_related_transaction", value: kendo.toString(end, "yyyy-MM-dd") });
+
+            	displayDate = "From " + kendo.toString(start, "dd-MM-yyyy") + " To " + kendo.toString(end, "dd-MM-yyyy");
             }else if(start){
-            	para.push({ field:"issued_date", operator:"where_related_transaction", value: kendo.toString(new Date(start), "yyyy-MM-dd") });
+            	start = new Date(start);
+            	para.push({ field:"issued_date", operator:"where_related_transaction", value: kendo.toString(start, "yyyy-MM-dd") });
 
-            	displayDate = "On " + kendo.toString(new Date(start), "dd-MM-yyyy");
+            	displayDate = "On " + kendo.toString(start, "dd-MM-yyyy");
             }else if(end){
-            	para.push({ field:"issued_date <=", operator:"where_related_transaction", value: kendo.toString(new Date(end), "yyyy-MM-dd") });
+            	end = new Date(end);
+        		end.setDate(end.getDate()+1);
 
-            	displayDate = "As Of " + kendo.toString(new Date(end), "dd-MM-yyyy");
+            	para.push({ field:"issued_date <", operator:"where_related_transaction", value: kendo.toString(end, "yyyy-MM-dd") });
+
+            	displayDate = "As Of " + kendo.toString(end, "dd-MM-yyyy");
             }else{
             	
             }
@@ -49486,10 +49520,11 @@
 			var as_of = this.get("as_of"), self = this, totalDR = 0, totalCR = 0;
 
 			if(as_of){
+				as_of = new Date(as_of);
 				var displayDate = "As Of " + kendo.toString(as_of, "dd-MM-yyyy");
 				this.set("displayDate", displayDate);
-
-				this.dataSource.filter({ field:"issued_date", value:kendo.toString(new Date(as_of), "yyyy-MM-dd") });
+				
+				this.dataSource.filter({ field:"issued_date", value:kendo.toString(as_of, "yyyy-MM-dd") });
 
 				this.dataSource.bind("requestEnd", function(e){				
 					if(e.type=="read"){
@@ -49689,11 +49724,12 @@
 			this.set("totalLiabilityEquity", 0);
 			var totalAll = 0, totalCurrent = 0, totalLi = 0, totalEq = 0, totalAsCu = 0;
 			if(as_of){
+				as_of = new Date(as_of);
 				var displayDate = "As Of " + kendo.toString(as_of, "dd-MM-yyyy");
 				this.set("displayDate", displayDate);
 
 				this.dataSource.filter([
-					{ field:"issued_date", value:kendo.toString(new Date(as_of), "yyyy-MM-dd") },
+					{ field:"issued_date", value:kendo.toString(as_of, "yyyy-MM-dd") },
 					{ field:"account_type_id", value:[10,11,12,13,14,15,16,17,18,19,20,21,22] }
 				]);
 				var unReadAsset = true;
@@ -49805,7 +49841,7 @@
 				totalAll = 0;
 				//Liability
 				this.liabilityDS.filter([
-					{ field:"issued_date", value:kendo.toString(new Date(as_of), "yyyy-MM-dd") },
+					{ field:"issued_date", value:kendo.toString(as_of, "yyyy-MM-dd") },
 					{ field:"account_type_id", value:[23,24,25,26,27,28,29,30,31] }
 				]);
 				var unReadLiability = true;
@@ -49894,7 +49930,7 @@
 				});
 
 				//Equity
-				this.equityDS.filter({ field:"issued_date", value:kendo.toString(new Date(as_of), "yyyy-MM-dd") });
+				this.equityDS.filter({ field:"issued_date", value:kendo.toString(as_of, "yyyy-MM-dd") });
 				var unReadEquity = true;
 				this.equityDS.bind("requestEnd", function(e){
 					if(e.type=="read" && unReadEquity){

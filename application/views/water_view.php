@@ -97,8 +97,7 @@
 					</a>						
 				</div>
 			</div>
-			<div class="water-grap" style="background: #fff; width: 100%; min-height: 175px; margin-top: 10px;">
-				Grap
+			<div class="water-grap" id="water-sale-graph" style="background: #fff; width: 100%; min-height: 175px; margin-top: 10px;">
 			</div>
 		</div>
 	    <div class="span6" style="padding-left: 0;">
@@ -228,7 +227,7 @@
 		<td>#=deposit#</td>
 		<td>#=usage#</td>
 		<td>#=sale#</td>
-		<td>3,000,000</td>
+		<td>#=sale - deposit#</td>
 	</tr>
 </script>
 <script id="wsale-by-branch-row-template" type="text/x-kendo-tmpl">		
@@ -5034,7 +5033,7 @@
 		
 				<!-- Stats Widget -->
 				<span class="widget-stats widget-stats-gray widget-stats-2" style="background: #496cad;">
-					<span class="count" style="font-size: 25px; "><a style="color: #fff;"><span data-bind="text: nCustomer"></span></a></span>
+					<span class="count" style="font-size: 25px; "><a style="color: #fff;"><span data-bind="text: tCustomer"></span></a></span>
 					<span class="txt" style="font-size: small; color: #fff;"><span >Total No. of Customer</span></span>
 				</span>
 				<!-- // Stats Widget END -->
@@ -5044,7 +5043,7 @@
 		
 				<!-- Stats Widget -->
 				<span class="widget-stats widget-stats-2" style="background: #d9edf7;">
-					<span class="count" style="font-size: 25px;"><a style="color: #31708f;" data-format="p"><span data-bind="text: tCustomer"></span></a></span>
+					<span class="count" style="font-size: 25px;"><a style="color: #31708f;" data-format="p"><span data-bind="text: nCustomer"></span></a></span>
 					<span class="txt" style="font-size: small; color: #31708f;"><span >Total Customer Ratio</span></span>
 				</span>
 				<!-- // Stats Widget END -->
@@ -8167,7 +8166,7 @@
 			var self = this;
 
 			this.graphDS.fetch();
-
+			banhji.wDashBoard.dashSource.read();
 			this.dataSource.query({
 				filter: [],								
 				page: 1,
@@ -13891,6 +13890,7 @@
 		licenseDS 			: dataStore(apiUrl + "branches"),
 		onLicenseChange 	: function() {
 			// console.log(this.get('licenseSelect'));
+			var that = this;
 			this.dataSource.query({
 				filter: {field: 'branch_id', value: this.get('licenseSelect')}
 			})
@@ -13903,7 +13903,7 @@
 				that.set('avgUsage', kendo.toString(data[0].avgUsage, 'n'));
 				that.set('avgRevenue', kendo.toString(data[0].avgIncome, 'n'));
 				that.set('waterRevenue', kendo.toString(data[0].totalIncome, 'n'));
-				that.set('totalDeposit', 0);
+				that.set('totalDeposit', kendo.toString(data[0].totalDeposit, 'n'));
 			});
 		},
 		pageLoad 			: function(){
@@ -16442,6 +16442,77 @@
 		// $('#main-top-navigation').append('<li><a href="\#">Home</a></li>');
 		// $('#current-section').text("");
 		// $("#secondary-menu").html("");
+		var monthlyDS = new kendo.data.DataSource({
+			transport: {
+				read 	: {
+					url: apiUrl + 'waterdash/graph',
+					type: "GET",
+					headers: banhji.header,
+					dataType: 'json'
+				},
+				parameterMap: function(options, operation) {
+					if(operation === 'read') {
+						return {
+							limit: options.take,
+							page: options.page,
+							filter: options.filter
+						};
+					}
+				}
+			},
+			schema 	: {
+				data: 'results',
+				total: 'count'
+			},
+			group: {
+				field: 'month',
+				aggregates: [
+					{field: 'amount', aggregate: 'sum'},
+					{field: 'usage', aggregate: 'sum'}
+				]
+			},
+			batch: true,
+			serverFiltering: true,
+			serverPaging: true,
+			pageSize: 1000
+		});				 
+		
+		monthlyDS.fetch(function(e){
+			console.log('test graph0');				
+			$('#water-sale-graph').kendoChart({
+				dataSource: {data: monthlyDS.data()},												
+				series: [
+					{field: 'amount', categoryField:'month', type: 'line', axis: 'sale'},
+					{field: 'usage', categoryField:'month', type: 'column', axis: 'usage'}
+				],
+				valueAxes: [
+					{
+	                    name: "sale",
+	                    color: "#007eff",
+	                    min: 0,
+	                    majorUnit: 5000000,
+	                    max: 50000000
+	                }, 
+	                {
+	                    name: "usage",
+	                    color: "#3399ff",
+	                    min: 0,	
+	                    majorUnit: 5000,		                   
+	                    max: 50000
+	                }
+                ],
+                categoryAxis: {
+                    //categories: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],		                    
+                    axisCrossingValues: [0, 13],
+                    justified: true
+                },
+                tooltip: {
+                    visible: true,
+                    format: "{0}"
+                }
+
+			});
+		});	
 		banhji.index.getLogo();
 		banhji.index.pageLoad();
 	});
