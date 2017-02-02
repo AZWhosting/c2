@@ -41103,7 +41103,7 @@
 			    	<div id="invFormContent">
 						<div class="block-title">
 							<h3 data-bind="text: company.name"></h3>
-							<h2>Profitability Detail by Job</h2>
+							<h2>Profitability Detail By Job</h2>
 							<p data-bind="text: displayDate"></p>
 						</div>
 
@@ -41223,6 +41223,56 @@
 			</div>						
 		</div>
 	</div>
+</script>
+<script id="profitabilityDetailJob-template" type="text/x-kendo-tmpl">
+	<tr>
+		<td colspan="6" style="font-weight: bold; color: black;">#: name #</td>
+	</tr>
+	#var balance = balance_forward;#
+	#for(var i=0; i<line.length; i++){#
+	#balance += line[i].amount;#
+	<tr>
+		<td style="padding-left: 20px !important;">#=line[i].number#</td>
+		<td>09-12-2016</td>
+		<td>3</td>
+		<td>4</td>
+		<td style="text-align: right;">5</td>
+		<td style="text-align: right;">6</td>
+	</tr>
+	<tr>
+		<td style="color: black;">
+			&nbsp;&nbsp; #=line[i].type#
+		</td>		
+		<td style="color: black;">
+			#=kendo.toString(new Date(line[i].issued_date), "dd-MM-yyyy")#
+		</td>
+		<td style="color: black;">
+			<a href="\#/#=line[i].type.toLowerCase()#/#=line[i].id#"><i></i> #=line[i].number#</a>
+		</td>		
+		<td style="color: black;">
+			#=line[i].memo#
+		</td>
+		<td class="right" style="color: black;">
+			#=kendo.toString(line[i].amount, "c", banhji.locale)#
+		</td>
+		<td class="right" style="color: black;">
+			#=kendo.toString(balance, "c", banhji.locale)#
+		</td> 			
+    </tr>    
+    #}# 
+    <tr>
+    	<td style="font-weight: bold; color: black;">Total #: number # #: name #</td>
+    	<td></td>
+    	<td></td>
+    	<td></td>
+    	<td></td>
+    	<td class="right" style="font-weight: bold; border-top: 1px solid black !important; color: black;">
+    		#=kendo.toString(balance, "c", banhji.locale)#
+    	</td>
+    </tr>
+    <tr>
+    	<td colspan="6">&nbsp;</td>
+    </tr>  
 </script>
 <!-- <script id="profitabilityDetailJob-template" type="text/x-kendo-tmpl">
 	<tr>
@@ -46606,8 +46656,14 @@
 		}),
 		cashAccountDS 		: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
-		  	filter: { field:"account_type_id", value: 10 },
-		  	sort: { field:"number", dir:"asc" }
+		  	filter:{
+			    logic: "or",
+			    filters: [
+			      	{ field:"account_type_id", value: 10 },//Cash Account
+			      	{ field:"account_type_id", value: 34 }//Retained Earning
+			    ],
+			    sort: { field:"number", dir:"asc" }
+			}
 		}),
 		advAccountDS 		: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,

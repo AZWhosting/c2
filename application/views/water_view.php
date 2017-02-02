@@ -913,7 +913,13 @@
     		#= _currency.code#
    		</td>
    		<td align="right" >
+   		#if(unit == "money"){#
     		#= kendo.toString(amount, _currency.locale=="km-KH"?"c0":"c", _currency.locale)#
+    	#}else if(unit == "m3"){#
+    		#= amount#m<sup>3</sup>
+    	#}else{#
+    		#= amount#%
+    	#}#
    		</td>
    		<td align="center">   			   
 		    <a class="btn-action glyphicons pencil btn-success k-edit-button"><i></i></a>
@@ -1060,7 +1066,7 @@
    			#= _currency.code #
    		</td>
    		<td align="right">
-    		#= amount#
+    		#= kendo.toString(amount, _currency.locale=="km-KH"?"c0":"c", _currency.locale)#
    		</td>
    		<td align="center">   			   
 		    <a class="btn-action glyphicons pencil btn-success k-edit-button"><i></i></a>
@@ -1112,7 +1118,7 @@
    			#= _currency.code #
    		</td>
    		<td align="right">
-    		#= amount#
+    		#= kendo.toString(amount, _currency.locale=="km-KH"?"c0":"c", _currency.locale)#
    		</td>
    		<td align="center">   			   
 		    <a class="btn-action glyphicons pencil btn-success k-edit-button"><i></i></a>
@@ -1164,7 +1170,7 @@
    			#= _currency.code #
    		</td>
    		<td align="right">
-    		#= amount#
+    		#= kendo.toString(amount, _currency.locale=="km-KH"?"c0":"c", _currency.locale)#
    		</td>
    		<td align="center">   			   
 		    <a class="btn-action glyphicons pencil btn-success k-edit-button"><i></i></a>

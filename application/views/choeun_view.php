@@ -7388,7 +7388,6 @@
 	            			<tr class="widget-head">
 	            				<th class="center" data-bind="text: lang.lang.type"></th>
 	            				<th class="center" data-bind="text: lang.lang.abbr"></th>
-	            				<th class="center" data-bind="text: lang.lang.startup_number"></th>
 	            				<th style="text-align: left;padding-left: 5px;" data-bind="text: lang.lang.name"></th>
 	            				<th class="center"><span data-bind="text: lang.lang.action"></span></th>
 	            			</tr>
@@ -7413,9 +7412,6 @@
 		<td > #=type#  </a></td>
 		<td style="text-align: center; padding-left: 10px!important;"> 
 			#= abbr# 
-		</td>
-		<td class="center"> 
-			#= startup_number#
 		</td>
 		<td class="center" style="text-align: left;">
 			<a style="text-align: left;padding-left: 5px;" href="\\#/add_accountingprefix/#= id # ">#= name# </a>
@@ -7502,7 +7498,6 @@
 							    	<tr>
 							    		<th width="40%">Name</th>
 							    		<th>Abbr</th>
-							    		<th>Starting Number</td>
 							    	</tr>
 						    	</thead>
 						    	<tbody>
@@ -7510,9 +7505,6 @@
 							    		<td><span data-bind="text: obj.type"></span></td>
 							    		<td>
 							    			<input type="text" placeholder="Abbr" class="k-textbox k-invalid span4" data-bind="value: obj.abbr" style="width: 100px;" >
-							    		</td>
-							    		<td>
-							    			<input type="text" placeholder="Starting Number" class="k-textbox k-invalid span2" data-bind="value: obj.startup_number" style="width: 100px;" >
 							    		</td>
 							    	</tr>
 						    	</tbody>
@@ -13603,7 +13595,6 @@
 	            			<tr class="widget-head">
 	            				<th class="center" data-bind="text: lang.lang.type"></th>
 	            				<th class="center" data-bind="text: lang.lang.abbr"></th>
-	            				<th class="center" data-bind="text: lang.lang.startup_number"></th>
 	            				<th style="text-align: left;padding-left: 5px;" data-bind="text: lang.lang.name"></th>
 	            				<th class="center"><span data-bind="text: lang.lang.action"></span></th>
 	            			</tr>
@@ -21605,7 +21596,6 @@
 	            			<tr class="widget-head">
 	            				<th class="center" data-bind="text: lang.lang.type"></th>
 	            				<th class="center" data-bind="text: lang.lang.abbr"></th>
-	            				<th class="center" data-bind="text: lang.lang.startup_number"></th>
 	            				<th style="text-align: left;padding-left: 5px;" data-bind="text: lang.lang.name"></th>
 	            				<th class="center"><span data-bind="text: lang.lang.action"></span></th>
 	            			</tr>
@@ -22733,7 +22723,6 @@
 
 										  	 <button type="button" data-role="button" data-bind="click: summaryProductSale.search"><i class="icon-search"></i></button>							
 									    </div>
-
 									    <!-- PRINT/EXPORT  -->
 								        <div class="tab-pane" id="tab-2">								        	
 								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: printGrid" style="width: 80px;"><i></i> Print</span>
@@ -34439,7 +34428,6 @@
 	            			<tr class="widget-head">
 	            				<th class="center" data-bind="text: lang.lang.type"></th>
 	            				<th class="center" data-bind="text: lang.lang.abbr"></th>
-	            				<th class="center" data-bind="text: lang.lang.startup_number"></th>
 	            				<th style="text-align: left;padding-left: 5px;" data-bind="text: lang.lang.name"></th>
 	            				<th class="center"><span data-bind="text: lang.lang.action"></span></th>
 	            			</tr>
@@ -54758,6 +54746,7 @@
 			    logic: "or",
 			    filters: [
 			      	{ field: "account_type_id", value: 10 },//Cash
+			      	{ field: "account_type_id", value: 34 },//Retained Earning
 			      	{ field: "account_type_id", value: 36 },//Expense
 			      	{ field: "account_type_id", value: 37 },
 			      	{ field: "account_type_id", value: 38 },
@@ -62364,6 +62353,7 @@
 			    logic: "or",
 			    filters: [
 			      	{ field: "account_type_id", value: 10 },//Cash
+			      	{ field: "account_type_id", value: 34 },//Retained Earning
 			      	{ field: "account_type_id", value: 36 },//Expense
 			      	{ field: "account_type_id", value: 37 },
 			      	{ field: "account_type_id", value: 38 },
@@ -69722,6 +69712,70 @@
 					{field: "issued_date >=", value: kendo.toString(this.startDate, "yyyy-MM-dd")},
 					{field: "issued_date <=", value: kendo.toString(this.endDate, "yyyy-MM-dd")}
 				]
+			});
+			banhji.saleSummaryProduct.dataSource.bind('requestEnd', function(e){
+				if(e.response) {
+					banhji.customerSale.set('count', e.response.count);
+					kendo.culture(banhji.locale);
+					banhji.customerSale.set('total', kendo.toString(e.response.total, 'c2'));	
+					banhji.customerSale.set('total_sale', kendo.toString(e.response.total_sale, 'c2'));
+					banhji.customerSale.set('total_avg', kendo.toString(e.response.total_avg, 'c2'));	
+					banhji.customerSale.set('gpm', kendo.toString(e.response.gpm, 'p'));
+				
+					//Export Excel
+					var response = e.response, balanceCal = 0;
+					//banhji.saleSummaryCustomer.exArray = [];
+					banhji.saleSummaryProduct.exArray.push({
+	            		cells: [
+	            			{ value: banhji.institute.name, textAlign: "center", colSpan: 6 }
+	            		]
+	            	});
+	            	banhji.saleSummaryProduct.exArray.push({
+	            		cells: [
+	            			{ value: "Sale Summary by Products/Services",bold: true, fontSize: 20, textAlign: "center", colSpan: 6 }
+	            		]
+	            	});
+	            	if(banhji.customerSale.displayDateStart){
+		            	banhji.saleSummaryProduct.exArray.push({
+		            		cells: [
+		            			{ value: "From " + kendo.toString(new Date(banhji.customerSale.startDate), "dd-MM-yyyy") + " to " + kendo.toString(new Date(banhji.customerSale.endDate), "dd-MM-yyyy"), textAlign: "center", colSpan: 6 }
+		            		]
+		            	});
+		            }
+	            	banhji.saleSummaryProduct.exArray.push({
+	            		cells: [
+	            			{ value: "", colSpan: 6 }
+	            		]
+	            	});
+	            	banhji.saleSummaryProduct.exArray.push({ 
+	            		cells: [
+							{ value: "ITEM", background: "#496cad", color: "#ffffff" },
+							{ value: "QTY", background: "#496cad", color: "#ffffff" },
+							{ value: "AMOUNT", background: "#496cad", color: "#ffffff" },
+							{ value: "AVG PRICE", background: "#496cad", color: "#ffffff" },
+							{ value: "COST", background: "#496cad", color: "#ffffff" },
+							{ value: "GROSS PROFIT MARGIN", background: "#496cad", color: "#ffffff" }
+						]
+					});
+					for (var i = 0; i < response.results.length; i++){
+					    banhji.saleSummaryProduct.exArray.push({
+					        cells: [
+					          	{ value: response.results[i].group },
+					          	{ value: response.results[i].qty },
+					          	{ value: response.results[i].amount },
+					          	{ value: response.results[i].avg_price },
+					          	{ value: response.results[i].cost },
+					          	{ value: kendo.toString(response.results[i].gross_profit_margin, 'p') }
+					        ]
+					    });
+					}
+					banhji.saleSummaryProduct.exArray.push({
+				        cells: [
+				          	{ value: "TOTAL", background: "#496cad", bold: true, color: "#ffffff", colSpan: 5 },
+				          	{ value: kendo.parseFloat(e.response.total_sale),bold: true, background: "#496cad", color: "#ffffff" }
+				        ]
+				    });
+				}
 			});
 		}, 
 		filterChange  : function(e){
@@ -86124,7 +86178,7 @@
 					banhji.customerSale.set('total_sale', kendo.toString(e.response.total_sale, 'c2'));
 					banhji.customerSale.set('total_avg', kendo.toString(e.response.total_avg, 'c2'));	
 					banhji.customerSale.set('gpm', kendo.toString(e.response.gpm, 'p'));
-					
+				
 					//Export Excel
 					var response = e.response, balanceCal = 0;
 					//banhji.saleSummaryCustomer.exArray = [];

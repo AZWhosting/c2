@@ -2142,8 +2142,8 @@ class Accounting_reports extends REST_Controller {
 		$this->response($data, 200);	
 	}	
 	
-	//GET PROFIBILITY SUMMARY BY JOB
-	function profitability_summary_by_job_get() {
+	//GET PROFIBILITY DETAIL BY JOB
+	function profitability_detail_by_job_get() {
 		$filter 	= $this->get("filter");
 		$page 		= $this->get('page');
 		$limit 		= $this->get('limit');
