@@ -21,18 +21,19 @@ class Accounting_reports extends REST_Controller {
 			$this->server_user = $conn->username;
 			$this->server_pwd = $conn->password;	
 			$this->_database = $conn->inst_database;
-			
+			date_default_timezone_set("$conn->time_zone");
+
 			//Fiscal Date
 			//Note: selecting date must greater than startFiscalDate AND smaller or equal to endFiscalDate
-			$this->fiscalDate = $institute->fiscal_date;
+			$fiscalDate = date("m-d", $institute->fiscal_date/1000);
+			$fDate = date("Y") ."-". $fiscalDate;
 			$today = date("Y-m-d");
-			$fdate = date("Y") ."-". $institute->fiscal_date;
-			if($today > $fdate){
-				$this->startFiscalDate 	= date("Y") ."-". $institute->fiscal_date;
-				$this->endFiscalDate 	= date("Y",strtotime("+1 year")) ."-". $institute->fiscal_date;
+			if($today > $fDate){
+				$this->startFiscalDate 	= date("Y") ."-". $fiscalDate;
+				$this->endFiscalDate 	= date("Y",strtotime("+1 year")) ."-". $fiscalDate;
 			}else{
-				$this->startFiscalDate 	= date("Y",strtotime("-1 year")) ."-". $institute->fiscal_date;
-				$this->endFiscalDate 	= date("Y") ."-". $institute->fiscal_date;
+				$this->startFiscalDate 	= date("Y",strtotime("-1 year")) ."-". $fiscalDate;
+				$this->endFiscalDate 	= date("Y") ."-". $fiscalDate;
 			}
 		}
 	}
