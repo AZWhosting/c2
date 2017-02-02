@@ -7388,7 +7388,6 @@
 	            			<tr class="widget-head">
 	            				<th class="center" data-bind="text: lang.lang.type"></th>
 	            				<th class="center" data-bind="text: lang.lang.abbr"></th>
-	            				<th class="center" data-bind="text: lang.lang.startup_number"></th>
 	            				<th style="text-align: left;padding-left: 5px;" data-bind="text: lang.lang.name"></th>
 	            				<th class="center"><span data-bind="text: lang.lang.action"></span></th>
 	            			</tr>
@@ -7413,9 +7412,6 @@
 		<td > #=type#  </a></td>
 		<td style="text-align: center; padding-left: 10px!important;"> 
 			#= abbr# 
-		</td>
-		<td class="center"> 
-			#= startup_number#
 		</td>
 		<td class="center" style="text-align: left;">
 			<a style="text-align: left;padding-left: 5px;" href="\\#/add_accountingprefix/#= id # ">#= name# </a>
@@ -7502,7 +7498,6 @@
 							    	<tr>
 							    		<th width="40%">Name</th>
 							    		<th>Abbr</th>
-							    		<th>Starting Number</td>
 							    	</tr>
 						    	</thead>
 						    	<tbody>
@@ -7510,9 +7505,6 @@
 							    		<td><span data-bind="text: obj.type"></span></td>
 							    		<td>
 							    			<input type="text" placeholder="Abbr" class="k-textbox k-invalid span4" data-bind="value: obj.abbr" style="width: 100px;" >
-							    		</td>
-							    		<td>
-							    			<input type="text" placeholder="Starting Number" class="k-textbox k-invalid span2" data-bind="value: obj.startup_number" style="width: 100px;" >
 							    		</td>
 							    	</tr>
 						    	</tbody>
@@ -13603,7 +13595,6 @@
 	            			<tr class="widget-head">
 	            				<th class="center" data-bind="text: lang.lang.type"></th>
 	            				<th class="center" data-bind="text: lang.lang.abbr"></th>
-	            				<th class="center" data-bind="text: lang.lang.startup_number"></th>
 	            				<th style="text-align: left;padding-left: 5px;" data-bind="text: lang.lang.name"></th>
 	            				<th class="center"><span data-bind="text: lang.lang.action"></span></th>
 	            			</tr>
@@ -21605,7 +21596,6 @@
 	            			<tr class="widget-head">
 	            				<th class="center" data-bind="text: lang.lang.type"></th>
 	            				<th class="center" data-bind="text: lang.lang.abbr"></th>
-	            				<th class="center" data-bind="text: lang.lang.startup_number"></th>
 	            				<th style="text-align: left;padding-left: 5px;" data-bind="text: lang.lang.name"></th>
 	            				<th class="center"><span data-bind="text: lang.lang.action"></span></th>
 	            			</tr>
@@ -22548,7 +22538,7 @@
 								<div class="widget-head">
 									<ul>
 										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
-										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab" data-bind="click: printGrid"><i></i>Print/Export</a></li>
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i><span data-bind="text: lang.lang.print_export"></span></a></li>
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
@@ -22575,7 +22565,19 @@
 										           placeholder="To ..." />
 
 										  	 <button type="button" data-role="button" data-bind="click: detailSummary.search"><i class="icon-search"></i></button>							
-									    </div>									        							       
+									    </div>
+									    <!-- PRINT/EXPORT  -->
+								        <div class="tab-pane" id="tab-2">								        	
+								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: printGrid" style="width: 80px;"><i></i> Print</span>
+								        	<!-- <span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
+								        		<i class="fa fa-file-pdf-o"></i>
+								        		Print as PDF
+								        	</span> -->
+								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: ExportExcelSDC" style="width: 80px;">
+								        		<i class="fa fa-file-excel-o"></i>
+								        		Export to Excel
+								        	</span>
+							        	</div>							       
 								    </div>
 								</div>
 							</div>
@@ -22692,8 +22694,8 @@
 								<!-- Tabs Heading -->
 								<div class="widget-head">
 									<ul>
-										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
-										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab" data-bind="click: printGrid"><i></i>Print/Export</a></li>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i><span data-bind="text: lang.lang.print_export"></span></a></li>
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
@@ -22721,6 +22723,18 @@
 
 										  	 <button type="button" data-role="button" data-bind="click: summaryProductSale.search"><i class="icon-search"></i></button>							
 									    </div>
+									    <!-- PRINT/EXPORT  -->
+								        <div class="tab-pane" id="tab-2">								        	
+								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: printGrid" style="width: 80px;"><i></i> Print</span>
+								        	<!-- <span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
+								        		<i class="fa fa-file-pdf-o"></i>
+								        		Print as PDF
+								        	</span> -->
+								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: ExportExcelSSP" style="width: 80px;">
+								        		<i class="fa fa-file-excel-o"></i>
+								        		Export to Excel
+								        	</span>
+							        	</div>
 								    </div>
 								</div>
 							</div>
@@ -23613,7 +23627,7 @@
 								<div class="widget-head">
 									<ul>
 										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
-										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab" data-bind="click: printGrid"><i></i>Print/Export</a></li>
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i><span data-bind="text: lang.lang.print_export"></span></a></li>
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
@@ -23640,7 +23654,19 @@
 										           placeholder="To ..." />
 
 										  	 <button type="button" data-role="button" data-bind="click: listInvoicesCollect.search"><i class="icon-search"></i></button>							
-									    </div>									        								       
+									    </div>
+									    <!-- PRINT/EXPORT  -->
+								        <div class="tab-pane" id="tab-2">								        	
+								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: printGrid" style="width: 80px;"><i></i> Print</span>
+								        	<!-- <span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
+								        		<i class="fa fa-file-pdf-o"></i>
+								        		Print as PDF
+								        	</span> -->
+								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: ExportExcelLIC" style="width: 80px;">
+								        		<i class="fa fa-file-excel-o"></i>
+								        		Export to Excel
+								        	</span>
+							        	</div>								       
 								    </div>
 								</div>
 							</div>
@@ -34402,7 +34428,6 @@
 	            			<tr class="widget-head">
 	            				<th class="center" data-bind="text: lang.lang.type"></th>
 	            				<th class="center" data-bind="text: lang.lang.abbr"></th>
-	            				<th class="center" data-bind="text: lang.lang.startup_number"></th>
 	            				<th style="text-align: left;padding-left: 5px;" data-bind="text: lang.lang.name"></th>
 	            				<th class="center"><span data-bind="text: lang.lang.action"></span></th>
 	            			</tr>
@@ -40921,9 +40946,32 @@
 				        	</div>
 
 				        	<div class="tab-pane" id="tab-8">
-				        		<div align="center" style="min-height: 150px;">
+				        		<!-- <div align="center" style="min-height: 150px;">
 				        			<h1 style="font-style: 30px;margin-top: 20px;">Coming Soon</h1>
-				        		</div>
+				        		</div> -->
+
+				        		<div class="row-fluid">
+									<div class="row-fluid sale-report" style="margin-top: 15px;">
+										<h2>Job Tracking Reports</h2>
+										<!-- <p>
+											The following reports provide summary and detailed reports on your cash position and related cash transactions.  
+										</p> -->
+										<div class="row-fluid">
+											<table class="span12">
+												<tr>
+													<td class="span4">
+														<h3><a href="#/profitability_summary_job">Profitability Summary by Job</a></h3>
+													</td>													
+													<td class="span4">
+														<h3><a href="#/profitability_detail_job">Profitability Detail by Job</a></h3>
+													</td>
+													<td class="span4">														
+													</td>
+												</tr>
+											</table>					
+										</div>
+									</div>									
+					        	</div>	
 				        	</div>
 
 					    </div>
@@ -40933,7 +40981,298 @@
 		</div>
 	</div>
 </script>
+<script id="profitabilityDetailJob" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background ">
+			<div class="container-960">					
+				<div id="example" class="k-content saleSummaryCustomer">			
+		    		<span class="glyphicons no-js remove_2 pull-right" 
+							onclick="javascript: window.history.back()"><i></i></span>
+					<br>
+					<br>
+					
+					<div class="row-fluid">
+					    <!-- Tabs -->
+						<div class="relativeWrap" data-toggle="source-code">
+							<div class="widget widget-tabs widget-tabs-gray report-tab">
+							
+								<!-- Tabs Heading -->
+								<div class="widget-head">
+									<ul>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i><span data-bind="text: lang.lang.date"></span></a></li>										
+										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i>Filter</a></li>
+										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab"><i></i><span data-bind="text: lang.lang.print_export"></span></a></li>
+									</ul>
+								</div>
+								<!-- // Tabs Heading END -->								
+								<div class="widget-body">
+									<div class="tab-content">
 
+										<!-- Date -->
+								        <div class="tab-pane active" id="tab-1">									        	
+											
+											<input data-role="dropdownlist"
+												   class="sorter"                  
+										           data-value-primitive="true"
+										           data-text-field="text"
+										           data-value-field="value"
+										           data-bind="value: sorter,
+										                      source: sortList,                              
+										                      events: { change: sorterChanges }" />
+
+											<input data-role="datepicker"
+												   class="sdate"
+												   data-format="dd-MM-yyyy"
+										           data-bind="value: sdate,
+										           			  max: edate"
+										           placeholder="From ..." >
+
+										    <input data-role="datepicker"
+										    	   class="edate"
+										    	   data-format="dd-MM-yyyy"
+										           data-bind="value: edate,
+										                      min: sdate"
+										           placeholder="To ..." >
+
+										  	<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+							
+							        	</div>
+
+							        	<!-- Filter -->
+								        <div class="tab-pane" id="tab-2">
+											<table class="table table-condensed">
+												<tr>
+									            	<td style="padding: 0 !important; width: 96%;">
+									            		<span data-bind="text: lang.lang.account"></span>
+														<input id="ddlAccount" name="ddlAccount" 
+																data-role="dropdownlist"
+									              				data-header-template="account-header-tmpl"
+									              				data-template="account-list-tmpl"
+									              				data-value-primitive="true"
+																data-text-field="name" 
+									              				data-value-field="id"
+									              				data-bind="value: obj.account_id,
+									              							source: accountDS"
+									              				data-option-label="Select Account..."
+									              				required data-required-msg="required" 
+									              				style="width: 100%" />
+													</td>
+													<td style="padding-top: 23px !important; float: left;">
+										  				<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+													</td>
+												</tr>
+												<tr>
+													<td style="padding: 8px 0 0 0 !important; ">
+														<span data-bind="text: lang.lang.segment"></span>
+														<select data-role="multiselect"
+															   data-value-primitive="true"
+															   data-header-template="segment-header-tmpl"
+															   data-item-template="segment-list-tmpl"
+															   data-value-field="id"
+															   data-text-field="code"
+															   data-bind="value: obj.segments, 
+															   			source: segmentItemDS,
+															   			events:{ change: segmentChanges }"
+															   data-placeholder="Select Segments.."
+															   style="width: 100%" /></select>
+													</td>
+													<td></td>
+												</tr>
+											</table>
+							        	</div>
+
+							        	<!-- PRINT/EXPORT  -->
+								        <div class="tab-pane" id="tab-3">								        	
+								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: printGrid" style="width: 80px;"><i></i> Print</span>
+								        	<!-- <span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
+								        		<i class="fa fa-file-pdf-o"></i>
+								        		Print as PDF
+								        	</span> -->
+								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: ExportExcel" style="width: 80px;">
+								        		<i class="fa fa-file-excel-o"></i>
+								        		Export to Excel
+								        	</span>
+							        	</div>
+
+								    </div>
+								</div>
+							</div>
+						</div>
+						<!-- // Tabs END -->						
+					</div>
+			    	<div id="invFormContent">
+						<div class="block-title">
+							<h3 data-bind="text: company.name"></h3>
+							<h2>Profitability Detail by Job</h2>
+							<p data-bind="text: displayDate"></p>
+						</div>
+
+						<table class="table table-borderless table-condensed">
+							<thead>
+								<tr>
+									<th><span data-bind="text: lang.lang.type"></span></th>
+									<th style="width: 10%;"><span data-bind="text: lang.lang.date"></span></th>
+									<th style="width: 15%;"><span data-bind="text: lang.lang.reference_no"></span></th>
+									<th><span data-bind="text: lang.lang.description"></span></th>
+									<th class="right">Revenue</th>
+									<th class="right">Expense</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td colspan="6" style="font-weight: bold; color: black;">10114 Saving - FTB</td>
+								</tr>
+								<tr>
+									<td style="padding-left: 20px !important;">Cash_Advance</td>
+									<td>09-12-2016</td>
+									<td>3</td>
+									<td>4</td>
+									<td style="text-align: right;">5</td>
+									<td style="text-align: right;">6</td>
+								</tr>
+								<tr>
+									<td style="padding-left: 20px !important;">Journal</td>
+									<td>09-12-2016</td>
+									<td>3</td>
+									<td>4</td>
+									<td style="text-align: right;">5</td>
+									<td style="text-align: right;">6</td>
+								</tr>
+								<tr>
+									<td style="padding-left: 20px !important;">Advance_Settlement</td>
+									<td>09-12-2016</td>
+									<td>3</td>
+									<td>4</td>
+									<td style="text-align: right;">5</td>
+									<td style="text-align: right;">6</td>
+								</tr>
+								<tr>
+									<td colspan="4" style="text-align: right; color: black; font-weight: bold;">Total</td>
+									<td style="text-align: right; color: black; font-weight: bold; border-top: 1px solid black !important;">900.00</td>
+									<td style="text-align: right; color: black; font-weight: bold; border-top: 1px solid black !important;">900.00</td>
+								</tr>
+								<tr>
+									<td colspan="4" style="text-align: right; color: black; font-weight: bold;">Profit</td>
+									<td ></td>
+									<td style="text-align: right; color: black; font-weight: bold;">900.00</td>
+								</tr>
+								<tr>
+									<td colspan="4" style="text-align: right; color: black; font-weight: bold;">Margin</td>
+									<td ></td>
+									<td style="text-align: right; color: black; font-weight: bold;">900.00</td>
+								</tr>
+
+								<tr>
+									<td colspan="6" style="font-weight: bold; color: black;">10100 Cash and Cash Equivalent</td>
+								</tr>
+								<tr>
+									<td style="padding-left: 20px !important;">Cash_Advance</td>
+									<td>09-12-2016</td>
+									<td>3</td>
+									<td>4</td>
+									<td style="text-align: right;">5</td>
+									<td style="text-align: right;">6</td>
+								</tr>
+								<tr>
+									<td style="padding-left: 20px !important;">Journal</td>
+									<td>09-12-2016</td>
+									<td>3</td>
+									<td>4</td>
+									<td style="text-align: right;">5</td>
+									<td style="text-align: right;">6</td>
+								</tr>
+								<tr>
+									<td style="padding-left: 20px !important;">Advance_Settlement</td>
+									<td>09-12-2016</td>
+									<td>3</td>
+									<td>4</td>
+									<td style="text-align: right;">5</td>
+									<td style="text-align: right;">6</td>
+								</tr>
+								<tr>
+									<td colspan="4" style="text-align: right; color: black; font-weight: bold;">Total</td>
+									<td style="text-align: right; color: black; font-weight: bold; border-top: 1px solid black !important;">900.00</td>
+									<td style="text-align: right; color: black; font-weight: bold; border-top: 1px solid black !important;">900.00</td>
+								</tr>
+								<tr>
+									<td colspan="4" style="text-align: right; color: black; font-weight: bold;">Profit</td>
+									<td ></td>
+									<td style="text-align: right; color: black; font-weight: bold;">900.00</td>
+								</tr>
+								<tr>
+									<td colspan="4" style="text-align: right; color: black; font-weight: bold;">Margin</td>
+									<td ></td>
+									<td style="text-align: right; color: black; font-weight: bold;">900.00</td>
+								</tr>
+							</tbody>
+
+							<!-- <tbody data-role="listview"
+					        		data-auto-bind="false"
+					        		data-template="generalLedger-template"			        		
+					        		data-bind="source: dataSource"></tbody>
+					       	<tfoot>
+					       		<tr style="font-weight: bold; font-size: large;">
+					       			<td colspan="4">TOTAL</td>
+					       			<td align="right" data-bind="text: totalAmount"></td>
+					       			<td align="right" data-bind="text: totalBalance"></td>
+					       		</tr>
+					       	</tfoot> -->
+						</table>				  
+					</div>
+				</div>
+			</div>						
+		</div>
+	</div>
+</script>
+<!-- <script id="profitabilityDetailJob-template" type="text/x-kendo-tmpl">
+	<tr>
+		<td style="font-weight: bold;">#: number # #: name #</td>
+    	<td></td>
+    	<td></td>
+    	<td></td>
+    	<td></td>
+    	<td class="right strong" style="color: black;">
+    		#=kendo.toString(balance_forward, "c", banhji.locale)#
+    	</td>
+	</tr>
+	#var balance = balance_forward;#
+	#for(var i=0; i<line.length; i++){#
+	#balance += line[i].amount;#
+	<tr>
+		<td style="color: black;">
+			&nbsp;&nbsp; #=line[i].type#
+		</td>		
+		<td style="color: black;">
+			#=kendo.toString(new Date(line[i].issued_date), "dd-MM-yyyy")#
+		</td>
+		<td style="color: black;">
+			<a href="\#/#=line[i].type.toLowerCase()#/#=line[i].id#"><i></i> #=line[i].number#</a>
+		</td>		
+		<td style="color: black;">
+			#=line[i].memo#
+		</td>
+		<td class="right" style="color: black;">
+			#=kendo.toString(line[i].amount, "c", banhji.locale)#
+		</td>
+		<td class="right" style="color: black;">
+			#=kendo.toString(balance, "c", banhji.locale)#
+		</td> 			
+    </tr>    
+    #}# 
+    <tr>
+    	<td style="font-weight: bold; color: black;">Total #: number # #: name #</td>
+    	<td></td>
+    	<td></td>
+    	<td></td>
+    	<td></td>
+    	<td class="right" style="font-weight: bold; border-top: 1px solid black !important; color: black;">
+    		#=kendo.toString(balance, "c", banhji.locale)#
+    	</td>
+    </tr>
+    <tr>
+    	<td colspan="6">&nbsp;</td>
+    </tr>  
+</script> -->
 
 
 
@@ -54407,6 +54746,7 @@
 			    logic: "or",
 			    filters: [
 			      	{ field: "account_type_id", value: 10 },//Cash
+			      	{ field: "account_type_id", value: 34 },//Retained Earning
 			      	{ field: "account_type_id", value: 36 },//Expense
 			      	{ field: "account_type_id", value: 37 },
 			      	{ field: "account_type_id", value: 38 },
@@ -62013,6 +62353,7 @@
 			    logic: "or",
 			    filters: [
 			      	{ field: "account_type_id", value: 10 },//Cash
+			      	{ field: "account_type_id", value: 34 },//Retained Earning
 			      	{ field: "account_type_id", value: 36 },//Expense
 			      	{ field: "account_type_id", value: 37 },
 			      	{ field: "account_type_id", value: 38 },
@@ -69167,7 +69508,7 @@
             	if(banhji.customerSale.displayDateStart){
 	            	banhji.saleSummaryCustomer.exArray.push({
 	            		cells: [
-	            			{ value: "From " + kendo.toString(banhji.customerSale.startDate, "dd-MM-yyyy") + " to " + kendo.toString(banhji.customerSale.endDate, "dd-MM-yyyy"), textAlign: "center", colSpan: 3 }
+	            			{ value: "From " + kendo.toString(new Date(banhji.customerSale.startDate), "dd-MM-yyyy") + " to " + kendo.toString(new Date(banhji.customerSale.endDate), "dd-MM-yyyy"), textAlign: "center", colSpan: 3 }
 	            		]
 	            	});
 	            }
@@ -69241,7 +69582,7 @@
 	            	if(banhji.customerSale.displayDateStart){
 		            	banhji.saleDetailCustomer.exArray.push({
 		            		cells: [
-		            			{ value: "From " + kendo.toString(banhji.customerSale.startDate, "dd-MM-yyyy") + " to " + kendo.toString(banhji.customerSale.endDate, "dd-MM-yyyy"), textAlign: "center", colSpan: 7 }
+		            			{ value: "From " + kendo.toString(new Date(banhji.customerSale.startDate), "dd-MM-yyyy") + " to " + kendo.toString(new Date(banhji.customerSale.endDate), "dd-MM-yyyy"), textAlign: "center", colSpan: 7 }
 		            		]
 		            	});
 		            }
@@ -69272,7 +69613,7 @@
 						    	banhji.saleDetailCustomer.exArray.push({
 							        cells: [
 							          	{ value: response.results[i].items[j].type },
-							          	{ value: kendo.toString(response.results[i].items[j].date, "dd-MM-yyyy") },
+							          	{ value: kendo.toString(new Date(response.results[i].items[j].date), "dd-MM-yyyy") },
 							          	{ value: response.results[i].items[j].number },
 							          	{ value: response.results[i].items[j].lines[k].name },
 							          	{ value: kendo.parseInt(response.results[i].items[j].lines[k].quantity) },
@@ -69362,6 +69703,7 @@
 		sortDB 				: [
 			{id: 'date', name: 'Date'}
 		],
+		exArray : [],
 		search 	: function() {
 
 			banhji.saleSummaryProduct.dataSource.filter({
@@ -69370,6 +69712,70 @@
 					{field: "issued_date >=", value: kendo.toString(this.startDate, "yyyy-MM-dd")},
 					{field: "issued_date <=", value: kendo.toString(this.endDate, "yyyy-MM-dd")}
 				]
+			});
+			banhji.saleSummaryProduct.dataSource.bind('requestEnd', function(e){
+				if(e.response) {
+					banhji.customerSale.set('count', e.response.count);
+					kendo.culture(banhji.locale);
+					banhji.customerSale.set('total', kendo.toString(e.response.total, 'c2'));	
+					banhji.customerSale.set('total_sale', kendo.toString(e.response.total_sale, 'c2'));
+					banhji.customerSale.set('total_avg', kendo.toString(e.response.total_avg, 'c2'));	
+					banhji.customerSale.set('gpm', kendo.toString(e.response.gpm, 'p'));
+				
+					//Export Excel
+					var response = e.response, balanceCal = 0;
+					//banhji.saleSummaryCustomer.exArray = [];
+					banhji.saleSummaryProduct.exArray.push({
+	            		cells: [
+	            			{ value: banhji.institute.name, textAlign: "center", colSpan: 6 }
+	            		]
+	            	});
+	            	banhji.saleSummaryProduct.exArray.push({
+	            		cells: [
+	            			{ value: "Sale Summary by Products/Services",bold: true, fontSize: 20, textAlign: "center", colSpan: 6 }
+	            		]
+	            	});
+	            	if(banhji.customerSale.displayDateStart){
+		            	banhji.saleSummaryProduct.exArray.push({
+		            		cells: [
+		            			{ value: "From " + kendo.toString(new Date(banhji.customerSale.startDate), "dd-MM-yyyy") + " to " + kendo.toString(new Date(banhji.customerSale.endDate), "dd-MM-yyyy"), textAlign: "center", colSpan: 6 }
+		            		]
+		            	});
+		            }
+	            	banhji.saleSummaryProduct.exArray.push({
+	            		cells: [
+	            			{ value: "", colSpan: 6 }
+	            		]
+	            	});
+	            	banhji.saleSummaryProduct.exArray.push({ 
+	            		cells: [
+							{ value: "ITEM", background: "#496cad", color: "#ffffff" },
+							{ value: "QTY", background: "#496cad", color: "#ffffff" },
+							{ value: "AMOUNT", background: "#496cad", color: "#ffffff" },
+							{ value: "AVG PRICE", background: "#496cad", color: "#ffffff" },
+							{ value: "COST", background: "#496cad", color: "#ffffff" },
+							{ value: "GROSS PROFIT MARGIN", background: "#496cad", color: "#ffffff" }
+						]
+					});
+					for (var i = 0; i < response.results.length; i++){
+					    banhji.saleSummaryProduct.exArray.push({
+					        cells: [
+					          	{ value: response.results[i].group },
+					          	{ value: response.results[i].qty },
+					          	{ value: response.results[i].amount },
+					          	{ value: response.results[i].avg_price },
+					          	{ value: response.results[i].cost },
+					          	{ value: kendo.toString(response.results[i].gross_profit_margin, 'p') }
+					        ]
+					    });
+					}
+					banhji.saleSummaryProduct.exArray.push({
+				        cells: [
+				          	{ value: "TOTAL", background: "#496cad", bold: true, color: "#ffffff", colSpan: 5 },
+				          	{ value: kendo.parseFloat(e.response.total_sale),bold: true, background: "#496cad", color: "#ffffff" }
+				        ]
+				    });
+				}
 			});
 		}, 
 		filterChange  : function(e){
@@ -69562,6 +69968,7 @@
 		sortDB 				: [
 			{id: 'date', name: 'Date'}
 		],
+		exArray : [],
 		search 	: function() {
 
 			banhji.listInvoicesCollect.dataSource.filter({
@@ -69570,6 +69977,70 @@
 					{field: "issued_date >=", value: kendo.toString(this.startDate, "yyyy-MM-dd")},
 					{field: "issued_date <=", value: kendo.toString(this.endDate, "yyyy-MM-dd")}
 				]
+			});
+			banhji.listInvoicesCollect.dataSource.bind('requestEnd', function(e){
+				if(e.response) {
+					banhji.customerSale.set('count', e.response.count);
+					kendo.culture(banhji.locale);
+					banhji.customerSale.set('total', kendo.toString(e.response.total, 'c2'));
+					banhji.customerSale.set('aging', kendo.toString(e.response.aging, '0'));
+
+					//Export Excel
+					var response = e.response, balanceCal = 0;
+					//banhji.saleSummaryCustomer.exArray = [];
+					banhji.listInvoicesCollect.exArray.push({
+	            		cells: [
+	            			{ value: banhji.institute.name, textAlign: "center", colSpan: 6 }
+	            		]
+	            	});
+	            	banhji.listInvoicesCollect.exArray.push({
+	            		cells: [
+	            			{ value: "List of Invoices to be Collected",bold: true, fontSize: 20, textAlign: "center", colSpan: 6 }
+	            		]
+	            	});
+	            	if(banhji.customerSale.displayDateStart){
+		            	banhji.listInvoicesCollect.exArray.push({
+		            		cells: [
+		            			{ value: "From " + kendo.toString(new Date(banhji.customerSale.startDate), "dd-MM-yyyy") + " to " + kendo.toString(new Date(banhji.customerSale.endDate), "dd-MM-yyyy"), textAlign: "center", colSpan: 6 }
+		            		]
+		            	});
+		            }
+	            	banhji.listInvoicesCollect.exArray.push({
+	            		cells: [
+	            			{ value: "", colSpan: 6 }
+	            		]
+	            	});
+	            	banhji.listInvoicesCollect.exArray.push({ 
+	            		cells: [
+							{ value: "TYPE", background: "#496cad", color: "#ffffff" },
+							{ value: "DATE", background: "#496cad", color: "#ffffff" },
+							{ value: "Name", background: "#496cad", color: "#ffffff" },
+							{ value: "NO", background: "#496cad", color: "#ffffff" },
+							{ value: "AGING", background: "#496cad", color: "#ffffff" },
+							{ value: "BALANCE", background: "#496cad", color: "#ffffff" }
+						]
+					});
+					for (var i = 0; i < response.results.length; i++){
+					    for(var j = 0; j < response.results[i].items.length; j++){
+					    	banhji.listInvoicesCollect.exArray.push({
+						        cells: [
+						          	{ value: response.results[i].items[j].type },
+						          	{ value: kendo.toString(new Date(response.results[i].items[j].date), "dd-MM-yyyy") },
+						          	{ value: response.results[i].items[j].name },
+						          	{ value: response.results[i].items[j].number },
+						          	{ value: response.results[i].items[j].agingkk + " days" },
+						          	{ value: response.results[i].items[j].amount }
+						        ]
+						    });
+					    }
+					}
+					banhji.listInvoicesCollect.exArray.push({
+				        cells: [
+				          	{ value: "TOTAL", background: "#496cad", bold: true, color: "#ffffff", colSpan: 5 },
+				          	{ value: kendo.parseFloat(e.response.total),bold: true, background: "#496cad", color: "#ffffff" }
+				        ]
+				    });
+				}
 			});
 		}, 
 		filterChange  : function(e){
@@ -69802,6 +70273,48 @@
 	        });
 	        //save the file as Excel file with extension xlsx
 	        kendo.saveAs({dataURI: workbook.toDataURL(), fileName: "SaleDetailCustomer.xlsx"});
+		},
+		ExportExcelLIC 		: function(){
+			console.log(banhji.saleDetailCustomer.exArray);
+	        var workbook = new kendo.ooxml.Workbook({
+	          sheets: [
+	            {
+	              columns: [
+	                { autoWidth: true },
+	                { autoWidth: true },
+	                { autoWidth: true },
+	                { autoWidth: true },
+	                { autoWidth: true },
+	                { autoWidth: true }
+	              ],
+	              title: "List of Invoices to be Collected",
+	              rows: banhji.listInvoicesCollect.exArray
+	            }
+	          ]
+	        });
+	        //save the file as Excel file with extension xlsx
+	        kendo.saveAs({dataURI: workbook.toDataURL(), fileName: "ListInvoicesCollect.xlsx"});
+		},
+		ExportExcelSSP 		: function(){
+	        var workbook = new kendo.ooxml.Workbook({
+	          sheets: [
+	            {
+	              columns: [
+	                { autoWidth: true },
+	                { autoWidth: true },
+	                { autoWidth: true },
+	                { autoWidth: true },
+	                { autoWidth: true },
+	                { autoWidth: true },
+	                { autoWidth: true }
+	              ],
+	              title: "Sale Summary by Products/Services",
+	              rows: banhji.saleSummaryProduct.exArray
+	            }
+	          ]
+	        });
+	        //save the file as Excel file with extension xlsx
+	        kendo.saveAs({dataURI: workbook.toDataURL(), fileName: "saleSummaryProduct.xlsx"});
 		},
 		dateChange 			: function(){
 			// var strDate = "";
@@ -78966,6 +79479,331 @@
 			});
 		}
     });
+    banhji.profitabilityDetailJob =  kendo.observable({
+		lang 				: langVM,
+		dataSource 			: dataStore(apiUrl + "accounting_reports/general_ledger"),
+		accountDS  		: new kendo.data.DataSource({
+		  	data: banhji.source.accountList,
+		  	sort: { field:"number", dir:"asc" }
+		}),
+		segmentItemDS 		: new kendo.data.DataSource({
+		  	data: banhji.source.segmentItemList,
+		  	sort: [
+			  	{ field: "segment_id", dir: "asc" },
+			  	{ field: "code", dir: "asc" }
+			]
+		}),		
+		sortList			: banhji.source.sortList,		
+		sorter 				: "all",
+		sdate 				: "",
+		edate 				: "",
+		obj 				: { account_id: 0, segments: [] },
+		company 			: banhji.institute,
+		displayDate 		: "",
+		totalAmount 		: 0,
+		totalBalance 		: 0,
+		exArray 			: [],
+		pageLoad 			: function(){
+			this.search();
+		},
+		sorterChanges 		: function(){
+	        var today = new Date(),
+        	sdate = "",
+        	edate = "",
+        	sorter = this.get("sorter");
+        	
+			switch(sorter){
+				case "today":								
+					this.set("sdate", today);
+					this.set("edate", "");
+													  					
+				  	break;
+				case "week":			  	
+					var first = today.getDate() - today.getDay(),
+					last = first + 6;
+
+					this.set("sdate", new Date(today.setDate(first)));
+					this.set("edate", new Date(today.setDate(last)));						
+					
+				  	break;
+				case "month":							  	
+					this.set("sdate", new Date(today.getFullYear(), today.getMonth(), 1));
+					this.set("edate", new Date(today.getFullYear(), today.getMonth() + 1, 0));
+
+				  	break;
+				case "year":				
+				  	this.set("sdate", new Date(today.getFullYear(), 0, 1));
+				  	this.set("edate", new Date(today.getFullYear(), 11, 31));
+
+				  	break;
+				default:
+					this.set("sdate", "");
+				  	this.set("edate", "");									  
+			}
+		},
+		segmentChanges 		: function() {
+			var dataArr = this.get("obj").segments,
+			lastIndex = dataArr.length - 1,
+			last = this.segmentItemDS.get(dataArr[lastIndex]);
+			
+			if(dataArr.length > 1) {
+				for(var i = 0; i < dataArr.length - 1; i++) {
+					var current_index = dataArr[i],
+					current = this.segmentItemDS.get(current_index);
+
+					if(current.segment_id === last.segment_id) {
+						dataArr.splice(lastIndex, 1);
+						break;
+					}
+				}
+			}
+		},
+		search				: function(){
+			var self = this, para = [], 
+				obj = this.get("obj"),
+				start = this.get("sdate"),
+        		end = this.get("edate"),
+        		displayDate = "";
+
+        	//Account
+            if(obj.account_id>0){
+	            para.push({ field:"account_id", value:obj.account_id });
+	        }
+
+	        //Segment
+            if(obj.segments.length>0){
+            	var segments = [];
+            	$.each(obj.segments, function(index, value){
+            		segments.push(value);
+            	});          	
+	            para.push({ field:"segments", operator:"like_related_transaction", value:"%"+segments.toString()+"%" });
+	        }
+    	
+        	//Dates
+        	if(start && end){
+        		start = new Date(start);
+        		end = new Date(end);
+        		end.setDate(end.getDate()+1);
+
+            	para.push({ field:"issued_date >=", operator:"where_related_transaction", value: kendo.toString(start, "yyyy-MM-dd") });
+            	para.push({ field:"issued_date <", operator:"where_related_transaction", value: kendo.toString(end, "yyyy-MM-dd") });
+
+            	displayDate = "From " + kendo.toString(start, "dd-MM-yyyy") + " To " + kendo.toString(end, "dd-MM-yyyy");
+            }else if(start){
+            	start = new Date(start);
+            	para.push({ field:"issued_date", operator:"where_related_transaction", value: kendo.toString(start, "yyyy-MM-dd") });
+
+            	displayDate = "On " + kendo.toString(start, "dd-MM-yyyy");
+            }else if(end){
+            	end = new Date(end);
+        		end.setDate(end.getDate()+1);
+
+            	para.push({ field:"issued_date <", operator:"where_related_transaction", value: kendo.toString(end, "yyyy-MM-dd") });
+
+            	displayDate = "As Of " + kendo.toString(end, "dd-MM-yyyy");
+            }else{
+            	
+            }
+            this.set("displayDate", displayDate);
+            
+            this.dataSource.query({
+            	filter:para,
+            	sort:[
+            		{ field:"account_type_id", operator:"order_by_related_account", dir:"asc" },
+            		{ field:"number", operator:"order_by_related_account", dir:"asc" },
+            		{ field:"issued_date", operator:"order_by_related_transaction", dir:"asc" },
+            		{ field:"number", operator:"order_by_related_transaction", dir:"asc" }            		
+            	]
+            });
+            this.dataSource.bind("requestEnd", function(e){				
+				if(e.type=="read"){
+					var response = e.response, balanceCal = 0;
+					self.exArray = [];
+					self.set("totalAmount", kendo.toString(response.totalAmount, "c", banhji.locale));
+					self.set("totalBalance", kendo.toString(response.totalBalance, "c", banhji.locale));
+
+					self.exArray.push({
+	            		cells: [
+	            			{ value: self.company.name, textAlign: "center", colSpan: 6 }
+	            		]
+	            	});
+	            	self.exArray.push({
+	            		cells: [
+	            			{ value: "General Ledger",bold: true, fontSize: 20, textAlign: "center", colSpan: 6 }
+	            		]
+	            	});
+	            	if(self.displayDate){
+		            	self.exArray.push({
+		            		cells: [
+		            			{ value: self.displayDate, textAlign: "center", colSpan: 6 }
+		            		]
+		            	});
+		            }
+	            	self.exArray.push({
+	            		cells: [
+	            			{ value: "", colSpan: 6 }
+	            		]
+	            	});
+	            	self.exArray.push({ 
+	            		cells: [
+							{ value: "Type", background: "#496cad", color: "#ffffff" },
+							{ value: "Date", background: "#496cad", color: "#ffffff" },
+							{ value: "Reference No", background: "#496cad", color: "#ffffff" },
+							{ value: "Description", background: "#496cad", color: "#ffffff" },
+							{ value: "Amount", background: "#496cad", color: "#ffffff" },
+							{ value: "Balance", background: "#496cad", color: "#ffffff" }
+						]
+					});
+					for (var i = 0; i < response.results.length; i++){
+						self.exArray.push({
+					        cells: [
+					          	{ value: response.results[i].number + " " + response.results[i].name, bold: true, },
+					            { value: "" },
+					            { value: "" },
+					            { value: "" },
+					            { value: "" },
+					            { value: kendo.parseFloat(response.results[i].balance_forward), bold: true },
+					        ]
+					    });
+					    balanceCal = response.results[i].balance_forward;
+					    for(var j = 0; j < response.results[i].line.length; j++){
+					    	balanceCal += response.results[i].line[j].amount;
+				          	self.exArray.push({
+				          		cells: [
+				          	  		{ value: "    "+response.results[i].line[j].type },
+				              		{ value: kendo.toString(new Date(response.results[i].line[j].issued_date), "dd-MM-yyyy")  },
+				              		{ value: response.results[i].line[j].number },
+				              		{ value: response.results[i].line[j].memo },
+				              		{ value: kendo.parseFloat(response.results[i].line[j].amount)},
+				              		{ value: kendo.parseFloat(balanceCal)}
+				            	]
+				          	});
+				        }
+				        self.exArray.push({
+					        cells: [
+					          	{ value: "Total " + response.results[i].number + " " + response.results[i].name, bold: true, },
+					            { value: "" },
+					            { value: "" },
+					            { value: "" },
+					            { value: "" },
+					            { value: kendo.parseFloat(balanceCal), bold: true, borderTop: { color: "#000000", size: 1 }  },
+					        ]
+					    });
+					    self.exArray.push({
+					        cells: [
+					          	{ value: "", colSpan: 6 }
+					        ]
+					    });
+					}
+					self.exArray.push({
+				        cells: [
+				          	{ value: "TOTAL", bold: true,fontSize: 16 },
+				            { value: "" },
+				            { value: "" },
+				            { value: "" },
+				            { value: kendo.parseFloat(response.totalAmount), bold: true, fontSize: 16 },
+				            { value: kendo.parseFloat(response.totalBalance), bold: true, fontSize: 16 },
+				        ]
+				    });
+				}
+			});            
+		},
+		printGrid			: function() {
+			var gridElement = $('#grid'),
+		        printableContent = '',
+		        win = window.open('', '', 'width=990, height=900'),
+		        doc = win.document.open();
+		    var htmlStart =
+		            '<!DOCTYPE html>' +
+		            '<html>' +
+		            '<head>' +
+		            '<meta charset="utf-8" />' +
+		            '<title></title>' +
+		            '<link href="http://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />'+
+		            '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/bootstrap.css">' +
+		            '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/responsive.css">' +
+		            '<link href="<?php echo base_url(); ?>assets/invoice/invoice.css" rel="stylesheet" />'+
+		            '<link href="https://fonts.googleapis.com/css?family=Content:400,700" rel="stylesheet" type="text/css">' +
+		            '<link href="https://fonts.googleapis.com/css?family=Moul" rel="stylesheet">' +
+		            '<style>' +
+		            'html { font: 11pt sans-serif; }' +
+		            '.k-grid { border-top-width: 0; }' +
+		            '.k-grid, .k-grid-content { height: auto !important; }' +
+		            '.k-grid-content { overflow: visible !important; }' +
+		            'div.k-grid table { table-layout: auto; width: 100% !important; }' +
+		            '.k-grid .k-grid-header th { border-top: 1px solid; }' +
+		            '.k-grid-toolbar, .k-grid-pager > .k-link { display: none; }' +
+		            '</style><style type="text/css" media="print"> @page { size: portrait; margin:1mm; }'+
+		            	'.inv1 .main-color {' +
+		            		
+		            		'-webkit-print-color-adjust:exact; ' +
+		            	'} ' +
+		            	'.table.table-borderless.table-condensed  tr th { background-color: #1E4E78!important;' +
+		            	'-webkit-print-color-adjust:exact; color:#fff!important;}' +
+		            	'.table.table-borderless.table-condensed  tr th * { color: #fff!important; -webkit-print-color-adjust:exact;}' +
+		            	'.inv1 .light-blue-td { ' +
+		            		'background-color: #c6d9f1!important;' +
+		            		'text-align: left;' +
+		            		'padding-left: 5px;' +
+		            		'-webkit-print-color-adjust:exact; ' +
+		            	'}' +
+		            	'.saleSummaryCustomer .table.table-borderless.table-condensed tr td { ' +
+    						'background-color: #F2F2F2!important; -webkit-print-color-adjust:exact;' +
+						'}'+
+						'.saleSummaryCustomer .table.table-borderless.table-condensed tr:nth-child(2n+1) td { ' +
+    						' background-color: #fff!important; -webkit-print-color-adjust:exact;' +
+						'}' +
+						'.journal_block1>.span2 *, .journal_block1>.span5 * {color: #fff!important;}' +
+		            	'.journal_block1>.span2:first-child { ' +
+    						'background-color: #bbbbbb!important; -webkit-print-color-adjust:exact;' +
+						'}' +
+						'.journal_block1>.span5:last-child {' +
+							'background-color: #496cad!important; color: #fff!important; -webkit-print-color-adjust:exact; ' +
+						'}' +
+						'.journal_block1>.span5 {' +
+							'background-color: #5cc7dd!important; color: #fff!important; -webkit-print-color-adjust:exact;' +
+						'}' +
+		            	'.saleSummaryCustomer .table.table-borderless.table-condensed tfoot .bg-total td {' +
+		            		'background-color: #1C2633!important;' +
+		            		'color: #fff!important; ' + 
+		            		'-webkit-print-color-adjust:exact;' +
+		            	'}' +
+		            	'</style>' +
+		            '</head>' +
+		            '<body><div class="saleSummaryCustomer" style="padding: 0 10px;">';
+		    var htmlEnd =
+		            '</div></body>' +
+		            '</html>';
+		    
+		    printableContent = $('#invFormContent').html();
+		    doc.write(htmlStart + printableContent + htmlEnd);
+		    doc.close();
+		    setTimeout(function(){
+		    	win.print();
+		    	win.close();
+		    },2000);
+		},
+		ExportExcel 		: function(){
+	        var workbook = new kendo.ooxml.Workbook({
+	          sheets: [
+	            {
+	              columns: [
+	                { autoWidth: true },
+	                { autoWidth: true },
+	                { autoWidth: true },
+	                { autoWidth: true },
+	                { autoWidth: true },
+	                { autoWidth: true }
+	              ],
+	              title: "General Ledger",
+	              rows: this.exArray
+	            }
+	          ]
+	        });
+	        //save the file as Excel file with extension xlsx
+	        kendo.saveAs({dataURI: workbook.toDataURL(), fileName: "GeneralLedger.xlsx"});
+		}
+	});
 
     
 	/*************************
@@ -79434,6 +80272,8 @@
 
 		//Report
 		reportDashboard: new kendo.Layout("#reportDashboard", {model: banhji.reportDashboard}),
+		profitabilitySummaryJob: new kendo.Layout("#profitabilitySummaryJob", {model: banhji.profitabilitySummaryJob}),
+		profitabilityDetailJob: new kendo.Layout("#profitabilityDetailJob", {model: banhji.profitabilityDetailJob}),
 
 		//Imports
 		imports: new kendo.Layout("#importView", {model: banhji.importView}),
@@ -85127,7 +85967,7 @@
 	            	if(banhji.customerSale.displayDateStart){
 		            	banhji.saleSummaryCustomer.exArray.push({
 		            		cells: [
-		            			{ value: "From " + kendo.toString(banhji.customerSale.startDate, "dd-MM-yyyy") + " to " + kendo.toString(banhji.customerSale.endDate, "dd-MM-yyyy"), textAlign: "center", colSpan: 3 }
+		            			{ value: "From " + kendo.toString(new Date(banhji.customerSale.startDate), "dd-MM-yyyy") + " to " + kendo.toString(new Date(banhji.customerSale.endDate), "dd-MM-yyyy"), textAlign: "center", colSpan: 3 }
 		            		]
 		            	});
 		            }
@@ -85202,7 +86042,7 @@
 	            	if(banhji.customerSale.displayDateStart){
 		            	banhji.saleDetailCustomer.exArray.push({
 		            		cells: [
-		            			{ value: "From " + kendo.toString(banhji.customerSale.startDate, "dd-MM-yyyy") + " to " + kendo.toString(banhji.customerSale.endDate, "dd-MM-yyyy"), textAlign: "center", colSpan: 7 }
+		            			{ value: "From " + kendo.toString(new Date(banhji.customerSale.startDate), "dd-MM-yyyy") + " to " + kendo.toString(new Date(banhji.customerSale.endDate), "dd-MM-yyyy"), textAlign: "center", colSpan: 7 }
 		            		]
 		            	});
 		            }
@@ -85233,7 +86073,7 @@
 						    	banhji.saleDetailCustomer.exArray.push({
 							        cells: [
 							          	{ value: response.results[i].items[j].type },
-							          	{ value: kendo.toString(response.results[i].items[j].date, "dd-MM-yyyy") },
+							          	{ value: kendo.toString(new Date(response.results[i].items[j].date), "dd-MM-yyyy") },
 							          	{ value: response.results[i].items[j].number },
 							          	{ value: response.results[i].items[j].lines[k].name },
 							          	{ value: kendo.parseInt(response.results[i].items[j].lines[k].quantity) },
@@ -85338,6 +86178,60 @@
 					banhji.customerSale.set('total_sale', kendo.toString(e.response.total_sale, 'c2'));
 					banhji.customerSale.set('total_avg', kendo.toString(e.response.total_avg, 'c2'));	
 					banhji.customerSale.set('gpm', kendo.toString(e.response.gpm, 'p'));
+				
+					//Export Excel
+					var response = e.response, balanceCal = 0;
+					//banhji.saleSummaryCustomer.exArray = [];
+					banhji.saleSummaryProduct.exArray.push({
+	            		cells: [
+	            			{ value: banhji.institute.name, textAlign: "center", colSpan: 6 }
+	            		]
+	            	});
+	            	banhji.saleSummaryProduct.exArray.push({
+	            		cells: [
+	            			{ value: "Sale Summary by Products/Services",bold: true, fontSize: 20, textAlign: "center", colSpan: 6 }
+	            		]
+	            	});
+	            	if(banhji.customerSale.displayDateStart){
+		            	banhji.saleSummaryProduct.exArray.push({
+		            		cells: [
+		            			{ value: "From " + kendo.toString(new Date(banhji.customerSale.startDate), "dd-MM-yyyy") + " to " + kendo.toString(new Date(banhji.customerSale.endDate), "dd-MM-yyyy"), textAlign: "center", colSpan: 6 }
+		            		]
+		            	});
+		            }
+	            	banhji.saleSummaryProduct.exArray.push({
+	            		cells: [
+	            			{ value: "", colSpan: 6 }
+	            		]
+	            	});
+	            	banhji.saleSummaryProduct.exArray.push({ 
+	            		cells: [
+							{ value: "ITEM", background: "#496cad", color: "#ffffff" },
+							{ value: "QTY", background: "#496cad", color: "#ffffff" },
+							{ value: "AMOUNT", background: "#496cad", color: "#ffffff" },
+							{ value: "AVG PRICE", background: "#496cad", color: "#ffffff" },
+							{ value: "COST", background: "#496cad", color: "#ffffff" },
+							{ value: "GROSS PROFIT MARGIN", background: "#496cad", color: "#ffffff" }
+						]
+					});
+					for (var i = 0; i < response.results.length; i++){
+					    banhji.saleSummaryProduct.exArray.push({
+					        cells: [
+					          	{ value: response.results[i].group },
+					          	{ value: response.results[i].qty },
+					          	{ value: response.results[i].amount },
+					          	{ value: response.results[i].avg_price },
+					          	{ value: response.results[i].cost },
+					          	{ value: kendo.toString(response.results[i].gross_profit_margin, 'p') }
+					        ]
+					    });
+					}
+					banhji.saleSummaryProduct.exArray.push({
+				        cells: [
+				          	{ value: "TOTAL", background: "#496cad", bold: true, color: "#ffffff", colSpan: 5 },
+				          	{ value: kendo.parseFloat(e.response.total_sale),bold: true, background: "#496cad", color: "#ffffff" }
+				        ]
+				    });
 				}
 			});
 		}
@@ -85498,6 +86392,62 @@
 					kendo.culture(banhji.locale);
 					banhji.customerSale.set('total', kendo.toString(e.response.total, 'c2'));
 					banhji.customerSale.set('aging', kendo.toString(e.response.aging, '0'));
+
+					//Export Excel
+					var response = e.response, balanceCal = 0;
+					//banhji.saleSummaryCustomer.exArray = [];
+					banhji.listInvoicesCollect.exArray.push({
+	            		cells: [
+	            			{ value: banhji.institute.name, textAlign: "center", colSpan: 6 }
+	            		]
+	            	});
+	            	banhji.listInvoicesCollect.exArray.push({
+	            		cells: [
+	            			{ value: "List of Invoices to be Collected",bold: true, fontSize: 20, textAlign: "center", colSpan: 6 }
+	            		]
+	            	});
+	            	if(banhji.customerSale.displayDateStart){
+		            	banhji.listInvoicesCollect.exArray.push({
+		            		cells: [
+		            			{ value: "From " + kendo.toString(new Date(banhji.customerSale.startDate), "dd-MM-yyyy") + " to " + kendo.toString(new Date(banhji.customerSale.endDate), "dd-MM-yyyy"), textAlign: "center", colSpan: 6 }
+		            		]
+		            	});
+		            }
+	            	banhji.listInvoicesCollect.exArray.push({
+	            		cells: [
+	            			{ value: "", colSpan: 6 }
+	            		]
+	            	});
+	            	banhji.listInvoicesCollect.exArray.push({ 
+	            		cells: [
+							{ value: "TYPE", background: "#496cad", color: "#ffffff" },
+							{ value: "DATE", background: "#496cad", color: "#ffffff" },
+							{ value: "Name", background: "#496cad", color: "#ffffff" },
+							{ value: "NO", background: "#496cad", color: "#ffffff" },
+							{ value: "AGING", background: "#496cad", color: "#ffffff" },
+							{ value: "BALANCE", background: "#496cad", color: "#ffffff" }
+						]
+					});
+					for (var i = 0; i < response.results.length; i++){
+					    for(var j = 0; j < response.results[i].items.length; j++){
+					    	banhji.listInvoicesCollect.exArray.push({
+						        cells: [
+						          	{ value: response.results[i].items[j].type },
+						          	{ value: kendo.toString(new Date(response.results[i].items[j].date), "dd-MM-yyyy") },
+						          	{ value: response.results[i].items[j].name },
+						          	{ value: response.results[i].items[j].number },
+						          	{ value: response.results[i].items[j].agingkk + " days" },
+						          	{ value: response.results[i].items[j].amount }
+						        ]
+						    });
+					    }
+					}
+					banhji.listInvoicesCollect.exArray.push({
+				        cells: [
+				          	{ value: "TOTAL", background: "#496cad", bold: true, color: "#ffffff", colSpan: 5 },
+				          	{ value: kendo.parseFloat(e.response.total),bold: true, background: "#496cad", color: "#ffffff" }
+				        ]
+				    });
 				}
 			});
 		}
@@ -87671,6 +88621,38 @@
 			vm.pageLoad();
 		}
 	});
+	banhji.router.route("/profitability_summary_job", function(){
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{
+			banhji.view.layout.showIn("#content", banhji.view.profitabilitySummaryJob);
+			
+			var vm = banhji.profitabilitySummaryJob;
+			banhji.userManagement.addMultiTask("Profitability Summary by Job","profitability_summary_job",null);
+
+			if(banhji.pageLoaded["profitability_summary_job"]==undefined){
+				banhji.pageLoaded["profitability_summary_job"] = true;
+			}
+			vm.pageLoad();
+		}
+	});
+	banhji.router.route("/profitability_detail_job", function(){
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{
+			banhji.view.layout.showIn("#content", banhji.view.profitabilityDetailJob);
+			
+			var vm = banhji.profitabilityDetailJob;
+			banhji.userManagement.addMultiTask("Profitability Detail by Job","profitability_detail_job",null);
+
+			if(banhji.pageLoaded["profitability_detail_job"]==undefined){
+				banhji.pageLoaded["profitability_detail_job"] = true;
+			}
+			vm.pageLoad();
+		}
+	});
+
+
 
 	/*************************
 	*   Import Section   *

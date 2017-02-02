@@ -136,3 +136,9 @@ p.addItem.glyphicons.circle_remove i:before {
 	color: #fff;
 	font-weight: bold;
 }
+.table-primary tbody tr.k-state-selected td.mm {
+	color: #5cc7dd;
+}
+.table-primary tbody tr td.mm {
+	cursor: pointer;
+}

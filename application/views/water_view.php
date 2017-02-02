@@ -462,7 +462,7 @@
 	            				<th class="center"><span>Account</span></th>
 	            				<th class="center"><span>Unit</span></th>
 	            				<th class="center"><span>Currency</span></th>
-	            				<th class="center"><span>Price</span></th>
+	            				<th class="center"><span>Exemption</span></th>
 	            				<th class="center">Action</th>
 	            			</tr>
 	            		</thead>
@@ -1897,8 +1897,8 @@
 							            </li>
 							            <li class="glyphicons text_bigger dashboard active"><span data-toggle="tab" data-target="#tab1" data-bind="click: meterClick"><i></i></span>
 							            </li>
-							            <li class="glyphicons text_bigger" ><span data-bind="click: NometerClick" data-toggle="tab" data-target="#tab2"><i></i></span>
-							            </li>							            							            
+							            <!-- <li class="glyphicons text_bigger" ><span data-bind="click: NometerClick" data-toggle="tab" data-target="#tab2"><i></i></span>
+							            </li>	 -->						            							            
 							            <li class="glyphicons circle_info"><span data-bind="click: NometerClick" data-toggle="tab" data-target="#tab3"><i></i></span>
 							            </li>							            
 							            <li class="glyphicons pen"><span data-bind="click: NometerClick" data-toggle="tab" data-target="#tab4"><i></i></span>
@@ -1926,6 +1926,7 @@
 										        <tbody data-role="listview" 
 										        		data-template="meter-list-tmpl" 
 										        		data-auto-bind="false"
+										        		data-selectable="single"
 										        		data-bind="source: meterDS"></tbody>			        
 										    </table>
 										    <div id="pager" class="k-pager-wrap"
@@ -1935,7 +1936,7 @@
 							            </div>
 							            <!-- // Transactions Tab content END -->	
 							            <!-- Transactions Tab content -->
-							            <div id="tab2" class="tab-pane box-generic">
+							           <!--  <div id="tab2" class="tab-pane box-generic">
 							            	<table class="table table-borderless table-condensed cart_total cash-table">
 								            	<tr>
 								            		<td width="50%">
@@ -1979,7 +1980,7 @@
 								            		</td>
 								            	</tr>
 							            	</table>
-							            </div>
+							            </div> -->
 							            <!-- // Transactions Tab content END -->
 							            <!-- INFO Tab content -->
 							            <div id="tab3" class="tab-pane box-generic">
@@ -2006,7 +2007,7 @@
 															</td>
 														</tr>
 														<tr>
-															<td><span data-bind="">Location</span></td>
+															<td><span data-bind="text: lang.lang.location"></span></td>
 															<td>
 																<span data-bind="text: obj.address"></span>
 															</td>
@@ -4951,7 +4952,7 @@
 </script>
 <script id="meter-list-tmpl" type="text/x-kendo-tmpl">
 	<tr>
-		<td data-bind="click: onSelectedMeter">#= meter_number#</td>
+		<td class="mm" data-bind="click: onSelectedMeter">#= meter_number#</td>
 		<td style="text-align:center;">
 			# if(status == 1){#
 				<span class="btn-action glyphicons ok_2 btn-success"><i></i></span>
@@ -6461,7 +6462,7 @@
 	  	<li role='presentation' class='dropdown'>
 	  		<a class='dropdown-toggle glyphicons text_bigger' data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false'><i></i> <span class='caret'></span></a>
   			<ul class='dropdown-menu'>
-  				<li><a href='<?php echo base_url(); ?>/c2/rrd/#/customer' target="_blank"><span >New Customer</span></a></li> 
+  				<li><a href='<?php echo base_url(); ?>rrd/#/customer' target="_blank"><span >New Customer</span></a></li> 
   				<li ><a href='#/reorder'><span >Reorder Meter</span></a></li>  				
   				<li><span class="li-line"></span></li>
   				<li><a href='#/reading'><span >Meter Reading</span></a></li> 

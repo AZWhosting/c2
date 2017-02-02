@@ -11,6 +11,7 @@ class Profiles extends REST_Controller {
 	//CONSTRUCTOR
 	function __construct() {
 		parent::__construct();
+		// date_default_timezone_set("Asia/Phnom_Penh");
 		$institute = new Institute();
 		$institute->where('id', $this->input->get_request_header('Institute'))->get();
 		if($institute->exists()) {
@@ -19,6 +20,7 @@ class Profiles extends REST_Controller {
 			$this->user = $conn->username;
 			$this->pwd = $conn->password;
 			$this->_database = $conn->inst_database;
+			date_default_timezone_set("$conn->time_zone");
 		}
 	}
 
@@ -299,6 +301,7 @@ class Profiles extends REST_Controller {
 	}
 
 	function company_get() {
+
 		$requested_data = $this->get("filter");
 		$filters = $requested_data['filters'];
 		$limit = $this->get('limit') ? $this->get('limit'): 1;
@@ -482,7 +485,7 @@ class Profiles extends REST_Controller {
 					'logo' => array('id'=>$pimage->id, 'url' => $pimage->url),
 					'description' => $company->description,
 					'vat_number' => $company->vat_number,
-					'fiscal_date'=> $company->fiscal_date,
+					'fiscal_date'=> intval($company->fiscal_date)/1000,
 					'tax_regime' => $company->tax_regime,
 					'year_founded'=>$company->year_founded,
 					'reportCurrency' => $report->exists() ? array('id'=>$report->id, 'code'=>$report->code, 'country' => $report->country, 'locale' =>$report->locale) : array('id' => null),

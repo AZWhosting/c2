@@ -58,9 +58,12 @@ class Imports extends REST_Controller {
 			$currency = new Currency(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$currency->where('code', $value->currency)->get();
 
+			$country = new Country(null, $this->server_host, $this->server_user, $this->server_pwd, "banhji");
+			$country->where('name', $value->country)->get();
+
 			$obj = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			isset($value->branch_id) 				? $obj->branch_id 				= $value->branch_id : "";
-			isset($value->country_id) 				? $obj->country_id 				= $value->country_id : "";
+			isset($value->country) 					? $obj->country_id 				= $country->id : "";
 			isset($value->ebranch_id) 				? $obj->ebranch_id 				= $value->ebranch_id : "";
 			isset($value->elocation_id) 			? $obj->elocation_id 			= $value->elocation_id : "";
 			isset($value->wbranch_id) 				? $obj->wbranch_id 				= $value->wbranch_id : "";
@@ -242,13 +245,16 @@ class Imports extends REST_Controller {
 			$uom = new Measurement(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$uom->where('name', $value->measurement)->get();
 
+			$group = new Item_group(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$group->where('name', $value->group)->get();
+
 
 			isset($value->company_id) 				? $obj->company_id 				= $value->company_id : 0;
 			isset($value->contact_id) 				? $obj->contact_id 				= $value->contact_id : 0;
 			$obj->currency_id 						= $this->currency;
 			isset($value->type) 					? $obj->item_type_id			= $type->id : 1;
 			isset($value->category) 				? $obj->category_id 			= $cat->id : 1;
-			isset($value->item_group_id) 			? $obj->item_group_id 			= $value->item_group_id : 0;
+			isset($value->group) 					? $obj->item_group_id 			= $group->id : 0;
 			isset($value->item_sub_group_id) 		? $obj->item_sub_group_id 		= $value->item_sub_group_id : 0;
 			isset($value->brand_id) 				? $obj->brand_id 				= $value->brand_id : "";
 			isset($value->measurement) 				? $obj->measurement_id 			= $uom->id : 1;

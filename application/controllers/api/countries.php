@@ -26,7 +26,7 @@ class Countries extends REST_Controller {
 	function index_get() {		
 		$filters 	= $this->get("filter")["filters"];		
 		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
-		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;								
+		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 200;						
 		$sort 	 	= $this->get("sort");		
 		$data["results"] = array();
 		$data["count"] = 0;

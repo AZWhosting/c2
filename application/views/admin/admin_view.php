@@ -1559,11 +1559,13 @@
           read  : {
             url: baseUrl + 'api/profiles',
             type: "GET",
+            headers: { Institute: JSON.parse(localStorage.getItem('userData/user')) != null ? JSON.parse(localStorage.getItem('userData/user')).institute.id : 0 },
             dataType: 'json'
           },
           update  : {
             url: baseUrl + 'api/profiles',
             type: "PUT",
+            headers: { Institute: JSON.parse(localStorage.getItem('userData/user')) != null ? JSON.parse(localStorage.getItem('userData/user')).institute.id : 0 },
             dataType: 'json'
           },
           parameterMap: function(options, operation) {
@@ -1693,11 +1695,13 @@
           read  : {
             url: baseUrl + 'api/profiles/company',
             type: "GET",
+            headers: { Institute: JSON.parse(localStorage.getItem('userData/user')) != null ? JSON.parse(localStorage.getItem('userData/user')).institute.id : 0 },
             dataType: 'json'
           },
           update  : {
             url: baseUrl + 'api/profiles/company',
             type: "PUT",
+            headers: { Institute: JSON.parse(localStorage.getItem('userData/user')) != null ? JSON.parse(localStorage.getItem('userData/user')).institute.id : 0 },
             dataType: 'json'
           },
           parameterMap: function(options, operation) {
@@ -3077,6 +3081,8 @@
           banhji.router.navigate('');
         },
         save: function() {
+          // let kDate = new Date(banhji.company.get('current').fiscal_date);
+          // console.log(kDate.getTime());
           let dd = new Date(banhji.company.get('current').fiscal_date);
           banhji.company.get('current').fiscal_date = dd.getTime();
           if(banhji.company.media.dataSource.hasChanges()) {
@@ -3095,18 +3101,24 @@
               // institute.showIn('#companyInfoPlaceholder', instInfo);
               // console.log("kdsslfds");
               //
-              banhji.company.setCurrent(res.results[0]);
+              // banhji.company.setCurrent(res.results[0]);
+              let d = new Date(res.results[0].fiscal_date*1000);
+              let day = d.getDate() < 10 ? '0'+ d.getDate() : d.getDate();
+              let mnth= (d.getMonth() +1);
+              let m = mnth < 10 ? '0'+mnth : mnth;
+              banhji.company.get('current').set('fiscal_date', day +"-"+ m);
+              console.log(res.results[0]);
               var appData = JSON.parse(localStorage.getItem('userData/user'));
               localforage.removeItem('user').then(function() {
                 var data = {id: appData.id, username: appData.username, role: appData.role, institute: res.results[0]};
                 localforage.setItem('user', data).then(function (value) {
-                    console.log(value);
+                    // console.log(value);
                 }).catch(function(err) {
-                    console.log(err);
+                    // console.log(err);
                 });
               }).catch(function(err) {
                   // This code runs if there were any errors
-                  console.log(err);
+                  // console.log(err);
               });
 
               banhji.router.navigate('company');
@@ -3160,7 +3172,7 @@
       // start here
       banhji.router.route('/', function() {
         var admin = JSON.parse(localStorage.getItem('userData/user')) != null ? JSON.parse(localStorage.getItem('userData/user')).role : 0;
-          if(admin != 1) {
+        if(admin != 1) {
           banhji.users.users.filter([
             {field: 'id', value: JSON.parse(localStorage.getItem('userData/user')) != null ? JSON.parse(localStorage.getItem('userData/user')).institute.id : 0},
             {field: 'id', operator: 'user', value:JSON.parse(localStorage.getItem('userData/user')) != null ? JSON.parse(localStorage.getItem('userData/user')).id : 0}
@@ -3181,7 +3193,7 @@
               if(e.response) {
                 banhji.company.setCurrent(banhji.companyDS.data()[0]);
                 //
-                let d = new Date(banhji.company.get('current').fiscal_date);
+                let d = new Date(banhji.company.get('current').fiscal_date*1000);
                 let day = d.getDate() < 10 ? '0'+ d.getDate() : d.getDate();
                 let mnth= (d.getMonth() +1);
                 let m = mnth < 10 ? '0'+mnth : mnth;
