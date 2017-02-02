@@ -43926,151 +43926,8 @@
 		itemTypeDS					: dataStore(apiUrl + "item_types"),
 		itemGroupDS					: dataStore(apiUrl + "items/group"),
 		brandDS						: dataStore(apiUrl + "brands"),
-		categoryDS					: dataStore(apiUrl + "categories"),
-		inventoryCategoryDS			: new kendo.data.DataSource({
-			transport: {
-				read 	: {
-					url: apiUrl + "categories",
-					type: "GET",
-					headers: banhji.header,
-					dataType: 'json'
-				},				
-				parameterMap: function(options, operation) {
-					if(operation === 'read') {
-						return {
-							page: options.page,
-							limit: options.pageSize,
-							filter: options.filter,
-							sort: options.sort
-						};
-					} else {
-						return {models: kendo.stringify(options.models)};
-					}
-				}
-			},
-			schema 	: {
-				model: {
-					id: 'id'
-				},
-				data: 'results',
-				total: 'count'
-			},
-			filter: { field: "item_type_id", value: 1 },
-			batch: true,
-			serverFiltering: true,
-			serverSorting: true,
-			serverPaging: true,
-			page:1,
-			pageSize: 100
-		}),
-		nonInventoryPartCategoryDS	: new kendo.data.DataSource({
-			transport: {
-				read 	: {
-					url: apiUrl + "categories",
-					type: "GET",
-					headers: banhji.header,
-					dataType: 'json'
-				},				
-				parameterMap: function(options, operation) {
-					if(operation === 'read') {
-						return {
-							page: options.page,
-							limit: options.pageSize,
-							filter: options.filter,
-							sort: options.sort
-						};
-					} else {
-						return {models: kendo.stringify(options.models)};
-					}
-				}
-			},
-			schema 	: {
-				model: {
-					id: 'id'
-				},
-				data: 'results',
-				total: 'count'
-			},
-			filter: { field: "item_type_id", value: 2 },
-			batch: true,
-			serverFiltering: true,
-			serverSorting: true,
-			serverPaging: true,
-			page:1,
-			pageSize: 100
-		}),
-		fixedAssetCategoryDS		: new kendo.data.DataSource({
-			transport: {
-				read 	: {
-					url: apiUrl + "categories",
-					type: "GET",
-					headers: banhji.header,
-					dataType: 'json'
-				},				
-				parameterMap: function(options, operation) {
-					if(operation === 'read') {
-						return {
-							page: options.page,
-							limit: options.pageSize,
-							filter: options.filter,
-							sort: options.sort
-						};
-					} else {
-						return {models: kendo.stringify(options.models)};
-					}
-				}
-			},
-			schema 	: {
-				model: {
-					id: 'id'
-				},
-				data: 'results',
-				total: 'count'
-			},
-			filter: { field: "item_type_id", value: 3 },
-			batch: true,
-			serverFiltering: true,
-			serverSorting: true,
-			serverPaging: true,
-			page:1,
-			pageSize: 100
-		}),
-		serviceCategoryDS			: new kendo.data.DataSource({
-			transport: {
-				read 	: {
-					url: apiUrl + "categories",
-					type: "GET",
-					headers: banhji.header,
-					dataType: 'json'
-				},				
-				parameterMap: function(options, operation) {
-					if(operation === 'read') {
-						return {
-							page: options.page,
-							limit: options.pageSize,
-							filter: options.filter,
-							sort: options.sort
-						};
-					} else {
-						return {models: kendo.stringify(options.models)};
-					}
-				}
-			},
-			schema 	: {
-				model: {
-					id: 'id'
-				},
-				data: 'results',
-				total: 'count'
-			},
-			filter: { field: "item_type_id", value: 4 },
-			batch: true,
-			serverFiltering: true,
-			serverSorting: true,
-			serverPaging: true,
-			page:1,
-			pageSize: 100
-		}),
+		categoryList 				: [],
+		categoryDS					: dataStore(apiUrl + "categories"),		
 		itemPriceList 				: [],
 		itemPriceDS					: dataStore(apiUrl + "item_prices"),
 		measurementList 			: [],
@@ -44274,6 +44131,7 @@
 			this.loadJobs();
 			this.loadSegmentItems();
 			this.loadAccounts();
+			this.loadCategories();
 			this.loadItems();
 			this.itemTypeDS.read();
 			this.loadItemPrices();
@@ -44283,7 +44141,6 @@
 			this.loadSuppliers();
 			this.loadEmployees();
 			this.accountTypeDS.read();
-			this.fixedAssetCategoryDS.read();
 		},
 		getFiscalDate 				: function(){
 			var today = new Date(),	
@@ -44424,6 +44281,24 @@
 				filter: { field:"status", value:1 }
 			}).then(function(){
 				var view = self.accountDS.view();
+
+				$.each(view, function(index, value){
+					raw.push(value);
+				});
+			});
+		},
+		loadCategories 				: function(){
+			var self = this, raw = this.get("categoryList");
+
+			//Clear array
+			if(raw.length>0){
+				raw.splice(0,raw.length);
+			}
+
+			this.categoryDS.query({
+				filter:[]
+			}).then(function(){
+				var view = self.categoryDS.view();
 
 				$.each(view, function(index, value){
 					raw.push(value);
@@ -74235,10 +74110,12 @@
 		}),
 		itemMovementDS 		: dataStore(apiUrl + "item_lines"),
 		onHandDS 			: dataStore(apiUrl + "item_lines"),
-		categoryDS 			: dataStore(apiUrl + "categories"),
 		sumamryDS 			: dataStore(apiUrl + "item_lines"),
 		transactionDS		: dataStore(apiUrl + "items/movement"),
-		attachmentDS 		: dataStore(apiUrl + "attachments"),		
+		attachmentDS 		: dataStore(apiUrl + "attachments"),
+		categoryDS 			: new kendo.data.DataSource({
+		  	data: banhji.source.categoryList
+		}),		
 		sortList			: banhji.source.sortList,
 		sorter 				: "all",
 		sdate 				: "",
@@ -74865,7 +74742,6 @@
     	dataSource 				: dataStore(apiUrl + "items"),
     	patternDS 				: dataStore(apiUrl + "items"),
     	deleteDS 				: dataStore(apiUrl + "item_lines"),
-    	categoryDS 				: banhji.source.inventoryCategoryDS,
     	itemGroupDS 			: banhji.source.itemGroupDS,   	
     	brandDS 	 			: banhji.source.brandDS,    	   	   	
     	measurementDS			: banhji.source.measurementDS,
@@ -74873,11 +74749,25 @@
     	numberDS 				: dataStore(apiUrl + "items"),
     	existingDS 				: dataStore(apiUrl + "items"),
     	itemPriceDS 			: dataStore(apiUrl + "item_prices"),
-    	vendorDS 	 			: banhji.source.supplierDS,
-    	customerDS 	 			: banhji.source.customerDS,
     	itemVendorDS 	 		: dataStore(apiUrl + "items/contact"),
     	itemCustomerDS 	 		: dataStore(apiUrl + "items/contact"),
-    	currencyDS 	 			: banhji.source.currencyDS,  	
+    	currencyDS 	 			: banhji.source.currencyDS,
+    	vendorDS  				: new kendo.data.DataSource({
+		  	data: banhji.source.supplierList,
+			sort: { field:"number", dir:"asc" }
+		}),
+		customerDS  			: new kendo.data.DataSource({
+		  	data: banhji.source.customerList,
+			sort: { field:"number", dir:"asc" }
+		}),
+    	categoryDS 				: new kendo.data.DataSource({
+		  	data: banhji.source.categoryList,
+		  	filter: [
+		  		{ field:"item_type_id", value: 1 },
+		  		{ field:"id", operator:"neq", value: 5 },
+		  		{ field:"id", operator:"neq", value: 6 }
+		  	]
+		}),  	
     	incomeAccountDS 		: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
 			filter:{
@@ -75912,15 +75802,24 @@
     	deleteDS 				: dataStore(apiUrl + "item_lines"),
     	numberDS 				: dataStore(apiUrl + "items"),
     	existingDS 				: dataStore(apiUrl + "items"),
-    	categoryDS 				: banhji.source.serviceCategoryDS,
     	itemGroupDS 			: dataStore(apiUrl + "items/group"),    	  	   	
     	measurementDS			: banhji.source.measurementDS,
-    	vendorDS 	 			: banhji.source.supplierDS,
-    	customerDS 	 			: banhji.source.customerDS,
     	itemVendorDS 	 		: dataStore(apiUrl + "items/contact"),
     	itemCustomerDS 	 		: dataStore(apiUrl + "items/contact"),
     	itemPriceDS 			: dataStore(apiUrl + "item_prices"),
-    	currencyDS 	 			: banhji.source.currencyDS,  	
+    	currencyDS 	 			: banhji.source.currencyDS,
+    	categoryDS 				: new kendo.data.DataSource({
+		  	data: banhji.source.categoryList,
+		  	filter: { field:"item_type_id", value: 4 }//Service
+		}),
+    	vendorDS  				: new kendo.data.DataSource({
+		  	data: banhji.source.supplierList,
+			sort: { field:"number", dir:"asc" }
+		}),
+		customerDS  			: new kendo.data.DataSource({
+		  	data: banhji.source.customerList,
+			sort: { field:"number", dir:"asc" }
+		}),  	
     	incomeAccountDS 		: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
 			filter:{
@@ -76328,16 +76227,25 @@
     	dataSource 				: dataStore(apiUrl + "items"),
     	patternDS 				: dataStore(apiUrl + "items"),
     	deleteDS 				: dataStore(apiUrl + "item_lines"),
-    	categoryDS 				: banhji.source.nonInventoryPartCategoryDS,
     	itemGroupDS 			: dataStore(apiUrl + "items/group"),
     	brandDS 	 			: dataStore(apiUrl + "brands"),    	   	   	
     	measurementDS			: dataStore(apiUrl + "measurements"),
     	numberDS 				: dataStore(apiUrl + "items"),
     	existingDS 				: dataStore(apiUrl + "items"),
-    	vendorDS 	 			: banhji.source.supplierDS,
-    	customerDS 	 			: banhji.source.customerDS,
     	itemVendorDS 	 		: dataStore(apiUrl + "items/contact"),
     	itemCustomerDS 	 		: dataStore(apiUrl + "items/contact"),
+    	vendorDS  				: new kendo.data.DataSource({
+		  	data: banhji.source.supplierList,
+			sort: { field:"number", dir:"asc" }
+		}),
+		customerDS  			: new kendo.data.DataSource({
+		  	data: banhji.source.customerList,
+			sort: { field:"number", dir:"asc" }
+		}),
+    	categoryDS 				: new kendo.data.DataSource({
+		  	data: banhji.source.categoryList,
+		  	filter: { field:"item_type_id", value: 2 }//Non Inventory
+		}),
     	inventoryAccountDS 		: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
 		  	filter: { field:"account_type_id", value: 13 },
@@ -76705,11 +76613,14 @@
     	dataSource 				: dataStore(apiUrl + "items"),
     	patternDS 				: dataStore(apiUrl + "items"),
     	deleteDS 				: dataStore(apiUrl + "item_lines"),
-    	categoryDS 				: banhji.source.fixedAssetCategoryDS,
     	measurementDS			: dataStore(apiUrl + "measurements"),
     	numberDS 				: dataStore(apiUrl + "items"),
     	existingDS 				: dataStore(apiUrl + "items"),
     	itemPriceDS 			: dataStore(apiUrl + "item_prices"),
+    	categoryDS 				: new kendo.data.DataSource({
+		  	data: banhji.source.categoryList,
+		  	filter: { field:"item_type_id", value: 3 }//Fixed Asset
+		}),
     	fixedAssetAccountDS 	: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
 		  	filter: { field:"account_type_id", value: 16 },
@@ -77174,12 +77085,75 @@
     banhji.itemAdjustment = kendo.observable({
     	lang 					: langVM,
     	dataSource  			: dataStore(apiUrl + "transactions"),	
-    	lineDS  				: dataStore(apiUrl + "item_lines"),
+    	lineDS  				: new kendo.data.DataSource({
+    		transport: {
+				read 	: {
+					url: apiUrl + "item_lines",
+					type: "GET",
+					headers: banhji.header,
+					dataType: 'json'
+				},
+				create 	: {
+					url: apiUrl + "item_lines",
+					type: "POST",
+					headers: banhji.header,
+					dataType: 'json'
+				},
+				update 	: {
+					url: apiUrl + "item_lines",
+					type: "PUT",
+					headers: banhji.header,
+					dataType: 'json'
+				},
+				destroy 	: {
+					url: apiUrl + "item_lines",
+					type: "DELETE",
+					headers: banhji.header,
+					dataType: 'json'
+				},
+				parameterMap: function(options, operation) {
+					if(operation === 'read') {
+						return {
+							page: options.page,
+							limit: options.pageSize,								
+							filter: options.filter,
+							sort: options.sort
+						};
+					} else {
+						return {models: kendo.stringify(options.models)};
+					}
+				}
+			},
+			schema 	: {
+				model: {
+					id: 'id'
+				},
+				data: 'results',
+				total: 'count'
+			},
+			batch: true,
+			serverFiltering: false,
+			serverSorting: false,
+			serverPaging: false,
+			page: 1,
+			pageSize: 20
+		}),
     	journalLineDS			: dataStore(apiUrl + "journal_lines"),
-    	attachmentDS	 		: dataStore(apiUrl + "attachments"),
-    	categoryDS 				: banhji.source.inventoryCategoryDS,			
-		itemDS  				: dataStore(apiUrl + "items"),
-		contactDS 				: banhji.source.employeeDS,
+    	attachmentDS	 		: dataStore(apiUrl + "attachments"),			
+		itemDS  				: dataStore(apiUrl + "items/on_hand"),
+		categoryDS 				: new kendo.data.DataSource({
+		  	data: banhji.source.categoryList,
+		  	filter: [
+		  		{ field:"item_type_id", value: 1 },
+		  		{ field:"id", operator:"neq", value: 5 },
+		  		{ field:"id", operator:"neq", value: 6 }
+		  	]
+		}),
+		contactDS  				: new kendo.data.DataSource({
+		  	data: banhji.source.employeeList,
+		  	filter:{ field: "item_type_id", value: 10 },//Employee
+			sort: { field:"number", dir:"asc" }
+		}),
 		accountDS  				: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
 			sort: { field:"number", dir:"asc" }
@@ -77198,8 +77172,7 @@
 		txnTemplateDS 			: new kendo.data.DataSource({
 		  	data: banhji.source.txnTemplateList,
 		  	filter:{ field: "type", value: "Item_Adjustment" }
-		}),
-		itemList 				: [],
+		}),		
 		obj 					: null,
 		isEdit 					: false,
 		saveClose 				: false,
@@ -78539,6 +78512,7 @@
 	        		if(e.type==="create"){
 	        			var response = e.response.results[0];	        			
 	        			self.addPattern(response.id, response.item_type_id);
+	        			banhji.source.loadCategories();
 	        		}
 	        	});
 

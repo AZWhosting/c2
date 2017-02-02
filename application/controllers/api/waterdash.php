@@ -201,9 +201,9 @@ class Waterdash extends REST_Controller {
 
 					foreach($line as $l) {
 						if($l->dr != 0.00) {
-							$deposit += $l->dr;
+							$deposit -= $l->dr;
 						} else {
-							$deposit -= $l->cr;
+							$deposit += $l->cr;
 						}
 					}				
 				}

@@ -35,9 +35,13 @@ class Items extends REST_Controller {
 		$obj = new Item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
 
 		//Sort
-		if(!empty($sort) && isset($sort)){					
+		if(!empty($sort) && isset($sort)){
 			foreach ($sort as $value) {
-				$obj->order_by($value["field"], $value["dir"]);
+				if(isset($value['operator'])){
+					$obj->{$value['operator']}($value["field"], $value["dir"]);
+				}else{
+					$obj->order_by($value["field"], $value["dir"]);
+				}
 			}
 		}
 		
@@ -385,6 +389,128 @@ class Items extends REST_Controller {
 
 		//Response data
 		$this->response($data, 200);
+	}
+
+	//GET ON HAND
+	function on_hand_get() {		
+		$filter 	= $this->get("filter");
+		$page 		= $this->get('page');
+		$limit 		= $this->get('limit');
+		$sort 	 	= $this->get("sort");
+		$data["results"] = [];
+		$data["count"] = 0;
+		$is_pattern = 0;
+
+		$obj = new Item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
+
+		//Sort
+		if(!empty($sort) && isset($sort)){
+			foreach ($sort as $value) {
+				if(isset($value['operator'])){
+					$obj->{$value['operator']}($value["field"], $value["dir"]);
+				}else{
+					$obj->order_by($value["field"], $value["dir"]);
+				}
+			}
+		}
+		
+		//Filter		
+		if(!empty($filter) && isset($filter)){
+	    	foreach ($filter['filters'] as $value) {
+	    		if(isset($value['operator'])) {
+					$obj->{$value['operator']}($value['field'], $value['value']);
+				} else {
+					if($value["field"]=="is_pattern"){
+	    				$is_pattern = $value["value"];
+	    			}else{
+	    				$obj->where($value["field"], $value["value"]);
+	    			}
+				}
+			}
+		}
+		
+		$obj->where("is_pattern", $is_pattern);
+		$obj->where("deleted <>", 1);			
+		
+		//Results
+		if($page && $limit){
+			$obj->get_paged_iterated($page, $limit);
+			$data["count"] = $obj->paged->total_rows;
+		}else{
+			$obj->get_iterated();
+			$data["count"] = $obj->result_count();
+		}
+
+		if($obj->exists()){
+			foreach ($obj as $value) {
+				//Sum On Hand
+				$onHand = 0;
+				if($value->item_type_id=="1"){
+					//Sum On Hand
+					$itemMovement = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);						
+					$itemMovement->where_in_related("transaction", "type", array("Cash_Purchase", "Credit_Purchase", "Commercial_Invoice", "Vat_Invoice", "Invoice", "Commercial_Cash_Sale", "Vat_Cash_Sale", "Cash_Sale", "Adjustment", "Internal_Usage"));
+					$itemMovement->where("item_id", $value->id);
+					$itemMovement->where_related("transaction", "is_recurring <>", 1);
+					$itemMovement->where_related("transaction", "deleted <>", 1);
+					$itemMovement->get_iterated();
+					
+					foreach ($itemMovement as $val) {
+						$onHand += ($val->quantity * $val->unit_value * $val->movement);
+					}
+				}
+
+				$data["results"][] = array(
+					"id" 						=> $value->id,
+					"company_id" 				=> $value->company_id,
+					"contact_id" 				=> $value->contact_id,
+					"currency_id" 				=> $value->currency_id,
+					"item_type_id"				=> $value->item_type_id,					
+					"category_id" 				=> $value->category_id,
+					"item_group_id"				=> $value->item_group_id,
+					"item_sub_group_id"			=> $value->item_sub_group_id,
+					"brand_id" 					=> $value->brand_id,					
+					"measurement_id" 			=> $value->measurement_id,					
+					"main_id" 					=> $value->main_id,
+					"abbr" 						=> $value->abbr,
+					"number" 					=> $value->number,
+					"international_code" 		=> $value->international_code,
+					"imei" 						=> $value->imei,
+					"serial_number" 			=> $value->serial_number,
+					"supplier_code"				=> $value->supplier_code,
+					"color_code" 				=> $value->color_code,
+				   	"name" 						=> $value->name,
+				   	"purchase_description" 		=> $value->purchase_description,
+				   	"sale_description" 			=> $value->sale_description,
+				   	"catalogs" 					=> explode(",",$value->catalogs),				   	
+				   	"cost" 						=> floatval($value->cost),
+				   	"price" 					=> floatval($value->price),
+				   	"amount" 					=> floatval($value->amount),
+				   	"rate" 						=> floatval($value->rate),
+				   	"locale" 					=> $value->locale,
+				   	"on_hand" 					=> $onHand,
+				   	"on_po" 					=> floatval($value->on_po),
+				   	"on_so" 					=> floatval($value->on_so),
+				   	"order_point" 				=> intval($value->order_point),
+				   	"income_account_id" 		=> $value->income_account_id,
+				   	"expense_account_id"		=> $value->expense_account_id,
+				   	"inventory_account_id"		=> $value->inventory_account_id,   				   	
+				   	"preferred_vendor_id" 		=> $value->preferred_vendor_id,
+				   	"image_url" 				=> $value->image_url,
+				   	"favorite" 					=> $value->favorite=="true"?true:false,
+				   	"is_catalog" 				=> $value->is_catalog,
+				   	"is_assembly" 				=> $value->is_assembly,
+				   	"is_pattern" 				=> intval($value->is_pattern),				  
+				   	"status" 					=> $value->status,
+				   	"deleted" 					=> $value->deleted,
+				   	"is_system" 				=> $value->is_system
+				);
+			}
+		}
+		$data['pageSize'] = $limit;
+		$data['skip'] = $limit * $page;	
+
+		//Response Data		
+		$this->response($data, 200);	
 	}
 	
 
