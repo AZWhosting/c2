@@ -33702,11 +33702,11 @@
                    data-bind="value: cost"
                    style="text-align: right; width: 150px;" #=cost>0?disabled="disabled":""# >    		
     	</td>
-    	<td align="right">#=kendo.toString(on_hand, "n")#</td>
+    	<td align="right">#=kendo.toString(on_hand, "n2")#</td>
     	<td align="right">
     		<input class="txt#=uid#"
     			   data-role="numerictextbox"
-                   data-format="n"
+                   data-format="n2"
                    data-min="0"
                    data-spinners="false"                   
                    data-bind="value: quantity_adjusted,
@@ -33714,7 +33714,7 @@
                    style="text-align: right; width: 100px;">    		
     	</td>
     	<td align="right">
-    		<span data-format="n" data-bind="text: quantity"></span>
+    		<span data-format="n2" data-bind="text: quantity"></span>
     	</td>
     </tr>
 </script>
@@ -52939,7 +52939,7 @@
 		typeChanges 			: function(){
 			var obj = this.get("obj");
 
-			if(obj.contact_type_id){
+			if(obj.contact_type_id && obj.isNew()){
 				this.applyPattern();
 				this.generateNumber();
 			}
@@ -60185,7 +60185,7 @@
 		typeChanges 			: function(){
 			var obj = this.get("obj");
 
-			if(obj.contact_type_id){
+			if(obj.contact_type_id && obj.isNew()){
 				this.applyPattern();
 				this.generateNumber();
 			}
@@ -75021,7 +75021,7 @@
 		categoryChanges 		: function(){
 			var obj = this.get("obj");
 
-			if(obj.category_id){
+			if(obj.category_id && obj.isNew()){
 				this.loadPattern();
 				this.generateNumber();
 			}
@@ -75957,7 +75957,7 @@
 		categoryChanges 		: function(){
 			var obj = this.get("obj");
 
-			if(obj.category_id){
+			if(obj.category_id && obj.isNew()){
 				this.loadPattern();
 				this.generateNumber();
 			}
@@ -76372,7 +76372,7 @@
 		categoryChanges 		: function(){
 			var obj = this.get("obj");
 
-			if(obj.category_id){
+			if(obj.category_id && obj.isNew()){
 				this.loadPattern();
 				this.generateNumber();
 			}
@@ -76749,7 +76749,7 @@
 		categoryChanges 		: function(){
 			var obj = this.get("obj");
 
-			if(obj.category_id){
+			if(obj.category_id && obj.isNew()){
 				this.loadPattern();				
 				this.generateNumber();
 			}
@@ -77342,6 +77342,7 @@
 						on_hand 			: value.on_hand,
 						quantity_adjusted 	: "",				
 						quantity 	 		: 0,
+						unit_value 			: 1,
 						cost 				: value.cost,
 						additional_cost 	: 0,
 						rate				: banhji.source.getRate(value.locale, new Date(obj.issued_date)),
@@ -77363,15 +77364,15 @@
       		var data = e.data;            
             
             if(data.quantity_adjusted){
-            	var diff = data.quantity_adjusted - data.on_hand;
-
-            	data.set("quantity", diff);         
+            	var diff = data.quantity_adjusted - data.on_hand;            	         
 		        
 		        if(diff>0){
 		        	data.set("movement", 1);
 		        }else{
 		        	data.set("movement", -1);
 		        }
+
+		        data.set("quantity", Math.abs(diff));
 			}			
 			
 			var index = this.lineDS.indexOf(data);
@@ -77402,17 +77403,14 @@
 						    	
 		    	self.set("obj", view[0]);		    	
 		    	self.journalLineDS.filter({ field:"transaction_id", value: id });
-		    	self.lineDS.filter({ field:"transaction_id", value: id });
-		    	self.lineDS.bind("requestEnd", function(e){
-		    		if(e.type=="read"){
-		    			var response = e.response.results;
 
-		    			$.each(response, function(index, value){		    				
-		    				var qty = value.quantity*value.movement;
-		    				value.quantity = qty;
-		    			});
-		    		}
-		    	});
+		    	var filter = {
+		    		filters: [
+		    			{field: "transaction_id", value: id}
+		    		]
+		    	};
+		    	self.lineDS.transport.options.read.data={"filter":filter};
+				self.lineDS.read();
 			});
     	},
         addEmpty 		 		: function(){							
@@ -77456,26 +77454,29 @@
 		    });
 
 		    return dfd;	    		    	
-	    },			
+	    },		
 		save 					: function(){			
 			var self = this, obj = this.get("obj");
 			obj.set("issued_date", kendo.toString(new Date(obj.issued_date), "s"));
 
-			//Remove empty row
-			$.each(this.lineDS.view(), function(index, value){
-		  		if(!value.quantity_adjusted){
-		  			self.lineDS.remove(value);
-		  		}
-		  	});
+			//Remove Empty Row
+			var raw = this.lineDS.data();			
+		    var item, i;
+		    for(i=raw.length-1; i>=0; i--){
+		    	item = raw[i];
+		    	
+		    	if (item.quantity_adjusted=="") {
+			       	this.lineDS.remove(item);
+			    }
+		    }
 
-			//Save Obj
+			// Save Obj
 			this.objSync()
 			.then(function(data){ //Success												
 				if(self.get("isEdit")==false){
 					//Item Line
 					$.each(self.lineDS.data(), function(index, value){						
-	      				value.set("transaction_id", data[0].id);
-	      				value.set("quantity", Math.abs(value.quantity));	      				
+	      				value.set("transaction_id", data[0].id);     				
 	      			});
 
 	      			//Attachment
@@ -77535,9 +77536,9 @@
 				accountID = item.inventory_account_id,
 				itemRate = banhji.source.getRate(item.locale, new Date(obj.issued_date));
 
-				var itemCost = (value.quantity*value.unit_value)*(kendo.parseFloat(item.cost)/itemRate);
+				var itemCost = (value.quantity*value.unit_value)*value.movement*(kendo.parseFloat(item.cost)/itemRate);
 				if(itemCost==0){
-					itemCost = (value.quantity*value.unit_value)*(value.cost/itemRate);
+					itemCost = (value.quantity*value.unit_value)*value.movement*(value.cost/itemRate);
 				}
 				
 				if(inventoryList[accountID]===undefined){

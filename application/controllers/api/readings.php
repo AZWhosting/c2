@@ -18,6 +18,7 @@ class Readings extends REST_Controller {
 			$this->server_user = $conn->username;
 			$this->server_pwd = $conn->password;	
 			$this->_database = $conn->inst_database;
+			date_default_timezone_set("$conn->time_zone");
 		}
 		// $this->_database = 'db_banhji';
 	}
@@ -106,6 +107,7 @@ class Readings extends REST_Controller {
 				$obj->previous 				= isset($value->previous)			?$value->previous: "";
 				$obj->current 				= isset($value->current)			?$value->current: "";
 				$obj->from_date 			= isset($value->from_date)			?$value->from_date: "";
+				$obj->month_of 				= isset($value->month_of)			?$value->month_of: "";
 				$obj->to_date 				= isset($value->to_date)			?$value->to_date: "";
 				
 				$obj->usage    = intval($value->current) - intval($value->previous);
@@ -131,6 +133,7 @@ class Readings extends REST_Controller {
 					"current"		=> $obj->current,
 					"usage"	 		=> $obj->current - $obj->previous,
 					"from_date"		=> $obj->from_date,
+					"month_of"		=> $obj->month_of,
 					"to_date"		=> $obj->to_date
 				);				
 			}			

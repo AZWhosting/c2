@@ -448,7 +448,7 @@ class Items extends REST_Controller {
 				if($value->item_type_id=="1"){
 					//Sum On Hand
 					$itemMovement = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);						
-					$itemMovement->where_in_related("transaction", "type", array("Cash_Purchase", "Credit_Purchase", "Commercial_Invoice", "Vat_Invoice", "Invoice", "Commercial_Cash_Sale", "Vat_Cash_Sale", "Cash_Sale", "Adjustment", "Internal_Usage"));
+					$itemMovement->where_in_related("transaction", "type", array("Cash_Purchase", "Credit_Purchase", "Commercial_Invoice", "Vat_Invoice", "Invoice", "Commercial_Cash_Sale", "Vat_Cash_Sale", "Cash_Sale", "Item_Adjustment", "Internal_Usage"));
 					$itemMovement->where("item_id", $value->id);
 					$itemMovement->where_related("transaction", "is_recurring <>", 1);
 					$itemMovement->where_related("transaction", "deleted <>", 1);

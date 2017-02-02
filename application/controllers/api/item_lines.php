@@ -29,7 +29,7 @@ class Item_lines extends REST_Controller {
 		$sort 	 	= $this->get("sort");
 		$data["results"] = [];
 		$data["count"] = 0;
-
+		
 		$obj = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
 		//Sort
@@ -219,12 +219,12 @@ class Item_lines extends REST_Controller {
 			isset($value->measurement_id)	? $obj->measurement_id		= $value->measurement_id : "";
 			isset($value->tax_item_id)		? $obj->tax_item_id			= $value->tax_item_id : "";
 		   	isset($value->description)		? $obj->description 		= $value->description : "";
-		   	// isset($value->on_hand)			? $obj->on_hand 			= $value->on_hand : "";
+		   	isset($value->on_hand)			? $obj->on_hand 			= $value->on_hand : "";
 		   	// isset($value->on_po)			? $obj->on_po 				= $value->on_po : "";
 		   	// isset($value->on_so)			? $obj->on_so 				= $value->on_so : "";
 		   	isset($value->quantity)			? $obj->quantity 			= $value->quantity : "";
 		   	isset($value->quantity_adjusted)? $obj->quantity_adjusted 	= $value->quantity_adjusted : "";
-		   	isset($value->unit_value)		? $obj->unit_value 			= $value->unit_value : "";
+		   	isset($value->unit_value)		? $obj->unit_value 			= $value->unit_value : $obj->unit_value = 1;
 		   	isset($value->cost)				? $obj->cost 				= $value->cost : "";
 		   	isset($value->price)			? $obj->price 				= $value->price : "";
 		   	//isset($value->price_avg)		? $obj->price_avg 			= $value->price_avg : "";

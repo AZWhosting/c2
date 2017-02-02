@@ -50067,7 +50067,7 @@
 		search 				: function(){
 			var self = this, as_of = this.get("as_of");
 			this.set("totalLiabilityEquity", 0);
-			var totalAll = 0, totalCurrent = 0, totalLi = 0, totalEq = 0, totalAsCu = 0;
+			var totalAll = 0, totalCurrent = 0, totalLi = 0, totalEq = 0, totalAsCu = 0, totalBlock = 0;
 			if(as_of){
 				as_of = new Date(as_of);
 				var displayDate = "As Of " + kendo.toString(as_of, "dd-MM-yyyy");
@@ -50144,14 +50144,16 @@
 								    totalCurrent += kendo.parseFloat(response.results[i].typeLine[j].line[k].amount);
 							    	totalAll += kendo.parseFloat(response.results[i].typeLine[j].line[k].amount);
 							    	totalAsCu += kendo.parseFloat(response.results[i].typeLine[j].line[k].amount);
+							    	totalBlock += kendo.parseFloat(response.results[i].typeLine[j].line[k].amount);
 							    }
 							    self.exArray.push({
 							        cells: [
 							          	{ value: "Total " + response.results[i].typeLine[j].type, bold: true },
-							            { value: totalCurrent, bold: true, borderTop: { color: "#000000", size: 1 } },
+							            { value: totalBlock, bold: true, borderTop: { color: "#000000", size: 1 } },
 							            { value: "" }
 							        ]
 							    });
+							    totalBlock = 0;
 							    self.exArray.push({
 							        cells: [
 							          	{ value: "" },
@@ -50233,16 +50235,18 @@
 								            { value: "" }
 								        ]
 								    });
+								    totalBlock += kendo.parseFloat(response.results[i].typeLine[j].line[k].amount);
 								    totalLi += kendo.parseFloat(response.results[i].typeLine[j].line[k].amount);
 							    	totalAll += kendo.parseFloat(response.results[i].typeLine[j].line[k].amount);
 							    }
 							    self.liArray.push({
 							        cells: [
 							          	{ value: "Total " + response.results[i].typeLine[j].type, bold: true },
-							            { value: totalLi, bold: true, borderTop: { color: "#000000", size: 1 } },
+							            { value: totalBlock, bold: true, borderTop: { color: "#000000", size: 1 } },
 							            { value: "" }
 							        ]
 							    });
+							    totalBlock = 0;
 							    self.liArray.push({
 							        cells: [
 							          	{ value: "" },
@@ -50319,16 +50323,18 @@
 								            { value: "" }
 								        ]
 								    });
+								    totalBlock += kendo.parseFloat(response.results[i].typeLine[j].line[k].amount);
 								    totalEq += kendo.parseFloat(response.results[i].typeLine[j].line[k].amount);
 							    	totalAll += kendo.parseFloat(response.results[i].typeLine[j].line[k].amount);
 							    }
 							    self.eqArray.push({
 							        cells: [
 							          	{ value: "Total " + response.results[i].typeLine[j].type, bold: true },
-							            { value: totalEq, bold: true, borderTop: { color: "#000000", size: 1 } },
+							            { value: totalBlock, bold: true, borderTop: { color: "#000000", size: 1 } },
 							            { value: "" }
 							        ]
 							    });
+							    totalBlock = 0;
 							    self.eqArray.push({
 							        cells: [
 							          	{ value: "" },
