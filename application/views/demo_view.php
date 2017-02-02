@@ -72576,7 +72576,7 @@
 					description 		: "",
 					reference_no 		: "",
 					segments 	 		: [],								
-					dr 	 				: value.amount,
+					dr 	 				: value.amount + Math.abs(overAmount),
 					cr 					: 0,				
 					rate				: value.rate,
 					locale				: value.locale
@@ -72621,7 +72621,7 @@
 						reference_no 		: "",
 						segments 	 		: [],								
 						dr 	 				: 0,
-						cr 					: overAmount*-1,				
+						cr 					: Math.abs(overAmount),				
 						rate				: value.rate,
 						locale				: value.locale
 					});
@@ -73097,7 +73097,7 @@
 						description 		: "",
 						reference_no 		: "",
 						segments 	 		: [],								
-						dr 	 				: overAmount*-1,
+						dr 	 				: Math.abs(overAmount),
 						cr 					: 0,				
 						rate				: value.rate,
 						locale				: value.locale
@@ -73113,7 +73113,7 @@
 					reference_no 		: "",
 					segments 	 		: [],								
 					dr 	 				: 0,
-					cr 					: value.amount,				
+					cr 					: value.amount + Math.abs(overAmount),				
 					rate				: value.rate,
 					locale				: value.locale
 				});
@@ -77199,6 +77199,7 @@
 		  	data: banhji.source.txnTemplateList,
 		  	filter:{ field: "type", value: "Item_Adjustment" }
 		}),
+		itemList 				: [],
 		obj 					: null,
 		isEdit 					: false,
 		saveClose 				: false,

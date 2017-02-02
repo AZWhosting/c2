@@ -20,7 +20,7 @@ class Installments extends REST_Controller {
 			$this->server_pwd = $conn->password;
 			$this->_database = $conn->inst_database;
 		}
-		$this->_database = "db_banhji";
+		// $this->_database = "db_banhji";
 	}
 
 	//GET
