@@ -19737,17 +19737,17 @@
 							    <!-- Tabs Heading -->
 							    <div class="tabsbar tabsbar-2">
 							        <ul class="row-fluid row-merge">
-							        	<li class="span1 glyphicons cogwheels active"><a href="#tab1-5" data-toggle="tab"><i></i></a>
+							        	<li class="span1 glyphicons cogwheels active"><a href="#tab1-6" data-toggle="tab"><i></i></a>
 							            </li>
-							            <li class="span1 glyphicons adress_book"><a href="#tab2-5" data-toggle="tab"><i></i></a>
+							            <li class="span1 glyphicons adress_book"><a href="#tab2-6" data-toggle="tab"><i></i></a>
 							            </li>
-							            <li class="span1 glyphicons circle_info"><a href="#tab3-5" data-toggle="tab"><i></i></a>
+							            <li class="span1 glyphicons circle_info"><a href="#tab3-6" data-toggle="tab"><i></i></a>
 							            </li>
-							            <li class="span1 glyphicons paperclip"><a href="#tab4-5" data-toggle="tab"><i></i></a>
+							            <li class="span1 glyphicons paperclip"><a href="#tab4-6" data-toggle="tab"><i></i></a>
 							            </li>						            
-							            <li class="span1 glyphicons history"><a href="#tab5-5" data-toggle="tab"><i></i></a>
+							            <li class="span1 glyphicons history"><a href="#tab5-6" data-toggle="tab"><i></i></a>
 							            </li>
-							            <!-- <li class="span1 glyphicons show_liness"><a href="#tab5-6" data-toggle="tab"><i></i></a></li> -->						            								            
+							            <!-- <li class="span1 glyphicons show_liness"><a href="#tab6-6" data-toggle="tab"><i></i></a></li> -->						            								            
 							        </ul>
 							    </div>
 							    <!-- // Tabs Heading END -->
@@ -19921,7 +19921,7 @@
 							        <!-- Recuring Tab content -->
 							        <div class="tab-pane" id="tab5-5">							            	
 							            
-							             <table style="width: 100%" class="table borderless">
+							            <table style="width: 100%" class="table borderless">
 							            	<tr align="right">
 							            		<td style="border-top: 0;">
 							            			<span data-bind="text: lang.lang.name"></span>
@@ -33464,13 +33464,15 @@
 							    <!-- Tabs Heading -->
 							    <div class="tabsbar tabsbar-2">
 							        <ul class="row-fluid row-merge">
-							        	<li class="span1 glyphicons cogwheels active"><a href="#tab1-4" data-toggle="tab"><i></i> </a>
+							        	<li class="span1 glyphicons cogwheels active"><a href="#tab1-6" data-toggle="tab"><i></i> </a>
 							            </li>						            
-							            <li class="span1 glyphicons pen"><a href="#tab2-4" data-toggle="tab"><i></i></a>
+							            <li class="span1 glyphicons pen"><a href="#tab2-6" data-toggle="tab"><i></i></a>
 							            </li>
-							            <li class="span1 glyphicons circle_info"><a href="#tab3-4" data-toggle="tab"><i></i></a>
+							            <li class="span1 glyphicons circle_info"><a href="#tab3-6" data-toggle="tab"><i></i></a>
 								        </li>
-							            <li class="span1 glyphicons paperclip"><a href="#tab4-4" data-toggle="tab"><i></i></a>
+							            <li class="span1 glyphicons paperclip"><a href="#tab4-6" data-toggle="tab"><i></i></a>
+							            </li>
+							            <li class="span1 glyphicons history"><a href="#tab5-6" data-toggle="tab"><i></i></a>
 							            </li>
 							            <!-- <li class="span1 glyphicons show_liness"><a href="#tab4-5" data-toggle="tab"><i></i></a></li> -->		            								            
 							        </ul>
@@ -33480,7 +33482,7 @@
 							    <div class="tab-content">
 
 							    	<!-- Options Tab content -->
-							        <div class="tab-pane active" id="tab1-4">						            
+							        <div class="tab-pane active" id="tab1-6">						            
 							            <table style="margin-bottom: 0;" class="table table-borderless table-condensed cart_total">
 							            	<tr>
 												<td><span data-bind="text: lang.lang.date"></span></td>
@@ -33532,7 +33534,7 @@
 							        <!-- // Options Tab content END -->
 
 							        <!-- Memo Tab content -->
-							        <div class="tab-pane" id="tab2-4">
+							        <div class="tab-pane" id="tab2-6">
 							        	<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.memo2" placeholder="memo for internal ..."></textarea>
 										<br>						
 										<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.memo" placeholder="memo for external ..."></textarea>
@@ -33540,7 +33542,7 @@
 							        <!-- // Memo Tab content END -->
 
 							        <!-- Info Tab content -->
-							        <div class="tab-pane" id="tab3-4">
+							        <div class="tab-pane" id="tab3-6">
 							        	
 										<table class="table table-borderless table-condensed cart_total">							            					            	
 											<tr>
@@ -33582,7 +33584,7 @@
 							        <!-- // Info Tab content END -->
 							        
 							        <!-- Attach Tab content -->
-							        <div class="tab-pane" id="tab4-4">
+							        <div class="tab-pane" id="tab4-6">
 							         	<p><span data-bind="text: lang.lang.file_type"></span> [PDF, JPG, JPEG, TIFF, PNG, GIF]</p>							            	
 							            
 							            <input id="files" name="files"
@@ -33609,9 +33611,106 @@
 									    </table>
 
 							        </div>
-							        <!-- // Attach Tab content END -->							        
+							        <!-- // Attach Tab content END -->
 
-							        <div class="tab-pane saleSummaryCustomer" id="tab4-5">
+							        <!-- Recuring Tab content -->
+							        <div class="tab-pane" id="tab5-6">							            	
+							            
+							            <table style="width: 100%" class="table borderless">
+							            	<tr align="right">
+							            		<td style="border-top: 0;">
+							            			<span data-bind="text: lang.lang.name"></span>
+							            		</td>
+							            		<td style="border-top: 0;">
+							            			<input id="txtRecurringName" name="txtRecurringName"
+							            					class="k-textbox" 
+							            					data-bind="value: obj.recurring_name" 
+							            					placeholder="Recurring name.." 
+							            					style="width: 43%; " />
+
+							            			<span data-bind="text: lang.lang.start"></span>
+
+									                <input data-role="datepicker"
+															data-format="dd-MM-yyyy"
+															data-parse-formats="yyyy-MM-dd"
+															data-bind="value: obj.start_date"
+															style="width: 40%; " />
+							            		</td>
+							            	</tr>
+							            	<tr align="right">
+							            		<td style="border-top: 0;">
+								            		<span data-bind="text: lang.lang.every"></span>
+								            	</td>
+							            		<td style="border-top: 0;">
+								            		<input data-role="numerictextbox"
+									                   data-format="n0"
+									                   data-min="0"								                   
+									                   data-bind="value: obj.interval"
+									                   style="width: 45%; " />
+
+								            		<input data-role="dropdownlist"									                   
+										                   data-value-primitive="true"
+										                   data-text-field="name"
+										                   data-value-field="id"
+										                   data-bind="value: obj.frequency,
+										                              source: frequencyList,
+										                              events: { change: frequencyChanges }"
+										                   style="width: 45%;" />
+								            	</td>
+							            	</tr>
+								            <tr align="right">
+								            	<td style="border-top: 0;">
+								            		<span data-bind="text: lang.lang.on"></span>
+								            	</td>							            	
+								            	<td style="border-top: 0;">
+
+								            		<input data-role="dropdownlist"									                   
+										                   data-value-primitive="true"
+										                   data-text-field="name"
+										                   data-value-field="id"
+										                   data-bind="value: obj.month,
+										                   			  visible: showMonth,
+										                              source: monthList"										                   
+										                   style="width: 45%;" />
+
+								            		<input data-role="dropdownlist"									                   
+										                   data-value-primitive="true"
+										                   data-text-field="name"
+										                   data-value-field="id"
+										                   data-bind="value: obj.month_option,
+										                   			  visible: showMonthOption,
+										                              source: monthOptionList,
+										                              events: { change: monthOptionChanges }"										                   
+										                   style="width: 45%;" />
+
+								            		<input data-role="dropdownlist"									                   
+										                   data-value-primitive="true"
+										                   data-text-field="name"
+										                   data-value-field="id"
+										                   data-bind="value: obj.week,
+										                   			  visible: showWeek,
+										                              source: weekDayList"										                  
+										                   style="width: 45%;" />										            
+										        
+								            		<input data-role="dropdownlist"									                   
+										                   data-value-primitive="true"
+										                   data-text-field="name"
+										                   data-value-field="id"
+										                   data-bind="value: obj.day,
+										                   			  visible: showDay,
+										                              source: dayList"										                   
+										                   style="width: 45%;" />
+
+								            	</td>
+								            </tr>
+							            </table>
+
+							            <span id="saveRecurring" class="btn btn-icon btn-default glyphicons history" style="float: right; margin-top: -12px;"><i></i> <span data-bind="text: lang.lang.save_recurring"></span></span>									     
+							            
+							        </div>
+							        <!-- // Recuring Tab content END -->							        
+
+							        <div class="tab-pane saleSummaryCustomer" id="tab6-6">
 										<table class="table table-borderless table-condensed">
 									        <thead>
 									            <tr>
@@ -34276,6 +34375,55 @@
 			</td>
 	    </tr>
     #}#   
+</script>
+<script id="itemRecurring" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">					
+				<div id="example" class="k-content">
+
+		    		<span class="glyphicons no-js remove_2 pull-right" 
+		    				onclick="javascript:window.history.back()"><i></i></span>
+
+				    <h2>Inventory Recurring</h2>
+
+				    <br>				    
+					                           					
+	            	<table class="table table-bordered table-primary table-striped table-vertical-center">
+	            		<thead style="background-color: blue; color: #fff; font-weight: bold">
+			                <th>TYPE</th>
+			                <th>RECURRING NAME</th>
+			                <th>START DATE</th>
+			                <th class="center">FREQUENCY</th>
+			                <th></th>
+	            		</thead>
+	            		<tbody data-role="listview" 
+				        		data-template="itemRecurring-template" 
+				        		data-auto-bind="false"
+				        		data-bind="source: dataSource"></tbody>
+	            	</table>
+
+	            	<div id="pager" class="k-pager-wrap"
+			             data-role="pager" 
+			             data-auto-bind="false"
+			             data-bind="source: dataSource"></div>
+
+	            </div>	            						
+			</div>
+		</div>
+	</div>
+</script>
+<script id="itemRecurring-template" type="text/x-kendo-tmpl">		
+	<tr data-uid="#: uid #">
+		<td>#=type#</td>
+		<td>#=recurring_name#</td>
+		<td>#=kendo.toString(new Date(start_date), "dd-MM-yyyy")#</td>
+		<td class="center">#=frequency#</td>
+		<td class="center">
+			<a class="btn btn-warning" data-bind="click: edit"><i></i> Edit</a>
+			<a class="btn btn-success" data-bind="click: use"><i></i> Use</a>
+		</td>		
+    </tr>   
 </script>
 
 <script id="itemSetting" type="text/x-kendo-template">
@@ -36549,87 +36697,6 @@
    </tr>
 </script>
 
-<script id="itemRecurring" type="text/x-kendo-template">
-	<div id="slide-form">
-		<div class="customer-background">
-			<div class="container-960">					
-				<div id="example" class="k-content">
-
-					<div class="hidden-print">
-				    	<div class="pull-right">
-
-				    		<span class="glyphicons no-js remove_2 pull-right" 
-	    				onclick="javascript:window.history.back()"
-						data-bind="click: cancel"><i></i></span>						
-						</div>
-
-				        <h2>Products/Services Recurring</h2>				        				        				        	
-				    </div>			   
-
-				    <br>
-
-				    <div data-role="window"
-		                 data-title="Job"		                 
-		                 data-width="600"
-		                 data-actions="{}"
-		                 data-position="{top: '30%', left: '30%'}"
-		                 data-height="300"
-		                 data-bind="visible: isVisible">
-
-						<table class="table table-bordered table-primary table-striped table-vertical-center">							
-							<tr>
-								<td>Name</td>
-								<td>
-									<input class="k-textbox" placeholder="type name ..." data-bind="value: obj.name" style="width: 100%;">
-								</td>
-							</tr>
-							<tr>
-								<td>Description</td>
-								<td>
-									<input class="k-textbox" placeholder="type description ..." data-bind="value: obj.description" style="width: 100%;">
-								</td>
-							</tr>
-							<tr>
-								<td>Customer</td>
-								<td>
-									<input data-role="combobox"
-										   data-template="contact-list-tmpl"				            			               			   		                   
-						                   data-value-primitive="true"
-						                   data-text-field="name"						                   
-						                   data-value-field="id"
-						                   data-bind="value: obj.contact_id,
-						                              source: contactDS"
-						                   style="width: 100%;" />
-								</td>
-							</tr>							
-						</table>
-
-						<br>
-
-						<div align="center">
-							<span class="btn btn-icon btn-primary glyphicons ok_2" data-bind="click: save" style="width: 80px;"><i></i> Save</span>
-							<span class="btn btn-icon btn-danger glyphicons remove_2" data-bind="click: closeWindow" style="width: 80px;"><i></i> Close</span>						
-						</div>
-					</div>
-					
-					                           					
-	            	<table class="table table-bordered table-primary table-striped table-vertical-center">
-	            		<thead style="background-color: blue; color: #fff; font-weight: bold">
-	            			<th style="width: 1%;">No.</th>
-			                <th>TEMPLATE NAME</th>
-			                <th>NAME</th>
-			                <th class="center" style="width: 10%">TYPE</th>
-			                <th class="center">START DATE</th>
-			                <th class="center">FREQUENCY</th>
-			                <th></th>
-	            		</thead>
-	            		<tbody ></tbody>
-	            	</table>
-	            </div>	            						
-			</div>
-		</div>
-	</div>
-</script>
 
 
 
@@ -41884,8 +41951,8 @@
   				<li><a href='#/gdn'><span data-bind="text: lang.lang.add_delivery_note"></span></a></li>
   				<li><a href='#/item_adjustment'><span data-bind="text: lang.lang.create_item_adjustment"></span></a></li>  				
   				<li><a href='#/internal_usage'><span data-bind="text: lang.lang.create_internal_usage"></span></a></li>	
-  				<!-- <li> <span class="li-line"></span></li>  -->	
-  				<!-- <li><a href='#/item_recurring'>Inventory Recurring List</a></li>-->
+  				<li><span class="li-line"></span></li> 	
+  				<li><a href='#/item_recurring'>Inventory Recurring List</a></li>
   				<li><a href='#/imports'><span ></span>Imports</a></li>
   			</ul>
 	  	</li>	  	  	
@@ -46952,7 +47019,7 @@
 		            });
 
 					//Add Journal
-		            if(obj.is_recurring==0){		            	
+		            if(data[0].is_recurring==0){		            	
 		            	self.addJournal(data[0].id);
 		        	}
 				}
@@ -47752,7 +47819,7 @@
 		            });
 
 					//Add Journal
-		            if(obj.is_recurring==0){		            	
+		            if(data[0].is_recurring==0){		            	
 		            	self.addJournal(data[0].id);
 		        	}
 				}
@@ -55119,7 +55186,7 @@
 		            });
 
 					//Add Journal
-		            if(obj.is_recurring==0){		            	
+		            if(data[0].is_recurring==0){		            	
 		            	self.addJournal(data[0].id);
 		        	}
 				}
@@ -62746,7 +62813,7 @@
 		            });
 
 					//Journal
-					if(obj.is_recurring==0){			            
+					if(data[0].is_recurring==0){			            
 			            self.addJournal(data[0].id);
 			        }
 				}
@@ -64015,7 +64082,7 @@
 		            });
 
 					//Journal
-					if(obj.is_recurring==0){
+					if(data[0].is_recurring==0){
 			            self.addJournal(data[0].id);
 			        }
 				}
@@ -65234,7 +65301,7 @@
 				if(this.get("recurring")=="edit"){
 					this.set("recurring","");
 					para.push({ field:"is_recurring", value: 1 });
-				}			
+				}
 
 				this.dataSource.query({    			
 					filter: para,
@@ -65570,7 +65637,7 @@
 		            });
 
 					//Journal
-					if(obj.is_recurring==0){
+					if(data[0].is_recurring==0){
 			            self.addJournal(data[0].id);
 		        	}
 				}
@@ -77084,8 +77151,13 @@
     });
     banhji.itemAdjustment = kendo.observable({
     	lang 					: langVM,
-    	dataSource  			: dataStore(apiUrl + "transactions"),	
-    	lineDS  				: new kendo.data.DataSource({
+    	dataSource  			: dataStore(apiUrl + "transactions"),
+    	recurringDS 			: dataStore(apiUrl + "transactions"),
+		recurringLineDS 		: dataStore(apiUrl + "item_lines"),    	
+    	journalLineDS			: dataStore(apiUrl + "journal_lines"),
+    	attachmentDS	 		: dataStore(apiUrl + "attachments"),			
+		itemDS  				: dataStore(apiUrl + "items/on_hand"),
+		lineDS  				: new kendo.data.DataSource({
     		transport: {
 				read 	: {
 					url: apiUrl + "item_lines",
@@ -77138,9 +77210,6 @@
 			page: 1,
 			pageSize: 20
 		}),
-    	journalLineDS			: dataStore(apiUrl + "journal_lines"),
-    	attachmentDS	 		: dataStore(apiUrl + "attachments"),			
-		itemDS  				: dataStore(apiUrl + "items/on_hand"),
 		categoryDS 				: new kendo.data.DataSource({
 		  	data: banhji.source.categoryList,
 		  	filter: [
@@ -77172,11 +77241,25 @@
 		txnTemplateDS 			: new kendo.data.DataSource({
 		  	data: banhji.source.txnTemplateList,
 		  	filter:{ field: "type", value: "Item_Adjustment" }
-		}),		
+		}),
+		recurringItemList 		: [],
+		confirmMessage 			: banhji.source.confirmMessage,
+		frequencyList 			: banhji.source.frequencyList,
+		monthOptionList 		: banhji.source.monthOptionList,
+		monthList 				: banhji.source.monthList,
+		weekDayList 			: banhji.source.weekDayList,
+		dayList 				: banhji.source.dayList,
+		showMonthOption 		: false,
+		showMonth 				: false,
+		showWeek 				: false,
+		showDay 				: false,		
 		obj 					: null,
 		isEdit 					: false,
 		saveClose 				: false,
 		savePrint 				: false,
+		saveRecurring 			: false,
+		recurring_validate 		: false,
+		recurring 				: "",
 		searchText 				: "",
 		category_id 			: null,
 		user_id					: banhji.source.user_id,
@@ -77306,8 +77389,17 @@
 			var self = this,
 			para = [],
 			obj = this.get("obj"),
+			recurringItemList = this.get("recurringItemList"),
 			category_id = this.get("category_id"),
 			searchText = this.get("searchText");
+			
+			if(this.lineDS.total()>0){
+				var existingIds = [];
+				$.each(this.lineDS.data(), function(index, value){
+					existingIds.push(value.item_id);
+				});
+				para.push({ field:"id", operator:"where_not_in", value:existingIds });				
+			}
 
             if(searchText!==""){
 				var textParts = searchText.replace(/([a-z]+)/i, "$1 ").split(/[^0-9a-z]+/ig);
@@ -77322,6 +77414,10 @@
 				para.push({ field:"category_id", value:category_id });
 			}
 
+			if(recurringItemList.length>0){
+				para.push({ field:"id", operator:"where_in", value:recurringItemList });
+			}
+
 			para.push({ field:"item_type_id", value:1 });
 			para.push({ field:"is_catalog", value: 0 });
 			para.push({ field:"is_assembly", value: 0 });
@@ -77329,9 +77425,7 @@
             this.itemDS.query({
             	filter: para
             }).then(function(data){
-            	var view = self.itemDS.view();
-
-            	self.lineDS.data([]);
+            	var view = self.itemDS.view();            	
 
             	$.each(view, function(index, value){
             		self.lineDS.add({
@@ -77354,6 +77448,11 @@
 
             this.set("searchText", "");
             this.set("category_id", null);
+
+            //Clear array
+			if(recurringItemList.length>0){
+				recurringItemList.splice(0,recurringItemList.length);
+			}
 		},
 		enterSearch 			: function(e){
 			e.preventDefault();
@@ -77392,26 +77491,39 @@
 		},
 		//Obj
 		loadObj 				: function(id){
-    		var self = this;
+			var self = this, para = [];
 
-    		this.dataSource.query({    			
-				filter: { field:"id", value: id },
-				page:1,
-				pageSize:100
-			}).then(function(e){
-				var view = self.dataSource.view();
-						    	
-		    	self.set("obj", view[0]);		    	
-		    	self.journalLineDS.filter({ field:"transaction_id", value: id });
+    		para.push({ field:"id", value: id });
 
-		    	var filter = {
-		    		filters: [
-		    			{field: "transaction_id", value: id}
-		    		]
-		    	};
-		    	self.lineDS.transport.options.read.data={"filter":filter};
-				self.lineDS.read();
-			});
+			if(this.get("recurring")=="use"){
+				this.set("recurring","");
+				this.addEmpty();
+				this.loadRecurring(id);
+			}else{
+				if(this.get("recurring")=="edit"){
+					this.set("recurring","");
+					para.push({ field:"is_recurring", value: 1 });
+				}
+
+	    		this.dataSource.query({    			
+					filter: para,
+					page:1,
+					pageSize:100
+				}).then(function(e){
+					var view = self.dataSource.view();
+							    	
+			    	self.set("obj", view[0]);		    	
+			    	self.journalLineDS.filter({ field:"transaction_id", value: id });
+
+			    	var filter = {
+			    		filters: [
+			    			{field: "transaction_id", value: id}
+			    		]
+			    	};
+			    	self.lineDS.transport.options.read.data={"filter":filter};
+					self.lineDS.read();
+				});
+			}
     	},
         addEmpty 		 		: function(){							
 			this.dataSource.data([]);
@@ -77434,7 +77546,17 @@
 			   	memo 					: "",
 			   	memo2 					: "",
 			   	segments 				: [],
-			   	is_journal 				: 1
+			   	is_journal 				: 1,
+			   	//Recurring
+			   	recurring_name 			: "",
+			   	start_date 				: new Date(),
+			   	frequency 				: "Daily",
+			   	month_option 			: "Day",
+			   	interval 				: 1,
+			   	day 					: 1,
+			   	week 					: 0,
+			   	month 					: 0,
+			   	is_recurring 			: 0
 	    	});		    		
 			
 			var obj = this.dataSource.at(0);	
@@ -77457,18 +77579,26 @@
 	    },		
 		save 					: function(){			
 			var self = this, obj = this.get("obj");
-			obj.set("issued_date", kendo.toString(new Date(obj.issued_date), "s"));
+			obj.set("issued_date", kendo.toString(new Date(obj.issued_date), "s"));			
 
-			//Remove Empty Row
-			var raw = this.lineDS.data();			
-		    var item, i;
-		    for(i=raw.length-1; i>=0; i--){
-		    	item = raw[i];
-		    	
-		    	if (item.quantity_adjusted=="") {
-			       	this.lineDS.remove(item);
+		    //Recurring
+	    	if(this.get("saveRecurring")){
+	    		this.set("saveRecurring", false);
+	    		
+	    		obj.set("number", "");
+	    		obj.set("is_recurring", 1);
+	    	}else{
+	    		//Remove Empty Row
+				var raw = this.lineDS.data();			
+			    var item, i;
+			    for(i=raw.length-1; i>=0; i--){
+			    	item = raw[i];
+			    	
+			    	if (item.quantity_adjusted=="") {
+				       	this.lineDS.remove(item);
+				    }
 			    }
-		    }
+	    	}
 
 			// Save Obj
 			this.objSync()
@@ -77485,7 +77615,9 @@
 		            });
 
 		            //Journal
-		            self.addJournal(data[0].id);    			
+					if(data[0].is_recurring==0){
+			            self.addJournal(data[0].id);
+		        	}
 				}
 				
       			self.lineDS.sync();
@@ -77506,7 +77638,9 @@
 					//Save Print					
 					self.set("savePrint", false);
 					self.cancel();
-					banhji.router.navigate("/invoice_form/"+result[0].id);
+					if(result[0].transaction_template_id>0){
+						banhji.router.navigate("/invoice_form/"+result[0].id);
+					}
 				}else{
 					//Save New
 					self.addEmpty();
@@ -77610,6 +77744,114 @@
 			}			
 
 			this.journalLineDS.sync();
+		},
+		//Recurring
+		loadRecurring 		: function(id){
+			var self = this;
+
+			this.recurringDS.query({
+				filter:[
+					{ field:"id", value:id },
+					{ field:"is_recurring", value:1 }
+				],
+				page: 1,
+				pageSize: 100
+			}).then(function(){
+				var view = self.recurringDS.view(),
+				obj = self.get("obj");
+				
+				obj.set("recurring_id", id);
+				obj.set("account_id", view[0].account_id);
+				obj.set("employee_id", view[0].employee_id);//Employee
+				obj.set("job_id", view[0].job_id);
+				obj.set("segments", view[0].segments);
+				obj.set("memo", view[0].memo);
+				obj.set("memo2", view[0].memo2);
+			});
+
+			this.recurringLineDS.query({
+				filter: { field:"transaction_id", value:id }
+			}).then(function(){
+				var view = self.recurringLineDS.view(),
+				raw = self.get("recurringItemList");				
+
+				$.each(view, function(index, value){
+					raw.push(value.item_id);
+				});
+
+				self.search();
+			});
+		},
+		frequencyChanges 	: function(){
+			var obj = this.get("obj");
+
+			switch(obj.frequency) {
+			    case "Daily":
+			        this.set("showMonthOption", false);
+			        this.set("showMonth", false);
+			        this.set("showWeek", false);
+			        this.set("showDay", false);
+			       
+			        break;
+			    case "Weekly":
+			        this.set("showMonthOption", false);
+			        this.set("showMonth", false);
+			        this.set("showWeek", true);
+			        this.set("showDay", false);
+
+			        break;
+			    case "Monthly":
+			        this.set("showMonthOption", true);
+			        this.set("showMonth", false);
+			        this.set("showWeek", false);
+			        this.set("showDay", true);
+
+			        break;
+			    case "Annually":
+			        this.set("showMonthOption", false);
+			        this.set("showMonth", true);
+			        this.set("showWeek", false);
+			        this.set("showDay", true);
+
+			        break;
+			    default:
+			        //Default here..
+			}
+		},
+		monthOptionChanges 	: function(){
+			var obj = this.get("obj");
+
+			switch(obj.month_option) {
+			    case "Day":
+			        this.set("showWeek", false);
+			        this.set("showDay", true);
+			       
+			        break;
+			    default:
+			        this.set("showWeek", true);
+			        this.set("showDay", false);
+			}
+		},
+		validateRecurring  	: function(){
+			var result = true, obj = this.get("obj");
+			
+			if(obj.recurring_name!==""){
+				//Check existing name
+				$.each(this.recurringDS.data(), function(index, value){
+					if(value.recurring_name==obj.recurring_name){
+						result = false;
+						alert("This is name is taken.");
+
+						return false;
+					}
+				});
+			}
+			else{
+				result = false;
+				alert("Recurring name is required.");
+			}
+
+			return result;
 		}
 	});
 	banhji.internalUsage = kendo.observable({
@@ -78413,6 +78655,33 @@
 			});
 
 			this.journalLineDS.sync();
+		}
+	});
+	banhji.itemRecurring = kendo.observable({
+		lang 				: langVM,
+		dataSource 			: dataStore(apiUrl + "transactions"),
+		pageLoad 			: function(){
+			this.search();
+		},
+		search 				: function(){
+			var para = [];
+
+			para.push({ field:"type", value:"Item_Adjustment" });
+			para.push({ field:"is_recurring", value: 1 });
+			
+			this.dataSource.filter(para);
+		},
+		edit 				: function(e){
+			var data = e.data;
+			
+	        banhji.itemAdjustment.set("recurring", "edit");
+	        banhji.router.navigate('/item_adjustment/' + data.id);
+		},
+		use 				: function(e){
+			var data = e.data;
+
+			banhji.itemAdjustment.set("recurring", "use");
+	        banhji.router.navigate('/item_adjustment/' + data.id);
 		}
 	});
 	banhji.itemSetting =  kendo.observable({
@@ -87411,7 +87680,22 @@
 
 				if(banhji.pageLoaded["item_adjustment"]==undefined){
 					banhji.pageLoaded["item_adjustment"] = true;
-					var validator = $("#example").kendoValidator().data("kendoValidator");
+					
+					var validator = $("#example").kendoValidator({
+			        	rules: {
+					        customRule1: function(input) {
+					          	if (input.is("[name=txtRecurringName]") && vm.recurring_validate) {
+					          		vm.set("recurring_validate", false);
+					            	return $.trim(input.val()) !== "";
+					          	}
+					          	return true;
+					        }
+					    },
+					    messages: {
+					        customRule1: banhji.source.requiredMessage
+					    }
+			        }).data("kendoValidator");
+
 			        $("#saveNew").click(function(e){
 						e.preventDefault();
 
@@ -87438,6 +87722,19 @@
 						
 						if(validator.validate()){
 							vm.set("savePrint", true);
+			            	vm.save();
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }
+					});
+
+					$("#saveRecurring").click(function(e){
+						e.preventDefault();
+
+						vm.set("recurring_validate", true);
+
+						if(validator.validate()){
+			            	vm.set("saveRecurring", true);
 			            	vm.save();
 				        }else{
 				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
@@ -87528,6 +87825,24 @@
 				window.location.replace(baseUrl + "admin");
 			}
 		});	
+	});
+	banhji.router.route("/item_recurring", function(){
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{
+			banhji.view.layout.showIn("#content", banhji.view.itemRecurring);
+			banhji.view.layout.showIn('#menu', banhji.view.menu);
+			banhji.view.menu.showIn('#secondary-menu', banhji.view.inventoryMenu);
+
+			var vm = banhji.itemRecurring;
+			banhji.userManagement.addMultiTask("Item Recurring","item_recurring",null);
+			if(banhji.pageLoaded["item_recurring"]==undefined){
+				banhji.pageLoaded["item_recurring"] = true;
+
+			}
+
+			vm.pageLoad();
+		}
 	});
 	banhji.router.route("/item_setting", function(){
 		banhji.accessMod.query({
@@ -87899,58 +88214,7 @@
 			}
 		}
 	});
-	banhji.router.route("/item_recurring", function(id){
-		if(!banhji.userManagement.getLogin()){
-			banhji.router.navigate('/manage');
-		}else{
-			banhji.view.layout.showIn("#content", banhji.view.itemRecurring);
-			banhji.view.layout.showIn('#menu', banhji.view.menu);
-			banhji.view.menu.showIn('#secondary-menu', banhji.view.inventoryMenu);
-
-			var vm = banhji.itemRecurring;
-
-			banhji.userManagement.addMultiTask("Products/Services Recurring","item_recurring",vm);
-
-			if(banhji.pageLoaded["item_recurring"]==undefined){
-				banhji.pageLoaded["item_recurring"] = true;
-				var validator = $("#example").kendoValidator().data("kendoValidator");
-		        $("#saveNew").click(function(e){
-					e.preventDefault();
-
-					if(validator.validate()){
-		            	vm.save();
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }
-				});
-
-				$("#saveClose").click(function(e){
-					e.preventDefault();
-
-					if(validator.validate()){
-						vm.set("saveClose", true);
-		            	vm.save();
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }
-				});
-
-				$("#savePrint").click(function(e){
-					e.preventDefault();
-					
-					if(validator.validate()){
-						vm.set("savePrint", true);
-		            	vm.save();
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }
-				});
-			}
-
-			vm.pageLoad(id);
-		}
-	});
-	
+		
 
 
 	/*************************
