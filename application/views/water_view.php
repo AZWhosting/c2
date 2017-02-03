@@ -12681,7 +12681,7 @@
 	    	$.each(this.invoiceArray, function(i, v){
 	    		mSold += kendo.parseInt(v.items[0].line.usage);
 	    		//Calculate Exemption
-	    		if(v.exemption){
+	    		if(v.exemption.length > 0){
 	    			var Usage = kendo.parseInt(v.items[0].line.usage),
 	    			AmountEx = kendo.parseInt(v.exemption[0].line.amount);
 	    			if(v.exemption[0].line.unit == 'm3'){
@@ -12693,6 +12693,9 @@
 	    				exU = v.items[0].line.usage;
 	    				tUsage = exU;
 	    			}
+	    		}else{
+	    			exU = v.items[0].line.usage;
+	    			tUsage = exU;
 	    		}
 	    		//Calculate Tariff
 	    		$.each(v.tariff, function(j, v){
