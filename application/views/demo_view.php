@@ -65560,6 +65560,7 @@
 		save 				: function(){
 	    	var self = this, obj = this.get("obj");
 	    	obj.set("issued_date", kendo.toString(new Date(obj.issued_date), "s"));
+	    	obj.set("due_date", kendo.toString(new Date(obj.due_date), "yyyy-MM-dd"));
 
 	    	//Warning over credit allowed
 	        if(obj.credit_limit>0 && obj.amount>obj.credit_allowed){
