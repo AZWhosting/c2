@@ -316,7 +316,7 @@ class Cashreports extends REST_Controller {
 
 
 
-			$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_banhji');
+			$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$type->where('parent_id', 1)->get();
 			$types = array();
 			foreach($type as $t) {
@@ -450,7 +450,7 @@ class Cashreports extends REST_Controller {
 
 
 
-			$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_banhji');
+			$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$type->where('parent_id', 2)->get();
 			$types = array();
 			foreach($type as $t) {

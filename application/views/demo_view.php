@@ -9883,6 +9883,7 @@
     			#=kendo.toString(amount, locale=="km-KH"?"c0":"c", locale)#
     		#}#
     	</td>
+    	<!-- Status -->
     	<td align="center">        	
         	#if(type==="Credit_Purchase"){#
         		#if(status==="0" || status==="2") {#
@@ -9892,8 +9893,10 @@
 					#} else {#
 						#:Math.floor((dueDate - toDay)/(1000*60*60*24))# days to pay
 					#}#
-				#} else {#
+				#} else if(status==="1") {#
 					Paid
+				#} else if(status==="3") {#
+					Returned
 				#}#
         	#}else if(type==="Purchase_Order"){#
         		#if(status==="0"){#
@@ -16777,8 +16780,10 @@
 					#} else {#
 						#:Math.floor((dueDate - toDay)/(1000*60*60*24))# days to pay
 					#}#
-				#} else {#
+				#} else if(status==="1") {#
 					Paid
+				#} else if(status==="3") {#
+					Returned
 				#}#        	
         	#}#        				
 		</td>
@@ -19790,7 +19795,7 @@
 								            		<input id="txtDueDate" name="txtDueDate" 
 															data-role="datepicker"
 															data-format="dd-MM-yyyy"
-															data-parse-formats="yyyy-MM-dd" 
+															data-parse-formats="yyyy-MM-dd HH:mm:ss" 
 															data-bind="value: obj.due_date" 
 															required data-required-msg="required"
 															style="width:100%;" />
@@ -21230,12 +21235,12 @@
 <script id="saleReturn-return-line-template" type="text/x-kendo-tmpl">		
 	<tr data-uid="#: uid #">
 		<td class="center">
-			<i class="icon-trash" data-bind="events: { click: removeRowOption }"></i>					
-		</td>			
+			<i class="icon-trash" data-bind="events: { click: removeRowOption }"></i>
+		</td>
 		<td>
 			<input id="ddlOption" name="ddlOption-#:uid#"
 				   data-role="dropdownlist"
-				   data-value-primitive="true"				                      			   
+				   data-value-primitive="true"
                    data-text-field="name"
                    data-value-field="id"
                    data-bind="value: type, 
@@ -21250,7 +21255,7 @@
 				   data-template="reference-list-tmpl"
 				   data-value-primitive="true"
                    data-auto-bind="false"
-                   data-text-field="number"                   
+                   data-text-field="number"
                    data-value-field="id"
                    data-bind="value: reference_id, 
                    			  source: invoiceDS,
@@ -21262,14 +21267,14 @@
             <input id="ddlAccount" name="ddlAccount-#:uid#"
 				   data-role="dropdownlist"
 				   data-template="account-list-tmpl"
-				   data-value-primitive="true"				                      			   
+				   data-value-primitive="true"
                    data-text-field="name"
                    data-value-field="id"
                    data-bind="value: account_id, 
                    			  source: accountDS,
-                   			  visible: showAccount"                   
-                   style="width: 100%" />            
-		</td>						
+                   			  visible: showAccount"
+                   style="width: 100%" />
+		</td>
 		<td>
 			<input id="txtAmount-#:uid#" name="txtAmount-#:uid#" 
 					data-role="numerictextbox"
@@ -21278,7 +21283,7 @@
 					data-spinners="false"
 					data-bind="value: amount, events: {change : changes}" 
 					required data-required-msg="required" style="width: 100%;" />
-		</td>								
+		</td>
     </tr>   
 </script>
 <script id="statement" type="text/x-kendo-template">
@@ -65458,7 +65463,7 @@
 
 			//Set Date
 			var duedate = new Date();
-			duedate.setDate(duedate.getDate() + 7);				
+			duedate.setDate(duedate.getDate() + 30);				
 
 			this.dataSource.insert(0, {				
 				contact_id 			: "",//Customer
@@ -65555,6 +65560,7 @@
 		save 				: function(){
 	    	var self = this, obj = this.get("obj");
 	    	obj.set("issued_date", kendo.toString(new Date(obj.issued_date), "s"));
+	    	obj.set("due_date", kendo.toString(new Date(obj.due_date), "s"));
 
 	    	//Warning over credit allowed
 	        if(obj.credit_limit>0 && obj.amount>obj.credit_allowed){
@@ -67898,6 +67904,7 @@
 	    	if(obj.reference_id>0){
 	    		var ref = this.referenceDS.get(obj.reference_id);
 				ref.set("status", 3);
+
 				this.referenceDS.sync();
 			}else{
 				obj.set("reference_id", 0);

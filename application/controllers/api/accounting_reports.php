@@ -2153,7 +2153,7 @@ class Accounting_reports extends REST_Controller {
 		$data["count"] = 0;
 		$totalAmount = 0;
 
-		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
+		$obj = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
 		
 		//Sort
 		if(!empty($sort) && isset($sort)){
@@ -2177,8 +2177,10 @@ class Accounting_reports extends REST_Controller {
 			}
 		}
 		
-		$obj->include_related("job", array("name"));
-		$obj->where("is_recurring <>", 1);
+		$obj->include_related("transaction/job", array("name"));
+		$obj->where_in_related("account", "account_type_id", array(35,36,37,38,39,40,41,42));
+		$obj->where_related("transaction", "is_recurring <>", 1);
+		$obj->where_related("transaction", "deleted <>", 1);
 		$obj->where("deleted <>", 1);
 		$obj->get_iterated();
 		
