@@ -2151,17 +2151,20 @@ class Accounting_reports extends REST_Controller {
 		$sort 	 	= $this->get("sort");
 		$data["results"] = [];
 		$data["count"] = 0;
-		$totalAmount = 0;
+		$objList = [];
 
-		$obj = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
+		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$accountLine = new Account_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
 		
 		//Sort
 		if(!empty($sort) && isset($sort)){
 			foreach ($sort as $value) {
 				if(isset($value['operator'])){
 					$obj->{$value['operator']}($value["field"], $value["dir"]);
+					$accountLine->{$value['operator']}($value["field"], $value["dir"]);
 				}else{
 					$obj->order_by($value["field"], $value["dir"]);
+					$accountLine->order_by($value["field"], $value["dir"]);
 				}
 			}
 		}
@@ -2171,22 +2174,37 @@ class Accounting_reports extends REST_Controller {
 	    	foreach ($filter["filters"] as $value) {
 	    		if(isset($value['operator'])){
 	    			$obj->{$value['operator']}($value['field'], $value['value']);
+	    			$accountLine->{$value['operator']}($value['field'], $value['value']);
 	    		} else {
 	    			$obj->where($value['field'], $value['value']);
+	    			$accountLine->where($value['field'], $value['value']);
 	    		}
 			}
 		}
 		
-		$obj->include_related("transaction/job", array("name"));
-		$obj->where_in_related("account", "account_type_id", array(35,36,37,38,39,40,41,42));
-		$obj->where_related("transaction", "is_recurring <>", 1);
-		$obj->where_related("transaction", "deleted <>", 1);
+		//TRANSACTION
+		$obj->include_related("job", array("name"));
+		$obj->where_in("type", array("Cash_Purchase", "Credit_Purchase","Purchase_Return","Commercial_Invoice","Vat_Invoice","Invoice","Commercial_Cash_Sale","Vat_Cash_Sale","Cash_Sale","Sale_Return"));
+		$obj->where("is_recurring <>", 1);
 		$obj->where("deleted <>", 1);
 		$obj->get_iterated();
 		
-		if($obj->exists()){
-			$objList = [];
+		if($obj->exists()){			
 			foreach ($obj as $value) {
+				$data["jobs"][] = $value->job_id;
+				$revenue = 0;
+				$expense = 0;
+
+				if($value->type=="Cash_Purchase" || $value->type=="Credit_Purchase"){
+					$expense += floatval($value->amount) / floatval($value->rate);
+				}else if($value->type=="Purchase_Return"){
+					$expense -= floatval($value->amount) / floatval($value->rate);
+				}else if($value->type=="Sale_Return"){
+					$revenue -= floatval($value->amount) / floatval($value->rate);
+				}else{
+					$revenue += floatval($value->amount) / floatval($value->rate);
+				}
+
 				if(isset($objList[$value->job_id])){
 					$objList[$value->job_id]["line"][] = array(
 						"id" 				=> $value->id,
@@ -2194,27 +2212,80 @@ class Accounting_reports extends REST_Controller {
 						"number" 			=> $value->number,
 						"issued_date" 		=> $value->issued_date,
 						"description" 		=> $value->memo,
-						"amount" 			=> floatval($value->amount)
+						"rate" 				=> $value->rate,
+						"revenue" 			=> $revenue,
+						"expense" 			=> $expense
 					);
 				}else{
-					$objList[$value->job_id]["id"] 				= $value->job_id;
-					$objList[$value->job_id]["name"] 			= $value->job_name;
-					$objList[$value->job_id]["line"][] 			= array(
+					$objList[$value->job_id]["id"] 			= $value->job_id;
+					$objList[$value->job_id]["name"] 		= $value->job_name;
+					$objList[$value->job_id]["line"][] 		= array(
 						"id" 				=> $value->id,
 						"type" 				=> $value->type,
 						"number" 			=> $value->number,
 						"issued_date" 		=> $value->issued_date,
 						"description" 		=> $value->memo,
-						"amount" 			=> floatval($value->amount)
+						"rate" 				=> $value->rate,
+						"revenue" 			=> $revenue,
+						"expense" 			=> $expense
+					);			
+				}
+			}		
+		}
+
+		//JOURNAL LINE
+		$accountLine->include_related("transaction/job", array("name"));
+		$accountLine->include_related("account", array("account_type_id"));
+		$accountLine->include_related("transaction", array("type", "number", "issued_date", "memo","amount", "rate","job_id"));
+		$accountLine->where_in_related("account", "account_type_id", array(35,36,37,38,39,40,41,42));
+		$accountLine->where_related("transaction", "is_recurring <>", 1);
+		$accountLine->where_related("transaction", "deleted <>", 1);
+		$accountLine->get_iterated();
+		
+		if($accountLine->exists()){
+			foreach ($accountLine as $value) {
+				$data["jobs"][] = $value->job_id;
+				$revenue = 0;
+				$expense = 0;				
+				if($value->account_account_type_id=="35"){
+					$revenue = floatval($value->amount) / floatval($value->transaction_rate);				
+				}else{
+					$expense = floatval($value->amount) / floatval($value->transaction_rate);					
+				}
+
+				if(isset($objList[$value->job_id])){
+					$objList[$value->job_id]["line"][] = array(
+						"id" 				=> $value->transaction_id,
+						"type" 				=> $value->transaction_type,
+						"number" 			=> $value->transaction_number,
+						"issued_date" 		=> $value->transaction_issued_date,
+						"description" 		=> $value->description,
+						"rate" 				=> $value->transaction_rate,
+						"revenue" 			=> $revenue,
+						"expense" 			=> $expense
+					);
+				}else{
+					$objList[$value->job_id]["id"] 			= $value->job_id;
+					$objList[$value->job_id]["name"] 		= $value->transaction_job_name;
+					$objList[$value->job_id]["line"][] 		= array(
+						"id" 				=> $value->transaction_id,
+						"type" 				=> $value->transaction_type,
+						"number" 			=> $value->transaction_number,
+						"issued_date" 		=> $value->transaction_issued_date,
+						"description" 		=> $value->description,
+						"rate" 				=> $value->transaction_rate,
+						"revenue" 			=> $revenue,
+						"expense" 			=> $expense
 					);			
 				}
 			}
+		}
 
+		if(count($objList)>0){
 			foreach ($objList as $value) {
 				$data["results"][] = $value;
 			}
-
-			$data["count"] = count($data["results"]);			
+			$data["count"] = count($data["results"]);
 		}
 
 		//Response Data		

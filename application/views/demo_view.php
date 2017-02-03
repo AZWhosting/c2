@@ -41127,41 +41127,22 @@
 								        <div class="tab-pane" id="tab-2">
 											<table class="table table-condensed">
 												<tr>
-									            	<td style="padding: 0 !important; width: 96%;">
-									            		<span data-bind="text: lang.lang.account"></span>
-														<input id="ddlAccount" name="ddlAccount" 
-																data-role="dropdownlist"
-									              				data-header-template="account-header-tmpl"
-									              				data-template="account-list-tmpl"
-									              				data-value-primitive="true"
-																data-text-field="name" 
-									              				data-value-field="id"
-									              				data-bind="value: obj.account_id,
-									              							source: accountDS"
-									              				data-option-label="Select Account..."
-									              				required data-required-msg="required" 
-									              				style="width: 100%" />
+									            	<td style="padding: 8px 0 0 0 !important; ">
+														<span data-bind="text: lang.lang.job"></span>
+														<select data-role="multiselect"
+															   data-value-primitive="true"
+															   data-header-template="job-header-tmpl"
+															   data-item-template="job-list-tmpl"
+															   data-value-field="id"
+															   data-text-field="name"
+															   data-bind="value: obj.jobs, 
+															   			source: jobDS"
+															   data-placeholder="Select Jobs.."
+															   style="width: 100%" /></select>
 													</td>
 													<td style="padding-top: 23px !important; float: left;">
 										  				<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
 													</td>
-												</tr>
-												<tr>
-													<td style="padding: 8px 0 0 0 !important; ">
-														<span data-bind="text: lang.lang.segment"></span>
-														<select data-role="multiselect"
-															   data-value-primitive="true"
-															   data-header-template="segment-header-tmpl"
-															   data-item-template="segment-list-tmpl"
-															   data-value-field="id"
-															   data-text-field="code"
-															   data-bind="value: obj.segments, 
-															   			source: segmentItemDS,
-															   			events:{ change: segmentChanges }"
-															   data-placeholder="Select Segments.."
-															   style="width: 100%" /></select>
-													</td>
-													<td></td>
 												</tr>
 											</table>
 							        	</div>
@@ -41203,7 +41184,7 @@
 									<th class="right">Expense</th>
 								</tr>
 							</thead>
-							<tbody>
+							<!-- <tbody>
 								<tr>
 									<td colspan="6" style="font-weight: bold; color: black;">10114 Saving - FTB</td>
 								</tr>
@@ -41289,19 +41270,12 @@
 									<td ></td>
 									<td style="text-align: right; color: black; font-weight: bold;">900.00</td>
 								</tr>
-							</tbody>
+							</tbody> -->
 
-							<!-- <tbody data-role="listview"
+							<tbody data-role="listview"
 					        		data-auto-bind="false"
-					        		data-template="generalLedger-template"			        		
+					        		data-template="profitabilityDetailJob-template"			        		
 					        		data-bind="source: dataSource"></tbody>
-					       	<tfoot>
-					       		<tr style="font-weight: bold; font-size: large;">
-					       			<td colspan="4">TOTAL</td>
-					       			<td align="right" data-bind="text: totalAmount"></td>
-					       			<td align="right" data-bind="text: totalBalance"></td>
-					       		</tr>
-					       	</tfoot> -->
 						</table>				  
 					</div>
 				</div>
@@ -41313,101 +41287,53 @@
 	<tr>
 		<td colspan="6" style="font-weight: bold; color: black;">#: name #</td>
 	</tr>
-	#var balance = balance_forward;#
+	#var totalRevenue = 0;#
+	#var totalExpense = 0;#
 	#for(var i=0; i<line.length; i++){#
-	#balance += line[i].amount;#
+	#totalRevenue += line[i].revenue;#
+	#totalExpense += line[i].expense;#
 	<tr>
-		<td style="padding-left: 20px !important;">#=line[i].number#</td>
-		<td>09-12-2016</td>
-		<td>3</td>
-		<td>4</td>
-		<td style="text-align: right;">5</td>
-		<td style="text-align: right;">6</td>
+		<td style="padding-left: 20px !important;">
+			<a href="\#/#=line[i].type.toLowerCase()#/#=line[i].id#"><i></i> #=line[i].type#</a>
+		</td>
+		<td>#=kendo.toString(new Date(line[i].issued_date), "dd-MM-yyyy")#</td>
+		<td><a href="\#/#=line[i].type.toLowerCase()#/#=line[i].id#"><i></i> #=line[i].number#</a></td>
+		<td>#=line[i].description#</td>
+		<td style="text-align: right;">
+			#=kendo.toString(line[i].revenue, "c2", banhji.locale)#
+		</td>
+		<td style="text-align: right;">
+			#=kendo.toString(line[i].expense, "c2", banhji.locale)#
+		</td>
 	</tr>
-	<tr>
-		<td style="color: black;">
-			&nbsp;&nbsp; #=line[i].type#
-		</td>		
-		<td style="color: black;">
-			#=kendo.toString(new Date(line[i].issued_date), "dd-MM-yyyy")#
-		</td>
-		<td style="color: black;">
-			<a href="\#/#=line[i].type.toLowerCase()#/#=line[i].id#"><i></i> #=line[i].number#</a>
-		</td>		
-		<td style="color: black;">
-			#=line[i].memo#
-		</td>
-		<td class="right" style="color: black;">
-			#=kendo.toString(line[i].amount, "c", banhji.locale)#
-		</td>
-		<td class="right" style="color: black;">
-			#=kendo.toString(balance, "c", banhji.locale)#
-		</td> 			
-    </tr>    
     #}# 
     <tr>
-    	<td style="font-weight: bold; color: black;">Total #: number # #: name #</td>
-    	<td></td>
-    	<td></td>
-    	<td></td>
-    	<td></td>
-    	<td class="right" style="font-weight: bold; border-top: 1px solid black !important; color: black;">
-    		#=kendo.toString(balance, "c", banhji.locale)#
-    	</td>
-    </tr>
+		<td colspan="4" style="text-align: right; color: black; font-weight: bold;">Total</td>
+		<td style="text-align: right; color: black; font-weight: bold; border-top: 1px solid black !important;">
+			#=kendo.toString(totalRevenue, "c2", banhji.locale)#
+		</td>
+		<td style="text-align: right; color: black; font-weight: bold; border-top: 1px solid black !important;">
+			#=kendo.toString(totalExpense, "c2", banhji.locale)#
+		</td>
+	</tr>
+	<tr>
+		<td colspan="4" style="text-align: right; color: black; font-weight: bold;">Profit</td>
+		<td></td>
+		<td style="text-align: right; color: black; font-weight: bold;">
+			#=kendo.toString(totalRevenue-totalExpense, "c2", banhji.locale)#
+		</td>
+	</tr>
+	<tr>
+		<td colspan="4" style="text-align: right; color: black; font-weight: bold;">Net Profit Margin</td>
+		<td></td>
+		<td style="text-align: right; color: black; font-weight: bold;">
+		#=kendo.toString((totalRevenue-totalExpense)/totalRevenue, "p2")#
+		</td>
+	</tr>
     <tr>
     	<td colspan="6">&nbsp;</td>
     </tr>  
 </script>
-<!-- <script id="profitabilityDetailJob-template" type="text/x-kendo-tmpl">
-	<tr>
-		<td style="font-weight: bold;">#: number # #: name #</td>
-    	<td></td>
-    	<td></td>
-    	<td></td>
-    	<td></td>
-    	<td class="right strong" style="color: black;">
-    		#=kendo.toString(balance_forward, "c", banhji.locale)#
-    	</td>
-	</tr>
-	#var balance = balance_forward;#
-	#for(var i=0; i<line.length; i++){#
-	#balance += line[i].amount;#
-	<tr>
-		<td style="color: black;">
-			&nbsp;&nbsp; #=line[i].type#
-		</td>		
-		<td style="color: black;">
-			#=kendo.toString(new Date(line[i].issued_date), "dd-MM-yyyy")#
-		</td>
-		<td style="color: black;">
-			<a href="\#/#=line[i].type.toLowerCase()#/#=line[i].id#"><i></i> #=line[i].number#</a>
-		</td>		
-		<td style="color: black;">
-			#=line[i].memo#
-		</td>
-		<td class="right" style="color: black;">
-			#=kendo.toString(line[i].amount, "c", banhji.locale)#
-		</td>
-		<td class="right" style="color: black;">
-			#=kendo.toString(balance, "c", banhji.locale)#
-		</td> 			
-    </tr>    
-    #}# 
-    <tr>
-    	<td style="font-weight: bold; color: black;">Total #: number # #: name #</td>
-    	<td></td>
-    	<td></td>
-    	<td></td>
-    	<td></td>
-    	<td class="right" style="font-weight: bold; border-top: 1px solid black !important; color: black;">
-    		#=kendo.toString(balance, "c", banhji.locale)#
-    	</td>
-    </tr>
-    <tr>
-    	<td colspan="6">&nbsp;</td>
-    </tr>  
-</script> -->
 
 
 
@@ -48258,7 +48184,7 @@
 		dataSource 			: dataStore(apiUrl + "accounting_reports/journal"),
 		exdataSource 			: dataStore(apiUrl + "accounting_reports/journal"),
 		sortList			: banhji.source.sortList,
-		sorter 				: "all",
+		sorter 				: "month",
 		sdate 				: "",
 		edate 				: "",
 		obj 				: null,
@@ -48320,24 +48246,22 @@
         	if(start && end){
         		start = new Date(start);
         		end = new Date(end);
+        		displayDate = "From " + kendo.toString(start, "dd-MM-yyyy") + " To " + kendo.toString(end, "dd-MM-yyyy");
         		end.setDate(end.getDate()+1);
 
             	para.push({ field:"issued_date >=", operator:"where_related_transaction", value: kendo.toString(start, "yyyy-MM-dd") });
             	para.push({ field:"issued_date <", operator:"where_related_transaction", value: kendo.toString(end, "yyyy-MM-dd") });
-
-            	displayDate = "From " + kendo.toString(start, "dd-MM-yyyy") + " To " + kendo.toString(end, "dd-MM-yyyy");
             }else if(start){
             	start = new Date(start);
-            	para.push({ field:"issued_date", operator:"where_related_transaction", value: kendo.toString(start, "yyyy-MM-dd") });
-
             	displayDate = "On " + kendo.toString(start, "dd-MM-yyyy");
+
+            	para.push({ field:"issued_date", operator:"where_related_transaction", value: kendo.toString(start, "yyyy-MM-dd") });
             }else if(end){
             	end = new Date(end);
+            	displayDate = "As Of " + kendo.toString(end, "dd-MM-yyyy");
         		end.setDate(end.getDate()+1);
 
             	para.push({ field:"issued_date <", operator:"where_related_transaction", value: kendo.toString(end, "yyyy-MM-dd") });
-
-            	displayDate = "As Of " + kendo.toString(end, "dd-MM-yyyy");
             }else{
             	
             }
@@ -48996,24 +48920,22 @@
         	if(start && end){
         		start = new Date(start);
         		end = new Date(end);
+        		displayDate = "From " + kendo.toString(start, "dd-MM-yyyy") + " To " + kendo.toString(end, "dd-MM-yyyy");
         		end.setDate(end.getDate()+1);
 
             	para.push({ field:"issued_date >=", operator:"where_related_transaction", value: kendo.toString(start, "yyyy-MM-dd") });
             	para.push({ field:"issued_date <", operator:"where_related_transaction", value: kendo.toString(end, "yyyy-MM-dd") });
-
-            	displayDate = "From " + kendo.toString(start, "dd-MM-yyyy") + " To " + kendo.toString(end, "dd-MM-yyyy");
             }else if(start){
             	start = new Date(start);
-            	para.push({ field:"issued_date", operator:"where_related_transaction", value: kendo.toString(start, "yyyy-MM-dd") });
-
             	displayDate = "On " + kendo.toString(start, "dd-MM-yyyy");
+
+            	para.push({ field:"issued_date", operator:"where_related_transaction", value: kendo.toString(start, "yyyy-MM-dd") });
             }else if(end){
             	end = new Date(end);
-        		end.setDate(end.getDate()+1);
-
-            	para.push({ field:"issued_date <", operator:"where_related_transaction", value: kendo.toString(end, "yyyy-MM-dd") });
-
             	displayDate = "As Of " + kendo.toString(end, "dd-MM-yyyy");
+        		end.setDate(end.getDate()+1);
+        		
+            	para.push({ field:"issued_date <", operator:"where_related_transaction", value: kendo.toString(end, "yyyy-MM-dd") });
             }else{
             	
             }
@@ -49275,28 +49197,25 @@
         	if(start && end){
         		start = new Date(start);
         		end = new Date(end);
+        		displayDate = "From " + kendo.toString(start, "dd-MM-yyyy") + " To " + kendo.toString(end, "dd-MM-yyyy");
         		end.setDate(end.getDate()+1);
 
             	para.push({ field:"issued_date >=", operator:"where_related_transaction", value: kendo.toString(start, "yyyy-MM-dd") });
             	para.push({ field:"issued_date <", operator:"where_related_transaction", value: kendo.toString(end, "yyyy-MM-dd") });
-
-            	displayDate = "From " + kendo.toString(start, "dd-MM-yyyy") + " To " + kendo.toString(end, "dd-MM-yyyy");
             }else if(start){
             	start = new Date(start);
-            	para.push({ field:"issued_date", operator:"where_related_transaction", value: kendo.toString(start, "yyyy-MM-dd") });
-
             	displayDate = "On " + kendo.toString(start, "dd-MM-yyyy");
+
+            	para.push({ field:"issued_date", operator:"where_related_transaction", value: kendo.toString(start, "yyyy-MM-dd") });
             }else if(end){
             	end = new Date(end);
-        		end.setDate(end.getDate()+1);
-
-            	para.push({ field:"issued_date <", operator:"where_related_transaction", value: kendo.toString(end, "yyyy-MM-dd") });
-
             	displayDate = "As Of " + kendo.toString(end, "dd-MM-yyyy");
+        		end.setDate(end.getDate()+1);
+        		
+            	para.push({ field:"issued_date <", operator:"where_related_transaction", value: kendo.toString(end, "yyyy-MM-dd") });
             }else{
             	
             }
-
             this.set("displayDate", displayDate);
 
             this.dataSource.query({
@@ -79756,23 +79675,16 @@
     });
     banhji.profitabilityDetailJob =  kendo.observable({
 		lang 				: langVM,
-		dataSource 			: dataStore(apiUrl + "accounting_reports/general_ledger"),
-		accountDS  		: new kendo.data.DataSource({
-		  	data: banhji.source.accountList,
-		  	sort: { field:"number", dir:"asc" }
-		}),
-		segmentItemDS 		: new kendo.data.DataSource({
-		  	data: banhji.source.segmentItemList,
-		  	sort: [
-			  	{ field: "segment_id", dir: "asc" },
-			  	{ field: "code", dir: "asc" }
-			]
+		dataSource 			: dataStore(apiUrl + "accounting_reports/profitability_detail_by_job"),
+		jobDS 						: new kendo.data.DataSource({
+		  	data: banhji.source.jobList,
+		  	sort: { field: "name", dir: "asc" }
 		}),
 		sortList			: banhji.source.sortList,
-		sorter 				: "all",
+		sorter 				: "month",
 		sdate 				: "",
 		edate 				: "",
-		obj 				: { account_id: 0, segments: [] },
+		obj 				: { jobs: [] },
 		company 			: banhji.institute,
 		displayDate 		: "",
 		totalAmount 		: 0,
@@ -79816,23 +79728,6 @@
 				  	this.set("edate", "");									  
 			}
 		},
-		segmentChanges 		: function() {
-			var dataArr = this.get("obj").segments,
-			lastIndex = dataArr.length - 1,
-			last = this.segmentItemDS.get(dataArr[lastIndex]);
-			
-			if(dataArr.length > 1) {
-				for(var i = 0; i < dataArr.length - 1; i++) {
-					var current_index = dataArr[i],
-					current = this.segmentItemDS.get(current_index);
-
-					if(current.segment_id === last.segment_id) {
-						dataArr.splice(lastIndex, 1);
-						break;
-					}
-				}
-			}
-		},
 		search				: function(){
 			var self = this, para = [], 
 				obj = this.get("obj"),
@@ -79840,148 +79735,46 @@
         		end = this.get("edate"),
         		displayDate = "";
 
-        	//Account
-            if(obj.account_id>0){
-	            para.push({ field:"account_id", value:obj.account_id });
-	        }
-
-	        //Segment
-            if(obj.segments.length>0){
-            	var segments = [];
-            	$.each(obj.segments, function(index, value){
-            		segments.push(value);
+	        //Job
+            if(obj.jobs.length>0){
+            	var jobs = [];
+            	$.each(obj.jobs, function(index, value){
+            		jobs.push(value);
             	});          	
-	            para.push({ field:"segments", operator:"like_related_transaction", value:"%"+segments.toString()+"%" });
+	            para.push({ field:"job_id", operator:"where_in", value:jobs });
 	        }
     	
         	//Dates
         	if(start && end){
         		start = new Date(start);
         		end = new Date(end);
+        		displayDate = "From " + kendo.toString(start, "dd-MM-yyyy") + " To " + kendo.toString(end, "dd-MM-yyyy");
         		end.setDate(end.getDate()+1);
 
-            	para.push({ field:"issued_date >=", operator:"where_related_transaction", value: kendo.toString(start, "yyyy-MM-dd") });
-            	para.push({ field:"issued_date <", operator:"where_related_transaction", value: kendo.toString(end, "yyyy-MM-dd") });
-
-            	displayDate = "From " + kendo.toString(start, "dd-MM-yyyy") + " To " + kendo.toString(end, "dd-MM-yyyy");
+            	para.push({ field:"issued_date >=", value: kendo.toString(start, "yyyy-MM-dd") });
+            	para.push({ field:"issued_date <", value: kendo.toString(end, "yyyy-MM-dd") });
             }else if(start){
             	start = new Date(start);
-            	para.push({ field:"issued_date", operator:"where_related_transaction", value: kendo.toString(start, "yyyy-MM-dd") });
-
             	displayDate = "On " + kendo.toString(start, "dd-MM-yyyy");
+
+            	para.push({ field:"issued_date", value: kendo.toString(start, "yyyy-MM-dd") });
             }else if(end){
             	end = new Date(end);
-        		end.setDate(end.getDate()+1);
-
-            	para.push({ field:"issued_date <", operator:"where_related_transaction", value: kendo.toString(end, "yyyy-MM-dd") });
-
             	displayDate = "As Of " + kendo.toString(end, "dd-MM-yyyy");
+        		end.setDate(end.getDate()+1);
+        		
+            	para.push({ field:"issued_date <", value: kendo.toString(end, "yyyy-MM-dd") });
             }else{
             	
             }
             this.set("displayDate", displayDate);
             
+            para.push({ field:"job_id >", value:0 });
+
             this.dataSource.query({
             	filter:para,
-            	sort:[
-            		{ field:"account_type_id", operator:"order_by_related_account", dir:"asc" },
-            		{ field:"number", operator:"order_by_related_account", dir:"asc" },
-            		{ field:"issued_date", operator:"order_by_related_transaction", dir:"asc" },
-            		{ field:"number", operator:"order_by_related_transaction", dir:"asc" }            		
-            	]
+            	sort:{ field:"number", operator:"order_by_related_job", dir:"asc" }
             });
-            this.dataSource.bind("requestEnd", function(e){				
-				if(e.type=="read"){
-					var response = e.response, balanceCal = 0;
-					self.exArray = [];
-					self.set("totalAmount", kendo.toString(response.totalAmount, "c", banhji.locale));
-					self.set("totalBalance", kendo.toString(response.totalBalance, "c", banhji.locale));
-
-					self.exArray.push({
-	            		cells: [
-	            			{ value: self.company.name, textAlign: "center", colSpan: 6 }
-	            		]
-	            	});
-	            	self.exArray.push({
-	            		cells: [
-	            			{ value: "General Ledger",bold: true, fontSize: 20, textAlign: "center", colSpan: 6 }
-	            		]
-	            	});
-	            	if(self.displayDate){
-		            	self.exArray.push({
-		            		cells: [
-		            			{ value: self.displayDate, textAlign: "center", colSpan: 6 }
-		            		]
-		            	});
-		            }
-	            	self.exArray.push({
-	            		cells: [
-	            			{ value: "", colSpan: 6 }
-	            		]
-	            	});
-	            	self.exArray.push({ 
-	            		cells: [
-							{ value: "Type", background: "#496cad", color: "#ffffff" },
-							{ value: "Date", background: "#496cad", color: "#ffffff" },
-							{ value: "Reference No", background: "#496cad", color: "#ffffff" },
-							{ value: "Description", background: "#496cad", color: "#ffffff" },
-							{ value: "Amount", background: "#496cad", color: "#ffffff" },
-							{ value: "Balance", background: "#496cad", color: "#ffffff" }
-						]
-					});
-					for (var i = 0; i < response.results.length; i++){
-						self.exArray.push({
-					        cells: [
-					          	{ value: response.results[i].number + " " + response.results[i].name, bold: true, },
-					            { value: "" },
-					            { value: "" },
-					            { value: "" },
-					            { value: "" },
-					            { value: kendo.parseFloat(response.results[i].balance_forward), bold: true },
-					        ]
-					    });
-					    balanceCal = response.results[i].balance_forward;
-					    for(var j = 0; j < response.results[i].line.length; j++){
-					    	balanceCal += response.results[i].line[j].amount;
-				          	self.exArray.push({
-				          		cells: [
-				          	  		{ value: "    "+response.results[i].line[j].type },
-				              		{ value: kendo.toString(new Date(response.results[i].line[j].issued_date), "dd-MM-yyyy")  },
-				              		{ value: response.results[i].line[j].number },
-				              		{ value: response.results[i].line[j].memo },
-				              		{ value: kendo.parseFloat(response.results[i].line[j].amount)},
-				              		{ value: kendo.parseFloat(balanceCal)}
-				            	]
-				          	});
-				        }
-				        self.exArray.push({
-					        cells: [
-					          	{ value: "Total " + response.results[i].number + " " + response.results[i].name, bold: true, },
-					            { value: "" },
-					            { value: "" },
-					            { value: "" },
-					            { value: "" },
-					            { value: kendo.parseFloat(balanceCal), bold: true, borderTop: { color: "#000000", size: 1 }  },
-					        ]
-					    });
-					    self.exArray.push({
-					        cells: [
-					          	{ value: "", colSpan: 6 }
-					        ]
-					    });
-					}
-					self.exArray.push({
-				        cells: [
-				          	{ value: "TOTAL", bold: true,fontSize: 16 },
-				            { value: "" },
-				            { value: "" },
-				            { value: "" },
-				            { value: kendo.parseFloat(response.totalAmount), bold: true, fontSize: 16 },
-				            { value: kendo.parseFloat(response.totalBalance), bold: true, fontSize: 16 },
-				        ]
-				    });
-				}
-			});            
 		},
 		printGrid			: function() {
 			var gridElement = $('#grid'),
@@ -81781,7 +81574,8 @@
 
 			if(banhji.pageLoaded["journal_report"]==undefined){
 				banhji.pageLoaded["journal_report"] = true;									
-						
+				
+				vm.sorterChanges();		
 			}
 
 			vm.pageLoad();
@@ -88798,6 +88592,8 @@
 
 			if(banhji.pageLoaded["profitability_detail_job"]==undefined){
 				banhji.pageLoaded["profitability_detail_job"] = true;
+
+				vm.sorterChanges();
 			}
 			vm.pageLoad();
 		}

@@ -8,6 +8,10 @@ class Account_line extends DataMapper {
 		'transaction' => array(
 			'class' => 'transaction',
 			'other_field' => 'account_line'
+		),
+		'job' => array(
+			'class' => 'job',
+			'other_field' => 'account_line'
 		),		
 		'account' => array(
 			'class' => 'account',
