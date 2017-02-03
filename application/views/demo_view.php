@@ -19686,7 +19686,7 @@
 											<input id="issuedDate" name="issuedDate" 
 													data-role="datepicker"
 													data-format="dd-MM-yyyy"
-													data-parse-formats="yyyy-MM-dd"
+													data-parse-formats="yyyy-MM-dd HH:mm:ss"
 													data-bind="value: obj.issued_date, 
 																events:{ change : setRate }" 
 													required data-required-msg="required"
@@ -19795,7 +19795,7 @@
 								            		<input id="txtDueDate" name="txtDueDate" 
 															data-role="datepicker"
 															data-format="dd-MM-yyyy"
-															data-parse-formats="yyyy-MM-dd HH:mm:ss" 
+															data-parse-formats="yyyy-MM-dd" 
 															data-bind="value: obj.due_date" 
 															required data-required-msg="required"
 															style="width:100%;" />
