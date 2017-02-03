@@ -18,6 +18,7 @@ class Transactions extends REST_Controller {
 			$this->server_user = $conn->username;
 			$this->server_pwd = $conn->password;
 			$this->_database = $conn->inst_database;
+			date_default_timezone_set("$conn->time_zone");
 		}
 	}
 

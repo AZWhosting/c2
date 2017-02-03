@@ -19686,7 +19686,7 @@
 											<input id="issuedDate" name="issuedDate" 
 													data-role="datepicker"
 													data-format="dd-MM-yyyy"
-													data-parse-formats="yyyy-MM-dd HH:mm:ss"
+													data-parse-formats="yyyy-MM-dd"
 													data-bind="value: obj.issued_date, 
 																events:{ change : setRate }" 
 													required data-required-msg="required"
@@ -65560,7 +65560,6 @@
 		save 				: function(){
 	    	var self = this, obj = this.get("obj");
 	    	obj.set("issued_date", kendo.toString(new Date(obj.issued_date), "s"));
-	    	obj.set("due_date", kendo.toString(new Date(obj.due_date), "s"));
 
 	    	//Warning over credit allowed
 	        if(obj.credit_limit>0 && obj.amount>obj.credit_allowed){
