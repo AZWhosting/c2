@@ -172,8 +172,9 @@ class Winvoices extends REST_Controller {
 				'items'=> $t['items']
 			);
 		}
-
-		$this->response(array('results' => $data, 'count' => count($data)), 200);
+		$results['results'] = $data;
+		$results['count'] = count($data);
+		$this->response($results, 200);
 	}
 	function index_post() {
 		$models = json_decode($this->post('models'));
@@ -383,8 +384,10 @@ class Winvoices extends REST_Controller {
 			);
 
 		}
-
-		$this->response(array('results' => $data, 'count' => count($data)), 200);
+		$results['results'] = $data;
+		$results['count'] = count($data);
+		//$this->response($results, 200);
+		// $this->response(array('results' => $data, 'count' => count($data)), 200);
 	}
 
 	//GET WATER PRINT SNAPSHOT 

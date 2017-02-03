@@ -21095,7 +21095,7 @@
 									</tr>
 									<tr>
 										<td class="right">
-											<span data-bind="text: lang.lang.amount_paid"></span>
+											Amount Paid
 										</td>
 										<td class="right">
 											<span data-format="n" data-bind="text: obj.amount_paid"></span>
@@ -33430,7 +33430,7 @@
 									<div class="widget-body padding-none">			
 										<div class="row-fluid row-merge">
 											<div class="listWrapper">
-												<div class="innerAll" style="padding: 15px 15px 19px;">							
+												<div class="innerAll" style="padding: 15px 15px 19px;">
 													<form autocomplete="off" class="form-inline">
 														<div class="widget-search separator bottom">
 															<button type="button" class="btn btn-default pull-right" data-bind="click: search"><i class="icon-search"></i></button>
@@ -33438,19 +33438,32 @@
 																<input type="search" placeholder="Item Number..." data-bind="value: searchText, events:{change: enterSearch}">
 															</div>
 														</div>
-														<div class="select2-container" style="width: 100%;">								
+														<div class="select2-container" style="width: 100%;">
 															<input id="ddlCategory" name="ddlCategory"
-																   data-option-label="Select Category..."
 																   data-role="dropdownlist"
-																   data-auto-bind="false"    
 												                   data-value-primitive="true"
 												                   data-text-field="name"
 												                   data-value-field="id"
 												                   data-bind="value: category_id,
-												                              source: categoryDS"                    
-												                   style="width: 100%; height: 29px;" />									
+												                              source: categoryDS"
+												                   data-option-label="Select Category..."
+												                   style="width: 100%; height: 29px;" />
+
+												            <input id="ddlItemGroup" id="ddlItemGroup"
+																   data-role="dropdownlist"
+																   data-header-template="item-group-header-tmpl"
+																   data-cascade-from="ddlCategory"
+																   data-cascade-from-field="category_id"
+												                   data-value-primitive="true"
+												                   data-auto-bind="false"
+												                   data-text-field="name"
+												                   data-value-field="id"
+												                   data-bind="value: item_group_id,
+												                              source: itemGroupDS"
+												                   data-option-label="Select Group..."
+												                   style="width: 100%;" />
 														</div>
-													</form>					
+													</form>
 												</div>
 											</div>
 										</div>
@@ -44594,46 +44607,7 @@
 	});
 	banhji.accountingCenter = kendo.observable({
 		lang 				: langVM,
-		dataSource			: new kendo.data.DataSource({
-			transport: {
-				read 	: {
-					url: apiUrl + "accounts",
-					type: "GET",
-					headers: banhji.header,
-					dataType: 'json'
-				},				
-				parameterMap: function(options, operation) {
-					if(operation === 'read') {
-						return {
-							page: options.page,
-							limit: options.pageSize,
-							filter: options.filter,
-							sort: options.sort
-						};
-					} else {
-						return {models: kendo.stringify(options.models)};
-					}
-				}
-			},
-			schema 	: {
-				model: {
-					id: 'id'
-				},
-				data: 'results',
-				total: 'count'
-			},
-			filter: { field:"status", value:1 },
-			sort:[
-				{ field:"account_type_id", dir:"asc" },
-				{ field:"number", dir:"asc" }
-			],
-			batch: true,
-			serverFiltering: true,
-			serverSorting: true,
-			serverPaging: true,
-			page:1,
-			pageSize: 100
-		}),
+		dataSource			: dataStore(apiUrl + "accounts"),
 		accountTypeDS 		: banhji.source.accountTypeDS,
 		summaryDS  			: dataStore(apiUrl + 'centers/accounting_summary'),
 		transactionDS  		: dataStore(apiUrl + 'centers/accounting_txn'),
@@ -44891,9 +44865,16 @@
 
       		if(account_type_id){
       			para.push({ field:"account_type_id", value:account_type_id });
-      		}      		
+      		}
 
-      		this.dataSource.filter(para);
+      		para.push({ field:"status", value:1 });      		
+
+      		this.dataSource.query({
+      			filter:para,
+      			sort:{ field:"number", dir:"asc" },
+      			page:1,
+      			pageSize:100
+      		});
       		
 			//Clear search filters
       		this.set("searchText", "");
@@ -77137,6 +77118,7 @@
     	journalLineDS			: dataStore(apiUrl + "journal_lines"),
     	attachmentDS	 		: dataStore(apiUrl + "attachments"),
 		itemDS  				: dataStore(apiUrl + "items/on_hand"),
+		itemGroupDS 			: banhji.source.itemGroupDS,
 		lineDS  				: new kendo.data.DataSource({
     		transport: {
 				read 	: {
@@ -77242,6 +77224,7 @@
 		recurring 				: "",
 		searchText 				: "",
 		category_id 			: null,
+		item_group_id 			: null,
 		user_id					: banhji.source.user_id,
 		pageLoad 				: function(id){
 			if(id){
@@ -77371,6 +77354,7 @@
 			obj = this.get("obj"),
 			recurringItemList = this.get("recurringItemList"),
 			category_id = this.get("category_id"),
+			item_group_id = this.get("item_group_id"),
 			searchText = this.get("searchText");
 			
 			if(this.lineDS.total()>0){
@@ -77390,7 +77374,9 @@
 				);
 			}
 
-			if(category_id){
+			if(item_group_id){
+				para.push({ field:"item_group_id", value:item_group_id });
+			}else if(category_id){
 				para.push({ field:"category_id", value:category_id });
 			}
 
@@ -77432,6 +77418,7 @@
 
             this.set("searchText", "");
             this.set("category_id", null);
+            this.set("item_group_id", null);
 
             //Clear array
 			if(recurringItemList.length>0){
