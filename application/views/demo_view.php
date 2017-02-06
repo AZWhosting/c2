@@ -1254,7 +1254,7 @@
 					<div class="row-fluid">
 						<div class="span4">
 							<div class="box-generic well" style="height: 150px;">				
-								<table class="table table-borderless table-condensed cart_total">									
+								<table class="table table-borderless table-condensed cart_total" style="margin-bottom: 0;">									
 									<tr>
 										<td style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></td>
 										<td>
@@ -1708,7 +1708,7 @@
 					<div class="row-fluid">
 						<div class="span4">
 							<div class="box-generic well" style="height: 150px;">				
-								<table class="table table-borderless table-condensed cart_total">									
+								<table class="table table-borderless table-condensed cart_total" style="margin-bottom: 0;">									
 									<tr>
 										<td style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></td>
 										<td>
@@ -2203,7 +2203,7 @@
 				<div class="row-fluid">
 					<div class="span4">
 						<div class="box-generic well" style="height: 150px;">				
-							<table class="table table-borderless table-condensed cart_total">									
+							<table class="table table-borderless table-condensed cart_total" >									
 								<tr>
 									<td style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></td>
 									<td>
@@ -2706,7 +2706,7 @@
 				<div class="row-fluid">
 					<div class="span4">
 						<div class="box-generic well" style="height: 190px;">				
-							<table class="table table-borderless table-condensed cart_total">									
+							<table class="table table-borderless table-condensed cart_total" >									
 								<tr>
 									<td style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></td>
 									<td>
@@ -11786,7 +11786,7 @@
 						<button class="btn btn-inverse" data-bind="click: addRow"><i class="icon-plus icon-white"></i></button>	
 						
 						<!-- Add New Item -->
-						<ul class="topnav addNew">
+						<!-- <ul class="topnav addNew">
 							<li role="presentation" class="dropdown ">
 						  		<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
 						  			<span data-bind="text: lang.lang.add_new_item"></span>
@@ -11801,8 +11801,11 @@
 					  				 				
 					  			</ul>
 						  	</li>				
-						</ul>
+						</ul> -->
 						<!--End Add New Item -->
+
+						<!--Add Account -->
+						<a href="#/account" class="btn btn-default"><span data-bind="text: lang.lang.add_account"></span></a>
 						 
 
 					</div>
@@ -18845,7 +18848,7 @@
 							<button class="btn btn-inverse" data-bind="click: addRow"><i class="icon-plus icon-white"></i></button>
 							
 							<!-- Add New Item -->
-							<ul class="topnav addNew">
+							<!-- <ul class="topnav addNew">
 								<li role="presentation" class="dropdown ">
 							  		<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
 							  			<span data-bind="text: lang.lang.add_new_item"></span>
@@ -18859,8 +18862,11 @@
 						  				<li><a href='#/txn_item'><span data-bind="text: lang.lang.add_transaction_item"></span></a></li> 
 						  			</ul>
 							  	</li>				
-							</ul>
+							</ul> -->
 							<!--End Add New Item -->
+
+							<!--Add Account -->
+							<a href="#/account" class="btn btn-default"><span data-bind="text: lang.lang.add_account"></span></a>
 
 						</div>
 						<!-- Column END -->
@@ -19760,7 +19766,7 @@
 							    <div class="tab-content">
 
 							    	<!-- Options Tab content -->
-							        <div class="tab-pane active" id="tab1-5">						            
+							        <div class="tab-pane active" id="tab1-6">						            
 							            <table style="margin-bottom: 0;" class="table table-borderless table-condensed cart_total">							            
 											<tr>
 												<td>
@@ -19825,7 +19831,7 @@
 							        <!-- // Options Tab content END -->
 
 							        <!-- Address Tab content -->
-							        <div class="tab-pane" id="tab2-5">
+							        <div class="tab-pane" id="tab2-6">
 							        	<span data-bind="text: lang.lang.billing_address"></span>
 										<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.bill_to" placeholder="Billing to ..."></textarea>								
 										
@@ -19836,7 +19842,7 @@
 							        <!-- // Address Tab content END -->
 
 							        <!-- Info Tab content -->
-							        <div class="tab-pane" id="tab3-5">
+							        <div class="tab-pane" id="tab3-6">
 							        	
 										<table class="table table-borderless table-condensed cart_total">
 								            <tr>
@@ -19894,7 +19900,7 @@
 							        <!-- // Info Tab content END -->
 
 							        <!-- Attach Tab content -->
-							        <div class="tab-pane" id="tab4-5">
+							        <div class="tab-pane" id="tab4-6">
 
 							        	<p><span data-bind="text: lang.lang.file_type"></span>: [PDF, JPG, JPEG, TIFF, PNG, GIF]</p>		
 							            <input id="files" name="files"
@@ -19924,7 +19930,7 @@
 							        <!-- // Attach Tab content END -->						        
 
 							        <!-- Recuring Tab content -->
-							        <div class="tab-pane" id="tab5-5">							            	
+							        <div class="tab-pane" id="tab5-6">							            	
 							            
 							            <table style="width: 100%" class="table borderless">
 							            	<tr align="right">
@@ -33430,12 +33436,12 @@
 			        <!-- Upper Part -->
 					<div class="row">
 						<div class="span4" style="padding-left: 15px;">							
-							<div class="box-generic well" style="height: 190px;">
-								<div class="widget widget-heading-simple widget-body-primary widget-employees">		
+							<div class="box-generic well" style="height: 190px; padding: 15px 15px 6px !important;">
+								<div class="widget widget-heading-simple widget-body-primary widget-employees" style="margin-bottom: 0 !important;">		
 									<div class="widget-body padding-none">			
 										<div class="row-fluid row-merge">
 											<div class="listWrapper">
-												<div class="innerAll" style="padding: 15px 15px 19px;">
+												<div class="innerAll" style="padding: 15px;">
 													<form autocomplete="off" class="form-inline">
 														<div class="widget-search separator bottom">
 															<button type="button" class="btn btn-default pull-right" data-bind="click: search"><i class="icon-search"></i></button>
@@ -33452,7 +33458,7 @@
 												                   data-bind="value: category_id,
 												                              source: categoryDS"
 												                   data-option-label="Select Category..."
-												                   style="width: 100%; height: 29px;" />
+												                   style="width: 100%; height: 29px; float: left; margin-bottom: 15px;" />
 
 												            <input id="ddlItemGroup" id="ddlItemGroup"
 																   data-role="dropdownlist"
@@ -48283,7 +48289,7 @@
 	            	self.set("cr", kendo.toString(response.cr, "c", banhji.locale));
 	            }
 	        });
-			                           
+			                          
 		},
 		printGrid			: function() {
 			var gridElement = $('#grid'),
@@ -49969,7 +49975,7 @@
 		search 				: function(){
 			var self = this, as_of = this.get("as_of");
 			this.set("totalLiabilityEquity", 0);
-			var totalAll = 0, totalCurrent = 0, totalLi = 0, totalEq = 0, totalAsCu = 0;
+			var totalAll = 0, totalCurrent = 0, totalLi = 0, totalEq = 0, totalAsCu = 0, totalBlock = 0;
 			if(as_of){
 				as_of = new Date(as_of);
 				var displayDate = "As Of " + kendo.toString(as_of, "dd-MM-yyyy");
@@ -50046,14 +50052,16 @@
 								    totalCurrent += kendo.parseFloat(response.results[i].typeLine[j].line[k].amount);
 							    	totalAll += kendo.parseFloat(response.results[i].typeLine[j].line[k].amount);
 							    	totalAsCu += kendo.parseFloat(response.results[i].typeLine[j].line[k].amount);
+							    	totalBlock += kendo.parseFloat(response.results[i].typeLine[j].line[k].amount);
 							    }
 							    self.exArray.push({
 							        cells: [
 							          	{ value: "Total " + response.results[i].typeLine[j].type, bold: true },
-							            { value: totalCurrent, bold: true, borderTop: { color: "#000000", size: 1 } },
+							            { value: totalBlock, bold: true, borderTop: { color: "#000000", size: 1 } },
 							            { value: "" }
 							        ]
 							    });
+							    totalBlock = 0;
 							    self.exArray.push({
 							        cells: [
 							          	{ value: "" },
@@ -50135,16 +50143,18 @@
 								            { value: "" }
 								        ]
 								    });
+								    totalBlock += kendo.parseFloat(response.results[i].typeLine[j].line[k].amount);
 								    totalLi += kendo.parseFloat(response.results[i].typeLine[j].line[k].amount);
 							    	totalAll += kendo.parseFloat(response.results[i].typeLine[j].line[k].amount);
 							    }
 							    self.liArray.push({
 							        cells: [
 							          	{ value: "Total " + response.results[i].typeLine[j].type, bold: true },
-							            { value: totalLi, bold: true, borderTop: { color: "#000000", size: 1 } },
+							            { value: totalBlock, bold: true, borderTop: { color: "#000000", size: 1 } },
 							            { value: "" }
 							        ]
 							    });
+							    totalBlock = 0;
 							    self.liArray.push({
 							        cells: [
 							          	{ value: "" },
@@ -50221,16 +50231,18 @@
 								            { value: "" }
 								        ]
 								    });
+								    totalBlock += kendo.parseFloat(response.results[i].typeLine[j].line[k].amount);
 								    totalEq += kendo.parseFloat(response.results[i].typeLine[j].line[k].amount);
 							    	totalAll += kendo.parseFloat(response.results[i].typeLine[j].line[k].amount);
 							    }
 							    self.eqArray.push({
 							        cells: [
 							          	{ value: "Total " + response.results[i].typeLine[j].type, bold: true },
-							            { value: totalEq, bold: true, borderTop: { color: "#000000", size: 1 } },
+							            { value: totalBlock, bold: true, borderTop: { color: "#000000", size: 1 } },
 							            { value: "" }
 							        ]
 							    });
+							    totalBlock = 0;
 							    self.eqArray.push({
 							        cells: [
 							          	{ value: "" },

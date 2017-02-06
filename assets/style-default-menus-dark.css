@@ -5257,7 +5257,7 @@ img.flag {
   background: #e5412d;
 }
 .select2-container {
-  background: #f4f4f4;
+  /*background: #f4f4f4;*/
   border-color: #fff;
 }
 .select2-container .select2-choice {
