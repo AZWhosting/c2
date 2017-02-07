@@ -134,8 +134,8 @@
 			                    template: "#= series.name #: #= kendo.toString(value, &#39;c&#39;, banhji.locale) #"
 			                 }'                 
 			                 data-series="[
-			                                 { field: 'cash_in', name: 'Cash In', categoryField:'month', color: '#236DA4' },
-			                                 { field: 'cash_out', name: 'Cash Out', categoryField:'month', color: '#A6C9E3' }
+			                                 { field: 'cash_in', name: 'Cash In', categoryField:'month', color: '#203864', overlay:{ gradient: 'none'}  },
+			                                 { field: 'cash_out', name: 'Cash Out', categoryField:'month', color: '#A6C9E3' , overlay:{ gradient: 'none'} }
 			                             ]"	                             
 			                 data-bind="source: graphDS"
 			                 style="height: 240px;" ></div>
@@ -482,77 +482,87 @@
 			        		<span data-bind="text: lang.lang.acc_in_this_module"></span>
 			        	</p>
 
-			        	<p style="width: 100%; float: left; margin-top: 8px;">
+			        	<p style="width: 100%; float: left; margin-top: 8px; margin-bottom: 15px;">
 				        	<span style="position: relative; height: 35px; line-height: 35px; padding-right: 15px; float: left; display: block; ">
-								<a style="color: #fff; margin-top: 4px; line-height: 17px; background: #203864; padding: 8px 55px;" href="#/accounting_recurring">
-									<span class="badge fix badge-primary" style="color: #fff; position: absolute; top: -13px; background: red; right: 5px; width: 25px; height: 25px; font-size: 15px; line-height: 25px;">0</span>
+								<a style="color: #203864; font-weight: 600; margin-top: 4px; line-height: 17px; background: #fff; padding: 8px 32px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;" href="#/accounting_recurring">
+									<span class="badge fix badge-primary" style="color: #fff;  position: absolute; top: -13px; background: #203864; right: 5px; width: 25px; height: 25px; font-size: 15px; line-height: 25px;">0</span>
 									Recurring												
+								</a>
+							</span>
+
+							<span style="position: relative; height: 35px; line-height: 35px; padding-right: 15px; float: left; display: block; ">
+								<a href="" target="_blank" style="color: #203864; font-weight: 600; margin-top: 4px; line-height: 17px; background: #fff; padding: 8px 39px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;" >
+									This Module's Guide												
 								</a>
 							</span>
 						</p>
 
-			        	<div class="supplier-icon">
-						    <div class="span4">
-						       	<a href="#/txn_item" class="center">
-						       		<img title="Add Txn Item"  src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/add_txn_item.ico" />
-						       	</a>
-						    </div>
-						    <div class="span4">
-						       	<a href="#/account" class="center">
-						       		<img title="Add New Account" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/journal.ico" />
-						       	</a>
-						    </div>
-						    <div class="span4">
-						       	<a href="#/segment" class="center">
-						       		<img title="Add New Segment" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/segment.ico" />
-						       	</a>
-						    </div>
+						<div class="cover-block" style="box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
+				        	<div class="supplier-icon">
+							    <div class="span4">
+							       	<a href="#/txn_item" class="center">
+							       		<img title="Add Txn Item"  src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/add_txn_item.ico" />
+							       	</a>
+							    </div>
+							    <div class="span4">
+							       	<a href="#/account" class="center">
+							       		<img title="Add New Account" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/journal.ico" />
+							       	</a>
+							    </div>
+							    <div class="span4">
+							       	<a href="#/segment" class="center">
+							       		<img title="Add New Segment" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/segment.ico" />
+							       	</a>
+							    </div>
+							</div>
 						</div>
 			        </td>
 			 	</tr>
 			</table>
-			<table class="table table-borderless table-condensed table-vertical-center ">
-				<tr>	
-					<td class="center" style="vertical-align: top;">
-						<a href="#/journal">
-							<img title="Add Account" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/journal.png" width="110" height="200" />
-							<span data-bind="text: lang.lang.journal" style="margin-top: 7px; display: inline-block; text-transform: uppercase;"></span>
-						</a>						
-					</td>					
-					<td class="center" style="vertical-align: top;">
-						<a href="#/cash_transaction">
-							<img title="Add Cash Transaction" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/cash_transaction.png" width="110" height="200" />
-							<span data-bind="text: lang.lang.cash_transaction" style="margin-top: 7px; display: inline-block; text-transform: uppercase;"></span>
-						</a>						
-					</td>
-					<td class="center" style="vertical-align: top;">
-						<a href="#/cash_advance">
-							<img title="Add Cash Advance" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/cash_advance.png" width="110" height="200" />
-							<span data-bind="text: lang.lang.cash_advance" style="margin-top: 7px; display: inline-block; text-transform: uppercase;"></span>
-						</a>
-					</td>		
-				</tr>
-				<tr>
-					<td class="center" style="vertical-align: top;">						
-						<a href="#/expense">
-							<img title="Add Expense" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/expense.png" width="110" height="200" />
-							<span data-bind="text: lang.lang.expense" style="margin-top: 7px; display: inline-block; text-transform: uppercase;"></span>
-						</a>						
-					</td>
-					<td class="center">						
-						<a href="#/currency_rate">
-							<img title="Add Exchange Rate Record" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/currency_record.png" width="110" height="200" />
-							<span data-bind="text: lang.lang.ex_rate_record" style="margin-top: 7px; display: inline-block; text-transform: uppercase;"></span>
-						</a>						
-					</td>
-					<td class="center" style="vertical-align: top;">
-						<a href="#/segment">
-							<img title="Add Segment" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/segment.png" width="110" height="200" />
-							<span style="margin-top: 7px; display: inline-block; text-transform: uppercase;" data-bind="text: lang.lang.segment"></span>
-						</a>
-					</td>			
-				</tr>								
-			</table>
+			<div class="cover-block">
+				<table class="table table-borderless table-condensed table-vertical-center costom-imag">
+					<tr>	
+						<td class="center" style="vertical-align: top;">
+							<a href="#/journal">
+								<img title="Add Account" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/journal.png" width="110" height="200" />
+								<span data-bind="text: lang.lang.journal" style="margin-top: 7px; display: inline-block; text-transform: uppercase;"></span>
+							</a>						
+						</td>					
+						<td class="center" style="vertical-align: top;">
+							<a href="#/cash_transaction">
+								<img title="Add Cash Transaction" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/cash_transaction.png" width="110" height="200" />
+								<span data-bind="text: lang.lang.cash_transaction" style="margin-top: 7px; display: inline-block; text-transform: uppercase;"></span>
+							</a>						
+						</td>
+						<td class="center" style="vertical-align: top;">
+							<a href="#/cash_advance">
+								<img title="Add Cash Advance" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/cash_advance.png" width="110" height="200" />
+								<span data-bind="text: lang.lang.cash_advance" style="margin-top: 7px; display: inline-block; text-transform: uppercase;"></span>
+							</a>
+						</td>		
+					</tr>
+					<tr>
+						<td class="center" style="vertical-align: top;">						
+							<a href="#/expense">
+								<img title="Add Expense" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/expense.png" width="110" height="200" />
+								<span data-bind="text: lang.lang.expense" style="margin-top: 7px; display: inline-block; text-transform: uppercase;"></span>
+							</a>						
+						</td>
+						<td class="center">						
+							<a href="#/currency_rate">
+								<img title="Add Exchange Rate Record" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/currency_record.png" width="110" height="200" />
+								<span data-bind="text: lang.lang.ex_rate_record" style="margin-top: 7px; display: inline-block; text-transform: uppercase;"></span>
+							</a>						
+						</td>
+						<td class="center" style="vertical-align: top;">
+							<a href="#/segment">
+								<img title="Add Segment" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/segment.png" width="110" height="200" />
+								<span style="margin-top: 7px; display: inline-block; text-transform: uppercase;" data-bind="text: lang.lang.segment"></span>
+							</a>
+						</td>			
+					</tr>								
+				</table>
+			</div>
 
 		</div>
 
@@ -613,7 +623,7 @@
 				</div>
 				<div class="span6 accounting-management">
 
-					<div class="span12 capital-box" style="width: 100%;">
+					<div class="span12 capital-box" style="width: 100%; background: #203864; color: #fff">
 						<span data-bind="text: txnRecorded"></span>
 						<p class="month" style="width: 70%; text-align: center; margin: 0 auto;" data-bind="text: lang.lang.transactions_recorded"></p>
 					</div>
@@ -622,13 +632,13 @@
 						<p class="month">Unsettled accrual transactions</p>
 					</div> -->
 					<div class="span12" style="padding: 0;">
-						<div class="span6 capital-box" >
+						<div class="span6 capital-box" style="background: #0077c5;">
 							<span data-bind="text: currentRatio"></span> <span>x</span>
 							<p class="month" data-bind="text: lang.lang.current_ratio"></p>
 						</div>
-						<div class="span6 capital-box">
+						<div class="span6 capital-box" style="background: #21abf6; color: #fff;">
 							<span data-bind="text: quickRatio"></span> <span>x</span>
-							<p class="month" data-bind="text: lang.lang.quick_ratio"></p>
+							<p class="month" style="color: #fff;" data-bind="text: lang.lang.quick_ratio"></p>
 						</div>
 					</div>
 					<table width="100%">
@@ -883,7 +893,7 @@
 						<div class="span6 account-center" style="margin-bottom: 10px;">
 							<div class="row-fluid" >
 								<div class="span12" style="margin-bottom: 10px;">
-									<div class="widget-stats widget-stats-primary widget-stats-5" data-bind="click: loadTransaction" style=" width: 425px; height:114px; background:#424242; margin-left:0;">
+									<div class="widget-stats widget-stats-primary widget-stats-5" data-bind="click: loadTransaction" style=" width: 425px; height:114px; background: #203864; margin-left:0;">
 										<span class="glyphicons coins"><i></i></span>										
 										<span class="txt">
 											<span data-bind="text: lang.lang.balance_as_of_today"></span>
@@ -896,7 +906,7 @@
 							
 							<div class="row-fluid">
 								<div class="span6">
-									<div class="widget-stats widget-stats-info widget-stats-5">
+									<div class="widget-stats widget-stats-info widget-stats-5" style="background: #0077c5">
 										<span class="glyphicons adjust_alt"><i></i></span>
 										<span class="txt">
 											<span data-bind="text: nature"></span>
@@ -906,7 +916,7 @@
 									</div>
 								</div>
 								<div class="span6">
-									<div class="widget-stats widget-stats-default widget-stats-5" data-bind="click: loadTransaction">
+									<div class="widget-stats widget-stats-default widget-stats-5" style="background: #21abf6" data-bind="click: loadTransaction">
 										<span class="glyphicons random"><i></i></span>										
 										<span class="txt">
 											<span data-bind="text: totalTxn"></span>
@@ -7459,7 +7469,7 @@
 		</div>
 	</div>
 </script>
-<script id="accountingRecurring-template" type="text/x-kendo-tmpl">		
+<script id="accountingRecurring-template" type="text/x-kendo-tmpl">
 	<tr data-uid="#: uid #">
 		<td>#=type#</td>
 		<td>#=recurring_name#</td>
@@ -7527,7 +7537,7 @@
 	</div>
 </script>
 
-<script id="accountingSetting-contact-type-template" type="text/x-kendo-tmpl">                    
+<script id="accountingSetting-contact-type-template" type="text/x-kendo-tmpl">
     <tr>
     	<td>
     		 #:name#
@@ -7556,7 +7566,7 @@
         </div>
     </div>
 </script>
-<script id="accountingSetting-payment-method-template" type="text/x-kendo-tmpl">                    
+<script id="accountingSetting-payment-method-template" type="text/x-kendo-tmpl">
     <tr>
     	<td>
     		 #:name#
@@ -7583,7 +7593,7 @@
         </div>
     </div>
 </script>
-<script id="accountingSetting-payment-term-template" type="text/x-kendo-tmpl">                    
+<script id="accountingSetting-payment-term-template" type="text/x-kendo-tmpl">
     <tr>
     	<td>
     		 #:name#
@@ -7783,7 +7793,7 @@
 		</div>
 	</div>
 </script>
-<script id="segment-template" type="text/x-kendo-tmpl">                    
+<script id="segment-template" type="text/x-kendo-tmpl">
     <tr>    	
     	<td>#=name#</td>
     	<td >
@@ -7799,7 +7809,7 @@
     	</td>
    	</tr>
 </script>
-<script id="segment-item-template" type="text/x-kendo-tmpl">                    
+<script id="segment-item-template" type="text/x-kendo-tmpl">
     <tr>
     	<td>#=code#</td>
     	<td>#=name#</td>
@@ -7814,6 +7824,132 @@
    	</tr>
 </script>
 
+
+<script id="fixedAssetsList" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960" style="overflow: hidden;">					
+				<div id="example" class="k-content">
+
+					<span class="glyphicons no-js remove_2 pull-right" 
+	    				onclick="javascript:window.history.back()"
+						data-bind="click: cancel"><i></i></span>
+					
+			        <h2 >Fixed Assets List</h2>
+
+			        <div class="row">
+				        <div class="span6">
+				        	<p>
+					        	<span data-bind="text: lang.lang.segment_is_important"></span>
+					        </p>
+				        </div>
+				         <div class="span6">
+				         	<button class="btn btn-inverse" data-bind="click: openWindow"><i class="icon-plus icon-white"></i>&nbsp&nbsp<span data-bind="text: lang.lang.add_new_segment"></span></button>
+							
+				        </div>
+			        </div>				    			   
+
+				    <br>
+
+				    <!-- Window -->
+				    <div data-role="window"
+			                 data-title="Segment"		                 
+			                 data-width="280"
+			                 data-height="165"
+			                 data-actions="{}"
+			                 data-position="{top: '30%', left: '37%'}"
+			                 data-bind="visible: windowVisible">
+				    	
+				    	<table>							
+							<tr style="border-bottom: 8px solid #fff;">
+								<td width="40%"><span data-bind="text: lang.lang.name"></span></td>
+								<td>
+									<input class="k-textbox" placeholder="name..." data-bind="value: obj.name" style="width: 100%;">
+								</td>
+							</tr>		
+						</table>
+
+						<br>
+
+						<div style="text-align: center;">
+							<span class="btn btn-success btn-icon glyphicons ok_2" data-bind="click: save"><i></i><span data-bind="text: lang.lang.save"></span></span>
+							<span class="btn btn-danger btn-icon glyphicons remove_2" data-bind="click: closeWindow"><i></i><span data-bind="text: lang.lang.close"></span></span>  
+						</div>
+					</div>
+							
+	                <div class="row-fluid">
+		                <div class="span12 table-segment" style="padding: 0;">	                					
+			            	<table class="table table-condensed">
+			            		<thead style="background-color: #1E4E78; color: #fff; font-weight: bold">
+			            			<tr>
+			            				<th data-bind="text: lang.lang.name"></th>            					            	
+			            				<th></th>
+			            			</tr>
+			            		</thead>
+			            		<tbody data-role="listview"			            			
+						                data-template="segment-template"
+						                data-bind="source: dataSource"></tbody>
+			            	</table>
+		            	</div>
+
+		            <!-- Item Window -->
+		            <div data-role="window"
+			                 data-title="Segment Item"		                 
+			                 data-width="250"
+			                 data-height="201"
+			                 data-actions="{}"
+			                 data-position="{top: '30%', left: '37%'}"		                 
+			                 data-bind="visible: windowItemVisible">
+	            		<table>
+							<tr style="border-bottom: 8px solid #fff;">
+								<td width="35%"><span data-bind="text: lang.lang.code"></span></td>
+								<td>
+									<input class="k-textbox" placeholder="type code ..." data-bind="value: item.code" style="width: 100%;">
+								</td>
+							</tr>
+							<tr style="border-bottom: 8px solid #fff;">
+								<td><span data-bind="text: lang.lang.name"></span></td>
+								<td>
+									<input class="k-textbox" placeholder="type name ..." data-bind="value: item.name" style="width: 100%;">
+								</td>
+							</tr>
+						</table>
+
+						<br>
+						<div style="text-align: center;">
+							<span class="btn btn-success btn-icon glyphicons ok_2" data-bind="click: saveItem"><i></i><span data-bind="text: lang.lang.save"></span></span>
+							<span class="btn btn-danger btn-icon glyphicons remove_2" data-bind="click: closeWindowItem"><i></i><span data-bind="text: lang.lang.close"></span></span>  
+						</div>
+					</div>
+
+					<h3 data-bind="text: objName"></h3>
+
+					<div class="row">
+		            	<div class="span12">		                	
+						    <table class="table table-bordered table-white">
+			            		<thead>
+			            			<tr>
+			            				<th data-bind="text: lang.lang.code"></th>
+			            				<th data-bind="text: lang.lang.name"></th>
+			            				<th data-bind="text: lang.lang.segment"></th>   					            		
+			            				<th></th>
+			            			</tr>
+			            		</thead>
+			            		<tbody data-role="listview"			            				
+						                data-template="segment-item-template"
+						                data-auto-bind="false"
+						                data-bind="source: itemDS"></tbody>
+			            	</table>
+			            	<div id="pager" class="k-pager-wrap"
+						    	 data-auto-bind="false"
+					             data-role="pager" data-bind="source: itemDS"></div>
+		            	</div>
+	            	</div>
+				</div>							
+			</div>
+		</div>
+	</div>
+</script>
 
 <script id="taxReportCenter" type="text/x-kendo-template">
 	<div class="row-fluid customer-report-center">
@@ -9246,37 +9382,44 @@
 			        		<span data-bind="text: lang.lang.S_inhere"></span>
 			        	</p>
 
-			        	<p style="width: 100%; float: left; margin-top: 8px;">
+			        	<p style="width: 100%; float: left; margin-top: 8px; margin-bottom: 15px;">
 				        	<span style="position: relative; height: 35px; line-height: 35px; padding-right: 15px; float: left; display: block; ">
-								<a style="color: #fff; margin-top: 4px; line-height: 17px; background: #203864; padding: 8px 55px;" href="#/vendor_recurring">
-									<span class="badge fix badge-primary" style="color: #fff; position: absolute; top: -13px; background: red; right: 5px; width: 25px; height: 25px; font-size: 15px; line-height: 25px;">0</span>
+								<a style="color: #203864; font-weight: 600; margin-top: 4px; line-height: 17px; background: #fff; padding: 8px 32px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;" href="#/vendor_recurring">
+									<span class="badge fix badge-primary" style="color: #fff;  position: absolute; top: -13px; background: #203864; right: 5px; width: 25px; height: 25px; font-size: 15px; line-height: 25px;">0</span>
 									Recurring												
 								</a>
 							</span>
-						</p>
 
-			        	<div class="supplier-icon">
-					       	<div class="span4">
-						       	<a href="#/vendor" class="center">
-						       		<img title="Add Suppliers" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/suppliers.ico" />
-						       	</a>
-						       </div>
-						    <div class="span4">
-						       	<a href="#/item" class="center">
-						       		<img title="Add Inventory" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/inventories.ico" />
-						       	</a>
-						    </div>
-						    <div class="span4">
-						       	<a href="#/item_service" class="center">
-						       		<img title="Add Service" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/services.ico" />
-						       	</a>
-						    </div>
+							<span style="position: relative; height: 35px; line-height: 35px; padding-right: 15px; float: left; display: block; ">
+								<a href="" target="_blank" style="color: #203864; font-weight: 600; margin-top: 4px; line-height: 17px; background: #fff; padding: 8px 39px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;" >
+									This Module's Guide												
+								</a>
+							</span>
+						</p>
+						<div class="cover-block" style="box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
+				        	<div class="supplier-icon">
+						       	<div class="span4">
+							       	<a href="#/vendor" class="center">
+							       		<img title="Add Suppliers" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/suppliers.ico" />
+							       	</a>
+							       </div>
+							    <div class="span4">
+							       	<a href="#/item" class="center">
+							       		<img title="Add Inventory" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/inventories.ico" />
+							       	</a>
+							    </div>
+							    <div class="span4">
+							       	<a href="#/item_service" class="center">
+							       		<img title="Add Service" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/services.ico" />
+							       	</a>
+							    </div>
+							</div>
 						</div>
 			        </td>
 			 	</tr>
 			</table>
-
-			<table class="table table-borderless table-condensed table-vertical-center">
+			<div class="cover-block">
+				<table class="table table-borderless table-condensed table-vertical-center costom-imag">
 				<tr>
 					<td class="center">
 						<a href="#/purchase_order">
@@ -9317,8 +9460,8 @@
 						</a>						
 					</td>										
 				</tr>				
-			</table>
-
+				</table>
+			</div>
 		</div>
 
 		<!-- Right Side -->
@@ -9335,11 +9478,11 @@
 					
 						<!-- Widget heading -->
 						<div class="widget-head">
-							<h4 class="heading"><span class="glyphicons coins"><i></i></span><span data-bind="text: lang.lang.purchase"></span></h4>
+							<h4 class="heading"><span class="glyphicons coins"><i></i></span><span style="color: #203864; font-weight: 600; font-style: normal;" data-bind="text: lang.lang.purchase"></span></h4>
 						</div>
 						<!-- // Widget heading END -->
 						
-						<div class="widget-body alert alert-primary">
+						<div class="widget-body alert alert-primary" style="min-height: 148px; background: white; color: #203864; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
 							
 							<div align="center" class="text-large strong" data-bind="text: purchase"></div>
 							<table width="100%">
@@ -9378,11 +9521,11 @@
 					
 						<!-- Widget heading -->
 						<div class="widget-head">
-							<h4 class="heading"><span class="glyphicons cart_in"><i></i></span><span data-bind="text: lang.lang.purchase_order"></span></h4>
+							<h4 class="heading"><span class="glyphicons cart_in"><i></i></span><span style="color: #203864; font-weight: 600; font-style: normal;" data-bind="text: lang.lang.purchase_order"></span></h4>
 						</div>
 						<!-- // Widget heading END -->
 						
-						<a href="#/open_purchase_order"><div class="widget-body alert-info">
+						<a href="#/open_purchase_order"><div class="widget-body alert-info" style="min-height: 148px; background: white; color: #203864; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
 							
 							<div align="center" class="text-large strong" data-bind="text: order"></div>
 							<table width="100%">
@@ -9416,11 +9559,11 @@
 					
 						<!-- Widget heading -->
 						<div class="widget-head">
-							<h4 class="heading"><span class="glyphicons credit_card"><i></i></span><span data-bind="text: lang.lang.payables"></span></h4>
+							<h4 class="heading"><span class="glyphicons credit_card"><i></i></span><span style="color: #203864; font-weight: 600; font-style: normal;" data-bind="text: lang.lang.payables"></span></h4>
 						</div>
 						<!-- // Widget heading END -->
 						
-						<a href="#/suppliers_balance_summary"><div class="widget-body alert-info3" style="background-color: LightGray">
+						<a href="#/suppliers_balance_summary"><div class="widget-body alert-info3" style="min-height: 148px; background: white; color: #203864; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
 							
 							<div align="center" class="text-large strong" data-bind="text: ap"></div>
 							<table width="100%">
@@ -9456,10 +9599,10 @@
 			<!-- Top 5 -->
 			<div class="row-fluid">
 				<div class="span4">			
-					<table class="table table-bordered table-primary table-striped table-vertical-center" style="font-size: 12px;">
+					<table class="table table-bordered table-primary table-striped table-vertical-center" style="font-size: 12px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
 				        <thead>
 				            <tr>				                
-				                <th class="center" colspan="2"><span data-bind="text: lang.lang.top_5_suppliers"></span></th>			                
+				                <th style="background: #203864;" class="center" colspan="2"><span data-bind="text: lang.lang.top_5_suppliers"></span></th>			                
 				            </tr>
 				        </thead>
 				        <tbody data-role="listview"
@@ -9469,10 +9612,10 @@
 				    </table>			
 				</div>
 				<div class="span4">					
-					<table class="table table-bordered table-primary table-striped table-vertical-center" style="font-size: 12px;">
+					<table class="table table-bordered table-primary table-striped table-vertical-center" style="font-size: 12px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
 				        <thead>
 				            <tr>
-				                <th class="center" colspan="2"><span data-bind="text: lang.lang.top_5_ap_balance"></span></th>
+				                <th style="background: #203864;" class="center" colspan="2"><span data-bind="text: lang.lang.top_5_ap_balance"></span></th>
 				            </tr>
 				        </thead>
 				        <tbody data-role="listview"
@@ -9482,10 +9625,10 @@
 				    </table>
 				</div>
 				<div class="span4">					
-					<table class="table table-bordered table-primary table-striped table-vertical-center" style="font-size: 12px;">
+					<table class="table table-bordered table-primary table-striped table-vertical-center" style="font-size: 12px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
 				        <thead>
 				            <tr>
-				                <th class="center" colspan="2"><span data-bind="text: lang.lang.top_5_purchased_products"></span></th>			                		                
+				                <th style="background: #203864;" class="center" colspan="2"><span data-bind="text: lang.lang.top_5_purchased_products"></span></th>			                		                
 				            </tr>
 				        </thead>
 				        <tbody data-role="listview"
@@ -9507,8 +9650,8 @@
 	                    template: "#= series.name #: #= kendo.toString(value, &#39;c&#39;, banhji.locale) #"
 	                 }'                 
 	                 data-series="[
-	                                 { field: 'sale', name: 'Monthly Purchase', categoryField:'month', color: '#236DA4' },
-	                                 { field: 'order', name: 'Monthly Purchase Order', categoryField:'month', color: '#A6C9E3' }
+	                                 { field: 'sale', name: 'Monthly Purchase', categoryField:'month', color: '#203864', overlay: {gradient:'none'} },
+	                                 { field: 'order', name: 'Monthly Purchase Order', categoryField:'month', color: '#A6C9E3', overlay: {gradient:'none'} }
 	                             ]"
 	                 data-auto-bind="false"	                             
 	                 data-bind="source: graphDS"
@@ -9776,9 +9919,9 @@
 						<div class="span6" style="margin-bottom:10px;">
 							<div class="row-fluid">
 								<div class="span6">
-									<div class="widget-stats widget-stats-primary widget-stats-5" data-bind="click: loadBalance">
+									<div class="widget-stats widget-stats-primary widget-stats-5" data-bind="click: loadBalance" style="background: #0077c5;">
 										<span class="glyphicons coins"><i></i></span>
-										<span class="txt"><span data-bind="text: lang.lang.balance"></span><span data-bind="text: balance" style="font-size:medium;"></span></span>
+										<span class="txt"><span data-bind="text: lang.lang.balance"></span><span data-bind="text: balance" style="font-size:medium; "></span></span>
 										<div class="clearfix"></div>
 									</div>
 								</div>
@@ -9793,7 +9936,7 @@
 							
 							<div class="row-fluid">
 								<div class="span6">
-									<div class="widget-stats widget-stats-info widget-stats-5" data-bind="click: loadBalance">
+									<div class="widget-stats widget-stats-info widget-stats-5" data-bind="click: loadBalance" style="background: #21abf6;">
 										<span class="glyphicons circle_exclamation_mark"><i></i></span>
 										<span class="txt"><span data-bind="text: openInvoice"></span><span data-bind="text: lang.lang.open"></span></span>
 										<div class="clearfix"></div>
@@ -10915,7 +11058,7 @@
 		</div>
 	</div>
 </script>
-<script id="purchaseOrder-template" type="text/x-kendo-tmpl">		
+<script id="purchaseOrder-template" type="text/x-kendo-tmpl">
 	<tr data-uid="#: uid #">		
 		<td>
 			<i class="icon-trash" data-bind="events: { click: removeRow }"></i>
@@ -11391,7 +11534,7 @@
 		</div>
 	</div>
 </script>
-<script id="grn-template" type="text/x-kendo-tmpl">		
+<script id="grn-template" type="text/x-kendo-tmpl">
 	<tr data-uid="#: uid #">		
 		<td>
 			<i class="icon-trash" data-bind="events: { click: removeRow }"></i>
@@ -11877,7 +12020,7 @@
 		</div>
 	</div>
 </script>
-<script id="vendorDeposit-template" type="text/x-kendo-tmpl">		
+<script id="vendorDeposit-template" type="text/x-kendo-tmpl">
 	<tr data-uid="#: uid #">		
 		<td class="center">
 			<i class="icon-trash" data-bind="events: { click: remove }"></i>
@@ -12697,7 +12840,7 @@
 		</div>
 	</div>
 </script>
-<script id="purchase-item-line-template" type="text/x-kendo-tmpl">		
+<script id="purchase-item-line-template" type="text/x-kendo-tmpl">
 	<tr data-uid="#: uid #">		
 		<td>
 			<i class="icon-trash" data-bind="events: { click: removeRow }"></i>
@@ -12786,7 +12929,7 @@
 		</td>				
     </tr>   
 </script>
-<script id="purchase-account-line-template" type="text/x-kendo-tmpl">		
+<script id="purchase-account-line-template" type="text/x-kendo-tmpl">
 	<tr data-uid="#: uid #">		
 		<td class="center">
 			<i class="icon-trash" data-bind="events: { click: removeRowAccount }"></i>
@@ -12850,7 +12993,7 @@
 		</td>			
     </tr>   
 </script>
-<script id="purchase-additional-cost-template" type="text/x-kendo-tmpl">		
+<script id="purchase-additional-cost-template" type="text/x-kendo-tmpl">
 	<tr data-uid="#: uid #">		
 		<td class="center">
 			<i class="icon-trash" data-bind="events: { click: removeRowAdditionalCost }"></i>
@@ -13337,7 +13480,7 @@
 		</div>
 	</div>
 </script>
-<script id="purchaseReturn-template" type="text/x-kendo-tmpl">		
+<script id="purchaseReturn-template" type="text/x-kendo-tmpl">
 	<tr data-uid="#: uid #">		
 		<td>
 			<i class="icon-trash" data-bind="events: { click: removeRow }"></i>
@@ -13419,7 +13562,7 @@
 		</td>						
     </tr>   
 </script>
-<script id="purchaseReturn-return-line-template" type="text/x-kendo-tmpl">		
+<script id="purchaseReturn-return-line-template" type="text/x-kendo-tmpl">
 	<tr data-uid="#: uid #">
 		<td class="center">
 			<i class="icon-trash" data-bind="events: { click: removeRowOption }"></i>					
@@ -13618,7 +13761,7 @@
 
 	</div>
 </script>
-<script id="vendorSetting-contact-type-template" type="text/x-kendo-tmpl">                    
+<script id="vendorSetting-contact-type-template" type="text/x-kendo-tmpl">
     <tr>
     	<td>
     		#:name#
@@ -13648,7 +13791,7 @@
         </div>
     </div>
 </script>
-<script id="vendorSetting-payment-method-template" type="text/x-kendo-tmpl">                    
+<script id="vendorSetting-payment-method-template" type="text/x-kendo-tmpl">
     <tr>
     	<td>
     		#:name#
@@ -13677,7 +13820,7 @@
         </div>
     </div>
 </script>
-<script id="vendorSetting-payment-term-template" type="text/x-kendo-tmpl">                    
+<script id="vendorSetting-payment-term-template" type="text/x-kendo-tmpl">
     <tr>
     	<td>
     		#:name#
@@ -13802,7 +13945,7 @@
 		</div>
 	</div>
 </script>
-<script id="vendorRecurring-template" type="text/x-kendo-tmpl">		
+<script id="vendorRecurring-template" type="text/x-kendo-tmpl">
 	<tr data-uid="#: uid #">
 		<td>#=type#</td>
 		<td>#=recurring_name#</td>
@@ -16077,103 +16220,108 @@
 			        		<span data-bind="text: lang.lang.in_here"></span>
 			        	</p>
 
-			        	<p style="width: 100%; float: left; margin-top: 8px;">
+			        	<p style="width: 100%; float: left; margin-top: 8px; margin-bottom: 15px;">
 				        	<span style="position: relative; height: 35px; line-height: 35px; padding-right: 15px; float: left; display: block; ">
-								<a style="color: #fff; margin-top: 4px; line-height: 17px; background: #203864; padding: 8px 40px;" href="#/customer_recurring">
-									<span class="badge fix badge-primary" style="color: #fff; position: absolute; top: -13px; background: red; right: 5px; width: 25px; height: 25px; font-size: 15px; line-height: 25px;">0</span>
+								<a style="color: #203864; font-weight: 600; margin-top: 4px; line-height: 17px; background: #fff; padding: 8px 32px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;" href="#/customer_recurring">
+									<span class="badge fix badge-primary" style="color: #fff;  position: absolute; top: -13px; background: #203864; right: 5px; width: 25px; height: 25px; font-size: 15px; line-height: 25px;">0</span>
 									Recurring												
 								</a>
 							</span>
 
 							<span style="position: relative; height: 35px; line-height: 35px; padding-right: 15px; float: left; display: block; ">
-								<a href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/guide/banhJi_customer_guide.pdf" target="_blank" style="color: #fff; margin-top: 4px; line-height: 17px; background: #203864; padding: 8px 39px;" href="#/customer_recurring">
-									This Module Guide												
+								<a href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/guide/banhJi_customer_guide.pdf" target="_blank" style="color: #203864; font-weight: 600; margin-top: 4px; line-height: 17px; background: #fff; padding: 8px 39px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
+									This Module's Guide												
 								</a>
 							</span>
 						</p>
 
-			        	<div class="supplier-icon">
-					       	<div class="span4">
-						       	<a href="#/customer" class="center">
-						       		<img title="Add Customers" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/customers.ico" />
-						       	</a>
-						       </div>
-						    <div class="span4">
-						       	<a href="#/item" class="center">
-						       		<img title="Add Inventory" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/inventories.ico" />
-						       	</a>
-						    </div>
-						    <div class="span4">
-						       	<a href="#/item_service" class="center">
-						       		<img title="Add Service" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/services.ico" />
-						       	</a>
-						    </div>
+						<div class="cover-block" style="box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
+				        	<div class="supplier-icon">
+						       	<div class="span4">
+							       	<a href="#/customer" class="center">
+							       		<img title="Add Customers" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/customers.ico" />
+							       	</a>
+							       </div>
+							    <div class="span4">
+							       	<a href="#/item" class="center">
+							       		<img title="Add Inventory" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/inventories.ico" />
+							       	</a>
+							    </div>
+							    <div class="span4">
+							       	<a href="#/item_service" class="center">
+							       		<img title="Add Service" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/services.ico" />
+							       	</a>
+							    </div>
+							</div>
 						</div>
+
 			        </td>
 			 	</tr>
 			</table>
-			<table class="table table-borderless table-condensed table-vertical-center costom-imag">
-				<tr>
-					<td class="center">
-						<a href="#/quote">
-							<img title="Add Quote" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/quotation.png"  height="200" />
-							<span data-bind="text: lang.lang.quotation" style="margin-top: 7px; display: inline-block; text-transform: uppercase;"></span>
-						</a>						
-					</td>
-					<td class="center">
-						<a href="#/sale_order">
-							<img title="Add Sale Order" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/sale_order.png"  height="200" />
-							<span data-bind="text: lang.lang.sale_order" style="margin-top: 7px; display: inline-block; text-transform: uppercase;"></span>
-						</a>
-					</td>
-					<td class="center">
-						<a href="#/customer_deposit">
-							<img title="Add Customer Deposit" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/customer_deposit.png"  height="200" />
-							<span data-bind="text: lang.lang.c_deposit" style="margin-top: 7px; display: inline-block; text-transform: uppercase;"></span>
-						</a>						
-					</td>					
-				</tr>
-				<tr>
-					<td class="center">
-						<a href="#/cash_sale">
-							<img title="Add Cash Sale" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/sale_receipt.png"  height="200" />
-							<span data-bind="text: lang.lang.cash_sale" style="margin-top: 7px; display: inline-block; text-transform: uppercase;"></span>
-						</a>
-					</td>
-					<td class="center">
-						<a href="#/invoice">
-							<img title="Add Invoice" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/invoice.png"  height="200" />
-							<span data-bind="text: lang.lang.invoice" style="margin-top: 7px; display: inline-block; text-transform: uppercase;"></span>
-						</a>
-					</td>
-					<td class="center">						
-						<a href="#/cash_receipt">
-							<img title="Add Cash Receipt" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/cash_receipt.png"  height="200" />
-							<span data-bind="text: lang.lang.cash_receipt" style="margin-top: 7px; display: inline-block; text-transform: uppercase;"></span>
-						</a>						
-					</td>										
-				</tr>
-				<tr>				
-					<td style="vertical-align:top;" class="center">
-						<a href="#/gdn">
-							<img title="Add Delivery Note" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/delivery_note.png"  height="200" />
-							<span data-bind="text: lang.lang.delivery_note" style="margin-top: 7px; display: inline-block; text-transform: uppercase;"></span>
-						</a>
-					</td>
-					<td width="186" class="center">
-						<a href="#/sale_return">
-							<img title="Add Sale Return" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/sale_return.png"  height="200" />
-							<span data-bind="text: lang.lang.sale_return" style="margin-top: 7px; display: inline-block; text-transform: uppercase;"></span>
-						</a>
-					</td>				
-					<td width="186" class="center">
-						<a href="#/statement">
-							<img title="Add Statement" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/statement.png"  height="200" />
-							<span data-bind="text: lang.lang.statement" style="margin-top: 7px; display: inline-block; text-transform: uppercase;"></span>
-						</a>
-					</td>
-				</tr>				
-			</table>
+			<div class="cover-block">
+				<table class="table table-borderless table-condensed table-vertical-center costom-imag">
+					<tr>
+						<td class="center">
+							<a href="#/quote">
+								<img title="Add Quote" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/quotation.png"  height="200" />
+								<span data-bind="text: lang.lang.quotation" style="margin-top: 7px; display: inline-block; text-transform: uppercase;"></span>
+							</a>						
+						</td>
+						<td class="center">
+							<a href="#/sale_order">
+								<img title="Add Sale Order" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/sale_order.png"  height="200" />
+								<span data-bind="text: lang.lang.sale_order" style="margin-top: 7px; display: inline-block; text-transform: uppercase;"></span>
+							</a>
+						</td>
+						<td class="center">
+							<a href="#/customer_deposit">
+								<img title="Add Customer Deposit" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/customer_deposit.png"  height="200" />
+								<span data-bind="text: lang.lang.c_deposit" style="margin-top: 7px; display: inline-block; text-transform: uppercase;"></span>
+							</a>						
+						</td>					
+					</tr>
+					<tr>
+						<td class="center">
+							<a href="#/cash_sale">
+								<img title="Add Cash Sale" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/sale_receipt.png"  height="200" />
+								<span data-bind="text: lang.lang.cash_sale" style="margin-top: 7px; display: inline-block; text-transform: uppercase;"></span>
+							</a>
+						</td>
+						<td class="center">
+							<a href="#/invoice">
+								<img title="Add Invoice" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/invoice.png"  height="200" />
+								<span data-bind="text: lang.lang.invoice" style="margin-top: 7px; display: inline-block; text-transform: uppercase;"></span>
+							</a>
+						</td>
+						<td class="center">						
+							<a href="#/cash_receipt">
+								<img title="Add Cash Receipt" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/cash_receipt.png"  height="200" />
+								<span data-bind="text: lang.lang.cash_receipt" style="margin-top: 7px; display: inline-block; text-transform: uppercase;"></span>
+							</a>						
+						</td>										
+					</tr>
+					<tr>				
+						<td style="vertical-align:top;" class="center">
+							<a href="#/gdn">
+								<img title="Add Delivery Note" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/delivery_note.png"  height="200" />
+								<span data-bind="text: lang.lang.delivery_note" style="margin-top: 7px; display: inline-block; text-transform: uppercase;"></span>
+							</a>
+						</td>
+						<td width="186" class="center">
+							<a href="#/sale_return">
+								<img title="Add Sale Return" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/sale_return.png"  height="200" />
+								<span data-bind="text: lang.lang.sale_return" style="margin-top: 7px; display: inline-block; text-transform: uppercase;"></span>
+							</a>
+						</td>				
+						<td width="186" class="center">
+							<a href="#/statement">
+								<img title="Add Statement" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/statement.png"  height="200" />
+								<span data-bind="text: lang.lang.statement" style="margin-top: 7px; display: inline-block; text-transform: uppercase;"></span>
+							</a>
+						</td>
+					</tr>				
+				</table>
+			</div>
 
 		</div>
 
@@ -16191,29 +16339,29 @@
 					
 						<!-- Widget heading -->
 						<div class="widget-head">
-							<h4 class="heading"><span class="glyphicons coins"><i></i></span><span data-bind="text: lang.lang.sale"></span></h4>
+							<h4 class="heading"><span class="glyphicons coins"><i></i></span><span style="color: #203864; font-weight: 600; font-style: normal;" data-bind="text: lang.lang.sale"></span></h4>
 						</div>
 						<!-- // Widget heading END -->
 						
-						<a href="#/sale_summary_customer"><div class="widget-body alert alert-primary " style="min-height: 148px;">
+						<a href="#/sale_summary_customer"><div class="widget-body alert alert-primary " style="min-height: 148px; background: white; color: #203864; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
 							
 							<div align="center" class="text-large strong medai-font" data-bind="text: sale"></div>
 							<table width="100%">
 								<tr align="center">
-									<td width="33%" style="vertical-align: top">										
+									<td width="33%" style="vertical-align: top">
 										<span data-bind="text: sale_customer"></span>
 										<br>
-										<span><span data-bind="text: lang.lang.customers"></span></span>
+										<span data-bind="text: lang.lang.customers"></span>
 									</td>
 									<td width="33%" style="vertical-align: top">
 										<span data-bind="text: sale_product"></span>
 										<br>
-										<span><span data-bind="text: lang.lang.product"></span></span>
+										<span data-bind="text: lang.lang.product"></span>
 									</td>
 									<td width="33%" style="vertical-align: top">
 										<span data-bind="text: sale_order"></span>
 										<br>
-										<span><span data-bind="text: lang.lang.order"></span></span>
+										<span data-bind="text: lang.lang.order"></span>
 									</td>
 								</tr>
 							</table>
@@ -16234,11 +16382,11 @@
 					
 						<!-- Widget heading -->
 						<div class="widget-head">
-							<h4 class="heading"><span class="glyphicons cart_in"><i></i></span><span data-bind="text: lang.lang.sale_order"></span></h4>
+							<h4 class="heading"><span class="glyphicons cart_in"><i></i></span><span style="color: #203864; font-weight: 600; font-style: normal;" data-bind="text: lang.lang.sale_order"></span></h4>
 						</div>
 						<!-- // Widget heading END -->
 						
-						<div class="widget-body alert-info " style="min-height: 148px;">
+						<div class="widget-body alert-info " style="min-height: 148px; background: white; color: #203864; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
 							
 							<div align="center" class="text-large strong medai-font" data-bind="text: order"></div>
 							<table width="100%">
@@ -16272,11 +16420,11 @@
 					
 						<!-- Widget heading -->
 						<div class="widget-head">
-							<h4 class="heading"><span class="glyphicons credit_card"><i></i></span><span data-bind="text: lang.lang.receivable"></span></h4>
+							<h4 class="heading"><span class="glyphicons credit_card"><i></i></span><span style="color: #203864; font-weight: 600; font-style: normal;" data-bind="text: lang.lang.receivable"></span></h4>
 						</div>
 						<!-- // Widget heading END -->
 						
-						<a href="#/customer_balance_summary"><div class="widget-body alert-info" style="background-color: LightGray;  min-height: 148px;">
+						<a href="#/customer_balance_summary"><div class="widget-body alert-info" style="min-height: 148px; background: white; color: #203864; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
 							
 							<div align="center" class="text-large strong medai-font" data-bind="text: ar"></div>
 							<table width="100%">
@@ -16312,10 +16460,10 @@
 			<!-- Top 5 -->
 			<div class="row-fluid">
 				<div class="span4">								
-					<table class="table table-bordered table-primary table-striped table-vertical-center" style="font-size: 12px;">
+					<table class="table table-bordered table-primary table-striped table-vertical-center" style="font-size: 12px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
 				        <thead>
 				            <tr>
-				                <th class="center" colspan="2"><span data-bind="text: lang.lang.top_5_customers"></span></th>				                			                
+				                <th class="center" colspan="2" style="background: #203864;"><span data-bind="text: lang.lang.top_5_customers"></span></th>				                			                
 				            </tr>
 				        </thead>
 				        <tbody data-role="listview"
@@ -16325,10 +16473,10 @@
 				    </table>			
 				</div>
 				<div class="span4">					
-					<table class="table table-bordered table-primary table-striped table-vertical-center" style="font-size: 12px;">
+					<table class="table table-bordered table-primary table-striped table-vertical-center" style="font-size: 12px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
 				        <thead>				           
 				            <tr>
-				                <th class="center" colspan="2"><span data-bind="text: lang.lang.top_5_ar_balance"></span></th>				                			                
+				                <th class="center" colspan="2" style="background: #203864;"><span data-bind="text: lang.lang.top_5_ar_balance"></span></th>				                			                
 				            </tr>					        
 				        </thead>
 				        <tbody data-role="listview"
@@ -16338,10 +16486,10 @@
 				    </table>
 				</div>
 				<div class="span4">					
-					<table class="table table-bordered table-primary table-striped table-vertical-center" style="font-size: 12px;">
+					<table class="table table-bordered table-primary table-striped table-vertical-center" style="font-size: 12px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
 				        <thead>				           
 				            <tr>
-				                <th class="center" colspan="2"><span data-bind="text: lang.lang.top_5_products"></span></th>				                			                
+				                <th class="center" colspan="2" style="background: #203864;"><span data-bind="text: lang.lang.top_5_products"></span></th>				                			                
 				            </tr>					        
 				        </thead>
 				        <tbody data-role="listview"
@@ -16363,8 +16511,8 @@
 	                    template: "#= series.name #: #= kendo.toString(value, &#39;c&#39;, banhji.locale) #"
 	                 }'                 
 	                 data-series="[
-	                                 { field: 'sale', name: 'Monthly Sale', categoryField:'month', color: '#236DA4' },
-	                                 { field: 'order', name: 'Monthly Order', categoryField:'month', color: '#A6C9E3' }
+	                                 { field: 'sale', name: 'Monthly Sale', categoryField:'month', color: '#203864', overlay:{ gradient: 'none'} },
+	                                 { field: 'order', name: 'Monthly Order', categoryField:'month', color: '#9CB9D9', overlay:{ gradient: 'none'} }
 	                             ]"
 	                 data-auto-bind="false"	                             
 	                 data-bind="source: graphDS"
@@ -16421,7 +16569,7 @@
 	</tr>
 </script>
 
-<script id="customerCenter" type="text/x-kendo-template">	
+<script id="customerCenter" type="text/x-kendo-template">
 	<div class="widget widget-heading-simple widget-body-gray widget-employees">		
 		<div class="widget-body padding-none">			
 			<div class="row-fluid row-merge">
@@ -16650,14 +16798,14 @@
 						<div class="span6" style="margin-bottom: 10px;">
 							<div class="row-fluid">
 								<div class="span6">
-									<div class="widget-stats widget-stats-primary widget-stats-5" data-bind="click: loadBalance" style="cursor: pointer;">
+									<div class="widget-stats widget-stats-primary widget-stats-5" data-bind="click: loadBalance" style="cursor: pointer; background: #0077c5">
 										<span class="glyphicons coins"><i></i></span>
 										<span class="txt"><span data-bind="text: lang.lang.balance"></span><span data-bind="text: balance" style="font-size:medium;"></span></span>
 										<div class="clearfix"></div>
 									</div>
 								</div>
 								<div class="span6">
-									<div class="widget-stats widget-stats-inverse widget-stats-5" data-bind="click: loadDeposit" style="cursor: pointer;">
+									<div class="widget-stats widget-stats-inverse widget-stats-5" data-bind="click: loadDeposit" style="cursor: pointer; ">
 										<span class="glyphicons briefcase"><i></i></span>
 										<span class="txt"><span data-bind="text: lang.lang.deposit"></span><span data-bind="text: deposit" style="font-size:medium;"></span></span>
 										<div class="clearfix"></div>
@@ -16667,7 +16815,7 @@
 							
 							<div class="row-fluid">
 								<div class="span6">
-									<div class="widget-stats widget-stats-info widget-stats-5" data-bind="click: loadBalance" style="cursor: pointer;">
+									<div class="widget-stats widget-stats-info widget-stats-5" data-bind="click: loadBalance" style="cursor: pointer; background: #21abf6;">
 										<span class="glyphicons circle_exclamation_mark"><i></i></span>
 										<span class="txt"><span data-bind="text: outInvoice"></span> <span data-bind="text: lang.lang.open_invoice"></span></span>
 										<div class="clearfix"></div>
@@ -18372,7 +18520,7 @@
 		</div>
 	</div>
 </script>
-<script id="saleOrder-template" type="text/x-kendo-tmpl">		
+<script id="saleOrder-template" type="text/x-kendo-tmpl">
 	<tr data-uid="#: uid #">		
 		<td>
 			<i class="icon-trash" data-bind="events: { click: removeRow }"></i>
@@ -18939,7 +19087,7 @@
 		</div>
 	</div>
 </script>
-<script id="customerDeposit-template" type="text/x-kendo-tmpl">		
+<script id="customerDeposit-template" type="text/x-kendo-tmpl">
 	<tr data-uid="#: uid #">		
 		<td class="center">
 			<i class="icon-trash" data-bind="events: { click: removeRow }"></i>
@@ -19573,7 +19721,7 @@
 		</div>
 	</div>
 </script>
-<script id="cashSale-template" type="text/x-kendo-tmpl">		
+<script id="cashSale-template" type="text/x-kendo-tmpl">
 	<tr data-uid="#: uid #">		
 		<td>
 			<i class="icon-trash" data-bind="events: { click: removeRow }"></i>
@@ -20239,7 +20387,7 @@
 		</div>
 	</div>
 </script>
-<script id="invoice-template" type="text/x-kendo-tmpl">		
+<script id="invoice-template" type="text/x-kendo-tmpl">
 	<tr data-uid="#: uid #">		
 		<td>
 			<i class="icon-trash" data-bind="events: { click: removeRow }"></i>
@@ -20715,7 +20863,7 @@
 		</div>
 	</div>
 </script>
-<script id="gdn-template" type="text/x-kendo-tmpl">		
+<script id="gdn-template" type="text/x-kendo-tmpl">
 	<tr data-uid="#: uid #">		
 		<td>
 			<i class="icon-trash" data-bind="events: { click: removeRow }"></i>
@@ -21156,7 +21304,7 @@
 		</div>
 	</div>
 </script>
-<script id="saleReturn-template" type="text/x-kendo-tmpl">		
+<script id="saleReturn-template" type="text/x-kendo-tmpl">
 	<tr data-uid="#: uid #">		
 		<td>
 			<i class="icon-trash" data-bind="events: { click: removeRow }"></i>
@@ -21238,7 +21386,7 @@
 		</td>						
     </tr>   
 </script>
-<script id="saleReturn-return-line-template" type="text/x-kendo-tmpl">		
+<script id="saleReturn-return-line-template" type="text/x-kendo-tmpl">
 	<tr data-uid="#: uid #">
 		<td class="center">
 			<i class="icon-trash" data-bind="events: { click: removeRowOption }"></i>
@@ -21624,7 +21772,7 @@
 
 	</div>
 </script>
-<script id="customerSetting-contact-type-template" type="text/x-kendo-tmpl">                    
+<script id="customerSetting-contact-type-template" type="text/x-kendo-tmpl">
     <tr>
     	<td>
     		#:name#
@@ -21678,7 +21826,7 @@
         </div>
     </div>
 </script>
-<script id="customerSetting-payment-method-template" type="text/x-kendo-tmpl">                    
+<script id="customerSetting-payment-method-template" type="text/x-kendo-tmpl">
     <tr>
     	<td>
     		#:name#
@@ -21707,7 +21855,7 @@
         </div>
     </div>
 </script>
-<script id="customerSetting-payment-term-template" type="text/x-kendo-tmpl">                    
+<script id="customerSetting-payment-term-template" type="text/x-kendo-tmpl">
     <tr>
     	<td>
     		#:name#
@@ -21851,7 +21999,7 @@
 		</div>
 	</div>
 </script>
-<script id="customerRecurring-template" type="text/x-kendo-tmpl">		
+<script id="customerRecurring-template" type="text/x-kendo-tmpl">
 	<tr data-uid="#: uid #">
 		<td>#=type#</td>
 		<td>#=recurring_name#</td>
@@ -21947,7 +22095,7 @@
 		</div>
 	</div>
 </script>
-<script id="job-template" type="text/x-kendo-tmpl">                    
+<script id="job-template" type="text/x-kendo-tmpl">
     <tr>    	
     	<td>#=name#</td>
     	<td>#=description#</td>
@@ -25383,7 +25531,7 @@
 		</div>
 	</div>
 </script>
-<script id="saleRecurring-template" type="text/x-kendo-tmpl">		
+<script id="saleRecurring-template" type="text/x-kendo-tmpl">
 	<tr data-uid="#: uid #">
 		<td>#=type#</td>
 		<td>#=recurring_name#</td>
@@ -30355,37 +30503,58 @@
 			        	<p>
 			        		<span data-bind="text: lang.lang.P_S_inhere"></span>
 			        	</p>
-			        	<div class="supplier-icon">
-						    <div class="span4">
-						       	<a href="#/item" class="center">
-						       		<img title="Add Inventory" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/inventories.ico" />
-						       	</a>
-						    </div>
-						    <div class="span4">
-						       	<a href="#/non_inventory_part" class="center">
-						       		<img title="Add Non Inventory Parts" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/non_inventory_parts.ico" />
-						       	</a>
-						    </div>
-						    <div class="span4">
-						       	<a href="#/item_service" class="center">
-						       		<img title="Add Service" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/services.ico" />
-						       	</a>
-						    </div>
-						    <div class="span4">
-						       	<a href="#/txn_item" class="center">
-						       		<img title="Add Txn Item"  src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/add_txn_item.ico" />
-						       	</a>
-						    </div>
-						    <div class="span4">
-						       	<a href="#/fixed_assets" class="center">
-						       		<img title="Add Txn Item"  src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/add_fixed_assets.ico" />
-						       	</a>
-						    </div>
+
+			        	<p style="width: 100%; float: left; margin-top: 8px; margin-bottom: 15px;">
+				        	<span style="position: relative; height: 35px; line-height: 35px; padding-right: 15px; float: left; display: block; ">
+								<a style="color: #203864; font-weight: 600; margin-top: 4px; line-height: 17px; background: #fff; padding: 8px 32px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;" href="#/inventories_recurring">
+									<span class="badge fix badge-primary" style="color: #fff;  position: absolute; top: -13px; background: #203864; right: 5px; width: 25px; height: 25px; font-size: 15px; line-height: 25px;">0</span>
+									Recurring												
+								</a>
+							</span>
+
+							<span style="position: relative; height: 35px; line-height: 35px; padding-right: 15px; float: left; display: block; ">
+								<a href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/guide/banhJi_customer_guide.pdf" target="_blank" style="color: #203864; font-weight: 600; margin-top: 4px; line-height: 17px; background: #fff; padding: 8px 39px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
+									This Module's Guide												
+								</a>
+							</span>
+						</p>
+
+
+			        	<div class="cover-block" style="box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
+				        	<div class="supplier-icon">
+							    <div class="span4">
+							       	<a href="#/item" class="center">
+							       		<img title="Add Inventory" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/inventories.ico" />
+							       	</a>
+							    </div>
+							    <div class="span4">
+							       	<a href="#/non_inventory_part" class="center">
+							       		<img title="Add Non Inventory Parts" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/non_inventory_parts.ico" />
+							       	</a>
+							    </div>
+							    <div class="span4">
+							       	<a href="#/item_service" class="center">
+							       		<img title="Add Service" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/services.ico" />
+							       	</a>
+							    </div>
+							  <!--   <div class="span4">
+							       	<a href="#/txn_item" class="center">
+							       		<img title="Add Txn Item"  src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/add_txn_item.ico" />
+							       	</a>
+							    </div>
+							    <div class="span4">
+							       	<a href="#/fixed_assets" class="center">
+							       		<img title="Add Txn Item"  src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/add_fixed_assets.ico" />
+							       	</a>
+							    </div> -->
+							</div>
 						</div>
 			        </td>
 			 	</tr>
 			</table>
-			<table class="table table-borderless table-condensed table-vertical-center ">
+
+			<div class="cover-block">
+				<table class="table table-borderless table-condensed table-vertical-center costom-imag">
 				<tr>
 					<td class="center">
 						<a href="#/grn">
@@ -30426,8 +30595,8 @@
 						</a>
 					</td>
 				</tr>				
-			</table>
-
+				</table>
+			</div>
 		</div>
 
 		<!-- Right Side -->
@@ -30444,11 +30613,11 @@
 					
 						<!-- Widget heading -->
 						<div class="widget-head">
-							<h4 class="heading"><span data-bind="text: lang.lang.qoh"></span></h4>
+							<h4 class="heading"><span class="glyphicons coins"><i></i></span><span style="color: #203864; font-weight: 600; font-style: normal;" data-bind="text: lang.lang.qoh"></span></h4>
 						</div>
 						<!-- // Widget heading END -->
 						
-						<a href="#/inventory_position_summary"><div class="widget-body alert alert-primary" style="min-height: 148px;">
+						<a href="#/inventory_position_summary"><div class="widget-body alert alert-primary" style="min-height: 148px; background: white; color: #203864; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
 							
 							<div align="center" class="text-large strong" data-bind="text: onHand"></div>
 							<table width="100%">
@@ -30488,11 +30657,11 @@
 					
 						<!-- Widget heading -->
 						<div class="widget-head">
-							<h4 class="heading"><span data-bind="text: lang.lang.gross_profit_margin"></span></h4>
+							<h4 class="heading"><span class="glyphicons cart_in"><i></i></span><span style="color: #203864; font-weight: 600; font-style: normal;" data-bind="text: lang.lang.gross_profit_margin"></span></h4>
 						</div>
 						<!-- // Widget heading END -->
 						
-						<a href="#/inventory_sale_item_analysis"><div class="widget-body alert-info" style="min-height: 148px;">
+						<a href="#/inventory_sale_item_analysis"><div class="widget-body alert-info" style="min-height: 148px; background: white; color: #203864; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
 							
 							<div style="margin-top: 15%;" align="center" class="text-large strong" data-bind="text: grossProfitMargin"></div>
 							<!-- <table width="100%">
@@ -30519,14 +30688,14 @@
 					
 						<!-- Widget heading -->
 						<div class="widget-head">
-							<h4 class="heading"><span data-bind="text: lang.lang.turnover_days"></span></h4>
+							<h4 class="heading"><span class="glyphicons credit_card"><i></i></span><span style="color: #203864; font-weight: 600; font-style: normal;" data-bind="text: lang.lang.turnover_days"></span></h4>
 						</div>
 						<!-- // Widget heading END -->
 						
-						<a href="#/inventory_turn_over_list"><div class="widget-body alert-info3" style="background-color: LightGray; min-height:148px;">
+						<a href="#/inventory_turn_over_list"><div class="widget-body alert-info3" style="min-height: 148px; background: white; color: #203864; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
 							
-							<div align="center" class="text-large strong"  data-bind="text: inventoryTurnOver"></div>
-							<table width="100%">
+							<div style="margin-top: 15%;" align="center" class="text-large strong" align="center" class="text-large strong"  data-bind="text: inventoryTurnOver"></div>
+							<!-- <table width="100%">
 								<tr align="center">
 									<td>
 										<span data-bind="text: product"></span>
@@ -30534,7 +30703,7 @@
 										<span data-bind="text: lang.lang.turnover"></span>
 									</td>
 								</tr>
-							</table>
+							</table> -->
 						</div></a>
 						<!-- // Widget footer END -->
 						
@@ -30549,10 +30718,10 @@
 			<!-- Top 5 -->
 			<div class="row-fluid">
 				<div class="span4">									
-					<table class="table table-bordered table-primary table-striped table-vertical-center" style="font-size: 12px;">
+					<table class="table table-bordered table-primary table-striped table-vertical-center" style="font-size: 12px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
 				        <thead>
 				            <tr>
-				                <th colspan="2" class="center"><span data-bind="text: lang.lang.top_5_purchased_products"></span></th>				                			                
+				                <th style="background: #203864;" colspan="2" class="center"><span data-bind="text: lang.lang.top_5_purchased_products"></span></th>				                			                
 				            </tr>
 				        </thead>
 				        <tbody data-role="listview"
@@ -30562,10 +30731,10 @@
 				    </table>			
 				</div>
 				<div class="span4">					
-					<table class="table table-bordered table-primary table-striped table-vertical-center" style="font-size: 12px;">
+					<table class="table table-bordered table-primary table-striped table-vertical-center" style="font-size: 12px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
 				        <thead>
 				            <tr>
-				                <th colspan="2" class="center"><span data-bind="text: lang.lang.top_5_suppliers"></span></th>		                
+				                <th style="background: #203864;" colspan="2" class="center"><span data-bind="text: lang.lang.top_5_suppliers"></span></th>		                
 				            </tr>
 				        </thead>
 				        <tbody data-role="listview"
@@ -30575,10 +30744,10 @@
 				    </table>
 				</div>
 				<div class="span4">					
-					<table class="table table-bordered table-primary table-striped table-vertical-center" style="font-size: 12px;">
+					<table class="table table-bordered table-primary table-striped table-vertical-center" style="font-size: 12px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
 				        <thead>
 				            <tr>
-				                <th colspan="2" class="center"><span data-bind="text: lang.lang.top_5_best_selling_products"></span></th>			                		                
+				                <th style="background: #203864;" colspan="2" class="center"><span data-bind="text: lang.lang.top_5_best_selling_products"></span></th>			                		                
 				            </tr>
 				        </thead>
 				        <tbody data-role="listview"
@@ -30600,8 +30769,8 @@
 	                    template: "#= series.name #: #= kendo.toString(value, &#39;c&#39;, banhji.locale) #"
 	                 }'                 
 	                 data-series="[
-	                                { field: 'purchase', name: 'Monthly Purchase', categoryField:'month', color: '#236DA4' },
-	                                { field: 'sale', name: 'Monthly Sale', categoryField:'month', color: '#A6C9E3' }
+	                                { field: 'purchase', name: 'Monthly Purchase', categoryField:'month', color: '#203864', overlay: {gradient: 'none'} },
+	                                { field: 'sale', name: 'Monthly Sale', categoryField:'month', color: '#A6C9E3' , overlay: {gradient: 'none'}}
 	                            ]"
 	                 data-auto-bind="false"	                             
 	                 data-bind="source: graphDS"
@@ -30808,7 +30977,7 @@
 						<div class="span6 account-center" style="margin-bottom: 10px;">
 							<div class="row-fluid">
 								<div class="span12" style="padding-right:0;">
-									<div class="widget-body alert alert-primary" style="margin-bottom: 10px; background:#424242;">							
+									<div class="widget-body alert alert-primary" style="margin-bottom: 10px; background: #203864;">							
 										<div align="center" class="text-large strong" data-bind="text: total_value"></div>
 										<table width="100%">
 											<tr align="center">
@@ -30835,14 +31004,14 @@
 							
 							<div class="row-fluid">
 								<div class="span6">
-									<div class="widget-stats widget-stats-info widget-stats-5" data-bind="click: loadPO">
+									<div class="widget-stats widget-stats-info widget-stats-5" data-bind="click: loadPO" style="background: #0077c5">
 										<span class="glyphicons adjust_alt"><i></i></span>
 										<span class="txt" style="width: 70%; margin-top: -16px;"><span data-bind="text: itemType" style="    font-size: 22px;"></span></span>
 										<div class="clearfix"></div>
 									</div>
 								</div>
 								<div class="span6">
-									<div class="widget-stats widget-stats-default widget-stats-5" data-bind="click: loadSO">
+									<div class="widget-stats widget-stats-default widget-stats-5" data-bind="click: loadSO" style="background: #21abf6">
 										<span class="glyphicons random"><i></i></span>
 										<span class="txt"><span data-bind="text: transactionDS.total()"></span><span data-bind="text: lang.lang.transaction"></span></span>
 										<div class="clearfix"></div>
@@ -33769,12 +33938,12 @@
 					<table class="table table-bordered table-primary table-striped table-vertical-center">
 				        <thead>
 				            <tr>
-				            	<th style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></th>				                
-				                <th data-bind="text: lang.lang.item"></th>
-				                <th style="width: 20px;" data-bind="text: lang.lang.cost"></th>
-				                <th data-bind="text: lang.lang.qoh"></th>
-				                <th style="width: 20px;" data-bind="text: lang.lang.quantity_count"></th>
-				                <th data-bind="text: lang.lang.different"></th>
+				            	<th style="width: 70px; vertical-align: top;"><span data-bind="text: lang.lang.no_"></span></th>				                
+				                <th style="vertical-align: top;" data-bind="text: lang.lang.item"></th>
+				                <th style="width: 20px; vertical-align: top;" data-bind="text: lang.lang.cost"></th>
+				                <th style="vertical-align: top;" data-bind="text: lang.lang.qoh"></th>
+				                <th style="width: 20px; vertical-align: top;" data-bind="text: lang.lang.quantity_count"></th>
+				                <th style="vertical-align: top;" data-bind="text: lang.lang.different"></th>
 				            </tr>
 				        </thead>
 				        <tbody data-role="listview"
@@ -33811,7 +33980,7 @@
 </script>
 <script id="itemAdjustment-row-template" type="text/x-kendo-tmpl">
     <tr data-uid="#: uid #"> 
-    	<td>
+    	<td style="width: 70px;">
 			<i class="icon-trash" data-bind="events: { click: removeRow }"></i>
 			#:banhji.itemAdjustment.lineDS.indexOf(data)+1#			
 		</td>
@@ -34232,7 +34401,7 @@
 		</div>
 	</div>
 </script>
-<script id="internalUsage-to-item-line-template" type="text/x-kendo-tmpl">		
+<script id="internalUsage-to-item-line-template" type="text/x-kendo-tmpl">
 	#if(movement=="1"){#
 		<tr data-uid="#: uid #">
 			<td>
@@ -34284,7 +34453,7 @@
 	    </tr>
 	#}#   
 </script>
-<script id="internalUsage-to-account-line-template" type="text/x-kendo-tmpl">		
+<script id="internalUsage-to-account-line-template" type="text/x-kendo-tmpl">
 	#if(movement=="1"){#
 		<tr data-uid="#: uid #">
 			<td>
@@ -34311,7 +34480,7 @@
 	    </tr>
     #}#   
 </script>
-<script id="internalUsage-from-item-line-template" type="text/x-kendo-tmpl">		
+<script id="internalUsage-from-item-line-template" type="text/x-kendo-tmpl">
 	#if(movement=="-1"){#
 		<tr data-uid="#: uid #">
 			<td>
@@ -34363,7 +34532,7 @@
 	    </tr>
     #}#  
 </script>
-<script id="internalUsage-from-account-line-template" type="text/x-kendo-tmpl">		
+<script id="internalUsage-from-account-line-template" type="text/x-kendo-tmpl">
 	#if(movement=="-1"){#
 		<tr data-uid="#: uid #">		
 			<td class="center">
@@ -34437,7 +34606,7 @@
 		</div>
 	</div>
 </script>
-<script id="itemRecurring-template" type="text/x-kendo-tmpl">		
+<script id="itemRecurring-template" type="text/x-kendo-tmpl">
 	<tr data-uid="#: uid #">
 		<td>#=type#</td>
 		<td>#=recurring_name#</td>
@@ -34616,7 +34785,7 @@
 
 	</div>
 </script>
-<script id="itemSetting-category-template" type="text/x-kendo-tmpl">                    
+<script id="itemSetting-category-template" type="text/x-kendo-tmpl">
     <tr>
    		<td>
     		#:name#
@@ -34669,7 +34838,7 @@
         </div>
     </div>
 </script>
-<script id="itemSetting-item-group-template" type="text/x-kendo-tmpl">                    
+<script id="itemSetting-item-group-template" type="text/x-kendo-tmpl">
     <tr>   		
    		<td>
     		#:name#
@@ -34716,7 +34885,7 @@
         </div>
     </div>
 </script>
-<script id="itemSetting-measurement-template" type="text/x-kendo-tmpl">                    
+<script id="itemSetting-measurement-template" type="text/x-kendo-tmpl">
     <tr>
     	<td>
     		#:name#
@@ -34745,7 +34914,7 @@
         </div>
     </div>
 </script>
-<script id="itemSetting-brand-template" type="text/x-kendo-tmpl">                    
+<script id="itemSetting-brand-template" type="text/x-kendo-tmpl">
     <tr>
     	<td>
     		 #:code#
@@ -37960,7 +38129,7 @@
         <td align="right">#:kendo.toString(kendo.parseFloat(amount), "c", locale)#</td>        
    	</tr>
 </script>
-<script id="cashier-row-template" type="text/x-kendo-tmpl">		
+<script id="cashier-row-template" type="text/x-kendo-tmpl">
 	<tr id="rowGrid-#:id#">
 		<td>
 			<input type="checkbox" data-bind="checked: isPay, events:{change: checkPay}">			
@@ -38140,7 +38309,7 @@
 		</div><!-- //End div row-fluid-->
 	</div>
 </script>
-<script id="denominationRowTemplate" type="text/x-kendo-tmpl">		
+<script id="denominationRowTemplate" type="text/x-kendo-tmpl">
 	<tr>				
 		<td class="right">#=denomination#</td>
 		<td>
@@ -38451,7 +38620,7 @@
 		</div>
 	</div>
 </script>
-<script id="cashReceipt-template" type="text/x-kendo-tmpl">		
+<script id="cashReceipt-template" type="text/x-kendo-tmpl">
 	<tr data-uid="#: uid #">		
 		<td>
 			<i class="icon-trash" data-bind="events: { click: removeRow }"></i>
@@ -38777,7 +38946,7 @@
 		</div>
 	</div>
 </script>
-<script id="cashPayment-template" type="text/x-kendo-tmpl">		
+<script id="cashPayment-template" type="text/x-kendo-tmpl">
 	<tr data-uid="#: uid #">		
 		<td>
 			<i class="icon-trash" data-bind="events: { click: removeRow }"></i>
@@ -39083,7 +39252,7 @@
 
 	</div>
 </script>
-<script id="cashSetting-contact-type-template" type="text/x-kendo-tmpl">                    
+<script id="cashSetting-contact-type-template" type="text/x-kendo-tmpl">
     <tr>
     	<td>
     		 #:name#
@@ -39112,7 +39281,7 @@
         </div>
     </div>
 </script>
-<script id="cashSetting-payment-method-template" type="text/x-kendo-tmpl">                    
+<script id="cashSetting-payment-method-template" type="text/x-kendo-tmpl">
     <tr>
     	<td>
     		 #:name#
@@ -39139,7 +39308,7 @@
         </div>
     </div>
 </script>
-<script id="cashSetting-payment-term-template" type="text/x-kendo-tmpl">                    
+<script id="cashSetting-payment-term-template" type="text/x-kendo-tmpl">
     <tr>
     	<td>
     		 #:name#
@@ -41764,7 +41933,9 @@
   			<ul class='dropdown-menu'>
   				<li><a href='#/txn_item'><span data-bind="text: lang.lang.add_transaction_item"></span></a></li>  	
   				<li><a href='#/account'><span data-bind="text: lang.lang.add_account"></span></a></li>
-  				<li><a href='#/segment'><span data-bind="text: lang.lang.add_segment"></span></a></li> 
+  				<li><a href='#/segment'><span data-bind="text: lang.lang.add_segment"></span></a></li>
+  				<li><a href='#/fixed_assets_list'><span >Add New Fixed Assets List</span></a></li>  	
+  				<li><a href='#/txn_item_list'><span >Add New Transaction Item List</span></a></li>
   				<li> <span class="li-line"></span></li>
   				<li><a href='#/journal'><span data-bind="text: lang.lang.make_journal"></span></a></li>
   				<li><a href='#/cash_transaction'><span data-bind="text: lang.lang.make_cash_transaction"></span></a></li>
@@ -48367,142 +48538,146 @@
 		    },2000);
 		},
 		ExportExcel 		: function(){
-								// $("#loadImport").css("display","block");
-								// var self = this, para = [],
-								// 	start = this.get("sdate"),
-					   //      		end = this.get("edate"),
-					   //      		displayDate = "";
-					    	
-					   //      	//Dates
-					   //      	if(start && end){
-					   //          	para.push({ field:"issued_date >=", operator:"where_related_transaction", value: kendo.toString(new Date(start), "yyyy-MM-dd") });
-					   //          	para.push({ field:"issued_date <=", operator:"where_related_transaction", value: kendo.toString(new Date(end), "yyyy-MM-dd") });
+			$("#loadImport").css("display","block");
+			var self = this, para = [],
+				start = this.get("sdate"),
+        		end = this.get("edate"),
+        		displayDate = "";
+    	
+        	//Dates
+        	if(start && end){
+            	para.push({ field:"issued_date >=", operator:"where_related_transaction", value: kendo.toString(new Date(start), "yyyy-MM-dd") });
+            	para.push({ field:"issued_date <=", operator:"where_related_transaction", value: kendo.toString(new Date(end), "yyyy-MM-dd") });
 
-					   //          	displayDate = "From " + kendo.toString(new Date(start), "dd-MM-yyyy") + " To " + kendo.toString(new Date(end), "dd-MM-yyyy");
-					   //          }else if(start){
-					   //          	para.push({ field:"issued_date", operator:"where_related_transaction", value: kendo.toString(new Date(start), "yyyy-MM-dd") });
+            	displayDate = "From " + kendo.toString(new Date(start), "dd-MM-yyyy") + " To " + kendo.toString(new Date(end), "dd-MM-yyyy");
+            }else if(start){
+            	para.push({ field:"issued_date", operator:"where_related_transaction", value: kendo.toString(new Date(start), "yyyy-MM-dd") });
 
-					   //          	displayDate = "On " + kendo.toString(new Date(start), "dd-MM-yyyy");
-					   //          }else if(end){
-					   //          	para.push({ field:"issued_date <=", operator:"where_related_transaction", value: kendo.toString(new Date(end), "yyyy-MM-dd") });
+            	displayDate = "On " + kendo.toString(new Date(start), "dd-MM-yyyy");
+            }else if(end){
+            	para.push({ field:"issued_date <=", operator:"where_related_transaction", value: kendo.toString(new Date(end), "yyyy-MM-dd") });
 
-					   //          	displayDate = "As Of " + kendo.toString(new Date(end), "dd-MM-yyyy");
-					   //          }else{
-					            	
-					   //          }
-					            
-					   //          this.set("displayDate", displayDate);
+            	displayDate = "As Of " + kendo.toString(new Date(end), "dd-MM-yyyy");
+            }else{
+            	
+            }
+            
+            this.set("displayDate", displayDate);
 
-					   //          this.exdataSource.query({
-					   //          	filter: para,
-					   //          	sort: [
-								//   		{ field: "issued_date", operator:"order_by_related_transaction", dir: "desc" },
-								//   		{ field: "number", operator:"order_by_related_transaction", dir: "desc" }
-								//   	]
-					   //          })
-					   //          .then(function(e){
-					   //          	var sumDR = 0, sumCR = 0;
-					   //          	self.exArray = [];
-					   //          	self.exArray.push({
-					   //          		cells: [
-					   //          			{ value: self.company.name, textAlign: "center", colSpan: 7 }
-					   //          		]
-					   //          	});
-					   //          	self.exArray.push({
-					   //          		cells: [
-					   //          			{ value: "JOURNAL ENTRY REPORTS",bold: true, fontSize: 20, textAlign: "center", colSpan: 7 }
-					   //          		]
-					   //          	});
-					   //          	if(self.displayDate){
-						  //           	self.exArray.push({
-						  //           		cells: [
-						  //           			{ value: self.displayDate, textAlign: "center", colSpan: 7 }
-						  //           		]
-						  //           	});
-						  //           }
-					   //          	self.exArray.push({
-					   //          		cells: [
-					   //          			{ value: "", colSpan: 7 }
-					   //          		]
-					   //          	});
-					   //          	self.exArray.push(
-					   //          		{ cells: [
-								// 			{ value: "Type", background: "#496cad", color: "#ffffff" },
-								// 			{ value: "Date", background: "#496cad", color: "#ffffff" },
-								// 			{ value: "TXN#", background: "#496cad", color: "#ffffff" },
-								// 			{ value: "TXN Description", background: "#496cad", color: "#ffffff" },
-								// 			{ value: "Account", background: "#496cad", color: "#ffffff" },
-								// 			{ value: "Debits(DR)", background: "#496cad", color: "#ffffff" },
-								// 			{ value: "Credits(CR)", background: "#496cad", color: "#ffffff" }
-								// 		]}
-								// 	);
-					   //          	for (var i = 0; i < self.exdataSource.data().length; i++){
-					   //          	  var RATE = self.exdataSource.data()[i].rate;
-					   //          	  var DR = self.exdataSource.data()[i].line[0].dr / RATE;
-							 //          var CR = self.exdataSource.data()[i].line[0].cr / RATE;
-							 //          self.exArray.push({
-							 //            cells: [
-							 //              { value: self.exdataSource.data()[i].type, rowSpan: self.exdataSource.data()[i].line.length, verticalAlign: "center" },
-							 //              { value: kendo.toString(new Date(self.exdataSource.data()[i].issued_date), "dd-MMMM-yyyy"), rowSpan: self.exdataSource.data()[i].line.length, verticalAlign: "center" },
-							 //              { value: self.exdataSource.data()[i].number, rowSpan: self.exdataSource.data()[i].line.length, verticalAlign: "center" },
-							 //              { value: self.exdataSource.data()[i].memo, rowSpan: self.exdataSource.data()[i].line.length, verticalAlign: "center" },
-							 //              { value: self.exdataSource.data()[i].line[0].account },
-							 //              { value: self.exdataSource.data()[i].line[0].dr ? DR : "",  },
-							 //              { value: self.exdataSource.data()[i].line[0].cr ? CR : "" }
-							 //            ]
-							 //          });
-							 //          sumDR = kendo.parseFloat(self.exdataSource.data()[i].line[0].dr);
-							 //          sumCR = kendo.parseFloat(self.exdataSource.data()[i].line[0].cr);
-							 //          for(var j = 1; j < self.exdataSource.data()[i].line.length; j++){
-							 //          	var DR = self.exdataSource.data()[i].line[j].dr / RATE;
-							 //          	var CR = self.exdataSource.data()[i].line[j].cr / RATE;
-								//           self.exArray.push({
-								//           	cells: [
-								//               { value: self.exdataSource.data()[i].line[j].account },
-								//               { value: self.exdataSource.data()[i].line[j].dr ? DR : "" },
-								//               { value: self.exdataSource.data()[i].line[j].cr ? CR : "" }
-								//             ]
-								//           });
-								//         sumDR += kendo.parseFloat(self.exdataSource.data()[i].line[j].dr);
-								//         sumCR += kendo.parseFloat(self.exdataSource.data()[i].line[j].cr);
-								//       }
-								//       self.exArray.push({
-							 //          	cells: [
-							 //          	  { value: "Total", bold: true, background: "#bbbbbb" },
-							 //              { value: "", background: "#bbbbbb" },
-							 //              { value: "", background: "#bbbbbb" },
-							 //              { value: "", background: "#bbbbbb" },
-							 //              { value: "", background: "#bbbbbb" },
-							 //              { value: kendo.parseFloat(sumDR), bold: true, background: "#bbbbbb" },
-							 //              { value: kendo.parseFloat(sumCR), bold: true, background: "#bbbbbb" }
-							 //            ]
-							 //          });
-							 //        }
-					   //          });
-					   //          this.exdataSource.bind("requestEnd", function(e){
-					   //          	//if(e.type==="read"){
-					   //          		$("#loadImport").css("display","none");
-					   //          		var workbook = new kendo.ooxml.Workbook({
-								//           sheets: [
-								//             {
-								//               columns: [
-								//                 { autoWidth: true },
-								//                 { autoWidth: true },
-								//                 { autoWidth: true },
-								//                 { autoWidth: true },
-								//                 { autoWidth: true },
-								//                 { autoWidth: true },
-								//                 { autoWidth: true }
-								//               ],
-								//               title: "Journal Entry Reports",
-								//               rows: self.exArray
-								//             }
-								//           ]
-								//         });
-								//         //save the file as Excel file with extension xlsx
-								//         kendo.saveAs({dataURI: workbook.toDataURL(), fileName: "JournalEntryReports.xlsx"});
-						  //           //}
-						  //       });
+            this.exdataSource.query({
+            	filter: para,
+            	sort: [
+			  		{ field: "issued_date", operator:"order_by_related_transaction", dir: "desc" },
+			  		{ field: "number", operator:"order_by_related_transaction", dir: "desc" }
+			  	]
+            })
+            .then(function(e){
+            	var sumDR = 0, sumCR = 0;
+            	self.exArray = [];
+            	self.exArray.push({
+            		cells: [
+            			{ value: self.company.name, textAlign: "center", colSpan: 7 }
+            		]
+            	});
+            	self.exArray.push({
+            		cells: [
+            			{ value: "JOURNAL ENTRY REPORTS",bold: true, fontSize: 20, textAlign: "center", colSpan: 7 }
+            		]
+            	});
+            	if(self.displayDate){
+	            	self.exArray.push({
+	            		cells: [
+	            			{ value: self.displayDate, textAlign: "center", colSpan: 7 }
+	            		]
+	            	});
+	            }
+            	self.exArray.push({
+            		cells: [
+            			{ value: "", colSpan: 7 }
+            		]
+            	});
+            	self.exArray.push(
+            		{ cells: [
+						{ value: "Type", background: "#496cad", color: "#ffffff" },
+						{ value: "Date", background: "#496cad", color: "#ffffff" },
+						{ value: "TXN#", background: "#496cad", color: "#ffffff" },
+						{ value: "TXN Description", background: "#496cad", color: "#ffffff" },
+						{ value: "Account", background: "#496cad", color: "#ffffff" },
+						{ value: "Debits(DR)", background: "#496cad", color: "#ffffff" },
+						{ value: "Credits(CR)", background: "#496cad", color: "#ffffff" }
+					]}
+				);
+            	for (var i = 0; i < self.exdataSource.data().length; i++){
+            	  var RATE = self.exdataSource.data()[i].rate;
+            	  var DR = self.exdataSource.data()[i].line[0].dr / RATE;
+		          var CR = self.exdataSource.data()[i].line[0].cr / RATE;
+		          self.exArray.push({
+		            cells: [
+		              { value: self.exdataSource.data()[i].type},
+		              { value: kendo.toString(new Date(self.exdataSource.data()[i].issued_date), "dd-MMMM-yyyy")},
+		              { value: self.exdataSource.data()[i].number },
+		              { value: self.exdataSource.data()[i].memo },
+		              { value: self.exdataSource.data()[i].line[0].account },
+		              { value: self.exdataSource.data()[i].line[0].dr ? DR : "",  },
+		              { value: self.exdataSource.data()[i].line[0].cr ? CR : "" }
+		            ]
+		          });
+		          sumDR = kendo.parseFloat(self.exdataSource.data()[i].line[0].dr);
+		          sumCR = kendo.parseFloat(self.exdataSource.data()[i].line[0].cr);
+		          for(var j = 1; j < self.exdataSource.data()[i].line.length; j++){
+		          	var DR = self.exdataSource.data()[i].line[j].dr / RATE;
+		          	var CR = self.exdataSource.data()[i].line[j].cr / RATE;
+			          self.exArray.push({
+			          	cells: [
+			          	  { value: ""},	
+			          	  { value: ""},
+			          	  { value: ""},
+			          	  { value: ""},
+			              { value: self.exdataSource.data()[i].line[j].account },
+			              { value: self.exdataSource.data()[i].line[j].dr ? DR : "" },
+			              { value: self.exdataSource.data()[i].line[j].cr ? CR : "" }
+			            ]
+			          });
+			        sumDR += kendo.parseFloat(self.exdataSource.data()[i].line[j].dr);
+			        sumCR += kendo.parseFloat(self.exdataSource.data()[i].line[j].cr);
+			      }
+			      self.exArray.push({
+		          	cells: [
+		          	  { value: "Total", bold: true, background: "#bbbbbb" },
+		              { value: "", background: "#bbbbbb" },
+		              { value: "", background: "#bbbbbb" },
+		              { value: "", background: "#bbbbbb" },
+		              { value: "", background: "#bbbbbb" },
+		              { value: kendo.parseFloat(sumDR), bold: true, background: "#bbbbbb" },
+		              { value: kendo.parseFloat(sumCR), bold: true, background: "#bbbbbb" }
+		            ]
+		          });
+		        }
+            });
+            this.exdataSource.bind("requestEnd", function(e){
+            	//if(e.type==="read"){
+            		$("#loadImport").css("display","none");
+            		var workbook = new kendo.ooxml.Workbook({
+			          sheets: [
+			            {
+			              columns: [
+			                { autoWidth: true },
+			                { autoWidth: true },
+			                { autoWidth: true },
+			                { autoWidth: true },
+			                { autoWidth: true },
+			                { autoWidth: true },
+			                { autoWidth: true }
+			              ],
+			              title: "Journal Entry Reports",
+			              rows: self.exArray
+			            }
+			          ]
+			        });
+			        //save the file as Excel file with extension xlsx
+			        kendo.saveAs({dataURI: workbook.toDataURL(), fileName: "JournalEntryReports.xlsx"});
+	            //}
+	        });
 	        
 		}
 	});

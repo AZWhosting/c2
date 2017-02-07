@@ -16,6 +16,20 @@ h1,h2,h3,h4,h5,h6{
   width: 220px !important;
 }
 
+.cover-block{
+  float: left;
+  width: 95%;
+  background: #fff;
+  padding: 10px 15px 0 5px;
+  margin-bottom: 15px;
+
+}
+.widget.widget-3.customer-border a .widget-body.alert.alert-primary,
+.widget.widget-3.customer-border .widget-body.alert.alert-primary{
+  border: none !important;
+}
+
+
 #myTable {
     padding: 0;
     position: relative;
@@ -1235,7 +1249,7 @@ width: 50% !important;
 }
 .btn-group.open .btn-inverse.dropdown-toggle, .btn-inverse.disabled, .btn-inverse[disabled], .btn-inverse:hover, .btn-inverse:focus,
 .btn-inverse{
-  background: #283444 !important;
+  background: #203864 !important;
   border: none !important;
 }
 
@@ -1377,7 +1391,10 @@ width: 50% !important;
 
 }
 .costom-imag tr td a img{
-  width: 110px;
+  width: 102px;
+}
+.costom-imag tr td a span{
+  font-size: 13px !important;
 }
 .row-merge .detailsWrapper{
   margin-left: 9px !important;
@@ -1838,14 +1855,15 @@ width: 50% !important;
 }
 .accounting-right .btn-download{
   padding: 10px 15px;
-  color: #fff;
-  background: #30618B;
+  color: #203864;
+  background: #fff;
   margin-top: 10px;
   margin-bottom: 20px;
   float: left;
   cursor: pointer;
   font-size: 14.5px;
   font-weight: 600;
+  box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;
 }
 .account-stement h2{
   text-align: left;
