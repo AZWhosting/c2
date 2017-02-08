@@ -70,6 +70,7 @@ class Meters extends REST_Controller {
 												"locale" => $currency->locale
 					),
 					"meter_number" 			=> $value->number,
+					"meter" 				=> $value->number,
 					"worder" 				=> $value->worder,
 					"contact_name" 			=> $contacts->name,
 					"status" 				=> $value->status,

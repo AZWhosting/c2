@@ -36,7 +36,13 @@ class Sales extends REST_Controller {
 		$total =0;
 		$totalSale =0;
 		$countInv =0;
+		$countCash = 0;
 		$deposit =0;
+		$invoiceCount = 0;
+		$cashCount = 0;
+		// $data['invoiceCount'] =0 ;
+		// $data['cashCount'] =0 ;
+
 		// checked if the logic is customer or segment
 		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
@@ -133,24 +139,32 @@ class Sales extends REST_Controller {
 				foreach ($obj as $value) {
 					$customer = $value->contact->get();
 					$fullname = $customer->surname.' '.$customer->name;
+					$items = $value->item_line->include_related('item', array('name'))->get();
 					$temp = 0;
-					
-					if(isset($customers["$fullname"])) {
-						$countInv+=1;
-						if($value->type=="Sale_Return"){
-							$customers["$fullname"]['amount']+= (floatval($value->amount)/ floatval($value->rate))*-1;
-						}else{
-							$customers["$fullname"]['amount']+= (floatval($value->amount)/ floatval($value->rate));
+					foreach($items as $item) {
+						$amount = $value->type =="Sale_Return"?floatval($item->amount)/floatval($value->rate)*-1:floatval($item->amount)/floatval($value->rate);
+
+						if(isset($customers["$fullname"])) {
+							$countInv+=1;
+							$customers["$fullname"]['amount']+= $amount ;
+
+							if($value->type=="Invoice" || $value->type=="Commercial_Invoice" || $value->type=="Vat_Invoice" ){
+								$customers["$fullname"]['invoiceCount'] += 1;
+							}else{
+								$customers["$fullname"]['cashCount'] += 1;
+							}						
+						} else {
+							$countInv+=1;
+							$customers["$fullname"]['amount']= $amount ;
+
+								$customers["$fullname"]['invoiceCount'] = 0;
+								$customers["$fullname"]['cashCount'] = 0;
+							if($value->type=="Invoice" || $value->type=="Commercial_Invoice" || $value->type=="Vat_Invoice" ){
+								$customers["$fullname"]['invoiceCount'] = 1;
+							}else{
+								$customers["$fullname"]['cashCount'] = 1;
+							}
 						}
-						$customers["$fullname"]['invoiceCount'] += 1;
-					} else {
-						$countInv+=1;
-						if($value->type=="Sale_Return"){
-							$customers["$fullname"]['amount']= (floatval($value->amount)/ floatval($value->rate))*-1;
-						}else{
-							$customers["$fullname"]['amount']= (floatval($value->amount)/ floatval($value->rate));
-						}
-						$customers["$fullname"]['invoiceCount'] = 1;
 					}
 					
 					// if($ref->type == "Deposit" ) {
@@ -165,6 +179,7 @@ class Sales extends REST_Controller {
 				'customer'  => $key,
 				'amount'	=> $value['amount'],
 				'invoice'	=> $value['invoiceCount'],
+				'cash'		=> $value['cashCount']
 			);
 			$total += $value['amount'];
 		}
@@ -241,7 +256,7 @@ class Sales extends REST_Controller {
 			foreach ($segmentItem as $seg) {
 				$txn = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
-				$txn->where_in("type", array("Invoice", "Cash_Sale", "Sale_Return", "Commercial_Invoice", "Vat_Invoice", "Commercial_Cash_Sale", "Vat_Cash_Sale"));
+				$txn->where_in("type", array("Invoice", "Cash_Sale", "Sale_Return", "Commercial_Invoice", "Vat_Invoice", "Commercial_Cash_Sale", "Vat_Cash_Sale", "Sale_Return"));
 				$txn->where_in("status", array(0,2));
 				$txn->like("segments", $seg->id, "both");
 				$txn->where("deleted",0);
@@ -305,7 +320,7 @@ class Sales extends REST_Controller {
 			}
 
 			$obj->where_in_related("contact", 'contact_type_id', $types);
-			$obj->where_in("type", array("Invoice", "Cash_Sale", "Sale_Return", "Commercial_Invoice", "Vat_Invoice", "Commercial_Cash_Sale", "Vat_Cash_Sale"));
+			$obj->where_in("type", array("Invoice", "Cash_Sale", "Commercial_Invoice", "Vat_Invoice", "Commercial_Cash_Sale", "Vat_Cash_Sale", "Cash_Sale", "Sale_Return"));
 			$obj->where('is_recurring', 0);
 			$obj->where("deleted",0);
 
@@ -922,7 +937,7 @@ class Sales extends REST_Controller {
 
 				$obj->where_related("contact", 'contact_type_id', $type);
 				$obj->where("status <>", 1);
-				$obj->where_in("type", array("Invoice", "Commercial_Invoice", "Vat_Invoice"));
+				$obj->where_in("type", array("Invoice", "Commercial_Invoice", "Vat_Invoice" ));
 				$obj->where('is_recurring', 0);
 				$obj->where("deleted",0);
 
@@ -946,23 +961,21 @@ class Sales extends REST_Controller {
 							$a = abs($r->amount);					
 							$temp += floatval($a);
 						}
-						if(isset($customers["$fullname"])) {
-							if($value->type == 'Invoice' || $value->type == 'Commercial_Invoice' || $value->type == 'Vat_Invoice') {
-								$customers["$fullname"]['amount']+= floatval($value->amount);
-							} else {
-								$customers["$fullname"]['amount']= floatval($value->amount);
-							}
-							$customers["$fullname"]['invoiceCount'] += 1;
-						} else {
-							if($value->type == 'Invoice' || $value->type == 'Commercial_Invoice' || $value->type == 'Vat_Invoice') {
-								$customers[$fullname]['amount']= floatval($value->amount)/ floatval($value->rate)  - $temp;
-							} else {
-								$customers[$fullname]['amount']= (floatval($value->amount)/ floatval($value->rate))  - $temp;
-							}
-							$customers["$fullname"]['invoiceCount'] = 1;
-						}
-						$total += (floatval($value->amount)/ floatval($value->rate)) - $temp;
+						$paid = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+						$paid->where("type", "Cash_Receipt");
+						$paid->where("reference_id", $value->id);
+						$paid->where("is_recurring", 0);		
+						$paid->where("deleted", 0);
+						$paid->get();
 
+							if(isset($customers["$fullname"])) {
+								$customers["$fullname"]['amount']+= (floatval($value->amount)- floatval($paid->amount))/floatval($value->rate)- $temp;
+								$customers["$fullname"]['invoiceCount'] += 1;
+							} else {
+								$customers["$fullname"]['amount']= (floatval($value->amount)- floatval($paid->amount))/floatval($value->rate)- $temp;
+								$customers["$fullname"]['invoiceCount'] = 1;
+							}
+							$total += (floatval($value->amount)- floatval($paid->amount))/floatval($value->rate)- $temp;
 					}
 				}
 		}
@@ -1294,7 +1307,7 @@ class Sales extends REST_Controller {
 			);
 		}
 		$data['total_sale'] = $total;
-		$data['total_avg'] = $total / $totalQ;
+		$data['total_avg'] = $totalQ > 0? $total / $totalQ : 0;
 		$data['totalQ'] = $totalQ;
 		$data['gpm'] = $total > 0? ($total - $totalCOS) / $total : 0;
 		$data['count'] = count($items);
@@ -1713,7 +1726,7 @@ class Sales extends REST_Controller {
 		}
 
 		$data['total'] = $total;
-		$data['count'] = count($jobName);
+		$data['count'] = count($total);
 		//Response Data
 		$this->response($data, 200);
 	}
@@ -1788,8 +1801,7 @@ class Sales extends REST_Controller {
 			foreach ($segmentItem as $seg) {
 				$txn = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
-				$txn->where_in("type", array("Invoice", "Commercial_Invoice", "Vat_Invoice"));
-				$txn->where_in("status", array(0,2));
+				$txn->where_in("type", array("Invoice", "Commercial_Invoice", "Vat_Invoice","Cash_Receipt"));
 				$txn->like("segments", $seg->id, "both");
 				$txn->where("deleted",0);
 				$txn->where("is_recurring",0);
@@ -1801,44 +1813,54 @@ class Sales extends REST_Controller {
 					$customer = $t->contact->get();
 					$fullname = $customer->surname.' '.$customer->name;
 					$items = $t->item_line->include_related('item', array('name'))->get();
+					foreach ($ref as $r) {
+						$a = abs($r->amount);					
+						$temp += floatval($a);
+					}
+					$amountT = 0;
+					if($t->type=="Cash_Receipt"){
+							$amountT = (floatval($t->amount)/ floatval($t->rate)) * -1;
+					}else{
+							$amountT = (floatval($t->amount)/ floatval($t->rate));
+					}
 
 					$today = new DateTime();
 					$dueDate = new DateTime($t->due_date);
 					$diff = $today->diff($dueDate)->format("%a");
 
 					if(isset($customers["$seg->name"])) {
-						$customers["$seg->name"]['amount']	+= floatval($t->amount) / floatval($t->rate);
+						$customers["$seg->name"]['amount']	+= $amountT-$temp;
 						if($dueDate<$today){
 							if(intval($diff)>90){
-								$customers["$seg->name"]['>90']+= floatval($t->amount) / floatval($t->rate);
+								$customers["$seg->name"]['>90']+= $amountT-$temp;
 							}else if(intval($diff)>60){
-								$customers["$seg->name"]['90'] += floatval($t->amount) / floatval($t->rate);
+								$customers["$seg->name"]['90'] += $amountT-$temp;
 							}else if(intval($diff)>30){
-								$customers["$seg->name"]['60'] += floatval($t->amount) / floatval($t->rate);
+								$customers["$seg->name"]['60'] += $amountT-$temp;
 							}else{
-								$customers["$seg->name"]['30'] += floatval($t->amount) / floatval($t->rate);
+								$customers["$seg->name"]['30'] += $amountT-$temp;
 							}
 						}else{
-							// $customers["$fullname"]['<30'] += floatval($value->amount) / floatval($value->rate);
+							$customers["$fullname"]['<30'] += $amountT-$temp;
 						}
 					} else {
-						$customers["$seg->name"]['amount']	= floatval($t->amount) / floatval($t->rate);
+						$customers["$seg->name"]['amount']	= $amountT-$temp;
 						if($dueDate<$today){
 							if(intval($diff)>90){
-								$customers["$seg->name"]['>90']= floatval($t->amount) / floatval($t->rate);
+								$customers["$seg->name"]['>90']= $amountT-$temp;
 							}else if(intval($diff)>60){
-								$customers["$seg->name"]['90'] = floatval($t->amount) / floatval($t->rate);
+								$customers["$seg->name"]['90'] = $amountT-$temp;
 							}else if(intval($diff)>30){
-								$customers["$seg->name"]['60'] = floatval($t->amount) / floatval($t->rate);
+								$customers["$seg->name"]['60'] = $amountT-$temp;
 							}else{
-								$customers["$seg->name"]['30'] = floatval($t->amount) / floatval($t->rate);
+								$customers["$seg->name"]['30'] = $amountT-$temp;
 							}
 						}else{
-							$customers["$seg->name"]['<30'] = floatval($t->amount) / floatval($t->rate);
+							$customers["$seg->name"]['<30'] += $amountT-$temp;
 						}
 				//Results
 					}
-					$total += $amt;
+					$total += $amountT-$temp;
 				}
 			}
 		} else {
@@ -1855,8 +1877,7 @@ class Sales extends REST_Controller {
 			}
 
 			$obj->where_in_related("contact", 'contact_type_id', $type);
-			$obj->where_in("type", array("Invoice", "Commercial_Invoice", "Vat_Invoice"));
-			$obj->where("status <>", 1);
+			$obj->where_in("type", array("Invoice", "Commercial_Invoice", "Vat_Invoice","Cash_Receipt"));
 			$obj->where('is_recurring', 0);
 			$obj->where("deleted",0);
 
@@ -1873,6 +1894,12 @@ class Sales extends REST_Controller {
 					$fullname = $customer->surname.' '.$customer->name;
 					$items = $value->item_line->include_related('item', array('name'))->get();
 					$temp = 0;
+					$amount = 0;
+					if($value->type=="Cash_Receipt"){
+							$amount = (floatval($value->amount)/ floatval($value->rate)) * -1;
+					}else{
+							$amount = (floatval($value->amount)/ floatval($value->rate));
+					}
 					foreach ($ref as $r) {
 						$a = abs($r->amount);					
 						$temp += floatval($a);
@@ -1882,37 +1909,38 @@ class Sales extends REST_Controller {
 					$diff = $today->diff($dueDate)->format("%a");
 
 					if(isset($customers["$fullname"])) {
-						$customers["$fullname"]['amount']	+= floatval($value->amount) / floatval($value->rate)- $temp;
+						$customers["$fullname"]['amount']	+= $amount- $temp;
 						if($dueDate<$today){
 							$outstanding = $today->diff($dueDate)->format("%a");
 							if(intval($diff)>90){
-								$customers["$fullname"]['>90']+= floatval($value->amount) / floatval($value->rate)- $temp;
+								$customers["$fullname"]['>90']+= $amount- $temp;
 							}else if(intval($diff)>60){
-								$customers["$fullname"]['90'] += floatval($value->amount) / floatval($value->rate)- $temp;
+								$customers["$fullname"]['90'] += $amount- $temp;
 							}else if(intval($diff)>30){
-								$customers["$fullname"]['60'] += floatval($value->amount) / floatval($value->rate)- $temp;
+								$customers["$fullname"]['60'] += $amount- $temp;
 							}else{
-								$customers["$fullname"]['30'] += floatval($value->amount) / floatval($value->rate)- $temp;
+								$customers["$fullname"]['30'] += $amount- $temp;
 							}
-						}else{
-							// $customers["$fullname"]['<30'] += floatval($value->amount) / floatval($value->rate);
-							$outstanding = 0;
 						}
+						// else{
+						// 	$customers["$fullname"]['<30'] += floatval($value->amount) / floatval($value->rate);
+						// 	$outstanding = 0;
+						// }
 					} else {
-						$customers["$fullname"]['amount']	= floatval($value->amount) / floatval($value->rate)- $temp;
+						$customers["$fullname"]['amount']	= $amount- $temp;
 						if($dueDate<$today){
 							$outstanding = $today->diff($dueDate)->format("%a");
 							if(intval($diff)>90){
-								$customers["$fullname"]['>90']= floatval($value->amount) / floatval($value->rate)- $temp;
+								$customers["$fullname"]['>90'] = $amount- $temp;
 							}else if(intval($diff)>60){
-								$customers["$fullname"]['90'] = floatval($value->amount) / floatval($value->rate)- $temp;
+								$customers["$fullname"]['90'] = $amount- $temp;
 							}else if(intval($diff)>30){
-								$customers["$fullname"]['60'] = floatval($value->amount) / floatval($value->rate)- $temp;
+								$customers["$fullname"]['60'] = $amount- $temp;
 							}else{
-								$customers["$fullname"]['30'] = floatval($value->amount) / floatval($value->rate)- $temp;
+								$customers["$fullname"]['30'] = $amount- $temp;
 							}
 						}else{
-							$customers["$fullname"]['<30'] = floatval($value->amount) / floatval($value->rate)- $temp;
+							$customers["$fullname"]['<30'] = $amount- $temp;
 							$outstanding = 0;
 						}
 				//Results
@@ -1921,7 +1949,7 @@ class Sales extends REST_Controller {
 						$totalInvoice +=1;
 					}
 					$totalDay += $outstanding;
-					$total += floatval($value->amount)/ floatval($value->rate)- $temp;
+					$total += $amount- $temp;
 					$aging = $totalInvoice > 0? $totalDay/ $totalInvoice : 0;
 				}
 			}
@@ -1947,244 +1975,343 @@ class Sales extends REST_Controller {
 	}
 
 	function aging_detail_get() {
-		$filters 	= $this->get("filter")["filters"];
-		$page 		= $this->get('page') !== false ? $this->get('page') : 1;
-		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;
+		$filter 	= $this->get("filter");
+		$page 		= $this->get('page');
+		$limit 		= $this->get('limit');
 		$sort 	 	= $this->get("sort");
-		$data["results"] = array();
+		$data["results"] = [];
 		$data["count"] = 0;
-		$is_pattern = 0;
-		$deleted = 0;
-		$customers = array();
-		$total = 0;
-		$totalInvoice = 0;
-		$totalDay = 0;
-		$aging = 0;
 
 		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
-		if(!empty($sort) && isset($sort)){					
+		//Sort
+		if(!empty($sort) && isset($sort)){
 			foreach ($sort as $value) {
-				$obj->order_by($value["field"], $value["dir"]);
+				if(isset($value['operator'])){
+					$obj->{$value['operator']}($value["field"], $value["dir"]);
+				}else{
+					$obj->order_by($value["field"], $value["dir"]);
+				}
 			}
 		}
-
-		//Filter
-		if(!empty($filters) && isset($filters)){			
-	    	foreach ($filters as $value) {
-	    		if(!empty($value["operator"]) && isset($value["operator"])){
-		    		if($value["operator"]=="where_in"){
-		    			$obj->where_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_where_in"){
-		    			$obj->or_where_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="where_not_in"){
-		    			$obj->where_not_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_where_not_in"){
-		    			$obj->or_where_not_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="like"){
-		    			$obj->like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_like"){
-		    			$obj->or_like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="not_like"){
-		    			$obj->not_like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_not_like"){
-		    			$obj->or_not_like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="startswith"){
-		    			$obj->like($value["field"], $value["value"], "after");
-		    		}else if($value["operator"]=="endswith"){
-		    			$obj->like($value["field"], $value["value"], "before");
-		    		}else if($value["operator"]=="contains"){
-		    			$obj->like($value["field"], $value["value"], "both");
-		    		}else if($value["operator"]=="or_where"){
-		    			$obj->or_where($value["field"], $value["value"]);		    		
-		    		}else{
-		    			$obj->where($value["field"].' '.$value["operator"], $value["value"]);
-		    		}
-	    		}else{
-	    			$obj->where($value["field"], $value["value"]);
-	    		}
-			}									 			
-		}
-
-		if($this->get("filter")['logic'] == "segment") {
-			$segmentItem = new Segmentitem(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		
-			$segmentItem->get();
-
-			foreach ($segmentItem as $seg) {
-				$txn = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-
-				$txn->where_in("type", array("Invoice", "Commercial_Invoice", "Vat_Invoice"));
-				$txn->where_in("status", array(0,2));
-				$txn->like("segments", $seg->id, "both");
-				$txn->where("deleted",0);
-				$txn->where("is_recurring",0);
-			
-				$txn->get_iterated();
-
-				foreach ($txn as $t) {
-					$ref = $t->referece->get();
-					$amt = floatval($t->amount)/ floatval($t->rate);
-					$items = $t->item_line->include_related('item', array('name'))->get();
-					$today = new DateTime();
-					$dueDate = new DateTime($t->due_date);
-					$diff = $today->diff($dueDate)->format("%a");
-
-					if(isset($customers["$seg->name"])) {
-						$customers["$seg->name"]['amount']	+= floatval($t->amount) / floatval($t->rate);
-						$outstanding = 0; // days
-						if($dueDate<$today){
-							if(intval($diff)>90){
-								$outstanding = '>90';
-							}else if(intval($diff)>60){
-								$outstanding = '90';
-							}else if(intval($diff)>30){
-								$outstanding = '60';
-							}else{
-								$outstanding = '30';
-							}
-						}else{
-							$outstanding = '>30';
-						}
-						$customers["$seg->name"]['transactions'][] = array(
-							'id' => $t->id,
-							'type' => $t->type,
-							'date' => $t->issued_date,
-							'number' => $t->number,
-							'memo' => $t->memo2,
-							'outstanding' => $diff,
-							'amount' => floatval($t->amount) / floatval($t->rate)
-						);
-					} else {
-						$customers["$seg->name"]['amount']	= floatval($t->amount) / floatval($t->rate);
-						$outstanding = 0; // days
-						if($dueDate<$today){
-							if(intval($diff)>90){
-								$outstanding = '>90';
-							}else if(intval($diff)>60){
-								$outstanding = '90';
-							}else if(intval($diff)>30){
-								$outstanding = '60';
-							}else{
-								$outstanding = '30';
-							}
-						}else{
-							$outstanding = '>30';
-						}
-						$customers["$seg->name"]['transactions'][] = array(
-							'id' => $t->id,
-							'type' => $t->type,
-							'date' => $t->issued_date,
-							'number' => $t->number,
-							'memo' => $t->memo2,
-							'outstanding' => $diff,
-							'amount' => floatval($t->amount) / floatval($t->rate)
-						);
-				//Results
-					}
-
-					$total += $amt;
-				}
+		//Filter		
+		if(!empty($filter) && isset($filter)){			
+	    	foreach ($filter["filters"] as $value) {
+	    		if(isset($value['operator'])){
+	    			$obj->{$value['operator']}($value['field'], $value['value']);	    		
+	    		} else {
+	    			$obj->where($value['field'], $value['value']);
+	    		}
 			}
-		} else {
-
-			// $obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-
-
-
-			$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			$type->select('id')->where('parent_id', 1)->get();
-			$types = array();
-			foreach($type as $t) {
-				$types[] = $t->id;
-			}
-
-			$obj->where_in_related("contact", 'contact_type_id', $type);
-			$obj->where_in("type", array("Invoice", "Commercial_Invoice", "Vat_Invoice"));
-			$obj->where('is_recurring', 0);
-			$obj->where("deleted",0);
-			$obj->where_in("status", array(0,2));
-
-			// $obj->include_related("contact_type", "name");
-
-			//Results
-			$obj->get_paged_iterated($page, $limit);
-			$data["count"] = $obj->paged->total_rows;
-			
-			if($obj->result_count()>0){
-				foreach ($obj as $value) {
-					$ref = $value->transaction->get();
-					$customer = $value->contact->get();
-					$fullname = $customer->surname.' '.$customer->name;
-					$items = $value->item_line->include_related('item', array('name'))->get();
-					$temp = 0;
-					foreach ($ref as $r) {
-						$a = abs($r->amount);					
-						$temp += floatval($a);
-					}
-					$today = new DateTime();
-					$dueDate = new DateTime($value->due_date);
-					$diff = $today->diff($dueDate)->format("%a");
-
-					if(isset($customers["$fullname"])) {
-						$customers["$fullname"]['amount']	+= floatval($value->amount) / floatval($value->rate)- $temp;
-						$outstanding = 0; // days
-						if($dueDate<$today){
-							$outstanding = $today->diff($dueDate)->format("%a");
-						}else{
-							$outstanding = 0;
-						}
-						$customers["$fullname"]['transactions'][] = array(
-							'id' => $value->id,
-							'type' => $value->type,
-							'date' => $value->issued_date,
-							'number' => $value->number,
-							'memo' => $value->memo2,
-							'outstanding' => $dueDate<$today ? $diff : 0,
-							'dueDate' => $value->due_date,
-
-							'amount' => floatval($value->amount) / floatval($value->rate)
-						);
-					} else {
-						$customers["$fullname"]['amount']	= floatval($value->amount) / floatval($value->rate)- $temp;
-						$customers["$fullname"]['transactions'][] = array(
-							'id' => $value->id,
-							'type' => $value->type,
-							'date' => $value->issued_date,
-							'number' => $value->number,
-							'memo' => $value->memo2,
-							'dueDate' => $value->due_date,
-							'outstanding' => $dueDate<$today ? $diff : 0,
-							'amount' => floatval($value->amount) / floatval($value->rate)- $temp
-						);
-				//Results
-					}
-					if($value->type == "Invoice"){
-						$totalInvoice +=1;
-					}
-					$total += floatval($value->amount)/ floatval($value->rate)- $temp;
-				}
-			}
-			
-		}	
-		foreach ($customers as $key => $value) { 
-			foreach($value['transactions'] as $trx){
-				$totalDay += $trx['outstanding'];
-			}			
-			$data["results"][] = array(
-				'group' 	=> $key,
-				'amount'	=> $value['amount'],
-				'items' 	=> $value['transactions']
-			);
 		}
-		$data['total'] = $total;
-		$data['totalInvoice'] = $totalInvoice;
-		$data['aging'] = $totalDay/ $totalInvoice;
-		$data['totalDay'] = $totalDay;
-		$data['count'] = count($customers);
+
+		//Results
+		$obj->include_related("contact", array("abbr", "number", "name"));
+		$obj->where_in("type", array("Commercial_Invoice","Vat_Invoice","Invoice","Cash_Receipt","Sale_Return"));
+		$obj->where("is_recurring <>", 1);
+		$obj->where("deleted <>", 1);
+		$obj->get_iterated();
+		
+		if($obj->exists()){
+			$objList = [];
+			foreach ($obj as $value) {
+				$multiplier = 1;
+				if($value->type=="Cash_Receipt" || $value->type=="Sale_Return"){ $multiplier = -1; }
+				$amount = ((floatval($value->amount)-floatval($value->deposit)) / floatval($value->rate))*$multiplier;
+
+				if(isset($objList[$value->contact_id])){
+					$objList[$value->contact_id]["line"][] = array(
+						"id" 				=> $value->id,
+						"type" 				=> $value->type,
+						"number" 			=> $value->number,
+						"issued_date" 		=> $value->issued_date,
+						"due_date" 			=> $value->due_date,
+						"memo" 				=> $value->memo,
+						"status"			=> $value->status,
+						"rate" 				=> $value->rate,
+						"amount" 			=> $amount
+					);
+				}else{
+					//Balance Forward
+					$balance_forward = 0;
+					$bf = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					$bf->where_in("type", array("Commercial_Invoice","Vat_Invoice","Invoice","Cash_Receipt","Sale_Return"));
+					$bf->where("issued_date <", $value->issued_date);
+					$bf->where("contact_id", $value->contact_id);
+					$bf->where("is_recurring <>", 1);
+					$bf->where("deleted <>", 1);
+					$bf->get_iterated();
+
+					if($bf->exists()){
+						foreach ($bf as $val) {
+							$multiplier = 1;
+							if($val->type=="Cash_Receipt" || $value->type=="Sale_Return"){ $multiplier = -1; }
+							$balance_forward += ((floatval($val->amount)-floatval($val->deposit)) / floatval($val->rate))*$multiplier;
+						}
+					}
+
+					$objList[$value->contact_id]["id"] 				= $value->contact_id;
+					$objList[$value->contact_id]["name"] 			= $value->contact_abbr.$value->contact_number." ".$value->contact_name;
+					$objList[$value->contact_id]["balance_forward"] = $balance_forward;
+					$objList[$value->contact_id]["line"][] 			= array(
+						"id" 				=> $value->id,
+						"type" 				=> $value->type,
+						"number" 			=> $value->number,
+						"issued_date" 		=> $value->issued_date,
+						"due_date" 			=> $value->due_date,
+						"memo" 				=> $value->memo,
+						"status"			=> $value->status,
+						"rate" 				=> $value->rate,
+						"amount" 			=> $amount
+					);			
+				}
+			}
+
+			foreach ($objList as $value) {
+				$data["results"][] = $value;
+			}
+			$data["count"] = count($data["results"]);
+		}
+
 		//Response Data
 		$this->response($data, 200);
 	}
+	// function aging_detail_get() {
+	// 	$filter 	= $this->get("filter");
+	// 	$page 		= $this->get('page');
+	// 	$limit 		= $this->get('limit');
+	// 	$sort 	 	= $this->get("sort");
+	// 	$data["results"] = [];
+	// 	$data["count"] = 0;
+	// 	$is_pattern = 0;
+	// 	$deleted = 0;
+	// 	$customers = array();
+	// 	$total = 0;
+	// 	$totalInvoice = 0;
+	// 	$totalDay = 0;
+	// 	$aging = 0;
+	// 	$balance_forward = 0;
+
+	// 	$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+	// 	//Sort
+	// 	if(!empty($sort) && isset($sort)){
+	// 		foreach ($sort as $value) {
+	// 			if(isset($value['operator'])){
+	// 				$obj->{$value['operator']}($value["field"], $value["dir"]);
+	// 			}else{
+	// 				$obj->order_by($value["field"], $value["dir"]);
+	// 			}
+	// 		}
+	// 	}
+		
+	// 	//Filter		
+	// 	if(!empty($filter) && isset($filter)){			
+	//     	foreach ($filter["filters"] as $value) {
+	//     		if(isset($value['operator'])){
+	//     			$obj->{$value['operator']}($value['field'], $value['value']);	    		
+	//     		} else {
+	//     			$obj->where($value['field'], $value['value']);
+	//     		}
+	// 		}
+	// 	}
+
+	// 	if($this->get("filter")['logic'] == "segment") {
+	// 		$segmentItem = new Segmentitem(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		
+	// 		$segmentItem->get();
+
+	// 		foreach ($segmentItem as $seg) {
+	// 			$txn = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+	// 			$txn->where_in("type", array("Invoice", "Commercial_Invoice", "Vat_Invoice"));
+		
+	// 			$txn->like("segments", $seg->id, "both");
+	// 			$txn->where("deleted",0);
+	// 			$txn->where("is_recurring",0);
+			
+	// 			$txn->get_iterated();
+
+	// 			foreach ($txn as $t) {
+	// 				$ref = $t->referece->get();
+	// 				$amt = floatval($t->amount)/ floatval($t->rate);
+	// 				$items = $t->item_line->include_related('item', array('name'))->get();
+	// 				$today = new DateTime();
+	// 				$dueDate = new DateTime($t->due_date);
+	// 				$diff = $today->diff($dueDate)->format("%a");
+
+	// 				if(isset($customers["$seg->name"])) {
+	// 					$customers["$seg->name"]['amount']	+= floatval($t->amount) / floatval($t->rate);
+	// 					$outstanding = 0; // days
+	// 					if($dueDate<$today){
+	// 						if(intval($diff)>90){
+	// 							$outstanding = '>90';
+	// 						}else if(intval($diff)>60){
+	// 							$outstanding = '90';
+	// 						}else if(intval($diff)>30){
+	// 							$outstanding = '60';
+	// 						}else{
+	// 							$outstanding = '30';
+	// 						}
+	// 					}else{
+	// 						$outstanding = '>30';
+	// 					}
+	// 					$customers["$seg->name"]['transactions'][] = array(
+	// 						'id' => $t->id,
+	// 						'type' => $t->type,
+	// 						'date' => $t->issued_date,
+	// 						'number' => $t->number,
+	// 						'memo' => $t->memo2,
+	// 						"status" => $t->status,
+	// 						'outstanding' => $diff,
+	// 						'amount' => floatval($t->amount) / floatval($t->rate)
+	// 					);
+	// 				} else {
+	// 					$customers["$seg->name"]['amount']	= floatval($t->amount) / floatval($t->rate);
+	// 					$outstanding = 0; // days
+	// 					if($dueDate<$today){
+	// 						if(intval($diff)>90){
+	// 							$outstanding = '>90';
+	// 						}else if(intval($diff)>60){
+	// 							$outstanding = '90';
+	// 						}else if(intval($diff)>30){
+	// 							$outstanding = '60';
+	// 						}else{
+	// 							$outstanding = '30';
+	// 						}
+	// 					}else{
+	// 						$outstanding = '>30';
+	// 					}
+	// 					$customers["$seg->name"]['transactions'][] = array(
+	// 						'id' => $t->id,
+	// 						'type' => $t->type,
+	// 						'date' => $t->issued_date,
+	// 						'number' => $t->number,
+	// 						'memo' => $t->memo2,
+	// 						"status" => $t->status,
+	// 						'outstanding' => $diff,
+	// 						'amount' => floatval($t->amount) / floatval($t->rate)
+	// 					);
+	// 			//Results
+	// 				}
+
+	// 				$total += $amt;
+	// 			}
+	// 		}
+	// 	} else {
+
+	// 		// $obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+
+
+	// 		$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+	// 		$type->select('id')->where('parent_id', 1)->get();
+	// 		$types = array();
+	// 		foreach($type as $t) {
+	// 			$types[] = $t->id;
+	// 		}
+
+	// 		$obj->where_in_related("contact", 'contact_type_id', $type);
+	// 		$obj->where_in("type", array("Invoice", "Commercial_Invoice", "Vat_Invoice","Cash_Receipt"));
+		
+	// 		$obj->where('is_recurring', 0);
+	// 		$obj->where("deleted",0);
+			
+
+	// 		// $obj->include_related("contact_type", "name");
+
+	// 		//Results
+	// 		$obj->get_paged_iterated($page, $limit);
+	// 		$data["count"] = $obj->paged->total_rows;
+			
+	// 		if($obj->result_count()>0){
+	// 			foreach ($obj as $value) {
+	// 				$amount = 0;
+	// 				$balance_forward = 0;
+	// 				if($value->type=="Cash_Receipt"){
+	// 						$amount = (floatval($value->amount)/ floatval($value->rate)) * -1;
+	// 				}else{
+	// 						$amount = (floatval($value->amount)/ floatval($value->rate));
+	// 				}
+					
+	// 				$ref = $value->transaction->get();
+	// 				$customer = $value->contact->get();
+	// 				$fullname = $customer->surname.' '.$customer->name;
+	// 				$items = $value->item_line->include_related('item', array('name'))->get();
+	// 				$temp = 0;
+	// 				foreach ($ref as $r) {
+	// 					$a = abs($r->amount);					
+	// 					$temp += floatval($a);
+	// 				}
+	// 				$today = new DateTime();
+	// 				$dueDate = new DateTime($value->due_date);
+	// 				$diff = $today->diff($dueDate)->format("%a");
+
+	// 				if(isset($customers["$fullname"])) {
+	// 					$balance_forward += floatval($value->amount) / floatval($value->rate);
+	// 					$customers["$fullname"]['amount']	+= $amount - $temp ;//floatval($value->amount) / floatval($value->rate);
+	// 					$customers["$fullname"]['balance_forward']	= $balance_forward;
+	// 					$outstanding = 0; // days
+	// 					if($dueDate<$today){
+	// 						$outstanding = $today->diff($dueDate)->format("%a");
+	// 					}else{
+	// 						$outstanding = 0;
+	// 					}
+	// 					$customers["$fullname"]['transactions'][] = array(
+	// 						'id' => $value->id,
+	// 						'type' => $value->type,
+	// 						'date' => $value->issued_date,
+	// 						'number' => $value->number,
+	// 						'memo' => $value->memo2,
+	// 						'outstanding' => $dueDate<$today ? $diff : 0,
+	// 						'dueDate' => $value->due_date,
+	// 						"status" => $value->status,
+	// 						'amount' => $amount- $temp 
+	// 					);
+	// 				} else {
+	// 					$customers["$fullname"]['amount']	= $amount -$temp ;
+	// 					$customers["$fullname"]['balance_forward']	= $balance_forward;
+	// 					$customers["$fullname"]['transactions'][] = array(
+	// 						'id' => $value->id,
+	// 						'type' => $value->type,
+	// 						'date' => $value->issued_date,
+	// 						'number' => $value->number,
+	// 						'memo' => $value->memo2,
+	// 						'dueDate' => $value->due_date,
+	// 						"status" => $value->status,
+	// 						'outstanding' => $dueDate<$today ? $diff : 0,
+	// 						'amount' => $amount - $temp 
+	// 					);
+	// 			//Results
+	// 				}
+	// 				if($value->type == "Invoice"){
+	// 					$totalInvoice +=1;
+	// 				}
+	// 				$total +=  $amount- $temp  ; 
+	// 			}
+	// 		}
+			
+	// 	}	
+	// 	foreach ($customers as $key => $value) { 
+	// 		foreach($value['transactions'] as $trx){
+	// 			$totalDay += $trx['outstanding'];
+	// 		}			
+	// 		$data["results"][] = array(
+	// 			'group' 	=> $key,
+	// 			'amount'	=> $value['amount'],
+	// 			'items' 	=> $value['transactions'],
+	// 			'balance_forward' 	=> $value['balance_forward']
+	// 		);
+	// 	}
+	// 	$data['total'] = $total;
+	// 	$data['totalInvoice'] = $totalInvoice;
+	// 	$data['aging'] = $totalInvoice>0?$totalDay/ $totalInvoice:0;
+	// 	$data['totalDay'] = $totalDay;
+	// 	$data['count'] = count($customers);
+	// 	//Response Data
+	// 	$this->response($data, 200);
+	// }
 
 	function invoice2collect_get() {
 		$filters 	= $this->get("filter")["filters"];
@@ -2256,7 +2383,6 @@ class Sales extends REST_Controller {
 				$txn = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
 				$txn->where_in("type", array("Invoice", "Commercial_Invoice", "Vat_Invoice"));
-				$txn->where_in("status", array(0,2));
 				$txn->like("segments", $seg->id, "both");
 				$txn->where("deleted",0);
 				$txn->where("is_recurring",0);
@@ -2325,7 +2451,6 @@ class Sales extends REST_Controller {
 
 			$obj->where_in_related("contact", 'contact_type_id', $type);
 			$obj->where_in("type", array("Invoice", "Commercial_Invoice", "Vat_Invoice"));
-			$obj->where_in("status", array(0,2));
 			$obj->where('is_recurring', 0);
 			$obj->where("deleted",0);
 
@@ -2385,7 +2510,8 @@ class Sales extends REST_Controller {
 							'date' => $value->issued_date,
 							'number' => $value->number,
 							'memo' => $value->memo2,
-							'agingkk' => $dueDate<$today ? $diff : 0,
+							"status" => $value->status,
+							'dueDate' => $value->due_date,
 							'amount' => floatval($value->amount) / floatval($value->rate)- $temp
 						);
 					} else {
@@ -2397,7 +2523,8 @@ class Sales extends REST_Controller {
 							'date' => $value->issued_date,
 							'number' => $value->number,
 							'memo' => $value->memo2,
-							'agingkk' => $dueDate<$today ? $diff : 0,
+							"status" => $value->status,
+							'dueDate' => $value->due_date,
 							'amount' => floatval($value->amount) / floatval($value->rate)- $temp
 						);
 					}
@@ -2563,7 +2690,6 @@ class Sales extends REST_Controller {
 
 			$obj->where_in_related("contact", 'contact_type_id', $type);
 			$obj->where_in("type", array("Invoice", "Commercial_Invoice", "Vat_Invoice"));
-			$obj->where_in('status', array(1, 2));
 			$obj->where('is_recurring', 0);
 			$obj->where("deleted",0);
 

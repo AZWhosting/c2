@@ -524,22 +524,16 @@ class Dashboards extends REST_Controller {
 		
 		//Filter		
 		if(!empty($filters) && isset($filters)){			
-	    	foreach ($filters as $value) {	    				
-	    		if($value["field"]=="is_recurring"){
-    				$is_recurring = $value["value"];
-    			}else if($value["field"]=="deleted"){
-    				$deleted = $value["value"];
-    			}else{
-    				$obj->where($value["field"], $value["value"]);    				
-    			}    			    		  			    		
+	    	foreach ($filters as $value) {	
+    			$obj->where($value["field"], $value["value"]);	
 			}									 			
 		}
 		
 		$obj->where_in("type", array("Commercial_Invoice","Vat_Invoice","Invoice","Commercial_Cash_Sale","Vat_Cash_Sale","Cash_Sale","Sale_Order"));
 		$obj->where("issued_date >=", $this->startFiscalDate);
 		$obj->where("issued_date <", $this->endFiscalDate);
-		$obj->where("is_recurring", $is_recurring);		
-		$obj->where("deleted", $deleted);						
+		$obj->where("is_recurring <>", 1);		
+		$obj->where("deleted <>", 1);						
 		$obj->order_by("issued_date");								
 		$obj->get_iterated();
 
@@ -590,14 +584,8 @@ class Dashboards extends REST_Controller {
 		
 		//Filter		
 		if(!empty($filters) && isset($filters)){			
-	    	foreach ($filters as $value) {	    				
-	    		if($value["field"]=="is_recurring"){
-    				$is_recurring = $value["value"];
-    			}else if($value["field"]=="deleted"){
-    				$deleted = $value["value"];
-    			}else{
-    				$obj->where($value["field"], $value["value"]);    				
-    			}    			    		  			    		
+	    	foreach ($filters as $value) {
+    			$obj->where($value["field"], $value["value"]);
 			}									 			
 		}
 		
@@ -605,8 +593,8 @@ class Dashboards extends REST_Controller {
 		$obj->where("issued_date >=", $this->startFiscalDate);
 		$obj->where("issued_date <", $this->endFiscalDate);
 		$obj->where_in("status", array(0,2));
-		$obj->where("is_recurring", $is_recurring);	
-		$obj->where("deleted", $deleted);						
+		$obj->where("is_recurring <>", 1);	
+		$obj->where("deleted <>", 1);						
 		$obj->order_by("issued_date");								
 		$obj->get_iterated();
 
@@ -1087,22 +1075,16 @@ class Dashboards extends REST_Controller {
 		
 		//Filter		
 		if(!empty($filters) && isset($filters)){			
-	    	foreach ($filters as $value) {	    				
-	    		if($value["field"]=="is_recurring"){
-    				$is_recurring = $value["value"];
-    			}else if($value["field"]=="deleted"){
-    				$deleted = $value["value"];
-    			}else{
-    				$obj->where($value["field"], $value["value"]);    				
-    			}    			    		  			    		
+	    	foreach ($filters as $value) {
+    			$obj->where($value["field"], $value["value"]);
 			}									 			
 		}
 		
 		$obj->where_in("type", array("Cash_Purchase","Credit_Purchase","Purchase_Order"));
 		$obj->where("issued_date >=", $this->startFiscalDate);
 		$obj->where("issued_date <", $this->endFiscalDate);
-		$obj->where("is_recurring", $is_recurring);		
-		$obj->where("deleted", $deleted);						
+		$obj->where("is_recurring <>", 1);		
+		$obj->where("deleted <>", 1);						
 		$obj->order_by("issued_date");								
 		$obj->get_iterated();
 
@@ -1153,22 +1135,16 @@ class Dashboards extends REST_Controller {
 		
 		//Filter		
 		if(!empty($filters) && isset($filters)){			
-	    	foreach ($filters as $value) {	    				
-	    		if($value["field"]=="is_recurring"){
-    				$is_recurring = $value["value"];
-    			}else if($value["field"]=="deleted"){
-    				$deleted = $value["value"];
-    			}else{
-    				$obj->where($value["field"], $value["value"]);    				
-    			}    			    		  			    		
+	    	foreach ($filters as $value) {
+	    		$obj->where($value["field"], $value["value"]);
 			}									 			
 		}
 		
 		$obj->where_in("type", array("Credit_Purchase","Credit_Payment"));
 		$obj->where("issued_date >=", $this->startFiscalDate);
 		$obj->where("issued_date <", $this->endFiscalDate);
-		$obj->where("is_recurring", $is_recurring);		
-		$obj->where("deleted", $deleted);						
+		$obj->where("is_recurring <>", 1);		
+		$obj->where("deleted <>", 1);						
 		$obj->order_by("issued_date");								
 		$obj->get_iterated();
 

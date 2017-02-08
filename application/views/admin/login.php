@@ -480,70 +480,74 @@ a.enquiries:hover .enquiry-content, .enquiry-content:hover {
             console.log(this.get('password')); 
           },
           btnSignIn: function() {
-            $("#loginBtn").val("Logging in...");
-            var authenticationData = {
-                Username : this.get('email'),
-                Password : this.get('password')
-            };
-            var authenticationDetails = new AWSCognito.CognitoIdentityServiceProvider.AuthenticationDetails(authenticationData);
-            var userData = {
-                Username : this.get('email'),
-                Pool : userPool
-            };
-            var cognitoUser = new AWSCognito.CognitoIdentityServiceProvider.CognitoUser(userData);
-            cognitoUser.authenticateUser(authenticationDetails, {
-              onSuccess: function (result) {
-                // success
-                AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-                  IdentityPoolId : 'us-east-1:35445541-da4c-4dbb-b83f-d1d0301a26a9',
-                  Logins : {
-                      'cognito-idp.us-east-1.amazonaws.com/us-east-1_56S0nUDS4' : result.getIdToken().getJwtToken()
+            if(this.get('email') || this.get('password')){
+              $("#loginBtn").val("Logging in...");
+              var authenticationData = {
+                  Username : this.get('email'),
+                  Password : this.get('password')
+              };
+              var authenticationDetails = new AWSCognito.CognitoIdentityServiceProvider.AuthenticationDetails(authenticationData);
+              var userData = {
+                  Username : this.get('email'),
+                  Pool : userPool
+              };
+              var cognitoUser = new AWSCognito.CognitoIdentityServiceProvider.CognitoUser(userData);
+              cognitoUser.authenticateUser(authenticationDetails, {
+                onSuccess: function (result) {
+                  // success
+                  AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+                    IdentityPoolId : 'us-east-1:35445541-da4c-4dbb-b83f-d1d0301a26a9',
+                    Logins : {
+                        'cognito-idp.us-east-1.amazonaws.com/us-east-1_56S0nUDS4' : result.getIdToken().getJwtToken()
+                    }
+                  });
+                  if (cognitoUser != null) {
+                      cognitoUser.getSession(function(err, session) {
+                          if (err) {
+                            alert(err);
+                              return;
+                          }                        
+                      });
                   }
-                });
-                if (cognitoUser != null) {
-                    cognitoUser.getSession(function(err, session) {
-                        if (err) {
-                          alert(err);
-                            return;
-                        }                        
-                    });
+                  
+                  banhji.companyDS.filter({field: 'username', value: userPool.getCurrentUser() == null ? '': userPool.getCurrentUser().username});
+                      banhji.companyDS.bind('requestEnd', function(e) {
+                        var res = e.response;
+                        if(res.error) {
+                            // console.log()
+                        } else {
+                          var data = res.results[0];
+                          banhji.profileDS.filter({
+                            field: 'username', value: userPool.getCurrentUser().username
+                          });
+                          banhji.profileDS.bind('requestEnd', function(e){
+                            var id = e.response.results[0].id;
+                            if(e.response.results[0].id) {
+                              var user = {
+                                id: id,
+                                username: userPool.getCurrentUser().username,
+                                role: e.response.results[0].role,
+                                institute: data
+                              };
+                              localforage.setItem('user', user);
+                              $("#loginBtn").val("Redirecting...");
+                              window.location.replace(baseUrl + "rrd/");
+                            } else {
+                              console.log('bad');
+                            }
+                          });                          
+                        }
+                    });                    
+                },
+                onFailure: function(err) {
+                  // layout.showIn("#main-container", loginView);
+                  $("#loginBtn").val("Login");
+                  $('#loginInformation').text('Please check username/password.');
                 }
-                
-                banhji.companyDS.filter({field: 'username', value: userPool.getCurrentUser() == null ? '': userPool.getCurrentUser().username});
-                    banhji.companyDS.bind('requestEnd', function(e) {
-                      var res = e.response;
-                      if(res.error) {
-                          // console.log()
-                      } else {
-                        var data = res.results[0];
-                        banhji.profileDS.filter({
-                          field: 'username', value: userPool.getCurrentUser().username
-                        });
-                        banhji.profileDS.bind('requestEnd', function(e){
-                          var id = e.response.results[0].id;
-                          if(e.response.results[0].id) {
-                            var user = {
-                              id: id,
-                              username: userPool.getCurrentUser().username,
-                              role: e.response.results[0].role,
-                              institute: data
-                            };
-                            localforage.setItem('user', user);
-                            $("#loginBtn").val("Redirecting...");
-                            window.location.replace(baseUrl + "rrd/");
-                          } else {
-                            console.log('bad');
-                          }
-                        });                          
-                      }
-                  });                    
-              },
-              onFailure: function(err) {
-                // layout.showIn("#main-container", loginView);
-                $("#loginBtn").val("Login");
-                $('#loginInformation').text('Please check username/password.');
-              }
-            }); 
+              });
+            }else{
+              alert('Please Fill Username and Password!');
+            }
           },
           redirect: function(data) {
               // console.log(data.length > 0);
@@ -586,7 +590,13 @@ a.enquiries:hover .enquiry-content, .enquiry-content:hover {
       $(function(){
         auth.getSession();
         kendo.bind($('.login'), banhji.aws);
+        $(document).keypress(function(e){
+          if (e.which == 13){
+              banhji.aws.btnSignIn();
+          }
+        });
       });
+      
     </script>
 </body>
 </html>

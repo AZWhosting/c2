@@ -167,8 +167,8 @@ class Transactions extends REST_Controller {
 				   	"printed_by" 				=> $value->printed_by,
 				   	"deleted" 					=> $value->deleted,
 
-				   	"contact" 					=> $value->contact->get_raw()->result(),
-				   	"reference" 				=> $value->reference->get_raw()->result(),
+				   	"contact" 					=> [],//$value->contact->get_raw()->result(),
+				   	"reference" 				=> [],//$value->reference->get_raw()->result(),
 				   	"amount_paid"				=> $amount_paid
 				);
 			}

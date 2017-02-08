@@ -96,13 +96,13 @@ class Winvoices extends REST_Controller {
 				foreach($items as $item) {
 					$types = array('tariff', 'exemption', 'maintenance');
 					if(in_array($item->type, $types)) {
-						if($item->type === 'tariff') {
+						if($item->type == 'tariff') {
 							$tariff = new Plan_item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 							$tariff->where('tariff_id', $item->id)->get();
 							if($tariff->exists()) {
 								foreach($tariff as $t) {
 									$tmp["$meter->number"]['tariff'][] = array(
-										"type" => "$item->type",
+										"type" => 'tariff',
 										"line" => array(
 											'id'   => $t->id,
 											'name' => $t->name,
@@ -113,27 +113,27 @@ class Winvoices extends REST_Controller {
 									);
 								}									
 							}
-						} else if($item->type === 'exemption'){
+						} else if($item->type == 'exemption'){
 							$tmp["$meter->number"]['exemption'][] = array(
-								"type" => "$item->type",
+								"type" => $item->type,
 								"line" => array(
 									'id'   => $item->id,
 									'currency_id' => $item->currency_id,
 									'name' => $item->name,
 									'unit'  => $item->unit,
-									'amount'=> $item->amount,
+									'amount'=> floatval($item->amount),
 									'type' => $item->type
 								)
 							);
 						}else {
 							$tmp["$meter->number"]['maintenance'][] = array(
-								"type" => "$item->type",
+								"type" => $item->type,
 								"line" => array(
 									'id'   => $item->id,
 									'name' => $item->name,
 									'is_flat' => $item->is_flat == 0 ? FALSE:TRUE,
 									'unit'  => $item->unit,
-									'amount'=> $item->amount
+									'amount'=> floatval($item->amount)
 								)
 							);
 						}							
@@ -142,7 +142,7 @@ class Winvoices extends REST_Controller {
 
 				// installment
 				$installment = $meter->installment->get();
-				$tmp["$meter->number"]['items'][] = array(
+				$tmp["$meter->number"]['installment'][] = array(
 					"type" => 'installment',
 					"line" => array(
 						'id'   => $installment->id,
@@ -153,7 +153,7 @@ class Winvoices extends REST_Controller {
 						'current'=>0,
 						'usage' => 0,
 						'unit'  => 'money',
-						'amount'=> $installment->amount
+						'amount'=> floatval($installment->amount)
 					));
 			}
 		}
@@ -161,11 +161,13 @@ class Winvoices extends REST_Controller {
 		foreach($tmp as $t) {
 			$exemption = isset($t['exemption']) ? $t['exemption'] : [];
 			$maintenance = isset($t['maintenance']) ? $t['maintenance'] : [];
+			$installment = isset($t['installment']) ? $t['installment'] : [];
 			$data[] = array(
 				'type' => $t['type'],
 				'invoiced'=> FALSE,
 				'contact' => $t['contact'],
 				'meter'=> $t['meter'],
+				'installment' => $installment,
 				'exemption'=> $exemption,
 				'maintenance' => $maintenance,
 				'tariff' => $t['tariff'],
@@ -193,30 +195,48 @@ class Winvoices extends REST_Controller {
 
 			$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			// $obj->company_id 		= $value->company_id;
-			$obj->location_id 		= $value->location_id;
-			$obj->contact_id 		= $value->contact_id;
-			$obj->payment_term_id	= $value->payment_term_id;
-			$obj->payment_method_id = $value->payment_method_id;
-			$obj->reference_id 		= $value->reference_id;
-			$obj->account_id 		= $value->account_id;
-			$obj->vat_id 			= isset($value->vat_id) ? $value->vat_id: 0;
-			$obj->biller_id 		= $value->biller_id;
-		   	$obj->number 			= $number;
-		   	$obj->type 				= $value->type;
-		   	$obj->amount 			= $value->amount;
-		   	$obj->vat 				= $value->vat;
-		   	$obj->rate 				= $value->rate;
-		   	$obj->locale 			= $value->locale;
-		   	$obj->month_of 			= $value->month_of;
-		   	$obj->issued_date 		= $value->issued_date;
-		   	$obj->bill_date 		= $value->bill_date;
+			$obj->location_id 		= isset($value->location_id) ? $value->location_id : "";
+			$obj->contact_id 		= isset($value->contact->id) ? $value->contact->id : "";
+			$obj->payment_term_id	= isset($value->payment_term_id) ? $value->payment_term_id : "";
+			$obj->payment_method_id = isset($value->payment_method_id) ? $value->payment_method_id : "";
+			$obj->reference_id 		= isset($value->reference_id) ? $value->reference_id:0;
+			$obj->account_id 		= isset($value->contact->account_id) ? $value->contact->account_id : "";
+			$obj->vat_id 			= isset($value->contact->vat) ? $value->contact->vat: 0;
+			$obj->biller_id 		= isset($value->biller_id) ? $value->biller_id : "";
+		   	$obj->number 			= isset($number) ? $number : "";
+		   	$obj->type 				= isset($value->type) ? $value->type : "";
+		   	$obj->amount 			= isset($value->amount) ? $value->amount : "";
+		   	$obj->vat 				= isset($value->vat) ? $value->vat : "";
+		   	$obj->rate 				= isset($value->rate) ? $value->rate : "";
+		   	$obj->locale 			= isset($value->locale) ? $value->locale : "";
+		   	$obj->month_of 			= isset($value->month_of) ? $value->month_of : "";
+		   	$obj->issued_date 		= isset($value->issued_date) ? $value->issued_date : "";
+		   	$obj->bill_date 		= isset($value->bill_date) ? $value->bill_date : "";
 		   	$obj->due_date 			= date('Y-m-d', strtotime($value->due_date));
-		   	$obj->check_no 			= $value->check_no;
-		   	$obj->memo 				= $value->memo;
-		   	$obj->memo2 			= $value->memo2;
-		   	$obj->status 			= $value->status;
+		   	$obj->check_no 			= isset($value->check_no) ? $value->check_no : "";
+		   	$obj->memo 				= isset($value->memo) ? $value->memo: "";
+		   	$obj->memo2 			= isset($value->memo2) ? $value->memo2: "";
+		   	$obj->status 			= isset($value->status) ? $value->status: "";
 
 	   		if($obj->save()){
+
+	   			$journal = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+	   			$journal->transaction_id = $obj->id;
+	   			$journal->account_id = $value->contact->account_id;
+	   			$journal->contact_id = $value->contact->id;
+	   			$journal->dr  		 = $obj->amount;
+	   			$journal->rate 		 = $obj->rate;
+	   			$journal->locale 	 = $obj->locale;
+
+	   			$journal->transaction_id = $obj->id;
+	   			$journal->account_id = $value->contact->ra_id;
+	   			$journal->contact_id = $value->contact->id;
+	   			$journal->cr 		 = $obj->amount;
+	   			$journal->rate 		 = $obj->rate;
+	   			$journal->locale 	 = $obj->locale;
+
+	   			$journal->save();
+
 	   			$invoice_lines = [];
 		   		foreach ($value->invoice_lines as $row) {
 		   			if(isset($row->type) && $row->type == 'usage') {
@@ -228,14 +248,14 @@ class Winvoices extends REST_Controller {
 		   			$line = new Winvoice_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		   			$line->transaction_id 	= $obj->id;
 		   			//$line->item_id 			= $row->item_id;
-		   			$line->meter_record_id 	= $row->meter_record_id;
-		   			$line->description 		= $row->description;
-		   			$line->quantity 		= $row->quantity;
-		   			$line->price 			= $row->price;
-		   			$line->amount 			= $row->amount;
-		   			$line->rate 			= $row->rate;
-		   			$line->locale 			= $row->locale;
-		   			$line->has_vat 			= $row->has_vat;
+		   			$line->meter_record_id 	= isset($row->meter_record_id) ? $row->meter_record_id : "";
+		   			$line->description 		= isset($row->description) ? $row->description : "";
+		   			$line->quantity 		= isset($row->quantity) ? $row->quantity: 0;
+		   			$line->price 			= isset($row->price) ? $row->price : "";
+		   			$line->amount 			= isset($row->amount) ? $row->amount : "";
+		   			$line->rate 			= isset($row->rate) ? $row->rate : "";
+		   			$line->locale 			= isset($row->locale) ? $row->locale : "";
+		   			$line->has_vat 			= isset($row->has_vat) ? $row->has_vat : "";
 		   			$line->type 			= isset($row->type)?$row->type:"";
 		   			$line->item_id 			= isset($row->item_id)?$row->item_id:"";
 
@@ -255,8 +275,7 @@ class Winvoices extends REST_Controller {
 				   			"rate"				=> floatval($line->rate),
 				   			"locale" 			=> $line->locale,
 				   			"has_vat" 			=> $line->has_vat=="true"?true:false,
-				   			"type" 				=> $line->type,
-				   			"item_id" 			=> $line->item_id
+				   			"type" 				=> $line->type
 		   				);
 		   			}
 		   		}
@@ -286,14 +305,14 @@ class Winvoices extends REST_Controller {
 				   	"memo" 				=> $obj->memo,
 				   	"memo2" 			=> $obj->memo2,
 				   	"status" 			=> $obj->status,
-
 				   	"invoice_lines" 	=> $invoice_lines
 			   	);
 		    }
 		}
 
 		$data["count"] = count($data["results"]);
-		$this->response($data, 201);
+		// $this->response($data, 201);
+		$this->response($models, 201);
 	}
 
 	function index_get() {
@@ -315,10 +334,9 @@ class Winvoices extends REST_Controller {
 		$table->where('type','Water_Invoice');
 		$table->get();
 
-		$tmp = array();
+		// $tmp = array();
 
 		foreach($table as $row) {
-			$meter = null;
 			$contact = $row->contact->include_related('contact_utility', array('abbr', 'code'))->select('id, name, abbr, number, address')->get();
 
 			$items  = $row->winvoice_line->get();
@@ -329,7 +347,7 @@ class Winvoices extends REST_Controller {
 			$license = $ml->branch->get();
 			$usage = 0;	
 			$meter = array(
-				'meter_number'   => $m,
+				'meter_number'   => $m->number,
 				'location' => $m->location->get_raw()->result(),
 				'license' => $license->get_raw()->result(),
 			);
@@ -341,20 +359,22 @@ class Winvoices extends REST_Controller {
 					$usage = $record->usage;
 					$lines[] = array(
 						'number' => $m->number,
-						'previous' => $record->previous,
-						'current'  => $record->current,
-						'consumption' => $record->usage,
-						'rate' => $item->rate,
-						'amount' => floatval($item->amount)
+						'previous' => floatval($record->previous),
+						'current'  => floatval($record->current),
+						'consumption' => floatval($record->usage),
+						'rate' => floatval($item->rate),
+						'amount' => floatval($item->amount),
+						'type' => $item->type
 					);
 				} else {
 					$lines[] = array(
 						'number' => $item->description,
-						'previous' => $item->previous,
-						'current'  => $item->current,
-						'consumption' => $item->quantity,
+						'previous' => floatval($item->previous),
+						'current'  => floatval($item->current),
+						'consumption' => floatval($item->quantity),
 						'rate' => 0,
-						'amount' => floatval($item->amount)
+						'amount' => floatval($item->amount),
+						'type' => $item->type
 					);
 				}
 			}
@@ -380,14 +400,15 @@ class Winvoices extends REST_Controller {
 					'code' 	 => $contact->utility_abbr ."-".$contact->utility_code
 				),
 				'meter'=> $meter,
-				'items'=> $lines
+				'invoice_lines'=> $lines
 			);
 
 		}
-		$results['results'] = $data;
-		$results['count'] = count($data);
+		// $results['results'] = $data;
+		// $results['count'] = count($data);
 		//$this->response($results, 200);
-		// $this->response(array('results' => $data, 'count' => count($data)), 200);
+		// $this->response(array('results' => $data, 'count' => 1), 200);
+		$this->response(array('results'=> $data, 'count'=> count($data)), 200);
 	}
 
 	//GET WATER PRINT SNAPSHOT 

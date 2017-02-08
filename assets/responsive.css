@@ -4,6 +4,8 @@ h1,h2,h3,h4,h5,h6{
 .k-pager-wrap .k-pager-nav.k-pager-last{
   border-radius: 50% !important;
 }
+
+
 .top-itemprice tr td{
   padding: 5px;
 
@@ -299,7 +301,7 @@ input.k-textbox{
     margin: -12px auto 0;
 }
 .widget-head.head-custom{
-    background: #113051 !important;
+    background: #203864 !important;
 }
 .widget-head.head-custom ul{
   height: 50px !important;

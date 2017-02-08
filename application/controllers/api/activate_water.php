@@ -33,11 +33,11 @@ class Activate_water extends REST_Controller {
 		$obj = new contact_utility(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
 
 		//Sort
-		if(!empty($sort) && isset($sort)){					
-			foreach ($sort as $value) {
-				$obj->order_by($value["field"], $value["dir"]);
-			}
-		}
+		// if(!empty($sort) && isset($sort)){					
+		// 	foreach ($sort as $value) {
+		// 		$obj->order_by($value["field"], $value["dir"]);
+		// 	}
+		// }
 
 		//Filter		
 		if(!empty($filters) && isset($filters)){
@@ -49,7 +49,7 @@ class Activate_water extends REST_Controller {
 				}
 			}
 		}
-
+		$obj->order_by('code', 'desc');
 		//Results
 		$obj->get_paged_iterated($page, $limit);
 		$data["count"] = $obj->paged->total_rows;		
@@ -59,7 +59,7 @@ class Activate_water extends REST_Controller {
 		 		$data["results"][] = array(
 		 			"id" 				=> $value->id,	
 		 			"abbr"				=> $value->abbr,
-		 			"code"				=> $value->code,
+		 			"code"				=> floatval($value->code),
 		 			"contact_id" 		=> $value->contact_id,
 					"branch_id" 		=> $value->branch_id,
 					"location_id" 		=> $value->location_id,					

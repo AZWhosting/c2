@@ -2403,7 +2403,7 @@
 			#=meter.meter_number#	
 		</td>
 		<td>
-			#=items[0].consumption#	
+			#=invoice_lines[0].consumption#	
 		</td>
 		<td>
 			#=amount#	
@@ -3078,157 +3078,166 @@
 <!--  End Meter  -->
 <!--  Reading  -->
 <script id="Reading" type="text/x-kendo-template">
-	<h2>Reading</h2>
-	<span class="glyphicons no-js remove_2 pull-right" data-bind="click: cancel"><i></i></span>	
-	<div  class="row-fluid saleSummaryCustomer" style="padding-top: 30px;">
-		
-		<!-- Tabs -->
-		<div class="relativeWrap" data-toggle="source-code">
-			<div class="widget widget-tabs widget-tabs-double-2 widget-tabs-gray">
-			
-				<!-- Tabs Heading -->
-				<div class="widget-head">
-					<ul style="padding-left: 1px;">
-						<li class="active"><a class="glyphicons inbox_in" href="#tabDownload" data-toggle="tab"><i></i><span style="line-height: 55px;">Download</span></a></li>
-
-						<li ><a class="glyphicons inbox_out" href="#tabReading" data-toggle="tab"><i></i><span style="line-height: 55px;">Upload</span></a></li>
-						
-					</ul>
-				</div>
-				<!-- // Tabs Heading END -->
-				
-				<div class="widget-body">
-					<div class="tab-content">
-						<div id="loadImport" style="display:none;text-align: center;position: absolute;width: 100%; height: 70%;background: rgba(142, 159, 167, 0.8);z-index: 9999;">
-							<i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 35%;left: 45%"></i>
-						</div>
-						<!-- Tab content -->
-						<div id="tabDownload" style="border: 1px solid #ccc; overflow: hidden;" class="tab-pane active widget-body-regular">
-							<h4 class="separator bottom" style="margin-top: 10px;">Please Select Query</h4>
-						  	<div class="span12 row-fluid" style="padding:20px 0;padding-top: 0;">
-					        	<div class="span5" style="padding-left: 0;">
-						        	<div class="span6">	
-										<!-- Group -->
-										<div class="control-group">								
-											<label ><span >Month Of</span></label>
-								            <input type="text" 
-							                	style="width: 100%;" 
-							                	data-role="datepicker"
-							                	data-format="MM-yyyy"
-							                	data-start="year" 
-								  				data-depth="year" 
-							                	placeholder="Moth of ..." 
-									           	data-bind="value: monthOfSelect" />
-										</div>
-																										
-										<!-- // Group END -->
-									</div>
-									<div class="span6" style="padding-left: 0;">
-										<div class="control-group">								
-											<label ><span >License</span></label>
-											<input 
-												data-role="dropdownlist" 
-												style="width: 100%;" 
-												data-option-label="License ..." 
-												data-auto-bind="false" 
-												data-value-primitive="false" 
-												data-text-field="name" 
-												data-value-field="id" 
-												data-bind="
-													value: licenseSelect,
-				                  					source: licenseDS,
-				                  					events: {change: onLicenseChange}">
-				                  		</div>
-									</div>	
-								</div>
-								<div class="span7" style="padding-left: 0;">
-									<div class="span4">
-										<div class="control-group">								
-											<label ><span >Location</span></label>
-											<input 
-												data-role="dropdownlist" 
-												style="width: 100%;" 
-												data-option-label="Location ..." 
-												data-auto-bind="false" 
-												data-value-primitive="false" 
-												data-text-field="name" 
-												data-value-field="id" 
-												data-bind="
-													value: blocSelect,
-				                  					source: blocDS,
-				                  					events: {change: blocChange}">
-				                  		</div>
-									</div>
-									<div class="span4">
-										<div class="control-group">	
-											<label ><span >Action</span></label>	
-											<div class="row" style="margin: 0;">					
-												<button type="button" data-role="button" data-bind="click: search" class="k-button" role="button" aria-disabled="false" tabindex="0"><i class="icon-search"></i></button>
-											</div>
-				                  		</div>
-									</div>		
-								</div>
-					        </div>
-					        <div class="row-fluid" data-bind="visible: selectMeter">
-								<a data-bind="visible: haveData, click: exportEXCEL">
-									<span id="saveClose" class="btn btn-icon btn-success glyphicons download" style="width: 250px!important;">
-										<i></i> 
-										<span >Download Reading Book</span>
-									</span>
-								</a>
-								<br>
-								<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
-									<thead>
-										<tr>
-											<th class="center">Meter Number</th>
-											<th class="center">From Date</th>
-											<th class="center">To Date</th>
-											<th class="center">Previouse</th>
-											<th class="center">Current</th>
-										</tr>
-									</thead>
-									<tbody 
-				                		data-bind="source: uploadDS" 
-				                		data-auto-bind="false" 
-				                		data-role="listview" 
-				                		data-template="reading-template">
-				                	</tbody>
-								</table>
-							</div>
-						</div>
-						<!-- // Tab content END -->
-						<!-- Tab content -->
-						<div id="tabReading" style="border: 1px solid #ccc" class="tab-pane widget-body-regular">	
-							<h4 class="separator bottom" style="margin-top: 10px;">Please upload reading book</h4>
-							<div class="fileupload fileupload-new margin-none" data-provides="fileupload">
-							  	<input type="file"  data-role="upload" data-show-file-list="true" data-bind="events: {select: onSelected}" id="myFile"  class="margin-none" />
-							</div>
-							<span class="btn btn-icon btn-primary glyphicons ok_2" style="width: 160px!important;"><i></i>
-							<span data-bind="click: save">Start Reading</span></span>
-						</div>
-						<!-- // Tab content END -->
-						
+	<div id="slide-form">
+		<div class="customer-background" style="overflow: hidden;">
+			<div class="container-960">					
+				<div id="example" class="k-content">
+			    	<div class="hidden-print pull-right">
+			    		<span class="glyphicons no-js remove_2" 
+							data-bind="click: cancel"><i></i></span>	
 					</div>
+			        <h2 style="padding:0 15px;">Reading</h2>
+					<br />
+					<!-- Tabs -->
+					<div class="relativeWrap" data-toggle="source-code">
+						<div class="widget widget-tabs widget-tabs-double-2 widget-tabs-gray">
+						
+							<!-- Tabs Heading -->
+							<div class="widget-head">
+								<ul style="padding-left: 1px;">
+									<li class="active"><a class="glyphicons inbox_in" href="#tabDownload" data-toggle="tab"><i></i><span style="line-height: 55px;">Download</span></a></li>
+
+									<li ><a class="glyphicons inbox_out" href="#tabReading" data-toggle="tab"><i></i><span style="line-height: 55px;">Upload</span></a></li>
+									
+								</ul>
+							</div>
+							<!-- // Tabs Heading END -->
+							
+							<div class="widget-body">
+								<div class="tab-content">
+									<div id="loadImport" style="display:none;text-align: center;position: absolute;width: 100%; height: 70%;background: rgba(142, 159, 167, 0.8);z-index: 9999;">
+										<i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 35%;left: 45%"></i>
+									</div>
+									<!-- Tab content -->
+									<div id="tabDownload" style="border: 1px solid #ccc; overflow: hidden;" class="tab-pane active widget-body-regular">
+										<h4 class="separator bottom" style="margin-top: 10px;">Please Select Query</h4>
+									  	<div class="span12 row-fluid" style="padding:20px 0;padding-top: 0;">
+								        	<div class="span5" style="padding-left: 0;">
+									        	<div class="span6">	
+													<!-- Group -->
+													<div class="control-group">								
+														<label ><span >Month Of</span></label>
+											            <input type="text" 
+										                	style="width: 100%;" 
+										                	data-role="datepicker"
+										                	data-format="MM-yyyy"
+										                	data-start="year" 
+											  				data-depth="year" 
+										                	placeholder="Moth of ..." 
+												           	data-bind="value: monthOfSelect" />
+													</div>
+																													
+													<!-- // Group END -->
+												</div>
+												<div class="span6" style="padding-left: 0;">
+													<div class="control-group">								
+														<label ><span >License</span></label>
+														<input 
+															data-role="dropdownlist" 
+															style="width: 100%;" 
+															data-option-label="License ..." 
+															data-auto-bind="false" 
+															data-value-primitive="false" 
+															data-text-field="name" 
+															data-value-field="id" 
+															data-bind="
+																value: licenseSelect,
+							                  					source: licenseDS,
+							                  					events: {change: onLicenseChange}">
+							                  		</div>
+												</div>	
+											</div>
+											<div class="span7" style="padding-left: 0;">
+												<div class="span4">
+													<div class="control-group">								
+														<label ><span >Location</span></label>
+														<input 
+															data-role="dropdownlist" 
+															style="width: 100%;" 
+															data-option-label="Location ..." 
+															data-auto-bind="false" 
+															data-value-primitive="false" 
+															data-text-field="name" 
+															data-value-field="id" 
+															data-bind="
+																value: blocSelect,
+							                  					source: blocDS,
+							                  					events: {change: blocChange}">
+							                  		</div>
+												</div>
+												<div class="span4">
+													<div class="control-group">	
+														<label ><span >Action</span></label>	
+														<div class="row" style="margin: 0;">					
+															<button type="button" data-role="button" data-bind="click: search" class="k-button" role="button" aria-disabled="false" tabindex="0"><i class="icon-search"></i></button>
+														</div>
+							                  		</div>
+												</div>		
+											</div>
+								        </div>
+								        <div class="row-fluid" data-bind="visible: selectMeter">
+											<a data-bind="visible: haveData, click: exportEXCEL">
+												<span id="saveClose" class="btn btn-icon btn-success glyphicons download" style="width: 250px!important;">
+													<i></i> 
+													<span >Download Reading Book</span>
+												</span>
+											</a>
+											<br>
+											<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
+												<thead>
+													<tr>
+														<th class="center">Meter Number</th>
+														<th class="center">Previous Reading Date</th>
+														<th class="center">Previouse</th>
+														<th class="center">Month Of</th>
+														<th class="center">Current</th>
+													</tr>
+												</thead>
+												<tbody 
+							                		data-bind="source: uploadDS" 
+							                		data-auto-bind="false" 
+							                		data-role="listview" 
+							                		data-template="reading-template">
+							                	</tbody>
+											</table>
+										</div>
+									</div>
+									<!-- // Tab content END -->
+									<!-- Tab content -->
+									<div id="tabReading" style="border: 1px solid #ccc" class="tab-pane widget-body-regular">	
+										<h4 class="separator bottom" style="margin-top: 10px;">Please upload reading book</h4>
+										<div class="fileupload fileupload-new margin-none" data-provides="fileupload">
+										  	<input type="file"  data-role="upload" data-show-file-list="true" data-bind="events: {select: onSelected}" id="myFile"  class="margin-none" />
+										</div>
+										<span class="btn btn-icon btn-primary glyphicons ok_2" style="width: 160px!important;"><i></i>
+										<span data-bind="click: save">Start Reading</span></span>
+									</div>
+									<!-- // Tab content END -->
+									
+								</div>
+							</div>
+							<div id="ntf1" data-role="notification"></div>
+						</div>
+					</div>
+					<!-- // Tabs END -->
 				</div>
-				<div id="ntf1" data-role="notification"></div>
 			</div>
 		</div>
-		<!-- // Tabs END -->
 	</div>
 </script>
 <script id="reading-template" type="text/x-kendo-tmpl">                    
     <tr>
     	<td>
-    		#= number#
+    		#= meter_number# - #= _contact[0].name#
    		</td>
    		<td align="center">
-    		#= from_date#
-   		</td>
-   		<td align="center">
-    		#= to_date#
+    		#= prev_date#
    		</td>
    		<td align="center">
     		#= previous#
+   		</td>
+   		<td align="center">
+    		#= to_date#
    		</td>
    		<td align="center">
     		#= current#
@@ -3390,53 +3399,6 @@
 </script>
 
 <script id="waterImport" type="text/x-kendo-template">
-	<span class="glyphicons no-js remove_2 pull-right" data-bind="click: cancel"><i></i></span>	
-	<div  class="row-fluid saleSummaryCustomer" style="padding-top: 30px;">
-		
-		<!-- Tabs -->
-		<div class="relativeWrap" data-toggle="source-code">
-			<div class="widget widget-tabs widget-tabs-double-2 widget-tabs-gray">
-			
-				<!-- Tabs Heading -->
-				<div class="widget-head">
-					<ul style="padding-left: 1px;">
-						<li class="active"><a class="glyphicons group" href="#tabContact" data-toggle="tab"><i></i><span style="line-height: 55px;">Customer</span></a></li>
-					</ul>
-				</div>
-				<!-- // Tabs Heading END -->
-				
-				<div class="widget-body">
-					<div class="tab-content">
-						<div id="loadImport" style="display:none;text-align: center;position: absolute;width: 100%; height: 70%;background: rgba(142, 159, 167, 0.8);z-index: 9999;">
-							<i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 35%;left: 45%"></i>
-						</div>
-						<!-- Tab content -->
-						<div id="tabContact" style="border: 1px solid #ccc" class="tab-pane active widget-body-regular">
-							
-							<h4 class="separator bottom" style="margin-top: 10px;">Please upload customer list file</h4>
-							<a data-bind="click: exportEXCEL">
-								<span id="saveClose" class="btn btn-icon btn-success glyphicons download" style="width: 200px!important;position: absolute;top: 85px;right: 10px;">
-									<i></i> 
-									<span >Download Example file</span>
-								</span>
-							</a>
-							<div class="fileupload fileupload-new margin-none" data-provides="fileupload">
-							  	<input type="file"  data-role="upload" data-show-file-list="true" data-bind="events: {select: onSelected}" id="myFile"  class="margin-none" />
-							</div>
-							<span class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 160px!important;"><i></i>
-							<span data-bind="click: save">Start Import</span></span>
-						</div>
-						<!-- // Tab content END -->
-					</div>
-				</div>
-				<div id="ntf1" data-role="notification"></div>
-			</div>
-		</div>
-		<!-- // Tabs END -->
-	</div>
-</script>
-
-<script id="runBill" type="text/x-kendo-template">
 	<div id="slide-form">
 		<div class="customer-background" style="overflow: hidden;">
 			<div class="container-960">					
@@ -3445,8 +3407,70 @@
 			    		<span class="glyphicons no-js remove_2" 
 							data-bind="click: cancel"><i></i></span>	
 					</div>
+			        <h2 style="padding:0 15px;">Import</h2>
+					<br />
+		
+					<!-- Tabs -->
+					<div class="relativeWrap" data-toggle="source-code">
+						<div class="widget widget-tabs widget-tabs-double-2 widget-tabs-gray">
+						
+							<!-- Tabs Heading -->
+							<div class="widget-head">
+								<ul style="padding-left: 1px;">
+									<li class="active"><a class="glyphicons group" href="#tabContact" data-toggle="tab"><i></i><span style="line-height: 55px;">Customer</span></a></li>
+								</ul>
+							</div>
+							<!-- // Tabs Heading END -->
+							
+							<div class="widget-body">
+								<div class="tab-content">
+									<div id="loadImport" style="display:none;text-align: center;position: absolute;width: 100%; height: 70%;background: rgba(142, 159, 167, 0.8);z-index: 9999;">
+										<i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 35%;left: 45%"></i>
+									</div>
+									<!-- Tab content -->
+									<div id="tabContact" style="border: 1px solid #ccc" class="tab-pane active widget-body-regular">
+										
+										<h4 class="separator bottom" style="margin-top: 10px;">Please upload customer list file</h4>
+										<a data-bind="click: exportEXCEL">
+											<span id="saveClose" class="btn btn-icon btn-success glyphicons download" style="width: 200px!important;position: absolute;top: 85px;right: 10px;">
+												<i></i> 
+												<span >Download Example file</span>
+											</span>
+										</a>
+										<div class="fileupload fileupload-new margin-none" data-provides="fileupload">
+										  	<input type="file"  data-role="upload" data-show-file-list="true" data-bind="events: {select: onSelected}" id="myFile"  class="margin-none" />
+										</div>
+										<span class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 160px!important;"><i></i>
+										<span data-bind="click: save">Start Import</span></span>
+									</div>
+									<!-- // Tab content END -->
+								</div>
+							</div>
+							<div id="ntf1" data-role="notification"></div>
+						</div>
+					</div>
+					<!-- // Tabs END -->
+				</div>
+			</div>
+		</div>
+	</div>
+</script>
+
+<script id="runBill" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background" style="overflow: hidden;position: relative;">
+			<div id="loadImport" style="display:none;margin-top: -15px;text-align: center;position: absolute;width: 100%; height: 100%;background: rgba(142, 159, 167, 0.8);z-index: 9999;">
+				<i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 45%;left: 45%"></i>
+			</div>
+			<div class="container-960">					
+				<div id="example" class="k-content">
+			    	<div class="hidden-print pull-right">
+			    		<span class="glyphicons no-js remove_2" 
+							data-bind="click: cancel"><i></i></span>	
+					</div>
 			        <h2 style="padding:0 15px;">Run Bill</h2>
 			        <div class="span12 row-fluid" style="padding:20px 0;">
+
 			        	<div class="span5" style="padding-right: 0;">
 				        	<div class="span6">	
 								<!-- Group -->
@@ -3809,7 +3833,7 @@
 		<td align="center"><input type="checkbox" data-bind="checked: printed, events: {change: isCheck}" /></td>
 		<td>#= contact.name#</td>
 		<td>#= meter.meter_number#</td>
-		<td align="center">#= items[0].consumption#</td>
+		<td align="center">#= consumption#</td>
 		<td align="right">#= kendo.toString(amount, "c0", locale)#</td>
 	</tr>
 </script>
@@ -3926,22 +3950,38 @@
 				</tr>
 				<tr>
 					<td>#: meter.location[0].abbr# - #: meter.meter_number#</td>
-					<td align="center">#: items[0].previous#</td>
-					<td align="center">#: items[0].current#</td>
-					<td align="center">#: items[0].consumption#</td>
+					<td align="center"><strong>#: invoice_lines[0].previous#</strong></td>
+					<td align="center"><strong>#: invoice_lines[0].current#</strong></td>
+					<td align="center"><strong>#: invoice_lines[0].consumption#</strong></td>
 					<td></td>
 					<td></td>
 				</tr>
 
-				#for(var j=1; j< items.length; j++) {#
-				<tr>
-					<td>#: items[j].number#</td>
-					<td align="center">#= kendo.toString(items[j].amount, "c", locale)#</td>
-					<td align="center"></td>
-					<td align="center"></td>
-					<td></td>
-					<td></td>
-				</tr>
+				#for(var j=1; j< invoice_lines.length; j++) {#
+					#if(invoice_lines[j].amount != 0) {#
+						#if(invoice_lines[j].type == "tariff"){#
+							<tr>
+								<td colspan="3" align="left">#: invoice_lines[j].number#</td>
+								<td align="center">#: invoice_lines[0].consumption#</td>
+								<td align="right">#= kendo.toString(invoice_lines[j].amount, "c", locale)#</td>
+								<td align="right">#= kendo.toString(invoice_lines[j].amount * invoice_lines[0].consumption, "c", locale)#</td>
+							</tr>
+						#}else if(invoice_lines[j].type == "exemption"){#
+							<tr>
+								<td colspan="3" align="left">#: invoice_lines[j].number#</td>
+								<td align="center"></td>
+								<td align="right"></td>
+								<td align="right">-#= kendo.toString(invoice_lines[j].amount, "c", locale)#</td>
+							</tr>
+						#}else{#
+							<tr>
+								<td colspan="3" align="left">#: invoice_lines[j].number#</td>
+								<td align="center"></td>
+								<td align="right"></td>
+								<td align="right">#= kendo.toString(invoice_lines[j].amount, "c", locale)#</td>
+							</tr>
+						#}#
+					# } #
 				#}#	
 				#if(banhji.InvoicePrint.PaperSize == 'A4'){#
 					<tr><td colspan="6"  style="height: 200px;" ></td></tr>
@@ -3957,11 +3997,11 @@
 				</tr>
 				<tr>
 					<td colspan="2" class="greyy"  style="background: \\#ccc;">ថ្ងៃផុតកំណត់ DUE DATE</td>
-					<td align="center">#=kendo.toString(new Date(due_date), "dd-MM-yyyy")#</td>
+					<td align="left">#=kendo.toString(new Date(due_date), "dd-MM-yyyy")#</td>
 				</tr>
 				<tr>
 					<td colspan="2" class="greyy" style="background: \\#ccc;">ថ្ងៃបង់ប្រាក់ PAY DATE</td>
-					<td align="center">#=kendo.toString(new Date(bill_date), "dd-MM-yyyy")#</td>
+					<td align="left">#=kendo.toString(new Date(bill_date), "dd-MM-yyyy")#</td>
 				</tr>
 				<tr>
 					<td colspan="2" class="greyy" style="background: \\#ccc;">ប្រាក់បានបង់ PAY AMOUNT</td>
@@ -3978,13 +4018,13 @@
 						<span style="margin-left: -15px;" id="footwnumber#:id#"></span>
 					</th>
 					<td width="270" class="greyy"  style="background: \\#ccc;border-bottom:1px solid \\#fff;">ប្រាក់​ត្រូវ​បង់ TOTAL DUE</td>
-					<td width="180" align="right">#= kendo.toString(amount, "c", locale)#</td>
+					<td width="180" align="right"><strong>#= kendo.toString(amount, "c", locale)#</strong></td>
 				</tr>
 				<tr>
 					<td><p>វិក្កយបត្រ</p></td>
 					<td>#: issue_date# - #: number#</td>
 					<td class="greyy" style="background: \\#ccc;border-bottom:1px solid \\#fff;">ថ្ងៃបង់ប្រាក់ PAY DATE</td>
-					<td align="center">#=kendo.toString(new Date(bill_date), "dd-MM-yyyy")#</td>
+					<td align="left">#=kendo.toString(new Date(bill_date), "dd-MM-yyyy")#</td>
 				</tr>
 				<tr>
 					<td><p>អតិថិជន</p></td>
@@ -6478,6 +6518,8 @@
   				<li><a href='#/print_bill'><span >Print Bill</span></a></li>
   				<li><span class="li-line"></span></li>
   				<li><a href='#/receipt'><span >Receipt</span></a></li>
+  				<li><span class="li-line"></span></li>
+  				<li><a href='#/import'><span >Import</span></a></li>
   			</ul>
 	  	</li>	  	  	
 	  	<li><a href="#/reports">Reports</a></li>	  	
@@ -9676,204 +9718,6 @@
 			pageSize: 100
 		})
 	});
-
-	banhji.reading = kendo.observable({
-		lang 				: langVM,
-		meterVM 			: banhji.meter,
-		dataSource  		: dataStore(apiUrl + "readings"),
-		uploadDS  			: dataStore(apiUrl + "readings/books"),
-		licenseDS 			: dataStore(apiUrl + "branches"),
-		blocDS 				: dataStore(apiUrl + "locations"),
-		itemDS 				: null,
-		obj 				: null,
-		monthOfSelect		: null,
-		licenseSelect		: null,
-		blocSelect			: null,
-		selectMeter 		: false,
-		haveData 			: false,
-		rows 				: [{ cells: [ { value: "meter_number" }, { value: "from_date" }, { value: "to_date" }, { value: "previous" }, { value: "current" }, { value: "status" }]}],
-		pageLoad 			: function(id){
-			this.licenseDS.read();
-		},
-		onLicenseChange 	: function(e) {
-			var data = e.data;
-			var license = this.licenseDS.at(e.sender.selectedIndex - 1);
-			banhji.reading.set("licenseSelect", license);
-			banhji.reading.blocDS.filter({field: "branch_id", value: license.id});
-		},
-		blocChange 			: function(e){
-			var data = e.data;
-			var bloc = this.blocDS.at(e.sender.selectedIndex - 1);
-			banhji.reading.set("blocSelect", bloc);
-		},
-		search 		 		: function(){	
-			this.set("haveData", false);	
-			var monthOfSearch = this.get("monthOfSelect"),
-			license_id = this.get("licenseSelect"),
-			bloc_id = this.get("blocSelect");
-			var para = [];	
-			if(monthOfSearch){						
-				var monthOf = new Date(monthOfSearch);
-				monthOf.setDate(1);
-				monthOf = kendo.toString(monthOf, "yyyy-MM-dd");
-				var monthL = new Date(monthOfSearch);
-				monthL.setDate(31);
-				monthL = kendo.toString(monthL, "yyyy-MM-dd");
-				
-				para.push(
-					{field: "month_of >=", operator: "where_related_record", value: monthOf},
-					{field: "month_of <=", operator: "where_related_record", value: monthL}
-				);
-				//this.dataSource.filter(para);
-				if(license_id){
-					para.push({field: "branch_id", value: license_id.id});
-					if(bloc_id){
-						para.push({field: "location_id", value: bloc_id.id});
-						this.set("selectMeter", true);
-						var self = this;
-						this.uploadDS.query({
-							filter: para
-						}).then(function(){
-							for (var i = 0; i < self.uploadDS.data().length; i++){
-					        self.rows.push({
-					            cells: [
-					              { value: self.uploadDS.data()[i].meter_number },
-					              { value: self.uploadDS.data()[i].from_date },
-					              { value: self.uploadDS.data()[i].to_date  },
-					              { value: self.uploadDS.data()[i].previous  },
-					              { value: self.uploadDS.data()[i].current  },
-					              { value: self.uploadDS.data()[i].status  }
-					            ]
-					          });
-					        }
-					        if(self.uploadDS.data().length > 0){
-					        	self.set("haveData", true);
-					        }
-						});
-					}else{
-						alert("Please Select Location");
-					}
-				}else{
-					alert("Please Select License");
-				}
-			}else{
-				alert("Please Select Month Of");
-			}	
-		},
-		monthOfSR 			: null,
-		NumberSR 			: null,
-		previousSR 			: 0,
-		currentSR 			: 0,
-		addSingleReading 	: function() {
-			if(banhji.reading.get('monthOfSR')){
-				banhji.reading.dataSource.insert(0, {
-					month_of: banhji.reading.get('monthOfSR'),
-					meter_number  : banhji.reading.get('NumberSR'),
-					previous: banhji.reading.get('previousSR'),
-					current : banhji.reading.get('currentSR'),
-					invoiced: 0,
-					status: "n",
-					consumption: banhji.reading.get('currentSR') - banhji.reading.get('previousSR')
-				});
-				banhji.reading.save()
-				.done(
-					function(data) {
-						$("#ntf1").data("kendoNotification").success("Successfully!");
-						banhji.reading.set('monthOfSR', null);
-						banhji.reading.set('previousSR', null);
-						banhji.reading.set('currentSR', null);
-						$("#loadImport").css("display","none");
-					}
-				)
-				.fail(function(err){
-					$("#ntf1").data("kendoNotification").error("Error activated!"); 
-					$("#loadImport").css("display","none");	
-				});
-			}else{
-				alert("Please select month");
-			}
-		},
-		exportEXCEL 		: function(e){
-			var workbook = new kendo.ooxml.Workbook({
-	          	sheets: [
-	            	{
-	              		columns: [
-	                		{ autoWidth: true },
-	                		{ autoWidth: true },
-	                		{ autoWidth: true },
-	                		{ autoWidth: true },
-	                		{ autoWidth: true }
-	              		],
-	              		title: "Reading",
-	              		rows: this.rows
-	            	}
-	          	]
-	        });
-	        //save the file as Excel file with extension xlsx
-	        kendo.saveAs({dataURI: workbook.toDataURL(), fileName: "Reading.xlsx"});
-		},
-		onSelected 			: function(e){
-			$('li.k-file').remove();
-	        var files = e.files, self = this;
-	        $("#loadImport").css("display","block");
-	        var reader = new FileReader();
-			banhji.reading.dataSource.data([]);	
-			reader.onload = function() {	
-				var data = reader.result;	
-				var result = {}; 						
-				var workbook = XLSX.read(data, {type : 'binary'});
-				workbook.SheetNames.forEach(function(sheetName) {
-					var roa = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
-					if(roa.length > 0){
-						result[sheetName] = roa;
-						for(var i = 0; i < roa.length; i++) {
-							banhji.reading.dataSource.add(roa[i]);
-							$("#loadImport").css("display","none");	
-							console.log(roa[i]);
-						}							
-					}					
-				});															
-			}
-			reader.readAsBinaryString(files[0].rawFile);      
-		},
-		save 				: function() {
-			var self = this;
-			var dfd = $.Deferred();
-			if(banhji.reading.dataSource.data().length > 0) {
-				$("#loadImport").css("display","block");
-				banhji.reading.dataSource.sync();
-				banhji.reading.dataSource.bind("requestEnd", function(e){
-					if(e.type != 'read') {
-						if(e.type == 'update') {
-							// update current invoice
-							banhji.invoice.dataSource.query({
-								filter: {field: 'meter_record_id', operator: 'where_related_winvoice_line', value: e.response.results[0]._meta.id}
-							}).then(function(e){
-								console.log(banhji.invoice.dataSource.data());
-							});
-							// create new invoice
-						}
-				    	if(e.response){	
-				    		dfd.resolve(e.response.results);			
-				    		// self.cancel();
-							$("#loadImport").css("display","none");
-						}	
-					}			  				
-			    });
-			    banhji.reading.dataSource.bind("error", function(e){
-			    	dfd.reject(e);		    		    				
-			    });
-			}
-			return dfd.promise();	
-		},
-		cancel 				: function(){
-			banhji.reading.dataSource.cancelChanges();	
-			banhji.reading.uploadDS.cancelChanges();	
-			// banhji.reading.dataSource.data([]);
-			// banhji.reading.uploadDS.data([]);	
-			//window.history.back();
-		}
-	});
 	banhji.invoice = kendo.observable({
 		makes 	: new kendo.data.DataSource({
 	      transport: {
@@ -10019,602 +9863,475 @@
 			return dfd.promise();
 		}
 	});
-	/*************************
-	*	Water Section   	* 
-	**************************/
-	banhji.wDashBoard = kendo.observable({
-		dataSource: new kendo.data.DataSource({
-	      	transport: {
-		        read  : {
-		          url: baseUrl + 'api/waterdash/license',
-		          type: "GET",
-		          dataType: 'json',
-		          headers: { Institute: JSON.parse(localStorage.getItem('userData/user')).institute.id }
-		        },
-		        parameterMap: function(options, operation) {
-		          if(operation === 'read') {
-		            return {
-		              limit: options.take,
-		              page: options.page,
-		              filter: options.filter
-		            };
-		          } else {
-		            return {models: kendo.stringify(options.models)};
-		          }
-		        }
-		    },
-	      	schema  : {
-	        	model: {
-	          		id: 'id'
-	        	},
-	        	data: 'results',
-	        	total: 'count'
-	      	},
-	      	change: function(e) {
-	      		var vm = banhji.wDashboard;
-	      		var sale = 0, usage = 0, user = 0, deposit = 0;
-	      		$.each(this.data(), function(index, value){
-	      			sale += value.sale;
-	      			usage+= value.usage;
-	      			user += value.activeCustomer;
-	      			deposit+= value.deposit;
-	      		});
-	      		banhji.wDashBoard.set('totalSale', sale);
-	      		banhji.wDashBoard.set('totalUsage', usage);
-	      		banhji.wDashBoard.set('totalUser', user);
-	      		banhji.wDashBoard.set('totalDeposit', deposit);
-	      		banhji.wDashBoard.set('avgUsage', usage/user);
-	      	},
-	      	batch: true,
-	      	serverFiltering: true,
-	      	serverPaging: true,
-	      	pageSize: 100
-	    }),
-	    invoice: 0,
-	    activeCust: 0,
-	    invCust: 0,
-	    overDue: 0,
-	    totalCust: 0,
-	    voidCust : 0,
-	    totalAmount: 0,
-	    dashSource: new kendo.data.DataSource({
-	      	transport: {
-		        read  : {
-		          url: baseUrl + 'api/waterdash/board',
-		          type: "GET",
-		          dataType: 'json',
-		          headers: { Institute: JSON.parse(localStorage.getItem('userData/user')).institute.id }
-		        },
-		        parameterMap: function(options, operation) {
-		          if(operation === 'read') {
-		            return {
-		              limit: options.take,
-		              page: options.page,
-		              filter: options.filter
-		            };
-		          } else {
-		            return {models: kendo.stringify(options.models)};
-		          }
-		        }
-		    },
-	      	schema  : {
-	        	model: {
-	          		id: 'id'
-	        	},
-	        	data: 'results',
-	        	total: 'count'
-	      	},
-	      	change: function(e) {
-	      		var vm = banhji.wDashboard;
-	      		var totalCust = 0, invCust = 0, overDue = 0, voided = 0, invoice = 0, amount = 0, activeCust = 0, inActiveCust = 0;
-	      		$.each(this.data(), function(index, value){
-	      			activeCust += value.activeCustomer;
-	      			totalCust += value.totalCustomer;
-	      			invCust+= value.invoiceCust;
-	      			overDue += value.overDue;
-	      			invoice += value.totalInvoice;
-	      			inActiveCust += value.inActiveCustomer;
-	      			voided+= value.void;
-	      			amount+= value.total;
-	      		});
-	      		banhji.wDashBoard.set('activeCust', activeCust);
-	      		banhji.wDashBoard.set('inActiveCust', inActiveCust);
-	      		banhji.wDashBoard.set('invoice', invoice);
-	      		banhji.wDashBoard.set('invCust', invCust);
-	      		banhji.wDashBoard.set('overDue', overDue);
-	      		banhji.wDashBoard.set('totalCust', totalCust);
-	      		banhji.wDashBoard.set('voidCust', voided);
-	      		banhji.wDashBoard.set('totalAmount', amount);
-	      	},
-	      	batch: true,
-	      	serverFiltering: true,
-	      	serverPaging: true,
-	      	pageSize: 100
-	    }),
-	    totalSale: 0,
-	    totalUsage: 0,
-	    totalUser: 0,
-	    totalDeposit: 0,
-	    avgUsage: 0
-	});
-	banhji.waterCenter = kendo.observable({
+	/*Reading*/
+	banhji.reading = kendo.observable({
 		lang 				: langVM,
-		transactionDS  		: dataStore(apiUrl + 'transactions'),
-		filterKey 			: 1,
-		meter_visible 		: false,
-		meterDS 			: dataStore(apiUrl + "meters"),
-		readingVM			: banhji.reading,
-		installmentVM 		: banhji.installment,
-		invoiceVM 			: banhji.invoice,
-		meterClick 			: function(){ banhji.view.layout.showIn("#waterCenterContent", banhji.view.waterCenterContent); },
-		NometerClick 		: function(){ banhji.view.layout.showIn("#waterCenterContent", banhji.view.waterTransactionContent); },
-		contactDS			: new kendo.data.DataSource({
-			transport: {
-				read 	: {
-					url: apiUrl + "customers",
-					type: "GET",
-					headers: banhji.header,
-					dataType: 'json'
-				},
-				parameterMap: function(options, operation) {
-					if(operation === 'read') {
-						return {
-							page: options.page,
-							limit: options.pageSize,
-							filter: options.filter,
-							sort: options.sort
-						};
-					} else {
-						return {models: kendo.stringify(options.models)};
-					}
-				}
-			},
-			schema 	: {
-				model: {
-					id: 'id'
-				},
-				data: 'results',
-				total: 'count'
-			},
-			filter:[
-			{field:"use_water", value:1 },
-			{field:"parent_id", operation: "where_related", model: "contact_type", value: 1}],
-			sort:{ field:"number", dir:"asc" },
-			batch: true,
-			serverFiltering: true,
-			serverSorting: true,
-			serverPaging: true,
-			page:1,
-			pageSize: 100
-		}),
-		filterCustomerTypeDS : [
-	    	{ id: 1, name: "Water" },
-			{ id: 0, name: "None Water" }],
-		contactTypeDS  		: banhji.source.customerTypeDS,
-		filterChange 		: function(e){
-			this.contactDS.filter([
-				{field:"use_water", value: this.get("filterKey")},
-				{field:"deleted", value: "0"},
-				{field:"is_pattern", value: "0"},
-				{field:"parent_id", operation: "where_related", model: "contact_type", value: 1}
-			]);
-		},
-		noteDS 				: dataStore(apiUrl + 'notes'),
-		attachmentDS	 	: dataStore(apiUrl + "attachments"),
-		currencyDS  		: banhji.source.currencyDS,
-		summaryDS 			: dataStore(apiUrl + "transactions"),
-		sortList			: banhji.source.sortList,
-		sorter 				: "all",
-		sdate 				: "",
-		edate 				: "",
-		obj 				: {id:0},
-		note 				: "",
-		searchText 			: "",
-		contact_type_id 	: null,
-		currency_id 		: 0,
-		balance 			: 0,
-		deposit 			: 0,
-		outInvoice 			: 0,
-		overInvoice 		: 0,
-		currencyCode 		: "",
-		user_id 			: banhji.source.user_id,
-		exportEXCEL 		: function(){
-		},
+		meterVM 			: banhji.meter,
+		dataSource  		: dataStore(apiUrl + "readings"),
+		uploadDS  			: dataStore(apiUrl + "readings/books"),
+		licenseDS 			: dataStore(apiUrl + "branches"),
+		blocDS 				: dataStore(apiUrl + "locations"),
+		itemDS 				: null,
+		obj 				: null,
+		monthOfSelect		: null,
+		licenseSelect		: null,
+		blocSelect			: null,
+		selectMeter 		: false,
+		haveData 			: false,
+		rows 				: [],
 		pageLoad 			: function(id){
-			banhji.view.layout.showIn("#waterCenterContent", banhji.view.waterCenterContent);
-			//Refresh
-			if(this.contactDS.total()>0){
-				this.contactDS.fetch();
-				this.searchTransaction();
-				this.loadSummary();
-				var grid = $("#listContact").data('kendoGrid');
-				console.log(grid);
-				grid.select("tr:eq(1)");
-			}
+			this.licenseDS.read();
 		},
-		sorterChanges 		: function(){
-	        var today = new Date(),
-        	sdate = "",
-        	edate = "",
-        	sorter = this.get("sorter");
-        	
-			switch(sorter){
-				case "today":
-					this.set("sdate", today);
-					this.set("edate", "");
-				  	break;
-				case "week":
-					var first = today.getDate() - today.getDay(),
-					last = first + 6;
-					this.set("sdate", new Date(today.setDate(first)));
-					this.set("edate", new Date(today.setDate(last)));
-				  	break;
-				case "month":
-					this.set("sdate", new Date(today.getFullYear(), today.getMonth(), 1));
-					this.set("edate", new Date(today.getFullYear(), today.getMonth() + 1, 0));
-				  	break;
-				case "year":
-				  	this.set("sdate", new Date(today.getFullYear(), 0, 1));
-				  	this.set("edate", new Date(today.getFullYear(), 11, 31));
-				  	break;
-				default:
-					this.set("sdate", "");
-				  	this.set("edate", "");
-			}
+		onLicenseChange 	: function(e) {
+			var data = e.data;
+			var license = this.licenseDS.at(e.sender.selectedIndex - 1);
+			banhji.reading.set("licenseSelect", license);
+			banhji.reading.blocDS.filter({field: "branch_id", value: license.id});
 		},
-		setCurrencyCode 	: function(){
-			var code = "", obj = this.get("obj");
-			$.each(banhji.source.currencyRateDS.data(), function(index, value){
-				if(value.locale == obj.locale){
-					code = value.currency[0].code;
-					return false;
-				}
-			});
-
-			this.set("currencyCode", code);
+		blocChange 			: function(e){
+			var data = e.data;
+			var bloc = this.blocDS.at(e.sender.selectedIndex - 1);
+			banhji.reading.set("blocSelect", bloc);
 		},
-		loadObj 			: function(id){
-			var self = this;
-
-			this.contactDS.query({
-				filter: { field:"id", value:id},
-				page:1,
-				pageSize:100
-			}).then(function(){
-				var view = self.contactDS.view();
-
-				if(view.length>0){
-					self.set("obj", view[0]);
-					self.loadData();
-				}
-			});
-		},
-		loadData 			: function(){
-			var obj = this.get("obj");
-			this.searchTransaction();
-			this.loadSummary(obj.id);
-			this.setCurrencyCode();
-			this.attachmentDS.filter({ field:"contact_id", value: obj.id });
-			this.noteDS.query({
-				filter: { field:"contact_id", value: obj.id },
-				sort: { field:"noted_date", dir:"desc" },
-				page: 1,
-				pageSize: 10
-			});
-		},
-		//Upload
-		onSelect 			: function(e){
-	        // Array with information about the uploaded files
-	        var self = this, 
-	        files = e.files,
-	        obj = this.get("obj");
-			
-			if(obj.id>0){
-		        // Check the extension of each file and abort the upload if it is not .jpg
-		        $.each(files, function(index, value){
-		            if (value.extension.toLowerCase() === ".jpg"
-		            	|| value.extension.toLowerCase() === ".jpeg"
-		            	|| value.extension.toLowerCase() === ".tiff"
-		            	|| value.extension.toLowerCase() === ".png" 
-		            	|| value.extension.toLowerCase() === ".gif"
-		            	|| value.extension.toLowerCase() === ".pdf"){
-
-		            	var key = 'ATTACH_' + banhji.institute.id + "_" + Math.floor(Math.random() * 100000000000000001) +'_'+ value.name;
-		            	self.attachmentDS.add({
-		            		user_id 		: self.get("user_id"),
-		            		contact_id 		: obj.id,
-		            		type 			: "Contact",
-		            		name 			: value.name,
-		            		description 	: "",
-		            		key 			: key,
-		            		url 			: banhji.s3 + key,
-		            		size 			: value.size,
-		            		created_at 		: new Date(),
-		            		file 			: value.rawFile
-		            	});
-		            }else{
-		            	alert("This type of file is not allowed to attach.");
-		            }
-		        });
-	    	}else{
-	    		alert("Please select a customer!");
-	    	}
-	    },
-	    removeFile 			: function(e){
-	    	var data = e.data;
-	    	if (confirm(banhji.source.confirmMessage)) {
-	    		this.attachmentDS.remove(data);
-	    		this.attachmentDS.sync();
-	    	}
-	    },
-	    uploadFile 			: function(){
-	    	$.each(this.attachmentDS.data(), function(index, value){
-		    	if(!value.id){
-			    	var params = { 
-		            	Body: value.file, 
-		            	Key: value.key 
-		            };
-		            bucket.upload(params, function (err, data) {
-	                	// console.log(err, data);
-	                	// var url = data.Location;
-	            	});
-            	}
-            });
-            this.attachmentDS.sync();
-            var saved = false;
-            this.attachmentDS.bind("requestEnd", function(e){
-            	//Delete File
-            	if(e.type=="destroy"){
-	            	if(saved==false && e.response){
-	            		saved = true;
-	            		var response = e.response.results;
-	            		$.each(response, function(index, value){
-		            		var params = {
-							  	//Bucket: 'STRING_VALUE', /* required */
-							 	Delete: { /* required */
-								    Objects: [ /* required */
-								      	{
-									        Key: value.data.key /* required */
-								      	}
-								      /* more items */
-								    ]
-							  	}
-							};
-							bucket.deleteObjects(params, function(err, data) {
-							  	//console.log(err, data);
-							});
+		search 		 		: function(){	
+			this.set("haveData", false);	
+			var monthOfSearch = this.get("monthOfSelect"),
+			license_id = this.get("licenseSelect"),
+			bloc_id = this.get("blocSelect");
+			var para = [];	
+			if(monthOfSearch){						
+				var monthOf = new Date(monthOfSearch);
+				monthOf.setDate(1);
+				monthOf = kendo.toString(monthOf, "yyyy-MM-dd");
+				var monthL = new Date(monthOfSearch);
+				monthL.setDate(31);
+				monthL = kendo.toString(monthL, "yyyy-MM-dd");
+				
+				para.push(
+					{field: "month_of >=",operator: "where_related_record", value: monthOf},
+					{field: "month_of <=",operator: "where_related_record", value: monthL}
+				);
+				//this.dataSource.filter(para);
+				if(license_id){
+					para.push({field: "branch_id", value: license_id.id});
+					if(bloc_id){
+						para.push({field: "location_id", value: bloc_id.id});
+						this.set("selectMeter", true);
+						var self = this;
+						this.uploadDS.query({
+							filter: para
+						}).then(function(){
+							
+					        if(self.uploadDS.data().length > 0){
+					        	self.set("haveData", true);
+					        	self.rows.push({ 
+					        		cells: [ 
+					        			{ value: "meter_number", background: "#496cad", color: "#ffffff" }, 
+					        			{ value: "previous_reading_date", background: "#496cad", color: "#ffffff" }, 
+					        			{ value: "previous", background: "#496cad", color: "#ffffff" }, 
+					        			{ value: "month_of", background: "#496cad", color: "#ffffff" }, 
+					        			{ value: "current", background: "#496cad", color: "#ffffff" }, 
+					        			{ value: "condition", background: "#496cad", color: "#ffffff" }
+					        		]
+					        	});
+					        	for (var i = 0; i < self.uploadDS.data().length; i++){
+							        self.rows.push({
+							            cells: [
+							              { value: self.uploadDS.data()[i].meter_number },
+							              { value: self.uploadDS.data()[i].prev_date },
+							              { value: self.uploadDS.data()[i].previous  },
+							              { value: self.uploadDS.data()[i].to_date  },
+							              { value: self.uploadDS.data()[i].current  },
+							              { value: self.uploadDS.data()[i].status  }
+							            ]
+							        });
+							    }
+					        }
 						});
-	            	}
-            	}
-            });
-	    },
-	    //Summary
-		loadContact 		: function(id){
-			var self = this;
-			
-			this.contactDS.query({
-			  	filter:[
-			  		{ field:"id", value:id }
-			  	],
-			  	page: 1,
-			  	pageSize: 50
-			}).then(function(e) {
-			    var view = self.contactDS.data();
-			    
-			    if(view.length>0){
-			    	self.set("obj", view[0]);
-			    	self.loadData();
-			    }
-			});
-		},
-		loadSummary 		: function(id){
-			var self = this, obj = this.get("obj");
-			this.summaryDS.query({
-			  	filter: [
-			  		{ field:"contact_id", value: obj.id },
-			  		{ field:"type", operator:"where_in", value: ["Water_Deposit", "Water_Invoice"] },
-			  		{ field:"status", operator:"where_in", value: [0,2] }
-			  	],
-			  	sort: { field: "issued_date", dir: "desc" },
-			  	page: 1,
-			  	pageSize: 1000
-			}).then(function(){
-				var view = self.summaryDS.view(),
-				deposit = 0, open = 0, over = 0, balance = 0, today = new Date();
-				$.each(view, function(index, value){
-					if(value.type=="Water_Deposit"){
-						deposit += kendo.parseFloat(value.amount);
 					}else{
-						balance += kendo.parseFloat(value.amount) - kendo.parseFloat(value.deposit);
-						open++;
-						if(new Date(value.due_date)<today){
-							over++;
-						}
+						alert("Please Select Location");
 					}
-				});
-				self.set("deposit", kendo.toString(deposit, obj.locale=="km-KH"?"c0":"c", obj.locale));
-				self.set("outInvoice", kendo.toString(open, "n0"));
-				self.set("overInvoice", kendo.toString(over, "n0"));
-				self.set("balance", kendo.toString(balance, obj.locale=="km-KH"?"c0":"c", obj.locale));
-			});
-		},
-		loadBalance 		: function(){
-			var obj = this.get("obj");
-			this.transactionDS.query({
-			  	filter: [
-			  		{ field:"contact_id", value: obj.id },
-			  		{ field:"type", value:"Water_Invoice" },
-			  		{ field:"status", operator:"where_in", value: [0,2] }
-			  	],
-			  	sort: [
-			  		{ field: "issued_date", dir: "desc" },
-			  		{ field: "id", dir: "desc" }
-			  	],
-			  	page: 1,
-			  	pageSize: 10
-			});
-		},
-		loadDeposit 		: function(){
-			var obj = this.get("obj");
-			this.transactionDS.query({
-			  	filter: [
-			  		{ field:"contact_id", value: obj.id },
-			  		{ field:"type", value:"Water_Deposit" }
-			  	],
-			  	sort: [
-			  		{ field: "issued_date", dir: "desc" },
-			  		{ field: "id", dir: "desc" }
-			  	],
-			  	page: 1,
-			  	pageSize: 10
-			});
-		},
-		loadOverInvoice 	: function(){
-			var obj = this.get("obj");
-			this.transactionDS.query({
-			  	filter: [
-			  		{ field:"contact_id", value: obj.id },
-			  		{ field:"type", value: "Water_Invoice" },
-			  		{ field:"status", operator:"where_in", value: [0,2] },
-			  		{ field:"due_date <", value: kendo.toString(new Date(), "yyyy-MM-dd") }
-			  	],
-			  	sort: [
-			  		{ field: "issued_date", dir: "desc" },
-			  		{ field: "id", dir: "desc" }
-			  	],
-			  	page: 1,
-			  	pageSize: 10
-			});
-		},	
-		selectedRow			: function(e){
-			var data = e.data, self = this;
-			this.meterDS.query({
-				filter: {field: "contact_id", value: data.id}
-			})
-			.then(function(e){
-				var meters = self.meterDS.data();
-				if(meters.length > 0) {
-					if(meters.length > 1) {
-						var meterIds = [];
-						$.each(meters, function(index, value) {
-							meterIds.push(value.id);
-						});
-						console.log(meterIds);
-						self.readingVM.dataSource.filter({field: 'meter_id', operator: 'where_in', value: meterIds});
-					} else {
-						self.readingVM.dataSource.filter({field: 'meter_id', value: meters.id});
-					}
-					self.invoiceVM.dataSource.filter({field: 'contact_id', value: meters[0].contact[0].id});
+				}else{
+					alert("Please Select License");
 				}
-			});
-			this.set("obj", data);
-			this.loadData();
-			if(data.use_water == 1){
-				this.set('meter_visible', true);
 			}else{
-				this.set('meter_visible', false);
-			}
-			// console.log(this.meter_visible);
+				alert("Please Select Month Of");
+			}	
 		},
-		onSelectedMeter		: function(e) {
-			this.readingVM.set('NumberSR',e.data.meter_number);
-			this.readingVM.dataSource.filter({field: 'meter_id', value: e.data.id});
-			this.installmentVM.dataSource.filter({field: 'meter_id', value: e.data.id});
-		},
-		goMeter 			: function(){
-			banhji.meter.set("contact", this.get("obj"));
-			banhji.router.navigate("/meter");
-		},
-		goDeposit 			: function(){
-			banhji.customerDeposit.set("contact", this.get("obj"));
-			banhji.router.navigate("/customer_deposit");
-		},
-		//Search
-		enterSearch 		: function(e){
-			e.preventDefault();
-			this.search();
-		},
-		search 				: function(){
-			var self = this, 
-			para = [],
-      		searchText = this.get("searchText"),
-      		contact_type_id = this.get("contact_type_id");
-      		if(searchText){
-      			var textParts = searchText.replace(/([a-z]+)/i, "$1 ").split(/[^0-9a-z]+/ig);
-      			para.push(
-      				{ field: "abbr", value: textParts[0] },
-      				{ field: "number", value: textParts[1] },
-					{ field: "name", operator: "or_like", value: searchText }
-      			);
-      		}
-      		if(contact_type_id){
-      			para.push({ field: "contact_type_id", value: contact_type_id });
-      		}else{
-      			para.push({ field: "parent_id", model:"contact_type", operator:"where_related", value: 1 });
-      		}
-      		this.contactDS.filter(para);
-			//Clear search filters
-      		self.set("searchText", "");
-      		self.set("contact_type_id", 0);
-		},
-		searchTransaction	: function(){
-			var self = this,
-				start = kendo.toString(this.get("sdate"), "yyyy-MM-dd"),
-        		end = kendo.toString(this.get("edate"), "yyyy-MM-dd"),
-        		para = [], obj = this.get("obj");
-        	if(obj.id>0){
-        		para.push({ field:"contact_id", value: obj.id });
-	        	//Dates
-	        	if(start && end){
-	            	para.push({ field:"issued_date >=", value: start });
-	            	para.push({ field:"issued_date <=", value: end });
-	            }else if(start){
-	            	para.push({ field:"issued_date", value: start });
-	            }else if(end){
-	            	para.push({ field:"issued_date <=", value: end });
-	            }else{
-	            	
-	            }
-	            this.transactionDS.query({
-	            	filter: para,
-	            	sort: [
-				  		{ field: "issued_date", dir: "desc" },
-				  		{ field: "id", dir: "desc" }
-				  	],
-	            	page: 1,
-	            	pageSize: 10
-	            });
-	        }
-		},
-		//Note
-		saveNoteEnter 		: function(e){
-			e.preventDefault();
-			this.saveNote();
-		},
-		saveNote 			: function(){
-			var obj = this.get("obj");
-			if(obj.id>0 && this.get("note")!==""){
-				this.noteDS.insert(0, {
-					contact_id 	: obj.id,
-					note 		: this.get("note"),
-					noted_date	: new Date(),
-					created_by 	: this.get("user_id"),
-					creator 	: ""
+		monthOfSR 			: null,
+		NumberSR 			: null,
+		previousSR 			: 0,
+		currentSR 			: 0,
+		addSingleReading 	: function() {
+			if(banhji.reading.get('monthOfSR')){
+				banhji.reading.dataSource.insert(0, {
+					month_of: banhji.reading.get('monthOfSR'),
+					meter_number  : banhji.reading.get('NumberSR'),
+					previous: banhji.reading.get('previousSR'),
+					current : banhji.reading.get('currentSR'),
+					invoiced: 0,
+					status: "n",
+					consumption: banhji.reading.get('currentSR') - banhji.reading.get('previousSR')
 				});
-				this.noteDS.sync();
-				this.set("note", "");
+				banhji.reading.save()
+				.done(
+					function(data) {
+						$("#ntf1").data("kendoNotification").success("Successfully!");
+						banhji.reading.set('monthOfSR', null);
+						banhji.reading.set('previousSR', null);
+						banhji.reading.set('currentSR', null);
+						$("#loadImport").css("display","none");
+					}
+				)
+				.fail(function(err){
+					$("#ntf1").data("kendoNotification").error("Error activated!"); 
+					$("#loadImport").css("display","none");	
+				});
 			}else{
-				alert("Please select a customer and Memo is required");
+				alert("Please select month");
 			}
 		},
-		goEdit 		 		: function(){
-			var obj = this.get("obj");
-			if(obj!==null && obj.id !== 0){
-				window.open('<?php echo base_url(); ?>rrd#/customer/'+obj.id,'_blank');
-				//banhji.router.navigate('/customer/'+obj.id);
-			}else{
-				alert("Please select a customer.");
+		exportEXCEL 		: function(e){
+			var workbook = new kendo.ooxml.Workbook({
+	          	sheets: [
+	            	{
+	              		columns: [
+	                		{ autoWidth: true },
+	                		{ autoWidth: true },
+	                		{ autoWidth: true },
+	                		{ autoWidth: true },
+	                		{ autoWidth: true },
+	                		{ autoWidth: true }
+	              		],
+	              		title: "Reading",
+	              		rows: this.rows
+	            	}
+	          	]
+	        });
+	        //save the file as Excel file with extension xlsx
+	        kendo.saveAs({dataURI: workbook.toDataURL(), fileName: "Reading-"+"<?php echo date("d-M-Y"); ?>"+".xlsx"});
+		},
+		onSelected 			: function(e){
+			$('li.k-file').remove();
+	        var files = e.files, self = this;
+	        $("#loadImport").css("display","block");
+	        var reader = new FileReader();
+			banhji.reading.dataSource.data([]);	
+			reader.onload = function() {	
+				var data = reader.result;	
+				var result = {}; 						
+				var workbook = XLSX.read(data, {type : 'binary'});
+				workbook.SheetNames.forEach(function(sheetName) {
+					var roa = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
+					if(roa.length > 0){
+						result[sheetName] = roa;
+						for(var i = 0; i < roa.length; i++) {
+							roa[i].invoiced = 0;
+							banhji.reading.dataSource.add(roa[i]);
+							$("#loadImport").css("display","none");	
+							console.log(roa[i]);
+						}
+					}					
+				});															
 			}
+			reader.readAsBinaryString(files[0].rawFile);      
+		},
+		save 				: function() {
+			var self = this;
+			var dfd = $.Deferred();
+			if(banhji.reading.dataSource.data().length > 0) {
+				$("#loadImport").css("display","block");
+				banhji.reading.dataSource.sync();
+				banhji.reading.dataSource.bind("requestEnd", function(e){
+					if(e.type != 'read') {
+						if(e.type == 'update') {
+							// update current invoice
+							banhji.invoice.dataSource.query({
+								filter: {field: 'meter_record_id', operator: 'where_related_winvoice_line', value: e.response.results[0]._meta.id}
+							}).then(function(e){
+								console.log(banhji.invoice.dataSource.data());
+							});
+							// create new invoice
+						}
+				    	if(e.response){	
+				    		dfd.resolve(e.response.results);			
+				    		// self.cancel();
+							$("#loadImport").css("display","none");
+						}	
+					}			  				
+			    });
+			    banhji.reading.dataSource.bind("error", function(e){
+			    	dfd.reject(e);		    		    				
+			    });
+			}
+			return dfd.promise();	
+		},
+		cancel 				: function(){
+			banhji.reading.dataSource.cancelChanges();	
+			banhji.reading.uploadDS.cancelChanges();	
+			// banhji.reading.dataSource.data([]);
+			// banhji.reading.uploadDS.data([]);	
+			window.history.back();
+		}
+	});
+	banhji.EditReading = kendo.observable({
+		lang 				: langVM,
+		dataSource  		: dataStore(apiUrl + "readings"),
+		licenseDS 			: dataStore(apiUrl + "branches"),
+		blocDS 				: dataStore(apiUrl + "locations"),
+		monthOfSearch 		: null,
+		licenseSelect 		: null,
+		blocSelect 			: null,
+		pageLoad 			: function(id){
+			this.licenseDS.read();
+		},
+		onLicenseChange 	: function(e) {
+			var data = e.data;
+			var license = this.licenseDS.at(e.sender.selectedIndex - 1);
+			this.set("licenseSelect", license);
+			this.blocDS.filter({field: "branch_id", value: license.id});
+		},
+		blocChange 			: function(e){
+			var data = e.data;
+			var bloc = this.blocDS.at(e.sender.selectedIndex - 1);
+			this.set("blocSelect", bloc);
+		},
+		search 		 		: function(){
+			var monthOfSearch = this.get("monthOfSelect"),
+			license_id = this.get("licenseSelect"),
+			bloc_id = this.get("blocSelect");
+			var para = [];	
+			if(monthOfSearch){
+				var monthOf = new Date(monthOfSearch);
+				monthOf.setDate(1);
+				monthOf = kendo.toString(monthOf, "yyyy-MM-dd");
+				var monthL = new Date(monthOfSearch);
+				monthL.setDate(31);
+				monthL = kendo.toString(monthL, "yyyy-MM-dd");
+				
+				para.push(
+					{field: "month_of >=" , value: monthOf},
+					{field: "month_of <=", value: monthL}
+				);
+				//this.dataSource.filter(para);
+				if(license_id){
+					para.push({field: "branch_id", operator: "where_related_meter" , value: license_id.id});
+				}
+				if(bloc_id){
+					para.push({field: "location_id", operator: "where_related_meter" , value: bloc_id.id});
+				}
+				this.set("selectMeter", true);
+				var self = this;
+				this.dataSource.query({
+					filter: para
+				}).then(function(){
+					for (var i = 0; i < self.dataSource.data().length; i++){
+			        self.rows.push({
+			            cells: [
+			              { value: self.dataSource.data()[i].meter_number },
+			              { value: self.dataSource.data()[i].from_date },
+			              { value: self.dataSource.data()[i].to_date  },
+			              { value: self.dataSource.data()[i].previous  },
+			              { value: self.dataSource.data()[i].current  },
+			              { value: self.dataSource.data()[i].consumption  },
+			              { value: self.dataSource.data()[i].status  }
+			            ]
+			          });
+			        }
+				});
+				console.log(para);
+			}else{
+				alert("សូមSelect ខែ");
+			}
+		},
+		exportEXCEL 		: function(e){
+			$("#loadImport").css("display","block");
+			var ds = new kendo.data.DataSource({
+		        type: "json",
+		        transport: {
+		          read: apiUrl + "readings"
+		        },
+		        schema: {
+		          model: {
+		            fields: {
+		              meter_number: { type: "meter_number" },
+		              date: { type: "date" },
+		              previous: { type: "previous" },
+		              reading: { type: "reading" },
+		              current: { type: "current" }
+		            }
+		          }
+		        }
+		      });
+
+		      var rows = [{
+		        cells: [
+		          { value: "meter_number" },
+		          { value: "date" },
+		          { value: "previous" },
+		          { value: "reading" },
+		          { value: "current" }
+		        ]
+		      }];
+		      ds.fetch(function(){
+		        var data = this.data();
+		        for (var i = 0; i < data[0].count; i++){
+		          rows.push({
+		            cells: [
+		              { value: data[0].results[i].meter_number },
+		              { value: data[0].results[i].date },
+		              { value: data[0].results[i].previous },
+		              { value: data[0].results[i].reading },
+		              { value: data[0].results[i].current }
+		            ]
+		          })
+		        }
+		        var workbook = new kendo.ooxml.Workbook({
+		          sheets: [
+		            {
+		              columns: [
+		                { autoWidth: true },
+		                { autoWidth: true },
+		                { autoWidth: true },
+		                { autoWidth: true },
+		                { autoWidth: true }
+		              ],
+		              // Title of the sheet
+		              title: "Reading",
+		              // Rows of the sheet
+		              rows: rows
+		            }
+		          ]
+		        });
+		        //save the file as Excel file with extension xlsx
+		        kendo.saveAs({dataURI: workbook.toDataURL(), fileName: "Reading.xlsx"});
+		      }).then(function(){
+		      	$("#loadImport").css("display","none");
+		      });
+		},
+		cancel 				: function(){
+			this.dataSource.cancelChanges();		
+			window.history.back();
+		}
+	});
+	banhji.waterImport = kendo.observable({
+		lang 				: langVM,
+		dataSource  		: dataStore(apiUrl + "districts"),
+		pageLoad 			: function(id){
+			
+		},
+		onSelected 			: function(e){
+			$('li.k-file').remove();
+	        var files = e.files, self = this;
+	        $("#loadImport").css("display","block");
+	        var reader = new FileReader();
+			this.dataSource.data([]);	
+			reader.onload = function() {	
+				var data = reader.result;	
+				var result = {}; 						
+				var workbook = XLSX.read(data, {type : 'binary'});
+				workbook.SheetNames.forEach(function(sheetName) {
+					var roa = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
+					if(roa.length > 0){
+						result[sheetName] = roa;
+						for(var i = 0; i < roa.length; i++) {
+							self.dataSource.add(roa[i]);
+							$("#loadImport").css("display","none");	
+							console.log(roa[i]);
+						}							
+					}					
+				});															
+			}
+			reader.readAsBinaryString(files[0].rawFile);      
+		},
+		exportEXCEL 		: function(e){
+			$("#loadImport").css("display","block");
+			var ds = new kendo.data.DataSource({
+		        type: "json",
+		        transport: {
+		          read: apiUrl + "readings"
+		        },
+		        schema: {
+		          model: {
+		            fields: {
+		              meter_number: { type: "meter_number" },
+		              date: { type: "date" },
+		              previous: { type: "previous" },
+		              reading: { type: "reading" },
+		              current: { type: "current" }
+		            }
+		          }
+		        }
+		      });
+
+		      var rows = [{
+		        cells: [
+		          { value: "meter_number" },
+		          { value: "date" },
+		          { value: "previous" },
+		          { value: "reading" },
+		          { value: "current" }
+		        ]
+		      }];
+		      ds.fetch(function(){
+		        var data = this.data();
+		        for (var i = 0; i < data[0].count; i++){
+		          rows.push({
+		            cells: [
+		              { value: data[0].results[i].meter_number },
+		              { value: data[0].results[i].date },
+		              { value: data[0].results[i].previous },
+		              { value: data[0].results[i].reading },
+		              { value: data[0].results[i].current }
+		            ]
+		          })
+		        }
+		        var workbook = new kendo.ooxml.Workbook({
+		          sheets: [
+		            {
+		              columns: [
+		                { autoWidth: true },
+		                { autoWidth: true },
+		                { autoWidth: true },
+		                { autoWidth: true },
+		                { autoWidth: true }
+		              ],
+		              // Title of the sheet
+		              title: "Reading",
+		              // Rows of the sheet
+		              rows: rows
+		            }
+		          ]
+		        });
+		        //save the file as Excel file with extension xlsx
+		        kendo.saveAs({dataURI: workbook.toDataURL(), fileName: "Reading.xlsx"});
+		      }).then(function(){
+		      	$("#loadImport").css("display","none");
+		      });
+		},
+		save 				: function() {
+			var self = this;
+			if(this.dataSource.data().length > 0) {
+				$("#loadImport").css("display","block");
+				this.dataSource.sync();
+				this.dataSource.bind("requestEnd", function(e){
+					if(e.type != 'read') {
+				    	if(e.response){				
+				    		$("#ntf1").data("kendoNotification").success("Activated user successfully!");
+				    		self.cancel();
+							$("#loadImport").css("display","none");
+						}	
+					}			  				
+			    });
+			    this.dataSource.bind("error", function(e){		    		    	
+					$("#ntf1").data("kendoNotification").error("Error activated!"); 
+					$("#loadImport").css("display","none");				
+			    });
+			}	
+		},
+		cancel 				: function(){
+			this.dataSource.cancelChanges();		
+			window.history.back();
 		}
 	});
 	//Setting
@@ -11623,7 +11340,7 @@
 				filter: { field:"abbr", value: abbr },
 				sort: { field:"code", dir:"desc" },
 				page: 1,
-				take: 100
+				take: 1
 			}).then(function(e){
 				var view = self.numberDS.view();
 				var lastNo;
@@ -11636,6 +11353,7 @@
 					obj.set("code",lastNo);
 					self.set("Codenumber", lastNo);
 				}
+				console.log(lastNo);
 			});
 		},
 		checkExistingNumber 	: function(){
@@ -11664,10 +11382,8 @@
 			}		
 		},
 		save 				: function() {
-			var self = this;
-			// if(this.notDuplicateNumber == )
-			if(this.dataSource.data().length > 0) {
-				
+			var self = this, obj = this.get("obj");
+			if(obj.branch_id != null && this.dataSource.data().length > 0 && obj.location_id != null && obj.abbr != null && obj.code != null){
 				this.dataSource.sync();
 				this.dataSource.bind("requestEnd", function(e){
 					if(e.type != 'read') {
@@ -11678,10 +11394,11 @@
 					}			
 			    });
 			    this.dataSource.bind("error", function(e){		    		    	
-					$("#ntf1").data("kendoNotification").error("Error activated!"); 
-					//$("#loadImport").css("display","none");				
+					$("#ntf1").data("kendoNotification").error("Error activated!"); 				
 			    });
-			}	
+			}else{
+				alert("Fields Required!");
+			}
 			
 		},
 		cancel 				: function(){
@@ -12305,268 +12022,7 @@
 		}
 	});
 	/*==== End Meter=====*/
-	/*Reading*/
 	
-	banhji.EditReading = kendo.observable({
-		lang 				: langVM,
-		dataSource  		: dataStore(apiUrl + "readings"),
-		licenseDS 			: dataStore(apiUrl + "branches"),
-		blocDS 				: dataStore(apiUrl + "locations"),
-		monthOfSearch 		: null,
-		licenseSelect 		: null,
-		blocSelect 			: null,
-		pageLoad 			: function(id){
-			this.licenseDS.read();
-		},
-		onLicenseChange 	: function(e) {
-			var data = e.data;
-			var license = this.licenseDS.at(e.sender.selectedIndex - 1);
-			this.set("licenseSelect", license);
-			this.blocDS.filter({field: "branch_id", value: license.id});
-		},
-		blocChange 			: function(e){
-			var data = e.data;
-			var bloc = this.blocDS.at(e.sender.selectedIndex - 1);
-			this.set("blocSelect", bloc);
-		},
-		search 		 		: function(){
-			var monthOfSearch = this.get("monthOfSelect"),
-			license_id = this.get("licenseSelect"),
-			bloc_id = this.get("blocSelect");
-			var para = [];	
-			if(monthOfSearch){
-				var monthOf = new Date(monthOfSearch);
-				monthOf.setDate(1);
-				monthOf = kendo.toString(monthOf, "yyyy-MM-dd");
-				var monthL = new Date(monthOfSearch);
-				monthL.setDate(31);
-				monthL = kendo.toString(monthL, "yyyy-MM-dd");
-				
-				para.push(
-					{field: "month_of >=" , value: monthOf},
-					{field: "month_of <=", value: monthL}
-				);
-				//this.dataSource.filter(para);
-				if(license_id){
-					para.push({field: "branch_id", operator: "where_related_meter" , value: license_id.id});
-				}
-				if(bloc_id){
-					para.push({field: "location_id", operator: "where_related_meter" , value: bloc_id.id});
-				}
-				this.set("selectMeter", true);
-				var self = this;
-				this.dataSource.query({
-					filter: para
-				}).then(function(){
-					for (var i = 0; i < self.dataSource.data().length; i++){
-			        self.rows.push({
-			            cells: [
-			              { value: self.dataSource.data()[i].meter_number },
-			              { value: self.dataSource.data()[i].from_date },
-			              { value: self.dataSource.data()[i].to_date  },
-			              { value: self.dataSource.data()[i].previous  },
-			              { value: self.dataSource.data()[i].current  },
-			              { value: self.dataSource.data()[i].consumption  },
-			              { value: self.dataSource.data()[i].status  }
-			            ]
-			          });
-			        }
-				});
-				console.log(para);
-			}else{
-				alert("សូមSelect ខែ");
-			}
-		},
-		exportEXCEL 		: function(e){
-			$("#loadImport").css("display","block");
-			var ds = new kendo.data.DataSource({
-		        type: "json",
-		        transport: {
-		          read: apiUrl + "readings"
-		        },
-		        schema: {
-		          model: {
-		            fields: {
-		              meter_number: { type: "meter_number" },
-		              date: { type: "date" },
-		              previous: { type: "previous" },
-		              reading: { type: "reading" },
-		              current: { type: "current" }
-		            }
-		          }
-		        }
-		      });
-
-		      var rows = [{
-		        cells: [
-		          { value: "meter_number" },
-		          { value: "date" },
-		          { value: "previous" },
-		          { value: "reading" },
-		          { value: "current" }
-		        ]
-		      }];
-		      ds.fetch(function(){
-		        var data = this.data();
-		        for (var i = 0; i < data[0].count; i++){
-		          rows.push({
-		            cells: [
-		              { value: data[0].results[i].meter_number },
-		              { value: data[0].results[i].date },
-		              { value: data[0].results[i].previous },
-		              { value: data[0].results[i].reading },
-		              { value: data[0].results[i].current }
-		            ]
-		          })
-		        }
-		        var workbook = new kendo.ooxml.Workbook({
-		          sheets: [
-		            {
-		              columns: [
-		                { autoWidth: true },
-		                { autoWidth: true },
-		                { autoWidth: true },
-		                { autoWidth: true },
-		                { autoWidth: true }
-		              ],
-		              // Title of the sheet
-		              title: "Reading",
-		              // Rows of the sheet
-		              rows: rows
-		            }
-		          ]
-		        });
-		        //save the file as Excel file with extension xlsx
-		        kendo.saveAs({dataURI: workbook.toDataURL(), fileName: "Reading.xlsx"});
-		      }).then(function(){
-		      	$("#loadImport").css("display","none");
-		      });
-		},
-		cancel 				: function(){
-			this.dataSource.cancelChanges();		
-			window.history.back();
-		}
-	});
-	banhji.waterImport = kendo.observable({
-		lang 				: langVM,
-		dataSource  		: dataStore(apiUrl + "districts"),
-		pageLoad 			: function(id){
-			
-		},
-		onSelected 			: function(e){
-			$('li.k-file').remove();
-	        var files = e.files, self = this;
-	        $("#loadImport").css("display","block");
-	        var reader = new FileReader();
-			this.dataSource.data([]);	
-			reader.onload = function() {	
-				var data = reader.result;	
-				var result = {}; 						
-				var workbook = XLSX.read(data, {type : 'binary'});
-				workbook.SheetNames.forEach(function(sheetName) {
-					var roa = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
-					if(roa.length > 0){
-						result[sheetName] = roa;
-						for(var i = 0; i < roa.length; i++) {
-							self.dataSource.add(roa[i]);
-							$("#loadImport").css("display","none");	
-							console.log(roa[i]);
-						}							
-					}					
-				});															
-			}
-			reader.readAsBinaryString(files[0].rawFile);      
-		},
-		exportEXCEL 		: function(e){
-			$("#loadImport").css("display","block");
-			var ds = new kendo.data.DataSource({
-		        type: "json",
-		        transport: {
-		          read: apiUrl + "readings"
-		        },
-		        schema: {
-		          model: {
-		            fields: {
-		              meter_number: { type: "meter_number" },
-		              date: { type: "date" },
-		              previous: { type: "previous" },
-		              reading: { type: "reading" },
-		              current: { type: "current" }
-		            }
-		          }
-		        }
-		      });
-
-		      var rows = [{
-		        cells: [
-		          { value: "meter_number" },
-		          { value: "date" },
-		          { value: "previous" },
-		          { value: "reading" },
-		          { value: "current" }
-		        ]
-		      }];
-		      ds.fetch(function(){
-		        var data = this.data();
-		        for (var i = 0; i < data[0].count; i++){
-		          rows.push({
-		            cells: [
-		              { value: data[0].results[i].meter_number },
-		              { value: data[0].results[i].date },
-		              { value: data[0].results[i].previous },
-		              { value: data[0].results[i].reading },
-		              { value: data[0].results[i].current }
-		            ]
-		          })
-		        }
-		        var workbook = new kendo.ooxml.Workbook({
-		          sheets: [
-		            {
-		              columns: [
-		                { autoWidth: true },
-		                { autoWidth: true },
-		                { autoWidth: true },
-		                { autoWidth: true },
-		                { autoWidth: true }
-		              ],
-		              // Title of the sheet
-		              title: "Reading",
-		              // Rows of the sheet
-		              rows: rows
-		            }
-		          ]
-		        });
-		        //save the file as Excel file with extension xlsx
-		        kendo.saveAs({dataURI: workbook.toDataURL(), fileName: "Reading.xlsx"});
-		      }).then(function(){
-		      	$("#loadImport").css("display","none");
-		      });
-		},
-		save 				: function() {
-			var self = this;
-			if(this.dataSource.data().length > 0) {
-				$("#loadImport").css("display","block");
-				this.dataSource.sync();
-				this.dataSource.bind("requestEnd", function(e){
-					if(e.type != 'read') {
-				    	if(e.response){				
-				    		$("#ntf1").data("kendoNotification").success("Activated user successfully!");
-				    		self.cancel();
-							$("#loadImport").css("display","none");
-						}	
-					}			  				
-			    });
-			    this.dataSource.bind("error", function(e){		    		    	
-					$("#ntf1").data("kendoNotification").error("Error activated!"); 
-					$("#loadImport").css("display","none");				
-			    });
-			}	
-		},
-		cancel 				: function(){
-			this.dataSource.cancelChanges();		
-			window.history.back();
-		}
-	});
 	// Invoice
 	
 	/*Bill*/
@@ -12575,7 +12031,7 @@
 		licenseDS 			: dataStore(apiUrl + "branches"),
 		blocDS 				: dataStore(apiUrl + "locations"),
 		invoiceDS	     	: dataStore(apiUrl + "winvoices/make"),
-		invoiceCollection 	: banhji.invoice, 
+		invoiceCollection 	: dataStore(apiUrl + "winvoices"),
 		chkAll 				: false,
 		licenseSelect 		: null,	
 		monthSelect 		: null,	
@@ -12583,12 +12039,11 @@
 		totalOfInv 			: 0,
 		meterSold 			: 0,
 		amountSold 			: 0,
-		pageLoad 			: function(id){
+		pageLoad 			: function(){
 		},   
 		invoiceArray 		: [],
 		checkAll 		: function(e){
 			var self = this;
-			e.preventDefault();
 			this.set("invoiceArray",[]);
 			var bolValue = this.get("chkAll");
 			var data = this.invoiceDS.data();
@@ -12597,15 +12052,18 @@
 			        $.each(data, function(index, value){	
 			        	value.set("invoiced", bolValue);
 			        	self.invoiceArray.push(value);      	
-			        });		        			        
+			        });
+			        this.set("showButton", true);	        			        
 		        }
 		    }else{
 	        	this.set("invoiceArray",[]);
 	        	$.each(data, function(index, value){	
 		        	value.set("invoiced", bolValue);      	
 		        });
+		        this.set("showButton", false);
 	        }
-	        this.makeBilled();					
+	        this.makeBilled();
+
 		},	
 		total 			: function(){      		
 	        var sum = 0;
@@ -12654,31 +12112,40 @@
 	    },
 	    makeInvoice 		: function(e) {
 	    	var that = this;
+	    	
 	    	if(e.data.invoiced) {
-	    		this.invoiceArray.push(e.data);
+	    		banhji.runBill.invoiceArray.push(e.data);
 	    	} else {
-	    		$.each(this.invoiceArray, function(i, v){
+	    		$.each(banhji.runBill.invoiceArray, function(i, v){
 	    			if(e.data == v) {
 	    				that.invoiceArray.splice(i, 1);
 	    				return false;
 	    			}
 	    		});
 	    	}
-	    	this.makeBilled();
+	    	if(banhji.runBill.invoiceArray.length > 0) {
+	    		this.set('showButton', true);
+	    	} else {
+	    		this.set('showButton', false);
+	    	}
+	    	banhji.runBill.makeBilled();
 	    },
 	    showButton 			: false,
 	    exUnitType 			: null,
 	    exUnitAmount 		: null,
 	    makeBilled 			: function(){
-	    	this.invoiceCollection.dataSource.data([]);
-	    	var mSold = 0, aSold = 0, self = this, rUsage = 0, tUsage = 0,aSoldL = 0, aTariff = 0, exT, exA, exU;
-	    	if(this.invoiceArray.length > 0) {
-	    		this.set('showButton', true);
-	    	} else {
-	    		this.set('showButton', false);
-	    	}
-	    	this.set('totalOfInv', this.invoiceArray.length);
-	    	$.each(this.invoiceArray, function(i, v){
+	    	this.invoiceCollection.data([]);
+	    	var mSold = 0, aSold = 0, self = this, rUsage = 0, tUsage = 0,aSoldL = 0, aTariff = 0, exT, exA, exU, TariffDS = [];
+	    	
+	    	this.set('totalOfInv', banhji.runBill.invoiceArray.length);
+	    	$.each(banhji.runBill.invoiceArray, function(i, v){
+	    		var date = new Date();
+				var rate = banhji.source.getRate(banhji.locale, date);
+				var locale = banhji.locale;
+				// var usage = v.items[0].line.usage * v.meter.multiplier;
+				var record_id = v.items[0].line.id;
+				var invoiceItems = [];
+	    		//console.log(v);
 	    		mSold += kendo.parseInt(v.items[0].line.usage);
 	    		//Calculate Exemption
 	    		if(v.exemption.length > 0){
@@ -12697,36 +12164,99 @@
 	    			exU = v.items[0].line.usage;
 	    			tUsage = exU;
 	    		}
+	    		
 	    		//Calculate Tariff
-	    		$.each(v.tariff, function(j, v){
+				
+	    		//Add to Itmes
+				$.each(v.items, function(index, value) {
+					invoiceItems.push({				
+						"item_id" 			: value.line.id,
+				   		"invoice_id"		: 0,
+					   	"meter_record_id"	: record_id,
+					   	"description" 		: value.line.name,					   	
+					   	"quantity" 			: value.type == 'usage' ? value.line.usage : 1,
+					   	"price"				: value.line.amount,	
+					   	"amount" 			: Total,
+					   	"rate"				: rate,
+					   	"locale" 			: locale,
+					   	"has_vat" 			: false,
+				   		"type" 				: value.type
+					});
+				});	
+				$.each(v.tariff, function(j, v){
+					var tIndex = j - 1;
+					console.log(j);
+					if(j > 0){
+						if(invoiceItems[tIndex] && invoiceItems[tIndex].type == 'tariff'){
+							invoiceItems.splice(tIndex, 1);
+							console.log(invoiceItems[tIndex]);
+						}
+					}
 	    			if(kendo.parseInt(tUsage) > kendo.parseInt(v.line.usage)){
+		    			invoiceItems.push({				
+							"item_id" 			: v.line.id,
+					   		"invoice_id"		: 0,
+						   	"meter_record_id"	: record_id,
+						   	"description" 		: v.line.name,					   	
+						   	"quantity" 			: v.line.usage,
+						   	"price"				: 0,	
+						   	"amount" 			: v.line.amount,
+						   	"rate"				: rate,
+						   	"locale" 			: locale,
+						   	"has_vat" 			: false,
+					   		"type" 				: 'tariff'
+						});
 	    				aTariff = v.line.amount;
 	    			}
 	    		});
-	    		//Add Invocie Itme
-	    		var date = new Date();
-				var rate = banhji.source.getRate(banhji.locale, date);
-				var locale = banhji.locale;
-				var usage = v.items[0].line.usage * v.meter.multiplier;
-				var record_id = v.items[0].line.id;
-
-				v.items.filter(function(data) {
-					if(data.type === 'tariff') {
-						return true;
-					} else {
-						return false
-					}
-				}).sort(function(aValue, bValue){
-					if(aValue.usage < bValue.user) {
-						return -1;
-					} else {
-						return 1;
-					}
-					return 0;
-				});
+	    		if(v.installment.length > 0){
+	    			invoiceItems.push({				
+						"item_id" 			: v.installment[0].line.id,
+				   		"invoice_id"		: 0,
+					   	"meter_record_id"	: record_id,
+					   	"description" 		: v.installment[0].line.name,					   	
+					   	"quantity" 			: v.installment[0].line.usage,
+					   	"price"				: 0,	
+					   	"amount" 			: v.installment[0].line.amount,
+					   	"rate"				: rate,
+					   	"locale" 			: locale,
+					   	"has_vat" 			: false,
+				   		"type" 				: 'installment'
+					});
+		    	}
+	    		if(v.maintenance.length > 0){
+	    			invoiceItems.push({				
+						"item_id" 			: v.maintenance[0].line.id,
+				   		"invoice_id"		: 0,
+					   	"meter_record_id"	: record_id,
+					   	"description" 		: v.maintenance[0].line.name,					   	
+					   	"quantity" 			: v.maintenance[0].line.usage,
+					   	"price"				: 0,	
+					   	"amount" 			: v.maintenance[0].line.amount,
+					   	"rate"				: rate,
+					   	"locale" 			: locale,
+					   	"has_vat" 			: false,
+				   		"type" 				: 'maintenance'
+					});
+		    	}
+		    	if(v.exemption.length > 0){
+	    			invoiceItems.push({				
+						"item_id" 			: v.exemption[0].line.id,
+				   		"invoice_id"		: 0,
+					   	"meter_record_id"	: record_id,
+					   	"description" 		: v.exemption[0].line.name,					   	
+					   	"quantity" 			: v.exemption[0].line.usage,
+					   	"price"				: 0,	
+					   	"amount" 			: v.exemption[0].line.amount,
+					   	"rate"				: rate,
+					   	"locale" 			: locale,
+					   	"has_vat" 			: false,
+				   		"type" 				: 'exemption'
+					});
+		    	}
+				
 				//Total after Tariff
 				var Total = 0;
-				// console.log("exT = " + exT + "; aTariff = " + aTariff + "; exU = " + exU);
 				if(exT == '%'){
 					exU = kendo.parseInt(exU) * kendo.parseFloat(aTariff);
 					var exP = (kendo.parseFloat(exU) * kendo.parseFloat(exA)) / 100;
@@ -12737,107 +12267,64 @@
 				}else{
 					Total = kendo.parseInt(tUsage) * kendo.parseFloat(aTariff);
 				}
+				//Installment
+				if(v.installment[0].line.amount > 0){
+					console.log("Installment___"+v.installment[0].line.amount);
+					Total = Total + v.installment[0].line.amount;
+				}
+				//Maintenance
+				if(v.maintenance[0].line.amount > 0){
+					console.log("maintenance___"+v.maintenance[0].line.amount);
+					Total = Total + v.maintenance[0].line.amount;
+				}
 				//Meter Location
 				var MeterLocation = v.meter.location_id;
-				console.log(MeterLocation);
 				
 	    		aSold += Total;
-	    		//Add to Itmes
-				var invoiceItems = [];
-				$.each(v.items, function(index, value) {
-					if(value.type == "tariff") {
-						invoiceItems.push({			
-							"item_id" 			: value.line.id,
-					   		"invoice_id"		: 0,			
-						   	"meter_record_id"	: record_id,
-						   	"description" 		: value.line.name,					   	
-						   	"quantity" 			: usage,
-						   	"price"				: value.line.amount,
-						   	"amount" 			: AmountTariff,
-						   	"rate"				: rate,
-						   	"locale" 			: locale,
-						   	"has_vat" 			: false,
-					   		"type" 				: value.type
-						});
-					} else {
-						invoiceItems.push({				
-							"item_id" 			: value.line.id,
-					   		"invoice_id"		: 0,
-						   	"meter_record_id"	: record_id,
-						   	"description" 		: value.line.name,					   	
-						   	"quantity" 			: value.type == 'usage' ? value.line.usage : 1,
-						   	"price"				: value.line.amount,	
-						   	"amount" 			: Total,
-						   	"rate"				: rate,
-						   	"locale" 			: locale,
-						   	"has_vat" 			: false,
-					   		"type" 				: value.type
-						});
-					}	
-				});	
-				console.log(v.contact.locale);
-				aSoldL = kendo.toString(aSold, "c", v.contact.locale);
+	    		aSoldL = kendo.toString(aSold, "c", v.contact.locale);
 				//set INV
-	    		self.calInvoice(Total, aTariff, tUsage, v.contact.id, v.contact.account_id, v.contact.vat, invoiceItems, MeterLocation);
+	    		self.calInvoice(Total, v.contact, invoiceItems, MeterLocation);
 	    	});
 	    	this.set("amountSold", aSoldL);
 	    	this.set("meterSold", mSold);
 	    },
-	    calInvoice 			: function(Total, AmountTariff, TotalUsage, ContactID, AccountID, VatID, invoiceItems, MeterLocation){
-	    	var self =this,
-	    	monthOF,
-			issueDate,
-			paymentDate,
-			billDate,
-			dueDate,
-			AmountAfterTariff = Total;
+	    calInvoice 			: function(Total, Contact, invoiceItems, MeterLocation){
+	    	var self =this;
+			var date = new Date();
 			var rate = banhji.source.getRate(banhji.locale, date);
 			var locale = banhji.locale;
-			var amount = 0.00;
-			var date = new Date();
-			this.invoiceCollection.dataSource.add({
-				contact_id 			: ContactID,
-				payment_term_id		: null,
-				payment_method_id 	: null,
-				reference_id 		: null,
-				account_id 			: AccountID,
-				vat_id 				: VatID,
+			//console.log(this.invoiceArray);
+			this.invoiceCollection.add({
+				contact 			: Contact,
 				biller_id 			: banhji.userData.id,
-				number 				: null,
 				type 				: "Water_Invoice",
-				amount 				: AmountAfterTariff,
-				vat 				: null,
+				amount 				: Total,
 				rate 				: rate,
 				locale 				: locale,
 				location_id 		: MeterLocation,
 				month_of 			: this.get("FmonthSelect"),
 				issued_date 		: date,
-				payment_date 		: null,
 				bill_date 			: this.get("BillingDate"),
 				due_date 			: this.get("DueDate"),
-				check_no 			: null,
-				memo 				: null,
-				memo2 				: null,
-				status 				: null,
 				invoice_lines    	: invoiceItems
 			});
-			console.log(invoiceItems);
+			//this.invoiceCollection.dataSource.add(banhji.runBill.invoiceArray);
 	    },
 		save 				: function() {
 			var self = this;
 			if(this.get("FmonthSelect") && this.get("BillingDate") && this.get("DueDate")){
 				$("#loadImport").css("display","block");
-				this.invoiceCollection.save();
-				this.invoiceCollection.dataSource.bind("requestEnd", function(e){
+				this.invoiceCollection.sync();
+				this.invoiceCollection.bind("requestEnd", function(e){
 					if(e.type != 'read') {
 				    	if(e.response){				
 				    		$("#ntf1").data("kendoNotification").success("Successfully!");
-				    		self.cancel();
 							$("#loadImport").css("display","none");
+							self.cancel();
 						}
 					}
 			    });
-			    this.invoiceCollection.dataSource.bind("error", function(e){
+			    this.invoiceCollection.bind("error", function(e){
 					$("#ntf1").data("kendoNotification").error("Error!"); 
 					$("#loadImport").css("display","none");				
 			    });
@@ -12846,7 +12333,7 @@
 			}
 		},
 		cancel 				: function(){
-			this.invoiceCollection.dataSource.cancelChanges();
+			this.invoiceCollection.cancelChanges();
 			this.invoiceArray = [];	
 			window.history.back();
 		}
@@ -12900,6 +12387,7 @@
 		},	
 		isCheck 		: function(e) {
 	    	var that = this;
+
 	    	this.set("chkAll", false);
 	    	if(e.data.printed) {
 	    		this.printArray.push(e.data);
@@ -12916,7 +12404,7 @@
 	    preparePrint 	: function() {
 	    	var self = this, AmountT = 0, AmountTA = 0, tMeter = 0;
 	    	$.each(this.printArray, function(i, v){
-	    		tMeter += kendo.parseInt(v.items[0].consumption);
+	    		tMeter += kendo.parseInt(v.consumption);
 	    		AmountT += kendo.parseFloat(v.amount);
 	    		AmountTA = kendo.toString(AmountT, "c", v.locale);
 	    	});
@@ -13008,34 +12496,37 @@
 		TemplateSelect 		: null,
 		user_id 			: banhji.userManagement.getLogin() === null ? '':banhji.userManagement.getLogin().id,
 		pageLoad 			: function(id){	
-			this.barcod();
-			console.log(this.PaperSize);
+			this.barcod("do");
 		},
-		barcod 			: function(){
+		barcod 			: function(re){
 			var view = this.dataSource;
-			
 			for (var i=0;i<view.length;i++) {
 				var d = view[i];
-				$("#secondwnumber"+d.id).kendoBarcode({
-					renderAs: "svg",
-				  	value: d.meter.meter_number,
-				  	type: "code128",
-				  	width: 200,
-					height: 25,
-					text:{
-					    visible: false
-					}
-				});
-				$("#footwnumber"+d.id).kendoBarcode({
-					renderAs: "svg",
-				  	value: d.meter.meter_number,
-				  	type: "code128",
-				  	width: 200,
-					height: 25,
-					text:{
-					    visible: false
-					}	
-				});
+				if(re == "reset"){
+					$("#secondwnumber"+d.id).css("height", "0px").data("kendoBarcode").resize();
+					$("#footwnumber"+d.id).css("height", "0px").data("kendoBarcode").resize();
+				}else{
+					$("#secondwnumber"+d.id).kendoBarcode({
+						renderAs: "svg",
+					  	value: d.meter.meter_number,
+					  	type: "code128",
+					  	width: 200,
+						height: 25,
+						text:{
+						    visible: false
+						}
+					});
+					$("#footwnumber"+d.id).kendoBarcode({
+						renderAs: "svg",
+					  	value: d.meter.meter_number,
+					  	type: "code128",
+					  	width: 200,
+						height: 25,
+						text:{
+						    visible: false
+						}	
+					});
+				}
 			}
 		},
 		printGrid 		: function(){
@@ -13124,8 +12615,9 @@
 			}
 		},
 		cancel 				: function(){
-			this.set("dataSource",[]);	
+			this.dataSource = [];	
 			this.set("PaperSize","A4");
+			this.barcod("reset");
 			window.history.back();
 		}
 	});
@@ -16327,7 +15819,605 @@
 			window.history.back();
 		},
 	});
+	/*************************
+	*	Water Section   	* 
+	**************************/
+	banhji.wDashBoard = kendo.observable({
+		dataSource: new kendo.data.DataSource({
+	      	transport: {
+		        read  : {
+		          url: baseUrl + 'api/waterdash/license',
+		          type: "GET",
+		          dataType: 'json',
+		          headers: { Institute: JSON.parse(localStorage.getItem('userData/user')).institute.id }
+		        },
+		        parameterMap: function(options, operation) {
+		          if(operation === 'read') {
+		            return {
+		              limit: options.take,
+		              page: options.page,
+		              filter: options.filter
+		            };
+		          } else {
+		            return {models: kendo.stringify(options.models)};
+		          }
+		        }
+		    },
+	      	schema  : {
+	        	model: {
+	          		id: 'id'
+	        	},
+	        	data: 'results',
+	        	total: 'count'
+	      	},
+	      	change: function(e) {
+	      		var vm = banhji.wDashboard;
+	      		var sale = 0, usage = 0, user = 0, deposit = 0;
+	      		$.each(this.data(), function(index, value){
+	      			sale += value.sale;
+	      			usage+= value.usage;
+	      			user += value.activeCustomer;
+	      			deposit+= value.deposit;
+	      		});
+	      		banhji.wDashBoard.set('totalSale', sale);
+	      		banhji.wDashBoard.set('totalUsage', usage);
+	      		banhji.wDashBoard.set('totalUser', user);
+	      		banhji.wDashBoard.set('totalDeposit', deposit);
+	      		banhji.wDashBoard.set('avgUsage', usage/user);
+	      	},
+	      	batch: true,
+	      	serverFiltering: true,
+	      	serverPaging: true,
+	      	pageSize: 100
+	    }),
+	    invoice: 0,
+	    activeCust: 0,
+	    invCust: 0,
+	    overDue: 0,
+	    totalCust: 0,
+	    voidCust : 0,
+	    totalAmount: 0,
+	    dashSource: new kendo.data.DataSource({
+	      	transport: {
+		        read  : {
+		          url: baseUrl + 'api/waterdash/board',
+		          type: "GET",
+		          dataType: 'json',
+		          headers: { Institute: JSON.parse(localStorage.getItem('userData/user')).institute.id }
+		        },
+		        parameterMap: function(options, operation) {
+		          if(operation === 'read') {
+		            return {
+		              limit: options.take,
+		              page: options.page,
+		              filter: options.filter
+		            };
+		          } else {
+		            return {models: kendo.stringify(options.models)};
+		          }
+		        }
+		    },
+	      	schema  : {
+	        	model: {
+	          		id: 'id'
+	        	},
+	        	data: 'results',
+	        	total: 'count'
+	      	},
+	      	change: function(e) {
+	      		var vm = banhji.wDashboard;
+	      		var totalCust = 0, invCust = 0, overDue = 0, voided = 0, invoice = 0, amount = 0, activeCust = 0, inActiveCust = 0;
+	      		$.each(this.data(), function(index, value){
+	      			activeCust += value.activeCustomer;
+	      			totalCust += value.totalCustomer;
+	      			invCust+= value.invoiceCust;
+	      			overDue += value.overDue;
+	      			invoice += value.totalInvoice;
+	      			inActiveCust += value.inActiveCustomer;
+	      			voided+= value.void;
+	      			amount+= value.total;
+	      		});
+	      		banhji.wDashBoard.set('activeCust', activeCust);
+	      		banhji.wDashBoard.set('inActiveCust', inActiveCust);
+	      		banhji.wDashBoard.set('invoice', invoice);
+	      		banhji.wDashBoard.set('invCust', invCust);
+	      		banhji.wDashBoard.set('overDue', overDue);
+	      		banhji.wDashBoard.set('totalCust', totalCust);
+	      		banhji.wDashBoard.set('voidCust', voided);
+	      		banhji.wDashBoard.set('totalAmount', amount);
+	      	},
+	      	batch: true,
+	      	serverFiltering: true,
+	      	serverPaging: true,
+	      	pageSize: 100
+	    }),
+	    totalSale: 0,
+	    totalUsage: 0,
+	    totalUser: 0,
+	    totalDeposit: 0,
+	    avgUsage: 0
+	});
+	banhji.waterCenter = kendo.observable({
+		lang 				: langVM,
+		transactionDS  		: dataStore(apiUrl + 'transactions'),
+		filterKey 			: 1,
+		meter_visible 		: false,
+		meterDS 			: dataStore(apiUrl + "meters"),
+		readingVM			: banhji.reading,
+		installmentVM 		: banhji.installment,
+		invoiceVM 			: banhji.invoice,
+		meterClick 			: function(){ banhji.view.layout.showIn("#waterCenterContent", banhji.view.waterCenterContent); },
+		NometerClick 		: function(){ banhji.view.layout.showIn("#waterCenterContent", banhji.view.waterTransactionContent); },
+		contactDS			: new kendo.data.DataSource({
+			transport: {
+				read 	: {
+					url: apiUrl + "customers",
+					type: "GET",
+					headers: banhji.header,
+					dataType: 'json'
+				},
+				parameterMap: function(options, operation) {
+					if(operation === 'read') {
+						return {
+							page: options.page,
+							limit: options.pageSize,
+							filter: options.filter,
+							sort: options.sort
+						};
+					} else {
+						return {models: kendo.stringify(options.models)};
+					}
+				}
+			},
+			schema 	: {
+				model: {
+					id: 'id'
+				},
+				data: 'results',
+				total: 'count'
+			},
+			filter:[
+			{field:"use_water", value:1 },
+			{field:"parent_id", operation: "where_related", model: "contact_type", value: 1}],
+			sort:{ field:"number", dir:"asc" },
+			batch: true,
+			serverFiltering: true,
+			serverSorting: true,
+			serverPaging: true,
+			page:1,
+			pageSize: 100
+		}),
+		filterCustomerTypeDS : [
+	    	{ id: 1, name: "Water" },
+			{ id: 0, name: "None Water" }],
+		contactTypeDS  		: banhji.source.customerTypeDS,
+		filterChange 		: function(e){
+			this.contactDS.filter([
+				{field:"use_water", value: this.get("filterKey")},
+				{field:"deleted", value: "0"},
+				{field:"is_pattern", value: "0"},
+				{field:"parent_id", operation: "where_related", model: "contact_type", value: 1}
+			]);
+		},
+		noteDS 				: dataStore(apiUrl + 'notes'),
+		attachmentDS	 	: dataStore(apiUrl + "attachments"),
+		currencyDS  		: banhji.source.currencyDS,
+		summaryDS 			: dataStore(apiUrl + "transactions"),
+		sortList			: banhji.source.sortList,
+		sorter 				: "all",
+		sdate 				: "",
+		edate 				: "",
+		obj 				: {id:0},
+		note 				: "",
+		searchText 			: "",
+		contact_type_id 	: null,
+		currency_id 		: 0,
+		balance 			: 0,
+		deposit 			: 0,
+		outInvoice 			: 0,
+		overInvoice 		: 0,
+		currencyCode 		: "",
+		user_id 			: banhji.source.user_id,
+		exportEXCEL 		: function(){
+		},
+		pageLoad 			: function(id){
+			banhji.view.layout.showIn("#waterCenterContent", banhji.view.waterCenterContent);
+			//Refresh
+			if(this.contactDS.total()>0){
+				this.contactDS.fetch();
+				this.searchTransaction();
+				this.loadSummary();
+				var grid = $("#listContact").data('kendoGrid');
+				console.log(grid);
+				grid.select("tr:eq(1)");
+			}
+		},
+		sorterChanges 		: function(){
+	        var today = new Date(),
+        	sdate = "",
+        	edate = "",
+        	sorter = this.get("sorter");
+        	
+			switch(sorter){
+				case "today":
+					this.set("sdate", today);
+					this.set("edate", "");
+				  	break;
+				case "week":
+					var first = today.getDate() - today.getDay(),
+					last = first + 6;
+					this.set("sdate", new Date(today.setDate(first)));
+					this.set("edate", new Date(today.setDate(last)));
+				  	break;
+				case "month":
+					this.set("sdate", new Date(today.getFullYear(), today.getMonth(), 1));
+					this.set("edate", new Date(today.getFullYear(), today.getMonth() + 1, 0));
+				  	break;
+				case "year":
+				  	this.set("sdate", new Date(today.getFullYear(), 0, 1));
+				  	this.set("edate", new Date(today.getFullYear(), 11, 31));
+				  	break;
+				default:
+					this.set("sdate", "");
+				  	this.set("edate", "");
+			}
+		},
+		setCurrencyCode 	: function(){
+			var code = "", obj = this.get("obj");
+			$.each(banhji.source.currencyRateDS.data(), function(index, value){
+				if(value.locale == obj.locale){
+					code = value.currency[0].code;
+					return false;
+				}
+			});
 
+			this.set("currencyCode", code);
+		},
+		loadObj 			: function(id){
+			var self = this;
+
+			this.contactDS.query({
+				filter: { field:"id", value:id},
+				page:1,
+				pageSize:100
+			}).then(function(){
+				var view = self.contactDS.view();
+
+				if(view.length>0){
+					self.set("obj", view[0]);
+					self.loadData();
+				}
+			});
+		},
+		loadData 			: function(){
+			var obj = this.get("obj");
+			this.searchTransaction();
+			this.loadSummary(obj.id);
+			this.setCurrencyCode();
+			this.attachmentDS.filter({ field:"contact_id", value: obj.id });
+			this.noteDS.query({
+				filter: { field:"contact_id", value: obj.id },
+				sort: { field:"noted_date", dir:"desc" },
+				page: 1,
+				pageSize: 10
+			});
+		},
+		//Upload
+		onSelect 			: function(e){
+	        // Array with information about the uploaded files
+	        var self = this, 
+	        files = e.files,
+	        obj = this.get("obj");
+			
+			if(obj.id>0){
+		        // Check the extension of each file and abort the upload if it is not .jpg
+		        $.each(files, function(index, value){
+		            if (value.extension.toLowerCase() === ".jpg"
+		            	|| value.extension.toLowerCase() === ".jpeg"
+		            	|| value.extension.toLowerCase() === ".tiff"
+		            	|| value.extension.toLowerCase() === ".png" 
+		            	|| value.extension.toLowerCase() === ".gif"
+		            	|| value.extension.toLowerCase() === ".pdf"){
+
+		            	var key = 'ATTACH_' + banhji.institute.id + "_" + Math.floor(Math.random() * 100000000000000001) +'_'+ value.name;
+		            	self.attachmentDS.add({
+		            		user_id 		: self.get("user_id"),
+		            		contact_id 		: obj.id,
+		            		type 			: "Contact",
+		            		name 			: value.name,
+		            		description 	: "",
+		            		key 			: key,
+		            		url 			: banhji.s3 + key,
+		            		size 			: value.size,
+		            		created_at 		: new Date(),
+		            		file 			: value.rawFile
+		            	});
+		            }else{
+		            	alert("This type of file is not allowed to attach.");
+		            }
+		        });
+	    	}else{
+	    		alert("Please select a customer!");
+	    	}
+	    },
+	    removeFile 			: function(e){
+	    	var data = e.data;
+	    	if (confirm(banhji.source.confirmMessage)) {
+	    		this.attachmentDS.remove(data);
+	    		this.attachmentDS.sync();
+	    	}
+	    },
+	    uploadFile 			: function(){
+	    	$.each(this.attachmentDS.data(), function(index, value){
+		    	if(!value.id){
+			    	var params = { 
+		            	Body: value.file, 
+		            	Key: value.key 
+		            };
+		            bucket.upload(params, function (err, data) {
+	                	// console.log(err, data);
+	                	// var url = data.Location;
+	            	});
+            	}
+            });
+            this.attachmentDS.sync();
+            var saved = false;
+            this.attachmentDS.bind("requestEnd", function(e){
+            	//Delete File
+            	if(e.type=="destroy"){
+	            	if(saved==false && e.response){
+	            		saved = true;
+	            		var response = e.response.results;
+	            		$.each(response, function(index, value){
+		            		var params = {
+							  	//Bucket: 'STRING_VALUE', /* required */
+							 	Delete: { /* required */
+								    Objects: [ /* required */
+								      	{
+									        Key: value.data.key /* required */
+								      	}
+								      /* more items */
+								    ]
+							  	}
+							};
+							bucket.deleteObjects(params, function(err, data) {
+							  	//console.log(err, data);
+							});
+						});
+	            	}
+            	}
+            });
+	    },
+	    //Summary
+		loadContact 		: function(id){
+			var self = this;
+			
+			this.contactDS.query({
+			  	filter:[
+			  		{ field:"id", value:id }
+			  	],
+			  	page: 1,
+			  	pageSize: 50
+			}).then(function(e) {
+			    var view = self.contactDS.data();
+			    
+			    if(view.length>0){
+			    	self.set("obj", view[0]);
+			    	self.loadData();
+			    }
+			});
+		},
+		loadSummary 		: function(id){
+			var self = this, obj = this.get("obj");
+			this.summaryDS.query({
+			  	filter: [
+			  		{ field:"contact_id", value: obj.id },
+			  		{ field:"type", operator:"where_in", value: ["Water_Deposit", "Water_Invoice"] },
+			  		{ field:"status", operator:"where_in", value: [0,2] }
+			  	],
+			  	sort: { field: "issued_date", dir: "desc" },
+			  	page: 1,
+			  	pageSize: 1000
+			}).then(function(){
+				var view = self.summaryDS.view(),
+				deposit = 0, open = 0, over = 0, balance = 0, today = new Date();
+				$.each(view, function(index, value){
+					if(value.type=="Water_Deposit"){
+						deposit += kendo.parseFloat(value.amount);
+					}else{
+						balance += kendo.parseFloat(value.amount) - kendo.parseFloat(value.deposit);
+						open++;
+						if(new Date(value.due_date)<today){
+							over++;
+						}
+					}
+				});
+				self.set("deposit", kendo.toString(deposit, obj.locale=="km-KH"?"c0":"c", obj.locale));
+				self.set("outInvoice", kendo.toString(open, "n0"));
+				self.set("overInvoice", kendo.toString(over, "n0"));
+				self.set("balance", kendo.toString(balance, obj.locale=="km-KH"?"c0":"c", obj.locale));
+			});
+		},
+		loadBalance 		: function(){
+			var obj = this.get("obj");
+			this.transactionDS.query({
+			  	filter: [
+			  		{ field:"contact_id", value: obj.id },
+			  		{ field:"type", value:"Water_Invoice" },
+			  		{ field:"status", operator:"where_in", value: [0,2] }
+			  	],
+			  	sort: [
+			  		{ field: "issued_date", dir: "desc" },
+			  		{ field: "id", dir: "desc" }
+			  	],
+			  	page: 1,
+			  	pageSize: 10
+			});
+		},
+		loadDeposit 		: function(){
+			var obj = this.get("obj");
+			this.transactionDS.query({
+			  	filter: [
+			  		{ field:"contact_id", value: obj.id },
+			  		{ field:"type", value:"Water_Deposit" }
+			  	],
+			  	sort: [
+			  		{ field: "issued_date", dir: "desc" },
+			  		{ field: "id", dir: "desc" }
+			  	],
+			  	page: 1,
+			  	pageSize: 10
+			});
+		},
+		loadOverInvoice 	: function(){
+			var obj = this.get("obj");
+			this.transactionDS.query({
+			  	filter: [
+			  		{ field:"contact_id", value: obj.id },
+			  		{ field:"type", value: "Water_Invoice" },
+			  		{ field:"status", operator:"where_in", value: [0,2] },
+			  		{ field:"due_date <", value: kendo.toString(new Date(), "yyyy-MM-dd") }
+			  	],
+			  	sort: [
+			  		{ field: "issued_date", dir: "desc" },
+			  		{ field: "id", dir: "desc" }
+			  	],
+			  	page: 1,
+			  	pageSize: 10
+			});
+		},	
+		selectedRow			: function(e){
+			var data = e.data, self = this;
+			this.meterDS.query({
+				filter: {field: "contact_id", value: data.id}
+			})
+			.then(function(e){
+				var meters = self.meterDS.data();
+				console.log(self.readingVM.dataSource);
+				if(meters.length > 0) {
+					if(meters.length > 1) {
+						var meterIds = [];
+						$.each(meters, function(index, value) {
+							meterIds.push(value.id);
+						});
+						console.log(meterIds);
+						self.readingVM.dataSource.filter({field: 'meter_id', operator: 'where_in', value: meterIds});
+					} else {
+						self.readingVM.dataSource.filter({field: 'meter_id', value: meters[0].id});
+					}
+					self.invoiceVM.dataSource.filter({field: 'contact_id', value: meters[0].contact[0].id});
+				}
+			});
+			this.set("obj", data);
+			this.loadData();
+			if(data.use_water == 1){
+				this.set('meter_visible', true);
+			}else{
+				this.set('meter_visible', false);
+			}
+			// console.log(this.meter_visible);
+		},
+		onSelectedMeter		: function(e) {
+			this.readingVM.set('NumberSR',e.data.meter_number);
+			this.readingVM.dataSource.filter({field: 'meter_id', value: e.data.id});
+			this.installmentVM.dataSource.filter({field: 'meter_id', value: e.data.id});
+		},
+		goMeter 			: function(){
+			banhji.meter.set("contact", this.get("obj"));
+			banhji.router.navigate("/meter");
+		},
+		goDeposit 			: function(){
+			banhji.customerDeposit.set("contact", this.get("obj"));
+			banhji.router.navigate("/customer_deposit");
+		},
+		//Search
+		enterSearch 		: function(e){
+			e.preventDefault();
+			this.search();
+		},
+		search 				: function(){
+			var self = this, 
+			para = [],
+      		searchText = this.get("searchText"),
+      		contact_type_id = this.get("contact_type_id");
+      		if(searchText){
+      			var textParts = searchText.replace(/([a-z]+)/i, "$1 ").split(/[^0-9a-z]+/ig);
+      			para.push(
+      				{ field: "abbr", value: textParts[0] },
+      				{ field: "number", value: textParts[1] },
+					{ field: "name", operator: "or_like", value: searchText }
+      			);
+      		}
+      		if(contact_type_id){
+      			para.push({ field: "contact_type_id", value: contact_type_id });
+      		}else{
+      			para.push({ field: "parent_id", model:"contact_type", operator:"where_related", value: 1 });
+      		}
+      		this.contactDS.filter(para);
+			//Clear search filters
+      		self.set("searchText", "");
+      		self.set("contact_type_id", 0);
+		},
+		searchTransaction	: function(){
+			var self = this,
+				start = kendo.toString(this.get("sdate"), "yyyy-MM-dd"),
+        		end = kendo.toString(this.get("edate"), "yyyy-MM-dd"),
+        		para = [], obj = this.get("obj");
+        	if(obj.id>0){
+        		para.push({ field:"contact_id", value: obj.id });
+	        	//Dates
+	        	if(start && end){
+	            	para.push({ field:"issued_date >=", value: start });
+	            	para.push({ field:"issued_date <=", value: end });
+	            }else if(start){
+	            	para.push({ field:"issued_date", value: start });
+	            }else if(end){
+	            	para.push({ field:"issued_date <=", value: end });
+	            }else{
+	            	
+	            }
+	            this.transactionDS.query({
+	            	filter: para,
+	            	sort: [
+				  		{ field: "issued_date", dir: "desc" },
+				  		{ field: "id", dir: "desc" }
+				  	],
+	            	page: 1,
+	            	pageSize: 10
+	            });
+	        }
+		},
+		//Note
+		saveNoteEnter 		: function(e){
+			e.preventDefault();
+			this.saveNote();
+		},
+		saveNote 			: function(){
+			var obj = this.get("obj");
+			if(obj.id>0 && this.get("note")!==""){
+				this.noteDS.insert(0, {
+					contact_id 	: obj.id,
+					note 		: this.get("note"),
+					noted_date	: new Date(),
+					created_by 	: this.get("user_id"),
+					creator 	: ""
+				});
+				this.noteDS.sync();
+				this.set("note", "");
+			}else{
+				alert("Please select a customer and Memo is required");
+			}
+		},
+		goEdit 		 		: function(){
+			var obj = this.get("obj");
+			if(obj!==null && obj.id !== 0){
+				window.open('<?php echo base_url(); ?>rrd#/customer/'+obj.id,'_blank');
+				//banhji.router.navigate('/customer/'+obj.id);
+			}else{
+				alert("Please select a customer.");
+			}
+		}
+	});
 
 	/* views and layout */
 	banhji.view = {
@@ -16566,7 +16656,7 @@
 		banhji.view.layout.showIn('#menu', banhji.view.menu);
 		banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
 		var vm = banhji.waterCenter;
-		banhji.userManagement.addMultiTask("Water Center","water_center",null);
+		banhji.userManagement.addMultiTask("Water Center","center",null);
 		if(banhji.pageLoaded["water_center"]==undefined){
 			banhji.pageLoaded["water_center"] = true;
 		}
@@ -16672,7 +16762,7 @@
 		if(banhji.pageLoaded["run_bill"]==undefined){
 			banhji.pageLoaded["run_bill"] = true;
 		}
-		vm.pageLoad();
+		//vm.pageLoad();
 	});
 	banhji.router.route("/print_bill", function(){
 		banhji.view.layout.showIn("#content", banhji.view.printBill);
