@@ -3625,6 +3625,18 @@
 						           	events: {change: makeBilled}" />
 	                  		</div>
 						</div>	
+						<div class="span3">
+							<div class="control-group">								
+								<label ><span >Issue Date</span></label>
+								<input type="text" 
+				                	style="width: 100%;" 
+				                	data-role="datepicker"
+				                	data-format="dd-MM-yyyy"
+				                	placeholder="Issue Date ..." 
+						           	data-bind="value: IssueDate,
+						           	events: {change: makeBilled}" />
+	                  		</div>
+						</div>
 			        </div>
 			        <div class="box-generic bg-action-button">
 						<div id="ntf1" data-role="notification"></div>
@@ -3890,7 +3902,7 @@
 				<div class="span12">
 					<p>អតិថិជន​ #=contact.number#</p>
 					<p>#:contact.name#</p>
-					<p>#: typeof contact.address != 'null' ? contact.address: ''#</p>
+					<p>#: contact.address != 'null' ? contact.address: ''#</p>
 					<p style="font-size: 10px;"><i>ថ្ងៃ​ចាប់​ផ្តើម​ទទួល​ប្រាក់ #=kendo.toString(new Date(bill_date), "dd-MM-yyyy")#</i></p>
 				</div>
 			</div>
@@ -3971,7 +3983,13 @@
 								<td colspan="3" align="left">#: invoice_lines[j].number#</td>
 								<td align="center"></td>
 								<td align="right"></td>
-								<td align="right">-#= kendo.toString(invoice_lines[j].amount, "c", locale)#</td>
+								#if(invoice_lines[j].unit == "money"){#
+									<td align="right">-#= kendo.toString(invoice_lines[j].amount, "c", locale)#</td>
+								#}else if(invoice_lines[j].unit == "%"){#
+									<td align="right">#= invoice_lines[j].amount#%</td>
+								#}else{#
+									<td align="right">#= invoice_lines[j].amount#m<sup>3</sup></td>
+								#}#
 							</tr>
 						#}else{#
 							<tr>
@@ -12063,7 +12081,6 @@
 		        this.set("showButton", false);
 	        }
 	        this.makeBilled();
-
 		},	
 		total 			: function(){      		
 	        var sum = 0;
@@ -12096,7 +12113,7 @@
 				);
 				//this.dataSource.filter(para);
 				if(license_id){
-					para.push({field: "branch_id", operator: 'where_related_meter', value: license_id});
+					// para.push({field: "branch_id", operator: 'where_related_meter', value: license_id});
 					if(bloc_id){
 						para.push({field: "location_id", operator: 'where_related_meter', value: bloc_id});
 						this.invoiceDS.filter(para);
@@ -12136,16 +12153,13 @@
 	    makeBilled 			: function(){
 	    	this.invoiceCollection.data([]);
 	    	var mSold = 0, aSold = 0, self = this, rUsage = 0, tUsage = 0,aSoldL = 0, aTariff = 0, exT, exA, exU, TariffDS = [];
-	    	
 	    	this.set('totalOfInv', banhji.runBill.invoiceArray.length);
 	    	$.each(banhji.runBill.invoiceArray, function(i, v){
 	    		var date = new Date();
 				var rate = banhji.source.getRate(banhji.locale, date);
 				var locale = banhji.locale;
-				// var usage = v.items[0].line.usage * v.meter.multiplier;
 				var record_id = v.items[0].line.id;
 				var invoiceItems = [];
-	    		//console.log(v);
 	    		mSold += kendo.parseInt(v.items[0].line.usage);
 	    		//Calculate Exemption
 	    		if(v.exemption.length > 0){
@@ -12164,9 +12178,7 @@
 	    			exU = v.items[0].line.usage;
 	    			tUsage = exU;
 	    		}
-	    		
-	    		//Calculate Tariff
-				
+
 	    		//Add to Itmes
 				$.each(v.items, function(index, value) {
 					invoiceItems.push({				
@@ -12183,40 +12195,36 @@
 				   		"type" 				: value.type
 					});
 				});	
+				//Calculate Tariff
+				var that = this;
+				that.tariffTemp = null;
 				$.each(v.tariff, function(j, v){
-					var tIndex = j - 1;
-					console.log(j);
-					if(j > 0){
-						if(invoiceItems[tIndex] && invoiceItems[tIndex].type == 'tariff'){
-							invoiceItems.splice(tIndex, 1);
-							console.log(invoiceItems[tIndex]);
-						}
-					}
 	    			if(kendo.parseInt(tUsage) > kendo.parseInt(v.line.usage)){
-		    			invoiceItems.push({				
-							"item_id" 			: v.line.id,
-					   		"invoice_id"		: 0,
-						   	"meter_record_id"	: record_id,
-						   	"description" 		: v.line.name,					   	
-						   	"quantity" 			: v.line.usage,
-						   	"price"				: 0,	
-						   	"amount" 			: v.line.amount,
-						   	"rate"				: rate,
-						   	"locale" 			: locale,
-						   	"has_vat" 			: false,
-					   		"type" 				: 'tariff'
-						});
+	    				that.tariffTemp = v;		    			
 	    				aTariff = v.line.amount;
 	    			}
 	    		});
+	    		invoiceItems.push({				
+					"item_id" 			: that.tariffTemp.id,
+			   		"invoice_id"		: 0,
+				   	"meter_record_id"	: record_id,
+				   	"description" 		: that.tariffTemp.line.name,					   	
+				   	"quantity" 			: that.tariffTemp.line.usage,
+				   	"price"				: 0,	
+				   	"amount" 			: that.tariffTemp.line.amount,
+				   	"rate"				: rate,
+				   	"locale" 			: locale,
+				   	"has_vat" 			: false,
+			   		"type" 				: 'tariff'
+				});
 	    		if(v.installment.length > 0){
 	    			invoiceItems.push({				
 						"item_id" 			: v.installment[0].line.id,
 				   		"invoice_id"		: 0,
 					   	"meter_record_id"	: record_id,
-					   	"description" 		: v.installment[0].line.name,					   	
+					   	"description" 		: v.installment[0].line.name,
 					   	"quantity" 			: v.installment[0].line.usage,
-					   	"price"				: 0,	
+					   	"price"				: 0,
 					   	"amount" 			: v.installment[0].line.amount,
 					   	"rate"				: rate,
 					   	"locale" 			: locale,
@@ -12229,7 +12237,7 @@
 						"item_id" 			: v.maintenance[0].line.id,
 				   		"invoice_id"		: 0,
 					   	"meter_record_id"	: record_id,
-					   	"description" 		: v.maintenance[0].line.name,					   	
+					   	"description" 		: v.maintenance[0].line.name,
 					   	"quantity" 			: v.maintenance[0].line.usage,
 					   	"price"				: 0,	
 					   	"amount" 			: v.maintenance[0].line.amount,
@@ -12244,7 +12252,7 @@
 						"item_id" 			: v.exemption[0].line.id,
 				   		"invoice_id"		: 0,
 					   	"meter_record_id"	: record_id,
-					   	"description" 		: v.exemption[0].line.name,					   	
+					   	"description" 		: v.exemption[0].line.name,
 					   	"quantity" 			: v.exemption[0].line.usage,
 					   	"price"				: 0,	
 					   	"amount" 			: v.exemption[0].line.amount,
@@ -12254,7 +12262,7 @@
 				   		"type" 				: 'exemption'
 					});
 		    	}
-				
+
 				//Total after Tariff
 				var Total = 0;
 				if(exT == '%'){
@@ -12269,12 +12277,10 @@
 				}
 				//Installment
 				if(v.installment[0].line.amount > 0){
-					console.log("Installment___"+v.installment[0].line.amount);
 					Total = Total + v.installment[0].line.amount;
 				}
 				//Maintenance
 				if(v.maintenance[0].line.amount > 0){
-					console.log("maintenance___"+v.maintenance[0].line.amount);
 					Total = Total + v.maintenance[0].line.amount;
 				}
 				//Meter Location
@@ -12293,7 +12299,7 @@
 			var date = new Date();
 			var rate = banhji.source.getRate(banhji.locale, date);
 			var locale = banhji.locale;
-			//console.log(this.invoiceArray);
+			console.log(invoiceItems);
 			this.invoiceCollection.add({
 				contact 			: Contact,
 				biller_id 			: banhji.userData.id,
@@ -12303,16 +12309,15 @@
 				locale 				: locale,
 				location_id 		: MeterLocation,
 				month_of 			: this.get("FmonthSelect"),
-				issued_date 		: date,
+				issued_date 		: this.get("IssueDate"),
 				bill_date 			: this.get("BillingDate"),
 				due_date 			: this.get("DueDate"),
 				invoice_lines    	: invoiceItems
 			});
-			//this.invoiceCollection.dataSource.add(banhji.runBill.invoiceArray);
 	    },
 		save 				: function() {
 			var self = this;
-			if(this.get("FmonthSelect") && this.get("BillingDate") && this.get("DueDate")){
+			if(this.get("FmonthSelect") && this.get("BillingDate") && this.get("IssueDate") && this.get("DueDate")){
 				$("#loadImport").css("display","block");
 				this.invoiceCollection.sync();
 				this.invoiceCollection.bind("requestEnd", function(e){

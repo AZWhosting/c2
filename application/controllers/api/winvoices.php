@@ -354,7 +354,7 @@ class Winvoices extends REST_Controller {
 
 			foreach($items as $item) {
 				
-				 if($item->type == 'usage') {
+				if($item->type == 'usage') {
 					$record = $item->meter_record->limit(1)->get();
 					$usage = $record->usage;
 					$lines[] = array(
@@ -366,7 +366,20 @@ class Winvoices extends REST_Controller {
 						'amount' => floatval($item->amount),
 						'type' => $item->type
 					);
-				} else {
+				} elseif($item->type == 'exemption') {
+					$unit = $item->item->limit(1)->get();
+					$usage = $record->usage;
+					$lines[] = array(
+						'number' => $item->description,
+						'previous' => floatval($record->previous),
+						'current'  => floatval($record->current),
+						'consumption' => floatval($record->usage),
+						'rate' => floatval($item->rate),
+						'amount' => floatval($item->amount),
+						'type' => $item->type,
+						'unit' => $unit->unit
+					);
+				}else{
 					$lines[] = array(
 						'number' => $item->description,
 						'previous' => floatval($item->previous),
@@ -396,7 +409,7 @@ class Winvoices extends REST_Controller {
 					'phone' => $contact->phone,
 					'abbr' => $contact->abbr,
 					'number' => $contact->number,
-					'address'=> $contact->address,
+					'address'=> isset($contact->address)?$contact->address:'',
 					'code' 	 => $contact->utility_abbr ."-".$contact->utility_code
 				),
 				'meter'=> $meter,

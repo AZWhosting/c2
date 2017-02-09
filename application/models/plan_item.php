@@ -18,6 +18,10 @@ class Plan_item extends DataMapper {
 		'account' => array(
 			'class' => "acct",
 			'other_field' => 'plan_item'
+		),
+		'winvoice_line' => array(
+			'class' => "winvoice_line",
+			'other_field' => 'item'
 		)
 	);
 

@@ -16,6 +16,10 @@ class Winvoice_line extends DataMapper {
         'meter_record' => array(
             'class' => 'meter_record',
             'other_field' => 'winvoice_line'
+        ),
+        'item' => array(
+            'class' => 'plan_item',
+            'other_field' => 'winvoice_line'
         )
 	);
 		
