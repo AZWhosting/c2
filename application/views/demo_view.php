@@ -70567,11 +70567,7 @@
 	banhji.customerBalanceSummary =  kendo.observable({
 		lang 				: langVM,
 		dataSource 			: dataStore(apiUrl + "sales/aging_summary"),
-		contactDS  			: new kendo.data.DataSource({
-		  	data: banhji.source.customerList,
-			sort: { field:"number", dir:"asc" }
-		}),
-		obj 				: { customers: [] },
+		obj 				: null,
 		company 			: banhji.institute,
 		as_of 				: new Date(),
 		displayDate 		: "",
@@ -70582,19 +70578,9 @@
 			this.search();
 		},
 		search				: function(){
-			var self = this, para = [], 
-				obj = this.get("obj"),
+			var self = this, para = [],
 				as_of = this.get("as_of"),
         		displayDate = "";
-
-	        //Customer
-            if(obj.customers.length>0){
-            	var customers = [];
-            	$.each(obj.customers, function(index, value){
-            		customers.push(value);
-            	});          	
-	            para.push({ field:"contact_id", operator:"where_in", value:customers });
-	        }
     	
         	if(as_of){
 				as_of = new Date(as_of);
