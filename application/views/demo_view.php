@@ -48031,15 +48031,25 @@
 				}).then(function(e){
 					var view = self.dataSource.view();
 					       
-					self.set("obj", view[0]);
+					// self.set("obj", view[0]);
 
 					self.lineDS.filter({ field: "transaction_id", value: id });
 					self.journalLineDS.filter({ field: "transaction_id", value: id });
-					self.attachmentDS.filter({ field: "transaction_id", value: id });
-					self.referenceDS.filter({ field: "id", value: view[0].reference_id });
+					self.attachmentDS.filter({ field: "transaction_id", value: id });					
 					self.referenceLineDS.filter({ field: "transaction_id", value: view[0].reference_id });
-					self.loadContact(view[0].contact_id);
-					self.typeChanges();								
+					self.referenceDS.query({
+						filter:{ field: "id", value: view[0].reference_id }
+					}).then(function(){
+						self.set("obj", view[0]);
+					});
+
+					switch(view[0].type) {			    
+					    case "Advance_Settlement":
+					        self.set("showCashAdvance", true);
+					        break;
+					    default:			         
+					        self.set("showCashAdvance", false);
+					}
 				});
 			}
 		},
@@ -73591,8 +73601,7 @@
 		search 				: function(){
 			var self = this, 
 			para = [],
-			obj = this.get("obj"),			
-			date = kendo.toString(new Date(obj.issued_date), "yyyy-MM-dd"), 
+			obj = this.get("obj"), 
 			searchText = this.get("searchText"), 
 			invoice_id = this.get("invoice_id"),
 			contact_id = this.get("contact_id");
@@ -73822,13 +73831,14 @@
 				var ids = [];
 				//Save journals
 				$.each(data, function(index, value){
-					var contact = banhji.source.customerDS.get(value.contact_id);
+					var contact = banhji.source.supplierDS.get(value.contact_id),
+					reference = self.dataSource.at(index);
 					ids.push(value.id);
 
 					//AP on Dr
 					self.journalLineDS.add({
 						transaction_id 		: value.id,
-						account_id 			: value.reference[0].account_id,
+						account_id 			: reference.account_id,
 						contact_id 			: value.contact_id,
 						description 		: "",
 						reference_no 		: "",
