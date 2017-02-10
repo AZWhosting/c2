@@ -70,7 +70,7 @@ class Meters extends REST_Controller {
 												"locale" => $currency->locale
 					),
 					"meter_number" 			=> $value->number,
-					"meter" 				=> $value->number,
+					// "meter" 				=> $value->number,
 					"worder" 				=> $value->worder,
 					"contact_name" 			=> $contacts->name,
 					"status" 				=> $value->status,
@@ -114,7 +114,7 @@ class Meters extends REST_Controller {
 			$obj->maintenance_id 		= isset($value->maintenance_id)		?$value->maintenance_id:0;
 			$obj->reactive_of 			= isset($value->reactive_of)		?$value->reactive_of:0;
 			$obj->backup_of 			= isset($value->backup_of)			?$value->backup_of:0;
-			$obj->number 				= isset($value->meter_number) 			? $value->meter_number:0;			
+			$obj->number 				= isset($value->meter_number) 		? $value->meter_number:0;			
 			$obj->multiplier 			= isset($value->multiplier) 		? $value->multiplier: 1;
 			$obj->max_number 			= isset($value->max_number) 		? $value->max_number:0;
 			$obj->contact_id 			= isset($value->contact_id) 		? $value->contact_id:0;
@@ -135,7 +135,7 @@ class Meters extends REST_Controller {
 			if($obj->save()){	
 				$data[] = array(
 					"id" 					=> $obj->id,
-					"number" 				=> $obj->number,
+					"meter_number" 			=> $obj->number,
 					"status" 				=> $obj->status,
 					"number_digit" 			=> $obj->number_digit,
 					"latitute" 				=> $obj->map,	
@@ -153,9 +153,9 @@ class Meters extends REST_Controller {
 		
 		// $this->response($data, 201);
 		if($count > 0) {
-			$this->response(array("results" => 'success'), 201);
+			$this->response(array("results" => $data), 201);
 		} else {
-			$this->response(array("results" => 'failed'), 401);
+			$this->response(array("results" => array()), 401);
 		}
 							
 	}
@@ -182,7 +182,7 @@ class Meters extends REST_Controller {
 			$obj->maintenance_id 		= isset($value->maintenance_id)		?$value->maintenance_id:0;
 			$obj->reactive_of 			= isset($value->reactive_of)		?$value->reactive_of:0;
 			$obj->backup_of 			= isset($value->backup_of)			?$value->backup_of:0;
-			$obj->number 				= isset($value->meter_number) 			? $value->meter_number:0;			
+			$obj->number 				= isset($value->meter_number) 		? $value->meter_number:0;			
 			$obj->multiplier 			= isset($value->multiplier) 		? $value->multiplier: 1;
 			$obj->max_number 			= isset($value->max_number) 		? $value->max_number:0;
 			// $obj->contact_id 			= isset($value->contact_id) 		? $value->contact_id:0;
@@ -206,7 +206,7 @@ class Meters extends REST_Controller {
 				//Results
 				$data[] = array(
 					"id" 					=> $obj->id,
-					"number" 				=> $obj->number,
+					"meter_number" 			=> $obj->number,
 					"status" 				=> $obj->status,
 					"number_digit" 			=> $obj->number_digit,
 					"latitute" 				=> $obj->map,	
@@ -223,9 +223,9 @@ class Meters extends REST_Controller {
 		}
 		$count = count($data);
 		if($count > 0) {
-			$this->response(array("results" => 'success'), 201);
+			$this->response(array("results" =>$data), 201);
 		} else {
-			$this->response(array("results" => 'failed'), 401);
+			$this->response(array("results" => array()), 401);
 		}
 	}
 	

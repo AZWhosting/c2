@@ -141,17 +141,17 @@ class Winvoices extends REST_Controller {
 				}
 
 				// installment
-				$installment = $meter->installment->get();
+				$installment = $meter->installment->where("invoiced", 0)->limit(1)->get();
 				$tmp["$meter->number"]['installment'][] = array(
 					"type" => 'installment',
 					"line" => array(
 						'id'   => $installment->id,
 						'name' => 'Installment',
-						'from' => 0,
+						'from' => $installment->date,
 						'to'   => 0,
 						'prev' =>0,
 						'current'=>0,
-						'usage' => 0,
+						'usage' => 1,
 						'unit'  => 'money',
 						'amount'=> floatval($installment->amount)
 					));
@@ -364,7 +364,9 @@ class Winvoices extends REST_Controller {
 						'consumption' => floatval($record->usage),
 						'rate' => floatval($item->rate),
 						'amount' => floatval($item->amount),
-						'type' => $item->type
+						'type' => $item->type,
+						'from_date' => $record->from_date,
+						'to_date' => $record->to_date
 					);
 				} elseif($item->type == 'exemption') {
 					$unit = $item->item->limit(1)->get();

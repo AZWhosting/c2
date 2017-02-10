@@ -97,9 +97,9 @@ class Customer extends DataMapper {
 			'class' => 'attachment',
 			'other_field' => 'contact'
 		),
-		'contact_utility' => array(
+		'utility' => array(
 			'class' => 'contact_utility',
-			'other_field' => 'contact'
+			'other_field' => 'customer'
 		)
 	);
 

@@ -5,13 +5,13 @@ class Contact_utility extends DataMapper {
 	// protected $updated_field = "updated_at";
 
 	public $has_one = array(
+		// 'contact' => array(
+		// 	'class' => "contact",
+		// 	'other_field' => 'contact_utility'
+		// ),
 		'contact' => array(
-			'class' => "contact",
-			'other_field' => 'contact_utility'
-		),
-		'customer' => array(
 			'class' => "customer",
-			'other_field' => 'contact_utility'
+			'other_field' => 'utility'
 		),
 		'branch' => array(
 			'class' => "branch",

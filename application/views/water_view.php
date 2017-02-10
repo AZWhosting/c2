@@ -97,7 +97,20 @@
 					</a>						
 				</div>
 			</div>
-			<div class="water-grap" id="water-sale-graph" style="background: #fff; width: 100%; min-height: 175px; margin-top: 10px;">
+			<div data-role="chart"
+							 data-auto-bind="true"
+			                 data-legend="{ position: 'top' }"
+			                 data-series-defaults="{ type: 'column' }"
+			                 data-tooltip='{
+			                    visible: true,
+			                    format: "{0}%",
+			                    template: "#= series.name #: #= kendo.toString(value, &#39;c&#39;, banhji.locale) #"
+			                 }'                 
+			                 data-series="[
+			                                 { field: 'amount', name: 'Sale', categoryField:'month', color: '#203864', overlay:{ gradient: 'none'}  }
+			                             ]"	                             
+			                 data-bind="source: graphDS"
+			                 style="height: 240px;" ></div>
 			</div>
 		</div>
 	    <div class="span6" style="padding-left: 0;">
@@ -210,12 +223,10 @@
 					<th><span>Balance</span></th>
 				</tr>
 			</thead>
-			<tbody data-role="listview" data-bind="source: dataSource" data-template="dashboard-template-table-list">
-				
+			<tbody data-role="listview" data-bind="source: dataSource" data-template="dashboard-template-table-list">				
 			</tbody>
 		</table>
 	</div>
-
 </script>
 <script id="dashboard-template-table-list" type="text/x-kendo-tmpl">
 	<tr>
@@ -224,9 +235,9 @@
 		<td>#=blocCount#</td>
 		<td>#=activeCustomer#</td>
 		<td>#=inActiveCustomer#</td>
-		<td>#=deposit#</td>
+		<td>#=kendo.toString(deposit, 'c2', banhji.locale)#</td>
 		<td>#=usage#</td>
-		<td>#=sale#</td>
+		<td>#=kendo.toString(sale, 'c2', banhji.locale)#</td>
 		<td>#=sale - deposit#</td>
 	</tr>
 </script>
@@ -2277,11 +2288,10 @@
 		                    template: "#= series.name #: #= kendo.toString(value, &#39;c&#39;, banhji.locale) #"
 		                 }'                 
 		                 data-series="[
-		                                 { field: 'amount', name: 'Amount', categoryField:'month_of', color: '#236DA4' },
-		                                 { field: 'consumption', name: 'Usage', categoryField:'month_of', color: '#A6C9E3' }
+		                                 { field: 'usage', name: 'Usage', categoryField:'month', color: '#236DA4', overlay:{ gradient: 'none'} }
 		                             ]"
 		                 data-auto-bind="false"	                             
-		                 data-bind="source: invoiceVM.dataSource"
+		                 data-bind="source: graphDS"
 		                 style="height: 250px;" ></div> 
 		        	</div>
 			    	<!-- //GENERAL INFO -->
@@ -2633,7 +2643,7 @@
 									<div class="span6" style="padding-right: 0;">	
 										<!-- Group -->
 										<div class="control-group">							
-											<label for="txtAbbr"><span >Plan</span></label>										
+											<label for="txtAbbr"><span >Plan</span> <span style="color:red">*</span></label>										
 					              			<br>
 						              		<input data-role="dropdownlist"
 					              			   data-option-label="(--- Select ---)"	      
@@ -2742,7 +2752,7 @@
 											<div class="span6">		
 												<!-- Group -->
 												<div class="control-group">
-									    			<label for="latitute"><span>Bloc</span> </label>
+									    			<label for="latitute"><span>Bloc</span> <span style="color:red">*</span></label>
 													<div class="input-prepend">
 														<input data-role="dropdownlist"
 								              			   data-option-label="(--- Select ---)"        
@@ -3926,14 +3936,14 @@
 					</tr> -->
 					<tr>
 						<td><p>គិត​ចាប់​ពី​ថ្ងៃ​ទី</p></td>
-						<td><p>#=kendo.toString(new Date(bill_date), "dd-MM-yyyy")#</p></td>
+						<td><p>#=kendo.toString(new Date(invoice_lines[0].from_date), "dd-MM-yyyy")#</p></td>
 					</tr>
 					<tr>
 						<td><p>ដល់​ថ្ងៃ​ទី</p></td>
-						<td><p>#=kendo.toString(new Date(due_date), "dd-MM-yyyy")#</p></td>
+						<td><p>#=kendo.toString(new Date(invoice_lines[0].to_date), "dd-MM-yyyy")#</p></td>
 					</tr>
 				</table>		
-			</div>			
+			</div>
 		</div>
 		<table class="span12 table table-bordered footerTbl" style="padding:0;margin-top: 40px;border:1px solid \\#000; border-radius: 3px;border-collapse: inherit;margin-left: 0px;">
 			<thead>
@@ -8241,12 +8251,12 @@
 			}).then(function(){
 				var view = self.dataSource.view();				
 				
-				self.set("ar", kendo.toString(view[0].ar, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
-				self.set("ar_open", kendo.toString(view[0].ar_open, "n0"));
-				self.set("ar_customer", kendo.toString(view[0].ar_customer, "n0"));
-				self.set("ar_overdue", kendo.toString(view[0].ar_overdue, "n0"));
+				self.set("ar", kendo.toString(view[0].ar, banhji.locale));
+				self.set("ar_open", kendo.toString(view[0].ar_open, "n0", banhji.locale));
+				self.set("ar_customer", kendo.toString(view[0].ar_customer, "n0", banhji.locale));
+				self.set("ar_overdue", kendo.toString(view[0].ar_overdue, "n0", banhji.locale));
 
-				self.set("ap", kendo.toString(view[0].ap, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
+				self.set("ap", kendo.toString(view[0].ap, banhji.locale));
 				self.set("ap_open", kendo.toString(view[0].ap_open, "n0"));
 				self.set("ap_vendor", kendo.toString(view[0].ap_vendor, "n0"));
 				self.set("ap_overdue", kendo.toString(view[0].ap_overdue, "n0"));
@@ -9842,7 +9852,7 @@
 		setPeriod 			: function(period) {
 			this.set('period', period);
 		},
-		makeSchedule 		: function(amount, contactId, startDate, period) {
+		makeSchedule 		: function(amount, contactId, meterId,startDate, period) {
 			var dfd = $.Deferred();
 			try {
 				if(amount == undefined) throw "TypeError: Amount is not defined";
@@ -9851,6 +9861,7 @@
 				banhji.installment.dataSource.insert(0, {
 					biller_id 	: banhji.userData.id,
 					contact_id 	: contactId,
+					meter_id 	: meterId,
 					start_month : kendo.toString(startDate, 'yyyy-MM-dd'),
 					amount 		: amount,
 					payment_number: null,
@@ -9912,6 +9923,7 @@
 			banhji.reading.set("blocSelect", bloc);
 		},
 		search 		 		: function(){	
+			this.uploadDS.data([]);
 			this.set("haveData", false);	
 			var monthOfSearch = this.get("monthOfSelect"),
 			license_id = this.get("licenseSelect"),
@@ -9939,7 +9951,7 @@
 						this.uploadDS.query({
 							filter: para
 						}).then(function(){
-							
+							self.rows = [];
 					        if(self.uploadDS.data().length > 0){
 					        	self.set("haveData", true);
 					        	self.rows.push({ 
@@ -9988,7 +10000,7 @@
 					previous: banhji.reading.get('previousSR'),
 					current : banhji.reading.get('currentSR'),
 					invoiced: 0,
-					status: "n",
+					condition: "new",
 					consumption: banhji.reading.get('currentSR') - banhji.reading.get('previousSR')
 				});
 				banhji.reading.save()
@@ -11668,20 +11680,25 @@
 	    },
 		save 				: function() {
 			var self = this;
-			if(this.dataSource.data().length > 0) {
-				this.dataSource.sync();
-				this.dataSource.bind("requestEnd", function(e){
-					if(e.type != 'read') {
-						if(e.response){				
-				    		$("#ntf1").data("kendoNotification").success("Successfully!");
-							self.cancel();
-						}
-					}				    					  				
-			    });
-			    this.dataSource.bind("error", function(e){		    		    	
-					$("#ntf1").data("kendoNotification").error("Error!"); 	
-			    });
-			}	
+			var obj = this.get("obj");
+			if(obj.meter_number && obj.plan_id != 0 && obj.plan_id && obj.location_id && obj.date_used && obj.number_digit){
+				if(this.dataSource.data().length > 0) {
+					this.dataSource.sync();
+					this.dataSource.bind("requestEnd", function(e){
+						if(e.type != 'read') {
+							if(e.response){				
+					    		$("#ntf1").data("kendoNotification").success("Successfully!");
+								self.cancel();
+							}
+						}				    					  				
+				    });
+				    this.dataSource.bind("error", function(e){		    		    	
+						$("#ntf1").data("kendoNotification").error("Error!"); 	
+				    });
+				}
+			}else{
+				alert("Fields Required!");
+			}
 		},
 		cancel 				: function(){
 			this.dataSource.cancelChanges();		
@@ -11808,7 +11825,7 @@
 			});
 		},
 		save 				: function() {
-			console.log('save');
+			
 			$("#loadImport").css("display","block");
 			var self = this;
 			var amount = 0.0;
@@ -11879,7 +11896,7 @@
 					if(status) {
 						banhji.installment.setDate(banhji.ActivateMeter.get('startDate'));
 						banhji.installment.setPeriod(banhji.ActivateMeter.get('period'));
-						return banhji.installment.makeSchedule(amount - kendo.parseFloat(banhji.ActivateMeter.get('amountToBeRecieved')), banhji.ActivateMeter.get('meterObj').contact[0].id, banhji.ActivateMeter.get('startDate'), banhji.ActivateMeter.get('period'));
+						return banhji.installment.makeSchedule(amount - kendo.parseFloat(banhji.ActivateMeter.get('amountToBeRecieved')), banhji.ActivateMeter.get('meterObj').contact[0].id, banhji.ActivateMeter.get('meterObj').id,banhji.ActivateMeter.get('startDate'), banhji.ActivateMeter.get('period'));
 					}
 				})
 				.then(function(data){
@@ -12152,10 +12169,10 @@
 	    exUnitAmount 		: null,
 	    makeBilled 			: function(){
 	    	this.invoiceCollection.data([]);
-	    	var mSold = 0, aSold = 0, self = this, rUsage = 0, tUsage = 0,aSoldL = 0, aTariff = 0, exT, exA, exU, TariffDS = [];
+	    	var mSold = 0, aSold = 0, self = this,aSoldL = 0, TariffDS = [];
 	    	this.set('totalOfInv', banhji.runBill.invoiceArray.length);
 	    	$.each(banhji.runBill.invoiceArray, function(i, v){
-	    		var date = new Date();
+	    		var date = new Date(), aTariff = 0, exT = '', exA, exU, rUsage = 0, tUsage = 0 ;
 				var rate = banhji.source.getRate(banhji.locale, date);
 				var locale = banhji.locale;
 				var record_id = v.items[0].line.id;
@@ -12166,8 +12183,9 @@
 	    			var Usage = kendo.parseInt(v.items[0].line.usage),
 	    			AmountEx = kendo.parseInt(v.exemption[0].line.amount);
 	    			if(v.exemption[0].line.unit == 'm3'){
-	    				rUsage = Usage - AmountEx;
-	    				tUsage = Usage - rUsage;
+	    				//rUsage = Usage - AmountEx;
+	    				tUsage = Usage - AmountEx;
+	    				console.log(tUsage + '__' +Usage);
 	    			}else{
 	    				exT = v.exemption[0].line.unit;
 	    				exA = AmountEx;
@@ -12177,6 +12195,7 @@
 	    		}else{
 	    			exU = v.items[0].line.usage;
 	    			tUsage = exU;
+	    			exT = 'm3';
 	    		}
 
 	    		//Add to Itmes
@@ -12274,6 +12293,7 @@
 					Total = kendo.parseFloat(exU) - kendo.parseFloat(exA);
 				}else{
 					Total = kendo.parseInt(tUsage) * kendo.parseFloat(aTariff);
+					console.log(tUsage+"__"+Total);
 				}
 				//Installment
 				if(v.installment[0].line.amount > 0){
@@ -12299,7 +12319,6 @@
 			var date = new Date();
 			var rate = banhji.source.getRate(banhji.locale, date);
 			var locale = banhji.locale;
-			console.log(invoiceItems);
 			this.invoiceCollection.add({
 				contact 			: Contact,
 				biller_id 			: banhji.userData.id,
@@ -15864,7 +15883,7 @@
 	      			user += value.activeCustomer;
 	      			deposit+= value.deposit;
 	      		});
-	      		banhji.wDashBoard.set('totalSale', sale);
+	      		banhji.wDashBoard.set('totalSale', kendo.toString(sale, 'c2', banhji.locale));
 	      		banhji.wDashBoard.set('totalUsage', usage);
 	      		banhji.wDashBoard.set('totalUser', user);
 	      		banhji.wDashBoard.set('totalDeposit', deposit);
@@ -15875,6 +15894,39 @@
 	      	serverPaging: true,
 	      	pageSize: 100
 	    }),
+	    graphDS   : new kendo.data.DataSource({
+			transport: {
+				read 	: {
+					url: apiUrl + 'waterdash/graph',
+					type: "GET",
+					headers: banhji.header,
+					dataType: 'json'
+				},
+				parameterMap: function(options, operation) {
+					if(operation === 'read') {
+						return {
+							limit: options.take,
+							page: options.page,
+							filter: options.filter
+						};
+					}
+				}
+			},
+			schema 	: {
+				data: 'results',
+				total: 'count'
+			},
+			// group: {
+			// 	field: 'month',
+			// 	aggregates: [
+			// 		{field: 'amount', aggregate: 'sum'}
+			// 	]
+			// },
+			batch: true,
+			serverFiltering: true,
+			serverPaging: true,
+			pageSize: 1000
+		}),
 	    invoice: 0,
 	    activeCust: 0,
 	    invCust: 0,
@@ -15929,7 +15981,7 @@
 	      		banhji.wDashBoard.set('overDue', overDue);
 	      		banhji.wDashBoard.set('totalCust', totalCust);
 	      		banhji.wDashBoard.set('voidCust', voided);
-	      		banhji.wDashBoard.set('totalAmount', amount);
+	      		banhji.wDashBoard.set('totalAmount', kendo.toString(amount, 'c2', banhji.locale));
 	      	},
 	      	batch: true,
 	      	serverFiltering: true,
@@ -15951,6 +16003,39 @@
 		readingVM			: banhji.reading,
 		installmentVM 		: banhji.installment,
 		invoiceVM 			: banhji.invoice,
+		graphDS 			:new kendo.data.DataSource({
+			transport: {
+				read 	: {
+					url: apiUrl + 'waterdash/usage',
+					type: "GET",
+					headers: banhji.header,
+					dataType: 'json'
+				},
+				parameterMap: function(options, operation) {
+					if(operation === 'read') {
+						return {
+							limit: options.take,
+							page: options.page,
+							filter: options.filter
+						};
+					}
+				}
+			},
+			schema 	: {
+				data: 'results',
+				total: 'count'
+			},
+			// group: {
+			// 	field: 'month',
+			// 	aggregates: [
+			// 		{field: 'amount', aggregate: 'sum'}
+			// 	]
+			// },
+			batch: true,
+			serverFiltering: true,
+			serverPaging: true,
+			pageSize: 1000
+		}),
 		meterClick 			: function(){ banhji.view.layout.showIn("#waterCenterContent", banhji.view.waterCenterContent); },
 		NometerClick 		: function(){ banhji.view.layout.showIn("#waterCenterContent", banhji.view.waterTransactionContent); },
 		contactDS			: new kendo.data.DataSource({
@@ -16324,6 +16409,7 @@
 		},
 		onSelectedMeter		: function(e) {
 			this.readingVM.set('NumberSR',e.data.meter_number);
+			this.graphDS.filter({field: 'meter_id', value: e.data.id});
 			this.readingVM.dataSource.filter({field: 'meter_id', value: e.data.id});
 			this.installmentVM.dataSource.filter({field: 'meter_id', value: e.data.id});
 		},
@@ -16547,77 +16633,6 @@
 		// $('#main-top-navigation').append('<li><a href="\#">Home</a></li>');
 		// $('#current-section').text("");
 		// $("#secondary-menu").html("");
-		var monthlyDS = new kendo.data.DataSource({
-			transport: {
-				read 	: {
-					url: apiUrl + 'waterdash/graph',
-					type: "GET",
-					headers: banhji.header,
-					dataType: 'json'
-				},
-				parameterMap: function(options, operation) {
-					if(operation === 'read') {
-						return {
-							limit: options.take,
-							page: options.page,
-							filter: options.filter
-						};
-					}
-				}
-			},
-			schema 	: {
-				data: 'results',
-				total: 'count'
-			},
-			group: {
-				field: 'month',
-				aggregates: [
-					{field: 'amount', aggregate: 'sum'},
-					{field: 'usage', aggregate: 'sum'}
-				]
-			},
-			batch: true,
-			serverFiltering: true,
-			serverPaging: true,
-			pageSize: 1000
-		});				 
-		
-		monthlyDS.fetch(function(e){
-			console.log('test graph0');				
-			$('#water-sale-graph').kendoChart({
-				dataSource: {data: monthlyDS.data()},												
-				series: [
-					{field: 'amount', categoryField:'month', type: 'line', axis: 'sale'},
-					{field: 'usage', categoryField:'month', type: 'column', axis: 'usage'}
-				],
-				valueAxes: [
-					{
-	                    name: "sale",
-	                    color: "#007eff",
-	                    min: 0,
-	                    majorUnit: 5000000,
-	                    max: 50000000
-	                }, 
-	                {
-	                    name: "usage",
-	                    color: "#3399ff",
-	                    min: 0,	
-	                    majorUnit: 5000,		                   
-	                    max: 50000
-	                }
-                ],
-                categoryAxis: {
-                    //categories: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],		                    
-                    axisCrossingValues: [0, 13],
-                    justified: true
-                },
-                tooltip: {
-                    visible: true,
-                    format: "{0}"
-                }
-
-			});
-		});	
 		banhji.index.getLogo();
 		banhji.index.pageLoad();
 	});

@@ -43,10 +43,10 @@ class Waterdash extends REST_Controller {
 		// $data["results"] = array();
 		// $data["count"] = 0;
 
-		$contact = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$icontact = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$acontact = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$vcontact = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$contact = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$icontact = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$acontact = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$vcontact = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$trx = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
 
@@ -69,23 +69,22 @@ class Waterdash extends REST_Controller {
 			}
 		}
 
-		$contact->where('use_water', 1);
-		$contact->where('deleted', 0);
+		// $contact->where('status', 1);
+		$contact->where('activated', 1);
 		$totalCust = $contact->count();
 
-		$icontact->where('use_water', 1);
-		$icontact->where('deleted', 0);
+		$icontact->where('status', 0);
+		$icontact->where('activated', 1);
 		$icontact->where('status', 0);
 		$totalICust = $icontact->count();
 
-		$acontact->where('use_water', 1);
-		$acontact->where('deleted', 0);
+		$acontact->where('status', 1);
+		$acontact->where('activated', 1);
 		$acontact->where('status', 1);
 		$totalACust = $acontact->count();
 
-		$vcontact->where('use_water', 1);
-		$vcontact->where('deleted', 0);
 		$vcontact->where('status', 2);
+		$vcontact->where('activated', 1);
 		$totalVCust = $vcontact->count();
 
 		$voidedCust = $totalCust - ($totalICust - $totalACust);
@@ -163,7 +162,7 @@ class Waterdash extends REST_Controller {
 			foreach($obj as $value) {
 				$location = new Location(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_banhji');
 				// $location->include_related('transaction', 'amount');
-				$location->include_related('contact', array('id', 'status', 'deposit_account_id'));
+				// $location->include_related('utility', array('id', 'status', 'deposit_account_id'));
 				$location->where('branch_id', $value->id);
 
 				$location->get();
@@ -173,6 +172,8 @@ class Waterdash extends REST_Controller {
 				$usage = 0;
 				$deposit = 0;
 				foreach($location as $loc) {
+					$meter = $loc->meter->get();
+					$contact = $loc->contact->select('deposit_account_id')->get();
 					$trx = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_banhji');
 					$trx->select_sum('amount');
 					$trx->where('location_id', $loc->id)->get();
@@ -189,23 +190,28 @@ class Waterdash extends REST_Controller {
 						$usage += $u->winvoice_line_quantity;
 					}
 					
-					if($loc->contact_status == 1) {
-						$activeCount += 1;
-					} else {
-						$inActiveCount +=1; 
-					}
-					$line = new journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-					$line->where('contact_id', $loc->contact_id);
-					$line->where('account_id', $loc->contact_deposit_account_id);
-					$line->get();
-
-					foreach($line as $l) {
-						if($l->dr != 0.00) {
-							$deposit -= $l->dr;
+					foreach($meter as $c) {
+						if($c->status == 1) {
+							$activeCount += 1;
 						} else {
-							$deposit += $l->cr;
+							$inActiveCount +=1;
 						}
-					}				
+					}
+					
+					foreach($contact as $c) {
+						$line = new journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+						// $line->where('contact_id', $c->id);
+						$line->where('account_id', $c->deposit_account_id);
+						$line->get();
+
+						foreach($line as $l) {
+							if($l->dr != 0.00) {
+								$deposit -= $l->dr;
+							} else {
+								$deposit += $l->cr;
+							}
+						}	
+					}									
 				}
 					
 
@@ -232,7 +238,7 @@ class Waterdash extends REST_Controller {
 		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
 		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;								
 		$sort 	 	= $this->get("sort");		
-		// $data["results"] = array();
+		$data = array();
 		// $data["count"] = 0;
 
 		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
@@ -302,6 +308,64 @@ class Waterdash extends REST_Controller {
 
 				$data["results"][] = array(					
 				   	"amount" 		=> $amount,
+				   	"usage" 		=> floatval($value->usage),				   	
+				   	"month"			=> $readingMonth				   	
+				);
+			}
+		}
+
+		$this->response($data, 200);
+	}
+
+	function usage_get() {
+		$filters 	= $this->get("filter")["filters"];		
+		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
+		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;								
+		$sort 	 	= $this->get("sort");		
+		$data = array();
+		// $data["count"] = 0;
+
+		// $obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$reading = new Meter_record(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+
+		//Sort
+		if(!empty($sort) && isset($sort)){					
+			foreach ($sort as $value) {
+				$obj->order_by($value["field"], $value["dir"]);
+			}
+		}
+
+		//Filter		
+		if(!empty($filters) && isset($filters)){
+	    	foreach ($filters as $value) {
+	    		if(isset($value['operator'])) {
+					$reading->{$value['operator']}($value['field'], $value['value']);
+				} else {
+	    			$reading->where($value["field"], $value["value"]);
+				}
+			}
+		}
+
+		// $reading->where('type', 'Water_Invoice');
+		// $reading->where("issued_date >=", date("Y")."-01-01");
+		// $reading->where("issued_date <=", date("Y")."-12-31");						
+		// $reading->order_by("issued_date");	
+		// $reading->get();
+
+		$reading->where("month_of >=", date("Y")."-01-01");
+		$reading->where("month_of <=", date("Y")."-12-31");
+		$reading->order_by("month_of");								
+		$reading->get();
+
+		if($reading->exists()){
+			foreach ($reading as $value) {
+				// $amount = 0;
+				$readingMonth = date('F', strtotime($value->month_of));
+
+				// $amount += floatval($value->amount);
+
+				$data["results"][] = array(					
 				   	"usage" 		=> floatval($value->usage),				   	
 				   	"month"			=> $readingMonth				   	
 				);

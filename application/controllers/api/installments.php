@@ -90,6 +90,7 @@ class Installments extends REST_Controller {
 			$obj = new Installment(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$obj->biller_id 		= $value->biller_id;
 			$obj->contact_id 		= $value->contact_id;
+			$obj->meter_id 			= $value->meter_id;
 			$obj->start_month 		= $value->start_month;
 			$obj->amount 			= $value->amount;
 			$obj->period 			= $value->period;
@@ -103,7 +104,7 @@ class Installments extends REST_Controller {
 					$month= date('m', strtotime($obj->start_month)) + $x;
 					$sDate = null;
 					if($month > 12) {
-						$sDate = $year . '-'. ($month - 12) .'-'. $day;
+						$sDate = $year+1 . '-'. ($month - 12) .'-'. $day;
 					} else {
 						$sDate = $year . '-'.$month .'-'. $day;
 					}
@@ -121,6 +122,7 @@ class Installments extends REST_Controller {
 					"id" 				=> $obj->id,
 					"biller_id"			=> $obj->biller_id,
 					"contact_id" 		=> $obj->contact_id,
+					"meter_id" 			=> $obj->meter_id,
 					"start_month"		=> $obj->start_month,
 					"amount"			=> $obj->amount,
 					"period"			=> $obj->period,

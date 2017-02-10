@@ -23342,28 +23342,17 @@
 								<!-- // Tabs Heading END -->								
 								<div class="widget-body">
 									<div class="tab-content">
+								        <!-- //Date -->
 								        <div class="tab-pane active" id="tab-1">
-											<input id="sorter" name="sorter"
-									    	   data-role="dropdownlist"
-									           data-value-primitive="true"
-									           data-text-field="text"
-									           data-value-field="value"
-									           data-bind="value: sorter,
-									                      source: sortList,
-									                      events: {change: dateChange}" />
+									        As of:
+									        <input data-role="datepicker"
+													data-format="dd-MM-yyyy"
+													data-parse-formats="yyyy-MM-dd" 
+													data-bind="value: as_of" />
 
-									        <input id="sdate" name="sdate"
-									        	   data-role="datepicker"
-										           data-bind="value: startDate, events: {change: dateMax}"
-										           placeholder="From ..." />
-
-									       	<input id="edate" name="edate"
-									       		   data-role="datepicker"
-										           data-bind="value: endDate, events: {change: dateMin}"
-										           placeholder="To ..." />
-
-										  	 <button type="button" data-role="button" data-bind="click: summaryBalance.search"><i class="icon-search"></i></button>							
-									    </div>									        							       
+								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+							
+							        	</div>
 								    </div>
 								</div>
 							</div>
@@ -23374,7 +23363,7 @@
 						<div class="block-title">
 							<h3 data-bind="text: company.name"></h3>
 							<h2>Customer Balance Summary</h2>
-							<p>From <span data-bind="text: displayDateStart"></span> to <span data-bind="text: displayDateEnd"></p>
+							<p data-bind="text: displayDate"></p>
 						</div>
 
 						<div class="row-fluid">
@@ -23408,15 +23397,9 @@
 							</thead>
 		            		<tbody data-role="listview"
 		            				data-auto-bind="false"
-					                data-template="balance-summary-tmpl"
-					                data-bind="source: summaryBalance.dataSource" >
+					                data-template="customerBalanceSummary-template"
+					                data-bind="source: dataSource" >
 					        </tbody>
-				        	<tfoot>
-								<tr>
-									<th colspan="2">Total</th>
-									<th colspan="2"><span data-bind="text: total"></span></th>
-								</tr>
-							</tfoot>
 		            	</table>
 		            </div>
 				</div>
@@ -23424,7 +23407,7 @@
 		</div>
 	</div>
 </script>
-<script id="balance-summary-tmpl" type="text/x-kendo-template">
+<script id="customerBalanceSummary-template" type="text/x-kendo-template">
 	<tr>
 		<td>#=customer#</td>
 		<td style="text-align: right;">#=invoice#</td>
@@ -23591,7 +23574,7 @@
 									<div class="tab-content">
 
 								        <!-- //Date -->
-								        <div class="tab-pane active" id="tab-1">									
+								        <div class="tab-pane active" id="tab-1">
 									        As of:
 									        <input data-role="datepicker"
 													data-format="dd-MM-yyyy"
@@ -23803,10 +23786,9 @@
 </script>
 <script id="receivableAgingDetail-template" type="text/x-kendo-tmpl">
 	<tr>
-		<td colspan="6" style="font-weight: bold; color: black;">#: name #</td>
-		<td style="text-align: right;">#=kendo.toString(balance_forward, "c2", banhji.locale)#</td>
+		<td colspan="7" style="font-weight: bold; color: black;">#: name #</td>
 	</tr>
-	#var totalBalance = balance_forward;#
+	#var totalBalance = 0;#
 	#for(var i=0; i<line.length; i++){#
 	#totalBalance += line[i].amount;#
 	<tr>
@@ -70582,7 +70564,7 @@
 			banhji.saleDetail.set("filteredBy", e.sender.dataSource.at(e.sender.selectedIndex-1).id);
 		}
 	});
-	banhji.receivableAgingSummary =  kendo.observable({
+	banhji.customerBalanceSummary =  kendo.observable({
 		lang 				: langVM,
 		dataSource 			: dataStore(apiUrl + "sales/aging_summary"),
 		contactDS  			: new kendo.data.DataSource({
@@ -70593,45 +70575,11 @@
 		company 			: banhji.institute,
 		as_of 				: new Date(),
 		displayDate 		: "",
+		totalTxn 			: 0,
 		totalBalance 		: 0,
 		exArray 			: [],
 		pageLoad 			: function(){
 			this.search();
-		},
-		sorterChanges 		: function(){
-	        var today = new Date(),
-        	sdate = "",
-        	edate = "",
-        	sorter = this.get("sorter");
-        	
-			switch(sorter){
-				case "today":								
-					this.set("sdate", today);
-					this.set("edate", "");
-													  					
-				  	break;
-				case "week":			  	
-					var first = today.getDate() - today.getDay(),
-					last = first + 6;
-
-					this.set("sdate", new Date(today.setDate(first)));
-					this.set("edate", new Date(today.setDate(last)));						
-					
-				  	break;
-				case "month":							  	
-					this.set("sdate", new Date(today.getFullYear(), today.getMonth(), 1));
-					this.set("edate", new Date(today.getFullYear(), today.getMonth() + 1, 0));
-
-				  	break;
-				case "year":				
-				  	this.set("sdate", new Date(today.getFullYear(), 0, 1));
-				  	this.set("edate", new Date(today.getFullYear(), 11, 31));
-
-				  	break;
-				default:
-					this.set("sdate", "");
-				  	this.set("edate", "");									  
-			}
 		},
 		search				: function(){
 			var self = this, para = [], 
@@ -70782,41 +70730,6 @@
 		pageLoad 			: function(){
 			this.search();
 		},
-		sorterChanges 		: function(){
-	        var today = new Date(),
-        	sdate = "",
-        	edate = "",
-        	sorter = this.get("sorter");
-        	
-			switch(sorter){
-				case "today":								
-					this.set("sdate", today);
-					this.set("edate", "");
-													  					
-				  	break;
-				case "week":			  	
-					var first = today.getDate() - today.getDay(),
-					last = first + 6;
-
-					this.set("sdate", new Date(today.setDate(first)));
-					this.set("edate", new Date(today.setDate(last)));						
-					
-				  	break;
-				case "month":							  	
-					this.set("sdate", new Date(today.getFullYear(), today.getMonth(), 1));
-					this.set("edate", new Date(today.getFullYear(), today.getMonth() + 1, 0));
-
-				  	break;
-				case "year":				
-				  	this.set("sdate", new Date(today.getFullYear(), 0, 1));
-				  	this.set("edate", new Date(today.getFullYear(), 11, 31));
-
-				  	break;
-				default:
-					this.set("sdate", "");
-				  	this.set("edate", "");									  
-			}
-		},
 		search				: function(){
 			var self = this, para = [], 
 				obj = this.get("obj"),
@@ -70852,8 +70765,6 @@
 
             	var balance = 0;
             	$.each(view, function(index, value){
-            		balance += value.balance_forward;
-            		
             		$.each(value.line, function(ind, val){
             			balance += val.amount;
             		});
@@ -81461,7 +81372,7 @@
 		customerTransactionList: new kendo.Layout("#customerTransactionList", {model: banhji.customerTransactionList}),
 		depositDetailCustomer: new kendo.Layout("#depositDetailCustomer", {model: banhji.depositDetailCustomer}),
 		saleDetailProduct : new kendo.Layout("#saleDetailProduct", {model: banhji.saleDetailProduct}),
-		customerBalanceSummary : new kendo.Layout("#customerBalanceSummary", {model: banhji.customerSale}),
+		customerBalanceSummary : new kendo.Layout("#customerBalanceSummary", {model: banhji.customerBalanceSummary}),
 		customerBalanceDetail : new kendo.Layout("#customerBalanceDetail", {model: banhji.customerSale}),
 		receivableAgingSummary : new kendo.Layout("#receivableAgingSummary", {model: banhji.receivableAgingSummary}),
 		receivableAgingDetail : new kendo.Layout("#receivableAgingDetail", {model: banhji.receivableAgingDetail}),
@@ -87300,27 +87211,15 @@
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
 		}else{
+			banhji.view.layout.showIn("#content", banhji.view.customerBalanceSummary);
+			
 			var vm = banhji.customerBalanceSummary;
 			banhji.userManagement.addMultiTask("Customer Balance Summary","customer_balance_summary",null);
 
-			banhji.view.layout.showIn("#content", banhji.view.customerBalanceSummary);
-			banhji.customerSale.set('startDate', new Date().getFullYear() + "-01-01");
-			banhji.customerSale.summaryBalance.dataSource.filter({
-				logic: banhji.saleSummaryCustomer.get('filteredBy'),
-				filters: [
-					{field: "issued_date >=", value: kendo.toString(new Date().getFullYear() + "-01-01", "yyyy-MM-dd")},
-					{field: "issued_date <=", value: kendo.toString(new Date(), "yyyy-MM-dd")}
-				]
-			});
-			banhji.customerSale.summaryBalance.dataSource.bind('requestEnd', function(e){
-				if(e.response) {
-					banhji.customerSale.set('count', e.response.count);
-					kendo.culture(banhji.locale);
-					banhji.customerSale.set('total', kendo.toString(e.response.total, 'c2'));
-					banhji.customerSale.set('openInvoice', kendo.toString(e.response.openInvoice, 'n0'));
-					banhji.customerSale.set('customerCount', kendo.toString(e.response.customerCount, 'n0'));
-				}
-			});
+			if(banhji.pageLoaded["customer_balance_summary"]==undefined){
+				banhji.pageLoaded["customer_balance_summary"] = true;
+			}
+			vm.pageLoad();
 		}
 	});
 	banhji.router.route("/customer_balance_detail", function(){

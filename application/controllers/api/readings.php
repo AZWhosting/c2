@@ -176,40 +176,47 @@ class Readings extends REST_Controller {
 					);						
 				}
 			} else {
-				$obj->deleted = 1;
+				$obj->invoiced = 0;
 				$obj->save();
 
+				$line = $obj->Winvoice_line->select('transaction_id')->get();
+
+				$transaction = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
 				$winvioceLine = new Winvoice_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				$winvioceLine->where('meter_record_id', $value->id)->limit(1)->get();
 
-				$tx = $obj->include_related('winvoice_lines/transaction', array('id', 'status'))->get();
-				$invoiceStatus = $tx->winvoice_line_transaction_status;
+				$transaction->where('id', $line->transaction_id)->get();
+				$transaction->deleted = 1;
+				$transaction->save();
 
-				if($invoiceStatus == 0) {
-					$newObj = new Meter_record(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-					$newObj->meter_id 				= $value->meter_id;
-					$newObj->month_of 				= isset($value->month_of)			? $value->month_of: "";
-					$newObj->previous 				= isset($value->previous)			? $value->previous: "";
-					$newObj->current 				= isset($value->current)			? $value->current: "";
-					$newObj->from_date 				= isset($value->from_date)			? $value->from_date: "";
-					$newObj->to_date 				= isset($value->to_date)			? $value->to_date: "";
-					$newObj->invoiced 				= 1;
-					$newObj->usage = $newObj->current - $newObj->previous;
-					if($newObj->save()){		
-						$data["results"][] = array(
-							"id"			=> $newObj->id,
-							"meter_id" 		=> $newObj->meter_id,
-							"month_of"		=> $newObj->month_of,
-							"meter_number" 	=> $newObj->meter_number,
-							"prev"			=> $newObj->previous,
-							"current"		=> $newObj->current,
-							"usage" 		=> $newObj->usage,
-							"from_date"		=> $newObj->from_date,
-							"to_date"		=> $newObj->to_date,
-							"_meta" 		=> array('id' => $winvioceLine)
-						);						
-					}
+				$winvoiceLine->where('transaction_id', $line->transaction_id)->get();
+				$winvoiceLine->deleted = 1;
+				$winvoiceLine->save();
+
+				// if($invoiceStatus == 0) {
+				$newObj = new Meter_record(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$newObj->meter_id 				= $value->meter_id;
+				$newObj->month_of 				= isset($value->month_of)			? date('Y-m-d', strtotime($value->month_of)): date('Y-m-d');
+				$newObj->previous 				= isset($value->previous)			? $value->previous: "";
+				$newObj->current 				= isset($value->current)			? $value->current: "";
+				$newObj->from_date 				= isset($value->previous_reading_date) ? date('Y-m-d', strtotime($value->previous_reading_date)) : "";
+				$newObj->to_date 				= isset($value->month_of)			? date('Y-m-d', strtotime($value->month_of)):date('Y-m-d');
+				$newObj->invoiced 				= 0;
+				$newObj->usage = $newObj->current - $newObj->previous;
+				if($newObj->save()){		
+					$data["results"][] = array(
+						"id"			=> $newObj->id,
+						"meter_id" 		=> $newObj->meter_id,
+						"month_of"		=> $newObj->month_of,
+						"meter_number" 	=> $newObj->meter_number,
+						"prev"			=> $newObj->previous,
+						"current"		=> $newObj->current,
+						"usage" 		=> $newObj->usage,
+						"from_date"		=> $newObj->from_date,
+						"to_date"		=> $newObj->to_date
+					);						
 				}
+				// }
 			}
 
 						}
