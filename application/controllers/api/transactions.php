@@ -75,7 +75,6 @@ class Transactions extends REST_Controller {
 
 		if($obj->exists()){
 			foreach ($obj as $value) {
-
 				//Sum amount paid
 				$amount_paid = 0;
 				if($value->type=="Commercial_Invoice" || $value->type=="Vat_Invoice" || $value->type=="Invoice" || $value->type=="Credit_Purchase" || $value->type=="Cash_Receipt" || $value->type=="Cash_Payment"){
@@ -161,14 +160,12 @@ class Transactions extends REST_Controller {
 					"week" 						=> $value->week,
 					"month" 					=> $value->month,
 				   	"status" 					=> $value->status,
-				   	"is_recurring" 				=> $value->is_recurring,
+				   	"is_recurring" 				=> floatval($value->is_recurring),
 				   	"is_journal" 				=> $value->is_journal,
 				   	"print_count" 				=> $value->print_count,
 				   	"printed_by" 				=> $value->printed_by,
 				   	"deleted" 					=> $value->deleted,
 
-				   	"contact" 					=> [],//$value->contact->get_raw()->result(),
-				   	"reference" 				=> [],//$value->reference->get_raw()->result(),
 				   	"amount_paid"				=> $amount_paid
 				);
 			}
@@ -183,16 +180,24 @@ class Transactions extends REST_Controller {
 		$models = json_decode($this->post('models'));
 		$data["results"] = [];
 		$data["count"] = 0;
-
+		
 		$number = "";
 		foreach ($models as $value) {
 			//Generate Number
-			if(isset($value->is_recurring)){
-				if($value->is_recurring==0){
+			if(isset($value->number)){
+				$number = $value->number;
+
+				if($number==""){
 					$number = $this->_generate_number($value->type, $value->issued_date);
 				}
 			}else{
 				$number = $this->_generate_number($value->type, $value->issued_date);
+			}
+			
+			if(isset($value->is_recurring)){
+				if($value->is_recurring==1){
+					$number = "";
+				}
 			}
 
 			$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
@@ -211,7 +216,7 @@ class Transactions extends REST_Controller {
 			isset($value->tax_item_id) 				? $obj->tax_item_id 				= $value->tax_item_id : "";
 			isset($value->user_id) 					? $obj->user_id 					= $value->user_id : "";
 			isset($value->employee_id) 				? $obj->employee_id 				= $value->employee_id : "";
-			isset($value->number) 					? $obj->number 						= $value->number : $obj->number = $number;
+			$obj->number = $number;
 		   	isset($value->reference_no) 			? $obj->reference_no 				= $value->reference_no : "";
 		   	isset($value->type) 					? $obj->type 						= $value->type : "";
 		   	isset($value->journal_type) 			? $obj->journal_type 				= $value->journal_type : "";
@@ -257,35 +262,6 @@ class Transactions extends REST_Controller {
 		   	isset($value->deleted) 					? $obj->deleted 					= $value->deleted : "";
 
 	   		if($obj->save()){
-	   			// Cash Receipt/Payment Update Invoice status
-	   			$amount_paid = 0;
-				if($obj->type=="Cash_Receipt" || $obj->type=="Cash_Payment"){
-					//Sum amount paid
-					$paid = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-					$paid->select_sum("amount");
-					$paid->select_sum("discount");
-					$paid->where("reference_id", $obj->reference_id);
-					$paid->where_in("type", array("Cash_Receipt", "Cash_Payment"));
-					$paid->where("is_recurring <>", 1);
-					$paid->where("deleted <>", 1);
-					$paid->get();
-					$amount_paid = floatval($paid->amount) + floatval($paid->discount);
-
-					//Update invoice status
-					$inv = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-					$inv->get_by_id($obj->reference_id);
-
-					$amount = floatval($inv->amount) - floatval($inv->deposit);
-
-					if($amount_paid >= $amount){
-						$inv->status = 1;
-					}else{
-						$inv->status = 2;
-					}
-
-					$inv->save();
-				}
-
 			   	$data["results"][] = array(
 			   		"id" 						=> $obj->id,
 					"company_id" 				=> $obj->company_id,
@@ -342,14 +318,13 @@ class Transactions extends REST_Controller {
 					"week" 						=> $obj->week,
 					"month" 					=> $obj->month,
 				   	"status" 					=> $obj->status,
-				   	"is_recurring" 				=> $obj->is_recurring,
+				   	"is_recurring" 				=> floatval($obj->is_recurring),
 				   	"is_journal" 				=> $obj->is_journal,
 				   	"print_count" 				=> $obj->print_count,
 				   	"printed_by" 				=> $obj->printed_by,
 				   	"deleted" 					=> $obj->deleted,
 
-				   	"contact" 					=> $obj->contact->get_raw()->result(),
-				   	"amount_paid"				=> $amount_paid
+				   	"amount_paid"				=> 0
 			   	);
 		    }
 		}
@@ -429,33 +404,6 @@ class Transactions extends REST_Controller {
 		   	isset($value->deleted) 					? $obj->deleted 					= $value->deleted : "";
 
 			if($obj->save()){
-				//Update invoice
-				$amount_paid = 0;
-				if($value->type=="Cash_Receipt" || $value->type=="Cash_Payment"){
-					//Sum amount paid
-					$paid = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-					$paid->select_sum("amount");
-					$paid->select_sum("discount");
-					$paid->where("reference_id", $obj->reference_id);
-					$paid->where_in("type", array("Cash_Receipt", "Cash_Payment"));
-					$paid->where("is_recurring",0);
-					$paid->where("deleted",0);
-					$paid->get();
-					$amount_paid = floatval($paid->amount) + floatval($paid->discount);
-
-					//Update invoice status
-					$inv = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-					$inv->get_by_id($obj->reference_id);
-
-					if($amount_paid >= floatval($inv->amount)){
-						$inv->status = 1;
-					}else{
-						$inv->status = 2;
-					}
-
-					$inv->save();
-				}
-
 				//Results
 				$data["results"][] = array(
 					"id" 						=> $obj->id,
@@ -513,14 +461,13 @@ class Transactions extends REST_Controller {
 					"week" 						=> $obj->week,
 					"month" 					=> $obj->month,
 				   	"status" 					=> $obj->status,
-				   	"is_recurring" 				=> $obj->is_recurring,
+				   	"is_recurring" 				=> floatval($obj->is_recurring),
 				   	"is_journal" 				=> $obj->is_journal,
 				   	"print_count" 				=> $obj->print_count,
 				   	"printed_by" 				=> $obj->printed_by,
 				   	"deleted" 					=> $obj->deleted,
-
-				   	"contact" 					=> $obj->contact->get_raw()->result(),
-				   	"amount_paid"				=> $amount_paid
+				   	
+				   	"amount_paid"				=> 0
 				);
 			}
 		}
@@ -535,7 +482,7 @@ class Transactions extends REST_Controller {
 
 		foreach ($models as $key => $value) {
 			$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			$obj->where("id", $value->id)->get();			
+			$obj->get_by_id($value->id);
 
 			$data["results"][] = array(
 				"data"   => $value,

@@ -38703,7 +38703,7 @@
 				                <th class="center" style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></th>			                
 				                <th><span data-bind="text: lang.lang.date"></span></th>
 				                <th><span data-bind="text: lang.lang.name"></span></th>
-				                <th><span data-bind="text: lang.lang.invoice"></span></th>
+				                <th><span data-bind="text: lang.lang.reference_no"></span></th>
 				                <th data-bind="visible: showReceiptNo">Receipt#</th>
 				                <th data-bind="visible: showCheckNo" style="width: 10%"><span data-bind="text: lang.lang.check_number"></span></th>
 				                <th style="width: 15%"><span data-bind="text: lang.lang.amount"></span></th>			                
@@ -38816,7 +38816,7 @@
 		</td>
 		<td>#=kendo.toString(new Date(issued_date), "dd-MM-yyyy")#</td>
 		<td>#=banhji.cashReceipt.getContactName(contact_id)#</td>
-		<td>#=reference.length>0?reference[0].number:""#</td>
+		<td>#=reference_no#</td>
 		<td data-bind="visible: showReceiptNo">
 			<input type="text" class="k-textbox" 
 					data-bind="value: number"
@@ -38833,7 +38833,7 @@
 				   data-format="c2"
 				   data-culture="#:locale#"
                    data-min="0"                   
-                   data-bind="value: amount_due"
+                   data-bind="value: sub_total"
                    style="width: 100%; padding: 0 !important; text-align: right;">
 		</td>		
 		<td class="center">
@@ -38858,7 +38858,6 @@
 		</td>
     </tr>   
 </script>
-
 <script id="cashPayment" type="text/x-kendo-template">
 	<div id="slide-form">
 		<div class="customer-background">
@@ -39043,7 +39042,7 @@
 			                <th class="center" style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></th>			                
 			                <th data-bind="text: lang.lang.date"></th>
 			                <th data-bind="text: lang.lang.name"></th>
-			                <th data-bind="text: lang.lang.bill_number"></th>
+			                <th data-bind="text: lang.lang.reference_no"></th>
 			                <th data-bind="visible: showReceiptNo">Receipt#</th>
 			                <th data-bind="visible: showCheckNo" style="width: 10%"><span data-bind="text: lang.lang.check_number"></span></th>			                		                
 			                <th style="width: 15%"><span data-bind="text: lang.lang.amount"></span></th>
@@ -39158,7 +39157,7 @@
 		</td>		
 		<td>#=kendo.toString(new Date(issued_date), "dd-MM-yyyy")#</td>
 		<td>#=banhji.cashPayment.getContactName(contact_id)#</td>	
-		<td>#=reference.length>0?reference[0].number:""#</td>
+		<td>#=reference_no#</td>
 		<td data-bind="visible: showReceiptNo">
 			<input type="text" class="k-textbox" 
 					data-bind="value: number"
@@ -39175,7 +39174,7 @@
 				   data-format="c2"
 				   data-culture="#:locale#"
                    data-min="0"                   
-                   data-bind="value: amount_due"
+                   data-bind="value: sub_total"
                    style="width: 100%; padding: 0 !important; text-align: right;">
 		</td>
 		<td class="center">
@@ -73037,11 +73036,8 @@
 	banhji.cashReceipt =  kendo.observable({
 		lang 				: langVM,
 		dataSource 			: dataStore(apiUrl + "transactions"),
-		deleteDS 			: dataStore(apiUrl + "transactions"),
-		invoiceDS 			: dataStore(apiUrl + "transactions"),
-		creditDS 			: dataStore(apiUrl + "transactions"),
+		txnDS 				: dataStore(apiUrl + "transactions"),
 		journalLineDS		: dataStore(apiUrl + "journal_lines"),
-		currencyRateDS		: dataStore(apiUrl + "currencies/rate"),
 		txnTemplateDS 		: new kendo.data.DataSource({
 		  	data: banhji.source.txnTemplateList,
 		  	filter:{ field: "type", value: "Cash_Receipt" }
@@ -73170,8 +73166,7 @@
 		search 				: function(){
 			var self = this, 
 			para = [],
-			obj = this.get("obj"),			
-			date = kendo.toString(new Date(obj.issued_date), "yyyy-MM-dd"), 
+			obj = this.get("obj"),
 			searchText = this.get("searchText"), 
 			invoice_id = this.get("invoice_id"),
 			contact_id = this.get("contact_id");
@@ -73199,12 +73194,12 @@
 				para.push({ field:"id", operator:"where_not_in", value:idList });
 			}
 
-			this.invoiceDS.query({
+			this.txnDS.query({
 				filter: para,
 				page: 1,
 				pageSize: 100
 			}).then(function(){
-				var view = self.invoiceDS.view();
+				var view = self.txnDS.view();
 
 				if(view.length>0){
 					$.each(view, function(index, value){											
@@ -73219,8 +73214,10 @@
 							reference_id 		: value.id,								
 							user_id 			: self.get("user_id"),
 							check_no 			: value.check_no,
+							reference_no 		: value.number,
 							number 				: "",
 						   	type				: "Cash_Receipt",
+						   	sub_total 			: amount_due,
 						   	amount 				: amount_due,				   	
 						   	discount 			: 0,
 						   	rate				: value.rate,			   	
@@ -73241,8 +73238,7 @@
 						   	week 				: 0,
 						   	month 				: 0,
 						   	is_recurring 		: 0,
-						   	
-						   	amount_due 			: amount_due,
+
 						   	reference 			: [value]
 				    	});
 					});
@@ -73257,48 +73253,43 @@
 		},
 		//Obj
 		loadObj 			: function(id){
-			var self = this, para = [];
+			var self = this;
 
-			para.push({ field:"id", value: id });					
-
-			this.dataSource.query({    			
-				filter: para,
+			this.dataSource.query({
+				filter: { field:"id", value: id },
 				page: 1,
 				pageSize: 100
 			}).then(function(){
 				var view = self.dataSource.view();
-				
-				var amount_due = kendo.parseFloat(view[0].reference[0].amount) - (view[0].amount_paid + kendo.parseFloat(view[0].reference[0].deposit)), 
-				total = amount_due - view[0].discount,
-				remain = amount_due - (view[0].amount + view[0].discount);
-
-				view[0].set("amount_due", kendo.toString(amount_due, "c", view[0].locale));
+				view[0].set("reference", []);
 				
 				self.set("obj", view[0]);
-
-				self.set("sub_total", kendo.toString(amount_due, "c", view[0].locale));
-		        self.set("discount", kendo.toString(view[0].discount, "c", view[0].locale));
-		        self.set("total", kendo.toString(total, "c", view[0].locale));
-		        self.set("pay", kendo.toString(view[0].amount, "c", view[0].locale));
-		        self.set("remain", kendo.toString(remain, "c", view[0].locale));
+				self.set("total", kendo.toString(view[0].amount, "c", view[0].locale));
+		        self.set("total_received", kendo.toString(view[0].amount, "c", view[0].locale));
 				
 				self.journalLineDS.filter({ field: "transaction_id", value: id });
-				self.creditDS.filter([
-					{ field: "reference_id", value: id },
-					{ field: "type", value: "Customer_Deposit" }
-				]);
-			});						
+
+				self.txnDS.query({
+					filter:{ field:"id", value:view[0].reference_id }
+				}).then(function(){
+					var txn = self.txnDS.view(),
+					obj = self.get("obj");
+
+					obj.set("reference", txn);
+				});
+			});
 		},
 		changes				: function(){
 			var self = this, obj = this.get("obj"),
 			total = 0, sub_total = 0, discount = 0, total_received = 0, remaining = 0;											
 
 			$.each(this.dataSource.data(), function(index, value) {
-				var amt = kendo.parseFloat(value.amount_due) - kendo.parseFloat(value.discount);
+				var amt = kendo.parseFloat(value.sub_total) - kendo.parseFloat(value.discount);
 				if(kendo.parseFloat(value.amount)>amt){
 					value.set("amount", amt);
 				}
-				sub_total += kendo.parseFloat(value.amount_due) / value.rate;					
+
+				sub_total += kendo.parseFloat(value.sub_total) / value.rate;					
 				discount += kendo.parseFloat(value.discount) / value.rate;
 				total_received += kendo.parseFloat(value.amount) / value.rate;					
 	        });
@@ -73318,8 +73309,7 @@
 		},
 		addEmpty 		 	: function(){
 			this.dataSource.data([]);
-			this.invoiceDS.data([]);
-			this.creditDS.data([]);
+			this.txnDS.data([]);
 			this.journalLineDS.data([]);
 
 			this.set("isEdit", false);
@@ -73364,12 +73354,10 @@
 	    	if(this.get("isEdit")){
 	    		obj.set("issued_date", kendo.toString(new Date(obj.issued_date), "s"));
 
-	    		//Update Journal
+	    		//Delete Previouse Journal
     			$.each(this.journalLineDS.data(), function(index, value){
 					value.set("deleted", 1);
 				});
-
-				this.addJournal(obj.id);
 	    	}else{
 	    		//Add brand new transaction
 	    		$.each(this.dataSource.data(), function(index, value){
@@ -73386,9 +73374,59 @@
 			//Obj
 			this.objSync()
 			.then(function(data){
-				if(self.get("isEdit")==false){
-					self.addJournal(data[0].id);
-				}
+				var ids = [];
+				//Save journals
+				$.each(data, function(index, value){
+					var contact = banhji.source.customerDS.get(value.contact_id);
+					ids.push(value.id);
+
+					//Cash on Dr
+					self.journalLineDS.add({					
+						transaction_id 		: value.id,
+						account_id 			: obj.account_id,				
+						contact_id 			: value.contact_id,				
+						description 		: "",
+						reference_no 		: "",
+						segments 	 		: [],								
+						dr 	 				: value.amount,
+						cr 					: 0,				
+						rate				: value.rate,
+						locale				: value.locale
+					});
+
+					if(value.discount>0){
+						//Discount on Dr
+						self.journalLineDS.add({					
+							transaction_id 		: value.id,
+							account_id 			: contact.settlement_discount_id,				
+							contact_id 			: value.contact_id,				
+							description 		: "",
+							reference_no 		: "",
+							segments 	 		: [],								
+							dr 	 				: value.discount,
+							cr 					: 0,				
+							rate				: value.rate,
+							locale				: value.locale
+						});
+					}
+
+					//AR on Cr
+					self.journalLineDS.add({					
+						transaction_id 		: value.id,
+						account_id 			: contact.account_id,				
+						contact_id 			: value.contact_id,				
+						description 		: "",
+						reference_no 		: "",
+						segments 	 		: [],								
+						dr 	 				: 0,
+						cr 					: kendo.parseFloat(value.amount) + kendo.parseFloat(value.discount),				
+						rate				: value.rate,
+						locale				: value.locale
+					});	
+				});
+
+				self.journalLineDS.sync();
+				self.updateTxnStatus(ids);
 
 				return data;
 			}, function(reason) { //Error
@@ -73419,69 +73457,33 @@
 			
 			banhji.userManagement.removeMultiTask("cash_receipt");
 		},
-		//Journal
-		addJournal 			: function(transaction_id){
-			var self = this, obj = this.get("obj");
+		updateTxnStatus 	: function(ids){
+			var self = this;
 
-			$.each(this.dataSource.data(), function(index, value){
-				var contact = banhji.source.customerDS.get(value.contact_id);
+			this.txnDS.query({
+				filter:{ field:"id", operator:"where_in", value:ids }
+			}).then(function(){
+				var view = self.txnDS.view();
 
-				//Cash on Dr
-				self.journalLineDS.add({					
-					transaction_id 		: transaction_id,
-					account_id 			: obj.account_id,				
-					contact_id 			: value.contact_id,				
-					description 		: "",
-					reference_no 		: "",
-					segments 	 		: [],								
-					dr 	 				: value.amount,
-					cr 					: 0,				
-					rate				: value.rate,
-					locale				: value.locale
+				$.each(view, function(index, value){
+					if(value.amount_paid == 0){
+						value.set("status", 0);
+					}else if(value.amount_paid >= value.amount){
+						value.set("status", 1);
+					}else{
+						value.set("status", 2);
+					}
 				});
 
-				if(value.discount>0){
-					//Discount on Dr
-					self.journalLineDS.add({					
-						transaction_id 		: transaction_id,
-						account_id 			: contact.settlement_discount_id,				
-						contact_id 			: value.contact_id,				
-						description 		: "",
-						reference_no 		: "",
-						segments 	 		: [],								
-						dr 	 				: value.discount,
-						cr 					: 0,				
-						rate				: value.rate,
-						locale				: value.locale
-					});
-				}
-
-				//AR on Cr
-				self.journalLineDS.add({					
-					transaction_id 		: transaction_id,
-					account_id 			: contact.account_id,				
-					contact_id 			: value.contact_id,				
-					description 		: "",
-					reference_no 		: "",
-					segments 	 		: [],								
-					dr 	 				: 0,
-					cr 					: kendo.parseFloat(value.amount_due),				
-					rate				: value.rate,
-					locale				: value.locale
-				});	
+				self.txnDS.sync();
 			});
-
-			self.journalLineDS.sync();	
 		}
 	});
 	banhji.cashPayment =  kendo.observable({
 		lang 				: langVM,
 		dataSource 			: dataStore(apiUrl + "transactions"),
-		deleteDS 			: dataStore(apiUrl + "transactions"),
-		invoiceDS 			: dataStore(apiUrl + "transactions"),
-		creditDS 			: dataStore(apiUrl + "transactions"),
+		txnDS 				: dataStore(apiUrl + "transactions"),
 		journalLineDS		: dataStore(apiUrl + "journal_lines"),
-		currencyRateDS		: dataStore(apiUrl + "currencies/rate"),
 		txnTemplateDS 		: new kendo.data.DataSource({
 		  	data: banhji.source.txnTemplateList,
 		  	filter:{ field: "type", value: "Cash_Payment" }
@@ -73618,12 +73620,12 @@
 				para.push({ field:"id", operator:"where_not_in", value:idList });
 			}
 
-			this.invoiceDS.query({
+			this.txnDS.query({
 				filter: para,
 				page: 1,
 				pageSize: 100
 			}).then(function(){
-				var view = self.invoiceDS.view();
+				var view = self.txnDS.view();
 
 				if(view.length>0){
 					$.each(view, function(index, value){											
@@ -73638,7 +73640,9 @@
 							reference_id 		: value.id,								
 							user_id 			: self.get("user_id"),
 							check_no 			: value.check_no,
+							reference_no 		: value.number,
 						   	type				: "Cash_Payment",
+						   	sub_total 			: amount_due,
 						   	amount 				: amount_due,				   	
 						   	discount 			: 0,
 						   	rate				: value.rate,			   	
@@ -73660,7 +73664,6 @@
 						   	month 				: 0,
 						   	is_recurring 		: 0,
 
-						   	amount_due 			: amount_due,
 						   	reference 			: [value]
 				    	});						
 					});
@@ -73692,37 +73695,31 @@
 		},
 		//Obj
 		loadObj 			: function(id){
-			var self = this, para = [];
+			var self = this;
 
-			para.push({ field:"id", value: id });
-
-			this.dataSource.query({    			
-				filter: para,
+			this.dataSource.query({
+				filter: { field:"id", value: id },
 				page: 1,
 				pageSize: 100
 			}).then(function(){
 				var view = self.dataSource.view();
-
-				var amount_due = kendo.parseFloat(view[0].reference[0].amount) - (view[0].amount_paid + kendo.parseFloat(view[0].reference[0].deposit)), 
-				total = amount_due - view[0].discount,
-				remain = amount_due - (view[0].amount + view[0].discount);
-
-				view[0].set("amount_due", kendo.toString(amount_due, "c", view[0].locale));
+				view[0].set("reference", []);
 				
 				self.set("obj", view[0]);
-
-				self.set("sub_total", kendo.toString(amount_due, "c", view[0].locale));
-		        self.set("discount", kendo.toString(view[0].discount, "c", view[0].locale));
-		        self.set("total", kendo.toString(total, "c", view[0].locale));
-		        self.set("pay", kendo.toString(view[0].amount, "c", view[0].locale));
-		        self.set("remain", kendo.toString(remain, "c", view[0].locale));
+				self.set("total", kendo.toString(view[0].amount, "c", view[0].locale));
+		        self.set("total_received", kendo.toString(view[0].amount, "c", view[0].locale));
 				
 				self.journalLineDS.filter({ field: "transaction_id", value: id });
-				self.creditDS.filter([
-					{ field: "reference_id", value: id },
-					{ field: "type", value: "Vendor_Deposit" }
-				]);
-			});						
+
+				self.txnDS.query({
+					filter:{ field:"id", value:view[0].reference_id }
+				}).then(function(){
+					var txn = self.txnDS.view(),
+					obj = self.get("obj");
+
+					obj.set("reference", txn);
+				});
+			});
 		},
 		loadInvoice 		: function(id){
 			this.set("invoice_id", id);
@@ -73733,11 +73730,12 @@
 			total = 0, sub_total = 0, discount = 0, total_received = 0, remaining = 0;											
 
 			$.each(this.dataSource.data(), function(index, value) {
-				var amt = kendo.parseFloat(value.amount_due) - kendo.parseFloat(value.discount);
+				var amt = kendo.parseFloat(value.sub_total) - kendo.parseFloat(value.discount);
 				if(kendo.parseFloat(value.amount)>amt){
 					value.set("amount", amt);
 				}
-				sub_total += kendo.parseFloat(value.amount_due) / value.rate;					
+				
+				sub_total += kendo.parseFloat(value.sub_total) / value.rate;					
 				discount += kendo.parseFloat(value.discount) / value.rate;
 				total_received += kendo.parseFloat(value.amount) / value.rate;					
 	        });
@@ -73758,8 +73756,7 @@
 		},
 		addEmpty 		 	: function(){
 			this.dataSource.data([]);
-			this.invoiceDS.data([]);
-			this.creditDS.data([]);
+			this.txnDS.data([]);
 			this.journalLineDS.data([]);
 
 			this.set("isEdit", false);
@@ -73803,12 +73800,10 @@
 	    	if(this.get("isEdit")){
 	    		obj.set("issued_date", kendo.toString(new Date(obj.issued_date), "s"));
 
-	    		//Update Journal
+	    		//Delete Previouse Journal
     			$.each(this.journalLineDS.data(), function(index, value){
 					value.set("deleted", 1);
 				});
-
-				this.addJournal(obj.id);
 	    	}else{
 	    		//Add brand new transaction
 	    		$.each(this.dataSource.data(), function(index, value){
@@ -73824,9 +73819,60 @@
 
 			this.objSync()
 			.then(function(data){
-				if(self.get("isEdit")==false){
-					self.addJournal(data[0].id);
-				}
+				var ids = [];
+				//Save journals
+				$.each(data, function(index, value){
+					var contact = banhji.source.customerDS.get(value.contact_id);
+					ids.push(value.id);
+
+					//AP on Dr
+					self.journalLineDS.add({
+						transaction_id 		: value.id,
+						account_id 			: value.reference[0].account_id,
+						contact_id 			: value.contact_id,
+						description 		: "",
+						reference_no 		: "",
+						segments 	 		: [],
+						dr 	 				: kendo.parseFloat(value.amount) + kendo.parseFloat(value.discount),
+						cr 					: 0,
+						rate				: value.rate,
+						locale				: value.locale
+					});
+					
+					//Cash on Cr
+					self.journalLineDS.add({
+						transaction_id 		: value.id,
+						account_id 			: obj.account_id,
+						contact_id 			: value.contact_id,
+						description 		: "",
+						reference_no 		: "",
+						segments 	 		: [],
+						dr 	 				: 0,
+						cr 					: value.amount,
+						rate				: value.rate,
+						locale				: value.locale
+					});
+
+					if(value.discount>0){
+						//Discount on Cr
+						self.journalLineDS.add({
+							transaction_id 		: value.id,
+							account_id 			: contact.settlement_discount_id,
+							contact_id 			: value.contact_id,
+							description 		: "",
+							reference_no 		: "",
+							segments 	 		: [],
+							dr 	 				: 0,
+							cr 					: value.discount,
+							rate				: value.rate,
+							locale				: value.locale
+						});
+					}
+				});
+
+				self.journalLineDS.sync();
+				self.updateTxnStatus(ids);
+
 				return data;
 			}, function(reason) { //Error
 				$("#ntf1").data("kendoNotification").error(reason);
@@ -73856,59 +73902,26 @@
 			
 			banhji.userManagement.removeMultiTask("cash_payment");
 		},
-		//Journal
-		addJournal 			: function(transaction_id){
-			var self = this, obj = this.get("obj");
+		updateTxnStatus 	: function(ids){
+			var self = this;
 
-			$.each(this.dataSource.data(), function(index, value){
-				var contact = banhji.source.customerDS.get(value.contact_id);
+			this.txnDS.query({
+				filter:{ field:"id", operator:"where_in", value:ids }
+			}).then(function(){
+				var view = self.txnDS.view();
 
-				//AP on Dr
-				self.journalLineDS.add({					
-					transaction_id 		: transaction_id,
-					account_id 			: value.reference[0].account_id,				
-					contact_id 			: value.contact_id,				
-					description 		: "",
-					reference_no 		: "",
-					segments 	 		: [],								
-					dr 	 				: kendo.parseFloat(value.amount_due),
-					cr 					: 0,				
-					rate				: value.rate,
-					locale				: value.locale
-				});
-				
-				//Cash on Cr
-				self.journalLineDS.add({					
-					transaction_id 		: transaction_id,
-					account_id 			: obj.account_id,				
-					contact_id 			: value.contact_id,				
-					description 		: "",
-					reference_no 		: "",
-					segments 	 		: [],								
-					dr 	 				: 0,
-					cr 					: value.amount,				
-					rate				: value.rate,
-					locale				: value.locale
+				$.each(view, function(index, value){
+					if(value.amount_paid == 0){
+						value.set("status", 0);
+					}else if(value.amount_paid >= value.amount){
+						value.set("status", 1);
+					}else{
+						value.set("status", 2);
+					}
 				});
 
-				if(value.discount>0){
-					//Discount on Cr
-					self.journalLineDS.add({					
-						transaction_id 		: transaction_id,
-						account_id 			: contact.settlement_discount_id,				
-						contact_id 			: value.contact_id,				
-						description 		: "",
-						reference_no 		: "",
-						segments 	 		: [],								
-						dr 	 				: 0,
-						cr 					: value.discount,				
-						rate				: value.rate,
-						locale				: value.locale
-					});
-				}				
+				self.txnDS.sync();
 			});
-
-			self.journalLineDS.sync();	
 		}
 	});
 	banhji.cashFlowForecast = kendo.observable({
