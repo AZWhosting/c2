@@ -813,380 +813,379 @@ class Sales extends REST_Controller {
 		$this->response($data, 200);
 	}
 
-	function summary_balance_get() {
-		$filters 	= $this->get("filter")["filters"];
-		$page 		= $this->get('page') !== false ? $this->get('page') : 1;
-		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;
+	//BALANCE
+	function balance_summary_get() {
+		$filter 	= $this->get("filter");
+		$page 		= $this->get('page');
+		$limit 		= $this->get('limit');
 		$sort 	 	= $this->get("sort");
-		$data["results"] = array();
+		$data["results"] = [];
 		$data["count"] = 0;
-		$is_pattern = 0;
-		$deleted = 0;
 
 		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
+		//Sort
 		if(!empty($sort) && isset($sort)){
 			foreach ($sort as $value) {
-				$obj->order_by($value["field"], $value["dir"]);
+				if(isset($value['operator'])){
+					$obj->{$value['operator']}($value["field"], $value["dir"]);
+				}else{
+					$obj->order_by($value["field"], $value["dir"]);
+				}
 			}
 		}
-
-		//Filter
-		if(!empty($filters) && isset($filters)){
-	    	foreach ($filters as $value) {
-	    		if(!empty($value["operator"]) && isset($value["operator"])){
-		    		if($value["operator"]=="where_in"){
-		    			$obj->where_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_where_in"){
-		    			$obj->or_where_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="where_not_in"){
-		    			$obj->where_not_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_where_not_in"){
-		    			$obj->or_where_not_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="like"){
-		    			$obj->like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_like"){
-		    			$obj->or_like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="not_like"){
-		    			$obj->not_like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_not_like"){
-		    			$obj->or_not_like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="startswith"){
-		    			$obj->like($value["field"], $value["value"], "after");
-		    		}else if($value["operator"]=="endswith"){
-		    			$obj->like($value["field"], $value["value"], "before");
-		    		}else if($value["operator"]=="contains"){
-		    			$obj->like($value["field"], $value["value"], "both");
-		    		}else if($value["operator"]=="or_where"){
-		    			$obj->or_where($value["field"], $value["value"]);		    		
-		    		}else{
-		    			$obj->where($value["field"].' '.$value["operator"], $value["value"]);
-		    		}
-	    		}else{
-	    			$obj->where($value["field"], $value["value"]);
+		
+		//Filter		
+		if(!empty($filter) && isset($filter)){
+	    	foreach ($filter["filters"] as $value) {
+	    		if(isset($value['operator'])){
+	    			$obj->{$value['operator']}($value['field'], $value['value']);	    		
+	    		} else {
+	    			$obj->where($value['field'], $value['value']);
 	    		}
 			}
 		}
 
-		$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$type->select('id')->where('parent_id', 1)->get();
-			$types = array();
-			foreach($type as $t) {
-				$types[] = $t->id;
-			}
-
-		$customer = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$customer->where('deleted <>', 1);
-		$customer->where('is_pattern <>', 1);
-		$customerCount = $customer->where_in('contact_type_id', $type)->count();
-
-
-		if($this->get("filter")['logic'] == "segment") {
-			$segmentItem = new Segmentitem(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		//Results
+		$obj->include_related("contact", array("abbr", "number", "name"));
+		$obj->where_in("type", array("Commercial_Invoice","Vat_Invoice","Invoice"));
+		$obj->where_in("status", array(0,2));
+		$obj->where("is_recurring <>", 1);
+		$obj->where("deleted <>", 1);
+		$obj->get_iterated();
 		
-			$segmentItem->get();
-
-			foreach ($segmentItem as $seg) {
-				$txn = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		if($obj->exists()){
+			$objList = [];
+			$today = new DateTime();
+			foreach ($obj as $value) {
+				$amount = (floatval($value->amount) - floatval($value->deposit)) / floatval($value->rate);
 				
+				if($value->status=="2"){
+					$paid = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					$paid->select_sum("amount");
+					$paid->select_sum("discount");
+					$paid->where("reference_id", $value->id);
+					$paid->where_in("type", arary("Cash_Receipt", "Sale_Return", "Offset_Invoice"));
+					$paid->where("is_recurring <>",1);
+					$paid->where("deleted <>",1);
+					$paid->get();
+					$amount -= floatval($paid->amount) + floatval($paid->discount);
+				}
 
-				$txn->where_in("type", array("Invoice", "Cash_Receipt", "Commercial_Invoice", "Vat_Invoice"));
-				$txn->where_related("contact", 'contact_type_id', $type);
-				$txn->where_in("status", array(0,2));
-				$txn->like("segments", $seg->id, "both");
-				$txn->where("deleted",0);
-				$txn->where("is_recurring",0);
-		
-				$txn->get_iterated();
-
-				foreach ($txn as $t) {
-					$ref = $t->referece->get();
-					$amt = floatval($t->amount)/ floatval($t->rate);
-					$items = $t->item_line->include_related('item', array('name'))->get();
-					$lines = array();
-				
-					$customer = $t->contact->get();
-					
-					if(isset($customers["$seg->name"])) {
-						if($t->type == 'Invoice') {
-							$customers["$seg->name"]['amount']+= floatval($t->amount);
-						} else {
-						$customers["$seg->name"]['amount']-= floatval($t->amount);
-						}
-					} else {
-						if($t->type == 'Invoice') {
-							$customers[$seg->name]['amount']= floatval($t->amount)/ floatval($t->rate);
-						} else {
-							$customers[$seg->name]['amount']= (floatval($t->amount)/ floatval($t->rate)) * -1;
-						}
-					}
-					if($t->type == "Invoice") {
-						$total += floatval($t->amount)/ floatval($t->rate);
-					} else {
-						$paid += floatval($t->amount)/ floatval($t->rate);
-					}
+				if(isset($objList[$value->contact_id])){
+					$objList[$value->contact_id]["txn_count"]++;
+					$objList[$value->contact_id]["amount"] += $amount;
+				}else{
+					$objList[$value->contact_id]["id"] 			= $value->contact_id;
+					$objList[$value->contact_id]["name"] 		= $value->contact_abbr.$value->contact_number." ".$value->contact_name;
+					$objList[$value->contact_id]["txn_count"] 	= 1;
+					$objList[$value->contact_id]["amount"] 		= $amount;
 				}
 			}
-						$total += $amt;
-		}else {
 
-				// $obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-
-				$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				$type->where('parent_id', 1)->get();
-
-				$obj->where_related("contact", 'contact_type_id', $type);
-				$obj->where("status <>", 1);
-				$obj->where_in("type", array("Invoice", "Commercial_Invoice", "Vat_Invoice" ));
-				$obj->where('is_recurring', 0);
-				$obj->where("deleted",0);
-
-				// $obj->include_related("contact_type", "name");
-
-				//Results
-				$obj->get_paged_iterated($page, $limit);
-				$data["count"] = $obj->paged->total_rows;
-				$customers = array();
-				$total = 0;
-				$paid  = 0;
-				$openInvoice = 0;
-				if($obj->result_count()>0){
-					foreach ($obj as $value) {
-						$openInvoice += 1;
-						$ref = $value->transaction->get();
-						$customer = $value->contact->get();
-						$fullname = $customer->surname.' '.$customer->name;
-						$temp = 0;
-						foreach ($ref as $r) {
-							$a = abs($r->amount);					
-							$temp += floatval($a);
-						}
-						$paid = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-						$paid->where("type", "Cash_Receipt");
-						$paid->where("reference_id", $value->id);
-						$paid->where("is_recurring", 0);		
-						$paid->where("deleted", 0);
-						$paid->get();
-
-							if(isset($customers["$fullname"])) {
-								$customers["$fullname"]['amount']+= (floatval($value->amount)- floatval($paid->amount))/floatval($value->rate)- $temp;
-								$customers["$fullname"]['invoiceCount'] += 1;
-							} else {
-								$customers["$fullname"]['amount']= (floatval($value->amount)- floatval($paid->amount))/floatval($value->rate)- $temp;
-								$customers["$fullname"]['invoiceCount'] = 1;
-							}
-							$total += (floatval($value->amount)- floatval($paid->amount))/floatval($value->rate)- $temp;
-					}
-				}
-		}
-
-		foreach ($customers as $key => $value) {
-			$data["results"][] = array(
-				'customer' => $key,
-				'amount'	=> $value['amount'],
-				'invoice'	=> $value['invoiceCount'],
-
-			);
+			foreach ($objList as $value) {
+				$data["results"][] = $value;
+			}
+			$data["count"] = count($data["results"]);
 		}
 
 		//Response Data
-		$data['total'] = $total;
-		$data['customerCount'] = $customerCount;
-		$data['openInvoice'] = $openInvoice;
-		$data['count'] = count($customers);
+		$this->response($data, 200);
+	}
+	function balance_detail_get() {
+		$filter 	= $this->get("filter");
+		$page 		= $this->get('page');
+		$limit 		= $this->get('limit');
+		$sort 	 	= $this->get("sort");
+		$data["results"] = [];
+		$data["count"] = 0;
+
+		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+		//Sort
+		if(!empty($sort) && isset($sort)){
+			foreach ($sort as $value) {
+				if(isset($value['operator'])){
+					$obj->{$value['operator']}($value["field"], $value["dir"]);
+				}else{
+					$obj->order_by($value["field"], $value["dir"]);
+				}
+			}
+		}
+		
+		//Filter		
+		if(!empty($filter) && isset($filter)){
+	    	foreach ($filter["filters"] as $value) {
+	    		if(isset($value['operator'])){
+	    			$obj->{$value['operator']}($value['field'], $value['value']);	    		
+	    		} else {
+	    			$obj->where($value['field'], $value['value']);
+	    		}
+			}
+		}
+
+		//Results
+		$obj->include_related("contact", array("abbr", "number", "name"));
+		$obj->where_in("type", array("Commercial_Invoice","Vat_Invoice","Invoice"));
+		$obj->where_in("status", array(0,2));
+		$obj->where("is_recurring <>", 1);
+		$obj->where("deleted <>", 1);
+		$obj->get_iterated();
+		
+		if($obj->exists()){
+			$objList = [];
+			foreach ($obj as $value) {
+				$amount = (floatval($value->amount) - floatval($value->deposit)) / floatval($value->rate);
+
+				if($value->status=="2"){
+					$paid = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					$paid->select_sum("amount");
+					$paid->select_sum("discount");
+					$paid->where("reference_id", $value->id);
+					$paid->where_in("type", arary("Cash_Receipt", "Sale_Return", "Offset_Invoice"));
+					$paid->where("is_recurring <>",1);
+					$paid->where("deleted <>",1);
+					$paid->get();
+					$amount -= floatval($paid->amount) + floatval($paid->discount);
+				}
+
+				if(isset($objList[$value->contact_id])){
+					$objList[$value->contact_id]["line"][] = array(
+						"id" 				=> $value->id,
+						"type" 				=> $value->type,
+						"number" 			=> $value->number,
+						"issued_date" 		=> $value->issued_date,
+						"rate" 				=> $value->rate,
+						"amount" 			=> $amount
+					);
+				}else{
+					$objList[$value->contact_id]["id"] 				= $value->contact_id;
+					$objList[$value->contact_id]["name"] 			= $value->contact_abbr.$value->contact_number." ".$value->contact_name;
+					$objList[$value->contact_id]["line"][] 			= array(
+						"id" 				=> $value->id,
+						"type" 				=> $value->type,
+						"number" 			=> $value->number,
+						"issued_date" 		=> $value->issued_date,
+						"rate" 				=> $value->rate,
+						"amount" 			=> $amount
+					);			
+				}
+			}
+
+			foreach ($objList as $value) {
+				$data["results"][] = $value;
+			}
+			$data["count"] = count($data["results"]);
+		}
+
+		//Response Data
 		$this->response($data, 200);
 	}
 
-	function detail_balance_get() {
-		$filters 	= $this->get("filter")["filters"];
-		$page 		= $this->get('page') !== false ? $this->get('page') : 1;
-		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;
+	//AGING
+	function aging_summary_get() {
+		$filter 	= $this->get("filter");
+		$page 		= $this->get('page');
+		$limit 		= $this->get('limit');
 		$sort 	 	= $this->get("sort");
-		$data["results"] = array();
+		$data["results"] = [];
 		$data["count"] = 0;
-		$is_pattern = 0;
-		$deleted = 0;
-		$customers = array();
-		$total = 0;
-		$paid  = 0;
-		$invoiceOpen = 0;
 
 		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
+		//Sort
 		if(!empty($sort) && isset($sort)){
 			foreach ($sort as $value) {
-				$obj->order_by($value["field"], $value["dir"]);
+				if(isset($value['operator'])){
+					$obj->{$value['operator']}($value["field"], $value["dir"]);
+				}else{
+					$obj->order_by($value["field"], $value["dir"]);
+				}
 			}
 		}
-
-		//Filter
-		if(!empty($filters) && isset($filters)){
-	    	foreach ($filters as $value) {
-	    		if(!empty($value["operator"]) && isset($value["operator"])){
-		    		if($value["operator"]=="where_in"){
-		    			$obj->where_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_where_in"){
-		    			$obj->or_where_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="where_not_in"){
-		    			$obj->where_not_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_where_not_in"){
-		    			$obj->or_where_not_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="like"){
-		    			$obj->like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_like"){
-		    			$obj->or_like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="not_like"){
-		    			$obj->not_like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_not_like"){
-		    			$obj->or_not_like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="startswith"){
-		    			$obj->like($value["field"], $value["value"], "after");
-		    		}else if($value["operator"]=="endswith"){
-		    			$obj->like($value["field"], $value["value"], "before");
-		    		}else if($value["operator"]=="contains"){
-		    			$obj->like($value["field"], $value["value"], "both");
-		    		}else if($value["operator"]=="or_where"){
-		    			$obj->or_where($value["field"], $value["value"]);		    		
-		    		}else{
-		    			$obj->where($value["field"].' '.$value["operator"], $value["value"]);
-		    		}
-	    		}else{
-	    			$obj->where($value["field"], $value["value"]);
+		
+		//Filter		
+		if(!empty($filter) && isset($filter)){
+	    	foreach ($filter["filters"] as $value) {
+	    		if(isset($value['operator'])){
+	    			$obj->{$value['operator']}($value['field'], $value['value']);	    		
+	    		} else {
+	    			$obj->where($value['field'], $value['value']);
 	    		}
 			}
 		}
 
-		$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$type->select('id')->where('parent_id', 1)->get();
-			$types = array();
-			foreach($type as $t) {
-				$types[] = $t->id;
-			}
-
-		$customer = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$customer->where('deleted <>', 1);
-		$customer->where('is_pattern <>', 1);
-		$customerCount = $customer->where_in('contact_type_id', $type)->count();
-
-		if($this->get("filter")['logic'] == "segment") {
-			$segmentItem = new Segmentitem(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		//Results
+		$obj->include_related("contact", array("abbr", "number", "name"));
+		$obj->where_in("type", array("Commercial_Invoice","Vat_Invoice","Invoice"));
+		$obj->where_in("status", array(0,2));
+		$obj->where("is_recurring <>", 1);
+		$obj->where("deleted <>", 1);
+		$obj->order_by("issued_date", "asc");
+		$obj->get_iterated();
 		
-			$segmentItem->get();
+		if($obj->exists()){
+			$objList = [];
+			$today = new DateTime();
+			foreach ($obj as $value) {
+				$amount = (floatval($value->amount) - floatval($value->deposit)) / floatval($value->rate);
+				
+				if($value->status=="2"){
+					$paid = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					$paid->select_sum("amount");
+					$paid->select_sum("discount");
+					$paid->where("reference_id", $value->id);
+					$paid->where_in("type", arary("Cash_Receipt", "Sale_Return", "Offset_Invoice"));
+					$paid->where("is_recurring <>",1);
+					$paid->where("deleted <>",1);
+					$paid->get();
+					$amount -= floatval($paid->amount) + floatval($paid->discount);
+				}
 
-			foreach ($segmentItem as $seg) {
-				$txn = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$current = 0;
+				$in30 = 0;
+				$in60 = 0;
+				$in90 = 0;
+				$over90 = 0;
 
-				$txn->where_in("type", array("Invoice", "Cash_Receipt", "Commercial_Invoice", "Vat_Invoice"));
-				$txn->where_in("status", array(0,2));
-				$txn->like("segments", $seg->id, "both");
-				$txn->where("deleted",0);
-				$txn->where("is_recurring",0);
-				$txn->get_iterated();
-
-				foreach ($txn as $t) {
-					$ref = $t->referece->get();
-					$amt = floatval($t->amount)/ floatval($t->rate);
-					$items = $t->item_line->include_related('item', array('name'))->get();
-					if(isset($customers["$seg->name"])) {
-						$customers["$seg->name"]['transactions'][] = array(
-							'id'  		=> $t->id,
-							'type'  	=> $t->type,
-							'date' 		=> $t->issued_date,
-							'number' 	=> $t->number,
-							'memo' 		=> $t->memo2,						
-							'amount' 	=> floatval($t->amount)/floatval($t->rate)
-						);
-					} else {
-						$customers["$seg->name"]['transactions'][] = array(
-							'id'  		=> $t->id,
-							'type'  	=> $t->type,
-							'date' 		=> $t->issued_date,
-							'number' 	=> $t->number,
-							'memo' 		=> $t->memo2,					
-							'amount' 	=> floatval($t->amount)/floatval($t->rate)
-						);
+				$dueDate = new DateTime($value->due_date);
+				$days = $dueDate->diff($today)->format("%a");
+				if($dueDate < $today){
+					if(intval($days)>90){
+						$over90 = $amount;
+					}else if(intval($days)>60){
+						$in90 = $amount;
+					}else if(intval($days)>30){
+						$in60 = $amount;
+					}else{
+						$in30 = $amount;
 					}
-					if($t->type == "Invoice") {
-						if($t->status != 1) {
-							$invoiceOpen += 1;
-						}
-						$total += floatval($t->amount)/ floatval($t->rate);
-					} else {
-						$paid += floatval($t->amount)/ floatval($t->rate);
-					}
-					$total += $amt;
+				}else{
+					$current = $amount;
+				}
+
+				if(isset($objList[$value->contact_id])){
+					$objList[$value->contact_id]["current"] += $current;
+					$objList[$value->contact_id]["in30"] 	+= $in30;
+					$objList[$value->contact_id]["in60"] 	+= $in60;
+					$objList[$value->contact_id]["in90"] 	+= $in90;
+					$objList[$value->contact_id]["over90"] 	+= $over90;
+					$objList[$value->contact_id]["total"] 	+= $amount;
+				}else{
+					$objList[$value->contact_id]["id"] 		= $value->contact_id;
+					$objList[$value->contact_id]["name"] 	= $value->contact_abbr.$value->contact_number." ".$value->contact_name;
+					$objList[$value->contact_id]["current"] = $current;
+					$objList[$value->contact_id]["in30"] 	= $in30;
+					$objList[$value->contact_id]["in60"] 	= $in60;
+					$objList[$value->contact_id]["in90"] 	= $in90;
+					$objList[$value->contact_id]["over90"] 	= $over90;
+					$objList[$value->contact_id]["total"] 	= $amount;
 				}
 			}
-		} else {
-			// $obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
-			$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			$type->where('parent_id', 1)->get();
-
-			$obj->where_related("contact", 'contact_type_id', $type);
-			$obj->where("status <>", 1);
-			$obj->where_in("type", array("Invoice", "Commercial_Invoice", "Vat_Invoice"));
-			$obj->where("deleted",0);
-			$obj->where('is_recurring', 0);
-
-			// $obj->include_related("contact_type", "name");
-
-			//Results
-			$obj->get_paged_iterated($page, $limit);
-			$data["count"] = $obj->paged->total_rows;
-			
-			if($obj->result_count()>0){
-				foreach ($obj as $value) {
-					$ref = $value->transaction->get();
-					$customer = $value->contact->get();
-					$fullname = $customer->surname.' '.$customer->name;
-					$temp = 0;
-					foreach ($ref as $r) {
-						$a = abs($r->amount);					
-						$temp += floatval($a);
-					}
-					if(isset($customers["$fullname"])) {
-						$customers["$fullname"]['transactions'][] = array(
-							'id'  		=> $value->id,
-							'type'  	=> $value->type,
-							'date' 		=> $value->issued_date,
-							'number' 	=> $value->number,
-							'memo' 		=> $value->memo2,					
-							'amount' 	=> floatval($value->amount)/floatval($value->rate)- $temp 
-						);
-					} else {
-						$customers["$fullname"]['transactions'][] = array(
-							'id'  		=> $value->id,
-							'type'  	=> $value->type,
-							'date' 		=> $value->issued_date,
-							'number' 	=> $value->number,
-							'memo' 		=> $value->memo2,					
-							'amount' 	=> floatval($value->amount)/floatval($value->rate)- $temp
-						);
-					}
-					if($value->type == "Invoice" || $value->type == "Commercial_Invoice" || $value->type == "Vat_Invoice" ) {
-						if($value->status != 1) {
-							$invoiceOpen += 1;
-						}						
-					}
-					$total += (floatval($value->amount)/ floatval($value->rate)) - $temp; 
-
-				}
+			foreach ($objList as $value) {
+				$data["results"][] = $value;
 			}
-		}	
-
-		foreach ($customers as $key => $value) {
-			$data["results"][] = array(
-				'group' => $key,
-				'items' => $value['transactions']
-			);
+			$data["count"] = count($data["results"]);
 		}
 
 		//Response Data
-		$data['total'] = $total;
-		$data['customerCount'] = $customerCount;
-		$data['openInvoice'] = $invoiceOpen;
-		$data['count'] = count($customers);
+		$this->response($data, 200);
+	}
+	function aging_detail_get() {
+		$filter 	= $this->get("filter");
+		$page 		= $this->get('page');
+		$limit 		= $this->get('limit');
+		$sort 	 	= $this->get("sort");
+		$data["results"] = [];
+		$data["count"] = 0;
+
+		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+		//Sort
+		if(!empty($sort) && isset($sort)){
+			foreach ($sort as $value) {
+				if(isset($value['operator'])){
+					$obj->{$value['operator']}($value["field"], $value["dir"]);
+				}else{
+					$obj->order_by($value["field"], $value["dir"]);
+				}
+			}
+		}
+		
+		//Filter		
+		if(!empty($filter) && isset($filter)){
+	    	foreach ($filter["filters"] as $value) {
+	    		if(isset($value['operator'])){
+	    			$obj->{$value['operator']}($value['field'], $value['value']);	    		
+	    		} else {
+	    			$obj->where($value['field'], $value['value']);
+	    		}
+			}
+		}
+
+		//Results
+		$obj->include_related("contact", array("abbr", "number", "name"));
+		$obj->where_in("type", array("Commercial_Invoice","Vat_Invoice","Invoice"));
+		$obj->where_in("status", array(0,2));
+		$obj->where("is_recurring <>", 1);
+		$obj->where("deleted <>", 1);
+		$obj->order_by("issued_date", "asc");
+		$obj->get_iterated();
+		
+		if($obj->exists()){
+			$objList = [];
+			foreach ($obj as $value) {
+				$amount = (floatval($value->amount) - floatval($value->deposit)) / floatval($value->rate);
+				
+				if($value->status=="2"){
+					$paid = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					$paid->select_sum("amount");
+					$paid->select_sum("discount");
+					$paid->where("reference_id", $value->id);
+					$paid->where_in("type", arary("Cash_Receipt", "Sale_Return", "Offset_Invoice"));
+					$paid->where("is_recurring <>",1);
+					$paid->where("deleted <>",1);
+					$paid->get();
+					$amount -= floatval($paid->amount) + floatval($paid->discount);
+				}
+
+				if(isset($objList[$value->contact_id])){
+					$objList[$value->contact_id]["line"][] = array(
+						"id" 				=> $value->id,
+						"type" 				=> $value->type,
+						"number" 			=> $value->number,
+						"issued_date" 		=> $value->issued_date,
+						"due_date" 			=> $value->due_date,
+						"memo" 				=> $value->memo,
+						"status"			=> $value->status,
+						"rate" 				=> $value->rate,
+						"amount" 			=> $amount
+					);
+				}else{
+					$objList[$value->contact_id]["id"] 				= $value->contact_id;
+					$objList[$value->contact_id]["name"] 			= $value->contact_abbr.$value->contact_number." ".$value->contact_name;
+					$objList[$value->contact_id]["line"][] 			= array(
+						"id" 				=> $value->id,
+						"type" 				=> $value->type,
+						"number" 			=> $value->number,
+						"issued_date" 		=> $value->issued_date,
+						"due_date" 			=> $value->due_date,
+						"memo" 				=> $value->memo,
+						"status"			=> $value->status,
+						"rate" 				=> $value->rate,
+						"amount" 			=> $amount
+					);			
+				}
+			}
+
+			foreach ($objList as $value) {
+				$data["results"][] = $value;
+			}
+			$data["count"] = count($data["results"]);
+		}
+
+		//Response Data
 		$this->response($data, 200);
 	}
 
@@ -1725,199 +1724,6 @@ class Sales extends REST_Controller {
 
 		$data['total'] = $total;
 		$data['count'] = count($total);
-		//Response Data
-		$this->response($data, 200);
-	}
-
-	function aging_summary_get() {
-		$filter 	= $this->get("filter");
-		$page 		= $this->get('page');
-		$limit 		= $this->get('limit');
-		$sort 	 	= $this->get("sort");
-		$data["results"] = [];
-		$data["count"] = 0;
-
-		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-
-		//Sort
-		if(!empty($sort) && isset($sort)){
-			foreach ($sort as $value) {
-				if(isset($value['operator'])){
-					$obj->{$value['operator']}($value["field"], $value["dir"]);
-				}else{
-					$obj->order_by($value["field"], $value["dir"]);
-				}
-			}
-		}
-		
-		//Filter		
-		if(!empty($filter) && isset($filter)){
-	    	foreach ($filter["filters"] as $value) {
-	    		if(isset($value['operator'])){
-	    			$obj->{$value['operator']}($value['field'], $value['value']);	    		
-	    		} else {
-	    			$obj->where($value['field'], $value['value']);
-	    		}
-			}
-		}
-
-		//Results
-		$obj->include_related("contact", array("abbr", "number", "name"));
-		$obj->where_in("type", array("Commercial_Invoice","Vat_Invoice","Invoice"));
-		$obj->where_in("status", array(0,2));
-		$obj->where("is_recurring <>", 1);
-		$obj->where("deleted <>", 1);
-		$obj->get_iterated();
-		
-		if($obj->exists()){
-			$objList = [];
-			$today = new DateTime();
-			foreach ($obj as $value) {
-				$amount = (floatval($value->amount) - floatval($value->deposit)) / floatval($value->rate);
-				
-				if($value->status=="2"){
-					$paid = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-					$paid->select_sum("amount");
-					$paid->select_sum("discount");
-					$paid->where("reference_id", $value->id);
-					$paid->where("type", "Cash_Receipt");
-					$paid->where("is_recurring <>",1);
-					$paid->where("deleted <>",1);
-					$paid->get();
-					$amount -= floatval($paid->amount) + floatval($paid->discount);
-				}
-
-				$current = 0;
-				$in30 = 0;
-				$in60 = 0;
-				$in90 = 0;
-				$over90 = 0;
-
-				$dueDate = new DateTime($value->due_date);
-				$days = $dueDate->diff($today)->format("%a");
-				if($dueDate < $today){
-					if(intval($days)>90){
-						$over90 = $amount;
-					}else if(intval($days)>60){
-						$in90 = $amount;
-					}else if(intval($days)>30){
-						$in60 = $amount;
-					}else{
-						$in30 = $amount;
-					}
-				}else{
-					$current = $amount;
-				}
-
-				if(isset($objList[$value->contact_id])){
-					$objList[$value->contact_id]["current"] += $current;
-					$objList[$value->contact_id]["in30"] 	+= $in30;
-					$objList[$value->contact_id]["in60"] 	+= $in60;
-					$objList[$value->contact_id]["in90"] 	+= $in90;
-					$objList[$value->contact_id]["over90"] 	+= $over90;
-					$objList[$value->contact_id]["total"] 	+= $amount;
-				}else{
-					$objList[$value->contact_id]["id"] 		= $value->contact_id;
-					$objList[$value->contact_id]["name"] 	= $value->contact_abbr.$value->contact_number." ".$value->contact_name;
-					$objList[$value->contact_id]["current"] = $current;
-					$objList[$value->contact_id]["in30"] 	= $in30;
-					$objList[$value->contact_id]["in60"] 	= $in60;
-					$objList[$value->contact_id]["in90"] 	= $in90;
-					$objList[$value->contact_id]["over90"] 	= $over90;
-					$objList[$value->contact_id]["total"] 	= $amount;
-				}
-			}
-
-			foreach ($objList as $value) {
-				$data["results"][] = $value;
-			}
-			$data["count"] = count($data["results"]);
-		}
-
-		//Response Data
-		$this->response($data, 200);
-	}
-	function aging_detail_get() {
-		$filter 	= $this->get("filter");
-		$page 		= $this->get('page');
-		$limit 		= $this->get('limit');
-		$sort 	 	= $this->get("sort");
-		$data["results"] = [];
-		$data["count"] = 0;
-
-		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-
-		//Sort
-		if(!empty($sort) && isset($sort)){
-			foreach ($sort as $value) {
-				if(isset($value['operator'])){
-					$obj->{$value['operator']}($value["field"], $value["dir"]);
-				}else{
-					$obj->order_by($value["field"], $value["dir"]);
-				}
-			}
-		}
-		
-		//Filter		
-		if(!empty($filter) && isset($filter)){
-	    	foreach ($filter["filters"] as $value) {
-	    		if(isset($value['operator'])){
-	    			$obj->{$value['operator']}($value['field'], $value['value']);	    		
-	    		} else {
-	    			$obj->where($value['field'], $value['value']);
-	    		}
-			}
-		}
-
-		//Results
-		$obj->include_related("contact", array("abbr", "number", "name"));
-		$obj->where_in("type", array("Commercial_Invoice","Vat_Invoice","Invoice","Cash_Receipt","Sale_Return"));
-		$obj->where("is_recurring <>", 1);
-		$obj->where("deleted <>", 1);
-		$obj->get_iterated();
-		
-		if($obj->exists()){
-			$objList = [];
-			foreach ($obj as $value) {
-				$multiplier = 1;
-				if($value->type=="Cash_Receipt" || $value->type=="Sale_Return"){ $multiplier = -1; }
-				$amount = ((floatval($value->amount)-floatval($value->deposit)) / floatval($value->rate))*$multiplier;
-
-				if(isset($objList[$value->contact_id])){
-					$objList[$value->contact_id]["line"][] = array(
-						"id" 				=> $value->id,
-						"type" 				=> $value->type,
-						"number" 			=> $value->number,
-						"issued_date" 		=> $value->issued_date,
-						"due_date" 			=> $value->due_date,
-						"memo" 				=> $value->memo,
-						"status"			=> $value->status,
-						"rate" 				=> $value->rate,
-						"amount" 			=> $amount
-					);
-				}else{
-					$objList[$value->contact_id]["id"] 				= $value->contact_id;
-					$objList[$value->contact_id]["name"] 			= $value->contact_abbr.$value->contact_number." ".$value->contact_name;
-					$objList[$value->contact_id]["line"][] 			= array(
-						"id" 				=> $value->id,
-						"type" 				=> $value->type,
-						"number" 			=> $value->number,
-						"issued_date" 		=> $value->issued_date,
-						"due_date" 			=> $value->due_date,
-						"memo" 				=> $value->memo,
-						"status"			=> $value->status,
-						"rate" 				=> $value->rate,
-						"amount" 			=> $amount
-					);			
-				}
-			}
-
-			foreach ($objList as $value) {
-				$data["results"][] = $value;
-			}
-			$data["count"] = count($data["results"]);
-		}
-
 		//Response Data
 		$this->response($data, 200);
 	}

@@ -12185,7 +12185,6 @@
 	    			if(v.exemption[0].line.unit == 'm3'){
 	    				//rUsage = Usage - AmountEx;
 	    				tUsage = Usage - AmountEx;
-	    				console.log(tUsage + '__' +Usage);
 	    			}else{
 	    				exT = v.exemption[0].line.unit;
 	    				exA = AmountEx;
@@ -12293,7 +12292,6 @@
 					Total = kendo.parseFloat(exU) - kendo.parseFloat(exA);
 				}else{
 					Total = kendo.parseInt(tUsage) * kendo.parseFloat(aTariff);
-					console.log(tUsage+"__"+Total);
 				}
 				//Installment
 				if(v.installment[0].line.amount > 0){
@@ -12359,7 +12357,7 @@
 		cancel 				: function(){
 			this.invoiceCollection.cancelChanges();
 			this.invoiceArray = [];	
-			window.history.back();
+			//window.history.back();
 		}
 	});
 	banhji.printBill = kendo.observable({
@@ -13046,7 +13044,7 @@
 				$.each(this.dataSource.data(), function(index, value){
 					idList.push(value.reference_id);
 				});
-				para.push({ field:"id", operator:"where_not_in", value:idList });
+				// para.push({ field:"id", operator:"where_not_in", value:idList });
 			}
 
 			this.invoiceDS.query({
@@ -13057,6 +13055,7 @@
 				var view = self.invoiceDS.view();
 
 				if(view.length>0){
+					// console.log(view.length);
 					$.each(view, function(index, value){											
 						var amount_due = value.amount - (value.amount_paid + value.deposit);							
 
@@ -13093,16 +13092,14 @@
 						   	week 				: 0,
 						   	month 				: 0,
 						   	is_recurring 		: 0,
-
-						   	contact				: value.contact,
 						   	amount_due 			: kendo.toString(amount_due, "c", value.locale),
 						   	amount_paid 		: value.amount_paid,
 						   	reference 			: [{ "number" : value.number, "amount" : value.amount, "deposit" : value.deposit, "issued_date":value.issued_date, "account_id":value.account_id }]				
 				    	});	
 				    	self.set('numCustomer', self.get('numCustomer') + 1);					
 					});
-					self.applyTerm();
-					self.setRate();
+					// self.applyTerm();
+					// self.setRate();
 				}
 
 				self.set("searchText", "");

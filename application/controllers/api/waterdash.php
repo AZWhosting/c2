@@ -69,18 +69,16 @@ class Waterdash extends REST_Controller {
 			}
 		}
 
-		// $contact->where('status', 1);
+		$contact->where('status', 1);
 		$contact->where('activated', 1);
 		$totalCust = $contact->count();
 
 		$icontact->where('status', 0);
 		$icontact->where('activated', 1);
-		$icontact->where('status', 0);
 		$totalICust = $icontact->count();
 
 		$acontact->where('status', 1);
 		$acontact->where('activated', 1);
-		$acontact->where('status', 1);
 		$totalACust = $acontact->count();
 
 		$vcontact->where('status', 2);
@@ -172,7 +170,7 @@ class Waterdash extends REST_Controller {
 				$usage = 0;
 				$deposit = 0;
 				foreach($location as $loc) {
-					$meter = $loc->meter->get();
+					$meter = $loc->meter->where('activated', 1)->get();
 					$contact = $loc->contact->select('deposit_account_id')->get();
 					$trx = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_banhji');
 					$trx->select_sum('amount');

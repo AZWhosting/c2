@@ -141,11 +141,11 @@ class Winvoices extends REST_Controller {
 				}
 
 				// installment
-				$installment = $meter->installment->where("invoiced", 0)->limit(1)->get();
+				$installment = $meter->installment->include_related('installment_schedule', array('id','amount'))->limit(1)->where_related_installment_schedule('invoiced', 0)->get();
 				$tmp["$meter->number"]['installment'][] = array(
 					"type" => 'installment',
 					"line" => array(
-						'id'   => $installment->id,
+						'id'   => $installment->installment_schedule_id,
 						'name' => 'Installment',
 						'from' => $installment->date,
 						'to'   => 0,
@@ -153,7 +153,7 @@ class Winvoices extends REST_Controller {
 						'current'=>0,
 						'usage' => 1,
 						'unit'  => 'money',
-						'amount'=> floatval($installment->amount)
+						'amount'=> floatval($installment->installment_schedule_amount)
 					));
 			}
 		}
@@ -182,6 +182,7 @@ class Winvoices extends REST_Controller {
 		$models = json_decode($this->post('models'));
 		$data["results"] = array();
 		$data["count"] = 0;
+
 
 		$number = "";
 		foreach ($models as $value) {
@@ -217,6 +218,8 @@ class Winvoices extends REST_Controller {
 		   	$obj->memo 				= isset($value->memo) ? $value->memo: "";
 		   	$obj->memo2 			= isset($value->memo2) ? $value->memo2: "";
 		   	$obj->status 			= isset($value->status) ? $value->status: "";
+
+		   	
 
 	   		if($obj->save()){
 
@@ -258,9 +261,14 @@ class Winvoices extends REST_Controller {
 		   			$line->has_vat 			= isset($row->has_vat) ? $row->has_vat : "";
 		   			$line->type 			= isset($row->type)?$row->type:"";
 		   			$line->item_id 			= isset($row->item_id)?$row->item_id:"";
-
+		   			if($row->type == 'installment') {
+		   				//Update Installment Schedule Invoice = 1
+						$updateInstallSchedule = new Installment_schedule(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+						$updateInstallSchedule->where('id', $row->item_id);
+						$updateInstallSchedule->update('invoiced', 1);
+		   			}
 		   			//to do: add to accouting line
-
+		   			$updateInstallSchedule = isset($updateInstallSchedule) ? $updateInstallSchedule : "";
 		   			if($line->save()){
 		   				$invoice_lines[] = array(
 		   					"id" 				=> $line->id,
@@ -275,7 +283,8 @@ class Winvoices extends REST_Controller {
 				   			"rate"				=> floatval($line->rate),
 				   			"locale" 			=> $line->locale,
 				   			"has_vat" 			=> $line->has_vat=="true"?true:false,
-				   			"type" 				=> $line->type
+				   			"type" 				=> $line->type,
+				   			"installment" 		=> $updateInstallSchedule
 		   				);
 		   			}
 		   		}
@@ -393,6 +402,16 @@ class Winvoices extends REST_Controller {
 					);
 				}
 			}
+			$installment = $m->installment->include_related('installment_schedule', array('amount'))->limit(1)->where_related_installment_schedule('invoiced', 0)->get();
+			$lines[] = array(
+				'number' => 'Installment',
+				'previous' => 0,
+				'current'  => 0,
+				'consumption' => 0,
+				'rate' => 0,
+				'amount' => floatval($installment->installment_schedule_amount),
+				'type' => 'installment'
+			);
 			$data[] = array(
 				'id' => $row->id,
 				'type' => $row->type,

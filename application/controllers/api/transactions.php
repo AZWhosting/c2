@@ -81,7 +81,7 @@ class Transactions extends REST_Controller {
 					$paid = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 					$paid->select_sum("amount");
 					$paid->select_sum("discount");
-					$paid->where_in("type", array("Cash_Receipt", "Cash_Payment"));
+					$paid->where_in("type", array("Cash_Receipt", "Sale_Return", "Offset_Invoice", "Cash_Payment", "Purchase_Return", "Offset_Bill"));
 					if($value->type=="Cash_Receipt" || $value->type=="Cash_Payment"){
 						$paid->where("reference_id", $value->reference_id);
 						$paid->where_not_in("id", array($value->id));
