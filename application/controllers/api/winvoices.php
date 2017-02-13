@@ -402,16 +402,7 @@ class Winvoices extends REST_Controller {
 					);
 				}
 			}
-			$installment = $m->installment->include_related('installment_schedule', array('amount'))->limit(1)->where_related_installment_schedule('invoiced', 0)->get();
-			$lines[] = array(
-				'number' => 'Installment',
-				'previous' => 0,
-				'current'  => 0,
-				'consumption' => 0,
-				'rate' => 0,
-				'amount' => floatval($installment->installment_schedule_amount),
-				'type' => 'installment'
-			);
+			
 			$data[] = array(
 				'id' => $row->id,
 				'type' => $row->type,

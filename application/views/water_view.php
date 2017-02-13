@@ -4383,11 +4383,11 @@
 <script id="cashReceipt-template" type="text/x-kendo-template">
 	<tr data-uid="#: uid #">		
 		<td>
-			<i class="icon-trash" data-bind="events: { click: removeInvRow }"></i>
+			<i class="icon-trash" data-bind="events: { click: removeRow }"></i>
 			#:banhji.Receipt.dataSource.indexOf(data)+1#			
 		</td>		
 		<td>#=kendo.toString(new Date(due_date), "dd-MM-yyyy")#</td>
-		<td>#=contact[0].name#</td>		
+		<td>#=contact.name#</td>		
 		<td>#=number#</td>
 		<td data-bind="visible: showCheckNo">
 			<input type="text" class="k-textbox" 
@@ -8418,7 +8418,7 @@
 			serverSorting: true,
 			serverPaging: true,
 			page:1,
-			pageSize: 100
+			pageSize: 10000
 		}),
 		customerDS					: new kendo.data.DataSource({
 			transport: {
@@ -12637,7 +12637,7 @@
 			}
 		},
 		cancel 				: function(){
-			this.dataSource = [];	
+			banhji.InvoicePrint.dataSource = [];
 			this.set("PaperSize","A4");
 			this.barcod("reset");
 			window.history.back();
@@ -13057,8 +13057,8 @@
 				if(view.length>0){
 					// console.log(view.length);
 					$.each(view, function(index, value){											
-						var amount_due = value.amount - (value.amount_paid + value.deposit);							
-
+						var amount_due = value.amount - (value.amount_paid + value.deposit);
+						var contact = banhji.source.contactDS.get(value.contact_id);
 						self.dataSource.add({
 							transaction_template_id : 0,
 							number 				: value.number,
@@ -13092,14 +13092,15 @@
 						   	week 				: 0,
 						   	month 				: 0,
 						   	is_recurring 		: 0,
+						   	contact 			: {id: contact.id, name: contact.name},
 						   	amount_due 			: kendo.toString(amount_due, "c", value.locale),
 						   	amount_paid 		: value.amount_paid,
 						   	reference 			: [{ "number" : value.number, "amount" : value.amount, "deposit" : value.deposit, "issued_date":value.issued_date, "account_id":value.account_id }]				
 				    	});	
 				    	self.set('numCustomer', self.get('numCustomer') + 1);					
 					});
-					// self.applyTerm();
-					// self.setRate();
+					self.applyTerm();
+					self.setRate();
 				}
 
 				self.set("searchText", "");
@@ -17404,9 +17405,12 @@
 		}
 	});
 	
-	$(function() {	
-		banhji.router.start();
-		banhji.source.loadData();
+	$(function() {
+		banhji.source.contactDS.read().then(function(){
+			banhji.router.start();
+			banhji.source.loadData();
+		});	
+		
 		//console.log($(location).attr('hash').substr(2));
 		function loadStyle(href){
 				    // avoid duplicates

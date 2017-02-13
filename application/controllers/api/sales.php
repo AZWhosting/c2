@@ -865,7 +865,7 @@ class Sales extends REST_Controller {
 					$paid->select_sum("amount");
 					$paid->select_sum("discount");
 					$paid->where("reference_id", $value->id);
-					$paid->where_in("type", arary("Cash_Receipt", "Sale_Return", "Offset_Invoice"));
+					$paid->where_in("type", array("Cash_Receipt", "Sale_Return", "Offset_Invoice"));
 					$paid->where("is_recurring <>",1);
 					$paid->where("deleted <>",1);
 					$paid->get();
@@ -942,7 +942,7 @@ class Sales extends REST_Controller {
 					$paid->select_sum("amount");
 					$paid->select_sum("discount");
 					$paid->where("reference_id", $value->id);
-					$paid->where_in("type", arary("Cash_Receipt", "Sale_Return", "Offset_Invoice"));
+					$paid->where_in("type", array("Cash_Receipt", "Sale_Return", "Offset_Invoice"));
 					$paid->where("is_recurring <>",1);
 					$paid->where("deleted <>",1);
 					$paid->get();
@@ -1035,7 +1035,7 @@ class Sales extends REST_Controller {
 					$paid->select_sum("amount");
 					$paid->select_sum("discount");
 					$paid->where("reference_id", $value->id);
-					$paid->where_in("type", arary("Cash_Receipt", "Sale_Return", "Offset_Invoice"));
+					$paid->where_in("type", array("Cash_Receipt", "Sale_Return", "Offset_Invoice"));
 					$paid->where("is_recurring <>",1);
 					$paid->where("deleted <>",1);
 					$paid->get();
@@ -1143,7 +1143,7 @@ class Sales extends REST_Controller {
 					$paid->select_sum("amount");
 					$paid->select_sum("discount");
 					$paid->where("reference_id", $value->id);
-					$paid->where_in("type", arary("Cash_Receipt", "Sale_Return", "Offset_Invoice"));
+					$paid->where_in("type", array("Cash_Receipt", "Sale_Return", "Offset_Invoice"));
 					$paid->where("is_recurring <>",1);
 					$paid->where("deleted <>",1);
 					$paid->get();
@@ -1175,6 +1175,186 @@ class Sales extends REST_Controller {
 						"status"			=> $value->status,
 						"rate" 				=> $value->rate,
 						"amount" 			=> $amount
+					);			
+				}
+			}
+
+			foreach ($objList as $value) {
+				$data["results"][] = $value;
+			}
+			$data["count"] = count($data["results"]);
+		}
+
+		//Response Data
+		$this->response($data, 200);
+	}
+
+	//COLLECT INVOICE
+	function collect_invoice_get() {
+		$filter 	= $this->get("filter");
+		$page 		= $this->get('page');
+		$limit 		= $this->get('limit');
+		$sort 	 	= $this->get("sort");
+		$data["results"] = [];
+		$data["count"] = 0;
+
+		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+		//Sort
+		if(!empty($sort) && isset($sort)){
+			foreach ($sort as $value) {
+				if(isset($value['operator'])){
+					$obj->{$value['operator']}($value["field"], $value["dir"]);
+				}else{
+					$obj->order_by($value["field"], $value["dir"]);
+				}
+			}
+		}
+		
+		//Filter		
+		if(!empty($filter) && isset($filter)){
+	    	foreach ($filter["filters"] as $value) {
+	    		if(isset($value['operator'])){
+	    			$obj->{$value['operator']}($value['field'], $value['value']);	    		
+	    		} else {
+	    			$obj->where($value['field'], $value['value']);
+	    		}
+			}
+		}
+
+		//Results
+		$obj->include_related("contact", array("abbr", "number", "name"));
+		$obj->where_in("type", array("Commercial_Invoice","Vat_Invoice","Invoice"));
+		$obj->where_in("status", array(0,2));
+		$obj->where("is_recurring <>", 1);
+		$obj->where("deleted <>", 1);
+		$obj->get_iterated();
+		
+		if($obj->exists()){
+			foreach ($obj as $value) {
+				$amount = (floatval($value->amount) - floatval($value->deposit)) / floatval($value->rate);
+
+				if($value->status=="2"){
+					$paid = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					$paid->select_sum("amount");
+					$paid->select_sum("discount");
+					$paid->where("reference_id", $value->id);
+					$paid->where_in("type", array("Cash_Receipt", "Sale_Return", "Offset_Invoice"));
+					$paid->where("is_recurring <>",1);
+					$paid->where("deleted <>",1);
+					$paid->get();
+					$amount -= floatval($paid->amount) + floatval($paid->discount);
+				}
+				
+				$data["results"][] = array(
+					"id" 				=> $value->id,
+					"name" 				=> $value->contact_abbr.$value->contact_number." ".$value->contact_name,
+					"type" 				=> $value->type,
+					"number" 			=> $value->number,
+					"issued_date" 		=> $value->issued_date,
+					"due_date" 			=> $value->due_date,
+					"status"			=> $value->status,
+					"rate" 				=> $value->rate,
+					"amount" 			=> $amount
+				);
+			}
+
+			$data["count"] = count($data["results"]);
+		}
+
+		//Response Data
+		$this->response($data, 200);
+	}
+
+	//COLLECT REPORT
+	function collection_report_get() {
+		$filter 	= $this->get("filter");
+		$page 		= $this->get('page');
+		$limit 		= $this->get('limit');
+		$sort 	 	= $this->get("sort");
+		$data["results"] = [];
+		$data["count"] = 0;
+
+		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+		//Sort
+		if(!empty($sort) && isset($sort)){
+			foreach ($sort as $value) {
+				if(isset($value['operator'])){
+					$obj->{$value['operator']}($value["field"], $value["dir"]);
+				}else{
+					$obj->order_by($value["field"], $value["dir"]);
+				}
+			}
+		}
+		
+		//Filter		
+		if(!empty($filter) && isset($filter)){
+	    	foreach ($filter["filters"] as $value) {
+	    		if(isset($value['operator'])){
+	    			$obj->{$value['operator']}($value['field'], $value['value']);	    		
+	    		} else {
+	    			$obj->where($value['field'], $value['value']);
+	    		}
+			}
+		}
+
+		//Results
+		$obj->include_related("contact", array("abbr", "number", "name"));
+		$obj->where_in("type", array("Commercial_Invoice","Vat_Invoice","Invoice"));
+		$obj->where_in("status", array(1,2));
+		$obj->where("is_recurring <>", 1);
+		$obj->where("deleted <>", 1);
+		$obj->order_by("issued_date", "asc");
+		$obj->get_iterated();
+		
+		if($obj->exists()){
+			$objList = [];
+			foreach ($obj as $value) {
+				//Payments
+				$payments = [];				
+				$pmt = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);				
+				$pmt->where("reference_id", $value->id);
+				$pmt->where_in("type", array("Cash_Receipt", "Sale_Return", "Offset_Invoice"));
+				$pmt->where("is_recurring <>",1);
+				$pmt->where("deleted <>",1);
+				$pmt->get_iterated();
+				if($pmt->exists()){
+					foreach ($pmt as $val) {
+						$payments[] = array(
+							"id" 				=> $val->id,
+							"type" 				=> $val->type,
+							"number" 			=> $val->number,
+							"issued_date" 		=> $val->issued_date,
+							"rate" 				=> $val->rate,
+							"amount" 			=> floatval($val->amount) + floatval($val->discount)
+						);
+					}
+				}
+								
+				$amount = (floatval($value->amount) - floatval($value->deposit)) / floatval($value->rate);
+
+				if(isset($objList[$value->contact_id])){
+					$objList[$value->contact_id]["line"][] = array(
+						"id" 				=> $value->id,
+						"type" 				=> $value->type,
+						"number" 			=> $value->number,
+						"issued_date" 		=> $value->issued_date,
+						"rate" 				=> $value->rate,
+						"amount" 			=> $amount,
+						"payments" 			=> $payments
+					);
+				}else{
+					$objList[$value->contact_id]["id"] 		= $value->contact_id;
+					$objList[$value->contact_id]["name"] 	= $value->contact_abbr.$value->contact_number." ".$value->contact_name;
+					$objList[$value->contact_id]["line"][] 	= array(
+						"id" 				=> $value->id,
+						"type" 				=> $value->type,
+						"number" 			=> $value->number,
+						"issued_date" 		=> $value->issued_date,
+						"rate" 				=> $value->rate,
+						"amount" 			=> $amount,
+						"payments" 			=> $payments
 					);			
 				}
 			}
