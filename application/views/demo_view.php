@@ -23971,17 +23971,36 @@
 								<div class="widget-body">
 									<div class="tab-content">
 
-								        <!-- //Date -->
-								        <div class="tab-pane active" id="tab-1">
-									        As of:
-									        <input data-role="datepicker"
-													data-format="dd-MM-yyyy"
-													data-parse-formats="yyyy-MM-dd" 
-													data-bind="value: as_of" />
+								        <!-- Date -->
+								        <div class="tab-pane active" id="tab-1">									        	
+											
+											<input data-role="dropdownlist"
+												   class="sorter"                  
+										           data-value-primitive="true"
+										           data-text-field="text"
+										           data-value-field="value"
+										           data-bind="value: sorter,
+										                      source: sortList,                              
+										                      events: { change: sorterChanges }" />
 
-								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+											<input data-role="datepicker"
+												   class="sdate"
+												   data-format="dd-MM-yyyy"
+										           data-bind="value: sdate,
+										           			  max: edate"
+										           placeholder="From ..." >
+
+										    <input data-role="datepicker"
+										    	   class="edate"
+										    	   data-format="dd-MM-yyyy"
+										           data-bind="value: edate,
+										                      min: sdate"
+										           placeholder="To ..." >
+
+										  	<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
 							
 							        	</div>
+
 								    	<!-- Filter -->
 								        <div class="tab-pane" id="tab-2">
 											<table class="table table-condensed">
@@ -24039,7 +24058,7 @@
 								<tr>
 									<th><span>Invoice Date</span></th>
 									<th><span>Invoice Number</span></th>
-									<th><span>Invoice Balance</span></th>
+									<th><span>Invoice Amount</span></th>
 									<th><span>Receipt Date</span></th>
 									<th><span>Receipt Number</span></th>
 									<th><span>Receipt Amount</span></th>
@@ -24061,7 +24080,9 @@
 	<tr>
 		<td colspan="6" style="font-weight: bold; color: black;">#: name #</td>
 	</tr>
+	# var totalInvoice = 0, totalReceived = 0;#	
 	#for(var i=0; i<line.length; i++){#
+	#totalInvoice += line[i].amount;#
 	<tr>
 		<td style="vertical-align: top;">#=kendo.toString(new Date(line[i].issued_date), "dd-MM-yyyy")#</td>
 		<td style="vertical-align: top;"><a href="\#/#=line[i].type.toLowerCase()#/#=line[i].id#">#=line[i].number#</a></td>
@@ -24070,6 +24091,7 @@
 			#if(line[i].payments.length>0){#
 			<table class="table">
 				#for(var j=0; j<line[i].payments.length; j++){#
+				#totalReceived += line[i].payments[j].amount;#
 				<tr>
 					<td>#=kendo.toString(new Date(line[i].payments[j].issued_date), "dd-MM-yyyy")#</td>
 					<td><a href="\#/#=line[i].payments[j].type.toLowerCase()#/#=line[i].payments[j].id#">#=line[i].payments[j].number#</a></td>
@@ -24081,6 +24103,18 @@
 		</td>
 	</tr>
 	#}#
+	<tr>
+    	<td style="font-weight: bold; color: black;">Total</td>
+    	<td></td>
+    	<td style="text-align: right; font-weight: bold; border-top: 1px solid black !important; color: black;">
+    		#=kendo.toString(totalInvoice, "c", banhji.locale)#
+    	</td>    	
+    	<td></td>
+    	<td></td>
+    	<td style="text-align: right; font-weight: bold; border-top: 1px solid black !important; color: black;">
+    		#=kendo.toString(totalReceived, "c", banhji.locale)#
+    	</td>
+    </tr>
 	<tr>
     	<td colspan="6">&nbsp;</td>
     </tr>
@@ -71258,6 +71292,10 @@
 		  	data: banhji.source.customerList,
 			sort: { field:"number", dir:"asc" }
 		}),
+		sortList			: banhji.source.sortList,
+		sorter 				: "month",
+		sdate 				: "",
+		edate 				: "",
 		obj 				: { customers: [] },
 		company 			: banhji.institute,
 		as_of 				: new Date(),
@@ -71267,10 +71305,46 @@
 		pageLoad 			: function(){
 			this.search();
 		},
+		sorterChanges 		: function(){
+	        var today = new Date(),
+        	sdate = "",
+        	edate = "",
+        	sorter = this.get("sorter");
+        	
+			switch(sorter){
+				case "today":								
+					this.set("sdate", today);
+					this.set("edate", "");
+													  					
+				  	break;
+				case "week":			  	
+					var first = today.getDate() - today.getDay(),
+					last = first + 6;
+
+					this.set("sdate", new Date(today.setDate(first)));
+					this.set("edate", new Date(today.setDate(last)));						
+					
+				  	break;
+				case "month":							  	
+					this.set("sdate", new Date(today.getFullYear(), today.getMonth(), 1));
+					this.set("edate", new Date(today.getFullYear(), today.getMonth() + 1, 0));
+
+				  	break;
+				case "year":				
+				  	this.set("sdate", new Date(today.getFullYear(), 0, 1));
+				  	this.set("edate", new Date(today.getFullYear(), 11, 31));
+
+				  	break;
+				default:
+					this.set("sdate", "");
+				  	this.set("edate", "");									  
+			}
+		},
 		search				: function(){
 			var self = this, para = [],
 				obj = this.get("obj"),
-				as_of = this.get("as_of"),
+				start = this.get("sdate"),
+        		end = this.get("edate"),
         		displayDate = "";
 
         	//Customer
@@ -71282,23 +71356,42 @@
 	            para.push({ field:"contact_id", operator:"where_in", value:customers });
 	        }
     	
-        	if(as_of){
-				as_of = new Date(as_of);
-				var displayDate = "As Of " + kendo.toString(as_of, "dd-MM-yyyy");
-				this.set("displayDate", displayDate);
-				as_of.setDate(as_of.getDate()+1);
+        	//Dates
+        	if(start && end){
+        		start = new Date(start);
+        		end = new Date(end);
+        		displayDate = "From " + kendo.toString(start, "dd-MM-yyyy") + " To " + kendo.toString(end, "dd-MM-yyyy");
+        		end.setDate(end.getDate()+1);
 
-				para.push({ field:"issued_date <", value:kendo.toString(as_of, "yyyy-MM-dd") });
-			}
+            	para.push({ field:"issued_date >=", operator:"where_related_transaction", value: kendo.toString(start, "yyyy-MM-dd") });
+            	para.push({ field:"issued_date <", operator:"where_related_transaction", value: kendo.toString(end, "yyyy-MM-dd") });
+            }else if(start){
+            	start = new Date(start);
+            	displayDate = "On " + kendo.toString(start, "dd-MM-yyyy");
+
+            	para.push({ field:"issued_date", operator:"where_related_transaction", value: kendo.toString(start, "yyyy-MM-dd") });
+            }else if(end){
+            	end = new Date(end);
+            	displayDate = "As Of " + kendo.toString(end, "dd-MM-yyyy");
+        		end.setDate(end.getDate()+1);
+        		
+            	para.push({ field:"issued_date <", operator:"where_related_transaction", value: kendo.toString(end, "yyyy-MM-dd") });
+            }else{
+            	
+            }
+            this.set("displayDate", displayDate);
 
             this.dataSource.query({
             	filter:para
             }).then(function(){
             	var view = self.dataSource.view();
 
-            	var amount = 0;
+            	var amount = 0, txn_count = 0;
             	$.each(view, function(index, value){
-            		amount += value.amount;
+            		txn_count++;
+            		$.each(value.payments, function(ind, val){
+            			amount += val.amount;
+            		});
             	});
 
             	self.set("totalAmount", kendo.toString(amount, "c2", banhji.locale));
@@ -87703,6 +87796,8 @@
 
 			if(banhji.pageLoaded["collection_report"]==undefined){
 				banhji.pageLoaded["collection_report"] = true;
+
+				vm.sorterChanges();
 			}
 			vm.pageLoad();
 		}
