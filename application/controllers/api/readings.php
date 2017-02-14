@@ -300,7 +300,7 @@ class Readings extends REST_Controller {
 			    		}
 					}									 			
 				}
-				$record->limit(1)->order_by('id', 'desc')->get();	
+				$record->limit(1)->order_by('current', 'desc')->get();	
 				$data["meta"] = array(
 					'location_id' => $location->id,
 					'location_name' => $location->name,

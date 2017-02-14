@@ -9975,11 +9975,13 @@
 				var monthL = new Date(monthOfSearch);
 				monthL.setDate(31);
 				monthL = kendo.toString(monthL, "yyyy-MM-dd");
-				
 				para.push(
-					{field: "month_of >=",operator: "where_related_record", value: monthOf},
-					{field: "month_of <=",operator: "where_related_record", value: monthL}
+					{field: "month_of <",operator: "where_related_record", value: monthOf}
 				);
+				// para.push(
+				// 	{field: "month_of >=",operator: "where_related_record", value: monthOf},
+				// 	{field: "month_of <=",operator: "where_related_record", value: monthL}
+				// );
 				//this.dataSource.filter(para);
 				if(license_id){
 					para.push({field: "branch_id", value: license_id.id});
