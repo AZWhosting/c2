@@ -274,6 +274,7 @@ class Readings extends REST_Controller {
 
 		//Get Result
 		$obj->where('activated', 1);
+		// $obj->where_related_record('invoiced', 0);
 		$obj->get_paged_iterated($page, $limit);
 		$data["count"] = $obj->paged->total_rows;		
 
@@ -291,6 +292,7 @@ class Readings extends REST_Controller {
 				    		if($f['field'] === 'month_of >='){
 				    			$date = date('Y-m-d', strtotime($f['value']));
 				    			$record->where($f["field"], $f["value"]);
+
 				    		} else {
 				    			$record->where($f["field"], $f["value"]);
 				    		}

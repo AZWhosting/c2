@@ -292,6 +292,14 @@ class Imports extends REST_Controller {
 		   	isset($value->deleted) 					? $obj->deleted 				= $value->deleted : "";
 
 	   		if($obj->save()){
+	   			$item_price = new Item_price(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+	   			$item_price->item_id = $obj->id;
+	   			$item_price->measurement_id =$obj->measurement_id;
+	   			$item_price->unit_value =1;
+	   			$item_price->price =floatval($obj->price);
+	   			$item_price->locale = $obj->locale;
+	   			$item_price->quantity =1;
+	   			$item_price->save();
 			   	$data["results"][] = array(
 			   		"id" 						=> $obj->id,
 					"company_id" 				=> $obj->company_id,
@@ -319,7 +327,7 @@ class Imports extends REST_Controller {
 				   	"price" 					=> floatval($obj->price),
 				   	"amount" 					=> floatval($obj->amount),
 				   	"rate" 						=> floatval($obj->rate),
-				   	"locale" 					=> floatval($obj->locale),
+				   	"locale" 					=> $obj->locale,
 				   	"on_hand" 					=> floatval($obj->on_hand),
 				   	"on_po" 					=> floatval($obj->on_po),
 				   	"on_so" 					=> floatval($obj->on_so),

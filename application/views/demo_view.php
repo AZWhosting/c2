@@ -24042,7 +24042,7 @@
 							<div class="span3">
 								<div class="total-customer">									
 									<p>Number of Invoice</p>
-									<span data-format="n0" data-bind="text: dataSource.total"></span>
+									<span data-format="n0" data-bind="text: total_txn"></span>
 								</div>
 							</div>
 							<div class="span9">
@@ -71301,6 +71301,7 @@
 		company 			: banhji.institute,
 		as_of 				: new Date(),
 		displayDate 		: "",
+		total_txn 			: 0,
 		totalAmount 		: 0,
 		exArray 			: [],
 		pageLoad 			: function(){
@@ -71364,19 +71365,19 @@
         		displayDate = "From " + kendo.toString(start, "dd-MM-yyyy") + " To " + kendo.toString(end, "dd-MM-yyyy");
         		end.setDate(end.getDate()+1);
 
-            	para.push({ field:"issued_date >=", operator:"where_related_transaction", value: kendo.toString(start, "yyyy-MM-dd") });
-            	para.push({ field:"issued_date <", operator:"where_related_transaction", value: kendo.toString(end, "yyyy-MM-dd") });
+            	para.push({ field:"issued_date >=", value: kendo.toString(start, "yyyy-MM-dd") });
+            	para.push({ field:"issued_date <", value: kendo.toString(end, "yyyy-MM-dd") });
             }else if(start){
             	start = new Date(start);
             	displayDate = "On " + kendo.toString(start, "dd-MM-yyyy");
 
-            	para.push({ field:"issued_date", operator:"where_related_transaction", value: kendo.toString(start, "yyyy-MM-dd") });
+            	para.push({ field:"issued_date", value: kendo.toString(start, "yyyy-MM-dd") });
             }else if(end){
             	end = new Date(end);
             	displayDate = "As Of " + kendo.toString(end, "dd-MM-yyyy");
         		end.setDate(end.getDate()+1);
         		
-            	para.push({ field:"issued_date <", operator:"where_related_transaction", value: kendo.toString(end, "yyyy-MM-dd") });
+            	para.push({ field:"issued_date <", value: kendo.toString(end, "yyyy-MM-dd") });
             }else{
             	
             }
@@ -71388,13 +71389,16 @@
             	var view = self.dataSource.view();
 
             	var amount = 0, txn_count = 0;
-            	$.each(view, function(index, value){
-            		txn_count++;
-            		$.each(value.payments, function(ind, val){
-            			amount += val.amount;
+            	$.each(view, function(index, value){            		
+            		$.each(value.line, function(indexx, x){
+            			txn_count++;
+            			$.each(x.payments, function(indexy, y){
+            				amount += y.amount;
+            			});
             		});
             	});
 
+            	self.set("total_txn", kendo.toString(txn_count, "n0"));
             	self.set("totalAmount", kendo.toString(amount, "c2", banhji.locale));
             });
 		},
