@@ -42,3 +42,6 @@
 table.footerTbl > tbody > tr > td {
 	border: none;
 }
+.table-bordered > tbody > tr > td {
+	border-color: #fff!important;
+}

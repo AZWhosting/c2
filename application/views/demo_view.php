@@ -50427,6 +50427,7 @@
 				as_of = new Date(as_of);
 				var displayDate = "As Of " + kendo.toString(as_of, "dd-MM-yyyy");
 				this.set("displayDate", displayDate);
+				as_of.setDate(as_of.getDate()+1);
 
 				this.dataSource.filter([
 					{ field:"issued_date", value:kendo.toString(as_of, "yyyy-MM-dd") },

@@ -2324,6 +2324,7 @@
 						                	style="width: 100%;" 
 						                	data-role="datepicker"
 						                	data-format="MM-yyyy"
+						                	data-min="<?php echo date('Y-m-d'); ?>"
 						                	data-start="year" 
 							  				data-depth="year" 
 						                	placeholder="Moth of ..." 
@@ -3132,7 +3133,8 @@
 										                	data-role="datepicker"
 										                	data-format="MM-yyyy"
 										                	data-start="year" 
-											  				data-depth="year" 
+											  				data-depth="year"
+											  				min="<?php echo date('Y-m-d'); ?>" 
 										                	placeholder="Moth of ..." 
 												           	data-bind="value: monthOfSelect" />
 													</div>
@@ -3216,11 +3218,42 @@
 									<!-- Tab content -->
 									<div id="tabReading" style="border: 1px solid #ccc" class="tab-pane widget-body-regular">	
 										<h4 class="separator bottom" style="margin-top: 10px;">Please upload reading book</h4>
-										<div class="fileupload fileupload-new margin-none" data-provides="fileupload">
+
+										<div class="row-fluid clear" style="overflow: hidden;margin-bottom: 20px;">
+											<div class="span3">
+												<div class="control-group">	
+													<label ><span >Month Of</span></label>
+										            <input type="text" 
+									                	style="width: 100%;" 
+									                	data-role="datepicker"
+									                	data-format="MM-yyyy"
+									                	data-start="year" 
+										  				data-depth="year" 
+										  				min="<?php echo date('Y-m-d'); ?>" 
+									                	placeholder="Moth of ..." 
+											           	data-bind="value: monthOfUpload,
+											           			events: {change: selectMonthTo}" />
+												</div>
+											</div>											<div class="span3">
+												<div class="control-group">	
+													<label ><span >To Date</span></label>
+										            <input type="text" 
+									                	style="width: 100%;" 
+									                	data-role="datepicker"
+										  				min="<?php echo date('Y-m-d'); ?>" 
+									                	placeholder="To Date ..." 
+											           	data-bind="value: toDateUpload,
+											           			events: {change: selectMonthTo}" />
+												</div>
+											</div>
+										</div>
+										<div class="fileupload fileupload-new margin-none" data-provides="fileupload" data-bind="visible: MonthTo">
 										  	<input type="file"  data-role="upload" data-show-file-list="true" data-bind="events: {select: onSelected}" id="myFile"  class="margin-none" />
 										</div>
-										<span class="btn btn-icon btn-primary glyphicons ok_2" style="width: 160px!important;"><i></i>
-										<span data-bind="click: save">Start Reading</span></span>
+										
+										<br>
+
+										<span class="btn btn-icon btn-primary glyphicons ok_2" style="margin-top: 3px;width: 160px!important;"><i></i><span data-bind="click: save">Start Reading</span></span>
 									</div>
 									<!-- // Tab content END -->
 									
@@ -3241,13 +3274,13 @@
     		#= meter_number# - #= _contact[0].name#
    		</td>
    		<td align="center">
-    		#= prev_date#
+    		#= kendo.toString(new Date(prev_date), "dd-MMM-yyyy")#
    		</td>
    		<td align="center">
     		#= previous#
    		</td>
    		<td align="center">
-    		#= to_date#
+    		#= kendo.toString(new Date(to_date), "y")#
    		</td>
    		<td align="center">
     		#= current#
@@ -3879,7 +3912,7 @@
 					<br>					
 					
 					<div id="wInvoiceContent" data-role="listview" 
-						data-auto-bind="false"
+						data-auto-bind="true"
 						data-bind="source: dataSource" 
 						data-template="Invoice-print-row-template"></div>						
 					<!-- Form actions -->
@@ -9793,6 +9826,12 @@
 	          dataType: 'json',
 	          headers: { Institute: JSON.parse(localStorage.getItem('userData/user')).institute.id }
 	        },
+	        update 	: {
+				url: baseUrl + 'api/winvoices',
+				type: "PUT",
+				dataType: 'json',
+				headers: { Institute: JSON.parse(localStorage.getItem('userData/user')).institute.id }
+			},
 	        parameterMap: function(options, operation) {
 	          if(operation === 'read') {
 	            return {
@@ -10041,8 +10080,8 @@
 	        //save the file as Excel file with extension xlsx
 	        kendo.saveAs({dataURI: workbook.toDataURL(), fileName: "Reading-"+"<?php echo date("d-M-Y"); ?>"+".xlsx"});
 		},
+		MonthTo 			: false,
 		onSelected 			: function(e){
-			$('li.k-file').remove();
 	        var files = e.files, self = this;
 	        $("#loadImport").css("display","block");
 	        var reader = new FileReader();
@@ -10057,6 +10096,8 @@
 						result[sheetName] = roa;
 						for(var i = 0; i < roa.length; i++) {
 							roa[i].invoiced = 0;
+							roa[i].month_of = self.get("monthOfUpload");
+							roa[i].to_date = self.get("toDateUpload");
 							banhji.reading.dataSource.add(roa[i]);
 							$("#loadImport").css("display","none");	
 							console.log(roa[i]);
@@ -10065,6 +10106,13 @@
 				});															
 			}
 			reader.readAsBinaryString(files[0].rawFile);      
+		},
+		selectMonthTo 		: function(e){
+			if(this.get("monthOfUpload") && this.get("toDateUpload")){
+				this.set("MonthTo", true);
+			}else{
+				this.set("MonthTo", false);
+			}
 		},
 		save 				: function() {
 			var self = this;
@@ -11742,9 +11790,11 @@
 				self.setObj(view[0].plan_id);
 				self.goWorder(view[0].branch_id, view[0].location_id);
 			});
+			this.paymentMethodDS.read();
+			//this.cashAccountDS.read();
 		},
-		cashAccount 		: null,
-		paymentMethod 		: null,
+		cashAccount 		: 7,
+		paymentMethod 		: 1,
 		checkNumber 		: null,
 		amountRecievChange 	: function(e){
 			var amount = this.get("NamountToBeRecieved");
@@ -12357,7 +12407,7 @@
 		cancel 				: function(){
 			this.invoiceCollection.cancelChanges();
 			this.invoiceArray = [];	
-			//window.history.back();
+			window.history.back();
 		}
 	});
 	banhji.printBill = kendo.observable({
@@ -12517,8 +12567,12 @@
 		PaperSize 			: "A4",
 		TemplateSelect 		: null,
 		user_id 			: banhji.userManagement.getLogin() === null ? '':banhji.userManagement.getLogin().id,
-		pageLoad 			: function(id){	
-			this.barcod("do");
+		pageLoad 			: function(id){
+			var listView = $("#wInvoiceContent").data("kendoListView");
+			listView.refresh();
+			if(this.dataSource){
+				this.barcod("do");
+			}
 		},
 		barcod 			: function(re){
 			var view = this.dataSource;
@@ -12562,6 +12616,10 @@
 				pHeight = "297mm";
 				pWidth = "210mm";
 			}
+			for(var i = 0; i < banhji.printBill.invoiceCollection.dataSource.data().length; i++) {
+				banhji.printBill.invoiceCollection.dataSource.data()[i].print_count += 1;
+			}
+			banhji.printBill.invoiceCollection.dataSource.sync();
 			var gridElement = $('#grid'),
 		        printableContent = '',
 		        win = Win,
@@ -12582,8 +12640,10 @@
 		            '<style type="text/css" media="print"> @page { size: portrait; margin:1mm 0.5mm; size: '+ this.PaperSize +';} '+
 						'@media print {' +
   							'html, body {' +
-    							'width: '+ pWidth +';' +
-    							'height: '+ pHeight +';' +
+    							'max-width: '+ pWidth +';' +
+    							'max-height: '+ pHeight +';' +
+    							'min-width: '+ pWidth +';' +
+    							'min-height: '+ pHeight +';' +
   							'}' +
 						'}' +
 		            	'.inv1 .light-blue-td { ' +
@@ -12613,7 +12673,7 @@
 		            		'color:#fff!important;' +
 		            	'}</style>' +
 				    '</head>' + 
-				    '<body><div class="row-fluid" style="padding-top: 40px" ><div id="example" class="k-content">';
+				    '<body><div class="row-fluid" style="padding-top: 20px" ><div id="example" class="k-content">';
 
 		    var htmlEnd =
 		            '</div></div></body>' +
@@ -12637,6 +12697,7 @@
 			}
 		},
 		cancel 				: function(){
+
 			banhji.InvoicePrint.dataSource = [];
 			this.set("PaperSize","A4");
 			this.barcod("reset");
@@ -16406,9 +16467,15 @@
 			// console.log(this.meter_visible);
 		},
 		onSelectedMeter		: function(e) {
+			var that = this;
 			this.readingVM.set('NumberSR',e.data.meter_number);
 			this.graphDS.filter({field: 'meter_id', value: e.data.id});
-			this.readingVM.dataSource.filter({field: 'meter_id', value: e.data.id});
+			this.readingVM.dataSource.query({
+				filter:{field: 'meter_id', value: e.data.id}
+			}).then(function(e){
+				var last = that.readingVM.dataSource.data()[0];
+				that.readingVM.set('previousSR', last.current);
+			});
 			this.installmentVM.dataSource.filter({field: 'meter_id', value: e.data.id});
 		},
 		goMeter 			: function(){
@@ -16794,7 +16861,7 @@
 		}
 		vm.pageLoad();
 	});
-	banhji.router.route("/invoice_print(/:id)", function(id){
+	banhji.router.route("/invoice_print", function(){
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
 		}else{
@@ -16803,32 +16870,11 @@
 			banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
 
 			var vm = banhji.InvoicePrint;
-			function loadStyle(href){
-				    // avoid duplicates
-			    for(var i = 0; i < document.styleSheets.length; i++){
-			        if(document.styleSheets[i].href == href){
-			            return;
-			        }
-			    }
-			    var head  = document.getElementsByTagName('head')[0];
-			    var link  = document.createElement('link');
-			    link.rel  = 'stylesheet';
-			    link.type = 'text/css';
-			    //link.title = 'invPrintCSS';
-			    link.href = href;
-			    head.appendChild(link);
-			}
-			//var Href1 = '<?php echo base_url(); ?>assets/water/winvoice-res.css';
-			var Href2 = '<?php echo base_url(); ?>assets/water/winvoice-print.css';
-			
-			//loadStyle(Href1);
-			loadStyle(Href2);
 
 			if(banhji.pageLoaded["invoice_print"]==undefined){
-				banhji.pageLoaded["invoice_print"] = true;							
-
+				banhji.pageLoaded["invoice_print"] = true;
 			}
-			vm.pageLoad(id);
+			vm.pageLoad();
 		}							
 	});
 	banhji.router.route("/receipt", function(){

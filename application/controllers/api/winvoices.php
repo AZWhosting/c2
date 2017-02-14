@@ -323,7 +323,52 @@ class Winvoices extends REST_Controller {
 		// $this->response($data, 201);
 		$this->response($models, 201);
 	}
+	function index_put() {
+		$models = json_decode($this->put('models'));
+		$data["results"] = array();
+		$data["count"] = 0;
+		foreach ($models as $value) {
 
+			$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$obj->where('id', $value->id)->get();
+			if($obj->exists()) {
+				$obj->print_count = $value->print_count;
+				if($obj->save()){
+					$data["results"][] = array(
+				   		"id" 				=> $obj->id,
+						"company_id" 		=> null,
+						"print_count"	 	=> $obj->print_count,
+						"location_id" 		=> null,
+						"contact_id" 		=> null,
+						"payment_term_id" 	=> null,
+						"payment_method_id" => null,
+						"reference_id" 		=> $obj->reference_id,
+						"account_id" 		=> $obj->account_id,
+						"vat_id"			=> $obj->vat_id,
+						"biller_id" 		=> $obj->biller_id,
+					   	"number" 			=> $obj->number,
+					   	"type" 				=> $obj->type,
+					   	"amount" 			=> floatval($obj->amount),
+					   	"vat" 				=> floatval($obj->vat),
+					   	"rate" 				=> floatval($obj->rate),
+					   	"locale" 			=> $obj->locale,
+					   	"month_of"			=> $obj->month_of,
+					   	"issued_date"		=> $obj->issued_date,
+					   	"bill_date" 		=> $obj->bill_date,
+					   	"due_date" 			=> $obj->due_date,
+					   	"check_no" 			=> $obj->check_no,
+					   	"memo" 				=> $obj->memo,
+					   	"memo2" 			=> $obj->memo2,
+					   	"status" 			=> $obj->status,
+					   	"invoice_lines" 	=> array()
+				   	);
+				}
+			}
+		}
+		$data["count"] = count($data["results"]);
+		// $this->response($data, 201);
+		$this->response($models, 201);
+	}
 	function index_get() {
 		$getData = $this->get('filter');
 		$filters = $getData['filters'];
@@ -407,6 +452,7 @@ class Winvoices extends REST_Controller {
 				'id' => $row->id,
 				'type' => $row->type,
 				'number' => $row->number,
+				'print_count' => intval($row->print_count),
 				'month_of' => date('m', strtotime($row->month_of)),
 				'status'=> $row->status,
 				'issue_date' => $row->issued_date,

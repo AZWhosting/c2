@@ -45,7 +45,17 @@ class Institute extends DataMapper {
 	public $has_many = array(
 		'user', 
 		'module', 
-		'login'
+		'login',
+		'institute' => array(
+			'class' => 'institute',
+			'other_field' => 'access_institute',
+			'reciprocal' => TRUE
+		),
+		'access_institute' => array(
+			'class' => 'institute',
+			'other_field' => 'institute',
+			'reciprocal' => TRUE
+		)
 	);
 
 	public function __construct() {	

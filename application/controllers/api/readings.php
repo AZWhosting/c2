@@ -108,7 +108,7 @@ class Readings extends REST_Controller {
 				$obj->current 				= isset($value->current)			?$value->current: "";
 				$obj->from_date 			= isset($value->previous_reading_date) ? date('Y-m-d', strtotime($value->previous_reading_date)) : "";
 				$obj->month_of 				= isset($value->month_of)			? date('Y-m-d', strtotime($value->month_of)): date('Y-m-d');
-				$obj->to_date 				= isset($value->month_of)			? date('Y-m-d', strtotime($value->month_of)):date('Y-m-d');
+				$obj->to_date 				= isset($value->to_date)			? date('Y-m-d', strtotime($value->to_date)):date('Y-m-d');
 				
 				$obj->usage    = intval($value->current) - intval($value->previous);
 			} elseif($value->condition == "update") {
@@ -304,15 +304,14 @@ class Readings extends REST_Controller {
 					'location_name' => $location->name,
 					'location_abbr' => $location->abbr
 				);
-
 				
 				$data["results"][] = array(
 					"meter_id" 		=> $value->id,
-					"meter_number" 		=> $value->number,
+					"meter_number" 	=> $value->number,
 					"previous"		=> $record->exists() ? floatval($record->current) : 0,
 					"current"		=> 0,
 					"_contact" 		=> $contact->result(),
-					"prev_date"		=> $record->exists() ? $record->month_of: $date, 
+					"prev_date"		=> $record->exists() ? $record->to_date : $date, 
 					"to_date"		=> $date,
 					"status" 		=> "new"
 				);

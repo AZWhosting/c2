@@ -76,15 +76,15 @@ class Ops extends REST_Controller {
         //         	)
         //         );                
 
-                $this->dbforge->modify_column(
-                	'transactions', array(
-                					'issued_date' => array(
-                								'name' 		=> 'issued_date', 
-                								'type'		=> 'DATETIME',
-                								'null' 		=> FALSE
-                					)
-                	)
-                );
+                // $this->dbforge->modify_column(
+                // 	'transactions', array(
+                // 					'issued_date' => array(
+                // 								'name' 		=> 'issued_date', 
+                // 								'type'		=> 'DATETIME',
+                // 								'null' 		=> FALSE
+                // 					)
+                // 	)
+                // );
 
                 // $this->dbforge->modify_column(
                 // 	'item_prices', array(
@@ -106,8 +106,8 @@ class Ops extends REST_Controller {
 			    // 	)
 			    // ));
 			    
-			    // $this->db->where('id', 23);
-			    // $this->db->update('prefixes', array('type'=> 'Withdraw', 'name'=>"Withdraw"));
+			    $this->db->where('category_id', 3);
+			    $this->db->update('items', array('item_type_id'=> 4, 'inventory_account_id'=>0));
 			}
 		}
 

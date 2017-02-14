@@ -158,7 +158,7 @@ class Waterdash extends REST_Controller {
 		$obj->get();
 		if($obj->exists()) {
 			foreach($obj as $value) {
-				$location = new Location(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_banhji');
+				$location = new Location(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 				// $location->include_related('transaction', 'amount');
 				// $location->include_related('utility', array('id', 'status', 'deposit_account_id'));
 				$location->where('branch_id', $value->id);
@@ -172,14 +172,20 @@ class Waterdash extends REST_Controller {
 				foreach($location as $loc) {
 					$meter = $loc->meter->where('activated', 1)->get();
 					$contact = $loc->contact->select('deposit_account_id')->get();
-					$trx = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_banhji');
+					$trx = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 					$trx->select_sum('amount');
 					$trx->where('location_id', $loc->id)->get();
 					// $trx->where('due_date <');
 					$trx->where('status <>', 1);
 					$sale += $trx->amount;
 
-					$usages = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_banhji');
+					$dep = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					$dep->select_sum('amount');
+					$dep->where('type', 'Water_Deposit');
+					$dep->where('location_id', $loc->id)->get();
+					$deposit +=$dep->amount;
+
+					$usages = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 					$usages->select('id');
 					$usages->include_related('winvoice_line', 'quantity');
 					$usages->where_related_winvoice_line('type', 'usage');
@@ -194,21 +200,6 @@ class Waterdash extends REST_Controller {
 						} else {
 							$inActiveCount +=1;
 						}
-					}
-					
-					foreach($contact as $c) {
-						$line = new journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-						// $line->where('contact_id', $c->id);
-						$line->where('account_id', $c->deposit_account_id);
-						$line->get();
-
-						foreach($line as $l) {
-							if($l->dr != 0.00) {
-								$deposit -= $l->dr;
-							} else {
-								$deposit += $l->cr;
-							}
-						}	
 					}									
 				}
 					
