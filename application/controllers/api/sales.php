@@ -22,174 +22,7 @@ class Sales extends REST_Controller {
 			
 		}
 	}
-
-	function summary_customer_get() {
-		$filters 	= $this->get("filter");
-		$page 		= $this->get('page') !== false ? $this->get('page') : 1;
-		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;
-		$sort 	 	= $this->get("sort");
-		$data["results"] = array();
-		$data["count"] = 0;
-		$is_pattern = 0;
-		$deleted = 0;			
-		$customers = array();
-		$total =0;
-		$totalSale =0;
-		$countInv =0;
-		$countCash = 0;
-		$deposit =0;
-		$invoiceCount = 0;
-		$cashCount = 0;
-		// $data['invoiceCount'] =0 ;
-		// $data['cashCount'] =0 ;
-
-		// checked if the logic is customer or segment
-		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-
-		if(!empty($sort) && isset($sort)){					
-			foreach ($sort as $value) {
-				$obj->order_by($value["field"], $value["dir"]);
-			}
-		}
-
-		//Filter
-		if(!empty($filters) && isset($filters)){			
-	    	foreach ($filters["filters"] as $value) {
-	    		if(!empty($value["operator"]) && isset($value["operator"])){
-		    		if($value["operator"]=="where_in"){
-		    			$obj->where_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_where_in"){
-		    			$obj->or_where_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="where_not_in"){
-		    			$obj->where_not_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_where_not_in"){
-		    			$obj->or_where_not_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="like"){
-		    			$obj->like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_like"){
-		    			$obj->or_like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="not_like"){
-		    			$obj->not_like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_not_like"){
-		    			$obj->or_not_like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="startswith"){
-		    			$obj->like($value["field"], $value["value"], "after");
-		    		}else if($value["operator"]=="endswith"){
-		    			$obj->like($value["field"], $value["value"], "before");
-		    		}else if($value["operator"]=="contains"){
-		    			$obj->like($value["field"], $value["value"], "both");
-		    		}else if($value["operator"]=="or_where"){
-		    			$obj->or_where($value["field"], $value["value"]);		    		
-		    		}else{
-		    			$obj->where($value["field"].' '.$value["operator"], $value["value"]);
-		    		}
-	    		}else{
-	    			$obj->where($value["field"], $value["value"]);
-	    		}
-			}
-		}
-		// Segment
-		if($filters['logic'] == "segment") {
-			$segmentItem = new Segmentitem(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			$segmentItem->get();
-
-			foreach ($segmentItem as $seg) {
-				$txn = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-
-				$txn->where_in("type", array("Invoice", "Commercial_Invoice", "Vat_Invoice"));
-				$txn->like("segments", $seg->id, "both");
-				$txn->where("deleted",0);
-				$txn->where("is_recurring",0);
-				$txn->get_iterated();
-
-				foreach ($txn as $t) {
-					$ref = $t->referece->get();
-					$amt = floatval($t->amount)/ floatval($t->rate);
-
-					if(isset($customers["$seg->name"])) {
-						$customers["$seg->name"]['amount']+= $amt;
-					} else {
-						$customers["$seg->name"]['amount']= $amt;
-					}
-					$total += $amt;
-				}
-			}
-		} else {
-			$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			$type->select('id')->where('parent_id', 1)->get();
-			foreach($type as $t) {
-				$types[] = $t->id;
-			}
-
-			// $obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			$obj->where_in_related("contact", 'contact_type_id', $type);
-			$obj->where_in("type", array("Invoice", "Cash_Sale", "Commercial_Invoice", "Vat_Invoice", "Commercial_Cash_Sale", "Vat_Cash_Sale", "Cash_Sale", "Sale_Return"));
-			$obj->where('is_recurring', 0);
-			$obj->where("deleted",0);
-			
-			// $obj->include_related("contact_type", "name");
-
-		
-
-			//Results
-			$obj->get_paged_iterated($page, $limit);
-			$data["count"] = $obj->paged->total_rows;
-			
-			if($obj->result_count()>0){	
-				foreach ($obj as $value) {
-					$customer = $value->contact->get();
-					$fullname = $customer->surname.' '.$customer->name;
-					$items = $value->item_line->include_related('item', array('name'))->get();
-					$temp = 0;
-					foreach($items as $item) {
-						$amount = $value->type =="Sale_Return"?floatval($item->amount)/floatval($value->rate)*-1:floatval($item->amount)/floatval($value->rate);
-
-						if(isset($customers["$fullname"])) {
-							$countInv+=1;
-							$customers["$fullname"]['amount']+= $amount ;
-
-							if($value->type=="Invoice" || $value->type=="Commercial_Invoice" || $value->type=="Vat_Invoice" ){
-								$customers["$fullname"]['invoiceCount'] += 1;
-							}else{
-								$customers["$fullname"]['cashCount'] += 1;
-							}						
-						} else {
-							$countInv+=1;
-							$customers["$fullname"]['amount']= $amount ;
-
-								$customers["$fullname"]['invoiceCount'] = 0;
-								$customers["$fullname"]['cashCount'] = 0;
-							if($value->type=="Invoice" || $value->type=="Commercial_Invoice" || $value->type=="Vat_Invoice" ){
-								$customers["$fullname"]['invoiceCount'] = 1;
-							}else{
-								$customers["$fullname"]['cashCount'] = 1;
-							}
-						}
-					}
-					
-					// if($ref->type == "Deposit" ) {
-					// 	$deposit +=  floatval($value->amount)/ floatval($value->rate);
-					// }
-				}
-			}
-		}				
-
-		foreach ($customers as $key => $value) {
-			$data["results"][] = array(
-				'customer'  => $key,
-				'amount'	=> $value['amount'],
-				'invoice'	=> $value['invoiceCount'],
-				'cash'		=> $value['cashCount']
-			);
-			$total += $value['amount'];
-		}
-
-		// Response Data
-		$data['total'] = $total;
-		$data['count'] = count($customers);
-		$this->response($data, 200);
-	}
-
+	
 	function detail_customer_get() {
 		$filters 	= $this->get("filter");
 		$page 		= $this->get('page') !== false ? $this->get('page') : 1;
@@ -813,7 +646,7 @@ class Sales extends REST_Controller {
 		$this->response($data, 200);
 	}
 
-	//SALE SUMMARY BY CUSTOMER
+	//SALE BY CUSTOMER
 	function sale_summary_by_customer_get() {
 		$filter 	= $this->get("filter");
 		$page 		= $this->get('page');
@@ -888,6 +721,84 @@ class Sales extends REST_Controller {
 		//Response Data
 		$this->response($data, 200);
 	}
+	function sale_detail_by_customer_get() {
+		$filter 	= $this->get("filter");
+		$page 		= $this->get('page');
+		$limit 		= $this->get('limit');
+		$sort 	 	= $this->get("sort");
+		$data["results"] = [];
+		$data["count"] = 0;
+
+		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+		//Sort
+		if(!empty($sort) && isset($sort)){
+			foreach ($sort as $value) {
+				if(isset($value['operator'])){
+					$obj->{$value['operator']}($value["field"], $value["dir"]);
+				}else{
+					$obj->order_by($value["field"], $value["dir"]);
+				}
+			}
+		}
+		
+		//Filter		
+		if(!empty($filter) && isset($filter)){
+	    	foreach ($filter["filters"] as $value) {
+	    		if(isset($value['operator'])){
+	    			$obj->{$value['operator']}($value['field'], $value['value']);	    		
+	    		} else {
+	    			$obj->where($value['field'], $value['value']);
+	    		}
+			}
+		}
+
+		//Results
+		$obj->include_related("contact", array("abbr", "number", "name"));
+		$obj->where_in("type", array("Commercial_Invoice","Vat_Invoice","Invoice", "Commercial_Cash_Sale","Vat_Cash_Sale","Cash_Sale"));
+		$obj->where("is_recurring <>", 1);
+		$obj->where("deleted <>", 1);
+		$obj->order_by("issued_date", "asc");
+		$obj->get_iterated();
+		
+		if($obj->exists()){
+			$objList = [];
+			foreach ($obj as $value) {								
+				$amount = (floatval($value->amount) - floatval($value->deposit)) / floatval($value->rate);
+				
+				if(isset($objList[$value->contact_id])){
+					$objList[$value->contact_id]["line"][] = array(
+						"id" 				=> $value->id,
+						"type" 				=> $value->type,
+						"number" 			=> $value->number,
+						"issued_date" 		=> $value->issued_date,
+						"rate" 				=> $value->rate,
+						"amount" 			=> $amount
+					);
+				}else{
+					$objList[$value->contact_id]["id"] 		= $value->contact_id;
+					$objList[$value->contact_id]["name"] 	= $value->contact_abbr.$value->contact_number." ".$value->contact_name;
+					$objList[$value->contact_id]["line"][]	= array(
+						"id" 				=> $value->id,
+						"type" 				=> $value->type,
+						"number" 			=> $value->number,
+						"issued_date" 		=> $value->issued_date,
+						"rate" 				=> $value->rate,
+						"amount" 			=> $amount
+					);
+				}
+			}
+
+			foreach ($objList as $value) {
+				$data["results"][] = $value;
+			}
+			$data["count"] = count($data["results"]);
+		}
+
+		//Response Data
+		$this->response($data, 200);
+	}
+
 
 	//BALANCE
 	function balance_summary_get() {

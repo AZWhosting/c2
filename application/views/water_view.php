@@ -4015,23 +4015,30 @@
 				#for(var j=1; j< invoice_lines.length; j++) {#
 					#if(invoice_lines[j].amount != 0) {#
 						#if(invoice_lines[j].type == "tariff"){#
+						#var amountTariff = invoice_lines[j].amount #
+						#var amountTariffMoney = invoice_lines[j].amount * invoice_lines[0].consumption #
 							<tr>
 								<td colspan="3" align="left">#: invoice_lines[j].number#</td>
 								<td align="center">#: invoice_lines[0].consumption#</td>
 								<td align="right">#= kendo.toString(invoice_lines[j].amount, "c", locale)#</td>
-								<td align="right">#= kendo.toString(invoice_lines[j].amount * invoice_lines[0].consumption, "c", locale)#</td>
+								<td align="right">#= kendo.toString(amountTariffMoney, "c", locale)#</td>
 							</tr>
 						#}else if(invoice_lines[j].type == "exemption"){#
 							<tr>
 								<td colspan="3" align="left">#: invoice_lines[j].number#</td>
-								<td align="center"></td>
-								<td align="right"></td>
 								#if(invoice_lines[j].unit == "money"){#
+									<td align="center"></td>
+									<td align="right"></td>
 									<td align="right">-#= kendo.toString(invoice_lines[j].amount, "c", locale)#</td>
 								#}else if(invoice_lines[j].unit == "%"){#
-									<td align="right">#= invoice_lines[j].amount#%</td>
+								#var AMM = (amountTariffMoney * invoice_lines[j].amount) / 100#
+									<td align="center">#= invoice_lines[j].amount#%</td>
+									<td align="center"></td>
+									<td align="right">-#= kendo.toString(AMM, "c", locale)#</td>
 								#}else{#
-									<td align="right">#= invoice_lines[j].amount#m<sup>3</sup></td>
+									<td align="center">#= invoice_lines[j].amount#m<sup>3</sup></td>
+									<td align="center"></td>
+									<td align="right">-#= kendo.toString(invoice_lines[j].amount * amountTariff, "c", locale)#</td>
 								#}#
 							</tr>
 						#}else{#
@@ -10087,6 +10094,9 @@
 	        var files = e.files, self = this;
 	        $("#loadImport").css("display","block");
 	        var reader = new FileReader();
+
+	        var monthOf = new Date(this.get("monthOfUpload"));
+				monthOf.setDate(1);
 			banhji.reading.dataSource.data([]);	
 			reader.onload = function() {	
 				var data = reader.result;	
@@ -10098,7 +10108,7 @@
 						result[sheetName] = roa;
 						for(var i = 0; i < roa.length; i++) {
 							roa[i].invoiced = 0;
-							roa[i].month_of = self.get("monthOfUpload");
+							roa[i].month_of = monthOf;
 							roa[i].to_date = self.get("toDateUpload");
 							banhji.reading.dataSource.add(roa[i]);
 							$("#loadImport").css("display","none");	

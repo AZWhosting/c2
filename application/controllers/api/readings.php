@@ -84,7 +84,7 @@ class Readings extends REST_Controller {
 					"meter_number" 		=> $meter->number,
 					"invoiced"   	=> $value->invoiced == 0 ? FALSE:TRUE,
 					"usage" 		=> $value->usage,
-					"status"		=> "n",
+					"status"		=> "new",
 					"_meta" 		=> array()
 				);
 			}
@@ -289,9 +289,9 @@ class Readings extends REST_Controller {
 			    	foreach ($filters as $f) {
 			    		if(!empty($f["operator"]) && isset($f["operator"])){
 				    		// $record->{$f["operator"]}($f["field"], $f["value"]);
-				    		if($f['field'] === 'month_of >='){
+				    		if($f['field'] === 'month_of <'){
 				    			$date = date('Y-m-d', strtotime($f['value']));
-				    			$record->where($f["field"], $f["value"]);
+				    			$record->where('month_of =', $f["value"]);
 
 				    		} else {
 				    			$record->where($f["field"], $f["value"]);
@@ -300,23 +300,24 @@ class Readings extends REST_Controller {
 			    		}
 					}									 			
 				}
-				$record->limit(1)->order_by('current', 'desc')->get();	
+				$record->limit(1)->order_by('id', 'desc')->get();	
 				$data["meta"] = array(
 					'location_id' => $location->id,
 					'location_name' => $location->name,
 					'location_abbr' => $location->abbr
 				);
-				
-				$data["results"][] = array(
-					"meter_id" 		=> $value->id,
-					"meter_number" 	=> $value->number,
-					"previous"		=> $record->exists() ? floatval($record->current) : 0,
-					"current"		=> 0,
-					"_contact" 		=> $contact->result(),
-					"prev_date"		=> $record->exists() ? $record->to_date : $date, 
-					"to_date"		=> $date,
-					"status" 		=> "new"
-				);
+				if(!$record->exists()) {
+					$data["results"][] = array(
+						"meter_id" 		=> $value->id,
+						"meter_number" 	=> $value->number,
+						"previous"		=> $record->exists() ? floatval($record->current) : 0,
+						"current"		=> 0,
+						"_contact" 		=> $contact->result(),
+						"prev_date"		=> $record->exists() ? $record->to_date : $date, 
+						"to_date"		=> $date,
+						"status" 		=> "new"
+					);
+				}
 			}
 		}
 
