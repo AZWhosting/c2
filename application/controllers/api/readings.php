@@ -276,7 +276,7 @@ class Readings extends REST_Controller {
 		$obj->where('activated', 1);
 		// $obj->where_related_record('invoiced', 0);
 		$obj->get_paged_iterated($page, $limit);
-		$data["count"] = $obj->paged->total_rows;		
+		// $data["count"] = $obj->paged->total_rows;		
 
 		if($obj->result_count()>0){			
 			foreach ($obj as $value) {
@@ -291,7 +291,7 @@ class Readings extends REST_Controller {
 				    		// $record->{$f["operator"]}($f["field"], $f["value"]);
 				    		if($f['field'] === 'month_of <'){
 				    			$date = date('Y-m-d', strtotime($f['value']));
-				    			$record->where('month_of =', $f["value"]);
+				    			$record->where('month_of <', $f["value"]);
 
 				    		} else {
 				    			$record->where($f["field"], $f["value"]);
@@ -306,11 +306,11 @@ class Readings extends REST_Controller {
 					'location_name' => $location->name,
 					'location_abbr' => $location->abbr
 				);
-				if(!$record->exists()) {
+				if($record->exists()) {
 					$data["results"][] = array(
 						"meter_id" 		=> $value->id,
 						"meter_number" 	=> $value->number,
-						"previous"		=> $record->exists() ? floatval($record->current) : 0,
+						"previous"		=> floatval($record->current),
 						"current"		=> 0,
 						"_contact" 		=> $contact->result(),
 						"prev_date"		=> $record->exists() ? $record->to_date : $date, 
@@ -320,7 +320,7 @@ class Readings extends REST_Controller {
 				}
 			}
 		}
-
+		$data["count"] = count($data['results']);
 		//Response Data		
 		$this->response($data, 200);		
 	}

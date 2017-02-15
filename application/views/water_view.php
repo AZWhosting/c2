@@ -10094,9 +10094,6 @@
 	        var files = e.files, self = this;
 	        $("#loadImport").css("display","block");
 	        var reader = new FileReader();
-
-	        var monthOf = new Date(this.get("monthOfUpload"));
-				monthOf.setDate(1);
 			banhji.reading.dataSource.data([]);	
 			reader.onload = function() {	
 				var data = reader.result;	
@@ -10108,7 +10105,7 @@
 						result[sheetName] = roa;
 						for(var i = 0; i < roa.length; i++) {
 							roa[i].invoiced = 0;
-							roa[i].month_of = monthOf;
+							roa[i].month_of = self.get("monthOfUpload");
 							roa[i].to_date = self.get("toDateUpload");
 							banhji.reading.dataSource.add(roa[i]);
 							$("#loadImport").css("display","none");	
@@ -11888,162 +11885,207 @@
 		},
 		save 				: function() {
 			
-			$("#loadImport").css("display","block");
+			// $("#loadImport").css("display","block");
 			var self = this;
 			var amount = 0.0;
 			$.each(this.items, function(i, v){
+				var that = this;
+				if(v.type === "service") {
+					banhji.transaction.makeInvoice(this.get('meterObj').contact[0].id, this.get('paymentMethod'), v.received, 'Meter_Activation')
+					.then(function(transaction){
+						if(that.v.received == that.v.amount){
+							banhji.transactionLine.addById(transaction[0].id, banhji.ActivateMeter.get('meterObj').contact[0].id, banhji.ActivateMeter.get('cashAccount'), 'Meter Activation', that.v.received, 0, banhji.ActivateMeter.get('issued_date'));
+
+							banhji.transactionLine.addById(transaction[0].id, banhji.ActivateMeter.get('meterObj').contact[0].id, that.v.account_id, 'Meter Activation', 0, that.v.received, banhji.ActivateMeter.get('issued_date'));
+						} else if(that.v.received == 0) {
+							banhji.transactionLine.addById(transaction[0].id, banhji.ActivateMeter.get('meterObj').contact[0].id, that.v.account_id, 'Meter Activation', that.v.received, 0, banhji.ActivateMeter.get('issued_date'));
+
+							banhji.transactionLine.addById(transaction[0].id, banhji.ActivateMeter.get('meterObj').contact[0].id, banhji.ActivateMeter.get('cashAccount'), 'Meter Activation', 0, that.v.received, banhji.ActivateMeter.get('issued_date'));
+						} else {
+							banhji.transactionLine.addById(transaction[0].id, banhji.ActivateMeter.get('meterObj').contact[0].id, banhji.ActivateMeter.get('cashAccount'), 'Meter Activation', that.v.received, 0, banhji.ActivateMeter.get('issued_date'));
+
+							banhji.transactionLine.addById(transaction[0].id, banhji.ActivateMeter.get('meterObj').contact[0].id, that.v.receivable_id, 'Meter Activation', that.v.received, 0, banhji.ActivateMeter.get('issued_date'));
+
+							banhji.transactionLine.addById(transaction[0].id, banhji.ActivateMeter.get('meterObj').contact[0].id, that.v.account_id, 'Meter Activation', 0, that.v.received, banhji.ActivateMeter.get('issued_date'));
+
+						}
+						banhji.transactionLine.sync();
+					});
+				} else {
+					banhji.transaction.makeInvoice(this.get('meterObj').contact[0].id, this.get('paymentMethod'), v.received, 'Meter_Activation')
+					.then(function(transaction){
+						if(that.v.received == that.v.amount){
+							banhji.transactionLine.addById(transaction[0].id, banhji.ActivateMeter.get('meterObj').contact[0].id, banhji.ActivateMeter.get('cashAccount'), 'Meter Activation', that.v.received, 0, banhji.ActivateMeter.get('issued_date'));
+
+							banhji.transactionLine.addById(transaction[0].id, banhji.ActivateMeter.get('meterObj').contact[0].id, that.v.account_id, 'Meter Activation', 0, that.v.received, banhji.ActivateMeter.get('issued_date'));
+						} else if(that.v.received == 0) {
+							banhji.transactionLine.addById(transaction[0].id, banhji.ActivateMeter.get('meterObj').contact[0].id, that.v.account_id, 'Meter Activation', that.v.received, 0, banhji.ActivateMeter.get('issued_date'));
+
+							banhji.transactionLine.addById(transaction[0].id, banhji.ActivateMeter.get('meterObj').contact[0].id, banhji.ActivateMeter.get('cashAccount'), 'Meter Activation', 0, that.v.received, banhji.ActivateMeter.get('issued_date'));
+						} else {
+							banhji.transactionLine.addById(transaction[0].id, banhji.ActivateMeter.get('meterObj').contact[0].id, banhji.ActivateMeter.get('cashAccount'), 'Meter Activation', that.v.received, 0, banhji.ActivateMeter.get('issued_date'));
+
+							banhji.transactionLine.addById(transaction[0].id, banhji.ActivateMeter.get('meterObj').contact[0].id, that.v.receivable_id, 'Meter Activation', that.v.received, 0, banhji.ActivateMeter.get('issued_date'));
+
+							banhji.transactionLine.addById(transaction[0].id, banhji.ActivateMeter.get('meterObj').contact[0].id, that.v.account_id, 'Meter Activation', 0, that.v.received, banhji.ActivateMeter.get('issued_date'));
+
+						}
+						banhji.transactionLine.sync();
+					});
+				}
+				console.log(v);
 				amount += parseFloat(v.amount);
 			});
-			if(this.get('amountToBeRecieved') < amount) {
-				// create one invoice
-				banhji.transaction.makeInvoice(this.get('meterObj').contact[0].id, this.get('paymentMethod'), this.get('amountToBeRecieved'), 'Meter_Activation')
-				.then(function(data){
-					if(data) {
-						return banhji.transaction.save();
-					} else {
-						return false;
-					}
-				})
-				.then(function(transaction){
-					// create invoice line
-					if(transaction[0]){	
-						$.each(banhji.ActivateMeter.items, function(i, v){
-							if(v.type == 'service') {
-								var amount = 0.00;
-								banhji.transactionLine.addById(transaction[0].id, banhji.ActivateMeter.get('meterObj').contact[0].id, banhji.ActivateMeter.get('cashAccount'), 'Meter Activation', v.received, 0, banhji.ActivateMeter.get('issued_date'));
+			// if(this.get('amountToBeRecieved') < amount) {
+			// 	// create one invoice
+			// 	banhji.transaction.makeInvoice(this.get('meterObj').contact[0].id, this.get('paymentMethod'), this.get('amountToBeRecieved'), 'Meter_Activation')
+			// 	.then(function(data){
+			// 		if(data) {
+			// 			return banhji.transaction.save();
+			// 		} else {
+			// 			return false;
+			// 		}
+			// 	})
+			// 	.then(function(transaction){
+			// 		// create invoice line
+			// 		if(transaction[0]){	
+			// 			$.each(banhji.ActivateMeter.items, function(i, v){
+			// 				if(v.type == 'service') {
+			// 					var amount = 0.00;
+			// 					banhji.transactionLine.addById(transaction[0].id, banhji.ActivateMeter.get('meterObj').contact[0].id, banhji.ActivateMeter.get('cashAccount'), 'Meter Activation', v.received, 0, banhji.ActivateMeter.get('issued_date'));
 
-								banhji.transactionLine.addById(transaction[0].id, banhji.ActivateMeter.get('meterObj').contact[0].id, banhji.ActivateMeter.get('meterObj').contact[0].account_id, 'Meter Activation', v.amount - v.received, 0, banhji.ActivateMeter.get('issued_date'));
+			// 					banhji.transactionLine.addById(transaction[0].id, banhji.ActivateMeter.get('meterObj').contact[0].id, banhji.ActivateMeter.get('meterObj').contact[0].account_id, 'Meter Activation', v.amount - v.received, 0, banhji.ActivateMeter.get('issued_date'));
 
-								if(banhji.ActivateMeter.get('amountToBeRecieved') > 0) {
-									banhji.transactionLine.addById(transaction[0].id, banhji.ActivateMeter.get('meterObj').contact[0].id, v.account_id, 'Meter Activation', 0, v.amount, banhji.ActivateMeter.get('issued_date'));
-								} else {
-									banhji.transactionLine.addById(transaction[0].id, banhji.ActivateMeter.get('meterObj').contact[0].id, v.account_id, 'Meter Activation', 0, banhji.ActivateMeter.get('amountBilled'), banhji.ActivateMeter.get('issued_date'));
-								}
+			// 					if(banhji.ActivateMeter.get('amountToBeRecieved') > 0) {
+			// 						banhji.transactionLine.addById(transaction[0].id, banhji.ActivateMeter.get('meterObj').contact[0].id, v.account_id, 'Meter Activation', 0, v.amount, banhji.ActivateMeter.get('issued_date'));
+			// 					} else {
+			// 						banhji.transactionLine.addById(transaction[0].id, banhji.ActivateMeter.get('meterObj').contact[0].id, v.account_id, 'Meter Activation', 0, banhji.ActivateMeter.get('amountBilled'), banhji.ActivateMeter.get('issued_date'));
+			// 					}
 								
-							}
+			// 				}
 
-							if(v.type == 'deposit' && v.received > 0) {
-								banhji.transactionLine.addById(transaction[0].id, banhji.ActivateMeter.get('meterObj').contact[0].id, banhji.ActivateMeter.get('cashAccount'), 'Meter Activation', v.received, 0, banhji.ActivateMeter.get('issued_date'));
-								banhji.transactionLine.addById(transaction[0].id, banhji.ActivateMeter.get('meterObj').contact[0].id, v.account_id, 'Meter Activation', 0, v.received, banhji.ActivateMeter.get('issued_date'));
-							}
-						});
+			// 				if(v.type == 'deposit' && v.received > 0) {
+			// 					banhji.transactionLine.addById(transaction[0].id, banhji.ActivateMeter.get('meterObj').contact[0].id, banhji.ActivateMeter.get('cashAccount'), 'Meter Activation', v.received, 0, banhji.ActivateMeter.get('issued_date'));
+			// 					banhji.transactionLine.addById(transaction[0].id, banhji.ActivateMeter.get('meterObj').contact[0].id, v.account_id, 'Meter Activation', 0, v.received, banhji.ActivateMeter.get('issued_date'));
+			// 				}
+			// 			});
 						
-						return banhji.transactionLine.save();
-					} else {
-						return false;
-					}
-				})
-				.then(function(lines){
-					// then change meter activated field to 1
-					console.log(lines.length);
-					var status = false;
-					if(lines.length > 0) {
-						status = true;
-						self.get('meterObj').set('activated', 1);
-						console.log(self.meterDS.data());
-						self.meterDS.sync();
-						self.meterDS.bind('requestEnd', function(e){
-							if(e.response) {
-								// show success message
-							} else {
-								// show erro message
-							}
-						});
-					} else {
-						status = false;
-					}
-					return status;
-				})
-				.then(function(status){
-					if(status) {
-						banhji.installment.setDate(banhji.ActivateMeter.get('startDate'));
-						banhji.installment.setPeriod(banhji.ActivateMeter.get('period'));
-						return banhji.installment.makeSchedule(amount - kendo.parseFloat(banhji.ActivateMeter.get('amountToBeRecieved')), banhji.ActivateMeter.get('meterObj').contact[0].id, banhji.ActivateMeter.get('meterObj').id,banhji.ActivateMeter.get('startDate'), banhji.ActivateMeter.get('period'));
-					}
-				})
-				.then(function(data){
-					return banhji.installment.save();
-				})
-				.then(function(installment){
-					if(installment[0]) {
-						// show message
-						banhji.ActivateMeter.set('amountBilled', 0.00);
-						banhji.ActivateMeter.set('cashAccount', null);
-						banhji.ActivateMeter.set('paymentMethod', null);
-						banhji.ActivateMeter.set('amountToBeRecieved', 0.00);
-						banhji.ActivateMeter.set('amountRemain', 0.00);
-						$("#ntf1").data("kendoNotification").success("Successfully!");
-						banhji.ActivateMeter.cancel();
-						banhji.waterCenter.meterDS.read();
-					} else {
-						// show error
-						$("#ntf1").data("kendoNotification").error("Error!");
-					}
-				});
-				// and amount left to be make via installment
+			// 			return banhji.transactionLine.save();
+			// 		} else {
+			// 			return false;
+			// 		}
+			// 	})
+			// 	.then(function(lines){
+			// 		// then change meter activated field to 1
+			// 		console.log(lines.length);
+			// 		var status = false;
+			// 		if(lines.length > 0) {
+			// 			status = true;
+			// 			self.get('meterObj').set('activated', 1);
+			// 			console.log(self.meterDS.data());
+			// 			self.meterDS.sync();
+			// 			self.meterDS.bind('requestEnd', function(e){
+			// 				if(e.response) {
+			// 					// show success message
+			// 				} else {
+			// 					// show erro message
+			// 				}
+			// 			});
+			// 		} else {
+			// 			status = false;
+			// 		}
+			// 		return status;
+			// 	})
+			// 	.then(function(status){
+			// 		if(status) {
+			// 			banhji.installment.setDate(banhji.ActivateMeter.get('startDate'));
+			// 			banhji.installment.setPeriod(banhji.ActivateMeter.get('period'));
+			// 			return banhji.installment.makeSchedule(amount - kendo.parseFloat(banhji.ActivateMeter.get('amountToBeRecieved')), banhji.ActivateMeter.get('meterObj').contact[0].id, banhji.ActivateMeter.get('meterObj').id,banhji.ActivateMeter.get('startDate'), banhji.ActivateMeter.get('period'));
+			// 		}
+			// 	})
+			// 	.then(function(data){
+			// 		return banhji.installment.save();
+			// 	})
+			// 	.then(function(installment){
+			// 		if(installment[0]) {
+			// 			// show message
+			// 			banhji.ActivateMeter.set('amountBilled', 0.00);
+			// 			banhji.ActivateMeter.set('cashAccount', null);
+			// 			banhji.ActivateMeter.set('paymentMethod', null);
+			// 			banhji.ActivateMeter.set('amountToBeRecieved', 0.00);
+			// 			banhji.ActivateMeter.set('amountRemain', 0.00);
+			// 			$("#ntf1").data("kendoNotification").success("Successfully!");
+			// 			banhji.ActivateMeter.cancel();
+			// 			banhji.waterCenter.meterDS.read();
+			// 		} else {
+			// 			// show error
+			// 			$("#ntf1").data("kendoNotification").error("Error!");
+			// 		}
+			// 	});
+			// 	// and amount left to be make via installment
 				
-			} else {
-				banhji.transaction.makeInvoice(this.get('meterObj').contact[0].id, this.get('paymentMethod'), this.get('amountToBeRecieved'), 'Meter_Activation')
-				.then(function(data){
-					// create invoice
-					// console.log(amount - kendo.parseFloat(banhji.ActivateMeter.get('amountToBeRecieved')));
-					if(data) {
-						return banhji.transaction.save();
-					} else {
-						return false;
-					}
-				})
-				.then(function(transaction){
-					// create invoice line
-					if(transaction[0]){	
-						$.each(banhji.ActivateMeter.items, function(i, v){
-							if(v.type == 'service') {
-								var amount = 0.00;
-								banhji.transactionLine.addById(transaction[0].id, banhji.ActivateMeter.get('meterObj').contact[0].id, banhji.ActivateMeter.get('cashAccount'), 'Meter Activation', v.received, 0, banhji.ActivateMeter.get('issued_date'));
+			// } else {
+			// 	banhji.transaction.makeInvoice(this.get('meterObj').contact[0].id, this.get('paymentMethod'), this.get('amountToBeRecieved'), 'Meter_Activation')
+			// 	.then(function(data){
+			// 		// create invoice
+			// 		// console.log(amount - kendo.parseFloat(banhji.ActivateMeter.get('amountToBeRecieved')));
+			// 		if(data) {
+			// 			return banhji.transaction.save();
+			// 		} else {
+			// 			return false;
+			// 		}
+			// 	})
+			// 	.then(function(transaction){
+			// 		// create invoice line
+			// 		if(transaction[0]){	
+			// 			$.each(banhji.ActivateMeter.items, function(i, v){
+			// 				if(v.type == 'service') {
+			// 					var amount = 0.00;
+			// 					banhji.transactionLine.addById(transaction[0].id, banhji.ActivateMeter.get('meterObj').contact[0].id, banhji.ActivateMeter.get('cashAccount'), 'Meter Activation', v.received, 0, banhji.ActivateMeter.get('issued_date'));
 
-								banhji.transactionLine.addById(transaction[0].id, banhji.ActivateMeter.get('meterObj').contact[0].id, v.account_id, 'Meter Activation', 0, v.received, banhji.ActivateMeter.get('issued_date'));								
-							}
+			// 					banhji.transactionLine.addById(transaction[0].id, banhji.ActivateMeter.get('meterObj').contact[0].id, v.account_id, 'Meter Activation', 0, v.received, banhji.ActivateMeter.get('issued_date'));								
+			// 				}
 
-							if(v.type == 'deposit' && v.received > 0) {
-								banhji.transactionLine.addById(transaction[0].id, banhji.ActivateMeter.get('meterObj').contact[0].id, banhji.ActivateMeter.get('cashAccount'), 'Meter Activation', v.received, 0, banhji.ActivateMeter.get('issued_date'));
-								banhji.transactionLine.addById(transaction[0].id, v.account_id, banhji.ActivateMeter.get('meterObj').contact.deposit_account_id, 'Meter Activation', 0, v.received, banhji.ActivateMeter.get('issued_date'));
-							}
-						});
+			// 				if(v.type == 'deposit' && v.received > 0) {
+			// 					banhji.transactionLine.addById(transaction[0].id, banhji.ActivateMeter.get('meterObj').contact[0].id, banhji.ActivateMeter.get('cashAccount'), 'Meter Activation', v.received, 0, banhji.ActivateMeter.get('issued_date'));
+			// 					banhji.transactionLine.addById(transaction[0].id, v.account_id, banhji.ActivateMeter.get('meterObj').contact.deposit_account_id, 'Meter Activation', 0, v.received, banhji.ActivateMeter.get('issued_date'));
+			// 				}
+			// 			});
 						
-						return banhji.transactionLine.save();
-					} else {
-						return false;
-					}
-				})
-				.then(function(lines){
-					banhji.ActivateMeter.get('meterObj').set('activated', 1);
-						banhji.ActivateMeter.meterDS.sync();
-						banhji.ActivateMeter.meterDS.bind('requestEnd', function(e){
-							if(e.response) {
-								// show success message
-							} else {
-								// show erro message
-							}
-						});
-					// then change meter activated field to 1
-					var status = false;
-					if(lines.length > 0) {
-						status = true;
-						banhji.ActivateMeter.set('amountBilled', 0.00);
-						banhji.ActivateMeter.set('cashAccount', null);
-						banhji.ActivateMeter.set('paymentMethod', null);
-						banhji.ActivateMeter.set('amountToBeRecieved', 0.00);
-						banhji.ActivateMeter.set('amountRemain', 0.00);
-						$("#ntf1").data("kendoNotification").success("Successfully!");
-						$("#loadImport").css("display","none");
-						banhji.ActivateMeter.cancel();
-					} else {
-						status = false;
-						$("#ntf1").data("kendoNotification").error("Error!"); 
-					}
-					return status;
-				});
-			}		
+			// 			return banhji.transactionLine.save();
+			// 		} else {
+			// 			return false;
+			// 		}
+			// 	})
+			// 	.then(function(lines){
+			// 		banhji.ActivateMeter.get('meterObj').set('activated', 1);
+			// 			banhji.ActivateMeter.meterDS.sync();
+			// 			banhji.ActivateMeter.meterDS.bind('requestEnd', function(e){
+			// 				if(e.response) {
+			// 					// show success message
+			// 				} else {
+			// 					// show erro message
+			// 				}
+			// 			});
+			// 		// then change meter activated field to 1
+			// 		var status = false;
+			// 		if(lines.length > 0) {
+			// 			status = true;
+			// 			banhji.ActivateMeter.set('amountBilled', 0.00);
+			// 			banhji.ActivateMeter.set('cashAccount', null);
+			// 			banhji.ActivateMeter.set('paymentMethod', null);
+			// 			banhji.ActivateMeter.set('amountToBeRecieved', 0.00);
+			// 			banhji.ActivateMeter.set('amountRemain', 0.00);
+			// 			$("#ntf1").data("kendoNotification").success("Successfully!");
+			// 			$("#loadImport").css("display","none");
+			// 			banhji.ActivateMeter.cancel();
+			// 		} else {
+			// 			status = false;
+			// 			$("#ntf1").data("kendoNotification").error("Error!"); 
+			// 		}
+			// 		return status;
+			// 	});
+			// }		
 		},
 		cancel 				: function(){
 			$("#loadImport").css("display","none");
@@ -12279,13 +12321,13 @@
 				var that = this;
 				that.tariffTemp = null;
 				$.each(v.tariff, function(j, v){
-	    			if(kendo.parseInt(tUsage) > kendo.parseInt(v.line.usage)){
+	    			if(kendo.parseInt(tUsage) >= kendo.parseInt(v.line.usage)){
 	    				that.tariffTemp = v;		    			
 	    				aTariff = v.line.amount;
 	    			}
 	    		});
 	    		invoiceItems.push({				
-					"item_id" 			: that.tariffTemp.id,
+					"item_id" 			: that.tariffTemp.line.id,
 			   		"invoice_id"		: 0,
 				   	"meter_record_id"	: record_id,
 				   	"description" 		: that.tariffTemp.line.name,					   	
