@@ -165,17 +165,17 @@ class Item_lines extends REST_Controller {
 						if($transaction->type=="Commercial_Invoice" || $transaction->type=="Vat_Invoice" || $transaction->type=="Invoice" || $transaction->type=="Commercial_Cash_Sale" || $transaction->type=="Vat_Cash_Sale" || $transaction->type=="Cash_Sale"){
 							//Avg Price
 							$lastPrice = $onHand * floatval($item->price);
-							$currentPrice = $currentQuantity * (floatval($value->price) / floatval($value->rate));
+							$currentPrice = $currentQuantity * (floatval($value->price) / floatval($transaction->rate));
 
 							$item->price = ($lastPrice + $currentPrice) / $totalQty;
-							$obj->cost = floatval($item->cost)* $value->unit_value * floatval($value->rate);
+							$obj->cost = $currentQuantity * floatval($item->cost) * floatval($transaction->rate);
 							$obj->price_avg = ($lastPrice + $currentPrice) / $totalQty;
 						}
 
 						if($transaction->type=="Cash_Purchase" || $transaction->type=="Credit_Purchase" || $transaction->type=="Item_Adjustment"){
 							//Avg Cost
 							$lastCost = $onHand * floatval($item->cost);
-							$currentCost = ($currentQuantity*floatval($value->cost) + floatval($value->additional_cost)) / floatval($value->rate);
+							$currentCost = ($currentQuantity*floatval($value->cost) + floatval($value->additional_cost)) / floatval($transaction->rate);
 
 							if($onHand>0){
 								$item->cost = ($lastCost + $currentCost) / $totalQty;

@@ -2,7 +2,7 @@
 <!-- template section starts -->
 <script type="text/x-kendo-template" id="layout">
 	<div id="menu"></div>			
-	<div id="content" class="row-fluid container"></div>
+	<div id="content" class="row-fluid container" style="padding-top: 5px !important;"></div>
 </script>
 <script type="text/x-kendo-template" id="blank-tmpl">
 </script>
@@ -16,13 +16,13 @@
 				<div class="btn-group">
 				  	<a class="btn btn-inverse dropdown-toggle" data-toggle="dropdown" href="#">
 				    	<i class="icon-th"></i>
-				    	<span class="caret"></span>
+				    	<!-- <span class="caret"></span> -->
 				  	</a>
-				  	<ul class="dropdown-menu">
+				  <!-- 	<ul class="dropdown-menu">
 				    	<li data-bind="click: searchContact"><a href="#"><i class="icon-user"></i> Contact</a></li>
 				    	<li data-bind="click: searchTransaction"><a href="#"><i class="icon-random"></i> Transaction</a></li>
 				    	<li data-bind="click: searchItem"><a href="#"><i class="icon-th-list"></i> Item</a></li>
-				  	</ul>
+				  	</ul> -->
 				</div>
 			  	<input type="text" class="span2 search-query" placeholder="Search Contact" id="search-placeholder" 
 			  			data-bind="value: searchText" 
@@ -68,10 +68,10 @@
 *	Water Section      	  *
 **************************** -->
 <script id="wDashBoard" type="text/x-kendo-template">
-	<img src="<?php echo base_url();?>/assets/water_bill.png" width="300" height="100">
+	<img style="margin-bottom: 5px;" src="<?php echo base_url();?>/assets/water_bill.png" width="300" height="100">
 	<div class="row-fluid" >
 		<div class="span6" style="padding-left: 0;">
-			<div class="cash-bg" style="padding-right: 0;">				
+			<div class="cash-bg" style="padding-right: 0; margin-bottom: 10px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">				
 				<div class="span3" style="padding-left: 0; text-align: center;">
 					<a href="#/reading">
 						<img title="Add Reading" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/ir_reader.png"  style="width: 120px; "  />
@@ -110,50 +110,50 @@
 			                                 { field: 'amount', name: 'Sale', categoryField:'month', color: '#203864', overlay:{ gradient: 'none'}  }
 			                             ]"	                             
 			                 data-bind="source: graphDS"
-			                 style="height: 240px;" ></div>
+			                 style="height: 240px; margin-bottom: 15px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;" ></div>
 			</div>
 		</div>
 	    <div class="span6" style="padding-left: 0;">
-	    	<div class="cash-bg" style="margin-bottom: 10px;">
+	    	<div class="cash-bg" style="margin-bottom: 10px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
 	    		<a href="">
-					<div class="cash-invoice">
-						<div class="span4" style="padding-left: 0;">
-							<span style="font-size: 24px; color: #40546C;">DEPOSIT</span>
+					<div class="cash-invoice" style="background: #203864; color: #fff;">
+						<div class="span3" style="padding-left: 0;">
+							<span style="font-size: 24px; ">DEPOSIT</span>
 							<br>
 							<span style="color: #9EA7B8;">Water Connection</span>
 						</div>
-						<div class="span5" style="color: #3F73A3; text-align: center; font-size: 35px; font-weight: 600; padding-left: 0; border-right: 1px solid #9DA9BF; ">
+						<div class="span6" style=" text-align: center; font-size: 35px; font-weight: 600; padding-left: 0; border-right: 1px solid #9DA9BF; ">
 							<span data-bind="text: totalDeposit"></span>
 						</div>
-						<div class="span3" style="text-align: center; margin-top: 7px; padding-right: 0; color: #000; font-size: 35px;">
+						<div class="span3" style="text-align: center; margin-top: 7px; padding-right: 0; color: #fff; font-size: 35px;">
 							<span data-bind="text: totalUser"></span>
 						</div>					
 					</div>
 				</a>
 				<a href="">
-					<div class="cash-invoice" style="margin-bottom: 0;">
-						<div class="span4" style="padding-left: 0;">
-							<span style="font-size: 24px; color: #40546C;">TOTAL SALE</span>
+					<div class="cash-invoice" style="margin-bottom: 0; background: #0077c5; color: #fff;">
+						<div class="span2" style="padding-left: 0;">
+							<span style="font-size: 24px; color: #fff;">TOTAL SALE</span>
 						</div>
-						<div class="span4" style="color: #3F73A3; text-align: center; font-size: 35px; font-weight: 600; padding-left: 0; border-right: 1px solid #9DA9BF; ">
+						<div class="span6" style="color: #fff; text-align: center; font-size: 35px; font-weight: 600; padding-left: 0; border-right: 1px solid #9DA9BF; ">
 							<span data-bind="text: totalSale"></span>
 						</div>
-						<div class="span4" style="text-align: center; margin-top: 7px; padding-right: 0; color: #000; font-size: 35px;">
+						<div class="span4" style="text-align: center; margin-top: 7px; padding-right: 0; color: #fff; font-size: 35px;">
 							<span data-bind="text: totalUsage"></span><span style="font-size: 25px;">m<sup >3</sup></span>
 						</div>										
 					</div>
 				</a>
 	    	</div>
-	    	<div class="cash-bg" style="margin-bottom: 10px;">
+	    	<div class="cash-bg" style="margin-bottom: 10px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
 	    		<div class="row-fluid" >
-					<div class="span6" style="background: #DEEAF6; margin-right: 15px; width: 47%; ">
+					<div class="span8" style="background: #0077c5; margin-right: 15px; width: 63.8%; ">
 						<a href="#/customer_balance_summary">
-							<div class="widget-body alert-info welcome-nopadding" style="width: 100%;">
-								<p style="color: #000;"><span>Expected due</span></p>
+							<div class="widget-body alert-info welcome-nopadding" style="width: 100%; background: #0077c5;">
+								<p style="color: #fff;"><span>Expected due</span></p>
 						
-								<div class="strong" align="center" style="color: #3475AF; font-size: 40px; margin-top: -15px; margin-bottom: 0;"><span data-bind="text: totalAmount"></span></div>
+								<div class="strong" align="center" style="color: #fff; font-size: 40px; margin-top: -15px; margin-bottom: 0;"><span data-bind="text: totalAmount"></span></div>
 							
-								<table width="100%" style="color: #8E9EAE;">
+								<table width="100%" style="color: #fff;">
 									<tbody>
 										<tr align="center">
 											<td>										
@@ -178,14 +178,14 @@
 						</a>
 					</div>
 
-					<div class="span6" style="background: #DEEAF6;">
+					<div class="span4" style="background: #21abf6; padding-right: 0">
 						<a href="#/customer_balance_summary">
-							<div class="widget-body alert-info welcome-nopadding" style="width: 100%;">
-								<p style="color: #000;"><span>Active Customer</span></p>
+							<div class="widget-body alert-info welcome-nopadding" style="width: 100%; background: #21abf6;">
+								<p style="color: #fff;"><span>Active Meter</span></p>
 						
-								<div class="strong" align="center" style="color: #3475AF; font-size: 40px; margin-top: -15px; margin-bottom: 0;"><span data-bind="text: activeCust"></span></div>
+								<div class="strong" align="center" style="color: #fff; font-size: 40px; margin-top: -15px; margin-bottom: 0;"><span data-bind="text: activeCust"></span></div>
 							
-								<table width="100%" style="color: #8E9EAE;">
+								<table width="100%" style="color: #fff;">
 									<tbody>
 										<tr align="center">
 											<td>										
@@ -232,13 +232,13 @@
 	<tr>
 		<td>#=banhji.wDashBoard.dataSource.indexOf(id) +1 #</td>
 		<td>#=name#</td>
-		<td>#=blocCount#</td>
-		<td>#=activeCustomer#</td>
-		<td>#=inActiveCustomer#</td>
-		<td>#=kendo.toString(deposit, 'c2', banhji.locale)#</td>
-		<td>#=usage#</td>
-		<td>#=kendo.toString(sale, 'c2', banhji.locale)#</td>
-		<td>#=sale - deposit#</td>
+		<td style="text-align: right; padding-right: 5px !important;">#=blocCount#</td>
+		<td style="text-align: right; padding-right: 5px !important;">#=activeCustomer#</td>
+		<td style="text-align: right; padding-right: 5px !important;">#=inActiveCustomer#</td>
+		<td style="text-align: right; padding-right: 5px !important;">#=kendo.toString(deposit, 'c2', banhji.locale)#</td>
+		<td style="text-align: right; padding-right: 5px !important;">#=usage#</td>
+		<td style="text-align: right; padding-right: 5px !important;">#=kendo.toString(sale, 'c2', banhji.locale)#</td>
+		<td style="text-align: right; padding-right: 5px !important;">#=sale - deposit#</td>
 	</tr>
 </script>
 <script id="wsale-by-branch-row-template" type="text/x-kendo-tmpl">		
@@ -246,12 +246,12 @@
 		<td class="sno">1</td>
 		<td>#=name#</td>
 		<td>#=location#</td>		
-		<td align="right">#=kendo.toString(active_customer, "n0")#</td>
-		<td align="right">#=kendo.toString(inactive_customer, "n0")#​</td>				
-		<td align="right">#=kendo.toString(deposit, "c0", banhji.institute.locale)#</td>
-		<td align="right">#=kendo.toString(usage, "n0")# m<sup>3</sup></td>		
-		<td align="right">#=kendo.toString(sale, "c0", banhji.institute.locale)#</td>
-		<td align="right">#=kendo.toString(unpaid, "c0", banhji.institute.locale)#</td>					
+		<td >#=kendo.toString(active_customer, "n0")#</td>
+		<td >#=kendo.toString(inactive_customer, "n0")#​</td>				
+		<td >#=kendo.toString(deposit, "c0", banhji.institute.locale)#</td>
+		<td >#=kendo.toString(usage, "n0")# m<sup>3</sup></td>		
+		<td style="text-align: right; padding-right: 5px !important;">#=kendo.toString(sale, "c0", banhji.institute.locale)#</td>
+		<td style="text-align: right; padding-right: 5px !important;">#=kendo.toString(unpaid, "c0", banhji.institute.locale)#</td>					
     </tr>   
 </script>
 <script id="wsale-by-location-row-template" type="text/x-kendo-tmpl">		
@@ -259,12 +259,12 @@
 		<td class="snoo">1</td>
 		<td>#=branch_name#</td>
 		<td>#=location_name#</td>		
-		<td align="right">#=kendo.toString(active_customer, "n0")# </td>
-		<td align="right">#=kendo.toString(inactive_customer, "n0")#​ </td>				
-		<td align="right">#=kendo.toString(deposit, "c0", banhji.eDashBoard.locale)#</td>
-		<td align="right">#=kendo.toString(usage, "n0")# m<sup>3</sup></td>		
-		<td align="right">#=kendo.toString(sale, "c0", banhji.eDashBoard.locale)#</td>
-		<td align="right">#=kendo.toString(unpaid, "c0", banhji.eDashBoard.locale)#</td>						
+		<td >#=kendo.toString(active_customer, "n0")# </td>
+		<td >#=kendo.toString(inactive_customer, "n0")#​ </td>				
+		<td >#=kendo.toString(deposit, "c0", banhji.eDashBoard.locale)#</td>
+		<td >#=kendo.toString(usage, "n0")# m<sup>3</sup></td>		
+		<td style="text-align: right; padding-right: 5px !important;" >#=kendo.toString(sale, "c0", banhji.eDashBoard.locale)#</td>
+		<td style="text-align: right; padding-right: 5px !important;" >#=kendo.toString(unpaid, "c0", banhji.eDashBoard.locale)#</td>						
     </tr>   
 </script>
 
@@ -988,12 +988,12 @@
    		<td>
     		#= _currency.code#
    		</td>
-   		<td align="left">   
-		    <span class="k-edit-button"><i class="icon-edit"></i> Edit</span>
+   		<td  style="text-align: center;">   
+		    <span style="cursor: pointer;" class="k-edit-button"><i class="icon-edit"></i> Edit</span>
     		|
-    		<span data-bind="click: viewTariffItem"><i class="icon-view"></i> View Item</span>
+    		<span style="cursor: pointer;" data-bind="click: viewTariffItem"><i class="icon-view"></i> View Item</span>
     		|
-    		<span data-bind="click: showTariffItem"><i class="icon-plus icon-white"></i> Add Item</span>
+    		<span style="cursor: pointer;" data-bind="click: showTariffItem"><i class="icon-plus icon-white"></i> Add Item</span>
    		</td>   		
    	</tr>
 </script>
@@ -1227,7 +1227,7 @@
     	<td>
     		#= type#
     	</td>
-    	<td align="right">#= amount#</td>
+    	<td style="text-align: center;">#= amount#</td>
    	</tr>
 </script>
 <script id="accountSetting-prefix-template" type="text/x-kendo-template">
@@ -1320,8 +1320,8 @@
 		</td>
 		<td class="center">
 			#if( status == 0){ #
-			<a class="btn-action glyphicons pencil btn-success" href="\\#/invoice_custom/#= id # "><i></i></a>
-			<a data-bind="click: deleteForm" class="btn-action glyphicons remove_2 btn-danger"><i></i></a>
+			<a style="cursor: pointer;" class="btn-action glyphicons pencil btn-success" href="\\#/invoice_custom/#= id # "><i></i></a>
+			<a style="cursor: pointer;" data-bind="click: deleteForm" class="btn-action glyphicons remove_2 btn-danger"><i></i></a>
 			# } #
 		</td>
 	</tr>
@@ -1365,7 +1365,7 @@
 	</tr>
 </script>
 
-<script id="customerSetting-form-template" type="text/x-kendo-template">
+<!-- <script id="customerSetting-form-template" type="text/x-kendo-template">
 	<tr>
 		<td ><a style="text-align: left;" href="\\#/invoice_custom/#= id # "> #=name#  </a></td>
 		<td style="text-align: left; padding-left: 10px!important;"> 
@@ -1384,7 +1384,7 @@
 			# } #
 		</td>
 	</tr>
-</script>
+</script> -->
 
 
 <script id="customerSetting-edit-contact-type-template" type="text/x-kendo-tmpl">   
@@ -2105,14 +2105,14 @@
 						<div class="span6" style="margin-bottom: 10px;">
 							<div class="row-fluid">
 								<div class="span6">
-									<div class="widget-stats widget-stats-primary widget-stats-5" data-bind="click: loadBalance">
+									<div style="background: #203864;" class="widget-stats widget-stats-primary widget-stats-5" data-bind="click: loadBalance">
 										<span class="glyphicons coins"><i></i></span>
 										<span class="txt"><span data-bind="text: lang.lang.balance"></span><span data-bind="text: balance" style="font-size:medium;"></span></span>
 										<div class="clearfix"></div>
 									</div>
 								</div>
 								<div class="span6">
-									<div class="widget-stats widget-stats-inverse widget-stats-5" data-bind="click: loadDeposit">
+									<div style="background: #0077c5;" class="widget-stats widget-stats-inverse widget-stats-5" data-bind="click: loadDeposit">
 										<span class="glyphicons briefcase"><i></i></span>
 										<span class="txt"><span data-bind="text: lang.lang.deposit"></span><span data-bind="text: deposit" style="font-size:medium;"></span></span>
 										<div class="clearfix"></div>
@@ -2122,7 +2122,7 @@
 							
 							<div class="row-fluid">
 								<div class="span6">
-									<div class="widget-stats widget-stats-info widget-stats-5" data-bind="click: loadBalance">
+									<div style="background: #21abf6;" class="widget-stats widget-stats-info widget-stats-5" data-bind="click: loadBalance">
 										<span class="glyphicons circle_exclamation_mark"><i></i></span>
 										<span class="txt"><span data-bind="text: outInvoice"></span> <span data-bind="text: lang.lang.open_invoice"></span></span>
 										<div class="clearfix"></div>
@@ -2912,6 +2912,13 @@
 								            		<td>
 								            			<input id="ddlCash" name="ddlCash" data-role="dropdownlist"  data-template="account-list-tmpl" data-value-primitive="true" data-text-field="name" data-value-field="id" data-bind="value: cashAccount,
 								              							source: cashAccountDS" data-option-label="Select Account..." required="" data-required-msg="required" style="width: 100%; display: none;" class="k-valid">
+													</td>							            	
+									            </tr>
+									            <tr>
+									            	<td><span data-bind="text: lang.lang.ar_account">Account Receivable</span></td>				            	
+								            		<td>
+								            			<input id="ddlCash" name="ddlCash" data-role="dropdownlist"  data-template="account-list-tmpl" data-value-primitive="true" data-text-field="name" data-value-field="id" data-bind="value: arAccount,
+								              							source: arAccountDS" data-option-label="Select Account..." required="" data-required-msg="required" style="width: 100%; display: none;" class="k-valid">
 													</td>							            	
 									            </tr>
 									            <tr>
@@ -5069,11 +5076,11 @@
 		<td class="mm" data-bind="click: onSelectedMeter">#= meter_number#</td>
 		<td style="text-align:center;">
 			# if(status == 1){#
-				<span class="btn-action glyphicons ok_2 btn-success"><i></i></span>
+				<span style="cursor: pointer; " class="btn-action glyphicons ok_2 btn-success"><i></i></span>
 			# }else if(status == 0){#
-				<span class="btn-action glyphicons remove_2 btn-danger"><i></i></span>
+				<span style="cursor: pointer; class="btn-action glyphicons remove_2 btn-danger"><i></i></span>
 			# }else{ #
-				<span class="btn-action glyphicons remove_2 btn-danger widget-stats widget-stats-info "><i></i></span>
+				<span style="cursor: pointer; class="btn-action glyphicons remove_2 btn-danger widget-stats widget-stats-info "><i></i></span>
 			# } #
 		</td>
 		<td style="text-align: center;">
@@ -5147,7 +5154,7 @@
   			<div class="span2" >
 		
 				<!-- Stats Widget -->
-				<span class="widget-stats widget-stats-gray widget-stats-2" style="background: #496cad;">
+				<span class="widget-stats widget-stats-gray widget-stats-2" style="background: #203864;">
 					<span class="count" style="font-size: 25px; "><a style="color: #fff;"><span data-bind="text: tCustomer"></span></a></span>
 					<span class="txt" style="font-size: small; color: #fff;"><span >Total No. of Customer</span></span>
 				</span>
@@ -5157,9 +5164,9 @@
 			<div class="span2" style="padding: 0; ">
 		
 				<!-- Stats Widget -->
-				<span class="widget-stats widget-stats-2" style="background: #d9edf7;">
-					<span class="count" style="font-size: 25px;"><a style="color: #31708f;" data-format="p"><span data-bind="text: nCustomer"></span></a></span>
-					<span class="txt" style="font-size: small; color: #31708f;"><span >Total Customer Ratio</span></span>
+				<span class="widget-stats widget-stats-2" style="background: #0077c5;">
+					<span class="count" style="font-size: 25px;"><a style="color: #fff;" data-format="p"><span data-bind="text: nCustomer"></span></a></span>
+					<span class="txt" style="font-size: small; color: #fff;"><span >Total Customer Ratio</span></span>
 				</span>
 				<!-- // Stats Widget END -->
 				
@@ -5167,9 +5174,9 @@
 			<div class="span3" style="padding-right: 0; ">
 		
 				<!-- Stats Widget -->
-				<span class="widget-stats widget-stats-gray widget-stats-2" style="background: #D3D3D3;">
-					<span class="count" style="font-size: 25px;"><a style="color: #000;" data-format="p" ><span data-bind="text: activeCustomer"></span></a></span>
-					<span class="txt" style="font-size: small;"><span >Active Customer Ratio</span></span>
+				<span class="widget-stats widget-stats-gray widget-stats-2" style="background: #21abf6;">
+					<span class="count" style="font-size: 25px;"><a style="color: #fff;" data-format="p" ><span data-bind="text: activeCustomer"></span></a></span>
+					<span class="txt" style="font-size: small; color: #fff;"><span >Active Customer Ratio</span></span>
 				</span>
 				<!-- // Stats Widget END -->
 				
@@ -5177,9 +5184,9 @@
 			<div class="span5" >
 			
 				<!-- Stats Widget -->
-				<span class="widget-stats widget-stats-2" style="background: #113051;">
-					<span class="count" style="font-size: 25px;"><a style="color: #fff;" data-format="c0" ><span data-bind="text: waterRevenue"></span></a></span>
-					<span class="txt" style="font-size: small; color: #fff;"><span >Total Water Revenue</span></span>
+				<span class="widget-stats widget-stats-2" style="background: #D3D3D3;">
+					<span class="count" style="font-size: 25px;"><a style="color: #333;" data-format="c0" ><span data-bind="text: waterRevenue"></span></a></span>
+					<span class="txt" style="font-size: small; color: #333;"><span >Total Water Revenue</span></span>
 				</span>
 				<!-- // Stats Widget END -->
 				
@@ -5192,7 +5199,7 @@
 			<div class="span2" >
 			
 				<!-- Stats Widget -->			
-				<span class="widget-stats widget-stats-default widget-stats-2"  style="background: #496cad;">
+				<span class="widget-stats widget-stats-default widget-stats-2"  style="background: #203864;">
 					<span class="count" style="font-size: 25px; "><a style="color: #fff;"><span data-bind="text: waterSold"></span></a></span>
 					<span class="txt" style="font-size: small;"><span >Water Sold (M3)</span></span>
 				</span>
@@ -5202,9 +5209,9 @@
 			<div class="span2" style="padding: 0; ">
 			
 				<!-- Stats Widget -->
-				<span class="widget-stats widget-stats-2" style="background: #d9edf7;">
-					<span class="count" style="font-size: 25px;"><a data-format="n2" style="color: #31708f;"><span data-bind="text: avgUsage"></span></a></span>
-					<span class="txt" style="font-size: small; color: #31708f;"><span >Average Water Usage Per Connection</span></span>
+				<span class="widget-stats widget-stats-2" style="background: #0077c5;">
+					<span class="count" style="font-size: 25px;"><a data-format="n2" style="color: #fff;"><span data-bind="text: avgUsage"></span></a></span>
+					<span class="txt" style="font-size: small; color: #fff;"><span >Average Water Usage Per Connection</span></span>
 				</span>
 				<!-- // Stats Widget END -->
 				
@@ -5212,9 +5219,9 @@
 			<div class="span3" style="padding-right: 0; ">
 			
 				<!-- Stats Widget -->
-				<span class="widget-stats widget-stats-default widget-stats-2" style="background: #D3D3D3;">
-					<span class="count" style="font-size: 25px;"><a style="color: #000;" data-format="c0" ><span data-bind="text: avgRevenue"></span></a></span>
-					<span class="txt" style="font-size: small; color: #000; "><span >Avarage Reveune Per Connection</span></span>
+				<span class="widget-stats widget-stats-default widget-stats-2" style="background: #21abf6;">
+					<span class="count" style="font-size: 25px;"><a style="color: #fff;" data-format="c0" ><span data-bind="text: avgRevenue"></span></a></span>
+					<span class="txt" style="font-size: small; color: #fff; "><span >Avarage Reveune Per Connection</span></span>
 				</span>
 				<!-- // Stats Widget END -->
 				
@@ -5222,9 +5229,9 @@
 			<div class="span5">
 			
 				<!-- Stats Widget -->
-				<span class="widget-stats widget-stats-2" style="background: #113051;">
-					<span class="count" style="font-size: 25px;"><a style="color: #fff;" data-format="c0" ><span data-bind="text: totalDeposit"></span></a></span>
-					<span class="txt" style="font-size: small; color: #fff;"><span >Total Deposit</span></span>
+				<span class="widget-stats widget-stats-2" style="background: #D3D3D3;">
+					<span class="count" style="font-size: 25px;"><a style="color: #333;" data-format="c0" ><span data-bind="text: totalDeposit"></span></a></span>
+					<span class="txt" style="font-size: small; color: #333;"><span >Total Deposit</span></span>
 				</span>
 				<!-- // Stats Widget END -->
 				
@@ -11776,10 +11783,18 @@
 			],
 		  	sort: { field:"number", dir:"asc" }
 		}),
+		arAccountDS  		: new kendo.data.DataSource({
+		  	data: banhji.source.accountList,
+		  	filter: [
+				{ field:"account_type_id", value: 12 },
+				{ field:"status", value: 1 }
+			],
+		  	sort: { field:"number", dir:"asc" }
+		}),
 		paymentMethodDS 	: dataStore(apiUrl + "payment_methods"),
 		meterObj	 		: null,
 		isEdit 				: false,
-		obj 				: [],
+		obj 				: null,
 		installShow 		: false,
 		startDate 			: new Date(),
 		issued_date 		: new Date(),
@@ -11798,11 +11813,13 @@
 				self.set("meterObj", view[0]);
 				self.setObj(view[0].plan_id);
 				self.goWorder(view[0].branch_id, view[0].location_id);
+				console.log(self.get("meterObj"));
 			});
 			this.paymentMethodDS.read();
 			//this.cashAccountDS.read();
 		},
 		cashAccount 		: 7,
+		arAccount 			: 10,
 		paymentMethod 		: 1,
 		checkNumber 		: null,
 		amountRecievChange 	: function(e){
@@ -11888,204 +11905,84 @@
 			// $("#loadImport").css("display","block");
 			var self = this;
 			var amount = 0.0;
-			$.each(this.items, function(i, v){
-				var that = this;
-				if(v.type === "service") {
-					banhji.transaction.makeInvoice(this.get('meterObj').contact[0].id, this.get('paymentMethod'), v.received, 'Meter_Activation')
-					.then(function(transaction){
-						if(that.v.received == that.v.amount){
-							banhji.transactionLine.addById(transaction[0].id, banhji.ActivateMeter.get('meterObj').contact[0].id, banhji.ActivateMeter.get('cashAccount'), 'Meter Activation', that.v.received, 0, banhji.ActivateMeter.get('issued_date'));
+			self.deposit = null,
+			self.service = null;
+			if(this.items[0].type === "deposit") {
+				self.deposit = this.items[0];
+				self.service = this.items[1];
+			} else {
+				self.deposit = this.items[1];
+				self.service = this.items[0];
+			}
 
-							banhji.transactionLine.addById(transaction[0].id, banhji.ActivateMeter.get('meterObj').contact[0].id, that.v.account_id, 'Meter Activation', 0, that.v.received, banhji.ActivateMeter.get('issued_date'));
-						} else if(that.v.received == 0) {
-							banhji.transactionLine.addById(transaction[0].id, banhji.ActivateMeter.get('meterObj').contact[0].id, that.v.account_id, 'Meter Activation', that.v.received, 0, banhji.ActivateMeter.get('issued_date'));
+			banhji.transaction.makeInvoice(self.get('meterObj').contact[0].id, self.get('paymentMethod'), self.service.received, 'Meter_Activation')
+			.then(function(transaction){
+				return banhji.transaction.save();
+			})
+			.then(function(trx){
+				if(self.service.received == that.value.amount){
+					banhji.transactionLine.addById(trx[0].id, banhji.ActivateMeter.get('meterObj').contact[0].id, banhji.ActivateMeter.get('cashAccount'), 'Meter Activation', self.service.received, 0, banhji.ActivateMeter.get('issued_date'));
 
-							banhji.transactionLine.addById(transaction[0].id, banhji.ActivateMeter.get('meterObj').contact[0].id, banhji.ActivateMeter.get('cashAccount'), 'Meter Activation', 0, that.v.received, banhji.ActivateMeter.get('issued_date'));
-						} else {
-							banhji.transactionLine.addById(transaction[0].id, banhji.ActivateMeter.get('meterObj').contact[0].id, banhji.ActivateMeter.get('cashAccount'), 'Meter Activation', that.v.received, 0, banhji.ActivateMeter.get('issued_date'));
+					banhji.transactionLine.addById(trx[0].id, banhji.ActivateMeter.get('meterObj').contact[0].id, self.service.account_id, 'Meter Activation', 0, self.service.received, banhji.ActivateMeter.get('issued_date'));
+				} else if(self.service.received == 0) {
+					banhji.transactionLine.addById(trx[0].id, banhji.ActivateMeter.get('meterObj').contact[0].id, banhji.ActivateMeter.get('arAccount'), 'Meter Activation', self.service.received, 0, banhji.ActivateMeter.get('issued_date'));
 
-							banhji.transactionLine.addById(transaction[0].id, banhji.ActivateMeter.get('meterObj').contact[0].id, that.v.receivable_id, 'Meter Activation', that.v.received, 0, banhji.ActivateMeter.get('issued_date'));
-
-							banhji.transactionLine.addById(transaction[0].id, banhji.ActivateMeter.get('meterObj').contact[0].id, that.v.account_id, 'Meter Activation', 0, that.v.received, banhji.ActivateMeter.get('issued_date'));
-
-						}
-						banhji.transactionLine.sync();
-					});
+					banhji.transactionLine.addById(trx[0].id, banhji.ActivateMeter.get('meterObj').contact[0].id, self.service.account_id, 'Meter Activation', 0, self.service.received, banhji.ActivateMeter.get('issued_date'));
 				} else {
-					banhji.transaction.makeInvoice(this.get('meterObj').contact[0].id, this.get('paymentMethod'), v.received, 'Meter_Activation')
-					.then(function(transaction){
-						if(that.v.received == that.v.amount){
-							banhji.transactionLine.addById(transaction[0].id, banhji.ActivateMeter.get('meterObj').contact[0].id, banhji.ActivateMeter.get('cashAccount'), 'Meter Activation', that.v.received, 0, banhji.ActivateMeter.get('issued_date'));
+					banhji.transactionLine.addById(trx[0].id, banhji.ActivateMeter.get('meterObj').contact[0].id, banhji.ActivateMeter.get('cashAccount'), 'Meter Activation', self.service.received, 0, banhji.ActivateMeter.get('issued_date'));
 
-							banhji.transactionLine.addById(transaction[0].id, banhji.ActivateMeter.get('meterObj').contact[0].id, that.v.account_id, 'Meter Activation', 0, that.v.received, banhji.ActivateMeter.get('issued_date'));
-						} else if(that.v.received == 0) {
-							banhji.transactionLine.addById(transaction[0].id, banhji.ActivateMeter.get('meterObj').contact[0].id, that.v.account_id, 'Meter Activation', that.v.received, 0, banhji.ActivateMeter.get('issued_date'));
+					banhji.transactionLine.addById(trx[0].id, banhji.ActivateMeter.get('meterObj').contact[0].id, banhji.ActivateMeter.get('arAccount'), 'Meter Activation', self.service.received, 0, banhji.ActivateMeter.get('issued_date'));
 
-							banhji.transactionLine.addById(transaction[0].id, banhji.ActivateMeter.get('meterObj').contact[0].id, banhji.ActivateMeter.get('cashAccount'), 'Meter Activation', 0, that.v.received, banhji.ActivateMeter.get('issued_date'));
-						} else {
-							banhji.transactionLine.addById(transaction[0].id, banhji.ActivateMeter.get('meterObj').contact[0].id, banhji.ActivateMeter.get('cashAccount'), 'Meter Activation', that.v.received, 0, banhji.ActivateMeter.get('issued_date'));
-
-							banhji.transactionLine.addById(transaction[0].id, banhji.ActivateMeter.get('meterObj').contact[0].id, that.v.receivable_id, 'Meter Activation', that.v.received, 0, banhji.ActivateMeter.get('issued_date'));
-
-							banhji.transactionLine.addById(transaction[0].id, banhji.ActivateMeter.get('meterObj').contact[0].id, that.v.account_id, 'Meter Activation', 0, that.v.received, banhji.ActivateMeter.get('issued_date'));
-
-						}
-						banhji.transactionLine.sync();
-					});
+					banhji.transactionLine.addById(trx[0].id, banhji.ActivateMeter.get('meterObj').contact[0].id, self.service.account_id, 'Meter Activation', 0, self.service.received, banhji.ActivateMeter.get('issued_date'));
 				}
-				console.log(v);
+				banhji.transactionLine.save();
+			});
+			banhji.transaction.dataSource.data([]);
+			banhji.transaction.makeInvoice(self.get('meterObj').contact[0].id, self.get('paymentMethod'), self.deposit.received, 'Water_Deposit')
+			.then(function(transaction){
+				return banhji.transaction.save();
+			})
+			.then(function(trx){
+				if(self.deposit.received == self.deposit.amount){
+					banhji.transactionLine.addById(trx[0].id, banhji.ActivateMeter.get('meterObj').contact[0].id, banhji.ActivateMeter.get('cashAccount'), 'Water Deposit', self.deposit.received, 0, banhji.ActivateMeter.get('issued_date'));
+
+					banhji.transactionLine.addById(trx[0].id, banhji.ActivateMeter.get('meterObj').contact[0].id, self.deposit.account_id, 'Water Deposit', 0, self.deposit.received, banhji.ActivateMeter.get('issued_date'));
+				}
+				banhji.transactionLine.save();
+			});
+			$.each(this.items, function(i, v){
 				amount += parseFloat(v.amount);
 			});
-			// if(this.get('amountToBeRecieved') < amount) {
-			// 	// create one invoice
-			// 	banhji.transaction.makeInvoice(this.get('meterObj').contact[0].id, this.get('paymentMethod'), this.get('amountToBeRecieved'), 'Meter_Activation')
-			// 	.then(function(data){
-			// 		if(data) {
-			// 			return banhji.transaction.save();
-			// 		} else {
-			// 			return false;
-			// 		}
-			// 	})
-			// 	.then(function(transaction){
-			// 		// create invoice line
-			// 		if(transaction[0]){	
-			// 			$.each(banhji.ActivateMeter.items, function(i, v){
-			// 				if(v.type == 'service') {
-			// 					var amount = 0.00;
-			// 					banhji.transactionLine.addById(transaction[0].id, banhji.ActivateMeter.get('meterObj').contact[0].id, banhji.ActivateMeter.get('cashAccount'), 'Meter Activation', v.received, 0, banhji.ActivateMeter.get('issued_date'));
 
-			// 					banhji.transactionLine.addById(transaction[0].id, banhji.ActivateMeter.get('meterObj').contact[0].id, banhji.ActivateMeter.get('meterObj').contact[0].account_id, 'Meter Activation', v.amount - v.received, 0, banhji.ActivateMeter.get('issued_date'));
-
-			// 					if(banhji.ActivateMeter.get('amountToBeRecieved') > 0) {
-			// 						banhji.transactionLine.addById(transaction[0].id, banhji.ActivateMeter.get('meterObj').contact[0].id, v.account_id, 'Meter Activation', 0, v.amount, banhji.ActivateMeter.get('issued_date'));
-			// 					} else {
-			// 						banhji.transactionLine.addById(transaction[0].id, banhji.ActivateMeter.get('meterObj').contact[0].id, v.account_id, 'Meter Activation', 0, banhji.ActivateMeter.get('amountBilled'), banhji.ActivateMeter.get('issued_date'));
-			// 					}
-								
-			// 				}
-
-			// 				if(v.type == 'deposit' && v.received > 0) {
-			// 					banhji.transactionLine.addById(transaction[0].id, banhji.ActivateMeter.get('meterObj').contact[0].id, banhji.ActivateMeter.get('cashAccount'), 'Meter Activation', v.received, 0, banhji.ActivateMeter.get('issued_date'));
-			// 					banhji.transactionLine.addById(transaction[0].id, banhji.ActivateMeter.get('meterObj').contact[0].id, v.account_id, 'Meter Activation', 0, v.received, banhji.ActivateMeter.get('issued_date'));
-			// 				}
-			// 			});
-						
-			// 			return banhji.transactionLine.save();
-			// 		} else {
-			// 			return false;
-			// 		}
-			// 	})
-			// 	.then(function(lines){
-			// 		// then change meter activated field to 1
-			// 		console.log(lines.length);
-			// 		var status = false;
-			// 		if(lines.length > 0) {
-			// 			status = true;
-			// 			self.get('meterObj').set('activated', 1);
-			// 			console.log(self.meterDS.data());
-			// 			self.meterDS.sync();
-			// 			self.meterDS.bind('requestEnd', function(e){
-			// 				if(e.response) {
-			// 					// show success message
-			// 				} else {
-			// 					// show erro message
-			// 				}
-			// 			});
-			// 		} else {
-			// 			status = false;
-			// 		}
-			// 		return status;
-			// 	})
-			// 	.then(function(status){
-			// 		if(status) {
-			// 			banhji.installment.setDate(banhji.ActivateMeter.get('startDate'));
-			// 			banhji.installment.setPeriod(banhji.ActivateMeter.get('period'));
-			// 			return banhji.installment.makeSchedule(amount - kendo.parseFloat(banhji.ActivateMeter.get('amountToBeRecieved')), banhji.ActivateMeter.get('meterObj').contact[0].id, banhji.ActivateMeter.get('meterObj').id,banhji.ActivateMeter.get('startDate'), banhji.ActivateMeter.get('period'));
-			// 		}
-			// 	})
-			// 	.then(function(data){
-			// 		return banhji.installment.save();
-			// 	})
-			// 	.then(function(installment){
-			// 		if(installment[0]) {
-			// 			// show message
-			// 			banhji.ActivateMeter.set('amountBilled', 0.00);
-			// 			banhji.ActivateMeter.set('cashAccount', null);
-			// 			banhji.ActivateMeter.set('paymentMethod', null);
-			// 			banhji.ActivateMeter.set('amountToBeRecieved', 0.00);
-			// 			banhji.ActivateMeter.set('amountRemain', 0.00);
-			// 			$("#ntf1").data("kendoNotification").success("Successfully!");
-			// 			banhji.ActivateMeter.cancel();
-			// 			banhji.waterCenter.meterDS.read();
-			// 		} else {
-			// 			// show error
-			// 			$("#ntf1").data("kendoNotification").error("Error!");
-			// 		}
-			// 	});
-			// 	// and amount left to be make via installment
-				
-			// } else {
-			// 	banhji.transaction.makeInvoice(this.get('meterObj').contact[0].id, this.get('paymentMethod'), this.get('amountToBeRecieved'), 'Meter_Activation')
-			// 	.then(function(data){
-			// 		// create invoice
-			// 		// console.log(amount - kendo.parseFloat(banhji.ActivateMeter.get('amountToBeRecieved')));
-			// 		if(data) {
-			// 			return banhji.transaction.save();
-			// 		} else {
-			// 			return false;
-			// 		}
-			// 	})
-			// 	.then(function(transaction){
-			// 		// create invoice line
-			// 		if(transaction[0]){	
-			// 			$.each(banhji.ActivateMeter.items, function(i, v){
-			// 				if(v.type == 'service') {
-			// 					var amount = 0.00;
-			// 					banhji.transactionLine.addById(transaction[0].id, banhji.ActivateMeter.get('meterObj').contact[0].id, banhji.ActivateMeter.get('cashAccount'), 'Meter Activation', v.received, 0, banhji.ActivateMeter.get('issued_date'));
-
-			// 					banhji.transactionLine.addById(transaction[0].id, banhji.ActivateMeter.get('meterObj').contact[0].id, v.account_id, 'Meter Activation', 0, v.received, banhji.ActivateMeter.get('issued_date'));								
-			// 				}
-
-			// 				if(v.type == 'deposit' && v.received > 0) {
-			// 					banhji.transactionLine.addById(transaction[0].id, banhji.ActivateMeter.get('meterObj').contact[0].id, banhji.ActivateMeter.get('cashAccount'), 'Meter Activation', v.received, 0, banhji.ActivateMeter.get('issued_date'));
-			// 					banhji.transactionLine.addById(transaction[0].id, v.account_id, banhji.ActivateMeter.get('meterObj').contact.deposit_account_id, 'Meter Activation', 0, v.received, banhji.ActivateMeter.get('issued_date'));
-			// 				}
-			// 			});
-						
-			// 			return banhji.transactionLine.save();
-			// 		} else {
-			// 			return false;
-			// 		}
-			// 	})
-			// 	.then(function(lines){
-			// 		banhji.ActivateMeter.get('meterObj').set('activated', 1);
-			// 			banhji.ActivateMeter.meterDS.sync();
-			// 			banhji.ActivateMeter.meterDS.bind('requestEnd', function(e){
-			// 				if(e.response) {
-			// 					// show success message
-			// 				} else {
-			// 					// show erro message
-			// 				}
-			// 			});
-			// 		// then change meter activated field to 1
-			// 		var status = false;
-			// 		if(lines.length > 0) {
-			// 			status = true;
-			// 			banhji.ActivateMeter.set('amountBilled', 0.00);
-			// 			banhji.ActivateMeter.set('cashAccount', null);
-			// 			banhji.ActivateMeter.set('paymentMethod', null);
-			// 			banhji.ActivateMeter.set('amountToBeRecieved', 0.00);
-			// 			banhji.ActivateMeter.set('amountRemain', 0.00);
-			// 			$("#ntf1").data("kendoNotification").success("Successfully!");
-			// 			$("#loadImport").css("display","none");
-			// 			banhji.ActivateMeter.cancel();
-			// 		} else {
-			// 			status = false;
-			// 			$("#ntf1").data("kendoNotification").error("Error!"); 
-			// 		}
-			// 		return status;
-			// 	});
-			// }		
+			if(this.get('amountToBeRecieved') < amount) {
+				banhji.ActivateMeter.get('meterObj').set('activated', 1);
+				banhji.installment.setDate(banhji.ActivateMeter.get('startDate'));
+				banhji.installment.setPeriod(banhji.ActivateMeter.get('period'));
+				banhji.installment.makeSchedule(amount - kendo.parseFloat(banhji.ActivateMeter.get('amountToBeRecieved')), banhji.ActivateMeter.get('meterObj').contact[0].id, banhji.ActivateMeter.get('meterObj').id, banhji.ActivateMeter.get('startDate'), banhji.ActivateMeter.get('period'));
+				banhji.installment.save()
+				.then(function(installment){
+					if(installment[0]) {
+						// show message
+						banhji.ActivateMeter.set('amountBilled', 0.00);
+						banhji.ActivateMeter.set('cashAccount', null);
+						banhji.ActivateMeter.set('paymentMethod', null);
+						banhji.ActivateMeter.set('amountToBeRecieved', 0.00);
+						banhji.ActivateMeter.set('amountRemain', 0.00);
+						$("#ntf1").data("kendoNotification").success("Successfully!");
+						banhji.ActivateMeter.cancel();
+						banhji.waterCenter.meterDS.read();
+					} else {
+						// show error
+						$("#ntf1").data("kendoNotification").error("Error!");
+					}
+				});
+			} else {
+				banhji.ActivateMeter.get('meterObj').set('activated', 1);
+			}
+			banhji.ActivateMeter.meterDS.sync();
+			banhji.ActivateMeter.meterDS.bind('requestEnd', function(e){
+				banhji.router.navigate('/center');
+			});		
 		},
 		cancel 				: function(){
 			$("#loadImport").css("display","none");
