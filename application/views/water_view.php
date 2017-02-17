@@ -2324,11 +2324,10 @@
 						                	style="width: 100%;" 
 						                	data-role="datepicker"
 						                	data-format="MM-yyyy"
-						                	data-min="<?php echo date('Y-m-d'); ?>"
 						                	data-start="year" 
 							  				data-depth="year" 
 						                	placeholder="Moth of ..." 
-								           	data-bind="value: readingVM.monthOfSR" />
+								           	data-bind="value: readingVM.monthOfSR, min: miniMonthofS" />
 									</div>
 								</div>
 								<div class="span3">	
@@ -2342,11 +2341,11 @@
 						        <div class="span3">	
 									<div class="control-group">								
 										<label ><span >Previous</span></label>
-						        		<input type="text" 
-						        			class="k-input k-textbox" 
-						        			placeholder="Previous" 
+						        		<p class="k-input k-textbox" 
+						        			style="width:100%"
 						        			style="width:100%;border:1px solid #ccc;"
-						        			data-bind="value: readingVM.previousSR" />
+						        			data-bind="text: readingVM.previousSR" >
+						        			</p>
 						        	</div>
 						       	</div>
 						       	<div class="span3">	
@@ -3140,10 +3139,10 @@
 										                	data-role="datepicker"
 										                	data-format="MM-yyyy"
 										                	data-start="year" 
-											  				data-depth="year"
-											  				min="<?php echo date('Y-m-d'); ?>" 
+											  				data-depth="year" 
 										                	placeholder="Moth of ..." 
-												           	data-bind="value: monthOfSelect" />
+												           	data-bind="value: monthOfSelect,
+												           		min: miniMonthofS" />
 													</div>
 																													
 													<!-- // Group END -->
@@ -3235,11 +3234,11 @@
 									                	data-role="datepicker"
 									                	data-format="MM-yyyy"
 									                	data-start="year" 
-										  				data-depth="year" 
-										  				min="<?php echo date('Y-m-d'); ?>" 
+										  				data-depth="year" ]
 									                	placeholder="Moth of ..." 
 											           	data-bind="value: monthOfUpload,
-											           			events: {change: selectMonthTo}" />
+											           			events: {change: selectMonthTo},
+											           			min: miniMonthofS" />
 												</div>
 											</div>											<div class="span3">
 												<div class="control-group">	
@@ -3250,7 +3249,8 @@
 										  				min="<?php echo date('Y-m-d'); ?>" 
 									                	placeholder="To Date ..." 
 											           	data-bind="value: toDateUpload,
-											           			events: {change: selectMonthTo}" />
+											           			events: {change: selectMonthTo},
+											           			min: miniMonthofS" />
 												</div>
 											</div>
 										</div>
@@ -9953,6 +9953,7 @@
 		uploadDS  			: dataStore(apiUrl + "readings/books"),
 		licenseDS 			: dataStore(apiUrl + "branches"),
 		blocDS 				: dataStore(apiUrl + "locations"),
+		meterDS 			: dataStore(apiUrl + "meters/record"),
 		itemDS 				: null,
 		obj 				: null,
 		monthOfSelect		: null,
@@ -9961,8 +9962,19 @@
 		selectMeter 		: false,
 		haveData 			: false,
 		rows 				: [],
+		miniMonthofS 		: new Date(),
 		pageLoad 			: function(id){
+			var self = this;
 			this.licenseDS.read();
+			this.meterDS.query({
+            	sort: [
+			  		{ field: "id", dir: "desc" }
+			  	],
+			  	pageSize: 1
+            }).then(function(e){
+				var view = self.meterDS.view();
+				self.set("miniMonthofS", view[0].month_of);
+            });
 		},
 		onLicenseChange 	: function(e) {
 			var data = e.data;
@@ -11539,7 +11551,7 @@
 	});
 	banhji.transaction = kendo.observable({
 		dataSource 		: dataStore(apiUrl + "transactions"),
-		makeInvoice 	: function(contactId, payment, amount, type) {
+		makeInvoice 	: function(contactId, payment, amount, type, location) {
 			var duedate = new Date(), dfd = $.Deferred();
 			duedate.setDate(duedate.getDate() + 7);				
 
@@ -11549,7 +11561,8 @@
 				payment_term_id		: 0,				
 				reference_id 		: "",
 				recurring_id 		: "",
-				job_id 				: 0,				
+				job_id 				: 0,
+				location_id			: location,		
 				user_id 			: banhji.userData.id,
 				employee_id 		: "",//Sale Rep 	    		
 			   	type				: type,//Required
@@ -11813,10 +11826,21 @@
 				self.set("meterObj", view[0]);
 				self.setObj(view[0].plan_id);
 				self.goWorder(view[0].branch_id, view[0].location_id);
-				console.log(self.get("meterObj"));
+				var monthOf = self.issued_date;
+				monthOf.setDate(1);
+				banhji.reading.dataSource.insert(0, {
+					month_of: monthOf,
+					meter_number  : view[0].meter_number,
+					previous: 0,
+					current : view[0].starting_no,
+					invoiced: 1,
+					condition: "new",
+					consumption: 0
+				});
 			});
 			this.paymentMethodDS.read();
 			//this.cashAccountDS.read();
+
 		},
 		cashAccount 		: 7,
 		arAccount 			: 10,
@@ -11915,7 +11939,7 @@
 				self.service = this.items[0];
 			}
 
-			banhji.transaction.makeInvoice(self.get('meterObj').contact[0].id, self.get('paymentMethod'), self.service.received, 'Meter_Activation')
+			banhji.transaction.makeInvoice(self.get('meterObj').contact[0].id, self.get('paymentMethod'), self.service.received, 'Meter_Activation', self.get('meterObj').location_id)
 			.then(function(transaction){
 				return banhji.transaction.save();
 			})
@@ -11938,7 +11962,7 @@
 				banhji.transactionLine.save();
 			});
 			banhji.transaction.dataSource.data([]);
-			banhji.transaction.makeInvoice(self.get('meterObj').contact[0].id, self.get('paymentMethod'), self.deposit.received, 'Water_Deposit')
+			banhji.transaction.makeInvoice(self.get('meterObj').contact[0].id, self.get('paymentMethod'), self.deposit.received, 'Water_Deposit', self.get('meterObj').location_id)
 			.then(function(transaction){
 				return banhji.transaction.save();
 			})
@@ -11981,7 +12005,11 @@
 			}
 			banhji.ActivateMeter.meterDS.sync();
 			banhji.ActivateMeter.meterDS.bind('requestEnd', function(e){
-				banhji.router.navigate('/center');
+				if(e.type != 'read') {
+					banhji.reading.save();
+					banhji.router.navigate('/center');
+				}
+				
 			});		
 		},
 		cancel 				: function(){
@@ -15896,7 +15924,7 @@
 	      		banhji.wDashBoard.set('totalSale', kendo.toString(sale, 'c2', banhji.locale));
 	      		banhji.wDashBoard.set('totalUsage', usage);
 	      		banhji.wDashBoard.set('totalUser', user);
-	      		banhji.wDashBoard.set('totalDeposit', deposit);
+	      		banhji.wDashBoard.set('totalDeposit',  kendo.toString(deposit, 'c2', banhji.locale));
 	      		banhji.wDashBoard.set('avgUsage', usage/user);
 	      	},
 	      	batch: true,
@@ -16417,6 +16445,7 @@
 			}
 			// console.log(this.meter_visible);
 		},
+		miniMonthofS 		: "<?php echo date('Y-m-d'); ?>",
 		onSelectedMeter		: function(e) {
 			var that = this;
 			this.readingVM.set('NumberSR',e.data.meter_number);
@@ -16426,6 +16455,7 @@
 			}).then(function(e){
 				var last = that.readingVM.dataSource.data()[0];
 				that.readingVM.set('previousSR', last.current);
+				that.set("miniMonthofS", last.month_of);
 			});
 			this.installmentVM.dataSource.filter({field: 'meter_id', value: e.data.id});
 		},

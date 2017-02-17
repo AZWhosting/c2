@@ -88,6 +88,29 @@ class Meters extends REST_Controller {
 					"date_used" 			=> $value->date_used
 				);
 			}
+		} else {
+			$data["results"][] = array(
+				"id" 					=> "",
+				"currency_id"			=> "",
+				"_currency"				=> array(),
+				"meter_number" 			=> "No Data",
+				// "meter" 				=> $value->number,
+				"worder" 				=> "",
+				"contact_name" 			=> "",
+				"status" 				=> "",
+				"contact" 				=> "",
+				"number_digit"			=> "",
+				"plan_id"				=> "",
+				"map" 					=> "",
+				"starting_no" 			=> "",
+				"location_id" 			=> "",
+				"brand_id" 				=> "",
+				"branch_id" 			=> "",
+				"activated" 			=> "",
+				"latitute" 				=> "",
+				"longtitute" 			=> "",
+				"date_used" 			=> ""
+			);
 		}
 
 		//Response Data		
@@ -314,8 +337,8 @@ class Meters extends REST_Controller {
 					"meter_id" 		=> $value->meter_id, 		
 					"read_by" 		=> $value->read_by, 		
 					"input_by" 		=> $value->input_by,
-					"previous" 		=> $value->previous, 	
-					"current" 		=> $value->current,
+					"previous" 		=> intval($value->previous), 	
+					"current" 		=> intval($value->current),
 					"new_round" 	=> $value->new_round,
 					"usage"			=> intval($value->usage),			
 					"month_of" 		=> $value->month_of, 						

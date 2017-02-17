@@ -88,7 +88,7 @@ class Readings extends REST_Controller {
 					"_meta" 		=> array()
 				);
 			}
-		}
+		} 
 
 		//Response Data		
 		$this->response($data, 200);		
