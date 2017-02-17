@@ -57,8 +57,8 @@ class Winvoices extends REST_Controller {
 						'name' => 'usage',
 						'from' => $row->from_date,
 						'to'   => $row->to_date,
-						'prev'=>$row->previous,
-						'current'=>$row->current,
+						'prev'=> intval($row->previous),
+						'current'=> intval($row->current),
 						'usage' => intval($row->usage),
 						'unit' => 'm3',
 						'amount'=> 0
@@ -86,8 +86,8 @@ class Winvoices extends REST_Controller {
 					'name' => 'Usage',
 					'from' => $row->from_date,
 					'to'   => $row->to_date,
-					'prev'=>$row->previous,
-					'current'=>$row->current,
+					'prev'=> intval($row->previous),
+					'current'=> intval($row->current),
 					'usage' => intval($row->usage),
 					'unit' => 'm3',
 					'amount'=> 0

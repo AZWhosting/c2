@@ -68,6 +68,7 @@ class Installments extends REST_Controller {
 					"id" 						=> $value->id,
 					"biller_id"			=> $value->biller_id,
 					"contact_id" 		=> $value->contact_id,
+					"percentage"        => $value->percentage,
 					"start_month"		=> $value->start_month,
 					"amount"				=> $value->amount,
 					"period"				=> $value->period,
@@ -91,6 +92,7 @@ class Installments extends REST_Controller {
 			$obj->biller_id 		= $value->biller_id;
 			$obj->contact_id 		= $value->contact_id;
 			$obj->meter_id 			= $value->meter_id;
+			$obj->percentage 		= $value->percentage;
 			$obj->start_month 		= $value->start_month;
 			$obj->amount 			= $value->amount;
 			$obj->period 			= $value->period;
@@ -98,6 +100,9 @@ class Installments extends REST_Controller {
 			$obj->invoiced 			= $value->invoiced;
 
 			if($obj->save()){
+				$percentage = floatval($obj->amount) * (intval($obj->percentage)/100);
+				$amount = ($obj->amount + $percentage) / $obj->period;
+
 				for($x=0; $x < $obj->period; $x++) {
 					$day = date('d', strtotime($obj->start_month));
 					$year = date('Y', strtotime($obj->start_month));
@@ -110,11 +115,12 @@ class Installments extends REST_Controller {
 					}
 					$installment = new Installment_schedule(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 					$installment->installment_id = $obj->id;
-					$installment->amount = floatval($obj->amount) / $obj->period;
+					$installment->amount = floatval($amount);
 					$installment->date = $sDate;
 					$installment->invoiced = 0;
 					$installment->save($obj);
 				}
+				
 				$schedule = $obj->installment_schedule->select('id, date, amount')->get_raw();
 				//Results
 

@@ -174,6 +174,7 @@ class Waterdash extends REST_Controller {
 					$contact = $loc->contact->select('deposit_account_id')->get();
 					$trx = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 					$trx->select_sum('amount');
+					$trx->where('type', 'Water_Invoice');
 					$trx->where('location_id', $loc->id)->get();
 					// $trx->where('due_date <');
 					$trx->where('status <>', 1);
@@ -231,7 +232,6 @@ class Waterdash extends REST_Controller {
 		// $data["count"] = 0;
 
 		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$reading = new Meter_record(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
 
 		//Sort
@@ -253,54 +253,33 @@ class Waterdash extends REST_Controller {
 		}
 
 		$obj->where('type', 'Water_Invoice');
+		$obj->where('deleted', 0);
 		$obj->where("issued_date >=", date("Y")."-01-01");
 		$obj->where("issued_date <=", date("Y")."-12-31");						
 		$obj->order_by("issued_date");	
 		$obj->get();
+		$temp = array();
 
-		$reading->where("month_of >=", date("Y")."-01-01");
-		$reading->where("month_of <=", date("Y")."-12-31");
-		$reading->order_by("month_of");								
-		$reading->get();
-
-		if($obj->result_count() > $reading->result_count()){
+		if($obj->exists()){
 			foreach ($obj as $value) {
-				$usage = 0;
 				$invoiceMonth = date('F', strtotime($value->issued_date));
-
-				foreach ($reading as $v) {
-					$readingMonth = date('F', strtotime($v->month_of));
-
-					if($readingMonth===$invoiceMonth){
-						$usage += floatval($v->usage);
-					}
+				if(isset($temp["$invoiceMonth"])) {
+					$temp["$invoiceMonth"]['amount'] += floatval($value->amount);
+				} else {
+					$temp["$invoiceMonth"]['amount'] = floatval($value->amount);
 				}
-
+			}
+			foreach($temp as $key => $value) {
 				$data["results"][] = array(					
-				   	"amount" 		=> floatval($value->amount),
-				   	"usage" 		=> $usage,				   	
-				   	"month"			=> $invoiceMonth				   	
+				   	"amount" 		=> floatval($value['amount']),				   	
+				   	"month"			=> $key				   	
 				);
 			}
 		}else{
-			foreach ($reading as $value) {
-				$amount = 0;
-				$readingMonth = date('F', strtotime($value->month_of));
-
-				foreach ($obj as $v) {
-					$invoiceMonth = date('F', strtotime($v->issued_date));
-
-					if($readingMonth===$invoiceMonth){
-						$amount += floatval($v->amount);
-					}
-				}
-
-				$data["results"][] = array(					
-				   	"amount" 		=> $amount,
-				   	"usage" 		=> floatval($value->usage),				   	
-				   	"month"			=> $readingMonth				   	
-				);
-			}
+			$data["results"][] = array(					
+			   	"amount" 		=> 0,			   	
+			   	"month"			=> ""				   	
+			);
 		}
 
 		$this->response($data, 200);

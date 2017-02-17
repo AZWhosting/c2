@@ -325,7 +325,7 @@ class Meters extends REST_Controller {
 	    		}
 			}									 			
 		}		
-	
+		$obj->where("invoiced <>", 1);
 		$obj->get_paged_iterated($page, $limit);
 		$data["count"] = $obj->paged->total_rows;		
 

@@ -292,6 +292,7 @@ class Readings extends REST_Controller {
 				    		if($f['field'] === 'month_of <'){
 				    			$date = date('Y-m-d', strtotime($f['value']));
 				    			$record->where('month_of <', $f["value"]);
+				    			$record->where("invoiced <>", 1);
 
 				    		} else {
 				    			$record->where($f["field"], $f["value"]);

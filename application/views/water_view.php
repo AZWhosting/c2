@@ -2885,6 +2885,14 @@
 		            					data-parse-formats="yyyy-MM-dd" 
 		            					placeholder="dd-MM-yyyy" required data-required-msg="required" 
 		            					style="width: 80%" />
+		            					<br>
+				              		<label><span >Interest Percentage</span></label>										
+			              			<br>
+				              		<input	 		
+		            					data-bind="value: percentage" 
+		            					data-format="%"		            					
+		            					placeholder="percentage number (10)" required data-required-msg="required" 
+		            					style="width: 80%" />
 		            			</div>
 							</div>
 							<div class="span7">
@@ -9899,13 +9907,14 @@
 		dataSource 			: dataStore(apiUrl + "installments"),
 		startDate 			: new Date(),
 		period 				: 12,
+		percentage 			: 0,
 		setDate 			: function(date) {
 			this.set('startDate', date);
 		},
 		setPeriod 			: function(period) {
 			this.set('period', period);
 		},
-		makeSchedule 		: function(amount, contactId, meterId,startDate, period) {
+		makeSchedule 		: function(amount, contactId, meterId,startDate, period, percentage) {
 			var dfd = $.Deferred();
 			try {
 				if(amount == undefined) throw "TypeError: Amount is not defined";
@@ -9915,6 +9924,7 @@
 					biller_id 	: banhji.userData.id,
 					contact_id 	: contactId,
 					meter_id 	: meterId,
+					percentage  : percentage,
 					start_month : kendo.toString(startDate, 'yyyy-MM-dd'),
 					amount 		: amount,
 					payment_number: null,
@@ -9968,7 +9978,7 @@
 			this.licenseDS.read();
 			this.meterDS.query({
             	sort: [
-			  		{ field: "id", dir: "desc" }
+			  		{ field: "month_of", dir: "desc" }
 			  	],
 			  	pageSize: 1
             }).then(function(e){
@@ -10124,7 +10134,9 @@
 						result[sheetName] = roa;
 						for(var i = 0; i < roa.length; i++) {
 							roa[i].invoiced = 0;
-							roa[i].month_of = self.get("monthOfUpload");
+							var monthOf = self.get("monthOfUpload");
+							monthOf.setDate(1);
+							roa[i].month_of = monthOf;
 							roa[i].to_date = self.get("toDateUpload");
 							banhji.reading.dataSource.add(roa[i]);
 							$("#loadImport").css("display","none");	
@@ -10150,6 +10162,7 @@
 				banhji.reading.dataSource.sync();
 				banhji.reading.dataSource.bind("requestEnd", function(e){
 					if(e.type != 'read') {
+
 						if(e.type == 'update') {
 							// update current invoice
 							banhji.invoice.dataSource.query({
@@ -10163,7 +10176,12 @@
 				    		dfd.resolve(e.response.results);			
 				    		// self.cancel();
 							$("#loadImport").css("display","none");
+							self.dataSource.data([]);
+							self.set("monthOfUpload", "");
+							self.set("toDateUpload", "");
+							banhji.router.navigate("/print_bill");
 						}	
+
 					}			  				
 			    });
 			    banhji.reading.dataSource.bind("error", function(e){
@@ -11812,6 +11830,7 @@
 		startDate 			: new Date(),
 		issued_date 		: new Date(),
 		period 				: 12,
+		percentage 			: 0,
 		showInstallment 	: false,
 		activatProcess 		: false,
 		pageLoad 			: function(id){
@@ -11823,24 +11842,28 @@
 				take: 100
 			}).then(function(e){
 				var view = self.meterDS.view();	
-				self.set("meterObj", view[0]);
-				self.setObj(view[0].plan_id);
-				self.goWorder(view[0].branch_id, view[0].location_id);
-				var monthOf = self.issued_date;
-				monthOf.setDate(1);
-				banhji.reading.dataSource.insert(0, {
-					month_of: monthOf,
-					meter_number  : view[0].meter_number,
-					previous: 0,
-					current : view[0].starting_no,
-					invoiced: 1,
-					condition: "new",
-					consumption: 0
-				});
+				if(view[0].activated == 0) {
+					self.set("meterObj", view[0]);
+					self.setObj(view[0].plan_id);
+					self.goWorder(view[0].branch_id, view[0].location_id);
+					var monthOf = self.issued_date;
+					monthOf.setDate(1);
+					banhji.reading.dataSource.insert(0, {
+						month_of: monthOf,
+						meter_number  : view[0].meter_number,
+						previous: 0,
+						current : view[0].starting_no,
+						invoiced: 1,
+						condition: "new",
+						consumption: 0
+					});
+				} else {
+					banhji.router.navigate('/center');
+				}
+					
 			});
 			this.paymentMethodDS.read();
 			//this.cashAccountDS.read();
-
 		},
 		cashAccount 		: 7,
 		arAccount 			: 10,
@@ -11944,7 +11967,7 @@
 				return banhji.transaction.save();
 			})
 			.then(function(trx){
-				if(self.service.received == that.value.amount){
+				if(self.service.received == self.service.amount){
 					banhji.transactionLine.addById(trx[0].id, banhji.ActivateMeter.get('meterObj').contact[0].id, banhji.ActivateMeter.get('cashAccount'), 'Meter Activation', self.service.received, 0, banhji.ActivateMeter.get('issued_date'));
 
 					banhji.transactionLine.addById(trx[0].id, banhji.ActivateMeter.get('meterObj').contact[0].id, self.service.account_id, 'Meter Activation', 0, self.service.received, banhji.ActivateMeter.get('issued_date'));
@@ -11982,16 +12005,18 @@
 				banhji.ActivateMeter.get('meterObj').set('activated', 1);
 				banhji.installment.setDate(banhji.ActivateMeter.get('startDate'));
 				banhji.installment.setPeriod(banhji.ActivateMeter.get('period'));
-				banhji.installment.makeSchedule(amount - kendo.parseFloat(banhji.ActivateMeter.get('amountToBeRecieved')), banhji.ActivateMeter.get('meterObj').contact[0].id, banhji.ActivateMeter.get('meterObj').id, banhji.ActivateMeter.get('startDate'), banhji.ActivateMeter.get('period'));
+				banhji.installment.makeSchedule(amount - kendo.parseFloat(banhji.ActivateMeter.get('amountToBeRecieved')), banhji.ActivateMeter.get('meterObj').contact[0].id, banhji.ActivateMeter.get('meterObj').id, banhji.ActivateMeter.get('startDate'), banhji.ActivateMeter.get('period'), banhji.ActivateMeter.get('percentage'));
 				banhji.installment.save()
 				.then(function(installment){
 					if(installment[0]) {
 						// show message
 						banhji.ActivateMeter.set('amountBilled', 0.00);
-						banhji.ActivateMeter.set('cashAccount', null);
-						banhji.ActivateMeter.set('paymentMethod', null);
+						banhji.ActivateMeter.set('cashAccount', 7);
+						banhji.ActivateMeter.set('arAccount', 10);
+						banhji.ActivateMeter.set('paymentMethod', 1);
 						banhji.ActivateMeter.set('amountToBeRecieved', 0.00);
 						banhji.ActivateMeter.set('amountRemain', 0.00);
+						banhji.ActivateMeter.set('percentage', 0);
 						$("#ntf1").data("kendoNotification").success("Successfully!");
 						banhji.ActivateMeter.cancel();
 						banhji.waterCenter.meterDS.read();
@@ -12251,19 +12276,35 @@
 	    				aTariff = v.line.amount;
 	    			}
 	    		});
-	    		invoiceItems.push({				
-					"item_id" 			: that.tariffTemp.line.id,
-			   		"invoice_id"		: 0,
-				   	"meter_record_id"	: record_id,
-				   	"description" 		: that.tariffTemp.line.name,					   	
-				   	"quantity" 			: that.tariffTemp.line.usage,
-				   	"price"				: 0,	
-				   	"amount" 			: that.tariffTemp.line.amount,
-				   	"rate"				: rate,
-				   	"locale" 			: locale,
-				   	"has_vat" 			: false,
-			   		"type" 				: 'tariff'
-				});
+	    		if(that.tariffTemp){
+		    		invoiceItems.push({				
+						"item_id" 			: that.tariffTemp.line.id,
+				   		"invoice_id"		: 0,
+					   	"meter_record_id"	: record_id,
+					   	"description" 		: that.tariffTemp.line.name,					   	
+					   	"quantity" 			: that.tariffTemp.line.usage,
+					   	"price"				: 0,	
+					   	"amount" 			: that.tariffTemp.line.amount,
+					   	"rate"				: rate,
+					   	"locale" 			: locale,
+					   	"has_vat" 			: false,
+				   		"type" 				: 'tariff'
+					});
+				}else{
+					invoiceItems.push({				
+						"item_id" 			: v.tariff[0].line.id,
+				   		"invoice_id"		: 0,
+					   	"meter_record_id"	: record_id,
+					   	"description" 		: v.tariff[0].line.name,					   	
+					   	"quantity" 			: v.tariff[0].line.usage,
+					   	"price"				: 0,	
+					   	"amount" 			: v.tariff[0].line.amount,
+					   	"rate"				: rate,
+					   	"locale" 			: locale,
+					   	"has_vat" 			: false,
+				   		"type" 				: 'tariff'
+					});
+				}
 	    		if(v.installment.length > 0){
 	    			invoiceItems.push({				
 						"item_id" 			: v.installment[0].line.id,
