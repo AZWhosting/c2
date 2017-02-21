@@ -26796,8 +26796,9 @@
         	<div class="span12 clear mid-header">
         		<div class="span7" style="margin-right: 15px;">
         			<b style="font-size: 14px;line-height: 24px;">ព័ត៌មានអតិថិជន CUSTOMER INFO</b><br><br>
-        			<p><span data-bind="text: obj.contact[0].name"></span><br>
-        			<span data-bind="text: obj.contact[0].address"></span>
+        			<p><span data-bind="text: contactDS.data()[0].name"></span><br>
+        			<span data-bind="text: contactDS.data()[0].address"></span><br>
+        			<span data-bind="text: contactDS.data()[0].phone"></span>
         			</p>
         		</div>
         		<div class="span4" style="float:right;">
@@ -26891,8 +26892,9 @@
         	<div class="span12 clear mid-header">
         		<div class="span7" style="margin-right: 15px;">
         			<b style="font-size: 14px;line-height: 24px;">ព័ត៌មានអតិថិជន CUSTOMER INFO</b><br><br>
-        			<p><span data-bind="text: obj.contact[0].name"></span><br>
-        			<span data-bind="text: obj.contact[0].address"></span>
+        			<p><span data-bind="text: contactDS.data()[0].name"></span><br>
+        			<span data-bind="text: contactDS.data()[0].address"></span><br>
+        			<span data-bind="text: contactDS.data()[0].phone"></span>
         			</p>
         		</div>
         		<div class="span4" style="float:right;">
@@ -26993,8 +26995,9 @@
         		</div>
         		<div class="span7">
         			<b style="font-size: 14px;line-height: 24px;">ព័ត៌មានអតិថិជន CUSTOMER INFO</b><br><br>
-        			<p><span data-bind="text: obj.contact[0].name"></span><br>
-        			<span data-bind="text: obj.contact[0].address"></span>
+        			<p><span data-bind="text: contactDS.data()[0].name"></span><br>
+        			<span data-bind="text: contactDS.data()[0].address"></span><br>
+        			<span data-bind="text: contactDS.data()[0].phone"></span>
         			</p>
         		</div>
         	</div>
@@ -27086,8 +27089,9 @@
         		</div>
         		<div class="span7">
         			<b style="font-size: 14px;line-height: 24px;">ព័ត៌មានអតិថិជន CUSTOMER INFO</b><br><br>
-        			<p><span data-bind="text: obj.contact[0].name"></span><br>
-        			<span data-bind="text: obj.contact[0].address"></span>
+        			<p><span data-bind="text: contactDS.data()[0].name"></span><br>
+        			<span data-bind="text: contactDS.data()[0].address"></span><br>
+        			<span data-bind="text: contactDS.data()[0].phone"></span>
         			</p>
         		</div>
         	</div>
@@ -27173,8 +27177,9 @@
         	<div class="span12 clear mid-header">
         		<div class="span7" style="margin-right: 15px;">
         			<b style="font-size: 14px;line-height: 24px;">ព័ត៌មានអតិថិជន CUSTOMER INFO</b><br><br>
-        			<p><span data-bind="text: obj.contact[0].name"></span><br>
-        			<span data-bind="text: obj.contact[0].address"></span>
+        			<p><span data-bind="text: contactDS.data()[0].name"></span><br>
+        			<span data-bind="text: contactDS.data()[0].address"></span><br>
+        			<span data-bind="text: contactDS.data()[0].phone"></span>
         			</p>
         		</div>
         		<div class="span4" style="float:right;">
@@ -30618,12 +30623,12 @@
 </script>
 <script id="invoiceForm-lineDS-template10" type="text/x-kendo-template">
 	<tr>
-		<td class="lside">&nbsp;#= item_id #</td>
-		<td class="lside">#= description#</td>
-		<td>#= item_prices.length>0 ? item_prices[0].measurement : "" #</td>
-		<td>#= quantity#</td>
-		<td class="rside" width="70">#= kendo.toString(price, "c", locale) #</td>
-		<td class="rside" style="background-color: \\#eee">#= kendo.toString(amount, "c", locale) #</td>
+		<td class="center" style="color:\\#000">&nbsp;#= item_id #</td>
+		<td class="lside" style="color:\\#000">#= description#</td>
+		<td style="color:\\#000">#= item_prices.length>0 ? item_prices[0].measurement : "" #</td>
+		<td style="color:\\#000">#= quantity#</td>
+		<td class="rside" width="70" style="color:\\#000">#= kendo.toString(price, "c", locale) #</td>
+		<td class="rside" style="background-color: \\#eee;color: \\#000">#= kendo.toString(amount, "c", locale) #</td>
 	</tr>
 </script>
 <script id="invoiceForm-lineDS-template12" type="text/x-kendo-template">
@@ -42330,8 +42335,8 @@
   				<li><a href='#/txn_item'><span data-bind="text: lang.lang.add_transaction_item"></span></a></li>  	
   				<li><a href='#/account'><span data-bind="text: lang.lang.add_account"></span></a></li>
   				<li><a href='#/segment'><span data-bind="text: lang.lang.add_segment"></span></a></li>
-  				<li><a href='#/fixed_assets_list'><span >Add New Fixed Assets List</span></a></li>  	
-  				<li><a href='#/txn_item_list'><span >Add New Transaction Item List</span></a></li>
+  				<!-- <li><a href='#/fixed_assets_list'><span >Add New Fixed Assets List</span></a></li>  	
+  				<li><a href='#/txn_item_list'><span >Add New Transaction Item List</span></a></li> -->
   				<li> <span class="li-line"></span></li>
   				<li><a href='#/journal'><span data-bind="text: lang.lang.make_journal"></span></a></li>
   				<li><a href='#/cash_transaction'><span data-bind="text: lang.lang.make_cash_transaction"></span></a></li>
@@ -69312,7 +69317,7 @@
     });
     banhji.job = kendo.observable({
 		lang 				: langVM,
-        dataSource 			: banhji.source.jobDS,
+        dataSource 			: dataStore(apiUrl + "jobs"),
         contactDS 	 		: banhji.source.customerDS,
 		obj 				: null,
 		isVisible 			: false,
@@ -69613,7 +69618,13 @@
 				view[0].set("discount", kendo.toString(view[0].discount, "c", view[0].locale));	
 				view[0].set("deposit", kendo.toString(view[0].deposit, "c", view[0].locale));	
 				view[0].set("amount_due", kendo.toString(view[0].amount_due, "c", view[0].locale));
-				view[0].set("issued_date", kendo.toString(new Date(view[0].issued_date), "dd MMM yyyy"));		
+				view[0].set("issued_date", kendo.toString(new Date(view[0].issued_date), "dd MMM yyyy"));
+				view[0].set("due_date", kendo.toString(new Date(view[0].due_date), "dd MMM yyyy"));
+				if(view[0].description){
+
+				}else{
+					view[0].set("description", "");
+				}
 				self.set("obj", view[0]);
 				self.loadObjTemplate(view[0].transaction_template_id, id);
 				self.contactDS.filter({field: "id", value: view[0].contact_id});
