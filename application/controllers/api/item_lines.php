@@ -82,7 +82,7 @@ class Item_lines extends REST_Controller {
 				// 		);
 				// 	}
 				// }
-
+				$value->description = isset($value->description) ? $value->description : "No Description";
 				$data["results"][] = array(
 					"id" 				=> $value->id,
 			   		"transaction_id"	=> $value->transaction_id,

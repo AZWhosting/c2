@@ -11,15 +11,16 @@ class Reconciles extends REST_Controller {
 	function __construct() {
 		parent::__construct();
 		$this->_database = 'db_banhji';
-		// $institute = new Institute();
-		// $institute->where('id', $this->input->get_request_header('Institute'))->get();
-		// if($institute->exists()) {
-		// 	$conn = $institute->connection->get();
-		// 	$this->server_host = $conn->server_name;
-		// 	$this->server_user = $conn->username;
-		// 	$this->server_pwd = $conn->password;	
-		//  $this->_database = $conn->inst_database;
-		// }
+		$institute = new Institute();
+		$institute->where('id', $this->input->get_request_header('Institute'))->get();
+		if($institute->exists()) {
+			$conn = $institute->connection->get();
+			$this->server_host = $conn->server_name;
+			$this->server_user = $conn->username;
+			$this->server_pwd = $conn->password;	
+		 	$this->_database = $conn->inst_database;
+		 	date_default_timezone_set("$conn->time_zone");
+		}
 	}
 
 	//GET
@@ -313,7 +314,7 @@ class Reconciles extends REST_Controller {
 				}
 			}
 		}
-
+		$obj->where('status', 0);
 		$obj->get_paged_iterated($page, $limit);
 
 		if($obj->exists()) {

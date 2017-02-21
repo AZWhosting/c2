@@ -23,6 +23,7 @@ class Imports extends REST_Controller {
 			$this->_database = $conn->inst_database;
 			$this->locale = $institute->locale;
 			$this->currency = $institute->monetary_id;
+			date_default_timezone_set("$conn->time_zone");
 		}
 	}
 	function contact_post() {
@@ -58,7 +59,7 @@ class Imports extends REST_Controller {
 			$currency = new Currency(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$currency->where('code', $value->currency)->get();
 
-			$country = new Country(null, $this->server_host, $this->server_user, $this->server_pwd, "banhji");
+			$country = new Country(null);
 			$country->where('name', $value->country)->get();
 
 			$obj = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
@@ -125,7 +126,7 @@ class Imports extends REST_Controller {
 			isset($value->use_water)				? $obj->use_water				= $value->use_water : "";
 			isset($value->is_local)					? $obj->is_local				= $value->is_local : "";
 			isset($value->is_pattern)				? $obj->is_pattern				= $value->is_pattern : "";
-			isset($value->status)					? $obj->status					= $value->status : 1;
+			$value->status					= 1;
 			isset($value->deleted)					? $obj->deleted					= $value->deleted : "";
 			isset($value->is_system)				? $obj->is_system				= $value->is_system : "";
 

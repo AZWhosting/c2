@@ -106,7 +106,7 @@ class Readings extends REST_Controller {
 				$obj->meter_id 				= isset($meter->id)					?$meter->id: "";
 				$obj->previous 				= isset($value->previous)			?$value->previous: "";
 				$obj->current 				= isset($value->current)			?$value->current: "";
-				$obj->from_date 			= isset($value->previous_reading_date) ? date('Y-m-d', strtotime($value->previous_reading_date)) : "";
+				$obj->from_date 			= isset($value->previous_reading_date) ? date('Y-m-d', strtotime($value->previous_reading_date)) : date('Y-m-d');
 				$obj->month_of 				= isset($value->month_of)			? date('Y-m-d', strtotime($value->month_of)): date('Y-m-d');
 				$obj->to_date 				= isset($value->to_date)			? date('Y-m-d', strtotime($value->to_date)):date('Y-m-d');
 				

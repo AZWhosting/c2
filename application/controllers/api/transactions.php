@@ -103,16 +103,22 @@ class Transactions extends REST_Controller {
 					$paid->get();
 					$amount_paid = floatval($paid->amount) + floatval($paid->received);
 				}
-
+				$refNo = "";
+				if($value->reference_id){
+			   		$ref = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			   		$ref->where("id", $value->reference_id);
+			   		$ref->get();
+			   		$refNo = $ref->number;
+			   	}
 				$data["results"][] = array(
 					"id" 						=> $value->id,
 					"company_id" 				=> $value->company_id,
 					"location_id" 				=> $value->location_id,
-					"contact_id" 				=> $value->contact_id,
+					"contact_id" 				=> intval($value->contact_id),
 					"payment_term_id" 			=> $value->payment_term_id,
-					"payment_method_id" 		=> $value->payment_method_id,
+					"payment_method_id" 		=> intval($value->payment_method_id),
 					"transaction_template_id" 	=> $value->transaction_template_id,
-					"reference_id" 				=> $value->reference_id,
+					"reference_id" 				=> intval($value->reference_id),
 					"recurring_id" 				=> $value->recurring_id,
 					"return_id" 				=> $value->return_id,
 					"job_id" 					=> $value->job_id,
@@ -122,7 +128,7 @@ class Transactions extends REST_Controller {
 					"user_id" 					=> $value->user_id,
 					"employee_id" 				=> $value->employee_id,
 				   	"number" 					=> $value->number,
-				   	"reference_no" 				=> $value->reference_no,
+				   	"reference_no" 				=> $refNo,
 				   	"type" 						=> $value->type,
 				   	"journal_type" 				=> $value->journal_type,
 				   	"sub_total"					=> floatval($value->sub_total),
@@ -260,7 +266,7 @@ class Transactions extends REST_Controller {
 		   	isset($value->print_count) 				? $obj->print_count 				= $value->print_count : "";
 		   	isset($value->printed_by) 				? $obj->printed_by 					= $value->printed_by : "";
 		   	isset($value->deleted) 					? $obj->deleted 					= $value->deleted : "";
-
+		   	
 	   		if($obj->save()){
 			   	$data["results"][] = array(
 			   		"id" 						=> $obj->id,
