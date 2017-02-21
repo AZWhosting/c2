@@ -22048,7 +22048,7 @@
 		                 data-title="Job"		                 
 		                 data-width="600"
 		                 data-actions="{}"
-		                 data-position="{top: '30%', left: '30%'}"
+		                 data-position="{top: '150px', left: '30%'}"
 		                 data-height="300"
 		                 data-bind="visible: isVisible">
 
@@ -22103,7 +22103,9 @@
 	            		<tbody data-role="listview"			            			
 				                data-template="job-template"
 				                data-bind="source: dataSource"></tbody>
+
 	            	</table>
+	            	<div data-role="pager" data-bind="source: dataSource"></div>
 	            </div>	            						
 			</div>
 		</div>
@@ -23682,8 +23684,8 @@
 							<p data-bind="text: displayDate"></p>
 						</div>
 
-						<div class="row-fluid">
-							<div class="span3">
+						<div class="row">
+							<div class="span3" style="padding-right: 0;">
 								<div class="total-customer">									
 									<p>Number of Customer</p>
 									<span data-format="n0" data-bind="text: dataSource.total"></span>
@@ -23807,8 +23809,8 @@
 							<p data-bind="text: displayDate"></p>
 						</div>
 
-						<div class="row-fluid">
-							<div class="span3">
+						<div class="row">
+							<div class="span3" style="padding-right: 0;">
 								<div class="total-customer">									
 									<p>Number of Customer</p>
 									<span data-format="n0" data-bind="text: dataSource.total"></span>
@@ -26145,8 +26147,8 @@
 								
 							</div>
 							<div class="span9" align="right">
-								<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save_new"></span></span>
-								<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save_close"></span></span>		
+								<span class="btn btn-icon btn-primary glyphicons ok_2" data-bind="click: save" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save"></span></span>
+								<span class="btn btn-icon btn-success glyphicons power" data-bind="click: cancel" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.close"></span></span>		
 							</div>
 						</div>
 					</div>
@@ -26216,8 +26218,8 @@
                     <div class="clear">
                         <div class="left dotted-ruler" style="width: 62%;">
                         	<p style="font-weight:bold">
-                        		<span data-bind="text: obj.contact[0].name"></span><br>
-                        		<span data-bind="text: obj.contact[0].address"></span>
+                        		<span style="font-size: 12px;" data-bind="text: contactDS.data()[0].name"></span><br>
+                        		<span data-bind="text: contactDS.data()[0].address"></span>
                         	</p>
                         </div>
                     </div>
@@ -26226,7 +26228,7 @@
                     		<p>ទូរស័ព្ទ​លេខ HP:</p>
                         </div-->
                         <div class="left dotted-ruler" style="width: 78%;">
-                        	<p style="font-weight:bold" data-bind="text: obj.contact[0].phone"></p>
+                        	<p style="font-weight:bold" data-bind="text: contactDS.data()[0].phone"></p>
                         </div>
                     </div>
                 </div>
@@ -26328,8 +26330,8 @@
                     <div class="clear">
                         <div class="left dotted-ruler" style="width: 62%;">
                         	<p style="font-weight:bold">
-                        		<span data-bind="text: obj.contact[0].name"></span><br>
-                        		<span data-bind="text: obj.contact[0].address"></span>
+                        		<span data-bind="text: contactDS.data()[0].name"></span><br>
+                        		<span data-bind="text: contactDS.data()[0].address"></span>
                         	</p>
                         </div>
                     </div>
@@ -26338,11 +26340,11 @@
                     		<p>ទូរស័ព្ទ​លេខ HP:</p>
                         </div-->
                         <div class="left dotted-ruler" style="width: 78%;">
-                        	<p style="font-weight:bold" data-bind="text: obj.contact[0].phone"></p>
+                        	<p style="font-weight:bold" data-bind="text: contactDS.data()[0].phone"></p>
                         </div>
                     </div>
                     <div class="vattin">
-                	<p>លេខ​អត្ត​សញ្ញាណ​កម្ម អតប (VATTIN)</p><span id="vat_number" data-bind="text: contact[0].vat_no"></span><p style="font-size:8px;font-weight:normal;margin-left: 8px;">(ប្រសិន​បើ​មាន / If any)</p>
+                	<p>លេខ​អត្ត​សញ្ញាណ​កម្ម អតប (VATTIN)</p><span id="vat_number" data-bind="text: contactDS.data()[0].vat_no"></span><p style="font-size:8px;font-weight:normal;margin-left: 8px;">(ប្រសិន​បើ​មាន / If any)</p>
                 	</div>
                 </div>
                 <div class="cover-inv-number">
@@ -69414,7 +69416,9 @@
 				this.loadObj(id);
 			}else{	
 				var obj = this.get("obj"), self = this;
-				if(this.formShow === null){ this.formShow = banhji.view.invoiceForm10; }
+				if(this.formShow === null){ 
+					this.formShow = banhji.view.invoiceForm10; 
+				}
 				banhji.view.invoiceCustom.showIn('#invFormContent', this.formShow);		
 				this.addRowLineDS();
 				if(this.get("isEdit") || this.dataSource.total()==0){
@@ -69524,7 +69528,6 @@
 			this.dataSource.query({    			
 				filter: { field:"id", value: id },
 				page: 1,
-				take: 100
 			}).then(function(e){
 				var view = self.dataSource.view();
 				self.set("obj", view[0]);
@@ -69562,43 +69565,23 @@
 			var obj = this.dataSource.at(0);
 			this.set("obj", obj);
 		},
-		objSync 			: function(){
-	    	var dfd = $.Deferred();	        
-
-	    	this.dataSource.sync();
-		    this.dataSource.bind("requestEnd", function(e){
-		    	if(e.response){				
-					dfd.resolve(e.response.results);
-				}				  				
-		    });
-		    this.dataSource.bind("error", function(e){		    		    	
-				dfd.reject(e.errorThrown);    				
-		    });
-		    return dfd;	    		    	
-	    },
 		save 				: function(){
-	    	var self = this, obj = this.get("obj");
+	    	var self = this,obj = this.get("obj");
+	    	var dfd = $.Deferred();
 			//Save Obj
-			this.objSync()
-			.then(function(data){ //Success	
-				banhji.customerSetting.txnTemplateDS.fetch();	
-				
-				return data;
-			}, function(reason) { //Error
-				$("#ntf1").data("kendoNotification").error(reason);
-			}).then(function(result){
-				$("#ntf1").data("kendoNotification").success(banhji.source.successMessage);
-
-				if(self.get("saveClose")){
-					//Save Close
-					self.set("saveClose", false);
-					self.cancel();
-					//window.history.back();
-				}else{
-					//Save New
-					self.addEmpty();
-				}
-			});
+			if(obj.name){
+				this.dataSource.sync();
+				this.dataSource.bind("requestEnd", function(e){
+					if(e.type != 'read' && e.response.results) {
+						self.cancel();
+					}
+				});
+				this.dataSource.bind("error", function(e){		    		    	
+					dfd.reject(e.errorThrown);    				
+			    });
+			}else{
+				alert("Please Fill Name of Form!");
+			}
 		},
 		cancel 				: function(){
 			this.dataSource.cancelChanges();		
@@ -69614,10 +69597,28 @@
 		lineDS 				: dataStore(apiUrl + "item_lines"),
 		user_id				: banhji.source.user_id,
 		selectForm 			: null,
+		contactDS 			: dataStore(apiUrl + "contacts"),
+		contactT 			: null,
 		pageLoad 			: function(id, is_recurring){
-			if(id){				
-				this.loadObj(id);
-			}
+			var self = this;				
+			this.dataSource.query({    			
+				filter: { field:"id", value: id },
+				page: 1,
+				take: 100
+			}).then(function(e){
+				var view = self.dataSource.view();	
+				view[0].set("sub_total", kendo.toString(view[0].sub_total, "c", view[0].locale));	
+				view[0].set("tax", kendo.toString(view[0].tax, "c", view[0].locale));
+				view[0].set("amount", kendo.toString(view[0].amount, "c", view[0].locale));
+				view[0].set("discount", kendo.toString(view[0].discount, "c", view[0].locale));	
+				view[0].set("deposit", kendo.toString(view[0].deposit, "c", view[0].locale));	
+				view[0].set("amount_due", kendo.toString(view[0].amount_due, "c", view[0].locale));
+				view[0].set("issued_date", kendo.toString(new Date(view[0].issued_date), "dd MMM yyyy"));		
+				self.set("obj", view[0]);
+				self.loadObjTemplate(view[0].transaction_template_id, id);
+				self.contactDS.filter({field: "id", value: view[0].contact_id});
+			});
+
 		},
 		printGrid			: function() {
 			var obj = this.get('obj'), colorM, ts;
@@ -69738,22 +69739,7 @@
 			banhji.view.invoiceForm.showIn('#invFormContent', Active);
 		},
 		loadObj 			: function(id){
-			var self = this;				
-			this.dataSource.query({    			
-				filter: { field:"id", value: id },
-				page: 1,
-				take: 100
-			}).then(function(e){
-				var view = self.dataSource.view();	
-				view[0].set("sub_total", kendo.toString(view[0].sub_total, "c", view[0].locale));	
-				view[0].set("tax", kendo.toString(view[0].tax, "c", view[0].locale));
-				view[0].set("amount", kendo.toString(view[0].amount, "c", view[0].locale));
-				view[0].set("discount", kendo.toString(view[0].discount, "c", view[0].locale));	
-				view[0].set("deposit", kendo.toString(view[0].deposit, "c", view[0].locale));	
-				view[0].set("amount_due", kendo.toString(view[0].amount_due, "c", view[0].locale));				
-				self.set("obj", view[0]);
-				self.loadObjTemplate(view[0].transaction_template_id, id);		
-			});	
+				
 		},
 		loadObjTemplate 		: function(id, transaction_id){
 			var self = this, obj = this.get('obj');			
