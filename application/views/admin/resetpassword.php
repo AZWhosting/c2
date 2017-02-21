@@ -214,16 +214,15 @@
             </div>
             <div class="col-sm-6">
               <div class="login-form">
-                <div id="loadImport" style="display:none;text-align: center;position: absolute;width: 580px; height: 100%;background: rgba(142, 159, 167, 0.8);z-index: 9999;margin-top: -30px;margin-left: -50px;">
-                  <p style="font-size: 20px;color: #fff;margin-top: 23%">Processing ...</p>
-                </div>
                 <h2 align="center">Forget Password</h2>
                   <form action="" method="">
-
-                      <input type="email" data-bind="value: email" placeholder="Your email" class="login-email"><br>
-                     
-                      <input id="loginBtn" type="button" data-bind="click: forgotPassword" class="btn-login" value="Get New Password"><br><br>
-                      <div id="loginInformation"></div>
+                    <input type="text" data-bind="value: email" placeholder="Enter verification Code" class="login-email"><br>
+                    <input type="text" data-bind="value: veriCode" placeholder="Enter verification Code" class="login-email"><br>
+                    <input type="password" data-bind="value: newPassword, events: {change: onChange}" placeholder="Enter New Password" class="login-email"><br>
+                    <input type="password" data-bind="value: cPassword, events: {keyup: onKeyUp}" placeholder="Confirm Your Password" class="login-email"><br>
+                    <span data-bind="text: message"></span>
+                    <input id="changePasswordBtn" type="button" data-bind="enabled: isEnable, events:{click: reset}" class="btn-login" value="Change Password"><br><br>
+                    <div id="loginInformation"></div>
                   </form> 
                   <a href="<?php echo base_url(); ?>login">Login</a> | <a href="<?php echo base_url(); ?>signup"> Sign Up</a>
               </div>
@@ -332,18 +331,21 @@
 
         banhji.aws = kendo.observable({
           email: null,
-          password: null,
           newPassword: null,
           cPassword: null,
           veriCode: null,
           showReset: false,
           showVerify: false,
           message: null,
+          isEnable: false,
           onKeyUp: function(e) {
-            if(this.get('newPassword')!== this.get('cPassword')) {
-              this.set('message', "Passwords do not match");
-            } else {
-              this.set('message', "");
+            if(e.keyCode === 13) {
+              if(this.get('newPassword')!== this.get('cPassword')) {
+                this.set('message', "Passwords do not match");
+              } else {
+                this.set('message', "");
+                this.set('isEnable', true);
+              }
             }
           },
           onChange: function(e) {
@@ -394,38 +396,6 @@
             } else {
               console.log("passwords do not match");
             }
-          },
-          forgotPassword: function(e) {
-            $("#loadImport").css("display","block"); 
-            e.preventDefault();
-            var that = this;
-            var userData = {
-                Username : this.get('email'),
-                Pool : userPool
-            };
-            var cognitoUser = new AWSCognito.CognitoIdentityServiceProvider.CognitoUser(userData);
-            cognitoUser.forgotPassword({
-                onSuccess: function (result) {
-                },
-                onFailure: function(err) {
-                    alert(err);
-                },
-                inputVerificationCode(data) {
-                    // var verificationCode = prompt('Please input verification code ' ,'');
-                    // var newPassword = prompt('Enter new password ' ,'');
-                    // cognitoUser.confirmPassword(verificationCode, newPassword, this);
-                    // $("#loadImport").css("display","none"); 
-                    // $("#changePasswordBtn").on('click', function(){
-                    //   if(banhji.aws.get('newPassword')!== banhji.aws.get('cPassword')) {
-                    //     banhji.aws.set('message', "Passwords do not match");
-                    //   } else {
-                    //     cognitoUser.confirmPassword(banhji.aws.get("veriCode"), banhji.aws.get("newPassword"), this);
-                    //     window.location.replace("<?php //echo base_url(); ?>login");
-                    //   }                      
-                    // }); 
-                    window.location.replace("<?php echo base_url(); ?>resetpassword");
-                }
-            });
           }
         });
       $(function(){
