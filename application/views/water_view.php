@@ -121,7 +121,7 @@
 							<span style="font-size: 24px; ">DEPOSIT</span>
 							<br>
 							<span style="color: #9EA7B8;" data-bind="text: totalUser"></span>
-							<span style="color: #9EA7B8;">Water Connection</span>
+							<span style="color: #9EA7B8;">Cutomers</span>
 						</div>
 						<div class="span9" style=" text-align: center; font-size: 35px; font-weight: 600; padding-left: 0;">
 							<span data-bind="text: totalDeposit"></span>
@@ -132,16 +132,17 @@
 					</div>
 				</a>
 				<a href="">
-					<div class="cash-invoice" style="margin-bottom: 0; background: #0077c5; color: #fff;">
-						<div class="span2" style="padding-left: 0;">
+					<div class="cash-invoice" style="margin-bottom: 0; background: #203864; color: #fff;">
+						<div class="span4" style="padding-left: 0;">
 							<span style="font-size: 24px; color: #fff;">TOTAL SALE</span>
+							<span style="font-size: 24px;" data-bind="text: totalUsage"></span><span style="font-size: 24px;">m<sup >3</sup></span>
 						</div>
-						<div class="span6" style="color: #fff; text-align: center; font-size: 35px; font-weight: 600; padding-left: 0; border-right: 1px solid #9DA9BF; ">
+						<div class="span8" style="color: #fff; text-align: center; font-size: 35px; font-weight: 600; padding-left: 0;">
 							<span data-bind="text: totalSale"></span>
 						</div>
-						<div class="span4" style="text-align: center; margin-top: 7px; padding-right: 0; color: #fff; font-size: 35px;">
+						<!-- <div class="span4" style="text-align: center; margin-top: 7px; padding-right: 0; color: #fff; font-size: 35px;">
 							<span data-bind="text: totalUsage"></span><span style="font-size: 25px;">m<sup >3</sup></span>
-						</div>										
+						</div> -->										
 					</div>
 				</a>
 	    	</div>
@@ -3138,25 +3139,8 @@
 									<div id="tabDownload" style="border: 1px solid #ccc; overflow: hidden;" class="tab-pane active widget-body-regular">
 										<h4 class="separator bottom" style="margin-top: 10px;">Please Select Query</h4>
 									  	<div class="span12 row-fluid" style="padding:20px 0;padding-top: 0;">
-								        	<div class="span5" style="padding-left: 0;">
-									        	<div class="span6">	
-													<!-- Group -->
-													<div class="control-group">								
-														<label ><span >Month Of</span></label>
-											            <input type="text" 
-										                	style="width: 100%;" 
-										                	data-role="datepicker"
-										                	data-format="MM-yyyy"
-										                	data-start="year" 
-											  				data-depth="year" 
-										                	placeholder="Moth of ..." 
-												           	data-bind="value: monthOfSelect,
-												           		min: miniMonthofS" />
-													</div>
-																													
-													<!-- // Group END -->
-												</div>
-												<div class="span6" style="padding-left: 0;">
+								        	<div class="span6" style="padding-left: 0;">
+												<div class="span5" style="padding-left: 0;">
 													<div class="control-group">								
 														<label ><span >License</span></label>
 														<input 
@@ -3172,10 +3156,8 @@
 							                  					source: licenseDS,
 							                  					events: {change: onLicenseChange}">
 							                  		</div>
-												</div>	
-											</div>
-											<div class="span7" style="padding-left: 0;">
-												<div class="span4">
+												</div>
+												<div class="span5">
 													<div class="control-group">								
 														<label ><span >Location</span></label>
 														<input 
@@ -3192,7 +3174,7 @@
 							                  					events: {change: blocChange}">
 							                  		</div>
 												</div>
-												<div class="span4">
+												<div class="span2">
 													<div class="control-group">	
 														<label ><span >Action</span></label>	
 														<div class="row" style="margin: 0;">					
@@ -3214,9 +3196,10 @@
 												<thead>
 													<tr>
 														<th class="center">Meter Number</th>
-														<th class="center">Previous Reading Date</th>
-														<th class="center">Previouse</th>
+														<th class="center">From Date</th>
+														<th class="center">To Date</th>
 														<th class="center">Month Of</th>
+														<th class="center">Previouse</th>
 														<th class="center">Current</th>
 													</tr>
 												</thead>
@@ -3246,8 +3229,7 @@
 										  				data-depth="year" ]
 									                	placeholder="Moth of ..." 
 											           	data-bind="value: monthOfUpload,
-											           			events: {change: selectMonthTo},
-											           			min: miniMonthofS" />
+											           			events: {change: selectMonthTo}" />
 												</div>
 											</div>											<div class="span3">
 												<div class="control-group">	
@@ -3266,10 +3248,26 @@
 										<div class="fileupload fileupload-new margin-none" data-provides="fileupload" data-bind="visible: MonthTo">
 										  	<input type="file"  data-role="upload" data-show-file-list="true" data-bind="events: {select: onSelected}" id="myFile"  class="margin-none" />
 										</div>
-										
+										<table data-bind="visible: errorShow" class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
+											<thead>
+												<tr>
+													<th class="center">Line</th>
+													<th class="center">Meter Number</th>
+													<th class="center">Previus</th>
+													<th class="center">Current</th>
+													<th class="center">Status</th>
+												</tr>
+											</thead>
+											<tbody 
+						                		data-bind="source: Uploaderror" 
+						                		data-auto-bind="true" 
+						                		data-role="listview" 
+						                		data-template="reading-Error11-template">
+						                	</tbody>
+										</table>
 										<br>
 
-										<span class="btn btn-icon btn-primary glyphicons ok_2" style="margin-top: 3px;width: 160px!important;"><i></i><span data-bind="click: save">Start Reading</span></span>
+										<span data-bind="invisible: errorShow" class="btn btn-icon btn-primary glyphicons ok_2" style="margin-top: 3px;width: 160px!important;"><i></i><span data-bind="click: save">Start Reading</span></span>
 									</div>
 									<!-- // Tab content END -->
 									
@@ -3290,17 +3288,39 @@
     		#= meter_number# - #= _contact[0].name#
    		</td>
    		<td align="center">
-    		#= kendo.toString(new Date(prev_date), "dd-MMM-yyyy")#
+    		#= kendo.toString(new Date(from_date), "dd-MMM-yyyy")#
+   		</td>
+   		<td align="center">
+    		#= kendo.toString(new Date(to_date), "dd-MMM-yyyy")#
+   		</td>
+   		<td align="center">
+    		#= kendo.toString(new Date(month_of), "MMM-yyyy")#
    		</td>
    		<td align="center">
     		#= previous#
    		</td>
    		<td align="center">
-    		#= kendo.toString(new Date(to_date), "y")#
-   		</td>
-   		<td align="center">
     		#= current#
    		</td>		
+   	</tr>
+</script>
+<script id="reading-Error11-template" type="text/x-kendo-tmpl">                    
+    <tr>
+    	<td align="center">
+    		#= line#
+   		</td>
+    	<td>
+    		#= meter_number#
+   		</td>
+   		<td align="center">
+    		#= previous#
+   		</td>
+   		<td align="center" style="font-weight: bold;color:red">
+    		#= current#
+   		</td>
+   		<td align="center">
+   			<span><i class="icon-remove"></i></span>
+   		</td>	
    	</tr>
 </script>
 <script id="EditReading" type="text/x-kendo-template">
@@ -4132,7 +4152,7 @@
 </script> 
 
 <script id="Receipt" type="text/x-kendo-template">
-	<div class="row-fluid">
+	<div class="row-fluid" style="margin-top: 15px; ">
 		<!-- Left Side -->
 		<div class="span4">
 			<!-- Logo of the page -->
@@ -4155,51 +4175,50 @@
 			 	</tr>
 			</table>
 
-			<div style="width: 100%; float: left; background: #fff; height: 80px; margin: 10px 0 15px 0;">
+			<!-- <div style="width: 100%; float: left; background: #fff; height: 80px; margin: 10px 0 15px 0;">
 				Chart
-			</div>
-
-			<h2>Report</h2>
-			<p>
-				Summary and detail cash receipt reports grouped by sources/ methods of receipts
-			</p>
-			<ul style="margin-left: -20px;">
-				<li><a href="#/cash_receipt_summary"><span >Cash Receipt By Summary</span></a></li> 
-				<li><a href="#/cash_receipt_detail"><span >Cash Receipt By Detail</span></a></li>  
-  				<li><a href="#/cash_receipt_source_summary"><span >Cash Receipt By Sources Summary</span></a></li>
-  				<li><a href="#/cash_receipt_source_detail"><span >Cash Receipt By Sources Detail</span></a></li> 
-			</ul>
-
-		</div>
-
-		<!-- Right Side -->
-		<div class="span8">
-
-			<!-- Summary -->
+			</div> -->
 			<div class="row">
-	
-				<div class="span4" style="background: #0077c5; margin-bottom: 15px;">
-					<div class="innerAll padding-bottom-none-phone" >
-						<a href="javascript:void(0)" class="widget-stats widget-stats-gray widget-stats-4" style="background: #0077c5;"> 
-							<span class="txt" style="color: #fff;"><span >Customer</span></span>
-							<span class="count" style="color: #fff;" data-bind="text: numCustomer">0</span>
+				<div class="span12">
+					<div class="innerAll padding-bottom-none-phone" style="padding: 0 !important; margin: 8px 0 15px 0;">
+						<a href="javascript:void(0)" class="widget-stats widget-stats-gray widget-stats-4" style="background: #fff; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1; "> 
+							<span class="txt" style="color: #203864;"><span >Customer</span></span>
+							<span class="count" style="color: #203864;" data-bind="text: numCustomer">0</span>
 							<span class="glyphicons user userss"><i></i></span>
 						</a>
 					</div>
 				</div>
 
-				<div class="span8" >
-					<div class="innerAll padding-bottom-none-phone" style="background: #21abf6;">
-						<a href="#/wPayment_summary" class="widget-stats widget-stats-primary widget-stats-4" style="background: #21abf6;">
-							<span class="txt" style="color: #fff;"><span >Today Payment</span></span>
-							<span class="count"><span style="font-size: 35px; color: #fff;" data-bind="text: paymentReceiptToday">0៛</span></span>
-							<span class="glyphicons coins addcolor-coins userss"><i></i></span>
+				<div class="span12">
+					<div class="innerAll padding-bottom-none-phone" style="background: #fff; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1; margin: 0 0 15px 0">
+						<a href="#/wPayment_summary" class="widget-stats widget-stats-primary widget-stats-4" style="background: #fff; padding-left: 15px !important;">
+							<span class="txt" style="color: #203864;"><span >Today Payment</span></span>
+							<span class="count"><span style="font-size: 35px; color: #203864;" data-bind="text: paymentReceiptToday">0៛</span></span>
+							<span class="glyphicons coins addcolors"><i></i></span>
 						</a>
-					</div>
+					</div>			
 				</div>
-				
+
 			</div>
 
+
+
+			<div class="cover-block" style="padding: 10px 15px 8px 15px; width: 99%;">
+				<h2>Report</h2>
+				<p>
+					Summary and detail cash receipt reports grouped by sources/ methods of receipts
+				</p>
+				<ul style="margin-left: -20px;">
+					<li><a href="#/cash_receipt_summary"><span >Cash Receipt By Summary</span></a></li> 
+					<li><a href="#/cash_receipt_detail"><span >Cash Receipt By Detail</span></a></li>  
+	  				<li><a href="#/cash_receipt_source_summary"><span >Cash Receipt By Sources Summary</span></a></li>
+	  				<li><a href="#/cash_receipt_source_detail"><span >Cash Receipt By Sources Detail</span></a></li> 
+				</ul>
+			</div>
+		</div>
+
+		<!-- Right Side -->
+		<div class="span8">
 			<div class="row-fluid" style="background: #fff; float: left; padding: 15px; margin-left: -15px;">
 				<!-- Upper Part -->
 				<div class="row-fluid">
@@ -4243,7 +4262,7 @@
 						</div>												
 					</div>					   
 
-					<div class="span8">
+					<div class="span8" style="padding: 0;">
 
 						<div class="box-generic-noborder" >
 
@@ -4388,7 +4407,7 @@
 	            <div class="row-fluid">
 		
 					<!-- Column -->
-					<div class="span5">
+					<div class="span5" style="padding-left: 0; "> 
 						
 						<div class="btn-group">
 							<div class="leadcontainer">
@@ -9788,66 +9807,57 @@
 			license_id = this.get("licenseSelect"),
 			bloc_id = this.get("blocSelect");
 			var para = [];	
-			if(monthOfSearch){						
-				var monthOf = new Date(monthOfSearch);
-				monthOf.setDate(1);
-				monthOf = kendo.toString(monthOf, "yyyy-MM-dd");
-				var monthL = new Date(monthOfSearch);
-				monthL.setDate(31);
-				monthL = kendo.toString(monthL, "yyyy-MM-dd");
-				para.push(
-					{field: "month_of <",operator: "where_related_record", value: monthOf}
-				);
-				// para.push(
-				// 	{field: "month_of >=",operator: "where_related_record", value: monthOf},
-				// 	{field: "month_of <=",operator: "where_related_record", value: monthL}
-				// );
-				//this.dataSource.filter(para);
-				if(license_id){
-					para.push({field: "branch_id", value: license_id.id});
-					if(bloc_id){
-						para.push({field: "location_id", value: bloc_id.id});
-						this.set("selectMeter", true);
-						var self = this;
-						this.uploadDS.query({
-							filter: para
-						}).then(function(){
-							self.rows = [];
-					        if(self.uploadDS.data().length > 0){
-					        	self.set("haveData", true);
-					        	self.rows.push({ 
-					        		cells: [ 
-					        			{ value: "meter_number", background: "#496cad", color: "#ffffff" }, 
-					        			{ value: "previous_reading_date", background: "#496cad", color: "#ffffff" }, 
-					        			{ value: "previous", background: "#496cad", color: "#ffffff" }, 
-					        			{ value: "month_of", background: "#496cad", color: "#ffffff" }, 
-					        			{ value: "current", background: "#496cad", color: "#ffffff" }, 
-					        			{ value: "condition", background: "#496cad", color: "#ffffff" }
-					        		]
-					        	});
-					        	for (var i = 0; i < self.uploadDS.data().length; i++){
-							        self.rows.push({
-							            cells: [
-							              { value: self.uploadDS.data()[i].meter_number },
-							              { value: self.uploadDS.data()[i].prev_date },
-							              { value: self.uploadDS.data()[i].previous  },
-							              { value: self.uploadDS.data()[i].to_date  },
-							              { value: self.uploadDS.data()[i].current  },
-							              { value: self.uploadDS.data()[i].status  }
-							            ]
-							        });
-							    }
-					        }
-						});
-					}else{
-						alert("Please Select Location");
-					}
+			// para.push(
+			// 	{field: "month_of >=",operator: "where_related_record", value: monthOf},
+			// 	{field: "month_of <=",operator: "where_related_record", value: monthL}
+			// );
+			//this.dataSource.filter(para);
+			if(license_id){
+				para.push({field: "branch_id", value: license_id.id});
+				if(bloc_id){
+					para.push({field: "location_id", value: bloc_id.id});
+					this.set("selectMeter", true);
+					var self = this;
+					this.uploadDS.query({
+						filter: para
+					}).then(function(){
+						var FromDate, ToDate, MonthOf;
+						self.rows = [];
+				        if(self.uploadDS.data().length > 0){
+				        	self.set("haveData", true);
+				        	self.rows.push({ 
+				        		cells: [ 
+				        			{ value: "meter_number", background: "#496cad", color: "#ffffff" }, 
+				        			{ value: "from_date", background: "#496cad", color: "#ffffff" }, 
+				        			{ value: "to_date", background: "#496cad", color: "#ffffff" }, 
+				        			{ value: "month_of", background: "#496cad", color: "#ffffff" }, 
+				        			{ value: "previous", background: "#496cad", color: "#ffffff" }, 
+				        			{ value: "current", background: "#496cad", color: "#ffffff" }
+				        		]
+				        	});
+				        	for (var i = 0; i < self.uploadDS.data().length; i++){
+				        		FromDate = kendo.toString(new Date(self.uploadDS.data()[i].from_date), "dd-MMM-yyyy");
+				        		ToDate = kendo.toString(new Date(self.uploadDS.data()[i].to_date), "dd-MMM-yyyy");
+				        		MonthOf = kendo.toString(new Date(self.uploadDS.data()[i].month_of), "MMM-yyyy");
+						        self.rows.push({
+						            cells: [
+						              { value: self.uploadDS.data()[i].meter_number },
+						              { value: FromDate },
+						              { value: ToDate  },
+						              { value: MonthOf  },
+						              { value: self.uploadDS.data()[i].previous  },
+						              { value: self.uploadDS.data()[i].current  }
+						            ]
+						        });
+						    }
+				        }
+					});
 				}else{
-					alert("Please Select License");
+					alert("Please Select Location");
 				}
 			}else{
-				alert("Please Select Month Of");
-			}	
+				alert("Please Select License");
+			}
 		},
 		monthOfSR 			: null,
 		NumberSR 			: null,
@@ -9903,14 +9913,19 @@
 	        kendo.saveAs({dataURI: workbook.toDataURL(), fileName: "Reading-"+"<?php echo date("d-M-Y"); ?>"+".xlsx"});
 		},
 		MonthTo 			: false,
+		errorShow 			: false,
+		Uploaderror			: [],
 		onSelected 			: function(e){
 	        var files = e.files, self = this;
+	        $('li.k-file').remove();
+	        this.Uploaderror.splice(0, this.Uploaderror.length);
 	        $("#loadImport").css("display","block");
 	        var reader = new FileReader();
 			banhji.reading.dataSource.data([]);	
 			reader.onload = function() {	
 				var data = reader.result;	
-				var result = {}; 						
+				var result = {}; 
+				var errorArray = [];						
 				var workbook = XLSX.read(data, {type : 'binary'});
 				workbook.SheetNames.forEach(function(sheetName) {
 					var roa = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
@@ -9921,15 +9936,27 @@
 							var monthOf = self.get("monthOfUpload");
 							monthOf.setDate(1);
 							roa[i].month_of = monthOf;
+							roa[i].from_date = new Date(roa[i].to_date);
 							roa[i].to_date = self.get("toDateUpload");
+
+							errorArray = roa[i];
+							if(roa[i].current < roa[i].previous){
+								self.Uploaderror.push({line: i+2, meter_number: roa[i].meter_number,previous: roa[i].previous ,current: roa[i].current, status: 0});
+							}
 							banhji.reading.dataSource.add(roa[i]);
 							$("#loadImport").css("display","none");	
-							console.log(roa[i]);
+							
 						}
 					}					
-				});															
+				});	
+				if(self.Uploaderror.length > 0){
+					self.set("errorShow", true);
+				}else{
+					self.set("errorShow", false);
+				}												
 			}
-			reader.readAsBinaryString(files[0].rawFile);      
+			reader.readAsBinaryString(files[0].rawFile);   
+
 		},
 		selectMonthTo 		: function(e){
 			if(this.get("monthOfUpload") && this.get("toDateUpload")){
@@ -9960,10 +9987,11 @@
 				    		dfd.resolve(e.response.results);			
 				    		// self.cancel();
 							$("#loadImport").css("display","none");
+							$('li.k-file').remove();
 							self.dataSource.data([]);
 							self.set("monthOfUpload", "");
 							self.set("toDateUpload", "");
-							banhji.router.navigate("/print_bill");
+							banhji.router.navigate("/run_bill");
 						}	
 
 					}			  				
@@ -12201,7 +12229,7 @@
 				    	if(e.response){				
 				    		$("#ntf1").data("kendoNotification").success("Successfully!");
 							$("#loadImport").css("display","none");
-							self.cancel();
+							banhji.router.navigate("/print_bill");
 						}
 					}
 			    });

@@ -24,6 +24,13 @@ class Rrd extends MY_Controller {
 		$this->_render("demo_view_segment");	
 	}
 
+	public function voucher() {	
+		
+		/*
+		 *set up title and keywords (if not the default in custom.php config file will be set) 
+		 */
+		$this->_render("voucher_view");	
+	}
 	public function pich() {	
 		
 		/*

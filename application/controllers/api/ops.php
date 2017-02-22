@@ -106,8 +106,8 @@ class Ops extends REST_Controller {
 			    // 	)
 			    // ));
 			    
-			    $this->db->where('category_id', 3);
-			    $this->db->update('items', array('item_type_id'=> 4, 'inventory_account_id'=>0));
+			    $this->db->where('contact_type_id', 7);
+			    $this->db->update('contacts', array('account_id'=> 53));
 			}
 		}
 

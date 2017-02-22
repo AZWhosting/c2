@@ -102,25 +102,15 @@ class Readings extends REST_Controller {
 			$obj = new Meter_record(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$meter = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$meter->where('number', $value->meter_number)->get();
-			if($value->condition == "new") {
-				$obj->meter_id 				= isset($meter->id)					?$meter->id: "";
-				$obj->previous 				= isset($value->previous)			?$value->previous: "";
-				$obj->current 				= isset($value->current)			?$value->current: "";
-				$obj->from_date 			= isset($value->previous_reading_date) ? date('Y-m-d', strtotime($value->previous_reading_date)) : date('Y-m-d');
-				$obj->month_of 				= isset($value->month_of)			? date('Y-m-d', strtotime($value->month_of)): date('Y-m-d');
-				$obj->to_date 				= isset($value->to_date)			? date('Y-m-d', strtotime($value->to_date)):date('Y-m-d');
-				
-				$obj->usage    = intval($value->current) - intval($value->previous);
-			} elseif($value->condition == "update") {
-				$obj->where('meter_id', $value->meter_id);
-				$obj->where('from_date', $value->from_date);
-				$obj->where('to_date', $value->to_date);
-				$obj->get();
-				// update with new value
-				$obj->previous = $value->prev;
-				$obj->current  = $value->current;
-				$obj->usage    = intval($value->current) - intval($value->prev);
-			}
+
+			$obj->meter_id 				= isset($meter->id)					?$meter->id: "";
+			$obj->previous 				= isset($value->previous)			?$value->previous: "";
+			$obj->current 				= isset($value->current)			?$value->current: "";
+			$obj->from_date 			= isset($value->from_date) 			? date('Y-m-d', strtotime($value->from_date)) : date('Y-m-d');
+			$obj->month_of 				= isset($value->month_of)			? date('Y-m-d', strtotime($value->month_of)): date('Y-m-d');
+			$obj->to_date 				= isset($value->to_date)			? date('Y-m-d', strtotime($value->to_date)):date('Y-m-d');
+			
+			$obj->usage    = intval($value->current) - intval($value->previous);
 			
 			
 			if($obj->save()){								
@@ -289,14 +279,14 @@ class Readings extends REST_Controller {
 			    	foreach ($filters as $f) {
 			    		if(!empty($f["operator"]) && isset($f["operator"])){
 				    		// $record->{$f["operator"]}($f["field"], $f["value"]);
-				    		if($f['field'] === 'month_of <'){
-				    			$date = date('Y-m-d', strtotime($f['value']));
-				    			$record->where('month_of <', $f["value"]);
+				    		//if($f['field'] === 'month_of <'){
+				    			//$date = date('Y-m-d', strtotime($f['value']));
+				    			//$record->where('month_of <', $f["value"]);
 				    			$record->where("invoiced <>", 1);
 
-				    		} else {
-				    			$record->where($f["field"], $f["value"]);
-				    		}
+				    		//} else {
+				    			//$record->where($f["field"], $f["value"]);
+				    		//}
 				    		// $record->where($f["field"], $f["value"]);
 			    		}
 					}									 			
@@ -314,8 +304,9 @@ class Readings extends REST_Controller {
 						"previous"		=> floatval($record->current),
 						"current"		=> 0,
 						"_contact" 		=> $contact->result(),
-						"prev_date"		=> $record->exists() ? $record->to_date : $date, 
-						"to_date"		=> $date,
+						"from_date"		=> $record->from_date, 
+						"to_date"		=> $record->to_date,
+						"month_of" 		=> $record->month_of,
 						"status" 		=> "new"
 					);
 				}

@@ -120,9 +120,13 @@ h1,h2,h3,h4,h5,h6{
 input.k-textbox{
   text-indent: 0 !important;
 }
-.padding-bottom-none-phone .glyphicons.user.userss i:before,
+
 .padding-bottom-none-phone .icon-play-circles:before{
   color: #fff !important;
+}
+.padding-bottom-none-phone .glyphicons.user.userss i:before,
+.padding-bottom-none-phone .glyphicons.coins.addcolors i:before{
+  color: #203864 !important;
 }
 #issuedDate_dateview,
 #txtDueDate_dateview,

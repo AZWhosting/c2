@@ -26189,7 +26189,7 @@
 		</div>
 	</div>
 </script>
-<script id="invoiceForm1" type="text/x-kendo-template">
+<!-- <script id="invoiceForm1" type="text/x-kendo-template">
 	<div class="inv1">
     	<div class="head">
         	<div class="logo">
@@ -26224,9 +26224,6 @@
                         </div>
                     </div>
                     <div class="clear">
-                    	<!--div class="left">
-                    		<p>ទូរស័ព្ទ​លេខ HP:</p>
-                        </div-->
                         <div class="left dotted-ruler" style="width: 78%;">
                         	<p style="font-weight:bold" data-bind="text: contactDS.data()[0].phone"></p>
                         </div>
@@ -26300,7 +26297,27 @@
             <h6>សម្គាល់៖ <span>ច្បាប់​ដើម​សម្រាប់​អ្នក​ទិញ ច្បាប់​ចម្លង​សម្រាប់​អ្នក​លក់</span><br /><span style="font-size: 10px"><strong>Note:</strong> Original invoice for customer, copied invoice for seller</span></h6>
         </div>
     </div>
+</script> -->
+
+<script id="invoiceForm1" type="text/x-kendo-template">
+	<div class="voucher1">
+    	<div class="head">
+    		<div class="logo">
+            	<img data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
+            </div>
+            <div class="official">
+            	Official
+            </div>
+            <div class="head-title">
+            </div>
+    	</div>
+    	<div class="content">
+    	</div>
+    	<div class="footer">
+    	</div>
+    </div>
 </script>
+
 <script id="invoiceForm2" type="text/x-kendo-template">
 	<div class="inv1">
     	<div class="head">
