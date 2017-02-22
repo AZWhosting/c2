@@ -232,7 +232,7 @@
 </script>
 <script id="dashboard-template-table-list" type="text/x-kendo-tmpl">
 	<tr>
-		<td>#=banhji.wDashBoard.dataSource.indexOf(id) +1 #</td>
+		<td>#=banhji.wDashBoard.dataSource.indexOf(banhji.wDashBoard.dataSource.get(id)) +1 #</td>
 		<td>#=name#</td>
 		<td style="text-align: right; padding-right: 5px !important;">#=blocCount#</td>
 		<td style="text-align: right; padding-right: 5px !important;">#=activeCustomer#</td>
@@ -3983,7 +3983,7 @@
 					<p>អតិថិជន​ #=contact.number#</p>
 					<p>#:contact.name#</p>
 					<p>#: contact.address != 'null' ? contact.address: ''#</p>
-					<p style="font-size: 10px;"><i>ថ្ងៃ​ចាប់​ផ្តើម​ទទួល​ប្រាក់ #=kendo.toString(new Date(bill_date), "dd-MM-yyyy")#</i></p>
+					<p style="font-size: 10px;"><i>ថ្ងៃ​ចាប់​ផ្តើម​ទទួល​ប្រាក់ #=kendo.toString(new Date(bill_date), "dd-MMM-yyyy")#</i></p>
 				</div>
 			</div>
 			<div class="span4">
@@ -3994,7 +3994,7 @@
 					</tr>
 					<tr>
 						<td><p>ថ្ងៃ​ចេញ វិក្កយ​បត្រ</p></td>
-						<td><p>#=kendo.toString(new Date(issue_date), "dd-MM-yyyy")#</p></td>
+						<td><p>#=kendo.toString(new Date(issue_date), "dd-MMM-yyyy")#</p></td>
 					</tr>
 					<tr>
 						<td><p>តំបន់</p></td>
@@ -4006,11 +4006,11 @@
 					</tr> -->
 					<tr>
 						<td><p>គិត​ចាប់​ពី​ថ្ងៃ​ទី</p></td>
-						<td><p>#=kendo.toString(new Date(invoice_lines[0].from_date), "dd-MM-yyyy")#</p></td>
+						<td><p>#=kendo.toString(new Date(invoice_lines[0].from_date), "dd-MMM-yyyy")#</p></td>
 					</tr>
 					<tr>
 						<td><p>ដល់​ថ្ងៃ​ទី</p></td>
-						<td><p>#=kendo.toString(new Date(invoice_lines[0].to_date), "dd-MM-yyyy")#</p></td>
+						<td><p>#=kendo.toString(new Date(invoice_lines[0].to_date), "dd-MMM-yyyy")#</p></td>
 					</tr>
 				</table>		
 			</div>
@@ -4031,7 +4031,7 @@
 					<td style="vertical-align: middle;"></td>
 					<td colspan="4" style="text-align: right">
 						ប្រាក់​ជំ​ពាក់​ពេល​មុន Balance brought forward .<br>
-						ប្រាក់​បាន​ទទួល​ Payment Recieve #=kendo.toString(new Date(bill_date), "dd-MM-yyyy")# .<br>
+						ប្រាក់​បាន​ទទួល​ Payment Recieve #=kendo.toString(new Date(bill_date), "dd-MMM-yyyy")# .<br>
 						ជំពាក់​សរុប​នៅ​ថ្ងៃ​ធ្វើ​វិក្កយបត្រ Balance as at billing date .
 					</td>
 					<td>
@@ -4088,6 +4088,17 @@
 						#}#
 					# } #
 				#}#	
+				#if(invoice_lines.length < 5){#
+					#var minuS = 5 - invoice_lines.length;#
+					#for(var i = 0; i < minuS; i++){#
+						<tr>
+							<td colspan="3" align="left">&nbsp;</td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+					#}#
+				#}#
 				#if(banhji.InvoicePrint.PaperSize == 'A4'){#
 					<tr><td colspan="6"  style="height: 200px;" ></td></tr>
 				#}#
@@ -4102,11 +4113,11 @@
 				</tr>
 				<tr>
 					<td colspan="2" class="greyy"  style="background: \\#ccc;">ថ្ងៃផុតកំណត់ DUE DATE</td>
-					<td align="left">#=kendo.toString(new Date(due_date), "dd-MM-yyyy")#</td>
+					<td align="left">#=kendo.toString(new Date(due_date), "dd-MMM-yyyy")#</td>
 				</tr>
 				<tr>
 					<td colspan="2" class="greyy" style="background: \\#ccc;">ថ្ងៃបង់ប្រាក់ PAY DATE</td>
-					<td align="left">#=kendo.toString(new Date(bill_date), "dd-MM-yyyy")#</td>
+					<td align="left">#=kendo.toString(new Date(bill_date), "dd-MMM-yyyy")#</td>
 				</tr>
 				<tr>
 					<td colspan="2" class="greyy" style="background: \\#ccc;">ប្រាក់បានបង់ PAY AMOUNT</td>
@@ -4115,7 +4126,7 @@
 			</tbody>
 		</table>
 		<div class="line"></div>
-		<table class="span12 table table-bordered footerTbl" style="padding:0;border-collapse: inherit;margin-top: 15px;border:1px solid \\#000; border-radius: 3px;margin-left: 0px;">
+		<table class="span12 table table-bordered footerTbl" style="padding:0;margin-bottom:75px;border-collapse: inherit;margin-top: 15px;border:1px solid \\#000; border-radius: 3px;margin-left: 0px;">
 			<tbody>
 				<tr>
 					<td width="100"></td>
@@ -4127,9 +4138,9 @@
 				</tr>
 				<tr>
 					<td><p>វិក្កយបត្រ</p></td>
-					<td>#: issue_date# - #: number#</td>
+					<td>#: kendo.toString(new Date(issue_date), "dd-MMM-yyyy")# - #: number#</td>
 					<td class="greyy" style="background: \\#ccc;border-bottom:1px solid \\#fff;">ថ្ងៃបង់ប្រាក់ PAY DATE</td>
-					<td align="left">#=kendo.toString(new Date(bill_date), "dd-MM-yyyy")#</td>
+					<td align="left">#=kendo.toString(new Date(bill_date), "dd-MMM-yyyy")#</td>
 				</tr>
 				<tr>
 					<td><p>អតិថិជន</p></td>
@@ -13383,6 +13394,8 @@
 		invoice_id 			: 0,
 		total 				: 0,
 		total_received 		: 0,
+		numCustomer 		: 0,
+		paymentReceiptToday : 0,
 		user_id				: banhji.source.user_id,
 		pageLoad 			: function(id){
 			if(id){
@@ -13537,7 +13550,8 @@
 							number 				: "",
 						   	type				: "Cash_Receipt",
 						   	sub_total 			: amount_due,
-						   	amount 				: amount_due,				   	
+						   	amount 				: amount_due,
+						   	fine 				: 0,				   	
 						   	discount 			: 0,
 						   	rate				: value.rate,			   	
 						   	locale 				: value.locale,			   	
@@ -13603,8 +13617,11 @@
 			total = 0, sub_total = 0, discount = 0, total_received = 0, remaining = 0, fine = 0;											
 
 			$.each(this.dataSource.data(), function(index, value) {
-				var amt = kendo.parseFloat(value.sub_total) - kendo.parseFloat(value.discount);
+				console.log(value.fine);
+				var amt = (kendo.parseFloat(value.sub_total) + kendo.parseFloat(value.fine))- kendo.parseFloat(value.discount);
 				if(kendo.parseFloat(value.amount)>amt){
+					value.set("amount", amt);
+				}else{
 					value.set("amount", amt);
 				}
 
@@ -13620,6 +13637,7 @@
 	        obj.set("sub_total", sub_total);
 	        obj.set("discount", discount);
 	        obj.set("fine", fine);
+	        this.set('fine', kendo.toString(fine, "c2", banhji.locale));
 	        this.set("total", kendo.toString(total, "c2", banhji.locale));
 	        this.set("total_received", kendo.toString(total_received, "c2", banhji.locale));
 	        obj.set("remaining", remaining);
@@ -13670,6 +13688,7 @@
 	    },
 		save 				: function(){
 	    	var self = this, obj = this.get("obj");
+	    	var customerServed = 0, paymentReceipt = 0;
 	    	//Edit Mode
 	    	if(this.get("isEdit")){
 	    		obj.set("issued_date", kendo.toString(new Date(obj.issued_date), "s"));
@@ -13694,12 +13713,12 @@
 			//Obj
 			this.objSync()
 			.then(function(data){
-				var ids = [];
+				var ids = [], count = 0;
 				//Save journals
 				$.each(data, function(index, value){
 					var contact = banhji.source.customerDS.get(value.contact_id);
 					ids.push(value.reference_id);
-
+					count++;
 					//Cash on Dr
 					self.journalLineDS.add({					
 						transaction_id 		: value.id,
@@ -13760,8 +13779,19 @@
 						locale				: value.locale
 					});	
 				});
-
+				self.set('numCustomer', self.get('numCustomer')+count);
 				self.journalLineDS.sync();
+				self.journalLineDS.bind('requestEnd', function(e){
+					if(e.type !== "read") {
+						var amount = 0;
+						for(var i = 0; i < e.response.results.length; i++) {
+							if(e.response.results[i].dr > 0) {
+								amount += kendo.parseFloat(e.response.results[i].dr);
+							}
+						}
+						self.set('paymentReceiptToday', self.get('paymentReceiptToday') + amount);
+					}
+				});
 				self.updateTxnStatus(ids);
 
 				return data;

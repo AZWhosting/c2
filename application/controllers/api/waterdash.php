@@ -152,6 +152,7 @@ class Waterdash extends REST_Controller {
 			}
 		}
 		$obj->where('type', 'w');
+		$obj->order_by('id', 'asc');
 		// $obj->include_related('location', 'id');
 		$obj->include_related_count('location');
 		// $obj->include_related_count('location/contact');

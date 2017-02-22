@@ -51,6 +51,39 @@ class Ops extends REST_Controller {
 	// 	}
 	// }
 
+	function run_db_banhji_get() {
+		$this->load->dbutil();	
+	    $connection = 'use db_banhji';
+	    $this->db->query($connection);
+
+	    // transactions
+	    // transaction_templates
+	    // prefixes
+        $this->dbforge->modify_column(
+        	'prefixes', array(
+				'type' => array(
+							'name' 		=> 'type', 
+							'type'		=> 'VARCHAR',
+							'constraint'=> '255',
+							'null' 		=> TRUE,
+							'default' 	=> 'NULL'
+				)
+        	)
+        );
+
+    //     $this->dbforge->modify_column(
+    //     	'transactions', array(
+				// 'journal_type' => array(
+				// 			'name' 		=> 'journal_type', 
+				// 			'type'		=> 'VARCHAR',
+				// 			'constraint'=> '255',
+				// 			'null' 		=> TRUE,
+				// 			'default' 	=> 'NULL'
+				// )
+    //     	)
+    //     );
+	}
+
 	function runs_get() {
 		$this->load->dbutil();
 		$dbs = $this->dbutil->list_databases();
@@ -63,6 +96,16 @@ class Ops extends REST_Controller {
 			    $data[] = $db;
 			    $connection = 'use '.$db;
 			    $this->db->query($connection);
+
+			 //    $dataInserted = array(
+				//    'type' => 'Payment_Refund',
+				//    'abbr' => 'PF',
+				//    'name' => 'Payment Refund'
+				// );
+
+			 //    // $this->db->where('type', 'Cash_Refund');
+			 //    // $this->db->update('prefixes', array('abbr'=>'RF', 'name'=>'Cash Refund'));
+			 //    $this->db->insert('prefixes', $dataInserted);
 
         //         $this->dbforge->add_column(
         //         	"attachments", array(
@@ -85,20 +128,7 @@ class Ops extends REST_Controller {
                 // 					)
                 // 	)
                 // );
-
-                // $this->dbforge->modify_column(
-                // 	'item_prices', array(
-                // 					'assembly_id' => array(
-                // 								'name' 		=> 'assembly_id', 
-                // 								'type'		=> 'INT',
-                // 								'constraint'=> 11,
-                // 								'unsigned' 	=> TRUE,
-                // 								'null' 		=> FALSE,
-                // 								'default' 	=> 0
-                // 					)
-                // 	)
-                // );
-			    
+                
 			    // $this->dbforge->modify_column('attachments', 
 			    // 	array('type' => array(
 			    // 		'name' => 'type', 
@@ -106,8 +136,8 @@ class Ops extends REST_Controller {
 			    // 	)
 			    // ));
 			    
-			    $this->db->where('contact_type_id', 7);
-			    $this->db->update('contacts', array('account_id'=> 53));
+			    // $this->db->where('contact_type_id', 7);
+			    // $this->db->update('contacts', array('account_id'=> 53));
 			}
 		}
 
