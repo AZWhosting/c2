@@ -77,7 +77,7 @@ class Transactions extends REST_Controller {
 			foreach ($obj as $value) {
 				//Sum amount paid
 				$amount_paid = 0;
-				if($value->type=="Commercial_Invoice" || $value->type=="Vat_Invoice" || $value->type=="Invoice" || $value->type=="Credit_Purchase" || $value->type=="Cash_Receipt" || $value->type=="Cash_Payment"){
+				if($value->type=="Commercial_Invoice" || $value->type=="Vat_Invoice" || $value->type=="Invoice" || $value->type=="Credit_Purchase" || $value->type=="Cash_Receipt" || $value->type=="Cash_Payment" || $value->type=="Water_Invoice" || $value->type=="Water_Invoice" || $value->type=="Electricity_Invoice"){
 					$paid = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 					$paid->select_sum("amount");
 					$paid->select_sum("discount");
@@ -103,13 +103,7 @@ class Transactions extends REST_Controller {
 					$paid->get();
 					$amount_paid = floatval($paid->amount) + floatval($paid->received);
 				}
-				$refNo = "";
-				if($value->reference_id){
-			   		$ref = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			   		$ref->where("id", $value->reference_id);
-			   		$ref->get();
-			   		$refNo = $ref->number;
-			   	}
+				
 				$data["results"][] = array(
 					"id" 						=> $value->id,
 					"company_id" 				=> $value->company_id,
@@ -128,7 +122,7 @@ class Transactions extends REST_Controller {
 					"user_id" 					=> $value->user_id,
 					"employee_id" 				=> $value->employee_id,
 				   	"number" 					=> $value->number,
-				   	"reference_no" 				=> $refNo,
+				   	"reference_no" 				=> $value->reference_no,
 				   	"type" 						=> $value->type,
 				   	"journal_type" 				=> $value->journal_type,
 				   	"sub_total"					=> floatval($value->sub_total),

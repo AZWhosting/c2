@@ -48476,6 +48476,8 @@
 			var obj = this.get("obj");
 			if(obj.reference_id){
 				var data = this.referenceDS.get(obj.reference_id);
+
+				obj.set("reference_no", data.number);
 				obj.set("deposit", data.amount - data.amount_paid);
 				this.referenceLineDS.filter({ field:"transaction_id", value: obj.reference_id});
 			}
@@ -54982,6 +54984,7 @@
 				var data = this.referenceDS.get(obj.reference_id);
 
 				obj.set("employee_id", data.employee_id);
+				obj.set("reference_no", data.number);
 				obj.set("segments", data.segments);
 								
 			 	this.referenceLineDS.query({
@@ -55751,6 +55754,7 @@
 			if(obj.reference_id>0){
 				var data = this.referenceDS.get(obj.reference_id);
 
+				obj.set("reference_no", data.number);
 				obj.set("segments", data.segments);
 				obj.set("amount", data.amount);
 
@@ -57434,6 +57438,7 @@
 					this.set("showDiscount", false);
 				}
 				
+				obj.set("reference_no", ref.number);
 				obj.set("sub_total", ref.sub_total);
 				obj.set("discount", ref.discount);
 				obj.set("tax", ref.tax);
@@ -57710,7 +57715,7 @@
 				{ field:"number", dir:"asc" }
 			]
 		}),
-		taxItemDS 		: new kendo.data.DataSource({
+		taxItemDS 			: new kendo.data.DataSource({
 		  	data: banhji.source.taxList,
 		  	filter:{
 			    logic: "or",
@@ -58680,6 +58685,8 @@
 			
 			if(obj.reference_id>0){
 				var ref = this.referenceDS.get(obj.reference_id);
+
+				obj.set("reference_no", ref.number);
 
 				if(ref.type=="Cash_Purchase"){
 					this.set("showReturn", true);
@@ -62604,6 +62611,7 @@
 				var data = this.referenceDS.get(obj.reference_id);
 
 				obj.set("employee_id", data.employee_id);
+				obj.set("reference_no", data.number);
 				obj.set("segments", data.segments);
 								
 			 	this.referenceLineDS.query({
@@ -63383,6 +63391,7 @@
 			if(obj.reference_id>0){
 				var data = this.referenceDS.get(obj.reference_id);
 
+				obj.set("reference_no", data.number);
 				obj.set("segments", data.segments);
 				obj.set("amount", data.amount);
 
@@ -64888,6 +64897,7 @@
 				var data = this.referenceDS.get(obj.reference_id);
 
 				obj.set("employee_id", data.employee_id);
+				obj.set("reference_no", data.number);
 				obj.set("segments", data.segments);
 				obj.set("deposit", data.deposit);
 												
@@ -66442,6 +66452,7 @@
 				var data = this.referenceDS.get(obj.reference_id);
 				
 				obj.set("employee_id", data.employee_id);
+				obj.set("reference_no", data.number);
 				obj.set("segments", data.segments);
 				obj.set("deposit", data.deposit);
 												
@@ -67386,6 +67397,7 @@
 				var data = this.referenceDS.get(obj.reference_id);
 				
 				obj.set("employee_id", data.employee_id);
+				obj.set("reference_no", data.number);
 				obj.set("segments", data.segments);
 				obj.set("deposit", data.deposit);
 												
@@ -68787,6 +68799,7 @@
 			if(obj.reference_id>0){
 				var ref = this.referenceDS.get(obj.reference_id);
 				
+				obj.set("reference_no", ref.number);
 				obj.set("amount", ref.amount);
 
 				if(ref.type=="Commercial_Cash_Sale" || ref.type=="Vat_Cash_Sale" || ref.type=="Cash_Sale"){					
@@ -70797,8 +70810,13 @@
             		txnCount += value.txn_count;
             		amount += value.amount;
             	});
+
+            	var avgSale = 0;
+            	if(txnCount>0){
+            		avgSale = amount/txnCount;
+            	}
             	
-            	self.set("avg_sale", kendo.toString(amount/txnCount, "c2", banhji.locale));
+            	self.set("avg_sale", kendo.toString(avgSale, "c2", banhji.locale));
             	self.set("total_sale", kendo.toString(amount, "c2", banhji.locale));
             });
 		},
@@ -71016,17 +71034,21 @@
             }).then(function(){
             	var view = self.dataSource.view();
 
-            	var txnCount = 0, amount = 0, sale = 0;
+            	var txnCount = 0, amount = 0;
             	$.each(view, function(index, value){
             		$.each(value.line, function(ind, val){ 
 	            		txnCount++;
 	            		amount += val.amount;
-	            		sale += val.total;
             		});
             	});
+
+            	var avgSale = 0;
+            	if(txnCount>0){
+            		avgSale = amount/txnCount;
+            	}
             	
-            	self.set("product_sale", kendo.toString(amount/txnCount, "c2", banhji.locale));
-            	self.set("total_sale", kendo.toString(sale, "c2", banhji.locale));
+            	self.set("product_sale", kendo.toString(avgSale, "c2", banhji.locale));
+            	self.set("total_sale", kendo.toString(amount, "c2", banhji.locale));
             });
 		},
 		printGrid			: function() {

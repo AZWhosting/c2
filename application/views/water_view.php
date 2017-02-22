@@ -748,6 +748,7 @@
 				                data-auto-bind="false"
 				                data-bind="source: planDS"></tbody>
 	            	</table>
+	            	<p data-bind="visible: planSelect">Plan Name: <span data-bind="text: planNameShow"></span></p>
 	            	<table data-bind="visible: planSelect" class="table table-bordered table-condensed table-striped table-secondary table-vertical-center checkboxs">
 	            		<thead>
 	            			<tr>
@@ -1475,7 +1476,7 @@
 								                   data-value-field="id"
 								                   data-bind="value: current.currency,
 								                            source: currencyDS,
-								                            visible: currencyEnable,
+								                            enabled: currencyEnable,
 								                            events: {change: currencyChange}"/>
 											</td>
 										</tr>									
@@ -4394,6 +4395,7 @@
 			                <th data-bind="visible: showCheckNo" style="width: 10%"><span data-bind="text: lang.lang.check_number"></span></th>
 			                <th style="width: 15%"><span data-bind="text: lang.lang.amount"></span></th>			                
 			                <th style="width: 15%"><span data-bind="text: lang.lang.discount"></span></th>
+			                <th style="width: 15%"><span data-bind="text: lang.lang.fine"></span></th>
 			                <th style="width: 15%">RECEIVE</th>
 			            </tr> 
 			        </thead>
@@ -4457,7 +4459,7 @@
 									<td></td>
 									<td class="right"><h4 data-bind="text: lang.lang.total"></h4></td>
 									<td class="right strong"><h4 data-bind="text: total"></h4></td>
-								</tr>								
+								</tr>						
 							</tbody>
 						</table>
 					</div>
@@ -4827,6 +4829,16 @@
 				   data-culture="#:locale#"
                    data-min="0"                   
                    data-bind="value: discount,
+                              events: { change: changes }"
+                   style="width: 100%; text-align: right;">			
+		</td>
+		<td class="center">
+			<input data-role="numerictextbox"
+				   data-spinners="false"
+				   data-format="c2"
+				   data-culture="#:locale#"
+                   data-min="0"                   
+                   data-bind="value: fine,
                               events: { change: changes }"
                    style="width: 100%; text-align: right;">			
 		</td>
@@ -10303,6 +10315,7 @@
 		percentUnit 		: false,
 		meterUnit 			: false,
 		windowTariffItemVisible : false,
+		planNameShow 		: null,
 		prefixDS			: new kendo.data.DataSource({
 			transport: {
 				read 	: {
@@ -10685,6 +10698,7 @@
         viewPlanItem 		: function(e){
         	var data = e.data, self = this;
         	var idList = [];
+        	this.set("planNameShow", e.data.name);
         	$.each(data.items, function(index, value){
         		idList.push(value.item);
         	});
@@ -11031,6 +11045,7 @@
 			var data = e.data;
 			console.log(this.current.currency);
 			this.itemDS.filter({field: "currency_id", value: this.current.currency});
+			this.get("current").items.splice(0, this.get("current").items.length);
 		},
 		setCurrent 	: function(current) {
 			this.set('current', current);
@@ -12371,6 +12386,9 @@
 					  	var self = this;
 					  	banhji.InvoicePrint.dataSource = [];
 					  	$.each(this.printArray, function(index, value){
+					  		// self.printArray[index].issued_date = kendo.toString(new Date(self.printArray[index].issue_date), "dd-MMM-yyyy");
+					  		// self.printArray[index].from_date = kendo.toString(new Date(self.printArray[index].from_date), "dd-MMM-yyyy");
+					  		// self.printArray[index].to_date = kendo.toString(new Date(self.printArray[index].to_date), "dd-MMM-yyyy");
 					  		banhji.InvoicePrint.dataSource.push(self.printArray[index]);
 					  	});
 					  	banhji.InvoicePrint.PaperSize = this.SelectSize;
@@ -13344,7 +13362,13 @@
 		  	data: banhji.source.accountList,
 		  	filter: { field:"account_type_id", value: 10 },
 		  	sort: { field:"number", dir:"asc" }
-		}),		
+		}),
+		revenueaccountDS  	: new kendo.data.DataSource({
+		  	data: banhji.source.accountList,
+		  	filter: { field:"account_type_id", value: 39 },
+		  	sort: { field:"number", dir:"asc" }
+		}),
+		fine 				: 0,	
 		paymentTermDS 		: banhji.source.paymentTermDS,
 		paymentMethodDS 	: banhji.source.paymentMethodDS,
 		amtDueColor 		: banhji.source.amtDueColor,
@@ -13576,7 +13600,7 @@
 		},
 		changes				: function(){
 			var self = this, obj = this.get("obj"),
-			total = 0, sub_total = 0, discount = 0, total_received = 0, remaining = 0;											
+			total = 0, sub_total = 0, discount = 0, total_received = 0, remaining = 0, fine = 0;											
 
 			$.each(this.dataSource.data(), function(index, value) {
 				var amt = kendo.parseFloat(value.sub_total) - kendo.parseFloat(value.discount);
@@ -13586,14 +13610,16 @@
 
 				sub_total += kendo.parseFloat(value.sub_total) / value.rate;					
 				discount += kendo.parseFloat(value.discount) / value.rate;
+				fine += kendo.parseFloat(value.fine) / value.rate;
 				total_received += kendo.parseFloat(value.amount) / value.rate;					
 	        });
 
-			total = sub_total - discount;
+			total = (sub_total + fine) - discount;
 			remaining = total - total_received;			
 
 	        obj.set("sub_total", sub_total);
 	        obj.set("discount", discount);
+	        obj.set("fine", fine);
 	        this.set("total", kendo.toString(total, "c2", banhji.locale));
 	        this.set("total_received", kendo.toString(total_received, "c2", banhji.locale));
 	        obj.set("remaining", remaining);
@@ -13704,6 +13730,22 @@
 						});
 					}
 
+					if(value.fine>0){
+						//Discount on Dr
+						self.journalLineDS.add({					
+							transaction_id 		: value.id,
+							account_id 			: contact.or_account_id,				
+							contact_id 			: value.contact_id,				
+							description 		: "",
+							reference_no 		: "",
+							segments 	 		: [],								
+							dr 	 				: 0,
+							cr 					: value.fine,				
+							rate				: value.rate,
+							locale				: value.locale
+						});
+					}
+
 					//AR on Cr
 					self.journalLineDS.add({					
 						transaction_id 		: value.id,
@@ -13713,7 +13755,7 @@
 						reference_no 		: "",
 						segments 	 		: [],								
 						dr 	 				: 0,
-						cr 					: kendo.parseFloat(value.amount) + kendo.parseFloat(value.discount),				
+						cr 					: (kendo.parseFloat(value.amount) + kendo.parseFloat(value.discount)) - kendo.parseFloat(value.fine),		
 						rate				: value.rate,
 						locale				: value.locale
 					});	
@@ -13745,6 +13787,9 @@
 					self.addEmpty();
 				}
 			});
+			// if(this.get('fine') > 0) {
+
+			// }
 			if(this.reconReceipt.dataSource.data().length > 0) {
 				this.reconReceipt.dataSource.sync();
 			}

@@ -290,11 +290,22 @@ class Sales extends REST_Controller {
 			}
 			
 			foreach ($objList as $value) {
-				$value["avg_price"] = $value["amount"] / $value["quantity"];
-				$value["avg_cost"] = $value["cost"] / $value["quantity"];
+				$avgPrice = 0;
+				$avgCost = 0;
+				$gp = 0;
+				$gpm = 0;
 
-				$gp = ($value["quantity"] * $value["price"]) - ($value["quantity"] * $value["cost"]);
-				$value["gpm"] = $gp / ($value["quantity"] * $value["price"]);
+				if($value["quantity"]>0){
+					$avgPrice = $value["amount"] / $value["quantity"];
+					$avgCost = $value["cost"] / $value["quantity"];
+
+					$gp = ($value["quantity"] * $value["price"]) - ($value["quantity"] * $value["cost"]);
+					$gpm = $gp / ($value["quantity"] * $value["price"]);
+				}
+
+				$value["avg_price"] = $avgPrice;
+				$value["avg_cost"] = $avgCost;
+				$value["gpm"] = $gpm;
 
 				$data["results"][] = $value;
 			}
@@ -351,7 +362,6 @@ class Sales extends REST_Controller {
 			$objList = [];
 			foreach ($obj as $value) {
 				$amount = floatval($value->amount) / floatval($value->transaction_rate);
-				$total = (floatval($value->transaction_amount) - floatval($value->transaction_deposit)) / floatval($value->transaction_rate);
 								
 				if(isset($objList[$value->item_id])){
 					$objList[$value->item_id]["line"][]		= array(
@@ -362,8 +372,7 @@ class Sales extends REST_Controller {
 						"quantity" 		=> $value->quantity,
 						"measurement"	=> $value->measurement_name,
 						"price" 		=> $value->price,
-						"amount" 		=> $amount,
-						"total" 		=> $total
+						"amount" 		=> $amount
 					);
 				}else{
 					$objList[$value->item_id]["id"] 		= $value->item_id;
@@ -376,8 +385,7 @@ class Sales extends REST_Controller {
 						"quantity" 		=> $value->quantity,
 						"measurement"	=> $value->measurement_name,
 						"price" 		=> $value->price,
-						"amount" 		=> $amount,
-						"total" 		=> $total
+						"amount" 		=> $amount
 					);
 				}
 			}

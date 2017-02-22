@@ -26309,9 +26309,64 @@
             	Official
             </div>
             <div class="head-title">
+            	ADVANCE VOUCHER
             </div>
+            <div class="row">
+            	<div class="span12">
+	    			<div class="span7" style="padding-left: 0; padding-right: 15px;">
+	    				<table class="tableright">
+	    					<tr>
+	    						<td style="width: 156px; text-align: right;">PAID TO/ RECEIVED FROM</td>
+	    						<td></td>
+	    					</tr>
+	    					<tr>
+	    						<td style="text-align: right;">PAYMENT METHOD</td>
+	    						<td></td>
+	    					</tr>
+	    					<tr>
+	    						<td style="text-align: right;">Location</td>
+	    						<td></td>
+	    					</tr>
+	    				</table>
+	    			</div>
+	    			<div class="span5" style="padding-right: 0; ">
+	    				<table class="tableright">
+	    					<tr>
+	    						<td style="width: 130px; text-align: right;">Transaction Date:</td>
+	    						<td style="text-align: center; color: #333; font-weight: 600;">1-Jan-2016</td>
+	    					</tr>
+	    					<tr>
+	    						<td style="text-align: right;">Transaction No:</td>
+	    						<td style="text-align: center; color: #333; font-weight: 600; background: #d9d9d9;">PV1701001</td>
+	    					</tr>
+	    					<tr>
+	    						<td style="text-align: right;">Project Name:</td>
+	    						<td style="text-align: center;"></td>
+	    					</tr>
+	    				</table>
+	    			</div>
+	    		</div>
+    		</div>
     	</div>
     	<div class="content">
+    		<div class="row">
+    			<div class="span12">
+    				<table class="tablecontent">    				
+    					<tr>
+    						<th rowspan="2">DESCRIPTION</th>
+    						<th rowspan="2">REF</th>
+    						<th rowspan="2">DONOR</th>
+    						<th colspan="3" style="text-align: center; background: #fbda6c;">ACCOUNTING ENTRY</th>		
+    					</tr>
+    					<tr>
+    						<th style="text-align: center; background: #fbda6c;">ACCOUNT</th>
+    						<th style="text-align: center; background: #fbda6c;">DR</th>
+    						<th style="text-align: center; background: #fbda6c;">CR</th>
+    					</tr>
+	    			
+    				</table>
+    			</div>
+    		</div>
     	</div>
     	<div class="footer">
     	</div>

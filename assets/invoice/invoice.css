@@ -494,12 +494,58 @@ pre {
 }
 .voucher1 .logo {
 	height: 100%;
-	width: 20%;	
+	width: 40%;	
 	float: left;
 }
 .voucher1 .logo img {
 	width: 100%;
 }
 .voucher1 .official{
-	
+	-webkit-transform: rotate(271deg);
+	-moz-transform: rotate(271deg);
+	-o-transform: rotate(271deg);
+	transform: rotate(271deg);
+	color: #333;
+    float: left;
+    width: 10%;
+    margin-top: 4%;
+    font-weight: 600;
+    font-size: 12px;
+    text-transform: uppercase;
+}
+.voucher1 .head-title{
+	width: 50%;
+    text-align: center;
+    color: #333;
+    text-transform: uppercase;
+    font-size: 25px;
+    float: left;
+    margin-top: 3%;
+    font-weight: 600;
+}
+.voucher1 .content {
+	width: 100%;
+    margin: 0 auto;
+    overflow: hidden;
+    padding-left: 2%;
+    padding-right: 2%;
+}
+.voucher1 .head .tableright{
+	float: left;
+	width: 100%;
+	font-size: 11px;
+	margin-top: 15px;
+}
+.voucher1 .head .tableright tr td{
+	padding: 5px;
+	border: 1px solid #333;
+}
+.voucher1 .content .tablecontent{
+	float: left;
+	width: 100%;
+	font-size: 11px;
+},
+.voucher1 .content .tablecontent tr th{
+	padding: 5px;
+	border: 1px solid #333;
 }
