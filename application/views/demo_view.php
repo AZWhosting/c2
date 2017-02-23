@@ -21472,7 +21472,7 @@
 										data-format="n"
 										data-min="0"
 										data-bind="value: returnObj.amount,
-													events:{change: changes}" 
+													events:{change: returnChanges}" 
 										style="width: 100%;" />
 								</td>
 							</tr>
@@ -21564,7 +21564,7 @@
 											<span data-bind="text: lang.lang.remaining"></span>
 										</td>
 										<td class="right">
-											<span data-format="n" data-bind="text: obj.remaining"></span>
+											<span id="remaining" name="remaining" data-format="n" data-bind="text: obj.remaining"></span>
 										</td>
 									</tr>								
 								</tbody>
@@ -45236,79 +45236,6 @@
 		currencyList 				: [],
 		currencyDS					: dataStore(apiUrl + "currencies"),
 		currencyRateDS				: dataStore(apiUrl + "currencies/rate"),
-		//Prefixes
-		invoicePrefixDS				: new kendo.data.DataSource({
-			transport: {
-				read 	: {
-					url: apiUrl + "prefixes",
-					type: "GET",
-					headers: banhji.header,
-					dataType: 'json'
-				},
-				parameterMap: function(options, operation) {
-					if(operation === 'read') {
-						return {
-							page: options.page,
-							limit: options.pageSize,
-							filter: options.filter,
-							sort: options.sort
-						};
-					} else {
-						return {models: kendo.stringify(options.models)};
-					}
-				}
-			},
-			schema 	: {
-				model: {
-					id: 'id'
-				},
-				data: 'results',
-				total: 'count'
-			},
-			filter: { field:"type", operator:"where_in", value: ["Commercial_Invoice", "Vat_Invoice", "Invoice"] },
-			batch: true,
-			serverFiltering: true,
-			serverSorting: true,
-			serverPaging: true,
-			page:1,
-			pageSize: 100
-		}),
-		cashSalePrefixDS			: new kendo.data.DataSource({
-			transport: {
-				read 	: {
-					url: apiUrl + "prefixes",
-					type: "GET",
-					headers: banhji.header,
-					dataType: 'json'
-				},
-				parameterMap: function(options, operation) {
-					if(operation === 'read') {
-						return {
-							page: options.page,
-							limit: options.pageSize,
-							filter: options.filter,
-							sort: options.sort
-						};
-					} else {
-						return {models: kendo.stringify(options.models)};
-					}
-				}
-			},
-			schema 	: {
-				model: {
-					id: 'id'
-				},
-				data: 'results',
-				total: 'count'
-			},
-			filter: { field:"type", operator:"where_in", value: ["Commercial_Cash_Sale", "Vat_Cash_Sale", "Cash_Sale"] },
-			batch: true,
-			serverFiltering: true,
-			serverSorting: true,
-			serverPaging: true,
-			page:1,
-			pageSize: 100
-		}),
 		//Item
 		itemList 					: [],
 		itemDS						: dataStore(apiUrl + "items"),
@@ -66659,6 +66586,17 @@
 			serverPaging: true,
 			pageSize: 100
 		}),
+		typeList  			: new kendo.data.DataSource({
+		  	data: banhji.source.prefixList,
+		  	filter:{
+			    logic: "or",
+			    filters: [
+			      	{ field: "type", value: "Commercial_Cash_Sale" },
+			      	{ field: "type", value: "Vat_Cash_Sale" },
+			      	{ field: "type", value: "Cash_Sale" }
+			    ]
+			}
+		}),
 		txnTemplateDS 		: new kendo.data.DataSource({
 		  	data: banhji.source.txnTemplateList,
 		  	filter:{
@@ -66720,7 +66658,6 @@
 		}),
 		assemblyDS			: dataStore(apiUrl + "item_prices"),
 		paymentMethodDS 	: banhji.source.paymentMethodDS,
-		typeList 			: banhji.source.cashSalePrefixDS,
 		amtDueColor 		: banhji.source.amtDueColor,
 	    confirmMessage 		: banhji.source.confirmMessage,
 		frequencyList 		: banhji.source.frequencyList,
@@ -68162,6 +68099,17 @@
 		referenceLineDS		: dataStore(apiUrl + "item_lines"),
 		depositDS  			: dataStore(apiUrl + "transactions"),
 		attachmentDS	 	: dataStore(apiUrl + "attachments"),
+		typeList  			: new kendo.data.DataSource({
+		  	data: banhji.source.prefixList,
+		  	filter:{
+			    logic: "or",
+			    filters: [
+			      	{ field: "type", value: "Commercial_Invoice" },
+			      	{ field: "type", value: "Vat_Invoice" },
+			      	{ field: "type", value: "Invoice" }
+			    ]
+			}
+		}),
 		txnTemplateDS 		: new kendo.data.DataSource({
 		  	data: banhji.source.txnTemplateList,
 		  	filter:{
@@ -68250,7 +68198,6 @@
 			serverPaging: true,
 			pageSize: 100
 		}),
-		typeList 			: banhji.source.invoicePrefixDS,
 		paymentTermDS 		: banhji.source.paymentTermDS,
 		amtDueColor 		: banhji.source.amtDueColor,
 	    confirmMessage 		: banhji.source.confirmMessage,
@@ -71498,7 +71445,7 @@
 				para.push({field: "contact_id", value: obj.contact_id});
 				para.push({field: "status", operator:"where_in", value: [0,2]});
 				para.push({field: "type", operator:"where_in", value:["Commercial_Invoice", "Vat_Invoice", "Invoice", "Commercial_Cash_Sale","Vat_Cash_Sale", "Cash_Sale"]});
-				this.invoiceDS.filter(para);
+				this.referenceDS.filter(para);
 			}else{
 				this.set("isOffsetInvoice", false);
 			}
@@ -71513,11 +71460,16 @@
 		        this.changes();
 	        }
 		},
-		referenceChanges 		: function(){
+		returnChanges 		: function(e){
+			e.preventDefault();
+
+			this.closeWindow();
+		},
+		referenceChanges 	: function(){
 			var returnObj = this.get("returnObj");
 			
 			if(returnObj.reference_id>0){
-				var txn = this.invoiceDS.get(returnObj.reference_id);				
+				var txn = this.referenceDS.get(returnObj.reference_id);				
 				returnObj.set("amount", txn.amount - (txn.amount_paid + txn.deposit));
 				returnObj.set("reference_no", txn.number);				
 			}else{
@@ -71552,7 +71504,7 @@
 					para.push({field: "contact_id", value: obj.contact_id});
 					para.push({field: "status", operator:"where_in", value: [0,2]});
 					para.push({field: "type", operator:"where_in", value:["Commercial_Invoice", "Vat_Invoice", "Invoice", "Commercial_Cash_Sale","Vat_Cash_Sale", "Cash_Sale"]});
-					this.invoiceDS.filter(para);
+					this.referenceDS.filter(para);
 				}else{
 					this.set("isOffsetInvoice", false);
 				}

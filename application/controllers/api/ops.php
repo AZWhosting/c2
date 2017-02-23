@@ -84,27 +84,27 @@ class Ops extends REST_Controller {
  //    //     );
 	// }
 
-	// function runs_get() {
-	// 	$this->load->dbutil();
-	// 	$dbs = $this->dbutil->list_databases();
+	function runs_get() {
+		$this->load->dbutil();
+		$dbs = $this->dbutil->list_databases();
 
-	// 	$companyList = array("banhji","banhji_mac", "db_banhji", "information_schema","innodb","mysql","performance_schema","tmp");
-	// 	$data = array();
-	// 	foreach ($dbs as $db)
-	// 	{	
-	// 		if (!in_array("$db", $companyList)) {
-	// 		    $data[] = $db;
-	// 		    $connection = 'use '.$db;
-	// 		    $this->db->query($connection);
+		$companyList = array("banhji","banhji_mac", "db_banhji", "information_schema","innodb","mysql","performance_schema","tmp");
+		$data = array();
+		foreach ($dbs as $db)
+		{	
+			if (!in_array("$db", $companyList)) {
+			    $data[] = $db;
+			    $connection = 'use '.$db;
+			    $this->db->query($connection);
 
-	// 		    $this->db->where('unit_value', 0.000000000000000);
-	// 		    $this->db->update('item_prices', array('unit_value' => 1.000000000000000));
+			    $this->db->where('id', 1);
+			    $this->db->update('prefixes', array('name' => 'Invoice'));
 
-	// 		    $this->db->insert('item_prices', array('item_id' => 7, 'measurement_id'=> 6, 'unit_value' => 1.000000000000000, 'locale'=> 'km-KH'));
-	// 		}
-	// 	}
+			    // $this->db->insert('item_prices', array('item_id' => 7, 'measurement_id'=> 6, 'unit_value' => 1.000000000000000, 'locale'=> 'km-KH'));
+			}
+		}
 
-	// }
+	}
 
 	// function create_get() {
 	// 	$this->load->dbutil();
