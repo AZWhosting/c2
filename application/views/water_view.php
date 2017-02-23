@@ -11663,6 +11663,7 @@
 		activatProcess 		: false,
 		pageLoad 			: function(id){
 			$("#loadImport").css("display","block");
+			banhji.reading.dataSource.data([]);
 			var self = this;				
 			this.meterDS.query({    			
 				filter: { field:"id", value: id },
@@ -11680,6 +11681,7 @@
 						month_of: monthOf,
 						meter_number  : view[0].meter_number,
 						previous: 0,
+						to_date : self.get("issued_date"),
 						current : view[0].starting_no,
 						invoiced: 1,
 						condition: "new",
@@ -11875,6 +11877,7 @@
 			this.meterDS.data([]);	
 			this.planDS.data([]);
 			this.paymentMethodDS.data([]);
+			banhji.reading.dataSource.data([]);
 			banhji.router.navigate("/center");
 		}
 	});
