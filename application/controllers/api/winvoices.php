@@ -406,6 +406,20 @@ class Winvoices extends REST_Controller {
 				'location' => $m->location->get_raw()->result(),
 				'license' => $license->get_raw()->result(),
 			);
+			
+			$remain = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$remain->where("contact_id", $contact->id);
+			$remain->where("type", "Water_Invoice");
+			$remain->where("id <>", $row->id);
+			$remain->where("status <>", 1)->get();
+			$amountOwed = 0;
+			foreach($remain as $row) {
+				if($row->status == 2) {
+					$amountOwed += $row->remain;
+				} else {
+					$amountOwed += $row->amount;
+				}
+			}
 
 			foreach($items as $item) {
 				
@@ -471,6 +485,7 @@ class Winvoices extends REST_Controller {
 					'address'=> isset($contact->address)?$contact->address:'',
 					'code' 	 => $contact->utility_abbr ."-".$contact->utility_code
 				),
+				'amount_remain' => floatval($amountOwed),
 				'meter'=> $meter,
 				'invoice_lines'=> $lines
 			);

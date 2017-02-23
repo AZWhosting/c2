@@ -202,7 +202,7 @@ a.enquiries:hover .enquiry-content, .enquiry-content:hover {
 </script>
 </head>
 
-<body>
+<body data-bind="events: {  keypress: keyPressLogin }" >
 
    <div class="body-wrapper">
     <div class="container">
@@ -465,7 +465,6 @@ a.enquiries:hover .enquiry-content, .enquiry-content:hover {
           serverPaging: true,
           pageSize: 100
         });
-
         banhji.aws = kendo.observable({
           email: null,
           password: null,
@@ -478,6 +477,9 @@ a.enquiries:hover .enquiry-content, .enquiry-content:hover {
               // banhji.aws.btnSignIn();
             // }
             console.log(this.get('password')); 
+          },
+          keyPressLogin: function(e) {
+            console.log("zkldfjhglkajsdhfskljd");
           },
           btnSignIn: function() {
             if(this.get('email') || this.get('password')){
@@ -588,13 +590,10 @@ a.enquiries:hover .enquiry-content, .enquiry-content:hover {
         });
         
       $(function(){
+        
         auth.getSession();
         kendo.bind($('.login'), banhji.aws);
-        $(document).keypress(function(e){
-          if (e.which == 13){
-              banhji.aws.btnSignIn();
-          }
-        });
+        
       });
       
     </script>

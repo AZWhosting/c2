@@ -2533,7 +2533,7 @@
 							data-bind="click: cancel"><i></i></span>						
 					</div>
 			        <h2 style="padding:0 15px;">Name : <strong data-bind="text: contactOBJ.name"></strong></h2><br>
-			        <div class="span6 row-fluid well" style="overflow: hidden;">
+			        <div class="span6 row-fluid well" style="overflow: hidden;height: 175px;">
 			        	<div class="control-group">										
 							<label for="ddlContactType"><span>License</span> <span style="color:red">*</span></label>
 				        	<input data-role="dropdownlist"
@@ -2546,21 +2546,7 @@
 			                   data-value-field="id"
 			                   data-bind="value: obj.branch_id,
 			                              source: licenseDS,
-			                              events: {change : licenseChange}"/>
-			            </div>
-			            <div class="control-group">										
-							<label for="ddlContactType"><span>Bloc</span></label>
-			                <input data-role="dropdownlist"
-			            	   class="span2 row-fluid"
-			            	   style="width: 100%;padding-left: 0" 
-	            			   data-option-label="(--- Bloc ---)"
-	            			   data-auto-bind="false"			                   
-			                   data-value-primitive="true"
-			                   data-text-field="name"
-			                   data-value-field="id"
-			                   data-bind="value: obj.location_id,
-			                              source: blocDS,
-			                              events: {change : BlocChange}"/>
+			                              events: {change: licenseChange}"/>
 			            </div>
 			        	<div class="control-group">							
 							<label for="txtAbbr"><span data-bind="text: lang.lang.code">Code</span> <span style="color:red">*</span></label>										
@@ -2755,18 +2741,6 @@
 											<div class="span6">		
 												<!-- Group -->
 												<div class="control-group">
-													<!-- <label for="latitute"><span>License</span> <span style="color:red">*</span></label>
-													<div class="input-prepend">
-														<input data-role="dropdownlist"
-								              			   data-option-label="(- Select-)"        
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="source: licenseDS, 
-										                   			value: obj.branch_id,
-										                   			events: {change: onLicenseChange}" 
-										                   style="width: 100%;" />
-													</div> -->
 									    			<label for="latitute"><span>Bloc</span> <span style="color:red">*</span></label>
 													<div class="input-prepend">
 														<input data-role="dropdownlist"
@@ -3979,6 +3953,7 @@
 <script id="Invoice-print-row-template" type="text/x-kendo-tmpl">	
   	<div class="container winvoice-print" style="margin-bottom: 10px; #if(banhji.InvoicePrint.PaperSize == 'A5'){# width: 775px; #}else{# width: 900px; #}#">
 		<div class="span12 headerinv " style="border-bottom: 2px solid \#000;padding: 15px 0;">
+            <img style="position: absolute;left: 0;top: 20px;max-width: 100px;height: auto;" src="#: banhji.institute.logo.url#" alt="#: banhji.institute.name#" title="#: banhji.institute.name#" />
 			<div class="span12" align="center">
 				<h4>#: banhji.institute.name#</h4>					
 				<h5>#: banhji.institute.address# 
@@ -4042,14 +4017,10 @@
 				<tr>
 					<td style="vertical-align: middle;"></td>
 					<td colspan="4" style="text-align: right">
-						ប្រាក់​ជំ​ពាក់​ពេល​មុន Balance brought forward .<br>
-						ប្រាក់​បាន​ទទួល​ Payment Recieve #=kendo.toString(new Date(bill_date), "dd-MMM-yyyy")# .<br>
 						ជំពាក់​សរុប​នៅ​ថ្ងៃ​ធ្វើ​វិក្កយបត្រ Balance as at billing date .
 					</td>
-					<td>
-						<br>
-						0<br>
-						0
+					<td align="right">
+						#: kendo.toString(amount_remain, "c", locale)#
 					</td>
 				</tr>
 				<tr>
@@ -4115,13 +4086,25 @@
 					<tr><td colspan="6"  style="height: 200px;" ></td></tr>
 				#}#
 				<tr>
+					<td colspan="3" align="left">&nbsp;</td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td colspan="3" align="left">&nbsp;</td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>		
+				<tr>
 					<td colspan="5" style="padding-right: 10px;background: \\#355176;color: \\#fff;text-align: right;" class="darkbblue">បំណុល​សរុប TOTAL BALANCE</td>
 					<td style="border: 1px solid;text-align: right">#= kendo.toString(amount, "c", locale)#</td>
 				</tr>
 				<tr>
 					<td rowspan="4" colspan="3">#= meter.license[0].term_of_condition#</td>
 					<td colspan="2" class="greyy" style="background: \\#ccc;">ប្រាក់​ត្រូវ​បង់ TOTAL DUE</td>
-					<td style="text-align: right"><strong>#= kendo.toString(amount, "c", locale)#</strong></td>
+					<td style="text-align: right"><strong>#= kendo.toString(amount + amount_remain, "c", locale)#</strong></td>
 				</tr>
 				<tr>
 					<td colspan="2" class="greyy"  style="background: \\#ccc;">ថ្ងៃផុតកំណត់ DUE DATE</td>
@@ -4146,7 +4129,7 @@
 						<span style="margin-left: -15px;" id="footwnumber#:id#"></span>
 					</th>
 					<td width="270" class="greyy"  style="background: \\#ccc;border-bottom:1px solid \\#fff;">ប្រាក់​ត្រូវ​បង់ TOTAL DUE</td>
-					<td width="180" align="right"><strong>#= kendo.toString(amount, "c", locale)#</strong></td>
+					<td width="180" align="right"><strong>#= kendo.toString(amount + amount_remain, "c", locale)#</strong></td>
 				</tr>
 				<tr>
 					<td><p>វិក្កយបត្រ</p></td>
@@ -9959,8 +9942,7 @@
 			banhji.reading.dataSource.data([]);	
 			reader.onload = function() {	
 				var data = reader.result;	
-				var result = {}; 
-				var errorArray = [];						
+				var result = {}; 					
 				var workbook = XLSX.read(data, {type : 'binary'});
 				workbook.SheetNames.forEach(function(sheetName) {
 					var roa = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
@@ -9973,9 +9955,8 @@
 							roa[i].month_of = monthOf;
 							roa[i].from_date = new Date(roa[i].to_date);
 							roa[i].to_date = self.get("toDateUpload");
-
-							errorArray = roa[i];
-							if(roa[i].current < roa[i].previous){
+							// console.log("current :"+roa[i].current+"___previous :"+roa[i].previous);
+							if(kendo.parseInt(roa[i].current) < kendo.parseInt(roa[i].previous)){
 								self.Uploaderror.push({line: i+2, meter_number: roa[i].meter_number,previous: roa[i].previous ,current: roa[i].current, status: 0});
 							}
 							banhji.reading.dataSource.add(roa[i]);
@@ -11257,10 +11238,6 @@
 				self.set("contactOBJ", view[0]);
 			});
 		},
-		licenseChange 			: function(e){
-			var obj = this.get("obj"), self = this;
-			this.blocDS.filter({field: "branch_id", value: obj.branch_id});
-		},
 		loadContact 		: function(id){
 			var self = this;
 			this.contactDS.query({
@@ -11295,14 +11272,14 @@
 			var obj = this.dataSource.at(0);			
 			this.set("obj", obj);
 		},
-		BlocChange 			: function(e) {
+		licenseChange 		: function(e) {
 			var obj = this.get("obj"), self = this;
-			this.blocDS.query({    			
-				filter: { field:"id", value: obj.location_id },
+			this.licenseDS.query({    			
+				filter: { field:"id", value: obj.branch_id },
 				page: 1,
-				take: 100
+				take: 1
 			}).then(function(e){
-				var view = self.blocDS.view();	
+				var view = self.licenseDS.view();	
 				self.goNumber(view[0].abbr);
 				self.set("Codeabbr", view[0].abbr);
 				self.dataSource.pushUpdate({abbr: view[0].abbr});
@@ -11357,7 +11334,7 @@
 		},
 		save 				: function() {
 			var self = this, obj = this.get("obj");
-			if(obj.branch_id != null && this.dataSource.data().length > 0 && obj.location_id != null && obj.abbr != null && obj.code != null){
+			if(obj.branch_id != null && this.dataSource.data().length > 0 &&  obj.abbr != null && obj.code != null){
 				this.dataSource.sync();
 				this.dataSource.bind("requestEnd", function(e){
 					if(e.type != 'read') {
@@ -11556,6 +11533,7 @@
 			this.userActivatDS.query({filter: [{field: "contact_id", value: id}]})
 			.then(function(){
 				var view = self.userActivatDS.data();
+				self.locationDS.filter({field: "branch_id", value: view[0].branch_id});
 				self.dataSource.insert(0,{				
 					contact_id		: id,
 					meter_number 	: null,

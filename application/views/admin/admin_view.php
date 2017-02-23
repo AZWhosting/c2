@@ -2842,9 +2842,10 @@
           banhji.router.navigate('userlist/new');
         },
         removeUser: function(e) {
+          var self = this;
           var win = $('<div/>', {id: 'myWin'});
           win.html('Are you sure you want to remove this ' + e.data.username + ' user? <br><br><hr><button class="pull-right btn btn-info" id="cancelThisUser">Cancel</button>&nbsp;<button class="pull-right btn btn-warning" id="removeThisUser">Remove</button>');
-          var o = (win).kendoWindow({
+          self.o = (win).kendoWindow({
             width: "600px",
             title: "Remove " + e.data.username,
             visible: false,
@@ -2856,18 +2857,18 @@
               this.destroy();
             }
           }).data('kendoWindow');
-          o.center().open();
+          self.o.center().open();
 
           $('#cancelThisUser').click(function(){
-              o.close();
+              self.o.close();
           });  
           $('#removeThisUser').click(function(){
             banhji.users.users.remove(e.data);
             banhji.users.users.sync();
             banhji.users.users.bind('requestEnd', function(e){
               if(e.type == 'destroy') {
-                 $("#ntf1").data("kendoNotification").success("user has been removed.");
-                 o.destroy();
+                $("#ntf1").data("kendoNotification").success("user has been removed.");
+                self.o.destroy();
               }
             });
           });          
