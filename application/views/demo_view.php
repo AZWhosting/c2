@@ -30993,6 +30993,149 @@
         </div>
     </div>
 </script>
+<!--Caritas Company-->
+<script id="formCaritasExpense" type="text/x-kendo-template">
+	<div class="voucher1">
+    	<div class="head">
+    		<div class="logo">
+            	<img style="max-width: 100px" data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
+            </div>
+            <div class="official">
+            	Official
+            </div>
+            <div class="head-title">
+            	ADVANCE VOUCHER
+            </div>
+            <div class="row">
+            	<div class="span12">
+	    			<div class="span7" style="padding-left: 0; padding-right: 15px;">
+	    				<table class="tableright">
+	    					<tr>
+	    						<td style="width: 156px; text-align: right;">PAID TO/ RECEIVED FROM</td>
+	    						<td></td>
+	    					</tr>
+	    					<tr>
+	    						<td style="text-align: right;">PAYMENT METHOD</td>
+	    						<td></td>
+	    					</tr>
+	    					<tr>
+	    						<td style="text-align: right;">Location</td>
+	    						<td></td>
+	    					</tr>
+	    				</table>
+	    			</div>
+	    			<div class="span5" style="padding-right: 0; ">
+	    				<table class="tableright">
+	    					<tr>
+	    						<td style="width: 130px; text-align: right;">Transaction Date:</td>
+	    						<td style="text-align: center; color: #333; font-weight: 600;">1-Jan-2016</td>
+	    					</tr>
+	    					<tr>
+	    						<td style="text-align: right;">Transaction No:</td>
+	    						<td style="text-align: center; color: #333; font-weight: 600; background: #d9d9d9;">PV1701001</td>
+	    					</tr>
+	    					<tr>
+	    						<td style="text-align: right;">Project Name:</td>
+	    						<td style="text-align: center;"></td>
+	    					</tr>
+	    				</table>
+	    			</div>
+	    		</div>
+    		</div>
+    	</div>
+    	<div class="content">
+    		<div class="row">
+    			<div class="span12" style="padding-bottom: 15px;">
+    				<table class="tablecontent">
+    					<thead>  				
+	    					<tr>
+	    						<th style="width: 240px; border: 1px solid #333; text-align: center; padding: 5px;" rowspan="2">DESCRIPTION</th>
+	    						<th style="width: 50px; border: 1px solid #333; text-align: center; padding: 5px;" rowspan="2">REF</th>
+	    						<th style="width: 109px; border: 1px solid #333; text-align: center; padding: 5px;" rowspan="2">DONOR</th>
+	    						<th style="border: 1px solid #333; text-align: center; padding: 5px; background: #fbda6c; " colspan="3">ACCOUNTING ENTRY</th>		
+	    					</tr>
+	    					<tr>
+	    						<th style="border: 1px solid #333; padding: 5px; text-align: center; background: #fbda6c;">ACCOUNT</th>
+	    						<th style="border: 1px solid #333; padding: 5px; text-align: center; background: #fbda6c;">DR</th>
+	    						<th style="border: 1px solid #333; padding: 5px; text-align: center; background: #fbda6c;">CR</th>
+	    					</tr>
+	    				</thead>
+	    				<tbody>
+	    					<tr>
+	    						<td style="border: 1px solid #333; padding: 5px;">Being for payment of Office Rental Being for payment of Office Rental Being for payment of Office Rental</td>
+	    						<td style="border: 1px solid #333; padding: 5px; text-align: center;">1-10</td>
+	    						<td style="border: 1px solid #333; padding: 5px; text-align: center;">ABC</td>
+	    						<td style="border: 1px solid #333; padding: 5px; background: #fbda6c; font-weight: 800; text-align: center;">1100</td>
+	    						<td style="border: 1px solid #333; padding: 5px; background: #fbda6c; text-align: right; font-weight: 800;">1,000.00</td>
+	    						<td style="border: 1px solid #333; padding: 5px; background: #fbda6c; text-align: right; font-weight: 800;"></td>
+	    					</tr>
+	    					<tr>
+	    						<td style="border: 1px solid #333; padding: 5px;">Being for payment of Office Rental Being for payment of Office Rental Being for payment of Office Rental</td>
+	    						<td style="border: 1px solid #333; padding: 5px; text-align: center;">1-10</td>
+	    						<td style="border: 1px solid #333; padding: 5px; text-align: center;">ABC</td>
+	    						<td style="border: 1px solid #333; padding: 5px; background: #fbda6c; font-weight: 800; text-align: center;">1130</td>
+	    						<td style="border: 1px solid #333; padding: 5px; background: #fbda6c; text-align: right; font-weight: 800;">9,000.00</td>
+	    						<td style="border: 1px solid #333; padding: 5px; background: #fbda6c; text-align: right; font-weight: 800;"></td>
+	    					</tr>
+	    					<tr>
+	    						<td style="border: 1px solid #333; padding: 5px;">Being for payment of Office Rental Being for payment of Office Rental Being for payment of Office Rental</td>
+	    						<td style="border: 1px solid #333; padding: 5px; text-align: center;">1-10</td>
+	    						<td style="border: 1px solid #333; padding: 5px; text-align: center;">ABC</td>
+	    						<td style="border: 1px solid #333; padding: 5px; background: #fbda6c; font-weight: 800; text-align: center;">1120</td>
+	    						<td style="border: 1px solid #333; padding: 5px; background: #fbda6c; text-align: right; font-weight: 800;"></td>
+	    						<td style="border: 1px solid #333; padding: 5px; background: #fbda6c; text-align: right; font-weight: 800;">10,000.00</td>
+	    					</tr>
+	    					<tr>
+	    						<td style="border: 1px solid #333; padding: 5px;">Being for payment of Office Rental Being for payment of Office Rental Being for payment of Office Rental</td>
+	    						<td style="border: 1px solid #333; padding: 5px; text-align: center;">1-10</td>
+	    						<td style="border: 1px solid #333; padding: 5px; text-align: center;">ABC</td>
+	    						<td style="border: 1px solid #333; padding: 5px; background: #fbda6c; font-weight: 800; text-align: center;">1100</td>
+	    						<td style="border: 1px solid #333; padding: 5px; background: #fbda6c; text-align: right; font-weight: 800;">1,000.00</td>
+	    						<td style="border: 1px solid #333; padding: 5px; background: #fbda6c; text-align: right; font-weight: 800;"></td>
+	    					</tr>
+	    				</tbody>
+	    				<tfoot>
+	    					<tr>
+	    						<td style="border: 1px solid #333; padding: 5px; text-align: left;" colspan="2">PREPARED BY :</td>
+	    						<td style="border: 1px solid #333; padding: 5px; font-weight: 800;">Total</td>
+	    						<td style="border: 1px solid #333; padding: 5px; font-weight: 800;"></td>
+	    						<td style="border: 1px solid #333; padding: 5px; text-align: right; font-weight: 800;">10,000.00</td>
+	    						<td style="border: 1px solid #333; padding: 5px; text-align: right; font-weight: 800;">10,000.00</td>
+	    					</tr>
+	    					<tr>
+	    						<td colspan="2" rowspan="2" style="border: 1px solid #333; padding: 5px;">VERIFIED BY :</td>
+	    						<td rowspan="2" style="border: 1px solid #333; padding: 5px; font-weight: 800; background: #808080; color: #FFF;">Only for Advance Clearance</td>
+	    						<td colspan="2" style="border: 1px solid #333; padding: 5px; ">AV No:    N123</td>
+	    						<td style="border: 1px solid #333; padding: 5px; text-align: right; ">1000</td>
+	    					</tr>
+	    					<tr>
+	    						<td colspan="2" style="border: 1px solid #333; padding: 5px; text-align: left; font-weight: 800;">NET AMOUNT DUE FROM STAFF</td>
+	    						<td style="border: 1px solid #333; padding: 5px; text-align: right; font-weight: 800;">9,000.00</td>
+	    					</tr>
+	    					<tr>
+	    						<td colspan="2" rowspan="2" style="border: 1px solid #333; padding: 5px;">APPROVED BY :</td>
+	    						<td style="border: 1px solid #333; padding: 5px; ">In Words:</td>
+	    						<td style="border: 1px solid #333; padding: 5px; "></td>
+	    						<td style="border: 1px solid #333; padding: 5px; "></td>
+	    						<td style="border: 1px solid #333; padding: 5px; "></td>
+	    					</tr>
+	    					<tr>
+	    						<td colspan="4" style="border: 1px solid #333; padding: 5px; text-align: center;">Nine Thousand Dollars And No Cents</td>
+	    					</tr>
+	    					<tr>
+	    						<td colspan="2" style="border: 1px solid #333; padding: 5px;">RECEIVED BY :</td>
+	    						<td colspan="4" style="border: 1px solid #333; padding: 5px; "></td>
+	    					</tr>
+	    				</tfoot>
+    				</table>
+    			</div>
+    		</div>
+    	</div>
+    	<div class="footer">
+    	</div>
+    </div>
+</script>
+
 
 <script id="invoiceCustom-txn-form-template" type="text/x-kendo-template">
 	<a class="span4 #= type #" data-id="#= id #" data-bind="click: selectedForm" style="padding-right: 0; width: 32%;">
@@ -69064,7 +69207,7 @@
       		this.set("windowVisible", false);
       	},
       	cancelWindow : function(){
-      		this.set("offsetInvoiceVisible", false);
+      		this.set("windowVisible", false);
       		
       		var returnObj = this.get("returnObj"),
       		indexReturnObj = this.returnDS.indexOf(returnObj),
@@ -71355,6 +71498,7 @@
 				case 40: Active = banhji.view.invoiceForm40; break;
 				case 41: Active = banhji.view.invoiceForm41; break;
 				case 42: Active = banhji.view.invoiceForm42; break;
+				case 43: Active = banhji.view.formCaritasExpense; break;
 			}
 			banhji.view.invoiceCustom.showIn('#invFormContent', Active);
 		},
@@ -71601,6 +71745,7 @@
 				case 40: Active = banhji.view.invoiceForm40; break;
 				case 41: Active = banhji.view.invoiceForm41; break;
 				case 42: Active = banhji.view.invoiceForm42; break;
+				case 43: Active = banhji.view.formCaritasExpense; break;
 			}
 			banhji.view.invoiceForm.showIn('#invFormContent', Active);
 		},
@@ -84770,6 +84915,8 @@
 		invoiceForm40: new kendo.Layout("#invoiceForm40", {model: banhji.invoiceForm}),
 		invoiceForm41: new kendo.Layout("#invoiceForm41", {model: banhji.invoiceForm}),
 		invoiceForm42: new kendo.Layout("#invoiceForm42", {model: banhji.invoiceForm}),
+		//Caritas Company
+		formCaritasExpense: new kendo.Layout("#formCaritasExpense", {model: banhji.invoiceForm}),
 
 		saleSummaryByCustomer: new kendo.Layout("#saleSummaryByCustomer", {model: banhji.saleSummaryByCustomer}),
 		saleDetailByCustomer: new kendo.Layout("#saleDetailByCustomer", {model: banhji.saleDetailByCustomer}),

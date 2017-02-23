@@ -2755,6 +2755,18 @@
 											<div class="span6">		
 												<!-- Group -->
 												<div class="control-group">
+													<!-- <label for="latitute"><span>License</span> <span style="color:red">*</span></label>
+													<div class="input-prepend">
+														<input data-role="dropdownlist"
+								              			   data-option-label="(- Select-)"        
+										                   data-value-primitive="true"
+										                   data-text-field="name"
+										                   data-value-field="id"
+										                   data-bind="source: licenseDS, 
+										                   			value: obj.branch_id,
+										                   			events: {change: onLicenseChange}" 
+										                   style="width: 100%;" />
+													</div> -->
 									    			<label for="latitute"><span>Bloc</span> <span style="color:red">*</span></label>
 													<div class="input-prepend">
 														<input data-role="dropdownlist"
@@ -11882,9 +11894,9 @@
 		},
 		cancel 				: function(){
 			$("#loadImport").css("display","none");
-			this.meterDS.cancelChanges();	
-			this.planDS.cancelChanges();
-			this.paymentMethodDS.cancelChanges();
+			this.meterDS.data([]);	
+			this.planDS.data([]);
+			this.paymentMethodDS.data([]);
 			banhji.router.navigate("/center");
 		}
 	});

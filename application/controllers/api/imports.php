@@ -10,6 +10,7 @@ class Imports extends REST_Controller {
 	public $server_pwd;
 	public $locale;
 	public $currency;
+	public $countryId;
 	//CONSTRUCTOR
 	function __construct() {
 		parent::__construct();
@@ -23,6 +24,7 @@ class Imports extends REST_Controller {
 			$this->_database = $conn->inst_database;
 			$this->locale = $institute->locale;
 			$this->currency = $institute->monetary_id;
+			$this->countryId = $institute->country_id;
 			date_default_timezone_set("$conn->time_zone");
 		}
 	}
@@ -36,22 +38,23 @@ class Imports extends REST_Controller {
 		foreach ($models as $value) {
 			$last_id++;
 			$deposit = new Account(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			$deposit->where('number', $value->deposit_account)->get();
+			$deposit->where('number', isset($value->deposit_account) ? $value->deposit_account:0)->get();
 
 			$discount = new Account(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			$discount->where('number', $value->trade_discount)->get();
+			$discount->where('number', isset($value->trade_discount) ? $value->trade_discount:0)->get();
 
 			$settlement = new Account(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			$settlement->where('number', $value->settlement_discount)->get();
+			$settlement->where('number', isset($value->settlement_discount) ? $value->settlement_discount:0)->get();
 
 			$account = new Account(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			$account->where('number', $value->account)->get();
+			$account->where('number', isset($value->account) ? $value->account:0)->get();
 
+			
 			$revenue = new Account(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			$revenue->where('number', $value->revenue_account)->get();
+			$revenue->where('number', isset($value->revenue_account) ? $value->revenue_account:0)->get();
 
 			$tax = new Tax_item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			$tax->where('name', $value->tax)->get();
+			$tax->where('name', isset($value->tax) ? $value->tax:0)->get();
 
 			$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$type->where('name', $value->contact_type)->where('parent_id <>', "")->get();
@@ -59,12 +62,24 @@ class Imports extends REST_Controller {
 			$currency = new Currency(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$currency->where('code', $value->currency)->get();
 
-			$country = new Country(null);
-			$country->where('name', $value->country)->get();
+			// test
+			$country = null;
+			if(isset($value->country)) {
+				$connection = 'use banhji';
+				$this->db->query($connection);
+				$this->db->select('id')->from('countries')->where('name', $value->country);
+				$sql = $this->db->get();
+				foreach($sql->result() as $row) {
+					$country = $row->id;
+				}
+			} else {
+				$country = $this->countryId;
+			}
+				
 
 			$obj = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			isset($value->branch_id) 				? $obj->branch_id 				= $value->branch_id : "";
-			isset($value->country) 					? $obj->country_id 				= $country->id : "";
+			$obj->country_id = isset($value->country)?  $country : $this->countryId;
 			isset($value->ebranch_id) 				? $obj->ebranch_id 				= $value->ebranch_id : "";
 			isset($value->elocation_id) 			? $obj->elocation_id 			= $value->elocation_id : "";
 			isset($value->wbranch_id) 				? $obj->wbranch_id 				= $value->wbranch_id : "";
@@ -140,7 +155,7 @@ class Imports extends REST_Controller {
 				$data["results"][] = array(
 					"id" 						=> $obj->id,
 					"branch_id" 				=> $obj->branch_id,
-					"country_id" 				=> $obj->country_id,
+					"country_id" 				=> $country,
 					"ebranch_id" 				=> $obj->ebranch_id,
 					"elocation_id" 				=> $obj->elocation_id,
 					"wbranch_id" 				=> $obj->wbranch_id,
