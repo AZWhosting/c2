@@ -68443,7 +68443,6 @@
 		    	obj.set("ship_to", contact.ship_to);
 
 		    	this.setRate();
-		    	this.loadReference();
 		    	this.jobDS.filter({ field:"contact_id", value: obj.contact_id });		    		    			    	
 	    	}
 
@@ -69501,84 +69500,6 @@
 			}
 
 			this.journalLineDS.sync();
-		},
-		//Reference
-		loadReference 		: function(){
-			var obj = this.get("obj");
-
-			if(obj.contact_id>0){
-				this.set("enableRef", true);
-
-				this.referenceDS.filter([
-					{ field: "contact_id", value: obj.contact_id },
-					{ field: "status <>", value: 3 },
-					{ field: "type", operator:"where_in", value:["Commercial_Invoice", "Vat_Invoice", "Invoice", "Commercial_Cash_Sale","Vat_Cash_Sale", "Cash_Sale"] }
-				]);
-			}else{
-				this.set("enableRef", false);
-				obj.set("reference_id", "");
-			}
-		},
-		referenceChanges 	: function(e){
-			var self = this, obj = this.get("obj");
-			
-			if(obj.reference_id>0){
-				var ref = this.referenceDS.get(obj.reference_id);
-				
-				obj.set("reference_no", ref.number);
-				obj.set("amount", ref.amount);
-
-				if(ref.type=="Commercial_Cash_Sale" || ref.type=="Vat_Cash_Sale" || ref.type=="Cash_Sale"){					
-					obj.set("amount_paid", ref.amount);
-					this.set("showReturn", true);
-				}else{
-					obj.set("amount_paid", ref.amount_paid + ref.deposit);
-					if(ref.status==0){
-						this.set("showReturn", false);
-
-						this.returnDS.data([]);
-					}else{
-						this.set("showReturn", true);
-
-						this.returnDS.data([]);
-						this.addRowOption();
-					}
-				}				
-									
-			 	this.referenceLineDS.query({
-			 		filter: { field:"transaction_id", value: obj.reference_id },
-			 		page: 1,
-			 		pageSize: 100
-			 	}).then(function(){
-			 		var view = self.referenceLineDS.view();					
-
-			 		self.lineDS.data([]);
-			 		$.each(view, function(index, value){
-			 			self.lineDS.add({					
-							transaction_id 		: obj.id,
-							item_id 			: value.item_id,
-							tax_item_id 		: value.tax_item_id,
-							measurement_id 		: value.measurement_id,							
-							description 		: value.description,				
-							quantity 	 		: value.quantity,
-							price 				: value.price,												
-							amount 				: value.amount,
-							discount 			: value.discount,
-							fine 				: value.fine,
-							rate				: value.rate,
-							locale				: value.locale,
-							movement 			: value.movement,													
-
-							item_prices			: value.item_prices
-						});
-			 		});
-
-			 		self.changes();
-			 	});			 				 				 				 				
-			}else{
-				this.returnDS.data([]);
-				this.addRowOption();
-			}							
 		}
 	});
 	banhji.cashRefund =  kendo.observable({

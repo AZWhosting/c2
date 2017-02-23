@@ -130,6 +130,7 @@ class Items extends REST_Controller {
 				   	"name" 						=> $value->name,
 				   	"purchase_description" 		=> $value->purchase_description,
 				   	"sale_description" 			=> $value->sale_description,
+				   	"measurements"				=> $value->measurements,
 				   	"catalogs" 					=> explode(",",$value->catalogs),				   	
 				   	"cost" 						=> floatval($value->cost),
 				   	"price" 					=> floatval($value->price),
@@ -192,6 +193,7 @@ class Items extends REST_Controller {
 		   	isset($value->name) 					? $obj->name 					= $value->name :  "";
 		   	isset($value->purchase_description) 	? $obj->purchase_description 	= $value->purchase_description : "";
 		   	isset($value->sale_description) 		? $obj->sale_description 		= $value->sale_description : "";
+		   	isset($value->measurements) 			? $obj->measurements 			= $value->measurements : "";
 		   	isset($value->catalogs) 				? $obj->catalogs 				= implode(",",$value->catalogs) : "";
 		   	isset($value->cost) 					? $obj->cost 					= $value->cost : "";
 		   	isset($value->price) 					? $obj->price 					= $value->price : "";
@@ -237,6 +239,7 @@ class Items extends REST_Controller {
 				   	"name" 						=> $obj->name,
 				   	"purchase_description" 		=> $obj->purchase_description,
 				   	"sale_description" 			=> $obj->sale_description,
+				   	"measurements"				=> $obj->measurements,
 				   	"catalogs" 					=> explode(",",$obj->catalogs),				   	
 				   	"cost" 						=> floatval($obj->cost),
 				   	"price" 					=> floatval($obj->price),
@@ -297,6 +300,7 @@ class Items extends REST_Controller {
 		   	isset($value->name) 					? $obj->name 					= $value->name :  "";
 		   	isset($value->purchase_description) 	? $obj->purchase_description 	= $value->purchase_description : "";
 		   	isset($value->sale_description) 		? $obj->sale_description 		= $value->sale_description : "";
+		   	isset($value->measurements) 			? $obj->measurements 			= $value->measurements : "";
 		   	isset($value->catalogs) 				? $obj->catalogs 				= implode(",",$value->catalogs) : "";
 		   	isset($value->cost) 					? $obj->cost 					= $value->cost : "";
 		   	isset($value->price) 					? $obj->price 					= $value->price : "";
@@ -343,6 +347,7 @@ class Items extends REST_Controller {
 				   	"name" 						=> $obj->name,
 				   	"purchase_description" 		=> $obj->purchase_description,
 				   	"sale_description" 			=> $obj->sale_description,
+				   	"measurements"				=> $obj->measurements,
 				   	"catalogs" 					=> explode(",",$obj->catalogs),				   	
 				   	"cost" 						=> floatval($obj->cost),
 				   	"price" 					=> floatval($obj->price),
