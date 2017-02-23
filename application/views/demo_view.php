@@ -3395,7 +3395,7 @@
 								                   data-value-field="id"
 								                   data-template="currency-list-tmpl"
 								                   data-bind="value: obj.currency_id,
-								                              source: currencyDS"
+								                              source: currencyAllDS"
 								                   style="width: 100%" />
 							            </td>
 					            	</tr>
@@ -3445,8 +3445,8 @@
 <script id="currencyRate-template" type="text/x-kendo-tmpl">		
 	<tr>			
 		<td>#=kendo.toString(new Date(date), "dd-MM-yyyy")#</td>		
-		<td>#=currency.length>0?currency[0].code:""#</td>
-		<td>#=currency.length>0?currency[0].country:""#</td>
+		<td>#=banhji.currencyRate.getCode(currency_id)#</td>
+		<td>#=banhji.currencyRate.getCountry(currency_id)#</td>
 		<td align="right">#=rate#</td>					
 		<td>#=source#</td>
 		<td>#=method#</td>				
@@ -21197,8 +21197,8 @@
 					                   data-text-field="number"
 					                   data-value-field="id"
 					                   data-bind="value: returnObj.reference_id, 
-					                   			  source: invoiceDS,
-					                   			  events:{change: invoiceChanges}"
+					                   			  source: referenceDS,
+					                   			  events:{change: referenceChanges}"
 					                   placeholder="Select Invoice..." 
 					                   style="width: 100%" />
 								</td>
@@ -35537,6 +35537,7 @@
 	            		<tbody data-role="listview"	            				
 		            			data-edit-template="itemSetting-edit-category-template"
 				                data-template="itemSetting-category-template"
+				                data-auto-bind="false"
 				                data-bind="source: categoryDS"></tbody>
 	            	</table>		            
 	            </div>
@@ -35686,6 +35687,7 @@
             <dd>
             <input data-role="dropdownlist"
                    data-value-primitive="true"
+                   data-auto-bind="false"
                    data-text-field="name"
                    data-value-field="id"
                    data-bind="value: item_type_id,
@@ -44981,44 +44983,8 @@
 		jobList 					: [],
 		jobDS						: dataStore(apiUrl + "jobs"),
 		//Currency
-		currencyAllDS				: dataStore(apiUrl + "currencies"),
-		currencyDS					: new kendo.data.DataSource({
-			transport: {
-				read 	: {
-					url: apiUrl + "currencies",
-					type: "GET",
-					headers: banhji.header,
-					dataType: 'json'
-				},				
-				parameterMap: function(options, operation) {
-					if(operation === 'read') {
-						return {
-							page: options.page,
-							limit: options.pageSize,
-							filter: options.filter,
-							sort: options.sort
-						};
-					} else {
-						return {models: kendo.stringify(options.models)};
-					}
-				}
-			},
-			schema 	: {
-				model: {
-					id: 'id'
-				},
-				data: 'results',
-				total: 'count'
-			},
-			filter: { field:"status", value: 1 },
-			// group: { field: "group"},
-			batch: true,
-			serverFiltering: true,
-			serverSorting: true,
-			serverPaging: true,
-			page:1,
-			pageSize: 100
-		}),
+		currencyList 				: [],
+		currencyDS					: dataStore(apiUrl + "currencies"),
 		currencyRateDS				: dataStore(apiUrl + "currencies/rate"),
 		//Prefixes
 		invoicePrefixDS				: new kendo.data.DataSource({
@@ -45097,6 +45063,7 @@
 		itemList 					: [],
 		itemDS						: dataStore(apiUrl + "items"),
 		itemTypeDS					: dataStore(apiUrl + "item_types"),
+		itemGroupList 				: [],
 		itemGroupDS					: dataStore(apiUrl + "items/group"),
 		brandDS						: dataStore(apiUrl + "brands"),
 		categoryList 				: [],
@@ -45297,7 +45264,8 @@
 		selectItemMessage 			: "Please select an item.",
 		duplicateSelectedItemMessage: "You already selected this item.",
 		pageLoad 					: function(){
-			this.loadRate();
+			this.loadCurrencies();
+			this.loadRates();
 			this.loadPrefixes();
 			this.loadTxnTemplates();
 			this.loadTaxes();
@@ -45305,6 +45273,7 @@
 			this.loadSegmentItems();
 			this.loadAccounts();
 			this.loadCategories();
+			this.loadItemGroups();
 			this.loadItems();
 			this.itemTypeDS.read();
 			this.loadItemPrices();
@@ -45361,7 +45330,25 @@
 				});
 			});
 		},
-		loadRate 					: function(){
+		loadCurrencies 					: function(){
+			var self = this, raw = this.get("currencyList");
+
+			//Clear array
+			if(raw.length>0){
+				raw.splice(0,raw.length);
+			}
+
+			this.currencyDS.query({
+				filter:[]
+			}).then(function(){
+				var view = self.currencyDS.view();
+
+				$.each(view, function(index, value){
+					raw.push(value);
+				});
+			});
+		},
+		loadRates 					: function(){
 			this.currencyRateDS.query({
 				filter:[],
 				sort:{ field:"date", dir:"desc"}
@@ -45472,6 +45459,24 @@
 				filter:[]
 			}).then(function(){
 				var view = self.categoryDS.view();
+
+				$.each(view, function(index, value){
+					raw.push(value);
+				});
+			});
+		},
+		loadItemGroups 				: function(){
+			var self = this, raw = this.get("itemGroupList");
+
+			//Clear array
+			if(raw.length>0){
+				raw.splice(0,raw.length);
+			}
+
+			this.itemGroupDS.query({
+				filter:[]
+			}).then(function(){
+				var view = self.itemGroupDS.view();
 
 				$.each(view, function(index, value){
 					raw.push(value);
@@ -46058,7 +46063,10 @@
     	numberDS 				: dataStore(apiUrl + "accounts"),
     	accountTypeDS 			: banhji.source.accountTypeDS,
     	subAccountDS			: dataStore(apiUrl + "accounts"),
-    	currencyDS 				: banhji.source.currencyDS,
+    	currencyDS  			: new kendo.data.DataSource({
+		  	data: banhji.source.currencyList,
+		  	filter: { field:"status", value: 1 }
+		}),
     	statusList 				: banhji.source.statusList,
     	confirmMessage 			: banhji.source.confirmMessage,
     	obj 					: null,
@@ -46283,8 +46291,11 @@
 		lineDS  			: dataStore(apiUrl + "journal_lines"),
 		recurringDS 		: dataStore(apiUrl + "transactions"),
 		recurringLineDS 	: dataStore(apiUrl + "journal_lines"),
-		currencyDS 			: banhji.source.currencyDS,
 		attachmentDS	 	: dataStore(apiUrl + "attachments"),
+		currencyDS  			: new kendo.data.DataSource({
+		  	data: banhji.source.currencyList,
+		  	filter: { field:"status", value: 1 }
+		}),
 		contactDS 			: new kendo.data.DataSource({
 		  	data: banhji.source.customerList,
 		  	sort: { field: "number", dir: "asc" }
@@ -46934,9 +46945,12 @@
 		recurringDS 		: dataStore(apiUrl + "transactions"),
 		recurringLineDS 	: dataStore(apiUrl + "account_lines"),
 		contactDS 			: banhji.source.contactDS,
-		currencyDS 			: banhji.source.currencyDS,
 		attachmentDS	 	: dataStore(apiUrl + "attachments"),
 		paymentMethodDS		: banhji.source.paymentMethodDS,
+		currencyDS  			: new kendo.data.DataSource({
+		  	data: banhji.source.currencyList,
+		  	filter: { field:"status", value: 1 }
+		}),
 		accountDS 			: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
 		  	filter: { field:"account_type_id", value: 10 },
@@ -47656,7 +47670,10 @@
 		recurringDS 		: dataStore(apiUrl + "transactions"),
 		recurringLineDS 	: dataStore(apiUrl + "account_lines"),
 		attachmentDS	 	: dataStore(apiUrl + "attachments"),
-		currencyDS 			: banhji.source.currencyDS,
+		currencyDS  			: new kendo.data.DataSource({
+		  	data: banhji.source.currencyList,
+		  	filter: { field:"status", value: 1 }
+		}),
 		contactDS 			: new kendo.data.DataSource({
 		  	data: banhji.source.employeeList,
 		  	sort: { field:"number", dir:"asc" }
@@ -48334,8 +48351,11 @@
 		recurringDS 		: dataStore(apiUrl + "transactions"),
 		recurringLineDS 	: dataStore(apiUrl + "account_lines"),
 		existingInvoiceDS 	: dataStore(apiUrl + "account_lines"),
-		currencyDS  		: banhji.source.currencyDS,
 		currencyRateDS		: dataStore(apiUrl + "currencies/rate"),
+		currencyDS  			: new kendo.data.DataSource({
+		  	data: banhji.source.currencyList,
+		  	filter: { field:"status", value: 1 }
+		}),
 		contactDS 			: new kendo.data.DataSource({
 		  	data: banhji.source.employeeList,
 		  	sort: { field:"number", dir:"asc" }
@@ -49272,8 +49292,14 @@
 
 	banhji.currencyRate =  kendo.observable({
 		lang 				: langVM,
-		dataSource 			: banhji.source.currencyRateDS,
-		currencyDS 			: banhji.source.currencyAllDS,
+		dataSource 			: dataStore(apiUrl + "currencies/rate"),
+		currencyDS  		: new kendo.data.DataSource({
+		  	data: banhji.source.currencyList,
+		  	filter: { field:"status", value: 1 }
+		}),
+		currencyAllDS  		: new kendo.data.DataSource({
+		  	data: banhji.source.currencyList
+		}),
 		obj 				: null,
 		isEdit 				: false,
 		baseCode 			: banhji.institute.currency.country +' - '+ banhji.institute.currency.code,
@@ -49282,6 +49308,22 @@
 		user_id				: banhji.source.user_id,
 		pageLoad 			: function(){
 		},
+		getCode             : function(id){
+            var raw = banhji.source.currencyDS.get(id);
+            if(raw){
+                return raw.code;
+            }else{
+                return "";
+            }
+        },
+        getCountry             : function(id){
+            var raw = banhji.source.currencyDS.get(id);
+            if(raw){
+                return raw.country;
+            }else{
+                return "";
+            }
+        },
 		openWindow			: function(){
       		this.addEmpty();
 
@@ -49310,13 +49352,14 @@
 		},
 		save 				: function(){
 			var obj = this.get("obj"),
-			currency = this.currencyDS.get(obj.currency_id);
+			currency = this.currencyAllDS.get(obj.currency_id);
 			obj.set("locale", currency.locale);
 
       		this.dataSource.sync();
       		this.dataSource.bind("requestEnd", function(e){
       			if(e.type==="create" || e.type==="update"){
-      				banhji.source.currencyDS.fetch();
+      				banhji.source.loadCurrencies();
+      				banhji.source.loadRates();
       			}
       		});
       		
@@ -52488,8 +52531,11 @@
 		transactionDS  		: dataStore(apiUrl + 'transactions'),
 		contactDS 			: dataStore(apiUrl + 'contacts'),
 		noteDS 				: dataStore(apiUrl + 'notes'),
-		currencyDS 			: banhji.source.currencyDS,
 		summaryDS 			: dataStore(apiUrl + "transactions"),
+		currencyDS  			: new kendo.data.DataSource({
+		  	data: banhji.source.currencyList,
+		  	filter: { field:"status", value: 1 }
+		}),
 		contactTypeDS 			: new kendo.data.DataSource({
 		  	data: banhji.source.contactTypeList,
 		  	filter: { field:"parent_id", value: 2 }//Supplier
@@ -52783,9 +52829,12 @@
 		businessTypeDS			: dataStore(apiUrl + "businesstypes"),
 		contactTypeDS  			: banhji.source.employeeTypeDS,
 		contactPersonDS			: dataStore(apiUrl + "contact_persons"),
-		currencyDS 				: banhji.source.currencyDS,
 		adDS  					: banhji.source.ADAcountDS,
 		saDS  					: banhji.source.SAAcountDS,
+		currencyDS  			: new kendo.data.DataSource({
+		  	data: banhji.source.currencyList,
+		  	filter: { field:"status", value: 1 }
+		}),
 		genders					: banhji.source.genderList,
 		statusList 				: banhji.source.statusList,
 	    obj 					: null,
@@ -53311,9 +53360,9 @@
 		setCurrencyCode 	: function(){
 			var code = "", obj = this.get("obj");
 
-			$.each(banhji.source.currencyRateDS.data(), function(index, value){				
+			$.each(banhji.source.currencyDS.data(), function(index, value){				
 				if(value.locale == obj.locale){
-					code = value.currency[0].code;					
+					code = value.code;					
 
 					return false;					
 				}
@@ -53757,7 +53806,10 @@
 		paymentTermDS			: banhji.source.paymentTermDS,
 		paymentMethodDS			: banhji.source.paymentMethodDS,
 		countryDS 				: banhji.source.countryDS,
-		currencyDS 		  		: banhji.source.currencyDS,
+		currencyDS  			: new kendo.data.DataSource({
+		  	data: banhji.source.currencyList,
+		  	filter: { field:"status", value: 1 }
+		}),
 		contactTypeDS 			: new kendo.data.DataSource({
 		  	data: banhji.source.contactTypeList,
 		  	filter: { field:"parent_id", value: 2 }//Supplier
@@ -60411,8 +60463,11 @@
 		transactionDS  		: dataStore(apiUrl + 'transactions'),
 		noteDS 				: dataStore(apiUrl + 'notes'),
 		attachmentDS	 	: dataStore(apiUrl + "attachments"),
-		currencyDS  		: banhji.source.currencyDS,
 		summaryDS 			: dataStore(apiUrl + "transactions"),
+		currencyDS  			: new kendo.data.DataSource({
+		  	data: banhji.source.currencyList,
+		  	filter: { field:"status", value: 1 }
+		}),
 		contactTypeDS 			: new kendo.data.DataSource({
 		  	data: banhji.source.contactTypeList,
 		  	filter: { field:"parent_id", value: 1 }//Customer
@@ -60519,9 +60574,9 @@
 		setCurrencyCode 	: function(){
 			var code = "", obj = this.get("obj");
 
-			$.each(banhji.source.currencyRateDS.data(), function(index, value){				
+			$.each(banhji.source.currencyDS.data(), function(index, value){				
 				if(value.locale == obj.locale){
-					code = value.currency[0].code;					
+					code = value.code;					
 
 					return false;					
 				}
@@ -60996,7 +61051,10 @@
 		paymentTermDS			: banhji.source.paymentTermDS,
 		paymentMethodDS			: banhji.source.paymentMethodDS,
 		countryDS 				: banhji.source.countryDS,
-		currencyDS 		  		: banhji.source.currencyDS,
+		currencyDS  			: new kendo.data.DataSource({
+		  	data: banhji.source.currencyList,
+		  	filter: { field:"status", value: 1 }
+		}),
 		contactTypeDS 			: new kendo.data.DataSource({
 		  	data: banhji.source.contactTypeList,
 		  	filter: { field:"parent_id", value: 1 }//Customer
@@ -68225,15 +68283,14 @@
 	banhji.saleReturn =  kendo.observable({
 		lang 				: langVM,
 		dataSource 			: dataStore(apiUrl + "transactions"),
-		lineDS  			: dataStore(apiUrl + "item_lines"),
-		assemblyLineDS  	: dataStore(apiUrl + "item_lines"),
-		txnDS 				: dataStore(apiUrl + "transactions"),
-		journalLineDS		: dataStore(apiUrl + "journal_lines"),
 		referenceDS			: dataStore(apiUrl + "transactions"),
-		referenceLineDS		: dataStore(apiUrl + "item_lines"),
 		returnDS			: dataStore(apiUrl + "transactions"),
-		invoiceDS			: dataStore(apiUrl + "transactions"),
-		currencyRateDS		: dataStore(apiUrl + "currencies/rate"),
+		txnDS 				: dataStore(apiUrl + "transactions"),
+		lineDS  			: dataStore(apiUrl + "item_lines"),
+		assemblyLineDS  	: dataStore(apiUrl + "item_lines"),		
+		journalLineDS		: dataStore(apiUrl + "journal_lines"),
+		assemblyDS			: dataStore(apiUrl + "item_prices"),
+		attachmentDS	 	: dataStore(apiUrl + "attachments"),
 		jobDS 				: new kendo.data.DataSource({
 		  	data: banhji.source.jobList,
 		  	sort: { field: "name", dir: "asc" }
@@ -68290,9 +68347,7 @@
 			    ]
 			},
 			sort: { field:"number", dir:"asc" }
-		}),
-		assemblyDS			: dataStore(apiUrl + "item_prices"),
-		attachmentDS	 	: dataStore(apiUrl + "attachments"),
+		}),		
 		amtDueColor 		: banhji.source.amtDueColor,
 		obj 				: null,
 		returnObj 			: null,
@@ -68736,7 +68791,6 @@
 				]);
 				self.journalLineDS.filter({ field: "transaction_id", value: id });
 				self.attachmentDS.filter({ field: "transaction_id", value: id });
-				self.referenceDS.filter({ field: "id", value: view[0].reference_id });
 
 				self.returnDS.query({
 					filter:{ field: "return_id", value: id },
@@ -68968,16 +69022,6 @@
 				this.addJournal(obj.id);
 	    	}
 
-	    	//Reference
-	    	if(obj.reference_id>0){
-	    		var ref = this.referenceDS.get(obj.reference_id);
-				ref.set("status", 3);
-
-				this.referenceDS.sync();
-			}else{
-				obj.set("reference_id", 0);
-			}
-
 	    	//Save Obj
 			this.objSync()
 			.then(function(data){ //Success
@@ -68995,19 +69039,6 @@
 					//Return
 					$.each(self.returnDS.data(), function(index, value){
 						value.set("return_id", data[0].id);
-
-						if(value.type=="Offset_Invoice" && value.reference_id>0){
-							var inv = self.invoiceDS.get(value.reference_id),
-							amountPaid = inv.amount_paid + value.amount;
-
-							inv.set("amount_paid", amountPaid);
-
-							if(amountPaid>=inv.amount){
-								inv.set("status", 1); //Paid
-							}else{
-								inv.set("status", 2); //Partially Paid
-							}
-						}
 					});
 
 					//Attachment
@@ -69120,7 +69151,7 @@
 		        this.changes();
 	        }
 		},
-		invoiceChanges 		: function(){
+		referenceChanges 		: function(){
 			var returnObj = this.get("returnObj");
 			
 			if(returnObj.reference_id>0){
@@ -74941,9 +74972,9 @@
 		setCurrencyCode 	: function(){
 			var code = "", obj = this.get("obj");
 
-			$.each(banhji.source.currencyRateDS.data(), function(index, value){				
+			$.each(banhji.source.currencyDS.data(), function(index, value){				
 				if(value.locale == obj.locale){
-					code = value.currency[0].code;					
+					code = value.code;					
 
 					return false;					
 				}
@@ -78478,9 +78509,9 @@
 		setCurrencyCode 	: function(){
 			var code = "", obj = this.get("obj");
 
-			$.each(banhji.source.currencyRateDS.data(), function(index, value){				
+			$.each(banhji.source.currencyDS.data(), function(index, value){				
 				if(value.locale == obj.locale){
-					code = value.currency[0].code;					
+					code = value.code;					
 
 					return false;					
 				}
@@ -78829,8 +78860,11 @@
     	poDS 				: dataStore(apiUrl + "item_lines"),
     	soDS 				: dataStore(apiUrl + "item_lines"),
     	onHandDS 			: dataStore(apiUrl + "item_lines"),
-    	currencyDS  		: banhji.source.currencyDS,
     	measurementDS	   	: banhji.source.measurementDS,
+    	currencyDS  			: new kendo.data.DataSource({
+		  	data: banhji.source.currencyList,
+		  	filter: { field:"status", value: 1 }
+		}),
     	obj 				: null,
     	priceList 			: null,
     	windowVisible 		: false,
@@ -79029,17 +79063,20 @@
     	lang 					: langVM,
     	dataSource 				: dataStore(apiUrl + "items"),
     	patternDS 				: dataStore(apiUrl + "items"),
-    	deleteDS 				: dataStore(apiUrl + "item_lines"),
-    	itemGroupDS 			: banhji.source.itemGroupDS,   	
-    	brandDS 	 			: banhji.source.brandDS,
-    	measurementDS			: banhji.source.measurementDS,
+    	deleteDS 				: dataStore(apiUrl + "item_lines"),    	
     	attachmentDS	 		: dataStore(apiUrl + "attachments"),
     	numberDS 				: dataStore(apiUrl + "items"),
     	existingDS 				: dataStore(apiUrl + "items"),
     	itemPriceDS 			: dataStore(apiUrl + "item_prices"),
     	itemVendorDS 	 		: dataStore(apiUrl + "items/contact"),
     	itemCustomerDS 	 		: dataStore(apiUrl + "items/contact"),
-    	currencyDS 	 			: banhji.source.currencyDS,
+    	itemGroupDS 			: banhji.source.itemGroupDS,   	
+    	brandDS 	 			: banhji.source.brandDS,
+    	measurementDS			: banhji.source.measurementDS,
+    	currencyDS  			: new kendo.data.DataSource({
+		  	data: banhji.source.currencyList,
+		  	filter: { field:"status", value: 1 }
+		}),
     	vendorDS  				: new kendo.data.DataSource({
 		  	data: banhji.source.supplierList,
 			sort: { field:"number", dir:"asc" }
@@ -79055,7 +79092,7 @@
 		  		{ field:"id", operator:"neq", value: 5 },
 		  		{ field:"id", operator:"neq", value: 6 }
 		  	]
-		}),  	
+		}),
     	incomeAccountDS 		: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
 			filter:{
@@ -79254,6 +79291,14 @@
 			});
 
 			this.itemPriceDS.sync();
+			var loaded = false;
+			this.itemPriceDS.bind("requestEnd", function(e){
+				if(e.type=="create" && loaded==false){
+					loaded = true;
+
+					banhji.source.loadItemPrices();
+				}
+			});
       	},
       	//Number      	
 		checkExistingNumber 	: function(){
@@ -79818,7 +79863,10 @@
 				{ field:"number", dir:"asc" }
 			]
 		}),
-    	currencyDS 				: banhji.source.currencyDS,
+    	currencyDS  			: new kendo.data.DataSource({
+		  	data: banhji.source.currencyList,
+		  	filter: { field:"status", value: 1 }
+		}),
     	measurementDS 			: banhji.source.measurementDS,    	
     	statusList 				: banhji.source.statusList,
     	confirmMessage 			: banhji.source.confirmMessage,
@@ -80094,7 +80142,10 @@
     	itemVendorDS 	 		: dataStore(apiUrl + "items/contact"),
     	itemCustomerDS 	 		: dataStore(apiUrl + "items/contact"),
     	itemPriceDS 			: dataStore(apiUrl + "item_prices"),
-    	currencyDS 	 			: banhji.source.currencyDS,
+    	currencyDS  			: new kendo.data.DataSource({
+		  	data: banhji.source.currencyList,
+		  	filter: { field:"status", value: 1 }
+		}),
     	categoryDS 				: new kendo.data.DataSource({
 		  	data: banhji.source.categoryList,
 		  	filter: { field:"item_type_id", value: 4 }//Service
@@ -80677,6 +80728,14 @@
 			});
 
 			this.itemPriceDS.sync();
+			var loaded = false;
+			this.itemPriceDS.bind("requestEnd", function(e){
+				if(e.type=="create" && loaded==false){
+					loaded = true;
+
+					banhji.source.loadItemPrices();
+				}
+			});
       	},
       	//Item Contact
 		loadItemContact			: function(){
@@ -81216,7 +81275,10 @@
     	deleteDS 				: dataStore(apiUrl + "item_lines"),
     	numberDS 				: dataStore(apiUrl + "items"),
     	existingDS 				: dataStore(apiUrl + "items"),
-    	currencyDS 	 			: banhji.source.currencyDS,
+    	currencyDS  			: new kendo.data.DataSource({
+		  	data: banhji.source.currencyList,
+		  	filter: { field:"status", value: 1 }
+		}),
     	accountDS  			: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
 			sort: { field:"number", dir:"asc" }
@@ -82930,11 +82992,11 @@
 	});
 	banhji.itemSetting =  kendo.observable({
 		lang 				: langVM,
-		itemTypeDS 			: banhji.source.itemTypeDS,
-        categoryDS 			: banhji.source.categoryDS,
-        itemGroupDS 		: banhji.source.itemGroupDS,
-        measurementDS		: banhji.source.measurementDS,
-        brandDS 			: banhji.source.brandDS,
+		itemTypeDS 			: dataStore(apiUrl + "item_types"),
+        categoryDS 			: dataStore(apiUrl + "categories"),
+        itemGroupDS			: dataStore(apiUrl + "items/group"),
+		brandDS				: dataStore(apiUrl + "brands"),
+        measurementDS		: dataStore(apiUrl + "measurements"),
         patternDS  			: dataStore(apiUrl + "items"),
         category_code 		: "",
         category_name 		: "",
@@ -83022,8 +83084,11 @@
 	        	});
 
 	        	this.categoryDS.sync();
+	        	var saved = false;
 	        	this.categoryDS.bind("requestEnd", function(e){
-	        		if(e.type==="create"){
+	        		if(e.type==="create" && saved==false){
+	        			saved = true;
+
 	        			var response = e.response.results[0];	        			
 	        			self.addPattern(response.id, response.item_type_id);
 	        			banhji.source.loadCategories();
@@ -83066,7 +83131,14 @@
 	        	});
 
 	        	this.itemGroupDS.sync();
-	        	
+	        	var saved = false;
+	        	this.itemGroupDS.bind("requestEnd", function(e){
+	        		if(e.type==="create" && saved==false){
+	        			saved = true;
+	        			banhji.source.loadItemGroups();
+	        		}
+	        	});
+
     			self.set("item_group_category_id", 0);    			
     			self.set("item_group_code", "");
     			self.set("item_group_name", "");
@@ -91715,9 +91787,9 @@
 				if(banhji.pageLoaded["item_setting"]==undefined){
 					banhji.pageLoaded["item_setting"] = true;
 					
+					vm.itemTypeDS.filter({ field:"id <>", value:3 });
+					vm.categoryDS.filter({ field:"item_type_id <>", value:3 });
 				}
-
-				vm.pageLoad();
 			} else {
 				window.location.replace(baseUrl + "admin");
 			}

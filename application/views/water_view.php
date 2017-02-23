@@ -3828,7 +3828,7 @@
 								<div class="span4">
 									<div class="total-customer">
 										<p>No Print</p>
-										<span data-bind="text: noPrint"></span>
+										<span data-bind="text: noPrint, click: goNoPrint"></span>
 									</div>
 								</div>
 								<div class="span4">
@@ -12258,7 +12258,9 @@
 			}
 		},
 		cancel 				: function(){
-			this.invoiceCollection.cancelChanges();
+			this.invoiceCollection.data([]);
+			this.invoiceDS.data([]);
+
 			this.invoiceArray = [];	
 			window.history.back();
 		}
@@ -12271,6 +12273,50 @@
 		invoiceDS	     	: dataStore(apiUrl + "winvoices/make"),
 		printBTN 			: false,
 		invoiceCollection 	: banhji.invoice, 
+		invoiceNoPrint 		: new kendo.data.DataSource({
+	      transport: {
+	      	read  : {
+	          url: baseUrl + 'api/winvoices',
+	          type: "GET",
+	          dataType: 'json',
+	          headers: { Institute: JSON.parse(localStorage.getItem('userData/user')).institute.id }
+	        },
+	        create  : {
+	          url: baseUrl + 'api/winvoices',
+	          type: "POST",
+	          dataType: 'json',
+	          headers: { Institute: JSON.parse(localStorage.getItem('userData/user')).institute.id }
+	        },
+	        update 	: {
+				url: baseUrl + 'api/winvoices',
+				type: "PUT",
+				dataType: 'json',
+				headers: { Institute: JSON.parse(localStorage.getItem('userData/user')).institute.id }
+			},
+	        parameterMap: function(options, operation) {
+	          if(operation === 'read') {
+	            return {
+	              limit: options.take,
+	              page: options.page,
+	              filter: options.filter
+	            };
+	          } else {
+	            return {models: kendo.stringify(options.models)};
+	          }
+	        }
+	      },
+	      schema  : {
+	        model: {
+	          id: 'id'
+	        },
+	        data: 'results',
+	        total: 'count'
+	      },
+	      batch: true,
+	      serverFiltering: true,
+	      serverPaging: true,
+	      pageSize: 100
+	    }), 
 		txnTemplateDS 		: dataStore(apiUrl + "transaction_templates"),
 		selectInv 			: false,
 		chkAll 				: false,
@@ -12347,7 +12393,8 @@
 		search 				: function(){
 	    	var monthOfSearch = this.get("monthSelect"),
 			license_id = this.get("licenseSelect"),
-			bloc_id = this.get("blocSelect");
+			bloc_id = this.get("blocSelect"),
+			self = this;
 			var para = [];	
 			if(monthOfSearch){						
 				var monthOf = new Date(monthOfSearch);
@@ -12369,6 +12416,8 @@
 							{field: "type", value: "Water_Invoice"}
 						);
 						this.invoiceCollection.dataSource.filter(para);
+						para.push({field: "print_count", value: 0});
+						this.invoiceNoPrint.filter(para);
 						this.set("selectInv", true);
 					}else{
 						alert("Please Select Location");
@@ -12379,6 +12428,10 @@
 			}else{
 				alert("Please Select Month Of");
 			}
+	    },
+	    goNoPrint 			: function(){
+	    	this.invoiceCollection.dataSource.data([]);
+	    	this.invoiceCollection.dataSource.add(this.invoiceNoPrint.data());
 	    },
 		printBill 			: function(){
 			if(this.get("TemplateSelect")){
@@ -12560,6 +12613,7 @@
 			window.history.back();
 		}
 	});
+	
 
 	banhji.reconReceipt= kendo.observable({
 		dataSource 		: dataStore(apiUrl + 'reconciles/receipt'),
@@ -16819,6 +16873,11 @@
 		},	
 		selectedRow			: function(e){
 			var data = e.data, self = this;
+			if(data.use_water == 1){
+				this.set('meter_visible', true);
+			}else{
+				this.set('meter_visible', false);
+			}
 			this.meterDS.query({
 				filter: {field: "contact_id", value: data.id}
 			})
@@ -16831,7 +16890,6 @@
 						$.each(meters, function(index, value) {
 							meterIds.push(value.id);
 						});
-						console.log(meterIds);
 						self.readingVM.dataSource.filter({field: 'meter_id', operator: 'where_in', value: meterIds});
 					} else {
 						self.readingVM.dataSource.filter({field: 'meter_id', value: meters[0].id});
@@ -16841,11 +16899,7 @@
 			});
 			this.set("obj", data);
 			this.loadData();
-			if(data.use_water == 1){
-				this.set('meter_visible', true);
-			}else{
-				this.set('meter_visible', false);
-			}
+
 			// console.log(this.meter_visible);
 		},
 		miniMonthofS 		: "<?php echo date('Y-m-d'); ?>",

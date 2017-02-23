@@ -84,64 +84,27 @@ class Ops extends REST_Controller {
  //    //     );
 	// }
 
-	function runs_get() {
-		$this->load->dbutil();
-		$dbs = $this->dbutil->list_databases();
+	// function runs_get() {
+	// 	$this->load->dbutil();
+	// 	$dbs = $this->dbutil->list_databases();
 
-		$companyList = array("banhji","banhji_mac", "db_banhji", "information_schema","innodb","mysql","performance_schema","tmp");
-		$data = array();
-		foreach ($dbs as $db)
-		{	
-			if (!in_array("$db", $companyList)) {
-			    $data[] = $db;
-			    $connection = 'use '.$db;
-			    $this->db->query($connection);
+	// 	$companyList = array("banhji","banhji_mac", "db_banhji", "information_schema","innodb","mysql","performance_schema","tmp");
+	// 	$data = array();
+	// 	foreach ($dbs as $db)
+	// 	{	
+	// 		if (!in_array("$db", $companyList)) {
+	// 		    $data[] = $db;
+	// 		    $connection = 'use '.$db;
+	// 		    $this->db->query($connection);
 
-			 //    $dataInserted = array(
-				//    'type' => 'Payment_Refund',
-				//    'abbr' => 'PF',
-				//    'name' => 'Payment Refund'
-				// );
+	// 		    $this->db->where('unit_value', 0.000000000000000);
+	// 		    $this->db->update('item_prices', array('unit_value' => 1.000000000000000));
 
-			    // $this->db->where('id', 22);
-			    // $this->db->update('prefixes', array('type'=>'Water_Deposit'));
-			 //    $this->db->insert('prefixes', $dataInserted);
+	// 		    $this->db->insert('item_prices', array('item_id' => 7, 'measurement_id'=> 6, 'unit_value' => 1.000000000000000, 'locale'=> 'km-KH'));
+	// 		}
+	// 	}
 
-        //         $this->dbforge->add_column(
-        //         	"attachments", array(
-	       //          	'account_id'=> array(
-	       //          			'type'=> 'TINYINT', 
-	       //          			'constraint'=> 11,
-	       //          			'unsigned' 	=> TRUE,
-								// 'null' 		=> FALSE,
-								// 'default' 	=> 0
-	       //          	)
-        //         	)
-        //         );                
-
-                // $this->dbforge->modify_column(
-                // 	'transactions', array(
-                // 					'issued_date' => array(
-                // 								'name' 		=> 'issued_date', 
-                // 								'type'		=> 'DATETIME',
-                // 								'null' 		=> FALSE
-                // 					)
-                // 	)
-                // );
-                
-			    // $this->dbforge->modify_column('attachments', 
-			    // 	array('type' => array(
-			    // 		'name' => 'type', 
-			    // 		'type' => "ENUM('Transaction','Item','Contact','Account')"
-			    // 	)
-			    // ));
-			    
-			    // $this->db->where('contact_type_id', 7);
-			    // $this->db->update('contacts', array('account_id'=> 53));
-			}
-		}
-
-	}
+	// }
 
 	// function create_get() {
 	// 	$this->load->dbutil();

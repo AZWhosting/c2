@@ -199,9 +199,7 @@ class Currencies extends REST_Controller {
 					"source" 	 	=> $value->source,
 					"method" 		=> $value->method,
 					"date" 			=> $value->date,
-					"is_system" 	=> $value->is_system,
-
-					"currency" 		=> $value->currency->get_raw()->result()	
+					"is_system" 	=> $value->is_system	
 				);
 			}
 		}

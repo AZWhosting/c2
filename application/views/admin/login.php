@@ -202,7 +202,7 @@ a.enquiries:hover .enquiry-content, .enquiry-content:hover {
 </script>
 </head>
 
-<body data-bind="events: {  keypress: keyPressLogin }" >
+<body>
 
    <div class="body-wrapper">
     <div class="container">
@@ -478,9 +478,6 @@ a.enquiries:hover .enquiry-content, .enquiry-content:hover {
             // }
             console.log(this.get('password')); 
           },
-          keyPressLogin: function(e) {
-            console.log("zkldfjhglkajsdhfskljd");
-          },
           btnSignIn: function() {
             if(this.get('email') || this.get('password')){
               $("#loginBtn").val("Logging in...");
@@ -592,6 +589,7 @@ a.enquiries:hover .enquiry-content, .enquiry-content:hover {
       $(function(){
         
         auth.getSession();
+
         kendo.bind($('.login'), banhji.aws);
         
       });
