@@ -88,7 +88,7 @@ class Winvoices extends REST_Controller {
 					'to'   => $row->to_date,
 					'prev'=> intval($row->previous),
 					'current'=> intval($row->current),
-					'usage' => intval($row->usage),
+					'usage' => floatval($row->usage),
 					'unit' => 'm3',
 					'amount'=> 0
 				));
@@ -108,7 +108,7 @@ class Winvoices extends REST_Controller {
 											'id'   => $t->id,
 											'name' => $t->name,
 											'is_flat' => $t->is_flat == 0 ? FALSE:TRUE,
-											'usage'  => intval($t->usage),
+											'usage'  => floatval($t->usage),
 											'amount'=> floatval($t->amount)
 										)
 									);
@@ -408,7 +408,8 @@ class Winvoices extends REST_Controller {
 			);
 			
 			$remain = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			$remain->where("contact_id", $contact->id);
+			$remain->where_related("contact/meter", "id", $m->id);
+			//echo $row->id."____";
 			$remain->where("type", "Water_Invoice");
 			$remain->where("id <>", $row->id);
 			$remain->where("status <>", 1)->get();

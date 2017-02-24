@@ -238,9 +238,9 @@
 		<td style="text-align: right; padding-right: 5px !important;">#=activeCustomer#</td>
 		<td style="text-align: right; padding-right: 5px !important;">#=inActiveCustomer#</td>
 		<td style="text-align: right; padding-right: 5px !important;">#=kendo.toString(deposit, 'c2', banhji.locale)#</td>
-		<td style="text-align: right; padding-right: 5px !important;">#=usage#</td>
+		<td style="text-align: right; padding-right: 5px !important;">#=usage#m<sup>3</sup></td>
 		<td style="text-align: right; padding-right: 5px !important;">#=kendo.toString(sale, 'c2', banhji.locale)#</td>
-		<td style="text-align: right; padding-right: 5px !important;">#=sale - deposit#</td>
+		<td style="text-align: right; padding-right: 5px !important;">#=kendo.toString(sale - deposit, 'c2', banhji.locale)#</td>
 	</tr>
 </script>
 <script id="wsale-by-branch-row-template" type="text/x-kendo-tmpl">		
@@ -2288,7 +2288,7 @@
 		                 data-tooltip='{
 		                    visible: true,
 		                    format: "{0}%",
-		                    template: "#= series.name #: #= kendo.toString(value, &#39;c&#39;, banhji.locale) #"
+		                    template: "#= series.name #: #= kendo.toString(value) #"
 		                 }'                 
 		                 data-series="[
 		                                 { field: 'usage', name: 'Usage', categoryField:'month', color: '#236DA4', overlay:{ gradient: 'none'} }
@@ -6976,6 +6976,80 @@
 	</div>
 </script>
 
+<script id="importView" type="text/x-kendo-template">	
+	<div  class="row-fluid saleSummaryCustomer">
+		<span class="glyphicons no-js remove_2 pull-right" 
+	    				onclick="javascript:window.history.back()"
+						data-bind="click: cancel"><i></i></span>
+
+        <h2 data-bind="">Imports</h2>
+	    <br>		
+		<!-- Tabs -->
+		<div class="relativeWrap" data-toggle="source-code">
+			<div class="widget widget-tabs widget-tabs-double-2 widget-tabs-gray">
+			
+				<!-- Tabs Heading -->
+				<div class="widget-head">
+					<ul style="padding-left: 1px;">
+						<li class="active"><a class="glyphicons user" href="#tabContact" data-toggle="tab"><i></i><span style="line-height: 55px;">Contact</span></a></li>
+						<li><a class="glyphicons list" href="#tabInventery" data-toggle="tab"><i></i><span style="line-height: 55px;">Meter</span></a></li>
+					</ul>
+				</div>
+				<!-- // Tabs Heading END -->
+				
+				<div class="widget-body">
+					<div class="tab-content">
+						<div id="loadImport" style="display:none;text-align: center;position: absolute;width: 100%; height: 70%;background: rgba(142, 159, 167, 0.8);z-index: 9999;">
+							<i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 35%;left: 45%"></i>
+						</div>
+						<!-- Tab content -->
+						<div id="tabContact" style="border: 1px solid #ccc" class="tab-pane active widget-body-regular">
+							
+							<h4 class="separator bottom" style="margin-top: 10px;">Please upload contacts file</h4>
+							<a href="<?php echo base_url(); ?>assets/water/wcontact_import_form_excel.xlsx" download>
+								<span id="saveClose" class="btn btn-icon btn-success glyphicons download" style="width: 200px!important;position: absolute;top: 85px;right: 10px;">
+									<i></i> 
+									<span >Download file example</span>
+								</span>
+							</a>
+							<div class="fileupload fileupload-new margin-none" data-provides="fileupload">
+							  	<input type="file"  data-role="upload" data-show-file-list="true" data-bind="events: {select: contact.onSelected}" id="myFile"  class="margin-none" />
+							</div>
+							<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 160px!important;"><i></i>
+							<span data-bind="click: contact.save, text: lang.lang.import_contact">Import Contact</span></span>
+							
+
+						</div>
+						<!-- // Tab content END -->
+					
+						<!-- Tab content -->
+						<div id="tabInventery" style="border: 1px solid #ccc" class="tab-pane widget-body-regular">
+							
+							<h4 class="separator bottom" style="margin-top: 10px;">Please upload Inventory file</h4>
+							<a href="<?php echo base_url(); ?>assets/water/meter_import.xlsx" download>
+								<span id="saveClose" class="btn btn-icon btn-success glyphicons download" style="width: 200px!important;position: absolute;top: 85px;right: 10px;">
+									<i></i> 
+									<span >Download file Example</span>
+								</span>
+							</a>
+							<div class="fileupload fileupload-new margin-none" data-provides="fileupload">
+							  	<input type="file"  data-role="upload" data-show-file-list="true" data-bind="events: {select: item.onSelected}" id="myFile"  class="margin-none" />
+							</div>
+							<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 160px!important;"><i></i>
+							<span data-bind="click: item.save">Import Meter</span></span>
+						</div>
+						<!-- // Tab content END -->
+						
+						
+					</div>
+				</div>
+				<div id="ntf1" data-role="notification"></div>
+			</div>
+		</div>
+		<!-- // Tabs END -->
+	</div>
+</script>
+
 <!-- ***************************
 *	Menu Section         	  *
 **************************** -->
@@ -6998,7 +7072,7 @@
   				<li><span class="li-line"></span></li>
   				<li><a href='#/receipt'><span >Receipt</span></a></li>
   				<li><span class="li-line"></span></li>
-  				<li><a href='#/import'><span >Import</span></a></li>
+  				<li><a href='#/imports'><span >Import</span></a></li>
   			</ul>
 	  	</li>	  	  	
 	  	<li><a href="#/reports">Reports</a></li>	  	
@@ -11774,7 +11848,7 @@
 					}
 				});
 				self.set('amountBilled', amount);
-				self.set('NamountToBeRecieved', amount);
+				self.set('amountToBeRecieved', amount);
 			});
 		},
 		save 				: function() {
@@ -11836,6 +11910,7 @@
 			});
 
 			if(this.get('amountToBeRecieved') < amount) {
+				console.log('installment:' + this.get('amountToBeRecieved') +" : "+ amount);
 				banhji.ActivateMeter.get('meterObj').set('activated', 1);
 				banhji.installment.setDate(banhji.ActivateMeter.get('startDate'));
 				banhji.installment.setPeriod(banhji.ActivateMeter.get('period'));
@@ -12070,8 +12145,9 @@
 	    		mSold += kendo.parseInt(v.items[0].line.usage);
 	    		//Calculate Exemption
 	    		if(v.exemption.length > 0){
+
 	    			var Usage = kendo.parseInt(v.items[0].line.usage),
-	    			AmountEx = kendo.parseInt(v.exemption[0].line.amount);
+	    			AmountEx = kendo.parseFloat(v.exemption[0].line.amount);
 	    			if(v.exemption[0].line.unit == 'm3'){
 	    				//rUsage = Usage - AmountEx;
 	    				tUsage = Usage - AmountEx;
@@ -12191,7 +12267,7 @@
 				var Total = 0;
 				if(exT == '%'){
 					exU = kendo.parseFloat(exU) * kendo.parseFloat(aTariff);
-					var exP = (kendo.parseFloat(exU) * kendo.parseFloat(exA)) / 100;
+					var exP = (exU * exA) / 100;
 					Total = kendo.parseFloat(exU) - kendo.parseFloat(exP);
 				}else if(exT == 'money'){
 					exU = kendo.parseFloat(exU) * kendo.parseFloat(aTariff);
@@ -12248,7 +12324,7 @@
 				    	if(e.response){				
 				    		$("#ntf1").data("kendoNotification").success("Successfully!");
 							$("#loadImport").css("display","none");
-							banhji.router.navigate("/print_bill");
+							self.cancel();
 						}
 					}
 			    });
@@ -12265,7 +12341,7 @@
 			this.invoiceDS.data([]);
 
 			this.invoiceArray = [];	
-			window.history.back();
+			banhji.router.navigate("/print_bill");
 		}
 	});
 	banhji.printBill = kendo.observable({
@@ -12421,6 +12497,9 @@
 						this.invoiceCollection.dataSource.filter(para);
 						para.push({field: "print_count", value: 0});
 						this.invoiceNoPrint.filter(para);
+						this.invoiceNoPrint.bind("requestEnd", function(e){
+							self.set("noPrint", self.invoiceNoPrint.data().length);
+						});
 						this.set("selectInv", true);
 					}else{
 						alert("Please Select Location");
@@ -16343,6 +16422,130 @@
 			window.history.back();
 		},
 	});
+
+	banhji.importContact = kendo.observable({
+		dataSource 	  : dataStore(apiUrl+"imports/wcontact"),
+		onSelected    : function(e) {
+			$('li.k-file').remove();
+	        var files = e.files;
+	        var reader = new FileReader();
+			banhji.importContact.dataSource.data([]);		
+			reader.onload = function() {						
+				var data = reader.result;	
+				var result = {}; 						
+				var workbook = XLSX.read(data, {type : 'binary'});
+				workbook.SheetNames.forEach(function(sheetName) {
+					var roa = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
+					if(roa.length > 0){
+						result[sheetName] = roa;
+						for(var i = 0; i < roa.length; i++) {	
+							banhji.importContact.dataSource.add(roa[i]);	
+						}						
+					}
+				});															
+			}
+			reader.readAsBinaryString(files[0].rawFile);         	
+        },
+		save: function() {
+			$("#loadImport").css("display","block");
+			banhji.importContact.dataSource.sync();
+			banhji.importContact.dataSource.bind("requestEnd", function(e){
+		    	if(e.response){				
+		    		$("#ntf1").data("kendoNotification").success("Imported contacts successfully!");
+					$("#loadImport").css("display","none");
+				}				  				
+		    });
+		    banhji.importContact.dataSource.bind("error", function(e){		    		    	
+				$("#ntf1").data("kendoNotification").error("Error Importing Contact!"); 	
+				$("#loadImport").css("display","none");			
+		    });
+		}
+	});
+	banhji.importItem = kendo.observable({
+		dataSource 	  : dataStore(apiUrl+"imports/meter"),
+		onSelected    : function(e) {
+			$('li.k-file').remove();
+	        var files = e.files;
+	        var reader = new FileReader();
+			banhji.importItem.dataSource.data([]);	
+			reader.onload = function() {						
+				var data = reader.result;	
+				var result = {}; 						
+				var workbook = XLSX.read(data, {type : 'binary'});
+				workbook.SheetNames.forEach(function(sheetName) {
+					var roa = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
+					if(roa.length > 0){
+						result[sheetName] = roa;
+						for(var i = 0; i < roa.length; i++) {	
+							banhji.importItem.dataSource.add(roa[i]);	
+						}						
+					}
+				});															
+			}
+			reader.readAsBinaryString(files[0].rawFile);         	
+        },
+		save: function() {
+			$("#loadImport").css("display","block");
+			banhji.importItem.dataSource.sync();
+			banhji.importItem.dataSource.bind("requestEnd", function(e){
+		    	if(e.response){				
+		    		$("#ntf1").data("kendoNotification").success("Imported Inventory successfully!");
+					$("#loadImport").css("display","none");
+				}				  				
+		    });
+		    banhji.importItem.dataSource.bind("error", function(e){		    		    	
+				$("#ntf1").data("kendoNotification").error("Error Importing Inventory!"); 
+				$("#loadImport").css("display","none");				
+		    });
+		}
+	});
+	banhji.importView = kendo.observable({
+    	lang 				: langVM,
+    	contact 			: banhji.importContact,
+    	item 				: banhji.importItem,
+    	printGrid			: function() {
+			var obj = this.get('obj');
+			var gridElement = $('#grid'),
+		        printableContent = '',
+		        win = window.open('', '', 'width=800, height=900'),
+		        doc = win.document.open();
+		    var htmlStart =
+		            '<!DOCTYPE html>' +
+		            '<html>' +
+		            '<head>' +
+		            '<meta charset="utf-8" />' +
+		            '<title></title>' +
+		            '<link href="http://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />'+
+		            '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/bootstrap.css">' +
+		            '<link href="<?php echo base_url(); ?>assets/invoice/invoice.css" rel="stylesheet" />'+
+		            '<link href="https://fonts.googleapis.com/css?family=Content:400,700" rel="stylesheet" type="text/css">' +
+		            '<link href="https://fonts.googleapis.com/css?family=Moul" rel="stylesheet">' +
+		            '<style>' +
+		            'html { font: 11pt sans-serif; }' +
+		            '.k-grid { border-top-width: 0; }' +
+		            '.k-grid, .k-grid-content { height: auto !important; }' +
+		            '.k-grid-content { overflow: visible !important; }' +
+		            'div.k-grid table { table-layout: auto; width: 100% !important; }' +
+		            '.k-grid .k-grid-header th { border-top: 1px solid; }' +
+		            '.k-grid-toolbar, .k-grid-pager > .k-link { display: none; }' +
+		            '</style><style type="text/css" media="print"> @page { size: portrait; margin:0mm;margin-top: 1mm; }'+
+		            	'.table-primary thead th {background-color:#496cad!important;color: #fff;-webkit-print-color-adjust:true;}' +
+		            	'}</style>' +
+		            '</head>' +
+		            '<body>';
+		    var htmlEnd =
+		            '</body>' +
+		            '</html>';
+		    
+		    printableContent = $('#invFormContent').html();
+		    doc.write(htmlStart + printableContent + htmlEnd);
+		    doc.close();
+		    setTimeout(function(){
+		    	win.print();
+		    	win.close();
+		    },2000);
+		}
+    });
 	/*************************
 	*	Water Section   	* 
 	**************************/
@@ -17087,6 +17290,7 @@
 		cashReceiptSourceSummary : new kendo.Layout("#cashReceiptSourceSummary", {model: banhji.cashReceiptSourceSummary}),
 		cashReceiptDetail : new kendo.Layout("#cashReceiptDetail", {model: banhji.cashReceiptDetail}),
 		cashReceiptSourceDetail : new kendo.Layout("#cashReceiptSourceDetail", {model: banhji.cashReceiptSourceDetail}),
+		imports: new kendo.Layout("#importView", {model: banhji.importView})
 	};
 	/* views and layout */
 	banhji.router = new kendo.Router({
@@ -17907,6 +18111,13 @@
 			}
 			vm.pageLoad();
 		}
+	});
+
+	/*************************
+	*   Import Section   *
+	**************************/
+	banhji.router.route("/imports", function(){
+		banhji.view.layout.showIn("#content", banhji.view.imports);
 	});
 	
 	$(function() {

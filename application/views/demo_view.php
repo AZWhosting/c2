@@ -51317,7 +51317,7 @@
 				as_of = new Date(as_of);
 				var displayDate = "As Of " + kendo.toString(as_of, "dd-MM-yyyy");
 				this.set("displayDate", displayDate);
-				as_of.setDate(as_of.getDate()+1);
+				// as_of.setDate(as_of.getDate()+1);
 
 				this.dataSource.filter({ field:"issued_date <", value:kendo.toString(as_of, "yyyy-MM-dd") });
 
@@ -51522,7 +51522,7 @@
 				as_of = new Date(as_of);
 				var displayDate = "As Of " + kendo.toString(as_of, "dd-MM-yyyy");
 				this.set("displayDate", displayDate);
-				as_of.setDate(as_of.getDate()+1);
+				// as_of.setDate(as_of.getDate()+1);
 
 				this.dataSource.filter([
 					{ field:"issued_date", value:kendo.toString(as_of, "yyyy-MM-dd") },
@@ -71172,7 +71172,7 @@
 	        }
 		},
 		//Number      	
-		checkExistingNumber 	: function(){
+		checkExistingNumber : function(){
 			var self = this, para = [], 
 			obj = this.get("obj");
 			
@@ -71200,7 +71200,7 @@
 				});
 			}
 		},
-		generateNumber 			: function(){
+		generateNumber 		: function(){
 			var self = this, obj = this.get("obj"),
 			issueDate = new Date(obj.issued_date),
 			startDate = new Date(obj.issued_date),
@@ -71349,10 +71349,10 @@
 
 	        total = subTotal + tax;
 
-	        //Return
+	        //Return lines
 	        $.each(this.returnDS.data(), function(index, value) {
-	        	if(value.reference_id>0){
-
+	        	if(value.type=="Offset_Invoice" && value.amount>value.sub_total){
+	        		value.set("amount", value.sub_total);
 	        	}
 				returnAmount += value.amount;
 	        });
@@ -71584,6 +71584,29 @@
 
 			banhji.userManagement.removeMultiTask("sale_return");
 		},
+		validating 			: function(){
+			var result = true, obj = this.get("obj");
+
+			if(obj.remaining!==0){
+				$("#ntf1").data("kendoNotification").error("Remaining must be Zero!");
+
+				result = false;
+			}
+
+			if(this.lineDS.total()==0 && this.accountDS.total()==0){
+				$("#ntf1").data("kendoNotification").error("Please select an item or account.");
+
+				result = false;
+			}
+
+			if(this.returnDS.total()==0){
+				$("#ntf1").data("kendoNotification").error("Please make an offset invoice or add to deposit.");
+
+				result = false;
+			}
+
+			return result;
+		},
 		//Return
 		addRowReturn 		: function(type){
 			var obj = this.get("obj"), account_id = 0;
@@ -71652,15 +71675,19 @@
 			var returnObj = this.get("returnObj");
 			
 			if(returnObj.reference_id>0){
-				var txn = this.referenceDS.get(returnObj.reference_id);				
-				returnObj.set("amount", txn.amount - (txn.amount_paid + txn.deposit));
-				returnObj.set("reference_no", txn.number);				
+				var txn = this.referenceDS.get(returnObj.reference_id),
+				amount = txn.amount - (txn.amount_paid + txn.deposit);
+
+				returnObj.set("reference_no", txn.number);
+				returnObj.set("sub_total", amount);
+				returnObj.set("amount", amount);				
 			}else{
-				returnObj.set("amount", 0);
 				returnObj.set("reference_no", "");
+				returnObj.set("sub_total", 0);
+				returnObj.set("amount", 0);				
 			}
 
-			this.changes();							
+			this.changes();
 		},
 		openOffsetInvoiceWindow	: function(){
 			this.openWindow("Offset_Invoice");
@@ -71720,7 +71747,6 @@
 	    	taxList = {},
 	    	inventoryList = {},
 	    	cogsList = {},
-	    	cashList = {},
 	    	sumInvoice = 0,
 	    	sumCredit = 0;
 			
@@ -71928,24 +71954,6 @@
 					cr 					: sumCredit,
 					rate				: obj.rate,
 					locale				: obj.locale
-				});
-			}
-
-			//Cash on Cr
-			if(!jQuery.isEmptyObject(cashList)){
-				$.each(cashList, function(index, value){
-					self.journalLineDS.add({
-						transaction_id 		: transaction_id,
-						account_id 			: value.id,
-						contact_id 			: obj.contact_id,
-						description 		: "",
-						reference_no 		: "",
-						segments 	 		: [],
-						dr 	 				: 0,
-						cr 					: value.amount,
-						rate				: obj.rate,
-						locale				: obj.locale
-					});
 				});
 			}
 
@@ -92566,7 +92574,7 @@
 			        $("#saveNew").click(function(e){
 						e.preventDefault();
 						
-						if(validator.validate() && vm.get("obj").remaining===0){
+						if(validator.validate() && vm.validating()){
 			            	vm.save();
 				        }else{
 				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
@@ -92576,7 +92584,7 @@
 					$("#saveClose").click(function(e){
 						e.preventDefault();
 
-						if(validator.validate() && vm.get("obj").remaining===0){
+						if(validator.validate() && vm.validating()){
 							vm.set("saveClose", true);
 			            	vm.save();
 				        }else{
@@ -92587,7 +92595,7 @@
 					$("#savePrint").click(function(e){
 						e.preventDefault();
 						
-						if(validator.validate() && vm.get("obj").remaining===0){
+						if(validator.validate() && vm.validating()){
 							vm.set("savePrint", true);
 			            	vm.save();
 				        }else{

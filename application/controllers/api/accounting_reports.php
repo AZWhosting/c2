@@ -25,15 +25,15 @@ class Accounting_reports extends REST_Controller {
 
 			//Fiscal Date
 			//Note: selecting date must greater than startFiscalDate AND smaller or equal to endFiscalDate
-			$fiscalDate = date("m-d", $institute->fiscal_date/1000);
-			$fDate = date("Y") ."-". $fiscalDate;
+			$this->fiscalDate = date("m-d", $institute->fiscal_date/1000);
+			$fDate = date("Y") ."-". $this->fiscalDate;
 			$today = date("Y-m-d");
 			if($today > $fDate){
-				$this->startFiscalDate 	= date("Y") ."-". $fiscalDate;
-				$this->endFiscalDate 	= date("Y",strtotime("+1 year")) ."-". $fiscalDate;
+				$this->startFiscalDate 	= date("Y") ."-". $this->fiscalDate;
+				$this->endFiscalDate 	= date("Y",strtotime("+1 year")) ."-". $this->fiscalDate;
 			}else{
-				$this->startFiscalDate 	= date("Y",strtotime("-1 year")) ."-". $fiscalDate;
-				$this->endFiscalDate 	= date("Y") ."-". $fiscalDate;
+				$this->startFiscalDate 	= date("Y",strtotime("-1 year")) ."-". $this->fiscalDate;
+				$this->endFiscalDate 	= date("Y") ."-". $this->fiscalDate;
 			}
 		}
 	}
@@ -1026,7 +1026,8 @@ class Accounting_reports extends REST_Controller {
 		}
 
 		$asOf = date("Y-m-d", strtotime($asOf . "+1 days"));
-		
+		$startDate = date("Y-m-d", strtotime($startDate . "+1 days"));
+
 		//BALANCE SHEET (As Of)
 		$balanceSheet = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$balanceSheet->include_related("account", array("number","name"));
@@ -1093,7 +1094,7 @@ class Accounting_reports extends REST_Controller {
 		$currPL->include_related("account/account_type", array("name","nature"));		
 		$currPL->where_related("account", "account_type_id >=", 35);
 		$currPL->where_related("account", "account_type_id <=", 43);
-		$currPL->where_related("transaction", "issued_date >", $startDate);
+		$currPL->where_related("transaction", "issued_date >=", $startDate);
 		$currPL->where_related("transaction", "issued_date <", $asOf);
 		$currPL->where_related("transaction", "is_recurring <>", 1);
 		$currPL->where_related("transaction", "deleted <>", 1);		
@@ -1153,7 +1154,7 @@ class Accounting_reports extends REST_Controller {
 		$prevPL = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);				
 		$prevPL->where_related("account", "account_type_id >=", 35);
 		$prevPL->where_related("account", "account_type_id <=", 43);
-		$prevPL->where_related("transaction", "issued_date <=", $startDate);
+		$prevPL->where_related("transaction", "issued_date <", $startDate);
 		$prevPL->where_related("transaction", "is_recurring <>", 1);
 		$prevPL->where_related("transaction", "deleted <>", 1);		
 		$prevPL->where("deleted <>", 1);
@@ -1265,6 +1266,7 @@ class Accounting_reports extends REST_Controller {
 		}
 
 		$asOf = date("Y-m-d", strtotime($asOf . "+1 days"));
+		$startDate = date("Y-m-d", strtotime($startDate . "+1 days"));
 		
 		//OBJ (As Of)
 		$obj->include_related("account", array("account_type_id","number","name"));
@@ -1400,6 +1402,7 @@ class Accounting_reports extends REST_Controller {
 		}
 
 		$asOf = date("Y-m-d", strtotime($asOf . "+1 days"));
+		$startDate = date("Y-m-d", strtotime($startDate . "+1 days"));
 		
 		//OBJ (As Of)
 		$obj->include_related("account", array("account_type_id","number","name"));
@@ -1534,6 +1537,7 @@ class Accounting_reports extends REST_Controller {
 		}
 
 		$asOf = date("Y-m-d", strtotime($asOf . "+1 days"));
+		$startDate = date("Y-m-d", strtotime($startDate . "+1 days"));
 		
 		//OBJ (As Of)
 		$obj->where_in_related("account", "account_type_id", array(32,33));
@@ -1616,7 +1620,7 @@ class Accounting_reports extends REST_Controller {
 		$prevPL = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);				
 		$prevPL->where_related("account", "account_type_id >=", 35);
 		$prevPL->where_related("account", "account_type_id <=", 43);
-		$prevPL->where_related("transaction", "issued_date <=", $startDate);
+		$prevPL->where_related("transaction", "issued_date <", $startDate);
 		$prevPL->where_related("transaction", "is_recurring <>", 1);
 		$prevPL->where_related("transaction", "deleted <>", 1);		
 		$prevPL->where("deleted <>", 1);
@@ -1697,7 +1701,7 @@ class Accounting_reports extends REST_Controller {
 		$currPL->include_related("account/account_type", array("name","nature"));		
 		$currPL->where_related("account", "account_type_id >=", 35);
 		$currPL->where_related("account", "account_type_id <=", 43);
-		$currPL->where_related("transaction", "issued_date >", $startDate);
+		$currPL->where_related("transaction", "issued_date >=", $startDate);
 		$currPL->where_related("transaction", "issued_date <", $asOf);
 		$currPL->where_related("transaction", "is_recurring <>", 1);
 		$currPL->where_related("transaction", "deleted <>", 1);		
