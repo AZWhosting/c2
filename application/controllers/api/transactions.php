@@ -77,17 +77,12 @@ class Transactions extends REST_Controller {
 			foreach ($obj as $value) {
 				//Sum amount paid
 				$amount_paid = 0;
-				if($value->type=="Commercial_Invoice" || $value->type=="Vat_Invoice" || $value->type=="Invoice" || $value->type=="Credit_Purchase" || $value->type=="Cash_Receipt" || $value->type=="Cash_Payment" || $value->type=="Water_Invoice" || $value->type=="Water_Invoice" || $value->type=="Electricity_Invoice"){
+				if($value->type=="Commercial_Invoice" || $value->type=="Vat_Invoice" || $value->type=="Invoice" || $value->type=="Credit_Purchase" || $value->type=="Water_Invoice" || $value->type=="Water_Invoice" || $value->type=="Electricity_Invoice"){
 					$paid = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 					$paid->select_sum("amount");
 					$paid->select_sum("discount");
-					$paid->where_in("type", array("Cash_Receipt", "Offset_Invoice", "Cash_Payment", "Offset_Bill"));
-					if($value->type=="Cash_Receipt" || $value->type=="Cash_Payment"){
-						$paid->where("reference_id", $value->reference_id);
-						$paid->where_not_in("id", array($value->id));
-					}else{
-						$paid->where("reference_id", $value->id);
-					}
+					$paid->where_in("type", array("Cash_Receipt", "Offset_Invoice", "Cash_Payment", "Offset_Bill"));					
+					$paid->where("reference_id", $value->id);					
 					$paid->where("is_recurring <>",1);
 					$paid->where("deleted <>",1);
 					$paid->get();

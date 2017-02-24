@@ -58271,23 +58271,23 @@
 			});
 
 			//Account line
-			$.each(this.accountLineDS.data(), function(index, value){				
-				//Add tax list																							
+			$.each(this.accountLineDS.data(), function(index, value){
+				//Add tax list
 				if(value.tax_item_id>0){
 					var taxItem = self.taxItemDS.get(value.tax_item_id),
 					taxID = taxItem.account_id,
 					taxAmt = value.amount*taxItem.rate;
 					
 					if(taxList[taxID]===undefined){
-						taxList[taxID]={"id": taxID, "amount": taxAmt};						
-					}else{											
+						taxList[taxID]={"id": taxID, "amount": taxAmt};
+					}else{
 						if(taxList[taxID].id===taxID){
 							taxList[taxID].amount += taxAmt;
 						}else{
 							taxList[taxID]={"id": taxID, "amount": taxAmt};
 						}
 					}
-				}								  	
+				}
 			});
 
 			//Additional Cost line
@@ -58349,15 +58349,15 @@
 
 			//Expense Account on Dr
 			$.each(this.accountLineDS.data(), function(index, value){
-				self.journalLineDS.add({					
+				self.journalLineDS.add({
 					transaction_id 		: transaction_id,
-					account_id 			: value.account_id,				
-					contact_id 			: obj.contact_id,				
+					account_id 			: value.account_id,
+					contact_id 			: obj.contact_id,
 					description 		: value.description,
 					reference_no 		: value.reference_no,
-					segments 	 		: value.segments,								
+					segments 	 		: value.segments,
 					dr 	 				: value.amount,
-					cr 					: 0,				
+					cr 					: 0,
 					rate				: obj.rate,
 					locale				: obj.locale
 				});
@@ -71260,29 +71260,10 @@
 					{ field: "transaction_id", value: id },
 					{ field: "assembly_id >", value: 0 }
 				]);
+				self.accountLineDS.filter({ field: "transaction_id", value: id });
 				self.journalLineDS.filter({ field: "transaction_id", value: id });
 				self.attachmentDS.filter({ field: "transaction_id", value: id });
-
-				self.returnDS.query({
-					filter:{ field: "return_id", value: id },
-					page:1,
-					pageSize:100
-				}).then(function(){
-					var reInvoice = self.returnDS.view();
-
-					$.each(reInvoice, function(index, value){
-						if(value.type=="Offset_Invoice"){
-							value.set("showInvoice", true);
-			        		value.set("showAccount", false);
-						}else if(value.type=="Credit_Note"){
-							value.set("showInvoice", false);
-			        		value.set("showAccount", true);
-						}else{
-							value.set("showInvoice", false);
-			        		value.set("showAccount", false);
-						}
-					});
-				});
+				self.returnDS.filter({ field: "return_id", value: id });
 			});				
 		},
 		loadLines 			: function(id){
@@ -71460,24 +71441,23 @@
 		},
 		removeRow 			: function(e){
 			var data = e.data;
-			if(this.lineDS.total()>1){
-				//Remove Assembly Item List
-				if(data.item_id>0){
-					var raw = this.assemblyLineDS.data();
-				    
-				    var item, i;
-				    for(i=raw.length-1; i>=0; i--){
-				      	item = raw[i];
-				      	if (item.assembly_id==data.item_id){
-				       	 	this.assemblyLineDS.remove(item);
-				      	}
+			
+			//Remove Assembly Item List
+			if(data.item_id>0){
+				var raw = this.assemblyLineDS.data();
+			    
+			    var item, i;
+			    for(i=raw.length-1; i>=0; i--){
+			      	item = raw[i];
+			      	if (item.assembly_id==data.item_id){
+			       	 	this.assemblyLineDS.remove(item);
+			      	}
 
-				    }
-				}
+			    }
+			}
 
-				this.lineDS.remove(data);
-		        this.changes();
-	        }
+			this.lineDS.remove(data);
+	        this.changes();
 		},
 	    objSync 			: function(){
 	    	var dfd = $.Deferred();	        
@@ -71511,6 +71491,8 @@
 	    	//Save Obj
 			this.objSync()
 			.then(function(data){ //Success
+				var ids = [];
+
 				if(self.get("isEdit")==false){
 					//Item line
 					$.each(self.lineDS.data(), function(index, value){
@@ -71529,6 +71511,9 @@
 
 					//Return
 					$.each(self.returnDS.data(), function(index, value){
+						if(value.type=="Offset_Invoice" && value.reference_id>0){
+							ids.push(value.reference_id);
+						}
 						value.set("return_id", data[0].id);
 					});
 
@@ -71545,6 +71530,7 @@
 				self.accountLineDS.sync();
 				self.assemblyLineDS.sync();
 				self.returnDS.sync();
+				self.updateTxnStatus(ids);
 				self.uploadFile();
 				
 				return data;
@@ -71606,6 +71592,29 @@
 			}
 
 			return result;
+		},
+		updateTxnStatus 	: function(ids){
+			var self = this;
+
+			if(ids.length>0){
+				this.txnDS.query({
+					filter:{ field:"id", operator:"where_in", value:ids }
+				}).then(function(){
+					var view = self.txnDS.view();
+
+					$.each(view, function(index, value){
+						if(value.amount_paid == 0){
+							value.set("status", 0);
+						}else if(value.amount_paid >= value.amount){
+							value.set("status", 1);
+						}else{
+							value.set("status", 2);
+						}
+					});
+
+					self.txnDS.sync();
+				});
+			}
 		},
 		//Return
 		addRowReturn 		: function(type){
@@ -71678,10 +71687,12 @@
 				var txn = this.referenceDS.get(returnObj.reference_id),
 				amount = txn.amount - (txn.amount_paid + txn.deposit);
 
+				returnObj.set("account_id", txn.account_id);
 				returnObj.set("reference_no", txn.number);
 				returnObj.set("sub_total", amount);
 				returnObj.set("amount", amount);				
 			}else{
+				returnObj.set("account_id", 0);
 				returnObj.set("reference_no", "");
 				returnObj.set("sub_total", 0);
 				returnObj.set("amount", 0);				
@@ -71747,8 +71758,7 @@
 	    	taxList = {},
 	    	inventoryList = {},
 	    	cogsList = {},
-	    	sumInvoice = 0,
-	    	sumCredit = 0;
+	    	returnList = {};
 			
 			//Item lines
 			$.each(this.lineDS.data(), function(index, value){
@@ -71858,16 +71868,40 @@
 				}
 			});
 
+			//Account line
+			$.each(this.accountLineDS.data(), function(index, value){
+				//Add tax list
+				if(value.tax_item_id>0){
+					var taxItem = self.taxItemDS.get(value.tax_item_id),
+					taxID = taxItem.account_id,
+					taxAmt = value.amount*taxItem.rate;
+					
+					if(taxList[taxID]===undefined){
+						taxList[taxID]={"id": taxID, "amount": taxAmt};
+					}else{
+						if(taxList[taxID].id===taxID){
+							taxList[taxID].amount += taxAmt;
+						}else{
+							taxList[taxID]={"id": taxID, "amount": taxAmt};
+						}
+					}
+				}
+			});
+
 			//Return Lines
 			$.each(this.returnDS.data(), function(index, value){
-				//Offset Invoice
+				//Add Offset Invoice and Deposit list
+				var returnID = kendo.parseInt(value.account_id);
 				if(value.type=="Offset_Invoice"){
-					sumInvoice += value.amount;
+					returnID = contact.account_id;
 				}
 
-				//Deposit
-				if(value.type=="Customer_Deposit"){ 
-					sumCredit += value.amount;
+				if(returnID>0){
+					if(returnList[returnID]===undefined){
+						returnList[returnID] = {"id": returnID, "amount": value.amount};
+					}else{
+						returnList[returnID].amount += value.amount;
+					}
 				}
 			});
 
@@ -71889,6 +71923,22 @@
 					});						
 				});
 			}
+
+			//Rebate Account on Dr
+			$.each(this.accountLineDS.data(), function(index, value){
+				self.journalLineDS.add({
+					transaction_id 		: transaction_id,
+					account_id 			: value.account_id,
+					contact_id 			: obj.contact_id,
+					description 		: "",
+					reference_no 		: "",
+					segments 	 		: value.segments,
+					dr 	 				: value.amount,
+					cr 					: 0,
+					rate				: obj.rate,
+					locale				: obj.locale
+				});
+			});
 
 			//Tax on Dr
 			if(!jQuery.isEmptyObject(taxList)){
@@ -71924,36 +71974,21 @@
 				});
 			}
 
-			//A/R on Cr
-			var ar = obj.amount - (obj.amount_paid + obj.deposit);
-			if(ar>0){
-				this.journalLineDS.add({
-					transaction_id 		: transaction_id,
-					account_id 			: contact.account_id,
-					contact_id 			: obj.contact_id,
-					description 		: "",
-					reference_no 		: "",
-					segments 	 		: [],
-					dr 	 				: 0,
-					cr 					: ar,
-					rate				: obj.rate,
-					locale				: obj.locale
-				});
-			}
-
-			//Deposit on Cr
-			if(sumCredit>0){
-				this.journalLineDS.add({
-					transaction_id 		: transaction_id,
-					account_id 			: contact.deposit_account_id,
-					contact_id 			: obj.contact_id,
-					description 		: "",
-					reference_no 		: "",
-					segments 	 		: [],
-					dr 	 				: 0,
-					cr 					: sumCredit,
-					rate				: obj.rate,
-					locale				: obj.locale
+			//A/R and Deposit on Cr
+			if(!jQuery.isEmptyObject(returnList)){
+				$.each(returnList, function(index, value){
+					self.journalLineDS.add({
+						transaction_id 		: transaction_id,
+						account_id 			: value.id,
+						contact_id 			: obj.contact_id,
+						description 		: "",
+						reference_no 		: "",
+						segments 	 		: [],
+						dr 	 				: 0,
+						cr 					: value.amount,
+						rate				: obj.rate,
+						locale				: obj.locale
+					});
 				});
 			}
 
@@ -79334,23 +79369,25 @@
 		updateTxnStatus 	: function(ids){
 			var self = this;
 
-			this.txnDS.query({
-				filter:{ field:"id", operator:"where_in", value:ids }
-			}).then(function(){
-				var view = self.txnDS.view();
+			if(ids.length>0){
+				this.txnDS.query({
+					filter:{ field:"id", operator:"where_in", value:ids }
+				}).then(function(){
+					var view = self.txnDS.view();
 
-				$.each(view, function(index, value){
-					if(value.amount_paid == 0){
-						value.set("status", 0);
-					}else if(value.amount_paid >= value.amount){
-						value.set("status", 1);
-					}else{
-						value.set("status", 2);
-					}
+					$.each(view, function(index, value){
+						if(value.amount_paid == 0){
+							value.set("status", 0);
+						}else if(value.amount_paid >= value.amount){
+							value.set("status", 1);
+						}else{
+							value.set("status", 2);
+						}
+					});
+
+					self.txnDS.sync();
 				});
-
-				self.txnDS.sync();
-			});
+			}
 		}
 	});
 	banhji.cashPayment =  kendo.observable({
@@ -79779,23 +79816,25 @@
 		updateTxnStatus 	: function(ids){
 			var self = this;
 
-			this.txnDS.query({
-				filter:{ field:"id", operator:"where_in", value:ids }
-			}).then(function(){
-				var view = self.txnDS.view();
+			if(ids.length>0){
+				this.txnDS.query({
+					filter:{ field:"id", operator:"where_in", value:ids }
+				}).then(function(){
+					var view = self.txnDS.view();
 
-				$.each(view, function(index, value){
-					if(value.amount_paid == 0){
-						value.set("status", 0);
-					}else if(value.amount_paid >= value.amount){
-						value.set("status", 1);
-					}else{
-						value.set("status", 2);
-					}
+					$.each(view, function(index, value){
+						if(value.amount_paid == 0){
+							value.set("status", 0);
+						}else if(value.amount_paid >= value.amount){
+							value.set("status", 1);
+						}else{
+							value.set("status", 2);
+						}
+					});
+
+					self.txnDS.sync();
 				});
-
-				self.txnDS.sync();
-			});
+			}
 		}
 	});
 	banhji.cashFlowForecast = kendo.observable({

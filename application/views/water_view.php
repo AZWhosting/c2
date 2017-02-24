@@ -12498,7 +12498,7 @@
 						para.push({field: "print_count", value: 0});
 						this.invoiceNoPrint.filter(para);
 						this.invoiceNoPrint.bind("requestEnd", function(e){
-							self.set("noPrint", self.invoiceNoPrint.data().length);
+							self.set("noPrint", e.response.results.length);
 						});
 						this.set("selectInv", true);
 					}else{
@@ -12512,9 +12512,9 @@
 			}
 	    },
 	    goNoPrint 			: function(){
-		    if(this.invoiceNoPrint.length > 0){
+		    if(this.invoiceNoPrint.data().length > 0){
 		    	this.invoiceCollection.dataSource.data([]);
-		    	this.invoiceCollection.dataSource.add(this.invoiceNoPrint.data());
+		    	this.invoiceCollection.dataSource.pushUpdate(this.invoiceNoPrint.data());
 		    }
 	    },
 		printBill 			: function(){
@@ -12559,6 +12559,50 @@
 		company 			: banhji.institute,
 		PaperSize 			: "A4",
 		TemplateSelect 		: null,
+		invoiceCollection 	: new kendo.data.DataSource({
+	      transport: {
+	      	read  : {
+	          url: baseUrl + 'api/winvoices',
+	          type: "GET",
+	          dataType: 'json',
+	          headers: { Institute: JSON.parse(localStorage.getItem('userData/user')).institute.id }
+	        },
+	        create  : {
+	          url: baseUrl + 'api/winvoices',
+	          type: "POST",
+	          dataType: 'json',
+	          headers: { Institute: JSON.parse(localStorage.getItem('userData/user')).institute.id }
+	        },
+	        update 	: {
+				url: baseUrl + 'api/winvoices',
+				type: "PUT",
+				dataType: 'json',
+				headers: { Institute: JSON.parse(localStorage.getItem('userData/user')).institute.id }
+			},
+	        parameterMap: function(options, operation) {
+	          if(operation === 'read') {
+	            return {
+	              limit: options.take,
+	              page: options.page,
+	              filter: options.filter
+	            };
+	          } else {
+	            return {models: kendo.stringify(options.models)};
+	          }
+	        }
+	      },
+	      schema  : {
+	        model: {
+	          id: 'id'
+	        },
+	        data: 'results',
+	        total: 'count'
+	      },
+	      batch: true,
+	      serverFiltering: true,
+	      serverPaging: true,
+	      pageSize: 100
+	    }),
 		user_id 			: banhji.userManagement.getLogin() === null ? '':banhji.userManagement.getLogin().id,
 		pageLoad 			: function(id){
 			var listView = $("#wInvoiceContent").data("kendoListView");
@@ -12609,10 +12653,12 @@
 				pHeight = "297mm";
 				pWidth = "210mm";
 			}
-			for(var i = 0; i < banhji.printBill.invoiceCollection.dataSource.data().length; i++) {
-				banhji.printBill.invoiceCollection.dataSource.data()[i].print_count += 1;
+			this.invoiceCollection.data([]);
+			this.invoiceCollection.add(this.dataSource);
+			for(var i = 0; i < this.invoiceCollection.data().length; i++) {
+				this.invoiceCollection.data()[i].print_count += 1;
 			}
-			banhji.printBill.invoiceCollection.dataSource.sync();
+			this.invoiceCollection.sync();
 			var gridElement = $('#grid'),
 		        printableContent = '',
 		        win = Win,
