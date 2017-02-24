@@ -46374,10 +46374,14 @@
     	deleteDS 				: dataStore(apiUrl + "account_lines"),
     	numberDS 				: dataStore(apiUrl + "accounts"),
     	accountTypeDS 			: banhji.source.accountTypeDS,
-    	subAccountDS			: dataStore(apiUrl + "accounts"),
     	currencyDS  			: new kendo.data.DataSource({
 		  	data: banhji.source.currencyList,
 		  	filter: { field:"status", value: 1 }
+		}),
+		subAccountDS  			: new kendo.data.DataSource({
+		  	data: banhji.source.accountList,
+		  	filter: { field:"status", value: 1 },
+		  	sort: { field: "number", dir: "asc" }
 		}),
     	statusList 				: banhji.source.statusList,
     	confirmMessage 			: banhji.source.confirmMessage,
@@ -71707,12 +71711,12 @@
 	    	obj = this.get("obj"),
 	    	contact = this.contactDS.get(obj.contact_id),
 	    	saleList = {},
-	    	taxList = {},	    	
+	    	taxList = {},
 	    	inventoryList = {},
 	    	cogsList = {},
 	    	cashList = {},
 	    	sumInvoice = 0,
-	    	sumCredit = 0;			
+	    	sumCredit = 0;
 			
 			//Item lines
 			$.each(this.lineDS.data(), function(index, value){
@@ -71720,32 +71724,31 @@
 				amount = value.quantity * value.price;
 
 				//Add Income list
-				var incomeID = kendo.parseInt(item.income_account_id);																				
+				var incomeID = kendo.parseInt(item.income_account_id);
 				if(incomeID>0){
 					if(saleList[incomeID]===undefined){
-						saleList[incomeID] = {"id": incomeID, "amount": amount};						
+						saleList[incomeID] = {"id": incomeID, "amount": amount};
 					}else{
 						saleList[incomeID].amount += amount;
 					}
 				}
 
 				//Discount by line
-				if(value.discount>0){										
-					var discount_amount = amount * value.discount;
-					amount -= discount_amount;																						
+				if(value.discount>0){
+					amount -= (amount * value.discount);
 				}
 
-				//TAX Account																								
+				//TAX Account
 				if(value.tax_item_id>0){
 					var taxItem = self.taxItemDS.get(value.tax_item_id),
 					taxID = taxItem.account_id,
 					taxAmt = amount * taxItem.rate;
 					if(taxList[taxID]===undefined){
-						taxList[taxID] = {"id": taxID, "amount": taxAmt};						
+						taxList[taxID] = {"id": taxID, "amount": taxAmt};
 					}else{
 						taxList[taxID].amount += taxAmt;
 					}
-				}				
+				}
 
 				//Add COGS list
 				var cogsID = kendo.parseInt(item.expense_account_id);
@@ -71754,17 +71757,17 @@
 					itemRate = banhji.source.getRate(item.locale, new Date(obj.issued_date));
 
 					if(item.item_type_id==1 || item.item_type_id==4){
-						cogsAmount = (value.quantity*value.unit_value)*item.cost;						
+						cogsAmount = (value.quantity*value.unit_value)*item.cost;
 					}else{
 						cogsAmount = value.amount;
-					}					
+					}
 
 					if(cogsList[cogsID]===undefined){
 						cogsList[cogsID] = {"id": cogsID, "amount": cogsAmount, "rate": itemRate, "locale": item.locale};						
 					}else{
 						cogsList[cogsID].amount += cogsAmount;
 					}
-				}						
+				}
 
 				//Add Inventory list
 				var inventoryID = kendo.parseInt(item.inventory_account_id);
@@ -71773,7 +71776,7 @@
 					itemRate = banhji.source.getRate(item.locale, new Date(obj.issued_date));
 
 					if(item.item_type_id==1 || item.item_type_id==4){
-						inventoryAmount = (value.quantity*value.unit_value)*item.cost;						
+						inventoryAmount = (value.quantity*value.unit_value)*item.cost;
 					}else{
 						inventoryAmount = value.amount;
 					}
@@ -71783,10 +71786,10 @@
 					}else{
 						inventoryList[inventoryID].amount += inventoryAmount;
 					}
-				}					  	
+				}
 			});
 
-			//Assembly Item for cogs and inventory
+			//Assembly Item Lines
 			$.each(self.assemblyLineDS.data(), function(index, value){
 				var item = self.itemDS.get(value.item_id);
 				
@@ -71823,7 +71826,7 @@
 				}
 			});
 
-			//Group Account from returnDS
+			//Return Lines
 			$.each(this.returnDS.data(), function(index, value){
 				//Offset Invoice
 				if(value.type=="Offset_Invoice"){
@@ -71834,37 +71837,21 @@
 				if(value.type=="Customer_Deposit"){ 
 					sumCredit += value.amount;
 				}
-
-				//Refund
-				if(value.type=="Credit_Note"){
-					var cashID = value.account_id,
-					cashAmt = value.amount;
-
-					if(cashList[cashID]===undefined){
-						cashList[cashID]={"id": cashID, "amount": cashAmt};						
-					}else{											
-						if(cashList[cashID].id===cashID){
-							cashList[cashID].amount += cashAmt;
-						}else{
-							cashList[cashID]={"id": cashID, "amount": cashAmt};
-						}
-					}
-				}
 			});
 
-			//Start journal			
+			//Start journal
 			//Sale on Dr
 			if(!jQuery.isEmptyObject(saleList)){
 				$.each(saleList, function(index, value){
-					self.journalLineDS.add({					
+					self.journalLineDS.add({
 						transaction_id 		: transaction_id,
-						account_id 			: value.id,				
-						contact_id 			: obj.contact_id,				
+						account_id 			: value.id,
+						contact_id 			: obj.contact_id,
 						description 		: "",
 						reference_no 		: "",
-						segments 	 		: [],								
+						segments 	 		: [],
 						dr 	 				: value.amount,
-						cr 					: 0,				
+						cr 					: 0,
 						rate				: obj.rate,
 						locale				: obj.locale
 					});						
@@ -71874,32 +71861,32 @@
 			//Tax on Dr
 			if(!jQuery.isEmptyObject(taxList)){
 				$.each(taxList, function(index, value){
-					self.journalLineDS.add({					
+					self.journalLineDS.add({
 						transaction_id 		: transaction_id,
-						account_id 			: value.id,				
-						contact_id 			: obj.contact_id,				
+						account_id 			: value.id,
+						contact_id 			: obj.contact_id,
 						description 		: "",
 						reference_no 		: "",
-						segments 	 		: [],								
+						segments 	 		: [],
 						dr 	 				: value.amount,
-						cr 					: 0,				
+						cr 					: 0,
 						rate				: obj.rate,
 						locale				: obj.locale
-					});						
+					});
 				});
 			}			
 
 			//Discount on Cr
-			if(obj.discount>0){			
-				this.journalLineDS.add({					
+			if(obj.discount>0){
+				this.journalLineDS.add({
 					transaction_id 		: transaction_id,
-					account_id 			: contact.trade_discount_id,				
-					contact_id 			: obj.contact_id,				
+					account_id 			: contact.trade_discount_id,
+					contact_id 			: obj.contact_id,
 					description 		: "",
 					reference_no 		: "",
-					segments 	 		: [],								
+					segments 	 		: [],
 					dr 	 				: 0,
-					cr 					: obj.discount,				
+					cr 					: obj.discount,
 					rate				: obj.rate,
 					locale				: obj.locale
 				});
@@ -71907,32 +71894,32 @@
 
 			//A/R on Cr
 			var ar = obj.amount - (obj.amount_paid + obj.deposit);
-			if(ar>0){						
-				this.journalLineDS.add({					
+			if(ar>0){
+				this.journalLineDS.add({
 					transaction_id 		: transaction_id,
-					account_id 			: contact.account_id,				
-					contact_id 			: obj.contact_id,				
+					account_id 			: contact.account_id,
+					contact_id 			: obj.contact_id,
 					description 		: "",
 					reference_no 		: "",
-					segments 	 		: [],								
+					segments 	 		: [],
 					dr 	 				: 0,
-					cr 					: ar,				
+					cr 					: ar,
 					rate				: obj.rate,
 					locale				: obj.locale
 				});
-			}			
+			}
 
 			//Deposit on Cr
-			if(sumCredit>0){			
-				this.journalLineDS.add({					
+			if(sumCredit>0){
+				this.journalLineDS.add({
 					transaction_id 		: transaction_id,
-					account_id 			: contact.deposit_account_id,				
-					contact_id 			: obj.contact_id,				
+					account_id 			: contact.deposit_account_id,
+					contact_id 			: obj.contact_id,
 					description 		: "",
 					reference_no 		: "",
-					segments 	 		: [],								
+					segments 	 		: [],
 					dr 	 				: 0,
-					cr 					: sumCredit,				
+					cr 					: sumCredit,
 					rate				: obj.rate,
 					locale				: obj.locale
 				});
@@ -71941,18 +71928,18 @@
 			//Cash on Cr
 			if(!jQuery.isEmptyObject(cashList)){
 				$.each(cashList, function(index, value){
-					self.journalLineDS.add({					
+					self.journalLineDS.add({
 						transaction_id 		: transaction_id,
-						account_id 			: value.id,				
-						contact_id 			: obj.contact_id,				
+						account_id 			: value.id,
+						contact_id 			: obj.contact_id,
 						description 		: "",
 						reference_no 		: "",
-						segments 	 		: [],								
+						segments 	 		: [],
 						dr 	 				: 0,
-						cr 					: value.amount,				
+						cr 					: value.amount,
 						rate				: obj.rate,
 						locale				: obj.locale
-					});						
+					});
 				});
 			}
 
@@ -71960,36 +71947,36 @@
 			//Inventory on Dr
 			if(!jQuery.isEmptyObject(inventoryList)){
 				$.each(inventoryList, function(index, value){
-					self.journalLineDS.add({					
+					self.journalLineDS.add({
 						transaction_id 		: transaction_id,
-						account_id 			: value.id,				
-						contact_id 			: obj.contact_id,				
+						account_id 			: value.id,
+						contact_id 			: obj.contact_id,
 						description 		: "",
 						reference_no 		: "",
-						segments 	 		: [],								
+						segments 	 		: [],
 						dr 	 				: value.amount,
-						cr 					: 0,				
+						cr 					: 0,
 						rate				: value.rate,
 						locale				: value.locale
-					});						
+					});
 				});
 			}
 
 			//Cogs on Cr
 			if(!jQuery.isEmptyObject(cogsList)){
 				$.each(cogsList, function(index, value){
-					self.journalLineDS.add({					
+					self.journalLineDS.add({
 						transaction_id 		: transaction_id,
-						account_id 			: value.id,				
-						contact_id 			: obj.contact_id,				
+						account_id 			: value.id,
+						contact_id 			: obj.contact_id,
 						description 		: "",
 						reference_no 		: "",
-						segments 	 		: [],								
+						segments 	 		: [],
 						dr 	 				: 0,
-						cr 					: value.amount,				
+						cr 					: value.amount,
 						rate				: value.rate,
 						locale				: value.locale
-					});						
+					});
 				});
 			}
 
