@@ -365,6 +365,7 @@ class Imports extends REST_Controller {
 				$utility->occupation = $value->occupation;
 				$utility->code = $value->code;
 				$utility->abbr = $license->abbr;
+				$utility->save();
 
 				//Respsone
 				$data["results"][] = array(
@@ -435,7 +436,6 @@ class Imports extends REST_Controller {
 					"is_pattern" 				=> intval($obj->is_pattern),
 					"status" 					=> $obj->status,
 					"is_system"					=> $obj->is_system,
-
 					"fullname" 					=> $fullname,
 					"contact_type"				=> $obj->contact_type->get_raw()->result()
 				);
@@ -453,7 +453,7 @@ class Imports extends REST_Controller {
 		foreach($models as $row) {
 			$customer = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$plan = new Plan(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			$locatin = new Location(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$location = new Location(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$meter = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
 			$customer->select('id')->where('name', $row->customer)->get();
@@ -467,14 +467,15 @@ class Imports extends REST_Controller {
 			$meter->multiplier = 1;
 			$meter->activated = 1;
 			$meter->status = 1;
-			$meter->customer_id = $customer->id;
+			$meter->contact_id = $customer->id;
 			$meter->branch_id = $location->branch_id;
 			$meter->location_id = $location->id;
 			$meter->plan_id = $plan->id;
+			$meter->date_used = date('Y-m-d', strtotime($row->date_used));
 
 			if($meter->save()) {
 				$data[] = array(
-					'id' => $meter->id;
+					'id' => $meter->id,
 					'number' => $meter->number,
 					'order' => $meter->worder,
 					'customer' => $customer->id,

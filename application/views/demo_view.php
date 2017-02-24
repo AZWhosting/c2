@@ -48018,7 +48018,10 @@
 			      	{ field:"account_type_id", value: 10 },//Cash Account
 			      	{ field:"account_type_id", value: 34 }//Retained Earning
 			    ],
-			    sort: { field:"number", dir:"asc" }
+			    sort:[
+			    	{ field:"account_type_id", dir:"asc" },
+			    	{ field:"number", dir:"asc" }
+			    ]
 			}
 		}),
 		advAccountDS 		: new kendo.data.DataSource({
@@ -71348,6 +71351,9 @@
 
 	        //Return
 	        $.each(this.returnDS.data(), function(index, value) {
+	        	if(value.reference_id>0){
+
+	        	}
 				returnAmount += value.amount;
 	        });
 	       
