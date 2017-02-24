@@ -16,6 +16,10 @@ h1,h2,h3,h4,h5,h6{
   width: 100%;
 }
 
+div.k-window{
+  z-index: 1 !important;
+}
+
 #ddlCurrency-list{
   width: 220px !important;
 }

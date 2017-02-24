@@ -28,7 +28,7 @@ class Imports extends REST_Controller {
 			date_default_timezone_set("$conn->time_zone");
 		}
 	}
-	
+
 	function contact_post() {
 		$models = json_decode($this->post('models'));
 
@@ -49,7 +49,6 @@ class Imports extends REST_Controller {
 
 			$account = new Account(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$account->where('number', isset($value->account) ? $value->account:0)->get();
-
 			
 			$revenue = new Account(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$revenue->where('number', isset($value->revenue_account) ? $value->revenue_account:0)->get();
@@ -230,6 +229,262 @@ class Imports extends REST_Controller {
 		$data["count"] = count($data["results"]);
 
 		$this->response($data, 201);
+	}
+
+	function wcontact_post() {
+		$models = json_decode($this->post('models'));
+
+		$lastContact = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$lastContact->order_by('id', 'desc')->limit(1)->get();
+		$last_id = intval($lastContact->id);
+
+		foreach ($models as $value) {
+			$last_id++;
+			$deposit = new Account(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$deposit->select('id')->where('number', isset($value->deposit_account) ? $value->deposit_account:0)->get();
+
+			$discount = new Account(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$discount->select('id')->where('number', isset($value->trade_discount) ? $value->trade_discount:0)->get();
+
+			$settlement = new Account(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$settlement->select('id')->where('number', isset($value->settlement_discount) ? $value->settlement_discount:0)->get();
+
+			$account = new Account(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$account->select('id')->where('number', isset($value->account) ? $value->account:0)->get();
+			
+			$revenue = new Account(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$revenue->select('id')->where('number', isset($value->revenue_account) ? $value->revenue_account:0)->get();
+
+			$tax = new Tax_item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$tax->select('id')->where('name', isset($value->tax) ? $value->tax:0)->get();
+
+			$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$type->select('id')->where('name', $value->contact_type)->where('parent_id <>', "")->get();
+
+			$currency = new Currency(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$currency->where('code', $value->currency)->get();
+
+			$license = new Branch(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$license->select('id, abbr')->where('number', isset($value->license) ? $value->license:0)->get();
+
+			// test
+			$country = null;
+			if(isset($value->country)) {
+				$connection = 'use banhji';
+				$this->db->query($connection);
+				$this->db->select('id')->from('countries')->where('name', $value->country);
+				$sql = $this->db->get();
+				foreach($sql->result() as $row) {
+					$country = $row->id;
+				}
+			} else {
+				$country = $this->countryId;
+			}
+				
+
+			$obj = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			isset($value->branch_id) 				? $obj->branch_id 				= $value->branch_id : "";
+			$obj->country_id = isset($value->country)?  $country : $this->countryId;
+			isset($value->ebranch_id) 				? $obj->ebranch_id 				= $value->ebranch_id : "";
+			isset($value->elocation_id) 			? $obj->elocation_id 			= $value->elocation_id : "";
+			isset($value->wbranch_id) 				? $obj->wbranch_id 				= $value->wbranch_id : "";
+			isset($value->wlocation_id) 			? $obj->wlocation_id			= $value->wlocation_id : "";
+			isset($value->user_id)					? $obj->user_id 				= $value->user_id : "";
+			isset($value->contact_type)				? $obj->contact_type_id 		= $type->id : "";
+			isset($value->eorder)					? $obj->eorder					= $last_id : "";
+			isset($value->worder)					? $obj->worder					= $last_id : "";
+			isset($value->abbr)						? $obj->abbr					= $value->abbr : "";
+			isset($value->number)					? $obj->number					= $value->number : "";
+			isset($value->eabbr)					? $obj->eabbr					= $value->eabbr : "";
+			isset($value->enumber)					? $obj->enumber					= $value->enumber : "";
+			isset($value->wabbr)					? $obj->wabbr					= $value->wabbr : "";
+			isset($value->wnumber)					? $obj->wnumber					= $value->wnumber : "";
+			isset($value->name)						? $obj->name					= $value->name : "";
+			isset($value->gender)					? $obj->gender					= $value->gender : "";
+			isset($value->dob)						? $obj->dob						= date("Y-m-d", strtotime($value->dob)) : "";
+			isset($value->pob)						? $obj->pob						= $value->pob : "";
+			isset($value->latitute)					? $obj->latitute 				= $value->latitute : "";
+			isset($value->longtitute)				? $obj->longtitute 				= $value->longtitute : "";
+			isset($value->credit_limit)				? $obj->credit_limit			= $value->credit_limit : "";
+			isset($value->currency)					? $obj->locale					= $currency->locale : "";
+			isset($value->id_number)				? $obj->id_number				= $value->id_number : "";
+			isset($value->phone)					? $obj->phone 					= $value->phone : "";
+			isset($value->email)					? $obj->email 					= $value->email : "";
+			isset($value->website)					? $obj->website					= $value->website : "";
+			isset($value->job)						? $obj->job						= $value->job : "";
+			isset($value->vat_no)					? $obj->vat_no					= $value->vat_no : "";
+			isset($value->family_member)			? $obj->family_member			= $value->family_member : "";
+			isset($value->city)						? $obj->city 					= $value->city : "";
+			isset($value->post_code)				? $obj->post_code 				= $value->post_code : "";
+			isset($value->address)					? $obj->address 				= $value->address : "";
+			isset($value->bill_to)					? $obj->bill_to 				= $value->bill_to : "";
+			isset($value->ship_to)					? $obj->ship_to 				= $value->ship_to : "";
+			isset($value->memo)						? $obj->memo					= $value->memo : "";
+			isset($value->image_url)				? $obj->image_url				= $value->image_url : "";
+			isset($value->company)					? $obj->company					= $value->company : "";
+			isset($value->company_en)				? $obj->company_en				= $value->company_en : "";
+			isset($value->bank_name)				? $obj->bank_name				= $value->bank_name : "";
+			isset($value->bank_address)				? $obj->bank_address			= $value->bank_address : "";
+			isset($value->bank_account_name)		? $obj->bank_account_name		= $value->bank_account_name : "";
+			isset($value->bank_account_number)		? $obj->bank_account_number		= $value->bank_account_number : "";
+			isset($value->name_on_cheque)			? $obj->name_on_cheque			= $value->name_on_cheque : "";
+			isset($value->business_type_id)			? $obj->business_type_id		= $value->business_type_id : "";
+			isset($value->payment_term_id)			? $obj->payment_term_id			= $value->payment_term_id : "";
+			isset($value->payment_method_id)		? $obj->payment_method_id		= $value->payment_method_id : "";
+			isset($value->deposit_account)			? $obj->deposit_account_id		= $deposit->id : "";
+			isset($value->trade_discount)			? $obj->trade_discount_id		= $discount->id : "";
+			isset($value->settlement_discount)		? $obj->settlement_discount_id	= $settlement->id : "";
+			isset($value->salary_account_id)		? $obj->salary_account_id		= $value->salary_account_id : "";
+			isset($value->account)					? $obj->account_id				= $account->id : "";
+			isset($value->revenue_account)			? $obj->ra_id					= $revenue->id : "";
+			isset($value->tax)						? $obj->tax_item_id				= $tax->id : "";
+			isset($value->phase_id)					? $obj->phase_id				= $value->phase_id : "";
+			isset($value->voltage_id)				? $obj->voltage_id				= $value->voltage_id : "";
+			isset($value->ampere_id)				? $obj->ampere_id				= $value->ampere_id : "";
+			isset($value->registered_date)			? $obj->registered_date 		= date("Y-m-d", strtotime($value->registered_date)) : "";
+			isset($value->use_electricity)			? $obj->use_electricity			= $value->use_electricity : "";
+			isset($value->use_water)				? $obj->use_water				= $value->use_water : "";
+			isset($value->is_local)					? $obj->is_local				= $value->is_local : "";
+			isset($value->is_pattern)				? $obj->is_pattern				= $value->is_pattern : "";
+			$obj->status					= 1;
+			isset($value->deleted)					? $obj->deleted					= $value->deleted : "";
+			isset($value->is_system)				? $obj->is_system				= $value->is_system : "";
+
+			if($obj->save()){
+				$fullname = $obj->surname.' '.$obj->name;
+				if($obj->contact_type_id=="6" || $obj->contact_type_id=="7" || $obj->contact_type_id=="8"){
+					$fullname = $obj->company;
+				}
+
+				$utility = new Contact_utility(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$utility->contact_id = $obj->id;
+				$utility->type = 'w';
+				$utility->branch_id = $license->id;
+				$utility->id_card = $value->id_card;
+				$utility->family_member = $value->family_member;
+				$utility->occupation = $value->occupation;
+				$utility->code = $value->code;
+				$utility->abbr = $license->abbr;
+
+				//Respsone
+				$data["results"][] = array(
+					"id" 						=> $obj->id,
+					"branch_id" 				=> $obj->branch_id,
+					"country_id" 				=> $country,
+					"ebranch_id" 				=> $obj->ebranch_id,
+					"elocation_id" 				=> $obj->elocation_id,
+					"wbranch_id" 				=> $obj->wbranch_id,
+					"wlocation_id" 				=> $obj->wlocation_id,
+					"user_id"					=> $obj->user_id,
+					"contact_type_id" 			=> $obj->contact_type_id,
+					"eorder" 					=> $obj->eorder,
+					"worder" 					=> $obj->worder,
+					"abbr" 						=> $obj->abbr,
+					"number" 					=> $obj->number,
+					"eabbr" 					=> $obj->eabbr,
+					"enumber" 					=> $obj->enumber,
+					"wabbr" 					=> $obj->wabbr,
+					"wnumber" 					=> $obj->wnumber,
+					"name" 						=> $obj->name,
+					"gender"					=> $obj->gender,
+					"dob" 						=> $obj->dob,
+					"pob" 						=> $obj->pob,
+					"latitute" 					=> $obj->latitute,
+					"longtitute" 				=> $obj->longtitute,
+					"credit_limit" 				=> $obj->credit_limit,
+					"locale" 					=> $obj->locale,
+					"id_number" 				=> $obj->id_number,
+					"phone" 					=> $obj->phone,
+					"email" 					=> $obj->email,
+					"website" 					=> $obj->website,
+					"job" 						=> $obj->job,
+					"vat_no" 					=> $obj->vat_no,
+					"family_member"				=> $obj->family_member,
+					"city" 						=> $obj->city,
+					"post_code" 				=> $obj->post_code,
+					"address" 					=> $obj->address,
+					"bill_to" 					=> $obj->bill_to,
+					"ship_to" 					=> $obj->ship_to,
+					"memo" 						=> $obj->memo,
+					"image_url" 				=> $obj->image_url,
+					"company" 					=> $obj->company,
+					"company_en" 				=> $obj->company_en,
+					"bank_name" 				=> $obj->bank_name,
+					"bank_address" 				=> $obj->bank_address,
+					"bank_account_name" 		=> $obj->bank_account_name,
+					"bank_account_number" 		=> $obj->bank_account_number,
+					"name_on_cheque" 			=> $obj->name_on_cheque,
+					"business_type_id" 			=> $obj->business_type_id,
+					"payment_term_id" 			=> $obj->payment_term_id,
+					"payment_method_id" 		=> $obj->payment_method_id,
+					"deposit_account_id"		=> $obj->deposit_account_id,
+					"trade_discount_id" 		=> $obj->trade_discount_id,
+					"settlement_discount_id"	=> $obj->settlement_discount_id,
+					"salary_account_id"			=> $obj->salary_account_id,
+					"account_id" 				=> $obj->account_id,
+					"account_id" 				=> $obj->account_id,
+					"ra_id" 					=> $obj->ra_id,
+					"tax_item_id" 				=> $obj->tax_item_id,
+					"phase_id" 					=> $obj->phase_id,
+					"voltage_id" 				=> $obj->voltage_id,
+					"ampere_id" 				=> $obj->ampere_id,
+					"registered_date" 			=> $obj->registered_date,
+					"use_electricity" 			=> $obj->use_electricity,
+					"use_water" 				=> $obj->use_water,
+					"is_local" 					=> $obj->is_local,
+					"is_pattern" 				=> intval($obj->is_pattern),
+					"status" 					=> $obj->status,
+					"is_system"					=> $obj->is_system,
+
+					"fullname" 					=> $fullname,
+					"contact_type"				=> $obj->contact_type->get_raw()->result()
+				);
+			}
+		}
+		$data["count"] = count($data["results"]);
+
+		$this->response($data, 201);
+	}
+
+	function meter_post() {
+		$models = json_decode($this->post('models'));
+		$data = array();
+		$order = 1;
+		foreach($models as $row) {
+			$customer = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$plan = new Plan(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$locatin = new Location(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$meter = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+			$customer->select('id')->where('name', $row->customer)->get();
+			$location->select('id, branch_id')->where('name', $row->bloc)->get();
+			$plan->select('id')->where('code', $row->plan_code)->get();
+			
+			$meter->number = isset($row->number) ? $row->number : 0;
+			$meter->worder = isset($row->order) ? $row->order : $order;
+			$meter->startup_reader = isset($row->start_up) ? $row->number : 0;
+			$meter->number_digit = $row->digit_number;
+			$meter->multiplier = 1;
+			$meter->activated = 1;
+			$meter->status = 1;
+			$meter->customer_id = $customer->id;
+			$meter->branch_id = $location->branch_id;
+			$meter->location_id = $location->id;
+			$meter->plan_id = $plan->id;
+
+			if($meter->save()) {
+				$data[] = array(
+					'id' => $meter->id;
+					'number' => $meter->number,
+					'order' => $meter->worder,
+					'customer' => $customer->id,
+					'bloc' => $location->id,
+					'plan_code' => $plan->id,
+					'digit_number' => $meter->number_digit
+				);
+			}
+		}
+		$this->response(array('results' => $data, 'count' => count($data)), 201);
 	}
 
 	function item_post() {

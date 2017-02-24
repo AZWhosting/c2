@@ -12190,11 +12190,11 @@
 				//Total after Tariff
 				var Total = 0;
 				if(exT == '%'){
-					exU = kendo.parseInt(exU) * kendo.parseFloat(aTariff);
+					exU = kendo.parseFloat(exU) * kendo.parseFloat(aTariff);
 					var exP = (kendo.parseFloat(exU) * kendo.parseFloat(exA)) / 100;
 					Total = kendo.parseFloat(exU) - kendo.parseFloat(exP);
 				}else if(exT == 'money'){
-					exU = kendo.parseInt(exU) * kendo.parseFloat(aTariff);
+					exU = kendo.parseFloat(exU) * kendo.parseFloat(aTariff);
 					Total = kendo.parseFloat(exU) - kendo.parseFloat(exA);
 				}else{
 					Total = kendo.parseInt(tUsage) * kendo.parseFloat(aTariff);
@@ -12433,8 +12433,10 @@
 			}
 	    },
 	    goNoPrint 			: function(){
-	    	this.invoiceCollection.dataSource.data([]);
-	    	this.invoiceCollection.dataSource.add(this.invoiceNoPrint.data());
+		    if(this.invoiceNoPrint.length > 0){
+		    	this.invoiceCollection.dataSource.data([]);
+		    	this.invoiceCollection.dataSource.add(this.invoiceNoPrint.data());
+		    }
 	    },
 		printBill 			: function(){
 			if(this.get("TemplateSelect")){
@@ -17337,21 +17339,11 @@
 		  //       }else{
 		  //       	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
 		  //       }
-		  		console.log('dlsfjkdsfjlsdfs');
 			});
 		}
 		vm.pageLoad();
 	});
 	banhji.router.route("/reconcile", function(){
-		if(banhji.Receipt.currencyDS.data().length <= 0) {
-			banhji.Receipt.currencyDS.read()
-			.then(function(e){
-				$.each(banhji.Receipt.currencyDS.data(), function(i, v){
-					banhji.reconcileVM.currencyDS.push(v);
-				});
-			});
-		}		
-		banhji.view.layout.showIn("#content", banhji.view.Reconcile);
 		banhji.view.layout.showIn('#menu', banhji.view.menu);
 		banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
 		var vm = banhji.Reconcile;
@@ -17360,6 +17352,20 @@
 			banhji.pageLoaded["reconcile"] = true;
 		}
 		vm.pageLoad();
+		if(banhji.Receipt.currencyDS.data().length == 0) {
+			banhji.Receipt.currencyDS.read()
+			.then(function(e){
+				$.each(banhji.Receipt.currencyDS.data(), function(i, v){
+					banhji.reconcileVM.currencyDS.push(v);
+				});
+				banhji.view.layout.showIn("#content", banhji.view.Reconcile);
+			});
+		} else {
+			$.each(banhji.Receipt.currencyDS.data(), function(i, v){
+				banhji.reconcileVM.currencyDS.push(v);
+			});
+			banhji.view.layout.showIn("#content", banhji.view.Reconcile);
+		}
 	});
 	banhji.router.route("/reports", function(){
 		banhji.view.layout.showIn("#content", banhji.view.Reports);

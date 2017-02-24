@@ -12595,7 +12595,7 @@
 
 								<br>
 
-							    <!-- Account List -->				
+							    <!-- Account List -->
 								<table class="table table-bordered table-primary table-striped table-vertical-center">
 							        <thead>
 							            <tr>
@@ -21407,13 +21407,13 @@
 				        <thead>
 				            <tr>
 				                <th class="center" style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></th>			      
-				                <th><span data-bind="text: lang.lang.items"></span></th>
+				                <th style="width: 20%;"><span data-bind="text: lang.lang.items"></span></th>
 				                <th><span data-bind="text: lang.lang.description"></span></th>
 				                <th style="width: 15%;"><span data-bind="text: lang.lang.quantity"></span></th>
 				                <th style="width: 10%;"><span data-bind="text: lang.lang.price"></span></th>
 				                <th style="width: 10%;" data-bind="visible: showDiscount"><span data-bind="text: lang.lang.discount"></span></th>	                
 				                <th style="width: 10%;"><span data-bind="text: lang.lang.amount"></span></th>
-				                <th style="width: 10%;"><span data-bind="text: lang.lang.tax"></span></th>		                			                			                
+				                <th style="width: 11%;"><span data-bind="text: lang.lang.tax"></span></th>		                			                			                
 				            </tr> 
 				        </thead>
 				        <tbody data-role="listview" 
@@ -21421,8 +21421,93 @@
 				        		data-auto-bind="false"
 				        		data-bind="source: lineDS"></tbody>			        
 				    </table>
+				    <!-- Item Add Row part -->
+		            <div class="row">
+						<div class="span12">
+							<button class="btn btn-inverse" data-bind="click: addRow"><i class="icon-plus icon-white"></i></button>
 
-				    <!-- Offset Invoice -->
+							<div class="btn-group">
+								<div class="leadcontainer">
+									
+								</div>
+								<a class="btn btn-default dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-list"></i> </a>
+								<ul class="dropdown-menu" style="padding: 5px; border-radius:0;">
+									<li>
+										<input type="checkbox" id="chbDiscount" class="k-checkbox" data-bind="checked: showDiscount" />												
+										<label class="k-checkbox-label" for="chbDiscount"><span data-bind="text: lang.lang.discount"></span></label>
+									</li>
+								</ul>
+							</div>
+
+							<!-- Add New Item -->
+							<ul class="topnav addNew">
+								<li role="presentation" class="dropdown ">
+							  		<a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+							  			<span data-bind="text: lang.lang.add_new_item"></span>
+				    					<span class="caret"></span>
+							  		</a>
+						  			<ul class="dropdown-menu addNewItem">  				  				
+						  				<li><a href='#/item'><span data-bind="text: lang.lang.add_inventory_for_sale"></span></a></li>
+						  				<li><a href='#/non_inventory_part'><span data-bind="text: lang.lang.add_noninventory_for_sale"></span></a></li>
+						  				<li><a href='#/fixed_assets'><span data-bind="text: lang.lang.add_fixed_assets"></span></a></li>
+						  				<li><a href='#/item_service'><span data-bind="text: lang.lang.add_services"></span></a></li>
+						  				<li><a href='#/txn_item'><span data-bind="text: lang.lang.add_transaction_item"></span></a></li>  				
+						  				 				
+						  			</ul>
+							  	</li>				
+							</ul>
+							<!--End Add New Item -->
+
+						</div>
+					</div>
+
+					<br>
+
+				    <!-- Account List -->
+					<table class="table table-bordered table-primary table-striped table-vertical-center">
+				        <thead>
+				            <tr>
+				                <th style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></th>			                
+				                <th style="width: 20%;"><span data-bind="text: lang.lang.account"></span></th>
+				                <th><span data-bind="text: lang.lang.description"></span></th>
+				                <th data-bind="visible: showRef" style="width: 7%;"><span data-bind="text: lang.lang.ref"></span></th>			                
+				                <th data-bind="visible: showSegment" style="width: 15%;"><span data-bind="text: lang.lang.segment"></span></th>
+				                <th class="center" style="width: 20%;"><span data-bind="text: lang.lang.amount"></span></th>
+				                <th class="center" style="width: 11%;"><span data-bind="text: lang.lang.tax"></span></th>			                			                
+				            </tr> 
+				        </thead>
+				        <tbody data-role="listview" 
+				        		data-template="saleReturn-account-line-template" 
+				        		data-auto-bind="false"
+				        		data-bind="source: accountLineDS"></tbody>			        
+				    </table>
+				    <!-- Add Row Account -->
+				    <div>
+						<button class="btn btn-inverse" data-bind="click: addRowAccount"><i class="icon-plus icon-white"></i></button>												
+
+						<div class="btn-group">
+							<div class="leadcontainer">
+								
+							</div>
+							<a class="btn btn-default dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-list"></i> </a>
+							<ul class="dropdown-menu" style="padding: 5px; border-radius:0;">
+								<li>											
+									<input type="checkbox" id="chbReference" class="k-checkbox" data-bind="checked: showRef" />												
+									<label class="k-checkbox-label" for="chbReference"><span data-bind="text: lang.lang.reference"></span></label>
+								</li>
+								<li>											
+									<input type="checkbox" id="chbSegment" class="k-checkbox" data-bind="checked: showSegment" />												
+									<label class="k-checkbox-label" for="chbSegment"><span data-bind="text: lang.lang.segment"></span></label>
+								</li>															
+							</ul>
+						</div>
+						
+				  		<a href="#/account" class="btn" style="background: #f4f4f4; color: #333; width: 137px;">
+				  			<span data-bind="text: lang.lang.add_account"></span>
+				  		</a>					
+					</div>
+
+				    <!-- Return Window -->
 				    <div data-role="window"
 		                 data-title="Return Option"
 		                 data-width="600"
@@ -21486,31 +21571,13 @@
 						</div>
 					</div>
 
+					<br>
+
 		            <!-- Bottom part -->
 		            <div class="row">
 			
 						<!-- Column -->
 						<div class="span7">
-							<button class="btn btn-inverse" data-bind="click: addRow"><i class="icon-plus icon-white"></i></button>
-
-							<div class="btn-group">
-								<div class="leadcontainer">
-									
-								</div>
-								<a class="btn btn-default dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-list"></i> </a>
-								<ul class="dropdown-menu" style="padding: 5px; border-radius:0;">
-									<li>
-										<input type="checkbox" id="chbDiscount" class="k-checkbox" data-bind="checked: showDiscount" />												
-										<label class="k-checkbox-label" for="chbDiscount"><span data-bind="text: lang.lang.discount"></span></label>
-									</li>																
-								</ul>
-							</div>
-
-							<button style="margin-bottom: 15px;" class="btn btn-inverse" data-bind="click: openOffsetInvoiceWindow"><i class="icon-plus icon-white"></i> Charge Against Invoice</button>
-							<button style="margin-bottom: 15px;" class="btn btn-inverse" data-bind="click: openDepositWindow"><i class="icon-plus icon-white"></i> Add To Deposit</button>					
-
-							<br><br>
-
 							<table class="table table-bordered table-inverse table-striped table-vertical-center" data-bind="visible: showReturn">
 						        <thead>
 						            <tr>
@@ -21525,6 +21592,10 @@
 						        		data-auto-bind="false"
 						        		data-bind="source: returnDS"></tbody>			        
 						    </table>
+
+						    <br>
+						    <button class="btn btn-inverse" data-bind="click: openOffsetInvoiceWindow"><i class="icon-plus icon-white"></i> Charge Against Invoice</button>
+							<button class="btn btn-inverse" data-bind="click: openDepositWindow"><i class="icon-plus icon-white"></i> Add To Deposit</button>
 
 						</div>
 						<!-- Column END -->
@@ -21683,6 +21754,70 @@
                    			  events:{ change: changes }"
                    style="width: 100%" />			
 		</td>						
+    </tr>   
+</script>
+<script id="saleReturn-account-line-template" type="text/x-kendo-tmpl">
+	<tr data-uid="#: uid #">		
+		<td class="center">
+			<i class="icon-trash" data-bind="events: { click: removeRowAccount }"></i>
+			#:banhji.saleReturn.accountLineDS.indexOf(data)+1#			
+		</td>			
+		<td>
+			<input id="cbbAccounts" name="cbbAccounts-#:uid#"
+				   data-role="combobox"
+                   data-template="account-list-tmpl"
+                   data-value-primitive="true"                                     
+                   data-text-field="name"
+                   data-value-field="id"
+                   data-bind="value: account_id,
+                              source: accountDS"
+                   data-placeholder="Add Account.."        
+                   required data-required-msg="required" style="width: 100%" />	
+		</td>		
+		<td>
+			<input name="description" 
+					type="text" class="k-textbox" 
+					data-bind="value: description"					
+					style="width: 100%; margin-bottom: 0;" />
+		</td>
+		<td data-bind="visible: showRef">
+			<input type="text" class="k-textbox" 
+					data-bind="value: reference_no"				
+					style="width: 100%; margin-bottom: 0;" />		
+		</td>			
+		<td data-bind="visible: showSegment">
+			<select data-role="multiselect" id="ddlSegment"
+				   data-value-primitive="true"				   
+				   data-item-template="segment-list-tmpl"				    
+				   data-value-field="id" 
+				   data-text-field="code"
+				   data-bind="value: segments, 
+				   			source: segmentItemDS,
+				   			events:{ change: segmentChanges }"
+				   data-placeholder="Add Segment.."				   
+				   style="width: 100%" /></select>					
+		</td>
+		<td class="right">
+			<input id="txtAmount-#:uid#" name="txtAmount-#:uid#" 
+					data-role="numerictextbox"
+					data-spinners="false" 
+					data-format="n"
+					data-min="0" 
+					data-bind="value: amount, events: {change : changes}" 
+					required data-required-msg="required" style="width: 100%;" /> 						
+		</td>
+		<td>
+			<input id="ccbTaxItem" name="ccbTaxItemAccount-#:uid#"
+				   data-role="combobox"
+                   data-header-template="tax-header-tmpl"
+				   data-value-primitive="true"
+                   data-text-field="name"
+                   data-value-field="id"
+                   data-bind="value: tax_item_id, 
+                   			  source: taxItemDS,
+                   			  events:{ change: changes }"
+                   style="width: 100%" />			
+		</td>			
     </tr>   
 </script>
 <script id="saleReturn-return-line-template" type="text/x-kendo-tmpl">
@@ -56849,7 +56984,7 @@
 				{ field:"number", dir:"asc" }
 			]
 		}),
-		txnTemplateDS 		: new kendo.data.DataSource({
+		txnTemplateDS 				: new kendo.data.DataSource({
 		  	data: banhji.source.txnTemplateList,
 		  	filter:{
 			    logic: "or",
@@ -56894,7 +57029,7 @@
 			serverPaging: true,
 			pageSize: 100
 		}),
-		taxItemDS 		: new kendo.data.DataSource({
+		taxItemDS 					: new kendo.data.DataSource({
 		  	data: banhji.source.taxList,
 		  	filter:{
 			    logic: "or",
@@ -57647,23 +57782,23 @@
 			var self = this, obj = this.get("obj"),
 			total = 0, subTotal = 0, discount =0, tax = 0, 
 			countAdditCheck = 0, amountAdditCheck = 0, additionalCost = 0, 
-			remaining = 0, amount_due = 0;													
+			remaining = 0, amount_due = 0;
 				
 			//Item
-			$.each(this.lineDS.data(), function(index, value) {				
-				var amt = value.quantity * value.cost;					
+			$.each(this.lineDS.data(), function(index, value) {
+				var amt = value.quantity * value.cost;
 
 				//Discount by line
-				if(value.discount>0){										
+				if(value.discount>0){
 					var discount_amount = amt * value.discount;
 					amt -= discount_amount;
-					discount += discount_amount;																	
+					discount += discount_amount;
 				}
 
 				//Tax by line
 				if(value.tax_item_id>0){
-					var taxItem = self.taxItemDS.get(value.tax_item_id);										
-					tax += amt * taxItem.rate;																	
+					var taxItem = self.taxItemDS.get(value.tax_item_id);
+					tax += amt * taxItem.rate;
 				}
 
 				//Count additional cost and check
@@ -57671,7 +57806,7 @@
 					amountAdditCheck += amt;
 					countAdditCheck++;
 				}
-									
+
 				subTotal += amt;
 				value.set("amount", amt);
 	        });
@@ -57680,11 +57815,11 @@
 	        $.each(this.accountLineDS.data(), function(index, value) {
 				//Tax by line
 				if(value.tax_item_id>0){
-					var taxItem = self.taxItemDS.get(value.tax_item_id);										
-					tax += value.amount * taxItem.rate;																	
+					var taxItem = self.taxItemDS.get(value.tax_item_id);
+					tax += value.amount * taxItem.rate;
 				}
 
-				subTotal += value.amount;					
+				subTotal += value.amount;
 	        });
 
 	        //Additional Cost
@@ -57692,14 +57827,14 @@
 	        	var additionalTax = 0;
 	        	//Tax by line
 				if(value.tax_item_id>0){
-					var taxItem = self.taxItemDS.get(value.tax_item_id);										
+					var taxItem = self.taxItemDS.get(value.tax_item_id);
 					additionalTax += value.sub_total * taxItem.rate;
-					tax += additionalTax;																							
+					tax += additionalTax;
 				}
 
 				additionalCost += value.sub_total / value.rate;
 
-				value.set("amount", value.sub_total + additionalTax);									
+				value.set("amount", value.sub_total + additionalTax);
 	        });
 
 	        //Apply additional cost
@@ -70596,7 +70731,8 @@
 		returnDS			: dataStore(apiUrl + "transactions"),
 		txnDS 				: dataStore(apiUrl + "transactions"),
 		lineDS  			: dataStore(apiUrl + "item_lines"),
-		assemblyLineDS  	: dataStore(apiUrl + "item_lines"),		
+		assemblyLineDS  	: dataStore(apiUrl + "item_lines"),
+		accountLineDS  		: dataStore(apiUrl + "account_lines"),		
 		journalLineDS		: dataStore(apiUrl + "journal_lines"),
 		assemblyDS			: dataStore(apiUrl + "item_prices"),
 		attachmentDS	 	: dataStore(apiUrl + "attachments"),
@@ -70643,7 +70779,10 @@
 		}),
 		accountDS  			: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
-		  	filter: { field:"account_type_id", value: 10 },
+		  	filter:[
+		      	{ field: "account_type_id", operator:"gte", value: 35 },
+		      	{ field: "account_type_id", operator:"lte", value: 43 }
+		    ],
 		  	sort: { field:"number", dir:"asc" }
 		}),
 		depositAccountDS 	: new kendo.data.DataSource({
@@ -70664,19 +70803,14 @@
 		saveClose 			: false,
 		savePrint 			: false,
 		statusSrc 			: "",
-		enableRef 	 		: false,
 		showReturn 			: true,
 		showDiscount 		: false,
+		showRef 			: false,
+		showSegment 		: false,
 		windowVisible 		: false,
 		isOffsetInvoice 	: false,
 		notDuplicateNumber  : true,
-		notDuplicateReturnNumber: true,
-		sub_total 			: 0,
-		discount 			: 0,
-		tax 				: 0,
 		total 				: 0,
-		remain 				: 0,
-		original_total 		: 0,
 		user_id				: banhji.source.user_id,
 		pageLoad 			: function(id){
 			if(id){
@@ -71005,6 +71139,31 @@
 		        this.changes();
 	        }
 		},
+		//Account
+		addRowAccount		: function(){
+			var obj = this.get("obj");
+					
+			this.accountLineDS.add({
+				transaction_id 		: obj.id,
+				tax_item_id 		: "",
+				account_id 			: "",
+				description 		: "",
+				reference_no 		: "",
+				segments 	 		: [],
+				amount 	 			: 0,
+				rate				: obj.rate,
+				locale				: obj.locale
+			});
+		},
+		removeRowAccount	: function(e){
+			var d = e.data;
+			if(this.lineDS.total()==0 && this.accountLineDS.total()==0){
+
+			}else{
+				this.accountLineDS.remove(d);
+		        this.changes();
+	        }
+		},
 		//Number      	
 		checkExistingNumber 	: function(){
 			var self = this, para = [], 
@@ -71086,12 +71245,8 @@
 				var view = self.dataSource.view();				
 				
 				self.set("obj", view[0]);
-				
-				self.set("statusSrc", banhji.source.usedSrc);
-					
+				self.set("statusSrc", banhji.source.usedSrc);					
 		        self.set("total", kendo.toString(view[0].amount, "c", view[0].locale));
-
-		        self.set("original_total", view[0].amount);
 				
 				self.loadLines(id);
 				self.assemblyLineDS.filter([
@@ -71149,6 +71304,7 @@
 			var self = this, obj = this.get("obj"), 
 			subTotal = 0, discount =0, tax = 0, returnAmount = 0, remaining = 0, itemIds = [];
 			
+			//Item lines
 	        $.each(this.lineDS.data(), function(index, value) {
 				var amt = value.quantity * value.price;
 
@@ -71171,6 +71327,17 @@
 				if(value.item_id>0){
 					itemIds.push(value.item_id);
 				}
+	        });
+
+	        //Account lines
+	        $.each(this.accountLineDS.data(), function(index, value) {
+				//Tax by line
+				if(value.tax_item_id>0){
+					var taxItem = self.taxItemDS.get(value.tax_item_id);
+					tax += value.amount * taxItem.rate;
+				}
+
+				subTotal += value.amount;
 	        });
 
 	        total = subTotal + tax;
@@ -71340,6 +71507,11 @@
 						value.set("transaction_id", data[0].id);
 					});
 
+					//Account line
+					$.each(self.accountLineDS.data(), function(index, value){
+						value.set("transaction_id", data[0].id);
+					});
+
 					//Assembly Item line
 					$.each(self.assemblyLineDS.data(), function(index, value){
 						value.set("transaction_id", data[0].id);
@@ -71360,6 +71532,7 @@
 				}
 
 				self.lineDS.sync();
+				self.accountLineDS.sync();
 				self.assemblyLineDS.sync();
 				self.returnDS.sync();
 				self.uploadFile();
@@ -71541,7 +71714,7 @@
 	    	sumInvoice = 0,
 	    	sumCredit = 0;			
 			
-			//Group Account from lineDS
+			//Item lines
 			$.each(this.lineDS.data(), function(index, value){
 				var item = self.itemDS.get(value.item_id),
 				amount = value.quantity * value.price;
@@ -71550,13 +71723,9 @@
 				var incomeID = kendo.parseInt(item.income_account_id);																				
 				if(incomeID>0){
 					if(saleList[incomeID]===undefined){
-						saleList[incomeID]={"id": incomeID, "amount": amount};						
-					}else{											
-						if(saleList[incomeID].id===incomeID){
-							saleList[incomeID].amount += amount;
-						}else{
-							saleList[incomeID]={"id": incomeID, "amount": amount};
-						}
+						saleList[incomeID] = {"id": incomeID, "amount": amount};						
+					}else{
+						saleList[incomeID].amount += amount;
 					}
 				}
 
@@ -71572,13 +71741,9 @@
 					taxID = taxItem.account_id,
 					taxAmt = amount * taxItem.rate;
 					if(taxList[taxID]===undefined){
-						taxList[taxID]={"id": taxID, "amount": taxAmt};						
-					}else{											
-						if(taxList[taxID].id===taxID){
-							taxList[taxID].amount += taxAmt;
-						}else{
-							taxList[taxID]={"id": taxID, "amount": taxAmt};
-						}
+						taxList[taxID] = {"id": taxID, "amount": taxAmt};						
+					}else{
+						taxList[taxID].amount += taxAmt;
 					}
 				}				
 
@@ -71595,13 +71760,9 @@
 					}					
 
 					if(cogsList[cogsID]===undefined){
-						cogsList[cogsID]={"id": cogsID, "amount": cogsAmount, "rate": itemRate, "locale": item.locale};						
-					}else{											
-						if(cogsList[cogsID].id===cogsID){
-							cogsList[cogsID].amount += cogsAmount;
-						}else{
-							cogsList[cogsID]={"id": cogsID, "amount": cogsAmount, "rate": itemRate, "locale": item.locale};
-						}
+						cogsList[cogsID] = {"id": cogsID, "amount": cogsAmount, "rate": itemRate, "locale": item.locale};						
+					}else{
+						cogsList[cogsID].amount += cogsAmount;
 					}
 				}						
 
@@ -71618,13 +71779,9 @@
 					}
 
 					if(inventoryList[inventoryID]===undefined){
-						inventoryList[inventoryID]={"id": inventoryID, "amount": inventoryAmount, "rate": itemRate, "locale": item.locale};						
-					}else{											
-						if(inventoryList[inventoryID].id===inventoryID){
-							inventoryList[inventoryID].amount += inventoryAmount;
-						}else{
-							inventoryList[inventoryID]={"id": inventoryID, "amount": inventoryAmount, "rate": itemRate, "locale": item.locale};
-						}
+						inventoryList[inventoryID] = {"id": inventoryID, "amount": inventoryAmount, "rate": itemRate, "locale": item.locale};						
+					}else{
+						inventoryList[inventoryID].amount += inventoryAmount;
 					}
 				}					  	
 			});
@@ -71643,13 +71800,9 @@
 
 					if(cogsAmount>0){
 						if(cogsList[cogsID]===undefined){
-							cogsList[cogsID]={"id": cogsID, "amount": cogsAmount, "rate": itemRate, "locale": item.locale};						
-						}else{											
-							if(cogsList[cogsID].id===cogsID){
-								cogsList[cogsID].amount += cogsAmount;
-							}else{
-								cogsList[cogsID]={"id": cogsID, "amount": cogsAmount, "rate": itemRate, "locale": item.locale};
-							}
+							cogsList[cogsID] = {"id": cogsID, "amount": cogsAmount, "rate": itemRate, "locale": item.locale};						
+						}else{
+							cogsList[cogsID].amount += cogsAmount;
 						}
 					}
 				}
@@ -71663,13 +71816,9 @@
 					inventoryAmount = value.quantity*item.cost;
 
 					if(inventoryList[inventoryID]===undefined){
-						inventoryList[inventoryID]={"id": inventoryID, "amount": inventoryAmount, "rate": itemRate, "locale": item.locale};						
-					}else{											
-						if(inventoryList[inventoryID].id===inventoryID){
-							inventoryList[inventoryID].amount += inventoryAmount;
-						}else{
-							inventoryList[inventoryID]={"id": inventoryID, "amount": inventoryAmount, "rate": itemRate, "locale": item.locale};
-						}
+						inventoryList[inventoryID] = {"id": inventoryID, "amount": inventoryAmount, "rate": itemRate, "locale": item.locale};						
+					}else{
+						inventoryList[inventoryID].amount += inventoryAmount;
 					}
 				}
 			});
@@ -86970,7 +87119,7 @@
 				var workbook = XLSX.read(data, {type : 'binary'});
 				workbook.SheetNames.forEach(function(sheetName) {
 					var roa = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
-					self.accountDS.fetch(function(){
+					banhji.importJournal.accountDS.fetch(function(){
 						if(roa.length > 0){
 							result[sheetName] = roa;
 							for(var i = 0; i < roa.length; i++) {
