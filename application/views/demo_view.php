@@ -71659,7 +71659,7 @@
 				}
 				para.push({field: "contact_id", value: obj.contact_id});
 				para.push({field: "status", operator:"where_in", value: [0,2]});
-				para.push({field: "type", operator:"where_in", value:["Commercial_Invoice", "Vat_Invoice", "Invoice", "Commercial_Cash_Sale","Vat_Cash_Sale", "Cash_Sale"]});
+				para.push({field: "type", operator:"where_in", value:["Commercial_Invoice", "Vat_Invoice", "Invoice"]});
 				this.referenceDS.filter(para);
 			}else{
 				this.set("isOffsetInvoice", false);
