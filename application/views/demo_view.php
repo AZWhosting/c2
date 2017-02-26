@@ -10017,7 +10017,7 @@
     	<td>#=type#</td>
         <td>		
 			#if(type=="Vendor_Deposit" && amount<0){#
-				<a href="\#/purchase/#=reference.length>0?reference[0].id:0#">#=number#</a>						
+				<a data-bind="click: goReference">#=number#</a>						
 			#}else{#
 				<a href="\#/#=type.toLowerCase()#/#=id#">#=number#</a>
 			#}#
@@ -17146,7 +17146,7 @@
         <!-- Reference -->
         <td>
         	#if(type=="Customer_Deposit" && amount<0){#			
-				<a href="\#/#=reference[0].type.toLowerCase()#/#=reference[0].id#"><i></i> #=number#</a>			
+				<a data-bind="click: goReference">#=number#</a>			
 			#}else{#
 				<a href="\#/#=type.toLowerCase()#/#=id#"><i></i> #=number#</a>
 			#}#        	
@@ -21411,7 +21411,6 @@
 				                <th><span data-bind="text: lang.lang.description"></span></th>
 				                <th style="width: 15%;"><span data-bind="text: lang.lang.quantity"></span></th>
 				                <th style="width: 10%;"><span data-bind="text: lang.lang.price"></span></th>
-				                <th style="width: 10%;" data-bind="visible: showDiscount"><span data-bind="text: lang.lang.discount"></span></th>	                
 				                <th style="width: 10%;"><span data-bind="text: lang.lang.amount"></span></th>
 				                <th style="width: 11%;"><span data-bind="text: lang.lang.tax"></span></th>		                			                			                
 				            </tr> 
@@ -21425,20 +21424,7 @@
 		            <div class="row">
 						<div class="span12">
 							<button class="btn btn-inverse" data-bind="click: addRow"><i class="icon-plus icon-white"></i></button>
-
-							<div class="btn-group">
-								<div class="leadcontainer">
-									
-								</div>
-								<a class="btn btn-default dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-list"></i> </a>
-								<ul class="dropdown-menu" style="padding: 5px; border-radius:0;">
-									<li>
-										<input type="checkbox" id="chbDiscount" class="k-checkbox" data-bind="checked: showDiscount" />												
-										<label class="k-checkbox-label" for="chbDiscount"><span data-bind="text: lang.lang.discount"></span></label>
-									</li>
-								</ul>
-							</div>
-
+							
 							<!-- Add New Item -->
 							<ul class="topnav addNew">
 								<li role="presentation" class="dropdown ">
@@ -21472,33 +21458,29 @@
 				                <th><span data-bind="text: lang.lang.description"></span></th>
 				                <th data-bind="visible: showRef" style="width: 7%;"><span data-bind="text: lang.lang.ref"></span></th>			                
 				                <th data-bind="visible: showSegment" style="width: 15%;"><span data-bind="text: lang.lang.segment"></span></th>
-				                <th class="center" style="width: 20%;"><span data-bind="text: lang.lang.amount"></span></th>
-				                <th class="center" style="width: 11%;"><span data-bind="text: lang.lang.tax"></span></th>			                			                
+				                <th class="center" style="width: 21%;"><span data-bind="text: lang.lang.amount"></span></th>		                			                
 				            </tr> 
 				        </thead>
 				        <tbody data-role="listview" 
 				        		data-template="saleReturn-account-line-template" 
 				        		data-auto-bind="false"
-				        		data-bind="source: accountLineDS"></tbody>			        
+				        		data-bind="source: accountLineDS"></tbody>
 				    </table>
 				    <!-- Add Row Account -->
 				    <div>
 						<button class="btn btn-inverse" data-bind="click: addRowAccount"><i class="icon-plus icon-white"></i></button>												
 
 						<div class="btn-group">
-							<div class="leadcontainer">
-								
-							</div>
 							<a class="btn btn-default dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-list"></i> </a>
 							<ul class="dropdown-menu" style="padding: 5px; border-radius:0;">
-								<li>											
+								<li>
 									<input type="checkbox" id="chbReference" class="k-checkbox" data-bind="checked: showRef" />												
 									<label class="k-checkbox-label" for="chbReference"><span data-bind="text: lang.lang.reference"></span></label>
 								</li>
-								<li>											
+								<li>
 									<input type="checkbox" id="chbSegment" class="k-checkbox" data-bind="checked: showSegment" />												
 									<label class="k-checkbox-label" for="chbSegment"><span data-bind="text: lang.lang.segment"></span></label>
-								</li>															
+								</li>
 							</ul>
 						</div>
 						
@@ -21592,8 +21574,7 @@
 						        		data-auto-bind="false"
 						        		data-bind="source: returnDS"></tbody>			        
 						    </table>
-
-						    <br>
+						    
 						    <button class="btn btn-inverse" data-bind="click: openOffsetInvoiceWindow"><i class="icon-plus icon-white"></i> Charge Against Invoice</button>
 							<button class="btn btn-inverse" data-bind="click: openDepositWindow"><i class="icon-plus icon-white"></i> Add To Deposit</button>
 
@@ -21607,12 +21588,6 @@
 									<tr>
 										<td class="right"><span data-bind="text: lang.lang.subtotal"></span></td>
 										<td class="right strong" width="40%"><span data-format="n" data-bind="text: obj.sub_total"></span></td>
-									</tr>								
-									<tr>
-										<td class="right"><span data-bind="text: lang.lang.total_discount"></span></td>
-										<td class="right strong">
-											<span data-format="n" data-bind="text: obj.discount"></span>
-	                   					</td>
 									</tr>
 									<tr>
 										<td class="right"><span data-bind="text: lang.lang.total_tax"></span></td>
@@ -21728,17 +21703,7 @@
 					data-spinners="false"
 					data-bind="value: price, events: {change : changes}" 
 					required data-required-msg="required" style="width: 100%;" />
-		</td>					
-		<td class="center" data-bind="visible: showDiscount">
-			<input data-role="numerictextbox"
-                   data-format="p0"
-                   data-min="0"
-                   data-max="0.99"
-                   data-step="0.1"                   
-                   data-bind="value: discount,
-                              events: { change: changes }"
-                   style="width: 65px;">			
-		</td>				
+		</td>	
 		<td class="right">
 			<span data-format="n" data-bind="text: amount"></span> 						
 		</td>
@@ -21806,18 +21771,6 @@
 					data-bind="value: amount, events: {change : changes}" 
 					required data-required-msg="required" style="width: 100%;" /> 						
 		</td>
-		<td>
-			<input id="ccbTaxItem" name="ccbTaxItemAccount-#:uid#"
-				   data-role="combobox"
-                   data-header-template="tax-header-tmpl"
-				   data-value-primitive="true"
-                   data-text-field="name"
-                   data-value-field="id"
-                   data-bind="value: tax_item_id, 
-                   			  source: taxItemDS,
-                   			  events:{ change: changes }"
-                   style="width: 100%" />			
-		</td>			
     </tr>   
 </script>
 <script id="saleReturn-return-line-template" type="text/x-kendo-tmpl">
@@ -53614,7 +53567,7 @@
 		}),
 		noteDS 				: dataStore(apiUrl + 'notes'),
 		attachmentDS	 	: dataStore(apiUrl + "attachments"),
-		summaryDS 			: dataStore(apiUrl + "transactions"),
+		txnDS 				: dataStore(apiUrl + "transactions"),
 		sortList			: banhji.source.sortList,
 		sorter 				: "all",
 		sdate 				: "",
@@ -53838,7 +53791,7 @@
 			var self = this, obj = this.get("obj");
 
 			if(obj!==null){
-				this.summaryDS.query({
+				this.txnDS.query({
 				  	filter: [
 				  		{ field:"contact_id", value: obj.id },
 				  		{ field:"type", operator:"where_in", value: ["Credit_Purchase", "Purchase_Order"] },
@@ -53848,7 +53801,7 @@
 				  	page: 1,
 				  	pageSize: 1000
 				}).then(function(){
-					var view = self.summaryDS.view(),
+					var view = self.txnDS.view(),
 					balance = 0, open = 0, over = 0, po = 0, today = new Date();
 
 					$.each(view, function(index, value){
@@ -54018,6 +53971,17 @@
 			}else{
 				alert(banhji.source.selectSupplierMessage);
 			}
+		},
+		goReference 		: function(e){
+			var self = this, data = e.data;
+
+			this.txnDS.query({
+				filter:{ field:"id", value:data.reference_id}
+			}).then(function(){
+				var view = self.txnDS.view();
+
+				banhji.router.navigate('/' + view[0].type.toLowerCase() +'/'+ data.reference_id);
+			});
 		},
 		goPO				: function(){
 			var obj = this.get("obj");
@@ -62894,12 +62858,12 @@
 		transactionDS  		: dataStore(apiUrl + 'transactions'),
 		noteDS 				: dataStore(apiUrl + 'notes'),
 		attachmentDS	 	: dataStore(apiUrl + "attachments"),
-		summaryDS 			: dataStore(apiUrl + "transactions"),
-		currencyDS  			: new kendo.data.DataSource({
+		txnDS 				: dataStore(apiUrl + "transactions"),
+		currencyDS  		: new kendo.data.DataSource({
 		  	data: banhji.source.currencyList,
 		  	filter: { field:"status", value: 1 }
 		}),
-		contactTypeDS 			: new kendo.data.DataSource({
+		contactTypeDS 		: new kendo.data.DataSource({
 		  	data: banhji.source.contactTypeList,
 		  	filter: { field:"parent_id", value: 1 }//Customer
 		}),
@@ -63164,7 +63128,7 @@
 			var self = this, obj = this.get("obj");
 
 			if(obj!==null){
-				this.summaryDS.query({
+				this.txnDS.query({
 				  	filter: [
 				  		{ field:"contact_id", value: obj.id },
 				  		{ field:"type", operator:"where_in", value: ["Customer_Deposit", "Commercial_Invoice", "Vat_Invoice", "Invoice"] },
@@ -63174,7 +63138,7 @@
 				  	page: 1,
 				  	pageSize: 1000
 				}).then(function(){
-					var view = self.summaryDS.view(),
+					var view = self.txnDS.view(),
 					deposit = 0, open = 0, over = 0, balance = 0, today = new Date();
 
 					$.each(view, function(index, value){
@@ -63336,7 +63300,7 @@
 	        	alert("Please select a customer.");
 	        }            
 		},
-		//Links	
+		//Links			
 		goEdit 		 		: function(){
 			var obj = this.get("obj");
 
@@ -63345,6 +63309,17 @@
 			}else{
 				alert(banhji.source.selectCustomerMessage);
 			}
+		},
+		goReference 		: function(e){
+			var self = this, data = e.data;
+
+			this.txnDS.query({
+				filter:{ field:"id", value:data.reference_id}
+			}).then(function(){
+				var view = self.txnDS.view();
+
+				banhji.router.navigate('/' + view[0].type.toLowerCase() +'/'+ data.reference_id);
+			});
 		},
 		goQuote				: function(){
 			var obj = this.get("obj");
@@ -71290,18 +71265,11 @@
 		},
 		changes				: function(){
 			var self = this, obj = this.get("obj"), 
-			subTotal = 0, discount =0, tax = 0, returnAmount = 0, remaining = 0, itemIds = [];
+			subTotal = 0, tax = 0, returnAmount = 0, remaining = 0, itemIds = [];
 			
 			//Item lines
 	        $.each(this.lineDS.data(), function(index, value) {
 				var amt = value.quantity * value.price;
-
-				//Discount by line
-				if(value.discount>0){
-					var discount_amount = amt * value.discount;
-					amt -= discount_amount;
-					discount += discount_amount;
-				}
 
 				//Tax by line
 				if(value.tax_item_id>0){
@@ -71319,12 +71287,6 @@
 
 	        //Account lines
 	        $.each(this.accountLineDS.data(), function(index, value) {
-				//Tax by line
-				if(value.tax_item_id>0){
-					var taxItem = self.taxItemDS.get(value.tax_item_id);
-					tax += value.amount * taxItem.rate;
-				}
-
 				subTotal += value.amount;
 	        });
 
@@ -71341,7 +71303,6 @@
 	        remaining = total - returnAmount;
 
 	        obj.set("sub_total", subTotal);
-	        obj.set("discount", discount);
 	        obj.set("tax", tax);
 			obj.set("amount", total);
 			obj.set("deposit", returnAmount);
@@ -71363,6 +71324,7 @@
 		addEmpty 		 	: function(){
 			this.dataSource.data([]);
 			this.lineDS.data([]);
+			this.accountLineDS.data([]);
 			this.assemblyLineDS.data([]);
 			this.journalLineDS.data([]);
 			this.attachmentDS.data([]);
@@ -71491,8 +71453,6 @@
 	    	//Save Obj
 			this.objSync()
 			.then(function(data){ //Success
-				var ids = [];
-
 				if(self.get("isEdit")==false){
 					//Item line
 					$.each(self.lineDS.data(), function(index, value){
@@ -71507,15 +71467,7 @@
 					//Assembly Item line
 					$.each(self.assemblyLineDS.data(), function(index, value){
 						value.set("transaction_id", data[0].id);
-					});
-
-					//Return
-					$.each(self.returnDS.data(), function(index, value){
-						if(value.type=="Offset_Invoice" && value.reference_id>0){
-							ids.push(value.reference_id);
-						}
-						value.set("return_id", data[0].id);
-					});
+					});					
 
 					//Attachment
 					$.each(self.attachmentDS.data(), function(index, value){
@@ -71528,10 +71480,27 @@
 
 				self.lineDS.sync();
 				self.accountLineDS.sync();
-				self.assemblyLineDS.sync();
-				self.returnDS.sync();
-				self.updateTxnStatus(ids);
+				self.assemblyLineDS.sync();				
 				self.uploadFile();
+				
+				//Return
+				var ids = [];
+				$.each(self.returnDS.data(), function(index, value){
+					if(value.type=="Offset_Invoice" && value.reference_id>0){
+						ids.push(value.reference_id);
+					}
+					value.set("return_id", data[0].id);
+				});
+				
+				self.returnDS.sync();
+				var saved = false;
+				self.returnDS.bind("requestEnd", function(e){
+					if(e.type=="create" && saved==false){
+						saved = true;
+
+						self.updateTxnStatus(ids);
+					}
+				});				
 				
 				return data;
 			}, function(reason) { //Error
