@@ -384,10 +384,10 @@ class Plans extends REST_Controller {
 					'name' => $row->name,
 					'is_flat' => $row->is_flat,
 					'type' => $row->type,
-					'usage' 	=> $row->usage,
+					'usage' 	=> intval($row->usage),
 					'tariff_id' => $row->tariff_id,
 					"account" => $account->exists() ? array('id' => $account->id, 'name' => $account->name) : array('id'=>null, 'name'=> null),
-					'amount'=> $row->amount
+					'amount'=> floatval($row->amount)
 				);
 			}
 			$this->response(array('results'=> $data, 'count' => count($data)), 200);

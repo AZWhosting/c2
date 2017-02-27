@@ -19634,7 +19634,7 @@
 							              				data-option-label="Select Account..." 
 							              				required data-required-msg="required" 
 							              				style="width: 100%" />
-												</td>							            	
+												</td>
 								            </tr>
 								            <tr>
 								            	<td><span data-bind="text: lang.lang.check_no"></span></td>							            	
@@ -21928,7 +21928,7 @@
 
 								<div class="strong" style="margin-bottom:0; width: 100%; padding: 10px;" align="center"
 									data-bind="style: { backgroundColor: amtDueColor}">
-									<div align="left"><span data-bind="text: lang.lang.amount_return"></span></div>
+									<div align="left">AMOUNT REFUND</div>
 									<h2 data-bind="text: total" align="right"></h2>
 								</div>
 
@@ -21942,13 +21942,11 @@
 							    <!-- Tabs Heading -->
 							    <div class="tabsbar tabsbar-2">
 							        <ul class="row-fluid row-merge">
-							        	<li class="span1 glyphicons cogwheels active"><a href="#tab1-4" data-toggle="tab"><i></i></a>
-							            </li>						            
-							            <li class="span1 glyphicons pen"><a href="#tab2-4" data-toggle="tab"><i></i></a>
+							        	<li class="span1 glyphicons cogwheels active"><a href="#tab1-3" data-toggle="tab"><i></i></a>
 							            </li>
-							            <li class="span1 glyphicons adress_book"><a href="#tab3-4" data-toggle="tab"><i></i></a>
+							            <li class="span1 glyphicons adress_book"><a href="#tab2-3" data-toggle="tab"><i></i></a>
 							            </li>						            
-							            <li class="span1 glyphicons paperclip"><a href="#tab4-4" data-toggle="tab"><i></i></a>
+							            <li class="span1 glyphicons paperclip"><a href="#tab3-3" data-toggle="tab"><i></i></a>
 							            </li>
 							           <!--  <li class="span1 glyphicons show_liness"><a href="#tab4-5" data-toggle="tab"><i></i></a></li> -->
 							        </ul>
@@ -21958,8 +21956,25 @@
 							    <div class="tab-content">
 
 							    	<!-- Options Tab content -->
-							        <div class="tab-pane active" id="tab1-4">						            
+							        <div class="tab-pane active" id="tab1-3">						            
 							            <table class="table table-borderless table-condensed cart_total">											
+											<tr>
+								            	<td><span data-bind="text: lang.lang.cash_account"></span></td>				            	
+							            		<td>
+							            			<input id="ddlCash" name="ddlCash"
+							            				data-role="dropdownlist"
+							            				data-header-template="account-header-tmpl"
+							            				data-template="account-list-tmpl"
+							              				data-value-primitive="true"
+														data-text-field="name" 
+							              				data-value-field="id"
+							              				data-bind="value: obj.account_id,
+							              							source: accountDS"
+							              				data-option-label="Select Account..." 
+							              				required data-required-msg="required" 
+							              				style="width: 100%" />
+												</td>
+								            </tr>
 											<tr>
 												<td><span data-bind="text: lang.lang.segments"></span></td>
 												<td>
@@ -21995,18 +22010,10 @@
 											</tr>	
 							            </table>						            
 							        </div>
-							        <!-- // Options Tab content E4D -->						        
-
-							        <!-- Memo Tab content -->
-							        <div class="tab-pane" id="tab2-4">
-							        	<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.memo2" placeholder="memo for internal ..."></textarea>
-										<br>						
-										<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.memo" placeholder="memo for external ..."></textarea>
-							        </div>
-							        <!-- // Memo Tab content END -->
+							        <!-- // Options Tab content E4D -->	
 
 							        <!-- Address Tab content -->
-							        <div class="tab-pane" id="tab3-4">
+							        <div class="tab-pane" id="tab2-3">
 							        	<span data-bind="text: lang.lang.billing_address"></span>
 										<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.bill_to" placeholder="Billing to ..."></textarea>								
 										
@@ -22017,7 +22024,7 @@
 							        <!-- // Address Tab content END -->						        
 
 							        <!-- Attach Tab content -->
-							        <div class="tab-pane" id="tab4-4">
+							        <div class="tab-pane" id="tab3-3">
 							        	<p><span data-bind="text: lang.lang.file_type"></span>: [PDF, JPG, JPEG, TIFF, PNG, GIF]</p>
 							            <input id="files" name="files"
 							                   type="file"
@@ -22127,13 +22134,13 @@
 
 					<br>
 
-				    <!-- Deposit Lines -->
+				    <!-- Return Lines -->
 				    <table class="table table-bordered table-primary table-striped table-vertical-center">
 				        <thead>
 				            <tr>
 				            	<th class="center" style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></th>
-				            	<th>Deposit</th>
-				                <th style="width: 15%;">Reference No.</th>
+				            	<th>DEPOSIT</th>
+				                <th style="width: 20%;">REFERENCE No.</th>
 				                <th style="width: 20%;"><span data-bind="text: lang.lang.amount"></span></th>                          
 				            </tr> 
 				        </thead>
@@ -22143,70 +22150,22 @@
 				        		data-bind="source: returnDS"></tbody>			        
 				    </table>
 
-				    <!-- Deposit Window -->
-				    <div data-role="window"
-		                 data-title="Deposit For Refund"
-		                 data-width="600"
-		                 data-actions="{}"
-		                 data-position="{top: '150px', left: '30%'}"
-		                 data-height="300"
-		                 data-bind="visible: windowVisible">
-
-						<table class="table table-bordered table-primary table-striped table-vertical-center">							
-							<tr>
-								<td>Deposit</td>
-								<td>
-									
-								</td>
-							</tr>
-							<tr>
-								<td style="width: 15%"><span data-bind="text: lang.lang.deposit_to"></span></td>
-								<td style="width: 40%">
-									<input id="cbbAccount" name="cbbAccount"
-										   data-role="combobox"
-						                   data-value-primitive="true"
-						                   data-header-template="account-header-tmpl"
-						                   data-template="account-list-tmpl"
-						                   data-text-field="name"
-						                   data-value-field="id"
-						                   data-bind="value: returnObj.account_id,
-						                   			  source: depositAccountDS"
-						                   data-placeholder="Add Account.." style="width: 100%" />
-								</td>
-							</tr>
-							<tr>
-								<td>Amount</td>
-								<td>
-									<input data-role="numerictextbox"
-										data-spinners="false" 
-										data-format="n"
-										data-min="0"
-										data-bind="value: returnObj.amount,
-													events:{change: returnChanges}" 
-										style="width: 100%;" />
-								</td>
-							</tr>
-						</table>
-
-						<br>
-
-						<div align="center">
-							<span class="btn btn-icon btn-primary glyphicons ok_2" data-bind="click: closeWindow" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save"></span></span>
-							<span class="btn btn-icon btn-danger glyphicons remove_2" data-bind="click: cancelWindow" style="width: 80px;"><i></i> Discard</span>
-						</div>
-					</div>
-
 		            <!-- Bottom part -->
 		            <div class="row">
 			
 						<!-- Column -->
-						<div class="span7">
-							<button class="btn btn-inverse" data-bind="click: openWindow"><i class="icon-plus icon-white"></i></button>							
+						<div class="span6">
+							<button class="btn btn-inverse" data-bind="click: addRowReturn"><i class="icon-plus icon-white"></i></button>							
+							
+							<br><br>
+							<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.memo2" placeholder="memo for internal ..."></textarea>
+							<br>
+							<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.memo" placeholder="memo for external ..."></textarea>
 						</div>
 						<!-- Column END -->
 						
 						<!-- Column -->
-						<div class="span5">
+						<div class="span6">
 							<table class="table table-condensed table-striped table-white">
 								<tbody>
 									<tr>
@@ -22216,27 +22175,20 @@
 									<tr>
 										<td class="right"><span data-bind="text: lang.lang.total_tax"></span></td>
 										<td class="right strong"><span data-format="n" data-bind="text: obj.tax"></span></td>
-									</tr>																
-									<tr>
-										<td class="right"><h4 span data-bind="text: lang.lang.total"></h4></td>
-										<td class="right strong"><h4 data-bind="text: total"></h4></td>
 									</tr>
 									<tr>
 										<td class="right">
-											Offset Amount:
+											<span data-bind="text: lang.lang.deposit"></span>
+											<span data-format="n" data-bind="text: total_deposit"></span>										
 										</td>
 										<td class="right">
 											<span data-format="n" data-bind="text: obj.deposit"></span>
 										</td>
 									</tr>
 									<tr>
-										<td class="right">
-											<span data-bind="text: lang.lang.remaining"></span>
-										</td>
-										<td class="right">
-											<span id="remaining" name="remaining" data-format="n" data-bind="text: obj.remaining"></span>
-										</td>
-									</tr>								
+										<td class="right"><h4 span data-bind="text: lang.lang.total"></h4></td>
+										<td class="right strong"><h4 data-bind="text: total"></h4></td>
+									</tr>
 								</tbody>
 							</table>
 						</div>
@@ -22359,7 +22311,7 @@
 <script id="cashRefund-return-template" type="text/x-kendo-tmpl">
 	<tr data-uid="#: uid #">
 		<td class="center">
-			<i class="icon-trash" data-bind="events: { click: removeRowOption }"></i>
+			<i class="icon-trash" data-bind="events: { click: removeRowReturn }"></i>
 			#:banhji.cashRefund.returnDS.indexOf(data)+1#
 		</td>
 		<td>
@@ -22385,11 +22337,10 @@
 				data-role="numerictextbox"
 				data-spinners="false" 
 				data-format="n"
-				data-min="0"
 				data-spinners="false"
 				data-bind="value: amount, 
 							events: {change : changes}" 
-				required data-required-msg="required" style="width: 100%;" />
+				required data-required-msg="required" style="width: 100%; text-align: right;" />
 		</td>
     </tr>   
 </script>
@@ -59464,6 +59415,7 @@
 						ids.push(value.reference_id);
 					}
 					value.set("return_id", data[0].id);
+					value.set("issued_date", kendo.toString(new Date(data[0].issued_date), "s"));
 				});
 
 				self.returnDS.sync();
@@ -67839,41 +67791,6 @@
 		referenceDS			: dataStore(apiUrl + "transactions"),
 		referenceLineDS		: dataStore(apiUrl + "item_lines"),
 		depositDS  			: dataStore(apiUrl + "transactions"),
-		currencyRateDS		: dataStore(apiUrl + "currencies/rate"),
-		depositSumDS  		: new kendo.data.DataSource({
-			transport: {
-				read 	: {
-					url: apiUrl + "transactions/amount_sum",
-					type: "GET",
-					headers: banhji.header,
-					dataType: 'json'
-				},
-				parameterMap: function(options, operation) {
-					if(operation === 'read') {
-						return {
-							page: options.page,
-							limit: options.pageSize,								
-							filter: options.filter,
-							sort: options.sort
-						};
-					} else {
-						return {models: kendo.stringify(options.models)};
-					}
-				}
-			},
-			schema 	: {
-				model: {
-					id: 'id'
-				},
-				data: 'results',
-				total: 'count'
-			},								
-			batch: true,			
-			serverFiltering: true,
-			serverSorting: true,
-			serverPaging: true,
-			pageSize: 100
-		}),
 		typeList  			: new kendo.data.DataSource({
 		  	data: banhji.source.prefixList,
 		  	filter:{
@@ -68094,19 +68011,19 @@
 				]);
 			}
 
-			this.depositSumDS.query({
-				filter:[
-					{ field:"type", value:"Customer_Deposit" },
-					{ field:"contact_id", value:obj.contact_id }
-				],
-				page: 1,
-				pageSize: 1000
-			}).then(function(){
-				var view = self.depositSumDS.view(),
-				total_deposit = view[0].amount + obj.deposit;
+	    	if(obj.contact_id>0){
+		    	this.txnDS.query({
+		    		filter:[
+		    			{ field:"amount", operator:"select_sum", value:"amount" },
+		    			{ field:"contact_id", value: obj.contact_id },
+		    			{ field:"type", value: "Customer_Deposit" }
+		    		]
+		    	}).then(function(){
+		    		var view = self.txnDS.view();
 
-				self.set("total_deposit", total_deposit);
-			});
+		    		self.set("total_deposit", view[0].amount + obj.deposit);
+		    	});
+	    	}
 		},
 		addDeposit 			: function(id){
 			var obj = this.get("obj");
@@ -69386,6 +69303,7 @@
 		referenceDS			: dataStore(apiUrl + "transactions"),
 		referenceLineDS		: dataStore(apiUrl + "item_lines"),
 		depositDS  			: dataStore(apiUrl + "transactions"),
+		assemblyDS			: dataStore(apiUrl + "item_prices"),
 		attachmentDS	 	: dataStore(apiUrl + "attachments"),
 		typeList  			: new kendo.data.DataSource({
 		  	data: banhji.source.prefixList,
@@ -69450,42 +69368,7 @@
 			  	{ field: "tax_type_id", dir: "asc" },
 			  	{ field: "name", dir: "asc" }
 			]
-		}),
-		assemblyDS			: dataStore(apiUrl + "item_prices"),
-		depositSumDS  		: new kendo.data.DataSource({
-			transport: {
-				read 	: {
-					url: apiUrl + "transactions/amount_sum",
-					type: "GET",
-					headers: banhji.header,
-					dataType: 'json'
-				},
-				parameterMap: function(options, operation) {
-					if(operation === 'read') {
-						return {
-							page: options.page,
-							limit: options.pageSize,								
-							filter: options.filter,
-							sort: options.sort
-						};
-					} else {
-						return {models: kendo.stringify(options.models)};
-					}
-				}
-			},
-			schema 	: {
-				model: {
-					id: 'id'
-				},
-				data: 'results',
-				total: 'count'
-			},								
-			batch: true,			
-			serverFiltering: true,
-			serverSorting: true,
-			serverPaging: true,
-			pageSize: 100
-		}),
+		}),		
 		paymentTermDS 		: banhji.source.paymentTermDS,
 		amtDueColor 		: banhji.source.amtDueColor,
 	    confirmMessage 		: banhji.source.confirmMessage,
@@ -69649,19 +69532,19 @@
 				]);
 			}
 
-			this.depositSumDS.query({
-				filter:[
-					{ field:"type", value:"Customer_Deposit" },
-					{ field:"contact_id", value:obj.contact_id }
-				],
-				page: 1,
-				pageSize: 1000
-			}).then(function(){
-				var view = self.depositSumDS.view(),
-				total_deposit = view[0].amount + obj.deposit;
+			if(obj.contact_id>0){
+		    	this.txnDS.query({
+		    		filter:[
+		    			{ field:"amount", operator:"select_sum", value:"amount" },
+		    			{ field:"contact_id", value: obj.contact_id },
+		    			{ field:"type", value: "Customer_Deposit" }
+		    		]
+		    	}).then(function(){
+		    		var view = self.txnDS.view();
 
-				self.set("total_deposit", total_deposit);
-			});
+		    		self.set("total_deposit", view[0].amount + obj.deposit);
+		    	});
+	    	}
 		},
 		addDeposit 			: function(id){
 			var obj = this.get("obj");
@@ -71932,12 +71815,9 @@
 		}),
 		accountDS  			: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
-		  	filter:[
-		      	{ field: "account_type_id", operator:"gte", value: 35 },
-		      	{ field: "account_type_id", operator:"lte", value: 43 }
-		    ],
+		  	filter: { field:"account_type_id", value: 10 },
 		  	sort: { field:"number", dir:"asc" }
-		}),
+		}),		
 		depositAccountDS 	: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
 			filter:{
@@ -72659,6 +72539,7 @@
 						ids.push(value.reference_id);
 					}
 					value.set("return_id", data[0].id);
+					value.set("issued_date", kendo.toString(new Date(data[0].issued_date), "s"));
 				});
 
 				self.returnDS.sync();
@@ -72913,11 +72794,6 @@
 					}else{
 						saleList[incomeID].amount += amount;
 					}
-				}
-
-				//Discount by line
-				if(value.discount>0){
-					amount -= (amount * value.discount);
 				}
 
 				//TAX Account
@@ -73198,11 +73074,9 @@
 		isEdit 				: false,
 		saveClose 			: false,
 		savePrint 			: false,
-		windowVisible 		: false,
-		isOffsetInvoice 	: false,
 		notDuplicateNumber  : true,
-		enableRef 	 		: false,
 		total 				: 0,
+		total_deposit 		: 0,
 		user_id				: banhji.source.user_id,
 		pageLoad 			: function(id){
 			if(id){
@@ -73315,6 +73189,24 @@
             //Clear upload files
             $(".k-upload-files").remove();
 	    },
+	    //Deposit
+	    loadDeposit 		: function(){
+	    	var self = this, obj = this.get("obj");
+
+	    	if(obj.contact_id>0){
+		    	this.txnDS.query({
+		    		filter:[
+		    			{ field:"amount", operator:"select_sum", value:"amount" },
+		    			{ field:"contact_id", value: obj.contact_id },
+		    			{ field:"type", value: "Customer_Deposit" }
+		    		]
+		    	}).then(function(){
+		    		var view = self.txnDS.view();
+
+		    		self.set("total_deposit", view[0].amount + obj.deposit);
+		    	});
+	    	}
+	    },
 		//Contact
 		loadContact 		: function(id){
 			var obj = this.get("obj");
@@ -73333,6 +73225,7 @@
 		    	obj.set("ship_to", contact.ship_to);
 
 		    	this.setRate();
+		    	this.loadDeposit();
 		    	this.loadReference();
 		    	this.jobDS.filter({ field:"contact_id", value: obj.contact_id });		    		    			    	
 	    	}
@@ -73533,7 +73426,7 @@
 	        }
 		},
 		//Number      	
-		checkExistingNumber 	: function(){
+		checkExistingNumber : function(){
 			var self = this, para = [], 
 			obj = this.get("obj");
 			
@@ -73561,7 +73454,7 @@
 				});
 			}
 		},
-		generateNumber 			: function(){
+		generateNumber 		: function(){
 			var self = this, obj = this.get("obj"),
 			issueDate = new Date(obj.issued_date),
 			startDate = new Date(obj.issued_date),
@@ -73606,19 +73499,12 @@
 			para.push({ field:"id", value: id });					
 
 			this.dataSource.query({    			
-				filter: para,
-				page: 1,
-				pageSize: 100
+				filter: para
 			}).then(function(e){
 				var view = self.dataSource.view();				
 				
-				self.set("obj", view[0]);
-				
-				self.set("statusSrc", banhji.source.usedSrc);
-					
+				self.set("obj", view[0]);					
 		        self.set("total", kendo.toString(view[0].amount, "c", view[0].locale));
-
-		        self.set("original_total", view[0].amount);
 				
 				self.loadLines(id);
 				self.assemblyLineDS.filter([
@@ -73627,28 +73513,23 @@
 				]);
 				self.journalLineDS.filter({ field: "transaction_id", value: id });
 				self.attachmentDS.filter({ field: "transaction_id", value: id });
-				self.referenceDS.filter({ field: "id", value: view[0].reference_id });
+				self.referenceDS.filter([
+					{ field: "contact_id", value: view[0].contact_id },
+					{ field: "amount >", value: 0 },
+					{ field: "type", operator:"where_in", value:"Customer_Deposit" }
+				]);
 
 				self.returnDS.query({
-					filter:{ field: "return_id", value: id },
-					page:1,
-					pageSize:100
+					filter:{ field: "return_id", value: id }
 				}).then(function(){
 					var reInvoice = self.returnDS.view();
 
 					$.each(reInvoice, function(index, value){
-						if(value.type=="Offset_Invoice"){
-							value.set("showInvoice", true);
-			        		value.set("showAccount", false);
-						}else if(value.type=="Credit_Note"){
-							value.set("showInvoice", false);
-			        		value.set("showAccount", true);
-						}else{
-							value.set("showInvoice", false);
-			        		value.set("showAccount", false);
-						}
+						value.set("amount", Math.abs(value.amount));
 					});
 				});
+
+				self.loadDeposit();
 			});				
 		},
 		loadLines 			: function(id){
@@ -73675,17 +73556,10 @@
 		},
 		changes				: function(){
 			var self = this, obj = this.get("obj"), 
-			subTotal = 0, discount =0, tax = 0, returnAmount = 0, remaining = 0, itemIds = [];
+			subTotal = 0, tax = 0, returnAmount = 0, itemIds = [];
 			
 	        $.each(this.lineDS.data(), function(index, value) {				
-				var amt = value.quantity * value.price;					
-
-				//Discount by line
-				if(value.discount>0){										
-					var discount_amount = amt * value.discount;
-					amt -= discount_amount;
-					discount += discount_amount;																	
-				}
+				var amt = value.quantity * value.price;
 
 				//Tax by line
 				if(value.tax_item_id>0){
@@ -73699,22 +73573,22 @@
 				if(value.item_id>0){
 					itemIds.push(value.item_id);
 				}									
-	        });
-
-	        total = subTotal + tax;
+	        });	        
 
 	        //Return
-	        $.each(this.returnDS.data(), function(index, value) {								
+	        $.each(this.returnDS.data(), function(index, value) {
+	        	if(value.amount>value.sub_total){
+	        		value.set("amount", value.sub_total);
+	        	}								
 				returnAmount += value.amount;					
 	        });
-	       
-	        remaining = obj.amount_paid - returnAmount;
+
+	        total = subTotal + tax + returnAmount;
 
 	        obj.set("sub_total", subTotal);
-	        obj.set("discount", discount);
-	        obj.set("tax", tax);			
+	        obj.set("tax", tax);
+	        obj.set("deposit", returnAmount);			
 			obj.set("amount", total);
-			obj.set("remaining", remaining);
 
 			this.set("total", kendo.toString(total, "c", obj.locale));
 
@@ -73857,16 +73731,6 @@
 				this.addJournal(obj.id);
 	    	}
 
-	    	//Reference
-	    	if(obj.reference_id>0){
-	    		var ref = this.referenceDS.get(obj.reference_id);
-				ref.set("status", 3);
-
-				this.referenceDS.sync();
-			}else{
-				obj.set("reference_id", 0);
-			}
-
 	    	//Save Obj
 			this.objSync()
 			.then(function(data){ //Success
@@ -73879,25 +73743,7 @@
 					//Assembly Item line
 					$.each(self.assemblyLineDS.data(), function(index, value){
 						value.set("transaction_id", data[0].id);
-					});
-
-					//Return
-					$.each(self.returnDS.data(), function(index, value){
-						value.set("return_id", data[0].id);
-
-						if(value.type=="Offset_Invoice" && value.reference_id>0){
-							var inv = self.invoiceDS.get(value.reference_id),
-							amountPaid = inv.amount_paid + value.amount;
-
-							inv.set("amount_paid", amountPaid);
-
-							if(amountPaid>=inv.amount){
-								inv.set("status", 1); //Paid
-							}else{
-								inv.set("status", 2); //Partially Paid
-							}
-						}
-					});
+					});					
 
 					//Attachment
 					$.each(self.attachmentDS.data(), function(index, value){
@@ -73909,9 +73755,21 @@
 				}
 
 				self.lineDS.sync();
-				self.assemblyLineDS.sync();
-				self.returnDS.sync();
+				self.assemblyLineDS.sync();				
 				self.uploadFile();
+
+				//Return
+				var ids = [];
+				$.each(self.returnDS.data(), function(index, value){
+					if(value.reference_id>0){
+						ids.push(value.reference_id);
+					}
+					value.set("return_id", data[0].id);
+					value.set("amount", value.amount*-1);
+					value.set("issued_date", kendo.toString(new Date(data[0].issued_date), "s"));
+				});
+				self.returnDS.sync();
+				self.updateTxnStatus(ids);
 				
 				return data;
 			}, function(reason) { //Error
@@ -73952,6 +73810,41 @@
 
 			banhji.userManagement.removeMultiTask("cash_refund");
 		},
+		validating 			: function(){
+			var result = true, obj = this.get("obj"), 
+			total_deposit = this.get("total_deposit");
+
+			if(obj.deposit>total_deposit){
+				$("#ntf1").data("kendoNotification").error("Over deposit amount to refund!");
+
+				result = false;
+			}
+
+			if(this.lineDS.total()==0 && this.returnDS.total()==0){
+				$("#ntf1").data("kendoNotification").error("Please select an item or deposit.");
+
+				result = false;
+			}
+
+			return result;
+		},
+		updateTxnStatus 	: function(ids){
+			var self = this;
+
+			if(ids.length>0){
+				this.txnDS.query({
+					filter:{ field:"id", operator:"where_in", value:ids }
+				}).then(function(){
+					var view = self.txnDS.view();
+
+					$.each(view, function(index, value){
+						value.set("status", 3);//Status 3 = refund
+					});
+
+					self.txnDS.sync();
+				});
+			}
+		},
 		//Return
 		addRowReturn 		: function(){
 			var obj = this.get("obj"), account_id = 0;
@@ -73961,7 +73854,7 @@
 				account_id = contact.deposit_account_id;
 			}
 			
-			this.returnDS.insert(0, {
+			this.returnDS.add({
 				return_id 		: obj.id,
 				account_id 		: account_id,
 				reference_id 	: "",
@@ -73975,129 +73868,89 @@
 			});
 		},
 		removeRowReturn 	: function(e){
-			var d = e.data;
+			var data = e.data;
 			
-			if(this.returnDS.total()>1){
-				this.returnDS.remove(d);
-		        this.changes();
-	        }
+			this.returnDS.remove(data);
+	        this.changes();
 		},
-		returnChanges 		: function(e){
-			e.preventDefault();
+		loadReference 		: function(){
+			var obj = this.get("obj");
 
-			this.closeWindow();
+			if(obj.contact_id>0){
+				this.referenceDS.filter([
+					{ field: "contact_id", value: obj.contact_id },
+					{ field: "amount >", value: 0 },
+					{ field: "status <>", value: 3 },
+					{ field: "type", operator:"where_in", value:"Customer_Deposit" }
+				]);
+			}
 		},
 		referenceChanges 	: function(e){
 			var data = e.data;
 			
 			if(data.reference_id>0){
-				var txn = this.referenceDS.get(returnObj.reference_id);
+				var txn = this.referenceDS.get(data.reference_id);
 
-				returnObj.set("account_id", txn.account_id);
-				returnObj.set("reference_no", txn.number);
-				returnObj.set("sub_total", txn.amount);
-				returnObj.set("amount", txn.amount);				
+				data.set("account_id", txn.account_id);
+				data.set("reference_no", txn.number);
+				data.set("sub_total", txn.amount);
+				data.set("amount", txn.amount);				
 			}else{
-				returnObj.set("account_id", 0);
-				returnObj.set("reference_no", "");
-				returnObj.set("sub_total", 0);
-				returnObj.set("amount", 0);				
+				data.set("account_id", 0);
+				data.set("reference_no", "");
+				data.set("sub_total", 0);
+				data.set("amount", 0);				
 			}
 
 			this.changes();
 		},
-		openWindow			: function(){
-			var para = [], ids = [], 
-			obj = this.get("obj");
-
-			if(obj.contact_id>0){
-				this.addRowReturn();
-				
-				if(this.returnDS.total()>0){
-					$.each(this.returnDS.data(), function(index, value){
-						ids.push(value.reference_id);
-					});
-					para.push({field: "id", operator:"where_not_in", value: ids});
-				}
-				para.push({field: "contact_id", value: obj.contact_id});
-				para.push({field: "amount >", value: 0});
-				para.push({field: "type", value:"Customer_Deposit"});
-				this.referenceDS.filter(para);
-				
-	      		this.set("windowVisible", true);
-      		}else{
-      			alert("Please select a customer.");
-      		}
-      	},
-      	closeWindow 		: function(){
-      		this.changes();
-      		this.set("windowVisible", false);
-      	},
-      	cancelWindow 		: function(){      		
-      		var returnObj = this.get("returnObj"),
-      		indexReturnObj = this.returnDS.indexOf(returnObj),
-      		selectedReturnObj = this.returnDS.at(indexReturnObj);
-
-      		this.returnDS.remove(selectedReturnObj);
-      		this.changes();
-
-      		this.set("windowVisible", false);
-      	},
 	    //Journal	        
 	    addJournal 			: function(transaction_id){
 	    	var self = this,
 	    	obj = this.get("obj"),
 	    	contact = this.contactDS.get(obj.contact_id),
-	    	saleList = {},
-	    	taxList = {},	    	
-	    	inventoryList = {},
-	    	cogsList = {},
-	    	cashList = {},
-	    	sumInvoice = 0,
-	    	sumCredit = 0;			
+	    	entries = {};			
 			
-			//Group Account from lineDS
+			//Item Lines
 			$.each(this.lineDS.data(), function(index, value){
 				var item = self.itemDS.get(value.item_id),
 				amount = value.quantity * value.price;
 
-				//Add Income list
-				var incomeID = kendo.parseInt(item.income_account_id);																				
+				//Income on Dr
+				var incomeID = kendo.parseInt(item.income_account_id);
 				if(incomeID>0){
-					if(saleList[incomeID]===undefined){
-						saleList[incomeID]={"id": incomeID, "amount": amount};						
-					}else{											
-						if(saleList[incomeID].id===incomeID){
-							saleList[incomeID].amount += amount;
-						}else{
-							saleList[incomeID]={"id": incomeID, "amount": amount};
-						}
+					if(entries[incomeID]===undefined){
+						entries[incomeID] = {
+							"id"		: incomeID, 
+							"dr"		: amount,
+							"cr" 		: 0, 
+							"rate" 		: obj.rate, 
+							"locale" 	: obj.locale
+						};
+					}else{
+						entries[incomeID].dr += amount;
 					}
 				}
 
-				//Discount by line
-				if(value.discount>0){										
-					var discount_amount = amount * value.discount;
-					amount -= discount_amount;																						
-				}
-
-				//TAX Account																								
+				//TAX on Dr																								
 				if(value.tax_item_id>0){
 					var taxItem = self.taxItemDS.get(value.tax_item_id),
 					taxID = taxItem.account_id,
 					taxAmt = amount * taxItem.rate;
-					if(taxList[taxID]===undefined){
-						taxList[taxID]={"id": taxID, "amount": taxAmt};						
-					}else{											
-						if(taxList[taxID].id===taxID){
-							taxList[taxID].amount += taxAmt;
-						}else{
-							taxList[taxID]={"id": taxID, "amount": taxAmt};
-						}
+					if(entries[taxID]===undefined){
+						entries[taxID] = {
+							"id" 		: taxID, 
+							"dr" 		: taxAmt,
+							"cr" 		: 0, 
+							"rate" 		: obj.rate, 
+							"locale" 	: obj.locale
+						};						
+					}else{
+						entries[taxID].dr += taxAmt;
 					}
 				}				
 
-				//Add COGS list
+				//COGS on Cr
 				var cogsID = kendo.parseInt(item.expense_account_id);
 				if(cogsID>0){
 					var cogsAmount = 0, 
@@ -74109,18 +73962,20 @@
 						cogsAmount = value.amount;
 					}					
 
-					if(cogsList[cogsID]===undefined){
-						cogsList[cogsID]={"id": cogsID, "amount": cogsAmount, "rate": itemRate, "locale": item.locale};						
-					}else{											
-						if(cogsList[cogsID].id===cogsID){
-							cogsList[cogsID].amount += cogsAmount;
-						}else{
-							cogsList[cogsID]={"id": cogsID, "amount": cogsAmount, "rate": itemRate, "locale": item.locale};
-						}
+					if(entries[cogsID]===undefined){
+						entries[cogsID] = { 
+							"id" 		: cogsID,
+							"dr" 		: 0, 
+							"cr"		: cogsAmount, 
+							"rate" 		: itemRate, 
+							"locale" 	: item.locale
+						};						
+					}else{
+						entries[cogsID].cr += cogsAmount;
 					}
 				}						
 
-				//Add Inventory list
+				//Inventory on Dr
 				var inventoryID = kendo.parseInt(item.inventory_account_id);
 				if(inventoryID>0){
 					var inventoryAmount = 0, 
@@ -74132,14 +73987,16 @@
 						inventoryAmount = value.amount;
 					}
 
-					if(inventoryList[inventoryID]===undefined){
-						inventoryList[inventoryID]={"id": inventoryID, "amount": inventoryAmount, "rate": itemRate, "locale": item.locale};						
-					}else{											
-						if(inventoryList[inventoryID].id===inventoryID){
-							inventoryList[inventoryID].amount += inventoryAmount;
-						}else{
-							inventoryList[inventoryID]={"id": inventoryID, "amount": inventoryAmount, "rate": itemRate, "locale": item.locale};
-						}
+					if(entries[inventoryID]===undefined){
+						entries[inventoryID] = {
+							"id" 		: inventoryID, 
+							"dr"		: inventoryAmount,
+							"cr" 		: 0, 
+							"rate"		: itemRate, 
+							"locale"	: item.locale
+						};						
+					}else{
+						entries[inventoryID].dr += inventoryAmount;
 					}
 				}					  	
 			});
@@ -74148,7 +74005,7 @@
 			$.each(self.assemblyLineDS.data(), function(index, value){
 				var item = self.itemDS.get(value.item_id);
 				
-				//Add COGS list
+				//COGS on Cr
 				var cogsID = kendo.parseInt(item.expense_account_id);
 				if(cogsID>0){
 					var cogsAmount = 0, 
@@ -74157,19 +74014,21 @@
 					cogsAmount = value.quantity*item.cost;
 
 					if(cogsAmount>0){
-						if(cogsList[cogsID]===undefined){
-							cogsList[cogsID]={"id": cogsID, "amount": cogsAmount, "rate": itemRate, "locale": item.locale};						
-						}else{											
-							if(cogsList[cogsID].id===cogsID){
-								cogsList[cogsID].amount += cogsAmount;
-							}else{
-								cogsList[cogsID]={"id": cogsID, "amount": cogsAmount, "rate": itemRate, "locale": item.locale};
-							}
+						if(entries[cogsID]===undefined){
+							entries[cogsID] = {
+								"id" 		: cogsID,
+								"dr" 		: 0, 
+								"cr" 		: cogsAmount, 
+								"rate" 		: itemRate, 
+								"locale" 	: item.locale
+							};						
+						}else{
+							entries[cogsID].cr += cogsAmount;
 						}
 					}
 				}
 
-				//Add Inventory list
+				//Inventory on Dr
 				var inventoryID = kendo.parseInt(item.inventory_account_id);
 				if(inventoryID>0){
 					var inventoryAmount = 0, 
@@ -74177,155 +74036,56 @@
 
 					inventoryAmount = value.quantity*item.cost;
 
-					if(inventoryList[inventoryID]===undefined){
-						inventoryList[inventoryID]={"id": inventoryID, "amount": inventoryAmount, "rate": itemRate, "locale": item.locale};						
-					}else{											
-						if(inventoryList[inventoryID].id===inventoryID){
-							inventoryList[inventoryID].amount += inventoryAmount;
-						}else{
-							inventoryList[inventoryID]={"id": inventoryID, "amount": inventoryAmount, "rate": itemRate, "locale": item.locale};
-						}
+					if(entries[inventoryID]===undefined){
+						entries[inventoryID] = {
+							"id"		: inventoryID, 
+							"dr" 		: inventoryAmount,
+							"cr" 		: 0, 
+							"rate" 		: itemRate, 
+							"locale" 	: item.locale
+						};						
+					}else{
+						entries[inventoryID].dr += inventoryAmount;
 					}
 				}
 			});
 
-			//Group Account from returnDS
+			//Return Lines
+			//Deposit on Dr
 			$.each(this.returnDS.data(), function(index, value){
-				//Offset Invoice
-				if(value.type=="Offset_Invoice"){
-					sumInvoice += value.amount;
-				}
-
-				//Deposit
-				if(value.type=="Customer_Deposit"){ 
-					sumCredit += value.amount;
-				}
-
-				//Refund
-				if(value.type=="Credit_Note"){
-					var cashID = value.account_id,
-					cashAmt = value.amount;
-
-					if(cashList[cashID]===undefined){
-						cashList[cashID]={"id": cashID, "amount": cashAmt};						
-					}else{											
-						if(cashList[cashID].id===cashID){
-							cashList[cashID].amount += cashAmt;
-						}else{
-							cashList[cashID]={"id": cashID, "amount": cashAmt};
-						}
+				var depositID = kendo.parseInt(value.account_id);
+				if(depositID>0){
+					if(entries[depositID]===undefined){
+						entries[depositID] = {
+							"id" 		: depositID, 
+							"dr" 		: value.amount,
+							"cr" 		: 0, 
+							"rate" 		: obj.rate, 
+							"locale" 	: obj.locale
+						};
+					}else{
+						entries[depositID].dr += value.amount;
 					}
 				}
 			});
-
-			//Start journal			
-			//Sale on Dr
-			if(!jQuery.isEmptyObject(saleList)){
-				$.each(saleList, function(index, value){
-					self.journalLineDS.add({					
-						transaction_id 		: transaction_id,
-						account_id 			: value.id,				
-						contact_id 			: obj.contact_id,				
-						description 		: "",
-						reference_no 		: "",
-						segments 	 		: [],								
-						dr 	 				: value.amount,
-						cr 					: 0,				
-						rate				: obj.rate,
-						locale				: obj.locale
-					});						
-				});
-			}
-
-			//Tax on Dr
-			if(!jQuery.isEmptyObject(taxList)){
-				$.each(taxList, function(index, value){
-					self.journalLineDS.add({					
-						transaction_id 		: transaction_id,
-						account_id 			: value.id,				
-						contact_id 			: obj.contact_id,				
-						description 		: "",
-						reference_no 		: "",
-						segments 	 		: [],								
-						dr 	 				: value.amount,
-						cr 					: 0,				
-						rate				: obj.rate,
-						locale				: obj.locale
-					});						
-				});
-			}			
-
-			//Discount on Cr
-			if(obj.discount>0){			
-				this.journalLineDS.add({					
-					transaction_id 		: transaction_id,
-					account_id 			: contact.trade_discount_id,				
-					contact_id 			: obj.contact_id,				
-					description 		: "",
-					reference_no 		: "",
-					segments 	 		: [],								
-					dr 	 				: 0,
-					cr 					: obj.discount,				
-					rate				: obj.rate,
-					locale				: obj.locale
-				});
-			}
-
-			//A/R on Cr
-			var ar = obj.amount - (obj.amount_paid + obj.deposit);
-			if(ar>0){						
-				this.journalLineDS.add({					
-					transaction_id 		: transaction_id,
-					account_id 			: contact.account_id,				
-					contact_id 			: obj.contact_id,				
-					description 		: "",
-					reference_no 		: "",
-					segments 	 		: [],								
-					dr 	 				: 0,
-					cr 					: ar,				
-					rate				: obj.rate,
-					locale				: obj.locale
-				});
-			}			
-
-			//Deposit on Cr
-			if(sumCredit>0){			
-				this.journalLineDS.add({					
-					transaction_id 		: transaction_id,
-					account_id 			: contact.deposit_account_id,				
-					contact_id 			: obj.contact_id,				
-					description 		: "",
-					reference_no 		: "",
-					segments 	 		: [],								
-					dr 	 				: 0,
-					cr 					: sumCredit,				
-					rate				: obj.rate,
-					locale				: obj.locale
-				});
-			}
 
 			//Cash on Cr
-			if(!jQuery.isEmptyObject(cashList)){
-				$.each(cashList, function(index, value){
-					self.journalLineDS.add({					
-						transaction_id 		: transaction_id,
-						account_id 			: value.id,				
-						contact_id 			: obj.contact_id,				
-						description 		: "",
-						reference_no 		: "",
-						segments 	 		: [],								
-						dr 	 				: 0,
-						cr 					: value.amount,				
-						rate				: obj.rate,
-						locale				: obj.locale
-					});						
-				});
+			if(entries[obj.account_id]===undefined){
+				entries[obj.account_id] = {
+					"id" 		: obj.account_id, 
+					"dr" 		: 0,
+					"cr" 		: obj.amount, 
+					"rate" 		: obj.rate, 
+					"locale" 	: obj.locale
+				};
+			}else{
+				entries[obj.account_id].cr += obj.amount;
 			}
 
-			//INVENTORY
-			//Inventory on Dr
-			if(!jQuery.isEmptyObject(inventoryList)){
-				$.each(inventoryList, function(index, value){
+			
+			//Add to journal entry
+			if(!jQuery.isEmptyObject(entries)){
+				$.each(entries, function(index, value){
 					self.journalLineDS.add({					
 						transaction_id 		: transaction_id,
 						account_id 			: value.id,				
@@ -74333,26 +74093,8 @@
 						description 		: "",
 						reference_no 		: "",
 						segments 	 		: [],								
-						dr 	 				: value.amount,
-						cr 					: 0,				
-						rate				: value.rate,
-						locale				: value.locale
-					});						
-				});
-			}
-
-			//Cogs on Cr
-			if(!jQuery.isEmptyObject(cogsList)){
-				$.each(cogsList, function(index, value){
-					self.journalLineDS.add({					
-						transaction_id 		: transaction_id,
-						account_id 			: value.id,				
-						contact_id 			: obj.contact_id,				
-						description 		: "",
-						reference_no 		: "",
-						segments 	 		: [],								
-						dr 	 				: 0,
-						cr 					: value.amount,				
+						dr 	 				: value.dr,
+						cr 					: value.cr,				
 						rate				: value.rate,
 						locale				: value.locale
 					});						
@@ -74360,84 +74102,6 @@
 			}
 
 			this.journalLineDS.sync();
-		},
-		//Reference
-		loadReference 		: function(){
-			var obj = this.get("obj");
-
-			if(obj.contact_id>0){
-				this.set("enableRef", true);
-
-				this.referenceDS.filter([
-					{ field: "contact_id", value: obj.contact_id },
-					{ field: "status <>", value: 3 },
-					{ field: "type", operator:"where_in", value:["Commercial_Invoice", "Vat_Invoice", "Invoice", "Commercial_Cash_Sale","Vat_Cash_Sale", "Cash_Sale"] }
-				]);
-			}else{
-				this.set("enableRef", false);
-				obj.set("reference_id", "");
-			}
-		},
-		referenceChanges 	: function(e){
-			var self = this, obj = this.get("obj");
-			
-			if(obj.reference_id>0){
-				var ref = this.referenceDS.get(obj.reference_id);
-				
-				obj.set("reference_no", ref.number);
-				obj.set("amount", ref.amount);
-
-				if(ref.type=="Commercial_Cash_Sale" || ref.type=="Vat_Cash_Sale" || ref.type=="Cash_Sale"){					
-					obj.set("amount_paid", ref.amount);
-					this.set("showReturn", true);
-				}else{
-					obj.set("amount_paid", ref.amount_paid + ref.deposit);
-					if(ref.status==0){
-						this.set("showReturn", false);
-
-						this.returnDS.data([]);
-					}else{
-						this.set("showReturn", true);
-
-						this.returnDS.data([]);
-						this.addRowOption();
-					}
-				}				
-									
-			 	this.referenceLineDS.query({
-			 		filter: { field:"transaction_id", value: obj.reference_id },
-			 		page: 1,
-			 		pageSize: 100
-			 	}).then(function(){
-			 		var view = self.referenceLineDS.view();					
-
-			 		self.lineDS.data([]);
-			 		$.each(view, function(index, value){
-			 			self.lineDS.add({					
-							transaction_id 		: obj.id,
-							item_id 			: value.item_id,
-							tax_item_id 		: value.tax_item_id,
-							measurement_id 		: value.measurement_id,							
-							description 		: value.description,				
-							quantity 	 		: value.quantity,
-							price 				: value.price,												
-							amount 				: value.amount,
-							discount 			: value.discount,
-							fine 				: value.fine,
-							rate				: value.rate,
-							locale				: value.locale,
-							movement 			: value.movement,													
-
-							item_prices			: value.item_prices
-						});
-			 		});
-
-			 		self.changes();
-			 	});			 				 				 				 				
-			}else{
-				this.returnDS.data([]);
-				this.addRowOption();
-			}							
 		}
 	});
 	banhji.statement = kendo.observable({
@@ -93763,6 +93427,7 @@
 
 		var vm = banhji.cashRefund;
 		banhji.userManagement.addMultiTask("Cash Refund","cash_refund",vm);
+
 		if(banhji.pageLoaded["cash_refund"]==undefined){
 			banhji.pageLoaded["cash_refund"] = true;
 			

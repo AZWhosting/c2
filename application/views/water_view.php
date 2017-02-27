@@ -121,7 +121,7 @@
 							<span style="font-size: 24px; ">DEPOSIT</span>
 							<br>
 							<span style="color: #9EA7B8;" data-bind="text: totalUser"></span>
-							<span style="color: #9EA7B8;">Cutomers</span>
+							<span style="color: #9EA7B8;">Customers</span>
 						</div>
 						<div class="span9" style=" text-align: center; font-size: 35px; font-weight: 600; padding-left: 0;">
 							<span data-bind="text: totalDeposit"></span>
@@ -533,7 +533,6 @@
 	            		<thead>
 	            			<tr>
 	            				<th class="center" width="150"><span>Name</span></th>
-	            				<th class="center" width="100"><span>Flat</span></th>
 	            				<th class="center" width="100"><span>Usage</span></th>
 	            				<th class="center" width="100"><span>Price</span></th>
 	            				<th class="center" width="200"><span>Action</span></th>
@@ -549,7 +548,7 @@
 		            <div data-role="window"
 			                 data-title="Tariff Item"		                 
 			                 data-width="250"
-			                 data-height="290"
+			                 data-height="190"
 			                 data-actions="{}"
 			                 data-position="{top: '30%', left: '37%'}"		                 
 			                 data-bind="visible: windowTariffItemVisible">
@@ -558,19 +557,6 @@
 								<td width="35%"><span data-bind="text: lang.lang.name"></span></td>
 								<td>
 									<input class="k-textbox" placeholder="Item Name ..." data-bind="value: tariffItemName" style="width: 100%;">
-								</td>
-							</tr>
-							<tr style="border-bottom: 8px solid #fff;">
-								<td><span>Flat</span></td>
-								<td>
-									<input data-role="dropdownlist"
-					            	   style="padding-right: 1px;height: 32px;" 
-			            			   data-auto-bind="false"			                   
-					                   data-value-primitive="true"
-					                   data-text-field="name"
-					                   data-value-field="id"
-					                   data-bind="value: tariffItemFlat,
-					                              source: typeFlat"/>
 								</td>
 							</tr>
 							<tr style="border-bottom: 8px solid #fff;">
@@ -1033,15 +1019,8 @@
 <script id="tariff-item-template" type="text/x-kendo-tmpl">                    
     <tr>
     	<td>#= name#</td>
-    	<td align="center">
-    		# if(is_flat == 0) {#
-    			<span><i class="icon-remove"></i></span>
-    		# }else{ #
-    			<span><i class="icon-ok"></i></span>
-    		# } #
-    	</td>
     	<td align="right">#= usage#</td>
-    	<td align="right">#= amount#</td>
+    	<td align="right">#= kendo.toString(amount, _currency.locale=="km-KH"?"c0":"c", _currency.locale)#</td>
     	<td align="center">
     		<span class="k-edit-button"><i class="icon-edit"></i> Edit</span>
     	</td>
@@ -1060,7 +1039,11 @@
                data-bind="value: is_flat,
                           source: typeFlat"/>
 		</td>
-    	<td><input style="width: 100%;" type="text" class="k-textbox" data-bind="value:usage" /></td>
+    	<td>
+    		#if(usage != 0){#
+    			<input style="width: 100%;" type="text" class="k-textbox" data-bind="value:usage" />
+    		#}else{# #:usage# #}#
+    	</td>
     	<td><input style="width: 100%;" type="text" class="k-textbox" data-bind="value:amount" /></td>
     	<td class="edit-buttons" style="text-align: center;">
 	        <a class="k-button k-update-button" href="\\#"><span class="k-icon k-update"></span></a>
@@ -1430,14 +1413,14 @@
 
 <script id="plan" type="text/x-kendo-template">
 	<div id="slide-form">
-		<div class="customer-background">
+		<div class="customer-background" style="margin-top: 15px;">
 			<div class="container-960">					
 				<div id="example" class="k-content">
 			    	<div class="hidden-print pull-right">
 			    		<span class="glyphicons no-js remove_2" 
 							data-bind="click: cancel"><i></i></span>	
 					</div>
-			        <h2 style="padding:0 15px;">Add Plan</h2>
+			        <h2 style="padding:0 15px 0 0;">Add Plan</h2>
 			        <div class="span12 row-fluid" style="padding:20px 0;">
 			        	<div class="span12" style="padding-left: 0;">
 
@@ -1568,7 +1551,7 @@
 </script>
 <script id="addLicense" type="text/x-kendo-template">
 	<div id="slide-form">
-		<div class="customer-background" style="overflow: hidden;">
+		<div class="customer-background" style="overflow: hidden; margin-top: 15px;">
 			<div class="container-960">					
 				<div id="example" class="k-content">
 			    	<div class="hidden-print pull-right">
@@ -2525,13 +2508,14 @@
 
 <script id="waterActivateUser" type="text/x-kendo-template">
 	<div id="slide-form">
-		<div class="customer-background" style="overflow: hidden;">
+		<div class="customer-background" style="overflow: hidden; margin-top: 15px;">
 			<div class="container-960">					
 				<div id="example" class="k-content">
 			    	<div class="hidden-print pull-right">
 			    		<span class="glyphicons no-js remove_2" 
 							data-bind="click: cancel"><i></i></span>						
 					</div>
+					<h2>Activate User</h2>
 			        <h2 style="padding:0 15px;">Name : <strong data-bind="text: contactOBJ.name"></strong></h2><br>
 			        <div class="span6 row-fluid well" style="overflow: hidden;height: 175px;">
 			        	<div class="control-group">										
@@ -2588,7 +2572,7 @@
 <!--  Meter  -->
 <script id="waterAddMeter" type="text/x-kendo-template">
 	<div id="slide-form">
-		<div class="customer-background" style="overflow: hidden;">
+		<div class="customer-background" style="overflow: hidden; margin-top: 15px;">
 			<div class="container-960">					
 				<div id="example" class="k-content">
 			    	<div class="hidden-print pull-right">
@@ -2806,7 +2790,7 @@
 </script>
 <script id="ActivateMeter" type="text/x-kendo-template">
 	<div id="slide-form">
-		<div class="customer-background" style="overflow: hidden;">
+		<div class="customer-background" style="overflow: hidden; margin-top: 15px;">
 			<div class="container-960">					
 				<div id="example" class="k-content">
 			    	<div class="hidden-print pull-right">
@@ -2988,18 +2972,18 @@
 		<td>#=type#</td>
 		<td>#=name#</td>
 		<td>#=amount#</td>
-		<td><input type="text" class="k-textbox k-input k-formatted-value" data-bind="value: received, events: {change: onAmountChange}">
+		<td><input type="number" class="k-textbox k-input k-formatted-value" data-bind="value: received, events: {change: onAmountChange}">
 	</tr>
 </script>
 <script id="Reorder" type="text/x-kendo-template">
 	<div id="slide-form">
-		<div class="customer-background">
+		<div class="customer-background" style="margin-top: 15px;">
 			<div class="container-960">
 				<div id="example" class="k-content saleSummaryCustomer">
 			    	<span class="pull-right glyphicons no-js remove_2"
 						onclick="javascript:window.history.back()"><i></i></span>
-					<br>
-					<br>
+
+					<h2 style="padding:0 15px 15px 0;">Reorder Meter</h2>
 					<div class="row-fluid">
 					    <!-- Tabs -->
 						<div class="relativeWrap" data-toggle="source-code">
@@ -3093,14 +3077,14 @@
 <!--  Reading  -->
 <script id="Reading" type="text/x-kendo-template">
 	<div id="slide-form">
-		<div class="customer-background" style="overflow: hidden;">
+		<div class="customer-background" style="overflow: hidden; margin-top: 15px;">
 			<div class="container-960">					
 				<div id="example" class="k-content">
 			    	<div class="hidden-print pull-right">
 			    		<span class="glyphicons no-js remove_2" 
 							data-bind="click: cancel"><i></i></span>	
 					</div>
-			        <h2 style="padding:0 15px;">Reading</h2>
+			        <h2 style="padding:0 15px 0 0;">Reading</h2>
 					<br />
 					<!-- Tabs -->
 					<div class="relativeWrap" data-toggle="source-code">
@@ -3524,7 +3508,7 @@
 
 <script id="runBill" type="text/x-kendo-template">
 	<div id="slide-form">
-		<div class="customer-background" style="overflow: hidden;position: relative;">
+		<div class="customer-background" style="overflow: hidden;position: relative; margin-top: 15px;">
 			<div id="loadImport" style="display:none;margin-top: -15px;text-align: center;position: absolute;width: 100%; height: 100%;background: rgba(142, 159, 167, 0.8);z-index: 9999;">
 				<i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 45%;left: 45%"></i>
 			</div>
@@ -3534,8 +3518,8 @@
 			    		<span class="glyphicons no-js remove_2" 
 							data-bind="click: cancel"><i></i></span>	
 					</div>
-			        <h2 style="padding:0 15px;">Run Bill</h2>
-			        <div class="span12 row-fluid" style="padding:20px 0;">
+			        <h2 style="padding:0 15px 0 0;">Run Bill</h2>
+			        <div class="span12 row" style="padding:0 0 20px 0;">
 
 			        	<div class="span5" style="padding-right: 0;">
 				        	<div class="span6">	
@@ -3651,7 +3635,7 @@
 					    	 data-auto-bind="false"
 				             data-role="pager" data-bind="source: invoiceDS"></div>
 			        </div>
-			        <div class="span12 row-fluid" style="padding:20px 0;padding-top: 0">
+			        <div class="span12 row" style="padding:20px 0;padding-top: 0">
 			        	<div class="span3">	
 							<!-- Group -->
 							<div class="control-group">								
@@ -3741,15 +3725,15 @@
 </script>
 <script id="printBill" type="text/x-kendo-template">
 	<div id="slide-form">
-		<div class="customer-background" style="overflow: hidden;">
+		<div class="customer-background" style="overflow: hidden; margin-top: 15px;">
 			<div class="container-960">					
 				<div id="example" class="k-content">
 			    	<div class="hidden-print pull-right">
 			    		<span class="glyphicons no-js remove_2" 
 							data-bind="click: cancel"><i></i></span>	
 					</div>
-			        <h2 style="padding:0 15px;">Print Bill</h2>
-			        <div class="span12 row-fluid" style="padding:20px 0;">
+			        <h2 style="padding:0 15px 0 0;">Print Bill</h2>
+			        <div class="span12 row" style="padding: 20px 0;">
 			        	<div class="span5" style="padding-right: 0;">
 				        	<div class="span6">	
 								<!-- Group -->
@@ -3943,7 +3927,7 @@
 						<span id="notification"></span>
 
 						<span id="savePrint" class="btn btn-icon btn-primary glyphicons print" data-bind="click: printGrid" style="width: 80px;"><i></i>Print</span>
-						<!--span id="savePDF" class="btn btn-icon btn-success glyphicons edit" data-bind="click: savePDF" style="width: 120px;"><i></i> Save PDF</span-->									
+						<span id="savePDF" class="btn btn-icon btn-success glyphicons edit" data-bind="click: savePDF" style="width: 120px;"><i></i> Save PDF</span>							
 					</div>
 				</div><!-- //End div span12-->
 			</div><!-- //End div row-fluid-->
@@ -4980,14 +4964,14 @@
 **************************** -->	
 <script id="invoiceCustom" type="text/x-kendo-template">
 	<div id="slide-form">
-		<div class="customer-background">
+		<div class="customer-background" style="margin-top: 15px;">
 			<div class="container-960">					
 				<div id="example" class="k-content">
 			    	<div class="hidden-print pull-right">
 			    		<span class="glyphicons no-js remove_2" 
 							data-bind="click: cancel"><i></i></span>						
 					</div>
-			        <h2 style="padding:0 15px;"" data-bind="text: lang.lang.custom_forms"></h2>
+			        <h2 style="padding:0 15px 0 0;" data-bind="text: lang.lang.custom_forms"></h2>
 				    <br>	
 				    <div class="row" style="margin-left:0;">			   				
 						<div class="span4">	
@@ -6977,76 +6961,82 @@
 </script>
 
 <script id="importView" type="text/x-kendo-template">	
-	<div  class="row-fluid saleSummaryCustomer">
-		<span class="glyphicons no-js remove_2 pull-right" 
-	    				onclick="javascript:window.history.back()"
-						data-bind="click: cancel"><i></i></span>
+	<div id="slide-form">
+		<div class="customer-background" style="overflow: hidden; margin-top: 15px;">
+			<div class="container-960">	
+				<div  class="row-fluid saleSummaryCustomer">
+			<span class="glyphicons no-js remove_2 pull-right" 
+		    				onclick="javascript:window.history.back()"
+							data-bind="click: cancel"><i></i></span>
 
-        <h2 data-bind="">Imports</h2>
-	    <br>		
-		<!-- Tabs -->
-		<div class="relativeWrap" data-toggle="source-code">
-			<div class="widget widget-tabs widget-tabs-double-2 widget-tabs-gray">
-			
-				<!-- Tabs Heading -->
-				<div class="widget-head">
-					<ul style="padding-left: 1px;">
-						<li class="active"><a class="glyphicons user" href="#tabContact" data-toggle="tab"><i></i><span style="line-height: 55px;">Contact</span></a></li>
-						<li><a class="glyphicons list" href="#tabInventery" data-toggle="tab"><i></i><span style="line-height: 55px;">Meter</span></a></li>
-					</ul>
-				</div>
-				<!-- // Tabs Heading END -->
+	        <h2 data-bind="">Imports</h2>
+		    <br>		
+			<!-- Tabs -->
+			<div class="relativeWrap" data-toggle="source-code">
+				<div class="widget widget-tabs widget-tabs-double-2 widget-tabs-gray">
 				
-				<div class="widget-body">
-					<div class="tab-content">
-						<div id="loadImport" style="display:none;text-align: center;position: absolute;width: 100%; height: 70%;background: rgba(142, 159, 167, 0.8);z-index: 9999;">
-							<i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 35%;left: 45%"></i>
-						</div>
-						<!-- Tab content -->
-						<div id="tabContact" style="border: 1px solid #ccc" class="tab-pane active widget-body-regular">
-							
-							<h4 class="separator bottom" style="margin-top: 10px;">Please upload contacts file</h4>
-							<a href="<?php echo base_url(); ?>assets/water/wcontact_import_form_excel.xlsx" download>
-								<span id="saveClose" class="btn btn-icon btn-success glyphicons download" style="width: 200px!important;position: absolute;top: 85px;right: 10px;">
-									<i></i> 
-									<span >Download file example</span>
-								</span>
-							</a>
-							<div class="fileupload fileupload-new margin-none" data-provides="fileupload">
-							  	<input type="file"  data-role="upload" data-show-file-list="true" data-bind="events: {select: contact.onSelected}" id="myFile"  class="margin-none" />
-							</div>
-							<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 160px!important;"><i></i>
-							<span data-bind="click: contact.save, text: lang.lang.import_contact">Import Contact</span></span>
-							
-
-						</div>
-						<!-- // Tab content END -->
-					
-						<!-- Tab content -->
-						<div id="tabInventery" style="border: 1px solid #ccc" class="tab-pane widget-body-regular">
-							
-							<h4 class="separator bottom" style="margin-top: 10px;">Please upload Inventory file</h4>
-							<a href="<?php echo base_url(); ?>assets/water/meter_import.xlsx" download>
-								<span id="saveClose" class="btn btn-icon btn-success glyphicons download" style="width: 200px!important;position: absolute;top: 85px;right: 10px;">
-									<i></i> 
-									<span >Download file Example</span>
-								</span>
-							</a>
-							<div class="fileupload fileupload-new margin-none" data-provides="fileupload">
-							  	<input type="file"  data-role="upload" data-show-file-list="true" data-bind="events: {select: item.onSelected}" id="myFile"  class="margin-none" />
-							</div>
-							<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 160px!important;"><i></i>
-							<span data-bind="click: item.save">Import Meter</span></span>
-						</div>
-						<!-- // Tab content END -->
-						
-						
+					<!-- Tabs Heading -->
+					<div class="widget-head">
+						<ul style="padding-left: 1px;">
+							<li class="active"><a class="glyphicons user" href="#tabContact" data-toggle="tab"><i></i><span style="line-height: 55px;">Contact</span></a></li>
+							<li><a class="glyphicons list" href="#tabInventery" data-toggle="tab"><i></i><span style="line-height: 55px;">Meter</span></a></li>
+						</ul>
 					</div>
+					<!-- // Tabs Heading END -->
+					
+					<div class="widget-body">
+						<div class="tab-content">
+							<div id="loadImport" style="display:none;text-align: center;position: absolute;width: 100%; height: 70%;background: rgba(142, 159, 167, 0.8);z-index: 9999;">
+								<i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 35%;left: 45%"></i>
+							</div>
+							<!-- Tab content -->
+							<div id="tabContact" style="border: 1px solid #ccc" class="tab-pane active widget-body-regular">
+								
+								<h4 class="separator bottom" style="margin-top: 10px;">Please upload contacts file</h4>
+								<a href="<?php echo base_url(); ?>assets/water/wcontact_import_form_excel.xlsx" download>
+									<span id="saveClose" class="btn btn-icon btn-success glyphicons download" style="width: 200px!important;position: absolute;top: 85px;right: 10px;">
+										<i></i> 
+										<span >Download file example</span>
+									</span>
+								</a>
+								<div class="fileupload fileupload-new margin-none" data-provides="fileupload">
+								  	<input type="file"  data-role="upload" data-show-file-list="true" data-bind="events: {select: contact.onSelected}" id="myFile"  class="margin-none" />
+								</div>
+								<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 160px!important;"><i></i>
+								<span data-bind="click: contact.save, text: lang.lang.import_contact">Import Contact</span></span>
+								
+
+							</div>
+							<!-- // Tab content END -->
+						
+							<!-- Tab content -->
+							<div id="tabInventery" style="border: 1px solid #ccc" class="tab-pane widget-body-regular">
+								
+								<h4 class="separator bottom" style="margin-top: 10px;">Please upload Inventory file</h4>
+								<a href="<?php echo base_url(); ?>assets/water/meter_import.xlsx" download>
+									<span id="saveClose" class="btn btn-icon btn-success glyphicons download" style="width: 200px!important;position: absolute;top: 85px;right: 10px;">
+										<i></i> 
+										<span >Download file Example</span>
+									</span>
+								</a>
+								<div class="fileupload fileupload-new margin-none" data-provides="fileupload">
+								  	<input type="file"  data-role="upload" data-show-file-list="true" data-bind="events: {select: item.onSelected}" id="myFile"  class="margin-none" />
+								</div>
+								<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 160px!important;"><i></i>
+								<span data-bind="click: item.save">Import Meter</span></span>
+							</div>
+							<!-- // Tab content END -->
+							
+							
+						</div>
+					</div>
+					<div id="ntf1" data-role="notification"></div>
 				</div>
-				<div id="ntf1" data-role="notification"></div>
+			</div>
+			<!-- // Tabs END -->
+				</div>
 			</div>
 		</div>
-		<!-- // Tabs END -->
 	</div>
 </script>
 
@@ -9871,15 +9861,6 @@
 		pageLoad 			: function(id){
 			var self = this;
 			this.licenseDS.read();
-			this.meterDS.query({
-            	sort: [
-			  		{ field: "month_of", dir: "desc" }
-			  	],
-			  	pageSize: 1
-            }).then(function(e){
-				var view = self.meterDS.view();
-				self.set("miniMonthofS", view[0].month_of);
-            });
 		},
 		onLicenseChange 	: function(e) {
 			var data = e.data;
@@ -9905,7 +9886,7 @@
 			// );
 			//this.dataSource.filter(para);
 			if(license_id){
-				para.push({field: "branch_id", value: license_id.id});
+				//para.push({field: "branch_id", value: license_id.id});
 				if(bloc_id){
 					para.push({field: "location_id", value: bloc_id.id});
 					this.set("selectMeter", true);
@@ -10579,7 +10560,7 @@
 	        		type     	: "tariff",
 	        		tariff_id	: this.get('current').id,
 	        		account   	: this.get('current').account,
-	        		is_flat   	: this.get("tariffItemFlat"),
+	        		is_flat   	: 0,
 	        		unit 		: null,
 	        		usage 		: this.get("tariffItemUsage"),
 	        		amount 		: this.get("tariffItemAmount"),
@@ -10646,6 +10627,21 @@
 		        			self.set("tariffName", "");
 		        			self.set("tariffAccount", "");
 		        			self.set("tariffCurrency", "");
+		        			console.log(e.response);
+		        			self.tariffItemDS.data([]);
+				        	self.tariffItemDS.add({
+				        		name 		: "Default Tariff Item",
+				        		type     	: "tariff",
+				        		tariff_id	: e.response.results[0].id,
+				        		account   	: 0,
+				        		is_flat   	: 0,
+				        		unit 		: null,
+				        		usage 		: 0,
+				        		amount 		: 0,
+				        		currency 	: e.response.results[0]._currency.id,
+				        		_currency   : []
+				        	});
+				        	self.tariffItemDS.sync();
 		        		}
 	        		}
 	        	});
@@ -11559,7 +11555,11 @@
 			if(id){
 				this.loadObj(id);
 			}else{
-				this.addEmpty(this.contact.id);
+				if(this.contact){
+					this.addEmpty(this.contact.id);
+				}else{
+					banhji.router.navigate("/center");
+				}
 			}
 		},
 		loadObj 			: function(id){
@@ -11707,6 +11707,7 @@
 		meterDS     		: dataStore(apiUrl + "meters"),
 		worderDS     		: dataStore(apiUrl + "meters"),
 		dataSource 			: null,
+		readingDS 			: dataStore(apiUrl + "readings"),
 		planDS 				: dataStore(apiUrl + "plans"),
 		cashAccountDS  		: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
@@ -11751,7 +11752,7 @@
 					self.goWorder(view[0].branch_id, view[0].location_id);
 					var monthOf = self.issued_date;
 					monthOf.setDate(1);
-					banhji.reading.dataSource.insert(0, {
+					self.readingDS.insert(0, {
 						month_of: monthOf,
 						meter_number  : view[0].meter_number,
 						previous: 0,
@@ -11854,6 +11855,7 @@
 		save 				: function() {
 			
 			// $("#loadImport").css("display","block");
+
 			var self = this;
 			var amount = 0.0;
 			var receivedAmount = 0.00;
@@ -11869,8 +11871,15 @@
 
 			$.each(this.items, function(i, v){
 				amount += parseFloat(v.amount);
-				receivedAmount += parseFloat(v.received);
+				if(typeof v.received == 'number'){
+					receivedAmount += parseFloat(v.received);
+				}else{
+					receivedAmount += parseFloat(0.0);
+				}
+				
+				
 			});
+			
 			this.set('amountToBeRecieved', receivedAmount);
 
 			banhji.transaction.makeInvoice(self.get('meterObj').contact[0].id, self.get('paymentMethod'), self.service.received, 'Meter_Activation', self.get('meterObj').location_id)
@@ -11941,8 +11950,8 @@
 			banhji.ActivateMeter.meterDS.bind('requestEnd', function(e){
 				if(e.type != 'read') {
 					self.set('amountToBeRecieved', 0.00);
-					banhji.reading.save();
-					banhji.router.navigate('/center');
+					self.readingDS.sync();
+					self.cancel();
 				}
 				
 			});		
@@ -11952,7 +11961,7 @@
 			this.meterDS.data([]);	
 			this.planDS.data([]);
 			this.paymentMethodDS.data([]);
-			banhji.reading.dataSource.data([]);
+			this.readingDS.data([]);
 			banhji.router.navigate("/center");
 		}
 	});
@@ -12017,7 +12026,7 @@
 			});
 		},
 		cancel 				: function(){
-			this.dataSource.cancelChanges();	
+			this.dataSource.data([]);	
 			window.history.back();
 		}
 	});
@@ -12339,7 +12348,13 @@
 		cancel 				: function(){
 			this.invoiceCollection.data([]);
 			this.invoiceDS.data([]);
-
+			this.set("monthSelect", null);
+			this.set("licenseSelect", null);
+			this.set("blocSelect", null);
+			this.set("FmonthSelect", null);
+			this.set("BillingDate", null);
+			this.set("DueDate", null);
+			this.set("IssueDate", null);
 			this.invoiceArray = [];	
 			banhji.router.navigate("/print_bill");
 		}
@@ -12513,8 +12528,8 @@
 	    },
 	    goNoPrint 			: function(){
 		    if(this.invoiceNoPrint.data().length > 0){
-		    	this.invoiceCollection.dataSource.data([]);
-		    	this.invoiceCollection.dataSource.pushUpdate(this.invoiceNoPrint.data());
+		    	// this.invoiceCollection.dataSource.data([]);
+		    	this.invoiceCollection.dataSource = this.invoiceNoPrint;
 		    }
 	    },
 		printBill 			: function(){
@@ -12726,7 +12741,49 @@
 		    	//win.close();
 		    },2000)
 			//}
-		},		
+		},	
+		savePDF 		: function(e){
+			// drawing.drawDOM(".winvoice-print").then(function(group){
+			//     // here group is a drawing.Group object
+
+			//     // you can now draw it to SVG for example:
+			//     var svg = drawing.Surface.create($("#container"), { type: "svg" });
+			//     svg.draw(group);
+
+			//     // or you can save it as PDF.
+			//     // optionally:
+			//     group.options.set("pdf", {});
+			//     drawing.pdf.saveAs(group, "filename.pdf", proxyUrl);
+			// });
+			// var draw = kendo.drawing;
+
+	  //       draw.drawDOM($(".winvoice-print"), {
+	  //           avoidLinks: true,
+	  //           paperSize: "A4"
+	  //       })
+	  //       .then(function(root) {
+	  //           return draw.exportPDF(root);
+	  //       })
+	  //       .done(function(data) {
+	  //           kendo.saveAs({
+	  //               dataURI: data,
+	  //               fileName: "avoid-links.pdf"
+	  //           });
+	  //       });
+	  		var printLocation = document.querySelector('.winvoice-print');
+	  		e.preventDefault();
+	  		kendo.drawing.drawDOM(printLocation)
+	  		.then(function(data){
+	  			return kendo.drawing.exportImage(data);
+	  		})
+	  		.done(function(data){
+	  			kendo.saveAs({
+	  				dataURI: data,
+	  				fileName: 'Pint.png'
+	  			});
+	  		});
+
+		},	
 		hideFrameInvoice 			: function(e) {
 			var printBtn = e.target;
 			if(printBtn.checked) {

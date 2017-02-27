@@ -392,6 +392,7 @@ class Winvoices extends REST_Controller {
 		// $tmp = array();
 
 		foreach($table as $row) {
+			//echo $row->id."__";
 			$contact = $row->contact->include_related('contact_utility', array('abbr', 'code'))->select('id, name, abbr, number, address')->get();
 
 			$items  = $row->winvoice_line->get();
@@ -414,11 +415,11 @@ class Winvoices extends REST_Controller {
 			$remain->where("id <>", $row->id);
 			$remain->where("status <>", 1)->get();
 			$amountOwed = 0;
-			foreach($remain as $row) {
-				if($row->status == 2) {
-					$amountOwed += $row->remain;
+			foreach($remain as $rem) {
+				if($rem->status == 2) {
+					$amountOwed += $rem->remain;
 				} else {
-					$amountOwed += $row->amount;
+					$amountOwed += $rem->amount;
 				}
 			}
 
