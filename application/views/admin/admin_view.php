@@ -3108,7 +3108,6 @@
               let mnth= (d.getMonth() +1);
               let m = mnth < 10 ? '0'+mnth : mnth;
               banhji.company.get('current').set('fiscal_date', day +"-"+ m);
-              console.log(res.results[0]);
               var appData = JSON.parse(localStorage.getItem('userData/user'));
               localforage.removeItem('user').then(function() {
                 var data = {id: appData.id, username: appData.username, role: appData.role, institute: res.results[0]};
@@ -3194,7 +3193,7 @@
               if(e.response) {
                 banhji.company.setCurrent(banhji.companyDS.data()[0]);
                 //
-                let d = new Date(banhji.company.get('current').fiscal_date*1000);
+                let d = new Date(banhji.company.get('current').fiscal_date);
                 let day = d.getDate() < 10 ? '0'+ d.getDate() : d.getDate();
                 let mnth= (d.getMonth() +1);
                 let m = mnth < 10 ? '0'+mnth : mnth;

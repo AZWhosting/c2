@@ -377,6 +377,7 @@ class Profiles extends REST_Controller {
 			), 200);
 		}
 	}
+
 	function company_post() {
 		$request = json_decode($this->post('models'));
 
@@ -394,7 +395,7 @@ class Profiles extends REST_Controller {
 				$inst->vat_number = $r->vat_number;
 				$inst_year_founded = date('Y');
 				$inst->telephone = $r->telephone;
-				$inst->fiscal_date = '01-01';
+				$inst->fiscal_date = $r->fiscal_date; //'01-01';
 				$inst->monetary_id = $r->currency->id;
 				$inst->locale = $r->currency->locale;
 				$inst->report_monetary_id = $r->currency->id;
@@ -443,6 +444,7 @@ class Profiles extends REST_Controller {
 			201);
 		}
 	}
+
 	function company_put() {
 		$requested_data = json_decode($this->put("models"));
 

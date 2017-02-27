@@ -1068,11 +1068,13 @@
                                 var res = e.response, type = e.type;
                                 if(res.results.length > 0) {
                                     // create company
+                                    let dd = new Date(banhji.company.get('current').fiscal_date);
                                     banhji.companyDS.insert(0, {
                                         name:  banhji.index.get('name'),
                                         currency: banhji.index.get('currency'),
                                         country:  banhji.index.get('country'),
                                         industry:  banhji.index.get('industry'),
+                                        fiscal_date : dd.getTime(),
                                         type: banhji.index.get('type'),
                                         telephone: banhji.index.get('telephone'),
                                         username:result.user.username

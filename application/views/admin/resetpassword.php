@@ -216,12 +216,12 @@
               <div class="login-form">
                 <h2 align="center">Forget Password</h2>
                   <form action="" method="">
-                    <input type="text" data-bind="value: email" placeholder="Enter verification Code" class="login-email"><br>
+                    <input type="text" data-bind="value: email" placeholder="Enter Email Address" class="login-email"><br>
                     <input type="text" data-bind="value: veriCode" placeholder="Enter verification Code" class="login-email"><br>
                     <input type="password" data-bind="value: newPassword, events: {change: onChange}" placeholder="Enter New Password" class="login-email"><br>
-                    <input type="password" data-bind="value: cPassword, events: {keyup: onKeyUp}" placeholder="Confirm Your Password" class="login-email"><br>
+                    <input type="password" data-bind="value: cPassword, events: {keyup: onKeyUp, blur: onBlur}" placeholder="Confirm Your Password" class="login-email"><br>
                     <span data-bind="text: message"></span>
-                    <input id="changePasswordBtn" type="button" data-bind="enabled: isEnable, events:{click: reset}" class="btn-login" value="Change Password"><br><br>
+                    <input id="changePasswordBtn" type="button" data-bind="enabled: isEnable, events:{click: reset}" class="btn-login" value="Reset Password"><br><br>
                     <div id="loginInformation"></div>
                   </form> 
                   <a href="<?php echo base_url(); ?>login">Login</a> | <a href="<?php echo base_url(); ?>signup"> Sign Up</a>
@@ -341,11 +341,21 @@
           onKeyUp: function(e) {
             if(e.keyCode === 13) {
               if(this.get('newPassword')!== this.get('cPassword')) {
-                this.set('message', "Passwords do not match");
+                $("#changePasswordBtn").val('Passwords do not match');
+                // this.set('message', "Passwords do not match");
               } else {
-                this.set('message', "");
+                // this.set('message', "");
+                 $("#changePasswordBtn").val('Reset Password');
                 this.set('isEnable', true);
               }
+            }
+          },
+          onBlur  : function(e) {
+            if(this.get('newPassword')!== this.get('cPassword')) {
+              this.set('message', "Passwords do not match");
+            } else {
+              this.set('message', "");
+              this.set('isEnable', true);
             }
           },
           onChange: function(e) {
@@ -385,6 +395,7 @@
             }
           },
           reset: function() {
+            $("#changePasswordBtn").val('Resetting...');
             var that = this;
             var userData = {
                 Username : this.get('email'),

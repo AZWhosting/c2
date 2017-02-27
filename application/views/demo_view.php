@@ -16647,9 +16647,9 @@
 							</a>
 						</td>				
 						<td width="186" class="center">
-							<a href="#/statement">
-								<img title="Add Statement" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/statement.png"  height="200" />
-								<span data-bind="text: lang.lang.statement" style="margin-top: 7px; display: inline-block; text-transform: uppercase;"></span>
+							<a href="#/cash_refund">
+								<img title="Cash Refund" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/statement.png"  height="200" />
+								<span style="margin-top: 7px; display: inline-block; text-transform: uppercase;">Cash Refund</span>
 							</a>
 						</td>
 					</tr>				
@@ -21866,15 +21866,15 @@
 <script id="cashRefund" type="text/x-kendo-template">
 	<div id="slide-form">
 		<div class="customer-background">
-			<div class="container-960">					
-				<div id="example" class="k-content">					
+			<div class="container-960">
+				<div id="example" class="k-content">
 				    
 			    	<span class="glyphicons no-js remove_2 pull-right" 
 		    				onclick="javascript:window.history.back()"
 							data-bind="click: cancel"><i></i></span>
 
 			        <h2>Cash Refund</h2>
-				    <br>				   				
+				    <br>
 						
 					<!-- Upper Part -->
 					<div class="row-fluid">
@@ -21888,7 +21888,7 @@
 													data-bind="value: obj.number,
 																events:{change:checkExistingNumber}" 
 													required data-required-msg="required" 
-													placeholder="eg. ABC00001" style="width: 83%; float: left; margin-right: 5px;"" />
+													placeholder="eg. ABC00001" style="width: 83%; float: left; margin-right: 5px;" />
 											<div style="padding-left: 0; width: 25px; float: left;">
 												<a class="glyphicons no-js qrcode" data-bind="click: generateNumber" title="Generate Number" style="float: left; margin: 2px 0 0 0 ;"><i></i></a>
 											</div>
@@ -21959,25 +21959,7 @@
 
 							    	<!-- Options Tab content -->
 							        <div class="tab-pane active" id="tab1-4">						            
-							            <table class="table table-borderless table-condensed cart_total">										
-											<tr>							            				
-												<td><span data-bind="text: lang.lang.related_invoices"></span></td>
-								            	<td>
-													<input id="cbbReference" name="cbbReference"
-															data-role="combobox"
-								              				data-value-primitive="true"
-								              				data-template="reference-list-tmpl"
-										                    data-auto-bind="false"
-															data-text-field="number" 
-								              				data-value-field="id"						              				 
-								              				data-bind="value: obj.reference_id,
-								              							source: referenceDS,
-								              							enabled: enableRef,						              							
-								              							events:{change: referenceChanges}"
-								              				placeholder="Select Invoice..." 
-								              				required data-required-msg="required" style="width: 100%" />
-												</td>
-											</tr>			            	
+							            <table class="table table-borderless table-condensed cart_total">											
 											<tr>
 												<td><span data-bind="text: lang.lang.segments"></span></td>
 												<td>
@@ -22096,50 +22078,35 @@
 					    </div>
 					</div>
 
-					<!-- Item List -->
+					<!-- Item Lines -->
 					<table class="table table-bordered table-primary table-striped table-vertical-center">
 				        <thead>
 				            <tr>
-				                <th class="center" style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></th>			      
+				                <th class="center" style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></th>
 				                <th><span data-bind="text: lang.lang.items"></span></th>
 				                <th><span data-bind="text: lang.lang.description"></span></th>
 				                <th style="width: 15%;"><span data-bind="text: lang.lang.quantity"></span></th>
 				                <th style="width: 10%;"><span data-bind="text: lang.lang.price"></span></th>
-				                <th style="width: 10%;" data-bind="visible: showDiscount"><span data-bind="text: lang.lang.discount"></span></th>	                
+				                <th style="width: 10%;" data-bind="visible: showDiscount"><span data-bind="text: lang.lang.discount"></span></th>
 				                <th style="width: 10%;"><span data-bind="text: lang.lang.amount"></span></th>
-				                <th style="width: 10%;"><span data-bind="text: lang.lang.tax"></span></th>		                			                			                
+				                <th style="width: 10%;"><span data-bind="text: lang.lang.tax"></span></th>
 				            </tr> 
 				        </thead>
 				        <tbody data-role="listview" 
 				        		data-template="cashRefund-template" 
 				        		data-auto-bind="false"
-				        		data-bind="source: lineDS"></tbody>			        
-				    </table>			    
-									
-		            <!-- Bottom part -->
+				        		data-bind="source: lineDS"></tbody>
+				    </table>
+
+				    <!-- Item Add Row part -->
 		            <div class="row">
-			
-						<!-- Column -->
-						<div class="span9">
-							<button class="btn btn-inverse" data-bind="click: addRow"><i class="icon-plus icon-white"></i></button>												
-
-							<div class="btn-group">
-								<div class="leadcontainer">
-									
-								</div>
-								<a class="btn btn-default dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-list"></i> </a>
-								<ul class="dropdown-menu" style="padding: 5px; border-radius:0;">
-									<li>
-										<input type="checkbox" id="chbDiscount" class="k-checkbox" data-bind="checked: showDiscount" />												
-										<label class="k-checkbox-label" for="chbDiscount"><span data-bind="text: lang.lang.discount"></span></label>
-									</li>																
-								</ul>
-							</div>
-
+						<div class="span12">
+							<button class="btn btn-inverse" data-bind="click: addRow"><i class="icon-plus icon-white"></i></button>
+							
 							<!-- Add New Item -->
 							<ul class="topnav addNew">
 								<li role="presentation" class="dropdown ">
-							  		<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+							  		<a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
 							  			<span data-bind="text: lang.lang.add_new_item"></span>
 				    					<span class="caret"></span>
 							  		</a>
@@ -22148,53 +22115,103 @@
 						  				<li><a href='#/non_inventory_part'><span data-bind="text: lang.lang.add_noninventory_for_sale"></span></a></li>
 						  				<li><a href='#/fixed_assets'><span data-bind="text: lang.lang.add_fixed_assets"></span></a></li>
 						  				<li><a href='#/item_service'><span data-bind="text: lang.lang.add_services"></span></a></li>
-						  				<li><a href='#/txn_item'><span data-bind="text: lang.lang.add_transaction_item"></span></a></li>  	
+						  				<li><a href='#/txn_item'><span data-bind="text: lang.lang.add_transaction_item"></span></a></li>  				
+						  				 				
 						  			</ul>
 							  	</li>				
 							</ul>
 							<!--End Add New Item -->
 
-							<br><br>					
-
-							<table class="table table-bordered table-inverse table-striped table-vertical-center" data-bind="visible: showReturn">
-						        <thead>
-						            <tr>
-						            	<th class="center" style="width: 1%;">
-						            		<button type="button" data-role="button" data-bind="click: addRowOption"><i class="icon-plus"></i></button>
-						            	</th>
-						            	<th style="width: 30%"><span data-bind="text: lang.lang.type_of_return"></span></th>			
-						                <th><span data-bind="text: lang.lang.condition"></span></th>					                	
-						                <th style="width: 20%"><span data-bind="text: lang.lang.amount"></span></th>                          
-						            </tr> 
-						        </thead>
-						        <tbody data-role="listview" 
-						        		data-template="cashRefund-return-line-template" 
-						        		data-auto-bind="false"
-						        		data-bind="source: returnDS"></tbody>			        
-						    </table>
-														
 						</div>
-						<!-- Column END -->
+					</div>
 
+					<br>
+
+				    <!-- Deposit Lines -->
+				    <table class="table table-bordered table-primary table-striped table-vertical-center">
+				        <thead>
+				            <tr>
+				            	<th class="center" style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></th>
+				            	<th>Deposit</th>
+				                <th style="width: 15%;">Reference No.</th>
+				                <th style="width: 20%;"><span data-bind="text: lang.lang.amount"></span></th>                          
+				            </tr> 
+				        </thead>
+				        <tbody data-role="listview"
+				        		data-template="cashRefund-return-template" 
+				        		data-auto-bind="false"
+				        		data-bind="source: returnDS"></tbody>			        
+				    </table>
+
+				    <!-- Deposit Window -->
+				    <div data-role="window"
+		                 data-title="Deposit For Refund"
+		                 data-width="600"
+		                 data-actions="{}"
+		                 data-position="{top: '150px', left: '30%'}"
+		                 data-height="300"
+		                 data-bind="visible: windowVisible">
+
+						<table class="table table-bordered table-primary table-striped table-vertical-center">							
+							<tr>
+								<td>Deposit</td>
+								<td>
+									
+								</td>
+							</tr>
+							<tr>
+								<td style="width: 15%"><span data-bind="text: lang.lang.deposit_to"></span></td>
+								<td style="width: 40%">
+									<input id="cbbAccount" name="cbbAccount"
+										   data-role="combobox"
+						                   data-value-primitive="true"
+						                   data-header-template="account-header-tmpl"
+						                   data-template="account-list-tmpl"
+						                   data-text-field="name"
+						                   data-value-field="id"
+						                   data-bind="value: returnObj.account_id,
+						                   			  source: depositAccountDS"
+						                   data-placeholder="Add Account.." style="width: 100%" />
+								</td>
+							</tr>
+							<tr>
+								<td>Amount</td>
+								<td>
+									<input data-role="numerictextbox"
+										data-spinners="false" 
+										data-format="n"
+										data-min="0"
+										data-bind="value: returnObj.amount,
+													events:{change: returnChanges}" 
+										style="width: 100%;" />
+								</td>
+							</tr>
+						</table>
+
+						<br>
+
+						<div align="center">
+							<span class="btn btn-icon btn-primary glyphicons ok_2" data-bind="click: closeWindow" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save"></span></span>
+							<span class="btn btn-icon btn-danger glyphicons remove_2" data-bind="click: cancelWindow" style="width: 80px;"><i></i> Discard</span>
+						</div>
+					</div>
+
+		            <!-- Bottom part -->
+		            <div class="row">
+			
 						<!-- Column -->
-						<!-- <div class="span3" align="center">
-							<img data-bind="visible: isEdit, attr: { src: statusSrc }" width="150px;" height="150px;" />	
-						</div> -->
+						<div class="span7">
+							<button class="btn btn-inverse" data-bind="click: openWindow"><i class="icon-plus icon-white"></i></button>							
+						</div>
 						<!-- Column END -->
 						
 						<!-- Column -->
-						<div class="span3">
+						<div class="span5">
 							<table class="table table-condensed table-striped table-white">
 								<tbody>
 									<tr>
 										<td class="right"><span data-bind="text: lang.lang.subtotal"></span></td>
 										<td class="right strong" width="40%"><span data-format="n" data-bind="text: obj.sub_total"></span></td>
-									</tr>								
-									<tr>
-										<td class="right"><span data-bind="text: lang.lang.total_discount"></span></td>
-										<td class="right strong">
-											<span data-format="n" data-bind="text: obj.discount"></span>
-	                   					</td>
 									</tr>
 									<tr>
 										<td class="right"><span data-bind="text: lang.lang.total_tax"></span></td>
@@ -22206,10 +22223,10 @@
 									</tr>
 									<tr>
 										<td class="right">
-											Amount Paid
+											Offset Amount:
 										</td>
 										<td class="right">
-											<span data-format="n" data-bind="text: obj.amount_paid"></span>
+											<span data-format="n" data-bind="text: obj.deposit"></span>
 										</td>
 									</tr>
 									<tr>
@@ -22217,7 +22234,7 @@
 											<span data-bind="text: lang.lang.remaining"></span>
 										</td>
 										<td class="right">
-											<span data-format="n" data-bind="text: obj.remaining"></span>
+											<span id="remaining" name="remaining" data-format="n" data-bind="text: obj.remaining"></span>
 										</td>
 									</tr>								
 								</tbody>
@@ -22225,7 +22242,8 @@
 						</div>
 						<!-- // Column END -->
 						
-					</div>	           
+					</div>
+					<!-- END Bottom part -->
 					
 					<!-- Form actions -->
 					<div class="box-generic bg-action-button">
@@ -22249,9 +22267,9 @@
 							</div>
 						</div>
 					</div>
-					<!-- // Form actions END -->							
+					<!-- // Form actions END -->
 
-				</div>							
+				</div>
 			</div>
 		</div>
 	</div>
@@ -22260,7 +22278,7 @@
 	<tr data-uid="#: uid #">		
 		<td>
 			<i class="icon-trash" data-bind="events: { click: removeRow }"></i>
-			#:banhji.saleReturn.lineDS.indexOf(data)+1#			
+			#:banhji.cashRefund.lineDS.indexOf(data)+1#
 		</td>		
 		<td>
 			<input id="ccbItem" name="ccbItem-#:uid#"
@@ -22338,57 +22356,40 @@
 		</td>						
     </tr>   
 </script>
-<script id="cashRefund-return-line-template" type="text/x-kendo-tmpl">
+<script id="cashRefund-return-template" type="text/x-kendo-tmpl">
 	<tr data-uid="#: uid #">
 		<td class="center">
 			<i class="icon-trash" data-bind="events: { click: removeRowOption }"></i>
+			#:banhji.cashRefund.returnDS.indexOf(data)+1#
 		</td>
 		<td>
-			<input id="ddlOption" name="ddlOption-#:uid#"
-				   data-role="dropdownlist"
-				   data-value-primitive="true"
-                   data-text-field="name"
-                   data-value-field="id"
-                   data-bind="value: type, 
-                   			  source: optionList,
-                   			  events:{ change: optionChanges }"
-                   data-option-label="Select Option..." 
-                   style="width: 100%" />            
+			<input data-role="combobox"
+			   data-template="reference-list-tmpl"
+			   data-value-primitive="true"
+               data-auto-bind="false"
+               data-text-field="number"
+               data-value-field="id"
+               data-bind="value: reference_id, 
+               			  source: referenceDS,
+               			  events:{change: referenceChanges}"
+               placeholder="Select Deposit..." 
+               required data-required-msg="required" style="width: 100%" />
 		</td>
 		<td>
-			<input id="cbbInvoice" name="cbbInvoice-#:uid#"
-				   data-role="combobox"
-				   data-template="reference-list-tmpl"
-				   data-value-primitive="true"
-                   data-auto-bind="false"
-                   data-text-field="number"
-                   data-value-field="id"
-                   data-bind="value: reference_id, 
-                   			  source: invoiceDS,
-                   			  visible: showInvoice,
-                   			  events:{ change: invoiceChanges }"
-                   placeholder="Select Invoice..." 
-                   style="width: 100%" />
-
-            <input id="ddlAccount" name="ddlAccount-#:uid#"
-				   data-role="dropdownlist"
-				   data-template="account-list-tmpl"
-				   data-value-primitive="true"
-                   data-text-field="name"
-                   data-value-field="id"
-                   data-bind="value: account_id, 
-                   			  source: accountDS,
-                   			  visible: showAccount"
-                   style="width: 100%" />
+			<input class="k-textbox" 
+				data-bind="value: reference_no"
+				style="width: 100%;" />
 		</td>
 		<td>
 			<input id="txtAmount-#:uid#" name="txtAmount-#:uid#" 
-					data-role="numerictextbox"
-					data-spinners="false" 
-					data-format="n"
-					data-spinners="false"
-					data-bind="value: amount, events: {change : changes}" 
-					required data-required-msg="required" style="width: 100%;" />
+				data-role="numerictextbox"
+				data-spinners="false" 
+				data-format="n"
+				data-min="0"
+				data-spinners="false"
+				data-bind="value: amount, 
+							events: {change : changes}" 
+				required data-required-msg="required" style="width: 100%;" />
 		</td>
     </tr>   
 </script>
@@ -73138,15 +73139,14 @@
 	banhji.cashRefund =  kendo.observable({
 		lang 				: langVM,
 		dataSource 			: dataStore(apiUrl + "transactions"),
+		referenceDS			: dataStore(apiUrl + "transactions"),
+		returnDS			: dataStore(apiUrl + "transactions"),
+		txnDS 				: dataStore(apiUrl + "transactions"),
 		lineDS  			: dataStore(apiUrl + "item_lines"),
 		assemblyLineDS  	: dataStore(apiUrl + "item_lines"),
-		txnDS 				: dataStore(apiUrl + "transactions"),
 		journalLineDS		: dataStore(apiUrl + "journal_lines"),
-		referenceDS			: dataStore(apiUrl + "transactions"),
-		referenceLineDS		: dataStore(apiUrl + "item_lines"),
-		returnDS			: dataStore(apiUrl + "transactions"),
-		invoiceDS			: dataStore(apiUrl + "transactions"),
-		currencyRateDS		: dataStore(apiUrl + "currencies/rate"),
+		assemblyDS			: dataStore(apiUrl + "item_prices"),
+		attachmentDS	 	: dataStore(apiUrl + "attachments"),		
 		jobDS 				: new kendo.data.DataSource({
 		  	data: banhji.source.jobList,
 		  	sort: { field: "name", dir: "asc" }
@@ -73192,29 +73192,17 @@
 		  	data: banhji.source.accountList,
 		  	filter: { field:"account_type_id", value: 10 },
 		  	sort: { field:"number", dir:"asc" }
-		}),
-		assemblyDS			: dataStore(apiUrl + "item_prices"),
-		attachmentDS	 	: dataStore(apiUrl + "attachments"),
-		optionList 			: [
-			{ id:"Offset_Invoice", name:"Charge Against Invoice" },
-			{ id:"Customer_Deposit", name:"Add To Deposit" },
-			{ id:"Credit_Note", name:"Cash Refund" }
-		],
+		}),		
 		amtDueColor 		: banhji.source.amtDueColor,
 		obj 				: null,
 		isEdit 				: false,
 		saveClose 			: false,
 		savePrint 			: false,
-		statusSrc 			: "",
+		windowVisible 		: false,
+		isOffsetInvoice 	: false,
+		notDuplicateNumber  : true,
 		enableRef 	 		: false,
-		showReturn 			: true,
-		showDiscount 		: false,
-		sub_total 			: 0,
-		discount 			: 0,
-		tax 				: 0,
 		total 				: 0,
-		remain 				: 0,
-		original_total 		: 0,
 		user_id				: banhji.source.user_id,
 		pageLoad 			: function(id){
 			if(id){
@@ -73544,80 +73532,6 @@
 		        this.changes();
 	        }
 		},
-		//Return Option
-		addRowOption 		: function(){
-			var obj = this.get("obj");
-			
-
-			var account_id = 0;
-			if(this.accountDS.total()>0){
-				account_id = this.accountDS.at(0).id;
-			}
-			this.returnDS.add({
-				return_id 		: obj.id,
-				reference_id 	: "",
-				account_id 		: account_id,
-				type 			: "",
-				amount 			: 0,
-				rate			: obj.rate,
-				locale			: obj.locale,
-				issued_date 	: obj.issued_date,
-				showInvoice 	: false,
-				showAccount 	: false
-			});
-		},
-		removeRowOption 	: function(e){
-			var d = e.data;
-			
-			if(this.returnDS.total()>1){
-				this.returnDS.remove(d);
-		        this.changes();
-	        }
-		},
-		invoiceChanges 		: function(e){
-			var data = e.data;
-			
-			if(data.reference_id>0){
-				var inv = this.invoiceDS.get(data.reference_id);
-				data.set("amount", inv.amount - (inv.amount_paid + inv.deposit));
-
-				this.changes();
-			}else{
-				data.set("amount", 0);
-			}							
-		},
-		optionChanges 		: function(e){
-			var data = e.data, obj = this.get("obj");
-
-			switch(data.type) {
-			    case "Offset_Invoice": //Invoice		    	
-			        data.set("showInvoice", true);
-			        data.set("showAccount", false);
-
-			        if(obj.contact_id>0){
-			        	var para = [
-					 			{ field:"contact_id", value: obj.contact_id },
-					 			{ field:"status", operator:"where_in", value:[0,2] },
-					 			{ field:"type", operator:"where_in", value:["Commercial_Invoice", "Vat_Invoice", "Invoice"] }
-					 	];
-
-					 	if(obj.reference_id>0){
-					 		para.push({ field:"id", operator:"where_not_in", value:[obj.reference_id] });
-					 	} 
-
-				        this.invoiceDS.filter(para);
-				 	}
-
-			        break;
-			    case "Credit_Note": //Refund		    	
-			        data.set("showInvoice", false);
-			        data.set("showAccount", true);
-			        break;
-			    default: //Deposit		    	
-			        data.set("showInvoice", false);
-			        data.set("showAccount", false);
-			}			
-		},
 		//Number      	
 		checkExistingNumber 	: function(){
 			var self = this, para = [], 
@@ -73834,7 +73748,7 @@
 				recurring_id 		: "",
 				job_id 				: 0,
 				user_id 			: this.get("user_id"),
-			   	type				: "Sale_Return", //Require
+			   	type				: "Cash_Refund", //Require
 			   	number 				: "",
 			   	sub_total 			: 0,
 			   	discount 			: 0,
@@ -73871,7 +73785,6 @@
 
 			this.setRate();
 			this.addRow();
-			this.addRowOption();
 			this.generateNumber();
 		},
 		addRow 				: function(){
@@ -73897,24 +73810,23 @@
 		},
 		removeRow 			: function(e){
 			var data = e.data;
-			if(this.lineDS.total()>1){
-				//Remove Assembly Item List
-				if(data.item_id>0){
-					var raw = this.assemblyLineDS.data();
-				    
-				    var item, i;
-				    for(i=raw.length-1; i>=0; i--){
-				      	item = raw[i];
-				      	if (item.assembly_id==data.item_id){
-				       	 	this.assemblyLineDS.remove(item);
-				      	}
+			
+			//Remove Assembly Item List
+			if(data.item_id>0){
+				var raw = this.assemblyLineDS.data();
+			    
+			    var item, i;
+			    for(i=raw.length-1; i>=0; i--){
+			      	item = raw[i];
+			      	if (item.assembly_id==data.item_id){
+			       	 	this.assemblyLineDS.remove(item);
+			      	}
 
-				    }
-				}
+			    }
+			}
 
-				this.lineDS.remove(data);
-		        this.changes();
-	        }
+			this.lineDS.remove(data);
+	        this.changes();
 		},
 	    objSync 			: function(){
 	    	var dfd = $.Deferred();	        
@@ -74028,16 +73940,109 @@
 		cancel 				: function(){
 			this.dataSource.cancelChanges();
 			this.lineDS.cancelChanges();
+			this.returnDS.cancelChanges();
 			this.assemblyLineDS.cancelChanges();
 			this.attachmentDS.cancelChanges();
 			
 			this.dataSource.data([]);
 			this.lineDS.data([]);
+			this.returnDS.data([]);
 			this.assemblyLineDS.data([]);
 			this.attachmentDS.data([]);
 
-			banhji.userManagement.removeMultiTask("sale_return");
+			banhji.userManagement.removeMultiTask("cash_refund");
 		},
+		//Return
+		addRowReturn 		: function(){
+			var obj = this.get("obj"), account_id = 0;
+
+			if(obj.contact_id>0){
+				var contact = this.contactDS.get(obj.contact_id);
+				account_id = contact.deposit_account_id;
+			}
+			
+			this.returnDS.insert(0, {
+				return_id 		: obj.id,
+				account_id 		: account_id,
+				reference_id 	: "",
+				reference_no 	: "",
+				number 			: "",
+				type 			: "Customer_Deposit",				
+				amount 			: 0,
+				rate			: obj.rate,
+				locale			: obj.locale,
+				issued_date 	: obj.issued_date
+			});
+		},
+		removeRowReturn 	: function(e){
+			var d = e.data;
+			
+			if(this.returnDS.total()>1){
+				this.returnDS.remove(d);
+		        this.changes();
+	        }
+		},
+		returnChanges 		: function(e){
+			e.preventDefault();
+
+			this.closeWindow();
+		},
+		referenceChanges 	: function(e){
+			var data = e.data;
+			
+			if(data.reference_id>0){
+				var txn = this.referenceDS.get(returnObj.reference_id);
+
+				returnObj.set("account_id", txn.account_id);
+				returnObj.set("reference_no", txn.number);
+				returnObj.set("sub_total", txn.amount);
+				returnObj.set("amount", txn.amount);				
+			}else{
+				returnObj.set("account_id", 0);
+				returnObj.set("reference_no", "");
+				returnObj.set("sub_total", 0);
+				returnObj.set("amount", 0);				
+			}
+
+			this.changes();
+		},
+		openWindow			: function(){
+			var para = [], ids = [], 
+			obj = this.get("obj");
+
+			if(obj.contact_id>0){
+				this.addRowReturn();
+				
+				if(this.returnDS.total()>0){
+					$.each(this.returnDS.data(), function(index, value){
+						ids.push(value.reference_id);
+					});
+					para.push({field: "id", operator:"where_not_in", value: ids});
+				}
+				para.push({field: "contact_id", value: obj.contact_id});
+				para.push({field: "amount >", value: 0});
+				para.push({field: "type", value:"Customer_Deposit"});
+				this.referenceDS.filter(para);
+				
+	      		this.set("windowVisible", true);
+      		}else{
+      			alert("Please select a customer.");
+      		}
+      	},
+      	closeWindow 		: function(){
+      		this.changes();
+      		this.set("windowVisible", false);
+      	},
+      	cancelWindow 		: function(){      		
+      		var returnObj = this.get("returnObj"),
+      		indexReturnObj = this.returnDS.indexOf(returnObj),
+      		selectedReturnObj = this.returnDS.at(indexReturnObj);
+
+      		this.returnDS.remove(selectedReturnObj);
+      		this.changes();
+
+      		this.set("windowVisible", false);
+      	},
 	    //Journal	        
 	    addJournal 			: function(transaction_id){
 	    	var self = this,
@@ -93751,6 +93756,64 @@
 		// 		window.location.replace(baseUrl + "admin");
 		// 	}				
 		// });		
+	});
+	banhji.router.route("/cash_refund(/:id)", function(id){
+		banhji.view.layout.showIn("#content", banhji.view.cashRefund);
+		kendo.fx($("#slide-form")).slideIn("down").play();
+
+		var vm = banhji.cashRefund;
+		banhji.userManagement.addMultiTask("Cash Refund","cash_refund",vm);
+		if(banhji.pageLoaded["cash_refund"]==undefined){
+			banhji.pageLoaded["cash_refund"] = true;
+			
+	        var validator = $("#example").kendoValidator({
+	        	rules: {
+			        customRule1: function(input){
+			          	if (input.is("[name=txtNumber]")) {	
+				            return vm.get("notDuplicateNumber");
+				        }
+				        return true;
+			        }
+			    },
+			    messages: {
+			        customRule1: banhji.source.duplicateNumber
+			    }
+	        }).data("kendoValidator");
+
+	        $("#saveNew").click(function(e){
+				e.preventDefault();
+				
+				if(validator.validate() && vm.validating()){
+	            	vm.save();
+		        }else{
+		        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+		        }
+			});
+
+			$("#saveClose").click(function(e){
+				e.preventDefault();
+
+				if(validator.validate() && vm.validating()){
+					vm.set("saveClose", true);
+	            	vm.save();
+		        }else{
+		        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+		        }
+			});
+
+			$("#savePrint").click(function(e){
+				e.preventDefault();
+				
+				if(validator.validate() && vm.validating()){
+					vm.set("savePrint", true);
+	            	vm.save();
+		        }else{
+		        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+		        }
+			});
+		}
+
+		vm.pageLoad(id);
 	});
 	banhji.router.route("/statement(/:id)", function(){
 		// banhji.accessMod.query({
