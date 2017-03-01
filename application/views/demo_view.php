@@ -36911,9 +36911,9 @@
 							<td width="50%">
 								<h3><a href="#/inventory_position_summary">Inventory Position Summary</a></h3>
 							</td>
-							<td width="50%">
-								<h3><a href="#/inventory_sale_item_analysis">Inventory Sale by Item Analysis</a></h3>								
-							</td>						
+							<td >
+								<h3><a href="#/inventory_position_detail">Inventory Position Detail</a></h3>
+							</td>
 						</tr>
 						<tr>
 							<td >
@@ -36923,40 +36923,13 @@
 								</p>
 								
 							</td>
-							<td >
-								<p>
-									Lists of all transactions related to and grouped by each inventory with analysis of average gross profit margin.
-
-								</p>
-							</td>
-							
-						</tr>
-						<tr>
-							<td >
-								<h3><a href="#/inventory_position_detail">Inventory Position Detail</a></h3>
-							</td>
-							<!-- <td >
-								<h3><a href="#/inventory_turnover_list">Inventory Turnover List</a></h3>
-							</td> -->
-							<td>
-								
-							</td>
-						</tr>
-						<tr>
-							<td >
+							<td style="vertical-align: top;">
 								<p>
 									Lists individual inventory movement transactions by date for each inventory within a period of time.
 
 								</p>
 							</td>
-							<td></td>
-							<!-- <td >
-								<p>
-									Provides analysis of inventory turnover days by each inventory.
-
-								</p>
-							</td> -->
-						</tr>
+						</tr>						
 					</table>
 				</div>
 			</div>
@@ -36984,7 +36957,7 @@
 							</td>
 							<td >
 								<p>
-									Shows the movement of each inventory by opening balance, sale, purchase and adjustment. 
+									Lists individual expenses/ purchase transactions by date for each supplier within a period of time.
 								</p>
 								
 							</td>
@@ -42816,22 +42789,18 @@
 														<h3><a href="#/inventory_position_summary">Inventory Position Summary</a></h3>
 													</td>
 													<td class="span4">
-														<h3><a href="#/inventory_sale_item_analysis">Inventory Sale by Item Analysis</a></h3>								
-													</td>
-													<td class="span4">
 														<h3><a href="#/inventory_position_detail">Inventory Position Detail</a></h3>
-													</td>						
+													</td>
+													<td class="span4"></td>						
 												</tr>
 												<tr>
 													<td class="span4">
 														Summarizes each inventory balance by quantity on hand, on purchase order and sale order. In addition, it also includes average cost and price. 
 													</td>
 													<td class="span4">
-														Lists of all transactions related to and grouped by each inventory with analysis of average gross profit margin.
-													</td>
-													<td class="span4">
 														Lists individual inventory movement transactions by date for each inventory within a period of time.
 													</td>
+													<td class="span4"></td>
 												</tr>
 												<!-- <tr>													
 													<td class="span4">
@@ -42855,53 +42824,35 @@
 										<div class="row-fluid">
 											<table class="span12">
 												<tr>
-													<td class="span4">
-														<h3><a href="#/inventory_movement_summary">Inventory Movement Summary</a></h3>
-													</td>
-													<!-- <td class="span4">
-														<h3><a href="#/inventory_movement_detail">Inventory Movement Detail</a></h3>								
-													</td> -->
-													<td class="span4">
+													<td class="span6">
 														<h3><a href="#/purchase_summary_product_services">Purchase by Supplier Summary</a></h3>
 													</td>
-													<td class="span4">
+													<td class="span6">
 														<h3><a href="#/purchase_detail_product_services">Purchase by Supplier Detail</a></h3>
 													</td>					
 												</tr>
 												<tr>
-													<td class="span4">
-														Shows the movement of each inventory by opening balance, sale, purchase and adjustment. 
-													</td>
-													<!-- <td class="span4">
-														Lists of all detailed transactions related to and grouped by each inventory
-													</td> -->
-													<td class="span4">
+													<td class="span6">
 														Lists all inventory purchases from each suppliers
 													</td>
-													<td class="span4">
+													<td class="span6">
 														Lists all inventory sold to each customer
 													</td>
 												</tr>
 												
 												<tr>
-													<!-- <td class="span4">
-														<h3><a href="#/purchase_detail_product_services">Purchase by Supplier Detail</a></h3>
-													</td> -->
-													<td class="span4">
+													<td class="span6">
 														<h3><a href="#/sale_summary_by_customer">Sale by Customer Summary</a></h3>
 													</td>
-													<td class="span4">
+													<td class="span6">
 														<h3><a href="#/sale_detail_by_customer">Sale by Customer Detail</a></h3>
 													</td>
 												</tr>
 												<tr>
-													<!-- <td class="span4">
-														Lists all inventory sold to each customer
-													</td> -->
-													<td class="span4">
+													<td class="span6">
 														Lists of detailed inventory sale transactions to each customer
 													</td>
-													<td class="span4">
+													<td class="span6">
 														Lists of detailed inventory purchase transactions from each suppliers
 													</td>
 												</tr>
