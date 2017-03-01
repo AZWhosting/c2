@@ -1527,6 +1527,7 @@ class Dashboards extends REST_Controller {
 		 //Inventory Turn Over
 		$inventory = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$inventory->where_related("account/account_type", "id", 13);
+		$inventory->include_related("transaction", array("rate"));
 		$inventory->where_related("transaction", "issued_date <=", $today);
 		$inventory->where_related("transaction", "is_recurring", 0);
 		$inventory->where_related("transaction", "deleted", 0);
@@ -1538,10 +1539,10 @@ class Dashboards extends REST_Controller {
 		$inventoryCr = 0;
 		foreach ($inventory as $value) {			
 			if($value->dr>0){
-				$inventoryDr += floatval($value->dr) / floatval($value->rate);
+				$inventoryDr += floatval($value->dr) / floatval($value->transaction_rate);
 			}
 			if($value->cr>0){
-				$inventoryCr += floatval($value->cr) / floatval($value->rate);
+				$inventoryCr += floatval($value->cr) / floatval($value->transaction_rate);
 			}	
 		}
 		
@@ -1629,7 +1630,7 @@ class Dashboards extends REST_Controller {
 		//Results
 		$data["results"][] = array(
 			'id' 						=> 0,
-			'onHand' 					=> $onHand,						
+			'totalInventory' 			=> $totalInventory,						
 			'purchaseSupplierCount' 	=> $purchaseSupplierCount,
 			'purchaseProductCount'		=> $purchaseProductCount,
 			'purchase_order' 			=> $purchaseOrder->count(),	
@@ -1837,9 +1838,10 @@ class Dashboards extends REST_Controller {
 		$onHand = 0;
 		$today = date("Y-m-d");
 		
-		 //Inventory Turn Over
+		//Inventory Turn Over
 		$inventory = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$inventory->where_related("account/account_type", "id", 13);
+		$inventory->include_related("transaction", array("rate"));
 		$inventory->where_related("transaction", "issued_date <=", $today);
 		$inventory->where_related("transaction", "is_recurring", 0);
 		$inventory->where_related("transaction", "deleted", 0);
@@ -1851,10 +1853,10 @@ class Dashboards extends REST_Controller {
 		$inventoryCr = 0;
 		foreach ($inventory as $value) {			
 			if($value->dr>0){
-				$inventoryDr += floatval($value->dr) / floatval($value->rate);
+				$inventoryDr += floatval($value->dr) / floatval($value->transaction_rate);
 			}
 			if($value->cr>0){
-				$inventoryCr += floatval($value->cr) / floatval($value->rate);
+				$inventoryCr += floatval($value->cr) / floatval($value->transaction_rate);
 			}	
 		}
 		

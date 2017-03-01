@@ -32423,7 +32423,7 @@
 					
 						<!-- Widget heading -->
 						<div class="widget-head">
-							<h4 class="heading"><span class="glyphicons coins"><i></i></span><span style="color: #203864; font-weight: 600; font-style: normal;" data-bind="text: lang.lang.qoh"></span></h4>
+							<h4 class="heading"><span class="glyphicons coins"><i></i></span><span style="color: #203864; font-weight: 600; font-style: normal;">Inventory Balance</span></h4>
 						</div>
 						<!-- // Widget heading END -->
 						
@@ -32431,10 +32431,8 @@
 							
 							<div align="center" class="text-large strong" data-bind="text: onHand"></div>
 							<table width="100%">
+								<div align="center" class="text-large strong" data-bind="text: totalInventory"></div>
 								<tr align="center">
-									<td>										
-										<span ></span>
-									</td>
 									<td>
 										<span data-bind="text: purchaseSupplierCount"></span>
 										<br>
@@ -82586,7 +82584,8 @@
 			}).then(function(){
 				var view = self.summaryDS.view();
 				
-			
+				self.set("totalInventory", kendo.toString(view[0].totalInventory, "c2", banhji.locale));
+
 				self.set("purchaseSupplierCount", kendo.toString(view[0].purchaseSupplierCount, "n0"));
 				self.set("purchaseProductCount", kendo.toString(view[0].purchaseProductCount, "n0"));
 				self.set("purchase_order", kendo.toString(view[0].purchase_order, "n0"));
