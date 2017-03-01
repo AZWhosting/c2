@@ -3,7 +3,7 @@
 
 require APPPATH.'/libraries/REST_Controller.php';
 
-class Itemreports extends REST_Controller {
+class Item_reports extends REST_Controller {
 	public $_database;
 	public $server_host;
 	public $server_user;
@@ -33,6 +33,7 @@ class Itemreports extends REST_Controller {
 		}
 	}
 
+	//POSITION SUMMARY BY DAWINE
 	function position_summary_get() {
 		$filter 	= $this->get("filter");
 		$page 		= $this->get('page');
@@ -40,28 +41,21 @@ class Itemreports extends REST_Controller {
 		$sort 	 	= $this->get("sort");
 		$data["results"] = [];
 		$data["count"] = 0;
-		$is_pattern = 0;
-		$deleted = 0;
-		$temp = array();
-		$onHand = 0;
-		$total =0;
-		$totalProduct = 0;
-		$totalOnhand =0;
-		$totalQOH = 0;
-		$totalPO =0;
-		$totalSO =0;
 
-		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$obj->where_in( 'type', array("Purchase_Order", "Sale_Order"));
-		$obj->where('is_recurring <>', 1);
-		$obj->where('deleted <>', 1);
-		if(!empty($sort) && isset($sort)){					
+		$obj = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		
+		//Sort
+		if(!empty($sort) && isset($sort)){
 			foreach ($sort as $value) {
-				$obj->order_by($value["field"], $value["dir"]);
+				if(isset($value['operator'])){
+					$obj->{$value['operator']}($value["field"], $value["dir"]);
+				}else{
+					$obj->order_by($value["field"], $value["dir"]);
+				}
 			}
 		}
 
-		//Filter		
+		//Filter
 		if(!empty($filter) && isset($filter)){
 	    	foreach ($filter['filters'] as $value) {
 	    		if(isset($value['operator'])) {
@@ -72,88 +66,88 @@ class Itemreports extends REST_Controller {
 			}
 		}
 
-		// $obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		// $obj->where("item_type_id", 1);
-		// $obj->where('is_pattern', 0);
-
-		// $obj->include_related("contact_type", "name");
+		$obj->include_related("item", array("abbr", "number", "name"));
+		$obj->include_related("transaction", array("rate"));
+		$obj->where_in_related("transaction", "type", array("Purchase_Order", "Sale_Order", "Cash_Purchase", "Credit_Purchase", "Purchase_Return", "Payment_Refund", "Commercial_Invoice", "Vat_Invoice", "Invoice", "Commercial_Cash_Sale", "Vat_Cash_Sale", "Cash_Sale", "Sale_Return", "Cash_Refund", "Item_Adjustment", "Internal_Usage"));
+		$obj->where_related("transaction", "is_recurring <>", 1);
+		$obj->where_related("transaction", "deleted <>", 1);
+		$obj->where_related("item", "item_type_id", 1);		
+		$obj->order_by_related("transaction", "issued_date", "asc");
 
 		//Results
 		$obj->get_iterated();
-		$data["count"] = $obj->result_count();
 		
-		if($obj->result_count()>0){
+		if($obj->exists()){
+			$objList = [];
 			foreach ($obj as $value) {
+				$qoh = 0;
 				$po = 0;
-				$so = 0;
-				$items = $value->item_line->get();
-				foreach ($items as $item) {
-					$inventory = $item->item->get();
-					
+				$so	= 0;
+				$purchaseQty = 0;
+				$purchaseAmount = 0;
+				$saleQty = 0;				
+				$saleAmount = 0;
 
-					if(isset($temp["$inventory->id"])) {
-						if($value->type == "Purchase_Order") {
-							isset($temp["$inventory->id"]['po']) ? $temp["$inventory->id"]['po'] += $item->quantity : $temp["$inventory->id"]['po'] = $item->quantity;
-						} else {
-							isset($temp["$inventory->id"]['so']) ? $temp["$inventory->id"]['so'] += $item->quantity : $temp["$inventory->id"]['so'] = $item->quantity;
-						}
-					} else {
-						$in = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-						$in->select_sum('quantity');						
-						$in->where_in_related("transaction", "type", array("Cash_Purchase", "Credit_Purchase", "Item_Adjustment"));
-						$in->where_related("transaction", "is_recurring", 0);
-						$in->where_related("transaction", "deleted", 0);
-						$in->where('item_id', $item->item_id);
-						$in->where('movement', 1);
-						$in->get();
+				$quantity = floatval($value->quantity) * floatval($value->unit_value) * intval($value->movement);
+				
+				if($value->transaction_type==="Purchase_Order"){
+					$po = $quantity;
+				}else if($value->transaction_type==="Sale_Order"){
+					$so = $quantity;
+				}else{
+					$qoh = $quantity;
 
-						$out = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-						$out->select_sum('quantity');
-						$out->where_in_related("transaction", "type", array("Invoice", "Cash_Sale", "Item_Adjustment"));
-						$out->where_related("transaction", "is_recurring", 0);
-						$out->where_related("transaction", "deleted", 0);
-						$out->where('item_id', $item->item_id);
-						$out->where('movement', -1);
-						$out->get();
-
-						
-
-						if($value->type == "Purchase_Order") {
-							$temp["$inventory->id"]['po'] = $item->quantity;
-						} else {
-							$temp["$inventory->id"]['so'] = $item->quantity;
-						}
-						$temp["$inventory->id"]['name'] = $inventory->name;
-						$temp["$inventory->id"]['cost'] = floatval($inventory->cost);
-						$temp["$inventory->id"]['price'] = floatval($inventory->price);
-						$temp["$inventory->id"]['onHand'] = $in->quantity - $out->quantity;
-						$temp["$inventory->id"]['currency_code'] = $inventory->locale;
-
-						$onHand +=  $in->quantity - $out->quantity;
+					if(intval($value->movement)>0){
+						$purchaseQty = $quantity;
+						$purchaseAmount = ($quantity * floatval($value->cost)) / floatval($value->transaction_rate);
+					}else{
+						$saleQty = abs($quantity);
+						$saleAmount = ($saleQty * floatval($value->price)) / floatval($value->transaction_rate);
 					}
-				}				
+				}
+
+				if(isset($objList[$value->item_id])){
+					$objList[$value->item_id]["qoh"] 			+= $qoh;
+					$objList[$value->item_id]["po"] 			+= $po;
+					$objList[$value->item_id]["so"] 			+= $so;
+					$objList[$value->item_id]["purchaseQty"] 	+= $purchaseQty;
+					$objList[$value->item_id]["purchaseAmount"] += $purchaseAmount;
+					$objList[$value->item_id]["saleQty"] 		+= $saleQty;
+					$objList[$value->item_id]["saleAmount"] 	+= $saleAmount;
+				}else{
+					$objList[$value->item_id]["id"] 			= $value->item_id;
+					$objList[$value->item_id]["name"] 			= $value->item_abbr . $value->item_number ." ". $value->item_name;					
+					$objList[$value->item_id]["qoh"] 			= $qoh;
+					$objList[$value->item_id]["po"] 			= $po;
+					$objList[$value->item_id]["so"] 			= $so;
+					$objList[$value->item_id]["purchaseQty"] 	= $purchaseQty;
+					$objList[$value->item_id]["purchaseAmount"] = $purchaseAmount;
+					$objList[$value->item_id]["saleQty"] 		= $saleQty;
+					$objList[$value->item_id]["saleAmount"] 	= $saleAmount;
+				}
 			}
-		}			
 
-		foreach ($temp as $key => $value) {
-			$data["results"][] = array(
-				'id' 		=> $key,
-				'item' 		=> $value['name'],
-				'cost'		=> $value['cost'],
-				'price'		=> $value['price'],
-				'onHand'	=> $value['onHand'],
-				'currency'	=> $value['currency_code'],
-				'so'		=> isset($value['so'])? $value['so'] : 0,
-				'po'		=> isset($value['po'])? $value['po'] : 0,
-			);
+			foreach ($objList as $value) {
+				$avgPrice = 0;
+				$avgCost = 0;
 
+				if($value["purchaseQty"]>0){
+					$avgCost = $value["purchaseAmount"] / $value["purchaseQty"];
+				}
+
+				if($value["saleQty"]>0){
+					$avgPrice = $value["saleAmount"] / $value["saleQty"];
+				}
+				
+				$value["cost"] = $avgCost;
+				$value["price"] = $avgPrice;
+				$value["amount"] = $value["qoh"] * $avgCost;
+
+				$data["results"][] = $value;
+			}
+			$data["count"] = count($data["results"]);
 		}
 		
-
-		// Response Data
-		$data['onHand'] = $onHand;
-		$data['count'] = count($temp);
-		// $data['test'] =$test;
 		$this->response($data, 200);
 	}
 
@@ -198,7 +192,7 @@ class Itemreports extends REST_Controller {
 		$obj->order_by_related("transaction", "issued_date", "asc");
 
 		//Results
-		$obj->get_iterated();		
+		$obj->get_iterated();
 		
 		if($obj->exists()){
 			$objList = [];

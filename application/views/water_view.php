@@ -115,7 +115,7 @@
 		</div>
 	    <div class="span6" style="padding-left: 0;">
 	    	<div class="cash-bg" style="margin-bottom: 10px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
-	    		<a href="">
+	    		<a href="#/customer_deposit_report">
 					<div class="cash-invoice" style="background: #203864; color: #fff;">
 						<div class="span3" style="padding-left: 0;">
 							<span style="font-size: 24px; ">DEPOSIT</span>
@@ -131,11 +131,12 @@
 						</div> -->					
 					</div>
 				</a>
-				<a href="">
+				<a href="#/sale_summary">
 					<div class="cash-invoice" style="margin-bottom: 0; background: #203864; color: #fff;">
 						<div class="span4" style="padding-left: 0;">
 							<span style="font-size: 24px; color: #fff;">TOTAL SALE</span>
-							<span style="font-size: 24px;" data-bind="text: totalUsage"></span><span style="font-size: 24px;">m<sup >3</sup></span>
+							<span style="color: #9EA7B8;" data-bind="text: totalUsage"></span>
+							<span style="color: #9EA7B8;">m<sup >3</sup></span>
 						</div>
 						<div class="span8" style="color: #fff; text-align: center; font-size: 35px; font-weight: 600; padding: 0;">
 							<span style="float: right;" data-bind="text: totalSale"></span>
@@ -149,7 +150,7 @@
 	    	<div class="cash-bg" style="margin-bottom: 10px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
 	    		<div class="row-fluid" >
 					<div class="span8" style="background: #0077c5; margin-right: 15px; width: 63.8%; ">
-						<a href="#/customer_balance_summary">
+						<a href="#/customer_aging_sum_list">
 							<div class="widget-body alert-info welcome-nopadding" style="width: 100%; background: #0077c5;">
 								<p style="color: #fff;"><span>Expected due</span></p>
 						
@@ -181,7 +182,7 @@
 					</div>
 
 					<div class="span4" style="background: #21abf6; padding-right: 0">
-						<a href="#/customer_balance_summary">
+						<a href="#/customer_list">
 							<div class="widget-body alert-info welcome-nopadding" style="width: 100%; background: #21abf6;">
 								<p style="color: #fff;"><span>Active Meter</span></p>
 						
@@ -834,7 +835,7 @@
 		</td>
 	</tr>
 </script>
-<script id="custType-template" type="text/x-kendo-tmpl">                    
+<script id="custType-template" type="text/x-kendo-tmpl">
     <tr>
     	<td>
     		#= name#
@@ -854,7 +855,7 @@
    		</td>   		
    	</tr>
 </script>
-<script id="blocSetting-template" type="text/x-kendo-tmpl">                    
+<script id="blocSetting-template" type="text/x-kendo-tmpl">
     <tr>
     	<td>
     		#= branch.name#
@@ -898,7 +899,7 @@
 	    </td>
 	</tr>
 </script>
-<script id="exemptionSetting-template" type="text/x-kendo-tmpl">                    
+<script id="exemptionSetting-template" type="text/x-kendo-tmpl">
     <tr>
     	<td>
     		#= name#
@@ -966,7 +967,7 @@
 	    </td>
     </tr>
 </script>
-<script id="tariffSetting-template" type="text/x-kendo-tmpl">                    
+<script id="tariffSetting-template" type="text/x-kendo-tmpl">
     <tr>
     	<td>
     		#= name#
@@ -1016,7 +1017,7 @@
     </tr>
 </script>
 
-<script id="tariff-item-template" type="text/x-kendo-tmpl">                    
+<script id="tariff-item-template" type="text/x-kendo-tmpl">
     <tr>
     	<td>#= name#</td>
     	<td align="right">#= usage#</td>
@@ -1026,7 +1027,7 @@
     	</td>
    	</tr>
 </script>
-<script id="tariff-edit-item-template" type="text/x-kendo-tmpl">                    
+<script id="tariff-edit-item-template" type="text/x-kendo-tmpl">
     <tr>
     	<td><input style="width: 100%;" type="text" class="k-textbox" data-bind="value:name" /></td>
     	<td align="center">
@@ -1051,7 +1052,7 @@
 	    </td>
    	</tr>
 </script>
-<script id="depositSetting-template" type="text/x-kendo-tmpl">                    
+<script id="depositSetting-template" type="text/x-kendo-tmpl">
     <tr>
     	<td>
     		#= name#
@@ -1317,7 +1318,7 @@
     	<td>
     		#= code#
    		</td>
-   		<td align="center">
+   		<td align="left">
     		#= name#
    		</td>
    		<td align="center">
@@ -1401,12 +1402,12 @@
 <script id="planSetting-template" type="text/x-kendo-tmpl">
 	<tr>
 		<td>#= name #</td>
-		<td>#= code #</td>
-		<td>#= _currency.code #</td>
-		<td>
+		<td style="text-align: center;">#= code #</td>
+		<td style="text-align: center;">#= _currency.code #</td>
+		<td style="text-align: center;">
 			<a href="\#/plan/#: id#"><i class="icon-edit"></i> Edit</a>
     		|
-    		<span data-bind="click: viewPlanItem"><i class="icon-view"></i> View Item</span>
+    		<span style="cursor: pointer;" data-bind="click: viewPlanItem"><i class="icon-view"></i> View Item</span>
     	</td>
 	</tr>
 </script>
@@ -2300,9 +2301,9 @@
 
 			        <!-- //ACCOUNTING -->
 			        <div class="tab-pane" id="metertab3">
-			        	<h2>Add Single Reading</h2>
-			        	<div class="row-fluid" style="padding: 15px 0;overflow:hidden;">
-			        		<div class="span10">
+			        	<h2 style="margin-left: 0;">Add Single Reading</h2>
+			        	<div class="row" style="padding: 15px 0;overflow:hidden;">
+			        		<div class="span10" style="padding-right: 0">
 			        			<div class="span3">	
 									<div class="control-group">								
 										<label ><span >Month Of</span></label>
@@ -2310,42 +2311,56 @@
 						                	style="width: 100%;" 
 						                	data-role="datepicker"
 						                	data-format="MM-yyyy"
+						                	data-parse-formats="yyyy-MM-dd HH:mm:ss"
 						                	data-start="year" 
 							  				data-depth="year" 
 						                	placeholder="Moth of ..." 
 								           	data-bind="value: readingVM.monthOfSR, min: miniMonthofS" />
 									</div>
 								</div>
-								<div class="span3">	
+								<div class="span6">
+									<div class="span4">	
+										<div class="control-group">								
+											<label ><span >Meter Number</span></label>
+							        		<p class="k-input k-textbox" 
+							        			style="width:100%"
+							        			data-bind="text: readingVM.NumberSR"></p>
+							        	</div>
+							        </div>
+							        <div class="span4">	
+										<div class="control-group">								
+											<label ><span >Previous</span></label>
+							        		<p class="k-input k-textbox" 
+							        			style="width:100%"
+							        			style="width:100%;border:1px solid #ccc;"
+							        			data-bind="text: readingVM.previousSR" >
+							        			</p>
+							        	</div>
+							       	</div>
+							       	<div class="span4">	
+										<div class="control-group">								
+											<label ><span >Current</span></label>
+							        		<input type="text" 
+							        			class="k-input k-textbox" 
+							        			placeholder="Current" 
+							        			style="width:100%;border:1px solid #ccc;"
+							        			data-bind="value: readingVM.currentSR" />
+							        	</div>
+							        </div>
+							    </div>
+						        <div class="span3" style="padding-left: 15px;">	
 									<div class="control-group">								
-										<label ><span >Meter Number</span></label>
-						        		<p class="k-input k-textbox" 
-						        			style="width:100%"
-						        			data-bind="text: readingVM.NumberSR"></p>
-						        	</div>
-						        </div>
-						        <div class="span3">	
-									<div class="control-group">								
-										<label ><span >Previous</span></label>
-						        		<p class="k-input k-textbox" 
-						        			style="width:100%"
-						        			style="width:100%;border:1px solid #ccc;"
-						        			data-bind="text: readingVM.previousSR" >
-						        			</p>
-						        	</div>
-						       	</div>
-						       	<div class="span3">	
-									<div class="control-group">								
-										<label ><span >Current</span></label>
-						        		<input type="text" 
-						        			class="k-input k-textbox" 
-						        			placeholder="Current" 
-						        			style="width:100%;border:1px solid #ccc;"
-						        			data-bind="value: readingVM.currentSR" />
-						        	</div>
+										<label ><span >To Date</span></label>
+							            <input type="text" 
+						                	style="width: 100%;" 
+						                	data-role="datepicker"
+						                	placeholder="To Date ..." 
+						                	data-parse-formats="yyyy-MM-dd HH:mm:ss"
+								           	data-bind="value: readingVM.toDateSR, min: miniMonthofS" />
+									</div>
 						        </div>
 				        	</div>
-				        	<div class="span2">
+				        	<div class="span1">
 				        		<span id="saveNew" style="width: 80px!important;margin:0;top: 22px;" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="click: readingVM.addSingleReading"><i></i> <span>Add</span></span>
 				        	</div>
 			        	</div>
@@ -3074,6 +3089,7 @@
 	</div>
 </script>
 <!--  End Meter  -->
+
 <!--  Reading  -->
 <script id="Reading" type="text/x-kendo-template">
 	<div id="slide-form">
@@ -3091,11 +3107,10 @@
 						<div class="widget widget-tabs widget-tabs-double-2 widget-tabs-gray">
 						
 							<!-- Tabs Heading -->
-							<div class="widget-head">
-								<ul style="padding-left: 1px;">
-									<li class="active"><a class="glyphicons inbox_in" href="#tabDownload" data-toggle="tab"><i></i><span style="line-height: 55px;">Download</span></a></li>
-
-									<li ><a class="glyphicons inbox_out" href="#tabReading" data-toggle="tab"><i></i><span style="line-height: 55px;">Upload</span></a></li>
+							<div class="widget-head" style="background: #203864 !important; color: #fff;">
+								<ul style="padding-left: 0px;">
+									<li class="active" style="width: 210px;"><a style="text-transform: capitalize;" href="#tabDownload" data-toggle="tab"><span style="line-height: 23px;">Step 1: <br> <b>Download Reading Book</b></span></a></li>
+									<li style="width: 210px;"><a style="text-transform: capitalize;" href="#tabReading" data-toggle="tab"><span style="line-height: 23px;">Step 2: <br>  <b>Upload Reading Book </b></span></a></li>
 									
 								</ul>
 							</div>
@@ -3108,7 +3123,7 @@
 									</div>
 									<!-- Tab content -->
 									<div id="tabDownload" style="border: 1px solid #ccc; overflow: hidden;" class="tab-pane active widget-body-regular">
-										<h4 class="separator bottom" style="margin-top: 10px;">Please Select Query</h4>
+										<h4 class="separator bottom" style="margin-top: 10px;">Please Select License and Location to download reading book</h4>
 									  	<div class="span12 row-fluid" style="padding:20px 0;padding-top: 0;">
 								        	<div class="span6" style="padding-left: 0;">
 												<div class="span5" style="padding-left: 0;">
@@ -3189,6 +3204,40 @@
 										<h4 class="separator bottom" style="margin-top: 10px;">Please upload reading book</h4>
 
 										<div class="row-fluid clear" style="overflow: hidden;margin-bottom: 20px;">
+											<div class="span3" style="padding-left: 0;">
+												<div class="control-group">								
+													<label ><span >License</span></label>
+													<input 
+														data-role="dropdownlist" 
+														style="width: 100%;" 
+														data-option-label="License ..." 
+														data-auto-bind="false" 
+														data-value-primitive="false" 
+														data-text-field="name" 
+														data-value-field="id" 
+														data-bind="
+															value: licenseSelectU,
+						                  					source: licenseDSU,
+						                  					events: {change: onLicenseChangeU}">
+						                  		</div>
+											</div>
+											<div class="span3">
+												<div class="control-group">								
+													<label ><span >Location</span></label>
+													<input 
+														data-role="dropdownlist" 
+														style="width: 100%;" 
+														data-option-label="Location ..." 
+														data-auto-bind="false" 
+														data-value-primitive="false" 
+														data-text-field="name" 
+														data-value-field="id" 
+														data-bind="
+															value: blocSelectU,
+						                  					source: blocDSU,
+						                  					events: {change: blocChangeU}">
+						                  		</div>
+											</div>
 											<div class="span3">
 												<div class="control-group">	
 													<label ><span >Month Of</span></label>
@@ -3200,7 +3249,7 @@
 										  				data-depth="year"
 									                	placeholder="Moth of ..." 
 											           	data-bind="value: monthOfUpload,
-											           			events: {change: selectMonthTo}" />
+											           			events: {change: monthOfUSelect}" />
 												</div>
 											</div>											<div class="span3">
 												<div class="control-group">	
@@ -4202,7 +4251,6 @@
 					Summary and detail cash receipt reports grouped by sources/ methods of receipts
 				</p>
 				<ul style="margin-left: -20px;">
-					<li><a href="#/cash_receipt_summary"><span >Cash Receipt By Summary</span></a></li> 
 					<li><a href="#/cash_receipt_detail"><span >Cash Receipt By Detail</span></a></li>  
 	  				<li><a href="#/cash_receipt_source_summary"><span >Cash Receipt By Sources Summary</span></a></li>
 	  				<li><a href="#/cash_receipt_source_detail"><span >Cash Receipt By Sources Detail</span></a></li> 
@@ -4248,7 +4296,7 @@
 							</div>
 						</div>
 						
-						<div class="strong" style="margin-bottom:0; width: 100%; padding: 10px;" align="center"
+						<div class="strong" style="margin-bottom: 15px; width: 100%; padding: 10px;" align="center"
 							data-bind="style: { backgroundColor: amtDueColor}">
 							<div align="left"><span data-bind="text: lang.lang.amount_received"></span></div>
 							<h2 data-bind="text: total_received" align="right"></h2>
@@ -4258,19 +4306,7 @@
 					<div class="span8" style="padding: 0;">
 
 						<div class="box-generic-noborder" >
-
-						    <!-- Tabs Heading -->
-						    <div class="tabsbar tabsbar-2">
-						        <ul class="row-fluid row-merge">
-						        	<li class="span1 glyphicons circle_info active"><a href="#tab1-1" data-toggle="tab"><i></i> </a>
-						            </li>
-						            <!-- <li class="span1 glyphicons show_liness"><a href="#tab1-2" data-toggle="tab"><i></i></a></li> -->
-						        </ul>
-						    </div>
-						    <!-- // Tabs Heading END -->
-
-						    <div class="tab-content">
-
+						    <div class="tab-content" style="padding-top: 12px;">
 						    	<!-- Options Tab content -->
 						        <div class="tab-pane active" id="tab1-1">						            
 						            <table style="margin-bottom: 0;" class="table table-borderless table-condensed cart_total">
@@ -4340,38 +4376,9 @@
 										</tr>											
 						            </table>						            
 						        </div>
-						        <!-- // Options Tab content END -->
-
-						        <div class="tab-pane saleSummaryCustomer" id="tab1-2">
-									<table class="table table-borderless table-condensed">
-								        <thead>
-								            <tr>
-								                <th>NUMBER</th>
-								                <th>ACCOUNT</th>                		                
-								                <th class="right">DEBITS (Dr)</th>
-								                <th class="right">CREDITS (Cr)</th>		                
-								            </tr>
-								        </thead> 
-								        <tbody>
-								        	<tr>
-								        		<td>1</td>
-								        		<td>2</td>
-								        		<td class="right">3</td>
-								        		<td class="right">4</td>
-								        	</tr>
-								        	<tr>
-								        		<td>1</td>
-								        		<td>2</td>
-								        		<td class="right">3</td>
-								        		<td class="right">4</td>
-								        	</tr>
-								        </tbody>			        
-								    </table>
-								</div>
-
+						        <!-- // Options Tab content END -->						       
 						    </div>
 						</div>
-
 				    </div>
 				</div>
 
@@ -4421,10 +4428,10 @@
 						</div>
 
 						<br>
-						<div class="well" style="overflow: hidden;">
+						<!-- <div class="well" style="overflow: hidden;">
 							<textarea cols="0" rows="2" class="k-textbox" style="width:100% !important;" data-bind="value: obj.memo" placeholder="memo for external ..."></textarea>												
 							<textarea cols="0" rows="2" class="k-textbox" style="width:100% !important;" data-bind="value: obj.memo2" placeholder="memo for internal ..."></textarea>
-						</div>
+						</div> -->
 					</div>
 					<!-- Column END -->
 					
@@ -4457,20 +4464,30 @@
 					</div>
 					<!-- // Column END -->
 					
-				</div>	           
-				<table class="table table-bordered table-primary table-striped table-vertical-center">
-			        <thead>
-			            <tr>
-			                <th class="center" style="width: 50px;"><span >No.</span></th>             
-			                <th><span >Currency</span></th>
-			                <th><span >Cash Receipt</span></th>			                			                			                			                
-			            </tr> 
-			        </thead>
-			        <tbody data-role="listview" 
-		        		data-template="cash-currency-template" 
-		        		data-auto-bind="false"
-		        		data-bind="source: reconReceipt.dataSource"></tbody>			        
-			    </table>
+				</div>
+				<div class="row">
+					<div class="span5" style="min-height: 200px;">
+						<div class="well" style="overflow: hidden;">
+							<textarea cols="0" rows="2" class="k-textbox" style="width:100% !important;" data-bind="value: obj.memo" placeholder="memo for external ..."></textarea>												
+							<textarea cols="0" rows="2" class="k-textbox" style="width:100% !important;" data-bind="value: obj.memo2" placeholder="memo for internal ..."></textarea>
+						</div>
+
+					</div>
+					<div class="span7" style="padding-left: 0;">     
+						<table class="table table-bordered table-primary table-striped table-vertical-center">
+					        <thead>
+					            <tr>
+					                <th class="center" style="width: 50px;"><span >No.</span></th>             
+					                <th><span >Currency</span></th>
+					                <th><span >Cash Receipt</span></th>			                			                			                			                
+					            </tr> 
+					        </thead>
+					        <tbody data-role="listview" 
+				        		data-template="cash-currency-template" 
+				        		data-auto-bind="false"
+				        		data-bind="source: reconReceipt.dataSource"></tbody>			        
+					    </table>
+					</div>
 
 			    <button style="margin-bottom: 15px;" class="btn btn-inverse" data-bind="click: reconReceipt.addRow"><i class="icon-plus icon-white"></i></button>
 				<!-- Form actions -->
@@ -4950,7 +4967,7 @@
                           source: currencyDS"/>
 		</td>
 		<td>
-			<input id="numeric" class="k-formatted-value k-input" type="number" value="17" min="0" data-bind="value: amount" step="1" />
+			<input style="text-align: right;" id="numeric" class="k-formatted-value k-input" type="number" value="17" min="0" data-bind="value: amount" step="1" />
 			
 		</td>
 	</tr>
@@ -5836,7 +5853,7 @@
 </script>
 <script id="customerList" type="text/x-kendo-template">
 	<div id="slide-form">
-		<div class="customer-background">
+		<div class="customer-background" style="margin-top: 15px;">
 			<div class="container-960">
 				<div id="example" class="k-content saleSummaryCustomer">
 			    	<span class="pull-right glyphicons no-js remove_2"
@@ -5930,7 +5947,7 @@
 </script>
 <script id="customerNoConnection" type="text/x-kendo-template">
 	<div id="slide-form">
-		<div class="customer-background">
+		<div class="customer-background" style="margin-top: 15px;">
 			<div class="container-960">
 				<div id="example" class="k-content saleSummaryCustomer">
 			    	<span class="pull-right glyphicons no-js remove_2" data-bind="click: cancel"><i></i></span>
@@ -5993,7 +6010,7 @@
 </script>
 <script id="disconnectList" type="text/x-kendo-template">
 	<div id="slide-form">
-		<div class="customer-background">
+		<div class="customer-background" style="margin-top: 15px;">
 			<div class="container-960">
 				<div id="example" class="k-content saleSummaryCustomer">
 			    	<span class="pull-right glyphicons no-js remove_2"
@@ -6076,7 +6093,7 @@
 </script>
 <script id="newCustomerList" type="text/x-kendo-template">
 	<div id="slide-form">
-		<div class="customer-background">
+		<div class="customer-background" style="margin-top: 15px;">
 			<div class="container-960">
 				<div id="example" class="k-content saleSummaryCustomer">
 			    	<span class="pull-right glyphicons no-js remove_2"
@@ -6171,7 +6188,7 @@
 </script>
 <script id="miniUsageList" type="text/x-kendo-template">
 	<div id="slide-form">
-		<div class="customer-background">
+		<div class="customer-background" style="margin-top: 15px;">
 			<div class="container-960">
 				<div id="example" class="k-content saleSummaryCustomer">
 			    	<span class="pull-right glyphicons no-js remove_2"
@@ -6273,7 +6290,7 @@
 </script>
 <script id="saleSummary" type="text/x-kendo-template">
 	<div id="slide-form">
-		<div class="customer-background">
+		<div class="customer-background" style="margin-top: 15px;">
 			<div class="container-960">
 				<div id="example" class="k-content saleSummaryCustomer">
 			    	<span class="pull-right glyphicons no-js remove_2"
@@ -6345,7 +6362,7 @@
 </script>
 <script id="connectServiceRevenue" type="text/x-kendo-template">
 	<div id="slide-form">
-		<div class="customer-background">
+		<div class="customer-background" style="margin-top: 15px;">
 			<div class="container-960">
 				<div id="example" class="k-content saleSummaryCustomer">
 			    	<span class="pull-right glyphicons no-js remove_2" data-bind="click: cancel"><i></i></span>
@@ -6417,7 +6434,7 @@
 </script>
 <script id="saleDetail" type="text/x-kendo-template">
 	<div id="slide-form">
-		<div class="customer-background">
+		<div class="customer-background" style="margin-top: 15px;">
 			<div class="container-960">
 				<div id="example" class="k-content saleSummaryCustomer">
 			    	<span class="pull-right glyphicons no-js remove_2" data-bind="click: cancel"><i></i></span>
@@ -6556,7 +6573,7 @@
 </script>
 <script id="otherRevenues" type="text/x-kendo-template">
 	<div id="slide-form">
-		<div class="customer-background">
+		<div class="customer-background" style="margin-top: 15px;">
 			<div class="container-960">
 				<div id="example" class="k-content saleSummaryCustomer">
 			    	<span class="pull-right glyphicons no-js remove_2" data-bind="click: cancel"><i></i></span>
@@ -6619,7 +6636,7 @@
 </script>
 <script id="accountReceivableList" type="text/x-kendo-template">
 	<div id="slide-form">
-		<div class="customer-background">
+		<div class="customer-background" style="margin-top: 15px;">
 			<div class="container-960">
 				<div id="example" class="k-content saleSummaryCustomer">
 			    	<span class="pull-right glyphicons no-js remove_2" data-bind="click: cancel"><i></i></span>
@@ -6641,7 +6658,7 @@
 </script>
 <script id="customerAgingSumList" type="text/x-kendo-template">
 	<div id="slide-form">
-		<div class="customer-background">
+		<div class="customer-background" style="margin-top: 15px;">
 			<div class="container-960">
 				<div id="example" class="k-content saleSummaryCustomer">
 			    	<span class="pull-right glyphicons no-js remove_2" data-bind="click: cancel"><i></i></span>
@@ -6664,7 +6681,7 @@
 </script>
 <script id="customerDepositReport" type="text/x-kendo-template">
 	<div id="slide-form">
-		<div class="customer-background">
+		<div class="customer-background" style="margin-top: 15px;">
 			<div class="container-960">
 				<div id="example" class="k-content saleSummaryCustomer">
 			    	<span class="pull-right glyphicons no-js remove_2" data-bind="click: cancel"><i></i></span>
@@ -6694,7 +6711,7 @@
 </script>
 <script id="customerAgingDetail" type="text/x-kendo-template">
 	<div id="slide-form">
-		<div class="customer-background">
+		<div class="customer-background" style="margin-top: 15px;">
 			<div class="container-960">
 				<div id="example" class="k-content saleSummaryCustomer">
 			    	<span class="pull-right glyphicons no-js remove_2" data-bind="click: cancel"><i></i></span>
@@ -6717,7 +6734,7 @@
 </script>
 <script id="cashReceiptSummary" type="text/x-kendo-template">
 	<div id="slide-form">
-		<div class="customer-background">
+		<div class="customer-background" style="margin-top: 15px;">
 			<div class="container-960">
 				<div id="example" class="k-content saleSummaryCustomer">
 			    	<span class="pull-right glyphicons no-js remove_2" data-bind="click: cancel"><i></i></span>
@@ -6781,7 +6798,7 @@
 </script>
 <script id="cashReceiptSourceSummary" type="text/x-kendo-template">
 	<div id="slide-form">
-		<div class="customer-background">
+		<div class="customer-background" style="margin-top: 15px;">
 			<div class="container-960">
 				<div id="example" class="k-content saleSummaryCustomer">
 			    	<span class="pull-right glyphicons no-js remove_2" data-bind="click: cancel"><i></i></span>
@@ -6844,7 +6861,7 @@
 </script>
 <script id="cashReceiptDetail" type="text/x-kendo-template">
 	<div id="slide-form">
-		<div class="customer-background">
+		<div class="customer-background" style="margin-top: 15px;">
 			<div class="container-960">
 				<div id="example" class="k-content saleSummaryCustomer">
 			    	<span class="pull-right glyphicons no-js remove_2" data-bind="click: cancel"><i></i></span>
@@ -6908,7 +6925,7 @@
 </script>
 <script id="cashReceiptSourceDetail" type="text/x-kendo-template">
 	<div id="slide-form">
-		<div class="customer-background">
+		<div class="customer-background" style="margin-top: 15px;">
 			<div class="container-960">
 				<div id="example" class="k-content saleSummaryCustomer">
 			    	<span class="pull-right glyphicons no-js remove_2" data-bind="click: cancel"><i></i></span>
@@ -7065,13 +7082,11 @@
   				<li><a href='<?php echo base_url(); ?>rrd/#/customer' target="_blank"><span >New Customer</span></a></li> 
   				<li ><a href='#/reorder'><span >Reorder Meter</span></a></li>  				
   				<li><span class="li-line"></span></li>
-  				<li><a href='#/reading'><span >Meter Reading</span></a></li> 
+  				<li><a href='#/reading'><span >1. Meter Reading</span></a></li> 
   				<!--li><a href='#/edit_reading'><span >Edit Reading</span></a></li-->
-  				<li><span class="li-line"></span></li>
-  				<li><a href='#/run_bill'><span >Run Bill</span></a></li> 
-  				<li><a href='#/print_bill'><span >Print Bill</span></a></li>
-  				<li><span class="li-line"></span></li>
-  				<li><a href='#/receipt'><span >Receipt</span></a></li>
+  				<li><a href='#/run_bill'><span >2. Run Bill</span></a></li> 
+  				<li><a href='#/print_bill'><span >3. Print Bill</span></a></li>
+  				<li><a href='#/receipt'><span >4. Receipt</span></a></li>
   				<li><span class="li-line"></span></li>
   				<li><a href='#/imports'><span >Import</span></a></li>
   			</ul>
@@ -9859,7 +9874,10 @@
 		uploadDS  			: dataStore(apiUrl + "readings/books"),
 		licenseDS 			: dataStore(apiUrl + "branches"),
 		blocDS 				: dataStore(apiUrl + "locations"),
+		licenseDSU 			: dataStore(apiUrl + "branches"),
+		blocDSU 			: dataStore(apiUrl + "locations"),
 		meterDS 			: dataStore(apiUrl + "meters/record"),
+		existReading 		: dataStore(apiUrl + "readings"),
 		itemDS 				: null,
 		obj 				: null,
 		monthOfSelect		: null,
@@ -9883,6 +9901,20 @@
 			var data = e.data;
 			var bloc = this.blocDS.at(e.sender.selectedIndex - 1);
 			banhji.reading.set("blocSelect", bloc);
+		},
+		onLicenseChangeU 	: function(e) {
+			var data = e.data;
+			var license = this.licenseDSU.at(e.sender.selectedIndex - 1);
+			banhji.reading.blocDSU.filter({field: "branch_id", value: license.id});
+		},
+		blocChangeU 		: function(e){
+			var data = e.data;
+			var bloc = this.blocDSU.at(e.sender.selectedIndex - 1);
+			this.meterDS.query({
+				filter: {},
+				page: 1,
+ 				get: 1
+			});
 		},
 		search 		 		: function(){	
 			this.uploadDS.data([]);
@@ -9944,34 +9976,41 @@
 			}
 		},
 		monthOfSR 			: null,
+		toDateSR 			: null,
 		NumberSR 			: null,
 		previousSR 			: 0,
 		currentSR 			: 0,
 		addSingleReading 	: function() {
 			if(banhji.reading.get('monthOfSR')){
-				banhji.reading.dataSource.insert(0, {
-					month_of: banhji.reading.get('monthOfSR'),
-					meter_number  : banhji.reading.get('NumberSR'),
-					previous: banhji.reading.get('previousSR'),
-					current : banhji.reading.get('currentSR'),
-					invoiced: 0,
-					condition: "new",
-					consumption: banhji.reading.get('currentSR') - banhji.reading.get('previousSR')
-				});
-				banhji.reading.save()
-				.done(
-					function(data) {
-						$("#ntf1").data("kendoNotification").success("Successfully!");
-						banhji.reading.set('monthOfSR', null);
-						banhji.reading.set('previousSR', null);
-						banhji.reading.set('currentSR', null);
-						$("#loadImport").css("display","none");
-					}
-				)
-				.fail(function(err){
-					$("#ntf1").data("kendoNotification").error("Error activated!"); 
-					$("#loadImport").css("display","none");	
-				});
+				if(banhji.reading.get('previousSR') > banhji.reading.get('currentSR')){
+					alert("Current Reading is smaller than Previous Reading");
+				}else{
+					banhji.reading.dataSource.insert(0, {
+						month_of: banhji.reading.get('monthOfSR'),
+						to_date : banhji.reading.get('toDateSR'),
+						meter_number  : banhji.reading.get('NumberSR'),
+						previous: banhji.reading.get('previousSR'),
+						current : banhji.reading.get('currentSR'),
+						invoiced: 0,
+						condition: "new",
+						consumption: banhji.reading.get('currentSR') - banhji.reading.get('previousSR')
+					});
+					banhji.reading.save()
+					.done(
+						function(data) {
+							$("#ntf1").data("kendoNotification").success("Successfully!");
+							banhji.reading.set('monthOfSR', null);
+							banhji.reading.set('toDateSR', null);
+							banhji.reading.set('previousSR', null);
+							banhji.reading.set('currentSR', null);
+							$("#loadImport").css("display","none");
+						}
+					)
+					.fail(function(err){
+						$("#ntf1").data("kendoNotification").error("Error"); 
+						$("#loadImport").css("display","none");	
+					});
+				}
 			}else{
 				alert("Please select month");
 			}
@@ -10039,6 +10078,28 @@
 			}
 			reader.readAsBinaryString(files[0].rawFile);   
 
+		},
+		monthOfUSelect 		: function(e){
+			var para = [], self = this;
+			bloc_id = this.get("blocSelectU");
+			var monthOfSearch = self.get("monthOfUpload");
+			var monthOf = new Date(monthOfSearch);
+			monthOf.setDate(1);
+			monthOf = kendo.toString(monthOf, "yyyy-MM-dd");
+			var monthL = new Date(monthOfSearch);
+			monthL.setDate(31);
+			monthL = kendo.toString(monthL, "yyyy-MM-dd");
+			para.push({field: "location_id", value: bloc_id.id});
+			para.push(
+				{field: "month_of >=", value: monthOf},
+				{field: "month_of <=", value: monthL}
+			);
+			this.existReading.query({
+				filter: para
+			})
+			.then(function(e){
+				console.log(self.existReading.data());
+			});
 		},
 		selectMonthTo 		: function(e){
 			if(this.get("monthOfUpload") && this.get("toDateUpload")){

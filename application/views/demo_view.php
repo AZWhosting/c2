@@ -18284,7 +18284,7 @@
 																disabled: obj.is_recurring,
 																events:{change:checkExistingNumber}" 
 													required data-required-msg="required" 
-													placeholder="eg. ABC00001" style="width: 83%; float: left; margin-right: 5px;"" />
+													placeholder="eg. ABC00001" style="width: 83%; float: left; margin-right: 5px;" />
 											<div style="padding-left: 0; width: 25px; float: left;">
 												<a class="glyphicons no-js qrcode" data-bind="click: generateNumber" title="Generate Number" style="float: left; margin: 2px 0 0 0 ;"><i></i></a>
 											</div>
@@ -36908,10 +36908,10 @@
 				<div class="row-fluid">
 					<table class="table table-borderless table-condensed">
 						<tr>
-							<td>
+							<td width="50%">
 								<h3><a href="#/inventory_position_summary">Inventory Position Summary</a></h3>
 							</td>
-							<td >
+							<td width="50%">
 								<h3><a href="#/inventory_sale_item_analysis">Inventory Sale by Item Analysis</a></h3>								
 							</td>						
 						</tr>
@@ -36969,72 +36969,46 @@
 				<div class="row-fluid">
 					<table class="table table-borderless table-condensed">
 						<tr>
-							<td>
-								<h3><a href="#/inventory_movement_summary">Inventory Movement Summary</a></h3>
-							</td>
-							<!-- <td >
-								<h3><a href="#/inventory_movement_detail">Inventory Movement Detail</a></h3>								
-							</td>	 -->
-							<td >
+							<td width="50%">
 								<h3><a href="#/purchase_summary_product_services">Purchase Summary by Product/ Services</a></h3>
+							</td>
+							<td width="50%">
+								<h3><a href="#/purchase_detail_product_services">Purchase Detail by Product/ Services</a></h3>
 							</td>					
 						</tr>
-						<tr>
+						<tr>							
+							<td >
+								<p>
+									Summarizes total expenses/ purchase for each product/ service within a period of time.
+								</p>
+							</td>
 							<td >
 								<p>
 									Shows the movement of each inventory by opening balance, sale, purchase and adjustment. 
 								</p>
 								
 							</td>
-							<!-- <td >
-								<p>
-									Lists of all detailed transactions related to and grouped by each inventory
-								</p>
-							</td> -->
-							<td >
-								<p>
-									Summarizes total expenses/ purchase for each product/ service within a period of time.
-								</p>
-							</td>
 						</tr>
 						<tr>
-							
-							<td >
-								<h3><a href="#/purchase_detail_product_services">Purchase Detail by Product/ Services</a></h3>
-							</td>
 							<td >
 								<h3><a href="#/sale_summary_by_product">Sale Summary by Product/ Services</a></h3>
 							</td>
-						</tr>
-						<tr>
-							
-							<td >
-								<p>
-									Lists individual sale transactions by date for each product/ service with a period of time.
-								</p>
-							</td>
-							<td >
-								<p>
-									Summarizes total sales for each product/ service within a period of time. In addition, it also includes gross profit margin, quantity, amount, cost, and average prices.
-								</p>
-							</td>
-						</tr>
-
-						<tr>
-							
 							<td >
 								<h3><a href="#/sale_detail_by_product">Sale Detail by Product/ Services</a></h3>
 							</td>
 						</tr>
 						<tr>
-							
 							<td >
+								<p>
+									Summarizes total sales for each product/ service within a period of time. In addition, it also includes gross profit margin, quantity, amount, cost, and average prices.
+								</p>
+							</td>
+							<td style="vertical-align: top;">
 								<p>
 									Lists individual sale transactions by date for each product/ service with a period of time.
 								</p>
-							</td>
+							</td>							
 						</tr>
-						
 					</table>
 				</div>
 			</div>
@@ -37131,14 +37105,17 @@
 								<!-- Tabs Heading -->
 								<div class="widget-head">
 									<ul>
-										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
-										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab" data-bind="click: printGrid"><i></i>Print/Export</a></li>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>	
+										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i>Filter</a></li>
+										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab" data-bind="click: printGrid"><i></i>Print/Export</a></li>
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
 								<div class="widget-body">
 									<div class="tab-content">
-								        <div class="tab-pane active" id="tab-1">
+
+								        <!-- Date -->
+								        <div class="tab-pane active" id="tab-1">									        	
 											As of:
 									        <input data-role="datepicker"
 													data-format="dd-MM-yyyy"
@@ -37146,16 +37123,41 @@
 													data-bind="value: as_of" />
 
 								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
-									    </div>
+							        	</div>
+
+								    	<!-- Filter -->
+								        <div class="tab-pane" id="tab-2">
+											<table class="table table-condensed">
+												<tr>
+									            	<td style="padding: 8px 0 0 0 !important; ">
+														<span data-bind="text: lang.lang.item"></span>
+														<select data-role="multiselect"
+															   data-value-primitive="true"
+															   data-header-template="item-header-tmpl"
+															   data-item-template="item-list-tmpl"
+															   data-value-field="id"
+															   data-text-field="name"
+															   data-bind="value: obj.itemIds, 
+															   			source: itemDS"
+															   data-placeholder="Select Item..."
+															   style="width: 100%" /></select>
+													</td>													
+													<td style="padding-top: 23px !important; float: left;">
+										  				<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+													</td>
+												</tr>
+											</table>
+							        	</div>
 								    </div>
 								</div>
 							</div>
 						</div>
 						<!-- // Tabs END -->						
 					</div>
+
 					<div id="invFormContent">
 						<div class="block-title">
-							<h3 data-bind="text: company.name"></h3>
+							<h3 data-bind="text: institute.name"></h3>
 							<h2>Inventory Position Summary</h2>
 							<p data-bind="text: displayDate"></p>
 						</div>
@@ -37189,7 +37191,7 @@
 							</thead>
 		            		<tbody data-role="listview"
 		            				data-auto-bind="false"
-					                data-template="inventoryPositionSummary-row-template"
+					                data-template="inventoryPositionSummary-template"
 					                data-bind="source: dataSource" >
 					        </tbody>
 		            	</table>
@@ -37199,15 +37201,15 @@
 		</div>
 	</div>
 </script>
-<script id="inventoryPositionSummary-row-template" type="text/x-kendo-tmpl">
+<script id="inventoryPositionSummary-template" type="text/x-kendo-tmpl">
 	<tr>
-	    <td>#=item#</td>
-	    <td align="right">#=onHand#</td>
-	    <td align="right">#=po#</td>
-	    <td align="right">#=so#</td>
-	    <td align="right">#=kendo.toString(cost, 'c2')#</td>
-	    <td align="right">#=kendo.toString(price, 'c2')#</td>
-	    <td align="right">#=kendo.toString(price, 'c2')#</td>
+	    <td>#=name#</td>
+	    <td align="right">#=kendo.toString(qoh, "n")#</td>
+	    <td align="right">#=kendo.toString(po, "n")#</td>
+	    <td align="right">#=kendo.toString(so, "n")#</td>
+	    <td align="right">#=kendo.toString(cost, "c2", banhji.locale)#</td>
+	    <td align="right">#=kendo.toString(price, "c2", banhji.locale)#</td>
+	    <td align="right">#=kendo.toString(amount, "c2", banhji.locale)#</td>
 	</tr>
 </script>
 <script id="inventoryPositionDetail" type="text/x-kendo-template">
@@ -38095,32 +38097,6 @@
 	</div>
 </script>
 
-<script id="inventory-position-summary-row-template" type="text/x-kendo-tmpl">
-    <tr data-uid="#: uid #">
-        <td>#=number#</td>
-        <td>#=name#</td>
-        <td>#=item_group.length>0?item_group[0].name:''#</td>
-        <td>#=category.length>0?category[0].name:''#</td>        
-        <td align="right">#=kendo.toString(on_hand, "n0")#</td>
-        <td align="right">#=kendo.toString(on_po, "n0")#</td>
-        <td align="right">#=kendo.toString(on_so, "n0")#</td>
-        <td align="right">#=kendo.toString(cost, "c", banhji.institute.locale)#</td>
-        <td align="right">#=kendo.toString(on_hand*cost, "c", banhji.institute.locale)#</td>
-        <td align="right">#=kendo.toString(price_avg, "c", banhji.institute.locale)#</td>
-   </tr>
-</script>
-<script id="inventory-position-detail-row-template" type="text/x-kendo-tmpl">
-    <tr data-uid="#: uid #">
-        <td>#=kendo.toString(invoice.length>0?invoice[0].issued_date:"", "dd-MM-yyyy")#</td>
-        <td><a href="\#/#=invoice.length>0?invoice[0].type:''#/#=id#"><i></i> #=invoice.length>0?invoice[0].number:''#</a></td>        
-        <td>#=item[0].number# #=item[0].name#</td>               
-        <td align="right">#=unit#</td>
-        <td align="right">#=kendo.toString(price, "c", banhji.institute.locale)#</td>
-        <td align="right">#=on_hand#</td>         
-        <td align="right">#=kendo.toString(cost, "c", banhji.institute.locale)#</td>
-        <td align="right">#=kendo.toString(on_hand * cost, "c", banhji.institute.locale)#</td>        
-   </tr>
-</script>
 <script id="inventorySaleByItem" type="text/x-kendo-template">
 	<div class="container-fluid">
 		<div class="row-fluid">    
@@ -48761,7 +48737,7 @@
 		recurringDS 		: dataStore(apiUrl + "transactions"),
 		recurringLineDS 	: dataStore(apiUrl + "account_lines"),
 		attachmentDS	 	: dataStore(apiUrl + "attachments"),
-		currencyDS  			: new kendo.data.DataSource({
+		currencyDS  		: new kendo.data.DataSource({
 		  	data: banhji.source.currencyList,
 		  	filter: { field:"status", value: 1 }
 		}),
@@ -49481,7 +49457,8 @@
 			filter:{
 			    logic: "or",
 			    filters: [
-			      	{ field: "account_type_id", value: 36 },
+			      	{ field: "account_type_id", value: 11 },//Cash Advance
+			      	{ field: "account_type_id", value: 36 },//Expense
 			      	{ field: "account_type_id", value: 37 },
 			      	{ field: "account_type_id", value: 38 },
 			      	{ field: "account_type_id", value: 40 },
@@ -77072,7 +77049,7 @@
         		end = this.get("edate"),
         		displayDate = "";
 
-        	//Customer
+        	//Items
             if(obj.itemIds.length>0){
             	var itemIds = [];
             	$.each(obj.itemIds, function(index, value){
@@ -82597,8 +82574,8 @@
 	banhji.itemDashBoard = kendo.observable({
 		lang 				: langVM,
 		summaryDS 			: dataStore(apiUrl + "dashboards/inventory_dashboard_summary"),
-		dataSource 			: dataStore(apiUrl + "itemReports/item_sale"),
-		positionSummary 	: dataStore(apiUrl + "itemReports/position_summary"),
+		dataSource 			: dataStore(apiUrl + "item_reports/item_sale"),
+		positionSummary 	: dataStore(apiUrl + "item_reports/position_summary"),
 		topCustomerDS 		: dataStore(apiUrl + "dashboards/top_supplier"),
 		topARDS 			: dataStore(apiUrl + "dashboards/top_ar"),
 		topProductDS 		: dataStore(apiUrl + "dashboards/top_sale_product"),
@@ -87681,28 +87658,174 @@
 		}
 	});
 	banhji.inventoryPositionSummary = kendo.observable({
-		lang 					: langVM,
-		dataSource 				: dataStore(apiUrl + "itemReports/position_summary"),
-		company 				: banhji.institute,
-		as_of 					: new Date(),
-		displayDate 			: "",
-		total 					: 0,
-		pageLoad 				: function(){
+		lang 				: langVM,
+		dataSource 			: dataStore(apiUrl + "item_reports/position_summary"),
+		itemDS  			: new kendo.data.DataSource({
+		  	data: banhji.source.itemList,
+		  	filter: {
+		  		logic: "and",
+			    filters: [
+			    	{ field: "is_catalog", operator: "neq", value: 1 },
+			        { field: "is_assembly", operator: "neq", value: 1 },
+			      	{
+			      		logic: "or",
+					    filters: [
+					      	{ field: "item_type_id", value: 1 },//Inventory For Sale
+				      		{ field: "item_type_id", value: 4 }//Service
+					    ]
+					}
+			    ]
+			},
+			sort: [
+				{ field:"item_type_id", dir:"asc" },
+				{ field:"number", dir:"asc" }
+			]
+		}),
+		obj 				: { itemIds: [] },
+		institute 			: banhji.institute,
+		as_of 				: new Date(),
+		displayDate 		: "",
+		total 				: 0,
+		exArray 			: [],
+		pageLoad 			: function(){
+			this.search();
 		},
-		search 					: function(){
-			var as_of = this.get("as_of");
-
-			if(as_of){
+		search				: function(){
+			var self = this, para = [], 
+				obj = this.get("obj"),
+				as_of = this.get("as_of"),
+        		displayDate = "";
+    	
+        	if(as_of){
+				as_of = new Date(as_of);
 				var displayDate = "As Of " + kendo.toString(as_of, "dd-MM-yyyy");
 				this.set("displayDate", displayDate);
-
-				this.dataSource.filter({ field:"issued_date", value:kendo.toString(new Date(as_of), "yyyy-MM-dd") });
+				as_of.setDate(as_of.getDate()+1);
+				
+				para.push({ field:"issued_date <", value:kendo.toString(as_of, "yyyy-MM-dd") });
 			}
+
+			//Items
+            if(obj.itemIds.length>0){
+            	var itemIds = [];
+            	$.each(obj.itemIds, function(index, value){
+            		itemIds.push(value);
+            	});          	
+	            para.push({ field:"item_id", operator:"where_in", value:itemIds });
+	        }
+
+            this.dataSource.query({
+            	filter:para
+            }).then(function(){
+            	var view = self.dataSource.view();
+
+            	var amount = 0;
+            	$.each(view, function(index, value){
+            		amount += value.amount;
+            	});
+            	
+            	self.set("total", kendo.toString(amount, "c2", banhji.locale));
+            });
+		},
+		printGrid			: function() {
+			var gridElement = $('#grid'),
+		        printableContent = '',
+		        win = window.open('', '', 'width=990, height=900'),
+		        doc = win.document.open();
+		    var htmlStart =
+		            '<!DOCTYPE html>' +
+		            '<html>' +
+		            '<head>' +
+		            '<meta charset="utf-8" />' +
+		            '<title></title>' +
+		            '<link href="http://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />'+
+		            '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/bootstrap.css">' +
+		            '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/responsive.css">' +
+		            '<link href="<?php echo base_url(); ?>assets/invoice/invoice.css" rel="stylesheet" />'+
+		            '<link href="https://fonts.googleapis.com/css?family=Content:400,700" rel="stylesheet" type="text/css">' +
+		            '<link href="https://fonts.googleapis.com/css?family=Moul" rel="stylesheet">' +
+		            '<style>' +
+		            'html { font: 11pt sans-serif; }' +
+		            '.k-grid { border-top-width: 0; }' +
+		            '.k-grid, .k-grid-content { height: auto !important; }' +
+		            '.k-grid-content { overflow: visible !important; }' +
+		            'div.k-grid table { table-layout: auto; width: 100% !important; }' +
+		            '.k-grid .k-grid-header th { border-top: 1px solid; }' +
+		            '.k-grid-toolbar, .k-grid-pager > .k-link { display: none; }' +
+		            '</style><style type="text/css" media="print"> @page { size: portrait; margin:1mm; }'+
+		            	'.inv1 .main-color {' +
+		            		
+		            		'-webkit-print-color-adjust:exact; ' +
+		            	'} ' +
+		            	'.table.table-borderless.table-condensed  tr th { background-color: #1E4E78!important;' +
+		            	'-webkit-print-color-adjust:exact; color:#fff!important;}' +
+		            	'.table.table-borderless.table-condensed  tr th * { color: #fff!important; -webkit-print-color-adjust:exact;}' +
+		            	'.inv1 .light-blue-td { ' +
+		            		'background-color: #c6d9f1!important;' +
+		            		'text-align: left;' +
+		            		'padding-left: 5px;' +
+		            		'-webkit-print-color-adjust:exact; ' +
+		            	'}' +
+		            	'.saleSummaryCustomer .table.table-borderless.table-condensed tr td { ' +
+    						'background-color: #F2F2F2!important; -webkit-print-color-adjust:exact;' +
+						'}'+
+						'.saleSummaryCustomer .table.table-borderless.table-condensed tr:nth-child(2n+1) td { ' +
+    						' background-color: #fff!important; -webkit-print-color-adjust:exact;' +
+						'}' +
+						'.journal_block1>.span2 *, .journal_block1>.span5 * {color: #fff!important;}' +
+		            	'.journal_block1>.span2:first-child { ' +
+    						'background-color: #bbbbbb!important; -webkit-print-color-adjust:exact;' +
+						'}' +
+						'.journal_block1>.span5:last-child {' +
+							'background-color: #496cad!important; color: #fff!important; -webkit-print-color-adjust:exact; ' +
+						'}' +
+						'.journal_block1>.span5 {' +
+							'background-color: #5cc7dd!important; color: #fff!important; -webkit-print-color-adjust:exact;' +
+						'}' +
+		            	'.saleSummaryCustomer .table.table-borderless.table-condensed tfoot .bg-total td {' +
+		            		'background-color: #1C2633!important;' +
+		            		'color: #fff!important; ' + 
+		            		'-webkit-print-color-adjust:exact;' +
+		            	'}' +
+		            	'</style>' +
+		            '</head>' +
+		            '<body><div class="saleSummaryCustomer" style="padding: 0 10px;">';
+		    var htmlEnd =
+		            '</div></body>' +
+		            '</html>';
+		    
+		    printableContent = $('#invFormContent').html();
+		    doc.write(htmlStart + printableContent + htmlEnd);
+		    doc.close();
+		    setTimeout(function(){
+		    	win.print();
+		    	win.close();
+		    },2000);
+		},
+		ExportExcel 		: function(){
+	        var workbook = new kendo.ooxml.Workbook({
+	          sheets: [
+	            {
+	              columns: [
+	                { autoWidth: true },
+	                { autoWidth: true },
+	                { autoWidth: true },
+	                { autoWidth: true },
+	                { autoWidth: true },
+	                { autoWidth: true }
+	              ],
+	              title: "General Ledger",
+	              rows: this.exArray
+	            }
+	          ]
+	        });
+	        //save the file as Excel file with extension xlsx
+	        kendo.saveAs({dataURI: workbook.toDataURL(), fileName: "GeneralLedger.xlsx"});
 		}
 	});
 	banhji.inventoryPositionDetail = kendo.observable({
 		lang 					: langVM,
-		dataSource 				: dataStore(apiUrl + "itemReports/position_detail"),
+		dataSource 				: dataStore(apiUrl + "item_reports/position_detail"),
 		itemDS  				: new kendo.data.DataSource({
 		  	data: banhji.source.itemList,
 			filter:[
@@ -87813,7 +87936,7 @@
 		}
 	});
 	banhji.inventorySaleItemAnalysis = kendo.observable({
-		dataSource 		: dataStore(apiUrl + "itemReports/item_sale"),
+		dataSource 		: dataStore(apiUrl + "item_reports/item_sale"),
 		filterDB	 		: [
 			{id: 'customer', name: 'Customer'},
 			{id: 'segment', name: 'Segment'}
@@ -87837,7 +87960,7 @@
 		}
 	});
 	banhji.inventoryTurnoverList = kendo.observable({
-		dataSource 		: dataStore(apiUrl + "itemReports/item_turnover"),
+		dataSource 		: dataStore(apiUrl + "item_reports/item_turnover"),
 		filterDB	 		: [
 			{id: 'customer', name: 'Customer'},
 			{id: 'segment', name: 'Segment'}
@@ -87861,7 +87984,7 @@
 		}
 	});
 	banhji.inventoryMovementSummary = kendo.observable({
-		dataSource 		: dataStore(apiUrl + "itemReports/movement_summary"),
+		dataSource 		: dataStore(apiUrl + "item_reports/movement_summary"),
 		filterDB	 		: [
 			{id: 'customer', name: 'Customer'},
 			{id: 'segment', name: 'Segment'}
@@ -87885,7 +88008,7 @@
 		}
 	});
 	banhji.inventoryMovementDetail = kendo.observable({
-		dataSource 		: dataStore(apiUrl + "itemReports/movement_detail"),
+		dataSource 		: dataStore(apiUrl + "item_reports/movement_detail"),
 		filterDB	 		: [
 			{id: 'customer', name: 'Customer'},
 			{id: 'segment', name: 'Segment'}
@@ -96148,10 +96271,15 @@
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
 		}else{
+			banhji.view.layout.showIn("#content", banhji.view.inventoryPositionSummary);
+
 			var vm = banhji.inventoryPositionSummary;
 			banhji.userManagement.addMultiTask("Inventory Position Summary","inventory_position_summary",null);
 
-			banhji.view.layout.showIn("#content", banhji.view.inventoryPositionSummary);
+			if(banhji.pageLoaded["inventory_position_summary"]==undefined){
+				banhji.pageLoaded["inventory_position_summary"] = true;
+			}
+			vm.pageLoad();
 		}
 	});
 	banhji.router.route("/inventory_position_detail", function(){

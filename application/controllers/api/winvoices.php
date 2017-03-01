@@ -187,13 +187,13 @@ class Winvoices extends REST_Controller {
 
 		$number = "";
 		foreach ($models as $value) {
-			if(isset($value->is_recurring)){
-				if($value->is_recurring==0){
-					$number = $this->_generate_number($value->type, $value->issued_date);
-				}
-			}else{
-				$number = $this->_generate_number($value->type, $value->issued_date);
-			}
+			// if(isset($value->is_recurring)){
+			// 	if($value->is_recurring==0){
+			// 		$number = $this->_generate_number($value->type, $value->issued_date);
+			// 	}
+			// }else{
+			// 	$number = $this->_generate_number($value->type, $value->issued_date);
+			// }
 
 			$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			// $obj->company_id 		= $value->company_id;
