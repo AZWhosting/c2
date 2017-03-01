@@ -170,7 +170,7 @@ class Readings extends REST_Controller {
 				$obj->invoiced = 0;
 				$obj->save();
 
-				$line = $obj->Winvoice_line->select('transaction_id')->get();
+				$line = $obj->winvoice_line->select('transaction_id')->get();
 
 				$transaction = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 

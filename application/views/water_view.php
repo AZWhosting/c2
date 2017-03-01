@@ -121,10 +121,10 @@
 							<span style="font-size: 24px; ">DEPOSIT</span>
 							<br>
 							<span style="color: #9EA7B8;" data-bind="text: totalUser"></span>
-							<span style="color: #9EA7B8;">Customers</span>
+							<span style="color: #9EA7B8;">Meters</span>
 						</div>
-						<div class="span9" style=" text-align: center; font-size: 35px; font-weight: 600; padding-left: 0;">
-							<span data-bind="text: totalDeposit"></span>
+						<div class="span9" style=" text-align: center; font-size: 35px; font-weight: 600; padding: 0;">
+							<span style="float: right;" data-bind="text: totalDeposit"></span>
 						</div>
 						<!-- <div class="span3" style="text-align: center; margin-top: 7px; padding-right: 0; color: #fff; font-size: 35px;">
 							<span data-bind="text: totalUser"></span>
@@ -137,8 +137,8 @@
 							<span style="font-size: 24px; color: #fff;">TOTAL SALE</span>
 							<span style="font-size: 24px;" data-bind="text: totalUsage"></span><span style="font-size: 24px;">m<sup >3</sup></span>
 						</div>
-						<div class="span8" style="color: #fff; text-align: center; font-size: 35px; font-weight: 600; padding-left: 0;">
-							<span data-bind="text: totalSale"></span>
+						<div class="span8" style="color: #fff; text-align: center; font-size: 35px; font-weight: 600; padding: 0;">
+							<span style="float: right;" data-bind="text: totalSale"></span>
 						</div>
 						<!-- <div class="span4" style="text-align: center; margin-top: 7px; padding-right: 0; color: #fff; font-size: 35px;">
 							<span data-bind="text: totalUsage"></span><span style="font-size: 25px;">m<sup >3</sup></span>
@@ -193,12 +193,12 @@
 											<td>										
 												<span style="font-size: 25px;" data-bind="text: totalCust"></span>
 												<br>
-												<span>Total</span>
+												<span>Meter</span>
 											</td>
 											<td>
 												<span style="font-size: 25px;" data-bind="text: voidCust"></span>
 												<br>
-												<span>Void</span>
+												<span>Customers</span>
 											</td>
 										</tr>
 									</tbody>
@@ -217,8 +217,8 @@
 					<th><span>No.</span></th>
 					<th><span>License</span></th>
 					<th><span>No.of Bloc</span></th>
-					<th><span>Active Customers</span></th>
-					<th><span>Inactive Customers</span></th>
+					<th><span>Active Meter</span></th>
+					<th><span>Inactive Meter</span></th>
 					<th><span>Deposit</span></th>
 					<th><span>(m<sup>3</sup>) Sold</span></th>
 					<th><span>Sale Amount</span></th>
@@ -3197,7 +3197,7 @@
 									                	data-role="datepicker"
 									                	data-format="MM-yyyy"
 									                	data-start="year" 
-										  				data-depth="year" ]
+										  				data-depth="year"
 									                	placeholder="Moth of ..." 
 											           	data-bind="value: monthOfUpload,
 											           			events: {change: selectMonthTo}" />
@@ -3208,11 +3208,9 @@
 										            <input type="text" 
 									                	style="width: 100%;" 
 									                	data-role="datepicker"
-										  				min="<?php echo date('Y-m-d'); ?>" 
 									                	placeholder="To Date ..." 
 											           	data-bind="value: toDateUpload,
-											           			events: {change: selectMonthTo},
-											           			min: miniMonthofS" />
+											           			events: {change: selectMonthTo}" />
 												</div>
 											</div>
 										</div>
@@ -3646,6 +3644,7 @@
 				                	data-format="MM-yyyy"
 				                	data-start="year" 
 					  				data-depth="year" 
+					  				data-parse-formats="yyyy-MM-dd HH:mm:ss"
 				                	placeholder="Moth of ..." 
 						           	data-bind="value: FmonthSelect,
 						           			events: {change: makeBilled}" />
@@ -3659,6 +3658,7 @@
 				                	data-role="datepicker"
 				                	data-format="dd-MM-yyyy"
 				                	placeholder="Bill Date ..." 
+				                	data-parse-formats="yyyy-MM-dd HH:mm:ss"
 						           	data-bind="value: BillingDate,
 						           	events: {change: makeBilled}" />
 	                  		</div>
@@ -3671,6 +3671,7 @@
 				                	data-role="datepicker"
 				                	data-format="dd-MM-yyyy"
 				                	placeholder="Due Date ..." 
+				                	data-parse-formats="yyyy-MM-dd HH:mm:ss"
 						           	data-bind="value: DueDate,
 						           	events: {change: makeBilled}" />
 	                  		</div>
@@ -3682,6 +3683,7 @@
 				                	style="width: 100%;" 
 				                	data-role="datepicker"
 				                	data-format="dd-MM-yyyy"
+				                	data-parse-formats="yyyy-MM-dd HH:mm:ss"
 				                	placeholder="Issue Date ..." 
 						           	data-bind="value: IssueDate,
 						           	events: {change: makeBilled}" />
@@ -5523,7 +5525,7 @@
 	
 		<div class="rowfluid" style="margin-bottom: 20px;">
 			<div class="span12">
-				<p>Key Performance Indicators (KPIs)</p> 
+				<h2>Key Performance Indicators (KPIs)</h2> 
 				<input id="ddlCashAccount" name="ddlCashAccount" 
 					data-role="dropdownlist"
 	  				data-value-primitive="true"
@@ -5538,91 +5540,92 @@
 
   		<div style="float: left; margin-bottom: 15px; clear: both;"></div>
 
-  		<div class="row-fluid">
-  			<div class="span2" >
-		
-				<!-- Stats Widget -->
-				<span class="widget-stats widget-stats-gray widget-stats-2" style="background: #203864;">
-					<span class="count" style="font-size: 25px; "><a style="color: #fff;"><span data-bind="text: tCustomer"></span></a></span>
-					<span class="txt" style="font-size: small; color: #fff;"><span >Total No. of Customer</span></span>
-				</span>
-				<!-- // Stats Widget END -->
-				
+  		<div class="row-fluid">	
+  			<div class="cover-block span4" style="margin-bottom: 0; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;margin-left: 15px;width: 32.333333%;padding-right: 0;padding-bottom: 15px;padding-top: 15px;">
+	  			<div class="span6" >		
+					<!-- Stats Widget -->
+					<span class="widget-stats widget-stats-gray widget-stats-2" style="background: #203864;">
+						<span class="count" style="font-size: 25px;"><a style="color: #fff;" data-format="p" ><span data-bind="text: activeCustomer"></span></a></span>
+						<span class="txt" style="font-size: small; color: #fff;"><span >Active Customer Ratio</span></span>					
+					</span>
+					<!-- // Stats Widget END -->					
+				</div>
+
+				<div class="span6" style="padding-right: 15px; padding-left: 0; ">		
+					<!-- Stats Widget -->
+					<span class="widget-stats widget-stats-2" style="background: #0077c5;">
+						<span class="count" style="font-size: 25px;"><a style="color: #fff;" data-format="p"><span data-bind="text: nCustomer"></span></a></span>
+						<span class="txt" style="font-size: small; color: #fff;"><span >Total Customer Ratio</span></span>
+					</span>
+					<!-- // Stats Widget END -->					
+				</div>
 			</div>
-			<div class="span2" style="padding: 0; ">
-		
-				<!-- Stats Widget -->
-				<span class="widget-stats widget-stats-2" style="background: #0077c5;">
-					<span class="count" style="font-size: 25px;"><a style="color: #fff;" data-format="p"><span data-bind="text: nCustomer"></span></a></span>
-					<span class="txt" style="font-size: small; color: #fff;"><span >Total Customer Ratio</span></span>
-				</span>
-				<!-- // Stats Widget END -->
-				
+
+			<div class="cover-block span3" style="margin-bottom: 0;box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;margin-left: 15px;width: 30%; padding-right: 0;padding-bottom: 15px;padding-top: 15px;">
+				<div class="span12" style="padding-left: 10px !important;">		
+					<!-- Stats Widget -->
+					<span class="widget-stats widget-stats-gray widget-stats-2" style="background: #21abf6; ">
+						<span class="count" style="font-size: 25px; "><a style="color: #fff;"><span data-bind="text: tCustomer"></span></a></span>
+						<span class="txt" style="font-size: small; color: #fff;"><span >Total No. of Customer</span></span>
+					</span>
+					<!-- // Stats Widget END -->					
+				</div>
 			</div>
-			<div class="span3" style="padding-right: 0; ">
-		
-				<!-- Stats Widget -->
-				<span class="widget-stats widget-stats-gray widget-stats-2" style="background: #21abf6;">
-					<span class="count" style="font-size: 25px;"><a style="color: #fff;" data-format="p" ><span data-bind="text: activeCustomer"></span></a></span>
-					<span class="txt" style="font-size: small; color: #fff;"><span >Active Customer Ratio</span></span>
-				</span>
-				<!-- // Stats Widget END -->
-				
-			</div>
-			<div class="span5" >
-			
-				<!-- Stats Widget -->
-				<span class="widget-stats widget-stats-2" style="background: #D3D3D3;">
-					<span class="count" style="font-size: 25px;"><a style="color: #333;" data-format="c0" ><span data-bind="text: waterRevenue"></span></a></span>
-					<span class="txt" style="font-size: small; color: #333;"><span >Total Water Revenue</span></span>
-				</span>
-				<!-- // Stats Widget END -->
-				
+
+			<div class="cover-block span5" style="margin-bottom: 0;box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;margin-left: 15px;width: 32.5%;padding-right: 0;padding-bottom: 15px;padding-top: 15px;">
+				<div class="span12">			
+					<!-- Stats Widget -->
+					<span class="widget-stats widget-stats-2" style="background: #fff; ">
+						<span class="count" style="font-size: 25px; "><a style="color: #203864;" data-format="c0" ><span data-bind="text: waterRevenue"></span></a></span>
+						<span class="txt" style="font-size: small; color: #203864;"><span >Total Water Revenue</span></span>
+					</span>
+					<!-- // Stats Widget END -->					
+				</div>
 			</div>
   		</div>
 
   		<div style="float: left; margin-bottom: 15px; clear: both;"></div>
 
-  		<div class="row-fluid">		
-			<div class="span2" >
-			
-				<!-- Stats Widget -->			
-				<span class="widget-stats widget-stats-default widget-stats-2"  style="background: #203864;">
-					<span class="count" style="font-size: 25px; "><a style="color: #fff;"><span data-bind="text: waterSold"></span></a></span>
-					<span class="txt" style="font-size: small;"><span >Water Sold (M3)</span></span>
-				</span>
-				<!-- // Stats Widget END -->
-				
+  		<div class="row-fluid">
+  			<div class="cover-block span4" style="margin-bottom: 0;box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;margin-left: 15px;width: 32.333333%;padding-right: 0;padding-bottom: 15px;padding-top: 15px;">	
+				<div class="span6" >			
+					<!-- Stats Widget -->			
+					<span class="widget-stats widget-stats-default widget-stats-2"  style="background: #203864;">
+						<span class="count" style="font-size: 25px;"><a style="color: #fff;" data-format="c0" ><span data-bind="text: avgRevenue"></span></a></span>
+						<span class="txt" style="font-size: small; color: #fff; "><span >Avarage Reveune Per Connection</span></span>>
+					</span>
+					<!-- // Stats Widget END -->				
+				</div>
+				<div class="span6" style="padding-right: 15px; padding-left: 0; ">			
+					<!-- Stats Widget -->
+					<span class="widget-stats widget-stats-2" style="background: #0077c5;">
+						<span class="count" style="font-size: 25px;"><a data-format="n2" style="color: #fff;"><span data-bind="text: avgUsage"></span></a></span>
+						<span class="txt" style="font-size: small; color: #fff;"><span >Average Water Usage Per Connection</span></span>
+					</span>
+					<!-- // Stats Widget END -->				
+				</div>
 			</div>
-			<div class="span2" style="padding: 0; ">
-			
-				<!-- Stats Widget -->
-				<span class="widget-stats widget-stats-2" style="background: #0077c5;">
-					<span class="count" style="font-size: 25px;"><a data-format="n2" style="color: #fff;"><span data-bind="text: avgUsage"></span></a></span>
-					<span class="txt" style="font-size: small; color: #fff;"><span >Average Water Usage Per Connection</span></span>
-				</span>
-				<!-- // Stats Widget END -->
-				
+
+			<div class="cover-block span3" style="margin-bottom: 0;box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;margin-left: 15px;width: 30%; padding-right: 0;padding-bottom: 15px;padding-top: 15px;">
+				<div class="span12" style="padding-left: 10px !important;">			
+					<!-- Stats Widget -->
+					<span class="widget-stats widget-stats-default widget-stats-2" style="background: #21abf6;">				
+						<span class="count" style="font-size: 25px; "><a style="color: #fff;"><span data-bind="text: waterSold"></span></a></span>
+						<span class="txt" style="font-size: small;"><span >Water Sold (M3)</span></span>					
+					</span>
+					<!-- // Stats Widget END -->				
+				</div>
 			</div>
-			<div class="span3" style="padding-right: 0; ">
-			
-				<!-- Stats Widget -->
-				<span class="widget-stats widget-stats-default widget-stats-2" style="background: #21abf6;">
-					<span class="count" style="font-size: 25px;"><a style="color: #fff;" data-format="c0" ><span data-bind="text: avgRevenue"></span></a></span>
-					<span class="txt" style="font-size: small; color: #fff; "><span >Avarage Reveune Per Connection</span></span>
-				</span>
-				<!-- // Stats Widget END -->
-				
-			</div>
-			<div class="span5">
-			
-				<!-- Stats Widget -->
-				<span class="widget-stats widget-stats-2" style="background: #D3D3D3;">
-					<span class="count" style="font-size: 25px;"><a style="color: #333;" data-format="c0" ><span data-bind="text: totalDeposit"></span></a></span>
-					<span class="txt" style="font-size: small; color: #333;"><span >Total Deposit</span></span>
-				</span>
-				<!-- // Stats Widget END -->
-				
+
+			<div class="cover-block span5" style="margin-bottom: 0;box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;margin-left: 15px;width: 32.5%;padding-right: 0;padding-bottom: 15px;padding-top: 15px;">
+				<div class="span12">			
+					<!-- Stats Widget -->
+					<span class="widget-stats widget-stats-2" style="background: #fff; ">
+						<span class="count" style="font-size: 25px;"><a style="color: #203864;" data-format="c0" ><span data-bind="text: totalDeposit"></span></a></span>
+						<span class="txt" style="font-size: small; color: #203864;"><span >Total Deposit</span></span>
+					</span>
+					<!-- // Stats Widget END -->					
+				</div>
 			</div>							
 		</div>
 
@@ -5630,59 +5633,62 @@
 
   		<div class="row-fluid">
   			<div class="span6">
-				<div class="row-fluid sale-report">
-					<h2>Customer Management Report</h2>
-					<p>
-						These reports are useful for customer information management, meter connections, and usage managements 
-					</p>
-					<div class="row-fluid">
-						<table class="table table-borderless table-condensed">
-							<tr>
-								<td width="50%">
-									<h3><a href="#/customer_list">Customer List</a></h3>
-								</td>
-								<td width="50%">
-									<h3><a href="#/new_customer_list">New Customer List</a></h3>
-								</td>						
-							</tr>
-							<tr>
-								<td width="50%">
-									<p></p>
-								</td>
-								<td width="50%">
-									<p></p>
-								</td>
-							</tr>
-							<tr>
-								<td width="50%">
-									<h3><a href="#/disconnect_list">Disconnected List</a></h3>
-								</td>
-								<td width="50%">
-									<h3><a href="#/mini_usage_list">Minimum Water Usage List</a></h3>
-								</td>
-							</tr>
-							<tr>
-								<td width="50%">
-									<p></p>
-								</td>
-								<td width="50%">
-									<p></p>
-								</td>
-							</tr>
-							<tr>
-								<td width="50%">
-									<p></p>
-								</td>
-								<td width="50%">
-									<p></p>
-								</td>
-							</tr>
-						</table>
+  				<div class="cover-block" style="width: 100%; min-height: 175px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1; padding-left: 15px;">
+					<div class="row-fluid sale-report">
+						<h2>Customer Management Report</h2>
+						<p>
+							These reports are useful for customer information management, meter connections, and usage managements 
+						</p>
+						<div class="row-fluid">
+							<table class="table table-borderless table-condensed" style="margin-bottom: 0;">
+								<tr>
+									<td width="50%">
+										<h3><a href="#/customer_list">Customer List</a></h3>
+									</td>
+									<td width="50%">
+										<h3><a href="#/new_customer_list">New Customer List</a></h3>
+									</td>						
+								</tr>
+								<tr>
+									<td width="50%">
+										<p></p>
+									</td>
+									<td width="50%">
+										<p></p>
+									</td>
+								</tr>
+								<tr>
+									<td width="50%">
+										<h3><a href="#/disconnect_list">Disconnected List</a></h3>
+									</td>
+									<td width="50%">
+										<h3><a href="#/mini_usage_list">Minimum Water Usage List</a></h3>
+									</td>
+								</tr>
+								<tr>
+									<td width="50%">
+										<p></p>
+									</td>
+									<td width="50%">
+										<p></p>
+									</td>
+								</tr>
+								<tr>
+									<td width="50%">
+										<p></p>
+									</td>
+									<td width="50%">
+										<p></p>
+									</td>
+								</tr>
+							</table>
+						</div>
 					</div>
 				</div>
 			</div>
 			<div class="span6">
-				<div class="row-fluid recevable-report">
+				<div class="cover-block" style="width: 100%; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1; padding-left: 15px;">
+					<div class="row-fluid recevable-report">
 					<h2>Receiveable and Deposits</h2>
 					<p>
 						These would be the most common reports that you will be using. It includes receivables balance and its aging in both summary and detail list and the security deposit made by the customers for their water connection.
@@ -5726,12 +5732,14 @@
 							</tr>
 						</table>
 					</div>
+					</div>
 				</div>
 			</div>
 		</div>
 		<div class="row-fluid">
 			<div class="span6">
-				<div class="row-fluid sale-report">
+				<div class="cover-block" style="width: 100%; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1; padding-left: 15px;">
+					<div class="row-fluid sale-report">
 					<h2>Sale Report</h2>
 					<p>
 						Summary and detail sale report broken down by Licenses, bloc, and types of reveneues.	
@@ -5773,10 +5781,12 @@
 							</tr>
 						</table>					
 					</div>
+					</div>
 				</div>
 			</div>
 			<div class="span6">
-				<div class="row-fluid recevable-report">
+				<div class="cover-block" style="width: 100%; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1; padding-left: 15px;">
+					<div class="row-fluid recevable-report">
 					<h2>Cash Receipt Report</h2>
 					<p>
 						Summary and detail cash receipt reports grouped by sources/ methods of receipts 
@@ -5817,6 +5827,7 @@
 								</td>
 							</tr>
 						</table>					
+					</div>
 					</div>
 				</div>
 			</div>
@@ -11870,14 +11881,12 @@
 			}
 
 			$.each(this.items, function(i, v){
-				amount += parseFloat(v.amount);
-				if(typeof v.received == 'number'){
-					receivedAmount += parseFloat(v.received);
+				amount += kendo.parseFloat(v.amount);
+				if(kendo.parseFloat(v.received) != 'null'){
+					receivedAmount += kendo.parseFloat(v.received);
 				}else{
-					receivedAmount += parseFloat(0.0);
+					receivedAmount += kendo.parseFloat(0.0);
 				}
-				
-				
 			});
 			
 			this.set('amountToBeRecieved', receivedAmount);
@@ -12308,6 +12317,10 @@
 			var date = new Date();
 			var rate = banhji.source.getRate(banhji.locale, date);
 			var locale = banhji.locale;
+			var MonthOf = kendo.toString(new Date(this.get("FmonthSelect")), "s");
+			var IssueDate = kendo.toString(new Date(this.get("IssueDate")), "s");
+			var BillingDate = kendo.toString(new Date(this.get("BillingDate")), "s");
+			var DueDate = kendo.toString(new Date(this.get("DueDate")), "s");
 			this.invoiceCollection.add({
 				contact 			: Contact,
 				biller_id 			: banhji.userData.id,
@@ -12316,10 +12329,10 @@
 				rate 				: rate,
 				locale 				: locale,
 				location_id 		: MeterLocation,
-				month_of 			: this.get("FmonthSelect"),
-				issued_date 		: this.get("IssueDate"),
-				bill_date 			: this.get("BillingDate"),
-				due_date 			: this.get("DueDate"),
+				month_of 			: MonthOf,
+				issued_date 		: IssueDate,
+				bill_date 			: BillingDate,
+				due_date 			: DueDate,
 				invoice_lines    	: invoiceItems
 			});
 	    },
@@ -13852,9 +13865,9 @@
 				var amt = (kendo.parseFloat(value.sub_total) + kendo.parseFloat(value.fine))- kendo.parseFloat(value.discount);
 				if(kendo.parseFloat(value.amount)>amt){
 					value.set("amount", amt);
-				}else{
-					value.set("amount", amt);
-				}
+				}//else{
+				// 	value.set("amount", amt);
+				// }
 
 				sub_total += kendo.parseFloat(value.sub_total) / value.rate;					
 				discount += kendo.parseFloat(value.discount) / value.rate;
@@ -13945,11 +13958,24 @@
 			this.objSync()
 			.then(function(data){
 				var ids = [], count = 0;
+				var that = this;
+				that.amount = 0.00;
 				//Save journals
+				// if(e.type !== "read") {
+					// var amount = 0;
+					// for(var i = 0; i < e.response.results.length; i++) {
+					// 	if(e.response.results[i].dr > 0) {
+					// 		amount += kendo.parseFloat(e.response.results[i].dr);
+					// 	}
+					// }
+					
+				// }
 				$.each(data, function(index, value){
 					var contact = banhji.source.customerDS.get(value.contact_id);
 					ids.push(value.reference_id);
 					count++;
+					that.amount += kendo.parseFloat(value.amount);
+					console.log(that.amount);
 					//Cash on Dr
 					self.journalLineDS.add({					
 						transaction_id 		: value.id,
@@ -14010,18 +14036,12 @@
 						locale				: value.locale
 					});	
 				});
+				var tem = kendo.parseFloat(self.get('paymentReceiptToday')) + that.amount;
+				self.set('paymentReceiptToday',  kendo.toString(tem, 'n2'));
 				self.set('numCustomer', self.get('numCustomer')+count);
 				self.journalLineDS.sync();
 				self.journalLineDS.bind('requestEnd', function(e){
-					if(e.type !== "read") {
-						var amount = 0;
-						for(var i = 0; i < e.response.results.length; i++) {
-							if(e.response.results[i].dr > 0) {
-								amount += kendo.parseFloat(e.response.results[i].dr);
-							}
-						}
-						self.set('paymentReceiptToday', self.get('paymentReceiptToday') + amount);
-					}
+					
 				});
 				self.updateTxnStatus(ids);
 

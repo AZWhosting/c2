@@ -386,6 +386,7 @@ class Winvoices extends REST_Controller {
 			}
 		}
 		$table->where('status', 0);
+		$table->where('deleted', 0);
 		$table->where('type','Water_Invoice');
 		$table->get();
 

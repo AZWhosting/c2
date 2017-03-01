@@ -65,15 +65,15 @@ class Installments extends REST_Controller {
 				//Results
 
 				$data["results"][] = array(
-					"id" 						=> $value->id,
+					"id" 				=> $value->id,
 					"biller_id"			=> $value->biller_id,
 					"contact_id" 		=> $value->contact_id,
 					"percentage"        => $value->percentage,
 					"start_month"		=> $value->start_month,
-					"amount"				=> $value->amount,
-					"period"				=> $value->period,
-					"payment_number"=> $value->payment_number,
-					"paid_in_full"	=> $value->paid_in_full,
+					"amount"			=> $value->amount,
+					"period"			=> $value->period,
+					"payment_number" 	=> $value->payment_number,
+					"paid_in_full"		=> $value->paid_in_full,
 					"schedule" 			=> $schedule->result()
 				);
 			}

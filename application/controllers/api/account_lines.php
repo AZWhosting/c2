@@ -62,7 +62,7 @@ class Account_lines extends REST_Controller {
 			   		"transaction_id"	=> $value->transaction_id,
 			   		"payment_method_id"	=> $value->payment_method_id,
 			   		"tax_item_id"		=> $value->tax_item_id,			   		
-					"account_id" 		=> $value->account_id,
+					"account_id" 		=> intval($value->account_id),
 					"contact_id" 		=> $value->contact_id,							   	
 				   	"description" 		=> $value->description,
 				   	"reference_no" 		=> $value->reference_no,

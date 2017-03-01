@@ -67,7 +67,7 @@ class Journal_lines extends REST_Controller {
 					"contact_id" 		=> $value->contact_id,								   	
 				   	"description" 		=> $value->description,
 				   	"reference_no" 		=> $value->reference_no,
-				   	"segments" 			=> explode(",",$value->segments),
+				   	"segments" 			=> explode(",",intval($value->segments)),
 				   	"dr" 				=> floatval($value->dr),			   				   	
 				   	"cr" 				=> floatval($value->cr),
 				   	"rate"				=> floatval($value->rate),

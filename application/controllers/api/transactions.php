@@ -111,7 +111,7 @@ class Transactions extends REST_Controller {
 					"recurring_id" 				=> $value->recurring_id,
 					"return_id" 				=> $value->return_id,
 					"job_id" 					=> $value->job_id,
-					"account_id" 				=> $value->account_id,
+					"account_id" 				=> intval($value->account_id),
 					"item_id" 					=> $value->item_id,
 					"tax_item_id" 				=> $value->tax_item_id,
 					"user_id" 					=> $value->user_id,
