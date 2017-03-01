@@ -67,12 +67,12 @@ class Item_reports extends REST_Controller {
 		}
 
 		$obj->include_related("item", array("abbr", "number", "name"));
-		$obj->include_related("transaction", array("rate"));
+		$obj->include_related("transaction", array("type","rate"));
 		$obj->where_in_related("transaction", "type", array("Purchase_Order", "Sale_Order", "Cash_Purchase", "Credit_Purchase", "Purchase_Return", "Payment_Refund", "Commercial_Invoice", "Vat_Invoice", "Invoice", "Commercial_Cash_Sale", "Vat_Cash_Sale", "Cash_Sale", "Sale_Return", "Cash_Refund", "Item_Adjustment", "Internal_Usage"));
 		$obj->where_related("transaction", "is_recurring <>", 1);
 		$obj->where_related("transaction", "deleted <>", 1);
-		$obj->where_related("item", "item_type_id", 1);		
-		$obj->order_by_related("transaction", "issued_date", "asc");
+		$obj->where_related("item", "item_type_id", 1);
+		$obj->order_by_related("item", "number", "asc");
 
 		//Results
 		$obj->get_iterated();
@@ -151,6 +151,7 @@ class Item_reports extends REST_Controller {
 		$this->response($data, 200);
 	}
 
+	//POSITION DETAIL BY DAWINE
 	function position_detail_get() {
 		$filter 	= $this->get("filter");
 		$page 		= $this->get('page');
@@ -185,7 +186,7 @@ class Item_reports extends REST_Controller {
 
 		$obj->include_related("item", array("abbr", "number", "name"));
 		$obj->include_related("transaction", array("number", "type", "issued_date", "rate"));
-		$obj->where_in_related("transaction", "type", array("Cash_Purchase", "Credit_Purchase", "Purchase_Return", "Commercial_Invoice", "Vat_Invoice", "Invoice", "Commercial_Cash_Sale", "Vat_Cash_Sale", "Cash_Sale", "Sale_Return", "Item_Adjustment", "Internal_Usage"));
+		$obj->where_in_related("transaction", "type", array("Purchase_Order", "Sale_Order", "Cash_Purchase", "Credit_Purchase", "Purchase_Return", "Payment_Refund", "Commercial_Invoice", "Vat_Invoice", "Invoice", "Commercial_Cash_Sale", "Vat_Cash_Sale", "Cash_Sale", "Sale_Return", "Cash_Refund", "Item_Adjustment", "Internal_Usage"));
 		$obj->where_related("transaction", "is_recurring <>", 1);
 		$obj->where_related("transaction", "deleted <>", 1);
 		$obj->where_related("item", "item_type_id", 1);		
