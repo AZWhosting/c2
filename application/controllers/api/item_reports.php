@@ -87,15 +87,17 @@ class Item_reports extends REST_Controller {
 				$purchaseAmount = 0;
 				$saleQty = 0;				
 				$saleAmount = 0;
+				$amount = 0;
 
 				$quantity = floatval($value->quantity) * floatval($value->unit_value) * intval($value->movement);
 				
 				if($value->transaction_type==="Purchase_Order"){
 					$po = $quantity;
 				}else if($value->transaction_type==="Sale_Order"){
-					$so = $quantity;
+					$so = abs($quantity);
 				}else{
 					$qoh = $quantity;
+					$amount = floatval($value->amount) / floatval($value->transaction_rate);
 
 					if(intval($value->movement)>0){
 						$purchaseQty = $quantity;
@@ -114,6 +116,7 @@ class Item_reports extends REST_Controller {
 					$objList[$value->item_id]["purchaseAmount"] += $purchaseAmount;
 					$objList[$value->item_id]["saleQty"] 		+= $saleQty;
 					$objList[$value->item_id]["saleAmount"] 	+= $saleAmount;
+					$objList[$value->item_id]["amount"] 		+= $amount;
 				}else{
 					$objList[$value->item_id]["id"] 			= $value->item_id;
 					$objList[$value->item_id]["name"] 			= $value->item_abbr . $value->item_number ." ". $value->item_name;					
@@ -124,6 +127,7 @@ class Item_reports extends REST_Controller {
 					$objList[$value->item_id]["purchaseAmount"] = $purchaseAmount;
 					$objList[$value->item_id]["saleQty"] 		= $saleQty;
 					$objList[$value->item_id]["saleAmount"] 	= $saleAmount;
+					$objList[$value->item_id]["amount"] 		= $amount;
 				}
 			}
 
@@ -141,7 +145,6 @@ class Item_reports extends REST_Controller {
 				
 				$value["cost"] = $avgCost;
 				$value["price"] = $avgPrice;
-				$value["amount"] = $value["qoh"] * $avgCost;
 
 				$data["results"][] = $value;
 			}

@@ -96335,10 +96335,16 @@
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
 		}else{
+			banhji.view.layout.showIn("#content", banhji.view.inventoryPositionDetail);
+
 			var vm = banhji.inventoryPositionDetail;
 			banhji.userManagement.addMultiTask("Inventory Position Detail","inventory_position_detail",null);
+			
+			if(banhji.pageLoaded["inventory_position_detail"]==undefined){
+				banhji.pageLoaded["inventory_position_detail"] = true;
 
-			banhji.view.layout.showIn("#content", banhji.view.inventoryPositionDetail);
+				vm.sorterChanges();
+			}
 			vm.pageLoad();
 		}
 	});
