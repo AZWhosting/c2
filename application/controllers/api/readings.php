@@ -81,7 +81,7 @@ class Readings extends REST_Controller {
 					"from_date" 	=> $value->from_date,
 					"to_date" 		=> $value->to_date,
 					"date"			=> $value->from_date." - ".$value->to_date,
-					"meter_number" 		=> $meter->number,
+					"meter_number" 	=> $meter->number,
 					"invoiced"   	=> $value->invoiced == 0 ? FALSE:TRUE,
 					"usage" 		=> $value->usage,
 					"status"		=> "new",
@@ -170,12 +170,11 @@ class Readings extends REST_Controller {
 				$obj->invoiced = 0;
 				$obj->save();
 
-				$line = $obj->winvoice_line->select('transaction_id')->get();
+				$line = $obj->winvoice_line->get();
 
 				$transaction = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
-				$winvioceLine = new Winvoice_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-
+				$winvoiceLine = new Winvoice_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 				$transaction->where('id', $line->transaction_id)->get();
 				$transaction->deleted = 1;
 				$transaction->save();

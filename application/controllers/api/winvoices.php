@@ -405,6 +405,7 @@ class Winvoices extends REST_Controller {
 			$usage = 0;	
 			$meter = array(
 				'meter_number'   => $m->number,
+				'meter_id'   => $m->id,
 				'location' => $m->location->get_raw()->result(),
 				'license' => $license->get_raw()->result(),
 			);

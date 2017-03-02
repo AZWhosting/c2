@@ -273,12 +273,12 @@
 
 <!--Setting-->
 <script id="setting" type="text/x-kendo-template">
-    <span class="pull-right glyphicons no-js remove_2" 
+	<div class="" style="margin-top: 15px; background: #fff; padding: 15px; width: 99%; float: left;">
+    	<span class="pull-right glyphicons no-js remove_2" 
 			onclick="javascript:window.history.back()"><i></i></span>
-	<h2>Setting</h2>
-	<br>
-
-	<div class="widget widget-tabs widget-tabs-double widget-tabs-vertical row-fluid row-merge widget-tabs-gray">
+		<h2>Setting</h2>
+		<br>
+		<div class="widget widget-tabs widget-tabs-double widget-tabs-vertical row-fluid row-merge widget-tabs-gray">
 
 	    <!-- Tabs Heading -->
 	    <div class="widget-head span3">
@@ -348,7 +348,7 @@
 	    <!-- // Tabs Heading END -->
 
 	    <div class="widget-body span9">
-	        <div class="tab-content">
+	        <div class="tab-content" style="padding-right: 0;">
 	            <div class="tab-pane active" id="tab1">
 	            	<a class="btn-icon btn-primary glyphicons circle_plus" style="width: 130px" href="#/add_license"><i></i>Add License</a>
 	            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
@@ -812,6 +812,7 @@
 	        </div>
 	    </div>
 	    <div id="ntf1" data-role="notification"></div>
+		</div>
 	</div>
 </script>
 
@@ -2035,24 +2036,23 @@
 							            </div>
 							            <!-- // INFO Tab content END -->
 							            <!-- NOTE Tab content -->
-							            <div id="tab4" class="tab-pane">
+							            <div id="tab4" class="tab-pane">							            	
 										    <div>
 												<input type="text" class="k-textbox" 
 														data-bind="value: note, events:{change:saveNoteEnter}" 
 														placeholder="Add memo ..." 
-														style="width: 366px;" /-->
+														style="width: 366px;" >
 												<span class="btn btn-primary" data-bind="click: saveNote"><span data-bind="text: lang.lang.add"></span></span>
 											</div>
 											<br>
-											<div class="table table-condensed" style="height: 100;"						 
+											<div class="table table-condensed" style="height: 100;"
 												 data-role="grid"
 												 data-auto-bind="false"						 
 												 data-bind="source: noteDS"
 												 data-row-template="waterCenter-note-tmpl"
 												 data-columns="[{title: ''}]"
-												 data-height="100"						 
-												 data-scrollable="{virtual: true}"></div>
-											
+												 data-height="100"
+												 data-scrollable="{virtual: true}"></div>											
 							            </div>
 							            <!-- // NOTE Tab content END -->
 							            <!-- Attach Tab content -->
@@ -2383,10 +2383,26 @@
 
 			        <!-- //CONTACT PERSON -->
 			        <div class="tab-pane" id="metertab4">
-			        	<table>
+			        	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
+					        <thead>
+					            <tr>
+					                <th width="140">Date</th>
+					                <th width="50">Installment</th>
+					                <th width="100">Payment</th>
+					                <th width="100">Amount Paid</th>
+					            </tr> 
+					        </thead>
+					        <tbody 
+				        		data-role="listview" 
+				        		data-bind="source: installmentVM.dataSource" 
+				        		data-template="installment-list-template" 
+				        		data-auto-bind=false>
+					        </tbody>
+					    </table>
+			        	<!-- <table>
 			        		<tbody data-role="listview" data-bind="source: installmentVM.dataSource" data-template="installment-list-template" data-auto-bind=false>
 			        		</tbody>
-			        	</table>
+			        	</table> -->
 		        	</div>
 			        <!-- //CONTACT PERSON END -->
 			    </div>
@@ -5344,17 +5360,17 @@
 
 <script id="Reconcile" type="text/x-kendo-template">
 	<div id="slide-form">
-		<div class="customer-background" style="overflow: hidden;">
+		<div class="customer-background" style="overflow: hidden; margin-top: 15px;">
 			<div class="container-960">					
 				<div id="example" class="k-content">
 			    	<div class="hidden-print pull-right">
 			    		<span class="glyphicons no-js remove_2" 
 							data-bind="click: cancel"><i></i></span>	
 					</div>
-			        <h2>Reconcile</h2>
+			        <h2 style="margin-bottom: 0;">Reconcile</h2>
 			        <br>
 			        <div class="row-fluid reconcile">
-				        <table class="span12">
+				        <table class="span12 table-remove">
 				        	<thead>
 					        	<tr>
 					        		<th colspan="1">Actual Cash Count</th>
@@ -5428,11 +5444,11 @@
 
 <script id="Reconcile-list-tmpl" type="text/x-kendo-template">
 	<tr>
-		<td><i class="icon-trash" data-bind="click: removeRow"></i></td>
+		<td><i style="cursor: pointer;" class="icon-trash" data-bind="click: removeRow"></i></td>
 		<td><input type="text" data-role="combobox" data-bind="source: currencyDS, value: code" data-text-field="code" data-value-field="code"></td>
-		<td><input type="number" class="k-textbox" data-bind="value: note, events: {change: onChange}"></td>
-		<td><input type="number" class="k-textbox" data-bind="value: unit, events: {change: onChange}"></td>
-		<td><input type="number" data-bind="value:total"></td>
+		<td><input type="number" class="k-textbox" data-role="numerictextbox" data-format="n" data-min="0" data-spinners="false" data-bind="value: note, events: {change: onChange}"></td>
+		<td><input type="number" class="k-textbox" data-role="numerictextbox" data-format="n" data-min="0" data-spinners="false" data-bind="value: unit, events: {change: onChange}"></td>
+		<td><input type="number" data-role="numerictextbox" data-format="n" data-min="0" data-spinners="false" data-bind="value:total"></td>
 	</tr>
 </script>
 <script id="reconcile-receipt-list" type="text/x-kendo-template">
