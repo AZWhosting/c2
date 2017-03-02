@@ -229,26 +229,25 @@ class Item_reports extends REST_Controller {
 					$bf->get_iterated();
 					
 					$balance_forward = 0; 
-					$sumOnHand = 0; 
-					$sumAmount = 0; 
-					$sumQtyPurchase = 0; 
-					$sumAmountPurchase = 0;
+					$sumOnHand = 0;
+					$purchaseQty = 0; 
+					$purchaseAmount = 0;
 					foreach ($bf as $val) {
 						$qty = $val->quantity * $val->unit_value * $val->movement;
 						$amt = $val->quantity * $val->unit_value * $val->cost * $val->transaction_rate;
 
 						$sumOnHand += $qty;
 
-						if($val->transaction_type=="Cash_Purchase" || $val->transaction_type=="Credit_Purchase"){
-							$sumQtyPurchase += $qty;
-							$sumAmountPurchase += $amt;
+						if(intval($val->movement)>0){
+							$purchaseQty += $qty;
+							$purchaseAmount += $amt;
 						}
 					}
 
-					if($sumQtyPurchase==0){
+					if($purchaseQty==0){
 						$avgCost = 0;
 					}else{
-						$avgCost = $sumAmountPurchase / $sumQtyPurchase;
+						$avgCost = $purchaseAmount / $purchaseQty;
 					}
 
 					$balance_forward = $avgCost * $sumOnHand;
