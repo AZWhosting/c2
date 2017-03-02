@@ -41548,14 +41548,9 @@
 </script>
 <script id="cashMovement-template" type="text/x-kendo-tmpl">
 	<tr>
-		<td style="font-weight: bold;">#: name #</td>
-    	<td></td>
-    	<td></td>
-    	<td></td>
-    	<td></td>
-    	<td></td>    	
+		<td colspan="6" style="font-weight: bold;">#: name #</td>
     	<td class="right strong" style="color: black;">
-    		#=kendo.toString(balance_forward, "c", banhji.locale)#
+    		#=kendo.toString(balance_forward, "c2", banhji.locale)#
     	</td>
 	</tr>
 	#var balance = balance_forward;#
@@ -41582,32 +41577,27 @@
 		</td>
 		<td class="right" style="color: black;">
 			#if(line[i].amount > 0){#
-				#=kendo.toString(line[i].amount, "c", banhji.locale)#
+				#=kendo.toString(line[i].amount, "c2", banhji.locale)#
 			#}else{#
 				#=0#
 			#}#			
 		</td>
 		<td class="right" style="color: black;">
 			#if(line[i].amount < 0){#
-				#=kendo.toString(Math.abs(line[i].amount), "c", banhji.locale)#
+				#=kendo.toString(Math.abs(line[i].amount), "c2", banhji.locale)#
 			#}else{#
 				#=0#
 			#}#	
 		</td>
 		<td class="right" style="color: black;">
-			#=kendo.toString(balance, "c", banhji.locale)#
+			#=kendo.toString(balance, "c2", banhji.locale)#
 		</td> 			
     </tr>    
     #}# 
     <tr>
-    	<td style="font-weight: bold; color: black;">Total #: name #</td>
-    	<td></td>
-    	<td></td>
-    	<td></td>
-    	<td></td>
-    	<td></td>
+    	<td colspan="6" style="font-weight: bold; color: black;">Total #: name #</td>    	
     	<td class="right" style="font-weight: bold; border-top: 1px solid black !important; color: black;">
-    		#=kendo.toString(balance, "c", banhji.locale)#
+    		#=kendo.toString(balance, "c2", banhji.locale)#
     	</td>
     </tr>  
 </script>
