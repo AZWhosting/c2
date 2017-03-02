@@ -605,7 +605,7 @@ class Sales extends REST_Controller {
 					$paid->select_sum("amount");
 					$paid->select_sum("discount");
 					$paid->where("reference_id", $value->id);
-					$paid->where_in("type", array("Cash_Receipt", "Sale_Return", "Offset_Invoice"));
+					$paid->where_in("type", array("Cash_Receipt", "Offset_Invoice"));
 					$paid->where("is_recurring <>",1);
 					$paid->where("deleted <>",1);
 					$paid->get();
@@ -682,7 +682,7 @@ class Sales extends REST_Controller {
 					$paid->select_sum("amount");
 					$paid->select_sum("discount");
 					$paid->where("reference_id", $value->id);
-					$paid->where_in("type", array("Cash_Receipt", "Sale_Return", "Offset_Invoice"));
+					$paid->where_in("type", array("Cash_Receipt", "Offset_Invoice"));
 					$paid->where("is_recurring <>",1);
 					$paid->where("deleted <>",1);
 					$paid->get();
@@ -775,7 +775,7 @@ class Sales extends REST_Controller {
 					$paid->select_sum("amount");
 					$paid->select_sum("discount");
 					$paid->where("reference_id", $value->id);
-					$paid->where_in("type", array("Cash_Receipt", "Sale_Return", "Offset_Invoice"));
+					$paid->where_in("type", array("Cash_Receipt", "Offset_Invoice"));
 					$paid->where("is_recurring <>",1);
 					$paid->where("deleted <>",1);
 					$paid->get();
@@ -883,7 +883,7 @@ class Sales extends REST_Controller {
 					$paid->select_sum("amount");
 					$paid->select_sum("discount");
 					$paid->where("reference_id", $value->id);
-					$paid->where_in("type", array("Cash_Receipt", "Sale_Return", "Offset_Invoice"));
+					$paid->where_in("type", array("Cash_Receipt", "Offset_Invoice"));
 					$paid->where("is_recurring <>",1);
 					$paid->where("deleted <>",1);
 					$paid->get();
@@ -979,7 +979,7 @@ class Sales extends REST_Controller {
 					$paid->select_sum("amount");
 					$paid->select_sum("discount");
 					$paid->where("reference_id", $value->id);
-					$paid->where_in("type", array("Cash_Receipt", "Sale_Return", "Offset_Invoice"));
+					$paid->where_in("type", array("Cash_Receipt", "Offset_Invoice"));
 					$paid->where("is_recurring <>",1);
 					$paid->where("deleted <>",1);
 					$paid->get();
@@ -1053,7 +1053,7 @@ class Sales extends REST_Controller {
 				$payments = [];				
 				$pmt = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);				
 				$pmt->where("reference_id", $value->id);
-				$pmt->where_in("type", array("Cash_Receipt", "Sale_Return", "Offset_Invoice"));
+				$pmt->where_in("type", array("Cash_Receipt", "Offset_Invoice"));
 				$pmt->where("is_recurring <>",1);
 				$pmt->where("deleted <>",1);
 				$pmt->get_iterated();

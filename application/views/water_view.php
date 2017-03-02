@@ -2856,7 +2856,7 @@
 													<td>
 														<input
 										            		data-role="datepicker"	 		
-							            					data-bind="value: issued_date" 
+							            					data-bind="value: issued_date, events: {change: addReading}" 
 							            					data-format="dd-MM-yyyy"
 							            					data-parse-formats="yyyy-MM-dd" 
 							            					placeholder="dd-MM-yyyy" required data-required-msg="required" 
@@ -3275,7 +3275,8 @@
 									                	data-role="datepicker"
 									                	placeholder="To Date ..." 
 											           	data-bind="value: toDateUpload,
-											           			events: {change: selectMonthTo}" />
+											           			events: {change: selectMonthTo},
+											           			disabled: toDateDisabled" />
 												</div>
 											</div>
 										</div>
@@ -3299,9 +3300,29 @@
 						                		data-template="reading-Error11-template">
 						                	</tbody>
 										</table>
+										<div data-bind="visible: existShow" style="overflow: hidden;">
+											<p>Exist Meter</p>
+											<table  class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
+												<thead>
+													<tr>
+														<th class="center">Line</th>
+														<th class="center">Meter Number</th>
+														<th class="center">Previus</th>
+														<th class="center">Current</th>
+														<th class="center">Status</th>
+													</tr>
+												</thead>
+												<tbody 
+							                		data-bind="source: ExistRUpload" 
+							                		data-auto-bind="true" 
+							                		data-role="listview" 
+							                		data-template="reading-Exist-template">
+							                	</tbody>
+											</table>
+										</div>
 										<br>
 
-										<span data-bind="invisible: errorShow" class="btn btn-icon btn-primary glyphicons ok_2" style="margin-top: 3px;width: 160px!important;"><i></i><span data-bind="click: save">Start Reading</span></span>
+										<span data-bind="visible: fullCorrect" class="btn btn-icon btn-primary glyphicons ok_2" style="margin-top: 3px;width: 160px!important;"><i></i><span data-bind="click: save">Start Reading</span></span>
 									</div>
 									<!-- // Tab content END -->
 									
@@ -3350,6 +3371,25 @@
     		#= previous#
    		</td>
    		<td align="center" style="font-weight: bold;color:red">
+    		#= current#
+   		</td>
+   		<td align="center">
+   			<span><i class="icon-remove"></i></span>
+   		</td>	
+   	</tr>
+</script>
+<script id="reading-Exist-template" type="text/x-kendo-tmpl">                    
+    <tr>
+    	<td align="center">
+    		#= line#
+   		</td>
+    	<td style="font-weight: bold;color:red">
+    		#= meter_number#
+   		</td>
+   		<td align="center">
+    		#= previous#
+   		</td>
+   		<td align="center" >
     		#= current#
    		</td>
    		<td align="center">
@@ -9996,6 +10036,7 @@
 		NumberSR 			: null,
 		previousSR 			: 0,
 		currentSR 			: 0,
+		toDateDisabled 		: true,
 		addSingleReading 	: function() {
 			if(banhji.reading.get('monthOfSR')){
 				if(banhji.reading.get('previousSR') > banhji.reading.get('currentSR')){
@@ -10053,11 +10094,46 @@
 		},
 		MonthTo 			: false,
 		errorShow 			: false,
+		existShow 			: false,
+		fullCorrect 		: false,
 		Uploaderror			: [],
+		ExistRUpload 		: [],
+		monthOfUSelect 		: function(e){
+			var para = [], self = this;
+			bloc_id = this.get("blocSelectU");
+			var monthOfSearch = self.get("monthOfUpload");
+			var monthOf = new Date(monthOfSearch);
+			monthOf.setDate(1);
+			monthOf = kendo.toString(monthOf, "yyyy-MM-dd");
+			var monthL = new Date(monthOfSearch);
+			var lastDayOfMonth = new Date(monthL.getFullYear(), monthL.getMonth()+1, 0);
+			lastDayOfMonth = lastDayOfMonth.getDate();
+			monthL.setDate(lastDayOfMonth);
+			monthL = kendo.toString(monthL, "yyyy-MM-dd");
+			para.push({field: "location_id", operator: "where_related_meter", value: bloc_id.id});
+			para.push(
+				{field: "month_of >=", value: monthOf},
+				{field: "month_of <=", value: monthL}
+			);
+			this.existReading.query({
+				filter: para
+			})
+			.then(function(e){
+				self.set("toDateDisabled", false);
+			});
+		},
+		selectMonthTo 		: function(e){
+			if(this.get("monthOfUpload") && this.get("toDateUpload") ){
+				this.set("MonthTo", true);
+			}else{
+				this.set("MonthTo", false);
+			}
+		},
 		onSelected 			: function(e){
 	        var files = e.files, self = this;
 	        $('li.k-file').remove();
 	        this.Uploaderror.splice(0, this.Uploaderror.length);
+	        this.ExistRUpload.splice(0, this.ExistRUpload.length);
 	        $("#loadImport").css("display","block");
 	        var reader = new FileReader();
 			banhji.reading.dataSource.data([]);	
@@ -10070,19 +10146,22 @@
 					if(roa.length > 0){
 						result[sheetName] = roa;
 						for(var i = 0; i < roa.length; i++) {
+							for(var j = 0; j< self.existReading.data().length; j++){
+								if(roa[i].meter_number == self.existReading.data()[j].meter_number){
+									self.ExistRUpload.push({line: j+1, meter_number: roa[i].meter_number,previous: roa[i].previous ,current: roa[i].current, status: 0});
+								}
+							}
 							roa[i].invoiced = 0;
 							var monthOf = self.get("monthOfUpload");
 							monthOf.setDate(1);
 							roa[i].month_of = monthOf;
 							roa[i].from_date = new Date(roa[i].to_date);
 							roa[i].to_date = self.get("toDateUpload");
-							// console.log("current :"+roa[i].current+"___previous :"+roa[i].previous);
 							if(kendo.parseInt(roa[i].current) < kendo.parseInt(roa[i].previous)){
 								self.Uploaderror.push({line: i+2, meter_number: roa[i].meter_number,previous: roa[i].previous ,current: roa[i].current, status: 0});
 							}
 							banhji.reading.dataSource.add(roa[i]);
 							$("#loadImport").css("display","none");	
-							
 						}
 					}					
 				});	
@@ -10090,39 +10169,19 @@
 					self.set("errorShow", true);
 				}else{
 					self.set("errorShow", false);
-				}												
+				}
+				if(self.ExistRUpload.length > 0){
+					self.set("existShow", true);
+				}else{
+					self.set("existShow", false);
+				}
+				if(self.Uploaderror.length > 0 || self.ExistRUpload.length > 0){
+					self.set("fullCorrect", false);
+				}else{
+					self.set("fullCorrect", true);
+				}
 			}
-			reader.readAsBinaryString(files[0].rawFile);   
-
-		},
-		monthOfUSelect 		: function(e){
-			var para = [], self = this;
-			bloc_id = this.get("blocSelectU");
-			var monthOfSearch = self.get("monthOfUpload");
-			var monthOf = new Date(monthOfSearch);
-			monthOf.setDate(1);
-			monthOf = kendo.toString(monthOf, "yyyy-MM-dd");
-			var monthL = new Date(monthOfSearch);
-			monthL.setDate(31);
-			monthL = kendo.toString(monthL, "yyyy-MM-dd");
-			para.push({field: "location_id", value: bloc_id.id});
-			para.push(
-				{field: "month_of >=", value: monthOf},
-				{field: "month_of <=", value: monthL}
-			);
-			this.existReading.query({
-				filter: para
-			})
-			.then(function(e){
-				console.log(self.existReading.data());
-			});
-		},
-		selectMonthTo 		: function(e){
-			if(this.get("monthOfUpload") && this.get("toDateUpload")){
-				this.set("MonthTo", true);
-			}else{
-				this.set("MonthTo", false);
-			}
+			reader.readAsBinaryString(files[0].rawFile);
 		},
 		save 				: function() {
 			var self = this;
@@ -11838,18 +11897,7 @@
 					self.set("meterObj", view[0]);
 					self.setObj(view[0].plan_id);
 					self.goWorder(view[0].branch_id, view[0].location_id);
-					var monthOf = self.issued_date;
-					monthOf.setDate(1);
-					self.readingDS.insert(0, {
-						month_of: monthOf,
-						meter_number  : view[0].meter_number,
-						previous: 0,
-						to_date : self.get("issued_date"),
-						current : view[0].starting_no,
-						invoiced: 1,
-						condition: "new",
-						consumption: 0
-					});
+					self.addReading();
 				} else {
 					banhji.router.navigate('/center');
 				}
@@ -11857,6 +11905,23 @@
 			});
 			this.paymentMethodDS.read();
 			//this.cashAccountDS.read();
+		},
+		addReading 			: function(e){
+			this.readingDS.data([]);
+			var obj = this.get("meterObj");
+			var monthOf = banhji.ActivateMeter.get("issued_date");
+			monthOf.setDate(1);
+			monthOf = kendo.toString(monthOf, "yyyy-MM-dd");
+			this.readingDS.insert(0, {
+				month_of: monthOf,
+				meter_number  : obj.meter_number,
+				previous: 0,
+				to_date : this.get("issued_date"),
+				current : obj.starting_no,
+				invoiced: 1,
+				condition: "new",
+				consumption: 0
+			});
 		},
 		cashAccount 		: 7,
 		arAccount 			: 10,
@@ -12180,8 +12245,12 @@
 				var monthOf = new Date(monthOfSearch);
 				monthOf.setDate(1);
 				monthOf = kendo.toString(monthOf, "yyyy-MM-dd");
+
 				var monthL = new Date(monthOfSearch);
-				monthL.setDate(31);
+				var lastDayOfMonth = new Date(monthL.getFullYear(), monthL.getMonth()+1, 0);
+				lastDayOfMonth = lastDayOfMonth.getDate();
+
+				monthL.setDate(lastDayOfMonth);
 				monthL = kendo.toString(monthL, "yyyy-MM-dd");
 				
 				para.push(
@@ -12500,7 +12569,7 @@
 	      serverFiltering: true,
 	      serverPaging: true,
 	      pageSize: 100
-	    }), 
+	    }),
 		txnTemplateDS 		: dataStore(apiUrl + "transaction_templates"),
 		selectInv 			: false,
 		chkAll 				: false,
@@ -12574,18 +12643,22 @@
 		},
 		blocChange 			: function(e){
 		},
+		noPrintIDTransaction: [],
 		search 				: function(){
 	    	var monthOfSearch = this.get("monthSelect"),
 			license_id = this.get("licenseSelect"),
 			bloc_id = this.get("blocSelect"),
 			self = this;
+			
 			var para = [];	
 			if(monthOfSearch){						
 				var monthOf = new Date(monthOfSearch);
 				monthOf.setDate(1);
 				monthOf = kendo.toString(monthOf, "yyyy-MM-dd");
 				var monthL = new Date(monthOfSearch);
-				monthL.setDate(31);
+				var lastDayOfMonth = new Date(monthL.getFullYear(), monthL.getMonth()+1, 0);
+				lastDayOfMonth = lastDayOfMonth.getDate();
+				monthL.setDate(lastDayOfMonth);
 				monthL = kendo.toString(monthL, "yyyy-MM-dd");
 				
 				para.push(
@@ -12599,11 +12672,17 @@
 							{field: "location_id", value: bloc_id},
 							{field: "type", value: "Water_Invoice"}
 						);
-						this.invoiceCollection.dataSource.filter(para);
-						para.push({field: "print_count", value: 0});
-						this.invoiceNoPrint.filter(para);
-						this.invoiceNoPrint.bind("requestEnd", function(e){
-							self.set("noPrint", e.response.results.length);
+						this.invoiceCollection.dataSource.query({
+							filter: para
+						}).then(function(e){
+							var numberNoPrint = 0;
+							$.each(self.invoiceCollection.dataSource.data(), function(i, v){
+								if(v.print_count == 0){
+									self.noPrintIDTransaction.push(v.id);
+									numberNoPrint++;
+								}
+							});
+							self.set("noPrint", numberNoPrint);
 						});
 						this.set("selectInv", true);
 					}else{
@@ -12617,10 +12696,7 @@
 			}
 	    },
 	    goNoPrint 			: function(){
-		    if(this.invoiceNoPrint.data().length > 0){
-		    	// this.invoiceCollection.dataSource.data([]);
-		    	this.invoiceCollection.dataSource = this.invoiceNoPrint;
-		    }
+		    this.invoiceCollection.dataSource.filter({field: "id",operator: "where_in" ,value: this.noPrintIDTransaction});
 	    },
 		printBill 			: function(){
 			if(this.get("TemplateSelect")){
@@ -12666,18 +12742,6 @@
 		TemplateSelect 		: null,
 		invoiceCollection 	: new kendo.data.DataSource({
 	      transport: {
-	      	read  : {
-	          url: baseUrl + 'api/winvoices',
-	          type: "GET",
-	          dataType: 'json',
-	          headers: { Institute: JSON.parse(localStorage.getItem('userData/user')).institute.id }
-	        },
-	        create  : {
-	          url: baseUrl + 'api/winvoices',
-	          type: "POST",
-	          dataType: 'json',
-	          headers: { Institute: JSON.parse(localStorage.getItem('userData/user')).institute.id }
-	        },
 	        update 	: {
 				url: baseUrl + 'api/winvoices',
 				type: "PUT",
@@ -12763,7 +12827,7 @@
 			for(var i = 0; i < this.invoiceCollection.data().length; i++) {
 				this.invoiceCollection.data()[i].print_count += 1;
 			}
-			this.invoiceCollection.sync();
+			//this.invoiceCollection.sync();
 			var gridElement = $('#grid'),
 		        printableContent = '',
 		        win = Win,
@@ -12818,11 +12882,9 @@
 		            	'}</style>' +
 				    '</head>' + 
 				    '<body><div class="row-fluid" style="padding-top: 20px" ><div id="example" class="k-content">';
-
 		    var htmlEnd =
 		            '</div></div></body>' +
 		            '</html>';
-		    
 		    printableContent = $('#wInvoiceContent').html();
 		    doc.write(htmlStart + printableContent + htmlEnd);
 		    doc.close();

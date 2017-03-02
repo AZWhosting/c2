@@ -415,6 +415,7 @@ class Winvoices extends REST_Controller {
 			//echo $row->id."____";
 			$remain->where("type", "Water_Invoice");
 			$remain->where("id <>", $row->id);
+			$remain->where("deleted <>", 1);
 			$remain->where("status <>", 1)->get();
 			$amountOwed = 0;
 			foreach($remain as $rem) {

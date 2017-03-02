@@ -48,9 +48,9 @@ class Transactions extends REST_Controller {
 
 		//Filter
 		if(!empty($filter) && isset($filter)){
-	    	foreach ($filter['filters'] as $value) {
-	    		if(isset($value['operator'])) {
-					$obj->{$value['operator']}($value['field'], $value['value']);
+	    	foreach ($filter["filters"] as $value) {
+	    		if(isset($value["operator"])) {
+					$obj->{$value["operator"]}($value["field"], $value["value"]);
 				} else {
 					if($value["field"]=="is_recurring"){
 	    				$is_recurring = $value["value"];

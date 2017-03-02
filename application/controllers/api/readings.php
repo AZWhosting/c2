@@ -82,7 +82,7 @@ class Readings extends REST_Controller {
 					"to_date" 		=> $value->to_date,
 					"date"			=> $value->from_date." - ".$value->to_date,
 					"meter_number" 	=> $meter->number,
-					"invoiced"   	=> $value->invoiced == 0 ? FALSE:TRUE,
+					"invoiced"   	=> $value->invoiced,
 					"usage" 		=> $value->usage,
 					"status"		=> "new",
 					"_meta" 		=> array()
@@ -184,26 +184,26 @@ class Readings extends REST_Controller {
 				$winvoiceLine->save();
 
 				// if($invoiceStatus == 0) {
-				$newObj = new Meter_record(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				$newObj->meter_id 				= $value->meter_id;
-				$newObj->month_of 				= isset($value->month_of)			? date('Y-m-d', strtotime($value->month_of)): date('Y-m-d');
-				$newObj->previous 				= isset($value->previous)			? $value->previous: "";
-				$newObj->current 				= isset($value->current)			? $value->current: "";
-				$newObj->from_date 				= isset($value->previous_reading_date) ? date('Y-m-d', strtotime($value->previous_reading_date)) : "";
-				$newObj->to_date 				= isset($value->month_of)			? date('Y-m-d', strtotime($value->month_of)):date('Y-m-d');
-				$newObj->invoiced 				= 0;
-				$newObj->usage = $newObj->current - $newObj->previous;
-				if($newObj->save()){		
+				// $newObj = new Meter_record(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$obj->meter_id 				= $value->meter_id;
+				$obj->month_of 				= isset($value->month_of)			? date('Y-m-d', strtotime($value->month_of)): date('Y-m-d');
+				$obj->previous 				= isset($value->previous)			? $value->previous: "";
+				$obj->current 				= isset($value->current)			? $value->current: "";
+				$obj->from_date 			= isset($value->previous_reading_date) ? date('Y-m-d', strtotime($value->previous_reading_date)) : "";
+				$obj->to_date 				= isset($value->month_of)			? date('Y-m-d', strtotime($value->month_of)):date('Y-m-d');
+				$obj->invoiced 				= 0;
+				$obj->usage = $obj->current - $obj->previous;
+				if($obj->save()){		
 					$data["results"][] = array(
-						"id"			=> $newObj->id,
-						"meter_id" 		=> $newObj->meter_id,
-						"month_of"		=> $newObj->month_of,
-						"meter_number" 	=> $newObj->meter_number,
-						"prev"			=> $newObj->previous,
-						"current"		=> $newObj->current,
-						"usage" 		=> $newObj->usage,
-						"from_date"		=> $newObj->from_date,
-						"to_date"		=> $newObj->to_date
+						"id"			=> $obj->id,
+						"meter_id" 		=> $obj->meter_id,
+						"month_of"		=> $obj->month_of,
+						"meter_number" 	=> $obj->meter_number,
+						"prev"			=> $obj->previous,
+						"current"		=> $obj->current,
+						"usage" 		=> $obj->usage,
+						"from_date"		=> $obj->from_date,
+						"to_date"		=> $obj->to_date
 					);						
 				}
 				// }

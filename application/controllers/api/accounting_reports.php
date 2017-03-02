@@ -24,7 +24,6 @@ class Accounting_reports extends REST_Controller {
 			date_default_timezone_set("$conn->time_zone");
 
 			//Fiscal Date
-			//Note: selecting date must greater than startFiscalDate AND smaller or equal to endFiscalDate
 			$this->fiscalDate = date("m-d", $institute->fiscal_date/1000);
 			$fDate = date("Y") ."-". $this->fiscalDate;
 			$today = date("Y-m-d");
@@ -35,42 +34,41 @@ class Accounting_reports extends REST_Controller {
 				$this->startFiscalDate 	= date("Y",strtotime("-1 year")) ."-". $this->fiscalDate;
 				$this->endFiscalDate 	= date("Y") ."-". $this->fiscalDate;
 			}
+			$this->startFiscalDate = date("Y-m-d", strtotime($this->startFiscalDate . "+1 days"));
 		}
 	}
 	
 
 	//GET FINANCIAL SNAPSHOT
-	function financial_snapshot_get() {		
-		$filters 	= $this->get("filte r")["filters"];		
-		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
-		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;
-		$sort 	 	= $this->get("sort");		
+	function financial_snapshot_get() {
+		$filter 	= $this->get("filter");
+		$page 		= $this->get('page');
+		$limit 		= $this->get('limit');
+		$sort 	 	= $this->get("sort");
 		$data["results"] = [];
 		$data["count"] = 0;
-		$is_recurring = 0;
-		$deleted = 0;
 		$today = date("Y-m-d");
-
 
 		//INCOME (Begin FiscalDate To As Of)
 		$income = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$income->include_related("transaction", array("rate"));
 		$income->where_in_related("account/account_type", "id", array(35,39));
-		$income->where_related("transaction", "issued_date >", $this->startFiscalDate);
+		$income->where_related("transaction", "issued_date >=", $this->startFiscalDate);
 		$income->where_related("transaction", "issued_date <=", $today);
-		$income->where_related("transaction", "is_recurring", 0);
-		$income->where_related("transaction", "deleted", 0);
-		$income->where("deleted", 0);		
+		$income->where_related("transaction", "is_recurring <>", 1);
+		$income->where_related("transaction", "deleted <>", 1);
+		$income->where("deleted <>", 1);
 		$income->get_iterated();
 		
-		//Sum Dr and Cr					
+		//Sum Dr and Cr
 		$incomeDr = 0;
 		$incomeCr = 0;
-		foreach ($income as $value) {			
+		foreach ($income as $value) {
 			if($value->dr>0){
-				$incomeDr += floatval($value->dr) / floatval($value->rate);
+				$incomeDr += floatval($value->dr) / floatval($value->transaction_rate);
 			}
 			if($value->cr>0){
-				$incomeCr += floatval($value->cr) / floatval($value->rate);
+				$incomeCr += floatval($value->cr) / floatval($value->transaction_rate);
 			}	
 		}
 		
@@ -80,23 +78,24 @@ class Accounting_reports extends REST_Controller {
 
 		//EXPENSE (Begin FiscalDate To As Of)
 		$expense = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$expense->include_related("transaction", array("rate"));
 		$expense->where_in_related("account/account_type", "id", array(36,37,38,40,41,42));
-		$expense->where_related("transaction", "issued_date >", $this->startFiscalDate);
+		$expense->where_related("transaction", "issued_date >=", $this->startFiscalDate);
 		$expense->where_related("transaction", "issued_date <=", $today);
-		$expense->where_related("transaction", "is_recurring", 0);
-		$expense->where_related("transaction", "deleted", 0);
-		$expense->where("deleted", 0);		
+		$expense->where_related("transaction", "is_recurring <>", 1);
+		$expense->where_related("transaction", "deleted <>", 1);
+		$expense->where("deleted <>", 1);
 		$expense->get_iterated();
 		
-		//Sum Dr and Cr					
+		//Sum Dr and Cr
 		$expenseDr = 0;
 		$expenseCr = 0;
-		foreach ($expense as $value) {			
+		foreach ($expense as $value) {
 			if($value->dr>0){
-				$expenseDr += floatval($value->dr) / floatval($value->rate);
+				$expenseDr += floatval($value->dr) / floatval($value->transaction_rate);
 			}
 			if($value->cr>0){
-				$expenseCr += floatval($value->cr) / floatval($value->rate);
+				$expenseCr += floatval($value->cr) / floatval($value->transaction_rate);
 			}	
 		}
 		
@@ -105,11 +104,12 @@ class Accounting_reports extends REST_Controller {
 
 		//ASSET (As Of)
 		$asset = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$asset->include_related("transaction", array("rate"));
 		$asset->where_in_related("account/account_type", "id", array(10,11,12,13,14,15,16,17,18,19,20,21,22));
 		$asset->where_related("transaction", "issued_date <=", $today);
-		$asset->where_related("transaction", "is_recurring", 0);
-		$asset->where_related("transaction", "deleted", 0);
-		$asset->where("deleted", 0);		
+		$asset->where_related("transaction", "is_recurring <>", 1);
+		$asset->where_related("transaction", "deleted <>", 1);
+		$asset->where("deleted <>", 1);
 		$asset->get_iterated();
 		
 		//Sum Dr and Cr					
@@ -117,10 +117,10 @@ class Accounting_reports extends REST_Controller {
 		$assetCr = 0;
 		foreach ($asset as $value) {			
 			if($value->dr>0){
-				$assetDr += floatval($value->dr) / floatval($value->rate);
+				$assetDr += floatval($value->dr) / floatval($value->transaction_rate);
 			}
 			if($value->cr>0){
-				$assetCr += floatval($value->cr) / floatval($value->rate);
+				$assetCr += floatval($value->cr) / floatval($value->transaction_rate);
 			}	
 		}
 		
@@ -129,11 +129,12 @@ class Accounting_reports extends REST_Controller {
 
 		//LIABILITY (As Of)
 		$liability = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$liability->include_related("transaction", array("rate"));
 		$liability->where_in_related("account/account_type", "id", array(23,24,25,26,27,28,29,30,31,32));
 		$liability->where_related("transaction", "issued_date <=", $today);
-		$liability->where_related("transaction", "is_recurring", 0);
-		$liability->where_related("transaction", "deleted", 0);
-		$liability->where("deleted", 0);		
+		$liability->where_related("transaction", "is_recurring <>", 1);
+		$liability->where_related("transaction", "deleted <>", 1);
+		$liability->where("deleted <>", 1);
 		$liability->get_iterated();
 		
 		//Sum Dr and Cr					
@@ -141,10 +142,10 @@ class Accounting_reports extends REST_Controller {
 		$liabilityCr = 0;
 		foreach ($liability as $value) {			
 			if($value->dr>0){
-				$liabilityDr += floatval($value->dr) / floatval($value->rate);
+				$liabilityDr += floatval($value->dr) / floatval($value->transaction_rate);
 			}
 			if($value->cr>0){
-				$liabilityCr += floatval($value->cr) / floatval($value->rate);
+				$liabilityCr += floatval($value->cr) / floatval($value->transaction_rate);
 			}	
 		}
 		
@@ -169,25 +170,24 @@ class Accounting_reports extends REST_Controller {
 
 	//GET RATIO ANALYSIS
 	function ratio_analysis_get() {		
-		$filters 	= $this->get("filte r")["filters"];		
-		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
-		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;
-		$sort 	 	= $this->get("sort");		
+		$filter 	= $this->get("filter");
+		$page 		= $this->get('page');
+		$limit 		= $this->get('limit');
+		$sort 	 	= $this->get("sort");
 		$data["results"] = [];
 		$data["count"] = 0;
-		$is_recurring = 0;
-		$deleted = 0;
 		$today = date("Y-m-d");
 
 
 		//INCOME (Begin FiscalDate To As Of)
 		$income = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$income->include_related("transaction", array("rate"));
 		$income->where_in_related("account/account_type", "id", array(35,39));
-		$income->where_related("transaction", "issued_date >", $this->startFiscalDate);
+		$income->where_related("transaction", "issued_date >=", $this->startFiscalDate);
 		$income->where_related("transaction", "issued_date <=", $today);
-		$income->where_related("transaction", "is_recurring", 0);
-		$income->where_related("transaction", "deleted", 0);
-		$income->where("deleted", 0);		
+		$income->where_related("transaction", "is_recurring <>", 1);
+		$income->where_related("transaction", "deleted <>", 1);
+		$income->where("deleted <>", 1);		
 		$income->get_iterated();
 		
 		//Sum dr and cr					
@@ -195,10 +195,10 @@ class Accounting_reports extends REST_Controller {
 		$incomeCr = 0;
 		foreach ($income as $value) {			
 			if($value->dr>0){
-				$incomeDr += floatval($value->dr) / floatval($value->rate);
+				$incomeDr += floatval($value->dr) / floatval($value->transaction_rate);
 			}
 			if($value->cr>0){
-				$incomeCr += floatval($value->cr) / floatval($value->rate);
+				$incomeCr += floatval($value->cr) / floatval($value->transaction_rate);
 			}	
 		}
 		
@@ -208,12 +208,13 @@ class Accounting_reports extends REST_Controller {
 
 		//EXPENSE (Begin FiscalDate To As Of)
 		$expense = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$expense->include_related("transaction", array("rate"));
 		$expense->where_in_related("account/account_type", "id", array(36,37,38,40,41,42));
-		$expense->where_related("transaction", "issued_date >", $this->startFiscalDate);
+		$expense->where_related("transaction", "issued_date >=", $this->startFiscalDate);
 		$expense->where_related("transaction", "issued_date <=", $today);
-		$expense->where_related("transaction", "is_recurring", 0);
-		$expense->where_related("transaction", "deleted", 0);
-		$expense->where("deleted", 0);		
+		$expense->where_related("transaction", "is_recurring <>", 1);
+		$expense->where_related("transaction", "deleted <>", 1);
+		$expense->where("deleted <>", 1);
 		$expense->get_iterated();
 		
 		//Sum Dr and Cr					
@@ -221,10 +222,10 @@ class Accounting_reports extends REST_Controller {
 		$expenseCr = 0;
 		foreach ($expense as $value) {			
 			if($value->dr>0){
-				$expenseDr += floatval($value->dr) / floatval($value->rate);
+				$expenseDr += floatval($value->dr) / floatval($value->transaction_rate);
 			}
 			if($value->cr>0){
-				$expenseCr += floatval($value->cr) / floatval($value->rate);
+				$expenseCr += floatval($value->cr) / floatval($value->transaction_rate);
 			}	
 		}
 		
@@ -234,12 +235,13 @@ class Accounting_reports extends REST_Controller {
 
 		//EXPENSE EBIT (Begin FiscalDate To As Of)
 		$expenseEBIT = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$expenseEBIT->include_related("transaction", array("rate"));
 		$expenseEBIT->where_in_related("account/account_type", "id", array(36,37,38,40));
-		$expenseEBIT->where_related("transaction", "issued_date >", $this->startFiscalDate);
+		$expenseEBIT->where_related("transaction", "issued_date >=", $this->startFiscalDate);
 		$expenseEBIT->where_related("transaction", "issued_date <=", $today);
-		$expenseEBIT->where_related("transaction", "is_recurring", 0);
-		$expenseEBIT->where_related("transaction", "deleted", 0);
-		$expenseEBIT->where("deleted", 0);		
+		$expenseEBIT->where_related("transaction", "is_recurring <>", 1);
+		$expenseEBIT->where_related("transaction", "deleted <>", 1);
+		$expenseEBIT->where("deleted <>", 1);
 		$expenseEBIT->get_iterated();
 		
 		//Sum Dr and Cr					
@@ -247,10 +249,10 @@ class Accounting_reports extends REST_Controller {
 		$expenseEBITCr = 0;
 		foreach ($expenseEBIT as $value) {			
 			if($value->dr>0){
-				$expenseEBITDr += floatval($value->dr) / floatval($value->rate);
+				$expenseEBITDr += floatval($value->dr) / floatval($value->transaction_rate);
 			}
 			if($value->cr>0){
-				$expenseEBITCr += floatval($value->cr) / floatval($value->rate);
+				$expenseEBITCr += floatval($value->cr) / floatval($value->transaction_rate);
 			}	
 		}
 		
@@ -260,11 +262,12 @@ class Accounting_reports extends REST_Controller {
 
 		//ASSET (As Of)
 		$asset = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$asset->include_related("transaction", array("rate"));
 		$asset->where_in_related("account/account_type", "id", array(10,11,12,13,14,15,16,17,18,19,20,21,22));
 		$asset->where_related("transaction", "issued_date <=", $today);
-		$asset->where_related("transaction", "is_recurring", 0);
-		$asset->where_related("transaction", "deleted", 0);
-		$asset->where("deleted", 0);		
+		$asset->where_related("transaction", "is_recurring <>", 1);
+		$asset->where_related("transaction", "deleted <>", 1);
+		$asset->where("deleted <>", 1);
 		$asset->get_iterated();
 		
 		//Sum Dr and Cr					
@@ -272,10 +275,10 @@ class Accounting_reports extends REST_Controller {
 		$assetCr = 0;
 		foreach ($asset as $value) {			
 			if($value->dr>0){
-				$assetDr += floatval($value->dr) / floatval($value->rate);
+				$assetDr += floatval($value->dr) / floatval($value->transaction_rate);
 			}
 			if($value->cr>0){
-				$assetCr += floatval($value->cr) / floatval($value->rate);
+				$assetCr += floatval($value->cr) / floatval($value->transaction_rate);
 			}	
 		}
 		
@@ -285,11 +288,12 @@ class Accounting_reports extends REST_Controller {
 
 		//QUICK CURRENT ASSET (As Of)
 		$quickCurrentAsset = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$quickCurrentAsset->include_related("transaction", array("rate"));
 		$quickCurrentAsset->where_in_related("account/account_type", "id", array(10,11,12,14,15));
 		$quickCurrentAsset->where_related("transaction", "issued_date <=", $today);
-		$quickCurrentAsset->where_related("transaction", "is_recurring", 0);
-		$quickCurrentAsset->where_related("transaction", "deleted", 0);
-		$quickCurrentAsset->where("deleted", 0);		
+		$quickCurrentAsset->where_related("transaction", "is_recurring <>", 1);
+		$quickCurrentAsset->where_related("transaction", "deleted <>", 1);
+		$quickCurrentAsset->where("deleted <>", 1);
 		$quickCurrentAsset->get_iterated();
 		
 		//Sum Dr and Cr					
@@ -297,10 +301,10 @@ class Accounting_reports extends REST_Controller {
 		$quickCurrentAssetCr = 0;
 		foreach ($quickCurrentAsset as $value) {			
 			if($value->dr>0){
-				$quickCurrentAssetDr += floatval($value->dr) / floatval($value->rate);
+				$quickCurrentAssetDr += floatval($value->dr) / floatval($value->transaction_rate);
 			}
 			if($value->cr>0){
-				$quickCurrentAssetCr += floatval($value->cr) / floatval($value->rate);
+				$quickCurrentAssetCr += floatval($value->cr) / floatval($value->transaction_rate);
 			}	
 		}
 		
@@ -310,11 +314,12 @@ class Accounting_reports extends REST_Controller {
 
 		//CURRENT ASSET (As Of)
 		$currentAsset = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$currentAsset->include_related("transaction", array("rate"));
 		$currentAsset->where_in_related("account/account_type", "id", array(10,11,12,13,14,15));
 		$currentAsset->where_related("transaction", "issued_date <=", $today);
-		$currentAsset->where_related("transaction", "is_recurring", 0);
-		$currentAsset->where_related("transaction", "deleted", 0);
-		$currentAsset->where("deleted", 0);		
+		$currentAsset->where_related("transaction", "is_recurring <>", 1);
+		$currentAsset->where_related("transaction", "deleted <>", 1);
+		$currentAsset->where("deleted <>", 1);
 		$currentAsset->get_iterated();
 		
 		//Sum Dr and Cr					
@@ -322,10 +327,10 @@ class Accounting_reports extends REST_Controller {
 		$currentAssetCr = 0;
 		foreach ($currentAsset as $value) {			
 			if($value->dr>0){
-				$currentAssetDr += floatval($value->dr) / floatval($value->rate);
+				$currentAssetDr += floatval($value->dr) / floatval($value->transaction_rate);
 			}
 			if($value->cr>0){
-				$currentAssetCr += floatval($value->cr) / floatval($value->rate);
+				$currentAssetCr += floatval($value->cr) / floatval($value->transaction_rate);
 			}	
 		}
 		
@@ -335,11 +340,12 @@ class Accounting_reports extends REST_Controller {
 
 		//CASH RATIO (As Of)
 		$cashRatio = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$cashRatio->include_related("transaction", array("rate"));
 		$cashRatio->where_related("account/account_type", "id", 10);
 		$cashRatio->where_related("transaction", "issued_date <=", $today);
-		$cashRatio->where_related("transaction", "is_recurring", 0);
-		$cashRatio->where_related("transaction", "deleted", 0);
-		$cashRatio->where("deleted", 0);		
+		$cashRatio->where_related("transaction", "is_recurring <>", 1);
+		$cashRatio->where_related("transaction", "deleted <>", 1);
+		$cashRatio->where("deleted <>", 1);		
 		$cashRatio->get_iterated();
 		
 		//Sum Dr and Cr					
@@ -347,10 +353,10 @@ class Accounting_reports extends REST_Controller {
 		$cashRatioCr = 0;
 		foreach ($cashRatio as $value) {			
 			if($value->dr>0){
-				$cashRatioDr += floatval($value->dr) / floatval($value->rate);
+				$cashRatioDr += floatval($value->dr) / floatval($value->transaction_rate);
 			}
 			if($value->cr>0){
-				$cashRatioCr += floatval($value->cr) / floatval($value->rate);
+				$cashRatioCr += floatval($value->cr) / floatval($value->transaction_rate);
 			}	
 		}
 		
@@ -360,11 +366,12 @@ class Accounting_reports extends REST_Controller {
 
 		//LIABILITY (As Of)
 		$liability = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$liability->include_related("transaction", array("rate"));
 		$liability->where_in_related("account/account_type", "id", array(23,24,25,26,27,28,29,30,31,32));
 		$liability->where_related("transaction", "issued_date <=", $today);
-		$liability->where_related("transaction", "is_recurring", 0);
-		$liability->where_related("transaction", "deleted", 0);
-		$liability->where("deleted", 0);		
+		$liability->where_related("transaction", "is_recurring <>", 1);
+		$liability->where_related("transaction", "deleted <>", 1);
+		$liability->where("deleted <>", 1);		
 		$liability->get_iterated();
 		
 		//Sum Dr and Cr					
@@ -372,10 +379,10 @@ class Accounting_reports extends REST_Controller {
 		$liabilityCr = 0;
 		foreach ($liability as $value) {			
 			if($value->dr>0){
-				$liabilityDr += floatval($value->dr) / floatval($value->rate);
+				$liabilityDr += floatval($value->dr) / floatval($value->transaction_rate);
 			}
 			if($value->cr>0){
-				$liabilityCr += floatval($value->cr) / floatval($value->rate);
+				$liabilityCr += floatval($value->cr) / floatval($value->transaction_rate);
 			}	
 		}
 		
@@ -385,11 +392,12 @@ class Accounting_reports extends REST_Controller {
 
 		//CURRENT LIABILITY (As Of)
 		$currentLiability = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$currentLiability->include_related("transaction", array("rate"));
 		$currentLiability->where_in_related("account/account_type", "id", array(23,24,25,26,27));
 		$currentLiability->where_related("transaction", "issued_date <=", $today);
-		$currentLiability->where_related("transaction", "is_recurring", 0);
-		$currentLiability->where_related("transaction", "deleted", 0);
-		$currentLiability->where("deleted", 0);		
+		$currentLiability->where_related("transaction", "is_recurring <>", 1);
+		$currentLiability->where_related("transaction", "deleted <>", 1);
+		$currentLiability->where("deleted <>", 1);
 		$currentLiability->get_iterated();
 		
 		//Sum Dr and Cr					
@@ -397,10 +405,10 @@ class Accounting_reports extends REST_Controller {
 		$currentLiabilityCr = 0;
 		foreach ($currentLiability as $value) {			
 			if($value->dr>0){
-				$currentLiabilityDr += floatval($value->dr) / floatval($value->rate);
+				$currentLiabilityDr += floatval($value->dr) / floatval($value->transaction_rate);
 			}
 			if($value->cr>0){
-				$currentLiabilityCr += floatval($value->cr) / floatval($value->rate);
+				$currentLiabilityCr += floatval($value->cr) / floatval($value->transaction_rate);
 			}	
 		}
 		
@@ -410,12 +418,13 @@ class Accounting_reports extends REST_Controller {
 
 		//COGS (Begin FiscalDate To As Of)
 		$cogs = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$cogs->include_related("transaction", array("rate"));
 		$cogs->where_related("account/account_type", "id", 36);
-		$cogs->where_related("transaction", "issued_date >", $this->startFiscalDate);
+		$cogs->where_related("transaction", "issued_date >=", $this->startFiscalDate);
 		$cogs->where_related("transaction", "issued_date <=", $today);
-		$cogs->where_related("transaction", "is_recurring", 0);
-		$cogs->where_related("transaction", "deleted", 0);
-		$cogs->where("deleted", 0);		
+		$cogs->where_related("transaction", "is_recurring <>", 1);
+		$cogs->where_related("transaction", "deleted <>", 1);
+		$cogs->where("deleted <>", 1);
 		$cogs->get_iterated();
 		
 		//Sum Dr and Cr					
@@ -423,10 +432,10 @@ class Accounting_reports extends REST_Controller {
 		$cogsCr = 0;
 		foreach ($cogs as $value) {			
 			if($value->dr>0){
-				$cogsDr += floatval($value->dr) / floatval($value->rate);
+				$cogsDr += floatval($value->dr) / floatval($value->transaction_rate);
 			}
 			if($value->cr>0){
-				$cogsCr += floatval($value->cr) / floatval($value->rate);
+				$cogsCr += floatval($value->cr) / floatval($value->transaction_rate);
 			}	
 		}
 		
@@ -436,11 +445,12 @@ class Accounting_reports extends REST_Controller {
 
 		//INVENTORY (As Of)
 		$inventory = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$inventory->include_related("transaction", array("rate"));
 		$inventory->where_related("account/account_type", "id", 13);
 		$inventory->where_related("transaction", "issued_date <=", $today);
-		$inventory->where_related("transaction", "is_recurring", 0);
-		$inventory->where_related("transaction", "deleted", 0);
-		$inventory->where("deleted", 0);		
+		$inventory->where_related("transaction", "is_recurring <>", 1);
+		$inventory->where_related("transaction", "deleted <>", 1);
+		$inventory->where("deleted <>", 1);		
 		$inventory->get_iterated();
 		
 		//Sum Dr and Cr					
@@ -448,10 +458,10 @@ class Accounting_reports extends REST_Controller {
 		$inventoryCr = 0;
 		foreach ($inventory as $value) {			
 			if($value->dr>0){
-				$inventoryDr += floatval($value->dr) / floatval($value->rate);
+				$inventoryDr += floatval($value->dr) / floatval($value->transaction_rate);
 			}
 			if($value->cr>0){
-				$inventoryCr += floatval($value->cr) / floatval($value->rate);
+				$inventoryCr += floatval($value->cr) / floatval($value->transaction_rate);
 			}	
 		}
 		
@@ -461,11 +471,12 @@ class Accounting_reports extends REST_Controller {
 
 		//AR (As Of)
 		$ar = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$ar->include_related("transaction", array("rate"));
 		$ar->where_related("account/account_type", "id", 12);
 		$ar->where_related("transaction", "issued_date <=", $today);
-		$ar->where_related("transaction", "is_recurring", 0);
-		$ar->where_related("transaction", "deleted", 0);
-		$ar->where("deleted", 0);		
+		$ar->where_related("transaction", "is_recurring <>", 1);
+		$ar->where_related("transaction", "deleted <>", 1);
+		$ar->where("deleted <>", 1);
 		$ar->get_iterated();
 		
 		//Sum Dr and Cr					
@@ -473,10 +484,10 @@ class Accounting_reports extends REST_Controller {
 		$arCr = 0;
 		foreach ($ar as $value) {			
 			if($value->dr>0){
-				$arDr += floatval($value->dr) / floatval($value->rate);
+				$arDr += floatval($value->dr) / floatval($value->transaction_rate);
 			}
 			if($value->cr>0){
-				$arCr += floatval($value->cr) / floatval($value->rate);
+				$arCr += floatval($value->cr) / floatval($value->transaction_rate);
 			}	
 		}
 		
@@ -486,11 +497,12 @@ class Accounting_reports extends REST_Controller {
 
 		//AP (As Of)
 		$ap = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$ap->include_related("transaction", array("rate"));
 		$ap->where_related("account/account_type", "id", 23);
 		$ap->where_related("transaction", "issued_date <=", $today);
-		$ap->where_related("transaction", "is_recurring", 0);
-		$ap->where_related("transaction", "deleted", 0);
-		$ap->where("deleted", 0);		
+		$ap->where_related("transaction", "is_recurring <>", 1);
+		$ap->where_related("transaction", "deleted <>", 1);
+		$ap->where("deleted <>", 1);
 		$ap->get_iterated();
 		
 		//Sum Dr and Cr					
@@ -498,10 +510,10 @@ class Accounting_reports extends REST_Controller {
 		$apCr = 0;
 		foreach ($ap as $value) {			
 			if($value->dr>0){
-				$apDr += floatval($value->dr) / floatval($value->rate);
+				$apDr += floatval($value->dr) / floatval($value->transaction_rate);
 			}
 			if($value->cr>0){
-				$apCr += floatval($value->cr) / floatval($value->rate);
+				$apCr += floatval($value->cr) / floatval($value->transaction_rate);
 			}	
 		}
 		
@@ -510,9 +522,9 @@ class Accounting_reports extends REST_Controller {
 
 
 		//SALE (Begin FiscalDate To As Of)
-		$sale = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$sale->where_in("type", array("Commercial_Invoice","Vat_Invoice","Invoice","Commercial_Cash_Sale","Vat_Cash_Sale","Cash_Sale","Sale_Return"));
-		$sale->where("issued_date >", $this->startFiscalDate);
+		$sale = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
+		$sale->where_in("type", array("Commercial_Invoice","Vat_Invoice","Invoice","Commercial_Cash_Sale","Vat_Cash_Sale","Cash_Sale","Sale_Return","Cash_Refund"));
+		$sale->where("issued_date >=", $this->startFiscalDate);
 		$sale->where("issued_date <=", $today);
 		$sale->where("is_recurring <>", 1);
 		$sale->where("deleted <>", 1);
@@ -521,11 +533,10 @@ class Accounting_reports extends REST_Controller {
 		//Sum Sale					
 		$totalSale = 0;
 		foreach ($sale as $value) {
-			if($value->type=="Commercial_Invoice" || $value->type=="Vat_Invoice" || $value->type=="Invoice" || $value->type=="Commercial_Cash_Sale" || $value->type=="Vat_Cash_Sale" || $value->type=="Cash_Sale"){
-				$totalSale += floatval($value->amount) / floatval($value->rate);
-			}else{
-				// -Sale Return
+			if($value->type=="Sale_Return" || $value->type=="Cash_Refund"){
 				$totalSale -= floatval($value->amount) / floatval($value->rate);
+			}else{
+				$totalSale += floatval($value->amount) / floatval($value->rate);
 			}
 		}
 		//END SALE
@@ -533,8 +544,8 @@ class Accounting_reports extends REST_Controller {
 
 		//CREDIT SALE (Begin FiscalDate To As Of)
 		$creditSale = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$creditSale->where_in("type", ["Commercial_Invoice","Vat_Invoice","Invoice"]);
-		$creditSale->where("issued_date >", $this->startFiscalDate);
+		$creditSale->where_in("type", array("Commercial_Invoice","Vat_Invoice","Invoice","Sale_Return"));
+		$creditSale->where("issued_date >=", $this->startFiscalDate);
 		$creditSale->where("issued_date <=", $today);
 		$creditSale->where("is_recurring <>", 1);
 		$creditSale->where("deleted <>", 1);
@@ -543,24 +554,32 @@ class Accounting_reports extends REST_Controller {
 		//Sum Sale					
 		$totalCreditSale = 0;
 		foreach ($creditSale as $value) {
-			$totalCreditSale += floatval($value->amount) / floatval($value->rate);
+			if($value->type=="Sale_Return"){
+				$totalCreditSale -= floatval($value->amount) / floatval($value->rate);
+			}else{
+				$totalCreditSale += floatval($value->amount) / floatval($value->rate);
+			}
 		}
 		//END CREDIT SALE
 
 
 		//CREDIT PURCHASE (Begin FiscalDate To As Of)
 		$creditPurchase = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$creditPurchase->where("type", "Credit_Purchase");
-		$creditPurchase->where("issued_date >", $this->startFiscalDate);
+		$creditPurchase->where_in("type", array("Credit_Purchase", "Purchase_Return"));
+		$creditPurchase->where("issued_date >=", $this->startFiscalDate);
 		$creditPurchase->where("issued_date <=", $today);
-		$creditPurchase->where("is_recurring", 0);
-		$creditPurchase->where("deleted", 0);
+		$creditPurchase->where("is_recurring <>", 1);
+		$creditPurchase->where("deleted <>", 1);
 		$creditPurchase->get_iterated();
 		
 		//Sum Purchase					
 		$totalCreditPurchase = 0;
 		foreach ($creditPurchase as $value) {
-			$totalCreditPurchase += floatval($value->amount) / floatval($value->rate);
+			if($value->type=="Purchase_Return"){
+				$totalCreditPurchase -= floatval($value->amount) / floatval($value->rate);
+			}else{
+				$totalCreditPurchase += floatval($value->amount) / floatval($value->rate);
+			}			
 		}
 		//END CREDIT PURCHASE
 
@@ -568,10 +587,10 @@ class Accounting_reports extends REST_Controller {
 		//TRANSACTION RECORDED (Begin FiscalDate To As Of)
 		$txnRecorded = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$txnRecorded->where("is_journal", 1);
-		$txnRecorded->where("issued_date >", $this->startFiscalDate);
+		$txnRecorded->where("issued_date >=", $this->startFiscalDate);
 		$txnRecorded->where("issued_date <=", $today);
-		$txnRecorded->where("is_recurring", 0);
-		$txnRecorded->where("deleted", 0);
+		$txnRecorded->where("is_recurring <>", 1);
+		$txnRecorded->where("deleted <>", 1);
 		
 		$totalTxnRecorded = $txnRecorded->count();
 		//END TRANSACTION RECORDED
@@ -599,7 +618,7 @@ class Accounting_reports extends REST_Controller {
 		//Days
 		$date1 = new DateTime($this->startFiscalDate);
 		$date2 = new DateTime($today);
-		$days = $date2->diff($date1)->format("%a")-1;
+		$days = $date2->diff($date1)->format("%a");
 
 		$arCollectionPeriod = 0;
 		if($totalCreditSale>0){
@@ -659,8 +678,6 @@ class Accounting_reports extends REST_Controller {
 		$sort 	 	= $this->get("sort");
 		$data["results"] = [];
 		$data["count"] = 0;
-		$is_recurring = 0;
-		$deleted = 0;
 
 		$obj = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
 		
@@ -916,8 +933,6 @@ class Accounting_reports extends REST_Controller {
 		$obj->where_related("transaction", "is_recurring <>", 1);		
 		$obj->where_related("transaction", "deleted <>", 1);
 		$obj->where("deleted <>", 1);
-		
-		//Results
 		$obj->get_iterated();
 		
 		if($obj->exists()){
@@ -967,8 +982,7 @@ class Accounting_reports extends REST_Controller {
 					$totalBalance += $balance_forward;
 
 					$objList[$value->account_id]["id"] 				= $value->account_id;
-					$objList[$value->account_id]["number"] 			= $value->account_number;
-					$objList[$value->account_id]["name"] 			= $value->account_name;
+					$objList[$value->account_id]["name"] 			= $value->account_number ." ". $value->account_name;
 					$objList[$value->account_id]["balance_forward"] = $balance_forward;
 					$objList[$value->account_id]["line"][] 			= array(
 						"id" 				=> $value->transaction_id,
@@ -997,24 +1011,21 @@ class Accounting_reports extends REST_Controller {
 
 	//GET TRIAL BALANCE
 	function trial_balance_get() {		
-		$filters 	= $this->get("filter")["filters"];		
-		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
-		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;
-		$sort 	 	= $this->get("sort");		
+		$filter 	= $this->get("filter");
+		$page 		= $this->get('page');
+		$limit 		= $this->get('limit');
+		$sort 	 	= $this->get("sort");
 		$data["results"] = [];
 		$data["count"] = 0;
-		$is_recurring = 0;
-		$deleted = 0;
 		
 		$asOf = date("Y-m-d");
-		if(!empty($filters) && isset($filters)){			
-	    	foreach ($filters as $value) {
+		if(!empty($filter) && isset($filter)){			
+	    	foreach ($filter["filters"] as $value) {
 	    		$asOf = $value["value"];
 			}									 			
 		}				
 
 		//Fiscal Date
-		//Note: selecting date must greater than startFiscalDate AND smaller or equal to endFiscalDate		
 		$asOfYear = date("Y",strtotime($asOf));
 		$fdate = $asOfYear ."-". $this->fiscalDate;
 		if($asOf > $fdate){
@@ -1025,11 +1036,13 @@ class Accounting_reports extends REST_Controller {
 			$endDate 	= $asOfYear ."-". $this->fiscalDate;
 		}
 
+		//Add 1 day
 		$asOf = date("Y-m-d", strtotime($asOf . "+1 days"));
 		$startDate = date("Y-m-d", strtotime($startDate . "+1 days"));
 
 		//BALANCE SHEET (As Of)
 		$balanceSheet = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$balanceSheet->include_related("transaction", array("rate"));
 		$balanceSheet->include_related("account", array("number","name"));
 		$balanceSheet->include_related("account/account_type", array("name","nature"));		
 		$balanceSheet->where_related("account", "account_type_id >=", 10);
@@ -1046,10 +1059,10 @@ class Accounting_reports extends REST_Controller {
 			$dr = 0;
 			$cr = 0;
 			if($value->dr>0){
-				$dr = floatval($value->dr) / floatval($value->rate);
+				$dr = floatval($value->dr) / floatval($value->transaction_rate);
 			}
 			if($value->cr>0){
-				$cr = floatval($value->cr) / floatval($value->rate);
+				$cr = floatval($value->cr) / floatval($value->transaction_rate);
 			}
 
 			//Group
@@ -1090,6 +1103,7 @@ class Accounting_reports extends REST_Controller {
 
 		//CURRENT PROFIT AND LOSS (startFiscalDate to As Of)
 		$currPL = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$currPL->include_related("transaction", array("rate"));
 		$currPL->include_related("account", array("number","name"));
 		$currPL->include_related("account/account_type", array("name","nature"));		
 		$currPL->where_related("account", "account_type_id >=", 35);
@@ -1107,10 +1121,10 @@ class Accounting_reports extends REST_Controller {
 			$dr = 0;
 			$cr = 0;
 			if($value->dr>0){
-				$dr = floatval($value->dr) / floatval($value->rate);
+				$dr = floatval($value->dr) / floatval($value->transaction_rate);
 			}
 			if($value->cr>0){
-				$cr = floatval($value->cr) / floatval($value->rate);
+				$cr = floatval($value->cr) / floatval($value->transaction_rate);
 			}			
 
 			//Group
@@ -1152,6 +1166,7 @@ class Accounting_reports extends REST_Controller {
 		//RETAINED EARNING = Profit Loss + Retained Earning
 		//PREVIOUSE PROFIT AND LOSS (From Begining to startFiscalDate) Cr - Dr
 		$prevPL = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);				
+		$prevPL->include_related("transaction", array("rate"));
 		$prevPL->where_related("account", "account_type_id >=", 35);
 		$prevPL->where_related("account", "account_type_id <=", 43);
 		$prevPL->where_related("transaction", "issued_date <", $startDate);
@@ -1165,10 +1180,10 @@ class Accounting_reports extends REST_Controller {
 		$sumCr = 0;		
 		foreach ($prevPL as $value) {			
 			if($value->dr>0){
-				$sumDr += floatval($value->dr) / floatval($value->rate);
+				$sumDr += floatval($value->dr) / floatval($value->transaction_rate);
 			}
 			if($value->cr>0){
-				$sumCr += floatval($value->cr) / floatval($value->rate);
+				$sumCr += floatval($value->cr) / floatval($value->transaction_rate);
 			}		
 		}
 		$prevPLAmount = $sumCr - $sumDr;
@@ -1177,6 +1192,7 @@ class Accounting_reports extends REST_Controller {
 
 		//RETAINED EARNING (As Of)
 		$retainEarning = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$retainEarning->include_related("transaction", array("rate"));
 		$retainEarning->where("account_id", 70);
 		$retainEarning->where_related("transaction", "issued_date <", $asOf);		
 		$retainEarning->where_related("transaction", "is_recurring <>", 1);
@@ -1204,10 +1220,10 @@ class Accounting_reports extends REST_Controller {
 
 		foreach ($retainEarning as $value) {
 			if($value->dr>0){
-				$sumDr += floatval($value->dr) / floatval($value->rate);
+				$sumDr += floatval($value->dr) / floatval($value->transaction_rate);
 			}
 			if($value->cr>0){
-				$sumCr += floatval($value->cr) / floatval($value->rate);
+				$sumCr += floatval($value->cr) / floatval($value->transaction_rate);
 			}		
 		}
 		$retainEarningAmount = $sumCr - $sumDr;
@@ -1235,26 +1251,22 @@ class Accounting_reports extends REST_Controller {
 
 	//GET BALANCE SHEET (Statement of Financial Position)
 	function balance_sheet_asset_get() {		
-		$filters 	= $this->get("filter")["filters"];		
-		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
-		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;
-		$sort 	 	= $this->get("sort");		
+		$filter 	= $this->get("filter");
+		$page 		= $this->get('page');
+		$limit 		= $this->get('limit');
+		$sort 	 	= $this->get("sort");
 		$data["results"] = [];
 		$data["count"] = 0;
-		$is_recurring = 0;
-		$deleted = 0;
 
 		$obj = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		
 		$asOf = date("Y-m-d");
-		$typeID = [];
-		if(!empty($filters) && isset($filters)){
-	    	$asOf = $filters[0]["value"];
-	    	$obj->where_in_related("account", "account_type_id", $filters[1]["value"]);		 			
+		if(!empty($filter) && isset($filter)){
+	    	$asOf = $filter["filters"][0]["value"];
+	    	$obj->where_in_related("account", "account_type_id", $filter["filters"][1]["value"]);		 			
 		}		
 
 		//Fiscal Date
-		//Note: selecting date must greater than startFiscalDate AND smaller or equal to endFiscalDate		
 		$asOfYear = date("Y",strtotime($asOf));
 		$fdate = $asOfYear ."-". $this->fiscalDate;
 		if($asOf > $fdate){
@@ -1265,10 +1277,12 @@ class Accounting_reports extends REST_Controller {
 			$endDate 	= $asOfYear ."-". $this->fiscalDate;
 		}
 
+		//Add 1 day
 		$asOf = date("Y-m-d", strtotime($asOf . "+1 days"));
 		$startDate = date("Y-m-d", strtotime($startDate . "+1 days"));
 		
 		//OBJ (As Of)
+		$obj->include_related("transaction", array("rate"));
 		$obj->include_related("account", array("account_type_id","number","name"));
 		$obj->include_related("account/account_type", array("sub_of_id","name","nature"));		
 		$obj->where_related("transaction", "issued_date <", $asOf);
@@ -1284,9 +1298,9 @@ class Accounting_reports extends REST_Controller {
 		foreach ($obj as $value) {
 			$amount = 0;
 			if($value->account_account_type_nature=="Dr"){
-				$amount = (floatval($value->dr) - floatval($value->cr)) / floatval($value->rate);				
+				$amount = (floatval($value->dr) - floatval($value->cr)) / floatval($value->transaction_rate);				
 			}else{
-				$amount = (floatval($value->cr) - floatval($value->dr)) / floatval($value->rate);					
+				$amount = (floatval($value->cr) - floatval($value->dr)) / floatval($value->transaction_rate);					
 			}			
 
 			//Group by account_id
@@ -1371,26 +1385,22 @@ class Accounting_reports extends REST_Controller {
 		$this->response($data, 200);	
 	}
 	function balance_sheet_liability_get() {		
-		$filters 	= $this->get("filter")["filters"];		
-		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
-		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;
-		$sort 	 	= $this->get("sort");		
+		$filter 	= $this->get("filter");
+		$page 		= $this->get('page');
+		$limit 		= $this->get('limit');
+		$sort 	 	= $this->get("sort");
 		$data["results"] = [];
 		$data["count"] = 0;
-		$is_recurring = 0;
-		$deleted = 0;
 
 		$obj = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		
 		$asOf = date("Y-m-d");
-		$typeID = [];
-		if(!empty($filters) && isset($filters)){
-	    	$asOf = $filters[0]["value"];
-	    	$obj->where_in_related("account", "account_type_id", $filters[1]["value"]);		 			
+		if(!empty($filter) && isset($filter)){
+	    	$asOf = $filter["filters"][0]["value"];
+	    	$obj->where_in_related("account", "account_type_id", $filter["filters"][1]["value"]);		 			
 		}		
 
 		//Fiscal Date
-		//Note: selecting date must greater than startFiscalDate AND smaller or equal to endFiscalDate		
 		$asOfYear = date("Y",strtotime($asOf));
 		$fdate = $asOfYear ."-". $this->fiscalDate;
 		if($asOf > $fdate){
@@ -1401,10 +1411,12 @@ class Accounting_reports extends REST_Controller {
 			$endDate 	= $asOfYear ."-". $this->fiscalDate;
 		}
 
+		//Add 1 day
 		$asOf = date("Y-m-d", strtotime($asOf . "+1 days"));
 		$startDate = date("Y-m-d", strtotime($startDate . "+1 days"));
 		
 		//OBJ (As Of)
+		$obj->include_related("transaction", array("rate"));
 		$obj->include_related("account", array("account_type_id","number","name"));
 		$obj->include_related("account/account_type", array("sub_of_id","name","nature"));		
 		$obj->where_related("transaction", "issued_date <", $asOf);
@@ -1420,9 +1432,9 @@ class Accounting_reports extends REST_Controller {
 		foreach ($obj as $value) {
 			$amount = 0;
 			if($value->account_account_type_nature=="Dr"){
-				$amount = (floatval($value->dr) - floatval($value->cr)) / floatval($value->rate);				
+				$amount = (floatval($value->dr) - floatval($value->cr)) / floatval($value->transaction_rate);				
 			}else{
-				$amount = (floatval($value->cr) - floatval($value->dr)) / floatval($value->rate);					
+				$amount = (floatval($value->cr) - floatval($value->dr)) / floatval($value->transaction_rate);					
 			}			
 
 			//Group by account_id
@@ -1507,25 +1519,21 @@ class Accounting_reports extends REST_Controller {
 		$this->response($data, 200);	
 	}
 	function balance_sheet_equity_get() {		
-		$filters 	= $this->get("filter")["filters"];		
-		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
-		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;
-		$sort 	 	= $this->get("sort");		
+		$filter 	= $this->get("filter");
+		$page 		= $this->get('page');
+		$limit 		= $this->get('limit');
+		$sort 	 	= $this->get("sort");
 		$data["results"] = [];
 		$data["count"] = 0;
-		$is_recurring = 0;
-		$deleted = 0;
 
 		$obj = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		
 		$asOf = date("Y-m-d");
-		$typeID = [];
-		if(!empty($filters) && isset($filters)){
-	    	$asOf = $filters[0]["value"];
+		if(!empty($filter) && isset($filter)){
+	    	$asOf = $filter["filters"][0]["value"];
 		}	
 
 		//Fiscal Date
-		//Note: selecting date must greater than startFiscalDate AND smaller or equal to endFiscalDate		
 		$asOfYear = date("Y",strtotime($asOf));
 		$fdate = $asOfYear ."-". $this->fiscalDate;
 		if($asOf > $fdate){
@@ -1536,13 +1544,15 @@ class Accounting_reports extends REST_Controller {
 			$endDate 	= $asOfYear ."-". $this->fiscalDate;
 		}
 
+		//Add 1 day
 		$asOf = date("Y-m-d", strtotime($asOf . "+1 days"));
 		$startDate = date("Y-m-d", strtotime($startDate . "+1 days"));
 		
 		//OBJ (As Of)
-		$obj->where_in_related("account", "account_type_id", array(32,33));
+		$obj->include_related("transaction", array("rate"));
 		$obj->include_related("account", array("account_type_id","number","name"));
-		$obj->include_related("account/account_type", array("sub_of_id","name","nature"));		
+		$obj->include_related("account/account_type", array("sub_of_id","name","nature"));
+		$obj->where_in_related("account", "account_type_id", array(32,33));		
 		$obj->where_related("transaction", "issued_date <", $asOf);
 		$obj->where_related("transaction", "is_recurring <>", 1);
 		$obj->where_related("transaction", "deleted <>", 1);
@@ -1556,9 +1566,9 @@ class Accounting_reports extends REST_Controller {
 		foreach ($obj as $value) {
 			$amount = 0;
 			if($value->account_account_type_nature=="Dr"){
-				$amount = (floatval($value->dr) - floatval($value->cr)) / floatval($value->rate);				
+				$amount = (floatval($value->dr) - floatval($value->cr)) / floatval($value->transaction_rate);				
 			}else{
-				$amount = (floatval($value->cr) - floatval($value->dr)) / floatval($value->rate);					
+				$amount = (floatval($value->cr) - floatval($value->dr)) / floatval($value->transaction_rate);					
 			}			
 
 			//Group by account_id
@@ -1618,6 +1628,7 @@ class Accounting_reports extends REST_Controller {
 		//RETAINED EARNING = Profit Loss + Retained Earning
 		//PREVIOUSE PROFIT AND LOSS (From Begining to startFiscalDate) Cr - Dr
 		$prevPL = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);				
+		$prevPL->include_related("transaction", array("rate"));
 		$prevPL->where_related("account", "account_type_id >=", 35);
 		$prevPL->where_related("account", "account_type_id <=", 43);
 		$prevPL->where_related("transaction", "issued_date <", $startDate);
@@ -1631,10 +1642,10 @@ class Accounting_reports extends REST_Controller {
 		$sumCr = 0;		
 		foreach ($prevPL as $value) {			
 			if($value->dr>0){
-				$sumDr += floatval($value->dr) / floatval($value->rate);
+				$sumDr += floatval($value->dr) / floatval($value->transaction_rate);
 			}
 			if($value->cr>0){
-				$sumCr += floatval($value->cr) / floatval($value->rate);
+				$sumCr += floatval($value->cr) / floatval($value->transaction_rate);
 			}		
 		}
 		$prevPLAmount = $sumCr - $sumDr;
@@ -1644,6 +1655,7 @@ class Accounting_reports extends REST_Controller {
 		//RETAINED EARNING (As Of)
 		$retainEarning = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$retainEarning->where("account_id", 70);
+		$retainEarning->include_related("transaction", array("rate"));
 		$retainEarning->where_related("transaction", "issued_date <", $asOf);		
 		$retainEarning->where_related("transaction", "is_recurring <>", 1);
 		$retainEarning->where_related("transaction", "deleted <>", 1);		
@@ -1670,10 +1682,10 @@ class Accounting_reports extends REST_Controller {
 
 		foreach ($retainEarning as $value) {
 			if($value->dr>0){
-				$sumDr += floatval($value->dr) / floatval($value->rate);
+				$sumDr += floatval($value->dr) / floatval($value->transaction_rate);
 			}
 			if($value->cr>0){
-				$sumCr += floatval($value->cr) / floatval($value->rate);
+				$sumCr += floatval($value->cr) / floatval($value->transaction_rate);
 			}		
 		}
 		$retainEarningAmount = $sumCr - $sumDr;
@@ -1698,6 +1710,7 @@ class Accounting_reports extends REST_Controller {
 
 		//CURRENT PROFIT FOR THE YEAR (startFiscalDate -> As Of)
 		$currPL = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
+		$currPL->include_related("transaction", array("rate"));
 		$currPL->include_related("account/account_type", array("name","nature"));		
 		$currPL->where_related("account", "account_type_id >=", 35);
 		$currPL->where_related("account", "account_type_id <=", 43);
@@ -1713,10 +1726,10 @@ class Accounting_reports extends REST_Controller {
 		$sumCr = 0;		
 		foreach ($currPL as $value) {			
 			if($value->dr>0){
-				$sumDr += floatval($value->dr) / floatval($value->rate);
+				$sumDr += floatval($value->dr) / floatval($value->transaction_rate);
 			}
 			if($value->cr>0){
-				$sumCr += floatval($value->cr) / floatval($value->rate);
+				$sumCr += floatval($value->cr) / floatval($value->transaction_rate);
 			}		
 		}
 		$currentPLAmount = $sumCr - $sumDr;
@@ -1788,6 +1801,7 @@ class Accounting_reports extends REST_Controller {
 			}
 		}
 		
+		$obj->include_related("transaction", array("rate"));
 		$obj->include_related("account", array("number","name"));
 		$obj->include_related("account/account_type", array("id","name","nature"));
 		$obj->where_in_related("account", "account_type_id", array(35,36,37,38,39,40,41,42));
@@ -1809,9 +1823,9 @@ class Accounting_reports extends REST_Controller {
 			foreach ($obj as $value) {
 				$amount = 0;
 				if($value->account_account_type_nature=="Dr"){
-					$amount = (floatval($value->dr) - floatval($value->cr)) / floatval($value->rate);				
+					$amount = (floatval($value->dr) - floatval($value->cr)) / floatval($value->transaction_rate);				
 				}else{
-					$amount = (floatval($value->cr) - floatval($value->dr)) / floatval($value->rate);					
+					$amount = (floatval($value->cr) - floatval($value->dr)) / floatval($value->transaction_rate);					
 				}
 
 				if(isset($objList[$value->account_id])){
@@ -2157,7 +2171,6 @@ class Accounting_reports extends REST_Controller {
 		$data["count"] = 0;
 		$objList = [];
 
-
 		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$accountLine = new Account_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
 		
@@ -2189,22 +2202,21 @@ class Accounting_reports extends REST_Controller {
 		
 		//TRANSACTION
 		$obj->include_related("job", array("name"));
-		$obj->where_in("type", array("Cash_Purchase", "Credit_Purchase","Purchase_Return","Commercial_Invoice","Vat_Invoice","Invoice","Commercial_Cash_Sale","Vat_Cash_Sale","Cash_Sale","Sale_Return"));
+		$obj->where_in("type", array("Cash_Purchase", "Credit_Purchase","Purchase_Return","Payment_Refund","Commercial_Invoice","Vat_Invoice","Invoice","Commercial_Cash_Sale","Vat_Cash_Sale","Cash_Sale","Sale_Return","Cash_Refund"));
 		$obj->where("is_recurring <>", 1);
 		$obj->where("deleted <>", 1);
 		$obj->get_iterated();
 		
 		if($obj->exists()){			
 			foreach ($obj as $value) {
-				$data["jobs"][] = $value->job_id;
 				$revenue = 0;
 				$expense = 0;
 
 				if($value->type=="Cash_Purchase" || $value->type=="Credit_Purchase"){
 					$expense += floatval($value->amount) / floatval($value->rate);
-				}else if($value->type=="Purchase_Return"){
+				}else if($value->type=="Purchase_Return" || $value->type=="Payment_Refund"){
 					$expense -= floatval($value->amount) / floatval($value->rate);
-				}else if($value->type=="Sale_Return"){
+				}else if($value->type=="Sale_Return" || $value->type=="Cash_Refund"){
 					$revenue -= floatval($value->amount) / floatval($value->rate);
 				}else{
 					$revenue += floatval($value->amount) / floatval($value->rate);
@@ -2315,7 +2327,7 @@ class Accounting_reports extends REST_Controller {
 		
 		//TRANSACTION
 		$obj->include_related("job", array("name"));
-		$obj->where_in("type", array("Cash_Purchase", "Credit_Purchase","Purchase_Return","Commercial_Invoice","Vat_Invoice","Invoice","Commercial_Cash_Sale","Vat_Cash_Sale","Cash_Sale","Sale_Return"));
+		$obj->where_in("type", array("Cash_Purchase", "Credit_Purchase","Purchase_Return","Payment_Refund","Commercial_Invoice","Vat_Invoice","Invoice","Commercial_Cash_Sale","Vat_Cash_Sale","Cash_Sale","Sale_Return","Cash_Refund"));
 		$obj->where("is_recurring <>", 1);
 		$obj->where("deleted <>", 1);
 		$obj->get_iterated();
@@ -2327,9 +2339,9 @@ class Accounting_reports extends REST_Controller {
 
 				if($value->type=="Cash_Purchase" || $value->type=="Credit_Purchase"){
 					$expense += floatval($value->amount) / floatval($value->rate);
-				}else if($value->type=="Purchase_Return"){
+				}else if($value->type=="Purchase_Return" || $value->type=="Payment_Refund"){
 					$expense -= floatval($value->amount) / floatval($value->rate);
-				}else if($value->type=="Sale_Return"){
+				}else if($value->type=="Sale_Return" || $value->type=="Cash_Refund"){
 					$revenue -= floatval($value->amount) / floatval($value->rate);
 				}else{
 					$revenue += floatval($value->amount) / floatval($value->rate);
