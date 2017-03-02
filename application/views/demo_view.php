@@ -41548,7 +41548,7 @@
 </script>
 <script id="cashMovement-template" type="text/x-kendo-tmpl">
 	<tr>
-		<td style="font-weight: bold;">#: number # #: name #</td>
+		<td style="font-weight: bold;">#: name #</td>
     	<td></td>
     	<td></td>
     	<td></td>
@@ -41600,7 +41600,7 @@
     </tr>    
     #}# 
     <tr>
-    	<td style="font-weight: bold; color: black;">Total #: number # #: name #</td>
+    	<td style="font-weight: bold; color: black;">Total #: name #</td>
     	<td></td>
     	<td></td>
     	<td></td>
