@@ -248,7 +248,7 @@
 								<div class="widget-body alert-info welcome-nopadding" >
 									<p><span data-bind="text: lang.lang.receivable"></span></p>
 							
-									<div align="center" class="text-large strong" data-bind="text: ar"></div>
+									<div align="center" class="text-large strong" data-bind="text: obj.ar"></div>
 								
 									<table width="100%" >
 										<tr align="center">
@@ -278,7 +278,7 @@
 								<div class="widget-body  alert-info welcome-nopadding" style="width: 100%;">
 									<p><span data-bind="text: lang.lang.payables"></span></p>
 							
-									<div align="center" class="text-large strong" data-bind="text: ap"></div>
+									<div align="center" class="text-large strong" data-bind="text: obj.ap"></div>
 								
 									<table width="100%">
 										<tr align="center">
@@ -64444,7 +64444,7 @@
 		topARDS 			: dataStore(apiUrl + "dashboards/top_ar"),
 		topProductDS 		: dataStore(apiUrl + "dashboards/top_sale_product"),		
 		graphDS 			: dataStore(apiUrl+ "dashboards/monthly_sale"),
-		obj 				: null,
+		obj 				: {},
 		pageLoad 			: function(){
 			this.setObj();
 			this.loadData();
