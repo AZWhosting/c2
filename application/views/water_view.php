@@ -3719,7 +3719,7 @@
 			        	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
 					        <thead>
 					            <tr>
-					                <th><input type="checkbox" data-bind="checked: chkAll, events: {change : checkAll}" /></th>                
+					                <th align="center" style="text-align: center;"><input type="checkbox" data-bind="checked: chkAll, events: {change : checkAll}" /></th>                
 					                <th><span data-bind="text: lang.lang.customer"></span></th>		         
 					                <th><span data-bind="text: lang.lang.meter"></span></th>
 					                <th><span data-bind="">Previous</span></th>
@@ -3919,7 +3919,7 @@
 								<div class="span4">
 									<div class="total-customer">
 										<p>No Print</p>
-										<span data-bind="text: noPrint, click: goNoPrint"></span>
+										<span data-bind="text: noPrint, click: goNoPrint" style="cursor: pointer;"></span>
 									</div>
 								</div>
 								<div class="span4">
@@ -4028,7 +4028,8 @@
 					<div id="wInvoiceContent" data-role="listview" 
 						data-auto-bind="true"
 						data-bind="source: dataSource" 
-						data-template="Invoice-print-row-template"></div>						
+						data-template="Invoice-print-row-template"></div>
+					
 					<!-- Form actions -->
 					<div class="box-generic" align="right" style="background-color: #0B0B3B;">
 						<span id="notification"></span>
@@ -10039,7 +10040,7 @@
 		toDateDisabled 		: true,
 		addSingleReading 	: function() {
 			if(banhji.reading.get('monthOfSR')){
-				if(banhji.reading.get('previousSR') > banhji.reading.get('currentSR')){
+				if(kendo.parseInt(banhji.reading.get('previousSR')) > kendo.parseInt(banhji.reading.get('currentSR'))){
 					alert("Current Reading is smaller than Previous Reading");
 				}else{
 					banhji.reading.dataSource.insert(0, {
@@ -10052,8 +10053,8 @@
 						condition: "new",
 						consumption: banhji.reading.get('currentSR') - banhji.reading.get('previousSR')
 					});
-					banhji.reading.save()
-					.done(
+					banhji.reading.dataSource.sync();
+					banhji.reading.dataSource.bind("requestEnd",
 						function(data) {
 							$("#ntf1").data("kendoNotification").success("Successfully!");
 							banhji.reading.set('monthOfSR', null);
@@ -10062,11 +10063,7 @@
 							banhji.reading.set('currentSR', null);
 							$("#loadImport").css("display","none");
 						}
-					)
-					.fail(function(err){
-						$("#ntf1").data("kendoNotification").error("Error"); 
-						$("#loadImport").css("display","none");	
-					});
+					);
 				}
 			}else{
 				alert("Please select month");
@@ -10197,7 +10194,7 @@
 							banhji.invoice.dataSource.query({
 								filter: {field: 'meter_record_id', operator: 'where_related_winvoice_line', value: e.response.results[0]._meta.id}
 							}).then(function(e){
-								console.log(banhji.invoice.dataSource.data());
+								//console.log(banhji.invoice.dataSource.data());
 							});
 							// create new invoice
 						}
@@ -12007,7 +12004,7 @@
 		},
 		save 				: function() {
 			
-			// $("#loadImport").css("display","block");
+			$("#loadImport").css("display","block");
 
 			var self = this;
 			var amount = 0.0;
@@ -12113,6 +12110,9 @@
 			this.planDS.data([]);
 			this.paymentMethodDS.data([]);
 			this.readingDS.data([]);
+			this.set("showInstallment", false);
+			this.set("issued_date", new Date());
+			banhji.waterCenter.meterDS.data([]);
 			banhji.router.navigate("/center");
 		}
 	});
@@ -12240,6 +12240,7 @@
 	    	var monthOfSearch = this.get("monthSelect"),
 			license_id = this.get("licenseSelect"),
 			bloc_id = this.get("blocSelect");
+			this.clearAll();
 			var para = [];	
 			if(monthOfSearch){						
 				var monthOf = new Date(monthOfSearch);
@@ -12504,6 +12505,13 @@
 				alert("Fields Required!");
 			}
 		},
+		clearAll 			: function(){
+	    	this.set("chkAll", false);
+			this.invoiceArray = [];
+			this.set("totalOfInv", 0);
+			this.set("meterSold", 0);
+			this.set("amountSold", 0);
+	    },
 		cancel 				: function(){
 			this.invoiceCollection.data([]);
 			this.invoiceDS.data([]);
@@ -12649,18 +12657,20 @@
 			license_id = this.get("licenseSelect"),
 			bloc_id = this.get("blocSelect"),
 			self = this;
-			
+			this.clearAll();
+			this.set("noPrint", 0);
 			var para = [];	
 			if(monthOfSearch){						
 				var monthOf = new Date(monthOfSearch);
 				monthOf.setDate(1);
+
 				monthOf = kendo.toString(monthOf, "yyyy-MM-dd");
 				var monthL = new Date(monthOfSearch);
 				var lastDayOfMonth = new Date(monthL.getFullYear(), monthL.getMonth()+1, 0);
 				lastDayOfMonth = lastDayOfMonth.getDate();
 				monthL.setDate(lastDayOfMonth);
 				monthL = kendo.toString(monthL, "yyyy-MM-dd");
-				
+				this.noPrintIDTransaction=[];
 				para.push(
 					{field: "month_of >=", value: monthOf},
 					{field: "month_of <=", value: monthL}
@@ -12696,7 +12706,24 @@
 			}
 	    },
 	    goNoPrint 			: function(){
-		    this.invoiceCollection.dataSource.filter({field: "id",operator: "where_in" ,value: this.noPrintIDTransaction});
+	    	this.clearAll();
+	    	if(this.noPrintIDTransaction.length > 0){
+		    	var noPArray = [];
+		    	$.each(this.noPrintIDTransaction, function(i,v){
+		    		noPArray.push(v);
+		    	});
+			    this.invoiceCollection.dataSource.query({
+		    		filter: { field:"id", operator:"where_in", value: noPArray }
+		    	});
+		    }
+	    },
+	    clearAll 			: function(){
+	    	this.set("chkAll", false);
+			this.printArray = [];
+			this.set("totalInv", 0);
+			
+			this.set("amountTotal", 0);
+			this.set("totalMeter", 0);
 	    },
 		printBill 			: function(){
 			if(this.get("TemplateSelect")){
@@ -12740,45 +12767,18 @@
 		company 			: banhji.institute,
 		PaperSize 			: "A4",
 		TemplateSelect 		: null,
-		invoiceCollection 	: new kendo.data.DataSource({
-	      transport: {
-	        update 	: {
-				url: baseUrl + 'api/winvoices',
-				type: "PUT",
-				dataType: 'json',
-				headers: { Institute: JSON.parse(localStorage.getItem('userData/user')).institute.id }
-			},
-	        parameterMap: function(options, operation) {
-	          if(operation === 'read') {
-	            return {
-	              limit: options.take,
-	              page: options.page,
-	              filter: options.filter
-	            };
-	          } else {
-	            return {models: kendo.stringify(options.models)};
-	          }
-	        }
-	      },
-	      schema  : {
-	        model: {
-	          id: 'id'
-	        },
-	        data: 'results',
-	        total: 'count'
-	      },
-	      batch: true,
-	      serverFiltering: true,
-	      serverPaging: true,
-	      pageSize: 100
-	    }),
 		user_id 			: banhji.userManagement.getLogin() === null ? '':banhji.userManagement.getLogin().id,
 		pageLoad 			: function(id){
-			var listView = $("#wInvoiceContent").data("kendoListView");
+			var listView = $("#wInvoiceContent").data("kendoListView"), self = this;
 			listView.refresh();
 			if(this.dataSource){
 				this.barcod("do");
 			}
+			$.each(this.dataSource, function(i,v){
+				var PrintCount = v.print_count + 1;
+				self.dataSource[i].set("print_count", PrintCount);
+			});
+			//this.printCountDS.add(this.dataSource);
 		},
 		barcod 			: function(re){
 			var view = this.dataSource;
@@ -12811,6 +12811,7 @@
 				}
 			}
 		},
+
 		printGrid 		: function(){
 			var self = this, Win, pHeight, pWidth;
 			if(this.PaperSize == "A5"){
@@ -12822,12 +12823,7 @@
 				pHeight = "297mm";
 				pWidth = "210mm";
 			}
-			this.invoiceCollection.data([]);
-			this.invoiceCollection.add(this.dataSource);
-			for(var i = 0; i < this.invoiceCollection.data().length; i++) {
-				this.invoiceCollection.data()[i].print_count += 1;
-			}
-			//this.invoiceCollection.sync();
+			banhji.invoice.dataSource.sync();
 			var gridElement = $('#grid'),
 		        printableContent = '',
 		        win = Win,
@@ -12945,11 +12941,12 @@
 			}
 		},
 		cancel 				: function(){
-
-			banhji.InvoicePrint.dataSource = [];
+			this.dataSource = [];
+			var listView = $("#wInvoiceContent").data("kendoListView"), self = this;
+			listView.refresh();
 			this.set("PaperSize","A4");
 			this.barcod("reset");
-			window.history.back();
+			banhji.router.navigate("/print_bill");
 		}
 	});
 	
@@ -17076,6 +17073,7 @@
 		exportEXCEL 		: function(){
 		},
 		pageLoad 			: function(id){
+			this.meterDS.data([]);
 			banhji.view.layout.showIn("#waterCenterContent", banhji.view.waterCenterContent);
 			//Refresh
 			if(this.contactDS.total()>0){

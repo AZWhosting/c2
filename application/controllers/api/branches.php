@@ -31,7 +31,7 @@ class Branches extends REST_Controller {
 		$data["count"] = 0;
 
 		$obj = new Branch(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
-
+		$obj->order_by("id", "ASC");
 		//Sort
 		if(!empty($sort) && isset($sort)){					
 			foreach ($sort as $value) {

@@ -187,13 +187,13 @@ class Winvoices extends REST_Controller {
 
 		$number = "";
 		foreach ($models as $value) {
-			// if(isset($value->is_recurring)){
-			// 	if($value->is_recurring==0){
-			// 		$number = $this->_generate_number($value->type, $value->issued_date);
-			// 	}
-			// }else{
-			// 	$number = $this->_generate_number($value->type, $value->issued_date);
-			// }
+			if(isset($value->is_recurring)){
+				if($value->is_recurring==0){
+					$number = $this->_generate_number($value->type, $value->issued_date);
+				}
+			}else{
+				$number = $this->_generate_number($value->type, $value->issued_date);
+			}
 
 			$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			// $obj->company_id 		= $value->company_id;
@@ -215,6 +215,7 @@ class Winvoices extends REST_Controller {
 		   	$obj->issued_date 		= isset($value->issued_date) ? $value->issued_date : "";
 		   	$obj->bill_date 		= isset($value->bill_date) ? $value->bill_date : "";
 		   	$obj->due_date 			= date('Y-m-d', strtotime($value->due_date));
+		   	$obj->is_journal 		= 1;
 		   	$obj->check_no 			= isset($value->check_no) ? $value->check_no : "";
 		   	$obj->memo 				= isset($value->memo) ? $value->memo: "";
 		   	$obj->memo2 			= isset($value->memo2) ? $value->memo2: "";
@@ -412,7 +413,6 @@ class Winvoices extends REST_Controller {
 			
 			$remain = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$remain->where_related("contact/meter", "id", $m->id);
-			//echo $row->id."____";
 			$remain->where("type", "Water_Invoice");
 			$remain->where("id <>", $row->id);
 			$remain->where("deleted <>", 1);
@@ -420,7 +420,16 @@ class Winvoices extends REST_Controller {
 			$amountOwed = 0;
 			foreach($remain as $rem) {
 				if($rem->status == 2) {
-					$amountOwed += $rem->remain;
+					$Rremain = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					//echo $row->id."____";
+					$Rremain->where("type", "Cash_Receipt");
+					$Rremain->where("reference_id", $rem->id);
+					$Rremain->where("deleted <>", 1);
+					$Rremain->where("status <>", 1)->get();
+					
+					foreach($Rremain as $Rrem) {
+						$amountOwed = $Rrem->sub_total - $Rrem->amount;
+					}
 				} else {
 					$amountOwed += $rem->amount;
 				}

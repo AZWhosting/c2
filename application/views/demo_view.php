@@ -203,17 +203,17 @@
 									<tr>
 										<td><span data-bind="text: lang.lang.income"></span></td>
 										<td></td>
-										<td align="right"><span data-bind="text: income"></span></td>
+										<td align="right"><span data-bind="text: obj.income"></span></td>
 									</tr>
 									<tr>
 										<td><span data-bind="text: lang.lang.expense"></span></td>
 										<td></td>
-										<td align="right"><span data-bind="text: expense"></span></td>
+										<td align="right"><span data-bind="text: obj.expense"></span></td>
 									</tr>
 									<tr>
 										<td><b><span data-bind="text: lang.lang.net_income"></span></b></td>
 										<td></td>
-										<td align="right"><b data-bind="text: net_income"></b></td>
+										<td align="right"><b data-bind="text: obj.net_income"></b></td>
 									</tr>
 								</table>
 							</a>     
@@ -225,17 +225,17 @@
 									<tr>
 										<td><span data-bind="text: lang.lang.asset"></span></td>
 										<td></td>
-										<td align="right"><span data-bind="text: asset"></span></td>
+										<td align="right"><span data-bind="text: obj.asset"></span></td>
 									</tr>
 									<tr>
 										<td><span data-bind="text: lang.lang.liabilities"></span></td>
 										<td></td>
-										<td align="right"><span data-bind="text: liability"></span></td>
+										<td align="right"><span data-bind="text: obj.liability"></span></td>
 									</tr>
 									<tr>
 										<td><b><span data-bind="text: lang.lang.equity"></span></b></td>
 										<td></td>
-										<td align="right"><b data-bind="text: equity"></b></td>
+										<td align="right"><b data-bind="text: obj.equity"></b></td>
 									</tr>
 								</table>
 							</a>
@@ -253,17 +253,17 @@
 									<table width="100%" >
 										<tr align="center">
 											<td>										
-												<span data-bind="text: ar_open"></span>
+												<span data-bind="text: obj.ar_open"></span>
 												<br>
 												<span><span data-bind="text: lang.lang.open"></span></span>
 											</td>
 											<td>
-												<span data-bind="text: ar_customer"></span>
+												<span data-bind="text: obj.ar_customer"></span>
 												<br>
 												<span><span data-bind="text: lang.lang.customers"></span></span>
 											</td>
 											<td>
-												<span data-bind="text: ar_overdue"></span>
+												<span data-bind="text: obj.ar_overdue"></span>
 												<br>
 												<span><span data-bind="text: lang.lang.overdue"></span></span>
 											</td>
@@ -283,17 +283,17 @@
 									<table width="100%">
 										<tr align="center">
 											<td>										
-												<span data-bind="text: ap_open"></span>
+												<span data-bind="text: obj.ap_open"></span>
 												<br>
 												<span><span data-bind="text: lang.lang.open"></span></span>
 											</td>
 											<td>
-												<span data-bind="text: ap_vendor"></span>
+												<span data-bind="text: obj.ap_vendor"></span>
 												<br>
 												<span><span data-bind="text: lang.lang.suppliers"></span></span>
 											</td>
 											<td>
-												<span data-bind="text: ap_overdue"></span>
+												<span data-bind="text: obj.ap_overdue"></span>
 												<br>
 												<span><span data-bind="text: lang.lang.overdue"></span></span>
 											</td>
@@ -9458,7 +9458,7 @@
 						<td class="center" style="vertical-align: top;">
 							<a href="#/payment_refund">
 								<img title="Add Payment Refund" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/refund_payment.png" width="110" height="200" />
-								<span style="margin-top: 7px; display: inline-block; text-transform: uppercase;">Payment Refund</span>
+								<span style="margin-top: 7px; display: inline-block; text-transform: uppercase;" data-bind="text: lang.lang.payment_refund"></span>
 							</a>
 						</td>
 						<td class="center" style="vertical-align: top;">
@@ -9656,8 +9656,8 @@
 	                    template: "#= series.name #: #= kendo.toString(value, &#39;c&#39;, banhji.locale) #"
 	                 }'                 
 	                 data-series="[
-	                                 { field: 'sale', name: 'Monthly Purchase', categoryField:'month', color: '#203864', overlay: {gradient:'none'} },
-	                                 { field: 'order', name: 'Monthly Purchase Order', categoryField:'month', color: '#A6C9E3', overlay: {gradient:'none'} }
+	                                 { field: 'sale', name: langVM.lang.monthly_purchase, categoryField:'month', color: '#203864', overlay: {gradient:'none'} },
+	                                 { field: 'order', name: langVM.lang.monthly_purchase_order, categoryField:'month', color: '#A6C9E3', overlay: {gradient:'none'} }
 	                             ]"
 	                 data-auto-bind="false"	                             
 	                 data-bind="source: graphDS"
@@ -14450,7 +14450,7 @@
 		    				onclick="javascript:window.history.back()"
 							data-bind="click: cancel"><i></i></span>
 
-				    <h2>Supplier Recurring</h2>
+				    <h2 data-bind="text: lang.lang.supplier_recurring_list"></h2>
 
 				    <br>
 
@@ -14461,7 +14461,7 @@
 							    <!-- Tabs Heading -->
 								<div class="widget-head">
 									<ul>
-										<li class="active"><a class="glyphicons user" href="#tab-1" data-toggle="tab"><i></i>Select Supplier</a></li>
+										<li class="active"><a class="glyphicons user" href="#tab-1" data-toggle="tab" data-bind="text: lang.lang.select_supplier"><i></i></a></li>
 									</ul>
 								</div>
 							    <!-- // Tabs Heading END -->
@@ -14492,11 +14492,11 @@
 					                           					
 	            	<table class="table table-bordered table-primary table-striped table-vertical-center">
 	            		<thead style="background-color: blue; color: #fff; font-weight: bold">
-			                <th>TYPE</th>
-			                <th>RECURRING NAME</th>
-			                <th>SUPPLIER</th>
-			                <th>START DATE</th>
-			                <th class="center">FREQUENCY</th>
+			                <th data-bind="text: lang.lang.type"></th>
+			                <th data-bind="text: lang.lang.name"></th>
+			                <th data-bind="text: lang.lang.supplier"></th>
+			                <th data-bind="text: lang.lang.start_date"></th>
+			                <th class="center" data-bind="text: lang.lang.frequency"></th>
 			                <th></th>
 	            		</thead>
 	            		<tbody data-role="listview" 
@@ -14523,12 +14523,11 @@
 		<td>#=kendo.toString(new Date(start_date), "dd-MM-yyyy")#</td>
 		<td class="center">#=frequency#</td>
 		<td class="center">
-			<a class="btn btn-warning" data-bind="click: edit"><i></i> Edit</a>
-			<a class="btn btn-success" data-bind="click: use"><i></i> Use</a>
+			<a class="btn btn-warning" data-bind="click: edit" data-bind="text: lang.lang.edit"><i></i></a>
+			<a class="btn btn-success" data-bind="click: use" data-bind="text: lang.lang.use"><i></i></a>
 		</td>		
     </tr>   
 </script>
-
 <script id="vendorReportCenter" type="text/x-kendo-template">
 	<div class="cover-block" style="width: 99%; background: #fff;">
 		<div class="row-fluid customer-report-center">
@@ -14537,85 +14536,76 @@
 			<br>
 			<div class="span7">
 				<div class="row-fluid sale-report" style="margin-bottom: 15px; padding-bottom: 5px; box-shadow: 0 2px 0 #d4d7dc, 0 0 0 #eceef1, 0 0 0 #eceef1;">
-					<h2>EXPENSE/PURCHASE MANAGEMENT REPORTS</h2>
-					<p>
-						The following reports provide summary and detailed reports in different ways to help analyze what 
-						you spent and their impact on your cash flow and performance. 
+					<h2 data-bind="text: lang.lang.expense_purchase_management_reports" style="text-transform: uppercase;"></h2>
+					<p data-bind="text: lang.the_following_reports_provide_summary_and_detailed_reports">
 					</p>
 					<div class="row-fluid">
 						<table class="table table-borderless table-condensed">
 							<tr>
 								<td>
-									<h3><a href="#/expenses_purchase_summary_supplier">Expenses/ Purchase Summary by Supplier</a></h3>
+									<h3><a href="#/expenses_purchase_summary_supplier" data-bind="text: lang.lang.expenses_purchase_summary_by_supplier"></a></h3>
 								</td>
 								<td >
-									<h3><a href="#/suppliers_transaction_list">Suppliers Transaction List</a></h3>								
+									<h3><a href="#/suppliers_transaction_list" data-bind="text: lang.lang.suppliers_transaction_list"></a></h3>								
 								</td>						
 							</tr>
 							<tr>
 								<td >
-									<p>
-										Summarizes total expenses/ purchase for each suppliers within a period of time.
+									<p data-bind="text: lang.lang.summarizes_total_expenses_purchase_for_each">
 									</p>
 									
 								</td>
 								<td >
-									<p>
-										Lists of all transactions related to and grouped by each suppliers
+									<p data-bind="text: lang.lang.lists_of_all_transactions_related_to_and_grouped_by_each_suppliers">
 									</p>
 								</td>
 								
 							</tr>
 							<tr>
 								<td >
-									<h3><a href="#/expenses_purchase_detail_supplier">Expenses/Purchase Detail by Supplier</a></h3>
+									<h3><a href="#/expenses_purchase_detail_supplier" data-bind="text: lang.lang.expeneses_purchase_detail_by_suppplier"></a></h3>
 								</td>
 								<td >
-									<h3><a href="#/deposit_detail_supplier">Deposit Detail by Supplier</a></h3>
+									<h3><a href="#/deposit_detail_supplier" data-bind="text: lang.lang.deposit_detail_by_supplier"></a></h3>
 								</td>
 							</tr>
 							<tr>
 								<td >
-									<p>
-										Lists individual expenses/ purchase transactions by date for each supplier within a period of time.
+									<p data-bind="text: lang.lang.lists_individual_expenses_purchase_transactions_by">
 									</p>
 								</td>
 								<td >
-									<p>
-										Provides detailed information about supplier deposit for specific order, prepayment, or credit.
+									<p data-bind="text: lang.lang.provides_detailed_information_about_supplier_deposit">
 									</p>
 								</td>
 							</tr>
 
 							<tr>
 								<td >
-									<h3><a href="#/purchase_summary_product_services">Purchase Summary by Product/ Services</a></h3>
+									<h3><a href="#/purchase_summary_product_services" data-bind="text: lang.lang.purchase_summary_by_product_services"></a></h3>
 								</td>
 								<td >
-									<h3><a href="#/open_purchase_order">Open Purchase Order</a></h3>
+									<h3><a href="#/open_purchase_order" data-bind="text: lang.lang.open_purchase_order"></a></h3>
 								</td>
 							</tr>
 							<tr>
 								<td >
-									<p>
-										Summarizes total expenses/ purchase for each product/ service within a period of time. 
+									<p data-bind="text: lang.lang.summarizes_total_expenses_purchase_for_each">
 									</p>
 								</td>
 								<td >
-									<p>
-										Lists all the open purchase order grouped by suppliers including the original amount as well.
+									<p data-bind="text: lang.lang.lists_all_the_open_purchase_order_grouped_by_suppliers">
 									</p>
 								</td>
 							</tr>
 							<tr>
 								<td >
-									<h3><a href="#/purchase_detail_product_services">Purchase Detail by Product/ Services</a></h3>
+									<h3><a href="#/purchase_detail_product_services" data-bind="text: lang.lang.purchase_summary_by_product_services"></a></h3>
 								</td>
 							</tr>
 							<tr>
 								<td >
-									<p>
-										Lists individual sale transactions by date for each product/ service with a period of time.
+									<p data-bind="text: lang.lang.lists_individual_sale_transactions_by_date_for_each_product">
 									</p>
 								</td>
 							</tr>
@@ -14625,72 +14615,65 @@
 				</div>
 
 				<div class="row-fluid recevable-report" style="margin-bottom: 15px; padding-bottom: 5px; box-shadow: 0 2px 0 #d4d7dc, 0 0 0 #eceef1, 0 0 0 #eceef1;">
-					<h2>PAYABLES MANAGEMENT REPORTS</h2>
-					<p>
-						The following reports provide summary and detailed reports.
+					<h2 data-bind="text: lang.lang.payable_management_reports"></h2>
+					<p data-bind="text: lang.lang.the_following_reports_provide_summary_and_detailed_reports">
 					</p>
 					<div class="row-fluid">
 						<table class="table table-borderless table-condensed">
 							<tr>
 								<td>
-									<h3><a href="#/suppliers_balance_summary">Suppliers Balance Summary</a></h3>
+									<h3><a href="#/suppliers_balance_summary" data-bind="text: lang.lang.suppliers_balance_summary"></a></h3>
 								</td>
 								<td >
-									<h3><a href="#/suppliers_balance_detail">Suppliers Balance Detail</a></h3>								
+									<h3><a href="#/suppliers_balance_detail" data-bind="text: lang.lang.suppliers_balance_detail"></a></h3>								
 								</td>						
 							</tr>
 							<tr>
 								<td >
-									<p>
-										Show each supplier’s total outstanding balances.
+									<p data-bind="text: lang.lang.show_each_supplier_total_outstanding_balances">
 									</p>
 									
 								</td>
 								<td >
-									<p>
-										Lists individual unpaid bill for each supplier
+									<p data-bind="text: lang.lang.lists_individual_unpaid_bill_for_each_supplier">
 									</p>
 								</td>
 								
 							</tr>
 							<tr>
 								<td >
-									<h3><a href="#/payables_aging_summary">Payables Aging Summary</a></h3>
+									<h3><a href="#/payables_aging_summary" data-bind="text: lang.lang.payables_aging_summary"></a></h3>
 								</td>
 								<td >
-									<h3><a href="#/payables_aging_detail">Payables Aging Detail</a></h3>
+									<h3><a href="#/payables_aging_detail" data-bind="text: lang.lang.payables_aging_detail"></a></h3>
 								</td>
 							</tr>
 							<tr>
 								<td >
-									<p>
-										Lists all unpaid bills for the current period, 30, 60, 90, and more than 90 days, grouped by individual suppliers. 
+									<p data-bind="text: lang.lang.lists_all_unpaid_bills_for_the_current_period,_30,_60,_90,_and_more"> 
 									</p>
 								</td>
 								<td >
-									<p>
-										Lists individual unpaid bills, grouped by suppliers. This includes due date, outstanding days (aging days), and amount.
+									<p data-bind="text: lang.lang.lists_individual_unpaid_bills_grouped_by_suppliers_this_includes">
 									</p>
 								</td>
 							</tr>
 
 							<tr>
 								<td >
-									<h3><a href="#/list_bills_paid">List of bills to be paid</a></h3>
+									<h3><a href="#/list_bills_paid" data-bind="text: lang.lang.list_of_bills_to_be_paid"></a></h3>
 								</td>
 								<td >
-									<h3><a href="#/bill_payment_list">Bill Payment List</a></h3>
+									<h3><a href="#/bill_payment_list" data-bind="text: lang.lang.bill_payment_list"></a></h3>
 								</td>
 							</tr>
 							<tr>
 								<td >
-									<p>
-										Lists all unpaid invoices, grouped by Due today and Overdue.
+									<p data-bind="text: lang.lang.lists_all_unpaid_invoices_grouped_by_due_today_and_0verdue">
 									</p>
 								</td>
 								<td >
-									<p>
-										Lists of paid bills for the select period of time, group by method of payments.
+									<p data-bind="text: lang.lang.lists_of_paid_bills_for_the_select_period_of_time_group_by_method_of_payments">
 									</p>
 								</td>
 							</tr>						
@@ -14700,7 +14683,7 @@
 				</div>
 
 				<div class="row-fluid recevable-report">
-					<h2>OTHER REPORTS/ LISTS</h2>
+					<h2 data-bind="text: lang.lang.other_reports_lists"></h2>
 					<div class="row-fluid">
 						<table class="table table-borderless table-condensed">
 							<tr>
@@ -14708,10 +14691,10 @@
 									<h3><a href="#/product_service_list">Product/ Service List</a></h3>
 								</td> -->
 								<td >
-									<h3><a href="#/supplier_list">Supplier List</a></h3>								
+									<h3><a href="#/supplier_list" data-bind="text: lang.lang.supplier_list"></a></h3>								
 								</td>
 								<td >
-									<h3><a href="#/vendor_recurring">Recurring Supplier Template List</a></h3>								
+									<h3><a href="#/vendor_recurring" data-bind="text: lang.lang.recurring_supplier_template_list"></a></h3>								
 								</td>						
 							</tr>
 							<tr>
@@ -14722,8 +14705,7 @@
 									</p>								
 								</td> -->
 								<td >
-									<p>
-										Lists of all active suppliers
+									<p data-bind="text: lang.lang.lists_of_all_active_suppliers">
 									</p>
 								</td>
 								<td>								
@@ -14744,24 +14726,24 @@
 			<div class="span5">
 				<div class="report-chart" style="margin-bottom: 20px; margin-top: 10px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
 					<div class="widget-body alert alert-primary sale-overview" style="margin-bottom: 0 !important;">
-						<h2>Expenses/ Purchase Overview</h2>
+						<h2 data-bind="text: lang.lang.expenses_purchase_overview"></h2>
 						<div align="center" class="text-large strong" data-bind="text: purchase"></div>
 						<table width="100%">
 							<tr align="center">
 								<td>										
 									<span data-bind="text: purchase_supplier"></span>
 									<br>
-									<span>Suppliers</span>
+									<span data-bind="text: lang.lang.suppliers"></span>
 								</td>
 								<td>
 									<span data-bind="text: purchase_product"></span>
 									<br>
-									<span>Products</span>
+									<span data-bind="text: lang.lang.products"></span>
 								</td>
 								<td>
 									<span data-bind="text: purchase_order"></span>
 									<br>
-									<span>Order</span>
+									<span data-bind="text: lang.lang.order"></span>
 								</td>
 							</tr>
 						</table>
@@ -14777,8 +14759,8 @@
 			                    template: "#= series.name #: #= kendo.toString(value, &#39;c&#39;, banhji.locale) #"
 			                 }'                 
 			                 data-series="[
-			                                 { field: 'sale', name: 'Monthly Purchase', categoryField:'month', color: '#203864', overlay:{ gradient: 'none'} },
-			                                 { field: 'order', name: 'Monthly Purchase Order', categoryField:'month', color: '#9CB9D9', overlay:{ gradient: 'none'} }
+			                                 { field: 'sale', name: langVM.lang.monthly_purchase, categoryField:'month', color: '#203864', overlay:{ gradient: 'none'} },
+			                                 { field: 'order', name: langVM.lang.monthly_purchase_order, categoryField:'month', color: '#9CB9D9', overlay:{ gradient: 'none'} }
 			                             ]"	                             
 			                 data-bind="source: graphDS"
 			                 style="height: 250px;" ></div>
@@ -14788,29 +14770,29 @@
 
 				<div class="report-chart" style="margin-bottom: 20px; padding: 15px; margin-top: 10px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
 					<div class="widget-body receivable-overview" style="background-color: #fff; margin-bottom: 0; color: #203864;">
-						<h2 style="text-transform: uppercase; color: #203864; font-weight: 800;">PAYABLES MANAGEMENT</h2>
+						<h2 style="text-transform: uppercase; color: #203864; font-weight: 800;" data-bind="text: lang.lang.payables_management"></h2>
 						<div align="center" class="text-large strong" data-bind="text: ap"></div>
 						<table width="100%">
 							<tr align="center">
 								<td>										
 									<span data-bind="text: ap_open"></span>
 									<br>
-									<span>Open</span>
+									<span data-bind="text: lang.lang.open"></span>
 								</td>
 								<td>
 									<span data-bind="text: ap_supplier"></span>
 									<br>
-									<span>Supplier</span>
+									<span data-bind="text: lang.lang.supplier"></span>
 								</td>
 								<td>
 									<span data-bind="text: ap_overdue"></span>
 									<br>
-									<span>Overdue</span>
+									<span data-bind="text: lang.lang.overdue"></span>
 								</td>
 								<td>
 									<span data-bind="text: collection_day"></span>
 									<br>
-									<span>Payable Payment Days</span>
+									<span data-bind="text: lang.lang.payable_payment_days"></span>
 								</td>
 							</tr>
 						</table>
@@ -14838,9 +14820,9 @@
 								<!-- Tabs Heading -->
 								<div class="widget-head">
 									<ul>
-										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>	
-										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i>Filter</a></li>
-										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab" data-bind="click: printGrid"><i></i>Print/Export</a></li>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i><span data-bind="text: lang.lang.date"></span></a></li>	
+										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i><span data-bind="text: lang.lang.filter"></span></a></li>
+										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab" data-bind="click: printGrid"><i></i><span data-bind="text: lang.lang.print_export"></span></a></li>
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
@@ -14909,20 +14891,20 @@
 					<div id="invFormContent">
 						<div class="block-title">
 							<h3 data-bind="text: company.name"></h3>
-							<h2>Expenses/ Purchase Summary by Supplier</h2>
+							<h2 data-bind="text: lang.lang.expenses_purchase_summary_by_supplier""></h2>
 							<p data-bind="text: displayDate"></p>
 						</div>
 
 						<div class="row-fluid">
 							<div class="span3">
 								<div class="total-customer">
-									<p>Total Supplier</p>
+									<p data-bind="text: lang.lang.total_suppliers"></p>
 									<span data-bind="text: dataSource.total"></span>
 								</div>
 							</div>
 							<div class="span9">
 								<div class="total-sale">
-									<p>Total Expenses/ Purchase</p>
+									<p data-bind="text: lang.lang.total_expenses_purchase"></p>
 									<span data-bind="text: totalAmount"></span>
 								</div>
 							</div>
@@ -14931,10 +14913,10 @@
 						<table class="table table-borderless table-condensed ">
 							<thead>
 								<tr>
-									<th ><span>Supplier</span></th>
-									<th style="text-align: right;"><span>Credit Purchase</span></th>
-									<th style="text-align: right;"><span>Cash Purchase</span></th>
-									<th ><span>Total Expenses/ Purchase</span></th>								
+									<th ><span data-bind="text: lang.lang.supplier"></span></th>
+									<th style="text-align: right;"><span data-bind="text: lang.lang.credit_purchase"></span></th>
+									<th style="text-align: right;"><span data-bind="text: lang.lang.cash_purchase"></span></th>
+									<th ><span data-bind="text: lang.lang.total_expense_purchase"></span></th>								
 								</tr>
 							</thead>
 							<tbody data-role="listview"
@@ -14975,9 +14957,9 @@
 								<!-- Tabs Heading -->
 								<div class="widget-head">
 									<ul>
-										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>	
-										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i>Filter</a></li>
-										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab" data-bind="click: printGrid"><i></i>Print/Export</a></li>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i><span data-bind="text: lang.lang.date"></span></a></li>	
+										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i><span data-bind="text: lang.lang.filter"></span></a></li>
+										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab" data-bind="click: printGrid"><i></i><span data-bind="text: lang.lang.print_export"></span></a></li>
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
@@ -15047,21 +15029,21 @@
 
 						<div class="block-title">
 							<h3 data-bind="text: company.name"></h3>
-							<h2>Expenses/ Purchase Detail by Supplier</h2>
+							<h2 data-bind="text: lang.lang.expeneses_purchase_detail_by_suppplier"></h2>
 							<p data-bind="text: displayDate"></p>
 						</div>
 
 						<div class="row-fluid">
 							<div class="span3">
 								<div class="total-customer">
-									<p>Total Supplier</p>
+									<p data-bind="text: lang.lang.total_supplier"></p>
 									<span data-bind="text: dataSource.total"></span>
 								</div>
 
 							</div>
 							<div class="span9">
 								<div class="total-sale">
-									<p>Total Expenses/ Purchase</p>
+									<p data-bind="text: lang.lang.total_expense_purchase"></p>
 									<span data-bind="text: total"></span>
 								</div>
 							</div>
@@ -15072,7 +15054,7 @@
 							<tr>
 								<th><span data-bind="text: lang.lang.type"></span></th>
 								<th><span data-bind="text: lang.lang.date"></span></th>
-								<th  style="text-align: right;"><span>Reference</span></th>							
+								<th  style="text-align: right;"><span data-bind="text: lang.lang.reference"></span></th>							
 								<th><span data-bind="text: lang.lang.amount"></span></th>
 							</tr>
 						</thead>
@@ -15109,7 +15091,7 @@
 		</tr>
 	#}#
 	<tr>
-    	<td style="font-weight: bold; color: black;">Total</td>
+    	<td style="font-weight: bold; color: black;" data-bind="text: lang.lang.total"></td>
     	<td></td>
     	<td></td>
     	<td class="right" style="font-weight: bold; border-top: 1px solid black !important; color: black;">
@@ -15138,9 +15120,9 @@
 								<!-- Tabs Heading -->
 								<div class="widget-head">
 									<ul>
-										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>	
-										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i>Filter</a></li>
-										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab" data-bind="click: printGrid"><i></i>Print/Export</a></li>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i><span data-bind="text: lang.lang.date"></span></a></li>	
+										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i><span data-bind="text: lang.lang.filter"></span></a></li>
+										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab" data-bind="click: printGrid"><i></i><span data-bind="text: lang.lang.print_export"></span></a></li>
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
@@ -15209,7 +15191,7 @@
 					<div id="invFormContent">
 						<div class="block-title">
 							<h3 data-bind="text: company.name"></h3>
-							<h2>Suppliers Transaction List</h2>
+							<h2 data-bind="text: lang.lang.suppliers_transaction_list"></h2>
 							<p data-bind="text: displayDate"></p>
 						</div>
 
@@ -15218,7 +15200,7 @@
 							<tr>
 								<th><span data-bind="text: lang.lang.type"></span></th>
 								<th><span data-bind="text: lang.lang.date"></span></th>
-								<th style="text-align: right;"><span>Reference</span></th>
+								<th style="text-align: right;"><span data-bind="text: lang.lang.reference"></span></th>
 								<th><span data-bind="text: lang.lang.amount"></span></th>
 							</tr>
 						</thead>
@@ -15255,7 +15237,7 @@
 		</tr>
 	#}#
 	<tr>
-    	<td style="font-weight: bold; color: black;">Total</td>
+    	<td style="font-weight: bold; color: black;" data-bind="text: lang.lang.total"></td>
     	<td></td>
     	<td></td>
     	<td class="right" style="font-weight: bold; border-top: 1px solid black !important; color: black;">
@@ -15284,9 +15266,9 @@
 								<!-- Tabs Heading -->
 								<div class="widget-head">
 									<ul>
-										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>	
-										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i>Filter</a></li>
-										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab" data-bind="click: printGrid"><i></i>Print/Export</a></li>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i><span data-bind="text: lang.lang.date"></span></a></li>	
+										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i><span data-bind="text: lang.lang.filter"></span></a></li>
+										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab" data-bind="click: printGrid"><i></i><span data-bind="text: lang.lang.print_export"></span></a></li>
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
@@ -15356,20 +15338,20 @@
 					<div id="invFormContent">
 						<div class="block-title">
 							<h3 data-bind="text: company.name"></h3>
-							<h2>Deposit Detail By Supplier</h2>
+							<h2 data-bind="text: lang.lang.deposit_detail_by_supplier"></h2>
 							<p data-bind="text: displayDate"></p>
 						</div>
 
 						<div class="row-fluid">
 							<div class="span3">
 								<div class="total-customer">
-									<p>Number of Supplier</p>
+									<p data-bind="text: lang.lang.number_of_supplier"></p>
 									<span data-bind="text: dataSource.total"></span>
 								</div>
 							</div>
 							<div class="span9">
 								<div class="total-customer">
-									<p>Deposit Balance</p>
+									<p data-bind="text: lang.lang.deposit_balance"></p>
 									<span data-bind="text: totalAmount"></span>
 								</div>
 							</div>
@@ -15378,12 +15360,12 @@
 						<table class="table table-borderless table-condensed ">
 							<thead>
 								<tr>
-									<th><span>Type</span></th>
-									<th><span>Date</span></th>
-									<th><span>Number</span></th>
-									<th><span>Reference</span></th>
-									<th style="text-align: right;"><span>Amount</span></th>
-									<th style="text-align: right;"><span>Balance</span></th>
+									<th><span data-bind="text: lang.lang.type"></span></th>
+									<th><span data-bind="text: lang.lang.date"></span></th>
+									<th><span data-bind="text: lang.lang.number"></span></th>
+									<th><span data-bind="text: lang.lang.reference"></span></th>
+									<th style="text-align: right;"><span data-bind="text: lang.lang.amount"></span></th>
+									<th style="text-align: right;"><span data-bind="text: lang.lang.balance"></span></th>
 								</tr>
 							</thead>
 							<tbody data-role="listview"
@@ -15433,7 +15415,7 @@
 	    </tr>    
     #}# 
     <tr>
-    	<td colspan="5" style="font-weight: bold; color: black;">Total #: name #</td>
+    	<td colspan="5" style="font-weight: bold; color: black;"><span data-bind="text: lang.lang.total"></span> #: name #</td>
     	<td class="right" style="font-weight: bold; border-top: 1px solid black !important; color: black;">
     		#=kendo.toString(balance, "c2", banhji.locale)#
     	</td>
@@ -15460,9 +15442,9 @@
 								<!-- Tabs Heading -->
 								<div class="widget-head">
 									<ul>
-										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>	
-										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i>Filter</a></li>
-										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab" data-bind="click: printGrid"><i></i>Print/Export</a></li>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i><span data-bind="text: lang.lang.date"></span></a></li>	
+										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i><span data-bind="text: lang.lang.filter"></span></a></li>
+										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab" data-bind="click: printGrid"><i></i><span data-bind="text: lang.lang.print_export"></span></a></li>
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
@@ -15532,7 +15514,7 @@
 					<div id="invFormContent">
 						<div class="block-title">
 							<h3 data-bind="text: company.name"></h3>
-							<h2>Purchase Summary By Product/Services</h2>
+							<h2 data-bind="text: lang.lang.purchase_summary_by_product_services"></h2>
 							<p data-bind="text: displayDate"></p>
 						</div>
 
@@ -15540,18 +15522,18 @@
 							<div class="span5">
 								<div class="total-customer">
 									<div class="span6">
-										<p>Total Product/services</p>
+										<p data-bind="text: lang.lang.total_product_services"></p>
 										<span data-bind="text: dataSource.total"></span>
 									</div>
 									<div class="span6">
-										<p>Avg. Purchase</p>
+										<p data-bind="text: lang.lang.avg_purchase"></p>
 										<span data-bind="text: avg_sale"></span>
 									</div>
 								</div>
 							</div>
 							<div class="span7">
 								<div class="total-customer">
-									<p>Total Purchase</p>
+									<p data-bind="text: lang.lang.total_purchase"></p>
 									<span data-bind="text: total_sale"></span>
 								</div>
 							</div>
@@ -15560,12 +15542,12 @@
 						<table class="table table-borderless table-condensed ">
 							<thead>
 								<tr>
-									<th><span>ITEM</span></th>
-									<th style="text-align: right;"><span>QTY</span></th>
-									<th style="text-align: right;"><span>AMOUNT</span></th>
-									<th style="text-align: right;"><span>AVG PRICE</span></th>
-									<th style="text-align: right;"><span>AVG COST</span></th>
-									<th style="text-align: right;"><span>GROSS PROFIT MARGIN</span></th>								
+									<th style="text-transform: uppercase;"><span data-bind="text: lang.lang.item"></span></th>
+									<th style="text-align: right; text-transform: uppercase;"><span data-bind="text: lang.lang.qty"></span></th>
+									<th style="text-align: right; text-transform: uppercase;"><span data-bind="text: lang.lang.amount"></span></th>
+									<th style="text-align: right; text-transform: uppercase;"><span data-bind="text: lang.lang.avg_price"></span></th>
+									<th style="text-align: right; text-transform: uppercase;"><span data-bind="text: lang.lang.avg_cost"></span></th>
+									<th style="text-align: right; text-transform: uppercase;"><span data-bind="text: lang.lang.gross_profit_margin"></span></th>								
 								</tr>
 							</thead>
 							<tbody data-role="listview"
@@ -15608,9 +15590,9 @@
 								<!-- Tabs Heading -->
 								<div class="widget-head">
 									<ul>
-										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>	
-										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i>Filter</a></li>
-										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab" data-bind="click: printGrid"><i></i>Print/Export</a></li>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i><span data-bind="text: lang.lang.date"></span></a></li>	
+										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i><span data-bind="text: lang.lang.filter"></span></a></li>
+										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab" data-bind="click: printGrid"><i></i><span data-bind="text: lang.lang.print_export"></span></a></li>
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
@@ -15680,7 +15662,7 @@
 					<div id="invFormContent">
 						<div class="block-title">
 							<h3 data-bind="text: company.name"></h3>
-							<h2>Purchase Order List</h2>
+							<h2 data-bind="text: lang.lang.purchase_order_list"></h2>
 							<p data-bind="text: displayDate"></p>
 						</div>
 
@@ -15688,18 +15670,18 @@
 							<div class="span5">
 								<div class="total-customer">
 									<div class="span6">
-										<p>Number of Supplier</p>
+										<p data-bind="text: lang.lang.number_of_supplier"></p>
 										<span data-bind="text: dataSource.total"></span>
 									</div>
 									<div class="span6">
-										<p>Purchase Order</p>
+										<p data-bind="text: lang.lang.purchase_order"></p>
 										<span data-bind="text: orderCount"></span>
 									</div>
 								</div>
 							</div>
 							<div class="span7">
 								<div class="total-customer">									
-									<p>Amount</p>
+									<p data-bind="text: lang.lang.amount"></p>
 									<span data-bind="text: totalAmount"></span>
 								</div>
 							</div>
@@ -15708,11 +15690,11 @@
 						<table class="table table-borderless table-condensed">
 							<thead>
 								<tr>
-									<th><span>Number</span></th>
-									<th><span>Reference</span></th>
-									<th><span>Date</span></th>
-									<th style="text-align: center;"><span>Status</span></th>
-									<th style="text-align: right;"><span>Amount</span></th>
+									<th><span data-bind="text: lang.lang.number"></span></th>
+									<th><span data-bind="text: lang.lang.reference"></span></th>
+									<th><span data-bind="text: lang.lang.date"></span></th>
+									<th style="text-align: center;"><span data-bind="text: lang.lang.status"></span></th>
+									<th style="text-align: right;"><span data-bind="text: lang.lang.amount"></span></th>
 								</tr>
 							</thead>
 							<tbody data-role="listview"
@@ -15755,7 +15737,7 @@
 		</tr>
 	#}#
 	<tr>
-    	<td colspan="4" style="font-weight: bold; color: black;">Total #=name#</td>    	
+    	<td colspan="4" style="font-weight: bold; color: black;"><span data-bind="text: lang.lang.total"></span> #=name#</td>    	
     	<td style="text-align: right; font-weight: bold; border-top: 1px solid black !important; color: black;">
     		#=kendo.toString(amount, "c2", banhji.locale)#
     	</td>
@@ -15782,9 +15764,9 @@
 								<!-- Tabs Heading -->
 								<div class="widget-head">
 									<ul>
-										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>	
-										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i>Filter</a></li>
-										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab" data-bind="click: printGrid"><i></i>Print/Export</a></li>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i><span data-bind="text: lang.lang.date"></span></a></li>	
+										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i><span data-bind="text: lang.lang.filter"></span></a></li>
+										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab" data-bind="click: printGrid"><i></i><span data-bind="text: lang.lang.print_export"></span></a></li>
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
@@ -15854,7 +15836,7 @@
 					<div id="invFormContent">
 						<div class="block-title">
 							<h3 data-bind="text: company.name"></h3>
-							<h2>Purchase Detail By Product/Service</h2>
+							<h2 data-bind="text: lang.lang.purchase_detail_by_product_services"></h2>
 							<p data-bind="text: displayDate"></p>
 						</div>
 
@@ -15862,18 +15844,18 @@
 							<div class="span5">
 								<div class="total-customer">
 									<div class="span6">
-										<p>Total Product/Services</p>
+										<p data-bind="text: lang.lang.total_product_services"></p>
 										<span data-bind="text: dataSource.total"></span>
 									</div>
 									<div class="span6">
-										<p>Avg. Purchase</p>
+										<p data-bind="text: lang.lang.avg_purchase"></p>
 										<span data-bind="text: product_sale"></span>
 									</div>
 								</div>
 							</div>
 							<div class="span7">
 								<div class="total-customer">									
-									<p>Total Purchase</p>
+									<p data-bind="text: lang.lang.total_purchase"></p>
 									<span data-bind="text: total_sale"></span>
 								</div>
 							</div>
@@ -15882,11 +15864,11 @@
 						<table class="table table-borderless table-condensed ">
 							<thead>
 								<tr>
-									<th><span>Type</span></th>
-									<th style="text-align: right;"><span>Purchase Date</span></th>
-									<th style="text-align: right;"><span>Reference</span></th>
-									<th style="text-align: right;"><span>QTY</span></th>
-									<th><span>AMOUNT</span></th>
+									<th><span data-bind="text: lang.lang.type"></span></th>
+									<th style="text-align: right;"><span data-bind="text: lang.lang.purchase_date"></span></th>
+									<th style="text-align: right;"><span data-bind="text: lang.lang.reference"></span></th>
+									<th style="text-align: right;"><span data-bind="text: lang.lang.qty"></span></th>
+									<th><span data-bind="text: lang.lang.amount"></span></th>
 								</tr>
 							</thead>
 							<tbody data-role="listview"
@@ -15922,7 +15904,7 @@
 
 	#}#
 	<tr>
-    	<td colspan="4" style="font-weight: bold; color: black;">Total #: name #</td>
+    	<td colspan="4" style="font-weight: bold; color: black;"><span data-bind="text: lang.lang.total"></span> #: name #</td>
     	<td class="right" style="font-weight: bold; border-top: 1px solid black !important; color: black;">
     		#=kendo.toString(totalAmount, "c2", banhji.locale)#
     	</td>
@@ -15949,8 +15931,8 @@
 								<!-- Tabs Heading -->
 								<div class="widget-head">
 									<ul>
-										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
-										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab" data-bind="click: printGrid"><i></i>Print/Export</a></li>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i><span data-bind="text: lang.lang.date"></span></a></li>	
+										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab" data-bind="click: printGrid"><i></i><span data-bind="text: lang.lang.print_export"></span></a></li>
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
@@ -15976,7 +15958,7 @@
 					<div id="invFormContent">
 						<div class="block-title">
 							<h3 data-bind="text: company.name"></h3>
-							<h2>Suppliers Balance Summary</h2>
+							<h2 data-bind="text: lang.lang.suppliers_balance_summary"></h2>
 							<p data-bind="text: displayDate"></p>
 						</div>
 
@@ -15984,18 +15966,18 @@
 							<div class="span5">
 								<div class="total-customer">
 									<div class="span6">
-										<p>Open Bill</p>
+										<p data-bind="text: lang.lang.open_bill"></p>
 										<span data-bind="text: total_txn"></span>
 									</div>
 									<div class="span6">
-										<p>Number of Supplier</p>
+										<p data-bind="text: lang.lang.number_of_supplier"></p>
 										<span data-bind="text: dataSource.total"></span>
 									</div>
 								</div>
 							</div>
 							<div class="span7">
 								<div class="total-customer">
-									<p>Total Supplier Balance</p>
+									<p data-bind="text: lang.lang.total_supplier_balance"></p>
 									<span data-bind="text: total_balance"></span>									
 								</div>
 							</div>
@@ -16004,9 +15986,9 @@
 						<table class="table table-borderless table-condensed ">
 							<thead>
 								<tr>
-									<th><span>SUPPLIER NAME</span></th>
-									<th style="text-align: right;"><span>No.BILL</span></th>
-									<th><span>BALANCE</span></th>
+									<th><span data-bind="text: lang.lang.supplier_name"></span></th>
+									<th style="text-align: right;"><span data-bind="text: lang.lang.no_bill"></span></th>
+									<th><span data-bind="text: lang.lang.balance"></span></th>
 								</tr>
 							</thead>
 		            		<tbody data-role="listview"
@@ -16046,8 +16028,9 @@
 								<!-- Tabs Heading -->
 								<div class="widget-head">
 									<ul>
-										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
-										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab" data-bind="click: printGrid"><i></i>Print/Export</a></li>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i><span data-bind="text: lang.lang.date"></span></a></li>	
+										
+										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab" data-bind="click: printGrid"><i></i><span data-bind="text: lang.lang.print_export"></span></a></li>
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
@@ -16074,7 +16057,7 @@
 					<div id="invFormContent">
 						<div class="block-title">
 							<h3 data-bind="text: company.name"></h3>
-							<h2>Supplier Balance Detail</h2>
+							<h2 data-bind="text: lang.lang.supplier_balance_detail"></h2>
 							<p data-bind="text: displayDate"></p>
 						</div>
 
@@ -16082,18 +16065,18 @@
 							<div class="span5">
 								<div class="total-customer">
 									<div class="span6">
-										<p>Open Bill</p>
+										<p data-bind="text: lang.lang.open_bill"></p>
 										<span data-bind="text: total_txn"></span>
 									</div>
 									<div class="span6">
-										<p>Number Supplier</p>
+										<p data-bind="text: lang.lang.number_of_supplier"></p>
 										<span data-bind="text: dataSource.total"></span>
 									</div>
 								</div>
 							</div>
 							<div class="span7">
 								<div class="total-customer">
-									<p>Total Supplier Balance</p>
+									<p data-bind="text: lang.lang.total_supplier_balance"></p>
 									<span data-bind="text: total_balance"></span>						
 								</div>
 							</div>
@@ -16102,10 +16085,10 @@
 						<table class="table table-borderless table-condensed ">
 							<thead>
 								<tr>
-									<th><span>Type</span></th>
-									<th style="text-align: right;"><span>Bill Date</span></th>
-									<th style="text-align: right;"><span>Reference</span></th>								
-									<th><span>Balance</span></th>
+									<th><span data-bind="text: lang.lang.type"></span></th>
+									<th style="text-align: right;"><span data-bind="text: lang.lang.bill_date"></span></th>
+									<th style="text-align: right;"><span data-bind="text: lang.lang.reference"></span></th>								
+									<th><span data-bind="text: lang.lang.balance"></span></th>
 								</tr>
 							</thead>
 							<tbody data-role="listview"
@@ -16139,7 +16122,7 @@
 		</tr>
 	#}#
 	<tr>
-    	<td style="font-weight: bold; color: black;">Total</td>
+    	<td style="font-weight: bold; color: black;" data-bind="text: lang.lang.total"></td>
     	<td></td>
     	<td></td>
     	<td class="right" style="font-weight: bold; border-top: 1px solid black !important; color: black;">
@@ -16168,9 +16151,9 @@
 								<!-- Tabs Heading -->
 								<div class="widget-head">
 									<ul>
-										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>	
-										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i>Filter</a></li>
-										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab" data-bind="click: printGrid"><i></i>Print/Export</a></li>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i><span data-bind="text: lang.lang.date"></span></a></li>	
+										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i><span data-bind="text: lang.lang.filter"></span></a></li>
+										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab" data-bind="click: printGrid"><i></i><span data-bind="text: lang.lang.print_export"></span></a></li>
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
@@ -16179,7 +16162,7 @@
 
 								        <!-- //Date -->
 								        <div class="tab-pane active" id="tab-1">
-									        As of:
+									        <span data-bind="text: lang.lang.as_of"></span>:
 									        <input data-role="datepicker"
 													data-format="dd-MM-yyyy"
 													data-parse-formats="yyyy-MM-dd" 
@@ -16220,20 +16203,20 @@
 					<div id="invFormContent">
 						<div class="block-title">
 							<h3 data-bind="text: company.name"></h3>
-							<h2>Payables Aging Summary</h2>
+							<h2 data-bind="text: lang.lang.payables_aging_summary"></h2>
 							<p data-bind="text: displayDate"></p>
 						</div>
 
 						<div class="row">
 							<div class="span3" style="padding-right: 0;">
 								<div class="total-customer">									
-									<p>Number of Supplier</p>
+									<p data-bind="text: lang.lang.number_of_supplier"></p>
 									<span data-format="n0" data-bind="text: dataSource.total"></span>
 								</div>
 							</div>
 							<div class="span9">
 								<div class="total-customer">
-									<p>Total Supplier Balance</p>
+									<p data-bind="text: lang.lang.total_supplier_balance"></p>
 									<span data-bind="text: totalBalance"></span>
 								</div>
 							</div>
@@ -16242,13 +16225,13 @@
 						<table class="table table-borderless table-condensed ">
 							<thead>
 								<tr>
-									<th><span>Name</span></th>
-									<th style="text-align: right;"><span>CURRENT</span></th>
-									<th style="text-align: right;"><span>1-30</span></th>
-									<th style="text-align: right;"><span>31-60</span></th>
-									<th style="text-align: right;"><span>61-90</span></th>
-									<th style="text-align: right;"><span>OVER 90</span></th>
-									<th style="text-align: right;"><span>TOTAL</span></th>							
+									<th><span data-bind="text: lang.lang.name"></span></th>
+									<th style="text-align: right;"><span data-bind="text: lang.lang.current"></span></th>
+									<th style="text-align: right;"><span data-bind="text: lang.lang.">1-30</span></th>
+									<th style="text-align: right;"><span data-bind="text: lang.lang.">31-60</span></th>
+									<th style="text-align: right;"><span data-bind="text: lang.lang.">61-90</span></th>
+									<th style="text-align: right;"><span data-bind="text: lang.lang.over"></span>90</th>
+									<th style="text-align: right;"><span data-bind="text: lang.lang.total"></span></th>							
 								</tr>
 							</thead>
 							<tbody data-role="listview"
@@ -16292,9 +16275,9 @@
 								<!-- Tabs Heading -->
 								<div class="widget-head">
 									<ul>
-										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>	
-										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i>Filter</a></li>
-										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab" data-bind="click: printGrid"><i></i>Print/Export</a></li>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i><span data-bind="text: lang.lang.date"></span></a></li>	
+										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i><span data-bind="text: lang.lang.filter"></span></a></li>
+										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab" data-bind="click: printGrid"><i></i><span data-bind="text: lang.lang.print_export"></span></a></li>
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
@@ -16345,20 +16328,20 @@
 					<div id="invFormContent">
 						<div class="block-title">
 							<h3 data-bind="text: company.name"></h3>
-							<h2>Payables Aging Detail</h2>
+							<h2 data-bind="text: lang.lang.payables_aging_detail"></h2>
 							<p data-bind="text: displayDate"></p>
 						</div>
 
 						<div class="row">
 							<div class="span3" style="padding-right: 0;">
 								<div class="total-customer">									
-									<p>Number of Supplier</p>
+									<p data-bind="text: lang.lang.number_of_supplier"></p>
 									<span data-format="n0" data-bind="text: dataSource.total"></span>
 								</div>
 							</div>
 							<div class="span9">
 								<div class="total-customer">
-									<p>Total Supplier Balance</p>
+									<p data-bind="text: lang.lang.total_supplier_balance"></p>
 									<span data-bind="text: totalBalance"></span>
 								</div>
 							</div>
@@ -16367,13 +16350,13 @@
 						<table class="table table-borderless table-condensed ">
 							<thead>
 								<tr>
-									<th><span>Type</span></th>
-									<th><span>Bill Date</span></th>
-									<th><span>Due Date</span></th>
-									<th><span>Reference</span></th>
-									<th style="text-align: center;"><span>Status</span></th>
-									<th style="text-align: right;"><span>Amount</span></th>
-									<th style="text-align: right;"><span>Balance</span></th>
+									<th><span data-bind="text: lang.lang.type"></span></th>
+									<th><span data-bind="text: lang.lang.bill_date"></span></th>
+									<th><span data-bind="text: lang.lang.due_date"></span></th>
+									<th><span data-bind="text: lang.lang.ref"></span></th>
+									<th style="text-align: center;"><span data-bind="text: lang.lang.status"></span></th>
+									<th style="text-align: right;"><span data-bind="text: lang.lang.amount"></span></th>
+									<th style="text-align: right;"><span data-bind="text: lang.lang.balance"></span></th>
 								</tr>
 							</thead>
 							<tbody data-role="listview"
@@ -16456,9 +16439,9 @@
 								<!-- Tabs Heading -->
 								<div class="widget-head">
 									<ul>
-										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>	
-										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i>Filter</a></li>
-										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab" data-bind="click: printGrid"><i></i>Print/Export</a></li>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i><span data-bind="text: lang.lang.date"></span></a></li>	
+										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i><span data-bind="text: lang.lang.filter"></span></a></li>
+										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab" data-bind="click: printGrid"><i></i><span data-bind="text: lang.lang.print_export"></span></a></li>
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
@@ -16508,20 +16491,20 @@
 					<div id="invFormContent">
 						<div class="block-title">
 							<h3 data-bind="text: company.name"></h3>
-							<h2>List Of Bill to be Paid</h2>
+							<h2 data-bind="text: lang.lang.list_of_bills_to_be_paid"></h2>
 							<p data-bind="text: displayDate"></p>
 						</div>
 
 						<div class="row-fluid">
 							<div class="span3">
 								<div class="total-customer">									
-									<p>Number of Supplier</p>
+									<p data-bind="text: lang.lang.number_of_supplier"></p>
 									<span data-format="n0" data-bind="text: dataSource.total"></span>
 								</div>
 							</div>
 							<div class="span9">
 								<div class="total-customer">
-									<p>Total Balance</p>
+									<p data-bind="text: lang.lang.total_balance"></p>
 									<span data-bind="text: totalAmount"></span>
 								</div>
 							</div>
@@ -16530,12 +16513,12 @@
 						<table class="table table-borderless table-condensed ">
 							<thead>
 								<tr>
-									<th><span>Type</span></th>
-									<th><span>Date</span></th>
-									<th><span>Name</span></th>
-									<th><span>Reference</span></th>
-									<th style="text-align: center;"><span>Status</span></th>	
-									<th><span>Amount</span></th>
+									<th><span data-bind="text: lang.lang.type"></span></th>
+									<th><span data-bind="text: lang.lang.date"></span></th>
+									<th><span data-bind="text: lang.lang.name"></span></th>
+									<th><span data-bind="text: lang.lang.reference"></span></th>
+									<th style="text-align: center;"><span data-bind="text: lang.lang.status"></span></th>	
+									<th><span data-bind="text: lang.lang.amount"></span></th>
 								</tr>
 							</thead>
 							<tbody data-role="listview"
@@ -16589,9 +16572,9 @@
 								<!-- Tabs Heading -->
 								<div class="widget-head">
 									<ul>
-										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>	
-										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i>Filter</a></li>
-										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab" data-bind="click: printGrid"><i></i>Print/Export</a></li>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i><span data-bind="text: lang.lang.date"></span></a></li>	
+										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i><span data-bind="text: lang.lang.filter"></span></a></li>
+										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab" data-bind="click: printGrid"><i></i><span data-bind="text: lang.lang.print_export"></span></a></li>
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
@@ -16661,20 +16644,20 @@
 					<div id="invFormContent">
 						<div class="block-title">
 							<h3 data-bind="text: company.name"></h3>
-							<h2>Bill Payment List</h2>
+							<h2 data-bind="text: lang.lang.bill_payment_list"></h2>
 							<p data-bind="text: displayDate"></p>
 						</div>
 
 						<div class="row-fluid">
 							<div class="span3" style="padding: 0;">
 								<div class="total-customer">									
-									<p>Number of Bill</p>
+									<p data-bind="text: lang.lang.no_bill"></p>
 									<span data-format="n0" data-bind="text: total_txn"></span>
 								</div>
 							</div>
 							<div class="span9" style="padding-right: 0;">
 								<div class="total-customer">
-									<p>Total Balance</p>
+									<p data-bind="text: lang.lang.total_balance"></p>
 									<span data-bind="text: totalAmount"></span>
 								</div>
 							</div>
@@ -16683,12 +16666,12 @@
 						<table class="table table-borderless table-condensed ">
 							<thead>
 								<tr>
-									<th><span>Bill Date</span></th>
-									<th><span>Bill Number</span></th>
-									<th><span>Bill Amount</span></th>
-									<th><span>Payment Date</span></th>
-									<th><span>Payment Number</span></th>
-									<th><span>Payment Amount</span></th>
+									<th><span data-bind="text: lang.lang.bill_date"></span></th>
+									<th><span data-bind="text: lang.lang.bill_number"></span></th>
+									<th><span data-bind="text: lang.lang.bill_amount"></span></th>
+									<th><span data-bind="text: lang.lang.payment_date"></span></th>
+									<th><span data-bind="text: lang.lang.payment_number"></span></th>
+									<th><span data-bind="text: lang.lang.payment_amount"></span></th>
 								</tr>
 							</thead>
 							<tbody data-role="listview"
@@ -16968,9 +16951,8 @@
 							
 								<!-- Tabs Heading -->
 								<div class="widget-head">
-									<ul>
-																			
-										<li><a class="glyphicons print" href="#tab-1" data-toggle="tab" data-bind="click: printGrid"><i></i>Print/Export</a></li>
+									<ul>									
+										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab" data-bind="click: printGrid"><i></i><span data-bind="text: lang.lang.print_export"></span></a></li>
 									</ul>
 								</div>
 							</div>
@@ -16981,17 +16963,17 @@
 					<div id="invFormContent">
 						<div class="block-title">
 							<h3 data-bind="text: institute.name"></h3>
-							<h2>Supplier List</h2>
+							<h2 data-bind="text: lang.lang.supplier_list"></h2>
 						</div>
 						<table class="table table-borderless table-condensed ">
 							<thead>
 								<tr>
-									<th><span>SupplierID</span></th>
-									<th><span>Supplier Name</span></th>
-									<th><span>Type</span></th>
-									<th><span>Address</span></th>
-									<th><span>Phone</span></th>
-									<th><span>E-Mail</span></th>
+									<th><span data-bind="text: lang.lang.supplierid"></span></th>
+									<th><span data-bind="text: lang.lang.supplier_name"></span></th>
+									<th><span data-bind="text: lang.lang.type"></span></th>
+									<th><span data-bind="text: lang.lang.address"></span></th>
+									<th><span data-bind="text: lang.lang.phone"></span></th>
+									<th><span data-bind="text: lang.lang.email"></span></th>
 								</tr>
 							</thead>
 							<tbody data-role="listview"
@@ -17162,21 +17144,21 @@
 						
 						<a href="#/sale_summary_by_customer"><div class="widget-body alert alert-primary " style="min-height: 148px; background: white; color: #203864; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
 							
-							<div align="center" class="text-large strong medai-font" data-bind="text: sale"></div>
+							<div align="center" class="text-large strong medai-font" data-bind="text: obj.sale"></div>
 							<table width="100%">
 								<tr align="center">
 									<td width="33%" style="vertical-align: top">
-										<span data-bind="text: sale_customer"></span>
+										<span data-bind="text: obj.sale_customer"></span>
 										<br>
 										<span data-bind="text: lang.lang.customers"></span>
 									</td>
 									<td width="33%" style="vertical-align: top">
-										<span data-bind="text: sale_product"></span>
+										<span data-bind="text: obj.sale_product"></span>
 										<br>
 										<span data-bind="text: lang.lang.product"></span>
 									</td>
 									<td width="33%" style="vertical-align: top">
-										<span data-bind="text: sale_order"></span>
+										<span data-bind="text: obj.sale_order"></span>
 										<br>
 										<span data-bind="text: lang.lang.order"></span>
 									</td>
@@ -17205,16 +17187,16 @@
 						
 						<div class="widget-body alert-info " style="min-height: 148px; background: white; color: #203864; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
 							
-							<div align="center" class="text-large strong medai-font" data-bind="text: order"></div>
+							<div align="center" class="text-large strong medai-font" data-bind="text: obj.so"></div>
 							<table width="100%">
 								<tr align="center">
 									<td width="50%" style="vertical-align: top">										
-										<span data-bind="text: order_avg"></span>
+										<span data-bind="text: obj.so_avg"></span>
 										<br>
 										<span><span data-bind="text: lang.lang.average"></span></span>
 									</td>
 									<td width="50%" style="vertical-align: top">
-										<span data-bind="text: order_open"></span>
+										<span data-bind="text: obj.so_open"></span>
 										<br>
 										<span><span data-bind="text: lang.lang.order_open"></span></span>
 									</td>									
@@ -17243,21 +17225,21 @@
 						
 						<a href="#/customer_balance_summary"><div class="widget-body alert-info" style="min-height: 148px; background: white; color: #203864; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
 							
-							<div align="center" class="text-large strong medai-font" data-bind="text: ar"></div>
+							<div align="center" class="text-large strong medai-font" data-bind="text: obj.ar"></div>
 							<table width="100%">
 								<tr align="center">
 									<td width="33%" style="vertical-align: top">										
-										<span data-bind="text: ar_open"></span>
+										<span data-bind="text: obj.ar_open"></span>
 										<br>
 										<span><span data-bind="text: lang.lang.open"></span></span>
 									</td>
 									<td width="33%" style="vertical-align: top">
-										<span data-bind="text: ar_customer"></span>
+										<span data-bind="text: obj.ar_customer"></span>
 										<br>
 										<span><span data-bind="text: lang.lang.customers"></span></span>
 									</td>
 									<td width="33%" style="vertical-align: top">
-										<span data-bind="text: ar_overdue"></span>
+										<span data-bind="text: obj.ar_overdue"></span>
 										<br>
 										<span><span data-bind="text: lang.lang.overdue"></span></span>
 									</td>
@@ -24360,7 +24342,7 @@
 					<div id="invFormContent">
 						<div class="block-title">
 							<h3 data-bind="text: company.name"></h3>
-							<h2 data-bind="text: lang.lang.sale_summary_by_product_Services">Sale Summary By Product/Services</h2>
+							<h2 data-bind="text: lang.lang.sale_summary_by_product_Services"></h2>
 							<p data-bind="text: displayDate"></p>
 						</div>
 
@@ -24368,18 +24350,18 @@
 							<div class="span5">
 								<div class="total-customer">
 									<div class="span6">
-										<p data-bind="text: lang.lang.total_product_services">Total Product/services</p>
+										<p data-bind="text: lang.lang.total_product_services"></p>
 										<span data-bind="text: dataSource.total"></span>
 									</div>
 									<div class="span6">
-										<p data-bind="text: lang.lang.avg_sale_per_invoice">Avg. Sale Per Invoice</p>
+										<p data-bind="text: lang.lang.avg_sale_per_invoice"></p>
 										<span data-bind="text: avg_sale"></span>
 									</div>
 								</div>
 							</div>
 							<div class="span7">
 								<div class="total-customer">
-									<p data-bind="text: lang.lang.total_sale">Total Sale</p>
+									<p data-bind="text: lang.lang.total_sale"></p>
 									<span data-bind="text: total_sale"></span>
 								</div>
 							</div>
@@ -24527,7 +24509,7 @@
 							</div>
 							<div class="span7">
 								<div class="total-customer">									
-									<p>Total Sale</p>
+									<p data-bind="text: lang.lang.total_sale"></p>
 									<span data-bind="text: total_sale"></span>
 								</div>
 							</div>
@@ -36889,7 +36871,7 @@
 			<br>
 			<div class="span7">
 				<div class="row-fluid sale-report" style="margin-bottom: 15px; padding-bottom: 5px; box-shadow: 0 2px 0 #d4d7dc, 0 0 0 #eceef1, 0 0 0 #eceef1;">
-					<h2>INVENTORY POSITION</h2>
+					<h2 data-bind="text: lang.lang.inventory_position"></h2>
 					<p>
 						The following reports provide summary and detailed reports on the position of inventory. 
 					</p>
@@ -36897,10 +36879,10 @@
 						<table class="table table-borderless table-condensed">
 							<tr>
 								<td width="50%">
-									<h3><a href="#/inventory_position_summary">Inventory Position Summary</a></h3>
+									<h3><a href="#/inventory_position_summary" data-bind="text: lang.lang.inventory_position_summary"></a></h3>
 								</td>
 								<td >
-									<h3><a href="#/inventory_position_detail">Inventory Position Detail</a></h3>
+									<h3><a href="#/inventory_position_detail" data-bind="text: lang.lang.inventory_position_detail"></a></h3>
 								</td>
 							</tr>
 							<tr>
@@ -36923,7 +36905,7 @@
 				</div>
 
 				<div class="row-fluid recevable-report" >
-					<h2>INVENTORY MOVEMENT REPORTS</h2>
+					<h2 data-bind="text: lang.lang.inventory_movement_reports"></h2>
 					<p>
 						The following reports provide summary and detailed reports on the movement of the inventories
 					</p>
@@ -36931,10 +36913,10 @@
 						<table class="table table-borderless table-condensed">
 							<tr>
 								<td width="50%">
-									<h3><a href="#/purchase_summary_product_services">Purchase Summary by Product/ Services</a></h3>
+									<h3><a href="#/purchase_summary_product_services" data-bind="text: lang.lang.purchase_summary_by_product_services"></a></h3>
 								</td>
 								<td width="50%">
-									<h3><a href="#/purchase_detail_product_services">Purchase Detail by Product/ Services</a></h3>
+									<h3><a href="#/purchase_detail_product_services" data-bind="text: lang.lang.purchase_detail_by_product_services"></a></h3>
 								</td>					
 							</tr>
 							<tr>							
@@ -36952,10 +36934,10 @@
 							</tr>
 							<tr>
 								<td >
-									<h3><a href="#/sale_summary_by_product">Sale Summary by Product/ Services</a></h3>
+									<h3><a href="#/sale_summary_by_product" data-bind="text:lang.lang.sale_summary_by_product_services"></a></h3>
 								</td>
 								<td >
-									<h3><a href="#/sale_detail_by_product">Sale Detail by Product/ Services</a></h3>
+									<h3><a href="#/sale_detail_by_product" data-bind="text:lang.lang.sale_detail_by_product_services"></a></h3>
 								</td>
 							</tr>
 							<tr>
@@ -37006,19 +36988,19 @@
 			<div class="span5">
 				<div class="report-chart" style="margin-bottom: 20px; padding: 15px; margin-top: 10px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
 					<div class="widget-body alert alert-primary sale-overview">
-						<h2>Inventory Balance</h2>
+						<h2 data-bind="text: lang.lang.inventory_balance"></h2>
 						<div align="center" class="text-large strong" data-bind="text: inventoryBalance"></div>
 						<table width="100%">
 							<tr align="center">
 								<td>
 									<span data-bind="text: grossProfitMargin"></span>
 									<br>
-									<span>Average Margin</span>
+									<span data-bind="text: lang.lang.average_margin"></span>
 								</td>
 								<td>
 									<span data-bind="text: inventoryTurnOver"></span>
 									<br>
-									<span>Turnover Days</span>
+									<span data-bind="text: lang.lang.turnover_days"></span>
 								</td>
 							</tr>
 						</table>
@@ -37033,8 +37015,8 @@
 		                    template: "#= series.name #: #= kendo.toString(value, &#39;c&#39;, banhji.locale) #"
 		                 }'                 
 		                 data-series="[
-		                                { field: 'purchase', name: 'Monthly Purchase', categoryField:'month', color: '#203864', overlay:{ gradient: 'none'} },
-		                                { field: 'sale', name: 'Monthly Sale', categoryField:'month', color: '#9CB9D9', overlay:{ gradient: 'none'} }
+		                                { field: 'purchase', name: langVM.lang.monthly_purchase, categoryField:'month', color: '#203864', overlay:{ gradient: 'none'} },
+		                                { field: 'sale', name: langVM.lang.monthly_sale, categoryField:'month', color: '#9CB9D9', overlay:{ gradient: 'none'} }
 		                            ]"	                             
 		                 data-bind="source: graphDS"
 		                 style="height: 250px;" ></div>            
@@ -37063,9 +37045,9 @@
 								<!-- Tabs Heading -->
 								<div class="widget-head">
 									<ul>
-										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>	
-										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i>Filter</a></li>
-										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab" data-bind="click: printGrid"><i></i>Print/Export</a></li>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i><span data-bind="text: lang.lang.date"></span></a></li>	
+										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i><span data-bind="text: lang.lang.filter"></span></a></li>
+										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab" data-bind="click: printGrid"><i></i><span data-bind="text: lang.lang.print_export"></span></a></li>
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
@@ -37074,7 +37056,7 @@
 
 								        <!-- Date -->
 								        <div class="tab-pane active" id="tab-1">									        	
-											As of:
+											<span data-bind="text: lang.lang.as_of"></span>:
 									        <input data-role="datepicker"
 													data-format="dd-MM-yyyy"
 													data-parse-formats="yyyy-MM-dd" 
@@ -37116,20 +37098,20 @@
 					<div id="invFormContent">
 						<div class="block-title">
 							<h3 data-bind="text: institute.name"></h3>
-							<h2>Inventory Position Summary</h2>
+							<h2 data-bind="text: lang.lang.inventory_position_summary"></h2>
 							<p data-bind="text: displayDate"></p>
 						</div>
 
 						<div class="row-fluid">
 							<div class="span2">
 								<div class="total-customer">
-									<p>Product Items</p>
+									<p data-bind="text: lang.lang.product_items"></p>
 									<span data-bind="text: dataSource.total"></span>
 								</div>
 							</div>
 							<div class="span10">
 								<div class="total-customer">
-									<p>Total Inventory Value</p>
+									<p data-bind="text: lang.lang.total_inventory_value"></p>
 									<span data-bind="text: total"></span>
 								</div>
 							</div>
@@ -37138,13 +37120,13 @@
 						<table class="table table-borderless table-condensed ">
 							<thead>
 								<tr>
-									<th>Item Name</th>
-									<th align="right">QOH</th>
-									<th align="right">On PO</th>
-									<th align="right">On SO</th>
-									<th align="right">Average Cost</th>
-									<th align="right">Average Price</th>
-									<th align="right">Amount</th>
+									<th data-bind="text: lang.lang.item_name"></th>
+									<th align="right" data-bind="text: lang.lang.qoh"></th>
+									<th align="right" data-bind="text: lang.lang.on_po"></th>
+									<th align="right" data-bind="text: lang.lang.on_so"></th>
+									<th align="right" data-bind="text: lang.lang.average_cost"></th>
+									<th align="right" data-bind="text: lang.lang.average_price"></th>
+									<th align="right" data-bind="text: lang.lang.amount"></th>
 								</tr>
 							</thead>
 		            		<tbody data-role="listview"
@@ -37188,9 +37170,9 @@
 								<!-- Tabs Heading -->
 								<div class="widget-head">
 									<ul>
-										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>
-										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i>Filter</a></li>
-										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab" data-bind="click: printGrid"><i></i>Print/Export</a></li>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i><span data-bind="text: lang.lang.date"></span></a></li>	
+										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i><span data-bind="text: lang.lang.filter"></span></a></li>
+										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab" data-bind="click: printGrid"><i></i><span data-bind="text: lang.lang.print_export"></span></a></li>
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
@@ -37254,20 +37236,20 @@
 					<div id="invFormContent">
 						<div class="block-title">
 							<h3 data-bind="text: institute.name"></h3>
-							<h2>Inventory Position Detail</h2>
+							<h2 data-bind="text: lang.lang.inventory_position_detail" style="text-transform: capitalize;"></h2>
 							<p data-bind="text: displayDate"></p>
 						</div>
 
 						<div class="row">
 							<div class="span2" style="padding-right: 0;">
 								<div class="total-customer">
-									<p>Product Items</p>
+									<p data-bind="text: lang.lang.product_items"></p>
 									<span data-bind="text: dataSource.total"></span>
 								</div>
 							</div>
 							<div class="span10">
 								<div class="total-customer">
-									<p>Total </p>
+									<p data-bind="text: lang.lang.total"></p>
 									<span data-bind="text: total"></span>
 								</div>
 							</div>
@@ -37276,19 +37258,19 @@
 						<table class="table table-borderless table-condensed ">
 							<thead>
 								<tr>
-									<th >TXN Type</th>
-									<th >Date</th>								
-									<th >REF</th>
-									<th >QTY</th>
-									<th class="center">Cost/Price</th>
-									<th >On Hand</th>
-									<th >Balance</th>
+									<th data-bind="text: lang.lang.txn_type"></th>
+									<th data-bind="text: lang.lang.date"></th>								
+									<th data-bind="text: lang.lang.ref"></th>
+									<th data-bind="text: lang.lang.qty"></th>
+									<th class="center" data-bind="text: lang.lang.cost_price"></th>
+									<th data-bind="text: lang.lang.on_hand"></th>
+									<th data-bind="text: lang.lang.balance"></th>
 								</tr>
 							</thead>
 		            		<tbody data-role="listview"
 		            				data-auto-bind="false"
 					                data-template="inventoryPositionDetail-template"
-					                data-bind="source: dataSource" >
+					                data-bind="source: dataSource">
 					        </tbody>
 		            	</table>
 		            </div>
@@ -37339,7 +37321,7 @@
 	    </tr>    
     #}# 
     <tr>
-    	<td colspan="5" style="font-weight: bold; color: black;">Total #: name #</td>
+    	<td colspan="5" style="font-weight: bold; color: black;">T<span data-bind="text: lang.lang.total"></span> #: name #</td>
     	<td class="right" style="font-weight: bold; border-top: 1px solid black !important; color: black;">
     		#=kendo.toString(onHand, "n2")#
     	</td>
@@ -45781,7 +45763,6 @@
 		dataSource			: dataStore(apiUrl+"dashboards/home"),
 		summaryDS			: dataStore(apiUrl+"accounting_reports/financial_snapshot"),
 		graphDS 			: dataStore(apiUrl+"dashboards/graph_cash_in_out"),
-		companyLogo 		: '',
 		modules 			: new kendo.data.DataSource({
 			transport: {
 				read 	: {
@@ -45828,7 +45809,6 @@
 			serverPaging: true,
 			// pageSize: 100
 		}),
-		companyName 		: null,
 		companyInf 			: function() {
 			var company = JSON.parse(localStorage.getItem('userData/user'));
 			return company;
@@ -45840,23 +45820,38 @@
 				}
 			});
 		},
+		obj 				: {},
 		today 				: new Date(),
-		ar 					: 0,
-		ar_open 			: 0,
-		ar_customer 		: 0,
-		ar_overdue 			: 0,
-		ap 					: 0,
-		ap_open 			: 0,
-		ap_vendor 			: 0,
-		ap_overdue 			: 0,
-		income 				: 0,
-		expense 			: 0,
-		net_income 			: 0,
-		asset 				: 0,
-		liability 	 		: 0,
-		equity 	 			: 0,
+		companyName 		: null,
+		companyLogo 		: "",
 		pageLoad 			: function(){
-			var self = this;
+			this.setObj();
+			this.loadData();
+		},
+		setObj 		: function(){
+			this.set("obj", {
+				//AR
+				ar 					: 0,
+				ar_open 			: 0,
+				ar_customer 		: 0,
+				ar_overdue 			: 0,
+				//AP
+				ap 					: 0,
+				ap_open 			: 0,
+				ap_vendor 			: 0,
+				ap_overdue 			: 0,
+				//Performance
+				income 				: 0,
+				expense 			: 0,
+				net_income 			: 0,
+				//Position
+				asset 				: 0,
+				liability 	 		: 0,
+				equity 	 			: 0
+			});
+		},
+		loadData 			: function(){
+			var self = this, obj = this.get("obj");
 
 			this.graphDS.read();
 
@@ -45867,15 +45862,15 @@
 			}).then(function(){
 				var view = self.dataSource.view();
 				
-				self.set("ar", kendo.toString(view[0].ar, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
-				self.set("ar_open", kendo.toString(view[0].ar_open, "n0"));
-				self.set("ar_customer", kendo.toString(view[0].ar_customer, "n0"));
-				self.set("ar_overdue", kendo.toString(view[0].ar_overdue, "n0"));
+				obj.set("ar", kendo.toString(view[0].ar, banhji.locale=="km-KH"?"c0":"c2", banhji.locale));
+				obj.set("ar_open", kendo.toString(view[0].ar_open, "n0"));
+				obj.set("ar_customer", kendo.toString(view[0].ar_customer, "n0"));
+				obj.set("ar_overdue", kendo.toString(view[0].ar_overdue, "n0"));
 
-				self.set("ap", kendo.toString(view[0].ap, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
-				self.set("ap_open", kendo.toString(view[0].ap_open, "n0"));
-				self.set("ap_vendor", kendo.toString(view[0].ap_vendor, "n0"));
-				self.set("ap_overdue", kendo.toString(view[0].ap_overdue, "n0"));
+				obj.set("ap", kendo.toString(view[0].ap, banhji.locale=="km-KH"?"c0":"c2", banhji.locale));
+				obj.set("ap_open", kendo.toString(view[0].ap_open, "n0"));
+				obj.set("ap_vendor", kendo.toString(view[0].ap_vendor, "n0"));
+				obj.set("ap_overdue", kendo.toString(view[0].ap_overdue, "n0"));
 			});
 
 			this.summaryDS.query({
@@ -45885,13 +45880,13 @@
 			}).then(function(){
 				var view = self.summaryDS.view();
 				
-				self.set("income", kendo.toString(view[0].income, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
-				self.set("expense", kendo.toString(view[0].expense, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
-				self.set("net_income", kendo.toString(view[0].net_income, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
+				obj.set("income", kendo.toString(view[0].income, banhji.locale=="km-KH"?"c0":"c2", banhji.locale));
+				obj.set("expense", kendo.toString(view[0].expense, banhji.locale=="km-KH"?"c0":"c2", banhji.locale));
+				obj.set("net_income", kendo.toString(view[0].net_income, banhji.locale=="km-KH"?"c0":"c2", banhji.locale));
 				
-				self.set("asset", kendo.toString(view[0].asset, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
-				self.set("liability", kendo.toString(view[0].liability, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
-				self.set("equity", kendo.toString(view[0].equity, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
+				obj.set("asset", kendo.toString(view[0].asset, banhji.locale=="km-KH"?"c0":"c2", banhji.locale));
+				obj.set("liability", kendo.toString(view[0].liability, banhji.locale=="km-KH"?"c0":"c2", banhji.locale));
+				obj.set("equity", kendo.toString(view[0].equity, banhji.locale=="km-KH"?"c0":"c2", banhji.locale));
 			});
 		}
 	});
@@ -64448,99 +64443,65 @@
 		topCustomerDS 		: dataStore(apiUrl + "dashboards/top_customer"),
 		topARDS 			: dataStore(apiUrl + "dashboards/top_ar"),
 		topProductDS 		: dataStore(apiUrl + "dashboards/top_sale_product"),		
-		graphDS  			: new kendo.data.DataSource({
-			transport: {
-				read 	: {
-					url: apiUrl + "dashboards/monthly_sale",
-					type: "GET",
-					headers: banhji.header,
-					dataType: 'json'
-				}
-			},
-			schema 	: {
-				model: {
-					id: 'id'
-				},
-				data: 'results',
-				total: 'count'
-			},
-			sort: {
-                field: "month",
-                dir: "asc"
-            },								
-			batch: true,			
-			serverFiltering: true,
-			serverSorting: true,
-			serverPaging: true,
-			pageSize: 100
-		}),
-		sale 				: 0,
-		sale_customer 		: 0,
-		sale_product 		: 0,
-		sale_order 			: 0,
-		order 				: 0,
-		order_avg 			: 0,
-		order_open 			: 0,
-		ar 					: 0,
-		ar_open 			: 0,
-		ar_customer 		: 0,
-		ar_overdue 			: 0,
+		graphDS 			: dataStore(apiUrl+ "dashboards/monthly_sale"),
+		obj 				: null,
 		pageLoad 			: function(){
-			var self = this, today = new Date(),
-			firstDayOfYear = new Date(today.getFullYear(), 0, 1);
+			this.setObj();
+			this.loadData();
+		},
+		setObj 		: function(){
+			this.set("obj", {
+				//Sale
+				sale 			: 0,
+				sale_customer 	: 0,
+				sale_product 	: 0,
+				sale_order 		: 0,
+				//Order
+				so 				: 0,
+				so_avg 			: 0,
+				so_open 		: 0,
+				//AR
+				ar 				: 0,
+				ar_open 		: 0,
+				ar_customer 	: 0,
+				ar_overdue 		: 0
+			});
+		},
+		loadData 			: function(){
+			var self = this, obj = this.get("obj");
 
 			this.graphDS.read();
 
 			this.summaryDS.query({
-				filter: [
-					{ field:"issued_date >=", value: kendo.toString(firstDayOfYear, "yyyy-MM-dd") },
-					{ field:"issued_date <=", value: kendo.toString(today, "yyyy-MM-dd") }
-				],								
-				page: 1,
-				pageSize: 5
+				filter: []
 			}).then(function(){
 				var view = self.summaryDS.view();
 				
-				self.set("sale", kendo.toString(view[0].sale, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
-				self.set("sale_customer", kendo.toString(view[0].sale_customer, "n0"));
-				self.set("sale_product", kendo.toString(view[0].sale_product, "n0"));
-				self.set("sale_order", kendo.toString(view[0].sale_order, "n0"));
+				obj.set("sale", kendo.toString(view[0].sale, banhji.locale=="km-KH"?"c0":"c2", banhji.locale));
+				obj.set("sale_customer", kendo.toString(view[0].sale_customer, "n0"));
+				obj.set("sale_product", kendo.toString(view[0].sale_product, "n0"));
+				obj.set("sale_order", kendo.toString(view[0].sale_order, "n0"));
 
-				self.set("order", kendo.toString(view[0].order, "n0"));
-				self.set("order_avg", kendo.toString(view[0].order_avg, banhji.locale=="km-KH"?"c0":"c", banhji.locale));				
-				self.set("order_open", kendo.toString(view[0].order_open, "n0"));
+				obj.set("so", kendo.toString(view[0].so, "n0"));
+				obj.set("so_avg", kendo.toString(view[0].so_avg, banhji.locale=="km-KH"?"c0":"c2", banhji.locale));				
+				obj.set("so_open", kendo.toString(view[0].so_open, "n0"));
 
-				self.set("ar", kendo.toString(view[0].ar, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
-				self.set("ar_open", kendo.toString(view[0].ar_open, "n0"));
-				self.set("ar_customer", kendo.toString(view[0].ar_customer, "n0"));
-				self.set("ar_overdue", kendo.toString(view[0].ar_overdue, "n0"));
+				obj.set("ar", kendo.toString(view[0].ar, banhji.locale=="km-KH"?"c0":"c2", banhji.locale));
+				obj.set("ar_open", kendo.toString(view[0].ar_open, "n0"));
+				obj.set("ar_customer", kendo.toString(view[0].ar_customer, "n0"));
+				obj.set("ar_overdue", kendo.toString(view[0].ar_overdue, "n0"));
 			});
 
 			this.topCustomerDS.query({
-				filter: [
-					{ field:"issued_date >=", value: kendo.toString(firstDayOfYear, "yyyy-MM-dd") },
-					{ field:"issued_date <=", value:  kendo.toString(today, "yyyy-MM-dd") }
-				],								
-				page: 1,
-				pageSize: 5
+				filter: []
 			});
 
 			this.topARDS.query({
-				filter: [
-					{ field:"issued_date >=", value: kendo.toString(firstDayOfYear, "yyyy-MM-dd") },
-					{ field:"issued_date <=", value:  kendo.toString(today, "yyyy-MM-dd") }
-				],							
-				page: 1,
-				pageSize: 5
+				filter: []
 			});
 
 			this.topProductDS.query({
-				filter: [
-					{ field:"issued_date >=", operator:"where_related_transaction", value: kendo.toString(firstDayOfYear, "yyyy-MM-dd") },
-					{ field:"issued_date <=", operator:"where_related_transaction", value:  kendo.toString(today, "yyyy-MM-dd") }
-				],							
-				page: 1,
-				pageSize: 5
+				filter: []
 			});										
 		}
 	});
@@ -70719,9 +70680,9 @@
 			   	amount				: 0,
 			   	remaining 			: 0,
 			   	credit_allowed 		: 0,
-			   	rate				: 1,			   	
-			   	locale 				: banhji.locale,			   	
-			   	issued_date 		: new Date(),
+			   	rate				: 1,//Required			   	
+			   	locale 				: banhji.locale,//Required			   	
+			   	issued_date 		: new Date(),//Required
 			   	due_date 			: duedate,			   	
 			   	bill_to 			: "",
 			   	ship_to 			: "",
@@ -70729,7 +70690,7 @@
 			   	memo2 				: "",
 			   	status 				: 0,
 			   	segments 			: [],
-			   	is_journal 			: 1,
+			   	is_journal 			: 1,//Required
 			   	//Recurring
 			   	recurring_name 		: "",
 			   	start_date 			: new Date(),

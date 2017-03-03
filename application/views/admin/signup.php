@@ -1068,7 +1068,9 @@
                                 var res = e.response, type = e.type;
                                 if(res.results.length > 0) {
                                     // create company
-                                    let dd = new Date(banhji.company.get('current').fiscal_date);
+                                    let dd = new Date();
+                                    dd.setDate(1);
+                                    dd.setMonth(0);
                                     banhji.companyDS.insert(0, {
                                         name:  banhji.index.get('name'),
                                         currency: banhji.index.get('currency'),
