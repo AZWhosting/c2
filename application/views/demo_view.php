@@ -14530,286 +14530,291 @@
 </script>
 
 <script id="vendorReportCenter" type="text/x-kendo-template">
-	<div class="row-fluid customer-report-center">
-		<div class="span7">
-			<div class="row-fluid sale-report">
-				<h2>EXPENSE/PURCHASE MANAGEMENT REPORTS</h2>
-				<p>
-					The following reports provide summary and detailed reports in different ways to help analyze what 
-					you spent and their impact on your cash flow and performance. 
-				</p>
-				<div class="row-fluid">
-					<table class="table table-borderless table-condensed">
-						<tr>
-							<td>
-								<h3><a href="#/expenses_purchase_summary_supplier">Expenses/ Purchase Summary by Supplier</a></h3>
-							</td>
-							<td >
-								<h3><a href="#/suppliers_transaction_list">Suppliers Transaction List</a></h3>								
-							</td>						
-						</tr>
-						<tr>
-							<td >
-								<p>
-									Summarizes total expenses/ purchase for each suppliers within a period of time.
-								</p>
-								
-							</td>
-							<td >
-								<p>
-									Lists of all transactions related to and grouped by each suppliers
-								</p>
-							</td>
-							
-						</tr>
-						<tr>
-							<td >
-								<h3><a href="#/expenses_purchase_detail_supplier">Expenses/Purchase Detail by Supplier</a></h3>
-							</td>
-							<td >
-								<h3><a href="#/deposit_detail_supplier">Deposit Detail by Supplier</a></h3>
-							</td>
-						</tr>
-						<tr>
-							<td >
-								<p>
-									Lists individual expenses/ purchase transactions by date for each supplier within a period of time.
-								</p>
-							</td>
-							<td >
-								<p>
-									Provides detailed information about supplier deposit for specific order, prepayment, or credit.
-								</p>
-							</td>
-						</tr>
-
-						<tr>
-							<td >
-								<h3><a href="#/purchase_summary_product_services">Purchase Summary by Product/ Services</a></h3>
-							</td>
-							<td >
-								<h3><a href="#/open_purchase_order">Open Purchase Order</a></h3>
-							</td>
-						</tr>
-						<tr>
-							<td >
-								<p>
-									Summarizes total expenses/ purchase for each product/ service within a period of time. 
-								</p>
-							</td>
-							<td >
-								<p>
-									Lists all the open purchase order grouped by suppliers including the original amount as well.
-								</p>
-							</td>
-						</tr>
-						<tr>
-							<td >
-								<h3><a href="#/purchase_detail_product_services">Purchase Detail by Product/ Services</a></h3>
-							</td>
-						</tr>
-						<tr>
-							<td >
-								<p>
-									Lists individual sale transactions by date for each product/ service with a period of time.
-								</p>
-							</td>
-						</tr>
-
-					</table>
-				</div>
-			</div>
-
-			<div class="row-fluid recevable-report">
-				<h2>PAYABLES MANAGEMENT REPORTS</h2>
-				<p>
-					The following reports provide summary and detailed reports.
-				</p>
-				<div class="row-fluid">
-					<table class="table table-borderless table-condensed">
-						<tr>
-							<td>
-								<h3><a href="#/suppliers_balance_summary">Suppliers Balance Summary</a></h3>
-							</td>
-							<td >
-								<h3><a href="#/suppliers_balance_detail">Suppliers Balance Detail</a></h3>								
-							</td>						
-						</tr>
-						<tr>
-							<td >
-								<p>
-									Show each supplier’s total outstanding balances.
-								</p>
-								
-							</td>
-							<td >
-								<p>
-									Lists individual unpaid bill for each supplier
-								</p>
-							</td>
-							
-						</tr>
-						<tr>
-							<td >
-								<h3><a href="#/payables_aging_summary">Payables Aging Summary</a></h3>
-							</td>
-							<td >
-								<h3><a href="#/payables_aging_detail">Payables Aging Detail</a></h3>
-							</td>
-						</tr>
-						<tr>
-							<td >
-								<p>
-									Lists all unpaid bills for the current period, 30, 60, 90, and more than 90 days, grouped by individual suppliers. 
-								</p>
-							</td>
-							<td >
-								<p>
-									Lists individual unpaid bills, grouped by suppliers. This includes due date, outstanding days (aging days), and amount.
-								</p>
-							</td>
-						</tr>
-
-						<tr>
-							<td >
-								<h3><a href="#/list_bills_paid">List of bills to be paid</a></h3>
-							</td>
-							<td >
-								<h3><a href="#/bill_payment_list">Bill Payment List</a></h3>
-							</td>
-						</tr>
-						<tr>
-							<td >
-								<p>
-									Lists all unpaid invoices, grouped by Due today and Overdue.
-								</p>
-							</td>
-							<td >
-								<p>
-									Lists of paid bills for the select period of time, group by method of payments.
-								</p>
-							</td>
-						</tr>						
-
-					</table>
-				</div>
-			</div>
-			<div class="row-fluid recevable-report">
-				<h2>OTHER REPORTS/ LISTS</h2>
-				<div class="row-fluid">
-					<table class="table table-borderless table-condensed">
-						<tr>
-							<!-- <td style="width: 48%; padding-right: 8px !important;">
-								<h3><a href="#/product_service_list">Product/ Service List</a></h3>
-							</td> -->
-							<td >
-								<h3><a href="#/supplier_list">Supplier List</a></h3>								
-							</td>
-							<td >
-								<h3><a href="#/vendor_recurring">Recurring Supplier Template List</a></h3>								
-							</td>						
-						</tr>
-						<tr>
-							<!-- <td style="width: 48%; padding-right: 8px !important;" >
-								<p>
-									Lists the products and services you purchase. The following information is included: name, 
-									description, cost, sales price, and quantity on hand.
-								</p>								
-							</td> -->
-							<td >
-								<p>
-									Lists of all active suppliers
-								</p>
-							</td>
-							<td>								
-							</td>						
-						</tr>
-						<!-- <tr>
-							<td>
-							</td>
-							<td >
-								<h3><a href="#/customer_recurring">Recurring Supplier Template List</a></h3>								
-							</td>
-						</tr> -->
-					</table>
-				</div>
-			</div>
-		</div>
-		<div class="span5">
+	<div class="cover-block" style="width: 99%; background: #fff;">
+		<div class="row-fluid customer-report-center">
 			<span class="pull-right glyphicons no-js remove_2" 
 						onclick="javascript:window.history.back()"><i></i></span>
 			<br>
-			<br>
-			<div class="report-chart">
-				<div class="widget-body alert alert-primary sale-overview">
-					<h2>Expenses/ Purchase Overview</h2>
-					<div align="center" class="text-large strong" data-bind="text: purchase"></div>
-					<table width="100%">
-						<tr align="center">
-							<td>										
-								<span data-bind="text: purchase_supplier"></span>
-								<br>
-								<span>Suppliers</span>
-							</td>
-							<td>
-								<span data-bind="text: purchase_product"></span>
-								<br>
-								<span>Products</span>
-							</td>
-							<td>
-								<span data-bind="text: purchase_order"></span>
-								<br>
-								<span>Order</span>
-							</td>
-						</tr>
-					</table>
+			<div class="span7">
+				<div class="row-fluid sale-report" style="margin-bottom: 15px; padding-bottom: 5px; box-shadow: 0 2px 0 #d4d7dc, 0 0 0 #eceef1, 0 0 0 #eceef1;">
+					<h2>EXPENSE/PURCHASE MANAGEMENT REPORTS</h2>
+					<p>
+						The following reports provide summary and detailed reports in different ways to help analyze what 
+						you spent and their impact on your cash flow and performance. 
+					</p>
+					<div class="row-fluid">
+						<table class="table table-borderless table-condensed">
+							<tr>
+								<td>
+									<h3><a href="#/expenses_purchase_summary_supplier">Expenses/ Purchase Summary by Supplier</a></h3>
+								</td>
+								<td >
+									<h3><a href="#/suppliers_transaction_list">Suppliers Transaction List</a></h3>								
+								</td>						
+							</tr>
+							<tr>
+								<td >
+									<p>
+										Summarizes total expenses/ purchase for each suppliers within a period of time.
+									</p>
+									
+								</td>
+								<td >
+									<p>
+										Lists of all transactions related to and grouped by each suppliers
+									</p>
+								</td>
+								
+							</tr>
+							<tr>
+								<td >
+									<h3><a href="#/expenses_purchase_detail_supplier">Expenses/Purchase Detail by Supplier</a></h3>
+								</td>
+								<td >
+									<h3><a href="#/deposit_detail_supplier">Deposit Detail by Supplier</a></h3>
+								</td>
+							</tr>
+							<tr>
+								<td >
+									<p>
+										Lists individual expenses/ purchase transactions by date for each supplier within a period of time.
+									</p>
+								</td>
+								<td >
+									<p>
+										Provides detailed information about supplier deposit for specific order, prepayment, or credit.
+									</p>
+								</td>
+							</tr>
+
+							<tr>
+								<td >
+									<h3><a href="#/purchase_summary_product_services">Purchase Summary by Product/ Services</a></h3>
+								</td>
+								<td >
+									<h3><a href="#/open_purchase_order">Open Purchase Order</a></h3>
+								</td>
+							</tr>
+							<tr>
+								<td >
+									<p>
+										Summarizes total expenses/ purchase for each product/ service within a period of time. 
+									</p>
+								</td>
+								<td >
+									<p>
+										Lists all the open purchase order grouped by suppliers including the original amount as well.
+									</p>
+								</td>
+							</tr>
+							<tr>
+								<td >
+									<h3><a href="#/purchase_detail_product_services">Purchase Detail by Product/ Services</a></h3>
+								</td>
+							</tr>
+							<tr>
+								<td >
+									<p>
+										Lists individual sale transactions by date for each product/ service with a period of time.
+									</p>
+								</td>
+							</tr>
+
+						</table>
+					</div>
 				</div>
-				<!-- Graph -->
-				<div class="home-chart">
-					<div data-role="chart"
-		                 data-legend="{ position: 'top' }"
-		                 data-series-defaults="{ type: 'column' }"
-		                 data-tooltip='{
-		                    visible: true,
-		                    format: "{0}%",
-		                    template: "#= series.name #: #= kendo.toString(value, &#39;c&#39;, banhji.locale) #"
-		                 }'                 
-		                 data-series="[
-		                                 { field: 'sale', name: 'Monthly Purchase', categoryField:'month', color: '#236DA4' },
-		                                 { field: 'order', name: 'Monthly Purchase Order', categoryField:'month', color: '#A6C9E3' }
-		                             ]"	                             
-		                 data-bind="source: graphDS"
-		                 style="height: 250px;" ></div>
-	            <!-- End Graph -->
+
+				<div class="row-fluid recevable-report" style="margin-bottom: 15px; padding-bottom: 5px; box-shadow: 0 2px 0 #d4d7dc, 0 0 0 #eceef1, 0 0 0 #eceef1;">
+					<h2>PAYABLES MANAGEMENT REPORTS</h2>
+					<p>
+						The following reports provide summary and detailed reports.
+					</p>
+					<div class="row-fluid">
+						<table class="table table-borderless table-condensed">
+							<tr>
+								<td>
+									<h3><a href="#/suppliers_balance_summary">Suppliers Balance Summary</a></h3>
+								</td>
+								<td >
+									<h3><a href="#/suppliers_balance_detail">Suppliers Balance Detail</a></h3>								
+								</td>						
+							</tr>
+							<tr>
+								<td >
+									<p>
+										Show each supplier’s total outstanding balances.
+									</p>
+									
+								</td>
+								<td >
+									<p>
+										Lists individual unpaid bill for each supplier
+									</p>
+								</td>
+								
+							</tr>
+							<tr>
+								<td >
+									<h3><a href="#/payables_aging_summary">Payables Aging Summary</a></h3>
+								</td>
+								<td >
+									<h3><a href="#/payables_aging_detail">Payables Aging Detail</a></h3>
+								</td>
+							</tr>
+							<tr>
+								<td >
+									<p>
+										Lists all unpaid bills for the current period, 30, 60, 90, and more than 90 days, grouped by individual suppliers. 
+									</p>
+								</td>
+								<td >
+									<p>
+										Lists individual unpaid bills, grouped by suppliers. This includes due date, outstanding days (aging days), and amount.
+									</p>
+								</td>
+							</tr>
+
+							<tr>
+								<td >
+									<h3><a href="#/list_bills_paid">List of bills to be paid</a></h3>
+								</td>
+								<td >
+									<h3><a href="#/bill_payment_list">Bill Payment List</a></h3>
+								</td>
+							</tr>
+							<tr>
+								<td >
+									<p>
+										Lists all unpaid invoices, grouped by Due today and Overdue.
+									</p>
+								</td>
+								<td >
+									<p>
+										Lists of paid bills for the select period of time, group by method of payments.
+									</p>
+								</td>
+							</tr>						
+
+						</table>
+					</div>
+				</div>
+
+				<div class="row-fluid recevable-report">
+					<h2>OTHER REPORTS/ LISTS</h2>
+					<div class="row-fluid">
+						<table class="table table-borderless table-condensed">
+							<tr>
+								<!-- <td style="width: 48%; padding-right: 8px !important;">
+									<h3><a href="#/product_service_list">Product/ Service List</a></h3>
+								</td> -->
+								<td >
+									<h3><a href="#/supplier_list">Supplier List</a></h3>								
+								</td>
+								<td >
+									<h3><a href="#/vendor_recurring">Recurring Supplier Template List</a></h3>								
+								</td>						
+							</tr>
+							<tr>
+								<!-- <td style="width: 48%; padding-right: 8px !important;" >
+									<p>
+										Lists the products and services you purchase. The following information is included: name, 
+										description, cost, sales price, and quantity on hand.
+									</p>								
+								</td> -->
+								<td >
+									<p>
+										Lists of all active suppliers
+									</p>
+								</td>
+								<td>								
+								</td>						
+							</tr>
+							<!-- <tr>
+								<td>
+								</td>
+								<td >
+									<h3><a href="#/customer_recurring">Recurring Supplier Template List</a></h3>								
+								</td>
+							</tr> -->
+						</table>
+					</div>
+				</div>
 			</div>
-			<div class="report-chart">
-				<div class="widget-body receivable-overview" style="background-color: LightGray">
-					<h2>PAYABLES MANAGEMENT</h2>
-					<div align="center" class="text-large strong" data-bind="text: ap"></div>
-					<table width="100%">
-						<tr align="center">
-							<td>										
-								<span data-bind="text: ap_open"></span>
-								<br>
-								<span>Open</span>
-							</td>
-							<td>
-								<span data-bind="text: ap_supplier"></span>
-								<br>
-								<span>Supplier</span>
-							</td>
-							<td>
-								<span data-bind="text: ap_overdue"></span>
-								<br>
-								<span>Overdue</span>
-							</td>
-							<td>
-								<span data-bind="text: collection_day"></span>
-								<br>
-								<span>Payable Payment Days</span>
-							</td>
-						</tr>
-					</table>
+
+			<div class="span5">
+				<div class="report-chart" style="margin-bottom: 20px; margin-top: 10px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
+					<div class="widget-body alert alert-primary sale-overview" style="margin-bottom: 0 !important;">
+						<h2>Expenses/ Purchase Overview</h2>
+						<div align="center" class="text-large strong" data-bind="text: purchase"></div>
+						<table width="100%">
+							<tr align="center">
+								<td>										
+									<span data-bind="text: purchase_supplier"></span>
+									<br>
+									<span>Suppliers</span>
+								</td>
+								<td>
+									<span data-bind="text: purchase_product"></span>
+									<br>
+									<span>Products</span>
+								</td>
+								<td>
+									<span data-bind="text: purchase_order"></span>
+									<br>
+									<span>Order</span>
+								</td>
+							</tr>
+						</table>
+					</div>
+					<!-- Graph -->
+					<div class="home-chart">
+						<div data-role="chart"
+			                 data-legend="{ position: 'top' }"
+			                 data-series-defaults="{ type: 'column' }"
+			                 data-tooltip='{
+			                    visible: true,
+			                    format: "{0}%",
+			                    template: "#= series.name #: #= kendo.toString(value, &#39;c&#39;, banhji.locale) #"
+			                 }'                 
+			                 data-series="[
+			                                 { field: 'sale', name: 'Monthly Purchase', categoryField:'month', color: '#203864', overlay:{ gradient: 'none'} },
+			                                 { field: 'order', name: 'Monthly Purchase Order', categoryField:'month', color: '#9CB9D9', overlay:{ gradient: 'none'} }
+			                             ]"	                             
+			                 data-bind="source: graphDS"
+			                 style="height: 250px;" ></div>
+		            <!-- End Graph -->
+		            </div>
+				</div>
+
+				<div class="report-chart" style="margin-bottom: 20px; padding: 15px; margin-top: 10px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
+					<div class="widget-body receivable-overview" style="background-color: #fff; margin-bottom: 0; color: #203864;">
+						<h2 style="text-transform: uppercase; color: #203864; font-weight: 800;">PAYABLES MANAGEMENT</h2>
+						<div align="center" class="text-large strong" data-bind="text: ap"></div>
+						<table width="100%">
+							<tr align="center">
+								<td>										
+									<span data-bind="text: ap_open"></span>
+									<br>
+									<span>Open</span>
+								</td>
+								<td>
+									<span data-bind="text: ap_supplier"></span>
+									<br>
+									<span>Supplier</span>
+								</td>
+								<td>
+									<span data-bind="text: ap_overdue"></span>
+									<br>
+									<span>Overdue</span>
+								</td>
+								<td>
+									<span data-bind="text: collection_day"></span>
+									<br>
+									<span>Payable Payment Days</span>
+								</td>
+							</tr>
+						</table>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -23510,7 +23515,7 @@
 							onclick="javascript:window.history.back()"><i></i></span>
 			<br>
 			<div class="span7">
-				<div class="row-fluid sale-report" style="margin-bottom: 15px; padding-bottom: 5px; box-shadow: 0 2px 0 #d4d7dc, 0 0 0 #eceef1, 0 0 0 #eceef1;">				
+				<div class="row-fluid sale-report" style="margin-bottom: 15px; padding-bottom: 5px; box-shadow: 0 2px 0 #d4d7dc, 0 0 0 #eceef1, 0 0 0 #eceef1;">
 					<h2 data-bind="text: lang.lang.sale_managment_reports" style="text-transform: uppercase;"></h2>
 					<p>
 						The following reports provide summary and detailed reports in 
@@ -23753,12 +23758,6 @@
 									<br>
 									<span data-bind="text: lang.lang.order">Order</span>
 								</td>
-								<td >
-									<span data-bind="text: sale_order"></span>
-									<br>
-									<span data-bind="text: lang.lang.sale_order">Sale Order</span>
-								</td>
-
 							</tr>
 						</table>
 					</div>
@@ -23773,8 +23772,8 @@
 			                    template: "#= series.name #: #= kendo.toString(value, &#39;c&#39;, banhji.locale) #"
 			                 }'                 
 			                 data-series="[
-			                                 { field: 'sale', name: langVM.lang.monthly_sale, categoryField:'month', color: '#236DA4' },
-			                                 { field: 'order', name: langVM.lang.monthly_order, categoryField:'month', color: '#A6C9E3' }
+			                                 { field: 'sale', name: langVM.lang.monthly_sale, categoryField:'month', color: '#203864', overlay:{ gradient: 'none'} },
+			                                 { field: 'order', name: langVM.lang.monthly_order, categoryField:'month', color: '#9CB9D9', overlay:{ gradient: 'none'} }
 			                             ]"	                             
 			                 data-bind="source: graphDS"
 			                 style="height: 250px;" ></div>
@@ -23810,8 +23809,6 @@
 							</tr>
 						</table>
 					</div>
-					
-	            </div>
 				</div>
 			</div>
 		</div>
@@ -36885,164 +36882,165 @@
 </script>
 
 <script id="itemReportCenter" type="text/x-kendo-template">
-	<div class="row-fluid customer-report-center">
-		<div class="span7">
-			<div class="row-fluid sale-report">
-				<h2>INVENTORY POSITION</h2>
-				<p>
-					The following reports provide summary and detailed reports on the position of inventory. 
-				</p>
-				<div class="row-fluid">
-					<table class="table table-borderless table-condensed">
-						<tr>
-							<td width="50%">
-								<h3><a href="#/inventory_position_summary">Inventory Position Summary</a></h3>
-							</td>
-							<td >
-								<h3><a href="#/inventory_position_detail">Inventory Position Detail</a></h3>
-							</td>
-						</tr>
-						<tr>
-							<td >
-								<p>
-									Summarizes each inventory balance by quantity on hand, on purchase order and sale order. In addition, it also includes average cost and price.  
-
-								</p>
-								
-							</td>
-							<td style="vertical-align: top;">
-								<p>
-									Lists individual inventory movement transactions by date for each inventory within a period of time.
-
-								</p>
-							</td>
-						</tr>						
-					</table>
-				</div>
-			</div>
-
-			<div class="row-fluid recevable-report">
-				<h2>INVENTORY MOVEMENT REPORTS</h2>
-				<p>
-					The following reports provide summary and detailed reports on the movement of the inventories
-				</p>
-				<div class="row-fluid">
-					<table class="table table-borderless table-condensed">
-						<tr>
-							<td width="50%">
-								<h3><a href="#/purchase_summary_product_services">Purchase Summary by Product/ Services</a></h3>
-							</td>
-							<td width="50%">
-								<h3><a href="#/purchase_detail_product_services">Purchase Detail by Product/ Services</a></h3>
-							</td>					
-						</tr>
-						<tr>							
-							<td >
-								<p>
-									Summarizes total expenses/ purchase for each product/ service within a period of time.
-								</p>
-							</td>
-							<td >
-								<p>
-									Lists individual expenses/ purchase transactions by date for each supplier within a period of time.
-								</p>
-								
-							</td>
-						</tr>
-						<tr>
-							<td >
-								<h3><a href="#/sale_summary_by_product">Sale Summary by Product/ Services</a></h3>
-							</td>
-							<td >
-								<h3><a href="#/sale_detail_by_product">Sale Detail by Product/ Services</a></h3>
-							</td>
-						</tr>
-						<tr>
-							<td >
-								<p>
-									Summarizes total sales for each product/ service within a period of time. In addition, it also includes gross profit margin, quantity, amount, cost, and average prices.
-								</p>
-							</td>
-							<td style="vertical-align: top;">
-								<p>
-									Lists individual sale transactions by date for each product/ service with a period of time.
-								</p>
-							</td>							
-						</tr>
-					</table>
-				</div>
-			</div>
-			<!-- <div class="row-fluid recevable-report">
-				<h2>OTHER REPORTS/ LISTS</h2>
-				<p>
-					The following reports provide summary and detailed reports on the movement of the inventories
-				</p>
-				<div class="row-fluid">
-					<table class="table table-borderless table-condensed">
-						<tr>
-							<td style="width: 55%; padding-right: 8px !important;">
-								<h3><a href="#/inventory_list">Inventory List</a></h3>
-							</td>
-							<td >
-								<h3><a href="#/">Recurring Inventory Template List</a></h3>								
-							</td>						
-						</tr>
-						<tr>
-							<td style="width: 55%; padding-right: 8px !important;">
-								<p>
-									Lists the products you purchase and sold. The following information is included: name, description, cost, sales price, and quantity on hand.
-								</p>								
-							</td>
-							<td >								
-							</td>
-							
-						</tr>
-						
-					</table>
-				</div>
-			</div> -->
-		</div>
-		<div class="span5">
+	<div class="cover-block" style="width: 99%; background: #fff;">
+		<div class="row-fluid customer-report-center">
 			<span class="pull-right glyphicons no-js remove_2" 
-						onclick="javascript:window.history.back()"><i></i></span>
+							onclick="javascript:window.history.back()"><i></i></span>
 			<br>
-			<br>
-			<div class="report-chart">
-				<div class="widget-body alert alert-primary sale-overview">
-					<h2>Inventory Balance</h2>
-					<div align="center" class="text-large strong" data-bind="text: inventoryBalance"></div>
-					<table width="100%">
-						<tr align="center">
-							<td>
-								<span data-bind="text: grossProfitMargin"></span>
-								<br>
-								<span>Average Margin</span>
-							</td>
-							<td>
-								<span data-bind="text: inventoryTurnOver"></span>
-								<br>
-								<span>Turnover Days</span>
-							</td>
-						</tr>
-					</table>
-				</div>
-				<div class="home-chart" >
-				<div data-role="chart"
-	                 data-legend="{ position: 'top' }"
-	                 data-series-defaults="{ type: 'column' }"
-	                 data-tooltip='{
-	                    visible: true,
-	                    format: "{0}%",
-	                    template: "#= series.name #: #= kendo.toString(value, &#39;c&#39;, banhji.locale) #"
-	                 }'                 
-	                 data-series="[
-	                                { field: 'purchase', name: 'Monthly Purchase', categoryField:'month', color: '#236DA4' },
-	                                { field: 'sale', name: 'Monthly Sale', categoryField:'month', color: '#A6C9E3' }
-	                            ]"	                             
-	                 data-bind="source: graphDS"
-	                 style="height: 250px;" ></div>            
-           		</div>
+			<div class="span7">
+				<div class="row-fluid sale-report" style="margin-bottom: 15px; padding-bottom: 5px; box-shadow: 0 2px 0 #d4d7dc, 0 0 0 #eceef1, 0 0 0 #eceef1;">
+					<h2>INVENTORY POSITION</h2>
+					<p>
+						The following reports provide summary and detailed reports on the position of inventory. 
+					</p>
+					<div class="row-fluid">
+						<table class="table table-borderless table-condensed">
+							<tr>
+								<td width="50%">
+									<h3><a href="#/inventory_position_summary">Inventory Position Summary</a></h3>
+								</td>
+								<td >
+									<h3><a href="#/inventory_position_detail">Inventory Position Detail</a></h3>
+								</td>
+							</tr>
+							<tr>
+								<td >
+									<p>
+										Summarizes each inventory balance by quantity on hand, on purchase order and sale order. In addition, it also includes average cost and price.  
 
+									</p>
+									
+								</td>
+								<td style="vertical-align: top;">
+									<p>
+										Lists individual inventory movement transactions by date for each inventory within a period of time.
+
+									</p>
+								</td>
+							</tr>						
+						</table>
+					</div>
+				</div>
+
+				<div class="row-fluid recevable-report" >
+					<h2>INVENTORY MOVEMENT REPORTS</h2>
+					<p>
+						The following reports provide summary and detailed reports on the movement of the inventories
+					</p>
+					<div class="row-fluid">
+						<table class="table table-borderless table-condensed">
+							<tr>
+								<td width="50%">
+									<h3><a href="#/purchase_summary_product_services">Purchase Summary by Product/ Services</a></h3>
+								</td>
+								<td width="50%">
+									<h3><a href="#/purchase_detail_product_services">Purchase Detail by Product/ Services</a></h3>
+								</td>					
+							</tr>
+							<tr>							
+								<td >
+									<p>
+										Summarizes total expenses/ purchase for each product/ service within a period of time.
+									</p>
+								</td>
+								<td >
+									<p>
+										Lists individual expenses/ purchase transactions by date for each supplier within a period of time.
+									</p>
+									
+								</td>
+							</tr>
+							<tr>
+								<td >
+									<h3><a href="#/sale_summary_by_product">Sale Summary by Product/ Services</a></h3>
+								</td>
+								<td >
+									<h3><a href="#/sale_detail_by_product">Sale Detail by Product/ Services</a></h3>
+								</td>
+							</tr>
+							<tr>
+								<td >
+									<p>
+										Summarizes total sales for each product/ service within a period of time. In addition, it also includes gross profit margin, quantity, amount, cost, and average prices.
+									</p>
+								</td>
+								<td style="vertical-align: top;">
+									<p>
+										Lists individual sale transactions by date for each product/ service with a period of time.
+									</p>
+								</td>							
+							</tr>
+						</table>
+					</div>
+				</div>
+				<!-- <div class="row-fluid recevable-report">
+					<h2>OTHER REPORTS/ LISTS</h2>
+					<p>
+						The following reports provide summary and detailed reports on the movement of the inventories
+					</p>
+					<div class="row-fluid">
+						<table class="table table-borderless table-condensed">
+							<tr>
+								<td style="width: 55%; padding-right: 8px !important;">
+									<h3><a href="#/inventory_list">Inventory List</a></h3>
+								</td>
+								<td >
+									<h3><a href="#/">Recurring Inventory Template List</a></h3>								
+								</td>						
+							</tr>
+							<tr>
+								<td style="width: 55%; padding-right: 8px !important;">
+									<p>
+										Lists the products you purchase and sold. The following information is included: name, description, cost, sales price, and quantity on hand.
+									</p>								
+								</td>
+								<td >								
+								</td>
+								
+							</tr>
+							
+						</table>
+					</div>
+				</div> -->
+			</div>
+			<div class="span5">
+				<div class="report-chart" style="margin-bottom: 20px; padding: 15px; margin-top: 10px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
+					<div class="widget-body alert alert-primary sale-overview">
+						<h2>Inventory Balance</h2>
+						<div align="center" class="text-large strong" data-bind="text: inventoryBalance"></div>
+						<table width="100%">
+							<tr align="center">
+								<td>
+									<span data-bind="text: grossProfitMargin"></span>
+									<br>
+									<span>Average Margin</span>
+								</td>
+								<td>
+									<span data-bind="text: inventoryTurnOver"></span>
+									<br>
+									<span>Turnover Days</span>
+								</td>
+							</tr>
+						</table>
+					</div>
+					<div class="home-chart" >
+					<div data-role="chart"
+		                 data-legend="{ position: 'top' }"
+		                 data-series-defaults="{ type: 'column' }"
+		                 data-tooltip='{
+		                    visible: true,
+		                    format: "{0}%",
+		                    template: "#= series.name #: #= kendo.toString(value, &#39;c&#39;, banhji.locale) #"
+		                 }'                 
+		                 data-series="[
+		                                { field: 'purchase', name: 'Monthly Purchase', categoryField:'month', color: '#203864', overlay:{ gradient: 'none'} },
+		                                { field: 'sale', name: 'Monthly Sale', categoryField:'month', color: '#9CB9D9', overlay:{ gradient: 'none'} }
+		                            ]"	                             
+		                 data-bind="source: graphDS"
+		                 style="height: 250px;" ></div>            
+	           		</div>
+
+				</div>
 			</div>
 		</div>
 	</div>
@@ -45782,32 +45780,7 @@
 		lang 				: langVM,
 		dataSource			: dataStore(apiUrl+"dashboards/home"),
 		summaryDS			: dataStore(apiUrl+"accounting_reports/financial_snapshot"),
-		graphDS  			: new kendo.data.DataSource({
-			transport: {
-				read 	: {
-					url: apiUrl + "dashboards/home_graph",
-					type: "GET",
-					headers: banhji.header,
-					dataType: 'json'
-				}
-			},
-			schema 	: {
-				model: {
-					id: 'id'
-				},
-				data: 'results',
-				total: 'count'
-			},
-			sort: {
-                field: "month",
-                dir: "asc"
-            },								
-			batch: true,			
-			serverFiltering: true,
-			serverSorting: true,
-			serverPaging: true,
-			pageSize: 100
-		}),		
+		graphDS 			: dataStore(apiUrl+"dashboards/graph_cash_in_out"),
 		companyLogo 		: '',
 		modules 			: new kendo.data.DataSource({
 			transport: {
@@ -45885,7 +45858,7 @@
 		pageLoad 			: function(){
 			var self = this;
 
-			this.graphDS.fetch();
+			this.graphDS.read();
 
 			this.dataSource.query({
 				filter: [],
@@ -74873,7 +74846,7 @@
 				self.set("sale", kendo.toString(view[0].sale, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
 				self.set("sale_customer", kendo.toString(view[0].sale_customer, "n0"));
 				self.set("sale_product", kendo.toString(view[0].sale_product, "n0"));
-				self.set("sale_order", kendo.toString(view[0].sale_order, "n0"));
+				// self.set("sale_order", kendo.toString(view[0].sale_order, "n0"));
 
 				self.set("order", kendo.toString(view[0].order, "n0"));
 				self.set("order_avg", kendo.toString(view[0].order_avg, banhji.locale=="km-KH"?"c0":"c", banhji.locale));				

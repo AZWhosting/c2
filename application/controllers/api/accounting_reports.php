@@ -25,16 +25,19 @@ class Accounting_reports extends REST_Controller {
 
 			//Fiscal Date
 			$this->fiscalDate = date("m-d", $institute->fiscal_date/1000);
-			$fDate = date("Y") ."-". $this->fiscalDate;
+			$currentFiscalDate = date("Y") ."-". $this->fiscalDate;
 			$today = date("Y-m-d");
-			if($today > $fDate){
+			if($today > $currentFiscalDate){
 				$this->startFiscalDate 	= date("Y") ."-". $this->fiscalDate;
 				$this->endFiscalDate 	= date("Y",strtotime("+1 year")) ."-". $this->fiscalDate;
 			}else{
 				$this->startFiscalDate 	= date("Y",strtotime("-1 year")) ."-". $this->fiscalDate;
 				$this->endFiscalDate 	= date("Y") ."-". $this->fiscalDate;
 			}
+
+			//Add 1 day
 			$this->startFiscalDate = date("Y-m-d", strtotime($this->startFiscalDate . "+1 days"));
+			$this->endFiscalDate = date("Y-m-d", strtotime($this->endFiscalDate . "+1 days"));
 		}
 	}
 	
