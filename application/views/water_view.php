@@ -762,6 +762,7 @@
 	            		</thead>
 	            		<tbody data-role="listview"
 								 data-selectable="false"
+								 data-auto-bind="false"
 				                 data-template="customerSetting-form-template"
 				                 data-bind="source: txnTemplateDS">				            
 	            		</tbody>
@@ -976,7 +977,7 @@
    		<td>
     		#= account.name#
    		</td>
-   		<td>
+   		<td align="center">
     		#= _currency.code#
    		</td>
    		<td  style="text-align: center;">   
@@ -1021,7 +1022,7 @@
 <script id="tariff-item-template" type="text/x-kendo-tmpl">
     <tr>
     	<td>#= name#</td>
-    	<td align="right">#= usage#</td>
+    	<td align="center">#= usage#</td>
     	<td align="right">#= kendo.toString(amount, _currency.locale=="km-KH"?"c0":"c", _currency.locale)#</td>
     	<td align="center">
     		<span class="k-edit-button"><i class="icon-edit"></i> Edit</span>
@@ -1061,7 +1062,7 @@
    		<td align="left">
     		#= account.name#
    		</td>
-   		<td>
+   		<td align="center">
    			#= _currency.code #
    		</td>
    		<td align="right">
@@ -1113,7 +1114,7 @@
    		<td align="left">
     		#= account.name#
    		</td>
-   		<td>
+   		<td align="center">
    			#= _currency.code #
    		</td>
    		<td align="right">
@@ -1162,10 +1163,10 @@
     	<td>
     		#= name#
    		</td>
-   		<td align="right">
+   		<td>
     		#= account.name#
    		</td>
-   		<td>
+   		<td align="center">
    			#= _currency.code #
    		</td>
    		<td align="right">
@@ -1215,7 +1216,7 @@
     	<td>
     		#= type#
     	</td>
-    	<td style="text-align: center;">#= amount#</td>
+    	<td align="right">#= kendo.toString(amount, _currency.locale=="km-KH"?"c0":"c", _currency.locale)#</td>
    	</tr>
 </script>
 <script id="accountSetting-prefix-template" type="text/x-kendo-template">
@@ -3011,9 +3012,7 @@
 		<div class="customer-background" style="margin-top: 15px;">
 			<div class="container-960">
 				<div id="example" class="k-content saleSummaryCustomer">
-			    	<span class="pull-right glyphicons no-js remove_2"
-						onclick="javascript:window.history.back()"><i></i></span>
-
+			    	<span class="pull-right glyphicons no-js remove_2" data-bind="click: cancel"><i></i></span>
 					<h2 style="padding:0 15px 15px 0;">Reorder Meter</h2>
 					<div class="row-fluid">
 					    <!-- Tabs -->
@@ -3023,7 +3022,7 @@
 								<div class="widget-head">
 									<ul>
 										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
-										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab" data-bind="click: printGrid"><i></i>Print/Export</a></li>
+										<li><a class="glyphicons print" data-toggle="tab" data-bind="click: ExportExcel"><i></i>Export</a></li>
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
@@ -3031,9 +3030,9 @@
 									<div class="tab-content">
 								        <div class="tab-pane active" id="tab-1">
 											<div class="span12 row-fluid" style="padding:20px 0;padding-top: 0;">
-									        	<div class="span6" style="padding-left: 0;">
+									        	<div class="span8" style="padding-left: 0;">
 													<div class="span4" style="padding-left: 0;">
-														<div class="control-group">								
+														<div class="control-group">
 															<label ><span >License</span></label>
 															<input 
 																data-role="dropdownlist" 
@@ -3087,6 +3086,7 @@
 					<div id="invFormContent">
 						<div id="grid"></div>
 					</div>
+					<br>
 					<div class="box-generic bg-action-button">
 						<div id="ntf1" data-role="notification" style="display: none;"></div>
 						<div class="row">
@@ -3094,7 +3094,7 @@
 								
 							</div>
 							<div class="span9" align="right">
-								<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" style="width: 80px;"><i></i> <span data-bind="click: save, text: lang.lang.save_new">Save New</span></span>
+								<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" style="width: 80px;"><i></i> <span data-bind="click: save, text: lang.lang.save">Save</span></span>
 								<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;margin-bottom: 10px"><i></i> <span data-bind="text: lang.lang.cancel, click: cancel">Cancel</span></span>		
 							</div>
 						</div>
@@ -3109,7 +3109,10 @@
 <!--  Reading  -->
 <script id="Reading" type="text/x-kendo-template">
 	<div id="slide-form">
-		<div class="customer-background" style="overflow: hidden; margin-top: 15px;">
+		<div class="customer-background" style="overflow: hidden; margin-top: 15px;position: relative;">
+			<div id="loadImport" style="display:none;text-align: center;position: absolute;width: 100%; height: 100%;margin-top: -15px;background: rgba(142, 159, 167, 0.8);z-index: 9999;">
+				<i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 35%;left: 45%"></i>
+			</div>
 			<div class="container-960">					
 				<div id="example" class="k-content">
 			    	<div class="hidden-print pull-right">
@@ -3134,9 +3137,6 @@
 							
 							<div class="widget-body">
 								<div class="tab-content">
-									<div id="loadImport" style="display:none;text-align: center;position: absolute;width: 100%; height: 70%;background: rgba(142, 159, 167, 0.8);z-index: 9999;">
-										<i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 35%;left: 45%"></i>
-									</div>
 									<!-- Tab content -->
 									<div id="tabDownload" style="border: 1px solid #ccc; overflow: hidden;" class="tab-pane active widget-body-regular">
 										<h4 class="separator bottom" style="margin-top: 10px;">Please Select License and Location to download reading book</h4>
@@ -3966,7 +3966,7 @@
 			        <div class="box-generic bg-action-button">
 						<div id="ntf1" data-role="notification"></div>
 				        <div class="row">
-							<div class="span2">
+							<div class="span3">
 								<input data-role="dropdownlist"
 					                   data-value-primitive="true"
 					                   data-text-field="name"
@@ -3975,20 +3975,10 @@
 					                              source: txnTemplateDS"
 					                   data-option-label="Select Template..." />
 							</div>
-							<div class="span2" style="margin: 0 10px;margin-left: 25px;">
-								<input data-role="dropdownlist"
-					                   data-value-primitive="true"
-					                   data-option-label="Paper Size ..." 
-					                   data-text-field="name"
-					                   data-value-field="id"
-					                   data-bind="value: SelectSize,
-					                              source: SizePaper" />
-							</div>
-							<div class="span7" align="right">
+							<div class="span9" align="right">
 								<span class="btn btn-icon btn-primary glyphicons print" data-bind="click: printBill" style="width: 110px;margin-bottom: 0;"><i></i> <span data-bind="text: lang.lang.print"></span></span>
 								
 								<span class="btn btn-icon btn-warning glyphicons remove_2" data-bind="click: cancel" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.cancel"></span></span>
-													
 							</div>
 						</div>
 					</div>
@@ -4015,37 +4005,34 @@
 </script>
 <script id="InvoicePrint" type="text/x-kendo-template">
 	<div id="slide-form">
-		<div class="customer-background" style="overflow: hidden;">
+		<div class="customer-background" style="overflow: hidden;margin-top: 15px;">
 			<div class="container-960">					
 				<div id="example" class="k-content">
+					<span id="savePrint" class="btn btn-icon btn-primary glyphicons print" data-bind="click: printGrid" style="width: 80px;margin-bottom:0;position: absolute;left:45%;"><i></i>Save PDF</span>
 					<div class="hidden-print pull-right">
 			    		<span style="padding: 5px 0 11px 35px;" class="glyphicons no-js remove_2" 
 							data-bind="click: cancel"><i></i></span>	
 					</div>
 					<h2>Invoice Preview</h2>
-					<br>					
-					
-					<div id="wInvoiceContent" data-role="listview" 
-						data-auto-bind="true"
-						data-bind="source: dataSource" 
-						data-template="Invoice-print-row-template"></div>
-					
+					<br>
+					<div id="wInvoiceContent"></div>
 					<!-- Form actions -->
 					<div class="box-generic" align="right" style="background-color: #0B0B3B;">
 						<span id="notification"></span>
 
-						<span id="savePrint" class="btn btn-icon btn-primary glyphicons print" data-bind="click: printGrid" style="width: 80px;"><i></i>Print</span>
-						<span id="savePDF" class="btn btn-icon btn-success glyphicons edit" data-bind="click: savePDF" style="width: 120px;"><i></i> Save PDF</span>							
+						<span id="savePrint" class="btn btn-icon btn-primary glyphicons print" data-bind="click: printGrid" style="width: 80px;margin-bottom:0!important;"><i></i>Save PDF</span>
+						
+						<span class="btn btn-icon btn-warning glyphicons remove_2" data-bind="click: cancel" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.cancel">Cancel </span></span>						
 					</div>
 				</div><!-- //End div span12-->
 			</div><!-- //End div row-fluid-->
 		</div>
 	</div>	
 </script>
-<script id="Invoice-print-row-template" type="text/x-kendo-tmpl">	
-  	<div class="container winvoice-print" style="margin-bottom: 10px; #if(banhji.InvoicePrint.PaperSize == 'A5'){# width: 775px; #}else{# width: 900px; #}#">
+<script id="Invoiceprintrowtemplate" type="text/x-kendo-tmpl">	
+  	<div class="container winvoice-print" style="page-break-after: always;width: 775px;">
 		<div class="span12 headerinv " style="border-bottom: 2px solid \#000;padding: 15px 0;">
-            <img style="position: absolute;left: 0;top: 20px;max-width: 100px;height: auto;" src="#: banhji.institute.logo.url#" alt="#: banhji.institute.name#" title="#: banhji.institute.name#" />
+            <img class="logoP" style="position: absolute;left: 0;top: 20px;max-width: 100px;height: auto;max-height: 50px;" src="#: banhji.institute.logo.url#" alt="#: banhji.institute.name#" title="#: banhji.institute.name#" />
 			<div class="span12" align="center">
 				<h4>#: banhji.institute.name#</h4>					
 				<h5>#: banhji.institute.address# 
@@ -4079,10 +4066,6 @@
 						<td><p>តំបន់</p></td>
 						<td><p>#:meter.location[0].abbr# - #:meter.location[0].name#</p></td>
 					</tr>
-					<!-- <tr>
-						<td><p>លេខ​ទី​តាំង​</p></td>
-						<td><p>#:contact.code#</p></td>
-					</tr> -->
 					<tr>
 						<td><p>គិត​ចាប់​ពី​ថ្ងៃ​ទី</p></td>
 						<td><p>#=kendo.toString(new Date(invoice_lines[0].from_date), "dd-MMM-yyyy")#</p></td>
@@ -4097,12 +4080,12 @@
 		<table class="span12 table table-bordered footerTbl" style="padding:0;margin-top: 40px;border:1px solid \\#000; border-radius: 3px;border-collapse: inherit;margin-left: 0px;">
 			<thead>
 				<tr>
-					<th width="180" class="darkbblue">លេខ​កុងទ័រ<br>METER</th>
-					<th width="150" class="darkbblue">អំណានចាស់<br>PREVIOUS</th>
-					<th width="120" class="darkbblue">អំណានថ្មី<br>CURRENT</th>
-					<th width="120" class="darkbblue">បរិមាណ<br>CONSUMPTION</th>
-					<th width="120" class="darkbblue">តំលៃឯកត្តា<br>RATE</th>
-					<th width="180" class="darkbblue">តំលៃសរុប<br>AMOUNT</th>
+					<th width="180" class="darkbblue main-color">លេខ​កុងទ័រ<br>METER</th>
+					<th width="150" class="darkbblue main-color">អំណានចាស់<br>PREVIOUS</th>
+					<th width="120" class="darkbblue main-color">អំណានថ្មី<br>CURRENT</th>
+					<th width="120" class="darkbblue main-color">បរិមាណ<br>CONSUMPTION</th>
+					<th width="120" class="darkbblue main-color">តំលៃឯកត្តា<br>RATE</th>
+					<th width="180" class="darkbblue main-color">តំលៃសរុប<br>AMOUNT</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -4167,10 +4150,7 @@
 					#var minuS = 5 - invoice_lines.length;#
 					#for(var i = 0; i < minuS; i++){#
 						<tr>
-							<td colspan="3" align="left">&nbsp;</td>
-							<td></td>
-							<td></td>
-							<td></td>
+							<td colspan="6" align="left">&nbsp;</td>
 						</tr>
 					#}#
 				#}#
@@ -4178,19 +4158,10 @@
 					<tr><td colspan="6"  style="height: 200px;" ></td></tr>
 				#}#
 				<tr>
-					<td colspan="3" align="left">&nbsp;</td>
-					<td></td>
-					<td></td>
-					<td></td>
+					<td colspan="6" align="left">&nbsp;</td>
 				</tr>
 				<tr>
-					<td colspan="3" align="left">&nbsp;</td>
-					<td></td>
-					<td></td>
-					<td></td>
-				</tr>		
-				<tr>
-					<td colspan="5" style="padding-right: 10px;background: \\#355176;color: \\#fff;text-align: right;" class="darkbblue">បំណុល​សរុប TOTAL BALANCE</td>
+					<td colspan="5" style="padding-right: 10px;background: \\#355176;color: \\#fff;text-align: right;" class="darkbblue main-color">បំណុល​សរុប TOTAL BALANCE</td>
 					<td style="border: 1px solid;text-align: right">#= kendo.toString(amount, "c", locale)#</td>
 				</tr>
 				<tr>
@@ -4216,8 +4187,8 @@
 		<table class="span12 table table-bordered footerTbl" style="padding:0;margin-bottom:75px;border-collapse: inherit;margin-top: 15px;border:1px solid \\#000; border-radius: 3px;margin-left: 0px;">
 			<tbody>
 				<tr>
-					<td width="100"></td>
-					<th width="390" style="border: none">
+					<td width="150"></td>
+					<th width="300" style="border: none">
 						<span style="margin-left: -15px;" id="footwnumber#:id#"></span>
 					</th>
 					<td width="270" class="greyy"  style="background: \\#ccc;border-bottom:1px solid \\#fff;">ប្រាក់​ត្រូវ​បង់ TOTAL DUE</td>
@@ -5051,7 +5022,7 @@
 				    <br>	
 				    <div class="row" style="margin-left:0;">			   				
 						<div class="span4">	
-							<div class="span12">
+							<!-- <div class="span12">
 								<select class="span12 selectType" 
 									data-role="dropdownlist" 
 									data-value-primitive="true" 
@@ -5060,7 +5031,7 @@
 									data-bind="value: obj.type, 
 												source: selectTypeList, 
 												events:{change: onChange}" ></select>
-							</div>
+							</div> -->
 							<div class="span12" style="margin-bottom: 10px;">
 								<input type="text" id="formName" name="Form Name" class="k-textbox" placeholder="Form Name" required validationMessage="" data-bind="value: obj.name" style="width: 100%;" />
 							</div>
@@ -5184,10 +5155,6 @@
 						<td><p>តំបន់</p></td>
 						<td><p data-bind="text: obj.customer_code"></p></td>
 					</tr>
-					<!-- <tr>
-						<td><p>លេខ​ទី​តាំង​</p></td>
-						<td><p>#:contact.code#</p></td>
-					</tr> -->
 					<tr>
 						<td><p>គិត​ចាប់​ពី​ថ្ងៃ​ទី</p></td>
 						<td><p data-bind="text: obj.start_date"></p></td>
@@ -5202,26 +5169,22 @@
 		<table class="span12 table table-bordered footerTbl" style="padding:0;margin-top: 40px;border:1px solid #000; border-radius: 3px;border-collapse: inherit;margin-left: 0px;">
 			<thead>
 				<tr>
-					<th width="180" class="darkbblue">លេខ​កុងទ័រ<br>METER</th>
-					<th width="150" class="darkbblue">អំណានចាស់<br>PREVIOUS</th>
-					<th width="120" class="darkbblue">អំណានថ្មី<br>CURRENT</th>
-					<th width="120" class="darkbblue">បរិមាណ<br>CONSUMPTION</th>
-					<th width="120" class="darkbblue">តំលៃឯកត្តា<br>RATE</th>
-					<th width="180" class="darkbblue">តំលៃសរុប<br>AMOUNT</th>
+					<th width="180" class="darkbblue main-color">លេខ​កុងទ័រ<br>METER</th>
+					<th width="150" class="darkbblue main-color">អំណានចាស់<br>PREVIOUS</th>
+					<th width="120" class="darkbblue main-color">អំណានថ្មី<br>CURRENT</th>
+					<th width="120" class="darkbblue main-color">បរិមាណ<br>CONSUMPTION</th>
+					<th width="120" class="darkbblue main-color">តំលៃឯកត្តា<br>RATE</th>
+					<th width="180" class="darkbblue main-color">តំលៃសរុប<br>AMOUNT</th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr>
 					<td style="vertical-align: middle;" data-bind="text: obj.issue_date"></td>
 					<td colspan="4" style="text-align: right">
-						ប្រាក់​ជំ​ពាក់​ពេល​មុន Balance brought forward . រ<br>
-						ប្រាក់​បាន​ទទួល​ Payment Recieve - THANK YOU . រ<br>
 						ជំពាក់​សរុប​នៅ​ថ្ងៃ​ធ្វើ​វិក្កយបត្រ Balance as at billing date .រ
 					</td>
 					<td>
-						<br>
 						0<br>
-						0
 					</td>
 				</tr>
 				<tr>
@@ -5242,7 +5205,7 @@
 				</tr>
 				<tr><td colspan="6"  style="height: 80px;" ></td></tr>
 				<tr>
-					<td colspan="5" style="padding-right: 10px;background: #355176;color: #fff;text-align: right;" class="darkbblue">បំណុល​សរុប TOTAL BALANCE</td>
+					<td colspan="5" style="padding-right: 10px;background: #355176;color: #fff;text-align: right;" class="darkbblue main-color">បំណុល​សរុប TOTAL BALANCE</td>
 					<td style="border: 1px solid;text-align: right"><strong data-bind="text: obj.amount"></strong></td>
 				</tr>
 				<tr>
@@ -7136,7 +7099,7 @@
 	  	<li role='presentation' class='dropdown'>
 	  		<a class='dropdown-toggle glyphicons text_bigger' data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false'><i></i> <span class='caret'></span></a>
   			<ul class='dropdown-menu'>
-  				<li><a href='<?php echo base_url(); ?>rrd/#/customer' target="_blank"><span >New Customer</span></a></li> 
+  				<li><a href='<?php echo base_url(); ?>rrd/#/customer'><span >New Customer</span></a></li> 
   				<li ><a href='#/reorder'><span >Reorder Meter</span></a></li>  				
   				<li><span class="li-line"></span></li>
   				<li><a href='#/reading'><span >1. Meter Reading</span></a></li> 
@@ -8587,7 +8550,6 @@
 				this.dataStore.sync();
 				this.dataStore.bind('requestEnd', function(e){
 					var type = e.type, res = e.response.results;
-					console.log(type + " operation is successful.");
 				});
 			}
 		});
@@ -9902,7 +9864,6 @@
 				dfd.resolve(banhji.installment.dataSource.at(0));
 				return dfd.promise();
 			} catch (err) {
-				console.log(err);
 				dfd.reject(err);
 			}
 			
@@ -10194,7 +10155,6 @@
 							banhji.invoice.dataSource.query({
 								filter: {field: 'meter_record_id', operator: 'where_related_winvoice_line', value: e.response.results[0]._meta.id}
 							}).then(function(e){
-								//console.log(banhji.invoice.dataSource.data());
 							});
 							// create new invoice
 						}
@@ -10218,11 +10178,11 @@
 			return dfd.promise();	
 		},
 		cancel 				: function(){
-			banhji.reading.dataSource.cancelChanges();	
-			banhji.reading.uploadDS.cancelChanges();	
+			banhji.reading.dataSource.data([]);	
+			banhji.reading.uploadDS.data([]);	
 			// banhji.reading.dataSource.data([]);
 			// banhji.reading.uploadDS.data([]);	
-			window.history.back();
+			banhji.router.navigate("/");
 		}
 	});
 	banhji.EditReading = kendo.observable({
@@ -10290,7 +10250,6 @@
 			          });
 			        }
 				});
-				console.log(para);
 			}else{
 				alert("សូមSelect ខែ");
 			}
@@ -10361,15 +10320,14 @@
 		      });
 		},
 		cancel 				: function(){
-			this.dataSource.cancelChanges();		
-			window.history.back();
+			this.dataSource.data([]);		
+			banhji.router.navigate("/");
 		}
 	});
 	banhji.waterImport = kendo.observable({
 		lang 				: langVM,
 		dataSource  		: dataStore(apiUrl + "districts"),
 		pageLoad 			: function(id){
-			
 		},
 		onSelected 			: function(e){
 			$('li.k-file').remove();
@@ -10379,7 +10337,7 @@
 			this.dataSource.data([]);	
 			reader.onload = function() {	
 				var data = reader.result;	
-				var result = {}; 						
+				var result = {};
 				var workbook = XLSX.read(data, {type : 'binary'});
 				workbook.SheetNames.forEach(function(sheetName) {
 					var roa = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
@@ -10387,13 +10345,12 @@
 						result[sheetName] = roa;
 						for(var i = 0; i < roa.length; i++) {
 							self.dataSource.add(roa[i]);
-							$("#loadImport").css("display","none");	
-							console.log(roa[i]);
-						}							
-					}					
-				});															
+							$("#loadImport").css("display","none");
+						}
+					}
+				});
 			}
-			reader.readAsBinaryString(files[0].rawFile);      
+			reader.readAsBinaryString(files[0].rawFile);
 		},
 		exportEXCEL 		: function(e){
 			$("#loadImport").css("display","block");
@@ -10481,8 +10438,8 @@
 			}	
 		},
 		cancel 				: function(){
-			this.dataSource.cancelChanges();		
-			window.history.back();
+			this.dataSource.data([]);		
+			banhji.router.navigate("/");
 		}
 	});
 	//Setting
@@ -10577,7 +10534,6 @@
 			var index = e.sender.selectedIndex;
 			var block = this.licenseDS.at(index - 1);
 			this.set('blockCompanyId',{id:block.id, name:block.name});
-			console.log(index);
 		},
 		unitChange 			: function(e){
 			this.set("exPrice","");
@@ -10771,7 +10727,6 @@
 		        			self.set("tariffName", "");
 		        			self.set("tariffAccount", "");
 		        			self.set("tariffCurrency", "");
-		        			console.log(e.response);
 		        			self.tariffItemDS.data([]);
 				        	self.tariffItemDS.add({
 				        		name 		: "Default Tariff Item",
@@ -10790,7 +10745,6 @@
 	        		}
 	        	});
 	        	this.planItemDS.bind("error", function(e){
-	        		console.log("error");
 	        	});
 	        }else{
 	        	alert("Fields Required!");
@@ -10958,11 +10912,10 @@
 		pageLoad 			: function(){
 			this.txnTemplateDS.filter({ field: "moduls", value : "water_mg" });
 			$(".widget-head li").eq(this.tabGo).children("a").click();
-			console.log(this.tabGo);
 		},
 		cancel 				: function(){
 			this.licenseDS.cancelChanges();		
-			window.history.back();
+			banhji.router.navigate("/");
 		},
 		deleteForm 			: function(e){
         	var data = e.data;
@@ -11002,7 +10955,6 @@
 			});
 		},
 		provinceChange : function(pro){
-			console.log(this.obj.province);
 			this.districtDS.filter({field: "province_id", value: this.obj.province});
 		},
 		loadObj 	: function(id){
@@ -11040,7 +10992,7 @@
 			var obj = this.dataSource.at(0);
 			this.set("obj", obj);	
 		},
-		onSelect 			: function(e){
+		onSelect 	: function(e){
 	        // Array with information about the uploaded files
 	        var self = this, 
 	        files = e.files,
@@ -11071,7 +11023,7 @@
 	            }
 	        });
 	    },
-	    uploadFile 			: function(id){
+	    uploadFile 	: function(id){
 	    	if(id){
 	    		this.attachmentDS.pushUpdate({license_id: id});
 	    	}
@@ -11081,9 +11033,7 @@
 		            	Body: value.file, 
 		            	Key: value.key 
 		            };
-		            bucket.upload(params, function (err, data) {		                
-	                	// console.log(err, data);
-	                	// var url = data.Location;                
+		            bucket.upload(params, function (err, data) {               
 	            	});
 	        	}	            
 	        });
@@ -11110,14 +11060,13 @@
 							  	}
 							};
 							bucket.deleteObjects(params, function(err, data) {
-							  	//console.log(err, data);
 							});
 						});
 	            	}
 	        	}
 	        });
 	    },
-	    removeFile 			: function(e){
+	    removeFile 	: function(e){
 	    	var data = e.data;
 
 	    	if (confirm(banhji.source.confirmMessage)) {
@@ -11140,7 +11089,6 @@
 									self.uploadFile(e.response.results[0].id);
 								}
 							}else{
-								console.log("Read");
 							}					  				
 					    });
 					    this.dataSource.bind("error", function(e){		    		    	
@@ -11158,12 +11106,12 @@
 				alert("License Number required!");
 			}
 		},
-		cancel 				: function(){
+		cancel 		: function(){
 			this.dataSource.cancelChanges();	
 			this.dataSource.data([]);
 			this.attachmentDS.cancelChanges();	
 			this.attachmentDS.data([]);
-			window.history.back();
+			banhji.router.navigate("/setting");
 		}
 	});
 	banhji.plan = kendo.observable({
@@ -11222,7 +11170,14 @@
 		}),
 		itemDS 		: dataStore(apiUrl + "plans/items"),
 		itemSelect 	: 0,
-		ItemTypeDS  : [{id:"exemption",name: "Exemption"}, {id: "tariff",name: "Tariff"},{id:"deposit",name:"Deposit"},{id:"service",name:"Service"},{id:"maintenance",name:"Maintenance"},{id:"installment",name:"Installment"}],
+		ItemTypeDS  : [
+			{id:"exemption",name: "Exemption"}, 
+			{id: "tariff",name: "Tariff"},
+			{id:"deposit",name:"Deposit"},
+			{id:"service",name:"Service"},
+			{id:"maintenance",name:"Maintenance"},
+			{id:"installment",name:"Installment"}
+		],
 		addNewItemType : null,
 		current 	: null,
 		currencyDS  : banhji.source.currencyDS,
@@ -11254,14 +11209,12 @@
 			var data = e.data,
 			selected = e.sender.selectedIndex,
 			dataitemDs = this.itemDS.at(selected);
-			console.log(data);
 			data.set("type", dataitemDs.type);
 			data.set("name", dataitemDs.name);
 			data.set("amount", dataitemDs.amount);
 		}, 
 		currencyChange : function(e) {
 			var data = e.data;
-			console.log(this.current.currency);
 			this.itemDS.filter({field: "currency_id", value: this.current.currency});
 			this.get("current").items.splice(0, this.get("current").items.length);
 		},
@@ -11302,8 +11255,8 @@
 			return dfd.promise();
 		},
 		cancel 				: function(){
-			this.dataSource.cancelChanges();		
-			window.history.back();
+			this.dataSource.data([]);		
+			banhji.router.navigate("/setting");
 		}
 	});
 	//end Setting
@@ -11445,8 +11398,9 @@
 		pageLoad 			: function(id){
 			var self = this;
 			this.addEmpty(id);
-			this.licenseDS.read();
-			this.contactDS.query({filter: [{ field: "id", value: id}]})
+			this.contactDS.query({
+				filter: [{ field: "id", value: id}]
+			})
 			.then(function(){
 				var view = self.contactDS.data();
 				self.set("contactOBJ", view[0]);
@@ -11468,11 +11422,10 @@
 			    }
 			});
 		},
-		addEmpty 		 	: function(id){			
-			//this.dataSource.data([]);		
-			this.set("obj", null);		
-			this.set("isEdit", false);		
-			this.dataSource.insert(0,{				
+		addEmpty 		 	: function(id){
+			this.set("obj", null);
+			this.set("isEdit", false);
+			this.dataSource.insert(0,{
 				contact_id			: id,
 				code 				: null,
 				branch_id 			: null,
@@ -11483,12 +11436,12 @@
 				id_card 			: null,
 				occupation 			: null
 	    	});
-			var obj = this.dataSource.at(0);			
+			var obj = this.dataSource.at(0);
 			this.set("obj", obj);
 		},
 		licenseChange 		: function(e) {
 			var obj = this.get("obj"), self = this;
-			this.licenseDS.query({    			
+			this.licenseDS.query({
 				filter: { field:"id", value: obj.branch_id },
 				page: 1,
 				take: 1
@@ -11518,7 +11471,6 @@
 					obj.set("code",lastNo);
 					self.set("Codenumber", lastNo);
 				}
-				console.log(lastNo);
 			});
 		},
 		checkExistingNumber 	: function(){
@@ -11542,7 +11494,6 @@
 					}else{
 						self.set("notDuplicateNumber", true);
 					}
-					console.log(self.notDuplicateNumber);
 				});
 			}		
 		},
@@ -11567,8 +11518,8 @@
 			
 		},
 		cancel 				: function(){
-			this.dataSource.cancelChanges();		
-			window.history.back();
+			this.dataSource.data([]);		
+			banhji.router.navigate("/center");
 		}
 	});
 	/* Invoice Section */
@@ -11721,7 +11672,6 @@
 		},
 		loadMap : function(){
 			var obj = this.get("obj");
-			// console.log(obj);
 			lat = kendo.parseFloat(obj.latitute),
 			lng = kendo.parseFloat(obj.longtitute);
 			
@@ -11842,8 +11792,8 @@
 			}
 		},
 		cancel 				: function(){
-			this.dataSource.cancelChanges();		
-			window.history.back();
+			this.dataSource.data([]);		
+			banhji.router.navigate("/center");
 		}
 	});
 	banhji.ActivateMeter = kendo.observable({
@@ -11954,7 +11904,6 @@
 					lastNo = 1;
 				}
 				if(lastNo){
-					console.log(lastNo);
 					$("#loadImport").css("display","none");
 					self.set("activatProcess", true);
 					meterObj.set('worder',lastNo );
@@ -12067,7 +12016,6 @@
 			});
 
 			if(this.get('amountToBeRecieved') < amount) {
-				console.log('installment:' + this.get('amountToBeRecieved') +" : "+ amount);
 				banhji.ActivateMeter.get('meterObj').set('activated', 1);
 				banhji.installment.setDate(banhji.ActivateMeter.get('startDate'));
 				banhji.installment.setPeriod(banhji.ActivateMeter.get('period'));
@@ -12137,6 +12085,7 @@
 			var bloc = this.blocDS.at(e.sender.selectedIndex - 1);
 			this.set("blocSelect", bloc);
 		},
+		exArray 			: [],
 		search 		 		: function(){	
 			license_id = this.get("licenseSelect"),
 			bloc_id = this.get("blocSelect");
@@ -12151,7 +12100,22 @@
 						filter: para
 					}).then(function(){
 				        if(self.dataSource.data().length > 0){
-				        	//self.gridData();
+				        	self.exArray.push(
+			            		{ cells: [
+									{ value: "Order", background: "#496cad", color: "#ffffff" },
+									{ value: "Meter Number", background: "#496cad", color: "#ffffff" },
+									{ value: "Customer", background: "#496cad", color: "#ffffff" }
+								]}
+							);
+							for (var i = 0; i < self.dataSource.data().length; i++){
+								self.exArray.push({
+						            cells: [
+						              { value: self.dataSource.data()[i].worder},
+						              { value: self.dataSource.data()[i].meter_number },
+						              { value: self.dataSource.data()[i].contact_name }
+						            ]
+						        });
+							}
 				        }
 					});
 				}else{
@@ -12165,20 +12129,112 @@
 			$.each(this.dataSource.data(), function(index, value){
 				value.set("worder", index);
 			});
-
 			this.dataSource.sync();
 			var saved = false;
 			this.dataSource.bind("requestEnd", function(e){				
 				if(e.type=="update" && saved==false){
 					saved = true;
-					//$("#ntf1").data("kendoNotification").info("Saved Successful");
 				}
 				$("#ntf1").data("kendoNotification").info("Saved Successful");
 			});
 		},
+		ExportExcel 		: function(){
+	        var workbook = new kendo.ooxml.Workbook({
+	          sheets: [
+	            {
+	              columns: [
+	                { autoWidth: true },
+	                { autoWidth: true },
+	                { autoWidth: true }
+	              ],
+	              title: "Reorder Meter",
+	              rows: this.exArray
+	            }
+	          ]
+	        });
+	        //save the file as Excel file with extension xlsx
+	        kendo.saveAs({dataURI: workbook.toDataURL(), fileName: this.get("licenseSelect").name+"_"+this.get("blocSelect").name+"_"+"<?php echo date('d-M-Y'); ?>.xlsx"});
+		},
+		printGrid 		: function(){
+			var self = this, Win, pHeight, pWidth;
+
+			Win = window.open('', '', 'width=800, height=900');
+			pHeight = "210mm";
+			pWidth = "150mm";
+			
+			banhji.invoice.dataSource.sync();
+			var gridElement = $('#grid'),
+		        printableContent = '',
+		        win = Win,
+		        doc = win.document.open();
+		    var htmlStart =
+		            '<!DOCTYPE html>' +
+		            '<html>' +
+		            '<head>' +
+		            '<meta charset="utf-8" />' +
+		            '<title></title>' +
+		            '<link rel="stylesheet" href="<?php echo base_url(); ?>resources/js/kendoui/styles/kendo.bootstrap.min.css">'+
+		            '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/bootstrap.css">'+
+		            '<link href="<?php echo base_url(); ?>assets/water/water.css" rel="stylesheet" />'+
+		            '<link href="<?php echo base_url(); ?>assets/water/winvoice-print.css" rel="stylesheet" />'+
+		            '<link href="<?php echo base_url(); ?>resources/common/theme/css/style-default-menus-dark.css" rel="stylesheet" />'+
+		            '<link href="https://fonts.googleapis.com/css?family=Content:400,700" rel="stylesheet" type="text/css">'+
+		            '<link href="https://fonts.googleapis.com/css?family=Moul" rel="stylesheet">'+
+		            '<style type="text/css" media="print">' +
+		            	'@page { size: portrait; margin:0.5cm;' +
+		            		'size: A5;' +
+		            	'} '+
+						'@media print {' +
+  							'html, body {' +
+    							'max-width: '+ pWidth +';' +
+    							'max-height: '+ pHeight +';' +
+    							'min-width: '+ pWidth +';' +
+    							'min-height: '+ pHeight +';' +
+  							'}' +
+						'}' +
+		            	'.inv1 .light-blue-td { ' +
+		            		'background-color: #c6d9f1!important;' +
+		            		'text-align: left;' +
+		            		'padding-left: 5px;' +
+		            		'-webkit-print-color-adjust:exact; ' +
+		            	'}' +
+		            	'.logoP{ max-height 50px;max-width100px}' +
+		            	'.inv1 thead tr {'+
+		            		'background-color: rgb(242, 242, 242)!important;'+
+		            		'-webkit-print-color-adjust:exact; ' +
+		            	'}'+
+		            	'.pcg .mid-title div {}' +
+		            	'.pcg .mid-header {' +
+		            		'background-color: #dce6f2!important; ' +
+		            		'-webkit-print-color-adjust:exact; ' +
+		            	'}'+
+		            	'.winvoice-print table thead .darkbblue, .winvoice-print table tbody td.darkbblue { ' +
+						    'background-color: #355176!important;' +
+						    'color: #fff!important;' +
+						    '-webkit-print-color-adjust:exact; ' +
+						'}' +
+						'.winvoice-print table td.greyy {' +
+						'background-color: #ccc!important;-webkit-print-color-adjust:exact;' +
+						'}' +
+		            	'.inv1 span.total-amount { ' +
+		            		'color:#fff!important;' +
+		            	'}</style>' +
+				    '</head>' + 
+				    '<body><div class="row-fluid" ><div id="example" class="k-content">';
+		    var htmlEnd =
+		            '</div></div></body>' +
+		            '</html>';
+		    printableContent = $('#invFormContent').html();
+		    doc.write(htmlStart + printableContent + htmlEnd);
+		    doc.close();
+		    setTimeout(function(){
+		    	win.print();	
+		    	//win.close();
+		    },2000)
+		},
 		cancel 				: function(){
 			this.dataSource.data([]);	
-			window.history.back();
+			banhji.router.navigate("/");
 		}
 	});
 	/*==== End Meter=====*/
@@ -12224,7 +12280,7 @@
 	        }
 	        this.makeBilled();
 		},	
-		total 			: function(){      		
+		total 			: function(){
 	        var sum = 0;
 	        $.each(this.readingDS.data(), function(index, value) {	  
 	        	sum += kendo.parseInt(value.usage);
@@ -12493,7 +12549,17 @@
 				    	if(e.response){				
 				    		$("#ntf1").data("kendoNotification").success("Successfully!");
 							$("#loadImport").css("display","none");
-							self.cancel();
+							self.invoiceCollection.data([]);
+							self.invoiceDS.data([]);
+							self.set("monthSelect", null);
+							self.set("licenseSelect", null);
+							self.set("blocSelect", null);
+							self.set("FmonthSelect", null);
+							self.set("BillingDate", null);
+							self.set("DueDate", null);
+							self.set("IssueDate", null);
+							self.invoiceArray = [];	
+							banhji.router.navigate("/print_bill");
 						}
 					}
 			    });
@@ -12523,7 +12589,7 @@
 			this.set("DueDate", null);
 			this.set("IssueDate", null);
 			this.invoiceArray = [];	
-			banhji.router.navigate("/print_bill");
+			banhji.router.navigate("/");
 		}
 	});
 	banhji.printBill = kendo.observable({
@@ -12585,7 +12651,6 @@
 		monthSelect 		: null,	
 		TemplateSelect 		: null,
 		SelectSize 			: null,
-		SizePaper 			: [{id: "A4", name: "A4"},{id: "A5", name: "A5"}],
 		obj 				: [],
 		blocSelect 			: null,
 		totalInv 			: 0,
@@ -12706,8 +12771,9 @@
 			}
 	    },
 	    goNoPrint 			: function(){
-	    	this.clearAll();
+	    	
 	    	if(this.noPrintIDTransaction.length > 0){
+	    		this.clearAll();
 		    	var noPArray = [];
 		    	$.each(this.noPrintIDTransaction, function(i,v){
 		    		noPArray.push(v);
@@ -12721,7 +12787,6 @@
 	    	this.set("chkAll", false);
 			this.printArray = [];
 			this.set("totalInv", 0);
-			
 			this.set("amountTotal", 0);
 			this.set("totalMeter", 0);
 	    },
@@ -12732,13 +12797,9 @@
 					  	var self = this;
 					  	banhji.InvoicePrint.dataSource = [];
 					  	$.each(this.printArray, function(index, value){
-					  		// self.printArray[index].issued_date = kendo.toString(new Date(self.printArray[index].issue_date), "dd-MMM-yyyy");
-					  		// self.printArray[index].from_date = kendo.toString(new Date(self.printArray[index].from_date), "dd-MMM-yyyy");
-					  		// self.printArray[index].to_date = kendo.toString(new Date(self.printArray[index].to_date), "dd-MMM-yyyy");
 					  		banhji.InvoicePrint.dataSource.push(self.printArray[index]);
 					  	});
-					  	banhji.InvoicePrint.PaperSize = this.SelectSize;
-					  	banhji.InvoicePrint.TemplateSelect = this.get("TemplateSelect");
+					  	banhji.InvoicePrint.set("TemplateSelect",this.get("TemplateSelect") );
 				        banhji.router.navigate('/invoice_print');
 
 			    	}else{
@@ -12755,8 +12816,15 @@
 			var self = this;
 		},
 		cancel 				: function(){
-			this.dataSource.cancelChanges();		
-			window.history.back();
+			this.invoiceCollection.dataSource.data([]);
+			this.invoiceDS.data([]);
+			this.set("monthSelect", null);
+			this.set("licenseSelect", null);
+			this.set("blocSelect", null);
+			this.noPrintIDTransaction = [];
+			this.set("noPrint", 0);
+			this.clearAll();
+			banhji.router.navigate("/");
 		}
 	});
 	banhji.InvoicePrint = kendo.observable({
@@ -12765,20 +12833,31 @@
 		dataSource 			: [],
 		isVisible 			: true,
 		company 			: banhji.institute,
-		PaperSize 			: "A4",
 		TemplateSelect 		: null,
+		txnTemplateDS		: dataStore(apiUrl + "transaction_templates"),
 		user_id 			: banhji.userManagement.getLogin() === null ? '':banhji.userManagement.getLogin().id,
+		formColor			: "#355176", 	
 		pageLoad 			: function(id){
-			var listView = $("#wInvoiceContent").data("kendoListView"), self = this;
-			listView.refresh();
-			if(this.dataSource){
-				this.barcod("do");
-			}
-			$.each(this.dataSource, function(i,v){
-				var PrintCount = v.print_count + 1;
-				self.dataSource[i].set("print_count", PrintCount);
+			var self = this;
+			$("#wInvoiceContent").kendoListView({
+			    dataSource: this.dataSource,
+			    template: kendo.template($("#Invoiceprintrowtemplate").html())
 			});
-			//this.printCountDS.add(this.dataSource);
+			if(this.dataSource){
+				for(var i = 0; i < this.dataSource.length; i++){
+					var PrintCount = this.dataSource[i].print_count + 1;
+					banhji.InvoicePrint.dataSource[i].set("print_count", PrintCount);
+				}
+			}
+			if(this.TemplateSelect){
+				this.txnTemplateDS.query({
+					filter: {field: "id", value: this.TemplateSelect}
+				})
+				.then(function(e){
+					self.set("formColor", self.txnTemplateDS.data()[0].color);
+				});
+			}
+			this.barcod("do");
 		},
 		barcod 			: function(re){
 			var view = this.dataSource;
@@ -12811,18 +12890,17 @@
 				}
 			}
 		},
-
 		printGrid 		: function(){
-			var self = this, Win, pHeight, pWidth;
-			if(this.PaperSize == "A5"){
-				Win = window.open('', '', 'width=800, height=900');
-				pHeight = "210mm";
-				pWidth = "148mm";
-			}else{
-				Win = window.open('', '', 'width=1000, height=900');
-				pHeight = "297mm";
-				pWidth = "210mm";
-			}
+			var self = this, Win, pHeight, pWidth, ts;
+
+			Win = window.open('', '', 'width=800, height=900');
+			pHeight = "210mm";
+			pWidth = "150mm";
+			var	colorM = this.formColor;
+			if(colorM == '#000000' || colorM =='#1f497d' || colorM == null){ 
+				ts = 'color: #fff!important;';
+			} else { ts = 'color: #333;'; }
+
 			banhji.invoice.dataSource.sync();
 			var gridElement = $('#grid'),
 		        printableContent = '',
@@ -12841,7 +12919,10 @@
 		            '<link href="<?php echo base_url(); ?>resources/common/theme/css/style-default-menus-dark.css" rel="stylesheet" />'+
 		            '<link href="https://fonts.googleapis.com/css?family=Content:400,700" rel="stylesheet" type="text/css">'+
 		            '<link href="https://fonts.googleapis.com/css?family=Moul" rel="stylesheet">'+
-		            '<style type="text/css" media="print"> @page { size: portrait; margin:1mm 0.5mm; size: '+ this.PaperSize +';} '+
+		            '<style type="text/css" media="print">' +
+		            	'@page { size: portrait; margin:0.5cm;' +
+		            		'size: A5;' +
+		            	'} '+
 						'@media print {' +
   							'html, body {' +
     							'max-width: '+ pWidth +';' +
@@ -12850,12 +12931,17 @@
     							'min-height: '+ pHeight +';' +
   							'}' +
 						'}' +
+						'.main-color {' +
+		            		'background-color: '+colorM+'!important; ' + ts +
+		            		'-webkit-print-color-adjust:exact; ' +
+		            	'} ' +
 		            	'.inv1 .light-blue-td { ' +
 		            		'background-color: #c6d9f1!important;' +
 		            		'text-align: left;' +
 		            		'padding-left: 5px;' +
 		            		'-webkit-print-color-adjust:exact; ' +
 		            	'}' +
+		            	'.logoP{ max-height 50px;max-width100px}' +
 		            	'.inv1 thead tr {'+
 		            		'background-color: rgb(242, 242, 242)!important;'+
 		            		'-webkit-print-color-adjust:exact; ' +
@@ -12877,7 +12963,7 @@
 		            		'color:#fff!important;' +
 		            	'}</style>' +
 				    '</head>' + 
-				    '<body><div class="row-fluid" style="padding-top: 20px" ><div id="example" class="k-content">';
+				    '<body><div class="row-fluid" ><div id="example" class="k-content">';
 		    var htmlEnd =
 		            '</div></div></body>' +
 		            '</html>';
@@ -12886,52 +12972,9 @@
 		    doc.close();
 		    setTimeout(function(){
 		    	win.print();	
-		    	//win.close();
+		    	win.close();
 		    },2000)
-			//}
-		},	
-		savePDF 		: function(e){
-			// drawing.drawDOM(".winvoice-print").then(function(group){
-			//     // here group is a drawing.Group object
-
-			//     // you can now draw it to SVG for example:
-			//     var svg = drawing.Surface.create($("#container"), { type: "svg" });
-			//     svg.draw(group);
-
-			//     // or you can save it as PDF.
-			//     // optionally:
-			//     group.options.set("pdf", {});
-			//     drawing.pdf.saveAs(group, "filename.pdf", proxyUrl);
-			// });
-			// var draw = kendo.drawing;
-
-	  //       draw.drawDOM($(".winvoice-print"), {
-	  //           avoidLinks: true,
-	  //           paperSize: "A4"
-	  //       })
-	  //       .then(function(root) {
-	  //           return draw.exportPDF(root);
-	  //       })
-	  //       .done(function(data) {
-	  //           kendo.saveAs({
-	  //               dataURI: data,
-	  //               fileName: "avoid-links.pdf"
-	  //           });
-	  //       });
-	  		var printLocation = document.querySelector('.winvoice-print');
-	  		e.preventDefault();
-	  		kendo.drawing.drawDOM(printLocation)
-	  		.then(function(data){
-	  			return kendo.drawing.exportImage(data);
-	  		})
-	  		.done(function(data){
-	  			kendo.saveAs({
-	  				dataURI: data,
-	  				fileName: 'Pint.png'
-	  			});
-	  		});
-
-		},	
+		},
 		hideFrameInvoice 			: function(e) {
 			var printBtn = e.target;
 			if(printBtn.checked) {
@@ -12942,9 +12985,6 @@
 		},
 		cancel 				: function(){
 			this.dataSource = [];
-			var listView = $("#wInvoiceContent").data("kendoListView"), self = this;
-			listView.refresh();
-			this.set("PaperSize","A4");
 			this.barcod("reset");
 			banhji.router.navigate("/print_bill");
 		}
@@ -13140,7 +13180,6 @@
 				banhji.reconcileVM.list.countActual(data);
 			
 			}, function(error){
-				console.log(error);
 			});
 		},
 		sync 			: function() {
@@ -13156,7 +13195,6 @@
 				banhji.reconcileVM.list.sync(e.response.results[0].id);
 				$.each(banhji.reconcileVM.currencyVM.dataSource.data(), function(i, v){
 					v.set('status',1);
-					console.log(v.status);
 				});
 				banhji.reconcileVM.currencyVM.dataSource.sync();
 			});
@@ -13184,7 +13222,6 @@
 					return false;
 				}
 			});
-			// console.log(e.data);
 		},
  		dataSource 			: dataStore(apiUrl + "transactions"),
 		deleteDS 			: dataStore(apiUrl + "transactions"),
@@ -13375,7 +13412,6 @@
 				var view = self.invoiceDS.view();
 
 				if(view.length>0){
-					// console.log(view.length);
 					$.each(view, function(index, value){											
 						var amount_due = value.amount - (value.amount_paid + value.deposit);
 						var contact = banhji.source.contactDS.get(value.contact_id);
@@ -13602,8 +13638,8 @@
 		},
 		cancel 				: function(){
 			this.dataSource.cancelChanges();
-			
 			banhji.userManagement.removeMultiTask("cash_receipt");
+			banhji.router.navigate("/");
 		},
 		//Deposit
 		addCredit 			: function(cash_receipt_id){
@@ -13997,7 +14033,6 @@
 			total = 0, sub_total = 0, discount = 0, total_received = 0, remaining = 0, fine = 0;											
 
 			$.each(this.dataSource.data(), function(index, value) {
-				console.log(value.fine);
 				var amt = (kendo.parseFloat(value.sub_total) + kendo.parseFloat(value.fine))- kendo.parseFloat(value.discount);
 				if(kendo.parseFloat(value.amount)>amt){
 					value.set("amount", amt);
@@ -14111,7 +14146,6 @@
 					ids.push(value.reference_id);
 					count++;
 					that.amount += kendo.parseFloat(value.amount);
-					console.log(that.amount);
 					//Cash on Dr
 					self.journalLineDS.add({					
 						transaction_id 		: value.id,
@@ -14213,7 +14247,6 @@
 		},
 		cancel 				: function(){
 			this.dataSource.cancelChanges();
-			
 			banhji.userManagement.removeMultiTask("cash_receipt");
 		},
 		updateTxnStatus 	: function(ids){
@@ -14253,7 +14286,6 @@
 		dataSource 			: dataStore(apiUrl + "wreports/kpi"),
 		licenseDS 			: dataStore(apiUrl + "branches"),
 		onLicenseChange 	: function() {
-			// console.log(this.get('licenseSelect'));
 			var that = this;
 			this.dataSource.query({
 				filter: {field: 'branch_id', value: this.get('licenseSelect')}
@@ -14277,8 +14309,8 @@
 			var self = this;
 		},
 		cancel 				: function(){
-			this.dataSource.cancelChanges();		
-			window.history.back();
+			this.dataSource.data([]);		
+			banhji.router.navigate("/");
 		}
 	});
 	
@@ -14414,9 +14446,7 @@
 		            	Body: value.file, 
 		            	Key: value.key 
 		            };
-		            bucket.upload(params, function (err, data) {		                
-	                	// console.log(err, data);
-	                	// var url = data.Location;                
+		            bucket.upload(params, function (err, data) {	             
 	            	});
 	        	}	            
 	        });
@@ -14443,7 +14473,6 @@
 							  	}
 							};
 							bucket.deleteObjects(params, function(err, data) {
-							  	//console.log(err, data);
 							});
 						});
 	            	}
@@ -15065,7 +15094,7 @@
 				banhji.invoiceForm.pageLoad();
 				this.addEmpty();
 				this.txnFormDS.query({
-					filter: [{ field:"type", value: "Invoice" },{ field:"moduls", value: "water_mg"}],
+					filter: [{ field:"moduls", value: "water_mg"}],
 					page: 1,
 					take: 100
 				}).then(function(e){
@@ -15158,7 +15187,7 @@
 				self.activeInvoiceTmp(Index);
 				//self.addRowLineDS();
 
-				self.txnFormDS.filter({ field:"type", value: "Invoice" });
+				self.txnFormDS.filter({ field:"moduls", value: "water_mg" });
 			});	
 		},		    
 		save 				: function(){
@@ -15182,7 +15211,7 @@
 		},
 		cancel 				: function(){
 			this.dataSource.cancelChanges();		
-			window.history.back();
+			banhji.router.navigate("/setting");
 		}
 	});
 	banhji.invoiceForm =  kendo.observable({
@@ -15242,7 +15271,6 @@
 				});	
 									
 			}
-			console.log("abd");
 		},	 
 		printGrid			: function() {
 			var obj = this.get('obj'), colorM, ts;
@@ -15463,7 +15491,6 @@
 			if(bloc){
 				para.push({ field:"location_id", value: bloc.id });
 			}
-			console.log(para);
 			this.dataSource.filter(para);
 		}, 
 		cancel 			: function(){
@@ -15589,7 +15616,6 @@
 			if(bloc){
 				para.push({ field:"location_id", value: bloc.id });
 			}
-			console.log(para);
 			this.dataSource.filter(para);
 		}, 
 		cancel 			: function(){
@@ -15665,7 +15691,6 @@
 			if(bloc){
 				para.push({ field:"location_id", operator: "where_related_contact_utility", value: bloc.id });
 			}
-			console.log(para);
 			this.dataSource.filter(para);
 		}, 
 		cancel 			: function(){
@@ -15759,7 +15784,6 @@
 			if(miniNumber){
 				para.push({field: "usage <=", operator: "where_related_record" ,value: this.get("miniNumber")});
 			}
-			console.log(para);
 			this.dataSource.filter(para);
 		}, 
 		cancel 			: function(){
@@ -17081,7 +17105,6 @@
 				this.searchTransaction();
 				this.loadSummary();
 				var grid = $("#listContact").data('kendoGrid');
-				console.log(grid);
 				grid.select("tr:eq(1)");
 			}
 		},
@@ -17208,8 +17231,6 @@
 		            	Key: value.key 
 		            };
 		            bucket.upload(params, function (err, data) {
-	                	// console.log(err, data);
-	                	// var url = data.Location;
 	            	});
             	}
             });
@@ -17234,7 +17255,6 @@
 							  	}
 							};
 							bucket.deleteObjects(params, function(err, data) {
-							  	//console.log(err, data);
 							});
 						});
 	            	}
@@ -17351,7 +17371,6 @@
 			})
 			.then(function(e){
 				var meters = self.meterDS.data();
-				console.log(self.readingVM.dataSource);
 				if(meters.length > 0) {
 					if(meters.length > 1) {
 						var meterIds = [];
@@ -17367,8 +17386,6 @@
 			});
 			this.set("obj", data);
 			this.loadData();
-
-			// console.log(this.meter_visible);
 		},
 		miniMonthofS 		: "<?php echo date('Y-m-d'); ?>",
 		onSelectedMeter		: function(e) {
@@ -17696,7 +17713,6 @@
 		if(banhji.pageLoaded["plan"]==undefined){
 			banhji.pageLoaded["plan"] = true;
 		}
-		console.log("plan");
 		vm.pageLoad(id);
 	});
 	banhji.router.route("/add_license(/:id)", function(id){
@@ -17707,7 +17723,6 @@
 		if(banhji.pageLoaded["add_license"]==undefined){
 			banhji.pageLoaded["add_license"] = true;
 		}
-		console.log("add_license");
 		var vm = banhji.addLicense;
 		vm.pageLoad(id);
 	});
@@ -18386,8 +18401,6 @@
 			// banhji.source.loadData();
 			banhji.source.pageLoad();
 		});	
-		
-		//console.log($(location).attr('hash').substr(2));
 		function loadStyle(href){
 				    // avoid duplicates
 		    for(var i = 0; i < document.styleSheets.length; i++){

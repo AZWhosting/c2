@@ -147,7 +147,7 @@ class Winvoices extends REST_Controller {
 					"type" => 'installment',
 					"line" => array(
 						'id'   => $installment->installment_schedule_id,
-						'name' => 'Installment',
+						'name' => 'រំលោះ',
 						'from' => $installment->date,
 						'to'   => 0,
 						'prev' =>0,
@@ -464,6 +464,21 @@ class Winvoices extends REST_Controller {
 						'type' => $item->type,
 						'unit' => $unit->unit
 					);
+				}elseif($item->type == 'installment') {
+					if($item->amount != 0){
+						$unit = $item->item->limit(1)->get();
+						$usage = $record->usage;
+						$lines[] = array(
+							'number' => "រំលោះ",
+							'previous' => floatval($record->previous),
+							'current'  => floatval($record->current),
+							'consumption' => floatval($record->usage),
+							'rate' => floatval($item->rate),
+							'amount' => floatval($item->amount),
+							'type' => $item->type,
+							'unit' => $unit->unit
+						);
+					}
 				}else{
 					$lines[] = array(
 						'number' => $item->description,
