@@ -456,9 +456,9 @@ class Imports extends REST_Controller {
 			$location = new Location(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$meter = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
-			$customer->select('id')->where('name', $row->customer)->get();
+			$customer->select('id, deposit_account_id, account_id, name')->where('name', $row->customer)->get();
 			$location->select('id, branch_id')->where('name', $row->bloc)->get();
-			$plan->select('id')->where('code', $row->plan_code)->get();
+			$plan->select('id, code')->where('code', $row->plan_code)->get();
 			
 			$meter->number = isset($row->number) ? $row->number : 0;
 			$meter->worder = isset($row->order) ? $row->order : $order;
@@ -474,6 +474,68 @@ class Imports extends REST_Controller {
 			$meter->date_used = date('Y-m-d', strtotime($row->date_used));
 
 			if($meter->save()) {
+				// transaction 
+				$transaction = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$transaction->type = "Water_Deposit";
+				$transaction->contact_id = $customer->id;
+				$transaction->journal_type = "journal";
+				$transaction->is_journal = 1;
+				$transaction->rate = 1.000000000000000;
+				$transaction->locale = $this->locale;
+				$transaction->number = "JV".$this->_generate_number($transaction->type, $meter->date_used);
+				$transaction->deposit_date = date('Y-m-d', strtotime($row->date_used));
+				$transaction->status = 1;
+				$transaction->amount = $row->deposit;
+				if($transaction->save()) {
+					$deposit1 = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					$deposit1->transaction_id = $transaction->id;
+					$deposit1->account_id = $customer->deposit_account_id;
+					$deposit1->description= "Water Opening Deposit";
+					$deposit1->contact_id = $transaction->contact_id;
+					$deposit1->dr = $row->deposit;
+					$deposit1->cr = 0.00;
+					$deposit1->save();
+
+					$deposit2 = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					$deposit2->transaction_id = $transaction->id;
+					$deposit2->account_id = 7;
+					$deposit2->description= "Water Opening Deposit";
+					$deposit2->contact_id = $transaction->contact_id;
+					$deposit2->dr = 0.00;
+					$deposit2->cr = $row->deposit;
+					$deposit2->save();
+				}
+				$ar = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$ar->type = "Journal";
+				$ar->contact_id = $customer->id;
+				$ar->journal_type = "journal";
+				$ar->is_journal = 1;
+				$ar->rate = 1.000000000000000;
+				$ar->locale = $this->locale;
+				$ar->number = "JV".$this->_generate_number($ar->type, $meter->date_used);
+				$ar->deposit_date = date('Y-m-d', strtotime($row->date_used));
+				$ar->amount = $row->balance;
+				$ar->status = 1;
+				if($ar->save()) {
+					$ar1 = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					$ar1->transaction_id = $ar->id;
+					$ar1->account_id = $customer->account_id;
+					$ar1->description= "Water Opening Balance";
+					$ar1->contact_id = $ar->contact_id;
+					$ar1->dr = $row->balance;
+					$ar1->cr = 0.00;
+					$ar1->save();
+
+					$ar2 = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					$ar2->transaction_id = $ar->id;
+					$ar2->account_id = 7;
+					$ar2->description= "Water Opening Balance";
+					$ar2->contact_id = $ar->contact_id;
+					$ar2->dr = 0.00;
+					$ar2->cr = $row->balance;
+					$ar2->save();
+				}
+
 				$data[] = array(
 					'id' => $meter->id,
 					'number' => $meter->number,
@@ -481,7 +543,11 @@ class Imports extends REST_Controller {
 					'customer' => $customer->id,
 					'bloc' => $location->id,
 					'plan_code' => $plan->id,
-					'digit_number' => $meter->number_digit
+					'digit_number' => $meter->number_digit,
+					'info' => array(
+						"deposit" => array('deposit1' => $deposit1->id, 'deposit' =>$deposit2->id),
+						"ar" => array('ar1' => $ar1->id, 'ar2' =>$ar2->id)
+					)
 				);
 			}
 		}
@@ -753,5 +819,61 @@ class Imports extends REST_Controller {
 			}
 		}
 		$this->response(array('results'=> $data, 'count'=>count($data), 'msg' => "Operation is good."), 200);
+	}
+
+	public function _generate_number($type, $date){
+		$YY = date("y");
+		$MM = date("m");
+		$startDate = date("Y")."-01-01";
+		$endDate = date("Y")."-12-31";
+
+		if(isset($date)){
+			$YY = date('y', strtotime($date));
+			$MM = date('m', strtotime($date));
+			$startDate = $YY."-01-01";
+			$endDate = $YY."-12-31";
+		}
+
+		$prefix = new Prefix(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$prefix->where('type', $type);
+		$prefix->limit(1);
+		$prefix->get();
+
+		$headerWithDate = $prefix->abbr . $YY . $MM;
+
+		$txn = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$txn->where('type', $type);
+		$txn->where("issued_date >=", $startDate);
+		$txn->where("issued_date <=", $endDate);
+		$txn->where('is_recurring <>', 1);
+		$txn->order_by('id', 'desc');
+		$txn->limit(1);
+		$txn->get();
+
+		$number = "";
+		if($txn->exists()){
+			$no = 0;
+			if(strlen($txn->number)>10){
+				$no = intval(substr($txn->number, strlen($txn->number) - 5));
+			}
+			$no++;
+
+			$number = $headerWithDate . str_pad($no, 5, "0", STR_PAD_LEFT);
+		}else{
+			//Check existing txn
+			$existTxn = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$existTxn->where('type', $type);
+			$existTxn->where('is_recurring <>', 1);
+			$existTxn->limit(1);
+			$existTxn->get();
+
+			if($existTxn->exists()){
+				$number = $headerWithDate . str_pad(1, 5, "0", STR_PAD_LEFT);
+			}else{
+				$number = $headerWithDate . str_pad($prefix->startup_number, 5, "0", STR_PAD_LEFT);
+			}
+		}
+
+		return $number;
 	}
 }

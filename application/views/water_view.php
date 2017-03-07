@@ -1173,8 +1173,9 @@
     		#= kendo.toString(amount, _currency.locale=="km-KH"?"c0":"c", _currency.locale)#
    		</td>
    		<td align="center">   			   
-		    <a class="btn-action glyphicons pencil btn-success k-edit-button"><i></i></a>
-   		</td>   		
+		    <a class="btn-action glyphicons pencil btn-success k-edit-button"><i></i>
+		    </a>
+   		</td>
    	</tr>
 </script>
 <script id="maintenance-edit-template" type="text/x-kendo-tmpl">
@@ -2133,6 +2134,29 @@
 		</div>
 	</div>		
 </script>
+<script id="meter-list-tmpl" type="text/x-kendo-tmpl">
+	<tr>
+		<td class="mm" data-bind="click: onSelectedMeter">#= meter_number#</td>
+		<td style="text-align:center;">
+			# if(status == 1){#
+				<span style="cursor: pointer;" title="Active" class="btn-action glyphicons ok_2 btn-success"><i></i></span>
+			# }else if(status == 0){#
+				<span style="cursor: pointer;background-color: \\#333;border-color: \\#333;" title="Inactive" class="btn-action glyphicons lock btn-danger"><i></i></span>
+			# }else{ #
+				<span style="cursor: pointer;" title="Void" class="btn-action glyphicons remove_2 btn-danger"><i></i></span>
+			# } #
+		</td>
+		<td style="text-align: center;">
+			# if(activated != "1") { #
+			<a style="background: \#1f4774;padding:4px;margin-right: 3px;vertical-align: middle;" 
+				href="\#/activate_meter/#= id#" 
+				class="btn-action btn-success">Activate
+			</a>
+			# } #
+			<a style="border:none;" href="\#/meter/#= id #" class="btn-action glyphicons pencil btn-danger widget-stats widget-stats-info"><i></i></span>
+		</td>
+	</tr>
+</script>
 <script id="waterCenter-transaction-tmpl" type="text/x-kendo-tmpl">
 	<div>
 		<input data-role="dropdownlist"
@@ -2425,16 +2449,16 @@
 <script id="water-sale-list-template" type="text/x-kendo-tmpl">
 	<tr>
 		<td>
-			#=month_of#	
+			#:kendo.toString(new Date(month_of), "MMMM")#
 		</td>
 		<td>
 			#=meter.meter_number#	
 		</td>
-		<td>
+		<td align="center">
 			#=invoice_lines[0].consumption#	
 		</td>
-		<td>
-			#=amount#	
+		<td align="right">
+			#= kendo.toString(amount, locale=="km-KH"?"c0":"c", locale)#
 		</td>
 		<td>
 		</td>
@@ -2466,16 +2490,16 @@
 		<td>
 			#=meter_number#
 		</td>
-		<td>
+		<td align="center">
 			#=previous#
 		</td>
-		<td>
+		<td align="center">
 			#=current#
 		</td>
-		<td>
+		<td align="center">
 			#=current-previous#
 		</td>
-		<td>
+		<td align="center">
 			# if(!invoiced || banhji.waterCenter.readingVM.dataSource.indexOf(data) == 0) {#
 				<a class="btn-action glyphicons pencil btn-success k-edit-button" ><i></i></a>
 			#}#
@@ -4080,12 +4104,12 @@
 		<table class="span12 table table-bordered footerTbl" style="padding:0;margin-top: 40px;border:1px solid \\#000; border-radius: 3px;border-collapse: inherit;margin-left: 0px;">
 			<thead>
 				<tr>
-					<th width="180" class="darkbblue main-color">លេខ​កុងទ័រ<br>METER</th>
-					<th width="150" class="darkbblue main-color">អំណានចាស់<br>PREVIOUS</th>
-					<th width="120" class="darkbblue main-color">អំណានថ្មី<br>CURRENT</th>
-					<th width="120" class="darkbblue main-color">បរិមាណ<br>CONSUMPTION</th>
-					<th width="120" class="darkbblue main-color">តំលៃឯកត្តា<br>RATE</th>
-					<th width="180" class="darkbblue main-color">តំលៃសរុប<br>AMOUNT</th>
+					<th width="180" class="darkbblue main-color" style="background-color: #: formcolor #!important">លេខ​កុងទ័រ<br>METER</th>
+					<th width="150" class="darkbblue main-color" style="background-color: #: formcolor #!important">អំណានចាស់<br>PREVIOUS</th>
+					<th width="120" class="darkbblue main-color" style="background-color: #: formcolor #!important">អំណានថ្មី<br>CURRENT</th>
+					<th width="120" class="darkbblue main-color" style="background-color: #: formcolor #!important">បរិមាណ<br>CONSUMPTION</th>
+					<th width="120" class="darkbblue main-color" style="background-color: #: formcolor #!important">តំលៃឯកត្តា<br>RATE</th>
+					<th width="180" class="darkbblue main-color" style="background-color: #: formcolor #!important">តំលៃសរុប<br>AMOUNT</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -4161,7 +4185,7 @@
 					<td colspan="6" align="left">&nbsp;</td>
 				</tr>
 				<tr>
-					<td colspan="5" style="padding-right: 10px;background: \\#355176;color: \\#fff;text-align: right;" class="darkbblue main-color">បំណុល​សរុប TOTAL BALANCE</td>
+					<td colspan="5" style="padding-right: 10px;background: \\#355176;color: \\#fff;text-align: right;background-color: #: formcolor #!important" class="darkbblue main-color">បំណុល​សរុប TOTAL BALANCE</td>
 					<td style="border: 1px solid;text-align: right">#= kendo.toString(amount, "c", locale)#</td>
 				</tr>
 				<tr>
@@ -4524,17 +4548,11 @@
 
 					<div class="row">
 						<div class="span3">
-							<input data-role="dropdownlist"
-				                   data-value-primitive="true"
-				                   data-text-field="name"
-				                   data-value-field="id"
-				                   data-bind="value: obj.transaction_template_id,
-				                              source: txnTemplateDS"
-				                   data-option-label="Select Template..." />
+							
 						</div>
 						<div class="span9" align="right">
-							<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 80px;"><i></i><span data-bind="text: lang.lang.save_new, events: {click: save}"></span></span>
-							<span class="btn btn-icon btn-warning glyphicons remove_2" onclick="javascript:window.history.back()" data-bind="click: cancel" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.cancel"></span></span>				
+							<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 80px;margin-bottom:0;"><i></i><span data-bind="text: lang.lang.save, events: {click: save}"></span></span>
+							<span class="btn btn-icon btn-warning glyphicons remove_2" data-bind="click: cancel" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.cancel"></span></span>				
 						</div>
 					</div>
 				</div>
@@ -5497,29 +5515,6 @@
 			#=name#
 		#}#
 	</span>
-</script>
-<script id="meter-list-tmpl" type="text/x-kendo-tmpl">
-	<tr>
-		<td class="mm" data-bind="click: onSelectedMeter">#= meter_number#</td>
-		<td style="text-align:center;">
-			# if(status == 1){#
-				<span style="cursor: pointer; " class="btn-action glyphicons ok_2 btn-success"><i></i></span>
-			# }else if(status == 0){#
-				<span style="cursor: pointer; class="btn-action glyphicons remove_2 btn-danger"><i></i></span>
-			# }else{ #
-				<span style="cursor: pointer; class="btn-action glyphicons remove_2 btn-danger widget-stats widget-stats-info "><i></i></span>
-			# } #
-		</td>
-		<td style="text-align: center;">
-			# if(activated != "1") { #
-			<a style="background: \#1f4774;padding:4px;margin-right: 3px;vertical-align: middle;" 
-				href="\#/activate_meter/#= id#" 
-				class="btn-action btn-success">Activate
-			</a>
-			# } #
-			<a style="border:none;" href="\#/meter/#= id #" class="btn-action glyphicons pencil btn-danger widget-stats widget-stats-info"><i></i></span>
-		</td>
-	</tr>
 </script>
 <script id="attachment-list-tmpl" type="text/x-kendo-tmpl">
 	<tr>
@@ -7013,9 +7008,7 @@
 		<div class="customer-background" style="overflow: hidden; margin-top: 15px;">
 			<div class="container-960">	
 				<div  class="row-fluid saleSummaryCustomer">
-			<span class="glyphicons no-js remove_2 pull-right" 
-		    				onclick="javascript:window.history.back()"
-							data-bind="click: cancel"><i></i></span>
+			<span class="glyphicons no-js remove_2 pull-right" data-bind="click: cancel"><i></i></span>
 
 	        <h2 data-bind="">Imports</h2>
 		    <br>		
@@ -12790,18 +12783,32 @@
 			this.set("amountTotal", 0);
 			this.set("totalMeter", 0);
 	    },
+	    txnTemplateDS		: dataStore(apiUrl + "transaction_templates"),
 		printBill 			: function(){
 			if(this.get("TemplateSelect")){
 		  		if(this.invoiceCollection.dataSource.total()>0){
 					if(this.printArray.length>0){
 					  	var self = this;
 					  	banhji.InvoicePrint.dataSource = [];
-					  	$.each(this.printArray, function(index, value){
-					  		banhji.InvoicePrint.dataSource.push(self.printArray[index]);
-					  	});
-					  	banhji.InvoicePrint.set("TemplateSelect",this.get("TemplateSelect") );
-				        banhji.router.navigate('/invoice_print');
+						this.txnTemplateDS.query({
+							filter: {field: "id", value: this.get("TemplateSelect")}
+						})
+						.then(function(e){
+							if(self.txnTemplateDS.data()[0].color){
+								banhji.InvoicePrint.formColor = self.txnTemplateDS.data()[0].color;
+								$.each(self.printArray, function(index, value){
+									self.printArray[index].formcolor = self.txnTemplateDS.data()[0].color;
+									banhji.InvoicePrint.dataSource.push(self.printArray[index]);
+								});
+							}else{
+								$.each(self.printArray, function(index, value){
+									self.printArray[index].formcolor = "#355176";
+									banhji.InvoicePrint.dataSource.push(self.printArray[index]);
+								});
+							}
 
+							banhji.router.navigate('/invoice_print');
+						});
 			    	}else{
 			    		alert("Please check the box!");
 			    	}
@@ -12834,28 +12841,17 @@
 		isVisible 			: true,
 		company 			: banhji.institute,
 		TemplateSelect 		: null,
-		txnTemplateDS		: dataStore(apiUrl + "transaction_templates"),
-		user_id 			: banhji.userManagement.getLogin() === null ? '':banhji.userManagement.getLogin().id,
-		formColor			: "#355176", 	
+		user_id 			: banhji.userManagement.getLogin() === null ? '':banhji.userManagement.getLogin().id,	
+		formColor 			: "#355176",
 		pageLoad 			: function(id){
 			var self = this;
 			$("#wInvoiceContent").kendoListView({
 			    dataSource: this.dataSource,
 			    template: kendo.template($("#Invoiceprintrowtemplate").html())
 			});
-			if(this.dataSource){
-				for(var i = 0; i < this.dataSource.length; i++){
-					var PrintCount = this.dataSource[i].print_count + 1;
-					banhji.InvoicePrint.dataSource[i].set("print_count", PrintCount);
-				}
-			}
-			if(this.TemplateSelect){
-				this.txnTemplateDS.query({
-					filter: {field: "id", value: this.TemplateSelect}
-				})
-				.then(function(e){
-					self.set("formColor", self.txnTemplateDS.data()[0].color);
-				});
+			for(var i = 0; i < this.dataSource.length; i++){
+				var PrintCount = this.dataSource[i].print_count + 1;
+				banhji.InvoicePrint.dataSource[i].set("print_count", PrintCount);
 			}
 			this.barcod("do");
 		},
@@ -12900,7 +12896,7 @@
 			if(colorM == '#000000' || colorM =='#1f497d' || colorM == null){ 
 				ts = 'color: #fff!important;';
 			} else { ts = 'color: #333;'; }
-
+			console.log(colorM);
 			banhji.invoice.dataSource.sync();
 			var gridElement = $('#grid'),
 		        printableContent = '',
@@ -12930,6 +12926,10 @@
     							'min-width: '+ pWidth +';' +
     							'min-height: '+ pHeight +';' +
   							'}' +
+  							'.main-color {' +
+			            		'background-color: '+colorM+'!important; ' + ts +
+			            		'-webkit-print-color-adjust:exact; ' +
+			            	'} ' +
 						'}' +
 						'.main-color {' +
 		            		'background-color: '+colorM+'!important; ' + ts +
@@ -12972,7 +12972,7 @@
 		    doc.close();
 		    setTimeout(function(){
 		    	win.print();	
-		    	win.close();
+		    	//win.close();
 		    },2000)
 		},
 		hideFrameInvoice 			: function(e) {
@@ -13754,7 +13754,7 @@
 			self.journalLineDS.sync();	
 		}
 	});
-
+	//Receipt
 	banhji.Receipt =  kendo.observable({
 		lang 				: langVM,
 		dataSource 			: dataStore(apiUrl + "transactions"),
@@ -14246,7 +14246,8 @@
 			}
 		},
 		cancel 				: function(){
-			this.dataSource.cancelChanges();
+			this.dataSource.data([]);
+			banhji.router.navigate("/");
 			banhji.userManagement.removeMultiTask("cash_receipt");
 		},
 		updateTxnStatus 	: function(ids){
@@ -16786,48 +16787,11 @@
     	lang 				: langVM,
     	contact 			: banhji.importContact,
     	item 				: banhji.importItem,
-    	printGrid			: function() {
-			var obj = this.get('obj');
-			var gridElement = $('#grid'),
-		        printableContent = '',
-		        win = window.open('', '', 'width=800, height=900'),
-		        doc = win.document.open();
-		    var htmlStart =
-		            '<!DOCTYPE html>' +
-		            '<html>' +
-		            '<head>' +
-		            '<meta charset="utf-8" />' +
-		            '<title></title>' +
-		            '<link href="http://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />'+
-		            '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/bootstrap.css">' +
-		            '<link href="<?php echo base_url(); ?>assets/invoice/invoice.css" rel="stylesheet" />'+
-		            '<link href="https://fonts.googleapis.com/css?family=Content:400,700" rel="stylesheet" type="text/css">' +
-		            '<link href="https://fonts.googleapis.com/css?family=Moul" rel="stylesheet">' +
-		            '<style>' +
-		            'html { font: 11pt sans-serif; }' +
-		            '.k-grid { border-top-width: 0; }' +
-		            '.k-grid, .k-grid-content { height: auto !important; }' +
-		            '.k-grid-content { overflow: visible !important; }' +
-		            'div.k-grid table { table-layout: auto; width: 100% !important; }' +
-		            '.k-grid .k-grid-header th { border-top: 1px solid; }' +
-		            '.k-grid-toolbar, .k-grid-pager > .k-link { display: none; }' +
-		            '</style><style type="text/css" media="print"> @page { size: portrait; margin:0mm;margin-top: 1mm; }'+
-		            	'.table-primary thead th {background-color:#496cad!important;color: #fff;-webkit-print-color-adjust:true;}' +
-		            	'}</style>' +
-		            '</head>' +
-		            '<body>';
-		    var htmlEnd =
-		            '</body>' +
-		            '</html>';
-		    
-		    printableContent = $('#invFormContent').html();
-		    doc.write(htmlStart + printableContent + htmlEnd);
-		    doc.close();
-		    setTimeout(function(){
-		    	win.print();
-		    	win.close();
-		    },2000);
-		}
+    	cancel 				: function(e){
+    		this.contact.dataSource.data([]);
+    		this.item.dataSource.data([]);
+    		banhji.router.navigate("/");
+    	}
     });
 	/*************************
 	*	Water Section   	* 

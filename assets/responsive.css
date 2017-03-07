@@ -1948,9 +1948,9 @@ width: 50% !important;
 .accounting-management table tr td{
   padding: 5px 0 5px 5px;
 }
-.accounting-management table tr td:first-child{
+/*.accounting-management table tr td:first-child{
   font-weight: 600;
-}
+}*/
 .accounting-management table tr td:last-child{
   font-weight: 700;
   padding-right: 5px;
@@ -1961,7 +1961,7 @@ width: 50% !important;
 .accounting-management table tr:nth-child(8),
 .accounting-management table tr:nth-child(10) {
     background: #E4EFF9;
-    font-weight: 700;
+    /*font-weight: 700;*/
 }
 
 .tab1-aacountsetting{
