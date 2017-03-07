@@ -3196,8 +3196,7 @@
 															data-value-field="id" 
 															data-bind="
 																value: blocSelect,
-							                  					source: blocDS,
-							                  					events: {change: blocChange}">
+							                  					source: blocDS">
 							                  		</div>
 												</div>
 												<div class="span2">
@@ -3274,8 +3273,7 @@
 														data-value-field="id" 
 														data-bind="
 															value: blocSelectU,
-						                  					source: blocDSU,
-						                  					events: {change: blocChangeU}">
+						                  					source: blocDSU">
 						                  		</div>
 											</div>
 											<div class="span3">
@@ -9900,32 +9898,16 @@
 		miniMonthofS 		: new Date(),
 		pageLoad 			: function(id){
 			var self = this;
-			this.licenseDS.read();
 		},
 		onLicenseChange 	: function(e) {
 			var data = e.data;
 			var license = this.licenseDS.at(e.sender.selectedIndex - 1);
-			banhji.reading.set("licenseSelect", license);
 			banhji.reading.blocDS.filter({field: "branch_id", value: license.id});
-		},
-		blocChange 			: function(e){
-			var data = e.data;
-			var bloc = this.blocDS.at(e.sender.selectedIndex - 1);
-			banhji.reading.set("blocSelect", bloc);
 		},
 		onLicenseChangeU 	: function(e) {
 			var data = e.data;
 			var license = this.licenseDSU.at(e.sender.selectedIndex - 1);
 			banhji.reading.blocDSU.filter({field: "branch_id", value: license.id});
-		},
-		blocChangeU 		: function(e){
-			var data = e.data;
-			var bloc = this.blocDSU.at(e.sender.selectedIndex - 1);
-			this.meterDS.query({
-				filter: {},
-				page: 1,
- 				get: 1
-			});
 		},
 		search 		 		: function(){	
 			this.uploadDS.data([]);
@@ -9934,13 +9916,7 @@
 			license_id = this.get("licenseSelect"),
 			bloc_id = this.get("blocSelect");
 			var para = [];	
-			// para.push(
-			// 	{field: "month_of >=",operator: "where_related_record", value: monthOf},
-			// 	{field: "month_of <=",operator: "where_related_record", value: monthL}
-			// );
-			//this.dataSource.filter(para);
 			if(license_id){
-				//para.push({field: "branch_id", value: license_id.id});
 				if(bloc_id){
 					para.push({field: "location_id", value: bloc_id.id});
 					this.set("selectMeter", true);
