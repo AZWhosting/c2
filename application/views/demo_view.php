@@ -34938,7 +34938,6 @@
 	            		<thead style="background-color: blue; color: #fff; font-weight: bold">
 	            			<tr>
 	            				<th class="center" style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></th>
-	            				<th><span data-bind="text: lang.lang.number"></span></th>
 	            				<th><span data-bind="text: lang.lang.name"></span></th>
 	            				<th><span data-bind="text: lang.lang.currency"></span></th>
 	            				<th><span data-bind="text: lang.lang.status"></span></th>
@@ -34961,7 +34960,6 @@
 <script id="txnItemList-template" type="text/x-kendo-tmpl">
     <tr>
     	<td>#=banhji.txnItemList.dataSource.indexOf(data)+1#</td>
-    	<td>#=abbr##=number#</td>
     	<td>
     		<a href="\#/txn_item_list/#=id#">#=name#</a>
     	</td>
