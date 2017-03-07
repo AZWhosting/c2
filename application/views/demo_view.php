@@ -44110,16 +44110,17 @@
 	  	<li role='presentation' class='dropdown'>
 	  		<a class='dropdown-toggle glyphicons text_bigger' data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false'><i></i> <span class='caret'></span></a>
   			<ul class='dropdown-menu'>
-  				<li><a href='#/txn_item_list'><span >Transaction Item List</span></a></li>
   				<li><a href='#/txn_item'><span data-bind="text: lang.lang.add_transaction_item"></span></a></li>  	
   				<li><a href='#/account'><span data-bind="text: lang.lang.add_account"></span></a></li>
   				<li><a href='#/segment'><span data-bind="text: lang.lang.add_segment"></span></a></li>  				
+  				<li><a href='#/fixed_assets'><span data-bind="text: lang.lang.add_fixed_assets"></span></a></li>
   				<li> <span class="li-line"></span></li>
   				<li><a href='#/journal'><span data-bind="text: lang.lang.make_journal"></span></a></li>
   				<li><a href='#/cash_transaction'><span data-bind="text: lang.lang.make_cash_transaction"></span></a></li>
   				<li><a href='#/cash_advance'><span data-bind="text: lang.lang.make_cash_advance"></span></a></li>
   				<li><a href='#/expense'><span data-bind="text: lang.lang.make_expense"></span></a></li>
-  				<li> <span class="li-line"></span></li> 		
+  				<li> <span class="li-line"></span></li>
+  				<li><a href='#/txn_item_list'><span >Transaction Item List</span></a></li> 		
   				<li><a href='#/currency_rate'><span data-bind="text: lang.lang.set_exchange_rate"></span></a></li>
   				<li><a href='#/accounting_recurring'><span data-bind="text: lang.lang.accounting_recurring_list"></span></a></li>
   				<li><a href='#/chart_of_account'><span data-bind="text: lang.lang.chart_of_account"></span></a></li>
@@ -44247,7 +44248,6 @@
   				<!-- <li ><a href="#/txn_item"><span data-bind="text: lang.lang.add_transaction_item"></span></a></li> -->
   				<li><a href='#/item_assembly'><span data-bind="text: lang.lang.build_assembly"></span></a></li>  
   				<li><a href='#/item_catalog'><span data-bind="text: lang.lang.add_new_catalog"></span></a></li>
-  				<!-- <li><a href='#/fixed_assets'><span data-bind="text: lang.lang.add_fixed_assets"></span></a></li> -->  		
   				<li> <span class="li-line"></span></li> 
   				<li><a href='#/grn'><span data-bind="text: lang.lang.add_received_note"></span></a></li>
   				<li><a href='#/gdn'><span data-bind="text: lang.lang.add_delivery_note"></span></a></li>
