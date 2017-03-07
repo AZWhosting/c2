@@ -354,11 +354,11 @@
 	            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
 	            		<thead>
 	            			<tr>
-	            				<th class="center" width="100"><span>Number</span></th>
-	            				<th class="center"><span>Name</span></th>
+	            				<th class="center" width="110"><span>Number</span></th>
+	            				<th class="center" width="150"><span>Name</span></th>
 	            				<th class="center"><span>Abbr</span></th>
 	            				<th class="center" width="160"><span>Representive</span></th>
-	            				<th class="center" width="180"><span>Expire Date</span></th>
+	            				<th class="center" width="100"><span>Expire Date</span></th>
 	            				<th class="center" width="100"><span>Max Con.</span></th>
 	            				<th class="center" width="100">Status</th>
 	            			</tr>
@@ -819,12 +819,12 @@
 
 <script id="licenseSetting-template" type="text/x-kendo-tmpl">
 	<tr>
-		<td align="center">#= number #</td>
+		<td>#= number #</td>
 		<td>#= name #</td>
 		<td>#= abbr #</td>
 		<td>#= representative #</td>
 		<td align="center">#= kendo.toString(new Date(expire_date), "dd-MM-yyyy") #</td>
-		<td>#= max_customer #</td>
+		<td align="right">#= max_customer #</td>
 		<td style="text-align: center;">
 			#if(status==1){#
 				<span class="btn-action glyphicons ok_2 btn-success" title="Active"><i></i></span>
@@ -17430,7 +17430,7 @@
 		goEdit 		 		: function(){
 			var obj = this.get("obj");
 			if(obj!==null && obj.id !== 0){
-				window.open('<?php echo base_url(); ?>rrd#/customer/'+obj.id,'_blank');
+				window.open('<?php echo base_url(); ?>rrd#/customer/'+obj.id,'_self');
 				//banhji.router.navigate('/customer/'+obj.id);
 			}else{
 				alert("Please select a customer.");
