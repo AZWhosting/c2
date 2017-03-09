@@ -68,6 +68,14 @@ class Rrd extends MY_Controller {
 		$this->_render("water_view");	
 	}
 
+	public function utibill() {	
+		
+		/*
+		 *set up title and keywords (if not the default in custom.php config file will be set) 
+		 */
+		$this->_render("utibill_view");	
+	}
+
 	public function virtual() {
 		$this->_render('virtual_view');
 	}

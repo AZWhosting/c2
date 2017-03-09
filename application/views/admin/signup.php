@@ -1069,8 +1069,8 @@
                                 if(res.results.length > 0) {
                                     // create company
                                     let dd = new Date();
-                                    dd.setDate(1);
-                                    dd.setMonth(0);
+                                    dd.setDate(31);
+                                    dd.setMonth(11);
                                     banhji.companyDS.insert(0, {
                                         name:  banhji.index.get('name'),
                                         currency: banhji.index.get('currency'),

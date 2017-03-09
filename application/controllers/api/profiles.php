@@ -355,6 +355,8 @@ class Profiles extends REST_Controller {
 					'accounting_standard' => $u->institute->accounting_standard,
 					'city' 			=> $u->institute->city,
 					'country' => array('id' => $country->id, 'name' => $country->name),
+					'lat' => $u->institute->lat,
+					'long' => $u->institute->long,
 					'users' => $u->institute->user->count(),
 					'lastLogin' => $loginCount
 				);
@@ -472,6 +474,8 @@ class Profiles extends REST_Controller {
 			$company->is_local = isset($req->is_local) ? $req->is_local: "";
 			$company->zip_code = isset($req->zip) ? $req->zip: "";
 			$company->financial_year = isset($req->financial_year) ? : "";
+			$company->lat = isset($req->lat) ? $req->lat : 0;
+			$company->long = isset($req->long) ? $req->long : 0;
 			$company->financial_report_date = isset($req->financial_report_date) ? date('m-d', strtotime($req->financial_report_date)): '01-01';
 			if($company->save()) {
 				$industry = $company->industry->get();

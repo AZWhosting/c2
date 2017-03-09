@@ -466,7 +466,7 @@
 
 
 <!-- ***************************
-*	Accounting Section        *
+*	ACCOUNTING SECTION        *
 **************************** -->
 <script id="accountingDashboard" type="text/x-kendo-template" >
 	<div class="row-fluid">
@@ -1246,7 +1246,7 @@
 		</div>
 	</div>
 </script>
-
+<!-- ACCOUNTING FUNCTIONS -->
 <script id="journal" type="text/x-kendo-template">
 	<div id="slide-form">
 		<div class="customer-background">
@@ -3327,7 +3327,533 @@
 		</td>			
     </tr>   
 </script>
+<!-- ACCOUNTING SETTINGS -->
+<script id="accountingSetting" type="text/x-kendo-template">
+	<span class="pull-right glyphicons no-js remove_2" 
+			onclick="javascript:window.history.back()"><i></i></span>
 
+	<h2 data-bind="text: lang.lang.general_accounting_setting"></h2>
+
+	<br>
+
+	<div class="widget widget-tabs widget-tabs-double widget-tabs-vertical row-fluid row-merge widget-tabs-gray">
+
+	    <!-- Tabs Heading -->
+	    <div class="widget-head span3">
+	        <ul>
+	            <!-- <li class="active"><a href="#tab1-1" class="glyphicons group" data-toggle="tab"><i></i><span class="strong"><span data-bind="text: lang.lang.financial_report"></span></span></a>
+	            </li> -->
+	           <!--  <li><a href="#tab2-1" class="glyphicons credit_card" data-toggle="tab"><i></i><span class="strong">Chart of Accounts Condition</span></a>
+	            </li>
+	            <li><a href="#tab2-1" class="glyphicons clock" data-toggle="tab"><i></i><span class="strong">Segments Setting</span></a>
+	            </li>
+	            <li><a href="#tab3-1" class="glyphicons clock" data-toggle="tab"><i></i><span class="strong">Transaction Item </span></a>
+	            </li>
+	            <li><a href="#tab5-1" class="glyphicons clock" data-toggle="tab"><i></i><span class="strong">Tax Setting </span></a>
+	            </li>	 -->
+	            <li class="active"><a href="#tab1-1" class="glyphicons clock" data-toggle="tab"><i></i><span class="strong"><span data-bind="text: lang.lang.prefix_setting"></span> </span></a>
+	            </li>	                        
+	        </ul>
+	    </div>
+	    <!-- // Tabs Heading END -->
+
+	    <div class="widget-body span9">
+	        <div class="tab-content">
+
+	            <!-- Tab Branch content -->
+	            <!-- <div class="tab-pane active" id="tab1-1">
+	            	<p>The selected Financial Reporting Standard</p>
+	            	<div class="tab1-aacountsetting">
+	            		<p>
+	            			BanhJi does not guarantee the full compliance with above selected financial reporting 
+	            			standards. We only provide the recommended format of the financial statements of selected standard.
+	            		</p>
+	            		<a href="" class="btn-change">Change</a>
+	            	</div>
+	            	<p class="noted">
+	            		<b>Noted:</b>
+	            		BanhJi does not guarantee the full compliance with above selected financial reporting 
+	            		standards. We only provide the recommended format of the financial statements of selected standard. 
+	            	</p>	            
+	            </div> -->
+	            <!-- // Tab Branch content END -->
+
+	            <!-- Tab Contact Type content -->
+	            <!-- <div class="tab-pane" id="tab2-1">
+	            	<div class="input-append">
+					    <input class="span12" id="appendedInputButtons" type="text" placeholder="name ..." data-bind="value: paymentMethodName">
+					    <button class="btn btn-default" type="button" data-bind="click: addPaymentMethod"><i class="icon-plus"></i></button>
+					</div>
+	            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
+	            		<thead>
+	            			<tr>
+	            				<th>Name</th>
+	            				<th></th>
+	            			</tr>
+	            		</thead>
+	            		<tbody data-role="listview"	            				
+		            			data-edit-template="customerSetting-edit-payment-method-template"
+				                data-template="customerSetting-payment-method-template"
+				                data-bind="source: paymentMethodDS"></tbody>
+	            	</table>			            
+	            </div> -->
+	            <!-- // Tab Contact Type content END -->
+
+	            <!-- Tab Block content -->
+	           <!--  <div class="tab-pane" id="tab2-1">
+            		<div class="input-append">
+					    <input class="span4" id="appendedInputButtons" type="text" placeholder="name ..." data-bind="value: paymentTermName">
+					    <input class="span4" id="appendedInputButtons" type="text" placeholder="term ..." data-bind="value: paymentTerm">
+					    <input class="span4" id="appendedInputButtons" type="text" placeholder="% ..." data-bind="value: paymentTermPercentage">
+					    <button class="btn btn-default" type="button" data-bind="click: addPaymentTerm"><i class="icon-plus"></i></button>
+					</div>
+	            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
+	            		<thead>
+	            			<tr>
+	            				<th>Name</th>
+	            				<th>Term</th>
+	            				<th>%</th>
+	            				<th></th>
+	            			</tr>
+	            		</thead>
+	            		<tbody data-role="listview"	            				
+		            			data-edit-template="customerSetting-edit-payment-term-template"
+				                data-template="customerSetting-payment-term-template"
+				                data-bind="source: paymentTermDS"></tbody>
+	            	</table>
+	            </div> -->
+	            <!-- // Tab Block content END -->
+
+	            <!-- Tab Block content -->
+	            <div class="tab-pane active" id="tab1-1">
+	            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
+	            		<thead>
+	            			<tr class="widget-head">
+	            				<th class="center" data-bind="text: lang.lang.type"></th>
+	            				<th class="center" data-bind="text: lang.lang.abbr"></th>
+	            				<th style="text-align: left;padding-left: 5px;" data-bind="text: lang.lang.name"></th>
+	            				<th class="center"><span data-bind="text: lang.lang.action"></span></th>
+	            			</tr>
+	            		</thead>
+	            		<tbody data-role="listview"
+								 data-selectable="false"
+				                 data-template="accountSetting-prefix-template"
+				                 data-bind="source: prefixDS">				            
+	            		</tbody>
+	            	</table>
+
+	            </div>
+	            <!-- // Tab Block content END -->
+
+	        </div>
+	    </div>
+
+	</div>
+</script>
+<script id="accountSetting-prefix-template" type="text/x-kendo-template">
+	<tr>
+		<td > #=type#  </a></td>
+		<td style="text-align: center; padding-left: 10px!important;"> 
+			#= abbr# 
+		</td>
+		<td class="center" style="text-align: left;">
+			<a style="text-align: left;padding-left: 5px;" href="\\#/add_accountingprefix/#= id # ">#= name# </a>
+		</td>
+		<td class="center">
+			<a class="btn-action glyphicons pencil btn-success" href="\\#/add_accountingprefix/#= id # "><i></i></a>
+		</td>
+	</tr>
+</script>
+<script id="accountingRecurring" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">					
+				<div id="example" class="k-content">
+
+		    		<span class="glyphicons no-js remove_2 pull-right" 
+		    				onclick="javascript:window.history.back()"
+							data-bind="click: cancel"><i></i></span>
+
+				    <h2>Accounting Recurring</h2>
+
+				    <br>
+					                           					
+	            	<table class="table table-bordered table-primary table-striped table-vertical-center">
+	            		<thead style="background-color: blue; color: #fff; font-weight: bold">
+			                <th>TYPE</th>
+			                <th>RECURRING NAME</th>			                
+			                <th>START DATE</th>
+			                <th class="center">FREQUENCY</th>
+			                <th></th>
+	            		</thead>
+	            		<tbody data-role="listview" 
+				        		data-template="accountingRecurring-template" 
+				        		data-auto-bind="false"
+				        		data-bind="source: dataSource"></tbody>
+	            	</table>
+
+	            	<div id="pager" class="k-pager-wrap"
+			             data-role="pager" 
+			             data-auto-bind="false"
+			             data-bind="source: dataSource"></div>
+
+	            </div>	            						
+			</div>
+		</div>
+	</div>
+</script>
+<script id="accountingRecurring-template" type="text/x-kendo-tmpl">
+	<tr data-uid="#: uid #">
+		<td>#=type#</td>
+		<td>#=recurring_name#</td>
+		<td>#=kendo.toString(new Date(start_date), "dd-MM-yyyy")#</td>
+		<td class="center">#=frequency#</td>
+		<td class="center">
+			<a class="btn btn-warning" data-bind="click: edit"><i></i> Edit</a>
+			<a class="btn btn-success" data-bind="click: use"><i></i> Use</a>
+		</td>		
+    </tr>   
+</script>
+<script id="addAccountingprefix" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">					
+				<div id="example" class="k-content">
+			    	<div class="hidden-print pull-right">
+			    		<span class="glyphicons no-js remove_2" 
+							data-bind="click: cancel"><i></i></span>						
+					</div>
+			        <h2 style="padding:0 15px;"">Transaction Prefix</h2>
+				    <br>
+
+				    <span class="row-fluid">
+
+				    	<span class="span6">
+				    		<p>At the begining of every fiscal year, all the reference numbers will start at 1. 
+				    			If you donot start using BanhJi at the beginning of your fiscal year, 
+				    			please use Starting Number to determine you next number for each transaction reference. 
+				    			This is important for your transaction reference number.</p>
+				    	</span>
+
+				    	<span class="span6">
+				    		<table class="table table-borderless">	
+						    	<thead>
+							    	<tr>
+							    		<th width="40%">Name</th>
+							    		<th>Abbr</th>
+							    	</tr>
+						    	</thead>
+						    	<tbody>
+							    	<tr>
+							    		<td><span data-bind="text: obj.type"></span></td>
+							    		<td>
+							    			<input type="text" placeholder="Abbr" class="k-textbox k-invalid span4" data-bind="value: obj.abbr" style="width: 100px;" >
+							    		</td>
+							    	</tr>
+						    	</tbody>
+							</table>
+				    	</span>
+
+				    </span>
+
+					<!-- Form actions -->
+					<div class="box-generic bg-action-button">
+						<div id="ntf1" data-role="notification"></div>
+						<div class="row">
+							<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;float:right; margin-right: 15px;"><i></i> Save Close</span>	
+						</div>
+					</div>
+					<!-- // Form actions END -->	
+				</div>							
+			</div>
+		</div>
+	</div>
+</script>
+<script id="accountingSetting-contact-type-template" type="text/x-kendo-tmpl">
+    <tr>
+    	<td>
+    		 #:name#
+   		</td>
+   		<td>
+   			#if(is_system=="0"){#
+	   			<div class="edit-buttons">       
+			        <a class="k-button k-edit-button" href="\\#"><span class="k-icon k-edit"></span></a>
+			        <a class="k-button k-delete-button" href="\\#"><span class="k-icon k-delete"></span></a>
+			   	</div>
+		   	#}#
+   		</td>
+   	</tr>
+</script>
+<script id="accountingSetting-edit-contact-type-template" type="text/x-kendo-tmpl">
+    <div class="product-view k-widget">
+        <dl>                
+            <dd>
+                <input type="text" class="k-textbox" data-bind="value:name" name="ProductName" required="required" validationMessage="required" />
+                <span data-for="ProductName" class="k-invalid-msg"></span>
+            </dd>               
+        </dl>
+        <div class="edit-buttons">
+            <a class="k-button k-update-button" href="\\#"><span class="k-icon k-update"></span></a>
+            <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-cancel"></span></a>
+        </div>
+    </div>
+</script>
+<script id="accountingSetting-payment-method-template" type="text/x-kendo-tmpl">
+    <tr>
+    	<td>
+    		 #:name#
+   		</td>
+   		<td>
+   			<div class="edit-buttons">       
+		        <a class="k-button k-edit-button" href="\\#"><span class="k-icon k-edit"></span></a>
+		        <a class="k-button k-delete-button" href="\\#"><span class="k-icon k-delete"></span></a>
+		   	</div>
+		</td>
+   	</tr>
+</script>
+<script id="accountingSetting-edit-payment-method-template" type="text/x-kendo-tmpl">
+    <div class="product-view k-widget">
+        <dl>                
+            <dd>
+                <input type="text" class="k-textbox" data-bind="value:name" name="ProductName" required="required" validationMessage="required" />
+                <span data-for="ProductName" class="k-invalid-msg"></span>
+            </dd>               
+        </dl>
+        <div class="edit-buttons">
+            <a class="k-button k-update-button" href="\\#"><span class="k-icon k-update"></span></a>
+            <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-cancel"></span></a>
+        </div>
+    </div>
+</script>
+<script id="accountingSetting-payment-term-template" type="text/x-kendo-tmpl">
+    <tr>
+    	<td>
+    		 #:name#
+   		</td>
+   		<td>
+    		 #:term#
+   		</td>
+   		<td>
+    		 #:discount_percentage#
+   		</td>
+   		<td>
+   			<div class="edit-buttons">       
+		        <a class="k-button k-edit-button" href="\\#"><span class="k-icon k-edit"></span></a>
+		        <a class="k-button k-delete-button" href="\\#"><span class="k-icon k-delete"></span></a>
+		   	</div>
+		</td>
+   	</tr>
+</script>
+<script id="accountingSetting-edit-payment-term-template" type="text/x-kendo-tmpl">
+    <div class="product-view k-widget">
+        <dl>                
+            <dd>
+                <input type="text" class="k-textbox" data-bind="value:name" name="ProductName" required="required" validationMessage="required" />
+                <span data-for="ProductName" class="k-invalid-msg"></span>
+            </dd>
+            <dd>
+                <input type="text" class="k-textbox" data-bind="value:net_due" name="term" required="required" validationMessage="required" />
+                <span data-for="term" class="k-invalid-msg"></span>
+            </dd>
+            <dd>
+                <input type="text" class="k-textbox" data-bind="value:discount_percentage" name="percentage" required="required" validationMessage="required" />
+                <span data-for="percentage" class="k-invalid-msg"></span>
+            </dd>               
+        </dl>
+        <div class="edit-buttons">
+            <a class="k-button k-update-button" href="\\#"><span class="k-icon k-update"></span></a>
+            <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-cancel"></span></a>
+        </div>
+    </div>
+</script>
+<script id="accountingList" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="container-fluid">
+			<div class="row-fluid">
+				<div class="span12">
+					<div id="example" class="k-content">
+						<div class="hidden-print">
+							<span class="pull-right glyphicons no-js remove_2" 
+								onclick="javascript:window.history.back()"><i></i></span>
+
+							<input data-role="dropdownlist"
+							   data-option-label="(--- TYPE ---)"
+			                   data-auto-bind="false"
+			                   data-value-primitive="true"
+			                   data-text-field="name"
+			                   data-value-field="id"
+			                   data-bind="value: contact_type_id,
+			                              source: contactTypeDS" />
+
+							<button id="search" type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button> |
+							<button type="button" data-role="button" onclick="javascript:window.print()"><i class="icon-print"></i></button>		
+						</div>
+
+						<h3 align="center"><span data-bind="text: lang.lang.customer_list"></span></h3>
+				
+						<div id="grid"></div>					
+					    					
+					</div> <!-- //End div example--> 
+				</div><!-- //End div span12-->
+			</div><!-- //End div row-fluid-->
+		</div>
+	</div>	
+</script>
+<script id="segment" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960" style="overflow: hidden;">					
+				<div id="example" class="k-content">
+
+					<span class="glyphicons no-js remove_2 pull-right" 
+	    				onclick="javascript:window.history.back()"
+						data-bind="click: cancel"><i></i></span>
+					
+			        <h2 span data-bind="text: lang.lang.segment"></h2>
+
+			        <div class="row">
+				        <div class="span6">
+				        	<p>
+					        	<span data-bind="text: lang.lang.segment_is_important"></span>
+					        </p>
+				        </div>
+				         <div class="span6">
+				         	<button class="btn btn-inverse" data-bind="click: openWindow"><i class="icon-plus icon-white"></i>&nbsp&nbsp<span data-bind="text: lang.lang.add_new_segment"></span></button>
+							
+				        </div>
+			        </div>				    			   
+
+				    <br>
+
+				    <!-- Window -->
+				    <div data-role="window"
+			                 data-title="Segment"		                 
+			                 data-width="280"
+			                 data-height="165"
+			                 data-actions="{}"
+			                 data-position="{top: '30%', left: '37%'}"
+			                 data-bind="visible: windowVisible">
+				    	
+				    	<table>							
+							<tr style="border-bottom: 8px solid #fff;">
+								<td width="40%"><span data-bind="text: lang.lang.name"></span></td>
+								<td>
+									<input class="k-textbox" placeholder="name..." data-bind="value: obj.name" style="width: 100%;">
+								</td>
+							</tr>		
+						</table>
+
+						<br>
+
+						<div style="text-align: center;">
+							<span class="btn btn-success btn-icon glyphicons ok_2" data-bind="click: save"><i></i><span data-bind="text: lang.lang.save"></span></span>
+							<span class="btn btn-danger btn-icon glyphicons remove_2" data-bind="click: closeWindow"><i></i><span data-bind="text: lang.lang.close"></span></span>  
+						</div>
+					</div>
+							
+	                <div class="row-fluid">
+		                <div class="span12 table-segment" style="padding: 0;">	                					
+			            	<table class="table table-condensed">
+			            		<thead style="background-color: #1E4E78; color: #fff; font-weight: bold">
+			            			<tr>
+			            				<th data-bind="text: lang.lang.name"></th>            					            	
+			            				<th></th>
+			            			</tr>
+			            		</thead>
+			            		<tbody data-role="listview"			            			
+						                data-template="segment-template"
+						                data-bind="source: dataSource"></tbody>
+			            	</table>
+		            	</div>
+
+		            <!-- Item Window -->
+		            <div data-role="window"
+			                 data-title="Segment Item"		                 
+			                 data-width="250"
+			                 data-height="201"
+			                 data-actions="{}"
+			                 data-position="{top: '30%', left: '37%'}"		                 
+			                 data-bind="visible: windowItemVisible">
+	            		<table>
+							<tr style="border-bottom: 8px solid #fff;">
+								<td width="35%"><span data-bind="text: lang.lang.code"></span></td>
+								<td>
+									<input class="k-textbox" placeholder="type code ..." data-bind="value: item.code" style="width: 100%;">
+								</td>
+							</tr>
+							<tr style="border-bottom: 8px solid #fff;">
+								<td><span data-bind="text: lang.lang.name"></span></td>
+								<td>
+									<input class="k-textbox" placeholder="type name ..." data-bind="value: item.name" style="width: 100%;">
+								</td>
+							</tr>
+						</table>
+
+						<br>
+						<div style="text-align: center;">
+							<span class="btn btn-success btn-icon glyphicons ok_2" data-bind="click: saveItem"><i></i><span data-bind="text: lang.lang.save"></span></span>
+							<span class="btn btn-danger btn-icon glyphicons remove_2" data-bind="click: closeWindowItem"><i></i><span data-bind="text: lang.lang.close"></span></span>  
+						</div>
+					</div>
+
+					<h3 data-bind="text: objName"></h3>
+
+					<div class="row">
+		            	<div class="span12">		                	
+						    <table class="table table-bordered table-white">
+			            		<thead>
+			            			<tr>
+			            				<th data-bind="text: lang.lang.code"></th>
+			            				<th data-bind="text: lang.lang.name"></th>
+			            				<th data-bind="text: lang.lang.segment"></th>   					            		
+			            				<th></th>
+			            			</tr>
+			            		</thead>
+			            		<tbody data-role="listview"			            				
+						                data-template="segment-item-template"
+						                data-auto-bind="false"
+						                data-bind="source: itemDS"></tbody>
+			            	</table>
+			            	<div id="pager" class="k-pager-wrap"
+						    	 data-auto-bind="false"
+					             data-role="pager" data-bind="source: itemDS"></div>
+		            	</div>
+	            	</div>
+				</div>							
+			</div>
+		</div>
+	</div>
+</script>
+<script id="segment-template" type="text/x-kendo-tmpl">
+    <tr>    	
+    	<td>#=name#</td>
+    	<td >
+    		<span data-bind="click: edit" style="cursor: pointer;"><i class="icon-edit"></i> Edit</span>
+    		#if(!is_system=="1"){#
+	    		|
+	    		<span data-bind="click: delete" style="cursor: pointer;"><i class="icon-remove"></i> Delete</span>
+    		#}#
+    		|
+    		<span data-bind="click: view" style="cursor: pointer;"><i class="icon-view"></i> View Item</span>
+    		|
+    		<span data-bind="click: addItem" style="cursor: pointer;"><i class="icon-plus icon-white"></i> Add Item</span>
+    	</td>
+   	</tr>
+</script>
+<script id="segment-item-template" type="text/x-kendo-tmpl">
+    <tr>
+    	<td>#=code#</td>
+    	<td>#=name#</td>
+    	<td>#=segment[0].name#</td>
+   		<td>
+    		<span data-bind="click: editItem" style="cursor: pointer;"><i class="icon-edit"></i> Edit</span>
+    		#if(!is_system=="1"){#
+	    		|
+	    		<span data-bind="click: deleteItem" style="cursor: pointer;"><i class="icon-remove"></i> Delete</span>
+    		#}#
+    	</td>
+   	</tr>
+</script>
 <script id="currencyRate" type="text/x-kendo-template">
 	<div id="slide-form">
 		<div class="customer-background">
@@ -3681,7 +4207,511 @@
     	</td>
    	</tr>
 </script>
+<script id="fixedAssetsList" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960" style="overflow: hidden;">					
+				<div id="example" class="k-content">
 
+					<span class="glyphicons no-js remove_2 pull-right" 
+	    				onclick="javascript:window.history.back()"
+						data-bind="click: cancel"><i></i></span>
+					
+			        <h2 >Fixed Assets List</h2>
+
+			        <div class="row">
+				        <div class="span6">
+				        	<p>
+					        	<span data-bind="text: lang.lang.segment_is_important"></span>
+					        </p>
+				        </div>
+				         <div class="span6">
+				         	<button class="btn btn-inverse" data-bind="click: openWindow"><i class="icon-plus icon-white"></i>&nbsp&nbsp<span data-bind="text: lang.lang.add_new_segment"></span></button>
+							
+				        </div>
+			        </div>				    			   
+
+				    <br>
+
+				    <!-- Window -->
+				    <div data-role="window"
+			                 data-title="Segment"		                 
+			                 data-width="280"
+			                 data-height="165"
+			                 data-actions="{}"
+			                 data-position="{top: '30%', left: '37%'}"
+			                 data-bind="visible: windowVisible">
+				    	
+				    	<table>							
+							<tr style="border-bottom: 8px solid #fff;">
+								<td width="40%"><span data-bind="text: lang.lang.name"></span></td>
+								<td>
+									<input class="k-textbox" placeholder="name..." data-bind="value: obj.name" style="width: 100%;">
+								</td>
+							</tr>		
+						</table>
+
+						<br>
+
+						<div style="text-align: center;">
+							<span class="btn btn-success btn-icon glyphicons ok_2" data-bind="click: save"><i></i><span data-bind="text: lang.lang.save"></span></span>
+							<span class="btn btn-danger btn-icon glyphicons remove_2" data-bind="click: closeWindow"><i></i><span data-bind="text: lang.lang.close"></span></span>  
+						</div>
+					</div>
+							
+	                <div class="row-fluid">
+		                <div class="span12 table-segment" style="padding: 0;">	                					
+			            	<table class="table table-condensed">
+			            		<thead style="background-color: #1E4E78; color: #fff; font-weight: bold">
+			            			<tr>
+			            				<th data-bind="text: lang.lang.name"></th>            					            	
+			            				<th></th>
+			            			</tr>
+			            		</thead>
+			            		<tbody data-role="listview"			            			
+						                data-template="segment-template"
+						                data-bind="source: dataSource"></tbody>
+			            	</table>
+		            	</div>
+
+		            <!-- Item Window -->
+		            <div data-role="window"
+			                 data-title="Segment Item"		                 
+			                 data-width="250"
+			                 data-height="201"
+			                 data-actions="{}"
+			                 data-position="{top: '30%', left: '37%'}"		                 
+			                 data-bind="visible: windowItemVisible">
+	            		<table>
+							<tr style="border-bottom: 8px solid #fff;">
+								<td width="35%"><span data-bind="text: lang.lang.code"></span></td>
+								<td>
+									<input class="k-textbox" placeholder="type code ..." data-bind="value: item.code" style="width: 100%;">
+								</td>
+							</tr>
+							<tr style="border-bottom: 8px solid #fff;">
+								<td><span data-bind="text: lang.lang.name"></span></td>
+								<td>
+									<input class="k-textbox" placeholder="type name ..." data-bind="value: item.name" style="width: 100%;">
+								</td>
+							</tr>
+						</table>
+
+						<br>
+						<div style="text-align: center;">
+							<span class="btn btn-success btn-icon glyphicons ok_2" data-bind="click: saveItem"><i></i><span data-bind="text: lang.lang.save"></span></span>
+							<span class="btn btn-danger btn-icon glyphicons remove_2" data-bind="click: closeWindowItem"><i></i><span data-bind="text: lang.lang.close"></span></span>  
+						</div>
+					</div>
+
+					<h3 data-bind="text: objName"></h3>
+
+					<div class="row">
+		            	<div class="span12">		                	
+						    <table class="table table-bordered table-white">
+			            		<thead>
+			            			<tr>
+			            				<th data-bind="text: lang.lang.code"></th>
+			            				<th data-bind="text: lang.lang.name"></th>
+			            				<th data-bind="text: lang.lang.segment"></th>   					            		
+			            				<th></th>
+			            			</tr>
+			            		</thead>
+			            		<tbody data-role="listview"			            				
+						                data-template="segment-item-template"
+						                data-auto-bind="false"
+						                data-bind="source: itemDS"></tbody>
+			            	</table>
+			            	<div id="pager" class="k-pager-wrap"
+						    	 data-auto-bind="false"
+					             data-role="pager" data-bind="source: itemDS"></div>
+		            	</div>
+	            	</div>
+				</div>							
+			</div>
+		</div>
+	</div>
+</script>
+<script id="taxReportCenter" type="text/x-kendo-template">
+	<div class="row-fluid customer-report-center">
+		<div class="span7">
+			<div class="row-fluid sale-report">
+				<h2>SALE TAX REPORTS</h2>
+				<div class="row-fluid">
+					<table class="table table-borderless table-condensed">
+						<tr>
+							<td width="50%">
+								<h3><a href="#/sale_journal">Sale Journal</a></h3>
+							</td>
+							<td width="50%">
+								<h3><a href="#/purchase_journal">Purchase Journal</a></h3>								
+							</td>						
+						</tr>
+						<tr>
+							<td width="50%">
+								<p>
+									
+								</p>
+								
+							</td>
+							<td width="50%">
+								<p>
+									
+								</p>
+							</td>
+							
+						</tr>
+						
+					</table>
+				</div>
+			</div>
+
+		</div>
+		<div class="span5">
+			<span class="pull-right glyphicons no-js remove_2" 
+						onclick="javascript:window.history.back()"><i></i></span>
+			<br>
+			<br>
+			
+		</div>
+	</div>
+</script>
+<script id="saleJournal" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">
+				<div id="example" class="k-content saleSummaryCustomer">
+			    	<span class="pull-right glyphicons no-js remove_2"
+						onclick="javascript:window.history.back()"><i></i></span>
+					<br>
+					<br>
+					<div class="block-title">
+						<h3 data-bind="text: company.name"></h3>
+						<h2>សៀវភៅទិន្នានុប្បវត្តិលក់</h2>
+						<p>Sale Journal</p>
+						<p>ខែ កក្ដដា ឆ្នំា​  ២០១៦ For  July  2016</p>
+					</div>
+
+					<div class="row-fluid company-name">
+						<div class="span7" style="padding-left: 0; padding-right: 15px;">
+							<table>
+								<tr style="border-bottom: 1px solid #000;">
+									<td>
+										នាមករណ៍សហគ្រាសៈ
+										<br>
+										Company's name:
+									</td>
+									<td>
+										បញ្ចី
+										<br>
+										Banh Ji
+									</td>
+								</tr>
+															
+								<tr>
+									<td>
+										អាស័យដ្ឋាន:
+										<br/>
+										Address:
+									</td>
+									<td>#245 ផ្លូវ 182 ភូមិ  ៧ សង្កាត់ ទឹកល្អក់ទី ២ ខណ្ឌ ទួលគោក រាជធានីភ្នំពេញ</td>
+								</tr>
+							</table>
+						</div>
+						<div class="span5">
+							<table>
+								<tr style="border-bottom: 1px solid #000;">
+									<td>
+										លេខអត្តសញ្ញាណកម្មអតប:
+										<br>
+										Tax Identification No:
+									</td>
+									<td>
+										100100260	
+									</td>
+								</tr>
+								<tr>
+									<td>
+										អត្រាប្តូរប្រាក់មធ្យមៈ
+										<br>
+										Average Exchange Rate:
+									</td>
+									<td>
+										 4,090
+									</td>
+								</tr>								
+							</table>
+						</div>
+					</div>
+
+					<br>
+					<div class="row-fluid table-company">						
+						<table class="table table-bordered">
+							<tbody>
+								<tr>
+									<th style="text-align:center !important" colspan="5">វិក័យប័ត្រ<br>Invoice</th>
+									<th style="text-align:center !important" colspan="7">ការផ្គត់ផ្គង់<br>Supplies</th>	
+									<th></th>	
+								</tr>
+								<tr>
+									<td style="text-align:center !important;vertical-align: top !important;" rowspan="3">ថ្ងៃទី<br>Date</td>
+									<td style="text-align:center !important;vertical-align: top !important;" rowspan="3">លេខវិក័យប័ត្រ<br>Invoicen<sup>o</sup> <br></td>
+									<td style="text-align:center !important;vertical-align: top !important;" rowspan="3">អ្នកទិញ<br>Client</td>
+									<td style="text-align:center !important;vertical-align: top !important;" rowspan="3">លេខអតប<br>VAT Tin</td>
+									<td style="text-align:center !important;vertical-align: top !important;" rowspan="3">បរិយាយ<br>Description<br></td>
+									<td style="text-align:center !important;vertical-align: top !important;" rowspan="3">បរិមាណ<br>Qty<br></td>
+									<td style="text-align:center !important;vertical-align: top !important;" rowspan="3">ផ្គត់ផ្គង់មិនជាប់អាករ<br>Non-taxable sale<br></td>
+									<td style="text-align:center !important;vertical-align: top !important;" rowspan="3">ការនាំចេញ<br>Value of Exports<br></td>
+									<td style="text-align:center !important;vertical-align: top !important;" colspan="4">ការលក់ជាប់អាករ<br>Taxable sale</td>
+									<td style="text-align:center !important;vertical-align: top !important;" rowspan="3">សរុបតម្លៃលក់រួមទាំងអាករ<br>Total Taxable Value</td>
+									
+								</tr>
+								<tr>
+									<td colspan="2" style="text-align:center;">លក់អោយបុគ្គលជាប់អាករ<br>Sales to Taxable Persons</td>
+									<td colspan="2" style="text-align:center;">លក់អោយអ្នកប្រើប្រាស់<br>Sales to Customers</td>
+								</tr>
+								<tr>
+									<td style="text-align:center !important">តម្លៃជាប់អាករ<br>Taxable Value</td>
+									<td style="text-align:center !important">អាករ<br>VAT<br></td>
+									<td style="text-align:center !important">តម្លៃជាប់អាករ<br>Taxable Value</td>
+									<td style="text-align:center !important">អាករ<br>VAT</td>
+								</tr>
+								<tr>
+									<td style="text-align:center !important">S1</td>
+									<td style="text-align:center !important">S2</td>
+									<td style="text-align:center !important">S3</td>
+									<td style="text-align:center !important">S4</td>
+									<td style="text-align:center !important">S5</td>
+									<td style="text-align:center !important">S6</td>
+									<td style="text-align:center !important">S7</td>
+									<td style="text-align:center !important">S8</td>
+									<td style="text-align:center !important">S9</td>
+									<td style="text-align:center !important">S10</td>
+									<td style="text-align:center !important">S11</td>
+									<td style="text-align:center !important">S12</td>
+									<td style="text-align:center !important">S13=sum(S7:S12)</td>
+									
+								</tr>
+								</tbody><tbody class="tax">
+									<tr class="none-padding">
+										<td><p style="padding:5px !important; padding-left:10px !important;" class="no">1</p></td>
+										<td><input type="text" name="s2[]" id="s2" class="form-control s2" value=""></td>
+										<td><input type="text" name="s3[]" id="s3" class="form-control s3" value="" ></td>
+										<td><input type="text" name="s4[]" id="s4" class="form-control s4" value=""></td>
+										<td><input type="text" name="s5[]" id="s5" class="form-control s5" value=""></td>
+										<td><input type="text" name="s6[]" id="s6" class="checknb form-control text-center s6" value=""></td>
+										<td><input type="text" name="s7[]" id="s7" class="checknb form-control text-right s7" value=""></td>
+										<td><input type="text" name="s8[]" id="s8" class="checknb form-control text-right s8" value="" style="width:100px;"></td>
+										<td><input type="text" name="s9[]" id="s9" class="checknb form-control text-right s9" value=""></td>
+										<td><input type="text" name="s10[]" id="s10" class="checknb form-control text-right s10" value=""></td>
+										<td><input type="text" name="s11[]" id="s11" class="checknb form-control text-right s11" value=""></td>
+										<td><input type="text" name="s12[]" id="s12" class="checknb form-control text-right s12" value=""></td>
+										<td><input type="text" name="s13[]" id="s13" class="form-control text-right s13" style="font-weight:bold;" value="" readonly=""></td>
+										
+									</tr>
+								</tbody>						
+								<tbody><tr>
+									<td style="text-align:right !important" colspan="7">សរុបលក់ជារៀល<br>Total Sale in KHR</td>
+									<td name="total_s7" id="total_s7" class="total_s7" style="padding-right:15px; text-align:right; font-weight:bold;"></td>
+									<td name="total_s8" id="total_s8" class="total_s8" style="padding-right:15px; text-align:right; font-weight:bold;"></td>
+									<td name="total_s9" id="total_s9" class="total_s9" style="padding-right:15px; text-align:right; font-weight:bold;"></td>
+									<td name="total_s10" id="total_s10" class="total_s10" style="padding-right:15px; text-align:right; font-weight:bold;"></td>
+									<td name="total_s11" id="total_s11" class="total_s11" style="padding-right:15px; text-align:right; font-weight:bold;"></td>
+									<td name="total_s12" id="total_s12" class="total_s12" style="padding-right:15px; text-align:right; font-weight:bold;"></td>
+									
+								</tr>
+								<tr id="hide-border">
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td style="text-align:center !important">Box12</td>
+									<td style="text-align:center !important">Box13</td>
+									<td style="text-align:center !important">Box14</td>
+									<td style="text-align:center !important">Box15</td>
+									<td style="text-align:center !important">Box14</td>
+									<td style="text-align:center !important">Box15</td>
+									<td></td>	
+								</tr>
+							</tbody>
+						</table>
+					
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>	
+</script>
+<script id="purchaseJournal" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">
+				<div id="example" class="k-content saleSummaryCustomer">
+			    	<span class="pull-right glyphicons no-js remove_2"
+						onclick="javascript:window.history.back()"><i></i></span>
+					<br>
+					<br>
+					
+					<div class="block-title">
+						<h3 data-bind="text: company.name"></h3>
+						<h2>សៀវភៅទិន្នានុប្បវត្តិទិញ</h2>
+						<p>PURCHASE JOURNAL</p>
+						<p>ខែ កក្ដដា ឆ្នំា​  ២០១៦ For  July  2016</p>
+					</div>
+
+					<div class="row-fluid company-name">
+						<div class="span7" style="padding-left: 0; padding-right: 15px;">
+							<table>
+								<tr style="border-bottom: 1px solid #000;">
+									<td>
+										នាមករណ៍សហគ្រាសៈ
+										<br>
+										Company's name:
+									</td>
+									<td>
+										បញ្ចី
+										<br>
+										Banh Ji
+									</td>
+								</tr>
+															
+								<tr>
+									<td>
+										អាស័យដ្ឋាន:
+										<br/>
+										Address:
+									</td>
+									<td>#245 ផ្លូវ 182 ភូមិ  ៧ សង្កាត់ ទឹកល្អក់ទី ២ ខណ្ឌ ទួលគោក រាជធានីភ្នំពេញ</td>
+								</tr>
+							</table>
+						</div>
+						<div class="span5">
+							<table>
+								<tr style="border-bottom: 1px solid #000;">
+									<td>
+										លេខអត្តសញ្ញាណកម្មអតប:
+										<br>
+										Tax Identification No:
+									</td>
+									<td>
+										100100260	
+									</td>
+								</tr>
+								<tr>
+									<td>
+										អត្រាប្តូរប្រាក់មធ្យមៈ
+										<br>
+										Average Exchange Rate:
+									</td>
+									<td>
+										 4,090
+									</td>
+								</tr>								
+							</table>
+						</div>
+					</div>
+
+					<br>
+					<div class="row-fluid table-company">						
+						<table class="table table-bordered">
+							<tbody>
+								<tr>
+							        <td style="text-align:center !important" colspan="6">វិក័យប័ត្រ<br>Invoice    </td>
+							        <td style="text-align:center !important" colspan="6">ការផ្គត់ផ្គង់<br>Supplies    </td>
+							       
+							    </tr>
+							    <tr>
+							        <td style="text-align:center !important;vertical-align: middle !important;" rowspan="3">ថ្ងៃទី<br>Date</td>
+							        <td style="text-align:center !important;vertical-align: middle !important;" rowspan="3">លេខវិក័យប័ត្រ<br>Invoice n<sup>o</sup></td>
+							        <td style="text-align:center !important;vertical-align: middle !important;"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    rowspan="3">អ្នកទិញ<br>Client</td>
+							        <td style="text-align:center !important;vertical-align: middle !important;" rowspan="3">លេខ អ ត ប<br>VAT Tin    </td>
+							        <td style="text-align:center !important;vertical-align: middle !important;" rowspan="3">បរិយាយ<br>Description    </td>
+							        <td style="text-align:center !important;vertical-align: middle !important;" rowspan="3">បរិមាណ<br>Qty    </td>
+							        <td style="text-align:center !important;vertical-align: middle !important;" rowspan="3">ការទិញមិនជាប់អាករ<br>Non-taxable Purchase    </td>
+							        <td style="text-align:center !important;vertical-align: middle !important;" colspan="4">ការទិញជាប់អាករ<br>Taxable Purchase    </td>
+							        <td style="text-align:center !important;vertical-align: middle !important;" rowspan="3">សរុបតម្លៃទិញរួមទាំងអាករ<br>Total Value Including VAT    </td>
+							        
+							    </tr>
+							    <tr>
+							        <td style="text-align:center !important" colspan="2">ការនាំចូល<br>Imports    </td>
+							        <td style="text-align:center !important" colspan="2">ការទិញក្នុងស្រុក<br>Local Purchases    </td>
+							    </tr>
+							    <tr>
+							        <td style="text-align:center !important">តម្លៃជាប់អាករ<br>Taxable Value</td>
+							        <td style="text-align:center !important">អាករ<br>VAT    </td>
+							        <td style="text-align:center !important">តម្លៃជាប់អាករ<br>Taxable Value    </td>
+							        <td style="text-align:center !important">អាករ<br>VAT    </td>
+							    </tr>
+							   
+							    <tr>
+							        <td style="text-align:center !important">P1</td>
+							        <td style="text-align:center !important">P2</td>
+							        <td style="text-align:center !important">P3</td>
+							        <td style="text-align:center !important">P4</td>
+							        <td style="text-align:center !important">P5</td>
+							        <td style="text-align:center !important">P6</td>
+							        <td style="text-align:center !important">P7</td>
+							        <td style="text-align:center !important">P8</td>
+							        <td style="text-align:center !important">P9</td>
+							        <td style="text-align:center !important">P10</td>
+							        <td style="text-align:center !important">P11</td>
+							        <td style="text-align:center !important">P13=sum(P7:P11)</td>
+							       
+							    </tr>
+							</tbody>
+								<tbody class="tax">
+									<tr class="none-padding">
+										<td><input type="text" name="s1[]" id="s1" class="form-control datetime s1" value="" ></td>
+										<td><input type="text" name="s2[]" id="s2" class="form-control s2" value=""></td>
+										<td><div class="select2-container form-control s3" id="s2id_s3"><a href="javascript:void(0)" class="select2-choice select2-default" tabindex="-1">   <span class="select2-chosen" id="select2-chosen-8"></span><abbr class="select2-search-choice-close"></abbr>   <span class="select2-arrow" role="presentation"><b role="presentation"></b></span></a><label for="s2id_autogen8" class="select2-offscreen"></label><input class="select2-focusser select2-offscreen" type="text" aria-haspopup="true" role="button" aria-labelledby="select2-chosen-8" id="s2id_autogen8"><div class="select2-drop select2-display-none select2-with-searchbox">   <div class="select2-search">       <label for="s2id_autogen8_search" class="select2-offscreen"></label>       <input type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" class="select2-input" role="combobox" aria-expanded="true" aria-autocomplete="list" aria-owns="select2-results-8" id="s2id_autogen8_search" placeholder="">   </div>   <ul class="select2-results" role="listbox" id="select2-results-8">   </ul></div></div><select name="s3[]" id="s3" class="form-control s3" tabindex="-1" title="" style="display: none;"><option value=""></option><option value="1">Owner</option><option value="2">Owner</option><option value="398">WG company</option><option value="401">Coffe shop</option></select></td>
+										<td><input type="text" name="s4[]" id="s4" class="checknb form-control s4" value=""></td>
+										<td><input type="text" name="s5[]" id="s5" class="form-control s5" value=""></td>
+										<td><input type="text" name="s6[]" id="s6" class="checknb form-control text-center s6" value=""></td>
+										<td><input type="text" name="s7[]" id="s7" class="checknb form-control text-right s7" value=""></td>
+										<td><input type="text" name="s9[]" id="s9" class="checknb form-control text-right s9" value=""></td>
+										<td><input type="text" name="s10[]" id="s10" class="checknb form-control text-right s10" value=""></td>
+										<td><input type="text" name="s11[]" id="s11" class="checknb form-control text-right s11" value=""></td>
+										<td><input type="text" name="s12[]" id="s12" class="checknb form-control text-right s12" value=""></td>
+										<td><input type="text" name="s13[]" id="s13" class="form-control text-right s13" style="font-weight:bold;" value="" readonly=""></td>
+										
+									</tr>
+								</tbody>				
+								
+							    <tbody><tr>
+							        <td style="text-align:right !important" colspan="6">សរុបទិញជារៀល<br>Total Purchase in KHR</td>
+							        <td name="total_s7" id="total_s7" class="total_s7" style="padding-right:15px; text-align:right; font-weight:bold;"></td>
+									<td name="total_s9" id="total_s9" class="total_s9" style="padding-right:15px; text-align:right; font-weight:bold;"></td>
+									<td name="total_s10" id="total_s10" class="total_s10" style="padding-right:15px; text-align:right; font-weight:bold;"></td>
+									<td name="total_s11" id="total_s11" class="total_s11" style="padding-right:15px; text-align:right; font-weight:bold;"></td>
+									<td name="total_s12" id="total_s12" class="total_s12" style="padding-right:15px; text-align:right; font-weight:bold;"></td>
+									<td name="total_s13" id="total_s13" class="total_s13" style="padding-right:15px; text-align:right; font-weight:bold;"></td>
+									
+							    </tr>
+							    <tr id="hide-border">
+							        <td></td>
+							        <td></td>
+							        <td></td>
+							        <td></td>
+							        <td></td>
+							        <td></td>
+							        <td>Box06</td>
+							        <td>Box09</td>
+							        <td>Box10</td>
+							        <td>Box07</td>
+							        <td>Box08</td>
+							       	<td>Box09</td>
+							    </tr>										
+							</tbody>
+						</table>					
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>	
+</script>
+<!-- ACCOUNTING REPORTS -->
 <script id="accountingReportCenter" type="text/x-kendo-template">
 	<div class="cover-block" style="width: 99%; background: #fff;">
 		<div class="row-fluid customer-report-center">
@@ -7287,1046 +8317,9 @@
 </script>
 
 
-<script id="accountingSetting" type="text/x-kendo-template">
-	<span class="pull-right glyphicons no-js remove_2" 
-			onclick="javascript:window.history.back()"><i></i></span>
-
-	<h2 data-bind="text: lang.lang.general_accounting_setting"></h2>
-
-	<br>
-
-	<div class="widget widget-tabs widget-tabs-double widget-tabs-vertical row-fluid row-merge widget-tabs-gray">
-
-	    <!-- Tabs Heading -->
-	    <div class="widget-head span3">
-	        <ul>
-	            <!-- <li class="active"><a href="#tab1-1" class="glyphicons group" data-toggle="tab"><i></i><span class="strong"><span data-bind="text: lang.lang.financial_report"></span></span></a>
-	            </li> -->
-	           <!--  <li><a href="#tab2-1" class="glyphicons credit_card" data-toggle="tab"><i></i><span class="strong">Chart of Accounts Condition</span></a>
-	            </li>
-	            <li><a href="#tab2-1" class="glyphicons clock" data-toggle="tab"><i></i><span class="strong">Segments Setting</span></a>
-	            </li>
-	            <li><a href="#tab3-1" class="glyphicons clock" data-toggle="tab"><i></i><span class="strong">Transaction Item </span></a>
-	            </li>
-	            <li><a href="#tab5-1" class="glyphicons clock" data-toggle="tab"><i></i><span class="strong">Tax Setting </span></a>
-	            </li>	 -->
-	            <li class="active"><a href="#tab1-1" class="glyphicons clock" data-toggle="tab"><i></i><span class="strong"><span data-bind="text: lang.lang.prefix_setting"></span> </span></a>
-	            </li>	                        
-	        </ul>
-	    </div>
-	    <!-- // Tabs Heading END -->
-
-	    <div class="widget-body span9">
-	        <div class="tab-content">
-
-	            <!-- Tab Branch content -->
-	            <!-- <div class="tab-pane active" id="tab1-1">
-	            	<p>The selected Financial Reporting Standard</p>
-	            	<div class="tab1-aacountsetting">
-	            		<p>
-	            			BanhJi does not guarantee the full compliance with above selected financial reporting 
-	            			standards. We only provide the recommended format of the financial statements of selected standard.
-	            		</p>
-	            		<a href="" class="btn-change">Change</a>
-	            	</div>
-	            	<p class="noted">
-	            		<b>Noted:</b>
-	            		BanhJi does not guarantee the full compliance with above selected financial reporting 
-	            		standards. We only provide the recommended format of the financial statements of selected standard. 
-	            	</p>	            
-	            </div> -->
-	            <!-- // Tab Branch content END -->
-
-	            <!-- Tab Contact Type content -->
-	            <!-- <div class="tab-pane" id="tab2-1">
-	            	<div class="input-append">
-					    <input class="span12" id="appendedInputButtons" type="text" placeholder="name ..." data-bind="value: paymentMethodName">
-					    <button class="btn btn-default" type="button" data-bind="click: addPaymentMethod"><i class="icon-plus"></i></button>
-					</div>
-	            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
-	            		<thead>
-	            			<tr>
-	            				<th>Name</th>
-	            				<th></th>
-	            			</tr>
-	            		</thead>
-	            		<tbody data-role="listview"	            				
-		            			data-edit-template="customerSetting-edit-payment-method-template"
-				                data-template="customerSetting-payment-method-template"
-				                data-bind="source: paymentMethodDS"></tbody>
-	            	</table>			            
-	            </div> -->
-	            <!-- // Tab Contact Type content END -->
-
-	            <!-- Tab Block content -->
-	           <!--  <div class="tab-pane" id="tab2-1">
-            		<div class="input-append">
-					    <input class="span4" id="appendedInputButtons" type="text" placeholder="name ..." data-bind="value: paymentTermName">
-					    <input class="span4" id="appendedInputButtons" type="text" placeholder="term ..." data-bind="value: paymentTerm">
-					    <input class="span4" id="appendedInputButtons" type="text" placeholder="% ..." data-bind="value: paymentTermPercentage">
-					    <button class="btn btn-default" type="button" data-bind="click: addPaymentTerm"><i class="icon-plus"></i></button>
-					</div>
-	            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
-	            		<thead>
-	            			<tr>
-	            				<th>Name</th>
-	            				<th>Term</th>
-	            				<th>%</th>
-	            				<th></th>
-	            			</tr>
-	            		</thead>
-	            		<tbody data-role="listview"	            				
-		            			data-edit-template="customerSetting-edit-payment-term-template"
-				                data-template="customerSetting-payment-term-template"
-				                data-bind="source: paymentTermDS"></tbody>
-	            	</table>
-	            </div> -->
-	            <!-- // Tab Block content END -->
-
-	            <!-- Tab Block content -->
-	            <div class="tab-pane active" id="tab1-1">
-	            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
-	            		<thead>
-	            			<tr class="widget-head">
-	            				<th class="center" data-bind="text: lang.lang.type"></th>
-	            				<th class="center" data-bind="text: lang.lang.abbr"></th>
-	            				<th style="text-align: left;padding-left: 5px;" data-bind="text: lang.lang.name"></th>
-	            				<th class="center"><span data-bind="text: lang.lang.action"></span></th>
-	            			</tr>
-	            		</thead>
-	            		<tbody data-role="listview"
-								 data-selectable="false"
-				                 data-template="accountSetting-prefix-template"
-				                 data-bind="source: prefixDS">				            
-	            		</tbody>
-	            	</table>
-
-	            </div>
-	            <!-- // Tab Block content END -->
-
-	        </div>
-	    </div>
-
-	</div>
-</script>
-<script id="accountSetting-prefix-template" type="text/x-kendo-template">
-	<tr>
-		<td > #=type#  </a></td>
-		<td style="text-align: center; padding-left: 10px!important;"> 
-			#= abbr# 
-		</td>
-		<td class="center" style="text-align: left;">
-			<a style="text-align: left;padding-left: 5px;" href="\\#/add_accountingprefix/#= id # ">#= name# </a>
-		</td>
-		<td class="center">
-			<a class="btn-action glyphicons pencil btn-success" href="\\#/add_accountingprefix/#= id # "><i></i></a>
-		</td>
-	</tr>
-</script>
-<script id="accountingRecurring" type="text/x-kendo-template">
-	<div id="slide-form">
-		<div class="customer-background">
-			<div class="container-960">					
-				<div id="example" class="k-content">
-
-		    		<span class="glyphicons no-js remove_2 pull-right" 
-		    				onclick="javascript:window.history.back()"
-							data-bind="click: cancel"><i></i></span>
-
-				    <h2>Accounting Recurring</h2>
-
-				    <br>
-					                           					
-	            	<table class="table table-bordered table-primary table-striped table-vertical-center">
-	            		<thead style="background-color: blue; color: #fff; font-weight: bold">
-			                <th>TYPE</th>
-			                <th>RECURRING NAME</th>			                
-			                <th>START DATE</th>
-			                <th class="center">FREQUENCY</th>
-			                <th></th>
-	            		</thead>
-	            		<tbody data-role="listview" 
-				        		data-template="accountingRecurring-template" 
-				        		data-auto-bind="false"
-				        		data-bind="source: dataSource"></tbody>
-	            	</table>
-
-	            	<div id="pager" class="k-pager-wrap"
-			             data-role="pager" 
-			             data-auto-bind="false"
-			             data-bind="source: dataSource"></div>
-
-	            </div>	            						
-			</div>
-		</div>
-	</div>
-</script>
-<script id="accountingRecurring-template" type="text/x-kendo-tmpl">
-	<tr data-uid="#: uid #">
-		<td>#=type#</td>
-		<td>#=recurring_name#</td>
-		<td>#=kendo.toString(new Date(start_date), "dd-MM-yyyy")#</td>
-		<td class="center">#=frequency#</td>
-		<td class="center">
-			<a class="btn btn-warning" data-bind="click: edit"><i></i> Edit</a>
-			<a class="btn btn-success" data-bind="click: use"><i></i> Use</a>
-		</td>		
-    </tr>   
-</script>
-<script id="addAccountingprefix" type="text/x-kendo-template">
-	<div id="slide-form">
-		<div class="customer-background">
-			<div class="container-960">					
-				<div id="example" class="k-content">
-			    	<div class="hidden-print pull-right">
-			    		<span class="glyphicons no-js remove_2" 
-							data-bind="click: cancel"><i></i></span>						
-					</div>
-			        <h2 style="padding:0 15px;"">Transaction Prefix</h2>
-				    <br>
-
-				    <span class="row-fluid">
-
-				    	<span class="span6">
-				    		<p>At the begining of every fiscal year, all the reference numbers will start at 1. 
-				    			If you donot start using BanhJi at the beginning of your fiscal year, 
-				    			please use Starting Number to determine you next number for each transaction reference. 
-				    			This is important for your transaction reference number.</p>
-				    	</span>
-
-				    	<span class="span6">
-				    		<table class="table table-borderless">	
-						    	<thead>
-							    	<tr>
-							    		<th width="40%">Name</th>
-							    		<th>Abbr</th>
-							    	</tr>
-						    	</thead>
-						    	<tbody>
-							    	<tr>
-							    		<td><span data-bind="text: obj.type"></span></td>
-							    		<td>
-							    			<input type="text" placeholder="Abbr" class="k-textbox k-invalid span4" data-bind="value: obj.abbr" style="width: 100px;" >
-							    		</td>
-							    	</tr>
-						    	</tbody>
-							</table>
-				    	</span>
-
-				    </span>
-
-					<!-- Form actions -->
-					<div class="box-generic bg-action-button">
-						<div id="ntf1" data-role="notification"></div>
-						<div class="row">
-							<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;float:right; margin-right: 15px;"><i></i> Save Close</span>	
-						</div>
-					</div>
-					<!-- // Form actions END -->	
-				</div>							
-			</div>
-		</div>
-	</div>
-</script>
-
-<script id="accountingSetting-contact-type-template" type="text/x-kendo-tmpl">
-    <tr>
-    	<td>
-    		 #:name#
-   		</td>
-   		<td>
-   			#if(is_system=="0"){#
-	   			<div class="edit-buttons">       
-			        <a class="k-button k-edit-button" href="\\#"><span class="k-icon k-edit"></span></a>
-			        <a class="k-button k-delete-button" href="\\#"><span class="k-icon k-delete"></span></a>
-			   	</div>
-		   	#}#
-   		</td>
-   	</tr>
-</script>
-<script id="accountingSetting-edit-contact-type-template" type="text/x-kendo-tmpl">
-    <div class="product-view k-widget">
-        <dl>                
-            <dd>
-                <input type="text" class="k-textbox" data-bind="value:name" name="ProductName" required="required" validationMessage="required" />
-                <span data-for="ProductName" class="k-invalid-msg"></span>
-            </dd>               
-        </dl>
-        <div class="edit-buttons">
-            <a class="k-button k-update-button" href="\\#"><span class="k-icon k-update"></span></a>
-            <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-cancel"></span></a>
-        </div>
-    </div>
-</script>
-<script id="accountingSetting-payment-method-template" type="text/x-kendo-tmpl">
-    <tr>
-    	<td>
-    		 #:name#
-   		</td>
-   		<td>
-   			<div class="edit-buttons">       
-		        <a class="k-button k-edit-button" href="\\#"><span class="k-icon k-edit"></span></a>
-		        <a class="k-button k-delete-button" href="\\#"><span class="k-icon k-delete"></span></a>
-		   	</div>
-		</td>
-   	</tr>
-</script>
-<script id="accountingSetting-edit-payment-method-template" type="text/x-kendo-tmpl">
-    <div class="product-view k-widget">
-        <dl>                
-            <dd>
-                <input type="text" class="k-textbox" data-bind="value:name" name="ProductName" required="required" validationMessage="required" />
-                <span data-for="ProductName" class="k-invalid-msg"></span>
-            </dd>               
-        </dl>
-        <div class="edit-buttons">
-            <a class="k-button k-update-button" href="\\#"><span class="k-icon k-update"></span></a>
-            <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-cancel"></span></a>
-        </div>
-    </div>
-</script>
-<script id="accountingSetting-payment-term-template" type="text/x-kendo-tmpl">
-    <tr>
-    	<td>
-    		 #:name#
-   		</td>
-   		<td>
-    		 #:term#
-   		</td>
-   		<td>
-    		 #:discount_percentage#
-   		</td>
-   		<td>
-   			<div class="edit-buttons">       
-		        <a class="k-button k-edit-button" href="\\#"><span class="k-icon k-edit"></span></a>
-		        <a class="k-button k-delete-button" href="\\#"><span class="k-icon k-delete"></span></a>
-		   	</div>
-		</td>
-   	</tr>
-</script>
-<script id="accountingSetting-edit-payment-term-template" type="text/x-kendo-tmpl">
-    <div class="product-view k-widget">
-        <dl>                
-            <dd>
-                <input type="text" class="k-textbox" data-bind="value:name" name="ProductName" required="required" validationMessage="required" />
-                <span data-for="ProductName" class="k-invalid-msg"></span>
-            </dd>
-            <dd>
-                <input type="text" class="k-textbox" data-bind="value:net_due" name="term" required="required" validationMessage="required" />
-                <span data-for="term" class="k-invalid-msg"></span>
-            </dd>
-            <dd>
-                <input type="text" class="k-textbox" data-bind="value:discount_percentage" name="percentage" required="required" validationMessage="required" />
-                <span data-for="percentage" class="k-invalid-msg"></span>
-            </dd>               
-        </dl>
-        <div class="edit-buttons">
-            <a class="k-button k-update-button" href="\\#"><span class="k-icon k-update"></span></a>
-            <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-cancel"></span></a>
-        </div>
-    </div>
-</script>
-<script id="accountingList" type="text/x-kendo-template">
-	<div id="slide-form">
-		<div class="container-fluid">
-			<div class="row-fluid">
-				<div class="span12">
-					<div id="example" class="k-content">
-						<div class="hidden-print">
-							<span class="pull-right glyphicons no-js remove_2" 
-								onclick="javascript:window.history.back()"><i></i></span>
-
-							<input data-role="dropdownlist"
-							   data-option-label="(--- TYPE ---)"
-			                   data-auto-bind="false"
-			                   data-value-primitive="true"
-			                   data-text-field="name"
-			                   data-value-field="id"
-			                   data-bind="value: contact_type_id,
-			                              source: contactTypeDS" />
-
-							<button id="search" type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button> |
-							<button type="button" data-role="button" onclick="javascript:window.print()"><i class="icon-print"></i></button>		
-						</div>
-
-						<h3 align="center"><span data-bind="text: lang.lang.customer_list"></span></h3>
-				
-						<div id="grid"></div>					
-					    					
-					</div> <!-- //End div example--> 
-				</div><!-- //End div span12-->
-			</div><!-- //End div row-fluid-->
-		</div>
-	</div>	
-</script>
-
-<script id="segment" type="text/x-kendo-template">
-	<div id="slide-form">
-		<div class="customer-background">
-			<div class="container-960" style="overflow: hidden;">					
-				<div id="example" class="k-content">
-
-					<span class="glyphicons no-js remove_2 pull-right" 
-	    				onclick="javascript:window.history.back()"
-						data-bind="click: cancel"><i></i></span>
-					
-			        <h2 span data-bind="text: lang.lang.segment"></h2>
-
-			        <div class="row">
-				        <div class="span6">
-				        	<p>
-					        	<span data-bind="text: lang.lang.segment_is_important"></span>
-					        </p>
-				        </div>
-				         <div class="span6">
-				         	<button class="btn btn-inverse" data-bind="click: openWindow"><i class="icon-plus icon-white"></i>&nbsp&nbsp<span data-bind="text: lang.lang.add_new_segment"></span></button>
-							
-				        </div>
-			        </div>				    			   
-
-				    <br>
-
-				    <!-- Window -->
-				    <div data-role="window"
-			                 data-title="Segment"		                 
-			                 data-width="280"
-			                 data-height="165"
-			                 data-actions="{}"
-			                 data-position="{top: '30%', left: '37%'}"
-			                 data-bind="visible: windowVisible">
-				    	
-				    	<table>							
-							<tr style="border-bottom: 8px solid #fff;">
-								<td width="40%"><span data-bind="text: lang.lang.name"></span></td>
-								<td>
-									<input class="k-textbox" placeholder="name..." data-bind="value: obj.name" style="width: 100%;">
-								</td>
-							</tr>		
-						</table>
-
-						<br>
-
-						<div style="text-align: center;">
-							<span class="btn btn-success btn-icon glyphicons ok_2" data-bind="click: save"><i></i><span data-bind="text: lang.lang.save"></span></span>
-							<span class="btn btn-danger btn-icon glyphicons remove_2" data-bind="click: closeWindow"><i></i><span data-bind="text: lang.lang.close"></span></span>  
-						</div>
-					</div>
-							
-	                <div class="row-fluid">
-		                <div class="span12 table-segment" style="padding: 0;">	                					
-			            	<table class="table table-condensed">
-			            		<thead style="background-color: #1E4E78; color: #fff; font-weight: bold">
-			            			<tr>
-			            				<th data-bind="text: lang.lang.name"></th>            					            	
-			            				<th></th>
-			            			</tr>
-			            		</thead>
-			            		<tbody data-role="listview"			            			
-						                data-template="segment-template"
-						                data-bind="source: dataSource"></tbody>
-			            	</table>
-		            	</div>
-
-		            <!-- Item Window -->
-		            <div data-role="window"
-			                 data-title="Segment Item"		                 
-			                 data-width="250"
-			                 data-height="201"
-			                 data-actions="{}"
-			                 data-position="{top: '30%', left: '37%'}"		                 
-			                 data-bind="visible: windowItemVisible">
-	            		<table>
-							<tr style="border-bottom: 8px solid #fff;">
-								<td width="35%"><span data-bind="text: lang.lang.code"></span></td>
-								<td>
-									<input class="k-textbox" placeholder="type code ..." data-bind="value: item.code" style="width: 100%;">
-								</td>
-							</tr>
-							<tr style="border-bottom: 8px solid #fff;">
-								<td><span data-bind="text: lang.lang.name"></span></td>
-								<td>
-									<input class="k-textbox" placeholder="type name ..." data-bind="value: item.name" style="width: 100%;">
-								</td>
-							</tr>
-						</table>
-
-						<br>
-						<div style="text-align: center;">
-							<span class="btn btn-success btn-icon glyphicons ok_2" data-bind="click: saveItem"><i></i><span data-bind="text: lang.lang.save"></span></span>
-							<span class="btn btn-danger btn-icon glyphicons remove_2" data-bind="click: closeWindowItem"><i></i><span data-bind="text: lang.lang.close"></span></span>  
-						</div>
-					</div>
-
-					<h3 data-bind="text: objName"></h3>
-
-					<div class="row">
-		            	<div class="span12">		                	
-						    <table class="table table-bordered table-white">
-			            		<thead>
-			            			<tr>
-			            				<th data-bind="text: lang.lang.code"></th>
-			            				<th data-bind="text: lang.lang.name"></th>
-			            				<th data-bind="text: lang.lang.segment"></th>   					            		
-			            				<th></th>
-			            			</tr>
-			            		</thead>
-			            		<tbody data-role="listview"			            				
-						                data-template="segment-item-template"
-						                data-auto-bind="false"
-						                data-bind="source: itemDS"></tbody>
-			            	</table>
-			            	<div id="pager" class="k-pager-wrap"
-						    	 data-auto-bind="false"
-					             data-role="pager" data-bind="source: itemDS"></div>
-		            	</div>
-	            	</div>
-				</div>							
-			</div>
-		</div>
-	</div>
-</script>
-<script id="segment-template" type="text/x-kendo-tmpl">
-    <tr>    	
-    	<td>#=name#</td>
-    	<td >
-    		<span data-bind="click: edit" style="cursor: pointer;"><i class="icon-edit"></i> Edit</span>
-    		#if(!is_system=="1"){#
-	    		|
-	    		<span data-bind="click: delete" style="cursor: pointer;"><i class="icon-remove"></i> Delete</span>
-    		#}#
-    		|
-    		<span data-bind="click: view" style="cursor: pointer;"><i class="icon-view"></i> View Item</span>
-    		|
-    		<span data-bind="click: addItem" style="cursor: pointer;"><i class="icon-plus icon-white"></i> Add Item</span>
-    	</td>
-   	</tr>
-</script>
-<script id="segment-item-template" type="text/x-kendo-tmpl">
-    <tr>
-    	<td>#=code#</td>
-    	<td>#=name#</td>
-    	<td>#=segment[0].name#</td>
-   		<td>
-    		<span data-bind="click: editItem" style="cursor: pointer;"><i class="icon-edit"></i> Edit</span>
-    		#if(!is_system=="1"){#
-	    		|
-	    		<span data-bind="click: deleteItem" style="cursor: pointer;"><i class="icon-remove"></i> Delete</span>
-    		#}#
-    	</td>
-   	</tr>
-</script>
-
-
-<script id="fixedAssetsList" type="text/x-kendo-template">
-	<div id="slide-form">
-		<div class="customer-background">
-			<div class="container-960" style="overflow: hidden;">					
-				<div id="example" class="k-content">
-
-					<span class="glyphicons no-js remove_2 pull-right" 
-	    				onclick="javascript:window.history.back()"
-						data-bind="click: cancel"><i></i></span>
-					
-			        <h2 >Fixed Assets List</h2>
-
-			        <div class="row">
-				        <div class="span6">
-				        	<p>
-					        	<span data-bind="text: lang.lang.segment_is_important"></span>
-					        </p>
-				        </div>
-				         <div class="span6">
-				         	<button class="btn btn-inverse" data-bind="click: openWindow"><i class="icon-plus icon-white"></i>&nbsp&nbsp<span data-bind="text: lang.lang.add_new_segment"></span></button>
-							
-				        </div>
-			        </div>				    			   
-
-				    <br>
-
-				    <!-- Window -->
-				    <div data-role="window"
-			                 data-title="Segment"		                 
-			                 data-width="280"
-			                 data-height="165"
-			                 data-actions="{}"
-			                 data-position="{top: '30%', left: '37%'}"
-			                 data-bind="visible: windowVisible">
-				    	
-				    	<table>							
-							<tr style="border-bottom: 8px solid #fff;">
-								<td width="40%"><span data-bind="text: lang.lang.name"></span></td>
-								<td>
-									<input class="k-textbox" placeholder="name..." data-bind="value: obj.name" style="width: 100%;">
-								</td>
-							</tr>		
-						</table>
-
-						<br>
-
-						<div style="text-align: center;">
-							<span class="btn btn-success btn-icon glyphicons ok_2" data-bind="click: save"><i></i><span data-bind="text: lang.lang.save"></span></span>
-							<span class="btn btn-danger btn-icon glyphicons remove_2" data-bind="click: closeWindow"><i></i><span data-bind="text: lang.lang.close"></span></span>  
-						</div>
-					</div>
-							
-	                <div class="row-fluid">
-		                <div class="span12 table-segment" style="padding: 0;">	                					
-			            	<table class="table table-condensed">
-			            		<thead style="background-color: #1E4E78; color: #fff; font-weight: bold">
-			            			<tr>
-			            				<th data-bind="text: lang.lang.name"></th>            					            	
-			            				<th></th>
-			            			</tr>
-			            		</thead>
-			            		<tbody data-role="listview"			            			
-						                data-template="segment-template"
-						                data-bind="source: dataSource"></tbody>
-			            	</table>
-		            	</div>
-
-		            <!-- Item Window -->
-		            <div data-role="window"
-			                 data-title="Segment Item"		                 
-			                 data-width="250"
-			                 data-height="201"
-			                 data-actions="{}"
-			                 data-position="{top: '30%', left: '37%'}"		                 
-			                 data-bind="visible: windowItemVisible">
-	            		<table>
-							<tr style="border-bottom: 8px solid #fff;">
-								<td width="35%"><span data-bind="text: lang.lang.code"></span></td>
-								<td>
-									<input class="k-textbox" placeholder="type code ..." data-bind="value: item.code" style="width: 100%;">
-								</td>
-							</tr>
-							<tr style="border-bottom: 8px solid #fff;">
-								<td><span data-bind="text: lang.lang.name"></span></td>
-								<td>
-									<input class="k-textbox" placeholder="type name ..." data-bind="value: item.name" style="width: 100%;">
-								</td>
-							</tr>
-						</table>
-
-						<br>
-						<div style="text-align: center;">
-							<span class="btn btn-success btn-icon glyphicons ok_2" data-bind="click: saveItem"><i></i><span data-bind="text: lang.lang.save"></span></span>
-							<span class="btn btn-danger btn-icon glyphicons remove_2" data-bind="click: closeWindowItem"><i></i><span data-bind="text: lang.lang.close"></span></span>  
-						</div>
-					</div>
-
-					<h3 data-bind="text: objName"></h3>
-
-					<div class="row">
-		            	<div class="span12">		                	
-						    <table class="table table-bordered table-white">
-			            		<thead>
-			            			<tr>
-			            				<th data-bind="text: lang.lang.code"></th>
-			            				<th data-bind="text: lang.lang.name"></th>
-			            				<th data-bind="text: lang.lang.segment"></th>   					            		
-			            				<th></th>
-			            			</tr>
-			            		</thead>
-			            		<tbody data-role="listview"			            				
-						                data-template="segment-item-template"
-						                data-auto-bind="false"
-						                data-bind="source: itemDS"></tbody>
-			            	</table>
-			            	<div id="pager" class="k-pager-wrap"
-						    	 data-auto-bind="false"
-					             data-role="pager" data-bind="source: itemDS"></div>
-		            	</div>
-	            	</div>
-				</div>							
-			</div>
-		</div>
-	</div>
-</script>
-
-<script id="taxReportCenter" type="text/x-kendo-template">
-	<div class="row-fluid customer-report-center">
-		<div class="span7">
-			<div class="row-fluid sale-report">
-				<h2>SALE TAX REPORTS</h2>
-				<div class="row-fluid">
-					<table class="table table-borderless table-condensed">
-						<tr>
-							<td width="50%">
-								<h3><a href="#/sale_journal">Sale Journal</a></h3>
-							</td>
-							<td width="50%">
-								<h3><a href="#/purchase_journal">Purchase Journal</a></h3>								
-							</td>						
-						</tr>
-						<tr>
-							<td width="50%">
-								<p>
-									
-								</p>
-								
-							</td>
-							<td width="50%">
-								<p>
-									
-								</p>
-							</td>
-							
-						</tr>
-						
-					</table>
-				</div>
-			</div>
-
-		</div>
-		<div class="span5">
-			<span class="pull-right glyphicons no-js remove_2" 
-						onclick="javascript:window.history.back()"><i></i></span>
-			<br>
-			<br>
-			
-		</div>
-	</div>
-</script>
-<script id="saleJournal" type="text/x-kendo-template">
-	<div id="slide-form">
-		<div class="customer-background">
-			<div class="container-960">
-				<div id="example" class="k-content saleSummaryCustomer">
-			    	<span class="pull-right glyphicons no-js remove_2"
-						onclick="javascript:window.history.back()"><i></i></span>
-					<br>
-					<br>
-					<div class="block-title">
-						<h3 data-bind="text: company.name"></h3>
-						<h2>សៀវភៅទិន្នានុប្បវត្តិលក់</h2>
-						<p>Sale Journal</p>
-						<p>ខែ កក្ដដា ឆ្នំា​  ២០១៦ For  July  2016</p>
-					</div>
-
-					<div class="row-fluid company-name">
-						<div class="span7" style="padding-left: 0; padding-right: 15px;">
-							<table>
-								<tr style="border-bottom: 1px solid #000;">
-									<td>
-										នាមករណ៍សហគ្រាសៈ
-										<br>
-										Company's name:
-									</td>
-									<td>
-										បញ្ចី
-										<br>
-										Banh Ji
-									</td>
-								</tr>
-															
-								<tr>
-									<td>
-										អាស័យដ្ឋាន:
-										<br/>
-										Address:
-									</td>
-									<td>#245 ផ្លូវ 182 ភូមិ  ៧ សង្កាត់ ទឹកល្អក់ទី ២ ខណ្ឌ ទួលគោក រាជធានីភ្នំពេញ</td>
-								</tr>
-							</table>
-						</div>
-						<div class="span5">
-							<table>
-								<tr style="border-bottom: 1px solid #000;">
-									<td>
-										លេខអត្តសញ្ញាណកម្មអតប:
-										<br>
-										Tax Identification No:
-									</td>
-									<td>
-										100100260	
-									</td>
-								</tr>
-								<tr>
-									<td>
-										អត្រាប្តូរប្រាក់មធ្យមៈ
-										<br>
-										Average Exchange Rate:
-									</td>
-									<td>
-										 4,090
-									</td>
-								</tr>								
-							</table>
-						</div>
-					</div>
-
-					<br>
-					<div class="row-fluid table-company">						
-						<table class="table table-bordered">
-							<tbody>
-								<tr>
-									<th style="text-align:center !important" colspan="5">វិក័យប័ត្រ<br>Invoice</th>
-									<th style="text-align:center !important" colspan="7">ការផ្គត់ផ្គង់<br>Supplies</th>	
-									<th></th>	
-								</tr>
-								<tr>
-									<td style="text-align:center !important;vertical-align: top !important;" rowspan="3">ថ្ងៃទី<br>Date</td>
-									<td style="text-align:center !important;vertical-align: top !important;" rowspan="3">លេខវិក័យប័ត្រ<br>Invoicen<sup>o</sup> <br></td>
-									<td style="text-align:center !important;vertical-align: top !important;" rowspan="3">អ្នកទិញ<br>Client</td>
-									<td style="text-align:center !important;vertical-align: top !important;" rowspan="3">លេខអតប<br>VAT Tin</td>
-									<td style="text-align:center !important;vertical-align: top !important;" rowspan="3">បរិយាយ<br>Description<br></td>
-									<td style="text-align:center !important;vertical-align: top !important;" rowspan="3">បរិមាណ<br>Qty<br></td>
-									<td style="text-align:center !important;vertical-align: top !important;" rowspan="3">ផ្គត់ផ្គង់មិនជាប់អាករ<br>Non-taxable sale<br></td>
-									<td style="text-align:center !important;vertical-align: top !important;" rowspan="3">ការនាំចេញ<br>Value of Exports<br></td>
-									<td style="text-align:center !important;vertical-align: top !important;" colspan="4">ការលក់ជាប់អាករ<br>Taxable sale</td>
-									<td style="text-align:center !important;vertical-align: top !important;" rowspan="3">សរុបតម្លៃលក់រួមទាំងអាករ<br>Total Taxable Value</td>
-									
-								</tr>
-								<tr>
-									<td colspan="2" style="text-align:center;">លក់អោយបុគ្គលជាប់អាករ<br>Sales to Taxable Persons</td>
-									<td colspan="2" style="text-align:center;">លក់អោយអ្នកប្រើប្រាស់<br>Sales to Customers</td>
-								</tr>
-								<tr>
-									<td style="text-align:center !important">តម្លៃជាប់អាករ<br>Taxable Value</td>
-									<td style="text-align:center !important">អាករ<br>VAT<br></td>
-									<td style="text-align:center !important">តម្លៃជាប់អាករ<br>Taxable Value</td>
-									<td style="text-align:center !important">អាករ<br>VAT</td>
-								</tr>
-								<tr>
-									<td style="text-align:center !important">S1</td>
-									<td style="text-align:center !important">S2</td>
-									<td style="text-align:center !important">S3</td>
-									<td style="text-align:center !important">S4</td>
-									<td style="text-align:center !important">S5</td>
-									<td style="text-align:center !important">S6</td>
-									<td style="text-align:center !important">S7</td>
-									<td style="text-align:center !important">S8</td>
-									<td style="text-align:center !important">S9</td>
-									<td style="text-align:center !important">S10</td>
-									<td style="text-align:center !important">S11</td>
-									<td style="text-align:center !important">S12</td>
-									<td style="text-align:center !important">S13=sum(S7:S12)</td>
-									
-								</tr>
-								</tbody><tbody class="tax">
-									<tr class="none-padding">
-										<td><p style="padding:5px !important; padding-left:10px !important;" class="no">1</p></td>
-										<td><input type="text" name="s2[]" id="s2" class="form-control s2" value=""></td>
-										<td><input type="text" name="s3[]" id="s3" class="form-control s3" value="" ></td>
-										<td><input type="text" name="s4[]" id="s4" class="form-control s4" value=""></td>
-										<td><input type="text" name="s5[]" id="s5" class="form-control s5" value=""></td>
-										<td><input type="text" name="s6[]" id="s6" class="checknb form-control text-center s6" value=""></td>
-										<td><input type="text" name="s7[]" id="s7" class="checknb form-control text-right s7" value=""></td>
-										<td><input type="text" name="s8[]" id="s8" class="checknb form-control text-right s8" value="" style="width:100px;"></td>
-										<td><input type="text" name="s9[]" id="s9" class="checknb form-control text-right s9" value=""></td>
-										<td><input type="text" name="s10[]" id="s10" class="checknb form-control text-right s10" value=""></td>
-										<td><input type="text" name="s11[]" id="s11" class="checknb form-control text-right s11" value=""></td>
-										<td><input type="text" name="s12[]" id="s12" class="checknb form-control text-right s12" value=""></td>
-										<td><input type="text" name="s13[]" id="s13" class="form-control text-right s13" style="font-weight:bold;" value="" readonly=""></td>
-										
-									</tr>
-								</tbody>						
-								<tbody><tr>
-									<td style="text-align:right !important" colspan="7">សរុបលក់ជារៀល<br>Total Sale in KHR</td>
-									<td name="total_s7" id="total_s7" class="total_s7" style="padding-right:15px; text-align:right; font-weight:bold;"></td>
-									<td name="total_s8" id="total_s8" class="total_s8" style="padding-right:15px; text-align:right; font-weight:bold;"></td>
-									<td name="total_s9" id="total_s9" class="total_s9" style="padding-right:15px; text-align:right; font-weight:bold;"></td>
-									<td name="total_s10" id="total_s10" class="total_s10" style="padding-right:15px; text-align:right; font-weight:bold;"></td>
-									<td name="total_s11" id="total_s11" class="total_s11" style="padding-right:15px; text-align:right; font-weight:bold;"></td>
-									<td name="total_s12" id="total_s12" class="total_s12" style="padding-right:15px; text-align:right; font-weight:bold;"></td>
-									
-								</tr>
-								<tr id="hide-border">
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td style="text-align:center !important">Box12</td>
-									<td style="text-align:center !important">Box13</td>
-									<td style="text-align:center !important">Box14</td>
-									<td style="text-align:center !important">Box15</td>
-									<td style="text-align:center !important">Box14</td>
-									<td style="text-align:center !important">Box15</td>
-									<td></td>	
-								</tr>
-							</tbody>
-						</table>
-					
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>	
-</script>
-<script id="purchaseJournal" type="text/x-kendo-template">
-	<div id="slide-form">
-		<div class="customer-background">
-			<div class="container-960">
-				<div id="example" class="k-content saleSummaryCustomer">
-			    	<span class="pull-right glyphicons no-js remove_2"
-						onclick="javascript:window.history.back()"><i></i></span>
-					<br>
-					<br>
-					
-					<div class="block-title">
-						<h3 data-bind="text: company.name"></h3>
-						<h2>សៀវភៅទិន្នានុប្បវត្តិទិញ</h2>
-						<p>PURCHASE JOURNAL</p>
-						<p>ខែ កក្ដដា ឆ្នំា​  ២០១៦ For  July  2016</p>
-					</div>
-
-					<div class="row-fluid company-name">
-						<div class="span7" style="padding-left: 0; padding-right: 15px;">
-							<table>
-								<tr style="border-bottom: 1px solid #000;">
-									<td>
-										នាមករណ៍សហគ្រាសៈ
-										<br>
-										Company's name:
-									</td>
-									<td>
-										បញ្ចី
-										<br>
-										Banh Ji
-									</td>
-								</tr>
-															
-								<tr>
-									<td>
-										អាស័យដ្ឋាន:
-										<br/>
-										Address:
-									</td>
-									<td>#245 ផ្លូវ 182 ភូមិ  ៧ សង្កាត់ ទឹកល្អក់ទី ២ ខណ្ឌ ទួលគោក រាជធានីភ្នំពេញ</td>
-								</tr>
-							</table>
-						</div>
-						<div class="span5">
-							<table>
-								<tr style="border-bottom: 1px solid #000;">
-									<td>
-										លេខអត្តសញ្ញាណកម្មអតប:
-										<br>
-										Tax Identification No:
-									</td>
-									<td>
-										100100260	
-									</td>
-								</tr>
-								<tr>
-									<td>
-										អត្រាប្តូរប្រាក់មធ្យមៈ
-										<br>
-										Average Exchange Rate:
-									</td>
-									<td>
-										 4,090
-									</td>
-								</tr>								
-							</table>
-						</div>
-					</div>
-
-					<br>
-					<div class="row-fluid table-company">						
-						<table class="table table-bordered">
-							<tbody>
-								<tr>
-							        <td style="text-align:center !important" colspan="6">វិក័យប័ត្រ<br>Invoice    </td>
-							        <td style="text-align:center !important" colspan="6">ការផ្គត់ផ្គង់<br>Supplies    </td>
-							       
-							    </tr>
-							    <tr>
-							        <td style="text-align:center !important;vertical-align: middle !important;" rowspan="3">ថ្ងៃទី<br>Date</td>
-							        <td style="text-align:center !important;vertical-align: middle !important;" rowspan="3">លេខវិក័យប័ត្រ<br>Invoice n<sup>o</sup></td>
-							        <td style="text-align:center !important;vertical-align: middle !important;"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    rowspan="3">អ្នកទិញ<br>Client</td>
-							        <td style="text-align:center !important;vertical-align: middle !important;" rowspan="3">លេខ អ ត ប<br>VAT Tin    </td>
-							        <td style="text-align:center !important;vertical-align: middle !important;" rowspan="3">បរិយាយ<br>Description    </td>
-							        <td style="text-align:center !important;vertical-align: middle !important;" rowspan="3">បរិមាណ<br>Qty    </td>
-							        <td style="text-align:center !important;vertical-align: middle !important;" rowspan="3">ការទិញមិនជាប់អាករ<br>Non-taxable Purchase    </td>
-							        <td style="text-align:center !important;vertical-align: middle !important;" colspan="4">ការទិញជាប់អាករ<br>Taxable Purchase    </td>
-							        <td style="text-align:center !important;vertical-align: middle !important;" rowspan="3">សរុបតម្លៃទិញរួមទាំងអាករ<br>Total Value Including VAT    </td>
-							        
-							    </tr>
-							    <tr>
-							        <td style="text-align:center !important" colspan="2">ការនាំចូល<br>Imports    </td>
-							        <td style="text-align:center !important" colspan="2">ការទិញក្នុងស្រុក<br>Local Purchases    </td>
-							    </tr>
-							    <tr>
-							        <td style="text-align:center !important">តម្លៃជាប់អាករ<br>Taxable Value</td>
-							        <td style="text-align:center !important">អាករ<br>VAT    </td>
-							        <td style="text-align:center !important">តម្លៃជាប់អាករ<br>Taxable Value    </td>
-							        <td style="text-align:center !important">អាករ<br>VAT    </td>
-							    </tr>
-							   
-							    <tr>
-							        <td style="text-align:center !important">P1</td>
-							        <td style="text-align:center !important">P2</td>
-							        <td style="text-align:center !important">P3</td>
-							        <td style="text-align:center !important">P4</td>
-							        <td style="text-align:center !important">P5</td>
-							        <td style="text-align:center !important">P6</td>
-							        <td style="text-align:center !important">P7</td>
-							        <td style="text-align:center !important">P8</td>
-							        <td style="text-align:center !important">P9</td>
-							        <td style="text-align:center !important">P10</td>
-							        <td style="text-align:center !important">P11</td>
-							        <td style="text-align:center !important">P13=sum(P7:P11)</td>
-							       
-							    </tr>
-							</tbody>
-								<tbody class="tax">
-									<tr class="none-padding">
-										<td><input type="text" name="s1[]" id="s1" class="form-control datetime s1" value="" ></td>
-										<td><input type="text" name="s2[]" id="s2" class="form-control s2" value=""></td>
-										<td><div class="select2-container form-control s3" id="s2id_s3"><a href="javascript:void(0)" class="select2-choice select2-default" tabindex="-1">   <span class="select2-chosen" id="select2-chosen-8"></span><abbr class="select2-search-choice-close"></abbr>   <span class="select2-arrow" role="presentation"><b role="presentation"></b></span></a><label for="s2id_autogen8" class="select2-offscreen"></label><input class="select2-focusser select2-offscreen" type="text" aria-haspopup="true" role="button" aria-labelledby="select2-chosen-8" id="s2id_autogen8"><div class="select2-drop select2-display-none select2-with-searchbox">   <div class="select2-search">       <label for="s2id_autogen8_search" class="select2-offscreen"></label>       <input type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" class="select2-input" role="combobox" aria-expanded="true" aria-autocomplete="list" aria-owns="select2-results-8" id="s2id_autogen8_search" placeholder="">   </div>   <ul class="select2-results" role="listbox" id="select2-results-8">   </ul></div></div><select name="s3[]" id="s3" class="form-control s3" tabindex="-1" title="" style="display: none;"><option value=""></option><option value="1">Owner</option><option value="2">Owner</option><option value="398">WG company</option><option value="401">Coffe shop</option></select></td>
-										<td><input type="text" name="s4[]" id="s4" class="checknb form-control s4" value=""></td>
-										<td><input type="text" name="s5[]" id="s5" class="form-control s5" value=""></td>
-										<td><input type="text" name="s6[]" id="s6" class="checknb form-control text-center s6" value=""></td>
-										<td><input type="text" name="s7[]" id="s7" class="checknb form-control text-right s7" value=""></td>
-										<td><input type="text" name="s9[]" id="s9" class="checknb form-control text-right s9" value=""></td>
-										<td><input type="text" name="s10[]" id="s10" class="checknb form-control text-right s10" value=""></td>
-										<td><input type="text" name="s11[]" id="s11" class="checknb form-control text-right s11" value=""></td>
-										<td><input type="text" name="s12[]" id="s12" class="checknb form-control text-right s12" value=""></td>
-										<td><input type="text" name="s13[]" id="s13" class="form-control text-right s13" style="font-weight:bold;" value="" readonly=""></td>
-										
-									</tr>
-								</tbody>				
-								
-							    <tbody><tr>
-							        <td style="text-align:right !important" colspan="6">សរុបទិញជារៀល<br>Total Purchase in KHR</td>
-							        <td name="total_s7" id="total_s7" class="total_s7" style="padding-right:15px; text-align:right; font-weight:bold;"></td>
-									<td name="total_s9" id="total_s9" class="total_s9" style="padding-right:15px; text-align:right; font-weight:bold;"></td>
-									<td name="total_s10" id="total_s10" class="total_s10" style="padding-right:15px; text-align:right; font-weight:bold;"></td>
-									<td name="total_s11" id="total_s11" class="total_s11" style="padding-right:15px; text-align:right; font-weight:bold;"></td>
-									<td name="total_s12" id="total_s12" class="total_s12" style="padding-right:15px; text-align:right; font-weight:bold;"></td>
-									<td name="total_s13" id="total_s13" class="total_s13" style="padding-right:15px; text-align:right; font-weight:bold;"></td>
-									
-							    </tr>
-							    <tr id="hide-border">
-							        <td></td>
-							        <td></td>
-							        <td></td>
-							        <td></td>
-							        <td></td>
-							        <td></td>
-							        <td>Box06</td>
-							        <td>Box09</td>
-							        <td>Box10</td>
-							        <td>Box07</td>
-							        <td>Box08</td>
-							       	<td>Box09</td>
-							    </tr>										
-							</tbody>
-						</table>					
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>	
-</script>
-
-
 
 <!-- ***************************
-*	Employee Section            *
+*	EMPLOYEE SECTION           *
 **************************** -->
 <script id="employeeDashboard" type="text/x-kendo-template">
 
@@ -9358,7 +9351,7 @@
 
 
 <!-- ***************************
-*	Vendor Section            *
+*	SUPPLIER SECTION          *
 **************************** -->
 <script id="vendorDashboard" type="text/x-kendo-template">
 	<div class="row-fluid">
@@ -9488,21 +9481,21 @@
 						
 						<div class="widget-body alert alert-primary" style="min-height: 148px; background: white; color: #203864; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
 							
-							<div align="center" class="text-large strong" data-bind="text: purchase"></div>
+							<div align="center" class="text-large strong" data-bind="text: obj.purchase"></div>
 							<table width="100%">
 								<tr align="center">
 									<td>										
-										<span data-bind="text: purchase_supplier"></span>
+										<span data-bind="text: obj.purchase_supplier"></span>
 										<br>
 										<span><span data-bind="text: lang.lang.supplier"></span></span>
 									</td>
 									<td>
-										<span data-bind="text: purchase_product"></span>
+										<span data-bind="text: obj.purchase_product"></span>
 										<br>
 										<span><span data-bind="text: lang.lang.product"></span></span>
 									</td>
 									<td>
-										<span data-bind="text: purchase_order"></span>
+										<span data-bind="text: obj.purchase_ordered"></span>
 										<br>
 										<span><span data-bind="text: lang.lang.order"></span></span>
 									</td>
@@ -9531,16 +9524,16 @@
 						
 						<a href="#/open_purchase_order"><div class="widget-body alert-info" style="min-height: 148px; background: white; color: #203864; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
 							
-							<div align="center" class="text-large strong" data-bind="text: order"></div>
+							<div align="center" class="text-large strong" data-bind="text: obj.po"></div>
 							<table width="100%">
 								<tr align="center">
 									<td>										
-										<span data-bind="text: order_avg"></span>
+										<span data-bind="text: obj.po_avg"></span>
 										<br>
 										<span><span data-bind="text: lang.lang.average"></span></span>
 									</td>
 									<td>
-										<span data-bind="text: order_open"></span>
+										<span data-bind="text: obj.po_open"></span>
 										<br>
 										<span><span data-bind="text: lang.lang.open"></span></span>
 									</td>									
@@ -9569,21 +9562,21 @@
 						
 						<a href="#/suppliers_balance_summary"><div class="widget-body alert-info3" style="min-height: 148px; background: white; color: #203864; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
 							
-							<div align="center" class="text-large strong" data-bind="text: ap"></div>
+							<div align="center" class="text-large strong" data-bind="text: obj.ap"></div>
 							<table width="100%">
 								<tr align="center">
 									<td>										
-										<span data-bind="text: ap_open"></span>
+										<span data-bind="text: obj.ap_open"></span>
 										<br>
 										<span><span data-bind="text: lang.lang.open"></span></span>
 									</td>
 									<td>
-										<span data-bind="text: ap_supplier"></span>
+										<span data-bind="text: obj.ap_supplier"></span>
 										<br>
 										<span><span data-bind="text: lang.lang.supplier"></span></span>
 									</td>
 									<td>
-										<span data-bind="text: ap_overdue"></span>
+										<span data-bind="text: obj.ap_overdue"></span>
 										<br>
 										<span><span data-bind="text: lang.lang.overdue"></span></span>
 									</td>
@@ -9612,7 +9605,7 @@
 				        <tbody data-role="listview"
 				        	 data-auto-bind="false"				        	                 
 			                 data-template="vendorDashboard-top-vendor-template"
-			                 data-bind="source: topContactDS"></tbody>			        
+			                 data-bind="source: topSupplierDS"></tbody>			        
 				    </table>			
 				</div>
 				<div class="span4">					
@@ -9654,7 +9647,7 @@
 	                    template: "#= series.name #: #= kendo.toString(value, &#39;c&#39;, banhji.locale) #"
 	                 }'                 
 	                 data-series="[
-	                                 { field: 'sale', name: langVM.lang.monthly_purchase, categoryField:'month', color: '#203864', overlay: {gradient:'none'} },
+	                                 { field: 'purchase', name: langVM.lang.monthly_purchase, categoryField:'month', color: '#203864', overlay: {gradient:'none'} },
 	                                 { field: 'order', name: langVM.lang.monthly_purchase_order, categoryField:'month', color: '#A6C9E3', overlay: {gradient:'none'} }
 	                             ]"
 	                 data-auto-bind="false"	                             
@@ -9668,7 +9661,6 @@
 </script>
 <script id="vendorDashboard-top-vendor-template" type="text/x-kendo-tmpl">
 	<tr data-uid="#: uid #">
-		<!-- <td style="width: 1%">#:banhji.vendorDashboard.topContactDS.indexOf(data)+1#</td> -->		
 		<td>
 			<span>
 				#if(name.length>15){#
@@ -9677,13 +9669,12 @@
 					#=name#
 				#}#
 			</span>
-			<span class="pull-right">#=kendo.toString(amount, banhji.institute.locale=="km-KH"?"c0":"c", banhji.institute.locale)#</span>
+			<span class="pull-right">#=kendo.toString(amount, banhji.locale=="km-KH"?"c0":"c2", banhji.locale)#</span>
 		</td>		
 	</tr>
 </script>
 <script id="vendorDashboard-top-ap-template" type="text/x-kendo-tmpl">
 	<tr>
-		<!-- <td style="width: 1%">#:banhji.vendorDashboard.topAPDS.indexOf(data)+1#</td> -->		
 		<td>
 			<span>
 				#if(name.length>15){#
@@ -9692,13 +9683,12 @@
 					#=name#
 				#}#
 			</span>
-			<span class="pull-right">#=kendo.toString(amount, banhji.institute.locale=="km-KH"?"c0":"c", banhji.institute.locale)#</span>
+			<span class="pull-right">#=kendo.toString(amount, banhji.locale=="km-KH"?"c0":"c2", banhji.locale)#</span>
 		</td>
 	</tr>
 </script>
 <script id="vendorDashboard-top-product-template" type="text/x-kendo-tmpl">
 	<tr>
-		<!-- <td style="width: 1%">#:banhji.vendorDashboard.topProductDS.indexOf(data)+1#</td> -->		
 		<td>
 			<span>
 				#if(name.length>15){#
@@ -10600,7 +10590,7 @@
 		</td>		
 	</tr>
 </script>
-
+<!-- SUPPLIER FUNCTIONS -->
 <script id="purchaseOrder" type="text/x-kendo-template">
 	<div id="slide-form">
 		<div class="customer-background">
@@ -14189,7 +14179,7 @@
 		</td>
     </tr>   
 </script>
-
+<!-- //SUPPLIER SETTINGS -->
 <script id="vendorSetting" type="text/x-kendo-template">
 	<span class="pull-right glyphicons no-js remove_2" 
 			onclick="javascript:window.history.back()"><i></i></span>
@@ -14531,6 +14521,7 @@
 		</td>		
     </tr>   
 </script>
+<!-- SUPPLIER REPORTS -->
 <script id="vendorReportCenter" type="text/x-kendo-template">
 	<div class="cover-block" style="width: 99%; background: #fff;">
 		<div class="row-fluid customer-report-center">
@@ -14741,7 +14732,7 @@
 			                    template: "#= series.name #: #= kendo.toString(value, &#39;c&#39;, banhji.locale) #"
 			                 }'                 
 			                 data-series="[
-			                                 { field: 'sale', name: langVM.lang.monthly_purchase, categoryField:'month', color: '#203864', overlay:{ gradient: 'none'} },
+			                                 { field: 'purchase', name: langVM.lang.monthly_purchase, categoryField:'month', color: '#203864', overlay:{ gradient: 'none'} },
 			                                 { field: 'order', name: langVM.lang.monthly_purchase_order, categoryField:'month', color: '#9CB9D9', overlay:{ gradient: 'none'} }
 			                             ]"	                             
 			                 data-bind="source: graphDS"
@@ -16984,7 +16975,7 @@
 
 
 <!-- ***************************
-*	Customer Section           *
+*	CUSTOMER SECTION           *
 **************************** -->
 <script id="customerDashboard" type="text/x-kendo-template">
 	<div class="row-fluid">
@@ -17116,7 +17107,7 @@
 				<div class="span4">
 				
 					<!-- Widget -->
-					<div class="widget widget-3 customer-border"  >
+					<div class="widget widget-3 customer-border">
 					
 						<!-- Widget heading -->
 						<div class="widget-head">
@@ -17140,7 +17131,7 @@
 										<span data-bind="text: lang.lang.product"></span>
 									</td>
 									<td width="33%" style="vertical-align: top">
-										<span data-bind="text: obj.sale_order"></span>
+										<span data-bind="text: obj.sale_ordered"></span>
 										<br>
 										<span data-bind="text: lang.lang.order"></span>
 									</td>
@@ -17305,8 +17296,7 @@
 	</div>		
 </script>
 <script id="customerDashBoard-top-customer-template" type="text/x-kendo-tmpl">	
-	<tr data-uid="#: uid #">
-		<!-- <td style="width: 1%">#:banhji.customerDashboard.topCustomerDS.indexOf(data)+1#</td -->>		
+	<tr data-uid="#: uid #">	
 		<td>
 			<span>
 				#if(name.length>15){#
@@ -17315,13 +17305,12 @@
 					#=name#
 				#}#
 			</span>
-			<span class="pull-right">#=kendo.toString(amount, banhji.institute.locale=="km-KH"?"c0":"c", banhji.institute.locale)#</span>
+			<span class="pull-right">#=kendo.toString(amount, banhji.locale=="km-KH"?"c0":"c2", banhji.locale)#</span>
 		</td>		
 	</tr>
 </script>
 <script id="customerDashBoard-top-ar-template" type="text/x-kendo-tmpl">
 	<tr>
-		<!-- <td style="width: 1%">#:banhji.customerDashboard.topARDS.indexOf(data)+1#</td>		 -->
 		<td>
 			<span>
 				#if(name.length>15){#
@@ -17330,13 +17319,12 @@
 					#=name#
 				#}#
 			</span>
-			<span class="pull-right">#=kendo.toString(amount, banhji.institute.locale=="km-KH"?"c0":"c", banhji.institute.locale)#</span>
+			<span class="pull-right">#=kendo.toString(amount, banhji.locale=="km-KH"?"c0":"c2", banhji.locale)#</span>
 		</td>
 	</tr>
 </script>
 <script id="customerDashBoard-top-product-template" type="text/x-kendo-tmpl">
 	<tr>
-		<!-- <td style="width: 1%">#:banhji.customerDashboard.topProductDS.indexOf(data)+1#</td>		 -->
 		<td>
 			<span>
 				#if(name.length>15){#
@@ -17349,7 +17337,6 @@
 		</td>
 	</tr>
 </script>
-
 <script id="customerCenter" type="text/x-kendo-template">
 	<div class="widget widget-heading-simple widget-body-gray widget-employees">		
 		<div class="widget-body padding-none">			
@@ -18213,7 +18200,7 @@
 		</td>		
 	</tr>
 </script>
-
+<!-- CUSTOMER FUNCTIONS -->
 <script id="quote" type="text/x-kendo-template">
 	<div id="slide-form">
 		<div class="customer-background">
@@ -22969,8 +22956,7 @@
 		<td align="right">#=kendo.toString(amount, "c", locale)#</td>
 	</tr>
 </script>
-
-
+<!-- CUSTOMER SETTINGS -->
 <script id="customerSetting" type="text/x-kendo-template">
 	<span class="pull-right glyphicons no-js remove_2" 
 			onclick="javascript:window.history.back()"><i></i></span>
@@ -23471,7 +23457,7 @@
     	</td>
    	</tr>
 </script>
-
+<!-- CUSTOMER REPORTS -->
 <script id="customerReportCenter" type="text/x-kendo-template">
 	<div class="cover-block" style="width: 99%; background: #fff;">
 		<div class="row-fluid customer-report-center">
@@ -25240,7 +25226,6 @@
     	<td colspan="7">&nbsp;</td>
     </tr>  
 </script>
-
 <script id="collectInvoice" type="text/x-kendo-template">
 	<div id="slide-form">
 		<div class="customer-background">
@@ -26140,7 +26125,7 @@
 
 
 <!-- ***************************
-*	Sale Section        *
+*	SALE SECTION               *
 **************************** -->
 <script id="saleDashboard" type="text/x-kendo-template">
 
@@ -27371,7 +27356,7 @@
 
 
 <!-- ***************************
-*	Invoice Form Section        *
+*	INVOICE FORM SECTION       *
 **************************** -->
 <script id="invoiceCustom" type="text/x-kendo-template">
 	<div id="slide-form">
@@ -32169,7 +32154,7 @@
 
 
 <!-- ***************************
-*	Document Section      	  *
+*	DOCUMENT SECTION       	  *
 **************************** -->
 <script id="documents" type="text/x-kendo-template">
 	
@@ -32253,7 +32238,7 @@
 
 
 <!-- ***************************
-*	Inventory Section      	  *
+*	INVENTORY SECTION      	  *
 **************************** -->
 <script id="itemDashBoard" type="text/x-kendo-template">
 	<div class="row-fluid">
@@ -32590,7 +32575,6 @@
 		</td>
 	</tr>
 </script>
-
 <script id="itemCenter" type="text/x-kendo-template"> 
 	<div class="widget widget-heading-simple widget-body-gray widget-employees">
 		<div class="widget-body padding-none">			
@@ -35408,7 +35392,7 @@
     	</td>  	
     </tr>
 </script>
-
+<!-- INVENTORY FUNCTIONS -->
 <script id="itemAdjustment" type="text/x-kendo-template">
 	<div id="slide-form">
 		<div class="customer-background" style="overflow: hidden;">
@@ -36439,7 +36423,7 @@
 		</td>		
     </tr>   
 </script>
-
+<!-- INVENTORY SETTINGS -->
 <script id="itemSetting" type="text/x-kendo-template">
 	<span class="pull-right glyphicons no-js remove_2" 
 			onclick="javascript:window.history.back()"><i></i></span>
@@ -36783,7 +36767,6 @@
         </div>
     </div>
 </script>
-
 <script id="serviceSetting" type="text/x-kendo-template">
 	<span class="pull-right glyphicons no-js remove_2" 
 			onclick="javascript:window.history.back()"><i></i></span>
@@ -36909,7 +36892,7 @@
 
 	</div>
 </script>
-
+<!-- INVENTORY REPORTS -->
 <script id="itemReportCenter" type="text/x-kendo-template">
 	<div class="cover-block" style="width: 99%; background: #fff;">
 		<div class="row-fluid customer-report-center">
@@ -37617,7 +37600,6 @@
 	    <td align="right">#=kendo.toString(turnover, 'n0')#</td>
 	 </tr>
 </script>
-
 <script id="inventoryMovementSummary" type="text/x-kendo-template">
 	<div id="slide-form">
 		<div class="customer-background">
@@ -38085,7 +38067,6 @@
 		</div>
 	</div>
 </script>
-
 <script id="inventorySaleByItem" type="text/x-kendo-template">
 	<div class="container-fluid">
 		<div class="row-fluid">    
@@ -38669,7 +38650,7 @@
 
 
 <!-- ***************************
-*	Cash Management            *
+*	CASH MANAGEMENT SECTION    *
 **************************** -->
 <script id="cashDashboard" type="text/x-kendo-template" >
 	<div class="row-fluid">
@@ -42311,7 +42292,7 @@
 
 
 <!-- ***************************
-*	Report Section       *
+*	REPORT SECTION       *
 **************************** -->
 <script id="reportDashboard" type="text/x-kendo-template" >
 	<div class="row-fluid">
@@ -43690,7 +43671,7 @@
 
 
 <!-- ***************************
-*	Template List Section     *
+*	TEMPLATE LIST SECTION      *
 **************************** -->
 <script id="contact-list-tmpl" type="text/x-kendo-tmpl">
 	<span>#=abbr##=number#</span>	
@@ -43938,7 +43919,7 @@
 </script>
 
 <!-- ***************************
-*	Import Section      	  *
+*	IMPORT SECTION      	  *
 **************************** -->
 <script id="importView" type="text/x-kendo-template">	
 	<div  class="row-fluid saleSummaryCustomer">
@@ -44101,7 +44082,7 @@
 
 
 <!-- ***************************
-*	Menu Section         	  *
+*	MENU SECTION           	  *
 **************************** -->
 <script id="accountingMenu" type="text/x-kendo-template">
 	<ul class="topnav">
@@ -54283,48 +54264,35 @@
 	banhji.vendorDashboard = kendo.observable({
 		lang 				: langVM,
 		summaryDS 			: dataStore(apiUrl + "dashboards/supplier_dashboard_summary"),
-		topContactDS 		: dataStore(apiUrl + "dashboards/top_supplier"),
+		topSupplierDS 		: dataStore(apiUrl + "dashboards/top_supplier"),
 		topAPDS 			: dataStore(apiUrl + "dashboards/top_ap"),
 		topProductDS 		: dataStore(apiUrl + "dashboards/top_purchase_product"),
-		graphDS  			: new kendo.data.DataSource({
-			transport: {
-				read 	: {
-					url: apiUrl + "dashboards/monthly_purchase",
-					type: "GET",
-					headers: banhji.header,
-					dataType: 'json'
-				}
-			},
-			schema 	: {
-				model: {
-					id: 'id'
-				},
-				data: 'results',
-				total: 'count'
-			},
-			sort: {
-                field: "month",
-                dir: "asc"
-            },								
-			batch: true,			
-			serverFiltering: true,
-			serverSorting: true,
-			serverPaging: true,
-			pageSize: 100
-		}),
-		purchase 			: 0,
-		purchase_supplier 	: 0,
-		purchase_product 	: 0,
-		purchase_order 		: 0,
-		order 				: 0,
-		order_avg 			: 0,
-		order_open 			: 0,
-		ap 					: 0,
-		ap_open 			: 0,
-		ap_supplier 		: 0,
-		ap_overdue 			: 0,
+		graphDS 			: dataStore(apiUrl + "dashboards/monthly_purchase"),
+		obj 				: {},
 		pageLoad 			: function(){
-			var self = this;
+			this.setObj();
+			this.loadData();
+		},
+		setObj 		: function(){
+			this.set("obj", {
+				//Purchase
+				purchase 			: 0,
+				purchase_supplier 	: 0,
+				purchase_product 	: 0,
+				purchase_ordered 	: 0,
+				//PO
+				po 					: 0,
+				po_avg 				: 0,
+				po_open 			: 0,
+				//AP
+				ap 					: 0,
+				ap_open 			: 0,
+				ap_supplier 		: 0,
+				ap_overdue 			: 0
+			});
+		},
+		loadData 			: function(){
+			var self = this, obj = this.get("obj");
 
 			this.graphDS.read();
 
@@ -54335,38 +54303,32 @@
 			}).then(function(){
 				var view = self.summaryDS.view();
 				
-				self.set("purchase", kendo.toString(view[0].purchase, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
-				self.set("purchase_supplier", kendo.toString(view[0].purchase_supplier, "n0"));
-				self.set("purchase_product", kendo.toString(view[0].purchase_product, "n0"));
-				self.set("purchase_order", kendo.toString(view[0].purchase_order, "n0"));
+				obj.set("purchase", kendo.toString(view[0].purchase, banhji.locale=="km-KH"?"c0":"c2", banhji.locale));
+				obj.set("purchase_supplier", kendo.toString(view[0].purchase_supplier, "n0"));
+				obj.set("purchase_product", kendo.toString(view[0].purchase_product, "n0"));
+				obj.set("purchase_ordered", kendo.toString(view[0].purchase_ordered, "n0"));
 
-				self.set("order", kendo.toString(view[0].order, "n0"));
-				self.set("order_avg", kendo.toString(view[0].order_avg, banhji.locale=="km-KH"?"c0":"c", banhji.locale));				
-				self.set("order_open", kendo.toString(view[0].order_open, "n0"));
+				obj.set("po", kendo.toString(view[0].po, "n0"));
+				obj.set("po_avg", kendo.toString(view[0].po_avg, banhji.locale=="km-KH"?"c0":"c2", banhji.locale));				
+				obj.set("po_open", kendo.toString(view[0].po_open, "n0"));
 
-				self.set("ap", kendo.toString(view[0].ap, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
-				self.set("ap_open", kendo.toString(view[0].ap_open, "n0"));
-				self.set("ap_supplier", kendo.toString(view[0].ap_supplier, "n0"));
-				self.set("ap_overdue", kendo.toString(view[0].ap_overdue, "n0"));
+				obj.set("ap", kendo.toString(view[0].ap, banhji.locale=="km-KH"?"c0":"c2", banhji.locale));
+				obj.set("ap_open", kendo.toString(view[0].ap_open, "n0"));
+				obj.set("ap_supplier", kendo.toString(view[0].ap_supplier, "n0"));
+				obj.set("ap_overdue", kendo.toString(view[0].ap_overdue, "n0"));
 			});
 
-			this.topContactDS.query({
-				filter: [],								
-				page: 1,
-				pageSize: 5
+			this.topSupplierDS.query({
+				filter: []
 			});
 
 			this.topAPDS.query({
-				filter: [],							
-				page: 1,
-				pageSize: 5
+				filter: []
 			});
 
 			this.topProductDS.query({
-				filter: [],							
-				page: 1,
-				pageSize: 5
-			});										
+				filter: []
+			});
 		}
 	});
 	banhji.vendorCenter = kendo.observable({
@@ -64602,7 +64564,7 @@
 		summaryDS 			: dataStore(apiUrl + "dashboards/customer_dashboard_summary"),
 		topCustomerDS 		: dataStore(apiUrl + "dashboards/top_customer"),
 		topARDS 			: dataStore(apiUrl + "dashboards/top_ar"),
-		topProductDS 		: dataStore(apiUrl + "dashboards/top_sale_product"),		
+		topProductDS 		: dataStore(apiUrl + "dashboards/top_sale_product"),
 		graphDS 			: dataStore(apiUrl+ "dashboards/monthly_sale"),
 		obj 				: {},
 		pageLoad 			: function(){
@@ -64615,7 +64577,7 @@
 				sale 			: 0,
 				sale_customer 	: 0,
 				sale_product 	: 0,
-				sale_order 		: 0,
+				sale_ordered 	: 0,
 				//Order
 				so 				: 0,
 				so_avg 			: 0,
@@ -64640,7 +64602,7 @@
 				obj.set("sale", kendo.toString(view[0].sale, banhji.locale=="km-KH"?"c0":"c2", banhji.locale));
 				obj.set("sale_customer", kendo.toString(view[0].sale_customer, "n0"));
 				obj.set("sale_product", kendo.toString(view[0].sale_product, "n0"));
-				obj.set("sale_order", kendo.toString(view[0].sale_order, "n0"));
+				obj.set("sale_ordered", kendo.toString(view[0].sale_ordered, "n0"));
 
 				obj.set("so", kendo.toString(view[0].so, "n0"));
 				obj.set("so_avg", kendo.toString(view[0].so_avg, banhji.locale=="km-KH"?"c0":"c2", banhji.locale));				
@@ -74932,37 +74894,14 @@
 	banhji.customerReportCenter = kendo.observable({
 		lang 				: langVM,
 		summaryDS 			: dataStore(apiUrl + "dashboards/customer_dashboard_summary"),
-		graphDS  			: new kendo.data.DataSource({
-			transport: {
-				read 	: {
-					url: apiUrl + "dashboards/monthly_sale",
-					type: "GET",
-					headers: banhji.header,
-					dataType: 'json'
-				}
-			},
-			schema 	: {
-				model: {
-					id: 'id'
-				},
-				data: 'results',
-				total: 'count'
-			},
-			sort: {
-                field: "month",
-                dir: "asc"
-            },								
-			batch: true,			
-			serverFiltering: true,
-			serverSorting: true,
-			serverPaging: true,
-			pageSize: 100
-		}),
+		graphDS 			: dataStore(apiUrl+ "dashboards/monthly_sale"),
 		pageLoad 			: function(){
 			var self = this,
 			today = new Date(),			        	
 			start = kendo.toString(banhji.source.getFiscalDate(), "yyyy-MM-dd"),
 			end = kendo.toString(today, "yyyy-MM-dd");
+
+			this.graphDS.read();
 
 			this.summaryDS.query({
 				filter: [
@@ -78876,32 +78815,7 @@
 		topCustomerDS 		: dataStore(apiUrl + "dashboards/top_customer"),
 		topARDS 			: dataStore(apiUrl + "dashboards/top_ar"),
 		topProductDS 		: dataStore(apiUrl + "dashboards/top_sale_product"),		
-		graphDS  			: new kendo.data.DataSource({
-			transport: {
-				read 	: {
-					url: apiUrl + "dashboards/monthly_sale",
-					type: "GET",
-					headers: banhji.header,
-					dataType: 'json'
-				}
-			},
-			schema 	: {
-				model: {
-					id: 'id'
-				},
-				data: 'results',
-				total: 'count'
-			},
-			sort: {
-                field: "month",
-                dir: "asc"
-            },								
-			batch: true,			
-			serverFiltering: true,
-			serverSorting: true,
-			serverPaging: true,
-			pageSize: 100
-		}),
+		graphDS 			: dataStore(apiUrl+ "dashboards/monthly_sale"),
 		quote 				: 0,
 		quote_customer 		: 0,
 		quote_open 			: 0,

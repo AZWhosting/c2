@@ -73,6 +73,7 @@ class Branches extends REST_Controller {
 		 			"email"				=> $value->email,
 		 			"mobile"			=> $value->mobile,
 		 			"telephone"			=> $value->telephone,
+		 			"type" 				=> $value->type,
 		 			"term_of_condition"	=> $value->term_of_condition
 
 		 		);
@@ -128,6 +129,7 @@ class Branches extends REST_Controller {
 		 			"email"				=> $obj->email,
 		 			"mobile"			=> $obj->mobile,
 		 			"telephone"			=> $obj->telephone,
+		 			"type"	 			=> $obj->type,
 		 			"term_of_condition"	=> $obj->term_of_condition
 					
 				);				
@@ -185,6 +187,7 @@ class Branches extends REST_Controller {
 		 			"email"				=> $obj->email,
 		 			"mobile"			=> $obj->mobile,
 		 			"telephone"			=> $obj->telephone,
+		 			"type"				=> $obj->type,
 		 			"term_of_condition"	=> $obj->term_of_condition
 				);						
 			}

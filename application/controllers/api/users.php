@@ -127,6 +127,7 @@ class Users extends REST_Controller {
 
 	function index_delete() {
 		$requested_data = json_decode($this->delete('models'));
+		$data = array();
 		foreach($requested_data as $row) {
 			$institute = new Institute();
 			$institute->where('id', $row->company->id)->get();

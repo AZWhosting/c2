@@ -1032,6 +1032,16 @@
 <script id="tariff-edit-item-template" type="text/x-kendo-tmpl">
     <tr>
     	<td><input style="width: 100%;" type="text" class="k-textbox" data-bind="value:name" /></td>
+    	<td align="center">
+    		<input data-role="dropdownlist"
+        	   style="padding-right: 1px;height: 32px;" 
+			   data-auto-bind="false"			                   
+               data-value-primitive="true"
+               data-text-field="name"
+               data-value-field="id"
+               data-bind="value: is_flat,
+                          source: typeFlat"/>
+		</td>
     	<td>
     		#if(usage != 0){#
     			<input style="width: 100%;" type="text" class="k-textbox" data-bind="value:usage" />
@@ -1345,6 +1355,27 @@
 	</tr>
 </script>
 
+<!-- <script id="customerSetting-form-template" type="text/x-kendo-template">
+	<tr>
+		<td ><a style="text-align: left;" href="\\#/invoice_custom/#= id # "> #=name#  </a></td>
+		<td style="text-align: left; padding-left: 10px!important;"> 
+			#= type.replace("_"," ")# 
+		</td>
+		<td style="text-align: left; padding-left: 10px!important;"> #if( updated_at ){ # 
+				#=kendo.toString(new Date(updated_at),"D")# 
+			 #}else{ #
+			 	#=kendo.toString(new Date(created_at),"D")# 
+			 #}#
+		</td>
+		<td class="center">
+			#if( status == 0){ #
+			<a class="btn-action glyphicons pencil btn-success" href="\\#/invoice_custom/#= id # "><i></i></a>
+			<a data-bind="click: deleteForm" class="btn-action glyphicons remove_2 btn-danger"><i></i></a>
+			# } #
+		</td>
+	</tr>
+</script> -->
+
 
 <script id="customerSetting-edit-contact-type-template" type="text/x-kendo-tmpl">   
     <tr>                
@@ -1446,8 +1477,8 @@
 		                	<thead>
 		                		<tr>
 		                			<th style="width: 15%;" >Item</th>
-		                			<th style="width: 10%;" >Type</th>
-		                			<th style="width: 20%;" >Name</th>
+		                			<th style="width: 20%;" >Type</th>
+		                			<th style="width: 10%;" >Name</th>
 		                			<th style="width: 11%;" >Rate</th>
 		                			<th style="width: 11%;" >Action</th>
 		                		</tr>
@@ -10401,7 +10432,7 @@
         licenseDS 			: dataStore(apiUrl + "branches"),
         branchDS 			: dataStore(apiUrl + "branches"),
         planDS 				: dataStore(apiUrl + "plans"),
-		contactTypeDS 		: dataStore(apiUrl + "contacts/type"),
+		contactTypeDS 		: banhji.source.customerTypeDS,
 		typeUnit 			: [{id:"m3", name: "m3"},{id:"money", name: "Money"},{ id:"%", name: "%"}],
 		typeFlat 			: [{id:"0", name: "Not Flat"},{id:"1", name: "Flat"}],
 		tariffItemFlat 		: 0,
@@ -11594,7 +11625,6 @@
 					banhji.router.navigate("/center");
 				}
 			}
-			this.planDS.fetch();
 		},
 		loadObj 			: function(id){
 			var self = this;	

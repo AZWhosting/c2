@@ -67,7 +67,7 @@
 <!-- ***************************
 *	Water Section      	  *
 **************************** -->
-<script id="wDashBoard" type="text/x-kendo-template">
+<script id="DashBoard" type="text/x-kendo-template">
 	<img style="margin-bottom: 5px;" src="<?php echo base_url();?>/assets/water_bill.png" width="300" height="100">
 	<div class="row-fluid" >
 		<div class="span6" style="padding-left: 0;">
@@ -221,7 +221,7 @@
 					<th><span>Active Meter</span></th>
 					<th><span>Inactive Meter</span></th>
 					<th><span>Deposit</span></th>
-					<th><span>(m<sup>3</sup>) Sold</span></th>
+					<th><span>Usage</span></th>
 					<th><span>Sale Amount</span></th>
 					<th><span>Balance</span></th>
 				</tr>
@@ -357,7 +357,7 @@
 	            				<th class="center" width="110"><span>Number</span></th>
 	            				<th class="center" width="150"><span>Name</span></th>
 	            				<th class="center"><span>Abbr</span></th>
-	            				<th class="center" width="160"><span>Representive</span></th>
+	            				<th class="center" width="160"><span>Type</span></th>
 	            				<th class="center" width="100"><span>Expire Date</span></th>
 	            				<th class="center" width="100"><span>Max Con.</span></th>
 	            				<th class="center" width="100">Status</th>
@@ -400,6 +400,48 @@
 			                data-auto-bind="true"
 			                data-bind="source: blocDS"></tbody>
 	            	</table>
+
+	            	<br>
+	            	<p data-bind="visible: blocSelect">Bloc Name: <span data-bind="text: blocNameShow"></span></p>
+	            	<table data-bind="visible: blocSelect" class="table table-bordered table-condensed table-striped table-secondary table-vertical-center checkboxs">
+	            		<thead>
+	            			<tr>
+	            				<th class="center" width="150"><span>Name</span></th>
+	            				<th class="center" width="100"><span>Usage</span></th>
+	            				<th class="center" width="100"><span>Price</span></th>
+	            				<th class="center" width="200"><span>Action</span></th>
+	            			</tr>
+	            		</thead>
+	            		<tbody data-role="listview"	            				
+				                data-template="tariff-item-template"
+				                data-auto-bind="false"
+				                data-edit-template="tariff-edit-item-template"
+				                data-bind="source: tariffItemDS"></tbody>
+	            	</table>
+	            	<!-- Tariff Item Window -->
+		            <div data-role="window"
+			                 data-title="Box"		                 
+			                 data-width="250"
+			                 data-height="190"
+			                 data-actions="{}"
+			                 data-position="{top: '30%', left: '37%'}"		                 
+			                 data-bind="visible: windowBoxVisible">
+	            		<table>
+							<tr style="border-bottom: 8px solid #fff;">
+								<td width="35%"><span data-bind="text: lang.lang.name"></span></td>
+								<td>
+									<input class="k-textbox" placeholder="Box Number ..." data-bind="value: boxNumber" style="width: 100%;">
+								</td>
+							</tr>
+						</table>
+
+						<br>
+						<div style="text-align: center;">
+							<span style="margin-bottom: 0;" class="btn btn-success btn-icon glyphicons ok_2" data-bind="click: saveTariffItem"><i></i><span data-bind="text: lang.lang.save"></span></span>
+
+							<span class="btn btn-danger btn-icon glyphicons remove_2" data-bind="click: closeTariffWindowItem"><i></i><span data-bind="text: lang.lang.close"></span></span>  
+						</div>
+					</div>
 	            </div>
 	            <div class="tab-pane" id="tab3">
 	            	<div style="clear: both;margin-bottom: 10px;">
@@ -822,7 +864,7 @@
 		<td>#= number #</td>
 		<td>#= name #</td>
 		<td>#= abbr #</td>
-		<td>#= representative #</td>
+		<td>#= type=="w" ? "Water" : "Electricity" #</td>
 		<td align="center">#= kendo.toString(new Date(expire_date), "dd-MM-yyyy") #</td>
 		<td align="right">#= max_customer #</td>
 		<td style="text-align: center;">
@@ -1535,9 +1577,27 @@
 			        <br>
 			        <!-- Top Part -->
 			    	<div class="row-fluid">
-			    		<div class="span12 well">									
+			    		<div class="span12 well">	
+			    			<div class="span3">											
+								<!-- Group -->
+								<div class="control-group">										
+									<label ><span >Type</span> <span style="color:red">*</span></label>
+									<select data-role="dropdownlist"
+					                   data-value-primitive="true"
+					                   data-text-field="name"
+					                   data-value-field="id"
+					                   data-bind="
+					                   	source: typeSelect,
+					                   	value: obj.type"
+					                   style="width: 100%; margin-bottom: 15px;" ></select>
+								</div>
+								<!-- // Group END -->
+							</div>
+						</div>
+			    		<div class="span12 well">
+			    										
 							<div class="row">
-								<div class="span3">														
+								<div class="span3">											
 									<!-- Group -->
 									<div class="control-group">										
 										<label ><span >License No.</span> <span style="color:red">*</span></label>
@@ -1824,7 +1884,7 @@
 </script>
 
 <!--End Setting-->
-<script id="waterCenter" type="text/x-kendo-template">	
+<script id="Center" type="text/x-kendo-template">	
 	<div class="widget widget-heading-simple widget-body-gray widget-employees">		
 		<div class="widget-body padding-none">			
 			<div class="row-fluid row-merge">
@@ -2609,14 +2669,31 @@
 			       	<div class="span12 row">			       		
 			       		<!-- Top Part -->
 				    	<div class="row-fluid">
+				    		<div class="span12 well">	
+				    			<div class="span3">											
+									<!-- Group -->
+									<div class="control-group">										
+										<label ><span >Type</span> <span style="color:red">*</span></label>
+										<select data-role="dropdownlist"
+						                   data-value-primitive="true"
+						                   data-text-field="name"
+						                   data-value-field="id"
+						                   data-bind="
+						                   	source: typeSelect,
+						                   	value: obj.type,
+						                   	events: {change: typeChange}"
+						                   style="width: 100%; margin-bottom: 15px;" ></select>
+									</div>
+									<!-- // Group END -->
+								</div>
+							</div>
 				    		<div class="span6 well">									
 								<div class="row">
 									<div class="span6" style="padding-right: 0;">	
 										<!-- Group -->
 										<div class="control-group">							
-											<label><span >Meter Code</span> <span style="color:red">*</span></label>			
+											<label><span >Meter Code</span> <span style="color:red">*</span></label>
 					              			<br>
-
 					              			<input class="k-textbox"					    
 						              			data-bind="value: obj.meter_number"
 								                placeholder="eg. 1" required data-required-msg="required"
@@ -7052,7 +7129,7 @@
 *	Menu Section         	  *
 **************************** -->
 
-<script id="waterMenu" type="text/x-kendo-template">
+<script id="utibillMenu" type="text/x-kendo-template">
 	<ul class="topnav pull-left">
 	  	<li><a href='#/' class='glyphicons show_big_thumbnails'><i></i></a></li>
 	  	<li><a href='#/center'><span data-bind="text: lang.lang.center"></span></a></li>
@@ -7062,8 +7139,7 @@
   				<li><a href='<?php echo base_url(); ?>rrd/#/customer'><span >New Customer</span></a></li> 
   				<li ><a href='#/reorder'><span >Reorder Meter</span></a></li>  				
   				<li><span class="li-line"></span></li>
-  				<li><a href='#/reading'><span >1. Meter Reading</span></a></li> 
-  				<!--li><a href='#/edit_reading'><span >Edit Reading</span></a></li-->
+  				<li><a href='#/reading'><span >1. Meter Reading</span></a></li>
   				<li><a href='#/run_bill'><span >2. Run Bill</span></a></li> 
   				<li><a href='#/print_bill'><span >3. Print Bill</span></a></li>
   				<li><a href='#/receipt'><span >4. Receipt</span></a></li>
@@ -10870,6 +10946,7 @@
 		toDay 		: new Date(),
 		obj 		: null,
 		provinceSelect : [],
+		typeSelect 	: [{id:"w", name: "Water"},{id: "e", name: "Electricity"}],
 		attachmentDS	: dataStore(apiUrl + "attachments"),
 		isEdit      : false,
 		selectType 	: [{id: "1", name: "Active"},{id: "0", name: "Inactive"},{id: "2", name: "Void"}],
@@ -10907,8 +10984,7 @@
 			});	
 		},
 		addNew 	  	: function() {
-			this.set("obj", null);		
-			this.set("isEdit", false);		
+			this.set("obj", null);	
 			this.dataSource.insert(0,{	
 				number 			: null,
 				name 			: null,
@@ -10925,6 +11001,7 @@
 				email 			: null,
 				mobile 			: null,
 				telephone 		: null,
+				type 			: "w",
 				term_of_condition : null
 			});
 			var obj = this.dataSource.at(0);
@@ -11580,6 +11657,7 @@
 		obj 				: null,
 		isEdit 				: false,
 		contact 			: null,
+		typeSelect 	: [{id:"w", name: "Water"},{id: "e", name: "Electricity"}],
 		selectType 			: [
 			{id: 1, name: "Active"},
 			{id: 0, name: "Inactive"},
@@ -11596,6 +11674,10 @@
 			}
 			this.planDS.fetch();
 		},
+		typeChange 			: function(e){
+			var data = e.data;
+			console.log(this.get("obj").type);
+		},
 		loadObj 			: function(id){
 			var self = this;	
 			this.dataSource.data([]);			
@@ -11609,7 +11691,7 @@
 				self.loadMap();	
 			});
 		},
-		loadMap : function(){
+		loadMap 			: function(){
 			var obj = this.get("obj");
 			lat = kendo.parseFloat(obj.latitute),
 			lng = kendo.parseFloat(obj.longtitute);
@@ -11664,7 +11746,7 @@
 				self.set("obj", obj);
 			});	
 		},
-		onSelect 				: function(e){
+		onSelect 			: function(e){
 	        // Array with information about the uploaded files
 	        var self = this, 
 	        files = e.files[0],
@@ -16742,7 +16824,7 @@
 	/*************************
 	*	Water Section   	* 
 	**************************/
-	banhji.wDashBoard = kendo.observable({
+	banhji.DashBoard = kendo.observable({
 		dataSource: new kendo.data.DataSource({
 	      	transport: {
 		        read  : {
@@ -16890,7 +16972,7 @@
 	    totalDeposit: 0,
 	    avgUsage: 0
 	});
-	banhji.waterCenter = kendo.observable({
+	banhji.Center = kendo.observable({
 		lang 				: langVM,
 		transactionDS  		: dataStore(apiUrl + 'transactions'),
 		filterKey 			: 1,
@@ -16921,12 +17003,6 @@
 				data: 'results',
 				total: 'count'
 			},
-			// group: {
-			// 	field: 'month',
-			// 	aggregates: [
-			// 		{field: 'amount', aggregate: 'sum'}
-			// 	]
-			// },
 			batch: true,
 			serverFiltering: true,
 			serverPaging: true,
@@ -16974,8 +17050,8 @@
 			pageSize: 100
 		}),
 		filterCustomerTypeDS : [
-	    	{ id: 1, name: "Water" },
-			{ id: 0, name: "None Water" }],
+	    	{ id: 1, name: "Utibill" },
+			{ id: 0, name: "None Utibill" }],
 		contactTypeDS  		: banhji.source.customerTypeDS,
 		filterChange 		: function(e){
 			this.contactDS.filter([
@@ -17417,7 +17493,7 @@
 		searchAdvanced: new kendo.Layout("#searchAdvanced", {model: banhji.searchAdvanced}),
 		//Water
 		setting: new kendo.Layout("#setting", {model: banhji.setting}),
-		waterCenter: new kendo.Layout("#waterCenter", {model: banhji.waterCenter}),
+		Center: new kendo.Layout("#Center", {model: banhji.Center}),
 		waterActivateUser: new kendo.Layout("#waterActivateUser", {model: banhji.waterActivateUser}),
 		meter: new kendo.Layout("#waterAddMeter", {model: banhji.meter}),
 		ActivateMeter: new kendo.Layout("#ActivateMeter", {model: banhji.ActivateMeter}),
@@ -17452,12 +17528,12 @@
 		vendorMenu: new kendo.View("#vendorMenu", {model: langVM}),
 		customerMenu: new kendo.View("#customerMenu", {model: langVM}),
 		cashMenu: new kendo.View("#cashMenu", {model: langVM}),
-		waterMenu: new kendo.View("#waterMenu", {model: langVM}),
+		utibillMenu: new kendo.View("#utibillMenu", {model: langVM}),
 		inventoryMenu: new kendo.View("#inventoryMenu", {model: langVM}),
 		saleTaxMenu: new kendo.View("#saleTaxMenu", {model: langVM}),
 		saleMenu: new kendo.View("#saleMenu", {model: langVM}),
 
-		wDashBoard: new kendo.View("#wDashBoard", {model: banhji.wDashBoard}),
+		DashBoard: new kendo.View("#DashBoard", {model: banhji.DashBoard}),
 		customer: new kendo.Layout("#customer", {model: banhji.customer}),	
 		//Report
 		customerList : new kendo.Layout("#customerList", {model: banhji.customerList}),
@@ -17526,19 +17602,15 @@
 	/* Login page */
 	banhji.router.route('/', function(){
 		var blank = new kendo.View('#blank-tmpl');
-		banhji.view.layout.showIn('#content', banhji.view.wDashBoard);
-		//banhji.view.layout.showIn('#menu', banhji.view.menu);
-		banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
-		// $('#main-top-navigation').append('<li><a href="\#">Home</a></li>');
-		// $('#current-section').text("");
-		// $("#secondary-menu").html("");
+		banhji.view.layout.showIn('#content', banhji.view.DashBoard);
+		banhji.view.menu.showIn('#secondary-menu', banhji.view.utibillMenu);
 		banhji.index.getLogo();
 		banhji.index.pageLoad();
 	});
 	banhji.router.route('/setting', function(){
 		banhji.view.layout.showIn("#content", banhji.view.setting);
 		banhji.view.layout.showIn('#menu', banhji.view.menu);
-		banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
+		banhji.view.menu.showIn('#secondary-menu', banhji.view.utibillMenu);
 		
 		var vm = banhji.setting;
 
@@ -17571,20 +17643,20 @@
 	*   Water Section   *
 	**************************/
 	banhji.router.route("/center(/:id)", function(id){
-		banhji.view.layout.showIn("#content", banhji.view.waterCenter);
+		banhji.view.layout.showIn("#content", banhji.view.Center);
 		banhji.view.layout.showIn('#menu', banhji.view.menu);
-		banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
-		var vm = banhji.waterCenter;
-		banhji.userManagement.addMultiTask("Water Center","center",null);
-		if(banhji.pageLoaded["water_center"]==undefined){
-			banhji.pageLoaded["water_center"] = true;
+		banhji.view.menu.showIn('#secondary-menu', banhji.view.utibillMenu);
+		var vm = banhji.Center;
+		banhji.userManagement.addMultiTask("Center","center",null);
+		if(banhji.pageLoaded["center"]==undefined){
+			banhji.pageLoaded["center"] = true;
 		}
 		vm.pageLoad(id);
 	});
 	banhji.router.route("/activate_user/:id", function(id){
 		banhji.view.layout.showIn("#content", banhji.view.waterActivateUser);
 		banhji.view.layout.showIn('#menu', banhji.view.menu);
-		banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
+		banhji.view.menu.showIn('#secondary-menu', banhji.view.utibillMenu);
 		var vm = banhji.waterActivateUser;
 		banhji.userManagement.addMultiTask("Activate User","activate_user",null);
 		if(banhji.pageLoaded["activate_user"]==undefined){
@@ -17595,7 +17667,7 @@
 	banhji.router.route("/meter(/:id)", function(id){
 		banhji.view.layout.showIn("#content", banhji.view.meter);
 		banhji.view.layout.showIn('#menu', banhji.view.menu);
-		banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
+		banhji.view.menu.showIn('#secondary-menu', banhji.view.utibillMenu);
 		var vm = banhji.meter;
 		banhji.userManagement.addMultiTask("Add Meter","meter",null);
 		if(banhji.pageLoaded["meter"]==undefined){
@@ -17606,7 +17678,7 @@
 	banhji.router.route("/activate_meter/:id", function(id){
 		banhji.view.layout.showIn("#content", banhji.view.ActivateMeter);
 		banhji.view.layout.showIn('#menu', banhji.view.menu);
-		banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
+		banhji.view.menu.showIn('#secondary-menu', banhji.view.utibillMenu);
 		var vm = banhji.ActivateMeter;
 		banhji.userManagement.addMultiTask("Activate Meter","activate_meter",null);
 		if(banhji.pageLoaded["activate_meter"]==undefined){
@@ -17617,7 +17689,7 @@
 	banhji.router.route("/plan(/:id)", function(id){
 		banhji.view.layout.showIn("#content", banhji.view.plan);
 		banhji.view.layout.showIn('#menu', banhji.view.menu);
-		banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
+		banhji.view.menu.showIn('#secondary-menu', banhji.view.utibillMenu);
 		var vm = banhji.plan;
 		banhji.userManagement.addMultiTask("Add Plan","plan",null);
 		if(banhji.pageLoaded["plan"]==undefined){
@@ -17627,7 +17699,7 @@
 	});
 	banhji.router.route("/add_license(/:id)", function(id){
 		banhji.view.layout.showIn('#menu', banhji.view.menu);
-		banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
+		banhji.view.menu.showIn('#secondary-menu', banhji.view.utibillMenu);
 		banhji.view.layout.showIn("#content", banhji.view.addLicense);
 		banhji.userManagement.addMultiTask("Add Licence","Licence",null);
 		if(banhji.pageLoaded["add_license"]==undefined){
@@ -17639,7 +17711,7 @@
 	banhji.router.route("/reading", function(){
 		banhji.view.layout.showIn("#content", banhji.view.reading);
 		banhji.view.layout.showIn('#menu', banhji.view.menu);
-		banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
+		banhji.view.menu.showIn('#secondary-menu', banhji.view.utibillMenu);
 		var vm = banhji.reading;
 		banhji.userManagement.addMultiTask("Reading","reading",null);
 		if(banhji.pageLoaded["reading"]==undefined){
@@ -17647,21 +17719,10 @@
 		}
 		vm.pageLoad();
 	});
-	banhji.router.route("/edit_reading", function(){
-		banhji.view.layout.showIn("#content", banhji.view.EditReading);
-		banhji.view.layout.showIn('#menu', banhji.view.menu);
-		banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);	
-		var vm = banhji.EditReading;
-		banhji.userManagement.addMultiTask("Edit Reading","Edit Reading",null);
-		if(banhji.pageLoaded["edit_reading"]==undefined){
-			banhji.pageLoaded["edit_reading"] = true;
-		}
-		vm.pageLoad();
-	});
 	banhji.router.route("/import", function(){
 		banhji.view.layout.showIn("#content", banhji.view.waterImport);
 		banhji.view.layout.showIn('#menu', banhji.view.menu);
-		banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
+		banhji.view.menu.showIn('#secondary-menu', banhji.view.utibillMenu);
 		var vm = banhji.waterImport;
 		banhji.userManagement.addMultiTask("Import","import",null);
 		if(banhji.pageLoaded["import"]==undefined){
@@ -17672,7 +17733,7 @@
 	banhji.router.route("/run_bill", function(){
 		banhji.view.layout.showIn("#content", banhji.view.runBill);
 		banhji.view.layout.showIn('#menu', banhji.view.menu);
-		banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
+		banhji.view.menu.showIn('#secondary-menu', banhji.view.utibillMenu);
 		
 		var vm = banhji.runBill;
 		banhji.userManagement.addMultiTask("Run Bill","run_bill",null);
@@ -17684,7 +17745,7 @@
 	banhji.router.route("/print_bill", function(){
 		banhji.view.layout.showIn("#content", banhji.view.printBill);
 		banhji.view.layout.showIn('#menu', banhji.view.menu);
-		banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
+		banhji.view.menu.showIn('#secondary-menu', banhji.view.utibillMenu);
 		
 		var vm = banhji.printBill;
 		banhji.userManagement.addMultiTask("Print Bill","print_bill",null);
@@ -17699,7 +17760,7 @@
 		}else{
 			banhji.view.layout.showIn("#content", banhji.view.InvoicePrint);
 			banhji.view.layout.showIn('#menu', banhji.view.menu);
-			banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
+			banhji.view.menu.showIn('#secondary-menu', banhji.view.utibillMenu);
 
 			var vm = banhji.InvoicePrint;
 
@@ -17712,7 +17773,7 @@
 	banhji.router.route("/receipt", function(){
 		banhji.view.layout.showIn("#content", banhji.view.Receipt);
 		banhji.view.layout.showIn('#menu', banhji.view.menu);
-		banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
+		banhji.view.menu.showIn('#secondary-menu', banhji.view.utibillMenu);
 		
 		var vm = banhji.Receipt;
 		banhji.userManagement.addMultiTask("Receipt","receipt",null);
@@ -17722,19 +17783,13 @@
 			var validator = $("#example").kendoValidator().data("kendoValidator");
 	        $("#saveNew").click(function(e){
 				e.preventDefault();
-
-				// if(validator.validate()){
-	   //          	vm.save();
-		  //       }else{
-		  //       	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-		  //       }
 			});
 		}
 		vm.pageLoad();
 	});
 	banhji.router.route("/reconcile", function(){
 		banhji.view.layout.showIn('#menu', banhji.view.menu);
-		banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
+		banhji.view.menu.showIn('#secondary-menu', banhji.view.utibillMenu);
 		var vm = banhji.Reconcile;
 		banhji.userManagement.addMultiTask("Reconcile","reconcile",null);
 		if(banhji.pageLoaded["reconcile"]==undefined){
@@ -17759,7 +17814,7 @@
 	banhji.router.route("/reports", function(){
 		banhji.view.layout.showIn("#content", banhji.view.Reports);
 		banhji.view.layout.showIn('#menu', banhji.view.menu);
-		banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
+		banhji.view.menu.showIn('#secondary-menu', banhji.view.utibillMenu);
 		var vm = banhji.Reports;
 		banhji.userManagement.addMultiTask("Reports","reports",null);
 		if(banhji.pageLoaded["reports"]==undefined){
@@ -17960,7 +18015,7 @@
 	banhji.router.route("/reorder", function(id){
 		banhji.view.layout.showIn("#content", banhji.view.Reorder);
 		banhji.view.layout.showIn('#menu', banhji.view.menu);
-		banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
+		banhji.view.menu.showIn('#secondary-menu', banhji.view.utibillMenu);
 		var vm = banhji.Reorder;
 		banhji.userManagement.addMultiTask("Reorder","reports",null);
 		if(banhji.pageLoaded["reorder"]==undefined){
@@ -18007,7 +18062,7 @@
 		}else{
 			banhji.view.layout.showIn("#content", banhji.view.customerList);
 			banhji.view.layout.showIn('#menu', banhji.view.menu);
-			banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
+			banhji.view.menu.showIn('#secondary-menu', banhji.view.utibillMenu);
 
 			var vm = banhji.customerList;
 			banhji.userManagement.addMultiTask("Customer List","customer_list",null);
@@ -18024,7 +18079,7 @@
 		}else{
 			banhji.view.layout.showIn("#content", banhji.view.customerNoConnection);
 			banhji.view.layout.showIn('#menu', banhji.view.menu);
-			banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
+			banhji.view.menu.showIn('#secondary-menu', banhji.view.utibillMenu);
 
 			var vm = banhji.customerNoConnection;
 			banhji.userManagement.addMultiTask("Customer No Connection","customer_no_connection",null);
@@ -18041,7 +18096,7 @@
 		}else{
 			banhji.view.layout.showIn("#content", banhji.view.disconnectList);
 			banhji.view.layout.showIn('#menu', banhji.view.menu);
-			banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
+			banhji.view.menu.showIn('#secondary-menu', banhji.view.utibillMenu);
 
 			var vm = banhji.disconnectList;
 			banhji.userManagement.addMultiTask("Disconnect List","disconnect_list",null);
@@ -18058,7 +18113,7 @@
 		}else{
 			banhji.view.layout.showIn("#content", banhji.view.newCustomerList);
 			banhji.view.layout.showIn('#menu', banhji.view.menu);
-			banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
+			banhji.view.menu.showIn('#secondary-menu', banhji.view.utibillMenu);
 
 			var vm = banhji.newCustomerList;
 			banhji.userManagement.addMultiTask("New Customer List","new_customer_list",null);
@@ -18074,7 +18129,7 @@
 		}else{
 			banhji.view.layout.showIn("#content", banhji.view.miniUsageList);
 			banhji.view.layout.showIn('#menu', banhji.view.menu);
-			banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
+			banhji.view.menu.showIn('#secondary-menu', banhji.view.utibillMenu);
 
 			var vm = banhji.miniUsageList;
 			banhji.userManagement.addMultiTask("Minimum Water Usage List","mini_usage_list",null);
@@ -18090,7 +18145,7 @@
 		}else{
 			banhji.view.layout.showIn("#content", banhji.view.saleSummary);
 			banhji.view.layout.showIn('#menu', banhji.view.menu);
-			banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
+			banhji.view.menu.showIn('#secondary-menu', banhji.view.utibillMenu);
 
 			var vm = banhji.saleSummary;
 			banhji.userManagement.addMultiTask("Sale Summary","sale_summary",null);
@@ -18106,7 +18161,7 @@
 		}else{
 			banhji.view.layout.showIn("#content", banhji.view.connectServiceRevenue);
 			banhji.view.layout.showIn('#menu', banhji.view.menu);
-			banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
+			banhji.view.menu.showIn('#secondary-menu', banhji.view.utibillMenu);
 
 			var vm = banhji.connectServiceRevenue;
 			banhji.userManagement.addMultiTask("Connect Service Revenue","connect_service_revenue",null);
@@ -18122,7 +18177,7 @@
 		}else{
 			banhji.view.layout.showIn("#content", banhji.view.saleDetail);
 			banhji.view.layout.showIn('#menu', banhji.view.menu);
-			banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
+			banhji.view.menu.showIn('#secondary-menu', banhji.view.utibillMenu);
 
 			var vm = banhji.saleDetail;
 			banhji.userManagement.addMultiTask("Sale Detail","sale_detail",null);
@@ -18159,7 +18214,7 @@
 		}else{
 			banhji.view.layout.showIn("#content", banhji.view.otherRevenues);
 			banhji.view.layout.showIn('#menu', banhji.view.menu);
-			banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
+			banhji.view.menu.showIn('#secondary-menu', banhji.view.utibillMenu);
 
 			var vm = banhji.otherRevenues;
 			banhji.userManagement.addMultiTask("Other Revenues","other_revenues",null);
@@ -18175,7 +18230,7 @@
 		}else{
 			banhji.view.layout.showIn("#content", banhji.view.accountReceivableList);
 			banhji.view.layout.showIn('#menu', banhji.view.menu);
-			banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
+			banhji.view.menu.showIn('#secondary-menu', banhji.view.utibillMenu);
 
 			var vm = banhji.accountReceivableList;
 			banhji.userManagement.addMultiTask("Other Revenues","account_receivable_list",null);
@@ -18191,7 +18246,7 @@
 		}else{
 			banhji.view.layout.showIn("#content", banhji.view.customerAgingSumList);
 			banhji.view.layout.showIn('#menu', banhji.view.menu);
-			banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
+			banhji.view.menu.showIn('#secondary-menu', banhji.view.utibillMenu);
 
 			var vm = banhji.customerAgingSumList;
 			banhji.userManagement.addMultiTask("Customer Aging Sum List","customer_aging_sum_list",null);
@@ -18207,7 +18262,7 @@
 		}else{
 			banhji.view.layout.showIn("#content", banhji.view.customerDepositReport);
 			banhji.view.layout.showIn('#menu', banhji.view.menu);
-			banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
+			banhji.view.menu.showIn('#secondary-menu', banhji.view.utibillMenu);
 
 			var vm = banhji.customerDepositReport;
 			banhji.userManagement.addMultiTask("Customer Deposit Report","customer_deposit_report",null);
@@ -18223,7 +18278,7 @@
 		}else{
 			banhji.view.layout.showIn("#content", banhji.view.customerAgingDetail);
 			banhji.view.layout.showIn('#menu', banhji.view.menu);
-			banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
+			banhji.view.menu.showIn('#secondary-menu', banhji.view.utibillMenu);
 
 			var vm = banhji.customerAgingDetail;
 			banhji.userManagement.addMultiTask("Customer Aging Detail","customer_aging_detail",null);
@@ -18239,7 +18294,7 @@
 		}else{
 			banhji.view.layout.showIn("#content", banhji.view.cashReceiptSummary);
 			banhji.view.layout.showIn('#menu', banhji.view.menu);
-			banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
+			banhji.view.menu.showIn('#secondary-menu', banhji.view.utibillMenu);
 
 			var vm = banhji.cashReceiptSummary;
 			banhji.userManagement.addMultiTask("Cash Receipt Summary","cash_receipt_summary",null);
@@ -18255,7 +18310,7 @@
 		}else{
 			banhji.view.layout.showIn("#content", banhji.view.cashReceiptSourceSummary);
 			banhji.view.layout.showIn('#menu', banhji.view.menu);
-			banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
+			banhji.view.menu.showIn('#secondary-menu', banhji.view.utibillMenu);
 
 			var vm = banhji.cashReceiptSourceSummary;
 			banhji.userManagement.addMultiTask("Cash Receipt Source Summary","cash_receipt_source_summary",null);
@@ -18271,7 +18326,7 @@
 		}else{
 			banhji.view.layout.showIn("#content", banhji.view.cashReceiptDetail);
 			banhji.view.layout.showIn('#menu', banhji.view.menu);
-			banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
+			banhji.view.menu.showIn('#secondary-menu', banhji.view.utibillMenu);
 
 			var vm = banhji.cashReceiptDetail;
 			banhji.userManagement.addMultiTask("Cash Receipt Detail","cash_receipt_detail",null);
@@ -18287,7 +18342,7 @@
 		}else{
 			banhji.view.layout.showIn("#content", banhji.view.cashReceiptSourceDetail);
 			banhji.view.layout.showIn('#menu', banhji.view.menu);
-			banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
+			banhji.view.menu.showIn('#secondary-menu', banhji.view.utibillMenu);
 
 			var vm = banhji.cashReceiptSourceDetail;
 			banhji.userManagement.addMultiTask("Cash Receipt Source Detail","cash_receipt_source_detail",null);

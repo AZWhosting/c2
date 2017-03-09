@@ -51,7 +51,7 @@ class Dashboards extends REST_Controller {
 		$today = date("Y-m-d");
 				
 		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);				
-		$obj->where_in("type", array("Credit_Purchase", "Commercial_Invoice","Vat_Invoice","Invoice"));
+		$obj->where_in("type", array("Credit_Purchase","Purchase_Return","Commercial_Invoice","Vat_Invoice","Invoice","Sale_Return"));
 		$obj->where_in("status", array(0,2));
 		$obj->where("is_recurring <>", 1);
 		$obj->where("deleted <>", 1);
@@ -68,24 +68,28 @@ class Dashboards extends REST_Controller {
 		$apOverDue = 0;
 
 		foreach($obj as $value) {
-			$amount = 0;
 			$paidAmount = 0;
 			if($value->status==2){
 				$paid = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				$paid->where_in("type", array("Cash_Payment","Offset_Bill","Cash_Receipt","Offset_Invoice"));
+				$paid->where_in("type", array("Cash_Payment","Cash_Receipt"));
 				$paid->where("reference_id", $value->id);
 				$paid->where("is_recurring <>", 1);
 				$paid->where("deleted <>", 1);
 				$paid->get_iterated();
 				
 				foreach ($paid as $p) {
-					$paidAmount += ($p->amount + $p->discount);
+					$paidAmount += (floatval($p->amount) + floatval($p->discount)) / floatval($p->rate);
 				}
 			}
 
-			$amount = (floatval($value->amount) - ($paidAmount + floatval($value->deposit))) / floatval($value->rate);
+			$amount = (floatval($value->amount) - floatval($value->deposit)) / floatval($value->rate);
+			$amount -= $paidAmount;
 			
-			if($value->type=="Credit_Purchase"){
+			if($value->type=="Purchase_Return"){
+				$apAmount -= $amount;
+			}else if($value->type=="Sale_Return"){
+				$arAmount -= $amount;
+			}else if($value->type=="Credit_Purchase"){
 				$apOpen++;
 				$apAmount += $amount;
 
@@ -144,7 +148,6 @@ class Dashboards extends REST_Controller {
 		$data["count"] = 0;
 
 		$obj = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		
 		$obj->include_related("transaction", array("rate","issued_date"));
 		$obj->where_in_related("account", "account_type_id", array(10,11));
 		$obj->where_related("transaction", "issued_date >=", $this->startFiscalDate);
@@ -200,8 +203,10 @@ class Dashboards extends REST_Controller {
 		$data["results"] = [];
 		$data["count"] = 0;
 				
-		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);			
+		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$obj->where_in("type", array("Sale_Order","Commercial_Invoice","Vat_Invoice","Invoice","Commercial_Cash_Sale","Vat_Cash_Sale","Cash_Sale","Sale_Return","Cash_Refund"));		
+		$obj->where("issued_date >=", $this->startFiscalDate);
+		$obj->where("issued_date <", $this->endFiscalDate);
 		$obj->where("is_recurring <>", 1);
 		$obj->where("deleted <>", 1);
 		$obj->get_iterated();
@@ -210,27 +215,19 @@ class Dashboards extends REST_Controller {
 
 		$sale = 0;
 		$saleCustomer = [];
-		$saleOrder = 0;
+		$saleOrdered = 0;
 
 		$so = 0;
 		$soAmount = 0;
 		$soAvg = 0;
 		$soOpen = 0;
 
-		$ar = 0;
-		$arOpen = 0;
-		$arCustomer = [];
-		$arOverDue = 0;
-
 		if($obj->exists()){
 			foreach ($obj as $value) {
 				$amount = floatval($value->amount) / floatval($value->rate);
 
-				if($value->type=="Sale_Return"){
+				if($value->type=="Sale_Return" || $value->type=="Cash_Refund"){
 					$sale -= $amount;
-				}else if($value->type=="Cash_Refund"){
-					$sale -= $amount;
-					$ar -= $amount;
 				}else if($value->type=="Sale_Order"){
 					$so++;
 					$soAmount += $amount;
@@ -241,16 +238,7 @@ class Dashboards extends REST_Controller {
 					}
 					//Used SO in sale
 					if($value->status==1){
-						$saleOrder++; 
-					}
-				}else if($value->type=="Commercial_Cash_Sale" || $value->type=="Vat_Cash_Sale" || $value->type=="Cash_Sale"){
-					$sale += $amount;
-
-					//Group Sale Customer
-					if(isset($saleCustomer[$value->contact_id])){
-						$saleCustomer[$value->contact_id] = 0;
-					} else {
-						$saleCustomer[$value->contact_id] = 0;
+						$saleOrdered++; 
 					}
 				}else{
 					$sale += $amount;
@@ -261,37 +249,6 @@ class Dashboards extends REST_Controller {
 					} else {
 						$saleCustomer[$value->contact_id] = 0;
 					}
-
-					$paidAmount = 0;
-					if($value->status==2){
-						$paid = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-						$paid->where_in("type", array("Cash_Receipt","Offset_Invoice"));
-						$paid->where("reference_id", $value->id);
-						$paid->where("is_recurring <>", 1);
-						$paid->where("deleted <>", 1);
-						$paid->get_iterated();
-						
-						foreach ($paid as $p) {
-							$paidAmount += ($p->amount + $p->discount);
-						}
-					}
-
-					if($value->status==0 || $value->status==2){
-						$ar += $amount - $paidAmount;
-						$arOpen++;
-
-						//Overdue AR
-						if($value->due_date<$today){
-							$arOverDue++;
-						}
-
-						//Group AR Customer
-						if(isset($arCustomer[$value->contact_id])){
-							$arCustomer[$value->contact_id] = 0;
-						} else {
-							$arCustomer[$value->contact_id] = 0;
-						}
-					}
 				}
 			}
 
@@ -300,7 +257,60 @@ class Dashboards extends REST_Controller {
 				$soAvg = $soAmount / $so;
 			}
 		}
+
+		//AR
+		$receivable = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$receivable->where_in("type", array("Commercial_Invoice","Vat_Invoice","Invoice","Sale_Return"));		
+		$receivable->where_in("status", array(0,2));
+		$receivable->where("is_recurring <>", 1);
+		$receivable->where("deleted <>", 1);
+		$receivable->get_iterated();
+
+		$ar = 0;
+		$arOpen = 0;
+		$arCustomer = [];
+		$arOverDue = 0;
+
+		if($receivable->exists()){
+			foreach ($receivable as $value) {
+				$amount = floatval($value->amount) / floatval($value->rate);
+
+				if($value->type=="Sale_Return"){
+					$ar -= $amount;
+				}else{
+					$paidAmount = 0;
+					if($value->status==2){
+						$paid = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+						$paid->where("type", "Cash_Receipt");
+						$paid->where("reference_id", $value->id);
+						$paid->where("is_recurring <>", 1);
+						$paid->where("deleted <>", 1);
+						$paid->get_iterated();
+						
+						foreach ($paid as $p) {
+							$paidAmount += (floatval($p->amount) + floatval($p->discount)) / floatval($p->rate);
+						}
+					}
+
+					$ar += $amount - $paidAmount;
+					$arOpen++;
+
+					//Overdue AR
+					if($value->due_date<$today){
+						$arOverDue++;
+					}
+
+					//Group AR Customer
+					if(isset($arCustomer[$value->contact_id])){
+						$arCustomer[$value->contact_id] = 0;
+					} else {
+						$arCustomer[$value->contact_id] = 0;
+					}
+				}
+			}
+		}
 		
+		//Sale Product
 		$product = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);			
 		$product->where_in_related("transaction", "type", array("Commercial_Invoice","Vat_Invoice","Invoice","Commercial_Cash_Sale","Vat_Cash_Sale","Cash_Sale"));
 		$product->where_related("transaction", "issued_date >=", $this->startFiscalDate);
@@ -309,15 +319,28 @@ class Dashboards extends REST_Controller {
 		$product->where_related("transaction", "deleted <>", 1);
 		$product->where("item_id >", 0);
 		$product->where_related("item", "item_type_id", 1);
-		// $product->get();
+		$product->get_iterated();
+
+		$itemList = [];
+
+		if($product->exists()){
+			foreach ($product as $value) {
+				//Group product
+				if(isset($itemList[$value->item_id])){
+					$itemList[$value->item_id] = 0;
+				} else {
+					$itemList[$value->item_id] = 0;
+				}
+			}
+		}
 
 		//Results
 		$data["results"][] = array(
 			'id' 				=> 0,
 			'sale' 				=> $sale,
 			'sale_customer' 	=> count($saleCustomer),
-			'sale_product' 		=> $product->count(),
-			'sale_order' 		=> $saleOrder,
+			'sale_product' 		=> count($itemList),
+			'sale_ordered' 		=> $saleOrdered,
 			'so' 				=> $so,
 			'so_avg' 			=> $soAvg,
 			'so_open'			=> $soOpen,
@@ -332,7 +355,6 @@ class Dashboards extends REST_Controller {
 		//Response Data		
 		$this->response($data, 200);	
 	}
-
 	//GET MONTHLY SALE
 	function monthly_sale_get() {		
 		$filter 	= $this->get("filter");
@@ -343,130 +365,49 @@ class Dashboards extends REST_Controller {
 		$data["count"] = 0;
 
 		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		
-		//Sort
-		if(!empty($sort) && isset($sort)){
-			foreach ($sort as $value) {
-				if(isset($value["operator"])){
-					$obj->{$value["operator"]}($value["field"], $value["dir"]);
-				}else{
-					$obj->order_by($value["field"], $value["dir"]);
-				}
-			}
-		}
-		
-		//Filter
-		if(!empty($filter) && isset($filter)){
-	    	foreach ($filter["filters"] as $value) {
-	    		if(isset($value["operator"])){
-	    			$obj->{$value["operator"]}($value['field'], $value['value']);
-	    		} else {
-	    			$obj->where($value['field'], $value['value']);
-	    		}
-			}
-		}
-
-		$obj->where_in("type", array("Commercial_Invoice","Vat_Invoice","Invoice","Commercial_Cash_Sale","Vat_Cash_Sale","Cash_Sale","Sale_Order"));
+		$obj->where_in("type", array("Sale_Order","Commercial_Invoice","Vat_Invoice","Invoice","Commercial_Cash_Sale","Vat_Cash_Sale","Cash_Sale","Sale_Return","Cash_Refund"));
 		$obj->where("issued_date >=", $this->startFiscalDate);
 		$obj->where("issued_date <", $this->endFiscalDate);
 		$obj->where("is_recurring <>", 1);		
 		$obj->where("deleted <>", 1);						
-		$obj->order_by("issued_date");								
+		$obj->order_by("issued_date", "asc");								
 		$obj->get_iterated();
 
-		$transactionList = [];
+		$txnList = [];
 		foreach ($obj as $value) {
 			$month = date('M', strtotime($value->issued_date));
 			$amount = floatval($value->amount) / floatval($value->rate);
 
-			if(isset($transactionList[$month])){
-				if($value->type==="Commercial_Invoice" || $value->type==="Vat_Invoice" || $value->type==="Invoice" || $value->type==="Commercial_Cash_Sale" || $value->type==="Vat_Cash_Sale" || $value->type==="Cash_Sale"){
-					$transactionList[$month]["sale"] += $amount;
+			if(isset($txnList[$month])){
+				if($value->type==="Sale_Order"){
+					$txnList[$month]["order"] += $amount;
+				}else if($value->type==="Sale_Return" || $value->type==="Cash_Refund"){
+					$txnList[$month]["sale"] -= $amount;
 				}else{
-					$transactionList[$month]["order"] += $amount;
+					$txnList[$month]["sale"] += $amount;
 				}
 			} else {
-				if($value->type==="Commercial_Invoice" || $value->type==="Vat_Invoice" || $value->type==="Invoice" || $value->type==="Commercial_Cash_Sale" || $value->type==="Vat_Cash_Sale" || $value->type==="Cash_Sale"){
-					$transactionList[$month] = array("sale"=>$amount, "order"=>0);
+				if($value->type==="Sale_Order"){
+					$txnList[$month] = array("sale"=>0, "order"=>$amount);
+				}else if($value->type==="Sale_Return" || $value->type==="Cash_Refund"){
+					$txnList[$month] = array("sale"=>$amount*-1, "order"=>0);
 				}else{
-					$transactionList[$month] = array("sale"=>0, "order"=>$amount);
-				}			
-			}			
-		}		
-		
-		foreach ($transactionList as $key => $value) {
-			$data["results"][] = array(					
-			   	"sale" 		=> floatval($value['sale']),
-			   	"order" 	=> floatval($value['order']),				   	
-			   	"month"		=> $key				   	
-			);
-		}					
-
-		//Response Data		
-		$this->response($data, 200);	
-	}
-
-	//GET MONTHLY RECEIVEABLE
-	function monthly_receivable_get() {		
-		$filters 	= $this->get("filter")["filters"];		
-		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
-		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;								
-		$sort 	 	= $this->get("sort");		
-		$data["results"] = [];
-		$data["count"] = 0;
-		$is_recurring = 0;
-		$deleted = 0;
-
-		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		
-		//Filter		
-		if(!empty($filters) && isset($filters)){			
-	    	foreach ($filters as $value) {
-    			$obj->where($value["field"], $value["value"]);
-			}									 			
+					$txnList[$month] = array("sale"=>$amount, "order"=>0);
+				}
+			}
 		}
 		
-		$obj->where_in("type", array("Commercial_Invoice","Vat_Invoice","Invoice","Cash_Receipt"));
-		$obj->where("issued_date >=", $this->startFiscalDate);
-		$obj->where("issued_date <", $this->endFiscalDate);
-		$obj->where_in("status", array(0,2));
-		$obj->where("is_recurring <>", 1);	
-		$obj->where("deleted <>", 1);						
-		$obj->order_by("issued_date");								
-		$obj->get_iterated();
-
-		$transactionList = [];
-		foreach ($obj as $value) {
-			$month = date('M', strtotime($value->issued_date));
-			$amount = floatval($value->amount) / floatval($value->rate);
-
-			if(isset($transactionList[$month])){
-				if($value->type==="Commercial_Invoice" || $value->type==="Vat_Invoice" || $value->type==="Invoice"){
-					$transactionList[$month]["receivable"] += $amount;
-				}else{
-					$transactionList[$month]["payment"] += $amount;
-				}
-			} else {
-				if($value->type==="Commercial_Invoice" || $value->type==="Vat_Invoice" || $value->type==="Invoice"){
-					$transactionList[$month] = array("receivable"=>$amount, "payment"=>0);
-				}else{
-					$transactionList[$month] = array("receivable"=>0, "payment"=>$amount);
-				}			
-			}			
-		}		
-		
-		foreach ($transactionList as $key => $value) {
-			$data["results"][] = array(					
-			   	"receivable" 		=> floatval($value['receivable']),
-			   	"payment" 	=> floatval($value['payment']),				   	
-			   	"month"		=> $key				   	
+		foreach ($txnList as $key => $value) {
+			$data["results"][] = array(
+			   	"sale" 		=> floatval($value['sale']),
+			   	"order" 	=> floatval($value['order']),
+			   	"month"		=> $key
 			);
-		}					
+		}
 
 		//Response Data		
 		$this->response($data, 200);	
-	}
-	
+	}	
 	//GET TOP CUSTOMER 
 	function top_customer_get() {
 		$filter 	= $this->get("filter");
@@ -501,7 +442,7 @@ class Dashboards extends REST_Controller {
 		}
 
 		$obj->include_related("contact", array("name"));
-		$obj->where_in("type", array("Commercial_Invoice","Vat_Invoice","Invoice","Commercial_Cash_Sale","Vat_Cash_Sale","Cash_Sale"));			
+		$obj->where_in("type", array("Commercial_Invoice","Vat_Invoice","Invoice","Commercial_Cash_Sale","Vat_Cash_Sale","Cash_Sale","Sale_Return","Cash_Refund"));			
 		$obj->where("issued_date >=", $this->startFiscalDate);
 		$obj->where("issued_date <", $this->endFiscalDate);
 		$obj->where("is_recurring <>", 1);
@@ -518,22 +459,31 @@ class Dashboards extends REST_Controller {
 
 		if($obj->exists()){
 			$top = [];
-			$customer = [];
+			$contactList = [];
 
 			//Group by contact_id
 			foreach($obj as $value) {
 				$amount = floatval($value->amount) / floatval($value->rate);
 
-				if(isset($customer[$value->contact_id])){
-					$customer[$value->contact_id]['amount'] += $amount;
+				if(isset($contactList[$value->contact_id])){
+					if($value->type=="Sale_Return" || $value->type=="Cash_Refund"){
+						$contactList[$value->contact_id]['amount'] -= $amount;
+					}else{
+						$contactList[$value->contact_id]['amount'] += $amount;
+					}					
 				} else {
-					$customer[$value->contact_id]['name'] = $value->contact_name;
-					$customer[$value->contact_id]['amount'] = $amount;
+					if($value->type=="Sale_Return" || $value->type=="Cash_Refund"){
+						$contactList[$value->contact_id]['name'] = $value->contact_name;
+						$contactList[$value->contact_id]['amount'] = $amount*-1;
+					}else{
+						$contactList[$value->contact_id]['name'] = $value->contact_name;
+						$contactList[$value->contact_id]['amount'] = $amount;
+					}
 				}
 			}
 
 			//Sort amount DESC
-			foreach($customer as $value) {
+			foreach($contactList as $value) {
 				$top[] = array('amount' => (float)$value['amount']);
 			}
 			rsort($top);
@@ -541,7 +491,7 @@ class Dashboards extends REST_Controller {
 			//Add Results
 			$counter = 0;
 			foreach ($top as $value) {
-				foreach($customer as $row) {
+				foreach($contactList as $row) {
 					if($row['amount'] === $value['amount'] && $counter < 5) {
 						$data["results"][] = array(
 							'id' 			=> 0,
@@ -560,7 +510,6 @@ class Dashboards extends REST_Controller {
 		//Response Data
 		$this->response($data, 200);
 	}
-
 	//GET TOP A/R 
 	function top_ar_get() {
 		$filter 	= $this->get("filter");
@@ -595,9 +544,8 @@ class Dashboards extends REST_Controller {
 		}
 
 		$obj->include_related("contact", array("name"));
-		$obj->where_in("type", array("Commercial_Invoice","Vat_Invoice","Invoice"));
-		$obj->where("issued_date >=", $this->startFiscalDate);
-		$obj->where("issued_date <", $this->endFiscalDate);
+		$obj->where_in("type", array("Commercial_Invoice","Vat_Invoice","Invoice","Sale_Return"));
+		$obj->where_in("status", array(0,2));
 		$obj->where("is_recurring <>", 1);
 		$obj->where("deleted <>", 1);
 
@@ -612,22 +560,46 @@ class Dashboards extends REST_Controller {
 
 		if($obj->exists()){
 			$top = [];
-			$customer = [];
+			$contactList = [];
 
 			//Group by contact_id
 			foreach($obj as $value) {
-				$amount = floatval($value->amount) / floatval($value->rate);
+				$paidAmount = 0;
+				if($value->status==2){
+					$paid = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					$paid->where("type", "Cash_Receipt");
+					$paid->where("reference_id", $value->id);
+					$paid->where("is_recurring <>", 1);
+					$paid->where("deleted <>", 1);
+					$paid->get_iterated();
+					
+					foreach ($paid as $p) {
+						$paidAmount += (floatval($p->amount) + floatval($p->discount)) / floatval($p->rate);
+					}
+				}
 
-				if(isset($customer[$value->contact_id])){
-					$customer[$value->contact_id]['amount'] += $amount;
+				$amount = floatval($value->amount) / floatval($value->rate);
+				$amount -= $paidAmount;
+
+				if(isset($contactList[$value->contact_id])){
+					if($value->type=="Sale_Return"){
+						$contactList[$value->contact_id]['amount'] -= $amount;
+					}else{
+						$contactList[$value->contact_id]['amount'] += $amount;
+					}					
 				} else {
-					$customer[$value->contact_id]['name'] = $value->contact_name;
-					$customer[$value->contact_id]['amount'] = $amount;
+					if($value->type=="Sale_Return"){
+						$contactList[$value->contact_id]['name'] = $value->contact_name;
+						$contactList[$value->contact_id]['amount'] = $amount*-1;
+					}else{
+						$contactList[$value->contact_id]['name'] = $value->contact_name;
+						$contactList[$value->contact_id]['amount'] = $amount;
+					}
 				}
 			}
 
 			//Sort amount
-			foreach($customer as $value) {
+			foreach($contactList as $value) {
 				$top[] = array('amount' => (float)$value['amount']);
 			}
 			rsort($top);
@@ -635,7 +607,7 @@ class Dashboards extends REST_Controller {
 			//Add Results
 			$counter = 0;
 			foreach ($top as $value) {
-				foreach($customer as $row) {
+				foreach($contactList as $row) {
 					if($row['amount'] === $value['amount'] && $counter < 5) {
 						$data["results"][] = array(
 							'id' 			=> 0,
@@ -649,209 +621,168 @@ class Dashboards extends REST_Controller {
 					}
 				}
 			}
-		}		
+		}
 
 		//Response Data		
 		$this->response($data, 200);
 	}
 
 
-
-
-
 	//SUPPLIER
 	//GET SUPPLIER DASHBOARD SUMMARY
 	function supplier_dashboard_summary_get() {		
-		$filters 	= $this->get("filter")["filters"];		
-		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
-		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;
-		$sort 	 	= $this->get("sort");		
+		$filter 	= $this->get("filter");
+		$page 		= $this->get('page');
+		$limit 		= $this->get('limit');
+		$sort 	 	= $this->get("sort");
 		$data["results"] = [];
 		$data["count"] = 0;
-		$is_recurring = 0;
-		$deleted = 0;
-						
-		//Purchase
-		$purchase = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);			
-		$purchase->where_in("type", array("Cash_Purchase","Credit_Purchase", "Purchase_Return"));
-		$purchase->where("issued_date >=", $this->startFiscalDate);
-		$purchase->where("issued_date <", $this->endFiscalDate);
-		$purchase->where("is_recurring", 0);		
-		$purchase->where("deleted", 0);		
-		$purchase->get_iterated();
-
-		//Puchase Count Customer
-		$purchaseAmount = 0;
-		$purchaseSupplier = [];
-		$purchaseSupplierCount = 0;
-		foreach($purchase as $value) {			
-			//Total Purchase
-			if($value->type=="Cash_Purchase" || $value->type=="Credit_Purchase"){
-				$purchaseAmount += floatval($value->amount) / floatval($value->rate);
-			}else{
-				//Purhcase Return
-				$purchaseAmount -= floatval($value->amount) / floatval($value->rate);
-			}
-
-			
-
-			//Group customer
-			if(isset($purchaseSupplier[$value->contact_id])){
-				$purchaseSupplier[$value->contact_id] = 0;
-			} else {
-				$purchaseSupplier[$value->contact_id] = 0;
-
-				$purchaseSupplierCount++;
-			}						
-		}
-
-		//Purchase Count Product
-		$purchaseProduct = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$purchaseProduct->where_in_related("transaction", "type", array("Cash_Purchase","Credit_Purchase"));
-		$purchaseProduct->where_related("transaction", "issued_date >=", $this->startFiscalDate);
-		$purchaseProduct->where_related("transaction", "issued_date <", $this->endFiscalDate);
-		$purchaseProduct->where_related("item", "item_type_id", 1);		
-		$purchaseProduct->where("item_id >", 0);
-		$purchaseProduct->get_iterated();
-		$purchaseProductList = [];
-		$purchaseProductCount = 0;
-		foreach ($purchaseProduct as $value) {			
-			if(isset($purchaseProductList[$value->item_id])){
 				
-			}else{
-				$purchaseProductCount++;
-				$purchaseProductList[$value->item_id] = 1;
+		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$obj->where_in("type", array("Purchase_Order","Cash_Purchase","Credit_Purchase","Purchase_Return","Payment_Refund"));		
+		$obj->where("issued_date >=", $this->startFiscalDate);
+		$obj->where("issued_date <", $this->endFiscalDate);
+		$obj->where("is_recurring <>", 1);
+		$obj->where("deleted <>", 1);
+		$obj->get_iterated();
+
+		$today = date("Y-m-d");
+
+		$purchase = 0;
+		$purchaseSupplier = [];
+		$purchaseOrdered = 0;
+
+		$po = 0;
+		$poAmount = 0;
+		$poAvg = 0;
+		$poOpen = 0;
+
+		if($obj->exists()){
+			foreach ($obj as $value) {
+				$amount = floatval($value->amount) / floatval($value->rate);
+
+				if($value->type=="Purchase_Return" || $value->type=="Payment_Refund"){
+					$purchase -= $amount;
+				}else if($value->type=="Purchase_Order"){
+					$po++;
+					$poAmount += $amount;
+
+					//Open PO
+					if($value->status==0){
+						$poOpen++; 
+					}
+					//Used PO in purchase
+					if($value->status==1){
+						$purchaseOrdered++; 
+					}
+				}else{
+					$purchase += $amount;
+
+					//Group Purchase Supplier
+					if(isset($purchaseSupplier[$value->contact_id])){
+						$purchaseSupplier[$value->contact_id] = 0;
+					} else {
+						$purchaseSupplier[$value->contact_id] = 0;
+					}
+				}
 			}
-		}
 
-		//Purchase Count Order
-		$purchaseOrder = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$purchaseOrder->where_in("type", array("Cash_Purchase","Credit_Purchase"));
-		$purchaseOrder->where("status", 1);		
-		$purchaseOrder->where("type", "Purchase_Order");		
-
-		//Order
-		$order = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);					
-		$order->where("type", "Purchase_Order");
-		$order->where("issued_date >=", $this->startFiscalDate);
-		$order->where("issued_date <", $this->endFiscalDate);
-		$order->where("is_recurring", 0);		
-		$order->where("deleted", 0);		
-		$order->get_iterated();
-
-		$orderCount = 0;		
-		$orderAmount = 0;
-		$orderOpen = 0;
-		$orderAvg = 0;
-		foreach($order as $value) {
-			$orderCount++;
-
-			if($value->status==0){
-				$orderOpen++;
+			//PO avg
+			if($po>0){
+				$poAvg = $poAmount / $po;
 			}
-
-			$orderAmount += floatval($value->amount) / floatval($value->rate);
-		}
-
-		if($orderCount>0){
-			$orderAvg = $orderAmount / $orderCount;
 		}
 
 		//AP
-		$ap = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);			
-		$ap->where("type", "Credit_Purchase");
-		$ap->where_in("status", array(0,2));
-		$ap->where("is_recurring", 0);		
-		$ap->where("deleted", 0);		
-		$ap->get_iterated();
+		$payable = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$payable->where_in("type", array("Credit_Purchase","Purchase_Return"));		
+		$payable->where_in("status", array(0,2));
+		$payable->where("is_recurring <>", 1);
+		$payable->where("deleted <>", 1);
+		$payable->get_iterated();
 
-		$apAmount = 0;
-		$apCustomer = [];
-		$apCustomerCount = 0;
-		$apCount = 0;
+		$ap = 0;
 		$apOpen = 0;
+		$apSupplier = [];
 		$apOverDue = 0;
-		$today = date("Y-m-d");
-		foreach($ap as $value) {
-			$apCount++;
 
-			//Open
-			if($value->status==0){
-				$apOpen++;
-			}
+		if($payable->exists()){
+			foreach ($payable as $value) {
+				$amount = floatval($value->amount) / floatval($value->rate);
 
-			//Overdue
-			if($value->due_date<$today){
-				$apOverDue++;
-			}
+				if($value->type=="Purchase_Return"){
+					$ap -= $amount;
+				}else{
+					$paidAmount = 0;
+					if($value->status==2){
+						$paid = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+						$paid->where("type", "Cash_Payment");
+						$paid->where("reference_id", $value->id);
+						$paid->where("is_recurring <>", 1);
+						$paid->where("deleted <>", 1);
+						$paid->get_iterated();
+						
+						foreach ($paid as $p) {
+							$paidAmount += (floatval($p->amount) + floatval($p->discount)) / floatval($p->rate);
+						}
+					}
 
-			//Sum amount
-			if($value->status==2){
-				$paid = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				$paid->where("type", "Cash_Payment");
-				$paid->where("reference_id", $value->id);
-				$paid->where("is_recurring", 0);		
-				$paid->where("deleted", 0);
-				$paid->get();
+					$ap += $amount - $paidAmount;
+					$apOpen++;
 
-				$paidAmount = 0;
-				foreach ($paid as $p) {
-					$paidAmount += ($p->amount + $p->discount);
+					//Overdue AP
+					if($value->due_date<$today){
+						$apOverDue++;
+					}
+
+					//Group AP Supplier
+					if(isset($apSupplier[$value->contact_id])){
+						$apSupplier[$value->contact_id] = 0;
+					} else {
+						$apSupplier[$value->contact_id] = 0;
+					}
 				}
-				
-				$apAmount += ($value->amount - $paidAmount) / $value->rate;
-			}else{
-				$apAmount += floatval($value->amount) / floatval($value->rate);
 			}
+		}
+		
+		//Purchase Product
+		$product = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);			
+		$product->where_in_related("transaction", "type", array("Cash_Purchase","Credit_Purchase"));
+		$product->where_related("transaction", "issued_date >=", $this->startFiscalDate);
+		$product->where_related("transaction", "issued_date <", $this->endFiscalDate);
+		$product->where_related("transaction", "is_recurring <>", 1);
+		$product->where_related("transaction", "deleted <>", 1);
+		$product->where("item_id >", 0);
+		$product->where_related("item", "item_type_id", 1);
+		$product->get_iterated();
 
-			$apAmount -= floatval($value->deposit);
+		$itemList = [];
 
-			//Group customer
-			if(isset($arCustomer[$value->contact_id])){
-				$apCustomer[$value->contact_id] = 0;
-			} else {
-				$apCustomer[$value->contact_id] = 0;
-
-				$apCustomerCount++;
-			}			
+		if($product->exists()){
+			foreach ($product as $value) {
+				//Group product
+				if(isset($itemList[$value->item_id])){
+					$itemList[$value->item_id] = 0;
+				} else {
+					$itemList[$value->item_id] = 0;
+				}
+			}
 		}
 
-		//Credit Purchase
-		$creditPurchase = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);			
-		$creditPurchase->where("type", "Credit_Purchase");
-		$creditPurchase->where("issued_date >=", $this->startFiscalDate);
-		$creditPurchase->where("issued_date <", $this->endFiscalDate);
-		$creditPurchase->where("is_recurring", 0);		
-		$creditPurchase->where("deleted", 0);		
-		$creditPurchase->get_iterated();
-		
-		$creditPurchaseAmount = 0;		
-		foreach($creditPurchase as $value) {			
-			$creditPurchaseAmount += floatval($value->amount) / floatval($value->rate);									
-		}		
-		
-	    $startDate = new DateTime($this->startFiscalDate);
-		$endDate = new DateTime();
-		$totalDay = $endDate->diff($startDate)->format("%a");		
-		$collectionDay = 0;
-		if($creditPurchaseAmount>0){
-			$collectionDay = ($apAmount / $creditPurchaseAmount) * $totalDay;
-		}
 		//Results
 		$data["results"][] = array(
 			'id' 				=> 0,
-			'purchase' 			=> $purchaseAmount,						
-			'purchase_supplier' => $purchaseSupplierCount,
-			'purchase_product' 	=> $purchaseProductCount,
-			'purchase_order' 	=> $purchaseOrder->count(),
-			'order' 			=> $order->result_count(),
-			'order_avg' 		=> $orderAvg,
-			'order_open'		=> $orderOpen,			
-			'ap' 				=> $apAmount,
+			'purchase' 			=> $purchase,						
+			'purchase_supplier' => count($purchaseSupplier),
+			'purchase_product' 	=> count($itemList),
+			'purchase_ordered' 	=> $purchaseOrdered,
+			'po' 				=> $po,
+			'po_avg' 			=> $poAvg,
+			'po_open'			=> $poOpen,			
+			'ap' 				=> $ap,
 			'ap_open' 			=> $apOpen,
-			'ap_supplier' 		=> $apCustomerCount,
-			'ap_overdue' 		=> $apOverDue,
-			'collection_day' 	=> $collectionDay
+			'ap_supplier' 		=> count($apSupplier),
+			'ap_overdue' 		=> $apOverDue
 		);
 
 		$data["count"] = count($data["results"]);		
@@ -859,58 +790,51 @@ class Dashboards extends REST_Controller {
 		//Response Data		
 		$this->response($data, 200);	
 	}
-
 	//GET MONTHLY PURCHASE
 	function monthly_purchase_get() {		
-		$filters 	= $this->get("filter")["filters"];		
-		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
-		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;								
-		$sort 	 	= $this->get("sort");		
+		$filter 	= $this->get("filter");
+		$page 		= $this->get('page');
+		$limit 		= $this->get('limit');
+		$sort 	 	= $this->get("sort");
 		$data["results"] = [];
 		$data["count"] = 0;
-		$is_recurring = 0;
-		$deleted = 0;
 
 		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		
-		//Filter		
-		if(!empty($filters) && isset($filters)){			
-	    	foreach ($filters as $value) {
-    			$obj->where($value["field"], $value["value"]);
-			}									 			
-		}
-		
-		$obj->where_in("type", array("Cash_Purchase","Credit_Purchase","Purchase_Order"));
+		$obj->where_in("type", array("Purchase_Order","Cash_Purchase","Credit_Purchase","Purchase_Return","Payment_Refund"));
 		$obj->where("issued_date >=", $this->startFiscalDate);
 		$obj->where("issued_date <", $this->endFiscalDate);
 		$obj->where("is_recurring <>", 1);		
 		$obj->where("deleted <>", 1);						
-		$obj->order_by("issued_date");								
+		$obj->order_by("issued_date", "asc");								
 		$obj->get_iterated();
 
-		$transactionList = [];
+		$txnList = [];
 		foreach ($obj as $value) {
 			$month = date('M', strtotime($value->issued_date));
 			$amount = floatval($value->amount) / floatval($value->rate);
 
-			if(isset($transactionList[$month])){
-				if($value->type==="Cash_Purchase" || $value->type==="Credit_Purchase"){
-					$transactionList[$month]["sale"] += $amount;
+			if(isset($txnList[$month])){
+				if($value->type==="Purchase_Order"){
+					$txnList[$month]["order"] += $amount;
+				}else if($value->type==="Purchase_Return" || $value->type==="Payment_Refund"){
+					$txnList[$month]["purchase"] -= $amount;
 				}else{
-					$transactionList[$month]["order"] += $amount;
+					$txnList[$month]["purchase"] += $amount;
 				}
 			} else {
-				if($value->type==="Cash_Purchase" || $value->type==="Credit_Purchase"){
-					$transactionList[$month] = array("sale"=>$amount, "order"=>0);
+				if($value->type==="Purchase_Order"){
+					$txnList[$month] = array("purchase"=>0, "order"=>$amount);
+				}else if($value->type==="Purchase_Return" || $value->type==="Payment_Refund"){
+					$txnList[$month] = array("purchase"=>$amount*-1, "order"=>0);
 				}else{
-					$transactionList[$month] = array("sale"=>0, "order"=>$amount);
-				}			
-			}			
+					$txnList[$month] = array("purchase"=>$amount, "order"=>0);
+				}
+			}		
 		}		
 		
-		foreach ($transactionList as $key => $value) {
+		foreach ($txnList as $key => $value) {
 			$data["results"][] = array(					
-			   	"sale" 		=> floatval($value['sale']),
+			   	"purchase" 	=> floatval($value['purchase']),
 			   	"order" 	=> floatval($value['order']),				   	
 			   	"month"		=> $key				   	
 			);
@@ -918,68 +842,7 @@ class Dashboards extends REST_Controller {
 
 		//Response Data		
 		$this->response($data, 200);	
-	}	
-
-	//GET MONTHLY PURCHASE
-	function monthly_payment_get() {		
-		$filters 	= $this->get("filter")["filters"];		
-		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
-		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;								
-		$sort 	 	= $this->get("sort");		
-		$data["results"] = [];
-		$data["count"] = 0;
-		$is_recurring = 0;
-		$deleted = 0;
-
-		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		
-		//Filter		
-		if(!empty($filters) && isset($filters)){			
-	    	foreach ($filters as $value) {
-	    		$obj->where($value["field"], $value["value"]);
-			}									 			
-		}
-		
-		$obj->where_in("type", array("Credit_Purchase","Credit_Payment"));
-		$obj->where("issued_date >=", $this->startFiscalDate);
-		$obj->where("issued_date <", $this->endFiscalDate);
-		$obj->where("is_recurring <>", 1);		
-		$obj->where("deleted <>", 1);						
-		$obj->order_by("issued_date");								
-		$obj->get_iterated();
-
-		$transactionList = [];
-		foreach ($obj as $value) {
-			$month = date('M', strtotime($value->issued_date));
-			$amount = floatval($value->amount) / floatval($value->rate);
-
-			if(isset($transactionList[$month])){
-				if($value->type==="Cash_Purchase"){
-					$transactionList[$month]["payable"] += $amount;
-				}else{
-					$transactionList[$month]["payment"] += $amount;
-				}
-			} else {
-				if($value->type==="Cash_Purchase"){
-					$transactionList[$month] = array("payable"=>$amount, "payment"=>0);
-				}else{
-					$transactionList[$month] = array("payable"=>0, "payment"=>$amount);
-				}			
-			}			
-		}		
-		
-		foreach ($transactionList as $key => $value) {
-			$data["results"][] = array(					
-			   	"payable" 		=> floatval($value['payable']),
-			   	"payment" 	=> floatval($value['payment']),				   	
-			   	"month"		=> $key				   	
-			);
-		}					
-
-		//Response Data		
-		$this->response($data, 200);	
 	}
-	
 	//GET TOP SUPPLIER 
 	function top_supplier_get() {		
 		$filter 	= $this->get("filter");
@@ -1014,7 +877,7 @@ class Dashboards extends REST_Controller {
 		}
 
 		$obj->include_related("contact", array("name"));
-		$obj->where_in("type", array("Cash_Purchase", "Credit_Purchase"));
+		$obj->where_in("type", array("Cash_Purchase", "Credit_Purchase", "Purchase_Return", "Payment_Refund"));
 		$obj->where("issued_date >=", $this->startFiscalDate);
 		$obj->where("issued_date <", $this->endFiscalDate);
 		$obj->where("is_recurring <>", 1);
@@ -1030,36 +893,45 @@ class Dashboards extends REST_Controller {
 		}
 
 		if($obj->exists()){
-			$top = [];		
-			$customer = [];
+			$top = [];
+			$contactList = [];
 
 			//Group by contact_id
-			foreach($obj as $value) {			
-				if(isset($customer[$value->contact_id])){
-					$customer[$value->contact_id]['amount'] += floatval($value->amount) / floatval($value->rate);
-				} else {
-					$customer[$value->contact_id]['amount'] = floatval($value->amount) / floatval($value->rate);
-				}					
-			}		
+			foreach($obj as $value) {
+				$amount = floatval($value->amount) / floatval($value->rate);
 
-			//Sort amount
-			foreach($customer as $value) {			
+				if(isset($contactList[$value->contact_id])){
+					if($value->type=="Purchase_Return" || $value->type=="Payment_Refund"){
+						$contactList[$value->contact_id]['amount'] -= $amount;
+					}else{
+						$contactList[$value->contact_id]['amount'] += $amount;
+					}					
+				} else {
+					if($value->type=="Purchase_Return" || $value->type=="Payment_Refund"){
+						$contactList[$value->contact_id]['name'] = $value->contact_name;
+						$contactList[$value->contact_id]['amount'] = $amount*-1;
+					}else{
+						$contactList[$value->contact_id]['name'] = $value->contact_name;
+						$contactList[$value->contact_id]['amount'] = $amount;
+					}
+				}
+			}
+
+			//Sort amount DESC
+			foreach($contactList as $value) {
 				$top[] = array('amount' => (float)$value['amount']);
 			}
-			rsort($top);	
+			rsort($top);
 
 			//Add Results
 			$counter = 0;
 			foreach ($top as $value) {
-				foreach($customer as $key => $v) {				
-					if($v['amount'] === $value['amount'] && $counter < 5) {
-						$contact = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-						$contact->get_by_id($key);
-
+				foreach($contactList as $row) {
+					if($row['amount'] === $value['amount'] && $counter < 5) {
 						$data["results"][] = array(
-							'id' 			=> 0,						
-							'amount' 		=> $value['amount'],
-							'name' 			=> $contact->name
+							'id' 			=> 0,
+							'name' 			=> $row['name'],
+							'amount' 		=> $value['amount']
 						);
 
 						$counter++;
@@ -1073,126 +945,126 @@ class Dashboards extends REST_Controller {
 		//Response Data		
 		$this->response($data, 200);	
 	}
-
 	//GET TOP A/P
 	function top_ap_get() {		
-		$filters 	= $this->get("filter")["filters"];		
-		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
-		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;
-		$sort 	 	= $this->get("sort");		
-		$data["results"] = array();
+		$filter 	= $this->get("filter");
+		$page 		= $this->get('page');
+		$limit 		= $this->get('limit');
+		$sort 	 	= $this->get("sort");
+		$data["results"] = [];
 		$data["count"] = 0;
-		$is_recurring = 0;
-		$deleted = 0;
 
-		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
-
-		//Sort
-		if(!empty($sort) && isset($sort)){					
-			foreach ($sort as $value) {
-				$obj->order_by($value["field"], $value["dir"]);
-			}
-		}
+		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);			
 		
-		//Filter		
-		if(!empty($filters) && isset($filters)){			
-	    	foreach ($filters as $value) {
-	    		if(!empty($value["operator"]) && isset($value["operator"])){
-		    		if($value["operator"]=="where_in"){
-		    			$obj->where_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_where_in"){
-		    			$obj->or_where_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="where_not_in"){
-		    			$obj->where_not_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_where_not_in"){
-		    			$obj->or_where_not_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="like"){
-		    			$obj->like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_like"){
-		    			$obj->or_like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="not_like"){
-		    			$obj->not_like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_not_like"){
-		    			$obj->or_not_like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="startswith"){
-		    			$obj->like($value["field"], $value["value"], "after");
-		    		}else if($value["operator"]=="endswith"){
-		    			$obj->like($value["field"], $value["value"], "before");
-		    		}else if($value["operator"]=="contains"){
-		    			$obj->like($value["field"], $value["value"], "both");
-		    		}else if($value["operator"]=="or_where"){
-		    			$obj->or_where($value["field"], $value["value"]);		    				    		
-		    		}else{
-		    			$obj->where($value["field"].' '.$value["operator"], $value["value"]);
-		    		}
-	    		}else{	    			
-	    			if($value["field"]=="is_recurring"){
-	    				$is_recurring = $value["value"];
-	    			}else if($value["field"]=="deleted"){
-	    				$deleted = $value["value"];
-	    			}else{
-	    				$obj->where($value["field"], $value["value"]);
-	    			}	    				    			
-	    		}
-			}									 			
-		}
-
-		$obj->where("type", "Credit_Purchase");
-		$obj->where_in("status", array(0,2));
-		$obj->where("is_recurring", $is_recurring);		
-		$obj->where("deleted", $deleted);		
-		$obj->get_iterated();
-
-		$top = [];		
-		$customer = [];
-
-		//Group by contact_id
-		foreach($obj as $value) {
-			$amt = floatval($value->amount) - (floatval($value->amount_paid) + floatval($value->deposit));
-
-			if(isset($customer[$value->contact_id])){
-				$customer[$value->contact_id]['amount'] += $amt / floatval($value->rate);
-			} else {
-				$customer[$value->contact_id]['amount'] = $amt / floatval($value->rate);
-			}					
-		}		
-
-		//Sort amount
-		foreach($customer as $value) {			
-			$top[] = array('amount' => (float)$value['amount']);
-		}
-		rsort($top);	
-
-		//Add Results
-		$counter = 0;
-		foreach ($top as $value) {
-			foreach($customer as $key => $v) {				
-				if($v['amount'] === $value['amount'] && $counter < 5) {
-					$contact = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-					$contact->get_by_id($key);
-
-					$data["results"][] = array(
-						'id' 			=> 0,						
-						'amount' 		=> $value['amount'],
-						'name' 			=> $contact->name
-					);
-
-					$counter++;
-
-					break;
+		//Sort
+		if(!empty($sort) && isset($sort)){
+			foreach ($sort as $value) {
+				if(isset($value['operator'])){
+					$obj->{$value['operator']}($value["field"], $value["dir"]);
+				}else{
+					$obj->order_by($value["field"], $value["dir"]);
 				}
 			}
-		}		
+		}
+
+		//Filter
+		if(!empty($filter) && isset($filter)){
+	    	foreach ($filter["filters"] as $value) {
+	    		if(isset($value["operator"])) {
+					$obj->{$value["operator"]}($value["field"], $value["value"]);
+				} else {
+	    			$obj->where($value["field"], $value["value"]);
+				}
+			}
+		}
+
+		$obj->include_related("contact", array("name"));
+		$obj->where_in("type", array("Credit_Purchase","Purchase_Return"));
+		$obj->where_in("status", array(0,2));
+		$obj->where("is_recurring <>", 1);
+		$obj->where("deleted <>", 1);
+
+		//Results
+		if($page && $limit){
+			$obj->get_paged_iterated($page, $limit);
+			$data["count"] = $obj->paged->total_rows;
+		}else{
+			$obj->get_iterated();
+			$data["count"] = $obj->result_count();
+		}
+
+		if($obj->exists()){
+			$top = [];
+			$contactList = [];
+
+			//Group by contact_id
+			foreach($obj as $value) {
+				$paidAmount = 0;
+				if($value->status==2){
+					$paid = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					$paid->where("type", "Cash_Payment");
+					$paid->where("reference_id", $value->id);
+					$paid->where("is_recurring <>", 1);
+					$paid->where("deleted <>", 1);
+					$paid->get_iterated();
+					
+					foreach ($paid as $p) {
+						$paidAmount += (floatval($p->amount) + floatval($p->discount)) / floatval($p->rate);
+					}
+				}
+
+				$amount = floatval($value->amount) / floatval($value->rate);
+				$amount -= $paidAmount;
+
+				if(isset($contactList[$value->contact_id])){
+					if($value->type=="Purchase_Return"){
+						$contactList[$value->contact_id]['amount'] -= $amount;
+					}else{
+						$contactList[$value->contact_id]['amount'] += $amount;
+					}					
+				} else {
+					if($value->type=="Purchase_Return"){
+						$contactList[$value->contact_id]['name'] = $value->contact_name;
+						$contactList[$value->contact_id]['amount'] = $amount*-1;
+					}else{
+						$contactList[$value->contact_id]['name'] = $value->contact_name;
+						$contactList[$value->contact_id]['amount'] = $amount;
+					}
+				}
+			}
+
+			//Sort amount
+			foreach($contactList as $value) {
+				$top[] = array('amount' => (float)$value['amount']);
+			}
+			rsort($top);
+
+			//Add Results
+			$counter = 0;
+			foreach ($top as $value) {
+				foreach($contactList as $row) {
+					if($row['amount'] === $value['amount'] && $counter < 5) {
+						$data["results"][] = array(
+							'id' 			=> 0,
+							'name' 			=> $row['name'],
+							'amount' 		=> $value['amount']
+						);
+
+						$counter++;
+
+						break;
+					}
+				}
+			}
+		}
 
 		//Response Data		
 		$this->response($data, 200);	
-	}	
+	}
 
 
-
-
-	//ITEM
-	//Inventory Dashboard Summary
+	//INVENTORY
+	//INVENTORY DASHBOARD SUMMARY
 	function inventory_dashboard_summary_get() {		
 		$filters 	= $this->get("filter")["filters"];		
 		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
@@ -1548,7 +1420,7 @@ class Dashboards extends REST_Controller {
 		$this->response($data, 200);	
 	}
 
-	//Get Top Purchase Product
+	//GET TOP PURCHASE PRODUCT
 	function top_purchase_get() {		
 		$filters 	= $this->get("filter")["filters"];		
 		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
@@ -1777,8 +1649,6 @@ class Dashboards extends REST_Controller {
 		//Response Data		
 		$this->response($data, 200);	
 	}
-
-
 	
 	
 	//CASH
@@ -1897,7 +1767,6 @@ class Dashboards extends REST_Controller {
 		//Response Data		
 		$this->response($data, 200);
 	}
-
 	function top_expense_get() {
 		$filters 	= $this->get("filter")["filters"];		
 		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
@@ -2007,8 +1876,7 @@ class Dashboards extends REST_Controller {
 		$data['count'] = $myLimit;
 		//Response Data		
 		$this->response($data, 200);
-	}
-	
+	}	
 	// cash advance
 	function top_advance_get() {
 		$filters 	= $this->get("filter")["filters"];		

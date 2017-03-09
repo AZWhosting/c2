@@ -286,7 +286,23 @@
                                         type="text"
                                       >
                                     </td>
-                                </tr>                                
+                                </tr> 
+                                <tr>
+                                  <td>Gender</td>
+                                  <td>:</td>
+                                  <td>
+                                    <input id="type"
+                                        data-role="dropdownlist"
+                                        data-bind="source: genders, value: current.gender"
+                                        data-text-field="value"
+                                        data-value-field="id"
+                                        data-value-primitive="true"
+                                        class="form-control col-md-7 col-xs-12"
+                                        type="text"
+                                      ></td>
+                                  <td></td>
+                                  <td></td>
+                                </tr>                               
                             </table>
                           </div>
                         </article>
@@ -533,6 +549,20 @@
                               </td>
                             </tr>
                             <tr>
+                              <td>Latitute</td>
+                              <td>:</td>
+                              <td>
+                                <input type="text" class="form-control" id="" placeholder="" data-bind="value: current.lat">
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>Longtitute</td>
+                              <td>:</td>
+                              <td>
+                                <input type="text" class="form-control" id="" placeholder="" data-bind="value: current.long">
+                              </td>
+                            </tr>
+                            <tr>
                               <td>Telephone</td>
                               <td>:</td>
                               <td>
@@ -705,60 +735,64 @@
       </div>
     </script>
     <script type="text/x-kendo-template" id="template-placeholder-company">
-      <article class="profile-info-item">
-        <img width="120px" data-bind="attr: {src: current.logo.url}">   
-      </article>
-        <header class="box-typical-header-sm">
-            General Info
-        </header>
+      <div class="row">
         <article class="profile-info-item">
-            <table >
-                <tr>
-                    <td>Company Name</td>
-                    <td>:</td>
-                    <td><span data-bind="text:current.name"></span></td>
-                </tr>
-                <tr>
-                    <td>Telephone</td>
-                    <td>:</td>
-                    <td><span data-bind="text:current.telephone"></span></td>
-                </tr>
-                <tr>
-                    <td>Email</td>
-                    <td>:</td>
-                    <td><span data-bind="text:current.email"></span></td>
-                </tr>
-                <tr>
-                    <td>Address</td>
-                    <td>:</td>
-                    <td><span data-bind="text:current.address"></span></td>
-                </tr>
-                <tr>
-                    <td>ZIP Code</td>
-                    <td>:</td>
-                    <td><span data-bind="text:current.zip"></span></td>
-                </tr>
-                <tr>
-                    <td>Company Registration Number</td>
-                    <td>:</td>
-                    <td><span data-bind="text:current.year_founded"></span></td>
-                </tr>
-                <tr>
-                    <td>City/Province</td>
-                    <td>:</td>
-                    <td><span data-bind="text:current.city"></span></td>
-                </tr>
-                <tr>
-                    <td>Country</td>
-                    <td>:</td>
-                    <td><span data-bind="text:current.country.name"></span></td>
-                </tr>
-                 <tr>
-                    <td>Industry</td>
-                    <td>:</td>
-                    <td><span data-bind="text:current.industry.type"></span></td>
-                </tr>
-            </table>
+          <img width="120px" data-bind="attr: {src: current.logo.url}" style="z-index: 999; position: absolute; top:0; left: 0"> 
+          <div id="map" style="height: 330px;" style="position: relative; top: 0; left: 0;"></div>  
+        </article>
+      </div>
+      
+      <header class="box-typical-header-sm">
+        General Info
+      </header>
+        <article class="profile-info-item">
+          <table >
+            <tr>
+              <td>Company Name</td>
+              <td>:</td>
+              <td><span data-bind="text:current.name"></span></td>
+            </tr>
+            <tr>
+              <td>Telephone</td>
+              <td>:</td>
+              <td><span data-bind="text:current.telephone"></span></td>
+            </tr>
+            <tr>
+              <td>Email</td>
+              <td>:</td>
+              <td><span data-bind="text:current.email"></span></td>
+            </tr>
+            <tr>
+              <td>Address</td>
+              <td>:</td>
+              <td><span data-bind="text:current.address"></span></td>
+            </tr>
+            <tr>
+              <td>ZIP Code</td>
+              <td>:</td>
+              <td><span data-bind="text:current.zip"></span></td>
+            </tr>
+            <tr>
+              <td>Company Registration Number</td>
+              <td>:</td>
+              <td><span data-bind="text:current.year_founded"></span></td>
+            </tr>
+            <tr>
+              <td>City/Province</td>
+              <td>:</td>
+              <td><span data-bind="text:current.city"></span></td>
+            </tr>
+            <tr>
+              <td>Country</td>
+              <td>:</td>
+              <td><span data-bind="text:current.country.name"></span></td>
+            </tr>
+             <tr>
+              <td>Industry</td>
+              <td>:</td>
+              <td><span data-bind="text:current.industry.type"></span></td>
+            </tr>
+          </table>
         </article>
         <header class="box-typical-header-sm">Financial Info</header>
         <article class="profile-info-item">
@@ -1301,6 +1335,7 @@
 
     <!-- kendoui-->
     <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/js/libs/localforage.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js"></script>
     <script>
       var banhji = banhji || {};
       var baseUrl = "<?php echo base_url(); ?>";
@@ -2135,6 +2170,7 @@
           pageSize: 50
         }),
         users : banhji.userDS,
+        genders  : [{id: "M", value: "Male"}, {id: "F", value: "Female"}],
         currencies : new kendo.data.DataSource({
           transport: {
             read  : {
@@ -3026,6 +3062,30 @@
         goProfile   : function() {
           banhji.router.navigate("profile");
         },
+        loadMap         : function(){
+          var current = this.get("current"), lat = kendo.parseFloat(current.lat),
+          lng = kendo.parseFloat(current.long);
+          
+          if(lat && lng){
+            var myLatLng = {lat:lat, lng:lng};
+            var mapOptions = {
+              zoom: 17,
+              center: myLatLng,
+              scrollwheel: false,
+              mapTypeControl: false,
+              zoomControl: false,
+              scaleControl: false,
+              streetViewControl: false
+            };
+            console.log($('#map'));
+            var map = new google.maps.Map(document.getElementById('map'),mapOptions);
+            var marker = new google.maps.Marker({
+              position: myLatLng,
+              map: map,
+              title: current.name + " (" + current.lat + ", " + current.long + ")"
+            });
+          } 
+        },
         onLogoChange: function() {
           var fileChooser = document.getElementById('companyLogo');
           var file = fileChooser.files[0];
@@ -3248,6 +3308,7 @@
       banhji.router.route('company', function(){
         layout.showIn("#container", mainDash);
         mainDash.showIn("#placeholder", company);
+        banhji.company.loadMap();
       });
 
       banhji.router.route('passwordChange', function(){
