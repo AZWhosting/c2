@@ -42726,10 +42726,10 @@
 											<table class="span12">
 												<tr>
 													<td class="span4">
-														<h3><a href="#/expenses_purchase_summary_supplier" data-bind="text: lang.lang.expenses_purchase_summary_supplier"></a></h3>
+														<h3><a href="#/expenses_purchase_summary_supplier" data-bind="text: lang.lang.expenses_purchase_summary_by_supplier"></a></h3>
 													</td>
 													<td class="span4">
-														<h3><a href="#/expenses_purchase_detail_supplier" data-bind="text: lang.lang.expenses_purchase_detail_supplier"></a></h3>
+														<h3><a href="#/expenses_purchase_detail_supplier" data-bind="text: lang.lang.expeneses_purchase_detail_by_suppplier"></a></h3>
 													</td>
 													<td class="span4">
 														<h3><a href="#/suppliers_transaction_list" data-bind="text: lang.lang.suppliers_transaction_list"></a></h3>								

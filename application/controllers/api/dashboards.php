@@ -94,7 +94,7 @@ class Dashboards extends REST_Controller {
 					$apOverDue++;
 				}
 
-				//Group customer
+				//Group vendor
 				if(isset($vendor[$value->contact_id])){
 					$vendor[$value->contact_id] = 0;
 				} else {
@@ -109,7 +109,7 @@ class Dashboards extends REST_Controller {
 					$arOverDue++;
 				}
 
-				//Group vendor
+				//Group customer
 				if(isset($customer[$value->contact_id])){
 					$customer[$value->contact_id] = 0;
 				} else {
@@ -201,9 +201,7 @@ class Dashboards extends REST_Controller {
 		$data["count"] = 0;
 				
 		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);			
-		$obj->where_in("type", array("Sale_Order","Commercial_Invoice","Vat_Invoice","Invoice","Commercial_Cash_Sale","Vat_Cash_Sale","Cash_Sale","Sale_Return","Cash_Refund"));
-		$obj->where("issued_date >=", $this->startFiscalDate);
-		$obj->where("issued_date <", $this->endFiscalDate);
+		$obj->where_in("type", array("Sale_Order","Commercial_Invoice","Vat_Invoice","Invoice","Commercial_Cash_Sale","Vat_Cash_Sale","Cash_Sale","Sale_Return","Cash_Refund"));		
 		$obj->where("is_recurring <>", 1);
 		$obj->where("deleted <>", 1);
 		$obj->get_iterated();
@@ -226,15 +224,16 @@ class Dashboards extends REST_Controller {
 
 		if($obj->exists()){
 			foreach ($obj as $value) {
-				if($value->type=="Sale_Return" || $value->type=="Cash_Refund"){
-					// $sale -= floatval($value->amount);
+				$amount = floatval($value->amount) / floatval($value->rate);
 
-					// if($value->type=="Sale_Return"){
-					// 	$ar -= floatval($value->amount);
-					// }
+				if($value->type=="Sale_Return"){
+					$sale -= $amount;
+				}else if($value->type=="Cash_Refund"){
+					$sale -= $amount;
+					$ar -= $amount;
 				}else if($value->type=="Sale_Order"){
 					$so++;
-					$soAmount += floatval($value->amount) / floatval($value->rate);
+					$soAmount += $amount;
 
 					//Open SO
 					if($value->status==0){
@@ -244,7 +243,25 @@ class Dashboards extends REST_Controller {
 					if($value->status==1){
 						$saleOrder++; 
 					}
+				}else if($value->type=="Commercial_Cash_Sale" || $value->type=="Vat_Cash_Sale" || $value->type=="Cash_Sale"){
+					$sale += $amount;
+
+					//Group Sale Customer
+					if(isset($saleCustomer[$value->contact_id])){
+						$saleCustomer[$value->contact_id] = 0;
+					} else {
+						$saleCustomer[$value->contact_id] = 0;
+					}
 				}else{
+					$sale += $amount;
+
+					//Group Sale Customer
+					if(isset($saleCustomer[$value->contact_id])){
+						$saleCustomer[$value->contact_id] = 0;
+					} else {
+						$saleCustomer[$value->contact_id] = 0;
+					}
+
 					$paidAmount = 0;
 					if($value->status==2){
 						$paid = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
@@ -259,18 +276,9 @@ class Dashboards extends REST_Controller {
 						}
 					}
 
-					$amount = (floatval($value->amount) - $paidAmount) / floatval($value->rate);
-					$sale += $amount;
-
-					//Group Sale Customer
-					if(isset($saleCustomer[$value->contact_id])){
-						$saleCustomer[$value->contact_id] = 0;
-					} else {
-						$saleCustomer[$value->contact_id] = 0;
-					}
-
-					if($value->status==0){
-						$ar += $amount;
+					if($value->status==0 || $value->status==2){
+						$ar += $amount - $paidAmount;
+						$arOpen++;
 
 						//Overdue AR
 						if($value->due_date<$today){
@@ -283,8 +291,6 @@ class Dashboards extends REST_Controller {
 						} else {
 							$arCustomer[$value->contact_id] = 0;
 						}
-					}else{
-						$arOpen++;
 					}
 				}
 			}
@@ -327,99 +333,39 @@ class Dashboards extends REST_Controller {
 		$this->response($data, 200);	
 	}
 
-	//GET OUTSTANDING
-	function outstanding_get(){
-		$filters 	= $this->get("filter")["filters"];		
-		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
-		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;								
-		$sort 	 	= $this->get("sort");		
-		$data["results"] = [];
-		$data["count"] = 0;
-		$is_recurring = 0;
-		$deleted = 0;
-
-		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$deposit = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-
-		//Filter		
-		if(!empty($filters) && isset($filters)){			
-	    	foreach ($filters as $value) {	    		
-    			if($value["field"]=="is_recurring"){
-    				$is_recurring = $value["value"];
-    			}else if($value["field"]=="deleted"){
-    				$deleted = $value["value"];
-    			}else{
-    				$obj->where($value["field"], $value["value"]);
-    				$deposit->where($value["field"], $value["value"]);
-    			}
-    		}	    										 			
-		}
-
-		$obj->where_in("type", array("Commercial_Invoice","Vat_Invoice","Invoice"));
-		$obj->where_in("status", array(0,2));
-		$obj->where("is_recurring", $is_recurring);		
-		$obj->where("deleted", $deleted);		
-		$obj->get_iterated();
-
-		$balance = 0;		
-		$open = 0;
-		$overdue = 0;
-		$today = date("Y-m-d");
-		foreach ($obj as $value) {			
-			if($value->due_date < $today){
-				$overdue++;
-			}
-
-			if($value->status==0){
-				$open++;
-			}
-
-			if($value->status==2){
-				$balance += floatval($value->amount) - floatval($value->amount_paid);
-			}else{
-				$balance += floatval($value->amount);
-			}			
-		}
-
-		//Deposit
-		$deposit->select_sum("amount");		
-		$deposit->where("type", "Deposit");		
-		$deposit->where("is_recurring", $is_recurring);		
-		$deposit->where("deleted", $deleted);		
-		$deposit->get();		
-
-		//Results
-		$data["results"][] = array(
-			'id' 		=> 0,
-			'balance' 	=> floatval($balance),						
-			'deposit' 	=> floatval($deposit->amount),
-			'open' 		=> intval($open),
-			'overdue'	=> intval($overdue)
-		);
-
-		$this->response($data, 200);		
-	}
-
 	//GET MONTHLY SALE
 	function monthly_sale_get() {		
-		$filters 	= $this->get("filter")["filters"];		
-		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
-		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;								
-		$sort 	 	= $this->get("sort");		
+		$filter 	= $this->get("filter");
+		$page 		= $this->get('page');
+		$limit 		= $this->get('limit');
+		$sort 	 	= $this->get("sort");
 		$data["results"] = [];
 		$data["count"] = 0;
-		$is_recurring = 0;
-		$deleted = 0;
 
 		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		
-		//Filter		
-		if(!empty($filters) && isset($filters)){			
-	    	foreach ($filters as $value) {	
-    			$obj->where($value["field"], $value["value"]);	
-			}									 			
+		//Sort
+		if(!empty($sort) && isset($sort)){
+			foreach ($sort as $value) {
+				if(isset($value["operator"])){
+					$obj->{$value["operator"]}($value["field"], $value["dir"]);
+				}else{
+					$obj->order_by($value["field"], $value["dir"]);
+				}
+			}
 		}
 		
+		//Filter
+		if(!empty($filter) && isset($filter)){
+	    	foreach ($filter["filters"] as $value) {
+	    		if(isset($value["operator"])){
+	    			$obj->{$value["operator"]}($value['field'], $value['value']);
+	    		} else {
+	    			$obj->where($value['field'], $value['value']);
+	    		}
+			}
+		}
+
 		$obj->where_in("type", array("Commercial_Invoice","Vat_Invoice","Invoice","Commercial_Cash_Sale","Vat_Cash_Sale","Cash_Sale","Sale_Order"));
 		$obj->where("issued_date >=", $this->startFiscalDate);
 		$obj->where("issued_date <", $this->endFiscalDate);
@@ -460,7 +406,7 @@ class Dashboards extends REST_Controller {
 		$this->response($data, 200);	
 	}
 
-	//GET MONTHLY Receiable
+	//GET MONTHLY RECEIVEABLE
 	function monthly_receivable_get() {		
 		$filters 	= $this->get("filter")["filters"];		
 		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		

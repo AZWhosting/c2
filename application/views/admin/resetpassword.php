@@ -219,7 +219,7 @@
                     <input type="text" data-bind="value: email" placeholder="Enter Email Address" class="login-email"><br>
                     <input type="text" data-bind="value: veriCode" placeholder="Enter verification Code" class="login-email"><br>
                     <input type="password" data-bind="value: newPassword, events: {change: onChange}" placeholder="Enter New Password" class="login-email"><br>
-                    <input type="password" data-bind="value: cPassword, events: {keyup: onKeyUp, blur: onBlur}" placeholder="Confirm Your Password" class="login-email"><br>
+                    <input type="password" data-bind="value: cPassword, events: {keyup: onKeyUp}" placeholder="Confirm Your Password" class="login-email"><br>
                     <span data-bind="text: message"></span>
                     <input id="changePasswordBtn" type="button" data-bind="enabled: isEnable, events:{click: reset}" class="btn-login" value="Reset Password"><br><br>
                     <div id="loginInformation"></div>
@@ -337,17 +337,18 @@
           showReset: false,
           showVerify: false,
           message: null,
-          isEnable: false,
-          onKeyUp: function(e) {
+          isEnable: true,
+          onKeyUp: function(e) {   
             if(e.keyCode === 13) {
-              if(this.get('newPassword')!== this.get('cPassword')) {
-                $("#changePasswordBtn").val('Passwords do not match');
-                // this.set('message', "Passwords do not match");
-              } else {
-                // this.set('message', "");
-                 $("#changePasswordBtn").val('Reset Password');
-                this.set('isEnable', true);
-              }
+              this.reset();
+            //   if(this.get('newPassword')!== this.get('cPassword')) {
+            //     $("#changePasswordBtn").val('Passwords do not match');
+            //     // this.set('message', "Passwords do not match");
+            //   } else {
+            //     // this.set('message', "");
+            //      $("#changePasswordBtn").val('Reset Password');
+            //     this.set('isEnable', true);
+            //   }
             }
           },
           onBlur  : function(e) {
@@ -385,27 +386,31 @@
             }
             score += (variationCount - 1) * 10;
             if (score > 80) {
-              this.set('message', "strong");
+               $("#changePasswordBtn").val('Password is strong');
             }else if (score > 60){
-              this.set('message', "good");
+              $("#changePasswordBtn").val('Password is good');
             }else if (score >= 30) {
-              this.set('message', "weak");
+               $("#changePasswordBtn").val('Password is week');
             } else {
               this.set('message', "");
             }
           },
           reset: function() {
-            $("#changePasswordBtn").val('Resetting...');
-            var that = this;
-            var userData = {
-                Username : this.get('email'),
-                Pool : userPool
-            };
-            var cognitoUser = new AWSCognito.CognitoIdentityServiceProvider.CognitoUser(userData);
-            if(that.get('newPassword') == that.get('cPassword')) {
-              cognitoUser.confirmPassword(that.get('veriCode'), that.get('newPassword'), this);
+            if(this.get('newPassword')!== this.get('cPassword')) {
+              $("#changePasswordBtn").val('Passwords do not match');
             } else {
-              console.log("passwords do not match");
+              $("#changePasswordBtn").val('Resetting...');
+              var that = this;
+              var userData = {
+                  Username : this.get('email'),
+                  Pool : userPool
+              };
+              var cognitoUser = new AWSCognito.CognitoIdentityServiceProvider.CognitoUser(userData);
+              // if(that.get('newPassword') == that.get('cPassword')) {
+                cognitoUser.confirmPassword(that.get('veriCode'), that.get('newPassword'), this);
+              // } else {
+              //   console.log("passwords do not match");
+              // }
             }
           }
         });

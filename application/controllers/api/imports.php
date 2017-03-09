@@ -474,6 +474,14 @@ class Imports extends REST_Controller {
 			$meter->date_used = date('Y-m-d', strtotime($row->date_used));
 
 			if($meter->save()) {
+				$planItems = $plan->plan_item->get();
+				$depositAcct = 0;
+				foreach($planItems as $item) {
+					if($item->type == "deposit") {
+						$depositAcct = $item->account_id;
+						break;
+					}
+				}
 				// transaction 
 				$transaction = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 				$transaction->type = "Water_Deposit";
@@ -489,7 +497,7 @@ class Imports extends REST_Controller {
 				if($transaction->save()) {
 					$deposit1 = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 					$deposit1->transaction_id = $transaction->id;
-					$deposit1->account_id = $customer->deposit_account_id;
+					$deposit1->account_id = $depositAcct;
 					$deposit1->description= "Water Opening Deposit";
 					$deposit1->contact_id = $transaction->contact_id;
 					$deposit1->dr = $row->deposit;

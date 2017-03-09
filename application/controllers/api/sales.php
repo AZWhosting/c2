@@ -38,19 +38,19 @@ class Sales extends REST_Controller {
 		//Sort
 		if(!empty($sort) && isset($sort)){
 			foreach ($sort as $value) {
-				if(isset($value['operator'])){
-					$obj->{$value['operator']}($value["field"], $value["dir"]);
+				if(isset($value["operator"])){
+					$obj->{$value["operator"]}($value["field"], $value["dir"]);
 				}else{
 					$obj->order_by($value["field"], $value["dir"]);
 				}
 			}
 		}
 		
-		//Filter		
+		//Filter
 		if(!empty($filter) && isset($filter)){
 	    	foreach ($filter["filters"] as $value) {
-	    		if(isset($value['operator'])){
-	    			$obj->{$value['operator']}($value['field'], $value['value']);	    		
+	    		if(isset($value["operator"])){
+	    			$obj->{$value["operator"]}($value['field'], $value['value']);
 	    		} else {
 	    			$obj->where($value['field'], $value['value']);
 	    		}
