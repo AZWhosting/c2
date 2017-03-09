@@ -32354,8 +32354,7 @@
 		<div class="span8">
 
 			<!-- Summary -->
-			<div class="row-fluid">
-				
+			<div class="row-fluid">				
 
 				<div class="span4">
 				
@@ -32364,34 +32363,15 @@
 					
 						<!-- Widget heading -->
 						<div class="widget-head">
-							<h4 class="heading"><span class="glyphicons coins"><i></i></span><span style="color: #203864; font-weight: 600; font-style: normal;">Inventory Balance</span></h4>
+							<h4 class="heading"><span class="glyphicons coins"><i></i></span><span style="color: #203864; font-weight: 600; font-style: normal;">Inventory Value</span></h4>
 						</div>
 						<!-- // Widget heading END -->
 						
-						<a href="#/inventory_position_summary"><div class="widget-body alert alert-primary" style="min-height: 148px; background: white; color: #203864; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
-							
-							<div align="center" class="text-large strong" data-bind="text: onHand"></div>
-							<table width="100%">
-								<div align="center" style="font-size: 25px;" class="strong" data-bind="text: totalInventory"></div>
-								<tr align="center">
-									<td>
-										<span data-bind="text: purchaseSupplierCount"></span>
-										<br>
-										<span data-bind="text: lang.lang.supplier"></span>
-									</td>
-									<td>
-										<span data-bind="text: purchaseProductCount"></span>
-										<br>
-										<span data-bind="text: lang.lang.product"></span>
-									</td>
-									<td>
-										<span data-bind="text: purchase_order"></span>
-										<br>
-										<span data-bind="text: lang.lang.order"></span>
-									</td>
-								</tr>
-							</table>
-						</div></a>
+						<a href="#/inventory_position_summary">
+							<div class="widget-body alert alert-primary" style="min-height: 148px; background: white; color: #203864; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">							
+								<div style="margin-top: 15%; font-size: 25px;" align="center" class=" strong" data-bind="text: obj.inventory_value"></div>
+							</div>
+						</a>
 						<!-- // Widget footer END -->
 						
 					</div>
@@ -32410,19 +32390,11 @@
 						</div>
 						<!-- // Widget heading END -->
 						
-						<a href="#/inventory_sale_item_analysis"><div class="widget-body alert-info" style="min-height: 148px; background: white; color: #203864; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
-							
-							<div style="margin-top: 15%; font-size: 25px;" align="center" class=" strong" data-bind="text: grossProfitMargin"></div>
-							<!-- <table width="100%">
-								<tr align="center">
-									<td>										
-										<span data-bind="text: product"></span>
-										<br>
-										<span data-bind="text: lang.lang.product"></span>
-									</td>
-								</tr>
-							</table> -->
-						</div></a>
+						<a href="#/inventory_sale_item_analysis">
+							<div class="widget-body alert-info" style="min-height: 148px; background: white; color: #203864; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">							
+								<div style="margin-top: 15%; font-size: 25px;" align="center" class=" strong" data-bind="text: obj.gross_profit_margin"></div>
+							</div>
+						</a>
 						<!-- // Widget footer END -->
 						
 					</div>
@@ -32441,26 +32413,17 @@
 						</div>
 						<!-- // Widget heading END -->
 						
-						<a href="#/inventory_turn_over_list"><div class="widget-body alert-info3" style="min-height: 148px; background: white; color: #203864; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
-							
-							<div style="margin-top: 15%; font-size: 25px;" align="center" class="strong" align="center" class="text-large strong"  data-bind="text: inventoryTurnOver"></div>
-							<!-- <table width="100%">
-								<tr align="center">
-									<td>
-										<span data-bind="text: product"></span>
-										<br>
-										<span data-bind="text: lang.lang.turnover"></span>
-									</td>
-								</tr>
-							</table> -->
-						</div></a>
+						<a href="#/inventory_turn_over_list">
+							<div class="widget-body alert-info3" style="min-height: 148px; background: white; color: #203864; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">							
+								<div style="margin-top: 15%; font-size: 25px;" align="center" class="strong" align="center" class="text-large strong"  data-bind="text: obj.inventory_turnover_day"></div>
+							</div>
+						</a>
 						<!-- // Widget footer END -->
 						
 					</div>
 					<!-- // Widget END -->
 					
-				</div>
-				
+				</div>				
 				
 			</div>
 
@@ -32475,8 +32438,8 @@
 				        </thead>
 				        <tbody data-role="listview"
 				        	 data-auto-bind="false"				        	                 
-			                 data-template="itemDashboard-top-customer-template"
-			                 data-bind="source: topPurchase"></tbody>			        
+			                 data-template="itemDashboard-top-purchase-product-template"
+			                 data-bind="source: topPurchaseProductDS"></tbody>			        
 				    </table>			
 				</div>
 				<div class="span4">					
@@ -32488,8 +32451,8 @@
 				        </thead>
 				        <tbody data-role="listview"
 				        	 data-auto-bind="false"				        	                  
-			                 data-template="itemDashboard-top-ar-template"
-			                 data-bind="source: topCustomerDS"></tbody>			        
+			                 data-template="itemDashboard-top-supplier-template"
+			                 data-bind="source: topSupplierDS"></tbody>			        
 				    </table>
 				</div>
 				<div class="span4">					
@@ -32501,8 +32464,8 @@
 				        </thead>
 				        <tbody data-role="listview"
 				        	 data-auto-bind="false"                
-			                 data-template="itemDashboard-top-product-template"
-			                 data-bind="source: topProductDS"></tbody>			        
+			                 data-template="itemDashboard-top-sale-product-template"
+			                 data-bind="source: topSaleProductDS"></tbody>			        
 				    </table>
 				</div>		
 			</div>
@@ -32530,9 +32493,8 @@
 		</div>
 	</div>	
 </script>
-<script id="itemDashboard-top-customer-template" type="text/x-kendo-tmpl">
+<script id="itemDashboard-top-purchase-product-template" type="text/x-kendo-tmpl">
 	<tr>
-		<!-- <td style="width: 1%">#:banhji.itemDashBoard.topPurchase.indexOf(data)+1#</td> -->		
 		<td>
 			<span>
 				#if(name.length>15){#
@@ -32545,9 +32507,8 @@
 		</td>
 	</tr>
 </script>
-<script id="itemDashboard-top-ar-template" type="text/x-kendo-tmpl">
+<script id="itemDashboard-top-supplier-template" type="text/x-kendo-tmpl">
 	<tr>
-		<!-- <td style="width: 1%">#:banhji.itemDashBoard.topCustomerDS.indexOf(data)+1#</td> -->		
 		<td>
 			<span>
 				#if(name.length>15){#
@@ -32556,13 +32517,12 @@
 					#=name#
 				#}#
 			</span>
-			<span class="pull-right">#=kendo.toString(amount, banhji.institute.locale=="km-KH"?"c0":"c", banhji.institute.locale)#</span>
+			<span class="pull-right">#=kendo.toString(amount, banhji.locale=="km-KH"?"c0":"c2", banhji.locale)#</span>
 		</td>
 	</tr>
 </script>
-<script id="itemDashboard-top-product-template" type="text/x-kendo-tmpl">
+<script id="itemDashboard-top-sale-product-template" type="text/x-kendo-tmpl">
 	<tr>
-		<!-- <td style="width: 1%">#:banhji.itemDashBoard.topProductDS.indexOf(data)+1#</td> -->		
 		<td>
 			<span>
 				#if(name.length>15){#
@@ -54263,14 +54223,13 @@
 	**********************/
 	banhji.vendorDashboard = kendo.observable({
 		lang 				: langVM,
-		summaryDS 			: dataStore(apiUrl + "dashboards/supplier_dashboard_summary"),
+		dataSource 			: dataStore(apiUrl + "dashboards/supplier_dashboard_summary"),
 		topSupplierDS 		: dataStore(apiUrl + "dashboards/top_supplier"),
 		topAPDS 			: dataStore(apiUrl + "dashboards/top_ap"),
 		topProductDS 		: dataStore(apiUrl + "dashboards/top_purchase_product"),
 		graphDS 			: dataStore(apiUrl + "dashboards/monthly_purchase"),
 		obj 				: {},
 		pageLoad 			: function(){
-			this.setObj();
 			this.loadData();
 		},
 		setObj 		: function(){
@@ -54296,12 +54255,12 @@
 
 			this.graphDS.read();
 
-			this.summaryDS.query({
+			this.dataSource.query({
 				filter: [],								
 				page: 1,
 				pageSize: 100
 			}).then(function(){
-				var view = self.summaryDS.view();
+				var view = self.dataSource.view();
 				
 				obj.set("purchase", kendo.toString(view[0].purchase, banhji.locale=="km-KH"?"c0":"c2", banhji.locale));
 				obj.set("purchase_supplier", kendo.toString(view[0].purchase_supplier, "n0"));
@@ -64561,14 +64520,13 @@
 	**************************/
 	banhji.customerDashboard = kendo.observable({
 		lang 				: langVM,
-		summaryDS 			: dataStore(apiUrl + "dashboards/customer_dashboard_summary"),
+		dataSource 			: dataStore(apiUrl + "dashboards/customer_dashboard_summary"),
 		topCustomerDS 		: dataStore(apiUrl + "dashboards/top_customer"),
 		topARDS 			: dataStore(apiUrl + "dashboards/top_ar"),
 		topProductDS 		: dataStore(apiUrl + "dashboards/top_sale_product"),
 		graphDS 			: dataStore(apiUrl+ "dashboards/monthly_sale"),
 		obj 				: {},
 		pageLoad 			: function(){
-			this.setObj();
 			this.loadData();
 		},
 		setObj 		: function(){
@@ -64594,10 +64552,10 @@
 
 			this.graphDS.read();
 
-			this.summaryDS.query({
+			this.dataSource.query({
 				filter: []
 			}).then(function(){
-				var view = self.summaryDS.view();
+				var view = self.dataSource.view();
 				
 				obj.set("sale", kendo.toString(view[0].sale, banhji.locale=="km-KH"?"c0":"c2", banhji.locale));
 				obj.set("sale_customer", kendo.toString(view[0].sale_customer, "n0"));
@@ -82521,115 +82479,48 @@
 	**************************/
 	banhji.itemDashBoard = kendo.observable({
 		lang 				: langVM,
-		summaryDS 			: dataStore(apiUrl + "dashboards/inventory_dashboard_summary"),
-		dataSource 			: dataStore(apiUrl + "item_reports/item_sale"),
-		positionSummary 	: dataStore(apiUrl + "item_reports/position_summary"),
-		topCustomerDS 		: dataStore(apiUrl + "dashboards/top_supplier"),
-		topARDS 			: dataStore(apiUrl + "dashboards/top_ar"),
-		topProductDS 		: dataStore(apiUrl + "dashboards/top_sale_product"),
-		topPurchase 		: dataStore(apiUrl + "dashboards/top_purchase"),
-		graphDS  			: new kendo.data.DataSource({
-			transport: {
-				read 	: {
-					url: apiUrl + "dashboards/item_monthly_purchase_sale",
-					type: "GET",
-					headers: banhji.header,
-					dataType: 'json'
-				}
-			},
-			schema 	: {
-				model: {
-					id: 'id'
-				},
-				data: 'results',
-				total: 'count'
-			},
-			sort: {
-                field: "month",
-                dir: "asc"
-            },								
-			batch: true,			
-			serverFiltering: true,
-			serverSorting: true,
-			serverPaging: true,
-			pageSize: 100
-		}),
-		sale 				: 0,
-		sale_customer 		: 0,
-		sale_product 		: 0,
-		sale_order 			: 0,
-		order 				: 0,
-		order_avg 			: 0,
-		order_open 			: 0,
-		ar 					: 0,
-		ar_open 			: 0,
-		ar_customer 		: 0,
-		ar_overdue 			: 0,
+		dataSource 			: dataStore(apiUrl + "dashboards/inventory_dashboard_summary"),
+		topSupplierDS 		: dataStore(apiUrl + "dashboards/top_supplier"),
+		topSaleProductDS 	: dataStore(apiUrl + "dashboards/top_sale_product"),
+		topPurchaseProductDS: dataStore(apiUrl + "dashboards/top_purchase_product"),
+		graphDS 	 		: dataStore(apiUrl + "dashboards/monthly_item_purchase_sale"),
+		obj 				: {},
 		pageLoad 			: function(){
-			var self = this, today = new Date(),
-			firstDayOfYear = new Date(today.getFullYear(), 0, 1);
+			this.loadData();
+		},
+		setObj 		: function(){
+			this.set("obj", {
+				inventory_value 		: 0,
+				gross_profit_margin 	: 0,
+				inventory_turnover_day	: 0
+			});
+		},
+		loadData 			: function(){
+			var self = this, obj = this.get("obj");
 
 			this.graphDS.read();
 
-			this.summaryDS.query({
-				filter: [
-					{ field:"issued_date >=", value: kendo.toString(firstDayOfYear, "yyyy-MM-dd") },
-					{ field:"issued_date <=", value:  kendo.toString(today, "yyyy-MM-dd") }
-				],								
-				page: 1,
-				pageSize: 5
+			this.dataSource.query({
+				filter: []
 			}).then(function(){
-				var view = self.summaryDS.view();
+				var view = self.dataSource.view();
 				
-				self.set("totalInventory", kendo.toString(view[0].totalInventory, "c2", banhji.locale));
-
-				self.set("purchaseSupplierCount", kendo.toString(view[0].purchaseSupplierCount, "n0"));
-				self.set("purchaseProductCount", kendo.toString(view[0].purchaseProductCount, "n0"));
-				self.set("purchase_order", kendo.toString(view[0].purchase_order, "n0"));
-
-				self.set("inventoryTurnOver", kendo.toString(view[0].inventoryTurnOver, "n0"));
-				self.set("turnover", kendo.toString(view[0].turnover, "n0"));
-
-				self.set("grossProfitMargin", kendo.toString(view[0].grossProfitMargin, "p"));
-				self.set("product", kendo.toString(view[0].product, "n0"));
-
+				obj.set("inventory_value", kendo.toString(view[0].totalInventory, "c2", banhji.locale));
+				obj.set("gross_profit_margin", kendo.toString(view[0].grossProfitMargin, "p"));
+				obj.set("inventory_turnover_day", kendo.toString(view[0].inventoryTurnOver, "n0"));				
 			});
 
-			this.topCustomerDS.query({
-				filter: [
-					{ field:"issued_date >=", value: kendo.toString(firstDayOfYear, "yyyy-MM-dd") },
-					{ field:"issued_date <=", value:  kendo.toString(today, "yyyy-MM-dd") }
-				],								
-				page: 1,
-				pageSize: 5
+			this.topPurchaseProductDS.query({
+				filter: []
 			});
 
-			this.topARDS.query({
-				filter: [
-					{ field:"issued_date >=", value: kendo.toString(firstDayOfYear, "yyyy-MM-dd") },
-					{ field:"issued_date <=", value:  kendo.toString(today, "yyyy-MM-dd") }
-				],							
-				page: 1,
-				pageSize: 5
+			this.topSupplierDS.query({
+				filter: []
 			});
 
-			this.topPurchase.query({
-				filter: [
-					{ field:"issued_date >=", operator:"where_related_transaction", value: kendo.toString(firstDayOfYear, "yyyy-MM-dd") },
-					{ field:"issued_date <=", operator:"where_related_transaction", value:  kendo.toString(today, "yyyy-MM-dd") }
-				],							
-				page: 1,
-				pageSize: 5
-			});	
-
-			this.topProductDS.query({
-				filter: [
-					{ field:"issued_date >=", operator:"where_related_transaction", value: kendo.toString(firstDayOfYear, "yyyy-MM-dd") },
-					{ field:"issued_date <=", operator:"where_related_transaction", value:  kendo.toString(today, "yyyy-MM-dd") }
-				],							
-				page: 1,
-				pageSize: 5
-			});								
+			this.topSaleProductDS.query({
+				filter: []
+			});
 		}
 	});
 	banhji.itemCenter = kendo.observable({
@@ -87567,7 +87458,7 @@
 		graphDS  			: new kendo.data.DataSource({
 			transport: {
 				read 	: {
-					url: apiUrl + "dashboards/item_monthly_purchase_sale",
+					url: apiUrl + "dashboards/monthly_item_purchase_sale",
 					type: "GET",
 					headers: banhji.header,
 					dataType: 'json'
@@ -92298,6 +92189,8 @@
 				banhji.userManagement.addMultiTask("Supplier Dashboard","vendors",null);
 				if(banhji.pageLoaded["vendors"]==undefined){
 					banhji.pageLoaded["vendors"] = true;
+
+					vm.setObj();
 				}
 
 				vm.pageLoad();
@@ -93573,6 +93466,8 @@
 				banhji.userManagement.addMultiTask("Customer Dashboard","customers",null);
 				if(banhji.pageLoaded["customers"]==undefined){
 					banhji.pageLoaded["customers"] = true;
+
+					vm.setObj();
 				}
 				vm.pageLoad();
 			} else {
@@ -95571,16 +95466,9 @@
 
 				if(banhji.pageLoaded["inventories"]==undefined){
 					banhji.pageLoaded["inventories"] = true;
-				}
 
-				banhji.itemDashBoard.positionSummary.read();
-				banhji.itemDashBoard.positionSummary.bind('requestEnd', function(e){
-					if(e.response) {
-						banhji.itemDashBoard.set('count', e.response.count);
-						kendo.culture(banhji.locale);
-						banhji.itemDashBoard.set('onHand', kendo.toString(e.response.onHand, 'n0'));
-					}
-				});
+					vm.setObj();
+				}
 				vm.pageLoad();
 			} else {
 				window.location.replace(baseUrl + "admin");
