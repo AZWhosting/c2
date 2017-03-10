@@ -86,6 +86,7 @@ class Meters extends REST_Controller {
 					"activated" 			=> $value->activated,
 					"latitute" 				=> $value->latitute,
 					"longtitute" 			=> $value->longtitute,
+					"multiplier" 			=> $value->multiplier,
 					"date_used" 			=> $value->date_used
 				);
 			}
@@ -170,6 +171,7 @@ class Meters extends REST_Controller {
 					"activated" 			=> 0,
 					"latitute" 				=> $obj->latitute,
 					"longtitute" 			=> $obj->longtitute,
+					"multiplier" 			=> $obj->multiplier,
 					"date_used" 			=> $obj->date_used
 				);					
 			}			
@@ -242,6 +244,7 @@ class Meters extends REST_Controller {
 					"worder" 				=> $obj->worder,
 					"latitute" 				=> $obj->latitute,
 					"longtitute" 			=> $obj->longtitute,
+					"multiplier" 			=> $obj->multiplier,
 					"date_used" 			=> $obj->date_used
 				);					
 			}
@@ -354,7 +357,7 @@ class Meters extends REST_Controller {
 		}
 
 		//Response Data		
-		$this->response($data, 200);		
+		$this->response($data, 200);
 	}
 	
 	//POST RECORD
