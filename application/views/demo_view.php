@@ -58221,12 +58221,9 @@
 		},
 		removeRowAccount	: function(e){
 			var d = e.data;
-			if(this.lineDS.total()==0 && this.accountLineDS.total()==0){
-
-			}else{
-				this.accountLineDS.remove(d);
-		        this.changes();
-	        }
+			
+			this.accountLineDS.remove(d);
+	        this.changes();
 		},
 		//Additional Cost
 		addRowAdditionalCost: function(){
@@ -58773,12 +58770,9 @@
 		},
 		removeRow 			: function(e){
 			var d = e.data;
-			if(this.lineDS.total()==0 && this.accountLineDS.total()==0){
-
-			}else{
-				this.lineDS.remove(d);
-		        this.changes();
-	        }
+			
+			this.lineDS.remove(d);
+	        this.changes();	        
 		},
 	    objSync 			: function(){
 	    	var dfd = $.Deferred();	        
@@ -58947,6 +58941,17 @@
 		},
 		closeConfirm 		: function(){
 			this.set("showConfirm", false);
+		},
+		validating 			: function(){
+			var result = true, obj = this.get("obj");
+			
+			if(this.lineDS.total()==0 && this.accountLineDS.total()==0){
+				$("#ntf1").data("kendoNotification").error("Please select an item or account.");
+
+				result = false;
+			}
+
+			return result;
 		},
 	    //Journal
 	    addJournal 			: function(transaction_id){
@@ -60223,7 +60228,7 @@
 				result = false;
 			}
 
-			if(this.lineDS.total()==0 && this.accountDS.total()==0){
+			if(this.lineDS.total()==0 && this.accountLineDS.total()==0){
 				$("#ntf1").data("kendoNotification").error("Please select an item or account.");
 
 				result = false;
@@ -73219,7 +73224,7 @@
 				result = false;
 			}
 
-			if(this.lineDS.total()==0 && this.accountDS.total()==0){
+			if(this.lineDS.total()==0 && this.accountLineDS.total()==0){
 				$("#ntf1").data("kendoNotification").error("Please select an item or account.");
 
 				result = false;
@@ -92620,7 +92625,7 @@
 			        $("#saveNew").click(function(e){
 						e.preventDefault();
 
-						if(validator.validate()){
+						if(validator.validate() && vm.validating()){
 			            	vm.save();
 				        }else{
 				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
@@ -92630,7 +92635,7 @@
 					$("#saveClose").click(function(e){
 						e.preventDefault();
 
-						if(validator.validate()){
+						if(validator.validate() && vm.validating()){
 							vm.set("saveClose", true);
 			            	vm.save();
 				        }else{
@@ -92641,7 +92646,7 @@
 					$("#savePrint").click(function(e){
 						e.preventDefault();
 						
-						if(validator.validate()){
+						if(validator.validate() && vm.validating()){
 							vm.set("savePrint", true);
 			            	vm.save();
 				        }else{
@@ -92654,7 +92659,7 @@
 
 						vm.set("recurring_validate", true);
 
-						if(validator.validate()){
+						if(validator.validate() && vm.validating()){
 			            	vm.set("saveRecurring", true);
 			            	vm.save();
 				        }else{
