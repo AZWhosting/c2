@@ -2,7 +2,7 @@
 
 require APPPATH.'/libraries/REST_Controller.php';
 
-class Accounting_reports extends REST_Controller {	
+class Accounting_modules extends REST_Controller {	
 	public $_database;
 	public $server_host;
 	public $server_user;
@@ -41,6 +41,105 @@ class Accounting_reports extends REST_Controller {
 		}
 	}
 	
+	//HOME PAGE
+	//GET AP AR
+	function apar_get() {		
+		$filter 	= $this->get("filter");
+		$page 		= $this->get('page');
+		$limit 		= $this->get('limit');
+		$sort 	 	= $this->get("sort");
+		$data["results"] = [];
+		$data["count"] = 0;
+		$today = date("Y-m-d");
+				
+		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);				
+		$obj->where_in("type", array("Credit_Purchase","Purchase_Return","Commercial_Invoice","Vat_Invoice","Invoice","Sale_Return"));
+		$obj->where_in("status", array(0,2));
+		$obj->where("is_recurring <>", 1);
+		$obj->where("deleted <>", 1);
+		$obj->get_iterated();
+		
+		$arAmount = 0;
+		$arOpen = 0;
+		$customer = [];
+		$arOverDue = 0;
+
+		$apAmount = 0;
+		$apOpen = 0;
+		$vendor = [];
+		$apOverDue = 0;
+
+		foreach($obj as $value) {
+			$paidAmount = 0;
+			if($value->status==2){
+				$paid = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$paid->where_in("type", array("Cash_Payment","Cash_Receipt"));
+				$paid->where("reference_id", $value->id);
+				$paid->where("is_recurring <>", 1);
+				$paid->where("deleted <>", 1);
+				$paid->get_iterated();
+				
+				foreach ($paid as $p) {
+					$paidAmount += (floatval($p->amount) + floatval($p->discount)) / floatval($p->rate);
+				}
+			}
+
+			$amount = (floatval($value->amount) - floatval($value->deposit)) / floatval($value->rate);
+			$amount -= $paidAmount;
+			
+			if($value->type=="Purchase_Return"){
+				$apAmount -= $amount;
+			}else if($value->type=="Sale_Return"){
+				$arAmount -= $amount;
+			}else if($value->type=="Credit_Purchase"){
+				$apOpen++;
+				$apAmount += $amount;
+
+				//Overdue AP
+				if($value->due_date<$today){
+					$apOverDue++;
+				}
+
+				//Group vendor
+				if(isset($vendor[$value->contact_id])){
+					$vendor[$value->contact_id] = 0;
+				} else {
+					$vendor[$value->contact_id] = 0;
+				}
+			}else{
+				$arOpen++;
+				$arAmount += $amount;
+
+				//Overdue AR
+				if($value->due_date<$today){
+					$arOverDue++;
+				}
+
+				//Group customer
+				if(isset($customer[$value->contact_id])){
+					$customer[$value->contact_id] = 0;
+				} else {
+					$customer[$value->contact_id] = 0;
+				}
+			}
+		}
+
+		//Results
+		$data["results"][] = array(
+			'id' 				=> 0,
+			'ar' 				=> $arAmount,
+			'ar_open' 			=> $arOpen,
+			'ar_customer' 		=> count($customer),
+			'ar_overdue' 		=> $arOverDue,
+			'ap' 				=> $apAmount,
+			'ap_open' 			=> $apOpen,
+			'ap_vendor' 		=> count($vendor),
+			'ap_overdue' 		=> $apOverDue
+		);		
+
+		//Response Data		
+		$this->response($data, 200);
+	}
 
 	//GET FINANCIAL SNAPSHOT
 	function financial_snapshot_get() {
@@ -2439,5 +2538,5 @@ class Accounting_reports extends REST_Controller {
 	}
 	
 }
-/* End of file accounting_reports.php */
-/* Location: ./application/controllers/api/accounting_reports.php */
+/* End of file accounting_modules.php */
+/* Location: ./application/controllers/api/accounting_modules.php */

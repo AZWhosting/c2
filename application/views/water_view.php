@@ -5702,7 +5702,7 @@
 							<table class="table table-borderless table-condensed" style="margin-bottom: 0;">
 								<tr>
 									<td width="50%">
-										<h3><a href="#/customer_list" data-bind="text: lang.lang.customer_list">Customer List</a></h3>
+										<h3><a href="#/customer_list" data-bind="text: lang.lang.customer_list"></a></h3>
 									</td>
 									<td width="50%">
 										<h3><a href="#/new_customer_list" data-bind="text: lang.lang.new_customer_list">New Customer List</a></h3>
@@ -5748,18 +5748,18 @@
 			<div class="span6">
 				<div class="cover-block" style="width: 100%; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1; padding-left: 15px;">
 					<div class="row-fluid recevable-report">
-					<h2>Receiveable and Deposits</h2>
-					<p>
+					<h2 data-bind="text: lang.lang.receiveable_and_deposits">Receiveable and Deposits</h2>
+					<p data-bind="text.lang.lang.these_would_be_the_most">
 						These would be the most common reports that you will be using. It includes receivables balance and its aging in both summary and detail list and the security deposit made by the customers for their water connection.
 					</p>
 					<div class="row-fluid">
 						<table class="table table-borderless table-condensed">
 							<tr>
 								<td >
-									<h3><a href="#/account_receivable_list">Accounts Receivable Listing</a></h3>
+									<h3><a href="#/account_receivable_list" data-bind="lang.lang.accounts_receivable_listing">Accounts Receivable Listing</a></h3>
 								</td>
 								<td >
-									<h3><a href="#/customer_deposit_report">Customer Deposit</a></h3>								
+									<h3><a href="#/customer_deposit_report" data-bind>Customer Deposit</a></h3>								
 								</td>						
 							</tr>
 							<tr>

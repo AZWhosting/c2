@@ -2,7 +2,7 @@
 
 require APPPATH.'/libraries/REST_Controller.php';
 
-class Customer_modules extends REST_Controller {	
+class Vendor_modules extends REST_Controller {	
 	public $_database;
 	public $server_host;
 	public $server_user;
@@ -38,9 +38,9 @@ class Customer_modules extends REST_Controller {
 			$this->startFiscalDate = date("Y-m-d", strtotime($this->startFiscalDate . "+1 days"));
 			$this->endFiscalDate = date("Y-m-d", strtotime($this->endFiscalDate . "+1 days"));
 		}
-	}	
+	}
 	
-	//GET DASHBOARD
+	//GET SUPPLIER DASHBOARD
 	function dashboard_get() {		
 		$filter 	= $this->get("filter");
 		$page 		= $this->get('page');
@@ -50,7 +50,7 @@ class Customer_modules extends REST_Controller {
 		$data["count"] = 0;
 				
 		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$obj->where_in("type", array("Sale_Order","Commercial_Invoice","Vat_Invoice","Invoice","Commercial_Cash_Sale","Vat_Cash_Sale","Cash_Sale","Sale_Return","Cash_Refund"));		
+		$obj->where_in("type", array("Purchase_Order","Cash_Purchase","Credit_Purchase","Purchase_Return","Payment_Refund"));		
 		$obj->where("issued_date >=", $this->startFiscalDate);
 		$obj->where("issued_date <", $this->endFiscalDate);
 		$obj->where("is_recurring <>", 1);
@@ -59,75 +59,75 @@ class Customer_modules extends REST_Controller {
 
 		$today = date("Y-m-d");
 
-		$sale = 0;
-		$saleCustomer = [];
-		$saleOrdered = 0;
+		$purchase = 0;
+		$purchaseSupplier = [];
+		$purchaseOrdered = 0;
 
-		$so = 0;
-		$soAmount = 0;
-		$soAvg = 0;
-		$soOpen = 0;
+		$po = 0;
+		$poAmount = 0;
+		$poAvg = 0;
+		$poOpen = 0;
 
 		if($obj->exists()){
 			foreach ($obj as $value) {
 				$amount = floatval($value->amount) / floatval($value->rate);
 
-				if($value->type=="Sale_Return" || $value->type=="Cash_Refund"){
-					$sale -= $amount;
-				}else if($value->type=="Sale_Order"){
-					$so++;
-					$soAmount += $amount;
+				if($value->type=="Purchase_Return" || $value->type=="Payment_Refund"){
+					$purchase -= $amount;
+				}else if($value->type=="Purchase_Order"){
+					$po++;
+					$poAmount += $amount;
 
-					//Open SO
+					//Open PO
 					if($value->status==0){
-						$soOpen++; 
+						$poOpen++; 
 					}
-					//Used SO in sale
+					//Used PO in purchase
 					if($value->status==1){
-						$saleOrdered++; 
+						$purchaseOrdered++; 
 					}
 				}else{
-					$sale += $amount;
+					$purchase += $amount;
 
-					//Group Sale Customer
-					if(isset($saleCustomer[$value->contact_id])){
-						$saleCustomer[$value->contact_id] = 0;
+					//Group Purchase Supplier
+					if(isset($purchaseSupplier[$value->contact_id])){
+						$purchaseSupplier[$value->contact_id] = 0;
 					} else {
-						$saleCustomer[$value->contact_id] = 0;
+						$purchaseSupplier[$value->contact_id] = 0;
 					}
 				}
 			}
 
-			//SO avg
-			if($so>0){
-				$soAvg = $soAmount / $so;
+			//PO avg
+			if($po>0){
+				$poAvg = $poAmount / $po;
 			}
 		}
 
-		//AR
-		$receivable = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$receivable->where_in("type", array("Commercial_Invoice","Vat_Invoice","Invoice","Sale_Return"));		
-		$receivable->where_in("status", array(0,2));
-		$receivable->where("is_recurring <>", 1);
-		$receivable->where("deleted <>", 1);
-		$receivable->get_iterated();
+		//AP
+		$payable = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$payable->where_in("type", array("Credit_Purchase","Purchase_Return"));		
+		$payable->where_in("status", array(0,2));
+		$payable->where("is_recurring <>", 1);
+		$payable->where("deleted <>", 1);
+		$payable->get_iterated();
 
-		$ar = 0;
-		$arOpen = 0;
-		$arCustomer = [];
-		$arOverDue = 0;
+		$ap = 0;
+		$apOpen = 0;
+		$apSupplier = [];
+		$apOverDue = 0;
 
-		if($receivable->exists()){
-			foreach ($receivable as $value) {
+		if($payable->exists()){
+			foreach ($payable as $value) {
 				$amount = floatval($value->amount) / floatval($value->rate);
 
-				if($value->type=="Sale_Return"){
-					$ar -= $amount;
+				if($value->type=="Purchase_Return"){
+					$ap -= $amount;
 				}else{
 					$paidAmount = 0;
 					if($value->status==2){
 						$paid = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-						$paid->where("type", "Cash_Receipt");
+						$paid->where("type", "Cash_Payment");
 						$paid->where("reference_id", $value->id);
 						$paid->where("is_recurring <>", 1);
 						$paid->where("deleted <>", 1);
@@ -138,27 +138,27 @@ class Customer_modules extends REST_Controller {
 						}
 					}
 
-					$ar += $amount - $paidAmount;
-					$arOpen++;
+					$ap += $amount - $paidAmount;
+					$apOpen++;
 
-					//Overdue AR
+					//Overdue AP
 					if($value->due_date<$today){
-						$arOverDue++;
+						$apOverDue++;
 					}
 
-					//Group AR Customer
-					if(isset($arCustomer[$value->contact_id])){
-						$arCustomer[$value->contact_id] = 0;
+					//Group AP Supplier
+					if(isset($apSupplier[$value->contact_id])){
+						$apSupplier[$value->contact_id] = 0;
 					} else {
-						$arCustomer[$value->contact_id] = 0;
+						$apSupplier[$value->contact_id] = 0;
 					}
 				}
 			}
 		}
 		
-		//Sale Product
+		//Purchase Product
 		$product = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);			
-		$product->where_in_related("transaction", "type", array("Commercial_Invoice","Vat_Invoice","Invoice","Commercial_Cash_Sale","Vat_Cash_Sale","Cash_Sale"));
+		$product->where_in_related("transaction", "type", array("Cash_Purchase","Credit_Purchase"));
 		$product->where_related("transaction", "issued_date >=", $this->startFiscalDate);
 		$product->where_related("transaction", "issued_date <", $this->endFiscalDate);
 		$product->where_related("transaction", "is_recurring <>", 1);
@@ -183,27 +183,27 @@ class Customer_modules extends REST_Controller {
 		//Results
 		$data["results"][] = array(
 			'id' 				=> 0,
-			'sale' 				=> $sale,
-			'sale_customer' 	=> count($saleCustomer),
-			'sale_product' 		=> count($itemList),
-			'sale_ordered' 		=> $saleOrdered,
-			'so' 				=> $so,
-			'so_avg' 			=> $soAvg,
-			'so_open'			=> $soOpen,
-			'ar' 				=> $ar,
-			'ar_open' 			=> $arOpen,
-			'ar_customer' 		=> count($arCustomer),
-			'ar_overdue' 		=> $arOverDue,
-			'collection_day' 	=> 0
+			'purchase' 			=> $purchase,						
+			'purchase_supplier' => count($purchaseSupplier),
+			'purchase_product' 	=> count($itemList),
+			'purchase_ordered' 	=> $purchaseOrdered,
+			'po' 				=> $po,
+			'po_avg' 			=> $poAvg,
+			'po_open'			=> $poOpen,			
+			'ap' 				=> $ap,
+			'ap_open' 			=> $apOpen,
+			'ap_supplier' 		=> count($apSupplier),
+			'ap_overdue' 		=> $apOverDue,
+			'payable_payment_day' => 0
 		);
 
-		$data["count"] = count($data["results"]);
+		$data["count"] = count($data["results"]);		
 
 		//Response Data		
 		$this->response($data, 200);	
 	}
-	//GET MONTHLY SALE
-	function monthly_sale_get() {		
+	//GET MONTHLY PURCHASE
+	function monthly_purchase_get() {		
 		$filter 	= $this->get("filter");
 		$page 		= $this->get('page');
 		$limit 		= $this->get('limit');
@@ -212,12 +212,12 @@ class Customer_modules extends REST_Controller {
 		$data["count"] = 0;
 
 		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$obj->where_in("type", array("Sale_Order","Commercial_Invoice","Vat_Invoice","Invoice","Commercial_Cash_Sale","Vat_Cash_Sale","Cash_Sale","Sale_Return","Cash_Refund"));
+		$obj->where_in("type", array("Purchase_Order","Cash_Purchase","Credit_Purchase","Purchase_Return","Payment_Refund"));
 		$obj->where("issued_date >=", $this->startFiscalDate);
 		$obj->where("issued_date <", $this->endFiscalDate);
-		$obj->where("is_recurring <>", 1);		
-		$obj->where("deleted <>", 1);						
-		$obj->order_by("issued_date", "asc");								
+		$obj->where("is_recurring <>", 1);
+		$obj->where("deleted <>", 1);
+		$obj->order_by("issued_date", "asc");
 		$obj->get_iterated();
 
 		$txnList = [];
@@ -226,37 +226,37 @@ class Customer_modules extends REST_Controller {
 			$amount = floatval($value->amount) / floatval($value->rate);
 
 			if(isset($txnList[$month])){
-				if($value->type==="Sale_Order"){
+				if($value->type==="Purchase_Order"){
 					$txnList[$month]["order"] += $amount;
-				}else if($value->type==="Sale_Return" || $value->type==="Cash_Refund"){
-					$txnList[$month]["sale"] -= $amount;
+				}else if($value->type==="Purchase_Return" || $value->type==="Payment_Refund"){
+					$txnList[$month]["purchase"] -= $amount;
 				}else{
-					$txnList[$month]["sale"] += $amount;
+					$txnList[$month]["purchase"] += $amount;
 				}
 			} else {
-				if($value->type==="Sale_Order"){
-					$txnList[$month] = array("sale"=>0, "order"=>$amount);
-				}else if($value->type==="Sale_Return" || $value->type==="Cash_Refund"){
-					$txnList[$month] = array("sale"=>$amount*-1, "order"=>0);
+				if($value->type==="Purchase_Order"){
+					$txnList[$month] = array("purchase"=>0, "order"=>$amount);
+				}else if($value->type==="Purchase_Return" || $value->type==="Payment_Refund"){
+					$txnList[$month] = array("purchase"=>$amount*-1, "order"=>0);
 				}else{
-					$txnList[$month] = array("sale"=>$amount, "order"=>0);
+					$txnList[$month] = array("purchase"=>$amount, "order"=>0);
 				}
-			}
-		}
+			}		
+		}		
 		
 		foreach ($txnList as $key => $value) {
-			$data["results"][] = array(
-			   	"sale" 		=> floatval($value['sale']),
-			   	"order" 	=> floatval($value['order']),
-			   	"month"		=> $key
+			$data["results"][] = array(					
+			   	"purchase" 	=> floatval($value['purchase']),
+			   	"order" 	=> floatval($value['order']),				   	
+			   	"month"		=> $key				   	
 			);
-		}
+		}					
 
 		//Response Data		
 		$this->response($data, 200);	
-	}	
-	//GET TOP CUSTOMER 
-	function top_customer_get() {
+	}
+	//GET TOP SUPPLIER 
+	function top_supplier_get() {		
 		$filter 	= $this->get("filter");
 		$page 		= $this->get('page');
 		$limit 		= $this->get('limit');
@@ -289,7 +289,7 @@ class Customer_modules extends REST_Controller {
 		}
 
 		$obj->include_related("contact", array("name"));
-		$obj->where_in("type", array("Commercial_Invoice","Vat_Invoice","Invoice","Commercial_Cash_Sale","Vat_Cash_Sale","Cash_Sale","Sale_Return","Cash_Refund"));			
+		$obj->where_in("type", array("Cash_Purchase", "Credit_Purchase", "Purchase_Return", "Payment_Refund"));
 		$obj->where("issued_date >=", $this->startFiscalDate);
 		$obj->where("issued_date <", $this->endFiscalDate);
 		$obj->where("is_recurring <>", 1);
@@ -313,13 +313,13 @@ class Customer_modules extends REST_Controller {
 				$amount = floatval($value->amount) / floatval($value->rate);
 
 				if(isset($contactList[$value->contact_id])){
-					if($value->type=="Sale_Return" || $value->type=="Cash_Refund"){
+					if($value->type=="Purchase_Return" || $value->type=="Payment_Refund"){
 						$contactList[$value->contact_id]['amount'] -= $amount;
 					}else{
 						$contactList[$value->contact_id]['amount'] += $amount;
 					}					
 				} else {
-					if($value->type=="Sale_Return" || $value->type=="Cash_Refund"){
+					if($value->type=="Purchase_Return" || $value->type=="Payment_Refund"){
 						$contactList[$value->contact_id]['name'] = $value->contact_name;
 						$contactList[$value->contact_id]['amount'] = $amount*-1;
 					}else{
@@ -352,13 +352,13 @@ class Customer_modules extends REST_Controller {
 					}
 				}
 			}
-		}
+		}			
 
-		//Response Data
-		$this->response($data, 200);
+		//Response Data		
+		$this->response($data, 200);	
 	}
-	//GET TOP A/R 
-	function top_ar_get() {
+	//GET TOP A/P
+	function top_ap_get() {		
 		$filter 	= $this->get("filter");
 		$page 		= $this->get('page');
 		$limit 		= $this->get('limit');
@@ -391,7 +391,7 @@ class Customer_modules extends REST_Controller {
 		}
 
 		$obj->include_related("contact", array("name"));
-		$obj->where_in("type", array("Commercial_Invoice","Vat_Invoice","Invoice","Sale_Return"));
+		$obj->where_in("type", array("Credit_Purchase","Purchase_Return"));
 		$obj->where_in("status", array(0,2));
 		$obj->where("is_recurring <>", 1);
 		$obj->where("deleted <>", 1);
@@ -414,7 +414,7 @@ class Customer_modules extends REST_Controller {
 				$paidAmount = 0;
 				if($value->status==2){
 					$paid = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-					$paid->where("type", "Cash_Receipt");
+					$paid->where("type", "Cash_Payment");
 					$paid->where("reference_id", $value->id);
 					$paid->where("is_recurring <>", 1);
 					$paid->where("deleted <>", 1);
@@ -429,13 +429,13 @@ class Customer_modules extends REST_Controller {
 				$amount -= $paidAmount;
 
 				if(isset($contactList[$value->contact_id])){
-					if($value->type=="Sale_Return"){
+					if($value->type=="Purchase_Return"){
 						$contactList[$value->contact_id]['amount'] -= $amount;
 					}else{
 						$contactList[$value->contact_id]['amount'] += $amount;
 					}					
 				} else {
-					if($value->type=="Sale_Return"){
+					if($value->type=="Purchase_Return"){
 						$contactList[$value->contact_id]['name'] = $value->contact_name;
 						$contactList[$value->contact_id]['amount'] = $amount*-1;
 					}else{
@@ -471,8 +471,8 @@ class Customer_modules extends REST_Controller {
 		}
 
 		//Response Data		
-		$this->response($data, 200);
+		$this->response($data, 200);	
 	}
 }
-/* End of file customer_modules.php */
-/* Location: ./application/controllers/api/customer_modules.php */
+/* End of file vendor_modules.php */
+/* Location: ./application/controllers/api/vendor_modules.php */
