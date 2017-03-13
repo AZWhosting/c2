@@ -41,7 +41,7 @@ class Accounting_modules extends REST_Controller {
 		}
 	}
 	
-	//HOME PAGE
+	//@HOME PAGE
 	//GET AP AR
 	function apar_get() {		
 		$filter 	= $this->get("filter");
@@ -809,7 +809,7 @@ class Accounting_modules extends REST_Controller {
 		$obj->include_related("transaction", array("type", "number", "issued_date", "memo","rate"));
 		$obj->include_related("account", array("number","name"));
 		$obj->include_related("contact", array("abbr","number","name"));
-		$obj->where_related("transaction", "is_journal", 1);
+		// $obj->where_related("transaction", "is_journal", 1);
 		$obj->where_related("transaction", "is_recurring <>", 1);		
 		$obj->where_related("transaction", "deleted <>", 1);
 		$obj->where("deleted <>", 1);
@@ -914,7 +914,7 @@ class Accounting_modules extends REST_Controller {
 		$obj->include_related("transaction", array("type", "number", "issued_date", "memo","rate"));
 		$obj->include_related("account", array("number","name"));
 		$obj->include_related("contact", array("abbr","number","name"));
-		$obj->where_related("transaction", "is_journal", 1);
+		// $obj->where_related("transaction", "is_journal", 1);
 		$obj->where_related("transaction", "is_recurring <>", 1);		
 		$obj->where_related("transaction", "deleted <>", 1);
 		$obj->where("deleted <>", 1);
@@ -1032,7 +1032,7 @@ class Accounting_modules extends REST_Controller {
 		$obj->include_related("transaction", array("type", "number", "issued_date", "memo", "rate"));
 		$obj->include_related("account", array("number","name"));
 		$obj->include_related("account/account_type", array("name","nature"));
-		$obj->where_related("transaction", "is_journal", 1);
+		// $obj->where_related("transaction", "is_journal", 1);
 		$obj->where_related("transaction", "is_recurring <>", 1);		
 		$obj->where_related("transaction", "deleted <>", 1);
 		$obj->where("deleted <>", 1);
@@ -1068,7 +1068,7 @@ class Accounting_modules extends REST_Controller {
 					$bf->include_related("account/account_type", array("nature"));
 					$bf->where_related("transaction", "issued_date <", $value->transaction_issued_date);
 					$bf->where("account_id", $value->account_id);
-					$bf->where_related("transaction", "is_journal", 1);
+					// $bf->where_related("transaction", "is_journal", 1);
 					$bf->where_related("transaction", "is_recurring <>", 1);		
 					$bf->where_related("transaction", "deleted <>", 1);
 					$bf->where("deleted <>", 1);
@@ -1153,7 +1153,8 @@ class Accounting_modules extends REST_Controller {
 		$balanceSheet->where_related("transaction", "issued_date <", $asOf);
 		$balanceSheet->where_related("transaction", "is_recurring <>", 1);
 		$balanceSheet->where_related("transaction", "deleted <>", 1);
-		$balanceSheet->where("deleted <>", 1);		
+		// $balanceSheet->where_related("transaction", "is_journal", 1);
+		$balanceSheet->where("deleted <>", 1);
 		$balanceSheet->get_iterated();
 		
 		//Sum Dr and Cr					

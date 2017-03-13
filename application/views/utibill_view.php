@@ -14872,7 +14872,6 @@
 			}).then(function(){
 				var view = self.dataSource.view();
 				view[0].set("reference", []);
-				
 				self.set("obj", view[0]);
 				self.set("total", kendo.toString(view[0].amount, "c", view[0].locale));
 		        self.set("total_received", kendo.toString(view[0].amount, "c", view[0].locale));
@@ -14935,7 +14934,7 @@
 			this.set("obj", {
 				transaction_template_id: 6,
 				account_id 			: 7,
-				payment_method_id	: 1,
+				payment_method_id	: 7,
 			   	rate				: 1,
 			   	sub_total 			: 0,
 			   	discount 			: 0,

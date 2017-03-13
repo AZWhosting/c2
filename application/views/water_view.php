@@ -3007,7 +3007,7 @@
 			<div class="container-960">
 				<div id="example" class="k-content saleSummaryCustomer">
 			    	<span class="pull-right glyphicons no-js remove_2" data-bind="click: cancel"><i></i></span>
-					<h2 style="padding:0 15px 15px 0;">Reorder Meter</h2>
+					<h2 style="padding:0 15px 15px 0;" data-bind="text: lang.lang.reorder_meter">Reorder Meter</h2>
 					<div class="row-fluid">
 					    <!-- Tabs -->
 						<div class="relativeWrap" data-toggle="source-code">
@@ -3015,8 +3015,8 @@
 								<!-- Tabs Heading -->
 								<div class="widget-head">
 									<ul>
-										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
-										<li><a class="glyphicons print" data-toggle="tab" data-bind="click: ExportExcel"><i></i>Export</a></li>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab" data-bind="text: lang.lang.date"><i></i>Date</a></li>										
+										<li><a class="glyphicons print" data-toggle="tab" data-bind="click: ExportExcel" data-bind="text: lang.lang.export"><i></i>Export</a></li>
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
@@ -3027,7 +3027,7 @@
 									        	<div class="span8" style="padding-left: 0;">
 													<div class="span4" style="padding-left: 0;">
 														<div class="control-group">
-															<label ><span >License</span></label>
+															<label ><span data-bind="text: lang.lang.license">License</span></label>
 															<input 
 																data-role="dropdownlist" 
 																style="width: 100%;" 
@@ -3044,7 +3044,7 @@
 													</div>	
 													<div class="span4">
 														<div class="control-group">								
-															<label ><span >Location</span></label>
+															<label ><span data-bind="text: lang.lang.location">Location</span></label>
 															<input 
 																data-role="dropdownlist" 
 																style="width: 100%;" 
@@ -3061,7 +3061,7 @@
 													</div>
 													<div class="span4">
 														<div class="control-group">	
-															<label ><span >Action</span></label>	
+															<label ><span data-bind="text: lang.lang.action">Action</span></label>	
 															<div class="row" style="margin: 0;">					
 																<button type="button" data-role="button" data-bind="click: search" class="k-button" role="button" aria-disabled="false" tabindex="0"><i class="icon-search"></i></button>
 															</div>
@@ -3113,7 +3113,7 @@
 			    		<span class="glyphicons no-js remove_2" 
 							data-bind="click: cancel"><i></i></span>	
 					</div>
-			        <h2 style="padding:0 15px 0 0;">Reading</h2>
+			        <h2 style="padding:0 15px 0 0;" data-bind="text: lang.lang.reading">Reading</h2>
 					<br />
 					<!-- Tabs -->
 					<div class="relativeWrap" data-toggle="source-code">
@@ -3122,8 +3122,8 @@
 							<!-- Tabs Heading -->
 							<div class="widget-head" style="background: #203864 !important; color: #fff;">
 								<ul style="padding-left: 0px;">
-									<li class="active" style="width: 210px;"><a style="text-transform: capitalize;" href="#tabDownload" data-toggle="tab"><span style="line-height: 23px;">Step 1: <br> <b>Download Reading Book</b></span></a></li>
-									<li style="width: 210px;"><a style="text-transform: capitalize;" href="#tabReading" data-toggle="tab"><span style="line-height: 23px;">Step 2: <br>  <b>Upload Reading Book </b></span></a></li>
+									<li class="active" style="width: 210px;"><a style="text-transform: capitalize;" href="#tabDownload" data-toggle="tab"><span style="line-height: 23px;"><span data-bind="text: lang.lang.step1">Step 1:</span> <br> <b><span data-bind="text: lang.lang.download_reading_book">Download Reading Book</span></b></span></a></li>
+									<li style="width: 210px;"><a style="text-transform: capitalize;" href="#tabReading" data-toggle="tab"><span style="line-height: 23px;"><span data-bind="text: lang.lang.step2">Step 2:</span> <br>  <b><span data-bind="text: lang.lang.upload_reading_book">Upload Reading Book</span> </b></span></a></li>
 									
 								</ul>
 							</div>
@@ -3133,12 +3133,12 @@
 								<div class="tab-content">
 									<!-- Tab content -->
 									<div id="tabDownload" style="border: 1px solid #ccc; overflow: hidden;" class="tab-pane active widget-body-regular">
-										<h4 class="separator bottom" style="margin-top: 10px;">Please Select License and Location to download reading book</h4>
+										<h4 class="separator bottom" style="margin-top: 10px;" data-bind="text: lang.lang.please_select_license">Please Select License and Location to download reading book</h4>
 									  	<div class="span12 row-fluid" style="padding:20px 0;padding-top: 0;">
 								        	<div class="span6" style="padding-left: 0;">
 												<div class="span5" style="padding-left: 0;">
 													<div class="control-group">								
-														<label ><span >License</span></label>
+														<label ><span data-bind="text: lang.lang.license">License</span></label>
 														<input 
 															data-role="dropdownlist" 
 															style="width: 100%;" 
@@ -3155,7 +3155,7 @@
 												</div>
 												<div class="span5">
 													<div class="control-group">								
-														<label ><span >Location</span></label>
+														<label ><span data-bind="text: lang.lang.location">Location</span></label>
 														<input 
 															data-role="dropdownlist" 
 															style="width: 100%;" 
@@ -3171,7 +3171,7 @@
 												</div>
 												<div class="span2">
 													<div class="control-group">	
-														<label ><span >Action</span></label>	
+														<label ><span data-bind="text: lang.lang.action">Action</span></label>	
 														<div class="row" style="margin: 0;">					
 															<button type="button" data-role="button" data-bind="click: search" class="k-button" role="button" aria-disabled="false" tabindex="0"><i class="icon-search"></i></button>
 														</div>
@@ -3183,19 +3183,19 @@
 											<a data-bind="visible: haveData, click: exportEXCEL">
 												<span id="saveClose" class="btn btn-icon btn-success glyphicons download" style="width: 250px!important;">
 													<i></i> 
-													<span >Download Reading Book</span>
+													<span data-bind="text: lang.lang.download_reading_book">Download Reading Book</span>
 												</span>
 											</a>
 											<br>
 											<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
 												<thead>
 													<tr>
-														<th class="center">Meter Number</th>
-														<th class="center">From Date</th>
-														<th class="center">To Date</th>
-														<th class="center">Month Of</th>
-														<th class="center">Previouse</th>
-														<th class="center">Current</th>
+														<th class="center"><span data-bind="text: lang.lang.meter_date">Meter Number</span></th>
+														<th class="center"><span data-bind="text: lang.lang.from_date">From Date</span></th>
+														<th class="center"><span data-bind="text: lang.lang.to_date">To Date</span></th>
+														<th class="center"><span data-bind="text: lang.lang.month_of">Month Of</span></th>
+														<th class="center"><span data-bind="text: lang.lang.previous">Previouse</span></th>
+														<th class="center"><span data-bind="text: lang.lang.current">Current</span></th>
 													</tr>
 												</thead>
 												<tbody 
@@ -3210,12 +3210,12 @@
 									<!-- // Tab content END -->
 									<!-- Tab content -->
 									<div id="tabReading" style="border: 1px solid #ccc" class="tab-pane widget-body-regular">	
-										<h4 class="separator bottom" style="margin-top: 10px;">Please upload reading book</h4>
+										<h4 class="separator bottom" style="margin-top: 10px;" data-bind="text: lang.lang.please_upload_reading_book">Please upload reading book</h4>
 
 										<div class="row-fluid clear" style="overflow: hidden;margin-bottom: 20px;">
 											<div class="span3" style="padding-left: 0;">
 												<div class="control-group">								
-													<label ><span >License</span></label>
+													<label ><span data-bind="text: lang.lang.license">License</span></label>
 													<input 
 														data-role="dropdownlist" 
 														style="width: 100%;" 
@@ -3232,7 +3232,7 @@
 											</div>
 											<div class="span3">
 												<div class="control-group">								
-													<label ><span >Location</span></label>
+													<label ><span data-bind="text: lang.lang.location">Location</span></label>
 													<input 
 														data-role="dropdownlist" 
 														style="width: 100%;" 
@@ -3248,7 +3248,7 @@
 											</div>
 											<div class="span3">
 												<div class="control-group">	
-													<label ><span >Month Of</span></label>
+													<label ><span data-bind="text: lang.lang.month_of">Month Of</span></label>
 										            <input type="text" 
 									                	style="width: 100%;" 
 									                	data-role="datepicker"
@@ -3261,7 +3261,7 @@
 												</div>
 											</div>											<div class="span3">
 												<div class="control-group">	
-													<label ><span >To Date</span></label>
+													<label ><span data-bind="text: lang.lang.to_date">To Date</span></label>
 										            <input type="text" 
 									                	style="width: 100%;" 
 									                	data-role="datepicker"
@@ -3278,11 +3278,11 @@
 										<table data-bind="visible: errorShow" class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
 											<thead>
 												<tr>
-													<th class="center">Line</th>
-													<th class="center">Meter Number</th>
-													<th class="center">Previus</th>
-													<th class="center">Current</th>
-													<th class="center">Status</th>
+													<th class="center"><span data-bind="text: lang.lang.line">Line</span></th>
+													<th class="center"><span data-bind="text: lang.lang.meter_number">Meter Number</span></th>
+													<th class="center"><span data-bind="text: lang.lang.previous">Previus</span></th>
+													<th class="center"><span data-bind="text: lang.lang.current">Current</span></th>
+													<th class="center"><span data-bind="text: lang.lang.status">Status</span></th>
 												</tr>
 											</thead>
 											<tbody 
@@ -3293,15 +3293,15 @@
 						                	</tbody>
 										</table>
 										<div data-bind="visible: existShow" style="overflow: hidden;">
-											<p>Exist Meter</p>
+											<p data-bind="text: lang.lang.exist_meter">Exist Meter</p>
 											<table  class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
 												<thead>
 													<tr>
-														<th class="center">Line</th>
-														<th class="center">Meter Number</th>
-														<th class="center">Previus</th>
-														<th class="center">Current</th>
-														<th class="center">Status</th>
+														<th class="center"><span data-bind="text: lang.lang.line">Line</span></th>
+														<th class="center"><span data-bind="text: lang.lang.meter_number">Meter Number</span></th>
+														<th class="center"><span data-bind="text: lang.lang.previous">Previus</span></th>
+														<th class="center"><span data-bind="text: lang.lang.current">Current</span></th>
+														<th class="center"><span data-bind="text: lang.lang.status">Status</span></th>
 													</tr>
 												</thead>
 												<tbody 
@@ -3314,7 +3314,7 @@
 										</div>
 										<br>
 
-										<span data-bind="visible: fullCorrect" class="btn btn-icon btn-primary glyphicons ok_2" style="margin-top: 3px;width: 160px!important;"><i></i><span data-bind="click: save">Start Reading</span></span>
+										<span data-bind="visible: fullCorrect" class="btn btn-icon btn-primary glyphicons ok_2" style="margin-top: 3px;width: 160px!important;"><i></i><span data-bind="click: save" data-bind="text: lang.lang.start_reading">Start Reading</span></span>
 									</div>
 									<!-- // Tab content END -->
 									
@@ -3329,7 +3329,7 @@
 		</div>
 	</div>
 </script>
-<script id="reading-template" type="text/x-kendo-tmpl">                    
+<script id="reading-template" type="text/x-kendo-tmpl">
     <tr>
     	<td>
     		#= meter_number# - #= _contact[0].name#
@@ -3351,7 +3351,7 @@
    		</td>		
    	</tr>
 </script>
-<script id="reading-Error11-template" type="text/x-kendo-tmpl">                    
+<script id="reading-Error11-template" type="text/x-kendo-tmpl">
     <tr>
     	<td align="center">
     		#= line#
@@ -3370,7 +3370,7 @@
    		</td>	
    	</tr>
 </script>
-<script id="reading-Exist-template" type="text/x-kendo-tmpl">                    
+<script id="reading-Exist-template" type="text/x-kendo-tmpl">
     <tr>
     	<td align="center">
     		#= line#
@@ -3495,7 +3495,7 @@
 		</div>
 	</div>
 </script>
-<script id="reading-list-template" type="text/x-kendo-tmpl">                    
+<script id="reading-list-template" type="text/x-kendo-tmpl">
     <tr>
     	<td>
     		#= meter_number#
@@ -5528,7 +5528,7 @@
     	<a href="\#/account">+ Add New Account</a>
     </strong>
 </script>
-<script id="account-list-tmpl" type="text/x-kendo-tmpl">	
+<script id="account-list-tmpl" type="text/x-kendo-tmpl">
 	<span>
 		#=number#				
 	</span>
@@ -5749,17 +5749,17 @@
 				<div class="cover-block" style="width: 100%; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1; padding-left: 15px;">
 					<div class="row-fluid recevable-report">
 					<h2 data-bind="text: lang.lang.receiveable_and_deposits">Receiveable and Deposits</h2>
-					<p data-bind="text.lang.lang.these_would_be_the_most">
+					<p data-bind="text: lang.lang.these_would_be_the_most">
 						These would be the most common reports that you will be using. It includes receivables balance and its aging in both summary and detail list and the security deposit made by the customers for their water connection.
 					</p>
 					<div class="row-fluid">
 						<table class="table table-borderless table-condensed">
 							<tr>
 								<td >
-									<h3><a href="#/account_receivable_list" data-bind="lang.lang.accounts_receivable_listing">Accounts Receivable Listing</a></h3>
+									<h3><a href="#/account_receivable_list" data-bind="text: lang.lang.accounts_receivable_listing">Accounts Receivable Listing</a></h3>
 								</td>
 								<td >
-									<h3><a href="#/customer_deposit_report" data-bind>Customer Deposit</a></h3>								
+									<h3><a href="#/customer_deposit_report" data-bind="text: lang.lang.customer_deposit">Customer Deposit</a></h3>								
 								</td>						
 							</tr>
 							<tr>
@@ -5774,10 +5774,10 @@
 
 							<tr>
 								<td >
-									<h3><a href="#/customer_aging_sum_list">Customer Aging Summary List</a></h3>
+									<h3><a href="#/customer_aging_sum_list" data-bind="text: lang.lang.customer_aging_summary_list">Customer Aging Summary List</a></h3>
 								</td>
 								<td >
-									<h3><a href="#/customer_aging_detail">Customer Aging Detail List</a></h3>								
+									<h3><a href="#/customer_aging_detail" data-bind="text: lang.lang.customer_aging_detail_list">Customer Aging Detail List</a></h3>								
 								</td>						
 							</tr>
 							<tr>
@@ -5799,18 +5799,18 @@
 			<div class="span6">
 				<div class="cover-block" style="width: 100%; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1; padding-left: 15px;">
 					<div class="row-fluid sale-report">
-					<h2>Sale Report</h2>
-					<p>
+					<h2 data-bind="text: lang.lang.sale_report">Sale Report</h2>
+					<p data-bind="text: lang.lang.summary_and_detail_sale">
 						Summary and detail sale report broken down by Licenses, bloc, and types of reveneues.	
 					</p>
 					<div class="row-fluid">
 						<table class="table table-borderless table-condensed">
 							<tr>
 								<td>
-									<h3><a href="#/sale_summary">Sale Summary Report</a></h3>
+									<h3><a href="#/sale_summary" data-bind="text: lang.lang.sale_summary_report">Sale Summary Report</a></h3>
 								</td>
 								<td >
-									<h3><a href="#/sale_detail">Sale Detail Report</a></h3>								
+									<h3><a href="#/sale_detail" data-bind="text: lang.lang.sale_detail_report">Sale Detail Report</a></h3>								
 								</td>						
 							</tr>
 							<tr>
@@ -5824,7 +5824,7 @@
 							</tr>
 							<tr>
 								<td >
-									<h3><a href="#/connect_service_revenue">Connection Service Revenue Report</a></h3>
+									<h3><a href="#/connect_service_revenue" data-bind="text: lang.lang.connection_service_revenue_report">Connection Service Revenue Report</a></h3>
 								</td>
 								<td >
 									
@@ -5846,18 +5846,18 @@
 			<div class="span6">
 				<div class="cover-block" style="width: 100%; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1; padding-left: 15px;">
 					<div class="row-fluid recevable-report">
-					<h2>Cash Receipt Report</h2>
-					<p>
+					<h2 data-bind="text: lang.lang.cash_receipt_report">Cash Receipt Report</h2>
+					<p data-bind="text: lang.lang.summary_and_detail_cash">
 						Summary and detail cash receipt reports grouped by sources/ methods of receipts 
 					</p>
 					<div class="row-fluid">
 						<table class="table table-borderless table-condensed">
 							<tr>
 								<td>
-									<h3><a href="#/cash_receipt_detail">Cash Receipt Detail</a></h3>
+									<h3><a href="#/cash_receipt_detail" data-bind="text: lang.lang.cash_receipt_detail">Cash Receipt Detail</a></h3>
 								</td>
 								<td >
-									<h3><a href="#/cash_receipt_source_detail">Cash Receipt By Sources Detail</a></h3>								
+									<h3><a href="#/cash_receipt_source_detail" data-bind="text: lang.lang.cash_receipt_by_sources_detail">Cash Receipt By Sources Detail</a></h3>								
 								</td>						
 							</tr>
 							<tr>
@@ -12841,14 +12841,18 @@
 
 					banhji.transactionLine.addById(trx[0].id, banhji.ActivateMeter.get('meterObj').contact[0].id, self.service.account_id, 'Meter Activation', 0, self.service.received, banhji.ActivateMeter.get('issued_date'));
 				}
-				banhji.transactionLine.save();
-			});
-			banhji.transaction.dataSource.data([]);
-			banhji.transaction.makeInvoice(self.get('meterObj').contact[0].id, self.get('paymentMethod'), self.deposit.received, 'Water_Deposit', self.get('meterObj').location_id)
+				return banhji.transactionLine.save();
+			})
+			.then(function(lines){
+				// get another transaction
+				banhji.transaction.dataSource.data([]);
+				return banhji.transaction.makeInvoice(self.get('meterObj').contact[0].id, self.get('paymentMethod'), self.deposit.received, 'Water_Deposit', self.get('meterObj').location_id);
+			})
 			.then(function(transaction){
 				return banhji.transaction.save();
 			})
 			.then(function(trx){
+				banhji.transactionLine.dataSource.data([]);
 				if(self.deposit.received == self.deposit.amount){
 					banhji.transactionLine.addById(trx[0].id, banhji.ActivateMeter.get('meterObj').contact[0].id, banhji.ActivateMeter.get('cashAccount'), 'Water Deposit', self.deposit.received, 0, banhji.ActivateMeter.get('issued_date'));
 
@@ -12856,6 +12860,10 @@
 				}
 				banhji.transactionLine.save();
 			});
+
+			
+			
+			
 
 			if(this.get('amountToBeRecieved') < amount) {
 				banhji.ActivateMeter.get('meterObj').set('activated', 1);
@@ -14935,7 +14943,7 @@
 			this.set("obj", {
 				transaction_template_id: 6,
 				account_id 			: 7,
-				payment_method_id	: 1,
+				payment_method_id	: 7,
 			   	rate				: 1,
 			   	sub_total 			: 0,
 			   	discount 			: 0,

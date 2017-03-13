@@ -27455,7 +27455,7 @@
                    data-value-field="id"
                    data-bind="value: contact_id,
                               source: supplierDS,
-                              events:{change: checkExistingInvoice}"
+                               events:{change: checkExistingInvoice}"
                    data-placeholder="Add Supplier.." style="width: 100%" />	
 		</td>
 		<td>
@@ -27470,8 +27470,7 @@
 					data-role="datepicker"
 					data-format="dd-MM-yyyy"
 					data-parse-formats="yyyy-MM-dd" 
-					data-bind="value: reference_date" 
-					required data-required-msg="required"
+					data-bind="value: reference_date"
 					style="width:100%;" />
 		</td>
 		<td data-bind="visible: showJob">
@@ -46429,8 +46428,7 @@
 
 			this.customerDS.query({
 				filter:[
-					{ field:"parent_id", operator:"where_related_contact_type", value:1 },
-					{ field:"status", value:1 }
+					{ field:"parent_id", operator:"where_related_contact_type", value:1 }
 				]
 			}).then(function(){
 				var view = self.customerDS.view();
@@ -46450,8 +46448,7 @@
 
 			this.supplierDS.query({
 				filter:[
-					{ field:"parent_id", operator:"where_related_contact_type", value:2 },
-					{ field:"status", value:1 }
+					{ field:"parent_id", operator:"where_related_contact_type", value:2 }
 				]
 			}).then(function(){
 				var view = self.supplierDS.view();
@@ -47847,6 +47844,7 @@
 		paymentTermDS 		: banhji.source.paymentTermDS,
 		contactDS  			: new kendo.data.DataSource({
 		  	data: banhji.source.customerList,
+		  	filter:{ field:"status", value:1 },
 			sort: { field:"number", dir:"asc" }
 		}),
 		employeeDS  		: new kendo.data.DataSource({
@@ -48859,9 +48857,9 @@
 			  	{ field: "name", dir: "asc" }
 			]
 		}),
-		currencyRateDS		: dataStore(apiUrl + "currencies/rate"),
 		contactDS  			: new kendo.data.DataSource({
 		  	data: banhji.source.customerList,
+		  	filter:{ field:"status", value:1 },
 			sort: { field:"number", dir:"asc" }
 		}),
 		employeeDS  		: new kendo.data.DataSource({
@@ -49878,7 +49876,6 @@
 		recurringDS 		: dataStore(apiUrl + "transactions"),
 		recurringLineDS 	: dataStore(apiUrl + "account_lines"),
 		journalLineDS		: dataStore(apiUrl + "journal_lines"),
-		currencyRateDS		: dataStore(apiUrl + "currencies/rate"),
 		attachmentDS	 	: dataStore(apiUrl + "attachments"),
 		txnTemplateDS 		: new kendo.data.DataSource({
 		  	data: banhji.source.txnTemplateList,
@@ -49926,6 +49923,7 @@
 		}),
 		contactDS  			: new kendo.data.DataSource({
 		  	data: banhji.source.customerList,
+		  	filter:{ field:"status", value:1 },
 			sort: { field:"number", dir:"asc" }
 		}),
 		employeeDS  		: new kendo.data.DataSource({
@@ -50692,6 +50690,7 @@
 		}),
 		contactDS  			: new kendo.data.DataSource({
 		  	data: banhji.source.customerList,
+		  	filter:{ field:"status", value:1 },
 			sort: { field:"number", dir:"asc" }
 		}),
 		employeeDS  		: new kendo.data.DataSource({
@@ -52175,6 +52174,7 @@
 		}),
 		contactDS  			: new kendo.data.DataSource({
 		  	data: banhji.source.customerList,
+		  	filter:{ field:"status", value:1 },
 			sort: { field:"number", dir:"asc" }
 		}),
 		employeeDS  		: new kendo.data.DataSource({
@@ -53702,6 +53702,7 @@
 		}),
 		contactDS  			: new kendo.data.DataSource({
 		  	data: banhji.source.customerList,
+		  	filter:{ field:"status", value:1 },
 			sort: { field:"number", dir:"asc" }
 		}),
 		itemDS  			: new kendo.data.DataSource({
@@ -54649,6 +54650,7 @@
 		}),
 		contactDS  			: new kendo.data.DataSource({
 		  	data: banhji.source.customerList,
+		  	filter:{ field:"status", value:1 },
 			sort: { field:"number", dir:"asc" }
 		}),
 		itemDS  			: new kendo.data.DataSource({
@@ -55900,6 +55902,7 @@
 		}),
 		contactDS  			: new kendo.data.DataSource({
 		  	data: banhji.source.customerList,
+		  	filter:{ field:"status", value:1 },
 			sort: { field:"number", dir:"asc" }
 		}),
 		itemDS  			: new kendo.data.DataSource({
@@ -57195,6 +57198,7 @@
 		agingDS 			: dataStore(apiUrl + "transactions/statement_aging"),
 		contactDS  			: new kendo.data.DataSource({
 		  	data: banhji.source.customerList,
+		  	filter:{ field:"status", value:1 },
 			sort: { field:"number", dir:"asc" }
 		}),
 		sortList 			: banhji.source.sortList,
@@ -57320,6 +57324,7 @@
 		dataSource 			: dataStore(apiUrl + "sales/sale_summary_by_customer"),
 		contactDS  			: new kendo.data.DataSource({
 		  	data: banhji.source.customerList,
+		  	filter:{ field:"status", value:1 },
 			sort: { field:"number", dir:"asc" }
 		}),
 		sortList			: banhji.source.sortList,
@@ -57524,6 +57529,7 @@
 		dataSource 			: dataStore(apiUrl + "sales/sale_detail_by_customer"),
 		contactDS  			: new kendo.data.DataSource({
 		  	data: banhji.source.customerList,
+		  	filter:{ field:"status", value:1 },
 			sort: { field:"number", dir:"asc" }
 		}),
 		sortList			: banhji.source.sortList,
@@ -57730,6 +57736,7 @@
 		dataSource 			: dataStore(apiUrl + "sales/customer_transaction_list"),
 		contactDS  			: new kendo.data.DataSource({
 		  	data: banhji.source.customerList,
+		  	filter:{ field:"status", value:1 },
 			sort: { field:"number", dir:"asc" }
 		}),
 		sortList			: banhji.source.sortList,
@@ -57925,6 +57932,7 @@
 		dataSource 			: dataStore(apiUrl + "sales/deposit_detail_by_customer"),
 		contactDS  			: new kendo.data.DataSource({
 		  	data: banhji.source.customerList,
+		  	filter:{ field:"status", value:1 },
 			sort: { field:"number", dir:"asc" }
 		}),
 		sortList			: banhji.source.sortList,
@@ -58874,6 +58882,7 @@
 		dataSource 			: dataStore(apiUrl + "sales/aging_summary"),
 		contactDS  			: new kendo.data.DataSource({
 		  	data: banhji.source.customerList,
+		  	filter:{ field:"status", value:1 },
 			sort: { field:"number", dir:"asc" }
 		}),
 		obj 				: null,
@@ -59013,6 +59022,7 @@
 		dataSource 			: dataStore(apiUrl + "sales/aging_detail"),
 		contactDS  			: new kendo.data.DataSource({
 		  	data: banhji.source.customerList,
+		  	filter:{ field:"status", value:1 },
 			sort: { field:"number", dir:"asc" }
 		}),
 		obj 				: { customers: [] },
@@ -59168,6 +59178,7 @@
 		dataSource 			: dataStore(apiUrl + "sales/collect_invoice"),
 		contactDS  			: new kendo.data.DataSource({
 		  	data: banhji.source.customerList,
+		  	filter:{ field:"status", value:1 },
 			sort: { field:"number", dir:"asc" }
 		}),
 		obj 				: { customers: [] },
@@ -59317,6 +59328,7 @@
 		dataSource 			: dataStore(apiUrl + "sales/collection_report"),
 		contactDS  			: new kendo.data.DataSource({
 		  	data: banhji.source.customerList,
+		  	filter:{ field:"status", value:1 },
 			sort: { field:"number", dir:"asc" }
 		}),
 		sortList			: banhji.source.sortList,
@@ -59528,6 +59540,7 @@
 		dataSource 			: dataStore(apiUrl + "sales/sale_order_list"),
 		contactDS  			: new kendo.data.DataSource({
 		  	data: banhji.source.customerList,
+		  	filter:{ field:"status", value:1 },
 			sort: { field:"number", dir:"asc" }
 		}),
 		sortList			: banhji.source.sortList,
@@ -59737,6 +59750,7 @@
 		dataSource 			: dataStore(apiUrl + "sales/invoice_list"),
 		contactDS  			: new kendo.data.DataSource({
 		  	data: banhji.source.customerList,
+		  	filter:{ field:"status", value:1 },
 			sort: { field:"number", dir:"asc" }
 		}),
 		sortList			: banhji.source.sortList,
@@ -62060,6 +62074,7 @@
 		}),		
 		contactDS  			: new kendo.data.DataSource({
 		  	data: banhji.source.supplierList,
+		  	filter:{ field:"status", value:1 },
 			sort: { field:"number", dir:"asc" }
 		}),
 		itemDS  			: new kendo.data.DataSource({
@@ -62934,6 +62949,7 @@
 		}),
 		contactDS  			: new kendo.data.DataSource({
 		  	data: banhji.source.supplierList,
+		  	filter:{ field:"status", value:1 },
 			sort: { field:"number", dir:"asc" }
 		}),
 		itemDS  			: new kendo.data.DataSource({
@@ -63715,11 +63731,11 @@
 		journalLineDS		: dataStore(apiUrl + "journal_lines"),
 		recurringDS 		: dataStore(apiUrl + "transactions"),
 		recurringLineDS 	: dataStore(apiUrl + "account_lines"),
-		currencyRateDS		: dataStore(apiUrl + "currencies/rate"),
 		paymentMethodDS		: dataStore(apiUrl + "payment_methods"),
 		attachmentDS	 	: dataStore(apiUrl + "attachments"),
 		contactDS  			: new kendo.data.DataSource({
 		  	data: banhji.source.supplierList,
+		  	filter:{ field:"status", value:1 },
 			sort: { field:"number", dir:"asc" }
 		}),
 		segmentItemDS 		: new kendo.data.DataSource({
@@ -64470,6 +64486,7 @@
 		referenceLineDS				: dataStore(apiUrl + "item_lines"),
 		contactDS  					: new kendo.data.DataSource({
 		  	data: banhji.source.supplierList,
+		  	filter:{ field:"status", value:1 },
 			sort: { field:"number", dir:"asc" }
 		}),
 		jobDS 						: new kendo.data.DataSource({
@@ -64485,6 +64502,7 @@
 		}),
 		additionalContactDS  		: new kendo.data.DataSource({
 		  	data: banhji.source.supplierList,
+		  	filter:{ field:"status", value:1 },
 			sort: { field:"number", dir:"asc" }
 		}),
 		accountDS  					: new kendo.data.DataSource({
@@ -66265,6 +66283,7 @@
 		attachmentDS	 	: dataStore(apiUrl + "attachments"),
 		contactDS  			: new kendo.data.DataSource({
 		  	data: banhji.source.supplierList,
+		  	filter:{ field:"status", value:1 },
 			sort: { field:"number", dir:"asc" }
 		}),
 		jobDS 				: new kendo.data.DataSource({
@@ -67386,6 +67405,7 @@
 		}),
 		contactDS  			: new kendo.data.DataSource({
 		  	data: banhji.source.supplierList,
+		  	filter:{ field:"status", value:1 },
 			sort: { field:"number", dir:"asc" }
 		}),
 		itemDS  			: new kendo.data.DataSource({
@@ -68302,6 +68322,7 @@
 		dataSource 			: dataStore(apiUrl + "transactions"),
 		contactDS  			: new kendo.data.DataSource({
 		  	data: banhji.source.supplierList,
+		  	filter:{ field:"status", value:1 },
 			sort: { field:"number", dir:"asc" }
 		}),
 		contact_id 			: "",
@@ -68516,6 +68537,7 @@
 		dataSource 			: dataStore(apiUrl + "vendorReports/expense_summary_by_supplier"),
 		contactDS  			: new kendo.data.DataSource({
 		  	data: banhji.source.supplierList,
+		  	filter:{ field:"status", value:1 },
 			sort: { field:"number", dir:"asc" }
 		}),
 		sortList			: banhji.source.sortList,
@@ -68720,6 +68742,7 @@
 		dataSource 			: dataStore(apiUrl + "vendorReports/expense_detail_by_supplier"),
 		contactDS  			: new kendo.data.DataSource({
 		  	data: banhji.source.supplierList,
+		  	filter:{ field:"status", value:1 },
 			sort: { field:"number", dir:"asc" }
 		}),
 		sortList			: banhji.source.sortList,
@@ -68924,6 +68947,7 @@
 		dataSource 			: dataStore(apiUrl + "vendorReports/transaction_vendor"),
 		contactDS  			: new kendo.data.DataSource({
 		  	data: banhji.source.supplierList,
+		  	filter:{ field:"status", value:1 },
 			sort: { field:"number", dir:"asc" }
 		}),
 		sortList			: banhji.source.sortList,
@@ -69343,6 +69367,7 @@
 		dataSource 			: dataStore(apiUrl + "vendorReports/purchase_order_list"),
 		contactDS  			: new kendo.data.DataSource({
 		  	data: banhji.source.supplierList,
+		  	filter:{ field:"status", value:1 },
 			sort: { field:"number", dir:"asc" }
 		}),
 		sortList			: banhji.source.sortList,
@@ -69779,6 +69804,7 @@
 		dataSource 		: dataStore(apiUrl + "vendorReports/deposit_detail_by_supplier"),
 		contactDS  			: new kendo.data.DataSource({
 		  	data: banhji.source.supplierList,
+		  	filter:{ field:"status", value:1 },
 			sort: { field:"number", dir:"asc" }
 		}),
 		sortList			: banhji.source.sortList,
@@ -70293,6 +70319,7 @@
 		dataSource 			: dataStore(apiUrl + "vendorReports/aging_summary"),
 		contactDS  			: new kendo.data.DataSource({
 		  	data: banhji.source.supplierList,
+		  	filter:{ field:"status", value:1 },
 			sort: { field:"number", dir:"asc" }
 		}),
 		obj 				: { contactIds: [] },
@@ -70442,6 +70469,7 @@
 		dataSource 			: dataStore(apiUrl + "vendorReports/aging_detail"),
 		contactDS  			: new kendo.data.DataSource({
 		  	data: banhji.source.supplierList,
+		  	filter:{ field:"status", value:1 },
 			sort: { field:"number", dir:"asc" }
 		}),
 		obj 				: { contactIds: [] },
@@ -70597,6 +70625,7 @@
 		dataSource 			: dataStore(apiUrl + "vendorReports/bill_topay"),
 		contactDS  			: new kendo.data.DataSource({
 		  	data: banhji.source.supplierList,
+		  	filter:{ field:"status", value:1 },
 			sort: { field:"number", dir:"asc" }
 		}),
 		obj 				: { contactIds: [] },
@@ -70746,6 +70775,7 @@
 		dataSource 		: dataStore(apiUrl + "vendorReports/bill_list"),
 		contactDS  			: new kendo.data.DataSource({
 		  	data: banhji.source.supplierList,
+		  	filter:{ field:"status", value:1 },
 			sort: { field:"number", dir:"asc" }
 		}),
 		sortList			: banhji.source.sortList,
@@ -72795,10 +72825,12 @@
 		}),
     	vendorDS  				: new kendo.data.DataSource({
 		  	data: banhji.source.supplierList,
+		  	filter:{ field:"status", value:1 },
 			sort: { field:"number", dir:"asc" }
 		}),
 		customerDS  			: new kendo.data.DataSource({
 		  	data: banhji.source.customerList,
+		  	filter:{ field:"status", value:1 },
 			sort: { field:"number", dir:"asc" }
 		}),
     	categoryDS 				: new kendo.data.DataSource({
@@ -73868,10 +73900,12 @@
 		}),
     	vendorDS  				: new kendo.data.DataSource({
 		  	data: banhji.source.supplierList,
+		  	filter:{ field:"status", value:1 },
 			sort: { field:"number", dir:"asc" }
 		}),
 		customerDS  			: new kendo.data.DataSource({
 		  	data: banhji.source.customerList,
+		  	filter:{ field:"status", value:1 },
 			sort: { field:"number", dir:"asc" }
 		}),  	
     	incomeAccountDS 		: new kendo.data.DataSource({
@@ -74291,10 +74325,12 @@
     	itemCustomerDS 	 		: dataStore(apiUrl + "items/contact"),
     	vendorDS  				: new kendo.data.DataSource({
 		  	data: banhji.source.supplierList,
+		  	filter:{ field:"status", value:1 },
 			sort: { field:"number", dir:"asc" }
 		}),
 		customerDS  			: new kendo.data.DataSource({
 		  	data: banhji.source.customerList,
+		  	filter:{ field:"status", value:1 },
 			sort: { field:"number", dir:"asc" }
 		}),
     	categoryDS 				: new kendo.data.DataSource({
@@ -78667,6 +78703,7 @@
 		}),
 		contactDS 			: new kendo.data.DataSource({
 		  	data: banhji.source.customerList,
+		  	filter:{ field:"status", value:1 },
 		  	sort: { field: "number", dir: "asc" }
 		}),
 		jobDS 				: new kendo.data.DataSource({
@@ -80727,9 +80764,8 @@
 		referenceLineDS  	: dataStore(apiUrl + "account_lines"),
 		recurringDS 		: dataStore(apiUrl + "transactions"),
 		recurringLineDS 	: dataStore(apiUrl + "account_lines"),
-		existingInvoiceDS 	: dataStore(apiUrl + "account_lines"),
-		currencyRateDS		: dataStore(apiUrl + "currencies/rate"),
-		currencyDS  			: new kendo.data.DataSource({
+		invoiceDS 			: dataStore(apiUrl + "account_lines"),
+		currencyDS  		: new kendo.data.DataSource({
 		  	data: banhji.source.currencyList,
 		  	filter: { field:"status", value: 1 }
 		}),
@@ -80757,6 +80793,7 @@
 		}),
 		supplierDS  		: new kendo.data.DataSource({
 		  	data: banhji.source.supplierList,
+		  	filter:{ field:"status", value:1 },
 			sort: { field:"number", dir:"asc" }
 		}),
 		accountDS 			: new kendo.data.DataSource({
@@ -81064,31 +81101,44 @@
 		},
 	    //Obj
 	    checkExistingInvoice: function(){
-	    	var self = this, contactIDs = [], referenceNos = [];
+	    	var self = this, obj = this.get("obj"), 
+	    	para = [], ids = [], contactIDs = [], referenceNos = [];
 
-		    $.each(this.lineDS.data(), function(index, value){
-		    	if(value.contact_id>0 && value.reference_no!==""){
-		    		contactIDs.push(value.contact_id);
-		    		referenceNos.push(value.reference_no);
-		    	}
-		    });
-	    	
-	    	this.existingInvoiceDS.query({
-	    		filter:[
-	    			{ field:"contact_id", operator:"where_in", value: contactIDs },
-	    			{ field:"reference_no", operator:"where_in", value: referenceNos }
-	    		],
-	    		page:1,
-	    		pageSize:1
-	    	}).then(function(){
-	    		var view = self.existingInvoiceDS.view();
+	    	$.each(this.lineDS.data(), function(index, value){
+	    		if(value.contact_id>0 && value.reference_no!==""){
 
-	    		if(view.length>0){
-	    			self.set("isExistingInvoice", true);
-	    		}else{
-	    			self.set("isExistingInvoice", false);
-	    		}
+		    		if(obj.isNew()==false){
+						ids.push(value.id);
+					}
+
+					contactIDs.push(value.contact_id);
+					referenceNos.push(value.reference_no);
+				}
 	    	});
+	    	
+	    	if(contactIDs.length>0 && referenceNos.length>0){
+	    		if(obj.isNew()==false){
+					para.push({ field:"id", operator:"where_not_in", value: ids });
+				}
+	    		para.push({ field:"contact_id", operator:"where_in", value: contactIDs });	    	
+				para.push({ field:"reference_no", operator:"where_in", value: referenceNos });
+			
+		    	this.invoiceDS.query({
+		    		filter:para,
+		    		page:1,
+		    		pageSize:1
+		    	}).then(function(){
+		    		var view = self.invoiceDS.view();
+
+		    		if(view.length>0){
+		    			self.set("isExistingInvoice", true);
+
+		    			$("#ntf1").data("kendoNotification").error(banhji.source.duplicateInvoice);
+		    		}else{
+		    			self.set("isExistingInvoice", false);
+		    		}
+		    	});
+	    	}
 	    },
 	    loadObj 			: function(id){
 			var self = this, para = [];
@@ -81387,6 +81437,17 @@
 		},
 		closeConfirm 		: function(){
 			this.set("showConfirm", false);
+		},
+		validating 			: function(){
+			var result = true, obj = this.get("obj");
+
+			if(this.get("isExistingInvoice")){
+				$("#ntf1").data("kendoNotification").error(banhji.source.duplicateInvoice);
+
+				result = false;
+			}
+
+			return result;
 		},
 		//Journal
 		addJournal 			: function(transaction_id){
@@ -83400,7 +83461,6 @@
 				as_of = new Date(as_of);
 				var displayDate = "As Of " + kendo.toString(as_of, "dd-MM-yyyy");
 				this.set("displayDate", displayDate);
-				// as_of.setDate(as_of.getDate()+1);
 
 				this.dataSource.filter({ field:"issued_date <", value:kendo.toString(as_of, "yyyy-MM-dd") });
 
@@ -86143,6 +86203,7 @@
 		}),
 		contactDS  			: new kendo.data.DataSource({
 		  	data: banhji.source.customerList,
+		  	filter:{ field:"status", value:1 },
 			sort: { field:"number", dir:"asc" }
 		}),
 		employeeDS  		: new kendo.data.DataSource({
@@ -86591,6 +86652,7 @@
 		}),
 		contactDS  			: new kendo.data.DataSource({
 		  	data: banhji.source.supplierList,
+		  	filter:{ field:"status", value:1 },
 			sort: { field:"number", dir:"asc" }
 		}),
 		employeeDS  		: new kendo.data.DataSource({
@@ -93899,7 +93961,7 @@
 				vm.pageLoad();			
 			} else {
 				window.location.replace(baseUrl + "admin");
-			}				
+			}
 		});
 	});
 	banhji.router.route("/accounting_center(/:id)", function(id){
@@ -94532,13 +94594,7 @@
 			          	}
 			          	return true;
 			        },
-			        customRule2: function(input) {
-			          	if (input.is("[name=txtReferenceNo]")) {
-			            	return $.trim(input.val()) !== "" && vm.isExistingInvoice==false;
-			          	}
-			          	return true;
-			        },
-			        customRule3: function(input){
+			        customRule2: function(input){
 			          	if (input.is("[name=txtNumber]")) {	
 				            return vm.get("notDuplicateNumber");
 				        }
@@ -94547,16 +94603,15 @@
 			    },
 			    messages: {
 			        customRule1: banhji.source.requiredMessage,
-			        customRule2: banhji.source.duplicateInvoice,
-			        customRule3: banhji.source.duplicateNumber
+			        customRule2: banhji.source.duplicateNumber
 			    }
 	        }).data("kendoValidator");
 
 	        $("#saveNew").click(function(e){
 				e.preventDefault();
 
-				if(validator.validate()){
-	            	vm.save();
+				if(validator.validate() && vm.validating()){
+	            	// vm.save();
 		        }else{
 		        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
 		        }
@@ -94565,7 +94620,7 @@
 			$("#saveClose").click(function(e){
 				e.preventDefault();
 
-				if(validator.validate()){
+				if(validator.validate() && vm.validating()){
 					vm.set("saveClose", true);
 	            	vm.save();
 		        }else{
@@ -94576,7 +94631,7 @@
 			$("#savePrint").click(function(e){
 				e.preventDefault();
 				
-				if(validator.validate()){
+				if(validator.validate() && vm.validating()){
 					vm.set("savePrint", true);
 	            	vm.save();
 		        }else{
@@ -96350,19 +96405,32 @@
 	*   REPORTS ROUTER  							 *
 	*************************************************/
 	banhji.router.route("/reports", function(){
-		if(!banhji.userManagement.getLogin()){
-			banhji.router.navigate('/manage');
-		}else{
-			banhji.view.layout.showIn("#content", banhji.view.reportDashboard);
-			
-			var vm = banhji.reportDashboard;
-			banhji.userManagement.addMultiTask("Reports Dashboard","reports",null);
+		banhji.accessMod.query({
+			filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		}).then(function(e){
+			var allowed = false;
+			if(banhji.accessMod.data().length > 0) {
+				for(var i = 0; i < banhji.accessMod.data().length; i++) {
+					if("report" == banhji.accessMod.data()[i].name.toLowerCase()) {
+						allowed = true;
+						break;
+					}
+				}
+			} 
+			if(allowed) {
+				banhji.view.layout.showIn("#content", banhji.view.reportDashboard);
+				
+				var vm = banhji.reportDashboard;
+				banhji.userManagement.addMultiTask("Reports Dashboard","reports",null);
 
-			if(banhji.pageLoaded["reports"]==undefined){
-				banhji.pageLoaded["reports"] = true;
+				if(banhji.pageLoaded["reports"]==undefined){
+					banhji.pageLoaded["reports"] = true;
+				}
+				vm.pageLoad();
+			} else {
+				window.location.replace(baseUrl + "admin");
 			}
-			vm.pageLoad();
-		}
+		});
 	});
 	banhji.router.route("/profitability_summary_job", function(){
 		if(!banhji.userManagement.getLogin()){
