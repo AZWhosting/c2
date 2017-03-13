@@ -94611,7 +94611,7 @@
 				e.preventDefault();
 
 				if(validator.validate() && vm.validating()){
-	            	// vm.save();
+	            	vm.save();
 		        }else{
 		        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
 		        }
@@ -94677,7 +94677,7 @@
 				
 				if(banhji.pageLoaded["expense"]==undefined){
 					banhji.pageLoaded["expense"] = true;
-	   
+
 					var validator = $("#example").kendoValidator({
 			        	rules: {
 					        customRule1: function(input) {
@@ -94687,13 +94687,7 @@
 					          	}
 					          	return true;
 					        },
-					        customRule2: function(input) {
-					          	if (input.is("[name=txtReferenceNo]")) {
-					            	return $.trim(input.val()) !== "" && vm.isExistingInvoice==false;
-					          	}
-					          	return true;
-					        },
-					        customRule3: function(input){
+					        customRule2: function(input){
 					          	if (input.is("[name=txtNumber]")) {	
 						            return vm.get("notDuplicateNumber");
 						        }
@@ -94702,15 +94696,14 @@
 					    },
 					    messages: {
 					        customRule1: banhji.source.requiredMessage,
-					        customRule2: banhji.source.duplicateInvoice,
-					        customRule3: banhji.source.duplicateNumber
+					        customRule2: banhji.source.duplicateNumber
 					    }
 			        }).data("kendoValidator");
 
 			        $("#saveNew").click(function(e){
 						e.preventDefault();
 
-						if(validator.validate()){
+						if(validator.validate() && vm.validating()){
 			            	vm.save();
 				        }else{
 				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
@@ -94720,7 +94713,7 @@
 					$("#saveClose").click(function(e){
 						e.preventDefault();
 
-						if(validator.validate()){
+						if(validator.validate() && vm.validating()){
 							vm.set("saveClose", true);
 			            	vm.save();
 				        }else{
@@ -94731,7 +94724,7 @@
 					$("#savePrint").click(function(e){
 						e.preventDefault();
 						
-						if(validator.validate()){
+						if(validator.validate() && vm.validating()){
 							vm.set("savePrint", true);
 			            	vm.save();
 				        }else{
@@ -94781,7 +94774,7 @@
 				
 				if(banhji.pageLoaded["expense"]==undefined){
 					banhji.pageLoaded["expense"] = true;
-	   
+
 					var validator = $("#example").kendoValidator({
 			        	rules: {
 					        customRule1: function(input) {
@@ -94791,13 +94784,7 @@
 					          	}
 					          	return true;
 					        },
-					        customRule2: function(input) {
-					          	if (input.is("[name=txtReferenceNo]")) {
-					            	return $.trim(input.val()) !== "" && vm.isExistingInvoice==false;
-					          	}
-					          	return true;
-					        },
-					        customRule3: function(input){
+					        customRule2: function(input){
 					          	if (input.is("[name=txtNumber]")) {	
 						            return vm.get("notDuplicateNumber");
 						        }
@@ -94806,15 +94793,14 @@
 					    },
 					    messages: {
 					        customRule1: banhji.source.requiredMessage,
-					        customRule2: banhji.source.duplicateInvoice,
-					        customRule3: banhji.source.duplicateNumber
+					        customRule2: banhji.source.duplicateNumber
 					    }
 			        }).data("kendoValidator");
 
 			        $("#saveNew").click(function(e){
 						e.preventDefault();
 
-						if(validator.validate()){
+						if(validator.validate() && vm.validating()){
 			            	vm.save();
 				        }else{
 				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
@@ -94824,7 +94810,7 @@
 					$("#saveClose").click(function(e){
 						e.preventDefault();
 
-						if(validator.validate()){
+						if(validator.validate() && vm.validating()){
 							vm.set("saveClose", true);
 			            	vm.save();
 				        }else{
@@ -94835,7 +94821,7 @@
 					$("#savePrint").click(function(e){
 						e.preventDefault();
 						
-						if(validator.validate()){
+						if(validator.validate() && vm.validating()){
 							vm.set("savePrint", true);
 			            	vm.save();
 				        }else{
@@ -94885,7 +94871,7 @@
 				
 				if(banhji.pageLoaded["expense"]==undefined){
 					banhji.pageLoaded["expense"] = true;
-	   
+
 					var validator = $("#example").kendoValidator({
 			        	rules: {
 					        customRule1: function(input) {
@@ -94895,13 +94881,7 @@
 					          	}
 					          	return true;
 					        },
-					        customRule2: function(input) {
-					          	if (input.is("[name=txtReferenceNo]")) {
-					            	return $.trim(input.val()) !== "" && vm.isExistingInvoice==false;
-					          	}
-					          	return true;
-					        },
-					        customRule3: function(input){
+					        customRule2: function(input){
 					          	if (input.is("[name=txtNumber]")) {	
 						            return vm.get("notDuplicateNumber");
 						        }
@@ -94910,15 +94890,14 @@
 					    },
 					    messages: {
 					        customRule1: banhji.source.requiredMessage,
-					        customRule2: banhji.source.duplicateInvoice,
-					        customRule3: banhji.source.duplicateNumber
+					        customRule2: banhji.source.duplicateNumber
 					    }
 			        }).data("kendoValidator");
 
 			        $("#saveNew").click(function(e){
 						e.preventDefault();
 
-						if(validator.validate()){
+						if(validator.validate() && vm.validating()){
 			            	vm.save();
 				        }else{
 				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
@@ -94928,7 +94907,7 @@
 					$("#saveClose").click(function(e){
 						e.preventDefault();
 
-						if(validator.validate()){
+						if(validator.validate() && vm.validating()){
 							vm.set("saveClose", true);
 			            	vm.save();
 				        }else{
@@ -94939,7 +94918,7 @@
 					$("#savePrint").click(function(e){
 						e.preventDefault();
 						
-						if(validator.validate()){
+						if(validator.validate() && vm.validating()){
 							vm.set("savePrint", true);
 			            	vm.save();
 				        }else{
