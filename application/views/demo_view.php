@@ -43226,7 +43226,7 @@
 	<div class="voucher1">
     	<div class="head">
     		<div class="logo">
-            	<img style="max-width: 100px" data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
+            	<img style="max-width: 100px;width: 100px;" data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
             </div>
             <div class="official">
             	Official
@@ -43312,14 +43312,9 @@
 	    						<td style="border: 1px solid #333; padding: 5px; text-align: right; font-weight: 800;" data-bind="text: netAmountDUE"></td>
 	    					</tr>
 	    					<tr>
-	    						<td colspan="2" rowspan="2" style="border: 1px solid #333; padding: 5px;">APPROVED BY :</td>
-	    						<td style="border: 1px solid #333; padding: 5px; ">In Words:</td>
-	    						<td style="border: 1px solid #333; padding: 5px; "></td>
-	    						<td style="border: 1px solid #333; padding: 5px; "></td>
-	    						<td style="border: 1px solid #333; padding: 5px; "></td>
-	    					</tr>
-	    					<tr>
-	    						<td colspan="4" style="border: 1px solid #333; padding: 5px; text-align: center;" data-bind="text: numberToString"></td>
+	    						<td colspan="2" style="border: 1px solid #333; padding: 5px;">APPROVED BY :</td>
+	    						<td colspan="4" style="border: 1px solid #333; padding: 5px; ">In Words:</td>
+	    						
 	    					</tr>
 	    					<tr>
 	    						<td colspan="2" style="border: 1px solid #333; padding: 5px;">RECEIVED BY :</td>
@@ -43338,7 +43333,7 @@
 	<div class="voucher1">
     	<div class="head">
     		<div class="logo">
-            	<img style="max-width: 100px" data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
+            	<img style="max-width: 100px;width: 100px;" data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
             </div>
             <div class="official">
             	Official
@@ -43418,14 +43413,8 @@
 	    						
 	    					</tr>
 	    					<tr>
-	    						<td colspan="2" rowspan="2" style="border: 1px solid #333; padding: 5px;">APPROVED BY :</td>
-	    						<td style="border: 1px solid #333; padding: 5px; ">In Words:</td>
-	    						<td style="border: 1px solid #333; padding: 5px; "></td>
-	    						<td style="border: 1px solid #333; padding: 5px; "></td>
-	    						<td style="border: 1px solid #333; padding: 5px; "></td>
-	    					</tr>
-	    					<tr>
-	    						<td colspan="4" style="border: 1px solid #333; padding: 5px; text-align: center;" data-bind="text: numberToString"></td>
+	    						<td colspan="2" style="border: 1px solid #333; padding: 5px;">APPROVED BY :</td>
+	    						<td colspan="4" style="border: 1px solid #333; padding: 5px; ">In Words:</td>
 	    					</tr>
 	    					<tr>
 	    						<td colspan="2" style="border: 1px solid #333; padding: 5px;">RECEIVED BY :</td>
@@ -43442,9 +43431,9 @@
 </script>
 <script id="formCaritasExpense-journallineDS-template" type="text/x-kendo-template">
 	<tr>
-		<td style="border: 1px solid \\#333; padding: 5px;" align="left">#: description#</td>
+		<td style="border: 1px solid \\#333; padding: 5px;" align="left">#: description#&nbsp;</td>
 		<td style="border: 1px solid \\#333; padding: 5px;" align="center">#: banhji.invoiceForm.journalLineDS.data()[0].reference_no#</td>
-		<td style="border: 1px solid \\#333; padding: 5px;" align="center">Dornor</td>
+		<td style="border: 1px solid \\#333; padding: 5px;" align="center">#= donor#</td>
 		<td style="border: 1px solid \\#333; padding: 5px;background: \\#fbda6c;" align="center">#: account[0].number#</td>
 		<td style="border: 1px solid \\#333; padding: 5px;background: \\#fbda6c;" align="right">#: dr==0?'':kendo.toString(dr, locale=='km-KH'?'c':'c2', locale)#</td>
 		<td style="border: 1px solid \\#333; padding: 5px;background: \\#fbda6c;" align="right">#: cr==0?'':kendo.toString(cr, locale=='km-KH'?'c':'c2', locale)#</td>
@@ -60925,6 +60914,7 @@
 			}
 			banhji.view.invoiceForm.showIn('#invFormContent', Active);
 		},
+		segmentItemDS 		: dataStore(apiUrl + "segments/item"),
 		loadObjTemplate 		: function(id, transaction_id){
 			var self = this, obj = this.get('obj');			
 			this.txnTemplateDS.query({    			
@@ -60983,12 +60973,24 @@
 						}
 					});
 				}
+				var SegMentID = '';
 				self.journalLineDS.query({
 					filter:{field: "transaction_id", value: transaction_id}
 				}).then(function(e){
 					var DR = 0, CR = 0;
-					
-					$.each(banhji.invoiceForm.journalLineDS.data(),function(i,v){
+					var that = self;
+					$.each(self.journalLineDS.data(),function(i,v){
+						//Get Donor in Segment Item
+						SegMentID = parseInt(v.segments[0]);
+						self.segmentItemDS.query({
+							filter: {field: "id", value: SegMentID},
+							take: 1
+						})
+						.then(function(e){
+							banhji.invoiceForm.journalLineDS.data()[i].set("donor",self.segmentItemDS.data()[0].name);
+							self.refreshJournalDatasource();
+						});
+						//Calculate DR/CR
 						DR += v.dr;
 						CR += v.cr;
 					});
@@ -60999,11 +61001,33 @@
 					var NumToStr = banhji.invoiceForm.numToWords(DR - D);
 					banhji.invoiceForm.set("numberToString", NumToStr.toUpperCase());
 					banhji.invoiceForm.set("netAmountDUE", kendo.toString(DR - D, journalLocale == 'km-KH'?'c':'c2', journalLocale));
-					// banhji.invoiceForm.segmentItemDS.query({
-					// 	filter: {field: }
-					// });
+					
+
+					var CountLineRow = parseInt(self.journalLineDS.data().length); 
+					var TotalRow = 12 - CountLineRow;
+					if(TotalRow > 0){
+						for (var i = 1; i < TotalRow; i++) { 
+							self.journalLineDS.add({				
+								id			: '',
+								description : ' ',
+								account 	: [{number: ""}],
+								dr 			: '',
+								cr 			: '',
+								description : '',
+								locale 		: '',
+								donor 		: '',
+								item_prices : [],
+								item_id 	: ''
+					    	});	
+					    }
+					    $("#loading-inv").remove();
+					}
 				});
 			});
+		},
+		refreshJournalDatasource : function(){
+			var ListVW = $("#formListView").data("kendoListView");
+			ListVW.refresh();
 		},
 		cancel 				: function(){
 			this.dataSource.cancelChanges();		

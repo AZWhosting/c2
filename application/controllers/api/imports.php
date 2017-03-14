@@ -431,7 +431,7 @@ class Imports extends REST_Controller {
 					"ampere_id" 				=> $obj->ampere_id,
 					"registered_date" 			=> $obj->registered_date,
 					"use_electricity" 			=> $obj->use_electricity,
-					"use_water" 				=> $obj->use_water,
+					"use_water" 				=> 1,
 					"is_local" 					=> $obj->is_local,
 					"is_pattern" 				=> intval($obj->is_pattern),
 					"status" 					=> $obj->status,

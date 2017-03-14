@@ -276,7 +276,7 @@
 	<div class="" style="margin-top: 15px; background: #fff; padding: 15px; width: 99%; float: left;">
     	<span class="pull-right glyphicons no-js remove_2" 
 			onclick="javascript:window.history.back()"><i></i></span>
-		<h2>Setting</h2>
+		<h2 data-bind="text: lang.lang.setting">Setting</h2>
 		<br>
 		<div class="widget widget-tabs widget-tabs-double widget-tabs-vertical row-fluid row-merge widget-tabs-gray">
 
@@ -285,62 +285,62 @@
 	        <ul>
 	            <li class="active">
 	            	<a href="#tab1" class="glyphicons notes_2" data-toggle="tab">
-	            		<i></i><span class="strong"><span>License</span></span>
+	            		<i></i><span class="strong"><span data-bind="text: lang.lang.license">License</span></span>
 	            	</a>
 	            </li>  
 	             <li>
 	             	<a href="#tab2" class="glyphicons pushpin" data-toggle="tab">
-	             		<i></i><span class="strong"><span>Bloc</span></span>
+	             		<i></i><span class="strong"><span data-bind="text: lang.lang.bloc">Bloc</span></span>
 	             	</a>
 	            </li>  
 	            <li>
 	            	<a href="#tab3" class="glyphicons old_man" data-toggle="tab">
-	            		<i></i><span class="strong"><span>Customer Types</span></span>
+	            		<i></i><span class="strong"><span data-bind="text: lang.lang.customer_types">Customer Types</span></span>
 	            	</a>
 	            </li>
 	            <li>
 	            	<a href="#tab4" data-bind="click: goExemption" class="glyphicons retweet_2" data-toggle="tab">
-	            		<i></i><span class="strong"><span>Exemption</span></span>
+	            		<i></i><span class="strong"><span data-bind="text: lang.lang.exemption">Exemption</span></span>
 	            	</a>
 	            </li>
 	            <li>
 	            	<a href="#tab5" data-bind="click: goTariff" class="glyphicons calculator" data-toggle="tab">
-	            		<i></i><span class="strong"><span>Tariff</span></span>
+	            		<i></i><span class="strong"><span data-bind="text: lang.lang.tariff">Tariff</span></span>
 	            	</a>
 	            </li>
 	            <li>
 	            	<a href="#tab6" data-bind="click: goDeposit" class="glyphicons wallet" data-toggle="tab">
-	            		<i></i><span class="strong"><span>Deposit</span></span>
+	            		<i></i><span class="strong"><span data-bind="text: lang.lang.deposit">Deposit</span></span>
 	            	</a>
 	            </li>
 	            <li>
 	            	<a href="#tab7" data-bind="click: goService" class="glyphicons cleaning" data-toggle="tab">
-	            		<i></i><span class="strong"><span>Service</span></span>
+	            		<i></i><span class="strong"><span data-bind="text: lang.lang.service">Service</span></span>
 	            	</a>
 	            </li>
 	            <li>
 	            	<a href="#tab8" data-bind="click: goMaintenance" class="glyphicons rotation_lock" data-toggle="tab">
-	            		<i></i><span class="strong"><span>Other Charge</span></span>
+	            		<i></i><span class="strong"><span data-bind="text: lang.lang.other_charge">Other Charge</span></span>
 	            	</a>
 	            </li>
 	            <li>
 	            	<a href="#tab9" data-bind="click: goPlan" class="glyphicons list" data-toggle="tab">
-	            		<i></i><span class="strong"><span>Plans</span></span>
+	            		<i></i><span class="strong"><span data-bind="text: lang.lang.plans">Plans</span></span>
 	            	</a>
 	            </li> 
 	             <li>
 	            	<a href="#tab10" class="glyphicons nameplate_alt" data-toggle="tab">
-	            		<i></i><span class="strong"><span>Custom Forms</span></span>
+	            		<i></i><span class="strong"><span data-bind="text: lang.lang.custom_forms">Custom Forms</span></span>
 	            	</a>
 	            </li>
 	            <li>
 	            	<a href="#tab11" class="glyphicons building" data-toggle="tab">
-	            		<i></i><span class="strong"><span>Prefix Setting</span></span>
+	            		<i></i><span class="strong"><span data-bind="text: lang.lang.prefix_setting">Prefix Setting</span></span>
 	            	</a>
 	            </li>
 	            <li>
 	            	<a href="#tab12" data-bind="click: goBrand" class="glyphicons certificate" data-toggle="tab">
-	            		<i></i><span class="strong"><span>Brand</span></span>
+	            		<i></i><span class="strong"><span data-bind="text: lang.lang.brand">Brand</span></span>
 	            	</a>
 	            </li>                        
 	        </ul>
@@ -350,17 +350,17 @@
 	    <div class="widget-body span9">
 	        <div class="tab-content" style="padding-right: 0;">
 	            <div class="tab-pane active" id="tab1">
-	            	<a class="btn-icon btn-primary glyphicons circle_plus" style="width: 130px" href="#/add_license"><i></i>Add License</a>
+	            	<a class="btn-icon btn-primary glyphicons circle_plus" style="width: 80px; padding: 5px 7px 5px 35px !important; text-align: left;" href="#/add_license"><i></i><span data-bind="text: lang.lang.add">Add</span></a>
 	            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
 	            		<thead>
 	            			<tr>
-	            				<th class="center" width="110"><span>Number</span></th>
-	            				<th class="center" width="150"><span>Name</span></th>
+	            				<th class="center" width="110"><span data-bind="text: lang.lang.number">Number</span></th>
+	            				<th class="center" width="150"><span data-bind="text: lang.lang.name">Name</span></th>
 	            				<th class="center"><span>Abbr</span></th>
-	            				<th class="center" width="160"><span>Representive</span></th>
-	            				<th class="center" width="100"><span>Expire Date</span></th>
-	            				<th class="center" width="100"><span>Max Con.</span></th>
-	            				<th class="center" width="100">Status</th>
+	            				<th class="center" width="160"><span data-bind="text: lang.lang.representive">Representive</span></th>
+	            				<th class="center" width="100"><span data-bind="text: lang.lang.expire_date">Expire Date</span></th>
+	            				<th class="center" width="100"><span data-bind="text: lang.lang.max_con">Max Con.</span></th>
+	            				<th class="center" width="100"><span data-bind="text: lang.lang.status">Status</span></th>
 	            			</tr>
 	            		</thead>
 	            		<tbody data-role="listview"	            				
@@ -369,7 +369,7 @@
 	            	</table>
 	            </div>
 	            <div class="tab-pane" id="tab2">
-	            	<div style="clear: both;margin-bottom: 10px;">
+	            	<div style="clear: both;">
 		            	<input data-role="dropdownlist"
 		            	   class="span3"
 		            	   style="padding-right: 1px;height: 32px;" 
@@ -381,17 +381,17 @@
 		                   data-bind="value: blockCompanyId,
 		                              source: licenseDS,
 		                              events: {change: onLicenseChange}"/>
-		            	<input data-bind="value: blocName" type="text" placeholder="Location" style="height: 32px;"  class="span3 k-textbox k-invalid" />
-		            	<input data-bind="value: blocAbbr" type="text" placeholder="Abbr" style="height: 32px;" class="span3 k-textbox k-invalid" />
-		            	<a class="btn btn-default glyphicons circle_plus cutype-icon" style="width: 80px;margin-left: 2px;" data-bind="click: addBloc"><i></i>Add</a>
+		            	<input data-bind="value: blocName" type="text" placeholder="Location" style="height: 32px; padding: 5px; margin-right: 10px; margin-left: 10px;"  class="span3 k-textbox k-invalid" />
+		            	<input data-bind="value: blocAbbr" type="text" placeholder="Abbr" style="height: 32px; padding: 5px; margin-right: 10px;" class="span3 k-textbox k-invalid" />
+		            	<a class="btn-icon btn-primary glyphicons circle_plus cutype-icon" style="width: 80px; padding: 5px 7px 5px 35px !important; text-align: left;" data-bind="click: addBloc"><i></i><span data-bind="text: lang.lang.add">Add</span></a>
 		            </div>
 	            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
 	            		<thead>
 	            			<tr>
-	            				<th class="center"><span>License</span></th>
-	            				<th class="center"><span>Location</span></th>
+	            				<th class="center"><span data-bind="text: lang.lang.license">License</span></th>
+	            				<th class="center"><span data-bind="text: lang.lang.location">Location</span></th>
 	            				<th class="center"><span>Abbr</span></th>
-	            				<th class="center">Action</th>
+	            				<th class="center"><span data-bind="text: lang.lang.action">Action</span></th>
 	            			</tr>
 	            		</thead>
 	            		<tbody data-role="listview"		
@@ -402,22 +402,22 @@
 	            	</table>
 	            </div>
 	            <div class="tab-pane" id="tab3">
-	            	<div style="clear: both;margin-bottom: 10px;">
-		            	<input type="text" class="span3 k-textbox k-invalid" style="height: 32px;" data-bind="value: contactTypeName" placeholder="Type" />
-		            	<input type="text" placeholder="Abbr" data-bind="value: contactTypeAbbr" style="height: 32px;"  class="span3 k-textbox k-invalid" />
-		            	<select class="span3" style="height: 32px; border-radius: 0;background: #fff;" id="appendedInputButtons" data-bind="value: contactTypeCompany" >
-			                <option value="0"><span>Not A Company</span></option>
-			                <option value="1"><span>It is A Company</span></option>           
+	            	<div style="clear: both;">
+		            	<input type="text" class="span3 k-textbox k-invalid" style="height: 32px; padding: 5px; margin-right: 10px;" data-bind="value: contactTypeName" placeholder="Type" />
+		            	<input type="text" placeholder="Abbr" data-bind="value: contactTypeAbbr" style="height: 32px; padding: 5px; margin-right: 10px;"  class="span3 k-textbox k-invalid" />
+		            	<select class="span3" style="height: 32px; border-radius: 0; background: #fff;" id="appendedInputButtons" data-bind="value: contactTypeCompany" >
+			                <option value="0"><span data-bind="text: lang.lang.not_a_company">Not A Company</span></option>
+			                <option value="1"><span data-bind="text: lang.lang.it_is_a_company">It is A Company</span></option>           
 			            </select>
-		            	<a class="btn btn-default glyphicons circle_plus cutype-icon" style="width: 80px;margin-left: 2px;" data-bind="click: addContactType"><i></i>Add</a>
+		            	<a class="btn-icon btn-primary glyphicons circle_plus cutype-icon" style="width: 80px; padding: 5px 7px 5px 35px !important; text-align: left;" data-bind="click: addContactType"><i></i><span data-bind="text: lang.lang.add">Add</span></a>
 		            </div>
 	            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
 	            		<thead>
 	            			<tr>
-	            				<th class="center"><span>Type</span></th>
+	            				<th class="center"><span data-bind="text: lang.lang.type">Type</span></th>
 	            				<th class="center"><span>Abbr</span></th>
-	            				<th class="center"><span>Other</span></th>
-	            				<th class="center">Action</th>
+	            				<th class="center"><span data-bind="text: lang.lang.other">Other</span></th>
+	            				<th class="center"><span data-bind="text: lang.lang.action">Action</span></th>
 	            			</tr>
 	            		</thead>
 	            		<tbody data-role="listview"	            	
@@ -427,12 +427,12 @@
 	            	</table>
 	            </div>
 	            <div class="tab-pane" id="tab4">
-	            	<div style="clear: both;margin-bottom: 10px;">
-	            		<input data-bind="value: exName" type="text" placeholder="Name" style="height: 32px;"  class="span2 k-textbox k-invalid" />
+	            	<div style="clear: both;">
+	            		<input data-bind="value: exName" type="text" placeholder="Name" style="height: 32px; padding: 5px; margin-right: 10px;"  class="span2 k-textbox k-invalid" />
 
 	            		<input data-role="dropdownlist"
 		            	   class="span2"
-		            	   style="padding-right: 1px;height: 32px;" 
+		            	   style="padding-right: 1px; height: 32px; margin-right: 10px;" 
             			   data-option-label="(--- Acount ---)"
             			   data-auto-bind="false"			                   
 		                   data-value-primitive="false"
@@ -443,7 +443,7 @@
 
 		                <input data-role="dropdownlist"
 		            	   class="span2"
-		            	   style="padding-right: 1px;height: 32px;" 
+		            	   style="padding-right: 1px; height: 32px; margin-right: 10px;" 
             			   data-option-label="(--- Unit ---)"
             			   data-auto-bind="false"			                   
 		                   data-value-primitive="true"
@@ -455,7 +455,7 @@
 
 		            	<input data-role="dropdownlist"
 		            	   class="span2"
-		            	   style="padding-right: 1px;height: 32px;" 
+		            	   style="padding-right: 1px; height: 32px; margin-right: 10px;" 
             			   data-option-label="(--- Currency ---)"
             			   data-auto-bind="false"			                   
 		                   data-value-primitive="true"
@@ -463,21 +463,21 @@
 		                   data-value-field="id"
 		                   data-bind="value: exCurrency,
 		                              source: currencyDS"/>
-		            	<input data-bind="visible: priceUnit, value: exPrice" type="text" placeholder="Price" style="height: 32px;" class="span2 k-textbox k-invalid" />
+		            	<input data-bind="visible: priceUnit, value: exPrice" type="text" placeholder="Price" style="height: 32px; padding: 5px; margin-right: 10px;" class="span2 k-textbox k-invalid" />
 		            	<input data-bind="visible: percentUnit, value: exPrice" type="text" placeholder="%" data-spinners="false" data-role="numerictextbox" max="100" min="1" style="padding:0;" class="span2 k-input k-valid" />
 		            	<input data-bind="visible: meterUnit, value: exPrice" type="text" placeholder="m3" data-spinners="false" data-role="numerictextbox" max="100" min="1" style="padding:0;" class="span2 k-input k-valid" />
 
-		            	<a class="btn btn-default glyphicons circle_plus cutype-icon" style="width: 80px;margin-left: 2px;" data-bind="click: addEx"><i></i>Add</a>
+		            	<a class="btn-icon btn-primary glyphicons circle_plus cutype-icon" style="width: 80px; padding: 5px 7px 5px 35px !important; text-align: left;" data-bind="click: addEx"><i></i><span data-bind="text: lang.lang.add">Add</span></a>
 		            </div>
 	            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
 	            		<thead>
 	            			<tr>
-	            				<th class="center"><span>Name</span></th>
-	            				<th class="center"><span>Account</span></th>
-	            				<th class="center"><span>Unit</span></th>
-	            				<th class="center"><span>Currency</span></th>
-	            				<th class="center"><span>Exemption</span></th>
-	            				<th class="center">Action</th>
+	            				<th class="center"><span data-bind="text: lang.lang.name">Name</span></th>
+	            				<th class="center"><span data-bind="text: lang.lang.account">Account</span></th>
+	            				<th class="center"><span data-bind="text: lang.lang.unit">Unit</span></th>
+	            				<th class="center"><span data-bind="text: lang.lang.currency">Currency</span></th>
+	            				<th class="center"><span data-bind="text: lang.lang.exemption">Exemption</span></th>
+	            				<th class="center"><span data-bind="text: lang.lang.action">Action</span></th>
 	            			</tr>
 	            		</thead>
 	            		<tbody data-role="listview"	            				
@@ -488,11 +488,11 @@
 	            	</table>
 	            </div>
 	            <div class="tab-pane" id="tab5">
-		            <div style="clear: both;margin-bottom: 10px;">
-		            	<input data-bind="value: tariffName" type="text" placeholder="Name" style="height: 32px;"  class="span3 k-textbox k-invalid" />
+		            <div style="clear: both; ">
+		            	<input data-bind="value: tariffName" type="text" placeholder="Name" style="height: 32px; padding: 5px; margin-right: 10px;"  class="span3 k-textbox k-invalid" />
 		            	<input data-role="dropdownlist"
 		            	   class="span3"
-		            	   style="padding-right: 1px;height: 32px;" 
+		            	   style="padding-right: 1px; height: 32px; margin-right: 10px;" 
             			   data-option-label="(--- Acount ---)"
             			   data-auto-bind="false"			                   
 		                   data-value-primitive="false"
@@ -502,7 +502,7 @@
 		                              source: tariffAccDS"/>
 		                <input data-role="dropdownlist"
 		            	   class="span3"
-		            	   style="padding-right: 1px;height: 32px;" 
+		            	   style="padding-right: 1px; height: 32px; margin-right: 10px;" 
             			   data-option-label="(--- Currency ---)"
             			   data-auto-bind="false"			                   
 		                   data-value-primitive="true"
@@ -510,15 +510,15 @@
 		                   data-value-field="id"
 		                   data-bind="value: tariffCurrency,
 		                              source: currencyDS"/>
-		            	<a class="btn btn-default glyphicons circle_plus cutype-icon" style="width: 80px;margin-left: 2px;" data-bind="click: addTariff"><i></i>Add</a>
+		            	<a class="btn-icon btn-primary glyphicons circle_plus cutype-icon" style="width: 80px; padding: 5px 7px 5px 35px !important; text-align: left;" data-bind="click: addTariff"><i></i><span data-bind="text: lang.lang.add">Add</span></a>
 		            </div>
 	            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
 	            		<thead>
 	            			<tr>
-	            				<th class="center" width="300"><span>Name</span></th>
-	            				<th class="center" ><span>Account</span></th>
-	            				<th class="center"><span>Currency</span></th>
-	            				<th class="center" ><span>Action</span></th>
+	            				<th class="center" width="300"><span data-bind="text: lang.lang.name">Name</span></th>
+	            				<th class="center" ><span data-bind="text: lang.lang.account">Account</span></th>
+	            				<th class="center"><span data-bind="text: lang.lang.currency">Currency</span></th>
+	            				<th class="center" ><span data-bind="text: lang.lang.action">Action</span></th>
 	            			</tr>
 	            		</thead>
 	            		<tbody data-role="listview"	            				
@@ -533,10 +533,10 @@
 	            	<table data-bind="visible: tariffSelect" class="table table-bordered table-condensed table-striped table-secondary table-vertical-center checkboxs">
 	            		<thead>
 	            			<tr>
-	            				<th class="center" width="150"><span>Name</span></th>
-	            				<th class="center" width="100"><span>Usage</span></th>
-	            				<th class="center" width="100"><span>Price</span></th>
-	            				<th class="center" width="200"><span>Action</span></th>
+	            				<th class="center" width="150"><span data-bind="text: lang.lang.name">Name</span></th>
+	            				<th class="center" width="100"><span data-bind="text: lang.lang.usage">Usage</span></th>
+	            				<th class="center" width="100"><span data-bind="text: lang.lang.price">Price</span></th>
+	            				<th class="center" width="200"><span data-bind="text: lang.lang.action">Action</span></th>
 	            			</tr>
 	            		</thead>
 	            		<tbody data-role="listview"	            				
@@ -561,13 +561,13 @@
 								</td>
 							</tr>
 							<tr style="border-bottom: 8px solid #fff;">
-								<td><span>Usage</span></td>
+								<td><span data-bind="text: lang.lang.usage">Usage</span></td>
 								<td>
 									<input class="k-textbox" placeholder="Usage ..." data-bind="value: tariffItemUsage" style="width: 100%;">
 								</td>
 							</tr>
 							<tr style="border-bottom: 8px solid #fff;">
-								<td><span>Price</span></td>
+								<td><span data-bind="text: lang.lang.price">Price</span></td>
 								<td>
 									<input class="k-textbox" placeholder="Price ..." data-bind="value: tariffItemAmount" style="width: 100%;">
 								</td>
@@ -584,11 +584,11 @@
 	            </div>
 	            <div class="tab-pane" id="tab6">
 	            
-	            	<div style="clear: both;margin-bottom: 10px;">
-	            		<input data-bind="value: depositName" type="text" placeholder="Name" style="height: 32px;"  class="span2 k-textbox k-invalid" />
+	            	<div style="clear: both;">
+	            		<input data-bind="value: depositName" type="text" placeholder="Name" style="height: 32px; padding: 5px; margin-right: 10px;"  class="span2 k-textbox k-invalid" />
 		            	<input data-role="dropdownlist"
 		            	   class="span2"
-		            	   style="padding-right: 1px;height: 32px;" 
+		            	   style="padding-right: 1px; height: 32px; margin-right: 10px;" 
             			   data-option-label="(--- Acount ---)"
             			   data-auto-bind="false"			                   
 		                   data-value-primitive="false"
@@ -599,7 +599,7 @@
 
 		                <input data-role="dropdownlist"
 		            	   class="span2"
-		            	   style="padding-right: 1px;height: 32px;" 
+		            	   style="padding-right: 1px; height: 32px; margin-right: 10px;" 
             			   data-option-label="(--- Currency ---)"
             			   data-auto-bind="false"			                   
 		                   data-value-primitive="true"
@@ -608,18 +608,18 @@
 		                   data-bind="value: depositCurrency,
 		                              source: currencyDS"/>
 
-		            	<input data-bind="value: depositPrice" type="text" placeholder="Price" style="height: 32px;" class="span2 k-textbox k-invalid" />
+		            	<input data-bind="value: depositPrice" type="text" placeholder="Price" style="height: 32px; padding: 5px; margin-right: 10px;" class="span2 k-textbox k-invalid" />
 
-		            	<a class="btn btn-default glyphicons circle_plus cutype-icon" style="width: 80px;margin-left: 2px;" data-bind="click: addDeposit"><i></i>Add</a>
+		            	<a class="btn-icon btn-primary glyphicons circle_plus cutype-icon" style="width: 80px; padding: 5px 7px 5px 35px !important; text-align: left;" data-bind="click: addDeposit"><i></i><span data-bind="text: lang.lang.add">Add</span></a>
 		            </div>
 	            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
 	            		<thead>
 	            			<tr>
-	            				<th class="center"><span>Name</span></th>
-	            				<th class="center"><span>Account</span></th>
-	            				<th class="center"><span>Currency</span></th>
-	            				<th class="center"><span>Price</span></th>
-	            				<th class="center">Action</th>
+	            				<th class="center"><span data-bind="text: lang.lang.name">Name</span></th>
+	            				<th class="center"><span data-bind="text: lang.lang.account">Account</span></th>
+	            				<th class="center"><span data-bind="text: lang.lang.currency">Currency</span></th>
+	            				<th class="center"><span data-bind="text: lang.lang.price">Price</span></th>
+	            				<th class="center"><span data-bind="text: lang.lang.action">Action</span></th>
 	            			</tr>
 	            		</thead>
 	            		<tbody data-role="listview"	            				
@@ -630,12 +630,12 @@
 	            	</table>
 	            </div>
 	            <div class="tab-pane" id="tab7">
-	            	<div style="clear: both;margin-bottom: 10px;">
-	            		<input data-bind="value: serviceName" type="text" placeholder="Name" style="height: 32px;"  class="span2 k-textbox k-invalid" />
+	            	<div style="clear: both;">
+	            		<input data-bind="value: serviceName" type="text" placeholder="Name" style="height: 32px; padding: 5px; margin-right: 10px;"  class="span2 k-textbox k-invalid" />
 
 		            	<input data-role="dropdownlist"
 		            	   class="span2"
-		            	   style="padding-right: 1px;height: 32px;" 
+		            	   style="padding-right: 1px; height: 32px; margin-right: 10px;" 
             			   data-option-label="(--- Acount ---)"
             			   data-auto-bind="false"			                   
 		                   data-value-primitive="false"
@@ -645,7 +645,7 @@
 		                              source: tariffAccDS"/>
 		                <input data-role="dropdownlist"
 		            	   class="span2"
-		            	   style="padding-right: 1px;height: 32px;" 
+		            	   style="padding-right: 1px; height: 32px; margin-right: 10px;" 
             			   data-option-label="(--- Currency ---)"
             			   data-auto-bind="false"			                   
 		                   data-value-primitive="true"
@@ -654,18 +654,18 @@
 		                   data-bind="value: serviceCurrency,
 		                              source: currencyDS"/>
 
-		            	<input data-bind="value: servicePrice" type="text" placeholder="Price" style="height: 32px;" class="span2 k-textbox k-invalid" />
+		            	<input data-bind="value: servicePrice" type="text" placeholder="Price" style="height: 32px; padding: 5px; margin-right: 10px;" class="span2 k-textbox k-invalid" />
 
-		            	<a class="btn btn-default glyphicons circle_plus cutype-icon" style="width: 80px;margin-left: 2px;" data-bind="click: addService"><i></i>Add</a>
+		            	<a class="btn-icon btn-primary glyphicons circle_plus cutype-icon" style="width: 80px; padding: 5px 7px 5px 35px !important; text-align: left;" data-bind="click: addService"><i></i><span data-bind="text: lang.lang.add">Add</span></a>
 		            </div>
 	            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
 	            		<thead>
 	            			<tr>
-	            				<th class="center"><span>Name</span></th>
-	            				<th class="center"><span>Account</span></th>
-	            				<th class="center"><span>Currency</span></th>
-	            				<th class="center"><span>Price</span></th>
-	            				<th class="center">Action</th>
+	            				<th class="center"><span data-bind="text: lang.lang.name">Name</span></th>
+	            				<th class="center"><span data-bind="text: lang.lang.account">Account</span></th>
+	            				<th class="center"><span data-bind="text: lang.lang.currency">Currency</span></th>
+	            				<th class="center"><span data-bind="text: lang.lang.price">Price</span></th>
+	            				<th class="center"><span data-bind="text: lang.lang.action">Action</span></th>
 	            			</tr>
 	            		</thead>
 	            		<tbody data-role="listview"	            				
@@ -676,11 +676,11 @@
 	            	</table>
 	            </div>
 	            <div class="tab-pane" id="tab8">
-	            	<div style="clear: both;margin-bottom: 10px;">
-	            		<input data-bind="value: maintenanceName" type="text" placeholder="Name" style="height: 32px;"  class="span2 k-textbox k-invalid" />
+	            	<div style="clear: both;">
+	            		<input data-bind="value: maintenanceName" type="text" placeholder="Name" style="height: 32px; padding: 5px; margin-right: 10px;"  class="span2 k-textbox k-invalid" />
 		            	<input data-role="dropdownlist"
 		            	   class="span2"
-		            	   style="padding-right: 1px;height: 32px;" 
+		            	   style="padding-right: 1px; height: 32px; margin-right: 10px;" 
             			   data-option-label="(--- Acount ---)"
             			   data-auto-bind="false"			                   
 		                   data-value-primitive="false"
@@ -690,7 +690,7 @@
 		                              source: tariffAccDS"/>
 		                <input data-role="dropdownlist"
 		            	   class="span2"
-		            	   style="padding-right: 1px;height: 32px;" 
+		            	   style="padding-right: 1px; height: 32px; margin-right: 10px;" 
             			   data-option-label="(--- Currency ---)"
             			   data-auto-bind="false"			                   
 		                   data-value-primitive="true"
@@ -698,18 +698,18 @@
 		                   data-value-field="id"
 		                   data-bind="value: maintenanceCurrency,
 		                              source: currencyDS"/>
-		            	<input data-bind="value: maintenancePrice" type="text" placeholder="Price" style="height: 32px;" class="span2 k-textbox k-invalid" />
+		            	<input data-bind="value: maintenancePrice" type="text" placeholder="Price" style="height: 32px; padding: 5px; margin-right: 10px;" class="span2 k-textbox k-invalid" />
 
-		            	<a class="btn btn-default glyphicons circle_plus cutype-icon" style="width: 80px;margin-left: 2px;" data-bind="click: addMaintenance"><i></i>Add</a>
+		            	<a class="btn-icon btn-primary glyphicons circle_plus cutype-icon" style="width: 80px; padding: 5px 7px 5px 35px !important; text-align: left;" data-bind="click: addMaintenance"><i></i><span data-bind="text: lang.lang.add">Add</span></a>
 		            </div>
 	            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
 	            		<thead>
 	            			<tr>
-	            				<th class="center"><span>Name</span></th>
-	            				<th class="center"><span>Account</span></th>
-	            				<th class="center"><span>Currency</span></th>
-	            				<th class="center"><span>Price</span></th>
-	            				<th class="center">Action</th>
+	            				<th class="center"><span data-bind="text: lang.lang.name">Name</span></th>
+	            				<th class="center"><span data-bind="text: lang.lang.account">Account</span></th>
+	            				<th class="center"><span data-bind="text: lang.lang.currency">Currency</span></th>
+	            				<th class="center"><span data-bind="text: lang.lang.price">Price</span></th>
+	            				<th class="center"><span data-bind="text: lang.lang.action">Action</span></th>
 	            			</tr>
 	            		</thead>
 	            		<tbody data-role="listview"	            				
@@ -720,14 +720,14 @@
 	            	</table>
 	            </div>
 	            <div class="tab-pane" id="tab9">
-	            	<a class="btn-icon btn-primary glyphicons circle_plus" style="width: 110px;" href="#/plan"><i></i>Add Plan</a>
+	            	<a class="btn-icon btn-primary glyphicons circle_plus cutype-icon" style="width: 80px; padding: 5px 7px 5px 35px !important; text-align: left;" href="#/plan"><i></i><span data-bind="text: lang.lang.add">Add</span></a>
 	            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
 	            		<thead>
 	            			<tr>
-	            				<th class="center"><span>Name</span></th>
-	            				<th class="center"><span>Code</span></th>
-	            				<th class="center"><span>Currency</span></th>
-	            				<th class="center"><span>Action</span></th>
+	            				<th class="center"><span data-bind="text: lang.lang.name">Name</span></th>
+	            				<th class="center"><span data-bind="text: lang.lang.code">Code</span></th>
+	            				<th class="center"><span data-bind="text: lang.lang.currency">Currency</span></th>
+	            				<th class="center"><span data-bind="text: lang.lang.action">Action</span></th>
 	            			</tr>
 	            		</thead>
 	            		<tbody data-role="listview"	            				
@@ -739,9 +739,9 @@
 	            	<table data-bind="visible: planSelect" class="table table-bordered table-condensed table-striped table-secondary table-vertical-center checkboxs">
 	            		<thead>
 	            			<tr>
-	            				<th class="center" width="150"><span>Name</span></th>
-	            				<th class="center" width="100"><span>Type</span></th>
-	            				<th class="center" width="100"><span>Amount</span></th>
+	            				<th class="center" width="150"><span data-bind="text: lang.lang.name">Name</span></th>
+	            				<th class="center" width="100"><span data-bind="text: lang.lang.type">Type</span></th>
+	            				<th class="center" width="100"><span data-bind="text: lang.lang.amout">Amount</span></th>
 	            			</tr>
 	            		</thead>
 	            		<tbody data-role="listview"	            				
@@ -767,7 +767,7 @@
 				                 data-bind="source: txnTemplateDS">				            
 	            		</tbody>
 	            	</table>
-	            	<a id="addNew" class="btn-icon btn-primary glyphicons ok_2" href="#/invoice_custom" style="width: 110px;"><i></i>Add New</a>
+	            	<a id="addNew" href="#/invoice_custom" class="btn-icon btn-primary glyphicons circle_plus cutype-icon" style="width: 80px; padding: 5px 7px 5px 35px !important; text-align: left;"><i></i><span data-bind="text: lang.lang.add">Add</span></a>
 	            </div>
 	            <div class="tab-pane" id="tab11">
 	            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
@@ -788,19 +788,19 @@
 	            	</table>
 	            </div>
 	            <div class="tab-pane" id="tab12">
-	            	<div style="clear: both;margin-bottom: 10px;">
-		            	<input data-bind="value: brandCode" type="text" placeholder="Code ..." style="height: 32px;"  class="span3 k-textbox k-invalid" />
-		            	<input data-bind="value: brandName" type="text" placeholder="Name ..." style="height: 32px;"  class="span3 k-textbox k-invalid" />
-		            	<input data-bind="value: brandAbbr" type="text" placeholder="Abbr ..." style="height: 32px;" class="span3 k-textbox k-invalid" />
-		            	<a class="btn btn-default glyphicons circle_plus cutype-icon" style="width: 80px;margin-left: 2px;" data-bind="click: addBrand"><i></i>Add</a>
+	            	<div style="clear: both;">
+		            	<input data-bind="value: brandCode" type="text" placeholder="Code ..." style="height: 32px; padding: 5px; margin-right: 10px;"  class="span3 k-textbox k-invalid" />
+		            	<input data-bind="value: brandName" type="text" placeholder="Name ..." style="height: 32px; padding: 5px; margin-right: 10px;"  class="span3 k-textbox k-invalid" />
+		            	<input data-bind="value: brandAbbr" type="text" placeholder="Abbr ..." style="height: 32px; padding: 5px; margin-right: 10px;" class="span3 k-textbox k-invalid" />
+		            	<a class="btn-icon btn-primary glyphicons circle_plus cutype-icon" style="width: 80px; padding: 5px 7px 5px 35px !important; text-align: left;" data-bind="click: addBrand"><i></i><span data-bind="text: lang.lang.add">Add</span></a>
 		            </div>
 	            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
 	            		<thead>
 	            			<tr>
-	            				<th class="center"><span>Code</span></th>
-	            				<th class="center"><span>Name</span></th>
-	            				<th class="center"><span>Abbr</span></th>
-	            				<th class="center">Action</th>
+	            				<th class="center"><span data-bind="text: lang.lang.code">Code</span></th>
+	            				<th class="center"><span data-bind="text: lang.lang.name">Name</span></th>
+	            				<th class="center"><span >Abbr</span></th>
+	            				<th class="center"><span data-bind="text: lang.lang.action">Action</span></th>
 	            			</tr>
 	            		</thead>
 	            		<tbody data-role="listview"		
@@ -981,11 +981,11 @@
     		#= _currency.code#
    		</td>
    		<td  style="text-align: center;">   
-		    <span style="cursor: pointer;" class="k-edit-button"><i class="icon-edit"></i> Edit</span>
+		    <span style="cursor: pointer;" class="k-edit-button"><i class="icon-edit"></i> <span data-bind="text: lang.lang.edit">Edit</span></span>
     		|
-    		<span style="cursor: pointer;" data-bind="click: viewTariffItem"><i class="icon-view"></i> View Item</span>
+    		<span style="cursor: pointer;" data-bind="click: viewTariffItem"><i class="icon-view"></i> <span data-bind="text: lang.lang.view_item">View Item</span></span>
     		|
-    		<span style="cursor: pointer;" data-bind="click: showTariffItem"><i class="icon-plus icon-white"></i> Add Item</span>
+    		<span style="cursor: pointer;" data-bind="click: showTariffItem"><i class="icon-plus icon-white"></i> <span data-bind="text: lang.lang.add_item">Add Item</span></span>
    		</td>   		
    	</tr>
 </script>
@@ -1377,9 +1377,9 @@
 		<td style="text-align: center;">#= code #</td>
 		<td style="text-align: center;">#= _currency.code #</td>
 		<td style="text-align: center;">
-			<a href="\#/plan/#: id#"><i class="icon-edit"></i> Edit</a>
+			<a href="\#/plan/#: id#"><i class="icon-edit"></i><span data-bind="text: lang.lang.edit"> Edit</span></a>
     		|
-    		<span style="cursor: pointer;" data-bind="click: viewPlanItem"><i class="icon-view"></i> View Item</span>
+    		<span style="cursor: pointer;" data-bind="click: viewPlanItem"><i class="icon-view"></i> <span data-bind="text: lang.lang.view_item">View Item</span></span>
     	</td>
 	</tr>
 </script>
@@ -18329,7 +18329,6 @@
 			window.history.back();
 		},
 	});
-
 	banhji.importContact = kendo.observable({
 		dataSource 	  : dataStore(apiUrl+"imports/wcontact"),
 		onSelected    : function(e) {

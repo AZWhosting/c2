@@ -75,7 +75,9 @@ class Journal_lines extends REST_Controller {
 				   	"deleted"			=> $value->deleted,
 
 				   	"account" 			=> $value->account->get_raw()->result(),
-				   	"contact" 			=> $value->contact->get_raw()->result()
+				   	"contact" 			=> $value->contact->get_raw()->result(),
+
+				   	"donor"				=> ""
 				);
 			}						 			
 		}		
