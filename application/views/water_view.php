@@ -10,7 +10,7 @@
 	<div class="menu-hidden sidebar-hidden-phone menu-left hidden-print">
 		<div class="navbar main navbar-fixed-top" id="main-menu">
 			<ul class="topnav">
-				<li><a href="<?php echo base_url(); ?>rrd/#" data-bind="click: checkRole"><img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/banhji-logo.png" style="height: 40px;"></a></li>
+				<li><a href="<?php echo base_url(); ?>rrd" data-bind="click: checkRole"><img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/banhji-logo.png" style="height: 40px;"></a></li>
 			</ul>
 			<form class="navbar-form pull-left">
 				<div class="btn-group">
@@ -3613,14 +3613,14 @@
 			    		<span class="glyphicons no-js remove_2" 
 							data-bind="click: cancel"><i></i></span>	
 					</div>
-			        <h2 style="padding:0 15px 0 0;">Run Bill</h2>
+			        <h2 style="padding:0 15px 0 0;" data-bind="text: lang.lang.run_bill">Run Bill</h2>
 			        <div class="span12 row" style="padding:0 0 20px 0;">
 
 			        	<div class="span5" style="padding-right: 0;">
 				        	<div class="span6">	
 								<!-- Group -->
 								<div class="control-group">								
-									<label ><span >Month Of</span></label>
+									<label ><span data-bind="text: lang.lang.month_of">Month Of</span></label>
 						            <input type="text" 
 					                	style="width: 100%;" 
 					                	data-role="datepicker"
@@ -3635,7 +3635,7 @@
 							</div>
 							<div class="span6" style="padding-left: 0;">
 								<div class="control-group">								
-									<label ><span >License</span></label>
+									<label ><span data-bind="text: lang.lang.license">License</span></label>
 									<input 
 										data-role="dropdownlist" 
 										style="width: 100%;" 
@@ -3654,7 +3654,7 @@
 						<div class="span7" style="padding-left: 0;">
 							<div class="span4">
 								<div class="control-group">								
-									<label ><span >Location</span></label>
+									<label ><span data-bind="text: lang.lang.location">Location</span></label>
 									<input 
 										data-role="dropdownlist" 
 										style="width: 100%;" 
@@ -3670,7 +3670,7 @@
 							</div>
 							<div class="span4">
 								<div class="control-group">	
-									<label ><span >Action</span></label>	
+									<label ><span data-bind="text: lang.lang.action">Action</span></label>	
 									<div class="row" style="margin: 0;">					
 										<button type="button" data-role="button" data-bind="click: search" class="k-button" role="button" aria-disabled="false" tabindex="0"><i class="icon-search"></i></button>
 									</div>
@@ -3684,21 +3684,21 @@
 								<div class="span4">
 									<div class="total-customer">
 										<div class="span12">
-											<p>Total Number of Invoices</p>
+											<p data-bind="text: lang.lang.total_number_of_invoice">Total Number of Invoices</p>
 											<span data-bind="text: totalOfInv"></span>
 										</div>	
 									</div>
 								</div>
 								<div class="span4">
 									<div class="total-customer">
-										<p>m<sup>3</sup> Sold</p>
+										<p>m<sup>3</sup> <span data-bind="text: lang.lang.sold">Sold</span></p>
 										<span data-bind="text: meterSold"></span>
 									</div>
 								</div>
 								<div class="span4">
 									<div class="total-customer">
 										<div class="span12">
-											<p>Amount</p>
+											<p data-bind="text: lang.lang.amount">Amount</p>
 											<span data-bind="text: amountSold"></span>
 										</div>	
 									</div>
@@ -3712,11 +3712,11 @@
 					        <thead>
 					            <tr>
 					                <th align="center" style="text-align: center;"><input type="checkbox" data-bind="checked: chkAll, events: {change : checkAll}" /></th>                
-					                <th><span data-bind="text: lang.lang.customer"></span></th>		         
-					                <th><span data-bind="text: lang.lang.meter"></span></th>
-					                <th><span data-bind="">Previous</span></th>
-					                <th><span data-bind="text: lang.lang.current"></span></th>
-					                <th><span data-bind="text: lang.lang.total"></span></th>	                    
+					                <th><span data-bind="text: lang.lang.customer">Customer</span></th>		         
+					                <th><span data-bind="text: lang.lang.meter">Meter</span></th>
+					                <th><span data-bind="text: lang.lang.previous">Previous</span></th>
+					                <th><span data-bind="text: lang.lang.current">Current</span></th>
+					                <th><span data-bind="text: lang.lang.total">Total</span></th>	                    
 					            </tr>
 					        </thead>
 					        <tbody data-role="listview" 
@@ -3734,7 +3734,7 @@
 			        	<div class="span3">	
 							<!-- Group -->
 							<div class="control-group">								
-								<label ><span >Month Of</span></label>
+								<label ><span data-bind="text: lang.lang.month_of">Month Of</span></label>
 					            <input type="text" 
 				                	style="width: 100%;" 
 				                	data-role="datepicker"
@@ -3749,7 +3749,7 @@
 						</div>
 						<div class="span3" style="padding-left: 0;">
 							<div class="control-group">								
-								<label ><span >Billing Date</span></label>
+								<label ><span data-bind="text: lang.lang.billing_date">Billing Date</span></label>
 								<input type="text" 
 				                	style="width: 100%;" 
 				                	data-role="datepicker"
@@ -3762,7 +3762,7 @@
 						</div>	
 						<div class="span3">
 							<div class="control-group">								
-								<label ><span >Due Date</span></label>
+								<label ><span data-bind="text: lang.lang.due_date">Due Date</span></label>
 								<input type="text" 
 				                	style="width: 100%;" 
 				                	data-role="datepicker"
@@ -3775,7 +3775,7 @@
 						</div>	
 						<div class="span3">
 							<div class="control-group">								
-								<label ><span >Issue Date</span></label>
+								<label ><span data-bind="text: lang.lang.issue_date">Issue Date</span></label>
 								<input type="text" 
 				                	style="width: 100%;" 
 				                	data-role="datepicker"
@@ -3791,7 +3791,7 @@
 						<div id="ntf1" data-role="notification"></div>
 				        <div class="row">
 							<div class="span12" align="right">
-								<span class="btn btn-icon btn-primary glyphicons ok_2" data-bind="click: save, visible: showButton" style="width: 110px;margin-bottom: 0;"><i></i> <span>Run Bill</span></span>
+								<span class="btn btn-icon btn-primary glyphicons ok_2" data-bind="click: save, visible: showButton" style="width: 110px;margin-bottom: 0;"><i></i> <span data-bind="text: lang.lang.run_bill">Run Bill</span></span>
 								
 								<span class="btn btn-icon btn-warning glyphicons remove_2" data-bind="click: cancel" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.cancel"></span></span>
 													
@@ -3831,13 +3831,13 @@
 			    		<span class="glyphicons no-js remove_2" 
 							data-bind="click: cancel"><i></i></span>	
 					</div>
-			        <h2 style="padding:0 15px 0 0;">Print Bill</h2>
+			        <h2 style="padding:0 15px 0 0;" data-bind="text: lang.lang.print_bill">Print Bill</h2>
 			        <div class="span12 row" style="padding: 20px 0;">
 			        	<div class="span5" style="padding-right: 0;">
 				        	<div class="span6">	
 								<!-- Group -->
 								<div class="control-group">								
-									<label ><span >Month Of</span></label>
+									<label ><span data-bind="text: lang.lang.month_of">Month Of</span></label>
 						            <input type="text" 
 					                	style="width: 100%;" 
 					                	data-role="datepicker"
@@ -3852,7 +3852,7 @@
 							</div>
 							<div class="span6" style="padding-left: 0;">
 								<div class="control-group">								
-									<label ><span >License</span></label>
+									<label ><span data-bind="text: lang.lang.license">License</span></label>
 									<input 
 										data-role="dropdownlist" 
 										style="width: 100%;" 
@@ -3871,7 +3871,7 @@
 						<div class="span7" style="padding-left: 0;">
 							<div class="span4">
 								<div class="control-group">								
-									<label ><span >Location</span></label>
+									<label ><span data-bind="text: lang.lang.location">Location</span></label>
 									<input 
 										data-role="dropdownlist" 
 										style="width: 100%;" 
@@ -3888,7 +3888,7 @@
 							</div>
 							<div class="span4">
 								<div class="control-group">	
-									<label ><span >Action</span></label>	
+									<label ><span data-bind="text: lang.lang.action">Action</span></label>	
 									<div class="row" style="margin: 0;">					
 										<button type="button" data-role="button" data-bind="click: search" class="k-button" role="button" aria-disabled="false" tabindex="0"><i class="icon-search"></i></button>
 									</div>
@@ -3903,14 +3903,14 @@
 								<div class="span4">
 									<div class="total-customer">
 										<div class="span12">
-											<p>Total Invoice</p>
+											<p data-bind="text: lang.lang.total_invoice">Total Invoice</p>
 											<span data-bind="text: totalInv"></span>
 										</div>	
 									</div>
 								</div>
 								<div class="span4">
 									<div class="total-customer">
-										<p>No Print</p>
+										<p data-bind="text: lang.lang.no_print">No Print</p>
 										<span data-bind="text: noPrint, click: goNoPrint" style="cursor: pointer;"></span>
 									</div>
 								</div>
@@ -3926,7 +3926,7 @@
 						</div>
 						<div class="span6" style="padding-right: 0;">
 							<div class="total-customer" style="background: #0B0B3B; color: #fff;">
-								<p>Amount</p>
+								<p data-bind="text: lang.lang.amount">Amount</p>
 								<span data-bind="text: amountTotal"></span>
 							</div>
 						</div>
@@ -3937,10 +3937,10 @@
 					        <thead>
 					            <tr>
 					                <th style="text-align:center"><input type="checkbox" data-bind="checked: chkAll, events: {change : checkAll}" /></th>                
-					                <th><span data-bind="text: lang.lang.customer"></span></th>		         
-					                <th><span data-bind="text: lang.lang.number"></span></th>
+					                <th><span data-bind="text: lang.lang.customer">Customer</span></th>		         
+					                <th><span data-bind="text: lang.lang.number">Number</span></th>
 					                <th align="center"><span >m<sup>3</sup></span></th>
-					                <th align="right"><span data-bind="text: lang.lang.amount"></span></th>
+					                <th align="right"><span data-bind="text: lang.lang.amount">Amount</span></th>
 					            </tr>
 					        </thead>
 					        <tbody data-role="listview" 
@@ -4222,14 +4222,14 @@
 			<table width="100%" cellpadding="10">
 				<tr>
 			        <td>
-			        	<h2 >Receipt</h2>
+			        	<h2 data-bind="text: lang.lang.receipt">Receipt</h2>
 			        	<p>
 			        		<span data-bind="text: lang.lang.in_here"></span>
 			        	</p>
 
 			        	<p style="width: 100%; float: left; margin-top: 8px;">
 				        	<span style="position: relative; height: 35px; line-height: 35px; padding-right: 15px; float: left; display: block; ">
-								<a style="color: #203864; margin-top: 4px; line-height: 17px; background: #fff; padding: 8px 91px; font-size: 20px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;" href="#/reconcile">
+								<a data-bind="text: lang.lang.reconcile_transfer" style="color: #203864; margin-top: 4px; line-height: 17px; background: #fff; padding: 8px 91px; font-size: 20px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;" href="#/reconcile">
 									Reconcile & Transfer												
 								</a>
 							</span>
@@ -4245,7 +4245,7 @@
 				<div class="span12">
 					<div class="innerAll padding-bottom-none-phone" style="padding: 0 !important; margin: 8px 0 15px 0;">
 						<a href="javascript:void(0)" class="widget-stats widget-stats-gray widget-stats-4" style="background: #fff; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1; "> 
-							<span class="txt" style="color: #203864;"><span >Customer</span></span>
+							<span class="txt" style="color: #203864;"><span data-bind="text: lang.lang.customer">Customer</span></span>
 							<span class="count" style="color: #203864;" data-bind="text: numCustomer">0</span>
 							<span class="glyphicons user userss"><i></i></span>
 						</a>
@@ -4255,7 +4255,7 @@
 				<div class="span12">
 					<div class="innerAll padding-bottom-none-phone" style="background: #fff; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1; margin: 0 0 15px 0">
 						<a href="#/wPayment_summary" class="widget-stats widget-stats-primary widget-stats-4" style="background: #fff; padding-left: 15px !important;">
-							<span class="txt" style="color: #203864;"><span >Today Payment</span></span>
+							<span class="txt" style="color: #203864;"><span data-bind="text: lang.lang.today_payment">Today Payment</span></span>
 							<span class="count"><span style="font-size: 35px; color: #203864;" data-bind="text: paymentReceiptToday">0៛</span></span>
 							<span class="glyphicons coins addcolors"><i></i></span>
 						</a>
@@ -4267,14 +4267,14 @@
 
 
 			<div class="cover-block" style="padding: 10px 15px 8px 15px; width: 99%;">
-				<h2>Report</h2>
-				<p>
+				<h2 data-bind="text: lang.lang.report">Report</h2>
+				<p data-bind="text: lang.lang.summary_and_detail_cash">
 					Summary and detail cash receipt reports grouped by sources/ methods of receipts
 				</p>
 				<ul style="margin-left: -20px;">
-					<li><a href="#/cash_receipt_detail"><span >Cash Receipt By Detail</span></a></li>  
-	  				<li><a href="#/cash_receipt_source_summary"><span >Cash Receipt By Sources Summary</span></a></li>
-	  				<li><a href="#/cash_receipt_source_detail"><span >Cash Receipt By Sources Detail</span></a></li> 
+					<li><a href="#/cash_receipt_detail"><span data-bind="text: lang.lang.cash_receipt_by_detail">Cash Receipt By Detail</span></a></li>  
+	  				<li><a href="#/cash_receipt_source_summary"><span data-bind="text: lang.lang.cash_receipt_by_sources_summary">Cash Receipt By Sources Summary</span></a></li>
+	  				<li><a href="#/cash_receipt_source_detail"><span data-bind="text: lang.lang.cash_receipt_by_sources_detail">Cash Receipt By Sources Detail</span></a></li> 
 				</ul>
 			</div>
 		</div>
@@ -4411,12 +4411,12 @@
 			                <th><span data-bind="text: lang.lang.date"></span></th>
 			                <th><span data-bind="text: lang.lang.name"></span></th>
 			                <th><span data-bind="text: lang.lang.reference_no"></span></th>
-			                <th data-bind="visible: showReceiptNo">Receipt#</th>
+			                <th data-bind="visible: showReceiptNo" data-bind="text: lang.lang.receipt">Receipt#</th>
 			                <th data-bind="visible: showCheckNo" style="width: 10%"><span data-bind="text: lang.lang.check_number"></span></th>
 			                <th style="width: 15%"><span data-bind="text: lang.lang.amount"></span></th>			                
 			                <th style="width: 15%"><span data-bind="text: lang.lang.discount"></span></th>
 			                <th style="width: 15%"><span data-bind="text: lang.lang.fine"></span></th>
-			                <th style="width: 15%">RECEIVE</th>
+			                <th style="width: 15%"><span data-bind="text: lang.lang.receive">RECEIVE</span></th>
 			            </tr> 
 			        </thead>
 			        <tbody data-role="listview" 
@@ -4443,7 +4443,7 @@
   								</li>
   								<li>
   									<input type="checkbox" id="chbReceiptNo" class="k-checkbox" data-bind="checked: showReceiptNo">
-  									<label class="k-checkbox-label" for="chbReceiptNo">Receipt Number</label>
+  									<label class="k-checkbox-label" for="chbReceiptNo" data-bind="text: lang.lang.receipt_number">Receipt Number</label>
 								</li>															
 							</ul>
 						</div>
@@ -4498,9 +4498,9 @@
 						<table class="table table-bordered table-primary table-striped table-vertical-center">
 					        <thead>
 					            <tr>
-					                <th class="center" style="width: 50px;"><span >No.</span></th>             
-					                <th><span >Currency</span></th>
-					                <th><span >Cash Receipt</span></th>			                			                			                			                
+					                <th class="center" style="width: 50px;"><span data-bind="text: lang.lang.no_">No.</span></th>             
+					                <th><span data-bind="text: lang.lang.currency">Currency</span></th>
+					                <th><span data-bind="text: lang.lang.cash_receipt">Cash Receipt</span></th>			                			                			                			                
 					            </tr> 
 					        </thead>
 					        <tbody data-role="listview" 
@@ -5414,13 +5414,13 @@
 			    		<span class="glyphicons no-js remove_2" 
 							data-bind="click: cancel"><i></i></span>	
 					</div>
-			        <h2 style="margin-bottom: 0;">Reconcile</h2>
+			        <h2 style="margin-bottom: 0;" data-bind="text: lang.lang.reconcile">Reconcile</h2>
 			        <br>
 			        <div class="row-fluid reconcile">
 				        <table class="span12 table-remove">
 				        	<thead>
 					        	<tr>
-					        		<th colspan="1">Actual Cash Count</th>
+					        		<th colspan="1" data-bind="text: lang.lang.actual_cash_count">Actual Cash Count</th>
 					        	</tr>
 				        	</thead>
 				        	<tbody>
@@ -5430,10 +5430,10 @@
 											<thead>
 											<tr>
 												<td data-bind="click: list.addRow"><i class="icon-plus"></i></td>
-												<td style="background: #0077c5; color: #fff;">Currency:</td>
-												<td style="background: #0077c5; color: #fff;">Note:</td>
-												<td style="background: #0077c5; color: #fff;" >Unit</td>
-												<td style="background: #0077c5; color: #fff;" >Total</td>
+												<td style="background: #0077c5; color: #fff;" data-bind="text: lang.lang.currency">Currency:</td>
+												<td style="background: #0077c5; color: #fff;" data-bind="text: lang.lang.note">Note:</td>
+												<td style="background: #0077c5; color: #fff;" data-bind="text: lang.lang.unit">Unit</td>
+												<td style="background: #0077c5; color: #fff;" data-bind="text: lang.lang.total">Total</td>
 											</tr>
 											</thead>
 											<tbody data-role="listview" data-bind="source: list.dataSource" data-template="Reconcile-list-tmpl"></tbody>
@@ -5445,7 +5445,7 @@
 					        			<table class="span6">
 					        				<thead>
 					        					<tr>
-					        						<th colspan="2">
+					        						<th colspan="2" data-bind="text: lang.lang.amount_received">
 					        							Amount Received
 					        						</th>
 					        					</tr>
@@ -5458,7 +5458,7 @@
 					        			<table class="span6">
 					        				<thead>
 					        					<tr>
-					        						<th colspan="2">
+					        						<th colspan="2" data-bind="text: lang.lang.actual_count">
 					        							Actual Count
 					        						</th>
 					        					</tr>
@@ -5475,8 +5475,8 @@
 						<div id="ntf1" data-role="notification"></div>
 				        <div class="row">
 							<div class="span12" align="right">
-								<span class="btn btn-icon btn-primary glyphicons ok_2" data-bind="click: verify" style="width: 110px;margin-bottom: 0;"><i></i> <span>Verify</span></span>
-								<span class="btn btn-icon btn-primary glyphicons ok_2" data-bind="click: sync" style="width: 110px;margin-bottom: 0;"><i></i> <span>Record</span></span>
+								<span class="btn btn-icon btn-primary glyphicons ok_2" data-bind="click: verify" style="width: 110px;margin-bottom: 0;"><i></i> <span data-bind="text: lang.lang.verify">Verify</span></span>
+								<span class="btn btn-icon btn-primary glyphicons ok_2" data-bind="click: sync" style="width: 110px;margin-bottom: 0;"><i></i> <span data-bind="text: lang.lang.record">Record</span></span>
 								
 								<span class="btn btn-icon btn-warning glyphicons remove_2" data-bind="click: cancel" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.cancel"></span></span>
 													
@@ -7876,7 +7876,7 @@
 				<div  class="row-fluid saleSummaryCustomer">
 			<span class="glyphicons no-js remove_2 pull-right" data-bind="click: cancel"><i></i></span>
 
-	        <h2 data-bind="">Imports</h2>
+	        <h2 data-bind="text: lang.lang.imports">Imports</h2>
 		    <br>		
 			<!-- Tabs -->
 			<div class="relativeWrap" data-toggle="source-code">
@@ -7885,8 +7885,8 @@
 					<!-- Tabs Heading -->
 					<div class="widget-head">
 						<ul style="padding-left: 1px;">
-							<li class="active"><a class="glyphicons user" href="#tabContact" data-toggle="tab"><i></i><span style="line-height: 55px;">Contact</span></a></li>
-							<li><a class="glyphicons list" href="#tabInventery" data-toggle="tab"><i></i><span style="line-height: 55px;">Meter</span></a></li>
+							<li class="active"><a class="glyphicons user" href="#tabContact" data-toggle="tab"><i></i><span style="line-height: 55px;" data-bind="text: lang.lang.contact">Contact</span></a></li>
+							<li><a class="glyphicons list" href="#tabInventery" data-toggle="tab"><i></i><span style="line-height: 55px;" data-bind="text: lang.lang.meter">Meter</span></a></li>
 						</ul>
 					</div>
 					<!-- // Tabs Heading END -->
@@ -7899,18 +7899,18 @@
 							<!-- Tab content -->
 							<div id="tabContact" style="border: 1px solid #ccc" class="tab-pane active widget-body-regular">
 								
-								<h4 class="separator bottom" style="margin-top: 10px;">Please upload contacts file</h4>
+								<h4 class="separator bottom" style="margin-top: 10px;" data-bind="text: lang.lang.please_upload_contacts_file">Please upload contacts file</h4>
 								<a href="<?php echo base_url(); ?>assets/water/wcontact_import_form_excel.xlsx" download>
 									<span id="saveClose" class="btn btn-icon btn-success glyphicons download" style="width: 200px!important;position: absolute;top: 85px;right: 10px;">
 										<i></i> 
-										<span >Download file example</span>
+										<span data-bind="text: lang.lang.download_file_example">Download file example</span>
 									</span>
 								</a>
 								<div class="fileupload fileupload-new margin-none" data-provides="fileupload">
 								  	<input type="file"  data-role="upload" data-show-file-list="true" data-bind="events: {select: contact.onSelected}" id="myFile"  class="margin-none" />
 								</div>
-								<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 160px!important;"><i></i>
-								<span data-bind="click: contact.save, text: lang.lang.import_contact">Import Contact</span></span>
+								<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 175px!important;"><i></i>
+								<span data-bind="click: contact.save, text: lang.lang.import_contact">Import Contact</span>
 								
 
 							</div>
@@ -7919,18 +7919,18 @@
 							<!-- Tab content -->
 							<div id="tabInventery" style="border: 1px solid #ccc" class="tab-pane widget-body-regular">
 								
-								<h4 class="separator bottom" style="margin-top: 10px;">Please upload Inventory file</h4>
+								<h4 class="separator bottom" style="margin-top: 10px;" data-bind="text: lang.lang.please_upload_inventory_file">Please upload Inventory file</h4>
 								<a href="<?php echo base_url(); ?>assets/water/meter_import.xlsx" download>
 									<span id="saveClose" class="btn btn-icon btn-success glyphicons download" style="width: 200px!important;position: absolute;top: 85px;right: 10px;">
 										<i></i> 
-										<span >Download file Example</span>
+										<span data-bind="text: lang.lang.download_file_example">Download file Example</span>
 									</span>
 								</a>
 								<div class="fileupload fileupload-new margin-none" data-provides="fileupload">
 								  	<input type="file"  data-role="upload" data-show-file-list="true" data-bind="events: {select: item.onSelected}" id="myFile"  class="margin-none" />
 								</div>
 								<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 160px!important;"><i></i>
-								<span data-bind="click: item.save">Import Meter</span></span>
+								<span data-bind="click: item.save, text: lang.lang.import_meter">Import Meter</span>
 							</div>
 							<!-- // Tab content END -->
 							
@@ -8535,11 +8535,11 @@
 		searchType : "contacts",
 		checkRole  : function(e) {
 			e.preventDefault();
-		if(JSON.parse(localStorage.getItem('userData/user')).role == 1) {
-            banhji.router.navigate("");
-          } else {
-           	window.location.replace("<?php echo base_url(); ?>admin");
-          }
+			if(JSON.parse(localStorage.getItem('userData/user')).role == 1) {
+	            window.location.replace("<?php echo base_url(); ?>");
+	        } else {
+	        	window.location.replace("<?php echo base_url(); ?>admin");
+	        }
 		},
 		searchContact: function() {
 			this.set("searchType", "contacts");
@@ -19962,6 +19962,32 @@
 	});
 	
 	$(function() {
+		banhji.accessMod.query({
+			filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		}).then(function(e){
+			var allowed = false;
+			if(banhji.accessMod.data().length > 0) {
+				for(var i = 0; i < banhji.accessMod.data().length; i++) {
+					if("water" == banhji.accessMod.data()[i].name.toLowerCase()) {
+						allowed = true;
+						break;
+					}
+				}
+			} 
+			if(allowed) {
+				banhji.view.layout.showIn("#content", banhji.view.reportDashboard);
+				
+				var vm = banhji.reportDashboard;
+				banhji.userManagement.addMultiTask("Reports Dashboard","reports",null);
+
+				if(banhji.pageLoaded["reports"]==undefined){
+					banhji.pageLoaded["reports"] = true;
+				}
+				vm.pageLoad();
+			} else {
+				window.location.replace(baseUrl + "admin");
+			}
+		});
 		banhji.source.contactDS.read().then(function(){
 			banhji.router.start();
 			// banhji.source.loadData();
