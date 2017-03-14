@@ -8536,7 +8536,7 @@
 		checkRole  : function(e) {
 			e.preventDefault();
 			if(JSON.parse(localStorage.getItem('userData/user')).role == 1) {
-	            window.location.replace("<?php echo base_url(); ?>");
+	            window.location.replace("<?php echo base_url(); ?>rrd");
 	        } else {
 	        	window.location.replace("<?php echo base_url(); ?>admin");
 	        }
