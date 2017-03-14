@@ -57098,7 +57098,7 @@
             }
         }
 	});
-	// CUSTOMER SETTINGS
+	// CUSTOMER REPORTS
 	banhji.customerReportCenter = kendo.observable({
 		lang 				: langVM,
 		dataSource 			: dataStore(apiUrl + "customer_modules/dashboard"),

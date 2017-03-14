@@ -727,7 +727,7 @@
     <script type="text/x-kendo-template" id="company-modules">
       <div class="col-xs-3 col-md-2 col-lg-2">
           <div>
-              <a href="<?php echo base_url(); ?>rrd\#/#=href#">
+              <a href="<?php echo base_url(); ?>#=href#">
                   <img data-bind="attr: {src: image_url}">
               </a>
               <span><span data-bind="text: name"></span></span>
@@ -951,7 +951,7 @@
     <script type="text/x-kendo-template" id="user-profile-modules-list">
       <div class="col-xs-3 col-md-2 col-lg-2">
         <div>
-          <a href="<?php echo base_url(); ?>rrd\#/#=href#">
+          <a href="<?php echo base_url(); ?>#=href#">
             <img data-bind="attr: {src: img_url}">
           </a>
           <span><span data-bind="text: name"></span></span>
