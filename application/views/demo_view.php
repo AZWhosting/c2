@@ -28414,8 +28414,8 @@
 				    	<input type="text" class="k-textbox" data-bind="value:obj.abbr" name="abbr" placeholder="Abbr..." />
             			<input type="text" class="k-textbox" data-bind="value:obj.name" name="name" placeholder="Name..." />
 
-						<span class="k-button" data-bind="click: addObj"><i class="icon-plus"></i> Add New Fixed Asset</span>
-						<a href="#/fixed_assets" class="k-button"><i class="icon-plus"></i> Add New Item</a>
+						<span class="k-button" data-bind="click: addObj"><i class="icon-plus"></i> Add New Category</span>
+						<a href="#/fixed_assets" class="k-button"><i class="icon-plus"></i> Add New Fixed Asset Item</a>
 					</div>
 
 					<br>
@@ -28475,6 +28475,8 @@
     	<td>
     		<div class="edit-buttons">
                 <a class="k-button k-edit-button" href="\\#"><span class="k-icon k-i-edit"></span></a>
+                |
+	    		<span class="k-button" data-bind="click: goPattern"><span data-bind="text: lang.lang.pattern"></span></span>
                 #if(is_system!=="1"){#
 		    		|
 			    	<span data-bind="click: delete" style="cursor: pointer;"><i class="icon-remove"></i> Delete</span>
@@ -72262,6 +72264,10 @@
 				data: 'results',
 				total: 'count'
 			},
+			filter:[
+		  		{ field:"item_type_id <>", value: 3 },
+		  		{ field:"item_type_id <>", value: 5 }
+		  	],
 			sort:[
 				{ field:"item_type_id", dir:"asc" },
 				{ field:"id", dir:"asc" }
@@ -72279,7 +72285,11 @@
 		transactionDS		: dataStore(apiUrl + "items/movement"),
 		attachmentDS 		: dataStore(apiUrl + "attachments"),
 		categoryDS 			: new kendo.data.DataSource({
-		  	data: banhji.source.categoryList
+		  	data: banhji.source.categoryList,
+		  	filter:[
+		  		{ field:"item_type_id", operator:"neq", value: 3 },
+		  		{ field:"item_type_id", operator:"neq", value: 5 }
+		  	]
 		}),
 		sortList			: banhji.source.sortList,
 		sorter 				: "all",
@@ -75255,6 +75265,10 @@
 			});
 
 			this.patternDS.sync();
+        },
+        goPattern 			: function(e){
+        	var data = e.data;	
+        	banhji.router.navigate('/fixed_assets/0/'+data.id);
         },
         deletePattern 		: function(id){
         	var self = this;
