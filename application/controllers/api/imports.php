@@ -343,7 +343,8 @@ class Imports extends REST_Controller {
 			isset($value->ampere_id)				? $obj->ampere_id				= $value->ampere_id : "";
 			isset($value->registered_date)			? $obj->registered_date 		= date("Y-m-d", strtotime($value->registered_date)) : "";
 			isset($value->use_electricity)			? $obj->use_electricity			= $value->use_electricity : "";
-			isset($value->use_water)				? $obj->use_water				= $value->use_water : "";
+			// isset($value->use_water)				? $obj->use_water				= $value->use_water : "";
+			$obj->use_water = 1;
 			isset($value->is_local)					? $obj->is_local				= $value->is_local : "";
 			isset($value->is_pattern)				? $obj->is_pattern				= $value->is_pattern : "";
 			$obj->status					= 1;
@@ -474,6 +475,17 @@ class Imports extends REST_Controller {
 			$meter->date_used = date('Y-m-d', strtotime($row->date_used));
 
 			if($meter->save()) {
+				$reading = new Meter_record(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$reading->previous = 0;
+				$reading->current = $meter->startup_reader;
+				$reading->meter_id = $meter->id;
+				$reading->usage = $meter->startup_reader;
+				$reading->month_of = $meter->date_used;
+				$reading->from_date = $meter->date_used;
+				$reading->to_date = $meter->date_used;
+				$reading->invoiced= 1;
+				$reading->save();
+				
 				$planItems = $plan->plan_item->get();
 				$depositAcct = 0;
 				foreach($planItems as $item) {
@@ -543,7 +555,7 @@ class Imports extends REST_Controller {
 					$ar2->cr = $row->balance;
 					$ar2->save();
 				}
-
+ 				
 				$data[] = array(
 					'id' => $meter->id,
 					'number' => $meter->number,
