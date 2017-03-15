@@ -28407,32 +28407,33 @@
 	    				onclick="javascript:window.history.back()"><i></i></span>
 					
 			        <h2 >Fixed Asset List</h2>
-
-			        <div class="row">
-				        <div class="span6">
-				        	<p>
-					        	<span data-bind="text: lang.lang.segment_is_important"></span>
-					        </p>
-				        </div>
-				         <div class="span6">
-				         	<button class="btn btn-inverse" data-bind="click: openWindow"><i class="icon-plus icon-white"></i>&nbsp&nbsp<span data-bind="text: lang.lang.add_new_segment"></span></button>
-							
-				        </div>
-			        </div>				    			   
-
+			        
 				    <br>
-							
+
+				    <div class="row-fluid">
+				    	<input type="text" class="k-textbox" data-bind="value:obj.abbr" name="abbr" placeholder="Abbr..." />
+            			<input type="text" class="k-textbox" data-bind="value:obj.name" name="name" placeholder="Name..." />
+
+						<span class="k-button" data-bind="click: addObj"><i class="icon-plus"></i> Add New Fixed Asset</span>
+						<a href="#/fixed_assets" class="k-button"><i class="icon-plus"></i> Add New Item</a>
+					</div>
+
+					<br>
+
 	                <div class="row-fluid">
 		                <div class="span12 table-segment" style="padding: 0;">	                					
 			            	<table class="table table-condensed">
 			            		<thead style="background-color: #1E4E78; color: #fff; font-weight: bold">
 			            			<tr>
+			            				<th data-bind="text: lang.lang.abbr"></th>
 			            				<th data-bind="text: lang.lang.name"></th>            					            	
 			            				<th></th>
 			            			</tr>
 			            		</thead>
-			            		<tbody data-role="listview"			            			
+			            		<tbody id="listView" data-role="listview"
+			            				data-edit-template="fixedAssetItemList-edit-template"			            			
 						                data-template="fixedAssetItemList-template"
+						                data-auto-bind="false"
 						                data-bind="source: categoryDS"></tbody>
 			            	</table>
 		            	</div>
@@ -28445,9 +28446,8 @@
 						    <table class="table table-bordered table-white">
 			            		<thead>
 			            			<tr>
-			            				<th data-bind="text: lang.lang.code"></th>
+			            				<th data-bind="text: lang.lang.number"></th>
 			            				<th data-bind="text: lang.lang.name"></th>
-			            				<th data-bind="text: lang.lang.segment"></th>   					            		
 			            				<th></th>
 			            			</tr>
 			            		</thead>
@@ -28457,8 +28457,9 @@
 						                data-bind="source: itemDS"></tbody>
 			            	</table>
 			            	<div id="pager" class="k-pager-wrap"
+			            		 data-role="pager"
 						    	 data-auto-bind="false"
-					             data-role="pager" data-bind="source: itemDS"></div>
+					             data-bind="source: itemDS"></div>
 		            	</div>
 	            	</div>
 
@@ -28469,17 +28470,36 @@
 </script>
 <script id="fixedAssetItemList-template" type="text/x-kendo-tmpl">
     <tr>    	
+    	<td>#=abbr#</td>
     	<td>#=name#</td>
-    	<td >
-    		<span data-bind="click: edit" style="cursor: pointer;"><i class="icon-edit"></i> Edit</span>
-    		#if(!is_system=="1"){#
+    	<td>
+    		<div class="edit-buttons">
+                <a class="k-button k-edit-button" href="\\#"><span class="k-icon k-i-edit"></span></a>
+                #if(is_system!=="1"){#
+		    		|
+			    	<span data-bind="click: delete" style="cursor: pointer;"><i class="icon-remove"></i> Delete</span>
+	    		#}#
 	    		|
-	    		<span data-bind="click: delete" style="cursor: pointer;"><i class="icon-remove"></i> Delete</span>
-    		#}#
-    		|
-    		<span data-bind="click: view" style="cursor: pointer;"><i class="icon-view"></i> View Item</span>
-    		|
-    		<span data-bind="click: addItem" style="cursor: pointer;"><i class="icon-plus icon-white"></i> Add Item</span>
+	    		<span data-bind="click: view" style="cursor: pointer;"><i class="icon-view"></i> View Item</span>
+            </div>
+    	</td>
+   	</tr>
+</script>
+<script id="fixedAssetItemList-edit-template" type="text/x-kendo-tmpl">
+    <tr>    	
+    	<td>
+    		<input type="text" class="k-textbox" data-bind="value:abbr" name="abbr" required="required" validationMessage="required" />
+            <span data-for="abbr" class="k-invalid-msg"></span>
+    	</td>
+    	<td>
+    		<input type="text" class="k-textbox" data-bind="value:name" name="name" required="required" validationMessage="required" />
+            <span data-for="name" class="k-invalid-msg"></span>
+    	</td>
+    	<td>
+    		<div class="edit-buttons">
+                <a class="k-button k-update-button" href="\\#"><span class="k-icon k-i-check"></span></a>
+                <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-i-cancel"></span></a>
+            </div>
     	</td>
    	</tr>
 </script>
@@ -65663,6 +65683,7 @@
 	    	var self = this, obj = this.get("obj");
 	    	obj.set("issued_date", kendo.toString(new Date(obj.issued_date), "s"));
 	    	obj.set("due_date", kendo.toString(new Date(obj.due_date), "yyyy-MM-dd"));
+	    	obj.set("bill_date", kendo.toString(new Date(obj.bill_date), "yyyy-MM-dd"));
 
 	    	//Warning over credit allowed
 	        if(obj.credit_limit>0 && obj.amount>obj.credit_allowed){
@@ -75151,62 +75172,51 @@
     });
     banhji.fixedAssetItemList =  kendo.observable({
 		lang 				: langVM,
-        itemDS 			: dataStore(apiUrl + "items"),
-        categoryDS  		: new kendo.data.DataSource({
-		  	data: banhji.source.categoryList,
-		  	filter:{ field:"item_type_id", value:3 }
-		}),
-        deleteDS 			: dataStore(apiUrl + "items"),
-        itemDeleteDS 		: dataStore(apiUrl + "transactions"),
-        statusList 			: banhji.source.statusList,
-		obj 				: null,
-		item 				: null,
+        itemDS 				: dataStore(apiUrl + "items"),
+        patternDS 			: dataStore(apiUrl + "items"),
+        categoryDS  		: dataStore(apiUrl + "categories"),
+        deleteDS 			: dataStore(apiUrl + "item_lines"),
+		obj 				: { abbr:"", name:"" },
 		objName 			: "",
-		windowVisible 		: false,
-		windowItemVisible 	: false,
 		pageLoad 			: function() {
+			this.categoryDS.filter({ field:"item_type_id", value: 3 });
         },        
         addObj 				: function(){
-        	this.dataSource.add({
-        		code_length			: "",
-        		name 				: "",
-        		is_system			: 0
-        	});
-        	var data = this.dataSource.data();
-			var obj = data[data.length-1];
-			this.set("obj", obj);
+        	var self = this, obj = this.get("obj");
+
+        	if(obj.abbr!=="" && obj.name!==""){
+	        	this.categoryDS.insert(0, {
+	        		item_type_id	: 3,
+	        		abbr 			: obj.abbr,
+	        		name 			: obj.name,
+	        		is_system		: 0
+	        	});
+
+	        	this.categoryDS.sync();
+	        	var saved = false;
+	        	this.categoryDS.bind("requestEnd", function(e){
+	        		if(e.type==="create" && saved==false){
+	        			saved = true;
+
+	        			var response = e.response.results[0];
+	        			self.addPattern(response.id);
+	        			banhji.source.loadCategories();
+	        		}
+	        	});
+
+	        	//Clear
+	        	obj.set("abbr", "");
+	        	obj.set("name", "");
+        	}else{
+        		alert("Abbr and Name are required.");
+        	}
         },
-        openWindow			: function(){
-      		this.addObj();
-
-         	this.set("windowVisible", true);
-      	},
-      	closeWindow 		: function(){
-      		this.dataSource.cancelChanges();
-
-      		this.set("windowVisible", false);
-      	},
-        save 				: function(){
-        	var self = this;
-        	this.dataSource.sync();
-        	this.dataSource.bind("requestEnd", function(e){
-        		if( e.type == "create" || e.type == "update"){ 
-        			self.set("windowVisible", false);
-        		}
-        	});
-        },
-        edit 				: function(e){
-      		var data = e.data;
-      		this.set("obj", data);
-
-      		this.set("windowVisible", true);
-      	},      	
       	delete 				: function(e){
 			if (confirm("Are you sure, you want to delete it?")) {
 		        var self = this, data = e.data;
 
 		        this.deleteDS.query({
-		        	filter: { field:"segment_id", value:data.id},
+		        	filter: { field:"item_id", value:data.id},
 		        	page:1,
 		        	pageSize:1
 		        }).then(function(){
@@ -75215,8 +75225,17 @@
 		        	if(view.length>0){
 		        		alert("Sorry, this item can not be deleted.");
 		        	}else{		        		
-		        		self.dataSource.remove(data);
-		        		self.dataSource.sync();		        	
+		        		self.categoryDS.remove(data);
+		        		self.categoryDS.sync();
+		        		var saved = false;
+			        	self.categoryDS.bind("requestEnd", function(e){
+			        		if(e.type==="destroy" && saved==false){
+			        			saved = true;
+			        			banhji.source.loadCategories();
+			        		}
+			        	});
+
+			        	self.deletePattern(data.id);		        	
 		        	}
 		        });		        		        
 	    	}	    	
@@ -75226,82 +75245,34 @@
 	    	this.set("objName", data.name);
 	    	this.itemDS.filter({ field: "category_id", value: data.id});
 	    },
-	    openWindowItem		: function(){
-         	this.set("windowItemVisible", true);
-      	},
-      	closeWindowItem 	: function(){
-      		this.itemDS.cancelChanges();
+	    addPattern 			: function(category_id){
+    		this.patternDS.insert(0, {				
+				item_type_id 			: 3,     			      			
+      			category_id 			: category_id,
+      			number 					: "",
+      			is_pattern 				: 1,
+      			status 					: 1							
+			});
 
-      		this.set("windowItemVisible", false);
-      	},
-      	loadItem 			: function(e){
-	        var d = e.data;
-
-	        this.set("selectedType", true);
-	        this.set("tax_type_id", d.id);
-	        this.set("selectedTypeName", d.name);
-	        
-	        this.itemDS.query({
-	        	filter: { field:"segment_id", value: d.id },
-	        	page: 1,
-	        	pageSize: 100
-	        });  	
+			this.patternDS.sync();
         },
-      	addItem				: function(e){
-		    var data = e.data;
-
-        	this.itemDS.add({
-        		segment_id 		: data.id,
-        		code 			: "",
-        		is_system		: 0,        		
-        		segment 		: [{name: ""}]
-        	});
-        	var data = this.itemDS.data();
-			var obj = data[data.length-1];
-			this.set("item", obj);
-			this.openWindowItem();	            	
-        },
-      	saveItem 			: function(){
+        deletePattern 		: function(id){
         	var self = this;
-        	this.itemDS.sync();
-        	this.itemDS.bind("requestEnd", function(e){
-        		if( e.type == "create" || e.type == "update"){
-        			banhji.source.loadSegmentItems(); 
-        			self.set("windowItemVisible", false);        			
+
+        	this.patternDS.query({
+        		filter:[
+        			{ field:"category_id", value:id },
+        			{ field:"is_pattern", value:1 }
+        		]
+        	}).then(function(){
+        		var data = self.patternDS.at(0);
+
+        		if(data){
+        			self.patternDS.remove(data);
+        			self.patternDS.sync();
         		}
         	});
-        },
-        editItem 			: function(e){
-      		var data = e.data;
-      		this.set("item", data);
-
-      		this.set("windowItemVisible", true);
-      	}, 
-      	deleteItem 			: function(e){
-			if (confirm("Are you sure, you want to delete it?")) {
-		        var self = this, data = e.data;
-
-		        this.itemDeleteDS.query({
-		        	filter: { field:"segments", operator:"like", value:data.id},
-		        	page:1,
-		        	pageSize:1
-		        }).then(function(){
-		        	var view = self.itemDeleteDS.view();
-
-		        	if(view.length>0){
-		        		alert("Sorry, this item can not be deleted.");
-		        	}else{		        		
-		        		self.itemDS.remove(data);
-		        		self.itemDS.sync();
-		        		self.itemDS.bind("requestEnd", function(e){
-		        			if(e.type=="destroy"){
-		        				banhji.source.loadSegmentItems();
-		        			}
-		        		});
-		        	}
-		        });
-	    	}
-	    }
+        }
     });
 	banhji.txnItem =  kendo.observable({
     	lang 					: langVM,
@@ -78101,7 +78072,7 @@
 	        		if(e.type==="create" && saved==false){
 	        			saved = true;
 
-	        			var response = e.response.results[0];	        			
+	        			var response = e.response.results[0];
 	        			self.addPattern(response.id, response.item_type_id);
 	        			banhji.source.loadCategories();
 	        		}
@@ -95465,8 +95436,8 @@
 
 			if(banhji.pageLoaded["fixed_asset_item_list"]==undefined){
 				banhji.pageLoaded["fixed_asset_item_list"] = true;
-														
-			}		
+			}
+			vm.pageLoad();		
 		}
 	});
 	banhji.router.route("/general_ledger", function(){

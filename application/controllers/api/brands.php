@@ -81,7 +81,7 @@ class Brands extends REST_Controller {
 			isset($value->sub_of) 	? $obj->sub_of 	= $value->sub_of : "";
 			isset($value->code) 	? $obj->code 	= $value->code : "";
 			isset($value->name) 	? $obj->name 	= $value->name : "";
-			isset($value->abbr) 	? $obj->abbr 	= $value->abbr : "";			
+			isset($value->abbr) 	? $obj->abbr 	= $value->abbr : "";
 						
 			if($obj->save()){
 				$data["results"][] = array(
