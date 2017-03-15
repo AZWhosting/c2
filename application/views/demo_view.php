@@ -44308,7 +44308,6 @@
             $(that.element).data("kendoDatePicker").max(value); //update the widget
         }
     });
-
     kendo.data.binders.widget.min = kendo.data.Binder.extend({
         init: function(widget, bindings, options) {
             //call the base constructor
@@ -44321,6 +44320,7 @@
         }
     });
 	// end of custom widget
+
 	banhji.fileManagement = kendo.observable({
         dataSource: new kendo.data.DataSource({
           transport: {
@@ -65618,6 +65618,7 @@
 		save 				: function(){
 	    	var self = this, obj = this.get("obj");
 	    	obj.set("issued_date", kendo.toString(new Date(obj.issued_date), "s"));
+	    	obj.set("due_date", kendo.toString(new Date(obj.due_date), "yyyy-MM-dd"));
 
 	    	//Warning over credit allowed
 	        if(obj.credit_limit>0 && obj.amount>obj.credit_allowed){
