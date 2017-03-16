@@ -117,7 +117,6 @@ class Transactions extends REST_Controller {
 					"user_id" 					=> $value->user_id,
 					"employee_id" 				=> $value->employee_id,
 				   	"number" 					=> $value->number,
-				   	"reference_no" 				=> $value->reference_no,
 				   	"type" 						=> $value->type,
 				   	"journal_type" 				=> $value->journal_type,
 				   	"sub_total"					=> floatval($value->sub_total),
@@ -141,6 +140,8 @@ class Transactions extends REST_Controller {
 				   	"due_date" 					=> $value->due_date,
 				   	"deposit_date" 				=> $value->deposit_date,
 				   	"check_no" 					=> $value->check_no,
+				   	"reference_no" 				=> $value->reference_no,
+				   	"references" 				=> explode(",", $value->references),
 				   	"segments" 					=> explode(",", $value->segments),
 				   	"bill_to" 					=> $value->bill_to,
 				   	"ship_to" 					=> $value->ship_to,
@@ -212,7 +213,6 @@ class Transactions extends REST_Controller {
 			isset($value->user_id) 					? $obj->user_id 					= $value->user_id : "";
 			isset($value->employee_id) 				? $obj->employee_id 				= $value->employee_id : "";
 			$obj->number = $number;
-		   	isset($value->reference_no) 			? $obj->reference_no 				= $value->reference_no : "";
 		   	isset($value->type) 					? $obj->type 						= $value->type : "";
 		   	isset($value->journal_type) 			? $obj->journal_type 				= $value->journal_type : "";
 		   	isset($value->sub_total) 				? $obj->sub_total 					= $value->sub_total : "";
@@ -236,6 +236,8 @@ class Transactions extends REST_Controller {
 		   	isset($value->due_date) 				? $obj->due_date 					= $value->due_date : "";
 		   	isset($value->deposit_date) 			? $obj->deposit_date 				= $value->deposit_date : "";
 		   	isset($value->check_no) 				? $obj->check_no 					= $value->check_no : "";
+		   	isset($value->reference_no) 			? $obj->reference_no 				= $value->reference_no : "";
+		   	isset($value->references) 				? $obj->references 					= implode(",", $value->references) : "";
 		   	isset($value->segments) 				? $obj->segments 					= implode(",", $value->segments) : "";
 		   	isset($value->bill_to) 					? $obj->bill_to 					= $value->bill_to : "";
 		   	isset($value->ship_to) 					? $obj->ship_to 					= $value->ship_to : "";
@@ -275,7 +277,6 @@ class Transactions extends REST_Controller {
 					"user_id" 					=> $obj->user_id,
 					"employee_id" 				=> $obj->employee_id,
 					"number" 					=> $obj->number,
-				   	"reference_no" 				=> $obj->reference_no,
 				   	"type" 						=> $obj->type,
 				   	"journal_type" 				=> $obj->journal_type,
 				   	"sub_total"					=> floatval($obj->sub_total),
@@ -299,6 +300,8 @@ class Transactions extends REST_Controller {
 				   	"due_date" 					=> $obj->due_date,
 				   	"deposit_date" 				=> $obj->deposit_date,
 				   	"check_no" 					=> $obj->check_no,
+				   	"reference_no" 				=> $obj->reference_no,
+				   	"references" 				=> explode(",", $obj->references),
 				   	"segments" 					=> explode(",", $obj->segments),
 				   	"bill_to" 					=> $obj->bill_to,
 				   	"ship_to" 					=> $obj->ship_to,
@@ -354,7 +357,6 @@ class Transactions extends REST_Controller {
 			isset($value->user_id) 					? $obj->user_id 					= $value->user_id : "";
 			isset($value->employee_id) 				? $obj->employee_id 				= $value->employee_id : "";
 			isset($value->number) 					? $obj->number 						= $value->number : "";
-		   	isset($value->reference_no) 			? $obj->reference_no 				= $value->reference_no : "";
 		   	isset($value->type) 					? $obj->type 						= $value->type : "";
 		   	isset($value->journal_type) 			? $obj->journal_type 				= $value->journal_type : "";
 		   	isset($value->sub_total) 				? $obj->sub_total 					= $value->sub_total : "";
@@ -378,6 +380,8 @@ class Transactions extends REST_Controller {
 		   	isset($value->due_date) 				? $obj->due_date 					= $value->due_date : "";
 		   	isset($value->deposit_date) 			? $obj->deposit_date 				= $value->deposit_date : "";
 		   	isset($value->check_no) 				? $obj->check_no 					= $value->check_no : "";
+		   	isset($value->reference_no) 			? $obj->reference_no 				= $value->reference_no : "";
+		   	isset($value->references) 				? $obj->references 					= implode(",", $value->references) : "";
 		   	isset($value->segments) 				? $obj->segments 					= implode(",", $value->segments) : "";
 		   	isset($value->bill_to) 					? $obj->bill_to 					= $value->bill_to : "";
 		   	isset($value->ship_to) 					? $obj->ship_to 					= $value->ship_to : "";
@@ -418,7 +422,6 @@ class Transactions extends REST_Controller {
 					"user_id" 					=> $obj->user_id,
 					"employee_id" 				=> $obj->employee_id,
 					"number" 					=> $obj->number,
-				   	"reference_no" 				=> $obj->reference_no,
 				   	"type" 						=> $obj->type,
 				   	"journal_type" 				=> $obj->journal_type,
 				   	"sub_total"					=> floatval($obj->sub_total),
@@ -442,6 +445,8 @@ class Transactions extends REST_Controller {
 				   	"due_date" 					=> $obj->due_date,
 				   	"deposit_date" 				=> $obj->deposit_date,
 				   	"check_no" 					=> $obj->check_no,
+				   	"reference_no" 				=> $obj->reference_no,
+				   	"references" 				=> explode(",", $obj->references),
 				   	"segments" 					=> explode(",", $obj->segments),
 				   	"bill_to" 					=> $obj->bill_to,
 				   	"ship_to" 					=> $obj->ship_to,

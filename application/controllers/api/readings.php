@@ -273,7 +273,7 @@ class Readings extends REST_Controller {
 				//Results
 				$date     = null;
 				$location = $value->location->get();
-				$contact = $value->contact->get_raw();
+				$contact = $value->contact->get();
 				$record = $value->record;//->limit(1)->order_by('id', 'desc')->get();
 				if(!empty($filters) && isset($filters)){			
 			    	foreach ($filters as $f) {
@@ -299,11 +299,11 @@ class Readings extends REST_Controller {
 				);
 				if($record->exists()) {
 					$data["results"][] = array(
+						"_contact" 		=> $contact->name,
 						"meter_id" 		=> $value->id,
 						"meter_number" 	=> $value->number,
 						"previous"		=> floatval($record->current),
 						"current"		=> 0,
-						"_contact" 		=> $contact->result(),
 						"from_date"		=> $record->from_date, 
 						"to_date"		=> $record->to_date,
 						"month_of" 		=> $record->month_of,

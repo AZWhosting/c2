@@ -107,7 +107,7 @@
 			                    template: "#= series.name #: #= kendo.toString(value, &#39;c&#39;, banhji.locale) #"
 			                 }'                 
 			                 data-series="[
-			                                 { field: 'amount', name: 'Sale', categoryField:'month', color: '#203864', overlay:{ gradient: 'none'}  }
+			                                 { field: 'amount', name: langVM.lang.sale, categoryField:'month', color: '#203864', overlay:{ gradient: 'none'}  }
 			                             ]"	                             
 			                 data-bind="source: graphDS"
 			                 style="height: 240px; margin-bottom: 15px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;" ></div>
@@ -121,7 +121,7 @@
 							<span data-bind="text: lang.lang.deposit" style="font-size: 24px; ">DEPOSIT</span>
 							<br>
 							<span style="color: #9EA7B8;" data-bind="text: totalUser"></span>
-							<span style="color: #9EA7B8;">Meters</span>
+							<span style="color: #9EA7B8;" data-bind="text: lang.lang.meter">Meters</span>
 						</div>
 						<div class="span9" style=" text-align: center; font-size: 35px; font-weight: 600; padding: 0;">
 							<span style="float: right;" data-bind="text: totalDeposit"></span>
@@ -194,7 +194,7 @@
 											<td>										
 												<span style="font-size: 25px;" data-bind="text: totalCust"></span>
 												<br>
-												<span>Meter</span>
+												<span data-bind="text: lang.lang.meter">Meter</span>
 											</td>
 											<td>
 												<span style="font-size: 25px;" data-bind="text: voidCust"></span>
@@ -241,7 +241,7 @@
 		<td style="text-align: right; padding-right: 5px !important;">#=kendo.toString(deposit, 'c2', banhji.locale)#</td>
 		<td style="text-align: right; padding-right: 5px !important;">#=usage#m<sup>3</sup></td>
 		<td style="text-align: right; padding-right: 5px !important;">#=kendo.toString(sale, 'c2', banhji.locale)#</td>
-		<td style="text-align: right; padding-right: 5px !important;">#=kendo.toString(sale - deposit, 'c2', banhji.locale)#</td>
+		<td style="text-align: right; padding-right: 5px !important;">#=kendo.toString(balance, 'c2', banhji.locale)#</td>
 	</tr>
 </script>
 <script id="wsale-by-branch-row-template" type="text/x-kendo-tmpl">		
@@ -3184,6 +3184,7 @@
 											<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
 												<thead>
 													<tr>
+														<th class="center"><span data-bind="text: lang.lang.name">name</span></th>
 														<th class="center"><span data-bind="text: lang.lang.meter_date">Meter Number</span></th>
 														<th class="center"><span data-bind="text: lang.lang.from_date">From Date</span></th>
 														<th class="center"><span data-bind="text: lang.lang.to_date">To Date</span></th>
@@ -3326,7 +3327,10 @@
 <script id="reading-template" type="text/x-kendo-tmpl">
     <tr>
     	<td>
-    		#= meter_number# - #= _contact[0].name#
+    		#= _contact#
+   		</td>
+    	<td>
+    		#= meter_number#
    		</td>
    		<td align="center">
     		#= kendo.toString(new Date(from_date), "dd-MMM-yyyy")#
@@ -8426,6 +8430,20 @@
 	localforage.config({
 		driver: localforage.LOCALSTORAGE,
 		name: 'userData'
+	});
+	var langVM = kendo.observable({
+		lang 		: null,		
+		localeCode 	: null,		
+		changeToEn 	: function() {
+			localforage.setItem("lang", "EN").then(function(value){
+				location.reload(false);
+			});
+		},
+		changeToKh 	: function() {
+			localforage.setItem("lang", "KH").then(function(value){
+				location.reload(false);
+			});
+		}
 	});	
 	var banhji = banhji || {};
 	var baseUrl = "<?php echo base_url(); ?>";
@@ -8867,20 +8885,7 @@
 	    	});
 	  	}
 	}	
-	var langVM = kendo.observable({
-		lang 		: null,		
-		localeCode 	: null,		
-		changeToEn 	: function() {
-			localforage.setItem("lang", "EN").then(function(value){
-				location.reload(false);
-			});
-		},
-		changeToKh 	: function() {
-			localforage.setItem("lang", "KH").then(function(value){
-				location.reload(false);
-			});
-		}
-	});
+	
 	banhji.userData = JSON.parse(localStorage.getItem('userData/user')) ? JSON.parse(localStorage.getItem('userData/user')) : "";
 	if(banhji.userData == "") {
 		banhji.companyDS.fetch(function() {
@@ -11234,6 +11239,7 @@
 				        	self.set("haveData", true);
 				        	self.rows.push({ 
 				        		cells: [ 
+				        			{ value: "_contact", background: "#496cad", color: "#ffffff" },
 				        			{ value: "meter_number", background: "#496cad", color: "#ffffff" }, 
 				        			{ value: "from_date", background: "#496cad", color: "#ffffff" }, 
 				        			{ value: "to_date", background: "#496cad", color: "#ffffff" }, 
@@ -11248,6 +11254,7 @@
 				        		MonthOf = kendo.toString(new Date(self.uploadDS.data()[i].month_of), "MMM-yyyy");
 						        self.rows.push({
 						            cells: [
+						              { value: self.uploadDS.data()[i]._contact },
 						              { value: self.uploadDS.data()[i].meter_number },
 						              { value: FromDate },
 						              { value: ToDate  },
@@ -11308,6 +11315,7 @@
 	          	sheets: [
 	            	{
 	              		columns: [
+	                		{ autoWidth: true },
 	                		{ autoWidth: true },
 	                		{ autoWidth: true },
 	                		{ autoWidth: true },
@@ -20990,18 +20998,9 @@
 					}
 				}
 			} 
-			if(allowed) {
-				banhji.view.layout.showIn("#content", banhji.view.wDashBoard);
-				
-				// var vm = banhji.reportDashboard;
-				// banhji.userManagement.addMultiTask("Reports Dashboard","reports",null);
-
-				// if(banhji.pageLoaded["reports"]==undefined){
-				// 	banhji.pageLoaded["reports"] = true;
-				// }
-				// vm.pageLoad();
-			} else {
+			if(!allowed) {
 				window.location.replace(baseUrl + "admin");
+				// banhji.view.layout.showIn("#content", banhji.view.wDashBoard);
 			}
 		});
 		banhji.source.contactDS.read().then(function(){

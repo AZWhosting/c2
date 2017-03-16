@@ -97,10 +97,16 @@ class Ops extends REST_Controller {
 			    $connection = 'use '.$db;
 			    $this->db->query($connection);
 
-			    $this->db->where('id', 1);
-			    $this->db->update('prefixes', array('name' => 'Invoice'));
+			    // $this->db->where('id', 1);
+			    // $this->db->update('prefixes', array('name' => 'Invoice'));
 
 			    // $this->db->insert('item_prices', array('item_id' => 7, 'measurement_id'=> 6, 'unit_value' => 1.000000000000000, 'locale'=> 'km-KH'));
+				$this->dbforge->add_column("transactions", array(
+																"references" => array(
+																					"type"=> "TEXT"
+																					)
+																)
+				);
 			}
 		}
 

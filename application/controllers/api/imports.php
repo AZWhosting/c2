@@ -361,10 +361,10 @@ class Imports extends REST_Controller {
 				$utility->contact_id = $obj->id;
 				$utility->type = 'w';
 				$utility->branch_id = $license->id;
-				$utility->id_card = $value->id_card;
-				$utility->family_member = $value->family_member;
-				$utility->occupation = $value->occupation;
-				$utility->code = $value->code;
+				isset($value->id_card) 	? $utility->id_card = $value->id_card : "";
+				isset($value->family_member) ? $utility->family_member = $value->family_member : "";
+				isset($value->occupation) ? $utility->occupation = $value->occupation : "";
+				isset($value->code) ? $utility->code = $value->code : "";
 				$utility->abbr = $license->abbr;
 				$utility->save();
 
@@ -443,7 +443,6 @@ class Imports extends REST_Controller {
 			}
 		}
 		$data["count"] = count($data["results"]);
-
 		$this->response($data, 201);
 	}
 

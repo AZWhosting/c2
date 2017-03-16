@@ -170,6 +170,7 @@ class Waterdash extends REST_Controller {
 				$sale = 0;
 				$usage = 0;
 				$deposit = 0;
+				$balance = 0;
 				foreach($location as $loc) {
 					$meter = $loc->meter->where('activated', 1)->get();
 					$contact = $loc->contact->select('deposit_account_id')->get();
@@ -180,6 +181,24 @@ class Waterdash extends REST_Controller {
 					// $trx->where('due_date <');
 					$trx->where('status <>', 1);
 					$sale += $trx->amount;
+
+					$tmpBal = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					$tmpBal->select('id, amount, deposit, rate');
+					$tmpBal->where('type', 'Water_Invoice');
+					$tmpBal->where('status', 2);
+					$tmpBal->where('location_id', $loc->id)->get();
+					foreach($tmpBal as $b) {
+						$amount = (floatval($b->amount) - floatval($b->deposit)) / floatval($b->rate);
+						$paid = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+						$paid->select_sum("amount");
+						$paid->select_sum("discount");
+						$paid->where("reference_id", $b->id);
+						$paid->where_in("type", array("Cash_Receipt", "Offset_Invoice"));
+						$paid->where("is_recurring <>",1);
+						$paid->where("deleted <>",1);
+						$paid->get();
+						$balance += $amount - (floatval($paid->amount) + floatval($paid->discount));
+					}
 
 					$dep = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 					$dep->select_sum('amount');
@@ -205,7 +224,6 @@ class Waterdash extends REST_Controller {
 					}									
 				}
 					
-
 				// $contact = new Customer(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_banhji');
 				$data['results'][] = array(
 					'id' => $value->id,
@@ -215,7 +233,8 @@ class Waterdash extends REST_Controller {
 					'inActiveCustomer' => $inActiveCount,
 					'deposit' => $deposit,
 					'usage' => $usage,
-					'sale' => $sale
+					'sale' => $sale,
+					'balance' => $balance
 				);
 			}
 			$this->response($data, 200);
