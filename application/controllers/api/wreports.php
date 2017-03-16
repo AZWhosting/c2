@@ -2551,7 +2551,7 @@ class Wreports extends REST_Controller {
 		if(!empty($filters) && isset($filters['filters'])){
 	    	foreach ($filters['filters'] as $value) {
 	    		if(isset($value['operator'])) {
-					$obj->{$value['operator']}($value['field'], $value['value']);
+					$obj->{$value['operator']}($value['field'], 'id', $value['value']);
 				} else {
 	    			$obj->where($value["field"], $value["value"]);
 				}

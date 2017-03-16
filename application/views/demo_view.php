@@ -3570,25 +3570,25 @@
 													<input class="k-textbox" placeholder="type check number ..." data-bind="value: obj.check_no" style="width: 100%;">
 												</td>							            	
 								            </tr>
-											<tr>							            				
-												<td>
-								            		<span data-bind="text: lang.lang.reference"></span>	                		
+											<tr>
+												<td style="vertical-align: top;">
+								            		<span data-bind="text: lang.lang.reference"></span>
 								            	</td>
 								            	<td>
-													<input data-role="combobox"
-															data-template="reference-list-tmpl"															
-								              				data-value-primitive="true"
-										                    data-auto-bind="false"
-															data-text-field="number" 
-								              				data-value-field="id"						              				 
-								              				data-bind="value: obj.reference_id,
-								              							enabled: enableRef,
-								              							source: referenceDS,						              							
-								              							events:{change: referenceChanges}"
-								              				placeholder="Select Reference..." 
-								              				style="width: 100%" />
+								            		<select data-role="multiselect"
+														   data-item-template="reference-list-tmpl"
+														   data-value-primitive="true"
+														   data-auto-bind="false"
+														   data-text-field="number"
+														   data-value-field="id"
+														   data-bind="value: obj.references, 
+														   			source: referenceDS,
+														   			enabled: enableRef,
+														   			events:{ select: referenceSelect }"
+														   data-placeholder="Add Reference.."
+														   style="width: 100%" /></select>
 												</td>
-											</tr>	
+											</tr>
 							            </table>						            
 							        </div>
 							        <!-- // Options Tab content END -->
@@ -4247,7 +4247,7 @@
 														   data-value-primitive="true"
 														   data-auto-bind="false"
 														   data-text-field="number"
-														   data-value-field="id"														   
+														   data-value-field="id"
 														   data-bind="value: obj.references, 
 														   			source: referenceDS,
 														   			enabled: enableRef,
@@ -44028,9 +44028,9 @@
 		#}#
 	</span>
 	<span class="pull-right">
-		#if(type=="GDN" || type=="GRN"){# 
+		#if(type=="GDN" || type=="GRN" || type=="Quote" || type=="Sale_Order"){# 
 			#if(status==1){#
-				Used			
+				Used
 			#}else{#
 				Open
 			#}#
@@ -50687,6 +50687,8 @@
 		referenceDS			: dataStore(apiUrl + "transactions"),
 		referenceLineDS		: dataStore(apiUrl + "item_lines"),
 		depositDS  			: dataStore(apiUrl + "transactions"),
+		attachmentDS	 	: dataStore(apiUrl + "attachments"),
+		assemblyDS			: dataStore(apiUrl + "item_prices"),
 		typeList  			: new kendo.data.DataSource({
 		  	data: banhji.source.prefixList,
 		  	filter:{
@@ -50708,8 +50710,7 @@
 			      	{ field: "type", value: "Cash_Sale" }
 			    ]
 			}
-		}),
-		attachmentDS	 	: dataStore(apiUrl + "attachments"),
+		}),		
 		cashAccountDS  		: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
 		  	filter:[
@@ -50760,8 +50761,7 @@
 				{ field:"item_type_id", dir:"asc" },
 				{ field:"number", dir:"asc" }
 			]
-		}),
-		assemblyDS			: dataStore(apiUrl + "item_prices"),
+		}),		
 		paymentMethodDS 	: banhji.source.paymentMethodDS,
 		amtDueColor 		: banhji.source.amtDueColor,
 	    confirmMessage 		: banhji.source.confirmMessage,
@@ -50786,15 +50786,10 @@
 		recurring_validate 	: false,
 		enableRef 	 		: false,
 		showDiscount 		: false,
-		sub_total 			: 0,
-		tax 				: 0,
-		discount 			: 0,
 		balance 			: 0,
 		total_deposit		: 0,
 		total 				: 0,
-		remaining 			: 0,
 		amount_due 			: 0,
-		original_total 		: 0,
 		user_id				: banhji.source.user_id,
 		pageLoad 			: function(id){
 			if(id){
@@ -51337,8 +51332,7 @@
 						{ field: "assembly_id >", value: 0 }
 					]);
 					self.journalLineDS.filter({ field: "transaction_id", value: view[0].id });
-					self.referenceDS.filter({ field: "id", value: view[0].reference_id });
-
+					
 					self.depositDS.filter([
 						{ field: "reference_id", value: view[0].id },
 						{ field: "type", value: "Credit" }
@@ -51346,7 +51340,7 @@
 					
 					self.set("original_total", view[0].amount);
 					self.set("original_credit", view[0].credit);
-
+					self.set("enableRef", false);
 					self.loadDeposit();
 				});
 			}				
@@ -51495,7 +51489,6 @@
 			this.set("obj", null);
 			this.set("total", 0);
 			this.set("total_deposit", 0);
-			this.set("remaining", 0);
 			this.set("amount_due", 0);
 			this.set("amtDueColor", banhji.source.amtDueColor);
 
@@ -51528,6 +51521,7 @@
 			   	memo 				: "",
 			   	memo2 				: "",
 			   	status 				: 0,
+			   	references 			: [],
 			   	segments 			: [],
 			   	is_journal 			: 1,
 			   	//Recurring
@@ -51622,13 +51616,14 @@
 		    	}
 	    	}
 
-	        //Reference
-	    	if(obj.reference_id>0){
-	    		var ref = this.referenceDS.get(obj.reference_id);
-				ref.set("status", 1);
+	        //References
+	    	if(obj.references.length>0){
+	    		$.each(obj.references, function(index, value){
+	    			var ref = self.referenceDS.get(value);
+					ref.set("status", 1);
+	    		});
+	    		
 				this.referenceDS.sync();
-			}else{
-				obj.set("reference_id", 0);
 			}
 	    	
 			//Save Obj
@@ -52016,53 +52011,43 @@
 				]);
 			}else{
 				this.set("enableRef", false);
-				obj.set("reference_id", "");
+				obj.set("references", []);
 			}
 		},
-		referenceChanges 	: function(){
-			var self = this, obj = this.get("obj");
-			
-			if(obj.reference_id>0){
-				var data = this.referenceDS.get(obj.reference_id);
+		referenceSelect 	: function(e){
+			var self = this, data = e.dataItem,
+				obj = this.get("obj"), 
+				deposit = kendo.parseFloat(data.deposit) + kendo.parseFloat(obj.deposit);
 
-				obj.set("employee_id", data.employee_id);
-				obj.set("reference_no", data.number);
-				obj.set("segments", data.segments);
-				obj.set("deposit", data.deposit);
-												
-			 	this.referenceLineDS.query({
-			 		filter: { field:"transaction_id", value: obj.reference_id },
-			 		page: 1,
-			 		pageSize: 100
-			 	}).then(function(){
-			 		var view = self.referenceLineDS.view();					
+			obj.set("deposit", deposit);
 
-			 		self.lineDS.data([]);
-			 		$.each(view, function(index, value){
-			 			self.lineDS.add({					
-							transaction_id 		: obj.id,
-							tax_item_id 		: value.tax_item_id,
-							item_id 			: value.item_id,
-							measurement_id 		: value.measurement_id,							
-							description 		: value.description,				
-							quantity 	 		: value.quantity,
-							price 				: value.price,												
-							amount 				: value.amount,
-							discount 			: value.discount,
-							fine 				: value.fine,
-							rate				: value.rate,
-							locale				: value.locale,
-							movement 			: value.movement,							
+		 	this.referenceLineDS.query({
+		 		filter: { field:"transaction_id", value: data.id }
+		 	}).then(function(){
+		 		var view = self.referenceLineDS.view();
 
-							item_prices			: value.item_prices
-						});
-			 		});
+		 		$.each(view, function(index, value){
+		 			self.lineDS.add({
+						transaction_id 		: obj.id,
+						tax_item_id 		: value.tax_item_id,
+						item_id 			: value.item_id,
+						measurement_id 		: value.measurement_id,
+						description 		: value.description,
+						quantity 	 		: value.quantity,
+						price 				: value.price,
+						amount 				: value.amount,
+						discount 			: value.discount,
+						fine 				: value.fine,
+						rate				: value.rate,
+						locale				: value.locale,
+						movement 			: value.movement,
 
-			 		self.changes();
-			 	});			 				 				 				 				
-			}else{
-				obj.set("deposit", 0);
-			}								
+						item_prices			: value.item_prices
+					});
+		 		});
+
+		 		self.changes();
+		 	});			
 		},
 		//Recurring
 		loadRecurring 		: function(id){
@@ -52294,15 +52279,10 @@
 		recurring_validate 	: false,
 		enableRef 	 		: false,
 		showDiscount 		: false,
-		sub_total 			: 0,
-		tax 				: 0,
-		discount 			: 0,
 		balance 			: 0,
 		total_deposit		: 0,
 		total 				: 0,
 		amount_due 			: 0,
-		remaining 			: 0,
-		original_total 		: 0,
 		user_id				: banhji.source.user_id,
 		pageLoad 			: function(id){
 			if(id){
@@ -52855,7 +52835,7 @@
 					page: 1,
 					pageSize: 100
 				}).then(function(e){
-					var view = self.dataSource.view();				
+					var view = self.dataSource.view();
 
 					self.set("obj", view[0]);
 
@@ -52882,18 +52862,7 @@
 
 					self.journalLineDS.filter({ field: "transaction_id", value: id });
 					self.attachmentDS.filter({ field: "transaction_id", value: id });
-
-					self.referenceDS.filter([
-						{ field: "id", operator:"or_where_in_related", value: view[0].references },
-						{ field: "contact_id", value: obj.contact_id },
-						{ field: "status", value: 0 },
-						{ field: "type", operator:"where_in", value:["Sale_Order", "Quote", "GDN"] },
-						{ field: "due_date >=", value: kendo.toString(obj.issued_date, "yyyy-MM-dd") }
-					]);
-
-					if(view[0].references.length>0){
-						self.set("enableRef", true);
-					}
+					self.set("enableRef", false);
 
 					self.loadDeposit();
 				});
