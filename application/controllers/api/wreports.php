@@ -2558,7 +2558,7 @@ class Wreports extends REST_Controller {
 			}
 		}
 		$obj->include_related("contact", array("abbr", "number", "name", "email", "address", "phone"));
-		$obj->include_related("location", "name");
+		$obj->include_related("branch/location", "name");
 		$obj->include_related("branch", "name");
 		$obj->get_paged_iterated($page, $limit);
 		if($obj->exists()) {
@@ -2572,7 +2572,7 @@ class Wreports extends REST_Controller {
 					"address"	=> $value->contact_address,
 					"phone"		=> $value->contact_phone,
 					"email" 	=> $value->contact_email,
-					"location" 	=> $value->location_name,
+					"location" 	=> $value->branch_location_name,
 				);
 			}
 			$this->response(array('results' => $data, 'count' => $obj->paged->total_rows), 200);

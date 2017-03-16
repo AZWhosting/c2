@@ -1,0 +1,19 @@
+//Water Add Licesen
+	"add_license": "បន្ថែមអាជ្ញាប័ណ្ណ",
+	"license_no": "លេខអាជ្ញាប័ណ្ណ",
+	"license_name": "ឈ្មោះអាជ្ញាប័ណ្ណ",
+	"representative": "តំណាង",
+	"maximum_household": "ចំនួនអ្នកប្រើប្រាស់អតិបរមា",
+	"terms_condition": "លក្ខខណ្ឌ",
+	"provinces": "ខេត្ត",
+	"districts": "សង្កាត់",
+	"mobile": "ទូរស័ព្ទចល័ត",
+	"telephone": "ទូរស័ព្ទលើតុ",
+
+	//Water InvoiceCustom
+	"form_style": "ម៉ូតរបស់ទំរង",
+	"form_color": "ពណ៌របស់ទំរង",
+	"form_appearance": "រូបរាងរបស់ទំរង",
+
+	"invoice_preview": "បង្ហាញវិក្ក័យបត្រ",
+	"save_pdf": "រក្សាជា PDF",

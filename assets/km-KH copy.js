@@ -1310,23 +1310,24 @@ var	km_KH = {
 	"add_plan": "បន្ថែម​កញ្ចប់​សេវាកម្ម",
 
 	//Water Add Licesen
-	"add_license": "បន្ថែម​អាជ្ញាប័ណ្ណ", 	
-	"license_no": "លេខ​អាជ្ញាប័ណ្ណ", 	
-	"license_name": "ឈ្មោះ​អាជ្ញាប័ណ្ណ", 	
-	"representative": "តំណាង", 	
-	"maximum_household": "ចំនួន​អ្នក​ប្រើប្រាស់​អតិបរមា", 	
-	"terms_condition": "លក្ខខណ្ឌ", 	
-	"provinces": "ខេត្ត", 	
-	"districts": "សង្កាត់", 	
-	"mobile": "ទូរស័ព្ទចល័ត", 	
-	"telephone": "ទូរស័ព្ទ​លើ​តុ",  	
+	"add_license": "បន្ថែមអាជ្ញាប័ណ្ណ",
+	"license_no": "លេខអាជ្ញាប័ណ្ណ",
+	"license_name": "ឈ្មោះអាជ្ញាប័ណ្ណ",
+	"representative": "តំណាង",
+	"maximum_household": "ចំនួនអ្នកប្រើប្រាស់អតិបរមា",
+	"terms_condition": "លក្ខខណ្ឌ",
+	"provinces": "ខេត្ត",
+	"districts": "សង្កាត់",
+	"mobile": "ទូរស័ព្ទចល័ត",
+	"telephone": "ទូរស័ព្ទលើតុ",
 
-	//Water InvoiceCustom 	
-	"form_style": "ម៉ូត​របស់​ទម្រង់", 	
-	"form_color": "ពណ៌​របស់​ទម្រង់", 	
-	"form_appearance": "រូបរាង​របស់​ទម្រង់",  	
-	"invoice_preview": "បង្ហាញ​វិក្កយបត្រ", 	
-	"save_pdf": "រក្សា​ជា PDF",
+	//Water InvoiceCustom
+	"form_style": "ម៉ូតរបស់ទំរង",
+	"form_color": "ពណ៌របស់ទំរង",
+	"form_appearance": "រូបរាងរបស់ទំរង",
+
+	"invoice_preview": "បង្ហាញវិក្ក័យបត្រ",
+	"save_pdf": "រក្សាជា PDF",
 
 
 

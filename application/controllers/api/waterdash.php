@@ -173,7 +173,7 @@ class Waterdash extends REST_Controller {
 				$balance = 0;
 				foreach($location as $loc) {
 					$meter = $loc->meter->where('activated', 1)->get();
-					$contact = $loc->contact->select('deposit_account_id')->get();
+					// $contact = $loc->contact->select('deposit_account_id')->get();
 					$trx = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 					$trx->select_sum('amount');
 					$trx->where('type', 'Water_Invoice');
