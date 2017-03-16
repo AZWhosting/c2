@@ -19343,16 +19343,18 @@
 			banhji.importItem.dataSource.bind("requestEnd", function(e){
 		    	if(e.response){				
 		    		$("#ntf1").data("kendoNotification").success("Imported Meters successfully!");
+		    		$("#loadImport").css("display","none");
 		    		$('li.k-file').remove();
 		    		self.dataSource.data([]);
-					$("#loadImport").css("display","none");
+					
 				}				  				
 		    });
 		    banhji.importItem.dataSource.bind("error", function(e){		    		    	
 				$("#ntf1").data("kendoNotification").error("Error Importing Meters!"); 
+				$("#loadImport").css("display","none");	
 				$('li.k-file').remove();
 				self.dataSource.data([]);
-				$("#loadImport").css("display","none");				
+							
 		    });
 		}
 	});

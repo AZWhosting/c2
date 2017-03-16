@@ -462,7 +462,7 @@ class Imports extends REST_Controller {
 			
 			$meter->number = isset($row->number) ? $row->number : 0;
 			$meter->worder = isset($row->order) ? $row->order : $order;
-			$meter->startup_reader = isset($row->start_up) ? $row->number : 0;
+			$meter->startup_reader = isset($row->start_up) ? $row->start_up : 0;
 			$meter->number_digit = $row->digit_number;
 			$meter->multiplier = 1;
 			$meter->activated = 1;
