@@ -51620,7 +51620,9 @@
 	    	if(obj.references.length>0){
 	    		$.each(obj.references, function(index, value){
 	    			var ref = self.referenceDS.get(value);
-					ref.set("status", 1);
+					if(ref){
+						ref.set("status", 1);
+					}
 	    		});
 	    		
 				this.referenceDS.sync();
@@ -53128,7 +53130,7 @@
 	    		obj.set("is_recurring", 1);
 	    	}
 
-	        //Mode
+	        //Edit Mode
 	    	if(obj.isNew()==false){
 	    		//Line has changed
 		    	if(obj.is_recurring==0){
@@ -53144,7 +53146,9 @@
 	    	if(obj.references.length>0){
 	    		$.each(obj.references, function(index, value){
 	    			var ref = self.referenceDS.get(value);
-					ref.set("status", 1);
+	    			if(ref){
+						ref.set("status", 1);
+					}
 	    		});
 	    		
 				this.referenceDS.sync();

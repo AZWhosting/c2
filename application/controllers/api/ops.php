@@ -110,10 +110,11 @@ class Ops extends REST_Controller {
 
 				$this->dbforge->modify_column(
 		        	'transactions', array(
-						'references' => array(
-									'name' 		=> 'references', 
+						'segments' => array(
+									'name' 		=> 'segments', 
 									'type'		=> 'TEXT',
-									'null' 		=> TRUE
+									'null' 		=> FALSE,
+									'default' 	=> ''
 						)
 		        	)
 		        );
