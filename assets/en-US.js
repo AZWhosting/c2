@@ -1354,6 +1354,10 @@ var	en_US = {
 	"invoice_preview": "Invoice Preview",
 	"save_pdf": "Save PDF",
 
+	//Message
+	"success_message": "Successfull!",
+	"error_message": "Error!",
+	"field_required_message": "Field Required!",
 
 
 

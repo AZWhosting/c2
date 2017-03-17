@@ -3575,18 +3575,17 @@
 								            		<span data-bind="text: lang.lang.reference"></span>
 								            	</td>
 								            	<td>
-								            		<select data-role="multiselect"
+													<select data-role="multiselect"
 														   data-item-template="reference-list-tmpl"
-														   data-value-primitive="true"
-														   data-auto-bind="false"
-														   data-text-field="number"
-														   data-value-field="id"
-														   data-bind="value: obj.references, 
-														   			source: referenceDS,
-														   			enabled: enableRef,
-														   			events:{ select: referenceSelect }"
-														   data-placeholder="Add Reference.."
-														   style="width: 100%" /></select>
+										                   data-value-primitive="true"
+										                   data-text-field="number"
+										                   data-value-field="id"
+										                   data-bind="value: obj.references,
+										                              source: referenceList,
+														   			  events:{ select: referenceSelect }"
+										                   data-placeholder="Add Reference..."
+										                   style="width:100%;" 
+										            ></select>
 												</td>
 											</tr>
 							            </table>						            
@@ -4242,18 +4241,17 @@
 								            		<span data-bind="text: lang.lang.reference"></span>
 								            	</td>
 								            	<td>
-								            		<select data-role="multiselect"
+													<select data-role="multiselect"
 														   data-item-template="reference-list-tmpl"
-														   data-value-primitive="true"
-														   data-auto-bind="false"
-														   data-text-field="number"
-														   data-value-field="id"
-														   data-bind="value: obj.references, 
-														   			source: referenceDS,
-														   			enabled: enableRef,
-														   			events:{ select: referenceSelect }"
-														   data-placeholder="Add Reference.."
-														   style="width: 100%" /></select>
+										                   data-value-primitive="true"
+										                   data-text-field="number"
+										                   data-value-field="id"
+										                   data-bind="value: obj.references,
+										                              source: referenceList,
+														   			  events:{ select: referenceSelect }"
+										                   data-placeholder="Add Reference..."
+										                   style="width:100%;" 
+										            ></select>
 												</td>
 											</tr>
 							            </table>
@@ -50803,7 +50801,6 @@
 		statusSrc 			: "",
 		recurring 			: "",
 		recurring_validate 	: false,
-		enableRef 	 		: false,
 		showDiscount 		: false,
 		balance 			: 0,
 		total_deposit		: 0,
@@ -51352,14 +51349,7 @@
 					]);
 					self.journalLineDS.filter({ field: "transaction_id", value: view[0].id });
 					
-					self.depositDS.filter([
-						{ field: "reference_id", value: view[0].id },
-						{ field: "type", value: "Credit" }
-					]);
-					
-					self.set("original_total", view[0].amount);
-					self.set("original_credit", view[0].credit);
-					self.set("enableRef", false);
+					self.loadEditReference();
 					self.loadDeposit();
 				});
 			}				
@@ -51384,6 +51374,32 @@
 		        	});
 					value.set("item_prices", itemPriceList);
 				});
+			});
+		},
+		loadEditReference 	: function(){
+			var self = this, 
+				obj = this.get("obj"),
+				referenceIds = [], referenceList = [];
+
+			$.each(obj.references, function(index, value){
+				referenceIds.push(value);
+			});
+			this.referenceDS.query({
+				filter:{ field: "id", operator:"where_in", value: referenceIds }
+			}).then(function(){
+				var view = self.referenceDS.view();
+
+				$.each(view, function(index, value){
+					referenceList.push(value);
+				});
+
+				self.set("referenceList", []);
+				obj.set("references", []);
+
+				self.set("referenceList", referenceList);
+				obj.set("references", referenceIds);
+
+				self.loadReference();
 			});
 		},
 		changes				: function(){
@@ -51624,7 +51640,7 @@
 	    		obj.set("is_recurring", 1);
 	    	}
 
-	        //Mode
+	        //Edit Mode
 	    	if(obj.isNew()==false){
 	    		//Line has changed
 		    	if(obj.is_recurring==0){
@@ -51638,14 +51654,28 @@
 
 	        //References
 	    	if(obj.references.length>0){
-	    		$.each(obj.references, function(index, value){
-	    			var ref = self.referenceDS.get(value);
-					if(ref){
-						ref.set("status", 1);
-					}
+	    		var referenceIds = [];
+	    		$.each(this.referenceList, function(index, value){
+	    			referenceIds.push(value.id);
 	    		});
-	    		
-				this.referenceDS.sync();
+
+	    		this.referenceDS.query({
+	    			filter:{ field:"id", operator:"where_in", value:referenceIds }
+	    		}).then(function(){
+	    			var view = self.referenceDS.view();
+
+	    			$.each(view, function(index, value){
+	    				$.each(obj.references, function(ind, val){
+		    				if(val == value.id){
+								value.set("status", 1);
+							}else{
+								value.set("status", 0);
+							}
+						});
+	    			});
+
+	    			self.referenceDS.sync();
+	    		});
 			}
 	    	
 			//Save Obj
@@ -52022,20 +52052,29 @@
 		},
 		//Reference
 		loadReference 		: function(){
-			var obj = this.get("obj");
+			var self = this, obj = this.get("obj");
 
 			if(obj.contact_id>0){
-				this.set("enableRef", true);
+				this.referenceDS.query({
+					filter:[
+						{ field: "contact_id", value: obj.contact_id },
+						{ field: "status", value: 0 },
+						{ field: "type", operator:"where_in", value:["Sale_Order", "Quote", "GDN"] },
+						{ field: "due_date >=", value: kendo.toString(obj.issued_date, "yyyy-MM-dd") }
+					]
+				}).then(function(){
+					var view = self.referenceDS.view();
 
-				this.referenceDS.filter([
-					{ field: "contact_id", value: obj.contact_id },
-					{ field: "status", value: 0 },
-					{ field: "type", operator:"where_in", value:["Sale_Order", "Quote", "GDN"] },
-					{ field: "due_date >=", value: kendo.toString(obj.issued_date, "yyyy-MM-dd") }
-				]);
+					if(obj.isNew()){
+						self.set("referenceList", []);
+					}
+					$.each(view, function(index, value){
+						self.referenceList.push(value);
+					});
+				});
 			}else{
-				this.set("enableRef", false);
 				obj.set("references", []);
+				this.set("referenceList", []);
 			}
 		},
 		referenceSelect 	: function(e){
@@ -52278,7 +52317,8 @@
 			  	{ field: "tax_type_id", dir: "asc" },
 			  	{ field: "name", dir: "asc" }
 			]
-		}),		
+		}),
+		referenceList 		: [],
 		paymentTermDS 		: banhji.source.paymentTermDS,
 		amtDueColor 		: banhji.source.amtDueColor,
 	    confirmMessage 		: banhji.source.confirmMessage,
@@ -52301,7 +52341,6 @@
 		statusSrc 			: "",
 		recurring 			: "",
 		recurring_validate 	: false,
-		enableRef 	 		: false,
 		showDiscount 		: false,
 		balance 			: 0,
 		total_deposit		: 0,
@@ -52886,8 +52925,8 @@
 
 					self.journalLineDS.filter({ field: "transaction_id", value: id });
 					self.attachmentDS.filter({ field: "transaction_id", value: id });
-					self.set("enableRef", false);
-
+					
+					self.loadEditReference();
 					self.loadDeposit();
 				});
 			}				
@@ -52912,6 +52951,32 @@
 		        	});
 					value.set("item_prices", itemPriceList);
 				});
+			});
+		},
+		loadEditReference 	: function(){
+			var self = this, 
+				obj = this.get("obj"),
+				referenceIds = [], referenceList = [];
+
+			$.each(obj.references, function(index, value){
+				referenceIds.push(value);
+			});
+			this.referenceDS.query({
+				filter:{ field: "id", operator:"where_in", value: referenceIds }
+			}).then(function(){
+				var view = self.referenceDS.view();
+
+				$.each(view, function(index, value){
+					referenceList.push(value);
+				});
+
+				self.set("referenceList", []);
+				obj.set("references", []);
+
+				self.set("referenceList", referenceList);
+				obj.set("references", referenceIds);
+
+				self.loadReference();
 			});
 		},
 		changes				: function(){
@@ -53164,14 +53229,28 @@
 
 	        //References
 	    	if(obj.references.length>0){
-	    		$.each(obj.references, function(index, value){
-	    			var ref = self.referenceDS.get(value);
-	    			if(ref){
-						ref.set("status", 1);
-					}
+	    		var referenceIds = [];
+	    		$.each(this.referenceList, function(index, value){
+	    			referenceIds.push(value.id);
 	    		});
-	    		
-				this.referenceDS.sync();
+
+	    		this.referenceDS.query({
+	    			filter:{ field:"id", operator:"where_in", value:referenceIds }
+	    		}).then(function(){
+	    			var view = self.referenceDS.view();
+
+	    			$.each(view, function(index, value){
+	    				$.each(obj.references, function(ind, val){
+		    				if(val == value.id){
+								value.set("status", 1);
+							}else{
+								value.set("status", 0);
+							}
+						});
+	    			});
+
+	    			self.referenceDS.sync();
+	    		});
 			}
 	    	
 			//Save Obj
@@ -53546,20 +53625,29 @@
 		},
 		//Reference
 		loadReference 		: function(){
-			var obj = this.get("obj");
+			var self = this, obj = this.get("obj");
 
 			if(obj.contact_id>0){
-				this.set("enableRef", true);
+				this.referenceDS.query({
+					filter:[
+						{ field: "contact_id", value: obj.contact_id },
+						{ field: "status", value: 0 },
+						{ field: "type", operator:"where_in", value:["Sale_Order", "Quote", "GDN"] },
+						{ field: "due_date >=", value: kendo.toString(obj.issued_date, "yyyy-MM-dd") }
+					]
+				}).then(function(){
+					var view = self.referenceDS.view();
 
-				this.referenceDS.filter([
-					{ field: "contact_id", value: obj.contact_id },
-					{ field: "status", value: 0 },
-					{ field: "type", operator:"where_in", value:["Sale_Order", "Quote", "GDN"] },
-					{ field: "due_date >=", value: kendo.toString(obj.issued_date, "yyyy-MM-dd") }
-				]);
+					if(obj.isNew()){
+						self.set("referenceList", []);
+					}
+					$.each(view, function(index, value){
+						self.referenceList.push(value);
+					});
+				});
 			}else{
-				this.set("enableRef", false);
 				obj.set("references", []);
+				this.set("referenceList", []);
 			}
 		},
 		referenceSelect 	: function(e){
@@ -53594,7 +53682,7 @@
 		 		});
 
 		 		self.changes();
-		 	});			
+		 	});
 		},
 		//Recurring
 		loadRecurring 		: function(id){

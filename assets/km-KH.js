@@ -1328,7 +1328,10 @@ var	km_KH = {
 	"invoice_preview": "បង្ហាញ​វិក្កយបត្រ", 	
 	"save_pdf": "រក្សា​ជា PDF",
 
-
+	//Message
+	"success_message": "ប្រត្តិបត្តការណ៍ជោគជ័យ",
+	"error_message": "ប្រត្តិបត្តការណ៍បរាជ័យ",
+	"field_required_message": "ព័ត៌មានចាំបាច់",
 
 
 

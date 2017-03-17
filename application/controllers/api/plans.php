@@ -453,14 +453,14 @@ class Plans extends REST_Controller {
 		$array = array();
 
 		foreach($requestedData as $row) {
-			$usageCh = new Plan_item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			$usageCh->where('tariff_id', $row->tariff_id);
-			$usageCh->where('id !=', $row->id);
-			$usageCh->where('usage', $row->usage);
-			$usageCh->get();
-			if($usageCh->exists()) {
-				$this->response(array('results' => 'error', 'count' => ''), 400);
-			}else{
+			// $usageCh = new Plan_item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			// $usageCh->where('tariff_id', $row->tariff_id);
+			// $usageCh->where('id !=', $row->id);
+			// $usageCh->where('usage', $row->usage);
+			// $usageCh->get();
+			// if($usageCh->exists()) {
+			// 	$this->response(array('results' => 'error', 'count' => ''), 400);
+			// }else{
 				$table = new Plan_item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 				$table->where('id', $row->id)->get();
 				$table->currency_id = $row->currency;
@@ -498,7 +498,7 @@ class Plans extends REST_Controller {
 				} else {
 					$this->response(array('results' => $data, 'count' => count($data)), 200);
 				}
-			}
+			// }
 		}
 	}
 	function tariff_delete() {

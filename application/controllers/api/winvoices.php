@@ -230,17 +230,21 @@ class Winvoices extends REST_Controller {
 	   			$journal->account_id = $value->contact->account_id;
 	   			$journal->contact_id = $value->contact->id;
 	   			$journal->dr  		 = $obj->amount;
+	   			$journal->cr 		 = 0.00;
 	   			$journal->rate 		 = $obj->rate;
 	   			$journal->locale 	 = $obj->locale;
-
-	   			$journal->transaction_id = $obj->id;
-	   			$journal->account_id = $value->contact->ra_id;
-	   			$journal->contact_id = $value->contact->id;
-	   			$journal->cr 		 = $obj->amount;
-	   			$journal->rate 		 = $obj->rate;
-	   			$journal->locale 	 = $obj->locale;
-
 	   			$journal->save();
+
+	   			$journal2 = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+	   			$journal2->transaction_id = $obj->id;
+	   			$journal2->account_id = $value->contact->ra_id;
+	   			$journal2->contact_id = $value->contact->id;
+	   			$journal2->dr 		  = 0.00;
+	   			$journal2->cr 		  = $obj->amount;
+	   			$journal2->rate 	  = $obj->rate;
+	   			$journal2->locale 	  = $obj->locale;
+
+	   			$journal2->save();
 
 	   			$invoice_lines = [];
 		   		foreach ($value->invoice_lines as $row) {

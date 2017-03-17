@@ -11870,7 +11870,7 @@
 				this.set("meterUnit", false);
 			}
 		},
-		addContactType 		: function(){
+		addContactType 		: function(e){
         	var name = this.get("contactTypeName"), self = this;
         	if(name && this.get("contactTypeAbbr")){
 	        	this.contactTypeDS.add({
@@ -11883,20 +11883,27 @@
 	        	});
 	        	this.contactTypeDS.sync();
 	        	this.contactTypeDS.bind("requestEnd", function(e){
-					if(e.type != 'read') {
-						if(e.response){
-							$("#ntf1").data("kendoNotification").success("Successfully!");
-							self.set("contactTypeName", "");
-				        	self.set("contactTypeAbbr", "");
-				        	self.set("contactTypeCompany", 0);
-						}
+					if(e.type != 'read' && e.response){
+						var notificat = $("#ntf1").data("kendoNotification");
+						notificat.hide();
+						notificat.success(self.lang.lang.success_message);
+						self.set("contactTypeName", "");
+			        	self.set("contactTypeAbbr", "");
+			        	self.set("contactTypeCompany", 0);
 					}
 				});
+				this.contactTypeDS.bind("error", function(e){
+					var notificat = $("#ntf1").data("kendoNotification");
+					notificat.hide();
+					notificat.success(self.lang.lang.error_message);
+				});	
         	}else{
-        		alert("Fiels Required!");
+        		var notificat = $("#ntf1").data("kendoNotification");
+				notificat.hide();
+				notificat.success(self.lang.lang.field_required_message);
         	}
         },
-        addBloc 			: function(){
+        addBloc 			: function(e){
         	var branch = this.get("blockCompanyId"),
         	self = this;
         	if(branch && this.get("blocName") && this.get("blocAbbr")){
@@ -11908,24 +11915,31 @@
 	        	});
 	        	this.blocDS.sync();
 	        	this.blocDS.bind("requestEnd", function(e){
-					if(e.type != 'read') {
-						if(e.response){
-							$("#ntf1").data("kendoNotification").success("Successfully!");
-							self.set("blocName", "");
-				        	self.set("blocAbbr", "");
-				        	self.set("blockCompanyId", 0);
-						}
+					if(e.type != 'read' && e.response){
+						var notificat = $("#ntf1").data("kendoNotification");
+						notificat.hide();
+						notificat.success(self.lang.lang.success_message);
+						self.set("blocName", "");
+			        	self.set("blocAbbr", "");
+			        	self.set("blockCompanyId", 0);
 					}
 				});
+	        	this.blocDS.bind("error", function(e){
+	        		var notificat = $("#ntf1").data("kendoNotification");
+					notificat.hide();
+					notificat.success(self.lang.lang.error_message);
+	        	});
         	}else{
-        		alert("Fiels Required!");
+        		var notificat = $("#ntf1").data("kendoNotification");
+				notificat.hide();
+				notificat.success(self.lang.lang.field_required_message);
         	}
         },
         goExemption    		: function(){
         	this.planItemDS.data([]);
         	this.planItemDS.filter({field: "type", value: "exemption"});
         },
-        addEx 				: function(){
+        addEx 				: function(e){
         	var self = this;
         	if(this.get("exName") && this.get("exAccount") && this.get("exUnit") && this.get("exCurrency") && this.get("exPrice")){
 	        	this.planItemDS.add({
@@ -11941,19 +11955,26 @@
 	        	});
 	        	this.planItemDS.sync();
 	        	this.planItemDS.bind("requestEnd", function(e){
-					if(e.type != 'read') {
-						if(e.response){				
-							$("#ntf1").data("kendoNotification").success("Successfully!");
-							self.set("exName", "");
-				        	self.set("exAccount", "");
-				        	self.set("exPrice", "");
-				        	self.set("exUnit", "");
-				        	self.set("exCurrency", "");
-				        }
+					if(e.type != 'read'&& e.response){				
+						var notificat = $("#ntf1").data("kendoNotification");
+						notificat.hide();
+						notificat.success(self.lang.lang.success_message);
+						self.set("exName", "");
+			        	self.set("exAccount", "");
+			        	self.set("exPrice", "");
+			        	self.set("exUnit", "");
+			        	self.set("exCurrency", "");
 					}
 				});
+				this.planItemDS.bind("error", function(e){
+					var notificat = $("#ntf1").data("kendoNotification");
+					notificat.hide();
+					notificat.success(self.lang.lang.error_message);
+				});
 			}else{
-				alert("Fields Required!");
+				var notificat = $("#ntf1").data("kendoNotification");
+				notificat.hide();
+				notificat.success(self.lang.lang.field_required_message);
 			}
         },
         goTariff    		: function(){
@@ -11988,39 +12009,46 @@
 	        	});
 	        	this.tariffItemDS.sync();
 	        	this.tariffItemDS.bind("requestEnd", function(e){
-	        		if(e.type != 'read') {
-		        		if(e.response) {
-		        			$("#ntf1").data("kendoNotification").success("Successfully!");
-		        			self.set("tariffItemName", "");
-				        	self.set("tariffItemFlat", 0);
-				        	self.set("tariffItemUsage", "");
-				        	self.set("tariffItemAmount", "");
-				        	self.set("windowTariffItemVisible", false);
-				        	self.closeTariffWindowItem();
-				        	self.closeTariffWindowItem();
-				        	self.tariffItemDS.filter({field: "tariff_id", value: self.get('current').id});
-		        		}
+	        		console.log(e.type);
+	        		if(e.type != 'read' && e.response) {
+	        			var notificat = $("#ntf1").data("kendoNotification");
+						notificat.hide();
+						notificat.success(self.lang.lang.success_message);
+	        			self.set("tariffItemName", "");
+			        	self.set("tariffItemFlat", 0);
+			        	self.set("tariffItemUsage", "");
+			        	self.set("tariffItemAmount", "");
+			        	self.set("windowTariffItemVisible", false);
+			        	self.closeTariffWindowItem();
+			        	self.closeTariffWindowItem();
+			        	self.tariffItemDS.filter({field: "tariff_id", value: self.get('current').id});
 		        	}
 	        	});
 	        	this.tariffItemDS.bind("error", function(e){
-	        		alert("Usage is already exist!");
+	        		var notificat = $("#ntf1").data("kendoNotification");
+					notificat.hide();
+					notificat.success(self.lang.lang.error_message);
 	        	});
 	        }else{
-	        	alert("Fields Required!");
+	        	var notificat = $("#ntf1").data("kendoNotification");
+				notificat.hide();
+				notificat.success(self.lang.lang.field_required_message);
 	        }
         },
         updateTariffItem : function(e){
         	this.tariffItemDS.sync();
 	        	this.tariffItemDS.bind("requestEnd", function(e){
-	        		if(e.type != 'read') {
-		        		if(e.response) {
-		        			$("#ntf1").data("kendoNotification").success("Successfully!");
-				        	self.tariffItemDS.filter({field: "tariff_id", value: self.get('current').id});
-		        		}
+	        		if(e.type != 'read' && e.response) {
+		        		var notificat = $("#ntf1").data("kendoNotification");
+						notificat.hide();
+						notificat.success(self.lang.lang.success_message);
+				        self.tariffItemDS.filter({field: "tariff_id", value: self.get('current').id});
 		        	}
 	        	});
 	        	this.tariffItemDS.bind("error", function(e){
-	        		alert("Usage is already exist!");
+	        		var notificat = $("#ntf1").data("kendoNotification");
+					notificat.hide();
+					notificat.success(self.lang.lang.error_message);
 	        	});
         },
         addTariff 		: function(e){
@@ -12040,33 +12068,38 @@
 	        	});
 	        	this.planItemDS.sync();
 	        	this.planItemDS.bind("requestEnd", function(e){
-	        		if(e.type != 'read') {
-		        		if(e.response) {
-		        			$("#ntf1").data("kendoNotification").success("Successfully!");
-		        			self.set("tariffName", "");
-		        			self.set("tariffAccount", "");
-		        			self.set("tariffCurrency", "");
-		        			self.tariffItemDS.data([]);
-				        	self.tariffItemDS.add({
-				        		name 		: "Default Tariff Item",
-				        		type     	: "tariff",
-				        		tariff_id	: e.response.results[0].id,
-				        		account   	: 0,
-				        		is_flat   	: 0,
-				        		unit 		: null,
-				        		usage 		: 0,
-				        		amount 		: 0,
-				        		currency 	: e.response.results[0]._currency.id,
-				        		_currency   : []
-				        	});
-				        	self.tariffItemDS.sync();
-		        		}
+	        		if(e.type != 'read' && e.response) {
+	        			var notificat = $("#ntf1").data("kendoNotification");
+						notificat.hide();
+						notificat.success(self.lang.lang.success_message);
+	        			self.set("tariffName", "");
+	        			self.set("tariffAccount", "");
+	        			self.set("tariffCurrency", "");
+	        			self.tariffItemDS.data([]);
+			        	self.tariffItemDS.add({
+			        		name 		: "Default Tariff Item",
+			        		type     	: "tariff",
+			        		tariff_id	: e.response.results[0].id,
+			        		account   	: 0,
+			        		is_flat   	: 0,
+			        		unit 		: null,
+			        		usage 		: 0,
+			        		amount 		: 0,
+			        		currency 	: e.response.results[0]._currency.id,
+			        		_currency   : []
+			        	});
+			        	self.tariffItemDS.sync();
 	        		}
 	        	});
 	        	this.planItemDS.bind("error", function(e){
+	        		var notificat = $("#ntf1").data("kendoNotification");
+					notificat.hide();
+					notificat.success(self.lang.lang.error_message);
 	        	});
 	        }else{
-	        	alert("Fields Required!");
+	        	var notificat = $("#ntf1").data("kendoNotification");
+				notificat.hide();
+				notificat.success(self.lang.lang.field_required_message);
 	        }
         },
         closeTariffWindowItem 	: function(){
@@ -12099,18 +12132,25 @@
 	        	});
 	        	this.planItemDS.sync();
 	        	this.planItemDS.bind("requestEnd", function(e){
-	        		if(e.type != 'read') {
-		        		if(e.response) {
-		        			$("#ntf1").data("kendoNotification").success("Successfully!");
-				        	self.set("depositName", "");
-				        	self.set("depositPrice", "");
-				        	self.set("depositCurrency", "");
-				        	self.set("depositAccount", "");
-				        }
+	        		if(e.type != 'read' && e.response) {
+	        			var notificat = $("#ntf1").data("kendoNotification");
+						notificat.hide();
+						notificat.success(self.lang.lang.success_message);
+			        	self.set("depositName", "");
+			        	self.set("depositPrice", "");
+			        	self.set("depositCurrency", "");
+			        	self.set("depositAccount", "");
 				    }
 				});
+				this.planItemDS.bind("error", function(e){
+					var notificat = $("#ntf1").data("kendoNotification");
+					notificat.hide();
+					notificat.success(self.lang.lang.error_message);
+				});
 			}else{
-				alert("Fields Required!");
+				var notificat = $("#ntf1").data("kendoNotification");
+				notificat.hide();
+				notificat.success(self.lang.lang.field_required_message);
 			}
         },
         goService    		: function(){
@@ -12133,18 +12173,25 @@
 	        	});
 	        	this.planItemDS.sync();
 	        	this.planItemDS.bind("requestEnd", function(e){
-	        		if(e.type != 'read') {
-		        		if(e.response) {
-		        			$("#ntf1").data("kendoNotification").success("Successfully!");
-				        	self.set("serviceName", "");
-				        	self.set("servicePrice", "");
-				        	self.set("serviceCurrency","");
-				        	self.set("serviceAccount", "");
-				       	}
+	        		if(e.type != 'read' && e.response) {
+	        			var notificat = $("#ntf1").data("kendoNotification");
+						notificat.hide();
+						notificat.success(self.lang.lang.success_message);
+			        	self.set("serviceName", "");
+			        	self.set("servicePrice", "");
+			        	self.set("serviceCurrency","");
+			        	self.set("serviceAccount", "");
 				    }
 				});
+				this.planItemDS.bind("error", function(e){
+					var notificat = $("#ntf1").data("kendoNotification");
+					notificat.hide();
+					notificat.success(self.lang.lang.error_message);
+				});
 			}else{
-				alert("Fields Required!");
+				var notificat = $("#ntf1").data("kendoNotification");
+				notificat.hide();
+				notificat.success(self.lang.lang.field_required_message);
 			}
         },
         goMaintenance    		: function(){
@@ -12167,18 +12214,25 @@
 	        	});
 	        	this.planItemDS.sync();
 	        	this.planItemDS.bind("requestEnd", function(e){
-	        		if(e.type != 'read') {
-		        		if(e.response) {
-		        			$("#ntf1").data("kendoNotification").success("Successfully!");
-				        	self.set("maintenanceName", "");
-				        	self.set("maintenancePrice", "");
-				        	self.set("maintenanceAccount", "");
-				        	self.set("maintenanceCurrency","");
-				       	}
+	        		if(e.type != 'read' && e.response) {
+	        			var notificat = $("#ntf1").data("kendoNotification");
+						notificat.hide();
+						notificat.success(self.lang.lang.success_message);
+			        	self.set("maintenanceName", "");
+			        	self.set("maintenancePrice", "");
+			        	self.set("maintenanceAccount", "");
+			        	self.set("maintenanceCurrency","");
 				    }
 				});
+				this.planItemDS.bind("error", function(e){
+					var notificat = $("#ntf1").data("kendoNotification");
+					notificat.hide();
+					notificat.success(self.lang.lang.error_message);
+				});
 			}else{
-				alert("Fields Required!");
+				var notificat = $("#ntf1").data("kendoNotification");
+				notificat.hide();
+				notificat.success(self.lang.lang.field_required_message);
 			}
         },
         goPlan 				: function(){
@@ -12215,17 +12269,19 @@
 	        	});
 	        	this.brandDS.sync();	        	    			
 	        	this.brandDS.bind("requestEnd", function(e){
-	        		if(e.type != 'read') {
-		        		if(e.response) {
-		        			$("#ntf1").data("kendoNotification").success("Successfully!");
-			    			self.set("brandCode", "");
-			    			self.set("brandName", "");
-			    			self.set("brandAbbr", "");	
-			    		}
+	        		if(e.type != 'read' && e.response) {
+	        			var notificat = $("#ntf1").data("kendoNotification");
+						notificat.hide();
+						notificat.success(self.lang.lang.success_message);
+		    			self.set("brandCode", "");
+		    			self.set("brandName", "");
+		    			self.set("brandAbbr", "");	
 			    	}
 			    });
         	}else{
-        		alert("Fields Required!");
+        		var notificat = $("#ntf1").data("kendoNotification");
+				notificat.hide();
+				notificat.success(self.lang.lang.field_required_message);
         	}
         },
 		pageLoad 			: function(){
