@@ -20923,7 +20923,7 @@
 			var allowed = false;
 			if(banhji.accessMod.data().length > 0) {
 				for(var i = 0; i < banhji.accessMod.data().length; i++) {
-					if("water" == banhji.accessMod.data()[i].name.toLowerCase()) {
+					if("utility" == banhji.accessMod.data()[i].name.toLowerCase()) {
 						allowed = true;
 						break;
 					}

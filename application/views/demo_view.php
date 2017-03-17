@@ -4250,8 +4250,7 @@
 														   data-value-field="id"
 														   data-bind="value: obj.references, 
 														   			source: referenceDS,
-														   			enabled: enableRef,
-														   			events:{ select: referenceSelect }"
+														   			enabled: enableRef"
 														   data-placeholder="Add Reference.."
 														   style="width: 100%" /></select>
 												</td>
@@ -50730,7 +50729,7 @@
 			  	{ field: "code", dir: "asc" }
 			]
 		}),
-		taxItemDS 		: new kendo.data.DataSource({
+		taxItemDS 			: new kendo.data.DataSource({
 		  	data: banhji.source.taxList,
 		  	filter:{
 			    logic: "or",
@@ -51484,6 +51483,7 @@
 			this.depositDS.data([]);
 			this.journalLineDS.data([]);
 			this.attachmentDS.data([]);
+			this.referenceDS.data([]);
 
 			this.set("isEdit", false);
 			this.set("obj", null);
@@ -51690,6 +51690,8 @@
 			this.lineDS.data([]);
 			this.assemblyLineDS.data([]);
 			this.attachmentDS.data([]);
+
+			this.referenceDS.data([]);
 
 			banhji.userManagement.removeMultiTask("cash_sale");
 		},
@@ -53002,6 +53004,7 @@
 			this.depositDS.data([]);
 			this.journalLineDS.data([]);
 			this.attachmentDS.data([]);
+			this.referenceDS.data([]);
 
 			this.set("isEdit", false);
 			this.set("obj", null);
@@ -53211,11 +53214,13 @@
 			this.assemblyLineDS.data([]);
 			this.attachmentDS.data([]);
 
+			this.referenceDS.data([]);
+
 			banhji.userManagement.removeMultiTask("invoice");
 		},
 		cancel 				: function(){
 			this.clear();
-			history.back();
+			window.history.back();
 		},
 		delete 				: function(){
 			var self = this, obj = this.get("obj");
