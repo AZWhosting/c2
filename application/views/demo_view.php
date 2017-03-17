@@ -4250,7 +4250,8 @@
 														   data-value-field="id"
 														   data-bind="value: obj.references, 
 														   			source: referenceDS,
-														   			enabled: enableRef"
+														   			enabled: enableRef,
+														   			events:{ select: referenceSelect }"
 														   data-placeholder="Add Reference.."
 														   style="width: 100%" /></select>
 												</td>
