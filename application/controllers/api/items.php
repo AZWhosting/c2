@@ -7,6 +7,7 @@ class Items extends REST_Controller {
 	public $server_host;
 	public $server_user;
 	public $server_pwd;
+	public $noImageUrl = "https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/no_image.jpg";
 	//CONSTRUCTOR
 	function __construct() {
 		parent::__construct();
@@ -31,7 +32,7 @@ class Items extends REST_Controller {
 		$data["results"] = [];
 		$data["count"] = 0;
 		$is_pattern = 0;
-
+		
 		$obj = new Item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
 
 		//Sort
@@ -145,7 +146,7 @@ class Items extends REST_Controller {
 				   	"expense_account_id"		=> $value->expense_account_id,
 				   	"inventory_account_id"		=> $value->inventory_account_id,   				   	
 				   	"preferred_vendor_id" 		=> $value->preferred_vendor_id,
-				   	"image_url" 				=> $value->image_url,
+				   	"image_url" 				=> $value->image_url!="" ? $value->image_url : $this->noImageUrl,
 				   	"favorite" 					=> $value->favorite=="true"?true:false,
 				   	"is_catalog" 				=> $value->is_catalog,
 				   	"is_assembly" 				=> $value->is_assembly,
@@ -254,7 +255,7 @@ class Items extends REST_Controller {
 				   	"expense_account_id"		=> $obj->expense_account_id,
 				   	"inventory_account_id"		=> $obj->inventory_account_id,
 				   	"preferred_vendor_id" 		=> $obj->preferred_vendor_id,
-				   	"image_url" 				=> $obj->image_url,
+				   	"image_url" 				=> $obj->image_url!="" ? $obj->image_url : $this->noImageUrl,
 				   	"favorite" 					=> $obj->favorite=="true"?true:false,
 				   	"is_catalog" 				=> $obj->is_catalog,
 				   	"is_assembly" 				=> $obj->is_assembly,
@@ -362,7 +363,7 @@ class Items extends REST_Controller {
 				   	"expense_account_id"		=> $obj->expense_account_id,
 				   	"inventory_account_id"		=> $obj->inventory_account_id,
 				   	"preferred_vendor_id" 		=> $obj->preferred_vendor_id,
-				   	"image_url" 				=> $obj->image_url,
+				   	"image_url" 				=> $obj->image_url!="" ? $obj->image_url : $this->noImageUrl,
 				   	"favorite" 					=> $obj->favorite=="true"?true:false,
 				   	"is_catalog" 				=> $obj->is_catalog,
 				   	"is_assembly" 				=> $obj->is_assembly,

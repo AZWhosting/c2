@@ -18648,40 +18648,57 @@
 							            	
 											<div class="row-fluid">
 							            		<div class="accounCetner-textedit">
-									            	<table width="100%">
-														<tr>
-															<td width="40%"><span data-bind="text: lang.lang.categories"></span>:</td>
-															<td width="60%">
-																<span class="strong" data-bind="text: obj.category"></span>
-															</td>
-														</tr>
-														<tr>
-															<td><span data-bind="text: lang.lang.weighted_avg_cost"></span></td>
-															<td>
-																<span class="strong" data-format="n" data-bind="text: obj.cost"></span>
-															</td>
-														</tr>
-														<tr>
-															<td><span data-bind="text: lang.lang.average_price"></span></td>
-															<td>
-																<span class="strong" data-format="n" data-bind="text: obj.price"></span>
-															</td>
-														</tr>
-														<tr>
-															<td><span data-bind="text: lang.lang.uom"></span></td>
-															<td>
-																<span data-bind="text: uom"></span>
-															</td>
-														</tr>
-														<tr>
-															<td><span data-bind="text: lang.lang.currency"></span></td>
-															<td>										
-																<span data-bind="text: currencyCode"></span>
-															</td>
-														</tr>
-													</table>
-
-													<span class="btn btn-primary btn-icon glyphicons edit pull-right" data-bind="click: edit"><i></i><span data-bind="text: lang.lang.view_all_info_edit"></span></span>
+								            		<div class="row-fluid">
+								            			<div class="span6" style="padding: 0 15px 0 0;">
+								            				<img class="main-image" data-bind="attr: { src: obj.image_url, alt: obj.name, title: obj.name }" style="border: 1px solid #ddd; height: auto !important;">
+								            			</div>
+								            			<div class="span6">
+								            				<table width="100%">
+																<!-- <tr>
+																	<td width="40%"><span data-bind="text: lang.lang.categories"></span>:</td>
+																	<td width="60%">
+																		<span class="strong" data-bind="text: obj.category"></span>
+																	</td>
+																</tr> -->
+																<tr>
+																	<td colspan="2">
+																		<span data-bind="text: lang.lang.weighted_avg_cost"></span>
+																	</td>
+																</tr>
+																<tr>
+																	<td colspan="2">
+																		<span class="strong" data-format="n" data-bind="text: obj.cost"></span>
+																	</td>
+																</tr>
+																<tr>
+																	<td colspan="2">
+																		<span data-bind="text: lang.lang.average_price"></span>
+																	</td>
+																</tr>
+																<tr>
+																	<td colspan="2">
+																		<span class="strong" data-format="n" data-bind="text: obj.price"></span>
+																	</td>
+																</tr>
+																<tr>
+																	<td >
+																		<span data-bind="text: lang.lang.uom"></span>
+																	</td>
+																	<td>
+																		<span data-bind="text: uom"></span>
+																	</td>
+																</tr>
+																<!-- <tr>
+																	<td><span data-bind="text: lang.lang.currency"></span></td>
+																	<td>										
+																		<span data-bind="text: currencyCode"></span>
+																	</td>
+																</tr> -->
+															</table>
+															<span style="margin-top: 10px; width: 204px !important; text-align: center;" class="btn btn-primary btn-icon glyphicons edit pull-right" data-bind="click: edit"><i></i><span style="font-size: 12.5px;" data-bind="text: lang.lang.view_all_info_edit"></span></span>
+								            			</div>
+								            		</div>
+													
 												</div>
 											</div>
 											
