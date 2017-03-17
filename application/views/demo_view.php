@@ -46159,25 +46159,27 @@
 		selectItemMessage 			: "Please select an item.",
 		duplicateSelectedItemMessage: "You already selected this item.",
 		pageLoad 					: function(){
+			this.loadAccounts();
+			this.accountTypeDS.read();
+			this.loadTaxes();
+			this.loadJobs();
+			this.loadSegmentItems();
 			this.loadCurrencies();
 			this.loadRates();
 			this.loadPrefixes();
 			this.loadTxnTemplates();
-			this.loadTaxes();
-			this.loadJobs();
-			this.loadSegmentItems();
-			this.loadAccounts();
+
 			this.loadCategories();
 			this.loadItemGroups();
 			this.loadItems();
 			this.itemTypeDS.read();
 			this.loadItemPrices();
 			this.loadMeasurements();
+
 			this.loadContactTypes();
 			this.loadCustomers();
 			this.loadSuppliers();
 			this.loadEmployees();
-			this.accountTypeDS.read();
 		},
 		getFiscalDate 				: function(){
 			var today = new Date(),	
@@ -79004,15 +79006,11 @@
 		recurringDS 		: dataStore(apiUrl + "transactions"),
 		recurringLineDS 	: dataStore(apiUrl + "journal_lines"),
 		attachmentDS	 	: dataStore(apiUrl + "attachments"),
-		currencyDS  			: new kendo.data.DataSource({
+		contactDS 			: dataStore(apiUrl + "contacts"),
+		currencyDS  		: new kendo.data.DataSource({
 		  	data: banhji.source.currencyList,
 		  	filter: { field:"status", value: 1 }
-		}),
-		contactDS 			: new kendo.data.DataSource({
-		  	data: banhji.source.customerList,
-		  	filter:{ field:"status", value:1 },
-		  	sort: { field: "number", dir: "asc" }
-		}),
+		}),		
 		jobDS 				: new kendo.data.DataSource({
 		  	data: banhji.source.jobList,
 		  	sort: { field: "name", dir: "asc" }
