@@ -47268,11 +47268,13 @@
         	
 	        	//Dates
 	        	if(start && end){
+	        		end.setDate(end.getDate()+1);
 	            	para.push({ field:"issued_date >=", value: start });
 	            	para.push({ field:"issued_date <=", value: end });
 	            }else if(start){
 	            	para.push({ field:"issued_date", value: start });
 	            }else if(end){
+	            	end.setDate(end.getDate()+1);
 	            	para.push({ field:"issued_date <=", value: end });
 	            }else{
 	            	
@@ -51437,7 +51439,6 @@
 
 	    	//Total
 	        total = subTotal + tax;
-	        amount_due = total - obj.deposit;
 
 	        //Apply Deposit
 	        if(obj.deposit>0){
@@ -51468,6 +51469,8 @@
 	        }else{
 	        	this.set("amtDueColor", banhji.source.amtDueColor);
 	        }
+
+	        amount_due = total - obj.deposit;
 
 	        obj.set("sub_total", subTotal);
 	        obj.set("discount", discount);
@@ -52083,6 +52086,12 @@
 				deposit = kendo.parseFloat(data.deposit) + kendo.parseFloat(obj.deposit);
 
 			obj.set("deposit", deposit);
+
+			//Remove empty line
+			var firstLine = this.lineDS.at(0);
+			if(this.lineDS.total()==1 && firstLine.item_id==0){
+				this.lineDS.data([]);
+			}
 
 		 	this.referenceLineDS.query({
 		 		filter: { field:"transaction_id", value: data.id }
@@ -53009,7 +53018,6 @@
 
 	    	//Total
 	        total = subTotal + tax;
-	        amount_due = total - obj.deposit;
 
 	        //Apply Deposit
 	        if(obj.deposit>0){
@@ -53040,6 +53048,8 @@
 	        }else{
 	        	this.set("amtDueColor", banhji.source.amtDueColor);
 	        }
+
+	        amount_due = total - obj.deposit;
 
 	        obj.set("sub_total", subTotal);
 	        obj.set("discount", discount);
@@ -53656,6 +53666,12 @@
 				deposit = kendo.parseFloat(data.deposit) + kendo.parseFloat(obj.deposit);
 
 			obj.set("deposit", deposit);
+
+			//Remove empty line
+			var firstLine = this.lineDS.at(0);
+			if(this.lineDS.total()==1 && firstLine.item_id==0){
+				this.lineDS.data([]);
+			}
 
 		 	this.referenceLineDS.query({
 		 		filter: { field:"transaction_id", value: data.id }
@@ -61688,11 +61704,13 @@
 
 	        	//Dates
 	        	if(start && end){
+	        		end.setDate(end.getDate()+1);
 	            	para.push({ field:"issued_date >=", value: start });
 	            	para.push({ field:"issued_date <=", value: end });
 	            }else if(start){
 	            	para.push({ field:"issued_date", value: start });
 	            }else if(end){
+	            	end.setDate(end.getDate()+1);
 	            	para.push({ field:"issued_date <=", value: end });
 	            }else{
 	            	
@@ -64695,6 +64713,10 @@
 		recurringAdditionalCostDS 	: dataStore(apiUrl + "transactions"),
 		referenceDS					: dataStore(apiUrl + "transactions"),
 		referenceLineDS				: dataStore(apiUrl + "item_lines"),
+		attachmentDS	 			: dataStore(apiUrl + "attachments"),
+		depositDS  					: dataStore(apiUrl + "transactions"),
+		paymentTermDS 				: banhji.source.paymentTermDS,
+		paymentMethodDS 			: banhji.source.paymentMethodDS,
 		contactDS  					: new kendo.data.DataSource({
 		  	data: banhji.source.supplierList,
 		  	filter:{ field:"status", value:1 },
@@ -64764,7 +64786,6 @@
 			    ]
 			}
 		}),
-		depositDS  					: dataStore(apiUrl + "transactions"),
 		depositSumDS  				: new kendo.data.DataSource({
 			transport: {
 				read 	: {
@@ -64815,9 +64836,6 @@
 			  	{ field: "name", dir: "asc" }
 			]
 		}),
-		paymentTermDS 				: banhji.source.paymentTermDS,
-		paymentMethodDS 			: banhji.source.paymentMethodDS,
-		attachmentDS	 			: dataStore(apiUrl + "attachments"),
 		referenceTypes 				: [
 			{ id:"Purchase_Order", name:"Purchase Order" },
 			{ id:"GRN", name:"Goods Received Note" }
@@ -65639,7 +65657,6 @@
 
 	    	//Total
 	        total = subTotal + tax;
-	        amount_due = total - obj.deposit;
 
 	        //Apply Deposit
 	        if(obj.deposit>0){
@@ -65670,6 +65687,8 @@
 	        }else{
 	        	this.set("amtDueColor", banhji.source.amtDueColor);
 	        }
+
+	        amount_due = total - obj.deposit;
 
 	        obj.set("sub_total", subTotal);
 	        obj.set("discount", discount);
@@ -72775,11 +72794,13 @@
         	
 	        	//Dates
 	        	if(start && end){
+	        		end.setDate(end.getDate()+1);
 	            	para.push({ field:"issued_date >=", operator: "where_related_transaction", value: start });
 	            	para.push({ field:"issued_date <=", operator: "where_related_transaction", value: end });            	            	
 	            }else if(start){
 	            	para.push({ field:"issued_date", operator: "where_related_transaction", value: start });
 	            }else if(end){
+	            	end.setDate(end.getDate()+1);
 	            	para.push({ field:"issued_date <=", operator: "where_related_transaction", value: end });
 	            }else{
 	            	
@@ -78194,11 +78215,13 @@
 
         	//Dates
         	if(start && end){
+        		end.setDate(end.getDate()+1);
             	para.push({ field:"issued_date >=", operator:"where_related_transaction", value: start });
             	para.push({ field:"issued_date <=", operator:"where_related_transaction", value: end });            	            	
             }else if(start){
             	para.push({ field:"issued_date", operator:"where_related_transaction", value: start });
             }else if(end){
+            	end.setDate(end.getDate()+1);
             	para.push({ field:"issued_date <=", operator:"where_related_transaction", value: end });
             }else{
             	

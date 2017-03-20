@@ -1332,6 +1332,8 @@ var	km_KH = {
 	"success_message": "ប្រត្តិបត្តការណ៍ជោគជ័យ",
 	"error_message": "ប្រត្តិបត្តការណ៍បរាជ័យ",
 	"field_required_message": "ព័ត៌មានចាំបាច់",
+	"add_pole": "បន្ថែមបង្គោល",
+	"bloc_name": "ប្លុកឈ្មោះ",
 
 
 

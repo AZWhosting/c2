@@ -1358,7 +1358,8 @@ var	en_US = {
 	"success_message": "Successfull!",
 	"error_message": "Error!",
 	"field_required_message": "Field Required!",
-
+	"add_pole": "Add Pole",
+	"bloc_name": "Bloc Name",
 
 
 
