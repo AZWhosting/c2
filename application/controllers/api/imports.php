@@ -588,10 +588,14 @@ class Imports extends REST_Controller {
 			$depreciation = 0;
 
 			$income = new Account(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			$income->where('number', $value->income_account)->get();
+			if(isset($value->income_account)) {
+				$income->where('number', $value->income_account)->get();
+			}			
 
 			$expense = new Account(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			$expense->where('number', $value->cogs_account)->get();
+			if(isset($value->cogs_account)) {
+				$expense->where('number', $value->cogs_account)->get();
+			}			
 
 			$inventory = new Account(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$inventory->where('number', $value->inventory_account)->get();
@@ -608,13 +612,18 @@ class Imports extends REST_Controller {
 			$group = new Item_group(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$group->where('name', $value->group)->get();
 
+			$currency = new Currency(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			if(isset($value->currency)) {
+				$currency->where('code', $value->currency)->get();
+			}			
+
 
 			isset($value->company_id) 				? $obj->company_id 				= $value->company_id : 0;
 			isset($value->contact_id) 				? $obj->contact_id 				= $value->contact_id : 0;
 			$obj->currency_id 						= $this->currency;
 			isset($value->type) 					? $obj->item_type_id			= $type->id : 1;
 			isset($value->category) 				? $obj->category_id 			= $cat->id : 1;
-			isset($value->group) 					? $obj->item_group_id 			= $group->id : 0;
+			$obj->item_group_id = isset($value->group) 	? $group->id : 0;
 			isset($value->item_sub_group_id) 		? $obj->item_sub_group_id 		= $value->item_sub_group_id : 0;
 			isset($value->brand_id) 				? $obj->brand_id 				= $value->brand_id : "";
 			isset($value->measurement) 				? $obj->measurement_id 			= $uom->id : 1;
@@ -634,13 +643,13 @@ class Imports extends REST_Controller {
 		   	isset($value->price) 					? $obj->price 					= $value->price : "";
 		   	isset($value->amount) 					? $obj->amount 					= $value->amount : "";
 		   	isset($value->rate) 					? $obj->rate 					= $value->rate : "";
-		   	$obj->locale 							= $this->locale;
+		   	$obj->locale 							= isset($value->currency) ? 	$currency->locale : $this->locale;
 		   	isset($value->on_hand) 					? $obj->on_hand 				= $value->on_hand : "";
 		   	isset($value->on_po) 					? $obj->on_po 					= $value->on_po : "";
 		   	isset($value->on_so) 					? $obj->on_so 					= $value->on_so : "";
 		   	isset($value->order_point) 				? $obj->order_point 			= $value->order_point : "";
-		   	isset($value->income_account) 			? $obj->income_account_id 		= $income->id : "";
-		   	isset($value->cogs_account) 			? $obj->expense_account_id 		= $expense->id : "";
+		   	$obj->income_account_id 		 		= isset($value->income_account) ? $income->id : 0;
+		   	$obj->expense_account_id 		  		= isset($value->cogs_account) ? $expense->id : 0;
 		   	isset($value->inventory_account) 		? $obj->inventory_account_id 	= $inventory->id : "";
 		   	isset($value->preferred_vendor_id) 		? $obj->preferred_vendor_id 	= $value->preferred_vendor_id : "";
 		   	$obj->image_url							= isset($value->image_url) 				? $value->image_url : "https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/no_image.jpg";

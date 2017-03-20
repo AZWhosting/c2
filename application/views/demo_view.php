@@ -4187,6 +4187,8 @@
 							            </li>
 							            <li class="span1 glyphicons history"><a href="#tab-5" data-toggle="tab"><i></i></a>
 							            </li>
+							            <li class="span1 glyphicons link"><a href="#tab-6" data-toggle="tab"><i></i></a>
+							            </li>
 							            <!-- <li class="span1 glyphicons show_liness"><a href="#tab6-6" data-toggle="tab"><i></i></a></li> -->
 							        </ul>
 							    </div>
@@ -4453,6 +4455,11 @@
 							            
 							        </div>
 							        <!-- // Recuring END -->
+
+							        <!-- References -->
+							        <div class="tab-pane" id="tab-6">
+
+							        </div>
 
 							        <div class="tab-pane saleSummaryCustomer" id="tab5-6">
 										<table class="table table-borderless table-condensed">
@@ -51669,7 +51676,7 @@
 
 	    			$.each(view, function(index, value){
 	    				$.each(obj.references, function(ind, val){
-		    				if(val == value.id){
+		    				if(kendo.parseInt(val)==value.id){
 								value.set("status", 1);
 							}else{
 								value.set("status", 0);
@@ -52258,6 +52265,7 @@
 		recurringDS 		: dataStore(apiUrl + "transactions"),
 		recurringLineDS 	: dataStore(apiUrl + "item_lines"),
 		referenceDS			: dataStore(apiUrl + "transactions"),
+		referenceDS1			: dataStore(apiUrl + "transactions"),
 		referenceLineDS		: dataStore(apiUrl + "item_lines"),
 		depositDS  			: dataStore(apiUrl + "transactions"),
 		assemblyDS			: dataStore(apiUrl + "item_prices"),
@@ -53244,25 +53252,39 @@
 	    			referenceIds.push(value.id);
 	    		});
 
-	    		this.referenceDS.query({
+	    		this.referenceDS1.query({
 	    			filter:{ field:"id", operator:"where_in", value:referenceIds }
 	    		}).then(function(){
-	    			var view = self.referenceDS.view();
+	    			var view = self.referenceDS1.data();
+
+	    		// 	for (var i = 0; i < view.length; i++) {
+	    		// 		for (var j = 0; j < obj.references.length; j++) {
+	    		// 			console.log(view[i].id + "__" + obj.references[j]);
+	    		// 			if(kendo.parseInt(obj.references[j])==view[i].id){
+							// 	view[i].set("status", 1);	
+							// 	console.log(view[i].id);					
+							// }else{
+							// 	view[i].set("status", 0);
+							// }
+	    		// 		}
+	    		// 	}
 
 	    			$.each(view, function(index, value){
 	    				$.each(obj.references, function(ind, val){
-		    				if(val == value.id){
+		    				if(kendo.parseInt(val)==value.id){
 								value.set("status", 1);
+								console.log(val+" - "+value.status);
 							}else{
 								value.set("status", 0);
+								console.log(value.status);
 							}
 						});
 	    			});
-
+	    			
 	    			self.referenceDS.sync();
 	    		});
 			}
-	    	
+	    	console.log(banhji.invoice.referenceDS1.data());
 			//Save Obj
 			this.objSync()
 			.then(function(data){ //Success

@@ -155,7 +155,7 @@ class Transactions extends REST_Controller {
 					"day" 						=> $value->day,
 					"week" 						=> $value->week,
 					"month" 					=> $value->month,
-				   	"status" 					=> $value->status,
+				   	"status" 					=> intval($value->status),
 				   	"is_recurring" 				=> floatval($value->is_recurring),
 				   	"is_journal" 				=> $value->is_journal,
 				   	"print_count" 				=> $value->print_count,

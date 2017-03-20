@@ -1334,6 +1334,10 @@ var	km_KH = {
 	"field_required_message": "ព័ត៌មានចាំបាច់",
 	"add_pole": "បន្ថែមបង្គោល",
 	"bloc_name": "ប្លុកឈ្មោះ",
+	"please_load_file": "សូមពិនិត្យទិន្នន័យម្តងទៀត",
+	"money": "លុយ",
+	"tariff_name": "ឈ្មោះតម្លៃ",
+	"plan_name": "ឈ្មោះតារាងតម្លៃ",
 
 
 

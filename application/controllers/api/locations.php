@@ -131,7 +131,7 @@ class Locations extends REST_Controller {
 		}
 		$data["count"] = count($data["results"]);
 
-		$this->response($data, 200);
+		$this->response($data, 201);
 	}
 	
 	//DELETE

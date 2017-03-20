@@ -381,8 +381,8 @@
 		                   data-bind="value: blockCompanyId,
 		                              source: licenseDS,
 		                              events: {change: onLicenseChange}"/>
-		            	<input data-bind="value: blocName" type="text" placeholder="Location" style="height: 32px; padding: 5px; margin-right: 10px; margin-left: 10px;"  class="span3 k-textbox k-invalid" />
-		            	<input data-bind="value: blocAbbr" type="text" placeholder="Abbr" style="height: 32px; padding: 5px; margin-right: 10px;" class="span3 k-textbox k-invalid" />
+		            	<input data-bind="value: blocName, attr: {placeholder: lang.lang.bloc}" type="text" placeholder="Location" style="height: 32px; padding: 5px; margin-right: 10px; margin-left: 10px;"  class="span3 k-textbox k-invalid" />
+		            	<input data-bind="value: blocAbbr, attr: {placeholder: lang.lang.abbr}" type="text" placeholder="Abbr" style="height: 32px; padding: 5px; margin-right: 10px;" class="span3 k-textbox k-invalid" />
 		            	<a class="btn-icon btn-primary glyphicons circle_plus cutype-icon" style="width: 80px; padding: 5px 7px 5px 35px !important; text-align: left;" data-bind="click: addBloc"><i></i><span data-bind="text: lang.lang.add">Add</span></a>
 		            </div>
 	            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
@@ -397,7 +397,7 @@
 	            		<tbody data-role="listview"		
 			                data-template="blocSetting-template"
 			                data-edit-template="bloc-edit-template"
-			                data-auto-bind="true"
+			                data-auto-bind="false"
 			                data-bind="source: blocDS"></tbody>
 	            	</table>
 
@@ -416,34 +416,39 @@
 				                data-edit-template="pole-edit-template"
 				                data-bind="source: poleDS"></tbody>
 	            	</table>
-	            	<div style="display: none;">
-		            	<!-- Tariff Item Window -->
-			            <div id="addPole">
-		            		<table>
-								<tr style="border-bottom: 8px solid #fff;">
-									<td width="35%"><span data-bind="text: lang.lang.name"></span></td>
-									<td>
-										<input class="k-textbox" placeholder="Name ..." data-bind="attr: {placeholder: lang.lang.name}, value: poleName" style="width: 100%;">
-									</td>
-								</tr>
-							</table>
+	            	<!-- Tariff Item Window -->
+		            <div id="addPole"
+		            	data-role="window"
+			                 data-width="250"
+			                 data-height="120"
+			                 data-actions="{}"
+			                 data-resizable="false"
+			                 data-position="{top: '30%', left: '37%'}"		                 
+			                 data-bind="visible: poleVisible">
+	            		<table>
+							<tr style="border-bottom: 8px solid #fff;">
+								<td width="35%"><span data-bind="text: lang.lang.name"></span></td>
+								<td>
+									<input class="k-textbox" placeholder="Name ..." data-bind="attr: {placeholder: lang.lang.name}, value: poleName" style="width: 100%;">
+								</td>
+							</tr>
+						</table>
 
-							<br>
-							<div style="text-align: center;">
-								<span style="margin-bottom: 0;" class="btn btn-success btn-icon glyphicons ok_2" data-bind="click: savePole"><i></i><span data-bind="text: lang.lang.save"></span></span>
+						<br>
+						<div style="text-align: center;">
+							<span style="margin-bottom: 0;" class="btn btn-success btn-icon glyphicons ok_2" data-bind="click: savePole"><i></i><span data-bind="text: lang.lang.save"></span></span>
 
-								<span class="btn btn-danger btn-icon glyphicons remove_2" data-bind="click: closePoleWin"><i></i><span data-bind="text: lang.lang.close"></span></span>  
-							</div>
+							<span class="btn btn-danger btn-icon glyphicons remove_2" data-bind="click: closePoleWin"><i></i><span data-bind="text: lang.lang.close"></span></span>  
 						</div>
 					</div>
 	            </div>
 	            <div class="tab-pane" id="tab3">
 	            	<div style="clear: both;">
-		            	<input type="text" class="span3 k-textbox k-invalid" style="height: 32px; padding: 5px; margin-right: 10px;" data-bind="value: contactTypeName" placeholder="Type" />
-		            	<input type="text" placeholder="Abbr" data-bind="value: contactTypeAbbr" style="height: 32px; padding: 5px; margin-right: 10px;"  class="span3 k-textbox k-invalid" />
+		            	<input type="text" class="span3 k-textbox k-invalid" style="height: 32px; padding: 5px; margin-right: 10px;" data-bind="value: contactTypeName, attr: {placeholder: lang.lang.type}" placeholder="Type" />
+		            	<input type="text" placeholder="Abbr" data-bind="value: contactTypeAbbr, attr: {placeholder: lang.lang.abbr}" style="height: 32px; padding: 5px; margin-right: 10px;"  class="span3 k-textbox k-invalid" />
 		            	<select class="span3" style="height: 32px; border-radius: 0; background: #fff;" id="appendedInputButtons" data-bind="value: contactTypeCompany" >
-			                <option value="0"><span data-bind="text: lang.lang.not_a_company">Not A Company</span></option>
-			                <option value="1"><span data-bind="text: lang.lang.it_is_a_company">It is A Company</span></option>           
+			                <option value="0" data-bind="text: lang.lang.not_a_company">Not A Company</option>
+			                <option value="1" data-bind="text: lang.lang.it_is_a_company">It is A Company</option>           
 			            </select>
 		            	<a class="btn-icon btn-primary glyphicons circle_plus cutype-icon" style="width: 80px; padding: 5px 7px 5px 35px !important; text-align: left;" data-bind="click: addContactType"><i></i><span data-bind="text: lang.lang.add">Add</span></a>
 		            </div>
@@ -452,7 +457,7 @@
 	            			<tr>
 	            				<th class="center"><span data-bind="text: lang.lang.type">Type</span></th>
 	            				<th class="center"><span data-bind="text: lang.lang.abbr">Abbr</span></th>
-	            				<th class="center"><span data-bind="text: lang.lang.other">Other</span></th>
+	            				<th class="center"><span data-bind="text: lang.lang.is_company">Is Company</span></th>
 	            				<th class="center"><span data-bind="text: lang.lang.action">Action</span></th>
 	            			</tr>
 	            		</thead>
@@ -464,7 +469,7 @@
 	            </div>
 	            <div class="tab-pane" id="tab4">
 	            	<div style="clear: both;">
-	            		<input data-bind="value: exName" type="text" placeholder="Name" style="height: 32px; padding: 5px; margin-right: 10px;"  class="span2 k-textbox k-invalid" />
+	            		<input data-bind="value: exName, attr: {placeholder: lang.lang.name}" type="text" placeholder="Name" style="height: 32px; padding: 5px; margin-right: 10px;"  class="span2 k-textbox k-invalid" />
 
 	            		<input data-role="dropdownlist"
 		            	   class="span2"
@@ -499,9 +504,9 @@
 		                   data-value-field="id"
 		                   data-bind="value: exCurrency,
 		                              source: currencyDS"/>
-		            	<input data-bind="visible: priceUnit, value: exPrice" type="text" placeholder="Price" style="height: 32px; padding: 5px; margin-right: 10px;" class="span2 k-textbox k-invalid" />
+		            	<input data-bind="visible: priceUnit, value: exPrice, attr: {placeholder: lang.lang.price}" type="text" placeholder="Price" style="height: 32px; padding: 5px; margin-right: 10px;" class="span2 k-textbox k-invalid" />
 		            	<input data-bind="visible: percentUnit, value: exPrice" type="text" placeholder="%" data-spinners="false" data-role="numerictextbox" max="100" min="1" style="padding:0;" class="span2 k-input k-valid" />
-		            	<input data-bind="visible: meterUnit, value: exPrice" type="text" placeholder="m3" data-spinners="false" data-role="numerictextbox" max="100" min="1" style="padding:0;" class="span2 k-input k-valid" />
+		            	<input data-bind="visible: meterUnit, value: exPrice" type="text" placeholder="0" data-spinners="false" data-role="numerictextbox" max="100" min="1" style="padding:0;" class="span2 k-input k-valid" />
 
 		            	<a class="btn-icon btn-primary glyphicons circle_plus cutype-icon" style="width: 80px; padding: 5px 7px 5px 35px !important; text-align: left;" data-bind="click: addEx"><i></i><span data-bind="text: lang.lang.add">Add</span></a>
 		            </div>
@@ -510,7 +515,7 @@
 	            			<tr>
 	            				<th class="center"><span data-bind="text: lang.lang.name">Name</span></th>
 	            				<th class="center"><span data-bind="text: lang.lang.account">Account</span></th>
-	            				<th class="center"><span data-bind="text: lang.lang.unit">Unit</span></th>
+	            				<th class="center" width="100"><span data-bind="text: lang.lang.unit">Unit</span></th>
 	            				<th class="center"><span data-bind="text: lang.lang.currency">Currency</span></th>
 	            				<th class="center"><span data-bind="text: lang.lang.exemption">Exemption</span></th>
 	            				<th class="center"><span data-bind="text: lang.lang.action">Action</span></th>
@@ -525,7 +530,7 @@
 	            </div>
 	            <div class="tab-pane" id="tab5">
 		            <div style="clear: both; ">
-		            	<input data-bind="value: tariffName" type="text" placeholder="Name" style="height: 32px; padding: 5px; margin-right: 10px;"  class="span3 k-textbox k-invalid" />
+		            	<input data-bind="value: tariffName, attr: {placeholder: lang.lang.name}" type="text" placeholder="Name" style="height: 32px; padding: 5px; margin-right: 10px;"  class="span3 k-textbox k-invalid" />
 		            	<input data-role="dropdownlist"
 		            	   class="span3"
 		            	   style="padding-right: 1px; height: 32px; margin-right: 10px;" 
@@ -565,7 +570,7 @@
 	            	</table>
 	            	
 	            	<br>
-	            	<p data-bind="visible: tariffSelect">Tariff Name: <span data-bind="text: tariffNameShow"></span></p>
+	            	<p data-bind="visible: tariffSelect"><span data-bind="text: lang.lang.tariff_name"></span>: <span data-bind="text: tariffNameShow"></span></p>
 	            	<table data-bind="visible: tariffSelect" class="table table-bordered table-condensed table-striped table-secondary table-vertical-center checkboxs">
 	            		<thead>
 	            			<tr>
@@ -582,10 +587,11 @@
 				                data-bind="source: tariffItemDS"></tbody>
 	            	</table>
 	            	<!-- Tariff Item Window -->
-		            <div data-role="window"
-			                 data-title="Tariff Item"		                 
+		            <div id="addTariffItem"
+		            		data-role="window"		                 
 			                 data-width="250"
 			                 data-height="190"
+			                 data-resizable="false"
 			                 data-actions="{}"
 			                 data-position="{top: '30%', left: '37%'}"		                 
 			                 data-bind="visible: windowTariffItemVisible">
@@ -593,19 +599,19 @@
 							<tr style="border-bottom: 8px solid #fff;">
 								<td width="35%"><span data-bind="text: lang.lang.name"></span></td>
 								<td>
-									<input class="k-textbox" placeholder="Item Name ..." data-bind="value: tariffItemName" style="width: 100%;">
+									<input class="k-textbox" placeholder="Item Name ..." data-bind="attr :{placeholder: lang.lang.item}, value: tariffItemName" style="width: 100%;">
 								</td>
 							</tr>
 							<tr style="border-bottom: 8px solid #fff;">
 								<td><span data-bind="text: lang.lang.usage">Usage</span></td>
 								<td>
-									<input class="k-textbox" placeholder="Usage ..." data-bind="value: tariffItemUsage" style="width: 100%;">
+									<input class="k-textbox" placeholder="Usage ..." data-bind="attr:{placeholder: lang.lang.usage},value: tariffItemUsage" style="width: 100%;">
 								</td>
 							</tr>
 							<tr style="border-bottom: 8px solid #fff;">
 								<td><span data-bind="text: lang.lang.price">Price</span></td>
 								<td>
-									<input class="k-textbox" placeholder="Price ..." data-bind="value: tariffItemAmount" style="width: 100%;">
+									<input class="k-textbox" placeholder="Price ..." data-bind="attr:{placeholder: lang.lang.price}, value: tariffItemAmount" style="width: 100%;">
 								</td>
 							</tr>
 						</table>
@@ -621,7 +627,7 @@
 	            <div class="tab-pane" id="tab6">
 	            
 	            	<div style="clear: both;">
-	            		<input data-bind="value: depositName" type="text" placeholder="Name" style="height: 32px; padding: 5px; margin-right: 10px;"  class="span2 k-textbox k-invalid" />
+	            		<input data-bind="value: depositName, attr: {placeholder: lang.lang.name}" type="text" placeholder="Name" style="height: 32px; padding: 5px; margin-right: 10px;"  class="span2 k-textbox k-invalid" />
 		            	<input data-role="dropdownlist"
 		            	   class="span2"
 		            	   style="padding-right: 1px; height: 32px; margin-right: 10px;" 
@@ -644,7 +650,7 @@
 		                   data-bind="value: depositCurrency,
 		                              source: currencyDS"/>
 
-		            	<input data-bind="value: depositPrice" type="text" placeholder="Price" style="height: 32px; padding: 5px; margin-right: 10px;" class="span2 k-textbox k-invalid" />
+		            	<input data-bind="value: depositPrice, attr: {placeholder: lang.lang.price}" type="text" placeholder="Price" style="height: 32px; padding: 5px; margin-right: 10px;" class="span2 k-textbox k-invalid" />
 
 		            	<a class="btn-icon btn-primary glyphicons circle_plus cutype-icon" style="width: 80px; padding: 5px 7px 5px 35px !important; text-align: left;" data-bind="click: addDeposit"><i></i><span data-bind="text: lang.lang.add">Add</span></a>
 		            </div>
@@ -667,7 +673,7 @@
 	            </div>
 	            <div class="tab-pane" id="tab7">
 	            	<div style="clear: both;">
-	            		<input data-bind="value: serviceName" type="text" placeholder="Name" style="height: 32px; padding: 5px; margin-right: 10px;"  class="span2 k-textbox k-invalid" />
+	            		<input data-bind="value: serviceName, attr: {placeholder: lang.lang.name}" type="text" placeholder="Name" style="height: 32px; padding: 5px; margin-right: 10px;"  class="span2 k-textbox k-invalid" />
 
 		            	<input data-role="dropdownlist"
 		            	   class="span2"
@@ -690,7 +696,7 @@
 		                   data-bind="value: serviceCurrency,
 		                              source: currencyDS"/>
 
-		            	<input data-bind="value: servicePrice" type="text" placeholder="Price" style="height: 32px; padding: 5px; margin-right: 10px;" class="span2 k-textbox k-invalid" />
+		            	<input data-bind="value: servicePrice, attr: {placeholder: lang.lang.price}" type="text" placeholder="Price" style="height: 32px; padding: 5px; margin-right: 10px;" class="span2 k-textbox k-invalid" />
 
 		            	<a class="btn-icon btn-primary glyphicons circle_plus cutype-icon" style="width: 80px; padding: 5px 7px 5px 35px !important; text-align: left;" data-bind="click: addService"><i></i><span data-bind="text: lang.lang.add">Add</span></a>
 		            </div>
@@ -713,7 +719,7 @@
 	            </div>
 	            <div class="tab-pane" id="tab8">
 	            	<div style="clear: both;">
-	            		<input data-bind="value: maintenanceName" type="text" placeholder="Name" style="height: 32px; padding: 5px; margin-right: 10px;"  class="span2 k-textbox k-invalid" />
+	            		<input data-bind="value: maintenanceName, attr: {placeholder: lang.lang.name}" type="text" placeholder="Name" style="height: 32px; padding: 5px; margin-right: 10px;"  class="span2 k-textbox k-invalid" />
 		            	<input data-role="dropdownlist"
 		            	   class="span2"
 		            	   style="padding-right: 1px; height: 32px; margin-right: 10px;" 
@@ -734,7 +740,7 @@
 		                   data-value-field="id"
 		                   data-bind="value: maintenanceCurrency,
 		                              source: currencyDS"/>
-		            	<input data-bind="value: maintenancePrice" type="text" placeholder="Price" style="height: 32px; padding: 5px; margin-right: 10px;" class="span2 k-textbox k-invalid" />
+		            	<input data-bind="value: maintenancePrice, attr: {placeholder: lang.lang.price}" type="text" placeholder="Price" style="height: 32px; padding: 5px; margin-right: 10px;" class="span2 k-textbox k-invalid" />
 
 		            	<a class="btn-icon btn-primary glyphicons circle_plus cutype-icon" style="width: 80px; padding: 5px 7px 5px 35px !important; text-align: left;" data-bind="click: addMaintenance"><i></i><span data-bind="text: lang.lang.add">Add</span></a>
 		            </div>
@@ -771,7 +777,7 @@
 				                data-auto-bind="false"
 				                data-bind="source: planDS"></tbody>
 	            	</table>
-	            	<p data-bind="visible: planSelect">Plan Name: <span data-bind="text: planNameShow"></span></p>
+	            	<p data-bind="visible: planSelect"><span data-bind="text: lang.lang.plan_name"></span>: <span data-bind="text: planNameShow"></span></p>
 	            	<table data-bind="visible: planSelect" class="table table-bordered table-condensed table-striped table-secondary table-vertical-center checkboxs">
 	            		<thead>
 	            			<tr>
@@ -825,9 +831,9 @@
 	            </div>
 	            <div class="tab-pane" id="tab12">
 	            	<div style="clear: both;">
-		            	<input data-bind="value: brandCode" type="text" placeholder="Code ..." style="height: 32px; padding: 5px; margin-right: 10px;"  class="span3 k-textbox k-invalid" />
-		            	<input data-bind="value: brandName" type="text" placeholder="Name ..." style="height: 32px; padding: 5px; margin-right: 10px;"  class="span3 k-textbox k-invalid" />
-		            	<input data-bind="value: brandAbbr" type="text" placeholder="Abbr ..." style="height: 32px; padding: 5px; margin-right: 10px;" class="span3 k-textbox k-invalid" />
+		            	<input data-bind="value: brandCode, attr: {placeholder: lang.lang.code}" type="text" placeholder="Code ..." style="height: 32px; padding: 5px; margin-right: 10px;"  class="span3 k-textbox k-invalid" />
+		            	<input data-bind="value: brandName, attr: {placeholder: lang.lang.name}" type="text" placeholder="Name ..." style="height: 32px; padding: 5px; margin-right: 10px;"  class="span3 k-textbox k-invalid" />
+		            	<input data-bind="value: brandAbbr, attr: {placeholder: lang.lang.abbr}" type="text" placeholder="Abbr ..." style="height: 32px; padding: 5px; margin-right: 10px;" class="span3 k-textbox k-invalid" />
 		            	<a class="btn-icon btn-primary glyphicons circle_plus cutype-icon" style="width: 80px; padding: 5px 7px 5px 35px !important; text-align: left;" data-bind="click: addBrand"><i></i><span data-bind="text: lang.lang.add">Add</span></a>
 		            </div>
 	            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
@@ -974,7 +980,13 @@
     		#= account.name#
    		</td>
    		<td align="center">
-    		#= unit#
+    		#if(unit == "money"){#
+    			#: langVM.lang.money#
+	    	#}else if(unit == "m3"){#
+	    		#: langVM.lang.usage#
+	    	#}else{#
+	    		#= unit#
+	    	#}#
    		</td>
    		<td align="center">
     		#= _currency.code#
@@ -983,7 +995,7 @@
    		#if(unit == "money"){#
     		#= kendo.toString(amount, _currency.locale=="km-KH"?"c0":"c", _currency.locale)#
     	#}else if(unit == "m3"){#
-    		#= amount#m<sup>3</sup>
+    		#= amount#
     	#}else{#
     		#= amount#%
     	#}#
@@ -1010,6 +1022,7 @@
         	<input style="width: 100%;" data-role="dropdownlist"      
                    data-value-primitive="false"
                    data-text-field="name"
+                   data-auto-bind="true"
                    data-value-field="id"
                    data-bind="value: unit,
                               source: typeUnit" />
@@ -1017,7 +1030,7 @@
         <td>
         	<input data-role="dropdownlist"
             	   style="padding-right: 1px;height: 32px;" 
-    			   data-auto-bind="false"			                   
+    			   data-auto-bind="true"			                   
                    data-value-primitive="true"
                    data-text-field="code"
                    data-value-field="id"
@@ -1062,6 +1075,7 @@
         	<input style="width: 100%;" data-role="dropdownlist"      
                    data-value-primitive="false"
                    data-text-field="name"
+                   data-auto-bind="true"
                    data-value-field="id"
                    data-bind="value: account,
                               source: tariffAccDS" />
@@ -1069,8 +1083,8 @@
         <td>
         	<input data-role="dropdownlist"
             	   style="padding-right: 1px;height: 32px;" 
-    			   data-auto-bind="false"			                   
-                   data-value-primitive="true"
+    			   data-auto-bind="true"			                   
+                   data-value-primitive="false"
                    data-text-field="code"
                    data-value-field="id"
                    data-bind="value: currency,
@@ -1136,6 +1150,7 @@
 			<input style="width: 100%;" data-role="dropdownlist"      
                    data-value-primitive="false"
                    data-text-field="name"
+                   data-auto-bind="true"
                    data-value-field="id"
                    data-bind="value: account,
                               source: depositAccDS" />
@@ -1143,7 +1158,7 @@
         <td>
         	<input data-role="dropdownlist"
             	   style="padding-right: 1px;height: 32px;" 
-    			   data-auto-bind="false"			                   
+    			   data-auto-bind="true"			                   
                    data-value-primitive="true"
                    data-text-field="code"
                    data-value-field="id"
@@ -1195,7 +1210,7 @@
         <td>
         	<input data-role="dropdownlist"
             	   style="padding-right: 1px;height: 32px;" 
-    			   data-auto-bind="false"			                   
+    			   data-auto-bind="true"			                   
                    data-value-primitive="true"
                    data-text-field="code"
                    data-value-field="id"
@@ -1241,6 +1256,7 @@
 			<input style="width: 100%;" data-role="dropdownlist"      
                    data-value-primitive="false"
                    data-text-field="name"
+                   data-auto-bind="true"
                    data-value-field="id"
                    data-bind="value: account,
                               source: tariffAccDS" />
@@ -1248,7 +1264,7 @@
         <td>
         	<input data-role="dropdownlist"
             	   style="padding-right: 1px;height: 32px;" 
-    			   data-auto-bind="false"			                   
+    			   data-auto-bind="true"			                   
                    data-value-primitive="true"
                    data-text-field="code"
                    data-value-field="id"
@@ -1424,8 +1440,8 @@
                    
         <td>
             <select  style="width: 100%; " data-bind="value: is_company" >
-                <option value="0"><span data-bind="text: lang.lang.not_a_company"></span></option>
-                <option value="1"><span data-bind="text: lang.lang.it_is_a_company"></span></option>			                
+                <option value="0">#: banhji.setting.lang.lang.not_a_company#</option>
+                <option value="1">#: banhji.setting.lang.lang.it_is_a_company#</option>    
             </select>
         </td>              
  
@@ -1473,7 +1489,7 @@
 													style="width: 100%;" 
 													placeholder="Name ..." 
 													aria-invalid="true"
-													data-bind="value: current.name" />
+													data-bind="value: current.name, attr: {placeholder: lang.lang.name}" />
 											</td>
 											<td style="width: 7%"><span data-bind="text: lang.lang.code">Code</span></td>
 											<td>
@@ -1483,7 +1499,7 @@
 													style="width: 100%;" 
 													placeholder="Code ..." 
 													aria-invalid="true"
-													data-bind="value: current.code" />
+													data-bind="value: current.code, attr: {placeholder: lang.lang.code}" />
 											</td>
 											<td style="width: 5%" data-bind="visible: currencyEnable"><span data-bind="text: lang.lang.currency">Currency</span></td>
 											<td>
@@ -1542,7 +1558,7 @@
 							<div class="span3">
 							</div>
 							<div class="span9" align="right">
-								<span id="saveNew" style="width: 80px!important;margin:0" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit, click: save" style="width: 50px;">
+								<span id="saveNew" style="width: 95px!important;margin:0" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit, click: save" style="width: 50px;">
 									<i></i><span data-bind="text: lang.lang.save">Save</span>
 								</span>
 								<span id="cancel" data-bind="click: cancel" class="btn btn-icon btn-success glyphicons power" style="width: 100px;">
@@ -1607,7 +1623,7 @@
 										<label ><span data-bind="text: lang.lang.license_no">License No.</span> <span style="color:red">*</span></label>
 										<input 
 											class="k-textbox" 
-							            	data-bind="value: obj.number"
+							            	data-bind="value: obj.number, attr: {placeholder: lang.lang.license_no}"
 							            	placeholder="License No." 
 							              	required data-required-msg="required"
 							              	style="width: 100%;" />																				            
@@ -1622,7 +1638,7 @@
 				              			<br>
 				              			<input
 				              				class="k-textbox" 
-							            	data-bind="value: obj.name" 
+							            	data-bind="value: obj.name, attr: {placeholder: lang.lang.name}" 
 						              		placeholder="Name" 
 						              		style="width: 100%;" />
 									</div>
@@ -1636,7 +1652,7 @@
 							            <input 
 							            	class="k-textbox" 
 							            	placeholder="Abbr" 
-						            		data-bind="value: obj.abbr" 
+						            		data-bind="value: obj.abbr, attr: {placeholder: lang.lang.abbr}" 
 						              		style="width: 100%;" />
 									</div>																		
 									<!-- // Group END -->
@@ -1648,7 +1664,7 @@
 										<input 
 							            	class="k-textbox" 
 							            	placeholder="Representative" 
-						            		data-bind="value: obj.representative" 
+						            		data-bind="value: obj.representative, attr: {placeholder: lang.lang.representative}" 
 						              		style="width: 100%;" />
 									</div>
 								</div>
@@ -1721,7 +1737,7 @@
 										<label ><span data-bind="text: lang.lang.description">Description</span></label>
 										<textarea rows="3" class="k-textbox k-valid" 
 											style="width:100%" 
-											data-bind="value: obj.description" 
+											data-bind="value: obj.description, attr: {placeholder: lang.lang.description}" 
 											placeholder="Description ..."></textarea>
 									</div>
 								</div>
@@ -1759,7 +1775,7 @@
 							                <td><span data-bind="text: lang.lang.address">Address</span></td>
 							              	<td colspan="3">
 					            				<input class="k-textbox" 
-					            					data-bind="value: obj.address" 
+					            					data-bind="value: obj.address, attr: {placeholder: lang.lang.address}" 
 													placeholder="Address ..." style="width: 100%;" />								
 							              	</td>
 							            </tr>
@@ -1782,7 +1798,7 @@
 							            	<td><span data-bind="text: lang.lang.mobile">Mobile</span></td>
 							              	<td>
 							              		<input class="k-textbox" 
-							              			data-bind="value: obj.mobile" 
+							              			data-bind="value: obj.mobile, attr: {placeholder: lang.lang.mobile}" 
 							              			placeholder="Mobile ..." 
 							              			style="width: 100%;" /></td>	              	
 							            </tr>
@@ -1803,14 +1819,14 @@
 							              	</td>							              	
 							            	<td><span data-bind="text: lang.lang.telephone">Telephone</span></td>
 							              	<td><input class="k-textbox" 
-							              		data-bind="value: obj.telephone" 
+							              		data-bind="value: obj.telephone, attr: {placeholder: lang.lang.telephone}" 
 							              		placeholder="Telephone ..." style="width: 100%;" /></td>
 							            </tr>	
 							            <tr>
 							            	<td><span data-bind="text: lang.lang.email">Email</span></td>
 							              	<td>
 							              		<input class="k-textbox" 
-							              			data-bind="value: obj.email" 
+							              			data-bind="value: obj.email, attr: {placeholder: lang.lang.email}" 
 							              			placeholder="Email ..." style="width: 100%;" />									            								              	
 							            	<td></td>
 							              	<td></td>							              	
@@ -11847,8 +11863,12 @@
         branchDS 			: dataStore(apiUrl + "branches"),
         planDS 				: dataStore(apiUrl + "plans"),
 		contactTypeDS 		: dataStore(apiUrl + "contacts/type"),
-		typeUnit 			: [{id:"m3", name: "m3"},{id:"money", name: "Money"},{ id:"%", name: "%"}],
-		typeFlat 			: [{id:"0", name: "Not Flat"},{id:"1", name: "Flat"}],
+		wordUsage			: null,
+		typeUnit 			: [
+			{id:"usage", name: this.wordUsage},
+			{id:"money", name: "money"},
+			{ id:"%", name: "%"}
+		],
 		tariffItemFlat 		: 0,
 		tariffSelect 		: false,
 		tariffNameShow 		: null,
@@ -11917,22 +11937,6 @@
 			var index = e.sender.selectedIndex;
 			var block = this.licenseDS.at(index - 1);
 			this.set('blockCompanyId',{id:block.id, name:block.name});
-		},
-		unitChange 			: function(e){
-			this.set("exPrice","");
-			if(this.exUnit === "%"){
-				this.set("percentUnit", true);
-				this.set("priceUnit", false);
-				this.set("meterUnit", false);
-			}else if(this.exUnit === "m3"){
-				this.set("percentUnit", false);
-				this.set("priceUnit", false);
-				this.set("meterUnit", true);
-			}else{
-				this.set("percentUnit", false);
-				this.set("priceUnit", true);
-				this.set("meterUnit", false);
-			}
 		},
 		addContactType 		: function(e){
         	var name = this.get("contactTypeName"), self = this;
@@ -12012,26 +12016,43 @@
         },
         showPole 			: function(e){
         	this.set("poleVisible",true);
-        	$("#addPole").kendoWindow({
-        		width: "250px",
-        		height: "120px",
-                title: this.lang.lang.name,
-                visible: true,
-                position: {top: '30%', left: '37%'},
-                actions: [
-                    "Pin",
-                    "Minimize",
-                    "Maximize",
-                    "Close"
-                ],
-                close: this.closePoleWin()
-        	});
-   //      	var minWin = $("#addPole").data("kendoWindow");
-			// minWin.minimize();
-        	
+        	this.setCurrent(e.data);
         },
         closePoleWin 		: function(e){
-
+        	this.set("poleVisible", false);
+        },
+        savePole 			: function(e){
+        	var self = this;
+        	if(this.get("poleName")){
+        		var data = e.data;
+        		this.poleDS.data([]);
+	        	this.poleDS.add({
+	        		branch 		: {id : this.get("current").branch.id, name: this.get("current").branch.name},
+	        		name 		: this.get("poleName"),
+	        		abbr 		: this.get("current").abbr,
+	        		main_bloc 	: this.get("current").id,
+	        		type 		: "e"
+	        	});
+	        	this.poleDS.sync();
+	        	this.poleDS.bind("requestEnd", function(e){
+					if(e.type != 'read' && e.response){
+						var notificat = $("#ntf1").data("kendoNotification");
+						notificat.hide();
+						notificat.success(self.lang.lang.success_message);
+						self.set("poleName", "");
+						self.closePoleWin();
+					}
+				});
+	        	this.poleDS.bind("error", function(e){
+	        		var notificat = $("#ntf1").data("kendoNotification");
+					notificat.hide();
+					notificat.success(self.lang.lang.error_message);
+	        	});
+        	}else{
+        		var notificat = $("#ntf1").data("kendoNotification");
+				notificat.hide();
+				notificat.success(self.lang.lang.field_required_message);
+        	}
         },
         goExemption    		: function(){
         	this.planItemDS.data([]);
@@ -12075,6 +12096,22 @@
 				notificat.success(self.lang.lang.field_required_message);
 			}
         },
+		unitChange 			: function(e){
+			this.set("exPrice","");
+			if(this.exUnit === "%"){
+				this.set("percentUnit", true);
+				this.set("priceUnit", false);
+				this.set("meterUnit", false);
+			}else if(this.exUnit === "usage"){
+				this.set("percentUnit", false);
+				this.set("priceUnit", false);
+				this.set("meterUnit", true);
+			}else{
+				this.set("percentUnit", false);
+				this.set("priceUnit", true);
+				this.set("meterUnit", false);
+			}
+		},
         goTariff    		: function(){
         	this.set("tariffSelect", false)
         	this.planItemDS.data([]);
@@ -12175,7 +12212,7 @@
 	        			self.set("tariffCurrency", "");
 	        			self.tariffItemDS.data([]);
 			        	self.tariffItemDS.add({
-			        		name 		: "Default Tariff Item",
+			        		name 		: "តម្លៃទូទៅ",
 			        		type     	: "tariff",
 			        		tariff_id	: e.response.results[0].id,
 			        		account   	: 0,
@@ -12385,6 +12422,21 @@
 		pageLoad 			: function(){
 			this.txnTemplateDS.filter({ field: "moduls", value : "water_mg" });
 			$(".widget-head li").eq(this.tabGo).children("a").click();
+			var polewindow = $("#addPole").kendoWindow({
+			  title: this.lang.lang.add_pole
+			});
+			var itemwindow = $("#addTariffItem").kendoWindow({
+			  title: this.lang.lang.item
+			});
+			this.blocDS.filter({field: "main_bloc", value: 0});
+			var self = this;
+			$.each(this.typeUnit,function(i,v){
+				if(i == 0){
+					self.typeUnit[i].set("name", self.lang.lang.usage);
+				}else if(i == 1){
+					self.typeUnit[i].set("name", self.lang.lang.money);
+				}
+			});
 		},
 		cancel 				: function(){
 			this.licenseDS.cancelChanges();		
@@ -12692,6 +12744,7 @@
 			var data = e.data;
 			this.itemDS.filter({field: "currency_id", value: this.current.currency});
 			this.get("current").items.splice(0, this.get("current").items.length);
+			this.addItem();
 		},
 		setCurrent 	: function(current) {
 			this.set('current', current);
@@ -12714,20 +12767,39 @@
 			this.items.remove(e);
 		},
 		save 		: function() {
-			var dfd = $.Deferred(), self = this;
-			banhji.plan.dataSource.sync();
-			banhji.plan.dataSource.bind('requestEnd', function(e){
-				if(e.type != 'read') {
-					if(e.response.results) {
-						dfd.resolve(e.response.results);
-					}
-					self.cancel();
+			var self = this;
+			var haveTariff = "", haveService = "", haveDeposit = "";
+			//Check Tariff
+			$.each(this.dataSource.data()[0].items, function(i, v){
+				if(v.type == "tariff"){
+					haveTariff = v.item;
+				}else if(v.type == "service"){
+					haveService = v.item;
+				}else if(v.type == "deposit"){
+					haveDeposit = v.item;
 				}
 			});
-			banhji.plan.dataSource.bind('error', function(e){
-				dfd.reject(e.status);
-			});
-			return dfd.promise();
+			if(haveTariff && haveService && haveDeposit){
+				this.dataSource.sync();
+				this.dataSource.bind('requestEnd', function(e){
+					if(e.type != 'read' && e.response.results) {
+						var notificat = $("#ntf1").data("kendoNotification");
+						notificat.hide();
+						notificat.success(self.lang.lang.success_message);
+						self.cancel();
+					}
+				});
+				this.dataSource.bind('error', function(e){
+					var notificat = $("#ntf1").data("kendoNotification");
+					notificat.hide();
+					notificat.error(self.lang.lang.error_message);
+				});
+			}else{
+				var notificat = $("#ntf1").data("kendoNotification");
+				notificat.hide();
+				notificat.error(self.lang.lang.error_message);
+			}
+			
 		},
 		cancel 				: function(){
 			this.dataSource.data([]);		

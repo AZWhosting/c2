@@ -19327,6 +19327,7 @@
 		}
 	});
 	banhji.importContact = kendo.observable({
+		lang 			: langVM,
 		dataSource 	  : dataStore(apiUrl+"imports/wcontact"),
 		onSelected    : function(e) {
 			$('li.k-file').remove();
@@ -19338,13 +19339,15 @@
 				var result = {}; 						
 				var workbook = XLSX.read(data, {type : 'binary'});
 				workbook.SheetNames.forEach(function(sheetName) {
-					var roa = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
-					if(roa.length > 0){
-						result[sheetName] = roa;
-						for(var i = 0; i < roa.length; i++) {	
-							banhji.importContact.dataSource.add(roa[i]);	
-						}						
-					}
+					if(sheetName === "contact_form_import") {
+						var roa = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
+						if(roa.length > 0){
+							result[sheetName] = roa;
+							for(var i = 0; i < roa.length; i++) {	
+								banhji.importContact.dataSource.add(roa[i]);	
+							}						
+						}
+					}					
 				});															
 			}
 			reader.readAsBinaryString(files[0].rawFile);         	
@@ -19352,17 +19355,29 @@
 		save: function() {
 			var self = this;
 			$("#loadImport").css("display","block");
-			banhji.importContact.dataSource.sync();
+			if(banhji.importContact.dataSource.data().length > 0) {
+				banhji.importContact.dataSource.sync();
+			} else {
+				$("#loadImport").css("display","none");
+				var notif = $("#ntf1").data("kendoNotification");
+				notif.hide();
+				notif.error(this.lang.lang.please_load_file);
+			}
+			
 			banhji.importContact.dataSource.bind("requestEnd", function(e){
-		    	if(e.response){				
-		    		$("#ntf1").data("kendoNotification").success("Imported contacts successfully!");
+		    	if(e.response){	
+		    		var notif = $("#ntf1").data("kendoNotification");
+		    		notif.hide();
+		    		notif.success(self.lang.lang.success_message);
 					$("#loadImport").css("display","none");
 					$('li.k-file').remove();
 					self.dataSource.data([]);
 				}				  				
 		    });
 		    banhji.importContact.dataSource.bind("error", function(e){		    		    	
-				$("#ntf1").data("kendoNotification").error("Error Importing Contact!"); 	
+				var notif = $("#ntf1").data("kendoNotification");
+	    		notif.hide();
+	    		notif.success(self.lang.lang.error_message);
 				$("#loadImport").css("display","none");	
 				$('li.k-file').remove();
 				self.dataSource.data([]);		
@@ -19381,13 +19396,15 @@
 				var result = {}; 						
 				var workbook = XLSX.read(data, {type : 'binary'});
 				workbook.SheetNames.forEach(function(sheetName) {
-					var roa = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
-					if(roa.length > 0){
-						result[sheetName] = roa;
-						for(var i = 0; i < roa.length; i++) {	
-							banhji.importItem.dataSource.add(roa[i]);	
-						}						
-					}
+					if(sheetName === "meter") {
+						var roa = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
+						if(roa.length > 0){
+							result[sheetName] = roa;
+							for(var i = 0; i < roa.length; i++) {	
+								banhji.importItem.dataSource.add(roa[i]);	
+							}						
+						}
+					}						
 				});															
 			}
 			reader.readAsBinaryString(files[0].rawFile);         	
@@ -19395,10 +19412,20 @@
 		save: function() {
 			var self = this;
 			$("#loadImport").css("display","block");
-			banhji.importItem.dataSource.sync();
+			if(banhji.importItem.dataSource.data().length > 0) {
+				banhji.importItem.dataSource.sync();
+			} else {
+				$("#loadImport").css("display","none");
+				var notif = $("#ntf1").data("kendoNotification");
+				notif.hide();
+				notif.error(this.lang.lang.please_load_file);
+			}
+			
 			banhji.importItem.dataSource.bind("requestEnd", function(e){
 		    	if(e.response){				
-		    		$("#ntf1").data("kendoNotification").success("Imported Meters successfully!");
+		    		var notif = $("#ntf1").data("kendoNotification");
+		    		notif.hide();
+		    		notif.success(self.lang.lang.success_message);
 		    		$("#loadImport").css("display","none");
 		    		$('li.k-file').remove();
 		    		self.dataSource.data([]);
@@ -19406,7 +19433,9 @@
 				}				  				
 		    });
 		    banhji.importItem.dataSource.bind("error", function(e){		    		    	
-				$("#ntf1").data("kendoNotification").error("Error Importing Meters!"); 
+				var notif = $("#ntf1").data("kendoNotification");
+	    		notif.hide();
+	    		notif.success(self.lang.lang.error_message);
 				$("#loadImport").css("display","none");	
 				$('li.k-file').remove();
 				self.dataSource.data([]);

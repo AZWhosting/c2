@@ -1360,7 +1360,10 @@ var	en_US = {
 	"field_required_message": "Field Required!",
 	"add_pole": "Add Pole",
 	"bloc_name": "Bloc Name",
-
+	"please_load_file": "Please Recheck Your File.",
+	"money": "Money",
+	"tariff_name": "Tariff Name",
+	"plan_name": "Plan Name",
 
 
 
