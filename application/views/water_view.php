@@ -93,7 +93,7 @@
 				<div class="span3" style="padding: 0; text-align: center;">						
 					<a href="#/receipt">
 						<img title="Receive Water Bill Payment" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/water_logo/receipt.png" style="width: 120px;"  />
-						<span data-bind="text: lang.lang.receipt"  style=" text-transform: uppercase; color: #000; font-weight: 600; margin-top: 8px; display: inline-block;">Receipt</span>
+						<span data-bind="text: lang.lang.wreceipt"  style=" text-transform: uppercase; color: #000; font-weight: 600; margin-top: 8px; display: inline-block;">Receipt</span>
 					</a>						
 				</div>
 			</div>
@@ -1478,7 +1478,7 @@
 							<div class="span3">
 							</div>
 							<div class="span9" align="right">
-								<span id="saveNew" style="width: 80px!important;margin:0" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit, click: save" style="width: 50px;">
+								<span style="width: 120px!important;margin:0" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="click: save" style="width: 50px;">
 									<i></i><span data-bind="text: lang.lang.save">Save</span>
 								</span>
 								<span id="cancel" data-bind="click: cancel" class="btn btn-icon btn-success glyphicons power" style="width: 100px;">
@@ -12580,20 +12580,26 @@
 			}).then(function(e){
 				var view = self.dataSource.view();
 				self.setCurrent(view[0]);
+				// self.itemDS.filter({field: "currency_id", value: view[0]._currency.id});
 			});
 		},
 		onChange 	: function(e) {
+			let self = this;
+			let myData = self.dataSource.data()[0];
+			
 			var data = e.data,
 			selected = e.sender.selectedIndex,
 			dataitemDs = this.itemDS.at(selected);
 			data.set("type", dataitemDs.type);
 			data.set("name", dataitemDs.name);
 			data.set("amount", dataitemDs.amount);
+			myData.set('dirty', true);
 		}, 
 		currencyChange : function(e) {
 			var data = e.data;
 			this.itemDS.filter({field: "currency_id", value: this.current.currency});
 			this.get("current").items.splice(0, this.get("current").items.length);
+			this.addItem();
 		},
 		setCurrent 	: function(current) {
 			this.set('current', current);
@@ -12616,20 +12622,42 @@
 			this.items.remove(e);
 		},
 		save 		: function() {
-			var dfd = $.Deferred(), self = this;
-			banhji.plan.dataSource.sync();
-			banhji.plan.dataSource.bind('requestEnd', function(e){
-				if(e.type != 'read') {
-					if(e.response.results) {
-						dfd.resolve(e.response.results);
-					}
-					self.cancel();
+			console.log("save");
+			var self = this;
+			var haveTariff = "", haveService = "", haveDeposit = "";
+			//Check Tariff
+			$.each(this.dataSource.data()[0].items, function(i, v){
+				if(v.type == "tariff"){
+					haveTariff = v.item;
+				}else if(v.type == "service"){
+					haveService = v.item;
+				}else if(v.type == "deposit"){
+					haveDeposit = v.item;
 				}
 			});
-			banhji.plan.dataSource.bind('error', function(e){
-				dfd.reject(e.status);
-			});
-			return dfd.promise();
+			console.log(haveTariff+"haveTa_"+haveDeposit+"haveDe_"+haveService+"haveSer");
+			if(haveTariff && haveService && haveDeposit){
+				console.log("aaaa");
+				this.dataSource.sync();
+				this.dataSource.bind('requestEnd', function(e){
+					if(e.type != 'read' && e.response.results) {
+						var notificat = $("#ntf1").data("kendoNotification");
+						notificat.hide();
+						notificat.success(self.lang.lang.success_message);
+						self.cancel();
+					}
+				});
+				this.dataSource.bind('error', function(e){
+					var notificat = $("#ntf1").data("kendoNotification");
+					notificat.hide();
+					notificat.error(self.lang.lang.error_message);
+				});
+			}else{
+				var notificat = $("#ntf1").data("kendoNotification");
+				notificat.hide();
+				notificat.error(self.lang.lang.error_message);
+			}
+			console.log("save");
 		},
 		cancel 				: function(){
 			this.dataSource.data([]);		
@@ -20298,6 +20326,70 @@
 		}
 		vm.pageLoad(id);
 	});
+	banhji.router.route("/customer(/:id)(/:is_pattern)", function(id,is_pattern){
+		banhji.accessMod.query({
+			filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		}).then(function(e){
+			var allowed = false;
+			if(banhji.accessMod.data().length > 0) {
+				for(var i = 0; i < banhji.accessMod.data().length; i++) {
+					if("customer" == banhji.accessMod.data()[i].name.toLowerCase()) {
+						allowed = true;
+						break;
+					}
+				}
+			} 
+			if(allowed) {
+				banhji.view.layout.showIn("#content", banhji.view.customer);
+				kendo.fx($("#slide-form")).slideIn("down").play();
+
+				var vm = banhji.customer;
+				banhji.userManagement.addMultiTask("Customer","customer",vm);
+				if(banhji.pageLoaded["customer"]==undefined){
+					banhji.pageLoaded["customer"] = true;
+
+			        var validator = $("#example").kendoValidator({
+			        	rules: {
+					        customRule1: function(input){
+					          	if (input.is("[name=txtNumber]")) {	
+						            return vm.get("notDuplicateNumber");
+						        }
+						        return true;
+					        }
+					    },
+					    messages: {
+					        customRule1: banhji.source.duplicateNumber
+					    }
+			        }).data("kendoValidator");
+
+			        $("#saveNew").click(function(e){
+						e.preventDefault();
+
+						if(validator.validate()){
+			            	vm.save();
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }
+					});
+
+					$("#saveClose").click(function(e){
+						e.preventDefault();
+
+						if(validator.validate()){
+							vm.set("saveClose", true);
+			            	vm.save();
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }
+					});
+				}
+
+				vm.pageLoad(id, is_pattern);
+			} else {
+				window.location.replace(baseUrl + "admin");
+			}
+		});
+	});
 	banhji.router.route("/activate_user/:id", function(id){
 		banhji.view.layout.showIn("#content", banhji.view.waterActivateUser);
 		banhji.view.layout.showIn('#menu', banhji.view.menu);
@@ -21008,7 +21100,7 @@
 			var allowed = false;
 			if(banhji.accessMod.data().length > 0) {
 				for(var i = 0; i < banhji.accessMod.data().length; i++) {
-					if("utility" == banhji.accessMod.data()[i].name.toLowerCase()) {
+					if("utibill" == banhji.accessMod.data()[i].name.toLowerCase()) {
 						allowed = true;
 						break;
 					}

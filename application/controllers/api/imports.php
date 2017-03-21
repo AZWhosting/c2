@@ -139,7 +139,7 @@ class Imports extends REST_Controller {
 			isset($value->registered_date)			? $obj->registered_date 		= date("Y-m-d", strtotime($value->registered_date)) : "";
 			isset($value->use_electricity)			? $obj->use_electricity			= $value->use_electricity : "";
 			isset($value->use_water)				? $obj->use_water				= $value->use_water : "";
-			isset($value->is_local)					? $obj->is_local				= $value->is_local : "";
+			isset($value->is_local)					? $obj->is_local				= $value->is_local : $this->locale;
 			isset($value->is_pattern)				? $obj->is_pattern				= $value->is_pattern : "";
 			$obj->status					= 1;
 			isset($value->deleted)					? $obj->deleted					= $value->deleted : "";
@@ -345,7 +345,7 @@ class Imports extends REST_Controller {
 			isset($value->use_electricity)			? $obj->use_electricity			= $value->use_electricity : "";
 			// isset($value->use_water)				? $obj->use_water				= $value->use_water : "";
 			$obj->use_water = 1;
-			isset($value->is_local)					? $obj->is_local				= $value->is_local : "";
+			isset($value->is_local)					? $obj->is_local				= $value->is_local : $this->locale;
 			isset($value->is_pattern)				? $obj->is_pattern				= $value->is_pattern : "";
 			$obj->status					= 1;
 			isset($value->deleted)					? $obj->deleted					= $value->deleted : "";
@@ -504,16 +504,16 @@ class Imports extends REST_Controller {
 				$transaction->number = "JV".$this->_generate_number($transaction->type, $meter->date_used);
 				$transaction->deposit_date = date('Y-m-d', strtotime($row->date_used));
 				$transaction->status = 1;
-				$row->deposit = isset($row->deposit) ? $row->deposit : 0;
-				$row->balance = isset($row->balance) ? $row->balance : 0;
-				$transaction->amount = $row->deposit;
+				// $row->deposit = isset($row->deposit) ? $row->deposit : 0;
+				// $row->balance = isset($row->balance) ? $row->balance : 0;
+				$transaction->amount = isset($row->deposit) ? $row->deposit : 0;
 				if($transaction->save()) {
 					$deposit1 = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 					$deposit1->transaction_id = $transaction->id;
 					$deposit1->account_id = $depositAcct;
 					$deposit1->description= "Water Opening Deposit";
 					$deposit1->contact_id = $transaction->contact_id;
-					$deposit1->dr = $row->deposit;
+					$deposit1->dr = isset($row->deposit) ? $row->deposit : 0;
 					$deposit1->cr = 0.00;
 					$deposit1->save();
 
@@ -523,7 +523,7 @@ class Imports extends REST_Controller {
 					$deposit2->description= "Water Opening Deposit";
 					$deposit2->contact_id = $transaction->contact_id;
 					$deposit2->dr = 0.00;
-					$deposit2->cr = $row->deposit;
+					$deposit2->cr = isset($row->deposit) ? $row->deposit : 0;
 					$deposit2->save();
 				}
 				$ar = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
@@ -543,7 +543,7 @@ class Imports extends REST_Controller {
 					$ar1->account_id = $customer->account_id;
 					$ar1->description= "Water Opening Balance";
 					$ar1->contact_id = $ar->contact_id;
-					$ar1->dr = $row->balance;
+					$ar1->dr = isset($row->balance) ? $row->balance : 0;
 					$ar1->cr = 0.00;
 					$ar1->save();
 
@@ -553,7 +553,7 @@ class Imports extends REST_Controller {
 					$ar2->description= "Water Opening Balance";
 					$ar2->contact_id = $ar->contact_id;
 					$ar2->dr = 0.00;
-					$ar2->cr = $row->balance;
+					$ar2->cr = isset($row->balance) ? $row->balance : 0;
 					$ar2->save();
 				}
  				

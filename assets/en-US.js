@@ -1176,7 +1176,7 @@ var	en_US = {
 	"reading": "Reading",
 	"run_bill": "Run Bill",
 	"print_bill": "Print Bill",
-	"receipt": "Receipt",
+	"wreceipt": "Receipt",
 	"deposits": "Deposits",
 	"total_sale": "Total Sale",
 	"expected_due": "Expected Due",
@@ -1364,7 +1364,7 @@ var	en_US = {
 	"money": "Money",
 	"tariff_name": "Tariff Name",
 	"plan_name": "Plan Name",
-
+	"utility": "Utility",
 
 
 
