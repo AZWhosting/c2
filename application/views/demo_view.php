@@ -3503,15 +3503,17 @@
 							    <!-- Tabs Heading -->
 							    <div class="tabsbar tabsbar-2">
 							        <ul class="row-fluid row-merge">
-							        	<li class="span1 glyphicons cogwheels active"><a href="#tab1-5" data-toggle="tab"><i></i></a>
+							        	<li class="span1 glyphicons cogwheels active"><a href="#tab-1" data-toggle="tab"><i></i></a>
 							            </li>
-							            <li class="span1 glyphicons adress_book"><a href="#tab2-5" data-toggle="tab"><i></i></a>
+							            <li class="span1 glyphicons link"><a href="#tab-2" data-toggle="tab"><i></i></a>
 							            </li>
-							            <li class="span1 glyphicons circle_info"><a href="#tab3-5" data-toggle="tab"><i></i></a>
+							            <li class="span1 glyphicons adress_book"><a href="#tab-3" data-toggle="tab"><i></i></a>
 							            </li>
-							            <li class="span1 glyphicons paperclip"><a href="#tab4-5" data-toggle="tab"><i></i></a>
+							            <li class="span1 glyphicons circle_info"><a href="#tab-4" data-toggle="tab"><i></i></a>
+							            </li>
+							            <li class="span1 glyphicons paperclip"><a href="#tab-5" data-toggle="tab"><i></i></a>
 							            </li>						            
-							            <li class="span1 glyphicons history"><a href="#tab5-5" data-toggle="tab"><i></i> Recuring</a>
+							            <li class="span1 glyphicons history"><a href="#tab-6" data-toggle="tab"><i></i> Recuring</a>
 							            </li>
 							            <!-- <li class="span1 glyphicons show_liness"><a href="#tab5-6" data-toggle="tab"><i></i></a></li> -->						            								            
 							        </ul>
@@ -3521,7 +3523,7 @@
 							    <div class="tab-content">
 
 							    	<!-- Options Tab content -->
-							        <div class="tab-pane active" id="tab1-5">						            
+							        <div class="tab-pane active" id="tab-1">						            
 							            <table style="margin-bottom: 0;" class="table table-borderless table-condensed cart_total">							            
 											<tr>
 												<td>
@@ -3570,30 +3572,42 @@
 													<input class="k-textbox" placeholder="type check number ..." data-bind="value: obj.check_no" style="width: 100%;">
 												</td>							            	
 								            </tr>
-											<tr>
-												<td style="vertical-align: top;">
-								            		<span data-bind="text: lang.lang.reference"></span>
-								            	</td>
-								            	<td>
-													<select data-role="multiselect"
-														   data-item-template="reference-list-tmpl"
-										                   data-value-primitive="true"
-										                   data-text-field="number"
-										                   data-value-field="id"
-										                   data-bind="value: obj.references,
-										                              source: referenceList,
-														   			  events:{ select: referenceSelect }"
-										                   data-placeholder="Add Reference..."
-										                   style="width:100%;" 
-										            ></select>
-												</td>
-											</tr>
 							            </table>						            
 							        </div>
 							        <!-- // Options Tab content END -->
 
+							        <!-- References -->
+							        <div class="tab-pane" id="tab-2">
+							            <table style="margin-bottom: 0;" class="table table-borderless table-condensed cart_total">											
+								            <tr>
+												<td style="vertical-align: top;">
+								            		<span data-bind="text: lang.lang.reference"></span>
+								            	</td>
+								            	<td>
+								            		<input data-role="dropdownlist"
+								            			   data-item-template="reference-list-tmpl"
+										                   data-auto-bind="false"
+										                   data-value-primitive="true"
+										                   data-text-field="number"
+										                   data-value-field="id"
+										                   data-bind="value: reference_id,
+										                              source: referenceDS,
+										                              events: { change: referenceChanges }"
+										                   data-option-label="Add Reference..."
+										                   style="width: 100%;" />
+										            <br>
+										            <table class="table table-bordered">
+												        <tbody data-template="cashSale-reference-template"
+												        		data-bind="source: referenceList"></tbody>			        
+												    </table>
+												</td>
+											</tr>
+							            </table>
+							        </div>
+							        <!-- // References END -->
+
 							        <!-- Address Tab content -->
-							        <div class="tab-pane" id="tab2-5">
+							        <div class="tab-pane" id="tab-3">
 							        	<span data-bind="text: lang.lang.billing_address"></span>
 										<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.bill_to" placeholder="Billing to ..."></textarea>								
 										
@@ -3604,7 +3618,7 @@
 							        <!-- // Address Tab content END -->
 
 							        <!-- Info Tab content -->
-							        <div class="tab-pane" id="tab3-5">
+							        <div class="tab-pane" id="tab-4">
 							        	
 										<table class="table table-borderless table-condensed cart_total">
 											<tr>
@@ -3662,7 +3676,7 @@
 							        <!-- // Info Tab content END -->
 
 							        <!-- Attach Tab content -->
-							        <div class="tab-pane" id="tab4-5">
+							        <div class="tab-pane" id="tab-5">
 
 							        	<p><span data-bind="text: lang.lang.file_type"></span>: [PDF, JPG, JPEG, TIFF, PNG, GIF]</p>		
 							            <input id="files" name="files"
@@ -3692,9 +3706,9 @@
 							        <!-- // Attach Tab content END -->						        
 
 							        <!-- Recuring Tab content -->
-							        <div class="tab-pane" id="tab5-5">							            	
+							        <div class="tab-pane" id="tab-6">							            	
 							            
-							             <table style="width: 100%" class="table borderless">
+							            <table style="width: 100%" class="table borderless">
 							            	<tr align="right">
 							            		<td style="border-top: 0;">
 							            			<span data-bind="text: lang.lang.name"></span>
@@ -4083,6 +4097,15 @@
 		</td>				
     </tr>   
 </script>
+<script id="cashSale-reference-template" type="text/x-kendo-tmpl">
+	<tr>
+		<td>
+			<i class="icon-trash" data-bind="events: { click: referenceRemoveRow }"></i>
+			#=number#
+		</td>
+		<td align="right">#=kendo.toString(amount, "c2", locale)#</td>
+    </tr>   
+</script>
 <script id="invoice" type="text/x-kendo-template">
 	<div id="slide-form">
 		<div class="customer-background">
@@ -4179,13 +4202,15 @@
 							        <ul class="row-fluid row-merge">
 							        	<li class="span1 glyphicons cogwheels active"><a href="#tab-1" data-toggle="tab"><i></i></a>
 							            </li>
-							            <li class="span1 glyphicons adress_book"><a href="#tab-2" data-toggle="tab"><i></i></a>
+							            <li class="span1 glyphicons link"><a href="#tab-2" data-toggle="tab"><i></i></a>
 							            </li>
-							            <li class="span1 glyphicons circle_info"><a href="#tab-3" data-toggle="tab"><i></i></a>
+							            <li class="span1 glyphicons adress_book"><a href="#tab-3" data-toggle="tab"><i></i></a>
 							            </li>
-							            <li class="span1 glyphicons paperclip"><a href="#tab-4" data-toggle="tab"><i></i></a>
+							            <li class="span1 glyphicons circle_info"><a href="#tab-4" data-toggle="tab"><i></i></a>
 							            </li>
-							            <li class="span1 glyphicons history"><a href="#tab-5" data-toggle="tab"><i></i></a>
+							            <li class="span1 glyphicons paperclip"><a href="#tab-5" data-toggle="tab"><i></i></a>
+							            </li>
+							            <li class="span1 glyphicons history"><a href="#tab-6" data-toggle="tab"><i></i></a>
 							            </li>
 							            <!-- <li class="span1 glyphicons show_liness"><a href="#tab6-6" data-toggle="tab"><i></i></a></li> -->
 							        </ul>
@@ -4236,33 +4261,42 @@
 															style="width:100%;" />
 								            	</td>
 								            </tr>
+							            </table>
+							        </div>
+							        <!-- // Options END -->
+
+							        <!-- References -->
+							        <div class="tab-pane" id="tab-2">
+							            <table style="margin-bottom: 0;" class="table table-borderless table-condensed cart_total">											
 								            <tr>
 												<td style="vertical-align: top;">
 								            		<span data-bind="text: lang.lang.reference"></span>
 								            	</td>
 								            	<td>
-													<select id="multiselect" data-role="multiselect"
-														   data-item-template="reference-list-tmpl"
-														   data-clear-button="false"
+								            		<input data-role="dropdownlist"
+								            			   data-item-template="reference-list-tmpl"
+										                   data-auto-bind="false"
 										                   data-value-primitive="true"
 										                   data-text-field="number"
 										                   data-value-field="id"
-										                   data-auto-bind="false"
-										                   data-bind="value: obj.references,
+										                   data-bind="value: reference_id,
 										                              source: referenceDS,
-														   			  events:{ select: referenceSelect,
-														   			  		   deselect: referenceDeselect }"
-										                   data-placeholder="Add Reference..."
-										                   style="width:100%;" 
-										            ></select>
+										                              events: { change: referenceChanges }"
+										                   data-option-label="Add Reference..."
+										                   style="width: 100%;" />
+										            <br>
+										            <table class="table table-bordered">
+												        <tbody data-template="invoice-reference-template"
+												        		data-bind="source: referenceList"></tbody>			        
+												    </table>
 												</td>
 											</tr>
 							            </table>
 							        </div>
-							        <!-- // Options END -->
+							        <!-- // References END -->
 
 							        <!-- Address -->
-							        <div class="tab-pane" id="tab-2">
+							        <div class="tab-pane" id="tab-3">
 							        	<span data-bind="text: lang.lang.billing_address"></span>
 										<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.bill_to" placeholder="Billing to ..."></textarea>								
 										
@@ -4273,7 +4307,7 @@
 							        <!-- // Address END -->
 
 							        <!-- Info -->
-							        <div class="tab-pane" id="tab-3">
+							        <div class="tab-pane" id="tab-4">
 							        	
 										<table class="table table-borderless table-condensed cart_total">
 								            <tr>
@@ -4331,7 +4365,7 @@
 							        <!-- // Info END -->
 
 							        <!-- Attach -->
-							        <div class="tab-pane" id="tab-4">
+							        <div class="tab-pane" id="tab-5">
 
 							        	<p><span data-bind="text: lang.lang.file_type"></span>: [PDF, JPG, JPEG, TIFF, PNG, GIF]</p>		
 							            <input id="files" name="files"
@@ -4361,7 +4395,7 @@
 							        <!-- // Attach END -->
 
 							        <!-- Recuring -->
-							        <div class="tab-pane" id="tab-5">
+							        <div class="tab-pane" id="tab-6">
 							            
 							            <table style="width: 100%" class="table borderless">
 							            	<tr align="right">
@@ -4750,6 +4784,15 @@
                    			  events:{ change: changes }"
                    style="width: 100%" />			
 		</td>				
+    </tr>   
+</script>
+<script id="invoice-reference-template" type="text/x-kendo-tmpl">
+	<tr>
+		<td>
+			<i class="icon-trash" data-bind="events: { click: referenceRemoveRow }"></i>
+			#=number#
+		</td>
+		<td align="right">#=kendo.toString(amount, "c2", locale)#</td>
     </tr>   
 </script>
 <script id="gdn" type="text/x-kendo-template">
@@ -50783,7 +50826,8 @@
 				{ field:"item_type_id", dir:"asc" },
 				{ field:"number", dir:"asc" }
 			]
-		}),		
+		}),
+		referenceList 		: [],		
 		paymentMethodDS 	: banhji.source.paymentMethodDS,
 		amtDueColor 		: banhji.source.amtDueColor,
 	    confirmMessage 		: banhji.source.confirmMessage,
@@ -50807,6 +50851,7 @@
 		recurring 			: "",
 		recurring_validate 	: false,
 		showDiscount 		: false,
+		reference_id 		: 0,
 		balance 			: 0,
 		total_deposit		: 0,
 		total 				: 0,
@@ -51316,7 +51361,7 @@
 		},
 		//Obj
 		loadObj 			: function(id){
-			var self = this, para = [];
+			var self = this, para = [], referenceIds = [];
 
 			para.push({ field:"id", value: id });
 
@@ -51338,8 +51383,9 @@
 					var view = self.dataSource.view();				
 
 					self.set("obj", view[0]);
-			        self.set("total", kendo.toString(view[0].amount, "c", view[0].locale));
-			        self.set("amount_due", kendo.toString(view[0].amount - view[0].deposit, "c", view[0].locale));
+
+			        self.set("total", kendo.toString(view[0].amount, "c2", view[0].locale));
+			        self.set("amount_due", kendo.toString(view[0].amount - view[0].deposit, "c2", view[0].locale));
 			        
 					self.set("statusSrc", banhji.source.paidSrc);
 
@@ -51348,14 +51394,30 @@
 					}
 									
 					self.loadLines(id);
+					self.loadDeposit();
 					self.assemblyLineDS.filter([
-						{ field: "transaction_id", value: view[0].id },
+						{ field: "transaction_id", value: id },
 						{ field: "assembly_id >", value: 0 }
 					]);
-					self.journalLineDS.filter({ field: "transaction_id", value: view[0].id });
+					self.journalLineDS.filter({ field: "transaction_id", value: id });
+					self.attachmentDS.filter({ field: "transaction_id", value: id });
 					
-					self.loadEditReference();
-					self.loadDeposit();
+					//References
+					if(view[0].references.length>0){
+						$.each(view[0].references, function(index, value){
+							referenceIds.push(value);
+						});
+
+						self.referenceDS.query({
+							filter:{ field: "id", operator:"where_in", value: referenceIds }
+						}).then(function(){
+							var reference = self.referenceDS.view();
+
+							self.set("referenceList", reference);
+						});
+					}else{
+						self.loadReference();
+					}
 				});
 			}				
 		},
@@ -51379,32 +51441,6 @@
 		        	});
 					value.set("item_prices", itemPriceList);
 				});
-			});
-		},
-		loadEditReference 	: function(){
-			var self = this, 
-				obj = this.get("obj"),
-				referenceIds = [], referenceList = [];
-
-			$.each(obj.references, function(index, value){
-				referenceIds.push(value);
-			});
-			this.referenceDS.query({
-				filter:{ field: "id", operator:"where_in", value: referenceIds }
-			}).then(function(){
-				var view = self.referenceDS.view();
-
-				$.each(view, function(index, value){
-					referenceList.push(value);
-				});
-
-				self.set("referenceList", []);
-				obj.set("references", []);
-
-				self.set("referenceList", referenceList);
-				obj.set("references", referenceIds);
-
-				self.loadReference();
 			});
 		},
 		changes				: function(){
@@ -51533,6 +51569,7 @@
 			this.set("total_deposit", 0);
 			this.set("amount_due", 0);
 			this.set("amtDueColor", banhji.source.amtDueColor);
+			this.set("referenceList", []);
 
 			this.dataSource.insert(0, {
 				transaction_template_id: 10,
@@ -51658,31 +51695,13 @@
 		    	}
 	    	}
 
-	        //References
-	    	if(obj.references.length>0){
-	    		var referenceIds = [];
-	    		$.each(this.referenceList, function(index, value){
-	    			referenceIds.push(value.id);
-	    		});
-
-	    		this.referenceDS.query({
-	    			filter:{ field:"id", operator:"where_in", value:referenceIds }
-	    		}).then(function(){
-	    			var view = self.referenceDS.view();
-
-	    			$.each(view, function(index, value){
-	    				$.each(obj.references, function(ind, val){
-		    				if(kendo.parseInt(val)==value.id){
-								value.set("status", 1);
-							}else{
-								value.set("status", 0);
-							}
-						});
-	    			});
-
-	    			self.referenceDS.sync();
-	    		});
-			}
+	    	//Reference
+    		var referenceIds = [];
+    		$.each(this.get("referenceList"), function(index, value){
+    			referenceIds.push(value.id);
+    		});
+	    	obj.set("references", referenceIds);
+	    	this.referenceDS.sync();
 	    	
 			//Save Obj
 			this.objSync()
@@ -51743,12 +51762,12 @@
 			this.lineDS.cancelChanges();
 			this.assemblyLineDS.cancelChanges();
 			this.attachmentDS.cancelChanges();
+			this.referenceDS.cancelChanges();
 
 			this.dataSource.data([]);
 			this.lineDS.data([]);
 			this.assemblyLineDS.data([]);
 			this.attachmentDS.data([]);
-
 			this.referenceDS.data([]);
 
 			banhji.userManagement.removeMultiTask("cash_sale");
@@ -52061,68 +52080,90 @@
 			var self = this, obj = this.get("obj");
 
 			if(obj.contact_id>0){
-				this.referenceDS.query({
-					filter:[
-						{ field: "contact_id", value: obj.contact_id },
-						{ field: "status", value: 0 },
-						{ field: "type", operator:"where_in", value:["Sale_Order", "Quote", "GDN"] },
-						{ field: "due_date >=", value: kendo.toString(obj.issued_date, "yyyy-MM-dd") }
-					]
-				}).then(function(){
-					var view = self.referenceDS.view();
-
-					if(obj.isNew()){
-						self.set("referenceList", []);
-					}
-					$.each(view, function(index, value){
-						self.referenceList.push(value);
-					});
-				});
+				this.referenceDS.filter([
+					{ field: "contact_id", value: obj.contact_id },
+					{ field: "status", value: 0 },
+					{ field: "type", operator:"where_in", value:["Sale_Order", "Quote", "GDN"] },
+					{ field: "due_date >=", value: kendo.toString(obj.issued_date, "yyyy-MM-dd") }
+				]);
 			}else{
 				obj.set("references", []);
 				this.set("referenceList", []);
 			}
 		},
-		referenceSelect 	: function(e){
-			var self = this, data = e.dataItem,
-				obj = this.get("obj"), 
-				deposit = kendo.parseFloat(data.deposit) + kendo.parseFloat(obj.deposit);
+		referenceChanges 	: function(e){			
+			var self = this,
+				isExisting = false, 
+				reference_id = this.get("reference_id"),
+				referenceList = this.get("referenceList");
 
+			$.each(referenceList, function(index, value){
+				if(value.id==reference_id){
+					isExisting = true;
+
+					return false;
+				}
+			});
+
+			if(reference_id>0 && isExisting==false){
+				var obj = this.get("obj"),
+					reference = this.referenceDS.get(reference_id),
+					deposit = kendo.parseFloat(reference.deposit) + kendo.parseFloat(obj.deposit);
+
+				obj.set("deposit", deposit);
+				reference.set("status", 1);
+
+				this.referenceList.push(reference);
+
+				//Remove empty line
+				var firstLine = this.lineDS.at(0);
+				if(this.lineDS.total()==1 && firstLine.item_id==0){
+					this.lineDS.data([]);
+				}
+
+			 	this.referenceLineDS.query({
+			 		filter: { field:"transaction_id", value: reference_id }
+			 	}).then(function(){
+			 		var view = self.referenceLineDS.view();
+
+			 		$.each(view, function(index, value){
+			 			self.lineDS.add({
+							transaction_id 		: obj.id,
+							tax_item_id 		: value.tax_item_id,
+							item_id 			: value.item_id,
+							measurement_id 		: value.measurement_id,
+							description 		: value.description,
+							quantity 	 		: value.quantity,
+							price 				: value.price,
+							amount 				: value.amount,
+							discount 			: value.discount,
+							fine 				: value.fine,
+							rate				: value.rate,
+							locale				: value.locale,
+							movement 			: value.movement,
+
+							item_prices			: value.item_prices
+						});
+			 		});
+
+			 		self.changes();
+			 	});
+		 	}
+
+		 	this.set("reference_id", 0);
+		},
+		referenceRemoveRow 	: function(e){
+			var self = this, data = e.data,
+				obj = this.get("obj"),
+				reference = this.referenceDS.get(data.id),
+				referenceList = this.get("referenceList"),
+				index = referenceList.indexOf(data), 
+				deposit = kendo.parseFloat(obj.deposit) - kendo.parseFloat(data.deposit);
+			
 			obj.set("deposit", deposit);
+			reference.set("status", 0);
 
-			//Remove empty line
-			var firstLine = this.lineDS.at(0);
-			if(this.lineDS.total()==1 && firstLine.item_id==0){
-				this.lineDS.data([]);
-			}
-
-		 	this.referenceLineDS.query({
-		 		filter: { field:"transaction_id", value: data.id }
-		 	}).then(function(){
-		 		var view = self.referenceLineDS.view();
-
-		 		$.each(view, function(index, value){
-		 			self.lineDS.add({
-						transaction_id 		: obj.id,
-						tax_item_id 		: value.tax_item_id,
-						item_id 			: value.item_id,
-						measurement_id 		: value.measurement_id,
-						description 		: value.description,
-						quantity 	 		: value.quantity,
-						price 				: value.price,
-						amount 				: value.amount,
-						discount 			: value.discount,
-						fine 				: value.fine,
-						rate				: value.rate,
-						locale				: value.locale,
-						movement 			: value.movement,
-
-						item_prices			: value.item_prices
-					});
-		 		});
-
-		 		self.changes();
-		 	});			
+			this.referenceList.splice(index, 1);
 		},
 		//Recurring
 		loadRecurring 		: function(id){
@@ -52260,6 +52301,8 @@
 		journalLineDS		: dataStore(apiUrl + "journal_lines"),
 		recurringDS 		: dataStore(apiUrl + "transactions"),
 		recurringLineDS 	: dataStore(apiUrl + "item_lines"),
+		referenceDS			: dataStore(apiUrl + "transactions"),
+		referenceLineDS		: dataStore(apiUrl + "item_lines"),
 		depositDS  			: dataStore(apiUrl + "transactions"),
 		assemblyDS			: dataStore(apiUrl + "item_prices"),
 		attachmentDS	 	: dataStore(apiUrl + "attachments"),
@@ -52328,6 +52371,7 @@
 			  	{ field: "name", dir: "asc" }
 			]
 		}),
+		referenceList 		: [],
 		paymentTermDS 		: banhji.source.paymentTermDS,
 		amtDueColor 		: banhji.source.amtDueColor,
 	    confirmMessage 		: banhji.source.confirmMessage,
@@ -52351,6 +52395,7 @@
 		recurring 			: "",
 		recurring_validate 	: false,
 		showDiscount 		: false,
+		reference_id 		: 0,
 		balance 			: 0,
 		total_deposit		: 0,
 		total 				: 0,
@@ -52914,6 +52959,7 @@
 					self.set("total", kendo.toString(view[0].amount, "c2", view[0].locale));
 			        self.set("amount_due", kendo.toString(view[0].amount - view[0].deposit, "c2", view[0].locale));
 					
+					//Status
 					if(view[0].status=="1"){
 						self.set("statusSrc", banhji.source.paidSrc);
 					}else if(view[0].status=="2"){
@@ -52922,11 +52968,13 @@
 						self.set("statusSrc", banhji.source.openSrc);
 					}
 
+					//Discount
 					if(view[0].discount>0){
 						self.set("showDiscount", true);
 					}
 
 					self.loadLines(id);
+					self.loadDeposit();
 					self.assemblyLineDS.filter([
 						{ field: "transaction_id", value: id },
 						{ field: "assembly_id >", value: 0 }
@@ -52935,8 +52983,21 @@
 					self.journalLineDS.filter({ field: "transaction_id", value: id });
 					self.attachmentDS.filter({ field: "transaction_id", value: id });
 					
+					//References
 					if(view[0].references.length>0){
-						self.loadEditReference();
+						$.each(view[0].references, function(index, value){
+							referenceIds.push(value);
+						});
+
+						self.referenceDS.query({
+							filter:{ field: "id", operator:"where_in", value: referenceIds }
+						}).then(function(){
+							var reference = self.referenceDS.view();
+
+							self.set("referenceList", reference);
+						});
+					}else{
+						self.loadReference();
 					}
 				});
 			}				
@@ -52961,27 +53022,6 @@
 		        	});
 					value.set("item_prices", itemPriceList);
 				});
-			});
-		},
-		loadEditReference 	: function(){
-			var self = this, referenceIds = [], obj = this.get("obj");
-
-			$.each(obj.references, function(index, value){
-				referenceIds.push(value);
-			});
-
-			this.referenceDS.query({
-				filter:{ field: "id", operator:"where_in", value: referenceIds }
-			}).then(function(){
-				// obj.set("references", []);
-				// obj.set("references", referenceIds);
-				
-				// var multiselect = $("#multiselect").data("kendoMultiSelect");
-				// // multiselect.value([]);
-				// multiselect.value(referenceIds);
-				// multiselect.refresh();
-
-				$("#multiselect").data("kendoMultiSelect").value(referenceIds);
 			});
 		},
 		changes				: function(){
@@ -53105,6 +53145,7 @@
 			this.set("total", 0);			
 			this.set("amount_due", 0);
 			this.set("amtDueColor", banhji.source.amtDueColor);
+			this.set("referenceList", []);
 
 			//Set Date
 			var duedate = new Date();
@@ -53208,9 +53249,6 @@
 	    	obj.set("issued_date", kendo.toString(new Date(obj.issued_date), "s"));
 	    	obj.set("due_date", kendo.toString(new Date(obj.due_date), "yyyy-MM-dd"));
 
-	    	//References
-	    	this.referenceDS.sync();
-
 	    	//Warning over credit allowed
 	        if(obj.credit_limit>0 && obj.amount>obj.credit_allowed){
 	        	alert("Over credit allowed!");
@@ -53235,6 +53273,14 @@
 					this.addJournal(obj.id);
 		    	}
 	    	}
+
+	    	//Reference
+    		var referenceIds = [];
+    		$.each(this.get("referenceList"), function(index, value){
+    			referenceIds.push(value.id);
+    		});
+	    	obj.set("references", referenceIds);
+	    	this.referenceDS.sync();
 	    	
 			//Save Obj
 			this.objSync()
@@ -53619,56 +53665,81 @@
 				]);
 			}else{
 				obj.set("references", []);
+				this.set("referenceList", []);
 			}
 		},
-		referenceSelect 	: function(e){
-			var self = this, data = e.dataItem,
-				obj = this.get("obj"), 
-				deposit = kendo.parseFloat(data.deposit) + kendo.parseFloat(obj.deposit);
+		referenceChanges 	: function(e){			
+			var self = this,
+				isExisting = false, 
+				reference_id = this.get("reference_id"),
+				referenceList = this.get("referenceList");
 
-			obj.set("deposit", deposit);
-			data.set("status", 1);
+			$.each(referenceList, function(index, value){
+				if(value.id==reference_id){
+					isExisting = true;
 
-			//Remove empty line
-			var firstLine = this.lineDS.at(0);
-			if(this.lineDS.total()==1 && firstLine.item_id==0){
-				this.lineDS.data([]);
-			}
+					return false;
+				}
+			});
 
-		 	this.referenceLineDS.query({
-		 		filter: { field:"transaction_id", value: data.id }
-		 	}).then(function(){
-		 		var view = self.referenceLineDS.view();
+			if(reference_id>0 && isExisting==false){
+				var obj = this.get("obj"),
+					reference = this.referenceDS.get(reference_id),
+					deposit = kendo.parseFloat(reference.deposit) + kendo.parseFloat(obj.deposit);
 
-		 		$.each(view, function(index, value){
-		 			self.lineDS.add({
-						transaction_id 		: obj.id,
-						tax_item_id 		: value.tax_item_id,
-						item_id 			: value.item_id,
-						measurement_id 		: value.measurement_id,
-						description 		: value.description,
-						quantity 	 		: value.quantity,
-						price 				: value.price,
-						amount 				: value.amount,
-						discount 			: value.discount,
-						rate				: value.rate,
-						locale				: value.locale,
-						movement 			: value.movement,
+				obj.set("deposit", deposit);
+				reference.set("status", 1);
 
-						item_prices			: value.item_prices
-					});
-		 		});
+				this.referenceList.push(reference);
 
-		 		self.changes();
-		 	});
+				//Remove empty line
+				var firstLine = this.lineDS.at(0);
+				if(this.lineDS.total()==1 && firstLine.item_id==0){
+					this.lineDS.data([]);
+				}
+
+			 	this.referenceLineDS.query({
+			 		filter: { field:"transaction_id", value: reference_id }
+			 	}).then(function(){
+			 		var view = self.referenceLineDS.view();
+
+			 		$.each(view, function(index, value){
+			 			self.lineDS.add({
+							transaction_id 		: obj.id,
+							tax_item_id 		: value.tax_item_id,
+							item_id 			: value.item_id,
+							measurement_id 		: value.measurement_id,
+							description 		: value.description,
+							quantity 	 		: value.quantity,
+							price 				: value.price,
+							amount 				: value.amount,
+							discount 			: value.discount,
+							rate				: value.rate,
+							locale				: value.locale,
+							movement 			: value.movement,
+
+							item_prices			: value.item_prices
+						});
+			 		});
+
+			 		self.changes();
+			 	});
+		 	}
+
+		 	this.set("reference_id", 0);
 		},
-		referenceDeselect 	: function(e){
-			var self = this, data = e.dataItem,
-				obj = this.get("obj"), 
+		referenceRemoveRow 	: function(e){
+			var self = this, data = e.data,
+				obj = this.get("obj"),
+				reference = this.referenceDS.get(data.id),
+				referenceList = this.get("referenceList"),
+				index = referenceList.indexOf(data), 
 				deposit = kendo.parseFloat(obj.deposit) - kendo.parseFloat(data.deposit);
-
+			
 			obj.set("deposit", deposit);
-			data.set("status", 0);
+			reference.set("status", 0);
+
+			this.referenceList.splice(index, 1);
 		},
 		//Recurring
 		loadRecurring 		: function(id){

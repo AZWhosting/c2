@@ -14642,7 +14642,9 @@
 			let dd = new Date();
 			this.set('session', dd.getTime());
 		},
-		onEnd  : function() {}
+		onEnd  : function() {
+			this.set('session', null);
+		}
 	});
 	banhji.cashReceipt = kendo.observable({
 		lang 				: langVM,
