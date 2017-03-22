@@ -4243,12 +4243,15 @@
 								            	<td>
 													<select data-role="multiselect"
 														   data-item-template="reference-list-tmpl"
+														   data-clear-button="false"
 										                   data-value-primitive="true"
+										                   data-auto-bind="false"
 										                   data-text-field="number"
 										                   data-value-field="id"
 										                   data-bind="value: obj.references,
-										                              source: referenceList,
-														   			  events:{ select: referenceSelect }"
+										                              source: referenceDS,
+														   			  events:{ select: referenceSelect,
+														   			  		   deselect: referenceDeselect }"
 										                   data-placeholder="Add Reference..."
 										                   style="width:100%;" 
 										            ></select>
@@ -52327,7 +52330,6 @@
 			  	{ field: "name", dir: "asc" }
 			]
 		}),
-		referenceList 		: [],
 		paymentTermDS 		: banhji.source.paymentTermDS,
 		amtDueColor 		: banhji.source.amtDueColor,
 	    confirmMessage 		: banhji.source.confirmMessage,
@@ -52888,7 +52890,7 @@
 		},
 		//Obj
 		loadObj 			: function(id){
-			var self = this, para = [];
+			var self = this, para = [], referenceIds = [];
 
 			para.push({ field:"id", value: id });
 
@@ -52911,6 +52913,9 @@
 
 					self.set("obj", view[0]);
 
+			        self.set("total", kendo.toString(view[0].amount, "c2", view[0].locale));
+			        self.set("amount_due", kendo.toString(view[0].amount - view[0].deposit, "c2", view[0].locale));
+					
 					if(view[0].status=="1"){
 						self.set("statusSrc", banhji.source.paidSrc);
 					}else if(view[0].status=="2"){
@@ -52922,10 +52927,7 @@
 					if(view[0].discount>0){
 						self.set("showDiscount", true);
 					}
-					
-			        self.set("total", kendo.toString(view[0].amount, "c", view[0].locale));
-			        self.set("amount_due", kendo.toString(view[0].amount - view[0].deposit, "c", view[0].locale));
-										
+
 					self.loadLines(id);
 					self.assemblyLineDS.filter([
 						{ field: "transaction_id", value: id },
@@ -52934,9 +52936,17 @@
 
 					self.journalLineDS.filter({ field: "transaction_id", value: id });
 					self.attachmentDS.filter({ field: "transaction_id", value: id });
-					
-					self.loadEditReference();
-					self.loadDeposit();
+
+					if(view[0].references.length>0){
+						$.each(view[0].references, function(index, value){
+							referenceIds.push(value);
+						});
+						self.referenceDS.query({
+							filter:{ field: "id", operator:"where_in", value: referenceIds }
+						}).then(function(){
+							
+						});
+					}
 				});
 			}				
 		},
@@ -52960,32 +52970,6 @@
 		        	});
 					value.set("item_prices", itemPriceList);
 				});
-			});
-		},
-		loadEditReference 	: function(){
-			var self = this, 
-				obj = this.get("obj"),
-				referenceIds = [], referenceList = [];
-
-			$.each(obj.references, function(index, value){
-				referenceIds.push(value);
-			});
-			this.referenceDS.query({
-				filter:{ field: "id", operator:"where_in", value: referenceIds }
-			}).then(function(){
-				var view = self.referenceDS.view();
-
-				$.each(view, function(index, value){
-					referenceList.push(value);
-				});
-
-				self.set("referenceList", []);
-				obj.set("references", []);
-
-				self.set("referenceList", referenceList);
-				obj.set("references", referenceIds);
-
-				self.loadReference();
 			});
 		},
 		changes				: function(){
@@ -53212,6 +53196,9 @@
 	    	obj.set("issued_date", kendo.toString(new Date(obj.issued_date), "s"));
 	    	obj.set("due_date", kendo.toString(new Date(obj.due_date), "yyyy-MM-dd"));
 
+	    	//References
+	    	this.referenceDS.sync();
+
 	    	//Warning over credit allowed
 	        if(obj.credit_limit>0 && obj.amount>obj.credit_allowed){
 	        	alert("Over credit allowed!");
@@ -53236,9 +53223,6 @@
 					this.addJournal(obj.id);
 		    	}
 	    	}
-
-	        //References
-	    	this.referenceDS.sync();
 	    	
 			//Save Obj
 			this.objSync()
@@ -53298,12 +53282,12 @@
 			this.lineDS.cancelChanges();
 			this.assemblyLineDS.cancelChanges();
 			this.attachmentDS.cancelChanges();
+			this.referenceDS.cancelChanges();
 			
 			this.dataSource.data([]);
 			this.lineDS.data([]);
 			this.assemblyLineDS.data([]);
 			this.attachmentDS.data([]);
-
 			this.referenceDS.data([]);
 
 			banhji.userManagement.removeMultiTask("invoice");
@@ -53615,26 +53599,14 @@
 			var self = this, obj = this.get("obj");
 
 			if(obj.contact_id>0){
-				this.referenceDS.query({
-					filter:[
-						{ field: "contact_id", value: obj.contact_id },
-						{ field: "status", value: 0 },
-						{ field: "type", operator:"where_in", value:["Sale_Order", "Quote", "GDN"] },
-						{ field: "due_date >=", value: kendo.toString(obj.issued_date, "yyyy-MM-dd") }
-					]
-				}).then(function(){
-					var view = self.referenceDS.view();
-
-					if(obj.isNew()){
-						self.set("referenceList", []);
-					}
-					$.each(view, function(index, value){
-						self.referenceList.push(value);
-					});
-				});
+				this.referenceDS.filter([
+					{ field: "contact_id", value: obj.contact_id },
+					{ field: "status", value: 0 },
+					{ field: "type", operator:"where_in", value:["Sale_Order", "Quote", "GDN"] },
+					{ field: "due_date >=", value: kendo.toString(obj.issued_date, "yyyy-MM-dd") }
+				]);
 			}else{
 				obj.set("references", []);
-				this.set("referenceList", []);
 			}
 		},
 		referenceSelect 	: function(e){
@@ -53644,7 +53616,7 @@
 
 			obj.set("deposit", deposit);
 			data.set("status", 1);
-			
+
 			//Remove empty line
 			var firstLine = this.lineDS.at(0);
 			if(this.lineDS.total()==1 && firstLine.item_id==0){
@@ -53684,7 +53656,7 @@
 				deposit = kendo.parseFloat(obj.deposit) - kendo.parseFloat(data.deposit);
 
 			obj.set("deposit", deposit);
-			data.set("status", 0);		 	
+			data.set("status", 0);
 		},
 		//Recurring
 		loadRecurring 		: function(id){

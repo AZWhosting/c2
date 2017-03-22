@@ -19405,7 +19405,7 @@
 		    banhji.importContact.dataSource.bind("error", function(e){		    		    	
 				var notif = $("#ntf1").data("kendoNotification");
 	    		notif.hide();
-	    		notif.success(self.lang.lang.error_message);
+	    		notif.error(self.lang.lang.error_message);
 				$("#loadImport").css("display","none");	
 				$('li.k-file').remove();
 				self.dataSource.data([]);		
@@ -19463,7 +19463,7 @@
 		    banhji.importItem.dataSource.bind("error", function(e){		    		    	
 				var notif = $("#ntf1").data("kendoNotification");
 	    		notif.hide();
-	    		notif.success(self.lang.lang.error_message);
+	    		notif.error(self.lang.lang.error_message);
 				$("#loadImport").css("display","none");	
 				$('li.k-file').remove();
 				self.dataSource.data([]);

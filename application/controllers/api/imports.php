@@ -493,68 +493,73 @@ class Imports extends REST_Controller {
 						break;
 					}
 				}
-				// transaction 
-				$transaction = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				$transaction->type = "Water_Deposit";
-				$transaction->contact_id = $customer->id;
-				$transaction->journal_type = "journal";
-				$transaction->is_journal = 1;
-				$transaction->rate = 1.000000000000000;
-				$transaction->locale = $this->locale;
-				$transaction->number = "JV".$this->_generate_number($transaction->type, $meter->date_used);
-				$transaction->deposit_date = date('Y-m-d', strtotime($row->date_used));
-				$transaction->status = 1;
-				// $row->deposit = isset($row->deposit) ? $row->deposit : 0;
-				// $row->balance = isset($row->balance) ? $row->balance : 0;
-				$transaction->amount = isset($row->deposit) ? $row->deposit : 0;
-				if($transaction->save()) {
-					$deposit1 = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-					$deposit1->transaction_id = $transaction->id;
-					$deposit1->account_id = $depositAcct;
-					$deposit1->description= "Water Opening Deposit";
-					$deposit1->contact_id = $transaction->contact_id;
-					$deposit1->dr = isset($row->deposit) ? $row->deposit : 0;
-					$deposit1->cr = 0.00;
-					$deposit1->save();
+				// transaction
+				if(isset($row->deposit)) {
+					$transaction = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					$transaction->type = "Water_Deposit";
+					$transaction->contact_id = $customer->id;
+					$transaction->journal_type = "journal";
+					$transaction->is_journal = 1;
+					$transaction->rate = 1.000000000000000;
+					$transaction->locale = $this->locale;
+					$transaction->number = "JV".$this->_generate_number($transaction->type, $meter->date_used);
+					$transaction->deposit_date = date('Y-m-d', strtotime($row->date_used));
+					$transaction->status = 1;
+					// $row->deposit = isset($row->deposit) ? $row->deposit : 0;
+					// $row->balance = isset($row->balance) ? $row->balance : 0;
+					$transaction->amount = isset($row->deposit) ? $row->deposit : 0;
+					if($transaction->save()) {
+						$deposit1 = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+						$deposit1->transaction_id = $transaction->id;
+						$deposit1->account_id = $depositAcct;
+						$deposit1->description= "Water Opening Deposit";
+						$deposit1->contact_id = $transaction->contact_id;
+						$deposit1->dr = isset($row->deposit) ? $row->deposit : 0;
+						$deposit1->cr = 0.00;
+						$deposit1->save();
 
-					$deposit2 = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-					$deposit2->transaction_id = $transaction->id;
-					$deposit2->account_id = 7;
-					$deposit2->description= "Water Opening Deposit";
-					$deposit2->contact_id = $transaction->contact_id;
-					$deposit2->dr = 0.00;
-					$deposit2->cr = isset($row->deposit) ? $row->deposit : 0;
-					$deposit2->save();
+						$deposit2 = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+						$deposit2->transaction_id = $transaction->id;
+						$deposit2->account_id = 7;
+						$deposit2->description= "Water Opening Deposit";
+						$deposit2->contact_id = $transaction->contact_id;
+						$deposit2->dr = 0.00;
+						$deposit2->cr = isset($row->deposit) ? $row->deposit : 0;
+						$deposit2->save();
+					}
 				}
-				$ar = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				$ar->type = "Journal";
-				$ar->contact_id = $customer->id;
-				$ar->journal_type = "journal";
-				$ar->is_journal = 1;
-				$ar->rate = 1.000000000000000;
-				$ar->locale = $this->locale;
-				$ar->number = "JV".$this->_generate_number($ar->type, $meter->date_used);
-				$ar->deposit_date = date('Y-m-d', strtotime($row->date_used));
-				$ar->amount = $row->balance;
-				$ar->status = 1;
-				if($ar->save()) {
-					$ar1 = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-					$ar1->transaction_id = $ar->id;
-					$ar1->account_id = $customer->account_id;
-					$ar1->description= "Water Opening Balance";
-					$ar1->contact_id = $ar->contact_id;
-					$ar1->dr = isset($row->balance) ? $row->balance : 0;
-					$ar1->cr = 0.00;
-					$ar1->save();
 
-					$ar2 = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-					$ar2->transaction_id = $ar->id;
-					$ar2->account_id = 7;
-					$ar2->description= "Water Opening Balance";
-					$ar2->contact_id = $ar->contact_id;
-					$ar2->dr = 0.00;
-					$ar2->cr = isset($row->balance) ? $row->balance : 0;
-					$ar2->save();
+				if(isset($row->balance)) {
+					$ar = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					$ar->type = "Journal";
+					$ar->contact_id = $customer->id;
+					$ar->journal_type = "journal";
+					$ar->is_journal = 1;
+					$ar->rate = 1.000000000000000;
+					$ar->locale = $this->locale;
+					$ar->number = "JV".$this->_generate_number($ar->type, $meter->date_used);
+					$ar->deposit_date = date('Y-m-d', strtotime($row->date_used));
+					$ar->amount = $row->balance;
+					$ar->status = 1;
+					if($ar->save()) {
+						$ar1 = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+						$ar1->transaction_id = $ar->id;
+						$ar1->account_id = $customer->account_id;
+						$ar1->description= "Water Opening Balance";
+						$ar1->contact_id = $ar->contact_id;
+						$ar1->dr = isset($row->balance) ? $row->balance : 0;
+						$ar1->cr = 0.00;
+						$ar1->save();
+
+						$ar2 = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+						$ar2->transaction_id = $ar->id;
+						$ar2->account_id = 7;
+						$ar2->description= "Water Opening Balance";
+						$ar2->contact_id = $ar->contact_id;
+						$ar2->dr = 0.00;
+						$ar2->cr = isset($row->balance) ? $row->balance : 0;
+						$ar2->save();
+					}
 				}
  				
 				$data[] = array(
@@ -564,11 +569,7 @@ class Imports extends REST_Controller {
 					'customer' => $customer->id,
 					'bloc' => $location->id,
 					'plan_code' => $plan->id,
-					'digit_number' => $meter->number_digit,
-					'info' => array(
-						"deposit" => array('deposit1' => $deposit1->id, 'deposit' =>$deposit2->id),
-						"ar" => array('ar1' => $ar1->id, 'ar2' =>$ar2->id)
-					)
+					'digit_number' => $meter->number_digit
 				);
 			}
 		}
