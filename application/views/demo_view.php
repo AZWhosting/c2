@@ -4064,7 +4064,7 @@
 		<td>
 			<input id="txtPrice-#:uid#" name="txtPrice-#:uid#" 
 					data-role="numerictextbox" 
-					data-format="n"
+					data-format="n3"
 					data-min="0"
 					data-spinners="false" 
 					data-bind="value: price, events: {change : changes}" 
@@ -4753,7 +4753,7 @@
 		<td>
 			<input id="txtPrice-#:uid#" name="txtPrice-#:uid#" 
 					data-role="numerictextbox" 
-					data-format="n"
+					data-format="n3"
 					data-min="0"
 					data-spinners="false" 
 					data-bind="value: price, events: {change : changes}" 
@@ -13205,7 +13205,7 @@
 		<td>
 			<input id="txtPrice" name="txtPrice-#:uid#" 
 					data-role="numerictextbox" 
-					data-format="n"
+					data-format="n3"
 					data-min="0"
 					data-spinners="false"
 					data-bind="value: cost, events: {change : changes}" 
