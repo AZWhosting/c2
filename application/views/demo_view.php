@@ -47305,8 +47305,8 @@
 		},
 		searchTransaction	: function(){
 			var self = this,
-				start = kendo.toString(this.get("sdate"), "yyyy-MM-dd"),
-        		end = kendo.toString(this.get("edate"), "yyyy-MM-dd"),
+				start = this.get("sdate"),
+        		end = this.get("edate"),
         		para = [], obj = this.get("obj");
 
         	if(obj!==null){
@@ -47314,17 +47314,20 @@
         	
 	        	//Dates
 	        	if(start && end){
+	        		start = new Date(start);
+	        		end = new Date(end);
 	        		end.setDate(end.getDate()+1);
-	            	para.push({ field:"issued_date >=", value: start });
-	            	para.push({ field:"issued_date <=", value: end });
+
+	            	para.push({ field:"issued_date >=", value: kendo.toString(start, "yyyy-MM-dd") });
+	            	para.push({ field:"issued_date <=", value: kendo.toString(end, "yyyy-MM-dd") });
 	            }else if(start){
-	            	para.push({ field:"issued_date", value: start });
+	            	start = new Date(start);
+	            	para.push({ field:"issued_date", value: kendo.toString(start, "yyyy-MM-dd") });
 	            }else if(end){
+	            	end = new Date(end);
 	            	end.setDate(end.getDate()+1);
-	            	para.push({ field:"issued_date <=", value: end });
-	            }else{
-	            	
-	            }
+	            	para.push({ field:"issued_date <=", value: kendo.toString(end, "yyyy-MM-dd") });
+	            }else{}
 
 	            this.transactionDS.query({
 	            	filter: para,
@@ -61736,8 +61739,8 @@
 		},
 		searchTransaction	: function(){
 			var self = this,
-				start = kendo.toString(this.get("sdate"), "yyyy-MM-dd"),
-        		end = kendo.toString(this.get("edate"), "yyyy-MM-dd"),
+				start = this.get("sdate"),
+        		end = this.get("edate"),
         		para = [], obj = this.get("obj");
 
         	if(obj!==null){
@@ -61745,17 +61748,20 @@
 
 	        	//Dates
 	        	if(start && end){
+	        		start = new Date(start);
+	        		end = new Date(end);
 	        		end.setDate(end.getDate()+1);
-	            	para.push({ field:"issued_date >=", value: start });
-	            	para.push({ field:"issued_date <=", value: end });
+
+	            	para.push({ field:"issued_date >=", value: kendo.toString(start, "yyyy-MM-dd") });
+	            	para.push({ field:"issued_date <=", value: kendo.toString(end, "yyyy-MM-dd") });
 	            }else if(start){
-	            	para.push({ field:"issued_date", value: start });
+	            	start = new Date(start);
+	            	para.push({ field:"issued_date", value: kendo.toString(start, "yyyy-MM-dd") });
 	            }else if(end){
+	            	end = new Date(end);
 	            	end.setDate(end.getDate()+1);
-	            	para.push({ field:"issued_date <=", value: end });
-	            }else{
-	            	
-	            }
+	            	para.push({ field:"issued_date <=", value: kendo.toString(end, "yyyy-MM-dd") });
+	            }else{}
 
 	            this.transactionDS.query({
 	            	filter: para,
@@ -72827,25 +72833,28 @@
 		searchTransaction	: function(){
 			var self = this, para = [],
 				obj = this.get("obj"),
-				start = kendo.toString(this.get("sdate"), "yyyy-MM-dd"),
-        		end = kendo.toString(this.get("edate"), "yyyy-MM-dd");
+				start = this.get("sdate"),
+        		end = this.get("edate");
 
         	if(obj!==null){
         		para.push({ field:"item_id", value: obj.id });
-        	
-	        	//Dates
+
+	            //Dates
 	        	if(start && end){
+	        		start = new Date(start);
+	        		end = new Date(end);
 	        		end.setDate(end.getDate()+1);
-	            	para.push({ field:"issued_date >=", operator: "where_related_transaction", value: start });
-	            	para.push({ field:"issued_date <=", operator: "where_related_transaction", value: end });            	            	
+
+	            	para.push({ field:"issued_date >=", operator: "where_related_transaction", value: kendo.toString(start, "yyyy-MM-dd") });
+	            	para.push({ field:"issued_date <=", operator: "where_related_transaction", value: kendo.toString(end, "yyyy-MM-dd") });
 	            }else if(start){
-	            	para.push({ field:"issued_date", operator: "where_related_transaction", value: start });
+	            	start = new Date(start);
+	            	para.push({ field:"issued_date", operator: "where_related_transaction", value: kendo.toString(start, "yyyy-MM-dd") });
 	            }else if(end){
+	            	end = new Date(end);
 	            	end.setDate(end.getDate()+1);
-	            	para.push({ field:"issued_date <=", operator: "where_related_transaction", value: end });
-	            }else{
-	            	
-	            }
+	            	para.push({ field:"issued_date <=", operator: "where_related_transaction", value: kendo.toString(end, "yyyy-MM-dd") });
+	            }else{}
 
 	            this.transactionDS.query({
 	            	filter: para,
@@ -78247,8 +78256,8 @@
 			var self = this,
 				para = [],
 				obj = this.get("obj"),
-				start = kendo.toString(this.get("sdate"), "yyyy-MM-dd"),
-        		end = kendo.toString(this.get("edate"), "yyyy-MM-dd");
+				start = this.get("sdate"),
+        		end = this.get("edate");
 
         	if(obj.id){
         		para.push({ field:"account_id", value: obj.id });
@@ -78256,17 +78265,20 @@
 
         	//Dates
         	if(start && end){
+        		start = new Date(start);
+        		end = new Date(end);
         		end.setDate(end.getDate()+1);
-            	para.push({ field:"issued_date >=", operator:"where_related_transaction", value: start });
-            	para.push({ field:"issued_date <=", operator:"where_related_transaction", value: end });            	            	
+
+            	para.push({ field:"issued_date >=", operator: "where_related_transaction", value: kendo.toString(start, "yyyy-MM-dd") });
+            	para.push({ field:"issued_date <=", operator: "where_related_transaction", value: kendo.toString(end, "yyyy-MM-dd") });
             }else if(start){
-            	para.push({ field:"issued_date", operator:"where_related_transaction", value: start });
+            	start = new Date(start);
+            	para.push({ field:"issued_date", operator: "where_related_transaction", value: kendo.toString(start, "yyyy-MM-dd") });
             }else if(end){
+            	end = new Date(end);
             	end.setDate(end.getDate()+1);
-            	para.push({ field:"issued_date <=", operator:"where_related_transaction", value: end });
-            }else{
-            	
-            }                        
+            	para.push({ field:"issued_date <=", operator: "where_related_transaction", value: kendo.toString(end, "yyyy-MM-dd") });
+            }else{}
 
             this.transactionDS.query({
             	filter: para,            	
@@ -80855,7 +80867,7 @@
 					var view = self.dataSource.view();
 					
 					self.set("obj", view[0]);
-					
+
 					self.set("total", kendo.toString(view[0].amount, "c2", view[0].locale));		       		
 
 					self.lineDS.filter({ field: "transaction_id", value: id });
