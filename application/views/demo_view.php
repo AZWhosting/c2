@@ -4187,8 +4187,6 @@
 							            </li>
 							            <li class="span1 glyphicons history"><a href="#tab-5" data-toggle="tab"><i></i></a>
 							            </li>
-							            <li class="span1 glyphicons link"><a href="#tab-6" data-toggle="tab"><i></i></a>
-							            </li>
 							            <!-- <li class="span1 glyphicons show_liness"><a href="#tab6-6" data-toggle="tab"><i></i></a></li> -->
 							        </ul>
 							    </div>
@@ -4455,11 +4453,6 @@
 							            
 							        </div>
 							        <!-- // Recuring END -->
-
-							        <!-- References -->
-							        <div class="tab-pane" id="tab-6">
-
-							        </div>
 
 							        <div class="tab-pane saleSummaryCustomer" id="tab5-6">
 										<table class="table table-borderless table-condensed">
@@ -52265,7 +52258,6 @@
 		recurringDS 		: dataStore(apiUrl + "transactions"),
 		recurringLineDS 	: dataStore(apiUrl + "item_lines"),
 		referenceDS			: dataStore(apiUrl + "transactions"),
-		referenceDS1			: dataStore(apiUrl + "transactions"),
 		referenceLineDS		: dataStore(apiUrl + "item_lines"),
 		depositDS  			: dataStore(apiUrl + "transactions"),
 		assemblyDS			: dataStore(apiUrl + "item_prices"),
@@ -53246,45 +53238,8 @@
 	    	}
 
 	        //References
-	    	if(obj.references.length>0){
-	    		var referenceIds = [];
-	    		$.each(this.referenceList, function(index, value){
-	    			referenceIds.push(value.id);
-	    		});
-
-	    		this.referenceDS1.query({
-	    			filter:{ field:"id", operator:"where_in", value:referenceIds }
-	    		}).then(function(){
-	    			var view = self.referenceDS1.data();
-
-	    		// 	for (var i = 0; i < view.length; i++) {
-	    		// 		for (var j = 0; j < obj.references.length; j++) {
-	    		// 			console.log(view[i].id + "__" + obj.references[j]);
-	    		// 			if(kendo.parseInt(obj.references[j])==view[i].id){
-							// 	view[i].set("status", 1);	
-							// 	console.log(view[i].id);					
-							// }else{
-							// 	view[i].set("status", 0);
-							// }
-	    		// 		}
-	    		// 	}
-
-	    			$.each(view, function(index, value){
-	    				$.each(obj.references, function(ind, val){
-		    				if(kendo.parseInt(val)==value.id){
-								value.set("status", 1);
-								console.log(val+" - "+value.status);
-							}else{
-								value.set("status", 0);
-								console.log(value.status);
-							}
-						});
-	    			});
-	    			
-	    			self.referenceDS.sync();
-	    		});
-			}
-	    	console.log(banhji.invoice.referenceDS1.data());
+	    	this.referenceDS.sync();
+	    	
 			//Save Obj
 			this.objSync()
 			.then(function(data){ //Success
@@ -53688,7 +53643,8 @@
 				deposit = kendo.parseFloat(data.deposit) + kendo.parseFloat(obj.deposit);
 
 			obj.set("deposit", deposit);
-
+			data.set("status", 1);
+			
 			//Remove empty line
 			var firstLine = this.lineDS.at(0);
 			if(this.lineDS.total()==1 && firstLine.item_id==0){
@@ -53721,6 +53677,14 @@
 
 		 		self.changes();
 		 	});
+		},
+		referenceDeselect 	: function(e){
+			var self = this, data = e.dataItem,
+				obj = this.get("obj"), 
+				deposit = kendo.parseFloat(obj.deposit) - kendo.parseFloat(data.deposit);
+
+			obj.set("deposit", deposit);
+			data.set("status", 0);		 	
 		},
 		//Recurring
 		loadRecurring 		: function(id){
@@ -97907,7 +97871,7 @@
 	$(function() {
 		banhji.router.start();
 		banhji.source.pageLoad();
-		console.log($(location).attr('hash').substr(2));
+		console.log($(location).attr('hash').substr(1));
 
 		var cognitoUser = userPool.getCurrentUser();
 		cognitoUser.getSession(function(err, session) {

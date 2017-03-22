@@ -20694,7 +20694,8 @@
       		}
       		if(contact_type_id){
       			para.push({ field: "contact_type_id", value: contact_type_id });
-      		}else{
+      		}
+      		else{
       			para.push({ field: "parent_id", model:"contact_type", operator:"where_related", value: 1 });
       		}
       		this.contactDS.filter(para);
