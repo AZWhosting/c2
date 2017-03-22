@@ -80855,7 +80855,8 @@
 					var view = self.dataSource.view();
 					
 					self.set("obj", view[0]);
-					self.set("original_total", view[0].amount);		       		
+					
+					self.set("total", kendo.toString(view[0].amount, "c2", view[0].locale));		       		
 
 					self.lineDS.filter({ field: "transaction_id", value: id });
 					self.journalLineDS.filter({ field: "transaction_id", value: id });
