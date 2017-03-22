@@ -505,8 +505,6 @@ class Imports extends REST_Controller {
 					$transaction->number = "JV".$this->_generate_number($transaction->type, $meter->date_used);
 					$transaction->deposit_date = date('Y-m-d', strtotime($row->date_used));
 					$transaction->status = 1;
-					// $row->deposit = isset($row->deposit) ? $row->deposit : 0;
-					// $row->balance = isset($row->balance) ? $row->balance : 0;
 					$transaction->amount = isset($row->deposit) ? $row->deposit : 0;
 					if($transaction->save()) {
 						$deposit1 = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
@@ -531,7 +529,7 @@ class Imports extends REST_Controller {
 
 				if(isset($row->balance)) {
 					$ar = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-					$ar->type = "Journal";
+					$ar->type = "Water_Invoice";
 					$ar->contact_id = $customer->id;
 					$ar->journal_type = "journal";
 					$ar->is_journal = 1;

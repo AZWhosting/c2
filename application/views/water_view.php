@@ -14635,6 +14635,14 @@
 		}
 	});
 
+	banhji.cashierSession = kendo.observable({
+		session: null,
+		onStart: function() {
+			let dd = new Date();
+			this.set('session', dd.getTime());
+		},
+		onEnd  : function() {}
+	});
 	banhji.cashReceipt = kendo.observable({
 		lang 				: langVM,
 		numCustomer			: 0,
@@ -16741,19 +16749,6 @@
 		}
 	});
 	
-	banhji.Reconcile = kendo.observable({
-		lang 					: langVM,
-		institute 				: banhji.institute,	
-		pageLoad 				: function(){
-			
-		},
-		save 					: function(){
-
-		},
-		cancel 					: function(){
-			window.history.back();
-		}
-	});	
 	/* Report */
 	banhji.customerList = kendo.observable({
 		lang 					: langVM,

@@ -2118,7 +2118,7 @@
         }
       });
 
-      banhji.employees = kendo.observable({
+    banhji.employees = kendo.observable({
         dataSource: new kendo.data.DataSource({
           transport: {
             read  : {
@@ -2536,9 +2536,9 @@
             }
           });
         }
-      });
+    });
 
-      banhji.users = kendo.observable({
+    banhji.users = kendo.observable({
         users : banhji.userDS,
         cModules: banhji.moduleDS,
         media    : new image(),

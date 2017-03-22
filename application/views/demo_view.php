@@ -4241,13 +4241,13 @@
 								            		<span data-bind="text: lang.lang.reference"></span>
 								            	</td>
 								            	<td>
-													<select data-role="multiselect"
+													<select id="multiselect" data-role="multiselect"
 														   data-item-template="reference-list-tmpl"
 														   data-clear-button="false"
 										                   data-value-primitive="true"
-										                   data-auto-bind="false"
 										                   data-text-field="number"
 										                   data-value-field="id"
+										                   data-auto-bind="false"
 										                   data-bind="value: obj.references,
 										                              source: referenceDS,
 														   			  events:{ select: referenceSelect,
@@ -52913,7 +52913,7 @@
 
 					self.set("obj", view[0]);
 
-			        self.set("total", kendo.toString(view[0].amount, "c2", view[0].locale));
+					self.set("total", kendo.toString(view[0].amount, "c2", view[0].locale));
 			        self.set("amount_due", kendo.toString(view[0].amount - view[0].deposit, "c2", view[0].locale));
 					
 					if(view[0].status=="1"){
@@ -52936,16 +52936,9 @@
 
 					self.journalLineDS.filter({ field: "transaction_id", value: id });
 					self.attachmentDS.filter({ field: "transaction_id", value: id });
-
+					
 					if(view[0].references.length>0){
-						$.each(view[0].references, function(index, value){
-							referenceIds.push(value);
-						});
-						self.referenceDS.query({
-							filter:{ field: "id", operator:"where_in", value: referenceIds }
-						}).then(function(){
-							
-						});
+						self.loadEditReference();
 					}
 				});
 			}				
@@ -52970,6 +52963,31 @@
 		        	});
 					value.set("item_prices", itemPriceList);
 				});
+			});
+		},
+		loadEditReference 	: function(){
+			var self = this, referenceIds = [], obj = this.get("obj");
+
+			$.each(obj.references, function(index, value){
+				referenceIds.push(value);
+			});
+
+			this.referenceDS.query({
+				filter:{ field: "id", operator:"where_in", value: referenceIds }
+			}).then(function(){
+				// obj.set("references", []);
+				// obj.set("references", referenceIds);
+				
+				// var multiselect = $("#multiselect").data("kendoMultiSelect");
+				// multiselect.value([]);
+				// multiselect.value(referenceIds);
+				// multiselect.refresh();
+				
+				debugger;
+	            // var products = obj.products;
+
+	            obj.set("references", []);                
+	            obj.set("references", referenceIds);
 			});
 		},
 		changes				: function(){
