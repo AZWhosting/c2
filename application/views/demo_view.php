@@ -52260,8 +52260,6 @@
 		journalLineDS		: dataStore(apiUrl + "journal_lines"),
 		recurringDS 		: dataStore(apiUrl + "transactions"),
 		recurringLineDS 	: dataStore(apiUrl + "item_lines"),
-		referenceDS			: dataStore(apiUrl + "transactions"),
-		referenceLineDS		: dataStore(apiUrl + "item_lines"),
 		depositDS  			: dataStore(apiUrl + "transactions"),
 		assemblyDS			: dataStore(apiUrl + "item_prices"),
 		attachmentDS	 	: dataStore(apiUrl + "attachments"),
@@ -52979,15 +52977,11 @@
 				// obj.set("references", referenceIds);
 				
 				// var multiselect = $("#multiselect").data("kendoMultiSelect");
-				// multiselect.value([]);
+				// // multiselect.value([]);
 				// multiselect.value(referenceIds);
 				// multiselect.refresh();
-				
-				debugger;
-	            // var products = obj.products;
 
-	            obj.set("references", []);                
-	            obj.set("references", referenceIds);
+				$("#multiselect").data("kendoMultiSelect").value(referenceIds);
 			});
 		},
 		changes				: function(){

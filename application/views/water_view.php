@@ -14637,6 +14637,7 @@
 
 	banhji.cashierSession = kendo.observable({
 		session: null,
+		amount : 0.00,
 		onStart: function() {
 			let dd = new Date();
 			this.set('session', dd.getTime());
