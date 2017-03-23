@@ -2375,7 +2375,7 @@
 						        <div class="tab-pane" id="tab2">
 					            	<table class="table table-borderless table-condensed cart_total">	
 							            <tr>
-							                <td><span data-bind="text: lang.lang.license"></span></td>
+							                <td><span data-bind="text: lang.lang.license"></span> <span style="color:red">*</span></td>
 							              	<td>
 												<input 
 													data-role="dropdownlist" 
@@ -2385,10 +2385,12 @@
 													data-value-primitive="true" 
 													data-text-field="name" 
 													data-value-field="id" 
+													required data-required-msg="required"
 													data-bind="
 														value: utility.branch_id,
 														enabled: waterUse,
-					                  					source: licenseDS">	
+					                  					source: licenseDS,
+					                  					events: {change: licenseChange}">	
 							              	</td>         	
 							            	<td><span data-bind="text: lang.lang.code"></span></td>
 							              	<td><input class="k-textbox" data-bind="value: utility.codeabbr, enabled: waterUse" placeholder="e.g. 012 333 444" style="width: 100%;" /></td>
@@ -12344,6 +12346,7 @@
         branchDS 			: dataStore(apiUrl + "branches"),
         planDS 				: dataStore(apiUrl + "plans"),
 		contactTypeDS 		: dataStore(apiUrl + "contacts/type"),
+        patternDS 			: dataStore(apiUrl + "contacts"),
 		wordUsage			: null,
 		typeUnit 			: [
 			{id:"usage", name: this.wordUsage},
@@ -12419,9 +12422,10 @@
 			var block = this.licenseDS.at(index - 1);
 			this.set('blockCompanyId',{id:block.id, name:block.name});
 		},
-		addContactType 		: function(e){
-        	var name = this.get("contactTypeName"), self = this;
-        	if(name && this.get("contactTypeAbbr")){
+		addContactType 		: function(){
+        	var self = this, name = this.get("contactTypeName");
+
+        	if(name!==""){
 	        	this.contactTypeDS.add({
 	        		parent_id 	: 1,
 	        		name 		: name,
@@ -12430,27 +12434,45 @@
 	        		is_company 	: this.get("contactTypeCompany"),
 	        		is_system 	: 0
 	        	});
+
 	        	this.contactTypeDS.sync();
 	        	this.contactTypeDS.bind("requestEnd", function(e){
-					if(e.type != 'read' && e.response){
-						var notificat = $("#ntf1").data("kendoNotification");
-						notificat.hide();
-						notificat.success(self.lang.lang.success_message);
-						self.set("contactTypeName", "");
-			        	self.set("contactTypeAbbr", "");
-			        	self.set("contactTypeCompany", 0);
-					}
-				});
-				this.contactTypeDS.bind("error", function(e){
+	        		if(e.type==="create"){
+	        			var response = e.response.results[0];
+	        			self.addPattern(response.id);
+	        			banhji.source.loadContactTypes();
+	        		}
+	        	});
+
+	        	this.set("contactTypeName", "");
+	        	this.set("contactTypeAbbr", "");
+	        	this.set("contactTypeCompany", 0);
+        	}
+        },
+        addPattern 			: function(id){
+        	this.patternDS.insert(0, {
+				"contact_type_id" 		: id,
+				"number"				: "",
+				"locale" 				: banhji.locale,					
+				"is_pattern" 			: 1,
+				"status"				: 1								
+			});
+			this.patternDS.sync();
+			this.patternDS.bind("requestEnd", function(e){
+				if(e.type != 'read' && e.response){
 					var notificat = $("#ntf1").data("kendoNotification");
 					notificat.hide();
-					notificat.success(self.lang.lang.error_message);
-				});	
-        	}else{
-        		var notificat = $("#ntf1").data("kendoNotification");
+					notificat.success(self.lang.lang.success_message);
+					self.set("contactTypeName", "");
+		        	self.set("contactTypeAbbr", "");
+		        	self.set("contactTypeCompany", 0);
+				}
+			});
+			this.patternDS.bind("error", function(e){
+				var notificat = $("#ntf1").data("kendoNotification");
 				notificat.hide();
-				notificat.success(self.lang.lang.field_required_message);
-        	}
+				notificat.error(self.lang.lang.error_message);
+			});	
         },
         addBloc 			: function(e){
         	var branch = this.get("blockCompanyId"),
@@ -20870,8 +20892,9 @@
 		utility 				: null,
 		waterUse 				: false,
 		licenseDS 				: dataStore(apiUrl + "branches"),
+		numberDS  				: dataStore(apiUrl + "activate_water"),
 		pageLoad 				: function(id, contact_type_id){
-			this.licenseDS.fetch();
+			
 			if(id){
 				this.set("isEdit", true);
 				this.loadObj(id, contact_type_id);
@@ -20892,6 +20915,37 @@
 				this.set("waterUse", true);
 			}	
 		},
+		licenseChange 		: function(e) {
+			var obj = this.get("utility"), self = this;
+			this.licenseDS.query({
+				filter: { field:"id", value: obj.branch_id },
+				page: 1,
+				take: 1
+			}).then(function(e){
+				var view = self.licenseDS.view();	
+				self.goNumber(view[0].abbr);
+			});
+		},
+		goNumber 			: function(abbr) {
+			var self = this, obj = this.get("utility");
+			this.numberDS.query({    			
+				filter: { field:"abbr", value: abbr },
+				sort: { field:"code", dir:"desc" },
+				page: 1,
+				take: 1
+			}).then(function(e){
+				var view = self.numberDS.view();
+				var lastNo;
+				if(self.numberDS._total > 0){
+					lastNo = kendo.parseInt(view[0].code) + 1;
+				}else{
+					lastNo = 1;
+				}
+				if(lastNo){
+					obj.set("codeabbr",lastNo);
+				}
+			});
+		},
 		//Contact Person
 		addEmptyContactPerson 	: function(){
 			var obj = this.get("obj");
@@ -20904,6 +20958,7 @@
 				phone				: "",
 				email				: ""
 			});
+			
 		},
 		deleteContactPerson 	: function(e){
 			if (confirm("Are you sure, you want to delete it?")) {
@@ -21084,6 +21139,18 @@
 			var obj = this.dataSource.at(0);
 			this.set("obj", obj);
 			this.typeChanges();
+			this.utilityDS.add({
+				abbr			:"",
+		 		code			:"",
+		 		contact_id 		:"",
+				branch_id 		:"",
+				location_id 	:"",					
+				id_card 		:"",
+				family_member 	:"",
+				occupation 		:""
+			});
+			var UT = this.utilityDS.at(0);
+			this.set("utility", UT);
 		},
 	    objSync 				: function(){
 	    	var dfd = $.Deferred();	        
@@ -21188,9 +21255,8 @@
 			this.set("showConfirm", false);
 		},
 		//Pattern
-		typeChanges 			: function(){
+		typeChanges 			: function(e){
 			var obj = this.get("obj");
-
 			if(obj.contact_type_id && obj.isNew()){
 				this.applyPattern();
 				this.generateNumber();

@@ -44,7 +44,8 @@ class Institute extends DataMapper {
 	);
 	public $has_many = array(
 		'user', 
-		'module', 
+		'module',
+		'role', 
 		'login',
 		'institute' => array(
 			'class' => 'institute',

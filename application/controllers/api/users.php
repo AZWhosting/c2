@@ -250,17 +250,39 @@ class Users extends REST_Controller {
 	* @param: user id
 	*/
 	function roles_get() {
-		$filter = $this->get('filter')?$this->get('filter'): null;
-		$limit = $this->get('limit');
-		$offset = $this->get('offset')?$this->get('offset'):0;
+		$requested_data = $this->get("filter");
+		$filters = $requested_data['filters'];
+		$limit = $this->get('limit') ? $this->get('limit'): 50;
+		$offset= $this->get('offset')? $this->get('offset'): null;
+		$data = array();
+		$user = new User();
 
-		$user = new User(null, $this->entity);
-		foreach($filter['filters'] as $f) {
-			$user->where($f['field'], $f['value']);
+		if(isset($filters)) {
+			foreach($filters as $f) {
+				$user->where($f['field'], $f['value']);
+			}
+		}
+		$user->get_paged($offset, $limit);
+		foreach($user as $u) {
+			$u->role->include_join_fields()->get();
+			foreach($u->module as $m) {
+				$data[] = array(
+					'id' 		=> intval($m->join_id),
+					// 'user'  	=> intval($u->id),
+					// 'module' 	=> intval($m->id),
+					'name' 		=> $m->name
+					// 'href'  	=> $m->href,
+					// 'img_url' 	=> $m->image_url,
+					// 'description'=>$m->description
+				);
+			}
 		}
 
-		$data = $user->include_related('role', NULL, TRUE)->get_raw();
-		$this->response(array('results'=>$data->result()), 200);
+		if(count($data) > 0) {
+			$this->response(array('results'=>$data, 'count'=>count($data)), 200);
+		} else {
+			$this->response(array('results'=>$data, 'count'=>0), 200);
+		}
 	}
 
 	/* assign user to role

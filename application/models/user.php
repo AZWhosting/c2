@@ -12,7 +12,8 @@ class User extends DataMapper {
 		)
 	);
 	public $has_many = array(
-		'module'
+		'module',
+		'role'
 	);
 	// protected $db_params = 
 	// public $validation = array(

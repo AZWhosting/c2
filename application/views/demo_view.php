@@ -12376,6 +12376,7 @@
 		</td>			
     </tr>   
 </script>
+<!-- Purchase -->
 <script id="purchase" type="text/x-kendo-template">
 	<div id="slide-form">
 		<div class="customer-background">
@@ -12815,219 +12816,330 @@
 					    </div>
 					</div>
 
+					<!-- Window -->
+				    <div data-role="window"
+		                 data-title="Additional Cost"
+		                 data-width="600"
+		                 data-actions="{}"
+		                 data-position="{top: '150px', left: '30%'}"
+		                 data-height="530"
+		                 data-bind="visible: windowVisible">
+
+						<table class="table table-bordered table-primary table-striped table-vertical-center">							
+							<tr>
+            					<td colspan="2">
+			            			<input type="radio" value="Cash_Purchase" class="k-radio"
+			            					name="additCostOption" id="additCostOption1"
+			            					data-bind="checked: additCostObj.type, 
+			            								events:{ change: additCostTypeChanges }"> 
+			            			<label class="k-radio-label" for="additCostOption1"><span data-bind="text: lang.lang.cash"></span></label>
+			            		
+						            <input type="radio" value="Credit_Purchase" class="k-radio"
+						            		name="additCostOption" id="additCostOption2"
+						            		data-bind="checked: additCostObj.type, 
+						            					events:{ change: additCostTypeChanges }"> 
+						            <label class="k-radio-label" for="additCostOption2"><span data-bind="text: lang.lang.credit"></span></label>
+				            	</td>
+							</tr>
+							<tr>
+								<td>Supplier</td>
+								<td>
+									<input data-role="combobox"
+										   data-header-template="vendor-header-tmpl"
+						                   data-template="contact-list-tmpl"                 
+						                   data-value-primitive="true"
+						                   data-text-field="name"
+						                   data-value-field="id"
+						                   data-bind="value: additCostObj.contact_id,
+						                              source: additionalContactDS,
+						                              events:{ change : contactColumnChanges }"
+						                   data-placeholder="Add Name.." style="width: 100%" />
+								</td>
+							</tr>
+							<tr>
+								<td>Account</td>
+								<td>
+									<input data-role="dropdownlist"
+											data-header-template="account-header-tmpl"
+						      				data-template="account-list-tmpl"
+											data-value-primitive="true"
+											data-text-field="name" 
+						      				data-value-field="id"
+						      				data-bind="value: additCostObj.account_id,
+						      							source: additionalCostAccountDS"
+						      				data-option-label="Select Account..."
+						      				style="width: 100%" />
+								</td>
+							</tr>
+							<tr>
+								<td>Bill Date</td>
+								<td>
+									<input data-role="datepicker"
+											data-format="dd-MM-yyyy"
+											data-parse-formats="yyyy-MM-dd" 
+											data-bind="value: additCostObj.issued_date"
+											style="width:100%;" />
+								</td>
+							</tr>
+							<tr data-bind="invisible: isAdditCostCash">
+								<td>Due Date</td>
+								<td>
+									<input data-role="datepicker"
+											data-format="dd-MM-yyyy"
+											data-parse-formats="yyyy-MM-dd" 
+											data-bind="value: additCostObj.due_date"
+											style="width:100%;" />
+								</td>
+							</tr>
+							<tr>
+								<td>Reference No.</td>
+								<td>
+									<input type="text" class="k-textbox" 
+											data-bind="value: additCostObj.reference_no"
+											style="width: 100%; margin-bottom: 0;" />		
+								</td>
+							</tr>
+							<tr>
+								<td>Memo</td>		
+								<td>
+									<input type="text" class="k-textbox" 
+											data-bind="value: additCostObj.memo"
+											style="width: 100%; margin-bottom: 0;" />
+								</td>
+							</tr>
+							<tr>
+								<td>Sub Total</td>
+								<td>
+									<input data-role="numerictextbox"
+											data-spinners="false" 
+											data-format="n"
+											data-min="0"
+											data-bind="value: additCostObj.sub_total, events: {change : changes}" 
+											required data-required-msg="required" style="width: 100%;" /> 						
+								</td>
+							</tr>
+							<tr>
+								<td>Tax</td>
+								<td>
+									<input data-role="combobox"
+										   data-header-template="tax-header-tmpl"
+										   data-value-primitive="true"
+						                   data-text-field="name"
+						                   data-value-field="id"
+						                   data-bind="value: additCostObj.tax_item_id, 
+						                   			  source: taxItemDS,
+						                   			  events:{ change: changes }"
+						                   style="width: 100%" />
+								</td>
+						    </tr>
+						    <tr>
+								<td>Amount</td>
+								<td>
+									<span data-format="n" data-bind="text: additCostObj.amount"></span>
+								</td>
+							</tr>
+						</table>
+
+						<br>
+
+						<div align="center">
+							<span class="btn btn-icon btn-success glyphicons power" data-bind="click: windowSave" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save_close"></span></span>							
+							<span class="btn btn-icon btn-danger glyphicons remove_2" data-bind="click: windowDiscard" style="width: 80px;"><i></i> Discard</span>
+						</div>
+					</div>
+
 					<!-- Middle Part -->
-					<div class="box-generic">
+					<div class="row-fluid">
 
-					    <!-- Tabs Heading -->
-					    <div class="tabsbar tabsbar-2">
-					        <ul class="row-fluid row-merge">
-					        	<li class="span6 glyphicons cargo active"><a href="#tab1-2" data-toggle="tab"><i></i><span data-bind="text: lang.lang.items_expense"></span></a>
-					            </li>
-					            <li class="span6 glyphicons circle_plus"><a href="#tab2-2" data-toggle="tab"><i></i><span data-bind="text: lang.lang.additional_costs"></span></a>
-					            </li>				            					            								            
-					        </ul>
-					    </div>
-					    <!-- // Tabs Heading END -->
+			    		<!-- Item Line -->
+						<table class="table table-bordered table-primary table-striped table-vertical-center">
+					        <thead>
+					            <tr>
+					                <th class="center" style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></th>			                
+					                <th><span data-bind="text: lang.lang.items"></span></th>
+					                <th><span data-bind="text: lang.lang.description"></span></th>
+					                <th style="width: 20%;"><span data-bind="text: lang.lang.quantity"></span></th>
+					                <th style="width: 10%;"><span data-bind="text: lang.lang.cost"></span></th>
+					                <th style="width: 1%;" data-bind="visible: showDiscount"><span data-bind="text: lang.lang.discount"></span></th>			                
+					                <th class="center" style="width: 15%;"><span data-bind="text: lang.lang.amount"></span></th>
+					                <th class="center" style="width: 11%;"><span data-bind="text: lang.lang.tax"></span></th>
+					                <th class="center" style="width: 1%;" data-bind="visible: showAdditionalCost">+Cost</th>			                			                			                
+					            </tr> 
+					        </thead>
+					        <tbody data-role="listview" 
+					        		data-template="purchase-item-line-template" 
+					        		data-auto-bind="false"
+					        		data-bind="source: lineDS"></tbody>			        
+					    </table>
+					    
+			            <div class="row">		
+													
+							<div class="span12">
+								<button class="btn btn-inverse" data-bind="click: addRow"><i class="icon-plus icon-white"></i></button>												
 
-					    <div class="tab-content">
+								<div class="btn-group">
+									<div class="leadcontainer">
+										
+									</div>
+									<a class="btn btn-default dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-list"></i> </a>
+									<ul class="dropdown-menu" style="padding: 5px; border-radius:0;">
+										<li>
+											<input type="checkbox" id="chbDiscount" class="k-checkbox" data-bind="checked: showDiscount" />												
+											<label class="k-checkbox-label" for="chbDiscount"><span data-bind="text: lang.lang.discount"></span></label>
+										</li>
+										<li>
+											<input type="checkbox" id="chbAdditionalCost" class="k-checkbox" data-bind="checked: showAdditionalCost" />												
+											<label class="k-checkbox-label" for="chbAdditionalCost"><span data-bind="text: lang.lang.additional_costs"></span></label>
+										</li>																									
+									</ul>
+								</div>
 
-					    	<!-- Item Tab content -->
-					        <div class="tab-pane active" id="tab1-2">						            
-					        	<!-- Item List -->
-								<table class="table table-bordered table-primary table-striped table-vertical-center">
-							        <thead>
-							            <tr>
-							                <th class="center" style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></th>			                
-							                <th><span data-bind="text: lang.lang.items"></span></th>
-							                <th><span data-bind="text: lang.lang.description"></span></th>
-							                <th style="width: 20%;"><span data-bind="text: lang.lang.quantity"></span></th>
-							                <th style="width: 10%;"><span data-bind="text: lang.lang.cost"></span></th>
-							                <th style="width: 1%;" data-bind="visible: showDiscount"><span data-bind="text: lang.lang.discount"></span></th>			                
-							                <th class="center" style="width: 15%;"><span data-bind="text: lang.lang.amount"></span></th>
-							                <th class="center" style="width: 11%;"><span data-bind="text: lang.lang.tax"></span></th>
-							                <th class="center" style="width: 1%;" data-bind="visible: showAdditionalCost">+Cost</th>			                			                			                
-							            </tr> 
-							        </thead>
-							        <tbody data-role="listview" 
-							        		data-template="purchase-item-line-template" 
-							        		data-auto-bind="false"
-							        		data-bind="source: lineDS"></tbody>			        
-							    </table>
+								<!-- Add New Item -->
+								<ul class="topnav addNew">
+									<li role="presentation" class="dropdown ">
+								  		<a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+								  			<span data-bind="text: lang.lang.add_new_item"></span>
+					    					<span class="caret"></span>
+								  		</a>
+							  			<ul class="dropdown-menu addNewItem">  				  				
+							  				<li><a href='#/item'><span data-bind="text: lang.lang.add_inventory_for_sale"></span></a></li>
+							  				<li><a href='#/non_inventory_part'><span data-bind="text: lang.lang.add_noninventory_for_sale"></span></a></li>
+							  				<li><a href='#/fixed_assets'><span data-bind="text: lang.lang.add_fixed_assets"></span></a></li>
+							  				<li><a href='#/item_service'><span data-bind="text: lang.lang.add_services"></span></a></li>
+							  				<li><a href='#/txn_item'><span data-bind="text: lang.lang.add_transaction_item"></span></a></li>  				
+							  				 				
+							  			</ul>
+								  	</li>				
+								</ul>
+								<!--End Add New Item -->
 
-							    <!-- Item Add Row part -->
-					            <div class="row">		
-															
-									<div class="span12">
-										<button class="btn btn-inverse" data-bind="click: addRow"><i class="icon-plus icon-white"></i></button>												
+							</div>										
+							
+						</div>
+						<!-- End Item Line -->
 
-										<div class="btn-group">
-											<div class="leadcontainer">
-												
+						<br>
+
+					    <!-- Account Line -->
+						<table class="table table-bordered table-primary table-striped table-vertical-center">
+					        <thead>
+					            <tr>
+					                <th style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></th>			                
+					                <th style="width: 20%;"><span data-bind="text: lang.lang.account"></span></th>
+					                <th><span data-bind="text: lang.lang.description"></span></th>
+					                <th data-bind="visible: showRef" style="width: 7%;"><span data-bind="text: lang.lang.ref"></span></th>			                
+					                <th data-bind="visible: showSegment" style="width: 15%;"><span data-bind="text: lang.lang.segment"></span></th>
+					                <th class="center" style="width: 15%;"><span data-bind="text: lang.lang.amount"></span></th>
+					                <th class="center" style="width: 11%;"><span data-bind="text: lang.lang.tax"></span></th>			                			                
+					            </tr> 
+					        </thead>
+					        <tbody data-role="listview" 
+					        		data-template="purchase-account-line-template" 
+					        		data-auto-bind="false"
+					        		data-bind="source: accountLineDS"></tbody>			        
+					    </table>
+					    
+					    <div>
+							<button class="btn btn-inverse" data-bind="click: addRowAccount"><i class="icon-plus icon-white"></i></button>												
+
+							<div class="btn-group">
+								<div class="leadcontainer">
+									
+								</div>
+								<a class="btn btn-default dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-list"></i> </a>
+								<ul class="dropdown-menu" style="padding: 5px; border-radius:0;">
+									<li>											
+										<input type="checkbox" id="chbReference" class="k-checkbox" data-bind="checked: showRef" />												
+										<label class="k-checkbox-label" for="chbReference"><span data-bind="text: lang.lang.reference"></span></label>
+									</li>
+									<li>											
+										<input type="checkbox" id="chbSegment" class="k-checkbox" data-bind="checked: showSegment" />												
+										<label class="k-checkbox-label" for="chbSegment"><span data-bind="text: lang.lang.segment"></span></label>
+									</li>															
+								</ul>
+							</div>
+							
+					  		<a href="#/account" class="btn" style="background: #f4f4f4; color: #333; width: 137px;">
+					  			<span data-bind="text: lang.lang.add_account"></span>
+					  		</a>					
+						</div>
+						<!-- End Account Line -->
+
+						<br>
+			       
+						<!-- Additional Cost Line -->
+			        	<table class="table table-bordered table-primary table-striped table-vertical-center">
+					        <thead>
+					            <tr>
+					                <th class="center" style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></th>			                
+					                <th><span data-bind="text: lang.lang.type"></span></th>
+					                <th><span data-bind="text: lang.lang.supplier"></span></th>
+					                <th data-bind="text: lang.lang.inv_"></th>
+					                <th><span data-bind="text: lang.lang.date"></span></th>
+					                <th class="center" style="width: 15%;"><span data-bind="text: lang.lang.subtotal"></span></th>
+					                <th class="center" style="width: 11%;"><span data-bind="text: lang.lang.tax"></span></th>						                						                			                
+					                <th class="center" style="width: 15%;"><span data-bind="text: lang.lang.amount"></span></th>		                			                			                
+					            </tr> 
+					        </thead>
+					        <tbody data-role="listview" 
+					        		data-template="purchase-additional-cost-template" 
+					        		data-auto-bind="false"
+					        		data-bind="source: additionalCostDS"></tbody>			        
+					    </table>
+
+			            <div class="row-fluid">		
+													
+							<div class="span8">
+
+								<table>
+									<tr>
+										<td>
+											<button class="btn btn-inverse" data-bind="click: windowCreate"><i class="icon-plus icon-white"></i></button>
+
+											<div class="btn-group">
+												<div class="leadcontainer">
+													
+												</div>
+												<a class="btn btn-default dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-list"></i> </a>
+												<ul class="dropdown-menu" style="padding: 5px; border-radius:0;">
+													<li>
+														<input type="checkbox" id="chbDueDateColumn" class="k-checkbox" data-bind="checked: showDueDateColumn" />												
+														<label class="k-checkbox-label" for="chbDueDateColumn"><span data-bind="text: lang.lang.due_date"></span></label>
+													</li>																										
+												</ul>
 											</div>
-											<a class="btn btn-default dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-list"></i> </a>
-											<ul class="dropdown-menu" style="padding: 5px; border-radius:0;">
-												<li>
-													<input type="checkbox" id="chbDiscount" class="k-checkbox" data-bind="checked: showDiscount" />												
-													<label class="k-checkbox-label" for="chbDiscount"><span data-bind="text: lang.lang.discount"></span></label>
-												</li>
-												<li>
-													<input type="checkbox" id="chbAdditionalCost" class="k-checkbox" data-bind="checked: showAdditionalCost" />												
-													<label class="k-checkbox-label" for="chbAdditionalCost"><span data-bind="text: lang.lang.additional_costs"></span></label>
-												</li>																									
-											</ul>
-										</div>
+										</td>
+										<td><span data-bind="text: lang.lang.additional_cost_apply"></span></td>
+										<td>
+											<input type="radio" name="engine" id="engine1" class="k-radio" value="Equal" 
+													data-bind="checked: obj.additional_apply,
+																events:{ change: changes }">
+								            <label class="k-radio-label" for="engine1"><span data-bind="text: lang.lang.equal"></span></label>
+					            		</td>						            	
+					            		<td>						         
+								            <input type="radio" name="engine" id="engine2" class="k-radio" value="Weighted"
+								            		data-bind="checked: obj.additional_apply,
+																events:{ change: changes }">
+								            <label class="k-radio-label" for="engine2"><span data-bind="text: lang.lang.weighted"></span></label>
+					            		</td>
+					            	</tr>
+					            </table>
+							</div>
 
-										<!-- Add New Item -->
-										<ul class="topnav addNew">
-											<li role="presentation" class="dropdown ">
-										  		<a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-										  			<span data-bind="text: lang.lang.add_new_item"></span>
-							    					<span class="caret"></span>
-										  		</a>
-									  			<ul class="dropdown-menu addNewItem">  				  				
-									  				<li><a href='#/item'><span data-bind="text: lang.lang.add_inventory_for_sale"></span></a></li>
-									  				<li><a href='#/non_inventory_part'><span data-bind="text: lang.lang.add_noninventory_for_sale"></span></a></li>
-									  				<li><a href='#/fixed_assets'><span data-bind="text: lang.lang.add_fixed_assets"></span></a></li>
-									  				<li><a href='#/item_service'><span data-bind="text: lang.lang.add_services"></span></a></li>
-									  				<li><a href='#/txn_item'><span data-bind="text: lang.lang.add_transaction_item"></span></a></li>  				
-									  				 				
-									  			</ul>
-										  	</li>				
-										</ul>
-										<!--End Add New Item -->
+							<div class="span4">
+								<table class="table table-condensed table-striped table-white">
+									<tbody>
+										<tr>												
+											<td class="right"><span data-bind="text: lang.lang.costs_allocated"></span></td>
+											<td class="right strong" width="40%"><span data-bind="text: additional_cost"></span></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>										
+							
+						</div>
+			        	<!-- End Additional Cost Line -->
 
-									</div>										
-									
-								</div>
-
-								<br>
-
-							    <!-- Account List -->
-								<table class="table table-bordered table-primary table-striped table-vertical-center">
-							        <thead>
-							            <tr>
-							                <th style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></th>			                
-							                <th style="width: 20%;"><span data-bind="text: lang.lang.account"></span></th>
-							                <th><span data-bind="text: lang.lang.description"></span></th>
-							                <th data-bind="visible: showRef" style="width: 7%;"><span data-bind="text: lang.lang.ref"></span></th>			                
-							                <th data-bind="visible: showSegment" style="width: 15%;"><span data-bind="text: lang.lang.segment"></span></th>
-							                <th class="center" style="width: 15%;"><span data-bind="text: lang.lang.amount"></span></th>
-							                <th class="center" style="width: 11%;"><span data-bind="text: lang.lang.tax"></span></th>			                			                
-							            </tr> 
-							        </thead>
-							        <tbody data-role="listview" 
-							        		data-template="purchase-account-line-template" 
-							        		data-auto-bind="false"
-							        		data-bind="source: accountLineDS"></tbody>			        
-							    </table>
-							    <!-- Add Row Account -->
-							    <div>
-									<button class="btn btn-inverse" data-bind="click: addRowAccount"><i class="icon-plus icon-white"></i></button>												
-
-									<div class="btn-group">
-										<div class="leadcontainer">
-											
-										</div>
-										<a class="btn btn-default dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-list"></i> </a>
-										<ul class="dropdown-menu" style="padding: 5px; border-radius:0;">
-											<li>											
-												<input type="checkbox" id="chbReference" class="k-checkbox" data-bind="checked: showRef" />												
-												<label class="k-checkbox-label" for="chbReference"><span data-bind="text: lang.lang.reference"></span></label>
-											</li>
-											<li>											
-												<input type="checkbox" id="chbSegment" class="k-checkbox" data-bind="checked: showSegment" />												
-												<label class="k-checkbox-label" for="chbSegment"><span data-bind="text: lang.lang.segment"></span></label>
-											</li>															
-										</ul>
-									</div>
-									
-							  		<a href="#/account" class="btn" style="background: #f4f4f4; color: #333; width: 137px;">
-							  			<span data-bind="text: lang.lang.add_account"></span>
-							  		</a>					
-								</div>
-
-					        </div>
-					        <!-- // Item Tab content END -->
-
-					        <!-- Additional Cost Tab content -->
-					        <div class="tab-pane" id="tab2-2">				        	
-								<table class="table table-bordered table-primary table-striped table-vertical-center">
-							        <thead>
-							            <tr>
-							                <th class="center" style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></th>			                
-							                <th><span data-bind="text: lang.lang.type"></span></th>
-							                <th><span data-bind="text: lang.lang.account"></span></th>
-							                <th><span data-bind="text: lang.lang.supplier"></span></th>
-							                <th data-bind="text: lang.lang.inv_"></th>
-							                <th><span data-bind="text: lang.lang.date"></span></th>
-							                <th data-bind="visible: showDueDateColumn"><span data-bind="text: lang.lang.due_date"></span></th>
-							                <th data-bind="visible: showDescriptionColumn"><span data-bind="text: lang.lang.description"></span></th>						                						                			                
-							                <th class="center" style="width: 15%;"><span data-bind="text: lang.lang.amount"></span></th>
-							                <th class="center" style="width: 11%;"><span data-bind="text: lang.lang.tax"></span></th>			                			                			                
-							            </tr> 
-							        </thead>
-							        <tbody data-role="listview" 
-							        		data-template="purchase-additional-cost-template" 
-							        		data-auto-bind="false"
-							        		data-bind="source: additionalCostDS"></tbody>			        
-							    </table>
-
-							    <!-- Add Row part -->
-					            <div class="row-fluid">		
-															
-									<div class="span8">
-
-										<table>
-											<tr>
-												<td>
-													<button class="btn btn-inverse" data-bind="click: addRowAdditionalCost"><i class="icon-plus icon-white"></i></button>
-
-													<div class="btn-group">
-														<div class="leadcontainer">
-															
-														</div>
-														<a class="btn btn-default dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-list"></i> </a>
-														<ul class="dropdown-menu" style="padding: 5px; border-radius:0;">
-															<li>
-																<input type="checkbox" id="chbDueDateColumn" class="k-checkbox" data-bind="checked: showDueDateColumn" />												
-																<label class="k-checkbox-label" for="chbDueDateColumn"><span data-bind="text: lang.lang.due_date"></span></label>
-															</li>																										
-														</ul>
-													</div>
-												</td>
-												<td><span data-bind="text: lang.lang.additional_cost_apply"></span></td>
-												<td>
-													<input type="radio" name="engine" id="engine1" class="k-radio" value="Equal" 
-															data-bind="checked: obj.additional_apply,
-																		events:{ change: changes }">
-										            <label class="k-radio-label" for="engine1"><span data-bind="text: lang.lang.equal"></span></label>
-							            		</td>						            	
-							            		<td>						         
-										            <input type="radio" name="engine" id="engine2" class="k-radio" value="Weighted"
-										            		data-bind="checked: obj.additional_apply,
-																		events:{ change: changes }">
-										            <label class="k-radio-label" for="engine2"><span data-bind="text: lang.lang.weighted"></span></label>
-							            		</td>
-							            	</tr>
-							            </table>
-									</div>
-
-									<div class="span4">
-										<table class="table table-condensed table-striped table-white">
-											<tbody>
-												<tr>												
-													<td class="right"><span data-bind="text: lang.lang.costs_allocated"></span></td>
-													<td class="right strong" width="40%"><span data-bind="text: additional_cost"></span></td>
-												</tr>
-											</tbody>
-										</table>
-									</div>										
-									
-								</div>
-					        </div>
-					        <!-- // Additional Cost Tab content END -->				        						        								        
-
-					    </div>
 					</div>
 
  		            <!-- Bottom part -->
@@ -13145,7 +13257,7 @@
 								<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;"><i></i><span data-bind="text: lang.lang.save_close"></span></span>																	
 								<span id="savePrint" class="btn btn-icon btn-default glyphicons print" style="width: 80px;"><i></i><span data-bind="text: lang.lang.save_print"></span></span>
 								<span class="btn btn-icon btn-warning glyphicons remove_2" onclick="javascript:window.history.back()" data-bind="click: cancel" style="width: 80px;"><i></i> Cancel</span>
-								<span class="btn btn-danger btn-icon glyphicons bin" data-bind="click: openConfirm, visible: isEdit" style="width: 80px;"><i></i><span data-bind="text: lang.lang.delete"></span></span>					
+								<span class="btn btn-danger btn-icon glyphicons bin" data-bind="click: openConfirm, visible: isEdit" style="width: 80px;"><i></i><span data-bind="text: lang.lang.delete"></span></span>
 							</div>
 						</div>
 					</div>
@@ -13310,98 +13422,22 @@
     </tr>   
 </script>
 <script id="purchase-additional-cost-template" type="text/x-kendo-tmpl">
-	<tr data-uid="#: uid #">		
+	<tr data-uid="#: uid #" data-bind="click: windowEdit">		
 		<td class="center">
-			<i class="icon-trash" data-bind="events: { click: removeRowAdditionalCost }"></i>
 			#:banhji.purchase.additionalCostDS.indexOf(data)+1#			
 		</td>			
-		<td>
-			<input id="ddlType-#:uid#" name="ddlType-#:uid#"
-				   data-role="dropdownlist"                   
-                   data-value-primitive="true"                   
-                   data-text-field="name"
-                   data-value-field="id"
-                   data-bind="value: type,
-                              source: typeList,
-                              events:{ change : typeColumnChanges }"                                       
-                   required data-required-msg="required" style="width: 100%" />	
-		</td>
-		<td>
-			<input id="ddlAccount" name="ddlAccount-#:uid#" 
-					data-role="dropdownlist"
-					data-header-template="account-header-tmpl"
-      				data-template="account-list-tmpl"
-					data-value-primitive="true"
-					data-text-field="name" 
-      				data-value-field="id"
-      				data-bind="value: account_id,
-      							source: additionalCostAccountDS"
-      				data-option-label="Select Account..."
-      				required data-required-msg="required" 
-      				style="width: 100%" />
-		</td>
-		<td>
-			<input id="ddlVendor" name="ddlVendor-#:uid#"
-				   data-role="combobox"
-				   data-header-template="vendor-header-tmpl"
-                   data-template="contact-list-tmpl"                 
-                   data-value-primitive="true"
-                   data-text-field="name"
-                   data-value-field="id"
-                   data-bind="value: contact_id,
-                              source: additionalContactDS,
-                              events:{ change : contactColumnChanges }"
-                   data-placeholder="Add Name.."                    
-                   style="width: 100%" />
-		</td>
-		<td>
-			<input type="text" class="k-textbox" 
-					data-bind="value: reference_no"
-					style="width: 100%; margin-bottom: 0;" />		
-		</td>
-		<td>
-			<input id="txtIssuedDate" name="txtIssuedDate" 
-					data-role="datepicker"
-					data-format="dd-MM-yyyy"
-					data-parse-formats="yyyy-MM-dd" 
-					data-bind="value: issued_date"
-					style="width:100%;" />
-		</td>
-		<td data-bind="visible: showDueDateColumn">
-			<input data-role="datepicker"
-					data-format="dd-MM-yyyy"
-					data-parse-formats="yyyy-MM-dd" 
-					data-bind="value: due_date"
-					style="width:100%;" />
-		</td>		
-		<td data-bind="visible: showDescriptionColumn">
-			<input type="text" class="k-textbox" 
-					data-bind="value: memo"
-					style="width: 100%; margin-bottom: 0;" />
-		</td>				
-		<td class="right">
-			<input id="txtSubTotal-#:uid#" name="txtSubTotal-#:uid#" 
-					data-role="numerictextbox"
-					data-spinners="false" 
-					data-format="n"
-					data-min="0"
-					data-bind="value: sub_total, events: {change : changes}" 
-					required data-required-msg="required" style="width: 100%;" /> 						
-		</td>		
-		<td>
-			<input id="ccbTaxItem" name="ccbTaxItem-#:uid#"
-				   data-role="combobox"
-				   data-value-primitive="true"
-                   data-text-field="name"
-                   data-value-field="id"
-                   data-header-template="tax-header-tmpl"
-                   data-bind="value: tax_item_id, 
-                   			  source: taxItemDS,
-                   			  events:{ change: changes }"
-                   style="width: 100%" />			
-		</td>			
+		<td data-bind="text: type"></td>
+		<td data-bind="text: contact_id">
+            #: banhji.purchase.getName(contact_id) #
+        </td>
+		<td data-bind="text: reference_no"></td>
+		<td data-format="dd-MM-yyyy" data-bind="text: issued_date"></td>
+		<td class="right" data-format="n" data-bind="text: sub_total"></td>
+		<td class="right" data-format="n" data-bind="text: tax"></td>
+		<td class="right" data-format="n" data-bind="text: amount"></td>
     </tr>   
 </script>
+<!-- Purchase Return -->
 <script id="purchaseReturn" type="text/x-kendo-template">
 	<div id="slide-form">
 		<div class="customer-background">
@@ -14011,6 +14047,7 @@
 		<td class="right"><span data-format="n2" data-bind="text: amount"></span></td>
     </tr>   
 </script>
+<!-- Payment Refund -->
 <script id="paymentRefund" type="text/x-kendo-template">
 	<div id="slide-form">
 		<div class="customer-background">
@@ -64790,6 +64827,11 @@
 		  	filter:{ field:"status", value: 1 },
 			sort: { field:"number", dir:"asc" }
 		}),
+		additionalCostAccountDS 	: new kendo.data.DataSource({
+		  	data: banhji.source.accountList,
+		  	filter:{ field:"status", value: 1 },
+			sort: { field:"number", dir:"asc" }
+		}),
 		expenseAccountDS  			: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
 		  	filter: {
@@ -64895,11 +64937,6 @@
 			{ id:1, name:"Cash" },
 			{ id:0, name:"Credit" }
 		],
-		additionalCostAccountDS 	: new kendo.data.DataSource({
-		  	data: banhji.source.accountList,
-		  	filter:{ field:"status", value: 1 },
-			sort: { field:"number", dir:"asc" }
-		}),
 		amtDueColor 				: banhji.source.amtDueColor,
 	    confirmMessage 				: banhji.source.confirmMessage,
 		frequencyList 				: banhji.source.frequencyList,
@@ -64912,6 +64949,7 @@
 		showWeek 					: false,
 		showDay 					: false,
 		obj 						: null,
+		additCostObj				: null,
 		isEdit 						: false,
 		saveClose 					: false,
 		savePrint 					: false,
@@ -64923,6 +64961,7 @@
 		recurring_validate 			: false,
 		enableRef 	 				: false,
 		isCash 						: true,
+		isAdditCostCash 			: true,
 		showDiscount 				: false,
 		showAdditionalCost 			: false,
 		showRef 					: true,
@@ -64930,6 +64969,7 @@
 		showSegment 				: false,
 		showDueDateColumn			: false,
 		showDescriptionColumn 		: false,
+		windowVisible 				: false,
 		sub_total 					: 0,
 		tax 						: 0,
 		discount 					: 0,
@@ -65443,6 +65483,131 @@
 			        ]
 				});
 			}
+		},
+		additCostTypeChanges: function(){
+			var additCostObj = this.get("additCostObj");			
+
+			if(additCostObj.type=="Cash_Purchase"){
+				this.set("isAdditCostCash", true);				
+
+				this.additionalCostAccountDS.filter({ field:"account_type_id", value: 10 });
+			}else{
+				this.set("isAdditCostCash", false);
+				
+				this.additionalCostAccountDS.filter({
+				    logic: "or",
+				    filters: [
+				      { field: "account_type_id", value: 23 },
+				      { field: "account_type_id", value: 24 }
+				    ]
+				});
+			}
+
+			additCostObj.set("account_id", 0);
+		},
+		getName             : function(id){
+            var raw = banhji.source.supplierDS.get(id);
+            if(raw){
+                return raw.name;
+            }else{
+                return "";
+            }
+        },
+		windowCreate 		: function(){
+			var self = this,
+				obj = this.get("obj"), 
+				additCostObj = this.get("additCostObj");
+			
+			this.additionalCostAccountDS.filter({ field:"account_type_id", value:10 });
+
+			this.additionalCostDS.insert(0, {				
+				contact_id 			: "",
+				account_id 			: 1,
+				payment_term_id		: 0,				
+				reference_id 		: obj.id,
+				recurring_id 		: "",
+				tax_item_id 		: "",				
+				user_id 			: this.get("user_id"),
+				reference_no 		: "",	    		
+			   	type				: "Cash_Purchase",//Required
+			   	sub_total 			: 0,				   		   					   				   	
+			   	amount				: 0,
+			   	tax 				: 0,
+			   	rate				: 1,			   	
+			   	locale 				: obj.locale,			   	
+			   	issued_date 		: new Date(),
+			   	due_date 			: new Date(),			   	
+			   	bill_to 			: "",
+			   	ship_to 			: "",
+			   	memo 				: "",
+			   	memo2 				: "",
+			   	status 				: 0,
+			   	segments 			: [],
+			   	//Recurring
+			   	recurring_name 		: "",
+			   	start_date 			: new Date(),
+			   	frequency 			: "Daily",
+			   	month_option 		: "Day",
+			   	interval 			: 1,
+			   	day 				: 1,
+			   	week 				: 0,
+			   	month 				: 0,
+			   	is_recurring 		: 0				
+	    	});
+
+	    	var additCostObj = this.additionalCostDS.at(0);
+			this.set("additCostObj", additCostObj);
+
+			// Apply additional cost to item line
+	    	$.each(this.lineDS.data(), function(index, value) {	    		
+	    		if(value.item_id>0){
+	    			var item = self.itemDS.get(value.item_id);
+
+	    			if(item.item_type_id==1){
+	    				value.set("additional_applied", true);
+	    			}
+	    		}
+	    	});
+	    	
+			this.set("windowVisible", true);
+		},
+		windowEdit 			: function(e){
+			var data = e.data;
+			
+			if(data.type=="Cash_Purchase"){
+				this.set("isAdditCostCash", true);				
+
+				this.additionalCostAccountDS.filter({ field:"account_type_id", value: 10 });
+			}else{
+				this.set("isAdditCostCash", false);
+				
+				this.additionalCostAccountDS.filter({
+				    logic: "or",
+				    filters: [
+				      { field: "account_type_id", value: 23 },
+				      { field: "account_type_id", value: 24 }
+				    ]
+				});
+			}
+
+			this.set("additCostObj", data);
+      		this.set("windowVisible", true);
+		},
+		windowSave 	 		: function(){
+			this.set("windowVisible", false);
+		},
+		windowDiscard 		: function(){
+			var additCostObj = this.get("additCostObj"),
+      			index = this.additionalCostDS.indexOf(additCostObj),
+      			selected = this.additionalCostDS.at(index);
+
+      		this.additionalCostDS.remove(selected);
+      		this.changes();
+
+			this.set("windowVisible", false);
+		},
+		windowClose 		: function(){
+			this.set("windowVisible", false);
 		},
 		//Segment
 		segmentChanges 		: function() {

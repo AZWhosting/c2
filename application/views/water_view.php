@@ -11783,6 +11783,7 @@
         branchDS 			: dataStore(apiUrl + "branches"),
         planDS 				: dataStore(apiUrl + "plans"),
 		contactTypeDS 		: dataStore(apiUrl + "contacts/type"),
+        patternDS 			: dataStore(apiUrl + "contacts"),
 		typeUnit 			: [{id:"m3", name: "m3"},{id:"money", name: "Money"},{ id:"%", name: "%"}],
 		typeFlat 			: [{id:"0", name: "Not Flat"},{id:"1", name: "Flat"}],
 		tariffItemFlat 		: 0,
@@ -11870,9 +11871,10 @@
 				this.set("meterUnit", false);
 			}
 		},
-		addContactType 		: function(e){
-        	var name = this.get("contactTypeName"), self = this;
-        	if(name && this.get("contactTypeAbbr")){
+		addContactType 		: function(){
+        	var self = this, name = this.get("contactTypeName");
+
+        	if(name!==""){
 	        	this.contactTypeDS.add({
 	        		parent_id 	: 1,
 	        		name 		: name,
@@ -11881,27 +11883,45 @@
 	        		is_company 	: this.get("contactTypeCompany"),
 	        		is_system 	: 0
 	        	});
+
 	        	this.contactTypeDS.sync();
 	        	this.contactTypeDS.bind("requestEnd", function(e){
-					if(e.type != 'read' && e.response){
-						var notificat = $("#ntf1").data("kendoNotification");
-						notificat.hide();
-						notificat.success(self.lang.lang.success_message);
-						self.set("contactTypeName", "");
-			        	self.set("contactTypeAbbr", "");
-			        	self.set("contactTypeCompany", 0);
-					}
-				});
-				this.contactTypeDS.bind("error", function(e){
+	        		if(e.type==="create"){
+	        			var response = e.response.results[0];
+	        			self.addPattern(response.id);
+	        			banhji.source.loadContactTypes();
+	        		}
+	        	});
+
+	        	this.set("contactTypeName", "");
+	        	this.set("contactTypeAbbr", "");
+	        	this.set("contactTypeCompany", 0);
+        	}
+        },
+        addPattern 			: function(id){
+        	this.patternDS.insert(0, {
+				"contact_type_id" 		: id,
+				"number"				: "",
+				"locale" 				: banhji.locale,					
+				"is_pattern" 			: 1,
+				"status"				: 1								
+			});
+			this.patternDS.sync();
+			this.patternDS.bind("requestEnd", function(e){
+				if(e.type != 'read' && e.response){
 					var notificat = $("#ntf1").data("kendoNotification");
 					notificat.hide();
-					notificat.success(self.lang.lang.error_message);
-				});	
-        	}else{
-        		var notificat = $("#ntf1").data("kendoNotification");
+					notificat.success(self.lang.lang.success_message);
+					self.set("contactTypeName", "");
+		        	self.set("contactTypeAbbr", "");
+		        	self.set("contactTypeCompany", 0);
+				}
+			});
+			this.patternDS.bind("error", function(e){
+				var notificat = $("#ntf1").data("kendoNotification");
 				notificat.hide();
-				notificat.success(self.lang.lang.field_required_message);
-        	}
+				notificat.error(self.lang.lang.error_message);
+			});	
         },
         addBloc 			: function(e){
         	var branch = this.get("blockCompanyId"),
