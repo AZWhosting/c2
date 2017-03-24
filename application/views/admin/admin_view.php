@@ -1072,8 +1072,8 @@
                     </tbody>
                 </table><br>
                 <div style="float: right;">
-                  <button class="btn" data-bind="click: saveAssign" style="cursor: pointer; border-radius: 0;">Save</button>
-                  <button class="btn" data-bind="click: cancelAssign" style="cursor: pointer;border-radius: 0;">Cancel</button>
+                  <button class="btn" data-bind="click: save" style="cursor: pointer; border-radius: 0;">Save</button>
+                  <button class="btn" data-bind="click: cancel" style="cursor: pointer;border-radius: 0;">Cancel</button>
                 </div>
             </div>
         </div>
@@ -1941,8 +1941,18 @@
       banhji.userFXDS = new kendo.data.DataSource({
         transport: {
           read  : {
-            url: baseUrl + 'api/roles/users',
+            url: baseUrl + 'api/users/roles',
             type: "GET",
+            dataType: 'json'
+          },
+          create  : {
+            url: baseUrl + 'api/users/roles',
+            type: "POST",
+            dataType: 'json'
+          },
+          destroy  : {
+            url: baseUrl + 'api/users/roles',
+            type: "DELETE",
             dataType: 'json'
           },
           parameterMap: function(options, operation) {
@@ -2667,9 +2677,38 @@
       banhji.userFX = kendo.observable({
         fx : banhji.functionDS,
         usr: banhji.userFXDS,
-        assign: function() {},
-        remove: function() {},
-        save  : function() {}
+        backToProfile: function() {
+          this.cancel();
+          banhji.router.navigate('userlist');
+        },
+        assignTo: function(e) {
+          var existed = false;
+          for(var i = 0; i < this.usr.data().length; i++) {
+            if(e.data.name == this.usr.data()[i].name) {
+              existed = true;
+              alert('User already is assigned to this module');
+              break;
+            }
+          }
+          if(existed === false) {
+            this.usr.add({
+              user: {id: banhji.users.get('current').id, username: banhji.users.get('current').username},
+              name: e.data.name
+            });
+          }
+        },
+        removeFrom: function(e) {
+          this.usr.remove(e.data);
+        },
+        cancel: function() {
+          if(this.usr.hasChanges()) {
+            this.usr.cancelChanges();
+          }
+          banhji.router.navigate('userlist');
+        },
+        save  : function() {
+          this.usr.sync();
+        }
       });
 
       banhji.users = kendo.observable({
@@ -3500,7 +3539,7 @@
         // layout.showIn("#container", profile);
         // profile.showIn("#profile-placeholder", profileMod);
         banhji.users.setCurrent(banhji.users.users.get(id));
-        banhji.userFX.usr.filter({field: 'user_id', value: id});
+        banhji.userFX.usr.filter({field: 'id', value: id});
         // banhji.users.modules.filter({field: 'username', value: banhji.users.users.get(id).username});
         // layout.showIn("#container", mainDash);
         mainDash.showIn("#placeholder", role);

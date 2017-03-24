@@ -255,27 +255,24 @@ class Users extends REST_Controller {
 		$limit = $this->get('limit') ? $this->get('limit'): 50;
 		$offset= $this->get('offset')? $this->get('offset'): null;
 		$data = array();
-		$user = new User();
+		$role = new Role(null);
+		$role->include_related('user', array('id', 'username'));
 
 		if(isset($filters)) {
 			foreach($filters as $f) {
-				$user->where($f['field'], $f['value']);
+				$role->where_related('user', $f['field'], $f['value']);
 			}
-		}
-		$user->get_paged($offset, $limit);
-		foreach($user as $u) {
-			$u->role->include_join_fields()->get();
-			foreach($u->module as $m) {
-				$data[] = array(
-					'id' 		=> intval($m->join_id),
-					// 'user'  	=> intval($u->id),
-					// 'module' 	=> intval($m->id),
-					'name' 		=> $m->name
-					// 'href'  	=> $m->href,
-					// 'img_url' 	=> $m->image_url,
-					// 'description'=>$m->description
-				);
-			}
+		}		
+		
+		$role->get();
+
+		foreach($role as $r) {
+
+			$data[] = array(
+				'id' => $r->id,
+				'name' => $r->name,
+				'user' => array('id' => $role->user_id, 'username' => $role->user_username)
+			);
 		}
 
 		if(count($data) > 0) {
@@ -290,28 +287,30 @@ class Users extends REST_Controller {
 	*/
 	function roles_post() {
 		$requested_data = json_decode($this->post('models'));
+		$data = array();
 
 		foreach($requested_data as $d) {
-			$user = new User(null, $this->entity);
-			$user->where('id', $d->user_id);
+			$user = new User(null);
+			$user->where('id', $d->user->id);
 			$user->get();
 
 			$role = new Role(null, $this->entity);
-			$role->where('id', $d->role_id);
+			$role->where('name', $d->name);
 			$role->get();
 
 			if($user->exists() && $role->exists()) {
 				if($user->save($role)){
-					$r = $user->include_related('role', NULL, TRUE)->get_raw();
-					$this->response(array('msg'=>'assigned successfully.', 'results'=>$r->result()), 201);
-				} else {
-					$this->response(array('msg'=>'error assigning to role.', 'results'=>array()), 201);
+					$data[] = $d;
 				}
 			} else {
 				$this->response(array('msg'=>'either role or user does not exist', 'results'=>array()), 201);
 			}
 		}
-		// $this->response(array('msg'=>'assigned successfully.', 'results'=>$r->result()), 201);
+		if(count($data) > 0) {
+			$this->response(array('msg'=>'assigned successfully.', 'results'=>$data), 201);
+		} else {
+			$this->response(array('msg'=>'assigned error.', 'results'=>$data), 200);
+		}		
 	}
 
 	/* remove user from role
@@ -319,23 +318,23 @@ class Users extends REST_Controller {
 	*/
 	function roles_delete() {
 		$requested_data = json_decode($this->delete('models'));
+		$data = array();
 
 		foreach($requested_data as $d) {
-			$user = new User(null, $this->entity);
-			$user->where('id', $d->id)->get();
-			$role = $user->role->where('id', $d->role_id)->get();
+			$role = new Role(null);
+			$role->where('id', $d->id)->get();
 
-			if($role->exists()) {
-				$role->delete($user);
-				// if($role->delete($user)){
-				// 	$this->response(array('msg'=>'deleted successfully.', 'results'=>$r->result()), 201);
-				// } else {
-				// 	$this->response(array('msg'=>'error removing from role.', 'results'=>array()), 201);
-				// }
+			$user = new User(null);
+			$user->where('id', $d->user->id)->get();
 
-			} //else {
-			// 	$this->response(array('msg'=>'either role or user does not exist', 'results'=>array()), 201);
-			// }
+			if($role->delete($user)) {
+				$data[] = $d;
+			}
+			if(count($data) > 0) {
+				$this->response(array('msg'=>'deleted successfully.', 'results'=>$data), 200);
+			} else {
+				$this->response(array('msg'=>'either role or user does not exist', 'results'=>array()), 200);
+			}
 		}
 	}
 

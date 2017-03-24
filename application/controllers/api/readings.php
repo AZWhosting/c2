@@ -27,7 +27,7 @@ class Readings extends REST_Controller {
 	function index_get() {		
 		$filters 	= $this->get("filter")["filters"];		
 		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
-		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;								
+		$limit 		= $this->get('limit');								
 		$sort 	 	= $this->get("sort");		
 		$data["results"] = array();
 		$data["count"] = 0;
@@ -56,8 +56,15 @@ class Readings extends REST_Controller {
 		$obj->order_by('created_at', 'desc');
 		$obj->order_by('id', 'desc');
 		$obj->where('deleted', 0);
-		$obj->get_paged_iterated($page, $limit);
-		$data["count"] = $obj->paged->total_rows;		
+		if($page && $limit){
+			$obj->get_paged_iterated($page, $limit);
+			$data["count"] = $obj->paged->total_rows;
+		}else{
+			$obj->get_iterated();
+			$data["count"] = $obj->result_count();
+		}
+		// $obj->get_paged_iterated($page, $limit);
+		// $data["count"] = $obj->paged->total_rows;		
 
 		if($obj->result_count()>0){			
 			foreach ($obj as $value) {
@@ -237,7 +244,7 @@ class Readings extends REST_Controller {
 	function books_get() {		
 		$filters 	= $this->get("filter")["filters"];		
 		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
-		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;								
+		$limit 		= $this->get('limit');								
 		$sort 	 	= $this->get("sort");		
 		$data["results"] = array();
 		$data["count"] = 0;
@@ -265,9 +272,16 @@ class Readings extends REST_Controller {
 		//Get Result
 		$obj->where('activated', 1);
 		// $obj->where_related_record('invoiced', 0);
-		$obj->get_paged_iterated($page, $limit);
+		// $obj->get_paged_iterated($page, $limit);
 		// $data["count"] = $obj->paged->total_rows;		
-
+		//Results
+		if($page && $limit){
+			$obj->get_paged_iterated($page, $limit);
+			$data["count"] = $obj->paged->total_rows;
+		}else{
+			$obj->get_iterated();
+			$data["count"] = $obj->result_count();
+		}
 		if($obj->result_count()>0){			
 			foreach ($obj as $value) {
 				//Results

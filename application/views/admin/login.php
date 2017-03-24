@@ -465,6 +465,47 @@ a.enquiries:hover .enquiry-content, .enquiry-content:hover {
           serverPaging: true,
           pageSize: 100
         });
+        banhji.userFXDS = new kendo.data.DataSource({
+          transport: {
+            read  : {
+              url: baseUrl + 'api/users/roles',
+              type: "GET",
+              dataType: 'json'
+            },
+            create  : {
+              url: baseUrl + 'api/users/roles',
+              type: "POST",
+              dataType: 'json'
+            },
+            destroy  : {
+              url: baseUrl + 'api/users/roles',
+              type: "DELETE",
+              dataType: 'json'
+            },
+            parameterMap: function(options, operation) {
+              if(operation === 'read') {
+                return {
+                  limit: options.take,
+                  page: options.page,
+                  filter: options.filter
+                };
+              } else {
+                return {models: kendo.stringify(options.models)};
+              }
+            }
+          },
+          schema  : {
+            model: {
+              id: 'id'
+            },
+            data: 'results',
+            total: 'count'
+          },
+          batch: true,
+          serverFiltering: true,
+          serverPaging: true,
+          pageSize: 50
+        });
         banhji.aws = kendo.observable({
           email: null,
           password: null,
@@ -526,6 +567,7 @@ a.enquiries:hover .enquiry-content, .enquiry-content:hover {
                                 id: id,
                                 username: userPool.getCurrentUser().username,
                                 role: e.response.results[0].role,
+                                roles: e.response.results[0].roles,
                                 institute: data
                               };
                               localforage.setItem('user', user);

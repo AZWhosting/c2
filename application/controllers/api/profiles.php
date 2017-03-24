@@ -95,12 +95,19 @@ class Profiles extends REST_Controller {
 		$users->logged_in = date('Y-m-d');
 		$users->save();
 		foreach($users as $user) {
+			$role = new Role(null);
+			$role->where_related('user', 'id', $user->id)->get();
+			$roles = array();
+			foreach($role as $r) {
+				$roles[] = $r;
+			}
 			$data[] = array(
 				'id' => $user->id,
 				'username' 	=> $user->username,
 				'first_name'=> $user->first_name,
 				'last_name' => $user->last_name,
 				'role' 		=> $user->role,
+				'roles'		=> $roles,
 				'profile_photo'=>$user->profile_photo_url,
 				// 'modules'   => $modules,
 				'created_at'=> $user->created_at,

@@ -7906,8 +7906,8 @@
 		<td>#=name#</td>
 		<td style="text-align: right;">#=kendo.toString(quantity, "n")# #=measurement#</td>
 		<td style="text-align: right;">#=kendo.toString(amount, "c2", banhji.locale)#</td>
-		<td style="text-align: right;">#=kendo.toString(avg_price, "c2", banhji.locale)#</td>	
-		<td style="text-align: right;">#=kendo.toString(avg_cost, "c2", banhji.locale)#</td>	
+		<td style="text-align: right;">#=kendo.toString(avg_price, "c3", banhji.locale)#</td>	
+		<td style="text-align: right;">#=kendo.toString(avg_cost, "c3", banhji.locale)#</td>	
 		<td style="text-align: right;">#=kendo.toString(gpm, "p")#</td>			
 	</tr>
 </script>
@@ -12852,7 +12852,7 @@
 						                   data-value-field="id"
 						                   data-bind="value: additCostObj.contact_id,
 						                              source: additionalContactDS,
-						                              events:{ change : contactColumnChanges }"
+						                              events:{ change : additCostContactChanges }"
 						                   data-placeholder="Add Name.." style="width: 100%" />
 								</td>
 							</tr>
@@ -13071,11 +13071,10 @@
 			        	<table class="table table-bordered table-primary table-striped table-vertical-center">
 					        <thead>
 					            <tr>
-					                <th class="center" style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></th>			                
+					                <th class="center"><span data-bind="text: lang.lang.no_"></span></th>			                
 					                <th><span data-bind="text: lang.lang.type"></span></th>
-					                <th><span data-bind="text: lang.lang.supplier"></span></th>
-					                <th data-bind="text: lang.lang.inv_"></th>
-					                <th><span data-bind="text: lang.lang.date"></span></th>
+					                <th data-bind="text: lang.lang.ref"></th>
+					                <th><span data-bind="text: lang.lang.memo"></span></th>
 					                <th class="center" style="width: 15%;"><span data-bind="text: lang.lang.subtotal"></span></th>
 					                <th class="center" style="width: 11%;"><span data-bind="text: lang.lang.tax"></span></th>						                						                			                
 					                <th class="center" style="width: 15%;"><span data-bind="text: lang.lang.amount"></span></th>		                			                			                
@@ -13427,11 +13426,8 @@
 			#:banhji.purchase.additionalCostDS.indexOf(data)+1#			
 		</td>			
 		<td data-bind="text: type"></td>
-		<td data-bind="text: contact_id">
-            #: banhji.purchase.getName(contact_id) #
-        </td>
 		<td data-bind="text: reference_no"></td>
-		<td data-format="dd-MM-yyyy" data-bind="text: issued_date"></td>
+		<td data-bind="text: memo"></td>
 		<td class="right" data-format="n" data-bind="text: sub_total"></td>
 		<td class="right" data-format="n" data-bind="text: tax"></td>
 		<td class="right" data-format="n" data-bind="text: amount"></td>
@@ -64806,6 +64802,11 @@
 		  	filter:{ field:"status", value:1 },
 			sort: { field:"number", dir:"asc" }
 		}),
+		additionalContactDS  		: new kendo.data.DataSource({
+		  	data: banhji.source.supplierList,
+		  	filter:{ field:"status", value:1 },
+			sort: { field:"number", dir:"asc" }
+		}),
 		jobDS 						: new kendo.data.DataSource({
 		  	data: banhji.source.jobList,
 		  	sort: { field: "name", dir: "asc" }
@@ -64816,11 +64817,6 @@
 			  	{ field: "segment_id", dir: "asc" },
 			  	{ field: "code", dir: "asc" }
 			]
-		}),
-		additionalContactDS  		: new kendo.data.DataSource({
-		  	data: banhji.source.supplierList,
-		  	filter:{ field:"status", value:1 },
-			sort: { field:"number", dir:"asc" }
 		}),
 		accountDS  					: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
@@ -65223,15 +65219,24 @@
 			
 			obj.set("rate", rate);
 
+			//Item Line
 			$.each(this.lineDS.data(), function(index, value){
 				var itemRate = rate / banhji.source.getRate(value.locale, new Date(obj.issued_date));
 				
 				value.set("rate", itemRate);
 			});
 
+			//Account Line
 			$.each(this.accountLineDS.data(), function(index, value){
 				value.set("rate", rate);
 				value.set("locale", obj.locale);
+			});
+
+			//Additional Cost Line
+			$.each(this.additionalCostDS.data(), function(index, value){
+				var additCostRate = rate / banhji.source.getRate(value.locale, new Date(value.issued_date));
+				
+				value.set("rate", additCostRate);
 			});							
 		},
 		//Item
@@ -65352,136 +65357,20 @@
 	        this.changes();
 		},
 		//Additional Cost
-		addRowAdditionalCost: function(){
-			var self = this, obj = this.get("obj");
-			
-			this.additionalCostAccountDS.filter({ field:"account_type_id", value:10 });
-
-			this.additionalCostDS.add({				
-				contact_id 			: "",
-				account_id 			: 1,
-				payment_term_id		: 0,				
-				reference_id 		: obj.id,
-				recurring_id 		: "",
-				tax_item_id 		: "",				
-				user_id 			: this.get("user_id"),
-				reference_no 		: "",	    		
-			   	type				: "Cash_Purchase",//Required
-			   	sub_total 			: 0,				   		   					   				   	
-			   	amount				: 0,
-			   	tax 				: 0,
-			   	rate				: 1,			   	
-			   	locale 				: banhji.locale,			   	
-			   	issued_date 		: new Date(),
-			   	due_date 			: new Date(),			   	
-			   	bill_to 			: "",
-			   	ship_to 			: "",
-			   	memo 				: "",
-			   	memo2 				: "",
-			   	status 				: 0,
-			   	segments 			: [],
-			   	//Recurring
-			   	recurring_name 		: "",
-			   	start_date 			: new Date(),
-			   	frequency 			: "Daily",
-			   	month_option 		: "Day",
-			   	interval 			: 1,
-			   	day 				: 1,
-			   	week 				: 0,
-			   	month 				: 0,
-			   	is_recurring 		: 0				
-	    	});
-
-			// Apply additional cost to item line
-	    	$.each(this.lineDS.data(), function(index, value) {	    		
-	    		if(value.item_id>0){
-	    			var item = self.itemDS.get(value.item_id);
-
-	    			if(item.item_type_id==1){
-	    				value.set("additional_applied", true);
-	    			}
-	    		}
-	    	});					
-		},
 		removeRowAdditionalCost: function(e){
 			var d = e.data;
 			this.additionalCostDS.remove(d);
 	        this.changes();
 		},
-		contactColumnChanges: function(e){
-			var data = e.data, obj = this.get("obj");
+		additCostContactChanges: function(){
+			var obj = this.get("obj"), additCostObj = this.get("additCostObj");
 
-			if(data.contact_id>0){
-				var contact = this.additionalContactDS.get(data.contact_id),
-				rate = banhji.source.getRate(contact.locale, new Date(data.issued_date)) / obj.rate;
+			if(additCostObj.contact_id>0){
+				var contact = this.additionalContactDS.get(additCostObj.contact_id),
+				rate = banhji.source.getRate(contact.locale, new Date(additCostObj.issued_date)) / obj.rate;
 
-				data.set("rate", rate);
-				data.set("locale", contact.locale);
-			}
-		},
-		typeColumnChanges 	: function(e){
-			var data = e.data;
-			if(data.type=="Cash_Purchase"){
-				data.set("status", 1);
-				this.set("showDueDateColumn", false);
-
-				//Cash Account
-				this.additionalCostAccountDS.filter({ field:"account_type_id", value:10 });
-			}else{
-				data.set("status", 0);
-				this.set("showDueDateColumn", true);
-
-				//AP Account
-				this.additionalCostAccountDS.filter({
-			        logic: "or",
-			        filters: [
-			            { field: "account_type_id", value: 23 },
-      					{ field: "account_type_id", value: 24 }
-			        ]
-				});
-			}
-
-			data.set("account_id", 0);
-		},
-		typeChanges 		: function(){
-			var obj = this.get("obj");			
-
-			if(obj.type=="Cash_Purchase"){
-				this.set("isCash", true);				
-
-				this.accountDS.filter({ field:"account_type_id", value: 10 });
-			}else{
-				this.set("isCash", false);
-				
-				this.accountDS.filter({
-				    logic: "or",
-				    filters: [
-				      { field: "account_type_id", value: 23 },
-				      { field: "account_type_id", value: 24 }
-				    ]
-				});
-			}
-
-			obj.set("account_id", 0);
-			this.generateNumber();			
-		},
-		loadTypeChanges 	: function(){
-			var obj = this.get("obj");			
-
-			if(obj.type=="Cash_Purchase"){
-				this.set("isCash", true);				
-
-				this.accountDS.filter({ field:"account_type_id", value: 10 });
-			}else{
-				this.set("isCash", false);
-				
-				this.accountDS.filter({
-			        logic: "or",
-			        filters: [
-			            { field: "account_type_id", value: 23 },
-      					{ field: "account_type_id", value: 24 }
-			        ]
-				});
+				additCostObj.set("rate", rate);
+				additCostObj.set("locale", contact.locale);
 			}
 		},
 		additCostTypeChanges: function(){
@@ -65505,14 +65394,6 @@
 
 			additCostObj.set("account_id", 0);
 		},
-		getName             : function(id){
-            var raw = banhji.source.supplierDS.get(id);
-            if(raw){
-                return raw.name;
-            }else{
-                return "";
-            }
-        },
 		windowCreate 		: function(){
 			var self = this,
 				obj = this.get("obj"), 
@@ -65753,7 +65634,7 @@
 					}				
 
 					self.loadDeposit();
-					self.loadTypeChanges();				
+					self.typeChanges();
 				});
 			}				
 		},
@@ -65912,6 +65793,28 @@
 			this.set("total", kendo.toString(total, "c", obj.locale));
 	        this.set("additional_cost", kendo.toString(additionalCost, "c", obj.locale));
 	        this.set("amount_due", kendo.toString(amount_due, "c", obj.locale));
+		},
+		typeChanges 		: function(){
+			var obj = this.get("obj");			
+
+			if(obj.type=="Cash_Purchase"){
+				this.set("isCash", true);				
+
+				this.accountDS.filter({ field:"account_type_id", value: 10 });
+			}else{
+				this.set("isCash", false);
+				
+				this.accountDS.filter({
+				    logic: "or",
+				    filters: [
+				      { field: "account_type_id", value: 23 },
+				      { field: "account_type_id", value: 24 }
+				    ]
+				});
+			}
+
+			obj.set("account_id", 0);
+			this.generateNumber();			
 		},
 		discountChanges 	: function(){
 			var obj = this.get("obj");
