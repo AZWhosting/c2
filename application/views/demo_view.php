@@ -12877,7 +12877,8 @@
 									<input data-role="datepicker"
 											data-format="dd-MM-yyyy"
 											data-parse-formats="yyyy-MM-dd" 
-											data-bind="value: additCostObj.issued_date"
+											data-bind="value: additCostObj.issued_date,
+														events: { change: additCostSetRate }"
 											style="width:100%;" />
 								</td>
 							</tr>
@@ -12889,6 +12890,14 @@
 											data-parse-formats="yyyy-MM-dd" 
 											data-bind="value: additCostObj.due_date"
 											style="width:100%;" />
+								</td>
+							</tr>
+							<tr>
+								<td>Number</td>
+								<td>
+									<input type="text" class="k-textbox" 
+											data-bind="value: additCostObj.number"
+											style="width: 100%; margin-bottom: 0;" />		
 								</td>
 							</tr>
 							<tr>
@@ -12936,6 +12945,8 @@
 								<td>Amount</td>
 								<td>
 									<span data-format="n" data-bind="text: additCostObj.amount"></span>
+
+									<span data-bind="text: additCostObj.locale"></span>
 								</td>
 							</tr>
 						</table>
@@ -12956,7 +12967,7 @@
 					        <thead>
 					            <tr>
 					                <th class="center" style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></th>			                
-					                <th><span data-bind="text: lang.lang.items"></span></th>
+					                <th style="width: 20%;"><span data-bind="text: lang.lang.items"></span></th>
 					                <th><span data-bind="text: lang.lang.description"></span></th>
 					                <th style="width: 20%;"><span data-bind="text: lang.lang.quantity"></span></th>
 					                <th style="width: 10%;"><span data-bind="text: lang.lang.cost"></span></th>
@@ -13071,86 +13082,45 @@
 			        	<table class="table table-bordered table-primary table-striped table-vertical-center">
 					        <thead>
 					            <tr>
-					                <th class="center"><span data-bind="text: lang.lang.no_"></span></th>			                
-					                <th><span data-bind="text: lang.lang.type"></span></th>
+					                <th class="center" style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></th>			                
+					                <th style="width: 20%;"><span data-bind="text: lang.lang.type"></span></th>
+					                <th data-bind="text: lang.lang.description"></th>
 					                <th data-bind="text: lang.lang.ref"></th>
-					                <th><span data-bind="text: lang.lang.memo"></span></th>
-					                <th class="center" style="width: 15%;"><span data-bind="text: lang.lang.subtotal"></span></th>
-					                <th class="center" style="width: 11%;"><span data-bind="text: lang.lang.tax"></span></th>						                						                			                
-					                <th class="center" style="width: 15%;"><span data-bind="text: lang.lang.amount"></span></th>		                			                			                
+					                <th class="center" style="width: 15%;"><span data-bind="text: lang.lang.amount"></span></th>
+					                <th class="center" style="width: 11%;"><span data-bind="text: lang.lang.tax"></span></th>		                			                			                
 					            </tr> 
 					        </thead>
 					        <tbody data-role="listview" 
 					        		data-template="purchase-additional-cost-template" 
 					        		data-auto-bind="false"
-					        		data-bind="source: additionalCostDS"></tbody>			        
+					        		data-bind="source: additionalCostDS"></tbody>
 					    </table>
-
-			            <div class="row-fluid">		
-													
-							<div class="span8">
-
-								<table>
-									<tr>
-										<td>
-											<button class="btn btn-inverse" data-bind="click: windowCreate"><i class="icon-plus icon-white"></i></button>
-
-											<div class="btn-group">
-												<div class="leadcontainer">
-													
-												</div>
-												<a class="btn btn-default dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-list"></i> </a>
-												<ul class="dropdown-menu" style="padding: 5px; border-radius:0;">
-													<li>
-														<input type="checkbox" id="chbDueDateColumn" class="k-checkbox" data-bind="checked: showDueDateColumn" />												
-														<label class="k-checkbox-label" for="chbDueDateColumn"><span data-bind="text: lang.lang.due_date"></span></label>
-													</li>																										
-												</ul>
-											</div>
-										</td>
-										<td><span data-bind="text: lang.lang.additional_cost_apply"></span></td>
-										<td>
-											<input type="radio" name="engine" id="engine1" class="k-radio" value="Equal" 
-													data-bind="checked: obj.additional_apply,
-																events:{ change: changes }">
-								            <label class="k-radio-label" for="engine1"><span data-bind="text: lang.lang.equal"></span></label>
-					            		</td>						            	
-					            		<td>						         
-								            <input type="radio" name="engine" id="engine2" class="k-radio" value="Weighted"
-								            		data-bind="checked: obj.additional_apply,
-																events:{ change: changes }">
-								            <label class="k-radio-label" for="engine2"><span data-bind="text: lang.lang.weighted"></span></label>
-					            		</td>
-					            	</tr>
-					            </table>
-							</div>
-
-							<div class="span4">
-								<table class="table table-condensed table-striped table-white">
-									<tbody>
-										<tr>												
-											<td class="right"><span data-bind="text: lang.lang.costs_allocated"></span></td>
-											<td class="right strong" width="40%"><span data-bind="text: additional_cost"></span></td>
-										</tr>
-									</tbody>
-								</table>
-							</div>										
-							
-						</div>
-			        	<!-- End Additional Cost Line -->
-
 					</div>
 
  		            <!-- Bottom part -->
 		            <div class="row-fluid">
 			
 						<!-- Column -->
-						<div class="span4">														
-							<div class="span12 well">
-								<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.memo2" placeholder="memo for internal ..."></textarea>
-								<br>						
-								<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.memo" placeholder="memo for external ..."></textarea>
-							</div>
+						<div class="span4">
+							<button class="btn btn-inverse" data-bind="click: windowCreate"><i class="icon-plus icon-white"></i></button>
+
+							<span data-bind="text: lang.lang.additional_cost_apply"></span>
+							
+							<input type="radio" name="engine" id="engine1" class="k-radio" value="Equal" 
+									data-bind="checked: obj.additional_apply,
+												events:{ change: changes }">
+				            <label class="k-radio-label" for="engine1"><span data-bind="text: lang.lang.equal"></span></label>
+
+				            <input type="radio" name="engine" id="engine2" class="k-radio" value="Weighted"
+				            		data-bind="checked: obj.additional_apply,
+												events:{ change: changes }">
+				            <label class="k-radio-label" for="engine2"><span data-bind="text: lang.lang.weighted"></span></label>
+				            
+				            <br><br>
+
+							<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.memo2" placeholder="memo for internal ..."></textarea>
+							<br>
+							<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.memo" placeholder="memo for external ..."></textarea>							
 						</div>
 						<!-- Column END -->
 
@@ -13165,12 +13135,16 @@
 							<table class="table table-condensed table-striped table-white">
 								<tbody>
 									<tr>
+										<td class="right"><span data-bind="text: lang.lang.costs_allocated"></span></td>
+										<td class="right" width="40%"><span data-format="n" data-bind="text: obj.additional_cost"></span></td>
+									</tr>
+									<tr>
 										<td class="right"><span data-bind="text: lang.lang.subtotal"></span></td>
-										<td class="right strong" width="40%"><span data-format="n" data-bind="text: obj.sub_total"></span></td>
+										<td class="right" width="40%"><span data-format="n" data-bind="text: obj.sub_total"></span></td>
 									</tr>								
 									<tr>
 										<td class="right"><span data-bind="text: lang.lang.total_discount"></span></td>
-										<td class="right strong">
+										<td class="right">
 											<input data-role="numerictextbox"
 								                   data-format="n"
 								                   data-spinners="false"
@@ -13182,7 +13156,7 @@
 									</tr>
 									<tr>
 										<td class="right"><span data-bind="text: lang.lang.total_tax"></span></td>
-										<td class="right strong"><span data-format="n" data-bind="text: obj.tax"></span></td>
+										<td class="right"><span data-format="n" data-bind="text: obj.tax"></span></td>
 									</tr>																
 									<tr>
 										<td class="right"><h4><span data-bind="text: lang.lang.total"></span></h4></td>
@@ -13426,11 +13400,10 @@
 			#:banhji.purchase.additionalCostDS.indexOf(data)+1#			
 		</td>			
 		<td data-bind="text: type"></td>
-		<td data-bind="text: reference_no"></td>
 		<td data-bind="text: memo"></td>
+		<td data-bind="text: reference_no"></td>
 		<td class="right" data-format="n" data-bind="text: sub_total"></td>
 		<td class="right" data-format="n" data-bind="text: tax"></td>
-		<td class="right" data-format="n" data-bind="text: amount"></td>
     </tr>   
 </script>
 <!-- Purchase Return -->
@@ -64855,7 +64828,10 @@
 		}),
 		itemDS  					: new kendo.data.DataSource({
 		  	data: banhji.source.itemList,
-		  	filter: { field:"is_assembly", operator:"neq", value: 1 },
+		  	filter: [
+		  		{ field:"is_assembly", operator:"neq", value: 1 },
+		  		{ field:"status", value: 1 }
+		  	],
 			sort: [
 				{ field:"item_type_id", dir:"asc" },
 				{ field:"number", dir:"asc" }
@@ -64921,18 +64897,6 @@
 			  	{ field: "name", dir: "asc" }
 			]
 		}),
-		referenceTypes 				: [
-			{ id:"Purchase_Order", name:"Purchase Order" },
-			{ id:"GRN", name:"Goods Received Note" }
-		],
-		typeList 					: [
-			{ id:"Cash_Purchase", name:"Cash" },
-			{ id:"Credit_Purchase", name:"Credit" }
-		],
-		statusList 					: [
-			{ id:1, name:"Cash" },
-			{ id:0, name:"Credit" }
-		],
 		amtDueColor 				: banhji.source.amtDueColor,
 	    confirmMessage 				: banhji.source.confirmMessage,
 		frequencyList 				: banhji.source.frequencyList,
@@ -64963,18 +64927,11 @@
 		showRef 					: true,
 		showName 					: false,
 		showSegment 				: false,
-		showDueDateColumn			: false,
-		showDescriptionColumn 		: false,
 		windowVisible 				: false,
-		sub_total 					: 0,
-		tax 						: 0,
-		discount 					: 0,
 		balance 					: 0,
 		total 						: 0,
-		remaining 					: 0,
 		amount_due 					: 0,
-		additional_cost 			: 0,
-		original_deposit			: 0,
+		total_deposit				: 0,
 		user_id						: banhji.source.user_id,
 		pageLoad 			: function(id){
 			if(id){
@@ -65230,14 +65187,7 @@
 			$.each(this.accountLineDS.data(), function(index, value){
 				value.set("rate", rate);
 				value.set("locale", obj.locale);
-			});
-
-			//Additional Cost Line
-			$.each(this.additionalCostDS.data(), function(index, value){
-				var additCostRate = rate / banhji.source.getRate(value.locale, new Date(value.issued_date));
-				
-				value.set("rate", additCostRate);
-			});							
+			});						
 		},
 		//Item
 		itemChanges 		: function(e){
@@ -65357,20 +65307,14 @@
 	        this.changes();
 		},
 		//Additional Cost
-		removeRowAdditionalCost: function(e){
-			var d = e.data;
-			this.additionalCostDS.remove(d);
-	        this.changes();
-		},
 		additCostContactChanges: function(){
-			var obj = this.get("obj"), additCostObj = this.get("additCostObj");
+			var additCostObj = this.get("additCostObj");
 
 			if(additCostObj.contact_id>0){
-				var contact = this.additionalContactDS.get(additCostObj.contact_id),
-				rate = banhji.source.getRate(contact.locale, new Date(additCostObj.issued_date)) / obj.rate;
-
-				additCostObj.set("rate", rate);
+				var contact = this.additionalContactDS.get(additCostObj.contact_id);
+				
 				additCostObj.set("locale", contact.locale);
+				this.additCostSetRate();
 			}
 		},
 		additCostTypeChanges: function(){
@@ -65393,6 +65337,12 @@
 			}
 
 			additCostObj.set("account_id", 0);
+		},
+		additCostSetRate: function(){
+			var additCostObj = this.get("additCostObj"),
+				rate = banhji.source.getRate(additCostObj.locale, new Date(additCostObj.issued_date));
+
+				additCostObj.set("rate", rate);			
 		},
 		windowCreate 		: function(){
 			var self = this,
@@ -65438,6 +65388,7 @@
 
 	    	var additCostObj = this.additionalCostDS.at(0);
 			this.set("additCostObj", additCostObj);
+			this.additCostSetRate();
 
 			// Apply additional cost to item line
 	    	$.each(this.lineDS.data(), function(index, value) {	    		
@@ -65659,22 +65610,22 @@
 		},
 		changes				: function(){
 			var self = this, obj = this.get("obj"),
-			total = 0, subTotal = 0, discount =0, tax = 0, 
-			countAdditCheck = 0, amountAdditCheck = 0, additionalCost = 0, 
-			remaining = 0, amount_due = 0;
+				total = 0, subTotal = 0, discount =0, tax = 0, 
+				countAdditCheck = 0, amountAdditCheck = 0, additionalCost = 0, 
+				remaining = 0, amount_due = 0;
 				
-			//Item
+			//Item Line
 			$.each(this.lineDS.data(), function(index, value) {
 				var amt = value.quantity * value.cost;
 
-				//Discount by line
+				//Discount
 				if(value.discount>0){
-					var discount_amount = amt * value.discount;
-					amt -= discount_amount;
+					var discount_amount = amt * value.discount;					
 					discount += discount_amount;
+					amt -= discount_amount;
 				}
 
-				//Tax by line
+				//Tax
 				if(value.tax_item_id>0){
 					var taxItem = self.taxItemDS.get(value.tax_item_id);
 					tax += amt * taxItem.rate;
@@ -65690,9 +65641,9 @@
 				value.set("amount", amt);
 	        });
 
-			//Account
+			//Account Line
 	        $.each(this.accountLineDS.data(), function(index, value) {
-				//Tax by line
+				//Tax
 				if(value.tax_item_id>0){
 					var taxItem = self.taxItemDS.get(value.tax_item_id);
 					tax += value.amount * taxItem.rate;
@@ -65701,18 +65652,18 @@
 				subTotal += value.amount;
 	        });
 
-	        //Additional Cost
+	        //Additional Cost Line	        
 	        $.each(this.additionalCostDS.data(), function(index, value) {
-	        	var additionalTax = 0;
-	        	//Tax by line
+	        	var additionalTax = 0, additionalRate = obj.rate / value.rate;
+	        	//Tax
 				if(value.tax_item_id>0){
 					var taxItem = self.taxItemDS.get(value.tax_item_id);
-					additionalTax += value.sub_total * taxItem.rate;
-					tax += additionalTax;
+					additionalTax = value.sub_total * taxItem.rate;
+					tax += additionalTax * additionalRate;
 				}
 
-				additionalCost += value.sub_total / value.rate;
-
+				additionalCost += value.sub_total * additionalRate;
+				value.set("tax", additionalTax);
 				value.set("amount", value.sub_total + additionalTax);
 	        });
 
@@ -65790,9 +65741,8 @@
 			obj.set("additional_cost", additionalCost);
 			obj.set("remaining", remaining);
 
-			this.set("total", kendo.toString(total, "c", obj.locale));
-	        this.set("additional_cost", kendo.toString(additionalCost, "c", obj.locale));
-	        this.set("amount_due", kendo.toString(amount_due, "c", obj.locale));
+			this.set("total", kendo.toString(total, "c2", obj.locale));
+	        this.set("amount_due", kendo.toString(amount_due, "c2", obj.locale));
 		},
 		typeChanges 		: function(){
 			var obj = this.get("obj");			
@@ -65839,7 +65789,6 @@
 			this.set("obj", null);
 			this.set("total", 0);
 			this.set("amount_due", 0);
-			this.set("additional_cost", 0);
 			this.set("amtDueColor", banhji.source.amtDueColor);
 
 			//Set Date
@@ -66195,11 +66144,13 @@
 				}
 			});
 
-			//Additional Cost line
-			$.each(this.additionalCostDS.data(), function(index, value){				
+			//Additional cost line
+			$.each(this.additionalCostDS.data(), function(index, value){
+				var additionalRate = obj.rate / value.rate;
+
 				if(value.amount>0){
 					additionalAccountID = value.account_id;
-					additionalAmt = value.amount / value.rate;
+					additionalAmt = value.amount * additionalRate;
 
 					if(additionalList[additionalAccountID]===undefined){
 						additionalList[additionalAccountID]={"id": additionalAccountID, "amount": additionalAmt, "contact_id": value.contact_id };						
@@ -66216,7 +66167,7 @@
 				if(value.tax_item_id>0){
 					var taxItem = self.taxItemDS.get(value.tax_item_id),
 					taxID = taxItem.account_id,
-					taxAmt = value.sub_total*taxItem.rate;
+					taxAmt = (value.sub_total*taxItem.rate)*additionalRate;
 					
 					if(taxList[taxID]===undefined){
 						taxList[taxID]={"id": taxID, "amount": taxAmt};						

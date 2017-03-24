@@ -33,9 +33,13 @@ class Item_prices extends REST_Controller {
 		$obj = new Item_price(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
 
 		//Sort
-		if(!empty($sort) && isset($sort)){					
+		if(!empty($sort) && isset($sort)){
 			foreach ($sort as $value) {
-				$obj->order_by($value["field"], $value["dir"]);
+				if(isset($value['operator'])){
+					$obj->{$value['operator']}($value["field"], $value["dir"]);
+				}else{
+					$obj->order_by($value["field"], $value["dir"]);
+				}
 			}
 		}
 		
@@ -59,7 +63,7 @@ class Item_prices extends REST_Controller {
 			$data["count"] = $obj->result_count();
 		}
 
-		if($obj->exists()){			
+		if($obj->exists()){
 			foreach ($obj as $value) {							
 				$data["results"][] = array(
 					"id" 				=> $value->id,					

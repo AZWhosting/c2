@@ -20464,15 +20464,25 @@
 		vm.pageLoad(id);
 	});
 	banhji.router.route("/reading", function(){
-		banhji.view.layout.showIn("#content", banhji.view.reading);
-		banhji.view.layout.showIn('#menu', banhji.view.menu);
-		banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
-		var vm = banhji.reading;
-		banhji.userManagement.addMultiTask("Reading","reading",null);
-		if(banhji.pageLoaded["reading"]==undefined){
-			banhji.pageLoaded["reading"] = true;
-		}
-		vm.pageLoad();
+		localforage.getItem('user')
+		.then(function(data){
+			for(var i = 0; i < data.roles.length; i++) {
+				if('reading' == data.roles[i].name){
+					banhji.view.layout.showIn("#content", banhji.view.reading);
+					banhji.view.layout.showIn('#menu', banhji.view.menu);
+					banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
+					var vm = banhji.reading;
+					banhji.userManagement.addMultiTask("Reading","reading",null);
+					if(banhji.pageLoaded["reading"]==undefined){
+						banhji.pageLoaded["reading"] = true;
+					}
+					vm.pageLoad();
+					break;
+				}
+			}			
+		});
+
+		
 	});
 	banhji.router.route("/edit_reading", function(){
 		banhji.view.layout.showIn("#content", banhji.view.EditReading);
@@ -20497,28 +20507,44 @@
 		vm.pageLoad();
 	});
 	banhji.router.route("/run_bill", function(){
-		banhji.view.layout.showIn("#content", banhji.view.runBill);
-		banhji.view.layout.showIn('#menu', banhji.view.menu);
-		banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
-		
-		var vm = banhji.runBill;
-		banhji.userManagement.addMultiTask("Run Bill","run_bill",null);
-		if(banhji.pageLoaded["run_bill"]==undefined){
-			banhji.pageLoaded["run_bill"] = true;
-		}
+		localforage.getItem('user')
+		.then(function(data){
+			for(var i = 0; i < data.roles.length; i++) {
+				if('run_bill' == data.roles[i].name){
+					banhji.view.layout.showIn("#content", banhji.view.runBill);
+					banhji.view.layout.showIn('#menu', banhji.view.menu);
+					banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
+					
+					var vm = banhji.runBill;
+					banhji.userManagement.addMultiTask("Run Bill","run_bill",null);
+					if(banhji.pageLoaded["run_bill"]==undefined){
+						banhji.pageLoaded["run_bill"] = true;
+					}
+					break;
+				}				
+			}
+		});
 		//vm.pageLoad();
 	});
 	banhji.router.route("/print_bill", function(){
-		banhji.view.layout.showIn("#content", banhji.view.printBill);
-		banhji.view.layout.showIn('#menu', banhji.view.menu);
-		banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
-		
-		var vm = banhji.printBill;
-		banhji.userManagement.addMultiTask("Print Bill","print_bill",null);
-		if(banhji.pageLoaded["print_bill"]==undefined){
-			banhji.pageLoaded["print_bill"] = true;
-		}
-		vm.pageLoad();
+		localforage.getItem('user')
+		.then(function(data){
+			for(var i = 0; i < data.roles.length; i++) {
+				if('print_bill' == data.roles[i].name){
+				banhji.view.layout.showIn("#content", banhji.view.printBill);
+				banhji.view.layout.showIn('#menu', banhji.view.menu);
+				banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
+				
+				var vm = banhji.printBill;
+				banhji.userManagement.addMultiTask("Print Bill","print_bill",null);
+				if(banhji.pageLoaded["print_bill"]==undefined){
+					banhji.pageLoaded["print_bill"] = true;
+				}
+				vm.pageLoad();
+				break;
+				}				
+			}
+		});
 	});
 	banhji.router.route("/invoice_print", function(){
 		if(!banhji.userManagement.getLogin()){
@@ -20537,27 +20563,35 @@
 		}							
 	});
 	banhji.router.route("/receipt", function(){
-		banhji.view.layout.showIn("#content", banhji.view.Receipt);
-		banhji.view.layout.showIn('#menu', banhji.view.menu);
-		banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
-		
-		var vm = banhji.Receipt;
-		banhji.userManagement.addMultiTask("Receipt","receipt",null);
-		if(banhji.pageLoaded["receipt"]==undefined){
-			banhji.pageLoaded["receipt"] = true;
-			vm.paymentTermDS.read();
-			var validator = $("#example").kendoValidator().data("kendoValidator");
-	        $("#saveNew").click(function(e){
-				e.preventDefault();
+		localforage.getItem('user')
+		.then(function(data){
+			for(var i = 0; i < data.roles.length; i++) {
+				if('print_bill' == data.roles[i].name){
+				banhji.view.layout.showIn("#content", banhji.view.Receipt);
+				banhji.view.layout.showIn('#menu', banhji.view.menu);
+				banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
+				
+				var vm = banhji.Receipt;
+				banhji.userManagement.addMultiTask("Receipt","receipt",null);
+				if(banhji.pageLoaded["receipt"]==undefined){
+					banhji.pageLoaded["receipt"] = true;
+					vm.paymentTermDS.read();
+					var validator = $("#example").kendoValidator().data("kendoValidator");
+			        $("#saveNew").click(function(e){
+						e.preventDefault();
 
-				// if(validator.validate()){
-	   //          	vm.save();
-		  //       }else{
-		  //       	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-		  //       }
-			});
-		}
-		vm.pageLoad();
+						// if(validator.validate()){
+			   //          	vm.save();
+				  //       }else{
+				  //       	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				  //       }
+					});
+				}
+				vm.pageLoad();
+				break;
+				}				
+			}
+		});
 	});
 	banhji.router.route("/reconcile", function(){
 		banhji.view.layout.showIn('#menu', banhji.view.menu);

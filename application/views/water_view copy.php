@@ -20178,6 +20178,10 @@
 		vm.pageLoad(id);
 	});
 	banhji.router.route("/reading", function(){
+		localforage.getItem('user')
+		.then(function(data){
+			console.log(data);
+		});
 		banhji.view.layout.showIn("#content", banhji.view.reading);
 		banhji.view.layout.showIn('#menu', banhji.view.menu);
 		banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
