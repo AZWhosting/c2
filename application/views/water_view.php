@@ -20316,15 +20316,11 @@
 		banhji.view.layout.showIn("#content", banhji.view.setting);
 		banhji.view.layout.showIn('#menu', banhji.view.menu);
 		banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
-		
 		var vm = banhji.setting;
-
 		banhji.userManagement.addMultiTask("Setting","setting",null);
-
 		if(banhji.pageLoaded["setting"]==undefined){
 			banhji.pageLoaded["setting"] = true;
 		}
-
 		vm.pageLoad();
 	});
 	banhji.router.route("/search_advanced", function(){
@@ -20332,16 +20328,12 @@
 			banhji.router.navigate('/manage');
 		}else{			
 			var vm = banhji.searchAdvanced;
-						
 			banhji.view.layout.showIn("#content", banhji.view.searchAdvanced);
-			
 			if(banhji.pageLoaded["search_advanced"]==undefined){
 				banhji.pageLoaded["search_advanced"] = true;
-		         
-		        vm.contactTypeDS.read();	
+		        vm.contactTypeDS.read();
 			}
-
-			vm.pageLoad();			
+			vm.pageLoad();
 		}
 	});	
 	/*************************
@@ -20374,12 +20366,10 @@
 			if(allowed) {
 				banhji.view.layout.showIn("#content", banhji.view.customer);
 				kendo.fx($("#slide-form")).slideIn("down").play();
-
 				var vm = banhji.customer;
 				banhji.userManagement.addMultiTask("Customer","customer",vm);
 				if(banhji.pageLoaded["customer"]==undefined){
 					banhji.pageLoaded["customer"] = true;
-
 			        var validator = $("#example").kendoValidator({
 			        	rules: {
 					        customRule1: function(input){
@@ -20393,20 +20383,16 @@
 					        customRule1: banhji.source.duplicateNumber
 					    }
 			        }).data("kendoValidator");
-
 			        $("#saveNew").click(function(e){
 						e.preventDefault();
-
 						if(validator.validate()){
 			            	vm.save();
 				        }else{
 				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
 				        }
 					});
-
 					$("#saveClose").click(function(e){
 						e.preventDefault();
-
 						if(validator.validate()){
 							vm.set("saveClose", true);
 			            	vm.save();
@@ -20415,7 +20401,6 @@
 				        }
 					});
 				}
-
 				vm.pageLoad(id, is_pattern);
 			} else {
 				window.location.replace(baseUrl + "admin");
@@ -20493,10 +20478,8 @@
 					vm.pageLoad();
 					break;
 				}
-			}			
+			}
 		});
-
-		
 	});
 	banhji.router.route("/edit_reading", function(){
 		banhji.view.layout.showIn("#content", banhji.view.EditReading);
@@ -20535,7 +20518,7 @@
 						banhji.pageLoaded["run_bill"] = true;
 					}
 					break;
-				}				
+				}
 			}
 		});
 		//vm.pageLoad();
@@ -20556,7 +20539,7 @@
 				}
 				vm.pageLoad();
 				break;
-				}				
+				}
 			}
 		});
 	});
@@ -20567,14 +20550,12 @@
 			banhji.view.layout.showIn("#content", banhji.view.InvoicePrint);
 			banhji.view.layout.showIn('#menu', banhji.view.menu);
 			banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
-
 			var vm = banhji.InvoicePrint;
-
 			if(banhji.pageLoaded["invoice_print"]==undefined){
 				banhji.pageLoaded["invoice_print"] = true;
 			}
 			vm.pageLoad();
-		}							
+		}
 	});
 	banhji.router.route("/receipt", function(){
 		localforage.getItem('user')
@@ -20593,7 +20574,6 @@
 					var validator = $("#example").kendoValidator().data("kendoValidator");
 			        $("#saveNew").click(function(e){
 						e.preventDefault();
-
 						// if(validator.validate()){
 			   //          	vm.save();
 				  //       }else{
@@ -20603,7 +20583,7 @@
 				}
 				vm.pageLoad();
 				break;
-				}				
+				}
 			}
 		});
 	});
@@ -20661,24 +20641,19 @@
 
 				var vm = banhji.customerDeposit;
 				banhji.userManagement.addMultiTask("Customer Deposit","customer_deposit",vm);
-
 				if(banhji.pageLoaded["customer_deposit"]==undefined){
 					banhji.pageLoaded["customer_deposit"] = true;
-
 			        var validator = $("#example").kendoValidator().data("kendoValidator");
 			        $("#saveNew").click(function(e){
 						e.preventDefault();
-
 						if(validator.validate()){
 			            	vm.save();
 				        }else{
 				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
 				        }
 					});
-
 					$("#saveClose").click(function(e){
 						e.preventDefault();
-
 						if(validator.validate()){
 							vm.set("saveClose", true);
 			            	vm.save();
@@ -20686,7 +20661,6 @@
 				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
 				        }
 					});
-
 					$("#savePrint").click(function(e){
 						e.preventDefault();
 						
@@ -20697,10 +20671,8 @@
 				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
 				        }
 					});
-
 					$("#saveRecurring").click(function(e){
 						e.preventDefault();
-
 						if(validator.validate() && vm.validateRecurring()){
 			            	vm.set("saveRecurring", true);
 			            	vm.save();
@@ -20722,12 +20694,9 @@
 		}else{
 			banhji.view.layout.showIn("#content", banhji.view.invoiceCustom);
 			kendo.fx($("#slide-form")).slideIn("down").play();
-
-			var vm = banhji.invoiceCustom;
-			
+			var vm = banhji.invoiceCustom;		
 			if(banhji.pageLoaded["invoice_custom"]==undefined){
 				banhji.pageLoaded["invoice_custom"] = true;
-
 				//Function write css to header
 				function loadStyle(href){
 				    // avoid duplicates
@@ -20765,50 +20734,43 @@
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
 		}else{
-			banhji.view.layout.showIn("#content", banhji.view.addAccountingprefix);			
+			banhji.view.layout.showIn("#content", banhji.view.addAccountingprefix);
 			kendo.fx($("#slide-form")).slideIn("down").play();
-
 			var vm = banhji.addAccountingprefix;
 			banhji.userManagement.addMultiTask("Add Accounting Prefix","add_accountingprefix",null);
 			if(banhji.pageLoaded["add_accountingprefix"]==undefined){
-				banhji.pageLoaded["add_accountingprefix"] = true;				        
+				banhji.pageLoaded["add_accountingprefix"] = true;
 				setTimeout(function(){
 					var validator = $("#example").kendoValidator().data("kendoValidator");
-					var notification = $("#notification").kendoNotification({				    
+					var notification = $("#notification").kendoNotification({
 					    autoHideAfter: 5000,
-					    width: 300,				    
+					    width: 300,
 					    height: 50
 					}).data('kendoNotification');
-					$("#saveNew").click(function(e){	
-		        			
+					$("#saveNew").click(function(e){
 						e.preventDefault();
 						if(validator.validate()){
-			            	vm.save();		            	
-
-			            	notification.success("Save Successful");			  
+			            	vm.save();
+			            	notification.success("Save Successful");
 				        }else{
-				        	notification.error("Warning, please review it again!");			           
-				        }		            
+				        	notification.error("Warning, please review it again!");
+				        }
 					});
-					$("#saveClose").click(function(e){				
+					$("#saveClose").click(function(e){
 						e.preventDefault();
-
 						if(validator.validate()){
 			            	vm.save();
 			            	window.history.back();
-
-			            	notification.success("Save Successful");			  
+			            	notification.success("Save Successful");
 				        }else{
-				        	notification.error("Warning, please review it again!");			           
-				        }	            
+				        	notification.error("Warning, please review it again!");
+				        }
 					});
 				},2000);
-						
 			};
-			
-			vm.pageLoad(id);		
+			vm.pageLoad(id);
 		};
-	});	
+	});
 	banhji.router.route("/reorder", function(id){
 		banhji.view.layout.showIn("#content", banhji.view.Reorder);
 		banhji.view.layout.showIn('#menu', banhji.view.menu);
@@ -20817,18 +20779,16 @@
 		banhji.userManagement.addMultiTask("Reorder","reports",null);
 		if(banhji.pageLoaded["reorder"]==undefined){
 			banhji.pageLoaded["reorder"] = true;
-
 			var grid = $("#grid").kendoGrid({
                 dataSource: vm.dataSource,
                 autoBind: false,
                 scrollable: true,
                 columns: [
-                    { field:"worder", title: vm.lang.lang.order1 },				    	
+                    { field:"worder", title: vm.lang.lang.order1 },
 			    	{ field:"meter_number", title:vm.lang.lang.number },
 			    	{ field:"contact_name", title:vm.lang.lang.customer }
                 ]
             }).data("kendoGrid");
-
             grid.table.kendoSortable({
                 filter: ">tbody >tr",
                 hint: $.noop,
@@ -20843,12 +20803,10 @@
                         newIndex = e.newIndex,
                         data = grid.dataSource.data(),
                         dataItem = grid.dataSource.getByUid(e.item.data("uid"));
-					
                     grid.dataSource.remove(dataItem);
                     grid.dataSource.insert(newIndex, dataItem);
                 }
             });
-
 		}
 		vm.pageLoad();
 	});	
