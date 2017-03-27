@@ -275,6 +275,7 @@ class Readings extends REST_Controller {
 		// $obj->get_paged_iterated($page, $limit);
 		// $data["count"] = $obj->paged->total_rows;		
 		//Results
+		$obj->order_by("worder", "ASC");
 		if($page && $limit){
 			$obj->get_paged_iterated($page, $limit);
 			$data["count"] = $obj->paged->total_rows;

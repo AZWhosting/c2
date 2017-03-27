@@ -54,7 +54,7 @@ class Customers extends REST_Controller {
 				}
 			}
 		}
-		
+		$obj->order_by("number", "ASC");
 		$obj->where("is_pattern", $is_pattern);
 		$obj->where("deleted <>", 1);
 		$obj->include_related("contact_type", "name");		

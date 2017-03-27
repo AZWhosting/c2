@@ -1170,39 +1170,39 @@
     	</td>
     	<!-- Status -->
     	<td align="center">
-    		#if(type==="Quote"){#       		
-				#if(status==="0"){#
+    		#if(type=="Quote"){#       		
+				#if(status=="0"){#
         			Open
         		#}else{#
         			Used        			
         		#}#
-        	#}else if(type==="Sale_Order"){#
-        		#if(status==="0"){#
+        	#}else if(type=="Sale_Order"){#
+        		#if(status=="0"){#
         			Open
         		#}else{#
         			Done        			
         		#}#
-        	#}else if(type==="GDN"){#
+        	#}else if(type=="GDN"){#
         		Delivered
-        	#}else if(type==="Commercial_Invoice" || type==="Vat_Invoice" || type==="Invoice"){#
-        		#if(status==="0" || status==="2") {#
+        	#}else if(type=="Commercial_Invoice" || type=="Vat_Invoice" || type=="Invoice"){#
+        		#if(status=="0" || status=="2") {#
         			# var date = new Date(), dueDate = new Date(due_date).getTime(), toDay = new Date(date).getTime(); #
 					#if(dueDate < toDay) {#
 						Over Due #:Math.floor((toDay - dueDate)/(1000*60*60*24))# days
 					#} else {#
 						#:Math.floor((dueDate - toDay)/(1000*60*60*24))# days to pay
 					#}#
-				#} else if(status==="1") {#
+				#} else if(status=="1") {#
 					Paid
-				#} else if(status==="3") {#
+				#} else if(status=="3") {#
 					Returned
 				#}#        	
         	#}#        				
 		</td>
 		<!-- Actions -->
     	<td align="center">
-			#if(type==="Commercial_Invoice" || type==="Vat_Invoice" || type==="Invoice"){#
-				#if(status==="0" || status==="2") {#
+			#if(type=="Commercial_Invoice" || type=="Vat_Invoice" || type=="Invoice"){#
+				#if(status=="0" || status=="2") {#
         			<a data-bind="click: payInvoice"><i></i> <span data-bind="text: lang.lang.receive_payment"></span></a>
         		#}#
         	#}#
@@ -10340,33 +10340,33 @@
     	</td>
     	<!-- Status -->
     	<td align="center">        	
-        	#if(type==="Credit_Purchase"){#
-        		#if(status==="0" || status==="2") {#
+        	#if(type=="Credit_Purchase"){#
+        		#if(status=="0" || status=="2") {#
         			# var date = new Date(), dueDate = new Date(due_date).getTime(), toDay = new Date(date).getTime(); #
 					#if(dueDate < toDay) {#
 						Over Due #:Math.floor((toDay - dueDate)/(1000*60*60*24))# days
 					#} else {#
 						#:Math.floor((dueDate - toDay)/(1000*60*60*24))# days to pay
 					#}#
-				#} else if(status==="1") {#
+				#} else if(status=="1") {#
 					Paid
-				#} else if(status==="3") {#
+				#} else if(status=="3") {#
 					Returned
 				#}#
-        	#}else if(type==="Purchase_Order"){#
-        		#if(status==="0"){#
+        	#}else if(type=="Purchase_Order"){#
+        		#if(status=="0"){#
         			Open
         		#}else{#
         			Done        			
         		#}#
-        	#}else if(type==="GRN"){#
+        	#}else if(type=="GRN"){#
         		Received 	
         	#}#			
 		</td>    	
     	<!-- Actions -->
     	<td align="center">
-    		#if(type==="Credit_Purchase"){#
-    			#if(status==="0" || status==="2") {#
+    		#if(type=="Credit_Purchase"){#
+    			#if(status=="0" || status=="2") {#
         			<a data-bind="click: payBill"><i></i> Pay Bill</a>
         		#}#	
         	#}#
@@ -16520,9 +16520,9 @@
 								<tr>
 									<th><span data-bind="text: lang.lang.name"></span></th>
 									<th style="text-align: right;"><span data-bind="text: lang.lang.current"></span></th>
-									<th style="text-align: right;"><span data-bind="text: lang.lang.">1-30</span></th>
-									<th style="text-align: right;"><span data-bind="text: lang.lang.">31-60</span></th>
-									<th style="text-align: right;"><span data-bind="text: lang.lang.">61-90</span></th>
+									<th style="text-align: right;"><span >1-30</span></th>
+									<th style="text-align: right;"><span >31-60</span></th>
+									<th style="text-align: right;"><span >61-90</span></th>
 									<th style="text-align: right;"><span data-bind="text: lang.lang.over"></span>90</th>
 									<th style="text-align: right;"><span data-bind="text: lang.lang.total"></span></th>							
 								</tr>
@@ -56980,7 +56980,7 @@
 	    	var self = this,
 	    	obj = this.get("obj"),
 	    	contact = this.contactDS.get(obj.contact_id),
-	    	entries = {};			
+	    	entries = {};
 			
 			//Item Lines
 			$.each(this.lineDS.data(), function(index, value){
@@ -57003,7 +57003,7 @@
 					}
 				}
 
-				//TAX on Dr																								
+				//TAX on Dr
 				if(value.tax_item_id>0){
 					var taxItem = self.taxItemDS.get(value.tax_item_id),
 					taxID = taxItem.account_id,
@@ -57019,7 +57019,7 @@
 					}else{
 						entries[taxID].dr += taxAmt;
 					}
-				}				
+				}
 
 				//COGS on Cr
 				var cogsID = kendo.parseInt(item.expense_account_id);
@@ -57044,7 +57044,7 @@
 					}else{
 						entries[cogsID].cr += cogsAmount;
 					}
-				}						
+				}
 
 				//Inventory on Dr
 				var inventoryID = kendo.parseInt(item.inventory_account_id);
@@ -57069,7 +57069,7 @@
 					}else{
 						entries[inventoryID].dr += inventoryAmount;
 					}
-				}					  	
+				}
 			});
 
 			//Assembly Item for cogs and inventory
@@ -57152,7 +57152,6 @@
 			}else{
 				entries[obj.account_id].cr += obj.amount;
 			}
-
 			
 			//Add to journal entry
 			if(!jQuery.isEmptyObject(entries)){
@@ -66064,238 +66063,251 @@
 	    	var self = this,
 	    	obj = this.get("obj"),
 	    	contact = this.contactDS.get(obj.contact_id),
-	    	taxList = {},
-	    	inventoryList = {},
-	    	additionalList = {};			
-			
-			//Item line
-			$.each(this.lineDS.data(), function(index, value){										
-				var item = self.itemDS.get(value.item_id);
+	    	entries = {};
 
-				//Add tax list																							
-				if(value.tax_item_id>0){
-					var taxItem = self.taxItemDS.get(value.tax_item_id),
-					taxID = taxItem.account_id,
-					taxAmt = value.amount*taxItem.rate;
-					
-					if(taxList[taxID]===undefined){
-						taxList[taxID]={"id": taxID, "amount": taxAmt};						
-					}else{											
-						if(taxList[taxID].id===taxID){
-							taxList[taxID].amount += taxAmt;
-						}else{
-							taxList[taxID]={"id": taxID, "amount": taxAmt};
-						}
-					}
-				}	
-
-				//Add Service Account to Inventory list
-				if(item.item_type_id=="4"){
-					var serviceID = kendo.parseInt(item.expense_account_id),
-					serviceAmount = (value.quantity*value.cost) + value.additional_cost,
+	    	//Item Lines
+			$.each(this.lineDS.data(), function(index, value){
+				var item = self.itemDS.get(value.item_id),
 					itemRate = banhji.source.getRate(item.locale, new Date(obj.issued_date));
 
-					if(inventoryList[serviceID]===undefined){
-						inventoryList[serviceID]={"id": serviceID, "amount": serviceAmount, "rate": itemRate, "locale": item.locale};						
-					}else{											
-						if(inventoryList[serviceID].id===serviceID){
-							inventoryList[serviceID].amount += serviceAmount;
-						}else{
-							inventoryList[serviceID]={"id": serviceID, "amount": serviceAmount, "rate": itemRate, "locale": item.locale};
-						}
+				//Tax on Dr
+				if(value.tax_item_id>0){
+					var taxItem = self.taxItemDS.get(value.tax_item_id),
+						taxID = taxItem.account_id,
+						taxAmt = value.amount * taxItem.rate;
+
+					if(entries[taxID]===undefined){
+						entries[taxID] = {
+							transaction_id 		: transaction_id,
+							account_id 			: taxID,
+							contact_id 			: obj.contact_id,
+							description 		: "",
+							reference_no 		: "",
+							segments 	 		: [],
+							dr 	 				: taxAmt,
+							cr 					: 0,
+							rate				: obj.rate,
+							locale				: obj.locale
+						};
+					}else{
+						entries[taxID].dr += taxAmt;
 					}
 				}
 
-				//Add Inventory list
+				//Service on Dr
+				if(item.item_type_id=="4"){
+					var serviceID = kendo.parseInt(item.expense_account_id),
+						serviceAmount = (value.quantity*value.unit_value*value.cost) + value.additional_cost;
+
+					if(entries[serviceID]===undefined){
+						entries[serviceID] = {
+							transaction_id 		: transaction_id,
+							account_id 			: serviceID,
+							contact_id 			: obj.contact_id,
+							description 		: "",
+							reference_no 		: "",
+							segments 	 		: [],
+							dr 	 				: serviceAmount,
+							cr 					: 0,
+							rate				: itemRate,
+							locale				: item.locale
+						};
+					}else{
+						entries[serviceID].dr += serviceAmount;
+					}
+				}
+
+				//Inventory on Dr
 				var inventoryID = kendo.parseInt(item.inventory_account_id);
 				if(inventoryID>0){
-					var inventoryAmount = (value.quantity*value.unit_value*value.cost) + value.additional_cost,
-					itemRate = obj.rate / banhji.source.getRate(item.locale, new Date(obj.issued_date));
-
-					if(inventoryList[inventoryID]===undefined){
-						inventoryList[inventoryID]={"id": inventoryID, "amount": inventoryAmount, "rate": itemRate, "locale": item.locale};						
-					}else{											
-						if(inventoryList[inventoryID].id===inventoryID){
-							inventoryList[inventoryID].amount += inventoryAmount;
-						}else{
-							inventoryList[inventoryID]={"id": inventoryID, "amount": inventoryAmount, "rate": itemRate, "locale": item.locale};
-						}
+					var inventoryAmount = 0;
+					if(item.item_type_id=="1" || item.item_type_id=="4"){
+						inventoryAmount = (value.quantity*value.unit_value)*value.cost;
+					}else{
+						inventoryAmount = value.amount;
 					}
-				}					  	
+
+					inventoryAmount += value.additional_cost;
+
+					if(entries[inventoryID]===undefined){
+						entries[inventoryID] = {
+							transaction_id 		: transaction_id,
+							account_id 			: inventoryID,
+							contact_id 			: obj.contact_id,
+							description 		: "",
+							reference_no 		: "",
+							segments 	 		: [],
+							dr 	 				: inventoryAmount,
+							cr 					: 0,
+							rate				: itemRate,
+							locale				: item.locale
+						};
+					}else{
+						entries[inventoryID].dr += inventoryAmount;
+					}
+				}
 			});
 
 			//Account line
 			$.each(this.accountLineDS.data(), function(index, value){
-				//Add tax list
+				//Expense Account on Dr
+				if(entries[value.account_id]===undefined){
+					entries[value.account_id] = {
+						transaction_id 		: transaction_id,
+						account_id 			: value.account_id,
+						contact_id 			: obj.contact_id,
+						description 		: value.description,
+						reference_no 		: value.reference_no,
+						segments 	 		: value.segments,
+						dr 	 				: value.amount,
+						cr 					: 0,
+						rate				: obj.rate,
+						locale				: obj.locale
+					};
+				}else{
+					entries[value.account_id].dr += value.amount;
+				}
+
+				//Tax on Dr
 				if(value.tax_item_id>0){
 					var taxItem = self.taxItemDS.get(value.tax_item_id),
-					taxID = taxItem.account_id,
-					taxAmt = value.amount*taxItem.rate;
-					
-					if(taxList[taxID]===undefined){
-						taxList[taxID]={"id": taxID, "amount": taxAmt};
+						taxID = taxItem.account_id,
+						taxAmt = value.amount * taxItem.rate;
+
+					if(entries[taxID]===undefined){
+						entries[taxID] = {
+							transaction_id 		: transaction_id,
+							account_id 			: taxID,
+							contact_id 			: obj.contact_id,
+							description 		: "",
+							reference_no 		: "",
+							segments 	 		: [],
+							dr 	 				: taxAmt,
+							cr 					: 0,
+							rate				: obj.rate,
+							locale				: obj.locale
+						};
 					}else{
-						if(taxList[taxID].id===taxID){
-							taxList[taxID].amount += taxAmt;
-						}else{
-							taxList[taxID]={"id": taxID, "amount": taxAmt};
-						}
+						entries[taxID].dr += taxAmt;
 					}
 				}
 			});
 
 			//Additional cost line
 			$.each(this.additionalCostDS.data(), function(index, value){
-				var additionalRate = obj.rate / value.rate;
+				var additionalRate = obj.rate / value.rate,
+					additionalAccountID = value.account_id,
+					additionalAmt = value.sub_total * additionalRate;					
 
-				if(value.amount>0){
-					additionalAccountID = value.account_id;
-					additionalAmt = value.amount * additionalRate;
-
-					if(additionalList[additionalAccountID]===undefined){
-						additionalList[additionalAccountID]={"id": additionalAccountID, "amount": additionalAmt, "contact_id": value.contact_id };						
-					}else{											
-						if(additionalList[additionalAccountID].id===additionalAccountID){
-							additionalList[additionalAccountID].amount += additionalAmt;
-						}else{
-							additionalList[additionalAccountID]={"id": additionalAccountID, "amount": additionalAmt, "contact_id": value.contact_id };
-						}
-					}
+				//Cash or A/P on Cr
+				if(entries[additionalAccountID]===undefined){
+					entries[additionalAccountID] = {
+						transaction_id 		: transaction_id,
+						account_id 			: additionalAccountID,
+						contact_id 			: value.contact_id,
+						description 		: value.memo,
+						reference_no 		: value.reference_no,
+						segments 	 		: value.segments,
+						dr 	 				: 0,
+						cr 					: additionalAmt,
+						rate				: additionalRate,
+						locale				: value.locale
+					};
+				}else{
+					entries[additionalAccountID].cr += additionalAmt;
 				}
 
-				//Add tax list																							
+				//Tax on Dr
 				if(value.tax_item_id>0){
 					var taxItem = self.taxItemDS.get(value.tax_item_id),
-					taxID = taxItem.account_id,
-					taxAmt = (value.sub_total*taxItem.rate)*additionalRate;
-					
-					if(taxList[taxID]===undefined){
-						taxList[taxID]={"id": taxID, "amount": taxAmt};						
-					}else{											
-						if(taxList[taxID].id===taxID){
-							taxList[taxID].amount += taxAmt;
-						}else{
-							taxList[taxID]={"id": taxID, "amount": taxAmt};
-						}
+						taxID = taxItem.account_id,
+						taxAmt = (value.sub_total*taxItem.rate)*additionalRate;
+
+					if(entries[taxID]===undefined){
+						entries[taxID] = {
+							transaction_id 		: transaction_id,
+							account_id 			: taxID,
+							contact_id 			: obj.contact_id,
+							description 		: "",
+							reference_no 		: "",
+							segments 	 		: [],
+							dr 	 				: taxAmt,
+							cr 					: 0,
+							rate				: obj.rate,
+							locale				: obj.locale
+						};
+					}else{
+						entries[taxID].dr += taxAmt;
 					}
 				}
 			});
-
-			//Start journal
-			//Inventory on Dr
-			if(!jQuery.isEmptyObject(inventoryList)){
-				$.each(inventoryList, function(index, value){
-					
-					if(value.amount>0){
-						self.journalLineDS.add({					
-							transaction_id 		: transaction_id,
-							account_id 			: value.id,				
-							contact_id 			: obj.contact_id,				
-							description 		: "",
-							reference_no 		: "",
-							segments 	 		: [],								
-							dr 	 				: value.amount,
-							cr 					: 0,				
-							rate				: value.rate,
-							locale				: value.locale
-						});
-					}						
-				});
-			}
-
-			//Expense Account on Dr
-			$.each(this.accountLineDS.data(), function(index, value){
-				self.journalLineDS.add({
+			
+			//Obj Account on Cr
+			var objAccountID = obj.account_id,
+				objAmount = obj.amount - obj.deposit;			
+			if(entries[objAccountID]===undefined){
+				entries[objAccountID] = {
 					transaction_id 		: transaction_id,
-					account_id 			: value.account_id,
+					account_id 			: objAccountID,
 					contact_id 			: obj.contact_id,
-					description 		: value.description,
-					reference_no 		: value.reference_no,
-					segments 	 		: value.segments,
-					dr 	 				: value.amount,
-					cr 					: 0,
+					description 		: obj.memo,
+					reference_no 		: obj.reference_no,
+					segments 	 		: obj.segments,
+					dr 	 				: 0,
+					cr 					: objAmount,
 					rate				: obj.rate,
 					locale				: obj.locale
-				});
-			});			
+				};
+			}else{
+				entries[objAccountID].cr += obj.amount;
+			}
 
-			//Tax account on Dr
-			if(!jQuery.isEmptyObject(taxList)){				
-				$.each(taxList, function(index, value){
-					self.journalLineDS.add({					
+			//Discount on Cr			
+			if(obj.discount > 0){
+				var discountAccountId = contact.trade_discount_id;
+				if(entries[discountAccountId]===undefined){
+					entries[discountAccountId] = {
 						transaction_id 		: transaction_id,
-						account_id 			: value.id,				
-						contact_id 			: value.contact_id,				
-						description 		: "",
-						reference_no 		: "",
-						segments 	 		: [],								
-						dr 	 				: value.amount,
-						cr 					: 0,				
+						account_id 			: discountAccountId,
+						contact_id 			: obj.contact_id,
+						description 		: obj.memo,
+						reference_no 		: obj.reference_no,
+						segments 	 		: obj.segments,
+						dr 	 				: 0,
+						cr 					: obj.discount,
 						rate				: obj.rate,
 						locale				: obj.locale
-					});										
-				});
-			}
-			
-			//Add Obj Account
-			var objAccountID = obj.account_id, objAmount = obj.amount;
-			if(additionalList[objAccountID]===undefined){
-				additionalList[objAccountID]={"id": objAccountID, "amount": objAmount };						
-			}else{											
-				if(additionalList[objAccountID].id===objAccountID){
-					additionalList[objAccountID].amount += objAmount;
+					};
 				}else{
-					additionalList[objAccountID]={"id": objAccountID, "amount": objAmount };
+					entries[discountAccountId].cr += obj.discount;
 				}
 			}
 
-			//Cash OR A/P on Cr
-			if(!jQuery.isEmptyObject(additionalList)){
-				$.each(additionalList, function(index, value){				
-					self.journalLineDS.add({					
+			//Deposit on Cr			
+			if(obj.deposit > 0){
+				var depositAccountId = contact.deposit_account_id;
+				if(entries[depositAccountId]===undefined){
+					entries[depositAccountId] = {
 						transaction_id 		: transaction_id,
-						account_id 			: value.id,				
-						contact_id 			: value.contact_id,				
-						description 		: "",
-						reference_no 		: "",
-						segments 	 		: [],								
+						account_id 			: depositAccountId,
+						contact_id 			: obj.contact_id,
+						description 		: obj.memo,
+						reference_no 		: obj.reference_no,
+						segments 	 		: obj.segments,
 						dr 	 				: 0,
-						cr 					: value.amount - obj.deposit,				
+						cr 					: obj.deposit,
 						rate				: obj.rate,
 						locale				: obj.locale
-					});
-				});				
-			}			
-
-			//Discount on Cr			
-			if(obj.discount > 0){				
-				this.journalLineDS.add({					
-					transaction_id 		: transaction_id,
-					account_id 			: contact.trade_discount_id,				
-					contact_id 			: obj.contact_id,				
-					description 		: "",
-					reference_no 		: "",
-					segments 	 		: [],								
-					dr 	 				: 0,
-					cr 					: obj.discount,				
-					rate				: obj.rate,
-					locale				: obj.locale
-				});
+					};
+				}else{
+					entries[depositAccountId].cr += obj.deposit;
+				}
 			}
 
-			//Deposit on Cr			
-			if(obj.deposit > 0){				
-				this.journalLineDS.add({					
-					transaction_id 		: transaction_id,
-					account_id 			: contact.deposit_account_id,				
-					contact_id 			: obj.contact_id,				
-					description 		: "",
-					reference_no 		: "",
-					segments 	 		: [],								
-					dr 	 				: 0,
-					cr 					: obj.deposit,				
-					rate				: obj.rate,
-					locale				: obj.locale
+			//Add to journal entry
+			if(!jQuery.isEmptyObject(entries)){
+				$.each(entries, function(index, value){
+					self.journalLineDS.add(value);						
 				});
 			}			
 
@@ -68617,13 +68629,13 @@
 				$.each(entries, function(index, value){
 					self.journalLineDS.add({					
 						transaction_id 		: transaction_id,
-						account_id 			: value.id,				
-						contact_id 			: obj.contact_id,				
+						account_id 			: value.id,
+						contact_id 			: obj.contact_id,
 						description 		: "",
 						reference_no 		: "",
-						segments 	 		: [],								
+						segments 	 		: [],
 						dr 	 				: value.dr,
-						cr 					: value.cr,				
+						cr 					: value.cr,
 						rate				: value.rate,
 						locale				: value.locale
 					});						

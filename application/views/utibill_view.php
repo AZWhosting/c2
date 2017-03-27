@@ -3692,48 +3692,46 @@
 									<div id="tabDownload" style="border: 1px solid #ccc; overflow: hidden;" class="tab-pane active widget-body-regular">
 										<h4 class="separator bottom" style="margin-top: 10px;" data-bind="text: lang.lang.please_select_license">Please Select License and Location to download reading book</h4>
 									  	<div class="span12 row-fluid" style="padding:20px 0;padding-top: 0;">
-								        	<div class="span6" style="padding-left: 0;">
-												<div class="span5" style="padding-left: 0;">
-													<div class="control-group">								
-														<label ><span data-bind="text: lang.lang.license">License</span></label>
-														<input 
-															data-role="dropdownlist" 
-															style="width: 100%;" 
-															data-option-label="License ..." 
-															data-auto-bind="false" 
-															data-value-primitive="false" 
-															data-text-field="name" 
-															data-value-field="id" 
-															data-bind="
-																value: licenseSelect,
-							                  					source: licenseDS,
-							                  					events: {change: onLicenseChange}">
-							                  		</div>
-												</div>
-												<div class="span5">
-													<div class="control-group">								
-														<label ><span data-bind="text: lang.lang.location">Location</span></label>
-														<input 
-															data-role="dropdownlist" 
-															style="width: 100%;" 
-															data-option-label="Location ..." 
-															data-auto-bind="false" 
-															data-value-primitive="false" 
-															data-text-field="name" 
-															data-value-field="id" 
-															data-bind="
-																value: blocSelect,
-							                  					source: blocDS">
-							                  		</div>
-												</div>
-												<div class="span2">
-													<div class="control-group">	
-														<label ><span data-bind="text: lang.lang.action">Action</span></label>	
-														<div class="row" style="margin: 0;">					
-															<button type="button" data-role="button" data-bind="click: search" class="k-button" role="button" aria-disabled="false" tabindex="0"><i class="icon-search"></i></button>
-														</div>
-							                  		</div>
-												</div>		
+											<div class="span5" style="padding-left: 0;">
+												<div class="control-group">								
+													<label ><span data-bind="text: lang.lang.license">License</span></label>
+													<input 
+														data-role="dropdownlist" 
+														style="width: 100%;" 
+														data-option-label="License ..." 
+														data-auto-bind="false" 
+														data-value-primitive="false" 
+														data-text-field="name" 
+														data-value-field="id" 
+														data-bind="
+															value: licenseSelect,
+						                  					source: licenseDS,
+						                  					events: {change: onLicenseChange}">
+						                  		</div>
+											</div>
+											<div class="span6" style="padding: 0;">
+												<div class="control-group">								
+													<label ><span data-bind="text: lang.lang.location">Location</span></label>
+													<input 
+														data-role="dropdownlist" 
+														style="width: 100%;" 
+														data-option-label="Location ..." 
+														data-auto-bind="false" 
+														data-value-primitive="false" 
+														data-text-field="name" 
+														data-value-field="id" 
+														data-bind="
+															value: blocSelect,
+						                  					source: blocDS">
+						                  		</div>
+											</div>
+											<div class="span1" style="padding-left: 15px;">
+												<div class="control-group">	
+													<label ><span data-bind="text: lang.lang.action">Action</span></label>	
+													<div class="row" style="margin: 0;">					
+														<button type="button" data-role="button" data-bind="click: search" class="k-button" role="button" aria-disabled="false" tabindex="0"><i class="icon-search"></i></button>
+													</div>
+						                  		</div>
 											</div>
 								        </div>
 								        <div class="row-fluid" data-bind="visible: selectMeter">
@@ -14193,6 +14191,7 @@
 			}
 		},
 		save 				: function() {
+			var self = this;
 			$.each(this.dataSource.data(), function(index, value){
 				value.set("worder", index);
 			});
@@ -14202,7 +14201,9 @@
 				if(e.type=="update" && saved==false){
 					saved = true;
 				}
-				$("#ntf1").data("kendoNotification").info("Saved Successful");
+				var notificat = $("#ntf1").data("kendoNotification");
+					notificat.hide();
+					notificat.success(self.lang.lang.success_message);
 			});
 		},
 		ExportExcel 		: function(){
@@ -20706,21 +20707,33 @@
 			para = [],
       		searchText = this.get("searchText"),
       		contact_type_id = this.get("contact_type_id");
+      		
       		if(searchText){
       			var textParts = searchText.replace(/([a-z]+)/i, "$1 ").split(/[^0-9a-z]+/ig);
+
       			para.push(
       				{ field: "abbr", value: textParts[0] },
       				{ field: "number", value: textParts[1] },
 					{ field: "name", operator: "or_like", value: searchText }
       			);
       		}
+
       		if(contact_type_id){
       			para.push({ field: "contact_type_id", value: contact_type_id });
+      		}else{
+      			para.push({ field: "parent_id", operator:"where_related_contact_type", value: 1 });
       		}
-      		else{
-      			para.push({ field: "parent_id", model:"contact_type", operator:"where_related", value: 1 });
+      		if(this.filterKey == 1){
+      			para.push(
+      				{ field: "use_water", value: 1 }
+      			);
+      		}else{
+      			para.push(
+      				{ field: "use_water", value: 0 }
+      			);
       		}
       		this.contactDS.filter(para);
+			
 			//Clear search filters
       		self.set("searchText", "");
       		self.set("contact_type_id", 0);

@@ -98,6 +98,7 @@
                             <button style="background-color: #B2C1D1;" type="button" class="btn btn-block goto-banhji" data-bind="visible:users.showAdmin, click: goCompany">Company Info</button>
                             <button style="background-color: #B2C1D1;" type="button" class="btn btn-block goto-banhji" data-bind="visible:users.showAdmin, click: goUser">Users List</button>
                             <button style="background-color: #B2C1D1;" type="button" class="btn btn-block goto-banhji" data-bind="visible:users.showAdmin, click: goEmployee">Employees List</button>
+                            <button style="background-color: #B2C1D1;" type="button" class="btn btn-block goto-banhji" data-bind="visible:users.showAdmin, click: activateWater">Activate Water</button>
                             
                           </div>
                           
@@ -1354,6 +1355,13 @@
         </td>
       </tr>
     </script>
+
+    <script type="text/x-kendo-template" id="water">
+      <div style="text-align: center;">
+        <p id="waterActivationMessage">You are about to activate for water</p>
+        <button class="btn btn-primary" data-bind="click: activate">Activate Now</button>
+      </div>
+    </script>
     <!-- cognito -->
     
     <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/resources/jsbn2.js"></script>
@@ -2255,423 +2263,423 @@
       });
 
       banhji.employees = kendo.observable({
-          dataSource: new kendo.data.DataSource({
-            transport: {
-              read  : {
-                url: baseUrl + 'api/employees',
-                type: "GET",
-                dataType: 'json',
-                headers: { Institute: JSON.parse(localStorage.getItem('userData/user')) != null ? JSON.parse(localStorage.getItem('userData/user')).institute.id : 0 }
-              },
-              create  : {
-                url: baseUrl + 'api/employees',
-                type: "POST",
-                dataType: 'json',
-                headers: { Institute: JSON.parse(localStorage.getItem('userData/user')) != null ? JSON.parse(localStorage.getItem('userData/user')).institute.id : 0 }
-              },
-              update  : {
-                url: baseUrl + 'api/employees',
-                type: "PUT",
-                dataType: 'json',
-                headers: { Institute: JSON.parse(localStorage.getItem('userData/user')) != null ? JSON.parse(localStorage.getItem('userData/user')).institute.id : 0 }
-              },
-              destroy  : {
-                url: baseUrl + 'api/employees',
-                type: "DELETE",
-                dataType: 'json',
-                headers: { Institute: JSON.parse(localStorage.getItem('userData/user')) != null ? JSON.parse(localStorage.getItem('userData/user')).institute.id : 0 }
-              },
-              parameterMap: function(options, operation) {
-                if(operation === 'read') {
-                  return {
-                    limit: options.take,
-                    page: options.page,
-                    filter: options.filter
-                  };
-                } else {
-                  return {models: kendo.stringify(options.models)};
-                }
-              }
+        dataSource: new kendo.data.DataSource({
+          transport: {
+            read  : {
+              url: baseUrl + 'api/employees',
+              type: "GET",
+              dataType: 'json',
+              headers: { Institute: JSON.parse(localStorage.getItem('userData/user')) != null ? JSON.parse(localStorage.getItem('userData/user')).institute.id : 0 }
             },
-            schema  : {
-              model: {
-                id: 'id'
-              },
-              data: 'results',
-              total: 'count'
+            create  : {
+              url: baseUrl + 'api/employees',
+              type: "POST",
+              dataType: 'json',
+              headers: { Institute: JSON.parse(localStorage.getItem('userData/user')) != null ? JSON.parse(localStorage.getItem('userData/user')).institute.id : 0 }
             },
-            batch: true,
-            serverFiltering: true,
-            serverPaging: true,
-            pageSize: 50
-          }),
-          users : banhji.userDS,
-          genders  : [{id: "M", value: "Male"}, {id: "F", value: "Female"}],
-          currencies : new kendo.data.DataSource({
-            transport: {
-              read  : {
-                url: baseUrl + "api/currencies",
-                type: "GET",
-                headers: { Institute: JSON.parse(localStorage.getItem('userData/user')) != null ? JSON.parse(localStorage.getItem('userData/user')).institute.id : 0 },
-                dataType: 'json'
-              },        
-              parameterMap: function(options, operation) {
-                if(operation === 'read') {
-                  return {
-                    page: options.page,
-                    limit: options.pageSize,
-                    filter: options.filter,
-                    sort: options.sort
-                  };
-                } else {
-                  return {models: kendo.stringify(options.models)};
-                }
-              }
+            update  : {
+              url: baseUrl + 'api/employees',
+              type: "PUT",
+              dataType: 'json',
+              headers: { Institute: JSON.parse(localStorage.getItem('userData/user')) != null ? JSON.parse(localStorage.getItem('userData/user')).institute.id : 0 }
             },
-            schema  : {
-              model: {
-                id: 'id'
-              },
-              data: 'results',
-              total: 'count'
+            destroy  : {
+              url: baseUrl + 'api/employees',
+              type: "DELETE",
+              dataType: 'json',
+              headers: { Institute: JSON.parse(localStorage.getItem('userData/user')) != null ? JSON.parse(localStorage.getItem('userData/user')).institute.id : 0 }
             },
-            batch: true,
-            serverFiltering: true,
-            serverSorting: true,
-            serverPaging: true,
-            page:1,
-            pageSize: 100
-          }),
-          advanceAC : new kendo.data.DataSource({
-            transport: {
-              read  : {
-                url: baseUrl + "api/accounts",
-                type: "GET",
-                headers: { Institute: JSON.parse(localStorage.getItem('userData/user')) != null ? JSON.parse(localStorage.getItem('userData/user')).institute.id : 0 },
-                dataType: 'json'
-              },        
-              parameterMap: function(options, operation) {
-                if(operation === 'read') {
-                  return {
-                    page: options.page,
-                    limit: options.pageSize,
-                    filter: options.filter,
-                    sort: options.sort
-                  };
-                } else {
-                  return {models: kendo.stringify(options.models)};
-                }
-              }
-            },
-            schema  : {
-              model: {
-                id: 'id'
-              },
-              data: 'results',
-              total: 'count'
-            },
-            filter: [
-              { field:"account_type_id", value: 11 },
-              { field:"status", value: 1 }
-            ],
-            sort: { field:"number", dir:"asc" },
-            batch: true,
-            serverFiltering: true,
-            serverSorting: true,
-            serverPaging: true,
-            page:1,
-            pageSize: 100
-          }),
-          salaryAC  : new kendo.data.DataSource({
-            transport: {
-              read  : {
-                url: baseUrl + "api/accounts",
-                type: "GET",
-                headers: { Institute: JSON.parse(localStorage.getItem('userData/user')) != null ? JSON.parse(localStorage.getItem('userData/user')).institute.id : 0 },
-                dataType: 'json'
-              },        
-              parameterMap: function(options, operation) {
-                if(operation === 'read') {
-                  return {
-                    page: options.page,
-                    limit: options.pageSize,
-                    filter: options.filter,
-                    sort: options.sort
-                  };
-                } else {
-                  return {models: kendo.stringify(options.models)};
-                }
-              }
-            },
-            schema  : {
-              model: {
-                id: 'id'
-              },
-              data: 'results',
-              total: 'count'
-            },
-            filter: [
-              { field:"account_type_id", value: 37 },
-              { field:"status", value: 1 }
-            ],
-            sort: { field:"number", dir:"asc" },
-            batch: true,
-            serverFiltering: true,
-            serverSorting: true,
-            serverPaging: true,
-            page:1,
-            pageSize: 100
-          }),
-          fileMan   : banhji.fileManagement,
-          goRole   : function() {
-            layout.showIn("#container", mainDash);
-            mainDash.showIn("#placeholder", role);
-          },
-          setCurrent: function(current) {
-            var that = this;
-            this.set('current', current);
-            this.payrollDS.query({filter: {'field' : 'contact_id', 'value': current.id}}).
-            then(function(e){
-              if(that.payrollDS.data().length > 0) {
-                that.set('payroll', that.payrollDS.data()[0]);
+            parameterMap: function(options, operation) {
+              if(operation === 'read') {
+                return {
+                  limit: options.take,
+                  page: options.page,
+                  filter: options.filter
+                };
               } else {
-                banhji.employees.payrollDS.insert(0,{
-                  children: 0,
-                  city: null,
-                  contact_id: that.get('current').id,
-                  country: null,
-                  emergency_name: null,
-                  emergency_name: null,
-                  employeement_date: null,
-                  married_status: 0,
-                  nationality: null
-                });
-                banhji.employees.set('payroll', banhji.employees.payrollDS.at(0));
+                return {models: kendo.stringify(options.models)};
               }
-              
-            });
+            }
           },
-          marriedStatus: [
-            { id: 0, name: 'Single'},
-            { id: 1, name: 'Married'}
-          ],
-          refresh: function() {
-            $('#user-spinwhile').addClass('fa-spin');
-            banhji.employees.dataSource.read().then(function() {
-              $('#user-spinwhile').removeClass('fa-spin');
-            });
+          schema  : {
+            model: {
+              id: 'id'
+            },
+            data: 'results',
+            total: 'count'
           },
-          roles     : new kendo.data.DataSource({
-            transport: {
-              read  : {
-                url: baseUrl + 'api/employees/roles',
-                type: "GET",
-                dataType: 'json',
-                headers: { Institute: JSON.parse(localStorage.getItem('userData/user')) != null ? JSON.parse(localStorage.getItem('userData/user')).institute.id : 0 }
-              },
-              create  : {
-                url: baseUrl + 'api/employees/roles',
-                type: "POST",
-                dataType: 'json',
-                headers: { Institute: JSON.parse(localStorage.getItem('userData/user')) != null ? JSON.parse(localStorage.getItem('userData/user')).institute.id : 0 }
-              },
-              update  : {
-                url: baseUrl + 'api/employees/roles',
-                type: "PUT",
-                dataType: 'json',
-                headers: { Institute: JSON.parse(localStorage.getItem('userData/user')) != null ? JSON.parse(localStorage.getItem('userData/user')).institute.id : 0 }
-              },
-              parameterMap: function(options, operation) {
-                if(operation === 'read') {
-                  return {
-                    limit: options.take,
-                    page: options.page,
-                    filter: options.filter
-                  };
-                } else {
-                  return {models: kendo.stringify(options.models)};
-                }
+          batch: true,
+          serverFiltering: true,
+          serverPaging: true,
+          pageSize: 50
+        }),
+        users : banhji.userDS,
+        genders  : [{id: "M", value: "Male"}, {id: "F", value: "Female"}],
+        currencies : new kendo.data.DataSource({
+          transport: {
+            read  : {
+              url: baseUrl + "api/currencies",
+              type: "GET",
+              headers: { Institute: JSON.parse(localStorage.getItem('userData/user')) != null ? JSON.parse(localStorage.getItem('userData/user')).institute.id : 0 },
+              dataType: 'json'
+            },        
+            parameterMap: function(options, operation) {
+              if(operation === 'read') {
+                return {
+                  page: options.page,
+                  limit: options.pageSize,
+                  filter: options.filter,
+                  sort: options.sort
+                };
+              } else {
+                return {models: kendo.stringify(options.models)};
               }
+            }
+          },
+          schema  : {
+            model: {
+              id: 'id'
             },
-            schema  : {
-              model: {
-                id: 'id'
-              },
-              data: 'results',
-              total: 'count'
-            },
-            batch: true,
-            serverFiltering: true,
-            serverPaging: true,
-            pageSize: 50
-          }),
-          payrollDS : new kendo.data.DataSource({
-            transport: {
-              read  : {
-                url: baseUrl + 'api/payrolls',
-                type: "GET",
-                dataType: 'json',
-                headers: { Institute: JSON.parse(localStorage.getItem('userData/user')) != null ? JSON.parse(localStorage.getItem('userData/user')).institute.id : 0 }
-              },
-              create  : {
-                url: baseUrl + 'api/payrolls',
-                type: "POST",
-                dataType: 'json',
-                headers: { Institute: JSON.parse(localStorage.getItem('userData/user')) != null ? JSON.parse(localStorage.getItem('userData/user')).institute.id : 0 }
-              },
-              update  : {
-                url: baseUrl + 'api/payrolls',
-                type: "PUT",
-                dataType: 'json',
-                headers: { Institute: JSON.parse(localStorage.getItem('userData/user')) != null ? JSON.parse(localStorage.getItem('userData/user')).institute.id : 0 }
-              },
-              parameterMap: function(options, operation) {
-                if(operation === 'read') {
-                  return {
-                    limit: options.take,
-                    page: options.page,
-                    filter: options.filter
-                  };
-                } else {
-                  return {models: kendo.stringify(options.models)};
-                }
+            data: 'results',
+            total: 'count'
+          },
+          batch: true,
+          serverFiltering: true,
+          serverSorting: true,
+          serverPaging: true,
+          page:1,
+          pageSize: 100
+        }),
+        advanceAC : new kendo.data.DataSource({
+          transport: {
+            read  : {
+              url: baseUrl + "api/accounts",
+              type: "GET",
+              headers: { Institute: JSON.parse(localStorage.getItem('userData/user')) != null ? JSON.parse(localStorage.getItem('userData/user')).institute.id : 0 },
+              dataType: 'json'
+            },        
+            parameterMap: function(options, operation) {
+              if(operation === 'read') {
+                return {
+                  page: options.page,
+                  limit: options.pageSize,
+                  filter: options.filter,
+                  sort: options.sort
+                };
+              } else {
+                return {models: kendo.stringify(options.models)};
               }
+            }
+          },
+          schema  : {
+            model: {
+              id: 'id'
             },
-            schema  : {
-              model: {
-                id: 'id'
-              },
-              data: 'results',
-              total: 'count'
+            data: 'results',
+            total: 'count'
+          },
+          filter: [
+            { field:"account_type_id", value: 11 },
+            { field:"status", value: 1 }
+          ],
+          sort: { field:"number", dir:"asc" },
+          batch: true,
+          serverFiltering: true,
+          serverSorting: true,
+          serverPaging: true,
+          page:1,
+          pageSize: 100
+        }),
+        salaryAC  : new kendo.data.DataSource({
+          transport: {
+            read  : {
+              url: baseUrl + "api/accounts",
+              type: "GET",
+              headers: { Institute: JSON.parse(localStorage.getItem('userData/user')) != null ? JSON.parse(localStorage.getItem('userData/user')).institute.id : 0 },
+              dataType: 'json'
+            },        
+            parameterMap: function(options, operation) {
+              if(operation === 'read') {
+                return {
+                  page: options.page,
+                  limit: options.pageSize,
+                  filter: options.filter,
+                  sort: options.sort
+                };
+              } else {
+                return {models: kendo.stringify(options.models)};
+              }
+            }
+          },
+          schema  : {
+            model: {
+              id: 'id'
             },
-            batch: true,
-            serverFiltering: true,
-            serverPaging: true,
-            pageSize: 50
-          }),
-          statusDS  : [
-            {id: 0, value: "inactive"},
-            {id: 1, value: "active"}
+            data: 'results',
+            total: 'count'
+          },
+          filter: [
+            { field:"account_type_id", value: 37 },
+            { field:"status", value: 1 }
           ],
-          genderDS  : [
-            {id: "M", value: "Male"},
-            {id: "F", value: "Female"}
-          ],
-          typeChange: function(e) {
-            var type = e.sender.dataSource.at(e.sender.selectedIndex - 1);
-            banhji.employees.get('current').set('abbr', type.abbr);
-            console.log();
-          },
-          addNew    : function() {
-            banhji.employees.dataSource.insert(0, {
-              name: "",
-              gender: "",
-              number: "",
-              is_fulltime: false,
-              role: {id: 0, name: ""},
-              status: 1,
-              phone: "",
-              email: "",
-              address: "",
-              memo: "",
-              bill_to: "",
-              ship_to: "",
-              abbr: "",
-              currency: {id: 2},
-              userid: 0,
-              account: {id: 0, name: null},
-              salary: {id: 0, name: null},
-              registered_date: new Date()
-            });
-            banhji.employees.payrollDS.insert(0,{
-              children: 0,
-              city: null,
-              country: null,
-              emergency_name: null,
-              emergency_name: null,
-              employeement_date: null,
-              married_status: 0,
-              nationality: null
-            });
-            banhji.employees.setCurrent(banhji.employees.dataSource.at(0));
-            banhji.employees.set('payroll', banhji.employees.payrollDS.at(0));
-            banhji.router.navigate('employee/new');
-          },
-          edit      : function(e) {
-            banhji.employees.setCurrent(e.data);
-            banhji.router.navigate('employee/edit');
-          },
-          remove    : function(e) {
-            banhji.employees.dataSource.remove(e.data);
-            var agree = confirm("Are you sure you want to delete?");
-            if(agree) {
-              this.save();
+          sort: { field:"number", dir:"asc" },
+          batch: true,
+          serverFiltering: true,
+          serverSorting: true,
+          serverPaging: true,
+          page:1,
+          pageSize: 100
+        }),
+        fileMan   : banhji.fileManagement,
+        goRole   : function() {
+          layout.showIn("#container", mainDash);
+          mainDash.showIn("#placeholder", role);
+        },
+        setCurrent: function(current) {
+          var that = this;
+          this.set('current', current);
+          this.payrollDS.query({filter: {'field' : 'contact_id', 'value': current.id}}).
+          then(function(e){
+            if(that.payrollDS.data().length > 0) {
+              that.set('payroll', that.payrollDS.data()[0]);
             } else {
-              this.cancel();
-            }
-          },
-          cancel    : function() {
-            if(banhji.employees.dataSource.hasChanges()) {
-              banhji.employees.dataSource.cancelChanges();
-              banhji.employees.payrollDS.cancelChanges();
-            }
-            banhji.router.navigate("employeelist");
-          },
-          addRole   : function() {
-            this.roles.insert(0, {abbr: null, name: null});
-          },
-          backToList: function() {
-            mainDash.showIn("#placeholder", employee);
-          },
-          save      : function() {
-            if( banhji.employees.dataSource.hasChanges()) {
-              banhji.employees.dataSource.sync();
-              banhji.employees.dataSource.bind('requestEnd', function(e){
-                if(e.type != "read") {
-                  if(e.response) {
-                    if(e.type == 'create') {
-                      banhji.employees.fileMan.save(e.response.results[0].id);
-                      banhji.employees.get('payroll').set('contact_id', e.response.results[0].id);
-                      if(banhji.employees.payrollDS.data()[0].dirty) {
-                        banhji.employees.payrollDS.sync();
-                      }
-                      // banhji.employees.addNew();
-                    } else if(e.type == 'update') {
-                      if(banhji.employees.payrollDS.data()[0].dirty) {
-                        banhji.employees.payrollDS.sync();
-                      }
-                    }                
-                    $("#ntf1").data("kendoNotification").success("Data saved.");
-                    banhji.router.navigate('employeelist');
-                  } else {
-                    $("#ntf1").data("kendoNotification").error("Operation failed");
-                  }
-                }
+              banhji.employees.payrollDS.insert(0,{
+                children: 0,
+                city: null,
+                contact_id: that.get('current').id,
+                country: null,
+                emergency_name: null,
+                emergency_name: null,
+                employeement_date: null,
+                married_status: 0,
+                nationality: null
               });
-            } else {
-              banhji.employees.fileMan.save(this.get('current').id);
-              banhji.employees.payrollDS.sync();
-              banhji.employees.payrollDS.bind('requestEnd', function(e) {
-                if(e.response && e.type != 'read') {
+              banhji.employees.set('payroll', banhji.employees.payrollDS.at(0));
+            }
+            
+          });
+        },
+        marriedStatus: [
+          { id: 0, name: 'Single'},
+          { id: 1, name: 'Married'}
+        ],
+        refresh: function() {
+          $('#user-spinwhile').addClass('fa-spin');
+          banhji.employees.dataSource.read().then(function() {
+            $('#user-spinwhile').removeClass('fa-spin');
+          });
+        },
+        roles     : new kendo.data.DataSource({
+          transport: {
+            read  : {
+              url: baseUrl + 'api/employees/roles',
+              type: "GET",
+              dataType: 'json',
+              headers: { Institute: JSON.parse(localStorage.getItem('userData/user')) != null ? JSON.parse(localStorage.getItem('userData/user')).institute.id : 0 }
+            },
+            create  : {
+              url: baseUrl + 'api/employees/roles',
+              type: "POST",
+              dataType: 'json',
+              headers: { Institute: JSON.parse(localStorage.getItem('userData/user')) != null ? JSON.parse(localStorage.getItem('userData/user')).institute.id : 0 }
+            },
+            update  : {
+              url: baseUrl + 'api/employees/roles',
+              type: "PUT",
+              dataType: 'json',
+              headers: { Institute: JSON.parse(localStorage.getItem('userData/user')) != null ? JSON.parse(localStorage.getItem('userData/user')).institute.id : 0 }
+            },
+            parameterMap: function(options, operation) {
+              if(operation === 'read') {
+                return {
+                  limit: options.take,
+                  page: options.page,
+                  filter: options.filter
+                };
+              } else {
+                return {models: kendo.stringify(options.models)};
+              }
+            }
+          },
+          schema  : {
+            model: {
+              id: 'id'
+            },
+            data: 'results',
+            total: 'count'
+          },
+          batch: true,
+          serverFiltering: true,
+          serverPaging: true,
+          pageSize: 50
+        }),
+        payrollDS : new kendo.data.DataSource({
+          transport: {
+            read  : {
+              url: baseUrl + 'api/payrolls',
+              type: "GET",
+              dataType: 'json',
+              headers: { Institute: JSON.parse(localStorage.getItem('userData/user')) != null ? JSON.parse(localStorage.getItem('userData/user')).institute.id : 0 }
+            },
+            create  : {
+              url: baseUrl + 'api/payrolls',
+              type: "POST",
+              dataType: 'json',
+              headers: { Institute: JSON.parse(localStorage.getItem('userData/user')) != null ? JSON.parse(localStorage.getItem('userData/user')).institute.id : 0 }
+            },
+            update  : {
+              url: baseUrl + 'api/payrolls',
+              type: "PUT",
+              dataType: 'json',
+              headers: { Institute: JSON.parse(localStorage.getItem('userData/user')) != null ? JSON.parse(localStorage.getItem('userData/user')).institute.id : 0 }
+            },
+            parameterMap: function(options, operation) {
+              if(operation === 'read') {
+                return {
+                  limit: options.take,
+                  page: options.page,
+                  filter: options.filter
+                };
+              } else {
+                return {models: kendo.stringify(options.models)};
+              }
+            }
+          },
+          schema  : {
+            model: {
+              id: 'id'
+            },
+            data: 'results',
+            total: 'count'
+          },
+          batch: true,
+          serverFiltering: true,
+          serverPaging: true,
+          pageSize: 50
+        }),
+        statusDS  : [
+          {id: 0, value: "inactive"},
+          {id: 1, value: "active"}
+        ],
+        genderDS  : [
+          {id: "M", value: "Male"},
+          {id: "F", value: "Female"}
+        ],
+        typeChange: function(e) {
+          var type = e.sender.dataSource.at(e.sender.selectedIndex - 1);
+          banhji.employees.get('current').set('abbr', type.abbr);
+          console.log();
+        },
+        addNew    : function() {
+          banhji.employees.dataSource.insert(0, {
+            name: "",
+            gender: "",
+            number: "",
+            is_fulltime: false,
+            role: {id: 0, name: ""},
+            status: 1,
+            phone: "",
+            email: "",
+            address: "",
+            memo: "",
+            bill_to: "",
+            ship_to: "",
+            abbr: "",
+            currency: {id: 2},
+            userid: 0,
+            account: {id: 0, name: null},
+            salary: {id: 0, name: null},
+            registered_date: new Date()
+          });
+          banhji.employees.payrollDS.insert(0,{
+            children: 0,
+            city: null,
+            country: null,
+            emergency_name: null,
+            emergency_name: null,
+            employeement_date: null,
+            married_status: 0,
+            nationality: null
+          });
+          banhji.employees.setCurrent(banhji.employees.dataSource.at(0));
+          banhji.employees.set('payroll', banhji.employees.payrollDS.at(0));
+          banhji.router.navigate('employee/new');
+        },
+        edit      : function(e) {
+          banhji.employees.setCurrent(e.data);
+          banhji.router.navigate('employee/edit');
+        },
+        remove    : function(e) {
+          banhji.employees.dataSource.remove(e.data);
+          var agree = confirm("Are you sure you want to delete?");
+          if(agree) {
+            this.save();
+          } else {
+            this.cancel();
+          }
+        },
+        cancel    : function() {
+          if(banhji.employees.dataSource.hasChanges()) {
+            banhji.employees.dataSource.cancelChanges();
+            banhji.employees.payrollDS.cancelChanges();
+          }
+          banhji.router.navigate("employeelist");
+        },
+        addRole   : function() {
+          this.roles.insert(0, {abbr: null, name: null});
+        },
+        backToList: function() {
+          mainDash.showIn("#placeholder", employee);
+        },
+        save      : function() {
+          if( banhji.employees.dataSource.hasChanges()) {
+            banhji.employees.dataSource.sync();
+            banhji.employees.dataSource.bind('requestEnd', function(e){
+              if(e.type != "read") {
+                if(e.response) {
+                  if(e.type == 'create') {
+                    banhji.employees.fileMan.save(e.response.results[0].id);
+                    banhji.employees.get('payroll').set('contact_id', e.response.results[0].id);
+                    if(banhji.employees.payrollDS.data()[0].dirty) {
+                      banhji.employees.payrollDS.sync();
+                    }
+                    // banhji.employees.addNew();
+                  } else if(e.type == 'update') {
+                    if(banhji.employees.payrollDS.data()[0].dirty) {
+                      banhji.employees.payrollDS.sync();
+                    }
+                  }                
                   $("#ntf1").data("kendoNotification").success("Data saved.");
+                  banhji.router.navigate('employeelist');
                 } else {
                   $("#ntf1").data("kendoNotification").error("Operation failed");
                 }
-              });
-            }
-          },
-          saveClose: function() {
-            banhji.employees.dataSource.sync();
-            banhji.employees.dataSource.bind('requestEnd', function(e){
-              if(e.response) {
+              }
+            });
+          } else {
+            banhji.employees.fileMan.save(this.get('current').id);
+            banhji.employees.payrollDS.sync();
+            banhji.employees.payrollDS.bind('requestEnd', function(e) {
+              if(e.response && e.type != 'read') {
                 $("#ntf1").data("kendoNotification").success("Data saved.");
-                banhji.employees.fileMan.save(e.response.results[0].id);
-                banhji.router.navigate("");
               } else {
-                //
+                $("#ntf1").data("kendoNotification").error("Operation failed");
               }
             });
           }
+        },
+        saveClose: function() {
+          banhji.employees.dataSource.sync();
+          banhji.employees.dataSource.bind('requestEnd', function(e){
+            if(e.response) {
+              $("#ntf1").data("kendoNotification").success("Data saved.");
+              banhji.employees.fileMan.save(e.response.results[0].id);
+              banhji.router.navigate("");
+            } else {
+              //
+            }
+          });
+        }
       });
 
       banhji.userFX = kendo.observable({
@@ -3235,6 +3243,9 @@
         goProfile   : function() {
           banhji.router.navigate("profile");
         },
+        activateWater   : function() {
+          banhji.router.navigate("water");
+        },
         loadMap         : function(){
           var current = this.get("current"), lat = kendo.parseFloat(current.lat),
           lng = kendo.parseFloat(current.long);
@@ -3362,6 +3373,54 @@
         }
       });
 
+      banhji.modules = kendo.observable({
+        dataSource : new kendo.data.DataSource({
+          transport: {
+            create  : {
+              url: baseUrl + 'api/institutes/activateWater',
+              type: "POST",
+              dataType: 'json'
+            },
+            parameterMap: function(options, operation) {
+              if(operation === 'read') {
+                return {
+                  limit: options.take,
+                  page: options.page,
+                  filter: options.filter
+                };
+              } else {
+                return {models: kendo.stringify(options.models)};
+              }
+            }
+          },
+          schema  : {
+            model: {
+              id: 'id'
+            },
+            data: 'results',
+            total: 'count'
+          },
+          batch: true,
+          serverFiltering: true,
+          serverPaging: true,
+          pageSize: 50
+        }),
+        activate   : function() {
+          $("#waterActivationMessage").html('Activating...');
+          let user = JSON.parse(localStorage.getItem('userData/user'));
+          this.dataSource.add({
+            user: user.id,
+            institute: institute
+          });
+          this.dataSource.sync();
+          this.dataSource.bind('requestEnd', function(e){
+            if(e.type !== 'read' && e.response.results) {
+               $("#waterActivationMessage").html('Activated!');
+            }
+          });
+        }
+      });
+
       // index view
       var layout = new kendo.Layout('#placeholder');
       var menu = new kendo.View('#header-menu', {model: banhji.profile});
@@ -3384,6 +3443,7 @@
       var assign = new kendo.View('#template-assign-module-to-page', {model: banhji.users});
       var password = new kendo.View('#template-user-password', {model: banhji.profile});
       var role = new kendo.View('#template-assign-role-to-page', {model: banhji.userFX});
+      var water = new kendo.View('#water', {model: banhji.modules});
       // router initization
       banhji.router = new kendo.Router({
         init: function() {
@@ -3564,6 +3624,12 @@
         }
         banhji.fileManagement.dataSource.filter({field: 'contact_id', value: banhji.employees.get('current').id});
         layout.showIn("#container", empEdit);
+      });
+
+      banhji.router.route('water', function() {
+        layout.showIn("#container", mainDash);
+        
+        mainDash.showIn("#placeholder", water);
       });
 
 
