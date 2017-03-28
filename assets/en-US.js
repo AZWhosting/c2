@@ -1365,7 +1365,10 @@ var	en_US = {
 	"tariff_name": "Tariff Name",
 	"plan_name": "Plan Name",
 	"utility": "Utility",
-
+	"pole": "Pole",
+	"pole_name": "Pole Name",
+	"add_box": "Add Box",
+	"box": "Box",
 	"new_customer": "New Customer",
 
 

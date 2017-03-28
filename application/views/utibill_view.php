@@ -416,7 +416,23 @@
 				                data-edit-template="pole-edit-template"
 				                data-bind="source: poleDS"></tbody>
 	            	</table>
-	            	<!-- Tariff Item Window -->
+
+	            	<br>
+	            	<p data-bind="visible: poleSelect"><span data-bind="text: lang.lang.pole_name">Pole Name</span>: <span data-bind="text: poleNameShow"></span></p>
+	            	<table data-bind="visible: poleSelect" class="table table-bordered table-condensed table-striped table-secondary table-vertical-center checkboxs">
+	            		<thead>
+	            			<tr>
+	            				<th class="center" width="100"><span data-bind="text: lang.lang.name">Name</span></th>
+	            				<th class="center" width="200"><span data-bind="text: lang.lang.action">Action</span></th>
+	            			</tr>
+	            		</thead>
+	            		<tbody data-role="listview"	            				
+				                data-template="box-template"
+				                data-auto-bind="false"
+				                data-edit-template="box-edit-template"
+				                data-bind="source: boxDS"></tbody>
+	            	</table>
+	            	<!-- Pole Item Window -->
 		            <div id="addPole"
 		            	data-role="window"
 			                 data-width="250"
@@ -439,6 +455,30 @@
 							<span style="margin-bottom: 0;" class="btn btn-success btn-icon glyphicons ok_2" data-bind="click: savePole"><i></i><span data-bind="text: lang.lang.save"></span></span>
 
 							<span class="btn btn-danger btn-icon glyphicons remove_2" data-bind="click: closePoleWin"><i></i><span data-bind="text: lang.lang.close"></span></span>  
+						</div>
+					</div>
+					<!-- Box Item Window -->
+		            <div id="addBox"
+		            	data-role="window"
+			                 data-width="250"
+			                 data-height="120"
+			                 data-actions="{}"
+			                 data-resizable="false"
+			                 data-position="{top: '30%', left: '37%'}"
+			                 data-bind="visible: boxVisible">
+	            		<table>
+							<tr style="border-bottom: 8px solid #fff;">
+								<td width="35%"><span data-bind="text: lang.lang.name"></span></td>
+								<td>
+									<input class="k-textbox" placeholder="Name ..." data-bind="attr: {placeholder: lang.lang.name}, value: boxName" style="width: 100%;">
+								</td>
+							</tr>
+						</table>
+
+						<br>
+						<div style="text-align: center;">
+							<span style="margin-bottom: 0;" class="btn btn-success btn-icon glyphicons ok_2" data-bind="click: saveBox"><i></i><span data-bind="text: lang.lang.save"></span></span>
+							<span class="btn btn-danger btn-icon glyphicons remove_2" data-bind="click: closeBoxWin"><i></i><span data-bind="text: lang.lang.close"></span></span>  
 						</div>
 					</div>
 	            </div>
@@ -954,10 +994,38 @@
    		</td>
    		<td align="center">   			   
 		    <span style="cursor: pointer;" class="k-edit-button"><i class="icon-edit"></i> <span data-bind="text: lang.lang.edit">Edit</span></span>
+    		|
+    		<span style="cursor: pointer;" data-bind="click: viewBox"><i class="icon-view"></i> <span data-bind="text: lang.lang.view_item">View Item</span></span>
+    		|
+    		<span style="cursor: pointer;" data-bind="click: showBox"><i class="icon-plus icon-white"></i> <span data-bind="text: lang.lang.add_box">Add Box</span></span>
    		</td>   		
    	</tr>
 </script>
 <script id="pole-edit-template" type="text/x-kendo-tmpl">
+	<tr>
+		<td>
+            <input type="text" class="k-textbox" data-bind="value:name" name="ProductName" required="required" validationMessage="required" />
+        </td>
+		<td align="center">
+    
+	        <div class="edit-buttons">
+	            <a class="k-button k-update-button" href="\\#"><span class="k-icon k-update"></span></a>
+	            <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-cancel"></span></a>
+	        </div>
+	    </td>
+	</tr>
+</script>
+<script id="box-template" type="text/x-kendo-tmpl">
+    <tr>
+    	<td>
+    		#= name#
+   		</td>
+   		<td align="center">   			   
+		    <span style="cursor: pointer;" class="k-edit-button"><i class="icon-edit"></i> <span data-bind="text: lang.lang.edit">Edit</span></span>
+   		</td>   		
+   	</tr>
+</script>
+<script id="box-edit-template" type="text/x-kendo-tmpl">
 	<tr>
 		<td>
             <input type="text" class="k-textbox" data-bind="value:name" name="ProductName" required="required" validationMessage="required" />
@@ -2382,9 +2450,9 @@
 													style="width: 100%;" 
 													data-option-label="License ..." 
 													data-auto-bind="false" 
-													data-value-primitive="true" 
+													data-value-primitive="false" 
 													data-text-field="name" 
-													data-value-field="id" 
+													data-value-field="id"
 													required data-required-msg="required"
 													data-bind="
 														value: utility.branch_id,
@@ -2393,7 +2461,7 @@
 					                  					events: {change: licenseChange}">	
 							              	</td>         	
 							            	<td><span data-bind="text: lang.lang.code"></span></td>
-							              	<td><input class="k-textbox" data-bind="value: utility.codeabbr, enabled: waterUse" placeholder="e.g. 012 333 444" style="width: 100%;" /></td>
+							              	<td><input class="k-textbox" data-bind="value: utility.codeabbr, enabled: waterCode" style="width: 100%;" /></td>
 							            </tr>
 							            <tr>
 							            	<td><span data-bind="text: lang.lang.number_of_family"></span></td>
@@ -3314,16 +3382,54 @@
 														<input data-role="dropdownlist"
 								              			   data-option-label="(--- Select ---)"        
 										                   data-value-primitive="true"
+										                   data-auto-bind="false"
 										                   data-text-field="name"
 										                   data-value-field="id"
-										                   data-bind="source: locationDS, value: obj.location_id" 
+										                   data-bind="
+										                   	source: locationDS, 
+										                   	value: obj.location_id,
+										                   	events: {change: blocChange}" 
 										                   style="width: 100%;" />
 													</div>
+												</div>
+												<div class="control-group">
+									    			<label for="latitute"><span data-bind="text: lang.lang.pole">Pole</span> <span style="color:red"></span></label>
+													<div class="input-prepend">
+														<input data-role="dropdownlist"
+								              			   data-option-label="(--- Select ---)"        
+										                   data-value-primitive="true"
+										                   data-auto-bind="false"
+										                   data-text-field="name"
+										                   data-value-field="id"
+										                   data-bind="
+										                   	source: poleDS, 
+										                   	value: obj.pole_id,
+										                   	events: {change: poleChange}" 
+										                   style="width: 100%;" />
+													</div>
+												</div>
+												<div class="control-group">
+									    			<label for="latitute"><span data-bind="text: lang.lang.box">Box</span> <span style="color:red"></span></label>
+													<div class="input-prepend">
+														<input data-role="dropdownlist"
+								              			   data-option-label="(--- Select ---)"        
+										                   data-value-primitive="true"
+										                   data-auto-bind="false"
+										                   data-text-field="name"
+										                   data-value-field="id"
+										                   data-bind="
+										                   	source: boxDS, 
+										                   	value: obj.box_id" 
+										                   style="width: 100%;" />
+													</div>
+												</div>
+												<div class="control-group">
 													<label for="latitute"><span data-bind="text: lang.lang.brand">Brands</span> </label>
 													<div class="input-prepend">
 														<input data-role="dropdownlist"
 								              			   data-option-label="(--- Select ---)" 
 										                   data-value-primitive="true"
+										                   data-auto-bind="false"
 										                   data-text-field="name"
 										                   data-value-field="id"
 										                   data-bind="value: obj.brand_id, source: brandDS" style="width: 100%;" />
@@ -10857,122 +10963,14 @@
 		jobList 					: [],
 		jobDS						: dataStore(apiUrl + "jobs"),
 		//Currency
-		currencyAllDS				: dataStore(apiUrl + "currencies"),
-		currencyDS					: new kendo.data.DataSource({
-			transport: {
-				read 	: {
-					url: apiUrl + "currencies",
-					type: "GET",
-					headers: banhji.header,
-					dataType: 'json'
-				},				
-				parameterMap: function(options, operation) {
-					if(operation === 'read') {
-						return {
-							page: options.page,
-							limit: options.pageSize,
-							filter: options.filter,
-							sort: options.sort
-						};
-					} else {
-						return {models: kendo.stringify(options.models)};
-					}
-				}
-			},
-			schema 	: {
-				model: {
-					id: 'id'
-				},
-				data: 'results',
-				total: 'count'
-			},
-			filter: { field:"status", value: 1 },
-			// group: { field: "group"},
-			batch: true,
-			serverFiltering: true,
-			serverSorting: true,
-			serverPaging: true,
-			page:1,
-			pageSize: 100
-		}),
+		currencyList 				: [],
+		currencyDS					: dataStore(apiUrl + "currencies"),
 		currencyRateDS				: dataStore(apiUrl + "currencies/rate"),
-		//Prefixes
-		invoicePrefixDS				: new kendo.data.DataSource({
-			transport: {
-				read 	: {
-					url: apiUrl + "prefixes",
-					type: "GET",
-					headers: banhji.header,
-					dataType: 'json'
-				},
-				parameterMap: function(options, operation) {
-					if(operation === 'read') {
-						return {
-							page: options.page,
-							limit: options.pageSize,
-							filter: options.filter,
-							sort: options.sort
-						};
-					} else {
-						return {models: kendo.stringify(options.models)};
-					}
-				}
-			},
-			schema 	: {
-				model: {
-					id: 'id'
-				},
-				data: 'results',
-				total: 'count'
-			},
-			filter: { field:"type", operator:"where_in", value: ["Commercial_Invoice", "Vat_Invoice", "Invoice"] },
-			batch: true,
-			serverFiltering: true,
-			serverSorting: true,
-			serverPaging: true,
-			page:1,
-			pageSize: 100
-		}),
-		cashSalePrefixDS			: new kendo.data.DataSource({
-			transport: {
-				read 	: {
-					url: apiUrl + "prefixes",
-					type: "GET",
-					headers: banhji.header,
-					dataType: 'json'
-				},
-				parameterMap: function(options, operation) {
-					if(operation === 'read') {
-						return {
-							page: options.page,
-							limit: options.pageSize,
-							filter: options.filter,
-							sort: options.sort
-						};
-					} else {
-						return {models: kendo.stringify(options.models)};
-					}
-				}
-			},
-			schema 	: {
-				model: {
-					id: 'id'
-				},
-				data: 'results',
-				total: 'count'
-			},
-			filter: { field:"type", operator:"where_in", value: ["Commercial_Cash_Sale", "Vat_Cash_Sale", "Cash_Sale"] },
-			batch: true,
-			serverFiltering: true,
-			serverSorting: true,
-			serverPaging: true,
-			page:1,
-			pageSize: 100
-		}),
 		//Item
 		itemList 					: [],
 		itemDS						: dataStore(apiUrl + "items"),
 		itemTypeDS					: dataStore(apiUrl + "item_types"),
+		itemGroupList 				: [],
 		itemGroupDS					: dataStore(apiUrl + "items/group"),
 		brandDS						: dataStore(apiUrl + "brands"),
 		categoryList 				: [],
@@ -11173,23 +11171,27 @@
 		selectItemMessage 			: "Please select an item.",
 		duplicateSelectedItemMessage: "You already selected this item.",
 		pageLoad 					: function(){
-			this.loadRate();
-			this.loadPrefixes();
-			this.loadTxnTemplates();
+			this.loadAccounts();
+			this.accountTypeDS.read();
 			this.loadTaxes();
 			this.loadJobs();
 			this.loadSegmentItems();
-			this.loadAccounts();
+			this.loadCurrencies();
+			this.loadRates();
+			this.loadPrefixes();
+			this.loadTxnTemplates();
+
 			this.loadCategories();
+			this.loadItemGroups();
 			this.loadItems();
 			this.itemTypeDS.read();
 			this.loadItemPrices();
 			this.loadMeasurements();
+
 			this.loadContactTypes();
 			this.loadCustomers();
 			this.loadSuppliers();
 			this.loadEmployees();
-			this.accountTypeDS.read();
 		},
 		getFiscalDate 				: function(){
 			var today = new Date(),	
@@ -11237,7 +11239,25 @@
 				});
 			});
 		},
-		loadRate 					: function(){
+		loadCurrencies 				: function(){
+			var self = this, raw = this.get("currencyList");
+
+			//Clear array
+			if(raw.length>0){
+				raw.splice(0,raw.length);
+			}
+
+			this.currencyDS.query({
+				filter:[]
+			}).then(function(){
+				var view = self.currencyDS.view();
+
+				$.each(view, function(index, value){
+					raw.push(value);
+				});
+			});
+		},
+		loadRates 					: function(){
 			this.currencyRateDS.query({
 				filter:[],
 				sort:{ field:"date", dir:"desc"}
@@ -11327,7 +11347,7 @@
 			}
 
 			this.accountDS.query({
-				filter: { field:"status", value:1 }
+				filter: []
 			}).then(function(){
 				var view = self.accountDS.view();
 
@@ -11348,6 +11368,24 @@
 				filter:[]
 			}).then(function(){
 				var view = self.categoryDS.view();
+
+				$.each(view, function(index, value){
+					raw.push(value);
+				});
+			});
+		},
+		loadItemGroups 				: function(){
+			var self = this, raw = this.get("itemGroupList");
+
+			//Clear array
+			if(raw.length>0){
+				raw.splice(0,raw.length);
+			}
+
+			this.itemGroupDS.query({
+				filter:[]
+			}).then(function(){
+				var view = self.itemGroupDS.view();
 
 				$.each(view, function(index, value){
 					raw.push(value);
@@ -11439,8 +11477,7 @@
 
 			this.customerDS.query({
 				filter:[
-					{ field:"parent_id", operator:"where_related_contact_type", value:1 },
-					{ field:"status", value:1 }
+					{ field:"parent_id", operator:"where_related_contact_type", value:1 }
 				]
 			}).then(function(){
 				var view = self.customerDS.view();
@@ -11460,8 +11497,7 @@
 
 			this.supplierDS.query({
 				filter:[
-					{ field:"parent_id", operator:"where_related_contact_type", value:2 },
-					{ field:"status", value:1 }
+					{ field:"parent_id", operator:"where_related_contact_type", value:2 }
 				]
 			}).then(function(){
 				var view = self.supplierDS.view();
@@ -12513,7 +12549,10 @@
         	var data = e.data;
         	this.set("blocSelect", true);
         	this.set("blocNameShow", data.name);
-        	this.poleDS.filter({field: "main_bloc", value: data.id});
+        	this.poleDS.filter([
+        		{field: "main_bloc", value: data.id},
+        		{field: "main_pole", value: 0}
+        	]);
         },
         showPole 			: function(e){
         	this.set("poleVisible",true);
@@ -12545,6 +12584,58 @@
 					}
 				});
 	        	this.poleDS.bind("error", function(e){
+	        		var notificat = $("#ntf1").data("kendoNotification");
+					notificat.hide();
+					notificat.success(self.lang.lang.error_message);
+	        	});
+        	}else{
+        		var notificat = $("#ntf1").data("kendoNotification");
+				notificat.hide();
+				notificat.success(self.lang.lang.field_required_message);
+        	}
+        },
+        boxDS 				: dataStore(apiUrl + "locations"),
+        poleNameShow 		: null,
+        boxVisible 			: false,
+        poleSelect 			: false,
+        viewBox 			: function(e){
+        	var data = e.data;
+        	this.set("poleSelect", true);
+        	this.set("poleNameShow", data.name);
+        	this.boxDS.filter({field: "main_pole", value: data.id});
+        },
+        pole 				: null,
+        showBox 			: function(e){
+        	this.set("boxVisible",true);
+        	this.set("pole", e.data);
+        },
+        closeBoxWin 		: function(e){
+        	this.set("boxVisible", false);
+        },
+        saveBox 			: function(e){
+        	var self = this;
+        	if(this.get("boxName")){
+        		var data = e.data;
+        		this.boxDS.data([]);
+	        	this.boxDS.add({
+	        		branch 		: { id : this.get("pole").branch.id, name: this.get("pole").branch.name},
+	        		name 		: this.get("boxName"),
+	        		abbr 		: this.get("pole").abbr,
+	        		main_bloc 	: this.get("pole").main_bloc,
+	        		main_pole 	: this.get("pole").id,
+	        		type 		: "e"
+	        	});
+	        	this.boxDS.sync();
+	        	this.boxDS.bind("requestEnd", function(e){
+					if(e.type != 'read' && e.response){
+						var notificat = $("#ntf1").data("kendoNotification");
+						notificat.hide();
+						notificat.success(self.lang.lang.success_message);
+						self.set("boxName", "");
+						self.closeBoxWin();
+					}
+				});
+	        	this.boxDS.bind("error", function(e){
 	        		var notificat = $("#ntf1").data("kendoNotification");
 					notificat.hide();
 					notificat.success(self.lang.lang.error_message);
@@ -12923,6 +13014,9 @@
 		pageLoad 			: function(){
 			this.txnTemplateDS.filter({ field: "moduls", value : "water_mg" });
 			$(".widget-head li").eq(this.tabGo).children("a").click();
+			var boxwindow = $("#addBox").kendoWindow({
+			  title: this.lang.lang.add_box
+			});
 			var polewindow = $("#addPole").kendoWindow({
 			  title: this.lang.lang.add_pole
 			});
@@ -13694,6 +13788,8 @@
 		userActivatDS 		: dataStore(apiUrl + "activate_water"),
 		brandDS 			: banhji.source.brandDS,
 		locationDS 			: dataStore(apiUrl + "locations"),
+		poleDS 				: dataStore(apiUrl + "locations"),
+		boxDS 				: dataStore(apiUrl + "locations"),
 		itemDS 				: null,
 		obj 				: null,
 		isEdit 				: false,
@@ -13758,12 +13854,17 @@
 			this.userActivatDS.query({filter: [{field: "contact_id", value: id}]})
 			.then(function(){
 				var view = self.userActivatDS.data();
-				self.locationDS.filter({field: "branch_id", value: view[0].branch_id});
+				self.locationDS.filter([
+					{field: "branch_id", value: view[0].branch_id},
+					{field: "main_bloc", value: 0}
+				]);
 				self.dataSource.insert(0,{				
 					contact_id		: id,
 					meter_number 	: null,
 					status 			: 1,
 					location_id 	: 0,
+					pole_id	 		: 0,
+					box_id	 		: 0,
 					branch_id 		: view[0].branch_id,
 					brand_id 		: 0,
 					latitute 		: null,
@@ -13782,7 +13883,19 @@
 				self.set("obj", obj);
 			});	
 		},
-		onSelect 				: function(e){
+		blocChange 			: function(e){
+			this.poleDS.filter([
+				{ field: "main_bloc", value: this.get("obj").location_id},
+				{ field: "main_pole", value: 0}
+			]);
+		},
+		poleChange 			: function(e){
+			this.boxDS.filter([
+				{ field: "main_bloc", value: this.get("obj").location_id},
+				{ field: "main_pole", value: this.get("obj").pole_id}
+			]);
+		},
+		onSelect 			: function(e){
 	        // Array with information about the uploaded files
 	        var self = this, 
 	        files = e.files[0],
@@ -20898,10 +21011,11 @@
 		utilityDS 				: dataStore(apiUrl + "activate_water"),
 		utility 				: null,
 		waterUse 				: false,
+		waterCode 				: false,
 		licenseDS 				: dataStore(apiUrl + "branches"),
-		numberDS  				: dataStore(apiUrl + "activate_water"),
+		licenseDSA 				: dataStore(apiUrl + "branches"),
+		numberDSA  				: dataStore(apiUrl + "activate_water"),
 		pageLoad 				: function(id, contact_type_id){
-			
 			if(id){
 				this.set("isEdit", true);
 				this.loadObj(id, contact_type_id);
@@ -20920,37 +21034,44 @@
 					this.addEmpty();
 				}
 				this.set("waterUse", true);
-			}	
+			}
 		},
 		licenseChange 		: function(e) {
 			var obj = this.get("utility"), self = this;
-			this.licenseDS.query({
-				filter: { field:"id", value: obj.branch_id },
-				page: 1,
-				take: 1
-			}).then(function(e){
-				var view = self.licenseDS.view();	
-				self.goNumber(view[0].abbr);
-			});
+			if(obj.branch_id){
+				this.licenseDSA.query({
+					filter: { field:"id", value: obj.branch_id.id },
+					page: 1,
+					take: 1
+				}).then(function(e){
+					var view = self.licenseDSA.view();
+					console.log(view[0].abbr);
+					self.goNumber(view[0].abbr, view[0].id);
+				});
+			}
 		},
-		goNumber 			: function(abbr) {
+		goNumber 			: function(abbr, branchID) {
 			var self = this, obj = this.get("utility");
-			this.numberDS.query({    			
+			this.numberDSA.query({
 				filter: { field:"abbr", value: abbr },
 				sort: { field:"code", dir:"desc" },
 				page: 1,
 				take: 1
 			}).then(function(e){
-				var view = self.numberDS.view();
+				var view = self.numberDSA.view();
 				var lastNo;
-				if(self.numberDS._total > 0){
+				obj.set("abbr", view[0].abbr);
+				if(self.numberDSA._total > 0){
 					lastNo = kendo.parseInt(view[0].code) + 1;
 				}else{
 					lastNo = 1;
 				}
+				obj.set("code", lastNo);
 				if(lastNo){
+					lastNo = view[0].abbr + "-" + lastNo
 					obj.set("codeabbr",lastNo);
 				}
+				obj.set("branch_id", branchID);
 			});
 		},
 		//Contact Person
@@ -20965,13 +21086,11 @@
 				phone				: "",
 				email				: ""
 			});
-			
 		},
 		deleteContactPerson 	: function(e){
 			if (confirm("Are you sure, you want to delete it?")) {
 				var d = e.data,
 				obj = this.contactPersonDS.getByUid(d.uid);
-
 				this.contactPersonDS.remove(obj);
 			}
 		},
@@ -20979,7 +21098,6 @@
 		loadMap 				: function(){
 			var obj = this.get("obj"), lat = kendo.parseFloat(obj.latitute),
 			lng = kendo.parseFloat(obj.longtitute);
-			
 			if(lat && lng){
 				var myLatLng = {lat:lat, lng:lng};
 				var mapOptions = {
@@ -21000,24 +21118,19 @@
 		},
 		copyBillTo 				: function(){
 			var obj = this.get("obj");
-
 			obj.set("ship_to", obj.bill_to);
 		},
 		//Number      	
 		checkExistingNumber 	: function(){
 			var self = this, para = [], 
 			obj = this.get("obj");
-			
 			if(obj.number!==""){
-
 				if(obj.isNew()==false){
 					para.push({ field:"id", operator:"where_not_in", value: [obj.id] });
 				}
-
 				para.push({ field:"abbr", value: obj.abbr });
 				para.push({ field:"number", value: obj.number });
 				para.push({ field:"contact_type_id", value: obj.contact_type_id });
-				
 				this.existingDS.query({
 					filter: para,
 					page: 1,
@@ -21035,7 +21148,6 @@
 		},
 		generateNumber 			: function(){
 			var self = this, obj = this.get("obj");
-
 			this.numberDS.query({
 				filter:[
 					{ field:"contact_type_id", value:obj.contact_type_id }
@@ -21045,7 +21157,6 @@
 				pageSize:1
 			}).then(function(){
 				var view = self.numberDS.view();
-
 				var lastNo = 0;
 				if(view.length>0){
 					lastNo = kendo.parseInt(view[0].number);
@@ -21056,14 +21167,12 @@
 		},
 		checkExistingTxn		: function(){
 			var self = this, obj = this.get("obj");
-			
 			this.deleteDS.query({
 				filter: { field:"contact_id", value: obj.id },
 				page: 1,
 				pageSize: 1
 			}).then(function(e){
 				var view = self.deleteDS.view();
-				
 				if(view.length>0){
 					self.set("isProtected", true);
 				}else{
@@ -21074,52 +21183,45 @@
 		//Obj
 		loadObj 				: function(id, contact_type_id){
 			var self = this, para = [];
-
 			if(id>0){
 				para.push({ field:"id", value: id });
 			}
-
 			if(contact_type_id){
 				para.push({ field:"contact_type_id", value: contact_type_id });
 				para.push({ field:"is_pattern", value: 1 });
 			}
-
 			this.dataSource.query({
 				filter: para,
 				page: 1,
 				pageSize: 100
 			}).then(function(e){
 				var view = self.dataSource.view();
-				
 				self.set("obj", view[0]);
 				self.loadMap();
 				self.checkExistingTxn();
 			});
-
 			this.contactPersonDS.filter({ field:"contact_id", value: id });
-		},		
+		},
       	addEmpty 				: function(){
       		this.dataSource.data([]);
       		this.contactPersonDS.data([]);
-      		
       		this.set("isEdit", false);
       		this.set("isProtected", false);
       		this.set("notDuplicateNumber", true);
       		this.set("obj", null);
-      		
-  			this.dataSource.insert(0, {				
-				"country_id" 			: 0,			
+  			this.dataSource.insert(0, {
+				"country_id" 			: 0,
 				"user_id" 				: 0,
-				"contact_type_id" 		: 4, //General Customer							
+				"contact_type_id" 		: 4,
 				"abbr"					: "",
-				"number"				: "",				
+				"number"				: "",
 				"surname"				: "",
 				"name"					: "",
-				"gender"				: "",					
+				"gender"				: "",
 				"phone" 				: "",
-				"email" 				: "",					
+				"email" 				: "",
 				"company"				: "",
-				"vat_no"				: "",					
+				"vat_no"				: "",
 				"memo"					: "",
 				"city"					: "",
 				"post_code"				: "",
@@ -21129,29 +21231,30 @@
 				"latitute" 				: "",
 				"longtitute" 			: "",
 				"credit_limit"			: 0,
-				"locale" 				: banhji.locale,														
+				"locale" 				: banhji.locale,
 				"payment_term_id"		: 0,
-				"payment_method_id"		: 0,									
+				"payment_method_id"		: 0,
 				"registered_date" 		: new Date(),
 				"account_id"			: 0,
 				"ra_id"					: 0,
 				"tax_item_id"			: 0,
 				"deposit_account_id"	: 0,
 				"trade_discount_id"		: 0,
-				"settlement_discount_id": 0,					
+				"settlement_discount_id": 0,
 				"is_pattern" 			: 0,
-				"status"				: 1
+				"status"				: 1,
+				"use_water" 			: 1
 			});
-
 			var obj = this.dataSource.at(0);
 			this.set("obj", obj);
 			this.typeChanges();
+			this.utilityDS.data([]);
 			this.utilityDS.add({
 				abbr			:"",
 		 		code			:"",
 		 		contact_id 		:"",
 				branch_id 		:"",
-				location_id 	:"",					
+				location_id 	:"",
 				id_card 		:"",
 				family_member 	:"",
 				occupation 		:""
@@ -21160,36 +21263,33 @@
 			this.set("utility", UT);
 		},
 	    objSync 				: function(){
-	    	var dfd = $.Deferred();	        
-
+	    	var self = this, UTL = this.get("utility");
+	    	var dfd = $.Deferred();
 	    	this.dataSource.sync();
 		    this.dataSource.bind("requestEnd", function(e){
-		    	if(e.response){				
+		    	if(e.response){
+		    		UTL.set("contact_id", e.response.results[0].id);
+		    		console.log(self.utilityDS.data());
+		    		self.utilityDS.sync();
+		    		self.utilityDS.bind("requestEnd", function(e){
+			    		var notificat = $("#ntf1").data("kendoNotification");
+						notificat.hide();
+						notificat.success(self.lang.lang.success_message);
+					});
 					dfd.resolve(e.response.results);
-				}				  				
+				}
 		    });
-		    this.dataSource.bind("error", function(e){		    		    	
-				dfd.reject(e.errorThrown);    				
+		    this.dataSource.bind("error", function(e){
+		    	var notificat = $("#ntf1").data("kendoNotification");
+				notificat.hide();
+				notificat.error(self.lang.lang.error_message);
+				dfd.reject(e.errorThrown);
 		    });
-
 		    return dfd;
 	    },
 		save 					: function(){
 			var self = this, obj = this.get("obj");
-			this.utilityDS.sync();
-			this.bind("requestEnd", function(e){
-				if(e.type != 'read'&& e.response){				
-					var notificat = $("#ntf1").data("kendoNotification");
-					notificat.hide();
-					notificat.success(self.lang.lang.success_message);
-					self.cancel();
-				}
-			});
-			this.utilityDS.bind("error", function(e){
-				var notificat = $("#ntf1").data("kendoNotification");
-				notificat.hide();
-				notificat.error(self.lang.lang.error_message);
-			});
+			
 			//Edit Mode
 	    	if(this.get("isEdit")){
 	    		//Contact Person has changes
@@ -21207,24 +21307,23 @@
 					});
 				}
 				self.contactPersonDS.sync();
-				
 				return data;
 			}, function(reason) { //Error
-				$("#ntf1").data("kendoNotification").error(reason);
-			}).then(function(result){				
+				var notificat = $("#ntf1").data("kendoNotification");
+				notificat.hide();
+				notificat.error(self.lang.lang.error_message);
+			}).then(function(result){
 				var notificat = $("#ntf1").data("kendoNotification");
 				notificat.hide();
 				notificat.success(self.lang.lang.success_message);
-
 				if(self.get("saveClose")){
-					//Save Close					
+					//Save Close
 					self.set("saveClose", false);
 					self.cancel();
 				}else{
 					//Save New
 					self.addEmpty();
 				}
-
 				banhji.source.loadCustomers();
 			});
 		},
@@ -21242,7 +21341,6 @@
 		delete 					: function(){
 			var obj = this.get("obj");
 			this.set("showConfirm",false);
-
 			if(!obj.is_system==1){
 				if(this.get("isProtected")){
 					alert("Sorry, this data is protected!");
@@ -21250,7 +21348,6 @@
 					obj.set("deleted", 1);
 			        this.dataSource.sync();
 			        banhji.source.customerDS.fetch();
-
 			        window.history.back();
 				}
 			}	
@@ -21281,11 +21378,10 @@
 				pageSize: 1
 			}).then(function(data){
 				var view = self.patternDS.view(),
-				type = self.contactTypeDS.get(view[0].contact_type_id);				
-
+				type = self.contactTypeDS.get(view[0].contact_type_id);
 				if(view.length>0){
 					obj.set("country_id", view[0].country_id);
-					obj.set("abbr", type.abbr);					
+					obj.set("abbr", type.abbr);
 					obj.set("gender", view[0].gender);
 					obj.set("company", view[0].company);
 					obj.set("vat_no", view[0].vat_no);
@@ -21294,17 +21390,17 @@
 					obj.set("post_code", view[0].post_code);
 					obj.set("address", view[0].address);
 					obj.set("bill_to", view[0].bill_to);
-					obj.set("ship_to", view[0].ship_to);									
+					obj.set("ship_to", view[0].ship_to);
 					obj.set("payment_term_id", view[0].payment_term_id);
 					obj.set("payment_method_id", view[0].payment_method_id);
 					obj.set("credit_limit", view[0].credit_limit);
-					obj.set("locale", view[0].locale);					
+					obj.set("locale", view[0].locale);
 					obj.set("account_id", view[0].account_id);
 					obj.set("ra_id", view[0].ra_id);
 					obj.set("tax_item_id", view[0].tax_item_id);
 					obj.set("deposit_account_id", view[0].deposit_account_id);
 					obj.set("trade_discount_id", view[0].trade_discount_id);
-					obj.set("settlement_discount_id", view[0].settlement_discount_id);					
+					obj.set("settlement_discount_id", view[0].settlement_discount_id);
 				}
 			});
 		}

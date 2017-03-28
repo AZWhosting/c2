@@ -63,6 +63,7 @@ class Locations extends REST_Controller {
 				   	"abbr" 			=> $value->abbr,
 				   	"type" 			=> $value->type,
 				   	"main_bloc" 	=> intval($value->main_bloc),
+				   	"main_pole" 	=> intval($value->main_pole),
 				   	"branch" 		=> array('id' => $license->id, 'name' => $license->name)			
 		 		);
 			}
@@ -81,7 +82,8 @@ class Locations extends REST_Controller {
 			isset($value->type) 			? $obj->type 			= $value->type : "";
 			isset($value->name) 			? $obj->name 			= $value->name : "";
 			isset($value->abbr) 			? $obj->abbr 			= $value->abbr : "";
-			isset($value->main_bloc) 		? $obj->main_bloc 		= $value->main_bloc : 0;
+			isset($value->main_bloc) 		? $obj->main_bloc 		= intval($value->main_bloc) : 0;
+			isset($value->main_pole) 		? $obj->main_pole 		= intval($value->main_pole) : 0;
 			isset($value->branch) 			? $obj->branch_id 		= $value->branch->id : "";
 			if($obj->save()){
 				//Respsone
@@ -92,6 +94,7 @@ class Locations extends REST_Controller {
 					"name" 			=> $obj->name,
 					"abbr" 			=> $obj->abbr,
 					"main_bloc" 	=> $obj->main_bloc,
+					"main_pole" 	=> $obj->main_pole,
 					"branch" 		=> array('id' => $license->id, 'name' => $license->name)	
 				);				
 			}		
@@ -111,11 +114,12 @@ class Locations extends REST_Controller {
 			$obj = new Location(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$obj->get_by_id($value->id);
 		
-			isset($value->name)? 	$obj->name 		= $value->name: "";
-			isset($value->abbr)?	$obj->abbr 		= $value->abbr: "";
-			isset($value->branch->id)? $obj->branch_id 	= $value->branch->id: "";
-			isset($value->type)? 	$obj->type 		= $value->type: "";
-			isset($value->main_bloc)? $obj->main_bloc 	= intval($value->main_bloc): 0;
+			isset($value->name)? 		$obj->name 		= $value->name: "";
+			isset($value->abbr)?		$obj->abbr 		= $value->abbr: "";
+			isset($value->branch->id)? 	$obj->branch_id 	= $value->branch->id: "";
+			isset($value->type)? 		$obj->type 		= $value->type: "";
+			isset($value->main_bloc)? 	$obj->main_bloc 	= intval($value->main_bloc): 0;
+			isset($value->main_pole)? 	$obj->main_pole 	= intval($value->main_pole): 0;
 			if($obj->save()){				
 				//Results
 				$license = $obj->branch->get();
@@ -124,6 +128,7 @@ class Locations extends REST_Controller {
 					"name" 			=> $obj->name,
 					"abbr" 			=> $obj->abbr,
 					"main_bloc" 	=> $obj->main_bloc,
+					"main_pole" 	=> $obj->main_pole,
 					"type" 			=> $obj->type,
 					"branch" 		=> array('id' => $license->id, 'name' => $license->name)
 				);						

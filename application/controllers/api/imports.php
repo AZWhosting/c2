@@ -306,7 +306,7 @@ class Imports extends REST_Controller {
 			isset($value->latitute)					? $obj->latitute 				= $value->latitute : "";
 			isset($value->longtitute)				? $obj->longtitute 				= $value->longtitute : "";
 			isset($value->credit_limit)				? $obj->credit_limit			= $value->credit_limit : "";
-			isset($value->currency)					? $obj->locale					= $currency->locale : "";
+			$obj->locale							= isset($value->currency) ? $currency->locale : $this->locale;
 			isset($value->id_number)				? $obj->id_number				= $value->id_number : "";
 			isset($value->phone)					? $obj->phone 					= $value->phone : "";
 			isset($value->email)					? $obj->email 					= $value->email : "";

@@ -3687,7 +3687,7 @@
 								</div>
 								<div class="span4">
 									<div class="total-customer">
-										<p>m<sup>3</sup> <span data-bind="text: lang.lang.sold">Sold</span></p>
+										<p>m<sup>3</sup> <span style="font-size: 12px;font-weight: normal;" data-bind="text: lang.lang.sold">Sold</span></p>
 										<span data-bind="text: meterSold"></span>
 									</div>
 								</div>
@@ -10138,41 +10138,41 @@
 		pageLoad 			: function(){
 			var self = this;
 
-			this.graphDS.fetch();
+			// this.graphDS.fetch();
 			banhji.wDashBoard.dashSource.read();
-			this.dataSource.query({
-				filter: [],								
-				page: 1,
-				pageSize: 5
-			}).then(function(){
-				var view = self.dataSource.view();				
+			// this.dataSource.query({
+			// 	filter: [],								
+			// 	page: 1,
+			// 	pageSize: 5
+			// }).then(function(){
+			// 	var view = self.dataSource.view();				
 				
-				self.set("ar", kendo.toString(view[0].ar, banhji.locale));
-				self.set("ar_open", kendo.toString(view[0].ar_open, "n0", banhji.locale));
-				self.set("ar_customer", kendo.toString(view[0].ar_customer, "n0", banhji.locale));
-				self.set("ar_overdue", kendo.toString(view[0].ar_overdue, "n0", banhji.locale));
+			// 	self.set("ar", kendo.toString(view[0].ar, banhji.locale));
+			// 	self.set("ar_open", kendo.toString(view[0].ar_open, "n0", banhji.locale));
+			// 	self.set("ar_customer", kendo.toString(view[0].ar_customer, "n0", banhji.locale));
+			// 	self.set("ar_overdue", kendo.toString(view[0].ar_overdue, "n0", banhji.locale));
 
-				self.set("ap", kendo.toString(view[0].ap, banhji.locale));
-				self.set("ap_open", kendo.toString(view[0].ap_open, "n0"));
-				self.set("ap_vendor", kendo.toString(view[0].ap_vendor, "n0"));
-				self.set("ap_overdue", kendo.toString(view[0].ap_overdue, "n0"));
-			});
+			// 	self.set("ap", kendo.toString(view[0].ap, banhji.locale));
+			// 	self.set("ap_open", kendo.toString(view[0].ap_open, "n0"));
+			// 	self.set("ap_vendor", kendo.toString(view[0].ap_vendor, "n0"));
+			// 	self.set("ap_overdue", kendo.toString(view[0].ap_overdue, "n0"));
+			// });
 
-			this.summaryDS.query({
-				filter: [],								
-				page: 1,
-				pageSize: 5
-			}).then(function(){
-				var view = self.summaryDS.view();				
+			// this.summaryDS.query({
+			// 	filter: [],								
+			// 	page: 1,
+			// 	pageSize: 5
+			// }).then(function(){
+			// 	var view = self.summaryDS.view();				
 				
-				self.set("income", kendo.toString(view[0].income, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
-				self.set("expense", kendo.toString(view[0].expense, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
-				self.set("net_income", kendo.toString(view[0].net_income, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
+			// 	self.set("income", kendo.toString(view[0].income, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
+			// 	self.set("expense", kendo.toString(view[0].expense, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
+			// 	self.set("net_income", kendo.toString(view[0].net_income, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
 				
-				self.set("asset", kendo.toString(view[0].asset, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
-				self.set("liability", kendo.toString(view[0].liability, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
-				self.set("equity", kendo.toString(view[0].equity, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
-			});										
+			// 	self.set("asset", kendo.toString(view[0].asset, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
+			// 	self.set("liability", kendo.toString(view[0].liability, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
+			// 	self.set("equity", kendo.toString(view[0].equity, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
+			// });										
 		}
 	});
 	banhji.searchAdvanced =  kendo.observable({
@@ -13932,12 +13932,16 @@
 					Total = kendo.parseInt(tUsage) * kendo.parseFloat(aTariff);
 				}
 				//Installment
-				if(v.installment[0].line.amount > 0){
-					Total = Total + v.installment[0].line.amount;
+				if(v.installment.length > 0){
+					if(v.installment[0].line.amount > 0){
+						Total = Total + v.installment[0].line.amount;
+					}
 				}
 				//Maintenance
-				if(v.maintenance[0].line.amount > 0){
-					Total = Total + v.maintenance[0].line.amount;
+				if(v.maintenance.length > 0){
+					if(v.maintenance[0].line.amount > 0){
+						Total = Total + v.maintenance[0].line.amount;
+					}
 				}
 				//Meter Location
 				var MeterLocation = v.meter.location_id;
