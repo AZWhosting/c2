@@ -1317,7 +1317,7 @@ var	km_KH = {
 	"maximum_household": "ចំនួន​អ្នក​ប្រើប្រាស់​អតិបរមា", 	
 	"terms_condition": "លក្ខខណ្ឌ", 	
 	"provinces": "ខេត្ត", 	
-	"districts": "សង្កាត់", 	
+	"districts": "ខ័ណ្ឌ", 	
 	"mobile": "ទូរស័ព្ទចល័ត", 	
 	"telephone": "ទូរស័ព្ទ​លើ​តុ",  	
 
@@ -1340,6 +1340,7 @@ var	km_KH = {
 	"plan_name": "ឈ្មោះតារាងតម្លៃ",
 	"utility": "ពត៌មានបន្ថែម",
 
+	"new_customer": "អតិថិជនថ្មី",
 
 
 

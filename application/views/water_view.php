@@ -12,23 +12,23 @@
 			<ul class="topnav">
 				<li><a href="<?php echo base_url(); ?>rrd" data-bind="click: checkRole"><img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/banhji-logo.png" style="height: 40px;"></a></li>
 			</ul>
-			<form class="navbar-form pull-left">
+			<!-- <form class="navbar-form pull-left">
 				<div class="btn-group">
 				  	<a class="btn btn-inverse dropdown-toggle" data-toggle="dropdown" href="#">
 				    	<i class="icon-th"></i>
-				    	<!-- <span class="caret"></span> -->
+				    	<span class="caret"></span>
 				  	</a>
-				  <!-- 	<ul class="dropdown-menu">
+				  	<ul class="dropdown-menu">
 				    	<li data-bind="click: searchContact"><a href="#"><i class="icon-user"></i> Contact</a></li>
 				    	<li data-bind="click: searchTransaction"><a href="#"><i class="icon-random"></i> Transaction</a></li>
 				    	<li data-bind="click: searchItem"><a href="#"><i class="icon-th-list"></i> Item</a></li>
-				  	</ul> -->
+				  	</ul>
 				</div>
 			  	<input type="text" class="span2 search-query" placeholder="Search Contact" id="search-placeholder" 
 			  			data-bind="value: searchText" 
 			  			style="background-color: #555555; color: #ffffff; border-color: #333333; height: 22px;">
 			  	<button type="submit" class="btn btn-inverse" data-bind="click: search"><i class="icon-search"></i></button>
-			</form>
+			</form> -->
 			<ul class="topnav" id="secondary-menu">
 			</ul> 
 			<ul class="topnav pull-right">
@@ -1831,11 +1831,11 @@
 				<div class="span3 listWrapper" >
 					<div class="innerAll">			
 						<!--button class="btn-primary span12" style="" data-bind="click: exportEXCEL">EXPORT XLSX</button-->						
-						<form autocomplete="off" class="form-inline">
+						<!-- <form autocomplete="off" class="form-inline"> -->
 							<div class="widget-search separator bottom">
-								<button type="button" class="btn btn-default pull-right" data-bind="click: search"><i class="icon-search"></i></button>
+								<a class="btn btn-default pull-right" data-bind="click: search"><i class="icon-search"></i></a>
 								<div class="overflow-hidden">
-									<input type="search" placeholder="Number or Name..." data-bind="value: searchText, events:{change: enterSearch}">
+									<input type="search" placeholder="Number or Name..." data-bind="value: searchText, events:{change: search}">
 								</div>
 							</div>						
 							<div class="select2-container" style="width: 100%;  margin-bottom: 10px;">
@@ -1848,7 +1848,7 @@
 					                   		events: {change: filterChange}"
 					                   style="width: 100%;" ></select>							
 							</div>
-						</form>	
+						<!-- </form>	 -->
 					</div>
 					<span class="results"><span data-bind="text: contactDS.total"></span> <span data-bind="text: lang.lang.found_search"></span></span>
 					<div class="table table-condensed" id="listContact" style="height: 580px;"						 
@@ -8434,19 +8434,19 @@
 	  	<li role='presentation' class='dropdown'>
 	  		<a class='dropdown-toggle glyphicons text_bigger' data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false'><i></i> <span class='caret'></span></a>
   			<ul class='dropdown-menu'>
-  				<li><a href='<?php echo base_url(); ?>rrd/#/customer'><span >New Customer</span></a></li> 
-  				<li ><a href='#/reorder'><span >Reorder Meter</span></a></li>  				
+  				<li><a href='<?php echo base_url(); ?>rrd/#/customer'><span data-bind="text: lang.lang.new_customer">New Customer</span></a></li> 
+  				<li ><a href='#/reorder'><span data-bind="text: lang.lang.reorder_meter">Reorder Meter</span></a></li>  				
   				<li><span class="li-line"></span></li>
-  				<li><a href='#/reading'><span >1. Meter Reading</span></a></li> 
+  				<li><a href='#/reading'>1. <span data-bind="text: lang.lang.reading">Meter Reading</span></a></li> 
   				<!--li><a href='#/edit_reading'><span >Edit Reading</span></a></li-->
-  				<li><a href='#/run_bill'><span >2. Run Bill</span></a></li> 
-  				<li><a href='#/print_bill'><span >3. Print Bill</span></a></li>
-  				<li><a href='#/receipt'><span >4. Receipt</span></a></li>
+  				<li><a href='#/run_bill'>2. <span data-bind="text: lang.lang.run_bill">Run Bill</span></a></li> 
+  				<li><a href='#/print_bill'>3. <span data-bind="text: lang.lang.print_bill">Print Bill</span></a></li>
+  				<li><a href='#/receipt'>4. <span data-bind="text: lang.lang.wreceipt">Receipt</span></a></li>
   				<li><span class="li-line"></span></li>
-  				<li><a href='#/imports'><span >Import</span></a></li>
+  				<li><a href='#/imports'><span data-bind="text: lang.lang.imports">Import</span></a></li>
   			</ul>
 	  	</li>	  	  	
-	  	<li><a href="#/reports">Reports</a></li>	  	
+	  	<li><a href="#/reports" data-bind="text: lang.lang.reports">Reports</a></li>	  	
 	  	<li><a href='#/setting' class='glyphicons settings'><i></i></a></li>
 	</ul>
 </script>
@@ -20082,10 +20082,10 @@
 			banhji.router.navigate("/customer_deposit");
 		},
 		//Search
-		enterSearch 		: function(e){
-			e.preventDefault();
-			this.search();
-		},
+		// //Search
+		// enterSearch 		: function(e){
+		// 	this.search();
+		// },
 		search 				: function(){
 			var self = this, 
 			para = [],
@@ -20096,30 +20096,25 @@
       			var textParts = searchText.replace(/([a-z]+)/i, "$1 ").split(/[^0-9a-z]+/ig);
 
       			para.push(
-      				{ field: "abbr", value: textParts[0] },
-      				{ field: "number", value: textParts[1] },
-					{ field: "name", operator: "or_like", value: searchText }
+      				{ field: "name", operator: "like", value: searchText },
+      				{ field: "number", operator: "or_where", value: textParts[1] }
       			);
       		}
-
+      		para.push(
+      			{field:"use_water", value: this.get("filterKey")},
+				{field:"deleted", value: 0},
+				{field:"is_pattern", value: 0}
+			);
       		if(contact_type_id){
       			para.push({ field: "contact_type_id", value: contact_type_id });
       		}else{
       			para.push({ field: "parent_id", operator:"where_related_contact_type", value: 1 });
       		}
-      		if(this.filterKey == 1){
-      			para.push(
-      				{ field: "use_water", value: 1 }
-      			);
-      		}else{
-      			para.push(
-      				{ field: "use_water", value: 0 }
-      			);
-      		}
+      		
       		this.contactDS.filter(para);
 			
 			//Clear search filters
-      		self.set("searchText", "");
+      		//self.set("searchText", "");
       		self.set("contact_type_id", 0);
 		},
 		searchTransaction	: function(){

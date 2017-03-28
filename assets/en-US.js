@@ -1366,6 +1366,8 @@ var	en_US = {
 	"plan_name": "Plan Name",
 	"utility": "Utility",
 
+	"new_customer": "New Customer",
+
 
 
 

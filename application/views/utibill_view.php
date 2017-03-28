@@ -1910,11 +1910,11 @@
 			<div class="row-fluid row-merge">
 				<div class="span3 listWrapper" >
 					<div class="innerAll">			
-						<form autocomplete="off" class="form-inline">
+						<!-- <form autocomplete="off" class="form-inline"> -->
 							<div class="widget-search separator bottom">
-								<button type="button" class="btn btn-default pull-right" data-bind="click: search"><i class="icon-search"></i></button>
+								<a class="btn btn-default pull-right" data-bind="click: search"><i class="icon-search"></i></a>
 								<div class="overflow-hidden">
-									<input type="search" placeholder="Number or Name..." data-bind="value: searchText, events:{change: enterSearch}">
+									<input type="search" placeholder="Number or Name..." data-bind="value: searchText, events:{change: search}">
 								</div>
 							</div>						
 							<div class="select2-container" style="width: 100%;  margin-bottom: 10px;">
@@ -1927,7 +1927,7 @@
 					                   		events: {change: filterChange}"
 					                   style="width: 100%;" ></select>							
 							</div>
-						</form>	
+						<!-- </form>	 -->
 					</div>
 					<span class="results"><span data-bind="text: contactDS.total"></span> <span data-bind="text: lang.lang.found_search"></span></span>
 					<div class="table table-condensed" id="listContact" style="height: 580px;"						 
@@ -20697,11 +20697,10 @@
 			banhji.customerDeposit.set("contact", this.get("obj"));
 			banhji.router.navigate("/customer_deposit");
 		},
-		//Search
-		enterSearch 		: function(e){
-			e.preventDefault();
-			this.search();
-		},
+		// //Search
+		// enterSearch 		: function(e){
+		// 	this.search();
+		// },
 		search 				: function(){
 			var self = this, 
 			para = [],
@@ -20712,30 +20711,25 @@
       			var textParts = searchText.replace(/([a-z]+)/i, "$1 ").split(/[^0-9a-z]+/ig);
 
       			para.push(
-      				{ field: "abbr", value: textParts[0] },
-      				{ field: "number", value: textParts[1] },
-					{ field: "name", operator: "or_like", value: searchText }
+      				{ field: "name", operator: "like", value: searchText },
+      				{ field: "number", operator: "or_where", value: textParts[1] }
       			);
       		}
-
+      		para.push(
+      			{field:"use_water", value: this.get("filterKey")},
+				{field:"deleted", value: 0},
+				{field:"is_pattern", value: 0}
+			);
       		if(contact_type_id){
       			para.push({ field: "contact_type_id", value: contact_type_id });
       		}else{
       			para.push({ field: "parent_id", operator:"where_related_contact_type", value: 1 });
       		}
-      		if(this.filterKey == 1){
-      			para.push(
-      				{ field: "use_water", value: 1 }
-      			);
-      		}else{
-      			para.push(
-      				{ field: "use_water", value: 0 }
-      			);
-      		}
+      		
       		this.contactDS.filter(para);
 			
 			//Clear search filters
-      		self.set("searchText", "");
+      		//self.set("searchText", "");
       		self.set("contact_type_id", 0);
 		},
 		searchTransaction	: function(){
