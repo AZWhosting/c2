@@ -75591,9 +75591,8 @@
 	    		obj.set("is_recurring", 1);
 	    	}else{
 	    		//Remove Empty Row
-				var raw = this.lineDS.data();
-			    var item, i;
-			    for(i=raw.length-1; i>=0; i--){
+				var raw = this.lineDS.data(), item, i;
+			    for(i=0; i<raw.length-1; i++){
 			    	item = raw[i];
 			    	
 			    	if (item.quantity_adjusted=="") {
@@ -75601,6 +75600,8 @@
 				    }
 			    }
 	    	}
+
+	    	// console.log(this.lineDS.data());
 
 			// Save Obj
 			this.objSync()

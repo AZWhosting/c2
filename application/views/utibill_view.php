@@ -13194,6 +13194,7 @@
 	        	if(e.type != 'read' && e.response){
             		var response = e.response.results;
             		self.get("obj").set("attachment_id", response[0].id);
+            		self.dataSource.hasChanges() = true;
 					self.saveDataSource();
 	        	}
 	        });
@@ -13219,6 +13220,7 @@
 		},
 		saveDataSource : function(){
 			var self = this;
+
 			if(this.dataSource.data().length > 0) {
 				if(this.dataSource.hasChanges() == true ){
 					this.dataSource.sync();
