@@ -1828,7 +1828,7 @@
 						            	<a href="#tab2" data-toggle="tab"><i></i> <span data-bind="text: lang.lang.terms_condition">Terms & Condition</span></a>
 						            </li>
 						            <li class="span2 glyphicons paperclip">
-						            	<a href="#tab3" data-toggle="tab"><i></i> <span data-bind="text: lang.lang.attach">Attach</span></a>
+						            	<a href="#tab3" data-toggle="tab"><i></i> <span data-bind="text: lang.lang.logo">LOGO</span></a>
 						            </li>						            					            
 						        </ul>
 						    </div>
@@ -1922,7 +1922,8 @@
 
 						        <!-- //CONTACT PERSON -->
 						        <div class="tab-pane" id="tab3">
-						        	<p><span >File Type</span>: [PDF, JPG, JPEG, TIFF, PNG, GIF]</p>		
+						        	<p><span >File Type</span>: [PDF, JPG, JPEG, TIFF, PNG, GIF]</p>	
+						        	<img data-bind="attr: { src: obj.image_url, alt: obj.name, title: obj.name }" width="120px" style="margin-bottom: 15px; border: 1px solid #ddd;">	
 						            <input id="files" name="files"
 						                   type="file"
 						                   data-role="upload"
@@ -1930,7 +1931,7 @@
 						                   data-bind="events: { 
 				                   				select: onSelect
 						                   }">
-
+<!-- 
 						            <table class="table table-bordered">
 								        <thead>
 								            <tr>			                
@@ -1944,7 +1945,7 @@
 								        		data-template="attachment-list-tmpl" 
 								        		data-auto-bind="false"
 								        		data-bind="source: attachmentDS"></tbody>			        
-								    </table>
+								    </table> -->
 					        	</div>
 						        <!-- //CONTACT PERSON END -->
 						    </div>
@@ -4707,7 +4708,7 @@
 					<p>អតិថិជន​ #=contact.number#</p>
 					<p>#:contact.name#</p>
 					<p>#: contact.address != 'null' ? contact.address: ''#</p>
-					<p style="font-size: 10px;"><i>ថ្ងៃ​ចាប់​ផ្តើម​ទទួល​ប្រាក់ #=kendo.toString(new Date(bill_date), "dd-MMM-yyyy")#</i></p>
+					<p style="font-size: 10px;"><i>ថ្ងៃ​ចាប់​ផ្តើម​ទទួល​ប្រាក់ #=kendo.toString(new Date(bill_date), "dd-MMMM-yyyy", "km-KH")#</i></p>
 				</div>
 			</div>
 			<div class="span4">
@@ -4718,7 +4719,7 @@
 					</tr>
 					<tr>
 						<td style="#= banhji.InvoicePrint.formVisible#"><p>ថ្ងៃ​ចេញ វិក្កយ​បត្រ</p></td>
-						<td><p>#=kendo.toString(new Date(issue_date), "dd-MMM-yyyy")#</p></td>
+						<td><p>#=kendo.toString(new Date(issue_date), "dd-MMMM-yyyy", "km-KH")#</p></td>
 					</tr>
 					<tr>
 						<td style="#= banhji.InvoicePrint.formVisible#"><p>តំបន់</p></td>
@@ -4726,11 +4727,11 @@
 					</tr>
 					<tr>
 						<td style="#= banhji.InvoicePrint.formVisible#"><p>គិត​ចាប់​ពី​ថ្ងៃ​ទី</p></td>
-						<td><p>#=kendo.toString(new Date(invoice_lines[0].from_date), "dd-MMM-yyyy")#</p></td>
+						<td><p>#=kendo.toString(new Date(invoice_lines[0].from_date), "dd-MMMM-yyyy", "km-KH")#</p></td>
 					</tr>
 					<tr>
 						<td style="#= banhji.InvoicePrint.formVisible#"><p>ដល់​ថ្ងៃ​ទី</p></td>
-						<td><p>#=kendo.toString(new Date(invoice_lines[0].to_date), "dd-MMM-yyyy")#</p></td>
+						<td><p>#=kendo.toString(new Date(invoice_lines[0].to_date), "dd-MMMM-yyyy", "km-KH")#</p></td>
 					</tr>
 				</table>		
 			</div>
@@ -4815,11 +4816,11 @@
 				</tr>
 				<tr>
 					<td colspan="2" class="greyy"  style="background: \\#ccc;#= banhji.InvoicePrint.formVisible#">ថ្ងៃផុតកំណត់ DUE DATE</td>
-					<td align="left">#=kendo.toString(new Date(due_date), "dd-MMM-yyyy")#</td>
+					<td align="left">#=kendo.toString(new Date(due_date), "dd-MMMM-yyyy", "km-KH")#</td>
 				</tr>
 				<tr>
 					<td colspan="2" class="greyy" style="background: \\#ccc;#= banhji.InvoicePrint.formVisible#">ថ្ងៃបង់ប្រាក់ PAY DATE</td>
-					<td align="left">#=kendo.toString(new Date(bill_date), "dd-MMM-yyyy")#</td>
+					<td align="left">#=kendo.toString(new Date(bill_date), "dd-MMMM-yyyy", "km-KH")#</td>
 				</tr>
 				<tr>
 					<td colspan="2" class="greyy" style="background: \\#ccc;#= banhji.InvoicePrint.formVisible#">ប្រាក់បានបង់ PAY AMOUNT</td>
@@ -4840,9 +4841,9 @@
 				</tr>
 				<tr>
 					<td style="#= banhji.InvoicePrint.formVisible#"><p>វិក្កយបត្រ</p></td>
-					<td>#: kendo.toString(new Date(issue_date), "dd-MMM-yyyy")# - #: number#</td>
+					<td>#: kendo.toString(new Date(issue_date), "dd-MMMM-yyyy", "km-KH")# - #: number#</td>
 					<td class="greyy" style="background: \\#ccc;border-bottom:1px solid \\#fff;#= banhji.InvoicePrint.formVisible#">ថ្ងៃបង់ប្រាក់ PAY DATE</td>
-					<td align="left">#=kendo.toString(new Date(bill_date), "dd-MMM-yyyy")#</td>
+					<td align="left">#=kendo.toString(new Date(bill_date), "dd-MMMM-yyyy", "km-KH")#</td>
 				</tr>
 				<tr>
 					<td style="#= banhji.InvoicePrint.formVisible#"><p>អតិថិជន</p></td>
@@ -4857,7 +4858,7 @@
 					<td rowspan="2"></td>
 				</tr>
 				<tr>
-					<td style="#= banhji.InvoicePrint.formVisible#">លេខ​កុនង​ទ័រ</td>
+					<td style="#= banhji.InvoicePrint.formVisible#">លេខ​កុង​ទ័រ</td>
 					<td>#: meter.meter_number#</td>
 				</tr>
 			</tbody>
@@ -13086,7 +13087,22 @@
 				take: 100
 			}).then(function(e){
 				var view = self.dataSource.view();
-				self.set("obj", view[0]);
+				
+				if(view[0].attachment_id != 0){
+					self.attachmentDS.query({
+						filter: { field: "id", value: view[0].attachment_id},
+						take: 1
+					})
+					.then(function(e){
+						var aView = self.attachmentDS.view();
+						view[0].set("image_url", aView[0].url);
+						self.set("obj", view[0]);
+					});
+				}else{
+					view[0].set("image_url", "https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/no_image.jpg");
+					self.set("obj", view[0]);
+				}
+				
 			});	
 		},
 		addNew 	  	: function() {
@@ -13108,46 +13124,59 @@
 				email 			: null,
 				mobile 			: null,
 				telephone 		: null,
+				attachment_id 	: 0,
+				image_url 		: "https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/no_image.jpg",
 				term_of_condition : null
 			});
 			var obj = this.dataSource.at(0);
 			this.set("obj", obj);	
 		},
-		onSelect 	: function(e){
+	    onSelect 			: function(e){
 	        // Array with information about the uploaded files
 	        var self = this, 
-	        files = e.files,
+	        files = e.files[0],
 	        obj = this.get("obj");
-	        // Check the extension of each file and abort the upload if it is not .jpg
-	        $.each(files, function(index, value){
-	            if (value.extension.toLowerCase() === ".jpg"
-	            	|| value.extension.toLowerCase() === ".jpeg"
-	            	|| value.extension.toLowerCase() === ".tiff"
-	            	|| value.extension.toLowerCase() === ".png" 
-	            	|| value.extension.toLowerCase() === ".gif"
-	            	|| value.extension.toLowerCase() === ".pdf"){
-	            	var key = 'ATTACH_' + banhji.institute.id + "_" + Math.floor(Math.random() * 100000000000000001) +'_'+ value.name;
-	            	self.attachmentDS.add({
-	            		user_id 		: self.get("user_id"),
-	            		license_id 		: obj.id,
-	            		type 			: "Transaction",
-	            		name 			: value.name,
-	            		description 	: "",
-	            		key 			: key,
-	            		url 			: banhji.s3 + key,
-	            		size 			: value.size,
-	            		created_at 		: new Date(),
-	            		file 			: value.rawFile
-	            	});
-	            }else{
-	            	alert("This type of file is not allowed to attach.");
-	            }
-	        });
+
+	        var fileReader = new FileReader();
+	        fileReader.onload = function (event) {
+	            var mapImage = event.target.result;
+	            self.obj.set('image_url', mapImage);
+	        }
+	        fileReader.readAsDataURL(files.rawFile);
+			
+	        // Check the extension of each file and abort the upload if it is not .jpg	       
+            if (files.extension.toLowerCase() === ".jpg"
+            	|| files.extension.toLowerCase() === ".jpeg"
+            	|| files.extension.toLowerCase() === ".tiff"
+            	|| files.extension.toLowerCase() === ".png" 
+            	|| files.extension.toLowerCase() === ".gif"){
+
+            	if(this.attachmentDS.total()>0){
+            		var att = this.attachmentDS.at(0);
+            		this.attachmentDS.remove(att);
+            	}
+
+            	var key = 'WLOGO_' + banhji.institute.id + "_" + Math.floor(Math.random() * 100000000000000001) +'_'+ files.name;
+
+            	this.attachmentDS.add({
+            		user_id 		: this.get("user_id"),
+            		item_id 		: obj.id,
+            		type 			: "Item",
+            		name 			: files.name,
+            		description 	: "",
+            		key 			: key,
+            		url 			: banhji.s3 + key,
+            		size 			: files.size,
+            		created_at 		: new Date(),
+
+            		file 			: files.rawFile
+            	});
+            }else{
+            	alert("This type of file is not allowed to attach.");
+            }
 	    },
-	    uploadFile 	: function(id){
-	    	if(id){
-	    		this.attachmentDS.pushUpdate({license_id: id});
-	    	}
+	    uploadFile 	: function(){
+	    	var self = this;
 	    	$.each(this.attachmentDS.data(), function(index, value){	    		
 		    	if(!value.id){
 			    	var params = { 
@@ -13160,30 +13189,12 @@
 	        });
 
 	        this.attachmentDS.sync();
-	        var saved = false;
 	        this.attachmentDS.bind("requestEnd", function(e){
 	        	//Delete File
-	        	if(e.type=="destroy"){
-	            	if(saved==false && e.response){
-	            		saved = true;
-	            	
-	            		var response = e.response.results;
-	            		$.each(response, function(index, value){            			
-		            		var params = {
-							  	//Bucket: 'STRING_VALUE', /* required */
-							 	Delete: { /* required */
-								    Objects: [ /* required */
-								      	{
-									        Key: value.data.key /* required */
-								      	}
-								      /* more items */
-								    ]
-							  	}
-							};
-							bucket.deleteObjects(params, function(err, data) {
-							});
-						});
-	            	}
+	        	if(e.type != 'read' && e.response){
+            		var response = e.response.results;
+            		self.get("obj").set("attachment_id", response[0].id);
+					self.saveDataSource();
 	        	}
 	        });
 	    },
@@ -13197,34 +13208,38 @@
 		save 		: function() {
 			var self = this;
 			if(this.get("obj").number && this.get("obj").max_customer){
-				if(this.dataSource.data().length > 0) {
-					if(this.dataSource.hasChanges() == true ){
-						this.dataSource.sync();
-						this.dataSource.bind("requestEnd", function(e){
-							if(e.type != 'read') {
-								if(e.response){				
-						    		$("#ntf1").data("kendoNotification").success("Successfully!");
-						    		//self.dataSource.addNew();
-									banhji.router.navigate("/setting");
-									banhji.setting.licenseDS.fetch();
-									self.uploadFile(e.response.results[0].id);
-								}
-							}else{
-							}					  				
-					    });
-					    this.dataSource.bind("error", function(e){		    		    	
-							$("#ntf1").data("kendoNotification").error("Error!"); 			
-					    });
-					}else{
-						if(this.attachmentDS.hasChanges() == true) {
-							banhji.router.navigate("/setting");
-							banhji.setting.licenseDS.fetch();
-							this.uploadFile();
-						}
-					}
+				if(this.attachmentDS.hasChanges() == true) {
+					this.uploadFile();
+				}else{
+					this.saveDataSource();
 				}
 			}else{
 				alert("License Number required!");
+			}
+		},
+		saveDataSource : function(){
+			var self = this;
+			if(this.dataSource.data().length > 0) {
+				if(this.dataSource.hasChanges() == true ){
+					this.dataSource.sync();
+					this.dataSource.bind("requestEnd", function(e){
+						if(e.type != 'read') {
+							if(e.response){				
+					    		var notificat = $("#ntf1").data("kendoNotification");
+					    		notificat.hide();
+					    		notificat.success(self.lang.lang.success_message);
+								banhji.router.navigate("/setting");
+								banhji.setting.licenseDS.fetch();
+							}
+						}else{
+						}					  				
+				    });
+				    this.dataSource.bind("error", function(e){		    		    	
+						var notificat = $("#ntf1").data("kendoNotification");
+			    		notificat.hide();
+			    		notificat.error(self.lang.lang.error_message);			
+				    });
+				}
 			}
 		},
 		cancel 		: function(){

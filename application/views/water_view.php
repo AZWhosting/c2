@@ -4038,7 +4038,7 @@
 					<p>អតិថិជន​ #=contact.number#</p>
 					<p>#:contact.name#</p>
 					<p>#: contact.address != 'null' ? contact.address: ''#</p>
-					<p style="font-size: 10px;"><i>ថ្ងៃ​ចាប់​ផ្តើម​ទទួល​ប្រាក់ #=kendo.toString(new Date(bill_date), "dd-MMM-yyyy")#</i></p>
+					<p style="font-size: 10px;"><i>ថ្ងៃ​ចាប់​ផ្តើម​ទទួល​ប្រាក់ #=kendo.toString(new Date(bill_date), "dd-MMMM-yyyy", "km-KH")#</i></p>
 				</div>
 			</div>
 			<div class="span4">
@@ -4049,7 +4049,7 @@
 					</tr>
 					<tr>
 						<td style="#= banhji.InvoicePrint.formVisible#"><p>ថ្ងៃ​ចេញ វិក្កយ​បត្រ</p></td>
-						<td><p>#=kendo.toString(new Date(issue_date), "dd-MMM-yyyy")#</p></td>
+						<td><p>#=kendo.toString(new Date(issue_date), "dd-MMMM-yyyy", "km-KH")#</p></td>
 					</tr>
 					<tr>
 						<td style="#= banhji.InvoicePrint.formVisible#"><p>តំបន់</p></td>
@@ -4057,11 +4057,11 @@
 					</tr>
 					<tr>
 						<td style="#= banhji.InvoicePrint.formVisible#"><p>គិត​ចាប់​ពី​ថ្ងៃ​ទី</p></td>
-						<td><p>#=kendo.toString(new Date(invoice_lines[0].from_date), "dd-MMM-yyyy")#</p></td>
+						<td><p>#=kendo.toString(new Date(invoice_lines[0].from_date), "dd-MMMM-yyyy", "km-KH")#</p></td>
 					</tr>
 					<tr>
 						<td style="#= banhji.InvoicePrint.formVisible#"><p>ដល់​ថ្ងៃ​ទី</p></td>
-						<td><p>#=kendo.toString(new Date(invoice_lines[0].to_date), "dd-MMM-yyyy")#</p></td>
+						<td><p>#=kendo.toString(new Date(invoice_lines[0].to_date), "dd-MMMM-yyyy", "km-KH")#</p></td>
 					</tr>
 				</table>		
 			</div>
@@ -4146,11 +4146,11 @@
 				</tr>
 				<tr>
 					<td colspan="2" class="greyy"  style="background: \\#ccc;#= banhji.InvoicePrint.formVisible#">ថ្ងៃផុតកំណត់ DUE DATE</td>
-					<td align="left">#=kendo.toString(new Date(due_date), "dd-MMM-yyyy")#</td>
+					<td align="left">#=kendo.toString(new Date(due_date), "dd-MMMM-yyyy", "km-KH")#</td>
 				</tr>
 				<tr>
 					<td colspan="2" class="greyy" style="background: \\#ccc;#= banhji.InvoicePrint.formVisible#">ថ្ងៃបង់ប្រាក់ PAY DATE</td>
-					<td align="left">#=kendo.toString(new Date(bill_date), "dd-MMM-yyyy")#</td>
+					<td align="left">#=kendo.toString(new Date(bill_date), "dd-MMMM-yyyy", "km-KH")#</td>
 				</tr>
 				<tr>
 					<td colspan="2" class="greyy" style="background: \\#ccc;#= banhji.InvoicePrint.formVisible#">ប្រាក់បានបង់ PAY AMOUNT</td>
@@ -4171,9 +4171,9 @@
 				</tr>
 				<tr>
 					<td style="#= banhji.InvoicePrint.formVisible#"><p>វិក្កយបត្រ</p></td>
-					<td>#: kendo.toString(new Date(issue_date), "dd-MMM-yyyy")# - #: number#</td>
+					<td>#: kendo.toString(new Date(issue_date), "dd-MMMM-yyyy", "km-KH")# - #: number#</td>
 					<td class="greyy" style="background: \\#ccc;border-bottom:1px solid \\#fff;#= banhji.InvoicePrint.formVisible#">ថ្ងៃបង់ប្រាក់ PAY DATE</td>
-					<td align="left">#=kendo.toString(new Date(bill_date), "dd-MMM-yyyy")#</td>
+					<td align="left">#=kendo.toString(new Date(bill_date), "dd-MMMM-yyyy", "km-KH")#</td>
 				</tr>
 				<tr>
 					<td style="#= banhji.InvoicePrint.formVisible#"><p>អតិថិជន</p></td>
@@ -4188,7 +4188,7 @@
 					<td rowspan="2"></td>
 				</tr>
 				<tr>
-					<td style="#= banhji.InvoicePrint.formVisible#">លេខ​កុនង​ទ័រ</td>
+					<td style="#= banhji.InvoicePrint.formVisible#">លេខ​កុង​ទ័រ</td>
 					<td>#: meter.meter_number#</td>
 				</tr>
 			</tbody>
@@ -6087,17 +6087,6 @@
 				                  					source: licenseDS,
 				                  					events: {change: licenseChange}">
 
-									        <input 
-												data-role="dropdownlist" 
-												data-option-label="Location ..." 
-												data-auto-bind="false" 
-												data-value-primitive="false" 
-												data-text-field="name" 
-												data-value-field="id" 
-												data-bind="
-													value: blocSelect,
-				                  					source: blocDS">
-
 										  	 <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>							
 									    </div>									        							       
 								    </div>
@@ -6112,12 +6101,19 @@
 							<h3 data-bind="text: institute.name"></h3>
 							<h2 data-bind="text: lang.lang.customer_list">Customer List</h2>
 						</div>
+						<div class="row-fluid">
+							<div class="span12" style="padding: 0; ">
+								<div class="total-customer">
+									<p data-bind="text: lang.lang.number_of_customer">Number of Customer</p>
+									<span data-bind="text: dataSource.total"></span>
+								</div>
+							</div>
+						</div>
 						<table class="table table-borderless table-condensed ">
 							<thead>
 								<tr>
 									<th style="vertical-align: top;"><span data-bind="text: lang.lang.customer_name">Customer Name</span></th>
 									<th style="vertical-align: top;"><span data-bind="text: lang.lang.license">License</span></th>
-									<th style="vertical-align: top;"><span data-bind="text: lang.lang.location">Location</span></th>
 									<th style="vertical-align: top;"><span data-bind="text: lang.lang.address">Address</span></th>
 									<th style="vertical-align: top;"><span style="text-align: right;" data-bind="text: lang.lang.phone">Phone</span></th>
 									<th style="vertical-align: top;"><span data-bind="text: lang.lang.email">E-Mail</span></th>
@@ -6139,7 +6135,6 @@
 	<tr>
 		<td>#=name#</td>
 		<td>#=branch#</td>
-		<td>#=location#</td>
 		<td>#=address#</td>
 		<td style="text-align: right;">#=phone#</td>
 		<td style="text-align: right;">#=email#</td>
@@ -6498,49 +6493,89 @@
 								<!-- Tabs Heading -->
 								<div class="widget-head">
 									<ul>
-										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i><span data-bind="text:lang.lang.date">Date</span></a></li>										
-										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab" data-bind="click: printGrid"><i></i><span data-bind="text:lang.lang.print_export">Print/Export</span></a></li>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i><span data-bind="text:lang.lang.date">Date</span></a></li>	
+										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i><span data-bind="text: lang.lang.filter">Filter</span></a></li>									
+										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab" data-bind="click: printGrid"><i></i><span data-bind="text:lang.lang.print_export">Print/Export</span></a></li>
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
 								<div class="widget-body">
 									<div class="tab-content">
-								        <div class="tab-pane active" id="tab-1">
-											<input 
-												data-role="dropdownlist" 
-												data-option-label="License ..." 
-												data-auto-bind="false" 
-												data-value-primitive="true" 
-												data-text-field="name" 
-												data-value-field="id" 
-												data-bind="
-													value: licenseSelect,
-				                  					source: licenseDS,
-				                  					events: {change: licenseChange}">
+								        <div class="tab-pane active" id="tab-1">									        	
+											
+											<input data-role="dropdownlist"
+												   class="sorter"                  
+										           data-value-primitive="true"
+										           data-text-field="text"
+										           data-value-field="value"
+										           data-bind="value: sorter,
+										                      source: sortList,                              
+										                      events: { change: sorterChanges }" />
 
-									        <input 
-												data-role="dropdownlist" 
-												data-option-label="Location ..." 
-												data-auto-bind="false" 
-												data-value-primitive="false" 
-												data-text-field="name" 
-												data-value-field="id" 
-												data-bind="
-													value: blocSelect,
-				                  					source: blocDS">
-				                  			<input type="text" 
-							                	data-role="datepicker"
-							                	data-format="MM-yyyy"
-							                	data-start="year" 
-								  				data-depth="year" 
-							                	placeholder="Moth of ..." 
-									           	data-bind="value: monthSelect" />
-				                  			<input 
-												class="k-textbox k-invalid" 
-												data-bind="
-													value: miniNumber">
-										  	 <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>							
-									    </div>									        							       
+											<input data-role="datepicker"
+												   class="sdate"
+												   data-format="dd-MM-yyyy"
+										           data-bind="value: sdate,
+										           			  max: edate"
+										           placeholder="From ..." >
+
+										    <input data-role="datepicker"
+										    	   class="edate"
+										    	   data-format="dd-MM-yyyy"
+										           data-bind="value: edate,
+										                      min: sdate"
+										           placeholder="To ..." >
+
+										  	<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+							
+							        	</div>	
+							        	<div class="tab-pane" id="tab-2">
+											<div class="row">
+												<div class="span3" style="padding-left: 15px;">
+													<span data-bind="text: lang.lang.license">Licenses</span>
+													<input 
+														data-role="dropdownlist" 
+														data-option-label="License ..." 
+														data-auto-bind="false" 
+														data-value-primitive="true" 
+														data-text-field="name" 
+														data-value-field="id" 
+														data-bind="
+															value: licenseSelect,
+																source: licenseDS,
+																events: {change: licenseChange}" style="width: 100%">
+												</div>
+												<div class="span3">													
+													<span data-bind="text: lang.lang.location">Locations</span>
+														<input 
+															data-role="dropdownlist" 
+															data-option-label="Location ..." 
+															data-auto-bind="false" 
+															data-value-primitive="false" 
+															data-text-field="name" 
+															data-value-field="id" 
+															data-bind="
+																value: blocSelect,
+																	source: blocDS" style="width: 100%">
+												</div>
+												<div class="span3">
+													<span data-bind="text: lang.lang.customers"></span>
+													<select data-role="multiselect"
+														   data-value-primitive="true"
+														   data-header-template="customer-header-tmpl"
+														   data-item-template="contact-list-tmpl"
+														   data-value-field="id"
+														   data-text-field="name"
+														   data-bind="value: obj.contactIds, 
+														   			source: contactDS"
+														   data-placeholder="Select Customer.."
+														   style="width: 100%" /></select>
+												</div>
+												<div class="span1">											
+										  			<button style="margin-top: 20px;" type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+												</div>														
+											</div>		
+							        	</div>								        							       
 								    </div>
 								</div>
 							</div>
@@ -6552,6 +6587,7 @@
 						<div class="block-title">
 							<h3 data-bind="text: institute.name"></h3>
 							<h2 data-bind="text:lang.lang.minimum_water_usage_list">Minimum Water Usage List</h2>
+							<p data-bind="text: displayDate"></p>
 						</div>
 						<table class="table table-borderless table-condensed ">
 							<thead>
@@ -6565,9 +6601,13 @@
 							</thead>
 							<tbody data-role="listview"
 										 data-bind="source: dataSource"
+										 data-auto-bind="false" 
 										 data-template="miniCustomerList-temp"
 							></tbody>
 						</table>
+						<div data-role="pager"
+			            	data-auto-bind="false" 
+			            	data-bind="source: dataSource"></div>
 					</div>
 				</div>
 			</div>
@@ -6612,14 +6652,32 @@
 									<div class="tab-content">
 
 								        <!-- //Date -->
-								        <div class="tab-pane active" id="tab-1">									
-									        As of:
-									        <input data-role="datepicker"
-													data-format="dd-MM-yyyy"
-													data-parse-formats="yyyy-MM-dd" 
-													data-bind="value: as_of" />
+								        <div class="tab-pane active" id="tab-1">									        	
+											
+											<input data-role="dropdownlist"
+												   class="sorter"                  
+										           data-value-primitive="true"
+										           data-text-field="text"
+										           data-value-field="value"
+										           data-bind="value: sorter,
+										                      source: sortList,                              
+										                      events: { change: sorterChanges }" />
 
-								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+											<input data-role="datepicker"
+												   class="sdate"
+												   data-format="dd-MM-yyyy"
+										           data-bind="value: sdate,
+										           			  max: edate"
+										           placeholder="From ..." >
+
+										    <input data-role="datepicker"
+										    	   class="edate"
+										    	   data-format="dd-MM-yyyy"
+										           data-bind="value: edate,
+										                      min: sdate"
+										           placeholder="To ..." >
+
+										  	<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
 							
 							        	</div>
 
@@ -6757,14 +6815,32 @@
 									<div class="tab-content">
 
 								        <!-- //Date -->
-								        <div class="tab-pane active" id="tab-1">									
-									        As of:
-									        <input data-role="datepicker"
-													data-format="dd-MM-yyyy"
-													data-parse-formats="yyyy-MM-dd" 
-													data-bind="value: as_of" />
+								        <div class="tab-pane active" id="tab-1">									        	
+											
+											<input data-role="dropdownlist"
+												   class="sorter"                  
+										           data-value-primitive="true"
+										           data-text-field="text"
+										           data-value-field="value"
+										           data-bind="value: sorter,
+										                      source: sortList,                              
+										                      events: { change: sorterChanges }" />
 
-								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+											<input data-role="datepicker"
+												   class="sdate"
+												   data-format="dd-MM-yyyy"
+										           data-bind="value: sdate,
+										           			  max: edate"
+										           placeholder="From ..." >
+
+										    <input data-role="datepicker"
+										    	   class="edate"
+										    	   data-format="dd-MM-yyyy"
+										           data-bind="value: edate,
+										                      min: sdate"
+										           placeholder="To ..." >
+
+										  	<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
 							
 							        	</div>
 
@@ -6932,14 +7008,32 @@
 									<div class="tab-content">
 
 								        <!-- //Date -->
-								        <div class="tab-pane active" id="tab-1">									
-									        As of:
-									        <input data-role="datepicker"
-													data-format="dd-MM-yyyy"
-													data-parse-formats="yyyy-MM-dd" 
-													data-bind="value: as_of" />
+								        <div class="tab-pane active" id="tab-1">									        	
+											
+											<input data-role="dropdownlist"
+												   class="sorter"                  
+										           data-value-primitive="true"
+										           data-text-field="text"
+										           data-value-field="value"
+										           data-bind="value: sorter,
+										                      source: sortList,                              
+										                      events: { change: sorterChanges }" />
 
-								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+											<input data-role="datepicker"
+												   class="sdate"
+												   data-format="dd-MM-yyyy"
+										           data-bind="value: sdate,
+										           			  max: edate"
+										           placeholder="From ..." >
+
+										    <input data-role="datepicker"
+										    	   class="edate"
+										    	   data-format="dd-MM-yyyy"
+										           data-bind="value: edate,
+										                      min: sdate"
+										           placeholder="To ..." >
+
+										  	<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
 							
 							        	</div>
 
@@ -8012,14 +8106,32 @@
 									<div class="tab-content">
 
 								        <!-- //Date -->
-								        <div class="tab-pane active" id="tab-1">									
-									        As of:
-									        <input data-role="datepicker"
-													data-format="dd-MM-yyyy"
-													data-parse-formats="yyyy-MM-dd" 
-													data-bind="value: as_of" />
+								        <div class="tab-pane active" id="tab-1">									        	
+											
+											<input data-role="dropdownlist"
+												   class="sorter"                  
+										           data-value-primitive="true"
+										           data-text-field="text"
+										           data-value-field="value"
+										           data-bind="value: sorter,
+										                      source: sortList,                              
+										                      events: { change: sorterChanges }" />
 
-								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+											<input data-role="datepicker"
+												   class="sdate"
+												   data-format="dd-MM-yyyy"
+										           data-bind="value: sdate,
+										           			  max: edate"
+										           placeholder="From ..." >
+
+										    <input data-role="datepicker"
+										    	   class="edate"
+										    	   data-format="dd-MM-yyyy"
+										           data-bind="value: edate,
+										                      min: sdate"
+										           placeholder="To ..." >
+
+										  	<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
 							
 							        	</div>
 
@@ -8194,14 +8306,32 @@
 									<div class="tab-content">
 
 								        <!-- //Date -->
-								        <div class="tab-pane active" id="tab-1">									
-									        As of:
-									        <input data-role="datepicker"
-													data-format="dd-MM-yyyy"
-													data-parse-formats="yyyy-MM-dd" 
-													data-bind="value: as_of" />
+								        <div class="tab-pane active" id="tab-1">									        	
+											
+											<input data-role="dropdownlist"
+												   class="sorter"                  
+										           data-value-primitive="true"
+										           data-text-field="text"
+										           data-value-field="value"
+										           data-bind="value: sorter,
+										                      source: sortList,                              
+										                      events: { change: sorterChanges }" />
 
-								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+											<input data-role="datepicker"
+												   class="sdate"
+												   data-format="dd-MM-yyyy"
+										           data-bind="value: sdate,
+										           			  max: edate"
+										           placeholder="From ..." >
+
+										    <input data-role="datepicker"
+										    	   class="edate"
+										    	   data-format="dd-MM-yyyy"
+										           data-bind="value: edate,
+										                      min: sdate"
+										           placeholder="To ..." >
+
+										  	<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
 							
 							        	</div>
 
@@ -16783,7 +16913,6 @@
 		institute 				: banhji.institute,
 		dataSource 				: dataStore(apiUrl + "wreports/customer_list"),
 		licenseDS 				: dataStore(apiUrl+"branches"),
-		blocDS 					: dataStore(apiUrl+"locations"),
 		licenseSelect 			: null,
 		blocSelect 				: null,
 		pageLoad 				: function(){
@@ -16832,7 +16961,6 @@
 			var data = e.data;
 			var license = this.licenseDS.at(e.sender.selectedIndex - 1);
 			this.set("licenseSelect", license);
-			this.blocDS.filter({field: "branch_id", value: license.id});
 		},
 		search 					: function(){
 			var para = [],
@@ -16841,10 +16969,6 @@
 
 			if(license){
 				para.push({ field:"branch_id", value: license.id });
-			}
-
-			if(bloc){
-				para.push({ field:"branch/location", operator:"where_related", value: bloc.id });
 			}
 			this.dataSource.filter(para);
 		}, 
@@ -17220,12 +17344,21 @@
 		dataSource 				: dataStore(apiUrl + "wreports/miniusage"),
 		licenseDS 				: dataStore(apiUrl+"branches"),
 		blocDS 					: dataStore(apiUrl+"locations"),
-		miniNumber 				: 20,
+		contactDS  			: new kendo.data.DataSource({
+		  	data: banhji.source.supplierList,
+		  	filter:{ field:"status", value:1 },
+			sort: { field:"number", dir:"asc" }
+		}),
+		displayDate 			: "",
+		sortList				: banhji.source.sortList,
+		sorter 					: "month",
+		sdate 					: "",
+		edate 					: "",
+		obj 					: { contactIds: [], licenseID:0 , locationID: []},
 		licenseSelect 			: null,
 		blocSelect 				: null,
 		pageLoad 				: function(){
-			this.licenseDS.read();
-			this.dataSource.filter({field: "usage <=", operator: "where_related_record" ,value: this.get("miniNumber")});
+			this.search();
 		},
 		printGrid			: function() {
 			var gridElement = $('#grid'),
@@ -17266,42 +17399,109 @@
 		    	win.close();
 		    },2000);
 		},
+		sorterChanges 		: function(){
+	        var today = new Date(),
+        	sdate = "",
+        	edate = "",
+        	sorter = this.get("sorter");
+        	
+			switch(sorter){
+				case "today":								
+					this.set("sdate", today);
+					this.set("edate", "");
+													  					
+				  	break;
+				case "week":			  	
+					var first = today.getDate() - today.getDay(),
+					last = first + 6;
+
+					this.set("sdate", new Date(today.setDate(first)));
+					this.set("edate", new Date(today.setDate(last)));						
+					
+				  	break;
+				case "month":							  	
+					this.set("sdate", new Date(today.getFullYear(), today.getMonth(), 1));
+					this.set("edate", new Date(today.getFullYear(), today.getMonth() + 1, 0));
+
+				  	break;
+				case "year":				
+				  	this.set("sdate", new Date(today.getFullYear(), 0, 1));
+				  	this.set("edate", new Date(today.getFullYear(), 11, 31));
+
+				  	break;
+				default:
+					this.set("sdate", "");
+				  	this.set("edate", "");									  
+			}
+		},
 		licenseChange 	: function(e) {
 			var data = e.data;
 			var license = this.licenseDS.at(e.sender.selectedIndex - 1);
 			this.set("licenseSelect", license);
 			this.blocDS.filter({field: "branch_id", value: license.id});
 		},
-		search 					: function(){
-			var para = [],
-			license = this.get("licenseSelect"),
-			bloc = this.get("blocSelect"),
-			monthOfSearch = this.get("monthSelect"),
-			miniNumber = this.get("miniNumber");
-			if(license){
-				para.push({ field:"branch_id", value: license.id });
-			}
+		search				: function(){
+			var self = this, para = [],
+				obj = this.get("obj"),
+				start = this.get("sdate"),
+        		end = this.get("edate"),
+        		displayDate = "";
+        		license = this.get("licenseSelect"),
+				bloc = this.get("blocSelect");
+
+        	//Account
+
 			if(bloc){
 				para.push({ field:"location_id", value: bloc.id });
 			}
-			if(monthOfSearch){
-				var monthOf = new Date(monthOfSearch);
-				monthOf.setDate(1);
-				monthOf = kendo.toString(monthOf, "yyyy-MM-dd");
-				var monthL = new Date(monthOfSearch);
-				monthL.setDate(31);
-				monthL = kendo.toString(monthL, "yyyy-MM-dd");
-				
-				para.push(
-					{field: "month_of >=", operator: "where_related_record", value: monthOf},
-					{field: "month_of <=", operator: "where_related_record", value: monthL}
-				);
-			}
-			if(miniNumber){
-				para.push({field: "usage <=", operator: "where_related_record" ,value: this.get("miniNumber")});
-			}
-			this.dataSource.filter(para);
-		}, 
+
+        	//Customer
+            if(obj.contactIds.length>0){
+            	var contactIds = [];
+            	$.each(obj.contactIds, function(index, value){
+            		contactIds.push(value);
+            	});          	
+	            para.push({ field:"contact_id", operator:"where_in", value:contactIds });
+	        }
+    	
+        	//Dates
+        	if(start && end){
+        		start = new Date(start);
+        		end = new Date(end);
+        		displayDate = "From " + kendo.toString(start, "dd-MM-yyyy") + " To " + kendo.toString(end, "dd-MM-yyyy");
+        		end.setDate(end.getDate()+1);
+
+            	para.push({ field:"date_used >=", value: kendo.toString(start, "yyyy-MM-dd") });
+            	para.push({ field:"date_used <", value: kendo.toString(end, "yyyy-MM-dd") });
+            }else if(start){
+            	start = new Date(start);
+            	displayDate = "On " + kendo.toString(start, "dd-MM-yyyy");
+
+            	para.push({ field:"date_used", value: kendo.toString(start, "yyyy-MM-dd") });
+            }else if(end){
+            	end = new Date(end);
+            	displayDate = "As Of " + kendo.toString(end, "dd-MM-yyyy");
+        		end.setDate(end.getDate()+1);
+        		
+            	para.push({ field:"date_used <", value: kendo.toString(end, "yyyy-MM-dd") });
+            }else{
+            	
+            }
+            this.set("displayDate", displayDate);
+
+            this.dataSource.query({
+            	filter:para
+            }).then(function(){
+            	var view = self.dataSource.view();
+
+            	var amount = 0;
+            	$.each(view, function(index, value){ 
+            		amount += value.amount;
+            	});
+            	
+            	self.set("totalAmount", kendo.toString(amount, "c2", banhji.locale));
+            });
+		},
 		cancel 			: function(){
 			this.contact.cancelChanges();
 			window.history.back();

@@ -1370,6 +1370,7 @@ var	en_US = {
 	"add_box": "Add Box",
 	"box": "Box",
 	"new_customer": "New Customer",
+	"logo": "Logo",
 
 
 

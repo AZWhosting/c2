@@ -30,7 +30,7 @@ var	km_KH = {
 	"liabilities" : "បំណុល",
 	"equity" : "ដើមទុន",
 	"receivable" : "អតិថិជន​ជំពាក់",
-	"overdue" : "ហូស​កំណត់",
+	"overdue" : "ហួស​កំណត់",
 	"payables" : "បំណុល​អ្នក​ផ្គត់ផ្គង់",
 	"all_rights_reserved" : " BanhJi PTE. Ltd.រក្សា​សិទ្ធិ​គ្រប់យ៉ាង",
 	 //Setting ,
@@ -152,7 +152,7 @@ var	km_KH = {
 	"validity_date" : "មាន​សុពលភាព​ដល់ ថ្ងៃ",
 	"billing_address" :  "អាសយដ្ឋាន​ទូទាត់",
 	"billing_to" : "ទូទាត់ទៅ",
-	"bill_to" : "អាស័យដ្ធានទូទាត់",
+	"bill_to" : "អាសយដ្ឋានទូទាត់",
 	"delivery_address" :  "អាសយដ្ឋានដឹកជញ្ជូន",
 	"delivered_to": "អាសយដ្ឋាន​ដឹកជញ្ជូន",
 	"shipping_to" : "ផ្ញើរ​ទៅ",
@@ -1344,6 +1344,7 @@ var	km_KH = {
 	"box": "ប្រអប់",
 	"add_box": "បន្ថែមប្រអប់",
 	"new_customer": "អតិថិជនថ្មី",
+	"logo": "ឡូហ្កូ",
 
 
 

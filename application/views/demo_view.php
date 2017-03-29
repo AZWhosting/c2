@@ -12819,10 +12819,10 @@
 					<!-- Window -->
 				    <div data-role="window"
 		                 data-title="Additional Cost"
-		                 data-width="600"
+		                 data-width="650"
 		                 data-actions="{}"
 		                 data-position="{top: '150px', left: '30%'}"
-		                 data-height="530"
+		                 data-height="330"
 		                 data-bind="visible: windowVisible">
 
 						<table class="table table-bordered table-primary table-striped table-vertical-center">							
@@ -12840,6 +12840,14 @@
 						            					events:{ change: additCostTypeChanges }"> 
 						            <label class="k-radio-label" for="additCostOption2"><span data-bind="text: lang.lang.credit"></span></label>
 				            	</td>
+								<td data-bind="invisible: isAdditCostCash">Due Date</td>
+								<td data-bind="invisible: isAdditCostCash">
+									<input data-role="datepicker"
+											data-format="dd-MM-yyyy"
+											data-parse-formats="yyyy-MM-dd" 
+											data-bind="value: additCostObj.due_date"
+											style="width:100%;" />
+								</td>
 							</tr>
 							<tr>
 								<td>Supplier</td>
@@ -12854,6 +12862,15 @@
 						                              source: additionalContactDS,
 						                              events:{ change : additCostContactChanges }"
 						                   data-placeholder="Add Name.." style="width: 100%" />
+								</td>
+								<td>Bill Date</td>
+								<td>
+									<input data-role="datepicker"
+											data-format="dd-MM-yyyy"
+											data-parse-formats="yyyy-MM-dd" 
+											data-bind="value: additCostObj.issued_date,
+														events: { change: additCostSetRate }"
+											style="width:100%;" />
 								</td>
 							</tr>
 							<tr>
@@ -12870,42 +12887,11 @@
 						      				data-option-label="Select Account..."
 						      				style="width: 100%" />
 								</td>
-							</tr>
-							<tr>
-								<td>Bill Date</td>
-								<td>
-									<input data-role="datepicker"
-											data-format="dd-MM-yyyy"
-											data-parse-formats="yyyy-MM-dd" 
-											data-bind="value: additCostObj.issued_date,
-														events: { change: additCostSetRate }"
-											style="width:100%;" />
-								</td>
-							</tr>
-							<tr data-bind="invisible: isAdditCostCash">
-								<td>Due Date</td>
-								<td>
-									<input data-role="datepicker"
-											data-format="dd-MM-yyyy"
-											data-parse-formats="yyyy-MM-dd" 
-											data-bind="value: additCostObj.due_date"
-											style="width:100%;" />
-								</td>
-							</tr>
-							<tr>
 								<td>Number</td>
 								<td>
 									<input type="text" class="k-textbox" 
 											data-bind="value: additCostObj.number"
-											style="width: 100%; margin-bottom: 0;" />		
-								</td>
-							</tr>
-							<tr>
-								<td>Reference No.</td>
-								<td>
-									<input type="text" class="k-textbox" 
-											data-bind="value: additCostObj.reference_no"
-											style="width: 100%; margin-bottom: 0;" />		
+											style="width: 100%; margin-bottom: 0;" />
 								</td>
 							</tr>
 							<tr>
@@ -12915,19 +12901,25 @@
 											data-bind="value: additCostObj.memo"
 											style="width: 100%; margin-bottom: 0;" />
 								</td>
+								<td>Reference No.</td>
+								<td>
+									<input type="text" class="k-textbox" 
+											data-bind="value: additCostObj.reference_no"
+											style="width: 100%; margin-bottom: 0;" />
+								</td>
 							</tr>
 							<tr>
-								<td>Sub Total</td>
+								<td>Amount</td>
 								<td>
 									<input data-role="numerictextbox"
 											data-spinners="false" 
 											data-format="n"
 											data-min="0"
 											data-bind="value: additCostObj.sub_total, events: {change : changes}" 
-											required data-required-msg="required" style="width: 100%;" /> 						
+											required data-required-msg="required" style="width: 70%;" />
+									&nbsp;
+									<span data-bind="text: additCostCurrency"></span>
 								</td>
-							</tr>
-							<tr>
 								<td>Tax</td>
 								<td>
 									<input data-role="combobox"
@@ -12941,14 +12933,6 @@
 						                   style="width: 100%" />
 								</td>
 						    </tr>
-						    <tr>
-								<td>Amount</td>
-								<td>
-									<span data-format="n" data-bind="text: additCostObj.amount"></span>
-
-									<span data-bind="text: additCostObj.locale"></span>
-								</td>
-							</tr>
 						</table>
 
 						<br>
@@ -12962,139 +12946,200 @@
 					<!-- Middle Part -->
 					<div class="row-fluid">
 
-			    		<!-- Item Line -->
-						<table class="table table-bordered table-primary table-striped table-vertical-center">
-					        <thead>
-					            <tr>
-					                <th class="center" style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></th>			                
-					                <th style="width: 20%;"><span data-bind="text: lang.lang.items"></span></th>
-					                <th><span data-bind="text: lang.lang.description"></span></th>
-					                <th style="width: 20%;"><span data-bind="text: lang.lang.quantity"></span></th>
-					                <th style="width: 10%;"><span data-bind="text: lang.lang.cost"></span></th>
-					                <th style="width: 1%;" data-bind="visible: showDiscount"><span data-bind="text: lang.lang.discount"></span></th>			                
-					                <th class="center" style="width: 15%;"><span data-bind="text: lang.lang.amount"></span></th>
-					                <th class="center" style="width: 11%;"><span data-bind="text: lang.lang.tax"></span></th>
-					                <th class="center" style="width: 1%;" data-bind="visible: showAdditionalCost">+Cost</th>			                			                			                
-					            </tr> 
-					        </thead>
-					        <tbody data-role="listview" 
-					        		data-template="purchase-item-line-template" 
-					        		data-auto-bind="false"
-					        		data-bind="source: lineDS"></tbody>			        
-					    </table>
-					    
-			            <div class="row">		
-													
-							<div class="span12">
-								<button class="btn btn-inverse" data-bind="click: addRow"><i class="icon-plus icon-white"></i></button>												
+						<div class="box-generic-noborder">
 
-								<div class="btn-group">
-									<div class="leadcontainer">
+						    <!-- Tabs Heading -->
+						    <div class="tabsbar tabsbar-2">
+						        <ul class="row-fluid row-merge">
+						        	<li class="span3 glyphicons shopping_cart active"><a href="#tab-1" data-toggle="tab"><i></i> ITEM</a>
+						            </li>
+						            <li class="span3 glyphicons database_plus"><a href="#tab-2" data-toggle="tab"><i></i> Additional Cost</a>
+						            </li>
+						        </ul>
+						    </div>
+						    <!-- // Tabs Heading END -->
+
+						    <div class="tab-content">
+
+						    	<!-- Item Line & Account Line -->
+						        <div class="tab-pane active" id="tab-1">
+
+						            <!-- Item Line -->
+									<table class="table table-bordered table-primary table-striped table-vertical-center">
+								        <thead>
+								            <tr>
+								                <th class="center" style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></th>			                
+								                <th style="width: 20%;"><span data-bind="text: lang.lang.items"></span></th>
+								                <th><span data-bind="text: lang.lang.description"></span></th>
+								                <th style="width: 20%;"><span data-bind="text: lang.lang.quantity"></span></th>
+								                <th style="width: 10%;"><span data-bind="text: lang.lang.cost"></span></th>
+								                <th style="width: 1%;" data-bind="visible: showDiscount"><span data-bind="text: lang.lang.discount"></span></th>			                
+								                <th class="center" style="width: 15%;"><span data-bind="text: lang.lang.amount"></span></th>
+								                <th class="center" style="width: 11%;"><span data-bind="text: lang.lang.tax"></span></th>
+								                <th class="center" style="width: 1%;" data-bind="visible: showAdditionalCost">+Cost</th>			                			                			                
+								            </tr> 
+								        </thead>
+								        <tbody data-role="listview" 
+								        		data-template="purchase-item-line-template" 
+								        		data-auto-bind="false"
+								        		data-bind="source: lineDS"></tbody>
+								    </table>
+								    
+						            <div class="row">
+
+										<div class="span12">
+											<button class="btn btn-inverse" data-bind="click: addRow"><i class="icon-plus icon-white"></i></button>												
+
+											<div class="btn-group">
+												<div class="leadcontainer">
+													
+												</div>
+												<a class="btn btn-default dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-list"></i> </a>
+												<ul class="dropdown-menu" style="padding: 5px; border-radius:0;">
+													<li>
+														<input type="checkbox" id="chbDiscount" class="k-checkbox" data-bind="checked: showDiscount" />												
+														<label class="k-checkbox-label" for="chbDiscount"><span data-bind="text: lang.lang.discount"></span></label>
+													</li>
+													<li>
+														<input type="checkbox" id="chbAdditionalCost" class="k-checkbox" data-bind="checked: showAdditionalCost" />												
+														<label class="k-checkbox-label" for="chbAdditionalCost"><span data-bind="text: lang.lang.additional_costs"></span></label>
+													</li>
+												</ul>
+											</div>
+
+											<!-- Add New Item -->
+											<ul class="topnav addNew">
+												<li role="presentation" class="dropdown ">
+											  		<a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+											  			<span data-bind="text: lang.lang.add_new_item"></span>
+								    					<span class="caret"></span>
+											  		</a>
+										  			<ul class="dropdown-menu addNewItem">
+										  				<li><a href='#/item'><span data-bind="text: lang.lang.add_inventory_for_sale"></span></a></li>
+										  				<li><a href='#/non_inventory_part'><span data-bind="text: lang.lang.add_noninventory_for_sale"></span></a></li>
+										  				<li><a href='#/fixed_assets'><span data-bind="text: lang.lang.add_fixed_assets"></span></a></li>
+										  				<li><a href='#/item_service'><span data-bind="text: lang.lang.add_services"></span></a></li>
+										  				<li><a href='#/txn_item'><span data-bind="text: lang.lang.add_transaction_item"></span></a></li>
+										  			</ul>
+											  	</li>
+											</ul>
+											<!--End Add New Item -->
+
+										</div>
 										
 									</div>
-									<a class="btn btn-default dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-list"></i> </a>
-									<ul class="dropdown-menu" style="padding: 5px; border-radius:0;">
-										<li>
-											<input type="checkbox" id="chbDiscount" class="k-checkbox" data-bind="checked: showDiscount" />												
-											<label class="k-checkbox-label" for="chbDiscount"><span data-bind="text: lang.lang.discount"></span></label>
-										</li>
-										<li>
-											<input type="checkbox" id="chbAdditionalCost" class="k-checkbox" data-bind="checked: showAdditionalCost" />												
-											<label class="k-checkbox-label" for="chbAdditionalCost"><span data-bind="text: lang.lang.additional_costs"></span></label>
-										</li>																									
-									</ul>
-								</div>
+									<!-- End Item Line -->
 
-								<!-- Add New Item -->
-								<ul class="topnav addNew">
-									<li role="presentation" class="dropdown ">
-								  		<a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-								  			<span data-bind="text: lang.lang.add_new_item"></span>
-					    					<span class="caret"></span>
+									<br>
+
+								    <!-- Account Line -->
+									<table class="table table-bordered table-primary table-striped table-vertical-center">
+								        <thead>
+								            <tr>
+								                <th style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></th>			                
+								                <th style="width: 20%;"><span data-bind="text: lang.lang.account"></span></th>
+								                <th><span data-bind="text: lang.lang.description"></span></th>
+								                <th data-bind="visible: showRef" style="width: 7%;"><span data-bind="text: lang.lang.ref"></span></th>			                
+								                <th data-bind="visible: showSegment" style="width: 15%;"><span data-bind="text: lang.lang.segment"></span></th>
+								                <th class="center" style="width: 15%;"><span data-bind="text: lang.lang.amount"></span></th>
+								                <th class="center" style="width: 11%;"><span data-bind="text: lang.lang.tax"></span></th>			                			                
+								            </tr> 
+								        </thead>
+								        <tbody data-role="listview" 
+								        		data-template="purchase-account-line-template" 
+								        		data-auto-bind="false"
+								        		data-bind="source: accountLineDS"></tbody>
+								    </table>
+								    
+								    <div class="row-fluid">
+										<button class="btn btn-inverse" data-bind="click: addRowAccount"><i class="icon-plus icon-white"></i></button>												
+
+										<div class="btn-group">
+											<div class="leadcontainer">
+												
+											</div>
+											<a class="btn btn-default dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-list"></i> </a>
+											<ul class="dropdown-menu" style="padding: 5px; border-radius:0;">
+												<li>
+													<input type="checkbox" id="chbReference" class="k-checkbox" data-bind="checked: showRef" />												
+													<label class="k-checkbox-label" for="chbReference"><span data-bind="text: lang.lang.reference"></span></label>
+												</li>
+												<li>
+													<input type="checkbox" id="chbSegment" class="k-checkbox" data-bind="checked: showSegment" />												
+													<label class="k-checkbox-label" for="chbSegment"><span data-bind="text: lang.lang.segment"></span></label>
+												</li>
+											</ul>
+										</div>
+										
+								  		<a href="#/account" class="btn" style="background: #f4f4f4; color: #333; width: 137px;">
+								  			<span data-bind="text: lang.lang.add_account"></span>
 								  		</a>
-							  			<ul class="dropdown-menu addNewItem">  				  				
-							  				<li><a href='#/item'><span data-bind="text: lang.lang.add_inventory_for_sale"></span></a></li>
-							  				<li><a href='#/non_inventory_part'><span data-bind="text: lang.lang.add_noninventory_for_sale"></span></a></li>
-							  				<li><a href='#/fixed_assets'><span data-bind="text: lang.lang.add_fixed_assets"></span></a></li>
-							  				<li><a href='#/item_service'><span data-bind="text: lang.lang.add_services"></span></a></li>
-							  				<li><a href='#/txn_item'><span data-bind="text: lang.lang.add_transaction_item"></span></a></li>  				
-							  				 				
-							  			</ul>
-								  	</li>				
-								</ul>
-								<!--End Add New Item -->
+									</div>
+									<!-- End Account Line -->
+						        </div>
+						        <!-- // Item Line & Account Line END -->
 
-							</div>										
-							
+						        <!-- Additional Cost -->
+						        <div class="tab-pane" id="tab-2">
+
+						        	<table class="table table-bordered table-primary table-striped table-vertical-center">
+								        <thead>
+								            <tr>
+								                <th class="center" style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></th>			                
+								                <th style="width: 20%;"><span data-bind="text: lang.lang.type"></span></th>
+								                <th data-bind="text: lang.lang.description"></th>
+								                <th data-bind="text: lang.lang.ref"></th>
+								                <th class="center" style="width: 15%;"><span data-bind="text: lang.lang.amount"></span></th>
+								                <th class="center" style="width: 11%;"><span data-bind="text: lang.lang.tax"></span></th>		                			                			                
+								            </tr> 
+								        </thead>
+								        <tbody data-role="listview" 
+								        		data-template="purchase-additional-cost-template" 
+								        		data-auto-bind="false"
+								        		data-bind="source: additionalCostDS"></tbody>
+								    </table>
+
+						            <div class="row">
+
+										<!-- Column -->
+										<div class="span6">
+											<button class="btn btn-inverse" data-bind="click: windowCreate"><i class="icon-plus icon-white"></i></button>
+
+											<span data-bind="text: lang.lang.additional_cost_apply"></span>
+											
+											<input type="radio" name="engine" id="engine1" class="k-radio" value="Equal" 
+													data-bind="checked: obj.additional_apply,
+																events:{ change: changes }">
+								            <label class="k-radio-label" for="engine1"><span data-bind="text: lang.lang.equal"></span></label>
+
+								            <input type="radio" name="engine" id="engine2" class="k-radio" value="Weighted"
+								            		data-bind="checked: obj.additional_apply,
+																events:{ change: changes }">
+								            <label class="k-radio-label" for="engine2"><span data-bind="text: lang.lang.weighted"></span></label>
+								        </div>
+										<!-- Column END -->
+										
+										<!-- Column -->
+										<div class="span6">
+											<table class="table table-condensed table-striped table-white">
+												<tbody>
+													<tr>
+														<td class="right"><span data-bind="text: lang.lang.costs_allocated"></span></td>
+														<td class="right" width="40%"><span data-format="n" data-bind="text: obj.additional_cost"></span></td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+										<!-- // Column END -->
+										
+									</div>
+
+						        </div>
+						        <!-- // Additional Cost END -->
+						        
+						    </div>
 						</div>
-						<!-- End Item Line -->
 
-						<br>
-
-					    <!-- Account Line -->
-						<table class="table table-bordered table-primary table-striped table-vertical-center">
-					        <thead>
-					            <tr>
-					                <th style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></th>			                
-					                <th style="width: 20%;"><span data-bind="text: lang.lang.account"></span></th>
-					                <th><span data-bind="text: lang.lang.description"></span></th>
-					                <th data-bind="visible: showRef" style="width: 7%;"><span data-bind="text: lang.lang.ref"></span></th>			                
-					                <th data-bind="visible: showSegment" style="width: 15%;"><span data-bind="text: lang.lang.segment"></span></th>
-					                <th class="center" style="width: 15%;"><span data-bind="text: lang.lang.amount"></span></th>
-					                <th class="center" style="width: 11%;"><span data-bind="text: lang.lang.tax"></span></th>			                			                
-					            </tr> 
-					        </thead>
-					        <tbody data-role="listview" 
-					        		data-template="purchase-account-line-template" 
-					        		data-auto-bind="false"
-					        		data-bind="source: accountLineDS"></tbody>			        
-					    </table>
-					    
-					    <div>
-							<button class="btn btn-inverse" data-bind="click: addRowAccount"><i class="icon-plus icon-white"></i></button>												
-
-							<div class="btn-group">
-								<div class="leadcontainer">
-									
-								</div>
-								<a class="btn btn-default dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-list"></i> </a>
-								<ul class="dropdown-menu" style="padding: 5px; border-radius:0;">
-									<li>											
-										<input type="checkbox" id="chbReference" class="k-checkbox" data-bind="checked: showRef" />												
-										<label class="k-checkbox-label" for="chbReference"><span data-bind="text: lang.lang.reference"></span></label>
-									</li>
-									<li>											
-										<input type="checkbox" id="chbSegment" class="k-checkbox" data-bind="checked: showSegment" />												
-										<label class="k-checkbox-label" for="chbSegment"><span data-bind="text: lang.lang.segment"></span></label>
-									</li>															
-								</ul>
-							</div>
-							
-					  		<a href="#/account" class="btn" style="background: #f4f4f4; color: #333; width: 137px;">
-					  			<span data-bind="text: lang.lang.add_account"></span>
-					  		</a>					
-						</div>
-						<!-- End Account Line -->
-
-						<br>
-			       
-						<!-- Additional Cost Line -->
-			        	<table class="table table-bordered table-primary table-striped table-vertical-center">
-					        <thead>
-					            <tr>
-					                <th class="center" style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></th>			                
-					                <th style="width: 20%;"><span data-bind="text: lang.lang.type"></span></th>
-					                <th data-bind="text: lang.lang.description"></th>
-					                <th data-bind="text: lang.lang.ref"></th>
-					                <th class="center" style="width: 15%;"><span data-bind="text: lang.lang.amount"></span></th>
-					                <th class="center" style="width: 11%;"><span data-bind="text: lang.lang.tax"></span></th>		                			                			                
-					            </tr> 
-					        </thead>
-					        <tbody data-role="listview" 
-					        		data-template="purchase-additional-cost-template" 
-					        		data-auto-bind="false"
-					        		data-bind="source: additionalCostDS"></tbody>
-					    </table>
 					</div>
 
  		            <!-- Bottom part -->
@@ -13102,22 +13147,6 @@
 			
 						<!-- Column -->
 						<div class="span4">
-							<button class="btn btn-inverse" data-bind="click: windowCreate"><i class="icon-plus icon-white"></i></button>
-
-							<span data-bind="text: lang.lang.additional_cost_apply"></span>
-							
-							<input type="radio" name="engine" id="engine1" class="k-radio" value="Equal" 
-									data-bind="checked: obj.additional_apply,
-												events:{ change: changes }">
-				            <label class="k-radio-label" for="engine1"><span data-bind="text: lang.lang.equal"></span></label>
-
-				            <input type="radio" name="engine" id="engine2" class="k-radio" value="Weighted"
-				            		data-bind="checked: obj.additional_apply,
-												events:{ change: changes }">
-				            <label class="k-radio-label" for="engine2"><span data-bind="text: lang.lang.weighted"></span></label>
-				            
-				            <br><br>
-
 							<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.memo2" placeholder="memo for internal ..."></textarea>
 							<br>
 							<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.memo" placeholder="memo for external ..."></textarea>							
@@ -13134,10 +13163,6 @@
 						<div class="span4">
 							<table class="table table-condensed table-striped table-white">
 								<tbody>
-									<tr>
-										<td class="right"><span data-bind="text: lang.lang.costs_allocated"></span></td>
-										<td class="right" width="40%"><span data-format="n" data-bind="text: obj.additional_cost"></span></td>
-									</tr>
 									<tr>
 										<td class="right"><span data-bind="text: lang.lang.subtotal"></span></td>
 										<td class="right" width="40%"><span data-format="n" data-bind="text: obj.sub_total"></span></td>
@@ -13190,7 +13215,7 @@
 						</div>
 						<!-- // Column END -->
 						
-					</div>	           
+					</div>
 					
 					<!-- Form actions -->
 					<div class="box-generic bg-action-button">
@@ -13234,9 +13259,9 @@
 							</div>
 						</div>
 					</div>
-					<!-- // Form actions END -->								
+					<!-- // Form actions END -->
 
-				</div>							
+				</div>
 			</div>
 		</div>
 	</div>
@@ -21376,12 +21401,13 @@
     	<td>#=description#</td>
     	<td align="right">
     		<input data-role="numerictextbox"
+    			   data-spinners="false"
                    data-format="c"
                    data-culture=#:locale#
-                   data-min="0"
-                   data-spinners="false"                   
+                   data-min="0"      
                    data-bind="value: cost"
-                   style="text-align: right; width: 150px;" #=cost>0?disabled="disabled":""# >    		
+                   style="text-align: right; width: 150px;" 
+                   #=cost>0?disabled="disabled":""# >    		
     	</td>
     	<td align="right">#=kendo.toString(on_hand, "n2")#</td>
     	<td align="right">
@@ -46582,6 +46608,19 @@
 			});
 
 			return abbr;
+		},
+		getCurrencyCode 			: function(locale){
+			var code = "";
+
+			$.each(this.currencyDS.data(), function(index, value){
+				if(value.locale==locale){
+					code = value.code;
+
+					return false;
+				}
+			});
+
+			return code;
 		}
 	});
 	
@@ -64931,6 +64970,7 @@
 		total 						: 0,
 		amount_due 					: 0,
 		total_deposit				: 0,
+		additCostCurrency 			: "",
 		user_id						: banhji.source.user_id,
 		pageLoad 			: function(id){
 			if(id){
@@ -65310,9 +65350,11 @@
 			var additCostObj = this.get("additCostObj");
 
 			if(additCostObj.contact_id>0){
-				var contact = this.additionalContactDS.get(additCostObj.contact_id);
+				var contact = this.additionalContactDS.get(additCostObj.contact_id),
+					code = banhji.source.getCurrencyCode(contact.locale);
 				
 				additCostObj.set("locale", contact.locale);
+				this.set("additCostCurrency", code);
 				this.additCostSetRate();
 			}
 		},
@@ -75420,22 +75462,26 @@
 			this.search();
 		},
 		onChange 				: function(e) {
-      		var data = e.data;            
+      		var data = e.data, diff = 0;            
             
-            if(data.quantity_adjusted){
-            	var diff = data.quantity_adjusted - data.on_hand;
-		        
-		        if(diff>0){
+            if(data.quantity_adjusted!==""){
+            	if(data.quantity_adjusted==0){
+            		diff = data.on_hand;
+            	}else{            	
+	            	diff = data.quantity_adjusted - data.on_hand;
+		    	}
+
+		    	if(diff>-1){
 		        	data.set("movement", 1);
 		        }else{
 		        	data.set("movement", -1);
 		        }
-
+		        
 		        data.set("quantity", Math.abs(diff));
 			}
 			
 			var index = this.lineDS.indexOf(data);
-			index++;
+				index++;
 			var nextDataItem = this.lineDS.at(index);
 
 			if(nextDataItem){
