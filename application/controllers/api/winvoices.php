@@ -404,8 +404,9 @@ class Winvoices extends REST_Controller {
 			$items  = $row->winvoice_line->get();
 			$lines  = array();
 			$m = $contact->meter->get();
-
+			
 			$ml = $row->location->include_related('branch', array('term_of_condition'))->select('term_of_condition')->get();
+			$logo = $ml->branch->include_related('attachment', array('url'))->get();
 			$license = $ml->branch->get();
 			$usage = 0;	
 			$meter = array(
@@ -413,6 +414,7 @@ class Winvoices extends REST_Controller {
 				'meter_id'   => $m->id,
 				'location' => $m->location->get_raw()->result(),
 				'license' => $license->get_raw()->result(),
+				'logo' => $logo->branch_url
 			);
 			
 			$remain = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);

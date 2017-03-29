@@ -75149,8 +75149,8 @@
     	attachmentDS	 		: dataStore(apiUrl + "attachments"),
 		itemDS  				: dataStore(apiUrl + "items/on_hand"),
 		itemGroupDS 			: banhji.source.itemGroupDS,
-		lineDS  				: new kendo.data.DataSource({
-    		transport: {
+		lineDS 					: new kendo.data.DataSource({
+			transport: {
 				read 	: {
 					url: apiUrl + "item_lines",
 					type: "GET",
@@ -75196,9 +75196,7 @@
 				total: 'count'
 			},
 			batch: true,
-			serverFiltering: false,
-			serverSorting: false,
-			serverPaging: false,
+			serverFiltering: true,
 			page: 1,
 			pageSize: 20
 		}),
@@ -75591,17 +75589,16 @@
 	    		obj.set("is_recurring", 1);
 	    	}else{
 	    		//Remove Empty Row
-				var raw = this.lineDS.data(), item, i;
-			    for(i=0; i<raw.length-1; i++){
+	    		var raw = this.lineDS.data();			
+			    var item, i;
+			    for(i=raw.length-1; i>=0; i--){
 			    	item = raw[i];
 			    	
-			    	if (item.quantity_adjusted=="") {
+			    	if (item.quantity_adjusted==="") {
 				       	this.lineDS.remove(item);
 				    }
 			    }
 	    	}
-
-	    	// console.log(this.lineDS.data());
 
 			// Save Obj
 			this.objSync()

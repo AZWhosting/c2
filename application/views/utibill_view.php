@@ -13194,7 +13194,8 @@
 	        	if(e.type != 'read' && e.response){
             		var response = e.response.results;
             		self.get("obj").set("attachment_id", response[0].id);
-            		self.dataSource.hasChanges() = true;
+            		self.get("obj").set("image_url", "");
+            		// self.dataSource.hasChanges() = true;
 					self.saveDataSource();
 	        	}
 	        });
@@ -13222,7 +13223,7 @@
 			var self = this;
 
 			if(this.dataSource.data().length > 0) {
-				if(this.dataSource.hasChanges() == true ){
+				// if(this.dataSource.hasChanges() == true ){
 					this.dataSource.sync();
 					this.dataSource.bind("requestEnd", function(e){
 						if(e.type != 'read') {
@@ -13241,7 +13242,7 @@
 			    		notificat.hide();
 			    		notificat.error(self.lang.lang.error_message);			
 				    });
-				}
+				// }
 			}
 		},
 		cancel 		: function(){
