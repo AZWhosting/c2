@@ -13,6 +13,10 @@ class Branch extends DataMapper {
 		'contact' => array(
 			"class" => 'contact', 
 			"other_field" => "branch"
+		),
+		'attachment' => array(
+			"class" => 'attachment', 
+			"other_field" => "branch"
 		)
 	);
 

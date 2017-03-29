@@ -7,7 +7,7 @@ class Attachment extends DataMapper {
 	public $has_one = array(
 		'transaction' => array(
 			'class' => 'transaction',
-			'other_field' => 'attachment'
+			'other_fiaeld' => 'attachment'
 		),
 		'contact' => array(
 			'class' => 'contact',
@@ -19,6 +19,10 @@ class Attachment extends DataMapper {
 		),
 		'item' => array(
 			'class' => 'item',
+			'other' => 'attachment'
+		),
+		'branch' => array(
+			'class' => 'branch',
 			'other' => 'attachment'
 		)
 	);

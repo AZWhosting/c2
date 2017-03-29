@@ -75465,18 +75465,14 @@
       		var data = e.data, diff = 0;            
             
             if(data.quantity_adjusted!==""){
-            	if(data.quantity_adjusted==0){
-            		diff = data.on_hand;
+            	if(data.quantity_adjusted>data.on_hand){
+            		diff = data.on_hand - data.quantity_adjusted;
+            		data.set("movement", 1);
             	}else{            	
 	            	diff = data.quantity_adjusted - data.on_hand;
+	            	data.set("movement", -1);
 		    	}
 
-		    	if(diff>-1){
-		        	data.set("movement", 1);
-		        }else{
-		        	data.set("movement", -1);
-		        }
-		        
 		        data.set("quantity", Math.abs(diff));
 			}
 			
