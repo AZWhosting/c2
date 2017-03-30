@@ -1543,7 +1543,7 @@
 										<label ><span data-bind="text: lang.lang.license_no">License No.</span> <span style="color:red">*</span></label>
 										<input 
 											class="k-textbox" 
-							            	data-bind="value: obj.number"
+							            	data-bind="value: obj.number, attr: {placeholder: lang.lang.license_no}"
 							            	placeholder="License No." 
 							              	required data-required-msg="required"
 							              	style="width: 100%;" />																				            
@@ -1558,7 +1558,7 @@
 				              			<br>
 				              			<input
 				              				class="k-textbox" 
-							            	data-bind="value: obj.name" 
+							            	data-bind="value: obj.name, attr: {placeholder: lang.lang.name}" 
 						              		placeholder="Name" 
 						              		style="width: 100%;" />
 									</div>
@@ -1572,7 +1572,7 @@
 							            <input 
 							            	class="k-textbox" 
 							            	placeholder="Abbr" 
-						            		data-bind="value: obj.abbr" 
+						            		data-bind="value: obj.abbr, attr: {placeholder: lang.lang.abbr}" 
 						              		style="width: 100%;" />
 									</div>																		
 									<!-- // Group END -->
@@ -1584,7 +1584,7 @@
 										<input 
 							            	class="k-textbox" 
 							            	placeholder="Representative" 
-						            		data-bind="value: obj.representative" 
+						            		data-bind="value: obj.representative, attr: {placeholder: lang.lang.representative}" 
 						              		style="width: 100%;" />
 									</div>
 								</div>
@@ -1657,7 +1657,7 @@
 										<label ><span data-bind="text: lang.lang.description">Description</span></label>
 										<textarea rows="3" class="k-textbox k-valid" 
 											style="width:100%" 
-											data-bind="value: obj.description" 
+											data-bind="value: obj.description, attr: {placeholder: lang.lang.description}" 
 											placeholder="Description ..."></textarea>
 									</div>
 								</div>
@@ -1680,7 +1680,7 @@
 						            	<a href="#tab2" data-toggle="tab"><i></i> <span data-bind="text: lang.lang.terms_condition">Terms & Condition</span></a>
 						            </li>
 						            <li class="span2 glyphicons paperclip">
-						            	<a href="#tab3" data-toggle="tab"><i></i> <span data-bind="text: lang.lang.attach">Attach</span></a>
+						            	<a href="#tab3" data-toggle="tab"><i></i> <span data-bind="text: lang.lang.logo">LOGO</span></a>
 						            </li>						            					            
 						        </ul>
 						    </div>
@@ -1695,7 +1695,7 @@
 							                <td><span data-bind="text: lang.lang.address">Address</span></td>
 							              	<td colspan="3">
 					            				<input class="k-textbox" 
-					            					data-bind="value: obj.address" 
+					            					data-bind="value: obj.address, attr: {placeholder: lang.lang.address}" 
 													placeholder="Address ..." style="width: 100%;" />								
 							              	</td>
 							            </tr>
@@ -1718,7 +1718,7 @@
 							            	<td><span data-bind="text: lang.lang.mobile">Mobile</span></td>
 							              	<td>
 							              		<input class="k-textbox" 
-							              			data-bind="value: obj.mobile" 
+							              			data-bind="value: obj.mobile, attr: {placeholder: lang.lang.mobile}" 
 							              			placeholder="Mobile ..." 
 							              			style="width: 100%;" /></td>	              	
 							            </tr>
@@ -1739,14 +1739,14 @@
 							              	</td>							              	
 							            	<td><span data-bind="text: lang.lang.telephone">Telephone</span></td>
 							              	<td><input class="k-textbox" 
-							              		data-bind="value: obj.telephone" 
+							              		data-bind="value: obj.telephone, attr: {placeholder: lang.lang.telephone}" 
 							              		placeholder="Telephone ..." style="width: 100%;" /></td>
 							            </tr>	
 							            <tr>
 							            	<td><span data-bind="text: lang.lang.email">Email</span></td>
 							              	<td>
 							              		<input class="k-textbox" 
-							              			data-bind="value: obj.email" 
+							              			data-bind="value: obj.email, attr: {placeholder: lang.lang.email}" 
 							              			placeholder="Email ..." style="width: 100%;" />									            								              	
 							            	<td></td>
 							              	<td></td>							              	
@@ -1774,7 +1774,8 @@
 
 						        <!-- //CONTACT PERSON -->
 						        <div class="tab-pane" id="tab3">
-						        	<p><span >File Type</span>: [PDF, JPG, JPEG, TIFF, PNG, GIF]</p>		
+						        	<p><span >File Type</span>: [PDF, JPG, JPEG, TIFF, PNG, GIF]</p>	
+						        	<img data-bind="attr: { src: obj.image_url, alt: obj.name, title: obj.name }" width="120px" style="margin-bottom: 15px; border: 1px solid #ddd;">	
 						            <input id="files" name="files"
 						                   type="file"
 						                   data-role="upload"
@@ -1782,21 +1783,6 @@
 						                   data-bind="events: { 
 				                   				select: onSelect
 						                   }">
-
-						            <table class="table table-bordered">
-								        <thead>
-								            <tr>			                
-								                <th><span data-bind="text: lang.lang.file_name">File Name</span></th>
-								                <th><span data-bind="text: lang.lang.description">DESCRIPTION</span></th>
-								                <th><span data-bind="text: lang.lang.date">Date</span></th>
-								                <th style="width: 13%;"></th>                			                
-								            </tr> 
-								        </thead>
-								        <tbody data-role="listview" 
-								        		data-template="attachment-list-tmpl" 
-								        		data-auto-bind="false"
-								        		data-bind="source: attachmentDS"></tbody>			        
-								    </table>
 					        	</div>
 						        <!-- //CONTACT PERSON END -->
 						    </div>
@@ -16821,8 +16807,10 @@
 	banhji.waterInvoice =  kendo.observable({
 		lang 				: langVM,
 		dataSource 			: dataStore(apiUrl + "winvoices"),
+		licenseDS 			: dataStore(apiUrl + "branches"),
 		company 			: banhji.institute,
 		obj 				: null,
+		invoiceArray 		: [],
 		pageLoad 			: function(id){
 			var self = this;
 			this.set("obj", null);
@@ -16831,14 +16819,28 @@
 				take: 1
 			})
 			.then(function(e){
-				
 				var view = self.dataSource.view();
-				banhji.InvoicePrint.dataSource = [];
+				self.invoiceArray = [];
 				view[0].set("formcolor", "#355176");
-				banhji.InvoicePrint.dataSource.push(view[0]);
-				banhji.router.navigate("/invoice_print");
+				self.invoiceArray.push(view[0]);
+				self.getLicense(view[0].meter.location[0].branch_id);
+				
 			});
-		},	 
+		},
+		getLicense 			: function(branch_id){
+			var self = this;
+			this.licenseDS.query({
+				filter: {field: "id", value: branch_id}
+			}).then(function(e){
+				var view = self.licenseDS.view();
+				banhji.InvoicePrint.license = view[0];
+				banhji.InvoicePrint.dataSource = [];
+				banhji.InvoicePrint.dataSource = self.invoiceArray;
+				
+				banhji.router.navigate("/invoice_print");
+
+			});
+		},
 		printGrid			: function() {
 			var obj = this.get('obj'), colorM, ts;
 			if(obj.color == null){

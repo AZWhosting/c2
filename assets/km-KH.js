@@ -254,7 +254,7 @@ var	km_KH = {
 	"customer_order" :  "ការកម្មង់​របស់​អតិថិជន",
 	"receivable_management_reports" : "របាយការណ៍​គ្រប់​គ្រង​បំណុល",
 	"the_following_reports_provide_summary" :  "របាយការណ៍​ខាង​ក្រោម​ផ្ដល់ការ​សង្ខេប",
-	"customer_balance_summary" :  "សង្ខេប​សមតុល្យ​សាច់​ប្រាក់​អតិថិជន",
+	"customer_balance_summary" :  "សង្ខេប​សមតុល្យ​អតិថិជន",
 	"show_each_customers_total_outstanding_balances" :  "Show each customer’s total outstanding balances.",
 	"customer_balance_detail" :  "សមតុល្យ​សាច់ប្រាក់​លំអិត​របស់​អតិថិជន",
 	"lists_individual_unpaid_invoices_for_each_customer" :  "តារាងជំពាក់របស់អតិថិជននិមួយៗ",
@@ -1344,7 +1344,9 @@ var	km_KH = {
 	"box": "ប្រអប់",
 	"add_box": "បន្ថែមប្រអប់",
 	"new_customer": "អតិថិជនថ្មី",
-	"logo": "ឡូហ្កូ",
+	"logo": "ឡូហ្គូ",
+	"electricity_meter": "កុងទ័រភ្លើង",
+	"water_meter": "កុងទ័រទឹក",
 
 
 

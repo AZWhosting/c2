@@ -1371,6 +1371,8 @@ var	en_US = {
 	"box": "Box",
 	"new_customer": "New Customer",
 	"logo": "Logo",
+	"electricity_meter": "Electricity",
+	"water_meter": "Water",
 
 
 

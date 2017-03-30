@@ -1931,21 +1931,6 @@
 						                   data-bind="events: { 
 				                   				select: onSelect
 						                   }">
-<!-- 
-						            <table class="table table-bordered">
-								        <thead>
-								            <tr>			                
-								                <th><span data-bind="text: lang.lang.file_name">File Name</span></th>
-								                <th><span data-bind="text: lang.lang.description">DESCRIPTION</span></th>
-								                <th><span data-bind="text: lang.lang.date">Date</span></th>
-								                <th style="width: 13%;"></th>                			                
-								            </tr> 
-								        </thead>
-								        <tbody data-role="listview" 
-								        		data-template="attachment-list-tmpl" 
-								        		data-auto-bind="false"
-								        		data-bind="source: attachmentDS"></tbody>			        
-								    </table> -->
 					        	</div>
 						        <!-- //CONTACT PERSON END -->
 						    </div>
@@ -3237,7 +3222,26 @@
 			       	<div class="span12 row">			       		
 			       		<!-- Top Part -->
 				    	<div class="row-fluid">
-				    		<div class="span6 well" style="padding-bottom: 0 !important;">									
+				    		<div class="span6 well" style="padding-bottom: 0 !important;">
+				    			<div class="row">
+									<div class="span12" style="padding-right: 0;">	
+										<!-- Group -->
+										<div class="control-group">							
+											<label><span data-bind="text: lang.lang.type">Type</span> <span style="color:red">*</span></label>			
+					              			<br>
+					              			<select data-role="dropdownlist"
+							                   data-value-primitive="true"
+							                   data-text-field="name"
+							                   data-value-field="id"
+							                   data-bind="
+							                   	source: selectMeterType,
+							                   	value: obj.type"
+							                   style="width: 100%;margin-bottom: 15px;" ></select>
+										</div>
+										<!-- // Group END -->											
+									</div>
+									
+								</div>								
 								<div class="row">
 									<div class="span6" style="padding-right: 0;">	
 										<!-- Group -->
@@ -13804,10 +13808,16 @@
 		obj 				: null,
 		isEdit 				: false,
 		contact 			: null,
+		meterWord 			: null,
+		selectMeterType 	: [
+			{id: "w", name: "Meter"},
+			{id: "e", name: "Electircity"}
+		],
 		selectType 			: [
 			{id: 1, name: "Active"},
 			{id: 0, name: "Inactive"},
-			{id: 2, name: "Void"}],
+			{id: 2, name: "Void"}
+		],
 		pageLoad 			: function(id){
 			if(id){
 				this.loadObj(id);
@@ -13819,6 +13829,12 @@
 				}
 			}
 			this.planDS.fetch();
+			this.setWords();
+		},
+		setWords 			: function(){
+			var self = this;
+			self.selectMeterType[0].set("name", self.lang.lang.water_meter);
+			self.selectMeterType[1].set("name", self.lang.lang.electricity_meter);
 		},
 		loadObj 			: function(id){
 			var self = this;	
@@ -17432,8 +17448,10 @@
 	banhji.waterInvoice =  kendo.observable({
 		lang 				: langVM,
 		dataSource 			: dataStore(apiUrl + "winvoices"),
+		licenseDS 			: dataStore(apiUrl + "branches"),
 		company 			: banhji.institute,
 		obj 				: null,
+		invoiceArray 		: [],
 		pageLoad 			: function(id){
 			var self = this;
 			this.set("obj", null);
@@ -17442,14 +17460,28 @@
 				take: 1
 			})
 			.then(function(e){
-				
 				var view = self.dataSource.view();
-				banhji.InvoicePrint.dataSource = [];
+				self.invoiceArray = [];
 				view[0].set("formcolor", "#355176");
-				banhji.InvoicePrint.dataSource.push(view[0]);
-				banhji.router.navigate("/invoice_print");
+				self.invoiceArray.push(view[0]);
+				self.getLicense(view[0].meter.location[0].branch_id);
+				
 			});
-		},	 
+		},
+		getLicense 			: function(branch_id){
+			var self = this;
+			this.licenseDS.query({
+				filter: {field: "id", value: branch_id}
+			}).then(function(e){
+				var view = self.licenseDS.view();
+				banhji.InvoicePrint.license = view[0];
+				banhji.InvoicePrint.dataSource = [];
+				banhji.InvoicePrint.dataSource = self.invoiceArray;
+				
+				banhji.router.navigate("/invoice_print");
+
+			});
+		},
 		printGrid			: function() {
 			var obj = this.get('obj'), colorM, ts;
 			if(obj.color == null){

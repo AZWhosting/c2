@@ -487,6 +487,27 @@
 	</dl>	
 </script>
 
+
+
+<!-- #############################################
+##################################################
+#	BUDGET							 #
+##################################################
+############################################## -->
+<script id="budget" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">
+				gfhgfjh		
+			</div>
+		</div>
+	</div>
+</script>
+
+
+
+
+
 <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/js/libs/localforage.min.js"></script>
 <script src="http://cdnjs.cloudflare.com/ajax/libs/jszip/2.4.0/jszip.js"></script>
 <script src="https://maps.googleapis.com/maps/api/js"></script>
@@ -2941,243 +2962,9 @@
 		menu 		: new kendo.Layout('#menu-tmpl', {model: banhji.userManagement}),
 		searchAdvanced: new kendo.Layout("#searchAdvanced", {model: banhji.searchAdvanced}),
 
-		//Accounting
-		accountingDashboard: new kendo.Layout("#accountingDashboard", {model: banhji.accountingDashboard}),
-		accountingCenter: new kendo.Layout("#accountingCenter", {model: banhji.accountingCenter}),
-		account: new kendo.Layout("#account", {model: banhji.account}),
-		txnItemList: new kendo.Layout("#txnItemList", {model: banhji.txnItemList}),
-		txnItem: new kendo.Layout("#txnItem", {model: banhji.txnItem}),
-		journal: new kendo.Layout("#journal", {model: banhji.journal}),
-		cashTransaction: new kendo.Layout("#cashTransaction", {model: banhji.cashTransaction}),
-		cashAdvance: new kendo.Layout("#cashAdvance", {model: banhji.cashAdvance}),
-		expense: new kendo.Layout("#expense", {model: banhji.expense}),
-		currencyRate: new kendo.Layout("#currencyRate", {model: banhji.currencyRate}),
-		journalReport: new kendo.Layout("#journalReport", {model: banhji.journalReport}),
-		journalReportBySegment: new kendo.Layout("#journalReportBySegment", {model: banhji.journalReportBySegment}),
-		generalLedger: new kendo.Layout("#generalLedger", {model: banhji.generalLedger}),
-		trialBalance: new kendo.Layout("#trialBalance", {model: banhji.trialBalance}),
-		chartOfAccount: new kendo.Layout("#chartOfAccount", {model: banhji.chartOfAccount}),
-		accountingReportCenter: new kendo.Layout("#accountingReportCenter", {model: banhji.accountingReportCenter}),
-		accountingSetting: new kendo.Layout("#accountingSetting", {model: banhji.accountingSetting}),
-		accountingRecurring: new kendo.Layout("#accountingRecurring", {model: banhji.accountingRecurring}),
-		addAccountingprefix: new kendo.Layout("#addAccountingprefix", {model: banhji.addAccountingprefix}),
-
-		segment: new kendo.Layout("#segment", {model: banhji.segment}),
-		transactionListDate: new kendo.Layout("#transactionListDate", {model: banhji.transactionListDate}),
-		recentTransactionsList: new kendo.Layout("#recentTransactionsList", {model: banhji.recentTransactionsList}),
-		recurringJournalList: new kendo.Layout("#recurringJournalList", {model: banhji.recurringJournalList}),
-		statementProfitLoss: new kendo.Layout("#statementProfitLoss", {model: banhji.statementProfitLoss}),
-		statementProfitLossBySegment: new kendo.Layout("#statementProfitLossBySegment", {model: banhji.statementProfitLossBySegment}),
-		statementFinancialPosition: new kendo.Layout("#statementFinancialPosition", {model: banhji.statementFinancialPosition}),
-		statementProfitLossComparison: new kendo.Layout("#statementProfitLossComparison", {model: banhji.statementProfitLossComparison}),
-		statementFinancialPositionComparison: new kendo.Layout("#statementFinancialPositionComparison", {model: banhji.statementFinancialPositionComparison}),
-		statementChangesEquity: new kendo.Layout("#statementChangesEquity", {model: banhji.statementChangesEquity}),
-		statementCashFlow: new kendo.Layout("#statementCashFlow", {model: banhji.statementCashFlow}),
-		auditTrialReport: new kendo.Layout("#auditTrialReport", {model: banhji.auditTrialReport}),
-
-		//Tax
-		tax: new kendo.Layout("#tax", {model: banhji.tax}),
-		taxReportCenter: new kendo.Layout("#taxReportCenter", {model: banhji.taxReportCenter}),
-		saleJournal: new kendo.Layout("#saleJournal", {model: banhji.saleJournal}),
-		purchaseJournal: new kendo.Layout("#purchaseJournal", {model: banhji.purchaseJournal}),
-
-
-		//Employee
-		employeeDashboard: new kendo.Layout("#employeeDashboard", {model: banhji.employeeDashboard}),
-		employeeCenter: new kendo.Layout("#employeeCenter", {model: banhji.employeeCenter}),
-		employee: new kendo.Layout("#employee", {model: banhji.employee}),
-		employeeReportCenter: new kendo.Layout("#employeeReportCenter"),
-
-		//Vendor
-		vendorDashboard: new kendo.Layout("#vendorDashboard", {model: banhji.vendorDashboard}),
-		vendorCenter: new kendo.Layout("#vendorCenter", {model: banhji.vendorCenter}),
-		vendor: new kendo.Layout("#vendor", {model: banhji.vendor}),
-		purchaseOrder: new kendo.Layout("#purchaseOrder", {model: banhji.purchaseOrder}),
-		grn: new kendo.Layout("#grn", {model: banhji.grn}),
-		purchase: new kendo.Layout("#purchase", {model: banhji.purchase}),
-		purchaseReturn: new kendo.Layout("#purchaseReturn", {model: banhji.purchaseReturn}),
-		paymentRefund: new kendo.Layout("#paymentRefund", {model: banhji.paymentRefund}),
-		vendorDeposit: new kendo.Layout("#vendorDeposit", {model: banhji.vendorDeposit}),
-		vendorSetting: new kendo.Layout("#vendorSetting", {model: banhji.vendorSetting}),
-		vendorReportCenter: new kendo.Layout("#vendorReportCenter", {model: banhji.vendorReportCenter}),
-		purchaseSummaryProductServices: new kendo.Layout("#purchaseSummaryProductServices", {model: banhji.purchaseSummaryProductServices}),
-		expensesSummarySupplier: new kendo.Layout("#expensesSummarySupplier", {model: banhji.expensesSummarySupplier}),
-		expensesDetailSupplier: new kendo.Layout("#expensesDetailSupplier", {model: banhji.expensesDetailSupplier}),
-		purchaseOrderList: new kendo.Layout("#purchaseOrderList", {model: banhji.purchaseOrderList}),
-		purchaseDetailProductServices: new kendo.Layout("#purchaseDetailProductServices", {model: banhji.purchaseDetailProductServices}),
-		supplierTransaction: new kendo.Layout("#supplierTransaction", {model: banhji.supplierTransaction}),
-		depositDetailSupplier: new kendo.Layout("#depositDetailSupplier", {model: banhji.depositDetailSupplier}),
-		suppliersBalanceSummary: new kendo.Layout("#suppliersBalanceSummary", {model: banhji.suppliersBalanceSummary}),
-		suppliersBalanceDetail: new kendo.Layout("#suppliersBalanceDetail", {model: banhji.suppliersBalanceDetail}),
-		payablesAgingSummary: new kendo.Layout("#payablesAgingSummary", {model: banhji.payablesAgingSummary}),
-		payablesAgingDetail: new kendo.Layout("#payablesAgingDetail", {model: banhji.payablesAgingDetail}),
-		listBillsPaid: new kendo.Layout("#listBillsPaid", {model: banhji.listBillsPaid}),
-		billPaymentList: new kendo.Layout("#billPaymentList", {model: banhji.billPaymentList}),
-		productServiceList: new kendo.Layout("#productServiceList", {model: banhji.vendorSale}),
-		supplierList: new kendo.Layout("#supplierList", {model: banhji.supplierList}),
-		vendorRecurring: new kendo.Layout("#vendorRecurring", {model: banhji.vendorRecurring}),
-
-		//Customer
-		customerDashboard: new kendo.Layout("#customerDashboard", {model: banhji.customerDashboard}),
-		customerCenter: new kendo.Layout("#customerCenter", {model: banhji.customerCenter}),
-		customer: new kendo.Layout("#customer", {model: banhji.customer}),
-		invoice: new kendo.Layout("#invoice", {model: banhji.invoice}),
-		cashSale: new kendo.Layout("#cashSale", {model: banhji.cashSale}),
-		saleOrder: new kendo.Layout("#saleOrder", {model: banhji.saleOrder}),
-		quote: new kendo.Layout("#quote", {model: banhji.quote}),
-		gdn: new kendo.Layout("#gdn", {model: banhji.gdn}),
-		saleReturn: new kendo.Layout("#saleReturn", {model: banhji.saleReturn}),
-		cashRefund: new kendo.Layout("#cashRefund", {model: banhji.cashRefund}),
-		statement: new kendo.Layout("#statement", {model: banhji.statement}),
-		customerDeposit: new kendo.Layout("#customerDeposit", {model: banhji.customerDeposit}),
-		customerReportCenter: new kendo.Layout("#customerReportCenter", {model: banhji.customerReportCenter}),
-		customerList : new kendo.Layout("#customerList"),
-		customerBalance : new kendo.Layout("#customerBalance", {model: banhji.customerBalance}),
-		customerSetting: new kendo.Layout("#customerSetting", {model: banhji.customerSetting}),
-		customerRecurring : new kendo.Layout("#customerRecurring", {model: banhji.customerRecurring}),
-		job: new kendo.Layout("#job", {model: banhji.job}),
-		invoiceCustom: new kendo.Layout("#invoiceCustom", {model: banhji.invoiceCustom}),
-		invoiceForm: new kendo.Layout("#invoiceForm", {model: banhji.invoiceForm}),
-		invoiceForm1: new kendo.Layout("#invoiceForm1", {model: banhji.invoiceForm}),
-		invoiceForm2: new kendo.Layout("#invoiceForm2", {model: banhji.invoiceForm}),
-		//invoiceForm3: new kendo.Layout("#invoiceForm3", {model: banhji.invoiceForm}),
-		//invoiceForm4: new kendo.Layout("#invoiceForm4", {model: banhji.invoiceForm}),
-		//invoiceForm5: new kendo.Layout("#invoiceForm5", {model: banhji.invoiceForm}),
-		invoiceForm6: new kendo.Layout("#invoiceForm6", {model: banhji.invoiceForm}),
-		invoiceForm7: new kendo.Layout("#invoiceForm7", {model: banhji.invoiceForm}),
-		invoiceForm8: new kendo.Layout("#invoiceForm8", {model: banhji.invoiceForm}),
-		invoiceForm9: new kendo.Layout("#invoiceForm9", {model: banhji.invoiceForm}),
-		invoiceForm10: new kendo.Layout("#invoiceForm10", {model: banhji.invoiceForm}),
-		invoiceForm11: new kendo.Layout("#invoiceForm11", {model: banhji.invoiceForm}),
-		invoiceForm12: new kendo.Layout("#invoiceForm12", {model: banhji.invoiceForm}),
-		invoiceForm13: new kendo.Layout("#invoiceForm13", {model: banhji.invoiceForm}),
-		invoiceForm14: new kendo.Layout("#invoiceForm14", {model: banhji.invoiceForm}),
-		invoiceForm15: new kendo.Layout("#invoiceForm15", {model: banhji.invoiceForm}),
-		invoiceForm16: new kendo.Layout("#invoiceForm16", {model: banhji.invoiceForm}),
-		invoiceForm17: new kendo.Layout("#invoiceForm17", {model: banhji.invoiceForm}),
-		invoiceForm18: new kendo.Layout("#invoiceForm18", {model: banhji.invoiceForm}),
-		invoiceForm19: new kendo.Layout("#invoiceForm19", {model: banhji.invoiceForm}),
-		invoiceForm20: new kendo.Layout("#invoiceForm20", {model: banhji.invoiceForm}),
-		invoiceForm21: new kendo.Layout("#invoiceForm21", {model: banhji.invoiceForm}),
-		invoiceForm22: new kendo.Layout("#invoiceForm22", {model: banhji.invoiceForm}),
-		invoiceForm23: new kendo.Layout("#invoiceForm23", {model: banhji.invoiceForm}),
-		invoiceForm24: new kendo.Layout("#invoiceForm24", {model: banhji.invoiceForm}),
-		invoiceForm25: new kendo.Layout("#invoiceForm25", {model: banhji.invoiceForm}),
-		invoiceForm26: new kendo.Layout("#invoiceForm26", {model: banhji.invoiceForm}),
-		invoiceForm27: new kendo.Layout("#invoiceForm27", {model: banhji.invoiceForm}),
-		invoiceForm28: new kendo.Layout("#invoiceForm28", {model: banhji.invoiceForm}),
-		invoiceForm29: new kendo.Layout("#invoiceForm29", {model: banhji.invoiceForm}),
-		invoiceForm30: new kendo.Layout("#invoiceForm30", {model: banhji.invoiceForm}),
-		invoiceForm31: new kendo.Layout("#invoiceForm31", {model: banhji.invoiceForm}),
-		invoiceForm32: new kendo.Layout("#invoiceForm32", {model: banhji.invoiceForm}),
-		invoiceForm33: new kendo.Layout("#invoiceForm33", {model: banhji.invoiceForm}),
-		invoiceForm34: new kendo.Layout("#invoiceForm34", {model: banhji.invoiceForm}),
-		invoiceForm35: new kendo.Layout("#invoiceForm35", {model: banhji.invoiceForm}),
-		invoiceForm36: new kendo.Layout("#invoiceForm36", {model: banhji.invoiceForm}),
-		invoiceForm37: new kendo.Layout("#invoiceForm37", {model: banhji.invoiceForm}),
-		invoiceForm38: new kendo.Layout("#invoiceForm38", {model: banhji.invoiceForm}),
-		invoiceForm39: new kendo.Layout("#invoiceForm39", {model: banhji.invoiceForm}),
-		invoiceForm40: new kendo.Layout("#invoiceForm40", {model: banhji.invoiceForm}),
-		invoiceForm41: new kendo.Layout("#invoiceForm41", {model: banhji.invoiceForm}),
-		invoiceForm42: new kendo.Layout("#invoiceForm42", {model: banhji.invoiceForm}),
-		//Caritas Company
-		formCaritasExpense: new kendo.Layout("#formCaritasExpense", {model: banhji.invoiceForm}),
-		formCaritasJournal: new kendo.Layout("#formCaritasJournal", {model: banhji.invoiceForm}),
-
-		saleSummaryByCustomer: new kendo.Layout("#saleSummaryByCustomer", {model: banhji.saleSummaryByCustomer}),
-		saleDetailByCustomer: new kendo.Layout("#saleDetailByCustomer", {model: banhji.saleDetailByCustomer}),
-		saleSummaryByProduct: new kendo.Layout("#saleSummaryByProduct", {model: banhji.saleSummaryByProduct}),
-		saleDetailByProduct : new kendo.Layout("#saleDetailByProduct", {model: banhji.saleDetailByProduct}),
-		customerTransactionList: new kendo.Layout("#customerTransactionList", {model: banhji.customerTransactionList}),
-		depositDetailByCustomer: new kendo.Layout("#depositDetailByCustomer", {model: banhji.depositDetailByCustomer}),		
-		customerBalanceSummary : new kendo.Layout("#customerBalanceSummary", {model: banhji.customerBalanceSummary}),
-		customerBalanceDetail : new kendo.Layout("#customerBalanceDetail", {model: banhji.customerBalanceDetail}),
-		receivableAgingSummary : new kendo.Layout("#receivableAgingSummary", {model: banhji.receivableAgingSummary}),
-		receivableAgingDetail : new kendo.Layout("#receivableAgingDetail", {model: banhji.receivableAgingDetail}),
-		collectInvoice : new kendo.Layout("#collectInvoice", {model: banhji.collectInvoice}),
-		collectionReport : new kendo.Layout("#collectionReport", {model: banhji.collectionReport}),
-		invoiceList : new kendo.Layout("#invoiceList", {model: banhji.invoiceList}),
-		saleJobEngagement: new kendo.Layout("#saleJobEngagement", {model: banhji.saleJob}),
-		saleOrderList: new kendo.Layout("#saleOrderList", {model: banhji.saleOrderList}),
-
-		//Sale
-		saleDashboard: new kendo.Layout("#saleDashboard", {model: banhji.saleDashboard}),
-		saleCenter: new kendo.Layout("#saleCenter", {model: banhji.saleCenter}),
-		sale: new kendo.Layout("#sale", {model: banhji.sale}),
-		saleDetail: new kendo.Layout("#saleDetail", {model: banhji.saleDetail}),
-		saleReportCenter: new kendo.Layout("#saleReportCenter", {model: banhji.saleReportCenter}),
-		saleRecurring : new kendo.Layout("#saleRecurring", {model: banhji.saleRecurring}),
-		saleInventoryPositionSummary: new kendo.Layout("#saleInventoryPositionSummary", {model: banhji.inventoryPositionSummary}),
-
-		//Inventory		
-		itemDashBoard: new kendo.Layout("#itemDashBoard", {model: banhji.itemDashBoard}),
-		itemCenter: new kendo.Layout("#itemCenter", {model: banhji.itemCenter}),
-		item: new kendo.Layout("#item", {model: banhji.item}),
-		itemService: new kendo.Layout("#itemService", {model: banhji.itemService}),
-		nonInventoryPart: new kendo.Layout("#nonInventoryPart", {model: banhji.nonInventoryPart}),
-		itemPrice: new kendo.Layout("#itemPrice", {model: banhji.itemPrice}),
-		itemCatalog: new kendo.Layout("#itemCatalog", {model: banhji.itemCatalog}),
-		itemAssembly: new kendo.Layout("#itemAssembly", {model: banhji.itemAssembly}),
-		itemAdjustment: new kendo.Layout("#itemAdjustment", {model: banhji.itemAdjustment}),
-		itemSetting: new kendo.Layout("#itemSetting", {model: banhji.itemSetting}),
-		internalUsage: new kendo.Layout("#internalUsage", {model: banhji.internalUsage}),
-		serviceSetting: new kendo.Layout("#serviceSetting", {model: banhji.serviceSetting}),
-		itemReportCenter: new kendo.Layout("#itemReportCenter", {model: banhji.itemReportCenter}),
-		inventoryPositionSummary: new kendo.Layout("#inventoryPositionSummary", {model: banhji.inventoryPositionSummary}),
-		inventoryPositionDetail: new kendo.Layout("#inventoryPositionDetail", {model: banhji.inventoryPositionDetail}),
-		inventoryTurnoverList: new kendo.Layout("#inventoryTurnoverList", {model: banhji.inventorySale}),
-		inventorySaleItemAnalysis: new kendo.Layout("#inventorySaleItemAnalysis", {model: banhji.inventorySale}),
-		inventoryMovementSummary: new kendo.Layout("#inventoryMovementSummary", {model: banhji.inventorySale}),
-		inventoryMovementDetail: new kendo.Layout("#inventoryMovementDetail", {model: banhji.inventorySale}),
-		inventorySaleByItem: new kendo.Layout("#inventorySaleByItem", {model: banhji.inventorySaleByItem}),
-		inventoryList: new kendo.Layout("#inventoryList", {model: banhji.inventoryList}),		
-		inventoryPurchaseByVendorSummary: new kendo.Layout("#inventoryPurchaseByVendorSummary", {model: banhji.inventoryPurchaseByVendorSummary}),
-		inventoryPurchaseByVendorDetail: new kendo.Layout("#inventoryPurchaseByVendorDetail", {model: banhji.inventoryPurchaseByVendorDetail}),
-		fixedAssets: new kendo.Layout("#fixedAssets", {model: banhji.fixedAssets}),
-		itemRecurring: new kendo.Layout("#itemRecurring", {model: banhji.itemRecurring}),
-		cashMovement: new kendo.Layout("#cashMovement", {model: banhji.cashMovement}),
-		cashPositionReport: new kendo.Layout("#cashPositionReport", {model: banhji.cashPositionReport}),
-		cashCollectionReport: new kendo.Layout("#cashCollectionReport", {model: banhji.cashSales}),
-		cashPaymentReport: new kendo.Layout("#cashPaymentReport", {model: banhji.cashPaymentReport}),
-		cashAdvanceReport: new kendo.Layout("#cashAdvanceReport", {model: banhji.cashAdvanceReport}),
-
-		//Cash Managment
-		cashDashboard: new kendo.Layout("#cashDashboard", {model: banhji.cashDashboard}),
-		cashCenter: new kendo.Layout("#cashCenter", {model: banhji.cashCenter}),
-		cash: new kendo.Layout("#cash", {model: banhji.cash}),
-		cashList : new kendo.Layout("#cashList", {model: banhji.cashList}),		
-		cashDeposit: new kendo.Layout("#cashDeposit", {model: banhji.cashDeposit}),
-		cashReportCenter: new kendo.Layout("#cashReportCenter"),
-		cashier: new kendo.Layout("#cashier", {model: banhji.cashier}),
-		reconcile: new kendo.Layout("#reconcile", {model: banhji.reconcile}),
-		cashReceipt: new kendo.Layout("#cashReceipt", {model: banhji.cashReceipt}),
-		cashPayment: new kendo.Layout("#cashPayment", {model: banhji.cashPayment}),
-		cashFlowForecast: new kendo.Layout("#cashFlowForecast", {model: banhji.cashFlowForecast}),
-		cashSetting: new kendo.Layout("#cashSetting", {model: banhji.cashSetting}),
-
-		//Cash Management Dashbaord
-		cashManagementDashboard: new kendo.Layout("#cashManagementDashboard", {model: banhji.cashManagementDashboard}),
-		
-		//Document
-		documents: new kendo.Layout("#documents", {model: banhji.fileManagement}),
-
-		//Report
-		reportDashboard: new kendo.Layout("#reportDashboard", {model: banhji.reportDashboard}),
-		profitabilitySummaryJob: new kendo.Layout("#profitabilitySummaryJob", {model: banhji.profitabilitySummaryJob}),
-		profitabilityDetailJob: new kendo.Layout("#profitabilityDetailJob", {model: banhji.profitabilityDetailJob}),
-
-		//Imports
-		imports: new kendo.Layout("#importView", {model: banhji.importView}),
-
-		//Menu
-		accountingMenu: new kendo.View("#accountingMenu", {model: langVM}),
-		employeeMenu: new kendo.View("#employeeMenu", {model: langVM}),
-		vendorMenu: new kendo.View("#vendorMenu", {model: langVM}),
-		customerMenu: new kendo.View("#customerMenu", {model: langVM}),
-		cashMenu: new kendo.View("#cashMenu", {model: langVM}),
-		inventoryMenu: new kendo.View("#inventoryMenu", {model: langVM}),
-		taxMenu: new kendo.View("#taxMenu", {model: langVM}),
-		saleMenu: new kendo.View("#saleMenu", {model: langVM})	
+		//
+		budget: new kendo.Layout("#budget", {model: banhji.budget}),
+			
 	};
 	banhji.router = new kendo.Router({
 		init: function() {	
@@ -3246,6 +3033,25 @@
 			}
 
 			vm.pageLoad();
+		}
+	});
+
+	//budget
+	banhji.router.route("/budget", function(){
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{
+			banhji.view.layout.showIn("#content", banhji.view.budget);
+			
+			var vm = banhji.budget;
+			banhji.userManagement.addMultiTask("Budget","budget",null);
+
+			if(banhji.pageLoaded["budget"]==undefined){
+				banhji.pageLoaded["budget"] = true;
+
+				//vm.sorterChanges();
+			}
+			//vm.pageLoad();
 		}
 	});
 

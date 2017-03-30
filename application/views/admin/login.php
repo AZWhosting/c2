@@ -272,7 +272,7 @@ a.enquiries:hover .enquiry-content, .enquiry-content:hover {
 
             </div>           
           </div>
-           <p style="width: 35%; font-size: 11px; margin-top: 10px; margin-left: 140px; float: left;">©<?php echo date("Y"); ?> BanhJi Pte. Ltd. All rights reserved. Terms, conditions, features, support, pricing and service options subject to change without notice.</p>
+           <p style="width: 35%; font-size: 11px; margin-top: 10px; margin-left: 140px; float: left;">&copy; <?php echo date('Y'); ?> BanhJi Pte. Ltd. All rights reserved. Terms, conditions, features, support, pricing and service options subject to change without notice.</p>
             <span style="float: right; width: 45%; text-align: right; margin-right: 35px;" id="siteseal"><script async type="text/javascript" src="https://seal.godaddy.com/getSeal?sealID=lNpq2OuFwU0nDcZ5f7uSQ9D1rwgIIgTNOoYBNRt4BqE4CMLt8GMhEDKt66EL"></script></span>
          </div>
      </div>

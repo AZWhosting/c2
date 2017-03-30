@@ -518,7 +518,7 @@ class Imports extends REST_Controller {
 
 						$deposit2 = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 						$deposit2->transaction_id = $transaction->id;
-						$deposit2->account_id = 7;
+						$deposit2->account_id = 70;
 						$deposit2->description= "Water Opening Deposit";
 						$deposit2->contact_id = $transaction->contact_id;
 						$deposit2->dr = 0.00;
@@ -535,8 +535,9 @@ class Imports extends REST_Controller {
 					$ar->is_journal = 1;
 					$ar->rate = 1.000000000000000;
 					$ar->locale = $this->locale;
+					$ar->due_date = date('Y-m-d');
 					$ar->number = "JV".$this->_generate_number($ar->type, $meter->date_used);
-					$ar->deposit_date = date('Y-m-d', strtotime($row->date_used));
+					$ar->issued_date = date('Y-m-d', strtotime($row->date_used));
 					$ar->amount = $row->balance;
 					$ar->status = 0;
 					if($ar->save()) {
@@ -551,7 +552,7 @@ class Imports extends REST_Controller {
 
 						$ar2 = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 						$ar2->transaction_id = $ar->id;
-						$ar2->account_id = 7;
+						$ar2->account_id = 70;
 						$ar2->description= "Water Opening Balance";
 						$ar2->contact_id = $ar->contact_id;
 						$ar2->dr = 0.00;

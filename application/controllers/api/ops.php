@@ -109,12 +109,13 @@ class Ops extends REST_Controller {
 				// );
 
 				$this->dbforge->modify_column(
-		        	'transactions', array(
-						'segments' => array(
-									'name' 		=> 'segments', 
-									'type'		=> 'TEXT',
+		        	'item_lines', array(
+						'cost_avg' => array(
+									'name' 		=> 'cost_avg', 
+									'type'		=> 'DECIMAL',
+									'constraint'=> '30,15',
 									'null' 		=> FALSE,
-									'default' 	=> ''
+									'default' 	=> '0'
 						)
 		        	)
 		        );
