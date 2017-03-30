@@ -18953,16 +18953,16 @@
 <script id="item" type="text/x-kendo-template">
 	<div id="slide-form">
 		<div class="customer-background">
-			<div class="container-960">					
-				<div id="example" class="k-content">					
+			<div class="container-960">
+				<div id="example" class="k-content">
 			    
 			    	<span class="glyphicons no-js remove_2 pull-right" 
 	    				onclick="javascript:window.history.back()"
 						data-bind="click: cancel"><i></i></span>
 
-			        <h2 data-bind="text: lang.lang.inventory_for_sale"></h2>		    		   
+			        <h2 data-bind="text: lang.lang.inventory_for_sale"></h2>
 
-				    <br>					
+				    <br>
 					
 			    	<div class="row-fluid">
 			    		<div class="span6 well">									
@@ -19095,96 +19095,94 @@
 						                              source: measurementDS"
 						                   required data-required-msg="required"
 						                   style="width: 100%;" />
-									</div>																		
+									</div>
 									<!-- // Group END -->
 								</div>
 
 								<div class="span6" style="padding: 0; ">
 									<!-- Group -->
-									<div class="control-group">								
+									<div class="control-group">
 										<label for="txtCost"><span data-bind="text: lang.lang.cost"></span></label>
-							            <input id="txtCost" name="txtCost" 
-							               data-role="numerictextbox"
-							               data-spinners="false"
-						                   data-format="n"
-						                   data-min="0"						                   
-						                   data-bind="value: obj.cost"
-						                   style="width: 100%">
-									</div>																		
-									<!-- // Group END -->			
+							            <input id="txtCost" name="txtCost"
+							            	   type="number" class="k-textbox"
+							            	   data-min="0"
+							                   data-bind="value: obj.cost"
+							                   placeholder="Add Cost..."
+							                   style="width: 100%" />
+									</div>
+									<!-- // Group END -->
 								</div>
 							</div>
 
 							<div class="row">
 								<div class="span6">
 									<!-- Group -->
-									<div class="control-group">								
+									<div class="control-group">
 										<label for="txtOrderPoint"><span data-bind="text: lang.lang.reorder_point"></span></label>
 										<input data-role="numerictextbox"
 										   data-spinners="false"
 						                   data-format="n"
-						                   data-min="0"						                   
+						                   data-min="0"
 						                   data-bind="value: obj.order_point"
 						                   style="width: 100%">
-									</div>																		
+									</div>
 									<!-- // Group END -->
 								</div>
 
-								<div class="span6" style="padding: 0; ">	
+								<div class="span6" style="padding: 0; ">
 									<!-- Group -->
-									<div class="control-group">								
+									<div class="control-group">
 										<label for="txtPrice"><span data-bind="text: lang.lang.price"></span></label>
-							            <input id="txtPrice" name="txtPrice" 
-							               data-role="numerictextbox"
-							               data-spinners="false"
-						                   data-format="n"
-						                   data-min="0"						                   
-						                   data-bind="value: obj.price"
-						                   style="width: 100%">
-									</div>																		
-									<!-- // Group END -->											
+							            <input id="txtPrice" name="txtPrice"
+							            	   type="number" class="k-textbox"
+							            	   data-min="0"
+							                   data-bind="value: obj.price"
+							                   placeholder="Add Price..."
+							                   style="width: 100%" />
+									</div>
+									<!-- // Group END -->
 								</div>
 							</div>
 
 							<div class="row">
 								<div class="span6">
 									<!-- Group -->
-									<div class="control-group">								
+									<div class="control-group">
 										<label for="txtPurchaseDescription"><span data-bind="text: lang.lang.purchase_description"></span></label>
 							            <textarea id="txtPurchaseDescription" class="k-textbox" 
 											data-bind="value: obj.purchase_description" style="resize:none; width: 100%;height:60px;"></textarea>
-									</div>																		
+									</div>
 									<!-- // Group END -->
 								</div>
 								<div class="span6" style="padding: 0; ">
 									<!-- Group -->
-									<div class="control-group">								
+									<div class="control-group">
 										<label for="txtSaleDescription"><span data-bind="text: lang.lang.sale_description"></span></label>
 							            <textarea id="txtSaleDescription" class="k-textbox" 
 											data-bind="value: obj.sale_description" style="resize:none; width: 100%;height:60px;"></textarea>
-									</div>																		
+									</div>
 									<!-- // Group END -->
 								</div>
 							</div>
 
 						</div>
-					</div>								
+					</div>
 							
 					<!-- // Inner Tabs -->
-					<div class="row-fluid">								
+					<div class="row-fluid">
 						<div class="box-generic">
 						    <!-- //Tabs Heading -->
 						    <div class="tabsbar tabsbar-1">
 						        <ul class="row-fluid row-merge">
 						        	<li class="span2 glyphicons circle_info active">
 						            	<a href="#tab1" data-toggle="tab"><i></i> <span><span data-bind="text: lang.lang.info"></span></span></a>
-						            </li>						            
+						            </li>
 						            <li class="span2 glyphicons usd">
 						            	<a href="#tab2" data-toggle="tab"><i></i> <span><span data-bind="text: lang.lang.accounting"></span></span></a>
-						            </li>						            
+						            </li>
 						            <li class="span2 glyphicons barcode">
 						            	<a href="#tab3" data-toggle="tab"><i></i> <span data-bind="text: lang.lang.supplier_customer_codes"></span></a>
-						            </li>					            					            						            					            
+						            </li>
 						        </ul>
 						    </div>
 						    <!-- // Tabs Heading END -->
@@ -19196,9 +19194,9 @@
 						        	<div class="row">
 						        		<div class="span6">
 						        			<div class="row">
-							        			<div class="span12">														
+							        			<div class="span12">
 													<!-- Group -->
-													<div class="control-group">							
+													<div class="control-group">
 														<label for="txtSerialNumber"><span data-bind="text: lang.lang.model"></span></label>
 								              			<input data-role="dropdownlist"
 								              			   data-option-label="(--- Select ---)"
@@ -19208,43 +19206,43 @@
 										                   data-value-field="id"
 										                   data-bind="value: obj.brand_id,
 										                              source: brandDS"
-										                   style="width: 100%;" />					              		
+										                   style="width: 100%;" />
 													</div>
 													<!-- // Group END -->
 												</div>
 
-												<div class="span12">														
+												<div class="span12">
 													<!-- Group -->
-													<div class="control-group">							
+													<div class="control-group">
 														<label for="txtMeasurement"><span data-bind="text: lang.lang.measurement"></span></label>
 								              			<input id="txtMeasurement" name="txtMeasurement" class="k-textbox"
 									              				data-bind="value: obj.measurements" 
 									              				placeholder="e.g. 4x6mn"
-									              				style="width: 100%;" />					              		
+									              				style="width: 100%;" />
 													</div>
 													<!-- // Group END -->
 												</div>
 
-												<div class="span12">														
+												<div class="span12">
 													<!-- Group -->
-													<div class="control-group">							
+													<div class="control-group">
 														<label for="txtColorCode"><span data-bind="text: lang.lang.color_code"></span></label>
 								              			<input id="txtColorCode" name="txtColorCode" class="k-textbox"
 									              				data-bind="value: obj.color_code" 
 									              				placeholder="e.g. #FF0000"
-									              				style="width: 100%;" />					              		
+									              				style="width: 100%;" />
 													</div>
 													<!-- // Group END -->
-												</div>										
+												</div>
 									        
-												<div class="span12">														
+												<div class="span12">
 													<!-- Group -->
-													<div class="control-group">							
+													<div class="control-group">
 														<label for="txtInternationalCode"><span data-bind="text: lang.lang.international_code"></span></label>
 								              			<input id="txtInternationalCode" name="txtInternationalCode" class="k-textbox"
 									              				data-bind="value: obj.international_code" 
 									              				placeholder="e.g. INT0001"
-									              				style="width: 100%;" />					              		
+									              				style="width: 100%;" />
 													</div>
 													<!-- // Group END -->
 												</div>
@@ -19262,7 +19260,7 @@
 					                   				select: onSelect
 							                    }">
 										</div>
-																						
+
 							        </div>
 							        <br/>
 							        <div class="row-fluid">
@@ -19270,17 +19268,17 @@
 											<!-- Group -->
 											<div class="control-group">
 									            <input type="checkbox" data-bind="checked: obj.favorite" />	<span data-bind="text: lang.lang.favorite"></span>
-											</div>																		
+											</div>
 											<!-- // Group END -->
 										</div>
-							        </div>							       
+							        </div>
 
 					        	</div>
 						        <!-- //INFO END -->
 
 						        <!-- //ACCOUNTING -->
 						        <div class="tab-pane" id="tab2">
-						        	<div class="row-fluid">						            	
+						        	<div class="row-fluid">
 										<div class="span4">
 											<label for="ddlIncome"><span data-bind="text: lang.lang.income_account"></span><span style="color:red">*</span></label>											
 											<input id="ddlIncome" name="ddlIncome"
@@ -19374,10 +19372,10 @@
 
 						    </div>
 						</div>
-					</div>					
+					</div>
 
-					<br>											
-							
+					<br>
+
 					<!-- Form actions -->
 					<div class="box-generic bg-action-button">
 						<div id="ntf1" data-role="notification"></div>
@@ -21400,20 +21398,19 @@
 		</td>
     	<td>#=description#</td>
     	<td align="right">
-    		<input data-role="numerictextbox"
-    			   data-spinners="false"
-                   data-format="c"
-                   data-culture=#:locale#
-                   data-min="0"      
+    		<input id="txtCost" name="txtCost"
+            	   type="number" class="k-textbox"
+            	   data-min="0"
                    data-bind="value: cost"
-                   style="text-align: right; width: 150px;" 
-                   #=cost>0?disabled="disabled":""# >    		
+                   placeholder="Add Cost..."
+                   style="text-align: right; width: 150px;"
+                   #=cost>0?disabled="disabled":""# />
     	</td>
-    	<td align="right">#=kendo.toString(on_hand, "n2")#</td>
+    	<td align="right">#=kendo.toString(on_hand, "n")#</td>
     	<td align="right">
     		<input class="txt#=uid#"
     			   data-role="numerictextbox"
-                   data-format="n2"
+                   data-format="n"
                    data-min="0"
                    data-spinners="false"                   
                    data-bind="value: quantity_adjusted,
@@ -28324,7 +28321,7 @@
 					            	<tr>
 										<td>
 							                <input id="date" name="date" 
-							            		data-role="datepicker"			            		
+							            		data-role="datepicker"
 					        					data-bind="value: obj.date" CASH ADVANCE
 					        					data-format="dd-MM-yyyy"
 					        					data-parse-formats="yyyy-MM-dd" 
@@ -28335,7 +28332,7 @@
 					            	</tr>
 					            	<tr>
 										<td>
-					        				<input type="number" class="k-textbox" 		                   
+					        				<input type="number" class="k-textbox"
 							                   data-bind="value: obj.rate"
 							                   placeholder="Rate(per 1 unit of base currency) ..."
 							                   style="width: 100%" />

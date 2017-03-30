@@ -4691,12 +4691,12 @@
 <script id="Invoiceprintrowtemplate" type="text/x-kendo-tmpl">	
   	<div class="container winvoice-print" style="page-break-after: always;width: 775px;">
 		<div class="span12 headerinv " style="border-bottom: 2px solid \#000;padding: 15px 0;#= banhji.InvoicePrint.formVisible#">
-            <img class="logoP" style="position: absolute;left: 0;top: 20px;max-width: 100px;height: auto;max-height: 50px;" src="#: banhji.institute.logo.url#" alt="#: banhji.institute.name#" title="#: banhji.institute.name#" />
+            <img class="logoP" style="position: absolute;left: 0;top: 20px;max-width: 100px;height: auto;max-height: 50px;" src="#: banhji.InvoicePrint.license.image_url#" alt="#: banhji.InvoicePrint.license.name#" title="#: banhji.InvoicePrint.license.name#" />
 			<div class="span12" align="center">
-				<h4>#: banhji.institute.name#</h4>					
-				<h5>#: banhji.institute.address# 
+				<h4>#: banhji.InvoicePrint.license.name#</h4>					
+				<h5>#: banhji.InvoicePrint.license.address# 
 				<br>
-				#:typeof banhji.institute.phone != 'undefined' ? banhji.institute.phone: ''#</h5>					
+				#:typeof banhji.InvoicePrint.license.mobile != 'undefined' ? banhji.InvoicePrint.license.mobile: ''#</h5>					
 			</div>
 		</div>		
 
@@ -4810,7 +4810,7 @@
 					<td style="border: 1px solid;text-align: right">#= kendo.toString(amount, "c", locale)#</td>
 				</tr>
 				<tr>
-					<td rowspan="4" colspan="3">#= meter.license[0].term_of_condition#</td>
+					<td rowspan="4" colspan="3">#= banhji.InvoicePrint.license.term_of_condition#</td>
 					<td colspan="2" class="greyy" style="background: \\#ccc;#= banhji.InvoicePrint.formVisible#">ប្រាក់​ត្រូវ​បង់ TOTAL DUE</td>
 					<td style="text-align: right"><strong>#= kendo.toString(amount + amount_remain, "c", locale)#</strong></td>
 				</tr>
@@ -13088,16 +13088,8 @@
 			}).then(function(e){
 				var view = self.dataSource.view();
 				
-				if(view[0].attachment_id != 0){
-					self.attachmentDS.query({
-						filter: { field: "id", value: view[0].attachment_id},
-						take: 1
-					})
-					.then(function(e){
-						var aView = self.attachmentDS.view();
-						view[0].set("image_url", aView[0].url);
-						self.set("obj", view[0]);
-					});
+				if(view[0].image_url){
+					self.set("obj", view[0]);
 				}else{
 					view[0].set("image_url", "https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/no_image.jpg");
 					self.set("obj", view[0]);
@@ -13131,7 +13123,7 @@
 			var obj = this.dataSource.at(0);
 			this.set("obj", obj);	
 		},
-	    onSelect 			: function(e){
+	    onSelect 	: function(e){
 	        // Array with information about the uploaded files
 	        var self = this, 
 	        files = e.files[0],
@@ -14797,6 +14789,7 @@
 		licenseDS 			: dataStore(apiUrl + "branches"),
 		blocDS 				: dataStore(apiUrl + "locations"),
 		invoiceDS	     	: dataStore(apiUrl + "winvoices/make"),
+		attachmentDS		: dataStore(apiUrl + "attachments"),
 		printBTN 			: false,
 		invoiceCollection 	: banhji.invoice, 
 		invoiceNoPrint 		: new kendo.data.DataSource({
@@ -14867,23 +14860,22 @@
 			var bolValue = this.get("chkAll");
 			var data = this.invoiceCollection.dataSource.data();
 			if(bolValue == true){
-				if(data.length>0){						
+				if(data.length>0){
 			        $.each(data, function(index, value){	
 			        	value.set("printed", bolValue);
-			        	self.printArray.push(value);      	
-			        });		        			        
+			        	self.printArray.push(value);
+			        });
 		        }
 		    }else{
 	        	this.set("printArray",[]);
-	        	$.each(data, function(index, value){	
-		        	value.set("printed", bolValue);      	
+	        	$.each(data, function(index, value){
+		        	value.set("printed", bolValue);
 		        });
 	        }
-	        this.preparePrint();			
+	        this.preparePrint();
 		},	
 		isCheck 		: function(e) {
 	    	var that = this;
-
 	    	this.set("chkAll", false);
 	    	if(e.data.printed) {
 	    		this.printArray.push(e.data);
@@ -14909,9 +14901,16 @@
 	    	this.set("totalInv", this.printArray.length);
 	    },
 	    licenseChange 	: function(e) {
-			var data = e.data;
+			var data = e.data, self = this;
 			var license = this.licenseDS.at(e.sender.selectedIndex - 1);
 			this.blocDS.filter({field: "branch_id", value: license.id});
+			this.dataSource.query(
+				{filter: {field: "id", value: license.id}}
+			).then(function(e){
+				var view = self.dataSource.view();
+				banhji.InvoicePrint.license = view[0];
+			});
+			
 		},
 		blocChange 			: function(e){
 		},
@@ -15019,7 +15018,7 @@
 									banhji.InvoicePrint.dataSource.push(self.printArray[index]);
 								});
 							}
-
+							
 							banhji.router.navigate('/invoice_print');
 						});
 			    	}else{
@@ -15053,6 +15052,7 @@
 		dataSource 			: [],
 		isVisible 			: true,
 		company 			: banhji.institute,
+		license 			: [],
 		TemplateSelect 		: null,
 		user_id 			: banhji.userManagement.getLogin() === null ? '':banhji.userManagement.getLogin().id,	
 		formColor 			: "#355176",

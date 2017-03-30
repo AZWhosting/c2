@@ -55,7 +55,8 @@ class Branches extends REST_Controller {
 		$data["count"] = $obj->paged->total_rows;		
 		
 		if($obj->result_count()>0){
-			foreach ($obj as $value) {				
+			foreach ($obj as $value) {	
+				$logo = $value->attachment->get();			
 		 		$data["results"][] = array(
 		 			"id" 				=> $value->id,		
 		 			"number" 			=> $value->number,	
@@ -75,6 +76,7 @@ class Branches extends REST_Controller {
 		 			"telephone"			=> $value->telephone,
 		 			"type" 				=> $value->type,
 		 			"attachment_id" 	=> intval($value->attachment_id),
+		 			"image_url"			=> $logo->url,
 		 			"term_of_condition"	=> $value->term_of_condition
 
 		 		);
