@@ -61,6 +61,7 @@ class Meters extends REST_Controller {
 				$contact = $value->contact->get_raw();
 				$currency= $value->currency->get();
 				$contacts = $value->contact->get();
+				$image_url = $value->attachment->get();
 				//Results				
 				$data["results"][] = array(
 					"id" 					=> $value->id,
@@ -71,7 +72,9 @@ class Meters extends REST_Controller {
 												"locale" => $currency->locale
 					),
 					"meter_number" 			=> $value->number,
-					// "meter" 				=> $value->number,
+					"type"					=> $value->type,
+					"attachment_id"			=> $value->attachment_id,
+					"image_url"				=> $image_url->url,
 					"worder" 				=> $value->worder,
 					"contact_name" 			=> $contacts->name,
 					"status" 				=> $value->status,
@@ -81,6 +84,8 @@ class Meters extends REST_Controller {
 					"map" 					=> $value->latitute,
 					"starting_no" 			=> $value->startup_reading,
 					"location_id" 			=> $value->location_id,
+					"pole_id" 				=> $value->pole_id,
+					"box_id" 				=> $value->box_id,
 					"brand_id" 				=> $value->brand_id,
 					"branch_id" 			=> $value->branch_id,
 					"activated" 			=> $value->activated,
@@ -91,30 +96,6 @@ class Meters extends REST_Controller {
 				);
 			}
 		}
-		//  else {
-		// 	$data["results"][] = array(
-		// 		"id" 					=> "",
-		// 		"currency_id"			=> "",
-		// 		"_currency"				=> array(),
-		// 		"meter_number" 			=> "No Data",
-		// 		// "meter" 				=> $value->number,
-		// 		"worder" 				=> "",
-		// 		"contact_name" 			=> "",
-		// 		"status" 				=> "",
-		// 		"contact" 				=> "",
-		// 		"number_digit"			=> "",
-		// 		"plan_id"				=> "",
-		// 		"map" 					=> "",
-		// 		"starting_no" 			=> "",
-		// 		"location_id" 			=> "",
-		// 		"brand_id" 				=> "",
-		// 		"branch_id" 			=> "",
-		// 		"activated" 			=> "",
-		// 		"latitute" 				=> "",
-		// 		"longtitute" 			=> "",
-		// 		"date_used" 			=> ""
-		// 	);
-		// }
 
 		//Response Data		
 		$this->response($data, 200);		
@@ -158,17 +139,25 @@ class Meters extends REST_Controller {
 			
 			$obj->number_digit 			= isset($value->number_digit)		?$value->number_digit:4;
 			$obj->plan_id 				= isset($value->plan_id)			?$value->plan_id:0;
+			$obj->type 					= isset($value->type)				?$value->type:"w";
+			$obj->attachment_id 		= isset($value->attachment_id)		?$value->attachment_id:0;
+			$obj->pole_id 				= isset($value->pole_id)			?$value->pole_id:0;
+			$obj->box_id 				= isset($value->box_id)				?$value->box_id:0;
 			if($obj->save()){	
 				$data[] = array(
 					"id" 					=> $obj->id,
 					"meter_number" 			=> $obj->number,
+					"attachment_id" 		=> $obj->attachment_id,
 					"status" 				=> $obj->status,
 					"number_digit" 			=> $obj->number_digit,
 					"latitute" 				=> $obj->map,	
 					"plan_id" 				=> $obj->plan_id,	
 					"location_id" 			=> $obj->location_id,
+					"pole_id" 				=> $obj->pole_id,
+					"box_id" 				=> $obj->box_id,
 					"brand_id" 				=> $obj->brand_id,
 					"activated" 			=> 0,
+					"type"					=> $obj->type,
 					"latitute" 				=> $obj->latitute,
 					"longtitute" 			=> $obj->longtitute,
 					"multiplier" 			=> $obj->multiplier,
@@ -228,17 +217,24 @@ class Meters extends REST_Controller {
 			$obj->date_used = isset($value->date_used)?date("Y-m-d", strtotime($value->date_used)):'0000-00-00';
 			$obj->number_digit 			= isset($value->number_digit)		?$value->number_digit:4;
 			$obj->plan_id 				= isset($value->plan_id)			?$value->plan_id:0;
-
+			$obj->type 					= isset($value->type)				?$value->type:"w";
+			$obj->attachment_id 		= isset($value->attachment_id)		?$value->attachment_id:0;
+			$obj->pole_id 				= isset($value->pole_id)			?$value->pole_id:0;
+			$obj->box_id 				= isset($value->box_id)				?$value->box_id:0;
 			if($obj->save()){
 				//Results
 				$data[] = array(
 					"id" 					=> $obj->id,
 					"meter_number" 			=> $obj->number,
 					"status" 				=> $obj->status,
+					"attachment_id" 		=> $obj->attachment_id,
 					"number_digit" 			=> $obj->number_digit,
 					"latitute" 				=> $obj->map,	
+					"type"					=> $obj->type,
 					"plan_id" 				=> $obj->plan_id,	
 					"location_id" 			=> $obj->location_id,
+					"pole_id" 				=> $obj->pole_id,
+					"box_id" 				=> $obj->box_id,
 					"brand_id" 				=> $obj->brand_id,
 					"activated" 			=> $obj->activated,
 					"worder" 				=> $obj->worder,

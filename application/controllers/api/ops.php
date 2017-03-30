@@ -88,7 +88,7 @@ class Ops extends REST_Controller {
 		$this->load->dbutil();
 		$dbs = $this->dbutil->list_databases();
 
-		$companyList = array("banhji","banhji_mac", "db_banhji", "information_schema","innodb","mysql","performance_schema","tmp");
+		$companyList = array("banhji","banhji_mac", "information_schema","innodb","mysql","performance_schema","tmp");
 		$data = array();
 		foreach ($dbs as $db)
 		{	
@@ -109,9 +109,9 @@ class Ops extends REST_Controller {
 				// );
 
 				$this->dbforge->modify_column(
-		        	'item_lines', array(
-						'cost_avg' => array(
-									'name' 		=> 'cost_avg', 
+		        	'account_lines', array(
+						'amount' => array(
+									'name' 		=> 'amount', 
 									'type'		=> 'DECIMAL',
 									'constraint'=> '30,15',
 									'null' 		=> FALSE,

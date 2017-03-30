@@ -12449,7 +12449,7 @@
 		pageLoad    : function(id){
 			if(id){
 				this.loadObj(id);
-				this.attachmentDS.filter({field: "license_id", value: id});
+				// this.attachmentDS.filter({field: "license_id", value: id});
 			}else{
 				this.addNew();
 			}
@@ -12475,7 +12475,14 @@
 				take: 100
 			}).then(function(e){
 				var view = self.dataSource.view();
-				self.set("obj", view[0]);
+				
+				if(view[0].image_url){
+					self.set("obj", view[0]);
+				}else{
+					view[0].set("image_url", "https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/no_image.jpg");
+					self.set("obj", view[0]);
+				}
+				
 			});	
 		},
 		addNew 	  	: function() {
@@ -12497,46 +12504,59 @@
 				email 			: null,
 				mobile 			: null,
 				telephone 		: null,
+				attachment_id 	: 0,
+				image_url 		: "https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/no_image.jpg",
 				term_of_condition : null
 			});
 			var obj = this.dataSource.at(0);
 			this.set("obj", obj);	
 		},
-		onSelect 	: function(e){
+	    onSelect 	: function(e){
 	        // Array with information about the uploaded files
 	        var self = this, 
-	        files = e.files,
+	        files = e.files[0],
 	        obj = this.get("obj");
-	        // Check the extension of each file and abort the upload if it is not .jpg
-	        $.each(files, function(index, value){
-	            if (value.extension.toLowerCase() === ".jpg"
-	            	|| value.extension.toLowerCase() === ".jpeg"
-	            	|| value.extension.toLowerCase() === ".tiff"
-	            	|| value.extension.toLowerCase() === ".png" 
-	            	|| value.extension.toLowerCase() === ".gif"
-	            	|| value.extension.toLowerCase() === ".pdf"){
-	            	var key = 'ATTACH_' + banhji.institute.id + "_" + Math.floor(Math.random() * 100000000000000001) +'_'+ value.name;
-	            	self.attachmentDS.add({
-	            		user_id 		: self.get("user_id"),
-	            		license_id 		: obj.id,
-	            		type 			: "Transaction",
-	            		name 			: value.name,
-	            		description 	: "",
-	            		key 			: key,
-	            		url 			: banhji.s3 + key,
-	            		size 			: value.size,
-	            		created_at 		: new Date(),
-	            		file 			: value.rawFile
-	            	});
-	            }else{
-	            	alert("This type of file is not allowed to attach.");
-	            }
-	        });
+
+	        var fileReader = new FileReader();
+	        fileReader.onload = function (event) {
+	            var mapImage = event.target.result;
+	            self.obj.set('image_url', mapImage);
+	        }
+	        fileReader.readAsDataURL(files.rawFile);
+			
+	        // Check the extension of each file and abort the upload if it is not .jpg	       
+            if (files.extension.toLowerCase() === ".jpg"
+            	|| files.extension.toLowerCase() === ".jpeg"
+            	|| files.extension.toLowerCase() === ".tiff"
+            	|| files.extension.toLowerCase() === ".png" 
+            	|| files.extension.toLowerCase() === ".gif"){
+
+            	if(this.attachmentDS.total()>0){
+            		var att = this.attachmentDS.at(0);
+            		this.attachmentDS.remove(att);
+            	}
+
+            	var key = 'WLOGO_' + banhji.institute.id + "_" + Math.floor(Math.random() * 100000000000000001) +'_'+ files.name;
+
+            	this.attachmentDS.add({
+            		user_id 		: this.get("user_id"),
+            		item_id 		: obj.id,
+            		type 			: "Item",
+            		name 			: files.name,
+            		description 	: "",
+            		key 			: key,
+            		url 			: banhji.s3 + key,
+            		size 			: files.size,
+            		created_at 		: new Date(),
+
+            		file 			: files.rawFile
+            	});
+            }else{
+            	alert("This type of file is not allowed to attach.");
+            }
 	    },
-	    uploadFile 	: function(id){
-	    	if(id){
-	    		this.attachmentDS.pushUpdate({license_id: id});
-	    	}
+	    uploadFile 	: function(){
+	    	var self = this;
 	    	$.each(this.attachmentDS.data(), function(index, value){	    		
 		    	if(!value.id){
 			    	var params = { 
@@ -12549,30 +12569,14 @@
 	        });
 
 	        this.attachmentDS.sync();
-	        var saved = false;
 	        this.attachmentDS.bind("requestEnd", function(e){
 	        	//Delete File
-	        	if(e.type=="destroy"){
-	            	if(saved==false && e.response){
-	            		saved = true;
-	            	
-	            		var response = e.response.results;
-	            		$.each(response, function(index, value){            			
-		            		var params = {
-							  	//Bucket: 'STRING_VALUE', /* required */
-							 	Delete: { /* required */
-								    Objects: [ /* required */
-								      	{
-									        Key: value.data.key /* required */
-								      	}
-								      /* more items */
-								    ]
-							  	}
-							};
-							bucket.deleteObjects(params, function(err, data) {
-							});
-						});
-	            	}
+	        	if(e.type != 'read' && e.response){
+            		var response = e.response.results;
+            		self.get("obj").set("attachment_id", response[0].id);
+            		self.get("obj").set("image_url", "");
+            		// self.dataSource.hasChanges() = true;
+					self.saveDataSource();
 	        	}
 	        });
 	    },
@@ -12586,34 +12590,39 @@
 		save 		: function() {
 			var self = this;
 			if(this.get("obj").number && this.get("obj").max_customer){
-				if(this.dataSource.data().length > 0) {
-					if(this.dataSource.hasChanges() == true ){
-						this.dataSource.sync();
-						this.dataSource.bind("requestEnd", function(e){
-							if(e.type != 'read') {
-								if(e.response){				
-						    		$("#ntf1").data("kendoNotification").success("Successfully!");
-						    		//self.dataSource.addNew();
-									banhji.router.navigate("/setting");
-									banhji.setting.licenseDS.fetch();
-									self.uploadFile(e.response.results[0].id);
-								}
-							}else{
-							}					  				
-					    });
-					    this.dataSource.bind("error", function(e){		    		    	
-							$("#ntf1").data("kendoNotification").error("Error!"); 			
-					    });
-					}else{
-						if(this.attachmentDS.hasChanges() == true) {
-							banhji.router.navigate("/setting");
-							banhji.setting.licenseDS.fetch();
-							this.uploadFile();
-						}
-					}
+				if(this.attachmentDS.hasChanges() == true) {
+					this.uploadFile();
+				}else{
+					this.saveDataSource();
 				}
 			}else{
 				alert("License Number required!");
+			}
+		},
+		saveDataSource : function(){
+			var self = this;
+
+			if(this.dataSource.data().length > 0) {
+				// if(this.dataSource.hasChanges() == true ){
+					this.dataSource.sync();
+					this.dataSource.bind("requestEnd", function(e){
+						if(e.type != 'read') {
+							if(e.response){				
+					    		var notificat = $("#ntf1").data("kendoNotification");
+					    		notificat.hide();
+					    		notificat.success(self.lang.lang.success_message);
+								banhji.router.navigate("/setting");
+								banhji.setting.licenseDS.fetch();
+							}
+						}else{
+						}					  				
+				    });
+				    this.dataSource.bind("error", function(e){		    		    	
+						var notificat = $("#ntf1").data("kendoNotification");
+			    		notificat.hide();
+			    		notificat.error(self.lang.lang.error_message);			
+				    });
+				// }
 			}
 		},
 		cancel 		: function(){

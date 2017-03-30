@@ -15,6 +15,7 @@ h1,h2,h3,h4,h5,h6{
 .top-itemprice{
   width: 100%;
 }
+.table.table-bordered.table-primary.table-striped.table-vertical-center tr td{}
 
 div.k-window{
   z-index: 1 !important;

@@ -1373,7 +1373,8 @@ var	en_US = {
 	"logo": "Logo",
 	"electricity_meter": "Electricity",
 	"water_meter": "Water",
-
+	"file_not_allow": "This type of file is not allowed to attach.",
+	"multiplier": "Multiplier",
 
 
 

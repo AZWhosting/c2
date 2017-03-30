@@ -2219,15 +2219,13 @@
 					style="width: 100%; margin-bottom: 0;" />
 		</td>
 		<td>
-			<input id="txtQuantity-#:uid#" 
-					name="txtQuantity-#:uid#" 
-					data-role="numerictextbox" 
-					data-format="n" 
-					data-min="0"
-					data-spinners="false"
-					data-bind="value: quantity, events: {change : changes}"
-					required data-required-msg="required" 
-					style="width: 40%;" />
+			<input id="txtQuantity-#:uid#" name="txtQuantity-#:uid#"
+            	   type="number" class="k-textbox"
+            	   data-min="0"
+                   data-bind="value: quantity, events: {change : changes}"
+                   required data-required-msg="required"
+                   placeholder="Qty..." 
+                   style="text-align: right; width: 40%;" />
 
 			<input 	id="ddlMesurement"
 					data-role="dropdownlist"					
@@ -2242,14 +2240,13 @@
                    style="width: 57%;" />
 		</td>					
 		<td>
-			<input 	id="txtPrice-#:uid#" 
-					name="txtPrice-#:uid#" 
-					data-role="numerictextbox" 
-					data-format="n"
-					data-min="0"
-					data-spinners="false"
-					data-bind="value: price, events: {change : changes}" 
-					required data-required-msg="required" style="width: 100%;" />
+			<input id="txtPrice-#:uid#" name="txtPrice-#:uid#"
+            	   type="number" class="k-textbox"
+            	   data-min="0"
+                   data-bind="value: price, events: {change : changes}"
+                   required data-required-msg="required"
+                   placeholder="Price..." 
+                   style="text-align: right; width: 100%;" />
 		</td>
 		<td class="center" data-bind="visible: showDiscount">
 			<input data-role="numerictextbox"
@@ -2809,13 +2806,13 @@
 					style="width: 100%; margin-bottom: 0;" />
 		</td>
 		<td>
-			<input id="txtQuantity-#:uid#" name="txtQuantity-#:uid#" 
-					data-role="numerictextbox" 
-					data-format="n" 
-					data-min="0"
-					data-spinners="false"
-					data-bind="value: quantity, events: {change : changes}"
-					required data-required-msg="required" style="width: 40%;" />
+			<input id="txtQuantity-#:uid#" name="txtQuantity-#:uid#"
+				   type="number" class="k-textbox"
+				   data-min="0"
+			       data-bind="value: quantity, events: {change : changes}"
+			       required data-required-msg="required"
+			       placeholder="Qty..." 
+			       style="text-align: right; width: 40%;" />
 
 			<input id="ddlMesurement" name="ddlMesurement"
 					data-role="dropdownlist"
@@ -2830,13 +2827,13 @@
                     style="width: 57%;" />
 		</td>					
 		<td>
-			<input id="txtPrice-#:uid#" name="txtPrice-#:uid#" 
-					data-role="numerictextbox" 
-					data-format="n"
-					data-min="0"
-					data-spinners="false" 
-					data-bind="value: price, events: {change : changes}" 
-					required data-required-msg="required" style="width: 100%;" />
+			<input id="txtPrice-#:uid#" name="txtPrice-#:uid#"
+            	   type="number" class="k-textbox"
+            	   data-min="0"
+                   data-bind="value: price, events: {change : changes}"
+                   required data-required-msg="required"
+                   placeholder="Price..." 
+                   style="text-align: right; width: 100%;" />
 		</td>
 		<td class="center" data-bind="visible: showCost">
 			<span data-format="n" data-bind="text: cost"></span>
@@ -3397,14 +3394,14 @@
 					data-bind="value: reference_no"				
 					style="width: 100%; margin-bottom: 0;" />		
 		</td>		
-		<td class="" >
-			<input id="txtAmount" name="txtAmount" 
-					data-role="numerictextbox"
-					data-spinners="false" 
-					data-format="n"
-					data-min="0" 
-					data-bind="value: amount, events: {change : changes}" 
-					required data-required-msg="required" style="width: 100%; text-align: right;" /> 						
+		<td>
+			<input id="txtAmount-#:uid#" name="txtAmount-#:uid#"
+			   type="number" class="k-textbox"
+			   data-min="0"
+		       data-bind="value: amount, events: {change : changes}"
+		       required data-required-msg="required"
+		       placeholder="Amount..." 
+		       style="text-align: right; width: 100%;" />
 		</td>			
     </tr>   
 </script>
@@ -4041,13 +4038,13 @@
 					style="width: 100%; margin-bottom: 0;" />
 		</td>
 		<td>
-			<input id="txtQuantity-#:uid#" name="txtQuantity-#:uid#" 
-					data-role="numerictextbox" 
-					data-format="n" 
-					data-min="0"
-					data-spinners="false"
-					data-bind="value: quantity, events: {change : changes}"
-					required data-required-msg="required" style="width: 40%;" />
+			<input id="txtQuantity-#:uid#" name="txtQuantity-#:uid#"
+				   type="number" class="k-textbox"
+				   data-min="0"
+			       data-bind="value: quantity, events: {change : changes}"
+			       required data-required-msg="required"
+			       placeholder="Qty..." 
+			       style="text-align: right; width: 40%;" />
 
 			<input id="ddlMesurement" name="ddlMesurement"
 				   data-role="dropdownlist"
@@ -4062,13 +4059,13 @@
                    style="width: 57%;" />
 		</td>					
 		<td>
-			<input id="txtPrice-#:uid#" name="txtPrice-#:uid#" 
-					data-role="numerictextbox" 
-					data-format="n3"
-					data-min="0"
-					data-spinners="false" 
-					data-bind="value: price, events: {change : changes}" 
-					required data-required-msg="required" style="width: 100%;" />
+			<input id="txtPrice-#:uid#" name="txtPrice-#:uid#"
+				   type="number" class="k-textbox"
+				   data-min="0"
+			       data-bind="value: price, events: {change : changes}"
+			       required data-required-msg="required"
+			       placeholder="Price..." 
+			       style="text-align: right; width: 100%;" />
 		</td>
 		<td class="center" data-bind="visible: showDiscount">
 			<input data-role="numerictextbox"
@@ -4730,13 +4727,13 @@
 					style="width: 100%; margin-bottom: 0;" />
 		</td>
 		<td>
-			<input id="txtQuantity-#:uid#" name="txtQuantity-#:uid#" 
-					data-role="numerictextbox" 
-					data-format="n" 
-					data-min="0"
-					data-spinners="false"
-					data-bind="value: quantity, events: {change : changes}"
-					required data-required-msg="required" style="width: 40%;" />
+			<input id="txtQuantity-#:uid#" name="txtQuantity-#:uid#"
+				   type="number" class="k-textbox"
+				   data-min="0"
+			       data-bind="value: quantity, events: {change : changes}"
+			       required data-required-msg="required"
+			       placeholder="Qty..." 
+			       style="text-align: right; width: 40%;" />
 
 			<input id="ddlMesurement" name="ddlMesurement"
 				   data-role="dropdownlist"
@@ -4751,13 +4748,13 @@
                    style="width: 57%;" />
 		</td>					
 		<td>
-			<input id="txtPrice-#:uid#" name="txtPrice-#:uid#" 
-					data-role="numerictextbox" 
-					data-format="n3"
-					data-min="0"
-					data-spinners="false" 
-					data-bind="value: price, events: {change : changes}" 
-					required data-required-msg="required" style="width: 100%;" />
+			<input id="txtPrice-#:uid#" name="txtPrice-#:uid#"
+				   type="number" class="k-textbox"
+				   data-min="0"
+			       data-bind="value: price, events: {change : changes}"
+			       required data-required-msg="required"
+			       placeholder="Price..." 
+			       style="text-align: right; width: 100%;" />
 		</td>
 		<td class="center" data-bind="visible: showDiscount">
 			<input data-role="numerictextbox"
@@ -5216,13 +5213,13 @@
 					style="width: 100%; margin-bottom: 0;" />
 		</td>
 		<td>
-			<input id="txtQuantity-#:uid#" name="txtQuantity-#:uid#" 
-					data-role="numerictextbox" 
-					data-format="n" 
-					data-min="0"
-					data-spinners="false"
-					data-bind="value: quantity, events: {change : changes}"
-					required data-required-msg="required" style="width: 40%;" />
+			<input id="txtQuantity-#:uid#" name="txtQuantity-#:uid#"
+				   type="number" class="k-textbox"
+				   data-min="0"
+			       data-bind="value: quantity, events: {change : changes}"
+			       required data-required-msg="required"
+			       placeholder="Qty..." 
+			       style="text-align: right; width: 40%;" />
 
 			<input id="ddlMesurement" name="ddlMesurement"
 				   data-role="dropdownlist"
@@ -5727,13 +5724,13 @@
 					style="width: 100%; margin-bottom: 0;" />
 		</td>
 		<td>
-			<input id="txtQuantity-#:uid#" name="txtQuantity-#:uid#" 
-					data-role="numerictextbox" 
-					data-format="n" 
-					data-min="0"
-					data-spinners="false"
-					data-bind="value: quantity, events: {change : changes}"
-					required data-required-msg="required" style="width: 40%;" />
+			<input id="txtQuantity-#:uid#" name="txtQuantity-#:uid#"
+				   type="number" class="k-textbox"
+				   data-min="0"
+			       data-bind="value: quantity, events: {change : changes}"
+			       required data-required-msg="required"
+			       placeholder="Qty..." 
+			       style="text-align: right; width: 40%;" />
 
 			<input id="ddlMesurement" name="ddlMesurement" 
 				   data-role="dropdownlist"
@@ -5748,13 +5745,13 @@
                    style="width: 57%;" />
 		</td>					
 		<td>
-			<input id="txtPrice-#:uid#" name="txtPrice-#:uid#" 
-					data-role="numerictextbox" 
-					data-format="n"
-					data-min="0"
-					data-spinners="false"
-					data-bind="value: price, events: {change : changes}" 
-					required data-required-msg="required" style="width: 100%;" />
+			<input id="txtPrice-#:uid#" name="txtPrice-#:uid#"
+				   type="number" class="k-textbox"
+				   data-min="0"
+			       data-bind="value: price, events: {change : changes}"
+			       required data-required-msg="required"
+			       placeholder="Price..." 
+			       style="text-align: right; width: 100%;" />
 		</td>	
 		<td class="right">
 			<span data-format="n" data-bind="text: amount"></span> 						
@@ -5815,13 +5812,13 @@
 				   style="width: 100%" /></select>					
 		</td>
 		<td class="right">
-			<input id="txtAmount-#:uid#" name="txtAmount-#:uid#" 
-					data-role="numerictextbox"
-					data-spinners="false" 
-					data-format="n"
-					data-min="0" 
-					data-bind="value: amount, events: {change : changes}" 
-					required data-required-msg="required" style="width: 100%;" /> 						
+			<input id="txtAmount-#:uid#" name="txtAmount-#:uid#"
+				   type="number" class="k-textbox"
+				   data-min="0"
+			       data-bind="value: amount, events: {change : changes}"
+			       required data-required-msg="required"
+			       placeholder="Amount..." 
+			       style="text-align: right; width: 100%;" /> 						
 		</td>
     </tr>   
 </script>
@@ -5832,7 +5829,7 @@
 		</td>
 		<td>#=type#</td>
 		<td><span data-bind="text: reference_no"></span></td>
-		<td class="right"><span data-format="n2" data-bind="text: amount"></span></td>
+		<td class="right"><span data-format="n" data-bind="text: amount"></span></td>
     </tr>   
 </script>
 <script id="cashRefund" type="text/x-kendo-template">
@@ -6224,13 +6221,13 @@
 					style="width: 100%; margin-bottom: 0;" />
 		</td>
 		<td>
-			<input id="txtQuantity-#:uid#" name="txtQuantity-#:uid#" 
-					data-role="numerictextbox" 
-					data-format="n" 
-					data-min="0"
-					data-spinners="false"
-					data-bind="value: quantity, events: {change : changes}"
-					required data-required-msg="required" style="width: 40%;" />
+			<input id="txtQuantity-#:uid#" name="txtQuantity-#:uid#"
+				   type="number" class="k-textbox"
+				   data-min="0"
+			       data-bind="value: quantity, events: {change : changes}"
+			       required data-required-msg="required"
+			       placeholder="Qty..." 
+			       style="text-align: right; width: 40%;" />
 
 			<input id="ddlMesurement" name="ddlMesurement" 
 				   data-role="dropdownlist"
@@ -6245,13 +6242,13 @@
                    style="width: 57%;" />
 		</td>					
 		<td>
-			<input id="txtPrice-#:uid#" name="txtPrice-#:uid#" 
-					data-role="numerictextbox" 
-					data-format="n"
-					data-min="0"
-					data-spinners="false"
-					data-bind="value: price, events: {change : changes}" 
-					required data-required-msg="required" style="width: 100%;" />
+			<input id="txtPrice-#:uid#" name="txtPrice-#:uid#"
+				   type="number" class="k-textbox"
+				   data-min="0"
+			       data-bind="value: price, events: {change : changes}"
+			       required data-required-msg="required"
+			       placeholder="Price..." 
+			       style="text-align: right; width: 100%;" />
 		</td>					
 		<td class="center" data-bind="visible: showDiscount">
 			<input data-role="numerictextbox"
@@ -6305,14 +6302,13 @@
 				style="width: 100%;" />
 		</td>
 		<td>
-			<input id="txtAmount-#:uid#" name="txtAmount-#:uid#" 
-				data-role="numerictextbox"
-				data-spinners="false" 
-				data-format="n"
-				data-spinners="false"
-				data-bind="value: amount, 
-							events: {change : changes}" 
-				required data-required-msg="required" style="width: 100%; text-align: right;" />
+			<input id="txtAmount-#:uid#" name="txtAmount-#:uid#"
+				   type="number" class="k-textbox"
+				   data-min="0"
+			       data-bind="value: amount, events: {change : changes}"
+			       required data-required-msg="required"
+			       placeholder="Amount..." 
+			       style="text-align: right; width: 100%;" />
 		</td>
     </tr>   
 </script>
@@ -11397,13 +11393,13 @@
 					style="width: 100%; margin-bottom: 0;" />
 		</td>
 		<td>
-			<input id="txtQuantity-#:uid#" name="txtQuantity-#:uid#" 
-					data-role="numerictextbox" 
-					data-format="n" 
-					data-min="0"
-					data-spinners="false"
-					data-bind="value: quantity, events: {change : changes}"
-					required data-required-msg="required" style="width: 40%;" />
+			<input id="txtQuantity-#:uid#" name="txtQuantity-#:uid#"
+				   type="number" class="k-textbox"
+				   data-min="0"
+			       data-bind="value: quantity, events: {change : changes}"
+			       required data-required-msg="required"
+			       placeholder="Qty..." 
+			       style="text-align: right; width: 40%;" />
 
 			<input id="ddlMesurement"
 				   data-role="dropdownlist"
@@ -11418,13 +11414,13 @@
                    style="width: 57%;" />
 		</td>					
 		<td>
-			<input id="txtPrice-#:uid#" name="txtPrice-#:uid#" 
-					data-role="numerictextbox" 
-					data-format="n"
-					data-min="0"
-					data-spinners="false"
-					data-bind="value: cost, events: {change : changes}" 
-					required data-required-msg="required" style="width: 100%;" />
+			<input id="txtCost-#:uid#" name="txtCost-#:uid#"
+				   type="number" class="k-textbox"
+				   data-min="0"
+			       data-bind="value: cost, events: {change : changes}"
+			       required data-required-msg="required"
+			       placeholder="Cost..." 
+			       style="text-align: right; width: 100%;" />
 		</td>
 		<td class="center" data-bind="visible: showDiscount">
 			<input data-role="numerictextbox"
@@ -11874,13 +11870,13 @@
 					style="width: 100%; margin-bottom: 0;" />
 		</td>
 		<td>
-			<input id="txtQuantity-#:uid#" name="txtQuantity-#:uid#" 
-					data-role="numerictextbox" 
-					data-format="n" 
-					data-min="0"
-					data-spinners="false"
-					data-bind="value: quantity, events: {change : changes}"
-					required data-required-msg="required" style="width: 40%;" />
+			<input id="txtQuantity-#:uid#" name="txtQuantity-#:uid#"
+				   type="number" class="k-textbox"
+				   data-min="0"
+			       data-bind="value: quantity, events: {change : changes}"
+			       required data-required-msg="required"
+			       placeholder="Qty..." 
+			       style="text-align: right; width: 40%;" />
 
 			<input id="ddlMesurement"
 					data-role="dropdownlist"
@@ -12366,13 +12362,13 @@
 					style="width: 100%; margin-bottom: 0;" />		
 		</td>		
 		<td class="right">
-			<input id="txtAmount" name="txtAmount" 
-					data-role="numerictextbox" 
-					data-format="n"
-					data-min="0"
-					data-spinners="false"
-					data-bind="value: amount, events: {change : changes}" 
-					required data-required-msg="required" style="width: 100%;" /> 						
+			<input id="txtAmount-#:uid#" name="txtAmount-#:uid#"
+				   type="number" class="k-textbox"
+				   data-min="0"
+			       data-bind="value: amount, events: {change : changes}"
+			       required data-required-msg="required"
+			       placeholder="Amount..." 
+			       style="text-align: right; width: 100%;" />						
 		</td>			
     </tr>   
 </script>
@@ -13292,13 +13288,13 @@
 					style="width: 100%; margin-bottom: 0;" />
 		</td>
 		<td>
-			<input id="txtQuantity-#:uid#" name="txtQuantity-#:uid#" 
-					data-role="numerictextbox" 
-					data-format="n" 
-					data-min="0"
-					data-spinners="false"
-					data-bind="value: quantity, events: {change : changes}"
-					required data-required-msg="required" style="width: 40%;" />
+			<input id="txtQuantity-#:uid#" name="txtQuantity-#:uid#"
+				   type="number" class="k-textbox"
+				   data-min="0"
+			       data-bind="value: quantity, events: {change : changes}"
+			       required data-required-msg="required"
+			       placeholder="Qty..." 
+			       style="text-align: right; width: 40%;" />
 
 			<input id="txtMeasurement" name="txtMeasurement-#:uid#"
 				   data-role="dropdownlist"
@@ -13313,13 +13309,13 @@
                    style="width: 57%;" />
 		</td>					
 		<td>
-			<input id="txtPrice" name="txtPrice-#:uid#" 
-					data-role="numerictextbox" 
-					data-format="n3"
-					data-min="0"
-					data-spinners="false"
-					data-bind="value: cost, events: {change : changes}" 
-					required data-required-msg="required" style="width: 100%;" />
+			<input id="txtCost-#:uid#" name="txtCost-#:uid#"
+				   type="number" class="k-textbox"
+				   data-min="0"
+			       data-bind="value: cost, events: {change : changes}"
+			       required data-required-msg="required"
+			       placeholder="Cost..." 
+			       style="text-align: right; width: 100%;" />
 		</td>
 		<td class="center" data-bind="visible: showDiscount">
 			<input data-role="numerictextbox"
@@ -13397,13 +13393,13 @@
 				   style="width: 100%" /></select>					
 		</td>
 		<td class="right">
-			<input id="txtAmount-#:uid#" name="txtAmount-#:uid#" 
-					data-role="numerictextbox"
-					data-spinners="false" 
-					data-format="n"
-					data-min="0" 
-					data-bind="value: amount, events: {change : changes}" 
-					required data-required-msg="required" style="width: 100%;" /> 						
+			<input id="txtAmount-#:uid#" name="txtAmount-#:uid#"
+				   type="number" class="k-textbox"
+				   data-min="0"
+			       data-bind="value: amount, events: {change : changes}"
+			       required data-required-msg="required"
+			       placeholder="Amount..." 
+			       style="text-align: right; width: 100%;" />
 		</td>
 		<td>
 			<input id="ccbTaxItem" name="ccbTaxItemAccount-#:uid#"
@@ -13923,13 +13919,13 @@
 					style="width: 100%; margin-bottom: 0;" />
 		</td>
 		<td>
-			<input id="txtQuantity-#:uid#" name="txtQuantity-#:uid#" 
-					data-role="numerictextbox" 
-					data-format="n" 
-					data-min="0"
-					data-spinners="false"
-					data-bind="value: quantity, events: {change : changes}"
-					required data-required-msg="required" style="width: 40%;" />
+			<input id="txtQuantity-#:uid#" name="txtQuantity-#:uid#"
+				   type="number" class="k-textbox"
+				   data-min="0"
+			       data-bind="value: quantity, events: {change : changes}"
+			       required data-required-msg="required"
+			       placeholder="Qty..." 
+			       style="text-align: right; width: 40%;" />
 
 			<input id="ddlMesurement"
 				   data-role="dropdownlist"
@@ -13944,13 +13940,13 @@
                    style="width: 57%;" />
 		</td>					
 		<td>
-			<input id="txtPrice-#:uid#" name="txtPrice-#:uid#" 
-					data-role="numerictextbox"
-					data-spinners="false" 
-					data-format="n"
-					data-min="0" 
-					data-bind="value: cost, events: {change : changes}" 
-					required data-required-msg="required" style="width: 100%;" />
+			<input id="txtCost-#:uid#" name="txtCost-#:uid#"
+				   type="number" class="k-textbox"
+				   data-min="0"
+			       data-bind="value: cost, events: {change : changes}"
+			       required data-required-msg="required"
+			       placeholder="Cost..." 
+			       style="text-align: right; width: 100%;" />
 		</td>					
 		<td class="center" data-bind="visible: showDiscount">
 			<input data-role="numerictextbox"
@@ -14021,13 +14017,13 @@
 				   style="width: 100%" /></select>					
 		</td>
 		<td class="right">
-			<input id="txtAmount-#:uid#" name="txtAmount-#:uid#" 
-					data-role="numerictextbox"
-					data-spinners="false" 
-					data-format="n"
-					data-min="0" 
-					data-bind="value: amount, events: {change : changes}" 
-					required data-required-msg="required" style="width: 100%;" /> 						
+			<input id="txtAmount-#:uid#" name="txtAmount-#:uid#"
+				   type="number" class="k-textbox"
+				   data-min="0"
+			       data-bind="value: amount, events: {change : changes}"
+			       required data-required-msg="required"
+			       placeholder="Amount..." 
+			       style="text-align: right; width: 100%;" />
 		</td>
     </tr>   
 </script>
@@ -14431,13 +14427,13 @@
 					style="width: 100%; margin-bottom: 0;" />
 		</td>
 		<td>
-			<input id="txtQuantity-#:uid#" name="txtQuantity-#:uid#" 
-					data-role="numerictextbox" 
-					data-format="n" 
-					data-min="0"
-					data-spinners="false"
-					data-bind="value: quantity, events: {change : changes}"
-					required data-required-msg="required" style="width: 40%;" />
+			<input id="txtQuantity-#:uid#" name="txtQuantity-#:uid#"
+				   type="number" class="k-textbox"
+				   data-min="0"
+			       data-bind="value: quantity, events: {change : changes}"
+			       required data-required-msg="required"
+			       placeholder="Qty..." 
+			       style="text-align: right; width: 40%;" />
 
 			<input id="ddlMesurement" name="ddlMesurement" 
 				   data-role="dropdownlist"
@@ -14452,13 +14448,13 @@
                    style="width: 57%;" />
 		</td>					
 		<td>
-			<input id="txtPrice-#:uid#" name="txtPrice-#:uid#" 
-					data-role="numerictextbox" 
-					data-format="n"
-					data-min="0"
-					data-spinners="false"
-					data-bind="value: cost, events: {change : changes}" 
-					required data-required-msg="required" style="width: 100%;" />
+			<input id="txtCost-#:uid#" name="txtCost-#:uid#"
+				   type="number" class="k-textbox"
+				   data-min="0"
+			       data-bind="value: cost, events: {change : changes}"
+			       required data-required-msg="required"
+			       placeholder="Cost..." 
+			       style="text-align: right; width: 100%;" />
 		</td>					
 		<td class="center" data-bind="visible: showDiscount">
 			<input data-role="numerictextbox"
@@ -14512,14 +14508,13 @@
 				style="width: 100%;" />
 		</td>
 		<td>
-			<input id="txtAmount-#:uid#" name="txtAmount-#:uid#" 
-				data-role="numerictextbox"
-				data-spinners="false" 
-				data-format="n"
-				data-spinners="false"
-				data-bind="value: amount, 
-							events: {change : changes}" 
-				required data-required-msg="required" style="width: 100%; text-align: right;" />
+			<input id="txtAmount-#:uid#" name="txtAmount-#:uid#"
+				   type="number" class="k-textbox"
+				   data-min="0"
+			       data-bind="value: amount, events: {change : changes}"
+			       required data-required-msg="required"
+			       placeholder="Amount..." 
+			       style="text-align: right; width: 100%;" />
 		</td>
     </tr>   
 </script>
@@ -21408,17 +21403,14 @@
     	</td>
     	<td align="right">#=kendo.toString(on_hand, "n")#</td>
     	<td align="right">
-    		<input class="txt#=uid#"
-    			   data-role="numerictextbox"
-                   data-format="n"
-                   data-min="0"
-                   data-spinners="false"                   
-                   data-bind="value: quantity_adjusted,
-                   			  events:{ change: onChange }"
-                   style="text-align: right; width: 100px;">    		
+    		<input id="txtQuantity-#:uid#" name="txtQuantity-#:uid#"
+				   type="number" class="k-textbox"
+				   data-min="0"
+			       data-bind="value: quantity_adjusted, events: {change : onChange}"
+			       style="text-align: right; width: 100px;" />
     	</td>
     	<td align="right">
-    		<span data-format="n2" data-bind="text: quantity"></span>
+    		<span data-format="n" data-bind="text: quantity"></span>
     	</td>
     </tr>
 </script>
@@ -21837,13 +21829,13 @@
 						style="width: 100%; margin-bottom: 0;" />
 			</td>
 			<td>
-				<input id="txtQuantity-#:uid#" name="txtQuantity-#:uid#" 
-						data-role="numerictextbox" 
-						data-format="n" 
-						data-min="0"
-						data-spinners="false"
-						data-bind="value: quantity, events: {change : changes}"
-						required data-required-msg="required" style="width: 40%;" />
+				<input id="txtQuantity-#:uid#" name="txtQuantity-#:uid#"
+					   type="number" class="k-textbox"
+					   data-min="0"
+				       data-bind="value: quantity, events: {change : changes}"
+				       required data-required-msg="required"
+				       placeholder="Qty..." 
+				       style="text-align: right; width: 40%;" />
 
 				<input id="ddlMesurement"
 					   data-role="dropdownlist"
@@ -21920,13 +21912,13 @@
 						style="width: 100%; margin-bottom: 0;" />
 			</td>
 			<td>
-				<input id="txtQuantity-#:uid#" name="txtQuantity-#:uid#" 
-						data-role="numerictextbox" 
-						data-format="n" 
-						data-min="0"
-						data-spinners="false"
-						data-bind="value: quantity, events: {change : changes}"
-						required data-required-msg="required" style="width: 40%;" />
+				<input id="txtQuantity-#:uid#" name="txtQuantity-#:uid#"
+					   type="number" class="k-textbox"
+					   data-min="0"
+				       data-bind="value: quantity, events: {change : changes}"
+				       required data-required-msg="required"
+				       placeholder="Qty..." 
+				       style="text-align: right; width: 40%;" />
 
 				<input id="ddlMesurement"
 					   data-role="dropdownlist"
@@ -21971,13 +21963,13 @@
 						style="width: 100%; margin-bottom: 0;" />
 			</td>
 			<td class="right">
-				<input id="txtAmount-#:uid#" name="txtAmount-#:uid#" 
-						data-role="numerictextbox" 
-						data-format="n"
-						data-min="0"
-						data-spinners="false"
-						data-bind="value: amount, events: {change : changes}" 
-						required data-required-msg="required" style="width: 100%; text-align: right;" /> 						
+				<input id="txtAmount-#:uid#" name="txtAmount-#:uid#"
+				   type="number" class="k-textbox"
+				   data-min="0"
+			       data-bind="value: amount, events: {change : changes}"
+			       required data-required-msg="required"
+			       placeholder="Amount..." 
+			       style="text-align: right; width: 100%;" />
 			</td>
 	    </tr>
     #}#   
@@ -26080,20 +26072,22 @@
 				   style="width: 100%; " /></select>					
 		</td>
 		<td class="right">
-			<input id="ntbDr" name="ntbDr" 
-					data-role="numerictextbox"
-					data-spinners="false" 
-					data-format="n"
-					data-bind="value: dr, events: {change : checkDr}" 
-					required data-required-msg="required" style="width: 100%; text-align: right;" /> 						
+			<input id="ntbDr-#:uid#" name="ntbDr-#:uid#"
+				   type="number" class="k-textbox"
+				   data-min="0"
+			       data-bind="value: dr, events: {change : checkDr}"
+			       required data-required-msg="required"
+			       placeholder="Dr..." 
+			       style="text-align: right; width: 100%;" />
 		</td>
 		<td class="right">
-			<input id="ntbCr" name="ntbCr" 
-					data-role="numerictextbox"
-					data-spinners="false" 
-					data-format="n"
-					data-bind="value: cr, events: {change : checkCr}" 
-					required data-required-msg="required" style="width: 100%; text-align: right;" />										
+			<input id="ntbCr-#:uid#" name="ntbCr-#:uid#"
+				   type="number" class="k-textbox"
+				   data-min="0"
+			       data-bind="value: cr, events: {change : checkCr}"
+			       required data-required-msg="required"
+			       placeholder="Cr..." 
+			       style="text-align: right; width: 100%;" />
 		</td>		
     </tr>   
 </script>
@@ -26582,13 +26576,13 @@
 				   style="width: 100%" /></select>					
 		</td>
 		<td class="right">
-			<input id="txtAmount" name="txtAmount" 
-					data-role="numerictextbox" 
-					data-format="n"
-					data-min="0"
-					data-spinners="false"
-					data-bind="value: amount, events: {change : changes}" 
-					required data-required-msg="required" style="width: 100%;" /> 						
+			<input id="txtAmount-#:uid#" name="txtAmount-#:uid#"
+				   type="number" class="k-textbox"
+				   data-min="0"
+			       data-bind="value: amount, events: {change : changes}"
+			       required data-required-msg="required"
+			       placeholder="Amount..." 
+			       style="text-align: right; width: 100%;" />
 		</td>			
     </tr>   
 </script>
@@ -27087,13 +27081,13 @@
 				   style="width: 100%" /></select>
 		</td>
 		<td class="right">
-			<input id="txtAmount" name="txtAmount" 
-					data-role="numerictextbox" 
-					data-format="n"
-					data-min="0"
-					data-spinners="false"
-					data-bind="value: amount, events: {change : changes}" 
-					required data-required-msg="required" style="width: 100%;" /> 						
+			<input id="txtAmount-#:uid#" name="txtAmount-#:uid#"
+				   type="number" class="k-textbox"
+				   data-min="0"
+			       data-bind="value: amount, events: {change : changes}"
+			       required data-required-msg="required"
+			       placeholder="Amount..." 
+			       style="text-align: right; width: 100%;" />
 		</td>			
     </tr>   
 </script>
@@ -27699,13 +27693,13 @@
 				   style="width: 100%" /></select>					
 		</td>
 		<td class="right">
-			<input id="txtAmount-#:uid#" name="txtAmount-#:uid#" 
-					data-role="numerictextbox" 
-					data-format="n"
-					data-min="0"
-					data-spinners="false"
-					data-bind="value: amount, events: {change : changes}" 
-					required data-required-msg="required" style="width: 100%;" /> 						
+			<input id="txtAmount-#:uid#" name="txtAmount-#:uid#"
+				   type="number" class="k-textbox"
+				   data-min="0"
+			       data-bind="value: amount, events: {change : changes}"
+			       required data-required-msg="required"
+			       placeholder="Amount..." 
+			       style="text-align: right; width: 100%;" />
 		</td>
 		<td>
 			<input id="ccbTaxItem"
@@ -35612,7 +35606,7 @@
 							        <!-- // Options Tab content END -->
 
 							        <div class="tab-pane saleSummaryCustomer" id="tab1-2">
-										<table class="table table-borderless table-condensed">
+										<table class="table table-borderless table-condensed custo-table">
 									        <thead>
 									            <tr>
 									                <th>NUMBER</th>
@@ -35776,33 +35770,28 @@
 					style="width: 100%; margin-bottom: 0;" />
 		</td>
 		<td class="center">
-			<input data-role="numerictextbox" disabled="disabled"
-				   data-spinners="false"
-				   data-format="c2"
-				   data-culture="#:locale#"
-                   data-min="0"                   
-                   data-bind="value: sub_total"
-                   style="width: 100%; padding: 0 !important; text-align: right;">
+			<input id="txtSubTotal-#:uid#" name="txtSubTotal-#:uid#"
+				   type="number" class="k-textbox"
+				   data-min="0"
+			       data-bind="value: sub_total"
+			       style="text-align: right; width: 100%;" disabled="disabled" />
 		</td>		
 		<td class="center">
-			<input data-role="numerictextbox"
-				   data-spinners="false"
-				   data-format="c2"
-				   data-culture="#:locale#"
-                   data-min="0"                   
-                   data-bind="value: discount,
-                              events: { change: changes }"
-                   style="width: 100%; text-align: right;">			
+			<input id="txtDiscount-#:uid#" name="txtDiscount-#:uid#"
+				   type="number" class="k-textbox"
+				   data-min="0"
+			       data-bind="value: discount, events: {change : changes}"
+			       placeholder="Discount..." 
+			       style="text-align: right; width: 100%;" />
 		</td>
 		<td class="center">
-			<input data-role="numerictextbox"
-				   data-spinners="false"
-				   data-format="c2"
-				   data-culture="#:locale#"
-                   data-min="0"                   
-                   data-bind="value: amount,
-                              events: { change: changes }"
-                   style="width: 100%; text-align: right;">			
+			<input id="txtAmount-#:uid#" name="txtAmount-#:uid#"
+				   type="number" class="k-textbox" data-format="n"
+				   data-min="0"
+			       data-bind="value: amount, events: {change : changes}"
+			       required data-required-msg="required"
+			       placeholder="Amount..." 
+			       style="text-align: right; width: 100%;" />
 		</td>
     </tr>   
 </script>
@@ -36117,33 +36106,28 @@
 					style="width: 100%; margin-bottom: 0;" />
 		</td>
 		<td class="center">
-			<input data-role="numerictextbox" disabled="disabled"
-				   data-spinners="false"
-				   data-format="c2"
-				   data-culture="#:locale#"
-                   data-min="0"                   
-                   data-bind="value: sub_total"
-                   style="width: 100%; padding: 0 !important; text-align: right;">
-		</td>
-		<td class="center">
-			<input data-role="numerictextbox"
-				   data-spinners="false"
-				   data-culture="#:locale#"
-                   data-format="n"
-                   data-min="0"                   
-                   data-bind="value: discount,
-                              events: { change: changes }"
-                   style="width: 100%; text-align: right;">			
+			<input id="txtSubTotal-#:uid#" name="txtSubTotal-#:uid#"
+				   type="number" class="k-textbox"
+				   data-min="0"
+			       data-bind="value: sub_total"
+			       style="text-align: right; width: 100%;" disabled="disabled" />
 		</td>		
 		<td class="center">
-			<input data-role="numerictextbox"
-				   data-spinners="false"
-				   data-culture="#:locale#"
-                   data-format="n"
-                   data-min="0"                   
-                   data-bind="value: amount,
-                              events: { change: changes }"
-                   style="width: 100%; text-align: right;">			
+			<input id="txtDiscount-#:uid#" name="txtDiscount-#:uid#"
+				   type="number" class="k-textbox"
+				   data-min="0"
+			       data-bind="value: discount, events: {change : changes}"
+			       placeholder="Discount..." 
+			       style="text-align: right; width: 100%;" />
+		</td>
+		<td class="center">
+			<input id="txtAmount-#:uid#" name="txtAmount-#:uid#"
+				   type="number" class="k-textbox"
+				   data-min="0"
+			       data-bind="value: amount, events: {change : changes}"
+			       required data-required-msg="required"
+			       placeholder="Amount..." 
+			       style="text-align: right; width: 100%;" />
 		</td>
     </tr>   
 </script>

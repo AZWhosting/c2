@@ -24,6 +24,10 @@ class Attachment extends DataMapper {
 		'branch' => array(
 			'class' => 'branch',
 			'other' => 'attachment'
+		),
+		'meter' => array(
+			'class' => 'meter',
+			'other' => 'attachment'
 		)
 	);
 

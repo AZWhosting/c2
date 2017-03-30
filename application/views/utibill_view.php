@@ -238,10 +238,10 @@
 		<td style="text-align: right; padding-right: 5px !important;">#=blocCount#</td>
 		<td style="text-align: right; padding-right: 5px !important;">#=activeCustomer#</td>
 		<td style="text-align: right; padding-right: 5px !important;">#=inActiveCustomer#</td>
-		<td style="text-align: right; padding-right: 5px !important;">#=kendo.toString(deposit, 'c2', banhji.locale)#</td>
+		<td style="text-align: right; padding-right: 5px !important;">#= kendo.toString(deposit, banhji.locale=="km-KH"?"c0":"c", banhji.locale)#</td>
 		<td style="text-align: right; padding-right: 5px !important;">#=usage#m<sup>3</sup></td>
-		<td style="text-align: right; padding-right: 5px !important;">#=kendo.toString(sale, 'c2', banhji.locale)#</td>
-		<td style="text-align: right; padding-right: 5px !important;">#=kendo.toString(balance, 'c2', banhji.locale)#</td>
+		<td style="text-align: right; padding-right: 5px !important;">#= kendo.toString(sale, banhji.locale=="km-KH"?"c0":"c", banhji.locale)#</td>
+		<td style="text-align: right; padding-right: 5px !important;">#= kendo.toString(balance, banhji.locale=="km-KH"?"c0":"c", banhji.locale)#</td>
 	</tr>
 </script>
 <script id="wsale-by-branch-row-template" type="text/x-kendo-tmpl">		
@@ -1793,7 +1793,7 @@
 										<input 
 							            	class="k-textbox" 
 							            	placeholder="Maximum Houshold" 
-						            		data-bind="value: obj.max_customer" 
+						            		data-bind="value: obj.max_customer, attr: {placeholder: lang.lang.maximum_household}" 
 						              		style="width: 100%;" />
 									</div>
 								</div>
@@ -2026,8 +2026,8 @@
 										        <thead>
 										            <tr>			                
 										                <th width="140"><span data-bind="text: lang.lang.meter_no">Meter No.</span></th>
-										                <th width="50"><span data-bind="text: lang.lang.status">Status</span></th>
-										                <th width="100"><span data-bind="text: lang.lang.active">Action</span></th>            
+										                <th width="50"><span data-bind="text: lang.lang.type">Type</span></th>
+										                <th width="100"><span data-bind="text: lang.lang.action">Action</span></th>            
 										            </tr> 
 										        </thead>
 										        <tbody data-role="listview" 
@@ -2725,15 +2725,13 @@
 	<tr>
 		<td class="mm" data-bind="click: onSelectedMeter" style="padding: 5px !important;">#= meter_number#</td>
 		<td style="text-align:center;">
-			# if(status == 1){#
-				<span style="cursor: pointer; margin-top: 3px;" title="Active" class="btn-action glyphicons ok_2 btn-success"><i></i></span>
-			# }else if(status == 0){#
-				<span style="cursor: pointer;background-color: \\#333;border-color: \\#333;" title="Inactive" class="btn-action glyphicons lock btn-danger"><i></i></span>
-			# }else{ #
-				<span style="cursor: pointer;" title="Void" class="btn-action glyphicons remove_2 btn-danger"><i></i></span>
+			# if(type == "w"){#
+				<span style="cursor: pointer; margin-top: 3px;" title="Water" class="btn-action glyphicons tint btn-success"><i></i></span>
+			# }else{#
+				<span style="cursor: pointer;background-color: \\#a22314;border-color: \\#a22314;" title="Electircity" class="btn-action glyphicons electricity btn-danger"><i></i></span>
 			# } #
 		</td>
-		<td style="text-align: center;">
+		<td style="text-align: right;">
 			# if(activated != "1") { #
 			<a style="background: \#1f4774; padding:4px; margin-right: 3px; vertical-align: middle;" href="\#/activate_meter/#= id#" class="btn-action btn-success" data-bind="text: lang.lang.activate">Activate</a>
 			# } #
@@ -3224,7 +3222,7 @@
 				    	<div class="row-fluid">
 				    		<div class="span6 well" style="padding-bottom: 0 !important;">
 				    			<div class="row">
-									<div class="span12" style="padding-right: 0;">	
+									<div class="span6" style="padding-right: 0;">	
 										<!-- Group -->
 										<div class="control-group">							
 											<label><span data-bind="text: lang.lang.type">Type</span> <span style="color:red">*</span></label>			
@@ -3240,7 +3238,19 @@
 										</div>
 										<!-- // Group END -->											
 									</div>
-									
+									<div class="span6" style="padding-right: 0;">	
+										<!-- Group -->
+										<div class="control-group">							
+											<label><span data-bind="text: lang.lang.multiplier">Multiplier</span></label>			
+					              			<br>
+
+					              			<input class="k-textbox"					    
+						              			data-bind="value: obj.multiplier"
+								                placeholder="eg. 1" required data-required-msg="required"
+								                style="width: 93%" />
+										</div>
+										<!-- // Group END -->											
+									</div>
 								</div>								
 								<div class="row">
 									<div class="span6" style="padding-right: 0;">	
@@ -3485,7 +3495,10 @@
 </script>
 <script id="ActivateMeter" type="text/x-kendo-template">
 	<div id="slide-form">
-		<div class="customer-background" style="overflow: hidden; margin-top: 15px;">
+		<div class="customer-background" style="overflow: hidden; margin-top: 15px;position: relative;">
+			<div id="loadImport" style="display:none;text-align: center;position: absolute;width: 100%; height: 100%;background: rgba(142, 159, 167, 0.8);z-index: 9999;">
+				<i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 45%;left: 45%"></i>
+			</div>
 			<div class="container-960">					
 				<div id="example" class="k-content">
 			    	<div class="hidden-print pull-right">
@@ -3497,9 +3510,7 @@
 				    <div class="span12 row">			       		
 			       		<!-- Top Part -->
 				    	<div class="row">
-				    		<div id="loadImport" style="display:none;text-align: center;position: absolute;width: 100%; height: 100%;background: rgba(142, 159, 167, 0.8);z-index: 9999;">
-								<i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 45%;left: 45%"></i>
-							</div>
+				    		
 				    		<div class="span5" style="padding-left: 15px; padding-right: 0;">									
 								<div class="row well">
 									<table class="table table-borderless table-condensed">
@@ -3665,7 +3676,7 @@
 	<tr>
 		<td>#=type#</td>
 		<td>#=name#</td>
-		<td>#=amount#</td>
+		<td>#= kendo.toString(amount, banhji.locale=="km-KH"?"c0":"c", banhji.locale)#</td>
 		<td><input type="number" class="k-textbox k-input k-formatted-value" data-bind="value: received, events: {change: onAmountChange}">
 	</tr>
 </script>
@@ -13065,7 +13076,6 @@
 		pageLoad    : function(id){
 			if(id){
 				this.loadObj(id);
-				this.attachmentDS.filter({field: "license_id", value: id});
 			}else{
 				this.addNew();
 			}
@@ -13079,6 +13089,12 @@
 					self.provinceSelect.push({'id' : view[i].id,'name' : view[i].name_local});
 				}
 			});
+			this.setWords();
+		},
+		setWords 	: function(){
+			this.selectType[0].set("name", this.lang.lang.active);
+			this.selectType[1].set("name", this.lang.lang.inactive);
+			this.selectType[2].set("name", this.lang.lang.void);
 		},
 		provinceChange : function(pro){
 			this.districtDS.filter({field: "province_id", value: this.obj.province});
@@ -13091,7 +13107,6 @@
 				take: 100
 			}).then(function(e){
 				var view = self.dataSource.view();
-				
 				if(view[0].image_url){
 					self.set("obj", view[0]);
 				}else{
@@ -13168,7 +13183,9 @@
             		file 			: files.rawFile
             	});
             }else{
-            	alert("This type of file is not allowed to attach.");
+            	var notificat = $("#ntf1").data("kendoNotification");
+	    		notificat.hide();
+	    		notificat.error(this.lang.lang.file_not_allow);
             }
 	    },
 	    uploadFile 	: function(){
@@ -13191,7 +13208,6 @@
             		var response = e.response.results;
             		self.get("obj").set("attachment_id", response[0].id);
             		self.get("obj").set("image_url", "");
-            		// self.dataSource.hasChanges() = true;
 					self.saveDataSource();
 	        	}
 	        });
@@ -13217,28 +13233,22 @@
 		},
 		saveDataSource : function(){
 			var self = this;
-
 			if(this.dataSource.data().length > 0) {
-				// if(this.dataSource.hasChanges() == true ){
-					this.dataSource.sync();
-					this.dataSource.bind("requestEnd", function(e){
-						if(e.type != 'read') {
-							if(e.response){				
-					    		var notificat = $("#ntf1").data("kendoNotification");
-					    		notificat.hide();
-					    		notificat.success(self.lang.lang.success_message);
-								banhji.router.navigate("/setting");
-								banhji.setting.licenseDS.fetch();
-							}
-						}else{
-						}					  				
-				    });
-				    this.dataSource.bind("error", function(e){		    		    	
-						var notificat = $("#ntf1").data("kendoNotification");
+				this.dataSource.sync();
+				this.dataSource.bind("requestEnd", function(e){
+					if(e.type != 'read' && e.response){				
+			    		var notificat = $("#ntf1").data("kendoNotification");
 			    		notificat.hide();
-			    		notificat.error(self.lang.lang.error_message);			
-				    });
-				// }
+			    		notificat.success(self.lang.lang.success_message);
+						banhji.router.navigate("/setting");
+						banhji.setting.licenseDS.fetch();
+					}				  				
+			    });
+			    this.dataSource.bind("error", function(e){		    		    	
+					var notificat = $("#ntf1").data("kendoNotification");
+		    		notificat.hide();
+		    		notificat.error(self.lang.lang.error_message);			
+			    });
 			}
 		},
 		cancel 		: function(){
@@ -13804,11 +13814,11 @@
 		locationDS 			: dataStore(apiUrl + "locations"),
 		poleDS 				: dataStore(apiUrl + "locations"),
 		boxDS 				: dataStore(apiUrl + "locations"),
+		attachmentDS 		: dataStore(apiUrl + "attachments"),
 		itemDS 				: null,
 		obj 				: null,
 		isEdit 				: false,
 		contact 			: null,
-		meterWord 			: null,
 		selectMeterType 	: [
 			{id: "w", name: "Meter"},
 			{id: "e", name: "Electircity"}
@@ -13832,9 +13842,11 @@
 			this.setWords();
 		},
 		setWords 			: function(){
-			var self = this;
-			self.selectMeterType[0].set("name", self.lang.lang.water_meter);
-			self.selectMeterType[1].set("name", self.lang.lang.electricity_meter);
+			this.selectMeterType[0].set("name", this.lang.lang.water_meter);
+			this.selectMeterType[1].set("name", this.lang.lang.electricity_meter);
+			this.selectType[0].set("name", this.lang.lang.active);
+			this.selectType[1].set("name", this.lang.lang.inactive);
+			this.selectType[2].set("name", this.lang.lang.void);
 		},
 		loadObj 			: function(id){
 			var self = this;	
@@ -13845,7 +13857,12 @@
 				take: 100
 			}).then(function(e){
 				var view = self.dataSource.view();	
-				self.set("obj", view[0]);
+				if(view[0].image_url){
+					self.set("obj", view[0]);
+				}else{
+					view[0].set("image_url", "https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/no_image.jpg");
+					self.set("obj", view[0]);
+				}
 				self.loadMap();	
 			});
 		},
@@ -13872,11 +13889,10 @@
 				});
 			} 
 		},
-		addEmpty 		 	: function(id){		
-			var self = this;	
-			this.dataSource.data([]);		
-			this.set("obj", null);		
-			this.set("isEdit", false);	
+		addEmpty 		 	: function(id){
+			var self = this;
+			this.dataSource.data([]);
+			this.set("obj", null);
 			this.userActivatDS.query({filter: [{field: "contact_id", value: id}]})
 			.then(function(){
 				var view = self.userActivatDS.data();
@@ -13884,7 +13900,7 @@
 					{field: "branch_id", value: view[0].branch_id},
 					{field: "main_bloc", value: 0}
 				]);
-				self.dataSource.insert(0,{				
+				self.dataSource.insert(0,{
 					contact_id		: id,
 					meter_number 	: null,
 					status 			: 1,
@@ -13899,13 +13915,15 @@
 					date_used 		: null,
 					map 			: null,
 					memo 			: null,
-					type 			: {id: "w", name: "Water"},
-					starting_no 	: null,
+					type 			: "w",
+					multiplier 		: 1,
+					starting_no 	: 0,
+					attachment_id	: 0,
 					activated 		: 0,
 					number_digit 	: null,
 					image_url 		: "https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/no_image.jpg"
 		    	});		
-				var obj = self.dataSource.at(0);			
+				var obj = self.dataSource.at(0);
 				self.set("obj", obj);
 			});	
 		},
@@ -13921,7 +13939,7 @@
 				{ field: "main_pole", value: this.get("obj").pole_id}
 			]);
 		},
-		onSelect 			: function(e){
+		onSelect 	: function(e){
 	        // Array with information about the uploaded files
 	        var self = this, 
 	        files = e.files[0],
@@ -13946,7 +13964,7 @@
             		this.attachmentDS.remove(att);
             	}
 
-            	var key = 'ITEM_' + banhji.institute.id + "_" + Math.floor(Math.random() * 100000000000000001) +'_'+ files.name;
+            	var key = 'METER_' + banhji.institute.id + "_" + Math.floor(Math.random() * 100000000000000001) +'_'+ files.name;
 
             	this.attachmentDS.add({
             		user_id 		: this.get("user_id"),
@@ -13962,29 +13980,73 @@
             		file 			: files.rawFile
             	});
             }else{
-            	alert("This type of file is not allowed to attach.");
+            	var notificat = $("#ntf1").data("kendoNotification");
+	    		notificat.hide();
+	    		notificat.error(this.lang.lang.file_not_allow);
             }
 	    },
-		save 				: function() {
+	    uploadFile 	: function(){
+	    	var self = this;
+	    	$.each(this.attachmentDS.data(), function(index, value){	    		
+		    	if(!value.id){
+			    	var params = { 
+		            	Body: value.file, 
+		            	Key: value.key 
+		            };
+		            bucket.upload(params, function (err, data) {               
+	            	});
+	        	}	            
+	        });
+
+	        this.attachmentDS.sync();
+	        this.attachmentDS.bind("requestEnd", function(e){
+	        	//Delete File
+	        	if(e.type != 'read' && e.response){
+            		var response = e.response.results;
+            		self.get("obj").set("attachment_id", response[0].id);
+            		self.get("obj").set("image_url", "");
+					self.saveDataSource();
+	        	}
+	        });
+	    },
+	    removeFile 	: function(e){
+	    	var data = e.data;
+	    	if (confirm(banhji.source.confirmMessage)) {
+	    		this.attachmentDS.remove(data);
+	    	}	    	
+	    },
+		save 		: function() {
 			var self = this;
 			var obj = this.get("obj");
 			if(obj.meter_number && obj.plan_id != 0 && obj.plan_id && obj.location_id && obj.date_used && obj.number_digit){
-				if(this.dataSource.data().length > 0) {
-					this.dataSource.sync();
-					this.dataSource.bind("requestEnd", function(e){
-						if(e.type != 'read') {
-							if(e.response){				
-					    		$("#ntf1").data("kendoNotification").success("Successfully!");
-								self.cancel();
-							}
-						}				    					  				
-				    });
-				    this.dataSource.bind("error", function(e){		    		    	
-						$("#ntf1").data("kendoNotification").error("Error!"); 	
-				    });
+				if(this.attachmentDS.hasChanges() == true) {
+					this.uploadFile();
+				}else{
+					this.saveDataSource();
 				}
 			}else{
-				alert("Fields Required!");
+				var notificat = $("#ntf1").data("kendoNotification");
+	    		notificat.hide();
+	    		notificat.error(self.lang.lang.field_required_message);	
+			}
+		},
+		saveDataSource : function(){
+			var self = this;
+			if(this.dataSource.data().length > 0) {
+				this.dataSource.sync();
+				this.dataSource.bind("requestEnd", function(e){
+					if(e.type != 'read' && e.response){				
+			    		var notificat = $("#ntf1").data("kendoNotification");
+			    		notificat.hide();
+			    		notificat.success(self.lang.lang.success_message);
+						banhji.router.navigate("/center");
+					}				  				
+			    });
+			    this.dataSource.bind("error", function(e){		    		    	
+					var notificat = $("#ntf1").data("kendoNotification");
+		    		notificat.hide();
+		    		notificat.error(self.lang.lang.error_message);			
+			    });
 			}
 		},
 		cancel 				: function(){
@@ -14214,11 +14276,6 @@
 				}
 				banhji.transactionLine.save();
 			});
-
-			
-			
-			
-
 			if(this.get('amountToBeRecieved') < amount) {
 				banhji.ActivateMeter.get('meterObj').set('activated', 1);
 				banhji.installment.setDate(banhji.ActivateMeter.get('startDate'));
@@ -14235,12 +14292,18 @@
 						banhji.ActivateMeter.set('amountToBeRecieved', 0.00);
 						banhji.ActivateMeter.set('amountRemain', 0.00);
 						banhji.ActivateMeter.set('percentage', 0);
-						$("#ntf1").data("kendoNotification").success("Successfully!");
+
+						var notificat = $("#ntf1").data("kendoNotification");
+						notificat.hide();
+						notificat.success(self.lang.lang.success_message);
+
 						banhji.ActivateMeter.cancel();
 						banhji.waterCenter.meterDS.read();
 					} else {
 						// show error
-						$("#ntf1").data("kendoNotification").error("Error!");
+						var notificat = $("#ntf1").data("kendoNotification");
+						notificat.hide();
+						notificat.error(self.lang.lang.error_message);
 					}
 				});
 			} else {

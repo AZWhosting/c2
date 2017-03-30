@@ -1347,6 +1347,8 @@ var	km_KH = {
 	"logo": "ឡូហ្គូ",
 	"electricity_meter": "កុងទ័រភ្លើង",
 	"water_meter": "កុងទ័រទឹក",
+	"file_not_allow": "ប្រភេទឯកសារឌែលបញ្ចូលមិនត្រឹមត្រូវទេ",
+	"multiplier": "មេគុណ",
 
 
 
