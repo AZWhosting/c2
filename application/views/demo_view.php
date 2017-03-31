@@ -14552,13 +14552,15 @@
 	            <!-- Tab Contact Type content -->
 	            <div class="tab-pane active" id="tab1-1">
 	            	<div class="input-append">
-					    <input class="span12" id="appendedInputButtons" type="text" placeholder="Enter New Vendor Type here ..." data-bind="value: contactTypeName">
+	            		<input class="span4" id="appendedInputButtons" type="text" placeholder="Enter New Vendor Type here ..." data-bind="value: contactTypeName">
+					    <input class="span4" id="appendedInputButtons" type="text" placeholder="Enter Abbr ..." data-bind="value: contactTypeAbbr">
 					    <button class="btn btn-default" type="button" data-bind="click: addContactType"><i class="icon-plus"></i><span data-bind="text: lang.lang.add_type"></span></button>
 					</div>
 	            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
 	            		<thead>
 	            			<tr>
 	            				<th><span data-bind="text: lang.lang.type"></span></th>
+	            				<th><span data-bind="text: lang.lang.abbr"></span></th>
 	            				<th></th>
 	            			</tr>
 	            		</thead>
@@ -14665,9 +14667,8 @@
 </script>
 <script id="vendorSetting-contact-type-template" type="text/x-kendo-tmpl">
     <tr>
-    	<td>
-    		#:name#
-   		</td>
+    	<td>#:name#</td>
+    	<td>#:abbr#</td>
    		<td align="center">   			
    			<div class="edit-buttons">       
 		        <a class="k-button k-edit-button" href="\\#"><span class="k-icon k-edit"></span></a>
@@ -14681,11 +14682,17 @@
 </script>
 <script id="vendorSetting-edit-contact-type-template" type="text/x-kendo-tmpl">
     <div class="product-view k-widget">
-        <dl>                
+        <dl>
             <dd>
                 <input type="text" class="k-textbox" data-bind="value:name" name="ProductName" required="required" validationMessage="required" />
                 <span data-for="ProductName" class="k-invalid-msg"></span>
-            </dd>               
+            </dd>
+        </dl>
+        <dl>
+            <dd>
+                <input type="text" class="k-textbox" data-bind="value:abbr" name="ProductAbbr" required="required" validationMessage="required" />
+                <span data-for="ProductAbbr" class="k-invalid-msg"></span>
+            </dd>
         </dl>
         <div class="edit-buttons">
             <a class="k-button k-update-button" href="\\#"><span class="k-icon k-update"></span></a>
@@ -35786,7 +35793,7 @@
 		</td>
 		<td class="center">
 			<input id="txtAmount-#:uid#" name="txtAmount-#:uid#"
-				   type="number" class="k-textbox" data-format="n"
+				   type="number" class="k-textbox"
 				   data-min="0"
 			       data-bind="value: amount, events: {change : changes}"
 			       required data-required-msg="required"
@@ -71583,7 +71590,7 @@
         	this.txnTemplateDS.filter({ field: "moduls", value : "vendor_mg" });
         },	    
         addContactType 		: function(){
-        	var name = this.get("contactTypeName");
+        	var self = this, name = this.get("contactTypeName");
 
         	if(name!==""){
 	        	this.contactTypeDS.add({

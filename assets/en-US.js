@@ -1375,6 +1375,8 @@ var	en_US = {
 	"water_meter": "Water",
 	"file_not_allow": "This type of file is not allowed to attach.",
 	"multiplier": "Multiplier",
+	"utility": "Utility",
+	"none_utility": "None Utility",
 
 
 

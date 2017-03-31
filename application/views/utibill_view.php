@@ -20515,12 +20515,6 @@
 				data: 'results',
 				total: 'count'
 			},
-			// group: {
-			// 	field: 'month',
-			// 	aggregates: [
-			// 		{field: 'amount', aggregate: 'sum'}
-			// 	]
-			// },
 			batch: true,
 			serverFiltering: true,
 			serverPaging: true,
@@ -20611,6 +20605,11 @@
 				var grid = $("#listContact").data('kendoGrid');
 				grid.select("tr:eq(1)");
 			}
+			this.setWords();
+		},
+		setWords 			: function(){
+			this.filterCustomerTypeDS[0].set("name", this.lang.lang.utility);
+			this.filterCustomerTypeDS[1].set("name", this.lang.lang.none_utility);
 		},
 		sorterChanges 		: function(){
 	        var today = new Date(),
@@ -20923,10 +20922,6 @@
 			banhji.customerDeposit.set("contact", this.get("obj"));
 			banhji.router.navigate("/customer_deposit");
 		},
-		// //Search
-		// enterSearch 		: function(e){
-		// 	this.search();
-		// },
 		search 				: function(){
 			var self = this, 
 			para = [],

@@ -109,9 +109,9 @@ class Ops extends REST_Controller {
 				// );
 
 				$this->dbforge->modify_column(
-		        	'account_lines', array(
-						'amount' => array(
-									'name' 		=> 'amount', 
+		        	'transactions', array(
+						'received' => array(
+									'name' 		=> 'received', 
 									'type'		=> 'DECIMAL',
 									'constraint'=> '30,15',
 									'null' 		=> FALSE,
