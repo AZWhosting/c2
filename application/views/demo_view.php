@@ -27554,11 +27554,11 @@
 							<tbody>
 								<tr>
 									<td class="right"><span data-bind="text: lang.lang.subtotal"></span></td>
-									<td class="right strong" width="40%"><span data-bind="text: obj.sub_total"></span></td>
+									<td class="right strong" width="40%"><span data-format="n" data-bind="text: obj.sub_total"></span></td>
 								</tr>								
 								<tr>
 									<td class="right"><span data-bind="text: lang.lang.total_tax"></span></td>
-									<td class="right strong"><span data-bind="text: obj.tax"></span></td>
+									<td class="right strong"><span data-format="n" data-bind="text: obj.tax"></span></td>
 								</tr>																
 								<tr>
 									<td class="right"><h4 span data-bind="text: lang.lang.total"></h4></td>
@@ -81730,24 +81730,19 @@
 				}).then(function(e){
 					var view = self.dataSource.view();
 					       
-					// self.set("obj", view[0]);
+					self.set("obj", view[0]);
+					self.set("total", kendo.toString(view[0].amount, "c2", view[0].locale));
 
 					self.lineDS.filter({ field: "transaction_id", value: id });
 					self.journalLineDS.filter({ field: "transaction_id", value: id });
-					self.attachmentDS.filter({ field: "transaction_id", value: id });					
+					self.attachmentDS.filter({ field: "transaction_id", value: id });
+					self.referenceDS.filter({ field: "id", value: view[0].reference_id });					
 					self.referenceLineDS.filter({ field: "transaction_id", value: view[0].reference_id });
-					self.referenceDS.query({
-						filter:{ field: "id", value: view[0].reference_id }
-					}).then(function(){
-						self.set("obj", view[0]);
-					});
-
-					switch(view[0].type) {			    
-					    case "Advance_Settlement":
-					        self.set("showCashAdvance", true);
-					        break;
-					    default:			         
-					        self.set("showCashAdvance", false);
+					
+					if(view[0].type=="Advance_Settlement") {
+					    self.set("showCashAdvance", true);
+					}else{
+					    self.set("showCashAdvance", false);
 					}
 				});
 			}
