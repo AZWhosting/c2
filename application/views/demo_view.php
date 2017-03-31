@@ -27258,10 +27258,12 @@
 							        	<tr data-bind="visible: showCashAdvance">
 							        		<td><span data-bind="text: lang.lang.cash_advance"></span></td>
 							        		<td>
-							        			<input data-role="dropdownlist"
+							        			<input id="ddlReference" name="ddlReference"
+							        					data-role="dropdownlist"
 							        				   data-template="reference-list-tmpl"                   
 									                   data-value-primitive="true"
 									                   data-auto-bind="false"
+									                   data-index="1"
 									                   data-text-field="number"
 									                   data-value-field="id"
 									                   data-bind="value: obj.reference_id,
@@ -81736,9 +81738,15 @@
 					self.lineDS.filter({ field: "transaction_id", value: id });
 					self.journalLineDS.filter({ field: "transaction_id", value: id });
 					self.attachmentDS.filter({ field: "transaction_id", value: id });
-					self.referenceDS.filter({ field: "id", value: view[0].reference_id });					
-					self.referenceLineDS.filter({ field: "transaction_id", value: view[0].reference_id });
 					
+					self.referenceLineDS.filter({ field: "transaction_id", value: view[0].reference_id });					
+					self.referenceDS.query({
+						filter:{ field: "id", value: view[0].reference_id }
+					}).then(function(){
+						var dropdownlist = $("#ddlReference").data("kendoDropDownList");
+						dropdownlist.value(view[0].reference_id);
+					});
+
 					if(view[0].type=="Advance_Settlement") {
 					    self.set("showCashAdvance", true);
 					}else{
