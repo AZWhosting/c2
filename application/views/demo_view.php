@@ -65578,6 +65578,22 @@
 				}).then(function(e){
 					var view = self.dataSource.view();
 
+					if(view[0].type=="Cash_Purchase"){
+						self.set("isCash", true);
+
+						self.accountDS.filter({ field:"account_type_id", value: 10 });
+					}else{
+						self.set("isCash", false);
+						
+						self.accountDS.filter({
+						    logic: "or",
+						    filters: [
+						      { field: "account_type_id", value: 23 },
+						      { field: "account_type_id", value: 24 }
+						    ]
+						});
+					}
+
 					self.set("obj", view[0]);
 
 			        self.set("total", kendo.toString(view[0].amount, "c", view[0].locale));
@@ -65614,7 +65630,6 @@
 					}				
 
 					self.loadDeposit();
-					self.typeChanges();
 				});
 			}				
 		},
@@ -65777,7 +65792,7 @@
 			var obj = this.get("obj");			
 
 			if(obj.type=="Cash_Purchase"){
-				this.set("isCash", true);				
+				this.set("isCash", true);
 
 				this.accountDS.filter({ field:"account_type_id", value: 10 });
 			}else{
