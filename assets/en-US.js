@@ -1111,7 +1111,7 @@ var	en_US = {
 	"import_journal" : "Import Journal",
 	"trx_no": "No. of Trx", // newly added
 	"txn": "txn",
-	"account": "account",
+	"account": "Account",
 	"filter": "filter",
 	"total_asset" : "Total Assets",
 	"total_liabilities" : "Total Liabilities",
@@ -1377,6 +1377,8 @@ var	en_US = {
 	"multiplier": "Multiplier",
 	"utility": "Utility",
 	"none_utility": "None Utility",
+	"for_water": "Water",
+	"for_electricity": "Electricity",
 
 
 

@@ -1351,6 +1351,8 @@ var	km_KH = {
 	"multiplier": "មេគុណ",
 	"utility": "ប្រើទឹកភ្លើង",
 	"none_utility": "មិនប្រើទឹកភ្លើង",
+	"for_water": "សម្រាប់ទឹក",
+	"for_electricity": "សម្រាប់ភ្លើង",
 
 
 

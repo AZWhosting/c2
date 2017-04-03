@@ -56,6 +56,13 @@ class Meter extends DataMapper {
         'attachment' => array(
             'class' => "attachment",
             'other_field' => 'meter'
+        ),
+        'reactive' => array(
+            'class' => "meter",
+            'other_field' => 'meter'
+        ),
+        'meter' => array(
+            'other_field' => 'reactive'
         )
 	);
 	public $has_many = array(

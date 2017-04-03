@@ -56,7 +56,7 @@ class Activate_water extends REST_Controller {
 		
 		if($obj->result_count()>0){
 			foreach ($obj as $value) {
-				// $licensce =;		
+				$licensce = $value->branch->get();		
 		 		$data["results"][] = array(
 		 			"id" 				=> $value->id,	
 		 			"abbr"				=> $value->abbr,
@@ -66,7 +66,8 @@ class Activate_water extends REST_Controller {
 					"location_id" 		=> $value->location_id,					
 					"id_card" 			=> $value->id_card,
 					"family_member" 	=> $value->family_member,
-					"occupation" 		=> $value->occupation
+					"occupation" 		=> $value->occupation,
+					"type" 				=> $licensce->type
 		 		);
 			}
 		}

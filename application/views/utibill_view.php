@@ -537,13 +537,13 @@
 		            	<input data-role="dropdownlist"
 		            	   class="span2"
 		            	   style="padding-right: 1px; height: 32px; margin-right: 10px;" 
-            			   data-option-label="(--- Currency ---)"
-            			   data-auto-bind="false"			                   
+            			   data-option-label="(--- Currency ---)"	                   
 		                   data-value-primitive="true"
 		                   data-text-field="code"
 		                   data-value-field="id"
 		                   data-bind="value: exCurrency,
 		                              source: currencyDS"/>
+
 		            	<input data-bind="visible: priceUnit, value: exPrice, attr: {placeholder: lang.lang.price}" type="text" placeholder="Price" style="height: 32px; padding: 5px; margin-right: 10px;" class="span2 k-textbox k-invalid" />
 		            	<input data-bind="visible: percentUnit, value: exPrice" type="text" placeholder="%" data-spinners="false" data-role="numerictextbox" max="100" min="1" style="padding:0;" class="span2 k-input k-valid" />
 		            	<input data-bind="visible: meterUnit, value: exPrice" type="text" placeholder="0" data-spinners="false" data-role="numerictextbox" max="100" min="1" style="padding:0;" class="span2 k-input k-valid" />
@@ -1493,7 +1493,6 @@
 	</tr>
 </script>
 
-
 <script id="customerSetting-edit-contact-type-template" type="text/x-kendo-tmpl">   
     <tr>                
         <td>
@@ -1681,6 +1680,24 @@
 					</div>
 			        <h2 data-bind="text: lang.lang.add_license">Add License</h2>
 			        <br>
+			        <div class="row-fluid">
+			        	<div class="span3" style="padding-right: 0;">
+							<!-- Group -->
+							<div class="control-group">
+								<label><span data-bind="text: lang.lang.type">Type</span> <span style="color:red">*</span></label>
+		              			<br>
+		              			<select data-role="dropdownlist"
+				                   data-value-primitive="true"
+				                   data-text-field="name"
+				                   data-value-field="id"
+				                   data-bind="
+				                   	source: selectMeterType,
+				                   	value: obj.type"
+				                   style="width: 100%;margin-bottom: 15px;" ></select>
+							</div>
+							<!-- // Group END -->											
+						</div>
+					</div>
 			        <!-- Top Part -->
 			    	<div class="row-fluid">
 			    		<div class="span12 well">									
@@ -3232,6 +3249,7 @@
 							                   data-text-field="name"
 							                   data-value-field="id"
 							                   data-bind="
+							                    enabled: disableOnly,
 							                   	source: selectMeterType,
 							                   	value: obj.type"
 							                   style="width: 100%;margin-bottom: 15px;" ></select>
@@ -3407,8 +3425,8 @@
 										                   style="width: 100%;" />
 													</div>
 												</div>
-												<div class="control-group">
-									    			<label for="latitute"><span data-bind="text: lang.lang.pole">Pole</span> <span style="color:red"></span></label>
+												<div class="control-group" data-bind="visible: electricMeter">
+									    			<label for="latitute"><span data-bind="text: lang.lang.pole">Pole</span> <span style="color:red">*</span></label>
 													<div class="input-prepend">
 														<input data-role="dropdownlist"
 								              			   data-option-label="(--- Select ---)"        
@@ -3423,8 +3441,8 @@
 										                   style="width: 100%;" />
 													</div>
 												</div>
-												<div class="control-group">
-									    			<label for="latitute"><span data-bind="text: lang.lang.box">Box</span> <span style="color:red"></span></label>
+												<div class="control-group" data-bind="visible: electricMeter">
+									    			<label for="latitute"><span data-bind="text: lang.lang.box">Box</span> <span style="color:red">*</span></label>
 													<div class="input-prepend">
 														<input data-role="dropdownlist"
 								              			   data-option-label="(--- Select ---)"        
@@ -3435,6 +3453,20 @@
 										                   data-bind="
 										                   	source: boxDS, 
 										                   	value: obj.box_id" 
+										                   style="width: 100%;" />
+													</div>
+												</div>
+												<div class="control-group" data-bind="visible: electricMeter">
+									    			<label for="latitute"><span data-bind="text: lang.lang.reactive_meter">Reactive Meter</span> <span style="color:red">*</span></label>
+													<div class="input-prepend">
+														<input data-role="autocomplete"
+								              			   data-option-label="(--- Select ---)"        
+										                   data-value-primitive="false"
+										                   data-ignore-case="false"
+										                   data-text-field="number"
+										                   data-bind="
+										                   	source: meterListDS, 
+										                   	value: obj.reactive_of" 
 										                   style="width: 100%;" />
 													</div>
 												</div>
@@ -11186,6 +11218,8 @@
 		selectSupplierMessage 		: "Please select a supplier.",
 		selectItemMessage 			: "Please select an item.",
 		duplicateSelectedItemMessage: "You already selected this item.",
+		meterDS						: dataStore(apiUrl + "meters"),
+		meterlist 					: [],
 		pageLoad 					: function(){
 			this.loadAccounts();
 			this.accountTypeDS.read();
@@ -11208,6 +11242,7 @@
 			this.loadCustomers();
 			this.loadSuppliers();
 			this.loadEmployees();
+			this.loadMeters();
 		},
 		getFiscalDate 				: function(){
 			var today = new Date(),	
@@ -11218,6 +11253,24 @@
 			}		
 
 			return fDate;
+		},
+		loadMeters 				: function(){
+			var self = this, raw = this.get("meterlist");
+
+			//Clear array
+			if(raw.length>0){
+				raw.splice(0,raw.length);
+			}
+
+			this.meterDS.query({
+				filter: {field: "type", value: "e"},
+			}).then(function(){
+				var view = self.meterDS.view();
+
+				$.each(view, function(index, value){
+					raw.push({id: view[index].id, number: view[index].meter_number});
+				});
+			});
 		},
 		loadPrefixes 				: function(){
 			var self = this, raw = this.get("prefixList");
@@ -12391,7 +12444,10 @@
         tariffItemDS		: dataStore(apiUrl + "plans/tariff"),
         txnTemplateDS		: dataStore(apiUrl + "transaction_templates"),
         objBloc 			: null,
-        currencyDS  		: banhji.source.currencyDS,
+        currencyDS  			: new kendo.data.DataSource({
+		  	data: banhji.source.currencyList,
+		  	filter: { field:"status", value: 1 }
+		}),
         licenseDS 			: dataStore(apiUrl + "branches"),
         branchDS 			: dataStore(apiUrl + "branches"),
         planDS 				: dataStore(apiUrl + "plans"),
@@ -13073,6 +13129,10 @@
 		isEdit      : false,
 		selectType 	: [{id: "1", name: "Active"},{id: "0", name: "Inactive"},{id: "2", name: "Void"}],
 		selectCurrency : [{id: "3", name: "KHR"},{id: "1", name: "USD"},{id: "10", name: "THB"},{id: "11", name: "VND"}],
+		selectMeterType 	: [
+			{id: "w", name: "Meter"},
+			{id: "e", name: "Electircity"}
+		],
 		pageLoad    : function(id){
 			if(id){
 				this.loadObj(id);
@@ -13095,6 +13155,8 @@
 			this.selectType[0].set("name", this.lang.lang.active);
 			this.selectType[1].set("name", this.lang.lang.inactive);
 			this.selectType[2].set("name", this.lang.lang.void);
+			this.selectMeterType[0].set("name", this.lang.lang.for_water);
+			this.selectMeterType[1].set("name", this.lang.lang.for_electricity);
 		},
 		provinceChange : function(pro){
 			this.districtDS.filter({field: "province_id", value: this.obj.province});
@@ -13136,6 +13198,7 @@
 				mobile 			: null,
 				telephone 		: null,
 				attachment_id 	: 0,
+				type 			: "w",
 				image_url 		: "https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/no_image.jpg",
 				term_of_condition : null
 			});
@@ -13818,7 +13881,12 @@
 		itemDS 				: null,
 		obj 				: null,
 		isEdit 				: false,
+		disableOnly 		: false,
 		contact 			: null,
+		electricMeter 		: false,
+		meterListDS 		: new kendo.data.DataSource({
+		  	data: banhji.source.meterlist
+		}),
 		selectMeterType 	: [
 			{id: "w", name: "Meter"},
 			{id: "e", name: "Electircity"}
@@ -13831,6 +13899,9 @@
 		pageLoad 			: function(id){
 			if(id){
 				this.loadObj(id);
+				this.meterListDS.filter({
+					field: "id", operator: "neq", value: id
+				});
 			}else{
 				if(this.contact){
 					this.addEmpty(this.contact.id);
@@ -13863,10 +13934,15 @@
 					view[0].set("image_url", "https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/no_image.jpg");
 					self.set("obj", view[0]);
 				}
-				self.loadMap();	
+				self.loadMap();
+				if(view[0].type == "e"){
+		    		self.set("electricMeter", true);
+		    	}else{
+		    		self.set("electricMeter", false);
+		    	}
 			});
 		},
-		loadMap : function(){
+		loadMap 			: function(){
 			var obj = this.get("obj");
 			lat = kendo.parseFloat(obj.latitute),
 			lng = kendo.parseFloat(obj.longtitute);
@@ -13915,14 +13991,20 @@
 					date_used 		: null,
 					map 			: null,
 					memo 			: null,
-					type 			: "w",
+					type 			: view[0].type,
 					multiplier 		: 1,
 					starting_no 	: 0,
 					attachment_id	: 0,
+					reactive_of 	: null,
 					activated 		: 0,
-					number_digit 	: null,
+					number_digit 	: 4,
 					image_url 		: "https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/no_image.jpg"
-		    	});		
+		    	});
+		    	if(view[0].type == "e"){
+		    		self.set("electricMeter", true);
+		    	}else{
+		    		self.set("electricMeter", false);
+		    	}
 				var obj = self.dataSource.at(0);
 				self.set("obj", obj);
 			});	
@@ -14019,10 +14101,24 @@
 			var self = this;
 			var obj = this.get("obj");
 			if(obj.meter_number && obj.plan_id != 0 && obj.plan_id && obj.location_id && obj.date_used && obj.number_digit){
-				if(this.attachmentDS.hasChanges() == true) {
-					this.uploadFile();
+				if(obj.type == "w"){
+					if(this.attachmentDS.hasChanges() == true) {
+						this.uploadFile();
+					}else{
+						this.saveDataSource();
+					}
 				}else{
-					this.saveDataSource();
+					if(obj.pole_id != 0 && obj.box_id != 0){
+						if(this.attachmentDS.hasChanges() == true) {
+							this.uploadFile();
+						}else{
+							this.saveDataSource();
+						}
+					}else{
+						var notificat = $("#ntf1").data("kendoNotification");
+			    		notificat.hide();
+			    		notificat.error(self.lang.lang.field_required_message);	
+					}
 				}
 			}else{
 				var notificat = $("#ntf1").data("kendoNotification");

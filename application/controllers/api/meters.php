@@ -62,6 +62,7 @@ class Meters extends REST_Controller {
 				$currency= $value->currency->get();
 				$contacts = $value->contact->get();
 				$image_url = $value->attachment->get();
+				$reactive = $value->reactive->get_raw();
 				//Results				
 				$data["results"][] = array(
 					"id" 					=> $value->id,
@@ -92,7 +93,9 @@ class Meters extends REST_Controller {
 					"latitute" 				=> $value->latitute,
 					"longtitute" 			=> $value->longtitute,
 					"multiplier" 			=> $value->multiplier,
-					"date_used" 			=> $value->date_used
+					//"reactive_of" 			=> $value->reactive_of,
+					"date_used" 			=> $value->date_used,
+					"reactive_of" 			=> $reactive->result(0)
 				);
 			}
 		}
@@ -140,6 +143,7 @@ class Meters extends REST_Controller {
 			$obj->number_digit 			= isset($value->number_digit)		?$value->number_digit:4;
 			$obj->plan_id 				= isset($value->plan_id)			?$value->plan_id:0;
 			$obj->type 					= isset($value->type)				?$value->type:"w";
+			$obj->reactive_of 			= isset($value->reactive_of)		?$value->reactive_of->id:"";
 			$obj->attachment_id 		= isset($value->attachment_id)		?$value->attachment_id:0;
 			$obj->pole_id 				= isset($value->pole_id)			?$value->pole_id:0;
 			$obj->box_id 				= isset($value->box_id)				?$value->box_id:0;
@@ -161,6 +165,7 @@ class Meters extends REST_Controller {
 					"latitute" 				=> $obj->latitute,
 					"longtitute" 			=> $obj->longtitute,
 					"multiplier" 			=> $obj->multiplier,
+					"reactive_of" 			=> $obj->reactive_of,
 					"date_used" 			=> $obj->date_used
 				);					
 			}			
@@ -221,6 +226,7 @@ class Meters extends REST_Controller {
 			$obj->attachment_id 		= isset($value->attachment_id)		?$value->attachment_id:0;
 			$obj->pole_id 				= isset($value->pole_id)			?$value->pole_id:0;
 			$obj->box_id 				= isset($value->box_id)				?$value->box_id:0;
+			$obj->reactive_of 			= isset($value->reactive_of)		?$value->reactive_of->id:"";
 			if($obj->save()){
 				//Results
 				$data[] = array(
@@ -241,6 +247,7 @@ class Meters extends REST_Controller {
 					"latitute" 				=> $obj->latitute,
 					"longtitute" 			=> $obj->longtitute,
 					"multiplier" 			=> $obj->multiplier,
+					"reactive_of" 			=> $obj->reactive_of,
 					"date_used" 			=> $obj->date_used
 				);					
 			}

@@ -110,7 +110,8 @@ class Branches extends REST_Controller {
 			isset($value->email) 				? $obj->email 				= $value->email : "";
 			isset($value->mobile) 				? $obj->mobile 				= $value->mobile : "";
 			isset($value->telephone) 			? $obj->telephone 			= $value->telephone : "";
-			isset($value->attachment_id) 			? $obj->attachment_id 			= $value->attachment_id : 0;
+			isset($value->type) 				? $obj->type 				= $value->type : "w";
+			isset($value->attachment_id) 		? $obj->attachment_id 		= $value->attachment_id : 0;
 			isset($value->term_of_condition) 	? $obj->term_of_condition 	= $value->term_of_condition : "";
 			
 			if($obj->save()){
@@ -170,6 +171,7 @@ class Branches extends REST_Controller {
 			isset($value->email) 				? $obj->email 				= $value->email : "";
 			isset($value->mobile) 				? $obj->mobile 				= $value->mobile : "";
 			isset($value->telephone) 			? $obj->telephone 			= $value->telephone : "";
+			isset($value->type) 			? $obj->type 			= $value->type : "";
 			isset($value->attachment_id) 		? $obj->attachment_id 			= $value->attachment_id : 0;
 			isset($value->term_of_condition) 	? $obj->term_of_condition 	= $value->term_of_condition : "";
 			
