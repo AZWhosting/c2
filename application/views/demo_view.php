@@ -21824,192 +21824,184 @@
 	</div>
 </script>
 <script id="internalUsage-from-item-line-template" type="text/x-kendo-tmpl">
-	
-		<tr data-uid="#: uid #">
-			<td>
-				<i class="icon-trash" data-bind="events: { click: removeRow }"></i>
-				#:banhji.internalUsage.lineDS.indexOf(data)+1#
-			</td>		
-			<td>
-				<input id="ccbItem" name="ccbItem-#:uid#"
-					   data-role="combobox"
-					   data-template="item-list-tmpl"
-					   data-value-primitive="true"
-	                   data-text-field="name"
-	                   data-value-field="id"
-	                   data-bind="value: item_id, 
-	                   			  source: itemDS,
-	                   			  events:{ change: itemChanges }"
-	                   placeholder="Add Item..." 
-	                   required data-required-msg="required" style="width: 100%" />			
-			</td>		
-			<td>
-				<input id="txtDescription-#:uid#" name="txtDescription-#:uid#" 
-						type="text" class="k-textbox" 
-						data-bind="value: description"
-						style="width: 100%; margin-bottom: 0;" />
-			</td>
-			<td>
-				<input id="txtQuantity-#:uid#" name="txtQuantity-#:uid#"
-					   type="number" class="k-textbox"
-					   data-min="0"
-				       data-bind="value: quantity, events: {change : changes}"
-				       required data-required-msg="required"
-				       placeholder="Qty..." 
-				       style="text-align: right; width: 40%;" />
+	<tr data-uid="#: uid #">
+		<td>
+			<i class="icon-trash" data-bind="events: { click: removeRow }"></i>
+			#:banhji.internalUsage.lineDS.indexOf(data)+1#
+		</td>		
+		<td>
+			<input id="ccbItem" name="ccbItem-#:uid#"
+				   data-role="combobox"
+				   data-template="item-list-tmpl"
+				   data-value-primitive="true"
+                   data-text-field="name"
+                   data-value-field="id"
+                   data-bind="value: item_id, 
+                   			  source: itemDS,
+                   			  events:{ change: itemChanges }"
+                   placeholder="Add Item..." 
+                   required data-required-msg="required" style="width: 100%" />			
+		</td>		
+		<td>
+			<input id="txtDescription-#:uid#" name="txtDescription-#:uid#" 
+					type="text" class="k-textbox" 
+					data-bind="value: description"
+					style="width: 100%; margin-bottom: 0;" />
+		</td>
+		<td>
+			<input id="txtQuantity-#:uid#" name="txtQuantity-#:uid#"
+				   type="number" class="k-textbox"
+				   data-min="0"
+			       data-bind="value: quantity, events: {change : changes}"
+			       required data-required-msg="required"
+			       placeholder="Qty..." 
+			       style="text-align: right; width: 40%;" />
 
-				<input id="ddlMesurement"
-					   data-role="dropdownlist"
-					   data-header-template="item-measurement-header-tmpl"
-					   data-value-primitive="true"                  
-	                   data-text-field="measurement"
-	                   data-value-field="measurement_id"
-	                   data-bind="value: measurement_id,
-	                   			  source: item_prices,
-	                   			  events:{ change: measurementChanges }"
-	                   data-option-label="UM" style="width: 57%;" />
-			</td>
-			<td class="right">
-				<span data-format="n" data-bind="text: cost"></span>
-			</td>
-	    </tr>
-    
+			<input id="ddlMesurement"
+				   data-role="dropdownlist"
+				   data-header-template="item-measurement-header-tmpl"
+				   data-value-primitive="true"                  
+                   data-text-field="measurement"
+                   data-value-field="measurement_id"
+                   data-bind="value: measurement_id,
+                   			  source: item_prices,
+                   			  events:{ change: measurementChanges }"
+                   data-option-label="UM" style="width: 57%;" />
+		</td>
+		<td class="right">
+			<span data-format="n" data-bind="text: cost"></span>
+		</td>
+    </tr>
 </script>
 <script id="internalUsage-from-account-line-template" type="text/x-kendo-tmpl">
-	
-		<tr data-uid="#: uid #">		
-			<td class="center">
-				<i class="icon-trash" data-bind="events: { click: removeRowAccount }"></i>
-				#:banhji.internalUsage.accountLineDS.indexOf(data)+1#			
-			</td>			
-			<td>
-				<input id="cbbAccounts" name="cbbAccounts-#:uid#"
-					   data-role="combobox"
-	                   data-header-template="account-header-tmpl"                 
-	                   data-template="account-list-tmpl"
-	                   data-value-primitive="true"
-	                   data-text-field="name"
-	                   data-value-field="id"
-	                   data-bind="value: account_id,
-	                              source: accountDS"
-	                   data-placeholder="Add Account.."                                     
-	                   required data-required-msg="required" style="width: 100%" />	
-			</td>
-			<td>
-				<input type="text" class="k-textbox" 
-						data-bind="value: description"					
-						style="width: 100%; margin-bottom: 0;" />
-			</td>
-			<td class="right">
-				<input id="txtAmount-#:uid#" name="txtAmount-#:uid#"
+	<tr data-uid="#: uid #">		
+		<td class="center">
+			<i class="icon-trash" data-bind="events: { click: removeRowAccount }"></i>
+			#:banhji.internalUsage.accountLineDS.indexOf(data)+1#			
+		</td>			
+		<td>
+			<input id="cbbAccounts" name="cbbAccounts-#:uid#"
+				   data-role="combobox"
+                   data-header-template="account-header-tmpl"                 
+                   data-template="account-list-tmpl"
+                   data-value-primitive="true"
+                   data-text-field="name"
+                   data-value-field="id"
+                   data-bind="value: account_id,
+                              source: accountDS"
+                   data-placeholder="Add Account.."                                     
+                   required data-required-msg="required" style="width: 100%" />	
+		</td>
+		<td>
+			<input type="text" class="k-textbox" 
+					data-bind="value: description"					
+					style="width: 100%; margin-bottom: 0;" />
+		</td>
+		<td class="right">
+			<input id="txtAmount-#:uid#" name="txtAmount-#:uid#"
+			   type="number" class="k-textbox"
+			   data-min="0"
+		       data-bind="value: amount, events: {change : changes}"
+		       required data-required-msg="required"
+		       placeholder="Amount..." 
+		       style="text-align: right; width: 100%;" />
+		</td>
+    </tr>
+</script>
+<script id="internalUsage-to-item-line-template" type="text/x-kendo-tmpl">
+	<tr data-uid="#: uid #">
+		<td>
+			<i class="icon-trash" data-bind="events: { click: removeItemTo }"></i>
+			#:banhji.internalUsage.toItemLineDS.indexOf(data)+1#
+		</td>
+		<td>
+			<input id="ccbItem" name="ccbItem-#:uid#"
+				   data-role="combobox"
+				   data-template="item-list-tmpl"
+				   data-value-primitive="true"
+                   data-text-field="name"
+                   data-value-field="id"
+                   data-bind="value: item_id, 
+                   			  source: itemDS,
+                   			  events:{ change: toItemChanges }"
+                   placeholder="Add Item..." 
+                   required data-required-msg="required" style="width: 100%" />			
+		</td>		
+		<td>
+			<input id="txtDescription-#:uid#" name="txtDescription-#:uid#" 
+					type="text" class="k-textbox" 
+					data-bind="value: description"
+					style="width: 100%; margin-bottom: 0;" />
+		</td>
+		<td>
+			<input id="txtQuantity-#:uid#" name="txtQuantity-#:uid#"
+				   type="number" class="k-textbox"
+				   data-min="0"
+			       data-bind="value: quantity, events: {change : changes}"
+			       required data-required-msg="required"
+			       placeholder="Qty..." 
+			       style="text-align: right; width: 40%;" />
+
+			<input id="ddlMesurement"
+				   data-role="dropdownlist"
+				   data-header-template="item-measurement-header-tmpl"
+				   data-value-primitive="true"                  
+                   data-text-field="measurement"
+                   data-value-field="measurement_id"
+                   data-bind="value: measurement_id,
+                   			  source: item_prices,
+                   			  events:{ change: measurementChanges }"
+                   data-option-label="UM" style="width: 57%;" />
+			
+		</td>
+		<td class="right">
+			<input id="txtCost-#:uid#" name="txtCost-#:uid#"
+			   type="number" class="k-textbox"
+			   data-min="0"
+		       data-bind="value: cost, events: {change : changes}"
+		       required data-required-msg="required"
+		       placeholder="Cost..." 
+		       style="text-align: right; width: 100%;" />
+		</td>
+		<td class="right">
+			<span data-format="n" data-bind="text: amount"></span>
+		</td>	
+    </tr>
+</script>
+<script id="internalUsage-to-account-line-template" type="text/x-kendo-tmpl">
+	<tr data-uid="#: uid #">
+		<td>
+			<i class="icon-trash" data-bind="events: { click: removeAccountTo }"></i>
+			#:banhji.internalUsage.toAccountLineDS.indexOf(data)+1#
+		</td>
+		<td>
+			<input id="cbbAccounts" name="cbbAccounts-#:uid#"
+				   data-role="combobox"
+                   data-header-template="account-header-tmpl"                 
+                   data-template="account-list-tmpl"
+                   data-value-primitive="true"
+                   data-text-field="name"
+                   data-value-field="id"
+                   data-bind="value: account_id,
+                              source: toAccountDS"
+                   data-placeholder="Add Account.."                                     
+                   required data-required-msg="required" style="width: 100%" />	
+		</td>
+		<td>
+			<input type="text" class="k-textbox" 
+					data-bind="value: description"					
+					style="width: 100%; margin-bottom: 0;" />
+		</td>
+		<td class="right">
+			<input id="txtAmount-#:uid#" name="txtAmount-#:uid#"
 				   type="number" class="k-textbox"
 				   data-min="0"
 			       data-bind="value: amount, events: {change : changes}"
 			       required data-required-msg="required"
 			       placeholder="Amount..." 
 			       style="text-align: right; width: 100%;" />
-			</td>
-	    </tr>
-    
-</script>
-<script id="internalUsage-to-item-line-template" type="text/x-kendo-tmpl">
-	
-		<tr data-uid="#: uid #">
-			<td>
-				<i class="icon-trash" data-bind="events: { click: removeItemTo }"></i>
-				#:banhji.internalUsage.toItemLineDS.indexOf(data)+1#
-			</td>
-			<td>
-				<input id="ccbItem" name="ccbItem-#:uid#"
-					   data-role="combobox"
-					   data-template="item-list-tmpl"
-					   data-value-primitive="true"
-	                   data-text-field="name"
-	                   data-value-field="id"
-	                   data-bind="value: item_id, 
-	                   			  source: itemDS,
-	                   			  events:{ change: toItemChanges }"
-	                   placeholder="Add Item..." 
-	                   required data-required-msg="required" style="width: 100%" />			
-			</td>		
-			<td>
-				<input id="txtDescription-#:uid#" name="txtDescription-#:uid#" 
-						type="text" class="k-textbox" 
-						data-bind="value: description"
-						style="width: 100%; margin-bottom: 0;" />
-			</td>
-			<td>
-				<input id="txtQuantity-#:uid#" name="txtQuantity-#:uid#"
-					   type="number" class="k-textbox"
-					   data-min="0"
-				       data-bind="value: quantity, events: {change : changes}"
-				       required data-required-msg="required"
-				       placeholder="Qty..." 
-				       style="text-align: right; width: 40%;" />
-
-				<input id="ddlMesurement"
-					   data-role="dropdownlist"
-					   data-header-template="item-measurement-header-tmpl"
-					   data-value-primitive="true"                  
-	                   data-text-field="measurement"
-	                   data-value-field="measurement_id"
-	                   data-bind="value: measurement_id,
-	                   			  source: item_prices,
-	                   			  events:{ change: measurementChanges }"
-	                   data-option-label="UM" style="width: 57%;" />
-				
-			</td>
-			<td class="right">
-				<input id="txtCost-#:uid#" name="txtCost-#:uid#"
-				   type="number" class="k-textbox"
-				   data-min="0"
-			       data-bind="value: cost, events: {change : changes}"
-			       required data-required-msg="required"
-			       placeholder="Cost..." 
-			       style="text-align: right; width: 100%;" />
-			</td>
-			<td class="right">
-				<span data-format="n" data-bind="text: amount"></span>
-			</td>	
-	    </tr>
-	
-</script>
-<script id="internalUsage-to-account-line-template" type="text/x-kendo-tmpl">
-	
-		<tr data-uid="#: uid #">
-			<td>
-				<i class="icon-trash" data-bind="events: { click: removeAccountTo }"></i>
-				#:banhji.internalUsage.toAccountLineDS.indexOf(data)+1#
-			</td>
-			<td>
-				<input id="cbbAccounts" name="cbbAccounts-#:uid#"
-					   data-role="combobox"
-	                   data-header-template="account-header-tmpl"                 
-	                   data-template="account-list-tmpl"
-	                   data-value-primitive="true"
-	                   data-text-field="name"
-	                   data-value-field="id"
-	                   data-bind="value: account_id,
-	                              source: inventoryFixAssetAccountDS"
-	                   data-placeholder="Add Account.."                                     
-	                   required data-required-msg="required" style="width: 100%" />	
-			</td>
-			<td>
-				<input type="text" class="k-textbox" 
-						data-bind="value: description"					
-						style="width: 100%; margin-bottom: 0;" />
-			</td>
-			<td class="right">
-				<input id="txtAmount-#:uid#" name="txtAmount-#:uid#"
-					   type="number" class="k-textbox"
-					   data-min="0"
-				       data-bind="value: amount, events: {change : changes}"
-				       required data-required-msg="required"
-				       placeholder="Amount..." 
-				       style="text-align: right; width: 100%;" />
-			</td>
-	    </tr>
-    
+		</td>
+    </tr>
 </script>
 <script id="itemRecurring" type="text/x-kendo-template">
 	<div id="slide-form">
@@ -50619,6 +50611,7 @@
 			//Cash account on DR
 			$.each(this.lineDS.data(), function(index, value){
 				sum += value.amount;
+
 				self.journalLineDS.add({
 					transaction_id 		: transaction_id,
 					account_id 			: value.account_id,
@@ -51876,268 +51869,244 @@
 	    //Journal
 	    addJournal 			: function(transaction_id){
 	    	var self = this,
-	    	obj = this.get("obj"),
-	    	contact = this.contactDS.get(obj.contact_id),
-	    	assemblyItemList = [],	    				    	
-	    	saleList = {},
-	    	taxList = {},
-	    	inventoryList = {},
-			cogsList = {};			
+		    	obj = this.get("obj"),
+		    	contact = this.contactDS.get(obj.contact_id),
+		    	raw = "", entries = {};
 			
-			//Arrange sale, cogs, inventory
-			$.each(this.lineDS.data(), function(index, value){										
+			//Item lines
+			$.each(this.lineDS.data(), function(index, value){
 				var item = self.itemDS.get(value.item_id),
-				amount = value.quantity * value.price;
+					itemRate = banhji.source.getRate(item.locale, new Date(obj.issued_date));
 
+				//Assembly
 				if(item.is_assembly=="1"){
 					assemblyItemList.push(value.item_id);
-				}				
-				
-				//Add Tax list																							
-				if(value.tax_item_id>0){
-					var taxItem = self.taxItemDS.get(value.tax_item_id),
-					taxID = taxItem.account_id,
-					taxAmt = value.amount*taxItem.rate;
+				}
 
-					if(taxList[taxID]===undefined){
-						taxList[taxID]={"id": taxID, "amount": taxAmt};						
-					}else{											
-						if(taxList[taxID].id===taxID){
-							taxList[taxID].amount += taxAmt;
-						}else{
-							taxList[taxID]={"id": taxID, "amount": taxAmt};
-						}
-					}
-				}				
-				
-				//Add Income list
-				var incomeID = kendo.parseInt(item.income_account_id);																				
-				if(incomeID>0){
-					if(saleList[incomeID]===undefined){
-						saleList[incomeID]={"id": incomeID, "amount": amount};						
-					}else{											
-						if(saleList[incomeID].id===incomeID){
-							saleList[incomeID].amount += amount;
-						}else{
-							saleList[incomeID]={"id": incomeID, "amount": amount};
-						}
-					}
-				}				
-				
-				//Add COGS list
+				//COGS on Dr
 				var cogsID = kendo.parseInt(item.expense_account_id);
 				if(cogsID>0){
-					var cogsAmount = 0, 
-					itemRate = banhji.source.getRate(item.locale, new Date(obj.issued_date));
+					raw = "dr"+cogsID;
 
+					var cogsAmount = 0;
 					if(item.item_type_id==1 || item.item_type_id==4){
-						cogsAmount = (value.quantity*value.unit_value)*item.cost;						
+						cogsAmount = (value.quantity*value.unit_value)*item.cost;
 					}else{
 						cogsAmount = value.amount;
-					}					
-
-					if(cogsAmount>0){
-						if(cogsList[cogsID]===undefined){
-							cogsList[cogsID]={"id": cogsID, "amount": cogsAmount, "rate": itemRate, "locale": item.locale};						
-						}else{											
-							if(cogsList[cogsID].id===cogsID){
-								cogsList[cogsID].amount += cogsAmount;
-							}else{
-								cogsList[cogsID]={"id": cogsID, "amount": cogsAmount, "rate": itemRate, "locale": item.locale};
-							}
-						}
 					}
-				}						
 
-				//Add Inventory list
+					if(entries[raw]===undefined){
+						entries[raw] = {
+							transaction_id 		: transaction_id,
+							account_id 			: cogsID,
+							contact_id 			: obj.contact_id,
+							description 		: value.description,
+							reference_no 		: "",
+							segments 	 		: [],
+							dr 	 				: cogsAmount,
+							cr 					: 0,
+							rate				: itemRate,
+							locale				: item.locale
+						};
+					}else{
+						entries[raw].dr += cogsAmount;
+					}
+				}
+
+				//Inventory on Cr
 				var inventoryID = kendo.parseInt(item.inventory_account_id);
 				if(inventoryID>0){
-					var inventoryAmount = 0, 
-					itemRate = banhji.source.getRate(item.locale, new Date(obj.issued_date));
+					raw = "cr"+inventoryID;
 
+					var inventoryAmount = 0;
 					if(item.item_type_id==1 || item.item_type_id==4){
-						inventoryAmount = (value.quantity*value.unit_value)*item.cost;						
+						inventoryAmount = (value.quantity*value.unit_value)*item.cost;
 					}else{
 						inventoryAmount = value.amount;
 					}
 
-					if(inventoryList[inventoryID]===undefined){
-						inventoryList[inventoryID]={"id": inventoryID, "amount": inventoryAmount, "rate": itemRate, "locale": item.locale};						
-					}else{											
-						if(inventoryList[inventoryID].id===inventoryID){
-							inventoryList[inventoryID].amount += inventoryAmount;
-						}else{
-							inventoryList[inventoryID]={"id": inventoryID, "amount": inventoryAmount, "rate": itemRate, "locale": item.locale};
-						}
+					if(entries[raw]===undefined){
+						entries[raw] = {
+							transaction_id 		: transaction_id,
+							account_id 			: inventoryID,
+							contact_id 			: obj.contact_id,
+							description 		: value.description,
+							reference_no 		: "",
+							segments 	 		: [],
+							dr 	 				: 0,
+							cr 					: inventoryAmount,
+							rate				: itemRate,
+							locale				: item.locale
+						};
+					}else{
+						entries[raw].cr += inventoryAmount;
 					}
 				}
-			});//End Foreach Loop
 
-			//Assembly Item for cogs and inventory
+				//Sale on Cr
+				var incomeID = kendo.parseInt(item.income_account_id);
+				if(incomeID>0){
+					raw = "cr"+incomeID;
+
+					if(entries[raw]===undefined){
+						entries[raw] = {
+							transaction_id 		: transaction_id,
+							account_id 			: incomeID,
+							contact_id 			: obj.contact_id,
+							description 		: value.description,
+							reference_no 		: "",
+							segments 	 		: [],
+							dr 	 				: 0,
+							cr 					: value.amount,
+							rate				: obj.rate,
+							locale				: obj.locale
+						};
+					}else{
+						entries[raw].cr += value.amount;
+					}
+				}
+
+				//Tax on Cr
+				if(value.tax_item_id>0){
+					var taxItem = self.taxItemDS.get(value.tax_item_id),
+						raw = "cr"+taxItem.account_id,
+						taxAmt = value.amount * taxItem.rate;
+
+					if(entries[raw]===undefined){
+						entries[raw] = {
+							transaction_id 		: transaction_id,
+							account_id 			: taxItem.account_id,
+							contact_id 			: obj.contact_id,
+							description 		: value.description,
+							reference_no 		: "",
+							segments 	 		: [],
+							dr 	 				: 0,
+							cr 					: taxAmt,
+							rate				: obj.rate,
+							locale				: obj.locale
+						};
+					}else{
+						entries[raw].cr += taxAmt;
+					}
+				}
+			});
+
+			//Assembly Item
 			$.each(self.assemblyLineDS.data(), function(index, value){
-				var item = self.itemDS.get(value.item_id);
-				
-				//Add COGS list
+				var item = self.itemDS.get(value.item_id),
+					itemRate = banhji.source.getRate(item.locale, new Date(obj.issued_date));
+
+				//COGS on Dr
 				var cogsID = kendo.parseInt(item.expense_account_id);
 				if(cogsID>0){
-					var cogsAmount = 0, 
-					itemRate = banhji.source.getRate(item.locale, new Date(obj.issued_date));
-					
-					cogsAmount = value.quantity*item.cost;
+					raw = "dr"+cogsID;
 
-					if(cogsAmount>0){
-						if(cogsList[cogsID]===undefined){
-							cogsList[cogsID]={"id": cogsID, "amount": cogsAmount, "rate": itemRate, "locale": item.locale};						
-						}else{											
-							if(cogsList[cogsID].id===cogsID){
-								cogsList[cogsID].amount += cogsAmount;
-							}else{
-								cogsList[cogsID]={"id": cogsID, "amount": cogsAmount, "rate": itemRate, "locale": item.locale};
-							}
-						}
+					var cogsAmount = 0;
+					if(item.item_type_id==1 || item.item_type_id==4){
+						cogsAmount = (value.quantity*value.unit_value)*item.cost;
+					}else{
+						cogsAmount = value.amount;
+					}
+
+					if(entries[raw]===undefined){
+						entries[raw] = {
+							transaction_id 		: transaction_id,
+							account_id 			: cogsID,
+							contact_id 			: obj.contact_id,
+							description 		: value.description,
+							reference_no 		: "",
+							segments 	 		: [],
+							dr 	 				: cogsAmount,
+							cr 					: 0,
+							rate				: itemRate,
+							locale				: item.locale
+						};
+					}else{
+						entries[raw].dr += cogsAmount;
 					}
 				}
 
-				//Add Inventory list
+				//Inventory on Cr
 				var inventoryID = kendo.parseInt(item.inventory_account_id);
 				if(inventoryID>0){
-					var inventoryAmount = 0, 
-					itemRate = banhji.source.getRate(item.locale, new Date(obj.issued_date));
+					raw = "cr"+inventoryID;
 
-					inventoryAmount = value.quantity*item.cost;
+					var inventoryAmount = 0;
+					if(item.item_type_id==1 || item.item_type_id==4){
+						inventoryAmount = (value.quantity*value.unit_value)*item.cost;
+					}else{
+						inventoryAmount = value.amount;
+					}
 
-					if(inventoryList[inventoryID]===undefined){
-						inventoryList[inventoryID]={"id": inventoryID, "amount": inventoryAmount, "rate": itemRate, "locale": item.locale};						
-					}else{											
-						if(inventoryList[inventoryID].id===inventoryID){
-							inventoryList[inventoryID].amount += inventoryAmount;
-						}else{
-							inventoryList[inventoryID]={"id": inventoryID, "amount": inventoryAmount, "rate": itemRate, "locale": item.locale};
-						}
+					if(entries[raw]===undefined){
+						entries[raw] = {
+							transaction_id 		: transaction_id,
+							account_id 			: inventoryID,
+							contact_id 			: obj.contact_id,
+							description 		: value.description,
+							reference_no 		: "",
+							segments 	 		: [],
+							dr 	 				: 0,
+							cr 					: inventoryAmount,
+							rate				: itemRate,
+							locale				: item.locale
+						};
+					}else{
+						entries[raw].cr += inventoryAmount;
 					}
 				}
-			});		
-
-			//Start journal
+			});
+			
 			//Cash on Dr 
-			this.journalLineDS.add({					
+			this.journalLineDS.add({
 				transaction_id 		: transaction_id,
-				account_id 			: obj.account_id,				
-				contact_id 			: obj.contact_id,				
-				description 		: "",
+				account_id 			: obj.account_id,
+				contact_id 			: obj.contact_id,
+				description 		: obj.memo,
 				reference_no 		: "",
-				segments 	 		: [],								
-				dr 	 				: obj.amount - obj.deposit,
-				cr 					: 0,				
+				segments 	 		: [],
+				dr 	 				: obj.amount - (obj.discount + obj.deposit),
+				cr 					: 0,
 				rate				: obj.rate,
 				locale				: obj.locale
 			});
 
-			//Discount on Dr			
-			if(obj.discount > 0){				
-				this.journalLineDS.add({					
+			//Discount on Dr
+			if(obj.discount>0){
+				this.journalLineDS.add({
 					transaction_id 		: transaction_id,
-					account_id 			: contact.trade_discount_id,				
-					contact_id 			: obj.contact_id,				
-					description 		: "",
+					account_id 			: contact.trade_discount_id,
+					contact_id 			: obj.contact_id,
+					description 		: obj.memo,
 					reference_no 		: "",
-					segments 	 		: [],								
+					segments 	 		: [],
 					dr 	 				: obj.discount,
-					cr 					: 0,				
+					cr 					: 0,
 					rate				: obj.rate,
 					locale				: obj.locale
 				});
 			}
 
 			//Deposit on Dr
-			if(obj.deposit > 0){				
-				this.journalLineDS.add({					
+			if(obj.deposit>0){
+				this.journalLineDS.add({
 					transaction_id 		: transaction_id,
-					account_id 			: contact.deposit_account_id,				
-					contact_id 			: obj.contact_id,				
-					description 		: "",
+					account_id 			: contact.deposit_account_id,
+					contact_id 			: obj.contact_id,
+					description 		: obj.memo,
 					reference_no 		: "",
-					segments 	 		: [],								
+					segments 	 		: [],
 					dr 	 				: obj.deposit,
-					cr 					: 0,				
+					cr 					: 0,
 					rate				: obj.rate,
 					locale				: obj.locale
 				});
 			}
 
-			//Sale accounts on Cr		
-			if(!jQuery.isEmptyObject(saleList)){				
-				$.each(saleList, function(index, value){
-					self.journalLineDS.add({					
-						transaction_id 		: transaction_id,
-						account_id 			: value.id,				
-						contact_id 			: obj.contact_id,				
-						description 		: "",
-						reference_no 		: "",
-						segments 	 		: [],								
-						dr 	 				: 0,
-						cr 					: value.amount,				
-						rate				: obj.rate,
-						locale				: obj.locale
-					});										
-				});
-			}
-
-			//Tax on Cr					
-			if(!jQuery.isEmptyObject(taxList)){				
-				$.each(taxList, function(index, value){
-					self.journalLineDS.add({					
-						transaction_id 		: transaction_id,
-						account_id 			: value.id,				
-						contact_id 			: obj.contact_id,				
-						description 		: "",
-						reference_no 		: "",
-						segments 	 		: [],								
-						dr 	 				: 0,
-						cr 					: value.amount,				
-						rate				: obj.rate,
-						locale				: obj.locale
-					});										
-				});
-			}
-			
-			//COGS on Dr 			
-			if(!jQuery.isEmptyObject(cogsList)){							
-				$.each(cogsList, function(index, value){				
-					if(value.amount>0){
-						self.journalLineDS.add({
-							transaction_id 		: transaction_id,
-							account_id 			: value.id,
-							contact_id 			: obj.contact_id,
-							description 		: "",
-							reference_no 		: "",
-							segments 	 		: [],
-							dr 	 				: value.amount,
-							cr 					: 0,
-							rate				: value.rate,
-							locale				: value.locale
-						});
-					}
-				});
-			}
-
-			//Inventory on Cr
-			if(!jQuery.isEmptyObject(inventoryList)){
-				$.each(inventoryList, function(index, value){
-					if(value.amount>0){
-						self.journalLineDS.add({
-							transaction_id 		: transaction_id,
-							account_id 			: value.id,
-							contact_id 			: obj.contact_id,
-							description 		: "",
-							reference_no 		: "",
-							segments 	 		: [],
-							dr 	 				: 0,
-							cr 					: value.amount,
-							rate				: value.rate,
-							locale				: value.locale
-						});
-					}
+			//Add to journal entry
+			if(!jQuery.isEmptyObject(entries)){
+				$.each(entries, function(index, value){
+					self.journalLineDS.add(value);
 				});
 			}
 
@@ -53458,263 +53427,244 @@
 	    //Journal	        
 	    addJournal 			: function(transaction_id){
 	    	var self = this,
-	    	obj = this.get("obj"),
-	    	contact = this.contactDS.get(obj.contact_id),
-	    	taxList = {},
-	    	saleList = {},
-	    	cogsList = {},
-	    	inventoryList = {};
+		    	obj = this.get("obj"),
+		    	contact = this.contactDS.get(obj.contact_id),
+		    	raw = "", entries = {};
 			
-			//Arrange sale, cogs, inventory
+			//Item lines
 			$.each(this.lineDS.data(), function(index, value){
 				var item = self.itemDS.get(value.item_id),
-				amount = value.quantity * value.price;				
+					itemRate = banhji.source.getRate(item.locale, new Date(obj.issued_date));
 
-				//Add Tax list
-				if(value.tax_item_id>0){
-					var taxItem = self.taxItemDS.get(value.tax_item_id),
-					taxID = taxItem.account_id,
-					taxAmt = value.amount*taxItem.rate;
+				//Assembly
+				if(item.is_assembly=="1"){
+					assemblyItemList.push(value.item_id);
+				}
 
-					if(taxList[taxID]===undefined){
-						taxList[taxID]={"id": taxID, "amount": taxAmt};						
-					}else{											
-						if(taxList[taxID].id===taxID){
-							taxList[taxID].amount += taxAmt;
-						}else{
-							taxList[taxID]={"id": taxID, "amount": taxAmt};
-						}
-					}
-				}
-				
-				//Add Income list
-				var incomeID = kendo.parseInt(item.income_account_id);
-				if(incomeID>0){
-					if(saleList[incomeID]===undefined){
-						saleList[incomeID]={"id": incomeID, "amount": amount};						
-					}else{											
-						if(saleList[incomeID].id===incomeID){
-							saleList[incomeID].amount += amount;
-						}else{
-							saleList[incomeID]={"id": incomeID, "amount": amount};
-						}
-					}
-				}
-				
-				//Add COGS list
+				//COGS on Dr
 				var cogsID = kendo.parseInt(item.expense_account_id);
 				if(cogsID>0){
-					var cogsAmount = 0, 
-					itemRate = banhji.source.getRate(item.locale, new Date(obj.issued_date));
+					raw = "dr"+cogsID;
 
+					var cogsAmount = 0;
 					if(item.item_type_id==1 || item.item_type_id==4){
-						cogsAmount = (value.quantity*value.unit_value)*item.cost;						
+						cogsAmount = (value.quantity*value.unit_value)*item.cost;
 					}else{
 						cogsAmount = value.amount;
-					}					
+					}
 
-					if(cogsAmount>0){
-						if(cogsList[cogsID]===undefined){
-							cogsList[cogsID]={"id": cogsID, "amount": cogsAmount, "rate": itemRate, "locale": item.locale};						
-						}else{											
-							if(cogsList[cogsID].id===cogsID){
-								cogsList[cogsID].amount += cogsAmount;
-							}else{
-								cogsList[cogsID]={"id": cogsID, "amount": cogsAmount, "rate": itemRate, "locale": item.locale};
-							}
-						}
+					if(entries[raw]===undefined){
+						entries[raw] = {
+							transaction_id 		: transaction_id,
+							account_id 			: cogsID,
+							contact_id 			: obj.contact_id,
+							description 		: value.description,
+							reference_no 		: "",
+							segments 	 		: [],
+							dr 	 				: cogsAmount,
+							cr 					: 0,
+							rate				: itemRate,
+							locale				: item.locale
+						};
+					}else{
+						entries[raw].dr += cogsAmount;
 					}
 				}
 
-				//Add Inventory list
+				//Inventory on Cr
 				var inventoryID = kendo.parseInt(item.inventory_account_id);
 				if(inventoryID>0){
-					var inventoryAmount = 0, 
-					itemRate = banhji.source.getRate(item.locale, new Date(obj.issued_date));
+					raw = "cr"+inventoryID;
 
+					var inventoryAmount = 0;
 					if(item.item_type_id==1 || item.item_type_id==4){
-						inventoryAmount = (value.quantity*value.unit_value)*item.cost;						
+						inventoryAmount = (value.quantity*value.unit_value)*item.cost;
 					}else{
 						inventoryAmount = value.amount;
 					}
 
-					if(inventoryList[inventoryID]===undefined){
-						inventoryList[inventoryID]={"id": inventoryID, "amount": inventoryAmount, "rate": itemRate, "locale": item.locale};						
-					}else{											
-						if(inventoryList[inventoryID].id===inventoryID){
-							inventoryList[inventoryID].amount += inventoryAmount;
-						}else{
-							inventoryList[inventoryID]={"id": inventoryID, "amount": inventoryAmount, "rate": itemRate, "locale": item.locale};
-						}
-					}
-				}
-			});//End Foreach Loop
-			
-			//Assembly Item for cogs and inventory
-			$.each(self.assemblyLineDS.data(), function(index, value){
-				var item = self.itemDS.get(value.item_id);
-				
-				//Add COGS list
-				var cogsID = kendo.parseInt(item.expense_account_id);
-				if(cogsID>0){
-					var cogsAmount = 0, 
-					itemRate = banhji.source.getRate(item.locale, new Date(obj.issued_date));
-					
-					cogsAmount = value.quantity*item.cost;
-
-					if(cogsAmount>0){
-						if(cogsList[cogsID]===undefined){
-							cogsList[cogsID]={"id": cogsID, "amount": cogsAmount, "rate": itemRate, "locale": item.locale};						
-						}else{											
-							if(cogsList[cogsID].id===cogsID){
-								cogsList[cogsID].amount += cogsAmount;
-							}else{
-								cogsList[cogsID]={"id": cogsID, "amount": cogsAmount, "rate": itemRate, "locale": item.locale};
-							}
-						}
+					if(entries[raw]===undefined){
+						entries[raw] = {
+							transaction_id 		: transaction_id,
+							account_id 			: inventoryID,
+							contact_id 			: obj.contact_id,
+							description 		: value.description,
+							reference_no 		: "",
+							segments 	 		: [],
+							dr 	 				: 0,
+							cr 					: inventoryAmount,
+							rate				: itemRate,
+							locale				: item.locale
+						};
+					}else{
+						entries[raw].cr += inventoryAmount;
 					}
 				}
 
-				//Add Inventory list
-				var inventoryID = kendo.parseInt(item.inventory_account_id);
-				if(inventoryID>0){
-					var inventoryAmount = 0, 
-					itemRate = banhji.source.getRate(item.locale, new Date(obj.issued_date));
+				//Sale on Cr
+				var incomeID = kendo.parseInt(item.income_account_id);
+				if(incomeID>0){
+					raw = "cr"+incomeID;
 
-					inventoryAmount = value.quantity*item.cost;
+					if(entries[raw]===undefined){
+						entries[raw] = {
+							transaction_id 		: transaction_id,
+							account_id 			: incomeID,
+							contact_id 			: obj.contact_id,
+							description 		: value.description,
+							reference_no 		: "",
+							segments 	 		: [],
+							dr 	 				: 0,
+							cr 					: value.amount,
+							rate				: obj.rate,
+							locale				: obj.locale
+						};
+					}else{
+						entries[raw].cr += value.amount;
+					}
+				}
 
-					if(inventoryList[inventoryID]===undefined){
-						inventoryList[inventoryID]={"id": inventoryID, "amount": inventoryAmount, "rate": itemRate, "locale": item.locale};						
-					}else{											
-						if(inventoryList[inventoryID].id===inventoryID){
-							inventoryList[inventoryID].amount += inventoryAmount;
-						}else{
-							inventoryList[inventoryID]={"id": inventoryID, "amount": inventoryAmount, "rate": itemRate, "locale": item.locale};
-						}
+				//Tax on Cr
+				if(value.tax_item_id>0){
+					var taxItem = self.taxItemDS.get(value.tax_item_id),
+						raw = "cr"+taxItem.account_id,
+						taxAmt = value.amount * taxItem.rate;
+
+					if(entries[raw]===undefined){
+						entries[raw] = {
+							transaction_id 		: transaction_id,
+							account_id 			: taxItem.account_id,
+							contact_id 			: obj.contact_id,
+							description 		: value.description,
+							reference_no 		: "",
+							segments 	 		: [],
+							dr 	 				: 0,
+							cr 					: taxAmt,
+							rate				: obj.rate,
+							locale				: obj.locale
+						};
+					}else{
+						entries[raw].cr += taxAmt;
 					}
 				}
 			});
 
-			//Start journal
+			//Assembly Item
+			$.each(self.assemblyLineDS.data(), function(index, value){
+				var item = self.itemDS.get(value.item_id),
+					itemRate = banhji.source.getRate(item.locale, new Date(obj.issued_date));
+
+				//COGS on Dr
+				var cogsID = kendo.parseInt(item.expense_account_id);
+				if(cogsID>0){
+					raw = "dr"+cogsID;
+
+					var cogsAmount = 0;
+					if(item.item_type_id==1 || item.item_type_id==4){
+						cogsAmount = (value.quantity*value.unit_value)*item.cost;
+					}else{
+						cogsAmount = value.amount;
+					}
+
+					if(entries[raw]===undefined){
+						entries[raw] = {
+							transaction_id 		: transaction_id,
+							account_id 			: cogsID,
+							contact_id 			: obj.contact_id,
+							description 		: value.description,
+							reference_no 		: "",
+							segments 	 		: [],
+							dr 	 				: cogsAmount,
+							cr 					: 0,
+							rate				: itemRate,
+							locale				: item.locale
+						};
+					}else{
+						entries[raw].dr += cogsAmount;
+					}
+				}
+
+				//Inventory on Cr
+				var inventoryID = kendo.parseInt(item.inventory_account_id);
+				if(inventoryID>0){
+					raw = "cr"+inventoryID;
+
+					var inventoryAmount = 0;
+					if(item.item_type_id==1 || item.item_type_id==4){
+						inventoryAmount = (value.quantity*value.unit_value)*item.cost;
+					}else{
+						inventoryAmount = value.amount;
+					}
+
+					if(entries[raw]===undefined){
+						entries[raw] = {
+							transaction_id 		: transaction_id,
+							account_id 			: inventoryID,
+							contact_id 			: obj.contact_id,
+							description 		: value.description,
+							reference_no 		: "",
+							segments 	 		: [],
+							dr 	 				: 0,
+							cr 					: inventoryAmount,
+							rate				: itemRate,
+							locale				: item.locale
+						};
+					}else{
+						entries[raw].cr += inventoryAmount;
+					}
+				}
+			});
+			
 			//A/R on Dr
-			this.journalLineDS.add({					
+			this.journalLineDS.add({
 				transaction_id 		: transaction_id,
-				account_id 			: contact.account_id,				
-				contact_id 			: obj.contact_id,				
-				description 		: "",
+				account_id 			: contact.account_id,
+				contact_id 			: obj.contact_id,
+				description 		: obj.memo,
 				reference_no 		: "",
-				segments 	 		: [],								
-				dr 	 				: obj.amount - obj.deposit,
-				cr 					: 0,				
+				segments 	 		: [],
+				dr 	 				: obj.amount - (obj.discount + obj.deposit),
+				cr 					: 0,
 				rate				: obj.rate,
 				locale				: obj.locale
 			});
 
-			//Discount on Dr			
-			if(obj.discount > 0){				
-				this.journalLineDS.add({					
+			//Discount on Dr
+			if(obj.discount>0){
+				this.journalLineDS.add({
 					transaction_id 		: transaction_id,
-					account_id 			: contact.trade_discount_id,				
-					contact_id 			: obj.contact_id,				
-					description 		: "",
+					account_id 			: contact.trade_discount_id,
+					contact_id 			: obj.contact_id,
+					description 		: obj.memo,
 					reference_no 		: "",
-					segments 	 		: [],								
+					segments 	 		: [],
 					dr 	 				: obj.discount,
-					cr 					: 0,				
+					cr 					: 0,
 					rate				: obj.rate,
 					locale				: obj.locale
 				});
 			}
 
 			//Deposit on Dr
-			if(obj.deposit > 0){				
-				this.journalLineDS.add({					
+			if(obj.deposit>0){
+				this.journalLineDS.add({
 					transaction_id 		: transaction_id,
-					account_id 			: contact.deposit_account_id,				
-					contact_id 			: obj.contact_id,				
-					description 		: "",
+					account_id 			: contact.deposit_account_id,
+					contact_id 			: obj.contact_id,
+					description 		: obj.memo,
 					reference_no 		: "",
-					segments 	 		: [],								
+					segments 	 		: [],
 					dr 	 				: obj.deposit,
-					cr 					: 0,				
+					cr 					: 0,
 					rate				: obj.rate,
 					locale				: obj.locale
 				});
 			}
 
-			//Sale accounts on Cr		
-			if(!jQuery.isEmptyObject(saleList)){				
-				$.each(saleList, function(index, value){
-					self.journalLineDS.add({					
-						transaction_id 		: transaction_id,
-						account_id 			: value.id,				
-						contact_id 			: obj.contact_id,				
-						description 		: "",
-						reference_no 		: "",
-						segments 	 		: [],								
-						dr 	 				: 0,
-						cr 					: value.amount,				
-						rate				: obj.rate,
-						locale				: obj.locale
-					});										
-				});
-			}
-
-			//Tax on Cr					
-			if(!jQuery.isEmptyObject(taxList)){				
-				$.each(taxList, function(index, value){
-					self.journalLineDS.add({					
-						transaction_id 		: transaction_id,
-						account_id 			: value.id,				
-						contact_id 			: obj.contact_id,				
-						description 		: "",
-						reference_no 		: "",
-						segments 	 		: [],								
-						dr 	 				: 0,
-						cr 					: value.amount,				
-						rate				: obj.rate,
-						locale				: obj.locale
-					});										
-				});
-			}
-			
-			//COGS on Dr 			
-			if(!jQuery.isEmptyObject(cogsList)){
-				$.each(cogsList, function(index, value){
-					if(value.amount>0){
-						self.journalLineDS.add({
-							transaction_id 		: transaction_id,
-							account_id 			: value.id,
-							contact_id 			: obj.contact_id,
-							description 		: "",
-							reference_no 		: "",
-							segments 	 		: [],
-							dr 	 				: value.amount,
-							cr 					: 0,
-							rate				: value.rate,
-							locale				: value.locale
-						});
-					}
-				});
-			}
-
-			//Inventory on Cr
-			if(!jQuery.isEmptyObject(inventoryList)){
-				$.each(inventoryList, function(index, value){
-					if(value.amount>0){
-						self.journalLineDS.add({					
-							transaction_id 		: transaction_id,
-							account_id 			: value.id,				
-							contact_id 			: obj.contact_id,				
-							description 		: "",
-							reference_no 		: "",
-							segments 	 		: [],								
-							dr 	 				: 0,
-							cr 					: value.amount,				
-							rate				: value.rate,
-							locale				: value.locale
-						});
-					}						
+			//Add to journal entry
+			if(!jQuery.isEmptyObject(entries)){
+				$.each(entries, function(index, value){
+					self.journalLineDS.add(value);
 				});
 			}
 
@@ -61120,6 +61070,10 @@
 		            '.k-grid-toolbar, .k-grid-pager > .k-link { display: none; }' +
 		            '</style><style type="text/css" media="print"> @page { size: portrait; margin:0mm;margin-top: 1mm; }'+
 		            	'.inv1 .main-color {' +
+		            		'background-color: '+colorM+'!important; ' + ts +
+		            		'-webkit-print-color-adjust:exact; ' +
+		            	'} ' +
+		            	'.inv1 .main-color th{' +
 		            		'background-color: '+colorM+'!important; ' + ts +
 		            		'-webkit-print-color-adjust:exact; ' +
 		            	'} ' +
@@ -75927,6 +75881,16 @@
 		  	filter:{ field:"status", value: 1 },
 			sort: { field:"number", dir:"asc" }
 		}),
+		toAccountDS 			: new kendo.data.DataSource({
+		  	data: banhji.source.accountList,
+		  	filter: [
+		    	{ field: "status", value: 1 },
+		      	{ field: "account_type_id", operator:"neq", value: 10 },
+		      	{ field: "account_type_id", operator:"neq", value: 11 },
+		      	{ field: "account_type_id", operator:"neq", value: 12 }
+		    ],
+			sort: { field:"number", dir:"asc" }
+		}),
 		jobDS 					: new kendo.data.DataSource({
 		  	data: banhji.source.jobList,
 		  	sort: { field: "name", dir: "asc" }
@@ -75937,24 +75901,6 @@
 			  	{ field: "segment_id", dir: "asc" },
 			  	{ field: "code", dir: "asc" }
 			]
-		}),
-		inventoryFixAssetAccountDS : new kendo.data.DataSource({
-		  	data: banhji.source.accountList,
-		  	filter: {
-				logic: "and",
-			    filters: [
-			    	{ field:"status", value: 1 },
-			      	{
-			      		logic: "or",
-					    filters: [
-					      	{ field: "account_type_id", value: 13 },
-					      	{ field: "account_type_id", value: 16 },
-					      	{ field: "account_type_id", value: 19 }
-					    ]
-					}
-			    ]
-			},
-			sort: { field:"number", dir:"asc" }
 		}),
 		amtDueColor 			: banhji.source.amtDueColor,
 	    confirmMessage 			: banhji.source.confirmMessage,
@@ -76357,7 +76303,7 @@
 		    	self.loadLines(id);
 			});
     	},
-    	loadLines 			: function(id){
+    	loadLines 				: function(id){
 			var self = this;
 
 			//From
@@ -76610,7 +76556,7 @@
 
 			banhji.userManagement.removeMultiTask("internal_usage");
 		},
-		validating 			: function(){
+		validating 				: function(){
 			var result = true, obj = this.get("obj");
 
 			if(this.get("totalFrom")!==this.get("totalTo")){
@@ -76635,8 +76581,8 @@
 
 				//Inventory on Dr
 				var inventoryID = kendo.parseInt(item.inventory_account_id);
-				if(inventoryID>0){					
-					raw = "Dr"+inventoryID;
+				if(inventoryID>0){
+					raw = "dr"+inventoryID;
 
 					if(entries[raw]===undefined){
 						entries[raw] = {
@@ -76657,7 +76603,7 @@
 				}
 			});
 			$.each(this.toAccountLineDS.data(), function(index, value){
-				raw = "Dr"+value.account_id;
+				raw = "dr"+value.account_id;
 
 				//Account on Dr
 				if(entries[raw]===undefined){
@@ -76687,7 +76633,7 @@
 				//Inventory on Cr
 				var inventoryID = kendo.parseInt(item.inventory_account_id);
 				if(inventoryID>0){
-					raw = "Cr"+inventoryID;
+					raw = "cr"+inventoryID;
 
 					if(entries[raw]===undefined){
 						entries[raw] = {
@@ -76708,7 +76654,7 @@
 				}
 			});
 			$.each(this.accountLineDS.data(), function(index, value){
-				raw = "Cr"+value.account_id;
+				raw = "cr"+value.account_id;
 
 				//Account on Cr
 				if(entries[raw]===undefined){
