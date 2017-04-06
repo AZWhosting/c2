@@ -39040,7 +39040,7 @@
                 </div>
                 <div class="clear">
                 	<pre>អាស័យ​ដ្ឋាន Address: <span data-bind="text: company.address"></span></pre>
-                    <pre>ទូរស័ព្ទលេខ HP <span data-bind="text: company.phone"></span></pre>
+                    <pre>ទូរស័ព្ទលេខ HP <span data-bind="text: company.telephone"></span></pre>
                 </div>
             </div>
         </div>
@@ -39152,7 +39152,7 @@
                 </div>
                 <div class="clear">
                 	<pre>អាស័យ​ដ្ឋាន Address: <span data-bind="text: company.address"></span></pre>
-                    <pre>ទូរស័ព្ទលេខ HP <span data-bind="text: company.phone"></span></pre>
+                    <pre>ទូរស័ព្ទលេខ HP <span data-bind="text: company.telephone"></span></pre>
                 </div>
             </div>
         </div>
@@ -39617,7 +39617,7 @@
         			<p><b>អស័យដ្ឋាន Address:</b> <span data-bind="text: company.address"></span></p>
         		</div>
         		<div class="span5" style="float:right">
-        			<p><b>Tel: </b><span data-bind="text: company.phone"></span></p>
+        			<p><b>Tel: </b><span data-bind="text: company.telephone"></span></p>
         			<p><b>Email: </b><span data-bind="text: company.email"></span></p>
         			<p><b>Website: </b><span data-bind="text: company.website"></span></p>
         		</div>
@@ -39713,7 +39713,7 @@
         			<p><b>អស័យដ្ឋាន Address:</b> <span data-bind="text: company.address"></span></p>
         		</div>
         		<div class="span5" style="float:right">
-        			<p><b>Tel: </b><span data-bind="text: company.phone"></span></p>
+        			<p><b>Tel: </b><span data-bind="text: company.telephone"></span></p>
         			<p><b>Email: </b><span data-bind="text: company.email"></span></p>
         			<p><b>Website: </b><span data-bind="text: company.website"></span></p>
         		</div>
@@ -39810,7 +39810,7 @@
         			<p><b>អស័យដ្ឋាន Address:</b> <span data-bind="text: company.address"></span></p>
         		</div>
         		<div class="span5" >
-        			<p><b>Tel: </b><span data-bind="text: company.phone"></span></p>
+        			<p><b>Tel: </b><span data-bind="text: company.telephone"></span></p>
         			<p><b>Email: </b><span data-bind="text: company.email"></span></p>
         			<p><b>Website: </b><span data-bind="text: company.website"></span></p>
         		</div>
@@ -39904,7 +39904,7 @@
         			<p><b>អស័យដ្ឋាន Address:</b> <span data-bind="text: company.address"></span></p>
         		</div>
         		<div class="span5" >
-        			<p><b>Tel: </b><span data-bind="text: company.phone"></span></p>
+        			<p><b>Tel: </b><span data-bind="text: company.telephone"></span></p>
         			<p><b>Email: </b><span data-bind="text: company.email"></span></p>
         			<p><b>Website: </b><span data-bind="text: company.website"></span></p>
         		</div>
@@ -39998,7 +39998,7 @@
         			<p><b>អស័យដ្ឋាន Address:</b> <span data-bind="text: company.address"></span></p>
         		</div>
         		<div class="span5" style="float:right">
-        			<p><b>Tel: </b><span data-bind="text: company.phone"></span></p>
+        			<p><b>Tel: </b><span data-bind="text: company.telephone"></span></p>
         			<p><b>Email: </b><span data-bind="text: company.email"></span></p>
         			<p><b>Website: </b><span data-bind="text: company.website"></span></p>
         		</div>
@@ -40093,7 +40093,7 @@
         			<p><b>អស័យដ្ឋាន Address:</b> <span data-bind="text: company.address"></span></p>
         		</div>
         		<div class="span5" style="float:right">
-        			<p><b>Tel: </b><span data-bind="text: company.phone"></span></p>
+        			<p><b>Tel: </b><span data-bind="text: company.telephone"></span></p>
         			<p><b>Email: </b><span data-bind="text: company.email"></span></p>
         			<p><b>Website: </b><span data-bind="text: company.website"></span></p>
         		</div>
@@ -40188,7 +40188,7 @@
         			<p><b>អស័យដ្ឋាន Address:</b> <span data-bind="text: company.address"></span></p>
         		</div>
         		<div class="span5" >
-        			<p><b>Tel: </b><span data-bind="text: company.phone"></span></p>
+        			<p><b>Tel: </b><span data-bind="text: company.telephone"></span></p>
         			<p><b>Email: </b><span data-bind="text: company.email"></span></p>
         			<p><b>Website: </b><span data-bind="text: company.website"></span></p>
         		</div>
@@ -40284,7 +40284,7 @@
         			<p><b>អស័យដ្ឋាន Address:</b> <span data-bind="text: company.address"></span></p>
         		</div>
         		<div class="span5" >
-        			<p><b>Tel: </b><span data-bind="text: company.phone"></span></p>
+        			<p><b>Tel: </b><span data-bind="text: company.telephone"></span></p>
         			<p><b>Email: </b><span data-bind="text: company.email"></span></p>
         			<p><b>Website: </b><span data-bind="text: company.website"></span></p>
         		</div>
@@ -40381,7 +40381,7 @@
         			<p><b>Address:</b> <span data-bind="text: company.address"></span></p>
         		</div>
         		<div class="span5" style="float:right">
-        			<p><b>Tel: </b><span data-bind="text: company.phone"></span></p>
+        			<p><b>Tel: </b><span data-bind="text: company.telephone"></span></p>
         			<p><b>Email: </b><span data-bind="text: company.email"></span></p>
         			<p><b>Website: </b><span data-bind="text: company.website"></span></p>
         		</div>
@@ -41489,7 +41489,7 @@
         			<p><b>Address:</b> <span data-bind="text: company.address"></span></p>
         		</div>
         		<div class="span5" style="float:right">
-        			<p><b>Tel: </b><span data-bind="text: company.phone"></span></p>
+        			<p><b>Tel: </b><span data-bind="text: company.telephone"></span></p>
         			<p><b>Email: </b><span data-bind="text: company.email"></span></p>
         			<p><b>Website: </b><span data-bind="text: company.website"></span></p>
         		</div>
@@ -41592,7 +41592,7 @@
         			<p><b>Address:</b> <span data-bind="text: company.address"></span></p>
         		</div>
         		<div class="span5" style="float:right">
-        			<p><b>Tel: </b><span data-bind="text: company.phone"></span></p>
+        			<p><b>Tel: </b><span data-bind="text: company.telephone"></span></p>
         			<p><b>Email: </b><span data-bind="text: company.email"></span></p>
         			<p><b>Website: </b><span data-bind="text: company.website"></span></p>
         		</div>
@@ -41955,7 +41955,7 @@
                 </div>
                 <div class="clear">
                 	<pre>អាស័យ​ដ្ឋាន Address: <span data-bind="text: company.address"></span></pre>
-                    <pre>ទូរស័ព្ទលេខ HP <span data-bind="text: company.phone"></span></pre>
+                    <pre>ទូរស័ព្ទលេខ HP <span data-bind="text: company.telephone"></span></pre>
                 </div>
             </div>
         </div>
@@ -42075,7 +42075,7 @@
                 </div>
                 <div class="clear">
                 	<pre>អាស័យ​ដ្ឋាន Address: <span data-bind="text: company.address"></span></pre>
-                    <pre>ទូរស័ព្ទលេខ HP <span data-bind="text: company.phone"></span></pre>
+                    <pre>ទូរស័ព្ទលេខ HP <span data-bind="text: company.telephone"></span></pre>
                 </div>
             </div>
         </div>
@@ -42199,7 +42199,7 @@
                 </div>
                 <div class="clear">
                 	<pre>អាស័យ​ដ្ឋាន Address: <span data-bind="text: company.address"></span></pre>
-                    <pre>ទូរស័ព្ទលេខ HP <span data-bind="text: company.phone"></span></pre>
+                    <pre>ទូរស័ព្ទលេខ HP <span data-bind="text: company.telephone"></span></pre>
                 </div>
             </div>
         </div>
@@ -42422,7 +42422,7 @@
         			<p><b>អស័យដ្ឋាន Address:</b> <span data-bind="text: company.address"></span></p>
         		</div>
         		<div class="span5" style="float:right">
-        			<p><b>Tel: </b><span data-bind="text: company.phone"></span></p>
+        			<p><b>Tel: </b><span data-bind="text: company.telephone"></span></p>
         			<p><b>Email: </b><span data-bind="text: company.email"></span></p>
         			<p><b>Website: </b><span data-bind="text: company.website"></span></p>
         		</div>
@@ -42497,7 +42497,7 @@
         			<p><b>អស័យដ្ឋាន Address:</b> <span data-bind="text: company.address"></span></p>
         		</div>
         		<div class="span5" style="float:right">
-        			<p><b>Tel: </b><span data-bind="text: company.phone"></span></p>
+        			<p><b>Tel: </b><span data-bind="text: company.telephone"></span></p>
         			<p><b>Email: </b><span data-bind="text: company.email"></span></p>
         			<p><b>Website: </b><span data-bind="text: company.website"></span></p>
         		</div>
@@ -42571,7 +42571,7 @@
         			<p><b>អស័យដ្ឋាន Address:</b> <span data-bind="text: company.address"></span></p>
         		</div>
         		<div class="span5" >
-        			<p><b>Tel: </b><span data-bind="text: company.phone"></span></p>
+        			<p><b>Tel: </b><span data-bind="text: company.telephone"></span></p>
         			<p><b>Email: </b><span data-bind="text: company.email"></span></p>
         			<p><b>Website: </b><span data-bind="text: company.website"></span></p>
         		</div>
@@ -42645,7 +42645,7 @@
         			<p><b>អស័យដ្ឋាន Address:</b> <span data-bind="text: company.address"></span></p>
         		</div>
         		<div class="span5" >
-        			<p><b>Tel: </b><span data-bind="text: company.phone"></span></p>
+        			<p><b>Tel: </b><span data-bind="text: company.telephone"></span></p>
         			<p><b>Email: </b><span data-bind="text: company.email"></span></p>
         			<p><b>Website: </b><span data-bind="text: company.website"></span></p>
         		</div>
@@ -42719,7 +42719,7 @@
         			<p><b>អស័យដ្ឋាន Address:</b> <span data-bind="text: company.address"></span></p>
         		</div>
         		<div class="span5" style="float:right">
-        			<p><b>Tel: </b><span data-bind="text: company.phone"></span></p>
+        			<p><b>Tel: </b><span data-bind="text: company.telephone"></span></p>
         			<p><b>Email: </b><span data-bind="text: company.email"></span></p>
         			<p><b>Website: </b><span data-bind="text: company.website"></span></p>
         		</div>
@@ -42813,7 +42813,7 @@
         			<p><b>អស័យដ្ឋាន Address:</b> <span data-bind="text: company.address"></span></p>
         		</div>
         		<div class="span5" style="float:right">
-        			<p><b>Tel: </b><span data-bind="text: company.phone"></span></p>
+        			<p><b>Tel: </b><span data-bind="text: company.telephone"></span></p>
         			<p><b>Email: </b><span data-bind="text: company.email"></span></p>
         			<p><b>Website: </b><span data-bind="text: company.website"></span></p>
         		</div>
@@ -42907,7 +42907,7 @@
         			<p><b>អស័យដ្ឋាន Address:</b> <span data-bind="text: company.address"></span></p>
         		</div>
         		<div class="span5" >
-        			<p><b>Tel: </b><span data-bind="text: company.phone"></span></p>
+        			<p><b>Tel: </b><span data-bind="text: company.telephone"></span></p>
         			<p><b>Email: </b><span data-bind="text: company.email"></span></p>
         			<p><b>Website: </b><span data-bind="text: company.website"></span></p>
         		</div>
@@ -43000,7 +43000,7 @@
         			<p><b>អស័យដ្ឋាន Address:</b> <span data-bind="text: company.address"></span></p>
         		</div>
         		<div class="span5" >
-        			<p><b>Tel: </b><span data-bind="text: company.phone"></span></p>
+        			<p><b>Tel: </b><span data-bind="text: company.telephone"></span></p>
         			<p><b>Email: </b><span data-bind="text: company.email"></span></p>
         			<p><b>Website: </b><span data-bind="text: company.website"></span></p>
         		</div>
@@ -43093,7 +43093,7 @@
         			<p><b>អស័យដ្ឋាន Address:</b> <span data-bind="text: company.address"></span></p>
         		</div>
         		<div class="span5" style="float:right">
-        			<p><b>Tel: </b><span data-bind="text: company.phone"></span></p>
+        			<p><b>Tel: </b><span data-bind="text: company.telephone"></span></p>
         			<p><b>Email: </b><span data-bind="text: company.email"></span></p>
         			<p><b>Website: </b><span data-bind="text: company.website"></span></p>
         		</div>
@@ -43162,7 +43162,7 @@
         			<p><b>អស័យដ្ឋាន Address:</b> <span data-bind="text: company.address"></span></p>
         		</div>
         		<div class="span5" style="float:right">
-        			<p><b>Tel: </b><span data-bind="text: company.phone"></span></p>
+        			<p><b>Tel: </b><span data-bind="text: company.telephone"></span></p>
         			<p><b>Email: </b><span data-bind="text: company.email"></span></p>
         			<p><b>Website: </b><span data-bind="text: company.website"></span></p>
         		</div>
@@ -43231,7 +43231,7 @@
         			<p><b>អស័យដ្ឋាន Address:</b> <span data-bind="text: company.address"></span></p>
         		</div>
         		<div class="span5" >
-        			<p><b>Tel: </b><span data-bind="text: company.phone"></span></p>
+        			<p><b>Tel: </b><span data-bind="text: company.telephone"></span></p>
         			<p><b>Email: </b><span data-bind="text: company.email"></span></p>
         			<p><b>Website: </b><span data-bind="text: company.website"></span></p>
         		</div>
@@ -43300,7 +43300,7 @@
         			<p><b>អស័យដ្ឋាន Address:</b> <span data-bind="text: company.address"></span></p>
         		</div>
         		<div class="span5" >
-        			<p><b>Tel: </b><span data-bind="text: company.phone"></span></p>
+        			<p><b>Tel: </b><span data-bind="text: company.telephone"></span></p>
         			<p><b>Email: </b><span data-bind="text: company.email"></span></p>
         			<p><b>Website: </b><span data-bind="text: company.website"></span></p>
         		</div>
