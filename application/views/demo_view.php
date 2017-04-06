@@ -21186,7 +21186,7 @@
 												</td>
 											</tr>											
 							            </table>
-												
+
 							        </div>
 							        <!-- // Info Tab content END -->
 							        
@@ -21221,8 +21221,8 @@
 							        <!-- // Attach Tab content END -->
 
 							        <!-- Recuring Tab content -->
-							        <div class="tab-pane" id="tab5-6">							            	
-							            
+							        <div class="tab-pane" id="tab5-6">
+
 							            <table style="width: 100%" class="table borderless">
 							            	<tr align="right">
 							            		<td style="border-top: 0;">
@@ -21251,11 +21251,11 @@
 							            		<td style="border-top: 0;">
 								            		<input data-role="numerictextbox"
 									                   data-format="n0"
-									                   data-min="0"								                   
+									                   data-min="0"
 									                   data-bind="value: obj.interval"
 									                   style="width: 45%; " />
 
-								            		<input data-role="dropdownlist"									                   
+								            		<input data-role="dropdownlist"
 										                   data-value-primitive="true"
 										                   data-text-field="name"
 										                   data-value-field="id"
@@ -21268,19 +21268,19 @@
 								            <tr align="right">
 								            	<td style="border-top: 0;">
 								            		<span data-bind="text: lang.lang.on"></span>
-								            	</td>							            	
+								            	</td>
 								            	<td style="border-top: 0;">
 
-								            		<input data-role="dropdownlist"									                   
+								            		<input data-role="dropdownlist"
 										                   data-value-primitive="true"
 										                   data-text-field="name"
 										                   data-value-field="id"
 										                   data-bind="value: obj.month,
 										                   			  visible: showMonth,
-										                              source: monthList"										                   
+										                              source: monthList"
 										                   style="width: 45%;" />
 
-								            		<input data-role="dropdownlist"									                   
+								            		<input data-role="dropdownlist"
 										                   data-value-primitive="true"
 										                   data-text-field="name"
 										                   data-value-field="id"
@@ -21290,22 +21290,22 @@
 										                              events: { change: monthOptionChanges }"										                   
 										                   style="width: 45%;" />
 
-								            		<input data-role="dropdownlist"									                   
+								            		<input data-role="dropdownlist"
 										                   data-value-primitive="true"
 										                   data-text-field="name"
 										                   data-value-field="id"
 										                   data-bind="value: obj.week,
 										                   			  visible: showWeek,
-										                              source: weekDayList"										                  
-										                   style="width: 45%;" />										            
+										                              source: weekDayList"
+										                   style="width: 45%;" />
 										        
-								            		<input data-role="dropdownlist"									                   
+								            		<input data-role="dropdownlist"
 										                   data-value-primitive="true"
 										                   data-text-field="name"
 										                   data-value-field="id"
 										                   data-bind="value: obj.day,
 										                   			  visible: showDay,
-										                              source: dayList"										                   
+										                              source: dayList"
 										                   style="width: 45%;" />
 
 								            	</td>
@@ -21313,9 +21313,9 @@
 							            </table>
 
 							            <span id="saveRecurring" class="btn btn-icon btn-default glyphicons history" style="float: right; margin-top: -12px;"><i></i> <span data-bind="text: lang.lang.save_recurring"></span></span>									     
-							            
+
 							        </div>
-							        <!-- // Recuring Tab content END -->							        
+							        <!-- // Recuring Tab content END -->
 
 							        <div class="tab-pane saleSummaryCustomer" id="tab6-6">
 										<table class="table table-borderless table-condensed">
@@ -21344,9 +21344,9 @@
 									    </table>
 									</div>
 
-							    </div>							
+							    </div>
 							</div>
-					    </div>					   
+					    </div>
 					</div>
 
 					<table class="table table-bordered table-primary table-striped table-vertical-center">
@@ -21485,11 +21485,13 @@
 							    <!-- Tabs Heading -->
 							    <div class="tabsbar tabsbar-2">
 							        <ul class="row-fluid row-merge">
-							        	<li class="span1 glyphicons circle_info active"><a href="#tab1-3" data-toggle="tab"><i></i> </a>
+							        	<li class="span1 glyphicons circle_info active"><a href="#tab-1" data-toggle="tab"><i></i> </a>
 							            </li>
-							            <li class="span1 glyphicons adress_book"><a href="#tab2-3" data-toggle="tab"><i></i> </a>
+							            <li class="span1 glyphicons adress_book"><a href="#tab-2" data-toggle="tab"><i></i> </a>
 							            </li>
-							            <li class="span1 glyphicons paperclip"><a href="#tab3-3" data-toggle="tab"><i></i></a>
+							            <li class="span1 glyphicons paperclip"><a href="#tab-3" data-toggle="tab"><i></i></a>
+							            </li>
+							            <li class="span1 glyphicons history"><a href="#tab-4" data-toggle="tab"><i></i></a>
 							            </li>
 							            <!-- <li class="span1 glyphicons show_liness"><a href="#tab3-4" data-toggle="tab"><i></i></a></li>	 -->				            								            
 							        </ul>
@@ -21499,7 +21501,7 @@
 							    <div class="tab-content">
 
 							    	<!-- Options Tab content -->
-							        <div class="tab-pane active" id="tab1-3">						            
+							        <div class="tab-pane active" id="tab-1">						            
 							           	<table style="margin-bottom: 0;" class="table table-borderless table-condensed cart_total">											
 											<tr>
 												<td><span data-bind="text: lang.lang.segments"></span></td>
@@ -21539,7 +21541,7 @@
 							        <!-- // Options Tab content END -->
 
 							        <!-- Address Tab content -->
-							        <div class="tab-pane" id="tab2-3">
+							        <div class="tab-pane" id="tab-2">
 							        	<span data-bind="text: lang.lang.from"></span>
 										<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.bill_to" placeholder="Billing to ..."></textarea>								
 										
@@ -21550,7 +21552,7 @@
 							        <!-- // Address Tab content END -->
 
 							        <!-- Attach Tab content -->
-							        <div class="tab-pane" id="tab3-3">
+							        <div class="tab-pane" id="tab-3">
 							         	<p><span data-bind="text: lang.lang.file_type"></span> [PDF, JPG, JPEG, TIFF, PNG, GIF]</p>							            	
 							            
 							            <input id="files" name="files"
@@ -21577,7 +21579,104 @@
 									    </table>
 
 							        </div>
-							        <!-- // Attach Tab content END -->							        					        								        
+							        <!-- // Attach Tab content END -->
+
+							        <!-- Recuring Tab content -->
+							        <div class="tab-pane" id="tab-4">
+
+							            <table style="width: 100%" class="table borderless">
+							            	<tr align="right">
+							            		<td style="border-top: 0;">
+							            			<span data-bind="text: lang.lang.name"></span>
+							            		</td>
+							            		<td style="border-top: 0;">
+							            			<input id="txtRecurringName" name="txtRecurringName"
+							            					class="k-textbox" 
+							            					data-bind="value: obj.recurring_name" 
+							            					placeholder="Recurring name.." 
+							            					style="width: 43%; " />
+
+							            			<span data-bind="text: lang.lang.start"></span>
+
+									                <input data-role="datepicker"
+															data-format="dd-MM-yyyy"
+															data-parse-formats="yyyy-MM-dd"
+															data-bind="value: obj.start_date"
+															style="width: 40%; " />
+							            		</td>
+							            	</tr>
+							            	<tr align="right">
+							            		<td style="border-top: 0;">
+								            		<span data-bind="text: lang.lang.every"></span>
+								            	</td>
+							            		<td style="border-top: 0;">
+								            		<input data-role="numerictextbox"
+									                   data-format="n0"
+									                   data-min="0"
+									                   data-bind="value: obj.interval"
+									                   style="width: 45%; " />
+
+								            		<input data-role="dropdownlist"
+										                   data-value-primitive="true"
+										                   data-text-field="name"
+										                   data-value-field="id"
+										                   data-bind="value: obj.frequency,
+										                              source: frequencyList,
+										                              events: { change: frequencyChanges }"
+										                   style="width: 45%;" />
+								            	</td>
+							            	</tr>
+								            <tr align="right">
+								            	<td style="border-top: 0;">
+								            		<span data-bind="text: lang.lang.on"></span>
+								            	</td>
+								            	<td style="border-top: 0;">
+
+								            		<input data-role="dropdownlist"
+										                   data-value-primitive="true"
+										                   data-text-field="name"
+										                   data-value-field="id"
+										                   data-bind="value: obj.month,
+										                   			  visible: showMonth,
+										                              source: monthList"
+										                   style="width: 45%;" />
+
+								            		<input data-role="dropdownlist"
+										                   data-value-primitive="true"
+										                   data-text-field="name"
+										                   data-value-field="id"
+										                   data-bind="value: obj.month_option,
+										                   			  visible: showMonthOption,
+										                              source: monthOptionList,
+										                              events: { change: monthOptionChanges }"										                   
+										                   style="width: 45%;" />
+
+								            		<input data-role="dropdownlist"
+										                   data-value-primitive="true"
+										                   data-text-field="name"
+										                   data-value-field="id"
+										                   data-bind="value: obj.week,
+										                   			  visible: showWeek,
+										                              source: weekDayList"
+										                   style="width: 45%;" />
+										        
+								            		<input data-role="dropdownlist"
+										                   data-value-primitive="true"
+										                   data-text-field="name"
+										                   data-value-field="id"
+										                   data-bind="value: obj.day,
+										                   			  visible: showDay,
+										                              source: dayList"
+										                   style="width: 45%;" />
+
+								            	</td>
+								            </tr>
+							            </table>
+
+							            <span id="saveRecurring" class="btn btn-icon btn-default glyphicons history" style="float: right; margin-top: -12px;"><i></i> <span data-bind="text: lang.lang.save_recurring"></span></span>									     
+
+							        </div>
+							        <!-- // Recuring Tab content END -->							        					        								        
 
 							        <div class="tab-pane saleSummaryCustomer" id="tab3-4">
 										<table class="table table-borderless table-condensed">
@@ -21611,7 +21710,6 @@
 					    </div>
 					</div>
 
-
 					<!-- Middle Part -->
 					<div class="row-fluid">
 						<div class="box-generic-noborder">
@@ -21619,9 +21717,9 @@
 						    <!-- Tabs Heading -->
 						    <div class="tabsbar tabsbar-2">
 						        <ul class="row-fluid row-merge">
-						        	<li class="span3 active" style="width: 135px;"><a href="#tab-1" data-toggle="tab">FROM</a>
+						        	<li class="span3 active" style="width: 135px;"><a href="#tab-FROM" data-toggle="tab">FROM</a>
 						            </li>
-						            <li class="span3 " style="width: 135px !important;"><a href="#tab-2" data-toggle="tab">TO</a>
+						            <li class="span3 " style="width: 135px !important;"><a href="#tab-TO" data-toggle="tab">TO</a>
 						            </li>
 						        </ul>
 						    </div>
@@ -21630,7 +21728,7 @@
 						    <div class="tab-content">
 
 						    	<!-- FROM -->
-						        <div class="tab-pane active" id="tab-1">
+						        <div class="tab-pane active" id="tab-FROM">
 						        	
 									<table class="table table-bordered table-primary table-striped table-vertical-center">
 								        <thead>
@@ -21673,7 +21771,7 @@
 						        <!-- // Item Line & Account Line END -->
 
 						        <!-- TO -->
-						        <div class="tab-pane" id="tab-2">
+						        <div class="tab-pane" id="tab-TO">
 						        	
 									<div class="row-fluid">
 										
@@ -75133,7 +75231,7 @@
     	lang 					: langVM,
     	dataSource  			: dataStore(apiUrl + "transactions"),
     	recurringDS 			: dataStore(apiUrl + "transactions"),
-		recurringLineDS 		: dataStore(apiUrl + "item_lines"),    	
+		recurringLineDS 		: dataStore(apiUrl + "item_lines"),
     	journalLineDS			: dataStore(apiUrl + "journal_lines"),
     	attachmentDS	 		: dataStore(apiUrl + "attachments"),
 		itemDS  				: dataStore(apiUrl + "items/on_hand"),
@@ -75850,6 +75948,9 @@
     	accountLineDS  			: dataStore(apiUrl + "account_lines"),
     	toItemLineDS  			: dataStore(apiUrl + "item_lines"),
     	toAccountLineDS  		: dataStore(apiUrl + "account_lines"),
+    	recurringDS 			: dataStore(apiUrl + "transactions"),
+		recurringLineDS 		: dataStore(apiUrl + "item_lines"),
+		recurringAccountLineDS 	: dataStore(apiUrl + "account_lines"),
     	journalLineDS			: dataStore(apiUrl + "journal_lines"),
     	attachmentDS	 		: dataStore(apiUrl + "attachments"),
 		txnTemplateDS 			: new kendo.data.DataSource({
@@ -75917,6 +76018,7 @@
 		isEdit 					: false,
 		saveClose 				: false,
 		savePrint 				: false,
+		saveRecurring 			: false,
 		showConfirm 			: false,
 		notDuplicateNumber 		: true,
 		totalFrom 				: 0,
@@ -76276,32 +76378,47 @@
 		},
 		//Obj
 		loadObj 				: function(id){
-    		var self = this;
+			var self = this, para = [];
 
-    		this.dataSource.query({
-				filter: { field:"id", value: id }
-			}).then(function(e){
-				var view = self.dataSource.view();
+    		para.push({ field:"id", value: id });
 
-		    	self.set("obj", view[0]);
-		    	self.set("total", kendo.toString(view[0].amount, "c2", view[0].locale));
+			if(this.get("recurring")=="use"){
+				this.set("recurring","");
+				this.addEmpty();
+				this.loadRecurring(id);
+			}else{
+				if(this.get("recurring")=="edit"){
+					this.set("recurring","");
+					para.push({ field:"is_recurring", value: 1 });
+				}
 
-		    	self.journalLineDS.filter({ field:"transaction_id", value: id });
+	    		this.dataSource.query({
+					filter: para,
+					page:1,
+					pageSize:100
+				}).then(function(e){
+					var view = self.dataSource.view();
 
-		    	//From
-		    	self.accountLineDS.filter([
-		    		{ field:"transaction_id", value: id },
-		    		{ field:"movement", value: -1 }
-		    	]);
+			    	self.set("obj", view[0]);
+			    	self.set("total", kendo.toString(view[0].amount, "c2", view[0].locale));
 
-		    	//To
-		    	self.toAccountLineDS.filter([
-		    		{ field:"transaction_id", value: id },
-		    		{ field:"movement", value: 1 }
-		    	]);
+			    	self.journalLineDS.filter({ field:"transaction_id", value: id });
 
-		    	self.loadLines(id);
-			});
+			    	//From
+			    	self.accountLineDS.filter([
+			    		{ field:"transaction_id", value: id },
+			    		{ field:"movement", value: -1 }
+			    	]);
+
+			    	//To
+			    	self.toAccountLineDS.filter([
+			    		{ field:"transaction_id", value: id },
+			    		{ field:"movement", value: 1 }
+			    	]);
+
+			    	self.loadLines(id);
+				});
+			}
     	},
     	loadLines 				: function(id){
 			var self = this;
@@ -76460,6 +76577,14 @@
 			var self = this, obj = this.get("obj");
 			obj.set("issued_date", kendo.toString(new Date(obj.issued_date), "s"));
 
+			//Recurring
+	    	if(this.get("saveRecurring")){
+	    		this.set("saveRecurring", false);
+	    		
+	    		obj.set("number", "");
+	    		obj.set("is_recurring", 1);
+	    	}
+
 			//Mode
 	    	if(obj.isNew()==false){
 	    		//Line has changes
@@ -76476,16 +76601,6 @@
 			this.objSync()
 			.then(function(data){ //Success
 				if(self.get("isEdit")==false){
-					//To Item Line
-					$.each(self.toItemLineDS.data(), function(index, value){
-	      				value.set("transaction_id", data[0].id);
-	      			});
-
-	      			//To Account Line
-					$.each(self.toAccountLineDS.data(), function(index, value){
-	      				value.set("transaction_id", data[0].id);
-	      			});
-
 	      			//Item Line
 					$.each(self.lineDS.data(), function(index, value){
 						value.set("transaction_id", data[0].id);
@@ -76496,13 +76611,25 @@
 	      				value.set("transaction_id", data[0].id);
 	      			});
 
+	      			//To Item Line
+					$.each(self.toItemLineDS.data(), function(index, value){
+	      				value.set("transaction_id", data[0].id);
+	      			});
+
+	      			//To Account Line
+					$.each(self.toAccountLineDS.data(), function(index, value){
+	      				value.set("transaction_id", data[0].id);
+	      			});
+
 	      			//Attachment
 					$.each(self.attachmentDS.data(), function(index, value){
 			    		value.set("transaction_id", data[0].id);
 		            });
 
 		            //Journal
-		            self.addJournal(data[0].id);
+					if(data[0].is_recurring==0){
+		            	self.addJournal(data[0].id);
+		        	}
 				}
 
       			self.lineDS.sync();
@@ -76683,6 +76810,184 @@
 			}
 
 			this.journalLineDS.sync();
+		},
+		//Recurring
+		loadRecurring 			: function(id){
+			var self = this;
+
+			this.recurringDS.query({
+				filter:[
+					{ field:"id", value:id },
+					{ field:"is_recurring", value:1 }
+				],
+				page: 1,
+				pageSize: 100
+			}).then(function(){
+				var view = self.recurringDS.view(),
+				obj = self.get("obj");
+				
+				obj.set("recurring_id", id);
+				obj.set("employee_id", view[0].employee_id);//Employee
+				obj.set("job_id", view[0].job_id);
+				obj.set("segments", view[0].segments);
+				obj.set("memo", view[0].memo);
+				obj.set("memo2", view[0].memo2);
+			});
+
+			//Item Line
+			this.recurringLineDS.query({
+				filter: { field:"transaction_id", value:id }
+			}).then(function(){
+				var view = self.recurringLineDS.view();
+				self.lineDS.data([]);
+				self.toItemLineDS.data([]);
+
+				$.each(view, function(index, value){
+					if(value.movement==-1){//FROM
+						self.lineDS.add({
+							transaction_id 		: 0,
+							tax_item_id 		: value.tax_item_id,
+							item_id 			: value.item_id,
+							measurement_id 		: value.measurement_id,
+							description 		: value.description,
+							quantity 	 		: value.quantity,
+							cost 				: value.cost,
+							price 				: value.price,
+							amount 				: value.amount,
+							rate				: value.rate,
+							locale				: value.locale,
+							movement 			: value.movement,
+
+							item_prices 		: value.item_prices
+						});
+					}else{//TO
+						self.toItemLineDS.add({
+							transaction_id 		: 0,
+							tax_item_id 		: value.tax_item_id,
+							item_id 			: value.item_id,
+							measurement_id 		: value.measurement_id,
+							description 		: value.description,
+							quantity 	 		: value.quantity,
+							cost 				: value.cost,
+							price 				: value.price,
+							amount 				: value.amount,
+							rate				: value.rate,
+							locale				: value.locale,
+							movement 			: value.movement,
+
+							item_prices 		: value.item_prices
+						});
+					}
+				});
+
+				self.changes();
+			});
+
+			//Account Line
+			this.recurringAccountLineDS.query({
+				filter: { field:"transaction_id", value:id }
+			}).then(function(){
+				var view = self.recurringAccountLineDS.view();
+				self.accountLineDS.data([]);
+				self.toAccountLineDS.data([]);
+
+				$.each(view, function(index, value){
+					if(value.movement==-1){//FROM
+						self.accountLineDS.add({
+							transaction_id 		: 0,
+							account_id 			: value.account_id,
+							description 		: value.description,
+							amount 	 			: value.amount,
+							rate				: value.rate,
+							locale				: value.locale,
+							movement 			: value.movement
+						});
+					}else{//TO
+						self.toAccountLineDS.add({
+							transaction_id 		: 0,
+							account_id 			: value.account_id,
+							description 		: value.description,
+							amount 	 			: value.amount,
+							rate				: value.rate,
+							locale				: value.locale,
+							movement 			: value.movement
+						});
+					}
+				});
+
+				self.changes();
+			});
+		},
+		frequencyChanges 		: function(){
+			var obj = this.get("obj");
+
+			switch(obj.frequency) {
+			    case "Daily":
+			        this.set("showMonthOption", false);
+			        this.set("showMonth", false);
+			        this.set("showWeek", false);
+			        this.set("showDay", false);
+			       
+			        break;
+			    case "Weekly":
+			        this.set("showMonthOption", false);
+			        this.set("showMonth", false);
+			        this.set("showWeek", true);
+			        this.set("showDay", false);
+
+			        break;
+			    case "Monthly":
+			        this.set("showMonthOption", true);
+			        this.set("showMonth", false);
+			        this.set("showWeek", false);
+			        this.set("showDay", true);
+
+			        break;
+			    case "Annually":
+			        this.set("showMonthOption", false);
+			        this.set("showMonth", true);
+			        this.set("showWeek", false);
+			        this.set("showDay", true);
+
+			        break;
+			    default:
+			        //Default here..
+			}
+		},
+		monthOptionChanges 		: function(){
+			var obj = this.get("obj");
+
+			switch(obj.month_option) {
+			    case "Day":
+			        this.set("showWeek", false);
+			        this.set("showDay", true);
+			       
+			        break;
+			    default:
+			        this.set("showWeek", true);
+			        this.set("showDay", false);
+			}
+		},
+		validateRecurring  		: function(){
+			var result = true, obj = this.get("obj");
+			
+			if(obj.recurring_name!==""){
+				//Check existing name
+				$.each(this.recurringDS.data(), function(index, value){
+					if(value.recurring_name==obj.recurring_name){
+						result = false;
+						alert("This is name is taken.");
+
+						return false;
+					}
+				});
+			}
+			else{
+				result = false;
+				alert("Recurring name is required.");
+			}
+
+			return result;
 		}
 	});
 	banhji.itemRecurring = kendo.observable({
@@ -76694,7 +76999,7 @@
 		search 				: function(){
 			var para = [];
 
-			para.push({ field:"type", value:"Item_Adjustment" });
+			para.push({ field:"type", operator:"where_in", value:["Item_Adjustment","Internal_Usage"] });
 			para.push({ field:"is_recurring", value: 1 });
 			
 			this.dataSource.filter(para);
@@ -76702,14 +77007,28 @@
 		edit 				: function(e){
 			var data = e.data;
 			
-	        banhji.itemAdjustment.set("recurring", "edit");
-	        banhji.router.navigate('/item_adjustment/' + data.id);
+			switch (data.type) {
+			    case "Item_Adjustment":
+			        banhji.itemAdjustment.set("recurring", "edit");
+			        break;
+			    default:
+			    	banhji.internalUsage.set("recurring", "edit");
+			}
+	        
+	        banhji.router.navigate('/'+ data.type +'/'+ data.id);
 		},
 		use 				: function(e){
 			var data = e.data;
 
-			banhji.itemAdjustment.set("recurring", "use");
-	        banhji.router.navigate('/item_adjustment/' + data.id);
+			switch (data.type) {
+			    case "Item_Adjustment":
+			        banhji.itemAdjustment.set("recurring", "use");
+			        break;
+			    default:
+			    	banhji.internalUsage.set("recurring", "use");
+			}
+
+	        banhji.router.navigate('/'+ data.type +'/'+ data.id);
 		}
 	});
 	// INVENTORY REPORTS
@@ -94112,6 +94431,19 @@
 						
 						if(validator.validate() && vm.validating()){
 							vm.set("savePrint", true);
+			            	vm.save();
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }
+					});
+
+					$("#saveRecurring").click(function(e){
+						e.preventDefault();
+
+						vm.set("recurring_validate", true);
+
+						if(validator.validate() && vm.validating()){
+			            	vm.set("saveRecurring", true);
 			            	vm.save();
 				        }else{
 				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);

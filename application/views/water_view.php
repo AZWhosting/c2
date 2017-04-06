@@ -14699,7 +14699,7 @@
 				}else{
 					$("#secondwnumber"+d.id).kendoBarcode({
 						renderAs: "svg",
-					  	value: d.meter.meter_number,
+					  	value: d.number,
 					  	type: "code128",
 					  	width: 200,
 						height: 25,
@@ -14709,7 +14709,7 @@
 					});
 					$("#footwnumber"+d.id).kendoBarcode({
 						renderAs: "svg",
-					  	value: d.meter.meter_number,
+					  	value: d.number,
 					  	type: "code128",
 					  	width: 200,
 						height: 25,
@@ -21051,12 +21051,12 @@
 	banhji.router.route("/reconcile", function(){
 		banhji.view.layout.showIn('#menu', banhji.view.menu);
 		banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
-		var vm = banhji.Reconcile;
+		// var vm = banhji.Reconcile;
 		banhji.userManagement.addMultiTask("Reconcile","reconcile",null);
 		if(banhji.pageLoaded["reconcile"]==undefined){
 			banhji.pageLoaded["reconcile"] = true;
 		}
-		vm.pageLoad();
+		// vm.pageLoad();
 		if(banhji.Receipt.currencyDS.data().length == 0) {
 			banhji.Receipt.currencyDS.read()
 			.then(function(e){

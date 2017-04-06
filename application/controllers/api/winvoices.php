@@ -77,7 +77,7 @@ class Winvoices extends REST_Controller {
 					'id' => $meter->id,
 					'meter_number' => $meter->number,
 					'location_id' => $meter->location_id,
-					'multiplier' => $meter->multiplier
+					'multiplier' => intval($meter->multiplier)
 				);
 				$tmp["$meter->number"]['items'][] = array(
 				'type' => 'usage',
@@ -107,7 +107,7 @@ class Winvoices extends REST_Controller {
 										"line" => array(
 											'id'   => $t->id,
 											'name' => $t->name,
-											'is_flat' => $t->is_flat == 0 ? FALSE:TRUE,
+											'is_flat' => $t->is_flat,
 											'usage'  => floatval($t->usage),
 											'amount'=> floatval($t->amount)
 										)

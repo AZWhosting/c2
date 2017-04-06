@@ -1353,6 +1353,9 @@ var	km_KH = {
 	"none_utility": "មិនប្រើទឹកភ្លើង",
 	"for_water": "សម្រាប់ទឹក",
 	"for_electricity": "សម្រាប់ភ្លើង",
+	"flat": "ថេរ",
+	"not_flat": "អថេរ",
+	"reactive_meter": "Reactive Meter",
 
 
 

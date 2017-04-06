@@ -12,7 +12,7 @@
     <link href="https://fonts.googleapis.com/css?family=Battambang" rel="stylesheet">
     <style>
         html, body {
-            background-color: #203864;
+            background-color: #fff;
             font-family: 'Roboto Slab', Battambang !important;
         }
         label {
@@ -24,14 +24,14 @@
             padding: 0;
         }
         .sign-up{
-            width: 100%;
+            width: 85%;
             margin: 0 auto;
-            background: #203864;
+            background: #fff;
             height: auto;
             padding-bottom: 100px;
         }
         .signup-content{
-            margin: 25px 0;
+            margin: 10% 0;
             display: inline-block;
             width: 100%;
         }
@@ -44,9 +44,10 @@
             font-size: 13px;
         }
         .signup-form{
-            background: #BDD7EE;
-            padding: 30px 50px;
+            background: #01b0f1;
+            padding: 65px 50px;
             color: #000000;
+            float: left;
             text-align:  center;
             font-family: 'Roboto Slab', Battambang !important;
         }
@@ -63,12 +64,13 @@
         .signup-form .signup-email{
             width: 100%;
             margin-top: 2px;
-            padding: 3px;
+            padding: 3px 3px 3px 10px;
+            height: 40px;
             color: #000;
             font-family: 'Roboto Slab', Battambang !important;
         }
         .signup-noted{
-                color: #000;
+            color: #000;
             margin: 5px auto 0;
             font-size: 11px;
             text-align: center;
@@ -77,16 +79,15 @@
         .signup-country{
             height: 37px;
             width: 100%;
-            margin-top: 5px;
+            margin-top: 10px;
         }
         .btn-signup{
-            width: 100%;
-            background: #222A35;
-            color: #68788E;
+            background: #002161; 
+            color: #fff;
             border: none;
-            margin: 15px 0 0 0;
             height: 55px;
             cursor: pointer;
+            width: 100%;
             font-size: 30px !important;
         }
         .signup-text-bottom{
@@ -117,6 +118,35 @@
             float: left; 
             width: 75%;
         }
+        .signup-img{
+            width: 18%;
+            float: left;
+            margin-right: 11px;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        .signup-img:nth-child(5),
+        .signup-img:nth-child(10),
+        .signup-img:nth-child(15){
+            margin-right: 0;
+        }
+        .signup-img a img{
+            width: 100%;
+            height: auto;
+        }
+        .signup-img a.active{
+            float: left;
+            opacity: 0.23;
+        }
+        .supporter{
+            float: left;
+            margin-top: 15px;
+            width: 100%;
+        }
+        #siteSealFauxBadge{
+            float: right;
+            text-align: right;
+        }
         .k-dropdown .k-input, .k-dropdown .k-state-focused .k-input, .k-menu .k-popup{
             color: #B5B5B5;
         }
@@ -142,8 +172,6 @@
         and (max-device-width : 1024px) 
         and (orientation : portrait) { 
         }
-
-
     </style>
     <style>
         /* FeedBack */
@@ -247,7 +275,6 @@
         .cover {
             position: relative;
             clear: both;
-            margin-bottom: 5px;
         }
         .cover img {
             position: absolute;
@@ -263,134 +290,298 @@
             display: none;
         }
     </style>
-<script>
-  window.fbAsyncInit = function() {
-    FB.init({
-      appId      : '387834344756149',
-      xfbml      : true,
-      version    : 'v2.7'
-    });
-    FB.AppEvents.logPageView();
-  };
+    <script>
+        window.fbAsyncInit = function() {
+            FB.init({
+              appId      : '387834344756149',
+              xfbml      : true,
+              version    : 'v2.7'
+            });
+            FB.AppEvents.logPageView();
+        ;
 
-  (function(d, s, id){
-     var js, fjs = d.getElementsByTagName(s)[0];
-     if (d.getElementById(id)) {return;}
-     js = d.createElement(s); js.id = id;
-     js.src = "//connect.facebook.net/en_US/sdk.js";
-     fjs.parentNode.insertBefore(js, fjs);
-   }(document, 'script', 'facebook-jssdk'));
-</script>
+        (function(d, s, id){
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) {return;}
+            js = d.createElement(s); js.id = id;
+            js.src = "//connect.facebook.net/en_US/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
 </head>
 
 <body>
-     <div class="cover-rightfixed">
-  <a class="rightfixed enquiries btn-rounded glyphicons no-js conversation" style="width: 142px;float:left;">
-    Support
-    <div class="enquiry-content">
-      <p style="font-size: 14px;">Call us at<br><span style="font-weight: bold;font-size: 16px">+855 10 413 777</span><br>Mon-Fri<br>09:00 - 18:00</p>
-      <div class="fb-messengermessageus" 
-        messenger_app_id="1301847836514973" 
-        page_id="862386433857166"
-        color="blue"
-        width="180"
-        size="standard" ></div>
+    <div class="cover-rightfixed">
+        <a class="rightfixed enquiries btn-rounded glyphicons no-js conversation" style="width: 142px;float:left;">
+            Support
+            <div class="enquiry-content">
+                <p style="font-size: 14px;">Call us at<br><span style="font-weight: bold;font-size: 16px">+855 10 413 777</span><br>Mon-Fri<br>09:00 - 18:00</p>
+                <div class="fb-messengermessageus" 
+                    messenger_app_id="1301847836514973" 
+                    page_id="862386433857166"
+                    color="blue"
+                    width="180"
+                    size="standard" ></div>
+            </div>
+        </a>
     </div>
-  </a>
-</div>
     <div class="container">
         <div class="sign-up">
             <dis class="signup-content">
-                
-                 <div class="col-sm-6">
-                    <div class="col-md-10 col-md-offset-2">
-                        <div class="signup-form">
-                            <form action="" method="">
-                                <label>Personal Information</label><br>
-                                <div class="cover">
-                                    <img src="<?php echo base_url();?>assets/img/form-loader.gif" class="imgLoad" />
-                                    <img src="<?php echo base_url();?>assets/img/form-tick.png" class="imgTick" />
-                                    <img src="<?php echo base_url();?>assets/img/form-cross.png" class="imgCross" />
-                                    <input type="email" data-bind="value: email, events: {change : emailChange}" required="required" placeholder="Your email" class="signup-email">
-                                    <p class="msg"></p>
-                                </div>
-                                <div class="cover">
-                                    <img src="<?php echo base_url();?>assets/img/form-loader.gif" class="imgLoad" />
-                                    <img src="<?php echo base_url();?>assets/img/form-tick.png" class="imgTick" />
-                                    <img src="<?php echo base_url();?>assets/img/form-cross.png" class="imgCross" />
-                                    <input required="required" type="numbers" data-bind="value: telephone, events: {change: phoneChange}" id="phoneInput" placeholder="Your Telephone" class="signup-email">
-                                    <p class="msg"></p>
-                                </div>
-                                <p class="signup-noted">We will use this information to communicate with you. We never share your number with third parties without your consent.</p>
-                                <div class="cover">
-                                    <img src="<?php echo base_url();?>assets/img/form-loader.gif" class="imgLoad" />
-                                    <img src="<?php echo base_url();?>assets/img/form-tick.png" class="imgTick" />
-                                    <img src="<?php echo base_url();?>assets/img/form-cross.png" class="imgCross" />
-                                    <input required="required" type="password" data-bind="value: password, events: {change: pwdCheck}" placeholder="Password " class="signup-email">
-                                    <p class="msg"></p>
-                                </div>
-
-                                <p class="signup-noted">The minimum requirements for password are:  at least 8 characters, letter, and numbers.</p>
-                                <div class="cover">
-                                    <img src="<?php echo base_url();?>assets/img/form-loader.gif" class="imgLoad" />
-                                    <img src="<?php echo base_url();?>assets/img/form-tick.png" class="imgTick" />
-                                    <img src="<?php echo base_url();?>assets/img/form-cross.png" class="imgCross" />
-                                    <input required="required" minlength="8" type="password" data-bind="value: cPassword, events: {change: pwdChange}" placeholder="Confirm password " class="signup-email">
-                                    <p class="msg"></p>
-                                </div>
-
-                                <label>Company Information</label><br>
-                                <div class="cover">
-                                    <img src="<?php echo base_url();?>assets/img/form-loader.gif" class="imgLoad" />
-                                    <img src="<?php echo base_url();?>assets/img/form-tick.png" class="imgTick" />
-                                    <img src="<?php echo base_url();?>assets/img/form-cross.png" class="imgCross" />
-                                    <input required="required" type="text" data-bind="value: name, events: {change: comChange }" placeholder="Company Name " class="signup-email">
-                                    <p class="msg">Company Name Required!</p>
-                                </div>
-                                <select class="signup-country" 
-                                        data-role="dropdownlist" 
-                                        data-bind="source: currencies, value: currency"
-                                        data-text-field="country"
-                                        data-value-field="id"
-                                        data-option-label="Select the main Currency" style="text-align: left;">
-                                </select><br>
-
-                                <select class="signup-country" 
-                                        data-role="dropdownlist" 
-                                        data-bind="source: countries, value: country"
-                                        data-text-field="name"
-                                        data-value-field="id"
-                                        data-option-label="Select Country" style="text-align: left;">
-                                </select><br>
-
-                                <select class="signup-country"
-                                        data-role="dropdownlist" 
-                                        data-bind="source: types, value: type"
-                                        data-text-field="name"
-                                        data-value-field="id"
-                                        data-option-label="Select Business Type" style="text-align: left;">
-                                </select><br>
-
-                                 <select class="signup-country"
-                                        data-role="dropdownlist" 
-                                        data-bind="source: industries, value: industry"
-                                        data-text-field="name"
-                                        data-value-field="id"
-                                        data-option-label="Select Industry Type"
-                                        data-place-holder="select one" style="text-align: left;">
-                                </select><br>
-
-                                <input style="background: #1F4E78;font-size: 20px !important; " id="signupBtn" type="button" data-bind="enabled: signupEnable, click: create" class="btn-signup" value="SIGNUP FOR FREE"><br>
-                                <p class="signup-text-bottom">
-                                    By clicking on “signup”, you agree to the <a href="https://www.banhji.com/terms" target="_blank">Terms of Service</a>  and <a href="https://banhji.com/privacy" target="_blank">Privacy Policy</a>.
-                                </p>
-
-                            </form> 
+                <div class="col-sm-6">
+                    <div class="row" style="margin-bottom: 15px;">
+                        <div class="col-sm-2 logo-onsignup" style="width: 20%;">
+                            <a href="https://banhji.com/" target="_blank">
+                                <img width="100%" height="auto" alt="BanhJi Logo" src="<?php echo base_url();?>assets/industry_logos/banhji-logo-onsignup.png">
+                            </a>
+                        </div>
+                        <div class="col-sm-10" style="width: 80%; margin-top: -10px; padding-left: 0;">
+                            <h3 class="textnear-logo">
+                                is <span class="fontbold">online accounting software</span> for <span class="sme">sme</span>s
+                            </h3>
                         </div>
                     </div>
+                    <div class="signup-form">
+                        <form action="" method="">
+                            <label>Personal Information</label><br>
+                            <div class="cover">
+                                <img src="<?php echo base_url();?>assets/img/form-loader.gif" class="imgLoad" />
+                                <img src="<?php echo base_url();?>assets/img/form-tick.png" class="imgTick" />
+                                <img src="<?php echo base_url();?>assets/img/form-cross.png" class="imgCross" />
+                                <input type="email" data-bind="value: email, events: {change : emailChange}" required="required" placeholder="Your email" class="signup-email">
+                                <p class="msg"></p>
+                            </div>
+                            <div class="cover" style="margin-top: 10px;">
+                                <img src="<?php echo base_url();?>assets/img/form-loader.gif" class="imgLoad" />
+                                <img src="<?php echo base_url();?>assets/img/form-tick.png" class="imgTick" />
+                                <img src="<?php echo base_url();?>assets/img/form-cross.png" class="imgCross" />
+                                <input required="required" type="numbers" data-bind="value: telephone, events: {change: phoneChange}" id="phoneInput" placeholder="Your Telephone" class="signup-email" >
+                                <p class="msg"></p>
+                            </div>
+                            <p class="signup-noted">We will use this information to communicate with you. We never share your number with third parties without your consent.</p>
+                            <div class="cover">
+                                <img src="<?php echo base_url();?>assets/img/form-loader.gif" class="imgLoad" />
+                                <img src="<?php echo base_url();?>assets/img/form-tick.png" class="imgTick" />
+                                <img src="<?php echo base_url();?>assets/img/form-cross.png" class="imgCross" />
+                                <input required="required" type="password" data-bind="value: password, events: {change: pwdCheck}" placeholder="Password " class="signup-email" style="margin-top: 8px;">
+                                <p class="msg"></p>
+                            </div>
+
+                            <p class="signup-noted">The minimum requirements for password are:  at least 8 characters, letter, and numbers.</p>
+                            <div class="cover">
+                                <img src="<?php echo base_url();?>assets/img/form-loader.gif" class="imgLoad" />
+                                <img src="<?php echo base_url();?>assets/img/form-tick.png" class="imgTick" />
+                                <img src="<?php echo base_url();?>assets/img/form-cross.png" class="imgCross" />
+                                <input required="required" minlength="8" type="password" data-bind="value: cPassword, events: {change: pwdChange}" placeholder="Confirm password " class="signup-email" style="margin-top: 8px;">
+                                <p class="msg"></p>
+                            </div>
+
+                            <!-- <label>Company Information</label><br>
+                            <div class="cover">
+                                <img src="<?php echo base_url();?>assets/img/form-loader.gif" class="imgLoad" />
+                                <img src="<?php echo base_url();?>assets/img/form-tick.png" class="imgTick" />
+                                <img src="<?php echo base_url();?>assets/img/form-cross.png" class="imgCross" />
+                                <input required="required" type="text" data-bind="value: name, events: {change: comChange }" placeholder="Company Name " class="signup-email">
+                                <p class="msg">Company Name Required!</p>
+                            </div>
+                            <select class="signup-country" 
+                                    data-role="dropdownlist" 
+                                    data-bind="source: currencies, value: currency"
+                                    data-text-field="country"
+                                    data-value-field="id"
+                                    data-option-label="Select the main Currency" style="text-align: left;">
+                            </select><br>
+
+                            <select class="signup-country" 
+                                    data-role="dropdownlist" 
+                                    data-bind="source: countries, value: country"
+                                    data-text-field="name"
+                                    data-value-field="id"
+                                    data-option-label="Select Country" style="text-align: left;">
+                            </select><br>
+
+                            <select class="signup-country"
+                                    data-role="dropdownlist" 
+                                    data-bind="source: types, value: type"
+                                    data-text-field="name"
+                                    data-value-field="id"
+                                    data-option-label="Select Business Type" style="text-align: left;">
+                            </select><br>
+
+                             <select class="signup-country"
+                                    data-role="dropdownlist" 
+                                    data-bind="source: industries, value: industry"
+                                    data-text-field="name"
+                                    data-value-field="id"
+                                    data-option-label="Select Industry Type"
+                                    data-place-holder="select one" style="text-align: left;">
+                            </select><br>
+
+                            <input style="background: #1F4E78;font-size: 20px !important; " id="signupBtn" type="button" data-bind="enabled: signupEnable, click: create" class="btn-signup" value="SIGNUP FOR FREE"><br>
+                            <p class="signup-text-bottom">
+                                By clicking on “signup”, you agree to the <a href="https://www.banhji.com/terms" target="_blank">Terms of Service</a>  and <a href="https://banhji.com/privacy" target="_blank">Privacy Policy</a>.
+                            </p>-->
+                        </form>
+                        <span class="row" style="font-size: 11px; color: #fff; text-align: left; margin-top: 8px; float: left;">
+                            By clicking on “signup”, you agree to the 
+                            <a href="https://www.banhji.com/terms" target="_blank" style="color: #333;">Terms of Service</a>  
+                            and 
+                            <a href="https://banhji.com/privacy" target="_blank" style="color: #333;">Privacy Policy</a>.
+                        </span>
+                    </div>
+                    
                 </div>
                <div class="col-sm-6">
-                    <div class="singup-image">
+                    <div class="cover">
+                        <img src="<?php echo base_url();?>assets/img/form-loader.gif" class="imgLoad" />
+                        <img src="<?php echo base_url();?>assets/img/form-tick.png" class="imgTick" />
+                        <img src="<?php echo base_url();?>assets/img/form-cross.png" class="imgCross" />
+                        <input required="required" type="text" data-bind="value: name, events: {change: comChange }" placeholder="Company Name " class="signup-email" style="height: 40px; width: 100% ; padding: 3px 3px 3px 10px; ">
+                        <p class="msg">Company Name Required!</p>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6" style="padding-right: 0;">
+                            <select class="signup-country" 
+                                    data-role="dropdownlist" 
+                                    data-bind="source: currencies, value: currency"
+                                    data-text-field="country"
+                                    data-value-field="id"
+                                    data-option-label="Select the main Currency" style="text-align: left; border: 1px solid #d0cfd5;">
+                            </select>
+                        </div>
+                        <div class="col-sm-6">
+                            <select class="signup-country" 
+                                    data-role="dropdownlist" 
+                                    data-bind="source: countries, value: country"
+                                    data-text-field="name"
+                                    data-value-field="id"
+                                    data-option-label="Select Country" style="text-align: left; border: 1px solid #d0cfd5;">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6" style="padding-right: 0;">
+                            <select class="signup-country"
+                                data-role="dropdownlist" 
+                                data-bind="source: types, value: type"
+                                data-text-field="name"
+                                data-value-field="id"
+                                data-option-label="Select Business Type" style="text-align: left; border: 1px solid #d0cfd5;">
+                            </select>
+                        </div>
+                        <div class="col-sm-6" style="padding-right: 0;">
+                            <p style="font-size: 12px; margin-bottom: 0; float: left; margin-top: 13px">
+                                Please select the industry that your business is in:
+                            </p>
+                        </div>
+                        <!-- <div class="col-sm-6">
+                            <select class="signup-country"
+                                data-role="dropdownlist" 
+                                data-bind="source: industries, value: industry"
+                                data-text-field="name"
+                                data-value-field="id"
+                                data-option-label="Select Industry Type"
+                                data-place-holder="select one" style="text-align: left; border: 1px solid #d0cfd5;">
+                            </select>   
+                        </div> -->
+                    </div>
+                    <div class="row-fluid" style="color: #333; margin-top: 8px;">
+                        
+                        <div class="col-sm-12" style="padding: 0;">
+                            <div class="signup-img" style="height: 110px; margin-bottom: 8px; ">
+                                <a class="" id="41" data-bind="click: industryClick">
+                                    <img src="<?php echo base_url();?>assets/industry_logos/10.png">
+                                    <p style="font-size: 10px; color: #333;">Wholesale & Retail Trading</p>
+                                </a>
+                            </div>
+                            <div class="signup-img" style="height: 110px; margin-bottom: 8px;">
+                                <a class="" id="49" data-bind="click: industryClick">
+                                    <img src="<?php echo base_url();?>assets/industry_logos/12.png">
+                                    <p style="font-size: 10px; color: #333;">Accomm. & Food </p>
+                                </a>
+                            </div>
+                            <div class="signup-img" style="height: 110px; margin-bottom: 8px;">
+                                <a class=""  id="66" data-bind="click: industryClick">
+                                    <img src="<?php echo base_url();?>assets/industry_logos/7.png">
+                                    <p style="font-size: 10px; color: #333;">Professional Service</p>
+                                </a>
+                            </div>
+                            <div class="signup-img" style="height: 110px; margin-bottom: 8px;">
+                                <a class="" id="31" data-bind="click: industryClick">
+                                    <img src="<?php echo base_url();?>assets/industry_logos/9.png">
+                                    <p style="font-size: 10px; color: #333;">Manufacturing</p>
+                                </a>
+                            </div>
+                            <div class="signup-img" style="height: 110px; margin-bottom: 8px;"> 
+                                <a class="" id="89" data-bind="click: industryClick">
+                                    <img src="<?php echo base_url();?>assets/industry_logos/13.png">
+                                    <p style="font-size: 10px; color: #333;">NGOs</p>
+                                </a>
+                            </div>
+                             <div class="signup-img">
+                                <a class="" id="63" data-bind="click: industryClick">
+                                    <img src="<?php echo base_url();?>assets/industry_logos/2.png">
+                                    <p style="font-size: 10px; color: #333;">Agriculture</p>
+                                </a>
+                            </div>
+                            <div class="signup-img">
+                                <a class="" id="33" data-bind="click: industryClick">
+                                    <img src="<?php echo base_url();?>assets/industry_logos/11.png">
+                                    <p style="font-size: 10px; color: #333;">Electricity</p>
+                                </a>
+                            </div>
+                            <div class="signup-img">
+                                <a class="" id="34" data-bind="click: industryClick">
+                                    <img src="<?php echo base_url();?>assets/industry_logos/15.png">
+                                    <p style="font-size: 10px; color: #333;">Water</p>
+                                </a>
+                            </div>
+                            <div class="signup-img">
+                                <a class="" id="47" data-bind="click: industryClick">
+                                    <img src="<?php echo base_url();?>assets/industry_logos/14.png">
+                                    <p style="font-size: 10px; color: #333;">Transportation</p>
+                                </a>
+                            </div>
+                            <div class="signup-img">
+                                <a class="" id="75" data-bind="click: industryClick">
+                                    <img src="<?php echo base_url();?>assets/industry_logos/3.png">
+                                    <p style="font-size: 10px; color: #333;">Education</p>
+                                </a>
+                            </div>
+                             <div class="signup-img">
+                                <a class="" id="38" data-bind="click: industryClick">
+                                    <img src="<?php echo base_url();?>assets/industry_logos/1.png">
+                                    <p style="font-size: 10px; color: #333;">Construction</p>
+                                </a>
+                            </div>
+                            <div class="signup-img">
+                                <a class="" id="56" data-bind="click: industryClick">
+                                    <img src="<?php echo base_url();?>assets/industry_logos/5.png">
+                                    <p style="font-size: 10px; color: #333;">Information & Communication</p>
+                                </a>
+                            </div>
+                            <div class="signup-img">
+                                <a class="" id="57" data-bind="click: industryClick">
+                                    <img src="<?php echo base_url();?>assets/industry_logos/4.png">
+                                    <p style="font-size: 10px; color: #333;">Financial Institutions</p>
+                                </a>
+                            </div>
+                            <div class="signup-img">
+                                <a class="" id="60" data-bind="click: industryClick">
+                                    <img src="<?php echo base_url();?>assets/industry_logos/8.png">
+                                    <p style="font-size: 10px; color: #333;">Real Estate Activities</p>
+                                </a>
+                            </div>
+                            <div class="signup-img">
+                                <a class="" id="90" data-bind="click: industryClick">
+                                    <img src="<?php echo base_url();?>assets/industry_logos/6.png">
+                                    <p style="font-size: 10px; color: #333;">Others</p>
+                                </a>
+                            </div>
+
+                        </div>
+                    </div>
+                    <!-- <div class="singup-image">
                         <img style="float: left;width: 67%; margin-top: -14px; margin-left: -32px;" src="<?php echo base_url(); ?>assets/signup-new.png" />
                     </div>
                     <div class="col-sm-12 signup-list">
@@ -438,38 +629,49 @@
                             </li>
                         </ul>
 
-                    </div>
+                    </div> -->
+                    <div class="row-fluid">
+                        <input style="font-size: 20px !important; " id="signupBtn" type="button" data-bind="enabled: signupEnable, click: create" class="btn-signup" value="SIGNUP FOR FREE">                       
+                    </div>  
                 </div>
             </div>
         </div>
     </div>
-    <div class="footer-wrapper" style="position: fixed;width: 100%; bottom:0; left: 0;">
-       <div class="footer" style="width: 100%; background: #111F3F; padding: 10px 0; color: #839ABA;">
-         <div class="container">
-          <div class="row">
-            <div class="col-sm-6">
-                <div style="margin-left:113px; padding-right: 20px; border-right: 1px solid #fff; width: 7%; float: left; margin-right: 13px; ">
-                  <img style="width: 30px; height: 30px; " src="https://storage.googleapis.com/instapage-user-media/e315080c/7548513-0-Banhji-Logo-3.png" />
+    <div class="footer-wrapper" style="position: fixed; width: 100%; bottom:0; left: 0;">
+        <div class="footer" style="width: 100%; background: #111F3F; padding: 10px 0; color: #839ABA;">
+            <div class="container">
+                <div class="sign-up" style="padding-bottom: 0; background: none;">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div style="padding-right: 20px; border-right: 1px solid #fff; width: 7%; float: left; margin-right: 13px; ">
+                                <img style="width: 30px; height: 30px; " src="https://storage.googleapis.com/instapage-user-media/e315080c/7548513-0-Banhji-Logo-3.png" />
+                            </div>
+                            <p style="text-align: left; margin-bottom: 0; margin-top: 7px; font-size: 13px;">Taking Fear out of Accounting</p>
+                            <p style="width: 85%; margin-left: 5px; font-size: 12px; margin-top: 10px; float: left; clear: both;">&copy; <?php echo date('Y'); ?> BanhJi Pte. Ltd. All rights reserved. Terms, conditions, features, support, pricing and service options subject to change without notice.</p>
+                        </div>
+                        <div class="col-sm-6 footer-list">
+                            <ul>
+                                <li>
+                                    <a href="https://banhji.com/privacy" target="_blank">Privacy Policy</a> 
+                                </li>
+                                <li>
+                                    <a href="https://www.banhji.com/terms" target="_blank">Terms of Service</a> 
+                                </li>
+                            </ul>
+                            <div class="supporter">
+                                <span  id="siteseal" style="float: right; width: 28%; text-align: right; margin-left: 15px;">
+                                    <script async type="text/javascript" src="https://seal.godaddy.com/getSeal?sealID=lNpq2OuFwU0nDcZ5f7uSQ9D1rwgIIgTNOoYBNRt4BqE4CMLt8GMhEDKt66EL"></script>
+                                </span>
+                                <span id="cdSiteSeal1" style="float: right; width: 28%; text-align: right;">
+                                    <script type="text/javascript" src="//tracedseals.starfieldtech.com/siteseal/get?scriptId=cdSiteSeal1&amp;cdSealType=Seal1&amp;sealId=55e4ye7y7mb733e8444d2ecffd8819eq59my7mb7355e4ye7baf4c5b6a4491396"></script></span>                        
+                                </span>                               
+                            </div>
+                        </div>           
+                    </div>                           
                 </div>
-                <p style="text-align: left; margin-bottom: 0; margin-top: 7px; font-size: 13px;">Taking Fear out of Accounting</p>
             </div>
-             <div class="col-sm-6 footer-list">
-              <ul>
-                <li>
-                  <a href="https://banhji.com/privacy" target="_blank">Privacy Policy</a> 
-                </li>
-                 <li>
-                  <a href="https://www.banhji.com/terms" target="_blank">Terms of Service</a> 
-                </li>
-              </ul>
-
-            </div>           
-          </div>
-           <p style="width: 35%; font-size: 12px; margin-top: 10px; margin-left: 120px; float: left;">&copy; <?php echo date('Y'); ?> BanhJi Pte. Ltd. All rights reserved. Terms, conditions, features, support, pricing and service options subject to change without notice.</p>
-            <span style="float: right; width: 45%; text-align: right; margin-right: 35px;" id="siteseal"><script async type="text/javascript" src="https://seal.godaddy.com/getSeal?sealID=lNpq2OuFwU0nDcZ5f7uSQ9D1rwgIIgTNOoYBNRt4BqE4CMLt8GMhEDKt66EL"></script></span>
-         </div>
-     </div>
-  </div>
+        </div>
+    </div>
     <!-- cognito -->
     <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/resources/jsbn.js"></script>
     <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/resources/jsbn2.js"></script>
@@ -765,6 +967,13 @@
                 serverPaging: true,
                 pageSize: 50
             }),
+            industryClick: function(e) {
+                let $value = $(e.currentTarget);
+                let id = $value.attr('id');
+                $value.addClass('active');
+                $value.parent().siblings().children().removeClass('active');
+                this.set('industry', id);
+            },
             companyCheck : new kendo.data.DataSource({
                 transport: {
                     read  : {

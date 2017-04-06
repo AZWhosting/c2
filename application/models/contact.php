@@ -53,10 +53,6 @@ class Contact extends DataMapper {
 			'class' => 'utility',
 			'other_field' => 'contact'
 		),
-		'contact_utility' => array(
-			'class' => 'contact_utility',
-			'other_field' => 'contact'
-		),
 		'branch' => array(
 			"class" => 'branch', 
 			"other_field" => "contact"
@@ -107,7 +103,11 @@ class Contact extends DataMapper {
 		'attachment' => array(
 			'class' => 'attachment',
 			'other_field' => 'contact'
-		)
+		),
+		'contact_utility' => array(
+			'class' => 'contact_utility',
+			'other_field' => 'contact'
+		),
 	);
 
 	public function __construct($id = null, $server_name = null, $db_username = null, $server_password = null, $db = null) {

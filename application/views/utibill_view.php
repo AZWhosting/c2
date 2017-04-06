@@ -571,6 +571,18 @@
 	            <div class="tab-pane" id="tab5">
 		            <div style="clear: both; ">
 		            	<input data-bind="value: tariffName, attr: {placeholder: lang.lang.name}" type="text" placeholder="Name" style="height: 32px; padding: 5px; margin-right: 10px;"  class="span3 k-textbox k-invalid" />
+
+		            	<input data-role="dropdownlist"
+		            	   class="span2"
+		            	   style="padding-right: 1px; height: 32px; margin-right: 10px;" 
+            			   data-option-label="(--- Flat ---)"
+            			   data-auto-bind="false"			                   
+		                   data-value-primitive="true"
+		                   data-text-field="name"
+		                   data-value-field="id"
+		                   data-bind="value: tariffFlat,
+		                              source: tariffFlatType"/>
+
 		            	<input data-role="dropdownlist"
 		            	   class="span3"
 		            	   style="padding-right: 1px; height: 32px; margin-right: 10px;" 
@@ -581,8 +593,9 @@
 		                   data-value-field="id"
 		                   data-bind="value: tariffAccount,
 		                              source: tariffAccDS"/>
+
 		                <input data-role="dropdownlist"
-		            	   class="span3"
+		            	   class="span2"
 		            	   style="padding-right: 1px; height: 32px; margin-right: 10px;" 
             			   data-option-label="(--- Currency ---)"
             			   data-auto-bind="false"			                   
@@ -591,15 +604,17 @@
 		                   data-value-field="id"
 		                   data-bind="value: tariffCurrency,
 		                              source: currencyDS"/>
+
 		            	<a class="btn-icon btn-primary glyphicons circle_plus cutype-icon" style="width: 80px; padding: 5px 7px 5px 35px !important; text-align: left;" data-bind="click: addTariff"><i></i><span data-bind="text: lang.lang.add">Add</span></a>
 		            </div>
 	            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
 	            		<thead>
 	            			<tr>
-	            				<th class="center" width="300"><span data-bind="text: lang.lang.name">Name</span></th>
-	            				<th class="center" ><span data-bind="text: lang.lang.account">Account</span></th>
-	            				<th class="center"><span data-bind="text: lang.lang.currency">Currency</span></th>
-	            				<th class="center" ><span data-bind="text: lang.lang.action">Action</span></th>
+	            				<th class="center" width="200"><span data-bind="text: lang.lang.name">Name</span></th>
+	            				<th class="center" width="50"><span data-bind="text: lang.lang.flat">Flat</span></th>
+	            				<th class="center" width="70"><span data-bind="text: lang.lang.account">Account</span></th>
+	            				<th class="center" width="70"><span data-bind="text: lang.lang.currency">Currency</span></th>
+	            				<th class="center" width="200"><span data-bind="text: lang.lang.action">Action</span></th>
 	            			</tr>
 	            		</thead>
 	            		<tbody data-role="listview"	            				
@@ -633,7 +648,7 @@
 			                 data-height="190"
 			                 data-resizable="false"
 			                 data-actions="{}"
-			                 data-position="{top: '30%', left: '37%'}"		                 
+			                 data-position="{top: '30%', left: '37%'}"
 			                 data-bind="visible: windowTariffItemVisible">
 	            		<table>
 							<tr style="border-bottom: 8px solid #fff;">
@@ -1120,6 +1135,9 @@
     		#= name#
    		</td>
    		<td>
+    		# if(is_flat == 0){# អថេរ #}else{# ថេរ #}#
+   		</td>
+   		<td>
     		#= account.name#
    		</td>
    		<td align="center">
@@ -1138,7 +1156,17 @@
     <tr>    	               
         <td>
 			<input style="width: 100%;" type="text" class="k-textbox" data-bind="value:name" />
-        </td>    
+        </td>
+        <td align="center">
+    		<input data-role="dropdownlist"
+        	   style="padding-right: 1px;height: 32px;" 
+			   data-auto-bind="false"			                   
+               data-value-primitive="true"
+               data-text-field="name"
+               data-value-field="id"
+               data-bind="value: is_flat,
+                          source: tariffFlatType"/>
+		</td> 
         <td>        	
         	<input style="width: 100%;" data-role="dropdownlist"      
                    data-value-primitive="false"
@@ -3242,19 +3270,19 @@
 									<div class="span6" style="padding-right: 0;">	
 										<!-- Group -->
 										<div class="control-group">							
-											<label><span data-bind="text: lang.lang.type">Type</span> <span style="color:red">*</span></label>			
+											<label><span data-bind="text: lang.lang.license">Type</span> <span style="color:red">*</span></label>			
 					              			<br>
 					              			<select data-role="dropdownlist"
 							                   data-value-primitive="true"
 							                   data-text-field="name"
 							                   data-value-field="id"
 							                   data-bind="
-							                    enabled: disableOnly,
-							                   	source: selectMeterType,
-							                   	value: obj.type"
+							                   	source: licenseDS,
+							                   	value: obj.branch_id,
+							                   	events: {change: licenseChange}"
 							                   style="width: 100%;margin-bottom: 15px;" ></select>
 										</div>
-										<!-- // Group END -->											
+										<!-- // Group END -->
 									</div>
 									<div class="span6" style="padding-right: 0;">	
 										<!-- Group -->
@@ -3344,7 +3372,7 @@
 									<div class="span6">	
 										<!-- Group -->
 										<div class="control-group">								
-											<label for="registeredDate"><span data-bind="text: lang.lang.register_date"></span> <span style="color:red">*</span></label>
+											<label for="registeredDate"><span data-bind="text: lang.lang.register_date"></span></label>
 								            <input
 							            		data-role="datepicker"			            		
 				            					data-bind="value: obj.date_used" 
@@ -12556,6 +12584,7 @@
         	}
         },
         addPattern 			: function(id){
+        	var self = this;
         	this.patternDS.insert(0, {
 				"contact_type_id" 		: id,
 				"number"				: "",
@@ -12850,13 +12879,17 @@
 					notificat.success(self.lang.lang.error_message);
 	        	});
         },
+        tariffFlatType 	: [
+        	{id: 0, name: "Not Flat"},
+        	{id: 1, name: "Flat"}
+        ],
         addTariff 		: function(e){
         	var self = this;
         	if(this.get("tariffName") && this.get("tariffAccount") && this.get("tariffCurrency")){
 	        	this.planItemDS.add({
 	        		name 		: this.get("tariffName"),
 	        		type     	: "tariff",
-	        		is_flat   	: 0,
+	        		is_flat   	: this.get("tariffFlat"),
 	        		tariff_id 	: 0,
 	        		unit 		: 0,
 	        		currency 	: this.get("tariffCurrency"),
@@ -12874,6 +12907,7 @@
 	        			self.set("tariffName", "");
 	        			self.set("tariffAccount", "");
 	        			self.set("tariffCurrency", "");
+	        			self.set("tariffFlat", "");
 	        			self.tariffItemDS.data([]);
 			        	self.tariffItemDS.add({
 			        		name 		: "តម្លៃទូទៅ",
@@ -13104,6 +13138,11 @@
 					self.typeUnit[i].set("name", self.lang.lang.money);
 				}
 			});
+			this.setWords();
+		},
+		setWords 			: function(){
+			this.tariffFlatType[0].set("name", this.lang.lang.not_flat);
+			this.tariffFlatType[1].set("name", this.lang.lang.flat);
 		},
 		cancel 				: function(){
 			this.licenseDS.cancelChanges();		
@@ -13389,7 +13428,10 @@
 		],
 		addNewItemType : null,
 		current 	: null,
-		currencyDS  : banhji.source.currencyDS,
+		currencyDS  			: new kendo.data.DataSource({
+		  	data: banhji.source.currencyList,
+		  	filter: { field:"status", value: 1 }
+		}),
 		list 		: [],
 		planItemList: [],
 		currencyEnable : true,
@@ -13874,6 +13916,8 @@
 		planDS 				: dataStore(apiUrl + "plans"),
 		userActivatDS 		: dataStore(apiUrl + "activate_water"),
 		brandDS 			: banhji.source.brandDS,
+		licenseDS 			: dataStore(apiUrl + "branches"),
+		licenseQueryDS 		: dataStore(apiUrl + "branches"),
 		locationDS 			: dataStore(apiUrl + "locations"),
 		poleDS 				: dataStore(apiUrl + "locations"),
 		boxDS 				: dataStore(apiUrl + "locations"),
@@ -13911,6 +13955,17 @@
 			}
 			this.planDS.fetch();
 			this.setWords();
+		},
+		licenseData 		: [],
+		licenseChange 		: function(e){
+			var obj = this.get("obj"), self = this;
+			this.licenseQueryDS.query({
+				filter: {field: "id", value: obj.branch_id},
+				take: 1
+			}).then(function(e){
+				var view = self.licenseQueryDS.view();
+				self.licenseData = view[0];
+			});
 		},
 		setWords 			: function(){
 			this.selectMeterType[0].set("name", this.lang.lang.water_meter);
@@ -13969,21 +14024,21 @@
 			var self = this;
 			this.dataSource.data([]);
 			this.set("obj", null);
-			this.userActivatDS.query({filter: [{field: "contact_id", value: id}]})
-			.then(function(){
-				var view = self.userActivatDS.data();
-				self.locationDS.filter([
-					{field: "branch_id", value: view[0].branch_id},
-					{field: "main_bloc", value: 0}
-				]);
-				self.dataSource.insert(0,{
+			// this.userActivatDS.query({filter: [{field: "contact_id", value: id}]})
+			// .then(function(){
+				// var view = self.userActivatDS.data();
+				// this.locationDS.filter([
+				// 	{field: "branch_id", value: view[0].branch_id},
+				// 	{field: "main_bloc", value: 0}
+				// ]);
+				this.dataSource.insert(0,{
 					contact_id		: id,
 					meter_number 	: null,
 					status 			: 1,
 					location_id 	: 0,
 					pole_id	 		: 0,
 					box_id	 		: 0,
-					branch_id 		: view[0].branch_id,
+					branch_id 		: 0,
 					brand_id 		: 0,
 					latitute 		: null,
 					longtitute  	: null,
@@ -13991,7 +14046,7 @@
 					date_used 		: null,
 					map 			: null,
 					memo 			: null,
-					type 			: view[0].type,
+					type 			: "w",
 					multiplier 		: 1,
 					starting_no 	: 0,
 					attachment_id	: 0,
@@ -14000,14 +14055,14 @@
 					number_digit 	: 4,
 					image_url 		: "https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/no_image.jpg"
 		    	});
-		    	if(view[0].type == "e"){
-		    		self.set("electricMeter", true);
-		    	}else{
-		    		self.set("electricMeter", false);
-		    	}
-				var obj = self.dataSource.at(0);
-				self.set("obj", obj);
-			});	
+		    	// if(view[0].type == "e"){
+		    	// 	self.set("electricMeter", true);
+		    	// }else{
+		    	// 	self.set("electricMeter", false);
+		    	// }
+				var obj = this.dataSource.at(0);
+				this.set("obj", obj);
+			// });	
 		},
 		blocChange 			: function(e){
 			this.poleDS.filter([
@@ -14136,6 +14191,7 @@
 			    		notificat.hide();
 			    		notificat.success(self.lang.lang.success_message);
 						banhji.router.navigate("/center");
+						banhji.source.loadMeters.fetch();
 					}				  				
 			    });
 			    this.dataSource.bind("error", function(e){		    		    	
@@ -14622,6 +14678,9 @@
 		meterSold 			: 0,
 		amountSold 			: 0,
 		pageLoad 			: function(){
+			// this.blocDS.filter([
+			// 	{field: "", value:}
+			// ]);
 		},   
 		invoiceArray 		: [],
 		checkAll 		: function(e){
@@ -14730,26 +14789,6 @@
 				var record_id = v.items[0].line.id;
 				var invoiceItems = [];
 	    		mSold += kendo.parseInt(v.items[0].line.usage);
-	    		//Calculate Exemption
-	    		if(v.exemption.length > 0){
-
-	    			var Usage = kendo.parseInt(v.items[0].line.usage),
-	    			AmountEx = kendo.parseFloat(v.exemption[0].line.amount);
-	    			if(v.exemption[0].line.unit == 'm3'){
-	    				//rUsage = Usage - AmountEx;
-	    				tUsage = Usage - AmountEx;
-	    			}else{
-	    				exT = v.exemption[0].line.unit;
-	    				exA = AmountEx;
-	    				exU = v.items[0].line.usage;
-	    				tUsage = exU;
-	    			}
-	    		}else{
-	    			exU = v.items[0].line.usage;
-	    			tUsage = exU;
-	    			exT = 'm3';
-	    		}
-
 	    		//Add to Itmes
 				$.each(v.items, function(index, value) {
 					invoiceItems.push({				
@@ -14794,7 +14833,7 @@
 						"item_id" 			: v.tariff[0].line.id,
 				   		"invoice_id"		: 0,
 					   	"meter_record_id"	: record_id,
-					   	"description" 		: v.tariff[0].line.name,					   	
+					   	"description" 		: v.tariff[0].line.name,
 					   	"quantity" 			: v.tariff[0].line.usage,
 					   	"price"				: 0,	
 					   	"amount" 			: v.tariff[0].line.amount,
@@ -14849,7 +14888,24 @@
 				   		"type" 				: 'exemption'
 					});
 		    	}
-
+		    	//Calculate Exemption
+	    		if(v.exemption.length > 0){
+	    			var Usage = kendo.parseInt(v.items[0].line.usage),
+	    			AmountEx = kendo.parseFloat(v.exemption[0].line.amount);
+	    			if(v.exemption[0].line.unit == 'm3'){
+	    				//rUsage = Usage - AmountEx;
+	    				tUsage = Usage - AmountEx;
+	    			}else{
+	    				exT = v.exemption[0].line.unit;
+	    				exA = AmountEx;
+	    				exU = v.items[0].line.usage;
+	    				tUsage = exU;
+	    			}
+	    		}else{
+	    			exU = v.items[0].line.usage;
+	    			tUsage = exU;
+	    			exT = 'm3';
+	    		}
 				//Total after Tariff
 				var Total = 0;
 				if(exT == '%'){
@@ -21255,7 +21311,7 @@
 			}
 		},
 		goNumber 			: function(abbr, branchID) {
-			var self = this, obj = this.get("utility");
+			var self = this, obj = this.get("utility"), FirstABBR = abbr;
 			this.numberDSA.query({
 				filter: { field:"abbr", value: abbr },
 				sort: { field:"code", dir:"desc" },
@@ -21264,16 +21320,23 @@
 			}).then(function(e){
 				var view = self.numberDSA.view();
 				var lastNo;
-				obj.set("abbr", view[0].abbr);
-				if(self.numberDSA._total > 0){
-					lastNo = kendo.parseInt(view[0].code) + 1;
+
+				if(view.length > 0){
+					obj.set("abbr", view[0].abbr);
+					if(self.numberDSA._total > 0){
+						lastNo = kendo.parseInt(view[0].code) + 1;
+					}else{
+						lastNo = 1;
+					}
+					obj.set("code", lastNo);
+					if(lastNo){
+						lastNo = view[0].abbr + "-" + lastNo
+						obj.set("codeabbr",lastNo);
+					}
 				}else{
-					lastNo = 1;
-				}
-				obj.set("code", lastNo);
-				if(lastNo){
-					lastNo = view[0].abbr + "-" + lastNo
-					obj.set("codeabbr",lastNo);
+					obj.set("abbr", FirstABBR);
+					obj.set("code", 1);
+					obj.set("codeabbr", FirstABBR+"-"+1);
 				}
 				obj.set("branch_id", branchID);
 			});

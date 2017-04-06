@@ -403,6 +403,10 @@ class Profiles extends REST_Controller {
 				$user->get();
 				$modules = new Module();
 				$modules->where('is_core', 'true')->get();
+				$fx = new Role(null);
+				$fx->where('type', 'UTB');
+				$fx->get(); 
+
 				$inst = new Institute();
 				$inst->name = $r->name;
 				$inst->vat_number = $r->vat_number;
@@ -415,10 +419,10 @@ class Profiles extends REST_Controller {
 				$inst->pimage_id = 1;
 				// $inst->logo = 'https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/default_logo.png';
 				$inst->country_id = $r->country->id;
-				$inst->industry_id = $r->industry->id;
+				$inst->industry_id = $r->industry;
 				$inst->type_id = $r->type->id;
 				if($inst->save(array($user, $modules->all))) {
-					$user->save($modules->all);
+					$user->save($modules->all, $fx->all);
 					// fillin dafault data
 					$data[] = array(
 						'id' => $inst->id,

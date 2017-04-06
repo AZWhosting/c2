@@ -1379,6 +1379,9 @@ var	en_US = {
 	"none_utility": "None Utility",
 	"for_water": "Water",
 	"for_electricity": "Electricity",
+	"flat": "Flat",
+	"not_flat": "Not Flat",
+	"reactive_meter": "Reactive Meter",
 
 
 
