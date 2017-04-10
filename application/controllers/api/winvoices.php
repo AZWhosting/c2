@@ -45,117 +45,134 @@ class Winvoices extends REST_Controller {
 
 		foreach($table as $row) {
 			$meter = $row->meter->get();
-			$contact = $meter->contact->get();
+			if($meter->reactive_status == 0){
+				$contact = $meter->contact->get();
 
-			$plan  = $meter->plan->get();
-
-			if(isset($tmp["$meter->number"])){
-				$tmp["$meter->number"]['items'][] = array(
-				'type' => 'usage',
-					'line' => array(
+				$plan  = $meter->plan->get();
+				$reactive = new Meter_record(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$reactive->where("meter_id", $meter->reactive_id);
+				$reactive->where('invoiced <>', 1);
+				$reactive->get();
+				if(isset($tmp["$meter->number"])){
+					$tmp["$meter->number"]['items'][] = array(
+					'type' => 'usage',
+						'line' => array(
+							'id'   => $row->id,
+							'name' => 'usage',
+							'from' => $row->from_date,
+							'to'   => $row->to_date,
+							'prev'=> intval($row->previous),
+							'current'=> intval($row->current),
+							'usage' => intval($row->usage),
+							'unit' => 'm3',
+							'amount'=> 0,
+							'reactive' => array(
+										"usage" => $reactive->usage, 
+										"previous" => $reactive->previous,
+										"current" => $reactive->current,
+										"number" => intval($reactive->meter_number)
+							)
+						));
+				} else {
+					$tmp["$meter->number"]['type'] = 'Utility_invoice';
+					$tmp["$meter->number"]['contact'] = array(
+							'id' => $contact->id,
+							'account_id' => $contact->account_id,
+							'ra_id' => $contact->ra_id,
+							'name' => $contact->name,
+							'vat' => $contact->vat_no,
+							'locale' => $contact->locale
+													);
+					$tmp["$meter->number"]['meter'] = array(
+						'id' => $meter->id,
+						'meter_number' => $meter->number,
+						'location_id' => $meter->location_id,
+						'multiplier' => intval($meter->multiplier)
+					);
+					$tmp["$meter->number"]['items'][] = array(
+					'type' => 'usage',
+					'line' => array(													
 						'id'   => $row->id,
-						'name' => 'usage',
+						'name' => 'Usage',
 						'from' => $row->from_date,
 						'to'   => $row->to_date,
 						'prev'=> intval($row->previous),
 						'current'=> intval($row->current),
-						'usage' => intval($row->usage),
-						'unit' => 'm3',
+						'usage_real' => intval($row->usage),
+						'usage' => floatval($row->usage * $meter->multiplier),
+						'reactive' => array(
+							"usage" => intval($reactive->usage), 
+							"previous" => intval($reactive->previous),
+							"current" => intval($reactive->current),
+							"number" => intval($reactive->meter_number)
+						),
 						'amount'=> 0
 					));
-			} else {
-				$tmp["$meter->number"]['type'] = 'water_invoice';
-				$tmp["$meter->number"]['contact'] = array(
-						'id' => $contact->id,
-						'account_id' => $contact->account_id,
-						'ra_id' => $contact->ra_id,
-						'name' => $contact->name,
-						'vat' => $contact->vat_no,
-						'locale' => $contact->locale
-												);
-				$tmp["$meter->number"]['meter'] = array(
-					'id' => $meter->id,
-					'meter_number' => $meter->number,
-					'location_id' => $meter->location_id,
-					'multiplier' => intval($meter->multiplier)
-				);
-				$tmp["$meter->number"]['items'][] = array(
-				'type' => 'usage',
-				'line' => array(													
-					'id'   => $row->id,
-					'name' => 'Usage',
-					'from' => $row->from_date,
-					'to'   => $row->to_date,
-					'prev'=> intval($row->previous),
-					'current'=> intval($row->current),
-					'usage' => floatval($row->usage),
-					'unit' => 'm3',
-					'amount'=> 0
-				));
-				// plan items
-				$items = $plan->plan_item->get();
-				foreach($items as $item) {
-					$types = array('tariff', 'exemption', 'maintenance');
-					if(in_array($item->type, $types)) {
-						if($item->type == 'tariff') {
-							$tariff = new Plan_item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-							$tariff->where('tariff_id', $item->id)->get();
-							if($tariff->exists()) {
-								foreach($tariff as $t) {
-									$tmp["$meter->number"]['tariff'][] = array(
-										"type" => 'tariff',
-										"line" => array(
-											'id'   => $t->id,
-											'name' => $t->name,
-											'is_flat' => $t->is_flat,
-											'usage'  => floatval($t->usage),
-											'amount'=> floatval($t->amount)
-										)
-									);
-								}									
-							}
-						} else if($item->type == 'exemption'){
-							$tmp["$meter->number"]['exemption'][] = array(
-								"type" => $item->type,
-								"line" => array(
-									'id'   => $item->id,
-									'currency_id' => $item->currency_id,
-									'name' => $item->name,
-									'unit'  => $item->unit,
-									'amount'=> floatval($item->amount),
-									'type' => $item->type
-								)
-							);
-						}else {
-							$tmp["$meter->number"]['maintenance'][] = array(
-								"type" => $item->type,
-								"line" => array(
-									'id'   => $item->id,
-									'name' => $item->name,
-									'is_flat' => $item->is_flat == 0 ? FALSE:TRUE,
-									'unit'  => $item->unit,
-									'amount'=> floatval($item->amount)
-								)
-							);
-						}							
-					}						
-				}
+					// plan items
+					$items = $plan->plan_item->get();
+					foreach($items as $item) {
+						$types = array('tariff', 'exemption', 'maintenance');
+						if(in_array($item->type, $types)) {
+							if($item->type == 'tariff') {
+								$tariff = new Plan_item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+								$tariff->where('tariff_id', $item->id)->get();
+								if($tariff->exists()) {
+									foreach($tariff as $t) {
+										$tmp["$meter->number"]['tariff'][] = array(
+											"type" => 'tariff',
+											"line" => array(
+												'id'   => $t->id,
+												'name' => $t->name,
+												'is_flat' => $t->is_flat,
+												'usage'  => floatval($t->usage),
+												'amount'=> floatval($t->amount)
+											)
+										);
+									}									
+								}
+							} else if($item->type == 'exemption'){
+								$tmp["$meter->number"]['exemption'][] = array(
+									"type" => $item->type,
+									"line" => array(
+										'id'   => $item->id,
+										'currency_id' => $item->currency_id,
+										'name' => $item->name,
+										'unit'  => $item->unit,
+										'amount'=> floatval($item->amount),
+										'type' => $item->type
+									)
+								);
+							}else {
+								$tmp["$meter->number"]['maintenance'][] = array(
+									"type" => $item->type,
+									"line" => array(
+										'id'   => $item->id,
+										'name' => $item->name,
+										'is_flat' => $item->is_flat == 0 ? FALSE:TRUE,
+										'unit'  => $item->unit,
+										'amount'=> floatval($item->amount)
+									)
+								);
+							}							
+						}						
+					}
 
-				// installment
-				$installment = $meter->installment->include_related('installment_schedule', array('id','amount'))->limit(1)->where_related_installment_schedule('invoiced', 0)->get();
-				$tmp["$meter->number"]['installment'][] = array(
-					"type" => 'installment',
-					"line" => array(
-						'id'   => $installment->installment_schedule_id,
-						'name' => 'រំលោះ',
-						'from' => $installment->date,
-						'to'   => 0,
-						'prev' =>0,
-						'current'=>0,
-						'usage' => 1,
-						'unit'  => 'money',
-						'amount'=> floatval($installment->installment_schedule_amount)
-					));
+					// installment
+					$installment = $meter->installment->include_related('installment_schedule', array('id','amount'))->limit(1)->where_related_installment_schedule('invoiced', 0)->get();
+					$tmp["$meter->number"]['installment'][] = array(
+						"type" => 'installment',
+						"line" => array(
+							'id'   => $installment->installment_schedule_id,
+							'name' => 'រំលោះ',
+							'from' => $installment->date,
+							'to'   => 0,
+							'prev' =>0,
+							'current'=>0,
+							'usage' => 1,
+							'unit'  => 'money',
+							'amount'=> floatval($installment->installment_schedule_amount)
+						));
+				}
 			}
 		}
 
@@ -187,6 +204,12 @@ class Winvoices extends REST_Controller {
 
 		$number = "";
 		foreach ($models as $value) {
+			if($value->type == ""){
+				$value->type = "WI";
+			}
+			if($value->issued_date == ""){
+				$value->issued_date= "2017-01-01";
+			}
 			if(isset($value->is_recurring)){
 				if($value->is_recurring==0){
 					$number = $this->_generate_number($value->type, $value->issued_date);
@@ -230,6 +253,7 @@ class Winvoices extends REST_Controller {
 	   			$journal->account_id = $value->contact->account_id;
 	   			$journal->contact_id = $value->contact->id;
 	   			$journal->dr  		 = $obj->amount;
+	   			$journal->description = "Utility Invoice";
 	   			$journal->cr 		 = 0.00;
 	   			$journal->rate 		 = $obj->rate;
 	   			$journal->locale 	 = $obj->locale;
@@ -241,6 +265,7 @@ class Winvoices extends REST_Controller {
 	   			$journal2->contact_id = $value->contact->id;
 	   			$journal2->dr 		  = 0.00;
 	   			$journal2->cr 		  = $obj->amount;
+	   			$journal2->description = "Utility Invoice";
 	   			$journal2->rate 	  = $obj->rate;
 	   			$journal2->locale 	  = $obj->locale;
 
@@ -258,7 +283,7 @@ class Winvoices extends REST_Controller {
 		   			$line->transaction_id 	= $obj->id;
 		   			//$line->item_id 			= $row->item_id;
 		   			$line->meter_record_id 	= isset($row->meter_record_id) ? $row->meter_record_id : "";
-		   			$line->description 		= isset($row->description) ? $row->description : "";
+		   			$line->description 		= isset($row->description) ? $row->description : "Utility Invoice";
 		   			$line->quantity 		= isset($row->quantity) ? $row->quantity: 0;
 		   			$line->price 			= isset($row->price) ? $row->price : "";
 		   			$line->amount 			= isset($row->amount) ? $row->amount : "";
@@ -392,30 +417,44 @@ class Winvoices extends REST_Controller {
 		}
 		$table->where('status', 0);
 		$table->where('deleted', 0);
-		$table->where('type','Water_Invoice');
+		$table->where('type','Utility_Invoice');
 		$table->get();
 
 		// $tmp = array();
 
 		foreach($table as $row) {
 			//echo $row->id."__";
-			$contact = $row->contact->include_related('contact_utility', array('abbr', 'code'))->select('id, name, abbr, number, address')->get();
+			$contact = $row->contact->get();
+			$meter = null;
+			$invoiceLine = new winvoice_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$invoiceLine->include_related('meter_record/meter', array("id", "number"));
+			// $invoiceLine->include_related('meter_record/meter/location', "name, abbr");
+			$location = $row->location->get_raw();
+			$invoiceLine->where('transaction_id', $row->id);
+			$invoiceLine->limit(1)->get();
+			if($invoiceLine->exists()) {
+				foreach($invoiceLine as $line) {
+					$meter = array(
+						'meter_number'   => $line->meter_record_meter_number,
+						'meter_id'   => $line->meter_record_meter_id,
+						'location' => $location->result()
+					);
+				}
+			}
+
 
 			$items  = $row->winvoice_line->get();
 			$lines  = array();
-			$m = $contact->meter->get();
+			//$m = $contact->meter->get();
 			
 			
 			$usage = 0;	
-			$meter = array(
-				'meter_number'   => $m->number,
-				'meter_id'   => $m->id,
-				'location' => $m->location->get_raw()->result()
-			);
+			
 			
 			$remain = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			$remain->where_related("contact/meter", "id", $m->id);
-			$remain->where("type", "Water_Invoice");
+			//$remain->where_related("contact/meter", "id", $meter->meter_id);
+			$remain->where("contact_id", $contact->id);
+			$remain->where("type", "Utility_Invoice");
 			$remain->where("id <>", $row->id);
 			$remain->where("deleted <>", 1);
 			$remain->where("status <>", 1)->get();
@@ -436,14 +475,14 @@ class Winvoices extends REST_Controller {
 					$amountOwed += $rem->amount;
 				}
 			}
-
+			$amountOwed = 0;
 			foreach($items as $item) {
 				
 				if($item->type == 'usage') {
 					$record = $item->meter_record->limit(1)->get();
 					$usage = $record->usage;
 					$lines[] = array(
-						'number' => $m->number,
+						// 'number' => $m->number,
 						'previous' => floatval($record->previous),
 						'current'  => floatval($record->current),
 						'consumption' => floatval($record->usage),
@@ -513,8 +552,8 @@ class Winvoices extends REST_Controller {
 					'phone' => $contact->phone,
 					'abbr' => $contact->abbr,
 					'number' => $contact->number,
-					'address'=> isset($contact->address)?$contact->address:'',
-					'code' 	 => $contact->utility_abbr ."-".$contact->utility_code
+					'address'=> isset($contact->address)?$contact->address:''
+					//'code' 	 => $contact->utility_abbr ."-".$contact->utility_code
 				),
 				'amount_remain' => floatval($amountOwed),
 				'meter'=> $meter,

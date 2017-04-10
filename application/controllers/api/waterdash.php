@@ -87,7 +87,7 @@ class Waterdash extends REST_Controller {
 
 		$voidedCust = $totalCust - ($totalICust - $totalACust);
 		$trx->select('amount, contact_id as contact');
-		$trx->where('type', 'Water_Invoice');
+		$trx->where('type', 'Utility_Invoice');
 		$trx->where('status <>', 1);
 		$trx->get();
 
@@ -151,7 +151,7 @@ class Waterdash extends REST_Controller {
 				}
 			}
 		}
-		$obj->where('type', 'w');
+		//$obj->where('type', 'w');
 		$obj->order_by('id', 'asc');
 		// $obj->include_related('location', 'id');
 		$obj->include_related_count('location');
@@ -160,11 +160,13 @@ class Waterdash extends REST_Controller {
 		if($obj->exists()) {
 			foreach($obj as $value) {
 				$location = new Location(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				// $location->include_related('transaction', 'amount');
-				// $location->include_related('utility', array('id', 'status', 'deposit_account_id'));
+				// // $location->include_related('transaction', 'amount');
+				// // $location->include_related('utility', array('id', 'status', 'deposit_account_id'));
 				$location->where('branch_id', $value->id);
-
-				$location->get();
+				$location->where('main_bloc', 0);
+				$location->where('main_pole', 0);
+				$location->get_iterated();
+				$branchCount = $location->result_count();
 				$activeCount = 0;
 				$inActiveCount = 0;
 				$sale = 0;
@@ -176,7 +178,7 @@ class Waterdash extends REST_Controller {
 					// $contact = $loc->contact->select('deposit_account_id')->get();
 					$trx = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 					$trx->select_sum('amount');
-					$trx->where('type', 'Water_Invoice');
+					$trx->where('type', 'Utility_Invoice');
 					$trx->where('location_id', $loc->id)->get();
 					// $trx->where('due_date <');
 					$trx->where('status <>', 1);
@@ -184,7 +186,7 @@ class Waterdash extends REST_Controller {
 
 					$tmpBal = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 					$tmpBal->select('id, amount, deposit, rate');
-					$tmpBal->where('type', 'Water_Invoice');
+					$tmpBal->where('type', 'Utility_Invoice');
 					$tmpBal->where('status', 2);
 					$tmpBal->where('location_id', $loc->id)->get();
 					foreach($tmpBal as $b) {
@@ -202,7 +204,7 @@ class Waterdash extends REST_Controller {
 
 					$dep = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 					$dep->select_sum('amount');
-					$dep->where('type', 'Water_Deposit');
+					$dep->where('type', 'Utility_Deposit');
 					$dep->where('location_id', $loc->id)->get();
 					$deposit +=$dep->amount;
 
@@ -228,7 +230,7 @@ class Waterdash extends REST_Controller {
 				$data['results'][] = array(
 					'id' => $value->id,
 					'name'=>$value->name,
-					'blocCount' => $value->location_count,
+					'blocCount' => $branchCount,
 					'activeCustomer' => $activeCount,
 					'inActiveCustomer' => $inActiveCount,
 					'deposit' => $deposit,
@@ -272,7 +274,7 @@ class Waterdash extends REST_Controller {
 			}
 		}
 
-		$obj->where('type', 'Water_Invoice');
+		$obj->where('type', 'Utility_Invoice');
 		$obj->where('deleted', 0);
 		$obj->where("issued_date >=", date("Y")."-01-01");
 		$obj->where("issued_date <=", date("Y")."-12-31");						

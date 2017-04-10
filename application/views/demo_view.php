@@ -1414,7 +1414,7 @@
 							            	<td><span data-bind="text: lang.lang.country"></span></td>
 							              	<td>
 							              		<input data-role="dropdownlist"
-							              			   data-option-label="(--- Select ---)"									                   
+							              			   data-option-label="(--- Select ---)"
 									                   data-value-primitive="true"
 									                   data-text-field="name"
 									                   data-value-field="id"
@@ -72757,15 +72757,18 @@
 				}).then(function(){
 					var view = self.onHandDS.view();
 
-					var onHand = 0;
+					var onHand = 0, totalValue = 0;
 					$.each(view, function(index, value){
 						onHand += (value.quantity * value.unit_value * value.movement);
 					});
 
+					totalValue = onHand * kendo.parseFloat(obj.cost);
 					self.set("on_hand", kendo.toString(onHand, "n"));
+					self.set("total_value", kendo.toString(totalValue, "c", obj.locale));
 				});
 			}else{
 				this.set("on_hand", 0);
+				this.set("total_value", 0);
 			}
 		},
 		//Upload
@@ -72890,10 +72893,7 @@
 			var obj = this.get("obj");
 
 			if(obj!==null){
-				var totalValue = kendo.parseFloat(obj.on_hand) * kendo.parseFloat(obj.cost);
-
-				this.searchTransaction();			
-				this.set("total_value", kendo.toString(totalValue, "c", obj.locale));
+				this.searchTransaction();				
 				this.attachmentDS.filter({ field:"item_id", value:obj.id });
 				this.setCurrencyCode();
 				this.setUOM();

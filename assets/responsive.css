@@ -2834,3 +2834,39 @@ a.activate {
 .cashFlow .glyphicons.refresh i:before {
   font-size: 12px;
 }
+
+
+
+/*FSR*/
+.fsr-budget .table.table-borderless.table-condensed {
+    margin-bottom: 0;
+    border: 1px solid #333;
+}
+.fsr-budget .table.table-borderless.table-condensed tr th {
+    border: 1px solid #333;
+    background: #1E4E78;
+}
+.fsr-budget .table.table-borderless.table-condensed tr td{
+   border: 1px solid #333 !important;
+   padding: 8px !important;
+}
+.fsr-budget .table.table-borderless.table-condensed tr:first-child th {
+    text-transform: uppercase;
+    font-size: 13px;
+    font-weight: 800;
+    color: #fff;
+    border: 1px solid #333;
+     padding: 8px !important;
+}
+.fsr-budget .table.table-borderless.table-condensed tr:first-child th:first-child {
+    padding-left: 10px !important;
+    border: 1px solid #333;
+}
+.fsr-budget .table.table-borderless.table-condensed tr:last-child th {
+    text-transform: uppercase;
+    font-size: 13px;
+    color: #fff;
+    font-weight: 800;
+    border: 1px solid #333;
+}
+

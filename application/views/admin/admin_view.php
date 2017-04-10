@@ -3512,8 +3512,9 @@
             banhji.users.modules.bind('requestEnd', function(e){
               if(e.type === 'read' && e.response) {
                 layout.showIn("#container", mainDash);
-                // mainDash.showIn("#placeholder", instituteModule);
-                mainDash.showIn("#placeholder", profileMod);
+                if($(location).attr('hash').substr(1) === "") {
+                  mainDash.showIn("#placeholder", profileMod);
+                }
               }
             });
           });

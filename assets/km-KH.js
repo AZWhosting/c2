@@ -1356,9 +1356,14 @@ var	km_KH = {
 	"flat": "ថេរ",
 	"not_flat": "អថេរ",
 	"reactive_meter": "Reactive Meter",
-
-
-
+	"sub_location": "ទីតាំងរង",
+	"add_sub_location": "បន្ថេមទីតាំងរង",
+	"location_name": "ឈ្មោះទីតាំង",
+	"sub_location_name": "ឈ្មោះទីតាំងរង",
+	"view_tariff": "មើល​លំអិតតម្លៃ",
+	"add_tariff": "បន្ថែមតម្លៃ",
+	"quantity_sold": "បរិមាណលក់",
+	"property_name": "ឈ្មោះ Property",
 
 
 

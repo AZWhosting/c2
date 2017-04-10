@@ -58,9 +58,10 @@ class Meters extends REST_Controller {
 
 		if($obj->result_count()>0){			
 			foreach ($obj as $value) {
-				$contact = $value->contact->get_raw();
+				// $contact = $value->contact->get_raw();
 				$currency= $value->currency->get();
 				$contacts = $value->contact->get();
+				$property = $value->property->get();
 				$image_url = $value->attachment->get();
 				$reactive = $value->reactive->get_raw();
 				//Results				
@@ -73,29 +74,36 @@ class Meters extends REST_Controller {
 												"locale" => $currency->locale
 					),
 					"meter_number" 			=> $value->number,
+					"property_id" 			=> $value->property_id,
+					"property_name"			=> $property->name,
+					"contact_id" 			=> $value->contact_id,
 					"type"					=> $value->type,
 					"attachment_id"			=> $value->attachment_id,
 					"image_url"				=> $image_url->url,
 					"worder" 				=> $value->worder,
 					"contact_name" 			=> $contacts->name,
 					"status" 				=> $value->status,
-					"contact" 				=> $contact->result(),
+					"contact" 				=> base_url(). "api/contacts/", //$contact->result(),
 					"number_digit"			=> $value->number_digit,
 					"plan_id"				=> $value->plan_id,
 					"map" 					=> $value->latitute,
 					"starting_no" 			=> $value->startup_reading,
-					"location_id" 			=> $value->location_id,
-					"pole_id" 				=> $value->pole_id,
-					"box_id" 				=> $value->box_id,
-					"brand_id" 				=> $value->brand_id,
-					"branch_id" 			=> $value->branch_id,
+					"location_id" 			=> intval($value->location_id),
+					"pole_id" 				=> intval($value->pole_id),
+					"box_id" 				=> intval($value->box_id),
+					"ampere_id" 			=> intval($value->ampere_id),
+					"phase_id" 				=> intval($value->phase_id),
+					"voltage_id" 			=> intval($value->voltage_id),
+					"brand_id" 				=> intval($value->brand_id),
+					"branch_id" 			=> intval($value->branch_id),
 					"activated" 			=> $value->activated,
 					"latitute" 				=> $value->latitute,
 					"longtitute" 			=> $value->longtitute,
 					"multiplier" 			=> $value->multiplier,
 					//"reactive_of" 			=> $value->reactive_of,
 					"date_used" 			=> $value->date_used,
-					"reactive_of" 			=> $reactive->result(0)
+					"reactive_id" 			=> intval($value->reactive_id),
+					"reactive_status" 		=> $value->reactive_status
 				);
 			}
 		}
@@ -122,7 +130,7 @@ class Meters extends REST_Controller {
 			$obj->tariff_id 			= isset($value->tariff_id)			?$value->tariff_id:0;
 			$obj->exemption_id 			= isset($value->exemption_id)		?$value->exemption_id:0;
 			$obj->maintenance_id 		= isset($value->maintenance_id)		?$value->maintenance_id:0;
-			$obj->reactive_of 			= isset($value->reactive_of)		?$value->reactive_of:0;
+			$obj->reactive_id 			= isset($value->reactive_id)		?$value->reactive_id:0;
 			$obj->backup_of 			= isset($value->backup_of)			?$value->backup_of:0;
 			$obj->number 				= isset($value->meter_number) 		? $value->meter_number:0;			
 			$obj->multiplier 			= isset($value->multiplier) 		? $value->multiplier: 1;
@@ -143,10 +151,12 @@ class Meters extends REST_Controller {
 			$obj->number_digit 			= isset($value->number_digit)		?$value->number_digit:4;
 			$obj->plan_id 				= isset($value->plan_id)			?$value->plan_id:0;
 			$obj->type 					= isset($value->type)				?$value->type:"w";
-			$obj->reactive_of 			= isset($value->reactive_of)		?$value->reactive_of->id:"";
 			$obj->attachment_id 		= isset($value->attachment_id)		?$value->attachment_id:0;
 			$obj->pole_id 				= isset($value->pole_id)			?$value->pole_id:0;
 			$obj->box_id 				= isset($value->box_id)				?$value->box_id:0;
+			$obj->property_id 			= isset($value->property_id)		?$value->property_id:0;
+			$obj->activated 			= isset($value->activated)			?$value->activated:0;
+			$obj->reactive_status 		= isset($value->reactive_status)	?$value->reactive_status:0;
 			if($obj->save()){	
 				$data[] = array(
 					"id" 					=> $obj->id,
@@ -156,16 +166,22 @@ class Meters extends REST_Controller {
 					"number_digit" 			=> $obj->number_digit,
 					"latitute" 				=> $obj->map,	
 					"plan_id" 				=> $obj->plan_id,	
+					"property_id" 			=> $obj->property_id,
+					"contact_id" 			=> $obj->contact_id,
 					"location_id" 			=> $obj->location_id,
 					"pole_id" 				=> $obj->pole_id,
 					"box_id" 				=> $obj->box_id,
+					"ampere_id" 			=> $obj->ampere_id,
+					"phase_id" 				=> $obj->phase_id,
+					"voltage_id" 			=> $obj->voltage_id,
 					"brand_id" 				=> $obj->brand_id,
-					"activated" 			=> 0,
+					"activated" 			=> $obj->activated,
 					"type"					=> $obj->type,
 					"latitute" 				=> $obj->latitute,
 					"longtitute" 			=> $obj->longtitute,
 					"multiplier" 			=> $obj->multiplier,
-					"reactive_of" 			=> $obj->reactive_of,
+					"reactive_id" 			=> $obj->reactive_id,
+					"reactive_status" 		=> $obj->reactive_status,
 					"date_used" 			=> $obj->date_used
 				);					
 			}			
@@ -201,7 +217,7 @@ class Meters extends REST_Controller {
 			$obj->tariff_id 			= isset($value->tariff_id)			?$value->tariff_id:0;
 			$obj->exemption_id 			= isset($value->exemption_id)		?$value->exemption_id:0;
 			$obj->maintenance_id 		= isset($value->maintenance_id)		?$value->maintenance_id:0;
-			$obj->reactive_of 			= isset($value->reactive_of)		?$value->reactive_of:0;
+			$obj->reactive_id 			= isset($value->reactive_id)		?$value->reactive_id:0;
 			$obj->backup_of 			= isset($value->backup_of)			?$value->backup_of:0;
 			$obj->number 				= isset($value->meter_number) 		? $value->meter_number:0;			
 			$obj->multiplier 			= isset($value->multiplier) 		? $value->multiplier: 1;
@@ -226,7 +242,8 @@ class Meters extends REST_Controller {
 			$obj->attachment_id 		= isset($value->attachment_id)		?$value->attachment_id:0;
 			$obj->pole_id 				= isset($value->pole_id)			?$value->pole_id:0;
 			$obj->box_id 				= isset($value->box_id)				?$value->box_id:0;
-			$obj->reactive_of 			= isset($value->reactive_of)		?$value->reactive_of->id:"";
+			$obj->reactive_id 			= isset($value->reactive_id)		?$value->reactive_id:0;
+			$obj->reactive_status		= isset($value->reactive_status)	?$value->reactive_status:0;
 			if($obj->save()){
 				//Results
 				$data[] = array(
@@ -243,11 +260,15 @@ class Meters extends REST_Controller {
 					"box_id" 				=> $obj->box_id,
 					"brand_id" 				=> $obj->brand_id,
 					"activated" 			=> $obj->activated,
+					"ampere_id" 			=> $obj->ampere_id,
+					"phase_id" 				=> $obj->phase_id,
+					"voltage_id" 			=> $obj->voltage_id,
 					"worder" 				=> $obj->worder,
 					"latitute" 				=> $obj->latitute,
 					"longtitute" 			=> $obj->longtitute,
 					"multiplier" 			=> $obj->multiplier,
-					"reactive_of" 			=> $obj->reactive_of,
+					"reactive_id" 			=> $obj->reactive_id,
+					"reactive_status" 		=> $obj->reactive_status,
 					"date_used" 			=> $obj->date_used
 				);					
 			}

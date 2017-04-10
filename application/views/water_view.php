@@ -6345,7 +6345,6 @@
 									<th style="vertical-align: top;"><span data-bind="text: lang.lang.license">License</span></th>
 									<th style="vertical-align: top;"><span data-bind="text: lang.lang.address">Address</span></th>
 									<th style="vertical-align: top;"><span style="text-align: right;" data-bind="text: lang.lang.phone">Phone</span></th>
-									<th style="vertical-align: top;"><span data-bind="text: lang.lang.email">E-Mail</span></th>
 								</tr>
 							</thead>
 							<tbody data-role="listview"
@@ -6366,7 +6365,6 @@
 		<td>#=branch#</td>
 		<td>#=address#</td>
 		<td style="text-align: right;">#=phone#</td>
-		<td style="text-align: right;">#=email#</td>
 	</tr>
 </script>
 <script id="customerNoConnection" type="text/x-kendo-template">
@@ -6438,7 +6436,6 @@
 									<th><span>Location</span></th>
 									<th><span>Address</span></th>
 									<th><span style="text-align: right;">Phone</span></th>
-									<th><span>E-Mail</span></th>
 								</tr>
 							</thead>
 							<tbody data-role="listview"
@@ -6459,7 +6456,6 @@
 		<td>#=location#</td>
 		<td>#=address#</td>
 		<td style="text-align: right;">#=phone#</td>
-		<td style="text-align: right;">#=email#</td>
 	</tr>
 </script>
 <script id="disconnectList" type="text/x-kendo-template">
@@ -6531,7 +6527,6 @@
 									<th style="vertical-align: top;"><span data-bind="text: lang.lang.location">Location</span></th>
 									<th style="vertical-align: top;"><span data-bind="text: lang.lang.address">Address</span></th>
 									<th style="vertical-align: top;"><span style="text-align: right;" data-bind="text: lang.lang.phone">Phone</span></th>
-									<th style="vertical-align: top;"><span data-bind="text: lang.lang.email">E-Mail</span></th>
 								</tr>
 							</thead>
 							<tbody data-role="listview"
@@ -6552,7 +6547,6 @@
 		<td>#=location#</td>
 		<td>#=address#</td>
 		<td style="text-align: right;">#=phone#</td>
-		<td style="text-align: right;">#=email#</td>
 	</tr>
 </script>
 <script id="newCustomerList" type="text/x-kendo-template">
@@ -6681,7 +6675,6 @@
 									<th style="vertical-align: top;"><span data-bind="text: lang.lang.location">Location</span></th>
 									<th style="vertical-align: top;"><span data-bind="text: lang.lang.address">Address</span></th>
 									<th style="vertical-align: top;"><span style="text-align: right;" data-bind="text: lang.lang.phone">Phone</span></th>
-									<th style="vertical-align: top;"><span data-bind="text: lang.lang.email">E-Mail</span></th>
 								</tr>
 							</thead>
 		            		<tbody  data-role="listview"
@@ -6702,8 +6695,7 @@
 		<td style="text-align: right;">#=branch#</td>
 		<td style="text-align: right;">#=location#</td>
 		<td style="text-align: right;">#=address#</td>
-		<td style="text-align: right;">#=phone#</td>
-		<td style="text-align: right;">#=email#</td>		
+		<td style="text-align: right;">#=phone#</td>		
 	</tr>
 </script>
 <script id="miniUsageList" type="text/x-kendo-template">
@@ -11528,6 +11520,7 @@
 			return dfd.promise();
 		}
 	});
+	//copy
 	banhji.installment = kendo.observable({
 		dataSource 			: dataStore(apiUrl + "installments"),
 		startDate 			: new Date(),
@@ -11539,15 +11532,13 @@
 		setPeriod 			: function(period) {
 			this.set('period', period);
 		},
-		makeSchedule 		: function(amount, contactId, meterId,startDate, period, percentage) {
+		makeSchedule 		: function(amount, meterId,startDate, period, percentage) {
 			var dfd = $.Deferred();
 			try {
 				if(amount == undefined) throw "TypeError: Amount is not defined";
-				if(contactId == undefined) throw "TypeError: Contact ID is not defined";
 				
 				banhji.installment.dataSource.insert(0, {
 					biller_id 	: banhji.userData.id,
-					contact_id 	: contactId,
 					meter_id 	: meterId,
 					percentage  : percentage,
 					start_month : kendo.toString(startDate, 'yyyy-MM-dd'),
@@ -11579,6 +11570,7 @@
 			return dfd.promise();
 		}
 	});
+	// end copy
 	/*Reading*/
 	banhji.reading = kendo.observable({
 		lang 				: langVM,
@@ -13588,6 +13580,7 @@
 			banhji.router.navigate("/center");
 		}
 	});
+	//copy
 	banhji.ActivateMeter = kendo.observable({
 		lang 				: langVM,
 		meterDS     		: dataStore(apiUrl + "meters"),
@@ -13796,7 +13789,9 @@
 			.then(function(lines){
 				// get another transaction
 				banhji.transaction.dataSource.data([]);
-				return banhji.transaction.makeInvoice(self.get('meterObj').contact[0].id, self.get('paymentMethod'), self.deposit.received, 'Water_Deposit', self.get('meterObj').location_id);
+				if(self.deposit.received == self.deposit.amount){
+					return banhji.transaction.makeInvoice(self.get('meterObj').contact[0].id, self.get('paymentMethod'), self.deposit.received, 'Water_Deposit', self.get('meterObj').location_id);
+				}
 			})
 			.then(function(transaction){
 				return banhji.transaction.save();
@@ -13811,15 +13806,11 @@
 				banhji.transactionLine.save();
 			});
 
-			
-			
-			
-
 			if(this.get('amountToBeRecieved') < amount) {
 				banhji.ActivateMeter.get('meterObj').set('activated', 1);
 				banhji.installment.setDate(banhji.ActivateMeter.get('startDate'));
 				banhji.installment.setPeriod(banhji.ActivateMeter.get('period'));
-				banhji.installment.makeSchedule(amount - kendo.parseFloat(banhji.ActivateMeter.get('amountToBeRecieved')), banhji.ActivateMeter.get('meterObj').contact[0].id, banhji.ActivateMeter.get('meterObj').id, banhji.ActivateMeter.get('startDate'), banhji.ActivateMeter.get('period'), banhji.ActivateMeter.get('percentage'));
+				banhji.installment.makeSchedule(amount - kendo.parseFloat(banhji.ActivateMeter.get('amountToBeRecieved')), banhji.ActivateMeter.get('meterObj').id, banhji.ActivateMeter.get('startDate'), banhji.ActivateMeter.get('period'), banhji.ActivateMeter.get('percentage'));
 				banhji.installment.save()
 				.then(function(installment){
 					if(installment[0]) {
@@ -13850,7 +13841,7 @@
 					self.cancel();
 				}
 				
-			});		
+			});
 		},
 		cancel 				: function(){
 			$("#loadImport").css("display","none");
@@ -13864,6 +13855,7 @@
 			banhji.router.navigate("/center");
 		}
 	});
+	// end copy
 	banhji.Reorder = kendo.observable({
 		lang 				: langVM,
 		dataSource  		: dataStore(apiUrl + "meters"),

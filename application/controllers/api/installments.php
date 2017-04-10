@@ -61,16 +61,15 @@ class Installments extends REST_Controller {
 
 		if($obj->result_count()>0){
 			foreach ($obj as $value) {
-				$schedule = $value->installment_schedule->select('id, date, amount')->get_raw();
+				$schedule = $value->installment_schedule->select('id, date, amount, invoiced')->get_raw();
 				//Results
 
 				$data["results"][] = array(
 					"id" 				=> $value->id,
 					"biller_id"			=> $value->biller_id,
-					"contact_id" 		=> $value->contact_id,
 					"percentage"        => $value->percentage,
 					"start_month"		=> $value->start_month,
-					"amount"			=> $value->amount,
+					"amount"			=> floatval($value->amount),
 					"period"			=> $value->period,
 					"payment_number" 	=> $value->payment_number,
 					"paid_in_full"		=> $value->paid_in_full,
@@ -90,7 +89,6 @@ class Installments extends REST_Controller {
 		foreach ($models as $value) {
 			$obj = new Installment(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$obj->biller_id 		= $value->biller_id;
-			$obj->contact_id 		= $value->contact_id;
 			$obj->meter_id 			= $value->meter_id;
 			$obj->percentage 		= $value->percentage;
 			$obj->start_month 		= $value->start_month;
@@ -127,7 +125,6 @@ class Installments extends REST_Controller {
 				$data["results"][] = array(
 					"id" 				=> $obj->id,
 					"biller_id"			=> $obj->biller_id,
-					"contact_id" 		=> $obj->contact_id,
 					"meter_id" 			=> $obj->meter_id,
 					"start_month"		=> $obj->start_month,
 					"amount"			=> $obj->amount,
@@ -154,7 +151,6 @@ class Installments extends REST_Controller {
 			$obj->get_by_id($value->id);
 
 			$obj->biller_id 	= $value->biller_id;
-			$obj->contact_id 	= $value->contact_id;
 			$obj->start_month 	= $value->start_month;
 			$obj->amount 		= $value->amount;
 			$obj->step 			= $value->step;
@@ -166,7 +162,7 @@ class Installments extends REST_Controller {
 				$data["results"][] = array(
 					"id" 			=> $obj->id,
 					"biller_id"		=> $obj->biller_id,
-					"contact_id" 	=> $obj->contact_id,
+					
 					"start_month"	=> $obj->start_month,
 					"amount"		=> $obj->amount,
 					"step"			=> $obj->step,

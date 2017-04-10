@@ -97,10 +97,14 @@ class Customer extends DataMapper {
 			'class' => 'attachment',
 			'other_field' => 'contact'
 		),
-		'utility' => array(
-			'class' => 'contact_utility',
-			'other_field' => 'customer'
-		)
+		'property' => array(
+			'class' => 'property',
+			'other_field' => 'contact'
+		),
+		'transaction' => array(
+            'class' => 'transaction',
+            'other_field' => 'contact'
+        )
 	);
 
 	public function __construct($id = null, $server_name = null, $db_username = null, $server_password = null, $db = null) {

@@ -136,7 +136,7 @@
 						<div class="span4" style="padding-left: 0;">
 							<span data-bind="text: lang.lang.total_sale" style="font-size: 24px; color: #fff;">TOTAL SALE</span><br>
 							<span style="color: #9EA7B8;" data-bind="text: totalUsage"></span>
-							<span style="color: #9EA7B8;">Usage</span>
+							<span style="color: #9EA7B8;">m<sup >3</sup></span>
 						</div>
 						<div class="span8" style="color: #fff; text-align: center; font-size: 35px; font-weight: 600; padding: 0;">
 							<span style="float: right;" data-bind="text: totalSale"></span>
@@ -221,7 +221,7 @@
 					<th><span data-bind="text: lang.lang.active_meter">Active Meter</span></th>
 					<th><span data-bind="text: lang.lang.inactive_meter">Inactive Meter</span></th>
 					<th><span data-bind="text: lang.lang.deposit">Deposit</span></th>
-					<th>m<sup>3</sup>/kWh</th>
+					<th>(m<sup>3</sup>) <span data-bind="text: lang.lang.sold">Sold</span></th>
 					<th><span data-bind="text: lang.lang.sale_amount">Sale Amount</span></th>
 					<th><span data-bind="text: lang.lang.balance">Balance</span></th>
 				</tr>
@@ -239,7 +239,7 @@
 		<td style="text-align: right; padding-right: 5px !important;">#=activeCustomer#</td>
 		<td style="text-align: right; padding-right: 5px !important;">#=inActiveCustomer#</td>
 		<td style="text-align: right; padding-right: 5px !important;">#= kendo.toString(deposit, banhji.locale=="km-KH"?"c0":"c", banhji.locale)#</td>
-		<td style="text-align: right; padding-right: 5px !important;">#=usage#</td>
+		<td style="text-align: right; padding-right: 5px !important;">#=usage#m<sup>3</sup></td>
 		<td style="text-align: right; padding-right: 5px !important;">#= kendo.toString(sale, banhji.locale=="km-KH"?"c0":"c", banhji.locale)#</td>
 		<td style="text-align: right; padding-right: 5px !important;">#= kendo.toString(balance, banhji.locale=="km-KH"?"c0":"c", banhji.locale)#</td>
 	</tr>
@@ -252,7 +252,7 @@
 		<td >#=kendo.toString(active_customer, "n0")#</td>
 		<td >#=kendo.toString(inactive_customer, "n0")#​</td>				
 		<td >#=kendo.toString(deposit, "c0", banhji.institute.locale)#</td>
-		<td >#=kendo.toString(usage, "n0")# </td>		
+		<td >#=kendo.toString(usage, "n0")# m<sup>3</sup></td>		
 		<td style="text-align: right; padding-right: 5px !important;">#=kendo.toString(sale, "c0", banhji.institute.locale)#</td>
 		<td style="text-align: right; padding-right: 5px !important;">#=kendo.toString(unpaid, "c0", banhji.institute.locale)#</td>					
     </tr>   
@@ -265,7 +265,7 @@
 		<td >#=kendo.toString(active_customer, "n0")# </td>
 		<td >#=kendo.toString(inactive_customer, "n0")#​ </td>				
 		<td >#=kendo.toString(deposit, "c0", banhji.eDashBoard.locale)#</td>
-		<td >#=kendo.toString(usage, "n0")# </td>		
+		<td >#=kendo.toString(usage, "n0")# m<sup>3</sup></td>		
 		<td style="text-align: right; padding-right: 5px !important;" >#=kendo.toString(sale, "c0", banhji.eDashBoard.locale)#</td>
 		<td style="text-align: right; padding-right: 5px !important;" >#=kendo.toString(unpaid, "c0", banhji.eDashBoard.locale)#</td>						
     </tr>   
@@ -654,7 +654,7 @@
 							<tr style="border-bottom: 8px solid #fff;">
 								<td width="35%"><span data-bind="text: lang.lang.name"></span></td>
 								<td>
-									<input class="k-textbox" placeholder="Item Name ..." data-bind="attr :{placeholder: lang.lang.name}, value: tariffItemName" style="width: 100%;">
+									<input class="k-textbox" placeholder="Item Name ..." data-bind="attr :{placeholder: lang.lang.item}, value: tariffItemName" style="width: 100%;">
 								</td>
 							</tr>
 							<tr style="border-bottom: 8px solid #fff;">
@@ -1146,9 +1146,9 @@
    		<td  style="text-align: center;">   
 		    <span style="cursor: pointer;" class="k-edit-button"><i class="icon-edit"></i> <span data-bind="text: lang.lang.edit">Edit</span></span>
     		|
-    		<span style="cursor: pointer;" data-bind="click: viewTariffItem"><i class="icon-view"></i> <span data-bind="text: lang.lang.view_tariff">View Tariff</span></span>
+    		<span style="cursor: pointer;" data-bind="click: viewTariffItem"><i class="icon-view"></i> <span data-bind="text: lang.lang.view_item">View Item</span></span>
     		|
-    		<span style="cursor: pointer;" data-bind="click: showTariffItem"><i class="icon-plus icon-white"></i> <span data-bind="text: lang.lang.add_tariff">Add Tariff</span></span>
+    		<span style="cursor: pointer;" data-bind="click: showTariffItem"><i class="icon-plus icon-white"></i> <span data-bind="text: lang.lang.add_item">Add Item</span></span>
    		</td>   		
    	</tr>
 </script>
@@ -2001,7 +2001,9 @@
 		</div>
 	</div>
 </script>
+
 <!--End Setting-->
+
 
 <!-- Water Center -->
 <script id="waterCenter" type="text/x-kendo-template">	
@@ -2700,7 +2702,9 @@
 		</td>
 	</tr>
 </script>
-<!-- Water Center End -->
+
+
+
 
 <!-- Customer -->
 <script id="customer" type="text/x-kendo-template">
@@ -3217,6 +3221,8 @@
 </script>
 <!-- End Customer -->
 
+
+
 <script id="property" type="text/x-kendo-template">
 	<div id="slide-form">
 		<div class="customer-background" style="overflow: hidden; margin-top: 15px;">
@@ -3475,7 +3481,7 @@
 							                   style="width: 100%;margin-bottom: 15px;" ></select>
 										</div>																		
 										<!-- // Group END -->
-										<div class="control-group" data-bind="visible: electricMeter">	
+										<div class="control-group">	
 											<input type="checkbox" data-bind="checked: chkRe, events: {change : checkRe}">
 											<label for="registeredDate"><span data-bind="text: lang.lang.reactive_meter"></span></label>
 								            
@@ -3925,7 +3931,7 @@
 			<div class="container-960">
 				<div id="example" class="k-content saleSummaryCustomer">
 			    	<span class="pull-right glyphicons no-js remove_2" data-bind="click: cancel"><i></i></span>
-					<h2 style="padding:0 15px 15px 0;" >Reading Route Management</h2>
+					<h2 style="padding:0 15px 15px 0;" data-bind="text: lang.lang.reorder_meter">Reorder Meter</h2>
 					<div class="row-fluid">
 					    <!-- Tabs -->
 						<div class="relativeWrap" data-toggle="source-code">
@@ -3974,7 +3980,7 @@
 																data-bind="
 																	value: blocSelect,
 								                  					source: blocDS,
-								                  					enabled: selectLocation}">
+								                  					events: {change: blocChange}">
 								                  		</div>
 													</div>
 													<div class="span4">
@@ -4083,7 +4089,6 @@
 														data-value-field="id" 
 														data-bind="
 															value: blocSelect,
-															enabled: haveSelect,
 						                  					source: blocDS">
 						                  		</div>
 											</div>
@@ -4161,7 +4166,6 @@
 														data-value-field="id" 
 														data-bind="
 															value: blocSelectU,
-															enabled: haveSelectU,
 						                  					source: blocDSU">
 						                  		</div>
 											</div>
@@ -4613,7 +4617,7 @@
 								</div>
 								<div class="span4">
 									<div class="total-customer">
-										<p>m<sup>3</sup>/kWh <span style="font-size: 12px;font-weight: normal;" data-bind="text: lang.lang.sold">Sold</span></p>
+										<p>m<sup>3</sup> <span style="font-size: 12px;font-weight: normal;" data-bind="text: lang.lang.sold">Sold</span></p>
 										<span data-bind="text: meterSold"></span>
 									</div>
 								</div>
@@ -4734,13 +4738,13 @@
 		<td>#= meter.meter_number#</td>
 		<td class="right">#= items[0].line.prev #</td>
 		<td class="right">#= items[0].line.current #</td>		
-		<td class="right">#= items[0].line.current - items[0].line.prev # </td>		
+		<td class="right">#= items[0].line.current - items[0].line.prev # m<sup>3</sup></td>		
     </tr>
 </script>
 <script id="runbill-footer-template" type="text/x-kendo-template">
     <tr>    	
         <td class="right" colspan="8" style="font-size:30px;">
-            <span data-bind="text: lang.lang.total"></span>: <span data-bind="text: meterSold"></span>  m<sup>3</sup>/kWh
+            <span data-bind="text: lang.lang.total"></span>: <span data-bind="text: meterSold"></span>  m<sup>3</sup>
         </td>
     </tr>
 </script>
@@ -4840,7 +4844,7 @@
 								<div class="span4">
 									<div class="total-customer">
 										<div class="span12">
-											<p>m<sup>3</sup>/kWh</p>
+											<p>m<sup>3</sup></p>
 											<span data-bind="text: totalMeter"></span>
 										</div>	
 									</div>
@@ -4862,7 +4866,7 @@
 					                <th style="text-align:center"><input type="checkbox" data-bind="checked: chkAll, events: {change : checkAll}" /></th>                
 					                <th><span data-bind="text: lang.lang.customer">Customer</span></th>		         
 					                <th><span data-bind="text: lang.lang.number">Number</span></th>
-					                <th align="center"><span >Usage</span></th>
+					                <th align="center"><span >m<sup>3</sup></span></th>
 					                <th align="right"><span data-bind="text: lang.lang.amount">Amount</span></th>
 					            </tr>
 					        </thead>
@@ -4915,7 +4919,7 @@
 <script id="printbill-footer-template" type="text/x-kendo-template">
     <tr>    	
         <td class="right" colspan="8" style="font-size:30px;">
-            <span data-bind="text: lang.lang.total"></span>: <span data-bind="text: totalMeter"></span>m<sup>3</sup>/kWh
+            <span data-bind="text: lang.lang.total"></span>: <span data-bind="text: totalMeter"></span>m<sup>3</sup>
         </td>
     </tr>
 </script>
@@ -5047,7 +5051,7 @@
 									<td align="center"></td>
 									<td align="right">-#= kendo.toString(AMM, "c", locale)#</td>
 								#}else{#
-									<td align="center">#= invoice_lines[j].amount#</td>
+									<td align="center">#= invoice_lines[j].amount#m<sup>3</sup></td>
 									<td align="center"></td>
 									<td align="right">-#= kendo.toString(invoice_lines[j].amount * amountTariff, "c", locale)#</td>
 								#}#
@@ -7038,7 +7042,15 @@
 <!-- ***************************
 *	Template Blog         	  *
 **************************** -->
-
+<script id="contact-header-tmpl" type="text/x-kendo-tmpl">
+    <strong>
+    	<a href="\#/customer">+ Add New Customer</a></li>
+    </strong>
+</script>
+<script id="contact-list-tmpl" type="text/x-kendo-tmpl">
+	<span>#=abbr##=number#</span>	
+	<span>#=name#</span>	
+</script>
 <script id="account-header-tmpl" type="text/x-kendo-tmpl">
     <strong>
     	<a href="\#/account">+ Add New Account</a>
@@ -7186,7 +7198,7 @@
 					<!-- Stats Widget -->
 					<span class="widget-stats widget-stats-default widget-stats-2" style="background: #21abf6;">				
 						<span class="count" style="font-size: 25px; "><a href="#/sale_summary" style="color: #fff;"><span data-bind="text: waterSold"></span></a></span>
-						<span class="txt" style="font-size: small;"><span data-bind="text: lang.lang.quantity_sold">Quantity Sold</span> m<sup>3</sup>/kWh</span>					
+						<span class="txt" style="font-size: small;"><span data-bind="text: lang.lang.water_sold">Water Sold</span> (m<sup>3</sup>)</span>					
 					</span>
 					<!-- // Stats Widget END -->				
 				</div>
@@ -7221,8 +7233,7 @@
 										<h3><a href="#/customer_list" data-bind="text: lang.lang.customer_list"></a></h3>
 									</td>
 									<td width="50%">
-										<!-- <h3><a href="#/new_customer_list" data-bind="text: lang.lang.new_customer_list">New Customer List</a></h3> -->
-										<h3><a href="#/disconnect_list" data-bind="text: lang.lang.disconnected_list">Disconnected List</a></h3>
+										<h3><a href="#/new_customer_list" data-bind="text: lang.lang.new_customer_list">New Customer List</a></h3>
 									</td>						
 								</tr>
 								<tr>
@@ -7235,11 +7246,10 @@
 								</tr>
 								<tr>
 									<td width="50%">
-										
-										<h3><a href="#/mini_usage_list" data-bind="text: lang.lang.minimum_water_usage_list">Minimum Water Usage List</a></h3>
+										<h3><a href="#/disconnect_list" data-bind="text: lang.lang.disconnected_list">Disconnected List</a></h3>
 									</td>
 									<td width="50%">
-										
+										<h3><a href="#/mini_usage_list" data-bind="text: lang.lang.minimum_water_usage_list">Minimum Water Usage List</a></h3>
 									</td>
 								</tr>
 								<tr>
@@ -7361,7 +7371,7 @@
 					</div>
 				</div>
 			</div>
-			<!-- <div class="span6">
+			<div class="span6">
 				<div class="cover-block" style="width: 100%; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1; padding-left: 15px;">
 					<div class="row-fluid recevable-report">
 					<h2 data-bind="text: lang.lang.cash_receipt_report">Cash Receipt Report</h2>
@@ -7407,7 +7417,7 @@
 					</div>
 					</div>
 				</div>
-			</div> -->
+			</div>
 		</div>
 	</div>
 </script>
@@ -7432,12 +7442,12 @@
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
-								<!-- <div class="widget-body">
+								<div class="widget-body">
 									<div class="tab-content">
 								        <div class="tab-pane active" id="tab-1">
 											<input 
 												data-role="dropdownlist" 
-												data-option-label="Property ..." 
+												data-option-label="License ..." 
 												data-auto-bind="false" 
 												data-value-primitive="true" 
 												data-text-field="name" 
@@ -7447,10 +7457,21 @@
 				                  					source: licenseDS,
 				                  					events: {change: licenseChange}">
 
+									        <input 
+												data-role="dropdownlist" 
+												data-option-label="Location ..." 
+												data-auto-bind="false" 
+												data-value-primitive="false" 
+												data-text-field="name" 
+												data-value-field="id" 
+												data-bind="
+													value: blocSelect,
+				                  					source: blocDS">
+
 										  	 <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>							
 									    </div>									        							       
 								    </div>
-								</div> -->
+								</div>
 							</div>
 						</div>
 						<!-- // Tabs END -->						
@@ -7461,26 +7482,20 @@
 							<h3 data-bind="text: institute.name"></h3>
 							<h2 data-bind="text: lang.lang.customer_list">Customer List</h2>
 						</div>
-						<div class="row-fluid">
-							<div class="span12" style="padding: 0; ">
-								<div class="total-customer">
-									<p data-bind="text: lang.lang.number_of_customer">Number of Customer</p>
-									<span data-bind="text: dataSource.total"></span>
-								</div>
-							</div>
-						</div>
 						<table class="table table-borderless table-condensed ">
 							<thead>
 								<tr>
 									<th style="vertical-align: top;"><span data-bind="text: lang.lang.customer_name">Customer Name</span></th>
+									<th style="vertical-align: top;"><span data-bind="text: lang.lang.license">License</span></th>
+									<th style="vertical-align: top;"><span data-bind="text: lang.lang.location">Location</span></th>
 									<th style="vertical-align: top;"><span data-bind="text: lang.lang.address">Address</span></th>
-									<th style="vertical-align: top;"><span data-bind="text: lang.lang.phone">Phone</span></th>
-									<th style="vertical-align: top;"><span style="text-align: right;" data-bind="text: lang.lang.email">Email</span></th>
+									<th style="vertical-align: top;"><span style="text-align: right;" data-bind="text: lang.lang.phone">Phone</span></th>
+									<th style="vertical-align: top;"><span data-bind="text: lang.lang.email">E-Mail</span></th>
 								</tr>
 							</thead>
 							<tbody data-role="listview"
 										 data-bind="source: dataSource"
-										
+										 data-auto-bind="false"
 										 data-template="customerList-temp"
 							></tbody>
 						</table>
@@ -7493,8 +7508,10 @@
 <script id="customerList-temp" type="text/x-kendo-template" >
 	<tr>
 		<td>#=name#</td>
+		<td>#=branch#</td>
+		<td>#=location#</td>
 		<td>#=address#</td>
-		<td>#=phone#</td>
+		<td style="text-align: right;">#=phone#</td>
 		<td style="text-align: right;">#=email#</td>
 	</tr>
 </script>
@@ -7656,8 +7673,11 @@
 							<thead>
 								<tr>
 									<th style="vertical-align: top;"><span data-bind="text: lang.lang.customer_name">Customer Name</span></th>
-									<th style="vertical-align: top;"><span data-bind="">Abbr</span></th>
+									<th style="vertical-align: top;"><span data-bind="text: lang.lang.license">License</span></th>
+									<th style="vertical-align: top;"><span data-bind="text: lang.lang.location">Location</span></th>
 									<th style="vertical-align: top;"><span data-bind="text: lang.lang.address">Address</span></th>
+									<th style="vertical-align: top;"><span style="text-align: right;" data-bind="text: lang.lang.phone">Phone</span></th>
+									<th style="vertical-align: top;"><span data-bind="text: lang.lang.email">E-Mail</span></th>
 								</tr>
 							</thead>
 							<tbody data-role="listview"
@@ -7674,8 +7694,11 @@
 <script id="disconnectList-temp" type="text/x-kendo-template" >
 	<tr>
 		<td>#=name#</td>
-		<td>#=abbr#</td>
-		<td style="text-align: right;">#=address#</td>
+		<td>#=branch#</td>
+		<td>#=location#</td>
+		<td>#=address#</td>
+		<td style="text-align: right;">#=phone#</td>
+		<td style="text-align: right;">#=email#</td>
 	</tr>
 </script>
 <script id="newCustomerList" type="text/x-kendo-template">
@@ -7683,7 +7706,8 @@
 		<div class="customer-background " style="margin-top: 20px;">
 			<div class="container-960">
 				<div id="example" class="k-content saleSummaryCustomer">
-			    	<span class="pull-right glyphicons no-js remove_2" data-bind="click: cancel"><i></i></span>
+			    	<span class="pull-right glyphicons no-js remove_2"
+						onclick="javascript:window.history.back()"><i></i></span>
 					<br>
 					<br>
 					
@@ -7705,7 +7729,8 @@
 									<div class="tab-content">
 
 								        <!-- Date -->
-								        <div class="tab-pane active" id="tab-1">
+								        <div class="tab-pane active" id="tab-1">									        	
+											
 											<input data-role="dropdownlist"
 												   class="sorter"                  
 										           data-value-primitive="true"
@@ -7798,8 +7823,11 @@
 							<thead>
 								<tr>
 									<th style="vertical-align: top;"><span data-bind="text: lang.lang.customer_name">Customer Name</span></th>
-									<th style="vertical-align: top;"><span data-bind="text: ">Abbr</span></th>
+									<th style="vertical-align: top;"><span data-bind="text: lang.lang.license">License</span></th>
+									<th style="vertical-align: top;"><span data-bind="text: lang.lang.location">Location</span></th>
 									<th style="vertical-align: top;"><span data-bind="text: lang.lang.address">Address</span></th>
+									<th style="vertical-align: top;"><span style="text-align: right;" data-bind="text: lang.lang.phone">Phone</span></th>
+									<th style="vertical-align: top;"><span data-bind="text: lang.lang.email">E-Mail</span></th>
 								</tr>
 							</thead>
 		            		<tbody  data-role="listview"
@@ -7814,11 +7842,14 @@
 		</div>
 	</div>	
 </script>
-<script id="new_CustomerList-template" type="text/x-kendo-template">
+<script id="newCustomerList-template" type="text/x-kendo-template">
 	<tr>
 		<td>#=name#</td>
-		<td style="text-align: right;">#=abbr#</td>
-		<td style="text-align: right;">#=address#</td>	
+		<td style="text-align: right;">#=branch#</td>
+		<td style="text-align: right;">#=location#</td>
+		<td style="text-align: right;">#=address#</td>
+		<td style="text-align: right;">#=phone#</td>
+		<td style="text-align: right;">#=email#</td>		
 	</tr>
 </script>
 <script id="miniUsageList" type="text/x-kendo-template">
@@ -7837,89 +7868,49 @@
 								<!-- Tabs Heading -->
 								<div class="widget-head">
 									<ul>
-										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i><span data-bind="text:lang.lang.date">Date</span></a></li>	
-										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i><span data-bind="text: lang.lang.filter">Filter</span></a></li>									
-										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab" data-bind="click: printGrid"><i></i><span data-bind="text:lang.lang.print_export">Print/Export</span></a></li>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i><span data-bind="text:lang.lang.date">Date</span></a></li>										
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab" data-bind="click: printGrid"><i></i><span data-bind="text:lang.lang.print_export">Print/Export</span></a></li>
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
 								<div class="widget-body">
 									<div class="tab-content">
-								        <div class="tab-pane active" id="tab-1">									        	
-											
-											<input data-role="dropdownlist"
-												   class="sorter"                  
-										           data-value-primitive="true"
-										           data-text-field="text"
-										           data-value-field="value"
-										           data-bind="value: sorter,
-										                      source: sortList,                              
-										                      events: { change: sorterChanges }" />
+								        <div class="tab-pane active" id="tab-1">
+											<input 
+												data-role="dropdownlist" 
+												data-option-label="License ..." 
+												data-auto-bind="false" 
+												data-value-primitive="true" 
+												data-text-field="name" 
+												data-value-field="id" 
+												data-bind="
+													value: licenseSelect,
+				                  					source: licenseDS,
+				                  					events: {change: licenseChange}">
 
-											<input data-role="datepicker"
-												   class="sdate"
-												   data-format="dd-MM-yyyy"
-										           data-bind="value: sdate,
-										           			  max: edate"
-										           placeholder="From ..." >
-
-										    <input data-role="datepicker"
-										    	   class="edate"
-										    	   data-format="dd-MM-yyyy"
-										           data-bind="value: edate,
-										                      min: sdate"
-										           placeholder="To ..." >
-
-										  	<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
-							
-							        	</div>	
-							        	<div class="tab-pane" id="tab-2">
-											<div class="row">
-												<div class="span3" style="padding-left: 15px;">
-													<span data-bind="text: lang.lang.license">Licenses</span>
-													<input 
-														data-role="dropdownlist" 
-														data-option-label="License ..." 
-														data-auto-bind="false" 
-														data-value-primitive="true" 
-														data-text-field="name" 
-														data-value-field="id" 
-														data-bind="
-															value: licenseSelect,
-																source: licenseDS,
-																events: {change: licenseChange}" style="width: 100%">
-												</div>
-												<div class="span3">													
-													<span data-bind="text: lang.lang.location">Locations</span>
-														<input 
-															data-role="dropdownlist" 
-															data-option-label="Location ..." 
-															data-auto-bind="false" 
-															data-value-primitive="false" 
-															data-text-field="name" 
-															data-value-field="id" 
-															data-bind="
-																value: blocSelect,
-																	source: blocDS" style="width: 100%">
-												</div>
-												<div class="span3">
-													<span data-bind="text: lang.lang.customers"></span>
-													<select data-role="multiselect"
-														   data-value-primitive="true"
-														   data-header-template="customer-header-tmpl"
-														   data-item-template="contact-list-tmpl"
-														   data-value-field="id"
-														   data-text-field="name"
-														   data-bind="value: obj.contactIds, 
-														   			source: contactDS"
-														   data-placeholder="Select Customer.."
-														   style="width: 100%" /></select>
-												</div>
-												<div class="span1">											
-										  			<button style="margin-top: 20px;" type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
-												</div>														
-											</div>		
-							        	</div>								        							       
+									        <input 
+												data-role="dropdownlist" 
+												data-option-label="Location ..." 
+												data-auto-bind="false" 
+												data-value-primitive="false" 
+												data-text-field="name" 
+												data-value-field="id" 
+												data-bind="
+													value: blocSelect,
+				                  					source: blocDS">
+				                  			<input type="text" 
+							                	data-role="datepicker"
+							                	data-format="MM-yyyy"
+							                	data-start="year" 
+								  				data-depth="year" 
+							                	placeholder="Moth of ..." 
+									           	data-bind="value: monthSelect" />
+				                  			<input 
+												class="k-textbox k-invalid" 
+												data-bind="
+													value: miniNumber">
+										  	 <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>							
+									    </div>									        							       
 								    </div>
 								</div>
 							</div>
@@ -7931,7 +7922,6 @@
 						<div class="block-title">
 							<h3 data-bind="text: institute.name"></h3>
 							<h2 data-bind="text:lang.lang.minimum_water_usage_list">Minimum Water Usage List</h2>
-							<p data-bind="text: displayDate"></p>
 						</div>
 						<table class="table table-borderless table-condensed ">
 							<thead>
@@ -7945,13 +7935,9 @@
 							</thead>
 							<tbody data-role="listview"
 										 data-bind="source: dataSource"
-										 data-auto-bind="false" 
 										 data-template="miniCustomerList-temp"
 							></tbody>
 						</table>
-						<div data-role="pager"
-			            	data-auto-bind="false" 
-			            	data-bind="source: dataSource"></div>
 					</div>
 				</div>
 			</div>
@@ -7959,12 +7945,13 @@
 	</div>
 </script>
 <script id="miniCustomerList-temp" type="text/x-kendo-template" >
-	<tr>
+	# kendo.culture(locale); #
+	<tr style="font-weight: bold">
 		<td>#=meter_number#</td>
 		<td>#=from_date# - #=to_date#</td>
 		<td>#=license#</td>
 		<td>#=address#</td>
-		<td style="text-align: right;">#=usage#</td>
+		<td>#=usage#</td>
 	</tr>
 </script>
 <script id="saleSummary" type="text/x-kendo-template">
@@ -7995,32 +7982,14 @@
 									<div class="tab-content">
 
 								        <!-- //Date -->
-								        <div class="tab-pane active" id="tab-1">									        	
-											
-											<input data-role="dropdownlist"
-												   class="sorter"                  
-										           data-value-primitive="true"
-										           data-text-field="text"
-										           data-value-field="value"
-										           data-bind="value: sorter,
-										                      source: sortList,                              
-										                      events: { change: sorterChanges }" />
+								        <div class="tab-pane active" id="tab-1">									
+									        As of:
+									        <input data-role="datepicker"
+													data-format="dd-MM-yyyy"
+													data-parse-formats="yyyy-MM-dd" 
+													data-bind="value: as_of" />
 
-											<input data-role="datepicker"
-												   class="sdate"
-												   data-format="dd-MM-yyyy"
-										           data-bind="value: sdate,
-										           			  max: edate"
-										           placeholder="From ..." >
-
-										    <input data-role="datepicker"
-										    	   class="edate"
-										    	   data-format="dd-MM-yyyy"
-										           data-bind="value: edate,
-										                      min: sdate"
-										           placeholder="To ..." >
-
-										  	<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
 							
 							        	</div>
 
@@ -8158,32 +8127,14 @@
 									<div class="tab-content">
 
 								        <!-- //Date -->
-								        <div class="tab-pane active" id="tab-1">									        	
-											
-											<input data-role="dropdownlist"
-												   class="sorter"                  
-										           data-value-primitive="true"
-										           data-text-field="text"
-										           data-value-field="value"
-										           data-bind="value: sorter,
-										                      source: sortList,                              
-										                      events: { change: sorterChanges }" />
+								        <div class="tab-pane active" id="tab-1">									
+									        As of:
+									        <input data-role="datepicker"
+													data-format="dd-MM-yyyy"
+													data-parse-formats="yyyy-MM-dd" 
+													data-bind="value: as_of" />
 
-											<input data-role="datepicker"
-												   class="sdate"
-												   data-format="dd-MM-yyyy"
-										           data-bind="value: sdate,
-										           			  max: edate"
-										           placeholder="From ..." >
-
-										    <input data-role="datepicker"
-										    	   class="edate"
-										    	   data-format="dd-MM-yyyy"
-										           data-bind="value: edate,
-										                      min: sdate"
-										           placeholder="To ..." >
-
-										  	<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
 							
 							        	</div>
 
@@ -8351,32 +8302,14 @@
 									<div class="tab-content">
 
 								        <!-- //Date -->
-								        <div class="tab-pane active" id="tab-1">									        	
-											
-											<input data-role="dropdownlist"
-												   class="sorter"                  
-										           data-value-primitive="true"
-										           data-text-field="text"
-										           data-value-field="value"
-										           data-bind="value: sorter,
-										                      source: sortList,                              
-										                      events: { change: sorterChanges }" />
+								        <div class="tab-pane active" id="tab-1">									
+									        As of:
+									        <input data-role="datepicker"
+													data-format="dd-MM-yyyy"
+													data-parse-formats="yyyy-MM-dd" 
+													data-bind="value: as_of" />
 
-											<input data-role="datepicker"
-												   class="sdate"
-												   data-format="dd-MM-yyyy"
-										           data-bind="value: sdate,
-										           			  max: edate"
-										           placeholder="From ..." >
-
-										    <input data-role="datepicker"
-										    	   class="edate"
-										    	   data-format="dd-MM-yyyy"
-										           data-bind="value: edate,
-										                      min: sdate"
-										           placeholder="To ..." >
-
-										  	<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
 							
 							        	</div>
 
@@ -9245,7 +9178,7 @@
 </script>
 <script id="agingDetail-template" type="text/x-kendo-tmpl">
 	<tr>
-		<td colspan="8" style="font-weight: bold; color: black;">#: name #</td>
+		<td colspan="7" style="font-weight: bold; color: black;">#: name #</td>
 	</tr>
 	#var totalBalance = 0;#
 	#for(var i=0; i<line.length; i++){#
@@ -9285,7 +9218,7 @@
 	</tr>
     #}#
     <tr>
-    	<td colspan="7" style="font-weight: bold; color: black;">Total</td>
+    	<td colspan="6" style="font-weight: bold; color: black;">Total</td>
     	<td class="right" style="font-weight: bold; border-top: 1px solid black !important; color: black;">
     		#=kendo.toString(totalBalance, "c2", banhji.locale)#
     	</td>
@@ -9794,7 +9727,7 @@
 					<!-- Tabs Heading -->
 					<div class="widget-head">
 						<ul style="padding-left: 1px;">
-							<li class="active"><a class="glyphicons user" href="#tabContact" data-toggle="tab"><i></i><span style="line-height: 55px;" data-bind="text: lang.lang.customer">Customer</span></a></li>
+							<li class="active"><a class="glyphicons user" href="#tabContact" data-toggle="tab"><i></i><span style="line-height: 55px;" data-bind="text: lang.lang.contact">Contact</span></a></li>
 							<li><a class="glyphicons list" href="#tabInventery" data-toggle="tab"><i></i><span style="line-height: 55px;" data-bind="text: lang.lang.meter">Meter</span></a></li>
 						</ul>
 					</div>
@@ -9892,15 +9825,7 @@
 <!-- ***************************
 * widget templates
 **************************** -->
-<script id="contact-header-tmpl" type="text/x-kendo-tmpl">
-    <strong>
-    	<a href="\#/customer">+ Add New Customer</a></li>
-    </strong>
-</script>
-<script id="contact-list-tmpl" type="text/x-kendo-tmpl">
-	<span>#=abbr##=number#</span>	
-	<span>#=name#</span>	
-</script>
+
 
 <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/js/libs/localforage.min.js"></script>
 <script src="http://cdnjs.cloudflare.com/ajax/libs/jszip/2.4.0/jszip.js"></script>
@@ -11925,7 +11850,7 @@
 			{ id: "Journal", name: "Journal" }
 	    ],
 		genderList					: ["M", "F"],
-		typeList 					: ['Invoice','Commercial_Invoice','Vat_Invoice','Electricity_Invoice','Utility_Invoice','Cash_Sale','Commercial_Cash_Sale','Vat_Cash_Sale','Receipt_Allocation','Sale_Order','Quote','GDN','Sale_Return','Purchase_Order','GRN','Cash_Purchase','Credit_Purchase','Purchase_Return','Payment_Allocation','Deposit','Electricty_Deposit','Utility_Deposit','Customer_Deposit','Vendor_Deposit','Withdraw','Transfer','Journal','Item_Adjustment','Cash_Advance','Reimbursement','Direct_Expense','Advance_Settlement','Additional_Cost','Cash_Payment','Cash_Receipt','Credit_Note','Debit_Note','Offset_Bill','Offset_Invoice','Cash_Transfer','Internal_Usage'],
+		typeList 					: ['Invoice','Commercial_Invoice','Vat_Invoice','Electricity_Invoice','Water_Invoice','Cash_Sale','Commercial_Cash_Sale','Vat_Cash_Sale','Receipt_Allocation','Sale_Order','Quote','GDN','Sale_Return','Purchase_Order','GRN','Cash_Purchase','Credit_Purchase','Purchase_Return','Payment_Allocation','Deposit','Electricty_Deposit','Water_Deposit','Customer_Deposit','Vendor_Deposit','Withdraw','Transfer','Journal','Item_Adjustment','Cash_Advance','Reimbursement','Direct_Expense','Advance_Settlement','Additional_Cost','Cash_Payment','Cash_Receipt','Credit_Note','Debit_Note','Offset_Bill','Offset_Invoice','Cash_Transfer','Internal_Usage'],
 		user_id						: banhji.userData.id,
 		amtDueColor 				: "#D5DBDB",
 		acceptedSrc					: "https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/accepted.ico",
@@ -12577,13 +12502,15 @@
 		setPeriod 			: function(period) {
 			this.set('period', period);
 		},
-		makeSchedule 		: function(amount, meterId,startDate, period, percentage) {
+		makeSchedule 		: function(amount, contactId, meterId,startDate, period, percentage) {
 			var dfd = $.Deferred();
 			try {
 				if(amount == undefined) throw "TypeError: Amount is not defined";
+				if(contactId == undefined) throw "TypeError: Contact ID is not defined";
 				
 				banhji.installment.dataSource.insert(0, {
 					biller_id 	: banhji.userData.id,
+					contact_id 	: contactId,
 					meter_id 	: meterId,
 					percentage  : percentage,
 					start_month : kendo.toString(startDate, 'yyyy-MM-dd'),
@@ -12636,12 +12563,8 @@
 		haveData 			: false,
 		rows 				: [],
 		miniMonthofS 		: new Date(),
-		haveSelect			: false,
-		haveSelectU			: false,
 		pageLoad 			: function(id){
 			var self = this;
-			this.set("haveSelect", false);
-			this.set("haveSelectU", false);
 		},
 		onLicenseChange 	: function(e) {
 			var data = e.data;
@@ -12651,7 +12574,6 @@
 				{field: "main_bloc", value: 0},
 				{field: "main_pole", value: 0}
 			]);
-			this.set("haveSelect", true);
 		},
 		onLicenseChangeU 	: function(e) {
 			var data = e.data;
@@ -12661,7 +12583,6 @@
 				{field: "main_bloc", value: 0},
 				{field: "main_pole", value: 0}
 			]);
-			this.set("haveSelectU", true);
 		},
 		search 		 		: function(){	
 			this.uploadDS.data([]);
@@ -13256,7 +13177,7 @@
 				data: 'results',
 				total: 'count'
 			},
-			filter: { field:"type", operator:"where", value:"Utility_Invoice" },			
+			filter: { field:"type", operator:"where", value:"Water_Invoice" },			
 			batch: true,
 			serverFiltering: true,
 			serverSorting: true,
@@ -13840,7 +13761,7 @@
 			  title: this.lang.lang.add_sub_location
 			});
 			var itemwindow = $("#addTariffItem").kendoWindow({
-			  title: this.lang.lang.add_tariff
+			  title: this.lang.lang.item
 			});
 			this.blocDS.filter({field: "main_bloc", value: 0});
 			var self = this;
@@ -13852,7 +13773,6 @@
 				}
 			});
 			this.setWords();
-			this.contactTypeDS.filter({field: "parent_id", value: 1});
 		},
 		setWords 			: function(){
 			this.tariffFlatType[0].set("name", this.lang.lang.not_flat);
@@ -14304,7 +14224,7 @@
 				data: 'results',
 				total: 'count'
 			},
-			filter: { field:"type", operator:"where_not_in", value:["Electricity_Invoice", "Utility_Invoice"] },
+			filter: { field:"type", operator:"where_not_in", value:["Electricity_Invoice", "Water_Invoice"] },
 			batch: true,
 			serverFiltering: true,
 			serverSorting: true,
@@ -14703,7 +14623,8 @@
 			}
 			this.planDS.fetch();
 			this.setWords();
-			
+			this.set("selectLocation", true);
+			this.set("selectSLocation", true);
 		},
 		licenseData 		: [],
 		otherINFO 			: false,
@@ -14720,11 +14641,6 @@
 				}else{
 					self.set("electricMeter", false);
 				}
-				self.locationDS.filter([
-					{field: "branch_id", value: view[0].id},
-					{field: "main_bloc", value: 0},
-					{field: "main_pole", value: 0}
-				]);
 				self.set("otherINFO", true);
 				self.get("obj").set("type", view[0].type);
 				self.get("objReactive").set("type", view[0].type);
@@ -15087,8 +15003,6 @@
 		cancel 				: function(){
 			this.dataSource.data([]);
 			banhji.router.navigate("/center");
-			this.set("selectLocation", true);
-			this.set("selectSLocation", true);
 		}
 	});
 	banhji.ActivateMeter = kendo.observable({
@@ -15189,7 +15103,7 @@
 					{field:"location_id",value: location_id}],
 				sort: { field:"worder", dir:"desc" },
 				page: 1,
-				take: 1
+				take: 100
 			}).then(function(e){
 				var view = self.worderDS.view();
 				var lastNo;
@@ -15299,9 +15213,7 @@
 			.then(function(lines){
 				// get another transaction
 				banhji.transaction.dataSource.data([]);
-				if(self.deposit.received == self.deposit.amount){
-					return banhji.transaction.makeInvoice(self.get('meterObj').contact[0].id, self.get('paymentMethod'), self.deposit.received, 'Water_Deposit', self.get('meterObj').location_id);
-				}
+				return banhji.transaction.makeInvoice(self.get('meterObj').contact[0].id, self.get('paymentMethod'), self.deposit.received, 'Water_Deposit', self.get('meterObj').location_id);
 			})
 			.then(function(transaction){
 				return banhji.transaction.save();
@@ -15315,12 +15227,11 @@
 				}
 				banhji.transactionLine.save();
 			});
-
 			if(this.get('amountToBeRecieved') < amount) {
 				banhji.ActivateMeter.get('meterObj').set('activated', 1);
 				banhji.installment.setDate(banhji.ActivateMeter.get('startDate'));
 				banhji.installment.setPeriod(banhji.ActivateMeter.get('period'));
-				banhji.installment.makeSchedule(amount - kendo.parseFloat(banhji.ActivateMeter.get('amountToBeRecieved')), banhji.ActivateMeter.get('meterObj').id, banhji.ActivateMeter.get('startDate'), banhji.ActivateMeter.get('period'), banhji.ActivateMeter.get('percentage'));
+				banhji.installment.makeSchedule(amount - kendo.parseFloat(banhji.ActivateMeter.get('amountToBeRecieved')), banhji.ActivateMeter.get('meterObj').contact[0].id, banhji.ActivateMeter.get('meterObj').id, banhji.ActivateMeter.get('startDate'), banhji.ActivateMeter.get('period'), banhji.ActivateMeter.get('percentage'));
 				banhji.installment.save()
 				.then(function(installment){
 					if(installment[0]) {
@@ -15332,12 +15243,18 @@
 						banhji.ActivateMeter.set('amountToBeRecieved', 0.00);
 						banhji.ActivateMeter.set('amountRemain', 0.00);
 						banhji.ActivateMeter.set('percentage', 0);
-						$("#ntf1").data("kendoNotification").success("Successfully!");
+
+						var notificat = $("#ntf1").data("kendoNotification");
+						notificat.hide();
+						notificat.success(self.lang.lang.success_message);
+
 						banhji.ActivateMeter.cancel();
 						banhji.waterCenter.meterDS.read();
 					} else {
 						// show error
-						$("#ntf1").data("kendoNotification").error("Error!");
+						var notificat = $("#ntf1").data("kendoNotification");
+						notificat.hide();
+						notificat.error(self.lang.lang.error_message);
 					}
 				});
 			} else {
@@ -15351,7 +15268,7 @@
 					self.cancel();
 				}
 				
-			});
+			});		
 		},
 		cancel 				: function(){
 			$("#loadImport").css("display","none");
@@ -15373,20 +15290,13 @@
 		licenseSelect		: null,
 		blocSelect			: null,
 		selectMeter 		: false,
-		selectLocation 		: false,
 		pageLoad 			: function(id){
-			this.set("selectLocation", false);
 		},
 		onLicenseChange 	: function(e) {
 			var data = e.data;
 			var license = this.licenseDS.at(e.sender.selectedIndex - 1);
 			this.set("licenseSelect", license);
-			this.blocDS.filter([
-				{field: "branch_id", value: license.id},
-				{field: "main_bloc", value: 0},
-				{field: "main_pole", value: 0}
-			]);
-			this.set("selectLocation", true);
+			this.blocDS.filter({field: "branch_id", value: license.id});
 		},
 		blocChange 			: function(e){
 			var data = e.data;
@@ -15785,9 +15695,9 @@
 		    	}
 		    	var ReactivePrice = 0, AmountUsage = 0, AmountReactive = 0;
 		    	//Calculate Reactive
-		    	if(v.items[0].line.reactive.usage > 0){
+		    	if(v.items[0].line.reactive > 0){
 		    		AmountUsage = v.items[0].line.usage;
-		    		AmountReactive = v.items[0].line.reactive.usage;
+		    		AmountReactive = v.items[0].line.reactive;
 		    		var PAmount = (AmountReactive * 100) / AmountUsage;
 		    		if(PAmount >= 48.4){
 		    			ReactivePrice = (AmountReactive * 100) * 0.25;
@@ -15798,7 +15708,7 @@
 						"item_id" 			: v.meter.id,
 				   		"invoice_id"		: 0,
 					   	"meter_record_id"	: record_id,
-					   	"description" 		: v.items[0].line.reactive.number,
+					   	"description" 		: meter.meter_number+"(Reactive)",
 					   	"quantity" 			: AmountReactive,
 					   	"price"				: 0,
 					   	"amount" 			: ReactivePrice,
@@ -15871,7 +15781,7 @@
 			this.invoiceCollection.add({
 				contact 			: Contact,
 				biller_id 			: banhji.userData.id,
-				type 				: "Utility_Invoice",
+				type 				: "Water_Invoice",
 				amount 				: Total,
 				rate 				: rate,
 				locale 				: locale,
@@ -15880,7 +15790,6 @@
 				issued_date 		: IssueDate,
 				bill_date 			: BillingDate,
 				due_date 			: DueDate,
-				description 		: "Utility Invoice",
 				invoice_lines    	: invoiceItems
 			});
 	    },
@@ -15892,9 +15801,7 @@
 				this.invoiceCollection.bind("requestEnd", function(e){
 					if(e.type != 'read') {
 				    	if(e.response){				
-				    		var notificat = $("#ntf1").data("kendoNotification");
-				    		notificat.hide();
-				    		notificat.success(self.lang.lang.success_message);
+				    		$("#ntf1").data("kendoNotification").success("Successfully!");
 							$("#loadImport").css("display","none");
 							self.invoiceCollection.data([]);
 							self.invoiceDS.data([]);
@@ -15911,9 +15818,7 @@
 					}
 			    });
 			    this.invoiceCollection.bind("error", function(e){
-					var notificat = $("#ntf1").data("kendoNotification");
-		    		notificat.hide();
-		    		notificat.error(self.lang.lang.error_message);
+					$("#ntf1").data("kendoNotification").error("Error!"); 
 					$("#loadImport").css("display","none");				
 			    });
 			}else{
@@ -16104,7 +16009,7 @@
 					if(bloc_id){
 						para.push(
 							{field: "location_id", value: bloc_id},
-							{field: "type", value: "Utility_Invoice"}
+							{field: "type", value: "Water_Invoice"}
 						);
 						this.invoiceCollection.dataSource.query({
 							filter: para
@@ -16793,7 +16698,7 @@
 				para.push({ field:"number", value: searchText });
 			}
 
-			para.push({ field:"type", value:"Utility_Invoice" });
+			para.push({ field:"type", value:"Water_Invoice" });
 			para.push({ field:"status", operator:"where_in", value:[0,2] });
 
 			if(this.dataSource.total()>0){
@@ -18748,7 +18653,7 @@
 	banhji.customerList = kendo.observable({
 		lang 					: langVM,
 		institute 				: banhji.institute,
-		dataSource 				: dataStore(apiUrl + "utibillReports/customer_list"),
+		dataSource 				: dataStore(apiUrl + "wreports/customer_list"),
 		licenseDS 				: dataStore(apiUrl+"branches"),
 		blocDS 					: dataStore(apiUrl+"locations"),
 		licenseSelect 			: null,
@@ -18898,7 +18803,7 @@
 	banhji.disconnectList = kendo.observable({
 		lang 					: langVM,
 		institute 				: banhji.institute,
-		dataSource 				: dataStore(apiUrl + "utibillReports/disconnection_list"),
+		dataSource 				: dataStore(apiUrl + "wreports/disconnection_list"),
 		licenseDS 				: dataStore(apiUrl+"branches"),
 		blocDS 					: dataStore(apiUrl+"locations"),
 		licenseSelect 			: null,
@@ -18972,7 +18877,7 @@
 	});	
 	banhji.newCustomerList =  kendo.observable({
 		lang 				: langVM,
-		dataSource 			: dataStore(apiUrl + "utibillReports/newProperty_list"),
+		dataSource 			: dataStore(apiUrl + "wreports/newCustomer_list"),
 		contactDS  			: new kendo.data.DataSource({
 		  	data: banhji.source.customerList,
 			sort: { field:"number", dir:"asc" }
@@ -19027,13 +18932,12 @@
 			}
 		},
 		licenseChange 	: function(e) {
-			this.blocDS.filter([
-				{field: "branch_id", value: this.get("licenseSelect")},
-				{field: "main_bloc", value: 0},
-				{field: "main_pole", value: 0}
-			]);
+			var data = e.data;
+			var license = this.licenseDS.at(e.sender.selectedIndex - 1);
+			this.set("licenseSelect", license);
+			this.blocDS.filter({field: "branch_id", value: license.id});
 		},
-		search				: function(e){
+		search				: function(){
 			var self = this, para = [],
 				obj = this.get("obj"),
 				start = this.get("sdate"),
@@ -19054,11 +18958,13 @@
         		end = new Date(end);
         		displayDate = "From " + kendo.toString(start, "dd-MM-yyyy") + " To " + kendo.toString(end, "dd-MM-yyyy");
         		end.setDate(end.getDate()+1);
+
             	para.push({ field:"date_used >=", value: kendo.toString(start, "yyyy-MM-dd") });
             	para.push({ field:"date_used <", value: kendo.toString(end, "yyyy-MM-dd") });
             }else if(start){
             	start = new Date(start);
             	displayDate = "On " + kendo.toString(start, "dd-MM-yyyy");
+
             	para.push({ field:"date_used", value: kendo.toString(start, "yyyy-MM-dd") });
             }else if(end){
             	end = new Date(end);
@@ -19073,9 +18979,9 @@
 
             this.dataSource.query({
             	filter:para
-            }).then(function(e){
+            }).then(function(){
             	var view = self.dataSource.view();
-            	console.log(view);
+
             	var amount = 0;
             	$.each(view, function(index, value){ 
             		amount += value.amount;
@@ -19183,24 +19089,15 @@
 	banhji.miniUsageList = kendo.observable({
 		lang 					: langVM,
 		institute 				: banhji.institute,
-		dataSource 				: dataStore(apiUrl + "utibillReports/miniusage"),
+		dataSource 				: dataStore(apiUrl + "wreports/miniusage"),
 		licenseDS 				: dataStore(apiUrl+"branches"),
 		blocDS 					: dataStore(apiUrl+"locations"),
-		contactDS  			: new kendo.data.DataSource({
-		  	data: banhji.source.supplierList,
-		  	filter:{ field:"status", value:1 },
-			sort: { field:"number", dir:"asc" }
-		}),
-		displayDate 			: "",
-		sortList				: banhji.source.sortList,
-		sorter 					: "month",
-		sdate 					: "",
-		edate 					: "",
-		obj 					: { contactIds: [], licenseID:0 , locationID: []},
+		miniNumber 				: 20,
 		licenseSelect 			: null,
 		blocSelect 				: null,
 		pageLoad 				: function(){
-			this.search();
+			this.licenseDS.read();
+			this.dataSource.filter({field: "usage <=", operator: "where_related_record" ,value: this.get("miniNumber")});
 		},
 		printGrid			: function() {
 			var gridElement = $('#grid'),
@@ -19241,109 +19138,42 @@
 		    	win.close();
 		    },2000);
 		},
-		sorterChanges 		: function(){
-	        var today = new Date(),
-        	sdate = "",
-        	edate = "",
-        	sorter = this.get("sorter");
-        	
-			switch(sorter){
-				case "today":								
-					this.set("sdate", today);
-					this.set("edate", "");
-													  					
-				  	break;
-				case "week":			  	
-					var first = today.getDate() - today.getDay(),
-					last = first + 6;
-
-					this.set("sdate", new Date(today.setDate(first)));
-					this.set("edate", new Date(today.setDate(last)));						
-					
-				  	break;
-				case "month":							  	
-					this.set("sdate", new Date(today.getFullYear(), today.getMonth(), 1));
-					this.set("edate", new Date(today.getFullYear(), today.getMonth() + 1, 0));
-
-				  	break;
-				case "year":				
-				  	this.set("sdate", new Date(today.getFullYear(), 0, 1));
-				  	this.set("edate", new Date(today.getFullYear(), 11, 31));
-
-				  	break;
-				default:
-					this.set("sdate", "");
-				  	this.set("edate", "");									  
-			}
-		},
 		licenseChange 	: function(e) {
 			var data = e.data;
 			var license = this.licenseDS.at(e.sender.selectedIndex - 1);
 			this.set("licenseSelect", license);
 			this.blocDS.filter({field: "branch_id", value: license.id});
 		},
-		search				: function(){
-			var self = this, para = [],
-				obj = this.get("obj"),
-				start = this.get("sdate"),
-        		end = this.get("edate"),
-        		displayDate = "";
-        		license = this.get("licenseSelect"),
-				bloc = this.get("blocSelect");
-
-        	//Account
-
+		search 					: function(){
+			var para = [],
+			license = this.get("licenseSelect"),
+			bloc = this.get("blocSelect"),
+			monthOfSearch = this.get("monthSelect"),
+			miniNumber = this.get("miniNumber");
+			if(license){
+				para.push({ field:"branch_id", value: license.id });
+			}
 			if(bloc){
 				para.push({ field:"location_id", value: bloc.id });
 			}
-
-        	//Customer
-            if(obj.contactIds.length>0){
-            	var contactIds = [];
-            	$.each(obj.contactIds, function(index, value){
-            		contactIds.push(value);
-            	});          	
-	            para.push({ field:"contact_id", operator:"where_in", value:contactIds });
-	        }
-    	
-        	//Dates
-        	if(start && end){
-        		start = new Date(start);
-        		end = new Date(end);
-        		displayDate = "From " + kendo.toString(start, "dd-MM-yyyy") + " To " + kendo.toString(end, "dd-MM-yyyy");
-        		end.setDate(end.getDate()+1);
-
-            	para.push({ field:"date_used >=", value: kendo.toString(start, "yyyy-MM-dd") });
-            	para.push({ field:"date_used <", value: kendo.toString(end, "yyyy-MM-dd") });
-            }else if(start){
-            	start = new Date(start);
-            	displayDate = "On " + kendo.toString(start, "dd-MM-yyyy");
-
-            	para.push({ field:"date_used", value: kendo.toString(start, "yyyy-MM-dd") });
-            }else if(end){
-            	end = new Date(end);
-            	displayDate = "As Of " + kendo.toString(end, "dd-MM-yyyy");
-        		end.setDate(end.getDate()+1);
-        		
-            	para.push({ field:"date_used <", value: kendo.toString(end, "yyyy-MM-dd") });
-            }else{
-            	
-            }
-            this.set("displayDate", displayDate);
-
-            this.dataSource.query({
-            	filter:para
-            }).then(function(){
-            	var view = self.dataSource.view();
-
-            	var amount = 0;
-            	$.each(view, function(index, value){ 
-            		amount += value.amount;
-            	});
-            	
-            	self.set("totalAmount", kendo.toString(amount, "c2", banhji.locale));
-            });
-		},
+			if(monthOfSearch){
+				var monthOf = new Date(monthOfSearch);
+				monthOf.setDate(1);
+				monthOf = kendo.toString(monthOf, "yyyy-MM-dd");
+				var monthL = new Date(monthOfSearch);
+				monthL.setDate(31);
+				monthL = kendo.toString(monthL, "yyyy-MM-dd");
+				
+				para.push(
+					{field: "month_of >=", operator: "where_related_record", value: monthOf},
+					{field: "month_of <=", operator: "where_related_record", value: monthL}
+				);
+			}
+			if(miniNumber){
+				para.push({field: "usage <=", operator: "where_related_record" ,value: this.get("miniNumber")});
+			}
+			this.dataSource.filter(para);
+		}, 
 		cancel 			: function(){
 			this.contact.cancelChanges();
 			window.history.back();
@@ -19439,7 +19269,7 @@
 	});
 	banhji.saleSummary =  kendo.observable({
 		lang 				: langVM,
-		dataSource 			: dataStore(apiUrl + "utibillReports/sale_summary"),
+		dataSource 			: dataStore(apiUrl + "wreports/sale_summary"),
 		contactDS  			: new kendo.data.DataSource({
 		  	data: banhji.source.customerList,
 			sort: { field:"number", dir:"asc" }
@@ -19659,7 +19489,7 @@
 	});
 	banhji.connectServiceRevenue =  kendo.observable({
 		lang 				: langVM,
-		dataSource 			: dataStore(apiUrl + "utibillReports/connect_service_revenue"),
+		dataSource 			: dataStore(apiUrl + "wreports/connect_service_revenue"),
 		contactDS  			: new kendo.data.DataSource({
 		  	data: banhji.source.customerList,
 			sort: { field:"number", dir:"asc" }
@@ -19878,7 +19708,7 @@
 	});
 	banhji.saleDetail =  kendo.observable({
 		lang 				: langVM,
-		dataSource 			: dataStore(apiUrl + "utibillReports/sale_detail"),
+		dataSource 			: dataStore(apiUrl + "wreports/sale_detail"),
 		contactDS  			: new kendo.data.DataSource({
 		  	data: banhji.source.customerList,
 			sort: { field:"number", dir:"asc" }
@@ -20148,7 +19978,7 @@
 	});
 	banhji.accountReceivableList =  kendo.observable({
 		lang 				: langVM,
-		dataSource 			: dataStore(apiUrl + "utibillReports/Reciveble_invoice"),
+		dataSource 			: dataStore(apiUrl + "wreports/Reciveble_invoice"),
 		contactDS  			: new kendo.data.DataSource({
 		  	data: banhji.source.customerList,
 			sort: { field:"number", dir:"asc" }
@@ -20313,7 +20143,7 @@
 	});
 	banhji.agingSummary =  kendo.observable({
 		lang 				: langVM,
-		dataSource 			: dataStore(apiUrl + "utibillReports/aging_summary"),
+		dataSource 			: dataStore(apiUrl + "wreports/aging_summary"),
 		contactDS  			: new kendo.data.DataSource({
 		  	data: banhji.source.customerList,
 			sort: { field:"number", dir:"asc" }
@@ -20479,7 +20309,7 @@
 	});
 	banhji.customerDepositReport =  kendo.observable({
 		lang 				: langVM,
-		dataSource 			: dataStore(apiUrl + "utibillReports/deposit"),
+		dataSource 			: dataStore(apiUrl + "wreports/deposit"),
 		contactDS  			: new kendo.data.DataSource({
 		  	data: banhji.source.customerList,
 			sort: { field:"number", dir:"asc" }
@@ -20701,7 +20531,7 @@
 	});
 	banhji.agingDetail =  kendo.observable({
 		lang 				: langVM,
-		dataSource 			: dataStore(apiUrl + "utibillReports/aging_detail"),
+		dataSource 			: dataStore(apiUrl + "wreports/aging_detail"),
 		contactDS  			: new kendo.data.DataSource({
 		  	data: banhji.source.customerList,
 			sort: { field:"number", dir:"asc" }
@@ -20924,7 +20754,7 @@
 	banhji.cashReceiptSourceSummary = kendo.observable({
 		lang 					: langVM,
 		institute 				: banhji.institute,
-		dataSource 				: dataStore(apiUrl + "utibillReports/wsource_summary"),	
+		dataSource 				: dataStore(apiUrl + "wreports/wsource_summary"),	
 		pageLoad 				: function(){
 		},
 		printGrid			: function() {
@@ -20973,7 +20803,7 @@
 	});
 	banhji.cashReceiptDetail =  kendo.observable({
 		lang 				: langVM,
-		dataSource 			: dataStore(apiUrl + "utibillReports/cash_receipt"),
+		dataSource 			: dataStore(apiUrl + "wreports/cash_receipt"),
 		contactDS  			: new kendo.data.DataSource({
 		  	data: banhji.source.customerList,
 			sort: { field:"number", dir:"asc" }
@@ -21201,7 +21031,7 @@
 	});
 	banhji.cashReceiptSourceDetail =  kendo.observable({
 		lang 				: langVM,
-		dataSource 			: dataStore(apiUrl + "utibillReports/cash_receipt_source"),
+		dataSource 			: dataStore(apiUrl + "wreports/cash_receipt_source"),
 		contactDS  			: new kendo.data.DataSource({
 		  	data: banhji.source.customerList,
 			sort: { field:"number", dir:"asc" }
@@ -23131,27 +22961,29 @@
 		.then(function(data){
 			for(var i = 0; i < data.roles.length; i++) {
 				if('print_bill' == data.roles[i].name){
-				banhji.view.layout.showIn("#content", banhji.view.Receipt);
-				banhji.view.layout.showIn('#menu', banhji.view.menu);
-				banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
-				
-				var vm = banhji.Receipt;
-				banhji.userManagement.addMultiTask("Receipt","receipt",null);
-				if(banhji.pageLoaded["receipt"]==undefined){
-					banhji.pageLoaded["receipt"] = true;
-					vm.paymentTermDS.read();
-					var validator = $("#example").kendoValidator().data("kendoValidator");
-			        $("#saveNew").click(function(e){
-						e.preventDefault();
-						// if(validator.validate()){
-			   //          	vm.save();
-				  //       }else{
-				  //       	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-				  //       }
-					});
-				}
-				vm.pageLoad();
-				break;
+					banhji.view.layout.showIn("#content", banhji.view.Receipt);
+					banhji.view.layout.showIn('#menu', banhji.view.menu);
+					banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
+					
+					var vm = banhji.Receipt;
+					banhji.userManagement.addMultiTask("Receipt","receipt",null);
+					
+					if(banhji.pageLoaded["receipt"]==undefined){
+						banhji.pageLoaded["receipt"] = true;
+						vm.paymentTermDS.read();
+						var validator = $("#example").kendoValidator().data("kendoValidator");
+				        $("#saveNew").click(function(e){
+							e.preventDefault();
+							// if(validator.validate()){
+				   //          	vm.save();
+					  //       }else{
+					  //       	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+					  //       }
+						});
+					}
+					
+					vm.pageLoad();
+					break;
 				}
 			}
 		});
@@ -23345,17 +23177,17 @@
 		banhji.view.layout.showIn('#menu', banhji.view.menu);
 		banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
 		var vm = banhji.Reorder;
-		banhji.userManagement.addMultiTask("Route Management","reorder",null);
+		banhji.userManagement.addMultiTask("Reorder","reports",null);
 		if(banhji.pageLoaded["reorder"]==undefined){
 			banhji.pageLoaded["reorder"] = true;
 			var grid = $("#grid").kendoGrid({
                 dataSource: vm.dataSource,
                 autoBind: false,
-                scrollable: false,
+                scrollable: true,
                 columns: [
-                    { field:"worder", title: "Route ID" },
+                    { field:"worder", title: vm.lang.lang.order1 },
 			    	{ field:"meter_number", title:vm.lang.lang.number },
-			    	{ field:"property_name", title:vm.lang.lang.property_name }
+			    	{ field:"contact_name", title:vm.lang.lang.customer }
                 ]
             }).data("kendoGrid");
             grid.table.kendoSortable({
@@ -23694,7 +23526,7 @@
 			var allowed = false;
 			if(banhji.accessMod.data().length > 0) {
 				for(var i = 0; i < banhji.accessMod.data().length; i++) {
-					if("utibill" == banhji.accessMod.data()[i].name.toLowerCase()) {
+					if("utility" == banhji.accessMod.data()[i].name.toLowerCase()) {
 						allowed = true;
 						break;
 					}

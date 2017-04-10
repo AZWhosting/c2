@@ -23,10 +23,10 @@ class Contacts extends REST_Controller {
 
 	//GET 
 	function index_get() {		
-		$filter 	= $this->get("filter");		
-		$page 		= $this->get('page');		
-		$limit 		= $this->get('limit');								
-		$sort 	 	= $this->get("sort");		
+		$filter 	= $this->get("filter");
+		$page 		= $this->get('page');
+		$limit 		= $this->get('limit');
+		$sort 	 	= $this->get("sort");
 		$data["results"] = [];
 		$data["count"] = 0;
 		$is_pattern = 0;
@@ -36,7 +36,11 @@ class Contacts extends REST_Controller {
 		//Sort
 		if(!empty($sort) && isset($sort)){
 			foreach ($sort as $value) {
-				$obj->order_by($value["field"], $value["dir"]);
+				if(isset($value['operator'])){
+					$obj->{$value['operator']}($value["field"], $value["dir"]);
+				}else{
+					$obj->order_by($value["field"], $value["dir"]);
+				}
 			}
 		}
 

@@ -234,7 +234,7 @@
 				</div>
 				
 				<div class="cash-bg" style="margin-bottom: 10px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
-		    		<a href="#/finance_function">
+		    		<a href="#/finance">
 						<div class="cash-invoice" style="background: #203864; color: #fff;">
 							<div class="span6" style="padding-left: 0;">
 								<img style="float: left; width: 64px; margin-right: 15px;" src="<?php echo base_url();?>assets/fsr/1.ico">
@@ -491,14 +491,1456 @@
 
 <!-- #############################################
 ##################################################
-#	BUDGET							 #
+#							 #
 ##################################################
 ############################################## -->
+<script id="finance" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">
+				<div id="example" class="k-content">				    
+			    	<span class="glyphicons no-js remove_2 pull-right"
+							data-bind="click: cancel"><i></i></span>
+
+					<!-- Title -->
+					<h2>Finance Functions</h2>
+					<p>Assessment Sessions</p>
+					<br>
+					<!-- Table -->
+					<div class="row-fluid fsr-budget">
+							<table class="table table-borderless table-condensed ">
+								<thead>
+									<tr>
+										<th></th>
+										<th style="vertical-align: top;">Focus Areas</th>
+										<th style="vertical-align: top;">Document Required</th>
+										<th style="vertical-align: top;">NA/CP</th>
+										<th style="vertical-align: top;">Risk Point</th>
+										<th style="vertical-align: top;">Attachment</th>
+										<th style="vertical-align: top;">Remarks/comments</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>3.1.7</td>
+										<td>
+											The approved budgets are informed and shared to all concerns via appropriate means, such as electronic document and/or hard copies of the approved documents.
+										</td>
+										<td></td>
+										<td>
+											<input data-role="dropdownlist"
+					              			   data-option-label="(--- Select ---)"
+							                   data-value-primitive="true"
+							                   data-text-field="name"
+							                   data-value-field="id"
+							                   data-bind="value: obj.country_id,
+							                              source: countryDS" style="width: 100%;" />
+										</td>
+										<td>
+											<input data-role="dropdownlist"
+					              			   data-option-label="(--- Select ---)"
+							                   data-value-primitive="true"
+							                   data-text-field="name"
+							                   data-value-field="id"
+							                   data-bind="value: obj.country_id,
+							                              source: countryDS" style="width: 100%;" />
+										</td>								
+										<td></td>
+										<td>
+											<textarea 
+												cols="0" 
+												rows="2" 
+												class="k-textbox" 
+												style="width:100%; resize: none;" 
+												data-bind="value: obj.memo2" 
+												placeholder="Remarks/comments...">
+											</textarea>
+										</td>
+									</tr>
+									<tr>
+										<td>3.2</td>
+										<td colspan="6">
+											Budget Management & Monitoring
+										</td>
+									</tr>
+									<tr>
+										<td>3.2.1</td>
+										<td>
+											Verifying and approving officer are always attentive and thorough in approving expenditure that is charged to budget.
+										</td>
+										<td></td>
+										<td>
+											<input data-role="dropdownlist"
+					              			   data-option-label="(--- Select ---)"
+							                   data-value-primitive="true"
+							                   data-text-field="name"
+							                   data-value-field="id"
+							                   data-bind="value: obj.country_id,
+							                              source: countryDS" style="width: 100%;" />
+										</td>
+										<td>
+											<input data-role="dropdownlist"
+					              			   data-option-label="(--- Select ---)"
+							                   data-value-primitive="true"
+							                   data-text-field="name"
+							                   data-value-field="id"
+							                   data-bind="value: obj.country_id,
+							                              source: countryDS" style="width: 100%;" />
+										</td>								
+										<td></td>
+										<td>
+											<textarea 
+												cols="0" 
+												rows="2" 
+												class="k-textbox" 
+												style="width:100%; resize: none;" 
+												data-bind="value: obj.memo2" 
+												placeholder="Remarks/comments...">
+											</textarea>
+										</td>
+									</tr>
+									<tr>
+										<td>3.2.2</td>
+										<td>
+											Budget performance reports are produced. Variances (both deficits and surpluses) are identified. Reasons for variances are determined, and recommendations for corrective actions are developed and implemented.
+										</td>
+										<td></td>
+										<td>
+											<input data-role="dropdownlist"
+					              			   data-option-label="(--- Select ---)"
+							                   data-value-primitive="true"
+							                   data-text-field="name"
+							                   data-value-field="id"
+							                   data-bind="value: obj.country_id,
+							                              source: countryDS" style="width: 100%;" />
+										</td>
+										<td>
+											<input data-role="dropdownlist"
+					              			   data-option-label="(--- Select ---)"
+							                   data-value-primitive="true"
+							                   data-text-field="name"
+							                   data-value-field="id"
+							                   data-bind="value: obj.country_id,
+							                              source: countryDS" style="width: 100%;" />
+										</td>								
+										<td></td>
+										<td>
+											<textarea 
+												cols="0" 
+												rows="2" 
+												class="k-textbox" 
+												style="width:100%; resize: none;" 
+												data-bind="value: obj.memo2" 
+												placeholder="Remarks/comments...">
+											</textarea>
+										</td>
+									</tr>
+									<tr>
+										<td>3.2.3</td>
+										<td>
+											There are no overlap funding in the same project (not shared cost funding)
+										</td>
+										<td></td>
+										<td>
+											<input data-role="dropdownlist"
+					              			   data-option-label="(--- Select ---)"
+							                   data-value-primitive="true"
+							                   data-text-field="name"
+							                   data-value-field="id"
+							                   data-bind="value: obj.country_id,
+							                              source: countryDS" style="width: 100%;" />
+										</td>
+										<td>
+											<input data-role="dropdownlist"
+					              			   data-option-label="(--- Select ---)"
+							                   data-value-primitive="true"
+							                   data-text-field="name"
+							                   data-value-field="id"
+							                   data-bind="value: obj.country_id,
+							                              source: countryDS" style="width: 100%;" />
+										</td>								
+										<td></td>
+										<td>
+											<textarea 
+												cols="0" 
+												rows="2" 
+												class="k-textbox" 
+												style="width:100%; resize: none;" 
+												data-bind="value: obj.memo2" 
+												placeholder="Remarks/comments...">
+											</textarea>
+										</td>
+									</tr>
+								</tbody>						
+							</table>
+					</div>
+					<br>
+					<!-- Bottom Part -->
+					<div class="box-generic bg-action-button">
+						<div id="ntf1" data-role="notification" style="display: none;"></div>
+
+						<!-- Delete Confirmation -->
+						
+			            <!-- // Delete Confirmation -->
+
+						<div class="row">
+							<div class="span12" align="right">
+								<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save_new">Save New</span></span>
+								<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save_close">Save Close </span></span>																	
+								<span id="savePrint" class="btn btn-icon btn-default glyphicons print" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save_print">Save Print</span></span>
+								<span class="btn btn-icon btn-warning glyphicons remove_2" onclick="javascript:window.history.back()" data-bind="click: cancel" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.cancel">Cancel </span></span>
+								<span class="btn btn-danger btn-icon glyphicons bin" data-bind="click: openConfirm, visible: isEdit" style="width: 80px; display: none;"><i></i> <span data-bind="text: lang.lang.delete">Delete</span></span>					
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+</script>
 <script id="budget" type="text/x-kendo-template">
 	<div id="slide-form">
 		<div class="customer-background">
 			<div class="container-960">
-				gfhgfjh		
+				<div id="example" class="k-content">				    
+			    	<span class="glyphicons no-js remove_2 pull-right"
+							data-bind="click: cancel"><i></i></span>
+
+					<!-- Title -->
+					<h2>BUDGET FORMULATION, MANAGEMENT& MONITORING</h2>
+					<p>Assessment Sessions</p>
+					<br>
+					<!-- Table -->
+					<div class="row-fluid fsr-budget">
+							<table class="table table-borderless table-condensed ">
+								<thead>
+									<tr>
+										<th></th>
+										<th style="vertical-align: top;">Focus Areas</th>
+										<th style="vertical-align: top;">Document Required</th>
+										<th style="vertical-align: top;">NA/CP</th>
+										<th style="vertical-align: top;">Risk Point</th>
+										<th style="vertical-align: top;">Attachment</th>
+										<th style="vertical-align: top;">Remarks/comments</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>3.1.7</td>
+										<td>
+											The approved budgets are informed and shared to all concerns via appropriate means, such as electronic document and/or hard copies of the approved documents.
+										</td>
+										<td></td>
+										<td>
+											<input data-role="dropdownlist"
+					              			   data-option-label="(--- Select ---)"
+							                   data-value-primitive="true"
+							                   data-text-field="name"
+							                   data-value-field="id"
+							                   data-bind="value: obj.country_id,
+							                              source: countryDS" style="width: 100%;" />
+										</td>
+										<td>
+											<input data-role="dropdownlist"
+					              			   data-option-label="(--- Select ---)"
+							                   data-value-primitive="true"
+							                   data-text-field="name"
+							                   data-value-field="id"
+							                   data-bind="value: obj.country_id,
+							                              source: countryDS" style="width: 100%;" />
+										</td>								
+										<td></td>
+										<td>
+											<textarea 
+												cols="0" 
+												rows="2" 
+												class="k-textbox" 
+												style="width:100%; resize: none;" 
+												data-bind="value: obj.memo2" 
+												placeholder="Remarks/comments...">
+											</textarea>
+										</td>
+									</tr>
+									<tr>
+										<td>3.2</td>
+										<td colspan="6">
+											Budget Management & Monitoring
+										</td>
+									</tr>
+									<tr>
+										<td>3.2.1</td>
+										<td>
+											Verifying and approving officer are always attentive and thorough in approving expenditure that is charged to budget.
+										</td>
+										<td></td>
+										<td>
+											<input data-role="dropdownlist"
+					              			   data-option-label="(--- Select ---)"
+							                   data-value-primitive="true"
+							                   data-text-field="name"
+							                   data-value-field="id"
+							                   data-bind="value: obj.country_id,
+							                              source: countryDS" style="width: 100%;" />
+										</td>
+										<td>
+											<input data-role="dropdownlist"
+					              			   data-option-label="(--- Select ---)"
+							                   data-value-primitive="true"
+							                   data-text-field="name"
+							                   data-value-field="id"
+							                   data-bind="value: obj.country_id,
+							                              source: countryDS" style="width: 100%;" />
+										</td>								
+										<td></td>
+										<td>
+											<textarea 
+												cols="0" 
+												rows="2" 
+												class="k-textbox" 
+												style="width:100%; resize: none;" 
+												data-bind="value: obj.memo2" 
+												placeholder="Remarks/comments...">
+											</textarea>
+										</td>
+									</tr>
+									<tr>
+										<td>3.2.2</td>
+										<td>
+											Budget performance reports are produced. Variances (both deficits and surpluses) are identified. Reasons for variances are determined, and recommendations for corrective actions are developed and implemented.
+										</td>
+										<td></td>
+										<td>
+											<input data-role="dropdownlist"
+					              			   data-option-label="(--- Select ---)"
+							                   data-value-primitive="true"
+							                   data-text-field="name"
+							                   data-value-field="id"
+							                   data-bind="value: obj.country_id,
+							                              source: countryDS" style="width: 100%;" />
+										</td>
+										<td>
+											<input data-role="dropdownlist"
+					              			   data-option-label="(--- Select ---)"
+							                   data-value-primitive="true"
+							                   data-text-field="name"
+							                   data-value-field="id"
+							                   data-bind="value: obj.country_id,
+							                              source: countryDS" style="width: 100%;" />
+										</td>								
+										<td></td>
+										<td>
+											<textarea 
+												cols="0" 
+												rows="2" 
+												class="k-textbox" 
+												style="width:100%; resize: none;" 
+												data-bind="value: obj.memo2" 
+												placeholder="Remarks/comments...">
+											</textarea>
+										</td>
+									</tr>
+									<tr>
+										<td>3.2.3</td>
+										<td>
+											There are no overlap funding in the same project (not shared cost funding)
+										</td>
+										<td></td>
+										<td>
+											<input data-role="dropdownlist"
+					              			   data-option-label="(--- Select ---)"
+							                   data-value-primitive="true"
+							                   data-text-field="name"
+							                   data-value-field="id"
+							                   data-bind="value: obj.country_id,
+							                              source: countryDS" style="width: 100%;" />
+										</td>
+										<td>
+											<input data-role="dropdownlist"
+					              			   data-option-label="(--- Select ---)"
+							                   data-value-primitive="true"
+							                   data-text-field="name"
+							                   data-value-field="id"
+							                   data-bind="value: obj.country_id,
+							                              source: countryDS" style="width: 100%;" />
+										</td>								
+										<td></td>
+										<td>
+											<textarea 
+												cols="0" 
+												rows="2" 
+												class="k-textbox" 
+												style="width:100%; resize: none;" 
+												data-bind="value: obj.memo2" 
+												placeholder="Remarks/comments...">
+											</textarea>
+										</td>
+									</tr>
+								</tbody>						
+							</table>
+					</div>
+					<br>
+					<!-- Bottom Part -->
+					<div class="box-generic bg-action-button">
+						<div id="ntf1" data-role="notification" style="display: none;"></div>
+
+						<!-- Delete Confirmation -->
+						
+			            <!-- // Delete Confirmation -->
+
+						<div class="row">
+							<div class="span12" align="right">
+								<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save_new">Save New</span></span>
+								<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save_close">Save Close </span></span>																	
+								<span id="savePrint" class="btn btn-icon btn-default glyphicons print" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save_print">Save Print</span></span>
+								<span class="btn btn-icon btn-warning glyphicons remove_2" onclick="javascript:window.history.back()" data-bind="click: cancel" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.cancel">Cancel </span></span>
+								<span class="btn btn-danger btn-icon glyphicons bin" data-bind="click: openConfirm, visible: isEdit" style="width: 80px; display: none;"><i></i> <span data-bind="text: lang.lang.delete">Delete</span></span>					
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+</script>
+<script id="controls" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">
+				<div id="example" class="k-content">				    
+			    	<span class="glyphicons no-js remove_2 pull-right"
+							data-bind="click: cancel"><i></i></span>
+
+					<!-- Title -->
+					<h2>GOVERNANCE, CONTROL & COMPLIANCE</h2>
+					<p>Assessment Sessions</p>
+					<br>
+					<!-- Table -->
+					<div class="row-fluid fsr-budget">
+							<table class="table table-borderless table-condensed ">
+								<thead>
+									<tr>
+										<th></th>
+										<th style="vertical-align: top;">Focus Areas</th>
+										<th style="vertical-align: top;">Document Required</th>
+										<th style="vertical-align: top;">NA/CP</th>
+										<th style="vertical-align: top;">Risk Point</th>
+										<th style="vertical-align: top;">Attachment</th>
+										<th style="vertical-align: top;">Remarks/comments</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>4.8.3</td>
+										<td>
+											There is a process in place to collect and document errors or complaints to analyse, determine cause, and eliminate a problem from recurring in future.
+										</td>
+										<td></td>
+										<td>
+											<input data-role="dropdownlist"
+					              			   data-option-label="(--- Select ---)"
+							                   data-value-primitive="true"
+							                   data-text-field="name"
+							                   data-value-field="id"
+							                   data-bind="value: obj.country_id,
+							                              source: countryDS" style="width: 100%;" />
+										</td>
+										<td>
+											<input data-role="dropdownlist"
+					              			   data-option-label="(--- Select ---)"
+							                   data-value-primitive="true"
+							                   data-text-field="name"
+							                   data-value-field="id"
+							                   data-bind="value: obj.country_id,
+							                              source: countryDS" style="width: 100%;" />
+										</td>								
+										<td></td>
+										<td>
+											<textarea 
+												cols="0" 
+												rows="2" 
+												class="k-textbox" 
+												style="width:100%; resize: none;" 
+												data-bind="value: obj.memo2" 
+												placeholder="Remarks/comments...">
+											</textarea>
+										</td>
+									</tr>
+									<tr>
+										<td>4.9</td>
+										<td colspan="6">
+											Monitoring
+										</td>
+									</tr>
+									<tr>
+										<td>4.9.1</td>
+										<td>
+											Officers and employees understand their obligation to communicate observed weaknesses in design or compliance with the internal control structure of the organization to the appropriate supervisory or management personnel
+										</td>
+										<td></td>
+										<td>
+											<input data-role="dropdownlist"
+					              			   data-option-label="(--- Select ---)"
+							                   data-value-primitive="true"
+							                   data-text-field="name"
+							                   data-value-field="id"
+							                   data-bind="value: obj.country_id,
+							                              source: countryDS" style="width: 100%;" />
+										</td>
+										<td>
+											<input data-role="dropdownlist"
+					              			   data-option-label="(--- Select ---)"
+							                   data-value-primitive="true"
+							                   data-text-field="name"
+							                   data-value-field="id"
+							                   data-bind="value: obj.country_id,
+							                              source: countryDS" style="width: 100%;" />
+										</td>								
+										<td></td>
+										<td>
+											<textarea 
+												cols="0" 
+												rows="2" 
+												class="k-textbox" 
+												style="width:100%; resize: none;" 
+												data-bind="value: obj.memo2" 
+												placeholder="Remarks/comments...">
+											</textarea>
+										</td>
+									</tr>
+									<tr>
+										<td>4.9.2</td>
+										<td>
+											There are follow-up on recommendations from external auditors for improvements to the internal control system.
+										</td>
+										<td></td>
+										<td>
+											<input data-role="dropdownlist"
+					              			   data-option-label="(--- Select ---)"
+							                   data-value-primitive="true"
+							                   data-text-field="name"
+							                   data-value-field="id"
+							                   data-bind="value: obj.country_id,
+							                              source: countryDS" style="width: 100%;" />
+										</td>
+										<td>
+											<input data-role="dropdownlist"
+					              			   data-option-label="(--- Select ---)"
+							                   data-value-primitive="true"
+							                   data-text-field="name"
+							                   data-value-field="id"
+							                   data-bind="value: obj.country_id,
+							                              source: countryDS" style="width: 100%;" />
+										</td>								
+										<td></td>
+										<td>
+											<textarea 
+												cols="0" 
+												rows="2" 
+												class="k-textbox" 
+												style="width:100%; resize: none;" 
+												data-bind="value: obj.memo2" 
+												placeholder="Remarks/comments...">
+											</textarea>
+										</td>
+									</tr>
+								</tbody>						
+							</table>
+					</div>
+					<br>
+					<!-- Bottom Part -->
+					<div class="box-generic bg-action-button">
+						<div id="ntf1" data-role="notification" style="display: none;"></div>
+
+						<!-- Delete Confirmation -->
+						
+			            <!-- // Delete Confirmation -->
+
+						<div class="row">
+							<div class="span12" align="right">
+								<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save_new">Save New</span></span>
+								<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save_close">Save Close </span></span>																	
+								<span id="savePrint" class="btn btn-icon btn-default glyphicons print" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save_print">Save Print</span></span>
+								<span class="btn btn-icon btn-warning glyphicons remove_2" onclick="javascript:window.history.back()" data-bind="click: cancel" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.cancel">Cancel </span></span>
+								<span class="btn btn-danger btn-icon glyphicons bin" data-bind="click: openConfirm, visible: isEdit" style="width: 80px; display: none;"><i></i> <span data-bind="text: lang.lang.delete">Delete</span></span>					
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+</script>
+<script id="audit" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">
+				<div id="example" class="k-content">				    
+			    	<span class="glyphicons no-js remove_2 pull-right"
+							data-bind="click: cancel"><i></i></span>
+
+					<!-- Title -->
+					<h2>FINANCIAL AUDIT</h2>
+					<p>Assessment Sessions</p>
+					<br>
+					<!-- Table -->
+					<div class="row-fluid fsr-budget">
+							<table class="table table-borderless table-condensed ">
+								<thead>
+									<tr>
+										<th></th>
+										<th style="vertical-align: top;">Focus Areas</th>
+										<th style="vertical-align: top;">Document Required</th>
+										<th style="vertical-align: top;">NA/CP</th>
+										<th style="vertical-align: top;">Risk Point</th>
+										<th style="vertical-align: top;">Attachment</th>
+										<th style="vertical-align: top;">Remarks/comments</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>5.1</td>
+										<td colspan="6">
+											Internal Audit
+										</td>
+									</tr>
+									<tr>
+										<td>5.1.1</td>
+										<td>
+											The Partner appears to have strong internal controls to ensure funds are expended for the intended purpose, discourage and prevent improper use of funds, and safeguard assets.
+										</td>
+										<td></td>
+										<td>
+											<input data-role="dropdownlist"
+					              			   data-option-label="(--- Select ---)"
+							                   data-value-primitive="true"
+							                   data-text-field="name"
+							                   data-value-field="id"
+							                   data-bind="value: obj.country_id,
+							                              source: countryDS" style="width: 100%;" />
+										</td>
+										<td>
+											<input data-role="dropdownlist"
+					              			   data-option-label="(--- Select ---)"
+							                   data-value-primitive="true"
+							                   data-text-field="name"
+							                   data-value-field="id"
+							                   data-bind="value: obj.country_id,
+							                              source: countryDS" style="width: 100%;" />
+										</td>								
+										<td></td>
+										<td>
+											<textarea 
+												cols="0" 
+												rows="2" 
+												class="k-textbox" 
+												style="width:100%; resize: none;" 
+												data-bind="value: obj.memo2" 
+												placeholder="Remarks/comments...">
+											</textarea>
+										</td>
+									</tr>
+									<tr>
+										<td>5.2</td>
+										<td colspan="6">
+											External Audit
+										</td>
+									</tr>
+									<tr>
+										<td>5.2.1</td>
+										<td>
+											"The partner’s specific financial statements are audited regularly by an independent auditor."
+										</td>
+										<td></td>
+										<td>
+											<input data-role="dropdownlist"
+					              			   data-option-label="(--- Select ---)"
+							                   data-value-primitive="true"
+							                   data-text-field="name"
+							                   data-value-field="id"
+							                   data-bind="value: obj.country_id,
+							                              source: countryDS" style="width: 100%;" />
+										</td>
+										<td>
+											<input data-role="dropdownlist"
+					              			   data-option-label="(--- Select ---)"
+							                   data-value-primitive="true"
+							                   data-text-field="name"
+							                   data-value-field="id"
+							                   data-bind="value: obj.country_id,
+							                              source: countryDS" style="width: 100%;" />
+										</td>								
+										<td></td>
+										<td>
+											<textarea 
+												cols="0" 
+												rows="2" 
+												class="k-textbox" 
+												style="width:100%; resize: none;" 
+												data-bind="value: obj.memo2" 
+												placeholder="Remarks/comments...">
+											</textarea>
+										</td>
+									</tr>
+									<tr>
+										<td>5.2.2</td>
+										<td>
+											The audit of the Partner’s financial statements are conducted according to the International Standards on Auditing.
+										</td>
+										<td></td>
+										<td>
+											<input data-role="dropdownlist"
+					              			   data-option-label="(--- Select ---)"
+							                   data-value-primitive="true"
+							                   data-text-field="name"
+							                   data-value-field="id"
+							                   data-bind="value: obj.country_id,
+							                              source: countryDS" style="width: 100%;" />
+										</td>
+										<td>
+											<input data-role="dropdownlist"
+					              			   data-option-label="(--- Select ---)"
+							                   data-value-primitive="true"
+							                   data-text-field="name"
+							                   data-value-field="id"
+							                   data-bind="value: obj.country_id,
+							                              source: countryDS" style="width: 100%;" />
+										</td>								
+										<td></td>
+										<td>
+											<textarea 
+												cols="0" 
+												rows="2" 
+												class="k-textbox" 
+												style="width:100%; resize: none;" 
+												data-bind="value: obj.memo2" 
+												placeholder="Remarks/comments...">
+											</textarea>
+										</td>
+									</tr>
+									<tr>
+										<td>5.2.3</td>
+										<td>
+											"The auditor will audit the accounts related to the work plan and Audit Agreements with the BfdW."
+										</td>
+										<td></td>
+										<td>
+											<input data-role="dropdownlist"
+					              			   data-option-label="(--- Select ---)"
+							                   data-value-primitive="true"
+							                   data-text-field="name"
+							                   data-value-field="id"
+							                   data-bind="value: obj.country_id,
+							                              source: countryDS" style="width: 100%;" />
+										</td>
+										<td>
+											<input data-role="dropdownlist"
+					              			   data-option-label="(--- Select ---)"
+							                   data-value-primitive="true"
+							                   data-text-field="name"
+							                   data-value-field="id"
+							                   data-bind="value: obj.country_id,
+							                              source: countryDS" style="width: 100%;" />
+										</td>								
+										<td></td>
+										<td>
+											<textarea 
+												cols="0" 
+												rows="2" 
+												class="k-textbox" 
+												style="width:100%; resize: none;" 
+												data-bind="value: obj.memo2" 
+												placeholder="Remarks/comments...">
+											</textarea>
+										</td>
+									</tr>
+									<tr>
+										<td>5.2.4</td>
+										<td>
+											The Statutory auditor has submitted a management letter/ internal control letter according to BfdW audit agreement.
+										</td>
+										<td></td>
+										<td>
+											<input data-role="dropdownlist"
+					              			   data-option-label="(--- Select ---)"
+							                   data-value-primitive="true"
+							                   data-text-field="name"
+							                   data-value-field="id"
+							                   data-bind="value: obj.country_id,
+							                              source: countryDS" style="width: 100%;" />
+										</td>
+										<td>
+											<input data-role="dropdownlist"
+					              			   data-option-label="(--- Select ---)"
+							                   data-value-primitive="true"
+							                   data-text-field="name"
+							                   data-value-field="id"
+							                   data-bind="value: obj.country_id,
+							                              source: countryDS" style="width: 100%;" />
+										</td>								
+										<td></td>
+										<td>
+											<textarea 
+												cols="0" 
+												rows="2" 
+												class="k-textbox" 
+												style="width:100%; resize: none;" 
+												data-bind="value: obj.memo2" 
+												placeholder="Remarks/comments...">
+											</textarea>
+										</td>
+									</tr>
+									<tr>
+										<td>5.2.5</td>
+										<td>
+											All recommendations made by the auditor in the prior three audit reports and/or management letters have been implemented.
+										</td>
+										<td></td>
+										<td>
+											<input data-role="dropdownlist"
+					              			   data-option-label="(--- Select ---)"
+							                   data-value-primitive="true"
+							                   data-text-field="name"
+							                   data-value-field="id"
+							                   data-bind="value: obj.country_id,
+							                              source: countryDS" style="width: 100%;" />
+										</td>
+										<td>
+											<input data-role="dropdownlist"
+					              			   data-option-label="(--- Select ---)"
+							                   data-value-primitive="true"
+							                   data-text-field="name"
+							                   data-value-field="id"
+							                   data-bind="value: obj.country_id,
+							                              source: countryDS" style="width: 100%;" />
+										</td>								
+										<td></td>
+										<td>
+											<textarea 
+												cols="0" 
+												rows="2" 
+												class="k-textbox" 
+												style="width:100%; resize: none;" 
+												data-bind="value: obj.memo2" 
+												placeholder="Remarks/comments...">
+											</textarea>
+										</td>
+									</tr>
+								</tbody>						
+							</table>
+					</div>
+					<br>
+					<!-- Bottom Part -->
+					<div class="box-generic bg-action-button">
+						<div id="ntf1" data-role="notification" style="display: none;"></div>
+
+						<!-- Delete Confirmation -->
+						
+			            <!-- // Delete Confirmation -->
+
+						<div class="row">
+							<div class="span12" align="right">
+								<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save_new">Save New</span></span>
+								<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save_close">Save Close </span></span>																	
+								<span id="savePrint" class="btn btn-icon btn-default glyphicons print" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save_print">Save Print</span></span>
+								<span class="btn btn-icon btn-warning glyphicons remove_2" onclick="javascript:window.history.back()" data-bind="click: cancel" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.cancel">Cancel </span></span>
+								<span class="btn btn-danger btn-icon glyphicons bin" data-bind="click: openConfirm, visible: isEdit" style="width: 80px; display: none;"><i></i> <span data-bind="text: lang.lang.delete">Delete</span></span>					
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+</script>
+<script id="procurement" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">
+				<div id="example" class="k-content">				    
+			    	<span class="glyphicons no-js remove_2 pull-right"
+							data-bind="click: cancel"><i></i></span>
+
+					<!-- Title -->
+					<h2>PROCUREMENT</h2>
+					<p>Assessment Sessions</p>
+					<br>
+					<!-- Table -->
+					<div class="row-fluid fsr-budget">
+						<table class="table table-borderless table-condensed ">
+							<thead>
+								<tr>
+									<th></th>
+									<th style="vertical-align: top;">Focus Areas</th>
+									<th style="vertical-align: top;">Document Required</th>
+									<th style="vertical-align: top;">NA/CP</th>
+									<th style="vertical-align: top;">Risk Point</th>
+									<th style="vertical-align: top;">Attachment</th>
+									<th style="vertical-align: top;">Remarks/comments</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>6.1</td>
+									<td colspan="6">
+										Procurement Principle, Policies, and Procedures
+									</td>
+								</tr>
+								<tr>
+									<td>6.1.1</td>
+									<td>
+										The partner has developed or followed an acceptable procurement principles
+									</td>
+									<td>"Procurement Policies"</td>
+									<td>
+										<input data-role="dropdownlist"
+				              			   data-option-label="(--- Select ---)"
+						                   data-value-primitive="true"
+						                   data-text-field="name"
+						                   data-value-field="id"
+						                   data-bind="value: obj.country_id,
+						                              source: countryDS" style="width: 100%;" />
+									</td>
+									<td>
+										<input data-role="dropdownlist"
+				              			   data-option-label="(--- Select ---)"
+						                   data-value-primitive="true"
+						                   data-text-field="name"
+						                   data-value-field="id"
+						                   data-bind="value: obj.country_id,
+						                              source: countryDS" style="width: 100%;" />
+									</td>								
+									<td></td>
+									<td>
+										<textarea 
+											cols="0" 
+											rows="2" 
+											class="k-textbox" 
+											style="width:100%; resize: none;" 
+											data-bind="value: obj.memo2" 
+											placeholder="Remarks/comments...">
+										</textarea>
+									</td>
+								</tr>
+								<tr>
+									<td>6.1.2</td>
+									<td>
+										The partner has written procurement policies and procedures.
+									</td>
+									<td></td>
+									<td>
+										<input data-role="dropdownlist"
+				              			   data-option-label="(--- Select ---)"
+						                   data-value-primitive="true"
+						                   data-text-field="name"
+						                   data-value-field="id"
+						                   data-bind="value: obj.country_id,
+						                              source: countryDS" style="width: 100%;" />
+									</td>
+									<td>
+										<input data-role="dropdownlist"
+				              			   data-option-label="(--- Select ---)"
+						                   data-value-primitive="true"
+						                   data-text-field="name"
+						                   data-value-field="id"
+						                   data-bind="value: obj.country_id,
+						                              source: countryDS" style="width: 100%;" />
+									</td>								
+									<td></td>
+									<td>
+										<textarea 
+											cols="0" 
+											rows="2" 
+											class="k-textbox" 
+											style="width:100%; resize: none;" 
+											data-bind="value: obj.memo2" 
+											placeholder="Remarks/comments...">
+										</textarea>
+									</td>
+								</tr>
+								<tr>
+									<td>6.1.3</td>
+									<td>
+										The Partner has a specific anti-fraud and corruption policy or conflict of interest that cover this topic.
+									</td>
+									<td>anti-fraud & corruption policy or conflict of interest</td>
+									<td>
+										<input data-role="dropdownlist"
+				              			   data-option-label="(--- Select ---)"
+						                   data-value-primitive="true"
+						                   data-text-field="name"
+						                   data-value-field="id"
+						                   data-bind="value: obj.country_id,
+						                              source: countryDS" style="width: 100%;" />
+									</td>
+									<td>
+										<input data-role="dropdownlist"
+				              			   data-option-label="(--- Select ---)"
+						                   data-value-primitive="true"
+						                   data-text-field="name"
+						                   data-value-field="id"
+						                   data-bind="value: obj.country_id,
+						                              source: countryDS" style="width: 100%;" />
+									</td>								
+									<td></td>
+									<td>
+										<textarea 
+											cols="0" 
+											rows="2" 
+											class="k-textbox" 
+											style="width:100%; resize: none;" 
+											data-bind="value: obj.memo2" 
+											placeholder="Remarks/comments...">
+										</textarea>
+									</td>
+								</tr>
+								<tr>
+									<td>6.1.4</td>
+									<td>
+										The Partner has utilize project funds and purchased goods efficiently, economically and exclusively for the purpose of the project, as state in the Cooperation Agreement with BfdW.
+									</td>
+									<td></td>
+									<td>
+										<input data-role="dropdownlist"
+				              			   data-option-label="(--- Select ---)"
+						                   data-value-primitive="true"
+						                   data-text-field="name"
+						                   data-value-field="id"
+						                   data-bind="value: obj.country_id,
+						                              source: countryDS" style="width: 100%;" />
+									</td>
+									<td>
+										<input data-role="dropdownlist"
+				              			   data-option-label="(--- Select ---)"
+						                   data-value-primitive="true"
+						                   data-text-field="name"
+						                   data-value-field="id"
+						                   data-bind="value: obj.country_id,
+						                              source: countryDS" style="width: 100%;" />
+									</td>								
+									<td></td>
+									<td>
+										<textarea 
+											cols="0" 
+											rows="2" 
+											class="k-textbox" 
+											style="width:100%; resize: none;" 
+											data-bind="value: obj.memo2" 
+											placeholder="Remarks/comments...">
+										</textarea>
+									</td>
+								</tr>
+								<tr>
+									<td>6.2</td>
+									<td colspan="6">
+										Controls
+									</td>
+								</tr>
+								<tr>
+									<td>6.2.1</td>
+									<td>
+										The Partner has a procurement committee that reviews and approves contracts.
+									</td>
+									<td></td>
+									<td>
+										<input data-role="dropdownlist"
+				              			   data-option-label="(--- Select ---)"
+						                   data-value-primitive="true"
+						                   data-text-field="name"
+						                   data-value-field="id"
+						                   data-bind="value: obj.country_id,
+						                              source: countryDS" style="width: 100%;" />
+									</td>
+									<td>
+										<input data-role="dropdownlist"
+				              			   data-option-label="(--- Select ---)"
+						                   data-value-primitive="true"
+						                   data-text-field="name"
+						                   data-value-field="id"
+						                   data-bind="value: obj.country_id,
+						                              source: countryDS" style="width: 100%;" />
+									</td>								
+									<td></td>
+									<td>
+										<textarea 
+											cols="0" 
+											rows="2" 
+											class="k-textbox" 
+											style="width:100%; resize: none;" 
+											data-bind="value: obj.memo2" 
+											placeholder="Remarks/comments...">
+										</textarea>
+									</td>
+								</tr>
+								<tr>
+									<td>6.2.2</td>
+									<td>
+										The Partner has defined authorization guidance and policies and procedures to ensure they are properly applied.
+									</td>
+									<td></td>
+									<td>
+										<input data-role="dropdownlist"
+				              			   data-option-label="(--- Select ---)"
+						                   data-value-primitive="true"
+						                   data-text-field="name"
+						                   data-value-field="id"
+						                   data-bind="value: obj.country_id,
+						                              source: countryDS" style="width: 100%;" />
+									</td>
+									<td>
+										<input data-role="dropdownlist"
+				              			   data-option-label="(--- Select ---)"
+						                   data-value-primitive="true"
+						                   data-text-field="name"
+						                   data-value-field="id"
+						                   data-bind="value: obj.country_id,
+						                              source: countryDS" style="width: 100%;" />
+									</td>								
+									<td></td>
+									<td>
+										<textarea 
+											cols="0" 
+											rows="2" 
+											class="k-textbox" 
+											style="width:100%; resize: none;" 
+											data-bind="value: obj.memo2" 
+											placeholder="Remarks/comments...">
+										</textarea>
+									</td>
+								</tr>
+								<tr>
+									<td>6.2.3</td>
+									<td>
+										The Partner obtains sufficient approvals before signing a contract executing a purchase or a payment.
+									</td>
+									<td></td>
+									<td>
+										<input data-role="dropdownlist"
+				              			   data-option-label="(--- Select ---)"
+						                   data-value-primitive="true"
+						                   data-text-field="name"
+						                   data-value-field="id"
+						                   data-bind="value: obj.country_id,
+						                              source: countryDS" style="width: 100%;" />
+									</td>
+									<td>
+										<input data-role="dropdownlist"
+				              			   data-option-label="(--- Select ---)"
+						                   data-value-primitive="true"
+						                   data-text-field="name"
+						                   data-value-field="id"
+						                   data-bind="value: obj.country_id,
+						                              source: countryDS" style="width: 100%;" />
+									</td>								
+									<td></td>
+									<td>
+										<textarea 
+											cols="0" 
+											rows="2" 
+											class="k-textbox" 
+											style="width:100%; resize: none;" 
+											data-bind="value: obj.memo2" 
+											placeholder="Remarks/comments...">
+										</textarea>
+									</td>
+								</tr>
+								<tr>
+									<td>6.2.4</td>
+									<td>
+										The Partner has formal guidelines and procedures in place to assist in identifying, monitoring and dealing with potential conflict of interests with potential suppliers/procurement agents.
+									</td>
+									<td></td>
+									<td>
+										<input data-role="dropdownlist"
+				              			   data-option-label="(--- Select ---)"
+						                   data-value-primitive="true"
+						                   data-text-field="name"
+						                   data-value-field="id"
+						                   data-bind="value: obj.country_id,
+						                              source: countryDS" style="width: 100%;" />
+									</td>
+									<td>
+										<input data-role="dropdownlist"
+				              			   data-option-label="(--- Select ---)"
+						                   data-value-primitive="true"
+						                   data-text-field="name"
+						                   data-value-field="id"
+						                   data-bind="value: obj.country_id,
+						                              source: countryDS" style="width: 100%;" />
+									</td>								
+									<td></td>
+									<td>
+										<textarea 
+											cols="0" 
+											rows="2" 
+											class="k-textbox" 
+											style="width:100%; resize: none;" 
+											data-bind="value: obj.memo2" 
+											placeholder="Remarks/comments...">
+										</textarea>
+									</td>
+								</tr>
+								<tr>
+									<td>6.3</td>
+									<td colspan="6">
+										Procurement process
+									</td>
+								</tr>
+								<tr>
+									<td>6.3.1</td>
+									<td>
+										The Partner has a well-defined process for sourcing/pre-qualifying suppliers.
+									</td>
+									<td></td>
+									<td>
+										<input data-role="dropdownlist"
+				              			   data-option-label="(--- Select ---)"
+						                   data-value-primitive="true"
+						                   data-text-field="name"
+						                   data-value-field="id"
+						                   data-bind="value: obj.country_id,
+						                              source: countryDS" style="width: 100%;" />
+									</td>
+									<td>
+										<input data-role="dropdownlist"
+				              			   data-option-label="(--- Select ---)"
+						                   data-value-primitive="true"
+						                   data-text-field="name"
+						                   data-value-field="id"
+						                   data-bind="value: obj.country_id,
+						                              source: countryDS" style="width: 100%;" />
+									</td>								
+									<td></td>
+									<td>
+										<textarea 
+											cols="0" 
+											rows="2" 
+											class="k-textbox" 
+											style="width:100%; resize: none;" 
+											data-bind="value: obj.memo2" 
+											placeholder="Remarks/comments...">
+										</textarea>
+									</td>
+								</tr>
+								<tr>
+									<td>6.3.2</td>
+									<td>
+										The Partner regularly checks ‘market’ prices of goods and services purchased.
+									</td>
+									<td></td>
+									<td>
+										<input data-role="dropdownlist"
+				              			   data-option-label="(--- Select ---)"
+						                   data-value-primitive="true"
+						                   data-text-field="name"
+						                   data-value-field="id"
+						                   data-bind="value: obj.country_id,
+						                              source: countryDS" style="width: 100%;" />
+									</td>
+									<td>
+										<input data-role="dropdownlist"
+				              			   data-option-label="(--- Select ---)"
+						                   data-value-primitive="true"
+						                   data-text-field="name"
+						                   data-value-field="id"
+						                   data-bind="value: obj.country_id,
+						                              source: countryDS" style="width: 100%;" />
+									</td>								
+									<td></td>
+									<td>
+										<textarea 
+											cols="0" 
+											rows="2" 
+											class="k-textbox" 
+											style="width:100%; resize: none;" 
+											data-bind="value: obj.memo2" 
+											placeholder="Remarks/comments...">
+										</textarea>
+									</td>
+								</tr>
+								<tr>
+									<td>6.3.3</td>
+									<td>
+										The Partner conducts public bid opening for formal procurement methods.
+									</td>
+									<td></td>
+									<td>
+										<input data-role="dropdownlist"
+				              			   data-option-label="(--- Select ---)"
+						                   data-value-primitive="true"
+						                   data-text-field="name"
+						                   data-value-field="id"
+						                   data-bind="value: obj.country_id,
+						                              source: countryDS" style="width: 100%;" />
+									</td>
+									<td>
+										<input data-role="dropdownlist"
+				              			   data-option-label="(--- Select ---)"
+						                   data-value-primitive="true"
+						                   data-text-field="name"
+						                   data-value-field="id"
+						                   data-bind="value: obj.country_id,
+						                              source: countryDS" style="width: 100%;" />
+									</td>								
+									<td></td>
+									<td>
+										<textarea 
+											cols="0" 
+											rows="2" 
+											class="k-textbox" 
+											style="width:100%; resize: none;" 
+											data-bind="value: obj.memo2" 
+											placeholder="Remarks/comments...">
+										</textarea>
+									</td>
+								</tr>
+								<tr>
+									<td>6.4</td>
+									<td colspan="6">
+										Awarding of contracts
+									</td>
+								</tr>
+								<tr>
+									<td>6.4.1</td>
+									<td>
+										The Partner awards procurement contracts to qualified bidders whose bids substantially conform to requirements set forth in the solicitation documentation and offer the lowest cost.
+									</td>
+									<td></td>
+									<td>
+										<input data-role="dropdownlist"
+				              			   data-option-label="(--- Select ---)"
+						                   data-value-primitive="true"
+						                   data-text-field="name"
+						                   data-value-field="id"
+						                   data-bind="value: obj.country_id,
+						                              source: countryDS" style="width: 100%;" />
+									</td>
+									<td>
+										<input data-role="dropdownlist"
+				              			   data-option-label="(--- Select ---)"
+						                   data-value-primitive="true"
+						                   data-text-field="name"
+						                   data-value-field="id"
+						                   data-bind="value: obj.country_id,
+						                              source: countryDS" style="width: 100%;" />
+									</td>								
+									<td></td>
+									<td>
+										<textarea 
+											cols="0" 
+											rows="2" 
+											class="k-textbox" 
+											style="width:100%; resize: none;" 
+											data-bind="value: obj.memo2" 
+											placeholder="Remarks/comments...">
+										</textarea>
+									</td>
+								</tr>
+								<tr>
+									<td>6.4.2</td>
+									<td>
+										The Partner awards procurement contracts to qualified proposers whose proposals, all factors considered, are the most responsive to the requirements set forth in the solicitation process.
+									</td>
+									<td></td>
+									<td>
+										<input data-role="dropdownlist"
+				              			   data-option-label="(--- Select ---)"
+						                   data-value-primitive="true"
+						                   data-text-field="name"
+						                   data-value-field="id"
+						                   data-bind="value: obj.country_id,
+						                              source: countryDS" style="width: 100%;" />
+									</td>
+									<td>
+										<input data-role="dropdownlist"
+				              			   data-option-label="(--- Select ---)"
+						                   data-value-primitive="true"
+						                   data-text-field="name"
+						                   data-value-field="id"
+						                   data-bind="value: obj.country_id,
+						                              source: countryDS" style="width: 100%;" />
+									</td>								
+									<td></td>
+									<td>
+										<textarea 
+											cols="0" 
+											rows="2" 
+											class="k-textbox" 
+											style="width:100%; resize: none;" 
+											data-bind="value: obj.memo2" 
+											placeholder="Remarks/comments...">
+										</textarea>
+									</td>
+								</tr>
+								<tr>
+									<td>6.5</td>
+									<td colspan="6">
+										Reporting and monitoring
+									</td>
+								</tr>
+								<tr>
+									<td>6.5.1</td>
+									<td>
+										Procurement reports are prepared frequently for the Partner.
+									</td>
+									<td></td>
+									<td>
+										<input data-role="dropdownlist"
+				              			   data-option-label="(--- Select ---)"
+						                   data-value-primitive="true"
+						                   data-text-field="name"
+						                   data-value-field="id"
+						                   data-bind="value: obj.country_id,
+						                              source: countryDS" style="width: 100%;" />
+									</td>
+									<td>
+										<input data-role="dropdownlist"
+				              			   data-option-label="(--- Select ---)"
+						                   data-value-primitive="true"
+						                   data-text-field="name"
+						                   data-value-field="id"
+						                   data-bind="value: obj.country_id,
+						                              source: countryDS" style="width: 100%;" />
+									</td>								
+									<td></td>
+									<td>
+										<textarea 
+											cols="0" 
+											rows="2" 
+											class="k-textbox" 
+											style="width:100%; resize: none;" 
+											data-bind="value: obj.memo2" 
+											placeholder="Remarks/comments...">
+										</textarea>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<br>
+					<!-- Bottom Part -->
+					<div class="box-generic bg-action-button">
+						<div id="ntf1" data-role="notification" style="display: none;"></div>
+
+						<!-- Delete Confirmation -->
+						
+			            <!-- // Delete Confirmation -->
+
+						<div class="row">
+							<div class="span12" align="right">
+								<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save_new">Save New</span></span>
+								<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save_close">Save Close </span></span>																	
+								<span id="savePrint" class="btn btn-icon btn-default glyphicons print" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save_print">Save Print</span></span>
+								<span class="btn btn-icon btn-warning glyphicons remove_2" onclick="javascript:window.history.back()" data-bind="click: cancel" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.cancel">Cancel </span></span>
+								<span class="btn btn-danger btn-icon glyphicons bin" data-bind="click: openConfirm, visible: isEdit" style="width: 80px; display: none;"><i></i> <span data-bind="text: lang.lang.delete">Delete</span></span>					
+							</div>
+						</div>
+					</div>
+
+				</div>
 			</div>
 		</div>
 	</div>
@@ -2963,7 +4405,11 @@
 		searchAdvanced: new kendo.Layout("#searchAdvanced", {model: banhji.searchAdvanced}),
 
 		//
+		finance: new kendo.Layout("#finance", {model: banhji.finance}),
 		budget: new kendo.Layout("#budget", {model: banhji.budget}),
+		controls: new kendo.Layout("#controls", {model: banhji.controls}),
+		audit: new kendo.Layout("#audit", {model: banhji.audit}),
+		procurement: new kendo.Layout("#procurement", {model: banhji.procurement}),
 			
 	};
 	banhji.router = new kendo.Router({
@@ -3036,7 +4482,24 @@
 		}
 	});
 
-	//budget
+	//Router
+	banhji.router.route("/finance", function(){
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{
+			banhji.view.layout.showIn("#content", banhji.view.finance);
+			
+			var vm = banhji.finance;
+			banhji.userManagement.addMultiTask("Finance Function","finance",null);
+
+			if(banhji.pageLoaded["finance"]==undefined){
+				banhji.pageLoaded["finance"] = true;
+
+				//vm.sorterChanges();
+			}
+			//vm.pageLoad();
+		}
+	});
 	banhji.router.route("/budget", function(){
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
@@ -3054,13 +4517,64 @@
 			//vm.pageLoad();
 		}
 	});
+	banhji.router.route("/controls", function(){
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{
+			banhji.view.layout.showIn("#content", banhji.view.controls);
+			
+			var vm = banhji.controls;
+			banhji.userManagement.addMultiTask("Controls","controls",null);
+
+			if(banhji.pageLoaded["controls"]==undefined){
+				banhji.pageLoaded["controls"] = true;
+
+				//vm.sorterChanges();
+			}
+			//vm.pageLoad();
+		}
+	});
+	banhji.router.route("/audit", function(){
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{
+			banhji.view.layout.showIn("#content", banhji.view.audit);
+			
+			var vm = banhji.audit;
+			banhji.userManagement.addMultiTask("Audit","audit",null);
+
+			if(banhji.pageLoaded["audit"]==undefined){
+				banhji.pageLoaded["audit"] = true;
+
+				//vm.sorterChanges();
+			}
+			//vm.pageLoad();
+		}
+	});
+	banhji.router.route("/procurement", function(){
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{
+			banhji.view.layout.showIn("#content", banhji.view.procurement);
+			
+			var vm = banhji.procurement;
+			banhji.userManagement.addMultiTask("Procurement","procurement",null);
+
+			if(banhji.pageLoaded["procurement"]==undefined){
+				banhji.pageLoaded["procurement"] = true;
+
+				//vm.sorterChanges();
+			}
+			//vm.pageLoad();
+		}
+	});
 
 
 
 	$(function() {
 		banhji.router.start();
 		banhji.source.pageLoad();
-		console.log($(location).attr('hash').substr(2));
+		//console.log($(location).attr('hash').substr(2));
 
 		var cognitoUser = userPool.getCurrentUser();
 		cognitoUser.getSession(function(err, session) {

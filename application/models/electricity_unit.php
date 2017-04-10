@@ -4,20 +4,20 @@ class Electricity_unit extends DataMapper {
 	protected $created_field = "created_at";
 	protected $updated_field = "updated_at";
 	
-	public $has_many = array("meter",
-		'ampere' => array(
-            'class' => 'meter',
-            'other_field' => 'ampere'
-        ),
-        'phase' => array(
-            'class' => 'meter',
-            'other_field' => 'phase'
-        ),
-        'voltage' => array(
-            'class' => 'meter',
-            'other_field' => 'voltage'
-        )
-	);
+	// public $has_many = array("meter",
+	// 	'ampere' => array(
+ //            'class' => 'meter',
+ //            'other_field' => 'ampere'
+ //        ),
+ //        'phase' => array(
+ //            'class' => 'meter',
+ //            'other_field' => 'phase'
+ //        ),
+ //        'voltage' => array(
+ //            'class' => 'meter',
+ //            'other_field' => 'voltage'
+ //        )
+	// );
 
 	public function __construct($id = null, $server_name = null, $db_username = null, $server_password = null, $db = null) {	
 		$this->db_params = array(

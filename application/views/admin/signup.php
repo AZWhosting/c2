@@ -45,7 +45,7 @@
         }
         .signup-form{
             background: #01b0f1;
-            padding: 65px 50px;
+            padding: 57px 50px;
             color: #000000;
             float: left;
             text-align:  center;
@@ -75,6 +75,14 @@
             font-size: 11px;
             text-align: center;
             width: 100%;
+        }
+        .textnear-logo {
+            font-size: 27px;
+            text-align: left;
+            padding-right: 0;
+        }
+        .sme {
+            text-transform: uppercase;
         }
         .signup-country{
             height: 37px;
@@ -422,14 +430,13 @@
                                 By clicking on “signup”, you agree to the <a href="https://www.banhji.com/terms" target="_blank">Terms of Service</a>  and <a href="https://banhji.com/privacy" target="_blank">Privacy Policy</a>.
                             </p>-->
                         </form>
-                        <span class="row" style="font-size: 11px; color: #fff; text-align: left; margin-top: 8px; float: left;">
+                    </div>
+                    <span class="row" style="font-size: 13px; color: #333; text-align: center; margin: 20px; float: left;">
                             By clicking on “signup”, you agree to the 
                             <a href="https://www.banhji.com/terms" target="_blank" style="color: #333;">Terms of Service</a>  
                             and 
                             <a href="https://banhji.com/privacy" target="_blank" style="color: #333;">Privacy Policy</a>.
                         </span>
-                    </div>
-                    
                 </div>
                <div class="col-sm-6">
                     <div class="cover">

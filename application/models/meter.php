@@ -5,42 +5,10 @@ class Meter extends DataMapper {
 	protected $updated_field = "updated_at";
 
 	public $has_one = array("branch", "location", "electricity_box",
-		"contact" => array(
-			'class' => 'customer',
+		"property" => array(
+			'class' => 'property',
 			'other_field' => 'meter'
 		),
-		'item' => array(
-            'class' => 'item',
-            'other_field' => 'meter'
-        ),
-        'transaction' => array(
-            'class' => 'meter',
-            'other_field' => 'transaction'
-        ),
-        'tariff' => array(
-            'class' => 'fee',
-            'other_field' => 'tariff'
-        ),
-        'exemption' => array(
-            'class' => 'fee',
-            'other_field' => 'exemption'
-        ),
-        'maintenance' => array(
-            'class' => 'fee',
-            'other_field' => 'maintenance'
-        ),
-        'ampere' => array(
-            'class' => 'electricity_unit',
-            'other_field' => 'ampere'
-        ),
-        'phase' => array(
-            'class' => 'electricity_unit',
-            'other_field' => 'phase'
-        ),
-        'voltage' => array(
-            'class' => 'electricity_unit',
-            'other_field' => 'voltage'
-        ),
         'plan' => array(
             'class' => 'plan',
             'other_field' => 'meter'
@@ -63,7 +31,11 @@ class Meter extends DataMapper {
         ),
         'meter' => array(
             'other_field' => 'reactive'
-        )
+        ),
+        'contact' => array(
+            'class' => "customer",
+            'other_field' => 'meter'
+        ),
 	);
 	public $has_many = array(
 		'reading' => array(

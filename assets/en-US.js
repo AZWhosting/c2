@@ -1382,7 +1382,14 @@ var	en_US = {
 	"flat": "Flat",
 	"not_flat": "Not Flat",
 	"reactive_meter": "Reactive Meter",
-
+	"sub_location": "Sub Location",
+	"add_sub_location": "Add Sub Location",
+	"location_name": "Location Name",
+	"sub_location_name": "Sub Location Name",
+	"view_tariff": "View Tariff",
+	"add_tariff": "Add Tariff",
+	"quantity_sold": "Quantity Sold",
+	"property_name": "Property Name",
 
 
 

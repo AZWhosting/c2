@@ -14,7 +14,7 @@ class Transaction extends DataMapper {
             'other_field' => 'transaction'
         ),
         'contact' => array(
-            'class' => 'contact',
+            'class' => 'customer',
             'other_field' => 'transaction'
         ),       
         'payment_term' => array(

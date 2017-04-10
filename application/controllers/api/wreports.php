@@ -571,7 +571,7 @@ class Wreports extends REST_Controller {
 		}
 	}
 
-	function kpi_get() {		
+	function skpi_get() {		
 		$filters 	= $this->get("filter")["filters"];		
 		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
 		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;								
@@ -579,10 +579,11 @@ class Wreports extends REST_Controller {
 		$data["results"] = [];
 		$data["count"] = 1;
 
-		$contact = new contact_utility(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$contact = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$location = new Location(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$meter = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$activeContact = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$activeMeter = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$activeCust = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$branch = new Branch(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$income = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$avgIncome = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
@@ -591,27 +592,28 @@ class Wreports extends REST_Controller {
 		// $deposit = new Payment(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
 		
 		//Filter		
-		if(!empty($filters) && isset($filters)){			
-	    	foreach ($filters as $value) {	    		    			
-	    		$contact->where("branch_id", $value["value"]);
-	    		$location->where("branch_id", $value["value"]);
-	    		$meter->where("branch_id", $value["value"]);
+		// if(!empty($filters) && isset($filters)){			
+	 //    	foreach ($filters as $value) {	    		    			
+	 //    		$contact->where("branch_id", $value["value"]);
+	 //    		$location->where("branch_id", $value["value"]);
+	 //    		$meter->where("branch_id", $value["value"]);
 
-	    		// $activeContact->where("branch_id", $value["value"]);
-	    		// $branch->where("id", $value["value"]);
-	    		// $income->where($value["field"], $value["value"]);
-	    		// $avgIncome->where($value["field"], $value["value"]);
-	    		// $usage->where_related("transaction", $value["field"], $value["value"]);
-	    		// $avgUsage->where_related("meter", $value["field"], $value["value"]);
-	    		// $deposit->where($value["field"], $value["value"]);    		
-			}									 			
-		}		
-		$contact->select('id, contact_id');
-		$contact->include_related('branch', array('max_customer'));
-		$contact->include_related('contact', array('deposit_account_id'));
-		$contact->where('type', 'w');
-		$contact->where_related_contact('status', 1);
-		$contact->get();
+	 //    		$activeMeter->where($value["field"], $value["value"]);
+	 //    		$branch->where("id", $value["value"]);
+	 //    		// $income->where($value["field"], $value["value"]);
+	 //    		// $avgIncome->where($value["field"], $value["value"]);
+	 //    		// $usage->where_related("transaction", $value["field"], $value["value"]);
+	 //    		$avgUsage->where_related("meter", $value["field"], $value["value"]);
+	 //    		// $deposit->where($value["field"], $value["value"]);    		
+		// 	}									 			
+		// }
+		$activeMeter->where('branch_id', 1);
+
+		// $contact->select('id, contact_id');
+		// $contact->include_related('branch', array('max_customer'));
+		// $contact->include_related('contact', array('deposit_account_id'));
+		// $contact->where('type', 'w');
+		// $contact->where_related_contact('status', 1);
 		$deposit = 0;
 		foreach($contact as $c) {
 			$journal = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
@@ -637,18 +639,20 @@ class Wreports extends REST_Controller {
 			$locs[] = $loc->id;
 		}
 
-		$totalCustomer = $contact->result_count();
-		$totalAllowCustomer = $contact->branch_max_customer == 0 ? 0:$totalCustomer / intval($contact->branch_max_customer);
-		$totalActiveCustomer = $totalCustomer == 0 ? 0 : $activeContact->count() / $totalCustomer;
+		$totalCustomer = $contact->count();
+		$branch->get();
+		$activeMeter->where('status', 1);
+		$totalAllowCustomer = $branch->max_customer == 0 ? 0: $activeMeter->count() / intval($branch->max_customer);
+		$totalActiveCustomer = $totalCustomer == 0 ? 0 : $activeMeter->count() / $totalCustomer;
 
 		$income->select_sum("amount");
 		$income->where_in('location_id', $locs);
-		$income->where("type", "Water_Invoice");
+		$income->where("type", "Utility_Invoice");
 		$income->get();
 		
 		$avgIncome->select_avg("amount");
 		$avgIncome->where_in('location_id', $locs);
-		$avgIncome->where("type", "Water_Invoice");
+		$avgIncome->where("type", "Utility_Invoice");
 		$avgIncome->get();
 
 		// $usage = $meter;
@@ -656,16 +660,16 @@ class Wreports extends REST_Controller {
 		// $usage->where_related_winvoice_line('type', 'tariff');
 		// $usage->get();
 
-		$avgUsage = $meter;
-		$avgUsage->include_related('record', array('usage'));
+		// $avgUsage = $meter;
+		// $avgUsage->include_related('record', array('usage'));
 		// $avgUsage->where_related_winvoice_line('type', 'tariff');
 		$avgUsage->get();
 		$totalUsage = 0;
 		$avg = 0;
 		foreach($avgUsage as $avgUsg) {
-			$totalUsage += $avgUsg->record_usage;
+			$totalUsage += $avgUsg->usage;
 		}
-		$avg = $totalCustomer == 0 ? 0:$totalUsage / $totalCustomer;
+		$avg = $totalCustomer == 0 ? 0:$totalUsage / $activeMeter->count();
 
 		// $usage->select_sum("quantity");
 		// $usage->where("type", "tariff");
@@ -677,23 +681,102 @@ class Wreports extends REST_Controller {
 		// $deposit->select_sum("amount");
 		// $deposit->where("type", "wdeposit");
 		// $deposit->get();
+
+		$activeCust->where('branch_id', 1);
+		// $activeCust->where('status', 1);
+		$activeCust->get();
 				
 		$data["results"][] = array(
 			"id" 						=> 0,
-			"totalCustomer" 			=> $totalCustomer,
+			"totalCustomer" 			=> $activeMeter->count(),
 			"totalAllowCustomer" 		=> $totalAllowCustomer,
 			"totalActiveCustomer" 		=> $totalActiveCustomer,
-			"totalIncome" 				=> floatval($income->amount),
-			"avgIncome" 				=> floatval($avgIncome->amount),
+			"totalIncome" 				=> floatval($income->amount), //water revenue
+			"avgIncome" 				=> floatval($income->amount) / $activeMeter->count(), // avg revenue/connection
 			"totalUsage" 				=> intval($usage),
 			"avgUsage" 					=> floatval($avg),
 			"totalUsage"				=> floatval($totalUsage),			
-			"totalDeposit" 				=> floatval($deposit)							
+			"totalDeposit" 				=> floatval($deposit),
+			"sql" 						=> $contact->get_sql()						
 		);
 			
 
 		//Response Data		
 		$this->response($data, 200);	
+	}
+
+	function kpi_get() {
+		$filters 	= $this->get("filter")["filters"];		
+		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
+		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;								
+		$sort 	 	= $this->get("sort");
+
+		$activeMeter = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_1489395794');
+		$allMeter = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_1489395794');
+		$income = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$location = new Location(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$branch = new Branch(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_1489395794');
+		$avgUsage = new Meter_record(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_1489395794');
+		$deposit = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd,'db_1489395794');
+
+		if(!empty($filters) && isset($filters)){			
+	    	foreach ($filters as $value) {	    		    			
+	    		$activeMeter->where("branch_id", $value["value"]);
+	    		$allMeter->where("branch_id", $value["value"]);
+	    		$branch->where("id", $value["value"]);
+	    		$avgUsage->where_related("meter", $value["field"], $value["value"]);
+			}									 			
+		}
+
+		$activeMeter->where('branch_id', 1);
+		$activeMeter->where('status', 1);
+		$nActiveMeter = $activeMeter->count();
+
+		$allMeter->where('branch_id', 1);
+
+		$branch->get();
+		$totalAllowCustomer = $branch->max_customer == 0 ? 0: $nActiveMeter / intval($branch->max_customer);
+
+		$location->get();
+		$locs = array();
+		$usage = 0;
+		foreach($location as $loc) {
+			// $usage += $loc_transaction_winvoice_line_quanity;
+			$locs[] = $loc->id;
+		}
+		$income->select_sum("amount");
+		$income->where_in('location_id', $locs);
+		$income->where("type", "Utility_Invoice");
+		$income->get();
+
+		$avgUsage->get();
+		$totalUsage = 0;
+		$avg = 0;
+		foreach($avgUsage as $avgUsg) {
+			$totalUsage += $avgUsg->usage;
+		}
+		$avg = $nActiveMeter == 0 ? 0:$totalUsage / $activeMeter->count();
+
+		$deposit->select_sum("amount");
+		$deposit->where_in('location_id', $locs);
+		$deposit->where("type", "Utility_Deposit");
+		$deposit->get();
+
+		$data["results"][] = array(
+				"id" 						=> 0,
+				"totalCustomer" 			=> $nActiveMeter,
+				"totalAllowCustomer" 		=> $totalAllowCustomer,
+				"totalActiveCustomer" 		=> $nActiveMeter / $allMeter->count(),
+				"totalIncome" 				=> floatval($income->amount), //water revenue
+				"avgIncome" 				=> floatval($income->amount) / $nActiveMeter, // avg revenue/connection
+				"avgUsage" 					=> floatval($avg),
+				"totalUsage"				=> floatval($totalUsage),			
+				"totalDeposit" 				=> floatval($deposit->amount)
+				);
+
+
+
+		$this->response($data, 200);
 	}
 
 	//GET WATER AGING SUMMARY
@@ -2541,8 +2624,10 @@ class Wreports extends REST_Controller {
 	function customer_list_get() {
 		$filters 	= $this->get("filter");		
 		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
-		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;								
-		$sort 	 	= $this->get("sort");		
+		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;
+		$sort 	 	= $this->get("sort");	
+		$data["results"] = [];
+		$data["count"] = 0;	
 		$is_pattern = 0;
 
 		$obj = new Contact_Utility(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
@@ -2582,7 +2667,7 @@ class Wreports extends REST_Controller {
 			}
 			$this->response(array('results' => $data, 'count' => $obj->paged->total_rows), 200);
 		} else {
-			$this->response(array('results'=> array(), 'msg'=> 'no meter found'), 404);
+			$this->response($data, 200);
 		}
 	}
 
