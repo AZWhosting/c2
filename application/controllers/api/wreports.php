@@ -711,13 +711,13 @@ class Wreports extends REST_Controller {
 		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;								
 		$sort 	 	= $this->get("sort");
 
-		$activeMeter = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_1489395794');
-		$allMeter = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_1489395794');
+		$activeMeter = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$allMeter = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$income = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$location = new Location(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$branch = new Branch(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_1489395794');
-		$avgUsage = new Meter_record(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_1489395794');
-		$deposit = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd,'db_1489395794');
+		$branch = new Branch(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$avgUsage = new Meter_record(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$deposit = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
 		if(!empty($filters) && isset($filters)){			
 	    	foreach ($filters as $value) {	    		    			
@@ -728,11 +728,8 @@ class Wreports extends REST_Controller {
 			}									 			
 		}
 
-		$activeMeter->where('branch_id', 1);
 		$activeMeter->where('status', 1);
 		$nActiveMeter = $activeMeter->count();
-
-		$allMeter->where('branch_id', 1);
 
 		$branch->get();
 		$totalAllowCustomer = $branch->max_customer == 0 ? 0: $nActiveMeter / intval($branch->max_customer);

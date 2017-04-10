@@ -58,7 +58,6 @@
     			<i></i>
     		</span>
     	</a>
-
     </li>	
 </script>
 
@@ -7473,9 +7472,8 @@
 							<thead>
 								<tr>
 									<th style="vertical-align: top;"><span data-bind="text: lang.lang.customer_name">Customer Name</span></th>
-									<th style="vertical-align: top;"><span data-bind="text: lang.lang.address">Address</span></th>
-									<th style="vertical-align: top;"><span data-bind="text: lang.lang.phone">Phone</span></th>
-									<th style="vertical-align: top;"><span style="text-align: right;" data-bind="text: lang.lang.email">Email</span></th>
+									<th style="vertical-align: top;"><span data-bind="text: lang.lang.number">Address</span></th>
+									<th style="vertical-align: top;"><span data-bind="text: lang.lang.address">Phone</span></th>
 								</tr>
 							</thead>
 							<tbody data-role="listview"
@@ -7493,9 +7491,8 @@
 <script id="customerList-temp" type="text/x-kendo-template" >
 	<tr>
 		<td>#=name#</td>
-		<td>#=address#</td>
-		<td>#=phone#</td>
-		<td style="text-align: right;">#=email#</td>
+		<td>#=number#</td>
+		<td>#=address#</td>		
 	</tr>
 </script>
 <script id="customerNoConnection" type="text/x-kendo-template">
@@ -22136,7 +22133,7 @@
 			var self = this,
 				start = kendo.toString(this.get("sdate"), "yyyy-MM-dd"),
         		end = kendo.toString(this.get("edate"), "yyyy-MM-dd"),
-        		para = [], obj = this.get("obj");
+        		para = [], obj = this.get("obj"), objMeter = this.get("objMeter");
         	
         	if(obj.id>0){
         		para.push({ field:"contact_id", value: obj.id });
@@ -23291,7 +23288,7 @@
 			vm.pageLoad(id);
 		};
 	});
-	banhji.router.route("/water_invoice/:id", function(id){
+	banhji.router.route("/utility_invoice/:id", function(id){
 		banhji.view.layout.showIn("#content", banhji.view.waterInvoice);
 		banhji.view.layout.showIn('#menu', banhji.view.menu);
 		banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);

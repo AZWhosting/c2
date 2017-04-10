@@ -903,24 +903,16 @@ class UtibillReports extends REST_Controller {
 				}
 			}
 		}
-		$obj->include_related("contact", array("abbr", "number", "name", "email", "address", "phone", "id"));
+		// $obj->include_related("contact", array("abbr", "number", "name", "email", "address", "phone", "id"));
 		$obj->get_paged_iterated($page, $limit);
 		if($obj->exists()) {
-			$objList = [];
 			foreach($obj as $value) {
-				if(isset($objList[$value->contact_id])){
-					
-				}else{
-					$objList[$value->contact_id]["id"] 		= $value->id;
-					$objList[$value->contact_id]["name"] 	= $value->contact_abbr.$value->contact_number." ".$value->contact_name;
-					$objList[$value->contact_id]["address"] = $value->contact_address;
-					$objList[$value->contact_id]["phone"]	= $value->contact_phone;
-					$objList[$value->contact_id]["email"] 	= $value->contact_email;
-				}
-
-			}
-			foreach ($objList as $value) {
-				$data["results"][] = $value;
+				$data["results"][] = array(
+					'id' => $value->id,
+					'name' => $value->name,
+					'number' => $value->abbr ."-". $value->code,
+					'address'=> $value->address
+				);
 			}
 			$data["count"] = count($data["results"]);			
 		}
