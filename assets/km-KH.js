@@ -1364,7 +1364,7 @@ var	km_KH = {
 	"add_tariff": "បន្ថែមតម្លៃ",
 	"quantity_sold": "បរិមាណលក់",
 	"property_name": "ឈ្មោះ Property",
-
+	"add_property": "បន្ថែម Property",
 
 
 

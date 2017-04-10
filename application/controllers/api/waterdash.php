@@ -182,7 +182,15 @@ class Waterdash extends REST_Controller {
 					$trx->where('location_id', $loc->id)->get();
 					// $trx->where('due_date <');
 					$trx->where('status <>', 1);
-					$sale += $trx->amount;
+					$balance += $trx->amount;
+
+					$trxSale = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					$trxSale->select_sum('amount');
+					$trxSale->where('type', 'Utility_Invoice');
+					$trxSale->where('location_id', $loc->id)->get();
+					// $trx->where('due_date <');
+					// $trxSale->where('status <>', 1);
+					$sale += $trxSale->amount;
 
 					$tmpBal = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 					$tmpBal->select('id, amount, deposit, rate');

@@ -1390,6 +1390,7 @@ var	en_US = {
 	"add_tariff": "Add Tariff",
 	"quantity_sold": "Quantity Sold",
 	"property_name": "Property Name",
+	"add_property": "Add Property",
 
 
 
