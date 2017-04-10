@@ -197,6 +197,7 @@ class Waterdash extends REST_Controller {
 					$tmpBal->where('type', 'Utility_Invoice');
 					$tmpBal->where('status', 2);
 					$tmpBal->where('location_id', $loc->id)->get();
+					
 					foreach($tmpBal as $b) {
 						$amount = (floatval($b->amount) - floatval($b->deposit)) / floatval($b->rate);
 						$paid = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
@@ -209,6 +210,7 @@ class Waterdash extends REST_Controller {
 						$paid->get();
 						$balance += $amount - (floatval($paid->amount) + floatval($paid->discount));
 					}
+
 
 					$dep = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 					$dep->select_sum('amount');
