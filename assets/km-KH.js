@@ -1238,7 +1238,7 @@ var	km_KH = {
 	"no_print": "ចំនួន​បោះ​ពុម្ព",
 
 	//Water Receipt
-	"reconcile_transfer": "Reconcile Transfer",
+	"reconcile_transfer": "Cash Receipt Reconciliation",
 	"today_payment": "ទទួល​ថ្ងៃនេះ",
 	"cash_receipt_by_detail": "សាច់​ប្រាក់​ទទួល​លំអិត",
 	"cash_receipt_by_sources_summary": "សាច់​ប្រាក់​ទទួល​តាម​ប្រភព​សង្ខេប",

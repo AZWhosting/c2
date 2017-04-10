@@ -2642,7 +2642,7 @@
 		</td>
 		<td>#=kendo.toString(schedule[i].amount, "c2", banhji.locale)#</td>
 		<td>
-			#if(schedule[i].invoiced=="0"){#			
+			#if(schedule[i].invoiced=="1"){#			
 				Paid
 			#}#
 		</td>
@@ -5541,7 +5541,7 @@
 			        	<p style="width: 100%; float: left; margin-top: 8px;">
 				        	<span style="position: relative; height: 35px; line-height: 35px; padding-right: 15px; float: left; display: block; ">
 								<a data-bind="text: lang.lang.reconcile_transfer" style="color: #203864; margin-top: 4px; line-height: 17px; background: #fff; padding: 8px 91px; font-size: 20px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;" href="#/reconcile">
-									Reconcile & Transfer												
+									Reconcile & Transfer									
 								</a>
 							</span>
 						</p>
@@ -7361,7 +7361,7 @@
 					</div>
 				</div>
 			</div>
-			<!-- <div class="span6">
+			<div class="span6">
 				<div class="cover-block" style="width: 100%; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1; padding-left: 15px;">
 					<div class="row-fluid recevable-report">
 					<h2 data-bind="text: lang.lang.cash_receipt_report">Cash Receipt Report</h2>
@@ -7407,7 +7407,7 @@
 					</div>
 					</div>
 				</div>
-			</div> -->
+			</div>
 		</div>
 	</div>
 </script>
@@ -17160,7 +17160,10 @@
 		dataSource 			: dataStore(apiUrl + "transactions"),
 		txnDS 				: dataStore(apiUrl + "transactions"),
 		journalLineDS		: dataStore(apiUrl + "journal_lines"),
-		currencyDS 			: banhji.source.currencyDS,
+		currencyDS  			: new kendo.data.DataSource({
+		  	data: banhji.source.currencyList,
+		  	filter: { field:"status", value: 1 }
+		}),
 		reconcileVM 		: banhji.reconcileVM,
 		reconReceipt 		: banhji.reconReceipt,
 		cashCurrencyDS 		: [],

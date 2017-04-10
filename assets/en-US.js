@@ -1261,7 +1261,7 @@ var	en_US = {
 	"no_print": "No. Print",
 
 	//Water Receipt
-	"reconcile_transfer": "Reconcile Transfer",
+	"reconcile_transfer": "Cash Receipt Reconciliation",
 	"today_payment": "Today Payment",
 	"cash_receipt_by_detail": "Cash Receipt by Detail",
 	"cash_receipt_by_sources_summary": "Cash Receipt by Sources Summary",
