@@ -34,8 +34,8 @@
 			  	<li role='presentation' class='dropdown'>
 			  		<a class='dropdown-toggle glyphicons text_bigger' data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false'><i></i> <span class='caret'></span></a>
 		  			<ul class='dropdown-menu'>  				  				
-		  				<li><a href='#/finance_function'>Finance Function</a></li>  				
-		  				<li><a href='#/accounting_system'>Accounting System</a></li>
+		  				<li><a href='#/finance'>Finance Function</a></li>  				
+		  				<li><a href='#/accounting'>Accounting System</a></li>
 		  				<li><a href='#/budget'>Budget</a></li>
 		  				<li><a href='#/controls'>Controls</a></li>
 		  				<li><a href='#/audit'>Audit</a></li>
@@ -250,7 +250,7 @@
 							</div>
 						</div>
 					</a>
-					<a href="#/accounting_system">
+					<a href="#/accounting">
 						<div class="cash-invoice" style="background: #203864; color: #fff;">
 							<div class="span6" style="padding-left: 0;">
 								<img style="float: left; width: 64px; margin-right: 15px;" src="<?php echo base_url();?>assets/fsr/2.ico">
@@ -499,8 +499,10 @@
 		<div class="customer-background">
 			<div class="container-960">
 				<div id="example" class="k-content">				    
-			    	<span class="glyphicons no-js remove_2 pull-right"
+			    	<div class="hidden-print pull-right">
+			    		<span class="glyphicons no-js remove_2" onclick="javascript:window.history.back()"
 							data-bind="click: cancel"><i></i></span>
+					</div>
 
 					<!-- Title -->
 					<h2>Finance Functions</h2>
@@ -522,51 +524,53 @@
 								</thead>
 								<tbody>
 									<tr>
-										<td>3.1.7</td>
-										<td>
-											The approved budgets are informed and shared to all concerns via appropriate means, such as electronic document and/or hard copies of the approved documents.
-										</td>
-										<td></td>
-										<td>
-											<input data-role="dropdownlist"
-					              			   data-option-label="(--- Select ---)"
-							                   data-value-primitive="true"
-							                   data-text-field="name"
-							                   data-value-field="id"
-							                   data-bind="value: obj.country_id,
-							                              source: countryDS" style="width: 100%;" />
-										</td>
-										<td>
-											<input data-role="dropdownlist"
-					              			   data-option-label="(--- Select ---)"
-							                   data-value-primitive="true"
-							                   data-text-field="name"
-							                   data-value-field="id"
-							                   data-bind="value: obj.country_id,
-							                              source: countryDS" style="width: 100%;" />
-										</td>								
-										<td></td>
-										<td>
-											<textarea 
-												cols="0" 
-												rows="2" 
-												class="k-textbox" 
-												style="width:100%; resize: none;" 
-												data-bind="value: obj.memo2" 
-												placeholder="Remarks/comments...">
-											</textarea>
-										</td>
-									</tr>
-									<tr>
-										<td>3.2</td>
+										<td>1.1</td>
 										<td colspan="6">
-											Budget Management & Monitoring
+											Finance Function Structure & Operating Model
 										</td>
 									</tr>
 									<tr>
-										<td>3.2.1</td>
+										<td>1.1.1</td>
 										<td>
-											Verifying and approving officer are always attentive and thorough in approving expenditure that is charged to budget.
+											"Partner’s finance department structure is appropriate for the level of financial volume and it provide clear lines of reporting and accountability."
+										</td>
+										<td>
+											"Organizational Structure"
+										</td>
+										<td>
+											<input data-role="dropdownlist"
+					              			   data-option-label="(--- Select ---)"
+							                   data-value-primitive="true"
+							                   data-text-field="name"
+							                   data-value-field="id"
+							                   data-bind="value: obj.country_id,
+							                              source: countryDS" style="width: 100%;" />
+										</td>
+										<td>
+											<input data-role="dropdownlist"
+					              			   data-option-label="(--- Select ---)"
+							                   data-value-primitive="true"
+							                   data-text-field="name"
+							                   data-value-field="id"
+							                   data-bind="value: obj.country_id,
+							                              source: countryDS" style="width: 100%;" />
+										</td>								
+										<td></td>
+										<td>
+											<textarea 
+												cols="0" 
+												rows="2" 
+												class="k-textbox" 
+												style="width:100%; resize: none;" 
+												data-bind="value: obj.memo2" 
+												placeholder="Remarks/comments...">
+											</textarea>
+										</td>
+									</tr>
+									<tr>
+										<td>1.1.2</td>
+										<td>
+											Partner’s Finance Function is staffed adequately to ensure sufficient controls are in place to manage donors’ funds and own means contribution.
 										</td>
 										<td></td>
 										<td>
@@ -600,11 +604,13 @@
 										</td>
 									</tr>
 									<tr>
-										<td>3.2.2</td>
+										<td>1.1.3</td>
 										<td>
-											Budget performance reports are produced. Variances (both deficits and surpluses) are identified. Reasons for variances are determined, and recommendations for corrective actions are developed and implemented.
+											Written job descriptions describing responsibilities and listing task exist for all types of finance jobs. Staff members have copies of their job descriptions; the job descriptions reflect what people actually do.
 										</td>
-										<td></td>
+										<td>
+											Job descriptions
+										</td>
 										<td>
 											<input data-role="dropdownlist"
 					              			   data-option-label="(--- Select ---)"
@@ -636,9 +642,53 @@
 										</td>
 									</tr>
 									<tr>
-										<td>3.2.3</td>
+										<td>1.2</td>
+										<td colspan="6">
+											Financial Personnel Capacity and Competencies
+										</td>
+									</tr>
+									<tr>
+										<td>1.2.1</td>
 										<td>
-											There are no overlap funding in the same project (not shared cost funding)
+											The level of posts and competency of staff appropriate for the level of financial volume in the finance department (matching between responsibility with educational backgrounds and professional experience).
+										</td>
+										<td>
+											Job descriptions and CVs of all finance staff.
+										</td>
+										<td>
+											<input data-role="dropdownlist"
+					              			   data-option-label="(--- Select ---)"
+							                   data-value-primitive="true"
+							                   data-text-field="name"
+							                   data-value-field="id"
+							                   data-bind="value: obj.country_id,
+							                              source: countryDS" style="width: 100%;" />
+										</td>
+										<td>
+											<input data-role="dropdownlist"
+					              			   data-option-label="(--- Select ---)"
+							                   data-value-primitive="true"
+							                   data-text-field="name"
+							                   data-value-field="id"
+							                   data-bind="value: obj.country_id,
+							                              source: countryDS" style="width: 100%;" />
+										</td>								
+										<td></td>
+										<td>
+											<textarea 
+												cols="0" 
+												rows="2" 
+												class="k-textbox" 
+												style="width:100%; resize: none;" 
+												data-bind="value: obj.memo2" 
+												placeholder="Remarks/comments...">
+											</textarea>
+										</td>
+									</tr>
+									<tr>
+										<td>1.2.2</td>
+										<td>
+											Finance Staff understands how accounting system and internal controls works and the factors that affect it.
 										</td>
 										<td></td>
 										<td>
@@ -686,10 +736,891 @@
 						<div class="row">
 							<div class="span12" align="right">
 								<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save_new">Save New</span></span>
-								<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save_close">Save Close </span></span>																	
+								<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save_close">Save Close </span></span>
 								<span id="savePrint" class="btn btn-icon btn-default glyphicons print" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save_print">Save Print</span></span>
 								<span class="btn btn-icon btn-warning glyphicons remove_2" onclick="javascript:window.history.back()" data-bind="click: cancel" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.cancel">Cancel </span></span>
-								<span class="btn btn-danger btn-icon glyphicons bin" data-bind="click: openConfirm, visible: isEdit" style="width: 80px; display: none;"><i></i> <span data-bind="text: lang.lang.delete">Delete</span></span>					
+								<span class="btn btn-danger btn-icon glyphicons bin" data-bind="click: openConfirm, visible: isEdit" style="width: 80px; display: none;"><i></i> <span data-bind="text: lang.lang.delete">Delete</span></span>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+</script>
+<script id="accounting" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">
+				<div id="example" class="k-content">				    
+			    	<div class="hidden-print pull-right">
+			    		<span class="glyphicons no-js remove_2" onclick="javascript:window.history.back()"
+							data-bind="click: cancel"><i></i></span>
+					</div>
+
+					<!-- Title -->
+					<h2>ACCOUNTING SYSTEM & FINANCIAL REPORTING</h2>
+					<p>Assessment Sessions</p>
+					<br>
+					<!-- Table -->
+					<div class="row-fluid fsr-budget">
+							<table class="table table-borderless table-condensed ">
+								<thead>
+									<tr>
+										<th></th>
+										<th style="vertical-align: top;">Focus Areas</th>
+										<th style="vertical-align: top;">Document Required</th>
+										<th style="vertical-align: top;">NA/CP</th>
+										<th style="vertical-align: top;">Risk Point</th>
+										<th style="vertical-align: top;">Attachment</th>
+										<th style="vertical-align: top;">Remarks/comments</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>2.1</td>
+										<td colspan="6">
+											Chart of Account
+										</td>
+									</tr>
+									<tr>
+										<td>2.1.1</td>
+										<td>
+											Chart of account enables Partner to classify and record financial transaction systematically and consistently necessary to produce all required reports.
+										</td>
+										<td>
+											Existing Chart of Account and Accounting Policies (Chart
+										</td>
+										<td>
+											<input data-role="dropdownlist"
+					              			   data-option-label="(--- Select ---)"
+							                   data-value-primitive="true"
+							                   data-text-field="name"
+							                   data-value-field="id"
+							                   data-bind="value: obj.country_id,
+							                              source: countryDS" style="width: 100%;" />
+										</td>
+										<td>
+											<input data-role="dropdownlist"
+					              			   data-option-label="(--- Select ---)"
+							                   data-value-primitive="true"
+							                   data-text-field="name"
+							                   data-value-field="id"
+							                   data-bind="value: obj.country_id,
+							                              source: countryDS" style="width: 100%;" />
+										</td>								
+										<td></td>
+										<td>
+											<textarea 
+												cols="0" 
+												rows="2" 
+												class="k-textbox" 
+												style="width:100%; resize: none;" 
+												data-bind="value: obj.memo2" 
+												placeholder="Remarks/comments...">
+											</textarea>
+										</td>
+									</tr>									
+									<tr>
+										<td>2.1.2</td>
+										<td>
+											All programs expenses and funding sources are recorded using a unified chart of account in an accounting system.
+										</td>
+										<td>
+											Existing Chart of Account and Accounting Policies (Chart
+										</td>
+										<td>
+											<input data-role="dropdownlist"
+					              			   data-option-label="(--- Select ---)"
+							                   data-value-primitive="true"
+							                   data-text-field="name"
+							                   data-value-field="id"
+							                   data-bind="value: obj.country_id,
+							                              source: countryDS" style="width: 100%;" />
+										</td>
+										<td>
+											<input data-role="dropdownlist"
+					              			   data-option-label="(--- Select ---)"
+							                   data-value-primitive="true"
+							                   data-text-field="name"
+							                   data-value-field="id"
+							                   data-bind="value: obj.country_id,
+							                              source: countryDS" style="width: 100%;" />
+										</td>								
+										<td></td>
+										<td>
+											<textarea 
+												cols="0" 
+												rows="2" 
+												class="k-textbox" 
+												style="width:100%; resize: none;" 
+												data-bind="value: obj.memo2" 
+												placeholder="Remarks/comments...">
+											</textarea>
+										</td>
+									</tr>
+									<tr>
+										<td>2.2</td>
+										<td colspan="6">
+											Design & Configuration
+										</td>
+									</tr>
+									<tr>
+										<td></td>
+										<td colspan="6">
+											Accounting Software and its configuration
+										</td>
+									</tr>
+									<tr>
+										<td>2.2.1</td>
+										<td>
+											Accounting Software provide the facilities designed to track fund and its utilization and other controls by donors, program or project, locations, or other requirements imposed by the management or donors.
+										</td>
+										<td></td>
+										<td>
+											<input data-role="dropdownlist"
+					              			   data-option-label="(--- Select ---)"
+							                   data-value-primitive="true"
+							                   data-text-field="name"
+							                   data-value-field="id"
+							                   data-bind="value: obj.country_id,
+							                              source: countryDS" style="width: 100%;" />
+										</td>
+										<td>
+											<input data-role="dropdownlist"
+					              			   data-option-label="(--- Select ---)"
+							                   data-value-primitive="true"
+							                   data-text-field="name"
+							                   data-value-field="id"
+							                   data-bind="value: obj.country_id,
+							                              source: countryDS" style="width: 100%;" />
+										</td>								
+										<td></td>
+										<td>
+											<textarea 
+												cols="0" 
+												rows="2" 
+												class="k-textbox" 
+												style="width:100%; resize: none;" 
+												data-bind="value: obj.memo2" 
+												placeholder="Remarks/comments...">
+											</textarea>
+										</td>
+									</tr>
+									<tr>
+										<td></td>
+										<td colspan="6">
+											Voucher and Supporting Document
+										</td>
+									</tr>
+									<tr>
+										<td>2.2.2</td>
+										<td>
+											The designed voucher system has the capability to capture sufficient data and work compatibly with the software that allow accurate and effective recording.
+										</td>
+										<td>
+											"All Existing Voucher"
+										</td>
+										<td>
+											<input data-role="dropdownlist"
+					              			   data-option-label="(--- Select ---)"
+							                   data-value-primitive="true"
+							                   data-text-field="name"
+							                   data-value-field="id"
+							                   data-bind="value: obj.country_id,
+							                              source: countryDS" style="width: 100%;" />
+										</td>
+										<td>
+											<input data-role="dropdownlist"
+					              			   data-option-label="(--- Select ---)"
+							                   data-value-primitive="true"
+							                   data-text-field="name"
+							                   data-value-field="id"
+							                   data-bind="value: obj.country_id,
+							                              source: countryDS" style="width: 100%;" />
+										</td>								
+										<td></td>
+										<td>
+											<textarea 
+												cols="0" 
+												rows="2" 
+												class="k-textbox" 
+												style="width:100%; resize: none;" 
+												data-bind="value: obj.memo2" 
+												placeholder="Remarks/comments...">
+											</textarea>
+										</td>
+									</tr>
+									<tr>
+										<td>2.2.3</td>
+										<td>
+											Designed supporting documents have been properly designed and incorporated well with other operational process of the organization to enable smooth and effective financial transaction.
+										</td>
+										<td>
+											All existing supporting documents
+										</td>
+										<td>
+											<input data-role="dropdownlist"
+					              			   data-option-label="(--- Select ---)"
+							                   data-value-primitive="true"
+							                   data-text-field="name"
+							                   data-value-field="id"
+							                   data-bind="value: obj.country_id,
+							                              source: countryDS" style="width: 100%;" />
+										</td>
+										<td>
+											<input data-role="dropdownlist"
+					              			   data-option-label="(--- Select ---)"
+							                   data-value-primitive="true"
+							                   data-text-field="name"
+							                   data-value-field="id"
+							                   data-bind="value: obj.country_id,
+							                              source: countryDS" style="width: 100%;" />
+										</td>								
+										<td></td>
+										<td>
+											<textarea 
+												cols="0" 
+												rows="2" 
+												class="k-textbox" 
+												style="width:100%; resize: none;" 
+												data-bind="value: obj.memo2" 
+												placeholder="Remarks/comments...">
+											</textarea>
+										</td>
+									</tr>
+									<tr>
+										<td>2.3</td>
+										<td colspan="6">
+											System, Documents, and Transactions Management
+										</td>
+									</tr>
+									<tr>
+										<td>2.3.1</td>
+										<td>
+											Controls are in place for accurate cost allocations to the various funding sources in accordance with established agreements.
+										</td>
+										<td></td>
+										<td>
+											<input data-role="dropdownlist"
+					              			   data-option-label="(--- Select ---)"
+							                   data-value-primitive="true"
+							                   data-text-field="name"
+							                   data-value-field="id"
+							                   data-bind="value: obj.country_id,
+							                              source: countryDS" style="width: 100%;" />
+										</td>
+										<td>
+											<input data-role="dropdownlist"
+					              			   data-option-label="(--- Select ---)"
+							                   data-value-primitive="true"
+							                   data-text-field="name"
+							                   data-value-field="id"
+							                   data-bind="value: obj.country_id,
+							                              source: countryDS" style="width: 100%;" />
+										</td>								
+										<td></td>
+										<td>
+											<textarea 
+												cols="0" 
+												rows="2" 
+												class="k-textbox" 
+												style="width:100%; resize: none;" 
+												data-bind="value: obj.memo2" 
+												placeholder="Remarks/comments...">
+											</textarea>
+										</td>
+									</tr>
+									<tr>
+										<td>2.3.2</td>
+										<td>
+											Date, description, and amount of each transaction are recorded accurately and promptly into accounting system.
+										</td>
+										<td></td>
+										<td>
+											<input data-role="dropdownlist"
+					              			   data-option-label="(--- Select ---)"
+							                   data-value-primitive="true"
+							                   data-text-field="name"
+							                   data-value-field="id"
+							                   data-bind="value: obj.country_id,
+							                              source: countryDS" style="width: 100%;" />
+										</td>
+										<td>
+											<input data-role="dropdownlist"
+					              			   data-option-label="(--- Select ---)"
+							                   data-value-primitive="true"
+							                   data-text-field="name"
+							                   data-value-field="id"
+							                   data-bind="value: obj.country_id,
+							                              source: countryDS" style="width: 100%;" />
+										</td>								
+										<td></td>
+										<td>
+											<textarea 
+												cols="0" 
+												rows="2" 
+												class="k-textbox" 
+												style="width:100%; resize: none;" 
+												data-bind="value: obj.memo2" 
+												placeholder="Remarks/comments...">
+											</textarea>
+										</td>
+									</tr>
+									<tr>
+										<td>2.3.3</td>
+										<td>
+											Financial records for all donors and Partner’s own mean are maintained in the same system
+										</td>
+										<td></td>
+										<td>
+											<input data-role="dropdownlist"
+					              			   data-option-label="(--- Select ---)"
+							                   data-value-primitive="true"
+							                   data-text-field="name"
+							                   data-value-field="id"
+							                   data-bind="value: obj.country_id,
+							                              source: countryDS" style="width: 100%;" />
+										</td>
+										<td>
+											<input data-role="dropdownlist"
+					              			   data-option-label="(--- Select ---)"
+							                   data-value-primitive="true"
+							                   data-text-field="name"
+							                   data-value-field="id"
+							                   data-bind="value: obj.country_id,
+							                              source: countryDS" style="width: 100%;" />
+										</td>								
+										<td></td>
+										<td>
+											<textarea 
+												cols="0" 
+												rows="2" 
+												class="k-textbox" 
+												style="width:100%; resize: none;" 
+												data-bind="value: obj.memo2" 
+												placeholder="Remarks/comments...">
+											</textarea>
+										</td>
+									</tr>
+									<tr>
+										<td>2.3.4</td>
+										<td>
+											There is a clear description regarding the usage of each supporting document and required supporting documents for each financial transactions in the financial policies and procedures
+										</td>
+										<td>
+											Financial Policies and Procedures (Particularly Documentation Control)
+										</td>
+										<td>
+											<input data-role="dropdownlist"
+					              			   data-option-label="(--- Select ---)"
+							                   data-value-primitive="true"
+							                   data-text-field="name"
+							                   data-value-field="id"
+							                   data-bind="value: obj.country_id,
+							                              source: countryDS" style="width: 100%;" />
+										</td>
+										<td>
+											<input data-role="dropdownlist"
+					              			   data-option-label="(--- Select ---)"
+							                   data-value-primitive="true"
+							                   data-text-field="name"
+							                   data-value-field="id"
+							                   data-bind="value: obj.country_id,
+							                              source: countryDS" style="width: 100%;" />
+										</td>								
+										<td></td>
+										<td>
+											<textarea 
+												cols="0" 
+												rows="2" 
+												class="k-textbox" 
+												style="width:100%; resize: none;" 
+												data-bind="value: obj.memo2" 
+												placeholder="Remarks/comments...">
+											</textarea>
+										</td>
+									</tr>
+									<tr>
+										<td>2.3.5</td>
+										<td>
+											There are detail procedures for reviewing/ revising voucher, forms, and other supporting documents.
+										</td>
+										<td></td>
+										<td>
+											<input data-role="dropdownlist"
+					              			   data-option-label="(--- Select ---)"
+							                   data-value-primitive="true"
+							                   data-text-field="name"
+							                   data-value-field="id"
+							                   data-bind="value: obj.country_id,
+							                              source: countryDS" style="width: 100%;" />
+										</td>
+										<td>
+											<input data-role="dropdownlist"
+					              			   data-option-label="(--- Select ---)"
+							                   data-value-primitive="true"
+							                   data-text-field="name"
+							                   data-value-field="id"
+							                   data-bind="value: obj.country_id,
+							                              source: countryDS" style="width: 100%;" />
+										</td>								
+										<td></td>
+										<td>
+											<textarea 
+												cols="0" 
+												rows="2" 
+												class="k-textbox" 
+												style="width:100%; resize: none;" 
+												data-bind="value: obj.memo2" 
+												placeholder="Remarks/comments...">
+											</textarea>
+										</td>
+									</tr>
+									<tr>
+										<td>2.3.6</td>
+										<td>
+											Partner has appropriate safeguards to ensure the confidentiality, integrity and availability of the data (for example: Different level of authority has been set for disclosure of financial reports or information).
+										</td>
+										<td></td>
+										<td>
+											<input data-role="dropdownlist"
+					              			   data-option-label="(--- Select ---)"
+							                   data-value-primitive="true"
+							                   data-text-field="name"
+							                   data-value-field="id"
+							                   data-bind="value: obj.country_id,
+							                              source: countryDS" style="width: 100%;" />
+										</td>
+										<td>
+											<input data-role="dropdownlist"
+					              			   data-option-label="(--- Select ---)"
+							                   data-value-primitive="true"
+							                   data-text-field="name"
+							                   data-value-field="id"
+							                   data-bind="value: obj.country_id,
+							                              source: countryDS" style="width: 100%;" />
+										</td>								
+										<td></td>
+										<td>
+											<textarea 
+												cols="0" 
+												rows="2" 
+												class="k-textbox" 
+												style="width:100%; resize: none;" 
+												data-bind="value: obj.memo2" 
+												placeholder="Remarks/comments...">
+											</textarea>
+										</td>
+									</tr>
+									<tr>
+										<td>2.3.7</td>
+										<td>
+											Partner has policies and procedures to restrict access to the computerized financial management system to appropriate personnel.
+										</td>
+										<td></td>
+										<td>
+											<input data-role="dropdownlist"
+					              			   data-option-label="(--- Select ---)"
+							                   data-value-primitive="true"
+							                   data-text-field="name"
+							                   data-value-field="id"
+							                   data-bind="value: obj.country_id,
+							                              source: countryDS" style="width: 100%;" />
+										</td>
+										<td>
+											<input data-role="dropdownlist"
+					              			   data-option-label="(--- Select ---)"
+							                   data-value-primitive="true"
+							                   data-text-field="name"
+							                   data-value-field="id"
+							                   data-bind="value: obj.country_id,
+							                              source: countryDS" style="width: 100%;" />
+										</td>								
+										<td></td>
+										<td>
+											<textarea 
+												cols="0" 
+												rows="2" 
+												class="k-textbox" 
+												style="width:100%; resize: none;" 
+												data-bind="value: obj.memo2" 
+												placeholder="Remarks/comments...">
+											</textarea>
+										</td>
+									</tr>
+									<tr>
+										<td>2.4</td>
+										<td colspan="6">
+											Financial Reports
+										</td>
+									</tr>
+									<tr>
+										<td></td>
+										<td colspan="6">
+											Financial Reports Processing
+										</td>
+									</tr>
+									<tr>
+										<td>2.4.1</td>
+										<td>
+											Accounting System provides the capability for reporting within the following parameter (but not limited to): Institutional Consolidation, Program Consolidation, Break down by project and/or location, Own mean contributions, and by account.
+										</td>
+										<td></td>
+										<td>
+											<input data-role="dropdownlist"
+					              			   data-option-label="(--- Select ---)"
+							                   data-value-primitive="true"
+							                   data-text-field="name"
+							                   data-value-field="id"
+							                   data-bind="value: obj.country_id,
+							                              source: countryDS" style="width: 100%;" />
+										</td>
+										<td>
+											<input data-role="dropdownlist"
+					              			   data-option-label="(--- Select ---)"
+							                   data-value-primitive="true"
+							                   data-text-field="name"
+							                   data-value-field="id"
+							                   data-bind="value: obj.country_id,
+							                              source: countryDS" style="width: 100%;" />
+										</td>								
+										<td></td>
+										<td>
+											<textarea 
+												cols="0" 
+												rows="2" 
+												class="k-textbox" 
+												style="width:100%; resize: none;" 
+												data-bind="value: obj.memo2" 
+												placeholder="Remarks/comments...">
+											</textarea>
+										</td>
+									</tr>
+									<tr>
+										<td>2.4.2</td>
+										<td>
+											The reporting system have the capacity to link the financial information with the work plan’s physical progress. If separate systems are used to gather and compile physical data, what controls are in place to reduce the risk that the physical data may not synchronize with the financial data?
+										</td>
+										<td></td>
+										<td>
+											<input data-role="dropdownlist"
+					              			   data-option-label="(--- Select ---)"
+							                   data-value-primitive="true"
+							                   data-text-field="name"
+							                   data-value-field="id"
+							                   data-bind="value: obj.country_id,
+							                              source: countryDS" style="width: 100%;" />
+										</td>
+										<td>
+											<input data-role="dropdownlist"
+					              			   data-option-label="(--- Select ---)"
+							                   data-value-primitive="true"
+							                   data-text-field="name"
+							                   data-value-field="id"
+							                   data-bind="value: obj.country_id,
+							                              source: countryDS" style="width: 100%;" />
+										</td>								
+										<td></td>
+										<td>
+											<textarea 
+												cols="0" 
+												rows="2" 
+												class="k-textbox" 
+												style="width:100%; resize: none;" 
+												data-bind="value: obj.memo2" 
+												placeholder="Remarks/comments...">
+											</textarea>
+										</td>
+									</tr>
+									<tr>
+										<td>2.4.3</td>
+										<td>
+											"Accounting System provides the capability for reporting according to various donors’ restricted reporting formats."
+										</td>
+										<td></td>
+										<td>
+											<input data-role="dropdownlist"
+					              			   data-option-label="(--- Select ---)"
+							                   data-value-primitive="true"
+							                   data-text-field="name"
+							                   data-value-field="id"
+							                   data-bind="value: obj.country_id,
+							                              source: countryDS" style="width: 100%;" />
+										</td>
+										<td>
+											<input data-role="dropdownlist"
+					              			   data-option-label="(--- Select ---)"
+							                   data-value-primitive="true"
+							                   data-text-field="name"
+							                   data-value-field="id"
+							                   data-bind="value: obj.country_id,
+							                              source: countryDS" style="width: 100%;" />
+										</td>								
+										<td></td>
+										<td>
+											<textarea 
+												cols="0" 
+												rows="2" 
+												class="k-textbox" 
+												style="width:100%; resize: none;" 
+												data-bind="value: obj.memo2" 
+												placeholder="Remarks/comments...">
+											</textarea>
+										</td>
+									</tr>
+									<tr>
+										<td>2.4.4</td>
+										<td>
+											Accounting System has the capability to track and generate report on the use of fund against the budget by period and cumulatively.
+										</td>
+										<td></td>
+										<td>
+											<input data-role="dropdownlist"
+					              			   data-option-label="(--- Select ---)"
+							                   data-value-primitive="true"
+							                   data-text-field="name"
+							                   data-value-field="id"
+							                   data-bind="value: obj.country_id,
+							                              source: countryDS" style="width: 100%;" />
+										</td>
+										<td>
+											<input data-role="dropdownlist"
+					              			   data-option-label="(--- Select ---)"
+							                   data-value-primitive="true"
+							                   data-text-field="name"
+							                   data-value-field="id"
+							                   data-bind="value: obj.country_id,
+							                              source: countryDS" style="width: 100%;" />
+										</td>								
+										<td></td>
+										<td>
+											<textarea 
+												cols="0" 
+												rows="2" 
+												class="k-textbox" 
+												style="width:100%; resize: none;" 
+												data-bind="value: obj.memo2" 
+												placeholder="Remarks/comments...">
+											</textarea>
+										</td>
+									</tr>
+									<tr>
+										<td></td>
+										<td colspan="6">
+											Quality and Frequency of financial reports
+										</td>
+									</tr>
+									<tr>
+										<td>2.4.5</td>
+										<td>
+											The Financial Reports are prepared in a timely fashion and in the frequency as stipulated in the financial policies and procedures that are useful to management for decision – making.
+										</td>
+										<td></td>
+										<td>
+											<input data-role="dropdownlist"
+					              			   data-option-label="(--- Select ---)"
+							                   data-value-primitive="true"
+							                   data-text-field="name"
+							                   data-value-field="id"
+							                   data-bind="value: obj.country_id,
+							                              source: countryDS" style="width: 100%;" />
+										</td>
+										<td>
+											<input data-role="dropdownlist"
+					              			   data-option-label="(--- Select ---)"
+							                   data-value-primitive="true"
+							                   data-text-field="name"
+							                   data-value-field="id"
+							                   data-bind="value: obj.country_id,
+							                              source: countryDS" style="width: 100%;" />
+										</td>								
+										<td></td>
+										<td>
+											<textarea 
+												cols="0" 
+												rows="2" 
+												class="k-textbox" 
+												style="width:100%; resize: none;" 
+												data-bind="value: obj.memo2" 
+												placeholder="Remarks/comments...">
+											</textarea>
+										</td>
+									</tr>
+									<tr>
+										<td>2.4.5</td>
+										<td>
+											The Financial Reports are prepared in a timely fashion and in the frequency as stipulated in the financial policies and procedures that are useful to management for decision – making.
+										</td>
+										<td>
+											"Selected signed financial reports"
+										</td>
+										<td>
+											<input data-role="dropdownlist"
+					              			   data-option-label="(--- Select ---)"
+							                   data-value-primitive="true"
+							                   data-text-field="name"
+							                   data-value-field="id"
+							                   data-bind="value: obj.country_id,
+							                              source: countryDS" style="width: 100%;" />
+										</td>
+										<td>
+											<input data-role="dropdownlist"
+					              			   data-option-label="(--- Select ---)"
+							                   data-value-primitive="true"
+							                   data-text-field="name"
+							                   data-value-field="id"
+							                   data-bind="value: obj.country_id,
+							                              source: countryDS" style="width: 100%;" />
+										</td>								
+										<td></td>
+										<td>
+											<textarea 
+												cols="0" 
+												rows="2" 
+												class="k-textbox" 
+												style="width:100%; resize: none;" 
+												data-bind="value: obj.memo2" 
+												placeholder="Remarks/comments...">
+											</textarea>
+										</td>
+									</tr>
+									<tr>
+										<td>2.4.6</td>
+										<td>
+											Partner has established financial management reporting responsibilities that specify what reports are to be prepared, what they are to contain and how they are to be used.
+										</td>
+										<td>
+											Financial Policies and Procedures
+										</td>
+										<td>
+											<input data-role="dropdownlist"
+					              			   data-option-label="(--- Select ---)"
+							                   data-value-primitive="true"
+							                   data-text-field="name"
+							                   data-value-field="id"
+							                   data-bind="value: obj.country_id,
+							                              source: countryDS" style="width: 100%;" />
+										</td>
+										<td>
+											<input data-role="dropdownlist"
+					              			   data-option-label="(--- Select ---)"
+							                   data-value-primitive="true"
+							                   data-text-field="name"
+							                   data-value-field="id"
+							                   data-bind="value: obj.country_id,
+							                              source: countryDS" style="width: 100%;" />
+										</td>								
+										<td></td>
+										<td>
+											<textarea 
+												cols="0" 
+												rows="2" 
+												class="k-textbox" 
+												style="width:100%; resize: none;" 
+												data-bind="value: obj.memo2" 
+												placeholder="Remarks/comments...">
+											</textarea>
+										</td>
+									</tr>
+									<tr>
+										<td></td>
+										<td colspan="6">
+											Internal Management Reports
+										</td>
+									</tr>
+									<tr>
+										<td>2.4.7</td>
+										<td>
+											Management review the financial statement before submission to the internal or external users.
+										</td>
+										<td></td>
+										<td>
+											<input data-role="dropdownlist"
+					              			   data-option-label="(--- Select ---)"
+							                   data-value-primitive="true"
+							                   data-text-field="name"
+							                   data-value-field="id"
+							                   data-bind="value: obj.country_id,
+							                              source: countryDS" style="width: 100%;" />
+										</td>
+										<td>
+											<input data-role="dropdownlist"
+					              			   data-option-label="(--- Select ---)"
+							                   data-value-primitive="true"
+							                   data-text-field="name"
+							                   data-value-field="id"
+							                   data-bind="value: obj.country_id,
+							                              source: countryDS" style="width: 100%;" />
+										</td>								
+										<td></td>
+										<td>
+											<textarea 
+												cols="0" 
+												rows="2" 
+												class="k-textbox" 
+												style="width:100%; resize: none;" 
+												data-bind="value: obj.memo2" 
+												placeholder="Remarks/comments...">
+											</textarea>
+										</td>
+									</tr>
+									<tr>
+										<td>2.4.8</td>
+										<td>
+											Management review the findings and recommendations of donors reviews or external auditor and take action accordingly
+										</td>
+										<td></td>
+										<td>
+											<input data-role="dropdownlist"
+					              			   data-option-label="(--- Select ---)"
+							                   data-value-primitive="true"
+							                   data-text-field="name"
+							                   data-value-field="id"
+							                   data-bind="value: obj.country_id,
+							                              source: countryDS" style="width: 100%;" />
+										</td>
+										<td>
+											<input data-role="dropdownlist"
+					              			   data-option-label="(--- Select ---)"
+							                   data-value-primitive="true"
+							                   data-text-field="name"
+							                   data-value-field="id"
+							                   data-bind="value: obj.country_id,
+							                              source: countryDS" style="width: 100%;" />
+										</td>								
+										<td></td>
+										<td>
+											<textarea 
+												cols="0" 
+												rows="2" 
+												class="k-textbox" 
+												style="width:100%; resize: none;" 
+												data-bind="value: obj.memo2" 
+												placeholder="Remarks/comments...">
+											</textarea>
+										</td>
+									</tr>
+								</tbody>						
+							</table>
+					</div>
+					<br>
+					<!-- Bottom Part -->
+					<div class="box-generic bg-action-button">
+						<div id="ntf1" data-role="notification" style="display: none;"></div>
+
+						<!-- Delete Confirmation -->
+						
+			            <!-- // Delete Confirmation -->
+
+						<div class="row">
+							<div class="span12" align="right">
+								<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save_new">Save New</span></span>
+								<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save_close">Save Close </span></span>
+								<span id="savePrint" class="btn btn-icon btn-default glyphicons print" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save_print">Save Print</span></span>
+								<span class="btn btn-icon btn-warning glyphicons remove_2" onclick="javascript:window.history.back()" data-bind="click: cancel" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.cancel">Cancel </span></span>
+								<span class="btn btn-danger btn-icon glyphicons bin" data-bind="click: openConfirm, visible: isEdit" style="width: 80px; display: none;"><i></i> <span data-bind="text: lang.lang.delete">Delete</span></span>
 							</div>
 						</div>
 					</div>
@@ -704,8 +1635,10 @@
 		<div class="customer-background">
 			<div class="container-960">
 				<div id="example" class="k-content">				    
-			    	<span class="glyphicons no-js remove_2 pull-right"
+			    	<div class="hidden-print pull-right">
+			    		<span class="glyphicons no-js remove_2" onclick="javascript:window.history.back()"
 							data-bind="click: cancel"><i></i></span>
+					</div>
 
 					<!-- Title -->
 					<h2>BUDGET FORMULATION, MANAGEMENT& MONITORING</h2>
@@ -891,10 +1824,10 @@
 						<div class="row">
 							<div class="span12" align="right">
 								<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save_new">Save New</span></span>
-								<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save_close">Save Close </span></span>																	
+								<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save_close">Save Close </span></span>
 								<span id="savePrint" class="btn btn-icon btn-default glyphicons print" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save_print">Save Print</span></span>
 								<span class="btn btn-icon btn-warning glyphicons remove_2" onclick="javascript:window.history.back()" data-bind="click: cancel" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.cancel">Cancel </span></span>
-								<span class="btn btn-danger btn-icon glyphicons bin" data-bind="click: openConfirm, visible: isEdit" style="width: 80px; display: none;"><i></i> <span data-bind="text: lang.lang.delete">Delete</span></span>					
+								<span class="btn btn-danger btn-icon glyphicons bin" data-bind="click: openConfirm, visible: isEdit" style="width: 80px; display: none;"><i></i> <span data-bind="text: lang.lang.delete">Delete</span></span>
 							</div>
 						</div>
 					</div>
@@ -909,8 +1842,10 @@
 		<div class="customer-background">
 			<div class="container-960">
 				<div id="example" class="k-content">				    
-			    	<span class="glyphicons no-js remove_2 pull-right"
+			    	<div class="hidden-print pull-right">
+			    		<span class="glyphicons no-js remove_2" onclick="javascript:window.history.back()"
 							data-bind="click: cancel"><i></i></span>
+					</div>
 
 					<!-- Title -->
 					<h2>GOVERNANCE, CONTROL & COMPLIANCE</h2>
@@ -1060,10 +1995,9 @@
 						<div class="row">
 							<div class="span12" align="right">
 								<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save_new">Save New</span></span>
-								<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save_close">Save Close </span></span>																	
-								<span id="savePrint" class="btn btn-icon btn-default glyphicons print" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save_print">Save Print</span></span>
+								<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save_close">Save Close </span></span>								<span id="savePrint" class="btn btn-icon btn-default glyphicons print" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save_print">Save Print</span></span>
 								<span class="btn btn-icon btn-warning glyphicons remove_2" onclick="javascript:window.history.back()" data-bind="click: cancel" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.cancel">Cancel </span></span>
-								<span class="btn btn-danger btn-icon glyphicons bin" data-bind="click: openConfirm, visible: isEdit" style="width: 80px; display: none;"><i></i> <span data-bind="text: lang.lang.delete">Delete</span></span>					
+								<span class="btn btn-danger btn-icon glyphicons bin" data-bind="click: openConfirm, visible: isEdit" style="width: 80px; display: none;"><i></i> <span data-bind="text: lang.lang.delete">Delete</span></span>
 							</div>
 						</div>
 					</div>
@@ -1078,8 +2012,10 @@
 		<div class="customer-background">
 			<div class="container-960">
 				<div id="example" class="k-content">				    
-			    	<span class="glyphicons no-js remove_2 pull-right"
+			    	<div class="hidden-print pull-right">
+			    		<span class="glyphicons no-js remove_2" onclick="javascript:window.history.back()"
 							data-bind="click: cancel"><i></i></span>
+					</div>
 
 					<!-- Title -->
 					<h2>FINANCIAL AUDIT</h2>
@@ -1343,10 +2279,10 @@
 						<div class="row">
 							<div class="span12" align="right">
 								<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save_new">Save New</span></span>
-								<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save_close">Save Close </span></span>																	
+								<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save_close">Save Close </span></span>
 								<span id="savePrint" class="btn btn-icon btn-default glyphicons print" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save_print">Save Print</span></span>
 								<span class="btn btn-icon btn-warning glyphicons remove_2" onclick="javascript:window.history.back()" data-bind="click: cancel" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.cancel">Cancel </span></span>
-								<span class="btn btn-danger btn-icon glyphicons bin" data-bind="click: openConfirm, visible: isEdit" style="width: 80px; display: none;"><i></i> <span data-bind="text: lang.lang.delete">Delete</span></span>					
+								<span class="btn btn-danger btn-icon glyphicons bin" data-bind="click: openConfirm, visible: isEdit" style="width: 80px; display: none;"><i></i> <span data-bind="text: lang.lang.delete">Delete</span></span>
 							</div>
 						</div>
 					</div>
@@ -1361,8 +2297,10 @@
 		<div class="customer-background">
 			<div class="container-960">
 				<div id="example" class="k-content">				    
-			    	<span class="glyphicons no-js remove_2 pull-right"
+			    	<div class="hidden-print pull-right">
+			    		<span class="glyphicons no-js remove_2" onclick="javascript:window.history.back()"
 							data-bind="click: cancel"><i></i></span>
+					</div>
 
 					<!-- Title -->
 					<h2>PROCUREMENT</h2>
@@ -1932,20 +2870,17 @@
 						<div class="row">
 							<div class="span12" align="right">
 								<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save_new">Save New</span></span>
-								<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save_close">Save Close </span></span>																	
-								<span id="savePrint" class="btn btn-icon btn-default glyphicons print" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save_print">Save Print</span></span>
+								<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save_close">Save Close </span></span>								<span id="savePrint" class="btn btn-icon btn-default glyphicons print" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save_print">Save Print</span></span>
 								<span class="btn btn-icon btn-warning glyphicons remove_2" onclick="javascript:window.history.back()" data-bind="click: cancel" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.cancel">Cancel </span></span>
-								<span class="btn btn-danger btn-icon glyphicons bin" data-bind="click: openConfirm, visible: isEdit" style="width: 80px; display: none;"><i></i> <span data-bind="text: lang.lang.delete">Delete</span></span>					
+								<span class="btn btn-danger btn-icon glyphicons bin" data-bind="click: openConfirm, visible: isEdit" style="width: 80px; display: none;"><i></i> <span data-bind="text: lang.lang.delete">Delete</span></span>
 							</div>
 						</div>
 					</div>
-
 				</div>
 			</div>
 		</div>
 	</div>
 </script>
-
 
 
 
@@ -4406,6 +5341,7 @@
 
 		//
 		finance: new kendo.Layout("#finance", {model: banhji.finance}),
+		accounting: new kendo.Layout("#accounting", {model: banhji.accounting}),
 		budget: new kendo.Layout("#budget", {model: banhji.budget}),
 		controls: new kendo.Layout("#controls", {model: banhji.controls}),
 		audit: new kendo.Layout("#audit", {model: banhji.audit}),
@@ -4500,6 +5436,23 @@
 			//vm.pageLoad();
 		}
 	});
+	banhji.router.route("/accounting", function(){
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{
+			banhji.view.layout.showIn("#content", banhji.view.accounting);
+			
+			var vm = banhji.accounting;
+			banhji.userManagement.addMultiTask("Accounting","accounting",null);
+
+			if(banhji.pageLoaded["accounting"]==undefined){
+				banhji.pageLoaded["accounting"] = true;
+
+				//vm.sorterChanges();
+			}
+			//vm.pageLoad();
+		}
+	});	
 	banhji.router.route("/budget", function(){
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');

@@ -161,7 +161,7 @@ class Transactions extends REST_Controller {
 				   	"print_count" 				=> $value->print_count,
 				   	"printed_by" 				=> $value->printed_by,
 				   	"deleted" 					=> $value->deleted,
-
+				   	"meter_id"					=> $value->meter_id,
 				   	"amount_paid"				=> $amount_paid
 				);
 			}
@@ -257,6 +257,7 @@ class Transactions extends REST_Controller {
 		   	isset($value->print_count) 				? $obj->print_count 				= $value->print_count : "";
 		   	isset($value->printed_by) 				? $obj->printed_by 					= $value->printed_by : "";
 		   	isset($value->deleted) 					? $obj->deleted 					= $value->deleted : "";
+		   	isset($value->meter_id) 					? $obj->meter_id 					= $value->meter_id : 0;
 		   	
 	   		if($obj->save()){
 			   	$data["results"][] = array(
@@ -321,7 +322,7 @@ class Transactions extends REST_Controller {
 				   	"print_count" 				=> $obj->print_count,
 				   	"printed_by" 				=> $obj->printed_by,
 				   	"deleted" 					=> $obj->deleted,
-
+				   	"meter_id"					=> $obj->meter_id,
 				   	"amount_paid"				=> 0
 			   	);
 		    }
@@ -401,7 +402,8 @@ class Transactions extends REST_Controller {
 		   	isset($value->print_count) 				? $obj->print_count 				= $value->print_count : "";
 		   	isset($value->printed_by) 				? $obj->printed_by 					= $value->printed_by : "";
 		   	isset($value->deleted) 					? $obj->deleted 					= $value->deleted : "";
-
+		   	isset($value->meter_id) 					? $obj->meter_id 					= $value->meter_id : 0;
+		   	
 			if($obj->save()){
 				//Results
 				$data["results"][] = array(
@@ -466,7 +468,7 @@ class Transactions extends REST_Controller {
 				   	"print_count" 				=> $obj->print_count,
 				   	"printed_by" 				=> $obj->printed_by,
 				   	"deleted" 					=> $obj->deleted,
-				   	
+				   	"meter_id"					=> $obj->meter_id,
 				   	"amount_paid"				=> 0
 				);
 			}

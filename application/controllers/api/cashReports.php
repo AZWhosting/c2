@@ -540,7 +540,7 @@ class Cashreports extends REST_Controller {
 							"number" 			=> $val->number,
 							"issued_date" 		=> $val->issued_date,
 							"rate" 				=> $val->rate,
-							"amount" 			=> floatval($val->amount) + floatval($val->discount)
+							"amount" 			=> floatval($val->amount) + floatval($val->discount) + floatval($val->received)
 						);
 					}
 				}

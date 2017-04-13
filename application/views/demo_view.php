@@ -79589,26 +79589,29 @@
 		currencyDS  		: new kendo.data.DataSource({
 		  	data: banhji.source.currencyList,
 		  	filter: { field:"status", value: 1 }
-		}),		
-		jobDS 				: new kendo.data.DataSource({
-		  	data: banhji.source.jobList,
-		  	sort: { field: "name", dir: "asc" }
 		}),
-		segmentItemDS 		: new kendo.data.DataSource({
-		  	data: banhji.source.segmentItemList,
-		  	sort: [
-			  	{ field: "segment_id", dir: "asc" },
-			  	{ field: "code", dir: "asc" }
-			]
-		}),		
-		accountDS 			: new kendo.data.DataSource({
-		  	data: banhji.source.accountList,
-		  	filter:{ field:"status", value: 1 },
-		  	sort: [
-			  	{ field: "account_type_id", dir: "asc" },
-			  	{ field: "number", dir: "asc" }
-			]
-		}),
+		jobDS 				: banhji.source.jobList,
+		segmentItemDS 		: banhji.source.segmentItemList,
+		accountDS 			: banhji.source.accountList,		
+		// jobDS 				: new kendo.data.DataSource({
+		//   	data: banhji.source.jobList,
+		//   	sort: { field: "name", dir: "asc" }
+		// }),
+		// segmentItemDS 		: new kendo.data.DataSource({
+		//   	data: banhji.source.segmentItemList,
+		//   	sort: [
+		// 	  	{ field: "segment_id", dir: "asc" },
+		// 	  	{ field: "code", dir: "asc" }
+		// 	]
+		// }),		
+		// accountDS 			: new kendo.data.DataSource({
+		//   	data: banhji.source.accountList,
+		//   	filter:{ field:"status", value: 1 },
+		//   	sort: [
+		// 	  	{ field: "account_type_id", dir: "asc" },
+		// 	  	{ field: "number", dir: "asc" }
+		// 	]
+		// }),
 		txnTemplateDS 		: new kendo.data.DataSource({
 		  	data: banhji.source.txnTemplateList,
 		  	filter:{

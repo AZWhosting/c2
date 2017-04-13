@@ -49,10 +49,7 @@ class Winvoices extends REST_Controller {
 				$contact = $meter->contact->get();
 
 				$plan  = $meter->plan->get();
-				$reactive = new Meter_record(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				$reactive->where("meter_id", $meter->reactive_id);
-				$reactive->where('invoiced <>', 1);
-				$reactive->get();
+				
 				if(isset($tmp["$meter->number"])){
 					$tmp["$meter->number"]['items'][] = array(
 					'type' => 'usage',
@@ -65,13 +62,7 @@ class Winvoices extends REST_Controller {
 							'current'=> intval($row->current),
 							'usage' => intval($row->usage),
 							'unit' => 'm3',
-							'amount'=> 0,
-							'reactive' => array(
-										"usage" => $reactive->usage, 
-										"previous" => $reactive->previous,
-										"current" => $reactive->current,
-										"number" => intval($reactive->meter_number)
-							)
+							'amount'=> 0
 						));
 				} else {
 					$tmp["$meter->number"]['type'] = 'Utility_invoice';
@@ -100,12 +91,6 @@ class Winvoices extends REST_Controller {
 						'current'=> intval($row->current),
 						'usage_real' => intval($row->usage),
 						'usage' => floatval($row->usage * $meter->multiplier),
-						'reactive' => array(
-							"usage" => intval($reactive->usage), 
-							"previous" => intval($reactive->previous),
-							"current" => intval($reactive->current),
-							"number" => intval($reactive->meter_number)
-						),
 						'amount'=> 0
 					));
 					// plan items
@@ -174,12 +159,34 @@ class Winvoices extends REST_Controller {
 						));
 				}
 			}
+			if($meter->reactive_id != 0){
+				$reactive = new Meter_record(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$reactive->where("meter_id", $meter->reactive_id);
+				$reactive->where('invoiced <>', 1);
+				$reactive->order_by("id", "desc");
+				$reactive->limit(1)->get();
+				if($reactive->exists()){
+					$tmp["$meter->number"]['reactive'] = array(
+						'type' => 'reactive',
+						'id'   => $reactive->id,
+						'name' => 'reactive',
+						'from' => $reactive->from_date,
+						'to'   => $reactive->to_date,
+						'prev'=> intval($reactive->previous),
+						'current'=> intval($reactive->current),
+						'usage' => intval($reactive->usage),
+						'meter_number' => $meter->number."(Reactive)",
+						'amount'=> 0
+					);
+				}
+			}
 		}
 
 		foreach($tmp as $t) {
 			$exemption = isset($t['exemption']) ? $t['exemption'] : [];
 			$maintenance = isset($t['maintenance']) ? $t['maintenance'] : [];
 			$installment = isset($t['installment']) ? $t['installment'] : [];
+			$reactive = isset($t['reactive']) ? $t['reactive'] : 0;
 			$data[] = array(
 				'type' => $t['type'],
 				'invoiced'=> FALSE,
@@ -187,6 +194,7 @@ class Winvoices extends REST_Controller {
 				'meter'=> $t['meter'],
 				'installment' => $installment,
 				'exemption'=> $exemption,
+				'reactive'=> $reactive,
 				'maintenance' => $maintenance,
 				'tariff' => $t['tariff'],
 				'items'=> $t['items']
@@ -242,6 +250,7 @@ class Winvoices extends REST_Controller {
 		   	$obj->check_no 			= isset($value->check_no) ? $value->check_no : "";
 		   	$obj->memo 				= isset($value->memo) ? $value->memo: "";
 		   	$obj->memo2 			= isset($value->memo2) ? $value->memo2: "";
+		   	$obj->meter_id 			= isset($value->meter_id) ? $value->meter_id: "";
 		   	$obj->status 			= isset($value->status) ? $value->status: "";
 
 		   	
@@ -428,7 +437,7 @@ class Winvoices extends REST_Controller {
 			$meter = null;
 			$invoiceLine = new winvoice_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$invoiceLine->include_related('meter_record/meter', array("id", "number"));
-			// $invoiceLine->include_related('meter_record/meter/location', "name, abbr");
+
 			$location = $row->location->get_raw();
 			$invoiceLine->where('transaction_id', $row->id);
 			$invoiceLine->limit(1)->get();
@@ -445,15 +454,12 @@ class Winvoices extends REST_Controller {
 
 			$items  = $row->winvoice_line->get();
 			$lines  = array();
-			//$m = $contact->meter->get();
 			
 			
-			$usage = 0;	
-			
-			
+			$usage = 0;
 			$remain = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			//$remain->where_related("contact/meter", "id", $meter->meter_id);
-			$remain->where("contact_id", $contact->id);
+			$remain->where("meter_id", $row->meter_id);
 			$remain->where("type", "Utility_Invoice");
 			$remain->where("id <>", $row->id);
 			$remain->where("deleted <>", 1);
@@ -462,7 +468,6 @@ class Winvoices extends REST_Controller {
 			foreach($remain as $rem) {
 				if($rem->status == 2) {
 					$Rremain = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-					//echo $row->id."____";
 					$Rremain->where("type", "Cash_Receipt");
 					$Rremain->where("reference_id", $rem->id);
 					$Rremain->where("deleted <>", 1);
@@ -475,7 +480,6 @@ class Winvoices extends REST_Controller {
 					$amountOwed += $rem->amount;
 				}
 			}
-			$amountOwed = 0;
 			foreach($items as $item) {
 				
 				if($item->type == 'usage') {
@@ -561,10 +565,6 @@ class Winvoices extends REST_Controller {
 			);
 
 		}
-		// $results['results'] = $data;
-		// $results['count'] = count($data);
-		//$this->response($results, 200);
-		// $this->response(array('results' => $data, 'count' => 1), 200);
 		$this->response(array('results'=> $data, 'count'=> count($data)), 200);
 	}
 

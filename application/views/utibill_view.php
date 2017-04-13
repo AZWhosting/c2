@@ -2641,9 +2641,7 @@
 		</td>
 		<td>#=kendo.toString(schedule[i].amount, "c2", banhji.locale)#</td>
 		<td>
-			#if(schedule[i].invoiced=="1"){#			
-				Paid
-			#}#
+			# schedule[i].invoiced=="0" ? 'Paid': 'Open'# 
 		</td>
 	</tr>
 	#}#
@@ -15670,7 +15668,7 @@
 	    	var mSold = 0, aSold = 0, self = this,aSoldL = 0, TariffDS = [];
 	    	this.set('totalOfInv', banhji.runBill.invoiceArray.length);
 	    	$.each(banhji.runBill.invoiceArray, function(i, v){
-	    		var date = new Date(), aTariff = 0, exT = '', exA, exU, rUsage = 0, tUsage = 0 ;
+	    		var date = new Date(), aTariff = 0, exT = '', exA, exU, rUsage = 0, tUsage = 0, isFlate = 0 ;
 				var rate = banhji.source.getRate(banhji.locale, date);
 				var locale = banhji.locale;
 				var record_id = v.items[0].line.id;
@@ -15699,6 +15697,7 @@
 	    			if(kendo.parseInt(tUsage) >= kendo.parseInt(v.line.usage)){
 	    				that.tariffTemp = v;		    			
 	    				aTariff = v.line.amount;
+	    				isFlate = v.is_flat;
 	    			}
 	    		});
 	    		if(that.tariffTemp){
@@ -15749,7 +15748,6 @@
 		    	//Calculate Other Charge
 	    		if(v.maintenance.length > 0){
 	    			$.each(v.maintenance, function(i, v){
-
 		    			invoiceItems.push({				
 							"item_id" 			: v.line.id,
 					   		"invoice_id"		: 0,
@@ -15780,11 +15778,12 @@
 				   		"type" 				: 'exemption'
 					});
 		    	}
+
 		    	var ReactivePrice = 0, AmountUsage = 0, AmountReactive = 0;
 		    	//Calculate Reactive
-		    	if(v.items[0].line.reactive.usage > 0){
+		    	if(v.reactive != 0){
 		    		AmountUsage = v.items[0].line.usage;
-		    		AmountReactive = v.items[0].line.reactive.usage;
+		    		AmountReactive = v.reactive.usage;
 		    		var PAmount = (AmountReactive * 100) / AmountUsage;
 		    		if(PAmount >= 48.4){
 		    			ReactivePrice = (AmountReactive * 100) * 0.25;
@@ -15792,10 +15791,10 @@
 		    	}
 		    	if(ReactivePrice > 0){
 		    		invoiceItems.push({				
-						"item_id" 			: v.meter.id,
+						"item_id" 			: v.reactive.id,
 				   		"invoice_id"		: 0,
 					   	"meter_record_id"	: record_id,
-					   	"description" 		: v.items[0].line.reactive.number,
+					   	"description" 		: v.reactive.meter_number,
 					   	"quantity" 			: AmountReactive,
 					   	"price"				: 0,
 					   	"amount" 			: ReactivePrice,
@@ -15823,6 +15822,12 @@
 	    			tUsage = exU;
 	    			exT = 'm3';
 	    		}
+	    		//Calculate Flat
+	    		if(isFlate == 1){
+	    			if(tUsage < 1){
+	    				tUsage = 1;
+	    			}
+	    		}
 				//Total after Tariff
 				var Total = 0;
 				if(exT == '%'){
@@ -15847,16 +15852,16 @@
 				Total = Total + ReactivePrice;
 				//Meter Location
 				var MeterLocation = v.meter.location_id;
-				
+				var MeterID = v.meter.id;
 	    		aSold += Total;
 	    		aSoldL = kendo.toString(aSold, "c", v.contact.locale);
 				//set INV
-	    		self.calInvoice(Total, v.contact, invoiceItems, MeterLocation);
+	    		self.calInvoice(Total, v.contact, invoiceItems, MeterLocation, MeterID);
 	    	});
 	    	this.set("amountSold", aSoldL);
 	    	this.set("meterSold", mSold);
 	    },
-	    calInvoice 			: function(Total, Contact, invoiceItems, MeterLocation){
+	    calInvoice 			: function(Total, Contact, invoiceItems, MeterLocation, MeterID){
 	    	var self =this;
 			var date = new Date();
 			var rate = banhji.source.getRate(banhji.locale, date);
@@ -15877,7 +15882,8 @@
 				issued_date 		: IssueDate,
 				bill_date 			: BillingDate,
 				due_date 			: DueDate,
-				description 		: "Utility Invoice",
+				meter_id 			: MeterID,
+
 				invoice_lines    	: invoiceItems
 			});
 	    },

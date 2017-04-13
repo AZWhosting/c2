@@ -1393,12 +1393,46 @@ var	en_US = {
 	"add_property": "Add Property",
 
 
-
-
-
-
-
-
+	//Sign Up page
+	"is_online": "is online accounting software for SMEs",
+	"personal_information": "PERSONAL INFORMATION",
+	"we_will_use": "We will use this information to communicate with you. We never share your number with third parties without your consent.",
+	"the_minimum_requirements": "The minimum requirements for password are: at least 8 characters, letter, and numbers.",
+	"select_the_main_currency": "Select the main Currency",
+	"select_business_type": "Select Business Type",
+	"select_country": "Select Country",
+	"please_select_the_industry": "Please select the industry that your business is in:",
+	"wholesale_retail_trading": "Wholesale & Retail Trading",
+	"accomm_food": "Accomm. & Food",
+	"professional_service": "Professional Service",
+	"manufacturing": "Manufacturing",
+	"ngos": "NGOs",
+	"agriculture": "Agriculture",
+	"electricity": "Electricity",
+	"swater": "Water",
+	"transportation": "Transportation",
+	"education": "Education",
+	"construction": "Construction",
+	"information_communication": "Information & Communication",
+	"financial_institutions": "Financial Institutions",
+	"real_estate_activities": "Real Estate Activities",
+	"others": "Others",
+	"your_email": "Your Email",
+	"your_telephone": "Your Telephone",
+	"spassword": "Password",
+	"confirm_password": "Confirm Password",
+	"company_name": "Company Name",
+	"by_clicking_on": "By clicking on “signup”, you agree to the Terms of Service and Privacy Policy.",
+	"signup_for_free": "SIGNUP FOR FREE",
+	"signing_up": "Signing up",
+	"please_fill_company_name": "Please fill company name!",
+	"partnerships": "Partnerships",
+	"sole_proprietorships": "Sole Proprietorships",
+	"limited_liability_company": "Limited liability Company",
+	"private_limited_company": "Private Limited Company",
+	"public_limited_company": "Public limited Company",
+	"ngos_associations": "NGOs & Associations",
+	"public_enterprise": "Public Enterprise",
 
 
 

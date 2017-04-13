@@ -614,7 +614,7 @@ class Imports extends REST_Controller {
 
 			$currency = new Currency(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			if(isset($value->currency)) {
-				$currency->where('code', $value->currency)->get();
+				$currency->where('code', strtolower($value->currency))->get();
 			}			
 
 
