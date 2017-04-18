@@ -730,8 +730,9 @@ class Banhji extends REST_Controller {
 				$country->select('code');
 				$country->where('id', $inst->country_id)->get();
 				
-				$timezone = new Timezone();
-				$timezone->where('country_code', $country->code)->get();
+				$tz = new Timezone();
+				$tz->where('country_code', strtoupper($country->code));
+				$tz->get();
 				
 				$now = new DateTime();
 				$db_name = 'db_'. $now->getTimestamp();
@@ -740,7 +741,7 @@ class Banhji extends REST_Controller {
 				$conn->server_name  = 'banhji-acct.cwxbgxgq7thx.ap-southeast-1.rds.amazonaws.com';
 				$conn->username 	= 'mightyadmin';
 				$conn->password 	= 'banhji2016';
-				$conn->time_zone 	= $timezone->timezonename;
+				$conn->time_zone 	= $tz->timezonename;
 				$conn->inst_database= strtolower($db_name);
 				if($conn->save()) {
 					// create database base on connection name

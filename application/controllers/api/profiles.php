@@ -422,7 +422,7 @@ class Profiles extends REST_Controller {
 				$inst->industry_id = $r->industry;
 				$inst->type_id = $r->type->id;
 				if($inst->save(array($user, $modules->all))) {
-					$user->save($modules->all, $fx->all);
+					$user->save(array($modules->all, $fx->all));
 					// fillin dafault data
 					$data[] = array(
 						'id' => $inst->id,
@@ -590,6 +590,24 @@ class Profiles extends REST_Controller {
             $hash = $this->{$field} = sha1($this->config->item('encryption_key').$field);
         }
         return $hash;
+    }
+
+    public function timezones_get($code = null) {
+    	$tz = new Timezone();
+    	$tz->where('country_code', strtoupper($code));
+    	$tz->get();
+    	$data = array();
+
+    	if($tz->exists()) {
+    		$data[] = array(
+    			'id' => $tz->id,
+    			'country_code' => $tz->country_code,
+    			'timezonename' => $tz->timezonename
+    		);
+    		$this->response($data, 200);
+    	} else {
+    		$this->response($data, 400);
+    	}
     }
 }
 /* End of file users.php */

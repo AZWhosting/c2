@@ -220,7 +220,7 @@
         <a class="rightfixed enquiries btn-rounded glyphicons no-js conversation" style="width: 144px;float:left;">
           Support
           <div class="enquiry-content">
-            <p style="font-size: 14px;">Call us at<br><span style="font-weight: bold;font-size: 16px">+855 10 413 777</span><br>Mon-Fri<br>09:00 - 18:00</p>
+            <p style="font-size: 14px;">Call us by<br><span style="font-weight: bold;font-size: 16px">+855 10 413 777</span><br>Mon-Fri<br>09:00 - 18:00</p>
             <div class="fb-messengermessageus" 
               messenger_app_id="1301847836514973" 
               page_id="862386433857166"

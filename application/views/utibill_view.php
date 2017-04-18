@@ -15677,13 +15677,13 @@
 	    		//Add to Itmes
 				$.each(v.items, function(index, value) {
 					invoiceItems.push({				
-						"item_id" 			: value.line.id,
+						"item_id" 			: v.meter.id,
 				   		"invoice_id"		: 0,
 					   	"meter_record_id"	: record_id,
 					   	"description" 		: value.line.name,					   	
 					   	"quantity" 			: value.type == 'usage' ? value.line.usage : 1,
 					   	"price"				: value.line.amount,	
-					   	"amount" 			: Total,
+					   	"amount" 			: 0,
 					   	"rate"				: rate,
 					   	"locale" 			: locale,
 					   	"has_vat" 			: false,
