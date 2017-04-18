@@ -536,7 +536,19 @@ class Winvoices extends REST_Controller {
 					);
 				}
 			}
-			
+			//Calucate minus month of 5months
+			$date = strtotime($row->month_of .' -5 months');
+			$d = date('Y-m-01', $date);
+			$monthGraph = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$monthGraph->where("month_of >=", $d);
+			$monthGraph->where("meter_id", $row->meter_id);
+			$monthGraph->where("deleted <>", 1);
+			$monthGraph->order_by('id', 'desc')->limit(5)->get();
+			$minusM = array();
+			foreach($monthGraph as $monthOF) {
+				array_push($minusM, $monthOF->amount);
+			}
+
 			$data[] = array(
 				'id' => $row->id,
 				'type' => $row->type,
@@ -550,6 +562,7 @@ class Winvoices extends REST_Controller {
 				'amount'  => floatval($row->amount),
 				'locale' => $row->locale,
 				'consumption' => $usage,
+				'minusMonth' => $minusM,
 				'contact' => array(
 					'id' => $contact->id,
 					'name' => $contact->name,
