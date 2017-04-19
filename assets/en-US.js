@@ -1433,6 +1433,9 @@ var	en_US = {
 	"public_limited_company": "Public limited Company",
 	"ngos_associations": "NGOs & Associations",
 	"public_enterprise": "Public Enterprise",
+	"phase": "Phase",
+	"voltage":"Voltage",
+	"ampere":"Ampere",
 
 
 

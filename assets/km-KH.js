@@ -219,7 +219,7 @@ var	km_KH = {
 	//Customer Modual,Goods Delivery Note "",
 	"memo" :  "កំណត់សម្គាល់",
 	"charge" :  "ចំណាយ",
-	"credit" :  "ជំពាក់",
+	"credit" :  "Credit",
 	"current" :  "របាយការណ៍",
 	//Customer Modual,Report "របាយការណ៍",
 	"sale_managment_reports" :  "របាយការណ៍​គ្រប់​គ្រង​ការ​លក់",
@@ -1407,6 +1407,9 @@ var	km_KH = {
 	"public_limited_company": "ក្រុមហ៊ុនមហាជនទទួលខុសត្រូវមានកំរិត",
 	"ngos_associations": "អង្គការនិងសមាគម",
 	"public_enterprise": "សហគ្រាសសធារណៈ",
+	"phase": "Phase",
+	"voltage":"Voltage",
+	"ampere":"Ampere",
 
 
 

@@ -14780,7 +14780,6 @@
 					self.set("obj", view[0]);
 				}else{
 					view[0].set("image_url", "https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/no_image.jpg");
-					
 				}
 				//Check Reactive
 				if(view[0].reactive_id){

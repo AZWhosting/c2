@@ -9,12 +9,12 @@
     <!-- Boostrap-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"> 
     <link href="https://fonts.googleapis.com/css?family=Roboto+Slab" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Battambang" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Kantumruy" rel="stylesheet">
 
     <style>
         html, body {
             background-color: #fff;
-            font-family: 'Roboto Slab', Battambang !important;
+            font-family: 'Roboto Slab', Kantumruy !important;
         }
         label {
             color: #000;
@@ -51,7 +51,7 @@
             color: #000000;
             float: left;
             text-align:  center;
-            font-family: 'Roboto Slab', Battambang !important;
+            font-family: 'Roboto Slab', Kantumruy !important;
         }
         .signup-form input{
           font-size: 15px;
@@ -69,7 +69,7 @@
             padding: 3px 3px 3px 10px;
             height: 40px;
             color: #000;
-            font-family: 'Roboto Slab', Battambang !important;
+            font-family: 'Roboto Slab', Kantumruy !important;
         }
         .signup-noted{
             color: #000;
@@ -355,8 +355,8 @@
                             </h3>
                         </div>
                         <div class="btn-switch">
-                            <ul class="topnav pull-right">
-                                <li role="presentation" class="dropdown">
+                            <ul class="topnav pull-right" style="margin-bottom: 0; margin-right: 16px;">
+                                <li role="presentation" class="dropdown" style="list-style: none;">
                                     <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Languages:<span class="caret"></span></a>
                                     <ul class="dropdown-menu">
                                         <li><a href="#" data-bind="click: lang.changeToKh">ភាសាខ្មែរ</a></li>

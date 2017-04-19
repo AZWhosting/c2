@@ -5,16 +5,20 @@ class Transaction extends DataMapper {
 	protected $updated_field = "updated_at";
 
 	public $has_one = array(
-		'branch' => array(
-            'class' => 'branch',
-            'other_field' => 'transaction'
-        ),
+		// 'branch' => array(
+  //           'class' => 'branch',
+  //           'other_field' => 'transaction'
+  //       ),
         'location' => array(
             'class' => 'location',
             'other_field' => 'transaction'
         ),
         'contact' => array(
-            'class' => 'customer',
+            'class' => 'contact',
+            'other_field' => 'transaction'
+        ),
+        'employee' => array(
+            'class' => 'contact',
             'other_field' => 'transaction'
         ),       
         'payment_term' => array(
@@ -47,10 +51,10 @@ class Transaction extends DataMapper {
             'class' => 'item_line',
             'other_field' => 'transaction'
         ),
-        'einvoice_line' => array(
-            'class' => 'einvoice_line',
-            'other_field' => 'transaction'
-        ),
+        // 'einvoice_line' => array(
+        //     'class' => 'einvoice_line',
+        //     'other_field' => 'transaction'
+        // ),
         'winvoice_line' => array(
             'class' => 'winvoice_line',
             'other_field' => 'transaction'
@@ -61,10 +65,6 @@ class Transaction extends DataMapper {
         ),
         'account_line' => array(
             'class' => 'account_line',
-            'other_field' => 'transaction'
-        ),
-        'employee' => array(
-            'class' => 'contact',
             'other_field' => 'transaction'
         )
 	);
