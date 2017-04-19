@@ -4921,7 +4921,7 @@
 		<div class="customer-background" style="overflow: hidden;margin-top: 15px;">
 			<div class="container-960">					
 				<div id="example" class="k-content">
-					<span id="savePrint" class="btn btn-icon btn-primary glyphicons print" data-bind="click: printGrid" style="width: 80px;margin-bottom:0;position: absolute;left:45%;"><i></i><span data-bind="text: lang.lang.save_pdf">Save PDF</span></span>
+					<!-- <span id="savePrint" class="btn btn-icon btn-primary glyphicons print" data-bind="click: printGrid" style="width: 80px;margin-bottom:0;position: absolute;left:45%;"><i></i><span data-bind="text: lang.lang.save_pdf">Save PDF</span></span> -->
 					<div class="hidden-print pull-right">
 			    		<span style="padding: 5px 0 11px 35px;" class="glyphicons no-js remove_2" 
 							data-bind="click: cancel"><i></i></span>	
@@ -5122,18 +5122,18 @@
 <script id="InvoiceFormTemplate2" type="text/x-kendo-template">
     <div class="row-fluid">
     	<div class="span7 inv1" style="width: 54%; padding-right: 15px; padding-left: 8px; ">
-    		<div class="head" style="width: 100%">
-	        	<div class="logo" style="width: 30%;">
-	            	<img class="logoP" style="position: absolute;left: 0;top: 20px;max-width: 100px;height: auto;max-height: 50px;" src="#: banhji.InvoicePrint.license.image_url#" alt="#: banhji.InvoicePrint.license.name#" title="#: banhji.InvoicePrint.license.name#" />
+    		<div class="head" style="width: 100%; padding-top: 0;">
+	        	<div class="logo" style="width: 40%;">
+	            	<img class="logoP" style=" left: 0;top: 20px;" src="#: banhji.InvoicePrint.license.image_url#" alt="#: banhji.InvoicePrint.license.name#" title="#: banhji.InvoicePrint.license.name#" />
 	            </div>
-	            <div class="cover-name-company" style="width: 65%; margin-left: 15px;">
+	            <div class="cover-name-company" style="width: 57%; margin-left: 15px;">
 	            	<h2 style="text-align: left;">#: banhji.InvoicePrint.license.name#</h2>
 	                <p style="font-size: 12px; color: \\#000;">#: banhji.InvoicePrint.license.adress#</p>
 	                <p style="font-size: 12px; color: \\#000;">#:typeof banhji.InvoicePrint.license.mobile != 'undefined' ? banhji.InvoicePrint.license.mobile: ''#</p>
 	            </div>
 	        </div>
     	</div>
-    	<div class="span5 " style="padding-left: 0; padding-right: 8px; width: 46%">
+    	<div class="span5 " style="padding-left: 0; padding-right: 8px;">
     		<div class="headertable-invoice">
 	    		<table style="">
 	    			<tr>
@@ -5141,7 +5141,6 @@
 	    				<td>
 	    					<input type="text" value="#: number#">
 	    				</td>
-
 	    			</tr>
 	    			<tr>
 	    				<td>ថ្ងៃចេញ INVOICE DATE</td>
@@ -5167,19 +5166,19 @@
     </div>
 
     <div class="row-fluid">
-    	<div class="span5">
+    	<div class="span5" style="float: left; width: 38%">
     	</div>
-    	<div class="span7">
+    	<div class="span7" style="margin-top: 15px;">
     		<div class="row">
-    			<div class="span5" style="padding-right: 0">
+    			<div class="span6" style="padding-right: 0">
     				<p style="list-style: 20px; margin-bottom: 0;">
     					<b>#: contact.name#</b><br>
     					#: contact.address#
     				</p>
 		    	</div>
-		    	<div class="span6" style="padding-left: 0; margin-left: 15px;">
-		    		<span id="secondwnumber#= id#"" style="width: 180px; height: auto; "></span>
-		    		<p style="margin-bottom: 0; margin-top: 5px; font-size: 12px; margin-left: 8px;">លេខកូដអតិថិជន #: contact.number#</p>
+		    	<div class="span6" style="padding-left: 0;margin-left: 15px;width: 42%;">
+		    		<span id="secondwnumber#= id#"" style="width: 180px; height: auto; float: right;"></span>
+		    		<p style="margin-bottom: 0; margin-top: 5px; font-size: 12px; margin-left: 8px; float: right;">លេខកូដអតិថិជន #: contact.number#</p>
 		    	</div>
     		</div>
     	</div>
@@ -5188,14 +5187,14 @@
     <div class="row-fluid">
     	<div class="span4" style="padding-left: 15px; padding-left: 8px;">
     		<p >ប្រវត្តិប្រើប្រាស់របស់អ្នកក្នុងឆ្នាំនេះ</p>
-    		<img style="width: 175px; height: auto;" src="<?php echo base_url();?>/assets/chart.png">
+    		<img style="width: 250px; height: auto;" src="<?php echo base_url();?>/assets/chart.png">
     	</div>
-    	<div class="span8" style="padding-left: 0;">
+    	<div class="span8" style="padding-left: 0; width: 65%;">
     		<img style="width: 58px; height: auto; float: left;" src="<?php echo base_url();?>/assets/icon-water.png">
-    		<p style="width: 140px; float: left; margin: 25px 0 0 8px; font-size: 20px; ">ប្រាក់ត្រូវបង់សរុប</p>
-    		<p style="padding: 5px 8px; background: \\#F1F1F1; border: 1px solid \\#000; width: 190px; float: left;font-size: 25px; color: \\#000;font-weight: 600; text-align: right; margin: 13px 0 10px 8px;">#= kendo.toString(amount, "c", locale)#</p>
-    		<p style="margin-left: 30px; float: left; margin-bottom: 0;">សូមអញ្ជើញមកបង់ប្រាក់ អោយបានមុនថ្ងៃផុតកំនត់ទី</p><br>
-    		<p style="margin-left: 40%; float: left; font-weight: 600;">#=kendo.toString(new Date(due_date), "dd-MMMM-yyyy", "km-KH")#</p>
+    		<p style="width: 273px; text-align: right; float: left; margin: 25px 0 0 8px; font-size: 20px; ">ប្រាក់ត្រូវបង់សរុប</p>
+    		<p style="padding: 5px 8px; background: \\#F1F1F1; border: 1px solid \\#000; width: 220px; float: right;font-size: 25px; color: \\#000;font-weight: 600; text-align: right; margin: 13px 0 10px 8px;">#= kendo.toString(amount, "c", locale)#</p>
+    		<p style="margin-left: 30px; float: right; margin-bottom: 0;">សូមអញ្ជើញមកបង់ប្រាក់ អោយបានមុនថ្ងៃផុតកំនត់ទី</p><br>
+    		<p style="margin-left: 40%; float: right; font-weight: 600;">#=kendo.toString(new Date(due_date), "dd-MMMM-yyyy", "km-KH")#</p>
 
     	</div>
     </div>
@@ -5296,7 +5295,7 @@
 				</tbody>
     			<tfoot>
     				<tr>
-    					<td colspan="2" rowspan="5"></td>
+    					<td colspan="1" rowspan="5"></td>
     					<td colspan="4">
     						ប្រាក់ត្រូវបង់សរុប ខែនេះ
     						<span style="font-size: 10px;">
@@ -5353,32 +5352,32 @@
 			<p style="font-size: 10px; float: left;">ហត្ថលេខា និងត្រា របស់បេឡាករ </p>
 			<p style="display: inline-block; text-align: center; margin-top: 40px; border-bottom: 1px solid \\#000; width: 75px;"></p>
 		</div>
-		<div class="row-fluid" style="width: 489px;float: left;clear: initial; margin-left: 15px;">
-			<div class="span4">
+		<div class="row-fluid" style="width: 85%;float: left;clear: initial; margin-left: 15px;">
+			<div class="span4" style="width: 30%; margin-right: 20px;">
 				<p style="text-align: center; font-size: 12px; margin-bottom: 5px;">លេខវិក្កយបត្រ INVOICE NO</p>
-				<p style="padding: 8px; background: \\#fff; margin-bottom: 0; border: 1px solid \\#A8B8CB; width: 155px; float: left;font-size: 15px; color: \\#000;font-weight: 600; text-align: center; ">#: number#</p> 
+				<p style="padding: 11px 8px 11px; background: \\#fff; margin-bottom: 0; border: 1px solid \\#A8B8CB; width: 253px; float: left;font-size: 15px; color: \\#000;font-weight: 600; text-align: center; ">#: number#</p> 
 			</div>
-			<div class="span4">
+			<div class="span4" style="width: 30%; margin-right: 20px;">
 				<p style="text-align: center; font-size: 12px; margin-bottom: 5px;">ប្រាក់ត្រូវបង់ AMOUNT DUE</p>
-				<p style="padding: 8px; background: \\#fff; margin-bottom: 0; margin-left: -9px; border: 1px solid \\#A8B8CB; width: 155px; float: left;font-size: 15px; color: \\#000;font-weight: 600; text-align: center; ">#= kendo.toString(amount + amount_remain, "c", locale)#</p> 
+				<p style="padding: 8px; background: \\#fff; margin-bottom: 0; border: 1px solid \\#A8B8CB; width: 253px; float: left;font-size: 15px; color: \\#000;font-weight: 600; text-align: center; ">#= kendo.toString(amount + amount_remain, "c", locale)#</p> 
 			</div>
-			<div class="span4">
+			<div class="span4" style="width: 30%; margin-right: 20px;">
 				<p style="text-align: center; font-size: 12px; margin-bottom: 5px;">ថ្ងៃបង់ប្រាក់ PAY DATE</p>
-				<p style="padding: 8px; background: \\#fff; margin-bottom: 0; border: 1px solid \\#A8B8CB; width: 155px; float: left;font-size: 15px; color: \\#000;font-weight: 600; text-align: center; ">#=kendo.toString(new Date(bill_date), "dd-MMMM-yyyy", "km-KH")#</p> 
+				<p style="padding: 8px; background: \\#fff; margin-bottom: 0; border: 1px solid \\#A8B8CB; width: 253px; float: left;font-size: 15px; color: \\#000;font-weight: 600; text-align: center; ">#=kendo.toString(new Date(bill_date), "dd-MMMM-yyyy", "km-KH")#</p> 
 			</div>
 		</div>
-		<div class="row-fluid" style="width: 489px;float: left;clear: initial; margin-left: 15px;">
-			<div class="span8">
-				<p style="float: left; margin-top: 5px; clear: both;"><b>#: contact.name#</b> <br/> #: contact.address#</p>
+		<div class="row-fluid" style="width: 84%;float: left;clear: initial; margin-left: 15px;">
+			<div class="span6">
+				<p style="float: left; margin-left: 15px; margin-top: 5px; clear: both;"><b>#: contact.name#</b> <br/> #: contact.address#</p>
 				<div style=" float: left;">
 		    		<span style="width: 257px; height: auto;"  id="footwnumber#:id#"></span>
-		    		<p style="margin-bottom: 0; margin-top: 5px; font-size: 12px; margin-left: 8px;">លេខកូដអតិថិជន #: contact.number#</p>
+		    		<p style="margin-bottom: 0; margin-top: 5px; font-size: 12px; margin-left: 15px;">លេខកូដអតិថិជន #: contact.number#</p>
 		    	</div>
 		    </div>
-		    <div class="span4" style="padding: 0;">
-		    	<p style="text-align: center; font-size: 12px; margin-bottom: 0px; margin-top: 8px;">ប្រាក់បានបង់ AMOUNT DUE</p>
-		    	<p style="padding: 8px; height: 40px; background: \\#fff; margin-bottom: 0; border: 5px solid \\#000; width: 155px; float: left;font-size: 15px; color: \\#000;font-weight: 600; text-align: center; "></p>
-		    	<p style="font-size: 11px; font-weight: 600; margin-top: 10px; float: left;">#: banhji.InvoicePrint.license.name #</p>
+		    <div class="span6" style="padding: 0; width: 46%;">
+		    	<p style="text-align: center; font-size: 12px; margin-bottom: 0px; margin-top: 8px;float: right;">ប្រាក់បានបង់ AMOUNT DUE</p>
+		    	<p style="padding: 8px; height: 25px; background: \\#fff; margin-bottom: 0; border: 5px solid \\#000; width: 254px; float: right;font-size: 15px; color: \\#000;font-weight: 600; text-align: center; "></p>
+		    	<p style="font-size: 11px; font-weight: 600; margin-top: 10px; float: right;">#: banhji.InvoicePrint.license.name #</p>
 		    </div>
 		</div>
 	</div>
