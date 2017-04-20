@@ -15744,6 +15744,12 @@
 	    			tUsage = exU;
 	    			exT = 'usage';
 	    		}
+	    		//Calculate Flat
+	    		if(isFlate == 1){
+	    			if(tUsage < 1){
+	    				tUsage = 1;
+	    			}
+	    		}
 				//Calculate Tariff
 				var that = this;
 				that.tariffTemp = null;
@@ -15859,12 +15865,7 @@
 					});
 		    	}
 		    	
-	    		//Calculate Flat
-	    		if(isFlate == 1){
-	    			if(tUsage < 1){
-	    				tUsage = 1;
-	    			}
-	    		}
+	    		
 				//Total after Tariff
 				var Total = 0;
 				if(exT == '%'){
