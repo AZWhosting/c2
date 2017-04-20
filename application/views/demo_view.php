@@ -460,6 +460,18 @@
 		</dt>											
 	</dl>	
 </script>
+<script id="customTable" type="text/x-kendo-template">
+	<div id="example">
+		<div>
+			<input type="text" class="k-textbox" data-bind="value: url" style="width: 100%;" />
+			<input type="button" class="k-button" data-bind="click: setDataSource" value="Set Datasource" />
+		</div>
+
+		<br>
+
+        <div id="grid"></div>
+    </div>
+</script>
 
 
 
@@ -46970,6 +46982,73 @@
 			banhji.router.navigate('/accounting_center/'+e.data.id);
 		}
     });
+    banhji.customTable =  kendo.observable({
+    	lang 				: langVM,
+    	dataSource 			: [],
+    	url 				: apiUrl,
+    	setDataSource 		: function(){
+    		var url = this.get("url");
+
+	    	var ds = new kendo.data.DataSource({
+				transport: {
+					read 	: {
+						url: url,
+						type: "GET",
+						headers: banhji.header,
+						dataType: 'json'
+					},
+					create 	: {
+						url: url,
+						type: "POST",
+						headers: banhji.header,
+						dataType: 'json'
+					},
+					update 	: {
+						url: url,
+						type: "PUT",
+						headers: banhji.header,
+						dataType: 'json'
+					},
+					destroy 	: {
+						url: url,
+						type: "DELETE",
+						headers: banhji.header,
+						dataType: 'json'
+					},
+					parameterMap: function(options, operation) {
+						if(operation === 'read') {
+							return {
+								page: options.page,
+								limit: options.pageSize,
+								filter: options.filter,
+								sort: options.sort
+							};
+						} else {
+							return {models: kendo.stringify(options.models)};
+						}
+					}
+				},
+				schema 	: {
+					model: {
+						id: 'id'
+					},
+					data: 'results',
+					total: 'count'
+				},
+				batch: true,
+				serverFiltering: true,
+				serverSorting: true,
+				serverPaging: true,
+				page: 1,
+				pageSize: 100
+			});
+
+			this.set("dataSource", ds);
+			this.dataSource.read();
+		},
+    	pageLoad 			: function(){
+		}
+    });
 
 
 
@@ -68824,137 +68903,211 @@
 	    //Journal	        
 	    addJournal 			: function(transaction_id){
 	    	var self = this,
-	    	obj = this.get("obj"),
-	    	contact = this.contactDS.get(obj.contact_id),
-	    	entries = {};
+		    	obj = this.get("obj"),
+		    	contact = this.contactDS.get(obj.contact_id),
+		    	raw = "", entries = {};
 
 	    	//Cash on Dr
-			if(entries[obj.account_id]===undefined){
-				entries[obj.account_id] = {
-					"id" 		: obj.account_id, 
-					"dr" 		: obj.amount,
-					"cr" 		: 0, 
-					"rate" 		: obj.rate, 
-					"locale" 	: obj.locale
-				};
-			}else{
-				entries[obj.account_id].dr += obj.amount;
-			}			
-			
-			//Item Lines
+			var cashID = kendo.parseInt(obj.account_id);
+			if(cashID>0){
+				raw = "dr"+cashID;
+
+				if(entries[raw]===undefined){
+					entries[raw] = {
+						transaction_id 		: transaction_id,
+						account_id 			: cashID,
+						contact_id 			: obj.contact_id,
+						description 		: obj.memo,
+						reference_no 		: "",
+						segments 	 		: obj.segments,
+						dr 	 				: obj.amount,
+						cr 					: 0,
+						rate				: obj.rate,
+						locale				: obj.locale
+					};
+				}else{
+					entries[raw].dr += obj.amount;
+				}
+			}
+
+			//Item lines
 			$.each(this.lineDS.data(), function(index, value){
 				var item = self.itemDS.get(value.item_id),
-				amount = value.quantity * value.cost;
+					itemRate = banhji.source.getRate(item.locale, new Date(obj.issued_date));
 
-				//TAX on Cr																								
-				if(value.tax_item_id>0){
-					var taxItem = self.taxItemDS.get(value.tax_item_id),
-					taxID = taxItem.account_id,
-					taxAmt = amount * taxItem.rate;
-					if(entries[taxID]===undefined){
-						entries[taxID] = {
-							"id" 		: taxID, 
-							"dr" 		: 0,
-							"cr" 		: taxAmt, 
-							"rate" 		: obj.rate, 
-							"locale" 	: obj.locale
-						};
-					}else{
-						entries[taxID].cr += taxAmt;
+				//Service on Cr
+				if(item.item_type_id=="4"){
+					var serviceID = kendo.parseInt(item.expense_account_id);
+					if(serviceID>0){
+						raw = "cr"+serviceID;
+
+						var serviceAmount = value.quantity *value.unit_value * value.cost;
+						if(entries[raw]===undefined){
+							entries[raw] = {
+								transaction_id 		: transaction_id,
+								account_id 			: serviceID,
+								contact_id 			: obj.contact_id,
+								description 		: value.description,
+								reference_no 		: "",
+								segments 	 		: [],
+								dr 	 				: 0,
+								cr 					: serviceAmount,
+								rate				: itemRate,
+								locale				: item.locale
+							};
+						}else{
+							entries[raw].cr += serviceAmount;
+						}
 					}
 				}
 
 				//Inventory on Cr
 				var inventoryID = kendo.parseInt(item.inventory_account_id);
 				if(inventoryID>0){
-					var inventoryAmount = 0, 
-					itemRate = banhji.source.getRate(item.locale, new Date(obj.issued_date));
+					raw = "cr"+inventoryID;
 
-					if(item.item_type_id==1 || item.item_type_id==4){
-						inventoryAmount = (value.quantity*value.unit_value)*item.cost;
+					var inventoryAmount = 0;
+					if(item.item_type_id=="1" || item.item_type_id=="4"){
+						inventoryAmount = value.quantity * value.unit_value * value.cost;
 					}else{
 						inventoryAmount = value.amount;
 					}
 
-					if(entries[inventoryID]===undefined){
-						entries[inventoryID] = {
-							"id" 		: inventoryID, 
-							"dr"		: 0,
-							"cr" 		: inventoryAmount, 
-							"rate"		: itemRate, 
-							"locale"	: item.locale
+					if(entries[raw]===undefined){
+						entries[raw] = {
+							transaction_id 		: transaction_id,
+							account_id 			: inventoryID,
+							contact_id 			: obj.contact_id,
+							description 		: value.description,
+							reference_no 		: "",
+							segments 	 		: [],
+							dr 	 				: 0,
+							cr 					: inventoryAmount,
+							rate				: itemRate,
+							locale				: item.locale
 						};
 					}else{
-						entries[inventoryID].cr += inventoryAmount;
+						entries[raw].cr += inventoryAmount;
+					}
+				}
+
+				//Tax on Cr
+				if(value.tax_item_id>0){
+					var taxItem = self.taxItemDS.get(value.tax_item_id),
+						raw = "cr"+taxItem.account_id,
+						taxAmt = value.amount * taxItem.rate;
+
+					if(entries[raw]===undefined){
+						entries[raw] = {
+							transaction_id 		: transaction_id,
+							account_id 			: taxItem.account_id,
+							contact_id 			: obj.contact_id,
+							description 		: value.description,
+							reference_no 		: "",
+							segments 	 		: [],
+							dr 	 				: 0,
+							cr 					: taxAmt,
+							rate				: obj.rate,
+							locale				: obj.locale
+						};
+					}else{
+						entries[raw].cr += taxAmt;
 					}
 				}
 			});
 
-			//Assembly Item for cogs and inventory
-			$.each(self.assemblyLineDS.data(), function(index, value){
-				var item = self.itemDS.get(value.item_id);
-				
+			//Assembly Item
+			$.each(this.assemblyLineDS.data(), function(index, value){
+				var item = self.itemDS.get(value.item_id),
+					itemRate = banhji.source.getRate(item.locale, new Date(obj.issued_date));
+
+				//Service on Cr
+				if(item.item_type_id=="4"){
+					var serviceID = kendo.parseInt(item.expense_account_id);
+					if(serviceID>0){
+						raw = "cr"+serviceID;
+
+						var serviceAmount = value.quantity *value.unit_value * item.cost;
+						if(entries[raw]===undefined){
+							entries[raw] = {
+								transaction_id 		: transaction_id,
+								account_id 			: serviceID,
+								contact_id 			: obj.contact_id,
+								description 		: value.description,
+								reference_no 		: "",
+								segments 	 		: [],
+								dr 	 				: 0,
+								cr 					: serviceAmount,
+								rate				: itemRate,
+								locale				: item.locale
+							};
+						}else{
+							entries[raw].cr += serviceAmount;
+						}
+					}
+				}
+
 				//Inventory on Cr
 				var inventoryID = kendo.parseInt(item.inventory_account_id);
 				if(inventoryID>0){
-					var inventoryAmount = 0, 
-					itemRate = banhji.source.getRate(item.locale, new Date(obj.issued_date));
+					raw = "cr"+inventoryID;
 
-					if(item.item_type_id==1 || item.item_type_id==4){
-						inventoryAmount = (value.quantity*value.unit_value)*item.cost;
+					var inventoryAmount = 0;
+					if(item.item_type_id=="1" || item.item_type_id=="4"){
+						inventoryAmount = value.quantity * value.unit_value * item.cost;
 					}else{
 						inventoryAmount = value.amount;
 					}
 
-					if(entries[inventoryID]===undefined){
-						entries[inventoryID] = {
-							"id" 		: inventoryID, 
-							"dr"		: 0,
-							"cr" 		: inventoryAmount, 
-							"rate"		: itemRate, 
-							"locale"	: item.locale
+					if(entries[raw]===undefined){
+						entries[raw] = {
+							transaction_id 		: transaction_id,
+							account_id 			: inventoryID,
+							contact_id 			: obj.contact_id,
+							description 		: value.description,
+							reference_no 		: "",
+							segments 	 		: [],
+							dr 	 				: 0,
+							cr 					: inventoryAmount,
+							rate				: itemRate,
+							locale				: item.locale
 						};
 					}else{
-						entries[inventoryID].cr += inventoryAmount;
+						entries[raw].cr += inventoryAmount;
 					}
 				}
 			});
 
 			//Return Lines
-			//Deposit on Cr
 			$.each(this.returnDS.data(), function(index, value){
+				//Deposit on Cr
 				var depositID = kendo.parseInt(value.account_id);
 				if(depositID>0){
-					if(entries[depositID]===undefined){
-						entries[depositID] = {
-							"id" 		: depositID, 
-							"dr" 		: 0,
-							"cr" 		: value.amount, 
-							"rate" 		: obj.rate, 
-							"locale" 	: obj.locale
+					raw = "cr"+depositID;
+
+					if(entries[raw]===undefined){
+						entries[raw] = {
+							transaction_id 		: transaction_id,
+							account_id 			: depositID,
+							contact_id 			: obj.contact_id,
+							description 		: value.description,
+							reference_no 		: value.reference_no,
+							segments 	 		: value.segments,
+							dr 	 				: 0,
+							cr 					: value.amount,
+							rate				: value.rate,
+							locale				: value.locale
 						};
 					}else{
-						entries[depositID].cr += value.amount;
+						entries[raw].cr += value.amount;
 					}
 				}
 			});
 
-			
 			//Add to journal entry
 			if(!jQuery.isEmptyObject(entries)){
 				$.each(entries, function(index, value){
-					self.journalLineDS.add({					
-						transaction_id 		: transaction_id,
-						account_id 			: value.id,
-						contact_id 			: obj.contact_id,
-						description 		: "",
-						reference_no 		: "",
-						segments 	 		: [],
-						dr 	 				: value.dr,
-						cr 					: value.cr,
-						rate				: value.rate,
-						locale				: value.locale
-					});						
+					self.journalLineDS.add(value);
 				});
 			}
 
@@ -90363,6 +90516,7 @@
 		index  		: new kendo.Layout("#index", {model: banhji.index}),
 		menu 		: new kendo.Layout('#menu-tmpl', {model: banhji.userManagement}),
 		searchAdvanced: new kendo.Layout("#searchAdvanced", {model: banhji.searchAdvanced}),
+		customTable: new kendo.Layout("#customTable", {model: banhji.customTable}),
 
 		//Accounting
 		accountingDashboard: new kendo.Layout("#accountingDashboard", {model: banhji.accountingDashboard}),
@@ -90667,6 +90821,30 @@
 			
 			if(banhji.pageLoaded["search_advanced"]==undefined){
 				banhji.pageLoaded["search_advanced"] = true;
+			}
+
+			vm.pageLoad();
+		}
+	});
+	banhji.router.route("/custom_table", function(){
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{
+			var vm = banhji.customTable;
+			banhji.view.layout.showIn("#content", banhji.view.customTable);
+			
+			if(banhji.pageLoaded["custom_table"]==undefined){
+				banhji.pageLoaded["custom_table"] = true;
+
+				$("#grid").kendoGrid({
+                    dataSource: vm.dataSource,
+                    navigatable: true,
+                    pageable: true,
+                    height: 550,
+                    toolbar: ["create", "save", "cancel"],
+                    columns: [],
+                    editable: true
+                });
 			}
 
 			vm.pageLoad();

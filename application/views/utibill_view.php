@@ -15704,7 +15704,7 @@
 	    	var mSold = 0, aSold = 0, self = this,aSoldL = 0, TariffDS = [];
 	    	this.set('totalOfInv', banhji.runBill.invoiceArray.length);
 	    	$.each(banhji.runBill.invoiceArray, function(i, v){
-	    		var date = new Date(), aTariff = 0, exT = '', exA, exU, rUsage = 0, tUsage = 0, isFlate = 0 ;
+	    		var date = new Date(), aTariff = 0, exT = '', exA, exU, rUsage = 0, tUsage = 0, isFlate = 0;
 				var rate = banhji.source.getRate(banhji.locale, date);
 				var locale = banhji.locale;
 				var record_id = v.items[0].line.id;
@@ -15752,7 +15752,6 @@
 	    			if(kendo.parseInt(tUsage) >= kendo.parseInt(v.line.usage)){
 	    				that.tariffTemp = v;		    			
 	    				aTariff = v.line.amount;
-	    				isFlate = v.is_flat;
 	    			}
 	    		});
 	    		if(that.tariffTemp){
@@ -15861,6 +15860,8 @@
 		    	}
 		    	
 	    		//Calculate Flat
+	    		console.log(v.tariffM[0].is_flat);
+	    		isFlate = v.tariffM[0].is_flat;
 	    		if(isFlate == 1){
 	    			if(tUsage < 1){
 	    				tUsage = 1;

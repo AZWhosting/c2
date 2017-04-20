@@ -99,6 +99,9 @@ class Winvoices extends REST_Controller {
 						$types = array('tariff', 'exemption', 'maintenance');
 						if(in_array($item->type, $types)) {
 							if($item->type == 'tariff') {
+								$tmp["$meter->number"]['tariffMain'][] = array(
+									"is_flat" => intval($item->is_flat)
+								);
 								$tariff = new Plan_item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 								$tariff->where('tariff_id', $item->id)->get();
 								if($tariff->exists()) {
@@ -113,7 +116,7 @@ class Winvoices extends REST_Controller {
 												'amount'=> floatval($t->amount)
 											)
 										);
-									}									
+									}								
 								}
 							} else if($item->type == 'exemption'){
 								$tmp["$meter->number"]['exemption'][] = array(
@@ -197,6 +200,7 @@ class Winvoices extends REST_Controller {
 				'reactive'=> $reactive,
 				'maintenance' => $maintenance,
 				'tariff' => $t['tariff'],
+				'tariffM' => $t['tariffMain'],
 				'items'=> $t['items']
 			);
 		}
