@@ -433,7 +433,6 @@ class Winvoices extends REST_Controller {
 
 		foreach($table as $row) {
 			//echo $row->id."__";
-			$contact = $row->contact->get();
 			$meter = null;
 			$invoiceLine = new winvoice_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$invoiceLine->include_related('meter_record/meter', array("id", "number"));
@@ -451,14 +450,11 @@ class Winvoices extends REST_Controller {
 				}
 			}
 
-
 			$items  = $row->winvoice_line->get();
 			$lines  = array();
 			
-			
 			$usage = 0;
 			$remain = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			//$remain->where_related("contact/meter", "id", $meter->meter_id);
 			$remain->where("meter_id", $row->meter_id);
 			$remain->where("type", "Utility_Invoice");
 			$remain->where("id <>", $row->id);
@@ -496,7 +492,7 @@ class Winvoices extends REST_Controller {
 						'from_date' => $record->from_date,
 						'to_date' => $record->to_date
 					);
-				} elseif($item->type == 'exemption') {
+				}elseif($item->type == 'exemption') {
 					$unit = $item->item->limit(1)->get();
 					$usage = $record->usage;
 					$lines[] = array(
@@ -549,6 +545,7 @@ class Winvoices extends REST_Controller {
 				array_push($minusM, $monthOF->amount);
 			}
 
+			$contact = $row->contact->get();
 			$data[] = array(
 				'id' => $row->id,
 				'type' => $row->type,
@@ -564,7 +561,7 @@ class Winvoices extends REST_Controller {
 				'consumption' => $usage,
 				'minusMonth' => $minusM,
 				'contact' => array(
-					'id' => $contact->id,
+					'id' => $row->contact_id,
 					'name' => $contact->name,
 					'phone' => $contact->phone,
 					'abbr' => $contact->abbr,

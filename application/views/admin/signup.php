@@ -455,7 +455,7 @@
                             <a href="https://banhji.com/privacy" target="_blank" style="color: #333;">Privacy Policy</a>.
                         </span> -->
                     <div class="" style="font-size: 12px; text-align: center">
-                        *Problem with "Signup", Please contact us by +855 10 413 777 from Mon-Fri at 9am to 18pm or
+                        *Problem with "Signup", Please contact us by +855 10 413 777 from Mon-Fri at 9am to 6pm or
                             <div class="fb-messengermessageus" 
                                 messenger_app_id="1301847836514973" 
                                 page_id="862386433857166"
@@ -520,96 +520,98 @@
                     <div class="row-fluid" style="color: #333; margin-top: 8px;">
                         
                         <div class="col-sm-12" style="padding: 0;">
-                            <div class="signup-img" style="height: 148px; margin-bottom: 8px; ">
+                            <div class="signup-img" style="height: 110px; margin-bottom: 8px;">
                                 <a class="" id="41" data-bind="click: industryClick">
                                     <img src="<?php echo base_url();?>assets/industry_logos/10.png">
                                     <p style="font-size: 10px; color: #333;" data-bind="text: lang.lang.wholesale_retail_trading"></p>
                                 </a>
                             </div>
-                            <div class="signup-img" style="height: 148px; margin-bottom: 8px;">
-                                <a class="" id="49" data-bind="click: industryClick">
-                                    <img src="<?php echo base_url();?>assets/industry_logos/12.png">
-                                    <p style="font-size: 10px; color: #333;" data-bind="text: lang.lang.accomm_food"></p>
-                                </a>
-                            </div>
-                            <div class="signup-img" style="height: 148px; margin-bottom: 8px;">
-                                <a class=""  id="66" data-bind="click: industryClick">
-                                    <img src="<?php echo base_url();?>assets/industry_logos/7.png">
-                                    <p style="font-size: 10px; color: #333;" data-bind="text: lang.lang.professional_service"></p>
-                                </a>
-                            </div>
-                            <div class="signup-img" style="height: 148px; margin-bottom: 8px;">
+                            <div class="signup-img" style="height: 110px; margin-bottom: 8px;">
                                 <a class="" id="31" data-bind="click: industryClick">
                                     <img src="<?php echo base_url();?>assets/industry_logos/9.png">
                                     <p style="font-size: 10px; color: #333;" data-bind="text: lang.lang.manufacturing"></p>
                                 </a>
-                            </div>
-                            <div class="signup-img" style="height: 148px; margin-bottom: 8px;"> 
-                                <a class="" id="89" data-bind="click: industryClick">
-                                    <img src="<?php echo base_url();?>assets/industry_logos/13.png">
-                                    <p style="font-size: 10px; color: #333;" data-bind="text: lang.lang.ngos"></p>
-                                </a>
-                            </div>
-                             <div class="signup-img" style="height: 110px">
-                                <a class="" id="63" data-bind="click: industryClick">
-                                    <img src="<?php echo base_url();?>assets/industry_logos/2.png">
-                                    <p style="font-size: 10px; color: #333;" data-bind="text: lang.lang.agriculture"></p>
-                                </a>
-                            </div>
-                            <div class="signup-img" style="height: 110px">
+                            </div>                            
+                            <div class="signup-img" style="height: 110px; margin-bottom: 8px;">
                                 <a class="" id="33" data-bind="click: industryClick">
                                     <img src="<?php echo base_url();?>assets/industry_logos/11.png">
                                     <p style="font-size: 10px; color: #333;" data-bind="text: lang.lang.electricity"></p>
                                 </a>
                             </div>
-                            <div class="signup-img" style="height: 110px">
+                            <div class="signup-img" style="height: 110px; margin-bottom: 8px;">
                                 <a class="" id="34" data-bind="click: industryClick">
                                     <img src="<?php echo base_url();?>assets/industry_logos/15.png">
                                     <p style="font-size: 10px; color: #333;" data-bind="text: lang.lang.swater"></p>
                                 </a>
                             </div>
-                            <div class="signup-img" style="height: 110px">
-                                <a class="" id="47" data-bind="click: industryClick">
-                                    <img src="<?php echo base_url();?>assets/industry_logos/14.png">
-                                    <p style="font-size: 10px; color: #333;" data-bind="text: lang.lang.transportation"></p>
-                                </a>
-                            </div>
-                            <div class="signup-img" style="height: 110px">
-                                <a class="" id="75" data-bind="click: industryClick">
-                                    <img src="<?php echo base_url();?>assets/industry_logos/3.png">
-                                    <p style="font-size: 10px; color: #333;" data-bind="text: lang.lang.education"></p>
-                                </a>
-                            </div>
-                             <div class="signup-img">
-                                <a class="" id="38" data-bind="click: industryClick">
-                                    <img src="<?php echo base_url();?>assets/industry_logos/1.png">
-                                    <p style="font-size: 10px; color: #333;" data-bind="text: lang.lang.construction"></p>
-                                </a>
-                            </div>
-                            <div class="signup-img">
-                                <a class="" id="56" data-bind="click: industryClick">
-                                    <img src="<?php echo base_url();?>assets/industry_logos/5.png">
-                                    <p style="font-size: 10px; color: #333;" data-bind="text: lang.lang.information_communication"></p>
-                                </a>
-                            </div>
-                            <div class="signup-img">
+                            <div class="signup-img" style="height: 110px; margin-bottom: 8px;">
                                 <a class="" id="57" data-bind="click: industryClick">
                                     <img src="<?php echo base_url();?>assets/industry_logos/4.png">
                                     <p style="font-size: 10px; color: #333;" data-bind="text: lang.lang.financial_institutions"></p>
                                 </a>
                             </div>
-                            <div class="signup-img">
-                                <a class="" id="60" data-bind="click: industryClick">
-                                    <img src="<?php echo base_url();?>assets/industry_logos/8.png">
-                                    <p style="font-size: 10px; color: #333;" data-bind="text: lang.lang.real_estate_activities">
+
+                            <div class="signup-img" style="height: 110px;"> 
+                                <a class="" id="89" data-bind="click: industryClick">
+                                    <img src="<?php echo base_url();?>assets/industry_logos/13.png">
+                                    <p style="font-size: 10px; color: #333;" data-bind="text: lang.lang.ngos"></p>
                                 </a>
                             </div>
-                            <div class="signup-img">
+                            <div class="signup-img" style="height: 110px;">
+                                <a class=""  id="66" data-bind="click: industryClick">
+                                    <img src="<?php echo base_url();?>assets/industry_logos/7.png">
+                                    <p style="font-size: 10px; color: #333;" data-bind="text: lang.lang.professional_service"></p>
+                                </a>
+                            </div>
+                            <div class="signup-img" style="height: 110px;">
+                                <a class="" id="75" data-bind="click: industryClick">
+                                    <img src="<?php echo base_url();?>assets/industry_logos/3.png">
+                                    <p style="font-size: 10px; color: #333;" data-bind="text: lang.lang.education"></p>
+                                </a>
+                            </div>
+                            <div class="signup-img" style="height: 110px;">
+                                <a class="" id="56" data-bind="click: industryClick">
+                                    <img src="<?php echo base_url();?>assets/industry_logos/5.png">
+                                    <p style="font-size: 10px; color: #333;" data-bind="text: lang.lang.information_communication"></p>
+                                </a>
+                            </div>                           
+                            <div class="signup-img" style="height: 110px;">
                                 <a class="" id="90" data-bind="click: industryClick">
                                     <img src="<?php echo base_url();?>assets/industry_logos/6.png">
                                     <p style="font-size: 10px; color: #333;" data-bind="text: lang.lang.others"></p>
                                 </a>
                             </div>
+
+                            <div class="signup-img">
+                                <a class="" id="60" data-bind="click: industryClick">
+                                    <img src="<?php echo base_url();?>assets/industry_logos/8.png">
+                                    <p style="font-size: 10px; color: #333;" data-bind="text: lang.lang.real_estate_activities">
+                                </a>
+                            </div>                            
+                            <div class="signup-img">
+                                <a class="" id="49" data-bind="click: industryClick">
+                                    <img src="<?php echo base_url();?>assets/industry_logos/12.png">
+                                    <p style="font-size: 10px; color: #333;" data-bind="text: lang.lang.accomm_food"></p>
+                                </a>
+                            </div>
+                            <div class="signup-img">
+                                <a class="" id="47" data-bind="click: industryClick">
+                                    <img src="<?php echo base_url();?>assets/industry_logos/14.png">
+                                    <p style="font-size: 10px; color: #333;" data-bind="text: lang.lang.transportation"></p>
+                                </a>
+                            </div>
+                            <div class="signup-img">
+                                <a class="" id="63" data-bind="click: industryClick">
+                                    <img src="<?php echo base_url();?>assets/industry_logos/2.png">
+                                    <p style="font-size: 10px; color: #333;" data-bind="text: lang.lang.agriculture"></p>
+                                </a>
+                            </div>
+                            <div class="signup-img">
+                                <a class="" id="38" data-bind="click: industryClick">
+                                    <img src="<?php echo base_url();?>assets/industry_logos/1.png">
+                                    <p style="font-size: 10px; color: #333;" data-bind="text: lang.lang.construction"></p>
+                                </a>
+                            </div>                           
 
                         </div>
                     </div>

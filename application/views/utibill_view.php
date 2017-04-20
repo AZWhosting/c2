@@ -1134,7 +1134,7 @@
     		#= name#
    		</td>
    		<td>
-    		# if(is_flat == 0){# អថេរ #}else{# ថេរ #}#
+    		# if(is_flat == 0){# #: banhji.setting.lang.lang.not_flat# #}else{# #: banhji.setting.lang.lang.flat# #}#
    		</td>
    		<td>
     		#= account.name#
@@ -15726,6 +15726,24 @@
 				   		"type" 				: value.type
 					});
 				});	
+				//Calculate Exemption
+	    		if(v.exemption.length > 0){
+	    			var Usage = kendo.parseInt(v.items[0].line.usage),
+	    			AmountEx = kendo.parseFloat(v.exemption[0].line.amount);
+	    			if(v.exemption[0].line.unit == 'usage'){
+	    				//rUsage = Usage - AmountEx;
+	    				tUsage = Usage - AmountEx;
+	    			}else{
+	    				exT = v.exemption[0].line.unit;
+	    				exA = AmountEx;
+	    				exU = v.items[0].line.usage;
+	    				tUsage = exU;
+	    			}
+	    		}else{
+	    			exU = v.items[0].line.usage;
+	    			tUsage = exU;
+	    			exT = 'usage';
+	    		}
 				//Calculate Tariff
 				var that = this;
 				that.tariffTemp = null;
@@ -15741,7 +15759,7 @@
 						"item_id" 			: that.tariffTemp.line.id,
 				   		"invoice_id"		: 0,
 					   	"meter_record_id"	: record_id,
-					   	"description" 		: that.tariffTemp.line.name,					   	
+					   	"description" 		: that.tariffTemp.line.name,	   	
 					   	"quantity" 			: that.tariffTemp.line.usage,
 					   	"price"				: 0,	
 					   	"amount" 			: that.tariffTemp.line.amount,
@@ -15840,24 +15858,7 @@
 				   		"type" 				: 'reactive'
 					});
 		    	}
-		    	//Calculate Exemption
-	    		if(v.exemption.length > 0){
-	    			var Usage = kendo.parseInt(v.items[0].line.usage),
-	    			AmountEx = kendo.parseFloat(v.exemption[0].line.amount);
-	    			if(v.exemption[0].line.unit == 'm3'){
-	    				//rUsage = Usage - AmountEx;
-	    				tUsage = Usage - AmountEx;
-	    			}else{
-	    				exT = v.exemption[0].line.unit;
-	    				exA = AmountEx;
-	    				exU = v.items[0].line.usage;
-	    				tUsage = exU;
-	    			}
-	    		}else{
-	    			exU = v.items[0].line.usage;
-	    			tUsage = exU;
-	    			exT = 'm3';
-	    		}
+		    	
 	    		//Calculate Flat
 	    		if(isFlate == 1){
 	    			if(tUsage < 1){
