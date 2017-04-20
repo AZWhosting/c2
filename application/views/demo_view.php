@@ -461,15 +461,86 @@
 	</dl>	
 </script>
 <script id="customTable" type="text/x-kendo-template">
-	<div id="example">
+	<div id="examplexxx">
 		<div>
-			<input type="text" class="k-textbox" data-bind="value: url" style="width: 100%;" />
-			<input type="button" class="k-button" data-bind="click: setDataSource" value="Set Datasource" />
+			<input type="number" class="k-textbox" data-bind="value: id" />
+			<input type="button" class="k-button" data-bind="click: searchTxn" value="Transaction" />
 		</div>
 
 		<br>
 
-        <div id="grid"></div>
+		<h2>Transaction</h2>
+
+        <div data-role="grid"
+             data-editable="true"
+             data-auto-bind="false"
+             data-toolbar="['create', 'save', 'cancel']"
+             data-columns="[
+                 { 'field': 'type' },
+                 { 'field': 'number' },
+                 { 'field': 'sub_total' },
+                 { 'field': 'discount' },
+                 { 'field': 'tax' },
+                 { 'field': 'amount' },
+                 { 'field': 'deposit' },
+                 { 'field': 'remaining' },
+                 { 'field': 'issued_date' },
+                 { 'field': 'due_date' },
+                 { 'field': 'deleted' }
+             ]"
+             data-bind="source: txnDS"></div>
+
+        <h2>Item Line</h2>
+
+        <div data-role="grid"
+             data-editable="true"
+             data-auto-bind="false"
+             data-toolbar="['create', 'save', 'cancel']"
+             data-columns="[
+                 { 'field': 'quantity' },
+                 { 'field': 'unit_value' },
+                 { 'field': 'cost' },
+                 { 'field': 'price' },
+                 { 'field': 'amount' },
+                 { 'field': 'rate' },
+                 { 'field': 'locale' },
+                 { 'field': 'movement' }
+             ]"
+             data-bind="source: itemLineDS"></div>
+
+        <h2>Account Line</h2>
+
+        <div data-role="grid"
+             data-editable="true"
+             data-auto-bind="false"
+             data-toolbar="['create', 'save', 'cancel']"
+             data-columns="[
+                 { 'field': 'account_id' },
+                 { 'field': 'description' },
+                 { 'field': 'amount' },
+                 { 'field': 'rate' },
+                 { 'field': 'locale' },
+                 { 'field': 'movement' }
+             ]"
+             data-bind="source: accountLineDS"></div>
+
+        <h2>Journal Line</h2>
+
+        <div data-role="grid"
+             data-editable="true"
+             data-auto-bind="false"
+             data-toolbar="['create', 'save', 'cancel']"
+             data-columns="[
+                 { 'field': 'account_id' },
+                 { 'field': 'description' },
+                 { 'field': 'dr' },
+                 { 'field': 'cr' },
+                 { 'field': 'rate' },
+                 { 'field': 'locale' },
+                 { 'field': 'deleted' }
+             ]"
+             data-bind="source: journalLineDS"></div>
+
     </div>
 </script>
 
@@ -46983,70 +47054,21 @@
 		}
     });
     banhji.customTable =  kendo.observable({
-    	lang 				: langVM,
-    	dataSource 			: [],
-    	url 				: apiUrl,
-    	setDataSource 		: function(){
-    		var url = this.get("url");
-
-	    	var ds = new kendo.data.DataSource({
-				transport: {
-					read 	: {
-						url: url,
-						type: "GET",
-						headers: banhji.header,
-						dataType: 'json'
-					},
-					create 	: {
-						url: url,
-						type: "POST",
-						headers: banhji.header,
-						dataType: 'json'
-					},
-					update 	: {
-						url: url,
-						type: "PUT",
-						headers: banhji.header,
-						dataType: 'json'
-					},
-					destroy 	: {
-						url: url,
-						type: "DELETE",
-						headers: banhji.header,
-						dataType: 'json'
-					},
-					parameterMap: function(options, operation) {
-						if(operation === 'read') {
-							return {
-								page: options.page,
-								limit: options.pageSize,
-								filter: options.filter,
-								sort: options.sort
-							};
-						} else {
-							return {models: kendo.stringify(options.models)};
-						}
-					}
-				},
-				schema 	: {
-					model: {
-						id: 'id'
-					},
-					data: 'results',
-					total: 'count'
-				},
-				batch: true,
-				serverFiltering: true,
-				serverSorting: true,
-				serverPaging: true,
-				page: 1,
-				pageSize: 100
-			});
-
-			this.set("dataSource", ds);
-			this.dataSource.read();
+    	lang 			: langVM,
+    	id 				: 6,
+    	txnDS 			: dataStore(apiUrl+"transactions"),
+    	itemLineDS 		: dataStore(apiUrl+"item_lines"),
+    	accountLineDS 	: dataStore(apiUrl+"account_lines"),
+    	journalLineDS 	: dataStore(apiUrl+"journal_lines"),
+    	pageLoad 		: function(){
 		},
-    	pageLoad 			: function(){
+		searchTxn 		: function(){
+			var id = this.get("id");
+
+			this.txnDS.filter({ field:"id", value: id });
+			this.itemLineDS.filter({ field:"transaction_id", value: id });
+			this.accountLineDS.filter({ field:"transaction_id", value: id });
+			this.journalLineDS.filter({ field:"transaction_id", value: id });
 		}
     });
 
@@ -90835,16 +90857,6 @@
 			
 			if(banhji.pageLoaded["custom_table"]==undefined){
 				banhji.pageLoaded["custom_table"] = true;
-
-				$("#grid").kendoGrid({
-                    dataSource: vm.dataSource,
-                    navigatable: true,
-                    pageable: true,
-                    height: 550,
-                    toolbar: ["create", "save", "cancel"],
-                    columns: [],
-                    editable: true
-                });
 			}
 
 			vm.pageLoad();
