@@ -719,18 +719,17 @@ class UtibillReports extends REST_Controller {
 			}
 		}
 
-		//Results
-		
-		$obj->where("type", "Utility_Invoice");
+		//Results	
 		$obj->include_related("location", "name");
 		$obj->include_related("contact", array("abbr", "number", "name"));
+		$obj->where("type", "Utility_Invoice");
 		$obj->where("is_recurring <>", 1);
 		$obj->where("deleted <>", 1);
 		$obj->order_by("issued_date", "asc");
 		$obj->get_iterated();
 		
 		if($obj->exists()){
-			
+			$objList = [];
 			foreach ($obj as $value) {
 				//Payments			
 				$pmt = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);				
@@ -742,8 +741,7 @@ class UtibillReports extends REST_Controller {
 				$pmt->where("is_recurring <>",1);
 				$pmt->where("deleted <>",1);
 				$pmt->get_iterated();
-				if($pmt->exists()){
-					$objList = [];
+				if($pmt->exists()){					
 					foreach ($pmt as $val) {
 						$amount = floatval($val->sub_total) / floatval($val->rate);
 						if(isset($objList[$val->payment_method_name])){
@@ -903,16 +901,23 @@ class UtibillReports extends REST_Controller {
 				}
 			}
 		}
-		// $obj->include_related("contact", array("abbr", "number", "name", "email", "address", "phone", "id"));
+		$obj->include_related("contact", array("abbr", "number", "name", "email", "address", "phone", "id"));
 		$obj->get_paged_iterated($page, $limit);
 		if($obj->exists()) {
+			$objList = [];
 			foreach($obj as $value) {
-				$data["results"][] = array(
-					'id' => $value->id,
-					'name' => $value->name,
-					'number' => $value->abbr ."-". $value->code,
-					'address'=> $value->address
-				);
+				if(isset($objList[$value->contact_id])){
+					$objList[$value->contact_id]["id"] 				= $value->id;
+				}else{
+					$objList[$value->contact_id]["id"] 				= $value->contact_id;
+					$objList[$value->contact_id]["name"] 			= $value->contact_abbr.$value->contact_number." ".$value->contact_name;
+					$objList[$value->contact_id]["number"]			= $value->contact_abbr ."-". $value->contact_number;
+					$objList[$value->contact_id]["address"]			= $value->contact_address;
+					$objList[$value->contact_id]["phone"]			= $value->contact_phone;
+				}
+			}
+			foreach ($objList as $value) {
+				$data["results"][] = $value;
 			}
 			$data["count"] = count($data["results"]);			
 		}
@@ -946,7 +951,7 @@ class UtibillReports extends REST_Controller {
 				}
 			}
 		}
-		$obj->include_related("property", array("abbr", "name", "address"));
+		$obj->include_related("contact", array("abbr", "number", "name", "email", "address", "phone", "id"));
 		$obj->include_related("location", "name");
 		$obj->include_related("branch", "name");
 		$obj->where("status", 0);
@@ -957,9 +962,11 @@ class UtibillReports extends REST_Controller {
 				//$utility = $row->contact->include_related('utility', array('abbr', 'code'))->get();
 				$data[] = array(
 					"id" 		=> $value->id,
-					"name"		=> $value->property_name,
-					"abbr" 		=> $value->property_abbr,
-					"address"	=> $value->peoperty_address
+					"name"		=> $value->contact_abbr.$value->contact_number." ".$value->contact_name,
+					"license" 	=> $value->branch_name,
+					"number" 	=> $value->contact_abbr ."-". $value->contact_number,
+					"phone"     => $value->contact_phone,
+					"address"	=> $value->contact_address
 				);
 			}
 			$this->response(array('results' => $data, 'count' => $obj->paged->total_rows), 200);

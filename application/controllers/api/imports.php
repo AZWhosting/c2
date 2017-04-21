@@ -151,15 +151,18 @@ class Imports extends REST_Controller {
 					$fullname = $obj->company;
 				}
 
+				$property = new Property(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$property->contact_id = $obj->id;
+				$property->name = $obj->name;
+				$property->abbr = $obj->abbr;
+				$property->code = $obj->code;
+				$property->save();
+
 				//Respsone
 				$data["results"][] = array(
 					"id" 						=> $obj->id,
 					"branch_id" 				=> $obj->branch_id,
 					"country_id" 				=> $country,
-					"ebranch_id" 				=> $obj->ebranch_id,
-					"elocation_id" 				=> $obj->elocation_id,
-					"wbranch_id" 				=> $obj->wbranch_id,
-					"wlocation_id" 				=> $obj->wlocation_id,
 					"user_id"					=> $obj->user_id,
 					"contact_type_id" 			=> $obj->contact_type_id,
 					"eorder" 					=> $obj->eorder,
@@ -451,12 +454,14 @@ class Imports extends REST_Controller {
 		$data = array();
 		$order = 1;
 		foreach($models as $row) {
+			$property = new Property(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$property->where('name', $row->proptery)->get();
 			$customer = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$plan = new Plan(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$location = new Location(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$meter = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
-			$customer->select('id, deposit_account_id, account_id, name')->where('name', $row->customer)->get();
+			$customer->select('id, deposit_account_id, account_id, name')->where('id', $property->contact_id)->get();
 			$location->select('id, branch_id')->where('name', $row->bloc)->get();
 			$plan->select('id, code')->where('code', $row->plan_code)->get();
 			
@@ -467,7 +472,7 @@ class Imports extends REST_Controller {
 			$meter->multiplier = 1;
 			$meter->activated = 1;
 			$meter->status = 1;
-			$meter->contact_id = $customer->id;
+			$meter->property_id = $property->id;
 			$meter->branch_id = $location->branch_id;
 			$meter->location_id = $location->id;
 			$meter->plan_id = $plan->id;
@@ -496,7 +501,7 @@ class Imports extends REST_Controller {
 				// transaction
 				if(isset($row->deposit)) {
 					$transaction = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-					$transaction->type = "Water_Deposit";
+					$transaction->type = "Utility_Deposit";
 					$transaction->contact_id = $customer->id;
 					$transaction->journal_type = "journal";
 					$transaction->is_journal = 1;
@@ -510,7 +515,7 @@ class Imports extends REST_Controller {
 						$deposit1 = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 						$deposit1->transaction_id = $transaction->id;
 						$deposit1->account_id = $depositAcct;
-						$deposit1->description= "Water Opening Deposit";
+						$deposit1->description= "Utility Opening Deposit";
 						$deposit1->contact_id = $transaction->contact_id;
 						$deposit1->dr = isset($row->deposit) ? $row->deposit : 0;
 						$deposit1->cr = 0.00;
@@ -519,7 +524,7 @@ class Imports extends REST_Controller {
 						$deposit2 = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 						$deposit2->transaction_id = $transaction->id;
 						$deposit2->account_id = 70;
-						$deposit2->description= "Water Opening Deposit";
+						$deposit2->description= "Utility Opening Deposit";
 						$deposit2->contact_id = $transaction->contact_id;
 						$deposit2->dr = 0.00;
 						$deposit2->cr = isset($row->deposit) ? $row->deposit : 0;
@@ -529,7 +534,7 @@ class Imports extends REST_Controller {
 
 				if(isset($row->balance)) {
 					$ar = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-					$ar->type = "Water_Invoice";
+					$ar->type = "Utility_Invoice";
 					$ar->contact_id = $customer->id;
 					$ar->journal_type = "journal";
 					$ar->is_journal = 1;
@@ -544,7 +549,7 @@ class Imports extends REST_Controller {
 						$ar1 = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 						$ar1->transaction_id = $ar->id;
 						$ar1->account_id = $customer->account_id;
-						$ar1->description= "Water Opening Balance";
+						$ar1->description= "Utility Opening Balance";
 						$ar1->contact_id = $ar->contact_id;
 						$ar1->dr = isset($row->balance) ? $row->balance : 0;
 						$ar1->cr = 0.00;
@@ -553,7 +558,7 @@ class Imports extends REST_Controller {
 						$ar2 = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 						$ar2->transaction_id = $ar->id;
 						$ar2->account_id = 70;
-						$ar2->description= "Water Opening Balance";
+						$ar2->description= "Utility Opening Balance";
 						$ar2->contact_id = $ar->contact_id;
 						$ar2->dr = 0.00;
 						$ar2->cr = isset($row->balance) ? $row->balance : 0;
@@ -573,6 +578,36 @@ class Imports extends REST_Controller {
 			}
 		}
 		$this->response(array('results' => $data, 'count' => count($data)), 201);
+	}
+
+	function proptery_post() {
+		$models = json_decode($this->post('models'));
+		$data = array();
+
+		foreach($modules as $row) {
+			$contact = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			// problem with same name for two different people
+			$contact->where('name', $row->contact)->get();
+			$property = new Proptery(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$property->contact_id = $contact->id;
+			$proterty->name = $row->name;
+			$property->abbr = $row->abbr;
+			$property->code = $row->code;
+
+			$property->trans_begin();
+			$property->save();
+			if($property->trans_status() === TRUE) {
+				$property->trans_commit();
+				$data[] = array(
+					'id' => $property->id,
+					'name' => $property->name,
+					'code' => $property->code
+				);
+			}
+		}
+
+		$this->response(array('results' => $data, 'count' => count($data)), 201);
+
 	}
 
 	function item_post() {

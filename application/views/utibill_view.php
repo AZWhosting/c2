@@ -7507,8 +7507,9 @@
 							<thead>
 								<tr>
 									<th style="vertical-align: top;"><span data-bind="text: lang.lang.customer_name">Customer Name</span></th>
-									<th style="vertical-align: top;"><span data-bind="text: lang.lang.number">Address</span></th>
-									<th style="vertical-align: top;"><span data-bind="text: lang.lang.address">Phone</span></th>
+									<th style="vertical-align: top;"><span data-bind="text: lang.lang.number">Number</span></th>
+									<th style="vertical-align: top;"><span data-bind="text: lang.lang.phone">Phone</span></th>
+									<th style="vertical-align: top;"><span data-bind="text: lang.lang.address">Address</span></th>
 								</tr>
 							</thead>
 							<tbody data-role="listview"
@@ -7527,7 +7528,8 @@
 	<tr>
 		<td>#=name#</td>
 		<td>#=number#</td>
-		<td>#=address#</td>		
+		<td>#=phone#</td>
+		<td style="text-align: right;">#=address#</td>		
 	</tr>
 </script>
 <script id="customerNoConnection" type="text/x-kendo-template">
@@ -7688,7 +7690,9 @@
 							<thead>
 								<tr>
 									<th style="vertical-align: top;"><span data-bind="text: lang.lang.customer_name">Customer Name</span></th>
-									<th style="vertical-align: top;"><span data-bind="">Abbr</span></th>
+									<th style="vertical-align: top;"><span data-bind="">License</span></th>
+									<th style="vertical-align: top;"><span data-bind="text: lang.lang.number">Number</span></th>
+									<th style="vertical-align: top;"><span data-bind="text: lang.lang.phone">Phone</span></th>
 									<th style="vertical-align: top;"><span data-bind="text: lang.lang.address">Address</span></th>
 								</tr>
 							</thead>
@@ -7706,7 +7710,9 @@
 <script id="disconnectList-temp" type="text/x-kendo-template" >
 	<tr>
 		<td>#=name#</td>
-		<td>#=abbr#</td>
+		<td>#=license#</td>
+		<td>#=number#</td>
+		<td>#=phone#</td>
 		<td style="text-align: right;">#=address#</td>
 	</tr>
 </script>
@@ -7934,19 +7940,6 @@
 																value: blocSelect,
 																	source: blocDS" style="width: 100%">
 												</div>
-												<div class="span3">
-													<span data-bind="text: lang.lang.customers"></span>
-													<select data-role="multiselect"
-														   data-value-primitive="true"
-														   data-header-template="customer-header-tmpl"
-														   data-item-template="contact-list-tmpl"
-														   data-value-field="id"
-														   data-text-field="name"
-														   data-bind="value: obj.contactIds, 
-														   			source: contactDS"
-														   data-placeholder="Select Customer.."
-														   style="width: 100%" /></select>
-												</div>
 												<div class="span1">											
 										  			<button style="margin-top: 20px;" type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
 												</div>														
@@ -7981,9 +7974,7 @@
 										 data-template="miniCustomerList-temp"
 							></tbody>
 						</table>
-						<div data-role="pager"
-			            	data-auto-bind="false" 
-			            	data-bind="source: dataSource"></div>
+				
 					</div>
 				</div>
 			</div>
@@ -8249,19 +8240,6 @@
 																value: blocSelect,
 																	source: blocDS" style="width: 100%">
 												</div>
-												<div class="span3">
-													<span data-bind="text: lang.lang.customers"></span>
-													<select data-role="multiselect"
-														   data-value-primitive="true"
-														   data-header-template="customer-header-tmpl"
-														   data-item-template="contact-list-tmpl"
-														   data-value-field="id"
-														   data-text-field="name"
-														   data-bind="value: obj.contactIds, 
-														   			source: contactDS"
-														   data-placeholder="Select Customer.."
-														   style="width: 100%" /></select>
-												</div>
 												<div class="span1">											
 										  			<button style="margin-top: 20px;" type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
 												</div>														
@@ -8441,19 +8419,6 @@
 															data-bind="
 																value: blocSelect,
 																	source: blocDS" style="width: 100%">
-												</div>
-												<div class="span3">
-													<span data-bind="text: lang.lang.customers"></span>
-													<select data-role="multiselect"
-														   data-value-primitive="true"
-														   data-header-template="customer-header-tmpl"
-														   data-item-template="contact-list-tmpl"
-														   data-value-field="id"
-														   data-text-field="name"
-														   data-bind="value: obj.contactIds, 
-														   			source: contactDS"
-														   data-placeholder="Select Customer.."
-														   style="width: 100%" /></select>
 												</div>
 												<div class="span1">											
 										  			<button style="margin-top: 20px;" type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
@@ -9828,6 +9793,7 @@
 						<ul style="padding-left: 1px;">
 							<li class="active"><a class="glyphicons user" href="#tabContact" data-toggle="tab"><i></i><span style="line-height: 55px;" data-bind="text: lang.lang.customer">Customer</span></a></li>
 							<li><a class="glyphicons list" href="#tabInventery" data-toggle="tab"><i></i><span style="line-height: 55px;" data-bind="text: lang.lang.meter">Meter</span></a></li>
+							<li><a class="glyphicons list" href="#tabProperty" data-toggle="tab"><i></i><span style="line-height: 55px;" data-bind="text: lang.lang.proptery">Meter</span></a></li>
 						</ul>
 					</div>
 					<!-- // Tabs Heading END -->
@@ -9874,6 +9840,21 @@
 								<span data-bind="click: item.save, text: lang.lang.import_meter">Import Meter</span>
 							</div>
 							<!-- // Tab content END -->
+							<div id="tabProperty" style="border: 1px solid #ccc" class="tab-pane widget-body-regular">
+								
+								<h4 class="separator bottom" style="margin-top: 10px;" data-bind="text: lang.lang.please_upload_inventory_file">Please upload Property file</h4>
+								<a href="<?php echo base_url(); ?>assets/water/property_import.xlsx" download>
+									<span id="saveClose" class="btn btn-icon btn-success glyphicons download" style="width: 200px!important;position: absolute;top: 85px;right: 10px;">
+										<i></i> 
+										<span data-bind="text: lang.lang.download_file_example">Download file Example</span>
+									</span>
+								</a>
+								<div class="fileupload fileupload-new margin-none" data-provides="fileupload">
+								  	<input type="file"  data-role="upload" data-show-file-list="true" data-bind="events: {select: property.onSelected}" id="myFile"  class="margin-none" />
+								</div>
+								<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 160px!important;"><i></i>
+								<span data-bind="click: property.save, text: lang.lang.import_proptery">Import Meter</span>
+							</div>
 							
 							
 						</div>
@@ -19938,7 +19919,7 @@
 		obj 				: { contactIds: [], licenseID:0 , locationID: []},
 		company 			: banhji.institute,
 		displayDate 		: "",
-		totalAmount 		: 0,
+		total 				: 0,
 		exArray 			: [],
 		pageLoad 			: function(){
 			this.search();
@@ -21030,6 +21011,7 @@
 		sorter 				: "month",
 		sdate 				: "",
 		edate 				: "",
+		as_of 				: new Date(),
 		obj 				: { contactIds: [], licenseID:0 , locationID: []},
 		company 			: banhji.institute,
 		displayDate 		: "",
@@ -21083,8 +21065,7 @@
 		search				: function(){
 			var self = this, para = [],
 				obj = this.get("obj"),
-				start = this.get("sdate"),
-        		end = this.get("edate"),
+				as_of = this.get("as_of"),
         		displayDate = "";
         		license = this.get("licenseSelect"),
 				bloc = this.get("blocSelect");
@@ -21106,29 +21087,14 @@
     	
     	
         	//Dates
-        	if(start && end){
-        		start = new Date(start);
-        		end = new Date(end);
-        		displayDate = "From " + kendo.toString(start, "dd-MM-yyyy") + " To " + kendo.toString(end, "dd-MM-yyyy");
-        		end.setDate(end.getDate()+1);
+        	if(as_of){
+				as_of = new Date(as_of);
+				var displayDate = "As Of " + kendo.toString(as_of, "dd-MM-yyyy");
+				this.set("displayDate", displayDate);
+				as_of.setDate(as_of.getDate()+1);
 
-            	para.push({ field:"issued_date >=", value: kendo.toString(start, "yyyy-MM-dd") });
-            	para.push({ field:"issued_date <", value: kendo.toString(end, "yyyy-MM-dd") });
-            }else if(start){
-            	start = new Date(start);
-            	displayDate = "On " + kendo.toString(start, "dd-MM-yyyy");
-
-            	para.push({ field:"issued_date", value: kendo.toString(start, "yyyy-MM-dd") });
-            }else if(end){
-            	end = new Date(end);
-            	displayDate = "As Of " + kendo.toString(end, "dd-MM-yyyy");
-        		end.setDate(end.getDate()+1);
-        		
-            	para.push({ field:"issued_date <", value: kendo.toString(end, "yyyy-MM-dd") });
-            }else{
-            	
-            }
-            this.set("displayDate", displayDate);
+				para.push({ field:"issued_date <", value:kendo.toString(as_of, "yyyy-MM-dd") });
+			}
 
             this.dataSource.query({
             	filter:para
@@ -21255,12 +21221,10 @@
 		licenseDS 				: dataStore(apiUrl+"branches"),
 		blocDS 					: dataStore(apiUrl+"locations"),
 		sortList			: banhji.source.sortList,
-		sorter 				: "month",
-		sdate 				: "",
-		edate 				: "",
 		obj 				: { contactIds: [], licenseID:0 , locationID: []},
 		company 			: banhji.institute,
 		displayDate 		: "",
+		as_of 				: new Date(),
 		totalAmount 		: 0,
 		exArray 			: [],
 		pageLoad 			: function(){
@@ -21310,8 +21274,7 @@
 		search				: function(){
 			var self = this, para = [],
 				obj = this.get("obj"),
-				start = this.get("sdate"),
-        		end = this.get("edate"),
+				as_of = this.get("as_of"),
         		displayDate = "";
         		license = this.get("licenseSelect"),
 				bloc = this.get("blocSelect");
@@ -21332,29 +21295,14 @@
 	        }
     	
         	//Dates
-        	if(start && end){
-        		start = new Date(start);
-        		end = new Date(end);
-        		displayDate = "From " + kendo.toString(start, "dd-MM-yyyy") + " To " + kendo.toString(end, "dd-MM-yyyy");
-        		end.setDate(end.getDate()+1);
+        	if(as_of){
+				as_of = new Date(as_of);
+				var displayDate = "As Of " + kendo.toString(as_of, "dd-MM-yyyy");
+				this.set("displayDate", displayDate);
+				as_of.setDate(as_of.getDate()+1);
 
-            	para.push({ field:"issued_date >=", value: kendo.toString(start, "yyyy-MM-dd") });
-            	para.push({ field:"issued_date <", value: kendo.toString(end, "yyyy-MM-dd") });
-            }else if(start){
-            	start = new Date(start);
-            	displayDate = "On " + kendo.toString(start, "dd-MM-yyyy");
-
-            	para.push({ field:"issued_date", value: kendo.toString(start, "yyyy-MM-dd") });
-            }else if(end){
-            	end = new Date(end);
-            	displayDate = "As Of " + kendo.toString(end, "dd-MM-yyyy");
-        		end.setDate(end.getDate()+1);
-        		
-            	para.push({ field:"issued_date <", value: kendo.toString(end, "yyyy-MM-dd") });
-            }else{
-            	
-            }
-            this.set("displayDate", displayDate);
+				para.push({ field:"issued_date <", value:kendo.toString(as_of, "yyyy-MM-dd") });
+			}
 
             this.dataSource.query({
             	filter:para
@@ -21477,11 +21425,13 @@
 				var result = {}; 						
 				var workbook = XLSX.read(data, {type : 'binary'});
 				workbook.SheetNames.forEach(function(sheetName) {
-					var roa = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
-					if(roa.length > 0){
-						result[sheetName] = roa;
-						for(var i = 0; i < roa.length; i++) {	
-							banhji.importContact.dataSource.add(roa[i]);	
+					if(sheetName == 'contact') {
+						var roa = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
+						if(roa.length > 0){
+							result[sheetName] = roa;
+							for(var i = 0; i < roa.length; i++) {	
+								banhji.importContact.dataSource.add(roa[i]);	
+							}						
 						}						
 					}
 				});															
@@ -21490,22 +21440,27 @@
         },
 		save: function() {
 			var self = this;
-			$("#loadImport").css("display","block");
-			banhji.importContact.dataSource.sync();
-			banhji.importContact.dataSource.bind("requestEnd", function(e){
-		    	if(e.response){				
-		    		$("#ntf1").data("kendoNotification").success("Imported contacts successfully!");
-					$("#loadImport").css("display","none");
+			if(banhji.importContact.dataSource.data().length === 0) {
+				$("#ntf1").data("kendoNotification").error("Error Importing Contact!");
+				$("#ntf1").data("kendoNotification").error("");
+			} else {
+				$("#loadImport").css("display","block");
+				banhji.importContact.dataSource.sync();
+				banhji.importContact.dataSource.bind("requestEnd", function(e){
+			    	if(e.response){				
+			    		$("#ntf1").data("kendoNotification").success("Imported contacts successfully!");
+						$("#loadImport").css("display","none");
+						$('li.k-file').remove();
+						banhji.importContact.dataSource.data([]);
+					}
+			    });
+			    banhji.importContact.dataSource.bind("error", function(e){		    		    	
+					$("#ntf1").data("kendoNotification").error("Error Importing Contact!"); 	
+					$("#loadImport").css("display","none");	
 					$('li.k-file').remove();
-					banhji.importContact.dataSource.data([]);
-				}
-		    });
-		    banhji.importContact.dataSource.bind("error", function(e){		    		    	
-				$("#ntf1").data("kendoNotification").error("Error Importing Contact!"); 	
-				$("#loadImport").css("display","none");	
-				$('li.k-file').remove();
-				banhji.importContact.dataSource.data([]);		
-		    });
+					banhji.importContact.dataSource.data([]);		
+			    });
+			}
 		}
 	});
 	banhji.importItem = kendo.observable({
@@ -21520,12 +21475,14 @@
 				var result = {}; 						
 				var workbook = XLSX.read(data, {type : 'binary'});
 				workbook.SheetNames.forEach(function(sheetName) {
-					var roa = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
-					if(roa.length > 0){
-						result[sheetName] = roa;
-						for(var i = 0; i < roa.length; i++) {	
-							banhji.importItem.dataSource.add(roa[i]);	
-						}						
+					if(sheetName == 'meter') {
+						var roa = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
+						if(roa.length > 0){
+							result[sheetName] = roa;
+							for(var i = 0; i < roa.length; i++) {	
+								banhji.importItem.dataSource.add(roa[i]);	
+							}						
+						}
 					}
 				});															
 			}
@@ -21533,33 +21490,92 @@
         },
 		save: function() {
 			var self = this;
-			$("#loadImport").css("display","block");
-			banhji.importItem.dataSource.sync();
-			banhji.importItem.dataSource.bind("requestEnd", function(e){
-		    	if(e.response){				
-		    		$("#ntf1").data("kendoNotification").success("Imported Meters successfully!");
-		    		$("#loadImport").css("display","none");
-		    		$('li.k-file').remove();
-		    		self.dataSource.data([]);
-					
-				}				  				
-		    });
-		    banhji.importItem.dataSource.bind("error", function(e){		    		    	
-				$("#ntf1").data("kendoNotification").error("Error Importing Meters!"); 
-				$("#loadImport").css("display","none");	
-				$('li.k-file').remove();
-				self.dataSource.data([]);
-							
-		    });
+			if(banhji.importContact.dataSource.data().length === 0) {
+				$("#ntf1").data("kendoNotification").error("Error Importing Contact!");
+				$("#ntf1").data("kendoNotification").error("");
+			} else {
+				$("#loadImport").css("display","block");
+				banhji.importItem.dataSource.sync();
+				banhji.importItem.dataSource.bind("requestEnd", function(e){
+			    	if(e.response){				
+			    		$("#ntf1").data("kendoNotification").success("Imported Meters successfully!");
+			    		$("#loadImport").css("display","none");
+			    		$('li.k-file').remove();
+			    		self.dataSource.data([]);
+						
+					}				  				
+			    });
+			    banhji.importItem.dataSource.bind("error", function(e){		    		    	
+					$("#ntf1").data("kendoNotification").error("Error Importing Meters!"); 
+					$("#loadImport").css("display","none");	
+					$('li.k-file').remove();
+					self.dataSource.data([]);
+								
+			    });
+			}
+		}
+	});
+	banhji.importProptery = kendo.observable({
+		dataSource 	  : dataStore(apiUrl+"imports/property"),
+		onSelected    : function(e) {
+			$('li.k-file').remove();
+	        var files = e.files;
+	        var reader = new FileReader();
+			banhji.importItem.dataSource.data([]);	
+			reader.onload = function() {						
+				var data = reader.result;	
+				var result = {}; 						
+				var workbook = XLSX.read(data, {type : 'binary'});
+				workbook.SheetNames.forEach(function(sheetName) {
+					if(sheetName == 'property') {
+						var roa = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
+						if(roa.length > 0){
+							result[sheetName] = roa;
+							for(var i = 0; i < roa.length; i++) {	
+								banhji.importProptery.dataSource.add(roa[i]);	
+							}						
+						}
+					}
+				});															
+			}
+			reader.readAsBinaryString(files[0].rawFile);         	
+        },
+		save: function() {
+			var self = this;
+			if(banhji.importProptery.dataSource.data().length === 0) {
+				$("#ntf1").data("kendoNotification").error("Error Importing Property!");
+				$("#ntf1").data("kendoNotification").error("");
+			} else {
+				$("#loadImport").css("display","block");
+				banhji.importProptery.dataSource.sync();
+				banhji.importProptery.dataSource.bind("requestEnd", function(e){
+			    	if(e.response){				
+			    		$("#ntf1").data("kendoNotification").success("Imported Meters successfully!");
+			    		$("#loadImport").css("display","none");
+			    		$('li.k-file').remove();
+			    		self.dataSource.data([]);
+						
+					}				  				
+			    });
+			    banhji.importProptery.dataSource.bind("error", function(e){		    		    	
+					$("#ntf1").data("kendoNotification").error("Error Importing Meters!"); 
+					$("#loadImport").css("display","none");	
+					$('li.k-file').remove();
+					self.dataSource.data([]);
+								
+			    });
+			}
 		}
 	});
 	banhji.importView = kendo.observable({
     	lang 				: langVM,
     	contact 			: banhji.importContact,
     	item 				: banhji.importItem,
+    	property 			: banhji.importProptery,
     	cancel 				: function(e){
     		this.contact.dataSource.data([]);
     		this.item.dataSource.data([]);
+    		this.property.dataSource.cancelChanges();
     		banhji.router.navigate("/");
     	}
     });

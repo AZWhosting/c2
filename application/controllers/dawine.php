@@ -9,14 +9,20 @@ class Dawine extends MY_Controller {
 		// }
 	}
 	
-	public function index() {	
-		
+	public function index() {
 		/*
 		 *set up title and keywords (if not the default in custom.php config file will be set) 
 		 */
 		$this->_render("dawine_view");	
 	}
-	
+
+	public function custom_table() {
+		/*
+		 *set up title and keywords (if not the default in custom.php config file will be set) 
+		 */
+		$this->_render("custom_table_view");	
+	}
+
 }
 
 /* End of file dawine.php */

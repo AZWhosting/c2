@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Welcome extends MY_Controller {
+class Welcome extends CI_Controller {
 
 	/**
 	 * Index Page for this controller.
@@ -19,9 +19,7 @@ class Welcome extends MY_Controller {
 	 */
 	public function index()
 	{
-		//$this->_render('showcase_view');
-		header("Location: http://www.banhji.com/");
-		die();
+		$this->load->view('gridtest');
 	}
 	public function report() {
 		$this->_render('report');

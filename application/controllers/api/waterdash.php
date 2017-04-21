@@ -89,6 +89,7 @@ class Waterdash extends REST_Controller {
 		$trx->select('amount, contact_id as contact');
 		$trx->where('type', 'Utility_Invoice');
 		$trx->where('status <>', 1);
+		$trx->where('deleted <>', 1);
 		$trx->get();
 
 		$invoices = 0;

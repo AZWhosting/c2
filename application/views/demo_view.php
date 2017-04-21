@@ -461,7 +461,7 @@
 	</dl>	
 </script>
 <script id="customTable" type="text/x-kendo-template">
-	<div id="examplexxx">
+	<div id="example">
 		<div>
 			<input type="number" class="k-textbox" data-bind="value: id" />
 			<input type="button" class="k-button" data-bind="click: searchTxn" value="Transaction" />
@@ -44598,7 +44598,6 @@
 
 
 <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/js/libs/localforage.min.js"></script>
-<script src="http://cdnjs.cloudflare.com/ajax/libs/jszip/2.4.0/jszip.js"></script>
 <script src="https://maps.googleapis.com/maps/api/js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/xlsx.js"></script>
 <script>
@@ -66610,7 +66609,7 @@
 				}
 			}
 
-			//Discount on Cr			
+			//Discount on Cr
 			if(obj.discount > 0){
 				var discountAccountId = kendo.parseInt(contact.trade_discount_id);
 				if(discountAccountId>0){
@@ -76110,85 +76109,100 @@
 		//Journal
 	    addJournal 				: function(transaction_id){
 	    	var self = this,
-	    	obj = this.get("obj"),
-	    	inventoryList = {};
+		    	obj = this.get("obj"),
+		    	raw = "", entries = {}, gainLoss = 0;
 			
-			//Group accounts
+			//Item Lines
 			$.each(this.lineDS.data(), function(index, value){
 				var item = self.itemDS.get(value.item_id),
-				accountID = item.inventory_account_id,
-				itemRate = banhji.source.getRate(item.locale, new Date(obj.issued_date));
+					accountID = item.inventory_account_id,
+					itemRate = banhji.source.getRate(item.locale, new Date(obj.issued_date));
 
 				var itemCost = (value.quantity*value.unit_value)*value.movement*(kendo.parseFloat(item.cost)/itemRate);
 				if(itemCost==0){
 					itemCost = (value.quantity*value.unit_value)*value.movement*(value.cost/itemRate);
 				}
-				
-				if(inventoryList[accountID]===undefined){
-					inventoryList[accountID]={"id": accountID, "amount": itemCost };
-				}else{
-					if(inventoryList[accountID].id===accountID){
-						inventoryList[accountID].amount += itemCost;
+
+				gainLoss += itemCost;
+
+				if(itemCost>0){//Add + Positive Inventory On Dr
+					raw = "dr"+accountID;
+					
+					if(entries[raw]===undefined){
+						entries[raw] = {
+							transaction_id 		: transaction_id,
+							account_id 			: accountID,
+							contact_id 			: obj.contact_id,
+							description 		: obj.memo,
+							reference_no 		: "",
+							segments 	 		: obj.segments,
+							dr 	 				: Math.abs(itemCost),
+							cr 					: 0,
+							rate				: itemRate,
+							locale				: item.locale
+						};
 					}else{
-						inventoryList[accountID]={"id": accountID, "amount": itemCost };
+						entries[raw].dr += Math.abs(itemCost);
+					}
+				}else{
+					//Add - Negative Inventory On Cr
+					raw = "cr"+accountID;
+					
+					if(entries[raw]===undefined){
+						entries[raw] = {
+							transaction_id 		: transaction_id,
+							account_id 			: accountID,
+							contact_id 			: obj.contact_id,
+							description 		: obj.memo,
+							reference_no 		: "",
+							segments 	 		: obj.segments,
+							dr 	 				: 0,
+							cr 					: Math.abs(itemCost),
+							rate				: itemRate,
+							locale				: item.locale
+						};
+					}else{
+						entries[raw].cr += Math.abs(itemCost);
 					}
 				}
 			});//End Foreach Loop
 
-			//Start journal
-			if(!jQuery.isEmptyObject(inventoryList)){
-				var gainLoss = 0;
+			//Add Gain Or Loss Account
+			var objAccountID = kendo.parseInt(obj.account_id),
+				dr = 0, cr = 0;
 
-				$.each(inventoryList, function(index, value){
-					gainLoss += value.amount;
-
-					if(value.amount>0){
-						//Add +Positive Inventory On Dr
-						self.journalLineDS.add({
-							transaction_id 		: transaction_id,
-							account_id 			: value.id,
-							description 		: "",
-							reference_no 		: "",
-							segments 	 		: [],
-							dr 	 				: Math.abs(value.amount),
-							cr 					: 0,
-							rate				: obj.rate,
-							locale				: obj.locale
-						});
-					}else{
-						//Add -Negative Inventory On Cr
-						self.journalLineDS.add({
-							transaction_id 		: transaction_id,
-							account_id 			: value.id,
-							description 		: "",
-							reference_no 		: "",
-							segments 	 		: [],
-							dr 	 				: 0,
-							cr 					: Math.abs(value.amount),
-							rate				: obj.rate,
-							locale				: obj.locale
-						});
-					}
-				});
-
-				//Add Gain Or Loss Account
-				var dr = 0, cr = 0;
+			if(objAccountID>0){				
 				if(gainLoss>0){
+					raw = "cr"+objAccountID;
 					cr = Math.abs(gainLoss);
 				}else{
+					raw = "dr"+objAccountID;
 					dr = Math.abs(gainLoss);
 				}
 
-				self.journalLineDS.add({
-					transaction_id 		: transaction_id,
-					account_id 			: obj.account_id,
-					description 		: "",
-					reference_no 		: "",
-					segments 	 		: [],
-					dr 	 				: dr,
-					cr 					: cr,
-					rate				: obj.rate,
-					locale				: obj.locale
+				if(entries[raw]===undefined){
+					entries[raw] = {
+						transaction_id 		: transaction_id,
+						account_id 			: objAccountID,
+						contact_id 			: obj.contact_id,
+						description 		: obj.memo,
+						reference_no 		: "",
+						segments 	 		: obj.segments,
+						dr 	 				: dr,
+						cr 					: cr,
+						rate				: obj.rate,
+						locale				: obj.locale
+					};
+				}else{
+					entries[raw].dr += dr;
+					entries[raw].cr += cr;
+				}
+			}
+
+			//Add to journal entry
+			if(!jQuery.isEmptyObject(entries)){
+				$.each(entries, function(index, value){
+					self.journalLineDS.add(value);
 				});
 			}
 
@@ -80608,7 +80622,7 @@
 		contactDS 			: banhji.source.contactDS,
 		attachmentDS	 	: dataStore(apiUrl + "attachments"),
 		paymentMethodDS		: banhji.source.paymentMethodDS,
-		currencyDS  			: new kendo.data.DataSource({
+		currencyDS  		: new kendo.data.DataSource({
 		  	data: banhji.source.currencyList,
 		  	filter: { field:"status", value: 1 }
 		}),
@@ -81161,13 +81175,40 @@
 	    //Journal	        
 	    addJournal 			: function(transaction_id){
 	    	var self = this,
-	    	obj = this.get("obj");
-			
-			var debit = 0, credit = 0;
-			if(obj.type=="Deposit"){
-				debit = obj.amount;
-			}else{
-				credit = obj.amount;
+	    		obj = this.get("obj"),
+	    		raw = "", entries = {};
+
+	    	//Add Journal
+			var objAccountID = kendo.parseInt(obj.account_id),
+				debit = 0, credit = 0;
+
+			if(objAccountID>0){				
+				if(obj.type=="Deposit"){
+					raw = "dr"+objAccountID;
+					debit = obj.amount;
+				}else{
+					raw = "cr"+objAccountID;
+					credit = obj.amount;
+				}
+
+				var arAmount = obj.amount - (obj.discount + obj.deposit);
+				if(entries[raw]===undefined){
+					entries[raw] = {
+						transaction_id 		: transaction_id,
+						account_id 			: objAccountID,
+						contact_id 			: obj.contact_id,
+						description 		: obj.memo,
+						reference_no 		: obj.reference_no,
+						segments 	 		: obj.segments,
+						dr 	 				: debit,
+						cr 					: credit,
+						rate				: obj.rate,
+						locale				: obj.locale
+					};
+				}else{
+					entries[raw].dr += debit;
+					entries[raw].cr += credit;
+				}
 			}
 
 			//Add Journal
@@ -81175,7 +81216,7 @@
 				transaction_id 		: transaction_id,
 				account_id 			: obj.account_id,				
 				contact_id 			: obj.contact_id,				
-				description 		: "",
+				description 		: obj.memo,
 				reference_no 		: "",
 				segments 	 		: obj.segments,								
 				dr 	 				: debit,
@@ -81205,7 +81246,14 @@
 					rate				: value.rate,
 					locale				: value.locale
 				});						
-			});			
+			});
+
+			//Add to journal entry
+			if(!jQuery.isEmptyObject(entries)){
+				$.each(entries, function(index, value){
+					self.journalLineDS.add(value);
+				});
+			}			
 
 			this.journalLineDS.sync();
 		},
@@ -81893,7 +81941,7 @@
 			this.journalLineDS.add({					
 				transaction_id 		: transaction_id,
 				account_id 			: obj.account_id,										
-				description 		: "",
+				description 		: obj.memo,
 				reference_no 		: "",
 				segments 	 		: obj.segments,								
 				dr 	 				: 0,
@@ -90857,6 +90905,7 @@
 			
 			if(banhji.pageLoaded["custom_table"]==undefined){
 				banhji.pageLoaded["custom_table"] = true;
+
 			}
 
 			vm.pageLoad();

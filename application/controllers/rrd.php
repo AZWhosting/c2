@@ -54,12 +54,12 @@ class Rrd extends MY_Controller {
 		$this->_render("fsr_view");	
 	}
 
-	public function choeun() {	
+	public function test() {	
 		
 		/*
 		 *set up title and keywords (if not the default in custom.php config file will be set) 
 		 */
-		$this->_render("choeun_view");	
+		$this->_render("gridtest");	
 	}
 	public function choeunw() {	
 		
