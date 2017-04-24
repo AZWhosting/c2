@@ -9853,7 +9853,7 @@
 								  	<input type="file"  data-role="upload" data-show-file-list="true" data-bind="events: {select: property.onSelected}" id="myFile"  class="margin-none" />
 								</div>
 								<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 160px!important;"><i></i>
-								<span data-bind="click: property.save, text: lang.lang.import_proptery">Import Meter</span>
+								<span data-bind="click: property.save, text: lang.lang.imports">Import Meter</span>
 							</div>
 							
 							
