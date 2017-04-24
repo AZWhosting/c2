@@ -87,10 +87,9 @@ class Ops extends REST_Controller {
 	function runs_get() {
 		$this->load->dbutil();
 		$dbs = $this->dbutil->list_databases();
-
 		$companyList = array("banhji","banhji_mac", "information_schema","innodb","mysql","performance_schema","tmp");
 		$data = array();
-		foreach ($dbs as $db)
+		foreach ($dbs as $key => $db)
 		{	
 			if (!in_array("$db", $companyList)) {
 			    $data[] = $db;
@@ -101,15 +100,16 @@ class Ops extends REST_Controller {
 			    // $this->db->update('prefixes', array('name' => 'Invoice'));
 
 			    // $this->db->insert('item_prices', array('item_id' => 7, 'measurement_id'=> 6, 'unit_value' => 1.000000000000000, 'locale'=> 'km-KH'));
-				$this->dbforge->add_column("item_lines", array(
-																"wht_account_id" => array(
-																					"type" 		=> "INT",
-																					"constraint"=> 11,
-																					"null" 		=> FALSE,
-																					"default" 	=> 0
-																					)
-																)
-				);
+				
+				// $this->dbforge->add_column("account_lines", array(
+				// 												"wht_account_id" => array(
+				// 																	"type" 		=> "INT",
+				// 																	"constraint"=> 11,
+				// 																	"null" 		=> FALSE,
+				// 																	"default" 	=> 0
+				// 																	)
+				// 												)
+				// );
 
 				// $this->dbforge->modify_column(
 		  //       	'transactions', array(

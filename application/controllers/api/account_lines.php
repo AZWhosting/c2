@@ -24,50 +24,60 @@ class Account_lines extends REST_Controller {
 	
 	//GET 
 	function index_get() {		
-		$filters 	= $this->get("filter")["filters"];		
-		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
-		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;								
+		$filter 	= $this->get("filter");		
+		$page 		= $this->get('page');		
+		$limit 		= $this->get('limit');
 		$sort 	 	= $this->get("sort");		
-		$data["results"] = array();
+		$data["results"] = [];
 		$data["count"] = 0;
 
-		$obj = new Account_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
+		$obj = new Account_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);	
 
 		//Sort
-		if(!empty($sort) && isset($sort)){					
+		if(!empty($sort) && isset($sort)){
 			foreach ($sort as $value) {
-				$obj->order_by($value["field"], $value["dir"]);
+				if(isset($value['operator'])){
+					$obj->{$value['operator']}($value["field"], $value["dir"]);
+				}else{
+					$obj->order_by($value["field"], $value["dir"]);
+				}
 			}
 		}
 		
 		//Filter		
-		if(!empty($filters) && isset($filters)){
-	    	foreach ($filters as $value) {
+		if(!empty($filter) && isset($filter)){
+	    	foreach ($filter['filters'] as $value) {
 	    		if(isset($value['operator'])) {
 					$obj->{$value['operator']}($value['field'], $value['value']);
 				} else {
-	    			$obj->where($value["field"], $value["value"]);
+					$obj->where($value["field"], $value["value"]);
 				}
 			}
 		}
 		
 		//Results
-		$obj->get_paged_iterated($page, $limit);
-		$data["count"] = $obj->paged->total_rows;		
-		
-		if($obj->result_count()>0){			
+		if($page && $limit){
+			$obj->get_paged_iterated($page, $limit);
+			$data["count"] = $obj->paged->total_rows;
+		}else{
+			$obj->get_iterated();
+			$data["count"] = $obj->result_count();
+		}							
+
+		if($obj->exists()){
 			foreach ($obj as $value) {
 				$data["results"][] = array(
 					"id" 				=> $value->id,
 			   		"transaction_id"	=> $value->transaction_id,
 			   		"payment_method_id"	=> $value->payment_method_id,
-			   		"tax_item_id"		=> $value->tax_item_id,			   		
+			   		"tax_item_id"		=> $value->tax_item_id,
+			   		"wht_account_id"	=> $value->wht_account_id,
 					"account_id" 		=> intval($value->account_id),
-					"contact_id" 		=> $value->contact_id,							   	
+					"contact_id" 		=> $value->contact_id,
 				   	"description" 		=> $value->description,
 				   	"reference_no" 		=> $value->reference_no,
 				   	"segments" 			=> explode(",",$value->segments),
-				   	"amount" 			=> floatval($value->amount),				   	
+				   	"amount" 			=> floatval($value->amount),
 				   	"rate"				=> floatval($value->rate),
 				   	"locale" 			=> $value->locale,
 				   	"reference_date" 	=> $value->reference_date,
@@ -93,6 +103,7 @@ class Account_lines extends REST_Controller {
 			isset($value->transaction_id) 	? $obj->transaction_id 		= $value->transaction_id : "";
 			isset($value->payment_method_id)? $obj->payment_method_id 	= $value->payment_method_id : "";
 			isset($value->tax_item_id) 		? $obj->tax_item_id 		= $value->tax_item_id : "";			
+			isset($value->wht_account_id) 	? $obj->wht_account_id 		= $value->wht_account_id : "";
 			isset($value->account_id)		? $obj->account_id			= $value->account_id : "";
 			isset($value->contact_id)		? $obj->contact_id			= $value->contact_id : "";			
 		   	isset($value->description)		? $obj->description 		= $value->description : "";
@@ -109,7 +120,8 @@ class Account_lines extends REST_Controller {
 			   		"id" 				=> $obj->id,
 			   		"transaction_id"	=> $obj->transaction_id,
 			   		"payment_method_id"	=> $obj->payment_method_id,
-			   		"tax_item_id"		=> $obj->tax_item_id,			   		
+			   		"tax_item_id"		=> $obj->tax_item_id,
+			   		"wht_account_id"	=> $obj->wht_account_id,			   		
 					"account_id" 		=> $obj->account_id,
 					"contact_id" 		=> $obj->contact_id,							   	
 				   	"description" 		=> $obj->description,
@@ -143,7 +155,8 @@ class Account_lines extends REST_Controller {
 
 			isset($value->transaction_id) 	? $obj->transaction_id 		= $value->transaction_id : "";
 			isset($value->payment_method_id)? $obj->payment_method_id 	= $value->payment_method_id : "";
-			isset($value->tax_item_id) 		? $obj->tax_item_id 		= $value->tax_item_id : "";			
+			isset($value->tax_item_id) 		? $obj->tax_item_id 		= $value->tax_item_id : "";
+			isset($value->wht_account_id) 	? $obj->wht_account_id 		= $value->wht_account_id : "";			
 			isset($value->account_id)		? $obj->account_id			= $value->account_id : "";
 			isset($value->contact_id)		? $obj->contact_id			= $value->contact_id : "";			
 		   	isset($value->description)		? $obj->description 		= $value->description : "";
@@ -161,7 +174,8 @@ class Account_lines extends REST_Controller {
 					"id" 				=> $obj->id,
 			   		"transaction_id"	=> $obj->transaction_id,
 			   		"payment_method_id"	=> $obj->payment_method_id,
-			   		"tax_item_id"		=> $obj->tax_item_id,			   		
+			   		"tax_item_id"		=> $obj->tax_item_id,
+			   		"wht_account_id"	=> $obj->wht_account_id,			   		
 					"account_id" 		=> $obj->account_id,
 					"contact_id" 		=> $obj->contact_id,							   	
 				   	"description" 		=> $obj->description,

@@ -35,7 +35,11 @@ class Item_lines extends REST_Controller {
 		//Sort
 		if(!empty($sort) && isset($sort)){
 			foreach ($sort as $value) {
-				$obj->order_by($value["field"], $value["dir"]);
+				if(isset($value['operator'])){
+					$obj->{$value['operator']}($value["field"], $value["dir"]);
+				}else{
+					$obj->order_by($value["field"], $value["dir"]);
+				}
 			}
 		}
 
@@ -88,6 +92,7 @@ class Item_lines extends REST_Controller {
 			   		"transaction_id"	=> $value->transaction_id,
 			   		"measurement_id" 	=> $value->measurement_id,
 					"tax_item_id" 		=> $value->tax_item_id,
+					"wht_account_id"	=> $value->wht_account_id,
 					"item_id" 			=> $value->item_id,
 					"assembly_id" 		=> $value->assembly_id,
 				   	"description" 		=> $value->description,
@@ -218,6 +223,7 @@ class Item_lines extends REST_Controller {
 			isset($value->assembly_id)		? $obj->assembly_id 		= $value->assembly_id : "";
 			isset($value->measurement_id)	? $obj->measurement_id		= $value->measurement_id : "";
 			isset($value->tax_item_id)		? $obj->tax_item_id			= $value->tax_item_id : "";
+		   	isset($value->wht_account_id)	? $obj->wht_account_id		= $value->wht_account_id : "";
 		   	isset($value->description)		? $obj->description 		= $value->description : "";
 		   	isset($value->on_hand)			? $obj->on_hand 			= $value->on_hand : "";
 		   	// isset($value->on_po)			? $obj->on_po 				= $value->on_po : "";
@@ -243,6 +249,7 @@ class Item_lines extends REST_Controller {
 			   		"transaction_id"	=> $obj->transaction_id,
 			   		"measurement_id" 	=> $obj->measurement_id,
 			   		"tax_item_id" 		=> $obj->tax_item_id,
+					"wht_account_id"	=> $obj->wht_account_id,
 					"item_id" 			=> $obj->item_id,
 					"assembly_id" 		=> $obj->assembly_id,
 				   	"description" 		=> $obj->description,
@@ -308,6 +315,7 @@ class Item_lines extends REST_Controller {
 			isset($value->assembly_id)		? $obj->assembly_id 		= $value->assembly_id : "";
 			isset($value->measurement_id)	? $obj->measurement_id		= $value->measurement_id : "";
 			isset($value->tax_item_id)		? $obj->tax_item_id			= $value->tax_item_id : "";
+			isset($value->wht_account_id)	? $obj->wht_account_id		= $value->wht_account_id : "";
 		   	isset($value->description)		? $obj->description 		= $value->description : "";
 		   	// isset($value->on_hand)		? $obj->on_hand 			= $value->on_hand : "";
 		   	isset($value->on_po)			? $obj->on_po 				= $value->on_po : "";
@@ -334,6 +342,7 @@ class Item_lines extends REST_Controller {
 			   		"transaction_id"	=> $obj->transaction_id,
 			   		"measurement_id" 	=> $obj->measurement_id,
 			   		"tax_item_id" 		=> $obj->tax_item_id,
+					"wht_account_id"	=> $obj->wht_account_id,
 					"item_id" 			=> $obj->item_id,
 					"assembly_id" 		=> $obj->assembly_id,
 				   	"description" 		=> $obj->description,

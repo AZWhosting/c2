@@ -114,6 +114,7 @@ class Transactions extends REST_Controller {
 					"account_id" 				=> intval($value->account_id),
 					"item_id" 					=> $value->item_id,
 					"tax_item_id" 				=> $value->tax_item_id,
+					"wht_account_id"			=> $value->wht_account_id,
 					"user_id" 					=> $value->user_id,
 					"employee_id" 				=> $value->employee_id,
 				   	"number" 					=> $value->number,
@@ -210,6 +211,7 @@ class Transactions extends REST_Controller {
 			isset($value->account_id) 				? $obj->account_id 					= $value->account_id : "";
 			isset($value->item_id) 					? $obj->item_id 					= $value->item_id : "";
 			isset($value->tax_item_id) 				? $obj->tax_item_id 				= $value->tax_item_id : "";
+			isset($value->wht_account_id) 			? $obj->wht_account_id 				= $value->wht_account_id : "";
 			isset($value->user_id) 					? $obj->user_id 					= $value->user_id : "";
 			isset($value->employee_id) 				? $obj->employee_id 				= $value->employee_id : "";
 			$obj->number = $number;
@@ -275,6 +277,7 @@ class Transactions extends REST_Controller {
 					"account_id" 				=> $obj->account_id,
 					"item_id" 					=> $obj->item_id,
 					"tax_item_id" 				=> $obj->tax_item_id,
+					"wht_account_id"			=> $obj->wht_account_id,
 					"user_id" 					=> $obj->user_id,
 					"employee_id" 				=> $obj->employee_id,
 					"number" 					=> $obj->number,
@@ -355,6 +358,7 @@ class Transactions extends REST_Controller {
 			isset($value->account_id) 				? $obj->account_id 					= $value->account_id : "";
 			isset($value->item_id) 					? $obj->item_id 					= $value->item_id : "";
 			isset($value->tax_item_id) 				? $obj->tax_item_id 				= $value->tax_item_id : "";
+			isset($value->wht_account_id) 			? $obj->wht_account_id 				= $value->wht_account_id : "";
 			isset($value->user_id) 					? $obj->user_id 					= $value->user_id : "";
 			isset($value->employee_id) 				? $obj->employee_id 				= $value->employee_id : "";
 			isset($value->number) 					? $obj->number 						= $value->number : "";
@@ -421,6 +425,7 @@ class Transactions extends REST_Controller {
 					"account_id" 				=> $obj->account_id,
 					"item_id" 					=> $obj->item_id,
 					"tax_item_id" 				=> $obj->tax_item_id,
+					"wht_account_id"			=> $obj->wht_account_id,
 					"user_id" 					=> $obj->user_id,
 					"employee_id" 				=> $obj->employee_id,
 					"number" 					=> $obj->number,

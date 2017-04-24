@@ -69,7 +69,7 @@ class Accounts extends REST_Controller {
 		}else{
 			$obj->get_iterated();
 			$data["count"] = $obj->result_count();
-		}							
+		}
 
 		if($obj->exists()){
 			foreach ($obj as $value) {				
