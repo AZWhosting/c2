@@ -101,24 +101,27 @@ class Ops extends REST_Controller {
 			    // $this->db->update('prefixes', array('name' => 'Invoice'));
 
 			    // $this->db->insert('item_prices', array('item_id' => 7, 'measurement_id'=> 6, 'unit_value' => 1.000000000000000, 'locale'=> 'km-KH'));
-				// $this->dbforge->add_column("transactions", array(
-				// 												"references" => array(
-				// 																	"type"=> "TEXT"
-				// 																	)
-				// 												)
-				// );
+				$this->dbforge->add_column("item_lines", array(
+																"wht_account_id" => array(
+																					"type" 		=> "INT",
+																					"constraint"=> 11,
+																					"null" 		=> FALSE,
+																					"default" 	=> 0
+																					)
+																)
+				);
 
-				$this->dbforge->modify_column(
-		        	'transactions', array(
-						'received' => array(
-									'name' 		=> 'received', 
-									'type'		=> 'DECIMAL',
-									'constraint'=> '30,15',
-									'null' 		=> FALSE,
-									'default' 	=> '0'
-						)
-		        	)
-		        );
+				// $this->dbforge->modify_column(
+		  //       	'transactions', array(
+				// 		'received' => array(
+				// 					'name' 		=> 'received', 
+				// 					'type'		=> 'DECIMAL',
+				// 					'constraint'=> '30,15',
+				// 					'null' 		=> FALSE,
+				// 					'default' 	=> '0'
+				// 		)
+		  //       	)
+		  //       );
 			}//End If
 		}//End Foreach
 	}//End Function

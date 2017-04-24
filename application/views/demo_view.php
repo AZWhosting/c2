@@ -44598,6 +44598,7 @@
 
 
 <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/js/libs/localforage.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/jszip/2.4.0/jszip.js"></script>
 <script src="https://maps.googleapis.com/maps/api/js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/xlsx.js"></script>
 <script>
@@ -83395,7 +83396,7 @@
             }
             
             this.set("displayDate", displayDate);
-
+            this.exdataSource.data([]);
             this.exdataSource.query({
             	filter: para,
             	sort: [
@@ -83485,31 +83486,34 @@
 		            ]
 		          });
 		        }
+		        if(self.exArray.length > 1) {
+		        	// this.exdataSource.bind("requestEnd", function(e){
+	            	//if(e.type==="read"){
+	            		$("#loadImport").css("display","none");
+	            		var workbook = new kendo.ooxml.Workbook({
+				          sheets: [
+				            {
+				              columns: [
+				                { autoWidth: true },
+				                { autoWidth: true },
+				                { autoWidth: true },
+				                { autoWidth: true },
+				                { autoWidth: true },
+				                { autoWidth: true },
+				                { autoWidth: true }
+				              ],
+				              title: "Journal Entry Reports",
+				              rows: self.exArray
+				            }
+				          ]
+				        });
+				        //save the file as Excel file with extension xlsx
+				        kendo.saveAs({dataURI: workbook.toDataURL(), fileName: "JournalEntryReports.xlsx"});
+		            //}
+		        // });
+		        }
             });
-            this.exdataSource.bind("requestEnd", function(e){
-            	//if(e.type==="read"){
-            		$("#loadImport").css("display","none");
-            		var workbook = new kendo.ooxml.Workbook({
-			          sheets: [
-			            {
-			              columns: [
-			                { autoWidth: true },
-			                { autoWidth: true },
-			                { autoWidth: true },
-			                { autoWidth: true },
-			                { autoWidth: true },
-			                { autoWidth: true },
-			                { autoWidth: true }
-			              ],
-			              title: "Journal Entry Reports",
-			              rows: self.exArray
-			            }
-			          ]
-			        });
-			        //save the file as Excel file with extension xlsx
-			        kendo.saveAs({dataURI: workbook.toDataURL(), fileName: "JournalEntryReports.xlsx"});
-	            //}
-	        });
+            
 	        
 		}
 	});
@@ -84006,7 +84010,7 @@
 					for (var i = 0; i < response.results.length; i++){
 						self.exArray.push({
 					        cells: [
-					          	{ value: response.results[i].number + " " + response.results[i].name, bold: true, },
+					          	{ value: response.results[i].name, bold: true, },
 					            { value: "" },
 					            { value: "" },
 					            { value: "" },
@@ -84030,7 +84034,7 @@
 				        }
 				        self.exArray.push({
 					        cells: [
-					          	{ value: "Total " + response.results[i].number + " " + response.results[i].name, bold: true, },
+					          	{ value: "Total " + response.results[i].name, bold: true, },
 					            { value: "" },
 					            { value: "" },
 					            { value: "" },
@@ -84785,10 +84789,14 @@
 				var displayDate = "As Of " + kendo.toString(as_of, "dd-MM-yyyy");
 				this.set("displayDate", displayDate);
 
-				this.dataSource.filter({ field:"issued_date <", value:kendo.toString(as_of, "yyyy-MM-dd") });
+				this.dataSource.query({
+					filter: { field:"issued_date <", value:kendo.toString(as_of, "yyyy-MM-dd") },
+					sort: {field: "number", dir: "asc" }
+				});
 
 				this.dataSource.bind("requestEnd", function(e){				
 					if(e.type=="read"){
+						self.exArray = [];
 						var response = e.response;
 							self.exArray.push({
 		            		cells: [
@@ -90873,14 +90881,20 @@
 	/* Login page */
 	banhji.router.route('/', function(){
 		var blank = new kendo.View('#blank-tmpl');
-		banhji.view.layout.showIn('#content', banhji.view.index);
-		banhji.view.layout.showIn('#menu', banhji.view.menu);
-		$('#main-top-navigation').append('<li><a href="\#">Home</a></li>');
-		$('#current-section').text("");
-		$("#secondary-menu").html("");
-		banhji.index.getLogo();
-		banhji.index.pageLoad();
-		banhji.pageLoaded["index"] = true;
+		var admin = JSON.parse(localStorage.getItem('userData/user')) != null ? JSON.parse(localStorage.getItem('userData/user')).role : 0;
+        if(admin != 1) {
+        	window.location.replace("<?php echo base_url(); ?>admin");
+        } else {
+        	banhji.view.layout.showIn('#content', banhji.view.index);
+			banhji.view.layout.showIn('#menu', banhji.view.menu);
+			$('#main-top-navigation').append('<li><a href="\#">Home</a></li>');
+			$('#current-section').text("");
+			$("#secondary-menu").html("");
+			banhji.index.getLogo();
+			banhji.index.pageLoad();
+			banhji.pageLoaded["index"] = true;
+        }
+			
 	});
 	banhji.router.route("/search_advanced", function(){
 		if(!banhji.userManagement.getLogin()){

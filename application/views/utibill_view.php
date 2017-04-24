@@ -21538,8 +21538,7 @@
 					}
 				});															
 			}
-			reader.readAsBinaryString(files[0].rawFile);      
-			console.log(banhji.importProptery.dataSource.data());   	
+			reader.readAsBinaryString(files[0].rawFile);    	
         },
 		save: function() {
 			var self = this;
