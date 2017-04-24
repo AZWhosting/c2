@@ -581,7 +581,7 @@ class Imports extends REST_Controller {
 		$this->response(array('results' => $data, 'count' => count($data)), 201);
 	}
 
-	function proptery_post() {
+	function property_post() {
 		$models = json_decode($this->post('models'));
 		$data = array();
 
