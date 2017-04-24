@@ -1391,7 +1391,8 @@ var	en_US = {
 	"quantity_sold": "Quantity Sold",
 	"property_name": "Property Name",
 	"add_property": "Add Property",
-
+	"property": "Property",
+	"import_property": "Import Property",
 
 	//Sign Up page
 	"is_online": "is online accounting software for SMEs",

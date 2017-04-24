@@ -95,6 +95,10 @@
              ]"
              data-bind="source: journalLineDS"></div>
 
+        <br>
+
+        <div id="grid"></div>
+
     </div>
 
     <script>

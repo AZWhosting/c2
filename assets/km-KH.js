@@ -1365,6 +1365,8 @@ var	km_KH = {
 	"quantity_sold": "បរិមាណលក់",
 	"property_name": "ឈ្មោះ Property",
 	"add_property": "បន្ថែម Property",
+	"property": "Property",
+	"import_property": "Import Property",
 
 
 	//Sign Up page
