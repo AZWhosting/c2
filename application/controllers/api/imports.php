@@ -360,16 +360,16 @@ class Imports extends REST_Controller {
 					$fullname = $obj->company;
 				}
 
-				$utility = new Contact_utility(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				$utility->contact_id = $obj->id;
-				$utility->type = 'w';
-				$utility->branch_id = $license->id;
-				isset($value->id_card) 	? $utility->id_card = $value->id_card : "";
-				isset($value->family_member) ? $utility->family_member = $value->family_member : "";
-				isset($value->occupation) ? $utility->occupation = $value->occupation : "";
-				isset($value->code) ? $utility->code = $value->code : "";
-				$utility->abbr = $license->abbr;
-				$utility->save();
+				// $utility = new Contact_utility(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				// $utility->contact_id = $obj->id;
+				// $utility->type = 'w';
+				// $utility->branch_id = $license->id;
+				// isset($value->id_card) 	? $utility->id_card = $value->id_card : "";
+				// isset($value->family_member) ? $utility->family_member = $value->family_member : "";
+				// isset($value->occupation) ? $utility->occupation = $value->occupation : "";
+				// isset($value->code) ? $utility->code = $value->code : "";
+				// $utility->abbr = $license->abbr;
+				// $utility->save();
 
 				//Respsone
 				$data["results"][] = array(
@@ -538,6 +538,7 @@ class Imports extends REST_Controller {
 					$ar->contact_id = $customer->id;
 					$ar->journal_type = "journal";
 					$ar->is_journal = 1;
+					$ar->meter_id = $meter->id;
 					$ar->rate = 1.000000000000000;
 					$ar->locale = $this->locale;
 					$ar->due_date = date('Y-m-d');
