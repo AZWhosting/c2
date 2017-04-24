@@ -585,20 +585,20 @@ class Imports extends REST_Controller {
 		$models = json_decode($this->post('models'));
 		$data = array();
 
-		foreach($modules as $row) {
+		foreach($models as $row) {
 			$contact = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			// problem with same name for two different people
 			$contact->where('name', $row->contact)->get();
-			$property = new Proptery(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$property = new Property(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$property->contact_id = $contact->id;
-			$proterty->name = $row->name;
+			$property->name = $row->name;
 			$property->abbr = $row->abbr;
 			$property->code = $row->code;
 
-			$property->trans_begin();
-			$property->save();
-			if($property->trans_status() === TRUE) {
-				$property->trans_commit();
+			// $property->trans_begin();
+			// $property->save();
+			if($property->save()) {
+				// $property->trans_commit();
 				$data[] = array(
 					'id' => $property->id,
 					'name' => $property->name,

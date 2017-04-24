@@ -89,7 +89,7 @@ class Properties extends REST_Controller {
 		$data["count"] = 0;				
 		
 		foreach ($models as $value) {
-			$obj = new property(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$obj = new Property(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			isset($value->contact_id) 			? $obj->contact_id 			= $value->contact_id : "";
 			isset($value->name) 				? $obj->name 				= $value->name: "";
 			isset($value->code) 				? $obj->code 				= $value->code : "";	

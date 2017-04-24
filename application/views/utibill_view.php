@@ -21521,7 +21521,7 @@
 			$('li.k-file').remove();
 	        var files = e.files;
 	        var reader = new FileReader();
-			banhji.importItem.dataSource.data([]);	
+			banhji.importProptery.dataSource.data([]);	
 			reader.onload = function() {						
 				var data = reader.result;	
 				var result = {}; 						
@@ -21538,7 +21538,8 @@
 					}
 				});															
 			}
-			reader.readAsBinaryString(files[0].rawFile);         	
+			reader.readAsBinaryString(files[0].rawFile);      
+			console.log(banhji.importProptery.dataSource.data());   	
         },
 		save: function() {
 			var self = this;
