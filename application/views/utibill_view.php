@@ -9792,8 +9792,11 @@
 					<div class="widget-head">
 						<ul style="padding-left: 1px;">
 							<li class="active"><a class="glyphicons user" href="#tabContact" data-toggle="tab"><i></i><span style="line-height: 55px;" data-bind="text: lang.lang.customer">Customer</span></a></li>
+
+							<li><a class="glyphicons vcard" href="#tabProperty" data-toggle="tab"><i></i><span style="line-height: 55px;" data-bind="text: lang.lang.property">Property</span></a></li>
+
 							<li><a class="glyphicons list" href="#tabInventery" data-toggle="tab"><i></i><span style="line-height: 55px;" data-bind="text: lang.lang.meter">Meter</span></a></li>
-							<li><a class="glyphicons list" href="#tabProperty" data-toggle="tab"><i></i><span style="line-height: 55px;" data-bind="text: lang.lang.proptery">Meter</span></a></li>
+							
 						</ul>
 					</div>
 					<!-- // Tabs Heading END -->
@@ -9816,8 +9819,8 @@
 								<div class="fileupload fileupload-new margin-none" data-provides="fileupload">
 								  	<input type="file"  data-role="upload" data-show-file-list="true" data-bind="events: {select: contact.onSelected}" id="myFile"  class="margin-none" />
 								</div>
-								<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 175px!important;"><i></i>
-								<span data-bind="click: contact.save, text: lang.lang.import_contact">Import Contact</span>
+								<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 120px!important;"><i></i>
+								<span data-bind="click: contact.save, text: lang.lang.imports">Import Contact</span>
 								
 
 							</div>
@@ -9826,7 +9829,7 @@
 							<!-- Tab content -->
 							<div id="tabInventery" style="border: 1px solid #ccc" class="tab-pane widget-body-regular">
 								
-								<h4 class="separator bottom" style="margin-top: 10px;" data-bind="text: lang.lang.please_upload_inventory_file">Please upload Inventory file</h4>
+								<h4 class="separator bottom" style="margin-top: 10px;" data-bind="text: lang.lang.please_upload_meter_file">Please upload Meter file</h4>
 								<a href="<?php echo base_url(); ?>assets/water/meter_import.xlsx" download>
 									<span id="saveClose" class="btn btn-icon btn-success glyphicons download" style="width: 200px!important;position: absolute;top: 85px;right: 10px;">
 										<i></i> 
@@ -9836,8 +9839,8 @@
 								<div class="fileupload fileupload-new margin-none" data-provides="fileupload">
 								  	<input type="file"  data-role="upload" data-show-file-list="true" data-bind="events: {select: item.onSelected}" id="myFile"  class="margin-none" />
 								</div>
-								<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 160px!important;"><i></i>
-								<span data-bind="click: item.save, text: lang.lang.import_meter">Import Meter</span>
+								<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 120px!important;"><i></i>
+								<span data-bind="click: item.save, text: lang.lang.imports">Import Meter</span>
 							</div>
 							<!-- // Tab content END -->
 							<div id="tabProperty" style="border: 1px solid #ccc" class="tab-pane widget-body-regular">
@@ -9852,7 +9855,7 @@
 								<div class="fileupload fileupload-new margin-none" data-provides="fileupload">
 								  	<input type="file"  data-role="upload" data-show-file-list="true" data-bind="events: {select: property.onSelected}" id="myFile"  class="margin-none" />
 								</div>
-								<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 160px!important;"><i></i>
+								<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 120px!important;"><i></i>
 								<span data-bind="click: property.save, text: lang.lang.imports">Import Meter</span>
 							</div>
 							
@@ -14238,7 +14241,7 @@
 			});
 			console.log(haveTariff+"haveTa_"+haveDeposit+"haveDe_"+haveService+"haveSer");
 			if(haveTariff && haveService && haveDeposit){
-				console.log("aaaa");
+				// console.log("aaaa");
 				this.dataSource.sync();
 				this.dataSource.bind('requestEnd', function(e){
 					if(e.type != 'read' && e.response.results) {
@@ -16253,7 +16256,7 @@
 		company 			: banhji.institute,
 		license 			: [],
 		TemplateSelect 		: null,
-		txnFormID 			: 44,
+		txnFormID 			: null,
 		user_id 			: banhji.userManagement.getLogin() === null ? '':banhji.userManagement.getLogin().id,	
 		formColor 			: "#355176",
 		formVisible 		: "visibility: visible;",
@@ -16263,11 +16266,11 @@
 				banhji.router.navigate('/print_bill');
 			}
 			var self = this, TempForm = "";
-			if(this.txnFormID == "45"){
+			// if(this.txnFormID == "45"){
 				TempForm = $("#InvoiceFormTemplate2").html();
-			}else{
-				TempForm = $("#InvoiceFormTemplate1").html();
-			}
+			// }else{
+				// TempForm = $("#InvoiceFormTemplate1").html();
+			// }
 			$("#wInvoiceContent").kendoListView({
 			    dataSource: this.dataSource,
 			    template: kendo.template(TempForm)
@@ -17700,47 +17703,7 @@
 		}
 	});
 
-	banhji.Reports = kendo.observable({
-		lang 				: langVM,
-		nCustomer 			: 0,
-		tCustomer 			: 0,
-		activeCustomer 		: 0,
-		waterSold 			: 0,
-		avgUsage 			: 0,
-		avgRevenue 			: 0,
-		waterRevenue 		: 0,
-		totalDeposit		: 0,
-		licenseSelect 		: 0,
-		dataSource 			: dataStore(apiUrl + "wreports/kpi"),
-		licenseDS 			: dataStore(apiUrl + "branches"),
-		onLicenseChange 	: function() {
-			var that = this;
-			this.dataSource.query({
-				filter: {field: 'branch_id', value: this.get('licenseSelect')}
-			})
-			.then(function(e){
-				let data = that.dataSource.data();
-				that.set('nCustomer', kendo.toString(data[0].totalAllowCustomer, 'n'));
-				that.set('tCustomer', kendo.toString(data[0].totalCustomer, 'n'));
-				that.set('activeCustomer', kendo.toString(data[0].totalActiveCustomer, 'n'));
-				that.set('waterSold', kendo.toString(data[0].totalUsage, 'n'));
-				that.set('avgUsage', kendo.toString(data[0].avgUsage, 'n'));
-				that.set('avgRevenue', kendo.toString(data[0].avgIncome, 'n'));
-				that.set('waterRevenue', kendo.toString(data[0].totalIncome, 'n'));
-				that.set('totalDeposit', kendo.toString(data[0].totalDeposit, 'n'));
-			});
-		},
-		pageLoad 			: function(){
-			var that = this;
-		},
-		save 				: function() {
-			var self = this;
-		},
-		cancel 				: function(){
-			this.dataSource.data([]);		
-			banhji.router.navigate("/");
-		}
-	});
+	
 	
 
 	banhji.customerDeposit =  kendo.observable({
@@ -18772,6 +18735,47 @@
 		}
 	});	
 	/* Report */
+	banhji.Reports = kendo.observable({
+		lang 				: langVM,
+		nCustomer 			: 0,
+		tCustomer 			: 0,
+		activeCustomer 		: 0,
+		waterSold 			: 0,
+		avgUsage 			: 0,
+		avgRevenue 			: 0,
+		waterRevenue 		: 0,
+		totalDeposit		: 0,
+		licenseSelect 		: 0,
+		dataSource 			: dataStore(apiUrl + "wreports/kpi"),
+		licenseDS 			: dataStore(apiUrl + "branches"),
+		onLicenseChange 	: function() {
+			var that = this;
+			this.dataSource.query({
+				filter: {field: 'branch_id', value: this.get('licenseSelect')}
+			})
+			.then(function(e){
+				let data = that.dataSource.data();
+				that.set('nCustomer', kendo.toString(data[0].totalAllowCustomer, 'n'));
+				that.set('tCustomer', kendo.toString(data[0].totalCustomer, 'n'));
+				that.set('activeCustomer', kendo.toString(data[0].totalActiveCustomer, 'n'));
+				that.set('waterSold', kendo.toString(data[0].totalUsage, 'n'));
+				that.set('avgUsage', kendo.toString(data[0].avgUsage, 'n'));
+				that.set('avgRevenue', kendo.toString(data[0].avgIncome, 'n'));
+				that.set('waterRevenue', kendo.toString(data[0].totalIncome, 'n'));
+				that.set('totalDeposit', kendo.toString(data[0].totalDeposit, 'n'));
+			});
+		},
+		pageLoad 			: function(){
+			var that = this;
+		},
+		save 				: function() {
+			var self = this;
+		},
+		cancel 				: function(){
+			this.dataSource.data([]);		
+			banhji.router.navigate("/");
+		}
+	});
 	banhji.customerList = kendo.observable({
 		lang 					: langVM,
 		institute 				: banhji.institute,
@@ -21414,6 +21418,7 @@
 		}
 	});
 	banhji.importContact = kendo.observable({
+		lang 		  : langVM,
 		dataSource 	  : dataStore(apiUrl+"imports/wcontact"),
 		onSelected    : function(e) {
 			$('li.k-file').remove();
@@ -21441,21 +21446,26 @@
 		save: function() {
 			var self = this;
 			if(banhji.importContact.dataSource.data().length === 0) {
-				$("#ntf1").data("kendoNotification").error("Error Importing Contact!");
-				$("#ntf1").data("kendoNotification").error("");
+				var notifi = $("#ntf1").data("kendoNotification");
+				notifi.hide();
+				notifi.error(this.lang.lang.error_message);
 			} else {
 				$("#loadImport").css("display","block");
 				banhji.importContact.dataSource.sync();
 				banhji.importContact.dataSource.bind("requestEnd", function(e){
 			    	if(e.response){				
-			    		$("#ntf1").data("kendoNotification").success("Imported contacts successfully!");
+			    		var notifi = $("#ntf1").data("kendoNotification");
+						notifi.hide();
+						notifi.success(self.lang.lang.success_message);
 						$("#loadImport").css("display","none");
 						$('li.k-file').remove();
 						banhji.importContact.dataSource.data([]);
 					}
 			    });
 			    banhji.importContact.dataSource.bind("error", function(e){		    		    	
-					$("#ntf1").data("kendoNotification").error("Error Importing Contact!"); 	
+					var notifi = $("#ntf1").data("kendoNotification");
+					notifi.hide();
+					notifi.error(this.lang.lang.error_message); 	
 					$("#loadImport").css("display","none");	
 					$('li.k-file').remove();
 					banhji.importContact.dataSource.data([]);		
@@ -21464,6 +21474,7 @@
 		}
 	});
 	banhji.importItem = kendo.observable({
+		lang 		  : langVM,
 		dataSource 	  : dataStore(apiUrl+"imports/meter"),
 		onSelected    : function(e) {
 			$('li.k-file').remove();
@@ -21490,15 +21501,18 @@
         },
 		save: function() {
 			var self = this;
-			if(banhji.importContact.dataSource.data().length === 0) {
-				$("#ntf1").data("kendoNotification").error("Error Importing Contact!");
-				$("#ntf1").data("kendoNotification").error("");
+			if(banhji.importItem.dataSource.data().length === 0) {
+				var notifi = $("#ntf1").data("kendoNotification");
+				notifi.hide();
+				notifi.error(this.lang.lang.error_message);
 			} else {
 				$("#loadImport").css("display","block");
 				banhji.importItem.dataSource.sync();
 				banhji.importItem.dataSource.bind("requestEnd", function(e){
 			    	if(e.response){				
-			    		$("#ntf1").data("kendoNotification").success("Imported Meters successfully!");
+			    		var notifi = $("#ntf1").data("kendoNotification");
+						notifi.hide();
+						notifi.success(self.lang.lang.success_message);
 			    		$("#loadImport").css("display","none");
 			    		$('li.k-file').remove();
 			    		self.dataSource.data([]);
@@ -21506,16 +21520,18 @@
 					}				  				
 			    });
 			    banhji.importItem.dataSource.bind("error", function(e){		    		    	
-					$("#ntf1").data("kendoNotification").error("Error Importing Meters!"); 
+					var notifi = $("#ntf1").data("kendoNotification");
+					notifi.hide();
+					notifi.error(self.lang.lang.error_message);
 					$("#loadImport").css("display","none");	
 					$('li.k-file').remove();
-					self.dataSource.data([]);
-								
+					banhji.importItem.dataSource.data([]);
 			    });
 			}
 		}
 	});
 	banhji.importProptery = kendo.observable({
+		lang 		  : langVM,
 		dataSource 	  : dataStore(apiUrl+"imports/property"),
 		onSelected    : function(e) {
 			$('li.k-file').remove();
@@ -21543,14 +21559,17 @@
 		save: function() {
 			var self = this;
 			if(banhji.importProptery.dataSource.data().length === 0) {
-				$("#ntf1").data("kendoNotification").error("Error Importing Property!");
-				$("#ntf1").data("kendoNotification").error("");
+				var notifi = $("#ntf1").data("kendoNotification");
+				notifi.hide();
+				notifi.error(this.lang.lang.error_message);
 			} else {
 				$("#loadImport").css("display","block");
 				banhji.importProptery.dataSource.sync();
 				banhji.importProptery.dataSource.bind("requestEnd", function(e){
 			    	if(e.response){				
-			    		$("#ntf1").data("kendoNotification").success("Imported Meters successfully!");
+			    		var notifi = $("#ntf1").data("kendoNotification");
+						notifi.hide();
+						notifi.success(self.lang.lang.success_message);
 			    		$("#loadImport").css("display","none");
 			    		$('li.k-file').remove();
 			    		self.dataSource.data([]);
@@ -21558,11 +21577,12 @@
 					}				  				
 			    });
 			    banhji.importProptery.dataSource.bind("error", function(e){		    		    	
-					$("#ntf1").data("kendoNotification").error("Error Importing Meters!"); 
+					var notifi = $("#ntf1").data("kendoNotification");
+					notifi.hide();
+					notifi.error(self.lang.lang.error_message);
 					$("#loadImport").css("display","none");	
 					$('li.k-file').remove();
-					self.dataSource.data([]);
-								
+					banhji.importProptery.dataSource.data([]);		
 			    });
 			}
 		}

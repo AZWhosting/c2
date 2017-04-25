@@ -1437,6 +1437,7 @@ var	en_US = {
 	"phase": "Phase",
 	"voltage":"Voltage",
 	"ampere":"Ampere",
+	"please_upload_meter_file": "Please Upload Meter File",
 
 
 

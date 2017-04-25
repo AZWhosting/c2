@@ -1254,7 +1254,7 @@ var	km_KH = {
 	//Water Imports
 	"imports": "បញ្ចូល",
 	"please_upload_contacts_file": "សូម​បញ្ចូល​អតិថិជន",
-	"please_upload_inventory_file": "បញ្ចូល",
+	"please_upload_inventory_file": "សូមបញ្ចូលសន្និធិ",
 	"download_file_example": "ទាញ​យក",
 	"import_meter": "បញ្ចូល​អំណាន",
 
@@ -1412,6 +1412,7 @@ var	km_KH = {
 	"phase": "Phase",
 	"voltage":"Voltage",
 	"ampere":"Ampere",
+	"please_upload_meter_file": "សូមបញ្ចូលកុងទ័រ",
 
 
 

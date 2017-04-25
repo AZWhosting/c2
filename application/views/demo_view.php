@@ -6203,21 +6203,24 @@
 				    </table>
 
 		            <!-- Bottom part -->
-		            <div class="row">
+		            <div class="row-fluid">
 			
 						<!-- Column -->
-						<div class="span6" style="margin-bottom: 15px;">
+						<div class="span4" style="margin-bottom: 15px;">
 							<button class="btn btn-inverse" data-bind="click: addRowReturn"><i class="icon-plus icon-white"></i></button>							
 							
 							<br><br>
-							<textarea cols="0" rows="2" class="k-textbox" style="width:100%; resize: none; margin-bottom: 15px;" data-bind="value: obj.memo2" placeholder="memo for internal ..."></textarea>
-							<br>
-							<textarea cols="0" rows="2" class="k-textbox" style="width:100%; resize: none;" data-bind="value: obj.memo" placeholder="memo for external ..."></textarea>
+							<div class="well">
+								<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.memo2" placeholder="memo for internal ..."></textarea>
+								<br>
+								<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.memo" placeholder="memo for external ..."></textarea>
+							</div>
 						</div>
 						<!-- Column END -->
-						
+
+						<div class="span4"></div>
 						<!-- Column -->
-						<div class="span6">
+						<div class="span4">
 							<table class="table table-condensed table-striped table-white">
 								<tbody>
 									<tr>
@@ -12530,7 +12533,7 @@
 
 						<div class="span8">
 
-							<div class="box-generic-noborder">
+							<div class="box-generic-noborder" style="overflow: inherit;">
 
 							    <!-- Tabs Heading -->
 							    <div class="tabsbar tabsbar-2">
@@ -13226,9 +13229,11 @@
 			
 						<!-- Column -->
 						<div class="span4">
-							<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.memo2" placeholder="memo for internal ..."></textarea>
-							<br>
-							<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.memo" placeholder="memo for external ..."></textarea>							
+							<div class="well">
+								<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.memo2" placeholder="memo for internal ..."></textarea>
+								<br>
+								<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.memo" placeholder="memo for external ..."></textarea>
+							</div>	
 						</div>
 						<!-- Column END -->
 
@@ -13885,7 +13890,7 @@
 		            <div class="row">
 			
 						<!-- Column -->
-						<div class="span7">
+						<div class="span7" style="margin-top: 15px;">
 							<table class="table table-bordered table-inverse table-striped table-vertical-center">
 						        <thead>
 						            <tr>
@@ -14409,21 +14414,23 @@
 				    </table>
 
 		            <!-- Bottom part -->
-		            <div class="row">
+		            <div class="row-fluid">
 			
 						<!-- Column -->
-						<div class="span6" style="margin-bottom: 15px;">
+						<div class="span4" style="margin-bottom: 15px;">
 							<button class="btn btn-inverse" data-bind="click: addRowReturn"><i class="icon-plus icon-white"></i></button>							
 							
 							<br><br>
-							<textarea cols="0" rows="2" class="k-textbox" style="width:100%; resize: none; margin-bottom: 15px;" data-bind="value: obj.memo2" placeholder="memo for internal ..."></textarea>
-							<br>
-							<textarea cols="0" rows="2" class="k-textbox" style="width:100%; resize: none;" data-bind="value: obj.memo" placeholder="memo for external ..."></textarea>
+							<div class="well">
+								<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.memo2" placeholder="memo for internal ..."></textarea>
+								<br>
+								<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.memo" placeholder="memo for external ..."></textarea>
+							</div>
 						</div>
 						<!-- Column END -->
-						
+						<div class="span4"></div>
 						<!-- Column -->
-						<div class="span6">
+						<div class="span4">
 							<table class="table table-condensed table-striped table-white">
 								<tbody>
 									<tr>

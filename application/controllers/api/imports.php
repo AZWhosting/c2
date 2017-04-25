@@ -455,7 +455,7 @@ class Imports extends REST_Controller {
 		$order = 1;
 		foreach($models as $row) {
 			$property = new Property(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			$property->where('name', $row->proptery)->get();
+			$property->where('name', $row->property)->limit(1)->get();
 			$customer = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$plan = new Plan(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$location = new Location(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
@@ -473,6 +473,7 @@ class Imports extends REST_Controller {
 			$meter->activated = 1;
 			$meter->status = 1;
 			$meter->property_id = $property->id;
+			$meter->contact_id = $property->contact_id;
 			$meter->branch_id = $location->branch_id;
 			$meter->location_id = $location->id;
 			$meter->plan_id = $plan->id;

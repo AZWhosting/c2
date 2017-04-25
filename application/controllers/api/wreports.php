@@ -648,11 +648,13 @@ class Wreports extends REST_Controller {
 		$income->select_sum("amount");
 		$income->where_in('location_id', $locs);
 		$income->where("type", "Utility_Invoice");
+		$income->where("deleted <>", 1);
 		$income->get();
 		
 		$avgIncome->select_avg("amount");
 		$avgIncome->where_in('location_id', $locs);
 		$avgIncome->where("type", "Utility_Invoice");
+		$avgIncome->where("deleted <>", 1);
 		$avgIncome->get();
 
 		// $usage = $meter;
@@ -663,6 +665,7 @@ class Wreports extends REST_Controller {
 		// $avgUsage = $meter;
 		// $avgUsage->include_related('record', array('usage'));
 		// $avgUsage->where_related_winvoice_line('type', 'tariff');
+		$avgUsage->where("deleted <>", 1);
 		$avgUsage->get();
 		$totalUsage = 0;
 		$avg = 0;
