@@ -607,7 +607,7 @@ class Wreports extends REST_Controller {
 	 //    		// $deposit->where($value["field"], $value["value"]);    		
 		// 	}									 			
 		// }
-		$activeMeter->where('branch_id', 1);
+		$activeMeter->where('activated', 1);
 
 		// $contact->select('id, contact_id');
 		// $contact->include_related('branch', array('max_customer'));
@@ -736,7 +736,7 @@ class Wreports extends REST_Controller {
 
 		$branch->get();
 		$totalAllowCustomer = $branch->max_customer == 0 ? 0: $nActiveMeter / intval($branch->max_customer);
-
+		$location->where("branch_id", $branch->id);
 		$location->get();
 		$locs = array();
 		$usage = 0;
@@ -747,6 +747,7 @@ class Wreports extends REST_Controller {
 		$income->select_sum("amount");
 		$income->where_in('location_id', $locs);
 		$income->where("type", "Utility_Invoice");
+		$income->where("deleted <>", 1);
 		$income->get();
 
 		$avgUsage->get();
