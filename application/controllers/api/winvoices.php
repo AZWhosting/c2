@@ -546,9 +546,10 @@ class Winvoices extends REST_Controller {
 			$monthGraph->order_by('id', 'desc')->limit(5)->get();
 			// $minusM = array();
 			foreach($monthGraph as $monthOF) {
+				$monthN = date('F', strtotime($monthOF->month_of));
 				$minusM[] = array(
-					'name' => $monthOF->month_of,
-					'amount' => $monthOF->amount
+					'name' => $monthN,
+					'usage' => $monthOF->amount
 				);
 			}
 

@@ -5188,21 +5188,21 @@
 	    <div class="row-fluid">
 	    	<div class="span4" style="padding-left: 15px; padding-left: 8px;">
 	    		<p >ប្រវត្តិប្រើប្រាស់របស់អ្នកក្នុងឆ្នាំនេះ</p>
-	    		<div data-role="chart"
-					 data-auto-bind="true"
-		             data-legend="{ position: 'top' }"
-		             data-series-defaults="{ type: 'column' }"
-		             data-tooltip='{
-		                visible: true,
-		                format: "{0}%",
-		                template: "#= series.name #: #= value #"
-		             }'                 
-		             data-series="[
-		                             { field: 'amount', name: 'Usage', categoryField:'month', color: '\\#203864', overlay:{ gradient: 'none'}  }
-		                         ]"	                             
-		             data-bind="source: minusMonth"
-		             style="height: 105px; width: 250px" ></div>
-				</div>
+	    		<div class="tab-pane active" id="tab-1">
+			        <div data-role="chart"
+		                 data-legend="{ position: 'top' }"
+		                 data-series-defaults="{ type: 'column' }"
+		                 data-tooltip='{
+		                    visible: true,
+		                    format: "{0}%"
+		                 }'                 
+		                 data-series="[
+		                                 { field: 'usage', name: 'Usage', categoryField:'month', color: '\\#236DA4', overlay:{ gradient: 'none'} }
+		                             ]"
+		                 data-auto-bind="false"
+		                 data-bind="source: minusMonth"
+		                 style="height: 250px;"></div> 
+	        	</div>
 	    	</div>
 	    	<div class="span8" style="padding-left: 0; width: 65%;">
 	    		<img style="width: 58px; height: auto; float: left;" src="<?php echo base_url();?>/assets/icon-water.png">

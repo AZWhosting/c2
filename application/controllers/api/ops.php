@@ -96,20 +96,20 @@ class Ops extends REST_Controller {
 			    $connection = 'use '.$db;
 			    $this->db->query($connection);
 
-			    // $this->db->where('id', 1);
-			    // $this->db->update('prefixes', array('name' => 'Invoice'));
+			    $this->db->where('id', 1);
+			    $this->db->update('tax_items', array('sub_of_id' => 12));
 
-			    // $this->db->insert('item_prices', array('item_id' => 7, 'measurement_id'=> 6, 'unit_value' => 1.000000000000000, 'locale'=> 'km-KH'));
+			    // $this->db->insert('tax_types', array('name' => 'WHT', 'tax_system' => 'Payment Based', 'agency' => 'GDT', 'is_system' => 1));
 				
-				$this->dbforge->add_column("tax_types", array(
-																"sub_of_id" => array(
-																					"type" 		=> "INT",
-																					"constraint"=> 11,
-																					"null" 		=> FALSE,
-																					"default" 	=> 0
-																				)
-																)
-				);
+				// $this->dbforge->add_column("tax_types", array(
+				// 												"sub_of_id" => array(
+				// 																	"type" 		=> "INT",
+				// 																	"constraint"=> 11,
+				// 																	"null" 		=> FALSE,
+				// 																	"default" 	=> 0
+				// 																)
+				// 												)
+				// );
 
 				// $this->dbforge->modify_column(
 		  //       	'transactions', array(

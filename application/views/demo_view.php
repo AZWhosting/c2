@@ -13027,7 +13027,7 @@
 						                   data-value-primitive="true"
 						                   data-text-field="name"
 						                   data-value-field="id"
-						                   data-bind="value: account_id,
+						                   data-bind="value: additCostObj.wht_account_id,
 						                              source: expenseAccountDS"
 						                   data-placeholder="Add Account.."
 						                   style="width: 100%" />	
@@ -65671,6 +65671,7 @@
 			this.accountLineDS.add({
 				transaction_id 		: obj.id,
 				tax_item_id 		: "",
+				wht_account_id 		: "",
 				account_id 			: "",
 				description 		: "",
 				reference_no 		: "",
@@ -65739,7 +65740,8 @@
 				payment_term_id		: 0,				
 				reference_id 		: obj.id,
 				recurring_id 		: "",
-				tax_item_id 		: "",				
+				tax_item_id 		: "",
+				wht_account_id 		: "",				
 				user_id 			: this.get("user_id"),
 				reference_no 		: "",	    		
 			   	type				: "Cash_Purchase",//Required
@@ -66026,7 +66028,7 @@
 				if(value.tax_item_id>0){
 					var taxItem = self.taxItemDS.get(value.tax_item_id);
 					
-					if(taxItem.id=="1" || taxItem.id=="2"){
+					if(taxItem.tax_type_id=="1" || taxItem.tax_type_id=="2"){
 						if(value.wht_account_id==0){
 							tax -= amt * taxItem.rate;
 						}
@@ -66259,6 +66261,7 @@
 			this.lineDS.add({
 				transaction_id 		: obj.id,
 				tax_item_id 		: "",
+				wht_account_id 		: "",
 				item_id 			: "",
 				measurement_id 		: 0,
 				description 		: "",
