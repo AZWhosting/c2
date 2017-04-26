@@ -82267,7 +82267,7 @@
 			}else{				
 				if(this.get("isEdit") || this.dataSource.total()==0){
 					this.addEmpty();
-				}								
+				}
 			}
 		},
 		//Upload
@@ -82311,20 +82311,20 @@
 
 	    	if (confirm(banhji.source.confirmMessage)) {
 	    		this.attachmentDS.remove(data);
-	    	}	    	
+	    	}
 	    },
 	    uploadFile 			: function(){
-	    	$.each(this.attachmentDS.data(), function(index, value){	    		
+	    	$.each(this.attachmentDS.data(), function(index, value){
 		    	if(!value.id){
 			    	var params = { 
 		            	Body: value.file, 
 		            	Key: value.key 
 		            };
-		            bucket.upload(params, function (err, data) {		                
+		            bucket.upload(params, function (err, data) {
 	                	// console.log(err, data);
-	                	// var url = data.Location;                
+	                	// var url = data.Location;
 	            	});
-	        	}	            
+	        	}
 	        });
 
 	        this.attachmentDS.sync();
@@ -82336,7 +82336,7 @@
 	            		saved = true;
 	            	
 	            		var response = e.response.results;
-	            		$.each(response, function(index, value){            			
+	            		$.each(response, function(index, value){
 		            		var params = {
 							  	//Bucket: 'STRING_VALUE', /* required */
 							 	Delete: { /* required */
@@ -82359,14 +82359,14 @@
 		//Currency Rate
 		setRate 			: function(){
 			var obj = this.get("obj"), 
-			rate = banhji.source.getRate(obj.locale, new Date(obj.issued_date));			
+			rate = banhji.source.getRate(obj.locale, new Date(obj.issued_date));
 			
 			obj.set("rate", rate);
 			
 			$.each(this.lineDS.data(), function(index, value){
 				value.set("rate", rate);
 				value.set("locale", obj.locale);
-			});						
+			});
 		},
 		//Contact
 		loadContact 		: function(id){
@@ -82374,13 +82374,13 @@
 
 			obj.set("contact_id", id);
 		    this.contactChanges();
-		},		
+		},
 		contactChanges 		: function(){
 			var obj = this.get("obj");
 
-	    	if(obj.contact_id>0){		    			    	
+	    	if(obj.contact_id>0){
 		    	var contact = this.contactDS.get(obj.contact_id);
-		    			    	
+
 		    	this.setRate();
 		    	this.loadReference();
 	    	}
@@ -82388,11 +82388,11 @@
 	    typeChanges 		: function(){
 	    	var obj = this.get("obj");
 
-	    	switch(obj.type) {			    
+	    	switch(obj.type) {
 			    case "Advance_Settlement":
 			        this.set("showCashAdvance", true);
 			        break;
-			    default:			         
+			    default:
 			        this.set("showCashAdvance", false);
 			        obj.set("reference_id", 0);
 			        obj.set("deposit", 0);
@@ -82414,7 +82414,7 @@
 						break;
 					}
 				}
-			}				
+			}
 		},
 		transactionSegmentChanges  	: function() {
 			dataArr = this.get("obj").segments,
@@ -82440,7 +82440,7 @@
 				if(obj.isNew()==false){
 					para.push({ field:"id", operator:"where_not_in", value: [obj.id] });
 				}
-				
+
 				para.push({ field:"number", value: obj.number });
 				para.push({ field:"type", value: obj.type });
 
@@ -82482,7 +82482,7 @@
 				page:1,
 				pageSize:1
 			}).then(function(){
-				var view = self.txnDS.view(),				
+				var view = self.txnDS.view(),
 				number = 0, str = "";
 
 				if(view.length>0){
@@ -82490,10 +82490,10 @@
 					str = str.substring(str.length-4, str.length);
 					number = kendo.parseInt(str);
 				}
-				
+
 				number++;
 				str = banhji.source.getPrefixAbbr(obj.type) + kendo.toString(issueDate, "yy") + kendo.toString(issueDate, "MM") + kendo.toString(number, "00000");
-				
+
 				obj.set("number", str);
 			});
 		},
@@ -82518,9 +82518,9 @@
 	    		if(obj.isNew()==false){
 					para.push({ field:"id", operator:"where_not_in", value: ids });
 				}
-	    		para.push({ field:"contact_id", operator:"where_in", value: contactIDs });	    	
+	    		para.push({ field:"contact_id", operator:"where_in", value: contactIDs });
 				para.push({ field:"reference_no", operator:"where_in", value: referenceNos });
-			
+
 		    	this.invoiceDS.query({
 		    		filter:para,
 		    		page:1,
@@ -82553,7 +82553,7 @@
 					para.push({ field:"is_recurring", value: 1 });
 				}
 
-				this.dataSource.query({    			
+				this.dataSource.query({
 					filter: para,
 					page: 1,
 					pageSize: 1
@@ -82567,7 +82567,7 @@
 					self.journalLineDS.filter({ field: "transaction_id", value: id });
 					self.attachmentDS.filter({ field: "transaction_id", value: id });
 					
-					self.referenceLineDS.filter({ field: "transaction_id", value: view[0].reference_id });					
+					self.referenceLineDS.filter({ field: "transaction_id", value: view[0].reference_id });
 					self.referenceDS.query({
 						filter:{ field: "id", value: view[0].reference_id }
 					}).then(function(){
@@ -82604,7 +82604,7 @@
 				contact_id 			: "",
 				user_id 			: this.get("user_id"),
 			   	type				: "Direct_Expense", //required
-			   	number 				: "",			   	
+			   	number 				: "",
 			   	sub_total 			: 0,
 			   	tax 				: 0,
 			   	deposit 			: 0,
@@ -82663,7 +82663,7 @@
 		},
 		changes				: function(){
 			var self = this, obj = this.get("obj"), 
-			subTotal = 0, total = 0, tax = 0, remaining = 0;								
+			subTotal = 0, total = 0, tax = 0, remaining = 0;
 			
 			$.each(this.lineDS.data(), function(index, value) {
 				value.set("rate", obj.rate);
@@ -82680,7 +82680,7 @@
 
 	        if(obj.deposit>0){
 	        	remaining = obj.deposit - (total + obj.received);
-	        }	        
+	        }
 
 	        obj.set("sub_total", subTotal);
 	        obj.set("tax", tax);
@@ -82690,19 +82690,19 @@
 	        this.set("total", kendo.toString(total, "c", obj.locale));
 		},
 		objSync 			: function(){
-	    	var dfd = $.Deferred();	        
+	    	var dfd = $.Deferred();
 
 	    	this.dataSource.sync();
 		    this.dataSource.bind("requestEnd", function(e){
-		    	if(e.response){				
+		    	if(e.response){
 					dfd.resolve(e.response.results);
-				}				  				
+				}
 		    });
-		    this.dataSource.bind("error", function(e){		    		    	
-				dfd.reject(e.errorThrown);    				
+		    this.dataSource.bind("error", function(e){
+				dfd.reject(e.errorThrown);
 		    });
 
-		    return dfd;	    		    	
+		    return dfd;
 	    },
 		save 				: function(){
 	    	var self = this, obj = this.get("obj");
@@ -82768,16 +82768,16 @@
 				return data;
 			}, function(reason) { //Error
 				$("#ntf1").data("kendoNotification").error(reason);
-			}).then(function(result){				
+			}).then(function(result){
 				$("#ntf1").data("kendoNotification").success(banhji.source.successMessage);
 
 				if(self.get("saveClose")){
-					//Save Close					
+					//Save Close
 					self.set("saveClose", false);
 					self.cancel();
 					window.history.back();
 				}else if(self.get("savePrint")){
-					//Save Print					
+					//Save Print
 					self.set("savePrint", false);
 					self.clear();
 					if(result[0].transaction_template_id>0){
@@ -82806,7 +82806,7 @@
 		},
 		delete 				: function(){
 			var self = this, obj = this.get("obj");
-			this.set("showConfirm",false);			
+			this.set("showConfirm",false);
 			
 	        this.txnDS.query({
 	        	filter:[
@@ -82829,7 +82829,7 @@
 			        	}
 			        });
 	        	}
-	        });		    	    	
+	        });
 		},
 		openConfirm 		: function(){
 			this.set("showConfirm", true);
@@ -82857,7 +82857,7 @@
     		$.each(this.lineDS.data(), function(index, value){
     			sumExpense += value.amount;
 
-				self.journalLineDS.add({					
+				self.journalLineDS.add({
 					transaction_id 		: transaction_id,
 					contact_id 			: value.contact_id,
 					account_id 			: value.account_id,
@@ -82873,7 +82873,7 @@
 			sum += sumExpense;
 
 			//Tax accounts
-			if(obj.tax>0){				
+			if(obj.tax>0){
 				$.each(this.lineDS.data(), function(index, value){
 					if(value.tax_item_id>0){
 						var taxItem = self.taxItemDS.get(value.tax_item_id),
@@ -82882,8 +82882,8 @@
 
 						if(taxItem.account_id>0){
 							if(taxList[taxItem.account_id]===undefined){
-								taxList[taxItem.account_id]={"id": taxItem.account_id, "amount":taxAmount};						
-							}else{											
+								taxList[taxItem.account_id]={"id": taxItem.account_id, "amount":taxAmount};
+							}else{
 								if(taxList[taxItem.account_id].id===taxItem.account_id){
 									taxList[taxItem.account_id].amount += taxAmount;
 								}else{
@@ -82895,20 +82895,20 @@
 				});
 
 				//Tax account on Dr
-				if(!jQuery.isEmptyObject(taxList)){				
+				if(!jQuery.isEmptyObject(taxList)){
 					$.each(taxList, function(index, value){
-						self.journalLineDS.add({					
+						self.journalLineDS.add({
 							transaction_id 		: transaction_id,
-							account_id 			: value.id,				
-							contact_id 			: value.contact_id,				
+							account_id 			: value.id,
+							contact_id 			: value.contact_id,
 							description 		: "",
 							reference_no 		: "",
-							segments 	 		: [],								
+							segments 	 		: [],
 							dr 	 				: value.amount,
-							cr 					: 0,				
+							cr 					: 0,
 							rate				: obj.rate,
 							locale				: obj.locale
-						});										
+						});
 					});
 				}
 			}
@@ -82934,7 +82934,7 @@
 						rate				: obj.rate,
 						locale				: obj.locale
 					});
-				}				
+				}
 
 				//Over Expense
 				if(obj.remaining<0){
@@ -82953,7 +82953,7 @@
 						rate				: obj.rate,
 						locale				: obj.locale
 					});
-				}			
+				}
 
 				//Advance Account on Cr
 	    		this.journalLineDS.add({
@@ -82973,17 +82973,17 @@
 				this.journalLineDS.add({
 					transaction_id 		: transaction_id,
 					contact_id 			: obj.contact_id,
-					account_id 			: obj.account_id,										
+					account_id 			: obj.account_id,
 					description 		: "",
 					reference_no 		: "",
-					segments 	 		: obj.segments,								
+					segments 	 		: obj.segments,
 					dr 	 				: 0,
-					cr 					: sum,				
+					cr 					: sum,
 					rate				: obj.rate,
 					locale				: obj.locale
 				});
 			}
-			
+
 			this.journalLineDS.sync();
 		},
 		//Reference
@@ -83043,16 +83043,16 @@
 				self.lineDS.data([]);
 
 				$.each(view, function(index, value){
-					self.lineDS.add({					
+					self.lineDS.add({
 						transaction_id 		: 0,
 						tax_item_id 		: value.tax_item_id,
 						job_id 				: value.job_id,
-						contact_id 			: value.contact_id,				
-						account_id 			: value.account_id,								
+						contact_id 			: value.contact_id,
+						account_id 			: value.account_id,
 						description 		: value.description,
 						reference_no 		: value.reference_no,
-						segments 	 		: value.segments,								
-						amount 	 			: value.amount,							
+						segments 	 		: value.segments,
+						amount 	 			: value.amount,
 						rate				: value.rate,
 						locale				: value.locale,
 						reference_date 		: value.reference_date
@@ -83249,11 +83249,11 @@
 			var self = this;
 			
 			this.dataSource.query({
-				filter: [],								
+				filter: [],
 				page: 1,
 				pageSize: 5
 			}).then(function(){
-				var view = self.dataSource.view();				
+				var view = self.dataSource.view();
 				
 				self.set("income", kendo.toString(view[0].income, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
 				self.set("expense", kendo.toString(view[0].expense, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
@@ -83262,7 +83262,7 @@
 				self.set("asset", kendo.toString(view[0].asset, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
 				self.set("liability", kendo.toString(view[0].liability, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
 				self.set("equity", kendo.toString(view[0].equity, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
-			});										
+			});
 		}
 	});
 	banhji.journalReport =  kendo.observable({
@@ -83292,34 +83292,34 @@
         	sdate = "",
         	edate = "",
         	sorter = this.get("sorter");
-        	
+
 			switch(sorter){
-				case "today":								
+				case "today":
 					this.set("sdate", today);
 					this.set("edate", "");
-													  					
+
 				  	break;
-				case "week":			  	
+				case "week":
 					var first = today.getDate() - today.getDay(),
 					last = first + 6;
 
 					this.set("sdate", new Date(today.setDate(first)));
-					this.set("edate", new Date(today.setDate(last)));						
+					this.set("edate", new Date(today.setDate(last)));
 					
 				  	break;
-				case "month":							  	
+				case "month":
 					this.set("sdate", new Date(today.getFullYear(), today.getMonth(), 1));
 					this.set("edate", new Date(today.getFullYear(), today.getMonth() + 1, 0));
 
 				  	break;
-				case "year":				
+				case "year":
 				  	this.set("sdate", new Date(today.getFullYear(), 0, 1));
 				  	this.set("edate", new Date(today.getFullYear(), 11, 31));
 
 				  	break;
 				default:
 					this.set("sdate", "");
-				  	this.set("edate", "");									  
+				  	this.set("edate", "");
 			}
 		},
 		search				: function(){
@@ -83327,7 +83327,7 @@
 				start = this.get("sdate"),
         		end = this.get("edate"),
         		displayDate = "";
-    	
+
         	//Dates
         	if(start && end){
         		start = new Date(start);
@@ -83369,7 +83369,7 @@
 	            	self.set("cr", kendo.toString(response.cr, "c", banhji.locale));
 	            }
 	        });
-			                          
+
 		},
 		printGrid			: function() {
 			var gridElement = $('#grid'),
@@ -83398,7 +83398,6 @@
 		            '.k-grid-toolbar, .k-grid-pager > .k-link { display: none; }' +
 		            '</style><style type="text/css" media="print"> @page { size: portrait; margin:1mm; }'+
 		            	'.inv1 .main-color {' +
-		            		
 		            		'-webkit-print-color-adjust:exact; ' +
 		            	'} ' +
 		            	'.table.table-borderless.table-condensed  tr th { background-color: #1E4E78!important;' +
@@ -83437,7 +83436,7 @@
 		    var htmlEnd =
 		            '</div></body>' +
 		            '</html>';
-		    
+
 		    printableContent = $('#invFormContent').html();
 		    doc.write(htmlStart + printableContent + htmlEnd);
 		    doc.close();
@@ -83452,7 +83451,7 @@
 				start = this.get("sdate"),
         		end = this.get("edate"),
         		displayDate = "";
-    	
+
         	//Dates
         	if(start && end){
             	para.push({ field:"issued_date >=", operator:"where_related_transaction", value: kendo.toString(new Date(start), "yyyy-MM-dd") });
@@ -83468,9 +83467,9 @@
 
             	displayDate = "As Of " + kendo.toString(new Date(end), "dd-MM-yyyy");
             }else{
-            	
+
             }
-            
+
             this.set("displayDate", displayDate);
             this.exdataSource.data([]);
             this.exdataSource.query({
@@ -83563,34 +83562,28 @@
 		          });
 		        }
 		        if(self.exArray.length > 1) {
-		        	// this.exdataSource.bind("requestEnd", function(e){
-	            	//if(e.type==="read"){
-	            		$("#loadImport").css("display","none");
-	            		var workbook = new kendo.ooxml.Workbook({
-				          sheets: [
-				            {
-				              columns: [
-				                { autoWidth: true },
-				                { autoWidth: true },
-				                { autoWidth: true },
-				                { autoWidth: true },
-				                { autoWidth: true },
-				                { autoWidth: true },
-				                { autoWidth: true }
-				              ],
-				              title: "Journal Entry Reports",
-				              rows: self.exArray
-				            }
-				          ]
-				        });
-				        //save the file as Excel file with extension xlsx
-				        kendo.saveAs({dataURI: workbook.toDataURL(), fileName: "JournalEntryReports.xlsx"});
-		            //}
-		        // });
+            		$("#loadImport").css("display","none");
+            		var workbook = new kendo.ooxml.Workbook({
+			          sheets: [
+			            {
+			              columns: [
+			                { autoWidth: true },
+			                { autoWidth: true },
+			                { autoWidth: true },
+			                { autoWidth: true },
+			                { autoWidth: true },
+			                { autoWidth: true },
+			                { autoWidth: true }
+			              ],
+			              title: "Journal Entry Reports",
+			              rows: self.exArray
+			            }
+			          ]
+			        });
+			        //save the file as Excel file with extension xlsx
+			        kendo.saveAs({dataURI: workbook.toDataURL(), fileName: "JournalEntryReports.xlsx"});
 		        }
             });
-            
-	        
 		}
 	});
 	banhji.journalReportBySegment =  kendo.observable({
@@ -90585,28 +90578,28 @@
 									$("#loadImport").css("display","none");	
 								}
 								banhji.importJournal.set('enabled', false);
-							}							
+							}
 						}
-					});						
-				});															
+					});
+				});
 			}
-			reader.readAsBinaryString(files[0].rawFile);         	
+			reader.readAsBinaryString(files[0].rawFile);
         },
 		save: function() {
 			if(banhji.importJournal.dataSource.data().length > 0) {
 				$("#loadImport").css("display","block");
 				banhji.importJournal.dataSource.sync();
 				banhji.importJournal.dataSource.bind("requestEnd", function(e){
-			    	if(e.response){				
+			    	if(e.response){
 			    		$("#ntf1").data("kendoNotification").success("Imported Journal successfully!");
 						$("#loadImport").css("display","none");
-					}				  				
+					}
 			    });
-			    banhji.importJournal.dataSource.bind("error", function(e){		    		    	
+			    banhji.importJournal.dataSource.bind("error", function(e){
 					$("#ntf1").data("kendoNotification").error("Error Importing Journal!"); 
-					$("#loadImport").css("display","none");				
+					$("#loadImport").css("display","none");
 			    });
-			}				
+			}
 		}
 	});
     banhji.importView = kendo.observable({
@@ -90945,8 +90938,7 @@
 					}
 					banhji.aws.getImage();
 				}
-			});	
-			
+			});
 		},
 		routeMissing: function(e) {
 			// banhji.view.layout.showIn("#layout-view", banhji.view.missing);
@@ -90969,7 +90961,7 @@
 			banhji.index.pageLoad();
 			banhji.pageLoaded["index"] = true;
         }
-			
+
 	});
 	banhji.router.route("/search_advanced", function(){
 		if(!banhji.userManagement.getLogin()){
@@ -92123,7 +92115,7 @@
 				banhji.userManagement.addMultiTask("Sale Return","sale_return",vm);
 				if(banhji.pageLoaded["sale_return"]==undefined){
 					banhji.pageLoaded["sale_return"] = true;
-					
+
 			        var validator = $("#example").kendoValidator({
 			        	rules: {
 					        customRule1: function(input){
@@ -92312,7 +92304,7 @@
 
 			if(banhji.pageLoaded["customer_list"]==undefined){
 				banhji.pageLoaded["customer_list"] = true;
-				
+
 				$("#grid").kendoGrid({
 	                dataSource: dataStore(apiUrl + "contacts"),
 	                height: 550,
@@ -92358,7 +92350,7 @@
 			banhji.userManagement.addMultiTask("Customer Balance","customer_balance",null);
 			if(banhji.pageLoaded["customer_balance"]==undefined){
 				banhji.pageLoaded["customer_balance"] = true;
-				
+
 				vm.search();
 			}
 		}
@@ -92423,7 +92415,7 @@
 					});
 				},2000);
 			};
-			
+
 			vm.pageLoad(id);
 		};
 	});
@@ -92457,7 +92449,7 @@
 				var Href1 = '<?php echo base_url(); ?>assets/invoice/invoice.css';
 				loadStyle(Href1);
 			};
-			
+
 			vm.pageLoad(id);
 		};
 	});
@@ -92554,7 +92546,7 @@
 
 			var vm = banhji.saleDetailByProduct;
 			banhji.userManagement.addMultiTask("Sale Detail By Product","sale_detail_by_product",null);
-			
+
 			if(banhji.pageLoaded["sale_detail_by_product"]==undefined){
 				banhji.pageLoaded["sale_detail_by_product"] = true;
 
@@ -92568,7 +92560,7 @@
 			banhji.router.navigate('/manage');
 		}else{
 			banhji.view.layout.showIn("#content", banhji.view.customerBalanceSummary);
-			
+
 			var vm = banhji.customerBalanceSummary;
 			banhji.userManagement.addMultiTask("Customer Balance Summary","customer_balance_summary",null);
 
@@ -92588,7 +92580,7 @@
 			if(banhji.pageLoaded["customer_balance_detail"]==undefined){
 				banhji.pageLoaded["customer_balance_detail"] = true;
 			}
-			vm.pageLoad();			
+			vm.pageLoad();
 		}
 	});
 	banhji.router.route("/receivable_aging_summary", function(){
@@ -92660,7 +92652,7 @@
 
 			var vm = banhji.invoiceList;
 			banhji.userManagement.addMultiTask("Invoice List","invoice_list",null);
-			
+
 			if(banhji.pageLoaded["collect_invoice"]==undefined){
 				banhji.pageLoaded["collect_invoice"] = true;
 				vm.sorterChanges();
@@ -92910,7 +92902,7 @@
 		// 			}
 		// 		}
 		// 	} 
-		// 	if(allowed) {						
+		// 	if(allowed) {
 				banhji.view.layout.showIn("#content", banhji.view.purchaseOrder);
 				kendo.fx($("#slide-form")).slideIn("down").play();
 
@@ -93567,7 +93559,7 @@
 
 	        $("#saveNew").click(function(e){
 				e.preventDefault();
-				
+
 				if(validator.validate() && vm.validating()){
 	            	vm.save();
 		        }else{
@@ -93792,7 +93784,7 @@
 			if(banhji.pageLoaded["suppliers_balance_detail"]==undefined){
 				banhji.pageLoaded["suppliers_balance_detail"] = true;
 			}
-			vm.pageLoad();			
+			vm.pageLoad();
 		}
 	});
 	banhji.router.route("/payables_aging_summary", function(){
@@ -95270,7 +95262,7 @@
 
 					start.value(sdate);
 					end.value(edate);
-					
+
 					start.max(end.value());
                 	end.min(start.value());
 
@@ -95295,11 +95287,11 @@
 
 			var vm = banhji.inventoryPurchaseByVendorSummary;
 
-			banhji.userManagement.addMultiTask("Purchase By Supplier Summary","inventory_purchase_by_vendor_summary",null);		
+			banhji.userManagement.addMultiTask("Purchase By Supplier Summary","inventory_purchase_by_vendor_summary",null);
 			
 			if(banhji.pageLoaded["inventory_purchase_by_vendor_summary"]==undefined){
 				banhji.pageLoaded["inventory_purchase_by_vendor_summary"] = true;
-				
+
 			}
 		}
 	});
@@ -95313,7 +95305,7 @@
 
 			var vm = banhji.inventoryPurchaseByVendorDetail;
 
-			banhji.userManagement.addMultiTask("Purchase By Supplier Detail","inventory_purchase_by_vendor_detail",null);		
+			banhji.userManagement.addMultiTask("Purchase By Supplier Detail","inventory_purchase_by_vendor_detail",null);
 			
 			if(banhji.pageLoaded["inventory_purchase_by_vendor_detail"]==undefined){
 				banhji.pageLoaded["inventory_purchase_by_vendor_detail"] = true;
@@ -95399,7 +95391,7 @@
 					}
 				}
 			} 
-			if(allowed) {	
+			if(allowed) {
 				banhji.view.layout.showIn("#content", banhji.view.accountingDashboard);
 				banhji.view.layout.showIn('#menu', banhji.view.menu);
 				banhji.view.menu.showIn('#secondary-menu', banhji.view.accountingMenu);
@@ -95409,10 +95401,10 @@
 
 				if(banhji.pageLoaded["accounting"]==undefined){
 					banhji.pageLoaded["accounting"] = true;
-			          	
+
 				}
 
-				vm.pageLoad();			
+				vm.pageLoad();
 			} else {
 				window.location.replace(baseUrl + "admin");
 			}
@@ -95431,23 +95423,23 @@
 					}
 				}
 			} 
-			if(allowed) {			
+			if(allowed) {
 				var vm = banhji.accountingCenter;
 				banhji.userManagement.addMultiTask("Account Center","accounting_center",null);
-							
-				banhji.view.layout.showIn("#content", banhji.view.accountingCenter);			
+
+				banhji.view.layout.showIn("#content", banhji.view.accountingCenter);
 				banhji.view.layout.showIn('#menu', banhji.view.menu);
 				banhji.view.menu.showIn('#secondary-menu', banhji.view.accountingMenu);
 
 				if(banhji.pageLoaded["accounting_center"]==undefined){
 					banhji.pageLoaded["accounting_center"] = true;
-			              	
+
 				}
 
-				vm.pageLoad(id);			
+				vm.pageLoad(id);
 			} else {
 				window.location.replace(baseUrl + "admin");
-			}				
+			}
 		});
 	});
 	banhji.router.route("/account(/:id)", function(id){
@@ -95463,15 +95455,15 @@
 					}
 				}
 			} 
-			if(allowed) {				
+			if(allowed) {
 				var vm = banhji.account;
 				banhji.userManagement.addMultiTask("Account","account",vm);
-							
-				banhji.view.layout.showIn("#content", banhji.view.account);			
+
+				banhji.view.layout.showIn("#content", banhji.view.account);
 				// kendo.fx($("#slide-form")).slideIn("down").play();
 
 				if(banhji.pageLoaded["account"]==undefined){
-					banhji.pageLoaded["account"] = true;		         
+					banhji.pageLoaded["account"] = true;
 
 			    	var validator = $("#example").kendoValidator({
 			        	rules: {
@@ -95486,33 +95478,33 @@
 					        customRule1: banhji.source.duplicateNumber
 					    }
 			        }).data("kendoValidator");
-													
-			        $("#saveNew").click(function(e){				
+
+			        $("#saveNew").click(function(e){
 						e.preventDefault();
 
 						if(validator.validate()){
-			            	vm.save();		            				  
+			            	vm.save();
 				        }else{
 				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-				        }		            
+				        }
 					});
 
-					$("#saveClose").click(function(e){				
+					$("#saveClose").click(function(e){
 						e.preventDefault();
 
 						if(validator.validate()){
 							vm.set("saveClose", true);
-			            	vm.save();		            	
+			            	vm.save();
 				        }else{
 				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
 				        }
-					});				      	
+					});
 				}
 
-				vm.pageLoad(id);			
+				vm.pageLoad(id);
 			} else {
 				window.location.replace(baseUrl + "admin");
-			}				
+			}
 		});
 	});
 	// ACCOUNTING FUNCTIONS
@@ -95874,10 +95866,10 @@
 
 			var vm = banhji.cashTransaction;
 			banhji.userManagement.addMultiTask("Cash Transaction","cash_transaction",vm);
-			
+
 			if(banhji.pageLoaded["cash_transaction"]==undefined){
 				banhji.pageLoaded["cash_transaction"] = true;
- 				
+
 				var validator = $("#example").kendoValidator({
 		        	rules: {
 				        customRule1: function(input) {
@@ -95988,7 +95980,7 @@
 	            	vm.save();
 		        }else{
 		        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-		        }		            
+		        }
 			});
 
 			$("#saveClose").click(function(e){
@@ -96035,7 +96027,7 @@
 
 		var vm = banhji.expense;
 		banhji.userManagement.addMultiTask("Expense","expense",vm);
-		
+
 		if(banhji.pageLoaded["expense"]==undefined){
 			banhji.pageLoaded["expense"] = true;
 
@@ -96128,7 +96120,7 @@
 
 				var vm = banhji.expense;
 				banhji.userManagement.addMultiTask("Expense","expense",vm);
-				
+
 				if(banhji.pageLoaded["expense"]==undefined){
 					banhji.pageLoaded["expense"] = true;
 
@@ -96316,7 +96308,7 @@
 		// 			}
 		// 		}
 		// 	} 
-		// 	if(allowed) {							
+		// 	if(allowed) {
 				banhji.view.layout.showIn("#content", banhji.view.expense);
 				kendo.fx($("#slide-form")).slideIn("down").play();
 
@@ -96409,7 +96401,7 @@
 
 			var vm = banhji.accountingRecurring;
 			banhji.userManagement.addMultiTask("Accounting Recurring","accounting_recurring",null);
-			
+
 			if(banhji.pageLoaded["accounting_recurring"]==undefined){
 				banhji.pageLoaded["accounting_recurring"] = true;
 
@@ -96427,11 +96419,10 @@
 			banhji.view.layout.showIn('#menu', banhji.view.menu);
 			banhji.view.menu.showIn('#secondary-menu', banhji.view.accountingMenu);
 
-			var vm = banhji.accountingReportCenter;			
+			var vm = banhji.accountingReportCenter;
 			banhji.userManagement.addMultiTask("Accounting Report Center","accounting_report_center",null);
 			if(banhji.pageLoaded["accounting_report_center"]==undefined){
-				banhji.pageLoaded["accounting_report_center"] = true;				
-								
+				banhji.pageLoaded["accounting_report_center"] = true;
 			}
 
 			vm.pageLoad();
@@ -96443,15 +96434,14 @@
 		}else{
 			banhji.view.layout.showIn("#content", banhji.view.journalReport);
 			banhji.view.layout.showIn('#menu', banhji.view.menu);
-			banhji.view.menu.showIn('#secondary-menu', banhji.view.accountingMenu);			
-			
+			banhji.view.menu.showIn('#secondary-menu', banhji.view.accountingMenu);
+
 			var vm = banhji.journalReport;
 			banhji.userManagement.addMultiTask("Journal Entry Reports","journal_report",null);
 
 			if(banhji.pageLoaded["journal_report"]==undefined){
-				banhji.pageLoaded["journal_report"] = true;									
-				
-				vm.sorterChanges();		
+				banhji.pageLoaded["journal_report"] = true;
+				vm.sorterChanges();
 			}
 
 			vm.pageLoad();
@@ -96463,14 +96453,13 @@
 		}else{
 			banhji.view.layout.showIn("#content", banhji.view.journalReportBySegment);
 			banhji.view.layout.showIn('#menu', banhji.view.menu);
-			banhji.view.menu.showIn('#secondary-menu', banhji.view.accountingMenu);			
+			banhji.view.menu.showIn('#secondary-menu', banhji.view.accountingMenu);
 			
 			var vm = banhji.journalReportBySegment;
 			banhji.userManagement.addMultiTask("Journal Entry Reports By Segment","journal_report_by_segment",null);
 
 			if(banhji.pageLoaded["journal_report_by_segment"]==undefined){
-				banhji.pageLoaded["journal_report_by_segment"] = true;									
-						
+				banhji.pageLoaded["journal_report_by_segment"] = true;
 			}
 
 			vm.pageLoad();
@@ -96482,14 +96471,13 @@
 		}else{
 			banhji.view.layout.showIn("#content", banhji.view.trialBalance);
 			banhji.view.layout.showIn('#menu', banhji.view.menu);
-			banhji.view.menu.showIn('#secondary-menu', banhji.view.accountingMenu);			
-			
+			banhji.view.menu.showIn('#secondary-menu', banhji.view.accountingMenu);
 			var vm = banhji.trialBalance;
 			banhji.userManagement.addMultiTask("Trial Balance","trial_balance",null);
 
 			if(banhji.pageLoaded["trial_balance"]==undefined){
-				banhji.pageLoaded["trial_balance"] = true;                
-                						
+				banhji.pageLoaded["trial_balance"] = true;
+
 			}
 
 			vm.pageLoad();
@@ -96501,14 +96489,14 @@
 		}else{
 			banhji.view.layout.showIn("#content", banhji.view.chartOfAccount);
 			banhji.view.layout.showIn('#menu', banhji.view.menu);
-			banhji.view.menu.showIn('#secondary-menu', banhji.view.accountingMenu);			
-			
+			banhji.view.menu.showIn('#secondary-menu', banhji.view.accountingMenu);
+
 			var vm = banhji.chartOfAccount;
 			banhji.userManagement.addMultiTask("Chart of Account","chart_of_account",null);
 
 			if(banhji.pageLoaded["chart_of_account"]==undefined){
-				banhji.pageLoaded["chart_of_account"] = true;              
-                						
+				banhji.pageLoaded["chart_of_account"] = true;
+
 			}
 
 			vm.pageLoad();
@@ -96518,48 +96506,48 @@
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
 		}else{
-			banhji.view.layout.showIn("#content", banhji.view.addAccountingprefix);			
+			banhji.view.layout.showIn("#content", banhji.view.addAccountingprefix);
 			kendo.fx($("#slide-form")).slideIn("down").play();
 
 			var vm = banhji.addAccountingprefix;
 			banhji.userManagement.addMultiTask("Add Accounting Prefix","add_accountingprefix",null);
 			if(banhji.pageLoaded["add_accountingprefix"]==undefined){
-				banhji.pageLoaded["add_accountingprefix"] = true;				        
+				banhji.pageLoaded["add_accountingprefix"] = true;
 				setTimeout(function(){
 					var validator = $("#example").kendoValidator().data("kendoValidator");
-					var notification = $("#notification").kendoNotification({				    
+					var notification = $("#notification").kendoNotification({
 					    autoHideAfter: 5000,
-					    width: 300,				    
+					    width: 300,
 					    height: 50
 					}).data('kendoNotification');
-					$("#saveNew").click(function(e){	
+					$("#saveNew").click(function(e){
 		        			
 						e.preventDefault();
 						if(validator.validate()){
-			            	vm.save();		            	
+			            	vm.save();
 
-			            	notification.success("Save Successful");			  
+			            	notification.success("Save Successful");
 				        }else{
-				        	notification.error("Warning, please review it again!");			           
-				        }		            
+				        	notification.error("Warning, please review it again!");
+				        }
 					});
-					$("#saveClose").click(function(e){				
+					$("#saveClose").click(function(e){
 						e.preventDefault();
 
 						if(validator.validate()){
 			            	vm.save();
 			            	window.history.back();
 
-			            	notification.success("Save Successful");			  
+			            	notification.success("Save Successful");
 				        }else{
-				        	notification.error("Warning, please review it again!");			           
-				        }	            
+				        	notification.error("Warning, please review it again!");
+				        }
 					});
 				},2000);
-						
+
 			};
-			
-			vm.pageLoad(id);		
+
+			vm.pageLoad(id);
 		};
 	});	
 	banhji.router.route("/segment", function(){
@@ -96571,14 +96559,13 @@
 			banhji.userManagement.addMultiTask("Segment","segment",null);
 
 			banhji.view.layout.showIn('#menu', banhji.view.menu);
-			banhji.view.menu.showIn('#secondary-menu', banhji.view.accountingMenu);			
-			
+			banhji.view.menu.showIn('#secondary-menu', banhji.view.accountingMenu);
+
 			var vm = banhji.segment;
 
 			if(banhji.pageLoaded["segment"]==undefined){
 				banhji.pageLoaded["segment"] = true;
-														
-			}		
+			}
 		}
 	});
 	banhji.router.route("/fixed_asset_item_list", function(){
@@ -96590,14 +96577,14 @@
 			banhji.userManagement.addMultiTask("Fixed Asset Item List","fixed_asset_item_list",null);
 
 			banhji.view.layout.showIn('#menu', banhji.view.menu);
-			banhji.view.menu.showIn('#secondary-menu', banhji.view.accountingMenu);			
-			
+			banhji.view.menu.showIn('#secondary-menu', banhji.view.accountingMenu);
+
 			var vm = banhji.fixedAssetItemList;
 
 			if(banhji.pageLoaded["fixed_asset_item_list"]==undefined){
 				banhji.pageLoaded["fixed_asset_item_list"] = true;
 			}
-			vm.pageLoad();		
+			vm.pageLoad();
 		}
 	});
 	banhji.router.route("/general_ledger", function(){
@@ -96606,14 +96593,14 @@
 		}else{
 			banhji.view.layout.showIn("#content", banhji.view.generalLedger);
 			banhji.view.layout.showIn('#menu', banhji.view.menu);
-			banhji.view.menu.showIn('#secondary-menu', banhji.view.accountingMenu);			
-			
+			banhji.view.menu.showIn('#secondary-menu', banhji.view.accountingMenu);
+
 			var vm = banhji.generalLedger;
 			banhji.userManagement.addMultiTask("General Ledger","general_ledger",null);
 
 			if(banhji.pageLoaded["general_ledger"]==undefined){
 				banhji.pageLoaded["general_ledger"] = true;
-						
+
 			}
 
 			vm.pageLoad();
@@ -96625,8 +96612,8 @@
 		}else{
 			banhji.view.layout.showIn("#content", banhji.view.transactionListDate);
 			banhji.view.layout.showIn('#menu', banhji.view.menu);
-			banhji.view.menu.showIn('#secondary-menu', banhji.view.accountingMenu);			
-			
+			banhji.view.menu.showIn('#secondary-menu', banhji.view.accountingMenu);
+
 			var vm = banhji.journalReport;
 			banhji.userManagement.addMultiTask("Transaction List by Date","transaction_list_date",null);
 
@@ -96690,7 +96677,7 @@
                 var start = $("#sdate").kendoDatePicker({
                 	format: "dd-MM-yyyy",
                     change: startChange
-                }).data("kendoDatePicker");               
+                }).data("kendoDatePicker");
 
                 var end = $("#edate").kendoDatePicker({
                 	format: "dd-MM-yyyy",
@@ -96704,66 +96691,66 @@
                 	value = $("#sorter").val();
 
 					switch(value){
-					case "today":								
+					case "today":
 						sdate = today;
-															  					
+
 					  	break;
-					case "week":			  	
+					case "week":
 						var first = today.getDate() - today.getDay(),
 						last = first + 6;
 
 						var sdate = new Date(today.setDate(first)),
-						edate = new Date(today.setDate(last));						
-						
+						edate = new Date(today.setDate(last));
+
 					  	break;
-					case "month":							  	
+					case "month":
 						var sdate = new Date(today.getFullYear(), today.getMonth(), 1),
 						edate = new Date(today.getFullYear(), today.getMonth() + 1, 0);
 
 					  	break;
-					case "year":				
+					case "year":
 					  	var sdate = new Date(today.getFullYear(), 0, 1),
 					  	edate = new Date(today.getFullYear(), 11, 31);
 
 					  	break;
 					default:
-											  
+
 					}
 
 					start.value(sdate);
 					end.value(edate);
-					
+
 					start.max(end.value());
                 	end.min(start.value());
 
-                	dateChanges();                	
+                	dateChanges();
                 });
-                
+
                 start.max(end.value());
-                end.min(start.value());				
+                end.min(start.value());
 
 				$("#search").click(function(e){
 		        	e.preventDefault();
 
-		        	var para = [],		        	
+		        	var para = [],
 					sdate = kendo.toString(start.value(), "yyyy-MM-dd"), 
 					edate = kendo.toString(end.value(), "yyyy-MM-dd");
-					
+
 		        	//Dates
-		        	if(start.value() && end.value()){        		
+		        	if(start.value() && end.value()){
 		            	para.push({ field:"issued_date >=", value: sdate });
-		            	para.push({ field:"issued_date <=", value: edate });            	          	            	
+		            	para.push({ field:"issued_date <=", value: edate });
 		            }else if(start.value()){
 		            	para.push({ field:"issued_date", value: sdate });
 		            }else if(end.value()){
 		            	para.push({ field:"issued_date <=", value: edate });
 		            }else{
-		            	
+
 		            }
 
-		            vm.dataSource.filter(para);		            
-		        });								
-						
+		            vm.dataSource.filter(para);
+		        });
+
 			}
 		}
 	});
@@ -96773,8 +96760,8 @@
 		}else{
 			banhji.view.layout.showIn("#content", banhji.view.recentTransactionsList);
 			banhji.view.layout.showIn('#menu', banhji.view.menu);
-			banhji.view.menu.showIn('#secondary-menu', banhji.view.accountingMenu);			
-			
+			banhji.view.menu.showIn('#secondary-menu', banhji.view.accountingMenu);
+
 			var vm = banhji.journalReport;
 			banhji.userManagement.addMultiTask("Recent Transactions List","recent_transactions_list",null);
 
@@ -96904,7 +96891,7 @@
 		            }else if(end.value()){
 		            	para.push({ field:"issued_date <=", value: edate });
 		            }else{
-		            	
+
 		            }
 
 		            vm.dataSource.filter(para);
@@ -97050,7 +97037,7 @@
 		            }else if(end.value()){
 		            	para.push({ field:"issued_date <=", value: edate });
 		            }else{
-		            	
+
 		            }
 
 		            vm.dataSource.filter(para);
@@ -97064,7 +97051,7 @@
 		}else{
 			banhji.view.layout.showIn("#content", banhji.view.auditTrialReport);
 			banhji.view.layout.showIn('#menu', banhji.view.menu);
-			banhji.view.menu.showIn('#secondary-menu', banhji.view.accountingMenu);			
+			banhji.view.menu.showIn('#secondary-menu', banhji.view.accountingMenu);
 			var vm = banhji.journalReport;
 
 			banhji.userManagement.addMultiTask("Audit Trial Report","audit_trial_report",null);
@@ -97209,14 +97196,14 @@
 		}else{
 			banhji.view.layout.showIn("#content", banhji.view.statementProfitLoss);
 			banhji.view.layout.showIn('#menu', banhji.view.menu);
-			banhji.view.menu.showIn('#secondary-menu', banhji.view.accountingMenu);			
+			banhji.view.menu.showIn('#secondary-menu', banhji.view.accountingMenu);
 			
 			var vm = banhji.statementProfitLoss;
 			banhji.userManagement.addMultiTask("Statement of Profit or Loss","statement_profit_loss",null);
 
 			if(banhji.pageLoaded["statement_profit_loss"]==undefined){
 				banhji.pageLoaded["statement_profit_loss"] = true;
-						
+
 			}
 
 			vm.pageLoad();
@@ -97228,14 +97215,14 @@
 		}else{
 			banhji.view.layout.showIn("#content", banhji.view.statementProfitLossBySegment);
 			banhji.view.layout.showIn('#menu', banhji.view.menu);
-			banhji.view.menu.showIn('#secondary-menu', banhji.view.accountingMenu);			
-			
+			banhji.view.menu.showIn('#secondary-menu', banhji.view.accountingMenu);
+
 			var vm = banhji.statementProfitLossBySegment;
 			banhji.userManagement.addMultiTask("Statement of Profit or Loss by Segment","statement_profit_loss_by_segment",null);
 
 			if(banhji.pageLoaded["statement_profit_loss_by_segment"]==undefined){
 				banhji.pageLoaded["statement_profit_loss_by_segment"] = true;
-						
+
 			}
 
 			vm.pageLoad();
@@ -97247,14 +97234,14 @@
 		}else{
 			banhji.view.layout.showIn("#content", banhji.view.statementFinancialPosition);
 			banhji.view.layout.showIn('#menu', banhji.view.menu);
-			banhji.view.menu.showIn('#secondary-menu', banhji.view.accountingMenu);			
-			
+			banhji.view.menu.showIn('#secondary-menu', banhji.view.accountingMenu);
+
 			var vm = banhji.statementFinancialPosition;
 			banhji.userManagement.addMultiTask("Statement of Financial Position","statement_financial_position",null);
 
 			if(banhji.pageLoaded["statement_financial_position"]==undefined){
 				banhji.pageLoaded["statement_financial_position"] = true;
-						
+
 			}
 
 			vm.pageLoad();
@@ -97266,8 +97253,8 @@
 		}else{
 			banhji.view.layout.showIn("#content", banhji.view.statementProfitLossComparison);
 			banhji.view.layout.showIn('#menu', banhji.view.menu);
-			banhji.view.menu.showIn('#secondary-menu', banhji.view.accountingMenu);			
-			
+			banhji.view.menu.showIn('#secondary-menu', banhji.view.accountingMenu);
+
 			var vm = banhji.statementProfitLossComparison;
 
 			banhji.userManagement.addMultiTask("Statement of Profit or Loss Comparison","statement_profit_loss_comparison",null);
@@ -97275,7 +97262,6 @@
 			if(banhji.pageLoaded["statement_profit_loss_comparison"]==undefined){
 				banhji.pageLoaded["statement_profit_loss_comparison"] = true;
 
-				
 			}
 		}
 	});
@@ -97285,8 +97271,8 @@
 		}else{
 			banhji.view.layout.showIn("#content", banhji.view.statementFinancialPositionComparison);
 			banhji.view.layout.showIn('#menu', banhji.view.menu);
-			banhji.view.menu.showIn('#secondary-menu', banhji.view.accountingMenu);			
-			
+			banhji.view.menu.showIn('#secondary-menu', banhji.view.accountingMenu);
+
 			var vm = banhji.journalReport;
 
 			banhji.userManagement.addMultiTask("Statement of Financial Position Comparison","statement_financial_position_comparison",null);
@@ -97543,7 +97529,7 @@
 
                 	dateChanges();
                 });
-                
+
                 start.max(end.value());
                 end.min(start.value());
 
@@ -97563,7 +97549,7 @@
 		            }else if(end.value()){
 		            	para.push({ field:"issued_date <=", value: edate });
 		            }else{
-		            	
+
 		            }
 
 		            vm.dataSource.filter(para);
@@ -97682,20 +97668,20 @@
 
 					start.value(sdate);
 					end.value(edate);
-					
+
 					start.max(end.value());
                 	end.min(start.value());
 
                 	dateChanges();
                 });
-                
+
                 start.max(end.value());
                 end.min(start.value());
 
 				$("#search").click(function(e){
 		        	e.preventDefault();
 
-		        	var para = [],		        	
+		        	var para = [],
 					sdate = kendo.toString(start.value(), "yyyy-MM-dd"), 
 					edate = kendo.toString(end.value(), "yyyy-MM-dd");
 					
@@ -97730,7 +97716,7 @@
 					}
 				}
 			} 
-			if(allowed) {	
+			if(allowed) {
 				banhji.view.layout.showIn("#content", banhji.view.accountingSetting);
 				banhji.view.layout.showIn('#menu', banhji.view.menu);
 				banhji.view.menu.showIn('#secondary-menu', banhji.view.accountingMenu);
@@ -97744,10 +97730,10 @@
 					vm.contactTypeDS.filter({ field:"parent_id", value: 2 });
 				}
 
-				vm.pageLoad();			     		
+				vm.pageLoad();
 			} else {
 				window.location.replace(baseUrl + "admin");
-			}				
+			}
 		});
 	});
 	banhji.router.route("/currency_rate", function(){
@@ -97785,13 +97771,13 @@
 
 			banhji.view.layout.showIn('#menu', banhji.view.menu);
 			//banhji.view.menu.showIn('#secondary-menu', banhji.view.taxMenu);
-			
+
 			var vm = banhji.tax;
 
 			if(banhji.pageLoaded["tax"]==undefined){
 				banhji.pageLoaded["tax"] = true;
 			}
-		}		
+		}
 	});
 	// TAX REPORTS
 	banhji.router.route("/tax_report_center", function(){
@@ -97840,7 +97826,7 @@
 
 			banhji.view.layout.showIn('#menu', banhji.view.menu);
 			banhji.view.menu.showIn('#secondary-menu', banhji.view.taxMenu);
-			
+
 			var vm = banhji.tax_report_center;
 
 			if(banhji.pageLoaded["purchase_journal"]==undefined){
@@ -97984,7 +97970,7 @@
 			var vm = banhji.cash;
 
 			banhji.userManagement.addMultiTask("Cash","cash",vm);
-						
+
 			banhji.view.layout.showIn("#content", banhji.view.cash);
 			kendo.fx($("#slide-form")).slideIn("down").play();
 
@@ -98041,7 +98027,7 @@
 				        customRule1: banhji.source.requiredMessage
 				    }
 		        }).data("kendoValidator");
-				
+
 		        $("#saveNew").click(function(e){
 					e.preventDefault();
 
@@ -98099,7 +98085,7 @@
 		banhji.userManagement.addMultiTask("Cashier Dashboard","cashier",null);
 		if(banhji.pageLoaded["cashier"]==undefined){
 			banhji.pageLoaded["cashier"] = true;
-			
+
 			$("#ddlContact").kendoComboBox({
 				placeholder: "លេខកូដ...",
 				valuePrimitive: true,
@@ -98352,8 +98338,7 @@
 			
 			if(banhji.pageLoaded["cash_flow_forecast"]==undefined){
 				banhji.pageLoaded["cash_flow_forecast"] = true;
-				
-									
+
 			}
 
 			vm.pageLoad(id);
@@ -98386,10 +98371,10 @@
 
 			var vm = banhji.cashList;
 			banhji.userManagement.addMultiTask("Cash List","cash_list",null);
-			
+
 			if(banhji.pageLoaded["cash_list"]==undefined){
 				banhji.pageLoaded["cash_list"] = true;
-				
+
 				vm.contactTypeDS.filter({ field:"parent_id", value:1 });
 				vm.dataSource.filter({ field:"parent_id", operator:"where_related_contact_type", value:1 });
 
@@ -98444,13 +98429,13 @@
 			// 	console.log(cashAccount);
 			// } else {
 			// 	console.log('no data');
-			// }			
-			
+			// }
+
 			banhji.userManagement.addMultiTask("Cash Movement","cash_movement",null);
 
 			if(banhji.pageLoaded["cash_movement"]==undefined){
 				banhji.pageLoaded["cash_movement"] = true;
-						
+
 			}
 
 			vm.pageLoad();
@@ -98593,7 +98578,7 @@
 			banhji.view.layout.showIn("#content", banhji.view.cashManagementDashboard);
 			//banhji.view.layout.showIn('#menu', banhji.view.menu);
 			//banhji.view.menu.showIn('#secondary-menu', banhji.view.cashMenu);
-			
+
 			var vm = banhji.cashDashboard;
 			banhji.userManagement.addMultiTask("Cash Management Dashboard","cash_management_dashboard",null);
 
@@ -98648,7 +98633,7 @@
 				banhji.view.layout.showIn("#content", banhji.view.saleDashboard);
 				banhji.view.layout.showIn('#menu', banhji.view.menu);
 				banhji.view.menu.showIn('#secondary-menu', banhji.view.saleMenu);
-				
+
 				var vm = banhji.saleDashboard;
 				banhji.userManagement.addMultiTask("Sale Dashboard","sales",null);
 				if(banhji.pageLoaded["sales"]==undefined){
@@ -98837,7 +98822,7 @@
 					}
 				} else {
 					window.location.replace(baseUrl + "admin");
-				}				
+				}
 			}
 		);
 		// if(!checkRole("documents")){

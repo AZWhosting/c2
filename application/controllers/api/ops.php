@@ -96,8 +96,8 @@ class Ops extends REST_Controller {
 			    $connection = 'use '.$db;
 			    $this->db->query($connection);
 
-			    $this->db->where('id', 1);
-			    $this->db->update('tax_items', array('sub_of_id' => 12));
+			    // $this->db->where('id', 2);
+			    // $this->db->update('tax_types', array('sub_of_id' => 12));
 
 			    // $this->db->insert('tax_types', array('name' => 'WHT', 'tax_system' => 'Payment Based', 'agency' => 'GDT', 'is_system' => 1));
 				
