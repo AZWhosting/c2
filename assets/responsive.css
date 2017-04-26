@@ -359,7 +359,8 @@ input.k-textbox{
 #ddlOption-list,
 #ddlOption-list,
 #showName-list,
-#showSegment-list{
+#showSegment-list,
+#cbbWHTItem-list{
   width: 250px !important;
 }
 #ccbTaxItem-list{

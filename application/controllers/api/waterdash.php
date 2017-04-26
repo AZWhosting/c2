@@ -46,7 +46,7 @@ class Waterdash extends REST_Controller {
 		$contact = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$icontact = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$acontact = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$vcontact = new Contact_utility(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$vcontact = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$trx = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
 
@@ -81,7 +81,7 @@ class Waterdash extends REST_Controller {
 		$acontact->where('activated', 1);
 		$totalACust = $acontact->count();
 
-		$vcontact->where('type', 'w');
+		$vcontact->where('use_water', '1');
 		// $vcontact->where('activated', 1);
 		$totalVCust = $vcontact->count();
 

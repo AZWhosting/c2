@@ -101,15 +101,15 @@ class Ops extends REST_Controller {
 
 			    // $this->db->insert('item_prices', array('item_id' => 7, 'measurement_id'=> 6, 'unit_value' => 1.000000000000000, 'locale'=> 'km-KH'));
 				
-				// $this->dbforge->add_column("account_lines", array(
-				// 												"wht_account_id" => array(
-				// 																	"type" 		=> "INT",
-				// 																	"constraint"=> 11,
-				// 																	"null" 		=> FALSE,
-				// 																	"default" 	=> 0
-				// 																	)
-				// 												)
-				// );
+				$this->dbforge->add_column("tax_types", array(
+																"sub_of_id" => array(
+																					"type" 		=> "INT",
+																					"constraint"=> 11,
+																					"null" 		=> FALSE,
+																					"default" 	=> 0
+																				)
+																)
+				);
 
 				// $this->dbforge->modify_column(
 		  //       	'transactions', array(

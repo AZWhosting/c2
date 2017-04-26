@@ -486,6 +486,7 @@
                  { 'field': 'remaining' },
                  { 'field': 'issued_date' },
                  { 'field': 'due_date' },
+                 { 'field': 'status' },
                  { 'field': 'deleted' }
              ]"
              data-bind="source: txnDS"></div>
@@ -66024,7 +66025,14 @@
 				//Tax
 				if(value.tax_item_id>0){
 					var taxItem = self.taxItemDS.get(value.tax_item_id);
-					tax += amt * taxItem.rate;
+					
+					if(taxItem.id=="1" || taxItem.id=="2"){
+						if(value.wht_account_id==0){
+							tax -= amt * taxItem.rate;
+						}
+					}else{
+						tax += amt * taxItem.rate;
+					}
 				}
 
 				//Count additional cost and check
