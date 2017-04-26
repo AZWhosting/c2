@@ -13015,6 +13015,23 @@
 						                   style="width: 100%" />
 								</td>
 						    </tr>
+						    <tr>
+						    	<td></td>
+						    	<td></td>
+						    	<td></td>
+						    	<td>
+									<input id="cbbWHTAccount" name="cbbWHTAccount"
+										   data-role="combobox"
+						                   data-template="account-list-tmpl"
+						                   data-value-primitive="true"
+						                   data-text-field="name"
+						                   data-value-field="id"
+						                   data-bind="value: account_id,
+						                              source: expenseAccountDS"
+						                   data-placeholder="Add Account.."
+						                   style="width: 100%" />	
+								</td>
+							</tr>
 						</table>
 
 						<br>
@@ -13058,6 +13075,7 @@
 								                <th style="width: 1%;" data-bind="visible: showDiscount"><span data-bind="text: lang.lang.discount"></span></th>			                
 								                <th class="center" style="width: 15%;"><span data-bind="text: lang.lang.amount"></span></th>
 								                <th class="center" style="width: 11%;"><span data-bind="text: lang.lang.tax"></span></th>
+								                <th class="center" style="width: 20%;" data-bind="visible: showWHTItem"><span>WHT Acc.</span></th>
 								                <th class="center" style="width: 1%;" data-bind="visible: showAdditionalCost">+Cost</th>			                			                			                
 								            </tr> 
 								        </thead>
@@ -13085,6 +13103,10 @@
 													<li>
 														<input type="checkbox" id="chbAdditionalCost" class="k-checkbox" data-bind="checked: showAdditionalCost" />												
 														<label class="k-checkbox-label" for="chbAdditionalCost"><span data-bind="text: lang.lang.additional_costs"></span></label>
+													</li>
+													<li>
+														<input type="checkbox" id="chbWHTItem" class="k-checkbox" data-bind="checked: showWHTItem" />												
+														<label class="k-checkbox-label" for="chbWHTItem"><span>WHT Account</span></label>
 													</li>
 												</ul>
 											</div>
@@ -13125,6 +13147,7 @@
 								                <th data-bind="visible: showSegment" style="width: 15%;"><span data-bind="text: lang.lang.segment"></span></th>
 								                <th class="center" style="width: 15%;"><span data-bind="text: lang.lang.amount"></span></th>
 								                <th class="center" style="width: 11%;"><span data-bind="text: lang.lang.tax"></span></th>			                			                
+								            	<th class="center" style="width: 20%;" data-bind="visible: showWHTAccount"><span>WHT Acc.</span></th>
 								            </tr> 
 								        </thead>
 								        <tbody data-role="listview" 
@@ -13138,7 +13161,7 @@
 
 										<div class="btn-group">
 											<div class="leadcontainer">
-												
+
 											</div>
 											<a class="btn btn-default dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-list"></i> </a>
 											<ul class="dropdown-menu" style="padding: 5px; border-radius:0;">
@@ -13149,6 +13172,10 @@
 												<li>
 													<input type="checkbox" id="chbSegment" class="k-checkbox" data-bind="checked: showSegment" />												
 													<label class="k-checkbox-label" for="chbSegment"><span data-bind="text: lang.lang.segment"></span></label>
+												</li>
+												<li>
+													<input type="checkbox" id="chbWHTAccount" class="k-checkbox" data-bind="checked: showWHTAccount" />												
+													<label class="k-checkbox-label" for="chbWHTAccount"><span>WHT Account</span></label>
 												</li>
 											</ul>
 										</div>
@@ -13172,7 +13199,7 @@
 								                <th data-bind="text: lang.lang.description"></th>
 								                <th data-bind="text: lang.lang.ref"></th>
 								                <th class="center" style="width: 15%;"><span data-bind="text: lang.lang.amount"></span></th>
-								                <th class="center" style="width: 11%;"><span data-bind="text: lang.lang.tax"></span></th>		                			                			                
+								                <th class="center" style="width: 11%;"><span data-bind="text: lang.lang.tax"></span></th>
 								            </tr> 
 								        </thead>
 								        <tbody data-role="listview" 
@@ -13186,7 +13213,7 @@
 										<!-- Column -->
 										<div class="span6">
 											<button class="btn btn-inverse" data-bind="click: windowCreate"><i class="icon-plus icon-white"></i></button>
-
+						
 											<span data-bind="text: lang.lang.additional_cost_apply"></span>
 											
 											<input type="radio" name="engine" id="engine1" class="k-radio" value="Equal" 
@@ -13430,11 +13457,24 @@
                    			  events:{ change: changes }"
                    style="width: 100%" />			
 		</td>
+		<td data-bind="visible: showWHTItem">
+			<input id="cbbWHTItem" name="cbbWHTItem-#:uid#"
+				   data-role="combobox"
+                   data-template="account-list-tmpl"
+                   data-value-primitive="true"
+                   data-text-field="name"
+                   data-value-field="id"
+                   data-bind="value: account_id,
+                              source: expenseAccountDS"
+                   data-placeholder="Add Account.."
+                   style="width: 100%" />	
+		</td>
 		<td class="center" data-bind="visible: showAdditionalCost">
 			<span data-format="n" data-bind="text: additional_cost"></span>
 						
-			<input type="checkbox" data-bind="checked: additional_applied,
-										events:{ change: changes }" />
+			<input type="checkbox" 
+					data-bind="checked: additional_applied,
+							   events:{ change: changes }" />
 							
 		</td>				
     </tr>   
@@ -13444,19 +13484,19 @@
 		<td class="center">
 			<i class="icon-trash" data-bind="events: { click: removeRowAccount }"></i>
 			#:banhji.purchase.accountLineDS.indexOf(data)+1#			
-		</td>			
+		</td>
 		<td>
 			<input id="cbbAccounts" name="cbbAccounts-#:uid#"
 				   data-role="combobox"
                    data-template="account-list-tmpl"
-                   data-value-primitive="true"                                     
+                   data-value-primitive="true"
                    data-text-field="name"
                    data-value-field="id"
                    data-bind="value: account_id,
                               source: expenseAccountDS"
                    data-placeholder="Add Account.."        
                    required data-required-msg="required" style="width: 100%" />	
-		</td>		
+		</td>
 		<td>
 			<input name="description" 
 					type="text" class="k-textbox" 
@@ -13500,6 +13540,18 @@
                    			  source: taxItemDS,
                    			  events:{ change: changes }"
                    style="width: 100%" />			
+		</td>
+		<td data-bind="visible: showWHTAccount">
+			<input id="cbbWHTAccount" name="cbbWHTAccount-#:uid#"
+				   data-role="combobox"
+                   data-template="account-list-tmpl"
+                   data-value-primitive="true"
+                   data-text-field="name"
+                   data-value-field="id"
+                   data-bind="value: account_id,
+                              source: expenseAccountDS"
+                   data-placeholder="Add Account.."
+                   style="width: 100%" />	
 		</td>			
     </tr>   
 </script>
@@ -35862,7 +35914,7 @@
 				        <thead>
 				            <tr>
 				                <th class="center" style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></th>			                
-				                <th><span data-bind="text: lang.lang.date"></span></th>
+				                <th style="width: 100px;"><span data-bind="text: lang.lang.date"></span></th>
 				                <th><span data-bind="text: lang.lang.name"></span></th>
 				                <th><span data-bind="text: lang.lang.reference_no"></span></th>
 				                <th data-bind="visible: showReceiptNo">Receipt#</th>
@@ -35975,7 +36027,9 @@
 			<i class="icon-trash" data-bind="events: { click: removeRow }"></i>
 			#:banhji.cashReceipt.dataSource.indexOf(data)+1#			
 		</td>
-		<td>#=kendo.toString(new Date(issued_date), "dd-MM-yyyy")#</td>
+		<td>
+			<span data-format="dd-MM-yyyy" data-bind="text: reference[0].issued_date"></span>
+		</td>
 		<td>#=banhji.cashReceipt.getContactName(contact_id)#</td>
 		<td>#=reference_no#</td>
 		<td data-bind="visible: showReceiptNo">
@@ -36196,7 +36250,7 @@
 			        <thead>
 			            <tr>
 			                <th class="center" style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></th>			                
-			                <th data-bind="text: lang.lang.date"></th>
+			                <th style="width: 100px;"><span data-bind="text: lang.lang.date"></span></th>
 			                <th data-bind="text: lang.lang.name"></th>
 			                <th data-bind="text: lang.lang.reference_no"></th>
 			                <th data-bind="visible: showReceiptNo">Receipt#</th>
@@ -36311,7 +36365,9 @@
 			<i class="icon-trash" data-bind="events: { click: removeRow }"></i>
 			#:banhji.cashPayment.dataSource.indexOf(data)+1#			
 		</td>		
-		<td>#=kendo.toString(new Date(issued_date), "dd-MM-yyyy")#</td>
+		<td>
+			<span data-format="dd-MM-yyyy" data-bind="text: reference[0].issued_date"></span>
+		</td>
 		<td>#=banhji.cashPayment.getContactName(contact_id)#</td>	
 		<td>#=reference_no#</td>
 		<td data-bind="visible: showReceiptNo">
@@ -65247,6 +65303,8 @@
 		showRef 					: true,
 		showName 					: false,
 		showSegment 				: false,
+		showWHTItem 				: false,
+		showWHTAccount 				: false,
 		windowVisible 				: false,
 		balance 					: 0,
 		total 						: 0,
@@ -87558,13 +87616,13 @@
 		  		{ field:"status", value: 1 }
 		  	],
 		  	sort: { field:"number", dir:"asc" }
-		}),		
+		}),
 		paymentTermDS 		: banhji.source.paymentTermDS,
 		paymentMethodDS 	: banhji.source.paymentMethodDS,
 		amtDueColor 		: banhji.source.amtDueColor,
 		showCheckNo 		: false,
 		showReceiptNo 		: false,
-		obj 				: null,		
+		obj 				: null,
 		isEdit 				: false,
 		saveClose 			: false,
 		savePrint 			: false,
@@ -87578,16 +87636,16 @@
 			if(id){
 				this.set("isEdit", true);
 				this.loadObj(id);
-			}else{				
+			}else{
 				if(this.get("isEdit") || this.dataSource.total()==0){
 					this.addEmpty();
-				}								
+				}
 			}
 		},
 		loadInvoice 		: function(id){
 			this.set("invoice_id", id);
 			this.search();
-		},	
+		},
 		//Contact
 		loadContact 		: function(id){
 			this.set("contact_id", id);
@@ -87596,7 +87654,7 @@
 		contactChanges 		: function(){
 			this.search();
 	    },
-	    getContactName      : function(id){
+        getContactName      : function(id){
             var raw = banhji.source.customerDS.get(id);
             if(raw){
                 return raw.name;
@@ -87610,42 +87668,42 @@
 	    	this.setRate();	
 	    },
 	    applyTerm 			: function(){
-	    	var self = this, obj = this.get("obj"), 
+	    	var self = this, obj = this.get("obj"),
 	    	today = new Date();
 
-	    	$.each(this.dataSource.data(), function(index, value){	    		   		
+	    	$.each(this.dataSource.data(), function(index, value){
 	    		var term = self.paymentTermDS.get(value.payment_term_id),
 	    		termDate = new Date(value.reference[0].issued_date);
 
     			termDate.setDate(termDate.getDate() + term.discount_period);
-    			
+
     			if(today<=termDate){
     				if(value.reference[0].amount_paid==0){
 	    				var amount = value.reference[0].amount * term.discount_percentage;
 	    				value.set("discount", amount);
 	    				value.set("amount", value.reference[0].amount - amount);
     				}
-    			}		    	
-	    	});	    	
+    			}
+	    	});
 	    },
-	    //Currency Rate		
+	    //Currency Rate
 		setRate 			: function(){
 			var obj = this.get("obj");
 
 			$.each(this.dataSource.data(), function(index, value){
-				var rate = banhji.source.getRate(value.locale, new Date(obj.issued_date));				
+				var rate = banhji.source.getRate(value.locale, new Date(obj.issued_date));
 				
-				value.set("rate", rate);				
+				value.set("rate", rate);
 			});
 
-			this.changes();			
+			this.changes();
 		},
-		//Segments		
+		//Segments
 	    segmentChanges 		: function(e) {
 			var dataArr = this.get("obj").segments,
 			lastIndex = dataArr.length - 1,
 			last = this.segmentItemDS.get(dataArr[lastIndex]);
-			
+
 			if(dataArr.length > 1) {
 				for(var i = 0; i < dataArr.length - 1; i++) {
 					var current_index = dataArr[i],
@@ -87656,25 +87714,25 @@
 						break;
 					}
 				}
-			}				
+			}
 		},
-		//Search		
+		//Search
 		search 				: function(){
 			var self = this, 
-			para = [],
-			obj = this.get("obj"),
-			searchText = this.get("searchText"), 
-			invoice_id = this.get("invoice_id"),
-			contact_id = this.get("contact_id");
+				para = [],
+				obj = this.get("obj"),
+				searchText = this.get("searchText"), 
+				invoice_id = this.get("invoice_id"),
+				contact_id = this.get("contact_id");
 
-	    	if(contact_id>0){		    			    	
-		    	para.push({ field:"contact_id", value: contact_id });				    			    	
+	    	if(contact_id>0){
+		    	para.push({ field:"contact_id", value: contact_id });
 	    	}
 
-	    	if(invoice_id>0){		    			    	
-		    	para.push({ field:"id", value: invoice_id });				    			    	
+	    	if(invoice_id>0){
+		    	para.push({ field:"id", value: invoice_id });
 	    	}
-			
+
 			if(searchText!==""){
 				para.push({ field:"number", value: searchText });
 			}
@@ -87698,27 +87756,27 @@
 				var view = self.txnDS.view();
 
 				if(view.length>0){
-					$.each(view, function(index, value){											
-						var amount_due = value.amount - (value.amount_paid + value.deposit);							
+					$.each(view, function(index, value){
+						var amount_due = value.amount - (value.amount_paid + value.deposit);
 
 						self.dataSource.add({
 							transaction_template_id : 0,
-		    				contact_id 			: value.contact_id,				
+		    				contact_id 			: value.contact_id,
 							account_id 			: obj.account_id,
 							payment_term_id		: value.payment_term_id,
-							payment_method_id	: obj.payment_method_id,				
-							reference_id 		: value.id,								
+							payment_method_id	: obj.payment_method_id,
+							reference_id 		: value.id,
 							user_id 			: self.get("user_id"),
 							check_no 			: value.check_no,
 							reference_no 		: value.number,
 							number 				: "",
 						   	type				: "Cash_Receipt",
 						   	sub_total 			: amount_due,
-						   	amount 				: amount_due,				   	
+						   	amount 				: amount_due,
 						   	discount 			: 0,
-						   	rate				: value.rate,			   	
-						   	locale 				: value.locale,			   	
-						   	issued_date 		: obj.issued_date,					   	
+						   	rate				: value.rate,
+						   	locale 				: value.locale,
+						   	issued_date 		: obj.issued_date,
 						   	memo 				: obj.memo,
 						   	memo2 				: obj.memo2,
 						   	status 				: 0,
@@ -87734,7 +87792,6 @@
 						   	week 				: 0,
 						   	month 				: 0,
 						   	is_recurring 		: 0,
-
 						   	reference 			: [value]
 				    	});
 					});
@@ -87744,7 +87801,7 @@
 
 				self.set("searchText", "");
 				self.set("contact_id", "");
-				self.set("invoice_id", 0);				
+				self.set("invoice_id", 0);
 			});
 		},
 		//Obj
@@ -87758,11 +87815,11 @@
 			}).then(function(){
 				var view = self.dataSource.view();
 				view[0].set("reference", []);
-				
+
 				self.set("obj", view[0]);
 				self.set("total", kendo.toString(view[0].amount, "c", view[0].locale));
 		        self.set("total_received", kendo.toString(view[0].amount, "c", view[0].locale));
-				
+
 				self.journalLineDS.filter({ field: "transaction_id", value: id });
 
 				self.txnDS.query({
@@ -87777,7 +87834,7 @@
 		},
 		changes				: function(){
 			var self = this, obj = this.get("obj"),
-			total = 0, sub_total = 0, discount = 0, total_received = 0, remaining = 0;											
+			total = 0, sub_total = 0, discount = 0, total_received = 0, remaining = 0;
 
 			$.each(this.dataSource.data(), function(index, value) {
 				var amt = kendo.parseFloat(value.sub_total) - kendo.parseFloat(value.discount);
@@ -87785,13 +87842,13 @@
 					value.set("amount", amt);
 				}
 
-				sub_total += kendo.parseFloat(value.sub_total) / value.rate;					
+				sub_total += kendo.parseFloat(value.sub_total) / value.rate;
 				discount += kendo.parseFloat(value.discount) / value.rate;
-				total_received += kendo.parseFloat(value.amount) / value.rate;					
+				total_received += kendo.parseFloat(value.amount) / value.rate;
 	        });
 
 			total = sub_total - discount;
-			remaining = total - total_received;			
+			remaining = total - total_received;
 
 	        obj.set("sub_total", sub_total);
 	        obj.set("discount", discount);
@@ -87829,23 +87886,23 @@
 	    	});						
 		},
 	    objSync 			: function(){
-	    	var dfd = $.Deferred();	        
+	    	var dfd = $.Deferred();
 
 	    	this.dataSource.sync();
 		    this.dataSource.bind("requestEnd", function(e){
-		    	if(e.response){				
+		    	if(e.response){
 					dfd.resolve(e.response.results);
-				}				  				
+				}
 		    });
-		    this.dataSource.bind("error", function(e){		    		    	
-				dfd.reject(e.errorThrown);    				
+		    this.dataSource.bind("error", function(e){
+				dfd.reject(e.errorThrown);
 		    });
 
-		    return dfd;	    		    	
+		    return dfd;
 	    },
 		save 				: function(){
 	    	var self = this, obj = this.get("obj");
-	    	
+
 	    	//Edit Mode
 	    	if(this.get("isEdit")){
 	    		obj.set("issued_date", kendo.toString(new Date(obj.issued_date), "s"));
@@ -87877,48 +87934,48 @@
 					ids.push(value.reference_id);
 
 					//Cash on Dr
-					self.journalLineDS.add({					
+					self.journalLineDS.add({
 						transaction_id 		: value.id,
-						account_id 			: obj.account_id,				
-						contact_id 			: value.contact_id,				
+						account_id 			: obj.account_id,
+						contact_id 			: value.contact_id,
 						description 		: "",
 						reference_no 		: "",
-						segments 	 		: [],								
+						segments 	 		: [],
 						dr 	 				: value.amount,
-						cr 					: 0,				
+						cr 					: 0,
 						rate				: value.rate,
 						locale				: value.locale
 					});
 
 					if(value.discount>0){
 						//Discount on Dr
-						self.journalLineDS.add({					
+						self.journalLineDS.add({
 							transaction_id 		: value.id,
-							account_id 			: contact.settlement_discount_id,				
-							contact_id 			: value.contact_id,				
+							account_id 			: contact.settlement_discount_id,
+							contact_id 			: value.contact_id,
 							description 		: "",
 							reference_no 		: "",
-							segments 	 		: [],								
+							segments 	 		: [],
 							dr 	 				: value.discount,
-							cr 					: 0,				
+							cr 					: 0,
 							rate				: value.rate,
 							locale				: value.locale
 						});
 					}
 
 					//AR on Cr
-					self.journalLineDS.add({					
+					self.journalLineDS.add({
 						transaction_id 		: value.id,
-						account_id 			: contact.account_id,				
-						contact_id 			: value.contact_id,				
+						account_id 			: contact.account_id,
+						contact_id 			: value.contact_id,
 						description 		: "",
 						reference_no 		: "",
-						segments 	 		: [],								
+						segments 	 		: [],
 						dr 	 				: 0,
 						cr 					: kendo.parseFloat(value.amount) + kendo.parseFloat(value.discount),				
 						rate				: value.rate,
 						locale				: value.locale
-					});	
+					});
 				});
 
 				self.journalLineDS.sync();
@@ -87950,7 +88007,7 @@
 		},
 		cancel 				: function(){
 			this.dataSource.cancelChanges();
-			
+
 			banhji.userManagement.removeMultiTask("cash_receipt");
 		},
 		updateTxnStatus 	: function(ids){
