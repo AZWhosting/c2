@@ -259,7 +259,7 @@ class Transactions extends REST_Controller {
 		   	isset($value->print_count) 				? $obj->print_count 				= $value->print_count : "";
 		   	isset($value->printed_by) 				? $obj->printed_by 					= $value->printed_by : "";
 		   	isset($value->deleted) 					? $obj->deleted 					= $value->deleted : "";
-		   	isset($value->meter_id) 					? $obj->meter_id 					= $value->meter_id : 0;
+		   	isset($value->meter_id) 				? $obj->meter_id 					= $value->meter_id : 0;
 		   	
 	   		if($obj->save()){
 			   	$data["results"][] = array(

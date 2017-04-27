@@ -44053,8 +44053,9 @@
 				<!-- Tabs Heading -->
 				<div class="widget-head">
 					<ul style="padding-left: 1px;">
-						<li class="active"><a class="glyphicons user" href="#tabContact" data-toggle="tab"><i></i><span style="line-height: 55px;">Contact</span></a></li>
+						<li><a class="glyphicons user" href="#tabContact" data-toggle="tab"><i></i><span style="line-height: 55px;">Contact</span></a></li>
 						<li><a class="glyphicons list" href="#tabInventery" data-toggle="tab"><i></i><span style="line-height: 55px;">Inventory</span></a></li>
+						<li class="active"><a class="glyphicons credit_card" href="#tabTxn" data-toggle="tab"><i></i><span style="line-height: 55px;">Trnsaction</span></a></li>
 						<li><a class="glyphicons credit_card" href="#tabJournal" data-toggle="tab"><i></i><span style="line-height: 55px;">Journal</span></a></li>
 						<!-- <li><a class="glyphicons notes" href="#tabChartAccount" data-toggle="tab"><i></i><span style="line-height: 55px;">Chart of Account</span></a></li> -->
 					</ul>
@@ -44067,7 +44068,7 @@
 							<i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 35%;left: 45%"></i>
 						</div>
 						<!-- Tab content -->
-						<div id="tabContact" style="border: 1px solid #ccc" class="tab-pane active widget-body-regular">
+						<div id="tabContact" style="border: 1px solid #ccc" class="tab-pane widget-body-regular">
 							
 							<h4 class="separator bottom" style="margin-top: 10px;">Please upload contacts file</h4>
 							<a href="<?php echo base_url(); ?>assets/imports/contact_import_form_excel.xlsx" download>
@@ -44105,7 +44106,7 @@
 						<!-- // Tab content END -->
 						
 						<!-- Tab content -->
-						<div id="tabTxn" style="border: 1px solid #ccc" class="tab-pane widget-body-regular">
+						<div id="tabTxn" style="border: 1px solid #ccc" class="tab-pane active widget-body-regular">
 							
 							<h4 class="separator bottom" style="margin-top: 10px;">Please upload Transaction file</h4>
 							<a href="<?php echo base_url(); ?>assets/imports/journal_import_form_excel.xlsx" download>
@@ -44115,35 +44116,12 @@
 								</span>
 							</a>
 							<div class="fileupload fileupload-new margin-none" data-provides="fileupload">
-							  	<input type="file"  data-role="upload" data-show-file-list="true" data-bind="events: {select: txn.onSelected}" id="myFile"  class="margin-none" />
+							  	<input id="files" name="files" type="file"  data-role="upload" data-show-file-list="true" data-bind="events: {select: txn.onSelected}" class="margin-none" />
 							</div>
-							<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 160px!important;"><i></i>
-							<button style="background: none;border: none;" data-bind="disabled: txn.enabled, click: txn.save, text: lang.lang.import_journal">Import Journal</button></span><br>
 
-							<span id="printG" class="btn btn-icon btn-primary glyphicons print" style="width: 100px!important; display: none;background: #a22314;right: 11px;top: 194px;position: absolute;border: none;" data-bind="visible: txn.enabled"><i></i>
-							<button style="background: none;border: none;" data-bind="click: printGrid, text: lang.lang.print">Print</button></span>
-							<div id="invFormContent">
-								<p style="margin-top: 10px;" data-bind="visible: txn.enabled"><b>Please check the following account numbers. Make sure they corresponse to account number in the system.</b></p>
-								<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs" style="margin-top: 10px;" data-bind="visible: txn.enabled">
-									<thead>
-										<tr class="widget-head">
-											<th width="100" data-bind="text: lang.lang.line">line</th>
-											<th width="120" data-bind="text: lang.lang.trans_no">trans_no</th>
-											<th width="130" data-bind="text: lang.lang.date">date</th>
-											<th width="130" data-bind="text: lang.lang.number">number</th>
-											<th data-bind="text: lang.lang.memo">memo</th>
-											<th data-bind="text: lang.lang.account_number">account_number</th>
-											<th>dr</th>
-											<th>cr</th>
-										</tr>
-									</thead>
-									<tbody style="margin-top: 10px;border: none;" 
-										data-role="listview"
-										data-template="importJournalErrorList" 
-										data-bind="source: txn.noneAccount"
-										></tbody>
-								</table>
-							</div>
+							<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" style="width: 170px!important;"><i></i>
+							<button style="background: none;border: none;" data-bind="click: txn.save">Import Transaction</button></span><br>							
+							
 						</div>
 						<!-- // Tab content END -->
 
@@ -48137,19 +48115,19 @@
       		this.set("notDuplicateNumber", true);
       		this.set("obj", null);
       		
-  			this.dataSource.insert(0, {				
-				"country_id" 			: 0,			
+  			this.dataSource.insert(0, {
+				"country_id" 			: 0,
 				"user_id" 				: 0,
-				"contact_type_id" 		: 4, //General Customer							
+				"contact_type_id" 		: 4, //General Customer
 				"abbr"					: "",
-				"number"				: "",				
+				"number"				: "",
 				"surname"				: "",
 				"name"					: "",
-				"gender"				: "",					
+				"gender"				: "",
 				"phone" 				: "",
-				"email" 				: "",					
+				"email" 				: "",
 				"company"				: "",
-				"vat_no"				: "",					
+				"vat_no"				: "",
 				"memo"					: "",
 				"city"					: "",
 				"post_code"				: "",
@@ -48159,16 +48137,16 @@
 				"latitute" 				: "",
 				"longtitute" 			: "",
 				"credit_limit"			: 0,
-				"locale" 				: banhji.locale,														
+				"locale" 				: banhji.locale,
 				"payment_term_id"		: 0,
-				"payment_method_id"		: 0,									
+				"payment_method_id"		: 0,
 				"registered_date" 		: new Date(),
 				"account_id"			: 0,
 				"ra_id"					: 0,
 				"tax_item_id"			: 0,
 				"deposit_account_id"	: 0,
 				"trade_discount_id"		: 0,
-				"settlement_discount_id": 0,					
+				"settlement_discount_id": 0,
 				"is_pattern" 			: 0,
 				"status"				: 1
 			});
@@ -57980,7 +57958,6 @@
 				contact_id = this.get("contact_id"),
 				start = this.get("sdate"),
         		end = this.get("edate");
-        	this.exArray = [];
         	if(contact_id>0){
         		var contact = this.contactDS.get(contact_id);
         		this.set("obj", contact);
@@ -58007,6 +57984,7 @@
 		        var FirstEX, SecondEX;
 	            this.set("displayDate", displayDate);
 	            this.dataSource.filter(para);
+	            this.exArray = [];
 	            this.dataSource.bind("requestEnd", function(e){
 	            	if(e.type=="read"){
 	            		var response = e.response;
@@ -90784,78 +90762,292 @@
 		}
 	});
 	banhji.importTxn = kendo.observable({
-		dataSource 	  : dataStore(apiUrl+"imports/txn"),
-		accountDS 	  : dataStore(apiUrl+"accounts"),
-		noneAccount   : [],
-		enabled 	  : false,
-		numberExists  : function(account) {
-			var existed = false;
-			
-			for(var i = 0; i < banhji.source.accountList.length; i++) {
-				if(account == banhji.source.accountList[i].number) {
-					existed = true;
-					break;
+		dataSource 	  		: dataStore(apiUrl + "transactions"),
+		contactDS 	  		: dataStore(apiUrl + "contacts"),
+		itemLineDS 	  		: dataStore(apiUrl + "item_lines"),
+		accountLineDS 	  	: dataStore(apiUrl + "account_lines"),
+		journalLineDS 	  	: dataStore(apiUrl + "journal_lines"),
+		checkName 			: function(name){
+			var result = false;
+
+			$.each(this.contactDS.data(), function(index, value){
+				if(value.name==name){
+					result = true;
+
+					return false;
 				}
-			}			
-			return existed;
+			});
+
+			return result;
 		},
-		onSelected    : function(e) {
-			var self = this;			
-			$('li.k-file').remove();
-	        var files = e.files;
-	        $("#loadImport").css("display","block");
-	        banhji.importJournal.set('enabled', false);
-	        banhji.importJournal.noneAccount.splice(0, banhji.importJournal.noneAccount.length);
-	        var reader = new FileReader();
-			banhji.importJournal.dataSource.data([]);	
+		getItemId 			: function(name){
+			var id = "";
+
+			$.each(banhji.source.itemList, function(index, value){
+				if(value.name==name){
+					id = value.id;
+
+					return false;
+				}
+			});
+
+			return id;
+		},
+		getMeasurementId 	: function(name){
+			var id = "";
+
+			$.each(banhji.source.measurementList, function(index, value){
+				if(value.name==name){
+					id = value.id;
+
+					return false;
+				}
+			});
+
+			return id;
+		},
+		getAccountId 		: function(name){
+			var id = "";
+
+			$.each(banhji.source.accountList, function(index, value){
+				if(value.name==name){
+					id = value.id;
+
+					return false;
+				}
+			});
+
+			return id;
+		},
+		onSelected 			: function(e){
+	        var self = banhji.importTxn, 
+	        	files = e.files, 
+	        	reader = new FileReader();
+
 			reader.onload = function() {	
-				var data = reader.result;	
-				var result = {}; 						
-				var workbook = XLSX.read(data, {type : 'binary'});
+				var data = reader.result,
+					workbook = XLSX.read(data, {type : 'binary'});
+
 				workbook.SheetNames.forEach(function(sheetName) {
-					var roa = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
-					banhji.importJournal.accountDS.fetch(function(){
-						if(roa.length > 0){
-							result[sheetName] = roa;
-							for(var i = 0; i < roa.length; i++) {
-								var number = banhji.importJournal.numberExists(roa[i].account_number);
-								if(!number) {
-									banhji.importJournal.noneAccount.push({line: i+1, trans_no:roa[i].trans_no, date: roa[i].date, number: roa[i].number, memo: roa[i].memo, 	account_number: roa[i].account_number, dr: roa[i].dr, cr: roa[i].cr});
-								}
+					var roa = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);					
+					
+					//Transactions
+					if(roa.length > 0 && sheetName=="transactions"){
+						for(var i = 0; i < roa.length; i++) {
+							
+							if(self.checkName(roa[i].name)==false){
+								//Contact
+								var contactTypes = banhji.source.contactTypeDS.get(4);
+
+								self.contactDS.add({
+									"country_id" 			: 36,//Cambodia
+									"contact_type_id" 		: 4,//General Customer
+									"abbr"					: contactTypes.abbr,
+									"number"				: "",
+									"name"					: roa[i].name,
+									"gender"				: "M",
+									"locale" 				: roa[i].locale,
+									"payment_term_id"		: 5,
+									"payment_method_id"		: 1,
+									"registered_date" 		: new Date(),
+									"account_id"			: 10,
+									"ra_id"					: 71,
+									"tax_item_id"			: 10,
+									"deposit_account_id"	: 55,
+									"trade_discount_id"		: 72,
+									"settlement_discount_id": 99,
+									"is_pattern" 			: 0,
+									"status"				: 1
+								});
 							}
-								
-							if(banhji.importJournal.noneAccount.length > 0){
-								banhji.importJournal.set('enabled', true);
-								$("#loadImport").css("display","none");	
-							}else{
-								for(var i = 0; i < roa.length; i++) {
-									banhji.importJournal.dataSource.add(roa[i]);
-									$("#loadImport").css("display","none");	
-								}
-								banhji.importJournal.set('enabled', false);
-							}
+
+							//Transaction
+							self.dataSource.add({
+								contact_id 				: roa[i].name,
+								transaction_template_id : 3,
+								payment_term_id			: 5,
+							   	type					: roa[i].type,//Required
+							   	number 					: roa[i].number,
+							   	sub_total 				: roa[i].sub_total,
+							   	discount 				: 0,
+							   	tax 					: 0,
+							   	deposit 				: 0,
+							   	amount					: roa[i].amount,
+							   	remaining 				: 0,
+							   	rate					: roa[i].rate,//Required
+							   	locale 					: roa[i].locale,//Required
+							   	issued_date 			: roa[i].issued_date,//Required
+							   	due_date 				: roa[i].due_date,
+							   	memo 					: roa[i].memo,
+							   	status 					: roa[i].status,
+							   	is_journal 				: 1,//Required
+							   	//Recurring
+							   	recurring_name 			: "",
+							   	start_date 				: new Date(),
+							   	frequency 				: "Daily",
+							   	month_option 			: "Day",
+							   	interval 				: 1,
+							   	day 					: 1,
+							   	week 					: 0,
+							   	month 					: 0,
+							   	is_recurring 			: 0
+							});
 						}
-					});
+					}
+
+					//Item Lines
+					if(roa.length > 0 && sheetName=="item_lines"){
+						for(var i = 0; i < roa.length; i++) {
+							self.itemLineDS.add({
+								transaction_id 		: roa[i].txn_no,
+								item_id 			: self.getItemId(roa[i].item),
+								measurement_id 		: self.getMeasurementId(roa[i].measurement),
+								description 		: roa[i].description,
+								quantity 	 		: roa[i].quantity,
+								unit_value 			: roa[i].unit_value,
+								cost 				: roa[i].cost,
+								price 				: roa[i].price,
+								amount 				: roa[i].amount,
+								rate				: roa[i].rate,
+								locale				: roa[i].locale,
+								movement 			: roa[i].movement
+							});
+						}
+					}
+
+					//Account Lines
+					if(roa.length > 0 && sheetName=="account_lines"){
+						for(var i = 0; i < roa.length; i++) {
+							self.accountLineDS.add({
+								transaction_id 		: roa[i].txn_no,
+								account_id 			: self.getAccountId(roa[i].account),
+								description 		: roa[i].description,
+								amount 	 			: roa[i].amount,
+								rate				: roa[i].rate,
+								locale				: roa[i].locale
+							});
+						}
+					}
+
+					//Journal Lines
+					if(roa.length > 0 && sheetName=="journal_lines"){
+						for(var i = 0; i < roa.length; i++) {
+							self.journalLineDS.add({
+								transaction_id 		: roa[i].txn_no,
+								account_id 			: self.getAccountId(roa[i].account),
+								contact_id 			: 0,
+								description 		: roa[i].description,
+								dr 	 				: roa[i].dr,
+								cr 					: roa[i].cr,
+								rate				: roa[i].rate,
+								locale				: roa[i].locale
+							});
+						}
+					}
+
 				});
 			}
 			reader.readAsBinaryString(files[0].rawFile);
-        },
-		save: function() {
-			if(banhji.importJournal.dataSource.data().length > 0) {
-				$("#loadImport").css("display","block");
-				banhji.importJournal.dataSource.sync();
-				banhji.importJournal.dataSource.bind("requestEnd", function(e){
-			    	if(e.response){
-			    		$("#ntf1").data("kendoNotification").success("Imported Journal successfully!");
-						$("#loadImport").css("display","none");
-					}
-			    });
-			    banhji.importJournal.dataSource.bind("error", function(e){
-					$("#ntf1").data("kendoNotification").error("Error Importing Journal!"); 
-					$("#loadImport").css("display","none");
-			    });
-			}
-		}
+	    },
+	    contactSync 		: function(){
+	    	var dfd = $.Deferred();	        
+
+	    	this.contactDS.sync();
+		    this.contactDS.bind("requestEnd", function(e){
+		    	if(e.response){				
+					dfd.resolve(e.response.results);
+				}				  				
+		    });
+		    this.contactDS.bind("error", function(e){		    		    	
+				dfd.reject(e.errorThrown);    				
+		    });
+
+		    return dfd;	    		    	
+	    },
+	    objSync 			: function(){
+	    	var dfd = $.Deferred();	        
+
+	    	this.dataSource.sync();
+		    this.dataSource.bind("requestEnd", function(e){
+		    	if(e.response){				
+					dfd.resolve(e.response.results);
+				}				  				
+		    });
+		    this.dataSource.bind("error", function(e){		    		    	
+				dfd.reject(e.errorThrown);    				
+		    });
+
+		    return dfd;	    		    	
+	    },
+	    save 				: function(){
+	    	var self = banhji.importTxn;
+
+			self.contactSync()
+			.then(function(data){ //Success
+				
+				$.each(data, function(index, value){
+					$.each(self.dataSource.data(), function(ind, val){
+						if(val.contact_id==value.name){
+							val.set("contact_id", value.id);
+						}
+					});
+				});
+
+				self.saveTxn();
+			}, function(reason) { //Error
+				$("#ntf1").data("kendoNotification").error(reason);
+			});
+	    },
+	    saveTxn 			: function(){
+	    	var self = banhji.importTxn;
+
+			self.objSync()
+			.then(function(data){ //Success	
+				$.each(data, function(index, value){			
+					//Item line
+					$.each(self.itemLineDS.data(), function(ind, val){
+						if(val.transaction_id==index){
+							val.set("transaction_id", value.id);
+						}
+					});
+
+					//Account line
+					$.each(self.accountLineDS.data(), function(ind, val){
+						if(val.transaction_id==index){
+							val.set("transaction_id", value.id);
+						}
+					});
+
+					//Journal line
+					$.each(self.journalLineDS.data(), function(ind, val){
+						if(val.transaction_id==index){
+							val.set("transaction_id", value.id);
+						}
+					});
+				});
+
+				self.itemLineDS.sync();
+				self.accountLineDS.sync();
+				self.journalLineDS.sync();
+
+				$("#ntf1").data("kendoNotification").success(banhji.source.successMessage);
+			}, function(reason) { //Error
+				$("#ntf1").data("kendoNotification").error(reason);
+			}).then(function(){
+				self.clear();
+			});
+	    },
+	    clear 				: function(){
+	    	var self = banhji.importTxn;
+
+	    	self.dataSource.data([]);
+	    	self.itemLineDS.data([]);
+	    	self.accountLineDS.data([]);
+	    	self.journalLineDS.data([]);
+
+	    	//Clear upload files
+            $(".k-upload-files").remove();
+	    }
 	});
 	banhji.importJournal = kendo.observable({
 		dataSource 	  : dataStore(apiUrl+"imports/journal"),
