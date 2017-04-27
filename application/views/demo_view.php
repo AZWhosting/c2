@@ -6416,7 +6416,7 @@
 								<div class="widget-head">
 									<ul>
 										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>
-										<li><a class="glyphicons print" data-bind="click: printGrid"><i></i>Print/Export</a></li>
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i>Print/Export</a></li>
 									</ul>
 								</div>
 							    <!-- // Tabs Heading END -->
@@ -6465,21 +6465,19 @@
 								        <!-- //GENERAL INFO END -->
 
 								        <!-- //ACCOUNTING -->
-								        <!--div class="tab-pane" id="tab-2">
+								        <div class="tab-pane" id="tab-2">
 								        	
-								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
-								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
+								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: printGrid" style="width: 80px;"><i></i> Print</span>
+								        	<!-- <span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
 								        		<i class="fa fa-file-pdf-o"></i>
 								        		Print as PDF
-								        	</span>
-								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: cancel" style="width: 80px;">
+								        	</span> -->
+								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: ExportExcel" style="width: 80px;">
 								        		<i class="fa fa-file-excel-o"></i>
 								        		Export to Excel
 								        	</span>
-							        	</div-->
-								        <!-- //ACCOUNTING END -->						       
-
-								       
+							        	</div>
+								        <!-- //ACCOUNTING END -->
 								    </div>
 								</div>
 							</div>
@@ -6487,70 +6485,71 @@
 					</div>
 
 					<br><br>
-					
-					<div class="block-title">
-						<h3 data-bind="text: company.name"></h3>
-						<h2 data-bind="text: lang.lang.statement"></h2>
-						<p data-bind="text: obj.name"></p>
-						<p data-bind="text: displayDate"></p>
+					<div id="invFormContent">
+						<div class="block-title">
+							<h3 data-bind="text: company.name"></h3>
+							<h2 data-bind="text: lang.lang.statement"></h2>
+							<p data-bind="text: obj.name"></p>
+							<p data-bind="text: displayDate"></p>
+						</div>
+
+						<div class="row-fluid" >
+							<div class="span5" style="margin-bottom: 15px;">
+								<table class="table-statement" style="margin-top: 0;">
+									<tr>
+										<td style="font-weight: 600;background-color: #ddd;">Customer Info</td>
+									</tr>
+									<tr>
+										<td data-bind="text: obj.bill_to"></td>
+									</tr>
+								</table>
+							</div>
+							<div class="span2"></div>
+							<div class="span5" style="margin-bottom: 15px;">
+								<div class="strong" style="margin-bottom: 0px; width: 100%; padding: 10px; background-color: rgb(213, 219, 219);" align="center" >
+										<div align="left"><span>Amount Due</span></div>
+										<h2 align="right" data-bind="text: total"></h2>
+									</div>
+							</div>
+
+						</div>				
+						
+						<table class="table table-borderless table-condensed">
+							<thead>
+								<tr>
+									<th><span style="color: #fff!important;" data-bind="text: lang.lang.date"></span></th>
+									<th><span style="color: #fff!important;" data-bind="text: lang.lang.type"></span></th>
+									<th><span style="color: #fff!important;" data-bind="text: lang.lang.job"></span></th>
+									<th><span style="color: #fff!important;" data-bind="text: lang.lang.reference_no"></span></th>
+									<th><span style="color: #fff!important;" data-bind="text: lang.lang.amount"></span></th>
+									<th><span style="color: #fff!important;" data-bind="text: lang.lang.balance"></span></th>
+								</tr>
+							</thead>
+							<tbody data-role="listview"
+								data-auto-bind="false"
+								data-bind="source: dataSource"
+								data-template="statement-row-template"
+							></tbody>
+						</table>
+
+						<table class="table-statement">
+							<thead>
+								<tr>
+									<th class="center" style="text-align: center"><span data-bind="text: lang.lang.current"></span></th>
+									<th class="center" style="text-align: center">30</th>
+									<th class="center" style="text-align: center">60</th>
+									<th class="center" style="text-align: center">90</th>
+									<th class="center" style="text-align: center">> 90</th>
+									<th class="center" style="text-align: center"><span data-bind="text: lang.lang.amount_due"></span></th>
+								</tr>
+							</thead>
+							<tbody data-role="listview"
+								data-auto-bind="false"
+								data-bind="source: agingDS"
+								data-template="statement-aging-row-template"
+							></tbody>
+						</table>
 					</div>
-
-					<div class="row-fluid" >
-						<div class="span5" style="margin-bottom: 15px;">
-							<table class="table-statement" style="margin-top: 0;">
-								<tr>
-									<td style="font-weight: 600;background-color: #ddd;">Customer Info</td>
-								</tr>
-								<tr>
-									<td data-bind="text: obj.bill_to"></td>
-								</tr>
-							</table>
-						</div>
-						<div class="span2"></div>
-						<div class="span5" style="margin-bottom: 15px;">
-							<div class="strong" style="margin-bottom: 0px; width: 100%; padding: 10px; background-color: rgb(213, 219, 219);" align="center" >
-									<div align="left"><span>Amount Due</span></div>
-									<h2 align="right" data-bind="text: total"></h2>
-								</div>
-						</div>
-
-					</div>				
-					
-					<table class="table table-borderless table-condensed">
-						<thead>
-							<tr>
-								<th><span data-bind="text: lang.lang.date"></span></th>
-								<th><span data-bind="text: lang.lang.type"></span></th>
-								<th><span data-bind="text: lang.lang.job"></span></th>
-								<th><span data-bind="text: lang.lang.reference_no"></span></th>
-								<th><span data-bind="text: lang.lang.amount"></span></th>
-								<th><span data-bind="text: lang.lang.balance"></span></th>
-							</tr>
-						</thead>
-						<tbody data-role="listview"
-							data-auto-bind="false"
-							data-bind="source: dataSource"
-							data-template="statement-row-template"
-						></tbody>
-					</table>
-
-					<table class="table-statement">
-						<thead>
-							<tr>
-								<th class="center"><span data-bind="text: lang.lang.current"></span></th>
-								<th class="center">30</th>
-								<th class="center">60</th>
-								<th class="center">90</th>
-								<th class="center">> 90</th>
-								<th class="center"><span data-bind="text: lang.lang.amount_due"></span></th>
-							</tr>
-						</thead>
-						<tbody data-role="listview"
-							data-auto-bind="false"
-							data-bind="source: agingDS"
-							data-template="statement-aging-row-template"
-						></tbody>
-					</table>
 				</div>							
 			</div>
 		</div>
@@ -46302,6 +46301,7 @@
 		measurementList 			: [],
 		measurementDS				: dataStore(apiUrl + "measurements"),
 		//Tax
+		taxTypeDS					: dataStore(apiUrl + "tax_types"),
 		taxList 					: [],
 		taxItemDS					: dataStore(apiUrl + "tax_items"),
 		//Accounting
@@ -46495,6 +46495,7 @@
 		pageLoad 					: function(){
 			this.loadAccounts();
 			this.accountTypeDS.read();
+			this.taxTypeDS.read();
 			this.loadTaxes();
 			this.loadJobs();
 			this.loadSegmentItems();
@@ -46623,6 +46624,16 @@
 					raw.push(value);
 				});
 			});
+		},
+		checkWHT 					: function(tax_type_id){
+			var result = false,
+				types = this.taxTypeDS.get(tax_type_id);
+
+			if(types.sub_of_id==12){
+				result = true;
+			}
+
+			return result;
 		},
 		loadJobs 					: function(){
 			var self = this, raw = this.get("jobList");
@@ -57804,6 +57815,8 @@
 		obj 				: null,
 		displayDate 		: "",
 		contact_id 			: "",
+		exArray 			: [],
+		exArrayA 			: [],
 		pageLoad 			: function(){
 		},
 		sorterChanges 		: function(){
@@ -57813,38 +57826,112 @@
         	sorter = this.get("sorter");
         	
 			switch(sorter){
-				case "today":								
+				case "today":
 					this.set("sdate", today);
 					this.set("edate", "");
-													  					
+
 				  	break;
-				case "week":			  	
+				case "week":
 					var first = today.getDate() - today.getDay(),
 					last = first + 6;
 
 					this.set("sdate", new Date(today.setDate(first)));
-					this.set("edate", new Date(today.setDate(last)));						
+					this.set("edate", new Date(today.setDate(last)));
 					
 				  	break;
-				case "month":							  	
+				case "month":
 					this.set("sdate", new Date(today.getFullYear(), today.getMonth(), 1));
 					this.set("edate", new Date(today.getFullYear(), today.getMonth() + 1, 0));
 
 				  	break;
-				case "year":				
+				case "year":
 				  	this.set("sdate", new Date(today.getFullYear(), 0, 1));
 				  	this.set("edate", new Date(today.getFullYear(), 11, 31));
 
 				  	break;
 				default:
 					this.set("sdate", "");
-				  	this.set("edate", "");									  
+				  	this.set("edate", "");
 			}
 		},
 		loadContact 		: function(id){
 		    this.set("contact_id", id);
 		    this.search();
 	    },
+	    printGrid			: function() {
+			var gridElement = $('#grid'),
+		        printableContent = '',
+		        win = window.open('', '', 'width=990, height=900'),
+		        doc = win.document.open();
+		    var htmlStart =
+		            '<!DOCTYPE html>' +
+		            '<html>' +
+		            '<head>' +
+		            '<meta charset="utf-8" />' +
+		            '<title></title>' +
+		            '<link href="http://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />'+
+		            '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/bootstrap.css">' +
+		            '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/responsive.css">' +
+		            '<link href="<?php echo base_url(); ?>assets/invoice/invoice.css" rel="stylesheet" />'+
+		            '<link href="https://fonts.googleapis.com/css?family=Content:400,700" rel="stylesheet" type="text/css">' +
+		            '<link href="https://fonts.googleapis.com/css?family=Moul" rel="stylesheet">' +
+		            '<style>' +
+		            'html { font: 11pt sans-serif; }' +
+		            '.k-grid { border-top-width: 0; }' +
+		            '.k-grid, .k-grid-content { height: auto !important; }' +
+		            '.k-grid-content { overflow: visible !important; }' +
+		            'div.k-grid table { table-layout: auto; width: 100% !important; }' +
+		            '.k-grid .k-grid-header th { border-top: 1px solid; }' +
+		            '.k-grid-toolbar, .k-grid-pager > .k-link { display: none; }' +
+		            '</style><style type="text/css" media="print"> @page { size: portrait; margin:1mm; }'+
+		            	'.inv1 .main-color {' +
+		            		'-webkit-print-color-adjust:exact; ' +
+		            	'} ' +
+		            	'.table.table-borderless.table-condensed  tr th { background-color: #1E4E78!important;' +
+		            	'-webkit-print-color-adjust:exact; color:#fff!important;}' +
+		            	'.inv1 .light-blue-td { ' +
+		            		'background-color: #c6d9f1!important;' +
+		            		'text-align: left;' +
+		            		'padding-left: 5px;' +
+		            		'-webkit-print-color-adjust:exact; ' +
+		            	'}' +
+		            	'.saleSummaryCustomer .table.table-borderless.table-condensed tr td { ' +
+    						'background-color: #F2F2F2!important; -webkit-print-color-adjust:exact;' +
+						'}'+
+						'.saleSummaryCustomer .table.table-borderless.table-condensed tr:nth-child(2n+1) td { ' +
+    						' background-color: #fff!important; -webkit-print-color-adjust:exact;' +
+						'}' +
+						'.journal_block>.span4 * {color: #fff!important;}' +
+		            	'.journal_block>.span4:first-child { ' +
+    						'background-color: #bbbbbb!important; -webkit-print-color-adjust:exact;' +
+						'}' +
+						'.journal_block>.span4:last-child {' +
+							'background-color: #496cad!important; color: #fff!important; -webkit-print-color-adjust:exact; ' +
+						'}' +
+						'.journal_block>.span4 {' +
+							'background-color: #5cc7dd!important; color: #fff!important; -webkit-print-color-adjust:exact;' +
+						'}' +
+		            	'.pcg .mid-header {' +
+		            		'background-color: #dce6f2!important; ' +
+		            		'-webkit-print-color-adjust:exact; ' +
+		            	'}'+
+		            	'.inv1 span.total-amount { ' +
+		            		'color:#fff!important;' +
+		            	'}</style>' +
+		            '</head>' +
+		            '<body><div class="saleSummaryCustomer" style="padding: 0 10px;">';
+		    var htmlEnd =
+		            '</div></body>' +
+		            '</html>';
+
+		    printableContent = $('#invFormContent').html();
+		    doc.write(htmlStart + printableContent + htmlEnd);
+		    doc.close();
+		    setTimeout(function(){
+		    	win.print();
+		    	win.close();
+		    },2000);
+		},
 		search				: function(){
 			var self = this, para = [], displayDate = "",
 				contact_id = this.get("contact_id"),
@@ -57874,19 +57961,136 @@
 		        }else{
 		        	
 		        }
-
+		        var FirstEX, SecondEX;
 	            this.set("displayDate", displayDate);
-
 	            this.dataSource.filter(para);
-	            this.agingDS.filter(para);
-	            this.agingDS.bind("requestEnd", function(e){				
-					if(e.type=="read"){
-						var response = e.response.results[0];
+	            this.dataSource.bind("requestEnd", function(e){
+	            	if(e.type=="read"){
+	            		var response = e.response;
+	            		self.exArray.push({
+		            		cells: [
+		            			{ value: self.company.name, textAlign: "center", colSpan: 6 }
+		            		]
+		            	});
+		            	self.exArray.push({
+		            		cells: [
+		            			{ value: "General Ledger",bold: true, fontSize: 20, textAlign: "center", colSpan: 6 }
+		            		]
+		            	});
+		            	if(self.displayDate){
+			            	self.exArray.push({
+			            		cells: [
+			            			{ value: self.displayDate, textAlign: "center", colSpan: 6 }
+			            		]
+			            	});
+			            }
+		            	self.exArray.push({
+		            		cells: [
+		            			{ value: "", colSpan: 6 }
+		            		]
+		            	});
+		            	self.exArray.push({ 
+		            		cells: [
+								{ value: "DATE", background: "#496cad", color: "#ffffff" },
+								{ value: "TYPE", background: "#496cad", color: "#ffffff" },
+								{ value: "JOB", background: "#496cad", color: "#ffffff" },
+								{ value: "REFERENCE NO.", background: "#496cad", color: "#ffffff" },
+								{ value: "AMOUNT", background: "#496cad", color: "#ffffff" },
+								{ value: "BALANCE", background: "#496cad", color: "#ffffff" }
+							]
+						});
+						if(response.results.length > 0){
+							for (var i = 0; i < response.results.length; i++){
+								self.exArray.push({
+							        cells: [
+							          	{ value: response.results[i].issued_date },
+							            { value: response.results[i].type },
+							            { value: response.results[i].job },
+							            { value: response.results[i].reference_no },
+							            { value: kendo.parseFloat(response.results[i].amount) },
+							            { value: kendo.parseFloat(response.results[i].balance) },
+							        ]
+							    });
+							}
+						}
+						self.exArray.push({
+		            		cells: [
+		            			{ value: "", colSpan: 6 }
+		            		]
+		            	});
+	            	}
+	            	self.agingQuery(para);
+	            });
 
-						self.set("total", kendo.toString(response.amount, "c", response.locale));
+	            
+	        }
+		},
+		agingQuery 			: function(para){
+			var self = this;
+			this.agingDS.filter(para);
+            this.agingDS.bind("requestEnd", function(e){
+				if(e.type=="read"){
+					var responses = e.response.results[0];
+
+					self.set("total", kendo.toString(responses.amount, "c", responses.locale));
+					var response = e.response, totalAD = responses.amount;
+					self.exArray.push({ 
+	            		cells: [
+							{ value: "Current", bold: true },
+							{ value: "30", bold: true },
+							{ value: "60", bold: true },
+							{ value: "90", bold: true },
+							{ value: "> 90", bold: true },
+							{ value: "AMOUNT DUE", bold: true }
+						]
+					});
+					if(response.results.length > 0){
+						for (var i = 0; i < response.results.length; i++){
+							self.exArray.push({
+						        cells: [
+						          	{ value: kendo.parseFloat(response.results[i].current) },
+						            { value: kendo.parseFloat(response.results[i].oneMonth) },
+						            { value: kendo.parseFloat(response.results[i].twoMonth) },
+						            { value: kendo.parseFloat(response.results[i].threeMonth) },
+						            { value: kendo.parseFloat(response.results[i].overMonth) },
+						            { value: kendo.parseFloat(response.results[i].amount) },
+						        ]
+						    });
+						}
 					}
-				}); 
-	        }            
+					self.exArray.push({ 
+	            		cells: [
+							{ value: "Total Amount Due", bold: true },
+							{ value: "", bold: true },
+							{ value: "", bold: true },
+							{ value: "", bold: true },
+							{ value: "", bold: true },
+							{ value: totalAD, bold: true }
+						]
+					});
+				}
+			}); 
+		},
+		ExportExcel 		: function(){
+			
+	        var workbook = new kendo.ooxml.Workbook({
+	          sheets: [
+	            {
+	              columns: [
+	                { autoWidth: true },
+	                { autoWidth: true },
+	                { autoWidth: true },
+	                { autoWidth: true },
+	                { autoWidth: true },
+	                { autoWidth: true }
+	              ],
+	              title: "Statement",
+	              rows: this.exArray
+	            }
+	          ]
+	        });
+	        //save the file as Excel file with extension xlsx
+	        kendo.saveAs({dataURI: workbook.toDataURL(), fileName: "Statement.xlsx"});
 		}
 	});	
 	banhji.stamentSummary = kendo.observable({
@@ -66028,10 +66232,8 @@
 				if(value.tax_item_id>0){
 					var taxItem = self.taxItemDS.get(value.tax_item_id);
 					
-					if(taxItem.tax_type_id=="1" || taxItem.tax_type_id=="2"){
-						if(value.wht_account_id==0){
-							tax -= amt * taxItem.rate;
-						}
+					if(banhji.source.checkWHT(taxItem.tax_type_id) && value.wht_account_id==0){
+						tax -= amt * taxItem.rate;
 					}else{
 						tax += amt * taxItem.rate;
 					}
@@ -66052,7 +66254,12 @@
 				//Tax
 				if(value.tax_item_id>0){
 					var taxItem = self.taxItemDS.get(value.tax_item_id);
-					tax += value.amount * taxItem.rate;
+					
+					if(banhji.source.checkWHT(taxItem.tax_type_id) && value.wht_account_id==0){
+						tax -= amt * taxItem.rate;
+					}else{
+						tax += amt * taxItem.rate;
+					}
 				}
 
 				subTotal += value.amount;
