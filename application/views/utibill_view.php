@@ -16283,11 +16283,11 @@
 				banhji.router.navigate('/print_bill');
 			}
 			var self = this, TempForm = "";
-			// if(this.txnFormID == "45"){
+			if(this.txnFormID == "45"){
 				TempForm = $("#InvoiceFormTemplate2").html();
-			// }else{
-				// TempForm = $("#InvoiceFormTemplate1").html();
-			// }
+			}else{
+				TempForm = $("#InvoiceFormTemplate1").html();
+			}
 			$("#wInvoiceContent").kendoListView({
 			    dataSource: this.dataSource,
 			    template: kendo.template(TempForm)
