@@ -90740,6 +90740,80 @@
 		    });
 		}
 	});
+	banhji.importTxn = kendo.observable({
+		dataSource 	  : dataStore(apiUrl+"imports/txn"),
+		accountDS 	  : dataStore(apiUrl+"accounts"),
+		noneAccount   : [],
+		enabled 	  : false,
+		numberExists  : function(account) {
+			var existed = false;
+			
+			for(var i = 0; i < banhji.source.accountList.length; i++) {
+				if(account == banhji.source.accountList[i].number) {
+					existed = true;
+					break;
+				}
+			}			
+			return existed;
+		},
+		onSelected    : function(e) {
+			var self = this;			
+			$('li.k-file').remove();
+	        var files = e.files;
+	        $("#loadImport").css("display","block");
+	        banhji.importJournal.set('enabled', false);
+	        banhji.importJournal.noneAccount.splice(0, banhji.importJournal.noneAccount.length);
+	        var reader = new FileReader();
+			banhji.importJournal.dataSource.data([]);	
+			reader.onload = function() {	
+				var data = reader.result;	
+				var result = {}; 						
+				var workbook = XLSX.read(data, {type : 'binary'});
+				workbook.SheetNames.forEach(function(sheetName) {
+					var roa = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
+					banhji.importJournal.accountDS.fetch(function(){
+						if(roa.length > 0){
+							result[sheetName] = roa;
+							for(var i = 0; i < roa.length; i++) {
+								var number = banhji.importJournal.numberExists(roa[i].account_number);
+								if(!number) {
+									banhji.importJournal.noneAccount.push({line: i+1, trans_no:roa[i].trans_no, date: roa[i].date, number: roa[i].number, memo: roa[i].memo, 	account_number: roa[i].account_number, dr: roa[i].dr, cr: roa[i].cr});
+								}
+							}
+								
+							if(banhji.importJournal.noneAccount.length > 0){
+								banhji.importJournal.set('enabled', true);
+								$("#loadImport").css("display","none");	
+							}else{
+								for(var i = 0; i < roa.length; i++) {
+									banhji.importJournal.dataSource.add(roa[i]);
+									$("#loadImport").css("display","none");	
+								}
+								banhji.importJournal.set('enabled', false);
+							}
+						}
+					});
+				});
+			}
+			reader.readAsBinaryString(files[0].rawFile);
+        },
+		save: function() {
+			if(banhji.importJournal.dataSource.data().length > 0) {
+				$("#loadImport").css("display","block");
+				banhji.importJournal.dataSource.sync();
+				banhji.importJournal.dataSource.bind("requestEnd", function(e){
+			    	if(e.response){
+			    		$("#ntf1").data("kendoNotification").success("Imported Journal successfully!");
+						$("#loadImport").css("display","none");
+					}
+			    });
+			    banhji.importJournal.dataSource.bind("error", function(e){
+					$("#ntf1").data("kendoNotification").error("Error Importing Journal!"); 
+					$("#loadImport").css("display","none");
+			    });
+			}
+		}
+	});
 	banhji.importJournal = kendo.observable({
 		dataSource 	  : dataStore(apiUrl+"imports/journal"),
 		accountDS 	  : dataStore(apiUrl+"accounts"),

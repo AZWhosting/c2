@@ -147,19 +147,21 @@ class Winvoices extends REST_Controller {
 
 					// installment
 					$installment = $meter->installment->include_related('installment_schedule', array('id','amount'))->limit(1)->where_related_installment_schedule('invoiced', 0)->get();
-					$tmp["$meter->number"]['installment'][] = array(
-						"type" => 'installment',
-						"line" => array(
-							'id'   => $installment->installment_schedule_id,
-							'name' => 'រំលោះ',
-							'from' => $installment->date,
-							'to'   => 0,
-							'prev' =>0,
-							'current'=>0,
-							'usage' => 1,
-							'unit'  => 'money',
-							'amount'=> floatval($installment->installment_schedule_amount)
-						));
+					if($installment->exists()){
+						$tmp["$meter->number"]['installment'][] = array(
+							"type" => 'installment',
+							"line" => array(
+								'id'   => $installment->installment_schedule_id,
+								'name' => 'រំលោះ',
+								'from' => $installment->date,
+								'to'   => 0,
+								'prev' =>0,
+								'current'=>0,
+								'usage' => 1,
+								'unit'  => 'money',
+								'amount'=> floatval($installment->installment_schedule_amount)
+							));
+					}
 				}
 			}
 			if($meter->reactive_id != 0){

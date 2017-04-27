@@ -763,6 +763,72 @@ class Imports extends REST_Controller {
 		$this->response($data, 201);
 	}
 
+	function txn_post() {
+		$models = json_decode($this->post('models'));
+		$journals = [];
+
+		foreach($models as $journal) {
+			$cr = 0;
+			$dr = 0;
+			$amount = 0;
+			isset($journal->dr) ? $dr = floatval($journal->dr) : $dr = 0;
+			isset($journal->cr) ? $cr = floatval($journal->cr) : $cr = 0;
+			$amount += $dr;
+			if(isset($journals["$journal->trans_no"])){
+				$journals["$journal->trans_no"]["amount"] += $amount;
+				$journals["$journal->trans_no"]["items"][] = array(
+					'account_number' => $journal->account_number,
+					'memo' => $journal->memo,
+					'dr' => $dr,
+					'cr' => $cr
+				);
+			} else {
+				$journals["$journal->trans_no"]["amount"] = $amount;
+				$journals["$journal->trans_no"]["number"] = $journal->number;
+				$journals["$journal->trans_no"]["date"] = $journal->date;
+				$journals["$journal->trans_no"]["items"][] = array(
+					'account_number' => $journal->account_number,
+					'memo' => $journal->memo,
+					'dr' => $dr,
+					'cr' => $cr
+				);
+			}
+		}
+
+		foreach($journals as $journal) {
+			$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$obj->number = isset($journal['number']) ? $journal['number'] : "";
+			$obj->type = "Journal";
+			$obj->memo = isset($journal['items'][0]['memo']) ? $journal['items'][0]['memo'] : "";
+			$obj->journal_type = "Journal";
+			$obj->issued_date = date("Y-m-d", strtotime($journal['date']));
+			$obj->amount = $journal['amount'];
+			$obj->rate = 1.00;
+			$obj->is_journal = 1;
+			$obj->locale = $this->locale;
+
+			if($obj->save()) {
+				foreach($journal['items'] as $item) {
+					$account = new Account(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					$account->select('id')->where('number', $item['account_number'])->get();
+
+					$journalItem = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					$journalItem->transaction_id = $obj->id;
+					$journalItem->account_id = $account->id;
+					$journalItem->description = $item['memo'];
+					$journalItem->dr = $item['dr'];
+					$journalItem->cr = $item['cr'];
+					$journalItem->rate = 1.00;
+					$journalItem->locale = $this->locale;
+					$journalItem->save();
+				}
+			}
+		}
+
+
+		$this->response(array('results'=> array(), 'msg' => "Operation is good."), 201);
+	}
+
 	function journal_post() {
 		$models = json_decode($this->post('models'));
 		$journals = array();
