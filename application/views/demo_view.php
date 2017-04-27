@@ -57937,7 +57937,7 @@
 				contact_id = this.get("contact_id"),
 				start = this.get("sdate"),
         		end = this.get("edate");
-
+        	this.exArray = [];
         	if(contact_id>0){
         		var contact = this.contactDS.get(contact_id);
         		this.set("obj", contact);
@@ -57974,7 +57974,12 @@
 		            	});
 		            	self.exArray.push({
 		            		cells: [
-		            			{ value: "General Ledger",bold: true, fontSize: 20, textAlign: "center", colSpan: 6 }
+		            			{ value: "STATEMENT",bold: true, fontSize: 15, textAlign: "center", colSpan: 6 }
+		            		]
+		            	});
+		            	self.exArray.push({
+		            		cells: [
+		            			{ value: self.get("obj").name,bold: true, textAlign: "center", colSpan: 6 }
 		            		]
 		            	});
 		            	if(self.displayDate){
