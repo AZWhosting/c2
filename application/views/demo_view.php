@@ -44109,7 +44109,7 @@
 						<div id="tabTxn" style="border: 1px solid #ccc" class="tab-pane active widget-body-regular">
 							
 							<h4 class="separator bottom" style="margin-top: 10px;">Please upload Transaction file</h4>
-							<a href="<?php echo base_url(); ?>assets/imports/journal_import_form_excel.xlsx" download>
+							<a href="<?php echo base_url(); ?>assets/imports/transaction_import_form_excel.xlsx" download>
 								<span id="saveClose" class="btn btn-icon btn-success glyphicons download" style="width: 200px!important;position: absolute;top: 85px;right: 10px;">
 									<i></i> 
 									<span >Download file Example</span>
