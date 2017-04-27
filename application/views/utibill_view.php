@@ -15882,12 +15882,16 @@
 					Total = kendo.parseInt(tUsage) * kendo.parseFloat(aTariff);
 				}
 				//Installment
-				if(v.installment[0].line.amount > 0){
-					Total = Total + v.installment[0].line.amount;
+				if(v.installment.length > 0){
+					if(v.installment[0].line.amount > 0){
+						Total = Total + v.installment[0].line.amount;
+					}
 				}
 				//Maintenance
-				if(v.maintenance[0].line.amount > 0){
-					Total = Total + v.maintenance[0].line.amount;
+				if(v.maintenance.length > 0){
+					if(v.maintenance[0].line.amount > 0){
+						Total = Total + v.maintenance[0].line.amount;
+					}
 				}
 				//Plus Reactive
 				Total = Total + ReactivePrice;

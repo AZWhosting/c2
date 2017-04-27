@@ -44105,6 +44105,49 @@
 						<!-- // Tab content END -->
 						
 						<!-- Tab content -->
+						<div id="tabTxn" style="border: 1px solid #ccc" class="tab-pane widget-body-regular">
+							
+							<h4 class="separator bottom" style="margin-top: 10px;">Please upload Transaction file</h4>
+							<a href="<?php echo base_url(); ?>assets/imports/journal_import_form_excel.xlsx" download>
+								<span id="saveClose" class="btn btn-icon btn-success glyphicons download" style="width: 200px!important;position: absolute;top: 85px;right: 10px;">
+									<i></i> 
+									<span >Download file Example</span>
+								</span>
+							</a>
+							<div class="fileupload fileupload-new margin-none" data-provides="fileupload">
+							  	<input type="file"  data-role="upload" data-show-file-list="true" data-bind="events: {select: txn.onSelected}" id="myFile"  class="margin-none" />
+							</div>
+							<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 160px!important;"><i></i>
+							<button style="background: none;border: none;" data-bind="disabled: txn.enabled, click: txn.save, text: lang.lang.import_journal">Import Journal</button></span><br>
+
+							<span id="printG" class="btn btn-icon btn-primary glyphicons print" style="width: 100px!important; display: none;background: #a22314;right: 11px;top: 194px;position: absolute;border: none;" data-bind="visible: txn.enabled"><i></i>
+							<button style="background: none;border: none;" data-bind="click: printGrid, text: lang.lang.print">Print</button></span>
+							<div id="invFormContent">
+								<p style="margin-top: 10px;" data-bind="visible: txn.enabled"><b>Please check the following account numbers. Make sure they corresponse to account number in the system.</b></p>
+								<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs" style="margin-top: 10px;" data-bind="visible: txn.enabled">
+									<thead>
+										<tr class="widget-head">
+											<th width="100" data-bind="text: lang.lang.line">line</th>
+											<th width="120" data-bind="text: lang.lang.trans_no">trans_no</th>
+											<th width="130" data-bind="text: lang.lang.date">date</th>
+											<th width="130" data-bind="text: lang.lang.number">number</th>
+											<th data-bind="text: lang.lang.memo">memo</th>
+											<th data-bind="text: lang.lang.account_number">account_number</th>
+											<th>dr</th>
+											<th>cr</th>
+										</tr>
+									</thead>
+									<tbody style="margin-top: 10px;border: none;" 
+										data-role="listview"
+										data-template="importJournalErrorList" 
+										data-bind="source: txn.noneAccount"
+										></tbody>
+								</table>
+							</div>
+						</div>
+						<!-- // Tab content END -->
+
+						<!-- Tab content -->
 						<div id="tabJournal" style="border: 1px solid #ccc" class="tab-pane widget-body-regular">
 							
 							<h4 class="separator bottom" style="margin-top: 10px;">Please upload Journal file</h4>
@@ -90892,6 +90935,7 @@
     	lang 				: langVM,
     	contact 			: banhji.importContact,
     	item 				: banhji.importItem,
+    	txn 				: banhji.importTxn,
     	journal 			: banhji.importJournal,
     	caccount 			: banhji.importChartAccount,
     	printGrid			: function() {
