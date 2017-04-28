@@ -1,4 +1,8 @@
 <div id="wrapperApplication" class="container-fluid"></div>
+<!--load before somthing not yet done -->
+<div id="holdpageloadhide" style="display:block;text-align: center;position: fixed;top: 0; left: 0;width: 100%; height: 100%;background: rgba(142, 159, 167, 0.8);z-index: 9999;">
+	<i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 45%;left: 45%"></i>
+</div>
 <!-- template section starts -->
 <script type="text/x-kendo-template" id="layout">
 	<div id="menu"></div>			
@@ -12314,6 +12318,7 @@
 					raw.push(value);
 				});
 			});
+			
 		},
 		loadSuppliers 				: function(){
 			var self = this, raw = this.get("supplierList");
@@ -17229,7 +17234,7 @@
 		}),
 		contactDS  			: new kendo.data.DataSource({
 		  	data: banhji.source.customerList,
-			sort: { field:"number", dir:"asc" }
+			sort: { field:"abbr", dir:"asc" }
 		}),
 		employeeDS  		: new kendo.data.DataSource({
 		  	data: banhji.source.employeeList,
@@ -17723,9 +17728,6 @@
 			});
 		}
 	});
-
-	
-	
 
 	banhji.customerDeposit =  kendo.observable({
 		lang 				: langVM,
@@ -23807,6 +23809,7 @@
 				window.location.replace(baseUrl + "admin");
 				// banhji.view.layout.showIn("#content", banhji.view.wDashBoard);
 			}
+			$("#holdpageloadhide").css("display","none");
 		});
 		banhji.source.contactDS.read().then(function(){
 			banhji.router.start();
