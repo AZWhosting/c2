@@ -1068,7 +1068,7 @@
    		<td align="center">
     		#if(unit == "money"){#
     			#: langVM.lang.money#
-	    	#}else if(unit == "m3"){#
+	    	#}else if(unit == "usage"){#
 	    		#: langVM.lang.usage#
 	    	#}else{#
 	    		#= unit#
@@ -1080,7 +1080,7 @@
    		<td align="right" >
    		#if(unit == "money"){#
     		#= kendo.toString(amount, _currency.locale=="km-KH"?"c0":"c", _currency.locale)#
-    	#}else if(unit == "m3"){#
+    	#}else if(unit == "usage"){#
     		#= amount#
     	#}else{#
     		#= amount#%

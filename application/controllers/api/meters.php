@@ -50,7 +50,7 @@ class Meters extends REST_Controller {
 				}
 			}
 		}			
-
+		$obj->where("status", 1);
 		//Get Result
 		$obj->order_by('worder','asc');
 		$obj->get_paged_iterated($page, $limit);
