@@ -5681,6 +5681,7 @@
 											data-bind="
 												value: locationSelect,
 			                  					source: locationDS,
+			                  					enabled: slocation,
 			                  					events: {change: locationChange}">
 			                  		</div>
 								</div>
@@ -5698,6 +5699,7 @@
 											data-bind="
 												value: sublocationSelect,
 			                  					source: sublocationDS,
+			                  					enabled: ssublocation,
 			                  					events: {change: sublocationChange}">
 			                  		</div>
 								</div>
@@ -5714,6 +5716,7 @@
 											data-value-field="id" 
 											data-bind="
 												value: boxSelect,
+												enabled: sbox,
 			                  					source: boxDS">
 			                  		</div>
 								</div>
@@ -6287,7 +6290,7 @@
 				   data-format="c2"
 				   data-culture="#:locale#"
                    data-min="0"                   
-                   data-bind="value: sub_total"
+                   data-bind="value: amount"
                    style="width: 100%; padding: 0 !important; text-align: right;">
 		</td>		
 		<td class="center">
@@ -17314,9 +17317,34 @@
 			]
 		}),
 		contactDS  			: new kendo.data.DataSource({
-		  	data: banhji.source.customerList,
-			sort: { field:"abbr", dir:"asc" }
-		}),
+			transport: {
+				read 	: {
+					url: apiUrl + 'contacts',
+					type: "GET",
+					headers: banhji.header,
+					dataType: 'json'
+				},
+				parameterMap: function(options, operation) {
+					if(operation === 'read') {
+						return {
+							limit: options.take,
+							page: options.page,
+							filter: options.filter
+						};
+					}
+				}
+			},
+			schema 	: {
+				data: 'results',
+				total: 'count'
+			},
+			filter: [
+				{ field:"use_water", value: 1 }
+			],
+			batch: true,
+			serverFiltering: true,
+			serverPaging: true,
+			pageSize: 1000}),
 		employeeDS  		: new kendo.data.DataSource({
 		  	data: banhji.source.employeeList,
 		  	filter:{ field: "item_type_id", value: 10 },//Sale Rep.
@@ -17354,6 +17382,57 @@
 		locationDS 			: dataStore(apiUrl + "locations"),
 		sublocationDS 		: dataStore(apiUrl + "locations"),
 		boxDS 				: dataStore(apiUrl + "locations"),
+		slocation 			: false,
+		ssublocation	 	: false,
+		sbox 				: false,
+		licenseChange 		: function(e) {
+			this.locationDS.filter([
+				{field: "branch_id",value: this.get("licenseSelect")},
+				{field: "main_bloc",value: 0},
+				{field: "main_pole",value: 0}
+			]);
+			this.set("slocation", true);
+	    },
+	    locationChange 		: function(e){
+	    	this.sublocationDS.filter([
+				{field: "branch_id",value: this.get("licenseSelect")},
+				{field: "main_bloc",value: this.get("locationSelect")},
+				{field: "main_pole",value: 0}
+			]);
+			this.set("ssublocation", true);
+	    },
+	    sublocationChange 		: function(e){
+	    	this.boxDS.filter([
+				{field: "branch_id",value: this.get("licenseSelect")},
+				{field: "main_bloc",value: this.get("locationSelect")},
+				{field: "main_pole",value: this.get("sublocationSelect")}
+			]);
+			this.set("sbox", true);
+	    },
+	    searchINV 			: function(){
+	    	var self = this, license_id = this.get("licenseSelect"),
+			bloc_id = this.get("locationSelect");
+			var para = [];
+			//this.dataSource.filter(para);
+			if(license_id){
+				// para.push({field: "branch_id", operator: 'where_related_meter', value: license_id});
+				if(bloc_id){
+					para.push({field: "location_id", value: bloc_id});
+					para.push({field: "meter_id <>", value: 0});
+					para.push({field: "deleted <>", value: 1});
+					para.push({field: "status <>", value: 1});
+					this.dataSource.query({
+						filter: para
+					}).then(function(e){
+						self.changes();
+					});
+				}else{
+					alert("Please Select Location");
+				}
+			}else{
+				alert("Please Select License");
+			}
+	    },
 		pageLoad 			: function(id){
 			if(id){
 				this.set("isEdit", true);

@@ -28,7 +28,7 @@ class Meters extends REST_Controller {
 		$page 		= $this->get('page');
 		$limit 		= $this->get('limit');
 		$sort 	 	= $this->get("sort");	
-				
+
 		$data["results"] = array();
 		$data["count"] = 0;
 
