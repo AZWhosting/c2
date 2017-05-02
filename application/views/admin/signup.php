@@ -1308,7 +1308,8 @@
                     $("#signupBtn").val("Signing up...");
                     // create user
                     var attributeList = [];
-
+                    this.comChange();
+                    this.phoneChange();
                     var dataEmail = {
                         Name : 'email',
                         Value : this.get('email')
@@ -1319,8 +1320,7 @@
                     var attributeEmail = new AWSCognito.CognitoIdentityServiceProvider.CognitoUserAttribute(dataEmail);
 
                     attributeList.push(attributeEmail);
-                    this.comChange();
-                    this.phoneChange();
+                    
                     userPool.signUp(this.get('email'), this.get('password'), attributeList, null, function(err, result){
                         if (err) {
                         } else {

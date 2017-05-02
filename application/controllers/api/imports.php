@@ -151,13 +151,6 @@ class Imports extends REST_Controller {
 					$fullname = $obj->company;
 				}
 
-				$property = new Property(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				$property->contact_id = $obj->id;
-				$property->name = $obj->name;
-				$property->abbr = $obj->abbr;
-				$property->code = $obj->code;
-				$property->save();
-
 				//Respsone
 				$data["results"][] = array(
 					"id" 						=> $obj->id,

@@ -414,4 +414,17 @@ class Ops extends REST_Controller {
 
 	// }
 	//End made by Great Mighty Dawine ^_^
+
+	function list_get() {
+		$this->load->dbutil();
+		$dbs = $this->dbutil->list_databases();
+		$data = array();
+		$companyList = array("banhji","banhji_mac", "db_banhji", "information_schema","innodb","mysql","performance_schema","tmp");
+		foreach ($dbs as $db) {
+			if (!in_array("$db", $companyList)) {
+				$data[] = $db;
+			}
+		}
+		$this->response(array('results'=> $data), 200);
+	}
 }

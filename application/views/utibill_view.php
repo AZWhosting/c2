@@ -5647,6 +5647,87 @@
 			<div class="row-fluid" style="background: #fff; float: left; padding: 15px; margin-left: -15px;">
 				<!-- Upper Part -->
 				<div class="row-fluid">
+					<div class="span12" style="padding: 0;">
+						<div class="box-generic-noborder" style="min-height: 90px;background: #eee;">
+						    <div class="tab-content" style="padding-top: 12px;">
+						    	<div class="span3" style="padding-left: 0;">
+									<div class="control-group">								
+										<label ><span data-bind="text: lang.lang.license">License</span></label>
+										<input 
+											data-role="dropdownlist" 
+											style="width: 100%;" 
+											data-option-label="License ..." 
+											data-auto-bind="false" 
+											data-value-primitive="true" 
+											data-text-field="name" 
+											data-value-field="id" 
+											data-bind="
+												value: licenseSelect,
+			                  					source: licenseDS,
+			                  					events: {change: licenseChange}">
+			                  		</div>
+								</div>
+								<div class="span3" style="padding-left: 0;">
+									<div class="control-group">								
+										<label ><span data-bind="text: lang.lang.location">Bloc</span></label>
+										<input 
+											data-role="dropdownlist" 
+											style="width: 100%;" 
+											data-option-label="Location ..." 
+											data-auto-bind="false" 
+											data-value-primitive="true" 
+											data-text-field="name" 
+											data-value-field="id" 
+											data-bind="
+												value: locationSelect,
+			                  					source: locationDS,
+			                  					events: {change: locationChange}">
+			                  		</div>
+								</div>
+								<div class="span3" style="padding-left: 0;">
+									<div class="control-group">								
+										<label ><span data-bind="text: lang.lang.sub_location">Sub Bloc</span></label>
+										<input 
+											data-role="dropdownlist" 
+											style="width: 100%;" 
+											data-option-label="Sub Location ..." 
+											data-auto-bind="false" 
+											data-value-primitive="true" 
+											data-text-field="name" 
+											data-value-field="id" 
+											data-bind="
+												value: sublocationSelect,
+			                  					source: sublocationDS,
+			                  					events: {change: sublocationChange}">
+			                  		</div>
+								</div>
+								<div class="span2" style="padding-left: 0;">
+									<div class="control-group">								
+										<label ><span data-bind="text: lang.lang.box">Box</span></label>
+										<input 
+											data-role="dropdownlist" 
+											style="width: 100%;" 
+											data-option-label="Box ..." 
+											data-auto-bind="false" 
+											data-value-primitive="true" 
+											data-text-field="name" 
+											data-value-field="id" 
+											data-bind="
+												value: boxSelect,
+			                  					source: boxDS">
+			                  		</div>
+								</div>
+								<div class="span1" style="padding-left: 0;">
+									<div class="control-group">								
+										<label ><span data-bind="text: lang.lang.action">Action</span></label>	
+										<div class="row" style="margin: 0;">					
+											<button type="button" data-role="button" data-bind="click: searchINV" class="k-button" role="button" aria-disabled="false" tabindex="0"><i class="icon-search"></i></button>
+										</div>
+			                  		</div>
+								</div>
+						    </div>
+						</div>
+					</div>
 					<div class="span4">
 						<div class="widget widget-heading-simple widget-body-primary widget-employees">		
 							<div class="widget-body padding-none">			
@@ -17023,8 +17104,8 @@
 	    	//Edit Mode
 	    	if(this.get("isEdit")){
 	    		//Update Journal
-    			$.each(this.journalLineDS.data(), function(index, value){										
-					value.set("deleted", 1);										
+    			$.each(this.journalLineDS.data(), function(index, value){		
+					value.set("deleted", 1);								
 				});
 
 				this.addJournal(obj.id);
@@ -17269,6 +17350,10 @@
 		numCustomer 		: 0,
 		paymentReceiptToday : 0,
 		user_id				: banhji.source.user_id,
+		licenseDS 			: dataStore(apiUrl + "branches"),
+		locationDS 			: dataStore(apiUrl + "locations"),
+		sublocationDS 		: dataStore(apiUrl + "locations"),
+		boxDS 				: dataStore(apiUrl + "locations"),
 		pageLoad 			: function(id){
 			if(id){
 				this.set("isEdit", true);
@@ -23246,14 +23331,6 @@
 					banhji.pageLoaded["receipt"] = true;
 					vm.paymentTermDS.read();
 					var validator = $("#example").kendoValidator().data("kendoValidator");
-			        $("#saveNew").click(function(e){
-						e.preventDefault();
-						// if(validator.validate()){
-			   //          	vm.save();
-				  //       }else{
-				  //       	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-				  //       }
-					});
 				}
 				vm.pageLoad();
 				break;

@@ -271,6 +271,7 @@ class Readings extends REST_Controller {
 
 		//Get Result
 		$obj->where('activated', 1);
+		$obj->where('status', 1);
 		// $obj->where_related_record('invoiced', 0);
 		// $obj->get_paged_iterated($page, $limit);
 		// $data["count"] = $obj->paged->total_rows;		
