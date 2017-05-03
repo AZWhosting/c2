@@ -5648,7 +5648,7 @@
 				<!-- Upper Part -->
 				<div class="row-fluid">
 					<div class="span12" style="padding: 0;">
-						<div class="box-generic-noborder" style="min-height: 90px;background: #eee;">
+						<!-- <div class="box-generic-noborder" style="min-height: 90px;background: #eee;">
 						    <div class="tab-content" style="padding-top: 12px;">
 						    	<div class="span3" style="padding-left: 0;">
 									<div class="control-group">								
@@ -5729,7 +5729,7 @@
 			                  		</div>
 								</div>
 						    </div>
-						</div>
+						</div> -->
 					</div>
 					<div class="span4">
 						<div class="widget widget-heading-simple widget-body-primary widget-employees">		
@@ -5741,7 +5741,7 @@
 												<div class="widget-search separator bottom">
 													<button type="button" class="btn btn-default pull-right" data-bind="click: search"><i class="icon-search"></i></button>
 													<div class="overflow-hidden">
-														<input type="search" placeholder="Invoice Number..." data-bind="value: searchText">
+														<input type="search" placeholder="Invoice Number..." data-bind="value: searchText, events: {change: search}">
 													</div>
 												</div>
 												<div class="select2-container" style="width: 100%;">
@@ -5855,14 +5855,13 @@
 			        <thead>
 			            <tr>
 			                <th class="center" style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></th>			                
-			                <th><span data-bind="text: lang.lang.date"></span></th>
-			                <th><span data-bind="text: lang.lang.name"></span></th>
-			                <th><span data-bind="text: lang.lang.reference_no"></span></th>
-			                <th data-bind="visible: showReceiptNo" data-bind="text: lang.lang.receipt">Receipt#</th>
-			                <th data-bind="visible: showCheckNo" style="width: 10%"><span data-bind="text: lang.lang.check_number"></span></th>
-			                <th style="width: 15%"><span data-bind="text: lang.lang.amount"></span></th>			                
-			                <th style="width: 15%"><span data-bind="text: lang.lang.discount"></span></th>
-			                <th style="width: 15%"><span data-bind="text: lang.lang.fine"></span></th>
+			                <th width="100"><span data-bind="text: lang.lang.date"></span></th>
+			                <th width="100"><span data-bind="text: lang.lang.name"></span></th>
+			                <th><span data-bind="text: lang.lang.number"></span></th>
+			                <th><span data-bind="text: lang.lang.meter"></span></th>
+			                <th style="width: 15%"><span data-bind="text: lang.lang.amount"></span></th>
+			                <th style="width: 15%" data-bind="visible: chhDiscount"><span data-bind="text: lang.lang.discount"></span></th>
+			                <th style="width: 15%" data-bind="visible: chhFine"><span data-bind="text: lang.lang.fine"></span></th>
 			                <th style="width: 15%"><span data-bind="text: lang.lang.receive">RECEIVE</span></th>
 			            </tr> 
 			        </thead>
@@ -5885,12 +5884,12 @@
 							<a class="btn btn-default dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-list"></i> </a>
 							<ul class="dropdown-menu" style="padding: 5px; border-radius:0;">
 								<li>
-									<input type="checkbox" id="chbCheckNo" class="k-checkbox" data-bind="checked: showCheckNo">
-  									<label class="k-checkbox-label" for="chbCheckNo"><span data-bind="text: lang.lang.check_number"></span></label>
+									<input type="checkbox" id="chhDiscount" class="k-checkbox" data-bind="checked: chhDiscount">
+  									<label class="k-checkbox-label" for="chhDiscount"><span data-bind="text: lang.lang.discount"></span></label>
   								</li>
   								<li>
-  									<input type="checkbox" id="chbReceiptNo" class="k-checkbox" data-bind="checked: showReceiptNo">
-  									<label class="k-checkbox-label" for="chbReceiptNo" data-bind="text: lang.lang.receipt_number">Receipt Number</label>
+  									<input type="checkbox" id="chhFine" class="k-checkbox" data-bind="checked: chhFine">
+  									<label class="k-checkbox-label" for="chhFine" data-bind="text: lang.lang.fine">Receipt Number</label>
 								</li>															
 							</ul>
 						</div>
@@ -6271,29 +6270,14 @@
 			<i class="icon-trash" data-bind="events: { click: removeRow }"></i>
 			#:banhji.Receipt.dataSource.indexOf(data)+1#			
 		</td>
-		<td>#=kendo.toString(new Date(issued_date), "dd-MM-yyyy")#</td>
+		<td>#=kendo.toString(new Date(issued_date), "dd-MM-yyyy", "km-KH")#</td>
 		<td>#=banhji.Receipt.getContactName(contact_id)#</td>
-		<td>#=reference_no#</td>
-		<td data-bind="visible: showReceiptNo">
-			<input type="text" class="k-textbox" 
-					data-bind="value: number"
-					style="width: 100%; margin-bottom: 0;" />
-		</td>
-		<td data-bind="visible: showCheckNo">
-			<input type="text" class="k-textbox" 
-					data-bind="value: check_no"
-					style="width: 100%; margin-bottom: 0;" />
-		</td>
+		<td>#=number#</td>
+		<td>#=meter#</td>
 		<td class="center">
-			<input data-role="numerictextbox" disabled="disabled"
-				   data-spinners="false"
-				   data-format="c2"
-				   data-culture="#:locale#"
-                   data-min="0"                   
-                   data-bind="value: amount"
-                   style="width: 100%; padding: 0 !important; text-align: right;">
-		</td>		
-		<td class="center">
+			#=kendo.toString(sub_total, "c", locale)#		
+		</td>
+		<td class="center" data-bind="visible: chhDiscount">
 			<input data-role="numerictextbox"
 				   data-spinners="false"
 				   data-format="c2"
@@ -6303,7 +6287,7 @@
                               events: { change: changes }"
                    style="width: 100%; text-align: right;">			
 		</td>
-		<td class="center">
+		<td class="center" data-bind="visible: chhFine">
 			<input data-role="numerictextbox"
 				   data-spinners="false"
 				   data-format="c2"
@@ -16401,7 +16385,7 @@
 				}else{
 					$("#secondwnumber"+d.id).kendoBarcode({
 						renderAs: "svg",
-					  	value: d.meter.meter_number,
+					  	value: d.number,
 					  	type: "code128",
 					  	width: 200,
 						height: 25,
@@ -16411,7 +16395,7 @@
 					});
 					$("#footwnumber"+d.id).kendoBarcode({
 						renderAs: "svg",
-					  	value: d.meter.meter_number,
+					  	value: d.number,
 					  	type: "code128",
 					  	width: 200,
 						height: 25,
@@ -17292,19 +17276,12 @@
 		}
 	});
 	//Receipt
+	
 	banhji.Receipt =  kendo.observable({
 		lang 				: langVM,
 		dataSource 			: dataStore(apiUrl + "transactions"),
 		txnDS 				: dataStore(apiUrl + "transactions"),
 		journalLineDS		: dataStore(apiUrl + "journal_lines"),
-		currencyDS  			: new kendo.data.DataSource({
-		  	data: banhji.source.currencyList,
-		  	filter: { field:"status", value: 1 }
-		}),
-		reconcileVM 		: banhji.reconcileVM,
-		reconReceipt 		: banhji.reconReceipt,
-		cashCurrencyDS 		: [],
-		currencyRateDS		: dataStore(apiUrl + "currencies/rate"),
 		txnTemplateDS 		: new kendo.data.DataSource({
 		  	data: banhji.source.txnTemplateList,
 		  	filter:{ field: "type", value: "Cash_Receipt" }
@@ -17317,34 +17294,10 @@
 			]
 		}),
 		contactDS  			: new kendo.data.DataSource({
-			transport: {
-				read 	: {
-					url: apiUrl + 'contacts',
-					type: "GET",
-					headers: banhji.header,
-					dataType: 'json'
-				},
-				parameterMap: function(options, operation) {
-					if(operation === 'read') {
-						return {
-							limit: options.take,
-							page: options.page,
-							filter: options.filter
-						};
-					}
-				}
-			},
-			schema 	: {
-				data: 'results',
-				total: 'count'
-			},
-			filter: [
-				{ field:"use_water", value: 1 }
-			],
-			batch: true,
-			serverFiltering: true,
-			serverPaging: true,
-			pageSize: 1000}),
+		  	data: banhji.source.customerList,
+		  	filter:{ field:"status", value:1 },
+			sort: { field:"number", dir:"asc" }
+		}),
 		employeeDS  		: new kendo.data.DataSource({
 		  	data: banhji.source.employeeList,
 		  	filter:{ field: "item_type_id", value: 10 },//Sale Rep.
@@ -17352,21 +17305,18 @@
 		}),
 		accountDS  			: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
-		  	filter: { field:"account_type_id", value: 10 },
+		  	filter:[
+		  		{ field:"account_type_id", value: 10 },
+		  		{ field:"status", value: 1 }
+		  	],
 		  	sort: { field:"number", dir:"asc" }
 		}),
-		revenueaccountDS  	: new kendo.data.DataSource({
-		  	data: banhji.source.accountList,
-		  	filter: { field:"account_type_id", value: 39 },
-		  	sort: { field:"number", dir:"asc" }
-		}),
-		fine 				: 0,	
 		paymentTermDS 		: banhji.source.paymentTermDS,
 		paymentMethodDS 	: banhji.source.paymentMethodDS,
 		amtDueColor 		: banhji.source.amtDueColor,
-		showCheckNo 		: false,
-		showReceiptNo 		: false,
-		obj 				: null,		
+		chhDiscount 		: false,
+		chhFine 			: false,
+		obj 				: null,
 		isEdit 				: false,
 		saveClose 			: false,
 		savePrint 			: false,
@@ -17375,8 +17325,6 @@
 		invoice_id 			: 0,
 		total 				: 0,
 		total_received 		: 0,
-		numCustomer 		: 0,
-		paymentReceiptToday : 0,
 		user_id				: banhji.source.user_id,
 		licenseDS 			: dataStore(apiUrl + "branches"),
 		locationDS 			: dataStore(apiUrl + "locations"),
@@ -17424,7 +17372,7 @@
 					this.dataSource.query({
 						filter: para
 					}).then(function(e){
-						self.changes();
+						//self.changes();
 					});
 				}else{
 					alert("Please Select Location");
@@ -17437,16 +17385,16 @@
 			if(id){
 				this.set("isEdit", true);
 				this.loadObj(id);
-			}else{				
+			}else{
 				if(this.get("isEdit") || this.dataSource.total()==0){
 					this.addEmpty();
-				}								
+				}
 			}
 		},
 		loadInvoice 		: function(id){
 			this.set("invoice_id", id);
 			this.search();
-		},	
+		},
 		//Contact
 		loadContact 		: function(id){
 			this.set("contact_id", id);
@@ -17455,7 +17403,7 @@
 		contactChanges 		: function(){
 			this.search();
 	    },
-	    getContactName      : function(id){
+        getContactName      : function(id){
             var raw = banhji.source.customerDS.get(id);
             if(raw){
                 return raw.name;
@@ -17469,44 +17417,42 @@
 	    	this.setRate();	
 	    },
 	    applyTerm 			: function(){
-	    	var self = this, obj = this.get("obj"), 
+	    	var self = this, obj = this.get("obj"),
 	    	today = new Date();
 
-	    	$.each(this.dataSource.data(), function(index, value){	    		   		
-	    		var term = value.payment_term_id != 0 ? self.paymentTermDS.get(value.payment_term_id) : 0,
-	    		termDate = new Date(value.reference[0].issued_date),
-	    		period = term == 0 ? 0 : term.discount_period,
-	    		percent = term == 0 ? 1 : term.discount_percentage;
+	    	$.each(this.dataSource.data(), function(index, value){
+	    		var term = self.paymentTermDS.get(value.payment_term_id),
+	    		termDate = new Date(value.reference[0].issued_date);
 
-    			termDate.setDate(termDate.getDate() + period);
-    			
+    			termDate.setDate(termDate.getDate() + term.discount_period);
+
     			if(today<=termDate){
     				if(value.reference[0].amount_paid==0){
-	    				var amount = value.reference[0].amount * percent;
+	    				var amount = value.reference[0].amount * term.discount_percentage;
 	    				value.set("discount", amount);
 	    				value.set("amount", value.reference[0].amount - amount);
     				}
-    			}		    	
-	    	});	      	
+    			}
+	    	});
 	    },
-	    //Currency Rate		
+	    //Currency Rate
 		setRate 			: function(){
 			var obj = this.get("obj");
 
 			$.each(this.dataSource.data(), function(index, value){
-				var rate = banhji.source.getRate(value.locale, new Date(obj.issued_date));				
+				var rate = banhji.source.getRate(value.locale, new Date(obj.issued_date));
 				
-				value.set("rate", rate);				
+				value.set("rate", rate);
 			});
 
-			this.changes();			
+			this.changes();
 		},
-		//Segments		
+		//Segments
 	    segmentChanges 		: function(e) {
 			var dataArr = this.get("obj").segments,
 			lastIndex = dataArr.length - 1,
 			last = this.segmentItemDS.get(dataArr[lastIndex]);
-			
+
 			if(dataArr.length > 1) {
 				for(var i = 0; i < dataArr.length - 1; i++) {
 					var current_index = dataArr[i],
@@ -17517,69 +17463,58 @@
 						break;
 					}
 				}
-			}				
+			}
 		},
-		//Search		
+		//Search
 		search 				: function(){
 			var self = this, 
-			para = [],
-			obj = this.get("obj"),
-			searchText = this.get("searchText"), 
-			invoice_id = this.get("invoice_id"),
-			contact_id = this.get("contact_id");
+				para = [],
+				obj = this.get("obj"),
+				searchText = this.get("searchText"), 
+				invoice_id = this.get("invoice_id"),
+				contact_id = this.get("contact_id");
+			
+	    	if(contact_id>0){
+		    	para.push({ field:"contact_id", value: contact_id });
+	    	}
 
-			if(searchText !== "") {				
-				if(searchText!==""){
-					para.push({ field:"number", value: searchText });
-				}
+	    	if(invoice_id>0){
+		    	para.push({ field:"id", value: invoice_id });
+	    	}
 
-				para.push({ field:"type",  value:"Utility_Invoice" });
-				para.push({ field:"status", operator:"where_in", value:[0,2] });
-
-				if(this.dataSource.total()>0){
-					var idList = [];
-					$.each(this.dataSource.data(), function(index, value){
-						idList.push(value.reference_id);
-					});
-					para.push({ field:"id", operator:"where_not_in", value:idList });
-				}
-			} else {
-				if(contact_id>0){		    			    	
-			    	para.push({ field:"contact_id", value: contact_id });				    			    	
-		    	}
-
-		    	if(invoice_id>0){		    			    	
-			    	para.push({ field:"id", value: invoice_id });				    			    	
-		    	}
-		    	para.push({ field:"type",  value:"Utility_Invoice" });
-				para.push({ field:"status", operator:"where_in", value:[0,2] });
-
-				if(this.dataSource.total()>0){
-					var idList = [];
-					$.each(this.dataSource.data(), function(index, value){
-						idList.push(value.reference_id);
-					});
-					para.push({ field:"id", operator:"where_not_in", value:idList });
-				}
+			if(searchText!==""){
+				para.push({ field:"number", value: searchText });
 			}
+
+			para.push({ field:"type",  value:"Utility_Invoice" });
+			para.push({ field:"status", operator:"where_in", value:[0,2] });
+
+			if(this.dataSource.total()>0){
+				var idList = [];
+				$.each(this.dataSource.data(), function(index, value){
+					idList.push(value.reference_id);
+				});
+				para.push({ field:"id", operator:"where_not_in", value:idList });
+			}
+
 			this.txnDS.query({
 				filter: para,
 				page: 1,
 				pageSize: 100
 			}).then(function(){
 				var view = self.txnDS.view();
-
+				self.dataSource.data([]);
 				if(view.length>0){
-					$.each(view, function(index, value){											
-						var amount_due = value.amount - (value.amount_paid + value.deposit);							
+					$.each(view, function(index, value){
+						var amount_due = value.amount - (value.amount_paid + value.deposit);
 
 						self.dataSource.add({
 							transaction_template_id : 0,
-		    				contact_id 			: value.contact_id,				
+		    				contact_id 			: value.contact_id,
 							account_id 			: obj.account_id,
 							payment_term_id		: value.payment_term_id,
-							payment_method_id	: obj.payment_method_id,				
-							reference_id 		: value.id,								
+							payment_method_id	: obj.payment_method_id,
+							reference_id 		: value.id,
 							user_id 			: self.get("user_id"),
 							check_no 			: value.check_no,
 							reference_no 		: value.number,
@@ -17587,11 +17522,10 @@
 						   	type				: "Cash_Receipt",
 						   	sub_total 			: amount_due,
 						   	amount 				: amount_due,
-						   	fine 				: 0,				   	
 						   	discount 			: 0,
-						   	rate				: value.rate,			   	
-						   	locale 				: value.locale,			   	
-						   	issued_date 		: obj.issued_date,					   	
+						   	rate				: value.rate,
+						   	locale 				: value.locale,
+						   	issued_date 		: obj.issued_date,
 						   	memo 				: obj.memo,
 						   	memo2 				: obj.memo2,
 						   	status 				: 0,
@@ -17607,17 +17541,22 @@
 						   	week 				: 0,
 						   	month 				: 0,
 						   	is_recurring 		: 0,
-
+						   	meter_id 			: value.meter_id,
+						   	meter 				: value.meter,
 						   	reference 			: [value]
 				    	});
 					});
 					self.applyTerm();
 					self.setRate();
+				}else{
+					var notifi = $("#ntf1").data("kendoNotification");
+					notifi.hide();
+					notifi.error(self.lang.lang.no_data);
 				}
 
 				self.set("searchText", "");
 				self.set("contact_id", "");
-				self.set("invoice_id", 0);				
+				self.set("invoice_id", 0);
 			});
 		},
 		//Obj
@@ -17631,11 +17570,11 @@
 			}).then(function(){
 				var view = self.dataSource.view();
 				view[0].set("reference", []);
-				
+
 				self.set("obj", view[0]);
 				self.set("total", kendo.toString(view[0].amount, "c", view[0].locale));
 		        self.set("total_received", kendo.toString(view[0].amount, "c", view[0].locale));
-				
+
 				self.journalLineDS.filter({ field: "transaction_id", value: id });
 
 				self.txnDS.query({
@@ -17650,29 +17589,24 @@
 		},
 		changes				: function(){
 			var self = this, obj = this.get("obj"),
-			total = 0, sub_total = 0, discount = 0, total_received = 0, remaining = 0, fine = 0;											
+			total = 0, sub_total = 0, discount = 0, total_received = 0, remaining = 0;
 
 			$.each(this.dataSource.data(), function(index, value) {
-				var amt = (kendo.parseFloat(value.sub_total) + kendo.parseFloat(value.fine))- kendo.parseFloat(value.discount);
+				var amt = kendo.parseFloat(value.sub_total) - kendo.parseFloat(value.discount);
 				if(kendo.parseFloat(value.amount)>amt){
 					value.set("amount", amt);
-				}//else{
-				// 	value.set("amount", amt);
-				// }
+				}
 
-				sub_total += kendo.parseFloat(value.sub_total) / value.rate;					
+				sub_total += kendo.parseFloat(value.sub_total) / value.rate;
 				discount += kendo.parseFloat(value.discount) / value.rate;
-				fine += kendo.parseFloat(value.fine) / value.rate;
-				total_received += kendo.parseFloat(value.amount) / value.rate;					
+				total_received += kendo.parseFloat(value.amount) / value.rate;
 	        });
 
-			total = (sub_total + fine) - discount;
-			remaining = total - total_received;			
+			total = sub_total - discount;
+			remaining = total - total_received;
 
 	        obj.set("sub_total", sub_total);
 	        obj.set("discount", discount);
-	        obj.set("fine", fine);
-	        this.set('fine', kendo.toString(fine, "c2", banhji.locale));
 	        this.set("total", kendo.toString(total, "c2", banhji.locale));
 	        this.set("total_received", kendo.toString(total_received, "c2", banhji.locale));
 	        obj.set("remaining", remaining);
@@ -17694,7 +17628,7 @@
 			this.set("obj", {
 				transaction_template_id: 6,
 				account_id 			: 7,
-				payment_method_id	: 7,
+				payment_method_id	: 1,
 			   	rate				: 1,
 			   	sub_total 			: 0,
 			   	discount 			: 0,
@@ -17707,23 +17641,23 @@
 	    	});						
 		},
 	    objSync 			: function(){
-	    	var dfd = $.Deferred();	        
+	    	var dfd = $.Deferred();
 
 	    	this.dataSource.sync();
 		    this.dataSource.bind("requestEnd", function(e){
-		    	if(e.response){				
+		    	if(e.response){
 					dfd.resolve(e.response.results);
-				}				  				
+				}
 		    });
-		    this.dataSource.bind("error", function(e){		    		    	
-				dfd.reject(e.errorThrown);    				
+		    this.dataSource.bind("error", function(e){
+				dfd.reject(e.errorThrown);
 		    });
 
-		    return dfd;	    		    	
+		    return dfd;
 	    },
 		save 				: function(){
 	    	var self = this, obj = this.get("obj");
-	    	var customerServed = 0, paymentReceipt = 0;
+
 	    	//Edit Mode
 	    	if(this.get("isEdit")){
 	    		obj.set("issued_date", kendo.toString(new Date(obj.issued_date), "s"));
@@ -17748,91 +17682,58 @@
 			//Obj
 			this.objSync()
 			.then(function(data){
-				var ids = [], count = 0;
-				var that = this;
-				that.amount = 0.00;
+				var ids = [];
 				//Save journals
-				// if(e.type !== "read") {
-					// var amount = 0;
-					// for(var i = 0; i < e.response.results.length; i++) {
-					// 	if(e.response.results[i].dr > 0) {
-					// 		amount += kendo.parseFloat(e.response.results[i].dr);
-					// 	}
-					// }
-					
-				// }
 				$.each(data, function(index, value){
 					var contact = banhji.source.customerDS.get(value.contact_id);
 					ids.push(value.reference_id);
-					count++;
-					that.amount += kendo.parseFloat(value.amount);
+
 					//Cash on Dr
-					self.journalLineDS.add({					
+					self.journalLineDS.add({
 						transaction_id 		: value.id,
-						account_id 			: obj.account_id,				
-						contact_id 			: value.contact_id,				
-						description 		: "",
+						account_id 			: obj.account_id,
+						contact_id 			: value.contact_id,
+						description 		: "Utility Cash Receipt",
 						reference_no 		: "",
-						segments 	 		: [],								
+						segments 	 		: [],
 						dr 	 				: value.amount,
-						cr 					: 0,				
+						cr 					: 0,
 						rate				: value.rate,
 						locale				: value.locale
 					});
 
 					if(value.discount>0){
 						//Discount on Dr
-						self.journalLineDS.add({					
+						self.journalLineDS.add({
 							transaction_id 		: value.id,
-							account_id 			: contact.settlement_discount_id,				
-							contact_id 			: value.contact_id,				
-							description 		: "",
+							account_id 			: contact.settlement_discount_id,
+							contact_id 			: value.contact_id,
+							description 		: "Utility Discount",
 							reference_no 		: "",
-							segments 	 		: [],								
+							segments 	 		: [],
 							dr 	 				: value.discount,
-							cr 					: 0,				
-							rate				: value.rate,
-							locale				: value.locale
-						});
-					}
-
-					if(value.fine>0){
-						//Discount on Dr
-						self.journalLineDS.add({					
-							transaction_id 		: value.id,
-							account_id 			: contact.or_account_id,				
-							contact_id 			: value.contact_id,				
-							description 		: "",
-							reference_no 		: "",
-							segments 	 		: [],								
-							dr 	 				: 0,
-							cr 					: value.fine,				
+							cr 					: 0,
 							rate				: value.rate,
 							locale				: value.locale
 						});
 					}
 
 					//AR on Cr
-					self.journalLineDS.add({					
+					self.journalLineDS.add({
 						transaction_id 		: value.id,
-						account_id 			: contact.account_id,				
-						contact_id 			: value.contact_id,				
-						description 		: "",
+						account_id 			: contact.account_id,
+						contact_id 			: value.contact_id,
+						description 		: "Utility Invoice",
 						reference_no 		: "",
-						segments 	 		: [],								
+						segments 	 		: [],
 						dr 	 				: 0,
-						cr 					: (kendo.parseFloat(value.amount) + kendo.parseFloat(value.discount)) - kendo.parseFloat(value.fine),		
+						cr 					: kendo.parseFloat(value.amount) + kendo.parseFloat(value.discount),				
 						rate				: value.rate,
 						locale				: value.locale
-					});	
+					});
 				});
-				var tem = kendo.parseFloat(self.get('paymentReceiptToday')) + that.amount;
-				self.set('paymentReceiptToday',  kendo.toString(tem, 'n2'));
-				self.set('numCustomer', self.get('numCustomer')+count);
+
 				self.journalLineDS.sync();
-				self.journalLineDS.bind('requestEnd', function(e){
-					
-				});
 				self.updateTxnStatus(ids);
 
 				return data;
@@ -17858,38 +17759,34 @@
 					self.addEmpty();
 				}
 			});
-			// if(this.get('fine') > 0) {
-
-			// }
-			if(this.reconReceipt.dataSource.data().length > 0) {
-				this.reconReceipt.dataSource.sync();
-			}
 		},
 		cancel 				: function(){
-			this.dataSource.data([]);
-			banhji.router.navigate("/");
-			banhji.userManagement.removeMultiTask("cash_receipt");
+			this.dataSource.cancelChanges();
+
+			banhji.userManagement.removeMultiTask("receipt");
 		},
 		updateTxnStatus 	: function(ids){
 			var self = this;
 
-			this.txnDS.query({
-				filter:{ field:"id", operator:"where_in", value:ids }
-			}).then(function(){
-				var view = self.txnDS.view();
+			if(ids.length>0){
+				this.txnDS.query({
+					filter:{ field:"id", operator:"where_in", value:ids }
+				}).then(function(){
+					var view = self.txnDS.view();
 
-				$.each(view, function(index, value){
-					if(value.amount_paid == 0){
-						value.set("status", 0);
-					}else if(value.amount_paid >= value.amount){
-						value.set("status", 1);
-					}else{
-						value.set("status", 2);
-					}
+					$.each(view, function(index, value){
+						if(value.amount_paid == 0){
+							value.set("status", 0);
+						}else if(value.amount_paid >= value.amount){
+							value.set("status", 1);
+						}else{
+							value.set("status", 2);
+						}
+					});
+
+					self.txnDS.sync();
 				});
-
-				self.txnDS.sync();
-			});
+			}
 		}
 	});
 

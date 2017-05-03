@@ -1413,6 +1413,7 @@ var	km_KH = {
 	"voltage":"Voltage",
 	"ampere":"Ampere",
 	"please_upload_meter_file": "សូមបញ្ចូលកុងទ័រ",
+	"no_data": "មិនមានទិន្នន័យ",
 
 
 

@@ -1438,6 +1438,7 @@ var	en_US = {
 	"voltage":"Voltage",
 	"ampere":"Ampere",
 	"please_upload_meter_file": "Please Upload Meter File",
+	"no_data": "No Data Found",
 
 
 

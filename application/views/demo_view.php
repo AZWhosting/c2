@@ -44120,7 +44120,7 @@
 							</div>
 
 							<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" style="width: 170px!important;"><i></i>
-							<button style="background: none;border: none;" data-bind="click: txn.save">Import Transaction</button></span><br>							
+							<button style="background: none;border: none;" data-bind="click: txn.save, enabled: txn.enableImport">Import Transaction</button></span><br>							
 							
 						</div>
 						<!-- // Tab content END -->
@@ -52175,15 +52175,10 @@
 
 				//COGS on Dr
 				var cogsID = kendo.parseInt(item.expense_account_id);
-				if(cogsID>0){
+				if(cogsID>0 && item.item_type_id==1){
 					raw = "dr"+cogsID;
-
-					var cogsAmount = 0;
-					if(item.item_type_id==1 || item.item_type_id==4){
-						cogsAmount = (value.quantity*value.unit_value)*item.cost;
-					}else{
-						cogsAmount = value.amount;
-					}
+					
+					var cogsAmount = (value.quantity*value.unit_value)*item.cost;
 
 					if(entries[raw]===undefined){
 						entries[raw] = {
@@ -52205,16 +52200,11 @@
 
 				//Inventory on Cr
 				var inventoryID = kendo.parseInt(item.inventory_account_id);
-				if(inventoryID>0){
+				if(inventoryID>0 && item.item_type_id==1){
 					raw = "cr"+inventoryID;
 
-					var inventoryAmount = 0;
-					if(item.item_type_id==1 || item.item_type_id==4){
-						inventoryAmount = (value.quantity*value.unit_value)*item.cost;
-					}else{
-						inventoryAmount = value.amount;
-					}
-
+					var inventoryAmount = (value.quantity*value.unit_value)*item.cost;
+					
 					if(entries[raw]===undefined){
 						entries[raw] = {
 							transaction_id 		: transaction_id,
@@ -52288,16 +52278,11 @@
 
 				//COGS on Dr
 				var cogsID = kendo.parseInt(item.expense_account_id);
-				if(cogsID>0){
+				if(cogsID>0 && item.item_type_id==1){
 					raw = "dr"+cogsID;
 
-					var cogsAmount = 0;
-					if(item.item_type_id==1 || item.item_type_id==4){
-						cogsAmount = (value.quantity*value.unit_value)*item.cost;
-					}else{
-						cogsAmount = value.amount;
-					}
-
+					var cogsAmount = (value.quantity*value.unit_value)*item.cost;
+					
 					if(entries[raw]===undefined){
 						entries[raw] = {
 							transaction_id 		: transaction_id,
@@ -52321,13 +52306,8 @@
 				if(inventoryID>0){
 					raw = "cr"+inventoryID;
 
-					var inventoryAmount = 0;
-					if(item.item_type_id==1 || item.item_type_id==4){
-						inventoryAmount = (value.quantity*value.unit_value)*item.cost;
-					}else{
-						inventoryAmount = value.amount;
-					}
-
+					var inventoryAmount = (value.quantity*value.unit_value)*item.cost;
+					
 					if(entries[raw]===undefined){
 						entries[raw] = {
 							transaction_id 		: transaction_id,
@@ -53756,15 +53736,10 @@
 				
 				//COGS on Dr
 				var cogsID = kendo.parseInt(item.expense_account_id);
-				if(cogsID>0){
+				if(cogsID>0 && item.item_type_id==1){
 					raw = "dr"+cogsID;
 
-					var cogsAmount = 0;
-					if(item.item_type_id==1 || item.item_type_id==4){
-						cogsAmount = (value.quantity*value.unit_value)*item.cost;
-					}else{
-						cogsAmount = value.amount;
-					}
+					var cogsAmount = (value.quantity*value.unit_value)*item.cost;
 
 					if(entries[raw]===undefined){
 						entries[raw] = {
@@ -53786,16 +53761,11 @@
 
 				//Inventory on Cr
 				var inventoryID = kendo.parseInt(item.inventory_account_id);
-				if(inventoryID>0){
+				if(inventoryID>0 && item.item_type_id==1){
 					raw = "cr"+inventoryID;
 
-					var inventoryAmount = 0;
-					if(item.item_type_id==1 || item.item_type_id==4){
-						inventoryAmount = (value.quantity*value.unit_value)*item.cost;
-					}else{
-						inventoryAmount = value.amount;
-					}
-
+					var inventoryAmount = (value.quantity*value.unit_value)*item.cost;
+					
 					if(entries[raw]===undefined){
 						entries[raw] = {
 							transaction_id 		: transaction_id,
@@ -53869,16 +53839,11 @@
 
 				//COGS on Dr
 				var cogsID = kendo.parseInt(item.expense_account_id);
-				if(cogsID>0){
+				if(cogsID>0 && item.item_type_id==1){
 					raw = "dr"+cogsID;
 
-					var cogsAmount = 0;
-					if(item.item_type_id==1 || item.item_type_id==4){
-						cogsAmount = (value.quantity*value.unit_value)*item.cost;
-					}else{
-						cogsAmount = value.amount;
-					}
-
+					var cogsAmount = (value.quantity*value.unit_value)*item.cost;
+					
 					if(entries[raw]===undefined){
 						entries[raw] = {
 							transaction_id 		: transaction_id,
@@ -53899,16 +53864,11 @@
 
 				//Inventory on Cr
 				var inventoryID = kendo.parseInt(item.inventory_account_id);
-				if(inventoryID>0){
+				if(inventoryID>0 && item.item_type_id==1){
 					raw = "cr"+inventoryID;
 
-					var inventoryAmount = 0;
-					if(item.item_type_id==1 || item.item_type_id==4){
-						inventoryAmount = (value.quantity*value.unit_value)*item.cost;
-					}else{
-						inventoryAmount = value.amount;
-					}
-
+					var inventoryAmount = (value.quantity*value.unit_value)*item.cost;
+					
 					if(entries[raw]===undefined){
 						entries[raw] = {
 							transaction_id 		: transaction_id,
@@ -56204,13 +56164,8 @@
 				if(cogsID>0){
 					raw = "cr"+cogsID;
 
-					var cogsAmount = 0;
-					if(item.item_type_id==1 || item.item_type_id==4){
-						cogsAmount = (value.quantity*value.unit_value)*item.cost;
-					}else{
-						cogsAmount = value.amount;
-					}
-
+					var cogsAmount = (value.quantity*value.unit_value)*item.cost;
+					
 					if(entries[raw]===undefined){
 						entries[raw] = {
 							transaction_id 		: transaction_id,
@@ -56234,13 +56189,8 @@
 				if(inventoryID>0){
 					raw = "dr"+inventoryID;
 
-					var inventoryAmount = 0;
-					if(item.item_type_id==1 || item.item_type_id==4){
-						inventoryAmount = (value.quantity*value.unit_value)*item.cost;
-					}else{
-						inventoryAmount = value.amount;
-					}
-
+					var inventoryAmount = (value.quantity*value.unit_value)*item.cost;
+					
 					if(entries[raw]===undefined){
 						entries[raw] = {
 							transaction_id 		: transaction_id,
@@ -56317,13 +56267,8 @@
 				if(cogsID>0){
 					raw = "cr"+cogsID;
 
-					var cogsAmount = 0;
-					if(item.item_type_id==1 || item.item_type_id==4){
-						cogsAmount = (value.quantity*value.unit_value)*item.cost;
-					}else{
-						cogsAmount = value.amount;
-					}
-
+					var cogsAmount = (value.quantity*value.unit_value)*item.cost;
+					
 					if(entries[raw]===undefined){
 						entries[raw] = {
 							transaction_id 		: transaction_id,
@@ -56347,13 +56292,8 @@
 				if(inventoryID>0){
 					raw = "dr"+inventoryID;
 
-					var inventoryAmount = 0;
-					if(item.item_type_id==1 || item.item_type_id==4){
-						inventoryAmount = (value.quantity*value.unit_value)*item.cost;
-					}else{
-						inventoryAmount = value.amount;
-					}
-
+					var inventoryAmount = (value.quantity*value.unit_value)*item.cost;
+					
 					if(entries[raw]===undefined){
 						entries[raw] = {
 							transaction_id 		: transaction_id,
@@ -57352,13 +57292,8 @@
 				if(cogsID>0){
 					raw = "cr"+cogsID;
 
-					var cogsAmount = 0;
-					if(item.item_type_id==1 || item.item_type_id==4){
-						cogsAmount = (value.quantity*value.unit_value)*item.cost;
-					}else{
-						cogsAmount = value.amount;
-					}
-
+					var cogsAmount = (value.quantity*value.unit_value)*item.cost;
+					
 					if(entries[raw]===undefined){
 						entries[raw] = {
 							transaction_id 		: transaction_id,
@@ -57382,13 +57317,8 @@
 				if(inventoryID>0){
 					raw = "dr"+inventoryID;
 
-					var inventoryAmount = 0;
-					if(item.item_type_id==1 || item.item_type_id==4){
-						inventoryAmount = (value.quantity*value.unit_value)*item.cost;
-					}else{
-						inventoryAmount = value.amount;
-					}
-
+					var inventoryAmount = (value.quantity*value.unit_value)*item.cost;
+					
 					if(entries[raw]===undefined){
 						entries[raw] = {
 							transaction_id 		: transaction_id,
@@ -57465,13 +57395,8 @@
 				if(cogsID>0){
 					raw = "cr"+cogsID;
 
-					var cogsAmount = 0;
-					if(item.item_type_id==1 || item.item_type_id==4){
-						cogsAmount = (value.quantity*value.unit_value)*item.cost;
-					}else{
-						cogsAmount = value.amount;
-					}
-
+					var cogsAmount = (value.quantity*value.unit_value)*item.cost;
+					
 					if(entries[raw]===undefined){
 						entries[raw] = {
 							transaction_id 		: transaction_id,
@@ -57495,13 +57420,8 @@
 				if(inventoryID>0){
 					raw = "dr"+inventoryID;
 
-					var inventoryAmount = 0;
-					if(item.item_type_id==1 || item.item_type_id==4){
-						inventoryAmount = (value.quantity*value.unit_value)*item.cost;
-					}else{
-						inventoryAmount = value.amount;
-					}
-
+					var inventoryAmount = (value.quantity*value.unit_value)*item.cost;
+					
 					if(entries[raw]===undefined){
 						entries[raw] = {
 							transaction_id 		: transaction_id,
@@ -66712,43 +66632,36 @@
 					itemRate = banhji.source.getRate(item.locale, new Date(obj.issued_date));
 				
 				//Service on Dr
-				if(item.item_type_id=="4"){
-					var serviceID = kendo.parseInt(item.expense_account_id);
-					if(serviceID>0){
-						raw = "dr"+serviceID;
+				var serviceID = kendo.parseInt(item.expense_account_id);
+				if(serviceID>0 && item.item_type_id==4){
+					raw = "dr"+serviceID;
 
-						var serviceAmount = (value.quantity*value.unit_value*value.cost) + value.additional_cost;
-						if(entries[raw]===undefined){
-							entries[raw] = {
-								transaction_id 		: transaction_id,
-								account_id 			: serviceID,
-								contact_id 			: obj.contact_id,
-								description 		: value.description,
-								reference_no 		: "",
-								segments 	 		: [],
-								dr 	 				: serviceAmount,
-								cr 					: 0,
-								rate				: itemRate,
-								locale				: item.locale
-							};
-						}else{
-							entries[raw].dr += serviceAmount;
-						}
+					var serviceAmount = (value.quantity*value.unit_value*value.cost) + value.additional_cost;
+					if(entries[raw]===undefined){
+						entries[raw] = {
+							transaction_id 		: transaction_id,
+							account_id 			: serviceID,
+							contact_id 			: obj.contact_id,
+							description 		: value.description,
+							reference_no 		: "",
+							segments 	 		: [],
+							dr 	 				: serviceAmount,
+							cr 					: 0,
+							rate				: itemRate,
+							locale				: item.locale
+						};
+					}else{
+						entries[raw].dr += serviceAmount;
 					}
 				}
 
 				//Inventory on Dr
 				var inventoryID = kendo.parseInt(item.inventory_account_id);
-				if(inventoryID>0){
+				if(inventoryID>0 && item.item_type_id==1){
 					raw = "dr"+inventoryID;
 
-					var inventoryAmount = 0;
-					if(item.item_type_id=="1" || item.item_type_id=="4"){
-						inventoryAmount = (value.quantity*value.unit_value*value.cost) + value.additional_cost;
-					}else{
-						inventoryAmount = value.amount;
-					}
-
+					var inventoryAmount = (value.quantity*value.unit_value*value.cost) + value.additional_cost;
+					
 					if(entries[raw]===undefined){
 						entries[raw] = {
 							transaction_id 		: transaction_id,
@@ -68204,43 +68117,37 @@
 					itemRate = banhji.source.getRate(item.locale, new Date(obj.issued_date));
 
 				//Service on Cr
-				if(item.item_type_id=="4"){
-					var serviceID = kendo.parseInt(item.expense_account_id);
-					if(serviceID>0){
-						raw = "cr"+serviceID;
+				var serviceID = kendo.parseInt(item.expense_account_id);
+				if(serviceID>0 && item.item_type_id==4){
+					raw = "cr"+serviceID;
 
-						var serviceAmount = value.quantity *value.unit_value * value.cost;
-						if(entries[raw]===undefined){
-							entries[raw] = {
-								transaction_id 		: transaction_id,
-								account_id 			: serviceID,
-								contact_id 			: obj.contact_id,
-								description 		: value.description,
-								reference_no 		: "",
-								segments 	 		: [],
-								dr 	 				: 0,
-								cr 					: serviceAmount,
-								rate				: itemRate,
-								locale				: item.locale
-							};
-						}else{
-							entries[raw].cr += serviceAmount;
-						}
+					var serviceAmount = value.quantity * value.unit_value * item.cost;
+
+					if(entries[raw]===undefined){
+						entries[raw] = {
+							transaction_id 		: transaction_id,
+							account_id 			: serviceID,
+							contact_id 			: obj.contact_id,
+							description 		: value.description,
+							reference_no 		: "",
+							segments 	 		: [],
+							dr 	 				: 0,
+							cr 					: serviceAmount,
+							rate				: itemRate,
+							locale				: item.locale
+						};
+					}else{
+						entries[raw].cr += serviceAmount;
 					}
 				}
 
 				//Inventory on Cr
 				var inventoryID = kendo.parseInt(item.inventory_account_id);
-				if(inventoryID>0){
+				if(inventoryID>0 && item.item_type_id==1){
 					raw = "cr"+inventoryID;
 
-					var inventoryAmount = 0;
-					if(item.item_type_id=="1" || item.item_type_id=="4"){
-						inventoryAmount = value.quantity * value.unit_value * value.cost;
-					}else{
-						inventoryAmount = value.amount;
-					}
-
+					var inventoryAmount = value.quantity * value.unit_value * value.cost;
+					
 					if(entries[raw]===undefined){
 						entries[raw] = {
 							transaction_id 		: transaction_id,
@@ -68280,68 +68187,6 @@
 						};
 					}else{
 						entries[raw].cr += taxAmt;
-					}
-				}
-			});
-
-			//Assembly Item
-			$.each(this.assemblyLineDS.data(), function(index, value){
-				var item = self.itemDS.get(value.item_id),
-					itemRate = banhji.source.getRate(item.locale, new Date(obj.issued_date));
-
-				//Service on Cr
-				if(item.item_type_id=="4"){
-					var serviceID = kendo.parseInt(item.expense_account_id);
-					if(serviceID>0){
-						raw = "cr"+serviceID;
-
-						var serviceAmount = value.quantity *value.unit_value * item.cost;
-						if(entries[raw]===undefined){
-							entries[raw] = {
-								transaction_id 		: transaction_id,
-								account_id 			: serviceID,
-								contact_id 			: obj.contact_id,
-								description 		: value.description,
-								reference_no 		: "",
-								segments 	 		: [],
-								dr 	 				: 0,
-								cr 					: serviceAmount,
-								rate				: itemRate,
-								locale				: item.locale
-							};
-						}else{
-							entries[raw].cr += serviceAmount;
-						}
-					}
-				}
-
-				//Inventory on Cr
-				var inventoryID = kendo.parseInt(item.inventory_account_id);
-				if(inventoryID>0){
-					raw = "cr"+inventoryID;
-
-					var inventoryAmount = 0;
-					if(item.item_type_id=="1" || item.item_type_id=="4"){
-						inventoryAmount = value.quantity * value.unit_value * item.cost;
-					}else{
-						inventoryAmount = value.amount;
-					}
-
-					if(entries[raw]===undefined){
-						entries[raw] = {
-							transaction_id 		: transaction_id,
-							account_id 			: inventoryID,
-							contact_id 			: obj.contact_id,
-							description 		: value.description,
-							reference_no 		: "",
-							segments 	 		: [],
-							dr 	 				: 0,
-							cr 					: inventoryAmount,
-							rate				: itemRate,
-							locale				: item.locale
-						};
-					}else{
-						entries[raw].cr += inventoryAmount;
 					}
 				}
 			});
@@ -90765,7 +90610,9 @@
 		dataSource 	  		: dataStore(apiUrl + "transactions"),
 		itemLineDS 	  		: dataStore(apiUrl + "item_lines"),
 		journalLineDS 	  	: dataStore(apiUrl + "journal_lines"),
-		getCustomerId 		: function(name){
+		txnList 			: [],
+		enableImport 		: false,
+		getCustomerId 		: function(name, row){
 			var id = 0, self = banhji.importTxn;
 
 			$.each(banhji.source.customerList, function(index, value){
@@ -90778,12 +90625,13 @@
 
 			if(id==0){
 				self.clear();
-				alert(name + " not found!");
+				var number = kendo.parseInt(row)+2;
+				alert(name + " not found at row number " + number);
 			}
 
 			return id;
 		},
-		getSupplierId 		: function(name){
+		getSupplierId 		: function(name, row){
 			var id = 0, self = banhji.importTxn;
 
 			$.each(banhji.source.supplierList, function(index, value){
@@ -90796,12 +90644,13 @@
 
 			if(id==0){
 				self.clear();
-				alert(name + " not found!");
+				var number = kendo.parseInt(row)+2;
+				alert(name + " not found at row number " + number);
 			}
 
 			return id;
 		},
-		getItemId 			: function(name){
+		getItemId 			: function(name, row){
 			var id = 0, self = banhji.importTxn;
 
 			$.each(banhji.source.itemList, function(index, value){
@@ -90814,7 +90663,8 @@
 
 			if(id==0){
 				self.clear();
-				alert(name + " not found!");
+				var number = kendo.parseInt(row)+2;
+				alert(name + " not found at row number " + number);
 			}
 
 			return id;
@@ -90832,7 +90682,7 @@
 
 			return id;
 		},
-		getTaxId 			: function(name){
+		getTaxId 			: function(name, row){
 			var id = 0, self = banhji.importTxn;
 
 			$.each(banhji.source.taxList, function(index, value){
@@ -90845,12 +90695,13 @@
 
 			if(id==0){
 				self.clear();
-				alert(name + " not found!");
+				var number = kendo.parseInt(row)+2;
+				alert(name + " not found at row number " + number);
 			}
 
 			return id;
 		},
-		getAccountId 		: function(name){
+		getAccountId 		: function(name, row){
 			var id = 0, self = banhji.importTxn;
 
 			$.each(banhji.source.accountList, function(index, value){
@@ -90863,7 +90714,8 @@
 
 			if(id==0){
 				self.clear();
-				alert(name + " not found!");
+				var number = kendo.parseInt(row)+2;
+				alert(name + " not found at row number " + number);
 			}
 
 			return id;
@@ -90872,49 +90724,42 @@
 	        var self = banhji.importTxn, 
 	        	files = e.files, 
 	        	reader = new FileReader(),
-	        	saleTypes = ["Commercial_Invoice","Vat_Invoice","Invoice","Commercial_Cash_Sale","Vat_Cash_Sale","Cash_Sale"],
-	        	purchaseTypes = ["Cash_Purchase","Credit_Purchase"];
+	        	isJournal = ["Cash_Purchase","Credit_Purchase","Commercial_Invoice","Vat_Invoice","Invoice","Commercial_Cash_Sale","Vat_Cash_Sale","Cash_Sale"];
+
+	        self.set("enableImport", true);
 
 			reader.onload = function() {
 				var data = reader.result,
+					txnName = "", counter = 0, is_journal = 0, 
+					contact_id = 0, account_id = 0, type = "", issued_date = "", raw = "", 
+					txn = {}, entries = {},
 					workbook = XLSX.read(data, {type : 'binary'});
 
 				workbook.SheetNames.forEach(function(sheetName) {
 					var roa = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
-					
+
 					if(roa.length > 0 && sheetName=="purchases"){
-						var contact_id = 0, account_id = 0, type = "", issued_date = "",
-	        				raw = "", txn = {}, entries = {};
-	        				
+						entries = {};
+
 						for(var i = 0; i < roa.length; i++) {
 							var	accountId = 0, 
 								tax = 0,
 								tax_item_id = 0,
 								tax_account_id = 0,
 								measurement_id = 0,
-								is_journal = 0,
 								quantity = kendo.parseInt(roa[i].quantity),
 								cost = kendo.parseFloat(roa[i].cost), 
 								amount = kendo.parseFloat(roa[i].amount),
-								transaction_id = kendo.parseInt(roa[i].no.trim()),								
-								item_id = self.getItemId(roa[i].item.trim()),
+								item_id = self.getItemId(roa[i].item.trim(), i),
 								item = banhji.source.itemDS.get(item_id),
 								itemRate = banhji.source.getRate(item.locale, issued_date);
 
-							if(roa[i].type!==undefined){
-								type = roa[i].type.trim();
-
-								if(jQuery.inArray( type, purchaseTypes )){
-									is_journal = 1;
-								}
-							}
-
 							if(roa[i].name!==undefined){
-								contact_id = self.getSupplierId(roa[i].name.trim());
+								contact_id = self.getSupplierId(roa[i].name.trim(), i);
 							}
 
 							if(roa[i].account!==undefined){
-								account_id = self.getAccountId(roa[i].account.trim());
+								account_id = self.getAccountId(roa[i].account.trim(), i);
 							}
 
 							if(roa[i].measurement!==undefined){
@@ -90925,73 +90770,35 @@
 								issued_date = new Date(roa[i].issued_date.trim());
 							}
 
-							//Tax on Dr
-							if(roa[i].tax!==undefined){
-								raw = sheetName+"dr"+tax_account_id;								
-								tax_item_id = self.getTaxId(roa[i].tax.trim());
-								taxItem = banhji.source.taxItemDS.get(tax_item_id);
-								tax_account_id = taxItem.account_id;
-								tax = amount * taxItem.rate;
+							if(roa[i].type!==undefined){
+								type = roa[i].type.trim();
 
-								if(entries[raw]===undefined){
-									entries[raw] = {
-										transaction_id 		: transaction_id,
-										account_id 			: tax_account_id,
-										contact_id 			: contact_id,
-										description 		: roa[i].description,
-										reference_no 		: "",
-										segments 	 		: [],
-										dr 	 				: tax,
-										cr 					: 0,
-										rate				: 1,
-										locale				: banhji.locale
-									};
+								if(jQuery.inArray( type, isJournal )==-1){
+									is_journal = 0;
 								}else{
-									entries[raw].dr += tax;
+									is_journal = 1;
 								}
-							}
 
-							//Cash or A/P on Cr
-							if(account_id>0){
-								raw = sheetName+"cr"+account_id;
-								
-								if(entries[raw]===undefined){
-									entries[raw] = {
-										transaction_id 		: transaction_id,
-										account_id 			: account_id,
-										contact_id 			: contact_id,
-										description 		: roa[i].memo,
-										reference_no 		: roa[i].reference_no,
-										segments 	 		: [],
-										dr 	 				: 0,
-										cr 					: amount + tax,
-										rate				: 1,
-										locale				: banhji.locale
-									};
-								}else{
-									entries[raw].cr += amount + tax;
-								}
-							}
-
-							//Transactions
-							if(txn[sheetName+transaction_id]===undefined){
-								txn[sheetName+transaction_id] = {
+								//Transactions
+								txnName = sheetName + counter.toString();
+								counter++;
+								txn[txnName] = {
 									contact_id 				: contact_id,
 									transaction_template_id : 3,
 									payment_term_id			: 5,
 									account_id 				: account_id,
 									reference_no 			: roa[i].reference_no,
-								   	type					: roa[i].type.trim(),//Required
+								   	type					: type,//Required
 								   	number 					: roa[i].number.trim(),
-								   	sub_total 				: amount,
+								   	sub_total 				: 0,
 								   	discount 				: 0,
-								   	tax 					: tax,
+								   	tax 					: 0,
 								   	deposit 				: 0,
-								   	amount					: amount + tax,
+								   	amount					: 0,
 								   	remaining 				: 0,
 								   	rate					: 1,//Required
 								   	locale 					: banhji.locale,//Required
-								   	issued_date 			: roa[i].issued_date.trim(),//Required
+								   	issued_date 			: issued_date,//Required
 								   	due_date 				: roa[i].due_date.trim(),
 								   	bill_to 				: roa[i].bill_to,
 								   	ship_to 				: roa[i].ship_to,
@@ -91009,17 +90816,67 @@
 								   	day 					: 1,
 								   	week 					: 0,
 								   	month 					: 0,
-								   	is_recurring 			: 0
+								   	is_recurring 			: 0,
+								   	item_lines 				: [],
+								   	journal_lines 			: []
 								};
-							}else{
-								txn[sheetName+transaction_id].sub_total += amount;
-								txn[sheetName+transaction_id].tax += tax;
-								txn[sheetName+transaction_id].amount += amount + tax;
 							}
 
+							//Tax on Dr
+							if(roa[i].tax!==undefined){
+								raw = "dr"+tax_account_id;								
+								tax_item_id = self.getTaxId(roa[i].tax.trim(), i);
+								taxItem = banhji.source.taxItemDS.get(tax_item_id);
+								tax_account_id = taxItem.account_id;
+								tax = amount * taxItem.rate;
+
+								if(entries[raw]===undefined){
+									entries[raw] = {
+										transaction_id 		: 0,
+										account_id 			: tax_account_id,
+										contact_id 			: contact_id,
+										description 		: roa[i].description,
+										reference_no 		: "",
+										segments 	 		: [],
+										dr 	 				: tax,
+										cr 					: 0,
+										rate				: 1,
+										locale				: banhji.locale
+									};
+								}else{
+									entries[raw].dr += tax;
+								}
+							}
+
+							//Cash or A/P on Cr
+							if(account_id>0){
+								raw = "cr"+account_id;
+								
+								if(entries[raw]===undefined){
+									entries[raw] = {
+										transaction_id 		: 0,
+										account_id 			: account_id,
+										contact_id 			: contact_id,
+										description 		: roa[i].memo,
+										reference_no 		: roa[i].reference_no,
+										segments 	 		: [],
+										dr 	 				: 0,
+										cr 					: amount + tax,
+										rate				: 1,
+										locale				: banhji.locale
+									};
+								}else{
+									entries[raw].cr += amount + tax;
+								}
+							}
+							
+							txn[txnName].sub_total 	+= amount;
+							txn[txnName].tax 		+= tax;
+							txn[txnName].amount 	+= amount + tax;							
+
 							//Item lines
-							self.itemLineDS.add({
-								transaction_id 		: transaction_id,
+							txn[txnName].item_lines.push({
+								transaction_id 		: 0,
 								tax_item_id 		: tax_item_id,
 								wht_account_id 		: 0,
 								item_id 			: item_id,
@@ -91036,78 +90893,74 @@
 								movement 			: 1
 							});
 
-							//Service on Dr
-							if(item.item_type_id==4){
-								accountId = kendo.parseInt(item.expense_account_id);
-								if(accountId>0){
-									raw = sheetName+"dr"+accountId;
+							if(is_journal==1){
+								//Service on Dr
+								if(item.item_type_id==4){
+									accountId = kendo.parseInt(item.expense_account_id);
+									if(accountId>0){
+										raw = "dr"+accountId;
 
-									amount = quantity*cost;
+										var serviceAmount = quantity*cost;
+										if(entries[raw]===undefined){
+											entries[raw] = {
+												transaction_id 		: 0,
+												account_id 			: accountId,
+												contact_id 			: contact_id,
+												description 		: roa[i].description,
+												reference_no 		: "",
+												segments 	 		: [],
+												dr 	 				: serviceAmount,
+												cr 					: 0,
+												rate				: itemRate,
+												locale				: item.locale
+											};
+										}else{
+											entries[raw].dr += serviceAmount;
+										}
+									}
+								}
+
+								//Inventory	on Dr					
+								accountId = kendo.parseInt(item.inventory_account_id);
+								if(accountId>0 && item.item_type_id==1){
+									raw = "dr"+accountId;								
+
+									var inventoryAmount = quantity*cost;
+									
 									if(entries[raw]===undefined){
 										entries[raw] = {
-											transaction_id 		: transaction_id,
+											transaction_id 		: 0,
 											account_id 			: accountId,
 											contact_id 			: contact_id,
 											description 		: roa[i].description,
 											reference_no 		: "",
 											segments 	 		: [],
-											dr 	 				: amount,
+											dr 	 				: inventoryAmount,
 											cr 					: 0,
 											rate				: itemRate,
 											locale				: item.locale
 										};
 									}else{
-										entries[raw].dr += amount;
+										entries[raw].dr += inventoryAmount;
+									}
+								}
+
+								var nextIndex = i+1;
+								if(nextIndex < roa.length){
+									if(roa[nextIndex].type!==undefined || nextIndex==roa.length-1){
+										$.each(entries, function(index, value){
+											txn[txnName].journal_lines.push(value);
+										});
+										
+										entries = {};
 									}
 								}
 							}
-
-							//Inventory	on Dr					
-							accountId = kendo.parseInt(item.inventory_account_id);
-							if(accountId>0){
-								raw = sheetName+"dr"+accountId;								
-
-								if(item.item_type_id==1 || item.item_type_id==4){
-									amount = quantity*cost;
-								}
-
-								if(entries[raw]===undefined){
-									entries[raw] = {
-										transaction_id 		: transaction_id,
-										account_id 			: accountId,
-										contact_id 			: contact_id,
-										description 		: roa[i].description,
-										reference_no 		: "",
-										segments 	 		: [],
-										dr 	 				: amount,
-										cr 					: 0,
-										rate				: itemRate,
-										locale				: item.locale
-									};
-								}else{
-									entries[raw].dr += amount;
-								}
-							}
-						}
-
-						//Add to transaction
-						if(!jQuery.isEmptyObject(txn)){
-							$.each(txn, function(index, value){
-								self.dataSource.add(value);
-							});
-						}
-
-						//Add to journal entry
-						if(!jQuery.isEmptyObject(entries)){
-							$.each(entries, function(index, value){
-								self.journalLineDS.add(value);
-							});
 						}
 					}
 
 					if(roa.length > 0 && sheetName=="sales"){
-						var contact_id = 0, account_id = 0, type = "", issued_date = "",
-	        				raw = "", txn = {}, entries = {};
+						entries = {};
 
 						for(var i = 0; i < roa.length; i++) {
 							var	accountId = 0, 
@@ -91115,29 +90968,19 @@
 								tax_item_id = 0,
 								tax_account_id = 0,
 								measurement_id = 0,
-								is_journal = 0,
 								quantity = kendo.parseInt(roa[i].quantity),
 								price = kendo.parseFloat(roa[i].price), 
 								amount = kendo.parseFloat(roa[i].amount),
-								transaction_id = kendo.parseInt(roa[i].no.trim()),								
-								item_id = self.getItemId(roa[i].item.trim()),
+								item_id = self.getItemId(roa[i].item.trim(), i),
 								item = banhji.source.itemDS.get(item_id),
 								itemRate = banhji.source.getRate(item.locale, issued_date);
 
-							if(roa[i].type!==undefined){
-								type = roa[i].type.trim();
-
-								if(jQuery.inArray( type, saleTypes )){
-									is_journal = 1;
-								}
-							}
-
 							if(roa[i].name!==undefined){
-								contact_id = self.getCustomerId(roa[i].name.trim());
+								contact_id = self.getCustomerId(roa[i].name.trim(), i);
 							}
 
 							if(roa[i].account!==undefined){
-								account_id = self.getAccountId(roa[i].account.trim());
+								account_id = self.getAccountId(roa[i].account.trim(), i);
 							}
 
 							if(roa[i].measurement!==undefined){
@@ -91148,17 +90991,67 @@
 								issued_date = new Date(roa[i].issued_date.trim());
 							}
 
+							if(roa[i].type!==undefined){
+								type = roa[i].type.trim();
+
+								if(jQuery.inArray( type, isJournal )==-1){
+									is_journal = 0;
+								}else{
+									is_journal = 1;
+								}
+
+								//Transactions
+								txnName = sheetName + counter.toString();
+								counter++;
+								txn[txnName] = {
+									contact_id 				: contact_id,
+									transaction_template_id : 3,
+									payment_term_id			: 5,
+									account_id 				: account_id,
+									reference_no 			: roa[i].reference_no,
+								   	type					: type,//Required
+								   	number 					: roa[i].number.trim(),
+								   	sub_total 				: 0,
+								   	discount 				: 0,
+								   	tax 					: 0,
+								   	deposit 				: 0,
+								   	amount					: 0,
+								   	remaining 				: 0,
+								   	rate					: 1,//Required
+								   	locale 					: banhji.locale,//Required
+								   	issued_date 			: issued_date,//Required
+								   	due_date 				: roa[i].due_date.trim(),
+								   	bill_to 				: roa[i].bill_to,
+								   	ship_to 				: roa[i].ship_to,
+								   	memo 					: roa[i].memo,
+								   	status 					: roa[i].status,
+								   	is_journal 				: is_journal,//Required
+								   	//Recurring
+								   	recurring_name 			: "",
+								   	start_date 				: new Date(),
+								   	frequency 				: "Daily",
+								   	month_option 			: "Day",
+								   	interval 				: 1,
+								   	day 					: 1,
+								   	week 					: 0,
+								   	month 					: 0,
+								   	is_recurring 			: 0,
+								   	item_lines 				: [],
+								   	journal_lines 			: []
+								};
+							}
+
 							//Tax on Cr
 							if(roa[i].tax!==undefined){
-								raw = sheetName+"cr"+tax_account_id;								
-								tax_item_id = self.getTaxId(roa[i].tax.trim());
+								raw = "cr"+tax_account_id;								
+								tax_item_id = self.getTaxId(roa[i].tax.trim(), i);
 								taxItem = banhji.source.taxItemDS.get(tax_item_id);
 								tax_account_id = taxItem.account_id;
 								tax = amount * taxItem.rate;
 
 								if(entries[raw]===undefined){
 									entries[raw] = {
-										transaction_id 		: transaction_id,
+										transaction_id 		: 0,
 										account_id 			: tax_account_id,
 										contact_id 			: contact_id,
 										description 		: roa[i].description,
@@ -91176,11 +91069,11 @@
 
 							//Cash or A/R on Dr
 							if(account_id>0){
-								raw = sheetName+"dr"+account_id;
+								raw = "dr"+account_id;
 								
 								if(entries[raw]===undefined){
 									entries[raw] = {
-										transaction_id 		: transaction_id,
+										transaction_id 		: 0,
 										account_id 			: account_id,
 										contact_id 			: contact_id,
 										description 		: roa[i].memo,
@@ -91195,52 +91088,14 @@
 									entries[raw].dr += amount + tax;
 								}
 							}
-
-							//Transactions
-							if(txn[sheetName+transaction_id]===undefined){
-								txn[sheetName+transaction_id] = {
-									contact_id 				: contact_id,
-									transaction_template_id : 3,
-									payment_term_id			: 5,
-									account_id 				: account_id,
-									reference_no 			: roa[i].reference_no,
-								   	type					: roa[i].type.trim(),//Required
-								   	number 					: roa[i].number.trim(),
-								   	sub_total 				: amount,
-								   	discount 				: 0,
-								   	tax 					: tax,
-								   	deposit 				: 0,
-								   	amount					: amount + tax,
-								   	remaining 				: 0,
-								   	rate					: 1,//Required
-								   	locale 					: banhji.locale,//Required
-								   	issued_date 			: roa[i].issued_date.trim(),//Required
-								   	due_date 				: roa[i].due_date.trim(),
-								   	bill_to 				: roa[i].bill_to,
-								   	ship_to 				: roa[i].ship_to,
-								   	memo 					: roa[i].memo,
-								   	status 					: roa[i].status,
-								   	is_journal 				: is_journal,//Required
-								   	//Recurring
-								   	recurring_name 			: "",
-								   	start_date 				: new Date(),
-								   	frequency 				: "Daily",
-								   	month_option 			: "Day",
-								   	interval 				: 1,
-								   	day 					: 1,
-								   	week 					: 0,
-								   	month 					: 0,
-								   	is_recurring 			: 0
-								};
-							}else{
-								txn[sheetName+transaction_id].sub_total += amount;
-								txn[sheetName+transaction_id].tax += tax;
-								txn[sheetName+transaction_id].amount += amount + tax;
-							}
+							
+							txn[txnName].sub_total 	+= amount;
+							txn[txnName].tax 		+= tax;
+							txn[txnName].amount 	+= amount + tax;
 
 							//Item lines
-							self.itemLineDS.add({
-								transaction_id 		: transaction_id,
+							txn[txnName].item_lines.push({
+								transaction_id 		: 0,
 								tax_item_id 		: tax_item_id,
 								item_id 			: item_id,
 								measurement_id 		: measurement_id,
@@ -91256,99 +91111,103 @@
 								movement 			: -1
 							});
 							
-							//COGS on Dr
-							accountId = kendo.parseInt(item.expense_account_id);
-							if(accountId>0){															
-								raw = sheetName+"dr"+accountId;
+							if(is_journal==1){
 
-								if(item.item_type_id==1 || item.item_type_id==4){
-									amount = quantity*item.cost;
+								//COGS on Dr
+								accountId = kendo.parseInt(item.expense_account_id);
+								if(accountId>0 && item.item_type_id==1){															
+									raw = "dr"+accountId;
+
+									var cogsAmount = quantity*item.cost;									
+
+									if(entries[raw]===undefined){
+										entries[raw] = {
+											transaction_id 		: 0,
+											account_id 			: accountId,
+											contact_id 			: contact_id,
+											description 		: roa[i].description,
+											reference_no 		: "",
+											segments 	 		: [],
+											dr 	 				: cogsAmount,
+											cr 					: 0,
+											rate				: itemRate,
+											locale				: item.locale
+										};
+									}else{
+										entries[raw].dr += cogsAmount;
+									}
 								}
 
-								if(entries[raw]===undefined){
-									entries[raw] = {
-										transaction_id 		: transaction_id,
-										account_id 			: accountId,
-										contact_id 			: contact_id,
-										description 		: roa[i].description,
-										reference_no 		: "",
-										segments 	 		: [],
-										dr 	 				: amount,
-										cr 					: 0,
-										rate				: itemRate,
-										locale				: item.locale
-									};
-								}else{
-									entries[raw].dr += amount;
+								//Inventory	on Cr					
+								accountId = kendo.parseInt(item.inventory_account_id);
+								if(accountId>0 && item.item_type_id==1){
+									raw = "cr"+accountId;								
+
+									var inventoryAmount = quantity*item.cost;
+
+									if(entries[raw]===undefined){
+										entries[raw] = {
+											transaction_id 		: 0,
+											account_id 			: accountId,
+											contact_id 			: contact_id,
+											description 		: roa[i].description,
+											reference_no 		: "",
+											segments 	 		: [],
+											dr 	 				: 0,
+											cr 					: inventoryAmount,
+											rate				: itemRate,
+											locale				: item.locale
+										};
+									}else{
+										entries[raw].cr += inventoryAmount;
+									}
+								}
+
+								//Sale on Cr
+								accountId = kendo.parseInt(item.income_account_id);
+								if(accountId>0){
+									raw = "cr"+accountId;
+
+									if(entries[raw]===undefined){
+										entries[raw] = {
+											transaction_id 		: 0,
+											account_id 			: accountId,
+											contact_id 			: contact_id,
+											description 		: roa[i].description,
+											reference_no 		: "",
+											segments 	 		: [],
+											dr 	 				: 0,
+											cr 					: amount,
+											rate				: 1,
+											locale				: banhji.locale
+										};
+									}else{
+										entries[raw].cr += amount;
+									}
+								}
+
+								var nextIndex = i+1;
+								if(nextIndex < roa.length){
+									if(roa[nextIndex].type!==undefined || nextIndex==roa.length-1){
+										$.each(entries, function(index, value){
+											txn[txnName].journal_lines.push(value);
+										});
+
+										entries = {};
+									}
 								}
 							}
-
-							//Inventory	on Cr					
-							accountId = kendo.parseInt(item.inventory_account_id);
-							if(accountId>0){
-								raw = sheetName+"cr"+accountId;								
-
-								if(item.item_type_id==1 || item.item_type_id==4){
-									amount = quantity*item.cost;
-								}
-
-								if(entries[raw]===undefined){
-									entries[raw] = {
-										transaction_id 		: transaction_id,
-										account_id 			: accountId,
-										contact_id 			: contact_id,
-										description 		: roa[i].description,
-										reference_no 		: "",
-										segments 	 		: [],
-										dr 	 				: 0,
-										cr 					: amount,
-										rate				: itemRate,
-										locale				: item.locale
-									};
-								}else{
-									entries[raw].cr += amount;
-								}
-							}
-
-							//Sale on Cr
-							accountId = kendo.parseInt(item.income_account_id);
-							if(accountId>0){
-								raw = sheetName+"cr"+accountId;
-
-								if(entries[raw]===undefined){
-									entries[raw] = {
-										transaction_id 		: transaction_id,
-										account_id 			: accountId,
-										contact_id 			: contact_id,
-										description 		: roa[i].description,
-										reference_no 		: "",
-										segments 	 		: [],
-										dr 	 				: 0,
-										cr 					: amount,
-										rate				: 1,
-										locale				: banhji.locale
-									};
-								}else{
-									entries[raw].cr += amount;
-								}
-							}
-						}
-
-						//Add to transaction
-						if(!jQuery.isEmptyObject(txn)){
-							$.each(txn, function(index, value){
-								self.dataSource.add(value);
-							});
-						}
-
-						//Add to journal entry
-						if(!jQuery.isEmptyObject(entries)){
-							$.each(entries, function(index, value){
-								self.journalLineDS.add(value);
-							});
 						}
 					}
 				});
+				
+				//Add to transaction
+				if(!jQuery.isEmptyObject(txn)){
+					$.each(txn, function(index, value){
+						self.dataSource.add(value);
+						self.txnList.push(value);
+					});
+				}
 			}
 			reader.readAsBinaryString(files[0].rawFile);
 	    },
@@ -91368,24 +91227,27 @@
 		    return dfd;	    		    	
 	    },
 	    save 				: function(){
-	    	var self = banhji.importTxn;
+	    	var self = banhji.importTxn, saved = false;
 
 			self.objSync()
-			.then(function(data){ //Success	
-				$.each(data, function(index, value){			
-					//Item line
-					$.each(self.itemLineDS.data(), function(ind, val){
-						if(val.transaction_id==index){
-							val.set("transaction_id", value.id);
-						}
-					});
+			.then(function(data){ //Success
+				console.log(self.get("txnList"));
+				$.each(self.get("txnList"), function(index, value){
+					//Item Line
+					if(value.item_lines){
+						$.each(value.item_lines, function(ind, val){
+							val.set("transaction_id", data[index].id);
+							self.itemLineDS.add(val);
+						});
+					}
 
-					//Journal line
-					$.each(self.journalLineDS.data(), function(ind, val){
-						if(val.transaction_id==index){
-							val.set("transaction_id", value.id);
-						}
-					});
+					//Journal Line
+					if(value.journal_lines){
+						$.each(value.journal_lines, function(ind, val){
+							val.set("transaction_id", data[index].id);
+							self.journalLineDS.add(val);
+						});
+					}
 				});
 
 				self.itemLineDS.sync();
@@ -91401,9 +91263,11 @@
 	    clear 				: function(){
 	    	var self = banhji.importTxn;
 
+	    	self.set("txnList", []);
 	    	self.dataSource.data([]);
 	    	self.itemLineDS.data([]);
 	    	self.journalLineDS.data([]);
+	    	self.set("enableImport", false);
 
 	    	//Clear upload files
             $(".k-upload-files").remove();

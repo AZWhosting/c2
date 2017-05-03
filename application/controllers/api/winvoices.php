@@ -258,8 +258,8 @@ class Winvoices extends REST_Controller {
 		   	$obj->memo2 			= isset($value->memo2) ? $value->memo2: "";
 		   	$obj->meter_id 			= isset($value->meter_id) ? $value->meter_id: "";
 		   	$obj->status 			= isset($value->status) ? $value->status: "";
-
-		   	
+		   	$obj->sub_total 		= isset($value->amount) ? $value->amount : "";
+		   	$obj->payment_term_id 	= 5;
 
 	   		if($obj->save()){
 

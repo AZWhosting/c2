@@ -77,7 +77,7 @@ class Transactions extends REST_Controller {
 			foreach ($obj as $value) {
 				//Sum amount paid
 				$amount_paid = 0;
-				if($value->type=="Commercial_Invoice" || $value->type=="Vat_Invoice" || $value->type=="Invoice" || $value->type=="Credit_Purchase" || $value->type=="Water_Invoice" || $value->type=="Water_Invoice" || $value->type=="Electricity_Invoice"){
+				if($value->type=="Commercial_Invoice" || $value->type=="Vat_Invoice" || $value->type=="Invoice" || $value->type=="Credit_Purchase" || $value->type=="Utility_Invoice"){
 					$paid = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 					$paid->select_sum("amount");
 					$paid->select_sum("discount");
@@ -98,7 +98,12 @@ class Transactions extends REST_Controller {
 					$paid->get();
 					$amount_paid = floatval($paid->amount) + floatval($paid->received);
 				}
-				
+				$meter = "";
+				$meterNum = "";
+				if($value->meter_id != 0){
+					$meter = $value->meter->get();
+					$meterNum = $meter->get()->number;
+				}
 				$data["results"][] = array(
 					"id" 						=> $value->id,
 					"company_id" 				=> $value->company_id,
@@ -162,6 +167,7 @@ class Transactions extends REST_Controller {
 				   	"print_count" 				=> $value->print_count,
 				   	"printed_by" 				=> $value->printed_by,
 				   	"deleted" 					=> $value->deleted,
+				   	"meter"						=> $meterNum,
 				   	"meter_id"					=> $value->meter_id,
 				   	"amount_paid"				=> $amount_paid
 				);
@@ -169,6 +175,7 @@ class Transactions extends REST_Controller {
 		}
 
 		//Response Data
+		$data["count"] = count($data["results"]);
 		$this->response($data, 200);
 	}
 

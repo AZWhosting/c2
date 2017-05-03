@@ -36,6 +36,10 @@ class Meter extends DataMapper {
             'class' => "customer",
             'other_field' => 'meter'
         ),
+        'transaction' => array(
+            'class' => "transaction",
+            'other_field' => 'meter'
+        ),
 	);
 	public $has_many = array(
 		'reading' => array(
