@@ -17761,7 +17761,7 @@
 			});
 		},
 		cancel 				: function(){
-			this.dataSource.cancelChanges();
+			this.dataSource.data([]);
 
 			banhji.userManagement.removeMultiTask("receipt");
 		},

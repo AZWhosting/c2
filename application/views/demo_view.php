@@ -90739,6 +90739,7 @@
 					var roa = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
 
 					if(roa.length > 0 && sheetName=="purchases"){
+						txnName = "";
 						entries = {};
 
 						for(var i = 0; i < roa.length; i++) {
@@ -90960,6 +90961,7 @@
 					}
 
 					if(roa.length > 0 && sheetName=="sales"){
+						txnName = "";
 						entries = {};
 
 						for(var i = 0; i < roa.length; i++) {
