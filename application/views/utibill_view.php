@@ -5744,7 +5744,7 @@
 														<input type="search" placeholder="Invoice Number..." data-bind="value: searchText, events: {change: search}">
 													</div>
 												</div>
-												<div class="select2-container" style="width: 100%;">
+												<!-- <div class="select2-container" style="width: 100%;">
 													<input id="ccbItem" name="cbbContact"
 													   	data-role="combobox"
 									                   	data-template="contact-list-tmpl"
@@ -5756,7 +5756,7 @@
 									                              events:{ change: contactChanges }"
 									                   	data-placeholder="Customer..."                    
 									                   	style="width: 100%; height: 29px;" />
-												</div>
+												</div> -->
 											</form>					
 										</div>
 									</div>
@@ -17293,11 +17293,11 @@
 			  	{ field: "code", dir: "asc" }
 			]
 		}),
-		contactDS  			: new kendo.data.DataSource({
-		  	data: banhji.source.customerList,
-		  	filter:{ field:"status", value:1 },
-			sort: { field:"number", dir:"asc" }
-		}),
+		// contactDS  			: new kendo.data.DataSource({
+		//   	data: banhji.source.customerList,
+		//   	filter:{ field:"status", value:1 },
+		// 	sort: { field:"number", dir:"asc" }
+		// }),
 		employeeDS  		: new kendo.data.DataSource({
 		  	data: banhji.source.employeeList,
 		  	filter:{ field: "item_type_id", value: 10 },//Sale Rep.
