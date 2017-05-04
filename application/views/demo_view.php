@@ -90730,20 +90730,17 @@
 
 			reader.onload = function() {
 				var data = reader.result,
-					txnName = "", counter = 0, is_journal = 0, 
-					contact_id = 0, account_id = 0, type = "", issued_date = "", raw = "", 
-					txn = {}, entries = {},
+					transaction_id = 0, is_journal = 0, contact_id = 0, txn_account_id = 0,
+					type = "", issued_date = "",
+					raw = "", txn = {}, entries = {},
 					workbook = XLSX.read(data, {type : 'binary'});
 
 				workbook.SheetNames.forEach(function(sheetName) {
 					var roa = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
 
 					if(roa.length > 0 && sheetName=="purchases"){
-						txnName = "";
-						entries = {};
-
 						for(var i = 0; i < roa.length; i++) {
-							var	accountId = 0, 
+							var	account_id = 0, 
 								tax = 0,
 								tax_item_id = 0,
 								tax_account_id = 0,
@@ -90760,7 +90757,7 @@
 							}
 
 							if(roa[i].account!==undefined){
-								account_id = self.getAccountId(roa[i].account.trim(), i);
+								txn_account_id = self.getAccountId(roa[i].account.trim(), i);
 							}
 
 							if(roa[i].measurement!==undefined){
@@ -90771,6 +90768,7 @@
 								issued_date = new Date(roa[i].issued_date.trim());
 							}
 
+							//New Transaction
 							if(roa[i].type!==undefined){
 								type = roa[i].type.trim();
 
@@ -90780,14 +90778,11 @@
 									is_journal = 1;
 								}
 
-								//Transactions
-								txnName = sheetName + counter.toString();
-								counter++;
-								txn[txnName] = {
+								txn = {
 									contact_id 				: contact_id,
 									transaction_template_id : 3,
 									payment_term_id			: 5,
-									account_id 				: account_id,
+									account_id 				: txn_account_id,
 									reference_no 			: roa[i].reference_no,
 								   	type					: type,//Required
 								   	number 					: roa[i].number.trim(),
@@ -90817,9 +90812,7 @@
 								   	day 					: 1,
 								   	week 					: 0,
 								   	month 					: 0,
-								   	is_recurring 			: 0,
-								   	item_lines 				: [],
-								   	journal_lines 			: []
+								   	is_recurring 			: 0
 								};
 							}
 
@@ -90833,7 +90826,7 @@
 
 								if(entries[raw]===undefined){
 									entries[raw] = {
-										transaction_id 		: 0,
+										transaction_id 		: transaction_id,
 										account_id 			: tax_account_id,
 										contact_id 			: contact_id,
 										description 		: roa[i].description,
@@ -90848,15 +90841,19 @@
 									entries[raw].dr += tax;
 								}
 							}
+							
+							txn.sub_total 	+= amount;
+							txn.tax 		+= tax;
+							txn.amount 		+= amount + tax;
 
 							//Cash or A/P on Cr
-							if(account_id>0){
-								raw = "cr"+account_id;
+							if(txn_account_id>0){
+								raw = "cr"+txn_account_id;
 								
 								if(entries[raw]===undefined){
 									entries[raw] = {
-										transaction_id 		: 0,
-										account_id 			: account_id,
+										transaction_id 		: transaction_id,
+										account_id 			: txn_account_id,
 										contact_id 			: contact_id,
 										description 		: roa[i].memo,
 										reference_no 		: roa[i].reference_no,
@@ -90870,14 +90867,10 @@
 									entries[raw].cr += amount + tax;
 								}
 							}
-							
-							txn[txnName].sub_total 	+= amount;
-							txn[txnName].tax 		+= tax;
-							txn[txnName].amount 	+= amount + tax;							
 
 							//Item lines
-							txn[txnName].item_lines.push({
-								transaction_id 		: 0,
+							self.itemLineDS.add({
+								transaction_id 		: transaction_id,
 								tax_item_id 		: tax_item_id,
 								wht_account_id 		: 0,
 								item_id 			: item_id,
@@ -90896,42 +90889,41 @@
 
 							if(is_journal==1){
 								//Service on Dr
-								if(item.item_type_id==4){
-									accountId = kendo.parseInt(item.expense_account_id);
-									if(accountId>0){
-										raw = "dr"+accountId;
+								account_id = kendo.parseInt(item.expense_account_id);
+								if(account_id>0 && item.item_type_id==4){
+									raw = "dr"+account_id;
 
-										var serviceAmount = quantity*cost;
-										if(entries[raw]===undefined){
-											entries[raw] = {
-												transaction_id 		: 0,
-												account_id 			: accountId,
-												contact_id 			: contact_id,
-												description 		: roa[i].description,
-												reference_no 		: "",
-												segments 	 		: [],
-												dr 	 				: serviceAmount,
-												cr 					: 0,
-												rate				: itemRate,
-												locale				: item.locale
-											};
-										}else{
-											entries[raw].dr += serviceAmount;
-										}
+									var serviceAmount = quantity*cost;
+
+									if(entries[raw]===undefined){
+										entries[raw] = {
+											transaction_id 		: transaction_id,
+											account_id 			: account_id,
+											contact_id 			: contact_id,
+											description 		: roa[i].description,
+											reference_no 		: "",
+											segments 	 		: [],
+											dr 	 				: serviceAmount,
+											cr 					: 0,
+											rate				: itemRate,
+											locale				: item.locale
+										};
+									}else{
+										entries[raw].dr += serviceAmount;
 									}
 								}
 
 								//Inventory	on Dr					
-								accountId = kendo.parseInt(item.inventory_account_id);
-								if(accountId>0 && item.item_type_id==1){
-									raw = "dr"+accountId;								
+								account_id = kendo.parseInt(item.inventory_account_id);
+								if(account_id>0 && item.item_type_id==1){
+									raw = "dr"+account_id;								
 
 									var inventoryAmount = quantity*cost;
 									
 									if(entries[raw]===undefined){
 										entries[raw] = {
-											transaction_id 		: 0,
-											account_id 			: accountId,
+											transaction_id 		: transaction_id,
+											account_id 			: account_id,
 											contact_id 			: contact_id,
 											description 		: roa[i].description,
 											reference_no 		: "",
@@ -90945,271 +90937,262 @@
 										entries[raw].dr += inventoryAmount;
 									}
 								}
+							}
+							
+							//Last line
+							var nextIndex = i+1;
+							if((nextIndex<roa.length && roa[nextIndex].type!==undefined) || i==roa.length-1){
+								self.dataSource.add(txn);
 
-								var nextIndex = i+1;
-								if(nextIndex < roa.length){
-									if(roa[nextIndex].type!==undefined || nextIndex==roa.length-1){
-										$.each(entries, function(index, value){
-											txn[txnName].journal_lines.push(value);
-										});
-										
-										entries = {};
-									}
-								}
+								$.each(entries, function(index, value){
+									self.journalLineDS.add(value);
+								});
+								
+								raw = "";
+								txn = {};
+								entries = {};
+								transaction_id++;
 							}
 						}
 					}
 
-					// if(roa.length > 0 && sheetName=="sales"){
-					// 	txnName = "";
-					// 	entries = {};
+					if(roa.length > 0 && sheetName=="sales"){
+						for(var i = 0; i < roa.length; i++) {
+							var	account_id = 0, 
+								tax = 0,
+								tax_item_id = 0,
+								tax_account_id = 0,
+								measurement_id = 0,
+								quantity = kendo.parseInt(roa[i].quantity),
+								price = kendo.parseFloat(roa[i].price), 
+								amount = kendo.parseFloat(roa[i].amount),
+								item_id = self.getItemId(roa[i].item.trim(), i),
+								item = banhji.source.itemDS.get(item_id),
+								itemRate = banhji.source.getRate(item.locale, issued_date);
 
-					// 	for(var i = 0; i < roa.length; i++) {
-					// 		var	accountId = 0, 
-					// 			tax = 0,
-					// 			tax_item_id = 0,
-					// 			tax_account_id = 0,
-					// 			measurement_id = 0,
-					// 			quantity = kendo.parseInt(roa[i].quantity),
-					// 			price = kendo.parseFloat(roa[i].price), 
-					// 			amount = kendo.parseFloat(roa[i].amount),
-					// 			item_id = self.getItemId(roa[i].item.trim(), i),
-					// 			item = banhji.source.itemDS.get(item_id),
-					// 			itemRate = banhji.source.getRate(item.locale, issued_date);
+							if(roa[i].name!==undefined){
+								contact_id = self.getCustomerId(roa[i].name.trim(), i);
+							}
 
-					// 		if(roa[i].name!==undefined){
-					// 			contact_id = self.getCustomerId(roa[i].name.trim(), i);
-					// 		}
+							if(roa[i].account!==undefined){
+								txn_account_id = self.getAccountId(roa[i].account.trim(), i);
+							}
 
-					// 		if(roa[i].account!==undefined){
-					// 			account_id = self.getAccountId(roa[i].account.trim(), i);
-					// 		}
+							if(roa[i].measurement!==undefined){
+								measurement_id = self.getMeasurementId(roa[i].measurement.trim());
+							}
 
-					// 		if(roa[i].measurement!==undefined){
-					// 			measurement_id = self.getMeasurementId(roa[i].measurement.trim());
-					// 		}
+							if(roa[i].issued_date!==undefined){
+								issued_date = new Date(roa[i].issued_date.trim());
+							}
 
-					// 		if(roa[i].issued_date!==undefined){
-					// 			issued_date = new Date(roa[i].issued_date.trim());
-					// 		}
+							if(roa[i].type!==undefined){
+								type = roa[i].type.trim();
 
-					// 		if(roa[i].type!==undefined){
-					// 			type = roa[i].type.trim();
-
-					// 			if(jQuery.inArray( type, isJournal )==-1){
-					// 				is_journal = 0;
-					// 			}else{
-					// 				is_journal = 1;
-					// 			}
-
-					// 			//Transactions
-					// 			txnName = sheetName + counter.toString();
-					// 			counter++;
-					// 			txn[txnName] = {
-					// 				contact_id 				: contact_id,
-					// 				transaction_template_id : 3,
-					// 				payment_term_id			: 5,
-					// 				account_id 				: account_id,
-					// 				reference_no 			: roa[i].reference_no,
-					// 			   	type					: type,//Required
-					// 			   	number 					: roa[i].number.trim(),
-					// 			   	sub_total 				: 0,
-					// 			   	discount 				: 0,
-					// 			   	tax 					: 0,
-					// 			   	deposit 				: 0,
-					// 			   	amount					: 0,
-					// 			   	remaining 				: 0,
-					// 			   	rate					: 1,//Required
-					// 			   	locale 					: banhji.locale,//Required
-					// 			   	issued_date 			: issued_date,//Required
-					// 			   	due_date 				: roa[i].due_date.trim(),
-					// 			   	bill_to 				: roa[i].bill_to,
-					// 			   	ship_to 				: roa[i].ship_to,
-					// 			   	memo 					: roa[i].memo,
-					// 			   	status 					: roa[i].status,
-					// 			   	is_journal 				: is_journal,//Required
-					// 			   	//Recurring
-					// 			   	recurring_name 			: "",
-					// 			   	start_date 				: new Date(),
-					// 			   	frequency 				: "Daily",
-					// 			   	month_option 			: "Day",
-					// 			   	interval 				: 1,
-					// 			   	day 					: 1,
-					// 			   	week 					: 0,
-					// 			   	month 					: 0,
-					// 			   	is_recurring 			: 0,
-					// 			   	item_lines 				: [],
-					// 			   	journal_lines 			: []
-					// 			};
-					// 		}
-
-					// 		//Tax on Cr
-					// 		if(roa[i].tax!==undefined){
-					// 			raw = "cr"+tax_account_id;								
-					// 			tax_item_id = self.getTaxId(roa[i].tax.trim(), i);
-					// 			taxItem = banhji.source.taxItemDS.get(tax_item_id);
-					// 			tax_account_id = taxItem.account_id;
-					// 			tax = amount * taxItem.rate;
-
-					// 			if(entries[raw]===undefined){
-					// 				entries[raw] = {
-					// 					transaction_id 		: 0,
-					// 					account_id 			: tax_account_id,
-					// 					contact_id 			: contact_id,
-					// 					description 		: roa[i].description,
-					// 					reference_no 		: "",
-					// 					segments 	 		: [],
-					// 					dr 	 				: 0,
-					// 					cr 					: tax,
-					// 					rate				: 1,
-					// 					locale				: banhji.locale
-					// 				};
-					// 			}else{
-					// 				entries[raw].cr += tax;
-					// 			}
-					// 		}
-
-					// 		//Cash or A/R on Dr
-					// 		if(account_id>0){
-					// 			raw = "dr"+account_id;
+								if(jQuery.inArray( type, isJournal )==-1){
+									is_journal = 0;
+								}else{
+									is_journal = 1;
+								}
 								
-					// 			if(entries[raw]===undefined){
-					// 				entries[raw] = {
-					// 					transaction_id 		: 0,
-					// 					account_id 			: account_id,
-					// 					contact_id 			: contact_id,
-					// 					description 		: roa[i].memo,
-					// 					reference_no 		: roa[i].reference_no,
-					// 					segments 	 		: [],
-					// 					dr 	 				: amount + tax,
-					// 					cr 					: 0,
-					// 					rate				: 1,
-					// 					locale				: banhji.locale
-					// 				};
-					// 			}else{
-					// 				entries[raw].dr += amount + tax;
-					// 			}
-					// 		}
+								txn = {
+									contact_id 				: contact_id,
+									transaction_template_id : 3,
+									payment_term_id			: 5,
+									account_id 				: txn_account_id,
+									reference_no 			: roa[i].reference_no,
+								   	type					: type,//Required
+								   	number 					: roa[i].number.trim(),
+								   	sub_total 				: 0,
+								   	discount 				: 0,
+								   	tax 					: 0,
+								   	deposit 				: 0,
+								   	amount					: 0,
+								   	remaining 				: 0,
+								   	rate					: 1,//Required
+								   	locale 					: banhji.locale,//Required
+								   	issued_date 			: issued_date,//Required
+								   	due_date 				: roa[i].due_date.trim(),
+								   	bill_to 				: roa[i].bill_to,
+								   	ship_to 				: roa[i].ship_to,
+								   	memo 					: roa[i].memo,
+								   	status 					: roa[i].status,
+								   	is_journal 				: is_journal,//Required
+								   	//Recurring
+								   	recurring_name 			: "",
+								   	start_date 				: new Date(),
+								   	frequency 				: "Daily",
+								   	month_option 			: "Day",
+								   	interval 				: 1,
+								   	day 					: 1,
+								   	week 					: 0,
+								   	month 					: 0,
+								   	is_recurring 			: 0
+								};
+							}
+
+							//Tax on Cr
+							if(roa[i].tax!==undefined){
+								raw = "cr"+tax_account_id;								
+								tax_item_id = self.getTaxId(roa[i].tax.trim(), i);
+								taxItem = banhji.source.taxItemDS.get(tax_item_id);
+								tax_account_id = taxItem.account_id;
+								tax = amount * taxItem.rate;
+
+								if(entries[raw]===undefined){
+									entries[raw] = {
+										transaction_id 		: transaction_id,
+										account_id 			: tax_account_id,
+										contact_id 			: contact_id,
+										description 		: roa[i].description,
+										reference_no 		: "",
+										segments 	 		: [],
+										dr 	 				: 0,
+										cr 					: tax,
+										rate				: 1,
+										locale				: banhji.locale
+									};
+								}else{
+									entries[raw].cr += tax;
+								}
+							}
+
+							//Cash or A/R on Dr
+							if(txn_account_id>0){
+								raw = "dr"+txn_account_id;
+								
+								if(entries[raw]===undefined){
+									entries[raw] = {
+										transaction_id 		: transaction_id,
+										account_id 			: txn_account_id,
+										contact_id 			: contact_id,
+										description 		: roa[i].memo,
+										reference_no 		: roa[i].reference_no,
+										segments 	 		: [],
+										dr 	 				: amount + tax,
+										cr 					: 0,
+										rate				: 1,
+										locale				: banhji.locale
+									};
+								}else{
+									entries[raw].dr += amount + tax;
+								}
+							}
 							
-					// 		txn[txnName].sub_total 	+= amount;
-					// 		txn[txnName].tax 		+= tax;
-					// 		txn[txnName].amount 	+= amount + tax;
+							txn.sub_total 	+= amount;
+							txn.tax 		+= tax;
+							txn.amount 		+= amount + tax;
 
-					// 		//Item lines
-					// 		txn[txnName].item_lines.push({
-					// 			transaction_id 		: 0,
-					// 			tax_item_id 		: tax_item_id,
-					// 			item_id 			: item_id,
-					// 			measurement_id 		: measurement_id,
-					// 			description 		: roa[i].description,
-					// 			quantity 	 		: quantity,
-					// 			unit_value 			: 1,
-					// 			cost 				: 0,
-					// 			price 				: price,
-					// 			amount 				: amount,
-					// 			rate				: 1,
-					// 			locale				: banhji.locale,
-					// 			additional_cost 	: 0,
-					// 			movement 			: -1
-					// 		});
+							//Item lines
+							self.itemLineDS.add({
+								transaction_id 		: transaction_id,
+								tax_item_id 		: tax_item_id,
+								item_id 			: item_id,
+								measurement_id 		: measurement_id,
+								description 		: roa[i].description,
+								quantity 	 		: quantity,
+								unit_value 			: 1,
+								cost 				: 0,
+								price 				: price,
+								amount 				: amount,
+								rate				: 1,
+								locale				: banhji.locale,
+								additional_cost 	: 0,
+								movement 			: -1
+							});
 							
-					// 		if(is_journal==1){
+							if(is_journal==1){
+								//COGS on Dr
+								account_id = kendo.parseInt(item.expense_account_id);
+								if(account_id>0 && item.item_type_id==1){															
+									raw = "dr"+account_id;
 
-					// 			//COGS on Dr
-					// 			accountId = kendo.parseInt(item.expense_account_id);
-					// 			if(accountId>0 && item.item_type_id==1){															
-					// 				raw = "dr"+accountId;
+									var cogsAmount = quantity*item.cost;									
 
-					// 				var cogsAmount = quantity*item.cost;									
+									if(entries[raw]===undefined){
+										entries[raw] = {
+											transaction_id 		: transaction_id,
+											account_id 			: account_id,
+											contact_id 			: contact_id,
+											description 		: roa[i].description,
+											reference_no 		: "",
+											segments 	 		: [],
+											dr 	 				: cogsAmount,
+											cr 					: 0,
+											rate				: itemRate,
+											locale				: item.locale
+										};
+									}else{
+										entries[raw].dr += cogsAmount;
+									}
+								}
 
-					// 				if(entries[raw]===undefined){
-					// 					entries[raw] = {
-					// 						transaction_id 		: 0,
-					// 						account_id 			: accountId,
-					// 						contact_id 			: contact_id,
-					// 						description 		: roa[i].description,
-					// 						reference_no 		: "",
-					// 						segments 	 		: [],
-					// 						dr 	 				: cogsAmount,
-					// 						cr 					: 0,
-					// 						rate				: itemRate,
-					// 						locale				: item.locale
-					// 					};
-					// 				}else{
-					// 					entries[raw].dr += cogsAmount;
-					// 				}
-					// 			}
+								//Inventory	on Cr					
+								account_id = kendo.parseInt(item.inventory_account_id);
+								if(account_id>0 && item.item_type_id==1){
+									raw = "cr"+account_id;								
 
-					// 			//Inventory	on Cr					
-					// 			accountId = kendo.parseInt(item.inventory_account_id);
-					// 			if(accountId>0 && item.item_type_id==1){
-					// 				raw = "cr"+accountId;								
+									var inventoryAmount = quantity*item.cost;
 
-					// 				var inventoryAmount = quantity*item.cost;
+									if(entries[raw]===undefined){
+										entries[raw] = {
+											transaction_id 		: transaction_id,
+											account_id 			: account_id,
+											contact_id 			: contact_id,
+											description 		: roa[i].description,
+											reference_no 		: "",
+											segments 	 		: [],
+											dr 	 				: 0,
+											cr 					: inventoryAmount,
+											rate				: itemRate,
+											locale				: item.locale
+										};
+									}else{
+										entries[raw].cr += inventoryAmount;
+									}
+								}
 
-					// 				if(entries[raw]===undefined){
-					// 					entries[raw] = {
-					// 						transaction_id 		: 0,
-					// 						account_id 			: accountId,
-					// 						contact_id 			: contact_id,
-					// 						description 		: roa[i].description,
-					// 						reference_no 		: "",
-					// 						segments 	 		: [],
-					// 						dr 	 				: 0,
-					// 						cr 					: inventoryAmount,
-					// 						rate				: itemRate,
-					// 						locale				: item.locale
-					// 					};
-					// 				}else{
-					// 					entries[raw].cr += inventoryAmount;
-					// 				}
-					// 			}
+								//Sale on Cr
+								account_id = kendo.parseInt(item.income_account_id);
+								if(account_id>0){
+									raw = "cr"+account_id;
 
-					// 			//Sale on Cr
-					// 			accountId = kendo.parseInt(item.income_account_id);
-					// 			if(accountId>0){
-					// 				raw = "cr"+accountId;
+									if(entries[raw]===undefined){
+										entries[raw] = {
+											transaction_id 		: transaction_id,
+											account_id 			: account_id,
+											contact_id 			: contact_id,
+											description 		: roa[i].description,
+											reference_no 		: "",
+											segments 	 		: [],
+											dr 	 				: 0,
+											cr 					: amount,
+											rate				: 1,
+											locale				: banhji.locale
+										};
+									}else{
+										entries[raw].cr += amount;
+									}
+								}
+							}
 
-					// 				if(entries[raw]===undefined){
-					// 					entries[raw] = {
-					// 						transaction_id 		: 0,
-					// 						account_id 			: accountId,
-					// 						contact_id 			: contact_id,
-					// 						description 		: roa[i].description,
-					// 						reference_no 		: "",
-					// 						segments 	 		: [],
-					// 						dr 	 				: 0,
-					// 						cr 					: amount,
-					// 						rate				: 1,
-					// 						locale				: banhji.locale
-					// 					};
-					// 				}else{
-					// 					entries[raw].cr += amount;
-					// 				}
-					// 			}
+							//Last line
+							var nextIndex = i+1;
+							if((nextIndex<roa.length && roa[nextIndex].type!==undefined) || i==roa.length-1){
+								self.dataSource.add(txn);
 
-					// 			var nextIndex = i+1;
-					// 			if(nextIndex < roa.length){
-					// 				if(roa[nextIndex].type!==undefined || nextIndex==roa.length-1){
-					// 					$.each(entries, function(index, value){
-					// 						txn[txnName].journal_lines.push(value);
-					// 					});
-
-					// 					entries = {};
-					// 				}
-					// 			}
-					// 		}
-					// 	}
-					// }
+								$.each(entries, function(index, value){
+									self.journalLineDS.add(value);
+								});
+								
+								raw = "";
+								txn = {};
+								entries = {};
+								transaction_id++;
+							}
+						}
+					}
 				});
-				
-				//Add to transaction
-				if(!jQuery.isEmptyObject(txn)){
-					$.each(txn, function(index, value){
-						self.dataSource.add(value);
-						self.txnList.push(value);
-					});
-				}
 			}
 			reader.readAsBinaryString(files[0].rawFile);
 	    },
@@ -91233,23 +91216,20 @@
 
 			self.objSync()
 			.then(function(data){ //Success
-				console.log(self.get("txnList"));
-				$.each(self.get("txnList"), function(index, value){
-					//Item Line
-					if(value.item_lines){
-						$.each(value.item_lines, function(ind, val){
-							val.set("transaction_id", data[index].id);
-							self.itemLineDS.add(val);
-						});
-					}
+				$.each(data, function(index, value){
+					//Item Lines
+					$.each(self.itemLineDS.data(), function(ind, val){
+						if(val.transaction_id==index){
+							val.set("transaction_id", value.id);
+						}
+					});
 
-					//Journal Line
-					if(value.journal_lines){
-						$.each(value.journal_lines, function(ind, val){
-							val.set("transaction_id", data[index].id);
-							self.journalLineDS.add(val);
-						});
-					}
+					//Journal Lines
+					$.each(self.journalLineDS.data(), function(ind, val){
+						if(val.transaction_id==index){
+							val.set("transaction_id", value.id);
+						}
+					});
 				});
 
 				self.itemLineDS.sync();
@@ -91264,8 +91244,7 @@
 	    },
 	    clear 				: function(){
 	    	var self = banhji.importTxn;
-
-	    	self.set("txnList", []);
+	    	
 	    	self.dataSource.data([]);
 	    	self.itemLineDS.data([]);
 	    	self.journalLineDS.data([]);

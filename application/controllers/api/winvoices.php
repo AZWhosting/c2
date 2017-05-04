@@ -444,15 +444,28 @@ class Winvoices extends REST_Controller {
 			$invoiceLine->include_related('meter_record/meter', array("id", "number"));
 
 			$location = $row->location->get_raw();
+
 			$invoiceLine->where('transaction_id', $row->id);
 			$invoiceLine->limit(1)->get();
 			if($invoiceLine->exists()) {
 				foreach($invoiceLine as $line) {
-					$meter = array(
-						'meter_number'   => $line->meter_record_meter_number,
-						'meter_id'   => $line->meter_record_meter_id,
-						'location' => $location->result()
-					);
+					$box = new Location(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					$box->where("id", $line->meter_record_box_id)->limit(1)->get();
+					if($box->exists()){
+						$meter = array(
+							'meter_number'   => $line->meter_record_meter_number,
+							'meter_id'   => $line->meter_record_meter_id,
+							'location' => $location->result(),
+							'box' => $box
+						);
+					}else{
+						$meter = array(
+							'meter_number'   => $line->meter_record_meter_number,
+							'meter_id'   => $line->meter_record_meter_id,
+							'location' => $location->result(),
+							'box' => []
+						);
+					}
 				}
 			}
 
@@ -550,7 +563,7 @@ class Winvoices extends REST_Controller {
 			foreach($monthGraph as $monthOF) {
 				$monthN = date('F', strtotime($monthOF->month_of));
 				$minusM[] = array(
-					'name' => $monthN,
+					'month' => $monthN,
 					'usage' => $monthOF->amount
 				);
 			}

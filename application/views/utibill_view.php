@@ -4925,7 +4925,7 @@
 		<div class="customer-background" style="overflow: hidden;margin-top: 15px;">
 			<div class="container-960">					
 				<div id="example" class="k-content">
-					<!-- <span id="savePrint" class="btn btn-icon btn-primary glyphicons print" data-bind="click: printGrid" style="width: 80px;margin-bottom:0;position: absolute;left:45%;"><i></i><span data-bind="text: lang.lang.save_pdf">Save PDF</span></span> -->
+					<span id="savePrint" class="btn btn-icon btn-primary glyphicons print" data-bind="click: printGrid" style="width: 80px;margin-bottom:0;position: absolute;left:45%;"><i></i><span data-bind="text: lang.lang.save_pdf">Save PDF</span></span>
 					<div class="hidden-print pull-right">
 			    		<span style="padding: 5px 0 11px 35px;" class="glyphicons no-js remove_2" 
 							data-bind="click: cancel"><i></i></span>	
@@ -5136,6 +5136,12 @@
 		                <p style="font-size: 12px; color: \\#000;">#: banhji.InvoicePrint.license.adress#</p>
 		                <p style="font-size: 12px; color: \\#000;">#:typeof banhji.InvoicePrint.license.mobile != 'undefined' ? banhji.InvoicePrint.license.mobile: ''#</p>
 		            </div>
+		            <div class="cover-name-company" style="border-top: 1px solid \\#000; width: 57%; margin-left: 15px;">
+		            	<h2 style="text-align: left;">#: contact.name#</h2>
+		                <p style="font-size: 12px; color: \\#000;">#: contact.adress#</p>
+		                <p style="font-size: 12px; color: \\#000;">#:typeof contact.phone != 'undefined' ? contact.phone: ''#</p>
+		                <p style="font-size: 12px; color: \\#000;">លេខកូដអតិថិជន #: contact.number#</p>
+		            </div>
 		        </div>
 	    	</div>
 	    	<div class="span5 " style="padding-left: 0; padding-right: 8px;">
@@ -5162,7 +5168,7 @@
 		    			<tr>
 		    				<td>លេខប្រអប់ BOX NO</td>
 		    				<td>
-		    					<input type="text" value="#:meter.location[0].abbr# - #:meter.location[0].name#">
+		    					<input type="text" value="#:meter.location[0].abbr# - #:meter.location[0].box#">
 		    				</td>
 		    			</tr>
 		    		</table>
@@ -5175,15 +5181,16 @@
 	    	</div>
 	    	<div class="span7" style="margin-top: 15px;">
 	    		<div class="row">
-	    			<div class="span6" style="padding-right: 0">
+	    			<!-- <div class="span6" style="padding-right: 0">
 	    				<p style="list-style: 20px; margin-bottom: 0;">
 	    					<b>#: contact.name#</b><br>
-	    					#: contact.address#
+	    					#: contact.address#<br>
+	    					#: contact.phone#
 	    				</p>
-			    	</div>
+			    	</div> -->
 			    	<div class="span6" style="padding-left: 0;margin-left: 15px;width: 42%;">
 			    		<span id="secondwnumber#= id#"" style="width: 180px; height: auto; float: right;"></span>
-			    		<p style="margin-bottom: 0; margin-top: 5px; font-size: 12px; margin-left: 8px; float: right;">លេខកូដអតិថិជន #: contact.number#</p>
+			    		<!-- <p style="margin-bottom: 0; margin-top: 5px; font-size: 12px; margin-left: 8px; float: right;">លេខកូដអតិថិជន #: contact.number#</p> -->
 			    	</div>
 	    		</div>
 	    	</div>
@@ -5193,23 +5200,10 @@
 	    	<div class="span4" style="padding-left: 15px; padding-left: 8px;">
 	    		<p >ប្រវត្តិប្រើប្រាស់របស់អ្នកក្នុងឆ្នាំនេះ</p>
 	    		<div class="tab-pane active" id="tab-1">
-			        <div data-role="chart"
-		                 data-legend="{ position: 'top' }"
-		                 data-series-defaults="{ type: 'column' }"
-		                 data-tooltip='{
-		                    visible: true,
-		                    format: "{0}%"
-		                 }'                 
-		                 data-series="[
-		                                 { field: 'usage', name: 'Usage', categoryField:'month', color: '\\#236DA4', overlay:{ gradient: 'none'} }
-		                             ]"
-		                 data-auto-bind="false"
-		                 data-bind="source: minusMonth"
-		                 style="height: 250px;"></div> 
+			        <div id="monthchart#= id#" style="height: 250px;"></div> 
 	        	</div>
 	    	</div>
 	    	<div class="span8" style="padding-left: 0; width: 65%;">
-	    		<img style="width: 58px; height: auto; float: left;" src="<?php echo base_url();?>/assets/icon-water.png">
 	    		<p style="width: 273px; text-align: right; float: left; margin: 25px 0 0 8px; font-size: 20px; ">ប្រាក់ត្រូវបង់សរុប</p>
 	    		<p style="padding: 5px 8px; background: \\#F1F1F1; border: 1px solid \\#000; width: 220px; float: right;font-size: 25px; color: \\#000;font-weight: 600; text-align: right; margin: 13px 0 10px 8px;">#= kendo.toString(amount, "c", locale)#</p>
 	    		<p style="margin-left: 30px; float: right; margin-bottom: 0;">សូមអញ្ជើញមកបង់ប្រាក់ អោយបានមុនថ្ងៃផុតកំនត់ទី</p><br>
@@ -5739,9 +5733,9 @@
 										<div class="innerAll" style="padding: 15px 15px 19px;">							
 											<form autocomplete="off" class="form-inline">
 												<div class="widget-search separator bottom">
-													<button type="button" class="btn btn-default pull-right" data-bind="click: search"><i class="icon-search"></i></button>
+													<button class="btn btn-default pull-right" data-bind="click: search"><i class="icon-search"></i></button>
 													<div class="overflow-hidden">
-														<input type="search" placeholder="Invoice Number..." data-bind="value: searchText, events: {change: search}">
+														<input type="text" placeholder="Invoice Number..." data-bind="value: searchText, events: {change: search}">
 													</div>
 												</div>
 												<!-- <div class="select2-container" style="width: 100%;">
@@ -16404,6 +16398,22 @@
 						}	
 					});
 				}
+				var DataM = [], MonthM = [];
+				$.each(d.minusMonth, function(i, v){
+					DataM.push(v.usage);
+					MonthM.push(v.month);
+				});
+				$("#monthchart"+d.id).kendoChart({
+				    title: {
+				         text: "6 Months"
+				    },
+				    series: [
+				         { name: "amount", data: DataM }
+				    ],
+				    categoryAxis:{
+				         categories: MonthM
+				    }
+				});
 			}
 		},
 		printGrid 		: function(){
