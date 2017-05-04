@@ -112,16 +112,17 @@ class Ops extends REST_Controller {
 				// );
 
 				// $this->dbforge->modify_column(
-		  //       	'transactions', array(
-				// 		'received' => array(
-				// 					'name' 		=> 'received', 
-				// 					'type'		=> 'DECIMAL',
-				// 					'constraint'=> '30,15',
+		  //       	'item_lines', array(
+				// 		'assembly_id' => array(
+				// 					'name' 		=> 'assembly_id', 
+				// 					'type'		=> 'INT',
+				// 					'constraint'=> 11,
 				// 					'null' 		=> FALSE,
-				// 					'default' 	=> '0'
+				// 					'default' 	=> 0
 				// 		)
 		  //       	)
 		  //       );
+
 			}//End If
 		}//End Foreach
 	}//End Function

@@ -430,7 +430,7 @@ class Winvoices extends REST_Controller {
 				}
 			}
 		}
-		$table->where('status', 0);
+		//$table->where('status', 0);
 		$table->where('deleted', 0);
 		$table->where('type','Utility_Invoice');
 		$table->get();
@@ -582,6 +582,7 @@ class Winvoices extends REST_Controller {
 				'amount'  => floatval($row->amount),
 				'locale' => $row->locale,
 				'consumption' => $usage,
+				'formcolor' => '',
 				'minusMonth' => $minusM,
 				'contact' => array(
 					'id' => $row->contact_id,

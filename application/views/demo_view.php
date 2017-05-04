@@ -5680,7 +5680,7 @@
 						<br>
 
 						<div align="center">
-							<span class="btn btn-icon btn-primary glyphicons ok_2" data-bind="click: closeWindow" style="width: 80px;"><i></i> <span>Save & Close</span></span>
+							<span class="btn btn-icon btn-primary glyphicons ok_2" data-bind="click: closeWindow" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save_close"></span></span>
 							<span class="btn btn-icon btn-danger glyphicons remove_2" data-bind="click: cancelWindow" style="width: 80px;"><i></i> Delete</span>
 						</div>
 					</div>
@@ -29441,14 +29441,14 @@
 								<div class="widget-head">
 									<ul>
 										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
-										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i>Print/Export</a></li>
+										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i>Filters</a></li>
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
 								<div class="widget-body">
 									<div class="tab-content">
-								        <div class="tab-pane active" id="tab-1">
-
+										<!-- Date -->
+										<div class="tab-pane active" id="tab-1">
 											<input data-role="dropdownlist"
 												   class="sorter"                  
 										           data-value-primitive="true"
@@ -29473,22 +29473,46 @@
 										           placeholder="To ..." >
 
 										  	<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
-																		
+									    </div>
+									    <!-- Filter -->
+								        <div class="tab-pane" id="tab-2">
+											<table class="table table-condensed">
+												<tr>
+									            	<td style="padding: 0 !important; width: 96%;">
+									            		<span data-bind="text: lang.lang.account"></span>
+									            		<select data-role="multiselect"
+															   data-value-primitive="true"
+															   data-item-template="account-list-tmpl"
+															   data-value-field="id"
+															   data-text-field="name"
+															   data-bind="value: obj.accounts, 
+															   			source: accountDS"
+															   data-placeholder="Select Accounts..."
+															   style="width: 100%" /></select>
+													</td>
+													<td style="padding-top: 23px !important; float: left;">
+										  				<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+													</td>
+												</tr>
+												<tr>
+													<td style="padding: 8px 0 0 0 !important; ">
+														<span data-bind="text: lang.lang.segment"></span>
+														<select data-role="multiselect"
+															   data-value-primitive="true"
+															   data-item-template="segment-list-tmpl"
+															   data-value-field="id"
+															   data-text-field="code"
+															   data-bind="value: obj.segments, 
+															   			source: segmentItemDS,
+															   			events:{ change: segmentChanges }"
+															   data-placeholder="Select Segments.."
+															   style="width: 100%" /></select>
+													</td>
+													<td></td>
+												</tr>
+											</table>
 							        	</div>
-
-							        	<!-- PRINT/EXPORT  -->
-								        <div class="tab-pane" id="tab-2">								        	
-								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: printGrid" style="width: 80px;"><i></i> Print</span>
-								        	<!-- <span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-pdf-o"></i>
-								        		Print as PDF
-								        	</span> -->
-								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: ExportExcel" style="width: 80px;">
-								        		<i class="fa fa-file-excel-o"></i>
-								        		Export to Excel
-								        	</span>
-							        	</div>								       
-								    </div>
+							        </div>
 								</div>
 							</div>
 						</div>
@@ -29525,22 +29549,23 @@
 					                <th>TYPE</th>
 					                <th>DATE</th>
 					                <th>TXN#</th>
+					                <th>NAME</th>
 					                <th>DESCRIPTION</th>
+					                <th>ACCOUNT</th>
 					                <th>SEGMENT</th>
-					                <th>ACCOUNT</th>                		                
-					                <th class="right">DEBITS (Dr)</th>
-					                <th class="right">CREDITS (Cr)</th>		                
+					                <th class="right">DEBITS</th>
+					                <th class="right">CREDITS</th>
 					            </tr>
 				            </thead> 
 					        <tbody data-role="listview"
 					        		data-auto-bind="false"
-					        		data-template="journalReportBySegment-template"			        		
-					        		data-bind="source: dataSource"></tbody>			        
+					        		data-template="journalReportBySegment-template"
+					        		data-bind="source: dataSource"></tbody>
 					    </table>
 					</div>
 		            <div data-role="pager"
 		            	data-auto-bind="false" 
-		            	data-bind="source: dataSource"></div>					  
+		            	data-bind="source: dataSource"></div>
 
 				</div>
 			</div>						
@@ -29569,7 +29594,13 @@
 				#}#
 			</td>		
 			<td style="color: black;">
+				#=line[i].contact#
+			</td>
+			<td style="color: black;">
 				#=line[i].description#
+			</td>
+			<td style="color: black;">
+				#=line[i].account#
 			</td>
 			<td style="color: black;">
 				#for(var j=0; j<line[i].segments.length; j++){#
@@ -29578,9 +29609,6 @@
 					#}#
 					#=line[i].segments[j].code# #=line[i].segments[j].name#					
 				#}#
-			</td>
-			<td style="color: black;">
-				#=line[i].account#
 			</td>			
 			<td class="right" style="color: black;">
 				#if(line[i].dr>0){#
@@ -29595,12 +29623,7 @@
 	    </tr>    
     #}# 
     <tr>
-    	<td style="color: black;">Total:</td>
-    	<td></td>    	
-    	<td></td>
-    	<td></td>
-    	<td></td>
-    	<td></td>    	
+    	<td colspan="7" style="color: black;">Total:</td>
     	<td class="right strong" style="border-top-color: black; color: black;">
     		#=kendo.toString(sumDr, "c2", banhji.locale)#
     	</td>
@@ -33849,10 +33872,7 @@
 				        	</div>
 
 				        	<div class="tab-pane" id="tab-7">
-				        		<div align="center" style="min-height: 150px;">
-				        			<h1 style="font-style: 30px; margin-top: 20px;">Coming Soon</h1>
-				        		</div>
-				        		<!-- <div class="row-fluid">
+				        		<div class="row-fluid">
 					        		<div class="row-fluid sale-report">
 										<h2 data-bind="text: lang.lang.segment_reports" style="text-transform: uppercase;"></h2>
 										<p>
@@ -33871,7 +33891,7 @@
 											</table>
 										</div>
 									</div>									
-					        	</div> -->
+					        	</div>
 				        	</div>
 
 				        	<div class="tab-pane" id="tab-8">
@@ -83667,12 +83687,23 @@
 	banhji.journalReportBySegment =  kendo.observable({
 		lang 				: langVM,
 		dataSource 			: dataStore(apiUrl + "accounting_modules/journal_by_segment"),
-		exdataSource 		: dataStore(apiUrl + "accounting_modules/journal_by_segment"),
+		accountDS  		: new kendo.data.DataSource({
+		  	data: banhji.source.accountList,
+		  	filter:{ field:"status", value: 1 },
+		  	sort: { field:"number", dir:"asc" }
+		}),
+		segmentItemDS 		: new kendo.data.DataSource({
+		  	data: banhji.source.segmentItemList,
+		  	sort: [
+			  	{ field: "segment_id", dir: "asc" },
+			  	{ field: "code", dir: "asc" }
+			]
+		}),
 		sortList			: banhji.source.sortList,
-		sorter 				: "all",
+		sorter 				: "month",
 		sdate 				: "",
 		edate 				: "",
-		obj 				: null,
+		obj 				: { accounts: [], segments: [] },
 		company 			: banhji.institute,
 		displayDate 		: "",
 		showDescription 	: false,
@@ -83681,8 +83712,6 @@
 		showSegment 		: false,
 		dr 					: 0,
 		cr 					: 0,
-		totalTxn 			: 0,
-		exArray 			: [],
 		pageLoad 			: function(){
 			this.search();
 		},
@@ -83721,263 +83750,93 @@
 				  	this.set("edate", "");									  
 			}
 		},
+		segmentChanges 		: function() {
+			var dataArr = this.get("obj").segments,
+			lastIndex = dataArr.length - 1,
+			last = this.segmentItemDS.get(dataArr[lastIndex]);
+			
+			if(dataArr.length > 1) {
+				for(var i = 0; i < dataArr.length - 1; i++) {
+					var current_index = dataArr[i],
+					current = this.segmentItemDS.get(current_index);
+
+					if(current.segment_id === last.segment_id) {
+						dataArr.splice(lastIndex, 1);
+						break;
+					}
+				}
+			}
+		},
 		search				: function(){
 			var self = this, para = [],
+				obj = this.get("obj"),
 				start = this.get("sdate"),
         		end = this.get("edate"),
         		displayDate = "";
-    	
+
+        	//Accounts
+            if(obj.accounts.length>0){
+            	var accounts = [];
+            	$.each(obj.accounts, function(index, value){
+            		accounts.push(value);
+            	});          	
+	            para.push({ field:"account_id", operator:"where_in_related_journal_line", value:accounts });
+	        }
+
+	        //Segments
+            if(obj.segments.length>0){
+            	var segments = [];
+            	$.each(obj.segments, function(index, value){
+            		segments.push(value);
+            	});          	
+	            para.push({ field:"segments", operator:"like_related_journal_line", value:"%"+segments.toString()+"%" });
+	        }
+
         	//Dates
         	if(start && end){
-            	para.push({ field:"issued_date >=", operator:"where_related_transaction", value: kendo.toString(new Date(start), "yyyy-MM-dd") });
-            	para.push({ field:"issued_date <=", operator:"where_related_transaction", value: kendo.toString(new Date(end), "yyyy-MM-dd") });
+        		start = new Date(start);
+        		end = new Date(end);
+        		displayDate = "From " + kendo.toString(start, "dd-MM-yyyy") + " To " + kendo.toString(end, "dd-MM-yyyy");
+        		end.setDate(end.getDate()+1);
 
-            	displayDate = "From " + kendo.toString(new Date(start), "dd-MM-yyyy") + " To " + kendo.toString(new Date(end), "dd-MM-yyyy");
+            	para.push({ field:"issued_date >=", value: kendo.toString(start, "yyyy-MM-dd") });
+            	para.push({ field:"issued_date <", value: kendo.toString(end, "yyyy-MM-dd") });
             }else if(start){
-            	para.push({ field:"issued_date", operator:"where_related_transaction", value: kendo.toString(new Date(start), "yyyy-MM-dd") });
+            	start = new Date(start);
+            	displayDate = "On " + kendo.toString(start, "dd-MM-yyyy");
 
-            	displayDate = "On " + kendo.toString(new Date(start), "dd-MM-yyyy");
+            	para.push({ field:"issued_date", value: kendo.toString(start, "yyyy-MM-dd") });
             }else if(end){
-            	para.push({ field:"issued_date <=", operator:"where_related_transaction", value: kendo.toString(new Date(end), "yyyy-MM-dd") });
+            	end = new Date(end);
+            	displayDate = "As Of " + kendo.toString(end, "dd-MM-yyyy");
+        		end.setDate(end.getDate()+1);
 
-            	displayDate = "As Of " + kendo.toString(new Date(end), "dd-MM-yyyy");
+            	para.push({ field:"issued_date <", value: kendo.toString(end, "yyyy-MM-dd") });
             }else{
             	
             }
-            
             this.set("displayDate", displayDate);
 
             this.dataSource.query({
             	filter: para,
             	sort: [
-			  		{ field: "issued_date", operator:"order_by_related_transaction", dir: "desc" },
-			  		{ field: "number", operator:"order_by_related_transaction", dir: "desc" }
+			  		{ field: "issued_date", dir: "desc" },
+			  		{ field: "number", dir: "desc" }
 			  	]
             });
-            var saved = false;
+            var loaded = false;
             this.dataSource.bind("requestEnd", function(e){
-            	if(e.type==="read" && saved==false){
-            		saved = true;
+            	if(e.type==="read" && loaded==false){
+            		loaded = true;
+
             		var response = e.response;
             		self.set("dr", kendo.toString(response.dr, "c", banhji.locale));
 	            	self.set("cr", kendo.toString(response.cr, "c", banhji.locale));
 	            }
 	        });
-			                           
-		},
-		printGrid			: function() {
-			var gridElement = $('#grid'),
-		        printableContent = '',
-		        win = window.open('', '', 'width=990, height=900'),
-		        doc = win.document.open();
-		    var htmlStart =
-		            '<!DOCTYPE html>' +
-		            '<html>' +
-		            '<head>' +
-		            '<meta charset="utf-8" />' +
-		            '<title></title>' +
-		            '<link href="http://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />'+
-		            '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/bootstrap.css">' +
-		            '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/responsive.css">' +
-		            '<link href="<?php echo base_url(); ?>assets/invoice/invoice.css" rel="stylesheet" />'+
-		            '<link href="https://fonts.googleapis.com/css?family=Content:400,700" rel="stylesheet" type="text/css">' +
-		            '<link href="https://fonts.googleapis.com/css?family=Moul" rel="stylesheet">' +
-		            '<style>' +
-		            'html { font: 11pt sans-serif; }' +
-		            '.k-grid { border-top-width: 0; }' +
-		            '.k-grid, .k-grid-content { height: auto !important; }' +
-		            '.k-grid-content { overflow: visible !important; }' +
-		            'div.k-grid table { table-layout: auto; width: 100% !important; }' +
-		            '.k-grid .k-grid-header th { border-top: 1px solid; }' +
-		            '.k-grid-toolbar, .k-grid-pager > .k-link { display: none; }' +
-		            '</style><style type="text/css" media="print"> @page { size: portrait; margin:1mm; }'+
-		            	'.inv1 .main-color {' +
-		            		
-		            		'-webkit-print-color-adjust:exact; ' +
-		            	'} ' +
-		            	'.table.table-borderless.table-condensed  tr th { background-color: #1E4E78!important;' +
-		            	'-webkit-print-color-adjust:exact; color:#fff!important;}' +
-		            	'.inv1 .light-blue-td { ' +
-		            		'background-color: #c6d9f1!important;' +
-		            		'text-align: left;' +
-		            		'padding-left: 5px;' +
-		            		'-webkit-print-color-adjust:exact; ' +
-		            	'}' +
-		            	'.saleSummaryCustomer .table.table-borderless.table-condensed tr td { ' +
-    						'background-color: #F2F2F2!important; -webkit-print-color-adjust:exact;' +
-						'}'+
-						'.saleSummaryCustomer .table.table-borderless.table-condensed tr:nth-child(2n+1) td { ' +
-    						' background-color: #fff!important; -webkit-print-color-adjust:exact;' +
-						'}' +
-						'.journal_block>.span4 * {color: #fff!important;}' +
-		            	'.journal_block>.span4:first-child { ' +
-    						'background-color: #bbbbbb!important; -webkit-print-color-adjust:exact;' +
-						'}' +
-						'.journal_block>.span4:last-child {' +
-							'background-color: #496cad!important; color: #fff!important; -webkit-print-color-adjust:exact; ' +
-						'}' +
-						'.journal_block>.span4 {' +
-							'background-color: #5cc7dd!important; color: #fff!important; -webkit-print-color-adjust:exact;' +
-						'}' +
-		            	'.pcg .mid-header {' +
-		            		'background-color: #dce6f2!important; ' +
-		            		'-webkit-print-color-adjust:exact; ' +
-		            	'}'+
-		            	'.inv1 span.total-amount { ' +
-		            		'color:#fff!important;' +
-		            	'}</style>' +
-		            '</head>' +
-		            '<body><div class="saleSummaryCustomer" style="padding: 0 10px;">';
-		    var htmlEnd =
-		            '</div></body>' +
-		            '</html>';
-		    
-		    printableContent = $('#invFormContent').html();
-		    doc.write(htmlStart + printableContent + htmlEnd);
-		    doc.close();
-		    setTimeout(function(){
-		    	win.print();
-		    	win.close();
-		    },2000);
-		},
-		ExportExcel 		: function(){
-								// $("#loadImport").css("display","block");
-								// var self = this, para = [],
-								// 	start = this.get("sdate"),
-					   //      		end = this.get("edate"),
-					   //      		displayDate = "";
-					    	
-					   //      	//Dates
-					   //      	if(start && end){
-					   //          	para.push({ field:"issued_date >=", operator:"where_related_transaction", value: kendo.toString(new Date(start), "yyyy-MM-dd") });
-					   //          	para.push({ field:"issued_date <=", operator:"where_related_transaction", value: kendo.toString(new Date(end), "yyyy-MM-dd") });
 
-					   //          	displayDate = "From " + kendo.toString(new Date(start), "dd-MM-yyyy") + " To " + kendo.toString(new Date(end), "dd-MM-yyyy");
-					   //          }else if(start){
-					   //          	para.push({ field:"issued_date", operator:"where_related_transaction", value: kendo.toString(new Date(start), "yyyy-MM-dd") });
-
-					   //          	displayDate = "On " + kendo.toString(new Date(start), "dd-MM-yyyy");
-					   //          }else if(end){
-					   //          	para.push({ field:"issued_date <=", operator:"where_related_transaction", value: kendo.toString(new Date(end), "yyyy-MM-dd") });
-
-					   //          	displayDate = "As Of " + kendo.toString(new Date(end), "dd-MM-yyyy");
-					   //          }else{
-					            	
-					   //          }
-					            
-					   //          this.set("displayDate", displayDate);
-
-					   //          this.exdataSource.query({
-					   //          	filter: para,
-					   //          	sort: [
-								//   		{ field: "issued_date", operator:"order_by_related_transaction", dir: "desc" },
-								//   		{ field: "number", operator:"order_by_related_transaction", dir: "desc" }
-								//   	]
-					   //          })
-					   //          .then(function(e){
-					   //          	var sumDR = 0, sumCR = 0;
-					   //          	self.exArray = [];
-					   //          	self.exArray.push({
-					   //          		cells: [
-					   //          			{ value: self.company.name, textAlign: "center", colSpan: 7 }
-					   //          		]
-					   //          	});
-					   //          	self.exArray.push({
-					   //          		cells: [
-					   //          			{ value: "JOURNAL ENTRY REPORTS",bold: true, fontSize: 20, textAlign: "center", colSpan: 7 }
-					   //          		]
-					   //          	});
-					   //          	if(self.displayDate){
-						  //           	self.exArray.push({
-						  //           		cells: [
-						  //           			{ value: self.displayDate, textAlign: "center", colSpan: 7 }
-						  //           		]
-						  //           	});
-						  //           }
-					   //          	self.exArray.push({
-					   //          		cells: [
-					   //          			{ value: "", colSpan: 7 }
-					   //          		]
-					   //          	});
-					   //          	self.exArray.push(
-					   //          		{ cells: [
-								// 			{ value: "Type", background: "#496cad", color: "#ffffff" },
-								// 			{ value: "Date", background: "#496cad", color: "#ffffff" },
-								// 			{ value: "TXN#", background: "#496cad", color: "#ffffff" },
-								// 			{ value: "TXN Description", background: "#496cad", color: "#ffffff" },
-								// 			{ value: "Account", background: "#496cad", color: "#ffffff" },
-								// 			{ value: "Debits(DR)", background: "#496cad", color: "#ffffff" },
-								// 			{ value: "Credits(CR)", background: "#496cad", color: "#ffffff" }
-								// 		]}
-								// 	);
-					   //          	for (var i = 0; i < self.exdataSource.data().length; i++){
-					   //          	  var RATE = self.exdataSource.data()[i].rate;
-					   //          	  var DR = self.exdataSource.data()[i].line[0].dr / RATE;
-							 //          var CR = self.exdataSource.data()[i].line[0].cr / RATE;
-							 //          self.exArray.push({
-							 //            cells: [
-							 //              { value: self.exdataSource.data()[i].type, rowSpan: self.exdataSource.data()[i].line.length, verticalAlign: "center" },
-							 //              { value: kendo.toString(new Date(self.exdataSource.data()[i].issued_date), "dd-MMMM-yyyy"), rowSpan: self.exdataSource.data()[i].line.length, verticalAlign: "center" },
-							 //              { value: self.exdataSource.data()[i].number, rowSpan: self.exdataSource.data()[i].line.length, verticalAlign: "center" },
-							 //              { value: self.exdataSource.data()[i].memo, rowSpan: self.exdataSource.data()[i].line.length, verticalAlign: "center" },
-							 //              { value: self.exdataSource.data()[i].line[0].account },
-							 //              { value: self.exdataSource.data()[i].line[0].dr ? DR : "",  },
-							 //              { value: self.exdataSource.data()[i].line[0].cr ? CR : "" }
-							 //            ]
-							 //          });
-							 //          sumDR = kendo.parseFloat(self.exdataSource.data()[i].line[0].dr);
-							 //          sumCR = kendo.parseFloat(self.exdataSource.data()[i].line[0].cr);
-							 //          for(var j = 1; j < self.exdataSource.data()[i].line.length; j++){
-							 //          	var DR = self.exdataSource.data()[i].line[j].dr / RATE;
-							 //          	var CR = self.exdataSource.data()[i].line[j].cr / RATE;
-								//           self.exArray.push({
-								//           	cells: [
-								//               { value: self.exdataSource.data()[i].line[j].account },
-								//               { value: self.exdataSource.data()[i].line[j].dr ? DR : "" },
-								//               { value: self.exdataSource.data()[i].line[j].cr ? CR : "" }
-								//             ]
-								//           });
-								//         sumDR += kendo.parseFloat(self.exdataSource.data()[i].line[j].dr);
-								//         sumCR += kendo.parseFloat(self.exdataSource.data()[i].line[j].cr);
-								//       }
-								//       self.exArray.push({
-							 //          	cells: [
-							 //          	  { value: "Total", bold: true, background: "#bbbbbb" },
-							 //              { value: "", background: "#bbbbbb" },
-							 //              { value: "", background: "#bbbbbb" },
-							 //              { value: "", background: "#bbbbbb" },
-							 //              { value: "", background: "#bbbbbb" },
-							 //              { value: kendo.parseFloat(sumDR), bold: true, background: "#bbbbbb" },
-							 //              { value: kendo.parseFloat(sumCR), bold: true, background: "#bbbbbb" }
-							 //            ]
-							 //          });
-							 //        }
-					   //          });
-					   //          this.exdataSource.bind("requestEnd", function(e){
-					   //          	//if(e.type==="read"){
-					   //          		$("#loadImport").css("display","none");
-					   //          		var workbook = new kendo.ooxml.Workbook({
-								//           sheets: [
-								//             {
-								//               columns: [
-								//                 { autoWidth: true },
-								//                 { autoWidth: true },
-								//                 { autoWidth: true },
-								//                 { autoWidth: true },
-								//                 { autoWidth: true },
-								//                 { autoWidth: true },
-								//                 { autoWidth: true }
-								//               ],
-								//               title: "Journal Entry Reports",
-								//               rows: self.exArray
-								//             }
-								//           ]
-								//         });
-								//         //save the file as Excel file with extension xlsx
-								//         kendo.saveAs({dataURI: workbook.toDataURL(), fileName: "JournalEntryReports.xlsx"});
-						  //           //}
-						  //       });
-	        
+	        obj.set("accounts", []);
+	        obj.set("segments", []);
 		}
 	});
 	banhji.generalLedger =  kendo.observable({
@@ -97187,6 +97046,8 @@
 
 			if(banhji.pageLoaded["journal_report_by_segment"]==undefined){
 				banhji.pageLoaded["journal_report_by_segment"] = true;
+
+				vm.sorterChanges();
 			}
 
 			vm.pageLoad();

@@ -6,135 +6,138 @@ require APPPATH.'/libraries/REST_Controller.php';
 
 class Tenants extends REST_Controller {
 	
+	public $_database;
+	public $server_host;
+	public $server_user;
+	public $server_pwd;
+	//CONSTRUCTOR
 	function __construct() {
-		parent::__construct();	
+		parent::__construct();
+		$institute = new Institute();
+		$institute->where('id', $this->input->get_request_header('Institute'))->get();
+		if($institute->exists()) {
+			$conn = $institute->connection->get();
+			$this->server_host = $conn->server_name;
+			$this->server_user = $conn->username;
+			$this->server_pwd = $conn->password;	
+			$this->_database = $conn->inst_database;
+		}
 	}
 
+	// public function index_get($id = NULL) {
+	// 	$this->response($id, 200);
+	// }
 
-	public function index_get() {
-		$filter = json_decode($this->get('filter'));
-		$limit = $this->get('limit');
-		$offset= $this->get('offset');
-		if(isset($filter)) {
-			foreach($filter->filters as $v) {
-				if(isset($v->operator) && $v->operator === 'like') {
-					$this->db->like($v->field, $v->value);
+	public function index_get($id = NULL, $resource = NULL) {
+		$filter 	= $this->get("filter");
+		$page 		= $this->get('page');
+		$limit 		= $this->get('limit');
+		$sort 	 	= $this->get("sort");
+		$data["results"] = [];
+		$data["count"] = 0;
+
+		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+		if(isset($id)) {
+			$obj->where('id', $id);
+			// if(isset($resource)) {
+			// 	$obj->include_related("$resource", NULL, TRUE, TRUE);
+			// }
+			$obj->limit(1);
+		} else {
+			if(!empty($sort) && isset($sort)){
+				foreach ($sort as $value) {
+					if(isset($value['operator'])){
+						$obj->{$value['operator']}($value["field"], $value["dir"]);
+					}else{
+						$obj->order_by($value["field"], $value["dir"]);
+					}
 				}
-				if(isset($v->operator) && $v->operator === 'or_like') {
-					$this->db->or_like($v->field, $v->value);
-				}
-				if(isset($v->operator) && $v->operator === 'where_in') {
-					$this->db->where_in($v->field, $v->value);
-				}
-				if(isset($v->operator) && $v->operator === 'having') {
-					$this->db->having($v->field, $v->value);
-				}
-				if(isset($v->operator)) {
-					$this->db->where($v->field, $v->value);
+			}
+
+			//Filter		
+			if(!empty($filter) && isset($filter)){
+		    	foreach ($filter['filters'] as $value) {
+		    		if(isset($value['operator'])) {
+						$obj->{$value['operator']}($value['field'], $value['value']);
+					} else {
+		    			$obj->where($value["field"], $value["value"]);
+					}
 				}
 			}
 		}
-			
-		$this->db->limit($limit, $offset);
-		$query = $this->db->get('tenants');
-		foreach($query->result() as $t) {
-			$data[] = array(
-				'id' => (int) $t->id,
-				'name' => $t->name,
-				'db_host' => $t->db_host,
-				'db_user' => $t->db_user,
-				'db_password' => $t->db_password,
-				'db_port' => $t->db_port,
-				'is_active'=> (bool)$t->is_active
-			);
+		//Results
+		$obj->where('type like ', "%Invoice");
+		if($page && $limit){
+			$obj->get_paged_iterated($page, $limit);
+			$data["count"] = $obj->paged->total_rows;
+		}else{
+			$obj->get_iterated();
+			$data["count"] = $obj->result_count();
 		}
-		$this->response(array('results'=>$data, 'count'=>1), 200);
+
+		if($obj->exists()){
+			if(isset($resource)) {
+				foreach($obj as $row) {
+					$rs = null;
+					switch ($resource) {
+						case "contact":
+							$q = $row->{$resource}->select('id, name')->get();
+							if($q->exists()) {
+								$rs = array(
+									'url' => base_url() . "api/contact/index/" . $q->id,
+									"name"=> $q->name
+								);
+							} else {
+								$rs = array();
+							}
+								
+							break;
+						case "reference":
+							$q = $row->{$resource}->select('id, amount, type, number')->get();
+							if($q->exists()) {
+								$rs = array(
+									'url' => base_url() . "api/transaction/index/" . $q->id,
+									"number"=> $q->number,
+									'type' => $q->type,
+									'amount' => $q->amount
+								);
+							} else {
+								$rs = array();
+							}
+							break;
+					}
+					
+					// $row->{$resource}->get_raw();
+					$data['results'][] = array(
+						'id' => $row->id,
+						'number' => $row->number,
+						"$resource" => $rs
+					);
+				}
+			} else {
+				foreach($obj as $row) {
+					$data['results'][] = array(
+						'id' => $row->id,
+						'number' => $row->number,
+					);
+				}
+			}
+			
+		}
+
+		$this->response($data, 200);
 	}
 
 	public function index_post() {
-		// decode data sent from client back to php array for processing
-		$posted = json_decode($this->post('models'));
-		$this->load->dbforge();
-		foreach($posted as $c) {
-			$this->db->insert('tenants', array(
-				'name'=>$c->name,
-				'db_host'=>$c->db_host,
-				'db_user'=>$c->db_user,
-				'db_password'=>$c->db_password,
-				'db_port'=>$c->db_port,
-				'is_active'=>$c->is_active,
-				'created_at' => date("y-m-d"),
-				'updated_at' => date("y-m-d")
-			));
-			$id = $this->db->insert_id();
-			$ids[] = $id;
-			if(!$this->dbforge->create_database($c->name)){
-				break;
-			}
-		}
-		$this->db->flush_cache();
-		$this->db->where_in('id', $ids);
-		$this->db->from('tenants');
-		$query = $this->db->get();
-		foreach($query->result() as $t) {
-			$data[] = array(
-				'id' => (int) $t->id,
-				'name' => $t->name,
-				'db_host' => $t->db_host,
-				'db_user' => $t->db_user,
-				'db_password' => $t->db_password,
-				'db_port' => $t->db_port,
-				'is_active'=> (bool)$t->is_active
-			);
-		}
-		$this->response(array('results'=>$data, 'count'=>count($ids)), 201);
+		//
 	}
 
-	public function index_put() {
-		$posted = json_decode($this->put('models'));
-
-		foreach($posted as $c) {
-			$this->db->where('id', $c->id);
-			$this->db->update('tenants', array(
-				'db_host' => $c->db_host,
-				'db_user' => $c->db_user,
-				'db_password' => $c->db_password,
-				'db_port' => $c->db_port,
-				'updated_at' => date("y-m-d")
-			));
-			$ids[] = $c->id;
-		}
-
-		$this->db->flush_cache();
-		$this->db->where_in('id', $ids);
-		$this->db->from('tenants');
-		$query = $this->db->get();
-		foreach($query->result() as $t) {
-			$data[] = array(
-				'id' => (int) $t->id,
-				'name' => $t->name,
-				'db_host' => $t->db_host,
-				'db_user' => $t->db_user,
-				'db_password' => $t->db_password,
-				'db_port' => $t->db_port,
-				'is_active'=> (bool)$t->is_active
-			);
-		}
-		$this->response(array('results'=>$data, 'count'=>count($ids)), 200);
+	public function index_put($id = NULL) {
+		//
 	}
-
-	public function index_delete() {
-		$posted = json_decode($this->delete('models'));
-		$this->load->dbforge();
-		foreach($posted as $c) {
-			if(!$this->dbforge->drop_database($c->name)) {
-				break;
-			} else {
-				$this->db->where('id', $c->id);
-				$this->db->delete('tenants');
-				$ids[] = $c->id;
-			}
-		}
-		$this->response(array('results'=>array(), 'count'=>count($ids)), 200);
+	
+	public function index_delete($id = NULL) {
+		//
 	}
 }

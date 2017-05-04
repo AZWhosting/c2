@@ -5129,14 +5129,14 @@
 	    	<div class="span7 inv1" style="width: 54%; padding-right: 15px; padding-left: 8px; ">
 	    		<div class="head" style="width: 100%; padding-top: 0;">
 		        	<div class="logo" style="width: 40%;">
-		            	<img class="logoP" style=" left: 0;top: 20px;" src="#: banhji.InvoicePrint.license.image_url#" alt="#: banhji.InvoicePrint.license.name#" title="#: banhji.InvoicePrint.license.name#" />
+		            	<img class="logoP" style=" left: 0;top: 20px;max-width: 200px;" src="#: banhji.InvoicePrint.license.image_url#" alt="#: banhji.InvoicePrint.license.name#" title="#: banhji.InvoicePrint.license.name#" />
 		            </div>
 		            <div class="cover-name-company" style="width: 57%; margin-left: 15px;">
 		            	<h2 style="text-align: left;">#: banhji.InvoicePrint.license.name#</h2>
 		                <p style="font-size: 12px; color: \\#000;">#: banhji.InvoicePrint.license.adress#</p>
 		                <p style="font-size: 12px; color: \\#000;">#:typeof banhji.InvoicePrint.license.mobile != 'undefined' ? banhji.InvoicePrint.license.mobile: ''#</p>
 		            </div>
-		            <div class="cover-name-company" style="border-top: 1px solid \\#000; width: 57%; margin-left: 15px;">
+		            <div class="cover-name-company" style="border-top: 1px solid \\#000; width: 57%; margin-left: 15px;padding-top: 10px;margin-top: 10px;">
 		            	<h2 style="text-align: left;">#: contact.name#</h2>
 		                <p style="font-size: 12px; color: \\#000;">#: contact.adress#</p>
 		                <p style="font-size: 12px; color: \\#000;">#:typeof contact.phone != 'undefined' ? contact.phone: ''#</p>
@@ -5177,37 +5177,23 @@
 	    </div>
 
 	    <div class="row-fluid">
-	    	<div class="span5" style="float: left; width: 38%">
-	    	</div>
-	    	<div class="span7" style="margin-top: 15px;">
-	    		<div class="row">
-	    			<!-- <div class="span6" style="padding-right: 0">
-	    				<p style="list-style: 20px; margin-bottom: 0;">
-	    					<b>#: contact.name#</b><br>
-	    					#: contact.address#<br>
-	    					#: contact.phone#
-	    				</p>
-			    	</div> -->
-			    	<div class="span6" style="padding-left: 0;margin-left: 15px;width: 42%;">
-			    		<span id="secondwnumber#= id#"" style="width: 180px; height: auto; float: right;"></span>
-			    		<!-- <p style="margin-bottom: 0; margin-top: 5px; font-size: 12px; margin-left: 8px; float: right;">លេខកូដអតិថិជន #: contact.number#</p> -->
-			    	</div>
-	    		</div>
-	    	</div>
-	    </div>
-
-	    <div class="row-fluid">
-	    	<div class="span4" style="padding-left: 15px; padding-left: 8px;">
-	    		<p >ប្រវត្តិប្រើប្រាស់របស់អ្នកក្នុងឆ្នាំនេះ</p>
+	    	<div class="span7" style="float: left;">
+	    		<p >ប្រវត្តិប្រើប្រាស់របស់អ្នក</p>
 	    		<div class="tab-pane active" id="tab-1">
-			        <div id="monthchart#= id#" style="height: 250px;"></div> 
+			        <div id="monthchart#= id#" style="height: 200px;"></div> 
 	        	</div>
 	    	</div>
-	    	<div class="span8" style="padding-left: 0; width: 65%;">
-	    		<p style="width: 273px; text-align: right; float: left; margin: 25px 0 0 8px; font-size: 20px; ">ប្រាក់ត្រូវបង់សរុប</p>
-	    		<p style="padding: 5px 8px; background: \\#F1F1F1; border: 1px solid \\#000; width: 220px; float: right;font-size: 25px; color: \\#000;font-weight: 600; text-align: right; margin: 13px 0 10px 8px;">#= kendo.toString(amount, "c", locale)#</p>
-	    		<p style="margin-left: 30px; float: right; margin-bottom: 0;">សូមអញ្ជើញមកបង់ប្រាក់ អោយបានមុនថ្ងៃផុតកំនត់ទី</p><br>
+	    	<div class="span4" style="margin-top: 15px;float:right;">
+	    		
+	    		<span id="secondwnumber#= id#"" style="width: 180px; height: auto; float: right;"></span><br>
+	    		<p style="text-align: right;clear: both;margin-top: 10px; float: right;font-size: 20px; ">ប្រាក់ត្រូវបង់សរុប</p><br>
+
+	    		<p style="padding: 8px;margin-bottom: 10px; background: \\#fff; border: 5px solid \\#000; width: 254px; float: right;font-size: 15px; color: \\#000;font-weight: 600; text-align: center; ">#= kendo.toString(amount, "c", locale)#</p><br>
+
+	    		<p style="text-align: right;margin-left: 30px; float: right; margin-bottom: 0;">សូមអញ្ជើញមកបង់ប្រាក់ អោយបានមុនថ្ងៃផុតកំនត់ទី</p><br>
+
 	    		<p style="margin-left: 40%; float: right; font-weight: 600;">#=kendo.toString(new Date(due_date), "dd-MMMM-yyyy", "km-KH")#</p>
+
 	    	</div>
 	    </div>
 
@@ -5377,7 +5363,8 @@
 					<p style="padding: 8px; background: \\#fff; margin-bottom: 0; border: 1px solid \\#A8B8CB; width: 253px; float: left;font-size: 15px; color: \\#000;font-weight: 600; text-align: center; ">#=kendo.toString(new Date(bill_date), "dd-MMMM-yyyy", "km-KH")#</p> 
 				</div>
 			</div>
-			<div class="row-fluid" style="width: 84%;float: left;clear: initial; margin-left: 15px;">
+
+			<div class="row-fluid" style="width: 84%;float: left;clear: initial; margin-left: 15px;margin-top: 10px;">
 				<div class="span6">
 					<p style="float: left; margin-left: 15px; margin-top: 5px; clear: both;"><b>#: contact.name#</b> <br/> #: contact.address#</p>
 					<div style=" float: left;">
@@ -16405,10 +16392,10 @@
 				});
 				$("#monthchart"+d.id).kendoChart({
 				    title: {
-				         text: "6 Months"
+				         text: ""
 				    },
 				    series: [
-				         { name: "amount", data: DataM }
+				         { name: "", data: DataM, color: '#236DA4', overlay:{ gradient: 'none'} }
 				    ],
 				    categoryAxis:{
 				         categories: MonthM
@@ -16418,91 +16405,184 @@
 		},
 		printGrid 		: function(){
 			var self = this, Win, pHeight, pWidth, ts;
-			Win = window.open('', '', 'width=900, height=900');
-			pHeight = "210mm";
-			pWidth = "150mm";
-			var	colorM = this.formColor;
-			if(colorM == '#000000' || colorM =='#1f497d' || colorM == null){ 
-				ts = 'color: #fff!important;';
-			} else { ts = 'color: #333;'; }
-			console.log(colorM);
-			banhji.invoice.dataSource.sync();
-			var gridElement = $('#grid'),
-		        printableContent = '',
-		        win = Win,
-		        doc = win.document.open();
-		    var htmlStart =
-		            '<!DOCTYPE html>' +
-		            '<html>' +
-		            '<head>' +
-		            '<meta charset="utf-8" />' +
-		            '<title></title>' +
-		            '<link rel="stylesheet" href="<?php echo base_url(); ?>resources/js/kendoui/styles/kendo.bootstrap.min.css">'+
-		            '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/bootstrap.css">'+
-		            '<link href="<?php echo base_url(); ?>assets/water/water.css" rel="stylesheet" />'+
-		            '<link href="<?php echo base_url(); ?>assets/water/winvoice-print.css" rel="stylesheet" />'+
-		            '<link href="<?php echo base_url(); ?>resources/common/theme/css/style-default-menus-dark.css" rel="stylesheet" />'+
-		            '<link href="https://fonts.googleapis.com/css?family=Content:400,700" rel="stylesheet" type="text/css">'+
-		            '<link href="https://fonts.googleapis.com/css?family=Moul" rel="stylesheet">'+
-		            '<style type="text/css" media="print">' +
-		            	'@page { size: portrait; margin:0.5cm;' +
-		            		'size: A5;' +
-		            	'} '+
-						'@media print {' +
-  							'html, body {' +
-    							'max-width: '+ pWidth +';' +
-    							'max-height: '+ pHeight +';' +
-    							'min-width: '+ pWidth +';' +
-    							'min-height: '+ pHeight +';' +
-  							'}' +
-  							'.main-color {' +
+			if(this.txnFormID == "45"){
+				Win = window.open('', '', 'width=1000, height=900');
+				pHeight = "210mm";
+				pWidth = "150mm";
+				var	colorM = this.formColor;
+				if(colorM == '#000000' || colorM =='#1f497d' || colorM == null){ 
+					ts = 'color: #fff!important;';
+				} else { ts = 'color: #333;'; }
+				console.log(colorM);
+				banhji.invoice.dataSource.sync();
+				var gridElement = $('#grid'),
+			        printableContent = '',
+			        win = Win,
+			        doc = win.document.open();
+			    var htmlStart =
+			            '<!DOCTYPE html>' +
+			            '<html>' +
+			            '<head>' +
+			            '<meta charset="utf-8" />' +
+			            '<title></title>' +
+			            '<link rel="stylesheet" href="<?php echo base_url(); ?>resources/js/kendoui/styles/kendo.bootstrap.min.css">'+
+			            '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/bootstrap.css">'+
+			            '<link href="<?php echo base_url(); ?>assets/water/water.css" rel="stylesheet" />'+
+			            '<link href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/js/kendoui/styles/kendo.common.min.css" rel="stylesheet" />'+
+			            '<link href="<?php echo base_url(); ?>assets/water/winvoice-print.css" rel="stylesheet" />'+
+			            '<link href="<?php echo base_url(); ?>assets/invoice/invoice.css" rel="stylesheet" />'+
+			            '<link href="<?php echo base_url(); ?>assets/responsive.css" rel="stylesheet" />'+
+			            '<link href="<?php echo base_url(); ?>assets/style-default-menus-dark.css" rel="stylesheet" />'+
+			            '<link href="https://fonts.googleapis.com/css?family=Content:400,700" rel="stylesheet" type="text/css">'+
+			            '<link href="https://fonts.googleapis.com/css?family=Moul" rel="stylesheet">'+
+			            '<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Battambang&amp;subset=khmer" media="all">'+
+			            '<style type="text/css" media="print">' +
+			            	'@page { size: portrait; margin:0.5cm;' +
+			            		'size: A4;' +
+			            	'} '+
+							'@media print {' +
+	  							'html, body {' +
+	    							'max-width: '+ pWidth +';' +
+	    							'max-height: '+ pHeight +';' +
+	    							'min-width: '+ pWidth +';' +
+	    							'min-height: '+ pHeight +';' +
+	  							'}' +
+	  							'.main-color {' +
+				            		'background-color: '+colorM+'!important; ' + ts +
+				            		'-webkit-print-color-adjust:exact; ' +
+				            	'} ' +
+							'}' +
+							'.main-color {' +
 			            		'background-color: '+colorM+'!important; ' + ts +
 			            		'-webkit-print-color-adjust:exact; ' +
 			            	'} ' +
-						'}' +
-						'.main-color {' +
-		            		'background-color: '+colorM+'!important; ' + ts +
-		            		'-webkit-print-color-adjust:exact; ' +
-		            	'} ' +
-		            	'.inv1 .light-blue-td { ' +
-		            		'background-color: #c6d9f1!important;' +
-		            		'text-align: left;' +
-		            		'padding-left: 5px;' +
-		            		'-webkit-print-color-adjust:exact; ' +
-		            	'}' +
-		            	'.logoP{ max-height 50px;max-width100px}' +
-		            	'.inv1 thead tr {'+
-		            		'background-color: rgb(242, 242, 242)!important;'+
-		            		'-webkit-print-color-adjust:exact; ' +
-		            	'}'+
-		            	'.pcg .mid-title div {}' +
-		            	'.pcg .mid-header {' +
-		            		'background-color: #dce6f2!important; ' +
-		            		'-webkit-print-color-adjust:exact; ' +
-		            	'}'+
-		            	'.winvoice-print table thead .darkbblue, .winvoice-print table tbody td.darkbblue { ' +
-						    'background-color: #355176!important;' +
-						    'color: #fff!important;' +
-						    '-webkit-print-color-adjust:exact; ' +
-						'}' +
-						'.winvoice-print table td.greyy {' +
-						'background-color: #ccc!important;-webkit-print-color-adjust:exact;' +
-						'}' +
-		            	'.inv1 span.total-amount { ' +
-		            		'color:#fff!important;' +
-		            	'}</style>' +
-				    '</head>' + 
-				    '<body><div class="row-fluid" ><div id="example" class="k-content">';
-		    var htmlEnd =
-		            '</div></div></body>' +
-		            '</html>';
-		    printableContent = $('#wInvoiceContent').html();
-		    doc.write(htmlStart + printableContent + htmlEnd);
-		    doc.close();
-		    setTimeout(function(){
-		    	win.print();	
-		    	win.close();
-		    },2000);
+			            	'.inv1 .light-blue-td { ' +
+			            		'background-color: #c6d9f1!important;' +
+			            		'text-align: left;' +
+			            		'padding-left: 5px;' +
+			            		'-webkit-print-color-adjust:exact; ' +
+			            	'}' +
+			            	'.logoP{ max-height 50px;max-width100px}' +
+			            	'.inv1 thead tr {'+
+			            		'background-color: rgb(242, 242, 242)!important;'+
+			            		'-webkit-print-color-adjust:exact; ' +
+			            	'}'+
+			            	'.pcg .mid-title div {}' +
+			            	'.pcg .mid-header {' +
+			            		'background-color: #dce6f2!important; ' +
+			            		'-webkit-print-color-adjust:exact; ' +
+			            	'}'+
+			            	'.winvoice-print table thead .darkbblue, .winvoice-print table tbody td.darkbblue { ' +
+							    'background-color: #355176!important;' +
+							    'color: #fff!important;' +
+							    '-webkit-print-color-adjust:exact; ' +
+							'}' +
+							'.winvoice-print table td.greyy {' +
+							'background-color: #ccc!important;-webkit-print-color-adjust:exact;' +
+							'}' +
+			            	'.inv1 span.total-amount { ' +
+			            		'color:#fff!important;' +
+			            	'}</style>' +
+					    '</head>' + 
+					    '<body><div class="row-fluid" ><div id="example" class="k-content">';
+			    var htmlEnd =
+			            '</div></div></body>' +
+			            '</html>';
+			    printableContent = $('#wInvoiceContent').html();
+			    doc.write(htmlStart + printableContent + htmlEnd);
+			    doc.close();
+			    setTimeout(function(){
+			    	win.print();	
+			    	//win.close();
+			    },2000);
+			}else{
+				Win = window.open('', '', 'width=900, height=900');
+				pHeight = "210mm";
+				pWidth = "150mm";
+				var	colorM = this.formColor;
+				if(colorM == '#000000' || colorM =='#1f497d' || colorM == null){ 
+					ts = 'color: #fff!important;';
+				} else { ts = 'color: #333;'; }
+				console.log(colorM);
+				banhji.invoice.dataSource.sync();
+				var gridElement = $('#grid'),
+			        printableContent = '',
+			        win = Win,
+			        doc = win.document.open();
+			    var htmlStart =
+			            '<!DOCTYPE html>' +
+			            '<html>' +
+			            '<head>' +
+			            '<meta charset="utf-8" />' +
+			            '<title></title>' +
+			            '<link rel="stylesheet" href="<?php echo base_url(); ?>resources/js/kendoui/styles/kendo.bootstrap.min.css">'+
+			            '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/bootstrap.css">'+
+			            '<link href="<?php echo base_url(); ?>assets/water/water.css" rel="stylesheet" />'+
+			            '<link href="<?php echo base_url(); ?>assets/water/winvoice-print.css" rel="stylesheet" />'+
+			            '<link href="<?php echo base_url(); ?>resources/common/theme/css/style-default-menus-dark.css" rel="stylesheet" />'+
+			            '<link href="https://fonts.googleapis.com/css?family=Content:400,700" rel="stylesheet" type="text/css">'+
+			            '<link href="https://fonts.googleapis.com/css?family=Moul" rel="stylesheet">'+
+			            '<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Battambang&amp;subset=khmer" media="all">'+
+			            '<style type="text/css" media="print">' +
+			            	'@page { size: portrait; margin:0.5cm;' +
+			            		'size: A5;' +
+			            	'} '+
+							'@media print {' +
+	  							'html, body {' +
+	    							'max-width: '+ pWidth +';' +
+	    							'max-height: '+ pHeight +';' +
+	    							'min-width: '+ pWidth +';' +
+	    							'min-height: '+ pHeight +';' +
+	  							'}' +
+	  							'.main-color {' +
+				            		'background-color: '+colorM+'!important; ' + ts +
+				            		'-webkit-print-color-adjust:exact; ' +
+				            	'} ' +
+							'}' +
+							'.main-color {' +
+			            		'background-color: '+colorM+'!important; ' + ts +
+			            		'-webkit-print-color-adjust:exact; ' +
+			            	'} ' +
+			            	'.inv1 .light-blue-td { ' +
+			            		'background-color: #c6d9f1!important;' +
+			            		'text-align: left;' +
+			            		'padding-left: 5px;' +
+			            		'-webkit-print-color-adjust:exact; ' +
+			            	'}' +
+			            	'.logoP{ max-height 50px;max-width100px}' +
+			            	'.inv1 thead tr {'+
+			            		'background-color: rgb(242, 242, 242)!important;'+
+			            		'-webkit-print-color-adjust:exact; ' +
+			            	'}'+
+			            	'.pcg .mid-title div {}' +
+			            	'.pcg .mid-header {' +
+			            		'background-color: #dce6f2!important; ' +
+			            		'-webkit-print-color-adjust:exact; ' +
+			            	'}'+
+			            	'.winvoice-print table thead .darkbblue, .winvoice-print table tbody td.darkbblue { ' +
+							    'background-color: #355176!important;' +
+							    'color: #fff!important;' +
+							    '-webkit-print-color-adjust:exact; ' +
+							'}' +
+							'.winvoice-print table td.greyy {' +
+							'background-color: #ccc!important;-webkit-print-color-adjust:exact;' +
+							'}' +
+			            	'.inv1 span.total-amount { ' +
+			            		'color:#fff!important;' +
+			            	'}</style>' +
+					    '</head>' + 
+					    '<body><div class="row-fluid" ><div id="example" class="k-content">';
+			    var htmlEnd =
+			            '</div></div></body>' +
+			            '</html>';
+			    printableContent = $('#wInvoiceContent').html();
+			    doc.write(htmlStart + printableContent + htmlEnd);
+			    doc.close();
+			    setTimeout(function(){
+			    	win.print();	
+			    	//win.close();
+			    },2000);
+			}
 		},
 		hideFrameInvoice 			: function(e) {
 			var printBtn = e.target;
@@ -18719,10 +18799,11 @@
 			.then(function(e){
 				var view = self.dataSource.view();
 				self.invoiceArray = [];
-				view[0].set("formcolor", "#355176");
-				self.invoiceArray.push(view[0]);
-				self.getLicense(view[0].meter.location[0].branch_id);
-				
+				if(self.dataSource.data().length >0){
+					view[0].set("formcolor", "#355176");
+					self.invoiceArray.push(view[0]);
+					self.getLicense(view[0].meter.location[0].branch_id);
+				}
 			});
 		},
 		getLicense 			: function(branch_id){
