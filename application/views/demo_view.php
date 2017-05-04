@@ -5680,8 +5680,8 @@
 						<br>
 
 						<div align="center">
-							<span class="btn btn-icon btn-primary glyphicons ok_2" data-bind="click: closeWindow" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save"></span></span>
-							<span class="btn btn-icon btn-danger glyphicons remove_2" data-bind="click: cancelWindow" style="width: 80px;"><i></i> Discard</span>
+							<span class="btn btn-icon btn-primary glyphicons ok_2" data-bind="click: closeWindow" style="width: 80px;"><i></i> <span>Save & Close</span></span>
+							<span class="btn btn-icon btn-danger glyphicons remove_2" data-bind="click: cancelWindow" style="width: 80px;"><i></i> Delete</span>
 						</div>
 					</div>
 
@@ -5913,7 +5913,7 @@
 		</td>
 		<td>#=type#</td>
 		<td><span data-bind="text: reference_no"></span></td>
-		<td class="right"><span data-format="n" data-bind="text: amount"></span></td>
+		<td class="right"><span data-bind="text: amount"></span></td>
     </tr>   
 </script>
 <script id="cashRefund" type="text/x-kendo-template">
@@ -55725,7 +55725,7 @@
 	        	}
 				returnAmount += value.amount;
 	        });
-	       
+	       	
 	        remaining = total - returnAmount;
 
 	        obj.set("sub_total", subTotal);
