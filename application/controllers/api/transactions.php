@@ -162,7 +162,7 @@ class Transactions extends REST_Controller {
 					"week" 						=> $value->week,
 					"month" 					=> $value->month,
 				   	"status" 					=> intval($value->status),
-				   	"is_recurring" 				=> floatval($value->is_recurring),
+				   	"is_recurring" 				=> intval($value->is_recurring),
 				   	"is_journal" 				=> $value->is_journal,
 				   	"print_count" 				=> $value->print_count,
 				   	"printed_by" 				=> $value->printed_by,
@@ -175,7 +175,6 @@ class Transactions extends REST_Controller {
 		}
 
 		//Response Data
-		$data["count"] = count($data["results"]);
 		$this->response($data, 200);
 	}
 

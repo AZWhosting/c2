@@ -4,7 +4,7 @@ require APPPATH.'/libraries/REST_Controller.php';
 
 /* for creating and editing company and their database */
 
-class Tenants extends REST_Controller {
+class Invoices extends REST_Controller {
 	
 	public $_database;
 	public $server_host;
@@ -37,6 +37,7 @@ class Tenants extends REST_Controller {
 		$data["count"] = 0;
 
 		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$obj->select('id, type, number, amount, due_date, status');
 
 		if(isset($id)) {
 			$obj->where('id', $id);
@@ -82,11 +83,16 @@ class Tenants extends REST_Controller {
 					$rs = null;
 					switch ($resource) {
 						case "contact":
-							$q = $row->{$resource}->select('id, name')->get();
+							$q = $row->{$resource}->select('id, name, abbr, number, email, phone, city, post_code')->get();
 							if($q->exists()) {
 								$rs = array(
-									'url' => base_url() . "api/contact/index/" . $q->id,
-									"name"=> $q->name
+									'url' => base_url() . "api/contact/index/" . "$q->id",
+									'name'=> "$q->name",
+									'number' => "$q->abbr"."-"."$q->number",
+									'email' => "$q->email",
+									'phone' => "$q->phone",
+									'city' => "$q->city",
+									'postCode' => "$q->post_code"
 								);
 							} else {
 								$rs = array();
@@ -112,6 +118,10 @@ class Tenants extends REST_Controller {
 					$data['results'][] = array(
 						'id' => $row->id,
 						'number' => $row->number,
+						'type' => $row->type,
+						'amount' => $row->amount,
+						'dueDate'=> $row->due_date,
+						'status' => $row->status,
 						"$resource" => $rs
 					);
 				}
@@ -120,6 +130,10 @@ class Tenants extends REST_Controller {
 					$data['results'][] = array(
 						'id' => $row->id,
 						'number' => $row->number,
+						'type' => $row->type,
+						'amount' => $row->amount,
+						'dueDate'=> $row->due_date,
+						'status' => $row->status
 					);
 				}
 			}

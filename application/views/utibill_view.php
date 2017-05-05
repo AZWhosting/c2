@@ -2643,7 +2643,7 @@
 		<td valign="top">
 			#=schedule[i].date#
 		</td>
-		<td>#=kendo.toString(schedule[i].amount, "c2", banhji.locale)#</td>
+		<td>#=kendo.toString(schedule[i].amount, banhji.locale=="km-KH"?"c0":"c", banhji.locale)#</td>
 		<td>
 			# schedule[i].invoiced=="0" ? 'Paid': 'Open'# 
 		</td>
@@ -5012,7 +5012,7 @@
 						ជំពាក់​សរុប​នៅ​ថ្ងៃ​ធ្វើ​វិក្កយបត្រ Balance as at billing date .
 					</td>
 					<td align="right">
-						#: kendo.toString(amount_remain, "c", locale)#
+						#: kendo.toString(amount_remain, locale=="km-KH"?"c0":"c", locale)#
 					</td>
 				</tr>
 				<tr>
@@ -5032,8 +5032,8 @@
 							<tr>
 								<td colspan="3" align="left">#: invoice_lines[j].number#</td>
 								<td align="center">#: invoice_lines[0].consumption#</td>
-								<td align="right">#= kendo.toString(invoice_lines[j].amount, "c", locale)#</td>
-								<td align="right">#= kendo.toString(amountTariffMoney, "c", locale)#</td>
+								<td align="right">#= kendo.toString(invoice_lines[j].amount, locale=="km-KH"?"c0":"c", locale)#</td>
+								<td align="right">#= kendo.toString(amountTariffMoney, locale=="km-KH"?"c0":"c", locale)#</td>
 							</tr>
 						#}else if(invoice_lines[j].type == "exemption"){#
 							<tr>
@@ -5041,16 +5041,16 @@
 								#if(invoice_lines[j].unit == "money"){#
 									<td align="center"></td>
 									<td align="right"></td>
-									<td align="right">-#= kendo.toString(invoice_lines[j].amount, "c", locale)#</td>
+									<td align="right">-#= kendo.toString(invoice_lines[j].amount, locale=="km-KH"?"c0":"c", locale)#</td>
 								#}else if(invoice_lines[j].unit == "%"){#
 								#var AMM = (amountTariffMoney * invoice_lines[j].amount) / 100#
 									<td align="center">#= invoice_lines[j].amount#%</td>
 									<td align="center"></td>
-									<td align="right">-#= kendo.toString(AMM, "c", locale)#</td>
+									<td align="right">-#= kendo.toString(AMM, locale=="km-KH"?"c0":"c", locale)#</td>
 								#}else{#
 									<td align="center">#= invoice_lines[j].amount#</td>
 									<td align="center"></td>
-									<td align="right">-#= kendo.toString(invoice_lines[j].amount * amountTariff, "c", locale)#</td>
+									<td align="right">-#= kendo.toString(invoice_lines[j].amount * amountTariff, locale=="km-KH"?"c0":"c", locale)#</td>
 								#}#
 							</tr>
 						#}else{#
@@ -5058,19 +5058,19 @@
 								<td colspan="3" align="left">#: invoice_lines[j].number#</td>
 								<td align="center"></td>
 								<td align="right"></td>
-								<td align="right">#= kendo.toString(invoice_lines[j].amount, "c", locale)#</td>
+								<td align="right">#= kendo.toString(invoice_lines[j].amount, locale=="km-KH"?"c0":"c", locale)#</td>
 							</tr>
 						#}#
 					# } #
 				#}#	
 				<tr>
 					<td colspan="5" style="padding-right: 10px;background: \\#355176;color: \\#fff;text-align: right;background-color: #: formcolor #!important;#= banhji.InvoicePrint.formVisible#" class="darkbblue main-color">បំណុល​សរុប TOTAL BALANCE</td>
-					<td style="border: 1px solid;text-align: right">#= kendo.toString(amount, "c", locale)#</td>
+					<td style="border: 1px solid;text-align: right">#= kendo.toString(amount, locale=="km-KH"?"c0":"c", locale)#</td>
 				</tr>
 				<tr>
 					<td rowspan="4" colspan="3">#= banhji.InvoicePrint.license.term_of_condition#</td>
 					<td colspan="2" class="greyy" style="background: \\#ccc;#= banhji.InvoicePrint.formVisible#">ប្រាក់​ត្រូវ​បង់ TOTAL DUE</td>
-					<td style="text-align: right"><strong>#= kendo.toString(amount + amount_remain, "c", locale)#</strong></td>
+					<td style="text-align: right"><strong>#= kendo.toString(amount + amount_remain, locale=="km-KH"?"c0":"c", locale)#</strong></td>
 				</tr>
 				<tr>
 					<td colspan="2" class="greyy"  style="background: \\#ccc;#= banhji.InvoicePrint.formVisible#">ថ្ងៃផុតកំណត់ DUE DATE</td>
@@ -5095,7 +5095,7 @@
 						<span style="margin-left: -15px;border:none!important" id="footwnumber#:id#"></span>
 					</th>
 					<td width="270" class="greyy"  style="background: \\#ccc;border-bottom:1px solid \\#fff;#= banhji.InvoicePrint.formVisible#">ប្រាក់​ត្រូវ​បង់ TOTAL DUE</td>
-					<td width="180" align="right"><strong>#= kendo.toString(amount + amount_remain, "c", locale)#</strong></td>
+					<td width="180" align="right"><strong>#= kendo.toString(amount + amount_remain, locale=="km-KH"?"c0":"c", locale)#</strong></td>
 				</tr>
 				<tr>
 					<td style="#= banhji.InvoicePrint.formVisible#"><p>វិក្កយបត្រ</p></td>
@@ -5188,7 +5188,7 @@
 	    		<span id="secondwnumber#= id#"" style="width: 180px; height: auto; float: right;"></span><br>
 	    		<p style="text-align: right;clear: both;margin-top: 10px; float: right;font-size: 20px; ">ប្រាក់ត្រូវបង់សរុប</p><br>
 
-	    		<p style="padding: 8px;margin-bottom: 10px; background: \\#fff; border: 5px solid \\#000; width: 254px; float: right;font-size: 15px; color: \\#000;font-weight: 600; text-align: center; ">#= kendo.toString(amount, "c", locale)#</p><br>
+	    		<p style="padding: 8px;margin-bottom: 10px; background: \\#fff; border: 5px solid \\#000; width: 254px; float: right;font-size: 15px; color: \\#000;font-weight: 600; text-align: center; ">#= kendo.toString(amount, locale=="km-KH"?"c0":"c", locale)#</p><br>
 
 	    		<p style="text-align: right;margin-left: 30px; float: right; margin-bottom: 0;">សូមអញ្ជើញមកបង់ប្រាក់ អោយបានមុនថ្ងៃផុតកំនត់ទី</p><br>
 
@@ -5218,7 +5218,7 @@
 								ជំពាក់​សរុប​នៅ​ថ្ងៃ​ធ្វើ​វិក្កយបត្រ Balance as at billing date .
 							</td>
 							<td align="right">
-								#: kendo.toString(amount_remain, "c", locale)#
+								#: kendo.toString(amount_remain, locale=="km-KH"?"c0":"c", locale)#
 							</td>
 						</tr>
 						<tr>
@@ -5238,8 +5238,8 @@
 									<tr>
 										<td colspan="3" align="left">#: invoice_lines[j].number#</td>
 										<td align="center">#: invoice_lines[0].consumption#</td>
-										<td align="right">#= kendo.toString(invoice_lines[j].amount, "c", locale)#</td>
-										<td align="right">#= kendo.toString(amountTariffMoney, "c", locale)#</td>
+										<td align="right">#= kendo.toString(invoice_lines[j].amount, locale=="km-KH"?"c0":"c", locale)#</td>
+										<td align="right">#= kendo.toString(amountTariffMoney, locale=="km-KH"?"c0":"c", locale)#</td>
 									</tr>
 								#}else if(invoice_lines[j].type == "exemption"){#
 									<tr>
@@ -5247,16 +5247,16 @@
 										#if(invoice_lines[j].unit == "money"){#
 											<td align="center"></td>
 											<td align="right"></td>
-											<td align="right">-#= kendo.toString(invoice_lines[j].amount, "c", locale)#</td>
+											<td align="right">-#= kendo.toString(invoice_lines[j].amount, locale=="km-KH"?"c0":"c",, locale)#</td>
 										#}else if(invoice_lines[j].unit == "%"){#
 										#var AMM = (amountTariffMoney * invoice_lines[j].amount) / 100#
 											<td align="center">#= invoice_lines[j].amount#%</td>
 											<td align="center"></td>
-											<td align="right">-#= kendo.toString(AMM, "c", locale)#</td>
+											<td align="right">-#= kendo.toString(AMM, locale=="km-KH"?"c0":"c", locale)#</td>
 										#}else{#
 											<td align="center">#= invoice_lines[j].amount#</td>
 											<td align="center"></td>
-											<td align="right">-#= kendo.toString(invoice_lines[j].amount * amountTariff, "c", locale)#</td>
+											<td align="right">-#= kendo.toString(invoice_lines[j].amount * amountTariff, locale=="km-KH"?"c0":"c", locale)#</td>
 										#}#
 									</tr>
 								#}else{#
@@ -5264,19 +5264,19 @@
 										<td colspan="3" align="left">#: invoice_lines[j].number#</td>
 										<td align="center"></td>
 										<td align="right"></td>
-										<td align="right">#= kendo.toString(invoice_lines[j].amount, "c", locale)#</td>
+										<td align="right">#= kendo.toString(invoice_lines[j].amount, locale=="km-KH"?"c0":"c", locale)#</td>
 									</tr>
 								#}#
 							# } #
 						#}#	
 						<tr>
 							<td colspan="5" style="padding-right: 10px;background: \\#355176;color: \\#fff;text-align: right;background-color: #: formcolor #!important;#= banhji.InvoicePrint.formVisible#" class="darkbblue main-color">បំណុល​សរុប TOTAL BALANCE</td>
-							<td style="border: 1px solid;text-align: right">#= kendo.toString(amount, "c", locale)#</td>
+							<td style="border: 1px solid;text-align: right">#= kendo.toString(amount, locale=="km-KH"?"c0":"c", locale)#</td>
 						</tr>
 						<tr>
 							<td rowspan="4" colspan="3">#= banhji.InvoicePrint.license.term_of_condition#</td>
 							<td colspan="2" class="greyy" style="background: \\#ccc;#= banhji.InvoicePrint.formVisible#">ប្រាក់​ត្រូវ​បង់ TOTAL DUE</td>
-							<td style="text-align: right"><strong>#= kendo.toString(amount + amount_remain, "c", locale)#</strong></td>
+							<td style="text-align: right"><strong>#= kendo.toString(amount + amount_remain, locale=="km-KH"?"c0":"c", locale)#</strong></td>
 						</tr>
 						<tr>
 							<td colspan="2" class="greyy"  style="background: \\#ccc;#= banhji.InvoicePrint.formVisible#">ថ្ងៃផុតកំណត់ DUE DATE</td>
@@ -5300,7 +5300,7 @@
 	    							Total charge for this period
 	    						</span>
 	    					</td>
-	    					<td colspan="2" >#= kendo.toString(amount, "c", locale)#</td>
+	    					<td colspan="2" >#= kendo.toString(amount, locale=="km-KH"?"c0":"c", locale)#</td>
 	    				</tr>
 	    				<tr>
 	    					<td colspan="4">
@@ -5309,7 +5309,7 @@
 	    							Total amount due
 	    						</span>
 	    					</td>
-	    					<td colspan="2">#= kendo.toString(amount + amount_remain, "c", locale)#</td>
+	    					<td colspan="2">#= kendo.toString(amount + amount_remain, locale=="km-KH"?"c0":"c", locale)#</td>
 	    				</tr>
 	    				<tr>
 	    					<td colspan="2" rowspan="3" style="vertical-align: middle;">
@@ -5356,7 +5356,7 @@
 				</div>
 				<div class="span4" style="width: 30%; margin-right: 20px;">
 					<p style="text-align: center; font-size: 12px; margin-bottom: 5px;">ប្រាក់ត្រូវបង់ AMOUNT DUE</p>
-					<p style="padding: 8px; background: \\#fff; margin-bottom: 0; border: 1px solid \\#A8B8CB; width: 253px; float: left;font-size: 15px; color: \\#000;font-weight: 600; text-align: center; ">#= kendo.toString(amount + amount_remain, "c", locale)#</p> 
+					<p style="padding: 8px; background: \\#fff; margin-bottom: 0; border: 1px solid \\#A8B8CB; width: 253px; float: left;font-size: 15px; color: \\#000;font-weight: 600; text-align: center; ">#= kendo.toString(amount + amount_remain, locale=="km-KH"?"c0":"c", locale)#</p> 
 				</div>
 				<div class="span4" style="width: 30%; margin-right: 20px;">
 					<p style="text-align: center; font-size: 12px; margin-bottom: 5px;">ថ្ងៃបង់ប្រាក់ PAY DATE</p>
@@ -6256,12 +6256,12 @@
 		<td>#=number#</td>
 		<td>#=meter#</td>
 		<td class="center">
-			#=kendo.toString(sub_total, "c", locale)#		
+			#=kendo.toString(sub_total, locale=="km-KH"?"c0":"c", locale)#		
 		</td>
 		<td class="center" data-bind="visible: chhDiscount">
 			<input data-role="numerictextbox"
 				   data-spinners="false"
-				   data-format="c2"
+				   data-format="c0"
 				   data-culture="#:locale#"
                    data-min="0"                   
                    data-bind="value: discount,
@@ -6271,7 +6271,7 @@
 		<td class="center" data-bind="visible: chhFine">
 			<input data-role="numerictextbox"
 				   data-spinners="false"
-				   data-format="c2"
+				   data-format="c0"
 				   data-culture="#:locale#"
                    data-min="0"                   
                    data-bind="value: fine,
@@ -6281,7 +6281,7 @@
 		<td class="center">
 			<input data-role="numerictextbox"
 				   data-spinners="false"
-				   data-format="c2"
+				   data-format="c0"
 				   data-culture="#:locale#"
                    data-min="0"                   
                    data-bind="value: amount,
@@ -7025,8 +7025,8 @@
 		<td><i>#:banhji.invoiceForm.lineDS.indexOf(data)+1#</i>&nbsp;</td>
 		<td class="lside">#= description#</td>
 		<td>#= quantity#</td>
-		<td class="rside" width="70">#= kendo.toString(price, "c", locale) #</td>
-		<td class="rside">#= kendo.toString(amount, "c", locale) #</td>
+		<td class="rside" width="70">#= kendo.toString(price, locale=="km-KH"?"c0":"c", locale) #</td>
+		<td class="rside">#= kendo.toString(amount, locale=="km-KH"?"c0":"c", locale) #</td>
 	</tr>
 </script>
 
@@ -8217,7 +8217,7 @@
 		<td style="text-align: right;">#=location#</td>
 		<td style="text-align: right;">#=usage#</td>
 		<td style="text-align: right;">#=invoice#</td>
-		<td style="text-align: right;">#=kendo.toString(amount, "c2", banhji.locale)#</td>
+		<td style="text-align: right;">#=kendo.toString(amount, banhji.locale=="km-KH"?"c0":"c", banhji.locale)#</td>
 	</tr>
 </script>
 <script id="connectServiceRevenue" type="text/x-kendo-template">
@@ -8384,7 +8384,7 @@
 			<td style="text-align: right;">
 				<a href="\#/#=line[i].type.toLowerCase()#/#=line[i].id#">#=line[i].number#</a>
 			</td>		
-			<td style="text-align: right;">#=kendo.toString(line[i].amount, "c2", banhji.locale)#</td>
+			<td style="text-align: right;">#=kendo.toString(line[i].amount, banhji.locale=="km-KH"?"c0":"c", banhji.locale)#</td>
 		</tr>
 	#}#
 	<tr>
@@ -8393,7 +8393,7 @@
     	<td></td>
     	<td></td>
     	<td class="right" style="font-weight: bold; border-top: 1px solid black !important; color: black;">
-    		#=kendo.toString(amount, "c2", banhji.locale)#
+    		#=kendo.toString(amount, banhji.locale=="km-KH"?"c0":"c", banhji.locale)#
     	</td>
     </tr>
     <tr>
@@ -8565,7 +8565,7 @@
 				<a href="\#/#=line[i].type.toLowerCase()#/#=line[i].id#">#=line[i].number#</a>
 			</td>		
 			<td>#=line[i].usage#</td>	
-			<td style="text-align: right;">#=kendo.toString(line[i].amount, "c2", banhji.locale)#</td>
+			<td style="text-align: right;">#=kendo.toString(line[i].amount, banhji.locale=="km-KH"?"c0":"c", banhji.locale)#</td>
 		</tr>
 	#}#
 	<tr>
@@ -8575,7 +8575,7 @@
     	<td></td>
     	<td></td>
     	<td class="right" style="font-weight: bold; border-top: 1px solid black !important; color: black;">
-    		#=kendo.toString(amount, "c2", banhji.locale)#
+    		#=kendo.toString(amount, banhji.locale=="km-KH"?"c0":"c", banhji.locale)#
     	</td>
     </tr>
     <tr>
@@ -8812,7 +8812,7 @@
 				#:Math.floor((dueDates - toDay)/(1000*60*60*24))# days to pay
 			#}#
 		</td>
-		<td style="text-align: right;">#=kendo.toString(amount, "c2", banhji.locale)#</td>
+		<td style="text-align: right;">#=kendo.toString(amount, banhji.locale=="km-KH"?"c0":"c", banhji.locale)#</td>
 	</tr>
 </script>
 <script id="agingSummary" type="text/x-kendo-template">
@@ -8956,12 +8956,12 @@
 <script id="agingSummary-template" type="text/x-kendo-template" >
 	<tr>
 		<td>#=name#</td>
-		<td style="text-align: right;">#=kendo.toString(current, "c2", banhji.locale)#</td>
-		<td style="text-align: right;">#=kendo.toString(in30, "c2", banhji.locale)#</td>
-		<td style="text-align: right;">#=kendo.toString(in60, "c2", banhji.locale)#</td>
-		<td style="text-align: right;">#=kendo.toString(in90, "c2", banhji.locale)#</td>
-		<td style="text-align: right;">#=kendo.toString(over90, "c2", banhji.locale)#</td>
-		<td style="text-align: right;">#=kendo.toString(total, "c2", banhji.locale)#</td>
+		<td style="text-align: right;">#=kendo.toString(current, banhji.locale=="km-KH"?"c0":"c", banhji.locale)#</td>
+		<td style="text-align: right;">#=kendo.toString(in30, banhji.locale=="km-KH"?"c0":"c", banhji.locale)#</td>
+		<td style="text-align: right;">#=kendo.toString(in60, banhji.locale=="km-KH"?"c0":"c", banhji.locale)#</td>
+		<td style="text-align: right;">#=kendo.toString(in90, banhji.locale=="km-KH"?"c0":"c", banhji.locale)#</td>
+		<td style="text-align: right;">#=kendo.toString(over90, banhji.locale=="km-KH"?"c0":"c", banhji.locale)#</td>
+		<td style="text-align: right;">#=kendo.toString(total, banhji.locale=="km-KH"?"c0":"c", banhji.locale)#</td>
 	</tr>
 </script>
 <script id="customerDepositReport" type="text/x-kendo-template">
@@ -9127,7 +9127,7 @@
 	<tr>
 		<td colspan="6" style="font-weight: bold;">#: name #</td>
     	<td class="right strong" style="color: black;">
-    		#=kendo.toString(balance_forward, "c", banhji.locale)#
+    		#=kendo.toString(balance_forward, locale=="km-KH"?"c0":"c", banhji.locale)#
     	</td>
 	</tr>
 	#var balance = balance_forward;#
@@ -9150,17 +9150,17 @@
 			</td>
 			<td>#=line[i].location#</td>
 			<td align="right" style="color: black;">
-				#=kendo.toString(line[i].amount, "c2", banhji.locale)#
+				#=kendo.toString(line[i].amount, banhji.locale=="km-KH"?"c0":"c", banhji.locale)#
 			</td>
 			<td class="right" style="color: black;">
-				#=kendo.toString(balance, "c2", banhji.locale)#
+				#=kendo.toString(balance, banhji.locale=="km-KH"?"c0":"c", banhji.locale)#
 			</td> 			
 	    </tr>    
     #}# 
     <tr>
     	<td colspan="6" style="font-weight: bold; color: black;">Total #: name #</td>
     	<td class="right" style="font-weight: bold; border-top: 1px solid black !important; color: black;">
-    		#=kendo.toString(balance, "c2", banhji.locale)#
+    		#=kendo.toString(balance, banhji.locale=="km-KH"?"c0":"c", banhji.locale)#
     	</td>
     </tr>
     <tr>
@@ -9341,17 +9341,17 @@
         	#}#
 		</td>
 		<td style="text-align: right;">
-			#=kendo.toString(line[i].amount, "c2", banhji.locale)#
+			#=kendo.toString(line[i].amount, banhji.locale=="km-KH"?"c0":"c", banhji.locale)#
 		</td>
 		<td style="text-align: right;">
-			#=kendo.toString(totalBalance, "c2", banhji.locale)#
+			#=kendo.toString(totalBalance, banhji.locale=="km-KH"?"c0":"c", banhji.locale)#
 		</td>
 	</tr>
     #}#
     <tr>
     	<td colspan="7" style="font-weight: bold; color: black;">Total</td>
     	<td class="right" style="font-weight: bold; border-top: 1px solid black !important; color: black;">
-    		#=kendo.toString(totalBalance, "c2", banhji.locale)#
+    		#=kendo.toString(totalBalance, banhji.locale=="km-KH"?"c0":"c", banhji.locale)#
     	</td>
     </tr>
     <tr>
@@ -9634,7 +9634,7 @@
 	<tr>
 		<td style="vertical-align: top;">#=kendo.toString(new Date(line[i].issued_date), "dd-MM-yyyy")#</td>
 		<td style="vertical-align: top;"><a href="\#/#=line[i].type.toLowerCase()#/#=line[i].id#">#=line[i].number#</a></td>
-		<td style="vertical-align: top; text-align: right;">#=kendo.toString(line[i].amount, "c2", banhji.locale)#</td>
+		<td style="vertical-align: top; text-align: right;">#=kendo.toString(line[i].amount, banhji.locale=="km-KH"?"c0":"c", banhji.locale)#</td>
 		<td colspan="3" style="padding-top: 0 !important; ">
 			#if(line[i].payments.length>0){#
 			<table class="table receipt-table">
@@ -9643,7 +9643,7 @@
 				<tr>
 					<td style="background: transparent !important;">#=kendo.toString(new Date(line[i].payments[j].issued_date), "dd-MM-yyyy")#</td>
 					<td style="background: transparent !important;"><a href="\#/#=line[i].payments[j].type.toLowerCase()#/#=line[i].payments[j].id#">#=line[i].payments[j].number#</a></td>
-					<td style="text-align: right; background: transparent !important;">#=kendo.toString(line[i].payments[j].amount, "c2", banhji.locale)#</td>
+					<td style="text-align: right; background: transparent !important;">#=kendo.toString(line[i].payments[j].amount, banhji.locale=="km-KH"?"c0":"c", banhji.locale)#</td>
 				</tr>
 				#}#
 			</table>
@@ -9655,12 +9655,12 @@
     	<td style="font-weight: bold; color: black;">Total</td>
     	<td></td>
     	<td style="text-align: right; font-weight: bold; border-top: 1px solid black !important; color: black;">
-    		#=kendo.toString(totalInvoice, "c", banhji.locale)#
+    		#=kendo.toString(totalInvoice, banhji.locale=="km-KH"?"c0":"c", banhji.locale)#
     	</td>    	
     	<td></td>
     	<td></td>
     	<td style="text-align: right; font-weight: bold; border-top: 1px solid black !important; color: black;">
-    		#=kendo.toString(totalReceived, "c", banhji.locale)#
+    		#=kendo.toString(totalReceived, banhji.locale=="km-KH"?"c0":"c", banhji.locale)#
     	</td>
     </tr>
 	<tr>
@@ -9826,7 +9826,7 @@
 			<td style="text-align: right;">
 				<a href="\#/#=line[i].type.toLowerCase()#/#=line[i].id#">#=line[i].number#</a>
 			</td>		
-			<td style="text-align: right;">#=kendo.toString(line[i].amount, "c2", banhji.locale)#</td>
+			<td style="text-align: right;">#=kendo.toString(line[i].amount, banhji.locale=="km-KH"?"c0":"c", banhji.locale)#</td>
 		</tr>
 	#}#
 	<tr>
@@ -9835,7 +9835,7 @@
     	<td></td>
     	<td></td>
     	<td class="right" style="font-weight: bold; border-top: 1px solid black !important; color: black;">
-    		#=kendo.toString(amount, "c2", banhji.locale)#
+    		#=kendo.toString(amount, banhji.locale=="km-KH"?"c0":"c", banhji.locale)#
     	</td>
     </tr>
     <tr>
@@ -15953,7 +15953,7 @@
 				var MeterLocation = v.meter.location_id;
 				var MeterID = v.meter.id;
 	    		aSold += Total;
-	    		aSoldL = kendo.toString(aSold, "c", v.contact.locale);
+	    		aSoldL = kendo.toString(aSold, v.contact.locale=="km-KH"?"c0":"c", v.contact.locale);
 				//set INV
 	    		self.calInvoice(Total, v.contact, invoiceItems, MeterLocation, MeterID);
 	    	});
@@ -16153,7 +16153,7 @@
 	    	$.each(this.printArray, function(i, v){
 	    		tMeter += kendo.parseInt(v.consumption);
 	    		AmountT += kendo.parseFloat(v.amount);
-	    		AmountTA = kendo.toString(AmountT, "c", v.locale);
+	    		AmountTA = kendo.toString(AmountT, v.locale=="km-KH"?"c0":"c", v.locale);
 	    	});
 	    	this.set("amountTotal", AmountTA);
 	    	this.set("totalMeter", tMeter);
@@ -17060,7 +17060,7 @@
 						   	month 				: 0,
 						   	is_recurring 		: 0,
 						   	contact 			: {id: contact.id, name: contact.name},
-						   	amount_due 			: kendo.toString(amount_due, "c", value.locale),
+						   	amount_due 			: kendo.toString(amount_due, value.locale=="km-KH"?"c0":"c", value.locale),
 						   	amount_paid 		: value.amount_paid,
 						   	reference 			: [{ "number" : value.number, "amount" : value.amount, "deposit" : value.deposit, "issued_date":value.issued_date, "account_id":value.account_id }]				
 				    	});	
@@ -17092,15 +17092,15 @@
 				total = amount_due - view[0].discount,
 				remain = amount_due - (view[0].amount + view[0].discount);
 
-				view[0].set("amount_due", kendo.toString(amount_due, "c", view[0].locale));
+				view[0].set("amount_due", kendo.toString(amount_due, view[0].locale=="km-KH"?"c0":"c", view[0].locale));
 				
 				self.set("obj", view[0]);
 
-				self.set("sub_total", kendo.toString(amount_due, "c", view[0].locale));
-		        self.set("discount", kendo.toString(view[0].discount, "c", view[0].locale));
-		        self.set("total", kendo.toString(total, "c", view[0].locale));
-		        self.set("pay", kendo.toString(view[0].amount, "c", view[0].locale));
-		        self.set("remain", kendo.toString(remain, "c", view[0].locale));
+				self.set("sub_total", kendo.toString(amount_due, view[0].locale=="km-KH"?"c0":"c", view[0].locale));
+		        self.set("discount", kendo.toString(view[0].discount, view[0].locale=="km-KH"?"c0":"c", view[0].locale));
+		        self.set("total", kendo.toString(total, view[0].locale=="km-KH"?"c0":"c", view[0].locale));
+		        self.set("pay", kendo.toString(view[0].amount, view[0].locale=="km-KH"?"c0":"c", view[0].locale));
+		        self.set("remain", kendo.toString(remain, view[0].locale=="km-KH"?"c0":"c", view[0].locale));
 				
 				self.journalLineDS.filter({ field: "transaction_id", value: id });
 				self.creditDS.filter([
@@ -17124,11 +17124,11 @@
 			total = subTotal - discount;
 			remain = total - pay;			
 
-	        this.set("sub_total", kendo.toString(subTotal, "c", banhji.locale));
-	        this.set("discount", kendo.toString(discount, "c", banhji.locale));
-	        this.set("total", kendo.toString(total, "c", banhji.locale));
-	        this.set("pay", kendo.toString(pay, "c", banhji.locale));
-	        this.set("remain", kendo.toString(remain, "c", banhji.locale));
+	        this.set("sub_total", kendo.toString(subTotal, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
+	        this.set("discount", kendo.toString(discount, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
+	        this.set("total", kendo.toString(total, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
+	        this.set("pay", kendo.toString(pay, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
+	        this.set("remain", kendo.toString(remain, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
 		},
 		removeRow 			: function(e){			
 			this.dataSource.remove(e.data);		    
@@ -17662,8 +17662,8 @@
 				view[0].set("reference", []);
 
 				self.set("obj", view[0]);
-				self.set("total", kendo.toString(view[0].amount, "c", view[0].locale));
-		        self.set("total_received", kendo.toString(view[0].amount, "c", view[0].locale));
+				self.set("total", kendo.toString(view[0].amount, view[0].locale=="km-KH"?"c0":"c", view[0].locale));
+		        self.set("total_received", kendo.toString(view[0].amount, view[0].locale=="km-KH"?"c0":"c", view[0].locale));
 
 				self.journalLineDS.filter({ field: "transaction_id", value: id });
 
@@ -17697,8 +17697,8 @@
 
 	        obj.set("sub_total", sub_total);
 	        obj.set("discount", discount);
-	        this.set("total", kendo.toString(total, "c2", banhji.locale));
-	        this.set("total_received", kendo.toString(total_received, "c2", banhji.locale));
+	        this.set("total", kendo.toString(total, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
+	        this.set("total_received", kendo.toString(total_received, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
 	        obj.set("remaining", remaining);
 		},
 		removeRow 			: function(e){
@@ -18131,7 +18131,7 @@
 
 				self.set("obj", view[0]);
 				self.set("original_total", view[0].amount);
-				self.set("total", kendo.toString(view[0].amount, "c", view[0].locale));
+				self.set("total", kendo.toString(view[0].amount, view[0].locale=="km-KH"?"c0":"c", view[0].locale));
 				self.lineDS.filter({ field: "transaction_id", value: id });				
 				self.journalLineDS.filter({ field: "transaction_id", value: id });
 				self.referenceDS.filter({ field: "id", value: view[0].reference_id });
@@ -18149,7 +18149,7 @@
 					sum += value.amount;
 		        });
 
-		        this.set("total", kendo.toString(sum, "c", obj.locale));
+		        this.set("total", kendo.toString(sum, obj.locale=="km-KH"?"c0":"c", obj.locale));
 		        obj.set("amount", sum);
 	    	}else{
 	    		this.set("total", 0);
@@ -18442,7 +18442,7 @@
 					rate				: data.rate,
 					locale				: data.locale
 				});
-			 	this.set("total", kendo.toString(data.amount, "c", data.locale));
+			 	this.set("total", kendo.toString(data.amount, data.locale=="km-KH"?"c0":"c", data.locale));
 		 	}
 		},
 		//Recurring
@@ -19287,7 +19287,7 @@
             		amount += value.amount;
             	});
             	
-            	self.set("totalAmount", kendo.toString(amount, "c2", banhji.locale));
+            	self.set("totalAmount", kendo.toString(amount, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
             });
 		},
 		printGrid			: function() {
@@ -19547,7 +19547,7 @@
             		amount += value.amount;
             	});
             	
-            	self.set("totalAmount", kendo.toString(amount, "c2", banhji.locale));
+            	self.set("totalAmount", kendo.toString(amount, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
             });
 		},
 		cancel 			: function(){
@@ -19764,7 +19764,7 @@
             		amount += value.amount;
             	});
             	
-            	self.set("totalAmount", kendo.toString(amount, "c2", banhji.locale));
+            	self.set("totalAmount", kendo.toString(amount, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
             });
 		},		
 		printGrid			: function() {
@@ -19983,7 +19983,7 @@
             		amount += value.amount;
             	});
             	
-            	self.set("totalAmount", kendo.toString(amount, "c2", banhji.locale));
+            	self.set("totalAmount", kendo.toString(amount, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
             });
 		},
 		printGrid			: function() {
@@ -20203,7 +20203,7 @@
             		amount += value.amount;
             	});
             	
-            	self.set("totalAmount", kendo.toString(amount, "c2", banhji.locale));
+            	self.set("totalAmount", kendo.toString(amount, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
             });
 		},
 		printGrid			: function() {
@@ -20418,7 +20418,7 @@
             		amount += value.amount;
             	});
 
-            	self.set("totalAmount", kendo.toString(amount, "c2", banhji.locale));
+            	self.set("totalAmount", kendo.toString(amount, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
             });
 		},
 		printGrid			: function() {
@@ -20584,7 +20584,7 @@
             		balance += value.total;
             	});
 
-            	self.set("totalBalance", kendo.toString(balance, "c2", banhji.locale));
+            	self.set("totalBalance", kendo.toString(balance, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
             });
 		},
 		printGrid			: function() {
@@ -20806,7 +20806,7 @@
 	            	});
             	});
             	
-            	self.set("totalAmount", kendo.toString(amount, "c2", banhji.locale));
+            	self.set("totalAmount", kendo.toString(amount, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
             });
 		},
 		printGrid			: function() {
@@ -20978,7 +20978,7 @@
             		});
             	});
 
-            	self.set("totalBalance", kendo.toString(balance, "c2", banhji.locale));
+            	self.set("totalBalance", kendo.toString(balance, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
             });
 		},
 		printGrid			: function() {
@@ -21291,7 +21291,7 @@
             	});
 
             	self.set("total_txn", kendo.toString(txn_count, "n0"));
-            	self.set("totalAmount", kendo.toString(amount, "c2", banhji.locale));
+            	self.set("totalAmount", kendo.toString(amount, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
             });
 		},
 		printGrid			: function() {
@@ -21493,7 +21493,7 @@
             		amount += value.amount;
             	});
             	
-            	self.set("totalAmount", kendo.toString(amount, "c2", banhji.locale));
+            	self.set("totalAmount", kendo.toString(amount, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
             });
 		},
 		printGrid			: function() {
@@ -21815,10 +21815,10 @@
 	      			user += value.activeCustomer;
 	      			deposit+= value.deposit;
 	      		});
-	      		banhji.wDashBoard.set('totalSale', kendo.toString(sale, 'c2', banhji.locale));
+	      		banhji.wDashBoard.set('totalSale', kendo.toString(sale, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
 	      		banhji.wDashBoard.set('totalUsage', usage);
 	      		banhji.wDashBoard.set('totalUser', user);
-	      		banhji.wDashBoard.set('totalDeposit',  kendo.toString(deposit, 'c2', banhji.locale));
+	      		banhji.wDashBoard.set('totalDeposit',  kendo.toString(deposit, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
 	      		banhji.wDashBoard.set('avgUsage', usage/user);
 	      	},
 	      	batch: true,
@@ -21913,7 +21913,7 @@
 	      		banhji.wDashBoard.set('overDue', overDue);
 	      		banhji.wDashBoard.set('totalCust', totalCust);
 	      		banhji.wDashBoard.set('voidCust', voided);
-	      		banhji.wDashBoard.set('totalAmount', kendo.toString(amount, 'c2', banhji.locale));
+	      		banhji.wDashBoard.set('totalAmount', kendo.toString(amount, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
 	      	},
 	      	batch: true,
 	      	serverFiltering: true,

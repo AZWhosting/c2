@@ -1214,17 +1214,18 @@
 								<th><span data-bind="text: lang.lang.status"></span></th>
 								<th><span data-bind="text: lang.lang.action"></span></th>
 							</tr>
-						</thead>	            		
+						</thead>
 	            		<tbody data-role="listview"
-	            				data-auto-bind="false"	            					            					            					            			
+	            				data-auto-bind="false"
 				                data-template="customerCenter-transaction-tmpl"
 				                data-bind="source: transactionDS" >
 				        </tbody>
 	            	</table>
 
 	            	<div id="pager" class="k-pager-wrap"
+	            		 data-role="pager"
 				    	 data-auto-bind="false"
-			             data-role="pager" data-bind="source: transactionDS"></div>	            	
+			             data-bind="source: transactionDS"></div>	            	
 				</div>
 			</div>			
 		</div>
@@ -47703,10 +47704,7 @@
 
 	            this.transactionDS.query({
 	            	filter: para,
-	            	sort: [
-				  		{ field: "issued_date", dir: "desc" },
-				  		{ field: "id", dir: "desc" }
-				  	],
+	            	sort: { field: "issued_date", dir: "desc" },
 	            	page: 1,
 	            	pageSize: 10
 	            });
