@@ -24,10 +24,6 @@ class Invoices extends REST_Controller {
 		}
 	}
 
-	// public function index_get($id = NULL) {
-	// 	$this->response($id, 200);
-	// }
-
 	public function index_get($id = NULL, $resource = NULL) {
 		$filter 	= $this->get("filter");
 		$page 		= $this->get('page');
@@ -99,8 +95,21 @@ class Invoices extends REST_Controller {
 							}
 								
 							break;
-						case "reference":
-							$q = $row->{$resource}->select('id, amount, type, number')->get();
+						case "sale_order":
+							$q = $row->reference->select('id, amount, type, number')->where('type','Sale_Order')->get();
+							if($q->exists()) {
+								$rs = array(
+									'url' => base_url() . "api/transaction/index/" . $q->id,
+									"number"=> $q->number,
+									'type' => $q->type,
+									'amount' => $q->amount
+								);
+							} else {
+								$rs = array();
+							}
+							break;
+						case "deposit":
+							$q = $row->reference->select('id, amount, type, number')->where('type','Customer_Deposit')->get();
 							if($q->exists()) {
 								$rs = array(
 									'url' => base_url() . "api/transaction/index/" . $q->id,
@@ -143,15 +152,15 @@ class Invoices extends REST_Controller {
 		$this->response($data, 200);
 	}
 
-	public function index_post() {
-		//
-	}
+	// public function index_post() {
+	// 	//
+	// }
 
-	public function index_put($id = NULL) {
-		//
-	}
+	// public function index_put($id = NULL) {
+	// 	//
+	// }
 	
-	public function index_delete($id = NULL) {
-		//
-	}
+	// public function index_delete($id = NULL) {
+	// 	//
+	// }
 }

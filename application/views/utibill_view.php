@@ -5133,12 +5133,12 @@
 		            </div>
 		            <div class="cover-name-company" style="width: 57%; margin-left: 15px;">
 		            	<h2 style="text-align: left;">#: banhji.InvoicePrint.license.name#</h2>
-		                <p style="font-size: 12px; color: \\#000;">#: banhji.InvoicePrint.license.adress#</p>
+		                <p style="font-size: 12px; color: \\#000;">#:typeof banhji.InvoicePrint.license.address != 'undefined' ? banhji.InvoicePrint.license.address: ''#</p>
 		                <p style="font-size: 12px; color: \\#000;">#:typeof banhji.InvoicePrint.license.mobile != 'undefined' ? banhji.InvoicePrint.license.mobile: ''#</p>
 		            </div>
 		            <div class="cover-name-company" style="border-top: 1px solid \\#000; width: 57%; margin-left: 15px;padding-top: 10px;margin-top: 10px;">
 		            	<h2 style="text-align: left;">#: contact.name#</h2>
-		                <p style="font-size: 12px; color: \\#000;">#: contact.adress#</p>
+		                <p style="font-size: 12px; color: \\#000;">#:typeof contact.address !='undefined' ? contact.address: ''#</p>
 		                <p style="font-size: 12px; color: \\#000;">#:typeof contact.phone != 'undefined' ? contact.phone: ''#</p>
 		                <p style="font-size: 12px; color: \\#000;">លេខកូដអតិថិជន #: contact.number#</p>
 		            </div>
@@ -5198,7 +5198,7 @@
 	    </div>
 
 	    <div class="row-fluid">
-	    	<div class="table-content" style="border: 2px solid \\#30859C; border-radius: 10px; padding: 10px; margin: 10px 8px; font-weight: 600; float: left; width: 97.5%;">
+	    	<div class="table-content" style="border: 2px solid \\#30859C; border-radius: 10px; padding: 10px; margin: 10px 8px; font-weight: 600; float: left;">
 	    		<p style="color: \\#30859C;">ការប្រើប្រាស់របស់អ្នកក្នុងរយះពេលពី​  <span style="color: \\#000;">#=kendo.toString(new Date(invoice_lines[0].from_date), "dd-MMMM-yyyy", "km-KH")#</span> ដល់ <span style="color: \\#000;">#=kendo.toString(new Date(invoice_lines[0].to_date), "dd-MMMM-yyyy", "km-KH")#</span></p>
 	    		<table>
 	    			<thead>
@@ -5233,8 +5233,8 @@
 						#for(var j=1; j< invoice_lines.length; j++) {#
 							#if(invoice_lines[j].amount != 0) {#
 								#if(invoice_lines[j].type == "tariff"){#
-								#var amountTariff = invoice_lines[j].amount #
-								#var amountTariffMoney = invoice_lines[j].amount * invoice_lines[0].consumption #
+								#var amountTariff = invoice_lines[j].amount ;#
+								#var amountTariffMoney = invoice_lines[j].amount * invoice_lines[0].consumption ;#
 									<tr>
 										<td colspan="3" align="left">#: invoice_lines[j].number#</td>
 										<td align="center">#: invoice_lines[0].consumption#</td>
@@ -5247,9 +5247,9 @@
 										#if(invoice_lines[j].unit == "money"){#
 											<td align="center"></td>
 											<td align="right"></td>
-											<td align="right">-#= kendo.toString(invoice_lines[j].amount, locale=="km-KH"?"c0":"c",, locale)#</td>
+											<td align="right">-#= kendo.toString(invoice_lines[j].amount, locale=="km-KH"?"c0":"c", locale)#</td>
 										#}else if(invoice_lines[j].unit == "%"){#
-										#var AMM = (amountTariffMoney * invoice_lines[j].amount) / 100#
+										#var AMM = (amountTariffMoney * invoice_lines[j].amount) / 100;#
 											<td align="center">#= invoice_lines[j].amount#%</td>
 											<td align="center"></td>
 											<td align="right">-#= kendo.toString(AMM, locale=="km-KH"?"c0":"c", locale)#</td>
@@ -5271,7 +5271,7 @@
 						#}#	
 						<tr>
 							<td colspan="5" style="padding-right: 10px;background: \\#355176;color: \\#fff;text-align: right;background-color: #: formcolor #!important;#= banhji.InvoicePrint.formVisible#" class="darkbblue main-color">បំណុល​សរុប TOTAL BALANCE</td>
-							<td style="border: 1px solid;text-align: right">#= kendo.toString(amount, locale=="km-KH"?"c0":"c", locale)#</td>
+							<td style="border: 1px solid \\#000;text-align: right">#= kendo.toString(amount, locale=="km-KH"?"c0":"c", locale)#</td>
 						</tr>
 						<tr>
 							<td rowspan="4" colspan="3">#= banhji.InvoicePrint.license.term_of_condition#</td>
@@ -12880,7 +12880,7 @@
 			monthL = kendo.toString(monthL, "yyyy-MM-dd");
 			para.push({field: "location_id", operator: "where_related_meter", value: bloc_id.id});
 			para.push(
-				{field: "month_of >=", value: monthOf},
+				{field: "month_of >", value: monthOf},
 				{field: "month_of <=", value: monthL}
 			);
 			this.existReading.query({
@@ -16408,7 +16408,7 @@
 			if(this.txnFormID == "45"){
 				Win = window.open('', '', 'width=1000, height=900');
 				pHeight = "210mm";
-				pWidth = "150mm";
+				pWidth = "297mm";
 				var	colorM = this.formColor;
 				if(colorM == '#000000' || colorM =='#1f497d' || colorM == null){ 
 					ts = 'color: #fff!important;';
@@ -16432,7 +16432,7 @@
 			            '<link href="<?php echo base_url(); ?>assets/water/winvoice-print.css" rel="stylesheet" />'+
 			            '<link href="<?php echo base_url(); ?>assets/invoice/invoice.css" rel="stylesheet" />'+
 			            '<link href="<?php echo base_url(); ?>assets/responsive.css" rel="stylesheet" />'+
-			            '<link href="<?php echo base_url(); ?>assets/style-default-menus-dark.css" rel="stylesheet" />'+
+			            '<link href="https://fonts.googleapis.com/css?family=Preahvihear" rel="stylesheet" />'+
 			            '<link href="https://fonts.googleapis.com/css?family=Content:400,700" rel="stylesheet" type="text/css">'+
 			            '<link href="https://fonts.googleapis.com/css?family=Moul" rel="stylesheet">'+
 			            '<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Battambang&amp;subset=khmer" media="all">'+
@@ -16440,6 +16440,7 @@
 			            	'@page { size: portrait; margin:0.5cm;' +
 			            		'size: A4;' +
 			            	'} '+
+			            	'* {font-weight: lighter!important;}'+
 							'@media print {' +
 	  							'html, body {' +
 	    							'max-width: '+ pWidth +';' +

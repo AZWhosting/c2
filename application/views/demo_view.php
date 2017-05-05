@@ -29500,12 +29500,10 @@
 														<span data-bind="text: lang.lang.segment"></span>
 														<select data-role="multiselect"
 															   data-value-primitive="true"
-															   data-item-template="segment-list-tmpl"
 															   data-value-field="id"
-															   data-text-field="code"
+															   data-text-field="name"
 															   data-bind="value: obj.segments, 
-															   			source: segmentItemDS,
-															   			events:{ change: segmentChanges }"
+															   			source: segmentDS"
 															   data-placeholder="Select Segments.."
 															   style="width: 100%" /></select>
 													</td>
@@ -29519,9 +29517,11 @@
 						</div>
 						<!-- // Tabs END -->						
 					</div>
+
 					<div id="loadImport" style="display:none;text-align: center;top:30px;position: absolute;width: 82%; height: 99.5%;background: rgba(142, 159, 167, 0.8);z-index: 9999;">
 						<i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 35%;left: 45%"></i>
 					</div>
+
 					<div id="invFormContent">
 						<div class="block-title">
 							<h3 data-bind="text: company.name"></h3>
@@ -46389,6 +46389,7 @@
 		paymentTermDS				: dataStore(apiUrl + "payment_terms"),
 		paymentMethodDS				: dataStore(apiUrl + "payment_methods"),
 		//Segment
+		segmentDS					: dataStore(apiUrl + "segments"),
 		segmentItemList 			: [],
 		segmentItemDS				: dataStore(apiUrl + "segments/item"),
 		//Txn Template
@@ -83690,13 +83691,7 @@
 		  	filter:{ field:"status", value: 1 },
 		  	sort: { field:"number", dir:"asc" }
 		}),
-		segmentItemDS 		: new kendo.data.DataSource({
-		  	data: banhji.source.segmentItemList,
-		  	sort: [
-			  	{ field: "segment_id", dir: "asc" },
-			  	{ field: "code", dir: "asc" }
-			]
-		}),
+		segmentDS 			: banhji.source.segmentDS,
 		sortList			: banhji.source.sortList,
 		sorter 				: "month",
 		sdate 				: "",
@@ -83746,23 +83741,6 @@
 				default:
 					this.set("sdate", "");
 				  	this.set("edate", "");									  
-			}
-		},
-		segmentChanges 		: function() {
-			var dataArr = this.get("obj").segments,
-			lastIndex = dataArr.length - 1,
-			last = this.segmentItemDS.get(dataArr[lastIndex]);
-			
-			if(dataArr.length > 1) {
-				for(var i = 0; i < dataArr.length - 1; i++) {
-					var current_index = dataArr[i],
-					current = this.segmentItemDS.get(current_index);
-
-					if(current.segment_id === last.segment_id) {
-						dataArr.splice(lastIndex, 1);
-						break;
-					}
-				}
 			}
 		},
 		search				: function(){

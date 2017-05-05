@@ -24,10 +24,6 @@ class Customers extends REST_Controller {
 		}
 	}
 
-	// public function index_get($id = NULL) {
-	// 	$this->response($id, 200);
-	// }
-
 	public function index_get($id = NULL, $resource = NULL) {
 		$filter 	= $this->get("filter");
 		$page 		= $this->get('page') == TRUE ? $this->get('page'): 1;
@@ -88,8 +84,7 @@ class Customers extends REST_Controller {
 					$rs = null;
 					switch ($resource) {
 						case "invoice":
-							$resource = 'transaction';
-							$query = $row->{$resource}->select('id, number, amount')->where('deleted', 0)->where('type like ', "%Invoice")->get_paged_iterated($page, $limit);
+							$query = $row->transaction->select('id, number, amount')->where('deleted', 0)->where('type like ', "%Invoice")->get_paged_iterated($page, $limit);
 							if($query->exists()) {
 								foreach($query as $q) {
 									$rs['items'][] = array(
@@ -104,15 +99,32 @@ class Customers extends REST_Controller {
 							}
 								
 							break;
-						case "reference":
-							$q = $row->{$resource}->select('id, amount, type, number')->get();
-							if($q->exists()) {
-								$rs = array(
-									'url' => base_url() . "api/transaction/index/" . $q->id,
-									"number"=> $q->number,
-									'type' => $q->type,
-									'amount' => $q->amount
-								);
+						case "sale_order":
+							$query = $row->transaction->select('id, amount, type, number')->where('type', 'Sale_Order')->get_paged_iterated($page, $limit);
+							if($query->exists()) {
+								foreach($query as $q) {
+									$rs['items'][] = array(
+										'url' => base_url() . "v1/invoices/index/" . $q->id,
+										"number"=> $q->number,
+										"amount"=> floatval($q->amount)
+									);
+								}
+								$rs['count'] = $query->paged->total_rows;
+							} else {
+								$rs = array();
+							}
+							break;
+						case "deposit":
+							$query = $row->transaction->select('id, amount, type, number')->where('type', 'Customer_Deposit')->get_paged_iterated($page, $limit);
+							if($query->exists()) {
+								foreach($query as $q) {
+									$rs['items'][] = array(
+										'url' => base_url() . "v1/invoices/index/" . $q->id,
+										"number"=> $q->number,
+										"amount"=> floatval($q->amount)
+									);
+								}
+								$rs['count'] = $query->paged->total_rows;
 							} else {
 								$rs = array();
 							}
@@ -150,15 +162,24 @@ class Customers extends REST_Controller {
 		$this->response($data, 200);
 	}
 
-	public function index_post() {
-		//
-	}
+	// public function index_post() {
+	// 	//
+	// }
 
-	public function index_put($id = NULL) {
-		//
-	}
+	// public function index_put($id = NULL) {
+	// 	//
+	// }
 	
-	public function index_delete($id = NULL) {
-		//
+	// public function index_delete($id = NULL) {
+	// 	//
+	// }
+
+	public function inst_get() {
+		$institutes = new Institute(null);
+		$institutes->include_related('user', 'username');
+		
+
+		echo $institutes->get_sql();
+
 	}
 }
