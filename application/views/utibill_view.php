@@ -9513,14 +9513,33 @@
 									<div class="tab-content">
 
 								        <!-- //Date -->
-								        <div class="tab-pane active" id="tab-1">									
-									        As of:
-									        <input data-role="datepicker"
-													data-format="dd-MM-yyyy"
-													data-parse-formats="yyyy-MM-dd" 
-													data-bind="value: as_of" />
+								        <!-- //Date -->
+								        <div class="tab-pane active" id="tab-1">									        	
+											
+											<input data-role="dropdownlist"
+												   class="sorter"                  
+										           data-value-primitive="true"
+										           data-text-field="text"
+										           data-value-field="value"
+										           data-bind="value: sorter,
+										                      source: sortList,                              
+										                      events: { change: sorterChanges }" />
 
-								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+											<input data-role="datepicker"
+												   class="sdate"
+												   data-format="dd-MM-yyyy"
+										           data-bind="value: sdate,
+										           			  max: edate"
+										           placeholder="From ..." >
+
+										    <input data-role="datepicker"
+										    	   class="edate"
+										    	   data-format="dd-MM-yyyy"
+										           data-bind="value: edate,
+										                      min: sdate"
+										           placeholder="To ..." >
+
+										  	<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
 							
 							        	</div>
 
@@ -9553,19 +9572,6 @@
 															data-bind="
 																value: blocSelect,
 																	source: blocDS" style="width: 100%">
-												</div>
-												<div class="span3">
-													<span data-bind="text: lang.lang.customers"></span>
-													<select data-role="multiselect"
-														   data-value-primitive="true"
-														   data-header-template="customer-header-tmpl"
-														   data-item-template="contact-list-tmpl"
-														   data-value-field="id"
-														   data-text-field="name"
-														   data-bind="value: obj.contactIds, 
-														   			source: contactDS"
-														   data-placeholder="Select Customer.."
-														   style="width: 100%" /></select>
 												</div>
 												<div class="span1">											
 										  			<button style="margin-top: 20px;" type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
@@ -9695,14 +9701,32 @@
 									<div class="tab-content">
 
 								        <!-- //Date -->
-								        <div class="tab-pane active" id="tab-1">									
-									        As of:
-									        <input data-role="datepicker"
-													data-format="dd-MM-yyyy"
-													data-parse-formats="yyyy-MM-dd" 
-													data-bind="value: as_of" />
+								        <div class="tab-pane active" id="tab-1">									        	
+											
+											<input data-role="dropdownlist"
+												   class="sorter"                  
+										           data-value-primitive="true"
+										           data-text-field="text"
+										           data-value-field="value"
+										           data-bind="value: sorter,
+										                      source: sortList,                              
+										                      events: { change: sorterChanges }" />
 
-								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+											<input data-role="datepicker"
+												   class="sdate"
+												   data-format="dd-MM-yyyy"
+										           data-bind="value: sdate,
+										           			  max: edate"
+										           placeholder="From ..." >
+
+										    <input data-role="datepicker"
+										    	   class="edate"
+										    	   data-format="dd-MM-yyyy"
+										           data-bind="value: edate,
+										                      min: sdate"
+										           placeholder="To ..." >
+
+										  	<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
 							
 							        	</div>
 
@@ -9735,19 +9759,6 @@
 															data-bind="
 																value: blocSelect,
 																	source: blocDS" style="width: 100%">
-												</div>
-												<div class="span3">
-													<span data-bind="text: lang.lang.customers"></span>
-													<select data-role="multiselect"
-														   data-value-primitive="true"
-														   data-header-template="customer-header-tmpl"
-														   data-item-template="contact-list-tmpl"
-														   data-value-field="id"
-														   data-text-field="name"
-														   data-bind="value: obj.contactIds, 
-														   			source: contactDS"
-														   data-placeholder="Select Customer.."
-														   style="width: 100%" /></select>
 												</div>
 												<div class="span1">											
 										  			<button style="margin-top: 20px;" type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
@@ -21245,7 +21256,8 @@
 		search				: function(){
 			var self = this, para = [],
 				obj = this.get("obj"),
-				as_of = this.get("as_of"),
+				start = this.get("sdate"),
+        		end = this.get("edate"),
         		displayDate = "";
         		license = this.get("licenseSelect"),
 				bloc = this.get("blocSelect");
@@ -21255,27 +21267,32 @@
 			if(bloc){
 				para.push({ field:"location_id", value: bloc.id });
 			}
-
-        	//Customer
-            if(obj.contactIds.length>0){
-            	var contactIds = [];
-            	$.each(obj.contactIds, function(index, value){
-            		contactIds.push(value);
-            	});          	
-	            para.push({ field:"contact_id", operator:"where_in", value:contactIds });
-	        }
     	
     	
         	//Dates
-        	if(as_of){
-				as_of = new Date(as_of);
-				var displayDate = "As Of " + kendo.toString(as_of, "dd-MM-yyyy");
-				this.set("displayDate", displayDate);
-				as_of.setDate(as_of.getDate()+1);
+        	if(start && end){
+        		start = new Date(start);
+        		end = new Date(end);
+        		displayDate = "From " + kendo.toString(start, "dd-MM-yyyy") + " To " + kendo.toString(end, "dd-MM-yyyy");
+        		end.setDate(end.getDate()+1);
 
-				para.push({ field:"issued_date <", value:kendo.toString(as_of, "yyyy-MM-dd") });
-			}
+            	para.push({ field:"issued_date >=", value: kendo.toString(start, "yyyy-MM-dd") });
+            	para.push({ field:"issued_date <", value: kendo.toString(end, "yyyy-MM-dd") });
+            }else if(start){
+            	start = new Date(start);
+            	displayDate = "On " + kendo.toString(start, "dd-MM-yyyy");
 
+            	para.push({ field:"issued_date", value: kendo.toString(start, "yyyy-MM-dd") });
+            }else if(end){
+            	end = new Date(end);
+            	displayDate = "As Of " + kendo.toString(end, "dd-MM-yyyy");
+        		end.setDate(end.getDate()+1);
+        		
+            	para.push({ field:"issued_date <", value: kendo.toString(end, "yyyy-MM-dd") });
+            }else{
+            	
+            }
+            this.set("displayDate", displayDate);
             this.dataSource.query({
             	filter:para
             }).then(function(){
@@ -21454,7 +21471,8 @@
 		search				: function(){
 			var self = this, para = [],
 				obj = this.get("obj"),
-				as_of = this.get("as_of"),
+				start = this.get("sdate"),
+        		end = this.get("edate"),
         		displayDate = "";
         		license = this.get("licenseSelect"),
 				bloc = this.get("blocSelect");
@@ -21475,15 +21493,29 @@
 	        }
     	
         	//Dates
-        	if(as_of){
-				as_of = new Date(as_of);
-				var displayDate = "As Of " + kendo.toString(as_of, "dd-MM-yyyy");
-				this.set("displayDate", displayDate);
-				as_of.setDate(as_of.getDate()+1);
+        	if(start && end){
+        		start = new Date(start);
+        		end = new Date(end);
+        		displayDate = "From " + kendo.toString(start, "dd-MM-yyyy") + " To " + kendo.toString(end, "dd-MM-yyyy");
+        		end.setDate(end.getDate()+1);
 
-				para.push({ field:"issued_date <", value:kendo.toString(as_of, "yyyy-MM-dd") });
-			}
+            	para.push({ field:"issued_date >=", value: kendo.toString(start, "yyyy-MM-dd") });
+            	para.push({ field:"issued_date <", value: kendo.toString(end, "yyyy-MM-dd") });
+            }else if(start){
+            	start = new Date(start);
+            	displayDate = "On " + kendo.toString(start, "dd-MM-yyyy");
 
+            	para.push({ field:"issued_date", value: kendo.toString(start, "yyyy-MM-dd") });
+            }else if(end){
+            	end = new Date(end);
+            	displayDate = "As Of " + kendo.toString(end, "dd-MM-yyyy");
+        		end.setDate(end.getDate()+1);
+        		
+            	para.push({ field:"issued_date <", value: kendo.toString(end, "yyyy-MM-dd") });
+            }else{
+            	
+            }
+            this.set("displayDate", displayDate);
             this.dataSource.query({
             	filter:para
             }).then(function(){
