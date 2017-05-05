@@ -810,7 +810,7 @@ var	en_US = {
 	"add_customer" : "Add Customer",
 	"period_end" : "PERIOD END",
 	"financial_statements" : "FINANCIAL STATEMENT",
-	"statement_reporting" : "SEGEMENT REPORTING",
+	"segment_reporting" : "SEGMENT REPORTING",
 	"job_tracking" : "JOB TRACKING",
 	"payment_terms": "PAYMENT TERM",
 	"add": "Add",

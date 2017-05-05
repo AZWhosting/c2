@@ -42,7 +42,8 @@
 		  			<ul class="dropdown-menu">  				  				
 		  				<li><a href="#" data-bind="click: lang.changeToKh">ភាសាខ្មែរ</a></li>
     					<li><a href="#" data-bind="click: lang.changeToEn">English</a></li>
-						<li class="divider"></li>	
+						<li class="divider"></li>
+						<li><a href="<?php echo base_url(); ?>admin">Setting</a></li>
 						<li><a href="#/manage" data-bind="click: logout"><i class="icon-power-off"></i> Logout</a></li> 				
 		  			</ul>
 			  	</li>				
@@ -111,12 +112,12 @@
 							</a>
 							<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><h5 data-bind="text: lang.lang.tax" style="margin-top: 5px; display: inline-block;" style="margin-top: 5px; display: inline-block;"></h5></span>
 						</li>
-						<li style="text-align:center;">
+						<!-- <li style="text-align:center;">
 							<a href="<?php echo base_url(); ?>admin">
 								<img title="Admin Module" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/setting.jpg" alt="Admin">
 								<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><h5 data-bind="text: lang.lang.settings" style="margin-top: 5px; display: inline-block;" style="margin-top: 5px; display: inline-block;"></h5></span>
 							</a>
-						</li>											
+						</li> -->											
 					</ul>
 				</div>
 			</div>
@@ -33004,7 +33005,7 @@
 							<li><a href="#tab-4" data-toggle="tab"><i></i><span data-bind="text: lang.lang.cash"></span></a></li>
 							<li><a href="#tab-5" data-toggle="tab"><i></i><span data-bind="text: lang.lang.period_end"></span></a></li>
 							<li><a href="#tab-6" data-toggle="tab"><i></i><span data-bind="text: lang.lang.financial_statements"></span></a></li>
-							<li><a href="#tab-7" data-toggle="tab"><i></i><span data-bind="text: lang.lang.segment_reporting"></span></a></li>
+							<li><a href="#tab-7" data-toggle="tab"><i></i><span data-bind="text: lang.lang.statement_reporting"></span></a></li>
 							<li><a href="#tab-8" data-toggle="tab"><i></i><span data-bind="text: lang.lang.job_tracking"></span></a></li>
 						</ul>
 					</div>
@@ -53433,18 +53434,18 @@
 			obj.set("remaining", remaining);
 
 			this.set("total", kendo.toString(total, "c", obj.locale));
-	        this.set("amount_due", kendo.toString(amount_due, "c", obj.locale));
+	        this.set("amount_due", kendo.toString(amount_due, "c", obj.locale));									    	
 	    	
 	    	//Remove Assembly Item List
-			var raw = this.assemblyLineDS.data();
+			var raw = this.assemblyLineDS.data();			
 		    var item, i;
 		    for(i=raw.length-1; i>=0; i--){
 		    	item = raw[i];
-
+		    	
 		    	if (jQuery.inArray(kendo.parseInt(item.assembly_id), itemIds)==-1) {
-			       	this.assemblyLineDS.remove(item);
+			       	this.assemblyLineDS.remove(item);			      	
 			    }
-		    }
+		    }	
 		},
 		typeChanges 		: function(){
 			var obj = this.get("obj");
@@ -83731,16 +83732,16 @@
         		displayDate = "";
 
 	        //Segments
-	        var segments = [];
-            if(obj.segments.length>0){            	
+            if(obj.segments.length>0){
+            	var segments = [];
             	$.each(obj.segments, function(index, value){
             		$.each(banhji.source.segmentItemList, function(ind, val){
             			if(val.segment_id==value){
             				segments.push(val.id);
             			}
             		});
-            	});
-            	para.push({ field:"segments", operator:"segments", value: segments });
+            	});          	
+	            para.push({ field:"segments", operator:"segments", value:segments });
 	        }
 
         	//Dates
@@ -83775,16 +83776,18 @@
 			  		{ field: "number", dir: "desc" }
 			  	]
             });
-         //    var loaded = false;
-         //    this.dataSource.bind("requestEnd", function(e){
-         //    	if(e.type==="read" && loaded==false){
-         //    		loaded = true;
+            var loaded = false;
+            this.dataSource.bind("requestEnd", function(e){
+            	if(e.type==="read" && loaded==false){
+            		loaded = true;
 
-         //    		var response = e.response;
-         //    		self.set("dr", kendo.toString(response.dr, "c", banhji.locale));
-	        //     	self.set("cr", kendo.toString(response.cr, "c", banhji.locale));
-	        //     }
-	        // });
+            		var response = e.response;
+            		self.set("dr", kendo.toString(response.dr, "c", banhji.locale));
+	            	self.set("cr", kendo.toString(response.cr, "c", banhji.locale));
+	            }
+	        });
+
+	        obj.set("segments", []);
 		}
 	});
 	banhji.generalLedger =  kendo.observable({

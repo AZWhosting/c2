@@ -789,7 +789,7 @@ var	km_KH = {
 	"export_to_excel" : "ទាញ​ចេញ​ជា​ Excel",
 	"period_end" : "បិទ​បញ្ជី​ចុង គ្រា",
 	"financial_statements" : "របាយការណ៍​ហិរញ្ញវត្ថុ",
-	"statement_reporting" : "របាយការណ៍​តាម​ផ្នែក",
+	"segment_reporting" : "របាយការណ៍​តាម​ផ្នែក",
 	"job_tracking" : "គម្រោង",
 	"payment_terms": "លក្ខខណ្ឌ​ទូទាត់",
 	"add": "បន្ថែម",

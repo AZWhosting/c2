@@ -884,7 +884,7 @@ class Accounting_modules extends REST_Controller {
 		$sort 	 	= $this->get("sort");
 		$data["results"] = [];
 		$data["count"] = 0;
-
+		
 		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
 		
 		//Sort
@@ -908,7 +908,7 @@ class Accounting_modules extends REST_Controller {
 				}
 			}
 		}
-		
+
 		$obj->where("is_recurring <>", 1);		
 		$obj->where("deleted <>", 1);
 		
@@ -923,8 +923,6 @@ class Accounting_modules extends REST_Controller {
 		
 		if($obj->exists()){
 			$objList = [];
-			$totalDr = 0;
-			$totalCr = 0;
 			foreach ($obj as $value) {
 				$journalLines = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 				$journalLines->where("transaction_id", $value->id);
@@ -934,9 +932,6 @@ class Accounting_modules extends REST_Controller {
 				$journalLines->get_iterated();
 
 				foreach ($journalLines as $val) {
-					$totalDr += floatval($val->dr) / floatval($value->rate);
-					$totalCr += floatval($val->cr) / floatval($value->rate);
-
 					//Segment
 					$segments = [];
 					if(isset($val->segments)){
@@ -944,11 +939,12 @@ class Accounting_modules extends REST_Controller {
 						$segment->where_in("id", explode(",", $val->segments));
 						$segment->get();
 						foreach ($segment as $seg) {
-							$segments[] = array("code"=>$seg->code, "name"=>$seg->name);
+							$segments[] = array("id"=>$seg->id,"code"=>$seg->code, "name"=>$seg->name);
 						}
 					}
 
 					if(isset($objList[$value->id])){
+						$objList[$value->id]["segments"][] = $segments;
 						$objList[$value->id]["line"][] = array(
 							"id" 			=> $val->id,
 							"description" 	=> $val->description,
@@ -967,6 +963,7 @@ class Accounting_modules extends REST_Controller {
 						$objList[$value->id]["issued_date"] = $value->issued_date;
 						$objList[$value->id]["memo"] = $value->memo;
 						$objList[$value->id]["rate"] = $value->rate;
+						$objList[$value->id]["segments"][] = $segments;
 						$objList[$value->id]["line"][] = array(
 							"id" 			=> $val->id,
 							"description" 	=> $val->description,
@@ -985,10 +982,7 @@ class Accounting_modules extends REST_Controller {
 			foreach ($objList as $value) {				
 				$data["results"][] = $value;
 			}
-
-			$data["dr"] = $totalDr;
-			$data["cr"] = $totalCr;
-		}		
+		}
 
 		//Response Data		
 		$this->response($data, 200);	
