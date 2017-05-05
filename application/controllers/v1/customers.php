@@ -177,6 +177,7 @@ class Customers extends REST_Controller {
 	public function inst_get() {
 		$institutes = new Institute(null);
 		$institutes->include_related('user', 'username');
+		$institutes->distinct();
 		
 
 		echo $institutes->get_sql();

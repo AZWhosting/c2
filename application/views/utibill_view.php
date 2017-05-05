@@ -5146,7 +5146,7 @@
 	    	</div>
 	    	<div class="span5 " style="padding-left: 0; padding-right: 8px;">
 	    		<div class="headertable-invoice">
-		    		<table style="">
+		    		<table style="background-color: \#daeef3!important; ">
 		    			<tr>
 		    				<td>លេខវិក្កយបត្រ INVOICE NO</td>
 		    				<td>
@@ -16485,7 +16485,7 @@
 			            		'color:#fff!important;' +
 			            	'}</style>' +
 					    '</head>' + 
-					    '<body><div class="row-fluid" ><div id="example" class="k-content">';
+					    '<body><div class="row-fluid" ><div id="example" class="k-content" style="width: 960px;overflow: hidden">';
 			    var htmlEnd =
 			            '</div></div></body>' +
 			            '</html>';
@@ -16497,7 +16497,7 @@
 			    	//win.close();
 			    },2000);
 			}else{
-				Win = window.open('', '', 'width=900, height=900');
+				Win = window.open('', '', 'width=1000, height=900');
 				pHeight = "210mm";
 				pWidth = "150mm";
 				var	colorM = this.formColor;

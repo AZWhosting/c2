@@ -29479,24 +29479,7 @@
 								        <div class="tab-pane" id="tab-2">
 											<table class="table table-condensed">
 												<tr>
-									            	<td style="padding: 0 !important; width: 96%;">
-									            		<span data-bind="text: lang.lang.account"></span>
-									            		<select data-role="multiselect"
-															   data-value-primitive="true"
-															   data-item-template="account-list-tmpl"
-															   data-value-field="id"
-															   data-text-field="name"
-															   data-bind="value: obj.accounts, 
-															   			source: accountDS"
-															   data-placeholder="Select Accounts..."
-															   style="width: 100%" /></select>
-													</td>
-													<td style="padding-top: 23px !important; float: left;">
-										  				<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
-													</td>
-												</tr>
-												<tr>
-													<td style="padding: 8px 0 0 0 !important; ">
+									            	<td style="padding: 8px 0 0 0 !important; ">
 														<span data-bind="text: lang.lang.segment"></span>
 														<select data-role="multiselect"
 															   data-value-primitive="true"
@@ -29507,7 +29490,9 @@
 															   data-placeholder="Select Segments.."
 															   style="width: 100%" /></select>
 													</td>
-													<td></td>
+													<td style="padding-top: 23px !important; float: left;">
+										  				<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+													</td>
 												</tr>
 											</table>
 							        	</div>
@@ -83763,9 +83748,14 @@
             if(obj.segments.length>0){
             	var segments = [];
             	$.each(obj.segments, function(index, value){
-            		segments.push(value);
+            		$.each(banhji.source.segmentItemList, function(ind, val){
+            			if(val.segment_id==value){
+            				// segments.push(val.id);
+            				para.push({ field:"segments", operator:"or_like_related_journal_line", value:"%"+val.id.toString()+"%" });
+            			}
+            		});
             	});          	
-	            para.push({ field:"segments", operator:"like_related_journal_line", value:"%"+segments.toString()+"%" });
+	            // para.push({ field:"segments", operator:"like_related_journal_line", value:"%"+segments.toString()+"%" });
 	        }
 
         	//Dates
