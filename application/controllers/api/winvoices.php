@@ -560,6 +560,7 @@ class Winvoices extends REST_Controller {
 			$monthGraph->where("deleted <>", 1);
 			$monthGraph->order_by('id', 'desc')->limit(5)->get();
 			// $minusM = array();
+			$minusM[] = array();
 			foreach($monthGraph as $monthOF) {
 				$monthN = date('F', strtotime($monthOF->month_of));
 				$minusM[] = array(

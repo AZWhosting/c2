@@ -5125,10 +5125,10 @@
 </script>
 <script id="InvoiceFormTemplate2" type="text/x-kendo-template">
 	<div class="row-fluid" style="page-break-after: always;">
-	    <div class="row-fluid">
-	    	<div class="span7 inv1" style="width: 54%; padding-right: 15px; padding-left: 8px; ">
+	    <div class="row-fluid" style="overflow: hidden;">
+	    	<div class="span7 inv1" style="width: 517px; padding-right: 15px; padding-left: 8px; ">
 	    		<div class="head" style="width: 100%; padding-top: 0;">
-		        	<div class="logo" style="width: 40%;">
+		        	<div class="logo" style="max-width: 150px;">
 		            	<img class="logoP" style=" left: 0;top: 20px;max-width: 200px;" src="#: banhji.InvoicePrint.license.image_url#" alt="#: banhji.InvoicePrint.license.name#" title="#: banhji.InvoicePrint.license.name#" />
 		            </div>
 		            <div class="cover-name-company" style="width: 57%; margin-left: 15px;">
@@ -5144,31 +5144,31 @@
 		            </div>
 		        </div>
 	    	</div>
-	    	<div class="span5 " style="padding-left: 0; padding-right: 8px;">
+	    	<div class="span5 " style="padding-left: 0; padding-right: 0px;float: right;">
 	    		<div class="headertable-invoice">
 		    		<table style="background-color: \#daeef3!important; ">
 		    			<tr>
 		    				<td>លេខវិក្កយបត្រ INVOICE NO</td>
 		    				<td>
-		    					<input type="text" value="#: number#">
+		    					<input type="text" style="background-color: \#fff!important; width: 220px;" value="#: number#">
 		    				</td>
 		    			</tr>
 		    			<tr>
 		    				<td>ថ្ងៃចេញ INVOICE DATE</td>
 		    				<td>
-		    					<input type="text" value='#=kendo.toString(new Date(issue_date), "dd-MMMM-yyyy", "km-KH")#'>
+		    					<input type="text" style="background-color: \#fff!important; width: 220px;" value='#=kendo.toString(new Date(issue_date), "dd-MMMM-yyyy", "km-KH")#'>
 		    				</td>
 		    			</tr>
 		    			<tr>
 		    				<td>តំបន់ AREA</td>
 		    				<td>
-		    					<input type="text" value="#:meter.location[0].abbr# - #:meter.location[0].name#">
+		    					<input type="text" style="background-color: \#fff!important; width: 220px;" value="#:meter.location[0].abbr# - #:meter.location[0].name#">
 		    				</td>
 		    			</tr>
 		    			<tr>
 		    				<td>លេខប្រអប់ BOX NO</td>
 		    				<td>
-		    					<input type="text" value="#:meter.location[0].abbr# - #:meter.location[0].box#">
+		    					<input type="text" style="background-color: \#fff!important; width: 220px;" value="#:meter.location[0].abbr# - #:meter.location[0].box#">
 		    				</td>
 		    			</tr>
 		    		</table>
@@ -16406,7 +16406,7 @@
 		printGrid 		: function(){
 			var self = this, Win, pHeight, pWidth, ts;
 			if(this.txnFormID == "45"){
-				Win = window.open('', '', 'width=1000, height=900');
+				Win = window.open('', '', 'width=1050, height=900');
 				pHeight = "210mm";
 				pWidth = "297mm";
 				var	colorM = this.formColor;
@@ -16485,7 +16485,7 @@
 			            		'color:#fff!important;' +
 			            	'}</style>' +
 					    '</head>' + 
-					    '<body><div class="row-fluid" ><div id="example" class="k-content" style="width: 960px;overflow: hidden">';
+					    '<body><div class="row-fluid" ><div id="example" class="k-content" style="width: 1000px;overflow: hidden">';
 			    var htmlEnd =
 			            '</div></div></body>' +
 			            '</html>';

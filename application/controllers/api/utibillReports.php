@@ -621,6 +621,7 @@ class UtibillReports extends REST_Controller {
 		$obj->where("type", "Utility_Invoice");
 		$obj->where("is_recurring <>", 1);
 		$obj->where("deleted <>", 1);
+		$obj->where_in("status", array(1,2));
 		$obj->order_by("issued_date", "asc");
 		$obj->get_iterated();
 		
