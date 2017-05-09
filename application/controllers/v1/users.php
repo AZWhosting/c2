@@ -12,7 +12,7 @@ class Users extends REST_Controller {
 	// get user information
 	// @param: optional userId
 	// return userdata
-	function index_get() {
+	public function q_get($id = NULL) {
 		$requested_data = $this->get("filter");
 		$filters = $requested_data['filters'];
 		$limit = $this->get('limit') ? $this->get('limit'): 50;
@@ -20,28 +20,34 @@ class Users extends REST_Controller {
 		$data = array();
 		$user = new User();
 
-		if(isset($filters)) {
-			foreach($filters as $f) {
-				if(isset($f['operator'])) {
-					$user->where($f['field'], $f['value']);
-				} else {
-					$user->where_related_institute($f['field'], $f['value']);
-				}				
-			}
+		if(isset($id)) {
+			$user->where('id', $id);
+		} else {
+			if(isset($filters)) {
+				foreach($filters as $f) {
+					if(isset($f['operator'])) {
+						$user->where($f['field'], $f['value']);
+					} else {
+						$user->where_related_institute($f['field'], $f['value']);
+					}				
+				}
+			}			
 		}
 		$user->include_related('institute', array('id', 'name'));
 		$user->get_paged($offset, $limit);
-		foreach($user as $u) {
-			$profile_photo = $u->pimage->get();
-			$data[] = array(
-				'id' 		=> intval($u->id),
-				'username' 	=> $u->username,
-				'company' => array('id' => intval($u->institute_id), 'name'=> $u->institute_name),
-				'joined'=> $u->created_at,
-				'updated_at'=> $u->updated_at,
-				'logged_in' => $u->logged_in
-			);
-		}
+		if($user->exists()) {
+			foreach($user as $u) {
+				$profile_photo = $u->pimage->get();
+				$data[] = array(
+					'id' 		=> intval($u->id),
+					'username' 	=> $u->username,
+					'institute' => array('id' => intval($u->institute_id), 'name'=> $u->institute_name),
+					'joined'=> $u->created_at,
+					'updated_at'=> $u->updated_at,
+					'logged_in' => $u->logged_in
+				);
+			}	
+		}					
 
 		if(count($user) > 0) {
 			$this->response(array('results'=>$data, 'count'=>$user->paged->total_rows), 200);

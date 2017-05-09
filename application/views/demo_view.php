@@ -80126,19 +80126,18 @@
 		  	filter: { field:"status", value: 1 }
 		}),
 		jobDS 				: banhji.source.jobList,
-		segmentItemDS 		: banhji.source.segmentItemList,
 		accountDS 			: banhji.source.accountList,		
 		// jobDS 				: new kendo.data.DataSource({
 		//   	data: banhji.source.jobList,
 		//   	sort: { field: "name", dir: "asc" }
 		// }),
-		// segmentItemDS 		: new kendo.data.DataSource({
-		//   	data: banhji.source.segmentItemList,
-		//   	sort: [
-		// 	  	{ field: "segment_id", dir: "asc" },
-		// 	  	{ field: "code", dir: "asc" }
-		// 	]
-		// }),		
+		segmentItemDS 		: new kendo.data.DataSource({
+		  	data: banhji.source.segmentItemList,
+		  	sort: [
+			  	{ field: "segment_id", dir: "asc" },
+			  	{ field: "code", dir: "asc" }
+			]
+		}),
 		// accountDS 			: new kendo.data.DataSource({
 		//   	data: banhji.source.accountList,
 		//   	filter:{ field:"status", value: 1 },
@@ -80302,13 +80301,16 @@
 			});						
 		},
 		//Segment
-		segmentChanges  	: function(e) {					
-			var self = this, dataArr = e.data.segments;
-			var lastIndex = dataArr.length - 1;
+		segmentChanges  	: function(e) {		
+			var dataArr = e.data.segments,
+			lastIndex = dataArr.length - 1,
+			last = this.segmentItemDS.get(dataArr[lastIndex]);
+			
 			if(dataArr.length > 1) {
 				for(var i = 0; i < dataArr.length - 1; i++) {
-					var current = self.segmentItemDS.get(dataArr[i]);
-					var last = self.segmentItemDS.get(dataArr[lastIndex]);
+					var current_index = dataArr[i],
+					current = this.segmentItemDS.get(current_index);
+
 					if(current.segment_id === last.segment_id) {
 						dataArr.splice(lastIndex, 1);
 						break;
