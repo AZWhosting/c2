@@ -44240,7 +44240,7 @@
 	</div> -->
 	<div class="span12">
 		<div class="relativeWrap" data-toggle="source-code">
-			<div class="widget widget-tabs widget-tabs-gray report-tab" style="padding-bottom: 20px; background: #fff; overflow: hidden;">
+			<div class="widget widget-tabs widget-tabs-gray report-tab" style="background: #fff; overflow: hidden;">
 				<div class="widget-head head-custom" style="height: 50px;">
 					<ul>
 						<li class="active"><a href="#tab-1" data-toggle="tab"><i></i><span >My Apps</span></a></li>
@@ -44279,7 +44279,7 @@
 							            data-text-field="text"
 							            data-value-field="value"
 							            data-bind="value: sorter,
-							                      source: sortList,
+							                      source:s sortList,
 							                      events: { change: sorterChanges }"
 							           	style="width: 100%; float: right;" />
 								</div>
@@ -44935,14 +44935,14 @@
 				        		</div>
 				        	</div>
 
-				        	<div class="row-fluid" style="float: left; background: #f7f9fb; padding: 15px 20px 0;">
+				        	<div class="row-fluid" style="float: left; background: #f7f9fb; padding: 15px 20px 0; width: 100%;">
 				        		<h2>Collections</h2>
 				        		<div class="row-fluid" style="margin-top: 20px;">
 				        			<div class="collection">
 					        			<ul style="padding-left: 0;">
-					        				<li style="list-style: none;">
+					        				<li style="list-style: none; float: left;">
 					        					<a href="">
-					        						<div class="" style="display: inline-block; vertical-align: top; position: relative; cursor: pointer; margin-right: 25px; margin-bottom: 20px; overflow: hidden;">
+					        						<div class="" style="display: inline-block; vertical-align: top; position: relative; cursor: pointer; margin-right: 20px; margin-bottom: 20px; overflow: hidden;">
 					        							<div class="" style="text-align: center; background: #FFF; border: 1px solid #dae3ef; -webkit-border-radius: 2px; -moz-border-radius: 2px; border-radius: 2px; border-bottom: 2px solid rgba(192,208,228,.5); width: 350px; height: 250px; padding: 25px;">
 					        								<div class="" style="width: 300px; height: 110px; border-bottom: 0; padding: 0;">
 					        									<img src="https://css.appcenter.intuit.com/Content/Static/7.11.0-rel-593/images/collection_tile_accountant.png">
@@ -44959,9 +44959,9 @@
 					        						</div>
 					        					</a>
 					        				</li>
-					        				<li style="list-style: none;">
+					        				<li style="list-style: none; float: left;">
 					        					<a href="">
-					        						<div class="" style="display: inline-block; vertical-align: top; position: relative; cursor: pointer; margin-right: 25px; margin-bottom: 20px; overflow: hidden;">
+					        						<div class="" style="display: inline-block; vertical-align: top; position: relative; cursor: pointer; margin-right: 20px; margin-bottom: 20px; overflow: hidden;">
 					        							<div class="" style="text-align: center; background: #FFF; border: 1px solid #dae3ef; -webkit-border-radius: 2px; -moz-border-radius: 2px; border-radius: 2px; border-bottom: 2px solid rgba(192,208,228,.5); width: 350px; height: 250px; padding: 25px;">
 					        								<div class="" style="width: 300px; height: 110px; border-bottom: 0; padding: 0;">
 					        									<img src="https://css.appcenter.intuit.com/Content/Static/7.11.0-rel-593/images/collection_tile_accountant.png">
@@ -44978,9 +44978,9 @@
 					        						</div>
 					        					</a>
 					        				</li>
-					        				<li style="list-style: none;">
+					        				<li style="list-style: none; float: left;">
 					        					<a href="">
-					        						<div class="" style="display: inline-block; vertical-align: top; position: relative; cursor: pointer; margin-right: 25px; margin-bottom: 20px; overflow: hidden;">
+					        						<div class="" style="display: inline-block; vertical-align: top; position: relative; cursor: pointer; margin-bottom: 20px; overflow: hidden;">
 					        							<div class="" style="text-align: center; background: #FFF; border: 1px solid #dae3ef; -webkit-border-radius: 2px; -moz-border-radius: 2px; border-radius: 2px; border-bottom: 2px solid rgba(192,208,228,.5); width: 350px; height: 250px; padding: 25px;">
 					        								<div class="" style="width: 300px; height: 110px; border-bottom: 0; padding: 0;">
 					        									<img src="https://css.appcenter.intuit.com/Content/Static/7.11.0-rel-593/images/collection_tile_accountant.png">

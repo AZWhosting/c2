@@ -17532,7 +17532,6 @@
 					var roa = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
 					if(roa.length > 0){
 						result[sheetName] = roa;
-						console.log(roa.length+"_"+roa.Receive);
 						for(var i = 0; i < roa.length; i++) {
 							self.txnDS.query({
 								filter: [{field: "number", value: roa[i].Number}, { field:"status", operator:"where_in", value:[0,2] }]
@@ -17541,7 +17540,7 @@
 								if(view.length>0){
 									self.numCustomer = 0;
 									$.each(view, function(index, value){
-										var amount_due = roa.Receive - (value.amount_paid + value.deposit);
+										var amount_due = roa[i].Receive - (value.amount_paid + value.deposit);
 
 										self.dataSource.add({
 											transaction_template_id : 0,

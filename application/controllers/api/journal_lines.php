@@ -114,11 +114,11 @@ class Journal_lines extends REST_Controller {
 		   	isset($value->locale)			? $obj->locale 				= $value->locale : "";
 		   	isset($value->deleted)			? $obj->deleted  			= $value->deleted : "";		   
 
-		 //   	$relatedsegmentitem = new Segmentitem(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			// $relatedsegmentitem->where_in($value->segments)->get();
-			// $obj->save_relatedsegmentitem($relatedsegmentitem->all);
+		   	$relatedsegmentitem = new Segmentitem(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$relatedsegmentitem->where_in($value->segments)->get();
+			$obj->save($relatedsegmentitem);
 
-		   	if($obj->save()){
+		   	// if($obj->save()){
 			   	$data["results"][] = array(
 			   		"id" 				=> $obj->id,
 			   		"transaction_id"	=> $obj->transaction_id,			   		
@@ -133,7 +133,7 @@ class Journal_lines extends REST_Controller {
 				   	"locale" 			=> $obj->locale,
 				   	"deleted"			=> $obj->deleted			   	
 			   	);
-		    }
+		    // }
 		}		
 
 		$data["count"] = count($data["results"]);
