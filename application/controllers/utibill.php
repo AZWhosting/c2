@@ -15,7 +15,7 @@ class Utibill extends MY_Controller {
 		 *set up title and keywords (if not the default in custom.php config file will be set) 
 		 */
 		// $this->_render("utibill_view");
-		$this->_render("login");
+		$this->_render("admin/login_view");
 	}
 	
 }
