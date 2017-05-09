@@ -46,12 +46,12 @@ class Rrd extends MY_Controller {
 		$this->_render("sela_view");	
 	}
 
-	public function store() {	
+	public function app() {	
 		
 		/*
 		 *set up title and keywords (if not the default in custom.php config file will be set) 
 		 */
-		$this->_render("app_store");	
+		$this->_render("app_center");	
 	}
 
 	public function fsr() {	

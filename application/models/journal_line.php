@@ -17,6 +17,13 @@ class Journal_line extends DataMapper {
 			'class' => 'contact',
 			'other_field' => 'journal_line'
 		)		
+	);
+
+	public $has_many = array(
+		'segmentitem' => array(
+			'class' => 'segmentitem',
+			'other_field' => 'journal_line'
+		)
 	);	
 		
 	public function __construct($id = null, $server_name = null, $server_username = null, $server_password = null, $db = null) {	

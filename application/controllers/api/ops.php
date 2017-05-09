@@ -87,7 +87,7 @@ class Ops extends REST_Controller {
 	function runs_get() {
 		$this->load->dbutil();
 		$dbs = $this->dbutil->list_databases();
-		$companyList = array("banhji","banhji_mac", "information_schema","innodb","mysql","performance_schema","tmp");
+		$companyList = array("banhji","banhji_mac", "db_banhji", "information_schema","innodb","mysql","performance_schema","tmp");
 		$data = array();
 		foreach ($dbs as $key => $db)
 		{	
@@ -96,6 +96,11 @@ class Ops extends REST_Controller {
 			    $connection = 'use '.$db;
 			    $this->db->query($connection);
 
+			    // $this->dbforge->add_field('id');
+			    // $this->dbforge->add_field("journal_line_id int(11) NOT NULL DEFAULT '0'");
+			    // $this->dbforge->add_field("segmentitem_id int(11) NOT NULL DEFAULT '0'");
+			    // $this->dbforge->create_table('journal_lines_segmentitems');
+			    
 			    // $this->db->where('id', 2);
 			    // $this->db->update('tax_types', array('sub_of_id' => 12));
 
@@ -416,16 +421,16 @@ class Ops extends REST_Controller {
 	// }
 	//End made by Great Mighty Dawine ^_^
 
-	function list_get() {
-		$this->load->dbutil();
-		$dbs = $this->dbutil->list_databases();
-		$data = array();
-		$companyList = array("banhji","banhji_mac", "db_banhji", "information_schema","innodb","mysql","performance_schema","tmp");
-		foreach ($dbs as $db) {
-			if (!in_array("$db", $companyList)) {
-				$data[] = $db;
-			}
-		}
-		$this->response(array('results'=> $data), 200);
-	}
+	// function list_get() {
+	// 	$this->load->dbutil();
+	// 	$dbs = $this->dbutil->list_databases();
+	// 	$data = array();
+	// 	$companyList = array("banhji","banhji_mac", "db_banhji", "information_schema","innodb","mysql","performance_schema","tmp");
+	// 	foreach ($dbs as $db) {
+	// 		if (!in_array("$db", $companyList)) {
+	// 			$data[] = $db;
+	// 		}
+	// 	}
+	// 	$this->response(array('results'=> $data), 200);
+	// }
 }

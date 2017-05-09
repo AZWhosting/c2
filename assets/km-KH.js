@@ -1414,7 +1414,11 @@ var	km_KH = {
 	"ampere":"Ampere",
 	"please_upload_meter_file": "សូមបញ្ចូលកុងទ័រ",
 	"no_data": "មិនមានទិន្នន័យ",
+	"download": "ទាញ​យក",
+	"upload": "បញ្ចូល",
 
+	//Web Store
+	"app_center": "App Center",
 
 
 

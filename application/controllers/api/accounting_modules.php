@@ -830,7 +830,7 @@ class Accounting_modules extends REST_Controller {
 			$totalCr = 0;
 			foreach ($obj as $value) {				
 				$totalDr += floatval($value->dr) / floatval($value->transaction_rate);
-				$totalCr += floatval($value->cr) / floatval($value->transaction_rate);				
+				$totalCr += floatval($value->cr) / floatval($value->transaction_rate);
 
 				if(isset($objList[$value->transaction_id])){
 					$objList[$value->transaction_id]["line"][] = array(
@@ -885,7 +885,7 @@ class Accounting_modules extends REST_Controller {
 		$data["results"] = [];
 		$data["count"] = 0;
 		
-		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
+		$obj = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
 		
 		//Sort
 		if(!empty($sort) && isset($sort)){
@@ -909,73 +909,62 @@ class Accounting_modules extends REST_Controller {
 			}
 		}
 
-		$obj->where("is_recurring <>", 1);		
+		$obj->where_related("transaction", "is_recurring <>", 1);
+		$obj->where_related("transaction", "deleted <>", 1);
 		$obj->where("deleted <>", 1);
-		
+		$obj->include_related("transaction", array("number","type","issued_date","memo","rate"));
+		$obj->include_related("account", array("number","name"));
+		$obj->include_related("contact", array("abbr","number","name"));
+		$obj->order_by("dr", "desc");		
+		$obj->get_iterated();
+
 		//Results
-		if($page && $limit){
-			$obj->get_paged_iterated($page, $limit);
-			$data["count"] = $obj->paged->total_rows;
-		}else{
-			$obj->get_iterated();
-			$data["count"] = $obj->result_count();
-		}
+		// if($page && $limit){
+		// 	$obj->get_paged_iterated($page, $limit);
+		// 	$data["count"] = $obj->paged->total_rows;
+		// }else{
+		// 	$obj->get_iterated();
+		// 	$data["count"] = $obj->result_count();
+		// }
 		
 		if($obj->exists()){
 			$objList = [];
-			foreach ($obj as $value) {
-				$journalLines = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				$journalLines->where("transaction_id", $value->id);
-				$journalLines->where("deleted <>", 1);
-				$journalLines->include_related("account", array("number","name"));
-				$journalLines->include_related("contact", array("abbr","number","name"));
-				$journalLines->get_iterated();
-
-				foreach ($journalLines as $val) {
-					//Segment
-					$segments = [];
-					if(isset($val->segments)){
-						$segment = new Segmentitem(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-						$segment->where_in("id", explode(",", $val->segments));
-						$segment->get();
-						foreach ($segment as $seg) {
-							$segments[] = array("id"=>$seg->id,"code"=>$seg->code, "name"=>$seg->name);
-						}
-					}
-
-					if(isset($objList[$value->id])){
-						$objList[$value->id]["segments"][] = $segments;
-						$objList[$value->id]["line"][] = array(
-							"id" 			=> $val->id,
-							"description" 	=> $val->description,
-							"reference_no" 	=> $val->reference_no,
-							"segments" 		=> $segments,
-							"dr" 			=> floatval($val->dr),
-							"cr" 			=> floatval($val->cr),
-							"locale" 		=> $val->locale,
-							"account" 		=> $val->account_number ." ". $val->account_name,
-							"contact" 		=> $val->contact_name
-						);
-					}else{
-						$objList[$value->id]["id"] = $value->id;
-						$objList[$value->id]["type"] = $value->type;
-						$objList[$value->id]["number"] = $value->number;
-						$objList[$value->id]["issued_date"] = $value->issued_date;
-						$objList[$value->id]["memo"] = $value->memo;
-						$objList[$value->id]["rate"] = $value->rate;
-						$objList[$value->id]["segments"][] = $segments;
-						$objList[$value->id]["line"][] = array(
-							"id" 			=> $val->id,
-							"description" 	=> $val->description,
-							"reference_no" 	=> $val->reference_no,
-							"segments" 		=> $segments,
-							"dr" 			=> floatval($val->dr),
-							"cr" 			=> floatval($val->cr),
-							"locale" 		=> $value->locale,
-							"account" 		=> $val->account_number ." ". $val->account_name,
-							"contact" 		=> $val->contact_name
-						);			
-					}
+			$totalDr = 0;
+			$totalCr = 0;
+			foreach ($obj as $value) {				
+				$totalDr += floatval($value->dr) / floatval($value->transaction_rate);
+				$totalCr += floatval($value->cr) / floatval($value->transaction_rate);
+			
+				if(isset($objList[$value->transaction_id])){
+					$objList[$value->transaction_id]["line"][] = array(
+						"id" 			=> $value->id,
+						"description" 	=> $value->description,
+						"reference_no" 	=> $value->reference_no,
+						"segments" 		=> $value->segmentitem->get_raw()->result(),
+						"dr" 			=> floatval($value->dr),
+						"cr" 			=> floatval($value->cr),
+						"locale" 		=> $value->locale,
+						"account" 		=> $value->account_number ." ". $value->account_name,
+						"contact" 		=> $value->contact_name
+					);
+				}else{
+					$objList[$value->transaction_id]["id"] = $value->id;
+					$objList[$value->transaction_id]["type"] = $value->transaction_type;
+					$objList[$value->transaction_id]["number"] = $value->transaction_number;
+					$objList[$value->transaction_id]["issued_date"] = $value->transaction_issued_date;
+					$objList[$value->transaction_id]["memo"] = $value->transaction_memo;
+					$objList[$value->transaction_id]["rate"] = $value->transaction_rate;
+					$objList[$value->transaction_id]["line"][] = array(
+						"id" 			=> $value->id,
+						"description" 	=> $value->description,
+						"reference_no" 	=> $value->reference_no,
+						"segments" 		=> $value->segmentitem->get_raw()->result(),
+						"dr" 			=> floatval($value->dr),
+						"cr" 			=> floatval($value->cr),
+						"locale" 		=> $value->locale,
+						"account" 		=> $value->account_number ." ". $value->account_name,
+						"contact" 		=> $value->contact_name
+					);			
 				}
 			}			
 
@@ -983,6 +972,10 @@ class Accounting_modules extends REST_Controller {
 				$data["results"][] = $value;
 			}
 		}
+
+		$data["dr"] = $totalDr;
+		$data["cr"] = $totalCr;
+		$data["count"] = count($data["results"]);
 
 		//Response Data		
 		$this->response($data, 200);	

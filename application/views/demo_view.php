@@ -80303,12 +80303,12 @@
 		},
 		//Segment
 		segmentChanges  	: function(e) {					
-			var dataArr = e.data.segments;
+			var self = this, dataArr = e.data.segments;
 			var lastIndex = dataArr.length - 1;
 			if(dataArr.length > 1) {
 				for(var i = 0; i < dataArr.length - 1; i++) {
-					var current = this.segmentItemDS.get(dataArr[i]);
-					var last = this.segmentItemDS.get(dataArr[lastIndex]);
+					var current = self.segmentItemDS.get(dataArr[i]);
+					var last = self.segmentItemDS.get(dataArr[lastIndex]);
 					if(current.segment_id === last.segment_id) {
 						dataArr.splice(lastIndex, 1);
 						break;
@@ -81146,6 +81146,7 @@
 			this.setRate();
 			this.addRow();
 			this.typeChanges();
+			this.generateNumber();
 		},
 		addRow 				: function(){
 			var obj = this.get("obj");
@@ -81335,22 +81336,20 @@
 	    addJournal 			: function(transaction_id){
 	    	var self = this,
 	    		obj = this.get("obj"),
-	    		raw = "", entries = {};
+	    		raw = "", entries = {},
+	    		dr = 0, cr = 0;
 
 	    	//Add Journal
-			var objAccountID = kendo.parseInt(obj.account_id),
-				debit = 0, credit = 0;
-
+			var objAccountID = kendo.parseInt(obj.account_id);
 			if(objAccountID>0){				
 				if(obj.type=="Deposit"){
 					raw = "dr"+objAccountID;
-					debit = obj.amount;
+					dr = obj.amount;
 				}else{
 					raw = "cr"+objAccountID;
-					credit = obj.amount;
+					cr = obj.amount;
 				}
-
-				var arAmount = obj.amount - (obj.discount + obj.deposit);
+				
 				if(entries[raw]===undefined){
 					entries[raw] = {
 						transaction_id 		: transaction_id,
@@ -81359,52 +81358,44 @@
 						description 		: obj.memo,
 						reference_no 		: obj.reference_no,
 						segments 	 		: obj.segments,
-						dr 	 				: debit,
-						cr 					: credit,
+						dr 	 				: dr,
+						cr 					: cr,
 						rate				: obj.rate,
 						locale				: obj.locale
 					};
 				}else{
-					entries[raw].dr += debit;
-					entries[raw].cr += credit;
+					entries[raw].dr += dr;
+					entries[raw].cr += cr;
 				}
 			}
 
-			//Add Journal
-			this.journalLineDS.add({					
-				transaction_id 		: transaction_id,
-				account_id 			: obj.account_id,				
-				contact_id 			: obj.contact_id,				
-				description 		: obj.memo,
-				reference_no 		: "",
-				segments 	 		: obj.segments,								
-				dr 	 				: debit,
-				cr 					: credit,				
-				rate				: obj.rate,
-				locale				: obj.locale
-			});
-
 			$.each(this.lineDS.data(), function(index, value){				
-				var dr = 0, cr = 0;
+				dr = 0; cr = 0;
 				if(obj.type=="Deposit"){
+					raw = "cr"+value.account_id;
 					cr = value.amount;
 				}else{
+					raw = "dr"+value.account_id;
 					dr = value.amount;
 				}
 
-				//Add Journal
-				self.journalLineDS.add({					
-					transaction_id 		: transaction_id,
-					account_id 			: value.account_id,				
-					contact_id 			: value.contact_id,				
-					description 		: value.description,
-					reference_no 		: value.reference_no,
-					segments 	 		: value.segments,								
-					dr 	 				: dr,
-					cr 					: cr,				
-					rate				: value.rate,
-					locale				: value.locale
-				});						
+				if(entries[raw]===undefined){
+					entries[raw] = {
+						transaction_id 		: transaction_id,
+						account_id 			: value.account_id,
+						contact_id 			: value.contact_id,
+						description 		: value.description,
+						reference_no 		: value.reference_no,
+						segments 	 		: value.segments,
+						dr 	 				: dr,
+						cr 					: cr,
+						rate				: obj.rate,
+						locale				: obj.locale
+					};
+				}else{
+					entries[raw].dr += dr;
+					entries[raw].cr += cr;
+				}
 			});
 
 			//Add to journal entry
@@ -83740,7 +83731,7 @@
             			}
             		});
             	});
-            	para.push({ field:"segments", operator:"segments", value: segments });
+            	para.push({ field:"id", operator:"where_in_related_segmentitem", value: segments });
 	        }
 
         	//Dates
@@ -83750,19 +83741,19 @@
         		displayDate = "From " + kendo.toString(start, "dd-MM-yyyy") + " To " + kendo.toString(end, "dd-MM-yyyy");
         		end.setDate(end.getDate()+1);
 
-            	para.push({ field:"issued_date >=", value: kendo.toString(start, "yyyy-MM-dd") });
-            	para.push({ field:"issued_date <", value: kendo.toString(end, "yyyy-MM-dd") });
+            	para.push({ field:"issued_date >=", operator:"where_related_transaction", value: kendo.toString(start, "yyyy-MM-dd") });
+            	para.push({ field:"issued_date <", operator:"where_related_transaction", value: kendo.toString(end, "yyyy-MM-dd") });
             }else if(start){
             	start = new Date(start);
             	displayDate = "On " + kendo.toString(start, "dd-MM-yyyy");
 
-            	para.push({ field:"issued_date", value: kendo.toString(start, "yyyy-MM-dd") });
+            	para.push({ field:"issued_date", operator:"where_related_transaction", value: kendo.toString(start, "yyyy-MM-dd") });
             }else if(end){
             	end = new Date(end);
             	displayDate = "As Of " + kendo.toString(end, "dd-MM-yyyy");
         		end.setDate(end.getDate()+1);
 
-            	para.push({ field:"issued_date <", value: kendo.toString(end, "yyyy-MM-dd") });
+            	para.push({ field:"issued_date <", operator:"where_related_transaction", value: kendo.toString(end, "yyyy-MM-dd") });
             }else{
             	
             }
@@ -83771,20 +83762,20 @@
             this.dataSource.query({
             	filter: para,
             	sort: [
-			  		{ field: "issued_date", dir: "desc" },
-			  		{ field: "number", dir: "desc" }
+			  		{ field: "issued_date", operator:"order_by_related_transaction", dir: "desc" },
+			  		{ field: "number", operator:"order_by_related_transaction", dir: "desc" }
 			  	]
             });
-         //    var loaded = false;
-         //    this.dataSource.bind("requestEnd", function(e){
-         //    	if(e.type==="read" && loaded==false){
-         //    		loaded = true;
+            var loaded = false;
+            this.dataSource.bind("requestEnd", function(e){
+            	if(e.type==="read" && loaded==false){
+            		loaded = true;
 
-         //    		var response = e.response;
-         //    		self.set("dr", kendo.toString(response.dr, "c", banhji.locale));
-	        //     	self.set("cr", kendo.toString(response.cr, "c", banhji.locale));
-	        //     }
-	        // });
+            		var response = e.response;
+            		self.set("dr", kendo.toString(response.dr, "c2", banhji.locale));
+	            	self.set("cr", kendo.toString(response.cr, "c2", banhji.locale));
+	            }
+	        });
 		}
 	});
 	banhji.generalLedger =  kendo.observable({

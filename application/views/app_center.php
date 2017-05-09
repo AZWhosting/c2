@@ -112,12 +112,12 @@
 							</a>
 							<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><h5 data-bind="text: lang.lang.tax" style="margin-top: 5px; display: inline-block;" style="margin-top: 5px; display: inline-block;"></h5></span>
 						</li>
-						<!-- <li style="text-align:center;">
-							<a href="<?php echo base_url(); ?>admin">
-								<img title="Admin Module" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/setting.jpg" alt="Admin">
-								<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><h5 data-bind="text: lang.lang.settings" style="margin-top: 5px; display: inline-block;" style="margin-top: 5px; display: inline-block;"></h5></span>
+						<li style="text-align:center;">
+							<a href="#/app_center">
+								<img title="App Center" src="<?php echo base_url(); ?>assets/app_center/app_center.jpg" alt="App Center">
+								<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><h5 data-bind="text: lang.lang.app_center" style="margin-top: 5px; display: inline-block;" style="margin-top: 5px; display: inline-block;"></h5></span>
 							</a>
-						</li> -->											
+						</li>											
 					</ul>
 				</div>
 			</div>
@@ -7422,12 +7422,12 @@
 								        <div class="tab-pane active" id="tab-1">									        	
 											
 											<input data-role="dropdownlist"
-												   class="sorter"                  
+												   class="sorter"
 										           data-value-primitive="true"
 										           data-text-field="text"
 										           data-value-field="value"
 										           data-bind="value: sorter,
-										                      source: sortList,                              
+										                      source: sortList,
 										                      events: { change: sorterChanges }" />
 
 											<input data-role="datepicker"
@@ -32994,7 +32994,7 @@
 			</div>
 		</div>
 
-		<div class="span12" style="margin-top: 20px;">		
+		<div class="span12" style="margin-top: 20px;">
 			<div class="relativeWrap" data-toggle="source-code">
 				<div class="widget widget-tabs widget-tabs-gray report-tab" style="padding-bottom: 20px; background: #fff; overflow: hidden;">
 					<div class="widget-head head-custom" style="height: 50px;">
@@ -44045,7 +44045,7 @@
 #	IMPORT VIEW 					 			 #
 ##################################################
 ############################################## -->
-<script id="importView" type="text/x-kendo-template">	
+<script id="importView" type="text/x-kendo-template">
 	<div  class="row-fluid saleSummaryCustomer">
 		<span class="glyphicons no-js remove_2 pull-right" 
 	    				onclick="javascript:window.history.back()"
@@ -44226,6 +44226,790 @@
 </script>
 
 
+
+
+<!-- #############################################
+##################################################
+#	APP CENTER VIEW 					 		#
+##################################################
+############################################## -->
+<script id="appCenter" type="text/x-kendo-template">
+	<!-- <div  class="row-fluid saleSummaryCustomer">
+		<h2 style="margin-top: 120px; float: left;">App Center</h2>
+	    <br>
+	</div> -->
+	<div class="span12">
+		<div class="relativeWrap" data-toggle="source-code">
+			<div class="widget widget-tabs widget-tabs-gray report-tab" style="padding-bottom: 20px; background: #fff; overflow: hidden;">
+				<div class="widget-head head-custom" style="height: 50px;">
+					<ul>
+						<li class="active"><a href="#tab-1" data-toggle="tab"><i></i><span >My Apps</span></a></li>
+						<li><a href="#tab-2" data-toggle="tab"><i></i><span >All Apps</span></a></li>
+					</ul>
+				</div>
+
+				<div class="widget-body" style="padding: 20px 0;">
+					<div class="tab-content">
+				        <div class="tab-pane active" id="tab-1">
+							<div class="row-fluid" style="padding: 0 20px;">
+								Test
+							</div>
+			        	</div>
+
+			        	<div class="tab-pane" id="tab-2">
+				        	<div class="row-fluid" style="padding: 0 20px;">
+				        		<div class="span7" style="padding-left: 5px;">
+									<select data-role="multiselect"
+										    data-value-primitive="true"
+										    data-header-template="contact-header-tmpl"
+										    data-item-template="contact-list-tmpl"
+										    data-value-field="id"
+										    data-text-field="name"
+										    data-bind="value: obj.contactIds, 
+										   			source: contactDS"
+										    data-placeholder="Search for an app..."
+										    style="width: 93%; float: left;" /></select>
+									<button type="button" data-role="button" data-bind="click: search" style="float: left; width: 5%; margin-left: 8px; height: 31px;"><i class="icon-search"></i></button>
+								</div>
+								<div class="span2"></div>
+								<div class="span3" style="padding-right: 5px;">
+									<input data-role="dropdownlist"
+									    class="sorter"
+							            data-value-primitive="true"
+							            data-text-field="text"
+							            data-value-field="value"
+							            data-bind="value: sorter,
+							                      source: sortList,
+							                      events: { change: sorterChanges }"
+							           	style="width: 100%; float: right;" />
+								</div>
+				        	</div>
+
+				        	<div class="row-fluid" style="margin-top: 20px; float: left; background: #ebeef3; padding: 15px 20px 0;">
+				        		<h2>Apps Recommended For You</h2>
+				        		<div class="row-fluid" style="margin-top: 20px;">
+				        			<div class="span3">
+				        				<a href="">
+				        					<div class="app-recommand ">
+				        						<div class="appIcon">
+				        							<img src="https://images.appcenter.intuit.com/Content/images/AppCards/b7q4xvfdhu/Submitted23/LogoName.png" />
+				        						</div>
+				        						<div clas="bigappcard-details" style="color: #404040; height: 135px; padding: 0 25px; margin-top: 10px; text-align: left; text-overflow: ellipsis; overflow: hidden; float: left; width: 100%">
+					        						<div class="bigappcard-display-name" style="font-size: 16px; font-weight: 700; ">
+					        							Futrli
+					        						</div>
+					        						<div class="bigappcard-vendor-name" style="font-size: 12px; font-weight: 700; padding-bottom: 5px; line-height: 22px;">
+							        					by CrunchBoards
+						        					</div>
+						        					<div class="bigappcard-tagline" style="font-size: 14px; line-height: 22px;">
+						        						The all-in-one Forecasting & Reporting Engine
+						        					</div>
+					        					</div>
+					        					
+					        					<div class="ratings" style="line-height: 14px; float: left; display: inline-block; margin-left: 10px; color: #0098CD; padding-top: 10px; padding-left: 15px; font-size: 15px; ">
+									                <span class="fa fa-star" style="margin-right: 2px;"></span>
+									                <span class="fa fa-star" style="margin-right: 2px;"></span>
+									                <span class="fa fa-star" style="margin-right: 2px;"></span>
+									                <span class="fa fa-star" style="margin-right: 2px;"></span>
+									                <span class="fa fa-star" style="margin-right: 2px;"></span>
+									                <span class="review" style="line-height: 20px;">
+									                    <span class="reviews" style="    vertical-align: top; float: none; color: #999; font-size: 12px; ">(7)</span>
+									                </span>
+									            </div>
+				        					</div>
+				        				</a>
+				        			</div>
+				        			<div class="span3">
+				        				<a href="">
+				        					<div class="app-recommand ">
+				        						<div class="appIcon">
+				        							<img src="https://images.appcenter.intuit.com/Content/images/AppCards/b7q4xvfdhu/Submitted23/LogoName.png" />
+				        						</div>
+				        						<div clas="bigappcard-details" style="color: #404040; height: 135px; padding: 0 25px; margin-top: 10px; text-align: left; text-overflow: ellipsis; overflow: hidden; float: left; width: 100%">
+					        						<div class="bigappcard-display-name" style="font-size: 16px; font-weight: 700; ">
+					        							Futrli
+					        						</div>
+					        						<div class="bigappcard-vendor-name" style="font-size: 12px; font-weight: 700; padding-bottom: 5px; line-height: 22px;">
+							        					by CrunchBoards
+						        					</div>
+						        					<div class="bigappcard-tagline" style="font-size: 14px; line-height: 22px;">
+						        						The all-in-one Forecasting & Reporting Engine
+						        					</div>
+					        					</div>
+					        					
+					        					<div class="ratings" style="line-height: 14px; float: left; display: inline-block; margin-left: 10px; color: #0098CD; padding-top: 10px; padding-left: 15px; font-size: 15px; ">
+									                <span class="fa fa-star" style="margin-right: 2px;"></span>
+									                <span class="fa fa-star" style="margin-right: 2px;"></span>
+									                <span class="fa fa-star" style="margin-right: 2px;"></span>
+									                <span class="fa fa-star" style="margin-right: 2px;"></span>
+									                <span class="fa fa-star" style="margin-right: 2px;"></span>
+									                <span class="review" style="line-height: 20px;">
+									                    <span class="reviews" style="    vertical-align: top; float: none; color: #999; font-size: 12px; ">(7)</span>
+									                </span>
+									            </div>
+				        					</div>
+				        				</a>
+				        			</div>
+				        			<div class="span3">
+				        				<a href="">
+				        					<div class="app-recommand ">
+				        						<div class="appIcon">
+				        							<img src="https://images.appcenter.intuit.com/Content/images/AppCards/b7q4xvfdhu/Submitted23/LogoName.png" />
+				        						</div>
+				        						<div clas="bigappcard-details" style="color: #404040; height: 135px; padding: 0 25px; margin-top: 10px; text-align: left; text-overflow: ellipsis; overflow: hidden; float: left; width: 100%">
+					        						<div class="bigappcard-display-name" style="font-size: 16px; font-weight: 700; ">
+					        							Futrli
+					        						</div>
+					        						<div class="bigappcard-vendor-name" style="font-size: 12px; font-weight: 700; padding-bottom: 5px; line-height: 22px;">
+							        					by CrunchBoards
+						        					</div>
+						        					<div class="bigappcard-tagline" style="font-size: 14px; line-height: 22px;">
+						        						The all-in-one Forecasting & Reporting Engine
+						        					</div>
+					        					</div>
+					        					
+					        					<div class="ratings" style="line-height: 14px; float: left; display: inline-block; margin-left: 10px; color: #0098CD; padding-top: 10px; padding-left: 15px; font-size: 15px; ">
+									                <span class="fa fa-star" style="margin-right: 2px;"></span>
+									                <span class="fa fa-star" style="margin-right: 2px;"></span>
+									                <span class="fa fa-star" style="margin-right: 2px;"></span>
+									                <span class="fa fa-star" style="margin-right: 2px;"></span>
+									                <span class="fa fa-star" style="margin-right: 2px;"></span>
+									                <span class="review" style="line-height: 20px;">
+									                    <span class="reviews" style="    vertical-align: top; float: none; color: #999; font-size: 12px; ">(7)</span>
+									                </span>
+									            </div>
+				        					</div>
+				        				</a>
+				        			</div>
+				        			<div class="span3">
+				        				<a href="">
+				        					<div class="app-recommand ">
+				        						<div class="appIcon">
+				        							<img src="https://images.appcenter.intuit.com/Content/images/AppCards/b7q4xvfdhu/Submitted23/LogoName.png" />
+				        						</div>
+				        						<div clas="bigappcard-details" style="color: #404040; height: 135px; padding: 0 25px; margin-top: 10px; text-align: left; text-overflow: ellipsis; overflow: hidden; float: left; width: 100%">
+					        						<div class="bigappcard-display-name" style="font-size: 16px; font-weight: 700; ">
+					        							Futrli
+					        						</div>
+					        						<div class="bigappcard-vendor-name" style="font-size: 12px; font-weight: 700; padding-bottom: 5px; line-height: 22px;">
+							        					by CrunchBoards
+						        					</div>
+						        					<div class="bigappcard-tagline" style="font-size: 14px; line-height: 22px;">
+						        						The all-in-one Forecasting & Reporting Engine
+						        					</div>
+					        					</div>
+					        					
+					        					<div class="ratings" style="line-height: 14px; float: left; display: inline-block; margin-left: 10px; color: #0098CD; padding-top: 10px; padding-left: 15px; font-size: 15px; ">
+									                <span class="fa fa-star" style="margin-right: 2px;"></span>
+									                <span class="fa fa-star" style="margin-right: 2px;"></span>
+									                <span class="fa fa-star" style="margin-right: 2px;"></span>
+									                <span class="fa fa-star" style="margin-right: 2px;"></span>
+									                <span class="fa fa-star" style="margin-right: 2px;"></span>
+									                <span class="review" style="line-height: 20px;">
+									                    <span class="reviews" style="    vertical-align: top; float: none; color: #999; font-size: 12px; ">(7)</span>
+									                </span>
+									            </div>
+				        					</div>
+				        				</a>
+				        			</div>
+				        		</div>
+				        	</div>
+
+				        	<div class="row-fluid" style="float: left; background: #f7f9fb; padding: 15px 20px 0;">
+				        		<h2>Trending Now</h2>
+				        		<div class="row-fluid" style="margin-top: 20px;">
+				        			<div class="span3">
+				        				<a href="">
+				        					<div class="app-recommand ">
+				        						<div class="appIcon">
+				        							<img src="https://images.appcenter.intuit.com/Content/images/AppCards/b7q4xvfdhu/Submitted23/LogoName.png" />
+				        						</div>
+				        						<div clas="bigappcard-details" style="color: #404040; height: 135px; padding: 0 25px; margin-top: 10px; text-align: left; text-overflow: ellipsis; overflow: hidden; float: left; width: 100%">
+					        						<div class="bigappcard-display-name" style="font-size: 16px; font-weight: 700; ">
+					        							Futrli
+					        						</div>
+					        						<div class="bigappcard-vendor-name" style="font-size: 12px; font-weight: 700; padding-bottom: 5px; line-height: 22px;">
+							        					by CrunchBoards
+						        					</div>
+						        					<div class="bigappcard-tagline" style="font-size: 14px; line-height: 22px;">
+						        						The all-in-one Forecasting & Reporting Engine
+						        					</div>
+					        					</div>
+					        					
+					        					<div class="ratings" style="line-height: 14px; float: left; display: inline-block; margin-left: 10px; color: #0098CD; padding-top: 10px; padding-left: 15px; font-size: 15px; ">
+									                <span class="fa fa-star" style="margin-right: 2px;"></span>
+									                <span class="fa fa-star" style="margin-right: 2px;"></span>
+									                <span class="fa fa-star" style="margin-right: 2px;"></span>
+									                <span class="fa fa-star" style="margin-right: 2px;"></span>
+									                <span class="fa fa-star" style="margin-right: 2px;"></span>
+									                <span class="review" style="line-height: 20px;">
+									                    <span class="reviews" style="    vertical-align: top; float: none; color: #999; font-size: 12px; ">(7)</span>
+									                </span>
+									            </div>
+				        					</div>
+				        				</a>
+				        			</div>
+				        			<div class="span3">
+				        				<a href="">
+				        					<div class="app-recommand ">
+				        						<div class="appIcon">
+				        							<img src="https://images.appcenter.intuit.com/Content/images/AppCards/b7q4xvfdhu/Submitted23/LogoName.png" />
+				        						</div>
+				        						<div clas="bigappcard-details" style="color: #404040; height: 135px; padding: 0 25px; margin-top: 10px; text-align: left; text-overflow: ellipsis; overflow: hidden; float: left; width: 100%">
+					        						<div class="bigappcard-display-name" style="font-size: 16px; font-weight: 700; ">
+					        							Futrli
+					        						</div>
+					        						<div class="bigappcard-vendor-name" style="font-size: 12px; font-weight: 700; padding-bottom: 5px; line-height: 22px;">
+							        					by CrunchBoards
+						        					</div>
+						        					<div class="bigappcard-tagline" style="font-size: 14px; line-height: 22px;">
+						        						The all-in-one Forecasting & Reporting Engine
+						        					</div>
+					        					</div>
+					        					
+					        					<div class="ratings" style="line-height: 14px; float: left; display: inline-block; margin-left: 10px; color: #0098CD; padding-top: 10px; padding-left: 15px; font-size: 15px; ">
+									                <span class="fa fa-star" style="margin-right: 2px;"></span>
+									                <span class="fa fa-star" style="margin-right: 2px;"></span>
+									                <span class="fa fa-star" style="margin-right: 2px;"></span>
+									                <span class="fa fa-star" style="margin-right: 2px;"></span>
+									                <span class="fa fa-star" style="margin-right: 2px;"></span>
+									                <span class="review" style="line-height: 20px;">
+									                    <span class="reviews" style="    vertical-align: top; float: none; color: #999; font-size: 12px; ">(7)</span>
+									                </span>
+									            </div>
+				        					</div>
+				        				</a>
+				        			</div>
+				        			<div class="span3">
+				        				<a href="">
+				        					<div class="app-recommand ">
+				        						<div class="appIcon">
+				        							<img src="https://images.appcenter.intuit.com/Content/images/AppCards/b7q4xvfdhu/Submitted23/LogoName.png" />
+				        						</div>
+				        						<div clas="bigappcard-details" style="color: #404040; height: 135px; padding: 0 25px; margin-top: 10px; text-align: left; text-overflow: ellipsis; overflow: hidden; float: left; width: 100%">
+					        						<div class="bigappcard-display-name" style="font-size: 16px; font-weight: 700; ">
+					        							Futrli
+					        						</div>
+					        						<div class="bigappcard-vendor-name" style="font-size: 12px; font-weight: 700; padding-bottom: 5px; line-height: 22px;">
+							        					by CrunchBoards
+						        					</div>
+						        					<div class="bigappcard-tagline" style="font-size: 14px; line-height: 22px;">
+						        						The all-in-one Forecasting & Reporting Engine
+						        					</div>
+					        					</div>
+					        					
+					        					<div class="ratings" style="line-height: 14px; float: left; display: inline-block; margin-left: 10px; color: #0098CD; padding-top: 10px; padding-left: 15px; font-size: 15px; ">
+									                <span class="fa fa-star" style="margin-right: 2px;"></span>
+									                <span class="fa fa-star" style="margin-right: 2px;"></span>
+									                <span class="fa fa-star" style="margin-right: 2px;"></span>
+									                <span class="fa fa-star" style="margin-right: 2px;"></span>
+									                <span class="fa fa-star" style="margin-right: 2px;"></span>
+									                <span class="review" style="line-height: 20px;">
+									                    <span class="reviews" style="    vertical-align: top; float: none; color: #999; font-size: 12px; ">(7)</span>
+									                </span>
+									            </div>
+				        					</div>
+				        				</a>
+				        			</div>
+				        			<div class="span3">
+				        				<a href="">
+				        					<div class="app-recommand ">
+				        						<div class="appIcon">
+				        							<img src="https://images.appcenter.intuit.com/Content/images/AppCards/b7q4xvfdhu/Submitted23/LogoName.png" />
+				        						</div>
+				        						<div clas="bigappcard-details" style="color: #404040; height: 135px; padding: 0 25px; margin-top: 10px; text-align: left; text-overflow: ellipsis; overflow: hidden; float: left; width: 100%">
+					        						<div class="bigappcard-display-name" style="font-size: 16px; font-weight: 700; ">
+					        							Futrli
+					        						</div>
+					        						<div class="bigappcard-vendor-name" style="font-size: 12px; font-weight: 700; padding-bottom: 5px; line-height: 22px;">
+							        					by CrunchBoards
+						        					</div>
+						        					<div class="bigappcard-tagline" style="font-size: 14px; line-height: 22px;">
+						        						The all-in-one Forecasting & Reporting Engine
+						        					</div>
+					        					</div>
+					        					
+					        					<div class="ratings" style="line-height: 14px; float: left; display: inline-block; margin-left: 10px; color: #0098CD; padding-top: 10px; padding-left: 15px; font-size: 15px; ">
+									                <span class="fa fa-star" style="margin-right: 2px;"></span>
+									                <span class="fa fa-star" style="margin-right: 2px;"></span>
+									                <span class="fa fa-star" style="margin-right: 2px;"></span>
+									                <span class="fa fa-star" style="margin-right: 2px;"></span>
+									                <span class="fa fa-star" style="margin-right: 2px;"></span>
+									                <span class="review" style="line-height: 20px;">
+									                    <span class="reviews" style="    vertical-align: top; float: none; color: #999; font-size: 12px; ">(7)</span>
+									                </span>
+									            </div>
+				        					</div>
+				        				</a>
+				        			</div>
+				        		</div>
+				        	</div>
+
+				        	<div class="row-fluid" style="float: left; background: #ebeef3; padding: 15px 20px 0;">
+				        		<h2>Featured</h2>
+				        		<div class="row-fluid" style="margin-top: 20px;">
+				        			<div class="span3">
+				        				<a href="">
+				        					<div class="app-recommand ">
+				        						<div class="appIcon">
+				        							<img src="https://images.appcenter.intuit.com/Content/images/AppCards/b7q4xvfdhu/Submitted23/LogoName.png" />
+				        						</div>
+				        						<div clas="bigappcard-details" style="color: #404040; height: 135px; padding: 0 25px; margin-top: 10px; text-align: left; text-overflow: ellipsis; overflow: hidden; float: left; width: 100%">
+					        						<div class="bigappcard-display-name" style="font-size: 16px; font-weight: 700; ">
+					        							Futrli
+					        						</div>
+					        						<div class="bigappcard-vendor-name" style="font-size: 12px; font-weight: 700; padding-bottom: 5px; line-height: 22px;">
+							        					by CrunchBoards
+						        					</div>
+						        					<div class="bigappcard-tagline" style="font-size: 14px; line-height: 22px;">
+						        						The all-in-one Forecasting & Reporting Engine
+						        					</div>
+					        					</div>
+					        					
+					        					<div class="ratings" style="line-height: 14px; float: left; display: inline-block; margin-left: 10px; color: #0098CD; padding-top: 10px; padding-left: 15px; font-size: 15px; ">
+									                <span class="fa fa-star" style="margin-right: 2px;"></span>
+									                <span class="fa fa-star" style="margin-right: 2px;"></span>
+									                <span class="fa fa-star" style="margin-right: 2px;"></span>
+									                <span class="fa fa-star" style="margin-right: 2px;"></span>
+									                <span class="fa fa-star" style="margin-right: 2px;"></span>
+									                <span class="review" style="line-height: 20px;">
+									                    <span class="reviews" style="    vertical-align: top; float: none; color: #999; font-size: 12px; ">(7)</span>
+									                </span>
+									            </div>
+				        					</div>
+				        				</a>
+				        			</div>
+				        			<div class="span3">
+				        				<a href="">
+				        					<div class="app-recommand ">
+				        						<div class="appIcon">
+				        							<img src="https://images.appcenter.intuit.com/Content/images/AppCards/b7q4xvfdhu/Submitted23/LogoName.png" />
+				        						</div>
+				        						<div clas="bigappcard-details" style="color: #404040; height: 135px; padding: 0 25px; margin-top: 10px; text-align: left; text-overflow: ellipsis; overflow: hidden; float: left; width: 100%">
+					        						<div class="bigappcard-display-name" style="font-size: 16px; font-weight: 700; ">
+					        							Futrli
+					        						</div>
+					        						<div class="bigappcard-vendor-name" style="font-size: 12px; font-weight: 700; padding-bottom: 5px; line-height: 22px;">
+							        					by CrunchBoards
+						        					</div>
+						        					<div class="bigappcard-tagline" style="font-size: 14px; line-height: 22px;">
+						        						The all-in-one Forecasting & Reporting Engine
+						        					</div>
+					        					</div>
+					        					
+					        					<div class="ratings" style="line-height: 14px; float: left; display: inline-block; margin-left: 10px; color: #0098CD; padding-top: 10px; padding-left: 15px; font-size: 15px; ">
+									                <span class="fa fa-star" style="margin-right: 2px;"></span>
+									                <span class="fa fa-star" style="margin-right: 2px;"></span>
+									                <span class="fa fa-star" style="margin-right: 2px;"></span>
+									                <span class="fa fa-star" style="margin-right: 2px;"></span>
+									                <span class="fa fa-star" style="margin-right: 2px;"></span>
+									                <span class="review" style="line-height: 20px;">
+									                    <span class="reviews" style="    vertical-align: top; float: none; color: #999; font-size: 12px; ">(7)</span>
+									                </span>
+									            </div>
+				        					</div>
+				        				</a>
+				        			</div>
+				        			<div class="span3">
+				        				<a href="">
+				        					<div class="app-recommand ">
+				        						<div class="appIcon">
+				        							<img src="https://images.appcenter.intuit.com/Content/images/AppCards/b7q4xvfdhu/Submitted23/LogoName.png" />
+				        						</div>
+				        						<div clas="bigappcard-details" style="color: #404040; height: 135px; padding: 0 25px; margin-top: 10px; text-align: left; text-overflow: ellipsis; overflow: hidden; float: left; width: 100%">
+					        						<div class="bigappcard-display-name" style="font-size: 16px; font-weight: 700; ">
+					        							Futrli
+					        						</div>
+					        						<div class="bigappcard-vendor-name" style="font-size: 12px; font-weight: 700; padding-bottom: 5px; line-height: 22px;">
+							        					by CrunchBoards
+						        					</div>
+						        					<div class="bigappcard-tagline" style="font-size: 14px; line-height: 22px;">
+						        						The all-in-one Forecasting & Reporting Engine
+						        					</div>
+					        					</div>
+					        					
+					        					<div class="ratings" style="line-height: 14px; float: left; display: inline-block; margin-left: 10px; color: #0098CD; padding-top: 10px; padding-left: 15px; font-size: 15px; ">
+									                <span class="fa fa-star" style="margin-right: 2px;"></span>
+									                <span class="fa fa-star" style="margin-right: 2px;"></span>
+									                <span class="fa fa-star" style="margin-right: 2px;"></span>
+									                <span class="fa fa-star" style="margin-right: 2px;"></span>
+									                <span class="fa fa-star" style="margin-right: 2px;"></span>
+									                <span class="review" style="line-height: 20px;">
+									                    <span class="reviews" style="    vertical-align: top; float: none; color: #999; font-size: 12px; ">(7)</span>
+									                </span>
+									            </div>
+				        					</div>
+				        				</a>
+				        			</div>
+				        			<div class="span3">
+				        				<a href="">
+				        					<div class="app-recommand ">
+				        						<div class="appIcon">
+				        							<img src="https://images.appcenter.intuit.com/Content/images/AppCards/b7q4xvfdhu/Submitted23/LogoName.png" />
+				        						</div>
+				        						<div clas="bigappcard-details" style="color: #404040; height: 135px; padding: 0 25px; margin-top: 10px; text-align: left; text-overflow: ellipsis; overflow: hidden; float: left; width: 100%">
+					        						<div class="bigappcard-display-name" style="font-size: 16px; font-weight: 700; ">
+					        							Futrli
+					        						</div>
+					        						<div class="bigappcard-vendor-name" style="font-size: 12px; font-weight: 700; padding-bottom: 5px; line-height: 22px;">
+							        					by CrunchBoards
+						        					</div>
+						        					<div class="bigappcard-tagline" style="font-size: 14px; line-height: 22px;">
+						        						The all-in-one Forecasting & Reporting Engine
+						        					</div>
+					        					</div>
+					        					
+					        					<div class="ratings" style="line-height: 14px; float: left; display: inline-block; margin-left: 10px; color: #0098CD; padding-top: 10px; padding-left: 15px; font-size: 15px; ">
+									                <span class="fa fa-star" style="margin-right: 2px;"></span>
+									                <span class="fa fa-star" style="margin-right: 2px;"></span>
+									                <span class="fa fa-star" style="margin-right: 2px;"></span>
+									                <span class="fa fa-star" style="margin-right: 2px;"></span>
+									                <span class="fa fa-star" style="margin-right: 2px;"></span>
+									                <span class="review" style="line-height: 20px;">
+									                    <span class="reviews" style="    vertical-align: top; float: none; color: #999; font-size: 12px; ">(7)</span>
+									                </span>
+									            </div>
+				        					</div>
+				        				</a>
+				        			</div>
+				        		</div>
+				        	</div>
+
+				        	<div class="row-fluid" style="float: left; background: #f7f9fb; padding: 15px 20px 0;">
+				        		<h2>Newest</h2>
+				        		<div class="row-fluid" style="margin-top: 20px;">
+				        			<div class="span3">
+				        				<a href="">
+				        					<div class="app-recommand ">
+				        						<div class="appIcon">
+				        							<img src="https://images.appcenter.intuit.com/Content/images/AppCards/b7q4xvfdhu/Submitted23/LogoName.png" />
+				        						</div>
+				        						<div clas="bigappcard-details" style="color: #404040; height: 135px; padding: 0 25px; margin-top: 10px; text-align: left; text-overflow: ellipsis; overflow: hidden; float: left; width: 100%">
+					        						<div class="bigappcard-display-name" style="font-size: 16px; font-weight: 700; ">
+					        							Futrli
+					        						</div>
+					        						<div class="bigappcard-vendor-name" style="font-size: 12px; font-weight: 700; padding-bottom: 5px; line-height: 22px;">
+							        					by CrunchBoards
+						        					</div>
+						        					<div class="bigappcard-tagline" style="font-size: 14px; line-height: 22px;">
+						        						The all-in-one Forecasting & Reporting Engine
+						        					</div>
+					        					</div>
+					        					
+					        					<div class="ratings" style="line-height: 14px; float: left; display: inline-block; margin-left: 10px; color: #0098CD; padding-top: 10px; padding-left: 15px; font-size: 15px; ">
+									                <span class="fa fa-star" style="margin-right: 2px;"></span>
+									                <span class="fa fa-star" style="margin-right: 2px;"></span>
+									                <span class="fa fa-star" style="margin-right: 2px;"></span>
+									                <span class="fa fa-star" style="margin-right: 2px;"></span>
+									                <span class="fa fa-star" style="margin-right: 2px;"></span>
+									                <span class="review" style="line-height: 20px;">
+									                    <span class="reviews" style="    vertical-align: top; float: none; color: #999; font-size: 12px; ">(7)</span>
+									                </span>
+									            </div>
+				        					</div>
+				        				</a>
+				        			</div>
+				        			<div class="span3">
+				        				<a href="">
+				        					<div class="app-recommand ">
+				        						<div class="appIcon">
+				        							<img src="https://images.appcenter.intuit.com/Content/images/AppCards/b7q4xvfdhu/Submitted23/LogoName.png" />
+				        						</div>
+				        						<div clas="bigappcard-details" style="color: #404040; height: 135px; padding: 0 25px; margin-top: 10px; text-align: left; text-overflow: ellipsis; overflow: hidden; float: left; width: 100%">
+					        						<div class="bigappcard-display-name" style="font-size: 16px; font-weight: 700; ">
+					        							Futrli
+					        						</div>
+					        						<div class="bigappcard-vendor-name" style="font-size: 12px; font-weight: 700; padding-bottom: 5px; line-height: 22px;">
+							        					by CrunchBoards
+						        					</div>
+						        					<div class="bigappcard-tagline" style="font-size: 14px; line-height: 22px;">
+						        						The all-in-one Forecasting & Reporting Engine
+						        					</div>
+					        					</div>
+					        					
+					        					<div class="ratings" style="line-height: 14px; float: left; display: inline-block; margin-left: 10px; color: #0098CD; padding-top: 10px; padding-left: 15px; font-size: 15px; ">
+									                <span class="fa fa-star" style="margin-right: 2px;"></span>
+									                <span class="fa fa-star" style="margin-right: 2px;"></span>
+									                <span class="fa fa-star" style="margin-right: 2px;"></span>
+									                <span class="fa fa-star" style="margin-right: 2px;"></span>
+									                <span class="fa fa-star" style="margin-right: 2px;"></span>
+									                <span class="review" style="line-height: 20px;">
+									                    <span class="reviews" style="    vertical-align: top; float: none; color: #999; font-size: 12px; ">(7)</span>
+									                </span>
+									            </div>
+				        					</div>
+				        				</a>
+				        			</div>
+				        			<div class="span3">
+				        				<a href="">
+				        					<div class="app-recommand ">
+				        						<div class="appIcon">
+				        							<img src="https://images.appcenter.intuit.com/Content/images/AppCards/b7q4xvfdhu/Submitted23/LogoName.png" />
+				        						</div>
+				        						<div clas="bigappcard-details" style="color: #404040; height: 135px; padding: 0 25px; margin-top: 10px; text-align: left; text-overflow: ellipsis; overflow: hidden; float: left; width: 100%">
+					        						<div class="bigappcard-display-name" style="font-size: 16px; font-weight: 700; ">
+					        							Futrli
+					        						</div>
+					        						<div class="bigappcard-vendor-name" style="font-size: 12px; font-weight: 700; padding-bottom: 5px; line-height: 22px;">
+							        					by CrunchBoards
+						        					</div>
+						        					<div class="bigappcard-tagline" style="font-size: 14px; line-height: 22px;">
+						        						The all-in-one Forecasting & Reporting Engine
+						        					</div>
+					        					</div>
+					        					
+					        					<div class="ratings" style="line-height: 14px; float: left; display: inline-block; margin-left: 10px; color: #0098CD; padding-top: 10px; padding-left: 15px; font-size: 15px; ">
+									                <span class="fa fa-star" style="margin-right: 2px;"></span>
+									                <span class="fa fa-star" style="margin-right: 2px;"></span>
+									                <span class="fa fa-star" style="margin-right: 2px;"></span>
+									                <span class="fa fa-star" style="margin-right: 2px;"></span>
+									                <span class="fa fa-star" style="margin-right: 2px;"></span>
+									                <span class="review" style="line-height: 20px;">
+									                    <span class="reviews" style="    vertical-align: top; float: none; color: #999; font-size: 12px; ">(7)</span>
+									                </span>
+									            </div>
+				        					</div>
+				        				</a>
+				        			</div>
+				        			<div class="span3">
+				        				<a href="">
+				        					<div class="app-recommand ">
+				        						<div class="appIcon">
+				        							<img src="https://images.appcenter.intuit.com/Content/images/AppCards/b7q4xvfdhu/Submitted23/LogoName.png" />
+				        						</div>
+				        						<div clas="bigappcard-details" style="color: #404040; height: 135px; padding: 0 25px; margin-top: 10px; text-align: left; text-overflow: ellipsis; overflow: hidden; float: left; width: 100%">
+					        						<div class="bigappcard-display-name" style="font-size: 16px; font-weight: 700; ">
+					        							Futrli
+					        						</div>
+					        						<div class="bigappcard-vendor-name" style="font-size: 12px; font-weight: 700; padding-bottom: 5px; line-height: 22px;">
+							        					by CrunchBoards
+						        					</div>
+						        					<div class="bigappcard-tagline" style="font-size: 14px; line-height: 22px;">
+						        						The all-in-one Forecasting & Reporting Engine
+						        					</div>
+					        					</div>
+					        					
+					        					<div class="ratings" style="line-height: 14px; float: left; display: inline-block; margin-left: 10px; color: #0098CD; padding-top: 10px; padding-left: 15px; font-size: 15px; ">
+									                <span class="fa fa-star" style="margin-right: 2px;"></span>
+									                <span class="fa fa-star" style="margin-right: 2px;"></span>
+									                <span class="fa fa-star" style="margin-right: 2px;"></span>
+									                <span class="fa fa-star" style="margin-right: 2px;"></span>
+									                <span class="fa fa-star" style="margin-right: 2px;"></span>
+									                <span class="review" style="line-height: 20px;">
+									                    <span class="reviews" style="    vertical-align: top; float: none; color: #999; font-size: 12px; ">(7)</span>
+									                </span>
+									            </div>
+				        					</div>
+				        				</a>
+				        			</div>
+				        		</div>
+				        	</div>
+
+				        	<div class="row-fluid" style="float: left; background: #ebeef3; padding: 15px 20px 0;">
+				        		<h2>Top Rated</h2>
+				        		<div class="row-fluid" style="margin-top: 20px;">
+				        			<div class="span3">
+				        				<a href="">
+				        					<div class="app-recommand ">
+				        						<div class="appIcon">
+				        							<img src="https://images.appcenter.intuit.com/Content/images/AppCards/b7q4xvfdhu/Submitted23/LogoName.png" />
+				        						</div>
+				        						<div clas="bigappcard-details" style="color: #404040; height: 135px; padding: 0 25px; margin-top: 10px; text-align: left; text-overflow: ellipsis; overflow: hidden; float: left; width: 100%">
+					        						<div class="bigappcard-display-name" style="font-size: 16px; font-weight: 700; ">
+					        							Futrli
+					        						</div>
+					        						<div class="bigappcard-vendor-name" style="font-size: 12px; font-weight: 700; padding-bottom: 5px; line-height: 22px;">
+							        					by CrunchBoards
+						        					</div>
+						        					<div class="bigappcard-tagline" style="font-size: 14px; line-height: 22px;">
+						        						The all-in-one Forecasting & Reporting Engine
+						        					</div>
+					        					</div>
+					        					
+					        					<div class="ratings" style="line-height: 14px; float: left; display: inline-block; margin-left: 10px; color: #0098CD; padding-top: 10px; padding-left: 15px; font-size: 15px; ">
+									                <span class="fa fa-star" style="margin-right: 2px;"></span>
+									                <span class="fa fa-star" style="margin-right: 2px;"></span>
+									                <span class="fa fa-star" style="margin-right: 2px;"></span>
+									                <span class="fa fa-star" style="margin-right: 2px;"></span>
+									                <span class="fa fa-star" style="margin-right: 2px;"></span>
+									                <span class="review" style="line-height: 20px;">
+									                    <span class="reviews" style="    vertical-align: top; float: none; color: #999; font-size: 12px; ">(7)</span>
+									                </span>
+									            </div>
+				        					</div>
+				        				</a>
+				        			</div>
+				        			<div class="span3">
+				        				<a href="">
+				        					<div class="app-recommand ">
+				        						<div class="appIcon">
+				        							<img src="https://images.appcenter.intuit.com/Content/images/AppCards/b7q4xvfdhu/Submitted23/LogoName.png" />
+				        						</div>
+				        						<div clas="bigappcard-details" style="color: #404040; height: 135px; padding: 0 25px; margin-top: 10px; text-align: left; text-overflow: ellipsis; overflow: hidden; float: left; width: 100%">
+					        						<div class="bigappcard-display-name" style="font-size: 16px; font-weight: 700; ">
+					        							Futrli
+					        						</div>
+					        						<div class="bigappcard-vendor-name" style="font-size: 12px; font-weight: 700; padding-bottom: 5px; line-height: 22px;">
+							        					by CrunchBoards
+						        					</div>
+						        					<div class="bigappcard-tagline" style="font-size: 14px; line-height: 22px;">
+						        						The all-in-one Forecasting & Reporting Engine
+						        					</div>
+					        					</div>
+					        					
+					        					<div class="ratings" style="line-height: 14px; float: left; display: inline-block; margin-left: 10px; color: #0098CD; padding-top: 10px; padding-left: 15px; font-size: 15px; ">
+									                <span class="fa fa-star" style="margin-right: 2px;"></span>
+									                <span class="fa fa-star" style="margin-right: 2px;"></span>
+									                <span class="fa fa-star" style="margin-right: 2px;"></span>
+									                <span class="fa fa-star" style="margin-right: 2px;"></span>
+									                <span class="fa fa-star" style="margin-right: 2px;"></span>
+									                <span class="review" style="line-height: 20px;">
+									                    <span class="reviews" style="    vertical-align: top; float: none; color: #999; font-size: 12px; ">(7)</span>
+									                </span>
+									            </div>
+				        					</div>
+				        				</a>
+				        			</div>
+				        			<div class="span3">
+				        				<a href="">
+				        					<div class="app-recommand ">
+				        						<div class="appIcon">
+				        							<img src="https://images.appcenter.intuit.com/Content/images/AppCards/b7q4xvfdhu/Submitted23/LogoName.png" />
+				        						</div>
+				        						<div clas="bigappcard-details" style="color: #404040; height: 135px; padding: 0 25px; margin-top: 10px; text-align: left; text-overflow: ellipsis; overflow: hidden; float: left; width: 100%">
+					        						<div class="bigappcard-display-name" style="font-size: 16px; font-weight: 700; ">
+					        							Futrli
+					        						</div>
+					        						<div class="bigappcard-vendor-name" style="font-size: 12px; font-weight: 700; padding-bottom: 5px; line-height: 22px;">
+							        					by CrunchBoards
+						        					</div>
+						        					<div class="bigappcard-tagline" style="font-size: 14px; line-height: 22px;">
+						        						The all-in-one Forecasting & Reporting Engine
+						        					</div>
+					        					</div>
+					        					
+					        					<div class="ratings" style="line-height: 14px; float: left; display: inline-block; margin-left: 10px; color: #0098CD; padding-top: 10px; padding-left: 15px; font-size: 15px; ">
+									                <span class="fa fa-star" style="margin-right: 2px;"></span>
+									                <span class="fa fa-star" style="margin-right: 2px;"></span>
+									                <span class="fa fa-star" style="margin-right: 2px;"></span>
+									                <span class="fa fa-star" style="margin-right: 2px;"></span>
+									                <span class="fa fa-star" style="margin-right: 2px;"></span>
+									                <span class="review" style="line-height: 20px;">
+									                    <span class="reviews" style="    vertical-align: top; float: none; color: #999; font-size: 12px; ">(7)</span>
+									                </span>
+									            </div>
+				        					</div>
+				        				</a>
+				        			</div>
+				        			<div class="span3">
+				        				<a href="">
+				        					<div class="app-recommand ">
+				        						<div class="appIcon">
+				        							<img src="https://images.appcenter.intuit.com/Content/images/AppCards/b7q4xvfdhu/Submitted23/LogoName.png" />
+				        						</div>
+				        						<div clas="bigappcard-details" style="color: #404040; height: 135px; padding: 0 25px; margin-top: 10px; text-align: left; text-overflow: ellipsis; overflow: hidden; float: left; width: 100%">
+					        						<div class="bigappcard-display-name" style="font-size: 16px; font-weight: 700; ">
+					        							Futrli
+					        						</div>
+					        						<div class="bigappcard-vendor-name" style="font-size: 12px; font-weight: 700; padding-bottom: 5px; line-height: 22px;">
+							        					by CrunchBoards
+						        					</div>
+						        					<div class="bigappcard-tagline" style="font-size: 14px; line-height: 22px;">
+						        						The all-in-one Forecasting & Reporting Engine
+						        					</div>
+					        					</div>
+					        					
+					        					<div class="ratings" style="line-height: 14px; float: left; display: inline-block; margin-left: 10px; color: #0098CD; padding-top: 10px; padding-left: 15px; font-size: 15px; ">
+									                <span class="fa fa-star" style="margin-right: 2px;"></span>
+									                <span class="fa fa-star" style="margin-right: 2px;"></span>
+									                <span class="fa fa-star" style="margin-right: 2px;"></span>
+									                <span class="fa fa-star" style="margin-right: 2px;"></span>
+									                <span class="fa fa-star" style="margin-right: 2px;"></span>
+									                <span class="review" style="line-height: 20px;">
+									                    <span class="reviews" style="    vertical-align: top; float: none; color: #999; font-size: 12px; ">(7)</span>
+									                </span>
+									            </div>
+				        					</div>
+				        				</a>
+				        			</div>
+				        		</div>
+				        	</div>
+
+				        	<div class="row-fluid" style="float: left; background: #f7f9fb; padding: 15px 20px 0;">
+				        		<h2>Collections</h2>
+				        		<div class="row-fluid" style="margin-top: 20px;">
+				        			<div class="collection">
+					        			<ul style="padding-left: 0;">
+					        				<li style="list-style: none;">
+					        					<a href="">
+					        						<div class="" style="display: inline-block; vertical-align: top; position: relative; cursor: pointer; margin-right: 25px; margin-bottom: 20px; overflow: hidden;">
+					        							<div class="" style="text-align: center; background: #FFF; border: 1px solid #dae3ef; -webkit-border-radius: 2px; -moz-border-radius: 2px; border-radius: 2px; border-bottom: 2px solid rgba(192,208,228,.5); width: 350px; height: 250px; padding: 25px;">
+					        								<div class="" style="width: 300px; height: 110px; border-bottom: 0; padding: 0;">
+					        									<img src="https://css.appcenter.intuit.com/Content/Static/7.11.0-rel-593/images/collection_tile_accountant.png">
+					        								</div>
+					        								<div class="" style="padding: 0; height: 65px; margin-top: 20px; overflow: visible; line-height: 20px">
+					        									<div class="" style="font-size: 16px; font-weight: 700; margin-bottom: 5px; width: 100%; text-align: left; color: #333;">
+					        										Popular with Accountants                                
+					        									</div>
+					        									<div class="" style="font-size: 14px; line-height: 22px; text-align: left; color: #333;">
+					        										Key apps that streamline your practice and support your business.
+					        									</div>
+					        								</div>
+					        							</div> 
+					        						</div>
+					        					</a>
+					        				</li>
+					        				<li style="list-style: none;">
+					        					<a href="">
+					        						<div class="" style="display: inline-block; vertical-align: top; position: relative; cursor: pointer; margin-right: 25px; margin-bottom: 20px; overflow: hidden;">
+					        							<div class="" style="text-align: center; background: #FFF; border: 1px solid #dae3ef; -webkit-border-radius: 2px; -moz-border-radius: 2px; border-radius: 2px; border-bottom: 2px solid rgba(192,208,228,.5); width: 350px; height: 250px; padding: 25px;">
+					        								<div class="" style="width: 300px; height: 110px; border-bottom: 0; padding: 0;">
+					        									<img src="https://css.appcenter.intuit.com/Content/Static/7.11.0-rel-593/images/collection_tile_accountant.png">
+					        								</div>
+					        								<div class="" style="padding: 0; height: 65px; margin-top: 20px; overflow: visible; line-height: 20px">
+					        									<div class="" style="font-size: 16px; font-weight: 700; margin-bottom: 5px; width: 100%; text-align: left; color: #333;">
+					        										Popular with Accountants                                
+					        									</div>
+					        									<div class="" style="font-size: 14px; line-height: 22px; text-align: left; color: #333;">
+					        										Key apps that streamline your practice and support your business.
+					        									</div>
+					        								</div>
+					        							</div> 
+					        						</div>
+					        					</a>
+					        				</li>
+					        				<li style="list-style: none;">
+					        					<a href="">
+					        						<div class="" style="display: inline-block; vertical-align: top; position: relative; cursor: pointer; margin-right: 25px; margin-bottom: 20px; overflow: hidden;">
+					        							<div class="" style="text-align: center; background: #FFF; border: 1px solid #dae3ef; -webkit-border-radius: 2px; -moz-border-radius: 2px; border-radius: 2px; border-bottom: 2px solid rgba(192,208,228,.5); width: 350px; height: 250px; padding: 25px;">
+					        								<div class="" style="width: 300px; height: 110px; border-bottom: 0; padding: 0;">
+					        									<img src="https://css.appcenter.intuit.com/Content/Static/7.11.0-rel-593/images/collection_tile_accountant.png">
+					        								</div>
+					        								<div class="" style="padding: 0; height: 65px; margin-top: 20px; overflow: visible; line-height: 20px">
+					        									<div class="" style="font-size: 16px; font-weight: 700; margin-bottom: 5px; width: 100%; text-align: left; color: #333;">
+					        										Popular with Accountants                                
+					        									</div>
+					        									<div class="" style="font-size: 14px; line-height: 22px; text-align: left; color: #333;">
+					        										Key apps that streamline your practice and support your business.
+					        									</div>
+					        								</div>
+					        							</div> 
+					        						</div>
+					        					</a>
+					        				</li>
+					        			</ul>
+					        		</div>
+				        		</div>
+				        	</div>
+
+			        	</div>
+			        	
+				    </div>
+				</div>
+			</div>
+		</div>		
+	</div>
+</script>
 
 
 
@@ -91430,6 +92214,10 @@
 		//Imports
 		imports: new kendo.Layout("#importView", {model: banhji.importView}),
 
+		//Employee
+		appCenter: new kendo.Layout("#appCenter", {model: banhji.appCenter}),
+
+
 		//Menu
 		accountingMenu: new kendo.View("#accountingMenu", {model: langVM}),
 		employeeMenu: new kendo.View("#employeeMenu", {model: langVM}),
@@ -91438,7 +92226,8 @@
 		cashMenu: new kendo.View("#cashMenu", {model: langVM}),
 		inventoryMenu: new kendo.View("#inventoryMenu", {model: langVM}),
 		taxMenu: new kendo.View("#taxMenu", {model: langVM}),
-		saleMenu: new kendo.View("#saleMenu", {model: langVM})	
+		saleMenu: new kendo.View("#saleMenu", {model: langVM}),
+		appMenu: new kendo.View("#appMenu", {model: langVM})	
 	};
 	banhji.router = new kendo.Router({
 		init: function() {	
@@ -99399,6 +100188,51 @@
 	banhji.router.route("/imports", function(){
 		banhji.view.layout.showIn("#content", banhji.view.imports);
 	});
+
+
+	/*************************************************
+	*   APP CENTER ROUTER  							 	 *
+	*************************************************/
+	banhji.router.route("/app_center", function(){
+		banhji.accessMod.query({
+			filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		}).then(function(e){
+			var allowed = false;
+			if(banhji.accessMod.data().length > 0) {
+				for(var i = 0; i < banhji.accessMod.data().length; i++) {
+					if("customer" == banhji.accessMod.data()[i].name.toLowerCase()) {
+						allowed = true;
+						break;
+					}
+				}
+			} 
+			if(allowed) {
+				banhji.view.layout.showIn("#content", banhji.view.appCenter);
+				banhji.view.layout.showIn('#menu', banhji.view.menu);
+				banhji.view.menu.showIn('#secondary-menu', banhji.view.appMenu);
+				
+				//eraseCookie("isshow");
+				var isshow = readCookie("cusVisit");
+				
+			    if (isshow != 1) {
+			        createCookie("cusVisit", 1);
+					$("a.aCustomer").click();
+				}
+
+				var vm = banhji.appCenter;
+				banhji.userManagement.addMultiTask("App Center","app_center",null);
+				if(banhji.pageLoaded["appCenter"]==undefined){
+					banhji.pageLoaded["appCenter"] = true;
+
+					vm.setObj();
+				}
+				vm.pageLoad();
+			} else {
+				window.location.replace(baseUrl + "admin");
+			}
+		});
+	});
+
 
 
 

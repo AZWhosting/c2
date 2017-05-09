@@ -5595,7 +5595,6 @@
 						</a>
 					</div>
 				</div>
-
 				<div class="span12">
 					<div class="innerAll padding-bottom-none-phone" style="background: #fff; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1; margin: 0 0 15px 0">
 						<a href="#/wPayment_summary" class="widget-stats widget-stats-primary widget-stats-4" style="background: #fff; padding-left: 15px !important;">
@@ -5605,11 +5604,7 @@
 						</a>
 					</div>			
 				</div>
-
 			</div>
-
-
-
 			<div class="cover-block" style="padding: 10px 15px 8px 15px; width: 99%;">
 				<h2 data-bind="text: lang.lang.reports">Report</h2>
 				<p data-bind="text: lang.lang.summary_and_detail_cash">
@@ -5625,14 +5620,17 @@
 
 		<!-- Right Side -->
 		<div class="span8">
+			<div id="loadING" style="display:none;text-align: center;position: absolute;top: 0; left: 0;width: 100%; height: 100%;background: rgba(142, 159, 167, 0.8);z-index: 9999;">
+				<i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 45%;left: 45%"></i>
+			</div>
 			<div class="row-fluid" style="background: #fff; float: left; padding: 15px; margin-left: -15px;">
 				<!-- Upper Part -->
 				<div class="row-fluid">
 					<div class="span12" style="padding: 0;">
-						<!-- <div class="box-generic-noborder" style="min-height: 90px;background: #eee;">
+						<div class="box-generic-noborder" style="min-height: 90px;background: #eee;">
 						    <div class="tab-content" style="padding-top: 12px;">
 						    	<div class="span3" style="padding-left: 0;">
-									<div class="control-group">								
+									<div class="control-group">
 										<label ><span data-bind="text: lang.lang.license">License</span></label>
 										<input 
 											data-role="dropdownlist" 
@@ -5662,55 +5660,34 @@
 											data-bind="
 												value: locationSelect,
 			                  					source: locationDS,
-			                  					enabled: slocation,
-			                  					events: {change: locationChange}">
+			                  					enabled: slocation">
 			                  		</div>
 								</div>
-								<div class="span3" style="padding-left: 0;">
-									<div class="control-group">								
-										<label ><span data-bind="text: lang.lang.sub_location">Sub Bloc</span></label>
-										<input 
-											data-role="dropdownlist" 
-											style="width: 100%;" 
-											data-option-label="Sub Location ..." 
-											data-auto-bind="false" 
-											data-value-primitive="true" 
-											data-text-field="name" 
-											data-value-field="id" 
-											data-bind="
-												value: sublocationSelect,
-			                  					source: sublocationDS,
-			                  					enabled: ssublocation,
-			                  					events: {change: sublocationChange}">
-			                  		</div>
-								</div>
-								<div class="span2" style="padding-left: 0;">
-									<div class="control-group">								
-										<label ><span data-bind="text: lang.lang.box">Box</span></label>
-										<input 
-											data-role="dropdownlist" 
-											style="width: 100%;" 
-											data-option-label="Box ..." 
-											data-auto-bind="false" 
-											data-value-primitive="true" 
-											data-text-field="name" 
-											data-value-field="id" 
-											data-bind="
-												value: boxSelect,
-												enabled: sbox,
-			                  					source: boxDS">
-			                  		</div>
-								</div>
+								
 								<div class="span1" style="padding-left: 0;">
-									<div class="control-group">								
+									<div class="control-group">
 										<label ><span data-bind="text: lang.lang.action">Action</span></label>	
-										<div class="row" style="margin: 0;">					
+										<div class="row" style="margin: 0;">
 											<button type="button" data-role="button" data-bind="click: searchINV" class="k-button" role="button" aria-disabled="false" tabindex="0"><i class="icon-search"></i></button>
 										</div>
 			                  		</div>
 								</div>
+								<div class="span2" data-bind="visible: downloadView" style="padding-left: 0;">
+									<div class="control-group">
+										<label ><span data-bind="text: lang.lang.download">Download</span></label>	
+										<div class="row" style="margin: 0;">
+											<button type="button" data-role="button" data-bind="click: ExportExcel" class="k-button" role="button" aria-disabled="false" tabindex="0"><i class="download_alt"></i> <span data-bind="text: lang.lang.download"></span></button>
+										</div>
+			                  		</div>
+								</div>
+								<div class="span2" data-bind="visible: downloadView" style="padding-left: 0;">
+									<div class="control-group">
+										<label ><span data-bind="text: lang.lang.upload">Upload</span></label>	
+									  	<input style="padding: 0; margin: 0;border: none" type="file"  data-role="upload" data-show-file-list="false" data-bind="events: {select: onSelected}" id="myFile"  class="margin-none" />
+			                  		</div>
+								</div>
 						    </div>
-						</div> -->
+						</div>
 					</div>
 					<div class="span4">
 						<div class="widget widget-heading-simple widget-body-primary widget-employees">		
@@ -5718,7 +5695,7 @@
 								<div class="row-fluid row-merge">
 									<div class="listWrapper">
 										<div class="innerAll" style="padding: 15px 15px 19px;">							
-											<form autocomplete="off" class="form-inline">
+											<!-- <form autocomplete="off" class="form-inline"> -->
 												<div class="widget-search separator bottom">
 													<button class="btn btn-default pull-right" data-bind="click: search"><i class="icon-search"></i></button>
 													<div class="overflow-hidden">
@@ -5738,7 +5715,7 @@
 									                   	data-placeholder="Customer..."                    
 									                   	style="width: 100%; height: 29px;" />
 												</div> -->
-											</form>					
+											<!-- </form>					 -->
 										</div>
 									</div>
 								</div>
@@ -5753,7 +5730,7 @@
 					</div>					   
 
 					<div class="span8" style="padding: 0;">
-
+						
 						<div class="box-generic-noborder" >
 						    <div class="tab-content" style="padding-top: 12px;">
 						    	<!-- Options Tab content -->
@@ -5876,10 +5853,6 @@
 						</div>
 
 						<br>
-						<!-- <div class="well" style="overflow: hidden;">
-							<textarea cols="0" rows="2" class="k-textbox" style="width:100% !important;" data-bind="value: obj.memo" placeholder="memo for external ..."></textarea>												
-							<textarea cols="0" rows="2" class="k-textbox" style="width:100% !important;" data-bind="value: obj.memo2" placeholder="memo for internal ..."></textarea>
-						</div> -->
 					</div>
 					<!-- Column END -->
 					
@@ -6251,9 +6224,9 @@
 			<i class="icon-trash" data-bind="events: { click: removeRow }"></i>
 			#:banhji.Receipt.dataSource.indexOf(data)+1#			
 		</td>
-		<td>#=kendo.toString(new Date(issued_date), "dd-MM-yyyy", "km-KH")#</td>
+		<td>#=kendo.toString(new Date(invissued_date), "dd-MMMM-yyyy", "km-KH")#</td>
 		<td>#=banhji.Receipt.getContactName(contact_id)#</td>
-		<td>#=number#</td>
+		<td>#=invnumber#</td>
 		<td>#=meter#</td>
 		<td class="center">
 			#=kendo.toString(sub_total, locale=="km-KH"?"c0":"c", locale)#		
@@ -14832,7 +14805,7 @@
 			this.selectType[2].set("name", this.lang.lang.void);
 		},
 		loadObj 			: function(id){
-			var self = this;	
+			var self = this;
 			this.dataSource.data([]);
 			this.dataSource.query({
 				filter: { field:"id", value: id },
@@ -14866,7 +14839,6 @@
 		    	//Set all OBJ
 		    	self.set("obj", view[0]);
 		    	self.loadMap();
-		    	// self.licenseChange();
 			});
 		},
 		editRe 				: function(id){
@@ -14899,7 +14871,6 @@
 				var marker = new google.maps.Marker({
 					position: myLatLng,
 					map: map
-					// title: obj.company
 				});
 			} 
 		},
@@ -15007,28 +14978,23 @@
 	        var self = this, 
 	        files = e.files[0],
 	        obj = this.get("obj");
-
 	        var fileReader = new FileReader();
 	        fileReader.onload = function (event) {
 	            var mapImage = event.target.result;
 	            self.obj.set('image_url', mapImage);
 	        }
 	        fileReader.readAsDataURL(files.rawFile);
-			
 	        // Check the extension of each file and abort the upload if it is not .jpg	       
             if (files.extension.toLowerCase() === ".jpg"
             	|| files.extension.toLowerCase() === ".jpeg"
             	|| files.extension.toLowerCase() === ".tiff"
             	|| files.extension.toLowerCase() === ".png" 
             	|| files.extension.toLowerCase() === ".gif"){
-
             	if(this.attachmentDS.total()>0){
             		var att = this.attachmentDS.at(0);
             		this.attachmentDS.remove(att);
             	}
-
             	var key = 'METER_' + banhji.institute.id + "_" + Math.floor(Math.random() * 100000000000000001) +'_'+ files.name;
-
             	this.attachmentDS.add({
             		user_id 		: this.get("user_id"),
             		item_id 		: obj.id,
@@ -15039,7 +15005,6 @@
             		url 			: banhji.s3 + key,
             		size 			: files.size,
             		created_at 		: new Date(),
-
             		file 			: files.rawFile
             	});
             }else{
@@ -15060,7 +15025,6 @@
 	            	});
 	        	}
 	        });
-
 	        this.attachmentDS.sync();
 	        this.attachmentDS.bind("requestEnd", function(e){
 	        	//Delete File
@@ -15081,7 +15045,6 @@
 		save 		: function() {
 			var self = this;
 			var obj = this.get("obj");
-
 			if(obj.meter_number && obj.plan_id != 0 && obj.plan_id && obj.location_id && obj.date_used && obj.number_digit){
 				if(obj.type == "w"){
 					if(this.attachmentDS.hasChanges() == true) {
@@ -15115,13 +15078,10 @@
 			var monthOf = obj.date_used;
 			monthOf.setDate(1);
 			monthOf = kendo.toString(monthOf, "yyyy-MM-dd");
-
 			var monthL = new Date(obj.date_used);
 			var lastDayOfMonth = new Date(monthL.getFullYear(), monthL.getMonth()+1, 0);
 			lastDayOfMonth = lastDayOfMonth.getDate();
-
 			monthL.setDate(lastDayOfMonth);
-
 			this.readingDS.insert(0, {
 				month_of: monthOf,
 				meter_number  : meterNum,
@@ -15147,12 +15107,12 @@
 							self.get("obj").set("reactive_id", ID);
 							self.addReading(meterNum);
 							self.saveDataSource();
-						}				  				
+						}
 				    });
-				    this.reactiveDS.bind("error", function(e){		    		    	
+				    this.reactiveDS.bind("error", function(e){
 						var notificat = $("#ntf1").data("kendoNotification");
 			    		notificat.hide();
-			    		notificat.error(self.lang.lang.error_message);			
+			    		notificat.error(self.lang.lang.error_message);
 				    });
 				}else{
 					this.saveDataSource();
@@ -17430,8 +17390,6 @@
 		user_id				: banhji.source.user_id,
 		licenseDS 			: dataStore(apiUrl + "branches"),
 		locationDS 			: dataStore(apiUrl + "locations"),
-		sublocationDS 		: dataStore(apiUrl + "locations"),
-		boxDS 				: dataStore(apiUrl + "locations"),
 		slocation 			: false,
 		ssublocation	 	: false,
 		sbox 				: false,
@@ -17443,38 +17401,115 @@
 			]);
 			this.set("slocation", true);
 	    },
-	    locationChange 		: function(e){
-	    	this.sublocationDS.filter([
-				{field: "branch_id",value: this.get("licenseSelect")},
-				{field: "main_bloc",value: this.get("locationSelect")},
-				{field: "main_pole",value: 0}
-			]);
-			this.set("ssublocation", true);
-	    },
-	    sublocationChange 		: function(e){
-	    	this.boxDS.filter([
-				{field: "branch_id",value: this.get("licenseSelect")},
-				{field: "main_bloc",value: this.get("locationSelect")},
-				{field: "main_pole",value: this.get("sublocationSelect")}
-			]);
-			this.set("sbox", true);
-	    },
+	    exArray 			: [],
+	    downloadView 		: false,
 	    searchINV 			: function(){
+	    	$("#loadING").css("display", "block");
 	    	var self = this, license_id = this.get("licenseSelect"),
 			bloc_id = this.get("locationSelect");
+			this.set("downloadView", false);
 			var para = [];
+			this.exArray = [];
+			self.exArray.push({
+        		cells: [
+        			{ value: "Date", background: "#496cad", color: "#ffffff"  },
+        			{ value: "Name", background: "#496cad", color: "#ffffff"  },
+        			{ value: "Number", background: "#496cad", color: "#ffffff"  },
+        			{ value: "Meter", background: "#496cad", color: "#ffffff"  },
+        			{ value: "Amount", background: "#496cad", color: "#ffffff"  },
+        			{ value: "Discount", background: "#496cad", color: "#ffffff"  },
+        			{ value: "Fine", background: "#496cad", color: "#ffffff"  },
+        			{ value: "Receive", background: "#496cad", color: "#ffffff"  },
+        		]
+        	});
 			//this.dataSource.filter(para);
 			if(license_id){
-				// para.push({field: "branch_id", operator: 'where_related_meter', value: license_id});
 				if(bloc_id){
 					para.push({field: "location_id", value: bloc_id});
 					para.push({field: "meter_id <>", value: 0});
-					para.push({field: "deleted <>", value: 1});
-					para.push({field: "status <>", value: 1});
-					this.dataSource.query({
-						filter: para
-					}).then(function(e){
-						//self.changes();
+					para.push({ field:"type",  value:"Utility_Invoice" });
+					para.push({ field:"status", operator:"where_in", value:[0,2] });
+
+					this.txnDS.query({
+						filter: para,
+						page: 1,
+						pageSize: 100
+					}).then(function(){
+						var view = self.txnDS.view();
+						self.dataSource.data([]);
+						if(view.length>0){
+							$.each(view, function(index, value){
+								var amount_due = value.amount - (value.amount_paid + value.deposit);
+
+								self.dataSource.add({
+									transaction_template_id : 0,
+				    				contact_id 			: value.contact_id,
+									account_id 			: obj.account_id,
+									payment_term_id		: value.payment_term_id,
+									payment_method_id	: obj.payment_method_id,
+									reference_id 		: value.id,
+									user_id 			: self.get("user_id"),
+									check_no 			: value.check_no,
+									reference_no 		: value.number,
+									number 				: "",
+									invnumber 			: value.number,
+								   	type				: "Cash_Receipt",
+								   	sub_total 			: amount_due,
+								   	amount 				: amount_due,
+								   	discount 			: 0,
+								   	fine 				: 0,
+								   	rate				: value.rate,
+								   	locale 				: value.locale,
+								   	issued_date 		: obj.issued_date,
+								   	invissued_date 		: value.issued_date,
+								   	memo 				: obj.memo,
+								   	memo2 				: obj.memo2,
+								   	status 				: 0,
+								   	segments 			: obj.segments,
+								   	is_journal 			: 1,
+								   	//Recurring
+								   	recurring_name 		: "",
+								   	start_date 			: new Date(),
+								   	frequency 			: "Daily",
+								   	month_option 		: "Day",
+								   	interval 			: 1,
+								   	day 				: 1,
+								   	week 				: 0,
+								   	month 				: 0,
+								   	is_recurring 		: 0,
+								   	meter_id 			: value.meter_id,
+								   	meter 				: value.meter,
+								   	reference 			: [value]
+						    	});
+						    	self.exArray.push({
+					        		cells: [
+					        			{ value: kendo.toString(new Date(value.issued_date), "dd-MMMM-yyyy", "km-KH")},
+					        			{ value: self.getContactName(value.contact_id)  },
+					        			{ value: value.number  },
+					        			{ value: value.meter  },
+					        			{ value: amount_due  },
+					        			{ value: 0  },
+					        			{ value: 0  },
+					        			{ value: amount_due  },
+					        		]
+					        	});
+					        	self.numCustomer += 1;
+							});
+							
+							self.applyTerm();
+							self.setRate();
+							$("#loadING").css("display", "none");
+							self.set("downloadView", true);
+						}else{
+							var notifi = $("#ntf1").data("kendoNotification");
+							notifi.hide();
+							notifi.error(self.lang.lang.no_data);
+							$("#loadING").css("display", "none");
+						}
+
+						self.set("searchText", "");
+						self.set("contact_id", "");
+						self.set("invoice_id", 0);
 					});
 				}else{
 					alert("Please Select Location");
@@ -17483,6 +17518,94 @@
 				alert("Please Select License");
 			}
 	    },
+	    onSelected 			: function(e){
+	        var files = e.files, self = this;
+	        $('li.k-file').remove();
+	        $("#loadImport").css("display","block");
+	        var reader = new FileReader();
+			this.dataSource.data([]);	
+			reader.onload = function() {	
+				var data = reader.result;	
+				var result = {}; 					
+				var workbook = XLSX.read(data, {type : 'binary'});
+				workbook.SheetNames.forEach(function(sheetName) {
+					var roa = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
+					if(roa.length > 0){
+						result[sheetName] = roa;
+						console.log(roa.length+"_"+roa.Receive);
+						for(var i = 0; i < roa.length; i++) {
+							self.txnDS.query({
+								filter: [{field: "number", value: roa[i].Number}, { field:"status", operator:"where_in", value:[0,2] }]
+							}).then(function(){
+								var view = self.txnDS.view();
+								if(view.length>0){
+									self.numCustomer = 0;
+									$.each(view, function(index, value){
+										var amount_due = roa.Receive - (value.amount_paid + value.deposit);
+
+										self.dataSource.add({
+											transaction_template_id : 0,
+						    				contact_id 			: value.contact_id,
+											account_id 			: obj.account_id,
+											payment_term_id		: value.payment_term_id,
+											payment_method_id	: obj.payment_method_id,
+											reference_id 		: value.id,
+											user_id 			: self.get("user_id"),
+											check_no 			: value.check_no,
+											reference_no 		: value.number,
+											number 				: "",
+											invnumber 			: value.number,
+										   	type				: "Cash_Receipt",
+										   	sub_total 			: amount_due,
+										   	amount 				: amount_due,
+										   	discount 			: 0,
+										   	fine 				: 0,
+										   	rate				: value.rate,
+										   	locale 				: value.locale,
+										   	issued_date 		: obj.issued_date,
+										   	invissued_date 		: value.issued_date,
+										   	memo 				: obj.memo,
+										   	memo2 				: obj.memo2,
+										   	status 				: 0,
+										   	segments 			: obj.segments,
+										   	is_journal 			: 1,
+										   	//Recurring
+										   	recurring_name 		: "",
+										   	start_date 			: new Date(),
+										   	frequency 			: "Daily",
+										   	month_option 		: "Day",
+										   	interval 			: 1,
+										   	day 				: 1,
+										   	week 				: 0,
+										   	month 				: 0,
+										   	is_recurring 		: 0,
+										   	meter_id 			: value.meter_id,
+										   	meter 				: value.meter,
+										   	reference 			: [value]
+								    	});
+										self.numCustomer += 1;
+
+									});
+									self.applyTerm();
+									self.setRate();
+									$("#loadING").css("display", "none");
+								}else{
+									var notifi = $("#ntf1").data("kendoNotification");
+									notifi.hide();
+									notifi.error(self.lang.lang.no_data);
+									$("#loadING").css("display", "none");
+								}
+
+								self.set("searchText", "");
+								self.set("contact_id", "");
+								self.set("invoice_id", 0);
+							});
+						}
+					}					
+				});	
+			}
+			reader.readAsBinaryString(files[0].rawFile);
+		},
 		pageLoad 			: function(id){
 			if(id){
 				this.set("isEdit", true);
@@ -17569,6 +17692,8 @@
 		},
 		//Search
 		search 				: function(){
+			$("#loadING").css("display", "block");
+			this.exArray = [];
 			var self = this, 
 				para = [],
 				obj = this.get("obj"),
@@ -17605,8 +17730,8 @@
 				pageSize: 100
 			}).then(function(){
 				var view = self.txnDS.view();
-				self.dataSource.data([]);
 				if(view.length>0){
+					self.numCustomer = 0;
 					$.each(view, function(index, value){
 						var amount_due = value.amount - (value.amount_paid + value.deposit);
 
@@ -17621,13 +17746,16 @@
 							check_no 			: value.check_no,
 							reference_no 		: value.number,
 							number 				: "",
+							invnumber 			: value.number,
 						   	type				: "Cash_Receipt",
 						   	sub_total 			: amount_due,
 						   	amount 				: amount_due,
 						   	discount 			: 0,
+						   	fine 				: 0,
 						   	rate				: value.rate,
 						   	locale 				: value.locale,
 						   	issued_date 		: obj.issued_date,
+						   	invissued_date 		: value.issued_date,
 						   	memo 				: obj.memo,
 						   	memo2 				: obj.memo2,
 						   	status 				: 0,
@@ -17647,19 +17775,48 @@
 						   	meter 				: value.meter,
 						   	reference 			: [value]
 				    	});
+						self.numCustomer += 1;
+
 					});
 					self.applyTerm();
 					self.setRate();
+					$("#loadING").css("display", "none");
 				}else{
 					var notifi = $("#ntf1").data("kendoNotification");
 					notifi.hide();
 					notifi.error(self.lang.lang.no_data);
+					$("#loadING").css("display", "none");
 				}
 
 				self.set("searchText", "");
 				self.set("contact_id", "");
 				self.set("invoice_id", 0);
 			});
+		},
+		ExportExcel 		: function(){
+	        if(this.exArray.length > 1) {
+        		$("#loadImport").css("display","none");
+        		var workbook = new kendo.ooxml.Workbook({
+		          sheets: [
+		            {
+		              columns: [
+		                { autoWidth: true },
+		                { autoWidth: true },
+		                { autoWidth: true },
+		                { autoWidth: true },
+		                { autoWidth: true },
+		                { autoWidth: true },
+		                { autoWidth: true },
+		                { autoWidth: true }
+		              ],
+		              title: "Receive",
+		              rows: this.exArray
+		            }
+		          ]
+		        });
+		        //save the file as Excel file with extension xlsx
+		        kendo.saveAs({dataURI: workbook.toDataURL(), fileName: "Receive.xlsx"});
+	        }
 		},
 		//Obj
 		loadObj 			: function(id){

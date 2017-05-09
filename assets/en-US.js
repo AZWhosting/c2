@@ -1439,9 +1439,11 @@ var	en_US = {
 	"ampere":"Ampere",
 	"please_upload_meter_file": "Please Upload Meter File",
 	"no_data": "No Data Found",
+	"download": "Download",
+	"upload": "Upload",
 
-
-
+	//Web Store
+	"app_center": "App Center",
 
 
 

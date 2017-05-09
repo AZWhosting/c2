@@ -10,6 +10,13 @@ class Segmentitem extends DataMapper {
 			'other_field' => 'segmentitem'
 		)
 	);
+
+	public $has_many = array(
+		'journal_line' => array(
+			'class' => 'journal_line',
+			'other_field' => 'segmentitem'
+		)
+	);
 	
 
     public function __construct($id = null, $server_name = null, $db_username = null, $server_password = null, $db = null) {	

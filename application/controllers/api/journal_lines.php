@@ -96,11 +96,11 @@ class Journal_lines extends REST_Controller {
 	//POST
 	function index_post() {
 		$models = json_decode($this->post('models'));				
-		$data["results"] = array();
+		$data["results"] = [];
 		$data["count"] = 0;
 		
 		foreach ($models as $value) {
-			$obj = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
+			$obj = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
 			isset($value->transaction_id) 	? $obj->transaction_id 		= $value->transaction_id : "";			
 			isset($value->account_id)		? $obj->account_id			= $value->account_id : "";
@@ -113,6 +113,10 @@ class Journal_lines extends REST_Controller {
 		   	isset($value->rate)				? $obj->rate 				= $value->rate : "";
 		   	isset($value->locale)			? $obj->locale 				= $value->locale : "";
 		   	isset($value->deleted)			? $obj->deleted  			= $value->deleted : "";		   
+
+		 //   	$relatedsegmentitem = new Segmentitem(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			// $relatedsegmentitem->where_in($value->segments)->get();
+			// $obj->save_relatedsegmentitem($relatedsegmentitem->all);
 
 		   	if($obj->save()){
 			   	$data["results"][] = array(

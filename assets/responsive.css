@@ -2870,3 +2870,96 @@ a.activate {
     border: 1px solid #333;
 }
 
+/*App Center*/
+.app-recommand {
+    display: inline-block;
+    vertical-align: top;
+    position: relative;
+    cursor: pointer;
+    margin-right: 20px;
+    margin-bottom: 20px;
+    overflow: hidden;
+
+
+    text-align: center;
+    background: #FFF;
+    border: 1px solid #dae3ef;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    border-bottom: 2px solid rgba(192,208,228,.5);
+    width: 260px;
+    height: 320px;
+}
+.appIcon {
+    display: inline-block;
+    height: 105px;
+    overflow: hidden;
+    padding-top: 8px;
+    width: 100%;
+    border-bottom: 3px solid #999999;
+}
+.app-recommand .appIcon {
+    height: 128px;
+    width: 210px;
+    position: relative;
+    border-bottom: 1px solid #E5E5E5;
+}
+.app-recommand .appIcon img {
+    overflow: auto;
+    margin: auto;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    height: 80px;
+}
+
+.app-recommand .bigappcard-details {
+    color: #404040;
+    height: 135px;
+    padding: 0 25px;
+    margin-top: 10px;
+    text-align: left;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    float: left;
+    width: 100%
+}
+.app-recommand .bigappcard-details .bigappcard-display-name {
+    font-size: 16px;
+    font-weight: 700;
+    float: left;
+}
+.app-recommand .bigappcard-details .bigappcard-vendor-name {
+    font-size: 12px;
+    font-weight: 700;
+    padding-bottom: 5px;
+    line-height: 22px;
+    float: left;
+}
+.app-recommand .bigappcard-details .bigappcard-tagline {
+    font-size: 14px;
+    line-height: 22px;
+    float: left;
+}
+.app-recommand .ratings {
+    color: #0098CD;
+    padding-top: 10px;
+    padding-left: 15px;
+    font-size: 15px;
+}
+.app-recommand .ratings .fa {
+    margin-right: 2px;
+}
+.review {
+    line-height: 20px;
+}
+.app-recommand .ratings .review .reviews {
+    vertical-align: top;
+    float: none;
+    color: #999;
+    font-size: 12px;
+}
+
