@@ -44248,11 +44248,139 @@
 					</ul>
 				</div>
 
-				<div class="widget-body" style="padding: 20px 0;">
+				<div class="widget-body" style="padding: 20px 0; float: left;">
 					<div class="tab-content">
 				        <div class="tab-pane active" id="tab-1">
 							<div class="row-fluid" style="padding: 0 20px;">
-								Test
+								<div class="row-fluid" style="float: left; background: #ebeef3; padding: 15px 20px 0;">
+					        		<h2>Featured</h2>
+					        		<div class="row-fluid" style="margin-top: 20px;">
+					        			<div class="span3">
+					        				<a href="">
+					        					<div class="app-recommand ">
+					        						<div class="appIcon">
+					        							<img src="https://images.appcenter.intuit.com/Content/images/AppCards/b7q4xvfdhu/Submitted23/LogoName.png" />
+					        						</div>
+					        						<div class="bigappcard-details">
+						        						<div class="bigappcard-display-name">
+						        							Futrli
+						        						</div>
+						        						<div class="bigappcard-vendor-name">
+								        					by CrunchBoards
+							        					</div>
+							        					<div class="bigappcard-tagline">
+							        						The all-in-one Forecasting & Reporting Engine
+							        					</div>
+						        					</div>
+						        					
+						        					<div class="ratings" style="float: left;">
+										                <span class="fa fa-star"></span>
+										                <span class="fa fa-star"></span>
+										                <span class="fa fa-star"></span>
+										                <span class="fa fa-star"></span>
+										                <span class="fa fa-star"></span>
+										                <span class="review">
+										                    <span class="reviews">(7)</span>
+										                </span>
+										            </div>
+					        					</div>
+					        				</a>
+					        			</div>
+					        			<div class="span3">
+					        				<a href="">
+					        					<div class="app-recommand ">
+					        						<div class="appIcon">
+					        							<img src="https://images.appcenter.intuit.com/Content/images/AppCards/b7q4xvfdhu/Submitted23/LogoName.png" />
+					        						</div>
+					        						<div class="bigappcard-details">
+						        						<div class="bigappcard-display-name">
+						        							Futrli
+						        						</div>
+						        						<div class="bigappcard-vendor-name">
+								        					by CrunchBoards
+							        					</div>
+							        					<div class="bigappcard-tagline">
+							        						The all-in-one Forecasting & Reporting Engine
+							        					</div>
+						        					</div>
+						        					
+						        					<div class="ratings" style="float: left;">
+										                <span class="fa fa-star"></span>
+										                <span class="fa fa-star"></span>
+										                <span class="fa fa-star"></span>
+										                <span class="fa fa-star"></span>
+										                <span class="fa fa-star"></span>
+										                <span class="review">
+										                    <span class="reviews">(7)</span>
+										                </span>
+										            </div>
+					        					</div>
+					        				</a>
+					        			</div>
+					        			<div class="span3">
+					        				<a href="">
+					        					<div class="app-recommand ">
+					        						<div class="appIcon">
+					        							<img src="https://images.appcenter.intuit.com/Content/images/AppCards/b7q4xvfdhu/Submitted23/LogoName.png" />
+					        						</div>
+					        						<div class="bigappcard-details">
+						        						<div class="bigappcard-display-name">
+						        							Futrli
+						        						</div>
+						        						<div class="bigappcard-vendor-name">
+								        					by CrunchBoards
+							        					</div>
+							        					<div class="bigappcard-tagline">
+							        						The all-in-one Forecasting & Reporting Engine
+							        					</div>
+						        					</div>
+						        					
+						        					<div class="ratings" style="float: left;">
+										                <span class="fa fa-star"></span>
+										                <span class="fa fa-star"></span>
+										                <span class="fa fa-star"></span>
+										                <span class="fa fa-star"></span>
+										                <span class="fa fa-star"></span>
+										                <span class="review">
+										                    <span class="reviews">(7)</span>
+										                </span>
+										            </div>
+					        					</div>
+					        				</a>
+					        			</div>
+					        			<div class="span3">
+					        				<a href="">
+					        					<div class="app-recommand ">
+					        						<div class="appIcon">
+					        							<img src="https://images.appcenter.intuit.com/Content/images/AppCards/b7q4xvfdhu/Submitted23/LogoName.png" />
+					        						</div>
+					        						<div class="bigappcard-details">
+						        						<div class="bigappcard-display-name">
+						        							Futrli
+						        						</div>
+						        						<div class="bigappcard-vendor-name">
+								        					by CrunchBoards
+							        					</div>
+							        					<div class="bigappcard-tagline">
+							        						The all-in-one Forecasting & Reporting Engine
+							        					</div>
+						        					</div>
+						        					
+						        					<div class="ratings" style="float: left;">
+										                <span class="fa fa-star"></span>
+										                <span class="fa fa-star"></span>
+										                <span class="fa fa-star"></span>
+										                <span class="fa fa-star"></span>
+										                <span class="fa fa-star"></span>
+										                <span class="review">
+										                    <span class="reviews">(7)</span>
+										                </span>
+										            </div>
+					        					</div>
+					        				</a>
+					        			</div>
+					        		</div>
+					        	</div>
 							</div>
 			        	</div>
 
@@ -44283,750 +44411,750 @@
 							                      events: { change: sorterChanges }"
 							           	style="width: 100%; float: right;" />
 								</div>
-				        	</div>
+				        	
 
-				        	<!-- <div class="row-fluid" style="margin-top: 20px; float: left; background: #ebeef3; padding: 15px 20px 0;">
-				        		<h2>Apps Recommended For You</h2>
-				        		<div class="row-fluid" style="margin-top: 20px;">
-				        			<div class="wrapper">
-				        				<div class="jcarousel-wrapper">
-							                <div class="jcarousel">
-							                    <ul>
-							                        <li><img src="<?php echo base_url(); ?>assets/app_center/img1.jpg" alt="Image 1"></li>
-							                        <li><img src="<?php echo base_url(); ?>assets/app_center/img2.jpg" alt="Image 2"></li>
-							                        <li><img src="<?php echo base_url(); ?>assets/app_center/img3.jpg" alt="Image 3"></li>
-							                        <li><img src="<?php echo base_url(); ?>assets/app_center/img4.jpg" alt="Image 4"></li>
-							                        <li><img src="<?php echo base_url(); ?>assets/app_center/img5.jpg" alt="Image 5"></li>
-							                        <li><img src="<?php echo base_url(); ?>assets/app_center/img6.jpg" alt="Image 6"></li>
-							                    </ul>
-							                </div>
+					        	<!-- <div class="row-fluid" style="margin-top: 20px; float: left; background: #ebeef3; padding: 15px 20px 0;">
+					        		<h2>Apps Recommended For You</h2>
+					        		<div class="row-fluid" style="margin-top: 20px;">
+					        			<div class="wrapper">
+					        				<div class="jcarousel-wrapper">
+								                <div class="jcarousel">
+								                    <ul>
+								                        <li><img src="<?php echo base_url(); ?>assets/app_center/img1.jpg" alt="Image 1"></li>
+								                        <li><img src="<?php echo base_url(); ?>assets/app_center/img2.jpg" alt="Image 2"></li>
+								                        <li><img src="<?php echo base_url(); ?>assets/app_center/img3.jpg" alt="Image 3"></li>
+								                        <li><img src="<?php echo base_url(); ?>assets/app_center/img4.jpg" alt="Image 4"></li>
+								                        <li><img src="<?php echo base_url(); ?>assets/app_center/img5.jpg" alt="Image 5"></li>
+								                        <li><img src="<?php echo base_url(); ?>assets/app_center/img6.jpg" alt="Image 6"></li>
+								                    </ul>
+								                </div>
 
-							                <a href="#" class="jcarousel-control-prev">&lsaquo;</a>
-							                <a href="#" class="jcarousel-control-next">&rsaquo;</a>
+								                <a href="#" class="jcarousel-control-prev">&lsaquo;</a>
+								                <a href="#" class="jcarousel-control-next">&rsaquo;</a>
 
-							                <p class="jcarousel-pagination"></p>
-							            </div>
-							        </div>
-				        		</div>
-				        	</div> -->
-
-				        	<!-- <div class="row-fluid" style="margin-top: 20px; float: left; background: #ebeef3; padding: 15px 20px 0;">
-				        		<h2>Apps Recommended For You</h2>
-				        		<div class="row-fluid" style="margin-top: 20px;">
-				        			<div class="span3">
-				        				<a href="">
-				        					<div class="app-recommand ">
-				        						<div class="appIcon">
-				        							<img src="https://images.appcenter.intuit.com/Content/images/AppCards/b7q4xvfdhu/Submitted23/LogoName.png" />
-				        						</div>
-				        						<div class="bigappcard-details">
-					        						<div class="bigappcard-display-name">
-					        							Futrli
-					        						</div>
-					        						<div class="bigappcard-vendor-name">
-							        					by CrunchBoards
-						        					</div>
-						        					<div class="bigappcard-tagline">
-						        						The all-in-one Forecasting & Reporting Engine
-						        					</div>
-					        					</div>
-					        					
-					        					<div class="ratings" style="float: left;">
-									                <span class="fa fa-star"></span>
-									                <span class="fa fa-star"></span>
-									                <span class="fa fa-star"></span>
-									                <span class="fa fa-star"></span>
-									                <span class="fa fa-star"></span>
-									                <span class="review">
-									                    <span class="reviews">(7)</span>
-									                </span>
-									            </div>
-				        					</div>
-				        				</a>
-				        			</div>
-				        			<div class="span3">
-				        				<a href="">
-				        					<div class="app-recommand ">
-				        						<div class="appIcon">
-				        							<img src="https://images.appcenter.intuit.com/Content/images/AppCards/b7q4xvfdhu/Submitted23/LogoName.png" />
-				        						</div>
-				        						<div class="bigappcard-details">
-					        						<div class="bigappcard-display-name">
-					        							Futrli
-					        						</div>
-					        						<div class="bigappcard-vendor-name">
-							        					by CrunchBoards
-						        					</div>
-						        					<div class="bigappcard-tagline">
-						        						The all-in-one Forecasting & Reporting Engine
-						        					</div>
-					        					</div>
-					        					
-					        					<div class="ratings" style="float: left;">
-									                <span class="fa fa-star"></span>
-									                <span class="fa fa-star"></span>
-									                <span class="fa fa-star"></span>
-									                <span class="fa fa-star"></span>
-									                <span class="fa fa-star"></span>
-									                <span class="review">
-									                    <span class="reviews">(7)</span>
-									                </span>
-									            </div>
-				        					</div>
-				        				</a>
-				        			</div>
-				        			<div class="span3">
-				        				<a href="">
-				        					<div class="app-recommand ">
-				        						<div class="appIcon">
-				        							<img src="https://images.appcenter.intuit.com/Content/images/AppCards/b7q4xvfdhu/Submitted23/LogoName.png" />
-				        						</div>
-				        						<div class="bigappcard-details">
-					        						<div class="bigappcard-display-name">
-					        							Futrli
-					        						</div>
-					        						<div class="bigappcard-vendor-name">
-							        					by CrunchBoards
-						        					</div>
-						        					<div class="bigappcard-tagline">
-						        						The all-in-one Forecasting & Reporting Engine
-						        					</div>
-					        					</div>
-					        					
-					        					<div class="ratings" style="float: left;">
-									                <span class="fa fa-star"></span>
-									                <span class="fa fa-star"></span>
-									                <span class="fa fa-star"></span>
-									                <span class="fa fa-star"></span>
-									                <span class="fa fa-star"></span>
-									                <span class="review">
-									                    <span class="reviews">(7)</span>
-									                </span>
-									            </div>
-				        					</div>
-				        				</a>
-				        			</div>
-				        			<div class="span3">
-				        				<a href="">
-				        					<div class="app-recommand ">
-				        						<div class="appIcon">
-				        							<img src="https://images.appcenter.intuit.com/Content/images/AppCards/b7q4xvfdhu/Submitted23/LogoName.png" />
-				        						</div>
-				        						<div class="bigappcard-details">
-					        						<div class="bigappcard-display-name">
-					        							Futrli
-					        						</div>
-					        						<div class="bigappcard-vendor-name">
-							        					by CrunchBoards
-						        					</div>
-						        					<div class="bigappcard-tagline">
-						        						The all-in-one Forecasting & Reporting Engine
-						        					</div>
-					        					</div>
-					        					
-					        					<div class="ratings" style="float: left;">
-									                <span class="fa fa-star"></span>
-									                <span class="fa fa-star"></span>
-									                <span class="fa fa-star"></span>
-									                <span class="fa fa-star"></span>
-									                <span class="fa fa-star"></span>
-									                <span class="review">
-									                    <span class="reviews">(7)</span>
-									                </span>
-									            </div>
-				        					</div>
-				        				</a>
-				        			</div>
-				        		</div>
-				        	</div> -->
-
-				        	<!-- <div class="row-fluid" style="float: left; background: #f7f9fb; padding: 15px 20px 0;">
-				        		<h2>Trending Now</h2>
-				        		<div class="row-fluid" style="margin-top: 20px;">
-				        			<div class="span3">
-				        				<a href="">
-				        					<div class="app-recommand ">
-				        						<div class="appIcon">
-				        							<img src="https://images.appcenter.intuit.com/Content/images/AppCards/b7q4xvfdhu/Submitted23/LogoName.png" />
-				        						</div>
-				        						<div class="bigappcard-details">
-					        						<div class="bigappcard-display-name">
-					        							Futrli
-					        						</div>
-					        						<div class="bigappcard-vendor-name">
-							        					by CrunchBoards
-						        					</div>
-						        					<div class="bigappcard-tagline">
-						        						The all-in-one Forecasting & Reporting Engine
-						        					</div>
-					        					</div>
-					        					
-					        					<div class="ratings" style="float: left;">
-									                <span class="fa fa-star"></span>
-									                <span class="fa fa-star"></span>
-									                <span class="fa fa-star"></span>
-									                <span class="fa fa-star"></span>
-									                <span class="fa fa-star"></span>
-									                <span class="review">
-									                    <span class="reviews">(7)</span>
-									                </span>
-									            </div>
-				        					</div>
-				        				</a>
-				        			</div>
-				        			<div class="span3">
-				        				<a href="">
-				        					<div class="app-recommand ">
-				        						<div class="appIcon">
-				        							<img src="https://images.appcenter.intuit.com/Content/images/AppCards/b7q4xvfdhu/Submitted23/LogoName.png" />
-				        						</div>
-				        						<div class="bigappcard-details">
-					        						<div class="bigappcard-display-name">
-					        							Futrli
-					        						</div>
-					        						<div class="bigappcard-vendor-name">
-							        					by CrunchBoards
-						        					</div>
-						        					<div class="bigappcard-tagline">
-						        						The all-in-one Forecasting & Reporting Engine
-						        					</div>
-					        					</div>
-					        					
-					        					<div class="ratings" style="float: left;">
-									                <span class="fa fa-star"></span>
-									                <span class="fa fa-star"></span>
-									                <span class="fa fa-star"></span>
-									                <span class="fa fa-star"></span>
-									                <span class="fa fa-star"></span>
-									                <span class="review">
-									                    <span class="reviews">(7)</span>
-									                </span>
-									            </div>
-				        					</div>
-				        				</a>
-				        			</div>
-				        			<div class="span3">
-				        				<a href="">
-				        					<div class="app-recommand ">
-				        						<div class="appIcon">
-				        							<img src="https://images.appcenter.intuit.com/Content/images/AppCards/b7q4xvfdhu/Submitted23/LogoName.png" />
-				        						</div>
-				        						<div class="bigappcard-details">
-					        						<div class="bigappcard-display-name">
-					        							Futrli
-					        						</div>
-					        						<div class="bigappcard-vendor-name">
-							        					by CrunchBoards
-						        					</div>
-						        					<div class="bigappcard-tagline">
-						        						The all-in-one Forecasting & Reporting Engine
-						        					</div>
-					        					</div>
-					        					
-					        					<div class="ratings" style="float: left;">
-									                <span class="fa fa-star"></span>
-									                <span class="fa fa-star"></span>
-									                <span class="fa fa-star"></span>
-									                <span class="fa fa-star"></span>
-									                <span class="fa fa-star"></span>
-									                <span class="review">
-									                    <span class="reviews">(7)</span>
-									                </span>
-									            </div>
-				        					</div>
-				        				</a>
-				        			</div>
-				        			<div class="span3">
-				        				<a href="">
-				        					<div class="app-recommand ">
-				        						<div class="appIcon">
-				        							<img src="https://images.appcenter.intuit.com/Content/images/AppCards/b7q4xvfdhu/Submitted23/LogoName.png" />
-				        						</div>
-				        						<div class="bigappcard-details">
-					        						<div class="bigappcard-display-name">
-					        							Futrli
-					        						</div>
-					        						<div class="bigappcard-vendor-name">
-							        					by CrunchBoards
-						        					</div>
-						        					<div class="bigappcard-tagline">
-						        						The all-in-one Forecasting & Reporting Engine
-						        					</div>
-					        					</div>
-					        					
-					        					<div class="ratings" style="float: left;">
-									                <span class="fa fa-star"></span>
-									                <span class="fa fa-star"></span>
-									                <span class="fa fa-star"></span>
-									                <span class="fa fa-star"></span>
-									                <span class="fa fa-star"></span>
-									                <span class="review">
-									                    <span class="reviews">(7)</span>
-									                </span>
-									            </div>
-				        					</div>
-				        				</a>
-				        			</div>
-				        		</div>
-				        	</div> -->
-
-				        	<div class="row-fluid" style="margin-top: 20px; float: left; background: #ebeef3; padding: 15px 20px 0;">
-				        		<h2>Featured</h2>
-				        		<div class="row-fluid" style="margin-top: 20px;">
-				        			<div class="span3">
-				        				<a href="">
-				        					<div class="app-recommand ">
-				        						<div class="appIcon">
-				        							<img src="https://images.appcenter.intuit.com/Content/images/AppCards/b7q4xvfdhu/Submitted23/LogoName.png" />
-				        						</div>
-				        						<div class="bigappcard-details">
-					        						<div class="bigappcard-display-name">
-					        							Futrli
-					        						</div>
-					        						<div class="bigappcard-vendor-name">
-							        					by CrunchBoards
-						        					</div>
-						        					<div class="bigappcard-tagline">
-						        						The all-in-one Forecasting & Reporting Engine
-						        					</div>
-					        					</div>
-					        					
-					        					<div class="ratings" style="float: left;">
-									                <span class="fa fa-star"></span>
-									                <span class="fa fa-star"></span>
-									                <span class="fa fa-star"></span>
-									                <span class="fa fa-star"></span>
-									                <span class="fa fa-star"></span>
-									                <span class="review">
-									                    <span class="reviews">(7)</span>
-									                </span>
-									            </div>
-				        					</div>
-				        				</a>
-				        			</div>
-				        			<div class="span3">
-				        				<a href="">
-				        					<div class="app-recommand ">
-				        						<div class="appIcon">
-				        							<img src="https://images.appcenter.intuit.com/Content/images/AppCards/b7q4xvfdhu/Submitted23/LogoName.png" />
-				        						</div>
-				        						<div class="bigappcard-details">
-					        						<div class="bigappcard-display-name">
-					        							Futrli
-					        						</div>
-					        						<div class="bigappcard-vendor-name">
-							        					by CrunchBoards
-						        					</div>
-						        					<div class="bigappcard-tagline">
-						        						The all-in-one Forecasting & Reporting Engine
-						        					</div>
-					        					</div>
-					        					
-					        					<div class="ratings" style="float: left;">
-									                <span class="fa fa-star"></span>
-									                <span class="fa fa-star"></span>
-									                <span class="fa fa-star"></span>
-									                <span class="fa fa-star"></span>
-									                <span class="fa fa-star"></span>
-									                <span class="review">
-									                    <span class="reviews">(7)</span>
-									                </span>
-									            </div>
-				        					</div>
-				        				</a>
-				        			</div>
-				        			<div class="span3">
-				        				<a href="">
-				        					<div class="app-recommand ">
-				        						<div class="appIcon">
-				        							<img src="https://images.appcenter.intuit.com/Content/images/AppCards/b7q4xvfdhu/Submitted23/LogoName.png" />
-				        						</div>
-				        						<div class="bigappcard-details">
-					        						<div class="bigappcard-display-name">
-					        							Futrli
-					        						</div>
-					        						<div class="bigappcard-vendor-name">
-							        					by CrunchBoards
-						        					</div>
-						        					<div class="bigappcard-tagline">
-						        						The all-in-one Forecasting & Reporting Engine
-						        					</div>
-					        					</div>
-					        					
-					        					<div class="ratings" style="float: left;">
-									                <span class="fa fa-star"></span>
-									                <span class="fa fa-star"></span>
-									                <span class="fa fa-star"></span>
-									                <span class="fa fa-star"></span>
-									                <span class="fa fa-star"></span>
-									                <span class="review">
-									                    <span class="reviews">(7)</span>
-									                </span>
-									            </div>
-				        					</div>
-				        				</a>
-				        			</div>
-				        			<div class="span3">
-				        				<a href="">
-				        					<div class="app-recommand ">
-				        						<div class="appIcon">
-				        							<img src="https://images.appcenter.intuit.com/Content/images/AppCards/b7q4xvfdhu/Submitted23/LogoName.png" />
-				        						</div>
-				        						<div class="bigappcard-details">
-					        						<div class="bigappcard-display-name">
-					        							Futrli
-					        						</div>
-					        						<div class="bigappcard-vendor-name">
-							        					by CrunchBoards
-						        					</div>
-						        					<div class="bigappcard-tagline">
-						        						The all-in-one Forecasting & Reporting Engine
-						        					</div>
-					        					</div>
-					        					
-					        					<div class="ratings" style="float: left;">
-									                <span class="fa fa-star"></span>
-									                <span class="fa fa-star"></span>
-									                <span class="fa fa-star"></span>
-									                <span class="fa fa-star"></span>
-									                <span class="fa fa-star"></span>
-									                <span class="review">
-									                    <span class="reviews">(7)</span>
-									                </span>
-									            </div>
-				        					</div>
-				        				</a>
-				        			</div>
-				        		</div>
-				        	</div>
-
-				        	<div class="row-fluid" style="float: left; background: #f7f9fb; padding: 15px 20px 0;">
-				        		<h2>Newest</h2>
-				        		<div class="row-fluid" style="margin-top: 20px;">
-				        			<div class="span3">
-				        				<a href="">
-				        					<div class="app-recommand ">
-				        						<div class="appIcon">
-				        							<img src="https://images.appcenter.intuit.com/Content/images/AppCards/b7q4xvfdhu/Submitted23/LogoName.png" />
-				        						</div>
-				        						<div class="bigappcard-details">
-					        						<div class="bigappcard-display-name">
-					        							Futrli
-					        						</div>
-					        						<div class="bigappcard-vendor-name">
-							        					by CrunchBoards
-						        					</div>
-						        					<div class="bigappcard-tagline">
-						        						The all-in-one Forecasting & Reporting Engine
-						        					</div>
-					        					</div>
-					        					
-					        					<div class="ratings" style="float: left;">
-									                <span class="fa fa-star"></span>
-									                <span class="fa fa-star"></span>
-									                <span class="fa fa-star"></span>
-									                <span class="fa fa-star"></span>
-									                <span class="fa fa-star"></span>
-									                <span class="review">
-									                    <span class="reviews">(7)</span>
-									                </span>
-									            </div>
-				        					</div>
-				        				</a>
-				        			</div>
-				        			<div class="span3">
-				        				<a href="">
-				        					<div class="app-recommand ">
-				        						<div class="appIcon">
-				        							<img src="https://images.appcenter.intuit.com/Content/images/AppCards/b7q4xvfdhu/Submitted23/LogoName.png" />
-				        						</div>
-				        						<div class="bigappcard-details">
-					        						<div class="bigappcard-display-name">
-					        							Futrli
-					        						</div>
-					        						<div class="bigappcard-vendor-name">
-							        					by CrunchBoards
-						        					</div>
-						        					<div class="bigappcard-tagline">
-						        						The all-in-one Forecasting & Reporting Engine
-						        					</div>
-					        					</div>
-					        					
-					        					<div class="ratings" style="float: left;">
-									                <span class="fa fa-star"></span>
-									                <span class="fa fa-star"></span>
-									                <span class="fa fa-star"></span>
-									                <span class="fa fa-star"></span>
-									                <span class="fa fa-star"></span>
-									                <span class="review">
-									                    <span class="reviews">(7)</span>
-									                </span>
-									            </div>
-				        					</div>
-				        				</a>
-				        			</div>
-				        			<div class="span3">
-				        				<a href="">
-				        					<div class="app-recommand ">
-				        						<div class="appIcon">
-				        							<img src="https://images.appcenter.intuit.com/Content/images/AppCards/b7q4xvfdhu/Submitted23/LogoName.png" />
-				        						</div>
-				        						<div class="bigappcard-details">
-					        						<div class="bigappcard-display-name">
-					        							Futrli
-					        						</div>
-					        						<div class="bigappcard-vendor-name">
-							        					by CrunchBoards
-						        					</div>
-						        					<div class="bigappcard-tagline">
-						        						The all-in-one Forecasting & Reporting Engine
-						        					</div>
-					        					</div>
-					        					
-					        					<div class="ratings" style="float: left;">
-									                <span class="fa fa-star"></span>
-									                <span class="fa fa-star"></span>
-									                <span class="fa fa-star"></span>
-									                <span class="fa fa-star"></span>
-									                <span class="fa fa-star"></span>
-									                <span class="review">
-									                    <span class="reviews">(7)</span>
-									                </span>
-									            </div>
-				        					</div>
-				        				</a>
-				        			</div>
-				        			<div class="span3">
-				        				<a href="">
-				        					<div class="app-recommand ">
-				        						<div class="appIcon">
-				        							<img src="https://images.appcenter.intuit.com/Content/images/AppCards/b7q4xvfdhu/Submitted23/LogoName.png" />
-				        						</div>
-				        						<div class="bigappcard-details">
-					        						<div class="bigappcard-display-name">
-					        							Futrli
-					        						</div>
-					        						<div class="bigappcard-vendor-name">
-							        					by CrunchBoards
-						        					</div>
-						        					<div class="bigappcard-tagline">
-						        						The all-in-one Forecasting & Reporting Engine
-						        					</div>
-					        					</div>
-					        					
-					        					<div class="ratings" style="float: left;">
-									                <span class="fa fa-star"></span>
-									                <span class="fa fa-star"></span>
-									                <span class="fa fa-star"></span>
-									                <span class="fa fa-star"></span>
-									                <span class="fa fa-star"></span>
-									                <span class="review">
-									                    <span class="reviews">(7)</span>
-									                </span>
-									            </div>
-				        					</div>
-				        				</a>
-				        			</div>
-				        		</div>
-				        	</div>
-
-				        	<!-- <div class="row-fluid" style="float: left; background: #ebeef3; padding: 15px 20px 0;">
-				        		<h2>Top Rated</h2>
-				        		<div class="row-fluid" style="margin-top: 20px;">
-				        			<div class="span3">
-				        				<a href="">
-				        					<div class="app-recommand ">
-				        						<div class="appIcon">
-				        							<img src="https://images.appcenter.intuit.com/Content/images/AppCards/b7q4xvfdhu/Submitted23/LogoName.png" />
-				        						</div>
-				        						<div class="bigappcard-details">
-					        						<div class="bigappcard-display-name">
-					        							Futrli
-					        						</div>
-					        						<div class="bigappcard-vendor-name">
-							        					by CrunchBoards
-						        					</div>
-						        					<div class="bigappcard-tagline">
-						        						The all-in-one Forecasting & Reporting Engine
-						        					</div>
-					        					</div>
-					        					
-					        					<div class="ratings" style="float: left;">
-									                <span class="fa fa-star"></span>
-									                <span class="fa fa-star"></span>
-									                <span class="fa fa-star"></span>
-									                <span class="fa fa-star"></span>
-									                <span class="fa fa-star"></span>
-									                <span class="review">
-									                    <span class="reviews">(7)</span>
-									                </span>
-									            </div>
-				        					</div>
-				        				</a>
-				        			</div>
-				        			<div class="span3">
-				        				<a href="">
-				        					<div class="app-recommand ">
-				        						<div class="appIcon">
-				        							<img src="https://images.appcenter.intuit.com/Content/images/AppCards/b7q4xvfdhu/Submitted23/LogoName.png" />
-				        						</div>
-				        						<div class="bigappcard-details">
-					        						<div class="bigappcard-display-name">
-					        							Futrli
-					        						</div>
-					        						<div class="bigappcard-vendor-name">
-							        					by CrunchBoards
-						        					</div>
-						        					<div class="bigappcard-tagline">
-						        						The all-in-one Forecasting & Reporting Engine
-						        					</div>
-					        					</div>
-					        					
-					        					<div class="ratings" style="float: left;">
-									                <span class="fa fa-star"></span>
-									                <span class="fa fa-star"></span>
-									                <span class="fa fa-star"></span>
-									                <span class="fa fa-star"></span>
-									                <span class="fa fa-star"></span>
-									                <span class="review">
-									                    <span class="reviews">(7)</span>
-									                </span>
-									            </div>
-				        					</div>
-				        				</a>
-				        			</div>
-				        			<div class="span3">
-				        				<a href="">
-				        					<div class="app-recommand ">
-				        						<div class="appIcon">
-				        							<img src="https://images.appcenter.intuit.com/Content/images/AppCards/b7q4xvfdhu/Submitted23/LogoName.png" />
-				        						</div>
-				        						<div class="bigappcard-details">
-					        						<div class="bigappcard-display-name">
-					        							Futrli
-					        						</div>
-					        						<div class="bigappcard-vendor-name">
-							        					by CrunchBoards
-						        					</div>
-						        					<div class="bigappcard-tagline">
-						        						The all-in-one Forecasting & Reporting Engine
-						        					</div>
-					        					</div>
-					        					
-					        					<div class="ratings" style="float: left;">
-									                <span class="fa fa-star"></span>
-									                <span class="fa fa-star"></span>
-									                <span class="fa fa-star"></span>
-									                <span class="fa fa-star"></span>
-									                <span class="fa fa-star"></span>
-									                <span class="review">
-									                    <span class="reviews">(7)</span>
-									                </span>
-									            </div>
-				        					</div>
-				        				</a>
-				        			</div>
-				        			<div class="span3">
-				        				<a href="">
-				        					<div class="app-recommand ">
-				        						<div class="appIcon">
-				        							<img src="https://images.appcenter.intuit.com/Content/images/AppCards/b7q4xvfdhu/Submitted23/LogoName.png" />
-				        						</div>
-				        						<div class="bigappcard-details">
-					        						<div class="bigappcard-display-name">
-					        							Futrli
-					        						</div>
-					        						<div class="bigappcard-vendor-name">
-							        					by CrunchBoards
-						        					</div>
-						        					<div class="bigappcard-tagline">
-						        						The all-in-one Forecasting & Reporting Engine
-						        					</div>
-					        					</div>
-					        					
-					        					<div class="ratings" style="float: left;">
-									                <span class="fa fa-star"></span>
-									                <span class="fa fa-star"></span>
-									                <span class="fa fa-star"></span>
-									                <span class="fa fa-star"></span>
-									                <span class="fa fa-star"></span>
-									                <span class="review">
-									                    <span class="reviews">(7)</span>
-									                </span>
-									            </div>
-				        					</div>
-				        				</a>
-				        			</div>
-				        		</div>
-				        	</div> -->
-
-				        	<div class="row-fluid" style="float: left; background: #ebeef3; padding: 15px 20px 0; width: 100%;">
-				        		<h2>Collections</h2>
-				        		<div class="row-fluid" style="margin-top: 20px;">
-				        			<div class="collection">
-					        			<ul>
-					        				<li>
-					        					<a href="">
-					        						<div class="home-bigappcard-class" style="">
-					        							<div class="home-bigappcard-inner" style="">
-					        								<div class="appIcon-accountant" style="">
-					        									<img src="https://css.appcenter.intuit.com/Content/Static/7.11.0-rel-593/images/collection_tile_accountant.png">
-					        								</div>
-					        								<div class="bigappcard-details" style="">
-					        									<div class="bigappcard-display-name" style="">
-					        										Apps by BanhJi                                
-					        									</div>
-					        									<div class="bigappcard-tagline" style="">
-					        										Key apps that streamline your practice and support your business.
-					        									</div>
-					        								</div>
-					        							</div> 
-					        						</div>
-					        					</a>
-					        				</li>
-					        				<li>
-					        					<a href="">
-					        						<div class="home-bigappcard-class" style="">
-					        							<div class="home-bigappcard-inner" style="">
-					        								<div class="appIcon-accountant" style="">
-					        									<img src="https://css.appcenter.intuit.com/Content/Static/7.11.0-rel-593/images/collection_tile_accountant.png">
-					        								</div>
-					        								<div class="bigappcard-details" style="">
-					        									<div class="bigappcard-display-name" style="">
-					        										Apps by Industry                              
-					        									</div>
-					        									<div class="bigappcard-tagline" style="">
-					        										Key apps that streamline your practice and support your business.
-					        									</div>
-					        								</div>
-					        							</div> 
-					        						</div>
-					        					</a>
-					        				</li>
-					        				<li>
-					        					<a href="">
-					        						<div class="home-bigappcard-class" style="">
-					        							<div class="home-bigappcard-inner" style="">
-					        								<div class="appIcon-accountant" style="">
-					        									<img src="https://css.appcenter.intuit.com/Content/Static/7.11.0-rel-593/images/collection_tile_accountant.png">
-					        								</div>
-					        								<div class="bigappcard-details" style="">
-					        									<div class="bigappcard-display-name" style="">
-					        										Apps by Function                                
-					        									</div>
-					        									<div class="bigappcard-tagline" style="">
-					        										Key apps that streamline your practice and support your business.
-					        									</div>
-					        								</div>
-					        							</div> 
-					        						</div>
-					        					</a>
-					        				</li>
-					        			</ul>
+								                <p class="jcarousel-pagination"></p>
+								            </div>
+								        </div>
 					        		</div>
-				        		</div>
-				        	</div>
+					        	</div> -->
 
+					        	<!-- <div class="row-fluid" style="margin-top: 20px; float: left; background: #ebeef3; padding: 15px 20px 0;">
+					        		<h2>Apps Recommended For You</h2>
+					        		<div class="row-fluid" style="margin-top: 20px;">
+					        			<div class="span3">
+					        				<a href="">
+					        					<div class="app-recommand ">
+					        						<div class="appIcon">
+					        							<img src="https://images.appcenter.intuit.com/Content/images/AppCards/b7q4xvfdhu/Submitted23/LogoName.png" />
+					        						</div>
+					        						<div class="bigappcard-details">
+						        						<div class="bigappcard-display-name">
+						        							Futrli
+						        						</div>
+						        						<div class="bigappcard-vendor-name">
+								        					by CrunchBoards
+							        					</div>
+							        					<div class="bigappcard-tagline">
+							        						The all-in-one Forecasting & Reporting Engine
+							        					</div>
+						        					</div>
+						        					
+						        					<div class="ratings" style="float: left;">
+										                <span class="fa fa-star"></span>
+										                <span class="fa fa-star"></span>
+										                <span class="fa fa-star"></span>
+										                <span class="fa fa-star"></span>
+										                <span class="fa fa-star"></span>
+										                <span class="review">
+										                    <span class="reviews">(7)</span>
+										                </span>
+										            </div>
+					        					</div>
+					        				</a>
+					        			</div>
+					        			<div class="span3">
+					        				<a href="">
+					        					<div class="app-recommand ">
+					        						<div class="appIcon">
+					        							<img src="https://images.appcenter.intuit.com/Content/images/AppCards/b7q4xvfdhu/Submitted23/LogoName.png" />
+					        						</div>
+					        						<div class="bigappcard-details">
+						        						<div class="bigappcard-display-name">
+						        							Futrli
+						        						</div>
+						        						<div class="bigappcard-vendor-name">
+								        					by CrunchBoards
+							        					</div>
+							        					<div class="bigappcard-tagline">
+							        						The all-in-one Forecasting & Reporting Engine
+							        					</div>
+						        					</div>
+						        					
+						        					<div class="ratings" style="float: left;">
+										                <span class="fa fa-star"></span>
+										                <span class="fa fa-star"></span>
+										                <span class="fa fa-star"></span>
+										                <span class="fa fa-star"></span>
+										                <span class="fa fa-star"></span>
+										                <span class="review">
+										                    <span class="reviews">(7)</span>
+										                </span>
+										            </div>
+					        					</div>
+					        				</a>
+					        			</div>
+					        			<div class="span3">
+					        				<a href="">
+					        					<div class="app-recommand ">
+					        						<div class="appIcon">
+					        							<img src="https://images.appcenter.intuit.com/Content/images/AppCards/b7q4xvfdhu/Submitted23/LogoName.png" />
+					        						</div>
+					        						<div class="bigappcard-details">
+						        						<div class="bigappcard-display-name">
+						        							Futrli
+						        						</div>
+						        						<div class="bigappcard-vendor-name">
+								        					by CrunchBoards
+							        					</div>
+							        					<div class="bigappcard-tagline">
+							        						The all-in-one Forecasting & Reporting Engine
+							        					</div>
+						        					</div>
+						        					
+						        					<div class="ratings" style="float: left;">
+										                <span class="fa fa-star"></span>
+										                <span class="fa fa-star"></span>
+										                <span class="fa fa-star"></span>
+										                <span class="fa fa-star"></span>
+										                <span class="fa fa-star"></span>
+										                <span class="review">
+										                    <span class="reviews">(7)</span>
+										                </span>
+										            </div>
+					        					</div>
+					        				</a>
+					        			</div>
+					        			<div class="span3">
+					        				<a href="">
+					        					<div class="app-recommand ">
+					        						<div class="appIcon">
+					        							<img src="https://images.appcenter.intuit.com/Content/images/AppCards/b7q4xvfdhu/Submitted23/LogoName.png" />
+					        						</div>
+					        						<div class="bigappcard-details">
+						        						<div class="bigappcard-display-name">
+						        							Futrli
+						        						</div>
+						        						<div class="bigappcard-vendor-name">
+								        					by CrunchBoards
+							        					</div>
+							        					<div class="bigappcard-tagline">
+							        						The all-in-one Forecasting & Reporting Engine
+							        					</div>
+						        					</div>
+						        					
+						        					<div class="ratings" style="float: left;">
+										                <span class="fa fa-star"></span>
+										                <span class="fa fa-star"></span>
+										                <span class="fa fa-star"></span>
+										                <span class="fa fa-star"></span>
+										                <span class="fa fa-star"></span>
+										                <span class="review">
+										                    <span class="reviews">(7)</span>
+										                </span>
+										            </div>
+					        					</div>
+					        				</a>
+					        			</div>
+					        		</div>
+					        	</div> -->
+
+					        	<!-- <div class="row-fluid" style="float: left; background: #f7f9fb; padding: 15px 20px 0;">
+					        		<h2>Trending Now</h2>
+					        		<div class="row-fluid" style="margin-top: 20px;">
+					        			<div class="span3">
+					        				<a href="">
+					        					<div class="app-recommand ">
+					        						<div class="appIcon">
+					        							<img src="https://images.appcenter.intuit.com/Content/images/AppCards/b7q4xvfdhu/Submitted23/LogoName.png" />
+					        						</div>
+					        						<div class="bigappcard-details">
+						        						<div class="bigappcard-display-name">
+						        							Futrli
+						        						</div>
+						        						<div class="bigappcard-vendor-name">
+								        					by CrunchBoards
+							        					</div>
+							        					<div class="bigappcard-tagline">
+							        						The all-in-one Forecasting & Reporting Engine
+							        					</div>
+						        					</div>
+						        					
+						        					<div class="ratings" style="float: left;">
+										                <span class="fa fa-star"></span>
+										                <span class="fa fa-star"></span>
+										                <span class="fa fa-star"></span>
+										                <span class="fa fa-star"></span>
+										                <span class="fa fa-star"></span>
+										                <span class="review">
+										                    <span class="reviews">(7)</span>
+										                </span>
+										            </div>
+					        					</div>
+					        				</a>
+					        			</div>
+					        			<div class="span3">
+					        				<a href="">
+					        					<div class="app-recommand ">
+					        						<div class="appIcon">
+					        							<img src="https://images.appcenter.intuit.com/Content/images/AppCards/b7q4xvfdhu/Submitted23/LogoName.png" />
+					        						</div>
+					        						<div class="bigappcard-details">
+						        						<div class="bigappcard-display-name">
+						        							Futrli
+						        						</div>
+						        						<div class="bigappcard-vendor-name">
+								        					by CrunchBoards
+							        					</div>
+							        					<div class="bigappcard-tagline">
+							        						The all-in-one Forecasting & Reporting Engine
+							        					</div>
+						        					</div>
+						        					
+						        					<div class="ratings" style="float: left;">
+										                <span class="fa fa-star"></span>
+										                <span class="fa fa-star"></span>
+										                <span class="fa fa-star"></span>
+										                <span class="fa fa-star"></span>
+										                <span class="fa fa-star"></span>
+										                <span class="review">
+										                    <span class="reviews">(7)</span>
+										                </span>
+										            </div>
+					        					</div>
+					        				</a>
+					        			</div>
+					        			<div class="span3">
+					        				<a href="">
+					        					<div class="app-recommand ">
+					        						<div class="appIcon">
+					        							<img src="https://images.appcenter.intuit.com/Content/images/AppCards/b7q4xvfdhu/Submitted23/LogoName.png" />
+					        						</div>
+					        						<div class="bigappcard-details">
+						        						<div class="bigappcard-display-name">
+						        							Futrli
+						        						</div>
+						        						<div class="bigappcard-vendor-name">
+								        					by CrunchBoards
+							        					</div>
+							        					<div class="bigappcard-tagline">
+							        						The all-in-one Forecasting & Reporting Engine
+							        					</div>
+						        					</div>
+						        					
+						        					<div class="ratings" style="float: left;">
+										                <span class="fa fa-star"></span>
+										                <span class="fa fa-star"></span>
+										                <span class="fa fa-star"></span>
+										                <span class="fa fa-star"></span>
+										                <span class="fa fa-star"></span>
+										                <span class="review">
+										                    <span class="reviews">(7)</span>
+										                </span>
+										            </div>
+					        					</div>
+					        				</a>
+					        			</div>
+					        			<div class="span3">
+					        				<a href="">
+					        					<div class="app-recommand ">
+					        						<div class="appIcon">
+					        							<img src="https://images.appcenter.intuit.com/Content/images/AppCards/b7q4xvfdhu/Submitted23/LogoName.png" />
+					        						</div>
+					        						<div class="bigappcard-details">
+						        						<div class="bigappcard-display-name">
+						        							Futrli
+						        						</div>
+						        						<div class="bigappcard-vendor-name">
+								        					by CrunchBoards
+							        					</div>
+							        					<div class="bigappcard-tagline">
+							        						The all-in-one Forecasting & Reporting Engine
+							        					</div>
+						        					</div>
+						        					
+						        					<div class="ratings" style="float: left;">
+										                <span class="fa fa-star"></span>
+										                <span class="fa fa-star"></span>
+										                <span class="fa fa-star"></span>
+										                <span class="fa fa-star"></span>
+										                <span class="fa fa-star"></span>
+										                <span class="review">
+										                    <span class="reviews">(7)</span>
+										                </span>
+										            </div>
+					        					</div>
+					        				</a>
+					        			</div>
+					        		</div>
+					        	</div> -->
+
+					        	<div class="row-fluid" style="margin-top: 20px; float: left; background: #ebeef3; padding: 15px 20px 0;">
+					        		<h2>Featured</h2>
+					        		<div class="row-fluid" style="margin-top: 20px;">
+					        			<div class="span3">
+					        				<a href="">
+					        					<div class="app-recommand ">
+					        						<div class="appIcon">
+					        							<img src="https://images.appcenter.intuit.com/Content/images/AppCards/b7q4xvfdhu/Submitted23/LogoName.png" />
+					        						</div>
+					        						<div class="bigappcard-details">
+						        						<div class="bigappcard-display-name">
+						        							Futrli
+						        						</div>
+						        						<div class="bigappcard-vendor-name">
+								        					by CrunchBoards
+							        					</div>
+							        					<div class="bigappcard-tagline">
+							        						The all-in-one Forecasting & Reporting Engine
+							        					</div>
+						        					</div>
+						        					
+						        					<div class="ratings" style="float: left;">
+										                <span class="fa fa-star"></span>
+										                <span class="fa fa-star"></span>
+										                <span class="fa fa-star"></span>
+										                <span class="fa fa-star"></span>
+										                <span class="fa fa-star"></span>
+										                <span class="review">
+										                    <span class="reviews">(7)</span>
+										                </span>
+										            </div>
+					        					</div>
+					        				</a>
+					        			</div>
+					        			<div class="span3">
+					        				<a href="">
+					        					<div class="app-recommand ">
+					        						<div class="appIcon">
+					        							<img src="https://images.appcenter.intuit.com/Content/images/AppCards/b7q4xvfdhu/Submitted23/LogoName.png" />
+					        						</div>
+					        						<div class="bigappcard-details">
+						        						<div class="bigappcard-display-name">
+						        							Futrli
+						        						</div>
+						        						<div class="bigappcard-vendor-name">
+								        					by CrunchBoards
+							        					</div>
+							        					<div class="bigappcard-tagline">
+							        						The all-in-one Forecasting & Reporting Engine
+							        					</div>
+						        					</div>
+						        					
+						        					<div class="ratings" style="float: left;">
+										                <span class="fa fa-star"></span>
+										                <span class="fa fa-star"></span>
+										                <span class="fa fa-star"></span>
+										                <span class="fa fa-star"></span>
+										                <span class="fa fa-star"></span>
+										                <span class="review">
+										                    <span class="reviews">(7)</span>
+										                </span>
+										            </div>
+					        					</div>
+					        				</a>
+					        			</div>
+					        			<div class="span3">
+					        				<a href="">
+					        					<div class="app-recommand ">
+					        						<div class="appIcon">
+					        							<img src="https://images.appcenter.intuit.com/Content/images/AppCards/b7q4xvfdhu/Submitted23/LogoName.png" />
+					        						</div>
+					        						<div class="bigappcard-details">
+						        						<div class="bigappcard-display-name">
+						        							Futrli
+						        						</div>
+						        						<div class="bigappcard-vendor-name">
+								        					by CrunchBoards
+							        					</div>
+							        					<div class="bigappcard-tagline">
+							        						The all-in-one Forecasting & Reporting Engine
+							        					</div>
+						        					</div>
+						        					
+						        					<div class="ratings" style="float: left;">
+										                <span class="fa fa-star"></span>
+										                <span class="fa fa-star"></span>
+										                <span class="fa fa-star"></span>
+										                <span class="fa fa-star"></span>
+										                <span class="fa fa-star"></span>
+										                <span class="review">
+										                    <span class="reviews">(7)</span>
+										                </span>
+										            </div>
+					        					</div>
+					        				</a>
+					        			</div>
+					        			<div class="span3">
+					        				<a href="">
+					        					<div class="app-recommand ">
+					        						<div class="appIcon">
+					        							<img src="https://images.appcenter.intuit.com/Content/images/AppCards/b7q4xvfdhu/Submitted23/LogoName.png" />
+					        						</div>
+					        						<div class="bigappcard-details">
+						        						<div class="bigappcard-display-name">
+						        							Futrli
+						        						</div>
+						        						<div class="bigappcard-vendor-name">
+								        					by CrunchBoards
+							        					</div>
+							        					<div class="bigappcard-tagline">
+							        						The all-in-one Forecasting & Reporting Engine
+							        					</div>
+						        					</div>
+						        					
+						        					<div class="ratings" style="float: left;">
+										                <span class="fa fa-star"></span>
+										                <span class="fa fa-star"></span>
+										                <span class="fa fa-star"></span>
+										                <span class="fa fa-star"></span>
+										                <span class="fa fa-star"></span>
+										                <span class="review">
+										                    <span class="reviews">(7)</span>
+										                </span>
+										            </div>
+					        					</div>
+					        				</a>
+					        			</div>
+					        		</div>
+					        	</div>
+
+					        	<div class="row-fluid" style="float: left; background: #f7f9fb; padding: 15px 20px 0;">
+					        		<h2>Newest</h2>
+					        		<div class="row-fluid" style="margin-top: 20px;">
+					        			<div class="span3">
+					        				<a href="">
+					        					<div class="app-recommand ">
+					        						<div class="appIcon">
+					        							<img src="https://images.appcenter.intuit.com/Content/images/AppCards/b7q4xvfdhu/Submitted23/LogoName.png" />
+					        						</div>
+					        						<div class="bigappcard-details">
+						        						<div class="bigappcard-display-name">
+						        							Futrli
+						        						</div>
+						        						<div class="bigappcard-vendor-name">
+								        					by CrunchBoards
+							        					</div>
+							        					<div class="bigappcard-tagline">
+							        						The all-in-one Forecasting & Reporting Engine
+							        					</div>
+						        					</div>
+						        					
+						        					<div class="ratings" style="float: left;">
+										                <span class="fa fa-star"></span>
+										                <span class="fa fa-star"></span>
+										                <span class="fa fa-star"></span>
+										                <span class="fa fa-star"></span>
+										                <span class="fa fa-star"></span>
+										                <span class="review">
+										                    <span class="reviews">(7)</span>
+										                </span>
+										            </div>
+					        					</div>
+					        				</a>
+					        			</div>
+					        			<div class="span3">
+					        				<a href="">
+					        					<div class="app-recommand ">
+					        						<div class="appIcon">
+					        							<img src="https://images.appcenter.intuit.com/Content/images/AppCards/b7q4xvfdhu/Submitted23/LogoName.png" />
+					        						</div>
+					        						<div class="bigappcard-details">
+						        						<div class="bigappcard-display-name">
+						        							Futrli
+						        						</div>
+						        						<div class="bigappcard-vendor-name">
+								        					by CrunchBoards
+							        					</div>
+							        					<div class="bigappcard-tagline">
+							        						The all-in-one Forecasting & Reporting Engine
+							        					</div>
+						        					</div>
+						        					
+						        					<div class="ratings" style="float: left;">
+										                <span class="fa fa-star"></span>
+										                <span class="fa fa-star"></span>
+										                <span class="fa fa-star"></span>
+										                <span class="fa fa-star"></span>
+										                <span class="fa fa-star"></span>
+										                <span class="review">
+										                    <span class="reviews">(7)</span>
+										                </span>
+										            </div>
+					        					</div>
+					        				</a>
+					        			</div>
+					        			<div class="span3">
+					        				<a href="">
+					        					<div class="app-recommand ">
+					        						<div class="appIcon">
+					        							<img src="https://images.appcenter.intuit.com/Content/images/AppCards/b7q4xvfdhu/Submitted23/LogoName.png" />
+					        						</div>
+					        						<div class="bigappcard-details">
+						        						<div class="bigappcard-display-name">
+						        							Futrli
+						        						</div>
+						        						<div class="bigappcard-vendor-name">
+								        					by CrunchBoards
+							        					</div>
+							        					<div class="bigappcard-tagline">
+							        						The all-in-one Forecasting & Reporting Engine
+							        					</div>
+						        					</div>
+						        					
+						        					<div class="ratings" style="float: left;">
+										                <span class="fa fa-star"></span>
+										                <span class="fa fa-star"></span>
+										                <span class="fa fa-star"></span>
+										                <span class="fa fa-star"></span>
+										                <span class="fa fa-star"></span>
+										                <span class="review">
+										                    <span class="reviews">(7)</span>
+										                </span>
+										            </div>
+					        					</div>
+					        				</a>
+					        			</div>
+					        			<div class="span3">
+					        				<a href="">
+					        					<div class="app-recommand ">
+					        						<div class="appIcon">
+					        							<img src="https://images.appcenter.intuit.com/Content/images/AppCards/b7q4xvfdhu/Submitted23/LogoName.png" />
+					        						</div>
+					        						<div class="bigappcard-details">
+						        						<div class="bigappcard-display-name">
+						        							Futrli
+						        						</div>
+						        						<div class="bigappcard-vendor-name">
+								        					by CrunchBoards
+							        					</div>
+							        					<div class="bigappcard-tagline">
+							        						The all-in-one Forecasting & Reporting Engine
+							        					</div>
+						        					</div>
+						        					
+						        					<div class="ratings" style="float: left;">
+										                <span class="fa fa-star"></span>
+										                <span class="fa fa-star"></span>
+										                <span class="fa fa-star"></span>
+										                <span class="fa fa-star"></span>
+										                <span class="fa fa-star"></span>
+										                <span class="review">
+										                    <span class="reviews">(7)</span>
+										                </span>
+										            </div>
+					        					</div>
+					        				</a>
+					        			</div>
+					        		</div>
+					        	</div>
+
+					        	<!-- <div class="row-fluid" style="float: left; background: #ebeef3; padding: 15px 20px 0;">
+					        		<h2>Top Rated</h2>
+					        		<div class="row-fluid" style="margin-top: 20px;">
+					        			<div class="span3">
+					        				<a href="">
+					        					<div class="app-recommand ">
+					        						<div class="appIcon">
+					        							<img src="https://images.appcenter.intuit.com/Content/images/AppCards/b7q4xvfdhu/Submitted23/LogoName.png" />
+					        						</div>
+					        						<div class="bigappcard-details">
+						        						<div class="bigappcard-display-name">
+						        							Futrli
+						        						</div>
+						        						<div class="bigappcard-vendor-name">
+								        					by CrunchBoards
+							        					</div>
+							        					<div class="bigappcard-tagline">
+							        						The all-in-one Forecasting & Reporting Engine
+							        					</div>
+						        					</div>
+						        					
+						        					<div class="ratings" style="float: left;">
+										                <span class="fa fa-star"></span>
+										                <span class="fa fa-star"></span>
+										                <span class="fa fa-star"></span>
+										                <span class="fa fa-star"></span>
+										                <span class="fa fa-star"></span>
+										                <span class="review">
+										                    <span class="reviews">(7)</span>
+										                </span>
+										            </div>
+					        					</div>
+					        				</a>
+					        			</div>
+					        			<div class="span3">
+					        				<a href="">
+					        					<div class="app-recommand ">
+					        						<div class="appIcon">
+					        							<img src="https://images.appcenter.intuit.com/Content/images/AppCards/b7q4xvfdhu/Submitted23/LogoName.png" />
+					        						</div>
+					        						<div class="bigappcard-details">
+						        						<div class="bigappcard-display-name">
+						        							Futrli
+						        						</div>
+						        						<div class="bigappcard-vendor-name">
+								        					by CrunchBoards
+							        					</div>
+							        					<div class="bigappcard-tagline">
+							        						The all-in-one Forecasting & Reporting Engine
+							        					</div>
+						        					</div>
+						        					
+						        					<div class="ratings" style="float: left;">
+										                <span class="fa fa-star"></span>
+										                <span class="fa fa-star"></span>
+										                <span class="fa fa-star"></span>
+										                <span class="fa fa-star"></span>
+										                <span class="fa fa-star"></span>
+										                <span class="review">
+										                    <span class="reviews">(7)</span>
+										                </span>
+										            </div>
+					        					</div>
+					        				</a>
+					        			</div>
+					        			<div class="span3">
+					        				<a href="">
+					        					<div class="app-recommand ">
+					        						<div class="appIcon">
+					        							<img src="https://images.appcenter.intuit.com/Content/images/AppCards/b7q4xvfdhu/Submitted23/LogoName.png" />
+					        						</div>
+					        						<div class="bigappcard-details">
+						        						<div class="bigappcard-display-name">
+						        							Futrli
+						        						</div>
+						        						<div class="bigappcard-vendor-name">
+								        					by CrunchBoards
+							        					</div>
+							        					<div class="bigappcard-tagline">
+							        						The all-in-one Forecasting & Reporting Engine
+							        					</div>
+						        					</div>
+						        					
+						        					<div class="ratings" style="float: left;">
+										                <span class="fa fa-star"></span>
+										                <span class="fa fa-star"></span>
+										                <span class="fa fa-star"></span>
+										                <span class="fa fa-star"></span>
+										                <span class="fa fa-star"></span>
+										                <span class="review">
+										                    <span class="reviews">(7)</span>
+										                </span>
+										            </div>
+					        					</div>
+					        				</a>
+					        			</div>
+					        			<div class="span3">
+					        				<a href="">
+					        					<div class="app-recommand ">
+					        						<div class="appIcon">
+					        							<img src="https://images.appcenter.intuit.com/Content/images/AppCards/b7q4xvfdhu/Submitted23/LogoName.png" />
+					        						</div>
+					        						<div class="bigappcard-details">
+						        						<div class="bigappcard-display-name">
+						        							Futrli
+						        						</div>
+						        						<div class="bigappcard-vendor-name">
+								        					by CrunchBoards
+							        					</div>
+							        					<div class="bigappcard-tagline">
+							        						The all-in-one Forecasting & Reporting Engine
+							        					</div>
+						        					</div>
+						        					
+						        					<div class="ratings" style="float: left;">
+										                <span class="fa fa-star"></span>
+										                <span class="fa fa-star"></span>
+										                <span class="fa fa-star"></span>
+										                <span class="fa fa-star"></span>
+										                <span class="fa fa-star"></span>
+										                <span class="review">
+										                    <span class="reviews">(7)</span>
+										                </span>
+										            </div>
+					        					</div>
+					        				</a>
+					        			</div>
+					        		</div>
+					        	</div> -->
+
+					        	<div class="row-fluid" style="float: left; background: #ebeef3; padding: 15px 20px 0; width: 100%;">
+					        		<h2>Collections</h2>
+					        		<div class="row-fluid" style="margin-top: 20px;">
+					        			<div class="collection">
+						        			<ul>
+						        				<li>
+						        					<a href="">
+						        						<div class="home-bigappcard-class" style="">
+						        							<div class="home-bigappcard-inner" style="">
+						        								<div class="appIcon-accountant" style="">
+						        									<img src="https://css.appcenter.intuit.com/Content/Static/7.11.0-rel-593/images/collection_tile_accountant.png">
+						        								</div>
+						        								<div class="bigappcard-details" style="">
+						        									<div class="bigappcard-display-name" style="">
+						        										Apps by BanhJi                                
+						        									</div>
+						        									<div class="bigappcard-tagline" style="">
+						        										Key apps that streamline your practice and support your business.
+						        									</div>
+						        								</div>
+						        							</div> 
+						        						</div>
+						        					</a>
+						        				</li>
+						        				<li>
+						        					<a href="">
+						        						<div class="home-bigappcard-class" style="">
+						        							<div class="home-bigappcard-inner" style="">
+						        								<div class="appIcon-accountant" style="">
+						        									<img src="https://css.appcenter.intuit.com/Content/Static/7.11.0-rel-593/images/collection_tile_accountant.png">
+						        								</div>
+						        								<div class="bigappcard-details" style="">
+						        									<div class="bigappcard-display-name" style="">
+						        										Apps by Industry                              
+						        									</div>
+						        									<div class="bigappcard-tagline" style="">
+						        										Key apps that streamline your practice and support your business.
+						        									</div>
+						        								</div>
+						        							</div> 
+						        						</div>
+						        					</a>
+						        				</li>
+						        				<li>
+						        					<a href="">
+						        						<div class="home-bigappcard-class" style="">
+						        							<div class="home-bigappcard-inner" style="">
+						        								<div class="appIcon-accountant" style="">
+						        									<img src="https://css.appcenter.intuit.com/Content/Static/7.11.0-rel-593/images/collection_tile_accountant.png">
+						        								</div>
+						        								<div class="bigappcard-details" style="">
+						        									<div class="bigappcard-display-name" style="">
+						        										Apps by Function                                
+						        									</div>
+						        									<div class="bigappcard-tagline" style="">
+						        										Key apps that streamline your practice and support your business.
+						        									</div>
+						        								</div>
+						        							</div> 
+						        						</div>
+						        					</a>
+						        				</li>
+						        			</ul>
+						        		</div>
+					        		</div>
+					        	</div>
+					        </div>
 			        	</div>
 			        	
 				    </div>
