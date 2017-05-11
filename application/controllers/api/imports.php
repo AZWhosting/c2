@@ -536,9 +536,12 @@ class Imports extends REST_Controller {
 					$ar->rate = 1.000000000000000;
 					$ar->locale = $this->locale;
 					$ar->due_date = date('Y-m-d');
+					$ar->month_of = date('Y-m-d', strtotime($row->date_used));
+					$ar->location_id = $location->id;
 					$ar->number = "JV".$this->_generate_number($ar->type, $meter->date_used);
 					$ar->issued_date = date('Y-m-d', strtotime($row->date_used));
 					$ar->amount = $row->balance;
+					$ar->sub_total = $row->balance;
 					$ar->status = 0;
 					if($ar->save()) {
 						$ar1 = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);

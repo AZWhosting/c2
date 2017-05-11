@@ -14651,7 +14651,7 @@
 	});
 	banhji.transaction = kendo.observable({
 		dataSource 		: dataStore(apiUrl + "transactions"),
-		makeInvoice 	: function(contactId, payment, amount, type, location) {
+		makeInvoice 	: function(contactId, payment, amount, type, location, meterID) {
 			var duedate = new Date(), dfd = $.Deferred();
 			duedate.setDate(duedate.getDate() + 7);				
 
@@ -14666,11 +14666,13 @@
 				user_id 			: banhji.userData.id,
 				employee_id 		: "",//Sale Rep 	    		
 			   	type				: type,//Required
-			   	sub_total 			: 0,
 			   	discount 			: 0,
 			   	tax 				: 0,
 			   	deposit 			: 0,			   	
 			   	amount				: amount,
+			   	sub_total			: amount,
+			   	payment_term_id 	: 5,
+			   	meter_id 			: meterID,
 			   	remaining 			: 0,
 			   	credit_allowed 		: 0,
 			   	rate				: 1,			   	
@@ -15331,23 +15333,23 @@
 			
 			this.set('amountToBeRecieved', receivedAmount);
 
-			banhji.transaction.makeInvoice(self.get('meterObj').contact[0].id, self.get('paymentMethod'), self.service.received, 'Meter_Activation', self.get('meterObj').location_id)
+			banhji.transaction.makeInvoice(self.get('meterObj').contact_id, self.get('paymentMethod'), self.service.received, 'Meter_Activation', self.get('meterObj').location_id, self.get('meterObj').id)
 			.then(function(transaction){
 				return banhji.transaction.save();
 			})
 			.then(function(trx){
 				if(self.service.received == self.service.amount){
-					banhji.transactionLine.addById(trx[0].id, banhji.ActivateMeter.get('meterObj').contact[0].id, banhji.ActivateMeter.get('cashAccount'), 'Meter Activation', self.service.received, 0, banhji.ActivateMeter.get('issued_date'));
+					banhji.transactionLine.addById(trx[0].id, banhji.ActivateMeter.get('meterObj').contact_id, banhji.ActivateMeter.get('cashAccount'), 'Meter Activation', self.service.received, 0, banhji.ActivateMeter.get('issued_date'));
 
-					banhji.transactionLine.addById(trx[0].id, banhji.ActivateMeter.get('meterObj').contact[0].id, self.service.account_id, 'Meter Activation', 0, self.service.received, banhji.ActivateMeter.get('issued_date'));
+					banhji.transactionLine.addById(trx[0].id, banhji.ActivateMeter.get('meterObj').contact_id, self.service.account_id, 'Meter Activation', 0, self.service.received, banhji.ActivateMeter.get('issued_date'));
 				} else if(self.service.received == 0) {
-					banhji.transactionLine.addById(trx[0].id, banhji.ActivateMeter.get('meterObj').contact[0].id, banhji.ActivateMeter.get('arAccount'), 'Meter Activation', self.service.received, 0, banhji.ActivateMeter.get('issued_date'));
+					banhji.transactionLine.addById(trx[0].id, banhji.ActivateMeter.get('meterObj').contact_id, banhji.ActivateMeter.get('arAccount'), 'Meter Activation', self.service.received, 0, banhji.ActivateMeter.get('issued_date'));
 
-					banhji.transactionLine.addById(trx[0].id, banhji.ActivateMeter.get('meterObj').contact[0].id, self.service.account_id, 'Meter Activation', 0, self.service.received, banhji.ActivateMeter.get('issued_date'));
+					banhji.transactionLine.addById(trx[0].id, banhji.ActivateMeter.get('meterObj').contact_id, self.service.account_id, 'Meter Activation', 0, self.service.received, banhji.ActivateMeter.get('issued_date'));
 				} else {
-					banhji.transactionLine.addById(trx[0].id, banhji.ActivateMeter.get('meterObj').contact[0].id, banhji.ActivateMeter.get('cashAccount'), 'Meter Activation', self.service.received, 0, banhji.ActivateMeter.get('issued_date'));
+					banhji.transactionLine.addById(trx[0].id, banhji.ActivateMeter.get('meterObj').contact_id, banhji.ActivateMeter.get('cashAccount'), 'Meter Activation', self.service.received, 0, banhji.ActivateMeter.get('issued_date'));
 
-					banhji.transactionLine.addById(trx[0].id, banhji.ActivateMeter.get('meterObj').contact[0].id, banhji.ActivateMeter.get('arAccount'), 'Meter Activation', self.service.received, 0, banhji.ActivateMeter.get('issued_date'));
+					banhji.transactionLine.addById(trx[0].id, banhji.ActivateMeter.get('meterObj').contact_id, banhji.ActivateMeter.get('arAccount'), 'Meter Activation', self.service.received, 0, banhji.ActivateMeter.get('issued_date'));
 
 					banhji.transactionLine.addById(trx[0].id, banhji.ActivateMeter.get('meterObj').contact[0].id, self.service.account_id, 'Meter Activation', 0, self.service.received, banhji.ActivateMeter.get('issued_date'));
 				}
@@ -15357,7 +15359,7 @@
 				// get another transaction
 				banhji.transaction.dataSource.data([]);
 				if(self.deposit.received == self.deposit.amount){
-					return banhji.transaction.makeInvoice(self.get('meterObj').contact[0].id, self.get('paymentMethod'), self.deposit.received, 'Water_Deposit', self.get('meterObj').location_id);
+					return banhji.transaction.makeInvoice(self.get('meterObj').contact_id, self.get('paymentMethod'), self.deposit.received, 'Utility_Deposit', self.get('meterObj').location_id, self.get('meterObj').id);
 				}
 			})
 			.then(function(transaction){
@@ -15366,9 +15368,9 @@
 			.then(function(trx){
 				banhji.transactionLine.dataSource.data([]);
 				if(self.deposit.received == self.deposit.amount){
-					banhji.transactionLine.addById(trx[0].id, banhji.ActivateMeter.get('meterObj').contact[0].id, banhji.ActivateMeter.get('cashAccount'), 'Water Deposit', self.deposit.received, 0, banhji.ActivateMeter.get('issued_date'));
+					banhji.transactionLine.addById(trx[0].id, banhji.ActivateMeter.get('meterObj').contact_id, banhji.ActivateMeter.get('cashAccount'), 'Utility Deposit', self.deposit.received, 0, banhji.ActivateMeter.get('issued_date'));
 
-					banhji.transactionLine.addById(trx[0].id, banhji.ActivateMeter.get('meterObj').contact[0].id, self.deposit.account_id, 'Water Deposit', 0, self.deposit.received, banhji.ActivateMeter.get('issued_date'));
+					banhji.transactionLine.addById(trx[0].id, banhji.ActivateMeter.get('meterObj').contact_id, self.deposit.account_id, 'Utility Deposit', 0, self.deposit.received, banhji.ActivateMeter.get('issued_date'));
 				}
 				banhji.transactionLine.save();
 			});
@@ -15389,12 +15391,16 @@
 						banhji.ActivateMeter.set('amountToBeRecieved', 0.00);
 						banhji.ActivateMeter.set('amountRemain', 0.00);
 						banhji.ActivateMeter.set('percentage', 0);
-						$("#ntf1").data("kendoNotification").success("Successfully!");
+						var notifi = $("#ntf1").data("kendoNotification");
+						notifi.hide();
+						notifi.success("success_message");
 						banhji.ActivateMeter.cancel();
 						banhji.waterCenter.meterDS.read();
 					} else {
 						// show error
-						$("#ntf1").data("kendoNotification").error("Error!");
+						var notifi = $("#ntf1").data("kendoNotification");
+						notifi.hide();
+						notifi.error("error_message");
 					}
 				});
 			} else {
@@ -17647,7 +17653,7 @@
 	    	$.each(this.dataSource.data(), function(index, value){
 	    		var term = self.paymentTermDS.get(value.payment_term_id),
 	    		termDate = new Date(value.reference[0].issued_date);
-
+	    		term.discount_period
     			termDate.setDate(termDate.getDate() + term.discount_period);
 
     			if(today<=termDate){
