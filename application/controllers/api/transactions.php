@@ -207,7 +207,7 @@ class Transactions extends REST_Controller {
 			isset($value->company_id) 				? $obj->company_id 					= $value->company_id : "";
 			isset($value->location_id) 				? $obj->location_id 				= $value->location_id : "";
 			isset($value->contact_id) 				? $obj->contact_id 					= $value->contact_id : "";
-			isset($value->payment_term_id) 			? $obj->payment_term_id 			= $value->payment_term_id : "";
+			isset($value->payment_term_id) 			? $obj->payment_term_id 			= $value->payment_term_id : 5;
 			isset($value->payment_method_id) 		? $obj->payment_method_id 			= $value->payment_method_id : "";
 			isset($value->transaction_template_id) 	? $obj->transaction_template_id 	= $value->transaction_template_id : "";
 			isset($value->reference_id) 			? $obj->reference_id 				= $value->reference_id : "";

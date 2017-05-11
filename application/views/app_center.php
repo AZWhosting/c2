@@ -44285,16 +44285,11 @@
 								</div>
 				        	</div>
 
-				        	<div class="row-fluid" style="margin-top: 20px; float: left; background: #ebeef3; padding: 15px 20px 0;">
+				        	<!-- <div class="row-fluid" style="margin-top: 20px; float: left; background: #ebeef3; padding: 15px 20px 0;">
 				        		<h2>Apps Recommended For You</h2>
 				        		<div class="row-fluid" style="margin-top: 20px;">
 				        			<div class="wrapper">
-							            <h1>Responsive Carousel</h1>
-							            
-
-							            <p>This example shows how to implement a responsive carousel. Resize the browser window to see the effect.</p>
-
-							            <div class="jcarousel-wrapper">
+				        				<div class="jcarousel-wrapper">
 							                <div class="jcarousel">
 							                    <ul>
 							                        <li><img src="<?php echo base_url(); ?>assets/app_center/img1.jpg" alt="Image 1"></li>
@@ -44313,11 +44308,9 @@
 							            </div>
 							        </div>
 				        		</div>
-				        	</div>
+				        	</div> -->
 
-
-
-				        	<div class="row-fluid" style="margin-top: 20px; float: left; background: #ebeef3; padding: 15px 20px 0;">
+				        	<!-- <div class="row-fluid" style="margin-top: 20px; float: left; background: #ebeef3; padding: 15px 20px 0;">
 				        		<h2>Apps Recommended For You</h2>
 				        		<div class="row-fluid" style="margin-top: 20px;">
 				        			<div class="span3">
@@ -44445,9 +44438,9 @@
 				        				</a>
 				        			</div>
 				        		</div>
-				        	</div>
+				        	</div> -->
 
-				        	<div class="row-fluid" style="float: left; background: #f7f9fb; padding: 15px 20px 0;">
+				        	<!-- <div class="row-fluid" style="float: left; background: #f7f9fb; padding: 15px 20px 0;">
 				        		<h2>Trending Now</h2>
 				        		<div class="row-fluid" style="margin-top: 20px;">
 				        			<div class="span3">
@@ -44575,9 +44568,9 @@
 				        				</a>
 				        			</div>
 				        		</div>
-				        	</div>
+				        	</div> -->
 
-				        	<div class="row-fluid" style="float: left; background: #ebeef3; padding: 15px 20px 0;">
+				        	<div class="row-fluid" style="margin-top: 20px; float: left; background: #ebeef3; padding: 15px 20px 0;">
 				        		<h2>Featured</h2>
 				        		<div class="row-fluid" style="margin-top: 20px;">
 				        			<div class="span3">
@@ -44837,7 +44830,7 @@
 				        		</div>
 				        	</div>
 
-				        	<div class="row-fluid" style="float: left; background: #ebeef3; padding: 15px 20px 0;">
+				        	<!-- <div class="row-fluid" style="float: left; background: #ebeef3; padding: 15px 20px 0;">
 				        		<h2>Top Rated</h2>
 				        		<div class="row-fluid" style="margin-top: 20px;">
 				        			<div class="span3">
@@ -44965,25 +44958,25 @@
 				        				</a>
 				        			</div>
 				        		</div>
-				        	</div>
+				        	</div> -->
 
-				        	<div class="row-fluid" style="float: left; background: #f7f9fb; padding: 15px 20px 0; width: 100%;">
+				        	<div class="row-fluid" style="float: left; background: #ebeef3; padding: 15px 20px 0; width: 100%;">
 				        		<h2>Collections</h2>
 				        		<div class="row-fluid" style="margin-top: 20px;">
 				        			<div class="collection">
-					        			<ul style="padding-left: 0;">
-					        				<li style="list-style: none; float: left;">
+					        			<ul>
+					        				<li>
 					        					<a href="">
-					        						<div class="" style="display: inline-block; vertical-align: top; position: relative; cursor: pointer; margin-right: 20px; margin-bottom: 20px; overflow: hidden;">
-					        							<div class="" style="text-align: center; background: #FFF; border: 1px solid #dae3ef; -webkit-border-radius: 2px; -moz-border-radius: 2px; border-radius: 2px; border-bottom: 2px solid rgba(192,208,228,.5); width: 350px; height: 250px; padding: 25px;">
-					        								<div class="" style="width: 300px; height: 110px; border-bottom: 0; padding: 0;">
+					        						<div class="home-bigappcard-class" style="">
+					        							<div class="home-bigappcard-inner" style="">
+					        								<div class="appIcon-accountant" style="">
 					        									<img src="https://css.appcenter.intuit.com/Content/Static/7.11.0-rel-593/images/collection_tile_accountant.png">
 					        								</div>
-					        								<div class="" style="padding: 0; height: 65px; margin-top: 20px; overflow: visible; line-height: 20px">
-					        									<div class="" style="font-size: 16px; font-weight: 700; margin-bottom: 5px; width: 100%; text-align: left; color: #333;">
-					        										Popular with Accountants                                
+					        								<div class="bigappcard-details" style="">
+					        									<div class="bigappcard-display-name" style="">
+					        										Apps by BanhJi                                
 					        									</div>
-					        									<div class="" style="font-size: 14px; line-height: 22px; text-align: left; color: #333;">
+					        									<div class="bigappcard-tagline" style="">
 					        										Key apps that streamline your practice and support your business.
 					        									</div>
 					        								</div>
@@ -44991,18 +44984,18 @@
 					        						</div>
 					        					</a>
 					        				</li>
-					        				<li style="list-style: none; float: left;">
+					        				<li>
 					        					<a href="">
-					        						<div class="" style="display: inline-block; vertical-align: top; position: relative; cursor: pointer; margin-right: 20px; margin-bottom: 20px; overflow: hidden;">
-					        							<div class="" style="text-align: center; background: #FFF; border: 1px solid #dae3ef; -webkit-border-radius: 2px; -moz-border-radius: 2px; border-radius: 2px; border-bottom: 2px solid rgba(192,208,228,.5); width: 350px; height: 250px; padding: 25px;">
-					        								<div class="" style="width: 300px; height: 110px; border-bottom: 0; padding: 0;">
+					        						<div class="home-bigappcard-class" style="">
+					        							<div class="home-bigappcard-inner" style="">
+					        								<div class="appIcon-accountant" style="">
 					        									<img src="https://css.appcenter.intuit.com/Content/Static/7.11.0-rel-593/images/collection_tile_accountant.png">
 					        								</div>
-					        								<div class="" style="padding: 0; height: 65px; margin-top: 20px; overflow: visible; line-height: 20px">
-					        									<div class="" style="font-size: 16px; font-weight: 700; margin-bottom: 5px; width: 100%; text-align: left; color: #333;">
-					        										Popular with Accountants                                
+					        								<div class="bigappcard-details" style="">
+					        									<div class="bigappcard-display-name" style="">
+					        										Apps by Industry                              
 					        									</div>
-					        									<div class="" style="font-size: 14px; line-height: 22px; text-align: left; color: #333;">
+					        									<div class="bigappcard-tagline" style="">
 					        										Key apps that streamline your practice and support your business.
 					        									</div>
 					        								</div>
@@ -45010,18 +45003,18 @@
 					        						</div>
 					        					</a>
 					        				</li>
-					        				<li style="list-style: none; float: left;">
+					        				<li>
 					        					<a href="">
-					        						<div class="" style="display: inline-block; vertical-align: top; position: relative; cursor: pointer; margin-bottom: 20px; overflow: hidden;">
-					        							<div class="" style="text-align: center; background: #FFF; border: 1px solid #dae3ef; -webkit-border-radius: 2px; -moz-border-radius: 2px; border-radius: 2px; border-bottom: 2px solid rgba(192,208,228,.5); width: 350px; height: 250px; padding: 25px;">
-					        								<div class="" style="width: 300px; height: 110px; border-bottom: 0; padding: 0;">
+					        						<div class="home-bigappcard-class" style="">
+					        							<div class="home-bigappcard-inner" style="">
+					        								<div class="appIcon-accountant" style="">
 					        									<img src="https://css.appcenter.intuit.com/Content/Static/7.11.0-rel-593/images/collection_tile_accountant.png">
 					        								</div>
-					        								<div class="" style="padding: 0; height: 65px; margin-top: 20px; overflow: visible; line-height: 20px">
-					        									<div class="" style="font-size: 16px; font-weight: 700; margin-bottom: 5px; width: 100%; text-align: left; color: #333;">
-					        										Popular with Accountants                                
+					        								<div class="bigappcard-details" style="">
+					        									<div class="bigappcard-display-name" style="">
+					        										Apps by Function                                
 					        									</div>
-					        									<div class="" style="font-size: 14px; line-height: 22px; text-align: left; color: #333;">
+					        									<div class="bigappcard-tagline" style="">
 					        										Key apps that streamline your practice and support your business.
 					        									</div>
 					        								</div>

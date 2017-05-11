@@ -92,6 +92,7 @@
 <link rel="stylesheet" href="<?php echo base_url()?>assets/responsive.css" >
 
 <!-- jcarousel-->
+<script src="<?php echo base_url()?>assets/app_center/jquery.js" ></script>
 <script src="<?php echo base_url()?>assets/app_center/jquery.jcarousel.min.js" ></script>
 <script src="<?php echo base_url()?>assets/app_center/jcarousel.responsive.js" ></script>
 

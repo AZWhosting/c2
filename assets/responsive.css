@@ -2962,7 +2962,67 @@ a.activate {
     color: #999;
     font-size: 12px;
 }
+.collection ul{
+  padding-left: 0;
+}
+.collection ul li{
+  list-style: none; 
+  float: left;
+}
+.collection ul li a .home-bigappcard-class{
+  display: inline-block; 
+  vertical-align: top; 
+  position: relative; 
+  cursor: pointer; 
+  margin-right: 20px; 
+  margin-bottom: 20px; 
+  overflow: hidden;
+}
+.collection ul li:last-child a .home-bigappcard-class{
+  margin-right: 0;
+}
 
+.collection ul li a .home-bigappcard-class .home-bigappcard-inner{
+  text-align: center; 
+  background: #FFF; 
+  border: 1px solid #dae3ef; 
+  -webkit-border-radius: 2px; 
+  -moz-border-radius: 2px; 
+  border-radius: 2px; 
+  border-bottom: 2px solid rgba(192,208,228,.5); 
+  width: 350px; 
+  height: 250px; 
+  padding: 25px;
+}
+.collection ul li a .home-bigappcard-class .home-bigappcard-inner .appIcon-accountant{
+  width: 300px; 
+  height: 110px; 
+  border-bottom: 0; 
+  padding: 0;
+}
+.collection ul li a .home-bigappcard-class .home-bigappcard-inner .bigappcard-details{
+  padding: 0; 
+  height: 65px; 
+  margin-top: 20px; 
+  overflow: visible; 
+  line-height: 20px;
+}
+.collection ul li a .home-bigappcard-class .home-bigappcard-inner .bigappcard-details .bigappcard-display-name{
+  font-size: 16px; 
+  font-weight: 700; 
+  margin-bottom: 5px; 
+  width: 100%; 
+  text-align: left; 
+  color: #333;
+}
+.collection ul li a .home-bigappcard-class .home-bigappcard-inner .bigappcard-details .bigappcard-tagline{
+  font-size: 14px; 
+  line-height: 22px; 
+  text-align: left; 
+  color: #333;
+}
+
+/** JCarousel **/
 .jcarousel-wrapper {
     margin: 20px auto;
     position: relative;
