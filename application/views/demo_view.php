@@ -83729,7 +83729,7 @@
             			}
             		});
             	});
-            	para.push({ field:"id", operator:"where_in_related_segmentitem", value: segments });
+            	para.push({ field:"id", operator:"segments", value: segments });
 	        }
 
         	//Dates
@@ -83739,19 +83739,19 @@
         		displayDate = "From " + kendo.toString(start, "dd-MM-yyyy") + " To " + kendo.toString(end, "dd-MM-yyyy");
         		end.setDate(end.getDate()+1);
 
-            	para.push({ field:"issued_date >=", operator:"where_related_transaction", value: kendo.toString(start, "yyyy-MM-dd") });
-            	para.push({ field:"issued_date <", operator:"where_related_transaction", value: kendo.toString(end, "yyyy-MM-dd") });
+            	para.push({ field:"issued_date >=", value: kendo.toString(start, "yyyy-MM-dd") });
+            	para.push({ field:"issued_date <", value: kendo.toString(end, "yyyy-MM-dd") });
             }else if(start){
             	start = new Date(start);
             	displayDate = "On " + kendo.toString(start, "dd-MM-yyyy");
 
-            	para.push({ field:"issued_date", operator:"where_related_transaction", value: kendo.toString(start, "yyyy-MM-dd") });
+            	para.push({ field:"issued_date", value: kendo.toString(start, "yyyy-MM-dd") });
             }else if(end){
             	end = new Date(end);
             	displayDate = "As Of " + kendo.toString(end, "dd-MM-yyyy");
         		end.setDate(end.getDate()+1);
 
-            	para.push({ field:"issued_date <", operator:"where_related_transaction", value: kendo.toString(end, "yyyy-MM-dd") });
+            	para.push({ field:"issued_date <", value: kendo.toString(end, "yyyy-MM-dd") });
             }else{
             	
             }
@@ -83760,8 +83760,8 @@
             this.dataSource.query({
             	filter: para,
             	sort: [
-			  		{ field: "issued_date", operator:"order_by_related_transaction", dir: "desc" },
-			  		{ field: "number", operator:"order_by_related_transaction", dir: "desc" }
+			  		{ field: "issued_date",  dir: "desc" },
+			  		{ field: "number", dir: "desc" }
 			  	]
             });
             var loaded = false;

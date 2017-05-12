@@ -885,6 +885,117 @@ class Accounting_modules extends REST_Controller {
 		$data["results"] = [];
 		$data["count"] = 0;
 		
+		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		
+		//Sort
+		if(!empty($sort) && isset($sort)){
+			foreach ($sort as $value) {
+				if(isset($value['operator'])){
+					$obj->{$value['operator']}($value["field"], $value["dir"]);
+				}else{
+					$obj->order_by($value["field"], $value["dir"]);
+				}
+			}
+		}
+		
+		//Filter
+		if(!empty($filter) && isset($filter)){
+	    	foreach ($filter['filters'] as $value) {
+	    		if(isset($value['operator'])) {
+	    			if($value['operator']=="segments") {
+						$obj->where_in_related("journal_line/segmentitem", "id", $value['value']);
+					}else{
+						$obj->{$value['operator']}($value['field'], $value['value']);
+					}
+				} else {
+					$obj->where($value["field"], $value["value"]);
+				}
+			}
+		}
+
+		$obj->where("is_recurring <>", 1);
+		$obj->where("deleted <>", 1);		
+
+		//Results
+		if($page && $limit){
+			$obj->get_paged_iterated($page, $limit);
+			$data["count"] = $obj->paged->total_rows;
+		}else{
+			$obj->get_iterated();
+			$data["count"] = $obj->result_count();
+		}
+		
+		$objList = [];
+		$totalDr = 0;
+		$totalCr = 0;
+
+		if($obj->exists()){			
+			foreach ($obj as $value) {
+				$journalLines = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$journalLines->where("transaction_id", $value->id);
+				$journalLines->include_related("account", array("number","name"));
+				$journalLines->include_related("contact", array("abbr","number","name"));
+				$journalLines->where("deleted <>", 1);
+				$journalLines->order_by("dr", "desc");
+				$journalLines->get_iterated();
+
+				foreach ($journalLines as $val) {
+					$totalDr += floatval($val->dr) / floatval($value->rate);
+					$totalCr += floatval($val->cr) / floatval($value->rate);
+				
+					if(isset($objList[$value->id])){
+						$objList[$value->id]["line"][] = array(
+							"id" 			=> $val->id,
+							"description" 	=> $val->description,
+							"reference_no" 	=> $val->reference_no,
+							"segments" 		=> $val->segmentitem->get_raw()->result(),
+							"dr" 			=> floatval($val->dr),
+							"cr" 			=> floatval($val->cr),
+							"locale" 		=> $value->locale,
+							"account" 		=> $val->account_number ." ". $val->account_name,
+							"contact" 		=> $val->contact_name
+						);
+					}else{
+						$objList[$value->id]["id"] = $value->id;
+						$objList[$value->id]["type"] = $value->type;
+						$objList[$value->id]["number"] = $value->number;
+						$objList[$value->id]["issued_date"] = $value->issued_date;
+						$objList[$value->id]["memo"] = $value->memo;
+						$objList[$value->id]["rate"] = $value->rate;
+						$objList[$value->id]["line"][] = array(
+							"id" 			=> $val->id,
+							"description" 	=> $val->description,
+							"reference_no" 	=> $val->reference_no,
+							"segments" 		=> $val->segmentitem->get_raw()->result(),
+							"dr" 			=> floatval($val->dr),
+							"cr" 			=> floatval($val->cr),
+							"locale" 		=> $value->locale,
+							"account" 		=> $val->account_number ." ". $val->account_name,
+							"contact" 		=> $val->contact_name
+						);
+					}
+				}
+			}
+		}
+
+		foreach ($objList as $value) {				
+			$data["results"][] = $value;
+		}
+
+		$data["dr"] = $totalDr;
+		$data["cr"] = $totalCr;
+
+		//Response Data		
+		$this->response($data, 200);	
+	}
+	/*function journal_by_segment_get() {		
+		$filter 	= $this->get("filter");
+		$page 		= $this->get('page');
+		$limit 		= $this->get('limit');
+		$sort 	 	= $this->get("sort");
+		$data["results"] = [];
+		$data["count"] = 0;
+		
 		$obj = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
 		
 		//Sort
@@ -979,7 +1090,7 @@ class Accounting_modules extends REST_Controller {
 
 		//Response Data		
 		$this->response($data, 200);	
-	}	
+	}*/	
 
 	//GET GENERAL LEDGER
 	function general_ledger_get() {		
