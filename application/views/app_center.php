@@ -44347,7 +44347,7 @@
 								</div>
 				        	
 
-					        	<!-- <div class="row-fluid" style="margin-top: 20px; float: left; background: #ebeef3; padding: 15px 20px 0;">
+					        	<div class="row-fluid" style="margin-top: 20px; float: left; background: #ebeef3; padding: 15px 20px 0;">
 					        		<h2>Apps Recommended For You</h2>
 					        		<div class="row-fluid" style="margin-top: 20px;">
 					        			<div class="wrapper">
@@ -44370,7 +44370,7 @@
 								            </div>
 								        </div>
 					        		</div>
-					        	</div> -->
+					        	</div>
 
 					        	<!-- <div class="row-fluid" style="margin-top: 20px; float: left; background: #ebeef3; padding: 15px 20px 0;">
 					        		<h2>Apps Recommended For You</h2>
@@ -45101,7 +45101,7 @@
 <script id="riceMill" type="text/x-kendo-template">
 	<img style="margin-bottom: 5px;" src="<?php echo base_url(); ?>assets/rice_mill/ricemill.png" width="100" >
 	<div class="row-fluid" >
-		<div class="span6" style="padding-left: 0;">
+		<div class="span5" style="padding-left: 0;">
 			<div class="cash-bg" style="padding-right: 0; margin-bottom: 10px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">				
 				<div class="span3" style="padding-left: 0; text-align: center;">
 					<a href="#/purchase">
@@ -45175,6 +45175,75 @@
 					</div>
 				</a>
 	    	</div>
+
+	    	<div class="cash-bg" style="margin-bottom: 10px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
+		    	<div class="row-fluid">
+		    		<div class="span6" style="padding-left: 0">
+						<div class="widget widget-3 customer-border">
+							<div class="widget-body alert alert-primary" style="min-height: 178px; background: #203864; color: #fff;">
+								<div align="center" class="text-large strong" style="font-size: 35px;">
+									<span data-bind="text: ccc"></span>
+									<br>
+									<p style="font-size: 14px" data-bind="text: lang.lang.cash_conversion_cycle">Cash Conversion Cycle</p>
+								</div>
+								<table width="100%">
+									<tbody>
+										<tr align="center" style="vertical-align: top;">
+											<td width="33%">										
+												<span style="font-size: 18px;" data-bind="text: arCollectionPeriod"></span>
+												<br>
+												<span style="font-size: 12px;" data-bind="text: lang.lang.receivable_collection_days"></span>
+											</td>
+											<td width="33%">
+												<span style="font-size: 18px;" data-bind="text: apPaymentPeriod"></span>
+												<br>
+												<span style="font-size: 12px;" data-bind="text: lang.lang.payable_payment_days"></span>
+											</td>
+											<td width="33%">
+												<span style="font-size: 18px;" data-bind="text: inventoryTurnOver"></span>
+												<br>
+												<span style="font-size: 12px;" data-bind="text: lang.lang.inventory_turnover_days"></span>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>									
+						</div>
+					</div>
+					<div class="span6" style="padding: 0;">
+						<div class="widget widget-3 customer-border">					
+							<div class="widget-body alert-info" style="min-height: 178px; background: #0077c5; color: #fff;">
+								<div align="center" class="text-large strong" style="font-size: 35px;">
+									<span data-bind="text: currentRatio"></span>
+									<br>
+									<p style="font-size: 14px" data-bind="text: lang.lang.current_ratio">Current Ratio</p>
+								</div>
+								<table width="100%">
+									<tbody>
+										<tr align="center" style="vertical-align: top;">
+											<td width="33%">										
+												<span style="font-size: 18px;" data-bind="text: quickRatio"></span>
+												<br>
+												<span style="font-size: 12px;" data-bind="text: lang.lang.quick_ratio"></span>
+											</td>
+											<td width="33%">
+												<span style="font-size: 18px;" data-bind="text: cashRatio"></span>
+												<br>
+												<span style="font-size: 12px;" data-bind="text: lang.lang.cash_ratio"></span>
+											</td>
+											<td width="33%">
+												<span style="font-size: 18px;" data-bind="text: wcSale"></span>
+												<br>
+												<span style="font-size: 12px;" data-bind="text: lang.lang.working_capital_to_sale_ratio"></span>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>										
+						</div>				
+					</div>
+				</div>
+	    	</div>
 			<!-- <div data-role="chart"
 				 data-auto-bind="true"
 	             data-legend="{ position: 'top' }"
@@ -45191,7 +45260,7 @@
 	             style="height: 240px; margin-bottom: 15px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;" ></div>
 			</div> -->
 		</div>
-	    <div class="span6" style="padding-left: 0;">
+	    <div class="span7" style="padding-left: 0;">
 	    	
 	    	<div class="cash-bg" style="margin-bottom: 10px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
 	    		<div class="row-fluid" >
@@ -91356,14 +91425,104 @@
 
 
 	/*************************************************
-	*   Rice Mill		  							 *
+	*   APP CENTER		  							 *
 	*************************************************/
+	banhji.appCenter = kendo.observable({
+		lang 				: langVM,
+		pageLoad 			: function(){
+			this.setObj();
+			this.loadData();
+		},
+		setObj 		: function(){
+			this.set("obj", {
+				//AR
+				ar 					: 0,
+				ar_open 			: 0,
+				ar_customer 		: 0,
+				ar_overdue 			: 0,
+				//AP
+				ap 					: 0,
+				ap_open 			: 0,
+				ap_vendor 			: 0,
+				ap_overdue 			: 0,
+				//Performance
+				income 				: 0,
+				expense 			: 0,
+				net_income 			: 0,
+				//Position
+				asset 				: 0,
+				liability 	 		: 0,
+				equity 	 			: 0
+			});
+		},
+		loadData 			: function(){
+			var self = this, obj = this.get("obj");
+
+			this.graphDS.read();
+
+			this.dataSource.query({
+				filter: [],
+				page: 1,
+				pageSize: 5
+			}).then(function(){
+				var view = self.dataSource.view();
+				
+				obj.set("ar", kendo.toString(view[0].ar, banhji.locale=="km-KH"?"c0":"c2", banhji.locale));
+				obj.set("ar_open", kendo.toString(view[0].ar_open, "n0"));
+				obj.set("ar_customer", kendo.toString(view[0].ar_customer, "n0"));
+				obj.set("ar_overdue", kendo.toString(view[0].ar_overdue, "n0"));
+
+				obj.set("ap", kendo.toString(view[0].ap, banhji.locale=="km-KH"?"c0":"c2", banhji.locale));
+				obj.set("ap_open", kendo.toString(view[0].ap_open, "n0"));
+				obj.set("ap_vendor", kendo.toString(view[0].ap_vendor, "n0"));
+				obj.set("ap_overdue", kendo.toString(view[0].ap_overdue, "n0"));
+			});
+
+			this.summaryDS.query({
+				filter: [],
+				page: 1,
+				pageSize: 5
+			}).then(function(){
+				var view = self.summaryDS.view();
+				
+				obj.set("income", kendo.toString(view[0].income, banhji.locale=="km-KH"?"c0":"c2", banhji.locale));
+				obj.set("expense", kendo.toString(view[0].expense, banhji.locale=="km-KH"?"c0":"c2", banhji.locale));
+				obj.set("net_income", kendo.toString(view[0].net_income, banhji.locale=="km-KH"?"c0":"c2", banhji.locale));
+				
+				obj.set("asset", kendo.toString(view[0].asset, banhji.locale=="km-KH"?"c0":"c2", banhji.locale));
+				obj.set("liability", kendo.toString(view[0].liability, banhji.locale=="km-KH"?"c0":"c2", banhji.locale));
+				obj.set("equity", kendo.toString(view[0].equity, banhji.locale=="km-KH"?"c0":"c2", banhji.locale));
+			});
+		}
+	});
 	banhji.riceMill = kendo.observable({
 		lang 				: langVM,
 		graphDS 			: dataStore(apiUrl+"cash_modules/cash_in_out"),
 		pageLoad 			: function(){
 			this.setObj();
 			this.loadData();
+			this.dataSource.query({
+				filter: [],
+				page: 1,
+				pageSize: 100
+			}).then(function(){
+				var view = self.dataSource.view();				
+				
+				self.set("quickRatio", kendo.toString(view[0].quickRatio, "n"));
+				self.set("currentRatio", kendo.toString(view[0].currentRatio, "n"));
+				self.set("cashRatio", kendo.toString(view[0].cashRatio, "n"));
+				
+				self.set("wcSale", kendo.toString(view[0].wcSale, "p"));
+				self.set("grossProfitMargin", kendo.toString(view[0].grossProfitMargin, "p"));
+				self.set("profitMargin", kendo.toString(view[0].profitMargin, "p"));
+				self.set("returnOnAsset", kendo.toString(view[0].returnOnAsset, "n"));
+				
+				self.set("roce", kendo.toString(view[0].roce, "p"));
+				self.set("arCollectionPeriod", kendo.toString(view[0].arCollectionPeriod, "n"));
+				self.set("apPaymentPeriod", kendo.toString(view[0].apPaymentPeriod, "n"));
+				self.set("inventoryTurnOver", kendo.toString(view[0].inventoryTurnOver, "n"));
+				self.set("ccc", kendo.toString(view[0].ccc, "n"));
+			});
 		},
 		setObj 		: function(){
 			this.set("obj", {

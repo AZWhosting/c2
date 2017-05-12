@@ -25498,7 +25498,7 @@
     <tr>
     	<td>#=banhji.txnItemList.dataSource.indexOf(data)+1#</td>
     	<td>
-    		<a href="\#/txn_item_list/#=id#">#=name#</a>
+    		<a href="\#/txn_item/#=id#">#=name#</a>
     	</td>
     	<td>#=locale#</td>
     	<td>
@@ -66685,14 +66685,11 @@
 				
 				//Service on Dr
 				var serviceID = kendo.parseInt(item.expense_account_id);
-				if(serviceID>0){
+				if(serviceID>0 && item.item_type_id==4){
 					raw = "dr"+serviceID;
-
-					var serviceAmount = value.amount;
-					if(item.item_type_id==1 || item.item_type_id==4){
-						(value.quantity*value.unit_value*value.cost) + value.additional_cost;
-					}
-
+					
+					var serviceAmount = (value.quantity*value.unit_value*value.cost) + value.additional_cost;
+					
 					if(entries[raw]===undefined){
 						entries[raw] = {
 							transaction_id 		: transaction_id,
@@ -66718,7 +66715,7 @@
 
 					var inventoryAmount = value.amount;
 					if(item.item_type_id==1 || item.item_type_id==4){
-						(value.quantity*value.unit_value*value.cost) + value.additional_cost;
+						inventoryAmount = (value.quantity*value.unit_value*value.cost) + value.additional_cost;
 					}
 
 					if(entries[raw]===undefined){
@@ -90532,7 +90529,7 @@
 			reader.onload = function() {
 				var data = reader.result,
 					transaction_id = 0, is_journal = 0, contact_id = 0, txn_account_id = 0,
-					type = "", issued_date = "",
+					type = "", issued_date = "", memo = "",
 					raw = "", txn = {}, entries = {},
 					workbook = XLSX.read(data, {type : 'binary'});
 
@@ -90546,12 +90543,12 @@
 								tax_item_id = 0,
 								tax_account_id = 0,
 								measurement_id = 0,
+								description = roa[i].description==null?"":roa[i].description,
 								quantity = kendo.parseInt(roa[i].quantity),
 								cost = kendo.parseFloat(roa[i].cost), 
 								amount = kendo.parseFloat(roa[i].amount),
 								item_id = self.getItemId(roa[i].item.trim(), i),
-								item = banhji.source.itemDS.get(item_id),
-								itemRate = banhji.source.getRate(item.locale, issued_date);
+								item = banhji.source.itemDS.get(item_id);
 
 							if(roa[i].name!==undefined){
 								contact_id = self.getSupplierId(roa[i].name.trim(), i);
@@ -90569,9 +90566,12 @@
 								issued_date = new Date(roa[i].issued_date.trim());
 							}
 
+							var itemRate = banhji.source.getRate(item.locale, issued_date);
+
 							//New Transaction
 							if(roa[i].type!==undefined){
 								type = roa[i].type.trim();
+								memo = roa[i].memo==null?"":roa[i].memo;
 
 								if(jQuery.inArray( type, isJournal )==-1){
 									is_journal = 0;
@@ -90595,14 +90595,14 @@
 								   	remaining 				: 0,
 								   	rate					: 1,//Required
 								   	locale 					: banhji.locale,//Required
-								   	issued_date 			: issued_date,//Required
-								   	due_date 				: roa[i].due_date.trim(),
+								   	issued_date 			: kendo.toString(new Date(issued_date), "s"),//Required
+								   	due_date 				: kendo.toString(new Date(roa[i].due_date.trim()), "yyyy-MM-dd"),
 								   	bill_to 				: roa[i].bill_to,
 								   	ship_to 				: roa[i].ship_to,
-								   	memo 					: roa[i].memo,
+								   	memo 					: memo,
 								   	additional_cost 		: 0,
 			   						additional_apply 		: "Equal",
-								   	status 					: roa[i].status,
+								   	status 					: 0,
 								   	is_journal 				: is_journal,//Required
 								   	//Recurring
 								   	recurring_name 			: "",
@@ -90630,7 +90630,7 @@
 										transaction_id 		: transaction_id,
 										account_id 			: tax_account_id,
 										contact_id 			: contact_id,
-										description 		: roa[i].description,
+										description 		: description,
 										reference_no 		: "",
 										segments 	 		: [],
 										dr 	 				: tax,
@@ -90656,7 +90656,7 @@
 										transaction_id 		: transaction_id,
 										account_id 			: txn_account_id,
 										contact_id 			: contact_id,
-										description 		: roa[i].memo,
+										description 		: memo,
 										reference_no 		: roa[i].reference_no,
 										segments 	 		: [],
 										dr 	 				: 0,
@@ -90676,7 +90676,7 @@
 								wht_account_id 		: 0,
 								item_id 			: item_id,
 								measurement_id 		: measurement_id,
-								description 		: roa[i].description,
+								description 		: description,
 								quantity 	 		: quantity,
 								unit_value 			: 1,
 								cost 				: cost,
@@ -90691,20 +90691,17 @@
 							if(is_journal==1){
 								//Service on Dr
 								account_id = kendo.parseInt(item.expense_account_id);
-								if(account_id>0){
+								if(account_id>0 && item.item_type_id==4){
 									raw = "dr"+account_id;
 									
-									var serviceAmount = amount;
-									if(item.item_type_id==1 || item.item_type_id==4){
-										serviceAmount = quantity*cost;
-									}
+									var serviceAmount = quantity*cost;
 
 									if(entries[raw]===undefined){
 										entries[raw] = {
 											transaction_id 		: transaction_id,
 											account_id 			: account_id,
 											contact_id 			: contact_id,
-											description 		: roa[i].description,
+											description 		: description,
 											reference_no 		: "",
 											segments 	 		: [],
 											dr 	 				: serviceAmount,
@@ -90732,7 +90729,7 @@
 											transaction_id 		: transaction_id,
 											account_id 			: account_id,
 											contact_id 			: contact_id,
-											description 		: roa[i].description,
+											description 		: description,
 											reference_no 		: "",
 											segments 	 		: [],
 											dr 	 				: inventoryAmount,
@@ -90770,12 +90767,12 @@
 								tax_item_id = 0,
 								tax_account_id = 0,
 								measurement_id = 0,
+								description = roa[i].description==null?"":roa[i].description,
 								quantity = kendo.parseInt(roa[i].quantity),
 								price = kendo.parseFloat(roa[i].price), 
 								amount = kendo.parseFloat(roa[i].amount),
 								item_id = self.getItemId(roa[i].item.trim(), i),
-								item = banhji.source.itemDS.get(item_id),
-								itemRate = banhji.source.getRate(item.locale, issued_date);
+								item = banhji.source.itemDS.get(item_id);
 
 							if(roa[i].name!==undefined){
 								contact_id = self.getCustomerId(roa[i].name.trim(), i);
@@ -90793,8 +90790,11 @@
 								issued_date = new Date(roa[i].issued_date.trim());
 							}
 
+							var itemRate = banhji.source.getRate(item.locale, issued_date);
+
 							if(roa[i].type!==undefined){
 								type = roa[i].type.trim();
+								memo = roa[i].memo==null?"":roa[i].memo;
 
 								if(jQuery.inArray( type, isJournal )==-1){
 									is_journal = 0;
@@ -90818,12 +90818,12 @@
 								   	remaining 				: 0,
 								   	rate					: 1,//Required
 								   	locale 					: banhji.locale,//Required
-								   	issued_date 			: issued_date,//Required
-								   	due_date 				: roa[i].due_date.trim(),
+								   	issued_date 			: kendo.toString(new Date(issued_date), "s"),//Required
+								   	due_date 				: kendo.toString(new Date(roa[i].due_date.trim()), "yyyy-MM-dd"),
 								   	bill_to 				: roa[i].bill_to,
 								   	ship_to 				: roa[i].ship_to,
-								   	memo 					: roa[i].memo,
-								   	status 					: roa[i].status,
+								   	memo 					: memo,
+								   	status 					: 0,
 								   	is_journal 				: is_journal,//Required
 								   	//Recurring
 								   	recurring_name 			: "",
@@ -90851,7 +90851,7 @@
 										transaction_id 		: transaction_id,
 										account_id 			: tax_account_id,
 										contact_id 			: contact_id,
-										description 		: roa[i].description,
+										description 		: description,
 										reference_no 		: "",
 										segments 	 		: [],
 										dr 	 				: 0,
@@ -90873,7 +90873,7 @@
 										transaction_id 		: transaction_id,
 										account_id 			: txn_account_id,
 										contact_id 			: contact_id,
-										description 		: roa[i].memo,
+										description 		: memo,
 										reference_no 		: roa[i].reference_no,
 										segments 	 		: [],
 										dr 	 				: amount + tax,
@@ -90896,7 +90896,7 @@
 								tax_item_id 		: tax_item_id,
 								item_id 			: item_id,
 								measurement_id 		: measurement_id,
-								description 		: roa[i].description,
+								description 		: description,
 								quantity 	 		: quantity,
 								unit_value 			: 1,
 								cost 				: 0,
@@ -90924,7 +90924,7 @@
 											transaction_id 		: transaction_id,
 											account_id 			: account_id,
 											contact_id 			: contact_id,
-											description 		: roa[i].description,
+											description 		: description,
 											reference_no 		: "",
 											segments 	 		: [],
 											dr 	 				: cogsAmount,
@@ -90952,7 +90952,7 @@
 											transaction_id 		: transaction_id,
 											account_id 			: account_id,
 											contact_id 			: contact_id,
-											description 		: roa[i].description,
+											description 		: description,
 											reference_no 		: "",
 											segments 	 		: [],
 											dr 	 				: 0,
@@ -90975,7 +90975,7 @@
 											transaction_id 		: transaction_id,
 											account_id 			: account_id,
 											contact_id 			: contact_id,
-											description 		: roa[i].description,
+											description 		: description,
 											reference_no 		: "",
 											segments 	 		: [],
 											dr 	 				: 0,

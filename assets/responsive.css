@@ -2879,8 +2879,6 @@ a.activate {
     margin-right: 20px;
     margin-bottom: 20px;
     overflow: hidden;
-
-
     text-align: center;
     background: #FFF;
     border: 1px solid #dae3ef;
@@ -2891,6 +2889,7 @@ a.activate {
     width: 260px;
     height: 320px;
 }
+
 .appIcon {
     display: inline-block;
     height: 105px;

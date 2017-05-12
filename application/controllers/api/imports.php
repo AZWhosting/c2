@@ -258,6 +258,7 @@ class Imports extends REST_Controller {
 			$type->select('id')->where('name', $value->contact_type)->where('parent_id <>', "")->get();
 
 			$currency = new Currency(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$value->currency = isset($value->currency) ? $value->currency : "km-KH";
 			$currency->where('code', $value->currency)->get();
 
 			$license = new Branch(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);

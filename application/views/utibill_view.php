@@ -11547,34 +11547,34 @@
 	});
 	banhji.index = kendo.observable({
 		lang 				: langVM,
-		// dataSource			: dataStore(apiUrl+"dashboards/home"),
-		// summaryDS			: dataStore(apiUrl+"accounting_reports/financial_snapshot"),
-		// graphDS  			: new kendo.data.DataSource({
-		// 	transport: {
-		// 		read 	: {
-		// 			url: apiUrl + "dashboards/home_graph",
-		// 			type: "GET",
-		// 			headers: banhji.header,
-		// 			dataType: 'json'
-		// 		}
-		// 	},
-		// 	schema 	: {
-		// 		model: {
-		// 			id: 'id'
-		// 		},
-		// 		data: 'results',
-		// 		total: 'count'
-		// 	},
-		// 	sort: {
-  //               field: "month",
-  //               dir: "asc"
-  //           },								
-		// 	batch: true,			
-		// 	serverFiltering: true,
-		// 	serverSorting: true,
-		// 	serverPaging: true,
-		// 	pageSize: 100
-		// }),		
+		dataSource			: dataStore(apiUrl+"dashboards/home"),
+		summaryDS			: dataStore(apiUrl+"accounting_reports/financial_snapshot"),
+		graphDS  			: new kendo.data.DataSource({
+			transport: {
+				read 	: {
+					url: apiUrl + "dashboards/home_graph",
+					type: "GET",
+					headers: banhji.header,
+					dataType: 'json'
+				}
+			},
+			schema 	: {
+				model: {
+					id: 'id'
+				},
+				data: 'results',
+				total: 'count'
+			},
+			sort: {
+                field: "month",
+                dir: "asc"
+            },								
+			batch: true,			
+			serverFiltering: true,
+			serverSorting: true,
+			serverPaging: true,
+			pageSize: 100
+		}),		
 		companyLogo 		: '',
 		modules 			: new kendo.data.DataSource({
 			transport: {
@@ -11652,41 +11652,41 @@
 		pageLoad 			: function(){
 			var self = this;
 
-			//this.graphDS.fetch();
-			// banhji.wDashBoard.dashSource.read();
-			// this.dataSource.query({
-			// 	filter: [],								
-			// 	page: 1,
-			// 	pageSize: 5
-			// }).then(function(){
-			// 	var view = self.dataSource.view();				
+			this.graphDS.fetch();
+			banhji.wDashBoard.dashSource.read();
+			this.dataSource.query({
+				filter: [],								
+				page: 1,
+				pageSize: 5
+			}).then(function(){
+				var view = self.dataSource.view();				
 				
-			// 	self.set("ar", kendo.toString(view[0].ar, banhji.locale));
-			// 	self.set("ar_open", kendo.toString(view[0].ar_open, "n0", banhji.locale));
-			// 	self.set("ar_customer", kendo.toString(view[0].ar_customer, "n0", banhji.locale));
-			// 	self.set("ar_overdue", kendo.toString(view[0].ar_overdue, "n0", banhji.locale));
+				self.set("ar", kendo.toString(view[0].ar, banhji.locale));
+				self.set("ar_open", kendo.toString(view[0].ar_open, "n0", banhji.locale));
+				self.set("ar_customer", kendo.toString(view[0].ar_customer, "n0", banhji.locale));
+				self.set("ar_overdue", kendo.toString(view[0].ar_overdue, "n0", banhji.locale));
 
-			// 	self.set("ap", kendo.toString(view[0].ap, banhji.locale));
-			// 	self.set("ap_open", kendo.toString(view[0].ap_open, "n0"));
-			// 	self.set("ap_vendor", kendo.toString(view[0].ap_vendor, "n0"));
-			// 	self.set("ap_overdue", kendo.toString(view[0].ap_overdue, "n0"));
-			// });
+				self.set("ap", kendo.toString(view[0].ap, banhji.locale));
+				self.set("ap_open", kendo.toString(view[0].ap_open, "n0"));
+				self.set("ap_vendor", kendo.toString(view[0].ap_vendor, "n0"));
+				self.set("ap_overdue", kendo.toString(view[0].ap_overdue, "n0"));
+			});
 
-			// this.summaryDS.query({
-			// 	filter: [],								
-			// 	page: 1,
-			// 	pageSize: 5
-			// }).then(function(){
-			// 	var view = self.summaryDS.view();				
+			this.summaryDS.query({
+				filter: [],								
+				page: 1,
+				pageSize: 5
+			}).then(function(){
+				var view = self.summaryDS.view();				
 				
-			// 	self.set("income", kendo.toString(view[0].income, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
-			// 	self.set("expense", kendo.toString(view[0].expense, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
-			// 	self.set("net_income", kendo.toString(view[0].net_income, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
+				self.set("income", kendo.toString(view[0].income, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
+				self.set("expense", kendo.toString(view[0].expense, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
+				self.set("net_income", kendo.toString(view[0].net_income, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
 				
-			// 	self.set("asset", kendo.toString(view[0].asset, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
-			// 	self.set("liability", kendo.toString(view[0].liability, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
-			// 	self.set("equity", kendo.toString(view[0].equity, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
-			// });										
+				self.set("asset", kendo.toString(view[0].asset, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
+				self.set("liability", kendo.toString(view[0].liability, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
+				self.set("equity", kendo.toString(view[0].equity, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
+			});										
 		}
 	});
 	banhji.searchAdvanced =  kendo.observable({
@@ -22225,6 +22225,46 @@
 			page:1,
 			pageSize: 100
 		}),
+		ownerDS 			: new kendo.data.DataSource({
+			transport: {
+				read 	: {
+					url: apiUrl + "contacts",
+					type: "GET",
+					headers: banhji.header,
+					dataType: 'json'
+				},
+				parameterMap: function(options, operation) {
+					if(operation === 'read') {
+						return {
+							page: options.page,
+							limit: options.pageSize,
+							filter: options.filter,
+							sort: options.sort
+						};
+					} else {
+						return {models: kendo.stringify(options.models)};
+					}
+				}
+			},
+			schema 	: {
+				model: {
+					id: 'id'
+				},
+				data: 'results',
+				total: 'count'
+			},
+			filter:
+			[
+			{field:"use_water", value:1 },
+			{field:"parent_id", operation: "where_related", model: "contact_type", value: 1}],
+			sort:{ field:"number", dir:"asc" },
+			batch: true,
+			serverFiltering: true,
+			serverSorting: true,
+			serverPaging: true,
+			page:1,
+			pageSize: 100
+		}),
 		meter_visible 		: false,
 		readingVM			: banhji.reading,
 		installmentVM 		: banhji.installment,
@@ -22299,12 +22339,12 @@
 		loadObj 			: function(id){
 			var self = this;
 
-			this.contactDS.query({
+			this.ownerDS.query({
 				filter: { field:"id", value:id},
 				page:1,
 				pageSize:100
 			}).then(function(){
-				var view = self.contactDS.view();
+				var view = self.ownerDS.view();
 
 				if(view.length>0){
 					self.set("obj", view[0]);
