@@ -55999,7 +55999,7 @@
 		validating 			: function(){
 			var result = true, obj = this.get("obj");
 
-			if(obj.remaining!==0){
+			if(kendo.parseFloat(obj.amount, "n3")!==kendo.parseFloat(obj.deposit, "n3")){
 				$("#ntf1").data("kendoNotification").error("Remaining must be Zero!");
 
 				result = false;
@@ -67984,7 +67984,7 @@
 		validating 			: function(){
 			var result = true, obj = this.get("obj");
 
-			if(obj.remaining!==0){
+			if(kendo.parseFloat(obj.amount, "n3")!==kendo.parseFloat(obj.deposit, "n3")){
 				$("#ntf1").data("kendoNotification").error("Remaining must be Zero!");
 
 				result = false;

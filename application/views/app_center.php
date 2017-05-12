@@ -45103,29 +45103,29 @@
 	<div class="row-fluid" >
 		<div class="span5" style="padding-left: 0;">
 			<div class="cash-bg" style="padding-right: 0; margin-bottom: 10px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">				
-				<div class="span3" style="padding-left: 0; text-align: center;">
+				<div class="span4" style="padding-left: 0; text-align: center;">
 					<a href="#/purchase">
 						<img title="Add Purchase" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/purchase.png"  style="width: 120px; "  />
 						<span data-bind="text: lang.lang.purchase" style="text-transform: uppercase; color: #000; font-weight: 600; margin-top: 8px; display: inline-block;">Readings</span>
 					</a>						
 				</div>
-				<div class="span3" style="padding-left: 0; text-align: center;">
+				<div class="span4" style="padding-left: 0; text-align: center;">
 					<a href="#/cash_payment">
 						<img title="Add Cash Payment" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/cash_payment.png" style="width: 120px;"  />
 						<span data-bind="text: lang.lang.cash_payment" style=" text-transform: uppercase; color: #000; font-weight: 600; margin-top: 8px; display: inline-block;">Run Bill</span>
 					</a>
 				</div>
-				<div class="span3" style="padding-left: 0; text-align: center;">						
+				<div class="span4" style="padding-left: 0; text-align: center;">						
 					<a href="#/invoice">
 						<img title="Add Invoice" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/invoice.png" style="width: 120px;"  />
 						<span data-bind="text: lang.lang.invoice" style="text-transform: uppercase; color: #000; font-weight: 600; margin-top: 8px; display: inline-block;">Print Bill</span>
 					</a>						
 				</div>
-				<div class="span3" style="padding: 0; text-align: center;">						
+				<div class="span4" style="padding: 0; text-align: center;">
 					<a href="#/cash_receipt">
 						<img title="Add Cash Receipt" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/cash_receipt.png" style="width: 120px;"  />
 						<span data-bind="text: lang.lang.cash_receipt"  style=" text-transform: uppercase; color: #000; font-weight: 600; margin-top: 8px; display: inline-block;">Receipt</span>
-					</a>						
+					</a>
 				</div>
 			</div>
 			<div class="cash-bg" style="margin-bottom: 10px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
@@ -45264,63 +45264,105 @@
 	    	
 	    	<div class="cash-bg" style="margin-bottom: 10px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
 	    		<div class="row-fluid" >
-					<div class="span8" style="background: #0077c5; margin-right: 15px; width: 63.8%; ">
-						<a href="#/customer_aging_sum_list">
-							<div class="widget-body alert-info welcome-nopadding" style="width: 100%; background: #0077c5;">
-								<p style="color: #fff;"><span data-bind="text: lang.lang.expected_due">Expected due</span></p>
+					<div class="span4">
+				
+						<!-- Widget -->
+						<div class="widget widget-3 customer-border">
 						
-								<div class="strong" align="center" style="color: #fff; font-size: 40px; margin-top: -15px; margin-bottom: 0;"><span data-bind="text: totalAmount"></span></div>
-							
-								<table width="100%" style="color: #fff;">
-									<tbody>
-										<tr align="center">
-											<td>										
-												<span style="font-size: 25px;"><span data-bind="text: invoice"></span></span>
-												<br>
-												<span data-bind="text: lang.lang.invoice">Invoices</span>
-											</td>
-											<td>
-												<span style="font-size: 25px;"><span data-bind="text: invCust"></span></span>
-												<br>
-												<span data-bind="text: lang.lang.customers">Customers</span>
-											</td>
-											<td>
-												<span style="font-size: 25px;"><span data-bind="text: overDue"></span></span>
-												<br>
-												<span data-bind="text: lang.lang.overdue">Overdue</span>
-											</td>
-										</tr>
-									</tbody>
-								</table>
+							<!-- Widget heading -->
+							<div class="widget-head">
+								<h4 class="heading"><span class="glyphicons credit_card"><i></i></span><span style="color: #203864; font-weight: 600; font-style: normal;" data-bind="text: lang.lang.receivable"></span></h4>
 							</div>
-						</a>
+							<!-- // Widget heading END -->
+							
+							<a href="#/customer_balance_summary"><div class="widget-body alert-info" style="min-height: 148px; background: white; color: #203864; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
+								
+								<div align="center" class="text-large strong medai-font" data-bind="text: obj.ar"></div>
+								<table width="100%">
+									<tr align="center">
+										<td width="33%" style="vertical-align: top">										
+											<span data-bind="text: obj.ar_open"></span>
+											<br>
+											<span><span data-bind="text: lang.lang.open"></span></span>
+										</td>
+										<td width="33%" style="vertical-align: top">
+											<span data-bind="text: obj.ar_customer"></span>
+											<br>
+											<span><span data-bind="text: lang.lang.customers"></span></span>
+										</td>
+										<td width="33%" style="vertical-align: top">
+											<span data-bind="text: obj.ar_overdue"></span>
+											<br>
+											<span><span data-bind="text: lang.lang.overdue"></span></span>
+										</td>
+									</tr>
+								</table>
+							</div></a>
+							<!-- // Widget footer END -->
+							
+						</div>
+						<!-- // Widget END -->
+						
 					</div>
-
-					<div class="span4" style="background: #21abf6; padding-right: 0">
-						<a href="#/customer_list">
-							<div class="widget-body alert-info welcome-nopadding" style="width: 100%; background: #21abf6;">
-								<p style="color: #fff;"><span data-bind="text: lang.lang.active_meter">Active Meter</span></p>
+					<div class="span4">
+				
+						<!-- Widget -->
+						<a href="#/suppliers_balance_summary"><div class="widget widget-3 customer-border">
 						
-								<div class="strong" align="center" style="color: #fff; font-size: 40px; margin-top: -15px; margin-bottom: 0;"><span data-bind="text: activeCust"></span></div>
-							
-								<table width="100%" style="color: #fff;">
-									<tbody>
-										<tr align="center">
-											<td>										
-												<span style="font-size: 25px;" data-bind="text: totalCust"></span>
-												<br>
-												<span data-bind="text: lang.lang.meter">Meter</span>
-											</td>
-											<td>
-												<span style="font-size: 25px;" data-bind="text: voidCust"></span>
-												<br>
-												<span data-bind="text: lang.lang.customers">Customers</span>
-											</td>
-										</tr>
-									</tbody>
-								</table>
+							<!-- Widget heading -->
+							<div class="widget-head">
+								<h4 class="heading"><span class="glyphicons credit_card"><i></i></span><span style="color: #203864; font-weight: 600; font-style: normal;" data-bind="text: lang.lang.payables"></span></h4>
 							</div>
-						</a>
+							<!-- // Widget heading END -->
+							
+							<a href="#/suppliers_balance_summary"><div class="widget-body alert-info3" style="min-height: 148px; background: white; color: #203864; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
+								
+								<div align="center" class="text-large strong" data-bind="text: obj.ap"></div>
+								<table width="100%">
+									<tr align="center">
+										<td>										
+											<span data-bind="text: obj.ap_open"></span>
+											<br>
+											<span><span data-bind="text: lang.lang.open"></span></span>
+										</td>
+										<td>
+											<span data-bind="text: obj.ap_supplier"></span>
+											<br>
+											<span><span data-bind="text: lang.lang.supplier"></span></span>
+										</td>
+										<td>
+											<span data-bind="text: obj.ap_overdue"></span>
+											<br>
+											<span><span data-bind="text: lang.lang.overdue"></span></span>
+										</td>
+									</tr>
+								</table>
+							</div></a>
+							<!-- // Widget footer END -->
+							
+						</div>
+						<!-- // Widget END -->
+						
+					</div>
+					<div class="span4">
+						<div class="widget-body alert alert-primary sale-overview">
+							<h2>Inventory Value</h2>
+							<div align="center" class="text-large strong" data-bind="text: obj.inventory_value"></div>
+							<table width="100%">
+								<tr align="center">
+									<td>
+										<span data-bind="text: obj.gross_profit_margin"></span>
+										<br>
+										<span data-bind="text: lang.lang.average_margin"></span>
+									</td>
+									<td>
+										<span data-bind="text: obj.inventory_turnover_day"></span>
+										<br>
+										<span data-bind="text: lang.lang.turnover_days"></span>
+									</td>
+								</tr>
+							</table>
+						</div>
 					</div>
 				</div>
 	    	</div>
