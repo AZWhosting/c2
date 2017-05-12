@@ -1274,7 +1274,7 @@
 	    </td>
     </tr>
 </script>
-<script id="serviceSetting-template" type="text/x-kendo-tmpl">                    
+<script id="serviceSetting-template" type="text/x-kendo-tmpl">
     <tr>
     	<td>
     		#= name#
@@ -1288,9 +1288,9 @@
    		<td align="right">
     		#= kendo.toString(amount, _currency.locale=="km-KH"?"c0":"c", _currency.locale)#
    		</td>
-   		<td align="center">   			   
+   		<td align="center">
 		    <a class="btn-action glyphicons pencil btn-success k-edit-button"><i></i></a>
-   		</td>   		
+   		</td>
    	</tr>
 </script>
 <script id="service-edit-template" type="text/x-kendo-tmpl">
@@ -1326,7 +1326,7 @@
 	    </td>
     </tr>
 </script>
-<script id="maintenanceSetting-template" type="text/x-kendo-tmpl">                    
+<script id="maintenanceSetting-template" type="text/x-kendo-tmpl">
     <tr>
     	<td>
     		#= name#
@@ -1340,7 +1340,7 @@
    		<td align="right">
     		#= kendo.toString(amount, _currency.locale=="km-KH"?"c0":"c", _currency.locale)#
    		</td>
-   		<td align="center">   			   
+   		<td align="center">
 		    <a class="btn-action glyphicons pencil btn-success k-edit-button"><i></i>
 		    </a>
    		</td>
@@ -1380,7 +1380,7 @@
 	    </td>
     </tr>
 </script>
-<script id="plan-item-template" type="text/x-kendo-tmpl">                    
+<script id="plan-item-template" type="text/x-kendo-tmpl">
     <tr>
     	<td>#= name#</td>
     	<td>
@@ -1485,7 +1485,7 @@
 		</td>
 	</tr>
 </script>
-<script id="brandSetting-template" type="text/x-kendo-tmpl">                    
+<script id="brandSetting-template" type="text/x-kendo-tmpl">
     <tr>
     	<td>
     		#= code#
@@ -1496,9 +1496,9 @@
    		<td align="center">
     		#= abbr#
    		</td>
-   		<td align="center">   			   
+   		<td align="center">
 		    <a class="btn-action glyphicons pencil btn-success k-edit-button" href="\\#"><i></i></a>
-   		</td>   		
+   		</td>
    	</tr>
 </script>
 <script id="brand-edit-template" type="text/x-kendo-tmpl">
@@ -1524,8 +1524,8 @@
 	</tr>
 </script>
 
-<script id="customerSetting-edit-contact-type-template" type="text/x-kendo-tmpl">   
-    <tr>                
+<script id="customerSetting-edit-contact-type-template" type="text/x-kendo-tmpl">
+    <tr>
         <td>
             <input style="width: 100%" type="text" class="k-textbox" data-bind="value:name" name="ProductName" required="required" validationMessage="required" />
             <span data-for="ProductName" class="k-invalid-msg"></span>
@@ -3175,9 +3175,9 @@
     	<a href="\#/account">+ Add New Account</a>
     </strong>
 </script>
-<script id="account-list-tmpl" type="text/x-kendo-tmpl">	
+<script id="account-list-tmpl" type="text/x-kendo-tmpl">
 	<span>
-		#=number#				
+		#=number#
 	</span>
 	-
 	<span>#=name#</span>
@@ -3239,6 +3239,7 @@
 											events: {change: onContactChange}" 
 								data-value-primitive="true"  
 								data-text-field="name" 
+								data-filter="contains"
 								data-value-field="id" style="width: 300px">
 								<a class="btn-icon btn-primary glyphicons circle_plus" data-bind="click: addProperty, visible: haveContact" style="width: 80px; padding: 5px 7px 5px 35px !important; text-align: left;"><i></i><span data-bind="text: lang.lang.add">Add</span></a>
 			        <br><br>
@@ -5572,8 +5573,8 @@
 			        	</p>
 
 			        	<p style="width: 100%; float: left; margin-top: 8px;">
-				        	<span style="position: relative; height: 35px; line-height: 35px; padding-right: 15px; float: left; display: block; ">
-								<a data-bind="text: lang.lang.reconcile_transfer" style="color: #203864; margin-top: 4px; line-height: 17px; background: #fff; padding: 8px 91px; font-size: 20px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;" href="#/reconcile">
+				        	<span style="position: relative; height: 35px; line-height: 35px;  float: left; display: block; ">
+								<a data-bind="text: lang.lang.reconcile_transfer" style="color: #203864; margin-top: 4px; line-height: 17px; background: #fff; padding: 8px 60px; font-size: 20px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;" href="#/reconcile">
 									Reconcile & Transfer									
 								</a>
 							</span>
@@ -5680,12 +5681,12 @@
 										</div>
 			                  		</div>
 								</div>
-								<div class="span2" data-bind="visible: downloadView" style="padding-left: 0;">
+								<!-- <div class="span2" data-bind="visible: downloadView" style="padding-left: 0;">
 									<div class="control-group">
 										<label ><span data-bind="text: lang.lang.upload">Upload</span></label>	
 									  	<input style="padding: 0; margin: 0;border: none" type="file"  data-role="upload" data-show-file-list="false" data-bind="events: {select: onSelected}" id="myFile"  class="margin-none" />
 			                  		</div>
-								</div>
+								</div> -->
 						    </div>
 						</div>
 					</div>
@@ -11546,34 +11547,34 @@
 	});
 	banhji.index = kendo.observable({
 		lang 				: langVM,
-		dataSource			: dataStore(apiUrl+"dashboards/home"),
-		summaryDS			: dataStore(apiUrl+"accounting_reports/financial_snapshot"),
-		graphDS  			: new kendo.data.DataSource({
-			transport: {
-				read 	: {
-					url: apiUrl + "dashboards/home_graph",
-					type: "GET",
-					headers: banhji.header,
-					dataType: 'json'
-				}
-			},
-			schema 	: {
-				model: {
-					id: 'id'
-				},
-				data: 'results',
-				total: 'count'
-			},
-			sort: {
-                field: "month",
-                dir: "asc"
-            },								
-			batch: true,			
-			serverFiltering: true,
-			serverSorting: true,
-			serverPaging: true,
-			pageSize: 100
-		}),		
+		// dataSource			: dataStore(apiUrl+"dashboards/home"),
+		// summaryDS			: dataStore(apiUrl+"accounting_reports/financial_snapshot"),
+		// graphDS  			: new kendo.data.DataSource({
+		// 	transport: {
+		// 		read 	: {
+		// 			url: apiUrl + "dashboards/home_graph",
+		// 			type: "GET",
+		// 			headers: banhji.header,
+		// 			dataType: 'json'
+		// 		}
+		// 	},
+		// 	schema 	: {
+		// 		model: {
+		// 			id: 'id'
+		// 		},
+		// 		data: 'results',
+		// 		total: 'count'
+		// 	},
+		// 	sort: {
+  //               field: "month",
+  //               dir: "asc"
+  //           },								
+		// 	batch: true,			
+		// 	serverFiltering: true,
+		// 	serverSorting: true,
+		// 	serverPaging: true,
+		// 	pageSize: 100
+		// }),		
 		companyLogo 		: '',
 		modules 			: new kendo.data.DataSource({
 			transport: {
@@ -11651,41 +11652,41 @@
 		pageLoad 			: function(){
 			var self = this;
 
-			this.graphDS.fetch();
-			banhji.wDashBoard.dashSource.read();
-			this.dataSource.query({
-				filter: [],								
-				page: 1,
-				pageSize: 5
-			}).then(function(){
-				var view = self.dataSource.view();				
+			//this.graphDS.fetch();
+			// banhji.wDashBoard.dashSource.read();
+			// this.dataSource.query({
+			// 	filter: [],								
+			// 	page: 1,
+			// 	pageSize: 5
+			// }).then(function(){
+			// 	var view = self.dataSource.view();				
 				
-				self.set("ar", kendo.toString(view[0].ar, banhji.locale));
-				self.set("ar_open", kendo.toString(view[0].ar_open, "n0", banhji.locale));
-				self.set("ar_customer", kendo.toString(view[0].ar_customer, "n0", banhji.locale));
-				self.set("ar_overdue", kendo.toString(view[0].ar_overdue, "n0", banhji.locale));
+			// 	self.set("ar", kendo.toString(view[0].ar, banhji.locale));
+			// 	self.set("ar_open", kendo.toString(view[0].ar_open, "n0", banhji.locale));
+			// 	self.set("ar_customer", kendo.toString(view[0].ar_customer, "n0", banhji.locale));
+			// 	self.set("ar_overdue", kendo.toString(view[0].ar_overdue, "n0", banhji.locale));
 
-				self.set("ap", kendo.toString(view[0].ap, banhji.locale));
-				self.set("ap_open", kendo.toString(view[0].ap_open, "n0"));
-				self.set("ap_vendor", kendo.toString(view[0].ap_vendor, "n0"));
-				self.set("ap_overdue", kendo.toString(view[0].ap_overdue, "n0"));
-			});
+			// 	self.set("ap", kendo.toString(view[0].ap, banhji.locale));
+			// 	self.set("ap_open", kendo.toString(view[0].ap_open, "n0"));
+			// 	self.set("ap_vendor", kendo.toString(view[0].ap_vendor, "n0"));
+			// 	self.set("ap_overdue", kendo.toString(view[0].ap_overdue, "n0"));
+			// });
 
-			this.summaryDS.query({
-				filter: [],								
-				page: 1,
-				pageSize: 5
-			}).then(function(){
-				var view = self.summaryDS.view();				
+			// this.summaryDS.query({
+			// 	filter: [],								
+			// 	page: 1,
+			// 	pageSize: 5
+			// }).then(function(){
+			// 	var view = self.summaryDS.view();				
 				
-				self.set("income", kendo.toString(view[0].income, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
-				self.set("expense", kendo.toString(view[0].expense, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
-				self.set("net_income", kendo.toString(view[0].net_income, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
+			// 	self.set("income", kendo.toString(view[0].income, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
+			// 	self.set("expense", kendo.toString(view[0].expense, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
+			// 	self.set("net_income", kendo.toString(view[0].net_income, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
 				
-				self.set("asset", kendo.toString(view[0].asset, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
-				self.set("liability", kendo.toString(view[0].liability, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
-				self.set("equity", kendo.toString(view[0].equity, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
-			});										
+			// 	self.set("asset", kendo.toString(view[0].asset, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
+			// 	self.set("liability", kendo.toString(view[0].liability, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
+			// 	self.set("equity", kendo.toString(view[0].equity, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
+			// });										
 		}
 	});
 	banhji.searchAdvanced =  kendo.observable({
@@ -17524,8 +17525,10 @@
 				alert("Please Select License");
 			}
 	    },
+	    upArray 			: [],
 	    onSelected 			: function(e){
 	        var files = e.files, self = this;
+	        var obj = this.get("obj");
 	        $('li.k-file').remove();
 	        $("#loadImport").css("display","block");
 	        var reader = new FileReader();
@@ -17539,77 +17542,99 @@
 					if(roa.length > 0){
 						result[sheetName] = roa;
 						for(var i = 0; i < roa.length; i++) {
-							self.txnDS.query({
-								filter: [{field: "number", value: roa[i].Number}, { field:"status", operator:"where_in", value:[0,2] }]
-							}).then(function(){
-								var view = self.txnDS.view();
-								if(view.length>0){
-									self.numCustomer = 0;
-									$.each(view, function(index, value){
-										var amount_due = roa[i].Receive - (value.amount_paid + value.deposit);
-
-										self.dataSource.add({
-											transaction_template_id : 0,
-						    				contact_id 			: value.contact_id,
-											account_id 			: obj.account_id,
-											payment_term_id		: value.payment_term_id,
-											payment_method_id	: obj.payment_method_id,
-											reference_id 		: value.id,
-											user_id 			: self.get("user_id"),
-											check_no 			: value.check_no,
-											reference_no 		: value.number,
-											number 				: "",
-											invnumber 			: value.number,
-										   	type				: "Cash_Receipt",
-										   	sub_total 			: amount_due,
-										   	amount 				: amount_due,
-										   	discount 			: 0,
-										   	fine 				: 0,
-										   	rate				: value.rate,
-										   	locale 				: value.locale,
-										   	issued_date 		: obj.issued_date,
-										   	invissued_date 		: value.issued_date,
-										   	memo 				: obj.memo,
-										   	memo2 				: obj.memo2,
-										   	status 				: 0,
-										   	segments 			: obj.segments,
-										   	is_journal 			: 1,
-										   	//Recurring
-										   	recurring_name 		: "",
-										   	start_date 			: new Date(),
-										   	frequency 			: "Daily",
-										   	month_option 		: "Day",
-										   	interval 			: 1,
-										   	day 				: 1,
-										   	week 				: 0,
-										   	month 				: 0,
-										   	is_recurring 		: 0,
-										   	meter_id 			: value.meter_id,
-										   	meter 				: value.meter,
-										   	reference 			: [value]
-								    	});
-										self.numCustomer += 1;
-
-									});
-									self.applyTerm();
-									self.setRate();
-									$("#loadING").css("display", "none");
-								}else{
-									var notifi = $("#ntf1").data("kendoNotification");
-									notifi.hide();
-									notifi.error(self.lang.lang.no_data);
-									$("#loadING").css("display", "none");
-								}
-
-								self.set("searchText", "");
-								self.set("contact_id", "");
-								self.set("invoice_id", 0);
-							});
+							self.upArray.push(roa[i].Number);
+							
 						}
+						self.insertDS(self.upArray);
 					}					
 				});	
 			}
 			reader.readAsBinaryString(files[0].rawFile);
+			// this.dataSource.data([]);
+			
+			
+			
+		},
+		insertDS 			: function(NU) {
+			$("#loadING").css("display", "block");
+			this.dataSource.data([]);
+			this.exArray = [];
+			var self = this, 
+				para = [],
+				obj = this.get("obj"),
+				searchText = this.get("searchText"), 
+				invoice_id = this.get("invoice_id");
+
+
+			para.push({ field:"type",  value:"Utility_Invoice" });
+			para.push({ field:"status", operator:"where_in", value:[0,2] });
+			para.push({ field:"number", operator:"where_in", value:NU });
+
+			this.txnDS.query({
+				filter: para
+			}).then(function(){
+				var view = self.txnDS.view();
+				if(view.length>0){
+					self.numCustomer = 0;
+					$.each(view, function(index, value){
+						var amount_due = value.amount - (value.amount_paid + value.deposit);
+
+						self.dataSource.add({
+							transaction_template_id : 0,
+		    				contact_id 			: value.contact_id,
+							account_id 			: obj.account_id,
+							payment_term_id		: value.payment_term_id,
+							payment_method_id	: obj.payment_method_id,
+							reference_id 		: value.id,
+							user_id 			: self.get("user_id"),
+							check_no 			: value.check_no,
+							reference_no 		: value.number,
+							number 				: "",
+							invnumber 			: value.number,
+						   	type				: "Cash_Receipt",
+						   	sub_total 			: amount_due,
+						   	amount 				: amount_due,
+						   	discount 			: 0,
+						   	fine 				: 0,
+						   	rate				: value.rate,
+						   	locale 				: value.locale,
+						   	issued_date 		: obj.issued_date,
+						   	invissued_date 		: value.issued_date,
+						   	memo 				: obj.memo,
+						   	memo2 				: obj.memo2,
+						   	status 				: 0,
+						   	segments 			: obj.segments,
+						   	is_journal 			: 1,
+						   	//Recurring
+						   	recurring_name 		: "",
+						   	start_date 			: new Date(),
+						   	frequency 			: "Daily",
+						   	month_option 		: "Day",
+						   	interval 			: 1,
+						   	day 				: 1,
+						   	week 				: 0,
+						   	month 				: 0,
+						   	is_recurring 		: 0,
+						   	meter_id 			: value.meter_id,
+						   	meter 				: value.meter,
+						   	reference 			: [value]
+				    	});
+
+					});
+					self.applyTerm();
+					self.setRate();
+					$("#loadING").css("display", "none");
+				}else{
+					var notifi = $("#ntf1").data("kendoNotification");
+					notifi.hide();
+					notifi.error(self.lang.lang.no_data);
+					$("#loadING").css("display", "none");
+				}
+
+				self.set("searchText", "");
+				self.set("contact_id", "");
+				self.set("invoice_id", 0);
+			});
 		},
 		pageLoad 			: function(id){
 			if(id){
@@ -17780,7 +17805,6 @@
 						   	meter 				: value.meter,
 						   	reference 			: [value]
 				    	});
-						self.numCustomer += 1;
 
 					});
 					self.applyTerm();

@@ -169,7 +169,7 @@ class Items extends REST_Controller {
 	//POST
 	function index_post() {
 		$models = json_decode($this->post('models'));				
-		$data["results"] = array();
+		$data["results"] = [];
 		$data["count"] = 0;				
 		
 		foreach ($models as $value) {

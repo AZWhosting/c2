@@ -455,8 +455,12 @@ class Imports extends REST_Controller {
 			$meter = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
 			$customer->select('id, deposit_account_id, account_id, name')->where('id', $property->contact_id)->get();
-			$location->select('id, branch_id')->where('name', $row->bloc)->get();
+			$location->select('id, branch_id')->where('name', $row->bloc)->limit(1)->get();
 			$plan->select('id, code')->where('code', $row->plan_code)->get();
+			$sublocation = new Location(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$sublocation->select('id, branch_id')->where('name', $row->sub_bloc)->limit(1)->get();
+			$box = new Location(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$box->select('id, branch_id')->where('name', $row->box)->limit(1)->get();
 			
 			$meter->number = isset($row->number) ? $row->number : 0;
 			$meter->worder = isset($row->order) ? $row->order : $order;
@@ -469,6 +473,9 @@ class Imports extends REST_Controller {
 			$meter->contact_id = $property->contact_id;
 			$meter->branch_id = $location->branch_id;
 			$meter->location_id = $location->id;
+			$meter->pole_id = isset($sublocation->id) ? $sublocation->id : 0;
+			$meter->box_id = isset($box->id) ? $box->id: 0;
+			$meter->type = isset($row->type) ? $row->type: "e";
 			$meter->plan_id = $plan->id;
 			$meter->date_used = date('Y-m-d', strtotime($row->date_used));
 

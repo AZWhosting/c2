@@ -874,54 +874,57 @@ class UtibillReports extends REST_Controller {
 	}
 
 	//Customer List
-	function customer_list_get() {
-		$filters 	= $this->get("filter");		
-		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
-		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;								
-		$sort 	 	= $this->get("sort");		
-		$is_pattern = 0;
-		$data["results"] = [];
-		$data["count"] = 0;
+	function customer_list_get(){
+		$filter 	= $this->get("filter");
+		$page 		= $this->get("page");
+		$sort 		= $this->get("sort");
+		$limit 		= $this->get("limit");
 
-		$obj = new Property(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
+		$obj = new property(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
-		// Sort
-		if(!empty($sort) && isset($sort)){				
-			foreach ($sort as $value) {
-				$obj->order_by($value["field"], $value["dir"]);
-			}
-		}
-
-		//Filter		
-		if(!empty($filters) && isset($filters['filters'])){
-	    	foreach ($filters['filters'] as $value) {
-	    		if(isset($value['operator'])) {
-					$obj->{$value['operator']}($value['field'], 'id', $value['value']);
-				} else {
-	    			$obj->where($value["field"], $value["value"]);
-				}
-			}
-		}
-		$obj->include_related("contact", array("abbr", "number", "name", "email", "address", "phone", "id"));
-		$obj->get_paged_iterated($page, $limit);
-		if($obj->exists()) {
-			$objList = [];
-			foreach($obj as $value) {
-				if(isset($objList[$value->contact_id])){
-					$objList[$value->contact_id]["id"] 				= $value->id;
+		if(!empty($sort) && isset($sort)){
+			foreach($sort as $value){
+				if(isset($value['operator'])){
+					$obj->{$value['operator']}($value["field"], $value["dir"]);
 				}else{
-					$objList[$value->contact_id]["id"] 				= $value->contact_id;
-					$objList[$value->contact_id]["name"] 			= $value->contact_abbr.$value->contact_number." ".$value->contact_name;
-					$objList[$value->contact_id]["number"]			= $value->contact_abbr ."-". $value->contact_number;
-					$objList[$value->contact_id]["address"]			= $value->contact_address;
-					$objList[$value->contact_id]["phone"]			= $value->contact_phone;
+					$obj->order_by($value["field"], $value["dir"]);
 				}
 			}
+		}
+
+		if(!empty($filter) && isset($filter)){
+			foreach($filter["filter"] as $value){
+				if(isset($value['operator'])){
+					$obj->{$value['operator']}($value['field'], $value["dir"]);
+				}else{
+					$obj->where($value['field'], $value['value']);
+				}
+			}
+		}
+
+		$obj->include_related("contact", array("abbr", "number", "address", "phone"));
+		$obj->get_iterated();
+
+		if($obj->exists()){
+			$objList = [];
+			foreach ($obj as $value) {
+				if(isset($objList[$value->contact_id])){
+					$objList[$value->contact_id]["id"]		= $value->contact_id;
+				}else{
+					$objList[$value->contact_id]["id"]		= $value->contact_id;
+					$objList[$value->contact_id]["name"]	= $value->contact_abbr.$value->contact_number." ".$value->contact_name;
+					$objList[$value->contact_id]["number"]	= $value->contact_abbr ."-". $value->contact_number;
+					$objList[$value->contact_id]["phone"]	= $value->contact_phone;
+					$objList[$value->contact_id]["address"]	= $value->contact_address;
+				}
+			}
+
 			foreach ($objList as $value) {
 				$data["results"][] = $value;
 			}
-			$data["count"] = count($data["results"]);			
+			$data["count"] = count($data["results"]);
 		}
+
 		$this->response($data, 200);
 	}
 

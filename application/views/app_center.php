@@ -44253,42 +44253,41 @@
 				        <div class="tab-pane active" id="tab-1">
 							<div class="row-fluid" style="padding: 0 20px;">
 								<div class="row-fluid" style="float: left; background: #ebeef3; padding: 15px 20px 0;">
-					        		<h2>Featured</h2>
+					        		<h2>Bring your apps along for the ride</h2>
+					        		<p>Connect your apps to get them working together in one place.</p>
 					        		<div class="row-fluid" style="margin-top: 20px;">
 					        			<div class="span3">
-					        				<a href="">
-					        					<div class="app-recommand ">
+					        				<a href="#/bill">
+					        					<div class="app-recommand " style="height: 200px; text-align: center;">
 					        						<div class="appIcon">
-					        							<img src="https://images.appcenter.intuit.com/Content/images/AppCards/b7q4xvfdhu/Submitted23/LogoName.png" />
+					        							<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/Utibill.png" />
 					        						</div>
 					        						<div class="bigappcard-details">
 						        						<div class="bigappcard-display-name">
-						        							Futrli
+						        							Utibill
 						        						</div>
-						        						<div class="bigappcard-vendor-name">
-								        					by CrunchBoards
-							        					</div>
-							        					<div class="bigappcard-tagline">
-							        						The all-in-one Forecasting & Reporting Engine
-							        					</div>
 						        					</div>
-						        					
-						        					<div class="ratings" style="float: left;">
-										                <span class="fa fa-star"></span>
-										                <span class="fa fa-star"></span>
-										                <span class="fa fa-star"></span>
-										                <span class="fa fa-star"></span>
-										                <span class="fa fa-star"></span>
-										                <span class="review">
-										                    <span class="reviews">(7)</span>
-										                </span>
-										            </div>
+
+					        					</div>
+					        				</a>
+					        			</div>
+					        			<div class="span3">
+					        				<a href="#/rice_mill">
+					        					<div class="app-recommand " style="height: 200px; text-align: center;">
+					        						<div class="appIcon">
+					        							<img src="<?php echo base_url(); ?>assets/rice_mill/ricemill.png" />
+					        						</div>
+					        						<div class="bigappcard-details">
+						        						<div class="bigappcard-display-name">
+						        							Rice Mill
+						        						</div>
+						        					</div>
 					        					</div>
 					        				</a>
 					        			</div>
 					        			<div class="span3">
 					        				<a href="">
-					        					<div class="app-recommand ">
+					        					<div class="app-recommand " style="height: 200px; text-align: center;">
 					        						<div class="appIcon">
 					        							<img src="https://images.appcenter.intuit.com/Content/images/AppCards/b7q4xvfdhu/Submitted23/LogoName.png" />
 					        						</div>
@@ -44296,30 +44295,13 @@
 						        						<div class="bigappcard-display-name">
 						        							Futrli
 						        						</div>
-						        						<div class="bigappcard-vendor-name">
-								        					by CrunchBoards
-							        					</div>
-							        					<div class="bigappcard-tagline">
-							        						The all-in-one Forecasting & Reporting Engine
-							        					</div>
 						        					</div>
-						        					
-						        					<div class="ratings" style="float: left;">
-										                <span class="fa fa-star"></span>
-										                <span class="fa fa-star"></span>
-										                <span class="fa fa-star"></span>
-										                <span class="fa fa-star"></span>
-										                <span class="fa fa-star"></span>
-										                <span class="review">
-										                    <span class="reviews">(7)</span>
-										                </span>
-										            </div>
 					        					</div>
 					        				</a>
 					        			</div>
 					        			<div class="span3">
 					        				<a href="">
-					        					<div class="app-recommand ">
+					        					<div class="app-recommand " style="height: 200px; text-align: center;">
 					        						<div class="appIcon">
 					        							<img src="https://images.appcenter.intuit.com/Content/images/AppCards/b7q4xvfdhu/Submitted23/LogoName.png" />
 					        						</div>
@@ -44327,55 +44309,7 @@
 						        						<div class="bigappcard-display-name">
 						        							Futrli
 						        						</div>
-						        						<div class="bigappcard-vendor-name">
-								        					by CrunchBoards
-							        					</div>
-							        					<div class="bigappcard-tagline">
-							        						The all-in-one Forecasting & Reporting Engine
-							        					</div>
 						        					</div>
-						        					
-						        					<div class="ratings" style="float: left;">
-										                <span class="fa fa-star"></span>
-										                <span class="fa fa-star"></span>
-										                <span class="fa fa-star"></span>
-										                <span class="fa fa-star"></span>
-										                <span class="fa fa-star"></span>
-										                <span class="review">
-										                    <span class="reviews">(7)</span>
-										                </span>
-										            </div>
-					        					</div>
-					        				</a>
-					        			</div>
-					        			<div class="span3">
-					        				<a href="">
-					        					<div class="app-recommand ">
-					        						<div class="appIcon">
-					        							<img src="https://images.appcenter.intuit.com/Content/images/AppCards/b7q4xvfdhu/Submitted23/LogoName.png" />
-					        						</div>
-					        						<div class="bigappcard-details">
-						        						<div class="bigappcard-display-name">
-						        							Futrli
-						        						</div>
-						        						<div class="bigappcard-vendor-name">
-								        					by CrunchBoards
-							        					</div>
-							        					<div class="bigappcard-tagline">
-							        						The all-in-one Forecasting & Reporting Engine
-							        					</div>
-						        					</div>
-						        					
-						        					<div class="ratings" style="float: left;">
-										                <span class="fa fa-star"></span>
-										                <span class="fa fa-star"></span>
-										                <span class="fa fa-star"></span>
-										                <span class="fa fa-star"></span>
-										                <span class="fa fa-star"></span>
-										                <span class="review">
-										                    <span class="reviews">(7)</span>
-										                </span>
-										            </div>
 					        					</div>
 					        				</a>
 					        			</div>
@@ -45164,7 +45098,190 @@
 	</div>
 </script>
 
+<script id="riceMill" type="text/x-kendo-template">
+	<img style="margin-bottom: 5px;" src="<?php echo base_url(); ?>assets/rice_mill/ricemill.png" width="100" >
+	<div class="row-fluid" >
+		<div class="span6" style="padding-left: 0;">
+			<div class="cash-bg" style="padding-right: 0; margin-bottom: 10px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">				
+				<div class="span3" style="padding-left: 0; text-align: center;">
+					<a href="#/purchase">
+						<img title="Add Purchase" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/purchase.png"  style="width: 120px; "  />
+						<span data-bind="text: lang.lang.purchase" style="text-transform: uppercase; color: #000; font-weight: 600; margin-top: 8px; display: inline-block;">Readings</span>
+					</a>						
+				</div>
+				<div class="span3" style="padding-left: 0; text-align: center;">
+					<a href="#/cash_payment">
+						<img title="Add Cash Payment" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/cash_payment.png" style="width: 120px;"  />
+						<span data-bind="text: lang.lang.cash_payment" style=" text-transform: uppercase; color: #000; font-weight: 600; margin-top: 8px; display: inline-block;">Run Bill</span>
+					</a>
+				</div>
+				<div class="span3" style="padding-left: 0; text-align: center;">						
+					<a href="#/invoice">
+						<img title="Add Invoice" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/invoice.png" style="width: 120px;"  />
+						<span data-bind="text: lang.lang.invoice" style="text-transform: uppercase; color: #000; font-weight: 600; margin-top: 8px; display: inline-block;">Print Bill</span>
+					</a>						
+				</div>
+				<div class="span3" style="padding: 0; text-align: center;">						
+					<a href="#/cash_receipt">
+						<img title="Add Cash Receipt" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/cash_receipt.png" style="width: 120px;"  />
+						<span data-bind="text: lang.lang.cash_receipt"  style=" text-transform: uppercase; color: #000; font-weight: 600; margin-top: 8px; display: inline-block;">Receipt</span>
+					</a>						
+				</div>
+			</div>
+			<div class="cash-bg" style="margin-bottom: 10px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
+	    		<a href="#/">
+					<div class="cash-invoice" style="background: #2ca01c; color: #fff;">
+						<div class="span6" style="padding-left: 0;">
+							<span style="font-size: 24px; ">Cash Position</span>
+							<br>
+							<span style="color: #9EA7B8;" data-bind="text: totalUser"></span>
+						</div>
+						<div class="span6" style=" text-align: center; font-size: 35px; font-weight: 600; padding: 0;">
+							<span style="float: right;" >1000</span>
+						</div>
+						<!-- <div class="span3" style="text-align: center; margin-top: 7px; padding-right: 0; color: #fff; font-size: 35px;">
+							<span data-bind="text: totalUser"></span>
+						</div> -->					
+					</div>
+				</a>
+				<a href="#/">
+					<div class="cash-invoice" style=" background: #2ca01c; color: #fff;">
+						<div class="span6" style="padding-left: 0;">
+							<span style="font-size: 24px; color: #fff;">Amount to Collect</span><br>
+							<span style="color: #9EA7B8;" ></span>
+							<span style="color: #9EA7B8;">This week</span>
+						</div>
+						<div class="span6" style="color: #fff; text-align: center; font-size: 35px; font-weight: 600; padding: 0;">
+							<span style="float: right;" >1000</span>
+						</div>
+						<!-- <div class="span4" style="text-align: center; margin-top: 7px; padding-right: 0; color: #fff; font-size: 35px;">
+							<span data-bind="text: totalUsage"></span><span style="font-size: 25px;">m<sup >3</sup></span>
+						</div> -->										
+					</div>
+				</a>
+				<a href="#/">
+					<div class="cash-invoice" style="margin-bottom: 0; background: #2ca01c; color: #fff;">
+						<div class="span6" style="padding-left: 0;">
+							<span style="font-size: 24px; color: #fff;">Amount to Pay</span><br>
+							<span style="color: #9EA7B8;" > </span>
+							<span style="color: #9EA7B8;">This week</span>
+						</div>
+						<div class="span6" style="color: #fff; text-align: center; font-size: 35px; font-weight: 600; padding: 0;">
+							<span style="float: right;" >1000</span>
+						</div>
+						<!-- <div class="span4" style="text-align: center; margin-top: 7px; padding-right: 0; color: #fff; font-size: 35px;">
+							<span data-bind="text: totalUsage"></span><span style="font-size: 25px;">m<sup >3</sup></span>
+						</div> -->										
+					</div>
+				</a>
+	    	</div>
+			<!-- <div data-role="chart"
+				 data-auto-bind="true"
+	             data-legend="{ position: 'top' }"
+	             data-series-defaults="{ type: 'column' }"
+	             data-tooltip='{
+	                visible: true,
+	                format: "{0}%",
+	                template: "#= series.name #: #= kendo.toString(value, &#39;c&#39;, banhji.locale) #"
+	             }'                 
+	             data-series="[
+	                             { field: 'amount', name: langVM.lang.sale, categoryField:'month', color: '#203864', overlay:{ gradient: 'none'}  }
+	                         ]"	                             
+	             data-bind="source: graphDS"
+	             style="height: 240px; margin-bottom: 15px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;" ></div>
+			</div> -->
+		</div>
+	    <div class="span6" style="padding-left: 0;">
+	    	
+	    	<div class="cash-bg" style="margin-bottom: 10px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
+	    		<div class="row-fluid" >
+					<div class="span8" style="background: #0077c5; margin-right: 15px; width: 63.8%; ">
+						<a href="#/customer_aging_sum_list">
+							<div class="widget-body alert-info welcome-nopadding" style="width: 100%; background: #0077c5;">
+								<p style="color: #fff;"><span data-bind="text: lang.lang.expected_due">Expected due</span></p>
+						
+								<div class="strong" align="center" style="color: #fff; font-size: 40px; margin-top: -15px; margin-bottom: 0;"><span data-bind="text: totalAmount"></span></div>
+							
+								<table width="100%" style="color: #fff;">
+									<tbody>
+										<tr align="center">
+											<td>										
+												<span style="font-size: 25px;"><span data-bind="text: invoice"></span></span>
+												<br>
+												<span data-bind="text: lang.lang.invoice">Invoices</span>
+											</td>
+											<td>
+												<span style="font-size: 25px;"><span data-bind="text: invCust"></span></span>
+												<br>
+												<span data-bind="text: lang.lang.customers">Customers</span>
+											</td>
+											<td>
+												<span style="font-size: 25px;"><span data-bind="text: overDue"></span></span>
+												<br>
+												<span data-bind="text: lang.lang.overdue">Overdue</span>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</a>
+					</div>
 
+					<div class="span4" style="background: #21abf6; padding-right: 0">
+						<a href="#/customer_list">
+							<div class="widget-body alert-info welcome-nopadding" style="width: 100%; background: #21abf6;">
+								<p style="color: #fff;"><span data-bind="text: lang.lang.active_meter">Active Meter</span></p>
+						
+								<div class="strong" align="center" style="color: #fff; font-size: 40px; margin-top: -15px; margin-bottom: 0;"><span data-bind="text: activeCust"></span></div>
+							
+								<table width="100%" style="color: #fff;">
+									<tbody>
+										<tr align="center">
+											<td>										
+												<span style="font-size: 25px;" data-bind="text: totalCust"></span>
+												<br>
+												<span data-bind="text: lang.lang.meter">Meter</span>
+											</td>
+											<td>
+												<span style="font-size: 25px;" data-bind="text: voidCust"></span>
+												<br>
+												<span data-bind="text: lang.lang.customers">Customers</span>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</a>
+					</div>
+				</div>
+	    	</div>
+
+	    	<div class="row-fluid" style="margin-top: 5px;">
+				<div class="span12" style="width: 100%; padding: 0 5px;">
+					<div class="home-chart" style="width: 95%; padding: 0 15px;">
+						
+						<div data-role="chart"
+							 data-auto-bind="false"
+			                 data-legend="{ position: 'top' }"
+			                 data-series-defaults="{ type: 'column' }"
+			                 data-tooltip='{
+			                    visible: true,
+			                    format: "{0}%",
+			                    template: "#= series.name #: #= kendo.toString(value, &#39;c&#39;, banhji.locale) #"
+			                 }'                 
+			                 data-series="[
+			                                 { field: 'cash_in', name: 'Cash In', categoryField:'month', color: '#203864', overlay:{ gradient: 'none'}  },
+			                                 { field: 'cash_out', name: 'Cash Out', categoryField:'month', color: '#A6C9E3' , overlay:{ gradient: 'none'} }
+			                             ]"	                             
+			                 data-bind="source: graphDS"
+			                 style="height: 240px;" ></div>
+			           
+					</div>
+				</div>
+			</div>
+	   </div>
+	</div>
+</script>
 
 
 
@@ -91238,6 +91355,79 @@
 
 
 
+	/*************************************************
+	*   Rice Mill		  							 *
+	*************************************************/
+	banhji.riceMill = kendo.observable({
+		lang 				: langVM,
+		graphDS 			: dataStore(apiUrl+"cash_modules/cash_in_out"),
+		pageLoad 			: function(){
+			this.setObj();
+			this.loadData();
+		},
+		setObj 		: function(){
+			this.set("obj", {
+				//AR
+				ar 					: 0,
+				ar_open 			: 0,
+				ar_customer 		: 0,
+				ar_overdue 			: 0,
+				//AP
+				ap 					: 0,
+				ap_open 			: 0,
+				ap_vendor 			: 0,
+				ap_overdue 			: 0,
+				//Performance
+				income 				: 0,
+				expense 			: 0,
+				net_income 			: 0,
+				//Position
+				asset 				: 0,
+				liability 	 		: 0,
+				equity 	 			: 0
+			});
+		},
+		loadData 			: function(){
+			var self = this, obj = this.get("obj");
+
+			this.graphDS.read();
+
+			this.dataSource.query({
+				filter: [],
+				page: 1,
+				pageSize: 5
+			}).then(function(){
+				var view = self.dataSource.view();
+				
+				obj.set("ar", kendo.toString(view[0].ar, banhji.locale=="km-KH"?"c0":"c2", banhji.locale));
+				obj.set("ar_open", kendo.toString(view[0].ar_open, "n0"));
+				obj.set("ar_customer", kendo.toString(view[0].ar_customer, "n0"));
+				obj.set("ar_overdue", kendo.toString(view[0].ar_overdue, "n0"));
+
+				obj.set("ap", kendo.toString(view[0].ap, banhji.locale=="km-KH"?"c0":"c2", banhji.locale));
+				obj.set("ap_open", kendo.toString(view[0].ap_open, "n0"));
+				obj.set("ap_vendor", kendo.toString(view[0].ap_vendor, "n0"));
+				obj.set("ap_overdue", kendo.toString(view[0].ap_overdue, "n0"));
+			});
+
+			this.summaryDS.query({
+				filter: [],
+				page: 1,
+				pageSize: 5
+			}).then(function(){
+				var view = self.summaryDS.view();
+				
+				obj.set("income", kendo.toString(view[0].income, banhji.locale=="km-KH"?"c0":"c2", banhji.locale));
+				obj.set("expense", kendo.toString(view[0].expense, banhji.locale=="km-KH"?"c0":"c2", banhji.locale));
+				obj.set("net_income", kendo.toString(view[0].net_income, banhji.locale=="km-KH"?"c0":"c2", banhji.locale));
+				
+				obj.set("asset", kendo.toString(view[0].asset, banhji.locale=="km-KH"?"c0":"c2", banhji.locale));
+				obj.set("liability", kendo.toString(view[0].liability, banhji.locale=="km-KH"?"c0":"c2", banhji.locale));
+				obj.set("equity", kendo.toString(view[0].equity, banhji.locale=="km-KH"?"c0":"c2", banhji.locale));
+			});
+		}
+	});
+
 
 
 	/*************************************************
@@ -92371,8 +92561,9 @@
 		//Imports
 		imports: new kendo.Layout("#importView", {model: banhji.importView}),
 
-		//Employee
+		//App Center
 		appCenter: new kendo.Layout("#appCenter", {model: banhji.appCenter}),
+		riceMill: new kendo.Layout("#riceMill", {model: banhji.riceMill}),
 
 
 		//Menu
@@ -100380,6 +100571,45 @@
 				banhji.userManagement.addMultiTask("App Center","app_center",null);
 				if(banhji.pageLoaded["appCenter"]==undefined){
 					banhji.pageLoaded["appCenter"] = true;
+
+					vm.setObj();
+				}
+				vm.pageLoad();
+			} else {
+				window.location.replace(baseUrl + "admin");
+			}
+		});
+	});
+	banhji.router.route("/rice_mill", function(){
+		banhji.accessMod.query({
+			filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		}).then(function(e){
+			var allowed = false;
+			if(banhji.accessMod.data().length > 0) {
+				for(var i = 0; i < banhji.accessMod.data().length; i++) {
+					if("customer" == banhji.accessMod.data()[i].name.toLowerCase()) {
+						allowed = true;
+						break;
+					}
+				}
+			} 
+			if(allowed) {
+				banhji.view.layout.showIn("#content", banhji.view.riceMill);
+				banhji.view.layout.showIn('#menu', banhji.view.menu);
+				banhji.view.menu.showIn('#secondary-menu', banhji.view.appMenu);
+				
+				//eraseCookie("isshow");
+				var isshow = readCookie("cusVisit");
+				
+			    if (isshow != 1) {
+			        createCookie("cusVisit", 1);
+					$("a.aCustomer").click();
+				}
+
+				var vm = banhji.appCenter;
+				banhji.userManagement.addMultiTask("Rice Mill","rice_mill",null);
+				if(banhji.pageLoaded["riceMill"]==undefined){
+					banhji.pageLoaded["riceMill"] = true;
 
 					vm.setObj();
 				}

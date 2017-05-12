@@ -52179,10 +52179,13 @@
 
 				//COGS on Dr
 				var cogsID = kendo.parseInt(item.expense_account_id);
-				if(cogsID>0 && item.item_type_id==1){
+				if(cogsID>0){
 					raw = "dr"+cogsID;
-					
-					var cogsAmount = (value.quantity*value.unit_value)*item.cost;
+
+					var cogsAmount = value.amount;
+					if(item.item_type_id==1 || item.item_type_id==4){
+						cogsAmount = (value.quantity*value.unit_value)*item.cost;
+					}
 
 					if(entries[raw]===undefined){
 						entries[raw] = {
@@ -52204,10 +52207,13 @@
 
 				//Inventory on Cr
 				var inventoryID = kendo.parseInt(item.inventory_account_id);
-				if(inventoryID>0 && item.item_type_id==1){
+				if(inventoryID>0){
 					raw = "cr"+inventoryID;
 
-					var inventoryAmount = (value.quantity*value.unit_value)*item.cost;
+					var inventoryAmount = value.amount;
+					if(item.item_type_id==1 || item.item_type_id==4){
+						inventoryAmount = (value.quantity*value.unit_value)*item.cost;
+					}
 					
 					if(entries[raw]===undefined){
 						entries[raw] = {
@@ -52285,7 +52291,10 @@
 				if(cogsID>0 && item.item_type_id==1){
 					raw = "dr"+cogsID;
 
-					var cogsAmount = (value.quantity*value.unit_value)*item.cost;
+					var cogsAmount = value.amount;
+					if(item.item_type_id==1 || item.item_type_id==4){
+						cogsAmount = (value.quantity*value.unit_value)*item.cost;
+					}
 					
 					if(entries[raw]===undefined){
 						entries[raw] = {
@@ -52310,7 +52319,10 @@
 				if(inventoryID>0){
 					raw = "cr"+inventoryID;
 
-					var inventoryAmount = (value.quantity*value.unit_value)*item.cost;
+					var inventoryAmount = value.amount;
+					if(item.item_type_id==1 || item.item_type_id==4){
+						inventoryAmount = (value.quantity*value.unit_value)*item.cost;
+					}
 					
 					if(entries[raw]===undefined){
 						entries[raw] = {
@@ -53740,10 +53752,13 @@
 				
 				//COGS on Dr
 				var cogsID = kendo.parseInt(item.expense_account_id);
-				if(cogsID>0 && item.item_type_id==1){
+				if(cogsID>0){
 					raw = "dr"+cogsID;
-
-					var cogsAmount = (value.quantity*value.unit_value)*item.cost;
+					
+					var cogsAmount = value.amount;
+					if(item.item_type_id==1 || item.item_type_id==4){
+						cogsAmount = (value.quantity*value.unit_value)*item.cost;
+					}
 
 					if(entries[raw]===undefined){
 						entries[raw] = {
@@ -53765,10 +53780,13 @@
 
 				//Inventory on Cr
 				var inventoryID = kendo.parseInt(item.inventory_account_id);
-				if(inventoryID>0 && item.item_type_id==1){
+				if(inventoryID>0){
 					raw = "cr"+inventoryID;
 
-					var inventoryAmount = (value.quantity*value.unit_value)*item.cost;
+					var inventoryAmount = value.amount;
+					if(item.item_type_id==1 || item.item_type_id==4){
+						inventoryAmount = (value.quantity*value.unit_value)*item.cost;
+					}
 					
 					if(entries[raw]===undefined){
 						entries[raw] = {
@@ -53843,10 +53861,13 @@
 
 				//COGS on Dr
 				var cogsID = kendo.parseInt(item.expense_account_id);
-				if(cogsID>0 && item.item_type_id==1){
+				if(cogsID>0){
 					raw = "dr"+cogsID;
 
-					var cogsAmount = (value.quantity*value.unit_value)*item.cost;
+					var cogsAmount = value.amount;
+					if(item.item_type_id==1 || item.item_type_id==4){
+						cogsAmount = (value.quantity*value.unit_value)*item.cost;
+					}
 					
 					if(entries[raw]===undefined){
 						entries[raw] = {
@@ -53868,10 +53889,13 @@
 
 				//Inventory on Cr
 				var inventoryID = kendo.parseInt(item.inventory_account_id);
-				if(inventoryID>0 && item.item_type_id==1){
+				if(inventoryID>0){
 					raw = "cr"+inventoryID;
 
-					var inventoryAmount = (value.quantity*value.unit_value)*item.cost;
+					var inventoryAmount = value.amount;
+					if(item.item_type_id==1 || item.item_type_id==4){
+						inventoryAmount = (value.quantity*value.unit_value)*item.cost;
+					}
 					
 					if(entries[raw]===undefined){
 						entries[raw] = {
@@ -56168,7 +56192,10 @@
 				if(cogsID>0){
 					raw = "cr"+cogsID;
 
-					var cogsAmount = (value.quantity*value.unit_value)*item.cost;
+					var cogsAmount = value.amount;
+					if(item.item_type_id==1 || item.item_type_id==4){
+						cogsAmount = (value.quantity*value.unit_value)*item.cost;
+					}
 					
 					if(entries[raw]===undefined){
 						entries[raw] = {
@@ -56193,7 +56220,10 @@
 				if(inventoryID>0){
 					raw = "dr"+inventoryID;
 
-					var inventoryAmount = (value.quantity*value.unit_value)*item.cost;
+					var inventoryAmount = value.amount;
+					if(item.item_type_id==1 || item.item_type_id==4){
+						inventoryAmount = (value.quantity*value.unit_value)*item.cost;
+					}
 					
 					if(entries[raw]===undefined){
 						entries[raw] = {
@@ -56271,7 +56301,10 @@
 				if(cogsID>0){
 					raw = "cr"+cogsID;
 
-					var cogsAmount = (value.quantity*value.unit_value)*item.cost;
+					var cogsAmount = value.amount;
+					if(item.item_type_id==1 || item.item_type_id==4){
+						cogsAmount = (value.quantity*value.unit_value)*item.cost;
+					}
 					
 					if(entries[raw]===undefined){
 						entries[raw] = {
@@ -56296,7 +56329,10 @@
 				if(inventoryID>0){
 					raw = "dr"+inventoryID;
 
-					var inventoryAmount = (value.quantity*value.unit_value)*item.cost;
+					var inventoryAmount = value.amount;
+					if(item.item_type_id==1 || item.item_type_id==4){
+						inventoryAmount = (value.quantity*value.unit_value)*item.cost;
+					}
 					
 					if(entries[raw]===undefined){
 						entries[raw] = {
@@ -57296,7 +57332,10 @@
 				if(cogsID>0){
 					raw = "cr"+cogsID;
 
-					var cogsAmount = (value.quantity*value.unit_value)*item.cost;
+					var cogsAmount = value.amount;
+					if(item.item_type_id==1 || item.item_type_id==4){
+						cogsAmount = (value.quantity*value.unit_value)*item.cost;
+					}
 					
 					if(entries[raw]===undefined){
 						entries[raw] = {
@@ -57321,7 +57360,10 @@
 				if(inventoryID>0){
 					raw = "dr"+inventoryID;
 
-					var inventoryAmount = (value.quantity*value.unit_value)*item.cost;
+					var inventoryAmount = value.amount;
+					if(item.item_type_id==1 || item.item_type_id==4){
+						inventoryAmount = (value.quantity*value.unit_value)*item.cost;
+					}
 					
 					if(entries[raw]===undefined){
 						entries[raw] = {
@@ -57399,7 +57441,10 @@
 				if(cogsID>0){
 					raw = "cr"+cogsID;
 
-					var cogsAmount = (value.quantity*value.unit_value)*item.cost;
+					var cogsAmount = value.amount;
+					if(item.item_type_id==1 || item.item_type_id==4){
+						inventoryAmount = (value.quantity*value.unit_value)*item.cost;
+					}
 					
 					if(entries[raw]===undefined){
 						entries[raw] = {
@@ -57424,7 +57469,10 @@
 				if(inventoryID>0){
 					raw = "dr"+inventoryID;
 
-					var inventoryAmount = (value.quantity*value.unit_value)*item.cost;
+					var inventoryAmount = value.amount;
+					if(item.item_type_id==1 || item.item_type_id==4){
+						inventoryAmount = (value.quantity*value.unit_value)*item.cost;
+					}
 					
 					if(entries[raw]===undefined){
 						entries[raw] = {
@@ -66637,10 +66685,14 @@
 				
 				//Service on Dr
 				var serviceID = kendo.parseInt(item.expense_account_id);
-				if(serviceID>0 && item.item_type_id==4){
+				if(serviceID>0){
 					raw = "dr"+serviceID;
 
-					var serviceAmount = (value.quantity*value.unit_value*value.cost) + value.additional_cost;
+					var serviceAmount = value.amount;
+					if(item.item_type_id==1 || item.item_type_id==4){
+						(value.quantity*value.unit_value*value.cost) + value.additional_cost;
+					}
+
 					if(entries[raw]===undefined){
 						entries[raw] = {
 							transaction_id 		: transaction_id,
@@ -66661,11 +66713,14 @@
 
 				//Inventory on Dr
 				var inventoryID = kendo.parseInt(item.inventory_account_id);
-				if(inventoryID>0 && item.item_type_id==1){
+				if(inventoryID>0){
 					raw = "dr"+inventoryID;
 
-					var inventoryAmount = (value.quantity*value.unit_value*value.cost) + value.additional_cost;
-					
+					var inventoryAmount = value.amount;
+					if(item.item_type_id==1 || item.item_type_id==4){
+						(value.quantity*value.unit_value*value.cost) + value.additional_cost;
+					}
+
 					if(entries[raw]===undefined){
 						entries[raw] = {
 							transaction_id 		: transaction_id,
@@ -68122,10 +68177,13 @@
 
 				//Service on Cr
 				var serviceID = kendo.parseInt(item.expense_account_id);
-				if(serviceID>0 && item.item_type_id==4){
+				if(serviceID>0){
 					raw = "cr"+serviceID;
 
-					var serviceAmount = value.quantity * value.unit_value * item.cost;
+					var serviceAmount = value.amount;
+					if(item.item_type_id==1 || item.item_type_id==4){
+						serviceAmount = value.quantity * value.unit_value * item.cost;
+					}
 
 					if(entries[raw]===undefined){
 						entries[raw] = {
@@ -68147,10 +68205,13 @@
 
 				//Inventory on Cr
 				var inventoryID = kendo.parseInt(item.inventory_account_id);
-				if(inventoryID>0 && item.item_type_id==1){
+				if(inventoryID>0){
 					raw = "cr"+inventoryID;
 
-					var inventoryAmount = value.quantity * value.unit_value * value.cost;
+					var inventoryAmount = value.amount;
+					if(item.item_type_id==1 || item.item_type_id==4){
+						inventoryAmount = value.quantity * value.unit_value * value.cost;
+					}
 					
 					if(entries[raw]===undefined){
 						entries[raw] = {
@@ -69116,28 +69177,30 @@
 					itemRate = banhji.source.getRate(item.locale, new Date(obj.issued_date));
 
 				//Service on Cr
-				if(item.item_type_id=="4"){
-					var serviceID = kendo.parseInt(item.expense_account_id);
-					if(serviceID>0){
-						raw = "cr"+serviceID;
+				var serviceID = kendo.parseInt(item.expense_account_id);
+				if(serviceID>0){
+					raw = "cr"+serviceID;
+					
+					var serviceAmount = value.amount;
+					if(item.item_type_id==1 || item.item_type_id==4){
+						serviceAmount = value.quantity * value.unit_value * value.cost;
+					}
 
-						var serviceAmount = value.quantity *value.unit_value * value.cost;
-						if(entries[raw]===undefined){
-							entries[raw] = {
-								transaction_id 		: transaction_id,
-								account_id 			: serviceID,
-								contact_id 			: obj.contact_id,
-								description 		: value.description,
-								reference_no 		: "",
-								segments 	 		: [],
-								dr 	 				: 0,
-								cr 					: serviceAmount,
-								rate				: itemRate,
-								locale				: item.locale
-							};
-						}else{
-							entries[raw].cr += serviceAmount;
-						}
+					if(entries[raw]===undefined){
+						entries[raw] = {
+							transaction_id 		: transaction_id,
+							account_id 			: serviceID,
+							contact_id 			: obj.contact_id,
+							description 		: value.description,
+							reference_no 		: "",
+							segments 	 		: [],
+							dr 	 				: 0,
+							cr 					: serviceAmount,
+							rate				: itemRate,
+							locale				: item.locale
+						};
+					}else{
+						entries[raw].cr += serviceAmount;
 					}
 				}
 
@@ -69146,11 +69209,9 @@
 				if(inventoryID>0){
 					raw = "cr"+inventoryID;
 
-					var inventoryAmount = 0;
-					if(item.item_type_id=="1" || item.item_type_id=="4"){
+					var inventoryAmount = value.amount;
+					if(item.item_type_id==1 || item.item_type_id==4){
 						inventoryAmount = value.quantity * value.unit_value * value.cost;
-					}else{
-						inventoryAmount = value.amount;
 					}
 
 					if(entries[raw]===undefined){
@@ -69192,68 +69253,6 @@
 						};
 					}else{
 						entries[raw].cr += taxAmt;
-					}
-				}
-			});
-
-			//Assembly Item
-			$.each(this.assemblyLineDS.data(), function(index, value){
-				var item = self.itemDS.get(value.item_id),
-					itemRate = banhji.source.getRate(item.locale, new Date(obj.issued_date));
-
-				//Service on Cr
-				if(item.item_type_id=="4"){
-					var serviceID = kendo.parseInt(item.expense_account_id);
-					if(serviceID>0){
-						raw = "cr"+serviceID;
-
-						var serviceAmount = value.quantity *value.unit_value * item.cost;
-						if(entries[raw]===undefined){
-							entries[raw] = {
-								transaction_id 		: transaction_id,
-								account_id 			: serviceID,
-								contact_id 			: obj.contact_id,
-								description 		: value.description,
-								reference_no 		: "",
-								segments 	 		: [],
-								dr 	 				: 0,
-								cr 					: serviceAmount,
-								rate				: itemRate,
-								locale				: item.locale
-							};
-						}else{
-							entries[raw].cr += serviceAmount;
-						}
-					}
-				}
-
-				//Inventory on Cr
-				var inventoryID = kendo.parseInt(item.inventory_account_id);
-				if(inventoryID>0){
-					raw = "cr"+inventoryID;
-
-					var inventoryAmount = 0;
-					if(item.item_type_id=="1" || item.item_type_id=="4"){
-						inventoryAmount = value.quantity * value.unit_value * item.cost;
-					}else{
-						inventoryAmount = value.amount;
-					}
-
-					if(entries[raw]===undefined){
-						entries[raw] = {
-							transaction_id 		: transaction_id,
-							account_id 			: inventoryID,
-							contact_id 			: obj.contact_id,
-							description 		: value.description,
-							reference_no 		: "",
-							segments 	 		: [],
-							dr 	 				: 0,
-							cr 					: inventoryAmount,
-							rate				: itemRate,
-							locale				: item.locale
-						};
-					}else{
-						entries[raw].cr += inventoryAmount;
 					}
 				}
 			});
@@ -90690,10 +90689,13 @@
 							if(is_journal==1){
 								//Service on Dr
 								account_id = kendo.parseInt(item.expense_account_id);
-								if(account_id>0 && item.item_type_id==4){
+								if(account_id>0){
 									raw = "dr"+account_id;
-
-									var serviceAmount = quantity*cost;
+									
+									var serviceAmount = amount;
+									if(item.item_type_id==1 || item.item_type_id==4){
+										serviceAmount = quantity*cost;
+									}
 
 									if(entries[raw]===undefined){
 										entries[raw] = {
@@ -90718,7 +90720,10 @@
 								if(account_id>0 && item.item_type_id==1){
 									raw = "dr"+account_id;								
 
-									var inventoryAmount = quantity*cost;
+									var inventoryAmount = amount;
+									if(item.item_type_id==1 || item.item_type_id==4){
+										inventoryAmount = quantity*cost;
+									}
 									
 									if(entries[raw]===undefined){
 										entries[raw] = {
@@ -90904,10 +90909,13 @@
 							if(is_journal==1){
 								//COGS on Dr
 								account_id = kendo.parseInt(item.expense_account_id);
-								if(account_id>0 && item.item_type_id==1){															
+								if(account_id>0){															
 									raw = "dr"+account_id;
 
-									var cogsAmount = quantity*item.cost;									
+									var cogsAmount = amount;
+									if(item.item_type_id==1 || item.item_type_id==4){
+										cogsAmount = quantity*item.cost;
+									}
 
 									if(entries[raw]===undefined){
 										entries[raw] = {
@@ -90929,10 +90937,13 @@
 
 								//Inventory	on Cr					
 								account_id = kendo.parseInt(item.inventory_account_id);
-								if(account_id>0 && item.item_type_id==1){
-									raw = "cr"+account_id;								
-
-									var inventoryAmount = quantity*item.cost;
+								if(account_id>0){
+									raw = "cr"+account_id;
+									
+									var inventoryAmount = amount;
+									if(item.item_type_id==1 || item.item_type_id==4){
+										inventoryAmount = quantity*item.cost;
+									}
 
 									if(entries[raw]===undefined){
 										entries[raw] = {
