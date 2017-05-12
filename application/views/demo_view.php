@@ -83777,6 +83777,8 @@
 	            	self.set("cr", kendo.toString(response.cr, "c2", banhji.locale));
 	            }
 	        });
+
+	        obj.set("segments", []);
 		}
 	});
 	banhji.generalLedger =  kendo.observable({
@@ -90717,7 +90719,7 @@
 
 								//Inventory	on Dr					
 								account_id = kendo.parseInt(item.inventory_account_id);
-								if(account_id>0 && item.item_type_id==1){
+								if(account_id>0){
 									raw = "dr"+account_id;								
 
 									var inventoryAmount = amount;
