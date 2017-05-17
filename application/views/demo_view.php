@@ -29593,9 +29593,9 @@
 					#if(j>0){#
 						:
 					#}#
-					#=line[i].segments[j].code# #=line[i].segments[j].name#					
+					#=line[i].segments[j].code# #=line[i].segments[j].name#
 				#}#
-			</td>			
+			</td>
 			<td class="right" style="color: black;">
 				#if(line[i].dr>0){#
 					#=kendo.toString(line[i].dr / rate, "c2", banhji.locale)#
@@ -29757,7 +29757,7 @@
 							</thead>
 							<tbody data-role="listview"
 					        		data-auto-bind="false"
-					        		data-template="generalLedger-template"			        		
+					        		data-template="generalLedger-template"
 					        		data-bind="source: dataSource"></tbody>
 					       	<tfoot>
 					       		<tr style="font-weight: bold; font-size: large;">
@@ -29766,7 +29766,7 @@
 					       			<td align="right" data-bind="text: totalBalance"></td>
 					       		</tr>
 					       	</tfoot>
-						</table>				  
+						</table>
 					</div>
 				</div>
 			</div>						
@@ -29812,6 +29812,187 @@
     </tr>
     <tr>
     	<td colspan="6">&nbsp;</td>
+    </tr>  
+</script>
+<script id="generalLedgerBySegment" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background ">
+			<div class="container-960">					
+				<div id="example" class="k-content saleSummaryCustomer">			
+		    		<span class="glyphicons no-js remove_2 pull-right" 
+							onclick="javascript: window.history.back()"><i></i></span>
+					<br>
+					<br>
+
+					<!-- Search Taps -->
+					<div class="row-fluid">
+					    <!-- Tabs -->
+						<div class="relativeWrap" data-toggle="source-code">
+							<div class="widget widget-tabs widget-tabs-gray report-tab">
+							
+								<!-- Tabs Heading -->
+								<div class="widget-head">
+									<ul>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
+										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i>Filters</a></li>
+									</ul>
+								</div>
+								<!-- // Tabs Heading END -->								
+								<div class="widget-body">
+									<div class="tab-content">
+										<!-- Date -->
+										<div class="tab-pane active" id="tab-1">
+											<input data-role="dropdownlist"
+												   class="sorter"                  
+										           data-value-primitive="true"
+										           data-text-field="text"
+										           data-value-field="value"
+										           data-bind="value: sorter,
+										                      source: sortList,                              
+										                      events: { change: sorterChanges }" />
+
+											<input data-role="datepicker"
+												   class="sdate"
+												   data-format="dd-MM-yyyy"
+										           data-bind="value: sdate,
+										           			  max: edate"
+										           placeholder="From ..." >
+
+										    <input data-role="datepicker"
+										    	   class="edate"
+										    	   data-format="dd-MM-yyyy"
+										           data-bind="value: edate,
+										                      min: sdate"
+										           placeholder="To ..." >
+
+										  	<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+									    </div>
+									    <!-- Filter -->
+								        <div class="tab-pane" id="tab-2">
+											<table class="table table-condensed">
+												<tr>
+									            	<td style="padding: 8px 0 0 0 !important; ">
+														<span data-bind="text: lang.lang.segment"></span>
+														<select data-role="multiselect"
+															   data-value-primitive="true"
+															   data-value-field="id"
+															   data-text-field="name"
+															   data-bind="value: obj.segments, 
+															   			source: segmentDS"
+															   data-placeholder="Select Segments.."
+															   style="width: 100%" /></select>
+													</td>
+													<td style="padding-top: 23px !important; float: left;">
+										  				<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+													</td>
+												</tr>
+											</table>
+							        	</div>
+							        </div>
+								</div>
+							</div>
+						</div>
+						<!-- // Tabs END -->						
+					</div>
+
+					<div id="loadImport" style="display:none;text-align: center;top:30px;position: absolute;width: 82%; height: 99.5%;background: rgba(142, 159, 167, 0.8);z-index: 9999;">
+						<i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 35%;left: 45%"></i>
+					</div>
+
+					<div id="invFormContent">
+						<div class="block-title">
+							<h3 data-bind="text: company.name"></h3>
+							<h2>GENERAL LEDGER WITH SEGMENT</h2>
+							<p data-bind="text: displayDate"></p>
+						</div>
+
+						<div class="row-fluid journal_block">
+							<div class="span4" style="width: 16.66666667%;">
+								<p>No. of Account</p>
+								<span data-format="n" data-bind="text: dataSource.total"></span>
+							</div>
+							<div class="span4" style="width: 41.66666667%;">
+								<p>Total Balance</p>
+								<span data-bind="text: totalBalance"></span>
+							</div>
+						</div>
+
+						<table class="table table-borderless table-condensed">
+							<thead>
+								<tr>
+									<th><span data-bind="text: lang.lang.type"></span></th>
+									<th style="width: 10%;"><span data-bind="text: lang.lang.date"></span></th>
+									<th style="width: 15%;"><span data-bind="text: lang.lang.transaction_number"></span></th>
+									<th><span data-bind="text: lang.lang.description"></span></th>
+									<th><span data-bind="text: lang.lang.name"></span></th>
+									<th><span data-bind="text: lang.lang.segments"></span></th>
+									<th class="right"><span data-bind="text: lang.lang.amount"></span></th>
+									<th class="right"><span data-bind="text: lang.lang.balance"></span></th>
+								</tr>
+							</thead>
+							<tbody data-role="listview"
+					        		data-auto-bind="false"
+					        		data-template="generalLedgerBySegment-template"
+					        		data-bind="source: dataSource">
+					        </tbody>
+						</table>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+</script>
+<script id="generalLedgerBySegment-template" type="text/x-kendo-tmpl">
+	<tr>
+		<td colspan="7" style="font-weight: bold;">#: name #</td>
+    	<td class="right strong" style="color: black;">
+    		#=kendo.toString(balance_forward, "c2", banhji.locale)#
+    	</td>
+	</tr>
+	#var balance = balance_forward;#
+	#for(var i=0; i<line.length; i++){#
+	#balance += line[i].amount;#
+	<tr>
+		<td style="color: black;">
+			&nbsp;&nbsp; #=line[i].type#
+		</td>		
+		<td style="color: black;">
+			#=kendo.toString(new Date(line[i].issued_date), "dd-MM-yyyy")#
+		</td>
+		<td style="color: black;">
+			<a href="\#/#=line[i].type.toLowerCase()#/#=line[i].id#"><i></i> #=line[i].number#</a>
+		</td>		
+		<td style="color: black;">
+			#=line[i].memo#
+		</td>
+		<td style="color: black;">
+			#=line[i].name#
+		</td>
+		<td style="color: black;">
+			#for(var j=0; j<line[i].segments.length; j++){#
+				#if(j>0){#
+					:
+				#}#
+				#=line[i].segments[j].code# #=line[i].segments[j].name#
+			#}#
+		</td>
+		<td class="right" style="color: black;">
+			#=kendo.toString(line[i].amount, "c2", banhji.locale)#
+		</td>
+		<td class="right" style="color: black;">
+			#=kendo.toString(balance, "c2", banhji.locale)#
+		</td> 			
+    </tr>    
+    #}# 
+    <tr>
+    	<td colspan="7" style="font-weight: bold; color: black;"><span data-bind="text: lang.lang.total" style="text-transform: capitalize;"></span><span>#: name #</span></td>    	
+    	<td class="right" style="font-weight: bold; border-top: 1px solid black !important; color: black;">
+    		#=kendo.toString(balance, "c2", banhji.locale)#
+    	</td>
+    </tr>
+    <tr>
+    	<td colspan="8">&nbsp;</td>
     </tr>  
 </script>
 <script id="transactionListDate" type="text/x-kendo-template">
@@ -33869,7 +34050,8 @@
 													<td class="span4">
 														<h3><a href="#/journal_report_by_segment" data-bind="text: lang.lang.journal_entry_report_with_segment"></a></h3>
 													</td>
-													<td class="span4">							
+													<td class="span4">
+														<h3><a href="#/general_ledger_by_segment">General Ledger With Segment</a></h3>							
 													</td>
 													<td class="span4">														
 													</td>						
@@ -84102,6 +84284,118 @@
 	        kendo.saveAs({dataURI: workbook.toDataURL(), fileName: "GeneralLedger.xlsx"});
 		}
 	});
+	banhji.generalLedgerBySegment =  kendo.observable({
+		lang 				: langVM,
+		dataSource 			: dataStore(apiUrl + "accounting_modules/general_ledger_by_segment"),
+		segmentDS 			: banhji.source.segmentDS,
+		sortList			: banhji.source.sortList,
+		sorter 				: "month",
+		sdate 				: "",
+		edate 				: "",
+		obj 				: { segments: [] },
+		company 			: banhji.institute,
+		displayDate 		: "",		
+		totalAmount 		: 0,
+		totalBalance 		: 0,
+		pageLoad 			: function(){
+			this.search();
+		},
+		sorterChanges 		: function(){
+	        var today = new Date(),
+        	sdate = "",
+        	edate = "",
+        	sorter = this.get("sorter");
+        	
+			switch(sorter){
+				case "today":								
+					this.set("sdate", today);
+					this.set("edate", "");
+													  					
+				  	break;
+				case "week":			  	
+					var first = today.getDate() - today.getDay(),
+					last = first + 6;
+
+					this.set("sdate", new Date(today.setDate(first)));
+					this.set("edate", new Date(today.setDate(last)));						
+					
+				  	break;
+				case "month":							  	
+					this.set("sdate", new Date(today.getFullYear(), today.getMonth(), 1));
+					this.set("edate", new Date(today.getFullYear(), today.getMonth() + 1, 0));
+
+				  	break;
+				case "year":				
+				  	this.set("sdate", new Date(today.getFullYear(), 0, 1));
+				  	this.set("edate", new Date(today.getFullYear(), 11, 31));
+
+				  	break;
+				default:
+					this.set("sdate", "");
+				  	this.set("edate", "");									  
+			}
+		},
+		search				: function(){
+			var self = this, para = [],
+				obj = this.get("obj"),
+				start = this.get("sdate"),
+        		end = this.get("edate"),
+        		displayDate = "";
+
+	        //Segments
+	        var segments = [];
+            if(obj.segments.length>0){            	
+            	$.each(obj.segments, function(index, value){
+            		$.each(banhji.source.segmentItemList, function(ind, val){
+            			if(val.segment_id==value){
+            				segments.push(val.id);
+            			}
+            		});
+            	});
+            	para.push({ field:"id", operator:"where_related_segmentitem", value: segments });
+	        }
+
+        	//Dates
+        	if(start && end){
+        		start = new Date(start);
+        		end = new Date(end);
+        		displayDate = "From " + kendo.toString(start, "dd-MM-yyyy") + " To " + kendo.toString(end, "dd-MM-yyyy");
+        		end.setDate(end.getDate()+1);
+
+            	para.push({ field:"issued_date >=", operator:"where_related_transaction", value: kendo.toString(start, "yyyy-MM-dd") });
+            	para.push({ field:"issued_date <", operator:"where_related_transaction", value: kendo.toString(end, "yyyy-MM-dd") });
+            }else if(start){
+            	start = new Date(start);
+            	displayDate = "On " + kendo.toString(start, "dd-MM-yyyy");
+
+            	para.push({ field:"issued_date", operator:"where_related_transaction", value: kendo.toString(start, "yyyy-MM-dd") });
+            }else if(end){
+            	end = new Date(end);
+            	displayDate = "As Of " + kendo.toString(end, "dd-MM-yyyy");
+        		end.setDate(end.getDate()+1);
+
+            	para.push({ field:"issued_date <", operator:"where_related_transaction", value: kendo.toString(end, "yyyy-MM-dd") });
+            }else{
+            	
+            }
+            this.set("displayDate", displayDate);
+
+            this.dataSource.query({
+            	filter: para
+            });
+            var loaded = false;
+            this.dataSource.bind("requestEnd", function(e){
+            	if(e.type==="read" && loaded==false){
+            		loaded = true;
+
+            		var response = e.response;
+	            	self.set("totalBalance", kendo.toString(response.totalBalance, "c2", banhji.locale));
+	            }
+	        });
+
+	        obj.set("segments", []);
+		}
+	});
 	banhji.statementProfitLoss =  kendo.observable({
 		lang 				: langVM,
 		dataSource 			: dataStore(apiUrl + "accounting_modules/income_statement"),		
@@ -91219,6 +91513,7 @@
 		journalReport: new kendo.Layout("#journalReport", {model: banhji.journalReport}),
 		journalReportBySegment: new kendo.Layout("#journalReportBySegment", {model: banhji.journalReportBySegment}),
 		generalLedger: new kendo.Layout("#generalLedger", {model: banhji.generalLedger}),
+		generalLedgerBySegment: new kendo.Layout("#generalLedgerBySegment", {model: banhji.generalLedgerBySegment}),
 		trialBalance: new kendo.Layout("#trialBalance", {model: banhji.trialBalance}),
 		chartOfAccount: new kendo.Layout("#chartOfAccount", {model: banhji.chartOfAccount}),
 		accountingReportCenter: new kendo.Layout("#accountingReportCenter", {model: banhji.accountingReportCenter}),
@@ -97143,6 +97438,26 @@
 			if(banhji.pageLoaded["general_ledger"]==undefined){
 				banhji.pageLoaded["general_ledger"] = true;
 
+			}
+
+			vm.pageLoad();
+		}
+	});
+	banhji.router.route("/general_ledger_by_segment", function(){
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{
+			banhji.view.layout.showIn("#content", banhji.view.generalLedgerBySegment);
+			banhji.view.layout.showIn('#menu', banhji.view.menu);
+			banhji.view.menu.showIn('#secondary-menu', banhji.view.accountingMenu);
+			
+			var vm = banhji.generalLedgerBySegment;
+			banhji.userManagement.addMultiTask("General Ledger By Segment","general_ledger_by_segment",null);
+
+			if(banhji.pageLoaded["general_ledger_by_segment"]==undefined){
+				banhji.pageLoaded["general_ledger_by_segment"] = true;
+
+				vm.sorterChanges();
 			}
 
 			vm.pageLoad();

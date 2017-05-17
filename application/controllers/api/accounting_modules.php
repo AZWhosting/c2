@@ -988,109 +988,6 @@ class Accounting_modules extends REST_Controller {
 		//Response Data		
 		$this->response($data, 200);	
 	}
-	/*function journal_by_segment_get() {		
-		$filter 	= $this->get("filter");
-		$page 		= $this->get('page');
-		$limit 		= $this->get('limit');
-		$sort 	 	= $this->get("sort");
-		$data["results"] = [];
-		$data["count"] = 0;
-		
-		$obj = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
-		
-		//Sort
-		if(!empty($sort) && isset($sort)){
-			foreach ($sort as $value) {
-				if(isset($value['operator'])){
-					$obj->{$value['operator']}($value["field"], $value["dir"]);
-				}else{
-					$obj->order_by($value["field"], $value["dir"]);
-				}
-			}
-		}
-		
-		//Filter
-		if(!empty($filter) && isset($filter)){
-	    	foreach ($filter['filters'] as $value) {
-	    		if(isset($value['operator'])) {
-					$obj->{$value['operator']}($value['field'], $value['value']);
-				} else {
-					$obj->where($value["field"], $value["value"]);
-				}
-			}
-		}
-
-		$obj->where_related("transaction", "is_recurring <>", 1);
-		$obj->where_related("transaction", "deleted <>", 1);
-		$obj->where("deleted <>", 1);
-		$obj->include_related("transaction", array("number","type","issued_date","memo","rate"));
-		$obj->include_related("account", array("number","name"));
-		$obj->include_related("contact", array("abbr","number","name"));
-		$obj->order_by("dr", "desc");		
-		$obj->get_iterated();
-
-		//Results
-		// if($page && $limit){
-		// 	$obj->get_paged_iterated($page, $limit);
-		// 	$data["count"] = $obj->paged->total_rows;
-		// }else{
-		// 	$obj->get_iterated();
-		// 	$data["count"] = $obj->result_count();
-		// }
-		
-		if($obj->exists()){
-			$objList = [];
-			$totalDr = 0;
-			$totalCr = 0;
-			foreach ($obj as $value) {				
-				$totalDr += floatval($value->dr) / floatval($value->transaction_rate);
-				$totalCr += floatval($value->cr) / floatval($value->transaction_rate);
-			
-				if(isset($objList[$value->transaction_id])){
-					$objList[$value->transaction_id]["line"][] = array(
-						"id" 			=> $value->id,
-						"description" 	=> $value->description,
-						"reference_no" 	=> $value->reference_no,
-						"segments" 		=> $value->segmentitem->get_raw()->result(),
-						"dr" 			=> floatval($value->dr),
-						"cr" 			=> floatval($value->cr),
-						"locale" 		=> $value->locale,
-						"account" 		=> $value->account_number ." ". $value->account_name,
-						"contact" 		=> $value->contact_name
-					);
-				}else{
-					$objList[$value->transaction_id]["id"] = $value->id;
-					$objList[$value->transaction_id]["type"] = $value->transaction_type;
-					$objList[$value->transaction_id]["number"] = $value->transaction_number;
-					$objList[$value->transaction_id]["issued_date"] = $value->transaction_issued_date;
-					$objList[$value->transaction_id]["memo"] = $value->transaction_memo;
-					$objList[$value->transaction_id]["rate"] = $value->transaction_rate;
-					$objList[$value->transaction_id]["line"][] = array(
-						"id" 			=> $value->id,
-						"description" 	=> $value->description,
-						"reference_no" 	=> $value->reference_no,
-						"segments" 		=> $value->segmentitem->get_raw()->result(),
-						"dr" 			=> floatval($value->dr),
-						"cr" 			=> floatval($value->cr),
-						"locale" 		=> $value->locale,
-						"account" 		=> $value->account_number ." ". $value->account_name,
-						"contact" 		=> $value->contact_name
-					);			
-				}
-			}			
-
-			foreach ($objList as $value) {				
-				$data["results"][] = $value;
-			}
-		}
-
-		$data["dr"] = $totalDr;
-		$data["cr"] = $totalCr;
-		$data["count"] = count($data["results"]);
-
-		//Response Data		
-		$this->response($data, 200);	
-	}*/	
 
 	//GET GENERAL LEDGER
 	function general_ledger_get() {		
@@ -1200,11 +1097,129 @@ class Accounting_modules extends REST_Controller {
 				$data["results"][] = $value;
 			}
 
-			$data["count"] = count($data["results"]);			
+			$data["count"] = count($data["results"]);
 		}
 
 		$data["totalAmount"] = $totalAmount;
 		$data["totalBalance"] = $totalBalance;
+
+		//Response Data		
+		$this->response($data, 200);	
+	}
+	function general_ledger_by_segment_get() {		
+		$filter 	= $this->get("filter");
+		$page 		= $this->get('page');
+		$limit 		= $this->get('limit');
+		$sort 	 	= $this->get("sort");
+		$data["results"] = [];
+		$data["count"] = 0;
+		
+		$obj = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		
+		//Sort
+		if(!empty($sort) && isset($sort)){
+			foreach ($sort as $value) {
+				if(isset($value['operator'])){
+					$obj->{$value['operator']}($value["field"], $value["dir"]);
+				}else{
+					$obj->order_by($value["field"], $value["dir"]);
+				}
+			}
+		}
+		
+		//Filter
+		if(!empty($filter) && isset($filter)){
+	    	foreach ($filter['filters'] as $value) {
+	    		if(isset($value['operator'])) {
+					$obj->{$value['operator']}($value['field'], $value['value']);
+				} else {
+					$obj->where($value["field"], $value["value"]);
+				}
+			}
+		}
+
+		$obj->include_related("transaction", array("number","type","issued_date","memo","rate"));
+		$obj->include_related("account", array("number","name"));
+		$obj->include_related("account/account_type", array("nature"));
+		$obj->include_related("transaction/contact", array("name"));
+		$obj->where_related("transaction", "is_recurring <>", 1);
+		$obj->where_related("transaction", "deleted <>", 1);
+		$obj->where("deleted <>", 1);		
+		$obj->get_iterated();
+		
+		$objList = [];
+		$totalAmount = 0;
+		$totalBalance = 0;
+
+		if($obj->exists()){	
+			foreach ($obj as $value) {
+				$amount = 0;
+				if($value->account_account_type_nature=="Dr"){
+					$amount = (floatval($value->dr) - floatval($value->cr)) / floatval($value->transaction_rate);				
+				}else{
+					$amount = (floatval($value->cr) - floatval($value->dr)) / floatval($value->transaction_rate);					
+				}
+
+				$totalAmount += $amount;
+				$totalBalance += $amount;
+
+				if(isset($objList[$value->account_id])){
+					$objList[$value->account_id]["line"][] = array(
+						"id" 				=> $value->transaction_id,
+						"type" 				=> $value->transaction_type,
+						"number" 			=> $value->transaction_number,
+						"issued_date" 		=> $value->transaction_issued_date,
+						"memo" 				=> $value->transaction_memo,
+						"name" 				=> $value->transaction_contact_name,
+						"segments" 			=> $value->segmentitem->get_raw()->result(),
+						"amount" 			=> $amount
+					);
+				}else{
+					//Balance Forward
+					$balance_forward = 0;
+					$bf = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
+					$bf->include_related("transaction", array("rate"));
+					$bf->include_related("account/account_type", array("nature"));
+					$bf->where_related("transaction", "issued_date <", $value->transaction_issued_date);
+					$bf->where("account_id", $value->account_id);
+					$bf->where_related("transaction", "is_recurring <>", 1);		
+					$bf->where_related("transaction", "deleted <>", 1);
+					$bf->where("deleted <>", 1);
+					$bf->get_iterated();
+
+					foreach ($bf as $row) {
+						if($row->account_account_type_nature=="Dr"){
+							$balance_forward += (floatval($row->dr) - floatval($row->cr)) / floatval($row->transaction_rate);				
+						}else{
+							$balance_forward += (floatval($row->cr) - floatval($row->dr)) / floatval($row->transaction_rate);					
+						}
+					}
+
+					$totalBalance += $balance_forward;
+					
+					$objList[$value->account_id]["id"] 				= $value->account_id;
+					$objList[$value->account_id]["name"] 			= $value->account_number ." ". $value->account_name;
+					$objList[$value->account_id]["balance_forward"] = $balance_forward;
+					$objList[$value->account_id]["line"][] = array(
+						"id" 				=> $value->transaction_id,
+						"type" 				=> $value->transaction_type,
+						"number" 			=> $value->transaction_number,
+						"issued_date" 		=> $value->transaction_issued_date,
+						"memo" 				=> $value->transaction_memo,
+						"name" 				=> $value->transaction_contact_name,
+						"segments" 			=> $value->segmentitem->get_raw()->result(),
+						"amount" 			=> $amount
+					);
+				}
+			}
+		}
+
+		foreach ($objList as $value) {				
+			$data["results"][] = $value;
+		}
+		
+		$data["totalBalance"] = $totalBalance;
+		$data["count"] = count($data["results"]);
 
 		//Response Data		
 		$this->response($data, 200);	
