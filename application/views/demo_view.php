@@ -7464,7 +7464,7 @@
 															   data-placeholder="Select Customer.."
 															   style="width: 100%" /></select>
 													</td>													
-													<td style="padding-top: 23px !important; float: left;">
+													<td style="padding-top: 31px !important; float: left;">
 										  				<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
 													</td>
 												</tr>
@@ -7600,7 +7600,7 @@
 															   data-placeholder="Select Customer.."
 															   style="width: 100%" /></select>
 													</td>													
-													<td style="padding-top: 23px !important; float: left;">
+													<td style="padding-top: 31px !important; float: left;">
 										  				<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
 													</td>
 												</tr>
@@ -7766,7 +7766,7 @@
 															   data-placeholder="Select Customer.."
 															   style="width: 100%" /></select>
 													</td>													
-													<td style="padding-top: 23px !important; float: left;">
+													<td style="padding-top: 31px !important; float: left;">
 										  				<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
 													</td>
 												</tr>
@@ -7920,7 +7920,7 @@
 															   data-placeholder="Select Item..."
 															   style="width: 100%" /></select>
 													</td>													
-													<td style="padding-top: 23px !important; float: left;">
+													<td style="padding-top: 31px !important; float: left;">
 										  				<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
 													</td>
 												</tr>
@@ -8068,7 +8068,7 @@
 															   data-placeholder="Select Item..."
 															   style="width: 100%" /></select>
 													</td>													
-													<td style="padding-top: 23px !important; float: left;">
+													<td style="padding-top: 31px !important; float: left;">
 										  				<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
 													</td>
 												</tr>
@@ -8237,7 +8237,7 @@
 															   data-placeholder="Select Customer.."
 															   style="width: 100%" /></select>
 													</td>													
-													<td style="padding-top: 23px !important; float: left;">
+													<td style="padding-top: 31px !important; float: left;">
 										  				<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
 													</td>
 												</tr>
@@ -8613,7 +8613,7 @@
 															   data-placeholder="Select Customer.."
 															   style="width: 100%" /></select>
 													</td>													
-													<td style="padding-top: 23px !important; float: left;">
+													<td style="padding-top: 31px !important; float: left;">
 										  				<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
 													</td>
 												</tr>
@@ -8738,7 +8738,7 @@
 															   data-placeholder="Select Customer.."
 															   style="width: 100%" /></select>
 													</td>													
-													<td style="padding-top: 23px !important; float: left;">
+													<td style="padding-top: 31px !important; float: left;">
 										  				<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
 													</td>
 												</tr>
@@ -8901,7 +8901,7 @@
 															   data-placeholder="Select Customer.."
 															   style="width: 100%" /></select>
 													</td>													
-													<td style="padding-top: 23px !important; float: left;">
+													<td style="padding-top: 31px !important; float: left;">
 										  				<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
 													</td>
 												</tr>
@@ -9053,7 +9053,7 @@
 															   data-placeholder="Select Customer.."
 															   style="width: 100%" /></select>
 													</td>													
-													<td style="padding-top: 23px !important; float: left;">
+													<td style="padding-top: 31px !important; float: left;">
 										  				<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
 													</td>
 												</tr>
@@ -9228,7 +9228,7 @@
 															   data-placeholder="Select Customer.."
 															   style="width: 100%" /></select>
 													</td>													
-													<td style="padding-top: 23px !important; float: left;">
+													<td style="padding-top: 31px !important; float: left;">
 										  				<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
 													</td>
 												</tr>
@@ -9639,7 +9639,7 @@
 															   data-placeholder="Select Customer.."
 															   style="width: 100%" /></select>
 													</td>													
-													<td style="padding-top: 23px !important; float: left;">
+													<td style="padding-top: 31px !important; float: left;">
 										  				<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
 													</td>
 												</tr>
@@ -15339,7 +15339,7 @@
 															   data-placeholder="Select Supplier.."
 															   style="width: 100%" /></select>
 													</td>													
-													<td style="padding-top: 23px !important; float: left;">
+													<td style="padding-top: 31px !important; float: left;">
 										  				<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
 													</td>
 												</tr>
@@ -15476,7 +15476,7 @@
 															   data-placeholder="Select Supplier.."
 															   style="width: 100%" /></select>
 													</td>													
-													<td style="padding-top: 23px !important; float: left;">
+													<td style="padding-top: 31px !important; float: left;">
 										  				<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
 													</td>
 												</tr>
@@ -15639,7 +15639,7 @@
 															   data-placeholder="Select Supplier.."
 															   style="width: 100%" /></select>
 													</td>													
-													<td style="padding-top: 23px !important; float: left;">
+													<td style="padding-top: 31px !important; float: left;">
 										  				<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
 													</td>
 												</tr>
@@ -15785,7 +15785,7 @@
 															   data-placeholder="Select Supplier.."
 															   style="width: 100%" /></select>
 													</td>													
-													<td style="padding-top: 23px !important; float: left;">
+													<td style="padding-top: 31px !important; float: left;">
 										  				<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
 													</td>
 												</tr>
@@ -15961,7 +15961,7 @@
 															   data-placeholder="Select Item..."
 															   style="width: 100%" /></select>
 													</td>													
-													<td style="padding-top: 23px !important; float: left;">
+													<td style="padding-top: 31px !important; float: left;">
 										  				<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
 													</td>
 												</tr>
@@ -16109,7 +16109,7 @@
 															   data-placeholder="Select Supplier.."
 															   style="width: 100%" /></select>
 													</td>													
-													<td style="padding-top: 23px !important; float: left;">
+													<td style="padding-top: 31px !important; float: left;">
 										  				<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
 													</td>
 												</tr>
@@ -16283,7 +16283,7 @@
 															   data-placeholder="Select Item..."
 															   style="width: 100%" /></select>
 													</td>													
-													<td style="padding-top: 23px !important; float: left;">
+													<td style="padding-top: 31px !important; float: left;">
 										  				<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
 													</td>
 												</tr>
@@ -16651,7 +16651,7 @@
 															   data-placeholder="Select Supplier.."
 															   style="width: 100%" /></select>
 													</td>													
-													<td style="padding-top: 23px !important; float: left;">
+													<td style="padding-top: 31px !important; float: left;">
 										  				<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
 													</td>
 												</tr>
@@ -16776,7 +16776,7 @@
 															   data-placeholder="Select Supplier.."
 															   style="width: 100%" /></select>
 													</td>													
-													<td style="padding-top: 23px !important; float: left;">
+													<td style="padding-top: 31px !important; float: left;">
 										  				<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
 													</td>
 												</tr>
@@ -16939,7 +16939,7 @@
 															   data-placeholder="Select Supplier.."
 															   style="width: 100%" /></select>
 													</td>													
-													<td style="padding-top: 23px !important; float: left;">
+													<td style="padding-top: 31px !important; float: left;">
 										  				<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
 													</td>
 												</tr>
@@ -17091,7 +17091,7 @@
 															   data-placeholder="Select Suppler.."
 															   style="width: 100%" /></select>
 													</td>													
-													<td style="padding-top: 23px !important; float: left;">
+													<td style="padding-top: 31px !important; float: left;">
 										  				<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
 													</td>
 												</tr>
@@ -22980,7 +22980,7 @@
 															   data-placeholder="Select Item..."
 															   style="width: 100%" /></select>
 													</td>
-													<td style="padding-top: 23px !important; float: left;">
+													<td style="padding-top: 31px !important; float: left;">
 										  				<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
 													</td>
 												</tr>
@@ -23118,7 +23118,7 @@
 															   data-placeholder="Select Item..."
 															   style="width: 100%" /></select>
 													</td>
-													<td style="padding-top: 23px !important; float: left;">
+													<td style="padding-top: 31px !important; float: left;">
 										  				<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
 													</td>
 												</tr>
@@ -29490,7 +29490,7 @@
 															   data-placeholder="Select Segments.."
 															   style="width: 100%" /></select>
 													</td>
-													<td style="padding-top: 23px !important; float: left;">
+													<td style="padding-top: 31px !important; float: left;">
 										  				<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
 													</td>
 												</tr>
@@ -29694,7 +29694,7 @@
 									              				required data-required-msg="required" 
 									              				style="width: 100%" />
 													</td>
-													<td style="padding-top: 23px !important; float: left;">
+													<td style="padding-top: 31px !important; float: left;">
 										  				<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
 													</td>
 												</tr>
@@ -29882,7 +29882,7 @@
 															   data-placeholder="Select Segments.."
 															   style="width: 100%" /></select>
 													</td>
-													<td style="padding-top: 23px !important; float: left;">
+													<td style="padding-top: 31px !important; float: left;">
 										  				<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
 													</td>
 												</tr>
@@ -29907,11 +29907,11 @@
 						</div>
 
 						<div class="row-fluid journal_block">
-							<div class="span4" style="width: 16.66666667%;">
+							<div class="span4" style="width: 50%;">
 								<p>No. of Account</p>
 								<span data-format="n" data-bind="text: dataSource.total"></span>
 							</div>
-							<div class="span4" style="width: 41.66666667%;">
+							<div class="span4" style="width: 50%;">
 								<p>Total Balance</p>
 								<span data-bind="text: totalBalance"></span>
 							</div>
@@ -30754,7 +30754,7 @@
 									              				required data-required-msg="required" 
 									              				style="width: 100%" />
 													</td>
-													<td style="padding-top: 23px !important; float: left;">
+													<td style="padding-top: 31px !important; float: left;">
 										  				<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
 													</td>
 												</tr>
@@ -34366,7 +34366,7 @@
 															   data-placeholder="Select Jobs.."
 															   style="width: 100%" /></select>
 													</td>													
-													<td style="padding-top: 23px !important; float: left;">
+													<td style="padding-top: 31px !important; float: left;">
 										  				<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
 													</td>
 												</tr>
@@ -37296,7 +37296,7 @@
 									              				required data-required-msg="required" 
 									              				style="width: 100%" />
 													</td>
-													<td style="padding-top: 23px !important; float: left;">
+													<td style="padding-top: 31px !important; float: left;">
 										  				<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
 													</td>
 												</tr>
@@ -37707,7 +37707,7 @@
 															   data-placeholder="Select Employee.."
 															   style="width: 100%" /></select>
 													</td>													
-													<td style="padding-top: 23px !important; float: left;">
+													<td style="padding-top: 31px !important; float: left;">
 										  				<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
 													</td>
 												</tr>
@@ -56181,7 +56181,7 @@
 		validating 			: function(){
 			var result = true, obj = this.get("obj");
 
-			if(kendo.parseFloat(obj.amount, "n3")!==kendo.parseFloat(obj.deposit, "n3")){
+			if(kendo.toString(obj.amount, "n3")!=kendo.toString(obj.deposit, "n3")){
 				$("#ntf1").data("kendoNotification").error("Remaining must be Zero!");
 
 				result = false;
@@ -84639,14 +84639,21 @@
 	});
 	banhji.statementProfitLossBySegment =  kendo.observable({
 		lang 				: langVM,
-		dataSource 			: dataStore(apiUrl + "accounting_modules/income_statement"),
+		dataSource 			: dataStore(apiUrl + "accounting_modules/journal_by_segment"),
+		segmentDS 			: banhji.source.segmentDS,
 		sortList			: banhji.source.sortList,
-		sorter 				: "all",
+		sorter 				: "month",
 		sdate 				: "",
 		edate 				: "",
-		obj 				: null,
+		obj 				: { segments: [] },
 		company 			: banhji.institute,
 		displayDate 		: "",
+		showDescription 	: false,
+		showRef 			: true,
+		showName 			: false,
+		showSegment 		: false,
+		dr 					: 0,
+		cr 					: 0,
 		pageLoad 			: function(){
 			this.search();
 		},
@@ -84685,192 +84692,70 @@
 				  	this.set("edate", "");									  
 			}
 		},
-		exArray 			: [],
 		search				: function(){
-			var self = this, para = [], displayDate = "",
+			var self = this, para = [],
+				obj = this.get("obj"),
 				start = this.get("sdate"),
-        		end = this.get("edate");
-    	
+        		end = this.get("edate"),
+        		displayDate = "";
+
+	        //Segments
+	        var segments = [];
+            if(obj.segments.length>0){            	
+            	$.each(obj.segments, function(index, value){
+            		$.each(banhji.source.segmentItemList, function(ind, val){
+            			if(val.segment_id==value){
+            				segments.push(val.id);
+            			}
+            		});
+            	});
+            	para.push({ field:"id", operator:"segments", value: segments });
+	        }
+
         	//Dates
         	if(start && end){
-            	para.push({ field:"issued_date >=", operator:"where_related_transaction", value: kendo.toString(new Date(start), "yyyy-MM-dd") });
-            	para.push({ field:"issued_date <=", operator:"where_related_transaction", value: kendo.toString(new Date(end), "yyyy-MM-dd") });
+        		start = new Date(start);
+        		end = new Date(end);
+        		displayDate = "From " + kendo.toString(start, "dd-MM-yyyy") + " To " + kendo.toString(end, "dd-MM-yyyy");
+        		end.setDate(end.getDate()+1);
 
-            	displayDate = "From " + kendo.toString(new Date(start), "dd-MM-yyyy") + " To " + kendo.toString(new Date(end), "dd-MM-yyyy");
+            	para.push({ field:"issued_date >=", value: kendo.toString(start, "yyyy-MM-dd") });
+            	para.push({ field:"issued_date <", value: kendo.toString(end, "yyyy-MM-dd") });
             }else if(start){
-            	para.push({ field:"issued_date", operator:"where_related_transaction", value: kendo.toString(new Date(start), "yyyy-MM-dd") });
+            	start = new Date(start);
+            	displayDate = "On " + kendo.toString(start, "dd-MM-yyyy");
 
-            	displayDate = "On " + kendo.toString(new Date(start), "dd-MM-yyyy");
+            	para.push({ field:"issued_date", value: kendo.toString(start, "yyyy-MM-dd") });
             }else if(end){
-            	para.push({ field:"issued_date <=", operator:"where_related_transaction", value: kendo.toString(new Date(end), "yyyy-MM-dd") });
+            	end = new Date(end);
+            	displayDate = "As Of " + kendo.toString(end, "dd-MM-yyyy");
+        		end.setDate(end.getDate()+1);
 
-            	displayDate = "As Of " + kendo.toString(new Date(end), "dd-MM-yyyy");
+            	para.push({ field:"issued_date <", value: kendo.toString(end, "yyyy-MM-dd") });
             }else{
             	
             }
-
             this.set("displayDate", displayDate);
 
             this.dataSource.query({
-            	filter:para
+            	filter: para,
+            	sort: [
+			  		{ field: "issued_date",  dir: "desc" },
+			  		{ field: "number", dir: "desc" }
+			  	]
             });
-            this.dataSource.bind("requestEnd", function(e){				
-				if(e.type=="read"){
-					var response = e.response;
-					self.exArray = [];
-	            	self.exArray.push({
-	            		cells: [
-	            			{ value: self.company.name, textAlign: "center", colSpan: 3 }
-	            		]
-	            	});
-	            	self.exArray.push({
-	            		cells: [
-	            			{ value: "Statement of Profit or Loss",bold: true, fontSize: 20, textAlign: "center", colSpan: 3 }
-	            		]
-	            	});
-	            	if(self.displayDate){
-		            	self.exArray.push({
-		            		cells: [
-		            			{ value: self.displayDate, textAlign: "center", colSpan: 3 }
-		            		]
-		            	});
-		            }
-	            	self.exArray.push({
-	            		cells: [
-	            			{ value: "", colSpan: 3 }
-	            		]
-	            	});
-					for (var i = 0; i < response.results.length; i++){
-						
-					    if(response.results[i].line){
-					    	self.exArray.push({
-						        cells: [
-						          	{ value: response.results[i].type, bold: true, },
-						            { value: "" },
-						            { value: "" }
-						        ]
-						    });
-						    for(var j = 0; j < response.results[i].line.length; j++){
-					          	self.exArray.push({
-					          		cells: [
-					          	  		{ value: response.results[i].line[j].number + " - " + response.results[i].line[j].name },
-					              		{ value: kendo.parseFloat(response.results[i].line[j].amount)  },
-					              		{ value: "" }
-					            	]
-					          	});
-					        }
-					        self.exArray.push({
-						        cells: [
-						          	{ value: "Total " + response.results[i].type, bold: true, },
-						            { value: "" },
-						            { value: kendo.parseFloat(response.results[i].amount), bold: true, borderTop: { color: "#000000", size: 1 }  },
-						        ]
-						    });
-						}else{
-							self.exArray.push({
-						        cells: [
-						          	{ value: response.results[i].name, bold: true, },
-						            { value: "" },
-						            { value: kendo.parseFloat(response.results[i].amount), bold: true, borderTop: { color: "#000000", size: 1 }  },
-						        ]
-						    });
-						}
-					}
-					
-				}
-			});
-		}, 
-		ExportExcel 		: function(){
-	        var workbook = new kendo.ooxml.Workbook({
-	          sheets: [
-	            {
-	              columns: [
-	                { autoWidth: true },
-	                { autoWidth: true },
-	                { autoWidth: true }
-	              ],
-	              title: "Statement of Profit or Loss",
-	              rows: this.exArray
+            var loaded = false;
+            this.dataSource.bind("requestEnd", function(e){
+            	if(e.type==="read" && loaded==false){
+            		loaded = true;
+
+            		var response = e.response;
+            		self.set("dr", kendo.toString(response.dr, "c2", banhji.locale));
+	            	self.set("cr", kendo.toString(response.cr, "c2", banhji.locale));
 	            }
-	          ]
 	        });
-	        //save the file as Excel file with extension xlsx
-	        kendo.saveAs({dataURI: workbook.toDataURL(), fileName: "StatementOfProfitOrLoss.xlsx"});
-		},
-		printGrid			: function() {
-			var gridElement = $('#grid'),
-		        printableContent = '',
-		        win = window.open('', '', 'width=990, height=900'),
-		        doc = win.document.open();
-		    var htmlStart =
-		            '<!DOCTYPE html>' +
-		            '<html>' +
-		            '<head>' +
-		            '<meta charset="utf-8" />' +
-		            '<title></title>' +
-		            '<link href="http://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />'+
-		            '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/bootstrap.css">' +
-		            '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/responsive.css">' +
-		            '<link href="<?php echo base_url(); ?>assets/invoice/invoice.css" rel="stylesheet" />'+
-		            '<link href="https://fonts.googleapis.com/css?family=Content:400,700" rel="stylesheet" type="text/css">' +
-		            '<link href="https://fonts.googleapis.com/css?family=Moul" rel="stylesheet">' +
-		            '<style>' +
-		            'html { font: 11pt sans-serif; }' +
-		            '.k-grid { border-top-width: 0; }' +
-		            '.k-grid, .k-grid-content { height: auto !important; }' +
-		            '.k-grid-content { overflow: visible !important; }' +
-		            'div.k-grid table { table-layout: auto; width: 100% !important; }' +
-		            '.k-grid .k-grid-header th { border-top: 1px solid; }' +
-		            '.k-grid-toolbar, .k-grid-pager > .k-link { display: none; }' +
-		            '</style><style type="text/css" media="print"> @page { size: portrait; margin:1mm; }'+
-		            	'.inv1 .main-color {' +
-		            		
-		            		'-webkit-print-color-adjust:exact; ' +
-		            	'} ' +
-		            	'.table.table-borderless.table-condensed  tr th { background-color: #1E4E78!important;' +
-		            	'-webkit-print-color-adjust:exact; color:#fff!important;}' +
-		            	'.table.table-borderless.table-condensed  tr th * { color: #fff!important; -webkit-print-color-adjust:exact;}' +
-		            	'.inv1 .light-blue-td { ' +
-		            		'background-color: #c6d9f1!important;' +
-		            		'text-align: left;' +
-		            		'padding-left: 5px;' +
-		            		'-webkit-print-color-adjust:exact; ' +
-		            	'}' +
-		            	'.saleSummaryCustomer .table.table-borderless.table-condensed tr td { ' +
-    						'background-color: #F2F2F2!important; -webkit-print-color-adjust:exact;' +
-						'}'+
-						'.saleSummaryCustomer .table.table-borderless.table-condensed tr:nth-child(2n+1) td { ' +
-    						' background-color: #fff!important; -webkit-print-color-adjust:exact;' +
-						'}' +
-						'.journal_block1>.span2 *, .journal_block1>.span5 * {color: #fff!important;}' +
-		            	'.journal_block1>.span2:first-child { ' +
-    						'background-color: #bbbbbb!important; -webkit-print-color-adjust:exact;' +
-						'}' +
-						'.journal_block1>.span5:last-child {' +
-							'background-color: #496cad!important; color: #fff!important; -webkit-print-color-adjust:exact; ' +
-						'}' +
-						'.journal_block1>.span5 {' +
-							'background-color: #5cc7dd!important; color: #fff!important; -webkit-print-color-adjust:exact;' +
-						'}' +
-		            	'.saleSummaryCustomer .table.table-borderless.table-condensed tfoot .bg-total td {' +
-		            		'background-color: #1C2633!important;' +
-		            		'color: #fff!important; ' + 
-		            		'-webkit-print-color-adjust:exact;' +
-		            	'}' +
-		            	'</style>' +
-		            '</head>' +
-		            '<body><div class="saleSummaryCustomer" style="padding: 0 10px;">';
-		    var htmlEnd =
-		            '</div></body>' +
-		            '</html>';
-		    
-		    printableContent = $('#invFormContent').html();
-		    doc.write(htmlStart + printableContent + htmlEnd);
-		    doc.close();
-		    setTimeout(function(){
-		    	win.print();
-		    	win.close();
-		    },2000);
+
+	        obj.set("segments", []);
 		}
 	});
 	banhji.statementProfitLossComparison =  kendo.observable({
@@ -91319,7 +91204,9 @@
 		    return dfd;	    		    	
 	    },
 	    save 				: function(){
-	    	var self = banhji.importTxn, saved = false;
+	    	var self = banhji.importTxn;
+
+	    	self.set("enableImport", false);
 
 			self.objSync()
 			.then(function(data){ //Success
@@ -91355,7 +91242,6 @@
 	    	self.dataSource.data([]);
 	    	self.itemLineDS.data([]);
 	    	self.journalLineDS.data([]);
-	    	self.set("enableImport", false);
 
 	    	//Clear upload files
             $(".k-upload-files").remove();
