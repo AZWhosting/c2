@@ -3039,7 +3039,11 @@ a.activate {
     margin: 0 auto;
     padding-left: 35px;
 }
-
+.win-wrapper{
+  width: 100%;
+  padding: 10px 30px;
+  float: left;
+}
 
 
 

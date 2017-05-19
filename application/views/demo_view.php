@@ -30634,7 +30634,7 @@
 						<table class="table table-borderless table-condensed" style="width: 70%; margin:0 auto;">
 							<tbody data-role="listview"
 					        		data-auto-bind="false"
-					        		data-template="statementProfitLoss-template"			        		
+					        		data-template="statementProfitLoss-template"
 					        		data-bind="source: dataSource"></tbody>
 						</table>
 
@@ -30680,14 +30680,14 @@
 <script id="statementProfitLossBySegment" type="text/x-kendo-template">
 	<div id="slide-form">
 		<div class="customer-background ">
-			<div class="container-960">	
+			<div class="container-960">
 				<div id="example" class="k-content saleSummaryCustomer">
-
-					<span class="glyphicons no-js remove_2 pull-right" 
+		    		<span class="glyphicons no-js remove_2 pull-right" 
 							onclick="javascript: window.history.back()"><i></i></span>
 					<br>
 					<br>
 
+					<!-- Search Taps -->
 					<div class="row-fluid">
 					    <!-- Tabs -->
 						<div class="relativeWrap" data-toggle="source-code">
@@ -30696,18 +30696,15 @@
 								<!-- Tabs Heading -->
 								<div class="widget-head">
 									<ul>
-										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i><span data-bind="text: lang.lang.date"></span></a></li>										
-										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i>Filter</a></li>
-										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab"><i></i><span data-bind="text: lang.lang.print_export"></span></a></li>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
+										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i>Filters</a></li>
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
 								<div class="widget-body">
 									<div class="tab-content">
-
 										<!-- Date -->
-								        <div class="tab-pane active" id="tab-1">									        	
-											
+										<div class="tab-pane active" id="tab-1">
 											<input data-role="dropdownlist"
 												   class="sorter"                  
 										           data-value-primitive="true"
@@ -30732,498 +30729,52 @@
 										           placeholder="To ..." >
 
 										  	<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
-							
-							        	</div>
-
-							        	<!-- Filter -->
+									    </div>
+									    <!-- Filter -->
 								        <div class="tab-pane" id="tab-2">
 											<table class="table table-condensed">
 												<tr>
-									            	<td style="padding: 0 !important; width: 96%;">
-									            		<span data-bind="text: lang.lang.account"></span>
-														<input id="ddlAccount" name="ddlAccount" 
-																data-role="dropdownlist"
-									              				data-header-template="account-header-tmpl"
-									              				data-template="account-list-tmpl"
-									              				data-value-primitive="true"
-																data-text-field="name" 
-									              				data-value-field="id"
-									              				data-bind="value: obj.account_id,
-									              							source: accountDS"
-									              				data-option-label="Select Account..."
-									              				required data-required-msg="required" 
-									              				style="width: 100%" />
+									            	<td style="padding: 8px 0 0 0 !important; ">
+														<span data-bind="text: lang.lang.segment"></span>
+														<select data-role="multiselect"
+															   data-value-primitive="true"
+															   data-value-field="id"
+															   data-text-field="name"
+															   data-bind="value: obj.segments, 
+															   			source: segmentDS"
+															   data-placeholder="Select Segments.."
+															   style="width: 100%" /></select>
 													</td>
 													<td style="padding-top: 31px !important; float: left;">
 										  				<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
 													</td>
 												</tr>
-												<tr>
-													<td style="padding: 8px 0 0 0 !important; ">
-														<span data-bind="text: lang.lang.segment"></span>
-														<select data-role="multiselect"
-															   data-value-primitive="true"
-															   data-header-template="segment-header-tmpl"
-															   data-item-template="segment-list-tmpl"
-															   data-value-field="id"
-															   data-text-field="code"
-															   data-bind="value: obj.segments, 
-															   			source: segmentItemDS,
-															   			events:{ change: segmentChanges }"
-															   data-placeholder="Select Segments.."
-															   style="width: 100%" /></select>
-													</td>
-													<td></td>
-												</tr>
 											</table>
 							        	</div>
-
-							        	<!-- PRINT/EXPORT  -->
-								        <div class="tab-pane" id="tab-3">								        	
-								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: printGrid" style="width: 80px;"><i></i> Print</span>
-								        	<!-- <span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-pdf-o"></i>
-								        		Print as PDF
-								        	</span> -->
-								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: ExportExcel" style="width: 80px;">
-								        		<i class="fa fa-file-excel-o"></i>
-								        		Export to Excel
-								        	</span>
-							        	</div>
-
-								    </div>
+							        </div>
 								</div>
 							</div>
 						</div>
 						<!-- // Tabs END -->						
 					</div>
-					
-					<div id="invFormContent" class="hello">
+
+					<div id="invFormContent">
 						<div class="block-title">
 							<h3 data-bind="text: company.name"></h3>
-							<h2>Statement of Profit or Loss by Segment</h2>
+							<h2>STATEMENT OF PROFIT OR LOSS WITH SEGMENT</h2>
 							<p data-bind="text: displayDate"></p>
 						</div>
 
-						<div id="myTable">
-						    <div class="wrapper">
-						        <table>
-						            <tr>
-						                <th class="largerFont">Account Name</th>						                
-						                <td class="last-td pos">Amount</td>
-						                <td>Segment</td>
-						                <td>Segment</td>
-						                <td>Segment</td>
-						                <td>Segment</td>
-						                <td>Segment</td>
-						                <td>Segment</td>
-						                <td>Segment</td>
-						                <td>Segment</td>
-						                <td>Segment</td>
-						                <td>Segment</td>
-						                <td>Segment</td>
-						                <td>Segment</td>
-						                <td>Segment</td>
-						                <td>Segment</td>
-						                <td>Segment</td>
-						                <td>Segment</td>
-						                <td>Segment</td>
-						                <td>Segment</td>
-						                <td>Segment</td>
-						                <td>Segment</td>
-						                <td>Segment</td>
-						                <td>Segment</td>
-						                <td>Segment</td>
-						                <td>Segment</td>
-						                <td>Segment</td>
-						                <td>Segment</td>
-						                <td>Segment</td>
-						                <td>Segment</td>
-						                <td>Segment</td>
-						                <td>Segment</td>
-						                <td>Segment</td>
-						                <td>Segment</td>
-						                <td>Segment</td>
-						                <td>Segment</td>
-						                <td>Segment</td>
-						                <td>Segment</td>
-						                <td>Segment</td>
-						                <td>Segment</td>
-						                <td>Segment</td>
-						                <td>Segment</td>
-						                <td>Segment</td>
-						            </tr>
-						            <tr>
-						                <th>TODAY</th>						                
-						                <td class="last-td">80</td>
-						                <td >1</td>
-						                <td >2</td>
-						                <td >3</td>
-						                <td >4</td>
-						                <td >5</td>
-						                <td >6</td>
-						                <td >7</td>
-						                <td >8</td>
-						                <td >9</td>
-						                <td >10</td>
-						                <td >11</td>
-						                <td >12</td>
-						                <td >13</td>
-						                <td >14</td>
-						                <td >15</td>
-						                <td >16</td>
-						                <td >17</td>
-						                <td >18</td>
-						                <td >19</td>
-						                <td >20</td>
-						                <td >21</td>
-						                <td >22</td>
-						                <td >23</td>
-						                <td >24</td>
-						                <td >25</td>
-						                <td >26</td>
-						                <td >27</td>
-						                <td >28</td>
-						                <td >29</td>
-						                <td >30</td>
-						                <td >31</td>
-						                <td >32</td>
-						                <td >33</td>
-						                <td >34</td>
-						                <td >35</td>
-						                <td >36</td>
-						                <td >37</td>
-						                <td >38</td>
-						                <td >39</td>
-						                <td >40</td>
-						                <td >41</td>
-						            </tr>
-						            <tr>
-						                <th>20-Jan-2014</th>						                
-						                <td class="last-td">95</td>
-						                <td >1</td>
-						                <td >2</td>
-						                <td >3</td>
-						                <td >4</td>
-						                <td >5</td>
-						                <td >6</td>
-						                <td >7</td>
-						                <td >8</td>
-						                <td >9</td>
-						                <td >10</td>
-						                <td >11</td>
-						                <td >12</td>
-						                <td >13</td>
-						                <td >14</td>
-						                <td >15</td>
-						                <td >16</td>
-						                <td >17</td>
-						                <td >18</td>
-						                <td >19</td>
-						                <td >20</td>
-						                <td >21</td>
-						                <td >22</td>
-						                <td >23</td>
-						                <td >24</td>
-						                <td >25</td>
-						                <td >26</td>
-						                <td >27</td>
-						                <td >28</td>
-						                <td >29</td>
-						                <td >30</td>
-						                <td >31</td>
-						                <td >32</td>
-						                <td >33</td>
-						                <td >34</td>
-						                <td >35</td>
-						                <td >36</td>
-						                <td >37</td>
-						                <td >38</td>
-						                <td >39</td>
-						                <td >40</td>
-						                <td >41</td>
-						            </tr>
-						            <tr>
-						                <th>19-Jan-2014</th>						                
-						                <td class="last-td">60</td>
-						                <td >1</td>
-						                <td >2</td>
-						                <td >3</td>
-						                <td >4</td>
-						                <td >5</td>
-						                <td >6</td>
-						                <td >7</td>
-						                <td >8</td>
-						                <td >9</td>
-						                <td >10</td>
-						                <td >11</td>
-						                <td >12</td>
-						                <td >13</td>
-						                <td >14</td>
-						                <td >15</td>
-						                <td >16</td>
-						                <td >17</td>
-						                <td >18</td>
-						                <td >19</td>
-						                <td >20</td>
-						                <td >21</td>
-						                <td >22</td>
-						                <td >23</td>
-						                <td >24</td>
-						                <td >25</td>
-						                <td >26</td>
-						                <td >27</td>
-						                <td >28</td>
-						                <td >29</td>
-						                <td >30</td>
-						                <td >31</td>
-						                <td >32</td>
-						                <td >33</td>
-						                <td >34</td>
-						                <td >35</td>
-						                <td >36</td>
-						                <td >37</td>
-						                <td >38</td>
-						                <td >39</td>
-						                <td >40</td>
-						                <td >41</td>
-						            </tr>
-						            <tr>
-						                <th>18-Jan-2014</th>						                
-						                <td class="last-td">49</td>
-						                <td >1</td>
-						                <td >2</td>
-						                <td >3</td>
-						                <td >4</td>
-						                <td >5</td>
-						                <td >6</td>
-						                <td >7</td>
-						                <td >8</td>
-						                <td >9</td>
-						                <td >10</td>
-						                <td >11</td>
-						                <td >12</td>
-						                <td >13</td>
-						                <td >14</td>
-						                <td >15</td>
-						                <td >16</td>
-						                <td >17</td>
-						                <td >18</td>
-						                <td >19</td>
-						                <td >20</td>
-						                <td >21</td>
-						                <td >22</td>
-						                <td >23</td>
-						                <td >24</td>
-						                <td >25</td>
-						                <td >26</td>
-						                <td >27</td>
-						                <td >28</td>
-						                <td >29</td>
-						                <td >30</td>
-						                <td >31</td>
-						                <td >32</td>
-						                <td >33</td>
-						                <td >34</td>
-						                <td >35</td>
-						                <td >36</td>
-						                <td >37</td>
-						                <td >38</td>
-						                <td >39</td>
-						                <td >40</td>
-						                <td >41</td>
-						            </tr>
-						            <tr>
-						                <th>17-Jan-2014</th>						                
-						                <td class="last-td">91</td>
-						                <td >1</td>
-						                <td >2</td>
-						                <td >3</td>
-						                <td >4</td>
-						                <td >5</td>
-						                <td >6</td>
-						                <td >7</td>
-						                <td >8</td>
-						                <td >9</td>
-						                <td >10</td>
-						                <td >11</td>
-						                <td >12</td>
-						                <td >13</td>
-						                <td >14</td>
-						                <td >15</td>
-						                <td >16</td>
-						                <td >17</td>
-						                <td >18</td>
-						                <td >19</td>
-						                <td >20</td>
-						                <td >21</td>
-						                <td >22</td>
-						                <td >23</td>
-						                <td >24</td>
-						                <td >25</td>
-						                <td >26</td>
-						                <td >27</td>
-						                <td >28</td>
-						                <td >29</td>
-						                <td >30</td>
-						                <td >31</td>
-						                <td >32</td>
-						                <td >33</td>
-						                <td >34</td>
-						                <td >35</td>
-						                <td >36</td>
-						                <td >37</td>
-						                <td >38</td>
-						                <td >39</td>
-						                <td >40</td>
-						                <td >41</td>
-						            </tr>
-						            <tr>
-						                <th>16-Jan-2014</th>						                
-						                <td class="last-td">70</td>
-						                <td >1</td>
-						                <td >2</td>
-						                <td >3</td>
-						                <td >4</td>
-						                <td >5</td>
-						                <td >6</td>
-						                <td >7</td>
-						                <td >8</td>
-						                <td >9</td>
-						                <td >10</td>
-						                <td >11</td>
-						                <td >12</td>
-						                <td >13</td>
-						                <td >14</td>
-						                <td >15</td>
-						                <td >16</td>
-						                <td >17</td>
-						                <td >18</td>
-						                <td >19</td>
-						                <td >20</td>
-						                <td >21</td>
-						                <td >22</td>
-						                <td >23</td>
-						                <td >24</td>
-						                <td >25</td>
-						                <td >26</td>
-						                <td >27</td>
-						                <td >28</td>
-						                <td >29</td>
-						                <td >30</td>
-						                <td >31</td>
-						                <td >32</td>
-						                <td >33</td>
-						                <td >34</td>
-						                <td >35</td>
-						                <td >36</td>
-						                <td >37</td>
-						                <td >38</td>
-						                <td >39</td>
-						                <td >40</td>
-						                <td >41</td>
-						            </tr>
-						            <tr>
-						                <th>15-Jan-2014</th>						                
-						                <td class="last-td">21</td>
-						                <td >1</td>
-						                <td >2</td>
-						                <td >3</td>
-						                <td >4</td>
-						                <td >5</td>
-						                <td >6</td>
-						                <td >7</td>
-						                <td >8</td>
-						                <td >9</td>
-						                <td >10</td>
-						                <td >11</td>
-						                <td >12</td>
-						                <td >13</td>
-						                <td >14</td>
-						                <td >15</td>
-						                <td >16</td>
-						                <td >17</td>
-						                <td >18</td>
-						                <td >19</td>
-						                <td >20</td>
-						                <td >21</td>
-						                <td >22</td>
-						                <td >23</td>
-						                <td >24</td>
-						                <td >25</td>
-						                <td >26</td>
-						                <td >27</td>
-						                <td >28</td>
-						                <td >29</td>
-						                <td >30</td>
-						                <td >31</td>
-						                <td >32</td>
-						                <td >33</td>
-						                <td >34</td>
-						                <td >35</td>
-						                <td >36</td>
-						                <td >37</td>
-						                <td >38</td>
-						                <td >39</td>
-						                <td >40</td>
-						                <td >41</td>
-						            </tr>
-						            <tr>
-						                <th>14-Jan-2014</th>						                
-						                <td class="last-td">21</td>
-						                <td >1</td>
-						                <td >2</td>
-						                <td >3</td>
-						                <td >4</td>
-						                <td >5</td>
-						                <td >6</td>
-						                <td >7</td>
-						                <td >8</td>
-						                <td >9</td>
-						                <td >10</td>
-						                <td >11</td>
-						                <td >12</td>
-						                <td >13</td>
-						                <td >14</td>
-						                <td >15</td>
-						                <td >16</td>
-						                <td >17</td>
-						                <td >18</td>
-						                <td >19</td>
-						                <td >20</td>
-						                <td >21</td>
-						                <td >22</td>
-						                <td >23</td>
-						                <td >24</td>
-						                <td >25</td>
-						                <td >26</td>
-						                <td >27</td>
-						                <td >28</td>
-						                <td >29</td>
-						                <td >30</td>
-						                <td >31</td>
-						                <td >32</td>
-						                <td >33</td>
-						                <td >34</td>
-						                <td >35</td>
-						                <td >36</td>
-						                <td >37</td>
-						                <td >38</td>
-						                <td >39</td>
-						                <td >40</td>
-						                <td >41</td>
-						            </tr>
-						        </table>
-						    </div>
-						</div>
+						
 						
 					</div>
-		        </div>		        
-			</div>							
+
+				</div>
+			</div>
 		</div>
 	</div>
 </script>
-<!-- <script id="statementProfitLossBySegment-template" type="text/x-kendo-tmpl">
+<script id="statementProfitLossBySegment-template" type="text/x-kendo-tmpl">
 	#if(id>0){#
 		<tr>
 			<td colspan="3" style="font-weight: bold; color: black;">#: type #</td>
@@ -31253,12 +30804,8 @@
 			<td colspan="2" style="font-weight: bold; color: black;">#: name #</td>
 			<td class="right" style="font-weight: bold; color: black;">#: kendo.toString(amount, "c", banhji.locale) #</td>
 		</tr>
-		<tr>
-			<td></td>
-			<td></td>
-		</tr>
 	#}# 
-</script> -->
+</script>
 <script id="statementFinancialPosition" type="text/x-kendo-template">
 	<div id="slide-form">
 		<div class="customer-background ">
@@ -34051,9 +33598,10 @@
 														<h3><a href="#/journal_report_by_segment" data-bind="text: lang.lang.journal_entry_report_with_segment"></a></h3>
 													</td>
 													<td class="span4">
-														<h3><a href="#/general_ledger_by_segment">General Ledger With Segment</a></h3>							
+														<h3><a href="#/general_ledger_by_segment">General Ledger With Segment</a></h3>
 													</td>
-													<td class="span4">														
+													<td class="span4">
+														<h3><a href="#/statement_profit_loss_by_segment">Statement of Profit or Loss With Segment</a></h3>
 													</td>						
 												</tr>
 											</table>
@@ -84398,7 +83946,7 @@
 	});
 	banhji.statementProfitLoss =  kendo.observable({
 		lang 				: langVM,
-		dataSource 			: dataStore(apiUrl + "accounting_modules/income_statement"),		
+		dataSource 			: dataStore(apiUrl + "accounting_modules/income_statement"),
 		sortList			: banhji.source.sortList,
 		sorter 				: "all",
 		sdate 				: "",
@@ -84639,7 +84187,7 @@
 	});
 	banhji.statementProfitLossBySegment =  kendo.observable({
 		lang 				: langVM,
-		dataSource 			: dataStore(apiUrl + "accounting_modules/journal_by_segment"),
+		dataSource 			: dataStore(apiUrl + "accounting_modules/income_statement_by_segment"),
 		segmentDS 			: banhji.source.segmentDS,
 		sortList			: banhji.source.sortList,
 		sorter 				: "month",
@@ -84648,14 +84196,8 @@
 		obj 				: { segments: [] },
 		company 			: banhji.institute,
 		displayDate 		: "",
-		showDescription 	: false,
-		showRef 			: true,
-		showName 			: false,
-		showSegment 		: false,
-		dr 					: 0,
-		cr 					: 0,
 		pageLoad 			: function(){
-			this.search();
+			// this.search();
 		},
 		sorterChanges 		: function(){
 	        var today = new Date(),
@@ -84700,16 +84242,18 @@
         		displayDate = "";
 
 	        //Segments
-	        var segments = [];
+	        var segments = [], segmentItems = [];
             if(obj.segments.length>0){            	
             	$.each(obj.segments, function(index, value){
+            		segments.push(value);
             		$.each(banhji.source.segmentItemList, function(ind, val){
             			if(val.segment_id==value){
-            				segments.push(val.id);
+            				segmentItems.push(val.id);
             			}
             		});
             	});
             	para.push({ field:"id", operator:"segments", value: segments });
+            	para.push({ field:"id", operator:"where_related_segmentitem", value: segmentItems });            	
 	        }
 
         	//Dates
@@ -84719,41 +84263,27 @@
         		displayDate = "From " + kendo.toString(start, "dd-MM-yyyy") + " To " + kendo.toString(end, "dd-MM-yyyy");
         		end.setDate(end.getDate()+1);
 
-            	para.push({ field:"issued_date >=", value: kendo.toString(start, "yyyy-MM-dd") });
-            	para.push({ field:"issued_date <", value: kendo.toString(end, "yyyy-MM-dd") });
+            	para.push({ field:"issued_date >=", operator:"where_related_transaction", value: kendo.toString(start, "yyyy-MM-dd") });
+            	para.push({ field:"issued_date <", operator:"where_related_transaction", value: kendo.toString(end, "yyyy-MM-dd") });
             }else if(start){
             	start = new Date(start);
             	displayDate = "On " + kendo.toString(start, "dd-MM-yyyy");
 
-            	para.push({ field:"issued_date", value: kendo.toString(start, "yyyy-MM-dd") });
+            	para.push({ field:"issued_date", operator:"where_related_transaction", value: kendo.toString(start, "yyyy-MM-dd") });
             }else if(end){
             	end = new Date(end);
             	displayDate = "As Of " + kendo.toString(end, "dd-MM-yyyy");
         		end.setDate(end.getDate()+1);
 
-            	para.push({ field:"issued_date <", value: kendo.toString(end, "yyyy-MM-dd") });
+            	para.push({ field:"issued_date <", operator:"where_related_transaction", value: kendo.toString(end, "yyyy-MM-dd") });
             }else{
             	
             }
             this.set("displayDate", displayDate);
 
             this.dataSource.query({
-            	filter: para,
-            	sort: [
-			  		{ field: "issued_date",  dir: "desc" },
-			  		{ field: "number", dir: "desc" }
-			  	]
+            	filter: para
             });
-            var loaded = false;
-            this.dataSource.bind("requestEnd", function(e){
-            	if(e.type==="read" && loaded==false){
-            		loaded = true;
-
-            		var response = e.response;
-            		self.set("dr", kendo.toString(response.dr, "c2", banhji.locale));
-	            	self.set("cr", kendo.toString(response.cr, "c2", banhji.locale));
-	            }
-	        });
 
 	        obj.set("segments", []);
 		}
@@ -97965,7 +97495,7 @@
 
 			if(banhji.pageLoaded["statement_profit_loss_by_segment"]==undefined){
 				banhji.pageLoaded["statement_profit_loss_by_segment"] = true;
-
+				
 			}
 
 			vm.pageLoad();

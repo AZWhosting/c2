@@ -23646,7 +23646,7 @@
 		localforage.getItem('user')
 		.then(function(data){
 			for(var i = 0; i < data.roles.length; i++) {
-				if('print_bill' == data.roles[i].name){
+				if('reciept' == data.roles[i].name){
 				banhji.view.layout.showIn("#content", banhji.view.Receipt);
 				banhji.view.layout.showIn('#menu', banhji.view.menu);
 				banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);

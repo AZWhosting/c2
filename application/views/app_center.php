@@ -44358,7 +44358,6 @@
 							                      events: { change: sorterChanges }"
 							           	style="width: 100%; float: right;" />
 								</div>
-				        	
 
 					        	<div class="row-fluid" style="margin-top: 20px; float: left; background: #ebeef3; padding: 15px 20px 0; width: 100%;">
 					        		<h2>Apps Recommended For You</h2>
@@ -44389,7 +44388,7 @@
 					        		<h2>Featured</h2>
 					        		<div class="row" style="margin-top: 20px;">
 					        			<div class="col-xs-12 col-sm-6 col-md-3">
-					        				<a href="" data-bind="click: openWindow">
+					        				<a data-bind="click: openWindow">
 					        					<div class="app-recommand ">
 					        						<div class="appIcon">
 					        							<img src="https://images.appcenter.intuit.com/Content/images/AppCards/b7q4xvfdhu/Submitted23/LogoName.png" />
@@ -44420,7 +44419,7 @@
 					        				</a>
 					        			</div>
 					        			<div class="col-xs-12 col-sm-6 col-md-3">
-					        				<a href="" data-bind="click: openWindow">
+					        				<a>
 					        					<div class="app-recommand ">
 					        						<div class="appIcon">
 					        							<img src="https://images.appcenter.intuit.com/Content/images/AppCards/b7q4xvfdhu/Submitted23/LogoName.png" />
@@ -44451,7 +44450,7 @@
 					        				</a>
 					        			</div>
 					        			<div class="col-xs-12 col-sm-6 col-md-3">
-					        				<a href="">
+					        				<a>
 					        					<div class="app-recommand ">
 					        						<div class="appIcon">
 					        							<img src="https://images.appcenter.intuit.com/Content/images/AppCards/b7q4xvfdhu/Submitted23/LogoName.png" />
@@ -44482,7 +44481,7 @@
 					        				</a>
 					        			</div>
 					        			<div class="col-xs-12 col-sm-6 col-md-3">
-					        				<a href="">
+					        				<a >
 					        					<div class="app-recommand ">
 					        						<div class="appIcon">
 					        							<img src="https://images.appcenter.intuit.com/Content/images/AppCards/b7q4xvfdhu/Submitted23/LogoName.png" />
@@ -44514,6 +44513,66 @@
 					        			</div>
 					        		</div>
 					        	</div>
+
+
+					        	<!-- Tax Type Window -->
+							    <div data-role="window"
+						            data-width="90%"
+						            data-height="700"
+						            data-actions="{}"
+						            data-modal="true"
+						            data-position="{top: '7%', left: '5%'}"
+						            data-bind="visible: windowVisible">
+
+						    		<div class="win-wrapper">
+						    			<div class="window-header">
+						    				<span class="btn btn-danger btn-icon glyphicons remove_2" data-bind="click: closeWindow"><i></i><span data-bind="text: lang.lang.close"></span></span> 
+						    				<div class="win-logo">
+						    					<img src="https://lh3.googleusercontent.com/wZMwJuLJFa8G-gituAAdM0ckm9tpYdj6fnmVtEg-Sdxu2a77auIvDOwt1PBGAYIIebDZr40=s26-h26-e365-rw">
+						    				</div>
+						    			</div>
+						    			<div class="window-content">
+						    				<div class="span12">
+												<div class="relativeWrap" data-toggle="source-code">
+													<div class="widget widget-tabs widget-tabs-gray report-tab" style="background: #fff; overflow: hidden;">
+														<div class="widget-head head-custom" style="height: 50px;">
+															<ul>
+																<li class="active"><a href="#tab-1" data-toggle="tab"><i></i><span >Overview</span></a></li>
+																<li><a href="#tab-2" data-toggle="tab"><i></i><span >REVIEW</span></a></li>
+																<li><a href="#tab-3" data-toggle="tab"><i></i><span >RELATED</span></a></li>
+															</ul>
+														</div>
+
+														<div class="widget-body" style="float: left; width: 100%;">
+															<div class="tab-content">
+														        <div class="tab-pane active" id="tab-1">
+																	<div class="row-fluid" style="">
+																		Tab 1
+																	</div>
+													        	</div>
+
+													        	<div class="tab-pane" id="tab-2">
+														        	<div class="row-fluid" style="">
+														        		Tab 2
+														        	</div>
+
+													        	</div>
+													        	
+														    </div>
+														</div>
+													</div>
+												</div>		
+											</div>
+						    			</div>
+						    		</div>
+
+									<br>
+									<!-- <div style="text-align: center;">
+										<span class="btn btn-success btn-icon glyphicons ok_2" data-bind="click: save"><i></i>Save</span>
+										<span class="btn btn-danger btn-icon glyphicons remove_2" data-bind="click: closeWindow"><i></i><span data-bind="text: lang.lang.close"></span></span> 
+									</div>  -->
+								</div>
+
 
 					        	<div class="row-fluid" style="float: left; background: #ebeef3 ; padding: 15px 20px 0; width: 100%;">
 					        		<h2>Newest</h2>
@@ -91097,172 +91156,7 @@
 
 	/*************************************************
 	*   APP CENTER		  							 *
-	*************************************************/
-	// banhji.appCenter = kendo.observable({
-	// 	lang 				: langVM,
-	// 	dataSource 			: dataStore(apiUrl + "customer_modules/dashboard"),
-	// 	topCustomerDS 		: dataStore(apiUrl + "customer_modules/top_customer"),
-	// 	topARDS 			: dataStore(apiUrl + "customer_modules/top_ar"),
-	// 	topProductDS 		: dataStore(apiUrl + "inventory_modules/top_sale_product"),
-	// 	graphDS 			: dataStore(apiUrl + "customer_modules/monthly_sale"),
-	// 	obj 				: {},
-	// 	pageLoad 			: function(){
-	// 		this.setObj();
-	// 		this.loadData();
-	// 	},
-	// 	setObj 		: function(){
-	// 		this.set("obj", {
-	// 			//AR
-	// 			ar 					: 0,
-	// 			ar_open 			: 0,
-	// 			ar_customer 		: 0,
-	// 			ar_overdue 			: 0,
-	// 			//AP
-	// 			ap 					: 0,
-	// 			ap_open 			: 0,
-	// 			ap_vendor 			: 0,
-	// 			ap_overdue 			: 0,
-	// 			//Performance
-	// 			income 				: 0,
-	// 			expense 			: 0,
-	// 			net_income 			: 0,
-	// 			//Position
-	// 			asset 				: 0,
-	// 			liability 	 		: 0,
-	// 			equity 	 			: 0
-	// 		});
-	// 	},
-	// 	loadData 			: function(){
-	// 		var self = this, obj = this.get("obj");
-
-	// 		this.graphDS.read();
-
-	// 		this.dataSource.query({
-	// 			filter: [],
-	// 			page: 1,
-	// 			pageSize: 5
-	// 		}).then(function(){
-	// 			var view = self.dataSource.view();
-				
-	// 			obj.set("ar", kendo.toString(view[0].ar, banhji.locale=="km-KH"?"c0":"c2", banhji.locale));
-	// 			obj.set("ar_open", kendo.toString(view[0].ar_open, "n0"));
-	// 			obj.set("ar_customer", kendo.toString(view[0].ar_customer, "n0"));
-	// 			obj.set("ar_overdue", kendo.toString(view[0].ar_overdue, "n0"));
-
-	// 			obj.set("ap", kendo.toString(view[0].ap, banhji.locale=="km-KH"?"c0":"c2", banhji.locale));
-	// 			obj.set("ap_open", kendo.toString(view[0].ap_open, "n0"));
-	// 			obj.set("ap_vendor", kendo.toString(view[0].ap_vendor, "n0"));
-	// 			obj.set("ap_overdue", kendo.toString(view[0].ap_overdue, "n0"));
-	// 		});
-
-	// 		this.summaryDS.query({
-	// 			filter: [],
-	// 			page: 1,
-	// 			pageSize: 5
-	// 		}).then(function(){
-	// 			var view = self.summaryDS.view();
-				
-	// 			obj.set("income", kendo.toString(view[0].income, banhji.locale=="km-KH"?"c0":"c2", banhji.locale));
-	// 			obj.set("expense", kendo.toString(view[0].expense, banhji.locale=="km-KH"?"c0":"c2", banhji.locale));
-	// 			obj.set("net_income", kendo.toString(view[0].net_income, banhji.locale=="km-KH"?"c0":"c2", banhji.locale));
-				
-	// 			obj.set("asset", kendo.toString(view[0].asset, banhji.locale=="km-KH"?"c0":"c2", banhji.locale));
-	// 			obj.set("liability", kendo.toString(view[0].liability, banhji.locale=="km-KH"?"c0":"c2", banhji.locale));
-	// 			obj.set("equity", kendo.toString(view[0].equity, banhji.locale=="km-KH"?"c0":"c2", banhji.locale));
-	// 		});
-	// 	}
-	// });
-	// banhji.riceMill = kendo.observable({
-	// 	lang 				: langVM,
-	// 	graphDS 			: dataStore(apiUrl+"cash_modules/cash_in_out"),
-	// 	pageLoad 			: function(){
-	// 		this.setObj();
-	// 		this.loadData();
-	// 		this.dataSource.query({
-	// 			filter: [],
-	// 			page: 1,
-	// 			pageSize: 100
-	// 		}).then(function(){
-	// 			var view = self.dataSource.view();				
-				
-	// 			self.set("quickRatio", kendo.toString(view[0].quickRatio, "n"));
-	// 			self.set("currentRatio", kendo.toString(view[0].currentRatio, "n"));
-	// 			self.set("cashRatio", kendo.toString(view[0].cashRatio, "n"));
-				
-	// 			self.set("wcSale", kendo.toString(view[0].wcSale, "p"));
-	// 			self.set("grossProfitMargin", kendo.toString(view[0].grossProfitMargin, "p"));
-	// 			self.set("profitMargin", kendo.toString(view[0].profitMargin, "p"));
-	// 			self.set("returnOnAsset", kendo.toString(view[0].returnOnAsset, "n"));
-				
-	// 			self.set("roce", kendo.toString(view[0].roce, "p"));
-	// 			self.set("arCollectionPeriod", kendo.toString(view[0].arCollectionPeriod, "n"));
-	// 			self.set("apPaymentPeriod", kendo.toString(view[0].apPaymentPeriod, "n"));
-	// 			self.set("inventoryTurnOver", kendo.toString(view[0].inventoryTurnOver, "n"));
-	// 			self.set("ccc", kendo.toString(view[0].ccc, "n"));
-	// 		});
-	// 	},
-	// 	setObj 		: function(){
-	// 		this.set("obj", {
-	// 			//AR
-	// 			ar 					: 0,
-	// 			ar_open 			: 0,
-	// 			ar_customer 		: 0,
-	// 			ar_overdue 			: 0,
-	// 			//AP
-	// 			ap 					: 0,
-	// 			ap_open 			: 0,
-	// 			ap_vendor 			: 0,
-	// 			ap_overdue 			: 0,
-	// 			//Performance
-	// 			income 				: 0,
-	// 			expense 			: 0,
-	// 			net_income 			: 0,
-	// 			//Position
-	// 			asset 				: 0,
-	// 			liability 	 		: 0,
-	// 			equity 	 			: 0
-	// 		});
-	// 	},
-	// 	loadData 			: function(){
-	// 		var self = this, obj = this.get("obj");
-
-	// 		this.graphDS.read();
-
-	// 		this.dataSource.query({
-	// 			filter: [],
-	// 			page: 1,
-	// 			pageSize: 5
-	// 		}).then(function(){
-	// 			var view = self.dataSource.view();
-				
-	// 			obj.set("ar", kendo.toString(view[0].ar, banhji.locale=="km-KH"?"c0":"c2", banhji.locale));
-	// 			obj.set("ar_open", kendo.toString(view[0].ar_open, "n0"));
-	// 			obj.set("ar_customer", kendo.toString(view[0].ar_customer, "n0"));
-	// 			obj.set("ar_overdue", kendo.toString(view[0].ar_overdue, "n0"));
-
-	// 			obj.set("ap", kendo.toString(view[0].ap, banhji.locale=="km-KH"?"c0":"c2", banhji.locale));
-	// 			obj.set("ap_open", kendo.toString(view[0].ap_open, "n0"));
-	// 			obj.set("ap_vendor", kendo.toString(view[0].ap_vendor, "n0"));
-	// 			obj.set("ap_overdue", kendo.toString(view[0].ap_overdue, "n0"));
-	// 		});
-
-	// 		this.summaryDS.query({
-	// 			filter: [],
-	// 			page: 1,
-	// 			pageSize: 5
-	// 		}).then(function(){
-	// 			var view = self.summaryDS.view();
-				
-	// 			obj.set("income", kendo.toString(view[0].income, banhji.locale=="km-KH"?"c0":"c2", banhji.locale));
-	// 			obj.set("expense", kendo.toString(view[0].expense, banhji.locale=="km-KH"?"c0":"c2", banhji.locale));
-	// 			obj.set("net_income", kendo.toString(view[0].net_income, banhji.locale=="km-KH"?"c0":"c2", banhji.locale));
-				
-	// 			obj.set("asset", kendo.toString(view[0].asset, banhji.locale=="km-KH"?"c0":"c2", banhji.locale));
-	// 			obj.set("liability", kendo.toString(view[0].liability, banhji.locale=="km-KH"?"c0":"c2", banhji.locale));
-	// 			obj.set("equity", kendo.toString(view[0].equity, banhji.locale=="km-KH"?"c0":"c2", banhji.locale));
-	// 		});
-	// 	}
-	// });
+	*************************************************/	
 	banhji.appCenter = kendo.observable({
 		lang 				: langVM,
 		dataSource 			: dataStore(apiUrl + "customer_modules/dashboard"),
@@ -91270,10 +91164,22 @@
 		topARDS 			: dataStore(apiUrl + "customer_modules/top_ar"),
 		topProductDS 		: dataStore(apiUrl + "inventory_modules/top_sale_product"),
 		graphDS 			: dataStore(apiUrl + "customer_modules/monthly_sale"),
+		windowVisible 		: false,
+		windowItemVisible 	: false,
 		obj 				: {},
 		pageLoad 			: function(){
 			this.loadData();
 		},
+		openWindow			: function(){
+      		//this.addType();
+
+         	this.set("windowVisible", true);
+      	},
+      	closeWindow 		: function(){
+      		//this.dataSource.cancelChanges();
+
+      		this.set("windowVisible", false);
+      	},
 		setObj 				: function(){
 			this.set("obj", {
 				//Sale
