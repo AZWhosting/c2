@@ -902,7 +902,7 @@ class UtibillReports extends REST_Controller {
 			}
 		}
 
-		$obj->include_related("contact", array("abbr", "number", "address", "phone"));
+		$obj->include_related("contact", array("abbr", "number", "address", "phone", "name"));
 		$obj->get_iterated();
 
 		if($obj->exists()){

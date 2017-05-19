@@ -9101,7 +9101,7 @@
 	<tr>
 		<td colspan="6" style="font-weight: bold;">#: name #</td>
     	<td class="right strong" style="color: black;">
-    		#=kendo.toString(balance_forward, locale=="km-KH"?"c0":"c", banhji.locale)#
+    		#=kendo.toString(balance_forward)#
     	</td>
 	</tr>
 	#var balance = balance_forward;#
@@ -21607,6 +21607,7 @@
 		obj 				: { contactIds: [], licenseID:0 , locationID: []},
 		company 			: banhji.institute,
 		displayDate 		: "",
+		sorter 				: "month",
 		as_of 				: new Date(),
 		totalAmount 		: 0,
 		exArray 			: [],

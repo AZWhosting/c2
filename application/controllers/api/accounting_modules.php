@@ -2219,7 +2219,7 @@ class Accounting_modules extends REST_Controller {
 				}
 			}
 		}
-		
+
 		$obj->include_related("transaction", array("rate"));
 		$obj->include_related("account", array("number","name","account_type_id"));
 		$obj->include_related("account/account_type", array("name","nature"));
@@ -2241,8 +2241,8 @@ class Accounting_modules extends REST_Controller {
 
 				$accountId = $value->account_id;
 
-				if(isset($objList[$value->account_id])){
-					$objList[$value->account_id]["amount"] += $amount;
+				if(isset($objList[$accountId])){
+					$objList[$accountId]["amount"] += $amount;
 				}else{
 					$objList[$accountId]["id"] 		= $accountId;
 					$objList[$accountId]["type_id"]	= $value->account_account_type_id;
@@ -2250,6 +2250,21 @@ class Accounting_modules extends REST_Controller {
 					$objList[$accountId]["number"] 	= $value->account_number;
 					$objList[$accountId]["name"] 	= $value->account_name;
 					$objList[$accountId]["amount"]	= $amount;
+
+					$segItems = new Segmentitem(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					$segItems->where_in("id", explode(",", $value->segments));
+					$segItems->get();
+
+					foreach ($segmentList as $row) {
+						$segAmount = 0;
+						foreach ($segItems as $sg) {
+							if($sg->segment_id==$row){
+
+							}
+						}
+						
+						$objList[$accountId][$row] = $amount;
+					}
 				}
 			}
 
@@ -2266,13 +2281,6 @@ class Accounting_modules extends REST_Controller {
 					$typeList[$typeId]["type"] 		= $value["type"];
 					$typeList[$typeId]["amount"] 	= $value["amount"];
 					$typeList[$typeId]["line"][] 	= $value;
-
-					foreach ($segmentList as $sg) {
-						$segments = new Segment(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-						$segments->get_by_id(8);
-						$data["sg"][] = $segments;
-						// $typeList[$typeId][$segments[0]->name] = $value["amount"];
-					}
 				}
 			}
 
@@ -2382,7 +2390,7 @@ class Accounting_modules extends REST_Controller {
 
 
 			$data["count"] = count($data["results"]);			
-		}		
+		}
 
 		//Response Data		
 		$this->response($data, 200);	

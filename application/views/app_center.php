@@ -44515,7 +44515,7 @@
 					        	</div>
 
 
-					        	<!-- Tax Type Window -->
+					        	<!-- Window -->
 							    <div data-role="window"
 						            data-width="90%"
 						            data-height="700"

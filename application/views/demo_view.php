@@ -83900,7 +83900,7 @@
             			}
             		});
             	});
-            	para.push({ field:"id", operator:"where_related_segmentitem", value: segments });
+            	para.push({ field:"id", operator:"where_in_related_segmentitem", value: segments });
 	        }
 
         	//Dates
@@ -84243,9 +84243,10 @@
 
 	        //Segments
 	        var segments = [], segmentItems = [];
-            if(obj.segments.length>0){            	
+            if(obj.segments.length>0){
             	$.each(obj.segments, function(index, value){
             		segments.push(value);
+
             		$.each(banhji.source.segmentItemList, function(ind, val){
             			if(val.segment_id==value){
             				segmentItems.push(val.id);
@@ -84253,7 +84254,7 @@
             		});
             	});
             	para.push({ field:"id", operator:"segments", value: segments });
-            	para.push({ field:"id", operator:"where_related_segmentitem", value: segmentItems });            	
+            	para.push({ field:"id", operator:"where_in_related_segmentitem", value: segmentItems });            	
 	        }
 
         	//Dates
