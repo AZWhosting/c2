@@ -44520,7 +44520,7 @@
 						            data-width="90%"
 						            data-height="700"
 						            data-actions="{}"
-						            data-modal="true"
+						            data-modal="{mask: 'true'}"
 						            data-position="{top: '7%', left: '5%'}"
 						            data-bind="visible: windowVisible">
 

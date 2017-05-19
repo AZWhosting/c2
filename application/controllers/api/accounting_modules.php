@@ -2240,6 +2240,7 @@ class Accounting_modules extends REST_Controller {
 				}
 
 				$accountId = $value->account_id;
+
 				if(isset($objList[$value->account_id])){
 					$objList[$value->account_id]["amount"] += $amount;
 				}else{
@@ -2256,6 +2257,7 @@ class Accounting_modules extends REST_Controller {
 			$typeList = [];
 			foreach ($objList as $value) {
 				$typeId = $value["type_id"];
+
 				if(isset($typeList[$typeId])){
 					$typeList[$typeId]["amount"] 	+= $value["amount"];
 					$typeList[$typeId]["line"][] 	= $value;
@@ -2267,9 +2269,9 @@ class Accounting_modules extends REST_Controller {
 
 					foreach ($segmentList as $sg) {
 						$segments = new Segment(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-						$segments->get_by_id($sg);
-
-						$typeList[$typeId][$segments->name] = $value["amount"];
+						$segments->get_by_id(8);
+						$data["sg"][] = $segments;
+						// $typeList[$typeId][$segments[0]->name] = $value["amount"];
 					}
 				}
 			}
