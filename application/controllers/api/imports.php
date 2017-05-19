@@ -462,10 +462,10 @@ class Imports extends REST_Controller {
 			$sublocation->select('id, branch_id')->where('name', $row->sub_bloc)->limit(1)->get();
 			$box = new Location(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$box->select('id, branch_id')->where('name', $row->box)->limit(1)->get();
-			
+			$startup = intval($row->start_up);
 			$meter->number = isset($row->number) ? $row->number : 0;
 			$meter->worder = isset($row->order) ? $row->order : $order;
-			$meter->startup_reader = isset($row->start_up) ? $row->start_up : 0;
+			$meter->startup_reader = isset($startup) ? $startup : 0;
 			$meter->number_digit = $row->digit_number;
 			$meter->multiplier = 1;
 			$meter->activated = 1;

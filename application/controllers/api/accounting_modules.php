@@ -2252,18 +2252,18 @@ class Accounting_modules extends REST_Controller {
 					$objList[$accountId]["amount"]	= $amount;
 
 					$segItems = new Segmentitem(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-					$segItems->where_in("id", explode(",", $value->segments));
+					$segItems->where_in("id", explode(",",intval($value->segments)));
 					$segItems->get();
 
 					foreach ($segmentList as $row) {
 						$segAmount = 0;
 						foreach ($segItems as $sg) {
 							if($sg->segment_id==$row){
-
+								$segAmount = $amount;
 							}
 						}
 						
-						$objList[$accountId][$row] = $amount;
+						$objList[$accountId][$row] = $segAmount;
 					}
 				}
 			}

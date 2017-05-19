@@ -109,15 +109,15 @@ class Readings extends REST_Controller {
 			$obj = new Meter_record(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$meter = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$meter->where('number', $value->meter_number)->get();
-
+			$current = intval($value->current);
 			$obj->meter_id 				= isset($meter->id)					?$meter->id: "";
 			$obj->previous 				= isset($value->previous)			?$value->previous: "";
-			$obj->current 				= isset($value->current)			?$value->current: "";
+			$obj->current 				= isset($current)			?$current: "";
 			$obj->from_date 			= isset($value->from_date) 			? date('Y-m-d', strtotime($value->from_date)) : date('Y-m-d');
 			$obj->month_of 				= isset($value->month_of)			? date('Y-m-d', strtotime($value->month_of)): date('Y-m-d');
 			$obj->to_date 				= isset($value->to_date)			? date('Y-m-d', strtotime($value->to_date)):date('Y-m-d');
 			$obj->invoiced 				= isset($value->invoiced)    		? $value->invoiced : 0;
-			$obj->usage    = intval($value->current) - intval($value->previous);
+			$obj->usage    = intval($current) - intval($value->previous);
 			
 			
 			if($obj->save()){								
