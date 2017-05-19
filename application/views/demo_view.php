@@ -30765,7 +30765,12 @@
 							<p data-bind="text: displayDate"></p>
 						</div>
 
-						
+						<table class="table table-borderless table-condensed" style="width: 70%; margin:0 auto;">
+							<tbody data-role="listview"
+					        		data-auto-bind="false"
+					        		data-template="statementProfitLoss-template"
+					        		data-bind="source: dataSource"></tbody>
+						</table>
 						
 					</div>
 
@@ -97497,6 +97502,7 @@
 			if(banhji.pageLoaded["statement_profit_loss_by_segment"]==undefined){
 				banhji.pageLoaded["statement_profit_loss_by_segment"] = true;
 				
+				vm.sorterChanges();
 			}
 
 			vm.pageLoad();

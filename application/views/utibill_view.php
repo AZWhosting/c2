@@ -21911,10 +21911,9 @@
 			    		$("#loadImport").css("display","none");
 			    		$('li.k-file').remove();
 			    		self.dataSource.data([]);
-						
 					}				  				
 			    });
-			    banhji.importItem.dataSource.bind("error", function(e){		    		    	
+			    banhji.importItem.dataSource.bind("error", function(e){	
 					var notifi = $("#ntf1").data("kendoNotification");
 					notifi.hide();
 					notifi.error(self.lang.lang.error_message);

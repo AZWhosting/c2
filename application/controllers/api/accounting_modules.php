@@ -2239,10 +2239,27 @@ class Accounting_modules extends REST_Controller {
 					$amount = (floatval($value->cr) - floatval($value->dr)) / floatval($value->transaction_rate);					
 				}
 
+				$segItems = new Segmentitem(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$segItems->where_in("id", explode(",",intval($value->segments)));
+				$segItems->get();
+
 				$accountId = $value->account_id;
 
 				if(isset($objList[$accountId])){
 					$objList[$accountId]["amount"] += $amount;
+
+					foreach ($segmentList as $row) {
+						$segAmount = 0;
+						foreach ($segItems as $sg) {
+							if($sg->segment_id==$row){
+								$segAmount = $amount;
+
+								break;
+							}
+						}
+						
+						$objList[$accountId][$row] += $segAmount;
+					}
 				}else{
 					$objList[$accountId]["id"] 		= $accountId;
 					$objList[$accountId]["type_id"]	= $value->account_account_type_id;
@@ -2251,15 +2268,13 @@ class Accounting_modules extends REST_Controller {
 					$objList[$accountId]["name"] 	= $value->account_name;
 					$objList[$accountId]["amount"]	= $amount;
 
-					$segItems = new Segmentitem(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-					$segItems->where_in("id", explode(",",intval($value->segments)));
-					$segItems->get();
-
 					foreach ($segmentList as $row) {
 						$segAmount = 0;
 						foreach ($segItems as $sg) {
 							if($sg->segment_id==$row){
 								$segAmount = $amount;
+
+								break;
 							}
 						}
 						
