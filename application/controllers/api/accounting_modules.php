@@ -2230,11 +2230,6 @@ class Accounting_modules extends REST_Controller {
 		$obj->get_iterated();
 		
 		if($obj->exists()){
-			
-			$segments = new Segment(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			$segments->where_in("id", $segmentList);
-			$segments->get();
-
 			$objList = [];
 			foreach ($obj as $value) {
 				$amount = 0;
@@ -2252,18 +2247,18 @@ class Accounting_modules extends REST_Controller {
 
 				if(isset($objList[$accountId])){
 					$objList[$accountId]["amount"] += $amount;
-
-					foreach ($segments as $row) {
+					
+					foreach ($segmentList as $key => $row) {
 						$segAmount = 0;
 						foreach ($segItems as $sg) {
-							if($sg->segment_id==$row->id){
+							if($sg->segment_id==$row){
 								$segAmount = $amount;
 
 								break;
 							}
 						}
 						
-						$objList[$accountId][$row->name] += $segAmount;
+						$objList[$accountId]["segment_lines"][$key] += $segAmount;
 					}
 				}else{
 					$objList[$accountId]["id"] 		= $accountId;
@@ -2273,17 +2268,17 @@ class Accounting_modules extends REST_Controller {
 					$objList[$accountId]["name"] 	= $value->account_name;
 					$objList[$accountId]["amount"]	= $amount;
 
-					foreach ($segments as $row) {
+					foreach ($segmentList as $key => $row) {
 						$segAmount = 0;
 						foreach ($segItems as $sg) {
-							if($sg->segment_id==$row->id){
+							if($sg->segment_id==$row){
 								$segAmount = $amount;
 
 								break;
 							}
 						}
 						
-						$objList[$accountId][$row->name] = $segAmount;
+						$objList[$accountId]["segment_lines"][$key] = $segAmount;
 					}
 				}
 			}

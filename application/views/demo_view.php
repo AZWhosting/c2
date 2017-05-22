@@ -30765,7 +30765,21 @@
 							<p data-bind="text: displayDate"></p>
 						</div>
 
-						<div id="listView"></div>
+						<table class="table table-borderless table-condensed">
+							<thead>
+								<tr>
+									<th></th>
+									<th></th>
+									<th></th>
+									<th class="right">Segment A</th>
+									<th class="right">Segment B</th>
+								</tr>
+							</thead>
+							<tbody data-role="listview"
+								 data-template="statementProfitLossBySegment-template"
+								 data-auto-bind="false"
+				                 data-bind="source: dataSource"></tbody>
+						</table>
 						
 					</div>
 
@@ -30773,6 +30787,18 @@
 			</div>
 		</div>
 	</div>
+</script>
+<script id="statementProfitLossBySegment-template" type="text/x-kendo-template">
+	<tr>
+        <td data-bind="text: number"></td>
+        <td data-bind="text: name"></td>
+        <td class="right">#: amount #</td>
+        #for(var i=0; i<segment_lines.length; i++){#
+	        <td class="right">
+	        	#:segment_lines[i]#
+	        </td>
+        #}#        
+    </tr>
 </script>
 <script id="statementFinancialPosition" type="text/x-kendo-template">
 	<div id="slide-form">
@@ -84211,9 +84237,16 @@
 
 	        //Segments
 	        var segments = [], segmentItems = [];
+	        // var table = document.getElementById("myTable");
             if(obj.segments.length>0){
             	$.each(obj.segments, function(index, value){
             		segments.push(value);
+
+            		// $.each(banhji.source.segmentDS.data(), function(ind, val){
+            		// 	if(val.id==value){
+            		// 		var header = table.createTHead(val.name);
+            		// 	}
+            		// });
 
             		$.each(banhji.source.segmentItemList, function(ind, val){
             			if(val.segment_id==value){
@@ -84250,10 +84283,12 @@
             }
             this.set("displayDate", displayDate);
 
-            this.dataSource.query({
-            	filter: para,
-            	group:{ field:"type" }
-            });
+            // this.dataSource.query({
+            // 	filter: para,
+            // 	group:{ field:"type" }
+            // });
+
+            this.dataSource.filter(para);
 
 	        // obj.set("segments", []);
 		}
@@ -97467,11 +97502,6 @@
 				banhji.pageLoaded["statement_profit_loss_by_segment"] = true;
 				
 				vm.sorterChanges();
-
-				$("#listView").kendoListView({
-					autoBind: false,
-	                dataSource: vm.dataSource
-	            });
 			}
 
 			vm.pageLoad();

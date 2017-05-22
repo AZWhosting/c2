@@ -44326,7 +44326,7 @@
 					        				</a>
 					        			</div>
 					        		</div>
-					        		<a href="" onclick="$('#tab-2').click();" class="see-all-apps">See all apps</a>
+					        		<a href="" class="see-all-apps">See all apps</a>
 					        	</div>					        	
 							</div>
 			        	</div>
@@ -44534,28 +44534,35 @@
 						    			</div>
 						    			<div class="window-content">
 						    				<div class="row">
-							    				<div class="span12">
-													<div class="relativeWrap" data-toggle="source-code" style="float: left; width: 97.5%;">
+							    				<div class="span12" style="width: 96%;">
+													<div class="relativeWrap" data-toggle="source-code" style="float: left; width: 100%;">
 														<div class="widget widget-tabs widget-tabs-gray report-tab" style="background: #fff; overflow: hidden;">
 															<div class="widget-head head-custom" style="height: 50px;">
 																<ul>
-																	<li class="active"><a href="#tab-1" data-toggle="tab"><i></i><span >Overview</span></a></li>
-																	<li><a href="#tab-2" data-toggle="tab"><i></i><span >REVIEW</span></a></li>
-																	<li><a href="#tab-3" data-toggle="tab"><i></i><span >RELATED</span></a></li>
+																	<li class="active"><a href="#tab1-1" data-toggle="tab"><i></i><span >Overview</span></a></li>
+																	<li><a href="#tab1-2" data-toggle="tab"><i></i><span >REVIEW</span></a></li>
+																	<li><a href="#tab1-3" data-toggle="tab"><i></i><span >RELATED</span></a></li>
 																</ul>
 															</div>
 
 															<div class="widget-body" style="float: left; width: 100%;">
 																<div class="tab-content">
-															        <div class="tab-pane active" id="tab-1">
+															        <div class="tab-pane active" id="tab1-1">
 																		<div class="row-fluid" style="">
 																			Tab 1
 																		</div>
 														        	</div>
 
-														        	<div class="tab-pane" id="tab-2">
+														        	<div class="tab-pane" id="tab1-2">
 															        	<div class="row-fluid" style="">
 															        		Tab 2
+															        	</div>
+
+														        	</div>
+
+														        	<div class="tab-pane" id="tab1-3">
+															        	<div class="row-fluid" style="">
+															        		Tab 3
 															        	</div>
 
 														        	</div>
