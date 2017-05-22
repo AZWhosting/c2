@@ -44333,30 +44333,32 @@
 
 			        	<div class="tab-pane" id="tab-2">
 				        	<div class="row-fluid" style="padding: 0 20px;">
-				        		<div class="span7" style="padding-left: 5px;">
-									<select data-role="multiselect"
-										    data-value-primitive="true"
-										    data-header-template="contact-header-tmpl"
-										    data-item-template="contact-list-tmpl"
-										    data-value-field="id"
-										    data-text-field="name"
-										    data-bind="value: obj.contactIds, 
-										   			source: contactDS"
-										    data-placeholder="Search for an app..."
-										    style="width: 88%; float: left;" /></select>
-									<button type="button" data-role="button" data-bind="click: search" style="float: left; width: 35px; margin-left: 8px; height: 31px;"><i class="icon-search"></i></button>
-								</div>
-								<div class="span2"></div>
-								<div class="span3" style="padding-right: 5px;">
-									<input data-role="dropdownlist"
-									    class="sorter"
-							            data-value-primitive="true"
-							            data-text-field="text"
-							            data-value-field="value"
-							            data-bind="value: sorter,
-							                      source:s sortList,
-							                      events: { change: sorterChanges }"
-							           	style="width: 100%; float: right;" />
+				        		<div class="row-fluid">
+					        		<div class="span7" style="padding-left: 5px;">
+										<select data-role="multiselect"
+											    data-value-primitive="true"
+											    data-header-template="contact-header-tmpl"
+											    data-item-template="contact-list-tmpl"
+											    data-value-field="id"
+											    data-text-field="name"
+											    data-bind="value: obj.contactIds, 
+											   			source: contactDS"
+											    data-placeholder="Search for an app..."
+											    style="width: 88%; float: left;" /></select>
+										<button type="button" data-role="button" data-bind="click: search" style="float: left; width: 35px; margin-left: 8px; height: 31px;"><i class="icon-search"></i></button>
+									</div>
+									<div class="span2"></div>
+									<div class="span3" style="padding-right: 5px;">
+										<input data-role="dropdownlist"
+										    class="sorter"
+								            data-value-primitive="true"
+								            data-text-field="text"
+								            data-value-field="value"
+								            data-bind="value: sorter,
+								                      source:s sortList,
+								                      events: { change: sorterChanges }"
+								           	style="width: 100%; float: right;" />
+									</div>
 								</div>
 
 					        	<div class="row-fluid" style="margin-top: 20px; float: left; background: #ebeef3; padding: 15px 20px 0; width: 100%;">
@@ -44514,7 +44516,6 @@
 					        		</div>
 					        	</div>
 
-
 					        	<!-- Window -->
 							    <div data-role="window"
 						            data-width="90%"
@@ -44532,36 +44533,38 @@
 						    				</div>
 						    			</div>
 						    			<div class="window-content">
-						    				<div class="span12">
-												<div class="relativeWrap" data-toggle="source-code">
-													<div class="widget widget-tabs widget-tabs-gray report-tab" style="background: #fff; overflow: hidden;">
-														<div class="widget-head head-custom" style="height: 50px;">
-															<ul>
-																<li class="active"><a href="#tab-1" data-toggle="tab"><i></i><span >Overview</span></a></li>
-																<li><a href="#tab-2" data-toggle="tab"><i></i><span >REVIEW</span></a></li>
-																<li><a href="#tab-3" data-toggle="tab"><i></i><span >RELATED</span></a></li>
-															</ul>
-														</div>
+						    				<div class="row">
+							    				<div class="span12">
+													<div class="relativeWrap" data-toggle="source-code" style="float: left; width: 97.5%;">
+														<div class="widget widget-tabs widget-tabs-gray report-tab" style="background: #fff; overflow: hidden;">
+															<div class="widget-head head-custom" style="height: 50px;">
+																<ul>
+																	<li class="active"><a href="#tab-1" data-toggle="tab"><i></i><span >Overview</span></a></li>
+																	<li><a href="#tab-2" data-toggle="tab"><i></i><span >REVIEW</span></a></li>
+																	<li><a href="#tab-3" data-toggle="tab"><i></i><span >RELATED</span></a></li>
+																</ul>
+															</div>
 
-														<div class="widget-body" style="float: left; width: 100%;">
-															<div class="tab-content">
-														        <div class="tab-pane active" id="tab-1">
-																	<div class="row-fluid" style="">
-																		Tab 1
-																	</div>
-													        	</div>
-
-													        	<div class="tab-pane" id="tab-2">
-														        	<div class="row-fluid" style="">
-														        		Tab 2
+															<div class="widget-body" style="float: left; width: 100%;">
+																<div class="tab-content">
+															        <div class="tab-pane active" id="tab-1">
+																		<div class="row-fluid" style="">
+																			Tab 1
+																		</div>
 														        	</div>
 
-													        	</div>
-													        	
-														    </div>
+														        	<div class="tab-pane" id="tab-2">
+															        	<div class="row-fluid" style="">
+															        		Tab 2
+															        	</div>
+
+														        	</div>
+														        	
+															    </div>
+															</div>
 														</div>
-													</div>
-												</div>		
+													</div>		
+												</div>
 											</div>
 						    			</div>
 						    		</div>

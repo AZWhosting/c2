@@ -30765,12 +30765,7 @@
 							<p data-bind="text: displayDate"></p>
 						</div>
 
-						<table class="table table-borderless table-condensed" style="width: 70%; margin:0 auto;">
-							<tbody data-role="listview"
-					        		data-auto-bind="false"
-					        		data-template="statementProfitLoss-template"
-					        		data-bind="source: dataSource"></tbody>
-						</table>
+						<div id="listView"></div>
 						
 					</div>
 
@@ -30778,38 +30773,6 @@
 			</div>
 		</div>
 	</div>
-</script>
-<script id="statementProfitLossBySegment-template" type="text/x-kendo-tmpl">
-	#if(id>0){#
-		<tr>
-			<td colspan="3" style="font-weight: bold; color: black;">#: type #</td>
-		</tr>
-		#var total = 0;#
-		#for(var i=0; i<line.length; i++){#
-		#total += line[i].amount;#
-		<tr>
-			<td style="color: black;">
-				&nbsp;&nbsp; #=line[i].number# - #=line[i].name#
-			</td>
-			<td class="right" style="color: black;">
-				#=kendo.toString(line[i].amount, "c", banhji.locale)#
-			</td>
-			<td style="width:15%;" ></td> 			
-	    </tr>    
-	    #}# 
-	    <tr>
-	    	<td style="font-weight: bold; color: black;">Total #: type #</td>
-	    	<td></td>	    	
-	    	<td class="right" style="font-weight: bold; border-top: 1px solid black !important; color: black;">
-	    		#=kendo.toString(total, "c", banhji.locale)#
-	    	</td>
-	    </tr>	    
-	#}else{#
-		<tr>
-			<td colspan="2" style="font-weight: bold; color: black;">#: name #</td>
-			<td class="right" style="font-weight: bold; color: black;">#: kendo.toString(amount, "c", banhji.locale) #</td>
-		</tr>
-	#}# 
 </script>
 <script id="statementFinancialPosition" type="text/x-kendo-template">
 	<div id="slide-form">
@@ -84288,10 +84251,11 @@
             this.set("displayDate", displayDate);
 
             this.dataSource.query({
-            	filter: para
+            	filter: para,
+            	group:{ field:"type" }
             });
 
-	        obj.set("segments", []);
+	        // obj.set("segments", []);
 		}
 	});
 	banhji.statementProfitLossComparison =  kendo.observable({
@@ -97503,6 +97467,11 @@
 				banhji.pageLoaded["statement_profit_loss_by_segment"] = true;
 				
 				vm.sorterChanges();
+
+				$("#listView").kendoListView({
+					autoBind: false,
+	                dataSource: vm.dataSource
+	            });
 			}
 
 			vm.pageLoad();

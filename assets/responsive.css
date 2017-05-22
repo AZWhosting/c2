@@ -3041,9 +3041,15 @@ a.activate {
 }
 .win-wrapper{
   width: 100%;
-  padding: 10px 30px;
   float: left;
 }
+.window-content,
+.window-header{
+  width: 96%;
+  padding: 10px 25px;
+  float: left;
+}
+
 
 
 

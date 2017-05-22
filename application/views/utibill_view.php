@@ -5661,6 +5661,7 @@
 											data-bind="
 												value: locationSelect,
 			                  					source: locationDS,
+			                  					events: {change: blocChange},
 			                  					enabled: slocation">
 			                  		</div>
 								</div>
@@ -5687,6 +5688,14 @@
 									  	<input style="padding: 0; margin: 0;border: none" type="file"  data-role="upload" data-show-file-list="false" data-bind="events: {select: onSelected}" id="myFile"  class="margin-none" />
 			                  		</div>
 								</div> -->
+								<div class="span2" data-bind="visible: balanceView" style="padding-left: 0;">
+									<div class="control-group">
+										<label ><span data-bind="text: lang.lang.balance">Download</span></label>	
+										<div class="row" style="margin: 0;">
+											<button type="button" data-role="button" data-bind="click: serachBalance" class="k-button" role="button" aria-disabled="false" tabindex="0"><i class="download_alt"></i> <span data-bind="text: lang.lang.balance"></span></button>
+										</div>
+			                  		</div>
+								</div>
 						    </div>
 						</div>
 					</div>
@@ -17350,6 +17359,8 @@
 		lang 				: langVM,
 		dataSource 			: dataStore(apiUrl + "transactions"),
 		txnDS 				: dataStore(apiUrl + "transactions"),
+		remainDS 			: dataStore(apiUrl + "transactions"),
+		balanceDS 			: dataStore(apiUrl + "transactions"),
 		journalLineDS		: dataStore(apiUrl + "journal_lines"),
 		txnTemplateDS 		: new kendo.data.DataSource({
 		  	data: banhji.source.txnTemplateList,
@@ -17362,11 +17373,6 @@
 			  	{ field: "code", dir: "asc" }
 			]
 		}),
-		// contactDS  			: new kendo.data.DataSource({
-		//   	data: banhji.source.customerList,
-		//   	filter:{ field:"status", value:1 },
-		// 	sort: { field:"number", dir:"asc" }
-		// }),
 		employeeDS  		: new kendo.data.DataSource({
 		  	data: banhji.source.employeeList,
 		  	filter:{ field: "item_type_id", value: 10 },//Sale Rep.
@@ -17400,6 +17406,7 @@
 		slocation 			: false,
 		ssublocation	 	: false,
 		sbox 				: false,
+		balanceView 		: false,
 		licenseChange 		: function(e) {
 			this.locationDS.filter([
 				{field: "branch_id",value: this.get("licenseSelect")},
@@ -17407,6 +17414,10 @@
 				{field: "main_pole",value: 0}
 			]);
 			this.set("slocation", true);
+
+	    },
+	    blocChange 			: function(){
+	    	this.set("balanceView", true);
 	    },
 	    exArray 			: [],
 	    downloadView 		: false,
@@ -17436,7 +17447,6 @@
 					para.push({field: "meter_id <>", value: 0});
 					para.push({ field:"type",  value:"Utility_Invoice" });
 					para.push({ field:"status", operator:"where_in", value:[0,2] });
-
 					this.txnDS.query({
 						filter: para,
 						page: 1,
@@ -17447,7 +17457,6 @@
 						if(view.length>0){
 							$.each(view, function(index, value){
 								var amount_due = value.amount - (value.amount_paid + value.deposit);
-
 								self.dataSource.add({
 									transaction_template_id : 0,
 				    				contact_id 			: value.contact_id,
@@ -17513,7 +17522,6 @@
 							notifi.error(self.lang.lang.no_data);
 							$("#loadING").css("display", "none");
 						}
-
 						self.set("searchText", "");
 						self.set("contact_id", "");
 						self.set("invoice_id", 0);
@@ -17532,10 +17540,10 @@
 	        $('li.k-file').remove();
 	        $("#loadImport").css("display","block");
 	        var reader = new FileReader();
-			this.dataSource.data([]);	
-			reader.onload = function() {	
-				var data = reader.result;	
-				var result = {}; 					
+			this.dataSource.data([]);
+			reader.onload = function() {
+				var data = reader.result;
+				var result = {};
 				var workbook = XLSX.read(data, {type : 'binary'});
 				workbook.SheetNames.forEach(function(sheetName) {
 					var roa = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
@@ -17546,14 +17554,10 @@
 							
 						}
 						self.insertDS(self.upArray);
-					}					
+					}
 				});	
 			}
 			reader.readAsBinaryString(files[0].rawFile);
-			// this.dataSource.data([]);
-			
-			
-			
 		},
 		insertDS 			: function(NU) {
 			$("#loadING").css("display", "block");
@@ -17564,12 +17568,9 @@
 				obj = this.get("obj"),
 				searchText = this.get("searchText"), 
 				invoice_id = this.get("invoice_id");
-
-
 			para.push({ field:"type",  value:"Utility_Invoice" });
 			para.push({ field:"status", operator:"where_in", value:[0,2] });
 			para.push({ field:"number", operator:"where_in", value:NU });
-
 			this.txnDS.query({
 				filter: para
 			}).then(function(){
@@ -17578,7 +17579,6 @@
 					self.numCustomer = 0;
 					$.each(view, function(index, value){
 						var amount_due = value.amount - (value.amount_paid + value.deposit);
-
 						self.dataSource.add({
 							transaction_template_id : 0,
 		    				contact_id 			: value.contact_id,
@@ -17605,7 +17605,6 @@
 						   	status 				: 0,
 						   	segments 			: obj.segments,
 						   	is_journal 			: 1,
-						   	//Recurring
 						   	recurring_name 		: "",
 						   	start_date 			: new Date(),
 						   	frequency 			: "Daily",
@@ -17619,7 +17618,6 @@
 						   	meter 				: value.meter,
 						   	reference 			: [value]
 				    	});
-
 					});
 					self.applyTerm();
 					self.setRate();
@@ -17630,7 +17628,6 @@
 					notifi.error(self.lang.lang.no_data);
 					$("#loadING").css("display", "none");
 				}
-
 				self.set("searchText", "");
 				self.set("contact_id", "");
 				self.set("invoice_id", 0);
@@ -17674,13 +17671,11 @@
 	    applyTerm 			: function(){
 	    	var self = this, obj = this.get("obj"),
 	    	today = new Date();
-
 	    	$.each(this.dataSource.data(), function(index, value){
 	    		var term = self.paymentTermDS.get(value.payment_term_id),
 	    		termDate = new Date(value.reference[0].issued_date);
 	    		term.discount_period
     			termDate.setDate(termDate.getDate() + term.discount_period);
-
     			if(today<=termDate){
     				if(value.reference[0].amount_paid==0){
 	    				var amount = value.reference[0].amount * term.discount_percentage;
@@ -17693,13 +17688,10 @@
 	    //Currency Rate
 		setRate 			: function(){
 			var obj = this.get("obj");
-
 			$.each(this.dataSource.data(), function(index, value){
 				var rate = banhji.source.getRate(value.locale, new Date(obj.issued_date));
-				
 				value.set("rate", rate);
 			});
-
 			this.changes();
 		},
 		//Segments
@@ -17707,12 +17699,10 @@
 			var dataArr = this.get("obj").segments,
 			lastIndex = dataArr.length - 1,
 			last = this.segmentItemDS.get(dataArr[lastIndex]);
-
 			if(dataArr.length > 1) {
 				for(var i = 0; i < dataArr.length - 1; i++) {
 					var current_index = dataArr[i],
 					current = this.segmentItemDS.get(current_index);
-
 					if(current.segment_id === last.segment_id) {
 						dataArr.splice(lastIndex, 1);
 						break;
@@ -17720,6 +17710,7 @@
 				}
 			}
 		},
+		idList 				: [],
 		//Search
 		search 				: function(){
 			$("#loadING").css("display", "block");
@@ -17727,44 +17718,99 @@
 			var self = this, 
 				para = [],
 				obj = this.get("obj"),
-				searchText = this.get("searchText"), 
-				invoice_id = this.get("invoice_id"),
-				contact_id = this.get("contact_id");
-			
-	    	if(contact_id>0){
-		    	para.push({ field:"contact_id", value: contact_id });
-	    	}
-
-	    	if(invoice_id>0){
-		    	para.push({ field:"id", value: invoice_id });
-	    	}
-
+				searchText = this.get("searchText");
 			if(searchText!==""){
 				para.push({ field:"number", value: searchText });
 			}
-
 			para.push({ field:"type",  value:"Utility_Invoice" });
 			para.push({ field:"status", operator:"where_in", value:[0,2] });
-
-			if(this.dataSource.total()>0){
-				var idList = [];
-				$.each(this.dataSource.data(), function(index, value){
-					idList.push(value.reference_id);
-				});
-				para.push({ field:"id", operator:"where_not_in", value:idList });
-			}
-
 			this.txnDS.query({
 				filter: para,
 				page: 1,
-				pageSize: 100
+				pageSize: 1
 			}).then(function(){
 				var view = self.txnDS.view();
 				if(view.length>0){
-					self.numCustomer = 0;
+					self.idList.push(view[0].id);
+					// self.remainFind(view[0].meter_id);
+					//$.each(view, function(index, value){
+						var amount_due = view[0].amount - (view[0].amount_paid + view[0].deposit);
+						self.dataSource.add({
+							transaction_template_id : 0,
+		    				contact_id 			: view[0].contact_id,
+							account_id 			: obj.account_id,
+							payment_term_id		: view[0].payment_term_id,
+							payment_method_id	: obj.payment_method_id,
+							reference_id 		: view[0].id,
+							user_id 			: self.get("user_id"),
+							check_no 			: view[0].check_no,
+							reference_no 		: view[0].number,
+							number 				: "",
+							invnumber 			: view[0].number,
+						   	type				: "Cash_Receipt",
+						   	sub_total 			: amount_due,
+						   	amount 				: amount_due,
+						   	discount 			: 0,
+						   	fine 				: 0,
+						   	rate				: view[0].rate,
+						   	locale 				: view[0].locale,
+						   	issued_date 		: obj.issued_date,
+						   	invissued_date 		: view[0].issued_date,
+						   	memo 				: obj.memo,
+						   	memo2 				: obj.memo2,
+						   	status 				: 0,
+						   	segments 			: obj.segments,
+						   	is_journal 			: 1,
+						   	//Recurring
+						   	recurring_name 		: "",
+						   	start_date 			: new Date(),
+						   	frequency 			: "Daily",
+						   	month_option 		: "Day",
+						   	interval 			: 1,
+						   	day 				: 1,
+						   	week 				: 0,
+						   	month 				: 0,
+						   	is_recurring 		: 0,
+						   	meter_id 			: view[0].meter_id,
+						   	meter 				: view[0].meter,
+						   	reference 			: [view[0]]
+				    	});
+					//});
+					self.remainFind(view[0].meter_id);
+					self.applyTerm();
+					self.setRate();
+					$("#loadING").css("display", "none");
+				}else{
+					var notifi = $("#ntf1").data("kendoNotification");
+					notifi.hide();
+					notifi.error(self.lang.lang.no_data);
+					$("#loadING").css("display", "none");
+				}
+				self.set("searchText", "");
+			});
+		},
+		remainFind 			: function(meter_id){
+			var para = [],
+				obj = this.get("obj"),
+				self = this;
+			para.push({ field:"type",  value:"Utility_Invoice" });
+			para.push({ field:"status", operator:"where_in", value:[0,2] });
+			para.push({ field:"meter_id", value: meter_id });
+			para.push({ field:"deleted <>", value: 1 });
+			if(this.idList.length > 0){
+				$.each(this.idList, function(i, v){
+					para.push({ field:"id", operator:"where_not_in", value: v });
+				});
+			}
+			this.remainDS.query({
+				filter: para,
+				page: 1,
+				pageSize: 10
+			}).then(function(){
+				var view = self.remainDS.view();
+				if(view.length>0){
 					$.each(view, function(index, value){
 						var amount_due = value.amount - (value.amount_paid + value.deposit);
-
 						self.dataSource.add({
 							transaction_template_id : 0,
 		    				contact_id 			: value.contact_id,
@@ -17805,21 +17851,76 @@
 						   	meter 				: value.meter,
 						   	reference 			: [value]
 				    	});
-
+					});
+					self.applyTerm();
+					self.setRate();
+				}
+			});
+		},
+		serachBalance 		: function(){
+			var para = [],
+				obj = this.get("obj"),
+				self = this,
+				bloc_id = this.get("locationSelect");
+			para.push({ field:"type",  value:"Utility_Invoice" });
+			para.push({ field:"status", operator:"where_in", value:[0,2] });
+			para.push({ field:"journal_type", value: "journal" });
+			para.push({ field:"location_id", value: bloc_id });
+			para.push({ field:"deleted <>", value: 1 });
+			this.dataSource.data([]);
+			$("#loadING").css("display", "block");
+			this.balanceDS.query({
+				filter: para
+			}).then(function(){
+				var view = self.balanceDS.view();
+				if(view.length>0){
+					$.each(view, function(index, value){
+						var amount_due = value.amount - (value.amount_paid + value.deposit);
+						self.dataSource.add({
+							transaction_template_id : 0,
+		    				contact_id 			: value.contact_id,
+							account_id 			: obj.account_id,
+							payment_term_id		: value.payment_term_id,
+							payment_method_id	: obj.payment_method_id,
+							reference_id 		: value.id,
+							user_id 			: self.get("user_id"),
+							check_no 			: value.check_no,
+							reference_no 		: value.number,
+							number 				: "",
+							invnumber 			: value.number,
+						   	type				: "Cash_Receipt",
+						   	sub_total 			: amount_due,
+						   	amount 				: amount_due,
+						   	discount 			: 0,
+						   	fine 				: 0,
+						   	rate				: value.rate,
+						   	locale 				: value.locale,
+						   	issued_date 		: obj.issued_date,
+						   	invissued_date 		: value.issued_date,
+						   	memo 				: obj.memo,
+						   	memo2 				: obj.memo2,
+						   	status 				: 0,
+						   	segments 			: obj.segments,
+						   	is_journal 			: 1,
+						   	//Recurring
+						   	recurring_name 		: "",
+						   	start_date 			: new Date(),
+						   	frequency 			: "Daily",
+						   	month_option 		: "Day",
+						   	interval 			: 1,
+						   	day 				: 1,
+						   	week 				: 0,
+						   	month 				: 0,
+						   	is_recurring 		: 0,
+						   	meter_id 			: value.meter_id,
+						   	meter 				: value.meter,
+						   	reference 			: [value]
+				    	});
 					});
 					self.applyTerm();
 					self.setRate();
 					$("#loadING").css("display", "none");
-				}else{
-					var notifi = $("#ntf1").data("kendoNotification");
-					notifi.hide();
-					notifi.error(self.lang.lang.no_data);
-					$("#loadING").css("display", "none");
 				}
-
-				self.set("searchText", "");
-				self.set("contact_id", "");
-				self.set("invoice_id", 0);
 			});
 		},
 		ExportExcel 		: function(){
@@ -17850,7 +17951,6 @@
 		//Obj
 		loadObj 			: function(id){
 			var self = this;
-
 			this.dataSource.query({
 				filter: { field:"id", value: id },
 				page: 1,
@@ -17858,19 +17958,15 @@
 			}).then(function(){
 				var view = self.dataSource.view();
 				view[0].set("reference", []);
-
 				self.set("obj", view[0]);
 				self.set("total", kendo.toString(view[0].amount, view[0].locale=="km-KH"?"c0":"c", view[0].locale));
 		        self.set("total_received", kendo.toString(view[0].amount, view[0].locale=="km-KH"?"c0":"c", view[0].locale));
-
 				self.journalLineDS.filter({ field: "transaction_id", value: id });
-
 				self.txnDS.query({
 					filter:{ field:"id", value:view[0].reference_id }
 				}).then(function(){
 					var txn = self.txnDS.view(),
 					obj = self.get("obj");
-
 					obj.set("reference", txn);
 				});
 			});
@@ -17878,21 +17974,17 @@
 		changes				: function(){
 			var self = this, obj = this.get("obj"),
 			total = 0, sub_total = 0, discount = 0, total_received = 0, remaining = 0;
-
 			$.each(this.dataSource.data(), function(index, value) {
 				var amt = kendo.parseFloat(value.sub_total) - kendo.parseFloat(value.discount);
 				if(kendo.parseFloat(value.amount)>amt){
 					value.set("amount", amt);
 				}
-
 				sub_total += kendo.parseFloat(value.sub_total) / value.rate;
 				discount += kendo.parseFloat(value.discount) / value.rate;
 				total_received += kendo.parseFloat(value.amount) / value.rate;
 	        });
-
 			total = sub_total - discount;
 			remaining = total - total_received;
-
 	        obj.set("sub_total", sub_total);
 	        obj.set("discount", discount);
 	        this.set("total", kendo.toString(total, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
@@ -17907,12 +17999,10 @@
 			this.dataSource.data([]);
 			this.txnDS.data([]);
 			this.journalLineDS.data([]);
-
 			this.set("isEdit", false);
 			this.set("obj", null);
 			this.set("total", 0);
 			this.set("total_received", 0);
-
 			this.set("obj", {
 				transaction_template_id: 6,
 				account_id 			: 7,
@@ -17926,7 +18016,7 @@
 			   	memo 				: "",
 			   	memo2 				: "",
 			   	segments 			: []
-	    	});						
+	    	});
 		},
 	    objSync 			: function(){
 	    	var dfd = $.Deferred();
@@ -17966,7 +18056,6 @@
 	    			value.set("segments", obj.segments);
 	    		});
 			}
-
 			//Obj
 			this.objSync()
 			.then(function(data){
@@ -17975,7 +18064,6 @@
 				$.each(data, function(index, value){
 					var contact = banhji.source.customerDS.get(value.contact_id);
 					ids.push(value.reference_id);
-
 					//Cash on Dr
 					self.journalLineDS.add({
 						transaction_id 		: value.id,
@@ -17989,7 +18077,6 @@
 						rate				: value.rate,
 						locale				: value.locale
 					});
-
 					if(value.discount>0){
 						//Discount on Dr
 						self.journalLineDS.add({
@@ -18005,7 +18092,6 @@
 							locale				: value.locale
 						});
 					}
-
 					//AR on Cr
 					self.journalLineDS.add({
 						transaction_id 		: value.id,
@@ -18020,16 +18106,13 @@
 						locale				: value.locale
 					});
 				});
-
 				self.journalLineDS.sync();
 				self.updateTxnStatus(ids);
-
 				return data;
 			}, function(reason) { //Error
 				$("#ntf1").data("kendoNotification").error(reason);
 			}).then(function(result){
 				$("#ntf1").data("kendoNotification").success(banhji.source.successMessage);
-
 				if(self.get("saveClose")){
 					//Save Close
 					self.set("saveClose", false);
@@ -18050,18 +18133,15 @@
 		},
 		cancel 				: function(){
 			this.dataSource.data([]);
-
 			banhji.userManagement.removeMultiTask("receipt");
 		},
 		updateTxnStatus 	: function(ids){
 			var self = this;
-
 			if(ids.length>0){
 				this.txnDS.query({
 					filter:{ field:"id", operator:"where_in", value:ids }
 				}).then(function(){
 					var view = self.txnDS.view();
-
 					$.each(view, function(index, value){
 						if(value.amount_paid == 0){
 							value.set("status", 0);
@@ -18071,13 +18151,11 @@
 							value.set("status", 2);
 						}
 					});
-
 					self.txnDS.sync();
 				});
 			}
 		}
 	});
-
 	banhji.customerDeposit =  kendo.observable({
 		lang 				: langVM,
 		dataSource 			: dataStore(apiUrl + "transactions"),

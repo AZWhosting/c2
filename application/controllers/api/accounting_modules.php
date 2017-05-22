@@ -865,7 +865,7 @@ class Accounting_modules extends REST_Controller {
 				}
 			}			
 
-			foreach ($objList as $value) {				
+			foreach ($objList as $value) {
 				$data["results"][] = $value;
 			}
 
@@ -2230,6 +2230,11 @@ class Accounting_modules extends REST_Controller {
 		$obj->get_iterated();
 		
 		if($obj->exists()){
+			
+			$segments = new Segment(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$segments->where_in("id", $segmentList);
+			$segments->get();
+
 			$objList = [];
 			foreach ($obj as $value) {
 				$amount = 0;
@@ -2248,17 +2253,17 @@ class Accounting_modules extends REST_Controller {
 				if(isset($objList[$accountId])){
 					$objList[$accountId]["amount"] += $amount;
 
-					foreach ($segmentList as $row) {
+					foreach ($segments as $row) {
 						$segAmount = 0;
 						foreach ($segItems as $sg) {
-							if($sg->segment_id==$row){
+							if($sg->segment_id==$row->id){
 								$segAmount = $amount;
 
 								break;
 							}
 						}
 						
-						$objList[$accountId][$row] += $segAmount;
+						$objList[$accountId][$row->name] += $segAmount;
 					}
 				}else{
 					$objList[$accountId]["id"] 		= $accountId;
@@ -2268,38 +2273,42 @@ class Accounting_modules extends REST_Controller {
 					$objList[$accountId]["name"] 	= $value->account_name;
 					$objList[$accountId]["amount"]	= $amount;
 
-					foreach ($segmentList as $row) {
+					foreach ($segments as $row) {
 						$segAmount = 0;
 						foreach ($segItems as $sg) {
-							if($sg->segment_id==$row){
+							if($sg->segment_id==$row->id){
 								$segAmount = $amount;
 
 								break;
 							}
 						}
 						
-						$objList[$accountId][$row] = $segAmount;
+						$objList[$accountId][$row->name] = $segAmount;
 					}
 				}
 			}
 
-			//Group by account_type_id
-			$typeList = [];
 			foreach ($objList as $value) {
-				$typeId = $value["type_id"];
-
-				if(isset($typeList[$typeId])){
-					$typeList[$typeId]["amount"] 	+= $value["amount"];
-					$typeList[$typeId]["line"][] 	= $value;
-				} else {
-					$typeList[$typeId]["id"] 		= $typeId;
-					$typeList[$typeId]["type"] 		= $value["type"];
-					$typeList[$typeId]["amount"] 	= $value["amount"];
-					$typeList[$typeId]["line"][] 	= $value;
-				}
+				$data["results"][] = $value;
 			}
 
-			//Revenue
+			//Group by account_type_id
+			$typeList = [];
+			// foreach ($objList as $value) {
+			// 	$typeId = $value["type_id"];
+
+			// 	if(isset($typeList[$typeId])){
+			// 		$typeList[$typeId]["amount"] 	+= $value["amount"];
+			// 		$typeList[$typeId]["line"][] 	= $value;
+			// 	} else {
+			// 		$typeList[$typeId]["id"] 		= $typeId;
+			// 		$typeList[$typeId]["type"] 		= $value["type"];
+			// 		$typeList[$typeId]["amount"] 	= $value["amount"];
+			// 		$typeList[$typeId]["line"][] 	= $value;
+			// 	}
+			// }
+
+			/*//Revenue
 			$totalRevenue = 0;
 			foreach ($typeList as $value) {
 				if($value["id"]=="35"){
@@ -2402,7 +2411,7 @@ class Accounting_modules extends REST_Controller {
 			//Profit For The Year
 			$ProfitForTheYear = $ProfitBeforeTax - $totalTaxExpense;
 			$data["results"][] = array("id"=>0, "name"=>"Profit For The Year", "amount"=>$ProfitForTheYear);
-
+*/
 
 			$data["count"] = count($data["results"]);			
 		}
