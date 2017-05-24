@@ -30765,16 +30765,7 @@
 							<p data-bind="text: displayDate"></p>
 						</div>
 
-						<table class="table table-borderless table-condensed">
-							<thead>
-								<tr>
-									<th></th>
-									<th></th>
-									<th></th>
-									<th class="right">Segment A</th>
-									<th class="right">Segment B</th>
-								</tr>
-							</thead>
+						<table id="myTable" class="table table-borderless table-condensed">
 							<tbody data-role="listview"
 								 data-template="statementProfitLossBySegment-template"
 								 data-auto-bind="false"
@@ -84235,18 +84226,32 @@
         		end = this.get("edate"),
         		displayDate = "";
 
+        	//Clear table header
+        	document.getElementById("myTable").deleteTHead();
+
+    		var table = document.getElementById("myTable");
+    		// Create an empty <thead> element and add it to the table:
+			var header = table.createTHead();
+
+			// Create an empty <tr> element and add it to the first position of <thead>:
+			var row = header.insertRow(0);
+				row.insertCell(0);
+				row.insertCell(1);
+				row.insertCell(2);
+
 	        //Segments
 	        var segments = [], segmentItems = [];
 	        // var table = document.getElementById("myTable");
             if(obj.segments.length>0){
             	$.each(obj.segments, function(index, value){
-            		segments.push(value);
+            		var seg = banhji.source.segmentDS.get(value);
+            		segments.push(value);					     
 
-            		// $.each(banhji.source.segmentDS.data(), function(ind, val){
-            		// 	if(val.id==value){
-            		// 		var header = table.createTHead(val.name);
-            		// 	}
-            		// });
+					// Insert a new cell (<td>) at the first position of the "new" <tr> element:
+					var cell = row.insertCell(index+3);
+
+					// Add some bold text in the new cell:
+					cell.innerHTML = seg.name;
 
             		$.each(banhji.source.segmentItemList, function(ind, val){
             			if(val.segment_id==value){
@@ -84286,9 +84291,11 @@
             // this.dataSource.query({
             // 	filter: para,
             // 	group:{ field:"type" }
-            // });
+            // });            
 
-            this.dataSource.filter(para);
+            this.dataSource.query({
+            	filter: para
+            });
 
 	        // obj.set("segments", []);
 		}

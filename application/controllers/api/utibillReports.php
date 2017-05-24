@@ -594,27 +594,7 @@ class UtibillReports extends REST_Controller {
 
 		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
-		//Sort
-		if(!empty($sort) && isset($sort)){
-			foreach ($sort as $value) {
-				if(isset($value['operator'])){
-					$obj->{$value['operator']}($value["field"], $value["dir"]);
-				}else{
-					$obj->order_by($value["field"], $value["dir"]);
-				}
-			}
-		}
-		
-		//Filter		
-		if(!empty($filter) && isset($filter)){
-	    	foreach ($filter["filters"] as $value) {
-	    		if(isset($value['operator'])){
-	    			$obj->{$value['operator']}($value['field'], $value['value']);	    		
-	    		} else {
-	    			$obj->where($value['field'], $value['value']);
-	    		}
-			}
-		}
+	
 
 		//Results
 		$obj->include_related("contact", array("abbr", "number", "name"));
@@ -630,7 +610,29 @@ class UtibillReports extends REST_Controller {
 			foreach ($obj as $value) {
 				//Payments
 				$payments = [];				
-				$pmt = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
+				$pmt = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);	
+				//Sort
+				if(!empty($sort) && isset($sort)){
+					foreach ($sort as $abc) {
+						if(isset($abc['operator'])){
+							$pmt->{$abc['operator']}($abc["field"], $value["dir"]);
+						}else{
+							$pmt->order_by($abc["field"], $abc["dir"]);
+						}
+					}
+				}
+				
+				//Filter		
+				if(!empty($filter) && isset($filter)){
+			    	foreach ($filter["filters"] as $abc) {
+			    		if(isset($abc['operator'])){
+			    			$pmt->{$abc['operator']}($abc['field'], $abc['value']);	    		
+			    		} else {
+			    			$pmt->where($abc['field'], $abc['value']);
+			    		}
+					}
+				}
+	
 				$pmt->where_in("type", array("Cash_Receipt", "Offset_Invoice"));		
 				$pmt->where("reference_id", $value->id);
 				$pmt->where("is_recurring <>",1);
@@ -698,27 +700,6 @@ class UtibillReports extends REST_Controller {
 
 		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
-		//Sort
-		if(!empty($sort) && isset($sort)){
-			foreach ($sort as $value) {
-				if(isset($value['operator'])){
-					$obj->{$value['operator']}($value["field"], $value["dir"]);
-				}else{
-					$obj->order_by($value["field"], $value["dir"]);
-				}
-			}
-		}
-		
-		//Filter		
-		if(!empty($filter) && isset($filter)){
-	    	foreach ($filter["filters"] as $value) {
-	    		if(isset($value['operator'])){
-	    			$obj->{$value['operator']}($value['field'], $value['value']);	    		
-	    		} else {
-	    			$obj->where($value['field'], $value['value']);
-	    		}
-			}
-		}
 
 		//Results	
 		$obj->include_related("location", "name");
@@ -733,10 +714,29 @@ class UtibillReports extends REST_Controller {
 			$objList = [];
 			foreach ($obj as $value) {
 				//Payments			
-				$pmt = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);				
-				$pmt->where("reference_id", $value->id);
+				$pmt = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);	
+				//Sort
+				if(!empty($sort) && isset($sort)){
+					foreach ($sort as $abc) {
+						if(isset($abc['operator'])){
+							$pmt->{$abc['operator']}($abc["field"], $value["dir"]);
+						}else{
+							$pmt->order_by($abc["field"], $abc["dir"]);
+						}
+					}
+				}
 				
-			
+				//Filter		
+				if(!empty($filter) && isset($filter)){
+			    	foreach ($filter["filters"] as $abc) {
+			    		if(isset($abc['operator'])){
+			    			$pmt->{$abc['operator']}($abc['field'], $abc['value']);	    		
+			    		} else {
+			    			$pmt->where($abc['field'], $abc['value']);
+			    		}
+					}
+				}			
+				$pmt->where("reference_id", $value->id);			
 				$pmt->include_related("payment_method", "name");
 				$pmt->where_in("type", array("Cash_Receipt", "Offset_Invoice"));
 				$pmt->where("is_recurring <>",1);

@@ -39279,20 +39279,35 @@
 </script>
 <script id="invoiceForm1" type="text/x-kendo-template">
 	<div class="inv1">
-    	<div class="head">
+    	<div class="head" style="width: 88%;">
         	<div class="logo">
-            	<img data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
+            	<!-- <img data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" /> -->
+            	<img src="<?php echo base_url(); ?>assets/pcg-invoice.png">
             </div>
             <div class="cover-name-company">
-            	<h2 ></h2>
-                <h3 style="text-align:left;" data-bind="text: company.name"></h3>
+            	<h2 style="text-align:left; font-weight: 600; ">ភីស៊ីជី & ផាតនើរ</h2>
+                <!-- <h3 style="text-align:left;" data-bind="text: company.name"></h3> -->
+                <h3 style="text-align:left; font-weight: 600;">PCG & Partners Co., Ltd</h3>
                 <div class="vattin">
-                	<p>លេខ​អត្ត​សញ្ញាណ​កម្ម អតប (VATTIN)</p><span id="vat_number" data-bind="text: company.vat_number"></span>
-                </div>
-                <div class="clear">
-                	<pre>អាស័យ​ដ្ឋាន Address: <span data-bind="text: company.address"></span></pre>
-                    <pre>ទូរស័ព្ទលេខ HP <span data-bind="text: company.telephone"></span></pre>
-                </div>
+                	<p>លេខ​អត្ត​សញ្ញាណ​កម្ម អតប (VATTIN)</p>
+                	<!-- <span id="vat_number" data-bind="text: company.vat_number"></span> -->
+                	<span id="vat_number" style="margin-top: 2px;">103005765</span>
+                </div>                
+            </div>
+            <div class="clear" style="margin-top: 8px; float: left; font-size: 11px;">
+            	<p style="line-height: 23px;">
+            		អាស័យ​ដ្ឋាន Address: <!-- <span data-bind="text: company.address"></span> -->
+            		<span>ផ្ទះលេខ113 ផាកវ៉េសាខ្វេ ជាន់ទី១ បន្ទប់ 1.21ផ្លូវ ម៉ៅសេទុង ឃុំ/សង្កាត់ ទួលស្វាយព្រៃ </span>
+            	</p>
+            	<p  style="line-height: 23px;">
+            		Address: <!-- <span data-bind="text: company.address"></span> -->
+            		<span>
+            			N<sup>0</sup> 113 Street Mao Tse Tong Blvd,  Parkway Square 1st Floor (Room 1.21) <br> Commune/Sangkat Toul Svay Prey ក្រុង/ស្រុក/ខណ្ឌ ចំការមន  ខេត្ត/រាជធានី  ភ្នំពេញ ទូរស័ព្ទលេខ +៨៥៥ ៨៧ ៧១ ៩៨ ៩៨ <br> Town/District/Khan  ChamkarMon  Province/City  Phnom Penh, Cambodia Telephone No: +855 87 719898
+            		</span>
+            	</p>
+                <!-- <pre>
+                	ទូរស័ព្ទលេខ HP <span data-bind="text: company.telephone"></span>
+                </pre> -->
             </div>
         </div>
         <div class="content">
@@ -39300,43 +39315,17 @@
         		<h1>វិក្កយបត្រ</h1>
             	<h2 data-bind="text: obj.title"></h2>
         	</div>
-            <div class="clear mid-header" style="padding: 10px;background: #dce6f2;padding-bottom: 10px;">
+            <div class="clear mid-header" style="padding-bottom: 10px;">
             	<div class="cover-customer">
-                	<h5>ព័ត៌មានអតិថិជន​ CUSTOMER INFO:</h5>
-                    <div class="clear">
-                        <div class="left dotted-ruler" style="width: 62%;">
-                        	<p style="font-weight:bold">
-                        		<span style="font-size: 12px;" data-bind="text: contactDS.data()[0].name"></span><br>
-                        		<span data-bind="text: contactDS.data()[0].address"></span>
-                        	</p>
-                        </div>
-                    </div>
-                    <div class="clear">
-                    	<!--div class="left">
-                    		<p>ទូរស័ព្ទ​លេខ HP:</p>
-                        </div-->
-                        <div class="left dotted-ruler" style="width: 78%;">
-                        	<p style="font-weight:bold" data-bind="text: contactDS.data()[0].phone"></p>
-                        </div>
-                    </div>
+                	<p style="font-size: 11px; line-height: 23px;">អតិថិជន/ Customer</p>
+                	<p style="font-size: 11px; line-height: 23px;">
+                		ឈ្មោះក្រុមហ៊ុន ឫអតិថិជន: លោក/លោក កេង អឿន ប្រធានក្រុមប្រឹក្សាភិបាលបណា្តញក្រុមកែលម្អរទុនបង្វិល ភូមិអូរ ឃុំត្រពាំងរាំង ស្រុកជុំគិរី ខេត្តកំពត
+
+                	</p>
                 </div>
                 <div class="cover-inv-number">
-                	<div class="clear">
-                    	<div class="left">
-                    		<p>លេខ No. :</p>
-                        </div>
-                        <div class="left dotted-ruler" style="width: 42%;">
-                        	<p style="font-weight:bold" data-bind="text: obj.number"></p>
-                        </div>
-                    </div>
-                    <div class="clear">
-                    	<div class="left">
-                    		<p>កាល​បរិច្ឆេទ Date:</p>
-                        </div>
-                        <div class="left dotted-ruler" style="width: 57%;">
-                        	<p style="font-weight:bold" data-bind="text: obj.issued_date"></p>
-                        </div>
-                    </div>
+                	<p style="line-height: 23px;">លេខវិក្កយបត្រ៖</p>
+                	<p style="line-height: 23px;">កាលបរិច្ឆេទ៖</p>
                 </div>
             </div>
         	<div class="clear">
@@ -39357,20 +39346,8 @@
                     </tbody>
                     <tfoot>
                         <tr>
-                        	<td colspan="4" style="text-align:right;padding:5px;font-weight: bold;">បញ្ចុះតម្លៃ Discount</td>
-                            <td style="text-align: right; padding-right: 5px;" data-bind="text: obj.discount"></td>
-                        </tr>
-                        <tr>
-                        	<td colspan="4" style="text-align:right;padding:5px;font-weight: bold;">សរុប (បូក​បញ្ចូល​ទាំង​អាករ)​ Total (VAT included)</td>
+                        	<td colspan="4" style="text-align:right; padding:5px; font-weight: bold; line-height: 23px;">សរុប (បូក​បញ្ចូល​ទាំង​អាករ)​ <br>Total (VAT included)</td>
                             <td style="text-align: right; padding-right: 5px;" data-bind="text: obj.amount"></td>
-                        </tr>
-                        <tr>
-                        	<td colspan="4" style="text-align:right;padding:5px;font-weight: bold;">ប្រាក់កក់ Deposit</td>
-                            <td style="text-align: right; padding-right: 5px;" data-bind="text: obj.deposit"></td>
-                        </tr>
-                        <tr>
-                        	<td colspan="4" style="text-align:right;padding:5px;font-weight: bold;">សាច់ប្រាក់ត្រូវទូទាត់ Amount Due</td>
-                            <td style="text-align: right; padding-right: 5px;" data-bind="text: obj.amount_due"></td>
                         </tr>
                     </tfoot>
                 </table>
@@ -44517,9 +44494,9 @@
 					        	</div>
 
 					        	<!-- Window -->
-							    <div data-role="window"
+							    <div data-role="window" id="appcenter"
 						            data-width="90%"
-						            data-height="700"
+						            data-height="660"
 						            data-actions="{}"
 						            data-modal="{mask: 'true'}"
 						            data-position="{top: '7%', left: '5%'}"
@@ -44527,9 +44504,16 @@
 
 						    		<div class="win-wrapper">
 						    			<div class="window-header">
-						    				<span class="btn btn-danger btn-icon glyphicons remove_2" data-bind="click: closeWindow"><i></i><span data-bind="text: lang.lang.close"></span></span> 
-						    				<div class="win-logo">
-						    					<img src="https://lh3.googleusercontent.com/wZMwJuLJFa8G-gituAAdM0ckm9tpYdj6fnmVtEg-Sdxu2a77auIvDOwt1PBGAYIIebDZr40=s26-h26-e365-rw">
+						    				<!-- <span class="btn btn-danger btn-icon glyphicons remove_2" data-bind="click: closeWindow"><i></i><span data-bind="text: lang.lang.close"></span></span>  -->
+						    				<div class="win-logo" style="width: 60px; height: 60px; background: red; float: left; margin-right: 10px;"></div>
+						    				<div class="win-header-title" style="float: left;">
+						    					<h2>Office Online</h2>
+						    					<p>offered by <a href="www.banhji.com" target="_blank">banhji.com</a></p>
+						    					
+						    				</div>
+						    				<span style="float: right; margin-top: -5px; cursor: pointer; color: #999; font-weight: 600; font-size: 15px; margin-right: -15px;" data-bind="click: closeWindow" >x</span>
+						    				<div class="win-heder-btn" style="width: 250px; float: right;">
+						    					Button
 						    				</div>
 						    			</div>
 						    			<div class="window-content">
@@ -44545,24 +44529,91 @@
 																</ul>
 															</div>
 
-															<div class="widget-body" style="float: left; width: 100%;">
+															<div class="widget-body" style="float: left; width: 97%; padding: 15px;">
 																<div class="tab-content">
-															        <div class="tab-pane active" id="tab1-1">
-																		<div class="row-fluid" style="">
-																			Tab 1
+															        <div class="tab-pane active" id="tab1-1" style="width: 100%; float: left;">
+															        	<!-- <div style="background: red; width: 100%; float: left; height: 50px;"></div> -->
+																		<div style="width: 100%; float: left; ">																			
+																			<div class="col-sm-8" style="padding-left: 0; padding-right: 30px;">
+																				<div class="win-video" style="width: 100%;">
+																					Video
+																				</div>
+																			</div>
+																			<div class="col-sm-4" style="padding: 0; width: 30.3%;">
+																				<div class="win-widget-Rfirst">
+																					<div class="win-title">
+																						<p style="margin-bottom: 20px;">Compatible with your device<p>
+																					</div>
+																					<div class="win-line"></div>
+																					<p style="color: #333; font-size: 13px; font-weight: bold; word-wrap: break-word;">
+																						View, edit, and create Office files in your browser.
+																					</p>
+																					<p>
+																						Built for Chrome – Use Word, Excel, PowerPoint, OneNote, and Sway Online without needing Office installed.
+																					</p>
+																					<p>
+																						Create with confidence – Use familiar formatting and layout options to express your ideas in full fidelity.
+																					</p>
+																					<p>
+																						Work on the go – Get to your files from anywhere, thanks to integration with OneDrive and OneDrive for Business.
+																					</p>
+																					<p>
+																						Copy and paste conveniently – Use Copy and Paste buttons on the ribbon and right-click menu, or use keyboard shortcuts for copying and pasting.
+																					</p>
+																					<p>
+																						By installing the app, you agree to these terms and conditions: 
+																					</p>
+																					<p>
+																						PLEASE NOTE: Refer to your license terms for Microsoft Office Online software (the "software") to identify the entity licensing this supplement to you and for support information. You may use a copy of this supplement with each validly licensed copy of the software. You may not use the supplement if you do not have a license for the software. The license terms for the software apply to your use of this supplement.
+																					</p>
+																					<p>
+																						Privacy Policy: http://aka.ms/privacy
+																					</p>
+																				</div>
+																				<div class="win-line"></div>
+																				<div class="win-widget-Second">
+																					<p><a href="">Report Abuse</a></p>
+																					<div class="win-title">
+																						<p style="margin-bottom: 20px;">Additional Information<p>
+																					</div>
+																					<p>
+																						Version: 1.5.1 <br>
+																						Updated: May 10, 2017 <br>
+																						Size: 1.08MiB <br>
+																						Languages: See all 52
+																					</p>
+																					<div class="win-title">
+																						<p style="margin-bottom: 20px;">Developer<p>
+																					</div>
+																					<p><a href="">Privacy Policy</a></p>
+																				</div>
+																			</div>
 																		</div>
 														        	</div>
 
 														        	<div class="tab-pane" id="tab1-2">
-															        	<div class="row-fluid" style="">
-															        		Tab 2
+															        	<div style="width: 100%; float: left; ">
+															        		<div class="col-sm-8" style="padding-left: 0; padding-right: 30px;">
+																				<div class="win-video" style="width: 100%;">
+																					Video
+																				</div>
+																			</div>
+																			<div class="col-sm-4" style="padding: 0; width: 30.3%;">
+																			
+																			</div>
 															        	</div>
-
 														        	</div>
 
 														        	<div class="tab-pane" id="tab1-3">
-															        	<div class="row-fluid" style="">
-															        		Tab 3
+															        	<div style="width: 100%; float: left; ">
+															        		<div class="col-sm-8" style="padding-left: 0; padding-right: 30px;">
+																				<div class="win-video" style="width: 100%;">
+																					Video
+																				</div>
+																			</div>
+																			<div class="col-sm-4" style="padding: 0; width: 30.3%;">
+																			
+																			</div>
 															        	</div>
 
 														        	</div>

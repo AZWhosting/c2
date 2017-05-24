@@ -11896,7 +11896,7 @@
 			this.loadCustomers();
 			this.loadSuppliers();
 			this.loadEmployees();
-			this.loadMeters();
+			//this.loadMeters();
 		},
 		getFiscalDate 				: function(){
 			var today = new Date(),	
@@ -11908,7 +11908,7 @@
 
 			return fDate;
 		},
-		loadMeters 				: function(){
+		loadMeters 					: function(){
 			var self = this, raw = this.get("meterlist");
 
 			//Clear array
@@ -12201,7 +12201,9 @@
 			this.customerDS.query({
 				filter:[
 					{ field:"parent_id", operator:"where_related_contact_type", value:1 }
-				]
+				],
+				page:1,
+				pageSize:1000
 			}).then(function(){
 				var view = self.customerDS.view();
 

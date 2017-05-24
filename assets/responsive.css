@@ -3043,18 +3043,51 @@ a.activate {
   width: 100%;
   float: left;
 }
-.window-content,
 .window-header{
+  width: 96%;
+  padding: 0 25px 10px;
+  float: left;
+  border-bottom: 1px solid #333;
+}
+.window-content{
   width: 96%;
   padding: 10px 25px;
   float: left;
 }
-.window-header{
-  border-bottom: 1px solid #333;
-  float: left;
+.win-widget-Rfirst{
+  overflow-y: auto;
+  overflow-x: hidden;
+  max-height: 275px;
+  font-size: 11px;
+  margin-top: 10px;
 }
-
-
+.win-widget-Second{
+  overflow-y: auto;
+  overflow-x: hidden;
+  max-height: 150px;
+  font-size: 11px;
+  margin-top: 10px;
+}
+.win-line{
+  display: block;
+  height: 1px;
+  border: 0;
+  border-top: 1px solid #c6c6c6;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  width: 100%;
+  margin-left: 0;
+  margin-right: 0;
+}
+.win-video{
+  width: 100%;
+  float: left;
+  background: pink;
+  height: 405px;
+  border: 2px solid #fff;
+  box-shadow: 0 4px 6px rgba(0,0,0,.2);
+}
 
 /** JCarousel **/
 .jcarousel-wrapper {
