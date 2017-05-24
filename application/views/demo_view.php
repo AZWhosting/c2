@@ -30782,7 +30782,7 @@
 <script id="statementProfitLossBySegment-template" type="text/x-kendo-template">
     #if(id>0){#
 		<tr>
-			<td colspan="3" style="font-weight: bold; color: black;">#: type #</td>
+			<td colspan="2" style="font-weight: bold; color: black;">#: type #</td>
 		</tr>
 		#var total = 0;#
 		#for(var i=0; i<line.length; i++){#
@@ -30792,25 +30792,24 @@
 				&nbsp;&nbsp; #=line[i].number# - #=line[i].name#
 			</td>
 			<td class="right" style="color: black;">
-				#=kendo.toString(line[i].amount, "c", banhji.locale)#
+				#=kendo.toString(line[i].amount, "c2", banhji.locale)#
 			</td>
-			#for(var i=0; i<segment_lines.length; i++){#
-		        <td class="right">
-		        	#:segment_lines[i]#
+			#for(var j=0; j<line[i].segment_lines.length; j++){#
+		        <td class="right" style="color: black;">
+		        	#=kendo.toString(line[i].segment_lines[j], "c2", banhji.locale)#
 		        </td>
 	        #}#		
 	    </tr>    
 	    #}# 
 	    <tr>
 	    	<td style="font-weight: bold; color: black;">Total #: type #</td>
-	    	<td></td>	    	
 	    	<td class="right" style="font-weight: bold; border-top: 1px solid black !important; color: black;">
-	    		#=kendo.toString(total, "c", banhji.locale)#
+	    		#=kendo.toString(total, "c2", banhji.locale)#
 	    	</td>
 	    </tr>	    
 	#}else{#
 		<tr>
-	        <td colspan="2" style="font-weight: bold; color: black;">#: number # #: name #</td>
+	        <td style="font-weight: bold; color: black;">#: name #</td>
 			<td class="right" style="font-weight: bold; color: black;">#: kendo.toString(amount, "c2", banhji.locale) #</td>	        
 	    </tr>
 	#}#
@@ -84261,18 +84260,16 @@
 			var row = header.insertRow(0);
 				row.insertCell(0);
 				row.insertCell(1);
-				row.insertCell(2);
 
 	        //Segments
 	        var segments = [], segmentItems = [];
-	        // var table = document.getElementById("myTable");
             if(obj.segments.length>0){
             	$.each(obj.segments, function(index, value){
             		var seg = banhji.source.segmentDS.get(value);
             		segments.push(value);					     
 
 					// Insert a new cell (<td>) at the first position of the "new" <tr> element:
-					var cell = row.insertCell(index+3);
+					var cell = row.insertCell(index+2);
 
 					// Add some bold text in the new cell:
 					cell.innerHTML = seg.name;
