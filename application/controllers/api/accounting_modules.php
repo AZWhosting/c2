@@ -2282,28 +2282,24 @@ class Accounting_modules extends REST_Controller {
 					}
 				}
 			}
-
-			foreach ($objList as $value) {
-				$data["results"][] = $value;
-			}
-
+			
 			//Group by account_type_id
 			$typeList = [];
-			// foreach ($objList as $value) {
-			// 	$typeId = $value["type_id"];
+			foreach ($objList as $value) {
+				$typeId = $value["type_id"];
 
-			// 	if(isset($typeList[$typeId])){
-			// 		$typeList[$typeId]["amount"] 	+= $value["amount"];
-			// 		$typeList[$typeId]["line"][] 	= $value;
-			// 	} else {
-			// 		$typeList[$typeId]["id"] 		= $typeId;
-			// 		$typeList[$typeId]["type"] 		= $value["type"];
-			// 		$typeList[$typeId]["amount"] 	= $value["amount"];
-			// 		$typeList[$typeId]["line"][] 	= $value;
-			// 	}
-			// }
+				if(isset($typeList[$typeId])){
+					$typeList[$typeId]["amount"] 	+= $value["amount"];
+					$typeList[$typeId]["line"][] 	= $value;
+				} else {
+					$typeList[$typeId]["id"] 		= $typeId;
+					$typeList[$typeId]["type"] 		= $value["type"];
+					$typeList[$typeId]["amount"] 	= $value["amount"];
+					$typeList[$typeId]["line"][] 	= $value;
+				}
+			}
 
-			/*//Revenue
+			//Revenue
 			$totalRevenue = 0;
 			foreach ($typeList as $value) {
 				if($value["id"]=="35"){
@@ -2406,7 +2402,7 @@ class Accounting_modules extends REST_Controller {
 			//Profit For The Year
 			$ProfitForTheYear = $ProfitBeforeTax - $totalTaxExpense;
 			$data["results"][] = array("id"=>0, "name"=>"Profit For The Year", "amount"=>$ProfitForTheYear);
-*/
+
 
 			$data["count"] = count($data["results"]);			
 		}

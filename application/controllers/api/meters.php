@@ -82,7 +82,7 @@ class Meters extends REST_Controller {
 				$reactive = $value->reactive->get_raw();
 				//Results				
 				$data["results"][] = array(
-					"id" 					=> $value->id,
+					"id" 					=> floatval($value->id),
 					"currency_id"			=> $value->currency_id,
 					"_currency"				=> array(
 												"id" => $currency->id,

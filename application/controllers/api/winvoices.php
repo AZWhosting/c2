@@ -39,6 +39,7 @@ class Winvoices extends REST_Controller {
 			}
 		}
 		$table->where('invoiced <>', 1);
+		$table->order_by('id','desc');
 		$table->get();
 
 		$tmp = array();

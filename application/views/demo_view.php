@@ -30780,16 +30780,40 @@
 	</div>
 </script>
 <script id="statementProfitLossBySegment-template" type="text/x-kendo-template">
-	<tr>
-        <td data-bind="text: number"></td>
-        <td data-bind="text: name"></td>
-        <td class="right">#: amount #</td>
-        #for(var i=0; i<segment_lines.length; i++){#
-	        <td class="right">
-	        	#:segment_lines[i]#
-	        </td>
-        #}#        
-    </tr>
+    #if(id>0){#
+		<tr>
+			<td colspan="3" style="font-weight: bold; color: black;">#: type #</td>
+		</tr>
+		#var total = 0;#
+		#for(var i=0; i<line.length; i++){#
+		#total += line[i].amount;#
+		<tr>
+			<td style="color: black;">
+				&nbsp;&nbsp; #=line[i].number# - #=line[i].name#
+			</td>
+			<td class="right" style="color: black;">
+				#=kendo.toString(line[i].amount, "c", banhji.locale)#
+			</td>
+			#for(var i=0; i<segment_lines.length; i++){#
+		        <td class="right">
+		        	#:segment_lines[i]#
+		        </td>
+	        #}#		
+	    </tr>    
+	    #}# 
+	    <tr>
+	    	<td style="font-weight: bold; color: black;">Total #: type #</td>
+	    	<td></td>	    	
+	    	<td class="right" style="font-weight: bold; border-top: 1px solid black !important; color: black;">
+	    		#=kendo.toString(total, "c", banhji.locale)#
+	    	</td>
+	    </tr>	    
+	#}else{#
+		<tr>
+	        <td colspan="2" style="font-weight: bold; color: black;">#: number # #: name #</td>
+			<td class="right" style="font-weight: bold; color: black;">#: kendo.toString(amount, "c2", banhji.locale) #</td>	        
+	    </tr>
+	#}#
 </script>
 <script id="statementFinancialPosition" type="text/x-kendo-template">
 	<div id="slide-form">
