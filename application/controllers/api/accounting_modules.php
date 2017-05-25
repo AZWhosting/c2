@@ -2305,9 +2305,9 @@ class Accounting_modules extends REST_Controller {
 				if($value["id"]=="35"){
 					$totalRevenue += $value["amount"];
 
-					foreach ($segmentList as $row) {
-						$value["segment_lines"][] = 999;
-					}
+					// foreach ($segmentList as $row) {
+					// 	$value["segment_lines"][] = 999;
+					// }
 
 					$data["results"][] = $value;
 				}
@@ -2323,7 +2323,7 @@ class Accounting_modules extends REST_Controller {
 				}
 			}
 
-			/*//Gross Profit
+			//Gross Profit
 			$grossProfit = $totalRevenue - $totalCOGS;
 			$data["results"][] = array("id"=>0, "name"=>"Gross Profit", "amount"=>$grossProfit);
 
@@ -2405,7 +2405,7 @@ class Accounting_modules extends REST_Controller {
 
 			//Profit For The Year
 			$ProfitForTheYear = $ProfitBeforeTax - $totalTaxExpense;
-			$data["results"][] = array("id"=>0, "name"=>"Profit For The Year", "amount"=>$ProfitForTheYear);*/
+			$data["results"][] = array("id"=>0, "name"=>"Profit For The Year", "amount"=>$ProfitForTheYear);
 
 
 			$data["count"] = count($data["results"]);			
