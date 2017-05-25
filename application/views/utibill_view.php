@@ -21987,7 +21987,7 @@
 						notifi.success(self.lang.lang.success_message);
 			    		$("#loadImport").css("display","none");
 			    		$('li.k-file').remove();
-			    		self.dataSource.data([]);
+			    		banhji.importItem.dataSource.data([]);
 					}				  				
 			    });
 			    banhji.importItem.dataSource.bind("error", function(e){	

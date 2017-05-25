@@ -2231,6 +2231,7 @@ class Accounting_modules extends REST_Controller {
 		
 		if($obj->exists()){
 			$objList = [];
+			$segList = [];
 			foreach ($obj as $value) {
 				$amount = 0;
 				if($value->account_account_type_nature=="Dr"){
@@ -2238,7 +2239,7 @@ class Accounting_modules extends REST_Controller {
 				}else{
 					$amount = (floatval($value->cr) - floatval($value->dr)) / floatval($value->transaction_rate);					
 				}
-				
+
 				$segItems = new Segmentitem(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 				$segItems->where_in("id", explode(",",intval($value->segments)));
 				$segItems->get();
@@ -2259,6 +2260,16 @@ class Accounting_modules extends REST_Controller {
 						}
 						
 						$objList[$accountId]["segment_lines"][$key] += $segAmount;
+
+						//Revenue
+						if($value->account_account_type_id=="35"){
+							$segList[$row]["revenue"] += $segAmount;
+						}
+
+						//COGS
+						if($value->account_account_type_id=="36"){
+							$segList[$row]["cogs"] += $segAmount;
+						}
 					}
 				}else{
 					$objList[$accountId]["id"] 		= $accountId;
@@ -2279,6 +2290,16 @@ class Accounting_modules extends REST_Controller {
 						}
 						
 						$objList[$accountId]["segment_lines"][$key] = $segAmount;
+
+						//Revenue
+						if($value->account_account_type_id=="35"){
+							$segList[$row]["revenue"] = $segAmount;
+						}
+
+						//COGS
+						if($value->account_account_type_id=="36"){
+							$segList[$row]["cogs"] = $segAmount;
+						}
 					}
 				}
 			}
@@ -2304,11 +2325,7 @@ class Accounting_modules extends REST_Controller {
 			foreach ($typeList as $value) {
 				if($value["id"]=="35"){
 					$totalRevenue += $value["amount"];
-
-					// foreach ($segmentList as $row) {
-					// 	$value["segment_lines"][] = 999;
-					// }
-
+					
 					$data["results"][] = $value;
 				}
 			}
@@ -2325,7 +2342,16 @@ class Accounting_modules extends REST_Controller {
 
 			//Gross Profit
 			$grossProfit = $totalRevenue - $totalCOGS;
-			$data["results"][] = array("id"=>0, "name"=>"Gross Profit", "amount"=>$grossProfit);
+			$grossProfitBySegments = [];
+			foreach ($objList as $value) {
+				$grossProfitBySegments
+			}
+			$data["results"][] = array(
+				"id"			=> 0, 
+				"name"			=> "Gross Profit", 
+				"amount"		=> $grossProfit,
+				"segment_lines" => $segmentList
+			);
 
 
 			//Other Revenue
@@ -2350,7 +2376,12 @@ class Accounting_modules extends REST_Controller {
 
 			//EBITDA
 			$EBITDA = ($grossProfit + $totalOtherRevenue) - $totalOperatingExpense;
-			$data["results"][] = array("id"=>0, "name"=>"Operating Income(EBITDA)", "amount"=>$EBITDA);
+			$data["results"][] = array(
+				"id"			=> 0, 
+				"name"			=> "Operating Income(EBITDA)", 
+				"amount"		=> $EBITDA,
+				"segment_lines" => $segmentList
+			);
 
 
 			//Depreciation Expense
@@ -2375,7 +2406,12 @@ class Accounting_modules extends REST_Controller {
 
 			//EBIT
 			$EBIT = ($EBITDA - $totalDepreciationExpense) - $totalOtherExpense;
-			$data["results"][] = array("id"=>0, "name"=>"Earning Before Interest And Tax(EBIT)", "amount"=>$EBIT);
+			$data["results"][] = array(
+				"id" 			=> 0, 
+				"name" 			=> "Earning Before Interest And Tax(EBIT)", 
+				"amount" 		=> $EBIT,
+				"segment_lines" => $segmentList
+			);
 
 
 			//Financing Cost
@@ -2390,7 +2426,12 @@ class Accounting_modules extends REST_Controller {
 
 			//Profit Before Tax
 			$ProfitBeforeTax = $EBIT - $totalFinancingCost;
-			$data["results"][] = array("id"=>0, "name"=>"Profit Before Tax", "amount"=>$ProfitBeforeTax);
+			$data["results"][] = array(
+				"id" 			=> 0, 
+				"name" 			=> "Profit Before Tax", 
+				"amount"		=> $ProfitBeforeTax,
+				"segment_lines" => $segmentList
+			);
 
 
 			//Tax Expense
@@ -2405,7 +2446,12 @@ class Accounting_modules extends REST_Controller {
 
 			//Profit For The Year
 			$ProfitForTheYear = $ProfitBeforeTax - $totalTaxExpense;
-			$data["results"][] = array("id"=>0, "name"=>"Profit For The Year", "amount"=>$ProfitForTheYear);
+			$data["results"][] = array(
+				"id" 			=> 0, 
+				"name" 			=> "Profit For The Year", 
+				"amount" 		=> $ProfitForTheYear,
+				"segment_lines" => $segmentList
+			);
 
 
 			$data["count"] = count($data["results"]);			
