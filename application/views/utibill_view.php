@@ -17414,7 +17414,6 @@
 				{field: "main_pole",value: 0}
 			]);
 			this.set("slocation", true);
-
 	    },
 	    blocChange 			: function(){
 	    	this.set("balanceView", true);
@@ -18037,14 +18036,14 @@
 	    	var self = this, obj = this.get("obj");
 
 	    	//Edit Mode
-	    	if(this.get("isEdit")){
-	    		obj.set("issued_date", kendo.toString(new Date(obj.issued_date), "s"));
+	   //  	if(this.get("isEdit")){
+	   //  		obj.set("issued_date", kendo.toString(new Date(obj.issued_date), "s"));
 
-	    		//Delete Previouse Journal
-    			$.each(this.journalLineDS.data(), function(index, value){
-					value.set("deleted", 1);
-				});
-	    	}else{
+	   //  		//Delete Previouse Journal
+    // 			$.each(this.journalLineDS.data(), function(index, value){
+				// 	value.set("deleted", 1);
+				// });
+	   //  	}else{
 	    		//Add brand new transaction
 	    		$.each(this.dataSource.data(), function(index, value){
 	    			value.set("transaction_template_id", obj.transaction_template_id);
@@ -18055,7 +18054,7 @@
 	    			value.set("memo2", obj.memo2);
 	    			value.set("segments", obj.segments);
 	    		});
-			}
+			// }
 			//Obj
 			this.objSync()
 			.then(function(data){

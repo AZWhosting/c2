@@ -30811,6 +30811,11 @@
 		<tr>
 	        <td style="font-weight: bold; color: black;">#: name #</td>
 			<td class="right" style="font-weight: bold; color: black;">#: kendo.toString(amount, "c2", banhji.locale) #</td>	        
+	    	#for(var i=0; i<segment_lines.length; i++){#
+		        <td class="right" style="color: black;">
+		        	#=kendo.toString(segment_lines[i], "c2", banhji.locale)#
+		        </td>
+	        #}#
 	    </tr>
 	#}#
 </script>
