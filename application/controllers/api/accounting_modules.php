@@ -2231,7 +2231,6 @@ class Accounting_modules extends REST_Controller {
 		
 		if($obj->exists()){
 			$objList = [];
-			$segList = [];
 			foreach ($obj as $value) {
 				$amount = 0;
 				if($value->account_account_type_nature=="Dr"){
@@ -2260,16 +2259,6 @@ class Accounting_modules extends REST_Controller {
 						}
 						
 						$objList[$accountId]["segment_lines"][$key] += $segAmount;
-
-						//Revenue
-						if($value->account_account_type_id=="35"){
-							$segList[$row]["revenue"] += $segAmount;
-						}
-
-						//COGS
-						if($value->account_account_type_id=="36"){
-							$segList[$row]["cogs"] += $segAmount;
-						}
 					}
 				}else{
 					$objList[$accountId]["id"] 		= $accountId;
@@ -2290,22 +2279,13 @@ class Accounting_modules extends REST_Controller {
 						}
 						
 						$objList[$accountId]["segment_lines"][$key] = $segAmount;
-
-						//Revenue
-						if($value->account_account_type_id=="35"){
-							$segList[$row]["revenue"] = $segAmount;
-						}
-
-						//COGS
-						if($value->account_account_type_id=="36"){
-							$segList[$row]["cogs"] = $segAmount;
-						}
 					}
 				}
 			}
-			
+
 			//Group by account_type_id
 			$typeList = [];
+			$segList = [];
 			foreach ($objList as $value) {
 				$typeId = $value["type_id"];
 
@@ -2317,6 +2297,146 @@ class Accounting_modules extends REST_Controller {
 					$typeList[$typeId]["type"] 		= $value["type"];
 					$typeList[$typeId]["amount"] 	= $value["amount"];
 					$typeList[$typeId]["line"][] 	= $value;
+				}
+
+				//Segments
+				foreach ($value["segment_lines"] as $key => $val) {					
+					if(isset($segList[$key])){
+						//Revenue
+						if($value["type_id"]=="35"){
+							$segList[$key]["revenue"] += $val;
+						}
+
+						//COGS
+						if($value["type_id"]=="36"){
+							$segList[$key]["cogs"] += $val;
+						}
+
+						//Operating Expense
+						if($value["type_id"]=="37"){
+							$segList[$key]["operating_expense"] += $val;
+						}
+
+						//Depreciation Expense
+						if($value["type_id"]=="38"){
+							$segList[$key]["depreciation_expense"] += $val;
+						}
+
+						//Other Revenue
+						if($value["type_id"]=="39"){
+							$segList[$key]["other_revenue"] += $val;
+						}
+
+						//Other Expense
+						if($value["type_id"]=="40"){
+							$segList[$key]["other_expense"] += $val;
+						}
+
+						//Financing Cost
+						if($value["type_id"]=="41"){
+							$segList[$key]["financing_cost"] += $val;
+						}
+
+						//Tax Expense
+						if($value["type_id"]=="42"){
+							$segList[$key]["tax_expense"] += $val;
+						}
+					} else {
+						//Revenue
+						if($value["type_id"]=="35"){
+							$segList[$key]["revenue"] = $val;
+							$segList[$key]["cogs"] = 0;
+							$segList[$key]["operating_expense"] = 0;
+							$segList[$key]["depreciation_expense"] = 0;
+							$segList[$key]["other_revenue"] = 0;
+							$segList[$key]["other_expense"] = 0;
+							$segList[$key]["financing_cost"] = 0;
+							$segList[$key]["tax_expense"] = 0;
+						}
+
+						//COGS
+						if($value["type_id"]=="36"){
+							$segList[$key]["revenue"] = 0;
+							$segList[$key]["cogs"] = $val;
+							$segList[$key]["operating_expense"] = 0;
+							$segList[$key]["depreciation_expense"] = 0;
+							$segList[$key]["other_revenue"] = 0;
+							$segList[$key]["other_expense"] = 0;
+							$segList[$key]["financing_cost"] = 0;
+							$segList[$key]["tax_expense"] = 0;
+						}
+
+						//Operating Expense
+						if($value["type_id"]=="37"){
+							$segList[$key]["revenue"] = 0;
+							$segList[$key]["cogs"] = 0;
+							$segList[$key]["operating_expense"] = $val;
+							$segList[$key]["depreciation_expense"] = 0;
+							$segList[$key]["other_revenue"] = 0;
+							$segList[$key]["other_expense"] = 0;
+							$segList[$key]["tax_expense"] = 0;
+						}
+
+						//Depreciation Expense
+						if($value["type_id"]=="38"){
+							$segList[$key]["revenue"] = 0;
+							$segList[$key]["cogs"] = 0;
+							$segList[$key]["operating_expense"] = 0;
+							$segList[$key]["depreciation_expense"] = $val;
+							$segList[$key]["other_revenue"] = 0;
+							$segList[$key]["other_expense"] = 0;
+							$segList[$key]["financing_cost"] = 0;
+							$segList[$key]["tax_expense"] = 0;
+						}
+
+						//Other Revenue
+						if($value["type_id"]=="39"){
+							$segList[$key]["revenue"] = 0;
+							$segList[$key]["cogs"] = 0;
+							$segList[$key]["operating_expense"] = 0;
+							$segList[$key]["depreciation_expense"] = 0;
+							$segList[$key]["other_revenue"] = $val;
+							$segList[$key]["other_expense"] = 0;
+							$segList[$key]["financing_cost"] = 0;
+							$segList[$key]["tax_expense"] = 0;
+						}
+
+						//Other Expense
+						if($value["type_id"]=="40"){
+							$segList[$key]["revenue"] = 0;
+							$segList[$key]["cogs"] = 0;
+							$segList[$key]["operating_expense"] = 0;
+							$segList[$key]["depreciation_expense"] = 0;
+							$segList[$key]["other_revenue"] = 0;
+							$segList[$key]["other_expense"] = $val;
+							$segList[$key]["financing_cost"] = 0;
+							$segList[$key]["tax_expense"] = 0;
+						}
+
+						//Financing Cost
+						if($value["type_id"]=="41"){
+							$segList[$key]["revenue"] = 0;
+							$segList[$key]["cogs"] = 0;
+							$segList[$key]["operating_expense"] = 0;
+							$segList[$key]["depreciation_expense"] = 0;
+							$segList[$key]["other_revenue"] = 0;
+							$segList[$key]["other_expense"] = 0;
+							$segList[$key]["financing_cost"] = $val;
+							$segList[$key]["tax_expense"] = 0;
+						}
+
+						//Tax Expense
+						if($value["type_id"]=="42"){
+							$segList[$key]["revenue"] = 0;
+							$segList[$key]["cogs"] = 0;
+							$segList[$key]["operating_expense"] = 0;
+							$segList[$key]["depreciation_expense"] = 0;
+							$segList[$key]["other_revenue"] = 0;
+							$segList[$key]["other_expense"] = 0;
+							$segList[$key]["financing_cost"] = 0;
+							$segList[$key]["tax_expense"] = $val;
+						}
+					}					
 				}
 			}
 
@@ -2340,19 +2460,33 @@ class Accounting_modules extends REST_Controller {
 				}
 			}
 
+			$gpBySeg = [];
+			$ebitdaBySeg = [];
+			$ebitBySeg = [];
+			$profitBeforeTaxBySeg = [];
+			$profitForTheYearBySeg = [];
+			foreach ($segList as $key => $value) {
+				$gpAmount = $value["revenue"] - $value["cogs"];
+				$ebitdaAmount = ($gpAmount + $value["other_revenue"]) - $value["operating_expense"];
+				$ebitAmount = $ebitdaAmount + ($value["depreciation_expense"] + $value["other_expense"]);
+				$profitBeforeTaxAmount = $ebitAmount - $value["financing_cost"];
+				$profitForTheYearAmount = $profitBeforeTaxAmount - $value["tax_expense"];
+
+				$gpBySeg[] = $gpAmount;
+				$ebitdaBySeg[] = $ebitdaAmount;
+				$ebitBySeg[] = $ebitAmount;
+				$profitBeforeTaxBySeg[] = $profitBeforeTaxAmount;
+				$profitForTheYearBySeg[] = $profitForTheYearAmount;
+			}
+
 			//Gross Profit
 			$grossProfit = $totalRevenue - $totalCOGS;
-			$grossProfitBySegments = [];
-			foreach ($objList as $value) {
-				$grossProfitBySegments
-			}
 			$data["results"][] = array(
 				"id"			=> 0, 
 				"name"			=> "Gross Profit", 
 				"amount"		=> $grossProfit,
-				"segment_lines" => $segmentList
+				"segment_lines" => $gpBySeg
 			);
-
 
 			//Other Revenue
 			$totalOtherRevenue = 0;
@@ -2380,9 +2514,8 @@ class Accounting_modules extends REST_Controller {
 				"id"			=> 0, 
 				"name"			=> "Operating Income(EBITDA)", 
 				"amount"		=> $EBITDA,
-				"segment_lines" => $segmentList
+				"segment_lines" => $ebitdaBySeg
 			);
-
 
 			//Depreciation Expense
 			$totalDepreciationExpense = 0;
@@ -2405,12 +2538,12 @@ class Accounting_modules extends REST_Controller {
 			}
 
 			//EBIT
-			$EBIT = ($EBITDA - $totalDepreciationExpense) - $totalOtherExpense;
+			$EBIT = $EBITDA - ($totalDepreciationExpense + $totalOtherExpense);
 			$data["results"][] = array(
 				"id" 			=> 0, 
 				"name" 			=> "Earning Before Interest And Tax(EBIT)", 
 				"amount" 		=> $EBIT,
-				"segment_lines" => $segmentList
+				"segment_lines" => $ebitBySeg
 			);
 
 
@@ -2430,7 +2563,7 @@ class Accounting_modules extends REST_Controller {
 				"id" 			=> 0, 
 				"name" 			=> "Profit Before Tax", 
 				"amount"		=> $ProfitBeforeTax,
-				"segment_lines" => $segmentList
+				"segment_lines" => $profitBeforeTaxBySeg
 			);
 
 
@@ -2450,7 +2583,7 @@ class Accounting_modules extends REST_Controller {
 				"id" 			=> 0, 
 				"name" 			=> "Profit For The Year", 
 				"amount" 		=> $ProfitForTheYear,
-				"segment_lines" => $segmentList
+				"segment_lines" => $profitForTheYearBySeg
 			);
 
 

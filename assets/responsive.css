@@ -3088,6 +3088,78 @@ a.activate {
   border: 2px solid #fff;
   box-shadow: 0 4px 6px rgba(0,0,0,.2);
 }
+.win-header-offered-by{
+      display: block;
+    max-width: 260px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    font-size: 11px;
+    color: #b2b2b2;
+    margin: -5px 0 5px 2px;
+}
+.win-header-averrage-star{
+  padding-left: 4px;
+    font-size: 10px;
+    color: #303030;
+}
+.win-header-line-dotted{
+    height: 15px;
+    width: 1px;
+    display: inline;
+    border-left: 1px dotted #a6a6a6;
+    margin: 0 10px;
+    vertical-align: middle;
+}
+.win-header-productivity{
+    font-size: 11px;
+    color: #1c5ac4;
+    padding: 1px 2px;
+    margin: 0 2px;
+}
+.win-header-sount-user{
+    font-size: 11px;
+    color: #a6a6a6;
+    font-style: italic;
+}
+.win-heder-btn{  
+  height: 28px;  
+  cursor: pointer;
+}
+.win-header-add-btn{
+  font-weight: 600;
+  text-transform: uppercase;    
+  font-size: 11px;
+  margin-left: 5px;
+}
+.win-header-bth-plus{
+  padding: 3px 15px 4px 15px;
+  margin-right: 10px;
+  color: #fff;
+  border: 1px solid #2d53af;
+  background-color: #4d7bd6;
+  box-shadow: 0 2px 0 0 rgba(255,255,255,.06) inset, 0 2px 3px 0 rgba(0,0,0,.2);
+}
+/*.win-header-bth-plus{
+  font-weight: 800;
+  color: #fff;
+  font-size: 15px;
+  float: left;
+  margin-right: 9px;
+}*/
+.win-header-bth-share{
+  padding: 3px 15px 4px 15px;
+  height: 28px;
+  font-size: 11px;
+  line-height: 28px;
+  color: #fff;
+  cursor: pointer;
+  font-weight: 800;
+  text-transform: uppercase;
+  border: 1px solid #2d53af;
+  background-color: #4d7bd6;
+  box-shadow: 0 2px 0 0 rgba(255,255,255,.06) inset, 0 2px 3px 0 rgba(0,0,0,.2);
+}
 
 /** JCarousel **/
 .jcarousel-wrapper {

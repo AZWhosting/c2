@@ -6755,6 +6755,152 @@
 </script>
 <script id="invoiceForm3" type="text/x-kendo-template">
     <div class="row-fluid">
+    	<div class="col-md-8 col-md-offset-2" inv1" style="margin-top: 15px; padding-right: 15px; padding-left: 8px; ">
+    		<div class="head" style="width: 100%; margin-bottom: 10px; float: left;">
+	        	<!-- <div class="logo" style="width: 30%;">
+	            	<img data-bind="attr: { src: objLicense.image_url, alt: company.name, title: company.name }" />
+	            </div> -->
+	            <div class="cover-name-company" style="width: 100%; margin-left: 15px;">
+	            	<h2 style="text-align: center;">សហគ្រាសបន្ទាយមាស អេឡិទ្រីស៊ីធី    </h2>
+	                <p style="font-size: 12px; color: #000; text-align: center;">ភូមិទូកមាស ឃុំទូកមាសខាងលិច ស្រុកបន្ទាយមាស ខេត្តកំពត </p>
+	                
+	            </div>
+	        </div>
+	        <h2 style="text-align: center; font-weight: 700; margin-bottom: 15px;">វិក្កយបត្រ INVOICE</h2>
+	        
+	        <div class="row " style="width: 100%; text-align: center; margin-left: 7%; margin-bottom: 10px;">
+	    		<div class="">
+		    		<table style="width: 100%;">
+		    			<tr>
+		    				<td style="width: 50% text-align: left;">លេខវិក្កយបត្រ INVOICE NO</td>
+		    				<td style="padding: 5px;">
+		    					<input type="text">
+		    				</td>
+
+		    			</tr>
+		    			<tr>
+		    				<td style="width: 50%; text-align: left;">ថ្ងៃចេញ INVOICE DATE</td>
+		    				<td style="padding: 5px;">
+		    					<input type="text">
+		    				</td>
+		    			</tr>
+		    		</table>
+		    	</div>
+	    	</div>
+
+	        <div class="row">
+    			<div class="span6" style="padding-right: 0">
+    				<p style="list-style: 20px; margin-bottom: 0;">
+    					<b>យិន អ៊ិច</b><br>
+    					ភូមិសាមគ្គី ឃុំអង្គរជ័យ
+    				</p>
+		    	</div>
+		    	<div class="span6" style="padding: 0;">
+		    		<img style="width: 180px; height: auto; float: right;" src="<?php echo base_url();?>/assets/barcode.png">
+		    		<p style="margin-bottom: 0; float: right; margin-top: 5px; font-size: 12px; margin-left: 8px;">លេខកូដអតិថិជន ០០៤៣៣៦</p>
+		    	</div>
+    		</div>
+    		
+    		<div class="row" style="padding-left: 0;">
+	    		<p style="width: 180px; float: left; margin: 25px 0 0 8px; font-size: 20px; ">ចំនួនដែលត្រូវបង់សរុប</p>
+	    		<p style="padding: 5px 8px; background: #F1F1F1; border: 1px solid #000; width: 190px; float: right;font-size: 25px; color: #000;font-weight: 600; text-align: right; margin: 13px 0 10px 8px;">38,808,900</p>
+	    		<p style="float: left; text-align: center; width: 100%;">
+	    			សូមអញ្ជើញមកបង់ប្រាក់ អោយបានមុនថ្ងៃផុតកំនត់ទី
+	    			<span style="font-weight: 600;">១៥ មេសា ២០១៦</span>
+	    		</p>
+	    	</div>
+
+	        <div class="table-content" style="border: 2px solid #30859C; border-radius: 10px; padding: 10px; margin: 10px 8px; font-weight: 600; float: left; width: 100%;">    		
+	    		<table>
+	    			<thead>
+	    				<tr>
+	    					<th>អំនានមុន <br> PREVIOUS</th>
+	    					<th>អំនានថ្មី <br> LASTES</th>
+	    					<th>ប្រើប្រាស់ <br> UNIT</th>
+	    					<th>តម្លៃឯកតា <br> RATE</th>
+	    					<th>តម្លៃសរុប <br> AMOUNT</th>
+	    				</tr>
+	    			</thead>
+	    			<tbody>
+	    				<tr>
+	    					<td>1</td>
+	    					<td></td>
+	    					<td></td>
+	    					<td></td>
+	    					<td></td>
+	    				</tr>
+	    				<tr>
+	    					<td>2</td>
+	    					<td></td>
+	    					<td></td>
+	    					<td></td>
+	    					<td></td>
+	    				</tr>
+	    				<tr>
+	    					<td>3</td>
+	    					<td></td>
+	    					<td></td>
+	    					<td></td>
+	    					<td></td>
+	    				</tr>
+	    				<tr>
+	    					<td>4</td>
+	    					<td></td>
+	    					<td></td>
+	    					<td></td>
+	    					<td></td>
+	    				</tr>
+	    			</tbody>
+	    			<tfoot>
+	    				<tr>
+	    					<td colspan="4" style="text-align: right;">
+	    						<span >
+	    							ថាមពលប្រើប្រាស់សរុបសម្រាប់រយះពេលនេះ
+	    						</span>
+	    					</td>
+	    					<td colspan="1" style="font-weight: 700; text-align: right;">
+	    						<span >
+	    							100,000
+	    						</span>
+	    					</td>
+	    				</tr>
+	    				<tr>
+	    					<td colspan="4" style="text-align: right;">
+	    						<span >
+	    							សមតុល្យសាច់ប្រាក់ជំពាក់គ្រាមុន
+	    						</span>
+	    					</td>
+	    					<td colspan="1" style="font-weight: 700; text-align: right;">
+	    						<span >
+	    							0
+	    						</span>
+	    					</td>
+	    				</tr>
+	    				<tr>
+	    					<td colspan="4" style="text-align: right;">
+	    						<span >
+	    							ប្រាក់ដែលត្រូវបង់សរុប
+	    						</span>
+	    					</td>
+	    					<td colspan="1" style="font-weight: 700; text-align: right;">
+	    						<span >
+	    							100,000
+	    						</span>
+	    					</td>
+	    				</tr>
+	    			</tfoot>
+	    		</table>
+	    	</div>
+
+	    	<div class="row" style="float: left; margin-left: 50px;">
+	    		<p style="margin-bottom: 0;">បច្ចេកទេស <span style="font-weight: 700">០៣៣ ៦៦០១ ៣៣៣</span></p>
+	    		<p>បង់ប្រាក់ និងវិក័យប័ត្រ <span style="font-weight: 700">០១១ ៦០០ ៧៣០</span></p>
+	    	</div>
+    	</div>
+    </div>
+</script>
+<script id="invoiceForm3-bk" type="text/x-kendo-template">
+    <div class="row-fluid">
     	<div class="span7 inv1" style="width: 54%; padding-right: 15px; padding-left: 8px; ">
     		<div class="head" style="width: 100%">
 	        	<div class="logo" style="width: 30%;">

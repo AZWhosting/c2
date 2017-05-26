@@ -44508,12 +44508,28 @@
 						    				<div class="win-logo" style="width: 60px; height: 60px; background: red; float: left; margin-right: 10px;"></div>
 						    				<div class="win-header-title" style="float: left;">
 						    					<h2>Office Online</h2>
-						    					<p>offered by <a href="www.banhji.com" target="_blank">banhji.com</a></p>
-						    					
+						    					<span class="win-header-offered-by">offered by banhji.com</span>
+						    					<p>
+						    						<span class="win-header-rate">
+						    							<span class="win-header-averrage-star">(1577)</span>
+						    						</span>
+						    						<span class="win-header-line-dotted"></span>
+						    						<a href="" class="win-header-productivity">Productivity</a>
+						    						<span class="win-header-line-dotted"></span>
+						    						<span class="win-header-sount-user">2,871,240 users</span>
+						    					</p>
 						    				</div>
 						    				<span style="float: right; margin-top: -5px; cursor: pointer; color: #999; font-weight: 600; font-size: 15px; margin-right: -15px;" data-bind="click: closeWindow" >x</span>
-						    				<div class="win-heder-btn" style="width: 250px; float: right;">
-						    					Button
+						    				<div class="win-heder-btn" style="float: right;">
+						    					<span class="win-header-bth-plus">
+						    						<i class="icon-plus"></i>
+						    						<span class="win-header-add-btn">Add to Chrome</span>
+						    					</span>
+						    					<span class="win-header-bth-share">
+						    						<a class="glyphicons no-js share_alt">
+						    							<i></i>
+						    						</a>
+						    					</span>						    					
 						    				</div>
 						    			</div>
 						    			<div class="window-content">
@@ -44606,13 +44622,20 @@
 
 														        	<div class="tab-pane" id="tab1-3">
 															        	<div style="width: 100%; float: left; ">
-															        		<div class="col-sm-8" style="padding-left: 0; padding-right: 30px;">
-																				<div class="win-video" style="width: 100%;">
-																					Video
+															        		<h2>Related</h2>
+															        		<div class="row">
+																        		<div class="col-sm-3">
+																					1
 																				</div>
-																			</div>
-																			<div class="col-sm-4" style="padding: 0; width: 30.3%;">
-																			
+																				<div class="col-sm-3">
+																					2
+																				</div>
+																				<div class="col-sm-3">
+																					3
+																				</div>
+																				<div class="col-sm-3">
+																					4
+																				</div>
 																			</div>
 															        	</div>
 
