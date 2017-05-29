@@ -6473,7 +6473,7 @@
 								        		<i class="fa fa-file-pdf-o"></i>
 								        		Print as PDF
 								        	</span> -->
-								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: ExportExcel" style="width: 80px;">
+								        	<span id="" class="btn btn-icon btn-default execl" data-bind="visible: haveEX,click: ExportExcel" style="width: 80px;">
 								        		<i class="fa fa-file-excel-o"></i>
 								        		Export to Excel
 								        	</span>
@@ -57668,15 +57668,18 @@
 		    	win.close();
 		    },2000);
 		},
+		haveEX 				: false,
 		search				: function(){
 			var self = this, para = [], displayDate = "",
 				contact_id = this.get("contact_id"),
 				start = this.get("sdate"),
         		end = this.get("edate");
+        	this.set("haveEX", false);
+        	this.dataSource.data([]);
         	if(contact_id>0){
         		var contact = this.contactDS.get(contact_id);
         		this.set("obj", contact);
-
+        		
         		para.push({ field:"contact_id", value: contact_id });
         	
 	        	//Dates
@@ -57699,66 +57702,10 @@
 		        var FirstEX, SecondEX;
 	            this.set("displayDate", displayDate);
 	            this.dataSource.filter(para);
-	            this.exArray = [];
+	            
 	            this.dataSource.bind("requestEnd", function(e){
 	            	if(e.type=="read"){
 	            		var response = e.response;
-	            		self.exArray.push({
-		            		cells: [
-		            			{ value: self.company.name, textAlign: "center", colSpan: 6 }
-		            		]
-		            	});
-		            	self.exArray.push({
-		            		cells: [
-		            			{ value: "STATEMENT",bold: true, fontSize: 15, textAlign: "center", colSpan: 6 }
-		            		]
-		            	});
-		            	self.exArray.push({
-		            		cells: [
-		            			{ value: self.get("obj").name,bold: true, textAlign: "center", colSpan: 6 }
-		            		]
-		            	});
-		            	if(self.displayDate){
-			            	self.exArray.push({
-			            		cells: [
-			            			{ value: self.displayDate, textAlign: "center", colSpan: 6 }
-			            		]
-			            	});
-			            }
-		            	self.exArray.push({
-		            		cells: [
-		            			{ value: "", colSpan: 6 }
-		            		]
-		            	});
-		            	self.exArray.push({ 
-		            		cells: [
-								{ value: "DATE", background: "#496cad", color: "#ffffff" },
-								{ value: "TYPE", background: "#496cad", color: "#ffffff" },
-								{ value: "JOB", background: "#496cad", color: "#ffffff" },
-								{ value: "REFERENCE NO.", background: "#496cad", color: "#ffffff" },
-								{ value: "AMOUNT", background: "#496cad", color: "#ffffff" },
-								{ value: "BALANCE", background: "#496cad", color: "#ffffff" }
-							]
-						});
-						if(response.results.length > 0){
-							for (var i = 0; i < response.results.length; i++){
-								self.exArray.push({
-							        cells: [
-							          	{ value: response.results[i].issued_date },
-							            { value: response.results[i].type },
-							            { value: response.results[i].job },
-							            { value: response.results[i].reference_no },
-							            { value: kendo.parseFloat(response.results[i].amount) },
-							            { value: kendo.parseFloat(response.results[i].balance) },
-							        ]
-							    });
-							}
-						}
-						self.exArray.push({
-		            		cells: [
-		            			{ value: "", colSpan: 6 }
-		            		]
-		            	});
 	            	}
 	            	self.agingQuery(para);
 	            });
@@ -57768,6 +57715,7 @@
 		},
 		agingQuery 			: function(para){
 			var self = this;
+			this.agingDS.data([]);
 			this.agingDS.filter(para);
             this.agingDS.bind("requestEnd", function(e){
 				if(e.type=="read"){
@@ -57775,45 +57723,100 @@
 
 					self.set("total", kendo.toString(responses.amount, "c", responses.locale));
 					var response = e.response, totalAD = responses.amount;
-					self.exArray.push({ 
-	            		cells: [
-							{ value: "Current", bold: true },
-							{ value: "30", bold: true },
-							{ value: "60", bold: true },
-							{ value: "90", bold: true },
-							{ value: "> 90", bold: true },
-							{ value: "AMOUNT DUE", bold: true }
-						]
-					});
-					if(response.results.length > 0){
-						for (var i = 0; i < response.results.length; i++){
-							self.exArray.push({
-						        cells: [
-						          	{ value: kendo.parseFloat(response.results[i].current) },
-						            { value: kendo.parseFloat(response.results[i].oneMonth) },
-						            { value: kendo.parseFloat(response.results[i].twoMonth) },
-						            { value: kendo.parseFloat(response.results[i].threeMonth) },
-						            { value: kendo.parseFloat(response.results[i].overMonth) },
-						            { value: kendo.parseFloat(response.results[i].amount) },
-						        ]
-						    });
-						}
-					}
-					self.exArray.push({ 
-	            		cells: [
-							{ value: "Total Amount Due", bold: true },
-							{ value: "", bold: true },
-							{ value: "", bold: true },
-							{ value: "", bold: true },
-							{ value: "", bold: true },
-							{ value: totalAD, bold: true }
-						]
-					});
+					
+					self.set("haveEX", true);
 				}
 			}); 
 		},
 		ExportExcel 		: function(){
-			
+			this.exArray = [];
+			this.exArray.push({
+	    		cells: [
+	    				{ value: this.company.name, textAlign: "center", colSpan: 6 }
+	        		]
+	        	});
+        	this.exArray.push({
+        		cells: [
+        			{ value: "STATEMENT",bold: true, fontSize: 15, textAlign: "center", colSpan: 6 }
+        		]
+        	});
+        	this.exArray.push({
+        		cells: [
+        			{ value: this.get("obj").name,bold: true, textAlign: "center", colSpan: 6 }
+        		]
+        	});
+        	if(this.displayDate){
+            	this.exArray.push({
+            		cells: [
+            			{ value: this.displayDate, textAlign: "center", colSpan: 6 }
+            		]
+            	});
+            }
+        	this.exArray.push({
+        		cells: [
+        			{ value: "", colSpan: 6 }
+        		]
+        	});
+        	this.exArray.push({ 
+        		cells: [
+					{ value: "DATE", background: "#496cad", color: "#ffffff" },
+					{ value: "TYPE", background: "#496cad", color: "#ffffff" },
+					{ value: "JOB", background: "#496cad", color: "#ffffff" },
+					{ value: "REFERENCE NO.", background: "#496cad", color: "#ffffff" },
+					{ value: "AMOUNT", background: "#496cad", color: "#ffffff" },
+					{ value: "BALANCE", background: "#496cad", color: "#ffffff" }
+				]
+			});
+
+			for (var i = 0; i < this.dataSource.data().length; i++){
+				this.exArray.push({
+			        cells: [
+			          	{ value: this.dataSource.data()[i].issued_date },
+			            { value: this.dataSource.data()[i].type },
+			            { value: this.dataSource.data()[i].job },
+			            { value: this.dataSource.data()[i].reference_no },
+			            { value: kendo.parseFloat(this.dataSource.data()[i].amount) },
+			            { value: kendo.parseFloat(this.dataSource.data()[i].balance) },
+			        ]
+			    });
+			}
+			this.exArray.push({
+        		cells: [
+        			{ value: "", colSpan: 6 }
+        		]
+        	});
+        	this.exArray.push({ 
+        		cells: [
+					{ value: "Current", bold: true },
+					{ value: "30", bold: true },
+					{ value: "60", bold: true },
+					{ value: "90", bold: true },
+					{ value: "> 90", bold: true },
+					{ value: "AMOUNT DUE", bold: true }
+				]
+			});
+			for (var j = 0; j < this.agingDS.data().length; j++){
+				this.exArray.push({
+			        cells: [
+			          	{ value: kendo.parseFloat(this.agingDS.data()[j].current) },
+			            { value: kendo.parseFloat(this.agingDS.data()[j].oneMonth) },
+			            { value: kendo.parseFloat(this.agingDS.data()[j].twoMonth) },
+			            { value: kendo.parseFloat(this.agingDS.data()[j].threeMonth) },
+			            { value: kendo.parseFloat(this.agingDS.data()[j].overMonth) },
+			            { value: kendo.parseFloat(this.agingDS.data()[j].amount) },
+			        ]
+			    });
+			}
+			this.exArray.push({ 
+        		cells: [
+					{ value: "Total Amount Due", bold: true },
+					{ value: "", bold: true },
+					{ value: "", bold: true },
+					{ value: "", bold: true },
+					{ value: "", bold: true },
+					{ value: kendo.parseFloat(this.agingDS.data()[0].amount), bold: true }
+				]
+			});
 	        var workbook = new kendo.ooxml.Workbook({
 	          sheets: [
 	            {
