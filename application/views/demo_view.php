@@ -18655,7 +18655,7 @@
 						</div>
 						<!-- // Widget heading END -->
 						
-						<a href="#/inventory_sale_item_analysis">
+						<a href="#/sale_summary_by_product">
 							<div class="widget-body alert-info" style="min-height: 148px; background: white; color: #203864; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">							
 								<div style="margin-top: 15%; font-size: 25px;" align="center" class=" strong" data-bind="text: obj.gross_profit_margin"></div>
 							</div>
@@ -72898,6 +72898,7 @@
 		}),
 		itemMovementDS 		: dataStore(apiUrl + "item_lines"),
 		onHandDS 			: dataStore(apiUrl + "item_lines"),
+		inventoryValueDS 	: dataStore(apiUrl + "journal_lines"),
 		sumamryDS 			: dataStore(apiUrl + "item_lines"),
 		transactionDS		: dataStore(apiUrl + "items/movement"),
 		attachmentDS 		: dataStore(apiUrl + "attachments"),
@@ -73006,7 +73007,7 @@
 			this.set("uom", measurement);
 		},
 		loadOnHand 			: function(){
-			var self = this, obj = this.get("obj");
+			var self = this, rateList = {}, obj = this.get("obj");
 			
 			if(obj.item_type_id==1){
 				this.onHandDS.query({
@@ -73019,14 +73020,47 @@
 				}).then(function(){
 					var view = self.onHandDS.view();
 
-					var onHand = 0, totalValue = 0;
+					var onHand = 0, txnIds = [];
 					$.each(view, function(index, value){
+						txnIds.push(value.transaction_id);
+
+						if(rateList[value.transaction_id]===undefined){
+							rateList[value.transaction_id] = kendo.parseFloat(value.rate);
+						}
+
 						onHand += (value.quantity * value.unit_value * value.movement);
 					});
 
-					totalValue = onHand * kendo.parseFloat(obj.cost);
 					self.set("on_hand", kendo.toString(onHand, "n"));
-					self.set("total_value", kendo.toString(totalValue, "c", obj.locale));
+
+					//Inventory Value
+					return self.inventoryValueDS.query({
+						filter:[
+							{ field:"transaction_id", operator:"where_in", value: txnIds },
+							{ field:"account_type_id", operator:"where_in_related_account", value: 13 },
+							{ field:"is_recurring <>", operator:"where_related_transaction", value: 1 },
+							{ field:"deleted <>", operator:"where_related_transaction", value: 1 },
+							{ field:"deleted <>", value: 1 }
+						]
+					});
+				}).then(function(){
+					var view = self.inventoryValueDS.view();
+
+					var inventoryDr = 0, inventoryCr = 0, totalInventory = 0;
+					$.each(view, function(index, value){
+						var rate = 1;
+
+						if(value.dr>0){
+							inventoryDr += kendo.parseFloat(value.dr) / rateList[value.transaction_id];
+						}
+						if(value.cr>0){
+							inventoryCr += kendo.parseFloat(value.cr) / rateList[value.transaction_id];
+						}
+					});
+					
+					totalInventory = inventoryDr - inventoryCr;
+
+					self.set("total_value", kendo.toString(totalInventory, "c2", obj.locale));
 				});
 			}else{
 				this.set("on_hand", 0);

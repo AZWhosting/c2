@@ -218,7 +218,7 @@ class Inventory_modules extends REST_Controller {
 					$qoh = $quantity;
 					// $amount = floatval($value->amount) / floatval($value->transaction_rate);
 					$amount = ($quantity * floatval($value->cost)) / floatval($value->transaction_rate);
-					
+
 					if(intval($value->movement)>0){
 						$purchaseQty = $quantity;
 						$purchaseAmount = ($quantity * floatval($value->cost)) / floatval($value->transaction_rate);

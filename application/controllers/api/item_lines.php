@@ -167,6 +167,7 @@ class Item_lines extends REST_Controller {
 							$totalQty = 1;
 						}
 
+						//Sale
 						if($transaction->type=="Commercial_Invoice" || $transaction->type=="Vat_Invoice" || $transaction->type=="Invoice" || $transaction->type=="Commercial_Cash_Sale" || $transaction->type=="Vat_Cash_Sale" || $transaction->type=="Cash_Sale"){
 							//Avg Price
 							$lastPrice = $onHand * floatval($item->price);
@@ -177,6 +178,7 @@ class Item_lines extends REST_Controller {
 							$obj->price_avg = ($lastPrice + $currentPrice) / $totalQty;
 						}
 
+						//Purchase
 						if($transaction->type=="Cash_Purchase" || $transaction->type=="Credit_Purchase" || $transaction->type=="Item_Adjustment"){
 							//Avg Cost
 							$lastCost = $onHand * floatval($item->cost);
