@@ -8113,6 +8113,7 @@
 							<thead>
 								<tr>
 									<th data-bind="text: lang.lang.type"></th>
+									<th style="text-align: right;" data-bind="text:lang.lang.customer"></th>
 									<th style="text-align: right;" data-bind="text: lang.lang.invoice_date"></th>
 									<th style="text-align: right;" data-bind="text: lang.lang.reference"></th>
 									<th style="text-align: right;" data-bind="text: lang.lang.qty"></th>
@@ -8134,7 +8135,7 @@
 </script>
 <script id="saleDetailByProduct-template" type="text/x-kendo-template">
 	<tr style="font-weight: bold">
-		<td colspan="6">#=name#</td>
+		<td colspan="7">#=name#</td>
 	</tr>
 	#var totalAmount = 0;#
 	#for(var i= 0; i <line.length; i++) {#
@@ -8143,6 +8144,7 @@
 			<td style="padding-left: 20px !important; color: black;">
 				<a href="\#/#=line[i].type.toLowerCase()#/#=line[i].id#">#=line[i].type#</a>
 			</td>
+			<td style="text-align: right;">#=line[i].customer#</td>
 			<td style="text-align: right;">#=kendo.toString(new Date(line[i].issued_date),"dd-MM-yyyy")#</td>
 			<td style="text-align: right;">
 				<a href="\#/#=line[i].type.toLowerCase()#/#=line[i].id#">#=line[i].number#</a>
@@ -8154,13 +8156,13 @@
 
 	#}#
 	<tr>
-    	<td colspan="5" style="font-weight: bold; color: black;"><span data-bind="text: lang.lang.total"></span> #: name #</td>
+    	<td colspan="6" style="font-weight: bold; color: black;"><span data-bind="text: lang.lang.total"></span> #: name #</td>
     	<td class="right" style="font-weight: bold; border-top: 1px solid black !important; color: black;">
     		#=kendo.toString(totalAmount, "c2", banhji.locale)#
     	</td>
     </tr>
     <tr>
-    	<td colspan="6">&nbsp;</td>
+    	<td colspan="7">&nbsp;</td>
     </tr>
 </script>
 <script id="depositDetailByCustomer" type="text/x-kendo-template">
@@ -16007,10 +16009,7 @@
 								<tr>
 									<th style="text-transform: uppercase;"><span data-bind="text: lang.lang.item"></span></th>
 									<th style="text-align: right; text-transform: uppercase;"><span data-bind="text: lang.lang.qty"></span></th>
-									<th style="text-align: right; text-transform: uppercase;"><span data-bind="text: lang.lang.amount"></span></th>
-									<th style="text-align: right; text-transform: uppercase;"><span data-bind="text: lang.lang.avg_price"></span></th>
-									<th style="text-align: right; text-transform: uppercase;"><span data-bind="text: lang.lang.avg_cost"></span></th>
-									<th style="text-align: right; text-transform: uppercase;"><span data-bind="text: lang.lang.gross_profit_margin"></span></th>								
+									<th style="text-align: right; text-transform: uppercase;"><span data-bind="text: lang.lang.amount"></span></th>								
 								</tr>
 							</thead>
 							<tbody data-role="listview"
@@ -16029,10 +16028,7 @@
 	<tr>
 		<td>#=name#</td>
 		<td style="text-align: right;">#=kendo.toString(quantity, "n")# #=measurement#</td>
-		<td style="text-align: right;">#=kendo.toString(amount, "c2", banhji.locale)#</td>
-		<td style="text-align: right;">#=kendo.toString(avg_price, "c2", banhji.locale)#</td>	
-		<td style="text-align: right;">#=kendo.toString(avg_cost, "c2", banhji.locale)#</td>	
-		<td style="text-align: right;">#=kendo.toString(gpm, "p")#</td>			
+		<td style="text-align: right;">#=kendo.toString(amount, "c2", banhji.locale)#</td>	
 	</tr>
 </script>
 <script id="purchaseOrderList" type="text/x-kendo-template">
@@ -16328,7 +16324,8 @@
 							<thead>
 								<tr>
 									<th><span data-bind="text: lang.lang.type"></span></th>
-									<th style="text-align: right;"><span data-bind="text: lang.lang.purchase_date"></span></th>
+									<th style="text-align: right;"><span data-bind="text: lang.lang.supplier"></span></th>
+									<th style="text-align: right;"><span data-bind="text: lang.lang.purchase_date"></span></th>									
 									<th style="text-align: right;"><span data-bind="text: lang.lang.reference"></span></th>
 									<th style="text-align: right;"><span data-bind="text: lang.lang.qty"></span></th>
 									<th><span data-bind="text: lang.lang.amount"></span></th>
@@ -16348,7 +16345,7 @@
 </script>
 <script id="purchaseDetailProductServices-temp" type="text/x-kendo-template">
 	<tr style="font-weight: bold">
-		<td colspan="5">#=name#</td>
+		<td colspan="6">#=name#</td>
 	</tr>
 	#var totalAmount = 0;#
 	#for(var i= 0; i <line.length; i++) {#
@@ -16356,7 +16353,7 @@
 		<tr>
 			<td style="padding-left: 20px !important; color: black;">
 				<a href="\#/#=line[i].type.toLowerCase()#/#=line[i].id#">#=line[i].type#</a>
-			</td>
+			<td style="text-align: right;">#=line[i].supplier#</td>
 			<td style="text-align: right;">#=kendo.toString(new Date(line[i].issued_date),"dd-MM-yyyy")#</td>
 			<td style="text-align: right;">
 				<a href="\#/#=line[i].type.toLowerCase()#/#=line[i].id#">#=line[i].number#</a>
@@ -16367,13 +16364,13 @@
 
 	#}#
 	<tr>
-    	<td colspan="4" style="font-weight: bold; color: black;"><span data-bind="text: lang.lang.total"></span> #: name #</td>
+    	<td colspan="5" style="font-weight: bold; color: black;"><span data-bind="text: lang.lang.total"></span> #: name #</td>
     	<td class="right" style="font-weight: bold; border-top: 1px solid black !important; color: black;">
     		#=kendo.toString(totalAmount, "c2", banhji.locale)#
     	</td>
     </tr>
     <tr>
-    	<td colspan="5">&nbsp;</td>
+    	<td colspan="6">&nbsp;</td>
     </tr>
 </script>
 <script id="suppliersBalanceSummary" type="text/x-kendo-template">

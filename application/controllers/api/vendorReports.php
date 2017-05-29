@@ -588,6 +588,7 @@ class Vendorreports extends REST_Controller {
 		$obj->where_in_related("transaction", "type", array("Credit_Purchase","Cash_Purchase"));
 		$obj->where_related("transaction", "is_recurring <>", 1);
 		$obj->where_related("transaction", "deleted <>", 1);
+		$obj->include_related('transaction/contact', array("abbr", "number", "name"));
 		$obj->order_by_related("transaction", "issued_date", "asc");
 		$obj->get_iterated();
 		
@@ -600,6 +601,7 @@ class Vendorreports extends REST_Controller {
 				if(isset($objList[$value->item_id])){
 					$objList[$value->item_id]["line"][]		= array(
 						"id" 			=> $value->transaction_id,
+						"supplier"		=> $value->transaction_contact_name,
 						"type" 			=> $value->transaction_type,
 						"number" 		=> $value->transaction_number,
 						"issued_date" 	=> $value->transaction_issued_date,
@@ -614,6 +616,7 @@ class Vendorreports extends REST_Controller {
 					$objList[$value->item_id]["name"] 		= $value->item_abbr.$value->item_number." ".$value->item_name;
 					$objList[$value->item_id]["line"][]		= array(
 						"id" 			=> $value->transaction_id,
+						"supplier"		=>$value->transaction_contact_name,
 						"type" 			=> $value->transaction_type,
 						"number" 		=> $value->transaction_number,
 						"issued_date" 	=> $value->transaction_issued_date,
