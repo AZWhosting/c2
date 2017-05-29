@@ -77342,7 +77342,7 @@
 	});
 	banhji.inventoryPositionSummary = kendo.observable({
 		lang 				: langVM,
-		dataSource 			: dataStore(apiUrl + "item_reports/position_summary"),
+		dataSource 			: dataStore(apiUrl + "inventory_modules/position_summary"),
 		itemDS  			: new kendo.data.DataSource({
 		  	data: banhji.source.itemList,
 		  	filter: {
@@ -77508,7 +77508,7 @@
 	});
 	banhji.inventoryPositionDetail = kendo.observable({
 		lang 					: langVM,
-		dataSource 				: dataStore(apiUrl + "item_reports/position_detail"),
+		dataSource 				: dataStore(apiUrl + "inventory_modules/position_detail"),
 		itemDS  				: new kendo.data.DataSource({
 		  	data: banhji.source.itemList,
 			filter:[
