@@ -3123,14 +3123,14 @@ a.activate {
     font-style: italic;
 }
 .win-heder-btn{  
-  height: 28px;  
-  cursor: pointer;
+  margin-right: 15px;
 }
 .win-header-add-btn{
   font-weight: 600;
   text-transform: uppercase;    
   font-size: 11px;
   margin-left: 5px;
+
 }
 .win-header-bth-plus{
   padding: 3px 15px 4px 15px;
@@ -3139,6 +3139,43 @@ a.activate {
   border: 1px solid #2d53af;
   background-color: #4d7bd6;
   box-shadow: 0 2px 0 0 rgba(255,255,255,.06) inset, 0 2px 3px 0 rgba(0,0,0,.2);
+  float: left;
+  cursor: pointer;
+}
+.sign-to-rate{
+  padding: 30px;
+  background: #f5f5f5;
+  box-shadow: inset 0 1px 3px #b2b2b2;
+  background-clip: padding-box;
+  border: solid transparent;
+  border-width: 1px 1px 1px 6px;
+  min-height: 28px;
+  text-align: center;
+}
+.rsw-stars{
+  margin: auto;
+  width: 105px;
+  padding-bottom: 10px;
+}
+.text-sign-to-rate{
+  padding-top: 10px;
+}
+.win-tabTwo-header{
+  position: relative;
+  padding: 0 0 5px 0;
+  vertical-align: middle;
+  border-bottom: 1px dashed #333;
+  float: left;
+}
+.win-tabTwo-header h2{
+  font-size: 20px;
+  margin: 0 0 0 0;
+  float: left;
+  width: 20%;
+}
+.win-tabTwo-tabMore{
+  float: right;
+  width: 195px;
 }
 /*.win-header-bth-plus{
   font-weight: 800;
@@ -3148,10 +3185,8 @@ a.activate {
   margin-right: 9px;
 }*/
 .win-header-bth-share{
-  padding: 3px 15px 4px 15px;
-  height: 28px;
+  padding: 5px 5px 6px 5px;
   font-size: 11px;
-  line-height: 28px;
   color: #fff;
   cursor: pointer;
   font-weight: 800;
@@ -3159,6 +3194,13 @@ a.activate {
   border: 1px solid #2d53af;
   background-color: #4d7bd6;
   box-shadow: 0 2px 0 0 rgba(255,255,255,.06) inset, 0 2px 3px 0 rgba(0,0,0,.2);
+  width: 15px;
+  float: left;
+}
+
+.glyphicons.share_alt.win_share_alt i:before {
+  font-size: 13px;
+  color: #fff;
 }
 
 /** JCarousel **/

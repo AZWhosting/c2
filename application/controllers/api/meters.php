@@ -390,7 +390,7 @@ class Meters extends REST_Controller {
 					"from_date" 	=> $value->from_date,			
 					"to_date" 		=> $value->to_date,
 					"memo"			=> $value->memo,			
-					"deleted" 		=> $value->deleted,											
+					"deleted" 		=> $value->deleted,
 					"deleted_by"	=> $value->deleted_by	
 				);
 			}

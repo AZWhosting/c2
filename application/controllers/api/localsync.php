@@ -2,7 +2,7 @@
 
 require APPPATH.'/libraries/REST_Controller.php';
 
-class Localsynce extends REST_Controller {	
+class Localsync extends REST_Controller {	
 	public $_database;
 	public $server_host;
 	public $server_user;
@@ -10,8 +10,12 @@ class Localsynce extends REST_Controller {
 	//CONSTRUCTOR
 	function __construct() {
 		parent::__construct();
+	}
+
+	function txn_post() {
+		$models = json_decode($this->post('models'));
 		$institute = new Institute();
-		$institute->where('id', $this->input->get_request_header('Institute'))->get();
+		$institute->where('id', $models[0]->institute_id)->get();
 		if($institute->exists()) {
 			$conn = $institute->connection->get();
 			$this->server_host = $conn->server_name;
@@ -20,59 +24,142 @@ class Localsynce extends REST_Controller {
 			$this->_database = $conn->inst_database;
 			date_default_timezone_set("$conn->time_zone");
 		}
-	}
-	function txn_post() {
-		$models = json_decode($this->post('models'));
-		$data["results"] = [];
+		$data["results"] = array();
 		$data["count"] = 0;
 		foreach ($models as $value) {
 			$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			isset($value->company_id) 				? $obj->company_id 					= $value->company_id : "";
-			isset($value->number) 					? $obj->number 						= $value->number : "";
-			isset($value->location_id) 				? $obj->location_id 				= $value->location_id : 0;
-			isset($value->contact_id) 				? $obj->contact_id 					= $value->contact_id : "";
-			isset($value->payment_term_id) 			? $obj->payment_term_id 			= $value->payment_term_id : 5;
-		   	isset($value->type) 					? $obj->type 						= $value->type : "Utility_Invoice";
-		   	isset($value->journal_type) 			? $obj->journal_type 				= $value->journal_type : "journal";
-		   	isset($value->sub_total) 				? $obj->sub_total 					= $value->sub_total : $value->amount;
-		   	isset($value->amount) 					? $obj->amount 						= $value->amount : "";
-		   	isset($value->rate) 					? $obj->rate 						= $value->rate : 1;
-		   	isset($value->month_of) 				? $obj->month_of 					= $value->month_of : "";
-		   	isset($value->issued_date) 				? $obj->issued_date 				= $value->issued_date : "";
-		   	isset($value->bill_date) 				? $obj->bill_date 					= $value->bill_date : "";
-		   	isset($value->due_date) 				? $obj->due_date 					= $value->due_date : "";
-		   	isset($value->is_journal) 				? $obj->is_journal 					= $value->is_journal : 1;
-		   	isset($value->print_count) 				? $obj->print_count 				= $value->print_count : 1;
-		   	isset($value->deleted) 					? $obj->deleted 					= $value->deleted : "";
-		   	isset($value->meter_id) 				? $obj->meter_id 					= $value->meter_id : 0;
-		   	
+			$obj->location_id 		= isset($value->location_id) ? $value->location_id : "";
+			$obj->contact_id 		= isset($value->contact_id) ? $value->contact_id : "";
+			$obj->payment_term_id	= isset($value->payment_term_id) ? $value->payment_term_id : 5;
+			$obj->payment_method_id = isset($value->payment_method_id) ? $value->payment_method_id : "";
+			$obj->reference_id 		= isset($value->reference_id) ? $value->reference_id:0;
+			$obj->account_id 		= isset($value->account_id) ? $value->account_id : "";
+			$obj->vat_id 			= isset($value->vat) ? $value->vat: 0;
+			$obj->biller_id 		= isset($value->biller_id) ? $value->biller_id : "";
+		   	$obj->number 			= isset($value->number) ? $value->number : "";
+		   	$obj->type 				= isset($value->type) ? $value->type : "";
+		   	$obj->amount 			= isset($value->amount) ? $value->amount : "";
+		   	$obj->vat 				= isset($value->vat) ? $value->vat : "";
+		   	$obj->rate 				= isset($value->rate) ? $value->rate : 1;
+		   	$obj->locale 			= isset($value->locale) ? $value->locale : "";
+		   	$obj->month_of 			= isset($value->month_of) ? $value->month_of : "";
+		   	$obj->issued_date 		= isset($value->issued_date) ? $value->issued_date : "";
+		   	$obj->bill_date 		= isset($value->bill_date) ? $value->bill_date : "";
+		   	$obj->due_date 			= date('Y-m-d', strtotime($value->due_date));
+		   	$obj->is_journal 		= 1;
+		   	$obj->check_no 			= isset($value->check_no) ? $value->check_no : "";
+		   	$obj->memo 				= isset($value->memo) ? $value->memo: "";
+		   	$obj->memo2 			= isset($value->memo2) ? $value->memo2: "";
+		   	$obj->meter_id 			= isset($value->meter_id) ? $value->meter_id: "";
+		   	$obj->status 			= isset($value->status) ? $value->status: 0;
+		   	$obj->sub_total 		= isset($value->amount) ? $value->amount : "";
+
 	   		if($obj->save()){
+
+	   			$journal = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+	   			$journal->transaction_id = $obj->id;
+	   			$journal->account_id = $value->account_id;
+	   			$journal->contact_id = $value->contact_id;
+	   			$journal->dr  		 = $obj->amount;
+	   			$journal->description = "Utility Invoice";
+	   			$journal->cr 		 = 0.00;
+	   			$journal->rate 		 = $obj->rate;
+	   			$journal->locale 	 = $obj->locale;
+	   			$journal->save();
+
+	   			$journal2 = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+	   			$journal2->transaction_id = $obj->id;
+	   			$journal2->account_id = $value->account_id;
+	   			$journal2->contact_id = $value->contact_id;
+	   			$journal2->dr 		  = 0.00;
+	   			$journal2->cr 		  = $obj->amount;
+	   			$journal2->description = "Utility Invoice";
+	   			$journal2->rate 	  = $obj->rate;
+	   			$journal2->locale 	  = $obj->locale;
+
+	   			$journal2->save();
+
+	   			$invoice_lines = [];
+		   		foreach ($value->invoice_lines as $row) {
+		   			if(isset($row->type) && $row->type == 'usage') {
+		   				$record = new Meter_record(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		   				$record->where('id', $row->meter_record_id)->get();
+		   				$record->invoiced = 1;
+		   				$record->save();
+		   			}
+		   			$line = new Winvoice_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		   			$line->transaction_id 	= $obj->id;
+		   			//$line->item_id 			= $row->item_id;
+		   			$line->meter_record_id 	= isset($row->meter_record_id) ? $row->meter_record_id : "";
+		   			$line->description 		= isset($row->description) ? $row->description : "Utility Invoice";
+		   			$line->quantity 		= isset($row->quantity) ? $row->quantity: 0;
+		   			$line->price 			= isset($row->price) ? $row->price : "";
+		   			$line->amount 			= isset($row->amount) ? $row->amount : "";
+		   			$line->rate 			= isset($row->rate) ? $row->rate : "";
+		   			$line->locale 			= isset($row->locale) ? $row->locale : "";
+		   			$line->has_vat 			= isset($row->has_vat) ? $row->has_vat : "";
+		   			$line->type 			= isset($row->type)?$row->type:"";
+		   			$line->item_id 			= isset($row->item_id)?$row->item_id:"";
+		   			if($row->type == 'installment') {
+		   				//Update Installment Schedule Invoice = 1
+						$updateInstallSchedule = new Installment_schedule(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+						$updateInstallSchedule->where('id', $row->item_id);
+						$updateInstallSchedule->update('invoiced', 1);
+		   			}
+		   			//to do: add to accouting line
+		   			$updateInstallSchedule = isset($updateInstallSchedule) ? $updateInstallSchedule : "";
+		   			if($line->save()){
+		   				$invoice_lines[] = array(
+		   					"id" 				=> $line->id,
+		   					"invoice_id"		=> $line->invoice_id,
+				   			"item_id"			=> $line->item_id,
+				   			"measurement_id" 	=> isset($line->measurement_id)?$line->measurement_id:0,
+				   			"meter_record_id" 	=> $line->meter_record_id,
+				   			"description" 		=> $line->description,
+				   			"quantity"			=> $line->quantity,
+				   			"price" 			=> floatval($line->price),
+				   			"amount" 			=> floatval($line->amount),
+				   			"rate"				=> floatval($line->rate),
+				   			"locale" 			=> $line->locale,
+				   			"has_vat" 			=> $line->has_vat=="true"?true:false,
+				   			"type" 				=> $line->type,
+				   			"installment" 		=> $updateInstallSchedule
+		   				);
+		   			}
+		   		}
 			   	$data["results"][] = array(
-			   		"id" 						=> $obj->id,
-					"location_id" 				=> $obj->location_id,
-					"contact_id" 				=> $obj->contact_id,
-					"payment_term_id" 			=> $obj->payment_term_id,
-					"number" 					=> $obj->number,
-				   	"type" 						=> $obj->type,
-				   	"journal_type" 				=> $obj->journal_type,
-				   	"sub_total"					=> floatval($obj->sub_total),
-				   	"rate" 						=> floatval($obj->rate),
-				   	"month_of"					=> $obj->month_of,
-				   	"issued_date"				=> $obj->issued_date,
-				   	"bill_date"					=> $obj->bill_date,
-				   	"due_date" 					=> $obj->due_date,
-				   	"status" 					=> $obj->status,
-				   	"is_journal" 				=> $obj->is_journal,
-				   	"print_count" 				=> $obj->print_count,
-				   	"deleted" 					=> $obj->deleted,
-				   	"meter_id"					=> $obj->meter_id
+			   		"id" 				=> $obj->id,
+					"company_id" 		=> $obj->company_id,
+					"location_id" 		=> $obj->location_id,
+					"contact_id" 		=> $obj->contact_id,
+					"payment_term_id" 	=> $obj->payment_term_id,
+					"payment_method_id" => $obj->payment_method_id,
+					"reference_id" 		=> $obj->reference_id,
+					"account_id" 		=> $obj->account_id,
+					"vat_id"			=> $obj->vat_id,
+					"biller_id" 		=> $obj->biller_id,
+				   	"number" 			=> $obj->number,
+				   	"type" 				=> $obj->type,
+				   	"amount" 			=> floatval($obj->amount),
+				   	"vat" 				=> floatval($obj->vat),
+				   	"rate" 				=> floatval($obj->rate),
+				   	"locale" 			=> $obj->locale,
+				   	"month_of"			=> $obj->month_of,
+				   	"issued_date"		=> $obj->issued_date,
+				   	"bill_date" 		=> $obj->bill_date,
+				   	"due_date" 			=> $obj->due_date,
+				   	"check_no" 			=> $obj->check_no,
+				   	"memo" 				=> $obj->memo,
+				   	"memo2" 			=> $obj->memo2,
+				   	"status" 			=> $obj->status,
+				   	"invoice_lines" 	=> $invoice_lines
 			   	);
 		    }
 		}
-
 		$data["count"] = count($data["results"]);
-		$this->response($data, 201);						
+		$this->response($models, 201);					
 	}
+
 }
 /* End of file meters.php */
 /* Location: ./application/controllers/api/meters.php */

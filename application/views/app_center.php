@@ -37,6 +37,17 @@
 		  			<ul class="dropdown-menu ul-multiTaskList" data-template="multiTaskList-row-template" data-bind="source: multiTaskList">  				  				
 		  			</ul>
 			  	</li>
+			  	<li>
+			  		<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+			  			<i class="icon-question"></i>
+			  			<span class="caret"></span>
+			  		</a>
+			  		<ul class="dropdown-menu">
+			  			<li><a href="#" >Get Starting</a></li>
+    					<li><a href="#" >Guide Book as English</a></li>
+    					<li><a href="#" >Guide Book as Khmer</a></li>
+			  		</ul>
+			  	</li>
 				<li role="presentation" class="dropdown">
 			  		<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">[<span data-bind="text: getUsername"></span>] <span class="caret"></span></a>
 		  			<ul class="dropdown-menu">  				  				
@@ -122,8 +133,8 @@
 				</div>
 			</div>
 			<div class="row" style="margin-top: 5px;">
-				<div class="span12" style="width: 100%; padding: 0 5px;">
-					<div class="home-chart" style="width: 95%; padding: 0 15px;">
+				<div class="span12" style="width: 100%; padding: 0 5px; ">
+					<div class="home-chart" style="width: 95%; padding: 0 15px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
 						
 						<div data-role="chart"
 							 data-auto-bind="false"
@@ -150,8 +161,7 @@
 		
 		<div class="span6" style="margin-bottom: 15px;">
 			<div class="row">
-				<div class="span12" style="background: #fff;">
-					<!-- Add New Board -->
+				<!-- <div class="span12" style="background: #fff;">
 					<div class="board-add" style="padding: 15px 0;">
 						<div class="span4" style="padding-right: 0;">
 							<h2 style="color: #6399D5; font-size: 20px;" data-bind="text: lang.lang.welcome"></h2>
@@ -183,11 +193,10 @@
 								</div>
 							</div>
 						</div>
-					</div><!--End Add New Board -->
-
-				</div>
+					</div>
+				</div> -->
 				
-				<div class="board-chart">
+				<div class="board-chart" style="margin-top: 0; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
 					<div class="span12">
 						<h4 data-bind="text: companyName"></h4>
 						<h2 style="color: #113051; margin-bottom: 11px; display: inline-block; width: 100%;" data-bind="text: lang.lang.financial_snapshot"></h2>
@@ -195,7 +204,7 @@
 					</div>
 				</div>
 
-				<div class="board-chart">
+				<div class="board-chart" style="box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
 					<div class="span12">
 						<div class="span6">
 							<p><span data-bind="text: lang.lang.performance"></span></p>
@@ -608,7 +617,7 @@
 			        </td>
 			 	</tr>
 			</table>
-			<div class="cover-block">
+			<div class="cover-block" style="box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
 				<table class="table table-borderless table-condensed table-vertical-center costom-imag">
 					<tr>
 						<td class="center">
@@ -851,7 +860,7 @@
 			</div>
 
 			<!-- Graph -->
-			<div class="home-chart">
+			<div class="home-chart" style="box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
 				<div data-role="chart"
 	                 data-legend="{ position: 'top' }"
 	                 data-series-defaults="{ type: 'column' }"
@@ -9800,7 +9809,7 @@
 			        </td>
 			 	</tr>
 			</table>
-			<div class="cover-block">
+			<div class="cover-block" style="box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
 				<table class="table table-borderless table-condensed table-vertical-center costom-imag">
 					<tr>
 						<td class="center">
@@ -10034,7 +10043,7 @@
 			</div>
 
 			<!-- Graph -->
-			<div class="home-chart">
+			<div class="home-chart" style="box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
 				<div data-role="chart"
 	                 data-legend="{ position: 'top' }"
 	                 data-series-defaults="{ type: 'column' }"
@@ -18570,7 +18579,7 @@
 			 	</tr>
 			</table>
 
-			<div class="cover-block">
+			<div class="cover-block" style="box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
 				<table class="table table-borderless table-condensed table-vertical-center costom-imag">
 				<tr>
 					<td class="center">
@@ -18737,7 +18746,7 @@
 			</div>
 
 			<!-- Graph -->
-			<div class="home-chart" >
+			<div class="home-chart" style="box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
 				<div data-role="chart"
 	                 data-legend="{ position: 'top' }"
 	                 data-series-defaults="{ type: 'column' }"
@@ -24623,7 +24632,7 @@
 		</div>
 
 		<!-- Right Side -->
-		<div class="span8 dash-accounting">
+		<div class="span8 dash-accounting" style="box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
 			<div class="row">
 				<div class="span6 accounting-right">
 					<div class="financial-report" style="padding-bottom: 0;">
@@ -44338,7 +44347,7 @@
 									</div>
 								</div>
 
-					        	<div class="row-fluid" style="margin-top: 20px; float: left; background: #ebeef3; padding: 15px 20px 0; width: 100%;">
+					        	<!-- <div class="row-fluid" style="margin-top: 20px; float: left; background: #ebeef3; padding: 15px 20px 0; width: 100%;">
 					        		<h2>Apps Recommended For You</h2>
 					        		<div class="row-fluid" style="margin-top: 20px;">
 					        			<div class="wrapper">
@@ -44361,9 +44370,9 @@
 								            </div>
 								        </div>
 					        		</div>
-					        	</div>
+					        	</div> -->
 
-					        	<div class="row-fluid" style="float: left; background: #f7f9fb ; padding: 15px 20px 0; width: 100%;">
+					        	<div class="row-fluid" style="float: left; background: #ebeef3 ; padding: 15px 20px 0; width: 100%;">
 					        		<h2>Featured</h2>
 					        		<div class="row" style="margin-top: 20px;">
 					        			<div class="col-xs-12 col-sm-6 col-md-3">
@@ -44526,7 +44535,7 @@
 						    						<span class="win-header-add-btn">Add to Chrome</span>
 						    					</span>
 						    					<span class="win-header-bth-share">
-						    						<a class="glyphicons no-js share_alt">
+						    						<a class="glyphicons no-js share_alt win_share_alt">
 						    							<i></i>
 						    						</a>
 						    					</span>						    					
@@ -44610,12 +44619,52 @@
 														        	<div class="tab-pane" id="tab1-2">
 															        	<div style="width: 100%; float: left; ">
 															        		<div class="col-sm-8" style="padding-left: 0; padding-right: 30px;">
-																				<div class="win-video" style="width: 100%;">
-																					Video
+																				<div class="win-tabTwo-header" style="width: 100%;">
+																					<h2>User Reviews</h2>
+																					<div class="win-tabTwo-tabMore">
+																						<div class="relativeWrap" data-toggle="source-code" style="float: left; width: 100%;">
+																							<div class="widget widget-tabs widget-tabs-gray report-tab" style="background: #fff; overflow: hidden;margin-bottom: 0;">
+																								<div class="widget-head head-custom" style="height: 20px; padding-right: 0; line-height: 20px;">
+																									<ul style="height: 20px !important; line-height: 20px;">
+																										<li class="active" style="height: 20px !important; line-height: 20px !important;">
+																											<a href="#tab2-1" data-toggle="tab">
+																												<i></i><span >Helpful</span>
+																											</a>
+																										</li>
+																										<li style="height: 20px !important; line-height: 20px !important;"><a href="#tab2-2" data-toggle="tab"><i></i><span >Recent</span></a></li>
+																									</ul>
+																								</div>
+
+																							</div>
+																						</div>
+																					</div>
+																				</div>
+																				<div class="win-tabTwo-content">
+																					<div class="widget-body" style="float: left; width: 97%; padding: 15px;">
+																						<div class="tab-content">
+																					        <div class="tab-pane active" id="tab2-1" style="width: 100%; float: left;">
+																					        	Helpful
+																				        	</div>
+
+																				        	<div class="tab-pane" id="tab2-2">
+																					        	<div style="width: 100%; float: left; ">
+																					        		Recent
+																					        	</div>
+																				        	</div>
+
+																					    </div>
+																					</div>
 																				</div>
 																			</div>
 																			<div class="col-sm-4" style="padding: 0; width: 30.3%;">
-																			
+																				<h2 style="font-size: 20px; margin: 0 0 10px 0;">Rate this extension</h2>
+																				<div class="sign-to-rate">
+																					<div class="rsw-stars">
+																					</div>
+																					<p class="text-sign-to-rate">
+																						<a href="" target="_blank">Sign</a> in to rate
+																					</p>
+																				</div>
 																			</div>
 															        	</div>
 														        	</div>
@@ -44638,7 +44687,6 @@
 																				</div>
 																			</div>
 															        	</div>
-
 														        	</div>
 														        	
 															    </div>
@@ -44658,7 +44706,7 @@
 								</div>
 
 
-					        	<div class="row-fluid" style="float: left; background: #ebeef3 ; padding: 15px 20px 0; width: 100%;">
+					        	<div class="row-fluid" style="float: left; background: #f7f9fb ; padding: 15px 20px 0; width: 100%;">
 					        		<h2>Newest</h2>
 					        		<div class="row" style="margin-top: 20px;">
 					        			<div class="col-xs-12 col-sm-6 col-md-3">
@@ -44788,7 +44836,7 @@
 					        		</div>
 					        	</div>
 
-					        	<div class="row-fluid" style="float: left; background: #f7f9fb; padding: 15px 20px 0; width: 100%;">
+					        	<div class="row-fluid" style="float: left; background: #ebeef3; padding: 15px 20px 0; width: 100%;">
 					        		<h2>Collections</h2>
 					        		<div class="row">
 					        			<div class="collection">

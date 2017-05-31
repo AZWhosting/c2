@@ -53661,7 +53661,7 @@
 			if(arID>0){
 				raw = "dr"+arID;
 
-				var arAmount = obj.amount - (obj.discount + obj.deposit);
+				var arAmount = obj.amount - obj.deposit;
 				if(entries[raw]===undefined){
 					entries[raw] = {
 						transaction_id 		: transaction_id,

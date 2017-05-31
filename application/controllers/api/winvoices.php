@@ -284,9 +284,7 @@ class Winvoices extends REST_Controller {
 	   			$journal2->description = "Utility Invoice";
 	   			$journal2->rate 	  = $obj->rate;
 	   			$journal2->locale 	  = $obj->locale;
-
 	   			$journal2->save();
-
 	   			$invoice_lines = [];
 		   		foreach ($value->invoice_lines as $row) {
 		   			if(isset($row->type) && $row->type == 'usage') {
