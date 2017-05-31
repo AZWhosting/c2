@@ -134,7 +134,7 @@
 			</div>
 			<div class="row" style="margin-top: 5px;">
 				<div class="span12" style="width: 100%; padding: 0 5px; ">
-					<div class="home-chart" style="width: 95%; padding: 0 15px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
+					<div class="home-chart" style="width: 95%; padding: 0 15px;">
 						
 						<div data-role="chart"
 							 data-auto-bind="false"
@@ -196,15 +196,42 @@
 					</div>
 				</div> -->
 				
-				<div class="board-chart" style="margin-top: 0; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
-					<div class="span12">
+				<div class="board-chart" style="margin-top: 0;">
+					<div class="span8" style="padding: 0;">
 						<h4 data-bind="text: companyName"></h4>
 						<h2 style="color: #113051; margin-bottom: 11px; display: inline-block; width: 100%;" data-bind="text: lang.lang.financial_snapshot"></h2>
 						<span style="color: #000000;"><span data-bind="text: lang.lang.as_of"></span>:&nbsp;<span id="today-date" data-bind="text: today"></span></span><br/>
 					</div>
+					<div class="span4">
+						<div class="row" style="border-bottom: 1px solid #333;">
+							<p style="padding: 7px 10px 15px; text-align: center; margin-bottom: 0; cursor: pointer;">Welcome Guide</p>
+						</div>
+						<div class="row">
+							<p style="padding: 14px 10px 0; text-align: center; margin-bottom: 0; cursor: pointer;">User Guide</p>
+						</div>
+					</div>
 				</div>
 
-				<div class="board-chart" style="box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
+				<div class="board-chart" style="margin-top: 20px;">
+					<div class="span3" style="padding-left: 0;">
+						<div style="background: red; width: 100%; float: left; height: 50px; ">
+
+						</div>
+					</div>
+					<div class="span3" style="padding-left: 0;">
+						<div style="background: pink; width: 100%; float: left; height: 50px; ">
+						</div>
+					</div>
+					<div class="span6" style="padding: 0;">
+						<div style="background: #f4f4f4; width: 100%; float: left; ">
+							<div style="width: 100%; padding: 8px; text-align: center; color: #333;">
+								Recommand
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="board-chart" >
 					<div class="span12">
 						<div class="span6">
 							<p><span data-bind="text: lang.lang.performance"></span></p>
@@ -24584,7 +24611,8 @@
 			        </td>
 			 	</tr>
 			</table>
-			<div class="cover-block">
+
+			<div class="cover-block" style="box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
 				<table class="table table-borderless table-condensed table-vertical-center costom-imag">
 					<tr>	
 						<td class="center" style="vertical-align: top;">

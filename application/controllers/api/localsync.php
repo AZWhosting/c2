@@ -58,7 +58,7 @@ class Localsync extends REST_Controller {
 
 	   			$journal = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 	   			$journal->transaction_id = $obj->id;
-	   			$journal->account_id = $value->account_id;
+	   			$journal->account_id = isset($value->account_id) ? $value->account_id: "";
 	   			$journal->contact_id = $value->contact_id;
 	   			$journal->dr  		 = $obj->amount;
 	   			$journal->description = "Utility Invoice";
@@ -69,7 +69,7 @@ class Localsync extends REST_Controller {
 
 	   			$journal2 = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 	   			$journal2->transaction_id = $obj->id;
-	   			$journal2->account_id = $value->account_id;
+	   			$journal2->account_id = isset($value->account_id) ? $value->account_id: "";
 	   			$journal2->contact_id = $value->contact_id;
 	   			$journal2->dr 		  = 0.00;
 	   			$journal2->cr 		  = $obj->amount;
@@ -80,16 +80,9 @@ class Localsync extends REST_Controller {
 	   			$journal2->save();
 
 	   			$invoice_lines = [];
-		   		foreach ($value->invoice_lines as $row) {
-		   			if(isset($row->type) && $row->type == 'usage') {
-		   				$record = new Meter_record(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		   				$record->where('id', $row->meter_record_id)->get();
-		   				$record->invoiced = 1;
-		   				$record->save();
-		   			}
+		   		foreach ($value->wline as $row) {
 		   			$line = new Winvoice_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		   			$line->transaction_id 	= $obj->id;
-		   			//$line->item_id 			= $row->item_id;
 		   			$line->meter_record_id 	= isset($row->meter_record_id) ? $row->meter_record_id : "";
 		   			$line->description 		= isset($row->description) ? $row->description : "Utility Invoice";
 		   			$line->quantity 		= isset($row->quantity) ? $row->quantity: 0;
@@ -158,6 +151,62 @@ class Localsync extends REST_Controller {
 		}
 		$data["count"] = count($data["results"]);
 		$this->response($models, 201);					
+	}
+	function record_post() {
+		$models = json_decode($this->post('models'));
+		$institute = new Institute();
+		$institute->where('id', $models[0]->institute_id)->get();
+		if($institute->exists()) {
+			$conn = $institute->connection->get();
+			$this->server_host = $conn->server_name;
+			$this->server_user = $conn->username;
+			$this->server_pwd = $conn->password;	
+			$this->_database = $conn->inst_database;
+			date_default_timezone_set("$conn->time_zone");
+		}
+		$data["results"] = array();
+		$data["count"] = 0;
+		foreach ($models as $value) {
+			$obj = new Meter_record(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$obj->meter_id 		= $value->meter_id;
+			$obj->read_by 		= isset($value->read_by)?$value->read_by:"";
+			$obj->input_by 		= isset($value->input_by)?$value->input_by:"";
+			$obj->previous 		= intval($value->previous);
+			$obj->current 		= intval($value->current);
+			$obj->new_round 	= isset($value->new_round)?$value->new_round:"";
+			$obj->usage 		= intval($value->usage);
+			$obj->month_of 		= $value->month_of;
+			$obj->from_date 	= $value->from_date;
+			$obj->to_date 		= $value->to_date;
+			$obj->invoiced 		= 1;
+			$obj->memo 			= isset($value->memo)?$value->memo:"";
+			$obj->deleted 		= isset($value->deleted)?$value->deleted:"";
+			$obj->deleted_by 	= isset($value->deleted_by)?$value->deleted_by:"";
+						
+			if($obj->save()){
+				//Respsone
+				$data["results"][] = array(
+					"id" 			=> $obj->id,
+					"meter_id" 		=> $obj->meter_id, 		
+					"read_by" 		=> $obj->read_by, 		
+					"input_by" 		=> $obj->input_by,
+					"previous" 		=> $obj->previous, 	
+					"current" 		=> $obj->current,
+					"new_round" 	=> $obj->new_round,
+					"usage"			=> $obj->usage,			
+					"month_of" 		=> $obj->month_of, 						
+					"from_date" 	=> $obj->from_date,			
+					"to_date" 		=> $obj->to_date,
+					"memo"			=> $obj->memo,		
+					"invoiced" 		=> 1,	
+					"deleted" 		=> $obj->deleted,											
+					"deleted_by"	=> $obj->deleted_by	
+				);				
+			}			
+		}
+		$data["count"] = count($data["results"]);
+		
+		$this->response($data, 201);					
 	}
 
 }

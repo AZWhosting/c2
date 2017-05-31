@@ -52088,7 +52088,7 @@
 			if(objAccountID>0){
 				raw = "dr"+objAccountID;
 
-				var objAmount = obj.amount - (obj.discount + obj.deposit);
+				var objAmount = obj.amount - obj.deposit;
 				if(entries[raw]===undefined){
 					entries[raw] = {
 						transaction_id 		: transaction_id,
