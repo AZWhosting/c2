@@ -4631,7 +4631,7 @@
 			
 						<!-- Column -->
 						<div class="span4">
-							<button class="btn btn-inverse" data-bind="click: addRow"><i class="icon-plus icon-white"></i></button>												
+							<button class="btn btn-inverse" data-bind="click: addRow"><i class="icon-plus icon-white"></i></button>
 
 							<div class="btn-group">
 								<div class="leadcontainer">
@@ -21154,72 +21154,71 @@
 							data-bind="click: cancel"><i></i></span>
 
 			        <h2 data-bind="text: lang.lang.item_adjustment"></h2>
-			        <br>
 
 			        <!-- Upper Part -->
 					<div class="row">
-						<div class="span4" style="padding-left: 15px;">							
-							<div class="box-generic well" style="height: 190px; padding: 15px 15px 6px !important;">
-								<div class="widget widget-heading-simple widget-body-primary widget-employees" style="margin-bottom: 0 !important;">		
-									<div class="widget-body padding-none">			
-										<div class="row-fluid row-merge">
-											<div class="listWrapper">
-												<div class="innerAll" style="padding: 15px;">
-													<form autocomplete="off" class="form-inline">
-														<div class="widget-search separator bottom">
-															<button type="button" class="btn btn-default pull-right" data-bind="click: search"><i class="icon-search"></i></button>
-															<div class="overflow-hidden">
-																<input type="search" placeholder="Item Number..." data-bind="value: searchText, events:{change: enterSearch}">
-															</div>
-														</div>
-														<div class="select2-container" style="width: 100%;">
-															<input id="ddlCategory" name="ddlCategory"
-																   data-role="dropdownlist"
-												                   data-value-primitive="true"
-												                   data-text-field="name"
-												                   data-value-field="id"
-												                   data-bind="value: category_id,
-												                              source: categoryDS"
-												                   data-option-label="Select Category..."
-												                   style="width: 100%; height: 29px; float: left; margin-bottom: 15px;" />
-
-												            <input id="ddlItemGroup" id="ddlItemGroup"
-																   data-role="dropdownlist"
-																   data-header-template="item-group-header-tmpl"
-																   data-cascade-from="ddlCategory"
-																   data-cascade-from-field="category_id"
-												                   data-value-primitive="true"
-												                   data-auto-bind="false"
-												                   data-text-field="name"
-												                   data-value-field="id"
-												                   data-bind="value: item_group_id,
-												                              source: itemGroupDS"
-												                   data-option-label="Select Group..."
-												                   style="width: 100%;" />
-														</div>
-													</form>
-												</div>
+						<div class="span4" style="padding-left: 15px;">
+							<div class="box-generic well" style="height: 190px;">				
+								<table class="table table-borderless table-condensed cart_total">
+									<tr>
+										<td style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></td>
+										<td>
+											<input id="txtNumber" name="txtNumber" class="k-textbox" 
+													data-bind="value: obj.number,
+																disabled: obj.is_recurring,
+																events:{change:checkExistingNumber}" 
+													required data-required-msg="required" 
+													placeholder="eg. ABC00001" style="width: 83%; float: left; margin-right: 5px;"" />
+											<div style="padding-left: 0; width: 25px; float: left;">
+												<a class="glyphicons no-js qrcode" data-bind="click: generateNumber" title="Generate Number" style="float: left; margin: 2px 0 0 0 ;"><i></i></a>
 											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>					   
+										</td>
+									</tr>
+									<tr>
+										<td><span data-bind="text: lang.lang.date"></span></td>
+										<td class="right">
+											<input id="issuedDate" name="issuedDate" 
+													data-role="datepicker"
+													data-format="dd-MM-yyyy"
+													data-parse-formats="yyyy-MM-dd HH:mm:ss"
+													data-bind="value: obj.issued_date, 
+																events:{ change : setRate }" 
+													required data-required-msg="required"
+													style="width:100%;" />
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<span data-bind="text: lang.lang.staff"></span>
+										</td>
+										<td>
+											<input id="cbbReader" name="cbbReader" 
+							    				   data-role="combobox"
+								                   data-value-primitive="true"
+								                   data-text-field="name"
+								                   data-value-field="id"
+								                   data-bind="value: obj.contact_id,
+								                              source: contactDS"
+								                   data-placeholder="Select ..."
+								                   style="width: 100%" />
+										</td>
+									</tr>
+								</table>
+							</div>						
+						</div>
 
 						<div class="span8" style="padding-left:0;">							
-							<div class=" box-generic-noborder">
+							<div class=" box-generic-noborder" style="min-height: 235px;">
 							    <!-- Tabs Heading -->
 							    <div class="tabsbar tabsbar-2">
 							        <ul class="row-fluid row-merge">
-							        	<li class="span1 glyphicons cogwheels active"><a href="#tab1-6" data-toggle="tab"><i></i> </a>
+							        	<li class="span1 glyphicons cogwheels active"><a href="#tab-1" data-toggle="tab"><i></i> </a>
 							            </li>						            
-							            <li class="span1 glyphicons pen"><a href="#tab2-6" data-toggle="tab"><i></i></a>
+							            <li class="span1 glyphicons pen"><a href="#tab-2" data-toggle="tab"><i></i></a>
 							            </li>
-							            <li class="span1 glyphicons circle_info"><a href="#tab3-6" data-toggle="tab"><i></i></a>
-								        </li>
-							            <li class="span1 glyphicons paperclip"><a href="#tab4-6" data-toggle="tab"><i></i></a>
+							            <li class="span1 glyphicons paperclip"><a href="#tab-3" data-toggle="tab"><i></i></a>
 							            </li>
-							            <li class="span1 glyphicons history"><a href="#tab5-6" data-toggle="tab"><i></i></a>
+							            <li class="span1 glyphicons history"><a href="#tab-4" data-toggle="tab"><i></i></a>
 							            </li>
 							            <!-- <li class="span1 glyphicons show_liness"><a href="#tab4-5" data-toggle="tab"><i></i></a></li> -->		            								            
 							        </ul>
@@ -21229,37 +21228,8 @@
 							    <div class="tab-content">
 
 							    	<!-- Options Tab content -->
-							        <div class="tab-pane active" id="tab1-6">						            
-							            <table style="margin-bottom: 0;" class="table table-borderless table-condensed cart_total">
-							            	<tr>
-												<td><span data-bind="text: lang.lang.date"></span></td>
-												<td class="right">
-													<input id="issuedDate" name="issuedDate" 
-															data-role="datepicker"
-															data-format="dd-MM-yyyy"
-															data-parse-formats="yyyy-MM-dd HH:mm:ss"
-															data-bind="value: obj.issued_date, 
-																		events:{ change : setRate }" 
-															required data-required-msg="required"
-															style="width:100%;" />
-												</td>
-											</tr>											
-								            <tr>
-												<td>
-													<span data-bind="text: lang.lang.staff"></span>
-												</td>
-												<td>
-													<input id="cbbReader" name="cbbReader" 
-									    				   data-role="combobox"
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"							                   
-										                   data-bind="value: obj.contact_id,
-										                              source: contactDS"
-										                   data-placeholder="Select ..."
-										                   style="width: 100%" />
-												</td>
-											</tr>										
+							        <div class="tab-pane active" id="tab-1">						            
+							            <table style="margin-bottom: 0;" class="table table-borderless table-condensed cart_total">								            										
 								            <tr>
 								            	<td><span data-bind="text: lang.lang.adjustment_account"></span></td>
 								            	<td>
@@ -21276,35 +21246,19 @@
 										                   required data-required-msg="required" style="width: 100%;" />
 								            	</td>
 								            </tr>
-							            </table>						            
-							        </div>
-							        <!-- // Options Tab content END -->
-
-							        <!-- Memo Tab content -->
-							        <div class="tab-pane" id="tab2-6">
-							        	<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.memo2" placeholder="memo for internal ..."></textarea>
-										<br>						
-										<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.memo" placeholder="memo for external ..."></textarea>
-							        </div>
-							        <!-- // Memo Tab content END -->
-
-							        <!-- Info Tab content -->
-							        <div class="tab-pane" id="tab3-6">
-							        	
-										<table class="table table-borderless table-condensed cart_total">							            					            	
-											<tr>
+								            <tr>
 												<td><span data-bind="text: lang.lang.segments"></span></td>
 												<td>
 													<select data-role="multiselect"
 														   data-value-primitive="true"
-														   data-header-template="segment-header-tmpl"								   
-														   data-item-template="segment-list-tmpl"				    
+														   data-header-template="segment-header-tmpl"
+														   data-item-template="segment-list-tmpl"
 														   data-value-field="id" 
 														   data-text-field="code"
 														   data-bind="value: obj.segments, 
 														   			source: segmentItemDS,
 														   			events:{ change: segmentChanges }"
-														   data-placeholder="Add Segment.."				   
+														   data-placeholder="Add Segment.."
 														   style="width: 100%" /></select>
 												</td>
 											</tr>
@@ -21315,23 +21269,30 @@
 														   data-role="dropdownlist"
 														   data-header-template="job-header-tmpl"
 														   data-template="job-list-tmpl"
-														   data-auto-bind="false"				                
-										                   data-value-primitive="true"									                   				   
+														   data-auto-bind="false"
+										                   data-value-primitive="true"
 										                   data-text-field="name"
 										                   data-value-field="id"
 										                   data-bind="value: obj.job_id, 
 										                   			source: jobDS"
 										                   data-option-label="Add job..." 
-										                   style="width: 100%" />										
+										                   style="width: 100%" />
 												</td>
-											</tr>											
-							            </table>
-
+											</tr>
+							            </table>						            
 							        </div>
-							        <!-- // Info Tab content END -->
+							        <!-- // Options Tab content END -->
+
+							        <!-- Memo Tab content -->
+							        <div class="tab-pane" id="tab-2">
+							        	<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.memo2" placeholder="memo for internal ..."></textarea>
+										<br>						
+										<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.memo" placeholder="memo for external ..."></textarea>
+							        </div>
+							        <!-- // Memo Tab content END -->
 							        
 							        <!-- Attach Tab content -->
-							        <div class="tab-pane" id="tab4-6">
+							        <div class="tab-pane" id="tab-3">
 							         	<p><span data-bind="text: lang.lang.file_type"></span> [PDF, JPG, JPEG, TIFF, PNG, GIF]</p>							            	
 							            
 							            <input id="files" name="files"
@@ -21361,7 +21322,7 @@
 							        <!-- // Attach Tab content END -->
 
 							        <!-- Recuring Tab content -->
-							        <div class="tab-pane" id="tab5-6">
+							        <div class="tab-pane" id="tab-4">
 
 							            <table style="width: 100%" class="table borderless">
 							            	<tr align="right">
@@ -21492,7 +21453,7 @@
 					<table class="table table-bordered table-primary table-striped table-vertical-center">
 				        <thead>
 				            <tr>
-				            	<th style="width: 70px; vertical-align: top;"><span data-bind="text: lang.lang.no_"></span></th>				                
+				            	<th class="center" style="vertical-align: top; width: 50px;"><span data-bind="text: lang.lang.no_"></span></th>				                
 				                <th style="vertical-align: top;" data-bind="text: lang.lang.item"></th>
 				                <th style="width: 20px; vertical-align: top;" data-bind="text: lang.lang.cost"></th>
 				                <th style="vertical-align: top;" data-bind="text: lang.lang.qoh"></th>
@@ -21506,9 +21467,7 @@
 			                 data-bind="source: lineDS"></tbody>				        
 				    </table>
 
-				    <div id="pager" class="k-pager-wrap"
-				    	 data-auto-bind="false"
-			             data-role="pager" data-bind="source: lineDS"></div>
+				    <button class="btn btn-inverse" data-bind="click: addRow"><i class="icon-plus icon-white"></i></button>
 
 					<!-- Form actions -->
 					<div class="box-generic bg-action-button">
@@ -21534,7 +21493,7 @@
 </script>
 <script id="itemAdjustment-row-template" type="text/x-kendo-tmpl">
     <tr data-uid="#: uid #"> 
-    	<td style="width: 70px;">
+    	<td>
 			<i class="icon-trash" data-bind="events: { click: removeRow }"></i>
 			#:banhji.itemAdjustment.lineDS.indexOf(data)+1#			
 		</td>
@@ -75523,63 +75482,14 @@
     banhji.itemAdjustment = kendo.observable({
     	lang 					: langVM,
     	dataSource  			: dataStore(apiUrl + "transactions"),
+    	txnDS  					: dataStore(apiUrl + "transactions"),
     	recurringDS 			: dataStore(apiUrl + "transactions"),
+    	lineDS 					: dataStore(apiUrl + "item_lines"),
 		recurringLineDS 		: dataStore(apiUrl + "item_lines"),
     	journalLineDS			: dataStore(apiUrl + "journal_lines"),
     	attachmentDS	 		: dataStore(apiUrl + "attachments"),
 		itemDS  				: dataStore(apiUrl + "items/on_hand"),
 		itemGroupDS 			: banhji.source.itemGroupDS,
-		lineDS 					: new kendo.data.DataSource({
-			transport: {
-				read 	: {
-					url: apiUrl + "item_lines",
-					type: "GET",
-					headers: banhji.header,
-					dataType: 'json'
-				},
-				create 	: {
-					url: apiUrl + "item_lines",
-					type: "POST",
-					headers: banhji.header,
-					dataType: 'json'
-				},
-				update 	: {
-					url: apiUrl + "item_lines",
-					type: "PUT",
-					headers: banhji.header,
-					dataType: 'json'
-				},
-				destroy 	: {
-					url: apiUrl + "item_lines",
-					type: "DELETE",
-					headers: banhji.header,
-					dataType: 'json'
-				},
-				parameterMap: function(options, operation) {
-					if(operation === 'read') {
-						return {
-							page: options.page,
-							limit: options.pageSize,
-							filter: options.filter,
-							sort: options.sort
-						};
-					} else {
-						return {models: kendo.stringify(options.models)};
-					}
-				}
-			},
-			schema 	: {
-				model: {
-					id: 'id'
-				},
-				data: 'results',
-				total: 'count'
-			},
-			batch: true,
-			serverFiltering: true,
-			page: 1,
-			pageSize: 20
-		}),
 		categoryDS 				: new kendo.data.DataSource({
 		  	data: banhji.source.categoryList,
 		  	filter: [
@@ -75864,10 +75774,73 @@
 				var firstRow = this.lineDS.at(0);
 				$(".txt"+firstRow.uid).focus();
 			}            
-        },
-		removeRow 				: function(e){
-			var d = e.data;
-			this.lineDS.remove(d);
+        },		
+		//Number
+		checkExistingNumber 	: function(){
+			var self = this, para = [], 
+			obj = this.get("obj");
+			
+			if(obj.number!==""){
+
+				if(obj.isNew()==false){
+					para.push({ field:"id", operator:"where_not_in", value: [obj.id] });
+				}
+				
+				para.push({ field:"number", value: obj.number });
+				para.push({ field:"type", value: obj.type });
+
+				this.txnDS.query({
+					filter: para,
+					page: 1,
+					pageSize: 1
+				}).then(function(e){
+					var view = self.txnDS.view();
+					
+					if(view.length>0){
+				 		self.set("notDuplicateNumber", false);
+					}else{
+						self.set("notDuplicateNumber", true);
+					}
+				});
+			}
+		},
+		generateNumber 			: function(){
+			var self = this, obj = this.get("obj"),
+			issueDate = new Date(obj.issued_date),
+			startDate = new Date(obj.issued_date),
+			endDate = new Date(obj.issued_date);
+
+			this.set("notDuplicateNumber", true);
+
+			startDate.setDate(1);
+			startDate.setMonth(0);//Set to January
+			endDate.setDate(31);
+			endDate.setMonth(11);//Set to November
+
+			this.txnDS.query({
+				filter:[
+					{ field:"type", value:obj.type },
+					{ field:"issued_date >=", value:kendo.toString(startDate, "yyyy-MM-dd") },
+					{ field:"issued_date <=", value:kendo.toString(endDate, "yyyy-MM-dd") }
+				],
+				sort: { field:"number", dir:"desc" },
+				page:1,
+				pageSize:1
+			}).then(function(){
+				var view = self.txnDS.view(),				
+				number = 0, str = "";
+
+				if(view.length>0){
+					str = view[0].number;
+					str = str.substring(str.length-4, str.length);
+					number = kendo.parseInt(str);
+				}
+				
+				number++;
+				str = banhji.source.getPrefixAbbr(obj.type) + kendo.toString(issueDate, "yy") + kendo.toString(issueDate, "MM") + kendo.toString(number, "00000");
+				
+				obj.set("number", str);
+			});
 		},
 		//Obj
 		loadObj 				: function(id){
@@ -75941,6 +75914,35 @@
 			
 			var obj = this.dataSource.at(0);
 			this.set("obj", obj);
+			this.addRow();
+			this.generateNumber();
+		},
+		addRow 				: function(){
+			var obj = this.get("obj");
+
+			this.lineDS.add({
+				transaction_id 		: obj.id,
+				tax_item_id 		: "",
+				item_id 			: "",
+				assembly_id 		: 0,
+				measurement_id 		: 0,
+				description 		: "",
+				quantity 	 		: 1,
+				unit_value 			: 0,
+				cost 				: 0,
+				price 				: 0,
+				amount 				: 0,
+				discount 			: 0,
+				rate				: obj.rate,
+				locale				: obj.locale,
+				movement 			: -1,
+				on_hand 			: 0,
+				item_prices 		: []
+			});
+		},
+		removeRow 				: function(e){
+			var d = e.data;
+			this.lineDS.remove(d);
 		},
 	    objSync 				: function(){
 	    	var dfd = $.Deferred();

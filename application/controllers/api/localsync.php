@@ -10,6 +10,9 @@ class Localsync extends REST_Controller {
 	//CONSTRUCTOR
 	function __construct() {
 		parent::__construct();
+		$this->load->dbutil();
+		$this->load->helper('file');
+		$this->load->helper('download');
 	}
 
 	function txn_post() {
@@ -120,37 +123,12 @@ class Localsync extends REST_Controller {
 		   				);
 		   			}
 		   		}
-			   	$data["results"][] = array(
-			   		"id" 				=> $obj->id,
-					"company_id" 		=> $obj->company_id,
-					"location_id" 		=> $obj->location_id,
-					"contact_id" 		=> $obj->contact_id,
-					"payment_term_id" 	=> $obj->payment_term_id,
-					"payment_method_id" => $obj->payment_method_id,
-					"reference_id" 		=> $obj->reference_id,
-					"account_id" 		=> $obj->account_id,
-					"vat_id"			=> $obj->vat_id,
-					"biller_id" 		=> $obj->biller_id,
-				   	"number" 			=> $obj->number,
-				   	"type" 				=> $obj->type,
-				   	"amount" 			=> floatval($obj->amount),
-				   	"vat" 				=> floatval($obj->vat),
-				   	"rate" 				=> floatval($obj->rate),
-				   	"locale" 			=> $obj->locale,
-				   	"month_of"			=> $obj->month_of,
-				   	"issued_date"		=> $obj->issued_date,
-				   	"bill_date" 		=> $obj->bill_date,
-				   	"due_date" 			=> $obj->due_date,
-				   	"check_no" 			=> $obj->check_no,
-				   	"memo" 				=> $obj->memo,
-				   	"memo2" 			=> $obj->memo2,
-				   	"status" 			=> $obj->status,
-				   	"invoice_lines" 	=> $invoice_lines
-			   	);
+
+				$data["results"][] = [];
 		    }
 		}
 		$data["count"] = count($data["results"]);
-		$this->response($models, 201);					
+		$this->response(array('results'=> $data, 'count'=> count($data)), 201);				
 	}
 	function record_post() {
 		$models = json_decode($this->post('models'));
