@@ -392,6 +392,107 @@ class Item_lines extends REST_Controller {
 		$this->response($data, 200);
 	}
 
+
+	public function item_line_get($id = NULL, $resource = NULL) {
+		$filter 	= $this->get("filter");
+		$page 		= $this->get('page');
+		$limit 		= $this->get('limit');
+		$sort 	 	= $this->get("sort");
+		$data["results"] = [];
+		$data["count"] = 0;
+
+		$obj = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		
+		if(isset($id)) {
+			// $obj->where('id', $id);
+			// $obj->limit(1);
+		} else {
+			//Sort
+			if(!empty($sort) && isset($sort)){
+				foreach ($sort as $value) {
+					if(isset($value['operator'])){
+						$obj->{$value['operator']}($value["field"], $value["dir"]);
+					}else{
+						$obj->order_by($value["field"], $value["dir"]);
+					}
+				}
+			}
+
+			//Filter		
+			if(!empty($filter) && isset($filter)){
+		    	foreach ($filter['filters'] as $value) {
+		    		if(isset($value['operator'])) {
+						$obj->{$value['operator']}($value['field'], $value['value']);
+					} else {
+		    			$obj->where($value["field"], $value["value"]);
+					}
+				}
+			}
+		}
+
+		//Get
+		if($page && $limit){
+			$obj->get_paged_iterated($page, $limit);
+			$data["count"] = $obj->paged->total_rows;
+		}else{
+			$obj->get_iterated();
+			$data["count"] = $obj->result_count();
+		}
+
+		//Result
+		if($obj->exists()){
+			foreach($obj as $row) {
+
+				//Resource
+				$rs = [];
+				if(isset($resource)) {
+					$q = $row->{$resource}->select('id, number, name')->get();
+					if($q->exists()) {
+						$rs = array(
+							'url' 		=> base_url() . "api/" .$resource. "/index/" . "$q->id",
+							'id' 		=> "$q->id",
+							'number' 	=> "$q->number",
+							'name'		=> "$q->name"
+						);
+					}
+				}
+
+				$data['results'][] = array(
+					"id" 				=> $value->id,
+			   		"transaction_id"	=> $value->transaction_id,
+			   		"measurement_id" 	=> $value->measurement_id,
+					"tax_item_id" 		=> $value->tax_item_id,
+					"wht_account_id"	=> $value->wht_account_id,
+					"item_id" 			=> $value->item_id,
+					"assembly_id" 		=> $value->assembly_id,
+				   	"description" 		=> $value->description,
+				   	"on_hand" 			=> floatval($value->on_hand),
+					"on_po" 			=> floatval($value->on_po),
+					"on_so" 			=> floatval($value->on_so),
+					"quantity" 			=> floatval($value->quantity),
+				   	"quantity_adjusted" => floatval($value->quantity_adjusted),
+				   	"unit_value" 		=> floatval($value->unit_value),
+				   	"cost"				=> floatval($value->cost),
+				   	"price"				=> floatval($value->price),
+				   	"price_avg" 		=> floatval($value->price_avg),
+				   	"amount" 			=> floatval($value->amount),
+				   	"discount" 			=> floatval($value->discount),
+				   	"fine" 				=> floatval($value->fine),
+				   	"additional_cost" 	=> floatval($value->additional_cost),
+				   	"additional_applied"=> $value->additional_applied,
+				   	"rate"				=> floatval($value->rate),
+				   	"locale" 			=> $value->locale,
+				   	"movement" 			=> $value->movement,
+				   	"required_date"		=> $value->required_date,
+
+				   	"item_prices" 		=> $itemPrice
+					"$resource" 		=> $rs
+				);
+			}			
+		}
+
+		$this->response($data, 200);
+	}
 }
 /* End of file item_lines.php */
 /* Location: ./application/controllers/api/item_lines.php */

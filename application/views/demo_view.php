@@ -544,10 +544,22 @@
 
     </div>
 </script>
-
-
-
-
+<script id="underConstruction" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">
+				<div id="example" class="k-content">
+			    	<span style="padding: 10px 20px; background: #203864; color: #fff; cursor: pointer;" class="button pull-left" 
+	    				onclick="javascript:window.history.back()">Go Back</span>
+					
+			        <div style="text-align: center;">
+			        	<h1 style="font-size: 25px; text-transform: capitalize;">Under Construction</h1>
+			        </div>
+			    </div>
+			</div>
+		</div>
+	</div>		
+</script>
 
 <!-- #############################################
 ##################################################
@@ -21453,19 +21465,21 @@
 					<table class="table table-bordered table-primary table-striped table-vertical-center">
 				        <thead>
 				            <tr>
-				            	<th class="center" style="vertical-align: top; width: 50px;"><span data-bind="text: lang.lang.no_"></span></th>				                
 				                <th style="vertical-align: top;" data-bind="text: lang.lang.item"></th>
-				                <th style="width: 20px; vertical-align: top;" data-bind="text: lang.lang.cost"></th>
-				                <th style="vertical-align: top;" data-bind="text: lang.lang.qoh"></th>
-				                <th style="width: 20px; vertical-align: top;" data-bind="text: lang.lang.quantity_count"></th>
-				                <th style="vertical-align: top;" data-bind="text: lang.lang.different"></th>
+				                <th style="width: 100px; vertical-align: top;" data-bind="text: lang.lang.cost"></th>
+				                <th style="width: 100px; vertical-align: top;" data-bind="text: lang.lang.qoh"></th>
+				                <th style="width: 100px; vertical-align: top;" data-bind="text: lang.lang.quantity_count"></th>
+				                <th style="width: 100px; vertical-align: top;" data-bind="text: lang.lang.different"></th>
+				            	<th style="width: 115px;"></th>
 				            </tr>
 				        </thead>
-				        <tbody data-role="listview"
+				        <!-- <tbody data-role="listview"
 				        	 data-auto-bind="false"
 			                 data-template="itemAdjustment-row-template"
-			                 data-bind="source: lineDS"></tbody>				        
+			                 data-bind="source: lineDS"></tbody> -->				        
 				    </table>
+
+				    <div id="grid"></div>
 
 				    <button class="btn btn-inverse" data-bind="click: addRow"><i class="icon-plus icon-white"></i></button>
 
@@ -75488,8 +75502,61 @@
 		recurringLineDS 		: dataStore(apiUrl + "item_lines"),
     	journalLineDS			: dataStore(apiUrl + "journal_lines"),
     	attachmentDS	 		: dataStore(apiUrl + "attachments"),
-		itemDS  				: dataStore(apiUrl + "items/on_hand"),
+		itemDS  				: dataStore(apiUrl + "items"),
 		itemGroupDS 			: banhji.source.itemGroupDS,
+		lineDS 					: new kendo.data.DataSource({
+			transport: {
+				read 	: {
+					url: apiUrl + "item_lines/0/item_line",
+					type: "GET",
+					headers: banhji.header,
+					dataType: 'json'
+				},
+				create 	: {
+					url: apiUrl + "item_lines",
+					type: "POST",
+					headers: banhji.header,
+					dataType: 'json'
+				},
+				update 	: {
+					url: apiUrl + "item_lines",
+					type: "PUT",
+					headers: banhji.header,
+					dataType: 'json'
+				},
+				destroy 	: {
+					url: apiUrl + "item_lines",
+					type: "DELETE",
+					headers: banhji.header,
+					dataType: 'json'
+				},
+				parameterMap: function(options, operation) {
+					if(operation === 'read') {
+						return {
+							page: options.page,
+							limit: options.pageSize,
+							filter: options.filter,
+							sort: options.sort
+						};
+					} else {
+						return {models: kendo.stringify(options.models)};
+					}
+				}
+			},
+			schema 	: {
+				model: {
+					id: 'id'
+				},
+				data: 'results',
+				total: 'count'
+			},
+			batch: true,
+			serverFiltering: true,
+			serverSorting: true,
+			serverPaging: true,
+			page: 1,
+			pageSize: 100
+		}),
 		categoryDS 				: new kendo.data.DataSource({
 		  	data: banhji.source.categoryList,
 		  	filter: [
@@ -75744,11 +75811,6 @@
 				recurringItemList.splice(0,recurringItemList.length);
 			}
 		},
-		enterSearch 			: function(e){
-			e.preventDefault();
-
-			this.search();
-		},
 		onChange 				: function(e) {
       		var data = e.data, diff = 0;            
             
@@ -75921,23 +75983,21 @@
 			var obj = this.get("obj");
 
 			this.lineDS.add({
-				transaction_id 		: obj.id,
-				tax_item_id 		: "",
+				transaction_id 		: 0,
 				item_id 			: "",
-				assembly_id 		: 0,
 				measurement_id 		: 0,
 				description 		: "",
-				quantity 	 		: 1,
-				unit_value 			: 0,
-				cost 				: 0,
-				price 				: 0,
-				amount 				: 0,
-				discount 			: 0,
-				rate				: obj.rate,
-				locale				: obj.locale,
-				movement 			: -1,
 				on_hand 			: 0,
-				item_prices 		: []
+				quantity_adjusted 	: 0,				
+				quantity 	 		: 0,
+				unit_value 			: 1,
+				cost 				: 99,
+				additional_cost 	: 0,
+				rate				: 1,
+				locale				: banhji.locale,
+				movement 			: 1,
+
+				item 				: { id:"", name:"" }
 			});
 		},
 		removeRow 				: function(e){
@@ -90987,6 +91047,7 @@
 		menu 		: new kendo.Layout('#menu-tmpl', {model: banhji.userManagement}),
 		searchAdvanced: new kendo.Layout("#searchAdvanced", {model: banhji.searchAdvanced}),
 		customTable: new kendo.Layout("#customTable", {model: banhji.customTable}),
+		underConstruction: new kendo.Layout("#underConstruction"),
 
 		//Accounting
 		accountingDashboard: new kendo.Layout("#accountingDashboard", {model: banhji.accountingDashboard}),
@@ -91317,8 +91378,9 @@
 			vm.pageLoad();
 		}
 	});
-
-
+	banhji.router.route("/under_construction", function(){
+		banhji.view.layout.showIn("#content", banhji.view.underConstruction);
+	});
 
 
 
@@ -95110,7 +95172,9 @@
 	});
 	// INVENTORY FUNCTIONS
 	banhji.router.route("/item_adjustment(/:id)", function(id){
-		banhji.accessMod.query({
+		banhji.view.layout.showIn("#content", banhji.view.underConstruction);
+
+		/*banhji.accessMod.query({
 			filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
 		}).then(function(e){
 			var allowed = false;
@@ -95133,6 +95197,39 @@
 
 				if(banhji.pageLoaded["item_adjustment"]==undefined){
 					banhji.pageLoaded["item_adjustment"] = true;
+
+					$("#grid").kendoGrid({
+                        dataSource: vm.lineDS,
+                        columns: [
+                        	{ field: "item", title: "Item", editor: categoryDropDownEditor, template: "#=item.name#" },
+                            { field: "cost", title:"Cost", width: "100px",
+						        editable: function (dataItem) {
+						        	return kendo.parseFloat(dataItem.cost) == 0;
+						      	}
+						    },
+                            { field: "on_hand", title:"Qty On Hand", width: "100px",
+						        editable: function (dataItem) {
+						        	return false;
+						      	}
+						  	},
+                            { field: "quantity_adjusted", title:"Qty Count", width: "100px" },
+                            { field: "quantity", title:"Different", width: "100px" },
+                            { command: "destroy", title: " ", width: "100px" }],
+                        editable: true
+                    });
+
+                    function categoryDropDownEditor(container, options) {
+				        $('<input required name="' + options.field + '"/>')
+			            .appendTo(container)
+			            .kendoComboBox({
+			            	placeholder: "Select Item",
+			            	filter: "contains",
+			            	minLength: 3,
+			                dataTextField: "name",
+			                dataValueField: "id",
+			                dataSource: banhji.source.itemList
+			            });
+				    }
 					
 					var validator = $("#example").kendoValidator({
 			        	rules: {
@@ -95199,7 +95296,7 @@
 			} else {
 				window.location.replace(baseUrl + "admin");
 			}
-		});
+		});*/
 	});
 	banhji.router.route("/internal_usage(/:id)", function(id){
 		banhji.accessMod.query({
@@ -99210,6 +99307,46 @@
 	});
 
 
+
+	banhji.router.route("/under_construction", function(){
+		banhji.accessMod.query({
+			filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		}).then(function(e){
+			var allowed = false;
+			if(banhji.accessMod.data().length > 0) {
+				for(var i = 0; i < banhji.accessMod.data().length; i++) {
+					if("underConstruction" == banhji.accessMod.data()[i].name.toLowerCase()) {
+						allowed = true;
+						break;
+					}
+				}
+			} 
+			if(allowed) {
+				banhji.view.layout.showIn("#underConstruction", banhji.view.underConstruction);
+				banhji.view.layout.showIn('#menu', banhji.view.menu);
+				banhji.view.menu.showIn('#secondary-menu', banhji.view.customerMenu);
+				
+				//eraseCookie("isshow");
+				var isshow = readCookie("cusVisit");
+				
+			    if (isshow != 1) {
+			        createCookie("cusVisit", 1);
+					$("a.aCustomer").click();
+				}
+
+				var vm = banhji.underConstruction;
+				banhji.userManagement.addMultiTask("Customer Dashboard","customers",null);
+				if(banhji.pageLoaded["under_construction"]==undefined){
+					banhji.pageLoaded["under_construction"] = true;
+
+					vm.setObj();
+				}
+				vm.pageLoad();
+			} else {
+				window.location.replace(baseUrl + "admin");
+			}
+		});
+	});
 
 
 

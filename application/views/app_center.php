@@ -196,30 +196,34 @@
 					</div>
 				</div> -->
 				
-				<div class="board-chart" style="margin-top: 0;">
-					<div class="span8" style="padding: 0;">
-						<h4 data-bind="text: companyName"></h4>
-						<h2 style="color: #113051; margin-bottom: 11px; display: inline-block; width: 100%;" data-bind="text: lang.lang.financial_snapshot"></h2>
-						<span style="color: #000000;"><span data-bind="text: lang.lang.as_of"></span>:&nbsp;<span id="today-date" data-bind="text: today"></span></span><br/>
-					</div>
-					<div class="span4">
-						<div class="row" style="border-bottom: 1px solid #333;">
-							<p style="padding: 7px 10px 15px; text-align: center; margin-bottom: 0; cursor: pointer;">Welcome Guide</p>
-						</div>
-						<div class="row">
-							<p style="padding: 14px 10px 0; text-align: center; margin-bottom: 0; cursor: pointer;">User Guide</p>
-						</div>
-					</div>
+				<div class="board-chart" style="margin-top: 0; width: 64%; background: #fff;">
+					<h4 data-bind="text: companyName"></h4>
+					<h2 style="color: #113051; margin-bottom: 11px; display: inline-block; width: 100%;" data-bind="text: lang.lang.financial_snapshot"></h2>
+					<span style="color: #000000;"><span data-bind="text: lang.lang.as_of"></span>:&nbsp;<span id="today-date" data-bind="text: today"></span></span>
+				</div>
+
+				<div class="board-chart" style="margin-top: 0; width: 33.33333333%; background: #fff; float: right; margin-bottom: 15px;">
+					<p style="text-align: center; margin-bottom: 0; cursor: pointer;">Welcome Guide</p>
+				</div>
+
+				<div class="board-chart" style="margin-top: 0; width: 33.33333333%; background: #fff; float: right;">
+					<p style="text-align: center; margin-bottom: 0; cursor: pointer;">User Guide</p>
 				</div>
 
 				<div class="board-chart" style="margin-top: 20px;">
 					<div class="span3" style="padding-left: 0;">
-						<div style="background: red; width: 100%; float: left; height: 50px; ">
-
+						<div style="background: #0ec9fc; width: 100%; float: left; text-align: center;">
+							<p style="margin-top: 10px; ">Your Business Financial Health Score</p>
+							<p style="color: #fff;">
+								<sup>70</sup>
+								<span style="font-size: 25px;">/</span>
+								<sub>100</sub>
+							</p>
 						</div>
 					</div>
 					<div class="span3" style="padding-left: 0;">
-						<div style="background: pink; width: 100%; float: left; height: 50px; ">
+						<div style="background: #96e95b; width: 100%; float: left; text-align: center;">
+							<p style="margin-top: 10px; ">Comparing with Similar Company</p>
 						</div>
 					</div>
 					<div class="span6" style="padding: 0;">
@@ -227,7 +231,7 @@
 							<div style="width: 100%; padding: 10px; text-align: center; color: #333;">
 								Recommand
 							</div>
-							<div style="width: 100%; padding: 5px; background: #fff; height: 150px;">
+							<div style="width: 100%; padding: 5px; background: #fff; height: 60px;">
 
 							</div>
 						</div>
