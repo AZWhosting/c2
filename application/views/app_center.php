@@ -134,7 +134,7 @@
 			</div>
 			<div class="row" style="margin-top: 5px;">
 				<div class="span12" style="width: 100%; padding: 0 5px; ">
-					<div class="home-chart" style="width: 95%; padding: 0 15px;">
+					<div class="home-chart" style="width: 95%; padding: 0 15px 0 20px; height: 285px;">
 						
 						<div data-role="chart"
 							 data-auto-bind="false"
@@ -215,15 +215,17 @@
 						<div style="background: #0ec9fc; width: 100%; float: left; text-align: center;">
 							<p style="margin-top: 10px; ">Your Business Financial Health Score</p>
 							<p style="color: #fff;">
-								<sup>70</sup>
-								<span style="font-size: 25px;">/</span>
-								<sub>100</sub>
+								<sup style="font-size: 30px; font-weight: 800;">70</sup>
+								<span style="font-size: 35px;">/</span>
+								<sub style="font-size: 20px;">100</sub>
 							</p>
 						</div>
 					</div>
 					<div class="span3" style="padding-left: 0;">
 						<div style="background: #96e95b; width: 100%; float: left; text-align: center;">
 							<p style="margin-top: 10px; ">Comparing with Similar Company</p>
+							<img src="<?php echo base_url()?>assets/sign-new.png" style="width: 45px;">
+							<p>Outperform your peer</p>
 						</div>
 					</div>
 					<div class="span6" style="padding: 0;">
@@ -44299,7 +44301,7 @@
 					        				<a href="#/rice_mill">
 					        					<div class="app-recommand " style="height: 200px; text-align: center; width: 100%">
 					        						<div class="appIcon" >
-					        							<img src="<?php echo base_url(); ?>assets/rice_mill/ricemill_logo.png" />
+					        							<img src="<?php echo base_url(); ?>assets/rice_mill/ricemill_logo.png" style="width: 180px; height: auto;"/>
 					        						</div>
 					        						<div class="bigappcard-details">
 						        						<div class="bigappcard-display-name">
@@ -44951,7 +44953,7 @@
 	<img style="margin-bottom: 5px; width: 200px;" src="<?php echo base_url(); ?>assets/rice_mill/ricemill_logo.png" >
 	<div class="row-fluid" >
 		<div class="col-xs-12 col-sm-12 col-md-5" style="padding-left: 0;">
-			<div class="cash-bg" style="padding-right: 0; margin-bottom: 10px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">				
+			<div class="cash-bg" style="padding-right: 0; margin-bottom: 10px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
 				
 				<div class="span3" style="padding-left: 0; text-align: center;">
 					<a href="#/purchase">
@@ -44983,7 +44985,7 @@
 
 			<div class="cash-bg" style="margin-bottom: 10px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
 	    		<a href="#/">
-					<div class="cash-invoice" style="background: #2ca01c; color: #fff;">
+					<div class="cash-invoice" style="background: #24351b; color: #fff;">
 						<div class="span6" style="padding-left: 0;">
 							<span style="font-size: 20px; ">Cash Position</span>
 							<br>
@@ -44998,7 +45000,7 @@
 					</div>
 				</a>
 				<a href="#/">
-					<div class="cash-invoice" style=" background: #2ca01c; color: #fff;">
+					<div class="cash-invoice" style=" background: #24351b; color: #fff;">
 						<div class="span7" style="padding-left: 0;">
 							<span style="font-size: 20px; color: #fff;">Amount to Collect</span><br>
 							<span style="color: #9EA7B8;" ></span>
@@ -45013,7 +45015,7 @@
 					</div>
 				</a>
 				<a href="#/">
-					<div class="cash-invoice" style="margin-bottom: 0; background: #2ca01c; color: #fff;">
+					<div class="cash-invoice" style="margin-bottom: 0; background: #24351b; color: #fff;">
 						<div class="span6" style="padding-left: 0;">
 							<span style="font-size: 20px; color: #fff;">Amount to Pay</span><br>
 							<span style="color: #9EA7B8;" > </span>
@@ -45033,7 +45035,7 @@
 		    	<div class="row-fluid">
 		    		<div class="col-xs-12 col-sm-6 col-md-12" style="padding: 0">
 						<div class="widget widget-3 customer-border">
-							<div class="widget-body alert alert-primary" style="min-height: 178px; background: #7fd000; color: #fff;">
+							<div class="widget-body alert alert-primary" style="min-height: 155px; background: #24351b; color: #fff; padding-top: 0; padding-bottom: 0;">
 								<div align="center" class="text-large strong" style="font-size: 35px;">
 									<span data-bind="text: ccc"></span>
 									<br>
@@ -45065,7 +45067,7 @@
 					</div>
 					<div class="col-xs-12 col-sm-6 col-md-12" style="padding: 0;">
 						<div class="widget widget-3 customer-border" style="margin-bottom: 0;">					
-							<div class="widget-body alert-info" style="min-height: 178px; background: #2ca01c; color: #fff;">
+							<div class="widget-body alert-info" style="min-height: 155px; background: #24351b; color: #fff; padding-top: 0; padding-bottom: 0; ">
 								<div align="center" class="text-large strong" style="font-size: 35px;">
 									<span data-bind="text: currentRatio"></span>
 									<br>
@@ -45100,11 +45102,11 @@
 		</div>
 
 	    <div class="col-xs-12 col-sm-12 col-md-7" style="padding-left: 0;">
-	    	<div class="cash-bg" style="margin-bottom: 10px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
+	    	<div class="cash-bg" style="margin-bottom: 15px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
 	    		<div class="row-fluid" >
 					<div class="span4">
-						<a href="#/customer_balance_summary">						
-							<div class="widget-body alert alert-primary sale-overview" style="background: #7fd000; border: none; padding: 30px 15px!important;">
+						<a href="#/customer_balance_summary">
+							<div class="widget-body alert alert-primary sale-overview" style="background: #54833b; border: none; padding: 30px 15px!important;">
 								<h2 data-bind="text: lang.lang.receivable"></h2>
 								<div align="center" class="text-large strong" data-bind="text: obj.ar"></div>
 								<!-- <table width="100%">
@@ -45132,7 +45134,7 @@
 
 					<div class="span4">
 						<a href="#/suppliers_balance_summary">
-							<div class="widget-body alert alert-primary sale-overview" style="background: #7fd000; border: none; padding: 30px 15px!important;">
+							<div class="widget-body alert alert-primary sale-overview" style="background: #54833b; border: none; padding: 30px 15px!important;">
 								<h2 data-bind="text: lang.lang.payables"></h2>
 								<div align="center" class="text-large strong" data-bind="text: obj.ap"></div>
 								<!-- <table width="100%">
@@ -45159,7 +45161,7 @@
 					</div>
 
 					<div class="span4">
-						<div class="widget-body alert alert-primary sale-overview" style="background: #7fd000; border: none; padding: 30px 15px!important;">
+						<div class="widget-body alert alert-primary sale-overview" style="background: #54833b; border: none; padding: 30px 15px!important;">
 							<h2>Inventory Value</h2>
 							<div align="center" class="text-large strong" data-bind="text: obj.inventory_value"></div>
 							<!-- <table width="100%">
@@ -45184,7 +45186,7 @@
 						<table class="table table-bordered table-primary table-striped table-vertical-center" style="font-size: 12px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1; margin-bottom: 0;">
 					        <thead>
 					            <tr>
-					                <th class="center" colspan="2" style="background: #2ca01c;"><span data-bind="text: lang.lang.top_5_ar_balance"></span></th>				                			                
+					                <th class="center" colspan="2" style="background: #24351b;"><span data-bind="text: lang.lang.top_5_ar_balance"></span></th>				                			                
 					            </tr>					        
 					        </thead>
 					        <tbody data-role="listview"
@@ -45197,7 +45199,7 @@
 						<table class="table table-bordered table-primary table-striped table-vertical-center" style="font-size: 12px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1; margin-bottom: 0;">
 					        <thead>
 					            <tr>
-					                <th style="background: #2ca01c;" class="center" colspan="2"><span data-bind="text: lang.lang.top_5_ap_balance"></span></th>
+					                <th style="background: #24351b;" class="center" colspan="2"><span data-bind="text: lang.lang.top_5_ap_balance"></span></th>
 					            </tr>
 					        </thead>
 					        <tbody data-role="listview"
@@ -45210,7 +45212,7 @@
 						<table class="table table-bordered table-primary table-striped table-vertical-center" style="font-size: 12px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1; margin-bottom: 0;">
 					        <thead>
 					            <tr>
-					                <th style="background: #2ca01c;" colspan="2" class="center"><span data-bind="text: lang.lang.top_5_purchased_products"></span></th>				                			                
+					                <th style="background: #24351b;" colspan="2" class="center"><span data-bind="text: lang.lang.top_5_purchased_products"></span></th>				                			                
 					            </tr>
 					        </thead>
 					        <tbody data-role="listview"
@@ -45224,7 +45226,7 @@
 
 	    	<div class="row-fluid" style="margin-top: 5px;">
 				<div class="span12" style="width: 100%; padding: 0 5px;">
-					<div class="home-chart" style="padding: 0 15px;">
+					<div class="home-chart" style="    padding: 63px 15px 62px 20px;">
 						
 						<div data-role="chart"
 							 data-auto-bind="false"
@@ -45236,8 +45238,8 @@
 			                    template: "#= series.name #: #= kendo.toString(value, &#39;c&#39;, banhji.locale) #"
 			                 }'                 
 			                 data-series="[
-			                                 { field: 'cash_in', name: 'Cash In', categoryField:'month', color: '#2ca01c', overlay:{ gradient: 'none'}  },
-			                                 { field: 'cash_out', name: 'Cash Out', categoryField:'month', color: '#7fd000' , overlay:{ gradient: 'none'} }
+			                                 { field: 'cash_in', name: 'Cash In', categoryField:'month', color: '#24351b', overlay:{ gradient: 'none'}  },
+			                                 { field: 'cash_out', name: 'Cash Out', categoryField:'month', color: '#54833b' , overlay:{ gradient: 'none'} }
 			                             ]"	                             
 			                 data-bind="source: graphDS"
 			                 style="height: 240px;" ></div>

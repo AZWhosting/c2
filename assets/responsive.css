@@ -247,7 +247,7 @@ input.k-textbox{
   margin-top: 40px;
 }
 
-#cbbAccounts-list{
+#cbbAccounts-list, #test-list{
   width: 550px !important;
 }
 
@@ -3336,7 +3336,12 @@ pre {
     -moz-box-shadow: 0 0 2px #F0EFE7;
     box-shadow: 0 0 2px #F0EFE7;
 }
-
+#costomerhover .hoverC{
+  position: relative;
+}
+#costomerhover .hoverC:hover{
+  background: #ddd;
+}
 
 
 

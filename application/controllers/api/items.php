@@ -47,7 +47,7 @@ class Items extends REST_Controller {
 		}
 		
 		//Filter		
-		if(!empty($filter) && isset($filter)){
+		if(!empty($filter["filters"]) && isset($filter["filters"])){
 	    	foreach ($filter['filters'] as $value) {
 	    		if(isset($value['operator'])) {
 					$obj->{$value['operator']}($value['field'], $value['value']);
@@ -76,23 +76,6 @@ class Items extends REST_Controller {
 
 		if($obj->exists()){
 			foreach ($obj as $value) {
-				$itemPrice = [];				
-				// foreach ($value->item_price->get() as $p) {					
-				// 	$itemPrice[] = array(
-				// 		"id" 			=> $p->id,				
-				// 		"item_id" 		=> $p->item_id,
-				// 		"assembly_id"	=> $p->assembly_id,
-				// 		"measurement_id"=> $p->measurement_id,
-				// 		"quantity"		=> floatval($p->quantity),					
-				// 		"unit_value" 	=> floatval($p->unit_value),
-				// 		"price" 		=> floatval($p->price),
-				// 		"amount" 		=> floatval($p->amount),
-				// 		"locale" 		=> $p->locale,
-						
-				// 		"measurement" 	=> $p->measurement->get()->name
-				// 	); 
-				// }
-
 				//Sum On Hand
 				$onHand = 0;
 				// if($value->item_type_id=="1"){					
@@ -159,6 +142,7 @@ class Items extends REST_Controller {
 				);
 			}
 		}
+		
 		$data['pageSize'] = $limit;
 		$data['skip'] = $limit * $page;	
 

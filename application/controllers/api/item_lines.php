@@ -29,6 +29,7 @@ class Item_lines extends REST_Controller {
 		$sort 	 	= $this->get("sort");
 		$data["results"] = [];
 		$data["count"] = 0;
+		$include = [];
 		
 		$obj = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
@@ -45,9 +46,13 @@ class Item_lines extends REST_Controller {
 
 		//Filter		
 		if(!empty($filter) && isset($filter)){
-	    	foreach ($filter['filters'] as $value) {
-	    		if(isset($value['operator'])) {
-					$obj->{$value['operator']}($value['field'], $value['value']);
+	    	foreach ($filter["filters"] as $value) {
+	    		if(isset($value["operator"])) {
+	    			if($value["operator"]=="item") {
+	    				$obj->include_related("item", array("abbr","number","name"));
+					}else{
+						$obj->{$value["operator"]}($value["field"], $value["value"]);
+					}
 				} else {
 					$obj->where($value["field"], $value["value"]);
 				}
@@ -64,29 +69,12 @@ class Item_lines extends REST_Controller {
 		}
 
 		if($obj->exists()){
-			foreach ($obj as $value) {
-				$itemPrice = [];
-				// if($value->item_id>0){
-				// 	$pl = new Item_price(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				// 	$pl->where("item_id", $value->item_id);
-				// 	$pl->get();
-				// 	foreach ($pl as $p) {
-				// 		$itemPrice[] = array(
-				// 			"id" 			=> $p->id,
-				// 			"item_id" 		=> $p->item_id,
-				// 			"assembly_id"	=> $p->assembly_id,
-				// 			"measurement_id"=> $p->measurement_id,
-				// 			"quantity"		=> floatval($p->quantity),
-				// 			"unit_value" 	=> floatval($p->unit_value),
-				// 			"price" 		=> floatval($p->price),
-				// 			"amount" 		=> floatval($p->amount),
-				// 			"locale" 		=> $p->locale,
-
-				// 			"measurement" 	=> $p->measurement->get()->name
-				// 		);
-				// 	}
-				// }
-				$value->description = isset($value->description) ? $value->description : "No Description";
+			foreach ($obj as $key => $value) {
+				$item = [];
+				if($value->item_name){
+					$item = array("abbr"=>$value->item_abbr, "number"=>$value->item_number, "name"=>$value->item_name);
+				}
+				
 				$data["results"][] = array(
 					"id" 				=> $value->id,
 			   		"transaction_id"	=> $value->transaction_id,
@@ -115,10 +103,28 @@ class Item_lines extends REST_Controller {
 				   	"movement" 			=> $value->movement,
 				   	"required_date"		=> $value->required_date,
 
-				   	"item_prices" 		=> $itemPrice
+				   	"item_prices" 		=> [],
+				   	"item" 				=> $item
 				);
+
+				// array("abbr"=>$value->item_abbr, "number"=>$value->item_number, "name"=>$value->item_name);
+				// foreach ($relatives as $row) {
+				// 	$q = [];
+				// 	if($row=="transaction"){
+				// 		$r = $value->transaction->select("number","name")->get();
+				// 		$q = array("number"=>"$r->number", "name"=>"$r->name");
+				// 	}
+
+				// 	if($row=="item"){
+				// 		$r = $value->item->select("number","name")->get();
+				// 		$q = array("number"=>"$r->number", "name"=>"$r->name");
+				// 	}
+
+				// 	$data["results"][$key]["$row"] = $q;
+				// }
 			}
 		}
+
 		$this->response($data, 200);
 	}
 
@@ -389,108 +395,6 @@ class Item_lines extends REST_Controller {
 		}
 
 		//Response data
-		$this->response($data, 200);
-	}
-
-
-	public function item_line_get($id = NULL, $resource = NULL) {
-		$filter 	= $this->get("filter");
-		$page 		= $this->get('page');
-		$limit 		= $this->get('limit');
-		$sort 	 	= $this->get("sort");
-		$data["results"] = [];
-		$data["count"] = 0;
-
-		$obj = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		
-		if(isset($id)) {
-			// $obj->where('id', $id);
-			// $obj->limit(1);
-		} else {
-			//Sort
-			if(!empty($sort) && isset($sort)){
-				foreach ($sort as $value) {
-					if(isset($value['operator'])){
-						$obj->{$value['operator']}($value["field"], $value["dir"]);
-					}else{
-						$obj->order_by($value["field"], $value["dir"]);
-					}
-				}
-			}
-
-			//Filter		
-			if(!empty($filter) && isset($filter)){
-		    	foreach ($filter['filters'] as $value) {
-		    		if(isset($value['operator'])) {
-						$obj->{$value['operator']}($value['field'], $value['value']);
-					} else {
-		    			$obj->where($value["field"], $value["value"]);
-					}
-				}
-			}
-		}
-
-		//Get
-		if($page && $limit){
-			$obj->get_paged_iterated($page, $limit);
-			$data["count"] = $obj->paged->total_rows;
-		}else{
-			$obj->get_iterated();
-			$data["count"] = $obj->result_count();
-		}
-
-		//Result
-		if($obj->exists()){
-			foreach($obj as $row) {
-
-				//Resource
-				$rs = [];
-				if(isset($resource)) {
-					$q = $row->{$resource}->select('id, number, name')->get();
-					if($q->exists()) {
-						$rs = array(
-							'url' 		=> base_url() . "api/" .$resource. "/index/" . "$q->id",
-							'id' 		=> "$q->id",
-							'number' 	=> "$q->number",
-							'name'		=> "$q->name"
-						);
-					}
-				}
-
-				$data['results'][] = array(
-					"id" 				=> $value->id,
-			   		"transaction_id"	=> $value->transaction_id,
-			   		"measurement_id" 	=> $value->measurement_id,
-					"tax_item_id" 		=> $value->tax_item_id,
-					"wht_account_id"	=> $value->wht_account_id,
-					"item_id" 			=> $value->item_id,
-					"assembly_id" 		=> $value->assembly_id,
-				   	"description" 		=> $value->description,
-				   	"on_hand" 			=> floatval($value->on_hand),
-					"on_po" 			=> floatval($value->on_po),
-					"on_so" 			=> floatval($value->on_so),
-					"quantity" 			=> floatval($value->quantity),
-				   	"quantity_adjusted" => floatval($value->quantity_adjusted),
-				   	"unit_value" 		=> floatval($value->unit_value),
-				   	"cost"				=> floatval($value->cost),
-				   	"price"				=> floatval($value->price),
-				   	"price_avg" 		=> floatval($value->price_avg),
-				   	"amount" 			=> floatval($value->amount),
-				   	"discount" 			=> floatval($value->discount),
-				   	"fine" 				=> floatval($value->fine),
-				   	"additional_cost" 	=> floatval($value->additional_cost),
-				   	"additional_applied"=> $value->additional_applied,
-				   	"rate"				=> floatval($value->rate),
-				   	"locale" 			=> $value->locale,
-				   	"movement" 			=> $value->movement,
-				   	"required_date"		=> $value->required_date,
-
-				   	"item_prices" 		=> $itemPrice
-					"$resource" 		=> $rs
-				);
-			}			
-		}
-
 		$this->response($data, 200);
 	}
 }
