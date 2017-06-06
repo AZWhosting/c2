@@ -63532,7 +63532,7 @@
 		recurringDS 		: dataStore(apiUrl + "transactions"),
 		recurringLineDS 	: dataStore(apiUrl + "item_lines"),
 		referenceDS			: dataStore(apiUrl + "transactions"),
-		referenceLineDS		: dataStore(apiUrl + "item_linese"),
+		referenceLineDS		: dataStore(apiUrl + "item_lines"),
 		attachmentDS	 	: dataStore(apiUrl + "attachments"),
 		txnTemplateDS 		: new kendo.data.DataSource({
 		  	data: banhji.source.txnTemplateList,
@@ -95145,7 +95145,9 @@
 	});
 	// INVENTORY FUNCTIONS
 	banhji.router.route("/item_adjustment(/:id)", function(id){
-		banhji.accessMod.query({
+		banhji.view.layout.showIn("#content", banhji.view.underConstruction);
+
+		/*banhji.accessMod.query({
 			filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
 		}).then(function(e){
 			var allowed = false;
@@ -95234,7 +95236,7 @@
 			} else {
 				window.location.replace(baseUrl + "admin");
 			}
-		});
+		});*/
 	});
 	banhji.router.route("/internal_usage(/:id)", function(id){
 		banhji.accessMod.query({
