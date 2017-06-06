@@ -603,7 +603,7 @@ class Winvoices extends REST_Controller {
 				$monthGraph = "";
 
 				$contact = $row->contact->get();
-				$data[] = array(
+				$data["results"][] = array(
 					'id' => $row->id,
 					'type' => $row->type,
 					'number' => $row->number,
@@ -634,7 +634,7 @@ class Winvoices extends REST_Controller {
 
 			}
 		}
-		$this->response(array('results'=> $data, 'count'=> count($data)), 200);
+		//$this->response(array('results'=> $data, 'count'=> count($data)), 200);
 		//Response Data
 		$this->response($data, 200);
 	}
