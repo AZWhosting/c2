@@ -234,7 +234,46 @@
 								Recommand
 							</div>
 							<div style="width: 100%; padding: 5px; background: #fff; height: 60px;">
-
+								<!-- <h4 style="font-size:15px;">Get this item now!</h4>
+								<p style="margin-bottom: 0; font-size: 12px;">
+									Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
+								</p> -->
+								<div id="carousel-1" class="carousel slide">					
+									<!-- Indicators -->
+									<!-- <ol class="carousel-indicators">
+										<li data-target="#carousel-1" data-slide-to="0" class="active"></li>
+										<li data-target="#carousel-1" data-slide-to="1"></li>
+										<li data-target="#carousel-1" data-slide-to="2"></li>
+										<li data-target="#carousel-1" data-slide-to="3"></li>
+										<li data-target="#carousel-1" data-slide-to="4"></li>
+									</ol> -->
+									<!-- // Indicators END -->
+									
+									<!-- Items -->
+									<div class="carousel-inner">
+									
+										<!-- Item -->
+										<div class="item active">
+											
+											<div class="carousel-caption" style="position: relative;">
+												<h4 style="font-size:15px;">Get this item now!</h4>
+												<p style="margin-bottom: 0; font-size: 12px;">
+													Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
+												</p>
+											</div>
+										</div>
+										<!-- // Item END -->
+										
+															
+									</div>
+									<!-- // Items END -->
+									
+									<!-- Navigation -->
+									<!-- <a class="left carousel-control" href="#carousel-1" data-slide="prev">&lsaquo;</a>
+									<a class="right carousel-control" href="#carousel-1" data-slide="next">&rsaquo;</a> -->
+									<!-- // Navigation END -->
+									
+								</div>
 							</div>
 						</div>
 					</div>

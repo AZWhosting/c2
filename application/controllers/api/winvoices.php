@@ -415,121 +415,135 @@ class Winvoices extends REST_Controller {
 		$this->response($models, 201);
 	}
 	function index_get() {
-		$getData = $this->get('filter');
-		$filters = $getData['filters'];
+		$filter 	= $this->get("filter");
+		$page 		= $this->get('page');
+		$limit 		= $this->get('limit');
+		$sort 	 	= $this->get("sort");
+
 		$table = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$data = array();
 
-		if(isset($filters)) {
-			foreach($filters as $filter) {
-				if(isset($filter['operator'])) {
-					$table->{$filter['operator']}($filter['field'], $filter['value']);
+		//Sort
+		if(!empty($sort) && isset($sort)){
+			foreach ($sort as $value) {
+				if(isset($value['operator'])){
+					$table->{$value['operator']}($value["field"], $value["dir"]);
+				}else{
+					$table->order_by($value["field"], $value["dir"]);
+				}
+			}
+		}
+
+		//Filter
+		if(!empty($filter) && isset($filter)){
+	    	foreach ($filter["filters"] as $value) {
+	    		if(isset($value["operator"])) {
+					$table->{$value["operator"]}($value["field"], $value["value"]);
 				} else {
-					$table->where($filter['field'], $filter['value']);
+					if($value["field"]=="is_recurring"){
+	    				$is_recurring = $value["value"];
+	    			}else{
+	    				$table->where($value["field"], $value["value"]);
+	    			}
 				}
 			}
 		}
 		//$table->where('status', 0);
 		$table->where('deleted', 0);
 		$table->where('type','Utility_Invoice');
-		$table->get();
+		//$table->get();
 
-		// $tmp = array();
+		//Results
+		if($page && $limit){
+			$table->get_paged_iterated($page, $limit);
+			$data["count"] = $table->paged->total_rows;
+		}else{
+			$table->get_iterated();
+			$data["count"] = $table->result_count();
+		}
 
-		foreach($table as $row) {
-			//echo $row->id."__";
-			$meter = null;
-			$invoiceLine = new winvoice_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			$invoiceLine->include_related('meter_record/meter', array("id", "number"));
+		if($table->exists()){
 
-			$location = $row->location->get_raw();
+			foreach($table as $row) {
+				//echo $row->id."__";
+				$meter = null;
+				$invoiceLine = new winvoice_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$invoiceLine->include_related('meter_record/meter', array("id", "number"));
 
-			$invoiceLine->where('transaction_id', $row->id);
-			$invoiceLine->limit(1)->get();
-			if($invoiceLine->exists()) {
-				foreach($invoiceLine as $line) {
-					$box = new Location(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-					$box->where("id", $line->meter_record_box_id)->limit(1)->get();
-					if($box->exists()){
-						$meter = array(
-							'meter_number'   => $line->meter_record_meter_number,
-							'meter_id'   => $line->meter_record_meter_id,
-							'location' => $location->result(),
-							'box' => $box
-						);
-					}else{
-						$meter = array(
-							'meter_number'   => $line->meter_record_meter_number,
-							'meter_id'   => $line->meter_record_meter_id,
-							'location' => $location->result(),
-							'box' => []
-						);
+				$location = $row->location->get_raw();
+
+				$invoiceLine->where('transaction_id', $row->id);
+				$invoiceLine->limit(1)->get();
+				if($invoiceLine->exists()) {
+					foreach($invoiceLine as $line) {
+						$box = new Location(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+						$box->where("id", $line->meter_record_box_id)->limit(1)->get();
+						if($box->exists()){
+							$meter = array(
+								'meter_number'   => $line->meter_record_meter_number,
+								'meter_id'   => $line->meter_record_meter_id,
+								'location' => $location->result(),
+								'box' => $box
+							);
+						}else{
+							$meter = array(
+								'meter_number'   => $line->meter_record_meter_number,
+								'meter_id'   => $line->meter_record_meter_id,
+								'location' => $location->result(),
+								'box' => []
+							);
+						}
 					}
 				}
-			}
 
-			$items  = $row->winvoice_line->get();
-			$lines  = array();
-			
-			$usage = 0;
-			$remain = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			$remain->where("meter_id", $row->meter_id);
-			$remain->where("type", "Utility_Invoice");
-			$remain->where("month_of <", $row->month_of);
-			$remain->where("id <>", $row->id);
-			$remain->where("deleted", 0);
-			$remain->where("status <>", 1)->get();
-			$amountOwed = 0;
-			foreach($remain as $rem) {
-				if($rem->status == 2) {
-					$Rremain = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-					$Rremain->where("type", "Cash_Receipt");
-					$Rremain->where("reference_id", $rem->id);
-					$Rremain->where("deleted <>", 1);
-					$Rremain->where("status <>", 1)->get();
-					
-					foreach($Rremain as $Rrem) {
-						$amountOwed = $Rrem->sub_total - $Rrem->amount;
-					}
-				} else {
-					$amountOwed += $rem->amount;
-				}
-			}
-			foreach($items as $item) {
+				$items  = $row->winvoice_line->get();
+				$lines  = array();
 				
-				if($item->type == 'usage') {
-					$record = $item->meter_record->limit(1)->get();
-					$usage = $record->usage;
-					$lines[] = array(
-						// 'number' => $m->number,
-						'previous' => floatval($record->previous),
-						'current'  => floatval($record->current),
-						'consumption' => floatval($record->usage),
-						'rate' => floatval($item->rate),
-						'amount' => floatval($item->amount),
-						'type' => $item->type,
-						'from_date' => $record->from_date,
-						'to_date' => $record->to_date
-					);
-				}elseif($item->type == 'exemption') {
-					$unit = $item->item->limit(1)->get();
-					$usage = $record->usage;
-					$lines[] = array(
-						'number' => $item->description,
-						'previous' => floatval($record->previous),
-						'current'  => floatval($record->current),
-						'consumption' => floatval($record->usage),
-						'rate' => floatval($item->rate),
-						'amount' => floatval($item->amount),
-						'type' => $item->type,
-						'unit' => $unit->unit
-					);
-				}elseif($item->type == 'installment') {
-					if($item->amount != 0){
+				$usage = 0;
+				$remain = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$remain->where("meter_id", $row->meter_id);
+				$remain->where("type", "Utility_Invoice");
+				$remain->where("month_of <", $row->month_of);
+				$remain->where("id <>", $row->id);
+				$remain->where("deleted", 0);
+				$remain->where("status <>", 1)->get();
+				$amountOwed = 0;
+				foreach($remain as $rem) {
+					if($rem->status == 2) {
+						$Rremain = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+						$Rremain->where("type", "Cash_Receipt");
+						$Rremain->where("reference_id", $rem->id);
+						$Rremain->where("deleted <>", 1);
+						$Rremain->where("status <>", 1)->get();
+						
+						foreach($Rremain as $Rrem) {
+							$amountOwed = $Rrem->sub_total - $Rrem->amount;
+						}
+					} else {
+						$amountOwed += $rem->amount;
+					}
+				}
+				foreach($items as $item) {
+					
+					if($item->type == 'usage') {
+						$record = $item->meter_record->limit(1)->get();
+						$usage = $record->usage;
+						$lines[] = array(
+							// 'number' => $m->number,
+							'previous' => floatval($record->previous),
+							'current'  => floatval($record->current),
+							'consumption' => floatval($record->usage),
+							'rate' => floatval($item->rate),
+							'amount' => floatval($item->amount),
+							'type' => $item->type,
+							'from_date' => $record->from_date,
+							'to_date' => $record->to_date
+						);
+					}elseif($item->type == 'exemption') {
 						$unit = $item->item->limit(1)->get();
 						$usage = $record->usage;
 						$lines[] = array(
-							'number' => "រំលោះ",
+							'number' => $item->description,
 							'previous' => floatval($record->previous),
 							'current'  => floatval($record->current),
 							'consumption' => floatval($record->usage),
@@ -538,70 +552,85 @@ class Winvoices extends REST_Controller {
 							'type' => $item->type,
 							'unit' => $unit->unit
 						);
+					}elseif($item->type == 'installment') {
+						if($item->amount != 0){
+							$unit = $item->item->limit(1)->get();
+							$usage = $record->usage;
+							$lines[] = array(
+								'number' => "រំលោះ",
+								'previous' => floatval($record->previous),
+								'current'  => floatval($record->current),
+								'consumption' => floatval($record->usage),
+								'rate' => floatval($item->rate),
+								'amount' => floatval($item->amount),
+								'type' => $item->type,
+								'unit' => $unit->unit
+							);
+						}
+					}else{
+						$lines[] = array(
+							'number' => $item->description,
+							'previous' => floatval($item->previous),
+							'current'  => floatval($item->current),
+							'consumption' => floatval($item->quantity),
+							'rate' => 0,
+							'amount' => floatval($item->amount),
+							'type' => $item->type
+						);
 					}
-				}else{
-					$lines[] = array(
-						'number' => $item->description,
-						'previous' => floatval($item->previous),
-						'current'  => floatval($item->current),
-						'consumption' => floatval($item->quantity),
-						'rate' => 0,
-						'amount' => floatval($item->amount),
-						'type' => $item->type
+				}
+				//Calucate minus month of 5months
+				$date = strtotime($row->month_of .' -5 months');
+				$d = date('Y-m-01', $date);
+				$monthGraph = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$monthGraph->where("month_of >=", $d);
+				$monthGraph->where("meter_id", $row->meter_id);
+				$monthGraph->where("deleted <>", 1);
+				$monthGraph->order_by('id', 'desc')->limit(5)->get();
+				// $minusM = array();
+				$minusM = array();
+				$monthN = "";
+				foreach($monthGraph as $monthOF) {
+					
+					$monthN = date('F', strtotime($monthOF->month_of));
+					$minusM[] = array(
+						'month' => $monthN,
+						'usage' => $monthOF->amount
 					);
 				}
-			}
-			//Calucate minus month of 5months
-			$date = strtotime($row->month_of .' -5 months');
-			$d = date('Y-m-01', $date);
-			$monthGraph = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			$monthGraph->where("month_of >=", $d);
-			$monthGraph->where("meter_id", $row->meter_id);
-			$monthGraph->where("deleted <>", 1);
-			$monthGraph->order_by('id', 'desc')->limit(5)->get();
-			// $minusM = array();
-			$minusM = array();
-			$monthN = "";
-			foreach($monthGraph as $monthOF) {
-				
-				$monthN = date('F', strtotime($monthOF->month_of));
-				$minusM[] = array(
-					'month' => $monthN,
-					'usage' => $monthOF->amount
+				$monthGraph = "";
+
+				$contact = $row->contact->get();
+				$data[] = array(
+					'id' => $row->id,
+					'type' => $row->type,
+					'number' => $row->number,
+					'print_count' => intval($row->print_count),
+					'month_of' => date('m', strtotime($row->month_of)),
+					'status'=> $row->status,
+					'issue_date' => $row->issued_date,
+					'due_date' => $row->due_date,
+					'bill_date' => $row->bill_date,
+					'amount'  => floatval($row->amount),
+					'locale' => $row->locale,
+					'consumption' => $usage,
+					'formcolor' => '',
+					'minusMonth' => $minusM,
+					'contact' => array(
+						'id' => $row->contact_id,
+						'name' => $contact->name,
+						'phone' => $contact->phone,
+						'abbr' => $contact->abbr,
+						'number' => $contact->number,
+						'address'=> isset($contact->address)?$contact->address:''
+						//'code' 	 => $contact->utility_abbr ."-".$contact->utility_code
+					),
+					'amount_remain' => floatval($amountOwed),
+					'meter'=> $meter,
+					'invoice_lines'=> $lines
 				);
+
 			}
-			$monthGraph = "";
-
-			$contact = $row->contact->get();
-			$data[] = array(
-				'id' => $row->id,
-				'type' => $row->type,
-				'number' => $row->number,
-				'print_count' => intval($row->print_count),
-				'month_of' => date('m', strtotime($row->month_of)),
-				'status'=> $row->status,
-				'issue_date' => $row->issued_date,
-				'due_date' => $row->due_date,
-				'bill_date' => $row->bill_date,
-				'amount'  => floatval($row->amount),
-				'locale' => $row->locale,
-				'consumption' => $usage,
-				'formcolor' => '',
-				'minusMonth' => $minusM,
-				'contact' => array(
-					'id' => $row->contact_id,
-					'name' => $contact->name,
-					'phone' => $contact->phone,
-					'abbr' => $contact->abbr,
-					'number' => $contact->number,
-					'address'=> isset($contact->address)?$contact->address:''
-					//'code' 	 => $contact->utility_abbr ."-".$contact->utility_code
-				),
-				'amount_remain' => floatval($amountOwed),
-				'meter'=> $meter,
-				'invoice_lines'=> $lines
-			);
-
 		}
 		$this->response(array('results'=> $data, 'count'=> count($data)), 200);
 	}
