@@ -419,6 +419,8 @@ class Winvoices extends REST_Controller {
 		$page 		= $this->get('page');
 		$limit 		= $this->get('limit');
 		$sort 	 	= $this->get("sort");
+		$data["results"] = [];
+		$data["count"] = 0;
 
 		$table = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$data = array();
@@ -633,6 +635,8 @@ class Winvoices extends REST_Controller {
 			}
 		}
 		$this->response(array('results'=> $data, 'count'=> count($data)), 200);
+		//Response Data
+		$this->response($data, 200);
 	}
 
 	//GET WATER PRINT SNAPSHOT 

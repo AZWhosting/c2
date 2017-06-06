@@ -229,16 +229,16 @@
 						</div>
 					</div>
 					<div class="span6" style="padding: 0;">
-						<div style="background: #f4f4f4; width: 100%; float: left; ">
-							<div style="width: 100%; padding: 10px; text-align: center; color: #333;">
+						<div style="width: 100%; float: left; ">
+							<div style="width: 100%; padding: 10px; text-align: center; color: #333; float: left; background: #f4f4f4;">
 								Recommand
 							</div>
-							<div style="width: 100%; padding: 5px; background: #fff; height: 60px;">
+							<div style="width: 100%; background: #ddd; float: left; padding: 5px; text-align: left;">
 								<!-- <h4 style="font-size:15px;">Get this item now!</h4>
 								<p style="margin-bottom: 0; font-size: 12px;">
 									Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
 								</p> -->
-								<div id="carousel-1" class="carousel slide">					
+								<div id="carousel-1" class="carousel slide" style="margin-bottom: 0; float: left;">					
 									<!-- Indicators -->
 									<!-- <ol class="carousel-indicators">
 										<li data-target="#carousel-1" data-slide-to="0" class="active"></li>
@@ -250,14 +250,14 @@
 									<!-- // Indicators END -->
 									
 									<!-- Items -->
-									<div class="carousel-inner">
+									<div class="carousel-inner" style="overflow: inherit; float: left;">
 									
 										<!-- Item -->
 										<div class="item active">
 											
-											<div class="carousel-caption" style="position: relative;">
-												<h4 style="font-size:15px;">Get this item now!</h4>
-												<p style="margin-bottom: 0; font-size: 12px;">
+											<div class="carousel-caption" style="position: relative; right: 0; left: 0; padding: 0; top: 0; background: none;">
+												<h4 style="font-size: 15px; float: left; width: 100%; text-align: left;">Get this item now!</h4>
+												<p style="margin-bottom: 0; font-size: 12px; text-align: left;">
 													Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
 												</p>
 											</div>
