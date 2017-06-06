@@ -3175,13 +3175,6 @@ a.activate {
   float: right;
   width: 195px;
 }
-/*.win-header-bth-plus{
-  font-weight: 800;
-  color: #fff;
-  font-size: 15px;
-  float: left;
-  margin-right: 9px;
-}*/
 .win-header-bth-share{
   padding: 5px 5px 6px 5px;
   font-size: 11px;
@@ -3200,4 +3193,19 @@ a.activate {
   font-size: 13px;
   color: #fff;
 }
-
+.icon-question{
+      font-size: 25px;
+    border: 1px #fff solid;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    float: left;
+    margin-top: 7px;
+    margin-right: 5px;
+}
+.icon-question.icon-question1:before{
+      content: "\f128";
+    margin-left: 21%;
+    margin-top: 2px;
+    color: #fff;
+}

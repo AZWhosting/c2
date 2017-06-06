@@ -39,7 +39,7 @@
 			  	</li>
 			  	<li>
 			  		<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-			  			<i class="icon-question"></i>
+			  			<i class="icon-question icon-question1"></i>
 			  			<span class="caret"></span>
 			  		</a>
 			  		<ul class="dropdown-menu">
@@ -44628,7 +44628,6 @@
 
 						    		<div class="win-wrapper">
 						    			<div class="window-header">
-						    				<!-- <span class="btn btn-danger btn-icon glyphicons remove_2" data-bind="click: closeWindow"><i></i><span data-bind="text: lang.lang.close"></span></span>  -->
 						    				<div class="win-logo" style="width: 60px; height: 60px; background: red; float: left; margin-right: 10px;"></div>
 						    				<div class="win-header-title" style="float: left;">
 						    					<h2>Office Online</h2>
@@ -44647,7 +44646,7 @@
 						    				<div class="win-heder-btn" style="float: right;">
 						    					<span class="win-header-bth-plus">
 						    						<i class="icon-plus"></i>
-						    						<span class="win-header-add-btn">Add to Chrome</span>
+						    						<span class="win-header-add-btn">Add</span>
 						    					</span>
 						    					<span class="win-header-bth-share">
 						    						<a class="glyphicons no-js share_alt win_share_alt">
@@ -44672,13 +44671,12 @@
 															<div class="widget-body" style="float: left; width: 97%; padding: 15px;">
 																<div class="tab-content">
 															        <div class="tab-pane active" id="tab1-1" style="width: 100%; float: left;">
-															        	<!-- <div style="background: red; width: 100%; float: left; height: 50px;"></div> -->
 																		<div style="width: 100%; float: left; ">																			
 																			<div class="col-sm-8" style="padding-left: 0; padding-right: 30px;">
 																				<div class="win-video" style="width: 100%;">
-																					<div id="carousel-1" class="carousel slide">					
+																					<div id="carousel-1" class="carousel slide" style="margin-bottom: 0;">					
 																						<!-- Indicators -->
-																						<ol class="carousel-indicators">
+																						<ol class="carousel-indicators" style="bottom: 0;">
 																							<li data-target="#carousel-1" data-slide-to="0" class="active"></li>
 																							<li data-target="#carousel-1" data-slide-to="1"></li>
 																							<li data-target="#carousel-1" data-slide-to="2"></li>

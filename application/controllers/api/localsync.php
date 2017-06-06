@@ -186,6 +186,21 @@ class Localsync extends REST_Controller {
 		
 		$this->response($data, 201);					
 	}
+	function index_get(){
+		// Load the DB utility class
+		$this->load->dbutil();
+
+		// Backup database dan dijadikan variable
+		$backup = $this->dbutil->backup();
+
+		// Load file helper dan menulis ke server untuk keperluan restore
+		$this->load->helper('file');
+		write_file('/assets/mybackup.gz', $backup);
+
+		// Load the download helper dan melalukan download ke komputer
+		$this->load->helper('download');
+		force_download('mybackup.gz', $backup);
+	}
 
 }
 /* End of file meters.php */

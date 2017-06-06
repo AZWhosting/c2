@@ -22301,6 +22301,7 @@
 			serverPaging: true,
 			pageSize: 1000
 		}),
+		backupdbDS	: dataStore(apiUrl + "localsync"),
 	    invoice: 0,
 	    activeCust: 0,
 	    invCust: 0,
