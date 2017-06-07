@@ -515,6 +515,22 @@
         <span>#=number#</span>-<span>#=name#</span>
       </div>
     </script>
+    <script type="text/x-kendo-template" id="employee-type">
+      <div data-role='grid' 
+           data-bind="source: roles" 
+           data-toolbar="['create']" 
+           data-editable="inline"
+           data-columns="
+              [
+                {field: 'id', title: 'ID'},
+                {field: 'name', title: 'Title'},
+                {field: 'abbr', title: 'ABBR'},
+                {command: ['edit', 'destroy']}
+              ]
+           "></div>
+    </script>
+    <script type="text/x-kendo-template" id="employee-type-list">
+    </script>
     <script type="text/x-kendo-template" id="attachment-list">
       <tr>
         <td>#=name# </td><td><button data-bind="click: onRemove">X</button></td>
@@ -2432,7 +2448,7 @@
         fileMan   : banhji.fileManagement,
         goRole   : function() {
           layout.showIn("#container", mainDash);
-          mainDash.showIn("#placeholder", role);
+          mainDash.showIn("#placeholder", empType);
         },
         setCurrent: function(current) {
           var that = this;
@@ -2502,7 +2518,12 @@
           },
           schema  : {
             model: {
-              id: 'id'
+              id: 'id',
+              fields: {
+                id: {editable: false, nullable: true},
+                name: {editable: true, nullable: false},
+                abbr: {editable: true, nullable: false}
+              }
             },
             data: 'results',
             total: 'count'
@@ -3437,6 +3458,7 @@
       var instEdit = new kendo.View('#company-edit', {model: banhji.company});
       var loading = new kendo.View('#template-waiting-page');
       var employee = new kendo.View('#template-placeholder-employee', { model: banhji.employees});
+      var empType = new kendo.View('#employee-type', { model: banhji.employees});
       var modeleView = new kendo.View('#template-modules-page', { model: banhji.company});
       var profile = new kendo.Layout('#user-profile', {model: banhji.profile});
       var profileMod = new kendo.View('#user-profile-modules', {model: banhji.users});

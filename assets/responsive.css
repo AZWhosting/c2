@@ -3209,3 +3209,87 @@ a.activate {
     margin-top: 2px;
     color: #fff;
 }
+.authorizeSync{
+    background: none;
+    margin: 40px 0 0 0;
+    padding: 35px 0 35px 0;
+    min-height: 60px;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: top;
+}
+.quickbooksSyncIcon {
+    display: inline-block;
+    min-height: 58px;
+    white-space: normal;
+    zoom: 1;
+    vertical-align: bottom;
+    width: 165px;
+}
+#preAuthContent .quickbooksSyncIcon.wrapText .brandLogo {
+    max-height: 92px;
+    max-width: 165px;
+    width: 165px;
+    float: none;
+}
+.smallText {
+    display: block;
+    margin-top: 16px;
+    padding-left: 8px;
+    font-size: 14px;
+    color: #6d8ba7;
+    line-height: 18px;
+}
+#preAuthContent .dashLine {
+    margin-top: 20px;
+    vertical-align: top;
+    height: 12px;
+    display: inline-block;
+    zoom: 1;
+    width: auto;
+    padding-left: 14px;
+    padding-right: 14px;
+    padding-top: 16px;
+}
+.dashLine span {
+    color: #E3EAF3;
+}
+.dashLine span {
+    background: url(../assets/qbConnectionLine.png) no-repeat;
+    height: 12px;
+    width: 16px;
+    display: inline-block;
+    vertical-align: middle;
+    zoom: 1;
+}
+#preAuthContent .quickbooksSyncIcon.wrapText img {
+    float: none;
+}
+.quickbooksSyncIcon.wrapText img {
+    float: left;
+}
+.quickbooksSyncIcon img.appIcon80 {
+    max-width: 80px;
+    max-height: 80px;
+    padding: 8px;
+    background: #fff;
+    -webkit-border-radius: 8px;
+    border-radius: 8px;
+    -moz-background-clip: padding;
+    -webkit-background-clip: padding-box;
+    background-clip: padding-box;
+    -webkit-box-shadow: 0px 1px 4px 0px #aaa;
+    box-shadow: 0px 1px 4px 0px #aaa;
+}
+#authorizeContent {
+    position: relative;
+}
+.termsLinks {
+    display: block;
+    bottom: 96px;
+    right: 0;
+    text-align: left;
+    width: 550px;
+    font-size: 10px;
+    height: 40px;
+}

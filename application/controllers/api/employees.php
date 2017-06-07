@@ -240,7 +240,7 @@ class Employees extends REST_Controller {
 	}
 	public function roles_get() {
 		$requested_data = $this->get('filter');
-		$filters = $requested_data['filters'];
+		// $filters = $requested_data['filters'];
 		$limit = $this->get('limit') !== false ? $this->get('limit') : 100;
 		$page = $this->get('page') !== false ? $this->get('page') : 1;
 		$data = array();

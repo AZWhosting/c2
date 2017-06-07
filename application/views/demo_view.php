@@ -4012,15 +4012,7 @@
 									</tr>								
 									<tr>
 										<td class="right"><span data-bind="text: lang.lang.total_discount"></span></td>
-										<td class="right strong">
-											<input data-role="numerictextbox"
-								                   data-format="n"
-								                   data-spinners="false"
-								                   data-min="0"							                                      
-								                   data-bind="value: obj.discount,
-								                              events: { change: discountChanges }"
-								                   style="width: 90%; text-align: right;">
-	                   					</td>
+										<td class="right strong"><span data-format="n" data-bind="text: obj.discount"></span></td>
 									</tr>
 									<tr>
 										<td class="right"><span data-bind="text: lang.lang.total_tax"></span></td>
@@ -4701,15 +4693,7 @@
 									</tr>								
 									<tr>
 										<td class="right"><span data-bind="text: lang.lang.total_discount"></span></td>
-										<td class="right strong">
-											<input data-role="numerictextbox"
-								                   data-format="n"
-								                   data-spinners="false"
-								                   data-min="0"							                                      
-								                   data-bind="value: obj.discount,
-								                              events: { change: discountChanges }"
-								                   style="width: 90%; text-align: right;">
-	                   					</td>
+										<td class="right strong"><span data-format="n" data-bind="text: obj.discount"></span></td>
 									</tr>
 									<tr>
 										<td class="right"><span data-bind="text: lang.lang.total_tax"></span></td>
@@ -13295,15 +13279,7 @@
 									</tr>								
 									<tr>
 										<td class="right"><span data-bind="text: lang.lang.total_discount"></span></td>
-										<td class="right">
-											<input data-role="numerictextbox"
-								                   data-format="n"
-								                   data-spinners="false"
-								                   data-min="0"							                                      
-								                   data-bind="value: obj.discount,
-								                              events: { change: discountChanges }"
-								                   style="width: 90%; text-align: right;">
-	                   					</td>
+										<td class="right strong"><span data-format="n" data-bind="text: obj.discount"></span></td>
 									</tr>
 									<tr>
 										<td class="right"><span data-bind="text: lang.lang.total_tax"></span></td>
@@ -75537,6 +75513,7 @@
     	journalLineDS			: dataStore(apiUrl + "journal_lines"),
     	attachmentDS	 		: dataStore(apiUrl + "attachments"),
 		itemDS  				: dataStore(apiUrl + "items"),
+		onHandDS  				: dataStore(apiUrl + "items/on_hand"),
 		itemGroupDS 			: banhji.source.itemGroupDS,
 		categoryDS 				: new kendo.data.DataSource({
 		  	data: banhji.source.categoryList,
@@ -75793,52 +75770,43 @@
 			}
 		},
 		changes 				: function(e){
-			console.log(e);
-
-			if(e.field=="item"){
-				e.items[0].set("item_id", e.items[0].item.id);
-				e.items[0].set("description", e.items[0].item.name);
-			}
-
-			$.each(banhji.itemAdjustment.lineDS.data(), function(index, value){
-				var diff = 0;	            
-            	if(value.quantity_adjusted>value.on_hand){
-            		diff = value.on_hand - value.quantity_adjusted;
-            		value.set("movement", 1);
-            	}else{            	
-	            	diff = value.quantity_adjusted - value.on_hand;
-	            	value.set("movement", -1);
-		    	}
-
-		        value.set("quantity", Math.abs(diff));
-			});
-		},
-		onChange 				: function(e) {
-      		var data = e.data, diff = 0;            
-            
-            if(data.quantity_adjusted!==""){
-            	if(data.quantity_adjusted>data.on_hand){
-            		diff = data.on_hand - data.quantity_adjusted;
-            		data.set("movement", 1);
-            	}else{            	
-	            	diff = data.quantity_adjusted - data.on_hand;
-	            	data.set("movement", -1);
-		    	}
-
-		        data.set("quantity", Math.abs(diff));
-			}
+			// console.log(e);
+			var obj = banhji.itemAdjustment.get("obj");
 			
-			var index = this.lineDS.indexOf(data);
-				index++;
-			var nextDataItem = this.lineDS.at(index);
+			if(e.field){
+				if(e.field=="item"){
+					console.log("item");
+					e.items[0].set("item_id", e.items[0].item.id);
+					e.items[0].set("measurement_id", e.items[0].item.measurement_id);
+					e.items[0].set("description", e.items[0].item.name);
+					e.items[0].set("on_hand", 0);
+					e.items[0].set("cost", e.items[0].item.cost);
+					e.items[0].set("rate", banhji.source.getRate(e.items[0].item.locale, new Date(obj.issued_date)));
+					e.items[0].set("locale", e.items[0].item.locale);
+				
+					// banhji.itemAdjustment.onHandDS.query({
+					// 	filter:{ field:"item_id", value:e.items[0].item.id }
+					// }).then(function(){
+					// 	// var view = banhji.itemAdjustment.onHandDS.view();
+					// 	// console.log(view);
+					// });
+				}else{
+					console.log("else");
+					$.each(banhji.itemAdjustment.lineDS.data(), function(index, value){
+						var diff = 0;	            
+		            	if(value.quantity_adjusted>value.on_hand){
+		            		diff = value.on_hand - value.quantity_adjusted;
+		            		value.set("movement", 1);
+		            	}else{            	
+			            	diff = value.quantity_adjusted - value.on_hand;
+			            	value.set("movement", -1);
+				    	}
 
-			if(nextDataItem){
-				$(".txt"+nextDataItem.uid).focus();
-			}else{
-				var firstRow = this.lineDS.at(0);
-				$(".txt"+firstRow.uid).focus();
-			}            
-        },		
+				        value.set("quantity", Math.abs(diff));
+					});
+				}
+			}
+		},
 		//Number
 		checkExistingNumber 	: function(){
 			var self = this, para = [], 
@@ -95174,9 +95142,9 @@
 	});
 	// INVENTORY FUNCTIONS
 	banhji.router.route("/item_adjustment(/:id)", function(id){
-		banhji.view.layout.showIn("#content", banhji.view.underConstruction);
+		// banhji.view.layout.showIn("#content", banhji.view.underConstruction);
 
-		/*banhji.accessMod.query({
+		banhji.accessMod.query({
 			filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
 		}).then(function(e){
 			var allowed = false;
@@ -95267,7 +95235,7 @@
 			} else {
 				window.location.replace(baseUrl + "admin");
 			}
-		});*/
+		});
 	});
 	banhji.router.route("/internal_usage(/:id)", function(id){
 		banhji.accessMod.query({

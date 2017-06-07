@@ -44653,7 +44653,7 @@
 						    							<i></i>
 						    						</a>
 						    					</span>
-						    					<span class="win-header-bth-plus">
+						    					<span class="win-header-bth-plus" style="margin-left: 10px;">
 						    						<i class="icon-plus"></i>
 						    						<span class="win-header-get-btn" data-bind="click: openWindow1">Get App Now</span>
 						    					</span>
@@ -44665,12 +44665,6 @@
 											</div>
 						    			</div>
 						    		</div>
-
-									<br>
-									<!-- <div style="text-align: center;">
-										<span class="btn btn-success btn-icon glyphicons ok_2" data-bind="click: save"><i></i>Save</span>
-										<span class="btn btn-danger btn-icon glyphicons remove_2" data-bind="click: closeWindow"><i></i><span data-bind="text: lang.lang.close"></span></span> 
-									</div>  -->
 								</div>
 
 
@@ -44681,18 +44675,58 @@
 						            data-height="540"
 						            data-actions="{}"
 						            data-modal="{mask: 'true'}"
-						            data-position="{top: '7%', left: '5%'}"
+						            data-position="{top: '11%', left: '25%'}"
 						            data-bind="visible: window1Visible">
 
-						    		<div class="win-wrapper">
-						    			<div class="window-header">
+						    		<div class="win-wrapper" style="width: 100%;">
+						    			<div class="window-header" style="width: 93%;">
 						    				<span style="float: right; margin-top: -5px; cursor: pointer; color: #999; font-weight: 600; font-size: 15px; margin-right: -15px;" data-bind="click: closeWindow1" >x</span>
 						    				
 						    			</div>
-						    			<div class="window-content">
+						    			<div class="window-content" style="width: 92%;">
 						    				<div class="row">
-							    				window-header
+							    				<h1 style="font-size: 25px; text-align: center;">Start using Gusto with QuickBooks</h1>
+							    				<p style="text-align: center;">Authorize the Sharing of Your Data Between Gusto and Intuit.</p>
+							    				<div class="authorizeSync">
+							    					<div id="preAuthContent">
+							    						<div class="quickbooksSyncIcon wrapText">
+							    							<img class="brandLogo" src="https://images.appcenter.intuit.com/Content/Static/7.12.0-rel-598/images/v2/logo/Logo-Intuit-Auth-0615-2016.png">
+							    							<br>
+							    							<span class="smallText">Company</span>
+							    						</div>
+							    						<div class="dashLine">
+							    							<span></span>
+							    							<span></span>
+							    							<span></span>
+							    							<span></span>
+							    							<span></span>
+							    						</div>
+							    						<div class="quickbooksSyncIcon wrapText">
+							    							<img class="appIcon80" src="https://images.appcenter.intuit.com/Content/images/AppCards/b7pnhdevpa/Submitted46/LogoName.png">
+							    							<br>
+							    							<span class="smallText">Gusto</span>
+							    						</div>
+							    						<div class="clear"></div>
+							    					</div>
+							    				</div>
+							    				<div id="authorizeContent">
+							    					<span class="termsLinks">
+							    						By clicking Authorize, I allow Gusto and Intuit to use my information* in accordance with each company’s respective terms of service and privacy policy Gusto’s
+							    						<a target="_new" href="https://gusto.com/terms">Terms of Service</a>
+							    						and
+							    						<a target="_new" href="https://gusto.com/privacy">Privacy Policy</a>.
+							    						Additionally, where applicable, I give Gusto limited access to my QuickBooks Payments account to provide me payments-related services. I authorize the sharing of data between Intuit and Gusto.  *Information may include data from QuickBooks Online, QuickBooks Desktop and QuickBooks Payments.
+							    					</span>
+							    				</div>
 											</div>
+						    			</div>
+						    			<div class="window-content" style="width: 92%; margin-top: 25px;">
+						    				<a style="float: left; background: #ddd; color: #fff; padding: 8px 15px; border: 1px solid #333;">
+						    					No, thanks
+						    				</a>
+						    				<a style="float: right; background: blue; color: #fff; padding: 8px 15px;">
+						    					Authorize
+						    				</a>
 						    			</div>
 						    		</div>									
 								</div>
