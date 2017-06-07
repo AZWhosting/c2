@@ -21465,29 +21465,33 @@
 					<table class="table table-bordered table-primary table-striped table-vertical-center" style="margin-bottom: 0;">
 				        <thead>
 				            <tr>
+				            	<th class="center" style="width: 40px;vertical-align: top;border-bottom: none;"><span data-bind="text: lang.lang.no_"></span></th>
 				                <th style="vertical-align: top; border-bottom: none;" data-bind="text: lang.lang.item"></th>
+				                <th style="width: 250px; vertical-align: top; border-bottom: none;" data-bind="text: lang.lang.description"></th>
 				                <th style="width: 100px; vertical-align: top; border-bottom: none;" data-bind="text: lang.lang.cost"></th>
 				                <th style="width: 100px; vertical-align: top; border-bottom: none;" data-bind="text: lang.lang.qoh"></th>
 				                <th style="width: 100px; vertical-align: top; border-bottom: none;" data-bind="text: lang.lang.quantity_count"></th>
 				                <th style="width: 100px; vertical-align: top; border-bottom: none;" data-bind="text: lang.lang.different"></th>
-				            	<th style="width: 115px; border-bottom: none;"></th>
+				            	<th style="width: 111px; vertical-align: top; border-bottom: none;"></th>
 				            </tr>
 				        </thead>
 				    </table>
 
-				    <div data-role="grid" id="costomerhover"
-		                 data-editable="true"
+				    <div data-role="grid"
+				    	 data-editable="true"
 		                 data-columns="[
-		                 	{ field: 'item', title: 'Item', editor: itemComboBoxEditor, template: '#=item.name#' },
-                            { field: 'cost', title:'Cost', width: '100px',
-						        editable: function (dataItem) {
-						        	return kendo.parseFloat(dataItem.cost) == 0;
+						    { title:'No.', width: '40px', attributes: { style: 'text-align: center;' },
+						        template: function (dataItem) {
+						        	return banhji.itemAdjustment.lineDS.indexOf(dataItem)+1;
 						      	}
 						    },
-                            { field: 'on_hand', title:'Qty On Hand', width: '100px', editable: false },
+		                 	{ field: 'item', title: 'Item', editor: itemComboBoxEditor, template: '#=item.name#' },
+                            { field: 'description', title:'Description', width: '250px' },
+                            { field: 'cost', title:'Cost', width: '100px' },
+                            { field: 'on_hand', title:'Qty On Hand', width: '100px' },
                             { field: 'quantity_adjusted', title:'Qty Count', width: '100px' },
                             { field: 'quantity', title:'Different', width: '100px' },
-                            { command: 'destroy', title: ' ', width: '100px' }
+                            { command: 'destroy', title: ' ', width: 96 }
                          ]"
                          data-auto-bind="false"
 		                 data-bind="source: lineDS"></div>
@@ -44203,7 +44207,7 @@
 <!--  Dropdown Templates -->
 <script>
 	function itemComboBoxEditor(container, options) {
-        $('<input required name="' + options.field + '"/>')
+        $('<input name="' + options.field + '"/>')
         .appendTo(container)
         .kendoComboBox({
         	placeholder: "Select Item",
@@ -51977,6 +51981,7 @@
 				if(incomeID>0){
 					raw = "cr"+incomeID;
 
+					var saleAmount = value.quantity * value.price;
 					if(entries[raw]===undefined){
 						entries[raw] = {
 							transaction_id 		: transaction_id,
@@ -51986,7 +51991,7 @@
 							reference_no 		: "",
 							segments 	 		: [],
 							dr 	 				: 0,
-							cr 					: value.amount,
+							cr 					: saleAmount,
 							rate				: obj.rate,
 							locale				: obj.locale
 						};
@@ -53549,7 +53554,8 @@
 				var incomeID = kendo.parseInt(item.income_account_id);
 				if(incomeID>0){
 					raw = "cr"+incomeID;
-
+					
+					var saleAmount = value.quantity * value.price;
 					if(entries[raw]===undefined){
 						entries[raw] = {
 							transaction_id 		: transaction_id,
@@ -53559,7 +53565,7 @@
 							reference_no 		: "",
 							segments 	 		: [],
 							dr 	 				: 0,
-							cr 					: value.amount,
+							cr 					: saleAmount,
 							rate				: obj.rate,
 							locale				: obj.locale
 						};
@@ -55987,6 +55993,7 @@
 				if(incomeID>0){
 					raw = "dr"+incomeID;
 
+					var saleAmount = value.quantity * value.price;
 					if(entries[raw]===undefined){
 						entries[raw] = {
 							transaction_id 		: transaction_id,
@@ -55995,7 +56002,7 @@
 							description 		: value.description,
 							reference_no 		: "",
 							segments 	 		: [],
-							dr 	 				: value.amount,
+							dr 	 				: saleAmount,
 							cr 					: 0,
 							rate				: obj.rate,
 							locale				: obj.locale
@@ -57127,6 +57134,7 @@
 				if(incomeID>0){
 					raw = "dr"+incomeID;
 
+					var saleAmount = value.quantity * value.price;
 					if(entries[raw]===undefined){
 						entries[raw] = {
 							transaction_id 		: transaction_id,
@@ -57135,7 +57143,7 @@
 							description 		: value.description,
 							reference_no 		: "",
 							segments 	 		: [],
-							dr 	 				: value.amount,
+							dr 	 				: saleAmount,
 							cr 					: 0,
 							rate				: obj.rate,
 							locale				: obj.locale
@@ -75784,6 +75792,27 @@
 				recurringItemList.splice(0,recurringItemList.length);
 			}
 		},
+		changes 				: function(e){
+			console.log(e);
+
+			if(e.field=="item"){
+				e.items[0].set("item_id", e.items[0].item.id);
+				e.items[0].set("description", e.items[0].item.name);
+			}
+
+			$.each(banhji.itemAdjustment.lineDS.data(), function(index, value){
+				var diff = 0;	            
+            	if(value.quantity_adjusted>value.on_hand){
+            		diff = value.on_hand - value.quantity_adjusted;
+            		value.set("movement", 1);
+            	}else{            	
+	            	diff = value.quantity_adjusted - value.on_hand;
+	            	value.set("movement", -1);
+		    	}
+
+		        value.set("quantity", Math.abs(diff));
+			});
+		},
 		onChange 				: function(e) {
       		var data = e.data, diff = 0;            
             
@@ -75964,7 +75993,7 @@
 				quantity_adjusted 	: 0,				
 				quantity 	 		: 0,
 				unit_value 			: 1,
-				cost 				: 99,
+				cost 				: 0,
 				additional_cost 	: 0,
 				rate				: 1,
 				locale				: banhji.locale,
@@ -95170,6 +95199,8 @@
 
 				if(banhji.pageLoaded["item_adjustment"]==undefined){
 					banhji.pageLoaded["item_adjustment"] = true;
+
+					vm.lineDS.bind("change", vm.changes);
 					
 					var validator = $("#example").kendoValidator({
 			        	rules: {

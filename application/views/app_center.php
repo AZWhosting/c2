@@ -44617,10 +44617,10 @@
 					        		</div>
 					        	</div>
 
-					        	<!-- Window -->
+					        	<!--First Window -->
 							    <div data-role="window" id="appcenter"
 						            data-width="90%"
-						            data-height="660"
+						            data-height="680"
 						            data-actions="{}"
 						            data-modal="{mask: 'true'}"
 						            data-position="{top: '7%', left: '5%'}"
@@ -44652,219 +44652,16 @@
 						    						<a class="glyphicons no-js share_alt win_share_alt">
 						    							<i></i>
 						    						</a>
-						    					</span>						    					
+						    					</span>
+						    					<span class="win-header-bth-plus">
+						    						<i class="icon-plus"></i>
+						    						<span class="win-header-get-btn" data-bind="click: openWindow1">Get App Now</span>
+						    					</span>
 						    				</div>
 						    			</div>
 						    			<div class="window-content">
 						    				<div class="row">
-							    				<div class="span12" style="width: 96%;">
-													<div class="relativeWrap" data-toggle="source-code" style="float: left; width: 100%;">
-														<div class="widget widget-tabs widget-tabs-gray report-tab" style="background: #fff; overflow: hidden;">
-															<div class="widget-head head-custom" style="height: 50px;">
-																<ul>
-																	<li class="active"><a href="#tab1-1" data-toggle="tab"><i></i><span >Overview</span></a></li>
-																	<li><a href="#tab1-2" data-toggle="tab"><i></i><span >REVIEW</span></a></li>
-																	<li><a href="#tab1-3" data-toggle="tab"><i></i><span >RELATED</span></a></li>
-																</ul>
-															</div>
-
-															<div class="widget-body" style="float: left; width: 97%; padding: 15px;">
-																<div class="tab-content">
-															        <div class="tab-pane active" id="tab1-1" style="width: 100%; float: left;">
-																		<div style="width: 100%; float: left; ">																			
-																			<div class="col-sm-8" style="padding-left: 0; padding-right: 30px;">
-																				<div class="win-video" style="width: 100%;">
-																					<div id="carousel-1" class="carousel slide" style="margin-bottom: 0;">					
-																						<!-- Indicators -->
-																						<ol class="carousel-indicators" style="bottom: 0;">
-																							<li data-target="#carousel-1" data-slide-to="0" class="active"></li>
-																							<li data-target="#carousel-1" data-slide-to="1"></li>
-																							<li data-target="#carousel-1" data-slide-to="2"></li>
-																							<li data-target="#carousel-1" data-slide-to="3"></li>
-																							<li data-target="#carousel-1" data-slide-to="4"></li>
-																						</ol>
-																						<!-- // Indicators END -->
-																						
-																						<!-- Items -->
-																						<div class="carousel-inner">
-																						
-																							<!-- Item -->
-																							<div class="item active">
-																								<img src="http://fpoimg.com/677x405?text=Picture%201">
-																								
-																							</div>
-																							<!-- // Item END -->
-
-																							<!-- Item -->
-																							<div class="item">
-																								<img src="http://fpoimg.com/677x405?text=Picture%202">
-																								
-																							</div>
-																							<!-- // Item END -->
-
-																							<!-- Item -->
-																							<div class="item">
-																								<img src="http://fpoimg.com/677x405?text=Picture%203">
-																								
-																							</div>
-																							<!-- // Item END -->
-
-																							<!-- Item -->
-																							<div class="item">
-																								<img src="http://fpoimg.com/677x405?text=Picture%204">
-																								
-																							</div>
-																							<!-- // Item END -->
-
-																							<!-- Item -->
-																							<div class="item">
-																								<img src="http://fpoimg.com/677x405?text=Picture%205">
-																								
-																							</div>
-																							<!-- // Item END -->
-																												
-																						</div>
-																						<!-- // Items END -->
-																						
-																						<!-- Navigation -->
-																						<!-- <a class="left carousel-control" href="#carousel-1" data-slide="prev">&lsaquo;</a>
-																						<a class="right carousel-control" href="#carousel-1" data-slide="next">&rsaquo;</a> -->
-																						<!-- // Navigation END -->
-																						
-																					</div>
-																					
-																				</div>
-																			</div>
-																			<div class="col-sm-4" style="padding: 0; width: 30.3%;">
-																				<div class="win-widget-Rfirst">
-																					<div class="win-title">
-																						<p style="margin-bottom: 20px;">Compatible with your device<p>
-																					</div>
-																					<div class="win-line"></div>
-																					<p style="color: #333; font-size: 13px; font-weight: bold; word-wrap: break-word;">
-																						View, edit, and create Office files in your browser.
-																					</p>
-																					<p>
-																						Built for Chrome – Use Word, Excel, PowerPoint, OneNote, and Sway Online without needing Office installed.
-																					</p>
-																					<p>
-																						Create with confidence – Use familiar formatting and layout options to express your ideas in full fidelity.
-																					</p>
-																					<p>
-																						Work on the go – Get to your files from anywhere, thanks to integration with OneDrive and OneDrive for Business.
-																					</p>
-																					<p>
-																						Copy and paste conveniently – Use Copy and Paste buttons on the ribbon and right-click menu, or use keyboard shortcuts for copying and pasting.
-																					</p>
-																					<p>
-																						By installing the app, you agree to these terms and conditions: 
-																					</p>
-																					<p>
-																						PLEASE NOTE: Refer to your license terms for Microsoft Office Online software (the "software") to identify the entity licensing this supplement to you and for support information. You may use a copy of this supplement with each validly licensed copy of the software. You may not use the supplement if you do not have a license for the software. The license terms for the software apply to your use of this supplement.
-																					</p>
-																					<p>
-																						Privacy Policy: http://aka.ms/privacy
-																					</p>
-																				</div>
-																				<div class="win-line"></div>
-																				<div class="win-widget-Second">
-																					<p><a href="">Report Abuse</a></p>
-																					<div class="win-title">
-																						<p style="margin-bottom: 20px;">Additional Information<p>
-																					</div>
-																					<p>
-																						Version: 1.5.1 <br>
-																						Updated: May 10, 2017 <br>
-																						Size: 1.08MiB <br>
-																						Languages: See all 52
-																					</p>
-																					<div class="win-title">
-																						<p style="margin-bottom: 20px;">Developer<p>
-																					</div>
-																					<p><a href="">Privacy Policy</a></p>
-																				</div>
-																			</div>
-																		</div>
-														        	</div>
-
-														        	<div class="tab-pane" id="tab1-2">
-															        	<div style="width: 100%; float: left; ">
-															        		<div class="col-sm-8" style="padding-left: 0; padding-right: 30px;">
-																				<div class="win-tabTwo-header" style="width: 100%;">
-																					<h2>User Reviews</h2>
-																					<div class="win-tabTwo-tabMore">
-																						<div class="relativeWrap" data-toggle="source-code" style="float: left; width: 100%;">
-																							<div class="widget widget-tabs widget-tabs-gray report-tab" style="background: #fff; overflow: hidden;margin-bottom: 0;">
-																								<div class="widget-head head-custom" style="height: 20px; padding-right: 0; line-height: 20px;">
-																									<ul style="height: 20px !important; line-height: 20px;">
-																										<li class="active" style="height: 20px !important; line-height: 20px !important;">
-																											<a href="#tab2-1" data-toggle="tab">
-																												<i></i><span >Helpful</span>
-																											</a>
-																										</li>
-																										<li style="height: 20px !important; line-height: 20px !important;"><a href="#tab2-2" data-toggle="tab"><i></i><span >Recent</span></a></li>
-																									</ul>
-																								</div>
-
-																							</div>
-																						</div>
-																					</div>
-																				</div>
-																				<div class="win-tabTwo-content">
-																					<div class="widget-body" style="float: left; width: 97%; padding: 15px;">
-																						<div class="tab-content">
-																					        <div class="tab-pane active" id="tab2-1" style="width: 100%; float: left;">
-																					        	Helpful
-																				        	</div>
-
-																				        	<div class="tab-pane" id="tab2-2">
-																					        	<div style="width: 100%; float: left; ">
-																					        		Recent
-																					        	</div>
-																				        	</div>
-
-																					    </div>
-																					</div>
-																				</div>
-																			</div>
-																			<div class="col-sm-4" style="padding: 0; width: 30.3%;">
-																				<h2 style="font-size: 20px; margin: 0 0 10px 0;">Rate this extension</h2>
-																				<div class="sign-to-rate">
-																					<div class="rsw-stars">
-																					</div>
-																					<p class="text-sign-to-rate">
-																						<a href="" target="_blank">Sign</a> in to rate
-																					</p>
-																				</div>
-																			</div>
-															        	</div>
-														        	</div>
-
-														        	<div class="tab-pane" id="tab1-3">
-															        	<div style="width: 100%; float: left; ">
-															        		<h2>Related</h2>
-															        		<div class="row">
-																        		<div class="col-sm-3">
-																					1
-																				</div>
-																				<div class="col-sm-3">
-																					2
-																				</div>
-																				<div class="col-sm-3">
-																					3
-																				</div>
-																				<div class="col-sm-3">
-																					4
-																				</div>
-																			</div>
-															        	</div>
-														        	</div>
-														        	
-															    </div>
-															</div>
-														</div>
-													</div>		
-												</div>
+							    				
 											</div>
 						    			</div>
 						    		</div>
@@ -44874,6 +44671,30 @@
 										<span class="btn btn-success btn-icon glyphicons ok_2" data-bind="click: save"><i></i>Save</span>
 										<span class="btn btn-danger btn-icon glyphicons remove_2" data-bind="click: closeWindow"><i></i><span data-bind="text: lang.lang.close"></span></span> 
 									</div>  -->
+								</div>
+
+
+
+								<!--Second Window -->
+							    <div data-role="window"
+						            data-width="600"
+						            data-height="540"
+						            data-actions="{}"
+						            data-modal="{mask: 'true'}"
+						            data-position="{top: '7%', left: '5%'}"
+						            data-bind="visible: window1Visible">
+
+						    		<div class="win-wrapper">
+						    			<div class="window-header">
+						    				<span style="float: right; margin-top: -5px; cursor: pointer; color: #999; font-weight: 600; font-size: 15px; margin-right: -15px;" data-bind="click: closeWindow1" >x</span>
+						    				
+						    			</div>
+						    			<div class="window-content">
+						    				<div class="row">
+							    				window-header
+											</div>
+						    			</div>
+						    		</div>									
 								</div>
 
 
@@ -45384,6 +45205,8 @@
 	   </div>
 	</div>
 </script>
+
+
 
 
 
@@ -91468,6 +91291,7 @@
 		topProductDS 		: dataStore(apiUrl + "inventory_modules/top_sale_product"),
 		graphDS 			: dataStore(apiUrl + "customer_modules/monthly_sale"),
 		windowVisible 		: false,
+		window1Visible 		: false,
 		windowItemVisible 	: false,
 		obj 				: {},
 		pageLoad 			: function(){
@@ -91482,6 +91306,16 @@
       		//this.dataSource.cancelChanges();
 
       		this.set("windowVisible", false);
+      	},
+      	openWindow1			: function(){
+      		//this.addType();
+
+         	this.set("window1Visible", true);
+      	},
+      	closeWindow1 		: function(){
+      		//this.dataSource.cancelChanges();
+
+      		this.set("window1Visible", false);
       	},
 		setObj 				: function(){
 			this.set("obj", {

@@ -29,7 +29,6 @@ class Item_lines extends REST_Controller {
 		$sort 	 	= $this->get("sort");
 		$data["results"] = [];
 		$data["count"] = 0;
-		$include = [];
 		
 		$obj = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
@@ -69,7 +68,7 @@ class Item_lines extends REST_Controller {
 		}
 
 		if($obj->exists()){
-			foreach ($obj as $key => $value) {
+			foreach ($obj as $value) {
 				$item = [];
 				if($value->item_name){
 					$item = array("abbr"=>$value->item_abbr, "number"=>$value->item_number, "name"=>$value->item_name);
@@ -106,22 +105,7 @@ class Item_lines extends REST_Controller {
 				   	"item_prices" 		=> [],
 				   	"item" 				=> $item
 				);
-
-				// array("abbr"=>$value->item_abbr, "number"=>$value->item_number, "name"=>$value->item_name);
-				// foreach ($relatives as $row) {
-				// 	$q = [];
-				// 	if($row=="transaction"){
-				// 		$r = $value->transaction->select("number","name")->get();
-				// 		$q = array("number"=>"$r->number", "name"=>"$r->name");
-				// 	}
-
-				// 	if($row=="item"){
-				// 		$r = $value->item->select("number","name")->get();
-				// 		$q = array("number"=>"$r->number", "name"=>"$r->name");
-				// 	}
-
 				// 	$data["results"][$key]["$row"] = $q;
-				// }
 			}
 		}
 
