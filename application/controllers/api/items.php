@@ -420,17 +420,22 @@ class Items extends REST_Controller {
 		$obj->where_related("transaction", "deleted <>", 1);
 		$obj->get_iterated();
 
-		$onHand = 0;
+		$objList = [];
 		if($obj->exists()){			
 			foreach ($obj as $value) {
-				$onHand += ($value->quantity * $value->unit_value * $value->movement);
+				$quantity = ($value->quantity * $value->unit_value * $value->movement);
+				if(isset($objList[$value->item_id])){
+					$objList[$value->item_id]["on_hand"] += $quantity;
+				}else{
+					$objList[$value->item_id]["id"] 		= $value->item_id;
+					$objList[$value->item_id]["on_hand"] 	= $quantity;
+				}
 			}
 		}
 
-		$data["results"] = array(
-			"id" 		=> $value->item_id,
-			"on_hand" 	=> $onHand
-		);
+		foreach ($objList as $value) {
+			$data["results"][] = $value;
+		}
 
 		//Response Data		
 		$this->response($data, 200);	

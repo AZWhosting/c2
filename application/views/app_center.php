@@ -212,28 +212,28 @@
 
 				<div class="board-chart" style="margin-top: 20px;">
 					<div class="span3" style="padding-left: 0;">
-						<div style="background: #0ec9fc; width: 100%; float: left; text-align: center;">
-							<p style="margin-top: 10px; ">Your Business Financial Health Score</p>
-							<p style="color: #fff;">
-								<sup style="font-size: 30px; font-weight: 800;">70</sup>
-								<span style="font-size: 35px;">/</span>
-								<sub style="font-size: 20px;">100</sub>
+						<div style="background: #0ec9fc; width: 100%; float: left; text-align: center; height: 135px;	">
+							<p style="margin-top: 10px; font-size: 10px;">Your Business Financial Health Score</p>
+							<p style="color: #fff; display: inline-block; margin-top: 27px;">
+								<sup style="font-size: 47px; font-weight: 600; margin-top: 8px; margin-left: 13px;">100</sup>
+								<span style="font-size: 35px; font-weight: 300; margin-left: -10px;">/</span>
+								<sub style="font-size: 11px; margin-left: -9px;">100</sub>
 							</p>
 						</div>
 					</div>
-					<div class="span3" style="padding-left: 0;">
-						<div style="background: #96e95b; width: 100%; float: left; text-align: center;">
-							<p style="margin-top: 10px; ">Comparing with Similar Company</p>
+					<div class="span2" style="padding-left: 0;">
+						<div style="background: #96e95b; width: 100%; float: left; text-align: center; height: 135px; padding: 20px 0;">
+							<p></p>
 							<img src="<?php echo base_url()?>assets/sign-new.png" style="width: 45px;">
-							<p>Outperform your peer</p>
+							<p style="font-size: 10px;">Outperform your peer</p>
 						</div>
 					</div>
-					<div class="span6" style="padding: 0;">
+					<div class="span7" style="padding: 0;">
 						<div style="width: 100%; float: left; ">
-							<div style="width: 100%; padding: 8px; text-align: center; color: #333; float: left; background: #f4f4f4;">
+							<div style="width: 100%; padding: 8px; text-align: center; color: #333; float: left; background: #ddd;">
 								Recommand
 							</div>
-							<div style="width: 100%; background: #ddd; float: left; padding: 5px; text-align: left;">
+							<div style="width: 100%; background: #f4f4f4; float: left; padding: 5px 10px; text-align: left;">
 								<div id="carousel-1" class="carousel slide" style="margin-bottom: 0; float: left;">
 									<!-- Indicators -->
 									<ol class="carousel-indicators" style="bottom: -14px; left: 86%;">
@@ -44661,7 +44661,218 @@
 						    			</div>
 						    			<div class="window-content">
 						    				<div class="row">
-							    				
+							    				<div class="span12" style="width: 96%;">
+													<div class="relativeWrap" data-toggle="source-code" style="float: left; width: 100%;">
+														<div class="widget widget-tabs widget-tabs-gray report-tab" style="background: #fff; overflow: hidden;">
+															<div class="widget-head head-custom" style="height: 50px;">
+																<ul>
+																	<li class="active"><a href="#tab1-1" data-toggle="tab"><i></i><span >Overview</span></a></li>
+																	<li><a href="#tab1-2" data-toggle="tab"><i></i><span >REVIEW</span></a></li>
+																	<li><a href="#tab1-3" data-toggle="tab"><i></i><span >RELATED</span></a></li>
+																</ul>
+															</div>
+
+															<div class="widget-body" style="float: left; width: 97%; padding: 15px;">
+																<div class="tab-content">
+															        <div class="tab-pane active" id="tab1-1" style="width: 100%; float: left;">
+																		<div style="width: 100%; float: left; ">
+																			<div class="col-sm-8" style="padding-left: 0; padding-right: 30px;">
+																				<div class="win-video" style="width: 100%;">
+																					<div id="carousel-1" class="carousel slide" style="margin-bottom: 0;">
+																						<!-- Indicators -->
+																						<ol class="carousel-indicators" style="bottom: 0;">
+																							<li data-target="#carousel-1" data-slide-to="0" class="active"></li>
+																							<li data-target="#carousel-1" data-slide-to="1"></li>
+																							<li data-target="#carousel-1" data-slide-to="2"></li>
+																							<li data-target="#carousel-1" data-slide-to="3"></li>
+																							<li data-target="#carousel-1" data-slide-to="4"></li>
+																						</ol>
+																						<!-- // Indicators END -->
+																						
+																						<!-- Items -->
+																						<div class="carousel-inner">
+																						
+																							<!-- Item -->
+																							<div class="item active">
+																								<img src="http://fpoimg.com/677x405?text=Picture%201">
+																								
+																							</div>
+																							<!-- // Item END -->
+
+																							<!-- Item -->
+																							<div class="item">
+																								<img src="http://fpoimg.com/677x405?text=Picture%202">
+																								
+																							</div>
+																							<!-- // Item END -->
+
+																							<!-- Item -->
+																							<div class="item">
+																								<img src="http://fpoimg.com/677x405?text=Picture%203">
+																								
+																							</div>
+																							<!-- // Item END -->
+
+																							<!-- Item -->
+																							<div class="item">
+																								<img src="http://fpoimg.com/677x405?text=Picture%204">
+																								
+																							</div>
+																							<!-- // Item END -->
+
+																							<!-- Item -->
+																							<div class="item">
+																								<img src="http://fpoimg.com/677x405?text=Picture%205">
+																								
+																							</div>
+																							<!-- // Item END -->
+
+																						</div>
+																						<!-- // Items END -->
+																						
+																						<!-- Navigation -->
+																						<!-- <a class="left carousel-control" href="#carousel-1" data-slide="prev">&lsaquo;</a>
+																						<a class="right carousel-control" href="#carousel-1" data-slide="next">&rsaquo;</a> -->
+																						<!-- // Navigation END -->
+																						
+																					</div>
+																					
+																				</div>
+																			</div>
+																			<div class="col-sm-4" style="padding: 0; width: 30.3%;">
+																				<div class="win-widget-Rfirst">
+																					<div class="win-title">
+																						<p style="margin-bottom: 20px;">Compatible with your device<p>
+																					</div>
+																					<div class="win-line"></div>
+																					<p style="color: #333; font-size: 13px; font-weight: bold; word-wrap: break-word;">
+																						View, edit, and create Office files in your browser.
+																					</p>
+																					<p>
+																						Built for Chrome – Use Word, Excel, PowerPoint, OneNote, and Sway Online without needing Office installed.
+																					</p>
+																					<p>
+																						Create with confidence – Use familiar formatting and layout options to express your ideas in full fidelity.
+																					</p>
+																					<p>
+																						Work on the go – Get to your files from anywhere, thanks to integration with OneDrive and OneDrive for Business.
+																					</p>
+																					<p>
+																						Copy and paste conveniently – Use Copy and Paste buttons on the ribbon and right-click menu, or use keyboard shortcuts for copying and pasting.
+																					</p>
+																					<p>
+																						By installing the app, you agree to these terms and conditions: 
+																					</p>
+																					<p>
+																						PLEASE NOTE: Refer to your license terms for Microsoft Office Online software (the "software") to identify the entity licensing this supplement to you and for support information. You may use a copy of this supplement with each validly licensed copy of the software. You may not use the supplement if you do not have a license for the software. The license terms for the software apply to your use of this supplement.
+																					</p>
+																					<p>
+																						Privacy Policy: http://aka.ms/privacy
+																					</p>
+																				</div>
+																				<div class="win-line"></div>
+																				<div class="win-widget-Second">
+																					<p><a href="">Report Abuse</a></p>
+																					<div class="win-title">
+																						<p style="margin-bottom: 20px;">Additional Information<p>
+																					</div>
+																					<p>
+																						Version: 1.5.1 <br>
+																						Updated: May 10, 2017 <br>
+																						Size: 1.08MiB <br>
+																						Languages: See all 52
+																					</p>
+																					<div class="win-title">
+																						<p style="margin-bottom: 20px;">Developer<p>
+																					</div>
+																					<p><a href="">Privacy Policy</a></p>
+																				</div>
+																			</div>
+																		</div>
+														        	</div>
+
+														        	<div class="tab-pane" id="tab1-2">
+															        	<div style="width: 100%; float: left; ">
+															        		<div class="col-sm-8" style="padding-left: 0; padding-right: 30px;">
+																				<div class="win-tabTwo-header" style="width: 100%;">
+																					<h2>User Reviews</h2>
+																					<div class="win-tabTwo-tabMore">
+																						<div class="relativeWrap" data-toggle="source-code" style="float: left; width: 100%;">
+																							<div class="widget widget-tabs widget-tabs-gray report-tab" style="background: #fff; overflow: hidden;margin-bottom: 0;">
+																								<div class="widget-head head-custom" style="height: 20px; padding-right: 0; line-height: 20px;">
+																									<ul style="height: 20px !important; line-height: 20px;">
+																										<li class="active" style="height: 20px !important; line-height: 20px !important;">
+																											<a href="#tab2-1" data-toggle="tab" style="line-height: 20px !important; font-size: 12px; text-transform: capitalize; height: 20px !important;">
+																												<i></i><span >Helpful</span>
+																											</a>
+																										</li>
+																										<li style="height: 20px !important; line-height: 20px !important;">
+																											<a href="#tab2-2" data-toggle="tab" style="line-height: 20px !important; font-size: 12px; text-transform: capitalize; height: 20px !important;">
+																												<i></i><span >Recent</span>
+																											</a>
+																										</li>
+																									</ul>
+																								</div>
+
+																							</div>
+																						</div>
+																					</div>
+																				</div>
+																				<div class="win-tabTwo-content">
+																					<div class="widget-body" style="float: left; width: 97%; padding: 15px;">
+																						<div class="tab-content">
+																					        <div class="tab-pane active" id="tab2-1" style="width: 100%; float: left;">
+																					        	Helpful
+																				        	</div>
+
+																				        	<div class="tab-pane" id="tab2-2">
+																					        	<div style="width: 100%; float: left; ">
+																					        		Recent
+																					        	</div>
+																				        	</div>
+
+																					    </div>
+																					</div>
+																				</div>
+																			</div>
+																			<div class="col-sm-4" style="padding: 0; width: 30.3%;">
+																				<h2 style="font-size: 20px; margin: 0 0 10px 0;">Rate this extension</h2>
+																				<div class="sign-to-rate">
+																					<div class="rsw-stars">
+																					</div>
+																					<p class="text-sign-to-rate">
+																						<a href="" target="_blank">Sign</a> in to rate
+																					</p>
+																				</div>
+																			</div>
+															        	</div>
+														        	</div>
+
+														        	<div class="tab-pane" id="tab1-3">
+															        	<div style="width: 100%; float: left; ">
+															        		<h2>Related</h2>
+															        		<div class="row">
+																        		<div class="col-sm-3">
+																					1
+																				</div>
+																				<div class="col-sm-3">
+																					2
+																				</div>
+																				<div class="col-sm-3">
+																					3
+																				</div>
+																				<div class="col-sm-3">
+																					4
+																				</div>
+																			</div>
+															        	</div>
+														        	</div>
+														        	
+															    </div>
+															</div>
+														</div>
+													</div>		
+												</div>
 											</div>
 						    			</div>
 						    		</div>
@@ -45654,15 +45865,15 @@
   				<li> <span class="li-line"></span></li> 
   				<li><a href='#/grn'><span data-bind="text: lang.lang.add_received_note"></span></a></li>
   				<li><a href='#/gdn'><span data-bind="text: lang.lang.add_delivery_note"></span></a></li>
-  				<li><a href='#/item_adjustment'><span data-bind="text: lang.lang.create_item_adjustment"></span></a></li>  				
-  				<li><a href='#/internal_usage'><span data-bind="text: lang.lang.create_internal_usage"></span></a></li>	
+  				<li><a href='#/item_adjustment'><span data-bind="text: lang.lang.create_item_adjustment"></span></a></li>
+  				<li><a href='#/internal_usage'><span data-bind="text: lang.lang.create_internal_usage"></span></a></li>
   				<li><span class="li-line"></span></li> 	
   				<li><a href='#/item_recurring'>Inventory Recurring List</a></li>
   				<li><a href='#/imports'><span ></span>Imports</a></li>
   			</ul>
 	  	</li>	  	  	
-	  	<li><a href='#/item_report_center'>REPORTS</a></li>	  	
-	  	<li><a href='#/item_setting' class='glyphicons settings'><i></i></a></li>	  	
+	  	<li><a href='#/item_report_center'>REPORTS</a></li>
+	  	<li><a href='#/item_setting' class='glyphicons settings'><i></i></a></li>
 	</ul>	
 </script>
 <script id="taxMenu" type="text/x-kendo-template">
@@ -45670,14 +45881,14 @@
 		<li><a href='#/tax' class='glyphicons show_big_thumbnails'><i></i></a></li>
 	  	<li role='presentation' class='dropdown'>
 	  		<a class='dropdown-toggle glyphicons text_bigger' data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false'><i></i> <span class='caret'></span></a>
-  			<ul class='dropdown-menu'>				 				  				
-  				<li><a href='#/journal'>Journal</a></li>  				
+  			<ul class='dropdown-menu'>
+  				<li><a href='#/journal'>Journal</a></li>
   				<li><a href='#/tax'>Tax</a></li>
-  				<li><a href='#/imports'><span ></span>Imports</a></li> 				  				 				  				 				
+  				<li><a href='#/imports'><span ></span>Imports</a></li>
   			</ul>
-	  	</li>	  	  	
-	  	<li><a href='#/tax_report_center'>REPORTS</a></li>	  	
-	  	<li><a href='#/' class='glyphicons settings'><i></i></a></li>	  				
+	  	</li>
+	  	<li><a href='#/tax_report_center'>REPORTS</a></li>
+	  	<li><a href='#/' class='glyphicons settings'><i></i></a></li>
 	</ul>
 </script>
 <script id="saleMenu" type="text/x-kendo-template">
@@ -45693,14 +45904,44 @@
   				<li><a href='#/item_assembly'><span data-bind="text: lang.lang.build_assembly"></span></a></li>
   				<li> <span class="li-line"></span></li>
   				<li ><a href='#/sale'>Mobile Sale</a></li>
-  				<li ><a href='#/quote'><span data-bind="text: lang.lang.create_quotation"></span></a></li>  				
-  				<li><a href='#/sale_order'><span data-bind="text: lang.lang.create_sale_order"></span></a></li>  				
-  				<li> <span class="li-line"></span></li> 				
+  				<li ><a href='#/quote'><span data-bind="text: lang.lang.create_quotation"></span></a></li>
+  				<li><a href='#/sale_order'><span data-bind="text: lang.lang.create_sale_order"></span></a></li>
+  				<li> <span class="li-line"></span></li>
   				<li><a href='#/sale_recurring'>Recurring</a></li>
-  				<li><a href='#/imports'><span ></span>Imports</a></li>			 				  				 				
+  				<li><a href='#/imports'><span ></span>Imports</a></li>
   			</ul>
-	  	</li>	  	  	
+	  	</li>
 	  	<li><a href="#/sale_report_center">Reports</a></li>
+	</ul>
+</script>
+<script id="riceMillMenu" type="text/x-kendo-template">
+	<ul class="topnav">
+	  	<li><a href='#/app_center' class='glyphicons show_big_thumbnails'><i></i></a></li>
+	  	<li role='presentation' class='dropdown'>
+	  		<a class='dropdown-toggle glyphicons ' data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false'>CENTER<span class='caret'></span></a>
+	  		<ul class='dropdown-menu'>
+  				<li><a href='#/customer_center'><span >Customer Center</span></a></li> 
+  				<li ><a href='#/vendor_center'><span >Supplier Center</span></a></li>	
+  				<li><a href='#/tem_center'><span >Inventory Center</span></a></li>
+  			</ul>
+	  	</li>
+	  	<li role='presentation' class='dropdown'>
+	  		<a class='dropdown-toggle glyphicons text_bigger' data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false'><i></i> <span class='caret'></span></a>
+  			<ul class='dropdown-menu'>
+  				<li><a href='#/customer'><span data-bind="text: lang.lang.add_customer"></span></a></li> 
+  				<li ><a href='#/job'><span data-bind="text: lang.lang.add_job"></span></a></li>	
+  				<li><a href='#/item_catalog'><span data-bind="text: lang.lang.add_new_catalog"></span></a></li>
+  				<li><a href='#/item_assembly'><span data-bind="text: lang.lang.build_assembly"></span></a></li>
+  				<li> <span class="li-line"></span></li>
+  				<li ><a href='#/sale'>Mobile Sale</a></li>
+  				<li ><a href='#/quote'><span data-bind="text: lang.lang.create_quotation"></span></a></li>
+  				<li><a href='#/sale_order'><span data-bind="text: lang.lang.create_sale_order"></span></a></li>
+  				<li> <span class="li-line"></span></li>
+  				<li><a href='#/sale_recurring'>Recurring</a></li>
+  				<li><a href='#/imports'><span ></span>Imports</a></li>
+  			</ul>
+	  	</li>
+	  	<li><a href="#/rice_report_center">Reports</a></li>
 	</ul>
 </script>
 
@@ -45829,7 +46070,7 @@
                 Body: value.file, 
                 Key: value.key
               };
-              bucket.upload(params, function (err, data) {                    
+              bucket.upload(params, function (err, data) {
                   // console.log(err, data);
                   // var url = data.Location;
               });
@@ -45844,7 +46085,7 @@
               if(saved==false && e.response){
                 saved = true;
                 var response = e.response.results;
-                $.each(response, function(index, value){                  
+                $.each(response, function(index, value){
                   var params = {
                     Delete: { /* required */
                       Objects: [ /* required */
@@ -92711,7 +92952,7 @@
 		inventoryMenu: new kendo.View("#inventoryMenu", {model: langVM}),
 		taxMenu: new kendo.View("#taxMenu", {model: langVM}),
 		saleMenu: new kendo.View("#saleMenu", {model: langVM}),
-		appMenu: new kendo.View("#appMenu", {model: langVM})	
+		riceMillMenu: new kendo.View("#riceMillMenu", {model: langVM})	
 	};
 	banhji.router = new kendo.Router({
 		init: function() {	
@@ -100732,7 +100973,7 @@
 			if(allowed) {
 				banhji.view.layout.showIn("#content", banhji.view.riceMill);
 				banhji.view.layout.showIn('#menu', banhji.view.menu);
-				banhji.view.menu.showIn('#secondary-menu', banhji.view.appMenu);
+				banhji.view.menu.showIn('#secondary-menu', banhji.view.riceMillMenu);
 				
 				//eraseCookie("isshow");
 				var isshow = readCookie("cusVisit");

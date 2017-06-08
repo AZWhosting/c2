@@ -21456,17 +21456,17 @@
 				    <div data-role="grid"
 				    	 data-editable="true"
 		                 data-columns="[
-						    { title:'No.', width: '40px', attributes: { style: 'text-align: center;' },
+						    { title:'No.', attributes: { style: 'text-align: center;' }, width: '40px',
 						        template: function (dataItem) {
 						        	return banhji.itemAdjustment.lineDS.indexOf(dataItem)+1;
 						      	}
 						    },
 		                 	{ field: 'item', title: 'Item', editor: itemComboBoxEditor, template: '#=item.name#' },
                             { field: 'description', title:'Description', width: '250px' },
-                            { field: 'cost', title:'Cost', width: '100px' },
-                            { field: 'on_hand', title:'Qty On Hand', width: '100px' },
-                            { field: 'quantity_adjusted', title:'Qty Count', width: '100px' },
-                            { field: 'quantity', title:'Different', width: '100px' },
+                            { field: 'cost', title:'Cost', attributes: { style: 'text-align: right;' }, width: '100px' },
+                            { field: 'on_hand', title:'Qty On Hand', attributes: { style: 'text-align: right;' }, width: '100px' },
+                            { field: 'quantity_adjusted', title:'Qty Count', attributes: { style: 'text-align: right;' }, width: '100px' },
+                            { field: 'quantity', title:'Different', attributes: { style: 'text-align: right;' }, width: '100px' },
                             { command: 'destroy', title: ' ', width: 96 }
                          ]"
                          data-auto-bind="false"
@@ -53847,7 +53847,7 @@
 				self.lineDS.data([]);
 
 				$.each(view, function(index, value){
-					self.lineDS.add({					
+					self.lineDS.add({
 						transaction_id 		: 0,
 						tax_item_id 		: value.tax_item_id,
 						item_id 			: value.item_id,
@@ -75512,17 +75512,65 @@
 		recurringLineDS 		: dataStore(apiUrl + "item_lines"),
     	journalLineDS			: dataStore(apiUrl + "journal_lines"),
     	attachmentDS	 		: dataStore(apiUrl + "attachments"),
-		itemDS  				: dataStore(apiUrl + "items"),
 		onHandDS  				: dataStore(apiUrl + "items/on_hand"),
-		itemGroupDS 			: banhji.source.itemGroupDS,
-		categoryDS 				: new kendo.data.DataSource({
-		  	data: banhji.source.categoryList,
-		  	filter: [
-		  		{ field:"item_type_id", value: 1 },
-		  		{ field:"id", operator:"neq", value: 5 },
-		  		{ field:"id", operator:"neq", value: 6 }
-		  	]
-		}),
+		// lineDS 					: new kendo.data.DataSource({
+		// 	transport: {
+		// 		read 	: {
+		// 			url: apiUrl + "item_lines",
+		// 			type: "GET",
+		// 			headers: banhji.header,
+		// 			dataType: 'json'
+		// 		},
+		// 		create 	: {
+		// 			url: apiUrl + "item_lines",
+		// 			type: "POST",
+		// 			headers: banhji.header,
+		// 			dataType: 'json'
+		// 		},
+		// 		update 	: {
+		// 			url: apiUrl + "item_lines",
+		// 			type: "PUT",
+		// 			headers: banhji.header,
+		// 			dataType: 'json'
+		// 		},
+		// 		destroy 	: {
+		// 			url: apiUrl + "item_lines",
+		// 			type: "DELETE",
+		// 			headers: banhji.header,
+		// 			dataType: 'json'
+		// 		},
+		// 		parameterMap: function(options, operation) {
+		// 			if(operation === 'read') {
+		// 				return {
+		// 					page: options.page,
+		// 					limit: options.pageSize,
+		// 					filter: options.filter,
+		// 					sort: options.sort
+		// 				};
+		// 			} else {
+		// 				return {models: kendo.stringify(options.models)};
+		// 			}
+		// 		}
+		// 	},
+		// 	schema 	: {
+		// 		model: {
+		// 			id: 'id',
+		// 			fields: {
+		// 				id : { editable: false, nullable: true },
+  //                       on_hand : { editable: false, nullable: true },
+  //                       quantity : { editable: false, nullable: true }
+  //                   }
+		// 		},
+		// 		data: 'results',
+		// 		total: 'count'
+		// 	},
+		// 	batch: true,
+		// 	serverFiltering: true,
+		// 	serverSorting: true,
+		// 	serverPaging: true,
+		// 	page: 1,
+		// 	pageSize: 100
+		// }),
 		contactDS  				: new kendo.data.DataSource({
 		  	data: banhji.source.employeeList,
 		  	filter:{ field: "item_type_id", value: 10 },//Employee
@@ -75548,7 +75596,6 @@
 		  	data: banhji.source.txnTemplateList,
 		  	filter:{ field: "type", value: "Item_Adjustment" }
 		}),
-		recurringItemList 		: [],
 		confirmMessage 			: banhji.source.confirmMessage,
 		frequencyList 			: banhji.source.frequencyList,
 		monthOptionList 		: banhji.source.monthOptionList,
@@ -75560,6 +75607,7 @@
 		showWeek 				: false,
 		showDay 				: false,
 		obj 					: null,
+		objItem 				: null,
 		isEdit 					: false,
 		saveClose 				: false,
 		savePrint 				: false,
@@ -75769,44 +75817,6 @@
 				recurringItemList.splice(0,recurringItemList.length);
 			}
 		},
-		changes 				: function(e){
-			// console.log(e);
-			var obj = banhji.itemAdjustment.get("obj");
-			
-			if(e.field){
-				if(e.field=="item"){
-					console.log("item");
-					e.items[0].set("item_id", e.items[0].item.id);
-					e.items[0].set("measurement_id", e.items[0].item.measurement_id);
-					e.items[0].set("description", e.items[0].item.name);
-					e.items[0].set("on_hand", 0);
-					e.items[0].set("cost", e.items[0].item.cost);
-					e.items[0].set("rate", banhji.source.getRate(e.items[0].item.locale, new Date(obj.issued_date)));
-					e.items[0].set("locale", e.items[0].item.locale);
-				
-					// banhji.itemAdjustment.onHandDS.query({
-					// 	filter:{ field:"item_id", value:e.items[0].item.id }
-					// }).then(function(){
-					// 	// var view = banhji.itemAdjustment.onHandDS.view();
-					// 	// console.log(view);
-					// });
-				}else{
-					console.log("else");
-					$.each(banhji.itemAdjustment.lineDS.data(), function(index, value){
-						var diff = 0;	            
-		            	if(value.quantity_adjusted>value.on_hand){
-		            		diff = value.on_hand - value.quantity_adjusted;
-		            		value.set("movement", 1);
-		            	}else{            	
-			            	diff = value.quantity_adjusted - value.on_hand;
-			            	value.set("movement", -1);
-				    	}
-
-				        value.set("quantity", Math.abs(diff));
-					});
-				}
-			}
-		},
 		//Number
 		checkExistingNumber 	: function(){
 			var self = this, para = [], 
@@ -75898,18 +75908,64 @@
 					var view = self.dataSource.view();
 
 			    	self.set("obj", view[0]);
+			    	self.lineDS.filter([
+			    		{ field:"transaction_id", value: id },
+			    		{ operator:"item" }
+			    	]);
+
 			    	// self.journalLineDS.filter({ field:"transaction_id", value: id });
 
-			    	var filter = {
-			    		filters: [
-			    			{field: "transaction_id", value: id}
-			    		]
-			    	};
-			    	self.lineDS.transport.options.read.data={"filter":filter};
-					self.lineDS.read();
+					//   	var filter = {
+					//   		filters: [
+					//   			{field: "transaction_id", value: id}
+					//   		]
+					//   	};
+					//   	self.lineDS.transport.options.read.data={"filter":filter};
+					// self.lineDS.read();
 				});
 			}
     	},
+    	lineDSChanges 			: function(arg){
+			var self = banhji.itemAdjustment;
+			
+			if(arg.field){
+				if(arg.field=="item"){
+					var dataItem = arg.items[0], obj = self.get("obj");
+
+					dataItem.set("item_id", dataItem.item.id);
+					dataItem.set("measurement_id", dataItem.item.measurement_id);
+					dataItem.set("description", dataItem.item.name);
+					dataItem.set("cost", dataItem.item.cost);
+					dataItem.set("rate", banhji.source.getRate(dataItem.item.locale, new Date(obj.issued_date)));
+					dataItem.set("locale", dataItem.item.locale);
+
+					self.set("objItem", dataItem);
+					self.onHandDS.query({
+						filter:{ field:"item_id", value:dataItem.item.id }
+					}).then(function(){
+						var view = self.onHandDS.view(),
+							objItem = self.get("objItem");
+
+						if(view.length>0){
+							objItem.set("on_hand", view[0].on_hand);
+						}
+					});
+				}else if(arg.field=="quantity_adjusted"){
+					$.each(banhji.itemAdjustment.lineDS.data(), function(index, value){
+						var diff = 0;
+		            	if(value.quantity_adjusted>value.on_hand){
+		            		diff = value.on_hand - value.quantity_adjusted;
+		            		value.set("movement", 1);
+		            	}else{
+			            	diff = value.quantity_adjusted - value.on_hand;
+			            	value.set("movement", -1);
+				    	}
+
+				        value.set("quantity", Math.abs(diff));
+					});
+				}
+			}
+		},
         addEmpty 		 		: function(){
 			this.dataSource.data([]);
 			this.lineDS.data([]);
@@ -75962,7 +76018,6 @@
 				quantity 	 		: 0,
 				unit_value 			: 1,
 				cost 				: 0,
-				additional_cost 	: 0,
 				rate				: 1,
 				locale				: banhji.locale,
 				movement 			: 1,
@@ -76078,11 +76133,10 @@
 			
 			//Item Lines
 			$.each(this.lineDS.data(), function(index, value){
-				var item = self.itemDS.get(value.item_id),
-					accountID = item.inventory_account_id,
-					itemRate = banhji.source.getRate(item.locale, new Date(obj.issued_date));
+				var accountID = value.item.inventory_account_id,
+					itemRate = banhji.source.getRate(value.item.locale, new Date(obj.issued_date));
 
-				var itemCost = (value.quantity*value.unit_value)*value.movement*(kendo.parseFloat(item.cost)/itemRate);
+				var itemCost = (value.quantity*value.unit_value)*value.movement*(kendo.parseFloat(value.item.cost)/itemRate);
 				if(itemCost==0){
 					itemCost = (value.quantity*value.unit_value)*value.movement*(value.cost/itemRate);
 				}
@@ -76103,7 +76157,7 @@
 							dr 	 				: Math.abs(itemCost),
 							cr 					: 0,
 							rate				: itemRate,
-							locale				: item.locale
+							locale				: value.item.locale
 						};
 					}else{
 						entries[raw].dr += Math.abs(itemCost);
@@ -76123,7 +76177,7 @@
 							dr 	 				: 0,
 							cr 					: Math.abs(itemCost),
 							rate				: itemRate,
-							locale				: item.locale
+							locale				: value.item.locale
 						};
 					}else{
 						entries[raw].cr += Math.abs(itemCost);
@@ -76174,7 +76228,7 @@
 		},
 		//Recurring
 		loadRecurring 		: function(id){
-			var self = this, raw = this.get("recurringItemList");
+			var self = this;
 
 			this.recurringDS.query({
 				filter:[
@@ -76197,15 +76251,48 @@
 			});
 
 			this.recurringLineDS.query({
-				filter: { field:"transaction_id", value:id }
+				filter:[
+					{ field:"transaction_id", value:id },
+					{ operator:"item" }
+				],
+				page: 1,
+				pageSize: 100
 			}).then(function(){
 				var view = self.recurringLineDS.view();
+				self.lineDS.data([]);
 
+				var ids = [];
 				$.each(view, function(index, value){
-					raw.push(value.item_id);
+					ids.push(value.item_id);
+
+					self.lineDS.add({
+						transaction_id 		: 0,
+						item_id 			: value.item_id,
+						measurement_id 		: value.item.measurement_id,
+						description 		: value.description,
+						on_hand 			: 0,
+						quantity_adjusted 	: 0,
+						quantity 	 		: 0,
+						unit_value 			: 1,
+						cost 				: kendo.parseFloat(value.item.cost),
+						rate				: 1,
+						locale				: value.item.locale,
+						movement 			: 1,
+
+						item 				: value.item
+					});
 				});
 
-				self.search();
+				self.onHandDS.query({
+					filter:{ field:"item_id", operator:"where_in", value:ids }
+				}).then(function(){
+					$.each(self.lineDS.data(), function(index, value){
+						var item = self.onHandDS.get(value.item_id);
+						if(item){
+							value.set("on_hand", item.on_hand);
+						}
+					});
+				});
 			});
 		},
 		frequencyChanges 	: function(){
@@ -95142,8 +95229,6 @@
 	});
 	// INVENTORY FUNCTIONS
 	banhji.router.route("/item_adjustment(/:id)", function(id){
-		// banhji.view.layout.showIn("#content", banhji.view.underConstruction);
-
 		banhji.accessMod.query({
 			filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
 		}).then(function(e){
@@ -95168,7 +95253,7 @@
 				if(banhji.pageLoaded["item_adjustment"]==undefined){
 					banhji.pageLoaded["item_adjustment"] = true;
 
-					vm.lineDS.bind("change", vm.changes);
+					vm.lineDS.bind("change", vm.lineDSChanges);
 					
 					var validator = $("#example").kendoValidator({
 			        	rules: {

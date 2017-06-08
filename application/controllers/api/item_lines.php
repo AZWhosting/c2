@@ -48,7 +48,7 @@ class Item_lines extends REST_Controller {
 	    	foreach ($filter["filters"] as $value) {
 	    		if(isset($value["operator"])) {
 	    			if($value["operator"]=="item") {
-	    				$obj->include_related("item", array("abbr","number","name"));
+	    				$obj->include_related("item", array("abbr","number","name","cost","price","locale","income_account_id","expense_account_id","inventory_account_id"));
 					}else{
 						$obj->{$value["operator"]}($value["field"], $value["value"]);
 					}
@@ -71,7 +71,17 @@ class Item_lines extends REST_Controller {
 			foreach ($obj as $value) {
 				$item = [];
 				if($value->item_name){
-					$item = array("abbr"=>$value->item_abbr, "number"=>$value->item_number, "name"=>$value->item_name);
+					$item = array(
+						"abbr"					=> $value->item_abbr, 
+						"number" 				=> $value->item_number, 
+						"name" 					=> $value->item_name,
+						"cost"					=> $value->item_cost,
+						"price"					=> $value->item_price,
+						"locale"				=> $value->item_locale,
+						"income_account_id"		=> $value->item_income_account_id, 
+						"expense_account_id" 	=> $value->item_expense_account_id, 
+						"inventory_account_id" 	=> $value->item_inventory_account_id
+					);
 				}
 				
 				$data["results"][] = array(

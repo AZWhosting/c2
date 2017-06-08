@@ -978,7 +978,7 @@ class Accounting_modules extends REST_Controller {
 			}
 		}
 
-		foreach ($objList as $value) {				
+		foreach ($objList as $value) {
 			$data["results"][] = $value;
 		}
 
