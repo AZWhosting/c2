@@ -44421,7 +44421,6 @@
 	banhji.s3 = "https://banhji.s3.amazonaws.com/";	
 	banhji.token = null;
 	banhji.no_image = "https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/no_image.jpg";
-
 	// custom widget for min and max
 	kendo.data.binders.widget.max = kendo.data.Binder.extend({
 		init: function(widget, bindings, options) {//call the base constructor
@@ -44445,7 +44444,6 @@
         }
     });
 	// end of custom widget
-
 	banhji.fileManagement = kendo.observable({
         dataSource: new kendo.data.DataSource({
           transport: {
@@ -46016,6 +46014,7 @@
 		lang 						: langVM,
 		countryDS					: dataStore(apiUrl + "countries"),
 		//Contact
+		contactList 				: [],
 		customerList 				: [],
 		supplierList 				: [],
 		employeeList 				: [],
@@ -46548,7 +46547,8 @@
 			});
 		},
 		loadCustomers 				: function(){
-			var self = this, raw = this.get("customerList");
+			var self = this, raw = this.get("customerList"),
+				contactList = this.get("contactList");
 
 			//Clear array
 			if(raw.length>0){
@@ -46564,11 +46564,13 @@
 
 				$.each(view, function(index, value){
 					raw.push(value);
+					contactList.push(value);
 				});
 			});
 		},
 		loadSuppliers 				: function(){
-			var self = this, raw = this.get("supplierList");
+			var self = this, raw = this.get("supplierList"),
+				contactList = this.get("contactList");
 
 			//Clear array
 			if(raw.length>0){
@@ -46584,11 +46586,13 @@
 
 				$.each(view, function(index, value){
 					raw.push(value);
+					contactList.push(value);
 				});
 			});
 		},
 		loadEmployees 				: function(){
-			var self = this, raw = this.get("employeeList");
+			var self = this, raw = this.get("employeeList"),
+				contactList = this.get("contactList");
 
 			//Clear array
 			if(raw.length>0){
@@ -46605,6 +46609,7 @@
 
 				$.each(view, function(index, value){
 					raw.push(value);
+					contactList.push(value);
 				});
 			});
 		},
@@ -50895,7 +50900,6 @@
 		}),
 		employeeDS  		: new kendo.data.DataSource({
 		  	data: banhji.source.employeeList,
-		  	filter:{ field: "item_type_id", value: 10 },//Sale Rep.
 			sort: { field:"number", dir:"asc" }
 		}),
 		itemDS  			: new kendo.data.DataSource({
@@ -52406,7 +52410,6 @@
 		}),
 		employeeDS  		: new kendo.data.DataSource({
 		  	data: banhji.source.employeeList,
-		  	filter:{ field: "item_type_id", value: 10 },//Sale Rep.
 			sort: { field:"number", dir:"asc" }
 		}),
 		itemDS  			: new kendo.data.DataSource({
@@ -75513,67 +75516,8 @@
     	journalLineDS			: dataStore(apiUrl + "journal_lines"),
     	attachmentDS	 		: dataStore(apiUrl + "attachments"),
 		onHandDS  				: dataStore(apiUrl + "items/on_hand"),
-		// lineDS 					: new kendo.data.DataSource({
-		// 	transport: {
-		// 		read 	: {
-		// 			url: apiUrl + "item_lines",
-		// 			type: "GET",
-		// 			headers: banhji.header,
-		// 			dataType: 'json'
-		// 		},
-		// 		create 	: {
-		// 			url: apiUrl + "item_lines",
-		// 			type: "POST",
-		// 			headers: banhji.header,
-		// 			dataType: 'json'
-		// 		},
-		// 		update 	: {
-		// 			url: apiUrl + "item_lines",
-		// 			type: "PUT",
-		// 			headers: banhji.header,
-		// 			dataType: 'json'
-		// 		},
-		// 		destroy 	: {
-		// 			url: apiUrl + "item_lines",
-		// 			type: "DELETE",
-		// 			headers: banhji.header,
-		// 			dataType: 'json'
-		// 		},
-		// 		parameterMap: function(options, operation) {
-		// 			if(operation === 'read') {
-		// 				return {
-		// 					page: options.page,
-		// 					limit: options.pageSize,
-		// 					filter: options.filter,
-		// 					sort: options.sort
-		// 				};
-		// 			} else {
-		// 				return {models: kendo.stringify(options.models)};
-		// 			}
-		// 		}
-		// 	},
-		// 	schema 	: {
-		// 		model: {
-		// 			id: 'id',
-		// 			fields: {
-		// 				id : { editable: false, nullable: true },
-  //                       on_hand : { editable: false, nullable: true },
-  //                       quantity : { editable: false, nullable: true }
-  //                   }
-		// 		},
-		// 		data: 'results',
-		// 		total: 'count'
-		// 	},
-		// 	batch: true,
-		// 	serverFiltering: true,
-		// 	serverSorting: true,
-		// 	serverPaging: true,
-		// 	page: 1,
-		// 	pageSize: 100
-		// }),
 		contactDS  				: new kendo.data.DataSource({
 		  	data: banhji.source.employeeList,
-		  	filter:{ field: "item_type_id", value: 10 },//Employee
 			sort: { field:"number", dir:"asc" }
 		}),
 		accountDS  				: new kendo.data.DataSource({
@@ -80012,7 +79956,7 @@
 		recurringDS 		: dataStore(apiUrl + "transactions"),
 		recurringLineDS 	: dataStore(apiUrl + "journal_lines"),
 		attachmentDS	 	: dataStore(apiUrl + "attachments"),
-		contactDS 			: dataStore(apiUrl + "contacts"),
+		contactDS 			: banhji.source.contactList,
 		currencyDS  		: new kendo.data.DataSource({
 		  	data: banhji.source.currencyList,
 		  	filter: { field:"status", value: 1 }

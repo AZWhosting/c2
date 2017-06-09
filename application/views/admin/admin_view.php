@@ -516,6 +516,7 @@
       </div>
     </script>
     <script type="text/x-kendo-template" id="employee-type">
+      <button class="btn" data-bind="click: backToEmp">X</button>
       <div data-role='grid' 
            data-bind="source: roles" 
            data-toolbar="['create']" 
@@ -2449,6 +2450,9 @@
         goRole   : function() {
           layout.showIn("#container", mainDash);
           mainDash.showIn("#placeholder", empType);
+        },
+        backToEmp : function() {
+          mainDash.showIn("#placeholder", employee);
         },
         setCurrent: function(current) {
           var that = this;
