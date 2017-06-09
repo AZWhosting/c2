@@ -1,0 +1,129 @@
+#menu{
+  margin: 0;
+}
+.offline-header{
+  width: 100%;
+  float: left;
+  margin-top: 15px
+}
+.home-utibill{
+  float: left;
+  width: 100px;
+}
+.utibill{
+  float: left;
+  width: 250px;
+}
+.offline-content{
+  float: left;
+  width: 100%;
+  margin-top: 50px;
+}
+.offline-read{
+  background: #0077c5;
+  width: 100%;
+  color: #fff;
+  padding: 40px 15px;
+  float: left;
+}
+.offline-read p{
+  margin-bottom: 0
+}
+.offline-read p.pull-right,
+.offline-watch p.pull-right{
+  font-size: 40px;
+  font-weight: 800;
+}
+.offline-read p.pull-left,
+.offline-watch p.pull-left{
+  font-size: 20px;
+}
+.offline-watch{
+  background: #21abf6;
+  width: 100%;
+  color: #fff;
+  padding: 40px 15px;
+  float: left;
+}
+.offline-watch p{
+  margin-bottom: 0
+}
+.offline-caltulator{
+  width: 100%;
+  color: #fff;
+  padding: 20px;
+  float: left;
+  box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;
+  background: #fff;
+}
+.offline-caltulator .offline-number{
+  padding: 15px 10px;
+  font-size: 25px;
+  color: #333;
+  font-weight: 700;
+  text-align: center;
+  border: 1px solid #333;
+  margin-bottom: 15px;
+  cursor: pointer;
+}
+.offline-search,
+.offline-input{
+  width: 100%;
+  float: left;
+  margin-top: 20px;
+}
+.offline-search-box{
+  width: 80%;
+  float: left;
+  padding: 5px;
+  border: 1px #333 solid;
+  border-radius: 0;
+  height: 60px;
+}
+.btn-offline-search{
+  float: left;
+  width: 17%;
+  margin-left: 8px;
+  height: 60px;
+  cursor: pointer;
+}
+.offline-search .icon-search:before{
+  font-size: 30px;
+}
+.offline-input .k-textbox{
+  padding: 10px;
+  height: 60px;
+  width: 100%;
+  font-size: 18px;
+}
+.offline-before-read{
+  float: left;
+  width: 100%;
+  margin-top: 20px;
+}
+.offline-before-read p{
+  font-size: 20px;
+  margin-bottom: 0;
+}
+.offline-btntwo{
+  width: 100%;
+  float: left;
+  margin-top: 20px;
+}
+.offline-btntwo .offline-btn-add{
+  float: left;
+  background: #0077c5;
+  padding: 20px 40px;
+  color: #fff;
+  margin-right: 15px;
+  font-size: 30px;
+  cursor: pointer;
+}
+.offline-btntwo .offline-btn-next{
+  float: left;
+  background: #0077c5;
+  padding: 20px 55px;
+  color: #fff;
+  font-size: 30px;
+  cursor: pointer;
+}

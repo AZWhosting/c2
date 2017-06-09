@@ -8922,8 +8922,8 @@
 						<div class="row-fluid">
 							<div class="span3">
 								<div class="total-customer">									
-									<p data-bind="text: lang.lang.number_of_customer"></p>
-									<span data-format="n0" data-bind="text: dataSource.total"></span>
+									<p data-bind="text: lang.lang.number_of_invoice"></p>
+									<span data-bind="text: total_txn"></span>
 								</div>
 							</div>
 							<div class="span9">
@@ -8937,10 +8937,9 @@
 						<table class="table table-borderless table-condensed ">
 							<thead>
 								<tr>
-									<th data-bind="text: lang.lang.type"></th>
 									<th data-bind="text: lang.lang.date"></th>
-									<th data-bind="text: lang.lang.name"></th>
-									<th data-bind="text: lang.lang.reference"></th>
+									<th data-bind="text: lang.lang.type"></th>
+									<th data-bind="text: lang.lang.number"></th>
 									<th style="text-align: center;" data-bind="text: lang.lang.status"></th>	
 									<th data-bind="text: lang.lang.amount"></th>
 								</tr>
@@ -8959,24 +8958,35 @@
 </script>
 <script id="collectInvoice-template" type="text/x-kendo-template">
 	<tr>
-		<td>
-			<a href="\#/#=type.toLowerCase()#/#=id#">#=type#</a>
-		</td>
-		<td>#=kendo.toString(new Date(issued_date),"dd-MM-yyyy")#</td>
-		<td>#=name#</td>
-		<td>
-			<a href="\#/#=type.toLowerCase()#/#=id#">#=number#</a>
-		</td>
-		<td style="text-align: center;">
-			# var date = new Date(), dueDates = new Date(due_date).getTime(), toDay = new Date(date).getTime(); #
-			#if(dueDates < toDay) {#
-				<span data-bind="text: lang.lang.over_due"></span> #:Math.floor((toDay - dueDates)/(1000*60*60*24))# <span data-bind="text: lang.lang.days"></span>
-			#} else {#
-				#:Math.floor((dueDates - toDay)/(1000*60*60*24))# <span data-bind="text: lang.lang.days_to_pay"></span>
-			#}#
-		</td>
-		<td style="text-align: right;">#=kendo.toString(amount, "c2", banhji.locale)#</td>
+		<td colspan="5" style="font-weight: bold; color: black;">#: name #</td>
 	</tr>
+	# var totalAmount = 0;#	
+	#for(var i=0; i<line.length; i++){#
+		#totalAmount += line[i].amount;#
+		<tr>
+			<td>&nbsp;&nbsp; #=kendo.toString(new Date(line[i].issued_date),"dd-MM-yyyy")#</td>
+			<td><a href="\#/#=line[i].type.toLowerCase()#/#=line[i].id#">#=line[i].type#</a></td>
+			<td><a href="\#/#=line[i].type.toLowerCase()#/#=line[i].id#">#=line[i].number#</a></td>
+			<td style="text-align: center;">
+				# var date = new Date(), dueDates = new Date(line[i].due_date).getTime(), toDay = new Date(date).getTime(); #
+				#if(dueDates < toDay) {#
+					<span data-bind="text: lang.lang.over_due"></span> #:Math.floor((toDay - dueDates)/(1000*60*60*24))# <span data-bind="text: lang.lang.days"></span>
+				#} else {#
+					#:Math.floor((dueDates - toDay)/(1000*60*60*24))# <span data-bind="text: lang.lang.days_to_pay"></span>
+				#}#
+			</td>
+			<td style="text-align: right;">#=kendo.toString(line[i].amount, "c2", banhji.locale)#</td>
+		</tr>
+	#}#
+	<tr>
+    	<td colspan="4" style="font-weight: bold; color: black;" data-bind="text: lang.lang.total">Total</td>
+    	<td style="text-align: right; font-weight: bold; border-top: 1px solid black !important; color: black;">
+    		#=kendo.toString(totalAmount, "c2", banhji.locale)#
+    	</td>
+    </tr>
+	<tr>
+    	<td colspan="5">&nbsp;</td>
+    </tr>	
 </script>
 <script id="collectionReport" type="text/x-kendo-template">
 	<div id="slide-form">
@@ -59688,6 +59698,7 @@
 		company 			: banhji.institute,
 		as_of 				: new Date(),
 		displayDate 		: "",
+		total_txn 			: 0,
 		totalAmount 		: 0,
 		exArray 			: [],
 		pageLoad 			: function(){
@@ -59722,11 +59733,15 @@
             }).then(function(){
             	var view = self.dataSource.view();
 
-            	var amount = 0;
+            	var amount = 0, txn_count = 0;
             	$.each(view, function(index, value){
-            		amount += value.amount;
+            		$.each(value.line, function(ind, val){
+	            		txn_count++;
+	            		amount += val.amount;
+            		});
             	});
 
+            	self.set("total_txn", kendo.toString(txn_count, "n0"));
             	self.set("totalAmount", kendo.toString(amount, "c2", banhji.locale));
             });
 		},

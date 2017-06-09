@@ -38,12 +38,20 @@ class Rrd extends MY_Controller {
 		 */
 		$this->_render("pich_view");	
 	}
-	public function sela() {	
+	public function sela() {
 		
 		/*
 		 *set up title and keywords (if not the default in custom.php config file will be set) 
 		 */
-		$this->_render("sela_view");	
+		$this->_render("sela_view");
+	}
+
+	public function offline() {
+		
+		/*
+		 *set up title and keywords (if not the default in custom.php config file will be set) 
+		 */
+		$this->_render("offline_view");
 	}
 
 	public function app() {	

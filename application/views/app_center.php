@@ -44925,8 +44925,6 @@
 						    		</div>
 								</div>
 
-
-
 								<!--Second Window -->
 							    <div data-role="window"
 							    	data-title="false"
@@ -44990,7 +44988,6 @@
 						    			</div>
 						    		</div>									
 								</div>
-
 
 					        	<div class="row-fluid" style="float: left; background: #f7f9fb ; padding: 15px 20px 0; width: 100%;">
 					        		<h2>Newest</h2>

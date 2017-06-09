@@ -974,6 +974,7 @@ class Sales extends REST_Controller {
 		$obj->get_iterated();
 		
 		if($obj->exists()){
+			$objList = [];
 			foreach ($obj as $value) {
 				$amount = (floatval($value->amount) - floatval($value->deposit)) / floatval($value->rate);
 
@@ -988,20 +989,35 @@ class Sales extends REST_Controller {
 					$paid->get();
 					$amount -= floatval($paid->amount) + floatval($paid->discount);
 				}
-				
-				$data["results"][] = array(
-					"id" 				=> $value->id,
-					"name" 				=> $value->contact_abbr.$value->contact_number." ".$value->contact_name,
-					"type" 				=> $value->type,
-					"number" 			=> $value->number,
-					"issued_date" 		=> $value->issued_date,
-					"due_date" 			=> $value->due_date,
-					"status"			=> $value->status,
-					"rate" 				=> $value->rate,
-					"amount" 			=> $amount
-				);
+
+				if(isset($objList[$value->contact_id])){
+					$objList[$value->contact_id]["line"][] = array(
+						"id" 					=> $value->id,
+						"type" 					=> $value->type,
+						"number" 				=> $value->number,
+						"issued_date" 			=> $value->issued_date,
+						"due_date" 				=> $value->due_date,
+						"amount" 				=> $amount,
+						"status"				=> $value->status
+					);
+				}else{
+					$objList[$value->contact_id]["id"] 		= $value->contact_id;
+					$objList[$value->contact_id]["name"] 	= $value->contact_abbr.$value->contact_number." ".$value->contact_name;
+					$objList[$value->contact_id]["line"][] 	= array(
+						"id" 					=> $value->id,
+						"type" 					=> $value->type,
+						"number" 				=> $value->number,
+						"issued_date" 			=> $value->issued_date,
+						"due_date" 				=> $value->due_date,
+						"amount" 				=> $amount,
+						"status"				=> $value->status
+					);			
+				}
 			}
 
+			foreach ($objList as $value) {
+				$data["results"][] = $value;
+			}
 			$data["count"] = count($data["results"]);
 		}
 
