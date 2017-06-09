@@ -46426,7 +46426,11 @@
 			}
 
 			this.accountDS.query({
-				filter: []
+				filter: { field:"status", value:1 },
+				sort: [
+				  	{ field: "account_type_id", dir: "asc" },
+				  	{ field: "number", dir: "asc" }
+				]
 			}).then(function(){
 				var view = self.accountDS.view();
 
@@ -47599,25 +47603,16 @@
 		}),
 		arDS 		  			: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
-		  	filter: [
-		  		{ field:"account_type_id", value: 12 },
-		  		{ field:"status", value: 1 }
-		  	],
+		  	filter: { field:"account_type_id", value: 12 },
 		  	sort: { field:"number", dir:"asc" }
 		}),
 		raDS 		  			: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
-		  	filter: {
-		  		logic: "and",
+		  	filter:{
+	      		logic: "or",
 			    filters: [
-			    	{ field:"status", value: 1 },
-			      	{
-			      		logic: "or",
-					    filters: [
-					      	{ field: "account_type_id", value: 35 },
-				      		{ field: "account_type_id", value: 39 }
-					    ]
-					}
+			      	{ field: "account_type_id", value: 35 },
+		      		{ field: "account_type_id", value: 39 }
 			    ]
 			},
 			sort: { field:"number", dir:"asc" }
@@ -47625,34 +47620,22 @@
 		depositDS 		  		: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
 		  	filter: {
-		  		logic: "and",
+	      		logic: "or",
 			    filters: [
-			    	{ field:"status", value: 1 },
-			      	{
-			      		logic: "or",
-					    filters: [
-					      	{ field: "account_type_id", value: 25 },
-			      			{ field: "account_type_id", value: 30 }
-					    ]
-					}
+			      	{ field: "account_type_id", value: 25 },
+	      			{ field: "account_type_id", value: 30 }
 			    ]
 			},
 			sort: { field:"number", dir:"asc" }
 		}),
 		tradeDiscountDS 		: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
-		  	filter: [
-		  		{ field:"id", value: 72 },
-		  		{ field:"status", value: 1 }
-		  	],
+		  	filter: { field:"id", value: 72 },
 		  	sort: { field:"number", dir:"asc" }
 		}),
 		settlementDiscountDS 	: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
-		  	filter: [
-		  		{ field:"id", value: 99 },
-		  		{ field:"status", value: 1 }
-		  	],
+		  	filter: { field:"id", value: 99 },
 		  	sort: { field:"number", dir:"asc" }
 		}),
 		taxItemDS 		: new kendo.data.DataSource({
@@ -50072,23 +50055,17 @@
 		accountDS 			: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
 		  	filter: {
-				logic: "and",
+	      		logic: "or",
 			    filters: [
-			    	{ field:"status", value: 1 },
-			      	{
-			      		logic: "or",
-					    filters: [
-					      	{ field: "account_type_id", value: 10 },//Cash
-					      	{ field: "account_type_id", value: 34 },//Retained Earning
-					      	{ field: "account_type_id", value: 36 },//Expense
-					      	{ field: "account_type_id", value: 37 },
-					      	{ field: "account_type_id", value: 38 },
-					      	{ field: "account_type_id", value: 40 },
-					      	{ field: "account_type_id", value: 41 },
-					      	{ field: "account_type_id", value: 42 },
-					      	{ field: "account_type_id", value: 43 }
-					    ]
-					}
+			      	{ field: "account_type_id", value: 10 },//Cash
+			      	{ field: "account_type_id", value: 34 },//Retained Earning
+			      	{ field: "account_type_id", value: 36 },//Expense
+			      	{ field: "account_type_id", value: 37 },
+			      	{ field: "account_type_id", value: 38 },
+			      	{ field: "account_type_id", value: 40 },
+			      	{ field: "account_type_id", value: 41 },
+			      	{ field: "account_type_id", value: 42 },
+			      	{ field: "account_type_id", value: 43 }
 			    ]
 			},
 			sort: { field:"number", dir:"asc" }
@@ -50096,16 +50073,10 @@
 		depositAccountDS 	: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
 		  	filter: {
-				logic: "and",
+	      		logic: "or",
 			    filters: [
-			    	{ field:"status", value: 1 },
-			      	{
-			      		logic: "or",
-					    filters: [
-					      	{ field: "account_type_id", value: 25 },
-			      			{ field: "account_type_id", value: 30 }
-					    ]
-					}
+			      	{ field: "account_type_id", value: 25 },
+	      			{ field: "account_type_id", value: 30 }
 			    ]
 			},
 			sort: { field:"number", dir:"asc" }
@@ -50128,7 +50099,6 @@
 		}),
 		employeeDS  		: new kendo.data.DataSource({
 		  	data: banhji.source.employeeList,
-		  	filter:{ field: "item_type_id", value: 10 },//Sale Rep.
 			sort: { field:"number", dir:"asc" }
 		}),
 		amtDueColor 		: banhji.source.amtDueColor,
@@ -50862,10 +50832,7 @@
 		}),		
 		cashAccountDS  		: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
-		  	filter:[
-		  		{ field:"account_type_id", value: 10 },
-		  		{ field:"status", value: 1 }
-		  	],
+		  	filter:{ field:"account_type_id", value: 10 },
 		  	sort: { field:"number", dir:"asc" }
 		}),
 		jobDS 				: new kendo.data.DataSource({
@@ -54935,25 +54902,16 @@
 		}),
 		accountDS  			: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
-		  	filter:[
-		  		{ field:"account_type_id", value: 10 },
-		  		{ field:"status", value: 1 }
-		  	],
+		  	filter:{ field:"account_type_id", value: 10 },
 		  	sort: { field:"number", dir:"asc" }
 		}),		
 		depositAccountDS 	: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
 			filter: {
-				logic: "and",
+	      		logic: "or",
 			    filters: [
-			    	{ field:"status", value: 1 },
-			      	{
-			      		logic: "or",
-					    filters: [
-					      	{ field: "account_type_id", value: 25 },
-			      			{ field: "account_type_id", value: 30 }
-					    ]
-					}
+			      	{ field: "account_type_id", value: 25 },
+	      			{ field: "account_type_id", value: 30 }
 			    ]
 			},
 			sort: { field:"number", dir:"asc" }
@@ -56199,10 +56157,7 @@
 		}),
 		accountDS  			: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
-		  	filter:[
-		  		{ field:"account_type_id", value: 10 },
-		  		{ field:"status", value: 1 }
-		  	],
+		  	filter:{ field:"account_type_id", value: 10 },
 		  	sort: { field:"number", dir:"asc" }
 		}),		
 		amtDueColor 		: banhji.source.amtDueColor,
@@ -62236,16 +62191,10 @@
 		apDS 		  			: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
 		  	filter: {
-				logic: "and",
+	      		logic: "or",
 			    filters: [
-			    	{ field:"status", value: 1 },
-			      	{
-			      		logic: "or",
-					    filters: [
-					      	{ field: "account_type_id", value: 23 },
-			      			{ field: "account_type_id", value: 24 }
-					    ]
-					}
+			      	{ field: "account_type_id", value: 23 },
+	      			{ field: "account_type_id", value: 24 }
 			    ]
 			},
 			sort: { field:"number", dir:"asc" }
@@ -62253,34 +62202,22 @@
 		prepaidAccountDS 		: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
 		  	filter: {
-				logic: "and",
+	      		logic: "or",
 			    filters: [
-			    	{ field:"status", value: 1 },
-			      	{
-			      		logic: "or",
-					    filters: [
-					      	{ field: "account_type_id", value: 14 },
-			      			{ field: "account_type_id", value: 21 }
-					    ]
-					}
+			      	{ field: "account_type_id", value: 14 },
+	      			{ field: "account_type_id", value: 21 }
 			    ]
 			},
 			sort: { field:"number", dir:"asc" }
 		}),
 		tradeDiscountDS 		: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
-		  	filter:[
-		  		{ field:"account_type_id", value: 36 },
-		  		{ field:"status", value: 1 }
-		  	],
+		  	filter:{ field:"account_type_id", value: 36 },
 		  	sort: { field:"number", dir:"asc" }
 		}),
 		settlementDiscountDS 	: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
-		  	filter:[
-		  		{ field:"id", value: 109 },
-		  		{ field:"status", value: 1 }
-		  	],
+		  	filter:{ field:"id", value: 109 },
 		  	sort: { field:"number", dir:"asc" }
 		}),
 		taxItemDS 		: new kendo.data.DataSource({
@@ -64330,40 +64267,28 @@
 		accountDS 			: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
 			filter:{
-				logic: "and",
+			    logic: "or",
 			    filters: [
-			    	{ field:"status", value: 1 },
-			      	{
-					    logic: "or",
-					    filters: [
-					      	{ field: "account_type_id", value: 10 },//Cash
-					      	{ field: "account_type_id", value: 34 },//Retained Earning
-					      	{ field: "account_type_id", value: 36 },//Expense
-					      	{ field: "account_type_id", value: 37 },
-					      	{ field: "account_type_id", value: 38 },
-					      	{ field: "account_type_id", value: 40 },
-					      	{ field: "account_type_id", value: 41 },
-					      	{ field: "account_type_id", value: 42 },
-					      	{ field: "account_type_id", value: 43 }
-					    ]
-					}
-				]
+			      	{ field: "account_type_id", value: 10 },//Cash
+			      	{ field: "account_type_id", value: 34 },//Retained Earning
+			      	{ field: "account_type_id", value: 36 },//Expense
+			      	{ field: "account_type_id", value: 37 },
+			      	{ field: "account_type_id", value: 38 },
+			      	{ field: "account_type_id", value: 40 },
+			      	{ field: "account_type_id", value: 41 },
+			      	{ field: "account_type_id", value: 42 },
+			      	{ field: "account_type_id", value: 43 }
+			    ]
 			},
 			sort: { field:"number", dir:"asc" }
 		}),
 		depositAccountDS 	: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
 		  	filter: {
-				logic: "and",
+	      		logic: "or",
 			    filters: [
-			    	{ field:"status", value: 1 },
-			      	{
-			      		logic: "or",
-					    filters: [
-					      	{ field: "account_type_id", value: 14 },
-			      			{ field: "account_type_id", value: 21 }
-					    ]
-					}
+			      	{ field: "account_type_id", value: 14 },
+	      			{ field: "account_type_id", value: 21 }
 			    ]
 			},
 			sort: { field:"number", dir:"asc" }
@@ -65099,47 +65024,30 @@
 			  	{ field: "code", dir: "asc" }
 			]
 		}),
-		accountDS  					: new kendo.data.DataSource({
-		  	data: banhji.source.accountList,
-		  	filter:{ field:"status", value: 1 },
-			sort: { field:"number", dir:"asc" }
-		}),
-		additionalCostAccountDS 	: new kendo.data.DataSource({
-		  	data: banhji.source.accountList,
-		  	filter:{ field:"status", value: 1 },
-			sort: { field:"number", dir:"asc" }
-		}),
+		accountDS  					: banhji.source.accountList,
+		additionalCostAccountDS 	: banhji.source.accountList,
 		expenseAccountDS  			: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
 		  	filter: {
-				logic: "and",
+	      		logic: "or",
 			    filters: [
-			    	{ field:"status", value: 1 },
-			      	{
-			      		logic: "or",
-					    filters: [
-					      	{ field: "account_type_id", value: 13 },//Inventory
-					      	{ field: "account_type_id", value: 16 },//Fixed Asset
-					      	{ field: "account_type_id", value: 17 },//Intangible Assets
-					      	{ field: "account_type_id", value: 36 },//Expense
-					      	{ field: "account_type_id", value: 37 },
-					      	{ field: "account_type_id", value: 38 },
-					      	{ field: "account_type_id", value: 40 },
-					      	{ field: "account_type_id", value: 41 },
-					      	{ field: "account_type_id", value: 42 },
-					      	{ field: "account_type_id", value: 43 }
-					    ]
-					}
+			      	{ field: "account_type_id", value: 13 },//Inventory
+			      	{ field: "account_type_id", value: 16 },//Fixed Asset
+			      	{ field: "account_type_id", value: 17 },//Intangible Assets
+			      	{ field: "account_type_id", value: 36 },//Expense
+			      	{ field: "account_type_id", value: 37 },
+			      	{ field: "account_type_id", value: 38 },
+			      	{ field: "account_type_id", value: 40 },
+			      	{ field: "account_type_id", value: 41 },
+			      	{ field: "account_type_id", value: 42 },
+			      	{ field: "account_type_id", value: 43 }
 			    ]
 			},
 			sort: { field:"number", dir:"asc" }
 		}),
 		itemDS  					: new kendo.data.DataSource({
 		  	data: banhji.source.itemList,
-		  	filter: [
-		  		{ field:"is_assembly", operator:"neq", value: 1 },
-		  		{ field:"status", value: 1 }
-		  	],
+		  	filter: { field:"is_assembly", operator:"neq", value: 1 },
 			sort: [
 				{ field:"item_type_id", dir:"asc" },
 				{ field:"number", dir:"asc" }
@@ -67006,24 +66914,17 @@
 		  	data: banhji.source.accountList,
 		  	filter:[
 		      	{ field: "account_type_id", operator:"gte", value: 35 },
-		      	{ field: "account_type_id", operator:"lte", value: 43 },
-		      	{ field:"status", value: 1 }
+		      	{ field: "account_type_id", operator:"lte", value: 43 }
 		    ],
 		  	sort: { field:"number", dir:"asc" }
 		}),
 		depositAccountDS 	: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
 		  	filter: {
-				logic: "and",
+	      		logic: "or",
 			    filters: [
-			    	{ field:"status", value: 1 },
-			      	{
-			      		logic: "or",
-					    filters: [
-					      	{ field: "account_type_id", value: 14 },
-			      			{ field: "account_type_id", value: 21 }
-					    ]
-					}
+			      	{ field: "account_type_id", value: 14 },
+	      			{ field: "account_type_id", value: 21 }
 			    ]
 			},
 			sort: { field:"number", dir:"asc" }
@@ -68092,7 +67993,6 @@
 		}),
 		contactDS  			: new kendo.data.DataSource({
 		  	data: banhji.source.supplierList,
-		  	filter:{ field:"status", value:1 },
 			sort: { field:"number", dir:"asc" }
 		}),
 		itemDS  			: new kendo.data.DataSource({
@@ -68105,10 +68005,7 @@
 		}),
 		accountDS  			: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
-		  	filter:[
-		  		{ field:"account_type_id", value: 10 },
-		  		{ field:"status", value: 1 }
-		  	],
+		  	filter:{ field:"account_type_id", value: 10 },
 		  	sort: { field:"number", dir:"asc" }
 		}),		
 		amtDueColor 		: banhji.source.amtDueColor,
@@ -73593,34 +73490,22 @@
     	incomeAccountDS 		: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
 		  	filter: {
-				logic: "and",
+	      		logic: "or",
 			    filters: [
-			    	{ field:"status", value: 1 },
-			      	{
-			      		logic: "or",
-					    filters: [
-					      	{ field: "account_type_id", value: 35 },
-				      		{ field: "account_type_id", value: 39 }
-					    ]
-					}
+			      	{ field: "account_type_id", value: 35 },
+		      		{ field: "account_type_id", value: 39 }
 			    ]
 			},
 			sort: { field:"number", dir:"asc" }
 		}),
     	cogsAccountDS 			: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
-		  	filter:[
-		  		{ field:"account_type_id", value: 36 },
-		  		{ field:"status", value: 1 }
-		  	],
+		  	filter:{ field:"account_type_id", value: 36 },
 		  	sort: { field:"number", dir:"asc" }
 		}),
     	inventoryAccountDS 		: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
-		  	filter:[
-		  		{ field:"account_type_id", value: 13 },
-		  		{ field:"status", value: 1 }
-		  	],
+		  	filter:{ field:"account_type_id", value: 13 },
 		  	sort: { field:"number", dir:"asc" }
 		}),
     	statusList 				: banhji.source.statusList,
@@ -74343,16 +74228,10 @@
     	incomeAccountDS 		: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
 		  	filter: {
-				logic: "and",
+	      		logic: "or",
 			    filters: [
-			    	{ field:"status", value: 1 },
-			      	{
-			      		logic: "or",
-					    filters: [
-					      	{ field: "account_type_id", value: 35 },
-				      		{ field: "account_type_id", value: 39 }
-					    ]
-					}
+			      	{ field: "account_type_id", value: 35 },
+		      		{ field: "account_type_id", value: 39 }
 			    ]
 			},
 			sort: { field:"number", dir:"asc" }
@@ -74678,16 +74557,10 @@
     	incomeAccountDS 		: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
 			filter: {
-				logic: "and",
+	      		logic: "or",
 			    filters: [
-			    	{ field:"status", value: 1 },
-			      	{
-			      		logic: "or",
-					    filters: [
-					      	{ field: "account_type_id", value: 35 },
-				      		{ field: "account_type_id", value: 39 }
-					    ]
-					}
+			      	{ field: "account_type_id", value: 35 },
+		      		{ field: "account_type_id", value: 39 }
 			    ]
 			},
 			sort: { field:"number", dir:"asc" }
@@ -74695,21 +74568,15 @@
 		cogsAccountDS  			: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
 		  	filter: {
-				logic: "and",
+	      		logic: "or",
 			    filters: [
-			    	{ field:"status", value: 1 },
-			      	{
-			      		logic: "or",
-					    filters: [
-					      	{ field: "account_type_id", value: 36 },//Expense
-					      	{ field: "account_type_id", value: 37 },
-					      	{ field: "account_type_id", value: 38 },
-					      	{ field: "account_type_id", value: 40 },
-					      	{ field: "account_type_id", value: 41 },
-					      	{ field: "account_type_id", value: 42 },
-					      	{ field: "account_type_id", value: 43 }
-					    ]
-					}
+			      	{ field: "account_type_id", value: 36 },//Expense
+			      	{ field: "account_type_id", value: 37 },
+			      	{ field: "account_type_id", value: 38 },
+			      	{ field: "account_type_id", value: 40 },
+			      	{ field: "account_type_id", value: 41 },
+			      	{ field: "account_type_id", value: 42 },
+			      	{ field: "account_type_id", value: 43 }
 			    ]
 			},
 			sort: { field:"number", dir:"asc" }
@@ -75118,10 +74985,7 @@
 		}),
     	inventoryAccountDS 		: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
-		  	filter:[
-		  		{ field:"account_type_id", value: 13 },
-		  		{ field:"status", value: 1 }
-		  	],
+		  	filter:{ field:"account_type_id", value: 13 },
 		  	sort: { field:"number", dir:"asc" }
 		}),
     	statusList 				: banhji.source.statusList,
@@ -75520,15 +75384,8 @@
 		  	data: banhji.source.employeeList,
 			sort: { field:"number", dir:"asc" }
 		}),
-		accountDS  				: new kendo.data.DataSource({
-		  	data: banhji.source.accountList,
-		  	filter:{ field:"status", value: 1 },
-			sort: { field:"number", dir:"asc" }
-		}),
-		jobDS 					: new kendo.data.DataSource({
-		  	data: banhji.source.jobList,
-		  	sort: { field: "name", dir: "asc" }
-		}),
+		accountDS  				: banhji.source.accountList,
+		jobDS 					: banhji.source.jobList,
 		segmentItemDS 			: new kendo.data.DataSource({
 		  	data: banhji.source.segmentItemList,
 		  	sort: [
@@ -76348,15 +76205,10 @@
 				{ field:"number", dir:"asc" }
 			]
 		}),
-		accountDS  				: new kendo.data.DataSource({
-		  	data: banhji.source.accountList,
-		  	filter:{ field:"status", value: 1 },
-			sort: { field:"number", dir:"asc" }
-		}),
+		accountDS  				: banhji.source.accountList,
 		toAccountDS 			: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
 		  	filter: [
-		    	{ field: "status", value: 1 },
 		      	{ field: "account_type_id", operator:"neq", value: 10 },
 		      	{ field: "account_type_id", operator:"neq", value: 11 },
 		      	{ field: "account_type_id", operator:"neq", value: 12 }
@@ -79124,11 +78976,7 @@
 		  	data: banhji.source.currencyList,
 		  	filter: { field:"status", value: 1 }
 		}),
-		subAccountDS  			: new kendo.data.DataSource({
-		  	data: banhji.source.accountList,
-		  	filter: { field:"status", value: 1 },
-		  	sort: { field: "number", dir: "asc" }
-		}),
+		subAccountDS  			: banhji.source.accountList,
     	statusList 				: banhji.source.statusList,
     	confirmMessage 			: banhji.source.confirmMessage,
     	obj 					: null,
@@ -79355,11 +79203,7 @@
 		  	data: banhji.source.currencyList,
 		  	filter: { field:"status", value: 1 }
 		}),
-    	accountDS  			: new kendo.data.DataSource({
-		  	data: banhji.source.accountList,
-		  	filter: { field:"status", value: 1 },
-			sort: { field:"number", dir:"asc" }
-		}),   	
+    	accountDS  				: banhji.source.accountList,
     	statusList 				: banhji.source.statusList,
     	confirmMessage 			: banhji.source.confirmMessage,
     	obj 	 				: null,
@@ -79547,26 +79391,17 @@
 		}),
     	fixedAssetAccountDS 	: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
-		  	filter:[
-		  		{ field:"account_type_id", value: 16 },
-		  		{ field:"status", value: 1 }
-		  	],
+		  	filter:{ field:"account_type_id", value: 16 },
 		  	sort: { field:"number", dir:"asc" }
 		}),
     	accumulatedAccountDS 	: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
-		  	filter:[
-		  		{ field:"account_type_id", value: 18 },
-		  		{ field:"status", value: 1 }
-		  	],
+		  	filter:{ field:"account_type_id", value: 18 },
 		  	sort: { field:"number", dir:"asc" }
 		}),
     	deposalAccountDS 		: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
-		  	filter:[
-		  		{ field:"account_type_id", value: 38 },
-		  		{ field:"status", value: 1 }
-		  	],
+		  	filter:{ field:"account_type_id", value: 38 },
 		  	sort: { field:"number", dir:"asc" }
 		}),
     	statusList 				: banhji.source.statusList,
@@ -79962,11 +79797,7 @@
 		  	filter: { field:"status", value: 1 }
 		}),
 		jobDS 				: banhji.source.jobList,
-		accountDS 			: banhji.source.accountList,		
-		// jobDS 				: new kendo.data.DataSource({
-		//   	data: banhji.source.jobList,
-		//   	sort: { field: "name", dir: "asc" }
-		// }),
+		accountDS 			: banhji.source.accountList,
 		segmentItemDS 		: new kendo.data.DataSource({
 		  	data: banhji.source.segmentItemList,
 		  	sort: [
@@ -79974,14 +79805,6 @@
 			  	{ field: "code", dir: "asc" }
 			]
 		}),
-		// accountDS 			: new kendo.data.DataSource({
-		//   	data: banhji.source.accountList,
-		//   	filter:{ field:"status", value: 1 },
-		//   	sort: [
-		// 	  	{ field: "account_type_id", dir: "asc" },
-		// 	  	{ field: "number", dir: "asc" }
-		// 	]
-		// }),
 		txnTemplateDS 		: new kendo.data.DataSource({
 		  	data: banhji.source.txnTemplateList,
 		  	filter:{
@@ -80625,10 +80448,7 @@
 		}),
 		accountDS 			: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
-		  	filter:[
-		  		{ field:"account_type_id", value: 10 },
-		  		{ field:"status", value: 1 }
-		  	],
+		  	filter:{ field:"account_type_id", value: 10 },
 		  	sort: { field:"number", dir:"asc" }
 		}),
 		segmentItemDS 		: new kendo.data.DataSource({
@@ -81390,24 +81210,14 @@
 			]
 		}),
 		paymentMethodDS		: banhji.source.paymentMethodDS,
-		accountDS  			: new kendo.data.DataSource({
-		  	data: banhji.source.accountList,
-		  	filter:{ field:"status", value: 1 },
-			sort: { field:"number", dir:"asc" }
-		}),
+		accountDS  			: banhji.source.accountList,
 		cashAccountDS 		: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
 		  	filter: {
-				logic: "and",
+	      		logic: "or",
 			    filters: [
-			    	{ field:"status", value: 1 },
-			      	{
-			      		logic: "or",
-					    filters: [
-					      	{ field:"account_type_id", value: 10 },//Cash Account
-			      			{ field:"account_type_id", value: 34 }//Retained Earning
-					    ]
-					}
+			      	{ field:"account_type_id", value: 10 },//Cash Account
+	      			{ field:"account_type_id", value: 34 }//Retained Earning
 			    ]
 			},
 		    sort:[
@@ -81417,10 +81227,7 @@
 		}),
 		advAccountDS 		: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
-		  	filter:[
-		  		{ field:"account_type_id", value: 11 },
-		  		{ field:"status", value: 1 }
-		  	],
+		  	filter:{ field:"account_type_id", value: 11 },
 		  	sort: { field:"number", dir:"asc" }
 		}),
 		txnTemplateDS 		: new kendo.data.DataSource({
@@ -82099,32 +81906,23 @@
 		accountDS 			: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
 		  	filter: {
-				logic: "and",
+	      		logic: "or",
 			    filters: [
-			    	{ field:"status", value: 1 },
-			      	{
-			      		logic: "or",
-					    filters: [
-					      	{ field: "account_type_id", value: 11 },//Cash Advance
-					      	{ field: "account_type_id", value: 36 },//Expense
-					      	{ field: "account_type_id", value: 37 },
-					      	{ field: "account_type_id", value: 38 },
-					      	{ field: "account_type_id", value: 40 },
-					      	{ field: "account_type_id", value: 41 },
-					      	{ field: "account_type_id", value: 42 },
-					      	{ field: "account_type_id", value: 43 }
-					    ]
-					}
+			      	{ field: "account_type_id", value: 11 },//Cash Advance
+			      	{ field: "account_type_id", value: 36 },//Expense
+			      	{ field: "account_type_id", value: 37 },
+			      	{ field: "account_type_id", value: 38 },
+			      	{ field: "account_type_id", value: 40 },
+			      	{ field: "account_type_id", value: 41 },
+			      	{ field: "account_type_id", value: 42 },
+			      	{ field: "account_type_id", value: 43 }
 			    ]
 			},
 			sort: { field:"number", dir:"asc" }
 		}),
 		cashAccountDS 		: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
-		  	filter:[
-		  		{ field:"account_type_id", value: 10 },
-		  		{ field:"status", value: 1 }
-		  	],
+		  	filter:{ field:"account_type_id", value: 10 },
 		  	sort: { field:"number", dir:"asc" }
 		}),
 		txnTemplateDS 		: new kendo.data.DataSource({
@@ -83621,11 +83419,7 @@
 	banhji.generalLedger =  kendo.observable({
 		lang 				: langVM,
 		dataSource 			: dataStore(apiUrl + "accounting_modules/general_ledger"),
-		accountDS  		: new kendo.data.DataSource({
-		  	data: banhji.source.accountList,
-		  	filter:{ field:"status", value: 1 },
-		  	sort: { field:"number", dir:"asc" }
-		}),
+		accountDS  			: banhji.source.accountList,
 		segmentItemDS 		: new kendo.data.DataSource({
 		  	data: banhji.source.segmentItemList,
 		  	sort: [
@@ -85686,11 +85480,7 @@
         itemDS 	 			: dataStore(apiUrl + "tax_items"),
         deleteDS 			: dataStore(apiUrl + "tax_items"),
         itemDeleteDS 		: dataStore(apiUrl + "item_lines"),
-        accountDS  			: new kendo.data.DataSource({
-		  	data: banhji.source.accountList,
-		  	filter:{ field:"status", value: 1 },
-			sort: { field:"number", dir:"asc" }
-		}),
+        accountDS  			: banhji.source.accountList,
         typeList			: [ 
 	 		{ id:"Invoice Based", name: "Invoice Based" },
 	 		{ id:"Payment Based", name: "Payment Based" },
@@ -86422,10 +86212,7 @@
 		lang 				: langVM,
 		dataStore 			: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
-		  	filter:[
-		  		{ field:"account_type_id", value: 10 },
-		  		{ field:"status", value: 1 }
-		  	],
+		  	filter:{ field:"account_type_id", value: 10 },
 		  	sort: { field:"number", dir:"asc" }
 		}),
 		summaryDS  			: dataStore(apiUrl + 'centers/accounting_summary'),
@@ -87335,10 +87122,7 @@
 		}),
 		accountDS  			: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
-		  	filter:[
-		  		{ field:"account_type_id", value: 10 },
-		  		{ field:"status", value: 1 }
-		  	],
+		  	filter:{ field:"account_type_id", value: 10 },
 		  	sort: { field:"number", dir:"asc" }
 		}),
 		paymentTermDS 		: banhji.source.paymentTermDS,
@@ -87786,10 +87570,7 @@
 		}),
 		accountDS  			: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
-		  	filter:[
-		  		{ field:"account_type_id", value: 10 },
-		  		{ field:"status", value: 1 }
-		  	],
+		  	filter:{ field:"account_type_id", value: 10 },
 		  	sort: { field:"number", dir:"asc" }
 		}),
 		paymentTermDS 		: banhji.source.paymentTermDS,
@@ -88494,10 +88275,7 @@
 		dataSource 			: dataStore(apiUrl + "accounting_modules/general_ledger"),
 		accountDS  		: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
-		  	filter:[
-		  		{ field:"account_type_id", value: 10 },
-		  		{ field:"status", value: 1 }
-		  	],
+		  	filter:{ field:"account_type_id", value: 10 },
 		  	sort: { field:"number", dir:"asc" }
 		}),
 		segmentItemDS 		: new kendo.data.DataSource({
@@ -89036,11 +88814,7 @@
 		  	data: banhji.source.employeeList,
 			sort: { field:"number", dir:"asc" }
 		}),
-		accountDS  		: new kendo.data.DataSource({
-		  	data: banhji.source.accountList,
-		  	filter:{ field:"status", value: 1 },
-		  	sort: { field:"number", dir:"asc" }
-		}),
+		accountDS  			: banhji.source.accountList,
 		sortList			: banhji.source.sortList,
 		sorter 				: "month",
 		sdate 				: "",

@@ -33,14 +33,13 @@
 			</ul> 
 			<ul class="topnav pull-right">
 				<li role="presentation" class="dropdown">
-			  		<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"> <i class="icon-th-list"></i> <span class="caret"></span></a>
+			  		<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"> <i class="icon-th-list"></i></a>
 		  			<ul class="dropdown-menu ul-multiTaskList" data-template="multiTaskList-row-template" data-bind="source: multiTaskList">  				  				
 		  			</ul>
 			  	</li>
 			  	<li>
 			  		<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
 			  			<i class="icon-question icon-question1"></i>
-			  			<span class="caret"></span>
 			  		</a>
 			  		<ul class="dropdown-menu">
 			  			<li><a href="#" >Get Starting</a></li>
@@ -49,7 +48,7 @@
 			  		</ul>
 			  	</li>
 				<li role="presentation" class="dropdown">
-			  		<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">[<span data-bind="text: getUsername"></span>] <span class="caret"></span></a>
+			  		<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">[<span data-bind="text: getUsername"></span>]</a>
 		  			<ul class="dropdown-menu">  				  				
 		  				<li><a href="#" data-bind="click: lang.changeToKh">ភាសាខ្មែរ</a></li>
     					<li><a href="#" data-bind="click: lang.changeToEn">English</a></li>
@@ -196,6 +195,8 @@
 					</div>
 				</div> -->
 				
+				
+
 				<div class="board-chart" style="margin-top: 0; width: 64%; background: #fff;">
 					<h4 data-bind="text: companyName"></h4>
 					<h2 style="color: #113051; margin-bottom: 11px; display: inline-block; width: 100%;" data-bind="text: lang.lang.financial_snapshot"></h2>
@@ -210,7 +211,7 @@
 					<p style="text-align: center; margin-bottom: 0; cursor: pointer;">User Guide</p>
 				</div>
 
-				<div class="board-chart" style="margin-top: 20px;">
+				<div class="board-chart" style="margin-top: 20px; ">
 					<div class="span3" style="padding-left: 0;">
 						<div style="background: #0ec9fc; width: 100%; float: left; text-align: center; height: 135px;	">
 							<p style="margin-top: 10px; font-size: 10px;">Your Business Financial Health Score</p>
@@ -225,7 +226,7 @@
 						<div style="background: #96e95b; width: 100%; float: left; text-align: center; height: 135px; padding: 20px 0;">
 							<p></p>
 							<img src="<?php echo base_url()?>assets/sign-new.png" style="width: 45px;">
-							<p style="font-size: 10px;">Outperform your peer</p>
+							<p style="font-size: 10px; margin-top: 20px;">Outperform your peer</p>
 						</div>
 					</div>
 					<div class="span7" style="padding: 0;">
@@ -45795,9 +45796,9 @@
 <script id="customerMenu" type="text/x-kendo-template">
 	<ul class="topnav">
 	  	<li><a href='#/customers' class='glyphicons show_big_thumbnails'><i></i></a></li>
-	  	<li><a href='#/customer_center'><span data-bind="text: lang.lang.center"></span></a></li>
+	  	<li><a href='#/customer_center'><span data-bind="text: lang.lang.center" style="color: #fff;"></span></a></li>
 	  	<li role='presentation' class='dropdown'>
-	  		<a class='dropdown-toggle glyphicons text_bigger' data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false'><i></i> <span class='caret'></span></a>
+	  		<a class='dropdown-toggle glyphicons text_bigger' data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false'><i class="text-t"></i> <span class='caret'></span></a>
   			<ul class='dropdown-menu'>
   				<li><a href='#/customer'><span data-bind="text: lang.lang.add_customer"></span></a></li> 
   				<li ><a href='#/job'><span data-bind="text: lang.lang.add_job"></span></a></li>
@@ -45821,7 +45822,7 @@
   				<li><a href='#/imports'><span ></span>Imports</a></li>
   			</ul>
 	  	</li>	  	  	
-	  	<li><a href="#/customer_report_center">Reports</a></li>	  	
+	  	<li><a href="#/customer_report_center" style="color: #fff;">Reports</a></li>	  	
 	  	<li><a href='#/customer_setting' class='glyphicons settings'><i></i></a></li>
 	</ul>
 </script>

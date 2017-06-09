@@ -10105,6 +10105,9 @@
   				<li><a href='#/receipt'><span >4. Cash Receipt</span></a></li>
   				<li><span class="li-line"></span></li>
   				<li><a href='#/imports'><span >Import</span></a></li>
+  				<li><span class="li-line"></span></li>
+  				<li><a onclick="BACKUP()">Export (Back Up)</a></li>
+  				<li><a onclick="IMPORTDB()">Import (Back Up)</a></li>
   			</ul>
 	  	</li>	  	  	
 	  	<li><a href="#/reports">Reports</a></li>	  	
@@ -22367,7 +22370,10 @@
 	    totalUsage: 0,
 	    totalUser: 0,
 	    totalDeposit: 0,
-	    avgUsage: 0
+	    avgUsage: 0,
+	    goBackUp: function(){
+	    	window.location.replace("<?php echo base_url(); ?>backup/index/"+banhji.institute.id);
+	    }
 	});
 	banhji.waterCenter = kendo.observable({
 		lang 				: langVM,
@@ -24459,9 +24465,11 @@
 		}
 		var Href1 = '<?php echo base_url(); ?>assets/water/winvoice-res.css';
 		var Href2 = '<?php echo base_url(); ?>assets/water/winvoice-print.css';
-		if($(location).attr('hash').substr(2) == "invoice_print"){
-			loadStyle(Href1);
-			loadStyle(Href2);
-		}
 	});
+	function BACKUP(){
+		window.location.href = "<?php echo base_url(); ?>backup/index/"+banhji.institute.id;
+	}
+	function IMPORTDB(){
+		window.location.href = "<?php echo base_url(); ?>import/index/"+banhji.institute.id;
+	}
 </script>

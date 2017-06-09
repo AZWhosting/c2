@@ -3194,13 +3194,13 @@ a.activate {
   color: #fff;
 }
 .icon-question{
-      font-size: 25px;
+      font-size: 20px;
     border: 1px #fff solid;
     border-radius: 50%;
-    width: 30px;
-    height: 30px;
+    width: 25px;
+    height: 25px;
     float: left;
-    margin-top: 7px;
+    margin-top: 10px;
     margin-right: 5px;
 }
 .icon-question.icon-question1:before{
@@ -3208,6 +3208,14 @@ a.activate {
     margin-left: 21%;
     margin-top: 2px;
     color: #fff;
+}
+html.top-full .navbar.main .topnav > li > a.glyphicons.show_big_thumbnails i:before,
+html.top-full .navbar.main .topnav > li > a.glyphicons .text-t:before,
+html.top-full .navbar.main .topnav > li > a.glyphicons .settings-t:before{
+  color: #fff !important;
+}
+html.top-full .navbar.main .topnav .dropdown > a .caret{
+  border-top-color: #fff !important;
 }
 .authorizeSync{
     background: none;
