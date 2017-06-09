@@ -10,9 +10,16 @@ class Localsync extends REST_Controller {
 	//CONSTRUCTOR
 	function __construct() {
 		parent::__construct();
-		$this->load->dbutil();
-		$this->load->helper('file');
-		$this->load->helper('download');
+		
+		$institute = new Institute();
+		$institute->where('id', $this->input->get_request_header('Institute'))->get();
+		if($institute->exists()) {
+			$conn = $institute->connection->get();
+			$this->server_host = $conn->server_name;
+			$this->server_user = $conn->username;
+			$this->server_pwd = $conn->password;	
+			$this->_database = $conn->inst_database;
+		}
 	}
 
 	function txn_post() {
@@ -186,22 +193,44 @@ class Localsync extends REST_Controller {
 		
 		$this->response($data, 201);					
 	}
+	
 	function index_get(){
-		// Load the DB utility class
-		$this->load->dbutil();
-
-		// Backup database dan dijadikan variable
-		$backup = $this->dbutil->backup();
-
-		// Load file helper dan menulis ke server untuk keperluan restore
-		$this->load->helper('file');
-		write_file('/assets/mybackup.gz', $backup);
-
-		// Load the download helper dan melalukan download ke komputer
-		$this->load->helper('download');
-		force_download('mybackup.gz', $backup);
+		$this->backup();
 	}
 
+	public function backup()
+	{
+		$dsn = 'mysql://mightyadmin:banhji2016@banhji-db-instance.cwxbgxgq7thx.ap-southeast-1.rds.amazonaws.com/db_1495085871';
+		$DB1 = $this->load->database($dsn, TRUE);
+		// get all of the tables
+		$this->load->dbutil();
+		$this->load->helper('file');
+		$this->load->helper('download');
+		
+		$this->db = $DB1;
+		// Backup your entire database and assign it to a variable
+		$this->load->dbutil();
+
+		$prefs = array(
+			'ignore' => array(),
+			'format' => 'sql',
+			'filename' => $this->db->database .'-'. date("Y-m-d-H-i-s").'-backup.sql',  
+			'add_drop' => TRUE,
+			'add_insert' => TRUE,
+			'newline' => "\n" 
+		);
+
+		$backup = $this->dbutil->backup($prefs);
+		$dbname = $this->db->database .'-'. date("Y-m-d-H-i-s").'-backup.sql';
+		
+		if ( ! write_file('assets/backupdb/'.$dbname, $backup)){
+		    echo 'Unable to write the file';
+		}else{
+		    $data = file_get_contents("assets/backupdb/".$dbname);
+    		force_download($dbname, $backup);
+		}
+	}
+	
 }
 /* End of file meters.php */
 /* Location: ./application/controllers/api/meters.php */
