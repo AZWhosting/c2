@@ -29332,55 +29332,58 @@
 <script id="journalReport-template" type="text/x-kendo-tmpl">
 	#var sumDr =0, sumCr = 0;#
 	#for(var i=0; i<line.length; i++){#
-		#sumDr += line[i].dr / rate;#
-		#sumCr += line[i].cr / rate;#
-		<tr>
-			<td style="color: black;">
-				#if(i==0){#
-					<a href="\#/#=type.toLowerCase()#/#=id#"><i></i> #=type#</a>
-				#}#
-			</td>		
-			<td style="color: black;">
-				#if(i==0){#
-					#=kendo.toString(new Date(issued_date), "dd-MM-yyyy")#
-				#}#
-			</td>
-			<td style="color: black;">
-				#if(i==0){#
-					<a href="\#/#=type.toLowerCase()#/#=id#"><i></i> #=number#</a>
-				#}#
-			</td>		
-			<td style="color: black;">
-				#=line[i].description#
-			</td>
-			<td style="color: black;">
-				#=line[i].account#
-			</td>			
-			<td class="right" style="color: black;">
-				#if(line[i].dr>0){#
-					#=kendo.toString(line[i].dr / rate, "c2", banhji.locale)#
-				#}#
-			</td>
-			<td class="right" style="color: black;">
-				#if(line[i].cr>0){#
-					#=kendo.toString(line[i].cr / rate, "c2", banhji.locale)#
-				#}#
-			</td>
-	    </tr>    
-    #}# 
-    <tr>
-    	<td style="color: black;" data-bind="text: lang.lang.total">Total:</td>
-    	<td></td>    	
-    	<td></td>
-    	<td></td>
-    	<td></td>    	
-    	<td class="right strong" style="border-top-color: black; color: black;">
-    		#=kendo.toString(sumDr, "c2", banhji.locale)#
-    	</td>
-    	<td class="right strong" style="border-top-color: black; color: black;">
-    		#=kendo.toString(sumCr, "c2", banhji.locale)#
-    	</td>	
-    </tr>  
+		#if(line[i].dr==0 && line[i].cr==0){#
+		#}else{#
+			#sumDr += line[i].dr / rate;#
+			#sumCr += line[i].cr / rate;#
+			<tr>
+				<td style="color: black;">
+					#if(i==0){#
+						<a href="\#/#=type.toLowerCase()#/#=id#"><i></i> #=type#</a>
+					#}#
+				</td>		
+				<td style="color: black;">
+					#if(i==0){#
+						#=kendo.toString(new Date(issued_date), "dd-MM-yyyy")#
+					#}#
+				</td>
+				<td style="color: black;">
+					#if(i==0){#
+						<a href="\#/#=type.toLowerCase()#/#=id#"><i></i> #=number#</a>
+					#}#
+				</td>		
+				<td style="color: black;">
+					#=line[i].description#
+				</td>
+				<td style="color: black;">
+					#=line[i].account#
+				</td>			
+				<td class="right" style="color: black;">
+					#if(line[i].dr>0){#
+						#=kendo.toString(line[i].dr / rate, "c2", banhji.locale)#
+					#}#
+				</td>
+				<td class="right" style="color: black;">
+					#if(line[i].cr>0){#
+						#=kendo.toString(line[i].cr / rate, "c2", banhji.locale)#
+					#}#
+				</td>
+		    </tr>
+	    #}#    
+    #}#
+
+    #if(sumDr==0 && sumCr==0){#
+	#}else{# 
+	    <tr>
+	    	<td colspan="5" style="color: black;" data-bind="text: lang.lang.total">Total:</td>
+	    	<td class="right strong" style="border-top-color: black; color: black;">
+	    		#=kendo.toString(sumDr, "c2", banhji.locale)#
+	    	</td>
+	    	<td class="right strong" style="border-top-color: black; color: black;">
+	    		#=kendo.toString(sumCr, "c2", banhji.locale)#
+	    	</td>	
+	    </tr>
+    #}#  
 </script>
 <script id="journalReportBySegment" type="text/x-kendo-template">
 	<div id="slide-form">
