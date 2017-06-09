@@ -33,16 +33,17 @@
 			</ul> 
 			<ul class="topnav pull-right">
 				<li role="presentation" class="dropdown">
-			  		<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"> <i class="icon-th-list"></i> <span class="caret"></span></a>
+			  		<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"> <i class="icon-th-list"></i></a>
 		  			<ul class="dropdown-menu ul-multiTaskList" data-template="multiTaskList-row-template" data-bind="source: multiTaskList">  				  				
 		  			</ul>
 			  	</li>
 				<li role="presentation" class="dropdown">
-			  		<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">[<span data-bind="text: getUsername"></span>] <span class="caret"></span></a>
+			  		<a style="color: #fff;" class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">[<span data-bind="text: getUsername"></span>]</a>
 		  			<ul class="dropdown-menu">  				  				
 		  				<li><a href="#" data-bind="click: lang.changeToKh">ភាសាខ្មែរ</a></li>
     					<li><a href="#" data-bind="click: lang.changeToEn">English</a></li>
-						<li class="divider"></li>	
+						<li class="divider"></li>
+						<li><a href="<?php echo base_url(); ?>admin">Setting</a></li>
 						<li><a href="#/manage" data-bind="click: logout"><i class="icon-power-off"></i> Logout</a></li> 				
 		  			</ul>
 			  	</li>				
@@ -21466,7 +21467,7 @@
                             { field: 'cost', title:'Cost', attributes: { style: 'text-align: right;' }, width: '100px' },
                             { field: 'on_hand', title:'Qty On Hand', attributes: { style: 'text-align: right;' }, width: '100px' },
                             { field: 'quantity_adjusted', title:'Qty Count', attributes: { style: 'text-align: right;' }, width: '100px' },
-                            { field: 'quantity', title:'Different', attributes: { style: 'text-align: right;' }, width: '100px' },
+                            { field: 'quantity', title:'Different', attributes: { style: 'text-align: right;' }, width: '100px' },                            
                             { command: 'destroy', title: ' ', width: 96 }
                          ]"
                          data-auto-bind="false"
@@ -44209,9 +44210,9 @@
 <script id="accountingMenu" type="text/x-kendo-template">
 	<ul class="topnav">
 		<li><a href='#/accounting' class='glyphicons show_big_thumbnails'><i></i></a></li>
-	  	<li><a href='#/accounting_center'>CENTER</a></li>
+	  	<li><a href='#/accounting_center' style="color: #fff;">CENTER</a></li>
 	  	<li role='presentation' class='dropdown'>
-	  		<a class='dropdown-toggle glyphicons text_bigger' data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false'><i></i> <span class='caret'></span></a>
+	  		<a class='dropdown-toggle glyphicons text_bigger' data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false'><i class="text-t"></i> <span class='caret'></span></a>
   			<ul class='dropdown-menu'>
   				<li><a href='#/txn_item'><span data-bind="text: lang.lang.add_transaction_item"></span></a></li>  	
   				<li><a href='#/account'><span data-bind="text: lang.lang.add_account"></span></a></li>
@@ -44232,32 +44233,32 @@
   				<li><a href='#/imports'><span ></span>Imports</a></li> 			  				 		
   			</ul>
 	  	</li>	  	  	
-	  	<li><a href='#/accounting_report_center'>REPORTS</a></li>	  	
+	  	<li><a href='#/accounting_report_center' style="color: #fff;">REPORTS</a></li>	  	
 	  	<li><a href='#/accounting_setting' class='glyphicons settings'><i></i></a></li>	  				
 	</ul>
 </script>
 <script id="employeeMenu" type="text/x-kendo-template">
 	<ul class="topnav">
 		<li><a href='#/employees' class='glyphicons show_big_thumbnails'><i></i></a></li>
-	  	<li><a href='#/employee_center'>CENTER</a></li>
+	  	<li><a href='#/employee_center' style="color: #fff;">CENTER</a></li>
 	  	<li role='presentation' class='dropdown'>
-	  		<a class='dropdown-toggle glyphicons text_bigger' data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false'><i></i> <span class='caret'></span></a>
+	  		<a class='dropdown-toggle glyphicons text_bigger' data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false'><i class="text-t"></i> <span class='caret'></span></a>
   			<ul class='dropdown-menu'>
   				<li><a href='#/employee'>New Employee</a></li>  				  				
   				<li><a href='#/cash_advance'>Cash Advance</a></li>
   				<li><a href='#/expense'>Expense</a></li>  				 				 				  				 				
   			</ul>
 	  	</li>	  	  	
-	  	<li><a href='#/employee_report_center'>REPORTS</a></li>	  	
+	  	<li><a href='#/employee_report_center' style="color: #fff;">REPORTS</a></li>	  	
 	  	<li><a href='#/employees_setting' class='glyphicons settings'><i></i></a></li>	  	
 	</ul>
 </script>
 <script id="vendorMenu" type="text/x-kendo-template">
 	<ul class="topnav">
 		<li><a href='#/vendors' class='glyphicons show_big_thumbnails'><i></i></a></li>
-	  	<li><a href='#/vendor_center'>CENTER</a></li>
+	  	<li><a href='#/vendor_center' style="color: #fff;">CENTER</a></li>
 	  	<li role='presentation' class='dropdown'>
-	  		<a class='dropdown-toggle glyphicons text_bigger' data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false'><i></i> <span class='caret'></span></a>
+	  		<a class='dropdown-toggle glyphicons text_bigger' data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false'><i class="text-t"></i> <span class='caret'></span></a>
   			<ul class='dropdown-menu'>
   				<li><a href='#/vendor'><span data-bind="text: lang.lang.add_supplier"></span></a></li>
   				<li><a href='#/item'><span data-bind="text: lang.lang.add_inventory"></span></a></li>
@@ -44278,16 +44279,16 @@
   				<li><a href='#/imports'><span ></span>Imports</a></li>
   			</ul>
 	  	</li>	  	  	
-	  	<li><a href='#/vendor_report_center'>REPORTS</a></li>	  	
+	  	<li><a href='#/vendor_report_center' style="color: #fff;">REPORTS</a></li>	  	
 	  	<li><a href='#/vendor_setting' class='glyphicons settings'><i></i></a></li>	  	
 	</ul>
 </script>
 <script id="customerMenu" type="text/x-kendo-template">
 	<ul class="topnav">
 	  	<li><a href='#/customers' class='glyphicons show_big_thumbnails'><i></i></a></li>
-	  	<li><a href='#/customer_center'><span data-bind="text: lang.lang.center"></span></a></li>
+	  	<li><a href='#/customer_center'><span data-bind="text: lang.lang.center" style="color: #fff;"></span></a></li>
 	  	<li role='presentation' class='dropdown'>
-	  		<a class='dropdown-toggle glyphicons text_bigger' data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false'><i></i> <span class='caret'></span></a>
+	  		<a class='dropdown-toggle glyphicons text_bigger' data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false'><i class="text-t"></i> <span class='caret'></span></a>
   			<ul class='dropdown-menu'>
   				<li><a href='#/customer'><span data-bind="text: lang.lang.add_customer"></span></a></li> 
   				<li ><a href='#/job'><span data-bind="text: lang.lang.add_job"></span></a></li>
@@ -44311,16 +44312,16 @@
   				<li><a href='#/imports'><span ></span>Imports</a></li>
   			</ul>
 	  	</li>	  	  	
-	  	<li><a href="#/customer_report_center">Reports</a></li>	  	
+	  	<li><a href="#/customer_report_center" style="color: #fff;">Reports</a></li>	  	
 	  	<li><a href='#/customer_setting' class='glyphicons settings'><i></i></a></li>
 	</ul>
 </script>
 <script id="cashMenu" type="text/x-kendo-template">
 	<ul class="topnav">
 	  	<li><a href='#/cashs' class='glyphicons show_big_thumbnails'><i></i></a></li>
-	  	<li><a href='#/cash_center'>CENTER</a></li>
+	  	<li><a href='#/cash_center' style="color: #fff;">CENTER</a></li>
 	  	<li role='presentation' class='dropdown'>
-	  		<a class='dropdown-toggle glyphicons text_bigger' data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false'><i></i> <span class='caret'></span></a>
+	  		<a class='dropdown-toggle glyphicons text_bigger' data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false'><i class="text-t"></i> <span class='caret'></span></a>
   			<ul class='dropdown-menu'>  				  				
   				<li><a href='#/quote'>Add Quote</a></li>  				
   				<li><a href='#/sale_order'>Add Sale Order</a></li>
@@ -44335,16 +44336,16 @@
   				<li><a href='#/imports'><span ></span>Imports</a></li>				  				 				
   			</ul>
 	  	</li>	  	  	
-	  	<li><a href='#/cash_report_center'>REPORTS</a></li>	  	
+	  	<li><a href='#/cash_report_center' style="color: #fff;">REPORTS</a></li>	  	
 	  	<li><a href='#/cash_setting' class='glyphicons settings'><i></i></a></li>	  		  	
 	</ul>
 </script>
 <script id="inventoryMenu" type="text/x-kendo-template">
 	<ul class="topnav">
 		<li><a href='#/inventories' class='glyphicons show_big_thumbnails'><i></i></a></li>
-	  	<li><a href='#/item_center'>CENTER</a></li>
+	  	<li><a href='#/item_center' style="color: #fff;">CENTER</a></li>
 	  	<li role='presentation' class='dropdown'>
-	  		<a class='dropdown-toggle glyphicons text_bigger' data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false'><i></i> <span class='caret'></span></a>
+	  		<a class='dropdown-toggle glyphicons text_bigger' data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false'><i class="text-t"></i> <span class='caret'></span></a>
   			<ul class='dropdown-menu'>
   				<li><a href='#/item'><span data-bind="text: lang.lang.add_inventory_for_sale"></span></a></li>
   				<li><a href='#/non_inventory_part'><span data-bind="text: lang.lang.add_noninventory_for_sale"></span></a></li>
@@ -44355,38 +44356,38 @@
   				<li> <span class="li-line"></span></li> 
   				<li><a href='#/grn'><span data-bind="text: lang.lang.add_received_note"></span></a></li>
   				<li><a href='#/gdn'><span data-bind="text: lang.lang.add_delivery_note"></span></a></li>
-  				<li><a href='#/item_adjustment'><span data-bind="text: lang.lang.create_item_adjustment"></span></a></li>  				
-  				<li><a href='#/internal_usage'><span data-bind="text: lang.lang.create_internal_usage"></span></a></li>	
+  				<li><a href='#/item_adjustment'><span data-bind="text: lang.lang.create_item_adjustment"></span></a></li>
+  				<li><a href='#/internal_usage'><span data-bind="text: lang.lang.create_internal_usage"></span></a></li>
   				<li><span class="li-line"></span></li> 	
   				<li><a href='#/item_recurring'>Inventory Recurring List</a></li>
   				<li><a href='#/imports'><span ></span>Imports</a></li>
   			</ul>
 	  	</li>	  	  	
-	  	<li><a href='#/item_report_center'>REPORTS</a></li>	  	
-	  	<li><a href='#/item_setting' class='glyphicons settings'><i></i></a></li>	  	
+	  	<li><a href='#/item_report_center' style="color: #fff;">REPORTS</a></li>
+	  	<li><a href='#/item_setting' class='glyphicons settings'><i></i></a></li>
 	</ul>	
 </script>
 <script id="taxMenu" type="text/x-kendo-template">
 	<ul class="topnav">
 		<li><a href='#/tax' class='glyphicons show_big_thumbnails'><i></i></a></li>
 	  	<li role='presentation' class='dropdown'>
-	  		<a class='dropdown-toggle glyphicons text_bigger' data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false'><i></i> <span class='caret'></span></a>
-  			<ul class='dropdown-menu'>				 				  				
-  				<li><a href='#/journal'>Journal</a></li>  				
+	  		<a class='dropdown-toggle glyphicons text_bigger' data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false'><i class="text-t"></i> <span class='caret'></span></a>
+  			<ul class='dropdown-menu'>
+  				<li><a href='#/journal'>Journal</a></li>
   				<li><a href='#/tax'>Tax</a></li>
-  				<li><a href='#/imports'><span ></span>Imports</a></li> 				  				 				  				 				
+  				<li><a href='#/imports'><span ></span>Imports</a></li>
   			</ul>
-	  	</li>	  	  	
-	  	<li><a href='#/tax_report_center'>REPORTS</a></li>	  	
-	  	<li><a href='#/' class='glyphicons settings'><i></i></a></li>	  				
+	  	</li>
+	  	<li><a href='#/tax_report_center' style="color: #fff;">REPORTS</a></li>
+	  	<li><a href='#/' class='glyphicons settings'><i></i></a></li>
 	</ul>
 </script>
 <script id="saleMenu" type="text/x-kendo-template">
 	<ul class="topnav">
 	  	<li><a href='#/sales' class='glyphicons show_big_thumbnails'><i></i></a></li>
-	  	<li><a href='#/sale_center'><span data-bind="text: lang.lang.center"></span></a></li>
+	  	<li><a href='#/sale_center'><span data-bind="text: lang.lang.center" style="color: #fff;"></span></a></li>
 	  	<li role='presentation' class='dropdown'>
-	  		<a class='dropdown-toggle glyphicons text_bigger' data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false'><i></i> <span class='caret'></span></a>
+	  		<a class='dropdown-toggle glyphicons text_bigger' data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false'><i class="text-t"></i> <span class='caret'></span></a>
   			<ul class='dropdown-menu'>
   				<li><a href='#/customer'><span data-bind="text: lang.lang.add_customer"></span></a></li> 
   				<li ><a href='#/job'><span data-bind="text: lang.lang.add_job"></span></a></li>	
@@ -44394,14 +44395,44 @@
   				<li><a href='#/item_assembly'><span data-bind="text: lang.lang.build_assembly"></span></a></li>
   				<li> <span class="li-line"></span></li>
   				<li ><a href='#/sale'>Mobile Sale</a></li>
-  				<li ><a href='#/quote'><span data-bind="text: lang.lang.create_quotation"></span></a></li>  				
-  				<li><a href='#/sale_order'><span data-bind="text: lang.lang.create_sale_order"></span></a></li>  				
-  				<li> <span class="li-line"></span></li> 				
+  				<li ><a href='#/quote'><span data-bind="text: lang.lang.create_quotation"></span></a></li>
+  				<li><a href='#/sale_order'><span data-bind="text: lang.lang.create_sale_order"></span></a></li>
+  				<li> <span class="li-line"></span></li>
   				<li><a href='#/sale_recurring'>Recurring</a></li>
-  				<li><a href='#/imports'><span ></span>Imports</a></li>			 				  				 				
+  				<li><a href='#/imports'><span ></span>Imports</a></li>
   			</ul>
-	  	</li>	  	  	
-	  	<li><a href="#/sale_report_center">Reports</a></li>
+	  	</li>
+	  	<li><a href="#/sale_report_center" style="color: #fff;">Reports</a></li>
+	</ul>
+</script>
+<script id="riceMillMenu" type="text/x-kendo-template">
+	<ul class="topnav">
+	  	<li><a href='#/app_center' class='glyphicons show_big_thumbnails'><i></i></a></li>
+	  	<li role='presentation' class='dropdown'>
+	  		<a style="color: #fff;" class='dropdown-toggle glyphicons ' data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false'>CENTER<span class='caret'></span></a>
+	  		<ul class='dropdown-menu'>
+  				<li><a href='#/customer_center'><span >Customer Center</span></a></li> 
+  				<li ><a href='#/vendor_center'><span >Supplier Center</span></a></li>	
+  				<li><a href='#/tem_center'><span >Inventory Center</span></a></li>
+  			</ul>
+	  	</li>
+	  	<li role='presentation' class='dropdown'>
+	  		<a class='dropdown-toggle glyphicons text_bigger' data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false'><i class="text-t"></i> <span class='caret'></span></a>
+  			<ul class='dropdown-menu'>
+  				<li><a href='#/customer'><span data-bind="text: lang.lang.add_customer"></span></a></li> 
+  				<li ><a href='#/job'><span data-bind="text: lang.lang.add_job"></span></a></li>	
+  				<li><a href='#/item_catalog'><span data-bind="text: lang.lang.add_new_catalog"></span></a></li>
+  				<li><a href='#/item_assembly'><span data-bind="text: lang.lang.build_assembly"></span></a></li>
+  				<li> <span class="li-line"></span></li>
+  				<li ><a href='#/sale'>Mobile Sale</a></li>
+  				<li ><a href='#/quote'><span data-bind="text: lang.lang.create_quotation"></span></a></li>
+  				<li><a href='#/sale_order'><span data-bind="text: lang.lang.create_sale_order"></span></a></li>
+  				<li> <span class="li-line"></span></li>
+  				<li><a href='#/sale_recurring'>Recurring</a></li>
+  				<li><a href='#/imports'><span ></span>Imports</a></li>
+  			</ul>
+	  	</li>
+	  	<li><a href="#/rice_report_center" style="color: #fff;">Reports</a></li>
 	</ul>
 </script>
 
