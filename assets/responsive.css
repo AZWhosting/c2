@@ -3211,11 +3211,14 @@ a.activate {
 }
 html.top-full .navbar.main .topnav > li > a.glyphicons.show_big_thumbnails i:before,
 html.top-full .navbar.main .topnav > li > a.glyphicons .text-t:before,
-html.top-full .navbar.main .topnav > li > a.glyphicons .settings-t:before{
+html.top-full .navbar.main .topnav > li > a.glyphicons.settings i:before{
   color: #fff !important;
 }
 html.top-full .navbar.main .topnav .dropdown > a .caret{
   border-top-color: #fff !important;
+}
+.dropdown-toggle .icon-th-list:before{
+  color: #fff !important;
 }
 .authorizeSync{
     background: none;

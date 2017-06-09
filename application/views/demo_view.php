@@ -65024,7 +65024,9 @@
 			  	{ field: "code", dir: "asc" }
 			]
 		}),
-		accountDS  					: banhji.source.accountList,
+		accountDS  					: new kendo.data.DataSource({
+		  	data: banhji.source.accountList
+		}),
 		additionalCostAccountDS 	: banhji.source.accountList,
 		expenseAccountDS  			: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
@@ -66002,13 +66004,7 @@
 			}else{
 				this.set("isCash", false);
 				
-				this.accountDS.filter({
-				    logic: "or",
-				    filters: [
-				      { field: "account_type_id", value: 23 },
-				      { field: "account_type_id", value: 24 }
-				    ]
-				});
+				this.accountDS.filter({ field: "account_type_id", value: 23 });
 			}
 
 			obj.set("account_id", 0);
@@ -78976,7 +78972,9 @@
 		  	data: banhji.source.currencyList,
 		  	filter: { field:"status", value: 1 }
 		}),
-		subAccountDS  			: banhji.source.accountList,
+		subAccountDS  			: new kendo.data.DataSource({
+		  	data: banhji.source.accountList
+		}),
     	statusList 				: banhji.source.statusList,
     	confirmMessage 			: banhji.source.confirmMessage,
     	obj 					: null,
