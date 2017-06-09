@@ -12,6 +12,10 @@ class Account extends DataMapper {
 		'sub_of' => array(
 			'class' => "account",
 			'other_field' => 'account'
+		),
+		'attachment' => array(
+			'class' => 'attachment',
+			'other_field' => 'account'
 		)
 	);
 

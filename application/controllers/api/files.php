@@ -71,7 +71,6 @@ class Files extends REST_Controller {
 		$data = $this->getcsv->set_file_path($path)->get_array();
 		//print_r($data);
 		$this->response($data, 200);
-
 	}
 
 	//Meter reading file ----- Dawine
@@ -114,8 +113,5 @@ class Files extends REST_Controller {
 		// }else{
 		// 	$this->response(array(), 200);
 		// }			
-	}
-
-
-	
+	}	
 }

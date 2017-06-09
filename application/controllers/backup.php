@@ -59,12 +59,12 @@ class Backup extends CI_Controller {
 			$backup = $this->dbutil->backup($prefs);
 			$dbname = $this->db->database .'-'. date("Y-m-d-H-i-s").'-backup.sql';
 			
-			// if ( ! write_file('assets/backupdb/'.$dbname, $backup)){
+			if ( ! write_file('assets/backupdb/'.$dbname, $backup)){
 			    
-			// }else{
-			//     $data = file_get_contents("assets/backupdb/".$dbname);
+			}else{
+			    $data = file_get_contents("assets/backupdb/".$dbname);
 	    		force_download($dbname, $backup);
-			// }
+			}
 		}
 	}
 }

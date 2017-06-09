@@ -41,10 +41,54 @@
 			  		<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
 			  			<i class="icon-question icon-question1"></i>
 			  		</a>
-			  		<ul class="dropdown-menu" style="width: 408px !important; left: -289px !important;">
-			  			<li><a href="#" >Get Starting</a></li>
-    					<li><a href="#" >Guide Book as English</a></li>
-    					<li><a href="#" >Guide Book as Khmer</a></li>
+			  		<ul class="dropdown-menu" style="width: 408px !important; left: -293px !important; padding-bottom: 0; border: none;">
+			  			<div class="top-help" style="background: #fff; padding: 10px 20px 20px; text-align: left; display: inline-block; width: 100%;">
+			  				<h3 style="margin-bottom: 12px;">Help</h3>
+			  				<div class="row-fluid">
+				        		<div class="span12" style="padding: 0;">
+									<select data-role="multiselect"
+										    data-value-primitive="true"
+										    data-header-template="contact-header-tmpl"
+										    data-item-template="contact-list-tmpl"
+										    data-value-field="id"
+										    data-text-field="name"
+										    data-bind="value: obj.contactIds, 
+										   			source: contactDS"
+										    data-placeholder="Search for an app..."
+										    style="width: 77%; float: left;" /></select>
+									<button type="button" data-role="button" data-bind="click: search" style="float: left; width: 35px; margin-left: 8px; height: 30px;"><i class="icon-search"></i></button>
+								</div>
+							</div>
+			  			</div>
+			  			<div class="middle-help" style="background: #f4f4f4; padding: 20px 20px 20px; text-align: left; display: inline-block; width: 100%;">
+			  				<div class="more-help" style="border-bottom: 1px solid #ddd; margin-bottom: 10px; width: 100%; float: left; padding-bottom: 10px;">
+		  						<div class="help-img" style="margin-right: 20px; float: left;">
+		  							<img src="http://fpoimg.com/51x51?text=Picture%201">
+		  						</div>
+		  						<div class="help-desc" style="float: left;">
+		  							<p>Need more help?</p>
+		  							<a href="" target="_blank">Accountant Help hub</a>
+		  						</div>
+		  					</div>
+		  					<div class="what-help" style="width: 100%; float: left;">
+		  						<div class="help-img" style="margin-right: 20px; float: left;">
+		  							<img src="http://fpoimg.com/51x51?text=Picture%202">
+		  						</div>
+		  						<div class="help-desc">
+		  							<p>Check out what's new</p>
+		  							<a href="" target="_blank">Learn about new product features</a>
+		  						</div>
+		  					</div>
+			  			</div>
+			  			<div class="bottom-help" style="background: #fff; padding: 20px 20px 20px; text-align: left; display: inline-block; width: 100%;">
+			  				<h3 style="float: left; margin-right: 10px;">Direct Chat by</h3>
+			  				<div class="fb-messengermessageus" 
+					            messenger_app_id="1301847836514973"
+					            page_id="862386433857166"
+					            color="blue"
+					            width="180"
+					            size="standard" style="float: left; margin-top: 6px;"></div>
+			  			</div>
 			  		</ul>
 			  	</li>
 				<li role="presentation" class="dropdown">
@@ -44620,8 +44664,10 @@
 
 					        	<!--First Window -->
 							    <div data-role="window" id="appcenter"
+							    	data-title="false"
 						            data-width="90%"
 						            data-height="680"
+						            data-resizable= "false"
 						            data-actions="{}"
 						            data-modal="{mask: 'true'}"
 						            data-position="{top: '7%', left: '5%'}"
@@ -44883,7 +44929,9 @@
 
 								<!--Second Window -->
 							    <div data-role="window"
-						            data-width="600"
+							    	data-title="false"
+							    	data-resizable= "false"
+						            data-width="610"
 						            data-height="540"
 						            data-actions="{}"
 						            data-modal="{mask: 'true'}"
@@ -48252,6 +48300,8 @@
 		pageLoad 			: function(){
 			this.setObj();
 			this.loadData();
+
+
 		},
 		setObj 		: function(){
 			this.set("obj", {
@@ -93013,6 +93063,23 @@
 			banhji.index.pageLoad();
 			banhji.pageLoaded["index"] = true;
         }
+
+        window.fbAsyncInit = function() {
+	    FB.init({
+	      appId      : '387834344756149',
+	      xfbml      : true,
+	      version    : 'v2.7'
+	    });
+	    FB.AppEvents.logPageView();
+	  };
+
+	  (function(d, s, id){
+	     var js, fjs = d.getElementsByTagName(s)[0];
+	     if (d.getElementById(id)) {return;}
+	     js = d.createElement(s); js.id = id;
+	     js.src = "//connect.facebook.net/en_US/sdk.js";
+	     fjs.parentNode.insertBefore(js, fjs);
+	   }(document, 'script', 'facebook-jssdk'));
 
 	});
 	banhji.router.route("/search_advanced", function(){

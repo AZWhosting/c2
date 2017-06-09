@@ -21,6 +21,10 @@ class Attachment extends DataMapper {
 			'class' => 'item',
 			'other' => 'attachment'
 		),
+		'account' => array(
+			'class' => 'account',
+			'other' => 'attachment'
+		),
 		'branch' => array(
 			'class' => 'branch',
 			'other' => 'attachment'

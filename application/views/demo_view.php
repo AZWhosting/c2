@@ -9068,14 +9068,14 @@
 					<div id="invFormContent">
 						<div class="block-title">
 							<h3 data-bind="text: company.name"></h3>
-							<h2 data-bind="text: lang.lang.conllection_report"></h2>
+							<h2 data-bind="text: lang.lang.collection_report"></h2>
 							<p data-bind="text: displayDate"></p>
 						</div>
 
 						<div class="row-fluid">
 							<div class="span3" style="padding: 0;">
 								<div class="total-customer">									
-									<p data-bind="text: lang.lang.number_of_invoice"></p>
+									<p>Number Of Receipt</p>
 									<span data-format="n0" data-bind="text: total_txn"></span>
 								</div>
 							</div>
@@ -9090,18 +9090,18 @@
 						<table class="table table-borderless table-condensed ">
 							<thead>
 								<tr>
-									<th data-bind="text: lang.lang.invoice_date"></th>
-									<th data-bind="text: lang.lang.invoice_number"></th>
-									<th data-bind="text: lang.lang.invoice_amount"></th>
 									<th data-bind="text: lang.lang.receipt_date"></th>
 									<th data-bind="text: lang.lang.receipt_number"></th>
 									<th data-bind="text: lang.lang.receipt_amount"></th>
+									<th data-bind="text: lang.lang.invoice_date"></th>
+									<th data-bind="text: lang.lang.invoice_number"></th>
+									<th data-bind="text: lang.lang.invoice_amount"></th>
 								</tr>
 							</thead>
 							<tbody data-role="listview"
-										 data-auto-bind="false"
-										 data-bind="source: dataSource"
-										 data-template="collectionReport-template"
+								 data-auto-bind="false"
+								 data-bind="source: dataSource"
+								 data-template="collectionReport-template"
 							></tbody>
 						</table>
 					</div>
@@ -9114,40 +9114,24 @@
 	<tr>
 		<td colspan="6" style="font-weight: bold; color: black;">#: name #</td>
 	</tr>
-	# var totalInvoice = 0, totalReceived = 0;#	
+	# var totalReceived = 0;#	
 	#for(var i=0; i<line.length; i++){#
-	#totalInvoice += line[i].amount;#
-	<tr>
-		<td style="vertical-align: top;">#=kendo.toString(new Date(line[i].issued_date), "dd-MM-yyyy")#</td>
-		<td style="vertical-align: top;"><a href="\#/#=line[i].type.toLowerCase()#/#=line[i].id#">#=line[i].number#</a></td>
-		<td style="vertical-align: top; text-align: right;">#=kendo.toString(line[i].amount, "c2", banhji.locale)#</td>
-		<td colspan="3" style="padding-top: 0 !important; ">
-			#if(line[i].payments.length>0){#
-			<table class="table receipt-table">
-				#for(var j=0; j<line[i].payments.length; j++){#
-				#totalReceived += line[i].payments[j].amount;#
-				<tr>
-					<td style="background: transparent !important;">#=kendo.toString(new Date(line[i].payments[j].issued_date), "dd-MM-yyyy")#</td>
-					<td style="background: transparent !important;"><a href="\#/#=line[i].payments[j].type.toLowerCase()#/#=line[i].payments[j].id#">#=line[i].payments[j].number#</a></td>
-					<td style="text-align: right; background: transparent !important;">#=kendo.toString(line[i].payments[j].amount, "c2", banhji.locale)#</td>
-				</tr>
-				#}#
-			</table>
-			#}#
-		</td>
-	</tr>
+		#totalReceived += line[i].amount;#
+		<tr>
+			<td>#=kendo.toString(new Date(line[i].issued_date), "dd-MM-yyyy")#</td>
+			<td><a href="\#/#=line[i].type.toLowerCase()#/#=line[i].id#">#=line[i].number#</a></td>
+			<td style="text-align: right;">#=kendo.toString(line[i].amount, "c2", banhji.locale)#</td>		
+			<td>#=kendo.toString(new Date(line[i].reference_issued_date), "dd-MM-yyyy")#</td>
+			<td><a href="\#/#=line[i].reference_type.toLowerCase()#/#=line[i].reference_id#">#=line[i].reference_number#</a></td>
+			<td style="text-align: right;">#=kendo.toString(line[i].reference_amount, "c2", banhji.locale)#</td>				
+		</tr>
 	#}#
 	<tr>
-    	<td style="font-weight: bold; color: black;" data-bind="text: lang.lang.total">Total</td>
-    	<td></td>
+    	<td colspan="2" style="font-weight: bold; color: black;" data-bind="text: lang.lang.total">Total</td>
     	<td style="text-align: right; font-weight: bold; border-top: 1px solid black !important; color: black;">
-    		#=kendo.toString(totalInvoice, "c", banhji.locale)#
-    	</td>    	
-    	<td></td>
-    	<td></td>
-    	<td style="text-align: right; font-weight: bold; border-top: 1px solid black !important; color: black;">
-    		#=kendo.toString(totalReceived, "c", banhji.locale)#
+    		#=kendo.toString(totalReceived, "c2", banhji.locale)#
     	</td>
+    	<td colspan="3"></td>
     </tr>
 	<tr>
     	<td colspan="6">&nbsp;</td>
@@ -43732,6 +43716,8 @@
 				# var link = attachedTo.go; #
 				# var lowcase = link.toLowerCase(); #
 				<a href="\#/#=lowcase#/#=attachedTo.id#">#=attachedTo.name#</a>
+			#} else if(attachedTo.type == "account") {#
+				<a href="\#/accounting_center/#=attachedTo.id#">#=attachedTo.name#</a>
 			#} else {#
 				<a href="\#/item_center/#=attachedTo.id#">#=attachedTo.name#</a>
 			#}#
@@ -55770,6 +55756,7 @@
 			this.returnDS.insert(0, {
 				return_id 		: obj.id,
 				account_id 		: account_id,
+				contact_id 		: obj.contact_id,
 				reference_id 	: "",
 				reference_no 	: "",
 				number 			: "",
@@ -56982,6 +56969,7 @@
 			this.returnDS.add({
 				return_id 		: obj.id,
 				account_id 		: account_id,
+				contact_id 		: obj.contact_id,
 				reference_id 	: "",
 				reference_no 	: "",
 				number 			: "",
@@ -59843,7 +59831,6 @@
 		dataSource 			: dataStore(apiUrl + "sales/collection_report"),
 		contactDS  			: new kendo.data.DataSource({
 		  	data: banhji.source.customerList,
-		  	filter:{ field:"status", value:1 },
 			sort: { field:"number", dir:"asc" }
 		}),
 		sortList			: banhji.source.sortList,
@@ -59941,12 +59928,10 @@
             	var view = self.dataSource.view();
 
             	var amount = 0, txn_count = 0;
-            	$.each(view, function(index, value){            		
-            		$.each(value.line, function(indexx, x){
-            			txn_count++;
-            			$.each(x.payments, function(indexy, y){
-            				amount += y.amount;
-            			});
+            	$.each(view, function(index, value){
+            		$.each(value.line, function(ind, val){
+	            		txn_count++;
+	            		amount += val.amount;
             		});
             	});
 
@@ -67699,6 +67684,7 @@
 			this.returnDS.insert(0, {
 				return_id 		: obj.id,
 				account_id 		: account_id,
+				contact_id 		: obj.contact_id,
 				reference_id 	: "",
 				reference_no 	: "",
 				number 			: "",
@@ -68747,6 +68733,7 @@
 			this.returnDS.add({
 				return_id 		: obj.id,
 				account_id 		: account_id,
+				contact_id 		: obj.contact_id,
 				reference_id 	: "",
 				reference_no 	: "",
 				number 			: "",

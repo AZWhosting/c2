@@ -38,6 +38,8 @@ class Attachments extends REST_Controller {
 		$conNumber = 0;
 		$traSize = 0;
 		$conSize = 0;
+		$accountNumber = 0;
+		$accountSize = 0;
 		$total 	   = 0;
 		$gb = 3072;
 
@@ -95,6 +97,11 @@ class Attachments extends REST_Controller {
 					$traNumber++;
 					$traSize += ceil((($value->size) / 1024) /1024);
 					$attachedTo = array('id' => $t->id, 'name' => $t->number, 'type' => 'transaction', 'go' => $t->type);
+				} elseif($value->account_id) {
+					$a = $value->account->get();
+					$accountNumber++;
+					$accountSize += ceil((($value->size) / 1024) /1024);
+					$attachedTo = array('id' => $a->id, 'name' => $a->name, 'type' => 'account');
 				} else {
 					$item = $value->item->get();
 					$conNumber++;
