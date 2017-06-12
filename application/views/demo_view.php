@@ -21461,7 +21461,7 @@
                             { field: 'cost', title:'Cost', attributes: { style: 'text-align: right;' }, width: '100px' },
                             { field: 'on_hand', title:'Qty On Hand', attributes: { style: 'text-align: right;' }, width: '100px' },
                             { field: 'quantity_adjusted', title:'Qty Count', attributes: { style: 'text-align: right;' }, width: '100px' },
-                            { field: 'quantity', title:'Different', attributes: { style: 'text-align: right;' }, width: '100px' },                            
+                            { field: 'quantity', title:'Different', editable: 'false', attributes: { style: 'text-align: right;' }, width: '100px' },                            
                             { command: 'destroy', title: ' ', width: 96 }
                          ]"
                          data-auto-bind="false"
