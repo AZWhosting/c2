@@ -23135,16 +23135,15 @@
 	<tr>
 		<td colspan="5" style="font-weight: bold;">#: name #</td>
     	<td class="right strong" style="color: black;">
-    		#=kendo.toString(qoh_forward, "n")#
+    		#=kendo.toString(qoh_forward, "n2")#
     	</td>
     	<td class="right strong" style="color: black;">
-    		#=kendo.toString(balance_forward, "c", banhji.locale)#
+    		#=kendo.toString(balance_forward, "c2", banhji.locale)#
     	</td>
 	</tr>
-	#var onHand = qoh_forward;#
-	#var balance = balance_forward;#
-	#for(var i=0; i<line.length; i++){#
-		#onHand += line[i].quantity;#
+	# var qty = qoh_forward, balance = balance_forward; #
+	# for(var i = 0; i < line.length; i++){ #
+		#qty += line[i].quantity;#
 		#balance += line[i].amount;#
 		<tr>
 			<td style="color: black;">
@@ -23165,7 +23164,7 @@
 				<span >#=kendo.toString(line[i].price, "c2", banhji.locale)#</span>
 			</td>
 			<td class="right" style="color: black;">
-				#=kendo.toString(onHand, "n2")#
+				#=kendo.toString(qty, "n2")#
 			</td>
 			<td class="right" style="color: black;">
 				#=kendo.toString(balance, "c2", banhji.locale)#
@@ -23173,9 +23172,9 @@
 	    </tr>    
     #}# 
     <tr>
-    	<td colspan="5" style="font-weight: bold; color: black;">T<span data-bind="text: lang.lang.total"></span> #: name #</td>
+    	<td colspan="5" style="font-weight: bold; color: black;"><span data-bind="text: lang.lang.total"></span> #: name #</td>
     	<td class="right" style="font-weight: bold; border-top: 1px solid black !important; color: black;">
-    		#=kendo.toString(onHand, "n2")#
+    		#=kendo.toString(qty, "n2")#
     	</td>
     	<td class="right" style="font-weight: bold; border-top: 1px solid black !important; color: black;">
     		#=kendo.toString(balance, "c2", banhji.locale)#
@@ -77501,7 +77500,7 @@
 		}),
 		obj 					: { itemIds: [] },
 		sortList				: banhji.source.sortList,
-		sorter 					: "all",
+		sorter 					: "month",
 		sdate 					: "",
 		edate 					: "",
 		institute 				: banhji.institute,
@@ -77595,7 +77594,7 @@
             	var sum = 0;
             	$.each(view, function(index, value){
             		$.each(value.line, function(ind, val){
-	            		sum += val.amount;
+	            		sum += val.cost;
 	            	});            		
             	});
             	self.set("total", kendo.toString(sum, "c", banhji.locale));

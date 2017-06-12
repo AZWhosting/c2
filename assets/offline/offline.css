@@ -12,7 +12,7 @@
 }
 .utibill{
   float: left;
-  width: 250px;
+  width: 245px;
 }
 .offline-content{
   float: left;
@@ -23,7 +23,7 @@
   background: #0077c5;
   width: 100%;
   color: #fff;
-  padding: 40px 15px;
+  padding: 20px 15px;
   float: left;
 }
 .offline-read p{
@@ -32,7 +32,7 @@
 .offline-read p.pull-right,
 .offline-watch p.pull-right{
   font-size: 40px;
-  font-weight: 800;
+  font-weight: 600;
 }
 .offline-read p.pull-left,
 .offline-watch p.pull-left{
@@ -42,7 +42,7 @@
   background: #21abf6;
   width: 100%;
   color: #fff;
-  padding: 40px 15px;
+  padding: 20px 15px;
   float: left;
 }
 .offline-watch p{
@@ -51,13 +51,13 @@
 .offline-caltulator{
   width: 100%;
   color: #fff;
-  padding: 20px;
+  padding: 20px 0;
   float: left;
   box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;
   background: #fff;
 }
 .offline-caltulator .offline-number{
-  padding: 15px 10px;
+  padding: 10px;
   font-size: 25px;
   color: #333;
   font-weight: 700;
@@ -65,41 +65,46 @@
   border: 1px solid #333;
   margin-bottom: 15px;
   cursor: pointer;
+  box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;
+  background: #f4f4f4;
+  border-radius: 5px;
 }
 .offline-search,
 .offline-input{
   width: 100%;
   float: left;
-  margin-top: 20px;
+  margin-top: 30px;
 }
-.offline-search-box{
-  width: 80%;
-  float: left;
-  padding: 5px;
-  border: 1px #333 solid;
-  border-radius: 0;
-  height: 60px;
-}
+
 .btn-offline-search{
   float: left;
-  width: 17%;
+  width: 21%;
   margin-left: 8px;
-  height: 60px;
+  height: 50px;
   cursor: pointer;
 }
 .offline-search .icon-search:before{
-  font-size: 30px;
+  font-size: 25px;
 }
 .offline-input .k-textbox{
   padding: 10px;
-  height: 60px;
+  height: 50px !important;
   width: 100%;
   font-size: 18px;
+  border: 1px solid #ccc;
+}
+.k-textbox.input-offline-search{
+  width: 75%; 
+  float: left; 
+  height: 50px !important;
+  padding: 10px;
+  font-size: 18px;
+  border: 1px solid #ccc;
 }
 .offline-before-read{
   float: left;
   width: 100%;
-  margin-top: 20px;
+  margin-top: 30px;
 }
 .offline-before-read p{
   font-size: 20px;
@@ -108,22 +113,86 @@
 .offline-btntwo{
   width: 100%;
   float: left;
-  margin-top: 20px;
+  margin-top: 30px;
 }
 .offline-btntwo .offline-btn-add{
   float: left;
   background: #0077c5;
-  padding: 20px 40px;
+  padding: 20px 0;
   color: #fff;
   margin-right: 15px;
   font-size: 30px;
   cursor: pointer;
+  text-align: center;
+  width: 100%;
 }
 .offline-btntwo .offline-btn-next{
   float: left;
   background: #0077c5;
-  padding: 20px 55px;
+  padding: 20px 0;
   color: #fff;
   font-size: 30px;
   cursor: pointer;
+  text-align: center;
+  width: 100%;
+}
+.offline-before-read table{
+  width: 100%;
+  float: left;
+}
+.offline-before-read table tr td{
+  padding: 8px;
+}
+.offline-before-read table tr:nth-child(2), 
+.offline-before-read table tr:nth-child(4){
+  background: #E4EFF9;
+}
+.offline-number .glyphicons.chevron-left i:before{
+  top: -12px;
+}
+.window-header{
+  width: 93%;
+  padding: 8px 25px 10px;
+  float: left;
+  border-bottom: 1px solid #333;
+}
+.window-content{
+  width: 93%;
+  padding: 10px 25px;
+  float: left;
+}
+@media only screen
+and (min-device-width : 320px)
+and (max-device-width : 480px) {
+  .offline-btntwo .col-sm-6{
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+  .offline-content{
+    margin-top: 30px;
+  }
+  .home-utibill {
+    float: left;
+    width: 90px;
+  }
+  .utibill {
+    width: 200px;
+    margin-top: 7px;
+  }
+  .offline-before-read{
+    margin-top: 15px;
+    margin-bottom: 15px;
+  }
+  .offline-search, 
+  .offline-input,
+  .offline-btntwo{
+    margin-top: 15px;
+  }
+  .offline-btn-next{
+    margin-top: 15px;
+    margin-bottom: 15px;
+  }
+  .offline-caltulator .offline-number{
+    margin-bottom: 10px;
+  }
 }

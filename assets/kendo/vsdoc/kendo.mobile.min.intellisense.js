@@ -693,6 +693,15 @@ intellisense.annotate(instance, {
         /// <param name="items" type="Object" >The data item or data items to remove from the data source.</param>
         /// </signature>
     },
+    pushInsert: function(index,items) {
+        /// <signature>
+        /// <summary>
+        /// Appends the specified data items to the data source without marking them as "new". The data source will not sync data items appended via pushInsert.
+        /// </summary>
+        /// <param name="index" type="Number" >The zero-based index at which the data item will be inserted.</param>
+        /// <param name="items" type="Object" >The data item or data items to append to the data source.</param>
+        /// </signature>
+    },
     pushUpdate: function(items) {
         /// <signature>
         /// <summary>
@@ -1118,6 +1127,15 @@ var original = kendo.data.HierarchicalDataSource;
 var wrapper = function() {
 var instance = new original();
 intellisense.annotate(instance, {
+    filter: function(value) {
+        /// <signature>
+        /// <summary>
+        /// Gets or sets the filter configuration. It applies the filter to all loaded nodes and creates views from the nodes that match the filter and their parent nodes up to the root of the hierarchy. Currently not loaded nodes are not filtered.
+        /// </summary>
+        /// <param name="value" type="Object" >The filter configuration. Accepts the same values as the filter option (check there for more examples).</param>
+        /// <returns type="Object">the current filter configuration. Returns undefined if the DataSource instance has not performed filtering so far.</returns>
+        /// </signature>
+    },
 
     bind: function(event, callback) {
         /// <signature>
@@ -5027,7 +5045,7 @@ intellisense.annotate(instance, {
         /// <summary>
         /// Creates a new instance with the same width and height.
         /// </summary>
-        /// <returns type="kendo.geometry.Size">A new Size instance with the same coordinates.</returns>
+        /// <returns type="kendo.geometry.Size">A new Size instance with the same dimensions.</returns>
         /// </signature>
     },
     equals: function(other) {

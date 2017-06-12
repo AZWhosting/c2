@@ -743,6 +743,16 @@ kendo.data.DataSource.prototype = {
     },
 
 
+    pushInsert: function(index,items) {
+        /// <summary>
+        /// Appends the specified data items to the data source without marking them as "new". The data source will not sync data items appended via pushInsert.
+        /// </summary>
+        /// <param name="index" type="Number" >The zero-based index at which the data item will be inserted.</param>
+        /// <param name="items" type="Object" >The data item or data items to append to the data source.</param>
+
+    },
+
+
     pushUpdate: function(items) {
         /// <summary>
         /// Updates the specified data items without marking them as "dirty". The data source will not sync data items appended via pushUpdate. If the data items are not found (using schema.model.id), they will be appended.
@@ -1274,6 +1284,16 @@ kendo.data.HierarchicalDataSource.prototype = {
 
 
 
+
+    filter: function(value) {
+        /// <summary>
+        /// Gets or sets the filter configuration. It applies the filter to all loaded nodes and creates views from the nodes that match the filter and their parent nodes up to the root of the hierarchy. Currently not loaded nodes are not filtered.
+        /// </summary>
+        /// <param name="value" type="Object" >The filter configuration. Accepts the same values as the filter option (check there for more examples).</param>
+        /// <returns type="Object">the current filter configuration. Returns undefined if the DataSource instance has not performed filtering so far.</returns>
+
+    },
+
     bind: function(event, callback) {
         /// <summary>
         /// Binds to a widget event.
@@ -1304,6 +1324,9 @@ $.fn.kendoHierarchicalDataSource = function(options) {
     /// Instantiates a kendo.data.HierarchicalDataSource widget based the DOM elements that match the selector.
 
     /// &#10;Accepts an object with the following configuration options:
+    /// &#10;
+    /// &#10;filter - Array|Object 
+    /// &#10;The filters which are applied over the data items. It applies the filter to all loaded nodes and creates views from the nodes that match the filter and their parent nodes up to the root of the hierarchy. Currently not loaded nodes are not filtered. By default, no filter is applied.
     /// &#10;
     /// &#10;schema - Object 
     /// &#10;The schema configuration. See the DataSource.schema configuration for all available options.
@@ -5705,7 +5728,7 @@ kendo.geometry.Size.prototype = {
         /// <summary>
         /// Creates a new instance with the same width and height.
         /// </summary>
-        /// <returns type="kendo.geometry.Size">A new Size instance with the same coordinates.</returns>
+        /// <returns type="kendo.geometry.Size">A new Size instance with the same dimensions.</returns>
 
     },
 
@@ -7308,6 +7331,9 @@ $.fn.kendoCalendar = function(options) {
     /// &#10;max - Date (default: Date(2099, 11, 31))
     /// &#10;Specifies the maximum date, which the calendar can show.
     /// &#10;
+    /// &#10;messages - Object 
+    /// &#10;Allows localization of the strings that are used in the widget.
+    /// &#10;
     /// &#10;min - Date (default: Date(1900, 0, 1))
     /// &#10;Specifies the minimum date, which the calendar can show.
     /// &#10;
@@ -8040,6 +8066,9 @@ $.fn.kendoContextMenu = function(options) {
     /// &#10;closeOnClick - Boolean (default: true)
     /// &#10;Specifies that sub menus should close after item selection (provided they won't navigate).
     /// &#10;
+    /// &#10;copyAnchorStyles - Boolean (default: true)
+    /// &#10;Copies and uses the styles from the anchor.
+    /// &#10;
     /// &#10;dataSource - Object|Array 
     /// &#10;The data source of the widget which is used to render its items. Can be a JSON object/Array that contains an item or an Array of items to be rendered.
 /// &#10;Refer to the example below for a list of the supported properties.
@@ -8068,6 +8097,130 @@ $.fn.kendoContextMenu = function(options) {
     /// &#10;
     /// &#10;target - String|jQuery (default: "body")
     /// &#10;Specifies the element on which ContextMenu should open. The default element is the document body.
+    /// &#10;
+    /// </summary>
+    /// <param name="options" type="Object">
+    /// The widget configuration options
+    /// </param>
+};
+
+
+kendo.ui.DateInput = function() { };
+
+kendo.ui.DateInput.prototype = {
+
+
+
+
+    destroy: function() {
+        /// <summary>
+        /// Prepares the DateInput for safe removal from DOM. Detaches all event handlers and removes jQuery.data attributes to avoid memory leaks. Calls destroy method of any child Kendo widgets.
+        /// </summary>
+
+    },
+
+
+    enable: function(enable) {
+        /// <summary>
+        /// Enable/Disable the DateInput widget.
+        /// </summary>
+        /// <param name="enable" type="Boolean" >The argument, which defines whether to enable/disable the DateInput.</param>
+
+    },
+
+
+    readonly: function(readonly) {
+        /// <summary>
+        /// Toggles the readonly state of the widget. When the widget is readonly it doesn't allow user input.
+        /// </summary>
+        /// <param name="readonly" type="Boolean" >The argument, which defines whether the DateInput should be readonly or editable.</param>
+
+    },
+
+
+    max: function(value) {
+        /// <summary>
+        /// Gets/Sets the max value of the DateInput.
+        /// </summary>
+        /// <param name="value" type="Object" >The max date to set.</param>
+        /// <returns type="Date">The max value of the DateInput.</returns>
+
+    },
+
+
+    min: function(value) {
+        /// <summary>
+        /// Gets/Sets the min value of the DateInput.
+        /// </summary>
+        /// <param name="value" type="Object" >The min date to set.</param>
+        /// <returns type="Date">The min value of the DateInput.</returns>
+
+    },
+
+
+    setOptions: function(options) {
+        /// <summary>
+        /// Changes the initial DateInput configuration.
+        /// </summary>
+        /// <param name="options" type="Object" >The new configuration options.</param>
+
+    },
+
+
+    value: function(value) {
+        /// <summary>
+        /// Gets/Sets the value of the DateInput.
+        /// </summary>
+        /// <param name="value" type="Object" >The value to set.</param>
+        /// <returns type="Date">The value of the DateInput.</returns>
+
+    },
+
+    bind: function(event, callback) {
+        /// <summary>
+        /// Binds to a widget event.
+        /// </summary>
+        /// <param name="event" type="String">The event name</param>
+        /// <param name="callback" type="Function">The callback to be executed when the event is triggered.</param>
+    },
+
+    unbind: function(event, callback) {
+        /// <summary>
+        /// Unbinds a callback from a widget event.
+        /// </summary>
+        /// <param name="event" type="String">The event name</param>
+        /// <param name="callback" type="Function">The callback to be removed.</param>
+    }
+
+};
+
+$.fn.getKendoDateInput = function() {
+    /// <summary>
+    /// Returns a reference to the kendo.ui.DateInput widget, instantiated on the selector.
+    /// </summary>
+    /// <returns type="kendo.ui.DateInput">The kendo.ui.DateInput instance (if present).</returns>
+};
+
+$.fn.kendoDateInput = function(options) {
+    /// <summary>
+    /// Instantiates a kendo.ui.DateInput widget based the DOM elements that match the selector.
+
+    /// &#10;Accepts an object with the following configuration options:
+    /// &#10;
+    /// &#10;format - String (default: "M/d/yyyy")
+    /// &#10;Specifies the format, which is used to format the value of the DateInput displayed in the input. The format also will be used to parse the input.
+    /// &#10;
+    /// &#10;max - Date (default: Date(2099, 11, 31))
+    /// &#10;Specifies the maximum date which can be entered in the input.
+    /// &#10;
+    /// &#10;min - Date (default: Date(1900, 0, 1))
+    /// &#10;Specifies the minimum date that which be entered in the input.
+    /// &#10;
+    /// &#10;value - Date (default: null)
+    /// &#10;Specifies the selected date.
+    /// &#10;
+    /// &#10;messages - Object 
+    /// &#10;The messages that DateInput uses.  Use it to customize or localize the placeholders of each date/time part.
     /// &#10;
     /// </summary>
     /// <param name="options" type="Object">
@@ -8205,6 +8358,9 @@ $.fn.kendoDatePicker = function(options) {
     /// &#10;
     /// &#10;culture - String (default: "en-US")
     /// &#10;Specifies the culture info used by the widget.
+    /// &#10;
+    /// &#10;dateInput - Boolean (default: false)
+    /// &#10;Specifies if the DatePicker will use DateInput for editing value
     /// &#10;
     /// &#10;dates - Array 
     /// &#10;Specifies a list of dates, which will be passed to the month template.
@@ -8392,6 +8548,9 @@ $.fn.kendoDateTimePicker = function(options) {
     /// &#10;
     /// &#10;culture - String (default: "en-US")
     /// &#10;Specifies the culture info used by the widget.
+    /// &#10;
+    /// &#10;dateInput - Boolean (default: false)
+    /// &#10;Specifies if the DateTimePicker will use DateInput for editing value
     /// &#10;
     /// &#10;dates - Array 
     /// &#10;Specifies a list of dates, which will be passed to the month template of the DateView.
@@ -10002,6 +10161,15 @@ kendo.ui.Grid.prototype = {
     },
 
 
+    selectedKeyNames: function() {
+        /// <summary>
+        /// Gets an array that holds the id field values of the selected rows.
+        /// </summary>
+        /// <returns type="Array">of the id field values of the selected rows.</returns>
+
+    },
+
+
     setDataSource: function(dataSource) {
         /// <summary>
         /// Sets the data source of the widget.
@@ -10156,6 +10324,9 @@ $.fn.kendoGrid = function(options) {
     /// &#10;pdf - Object 
     /// &#10;Configures the Kendo UI Grid PDF export settings.
     /// &#10;
+    /// &#10;persistSelection - Boolean (default: false)
+    /// &#10;Sets a value indicating whether the selection will be persisted when sorting, paging, filtering and etc are performed.
+    /// &#10;
     /// &#10;reorderable - Boolean (default: false)
     /// &#10;If set to true the user could reorder the columns by dragging their header cells. By default reordering is disabled.
 /// &#10;Multi-level headers allow reordering only in same level.
@@ -10189,6 +10360,191 @@ $.fn.kendoGrid = function(options) {
     /// &#10;toolbar - Array 
     /// &#10;If a String value is assigned to the toolbar configuration option, it will be treated as a single string template for the whole grid Toolbar,
 /// &#10;and the string value will be passed as an argument to a kendo.template() function.If a Function value is assigned (it may be a kendo.template() function call or a generic function reference), then the return value of the function will be used to render the Grid Toolbar contents.If an Array value is assigned, it will be treated as the list of commands displayed in the grid's Toolbar. Commands can be custom or built-in ("cancel", "create", "save", "excel", "pdf").The "cancel" built-in command reverts any data changes done by the end user.The "create" command adds an empty data item to the grid.The "save" command persists any data changes done by the end user.The "excel" command exports the grid data in MS Excel format.The "pdf" command exports the grid data in PDF format.
+    /// &#10;
+    /// </summary>
+    /// <param name="options" type="Object">
+    /// The widget configuration options
+    /// </param>
+};
+
+
+kendo.ui.ListBox = function() { };
+
+kendo.ui.ListBox.prototype = {
+
+
+
+
+    clearSelection: function() {
+        /// <summary>
+        /// Clears the selected items of the ListBox and triggers the change event.
+        /// </summary>
+
+    },
+
+
+    dataItem: function(element) {
+        /// <summary>
+        /// Returns the data item to which the specified list item is bound.
+        /// </summary>
+        /// <param name="element" type="Object" >A string, DOM element, or jQuery object which represents the item. A string is treated as a jQuery selector.</param>
+        /// <returns type="kendo.data.ObservableObject">The model of the item that was passed as a parameter.</returns>
+
+    },
+
+
+    dataItems: function() {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns type="kendo.data.ObservableArray">An array of data items to which the widget is bound.</returns>
+
+    },
+
+
+    destroy: function() {
+        /// <summary>
+        /// Prepares the ListBox for a safe removal from the DOM. Detaches all event handlers and removes the jQuery.data attributes to avoid memory leaks. Calls the destroy method of child Kendo UI widgets.
+        /// </summary>
+
+    },
+
+
+    enable: function(element,enable) {
+        /// <summary>
+        /// Enables or disables the ListBox items.
+        /// </summary>
+        /// <param name="element" type="Object" >The items that are to be enabled or disabled.</param>
+        /// <param name="enable" type="Boolean" >Indicates whether the items should be enabled or disabled.</param>
+
+    },
+
+
+    items: function() {
+        /// <summary>
+        /// Obtains an array of the DOM elements which correspond to the data items from the view method of the Kendo UI DataSource.
+        /// </summary>
+        /// <returns type="Array">- The currently rendered view items ( depending on the item template, <div>, <li>, <tr>, and other elements).</returns>
+
+    },
+
+
+    refresh: function() {
+        /// <summary>
+        /// Reloads the data and repaints the ListBox. Triggers the dataBound event.
+        /// </summary>
+
+    },
+
+
+    reorder: function(element,index) {
+        /// <summary>
+        /// Moves the specified item at a position set by the zero-based index parameter. The rest of the items are reordered accordingly.
+        /// </summary>
+        /// <param name="element" type="Object" >The item that is to be reordered.</param>
+        /// <param name="index" type="Number" >The new position of the item in the list.</param>
+
+    },
+
+
+    remove: function(element) {
+        /// <summary>
+        /// Removes items from the widget.
+        /// </summary>
+        /// <param name="element" type="Object" >The items that are to be removed.</param>
+
+    },
+
+
+    select: function(items) {
+        /// <summary>
+        /// Gets or sets the selected ListBox items.
+        /// </summary>
+        /// <param name="items" type="Object" >The items that are to be selected.</param>
+        /// <returns type="jQuery">- The selected items if called without arguments.</returns>
+
+    },
+
+
+    setDataSource: function(dataSource) {
+        /// <summary>
+        /// Sets the dataSource of an existing ListBox and rebinds it.
+        /// </summary>
+        /// <param name="dataSource" type="kendo.data.DataSource" ></param>
+
+    },
+
+    bind: function(event, callback) {
+        /// <summary>
+        /// Binds to a widget event.
+        /// </summary>
+        /// <param name="event" type="String">The event name</param>
+        /// <param name="callback" type="Function">The callback to be executed when the event is triggered.</param>
+    },
+
+    unbind: function(event, callback) {
+        /// <summary>
+        /// Unbinds a callback from a widget event.
+        /// </summary>
+        /// <param name="event" type="String">The event name</param>
+        /// <param name="callback" type="Function">The callback to be removed.</param>
+    }
+
+};
+
+$.fn.getKendoListBox = function() {
+    /// <summary>
+    /// Returns a reference to the kendo.ui.ListBox widget, instantiated on the selector.
+    /// </summary>
+    /// <returns type="kendo.ui.ListBox">The kendo.ui.ListBox instance (if present).</returns>
+};
+
+$.fn.kendoListBox = function(options) {
+    /// <summary>
+    /// Instantiates a kendo.ui.ListBox widget based the DOM elements that match the selector.
+
+    /// &#10;Accepts an object with the following configuration options:
+    /// &#10;
+    /// &#10;autoBind - Boolean (default: true)
+    /// &#10;If set to false, the widget will not bind to the data source during initialization. In this case, the data binding will occur when the change event of the data source is fired. By default, the ListBox will bind to the data source that is specified in the configuration.
+    /// &#10;
+    /// &#10;connectWith - String (default: null)
+    /// &#10;The id of the target ListBox to which items from the source ListBox will be transferred and vice versa. If you have to transfer items from the target ListBox over its toolbar, then you also need to set its connectWith option.
+    /// &#10;
+    /// &#10;dataSource - Object|Array|kendo.data.DataSource 
+    /// &#10;The data source of the widget which is used render ListBox items. Can be a JavaScript object which represents a valid data source configuration, a JavaScript array, or an existing kendo.data.DataSource instance.If the dataSource option is set to a JavaScript object or array, the widget initializes a new kendo.data.DataSource instance by using that value as the data source configuration.If the dataSource option is an existing kendo.data.DataSource instance, the widget uses that instance and does not initialize a new one.
+    /// &#10;
+    /// &#10;dataTextField - String (default: "")
+    /// &#10;The field of the data item that provides the text content of the list items. Based on this field, the widget filters the data source.
+    /// &#10;
+    /// &#10;dataValueField - String (default: "")
+    /// &#10;The field of the data item that provides the value of the widget.
+    /// &#10;
+    /// &#10;draggable - Boolean (default: false)
+    /// &#10;Indicates whether the ListBox items can be dragged and dropped.
+    /// &#10;
+    /// &#10;draggable - Object (default: false)
+    /// &#10;Indicates whether the ListBox items can be dragged and dropped.
+    /// &#10;
+    /// &#10;dropSources - Array 
+    /// &#10;Array of id strings which determines the ListBoxes that can drag and drop their items to the current ListBox. The dropSources option describes a one way relationship. If you want a two-way connection, then set the dropSources option on both widgets.
+    /// &#10;
+    /// &#10;navigatable - Boolean (default: true)
+    /// &#10;Indicates whether the keyboard navigation is enabled or disabled.
+    /// &#10;
+    /// &#10;messages - Object 
+    /// &#10;Defines the localization texts for the ListBox. Used primarily for localization.
+    /// &#10;
+    /// &#10;selectable - String (default: "single")
+    /// &#10;Indicates whether the selection is single or multiple. The possible values are:
+/// &#10;- "single" - A single-item selection.
+/// &#10;- "multiple" - A multiple-item selection.
+    /// &#10;
+    /// &#10;template - String|Function 
+    /// &#10;Specifies the item template of the ListBox.
+    /// &#10;
+    /// &#10;toolbar - Object 
+    /// &#10;Defines the settings for displaying the toolbar of the ListBox. The toolbar allows you to execute a set of predefined actions.By default, the toolbar is not displayed. If the tools array is populated, then the toolbar and the corresponding tools are displayed.
     /// &#10;
     /// </summary>
     /// <param name="options" type="Object">
@@ -10811,6 +11167,12 @@ $.fn.kendoMenu = function(options) {
     /// &#10;Specifies how Menu should adjust to screen boundaries. By default the strategy is "fit" for a sub menu with a horizontal parent,
 /// &#10;meaning it will move to fit in screen boundaries in all directions, and "fit flip" for a sub menu with vertical parent, meaning it will fit vertically and flip over
 /// &#10;its parent horizontally. You can also switch off the screen boundary detection completely if you set the popupCollision to false.
+    /// &#10;
+    /// &#10;scrollable - Boolean 
+    /// &#10;If enabled, the Menu displays buttons that scroll the items when they cannot fit the width or the popups' height of the Menu. By default, scrolling is disabled.The following example demonstrates how to enable the scrolling functionality.
+    /// &#10;
+    /// &#10;scrollable - Object 
+    /// &#10;If enabled, the Menu displays buttons that scroll the items when they cannot fit the width or the popups' height of the Menu. By default, scrolling is disabled.The following example demonstrates how to enable the scrolling functionality.
     /// &#10;
     /// </summary>
     /// <param name="options" type="Object">
@@ -13852,6 +14214,9 @@ $.fn.kendoTimePicker = function(options) {
     /// &#10;culture - String (default: "en-US")
     /// &#10;Specifies the culture info used by the widget.
     /// &#10;
+    /// &#10;dateInput - Boolean (default: false)
+    /// &#10;Specifies if the TimePicker will use DateInput for editing value
+    /// &#10;
     /// &#10;dates - Array 
     /// &#10;Specifies a list of dates, which are shown in the time drop-down list. If not set, the TimePicker will auto-generate the available times.
     /// &#10;
@@ -14557,6 +14922,14 @@ kendo.ui.TreeView.prototype = {
     },
 
 
+    focus: function() {
+        /// <summary>
+        /// Sets the focus to the TreeView
+        /// </summary>
+
+    },
+
+
     insertAfter: function(nodeData,referenceNode) {
         /// <summary>
         /// Inserts a node after a specified node.
@@ -14819,6 +15192,24 @@ kendo.ui.Upload.prototype = {
     },
 
 
+    pause: function(li) {
+        /// <summary>
+        /// Pauses the upload of the file that is uploaded in chunks.
+        /// </summary>
+        /// <param name="li" type="jQuery" >A jQuery object which represents the file to be paused.</param>
+
+    },
+
+
+    resume: function(li) {
+        /// <summary>
+        /// Resumes the upload of a paused file that is uploaded in chunks.
+        /// </summary>
+        /// <param name="li" type="jQuery" >A jQuery object which represents the file to be resumed.</param>
+
+    },
+
+
     removeAllFiles: function() {
         /// <summary>
         /// Removes all files by sending a standard remove request to the handler.
@@ -14893,12 +15284,18 @@ $.fn.kendoUpload = function(options) {
     /// &#10;Accepts an object with the following configuration options:
     /// &#10;
     /// &#10;async - Object 
-    /// &#10;Configures the ability to upload a file(s) in an asynchronous manner. Please refer to the
+    /// &#10;Configures the ability to upload a files in an asynchronous manner. Please refer to the
 /// &#10;async mode help topic
 /// &#10;for more details.
     /// &#10;
+    /// &#10;directory - Boolean (default: false)
+    /// &#10;Enables the selection of folders instead of files. When the user selects a directory, its entire content hierarchy of files is included in the set of selected items. The setting supported only in browsers that support webkitdirectory.
+    /// &#10;
+    /// &#10;directoryDrop - Boolean (default: false)
+    /// &#10;Enables the dropping of folders over the Upload and its drop zone. When a directory is dropped, its entire content hierarchy of files is included in the set of selected items. This setting is supported only in browsers that support DataTransferItem and webkitGetAsEntry.
+    /// &#10;
     /// &#10;dropZone - String 
-    /// &#10;Initializes a dropzone element(s) based on a given selector that provides drag and drop file upload.
+    /// &#10;Initializes a dropzone elements based on a given selector that provides drag and drop file upload.
     /// &#10;
     /// &#10;enabled - Boolean (default: true)
     /// &#10;Enables (true) or disables (false) an Upload. A disabled
@@ -14917,7 +15314,7 @@ $.fn.kendoUpload = function(options) {
     /// &#10;
     /// &#10;showFileList - Boolean (default: true)
     /// &#10;Enables (true) or disables (false) the ability to display a file listing
-/// &#10;for uploading a file(s). Disabling a file listing may be useful you wish to customize the UI; use the
+/// &#10;for uploading a files. Disabling a file listing may be useful you wish to customize the UI; use the
 /// &#10;client-side events to build your own UI.
     /// &#10;
     /// &#10;template - String|Function 

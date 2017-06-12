@@ -174,7 +174,7 @@ class Item_lines extends REST_Controller {
 							$currentPrice = $currentQuantity * (floatval($value->price) / floatval($transaction->rate));
 
 							$item->price = ($lastPrice + $currentPrice) / $totalQty;
-							$obj->cost = $currentQuantity * floatval($item->cost) * floatval($transaction->rate);
+							$obj->cost = floatval($item->cost) * floatval($transaction->rate);
 							$obj->price_avg = ($lastPrice + $currentPrice) / $totalQty;
 						}
 

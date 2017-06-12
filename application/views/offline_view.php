@@ -11,37 +11,76 @@
 <script type="text/x-kendo-template" id="index">
 	<div class="row-fluid">
 		<div class="offline-header">
-			<img class="home-utibill" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/Utibill.png">
-			<img class="utibill" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/water_logo/utibill_logo.png">
+			<div class="col-xs-12 col-sm-12">
+				<img class="home-utibill" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/Utibill.png">
+				<img class="utibill" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/water_logo/utibill_logo.png">
+			</div>
 		</div>
 		<div class="offline-content">
 			<div class="row-fluid">
-				<div class="col-xs-12 col-sm-4" style="padding-left: 0">
+				<div class="col-xs-12 col-sm-4">
 					<div class="offline-read">
-						<p class="pull-left">បានអាន</p>
+						<p class="pull-left" style="font-size: 18px;">បានអាន</p>
 						<p class="pull-right">100.00</p>
 					</div>
 
 					<div class="offline-search">
 						<div class="row-fluid">
-							<div class="span12" style="padding: 0px;">
-								<select data-role="multiselect" class="offline-search-box"
-									    data-value-primitive="true"
-									    data-header-template="contact-header-tmpl"
-									    data-item-template="contact-list-tmpl"
-									    data-value-field="id"
-									    data-text-field="name"
-									    data-bind="value: obj.contactIds, 
-									   			source: contactDS"
-									    data-placeholder="Search for an app..." /></select>
-								<button class="btn-offline-search" type="button" data-role="button" data-bind="click: search" ><i class="icon-search"></i></button>
+							<div class="col-sm-12" style="padding: 0px;">
+								<input id=""
+									name="" 
+									type="text" 
+									class="k-textbox input-offline-search"
+									data-bind="" />
+								<button data-bind="click: openWindow" class="btn-offline-search" type="button" data-role="button" ><i class="icon-search"></i></button>
 							</div>
 						</div>
 					</div>
 
+					<!--First Window -->
+				    <div data-role="window"
+				    	data-title="false"
+			            data-width="610"
+			            data-height="540"
+			            data-actions="{}"
+			            data-modal="{mask: 'true'}"
+			            data-position="{top: '50%', left: '50%'}"
+			            data-bind="visible: windowVisible">
+
+			    		<div class="win-wrapper">
+			    			<div class="window-header">			    				
+			    				<span style="float: right; margin-top: -5px; cursor: pointer; color: #999; font-weight: 600; font-size: 15px; margin-right: -15px;" data-bind="click: closeWindow" >x</span>
+			    			</div>
+			    			<div class="window-content">
+			    				<div class="row">
+				    				<div class="col-sm-12" style="width: 96%;">
+										<div class="col-sm-6">
+										</div>
+										<div class="col-sm-6">
+										</div>
+									</div>
+								</div>
+			    			</div>
+			    		</div>
+					</div>
+
 					<div class="offline-before-read">
-						<p>CHH-03001</p>
-						<p>អំណានមុន. 195</p>
+						<table>
+							<tr>
+								<td>ឈ្មោះអតិថិជន:</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>លេខនាឡិកា:</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>អំណានមុន:</td>
+								<td></td>
+							</tr>
+						</table>
+						<!-- <p>CHH-03001</p>
+						<p>អំណានមុន. 195</p> -->
 					</div>
 
 				</div>
@@ -53,87 +92,99 @@
 
 					<div class="offline-input">
 						<div class="row-fluid">
-							<div class="span12" style="padding: 0;">
+							<div class="col-sm-12" style="padding: 0;">
 								<input id="" 
 									name="" 
 									type="text" 
-									class="k-textbox" 
+									class="k-textbox"
 									data-bind="" />
 							</div>
 						</div>
 					</div>
 
 					<div class="offline-btntwo">
-						<a class="offline-btn-add">កត់ត្រា</a>
-						<a class="offline-btn-next">បន្ទាប់</a>
+						<div class="row">
+							<div class="col-sm-6">
+								<a class="offline-btn-add">កត់ត្រា</a>
+							</div>
+							<div class="col-sm-6">
+								<a class="offline-btn-next">បន្ទាប់</a>
+							</div>
+						</div>
 					</div>
 
 				</div>
 				<div class="col-xs-12 col-sm-4">
 					<div class="offline-caltulator">
-						<div class="row-fluid">
-							<a class="col-xs-3 col-sm-4 ">
-								<div class="offline-number">
-									1
+						<div class="row">
+							<div class="col-sm-12">
+								<div class="col-xs-4 col-sm-4 ">
+									<div class="offline-number">
+										1
+									</div>
 								</div>
-							</a>
-							<a class="col-xs-3 col-sm-4 ">
-								<div class="offline-number">
-									2
+								<div class="col-xs-4 col-sm-4 ">
+									<div class="offline-number">
+										2
+									</div>
 								</div>
-							</a>
-							<a class="col-xs-3 col-sm-4 ">
-								<div class="offline-number">
-									3
+								<div class="col-xs-4 col-sm-4 ">
+									<div class="offline-number">
+										3
+									</div>
 								</div>
-							</a>
-							<a class="col-xs-3 col-sm-4 ">
-								<div class="offline-number">
-									4
-								</div>
-							</a>
+								
+							</div>
 
-							<a class="col-xs-3 col-sm-4 ">
-								<div class="offline-number">
-									5
+							<div class="col-sm-12">
+								<div class="col-xs-4 col-sm-4 ">
+									<div class="offline-number">
+										4
+									</div>
 								</div>
-							</a>
+								<div class="col-xs-4 col-sm-4 ">
+									<div class="offline-number">
+										5
+									</div>
+								</div>
+								<div class="col-xs-4 col-sm-4 ">
+									<div class="offline-number">
+										6
+									</div>
+								</div>
+								
+							</div>
 
-							<a class="col-xs-3 col-sm-4 ">
-								<div class="offline-number">
-									6
+							<div class="col-sm-12">
+								<div class="col-xs-4 col-sm-4 ">
+									<div class="offline-number">
+										7
+									</div>
 								</div>
-							</a>
+								<div class="col-xs-4 col-sm-4 ">
+									<div class="offline-number">
+										8
+									</div>
+								</div>
+								<div class="col-xs-4 col-sm-4 ">
+									<div class="offline-number">
+										9
+									</div>
+								</div>
+							</div>
 
-							<a class="col-xs-3 col-sm-4 ">
-								<div class="offline-number">
-									7
+							<div class="col-sm-12">
+								<div class="col-xs-4 col-sm-4 ">
+									<div class="offline-number" style="margin-bottom: 0;">
+										0
+									</div>
 								</div>
-							</a>
-
-							<a class="col-xs-3 col-sm-4 ">
-								<div class="offline-number">
-									8
+								<div class="col-xs-8 col-sm-8 ">
+									<div class="offline-number " style="margin-bottom: 0;">
+										<span class="glyphicons chevron-left"><i></i></span>
+									</div>
 								</div>
-							</a>
-
-							<a class="col-xs-3 col-sm-4 ">
-								<div class="offline-number">
-									9
-								</div>
-							</a>
-
-							<a class="col-xs-3 col-sm-4 ">
-								<div class="offline-number" style="margin-bottom: 0;">
-									0
-								</div>
-							</a>
-
-							<a class="col-xs-3 col-sm-8 ">
-								<div class="offline-number" style="margin-bottom: 0;">
-									0
-								</div>
-							</a>
+							</div>
 
 						</div>
 					</div>
@@ -2392,6 +2443,7 @@
 		dataSource			: dataStore(apiUrl+"accounting_modules/apar"),
 		summaryDS			: dataStore(apiUrl+"accounting_modules/financial_snapshot"),
 		graphDS 			: dataStore(apiUrl+"cash_modules/cash_in_out"),
+		windowVisible 		: false,
 		modules 			: new kendo.data.DataSource({
 			transport: {
 				read 	: {
@@ -2459,6 +2511,16 @@
 
 
 		},
+		openWindow			: function(){
+      		//this.addType();
+
+         	this.set("windowVisible", true);
+      	},
+      	closeWindow 		: function(){
+      		//this.dataSource.cancelChanges();
+
+      		this.set("windowVisible", false);
+      	},
 		setObj 		: function(){
 			this.set("obj", {
 				//AR
@@ -2520,6 +2582,7 @@
 				obj.set("equity", kendo.toString(view[0].equity, banhji.locale=="km-KH"?"c0":"c2", banhji.locale));
 			});
 		}
+		
 	});
 	
 

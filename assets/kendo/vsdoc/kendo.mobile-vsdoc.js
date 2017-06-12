@@ -743,6 +743,16 @@ kendo.data.DataSource.prototype = {
     },
 
 
+    pushInsert: function(index,items) {
+        /// <summary>
+        /// Appends the specified data items to the data source without marking them as "new". The data source will not sync data items appended via pushInsert.
+        /// </summary>
+        /// <param name="index" type="Number" >The zero-based index at which the data item will be inserted.</param>
+        /// <param name="items" type="Object" >The data item or data items to append to the data source.</param>
+
+    },
+
+
     pushUpdate: function(items) {
         /// <summary>
         /// Updates the specified data items without marking them as "dirty". The data source will not sync data items appended via pushUpdate. If the data items are not found (using schema.model.id), they will be appended.
@@ -1274,6 +1284,16 @@ kendo.data.HierarchicalDataSource.prototype = {
 
 
 
+
+    filter: function(value) {
+        /// <summary>
+        /// Gets or sets the filter configuration. It applies the filter to all loaded nodes and creates views from the nodes that match the filter and their parent nodes up to the root of the hierarchy. Currently not loaded nodes are not filtered.
+        /// </summary>
+        /// <param name="value" type="Object" >The filter configuration. Accepts the same values as the filter option (check there for more examples).</param>
+        /// <returns type="Object">the current filter configuration. Returns undefined if the DataSource instance has not performed filtering so far.</returns>
+
+    },
+
     bind: function(event, callback) {
         /// <summary>
         /// Binds to a widget event.
@@ -1304,6 +1324,9 @@ $.fn.kendoHierarchicalDataSource = function(options) {
     /// Instantiates a kendo.data.HierarchicalDataSource widget based the DOM elements that match the selector.
 
     /// &#10;Accepts an object with the following configuration options:
+    /// &#10;
+    /// &#10;filter - Array|Object 
+    /// &#10;The filters which are applied over the data items. It applies the filter to all loaded nodes and creates views from the nodes that match the filter and their parent nodes up to the root of the hierarchy. Currently not loaded nodes are not filtered. By default, no filter is applied.
     /// &#10;
     /// &#10;schema - Object 
     /// &#10;The schema configuration. See the DataSource.schema configuration for all available options.
@@ -5705,7 +5728,7 @@ kendo.geometry.Size.prototype = {
         /// <summary>
         /// Creates a new instance with the same width and height.
         /// </summary>
-        /// <returns type="kendo.geometry.Size">A new Size instance with the same coordinates.</returns>
+        /// <returns type="kendo.geometry.Size">A new Size instance with the same dimensions.</returns>
 
     },
 
