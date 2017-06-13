@@ -278,40 +278,38 @@
 </script>
 
 <script id="search" type="text/x-kendo-template">
-	<div class="widget widget-heading-simple widget-body-gray widget-employees">		
-		<div class="widget-body padding-none">			
-			<div class="row-fluid row-merge">
-				<div class="col-xs-12 col-sm-3 listWrapper" >
-					<div class="innerAll">							
-						<form autocomplete="off" class="form-inline">
-							
-							<div class="widget-search separator bottom">
-								<button type="button" class="btn btn-default pull-right" data-bind="click: search"><i class="icon-search"></i></button>
-								<div class="overflow-hidden">
-									<input type="search" placeholder="Number or Name..." data-bind="value: searchText, events:{change: enterSearch}">
-								</div>
+	<div class="row">		
+		<div class="col-xs-12 col-sm-12">
+			<div class="col-xs-12 col-sm-3 listWrapper" >
+				<div class="innerAll">							
+					<form autocomplete="off" class="form-inline">
+						
+						<div class="widget-search separator bottom">
+							<button type="button" class="btn btn-default pull-right" data-bind="click: search"><i class="icon-search"></i></button>
+							<div class="overflow-hidden">
+								<input type="search" placeholder="Number or Name..." data-bind="value: searchText, events:{change: enterSearch}">
 							</div>
-						</form>					
+						</div>
+					</form>					
+				</div>
+
+			</div>
+			<div class="col-xs-12 col-sm-9 detailsWrapper">
+				<div class="row-fluid">
+					<div class="span6">
+						Search
 					</div>
 
-				</div>
-				<div class="col-xs-12 col-sm-9 detailsWrapper">
-					<div class="row-fluid">
-						<div class="span6">
-							Search
-						</div>
-
-						<div class="span6" style="margin-bottom: 10px;">
-							Caltulator												
-						</div>
+					<div class="span6" style="margin-bottom: 10px;">
+						Caltulator												
 					</div>
-					
-	            	<div id="pager" class="k-pager-wrap"
-	            		data-role="pager"
-				    	data-auto-bind="false"
-			            data-bind=""></div>	            	
 				</div>
-			</div>			
+				
+            	<div id="pager" class="k-pager-wrap"
+            		data-role="pager"
+			    	data-auto-bind="false"
+		            data-bind=""></div>	            	
+			</div>
 		</div>
 	</div>		
 </script>

@@ -464,9 +464,11 @@ class Imports extends REST_Controller {
 				$sublocation->select('id, branch_id')->where('name', $row->sub_bloc)->limit(1)->get();
 				$meter->pole_id = isset($sublocation->id) ? $sublocation->id : 0;
 			}
-			
-			$box = new Location(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			$box->select('id, branch_id')->where('name', $row->box)->limit(1)->get();
+			if(isset($row->box)){
+				$box = new Location(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$box->select('id, branch_id')->where('name', $row->box)->limit(1)->get();
+				$meter->box_id = isset($box->id) ? $box->id: 0;
+			}
 			$startup = intval($row->start_up);
 			$meter->number = isset($row->number) ? $row->number : 0;
 			$meter->worder = isset($row->order) ? $row->order : $order;
@@ -480,7 +482,6 @@ class Imports extends REST_Controller {
 			$meter->branch_id = $location->branch_id;
 			$meter->location_id = $location->id;
 			
-			$meter->box_id = isset($box->id) ? $box->id: 0;
 			$meter->type = isset($row->type) ? $row->type: "e";
 			$meter->plan_id = $plan->id;
 			$meter->date_used = date('Y-m-d', strtotime($row->date_used));
