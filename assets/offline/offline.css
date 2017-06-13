@@ -82,6 +82,7 @@
   margin-left: 8px;
   height: 50px;
   cursor: pointer;
+  line-height: 50px;
 }
 .offline-search .icon-search:before{
   font-size: 25px;
