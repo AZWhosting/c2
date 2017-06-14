@@ -55231,11 +55231,12 @@
 				        });
 			        }else{
 						var itemPriceList = [], counter = 0,
-						rate = obj.rate / banhji.source.getRate(item.locale, new Date(obj.issued_date)),
-						price = item.price, 
-						unit_value = 1, 
-						measurement_id = item.measurement_id, 
-						locale = item.locale;
+							rate = obj.rate / banhji.source.getRate(item.locale, new Date(obj.issued_date)),
+							cost = item.cost,
+							price = item.price, 
+							unit_value = 1, 
+							measurement_id = item.measurement_id, 
+							locale = item.locale;
 
 						$.each(banhji.source.itemPriceList, function(index, value){
 							if(value.item_id==data.item_id){
@@ -55256,6 +55257,7 @@
 			    		data.set("description", item.sale_description);
 			    		data.set("quantity", 1);
 			    		data.set("unit_value", unit_value);
+			    		data.set("cost", cost*rate);
 				        data.set("price", price*rate);
 				        data.set("rate", rate);	
 				        data.set("locale", locale);
@@ -56492,6 +56494,7 @@
 			        }else{
 						var itemPriceList = [], counter = 0,
 						rate = obj.rate / banhji.source.getRate(item.locale, new Date(obj.issued_date)),
+						cost = item.cost,
 						price = item.price, 
 						unit_value = 1, 
 						measurement_id = item.measurement_id, 
@@ -56516,6 +56519,7 @@
 			    		data.set("description", item.sale_description);
 			    		data.set("quantity", 1);
 			    		data.set("unit_value", unit_value);
+			    		data.set("cost", cost*rate);
 				        data.set("price", price*rate);
 				        data.set("rate", rate);	
 				        data.set("locale", locale);
