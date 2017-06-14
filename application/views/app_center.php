@@ -1084,19 +1084,18 @@
 	</tr>
 </script>
 <script id="customerCenter" type="text/x-kendo-template">
-	<div class="widget widget-heading-simple widget-body-gray widget-employees">		
-		<div class="widget-body padding-none">			
+	<div class="widget widget-heading-simple widget-body-gray widget-employees">
+		<div class="widget-body padding-none">
 			<div class="row-fluid row-merge">
 				<div class="span3 listWrapper" >
-					<div class="innerAll">							
+					<div class="innerAll">
 						<form autocomplete="off" class="form-inline">
-							
 							<div class="widget-search separator bottom">
 								<button type="button" class="btn btn-default pull-right" data-bind="click: search"><i class="icon-search"></i></button>
 								<div class="overflow-hidden">
 									<input type="search" placeholder="Number or Name..." data-bind="value: searchText, events:{change: enterSearch}">
 								</div>
-							</div>						
+							</div>
 							<div class="select2-container" style="width: 100%;  margin-bottom: 10px;">
 								<input data-role="dropdownlist"
 					                   data-option-label="Select Type..."
@@ -1105,24 +1104,24 @@
 					                   data-value-field="id"
 					                   data-bind="value: contact_type_id,
 					                              source: contactTypeDS"
-					                   style="width: 100%;" />							
+					                   style="width: 100%;" />
 							</div>
-						</form>					
+						</form>
 					</div>
 					
 					<span class="results"><span data-bind="text: contactDS.total"></span> <span data-bind="text: lang.lang.found_search"></span></span>
 
-					<div class="table table-condensed" style="height: 580px;"						 
-						 data-role="grid"						 
+					<div class="table table-condensed" style="height: 580px;"
+						 data-role="grid"
 						 data-bind="source: contactDS"
 						 data-row-template="customerCenter-customer-list-tmpl"
 						 data-columns="[{title: ''}]"
 						 data-selectable=true
-						 data-height="600"						 
-						 data-scrollable="{virtual: true}"></div>									
+						 data-height="600"
+						 data-scrollable="{virtual: true}"></div>
 				</div>
 				<div class="span9 detailsWrapper">
-					<div class="row-fluid">					
+					<div class="row-fluid">
 						<div class="span6">
 							<div class="widget widget-4 widget-tabs-icons-only margin-bottom-none">
 

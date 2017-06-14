@@ -469,12 +469,27 @@ class Imports extends REST_Controller {
 				$box->select('id, branch_id')->where('name', $row->box)->limit(1)->get();
 				$meter->box_id = isset($box->id) ? $box->id: 0;
 			}
+			if(isset($row->ampere)){
+				$ampere = new Electricity_unit(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$ampere->select('id')->where('name', $row->ampere)->limit(1)->get();
+				$meter->ampere_id = isset($ampere->id) ? $ampere->id: 0;
+			}
+			if(isset($row->phase)){
+				$phase = new Electricity_unit(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$phase->select('id')->where('name', $row->phase)->limit(1)->get();
+				$meter->phase_id = isset($phase->id) ? $phase->id: 0;
+			}
+			if(isset($row->voltage)){
+				$voltage = new Electricity_unit(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$voltage->select('id')->where('name', $row->voltage)->limit(1)->get();
+				$meter->voltage_id = isset($voltage->id) ? $voltage->id: 0;
+			}
 			$startup = intval($row->start_up);
 			$meter->number = isset($row->number) ? $row->number : 0;
+			$meter->multiplier = isset($row->multiplier) ? $row->multiplier : 1;
 			$meter->worder = isset($row->order) ? $row->order : $order;
 			$meter->startup_reader = isset($startup) ? $startup : 0;
 			$meter->number_digit = $row->digit_number;
-			$meter->multiplier = 1;
 			$meter->activated = 1;
 			$meter->status = 1;
 			$meter->property_id = $property->id;

@@ -278,37 +278,128 @@
 </script>
 
 <script id="search" type="text/x-kendo-template">
-	<div class="row">		
+	<div id="offline-search">		
 		<div class="col-xs-12 col-sm-12">
-			<div class="col-xs-12 col-sm-3 listWrapper" >
-				<div class="innerAll">							
-					<form autocomplete="off" class="form-inline">
-						
-						<div class="widget-search separator bottom">
-							<button type="button" class="btn btn-default pull-right" data-bind="click: search"><i class="icon-search"></i></button>
-							<div class="overflow-hidden">
-								<input type="search" placeholder="Number or Name..." data-bind="value: searchText, events:{change: enterSearch}">
+			<div class="row">
+				<div class="col-xs-12 col-sm-3" >
+					<div class="listWrapper">
+						<div class="innerAll">
+							<form autocomplete="off" class="form-inline">							
+								<div class="widget-search separator bottom">
+									<button type="button" class="btn btn-default pull-right" data-bind="click: search"><i class="icon-search"></i></button>
+									<div class="overflow-hidden">
+										<input type="search" placeholder="Number or Name..." data-bind="value: searchText, events:{change: enterSearch}">
+									</div>
+								</div>
+							</form>					
+						</div>
+						<span class="results">
+							<span>228</span>
+						</span>						
+					</div>
+				</div>
+				<div class="col-xs-12 col-sm-9 offline-search-deatil">
+					<div class="detailsWrapper">
+						<div class="row">
+							<div class="col-xs-12 col-sm-6">
+								<div class="offline-before-read">
+									<table>
+										<tr>
+											<td>ឈ្មោះអតិថិជន:</td>
+											<td></td>
+										</tr>
+										<tr>
+											<td>លេខនាឡិកា:</td>
+											<td></td>
+										</tr>
+										<tr>
+											<td>អំណានមុន:</td>
+											<td></td>
+										</tr>
+									</table>
+									<!-- <p>CHH-03001</p>
+									<p>អំណានមុន. 195</p> -->
+								</div>
+							</div>
+
+							<div class="col-xs-12 col-sm-6">
+								<div class="offline-caltulator">
+									<div class="row">
+										<div class="col-sm-12">
+											<div class="col-xs-4 col-sm-4 ">
+												<div class="offline-number">
+													1
+												</div>
+											</div>
+											<div class="col-xs-4 col-sm-4 ">
+												<div class="offline-number">
+													2
+												</div>
+											</div>
+											<div class="col-xs-4 col-sm-4 ">
+												<div class="offline-number">
+													3
+												</div>
+											</div>
+											
+										</div>
+
+										<div class="col-sm-12">
+											<div class="col-xs-4 col-sm-4 ">
+												<div class="offline-number">
+													4
+												</div>
+											</div>
+											<div class="col-xs-4 col-sm-4 ">
+												<div class="offline-number">
+													5
+												</div>
+											</div>
+											<div class="col-xs-4 col-sm-4 ">
+												<div class="offline-number">
+													6
+												</div>
+											</div>
+											
+										</div>
+
+										<div class="col-sm-12">
+											<div class="col-xs-4 col-sm-4 ">
+												<div class="offline-number">
+													7
+												</div>
+											</div>
+											<div class="col-xs-4 col-sm-4 ">
+												<div class="offline-number">
+													8
+												</div>
+											</div>
+											<div class="col-xs-4 col-sm-4 ">
+												<div class="offline-number">
+													9
+												</div>
+											</div>
+										</div>
+
+										<div class="col-sm-12">
+											<div class="col-xs-4 col-sm-4 ">
+												<div class="offline-number" style="margin-bottom: 0;">
+													0
+												</div>
+											</div>
+											<div class="col-xs-8 col-sm-8 ">
+												<div class="offline-number " style="margin-bottom: 0;">
+													<span class="glyphicons chevron-left"><i></i></span>
+												</div>
+											</div>
+										</div>
+
+									</div>
+								</div>
 							</div>
 						</div>
-					</form>					
+					</div>    	
 				</div>
-
-			</div>
-			<div class="col-xs-12 col-sm-9 detailsWrapper">
-				<div class="row-fluid">
-					<div class="span6">
-						Search
-					</div>
-
-					<div class="span6" style="margin-bottom: 10px;">
-						Caltulator												
-					</div>
-				</div>
-				
-            	<div id="pager" class="k-pager-wrap"
-            		data-role="pager"
-			    	data-auto-bind="false"
-		            data-bind=""></div>	            	
 			</div>
 		</div>
 	</div>		
