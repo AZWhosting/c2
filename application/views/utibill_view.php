@@ -9634,7 +9634,7 @@
 									<ul>
 										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i><span data-bind="text: lang.lang.date">Date</span></a></li>	
 										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i><span data-bind="text: lang.lang.filter">Filter</span></a></li>
-										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab" data-bind="click: printGrid"><i></i><span data-bind="text: lang.lang.print_export">Print/Export</span></a></li>
+										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab"><i></i><span data-bind="text: lang.lang.print_export" style="text-transform: capitalize;"></span></a></li>
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
@@ -9707,6 +9707,18 @@
 												</div>														
 											</div>		
 							        	</div>
+							        	<!-- PRINT/EXPORT  -->
+								        <div class="tab-pane" id="tab-3">								        	
+								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: printGrid" style="width: 80px;"><i></i> Print</span>
+								        	<!-- <span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
+								        		<i class="fa fa-file-pdf-o"></i>
+								        		Print as PDF
+								        	</span> -->
+								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: ExportExcel" style="width: 80px;">
+								        		<i class="fa fa-file-excel-o"></i>
+								        		Export to Excel
+								        	</span>
+							        	</div>
 								    </div>
 								</div>
 							</div>
@@ -9739,12 +9751,12 @@
 						<table class="table table-borderless table-condensed ">
 							<thead>
 								<tr>
-									<th><span data-bind="text: lang.lang.invoice_date">Invoice Date</span></th>
-									<th><span data-bind="text: lang.lang.invoice_number">Invoice Number</span></th>
-									<th><span data-bind="text: lang.lang.invoice_amount">Invoice Amount</span></th>
 									<th><span data-bind="text: lang.lang.receipt_date">Receipt Date</span></th>
 									<th><span data-bind="text: lang.lang.receipt_number">Receipt Number</span></th>
 									<th><span data-bind="text: lang.lang.receipt_amount">Receipt Amount</span></th>
+									<th><span data-bind="text: lang.lang.invoice_date">Invoice Date</span></th>
+									<th><span data-bind="text: lang.lang.invoice_number">Invoice Number</span></th>
+									<th><span data-bind="text: lang.lang.invoice_amount">Invoice Amount</span></th>									
 								</tr>
 							</thead>
 							<tbody data-role="listview"
@@ -9763,39 +9775,29 @@
 	<tr>
 		<td colspan="6" style="font-weight: bold; color: black;">#: name #</td>
 	</tr>
-	# var totalInvoice = 0, totalReceived = 0;#	
+	# var totalReceived = 0;#	
+	# var totalInvoice = 0;#
 	#for(var i=0; i<line.length; i++){#
-	#totalInvoice += line[i].amount;#
-	<tr>
-		<td style="vertical-align: top;">#=kendo.toString(new Date(line[i].issued_date), "dd-MM-yyyy")#</td>
-		<td style="vertical-align: top;"><a href="\#/#=line[i].type.toLowerCase()#/#=line[i].id#">#=line[i].number#</a></td>
-		<td style="vertical-align: top; text-align: right;">#=kendo.toString(line[i].amount, banhji.locale=="km-KH"?"c0":"c", banhji.locale)#</td>
-		<td colspan="3" style="padding-top: 0 !important; ">
-			#if(line[i].payments.length>0){#
-			<table class="table receipt-table">
-				#for(var j=0; j<line[i].payments.length; j++){#
-				#totalReceived += line[i].payments[j].amount;#
-				<tr>
-					<td style="background: transparent !important;">#=kendo.toString(new Date(line[i].payments[j].issued_date), "dd-MM-yyyy")#</td>
-					<td style="background: transparent !important;"><a href="\#/#=line[i].payments[j].type.toLowerCase()#/#=line[i].payments[j].id#">#=line[i].payments[j].number#</a></td>
-					<td style="text-align: right; background: transparent !important;">#=kendo.toString(line[i].payments[j].amount, banhji.locale=="km-KH"?"c0":"c", banhji.locale)#</td>
-				</tr>
-				#}#
-			</table>
-			#}#
-		</td>
-	</tr>
+		#totalReceived += line[i].amount;#
+		#totalInvoice += line[i].reference_amount;#
+		<tr>
+			<td>#=kendo.toString(new Date(line[i].issued_date), "dd-MM-yyyy")#</td>
+			<td><a href="\#/#=line[i].type.toLowerCase()#/#=line[i].id#">#=line[i].number#</a></td>
+			<td style="text-align: right;">#=kendo.toString(line[i].amount, "c2", banhji.locale)#</td>		
+			<td>#=kendo.toString(new Date(line[i].reference_issued_date), "dd-MM-yyyy")#</td>
+			<td><a href="\#/#=line[i].reference_type.toLowerCase()#/#=line[i].reference_id#">#=line[i].reference_number#</a></td>
+			<td style="text-align: right;">#=kendo.toString(line[i].reference_amount, "c2", banhji.locale)#</td>				
+		</tr>
 	#}#
 	<tr>
-    	<td style="font-weight: bold; color: black;">Total</td>
+    	<td colspan="2" style="font-weight: bold; color: black;" data-bind="text: lang.lang.total">Total</td>
+    	<td style="text-align: right; font-weight: bold; border-top: 1px solid black !important; color: black;">
+    		#=kendo.toString(totalReceived, "c2", banhji.locale)#
+    	</td>
+    	<td></td>
     	<td></td>
     	<td style="text-align: right; font-weight: bold; border-top: 1px solid black !important; color: black;">
-    		#=kendo.toString(totalInvoice, banhji.locale=="km-KH"?"c0":"c", banhji.locale)#
-    	</td>    	
-    	<td></td>
-    	<td></td>
-    	<td style="text-align: right; font-weight: bold; border-top: 1px solid black !important; color: black;">
-    		#=kendo.toString(totalReceived, banhji.locale=="km-KH"?"c0":"c", banhji.locale)#
+    		#=kendo.toString(totalInvoice, "c2", banhji.locale)#
     	</td>
     </tr>
 	<tr>
@@ -21723,6 +21725,86 @@
             	self.set("total_txn", kendo.toString(txn_count, "n0"));
             	self.set("totalAmount", kendo.toString(amount, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
             });
+            this.dataSource.bind("requestEnd", function(e){				
+				if(e.type=="read"){
+					var response = e.response, balanceCal = 0, balanceRec = 0;
+					self.exArray = [];
+
+					self.exArray.push({
+	            		cells: [
+	            			{ value: self.company.name, textAlign: "center", colSpan: 6 }
+	            		]
+	            	});
+	            	self.exArray.push({
+	            		cells: [
+	            			{ value: "Cash Receipt Detail",bold: true, fontSize: 20, textAlign: "center", colSpan: 6 }
+	            		]
+	            	});
+	            	if(self.displayDate){
+		            	self.exArray.push({
+		            		cells: [
+		            			{ value: self.displayDate, textAlign: "center", colSpan: 6 }
+		            		]
+		            	});
+		            }
+	            	self.exArray.push({
+	            		cells: [
+	            			{ value: "", colSpan: 6 }
+	            		]
+	            	});
+	            	self.exArray.push({ 
+	            		cells: [
+							{ value: "Receipt Date", background: "#496cad", color: "#ffffff" },
+							{ value: "Receipt Number", background: "#496cad", color: "#ffffff" },
+							{ value: "Receipt Amount", background: "#496cad", color: "#ffffff" },
+							{ value: "Invoice Date", background: "#496cad", color: "#ffffff" },
+							{ value: "Invoice Number", background: "#496cad", color: "#ffffff" },
+							{ value: "Invoice Amount", background: "#496cad", color: "#ffffff" }
+						]
+					});
+					for (var i = 0; i < response.results.length; i++){
+						self.exArray.push({
+					        cells: [
+					          	{ value: response.results[i].name, bold: true, },
+					            { value: "" },
+					            { value: "" },
+					            { value: "" },
+					            { value: "" },
+					            { value: "" }
+					        ]
+					    });
+					    for(var j = 0; j < response.results[i].line.length; j++){
+					    	balanceCal += response.results[i].line[j].reference_amount;
+					    	balanceRec += response.results[i].line[j].amount;
+				          	self.exArray.push({
+				          		cells: [
+				          	  		{ value: response.results[i].line[j].issued_date },
+				              		{ value: response.results[i].line[j].number },
+				              		{ value: kendo.parseFloat(response.results[i].line[j].amount)},
+				              		{ value: response.results[i].line[j].reference_issued_date },
+				              		{ value: response.results[i].line[j].reference_number },
+				              		{ value: kendo.parseFloat(response.results[i].line[j].reference_amount)},
+				            	]
+				          	});
+				        }
+					    self.exArray.push({
+					        cells: [
+					          	{ value: "", colSpan: 6 }
+					        ]
+					    });
+					}
+					self.exArray.push({
+				        cells: [
+				          	{ value: "TOTAL", bold: true,fontSize: 16 },
+				            { value: "" },
+				            { value: kendo.parseFloat(response.balanceRec), bold: true, fontSize: 16 },
+				            { value: "" },
+				            { value: "" },
+				            { value: kendo.parseFloat(response.balanceCal), bold: true, fontSize: 16 },
+				        ]
+				    });
+				}
+			});  
 		},
 		printGrid			: function() {
 			var gridElement = $('#grid'),
@@ -21811,13 +21893,13 @@
 	                { autoWidth: true },
 	                { autoWidth: true }
 	              ],
-	              title: "General Ledger",
+	              title: "Cash Receipt Detail",
 	              rows: this.exArray
 	            }
 	          ]
 	        });
 	        //save the file as Excel file with extension xlsx
-	        kendo.saveAs({dataURI: workbook.toDataURL(), fileName: "GeneralLedger.xlsx"});
+	        kendo.saveAs({dataURI: workbook.toDataURL(), fileName: "cashReceiptDetail.xlsx"});
 		}
 	});
 	banhji.cashReceiptSourceDetail =  kendo.observable({

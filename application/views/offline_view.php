@@ -36,114 +36,6 @@
 						</div>
 					</div>
 
-					<!--First Window -->
-				    <div data-role="window"
-				    	data-title="false"
-			            data-width="610"
-			            data-height="540"
-			            data-actions="{}"
-			            data-modal="{mask: 'true'}"
-			            data-position="{top: '15%', left: '25%'}"
-			            data-bind="visible: windowVisible">
-
-			    		<div class="win-wrapper">
-			    			<div class="window-header">			    				
-			    				<span style="float: right; margin-top: -5px; cursor: pointer; color: #999; font-weight: 600; font-size: 15px; margin-right: -15px;" data-bind="click: closeWindow" >x</span>
-			    			</div>
-			    			<div class="window-content">
-			    				<div class="row">
-				    				<div class="col-sm-12" style="width: 96%;">
-										<div class="col-sm-6">
-											<input id="" 
-												name="" 
-												type="text" 
-												class="k-textbox"
-												data-bind="" />
-											<p>អំណានចាស់: </p>
-											<div class="col-sm-6">
-												<a class="offline-btn-add">កត់ត្រា</a>
-											</div>
-										</div>
-										<div class="col-sm-6">
-											<div class="offline-caltulator">
-												<div class="row">
-													<div class="col-sm-12">
-														<div class="col-xs-4 col-sm-4 ">
-															<div class="offline-number">
-																1
-															</div>
-														</div>
-														<div class="col-xs-4 col-sm-4 ">
-															<div class="offline-number">
-																2
-															</div>
-														</div>
-														<div class="col-xs-4 col-sm-4 ">
-															<div class="offline-number">
-																3
-															</div>
-														</div>
-														
-													</div>
-
-													<div class="col-sm-12">
-														<div class="col-xs-4 col-sm-4 ">
-															<div class="offline-number">
-																4
-															</div>
-														</div>
-														<div class="col-xs-4 col-sm-4 ">
-															<div class="offline-number">
-																5
-															</div>
-														</div>
-														<div class="col-xs-4 col-sm-4 ">
-															<div class="offline-number">
-																6
-															</div>
-														</div>
-														
-													</div>
-
-													<div class="col-sm-12">
-														<div class="col-xs-4 col-sm-4 ">
-															<div class="offline-number">
-																7
-															</div>
-														</div>
-														<div class="col-xs-4 col-sm-4 ">
-															<div class="offline-number">
-																8
-															</div>
-														</div>
-														<div class="col-xs-4 col-sm-4 ">
-															<div class="offline-number">
-																9
-															</div>
-														</div>
-													</div>
-
-													<div class="col-sm-12">
-														<div class="col-xs-4 col-sm-4 ">
-															<div class="offline-number" style="margin-bottom: 0;">
-																0
-															</div>
-														</div>
-														<div class="col-xs-8 col-sm-8 ">
-															<div class="offline-number " style="margin-bottom: 0;">
-																<span class="glyphicons chevron-left"><i></i></span>
-															</div>
-														</div>
-													</div>
-
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-			    			</div>
-			    		</div>
-					</div>
 
 					<div class="offline-before-read">
 						<table>
@@ -277,7 +169,15 @@
 </script>
 
 <script id="search" type="text/x-kendo-template">
-	<div id="offline-search">		
+	<div id="offline-search">
+		<h2 style="margin-left: 15px; margin-bottom: 0;">
+			Search
+			<span style="float: right;" 
+				class="glyphicons no-js remove_2 pull-right" 
+				onclick="javascript:window.history.back()"
+				data-bind="click: cancel"><i></i></span>
+		</h2>
+		<br>		
 		<div class="col-xs-12 col-sm-12">
 			<div class="row">
 				<div class="col-xs-12 col-sm-4" >

@@ -321,8 +321,8 @@ class Inventory_modules extends REST_Controller {
 		if($obj->exists()){
 			$objList = [];
 			foreach ($obj as $value) {
-				$cost = floatval($value->cost) * floatval($value->transaction_rate);
-				$price = floatval($value->price) * $value->transaction_rate;
+				$cost = floatval($value->cost) / floatval($value->transaction_rate);
+				$price = floatval($value->price) / $value->transaction_rate;
 				$quantity = floatval($value->quantity) * floatval($value->unit_value) * intval($value->movement);
 				$amount = abs($quantity) * $cost;				
 
@@ -354,7 +354,7 @@ class Inventory_modules extends REST_Controller {
 					$purchaseAmount = 0;
 					foreach ($bf as $val) {
 						$qty = $val->quantity * $val->unit_value * $val->movement;
-						$amt = abs($qty) * $val->cost * $val->transaction_rate;
+						$amt = (abs($qty) * $val->cost) / $val->transaction_rate;
 
 						$sumOnHand += $qty;
 

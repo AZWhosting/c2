@@ -3,20 +3,31 @@
 <head>
     <title>BanhJi - ASEAN Accounting Platform</title>
     <meta charset="utf-8">
+    <link href='https://fonts.googleapis.com/css?family=Content:400,700' rel='stylesheet' type='text/css'>
+	<link href="https://fonts.googleapis.com/css?family=Moul" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Preahvihear" rel="stylesheet">
 
+	<!-- CSS Themes -->
+    <link rel="stylesheet" href="<?php echo base_url()?>assets/style-default-menus-dark.css" >
+	<link rel="stylesheet" href="<?php echo base_url()?>assets/blue-gray.css" >
+	
+
+	<!-- Bootstrap Extended -->
+	<link href="<?php echo base_url()?>assets/bootstrap.css" rel="stylesheet">
+	<link href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/common/bootstrap/extend/jasny-fileupload/css/fileupload.css" rel="stylesheet">
+	<link href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/common/bootstrap/extend/bootstrap-wysihtml5/css/bootstrap-wysihtml5-0.0.2.css" rel="stylesheet">
+	<link href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/common/bootstrap/extend/bootstrap-select/bootstrap-select.css" rel="stylesheet" />
+	<link href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/common/bootstrap/extend/bootstrap-toggle-buttons/static/stylesheets/bootstrap-toggle-buttons.css" rel="stylesheet" />
+
+	<!-- CSS Kendo -->
     <link href="<?php echo base_url()?>assets/kendo/examples/content/shared/styles/examples-offline.css" rel="stylesheet">
     <link href="<?php echo base_url()?>assets/kendo/styles/kendo.common.min.css" rel="stylesheet">
     <link href="<?php echo base_url()?>assets/kendo/styles/kendo.rtl.min.css" rel="stylesheet">
     <link href="<?php echo base_url()?>assets/kendo/styles/kendo.default.min.css" rel="stylesheet">
     <link href="<?php echo base_url()?>assets/kendo/styles/kendo.default.mobile.min.css" rel="stylesheet">
 
-    <link rel="stylesheet" href="<?php echo base_url()?>assets/style-default-menus-dark.css" >
-	<link rel="stylesheet" href="<?php echo base_url()?>assets/blue-gray.css" >
-	<link href='https://fonts.googleapis.com/css?family=Content:400,700' rel='stylesheet' type='text/css'>
-	<link href="https://fonts.googleapis.com/css?family=Moul" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css?family=Preahvihear" rel="stylesheet">
-
     <script src="<?php echo base_url()?>assets/kendo/js/jquery.min.js"></script>
+    <script src="<?php echo base_url()?>assets/bootstrap.min.js"></script>
     <script src="<?php echo base_url()?>assets/kendo/js/jszip.min.js"></script>
     <script src="<?php echo base_url()?>assets/kendo/js/kendo.all.min.js"></script>
     <script src="<?php echo base_url()?>assets/kendo/examples/content/shared/js/console.js"></script>
@@ -29,8 +40,11 @@
 	<script src="<?php echo base_url()?>assets/km-KH.js"></script>
 	<script src="<?php echo base_url()?>assets/en-US.js"></script>
 
+	<!-- Customize CSS-->
+	<link rel="stylesheet" href="<?php echo base_url()?>assets/responsive.css" >
+
 </head>
-<body>
+<body id="content">
 <div id="wrapperApplication" class="container-fluid"></div>
 <!-- template section starts -->
 <script type="text/x-kendo-template" id="layout">

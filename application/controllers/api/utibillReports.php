@@ -583,7 +583,7 @@ class UtibillReports extends REST_Controller {
 		$this->response($data, 200);
 	}
 
-	//Cash Receipt Detail
+	//Cash Receipt Detail 
 	function cash_receipt_get() {
 		$filter 	= $this->get("filter");
 		$page 		= $this->get('page');
@@ -594,86 +594,72 @@ class UtibillReports extends REST_Controller {
 
 		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
-	
+		//Sort
+		if(!empty($sort) && isset($sort)){
+			foreach ($sort as $value) {
+				if(isset($value['operator'])){
+					$obj->{$value['operator']}($value["field"], $value["dir"]);
+				}else{
+					$obj->order_by($value["field"], $value["dir"]);
+				}
+			}
+		}
+		
+		//Filter		
+		if(!empty($filter) && isset($filter)){
+	    	foreach ($filter["filters"] as $value) {
+	    		if(isset($value['operator'])){
+	    			$obj->{$value['operator']}($value['field'], $value['value']);	    		
+	    		} else {
+	    			$obj->where($value['field'], $value['value']);
+	    		}
+			}
+		}
 
 		//Results
 		$obj->include_related("contact", array("abbr", "number", "name"));
-		$obj->where("type", "Utility_Invoice");
+		$obj->where("type", "Cash_Receipt");
 		$obj->where("is_recurring <>", 1);
 		$obj->where("deleted <>", 1);
-		$obj->where_in("status", array(1,2));
 		$obj->order_by("issued_date", "asc");
 		$obj->get_iterated();
 		
 		if($obj->exists()){
 			$objList = [];
 			foreach ($obj as $value) {
-				//Payments
-				$payments = [];				
-				$pmt = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);	
-				//Sort
-				if(!empty($sort) && isset($sort)){
-					foreach ($sort as $abc) {
-						if(isset($abc['operator'])){
-							$pmt->{$abc['operator']}($abc["field"], $value["dir"]);
-						}else{
-							$pmt->order_by($abc["field"], $abc["dir"]);
-						}
-					}
-				}
-				
-				//Filter		
-				if(!empty($filter) && isset($filter)){
-			    	foreach ($filter["filters"] as $abc) {
-			    		if(isset($abc['operator'])){
-			    			$pmt->{$abc['operator']}($abc['field'], $abc['value']);	    		
-			    		} else {
-			    			$pmt->where($abc['field'], $abc['value']);
-			    		}
-					}
-				}
-	
-				$pmt->where_in("type", array("Cash_Receipt", "Offset_Invoice"));		
-				$pmt->where("reference_id", $value->id);
-				$pmt->where("is_recurring <>",1);
-				$pmt->where("deleted <>",1);
-				$pmt->get_iterated();
-				if($pmt->exists()){
-					foreach ($pmt as $val) {
-						$payments[] = array(
-							"id" 				=> $val->id,
-							"type" 				=> $val->type,
-							"number" 			=> $val->number,
-							"issued_date" 		=> $val->issued_date,
-							"rate" 				=> $val->rate,
-							"amount" 			=> floatval($val->sub_total) + floatval($val->discount)
-						);	
-					}
-				}
-								
+				//Reference
+				$ref = $value->reference->select("type, number, issued_date, amount, deposit, rate")->get();				
+				$refAmount = (floatval($ref->amount) - floatval($ref->deposit)) / floatval($ref->rate);
+
 				$amount = (floatval($value->amount) - floatval($value->deposit)) / floatval($value->rate);
 
 				if(isset($objList[$value->contact_id])){
 					$objList[$value->contact_id]["line"][] = array(
-						"id" 				=> $value->id,
-						"type" 				=> $value->type,
-						"number" 			=> $value->number,
-						"issued_date" 		=> $value->issued_date,
-						"rate" 				=> $value->rate,
-						"amount" 			=> $amount,
-						"payments" 			=> $payments
+						"id" 					=> $value->id,
+						"type" 					=> $value->type,
+						"number" 				=> $value->number,
+						"issued_date" 			=> $value->issued_date,
+						"amount" 				=> $amount,
+						"reference_id" 			=> $value->reference_id,
+						"reference_type" 		=> $ref->type,
+						"reference_number" 		=> $ref->number,
+						"reference_issued_date" => $ref->issued_date,
+						"reference_amount" 		=> $refAmount
 					);
 				}else{
 					$objList[$value->contact_id]["id"] 		= $value->contact_id;
 					$objList[$value->contact_id]["name"] 	= $value->contact_abbr.$value->contact_number." ".$value->contact_name;
 					$objList[$value->contact_id]["line"][] 	= array(
-						"id" 				=> $value->id,
-						"type" 				=> $value->type,
-						"number" 			=> $value->number,
-						"issued_date" 		=> $value->issued_date,
-						"rate" 				=> $value->rate,
-						"amount" 			=> $amount,
-						"payments" 			=> $payments
+						"id" 					=> $value->id,
+						"type" 					=> $value->type,
+						"number" 				=> $value->number,
+						"issued_date" 			=> $value->issued_date,
+						"amount" 				=> $amount,
+						"reference_id" 			=> $value->reference_id,
+						"reference_type" 		=> $ref->type,
+						"reference_number" 		=> $ref->number,
+						"reference_issued_date" => $ref->issued_date,
+						"reference_amount" 		=> $refAmount
 					);			
 				}
 			}

@@ -167,6 +167,10 @@
   display: inline-block;
   position: relative;
   width: 100%;
+  background: rgb(213, 219, 219);
+  padding-top: 15px;
+  padding-bottom: 15px;
+  border: 1px solid #d8e2e7;
 }
 #offline-search .listWrapper {
   padding: 15px;
