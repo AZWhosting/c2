@@ -77597,6 +77597,7 @@
 
             	var sum = 0;
             	$.each(view, function(index, value){
+            		sum += value.balance_forward;
             		$.each(value.line, function(ind, val){
 	            		sum += val.amount;
 	            	});            		
