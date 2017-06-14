@@ -7,7 +7,6 @@
 </script>
 <script type="text/x-kendo-template" id="blank-tmpl">
 </script>
-
 <script type="text/x-kendo-template" id="index">
 	<div class="row-fluid">
 		<div class="offline-header">

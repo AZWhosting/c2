@@ -374,7 +374,7 @@ class Inventory_modules extends REST_Controller {
 					//End Balance Forward
 
 					$measurements = new Measurement(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-					$measurements->get_by_id($value->measurement_id);
+					$measurements->get_by_id($value->item_measurement_id);
 
 					$objList[$value->item_id]["id"] 				= $value->item_id;
 					$objList[$value->item_id]["name"] 				= $value->item_abbr . $value->item_number ." ".$value->item_name;
