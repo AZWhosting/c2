@@ -281,7 +281,7 @@
 	<div id="offline-search">		
 		<div class="col-xs-12 col-sm-12">
 			<div class="row">
-				<div class="col-xs-12 col-sm-3" >
+				<div class="col-xs-12 col-sm-4" >
 					<div class="listWrapper">
 						<div class="innerAll">
 							<form autocomplete="off" class="form-inline">							
@@ -298,11 +298,18 @@
 						</span>						
 					</div>
 				</div>
-				<div class="col-xs-12 col-sm-9 offline-search-deatil">
+				<div class="col-xs-12 col-sm-8 offline-search-deatil">
 					<div class="detailsWrapper">
 						<div class="row">
 							<div class="col-xs-12 col-sm-6">
-								<div class="offline-before-read">
+								<div class="offline-input" style="margin-top: 0;">
+									<input id="" 
+										name="" 
+										type="text" 
+										class="k-textbox"
+										data-bind="" />
+									</div>
+								<div class="offline-before-read" style="margin-top: 15px;">
 									<table>
 										<tr>
 											<td>ឈ្មោះអតិថិជន:</td>
@@ -317,8 +324,13 @@
 											<td></td>
 										</tr>
 									</table>
-									<!-- <p>CHH-03001</p>
-									<p>អំណានមុន. 195</p> -->
+								</div>
+								<div class="offline-btntwo" style="margin-top: 15px;">
+									<div class="row">
+										<div class="col-sm-6">
+											<a class="offline-btn-add">កត់ត្រា</a>
+										</div>
+									</div>
 								</div>
 							</div>
 

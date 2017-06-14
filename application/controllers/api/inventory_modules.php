@@ -307,6 +307,7 @@ class Inventory_modules extends REST_Controller {
 		}
 
 		$obj->include_related("item", array("abbr", "number", "name"));
+		$obj->include_related("measurement", array("name"));
 		$obj->include_related("transaction", array("number", "type", "issued_date", "rate"));
 		$obj->where_in_related("transaction", "type", array("Cash_Purchase", "Credit_Purchase", "Purchase_Return", "Payment_Refund", "Commercial_Invoice", "Vat_Invoice", "Invoice", "Commercial_Cash_Sale", "Vat_Cash_Sale", "Cash_Sale", "Sale_Return", "Cash_Refund", "Item_Adjustment", "Internal_Usage"));
 		$obj->where_related("transaction", "is_recurring <>", 1);
@@ -374,6 +375,7 @@ class Inventory_modules extends REST_Controller {
 
 					$objList[$value->item_id]["id"] 				= $value->item_id;
 					$objList[$value->item_id]["name"] 				= $value->item_abbr . $value->item_number ." ".$value->item_name;
+					$objList[$value->item_id]["measurement"] 		= $value->measurement_name;
 					$objList[$value->item_id]["qoh_forward"] 		= $sumOnHand;
 					$objList[$value->item_id]["balance_forward"] 	= $balance_forward;
 					$objList[$value->item_id]["line"][] 			= array(

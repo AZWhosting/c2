@@ -23156,7 +23156,7 @@
 				<a href="\#/#=line[i].type.toLowerCase()#/#=line[i].id#"><i></i> #=line[i].number#</a>
 			</td>		
 			<td class="right" style="color: black;">
-				#=kendo.toString(line[i].quantity, "n2")#
+				#=kendo.toString(line[i].quantity, "n2")# #=measurement#
 			</td>
 			<td class="center" style="color: black;">
 				<span >#=kendo.toString(line[i].cost, "c2", banhji.locale)#</span>
@@ -77594,7 +77594,7 @@
             	var sum = 0;
             	$.each(view, function(index, value){
             		$.each(value.line, function(ind, val){
-	            		sum += val.cost;
+	            		sum += val.amount;
 	            	});            		
             	});
             	self.set("total", kendo.toString(sum, "c", banhji.locale));
