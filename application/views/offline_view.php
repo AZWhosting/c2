@@ -17,7 +17,7 @@
 		</div>
 		<div class="offline-content">
 			<div class="row-fluid">
-				<div class="col-xs-12 col-sm-4">
+				<div class="col-xs-12 col-sm-4 hafl-portrait">
 					<div class="offline-read">
 						<p class="pull-left" style="font-size: 18px;">បានអាន</p>
 						<p class="pull-right">100.00</p>
@@ -57,7 +57,7 @@
 					</div>
 
 				</div>
-				<div class="col-xs-12 col-sm-4">
+				<div class="col-xs-12 col-sm-4 hafl-portrait">
 					<div class="offline-watch">
 						<p class="pull-left">នាឡិកា</p>
 						<p class="pull-right">100.00</p>
@@ -87,7 +87,7 @@
 					</div>
 
 				</div>
-				<div class="col-xs-12 col-sm-4">
+				<div class="col-xs-12 col-sm-4 hidden-sm hide-on-portrait">
 					<div class="offline-caltulator">
 						<div class="row">
 							<div class="col-sm-12">
@@ -164,6 +164,82 @@
 				</div>
 			</div>
 		</div>
+
+		<div class="col-xs-12 col-sm-12 hide-on-landscape">
+			<div class="offline-caltulator">
+				<div class="row">
+					<div class="col-sm-12">
+						<div class="col-xs-4 col-sm-4 ">
+							<div class="offline-number">
+								1
+							</div>
+						</div>
+						<div class="col-xs-4 col-sm-4 ">
+							<div class="offline-number">
+								2
+							</div>
+						</div>
+						<div class="col-xs-4 col-sm-4 ">
+							<div class="offline-number">
+								3
+							</div>
+						</div>
+						
+					</div>
+
+					<div class="col-sm-12">
+						<div class="col-xs-4 col-sm-4 ">
+							<div class="offline-number">
+								4
+							</div>
+						</div>
+						<div class="col-xs-4 col-sm-4 ">
+							<div class="offline-number">
+								5
+							</div>
+						</div>
+						<div class="col-xs-4 col-sm-4 ">
+							<div class="offline-number">
+								6
+							</div>
+						</div>
+						
+					</div>
+
+					<div class="col-sm-12">
+						<div class="col-xs-4 col-sm-4 ">
+							<div class="offline-number">
+								7
+							</div>
+						</div>
+						<div class="col-xs-4 col-sm-4 ">
+							<div class="offline-number">
+								8
+							</div>
+						</div>
+						<div class="col-xs-4 col-sm-4 ">
+							<div class="offline-number">
+								9
+							</div>
+						</div>
+					</div>
+
+					<div class="col-sm-12">
+						<div class="col-xs-4 col-sm-4 ">
+							<div class="offline-number" style="margin-bottom: 0;">
+								0
+							</div>
+						</div>
+						<div class="col-xs-8 col-sm-8 ">
+							<div class="offline-number " style="margin-bottom: 0;">
+								<span class="glyphicons chevron-left"><i></i></span>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
 		
 	</div>		
 </script>
@@ -178,9 +254,9 @@
 				data-bind="click: cancel"><i></i></span>
 		</h2>
 		<br>		
-		<div class="col-xs-12 col-sm-12">
+		<div class="col-xs-12 col-sm-12 ">
 			<div class="row">
-				<div class="col-xs-12 col-sm-4" >
+				<div class="col-xs-12 col-sm-4 hafl-portrait" >
 					<div class="listWrapper">
 						<div class="innerAll">
 							<form autocomplete="off" class="form-inline">							
@@ -197,10 +273,11 @@
 						</span>						
 					</div>
 				</div>
-				<div class="col-xs-12 col-sm-8 offline-search-deatil">
+				
+				<div class="col-xs-12 col-sm-8 offline-search-deatil hafl-portrait">
 					<div class="detailsWrapper">
 						<div class="row">
-							<div class="col-xs-12 col-sm-6">
+							<div class="col-xs-12 col-sm-6 full-portrait">
 								<div class="offline-input" style="margin-top: 0;">
 									<input id="" 
 										name="" 
@@ -233,7 +310,7 @@
 								</div>
 							</div>
 
-							<div class="col-xs-12 col-sm-6">
+							<div class="col-xs-12 col-sm-6 hidden-sm hide-on-portrait">
 								<div class="offline-caltulator">
 									<div class="row">
 										<div class="col-sm-12">
@@ -310,6 +387,82 @@
 							</div>
 						</div>
 					</div>    	
+				</div>
+
+				<div class="col-xs-12 col-sm-12 hide-on-landscape">
+					<div class="offline-caltulator">
+						<div class="row">
+							<div class="col-sm-12">
+								<div class="col-xs-4 col-sm-4 ">
+									<div class="offline-number">
+										1
+									</div>
+								</div>
+								<div class="col-xs-4 col-sm-4 ">
+									<div class="offline-number">
+										2
+									</div>
+								</div>
+								<div class="col-xs-4 col-sm-4 ">
+									<div class="offline-number">
+										3
+									</div>
+								</div>
+								
+							</div>
+
+							<div class="col-sm-12">
+								<div class="col-xs-4 col-sm-4 ">
+									<div class="offline-number">
+										4
+									</div>
+								</div>
+								<div class="col-xs-4 col-sm-4 ">
+									<div class="offline-number">
+										5
+									</div>
+								</div>
+								<div class="col-xs-4 col-sm-4 ">
+									<div class="offline-number">
+										6
+									</div>
+								</div>
+								
+							</div>
+
+							<div class="col-sm-12">
+								<div class="col-xs-4 col-sm-4 ">
+									<div class="offline-number">
+										7
+									</div>
+								</div>
+								<div class="col-xs-4 col-sm-4 ">
+									<div class="offline-number">
+										8
+									</div>
+								</div>
+								<div class="col-xs-4 col-sm-4 ">
+									<div class="offline-number">
+										9
+									</div>
+								</div>
+							</div>
+
+							<div class="col-sm-12">
+								<div class="col-xs-4 col-sm-4 ">
+									<div class="offline-number" style="margin-bottom: 0;">
+										0
+									</div>
+								</div>
+								<div class="col-xs-8 col-sm-8 ">
+									<div class="offline-number " style="margin-bottom: 0;">
+										<span class="glyphicons chevron-left"><i></i></span>
+									</div>
+								</div>
+							</div>
+
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>

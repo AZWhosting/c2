@@ -26,10 +26,17 @@ ul{
   CSS Menu
 -----------*/
 .menu {
-  background: #1C2633;
-  float: left;
-  height: 50px;
-  width: 100%;
-  box-shadow: 0 1px 3px #ddd;
+  background: #1c2633 !important;
+  box-shadow: 0 1px 3px #ddd !important;
   color: #fff;
+  float: left !important;
+  height: 50px !important;
+  overflow: inherit !important;
+  position: relative !important;
+  width: 100% !important;
+}
+.navbar{
+  border-radius: 0 !important;
+  background: none !important;
+  border: none !important;
 }

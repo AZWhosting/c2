@@ -14,6 +14,7 @@
 
 	<!-- Bootstrap Extended -->
 	<link rel="stylesheet" href="<?php echo base_url()?>assets/bootstrap.css" />
+	<!-- <link rel="stylesheet" href="<?php echo base_url()?>assets/bootstrap4.css" /> -->
 	<link rel="stylesheet" href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/common/bootstrap/extend/jasny-fileupload/css/fileupload.css" />
 	<link rel="stylesheet" href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/common/bootstrap/extend/bootstrap-wysihtml5/css/bootstrap-wysihtml5-0.0.2.css" />
 	<link rel="stylesheet" href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/common/bootstrap/extend/bootstrap-select/bootstrap-select.css" />
@@ -31,6 +32,9 @@
 
     <script src="<?php echo base_url()?>assets/kendo/js/jquery.min.js"></script>
     <script src="<?php echo base_url()?>assets/bootstrap.min.js"></script>
+
+    <!-- <script src="<?php echo base_url()?>assets/bootstrap4.js"></script> -->
+
     <script src="<?php echo base_url()?>assets/kendo/js/jszip.min.js"></script>
     <script src="<?php echo base_url()?>assets/kendo/js/kendo.all.min.js"></script>
     <script src="<?php echo base_url()?>assets/kendo/examples/content/shared/js/console.js"></script>
@@ -48,13 +52,38 @@
 	<div id="wrapperApplication" class="wrapper" ></div>
 	<!-- template section starts -->
 	<script type="text/x-kendo-template" id="layout">
-		<div class="menu"></div>			
+		<div id="menu" class="menu"></div>			
 		<div class="container-fluid"></div>
 	</script>
 	<script type="text/x-kendo-template" id="blank-tmpl">
 	</script>
 	<script type="text/x-kendo-template" id="menu-tmpl">
-		<div class="container-fluid">
+	<!-- 	<div class="container-fluid"> -->
+			<nav class="navbar fixed-top navbar-toggleable-md navbar-inverse bg-inverse">
+		        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarExample" aria-controls="navbarExample" aria-expanded="false" aria-label="Toggle navigation">
+		            <span class="navbar-toggler-icon"></span>
+		        </button>
+	            <a class="navbar-brand" href="#">
+	                <img src="http://placehold.it/300x60?text=Logo" width="150" height="30" alt="">
+	            </a>
+	            <div class="collapse navbar-collapse" id="navbarExample">
+	                <ul class="navbar-nav ml-auto">
+	                    <li class="nav-item active">
+	                        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+	                    </li>
+	                    <li class="nav-item">
+	                        <a class="nav-link" href="#">About</a>
+	                    </li>
+	                    <li class="nav-item">
+	                        <a class="nav-link" href="#">Services</a>
+	                    </li>
+	                    <li class="nav-item">
+	                        <a class="nav-link" href="#">Contact</a>
+	                    </li>
+	                </ul>
+	            </div>
+		      
+		    </nav>
 			<!-- <div class="menu-hidden sidebar-hidden-phone menu-left hidden-print">
 				<div class="navbar main navbar-fixed-top" id="main-menu">
 					<ul class="topnav">
@@ -92,7 +121,7 @@
 					</ul>
 				</div>
 			</div> -->
-		</div>
+		<!-- </div> -->
 	</script>
 	<script id="multiTaskList-row-template" type="text/x-kendo-template">
 	    <li>

@@ -236,4 +236,24 @@ and (max-device-width : 480px) {
   .offline-caltulator .offline-number{
     margin-bottom: 10px;
   }
+  .col-xs-12{
+    width: 100% !important;
+  }
+}
+/*Add New*/
+@media (orientation:landscape) {
+    .hide-on-landscape {
+        display: none;
+    }
+}
+@media (orientation:portrait) {
+  .hafl-portrait{
+    width: 50%;
+  }
+  .full-portrait{
+    width: 100%;
+  }
+  .hidden-sm.hide-on-portrait {
+      display: none;
+  }
 }

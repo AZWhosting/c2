@@ -1,29 +1,15 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Measurement extends DataMapper {
+class Measurement_category extends DataMapper {
+	public $table = 'measurement_categories';
 	protected $created_field = "created_at";
 	protected $updated_field = "updated_at";
 
-	public $has_one = array(
-		'measurement_category' => array(
-			'class' => 'measurement_category',
-			'other_field' => 'measurement'
-		)
-	);
-
 	public $has_many = array(
-		'item_line' => array(
-			'class' => 'item_line',
-			'other_field' => 'measurement'
-		),
-		'item' => array(
-			'class' => 'item',
-			'other_field' => 'measurement'
-		),
-		'item_price' => array(
-			'class' => 'item_price',
-			'other_field' => 'measurement'
-		)		
+		'measurement' => array(
+			'class' => 'measurement',
+			'other_field' => 'measurement_category'
+		)
 	);
 
 	public function __construct($id = null, $server_name = null, $db_username = null, $server_password = null, $db = null) {	

@@ -87,7 +87,7 @@ class Ops extends REST_Controller {
 	function runs_get() {
 		$this->load->dbutil();
 		$dbs = $this->dbutil->list_databases();
-		$companyList = array("banhji","banhji_mac", "information_schema","innodb","mysql","performance_schema","tmp");
+		$companyList = array("api","banhji","banhji_mac","information_schema","innodb","mysql","performance_schema","tmp");
 		$data = array();
 		foreach ($dbs as $key => $db)
 		{	
@@ -95,6 +95,11 @@ class Ops extends REST_Controller {
 			    $data[] = $db;
 			    $connection = 'use '.$db;
 			    $this->db->query($connection);
+
+			 //    if ($this->db->field_exists('field_name', 'table_name'))
+				// {
+				//    // some code...
+				// }
 
 			    //Create new table
 			    // $this->dbforge->add_field('id');
@@ -106,33 +111,51 @@ class Ops extends REST_Controller {
 			    // $this->dbforge->create_table('measurement_categories');
 			    
 			    //Update data
+			 //    $data = array(
+				//    array(
+				//       'title' => 'My title' ,
+				//       'name' => 'My Name 2' ,
+				//       'date' => 'My date 2'
+				//    ),
+				//    array(
+				//       'title' => 'Another title' ,
+				//       'name' => 'Another Name 2' ,
+				//       'date' => 'Another date 2'
+				//    )
+				// );
 			    // $this->db->where('id', 2);
 			    // $this->db->update('tax_types', array('sub_of_id' => 12));
+			    // $this->db->update_batch('measurements', $data, 'measurement_category_id');
 
-			    //Insert data
-			    $this->db->insert('measurement_categories', array(
-				    	'name' 			=> 'WHT', 
-				    	'is_system' 	=> 1, 
-				    	'agency' 		=> 'GDT', 'is_system' => 1
-			    	)
-			    );
-				
-				//Add new field
-				// $this->dbforge->add_column("tax_types", array(
-				// 												"sub_of_id" => array(
-				// 																	"type" 		=> "INT",
-				// 																	"constraint"=> 11,
-				// 																	"null" 		=> FALSE,
-				// 																	"default" 	=> 0
-				// 																)
-				// 												)
+			    //Insert batch data
+			 //    $data = array(
+				// 	array(
+			 //    		'name' 			=> 'Working Time', 
+				//     	'is_system' 	=> 1
+			 //    	),
+			 //    	array(
+			 //    		'name' 			=> 'Unit', 
+				//     	'is_system' 	=> 1
+			 //    	)
 				// );
+			 //    $this->db->insert_batch('measurement_categories', $data);
+				
+				//Add new fields
+				// $fields = array(
+				// 	"is_base" => array(
+				// 			"type" 		=> "TINYINT",
+				// 			"constraint"=> 1,
+				// 			"null" 		=> FALSE,
+				// 			"default" 	=> 0
+				// 	)
+				// );
+				// $this->dbforge->add_column("measurements", $fields);
 
-			    //Rename field
+			    //Modify field
 				// $this->dbforge->modify_column(
-		  //       	'item_lines', array(
-				// 		'assembly_id' => array(
-				// 					'name' 		=> 'assembly_id', 
+		  //       	'measurements', array(
+				// 		'quantity' => array(
+				// 					'name' 		=> 'quantity', 
 				// 					'type'		=> 'INT',
 				// 					'constraint'=> 11,
 				// 					'null' 		=> FALSE,

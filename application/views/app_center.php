@@ -45232,11 +45232,11 @@
 	    		<a href="#/">
 					<div class="cash-invoice" style="background: #24351b; color: #fff;">
 						<div class="span6" style="padding-left: 0;">
-							<span style="font-size: 20px; ">Cash Position</span>
+							<span style="font-size: 15px; ">Cash Position</span>
 							<br>
 							<span style="color: #9EA7B8;" data-bind="text: totalUser"></span>
 						</div>
-						<div class="span6" style=" text-align: center; font-size: 20px; font-weight: 600; padding: 0;">
+						<div class="span6" style=" text-align: center; font-size: 15px; font-weight: 600; padding: 0;">
 							<span style="float: right;" >1000</span>
 						</div>
 						<!-- <div class="span3" style="text-align: center; margin-top: 7px; padding-right: 0; color: #fff; font-size: 35px;">
@@ -45247,11 +45247,11 @@
 				<a href="#/">
 					<div class="cash-invoice" style=" background: #24351b; color: #fff;">
 						<div class="span7" style="padding-left: 0;">
-							<span style="font-size: 20px; color: #fff;">Amount to Collect</span><br>
+							<span style="font-size: 15px; color: #fff;">Amount to Collect</span><br>
 							<span style="color: #9EA7B8;" ></span>
 							<!-- <span style="color: #9EA7B8;">This week</span> -->
 						</div>
-						<div class="span5" style="color: #fff; text-align: center; font-size: 20px; font-weight: 600; padding: 0;">
+						<div class="span5" style="color: #fff; text-align: center; font-size: 15px; font-weight: 600; padding: 0;">
 							<span style="float: right;" >1000</span>
 						</div>
 						<!-- <div class="span4" style="text-align: center; margin-top: 7px; padding-right: 0; color: #fff; font-size: 35px;">
@@ -45262,11 +45262,11 @@
 				<a href="#/">
 					<div class="cash-invoice" style="margin-bottom: 0; background: #24351b; color: #fff;">
 						<div class="span6" style="padding-left: 0;">
-							<span style="font-size: 20px; color: #fff;">Amount to Pay</span><br>
+							<span style="font-size: 15px; color: #fff;">Amount to Pay</span><br>
 							<span style="color: #9EA7B8;" > </span>
 							<!-- <span style="color: #9EA7B8;">This week</span> -->
 						</div>
-						<div class="span6" style="color: #fff; text-align: center; font-size: 20px; font-weight: 600; padding: 0;">
+						<div class="span6" style="color: #fff; text-align: center; font-size: 15px; font-weight: 600; padding: 0;">
 							<span style="float: right;" >1000</span>
 						</div>
 						<!-- <div class="span4" style="text-align: center; margin-top: 7px; padding-right: 0; color: #fff; font-size: 35px;">
@@ -45280,8 +45280,8 @@
 		    	<div class="row-fluid">
 		    		<div class="col-xs-12 col-sm-6 col-md-12" style="padding: 0">
 						<div class="widget widget-3 customer-border">
-							<div class="widget-body alert alert-primary" style="min-height: 155px; background: #24351b; color: #fff; padding-top: 0; padding-bottom: 0;">
-								<div align="center" class="text-large strong" style="font-size: 35px;">
+							<div class="widget-body alert alert-primary" style="min-height: 135px; background: #24351b; color: #fff; padding-top: 0; padding-bottom: 0;">
+								<div align="center" class="text-large strong" style="font-size: 25px;">
 									<span data-bind="text: ccc"></span>
 									<br>
 									<p style="font-size: 14px" data-bind="text: lang.lang.cash_conversion_cycle">Cash Conversion Cycle</p>
@@ -45312,8 +45312,8 @@
 					</div>
 					<div class="col-xs-12 col-sm-6 col-md-12" style="padding: 0;">
 						<div class="widget widget-3 customer-border" style="margin-bottom: 0;">					
-							<div class="widget-body alert-info" style="min-height: 155px; background: #24351b; color: #fff; padding-top: 0; padding-bottom: 0; ">
-								<div align="center" class="text-large strong" style="font-size: 35px;">
+							<div class="widget-body alert-info" style="min-height: 135px; background: #24351b; color: #fff; padding-top: 0; padding-bottom: 0; ">
+								<div align="center" class="text-large strong" style="font-size: 25px;">
 									<span data-bind="text: currentRatio"></span>
 									<br>
 									<p style="font-size: 14px" data-bind="text: lang.lang.current_ratio">Current Ratio</p>
@@ -45471,7 +45471,7 @@
 
 	    	<div class="row-fluid" style="margin-top: 5px;">
 				<div class="span12" style="width: 100%; padding: 0 5px;">
-					<div class="home-chart" style="    padding: 63px 15px 62px 20px;">
+					<div class="home-chart" style="    padding: 30px 15px 30px 20px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
 						
 						<div data-role="chart"
 							 data-auto-bind="false"
