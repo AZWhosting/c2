@@ -87,7 +87,7 @@ class Ops extends REST_Controller {
 	function runs_get() {
 		$this->load->dbutil();
 		$dbs = $this->dbutil->list_databases();
-		$companyList = array("banhji","banhji_mac", "db_banhji", "information_schema","innodb","mysql","performance_schema","tmp");
+		$companyList = array("banhji","banhji_mac", "information_schema","innodb","mysql","performance_schema","tmp");
 		$data = array();
 		foreach ($dbs as $key => $db)
 		{	
@@ -96,16 +96,28 @@ class Ops extends REST_Controller {
 			    $connection = 'use '.$db;
 			    $this->db->query($connection);
 
+			    //Create new table
 			    // $this->dbforge->add_field('id');
 			    // $this->dbforge->add_field("journal_line_id int(11) NOT NULL DEFAULT '0'");
-			    // $this->dbforge->add_field("segmentitem_id int(11) NOT NULL DEFAULT '0'");
-			    // $this->dbforge->create_table('journal_lines_segmentitems');
+			    // $this->dbforge->add_field("name varchar(255) NOT NULL DEFAULT ''");
+			    // $this->dbforge->add_field("is_system tinyint(1) NOT NULL DEFAULT '0'");
+			    // $this->dbforge->add_field("created_at date DEFAULT NULL");
+			    // $this->dbforge->add_field("updated_at date DEFAULT NULL");
+			    // $this->dbforge->create_table('measurement_categories');
 			    
+			    //Update data
 			    // $this->db->where('id', 2);
 			    // $this->db->update('tax_types', array('sub_of_id' => 12));
 
-			    // $this->db->insert('tax_types', array('name' => 'WHT', 'tax_system' => 'Payment Based', 'agency' => 'GDT', 'is_system' => 1));
+			    //Insert data
+			    $this->db->insert('measurement_categories', array(
+				    	'name' 			=> 'WHT', 
+				    	'is_system' 	=> 1, 
+				    	'agency' 		=> 'GDT', 'is_system' => 1
+			    	)
+			    );
 				
+				//Add new field
 				// $this->dbforge->add_column("tax_types", array(
 				// 												"sub_of_id" => array(
 				// 																	"type" 		=> "INT",
@@ -116,6 +128,7 @@ class Ops extends REST_Controller {
 				// 												)
 				// );
 
+			    //Rename field
 				// $this->dbforge->modify_column(
 		  //       	'item_lines', array(
 				// 		'assembly_id' => array(

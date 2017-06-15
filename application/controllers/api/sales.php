@@ -300,7 +300,13 @@ class Sales extends REST_Controller {
 					$avgCost = $value["cost"] / $value["quantity"];
 
 					$gp = ($value["quantity"] * $value["price"]) - ($value["quantity"] * $value["cost"]);
-					$gpm = $gp / ($value["quantity"] * $value["price"]);
+					
+					$price = ($value["quantity"] * $value["price"]);
+					if($price>0){
+						$gpm = $gp / $price;
+					}else{
+						$gpm = $gp;
+					}
 				}
 
 				$value["avg_price"] = $avgPrice;

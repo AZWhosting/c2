@@ -4871,7 +4871,13 @@
 			<i class="icon-trash" data-bind="events: { click: referenceRemoveRow }"></i>
 			#=number#
 		</td>
-		<td align="right">#=kendo.toString(amount, "c2", locale)#</td>
+		<td align="right">
+			#if(type=="GDN"){# 
+				#=kendo.toString(amount, "n2")#
+			#}else{#
+				#=kendo.toString(amount, "c2", locale)#
+			#}#
+		</td>
     </tr>   
 </script>
 <script id="gdn" type="text/x-kendo-template">
@@ -7933,7 +7939,7 @@
 					<div id="invFormContent">
 						<div class="block-title">
 							<h3 data-bind="text: company.name"></h3>
-							<h2 data-bind="text: lang.lang.sale_summary_by_product_Services"></h2>
+							<h2 data-bind="text: lang.lang.sale_summary_by_product_services"></h2>
 							<p data-bind="text: displayDate"></p>
 						</div>
 
@@ -22716,6 +22722,16 @@
 
 	</div>
 </script>
+<script id="unitOfMeasurement" type="text/x-kendo-template">
+	<span class="pull-right glyphicons no-js remove_2" 
+			onclick="javascript:window.history.back()"><i></i></span>
+
+	<h2>Unit Of Measurement</h2>
+
+	<br>
+
+	
+</script>
 <!-- INVENTORY REPORTS -->
 <script id="itemReportCenter" type="text/x-kendo-template">
 	<div class="cover-block" style="width: 99%; background: #fff;">
@@ -22801,7 +22817,7 @@
 									<p data-bind="text: lang.lang.lists_individual_sale_transactions">
 										Lists individual sale transactions by date for each product/ service with a period of time.
 									</p>
-								</td>							
+								</td>
 							</tr>
 						</table>
 					</div>
@@ -33249,17 +33265,28 @@
 													<td class="span4">
 														<h3><a href="#/sale_detail_by_customer" data-bind="text: lang.lang.sale_by_customer_detail"></a></h3>
 													</td>
-													<td class="span4"></td>
-													<td class="span4"></td>
+													<td class="span4">
+														<h3><a href="#/sale_summary_by_product" data-bind="text:lang.lang.sale_summary_by_product_services"></a></h3>
+													</td>
+													<td class="span4">
+														<h3><a href="#/sale_detail_by_product" data-bind="text:lang.lang.sale_detail_by_product_services"></a></h3>
+													</td>
 												</tr>
 												<tr>
 													<td class="span4">
 														<p style="padding-right: 25px;">Lists of detailed inventory purchase transactions from each suppliers</p>
 													</td>
-													<td class="span4"></td>
-													<td class="span4"></td>
+													<td class="span4">
+														<p style="padding-right: 25px;" data-bind="text: lang.lang.summarizes_total_sales_for_each_product">
+															Summarizes total sales for each product/ service within a period of time. In addition, it also includes gross profit margin, quantity, amount, cost, and average prices.
+														</p>
+													</td>
+													<td class="span4" style="vertical-align: top;">
+														<p data-bind="text: lang.lang.lists_individual_sale_transactions">
+															Lists individual sale transactions by date for each product/ service with a period of time.
+														</p>
+													</td>
 												</tr>
-												
 											</table>
 										</div>
 									</div>
@@ -49921,6 +49948,13 @@
 
 			 		self.lineDS.data([]);
 			 		$.each(view, function(index, value){
+			 			var itemPriceList = [];
+						$.each(banhji.source.itemPriceList, function(ind, val){
+			        		if(val.item_id==value.item_id){
+			        			itemPriceList.push(val);
+			        		}
+			        	});
+
 			 			self.lineDS.add({					
 							transaction_id 		: 0,
 							item_id 			: value.item_id,
@@ -49936,7 +49970,7 @@
 							movement 			: value.movement,
 							required_date 		: value.required_date,
 
-							item_prices			: value.item_prices
+							item_prices			: itemPriceList
 						});
 			 		});
 
@@ -52198,6 +52232,13 @@
 			 		var view = self.referenceLineDS.view();
 
 			 		$.each(view, function(index, value){
+			 			var itemPriceList = [];
+						$.each(banhji.source.itemPriceList, function(ind, val){
+			        		if(val.item_id==value.item_id){
+			        			itemPriceList.push(val);
+			        		}
+			        	});
+
 			 			self.lineDS.add({
 							transaction_id 		: obj.id,
 							tax_item_id 		: value.tax_item_id,
@@ -52213,7 +52254,7 @@
 							locale				: value.locale,
 							movement 			: value.movement,
 
-							item_prices			: value.item_prices
+							item_prices			: itemPriceList
 						});
 			 		});
 
@@ -53771,6 +53812,13 @@
 			 		var view = self.referenceLineDS.view();
 
 			 		$.each(view, function(index, value){
+			 			var itemPriceList = [];
+						$.each(banhji.source.itemPriceList, function(ind, val){
+			        		if(val.item_id==value.item_id){
+			        			itemPriceList.push(val);
+			        		}
+			        	});
+
 			 			self.lineDS.add({
 							transaction_id 		: obj.id,
 							tax_item_id 		: value.tax_item_id,
@@ -53785,7 +53833,7 @@
 							locale				: value.locale,
 							movement 			: value.movement,
 
-							item_prices			: value.item_prices
+							item_prices			: itemPriceList
 						});
 			 		});
 
@@ -54730,6 +54778,13 @@
 
 			 		self.lineDS.data([]);
 			 		$.each(view, function(index, value){
+			 			var itemPriceList = [];
+						$.each(banhji.source.itemPriceList, function(ind, val){
+			        		if(val.item_id==value.item_id){
+			        			itemPriceList.push(val);
+			        		}
+			        	});
+
 			 			self.lineDS.add({					
 							transaction_id 		: obj.id,
 							tax_item_id 		: value.tax_item_id,
@@ -54744,7 +54799,7 @@
 							locale				: value.locale,
 							movement 			: value.movement,							
 
-							item_prices			: value.item_prices
+							item_prices			: itemPriceList
 						});
 			 		});
 
@@ -64129,6 +64184,13 @@
 
 			 		self.lineDS.data([]);
 			 		$.each(view, function(index, value){
+			 			var itemPriceList = [];
+						$.each(banhji.source.itemPriceList, function(ind, val){
+			        		if(val.item_id==value.item_id){
+			        			itemPriceList.push(val);
+			        		}
+			        	});
+
 			 			self.lineDS.add({					
 							transaction_id 		: 0,
 							item_id 			: value.item_id,
@@ -64143,7 +64205,7 @@
 							locale				: value.locale,
 							movement 			: value.movement,
 
-							item_prices			: value.item_prices
+							item_prices			: itemPriceList
 						});
 			 		});
 
@@ -66663,6 +66725,13 @@
 
 			 		self.lineDS.data([]);
 			 		$.each(view, function(index, value){
+			 			var itemPriceList = [];
+						$.each(banhji.source.itemPriceList, function(ind, val){
+			        		if(val.item_id==value.item_id){
+			        			itemPriceList.push(val);
+			        		}
+			        	});
+			        	
 			 			self.lineDS.add({					
 							transaction_id 		: obj.id,
 							tax_item_id 		: value.tax_item_id,
@@ -66679,7 +66748,7 @@
 							additional_cost 	: value.additional_cost,
 							additional_applied 	: value.additional_applied,							
 
-							item_prices			: value.item_prices
+							item_prices			: itemPriceList
 						});
 			 		});
 
@@ -78575,6 +78644,56 @@
         		banhji.item.setPattern(data.id);
         	}
         } 
+    });
+    banhji.unitOfMeasurement =  kendo.observable({
+		lang 				: langVM,		        
+        dataSource 			: dataStore(apiUrl + "measurements"),        
+        categoryDS 			: dataStore(apiUrl + "measurement_categories"),
+        pageLoad 			: function() {
+        },        
+        addCategory 		: function(){
+        	var self = this, 
+        	name = this.get("category_name"),
+        	code = this.get("category_code");
+
+        	if(name!=="" && code!==""){        		
+	        	this.categoryDS.add({	        		
+	        		sub_of 		 	: 0,
+	        		item_type_id 	: this.get("category_item_type_id"),
+	        		item_id 		: 0,
+	        		code 			: code,	        		
+	        		name 			: name,
+	        		abbr 			: this.get("category_abbr"),	        		
+	        		is_system 		: 0,
+	        		item_type 		: []
+	        	});
+
+	        	this.categoryDS.sync();
+	        	this.set("category_code", "");
+    			this.set("category_name", "");
+    			this.set("category_abbr", "");
+        	}else{
+        		alert("required number and name!");
+        	}
+        },
+        addMeasurement 		: function(){
+        	var self = this, 
+        	name = this.get("measurement_name");
+
+        	if(name!==""){
+	        	this.measurementDS.add({	        		
+	        		name 		: name,
+	        		description : name,
+	        		is_system 	: 0
+	        	});
+
+	        	this.measurementDS.sync();
+	        		        			
+	        	this.set("measurement_name", "");	        		
+        	}else{
+        		alert("required name");
+        	}
+        }
     });
 
 
@@ -91043,6 +91162,7 @@
 		itemAssembly: new kendo.Layout("#itemAssembly", {model: banhji.itemAssembly}),
 		itemAdjustment: new kendo.Layout("#itemAdjustment", {model: banhji.itemAdjustment}),
 		itemSetting: new kendo.Layout("#itemSetting", {model: banhji.itemSetting}),
+		unitOfMeasurement: new kendo.Layout("#unitOfMeasurement", {model: banhji.unitOfMeasurement}),
 		internalUsage: new kendo.Layout("#internalUsage", {model: banhji.internalUsage}),
 		serviceSetting: new kendo.Layout("#serviceSetting", {model: banhji.serviceSetting}),
 		itemReportCenter: new kendo.Layout("#itemReportCenter", {model: banhji.itemReportCenter}),
@@ -95567,6 +95687,25 @@
 				vm.categoryDS.filter({ field:"item_type_id", operator:"where_in", value: [4,6] });
 				vm.itemTypeDS.filter({ field:"id", operator:"where_in", value: [4,6] });
 				vm.itemGroupDS.filter({ field:"id", operator:"where_in", value: [3,4] });
+			}
+
+			vm.pageLoad();
+		}
+	});
+	banhji.router.route("/unit_of_measurement", function(){
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{
+			banhji.view.layout.showIn("#content", banhji.view.unitOfMeasurement);
+			banhji.view.layout.showIn('#menu', banhji.view.menu);
+			banhji.view.menu.showIn('#secondary-menu', banhji.view.inventoryMenu);
+
+			var vm = banhji.unitOfMeasurement;
+
+			banhji.userManagement.addMultiTask("Unit Of Measurement","unit_of_measurement",null);
+			
+			if(banhji.pageLoaded["unit_of_measurement"]==undefined){
+				banhji.pageLoaded["unit_of_measurement"] = true;
 			}
 
 			vm.pageLoad();
