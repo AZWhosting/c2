@@ -43,7 +43,11 @@ class Measurements extends REST_Controller {
 		if(!empty($filter) && isset($filter)){
 	    	foreach ($filter['filters'] as $value) {
 	    		if(isset($value['operator'])) {
-					$obj->{$value['operator']}($value['field'], $value['value']);
+					if($value["operator"]=="measurement_category") {
+	    				$obj->include_related("measurement_category", array("name"));
+					}else{
+						$obj->{$value["operator"]}($value["field"], $value["value"]);
+					}
 				} else {
 	    			$obj->where($value["field"], $value["value"]);
 				}
@@ -62,10 +66,12 @@ class Measurements extends REST_Controller {
 		if($obj->exists()){			
 			foreach ($obj as $value) {							
 				$data["results"][] = array(
-					"id" 			=> $value->id,					
-					"name" 			=> $value->name,
-					"description" 	=> $value->description,
-					"is_system" 	=> $value->is_system
+					"id" 						=> $value->id,
+					"measurement_category_id" 	=> $value->measurement_category_id,
+					"name" 						=> $value->name,
+					"description" 				=> $value->description,
+					"is_system" 				=> intval($value->is_system),
+					"category" 					=> $value->measurement_category_name
 				);
 			}
 		}
@@ -80,16 +86,20 @@ class Measurements extends REST_Controller {
 
 		foreach ($models as $value) {
 			$obj = new Measurement(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
-			$obj->name 			= $value->name;
-			$obj->description 	= $value->description;			
 			
-			if($obj->save()){				
+			$obj->measurement_category_id 	= $value->measurement_category_id;
+			$obj->name 						= $value->name;
+			$obj->description 				= $value->description;
+			$obj->is_system 				= 0;
+			
+			if($obj->save()){
 				//Respsone
 				$data["results"][] = array(
-					"id" 			=> $obj->id,						
-					"name" 			=> $obj->name,
-					"description"	=> $obj->description,
-					"is_system" 	=> $obj->is_system
+					"id" 						=> $obj->id,
+					"measurement_category_id" 	=> $obj->measurement_category_id,
+					"name" 						=> $obj->name,
+					"description"				=> $obj->description,
+					"is_system" 				=> $obj->is_system
 				);				
 			}			
 		}
@@ -108,16 +118,19 @@ class Measurements extends REST_Controller {
 			$obj = new Measurement(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$obj->get_by_id($value->id);
 			
-			$obj->name 			= $value->name;
-			$obj->description 	= $value->description;			
+			$obj->measurement_category_id 	= $value->measurement_category_id;
+			$obj->name 						= $value->name;			
+			$obj->description 				= $value->description;
+			$obj->is_system 				= $value->is_system;		
 			
-			if($obj->save()){				
+			if($obj->save()){
 				//Results
 				$data["results"][] = array(
-					"id" 			=> $obj->id,					
-					"name" 			=> $obj->name,
-					"description"	=> $obj->description,
-					"is_system" 	=> $obj->is_system
+					"id" 						=> $obj->id,
+					"measurement_category_id" 	=> $obj->measurement_category_id,
+					"name" 						=> $obj->name,
+					"description"				=> $obj->description,
+					"is_system" 				=> $obj->is_system
 				);						
 			}
 		}

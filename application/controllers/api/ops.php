@@ -4,6 +4,98 @@ require APPPATH.'/libraries/REST_Controller.php';
 
 class Ops extends REST_Controller {
 
+	function runs_get() {
+		$this->load->dbutil();
+		$dbs = $this->dbutil->list_databases();
+		$companyList = array("api","banhji","banhji_mac","information_schema","innodb","mysql","performance_schema","tmp");
+		$data["results"] = [];
+		$data["count"] = 0;
+
+		foreach ($dbs as $key => $db)
+		{	
+			if (!in_array("$db", $companyList)) {
+			    $connection = 'use '.$db;
+			    $this->db->query($connection);
+
+			    //Check missing field
+				// if ($this->db->field_exists('quantity', 'measurements')==FALSE)
+				// {
+				//    $data["results"][] = $db;
+				// }
+
+			    //Create new table
+			    // $this->dbforge->add_field('id');
+			    // $this->dbforge->add_field("journal_line_id int(11) NOT NULL DEFAULT '0'");
+			    // $this->dbforge->add_field("name varchar(255) NOT NULL DEFAULT ''");
+			    // $this->dbforge->add_field("is_system tinyint(1) NOT NULL DEFAULT '0'");
+			    // $this->dbforge->add_field("created_at date DEFAULT NULL");
+			    // $this->dbforge->add_field("updated_at date DEFAULT NULL");
+			    // $this->dbforge->create_table('measurement_categories');
+			    
+			    //Update data
+			    // $this->db->where('id', 2);
+			    // $this->db->update('tax_types', array('sub_of_id' => 12));
+
+			 	//Update batch
+			 	// 	$raw = array(
+				//    	array(
+				//       	'id' 						=> 1,
+				//       	'measurement_category_id' 	=> 2
+				//    	),
+				//    	array(
+				//       	'id' 						=> 2,
+				//       	'measurement_category_id' 	=> 2
+				//    	)
+				// );
+			 	//    $this->db->update_batch('measurements', $raw, 'id');
+
+			    //Insert batch data
+			 	//    $data = array(
+				// 	array(
+			 	//    		'name' 			=> 'Working Time', 
+				//     	'is_system' 	=> 1
+			 	//    	),
+			 	//    	array(
+			 	//    		'name' 			=> 'Unit', 
+				//     	'is_system' 	=> 1
+			 	//    	)
+				// );
+			 	//    $this->db->insert_batch('measurement_categories', $data);
+				
+				//Add new fields
+				// $fields = array(
+				// 	"is_base" => array(
+				// 			"type" 		=> "TINYINT",
+				// 			"constraint"=> 1,
+				// 			"null" 		=> FALSE,
+				// 			"default" 	=> 0
+				// 	)
+				// );
+				// $this->dbforge->add_column("measurements", $fields);
+
+			    // Modify field
+				// $this->dbforge->modify_column(
+		  // 		    'measurements', array(
+				// 		'is_system' => array(
+				// 					'name' 		=> 'is_system', 
+				// 					'type'		=> 'TINYINT',
+				// 					'constraint'=> 1,
+				// 					'null' 		=> FALSE,
+				// 					'default' 	=> 0
+				// 		)
+				//     )
+				// );
+
+			}//End If
+		}//End Foreach
+
+		$data["total"] = count($data["results"]);
+
+		//Response Data		
+		$this->response($data, 200);
+
+	}//End Function
+
 	// function index_get() {
 
 	// 	$list = array(
@@ -84,89 +176,7 @@ class Ops extends REST_Controller {
  //    //     );
 	// }
 
-	function runs_get() {
-		$this->load->dbutil();
-		$dbs = $this->dbutil->list_databases();
-		$companyList = array("api","banhji","banhji_mac","information_schema","innodb","mysql","performance_schema","tmp");
-		$data = array();
-		foreach ($dbs as $key => $db)
-		{	
-			if (!in_array("$db", $companyList)) {
-			    $data[] = $db;
-			    $connection = 'use '.$db;
-			    $this->db->query($connection);
-
-			 //    if ($this->db->field_exists('field_name', 'table_name'))
-				// {
-				//    // some code...
-				// }
-
-			    //Create new table
-			    // $this->dbforge->add_field('id');
-			    // $this->dbforge->add_field("journal_line_id int(11) NOT NULL DEFAULT '0'");
-			    // $this->dbforge->add_field("name varchar(255) NOT NULL DEFAULT ''");
-			    // $this->dbforge->add_field("is_system tinyint(1) NOT NULL DEFAULT '0'");
-			    // $this->dbforge->add_field("created_at date DEFAULT NULL");
-			    // $this->dbforge->add_field("updated_at date DEFAULT NULL");
-			    // $this->dbforge->create_table('measurement_categories');
-			    
-			    //Update data
-			 //    $data = array(
-				//    array(
-				//       'title' => 'My title' ,
-				//       'name' => 'My Name 2' ,
-				//       'date' => 'My date 2'
-				//    ),
-				//    array(
-				//       'title' => 'Another title' ,
-				//       'name' => 'Another Name 2' ,
-				//       'date' => 'Another date 2'
-				//    )
-				// );
-			    // $this->db->where('id', 2);
-			    // $this->db->update('tax_types', array('sub_of_id' => 12));
-			    // $this->db->update_batch('measurements', $data, 'measurement_category_id');
-
-			    //Insert batch data
-			 //    $data = array(
-				// 	array(
-			 //    		'name' 			=> 'Working Time', 
-				//     	'is_system' 	=> 1
-			 //    	),
-			 //    	array(
-			 //    		'name' 			=> 'Unit', 
-				//     	'is_system' 	=> 1
-			 //    	)
-				// );
-			 //    $this->db->insert_batch('measurement_categories', $data);
-				
-				//Add new fields
-				// $fields = array(
-				// 	"is_base" => array(
-				// 			"type" 		=> "TINYINT",
-				// 			"constraint"=> 1,
-				// 			"null" 		=> FALSE,
-				// 			"default" 	=> 0
-				// 	)
-				// );
-				// $this->dbforge->add_column("measurements", $fields);
-
-			    //Modify field
-				// $this->dbforge->modify_column(
-		  //       	'measurements', array(
-				// 		'quantity' => array(
-				// 					'name' 		=> 'quantity', 
-				// 					'type'		=> 'INT',
-				// 					'constraint'=> 11,
-				// 					'null' 		=> FALSE,
-				// 					'default' 	=> 0
-				// 		)
-		  //       	)
-		  //       );
-
-			}//End If
-		}//End Foreach
-	}//End Function
+	
 
 	// function create_get() {
 	// 	$this->load->dbutil();

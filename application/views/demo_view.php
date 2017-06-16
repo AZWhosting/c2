@@ -22267,15 +22267,17 @@
 	    <!-- Tabs Heading -->
 	    <div class="widget-head span3">
 	        <ul>
-	            <li class="active"><a href="#tab1-1" class="glyphicons bookmark" data-toggle="tab"><i></i><span class="strong"><span data-bind="text: lang.lang.category"></span></span></a>
+	            <li class="active"><a href="#tab-1" class="glyphicons bookmark" data-toggle="tab"><i></i><span class="strong"><span data-bind="text: lang.lang.category"></span></span></a>
 	            </li>
-	            <li><a href="#tab2-1" class="glyphicons tag" data-toggle="tab"><i></i><span class="strong"><span data-bind="text: lang.lang.group"></span></span></a>
+	            <li><a href="#tab-2" class="glyphicons tag" data-toggle="tab"><i></i><span class="strong"><span data-bind="text: lang.lang.group"></span></span></a>
 	            </li>
-	            <li><a href="#tab3-1" class="glyphicons ruller" data-toggle="tab"><i></i><span class="strong"><span data-bind="text: lang.lang.measurement"></span></span></a>
+	            <li><a href="#tab-3" class="glyphicons ruller" data-toggle="tab"><i></i><span class="strong">Measurement Category</span></a>
 	            </li>
-	            <li><a href="#tab4-1" class="glyphicons certificate" data-toggle="tab"><i></i><span class="strong"><span data-bind="text: lang.lang.brand"></span></span></a>
+	            <li><a href="#tab-4" class="glyphicons ruller" data-toggle="tab"><i></i><span class="strong"><span data-bind="text: lang.lang.measurement"></span></span></a>
 	            </li>
-	            <li><a href="#tab5-1" class="glyphicons building" data-toggle="tab"><i></i><span class="strong"><span data-bind="text: lang.lang.prefix_setting"></span></span></a>
+	            <li><a href="#tab-5" class="glyphicons certificate" data-toggle="tab"><i></i><span class="strong"><span data-bind="text: lang.lang.brand"></span></span></a>
+	            </li>
+	            <li><a href="#tab-6" class="glyphicons building" data-toggle="tab"><i></i><span class="strong"><span data-bind="text: lang.lang.prefix_setting"></span></span></a>
 	            </li>	        
 	        </ul>
 	    </div>
@@ -22284,8 +22286,8 @@
 	    <div class="widget-body span9">
 	        <div class="tab-content">	            
 
-	            <!-- Tab Category content -->
-	            <div class="tab-pane active" id="tab1-1">	            	
+	            <!-- Category -->
+	            <div class="tab-pane active" id="tab-1">	            	
 		            <div class="input-append">
 					    <input class="span3" id="appendedInputButtons" type="text" placeholder="Category Name..." data-bind="value: category_name">
 					    <input class="span3" id="appendedInputButtons" type="text" placeholder="Category Abbr..." data-bind="value: category_abbr">					    
@@ -22316,10 +22318,10 @@
 				                data-bind="source: categoryDS"></tbody>
 	            	</table>		            
 	            </div>
-	            <!-- // Tab Category Type content END -->	            
+	            <!-- // Category END -->	            
 
-	            <!-- Tab Item Group content -->
-	            <div class="tab-pane" id="tab2-1">
+	            <!-- Item Group -->
+	            <div class="tab-pane" id="tab-2">
 		            <div class="input-append">
 		            	<input id="appendedInputButtons" class="span4"
 		            	   data-role="dropdownlist"
@@ -22351,31 +22353,65 @@
 				                data-bind="source: itemGroupDS"></tbody>
 	            	</table>		            
 	            </div>
-	            <!-- // Tab Item Group Type content END -->
+	            <!-- // Item Group END -->
 
-	            <!-- Tab Measurement content -->
-	            <div class="tab-pane" id="tab3-1">
+	            <!-- Measurement Category -->
+	            <div class="tab-pane" id="tab-3">
+                	<div class="input-append">
+					    <input class="span12" id="appendedInputButtons" type="text" placeholder="Measurement Category Name..." data-bind="value: measurement_category_name">
+					    <button class="btn btn-default" type="button" data-bind="click: addMeasurementCategory"><i class="icon-plus"></i> <span data-bind="text: lang.lang.add_measurement"></span> Category</button>		
+					</div>
+	            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
+	            		<thead>
+	            			<tr>
+	            				<th data-bind="text: lang.lang.measurement"></th>
+	            				<th></th>
+	            			</tr>
+	            		</thead>
+	            		<tbody data-role="listview"
+	            				data-auto-bind="false"	            				
+		            			data-edit-template="itemSetting-edit-measurement-category-template"
+				                data-template="itemSetting-measurement-category-template"
+				                data-bind="source: measurementCategoryDS"></tbody>
+	            	</table>
+	            </div>
+	            <!-- // Measurement Category END -->
+
+	            <!-- Measurement -->
+	            <div class="tab-pane" id="tab-4">
                 	<div class="input-append">
 					    <input class="span12" id="appendedInputButtons" type="text" placeholder="Measurement..." data-bind="value: measurement_name">					    
+					    
+					    <input name="category" 
+		                   data-role="dropdownlist"
+		                   data-value-primitive="true"
+		                   data-text-field="name"
+		                   data-value-field="id"
+		                   data-bind="value: measurement_category_id,
+                              source: measurementCategoryDS"
+                           data-option-label="Category" />
+
 					    <button class="btn btn-default" type="button" data-bind="click: addMeasurement"><i class="icon-plus"></i> <span data-bind="text: lang.lang.add_measurement"></span></button>		
 					</div>
 	            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
 	            		<thead>
 	            			<tr>
-	            				<th data-bind="text: lang.lang.measurement"></th>	            				
+	            				<th data-bind="text: lang.lang.measurement"></th>
+	            				<th data-bind="text: lang.lang.category"></th>
 	            				<th></th>
 	            			</tr>
 	            		</thead>
-	            		<tbody data-role="listview"	            				
+	            		<tbody data-role="listview"
+	            				data-auto-bind="false"	            				
 		            			data-edit-template="itemSetting-edit-measurement-template"
 				                data-template="itemSetting-measurement-template"
 				                data-bind="source: measurementDS"></tbody>
 	            	</table>
 	            </div>
-	            <!-- // Tab Measurement content END -->
+	            <!-- // Measurement END -->
 
-	            <!-- Tab Brand content -->
-	            <div class="tab-pane" id="tab4-1">
+	            <!-- Brand -->
+	            <div class="tab-pane" id="tab-5">
 		            <div class="input-append">
 					    <input class="span4" id="appendedInputButtons" type="text" placeholder="Code..." data-bind="value: brand_code">
 					    <input class="span4" id="appendedInputButtons" type="text" placeholder="New Brand..." data-bind="value: brand_name">
@@ -22398,8 +22434,9 @@
 				                data-bind="source: brandDS"></tbody>
 	            	</table>		            
 	            </div>
-	            <!-- // Tab Brand Type content END -->
-	            <div class="tab-pane" id="tab5-1">
+	            <!-- // Brand END -->
+
+	            <div class="tab-pane" id="tab-6">
 	            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
 	            		<thead>
 	            			<tr class="widget-head">
@@ -22522,10 +22559,42 @@
         </div>
     </div>
 </script>
+<script id="itemSetting-measurement-category-template" type="text/x-kendo-tmpl">
+    <tr>
+    	<td>
+    		#:name#
+   		</td>
+   		<td align="center">   			
+   			<div class="edit-buttons">       
+		        <a class="k-button k-edit-button" href="\\#"><span class="k-icon k-edit"></span></a>
+		        #if(is_system=="0"){#
+			        <a class="k-button k-delete-button" href="\\#"><span class="k-icon k-delete"></span></a>				        
+		        #}#
+		   	</div>		   	
+   		</td>
+   	</tr>
+</script>
+<script id="itemSetting-edit-measurement-category-template" type="text/x-kendo-tmpl">
+    <div class="product-view k-widget">
+        <dl>                
+            <dd>
+                <input type="text" class="k-textbox" data-bind="value:name" name="name" required="required" validationMessage="required" />
+                <span data-for="name" class="k-invalid-msg"></span>
+            </dd>
+        </dl>
+        <div class="edit-buttons">
+            <a class="k-button k-update-button" href="\\#"><span class="k-icon k-update"></span></a>
+            <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-cancel"></span></a>
+        </div>
+    </div>
+</script>
 <script id="itemSetting-measurement-template" type="text/x-kendo-tmpl">
     <tr>
     	<td>
     		#:name#
+   		</td>
+   		<td>
+    		#:category#
    		</td>
    		<td align="center">   			
    			<div class="edit-buttons">       
@@ -22543,6 +22612,17 @@
             <dd>
                 <input type="text" class="k-textbox" data-bind="value:name" name="name" required="required" validationMessage="required" />
                 <span data-for="name" class="k-invalid-msg"></span>
+            </dd>
+            <dd>
+                <input name="category" 
+                   data-role="dropdownlist"
+                   data-value-primitive="true"
+                   data-text-field="name"
+                   data-value-field="id"
+                   data-bind="value: measurement_category_id,
+                              source: measurementCategoryDS"
+                   required="required" validationMessage="required" />
+                <span data-for="category" class="k-invalid-msg"></span>
             </dd>               
         </dl>
         <div class="edit-buttons">
@@ -22721,16 +22801,6 @@
 	    </div>
 
 	</div>
-</script>
-<script id="unitOfMeasurement" type="text/x-kendo-template">
-	<span class="pull-right glyphicons no-js remove_2" 
-			onclick="javascript:window.history.back()"><i></i></span>
-
-	<h2>Unit Of Measurement</h2>
-
-	<br>
-
-	
 </script>
 <!-- INVENTORY REPORTS -->
 <script id="itemReportCenter" type="text/x-kendo-template">
@@ -78334,6 +78404,7 @@
         itemGroupDS			: dataStore(apiUrl + "items/group"),
 		brandDS				: dataStore(apiUrl + "brands"),
         measurementDS		: dataStore(apiUrl + "measurements"),
+        measurementCategoryDS: dataStore(apiUrl + "measurement_categories"),
         patternDS  			: dataStore(apiUrl + "items"),
         category_code 		: "",
         category_name 		: "",
@@ -78344,6 +78415,7 @@
         item_group_name 	: "",
         item_group_abbr 	: "",
         measurement_name 	: "",
+        measurement_category_id	: 0,
         brand_code 			: "",
         brand_name 			: "",
         brand_abbr 			: "", 
@@ -78484,15 +78556,36 @@
         		alert("required category, abbr, and name!");
         	}
         },
-        addMeasurement 		: function(){
-        	var self = this, 
-        	name = this.get("measurement_name");
+        addMeasurementCategory 		: function(){
+        	var name = this.get("measurement_category_name");
 
         	if(name!==""){
-	        	this.measurementDS.add({	        		
+	        	this.measurementCategoryDS.add({
+	        		name 		: name,
+	        		is_system 	: 0
+	        	});
+
+	        	this.measurementCategoryDS.sync();
+
+	        	this.set("measurement_category_name", "");
+        	}else{
+        		alert("required name");
+        	}
+        },
+        addMeasurement 		: function(){
+        	var self = this, 
+        		measurement_category_id = this.get("measurement_category_id"),
+        		name = this.get("measurement_name");
+
+        	if(name!=="" && measurement_category_id>0){
+        		var category = this.measurementCategoryDS.get(measurement_category_id);
+
+	        	this.measurementDS.add({
+	        		measurement_category_id	: measurement_category_id,	        		
 	        		name 		: name,
 	        		description : name,
-	        		is_system 	: 0
+	        		is_system 	: 0,
+	        		category 	: category.name
 	        	});
 
 	        	this.measurementDS.sync();
@@ -78504,9 +78597,10 @@
 	        		}
 	        	});
 	        		        			
-	        	this.set("measurement_name", "");	        		
+	        	this.set("measurement_category_id", 0);
+	        	this.set("measurement_name", "");
         	}else{
-        		alert("required name");
+        		alert("required both name and category");
         	}
         },
         addBrand 			: function(){
@@ -78644,56 +78738,6 @@
         		banhji.item.setPattern(data.id);
         	}
         } 
-    });
-    banhji.unitOfMeasurement =  kendo.observable({
-		lang 				: langVM,		        
-        dataSource 			: dataStore(apiUrl + "measurements"),        
-        categoryDS 			: dataStore(apiUrl + "measurement_categories"),
-        pageLoad 			: function() {
-        },        
-        addCategory 		: function(){
-        	var self = this, 
-        	name = this.get("category_name"),
-        	code = this.get("category_code");
-
-        	if(name!=="" && code!==""){        		
-	        	this.categoryDS.add({	        		
-	        		sub_of 		 	: 0,
-	        		item_type_id 	: this.get("category_item_type_id"),
-	        		item_id 		: 0,
-	        		code 			: code,	        		
-	        		name 			: name,
-	        		abbr 			: this.get("category_abbr"),	        		
-	        		is_system 		: 0,
-	        		item_type 		: []
-	        	});
-
-	        	this.categoryDS.sync();
-	        	this.set("category_code", "");
-    			this.set("category_name", "");
-    			this.set("category_abbr", "");
-        	}else{
-        		alert("required number and name!");
-        	}
-        },
-        addMeasurement 		: function(){
-        	var self = this, 
-        	name = this.get("measurement_name");
-
-        	if(name!==""){
-	        	this.measurementDS.add({	        		
-	        		name 		: name,
-	        		description : name,
-	        		is_system 	: 0
-	        	});
-
-	        	this.measurementDS.sync();
-	        		        			
-	        	this.set("measurement_name", "");	        		
-        	}else{
-        		alert("required name");
-        	}
-        }
     });
 
 
@@ -91162,7 +91206,6 @@
 		itemAssembly: new kendo.Layout("#itemAssembly", {model: banhji.itemAssembly}),
 		itemAdjustment: new kendo.Layout("#itemAdjustment", {model: banhji.itemAdjustment}),
 		itemSetting: new kendo.Layout("#itemSetting", {model: banhji.itemSetting}),
-		unitOfMeasurement: new kendo.Layout("#unitOfMeasurement", {model: banhji.unitOfMeasurement}),
 		internalUsage: new kendo.Layout("#internalUsage", {model: banhji.internalUsage}),
 		serviceSetting: new kendo.Layout("#serviceSetting", {model: banhji.serviceSetting}),
 		itemReportCenter: new kendo.Layout("#itemReportCenter", {model: banhji.itemReportCenter}),
@@ -95663,6 +95706,10 @@
 					
 					vm.itemTypeDS.filter({ field:"id <>", value:3 });
 					vm.categoryDS.filter({ field:"item_type_id <>", value:3 });
+					vm.measurementDS.query({ 
+						filter:{ operator:"measurement_category" },
+						sort:{ field:"measurement_category_id", dir:"asc" } 
+					});
 				}
 			} else {
 				window.location.replace(baseUrl + "admin");
@@ -95687,25 +95734,6 @@
 				vm.categoryDS.filter({ field:"item_type_id", operator:"where_in", value: [4,6] });
 				vm.itemTypeDS.filter({ field:"id", operator:"where_in", value: [4,6] });
 				vm.itemGroupDS.filter({ field:"id", operator:"where_in", value: [3,4] });
-			}
-
-			vm.pageLoad();
-		}
-	});
-	banhji.router.route("/unit_of_measurement", function(){
-		if(!banhji.userManagement.getLogin()){
-			banhji.router.navigate('/manage');
-		}else{
-			banhji.view.layout.showIn("#content", banhji.view.unitOfMeasurement);
-			banhji.view.layout.showIn('#menu', banhji.view.menu);
-			banhji.view.menu.showIn('#secondary-menu', banhji.view.inventoryMenu);
-
-			var vm = banhji.unitOfMeasurement;
-
-			banhji.userManagement.addMultiTask("Unit Of Measurement","unit_of_measurement",null);
-			
-			if(banhji.pageLoaded["unit_of_measurement"]==undefined){
-				banhji.pageLoaded["unit_of_measurement"] = true;
 			}
 
 			vm.pageLoad();

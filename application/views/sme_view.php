@@ -27,6 +27,8 @@
     <link rel="stylesheet" href="<?php echo base_url()?>assets/kendo/styles/kendo.default.min.css" />
     <link rel="stylesheet" href="<?php echo base_url()?>assets/kendo/styles/kendo.default.mobile.min.css" />
 
+    <link rel="stylesheet" href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/common/theme/fonts/font-awesome/css/font-awesome.min.css" />
+
     <!-- Customize CSS-->
 	<link rel="stylesheet" href="<?php echo base_url()?>assets/sme.css" />
 
@@ -59,30 +61,147 @@
 	</script>
 	<script type="text/x-kendo-template" id="menu-tmpl">
 	<!-- 	<div class="container-fluid"> -->
-			<nav class="navbar fixed-top navbar-toggleable-md navbar-inverse bg-inverse">
-		        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarExample" aria-controls="navbarExample" aria-expanded="false" aria-label="Toggle navigation">
-		            <span class="navbar-toggler-icon"></span>
-		        </button>
-	            <a class="navbar-brand" href="#">
-	                <img src="http://placehold.it/300x60?text=Logo" width="150" height="30" alt="">
-	            </a>
-	            <div class="collapse navbar-collapse" id="navbarExample">
-	                <ul class="navbar-nav ml-auto">
-	                    <li class="nav-item active">
-	                        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-	                    </li>
-	                    <li class="nav-item">
-	                        <a class="nav-link" href="#">About</a>
-	                    </li>
-	                    <li class="nav-item">
-	                        <a class="nav-link" href="#">Services</a>
-	                    </li>
-	                    <li class="nav-item">
-	                        <a class="nav-link" href="#">Contact</a>
-	                    </li>
-	                </ul>
-	            </div>
-		      
+			<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+		        <div class="container-fluid">
+		            <!-- Brand and toggle get grouped for better mobile display -->
+		            <div class="navbar-header">
+		                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+		                    <span class="sr-only">Toggle navigation</span>
+		                    <span class="icon-bar"></span>
+		                    <span class="icon-bar"></span>
+		                    <span class="icon-bar"></span>
+		                </button>
+		                <a class="navbar-brand" href="#" data-bind="click: checkRole">
+		                    <img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/banhji-logo.png" alt="">
+		                </a>
+		            </div>
+
+		            <!-- Search -->
+		            <form class="navbar-form pull-left hidden-xs">
+						<div class="btn-group">
+						  	<a class="btn btn-inverse dropdown-toggle" data-toggle="dropdown" href="#">
+						    	<i class="icon-th"></i>
+						  	</a>
+						</div>
+					  	<input id="search-placeholder" class="span2 search-query" 
+					  		type="text" 
+					  		placeholder="Search" 
+					  		data-bind="value: searchText" />
+					  	<button class="btn btn-inverse"
+					  		type="submit" 
+					  		data-bind="click: search" >
+					  			<i class="icon-search"></i>
+					  	</button>
+					</form>
+
+					<ul class="topnav pull-right">
+						<li role="presentation" class="dropdown">
+					  		<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"> <i class="icon-th-list"></i></a>
+				  			<ul class="dropdown-menu ul-multiTaskList" data-template="multiTaskList-row-template" data-bind="source: multiTaskList">  				  				
+				  			</ul>
+					  	</li>
+					  	<li>
+					  		<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+					  			<i class="icon-question icon-question1"></i>
+					  		</a>
+					  		<ul class="dropdown-menu" style="width: 408px !important; left: -293px !important; padding-bottom: 0; border: none;">
+					  			<div class="top-help" style="background: #fff; padding: 10px 20px 20px; text-align: left; display: inline-block; width: 100%;">
+					  				<h3 style="margin-bottom: 12px;">Help</h3>
+					  				<div class="row-fluid">
+						        		<div class="span12" style="padding: 0;">
+											<select data-role="multiselect"
+												    data-value-primitive="true"
+												    data-header-template="contact-header-tmpl"
+												    data-item-template="contact-list-tmpl"
+												    data-value-field="id"
+												    data-text-field="name"
+												    data-bind="value: obj.contactIds, 
+												   			source: contactDS"
+												    data-placeholder="Search for an app..."
+												    style="width: 77%; float: left;" /></select>
+											<button type="button" data-role="button" data-bind="click: search" style="float: left; width: 35px; margin-left: 8px; height: 30px;"><i class="icon-search"></i></button>
+										</div>
+									</div>
+					  			</div>
+					  			<div class="middle-help" style="background: #f4f4f4; padding: 20px 20px 20px; text-align: left; display: inline-block; width: 100%;">
+					  				<div class="more-help" style="border-bottom: 1px solid #ddd; margin-bottom: 10px; width: 100%; float: left; padding-bottom: 10px;">
+				  						<div class="help-img" style="margin-right: 20px; float: left;">
+				  							<img src="http://fpoimg.com/51x51?text=Picture%201">
+				  						</div>
+				  						<div class="help-desc" style="float: left;">
+				  							<p>Need more help?</p>
+				  							<a href="" target="_blank">Accountant Help hub</a>
+				  						</div>
+				  					</div>
+				  					<div class="what-help" style="width: 100%; float: left;">
+				  						<div class="help-img" style="margin-right: 20px; float: left;">
+				  							<img src="http://fpoimg.com/51x51?text=Picture%202">
+				  						</div>
+				  						<div class="help-desc">
+				  							<p>Check out what's new</p>
+				  							<a href="" target="_blank">Learn about new product features</a>
+				  						</div>
+				  					</div>
+					  			</div>
+					  			<div class="bottom-help" style="background: #fff; padding: 20px 20px 20px; text-align: left; display: inline-block; width: 100%;">
+					  				<h3 style="float: left; margin-right: 10px;">Direct Chat by</h3>
+					  				<div class="fb-messengermessageus" 
+							            messenger_app_id="1301847836514973"
+							            page_id="862386433857166"
+							            color="blue"
+							            width="180"
+							            size="standard" style="float: left; margin-top: 6px;"></div>
+					  			</div>
+					  		</ul>
+					  	</li>
+						<li role="presentation" class="dropdown">
+					  		<a style="color: #fff;" class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">[<span data-bind="text: getUsername"></span>]</a>
+				  			<ul class="dropdown-menu">  				  				
+				  				<li><a href="#" data-bind="click: lang.changeToKh">ភាសាខ្មែរ</a></li>
+		    					<li><a href="#" data-bind="click: lang.changeToEn">English</a></li>
+								<li class="divider"></li>
+								<li><a href="<?php echo base_url(); ?>admin">Setting</a></li>
+								<li><a href="#/manage" data-bind="click: logout"><i class="icon-power-off"></i> Logout</a></li> 				
+				  			</ul>
+					  	</li>				
+					</ul>
+
+		            <!-- Collect the nav links, forms, and other content for toggling -->
+		            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+		            	<!-- Search -->
+		            	<form class="navbar-form pull-left hidden-lg hidden-sm">
+							<div class="btn-group">
+							  	<a class="btn btn-inverse dropdown-toggle" data-toggle="dropdown" href="#">
+							    	<i class="icon-th"></i>
+							  	</a>
+							</div>
+						  	<input id="search-placeholder" class="span2 search-query" 
+						  		type="text" 
+						  		placeholder="Search" 
+						  		data-bind="value: searchText" />
+						  	<button class="btn btn-inverse"
+						  		type="submit" 
+						  		data-bind="click: search" >
+						  			<i class="icon-search"></i>
+						  	</button>
+						</form>
+
+
+		                <ul class="nav navbar-nav hidden-lg hidden-sm">
+		                    <li>
+		                        <a href="#">About</a>
+		                    </li>
+		                    <li>
+		                        <a href="#">Services</a>
+		                    </li>
+		                    <li>
+		                        <a href="#">Contact</a>
+		                    </li>
+		                </ul>
+		            </div>
+		            <!-- /.navbar-collapse -->
+		        </div>
+		        <!-- /.container -->
 		    </nav>
 			<!-- <div class="menu-hidden sidebar-hidden-phone menu-left hidden-print">
 				<div class="navbar main navbar-fixed-top" id="main-menu">

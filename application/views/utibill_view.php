@@ -327,6 +327,11 @@
 	            	</a>
 	            </li>
 	            <li>
+	            	<a href="#fine" data-bind="click: goFine" class="glyphicons more" data-toggle="tab">
+	            		<i></i><span class="strong"><span data-bind="text: lang.lang.fine">Fine</span></span>
+	            	</a>
+	            </li>
+	            <li>
 	            	<a href="#tab9" data-bind="click: goPlan" class="glyphicons list" data-toggle="tab">
 	            		<i></i><span class="strong"><span data-bind="text: lang.lang.plans">Plans</span></span>
 	            	</a>
@@ -816,6 +821,68 @@
 				                data-template="maintenanceSetting-template"
 				                data-auto-bind="false"
 				                data-edit-template="maintenance-edit-template"
+				                data-bind="source: planItemDS"></tbody>
+	            	</table>
+	            </div>
+	            <div class="tab-pane" id="fine">
+	            	<div style="clear: both;">
+	            		<input data-bind="value: fineName, attr: {placeholder: lang.lang.name}" type="text" placeholder="Name" style="height: 32px; padding: 5px; margin-right: 10px;"  class="span1 k-textbox k-invalid" />
+
+		            	<input data-role="dropdownlist"
+		            	   class="span2"
+		            	   style="padding-right: 1px; height: 32px; margin-right: 10px;" 
+            			   data-option-label="-Acount-"
+            			   data-auto-bind="false"			                   
+		                   data-value-primitive="false"
+		                   data-text-field="name"
+		                   data-value-field="id"
+		                   data-bind="value: fineAccount,
+		                              source: tariffAccDS"/>
+
+		                <input data-role="dropdownlist"
+		            	   class="span2"
+		            	   style="padding-right: 1px; height: 32px; margin-right: 10px;" 
+            			   data-option-label="-Currency-"
+            			   data-auto-bind="false"			                   
+		                   data-value-primitive="true"
+		                   data-text-field="code"
+		                   data-value-field="id"
+		                   data-bind="value: fineCurrency,
+		                              source: currencyDS"/>
+
+		                <input data-role="dropdownlist"
+		            	   class="span2"
+		            	   style="padding-right: 1px; height: 32px; margin-right: 10px;" 
+            			   data-option-label="-Flat-"
+            			   data-auto-bind="false"			                   
+		                   data-value-primitive="true"
+		                   data-text-field="name"
+		                   data-value-field="id"
+		                   data-bind="value: fineFlat,
+		                              source: tariffFlatType"/>
+
+		                <input data-bind="value: fineDay, attr: {placeholder: lang.lang.day}" type="text" placeholder="Day" style="height: 32px; padding: 5px; margin-right: 10px;" class="span1 k-textbox k-invalid" />
+
+		                <input data-bind="value: finePrice, attr: {placeholder: lang.lang.price}" type="text" placeholder="Price" style="height: 32px; padding: 5px; margin-right: 10px;" class="span1 k-textbox k-invalid" />
+
+		            	<a class="btn-icon btn-primary glyphicons circle_plus cutype-icon" style="width: 80px; padding: 5px 7px 5px 35px !important; text-align: left;" data-bind="click: addFine"><i></i><span data-bind="text: lang.lang.add">Add</span></a>
+		            </div>
+	            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
+	            		<thead>
+	            			<tr>
+	            				<th class="center"><span data-bind="text: lang.lang.name">Name</span></th>
+	            				<th class="center"><span data-bind="text: lang.lang.account">Account</span></th>
+	            				<th class="center"><span data-bind="text: lang.lang.currency">Currency</span></th>
+	            				<th class="center"><span data-bind="text: lang.lang.flat">Flat</span></th>
+	            				<th class="center"><span data-bind="text: lang.lang.day">Day</span></th>
+	            				<th class="center"><span data-bind="text: lang.lang.price">Price</span></th>
+	            				<th class="center"><span data-bind="text: lang.lang.action">Action</span></th>
+	            			</tr>
+	            		</thead>
+	            		<tbody data-role="listview"	            				
+				                data-template="findSetting-template"
+				                data-auto-bind="false"
+				                data-edit-template="find-edit-template"
 				                data-bind="source: planItemDS"></tbody>
 	            	</table>
 	            </div>
@@ -1370,6 +1437,79 @@
                    data-bind="value: currency,
                               source: currencyDS"/>
         </td>  
+        <td>
+        	<input style="width: 100%;" type="text" class="k-textbox" data-bind="value:amount" />
+        </td>
+
+	    <td class="edit-buttons" style="text-align: center;">
+	        <a class="k-button k-update-button" href="\\#"><span class="k-icon k-update"></span></a>
+	        <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-cancel"></span></a>
+	    </td>
+    </tr>
+</script>
+<script id="findSetting-template" type="text/x-kendo-tmpl">
+    <tr>
+    	<td>
+    		#= name#
+   		</td>
+   		<td>
+    		#= account.name#
+   		</td>
+   		<td align="center">
+   			#= _currency.code #
+   		</td>
+   		<td>
+    		# if(is_flat == 0){# #: banhji.setting.lang.lang.not_flat# #}else{# #: banhji.setting.lang.lang.flat# #}#
+   		</td>
+   		<td align="right">
+    		#= usage#
+   		</td>
+   		<td align="right">
+    		#= kendo.toString(amount, _currency.locale=="km-KH"?"c0":"c", _currency.locale)#
+   		</td>
+   		<td align="center">
+		    <a class="btn-action glyphicons pencil btn-success k-edit-button"><i></i>
+		    </a>
+   		</td>
+   	</tr>
+</script>
+<script id="find-edit-template" type="text/x-kendo-tmpl">
+    <tr>    	               
+        <td>
+			<input style="width: 100%;" type="text" class="k-textbox" data-bind="value:name" />
+        </td>       
+        <td>
+			<input style="width: 100%;" data-role="dropdownlist"      
+                   data-value-primitive="false"
+                   data-text-field="name"
+                   data-auto-bind="true"
+                   data-value-field="id"
+                   data-bind="value: account,
+                              source: tariffAccDS" />
+        </td>  
+        <td>
+        	<input data-role="dropdownlist"
+            	   style="padding-right: 1px;height: 32px;" 
+    			   data-auto-bind="true"			                   
+                   data-value-primitive="true"
+                   data-text-field="code"
+                   data-value-field="id"
+                   data-bind="value: currency,
+                              source: currencyDS"/>
+        </td>  
+        <td align="center">
+    		<input data-role="dropdownlist"
+        	   style="padding-right: 1px;height: 32px;" 
+			   data-auto-bind="false"			                   
+               data-value-primitive="true"
+               data-text-field="name"
+               data-value-field="id"
+               data-bind="value: is_flat,
+                          source: tariffFlatType"/>
+		</td> 
+		<td>
+        	<input style="width: 100%;" type="text" class="k-textbox" data-bind="value:usage" />
+        </td>
         <td>
         	<input style="width: 100%;" type="text" class="k-textbox" data-bind="value:amount" />
         </td>
@@ -13997,6 +14137,49 @@
 			        	self.set("maintenancePrice", "");
 			        	self.set("maintenanceAccount", "");
 			        	self.set("maintenanceCurrency","");
+				    }
+				});
+				this.planItemDS.bind("error", function(e){
+					var notificat = $("#ntf1").data("kendoNotification");
+					notificat.hide();
+					notificat.success(self.lang.lang.error_message);
+				});
+			}else{
+				var notificat = $("#ntf1").data("kendoNotification");
+				notificat.hide();
+				notificat.success(self.lang.lang.field_required_message);
+			}
+        },
+        goFine    		: function(){
+        	this.planItemDS.data([]);
+        	this.planItemDS.filter({field: "type", value: "fine"});
+        },
+        addFine			: function(){
+        	var self = this;
+        	if(this.get("fineName") && this.get("fineAccount") && this.get("fineCurrency") && this.get("finePrice") && this.get("fineDay")){
+	        	this.planItemDS.add({
+	        		name 		: this.get("fineName"),
+	        		type     	: "fine",
+	        		is_flat   	: this.get("fineFlat"),
+	        		unit 		: null,
+	        		account 	: this.get("fineAccount"),
+	        		usage 		: this.get("fineDay"),
+	        		currency 	: this.get("fineCurrency"),
+	        		amount 		: this.get("finePrice"),
+	        		_currency   : []
+	        	});
+	        	this.planItemDS.sync();
+	        	this.planItemDS.bind("requestEnd", function(e){
+	        		if(e.type != 'read' && e.response) {
+	        			var notificat = $("#ntf1").data("kendoNotification");
+						notificat.hide();
+						notificat.success(self.lang.lang.success_message);
+			        	self.set("fineName", "");
+			        	self.set("finePrice", "");
+			        	self.set("fineAccount", "");
+			        	self.set("fineCurrency","");
+			        	self.set("fineDay","");
+			        	self.set("fineFlat","");
 				    }
 				});
 				this.planItemDS.bind("error", function(e){

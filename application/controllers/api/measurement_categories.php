@@ -103,7 +103,7 @@ class Measurement_categories extends REST_Controller {
 		$data["count"] = 0;
 
 		foreach ($models as $value) {			
-			$obj = new is_system(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$obj = new Measurement_category(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$obj->get_by_id($value->id);
 			
 			$obj->name 			= $value->name;			
@@ -127,7 +127,7 @@ class Measurement_categories extends REST_Controller {
 		$models = json_decode($this->delete('models'));
 
 		foreach ($models as $key => $value) {
-			$obj = new is_system(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$obj = new Measurement_category(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$obj->where("id", $value->id)->get();
 			
 			$data["results"][] = array(

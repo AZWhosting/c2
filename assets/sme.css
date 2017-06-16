@@ -40,3 +40,64 @@ ul{
   background: none !important;
   border: none !important;
 }
+.navbar > .container .navbar-brand, .navbar > .container-fluid .navbar-brand{
+  border-right: 1px solid #333333;
+  float: left;
+  margin-left: 15px;
+  padding-left: 0;
+  padding-top: 0;
+  width: 50px;
+}
+.navbar-brand > img {
+  height: 40px;
+  line-height: 50px;
+  margin-top: 5px;
+}
+/*Menu Search*/
+.navbar-form .search-query {
+  width: 170px;
+  background: #555555;
+  border: none;
+  color: #ffffff;
+  height: 33px;
+  padding: 0 10px;
+}
+.btn-group.open 
+.btn-inverse.dropdown-toggle, 
+.btn-inverse.disabled, 
+.btn-inverse[disabled], 
+.btn-inverse:hover, 
+.btn-inverse:focus, 
+.btn-inverse {
+  background: #203864 !important;
+  border: none !important;
+  line-height: 21px;
+  border-radius: 0;
+}
+/*Menu Phone*/
+.navbar-collapse {
+  border-top: 1px solid transparent;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1) inset;
+  overflow-x: visible;
+  padding-left: 15px;
+  padding-right: 15px;
+  background: #1c2633;
+}
+.navbar-form.pull-left.hidden-sm{
+  width: 100%;
+  margin: 0;
+}
+.navbar-fixed-top .nav {
+  float: left;
+  margin: 0;
+  width: 100%;
+}
+
+@media only screen
+and (min-device-width : 320px)
+and (max-device-width : 480px) {
+  .navbar > .container .navbar-brand, .navbar > .container-fluid .navbar-brand{
+    padding-left: 15px;
+    border-right: none;
+  }
+}
