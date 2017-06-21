@@ -407,10 +407,15 @@
               };
               var cognitoUser = new AWSCognito.CognitoIdentityServiceProvider.CognitoUser(userData);
               // if(that.get('newPassword') == that.get('cPassword')) {
-                cognitoUser.confirmPassword(that.get('veriCode'), that.get('newPassword'), this);
-              // } else {
-              //   console.log("passwords do not match");
-              // }
+                cognitoUser.confirmPassword(that.get('veriCode'), that.get('newPassword'), {
+                  onFailter(err) {
+                    console.log(err);
+                  },
+                  onSuccess() {
+                     $("#changePasswordBtn").val('Password is reset');
+                      window.location.replace(baseUrl + "login/");
+                  }
+                });
             }
           }
         });

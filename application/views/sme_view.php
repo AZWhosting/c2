@@ -53,8 +53,8 @@
 	<div id="wrapperApplication" class="wrapper" ></div>
 	<!-- template section starts -->
 	<script type="text/x-kendo-template" id="layout">
-		<div id="menu" class="menu"></div>			
-		<div id="content" class="container-fluid"></div>
+		<div id="menu" class="menu"></div>
+		<div  class="container-fluid"></div>
 	</script>
 	<script type="text/x-kendo-template" id="blank-tmpl">
 	</script>
@@ -65,29 +65,27 @@
 	            <!-- Brand and toggle get grouped for better mobile display -->
 	            <div class="navbar-header" style="margin: 0">
 	            	<!-- Menu Phone -->
-	                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+	                <!-- <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
 	                    <span class="sr-only">Toggle navigation</span>
 	                    <span class="icon-bar"></span>
 	                    <span class="icon-bar"></span>
 	                    <span class="icon-bar"></span>
-	                </button>
+	                </button> -->
 
 	                <!-- Menu Phone Multipel Task-->
-	                <button type="button" class="navbar-toggle phone-multitasklist" data-toggle="collapse" data-target="#bs-example-navbar-collapse-2">
-	                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"> <i class="icon-th-list"></i></a>
-	                </button>
+	               <!--  <button type="button" class="navbar-toggle phone-multitasklist" data-toggle="collapse" data-target="#bs-example-navbar-collapse-2">	                   
+	                    <span class="icon-th-list"></span>
+	                </button> -->
 
 	                <!-- Menu Phone Langauge-->
-	                <button type="button" class="navbar-toggle phone-lang" data-toggle="collapse" data-target="#bs-example-navbar-collapse-4">
-	                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-	                    	<i data-bind="text: lang.localeCode"></i>
-	                    </a>
-	                </button>
+	               <!--  <button type="button" class="navbar-toggle phone-lang" data-toggle="collapse" data-target="#bs-example-navbar-collapse-4">
+	                    <span data-bind="text: lang.localeCode"></span>	                   
+	                </button> -->
 
 	                <!-- Menu Phone Search-->
-	                <button type="button" class="navbar-toggle phone-search" data-toggle="collapse" data-target="#bs-example-navbar-collapse-3">
-	                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"> <i class="icon-search"></i></a>
-	                </button>
+	                <!-- <button type="button" class="navbar-toggle phone-search" data-toggle="collapse" data-target="#bs-example-navbar-collapse-3">
+	                    <span class="icon-search"></span>	                   
+	                </button> -->
 
 	                <!--Logo-->
 	                <a class="navbar-brand" href="#" data-bind="click: checkRole">
@@ -118,14 +116,33 @@
 					<li role="presentation" class="setting dropdown">
 				  		<a style="color: #fff;" class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">[<span data-bind="text: getUsername"></span>]</a>
 			  			<ul class="dropdown-menu">  				  				
-			  				<li><a href="#" data-bind="click: lang.changeToKh">ភាសាខ្មែរ</a></li>
-	    					<li><a href="#" data-bind="click: lang.changeToEn">English</a></li>
+			  				<li>
+		                    	<a href="#" data-bind="click: lang.changeToKh">
+		                    		<img class="kh-flag" src="https://lipis.github.io/flag-icon-css/flags/4x3/kh.svg">
+		                    		<span>ភាសាខ្មែរ</span>
+		                    	</a>
+		                    </li>
+	    					<li>
+	    						<a href="#" data-bind="click: lang.changeToEn">
+	    							<img class="en-flag" src="https://lipis.github.io/flag-icon-css/flags/4x3/gb.svg">
+	    							<span>English</span>
+	    						</a>
+	    					</li>
 							<li class="divider"></li>
-							<li><a href="<?php echo base_url(); ?>admin">Setting</a></li>
-							<li><a href="#/manage" data-bind="click: logout"><i class="icon-power-off"></i> Logout</a></li> 				
+							<li>
+								<a  href="<?php echo base_url(); ?>admin">
+									<i class="icon-cog"></i>
+									Setting
+								</a>
+							</li>
+							<li>
+								<a href="#/manage" data-bind="click: logout">
+									<i class="icon-power-off"></i>
+									Logout
+								</a>
+							</li> 				
 			  			</ul>
 				  	</li>
-
 				  	<li class="help">
 				  		<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
 				  			<i class="icon-question icon-question1"></i>
@@ -188,8 +205,20 @@
 				</ul>
 
 	            <!-- Menu Phone -->
-	            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+	            <!-- <div class="menu-phone collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 	                <ul class="nav navbar-nav hidden-lg hidden-md hidden-sm">
+	                	<li>
+	                    	<a href="#" data-bind="click: lang.changeToKh">
+	                    		<img class="kh-flag" src="https://lipis.github.io/flag-icon-css/flags/4x3/kh.svg">
+	                    		<span>ភាសាខ្មែរ</span>
+	                    	</a>
+	                    </li>
+    					<li>
+    						<a href="#" data-bind="click: lang.changeToEn">
+    							<img class="en-flag" src="https://lipis.github.io/flag-icon-css/flags/4x3/gb.svg">
+    							<span>English</span>
+    						</a>
+    					</li>
 	                    <li>
 	                        <a href="#">About</a>
 	                    </li>
@@ -200,11 +229,10 @@
 	                        <a href="#">Contact</a>
 	                    </li>
 	                </ul>
-	            </div>
+	            </div> -->
 
 	            <!-- Menu Phone Multipel Task-->
-	            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
-	            	<!-- Search -->
+	            <!-- <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
 	            	<form class="navbar-form pull-left hidden-lg hidden-md hidden-sm">
 						<div class="btn-group">
 						  	<a class="btn btn-inverse dropdown-toggle" data-toggle="dropdown" href="#">
@@ -221,11 +249,10 @@
 					  			<i class="icon-search"></i>
 					  	</button>
 					</form>
-	            </div>
+	            </div> -->
 
 	            <!-- Menu Phone Search-->
-	            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-3">
-	            	<!-- Search -->
+	            <!-- <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-3">
 	            	<form class="navbar-form pull-left hidden-lg hidden-md hidden-sm">
 						<div class="btn-group">
 						  	<a class="btn btn-inverse dropdown-toggle" data-toggle="dropdown" href="#">
@@ -242,11 +269,11 @@
 					  			<i class="icon-search"></i>
 					  	</button>
 					</form>
-	            </div>
+	            </div> -->
 
 	            <!-- Menu Phone Langauge-->
-	            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-4">
-	            	<ul class="nav navbar-nav hidden-lg hidden-md hidden-sm phone-language">
+	            <!-- <div class="menu-phone collapse navbar-collapse" id="bs-example-navbar-collapse-4">
+	            	<ul class=" nav navbar-nav hidden-lg hidden-md hidden-sm phone-language">
 	                    <li>
 	                    	<a href="#" data-bind="click: lang.changeToKh">
 	                    		<img class="kh-flag" src="https://lipis.github.io/flag-icon-css/flags/4x3/kh.svg">
@@ -260,7 +287,7 @@
     						</a>
     					</li>	
 	                </ul>
-	            </div>
+	            </div> -->
 
 
 	            <!-- /.navbar-collapse -->

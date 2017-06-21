@@ -11,34 +11,16 @@ class Ops extends REST_Controller {
 		$companyList = array("api","banhji","banhji_mac","information_schema","innodb","mysql","performance_schema","tmp");
 		$data["results"] = [];
 		$data["count"] = 0;
-
+		
 		foreach ($dbs as $key => $db)
 		{	
 			if (!in_array("$db", $companyList)) {
-				// $dsn = 'mysql://'.$this->db->username.':'.$this->db->password.'@'.$this->db->hostname.'/'.$db;
-				// $DB1 = $this->load->database($dsn, TRUE);
-				// get all of the tables				
-				// $this->db = $DB1;
-			    $connection = 'use '.$db;
-			    // $this->db->query($connection);
-			    // if($this->db->table_exists('plan_items')) {
-			    // 	$field = array(
-			    // 		'type' => array(
-			    // 			'name' => 'type',
-			    // 			'type' => 'VARCHAR',
-			    // 			'constraint' => 255
-			    // 		)
-			    // 	);
-			    // 	if($this->dbforge->modify_column('plan_items', $field)) {
-			    // 		$data['results'][] = $db;
-			    // 	}
-			    // } 
-
+				$connection = 'use ' . $db;
+				$this->db->query($connection);
 
 			    //Check missing field
-				// if ($this->db->field_exists('quantity', 'measurements')==FALSE)
-				// {
-				//    $data["results"][] = $db;
+				// if ($this->db->field_exists('account_id', 'attachments')===FALSE){
+				//    	$data["results"][] = $db;
 				// }
 
 			    //Create new table
@@ -82,18 +64,19 @@ class Ops extends REST_Controller {
 				
 				//Add new fields
 				// $fields = array(
-				// 	"is_base" => array(
-				// 			"type" 		=> "TINYINT",
-				// 			"constraint"=> 1,
-				// 			"null" 		=> FALSE,
-				// 			"default" 	=> 0
+				// 	"account_id" => array(
+				// 		"type" 		=> "INT",
+				// 		"constraint"=> 11,
+				// 		'unsigned' 	=> TRUE,
+				// 		"null" 		=> FALSE,
+				// 		"default" 	=> 0
 				// 	)
 				// );
-				// $this->dbforge->add_column("measurements", $fields);
+				// $this->dbforge->add_column("attachments", $fields);
 
 			    // Modify field
 				// $this->dbforge->modify_column(
-		  // 		    'measurements', array(
+		  		// 		    'measurements', array(
 				// 		'is_system' => array(
 				// 					'name' 		=> 'is_system', 
 				// 					'type'		=> 'TINYINT',
@@ -103,6 +86,26 @@ class Ops extends REST_Controller {
 				// 		)
 				//     )
 				// );
+
+				//Custom
+				// $dsn = 'mysql://'.$this->db->username.':'.$this->db->password.'@'.$this->db->hostname.'/'.$db;
+				// $DB1 = $this->load->database($dsn, TRUE);
+				// get all of the tables				
+				// $this->db = $DB1;
+			    
+			    // $this->db->query($connection);
+			    // if($this->db->table_exists('plan_items')) {
+			    // 	$field = array(
+			    // 		'type' => array(
+			    // 			'name' => 'type',
+			    // 			'type' => 'VARCHAR',
+			    // 			'constraint' => 255
+			    // 		)
+			    // 	);
+			    // 	if($this->dbforge->modify_column('plan_items', $field)) {
+			    // 		$data['results'][] = $db;
+			    // 	}
+			    // } 
 
 			}//End If
 		}//End Foreach

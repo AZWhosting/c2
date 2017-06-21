@@ -2319,7 +2319,7 @@
 		<td>
 			<input id="txtQuantity-#:uid#" name="txtQuantity-#:uid#"
             	   type="number" class="k-textbox"
-            	   data-min="0"
+            	   min="0"
                    data-bind="value: quantity, events: {change : changes}"
                    required data-required-msg="required"
                    placeholder="Qty..." 
@@ -2340,7 +2340,7 @@
 		<td>
 			<input id="txtPrice-#:uid#" name="txtPrice-#:uid#"
             	   type="number" class="k-textbox"
-            	   data-min="0"
+            	   min="0"
                    data-bind="value: price, events: {change : changes}"
                    required data-required-msg="required"
                    placeholder="Price..." 
@@ -2906,7 +2906,7 @@
 		<td>
 			<input id="txtQuantity-#:uid#" name="txtQuantity-#:uid#"
 				   type="number" class="k-textbox"
-				   data-min="0"
+				   min="0"
 			       data-bind="value: quantity, events: {change : changes}"
 			       required data-required-msg="required"
 			       placeholder="Qty..." 
@@ -2927,7 +2927,7 @@
 		<td>
 			<input id="txtPrice-#:uid#" name="txtPrice-#:uid#"
             	   type="number" class="k-textbox"
-            	   data-min="0"
+            	   min="0"
                    data-bind="value: price, events: {change : changes}"
                    required data-required-msg="required"
                    placeholder="Price..." 
@@ -3495,7 +3495,7 @@
 		<td>
 			<input id="txtAmount-#:uid#" name="txtAmount-#:uid#"
 			   type="number" class="k-textbox"
-			   data-min="0"
+			   min="0"
 		       data-bind="value: amount, events: {change : changes}"
 		       required data-required-msg="required"
 		       placeholder="Amount..." 
@@ -4130,7 +4130,7 @@
 		<td>
 			<input id="txtQuantity-#:uid#" name="txtQuantity-#:uid#"
 				   type="number" class="k-textbox"
-				   data-min="0"
+				   min="0"
 			       data-bind="value: quantity, events: {change : changes}"
 			       required data-required-msg="required"
 			       placeholder="Qty..." 
@@ -4151,7 +4151,7 @@
 		<td>
 			<input id="txtPrice-#:uid#" name="txtPrice-#:uid#"
 				   type="number" class="k-textbox"
-				   data-min="0"
+				   min="0"
 			       data-bind="value: price, events: {change : changes}"
 			       required data-required-msg="required"
 			       placeholder="Price..." 
@@ -4811,7 +4811,7 @@
 		<td>
 			<input id="txtQuantity-#:uid#" name="txtQuantity-#:uid#"
 				   type="number" class="k-textbox"
-				   data-min="0"
+				   min="0"
 			       data-bind="value: quantity, events: {change : changes}"
 			       required data-required-msg="required"
 			       placeholder="Qty..." 
@@ -4832,7 +4832,7 @@
 		<td>
 			<input id="txtPrice-#:uid#" name="txtPrice-#:uid#"
 				   type="number" class="k-textbox"
-				   data-min="0"
+				   min="0"
 			       data-bind="value: price, events: {change : changes}"
 			       required data-required-msg="required"
 			       placeholder="Price..." 
@@ -5303,7 +5303,7 @@
 		<td>
 			<input id="txtQuantity-#:uid#" name="txtQuantity-#:uid#"
 				   type="number" class="k-textbox"
-				   data-min="0"
+				   min="0"
 			       data-bind="value: quantity, events: {change : changes}"
 			       required data-required-msg="required"
 			       placeholder="Qty..." 
@@ -5814,7 +5814,7 @@
 		<td>
 			<input id="txtQuantity-#:uid#" name="txtQuantity-#:uid#"
 				   type="number" class="k-textbox"
-				   data-min="0"
+				   min="0"
 			       data-bind="value: quantity, events: {change : changes}"
 			       required data-required-msg="required"
 			       placeholder="Qty..." 
@@ -5835,7 +5835,7 @@
 		<td>
 			<input id="txtPrice-#:uid#" name="txtPrice-#:uid#"
 				   type="number" class="k-textbox"
-				   data-min="0"
+				   min="0"
 			       data-bind="value: price, events: {change : changes}"
 			       required data-required-msg="required"
 			       placeholder="Price..." 
@@ -5902,7 +5902,7 @@
 		<td class="right">
 			<input id="txtAmount-#:uid#" name="txtAmount-#:uid#"
 				   type="number" class="k-textbox"
-				   data-min="0"
+				   min="0"
 			       data-bind="value: amount, events: {change : changes}"
 			       required data-required-msg="required"
 			       placeholder="Amount..." 
@@ -6314,7 +6314,7 @@
 		<td>
 			<input id="txtQuantity-#:uid#" name="txtQuantity-#:uid#"
 				   type="number" class="k-textbox"
-				   data-min="0"
+				   min="0"
 			       data-bind="value: quantity, events: {change : changes}"
 			       required data-required-msg="required"
 			       placeholder="Qty..." 
@@ -6335,7 +6335,7 @@
 		<td>
 			<input id="txtPrice-#:uid#" name="txtPrice-#:uid#"
 				   type="number" class="k-textbox"
-				   data-min="0"
+				   min="0"
 			       data-bind="value: price, events: {change : changes}"
 			       required data-required-msg="required"
 			       placeholder="Price..." 
@@ -6395,7 +6395,7 @@
 		<td>
 			<input id="txtAmount-#:uid#" name="txtAmount-#:uid#"
 				   type="number" class="k-textbox"
-				   data-min="0"
+				   min="0"
 			       data-bind="value: amount, events: {change : changes}"
 			       required data-required-msg="required"
 			       placeholder="Amount..." 
@@ -11481,7 +11481,7 @@
 		<td>
 			<input id="txtQuantity-#:uid#" name="txtQuantity-#:uid#"
 				   type="number" class="k-textbox"
-				   data-min="0"
+				   min="0"
 			       data-bind="value: quantity, events: {change : changes}"
 			       required data-required-msg="required"
 			       placeholder="Qty..." 
@@ -11502,7 +11502,7 @@
 		<td>
 			<input id="txtCost-#:uid#" name="txtCost-#:uid#"
 				   type="number" class="k-textbox"
-				   data-min="0"
+				   min="0"
 			       data-bind="value: cost, events: {change : changes}"
 			       required data-required-msg="required"
 			       placeholder="Cost..." 
@@ -11958,7 +11958,7 @@
 		<td>
 			<input id="txtQuantity-#:uid#" name="txtQuantity-#:uid#"
 				   type="number" class="k-textbox"
-				   data-min="0"
+				   min="0"
 			       data-bind="value: quantity, events: {change : changes}"
 			       required data-required-msg="required"
 			       placeholder="Qty..." 
@@ -12450,7 +12450,7 @@
 		<td class="right">
 			<input id="txtAmount-#:uid#" name="txtAmount-#:uid#"
 				   type="number" class="k-textbox"
-				   data-min="0"
+				   min="0"
 			       data-bind="value: amount, events: {change : changes}"
 			       required data-required-msg="required"
 			       placeholder="Amount..." 
@@ -13397,7 +13397,7 @@
 		<td>
 			<input id="txtQuantity-#:uid#" name="txtQuantity-#:uid#"
 				   type="number" class="k-textbox"
-				   data-min="0"
+				   min="0"
 			       data-bind="value: quantity, events: {change : changes}"
 			       required data-required-msg="required"
 			       placeholder="Qty..." 
@@ -13418,7 +13418,7 @@
 		<td>
 			<input id="txtCost-#:uid#" name="txtCost-#:uid#"
 				   type="number" class="k-textbox"
-				   data-min="0"
+				   min="0"
 			       data-bind="value: cost, events: {change : changes}"
 			       required data-required-msg="required"
 			       placeholder="Cost..." 
@@ -13515,7 +13515,7 @@
 		<td class="right">
 			<input id="txtAmount-#:uid#" name="txtAmount-#:uid#"
 				   type="number" class="k-textbox"
-				   data-min="0"
+				   min="0"
 			       data-bind="value: amount, events: {change : changes}"
 			       required data-required-msg="required"
 			       placeholder="Amount..." 
@@ -14053,7 +14053,7 @@
 		<td>
 			<input id="txtQuantity-#:uid#" name="txtQuantity-#:uid#"
 				   type="number" class="k-textbox"
-				   data-min="0"
+				   min="0"
 			       data-bind="value: quantity, events: {change : changes}"
 			       required data-required-msg="required"
 			       placeholder="Qty..." 
@@ -14074,7 +14074,7 @@
 		<td>
 			<input id="txtCost-#:uid#" name="txtCost-#:uid#"
 				   type="number" class="k-textbox"
-				   data-min="0"
+				   min="0"
 			       data-bind="value: cost, events: {change : changes}"
 			       required data-required-msg="required"
 			       placeholder="Cost..." 
@@ -14151,7 +14151,7 @@
 		<td class="right">
 			<input id="txtAmount-#:uid#" name="txtAmount-#:uid#"
 				   type="number" class="k-textbox"
-				   data-min="0"
+				   min="0"
 			       data-bind="value: amount, events: {change : changes}"
 			       required data-required-msg="required"
 			       placeholder="Amount..." 
@@ -14563,7 +14563,7 @@
 		<td>
 			<input id="txtQuantity-#:uid#" name="txtQuantity-#:uid#"
 				   type="number" class="k-textbox"
-				   data-min="0"
+				   min="0"
 			       data-bind="value: quantity, events: {change : changes}"
 			       required data-required-msg="required"
 			       placeholder="Qty..." 
@@ -14584,7 +14584,7 @@
 		<td>
 			<input id="txtCost-#:uid#" name="txtCost-#:uid#"
 				   type="number" class="k-textbox"
-				   data-min="0"
+				   min="0"
 			       data-bind="value: cost, events: {change : changes}"
 			       required data-required-msg="required"
 			       placeholder="Cost..." 
@@ -14644,7 +14644,7 @@
 		<td>
 			<input id="txtAmount-#:uid#" name="txtAmount-#:uid#"
 				   type="number" class="k-textbox"
-				   data-min="0"
+				   min="0"
 			       data-bind="value: amount, events: {change : changes}"
 			       required data-required-msg="required"
 			       placeholder="Amount..." 
@@ -19096,7 +19096,7 @@
 				    <br>
 					
 			    	<div class="row-fluid">
-			    		<div class="span6 well">									
+			    		<div class="span6 well">
 							<div class="row">
 								<div class="span6" style="padding-right: 0;">														
 									<!-- Group -->
@@ -19176,97 +19176,67 @@
 							<div class="row">
 								<div class="span6" style="padding-right: 0;">
 									<!-- Group -->
-									<div class="control-group">								
+									<div class="control-group">
 										<label for="ddlCurrency"><span data-bind="text: lang.lang.currency"></span> <span style="color:red">*</span></label>							            
-							            <input id="ddlCurrency" name="ddlCurrency"							            	 
+							            <input id="ddlCurrency" name="ddlCurrency"
 				              				data-role="dropdownlist"
 				              				data-option-label="(--- Select ---)"
 				              				data-template="currency-list-tmpl"
 				              				data-value-primitive="true"
 						            		data-text-field="code"
-			           						data-value-field="locale"			           						 
-						            		data-bind="source: currencyDS, value: obj.locale"						            		
-						            		required data-required-msg="required" style="width: 100%;" />						            		
-									</div>																		
-									<!-- // Group END -->								
+			           						data-value-field="locale"
+						            		data-bind="source: currencyDS, 
+						            				   disabled: isLock,
+						            				   value: obj.locale"
+						            		required data-required-msg="required" style="width: 100%;" />
+									</div>
+									<!-- // Group END -->
 								</div>
 
 								<div class="span6">
 									<!-- Group -->
-									<div class="control-group">								
-										<label for="ddlStatus"><span data-bind="text: lang.lang.status"></span> <span style="color:red">*</span></label>
-							            <input id="ddlStatus" name="ddlStatus" 
-				              				data-role="dropdownlist"
-						            		data-text-field="name"
-			           						data-value-field="id"
-			           						data-value-primitive="true" 
-						            		data-bind="source: statusList, value: obj.status"
-						            		data-option-label="(--- Select ---)"
-						            		required data-required-msg="required" style="width: 100%;" />
-									</div>																		
-									<!-- // Group END -->										
-								</div>								
-							</div>							
-						</div>
-						<div class="span6">
-
-							<div class="row">
-								<div class="span6">
-									<!-- Group -->
-									<div class="control-group">								
-										<label for="ddlMeasurement"><span data-bind="text: lang.lang.unit_measure"></span> <span style="color:red">*</span></label>
+									<div class="control-group">
+										<label for="ddlMeasurement">Base <span data-bind="text: lang.lang.uom"></span> <span style="color:red">*</span></label>
 										<input id="ddlMeasurement" name="ddlMeasurement"
 										   data-option-label="(--- Select ---)" 
 										   data-header-template="item-measurement-header-tmpl"
-										   data-role="dropdownlist"						                   
+										   data-role="dropdownlist"
 						                   data-value-primitive="true"
 						                   data-text-field="name"
 						                   data-value-field="id"
 						                   data-bind="value: obj.measurement_id,
+						                   			  disabled: isLock,
 						                              source: measurementDS"
 						                   required data-required-msg="required"
 						                   style="width: 100%;" />
 									</div>
 									<!-- // Group END -->
 								</div>
-
-								<div class="span6" style="padding: 0; ">
+							</div>
+						</div>
+						<div class="span6">
+							<div class="row">
+								<div class="span6">
 									<!-- Group -->
 									<div class="control-group">
 										<label for="txtCost"><span data-bind="text: lang.lang.cost"></span></label>
 							            <input id="txtCost" name="txtCost"
 							            	   type="number" class="k-textbox"
-							            	   data-min="0"
+							            	   min="0"
 							                   data-bind="value: obj.cost"
 							                   placeholder="Add Cost..."
 							                   style="width: 100%" />
 									</div>
 									<!-- // Group END -->
 								</div>
-							</div>
 
-							<div class="row">
 								<div class="span6">
-									<!-- Group -->
-									<div class="control-group">
-										<label for="txtOrderPoint"><span data-bind="text: lang.lang.reorder_point"></span></label>
-										<input data-role="numerictextbox"
-										   data-spinners="false"
-						                   data-format="n"
-						                   data-min="0"
-						                   data-bind="value: obj.order_point"
-						                   style="width: 100%">
-									</div>
-									<!-- // Group END -->
-								</div>
-
-								<div class="span6" style="padding: 0; ">
 									<!-- Group -->
 									<div class="control-group">
 										<label for="txtPrice"><span data-bind="text: lang.lang.price"></span></label>
 							            <input id="txtPrice" name="txtPrice"
 							            	   type="number" class="k-textbox"
-							            	   data-min="0"
+							            	   min="0"
 							                   data-bind="value: obj.price"
 							                   placeholder="Add Price..."
 							                   style="width: 100%" />
@@ -19275,27 +19245,34 @@
 								</div>
 							</div>
 
+							<br>
+
 							<div class="row">
 								<div class="span6">
 									<!-- Group -->
 									<div class="control-group">
 										<label for="txtPurchaseDescription"><span data-bind="text: lang.lang.purchase_description"></span></label>
-							            <textarea id="txtPurchaseDescription" class="k-textbox" 
-											data-bind="value: obj.purchase_description" style="resize:none; width: 100%;height:60px;"></textarea>
+							            <textarea id="txtPurchaseDescription" 
+							            	class="k-textbox" 
+											data-bind="value: obj.purchase_description"
+											placeholder="Add Purchase Description..." 
+											style="resize:none; width: 100%;height:94px;"></textarea>
 									</div>
 									<!-- // Group END -->
 								</div>
-								<div class="span6" style="padding: 0; ">
+								<div class="span6">
 									<!-- Group -->
 									<div class="control-group">
 										<label for="txtSaleDescription"><span data-bind="text: lang.lang.sale_description"></span></label>
-							            <textarea id="txtSaleDescription" class="k-textbox" 
-											data-bind="value: obj.sale_description" style="resize:none; width: 100%;height:60px;"></textarea>
+							            <textarea id="txtSaleDescription" 
+							            	class="k-textbox" 
+											data-bind="value: obj.sale_description"
+											placeholder="Add Sale Description..." 
+											style="resize:none; width: 100%;height:94px;"></textarea>
 									</div>
 									<!-- // Group END -->
 								</div>
 							</div>
-
 						</div>
 					</div>
 							
@@ -19342,40 +19319,37 @@
 													<!-- // Group END -->
 												</div>
 
-												<div class="span12">
-													<!-- Group -->
-													<div class="control-group">
-														<label for="txtMeasurement"><span data-bind="text: lang.lang.measurement"></span></label>
-								              			<input id="txtMeasurement" name="txtMeasurement" class="k-textbox"
-									              				data-bind="value: obj.measurements" 
-									              				placeholder="e.g. 4x6mn"
-									              				style="width: 100%;" />
-													</div>
-													<!-- // Group END -->
-												</div>
+												<br>
 
 												<div class="span12">
 													<!-- Group -->
 													<div class="control-group">
-														<label for="txtColorCode"><span data-bind="text: lang.lang.color_code"></span></label>
-								              			<input id="txtColorCode" name="txtColorCode" class="k-textbox"
-									              				data-bind="value: obj.color_code" 
-									              				placeholder="e.g. #FF0000"
-									              				style="width: 100%;" />
+														<label for="ddlStatus"><span data-bind="text: lang.lang.status"></span> <span style="color:red">*</span></label>
+											            <input id="ddlStatus" name="ddlStatus" 
+								              				data-role="dropdownlist"
+										            		data-text-field="name"
+							           						data-value-field="id"
+							           						data-value-primitive="true" 
+										            		data-bind="source: statusList, value: obj.status"
+										            		data-option-label="(--- Select ---)"
+										            		required data-required-msg="required" style="width: 100%;" />
+													</div>
+													<!-- // Group END -->
+												</div>
+
+												<br>
+
+												<div class="span12">
+													
+													<!-- Group -->
+													<div class="control-group">
+											            <input type="checkbox" data-bind="checked: obj.favorite" />	<span data-bind="text: lang.lang.favorite"></span>
 													</div>
 													<!-- // Group END -->
 												</div>
 									        
 												<div class="span12">
-													<!-- Group -->
-													<div class="control-group">
-														<label for="txtInternationalCode"><span data-bind="text: lang.lang.international_code"></span></label>
-								              			<input id="txtInternationalCode" name="txtInternationalCode" class="k-textbox"
-									              				data-bind="value: obj.international_code" 
-									              				placeholder="e.g. INT0001"
-									              				style="width: 100%;" />
-													</div>
-													<!-- // Group END -->
+													
 												</div>
 											</div>
 						        		</div>
@@ -19392,16 +19366,6 @@
 							                    }">
 										</div>
 
-							        </div>
-							        <br/>
-							        <div class="row-fluid">
-							        	<div class="span3">
-											<!-- Group -->
-											<div class="control-group">
-									            <input type="checkbox" data-bind="checked: obj.favorite" />	<span data-bind="text: lang.lang.favorite"></span>
-											</div>
-											<!-- // Group END -->
-										</div>
 							        </div>
 
 					        	</div>
@@ -20145,7 +20109,7 @@
 								<div class="span6">
 									<!-- Group -->
 									<div class="control-group">								
-										<label for="ddlMeasurement"><span data-bind="text: lang.lang.unit_measure"></span> <span style="color:red">*</span></label>
+										<label for="ddlMeasurement">Base <span data-bind="text: lang.lang.uom"></span> <span style="color:red">*</span></label>
 										<input id="ddlMeasurement" name="ddlMeasurement"
 										   data-option-label="(--- Select ---)" 
 										   data-header-template="item-measurement-header-tmpl"
@@ -20154,6 +20118,7 @@
 						                   data-text-field="name"
 						                   data-value-field="id"
 						                   data-bind="value: obj.measurement_id,
+						                   			  disabled: isLock,
 						                              source: measurementDS"
 						                   required data-required-msg="required"
 						                   style="width: 100%;" />
@@ -20189,7 +20154,9 @@
 				              				data-value-primitive="true"
 						            		data-text-field="code"
 			           						data-value-field="locale"			           						 
-						            		data-bind="source: currencyDS, value: obj.locale"						            		
+						            		data-bind="source: currencyDS, 
+						            				   disabled: isLock,
+						            				   value: obj.locale"						            		
 						            		required data-required-msg="required" style="width: 100%;" />						            		
 									</div>																		
 									<!-- // Group END -->
@@ -20517,39 +20484,43 @@
 							</div>
 
 							<div class="row">
-								<div class="span6" style="padding-right: 0;">																					
+								<div class="span6" style="padding-right: 0;">
 									<!-- Group -->
-									<div class="control-group">								
-										<label for="ddlMeasurement"><span data-bind="text: lang.lang.unit_measure"></span> <span style="color:red">*</span></label>
-										<input id="ddlMeasurement" name="ddlMeasurement"
-										   data-option-label="(--- Select ---)" 
-										   data-role="dropdownlist"
-										   data-header-template="item-measurement-header-tmpl"					                   
-						                   data-value-primitive="true"
-						                   data-text-field="name"
-						                   data-value-field="id"
-						                   data-bind="value: obj.measurement_id,
-						                              source: measurementDS"
-						                   required data-required-msg="required"
-						                   style="width: 100%;" />
-									</div>																		
-									<!-- // Group END -->															
+									<div class="control-group">
+										<label for="ddlCurrency"><span data-bind="text: lang.lang.currency"></span> <span style="color:red">*</span></label>							            
+							            <input id="ddlCurrency" name="ddlCurrency"
+				              				data-role="dropdownlist"
+				              				data-option-label="(--- Select ---)"
+				              				data-template="currency-list-tmpl"
+				              				data-value-primitive="true"
+						            		data-text-field="code"
+			           						data-value-field="locale"
+						            		data-bind="source: currencyDS, 
+						            				   disabled: isLock,
+						            				   value: obj.locale"
+						            		required data-required-msg="required" style="width: 100%;" />
+									</div>
+									<!-- // Group END -->
 								</div>
 
 								<div class="span6">
 									<!-- Group -->
-									<div class="control-group">								
-										<label for="ddlStatus"><span data-bind="text: lang.lang.status"></span> <span style="color:red">*</span></label>
-							            <input id="ddlStatus" name="ddlStatus" 
-				              				data-role="dropdownlist"
-						            		data-text-field="name"
-			           						data-value-field="id"
-			           						data-value-primitive="true" 
-						            		data-bind="source: statusList, value: obj.status"
-						            		data-option-label="(--- Select ---)"
-						            		required data-required-msg="required" style="width: 100%;" />
-									</div>																		
-									<!-- // Group END -->										
+									<div class="control-group">
+										<label for="ddlMeasurement"><span data-bind="text: lang.lang.unit_measure"></span> <span style="color:red">*</span></label>
+										<input id="ddlMeasurement" name="ddlMeasurement"
+										   data-option-label="(--- Select ---)" 
+										   data-role="dropdownlist"
+										   data-header-template="item-measurement-header-tmpl"
+						                   data-value-primitive="true"
+						                   data-text-field="name"
+						                   data-value-field="id"
+						                   data-bind="value: obj.measurement_id,
+						                   			  disabled: isLock,
+						                              source: measurementDS"
+						                   required data-required-msg="required"
+						                   style="width: 100%;" />
+									</div>
+									<!-- // Group END -->
 								</div>								
 							</div>							
 						</div>
@@ -20560,8 +20531,11 @@
 								<!-- Group -->
 								<div class="control-group" style="padding: 0; margin-bottom: 9px;">								
 									<label for="txtPurchaseDescription"><span data-bind="text: lang.lang.purchase_description"></span></label>
-						            <textarea id="txtPurchaseDescription" cols="0" rows="3" class="k-textbox" 
-										data-bind="value: obj.purchase_description" style="width: 100%; resize: none;"></textarea>
+						            <textarea id="txtPurchaseDescription" 
+						            	cols="0" rows="3" class="k-textbox" 
+										data-bind="value: obj.purchase_description"
+										placeholder="Add Purchase Description..." 
+										style="width: 100%; resize: none;"></textarea>
 								</div>																		
 								<!-- // Group END -->
 
@@ -20570,8 +20544,11 @@
 								<!-- Group -->
 								<div class="control-group" style="padding: 0;">								
 									<label for="txtSaleDescription"><span data-bind="text: lang.lang.sale_description"></span></label>
-						            <textarea id="txtSaleDescription" cols="0" rows="3" class="k-textbox" 
-										data-bind="value: obj.sale_description" style="width: 100%;resize: none;"></textarea>
+						            <textarea id="txtSaleDescription" 
+						            	cols="0" rows="3" class="k-textbox" 
+										data-bind="value: obj.sale_description"
+										placeholder="Add Sale Description..." 
+										style="width: 100%;resize: none;"></textarea>
 								</div>																		
 								<!-- // Group END -->
 
@@ -20610,15 +20587,16 @@
 							        			<div class="span12">														
 													<!-- Group -->
 													<div class="control-group">							
-														<label for="txtSerialNumber"><span data-bind="text: lang.lang.model"></span></label>
-								              			<input data-role="dropdownlist"
-								              			   data-option-label="(--- Select ---)"
+														<label for="ddlBrand"><span data-bind="text: lang.lang.model"></span></label>
+								              			<input id="ddlBrand" name="ddlBrand" 
+								              			   data-role="dropdownlist"
 								              			   data-header-template="item-brand-header-tmpl"           
 										                   data-value-primitive="true"
 										                   data-text-field="name"
 										                   data-value-field="id"
 										                   data-bind="value: obj.brand_id,
 										                              source: brandDS"
+										                   data-option-label="(--- Select ---)"
 										                   style="width: 100%;" />					              		
 													</div>
 													<!-- // Group END -->
@@ -20626,39 +20604,20 @@
 
 												<div class="span12">														
 													<!-- Group -->
-													<div class="control-group">							
-														<label for="txtMeasurement"><span data-bind="text: lang.lang.measurement"></span></label>
-								              			<input id="txtMeasurement" name="txtMeasurement" class="k-textbox"
-									              				data-bind="value: obj.measurements" 
-									              				placeholder="e.g. 4x6mn"
-									              				style="width: 100%;" />					              		
+													<div class="control-group">
+														<label for="ddlStatus"><span data-bind="text: lang.lang.status"></span> <span style="color:red">*</span></label>
+											            <input id="ddlStatus" name="ddlStatus" 
+								              				data-role="dropdownlist"
+										            		data-text-field="name"
+							           						data-value-field="id"
+							           						data-value-primitive="true" 
+										            		data-bind="source: statusList, value: obj.status"
+										            		data-option-label="(--- Select ---)"
+										            		required data-required-msg="required" style="width: 100%;" />
 													</div>
 													<!-- // Group END -->
 												</div>
-
-												<div class="span12">														
-													<!-- Group -->
-													<div class="control-group">							
-														<label for="txtColorCode"><span data-bind="text: lang.lang.color_code"></span></label>
-								              			<input id="txtColorCode" name="txtColorCode" class="k-textbox"
-									              				data-bind="value: obj.color_code" 
-									              				placeholder="e.g. #FF0000"
-									              				style="width: 100%;" />					              		
-													</div>
-													<!-- // Group END -->
-												</div>										
-									        
-												<div class="span12">														
-													<!-- Group -->
-													<div class="control-group">							
-														<label for="txtInternationalCode"><span data-bind="text: lang.lang.international_code"></span></label>
-								              			<input id="txtInternationalCode" name="txtInternationalCode" class="k-textbox"
-									              				data-bind="value: obj.international_code" 
-									              				placeholder="e.g. INT0001"
-									              				style="width: 100%;" />					              		
-													</div>
-													<!-- // Group END -->
-												</div>
+												
 											</div>
 						        		</div>
 										<div class="span6">
@@ -21011,7 +20970,7 @@
 						            		<div class="control-group" style="padding: 5px; float: left;">										
 												<label for="txtPrice"><span >Price</span> <span style="color:red">*</span></label>												
 												<input id="txtPrice" name="txtPrice"
-												   type="number" class="k-textbox"
+												   type="number" class="k-textbox" min="0"
 								                   data-bind="value: priceList.price"
 								                   required data-required-msg="required" />																				            
 											</div>
@@ -21505,7 +21464,7 @@
     	<td align="right">
     		<input id="txtCost" name="txtCost"
             	   type="number" class="k-textbox"
-            	   data-min="0"
+            	   min="0"
                    data-bind="value: cost"
                    placeholder="Add Cost..."
                    style="text-align: right; width: 150px;"
@@ -21515,7 +21474,7 @@
     	<td align="right">
     		<input id="txtQuantity-#:uid#" name="txtQuantity-#:uid#"
 				   type="number" class="k-textbox"
-				   data-min="0"
+				   min="0"
 			       data-bind="value: quantity_adjusted, events: {change : onChange}"
 			       style="text-align: right; width: 100px;" />
     	</td>
@@ -22052,7 +22011,7 @@
 		<td>
 			<input id="txtQuantity-#:uid#" name="txtQuantity-#:uid#"
 				   type="number" class="k-textbox"
-				   data-min="0"
+				   min="0"
 			       data-bind="value: quantity, events: {change : changes}"
 			       required data-required-msg="required"
 			       placeholder="Qty..." 
@@ -22101,7 +22060,7 @@
 		<td class="right">
 			<input id="txtAmount-#:uid#" name="txtAmount-#:uid#"
 			   type="number" class="k-textbox"
-			   data-min="0"
+			   min="0"
 		       data-bind="value: amount, events: {change : changes}"
 		       required data-required-msg="required"
 		       placeholder="Amount..." 
@@ -22137,7 +22096,7 @@
 		<td>
 			<input id="txtQuantity-#:uid#" name="txtQuantity-#:uid#"
 				   type="number" class="k-textbox"
-				   data-min="0"
+				   min="0"
 			       data-bind="value: quantity, events: {change : changes}"
 			       required data-required-msg="required"
 			       placeholder="Qty..." 
@@ -22158,7 +22117,7 @@
 		<td class="right">
 			<input id="txtCost-#:uid#" name="txtCost-#:uid#"
 			   type="number" class="k-textbox"
-			   data-min="0"
+			   min="0"
 		       data-bind="value: cost, events: {change : changes}"
 		       required data-required-msg="required"
 		       placeholder="Cost..." 
@@ -22196,7 +22155,7 @@
 		<td class="right">
 			<input id="txtAmount-#:uid#" name="txtAmount-#:uid#"
 				   type="number" class="k-textbox"
-				   data-min="0"
+				   min="0"
 			       data-bind="value: amount, events: {change : changes}"
 			       required data-required-msg="required"
 			       placeholder="Amount..." 
@@ -22271,9 +22230,9 @@
 	            </li>
 	            <li><a href="#tab-2" class="glyphicons tag" data-toggle="tab"><i></i><span class="strong"><span data-bind="text: lang.lang.group"></span></span></a>
 	            </li>
-	            <li><a href="#tab-3" class="glyphicons ruller" data-toggle="tab"><i></i><span class="strong">Measurement Category</span></a>
+	            <li><a href="#tab-3" class="glyphicons ruller" data-toggle="tab"><i></i><span class="strong">UOM Category</span></a>
 	            </li>
-	            <li><a href="#tab-4" class="glyphicons ruller" data-toggle="tab"><i></i><span class="strong"><span data-bind="text: lang.lang.measurement"></span></span></a>
+	            <li><a href="#tab-4" class="glyphicons ruller" data-toggle="tab"><i></i><span class="strong"><span data-bind="text: lang.lang.uom"></span></span></a>
 	            </li>
 	            <li><a href="#tab-5" class="glyphicons certificate" data-toggle="tab"><i></i><span class="strong"><span data-bind="text: lang.lang.brand"></span></span></a>
 	            </li>
@@ -22355,16 +22314,16 @@
 	            </div>
 	            <!-- // Item Group END -->
 
-	            <!-- Measurement Category -->
+	            <!-- UOM Category -->
 	            <div class="tab-pane" id="tab-3">
                 	<div class="input-append">
-					    <input class="span12" id="appendedInputButtons" type="text" placeholder="Measurement Category Name..." data-bind="value: measurement_category_name">
-					    <button class="btn btn-default" type="button" data-bind="click: addMeasurementCategory"><i class="icon-plus"></i> <span data-bind="text: lang.lang.add_measurement"></span> Category</button>		
+					    <input class="span12" id="appendedInputButtons" type="text" placeholder="UOM Category Name..." data-bind="value: measurement_category_name">
+					    <button class="btn btn-default" type="button" data-bind="click: addMeasurementCategory"><i class="icon-plus"></i> Add <span data-bind="text: lang.lang.uom"></span> Category</button>		
 					</div>
 	            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
 	            		<thead>
 	            			<tr>
-	            				<th data-bind="text: lang.lang.measurement"></th>
+	            				<th data-bind="text: lang.lang.name"></th>
 	            				<th></th>
 	            			</tr>
 	            		</thead>
@@ -22375,12 +22334,12 @@
 				                data-bind="source: measurementCategoryDS"></tbody>
 	            	</table>
 	            </div>
-	            <!-- // Measurement Category END -->
+	            <!-- // UOM Category END -->
 
-	            <!-- Measurement -->
+	            <!-- UOM -->
 	            <div class="tab-pane" id="tab-4">
                 	<div class="input-append">
-					    <input class="span12" id="appendedInputButtons" type="text" placeholder="Measurement..." data-bind="value: measurement_name">					    
+					    <input class="span12" id="appendedInputButtons" type="text" placeholder="UOM..." data-bind="value: measurement_name">					    
 					    
 					    <input name="category" 
 		                   data-role="dropdownlist"
@@ -22389,14 +22348,14 @@
 		                   data-value-field="id"
 		                   data-bind="value: measurement_category_id,
                               source: measurementCategoryDS"
-                           data-option-label="Category" />
+                           data-option-label="Category..." />
 
-					    <button class="btn btn-default" type="button" data-bind="click: addMeasurement"><i class="icon-plus"></i> <span data-bind="text: lang.lang.add_measurement"></span></button>		
+					    <button class="btn btn-default" type="button" data-bind="click: addMeasurement"><i class="icon-plus"></i> Add <span data-bind="text: lang.lang.uom"></span></button>		
 					</div>
 	            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
 	            		<thead>
 	            			<tr>
-	            				<th data-bind="text: lang.lang.measurement"></th>
+	            				<th data-bind="text: lang.lang.uom"></th>
 	            				<th data-bind="text: lang.lang.category"></th>
 	            				<th></th>
 	            			</tr>
@@ -22408,7 +22367,7 @@
 				                data-bind="source: measurementDS"></tbody>
 	            	</table>
 	            </div>
-	            <!-- // Measurement END -->
+	            <!-- // UOM END -->
 
 	            <!-- Brand -->
 	            <div class="tab-pane" id="tab-5">
@@ -25418,7 +25377,9 @@
 				              				data-value-primitive="true"
 						            		data-text-field="code"
 			           						data-value-field="locale"			           						 
-						            		data-bind="source: currencyDS, value: obj.locale"						            		
+						            		data-bind="source: currencyDS, 
+						            				   disabled: isLock,
+						            				   value: obj.locale"						            		
 						            		required data-required-msg="required" style="width: 100%;" />						            		
 									</div>																		
 									<!-- // Group END -->										
@@ -26383,7 +26344,7 @@
 		<td class="right">
 			<input id="ntbDr-#:uid#" name="ntbDr-#:uid#"
 				   type="number" class="k-textbox"
-				   data-min="0"
+				   min="0"
 			       data-bind="value: dr, events: {change : checkDr}"
 			       required data-required-msg="required"
 			       placeholder="Dr..." 
@@ -26392,7 +26353,7 @@
 		<td class="right">
 			<input id="ntbCr-#:uid#" name="ntbCr-#:uid#"
 				   type="number" class="k-textbox"
-				   data-min="0"
+				   min="0"
 			       data-bind="value: cr, events: {change : checkCr}"
 			       required data-required-msg="required"
 			       placeholder="Cr..." 
@@ -26887,7 +26848,7 @@
 		<td class="right">
 			<input id="txtAmount-#:uid#" name="txtAmount-#:uid#"
 				   type="number" class="k-textbox"
-				   data-min="0"
+				   min="0"
 			       data-bind="value: amount, events: {change : changes}"
 			       required data-required-msg="required"
 			       placeholder="Amount..." 
@@ -27392,7 +27353,7 @@
 		<td class="right">
 			<input id="txtAmount-#:uid#" name="txtAmount-#:uid#"
 				   type="number" class="k-textbox"
-				   data-min="0"
+				   min="0"
 			       data-bind="value: amount, events: {change : changes}"
 			       required data-required-msg="required"
 			       placeholder="Amount..." 
@@ -28006,7 +27967,7 @@
 		<td class="right">
 			<input id="txtAmount-#:uid#" name="txtAmount-#:uid#"
 				   type="number" class="k-textbox"
-				   data-min="0"
+				   min="0"
 			       data-bind="value: amount, events: {change : changes}"
 			       required data-required-msg="required"
 			       placeholder="Amount..." 
@@ -28638,6 +28599,7 @@
 					            	<tr>
 										<td>
 					        				<input type="number" class="k-textbox"
+					        				   min="0"
 							                   data-bind="value: obj.rate"
 							                   placeholder="Rate(per 1 unit of base currency) ..."
 							                   style="width: 100%" />
@@ -35847,14 +35809,14 @@
 		<td class="center">
 			<input id="txtSubTotal-#:uid#" name="txtSubTotal-#:uid#"
 				   type="number" class="k-textbox"
-				   data-min="0"
+				   min="0"
 			       data-bind="value: sub_total"
 			       style="text-align: right; width: 100%;" disabled="disabled" />
 		</td>		
 		<td class="center">
 			<input id="txtDiscount-#:uid#" name="txtDiscount-#:uid#"
 				   type="number" class="k-textbox"
-				   data-min="0"
+				   min="0"
 			       data-bind="value: discount, events: {change : changes}"
 			       placeholder="Discount..." 
 			       style="text-align: right; width: 100%;" />
@@ -35862,7 +35824,7 @@
 		<td class="center">
 			<input id="txtAmount-#:uid#" name="txtAmount-#:uid#"
 				   type="number" class="k-textbox"
-				   data-min="0"
+				   min="0"
 			       data-bind="value: amount, events: {change : changes}"
 			       required data-required-msg="required"
 			       placeholder="Amount..." 
@@ -36185,14 +36147,14 @@
 		<td class="center">
 			<input id="txtSubTotal-#:uid#" name="txtSubTotal-#:uid#"
 				   type="number" class="k-textbox"
-				   data-min="0"
+				   min="0"
 			       data-bind="value: sub_total"
 			       style="text-align: right; width: 100%;" disabled="disabled" />
 		</td>		
 		<td class="center">
 			<input id="txtDiscount-#:uid#" name="txtDiscount-#:uid#"
 				   type="number" class="k-textbox"
-				   data-min="0"
+				   min="0"
 			       data-bind="value: discount, events: {change : changes}"
 			       placeholder="Discount..." 
 			       style="text-align: right; width: 100%;" />
@@ -36200,7 +36162,7 @@
 		<td class="center">
 			<input id="txtAmount-#:uid#" name="txtAmount-#:uid#"
 				   type="number" class="k-textbox"
-				   data-min="0"
+				   min="0"
 			       data-bind="value: amount, events: {change : changes}"
 			       required data-required-msg="required"
 			       placeholder="Amount..." 
@@ -48146,7 +48108,6 @@
 		}),
 		employeeDS  		: new kendo.data.DataSource({
 		  	data: banhji.source.employeeList,
-		  	filter:{ field: "item_type_id", value: 10 },//Sale Rep.
 			sort: { field:"number", dir:"asc" }
 		}),
 		jobDS 				: new kendo.data.DataSource({
@@ -48160,7 +48121,7 @@
 			  	{ field: "code", dir: "asc" }
 			]
 		}),
-		taxItemDS 		: new kendo.data.DataSource({
+		taxItemDS 			: new kendo.data.DataSource({
 		  	data: banhji.source.taxList,
 		  	filter:{
 			    logic: "or",
@@ -49161,7 +49122,6 @@
 		}),
 		employeeDS  		: new kendo.data.DataSource({
 		  	data: banhji.source.employeeList,
-		  	filter:{ field: "item_type_id", value: 10 },//Sale Rep.
 			sort: { field:"number", dir:"asc" }
 		}),
 		itemDS  			: new kendo.data.DataSource({
@@ -73629,10 +73589,9 @@
     	lang 					: langVM,
     	dataSource 				: dataStore(apiUrl + "items"),
     	patternDS 				: dataStore(apiUrl + "items"),
-    	deleteDS 				: dataStore(apiUrl + "item_lines"),    	
-    	attachmentDS	 		: dataStore(apiUrl + "attachments"),
     	numberDS 				: dataStore(apiUrl + "items"),
-    	existingDS 				: dataStore(apiUrl + "items"),
+    	deleteDS 				: dataStore(apiUrl + "item_lines"),    	
+    	attachmentDS	 		: dataStore(apiUrl + "attachments"),    	
     	itemPriceDS 			: dataStore(apiUrl + "item_prices"),
     	itemVendorDS 	 		: dataStore(apiUrl + "items/contact"),
     	itemCustomerDS 	 		: dataStore(apiUrl + "items/contact"),
@@ -73688,12 +73647,14 @@
     	isEdit 					: false,
     	saveClose 				: false,
 		showConfirm 			: false,
+		isLock 					: false,
 		notDuplicateNumber 		: true,
 		user_id					: banhji.source.user_id,
     	pageLoad 				: function(id, category_id){
 			if(id){
 				this.set("isEdit", true);
 				this.loadObj(id, category_id);
+				this.checkExistingTxn(id);
 			}else{
 				if(this.get("isEdit") || this.dataSource.total()==0){
 					this.addEmpty();
@@ -73883,12 +73844,12 @@
 				para.push({ field:"number", value: obj.number });
 				para.push({ field:"category_id", value: obj.category_id });
 
-				this.existingDS.query({
+				this.numberDS.query({
 					filter: para,
 					page: 1,
 					pageSize: 1
 				}).then(function(e){
-					var view = self.existingDS.view();
+					var view = self.numberDS.view();
 					
 					if(view.length>0){
 				 		self.set("notDuplicateNumber", false);						
@@ -73985,6 +73946,23 @@
 				this.itemCustomerDS.remove(obj);
 			}
 		},
+		checkExistingTxn 		: function(id){
+			var self = this;
+
+			this.deleteDS.query({
+			  	filter: { field: "item_id", value: id },
+			  	page: 1,
+			  	pageSize: 1
+			}).then(function() {
+				var view = self.deleteDS.view();
+
+				if(view.length>0){
+					self.set("isLock", true);
+				}else{
+					self.set("isLock", false);
+				}
+			});
+		},
 		//Obj
 		loadObj 				: function(id, category_id){
     		var self = this, para = [];
@@ -74016,6 +73994,7 @@
       		this.itemVendorDS.data([]);
 	      	this.itemCustomerDS.data([]);
 
+	      	this.set("isLock", false);
 	      	this.set("isEdit", false);
       		this.set("obj", null);
 
@@ -74171,9 +74150,11 @@
 						obj.set("deleted", 1);
 				        self.dataSource.sync();
 
-				        window.history.back();				        
+				        window.history.back();
 					}
 				});
+			}else{
+				alert("Sorry, you can not delete it because it is system's item.");
 			}	
 		},
 		openConfirm 			: function(){
@@ -74702,9 +74683,8 @@
     	lang 					: langVM,
     	dataSource 				: dataStore(apiUrl + "items"),
     	patternDS 				: dataStore(apiUrl + "items"),
-    	deleteDS 				: dataStore(apiUrl + "item_lines"),
     	numberDS 				: dataStore(apiUrl + "items"),
-    	existingDS 				: dataStore(apiUrl + "items"),
+    	deleteDS 				: dataStore(apiUrl + "item_lines"),    	
     	itemGroupDS 			: dataStore(apiUrl + "items/group"),
     	measurementDS			: banhji.source.measurementDS,
     	itemVendorDS 	 		: dataStore(apiUrl + "items/contact"),
@@ -74759,14 +74739,15 @@
         confirmMessage 			: banhji.source.confirmMessage,
     	obj 	 				: null,
     	isEdit 					: false,
+    	isLock 					: false,
     	saveClose 				: false,
 		showConfirm 			: false,
-		originalNo 				: "",
 		notDuplicateNumber 		: true,
     	pageLoad 				: function(id, category_id){
 			if(id){
 				this.set("isEdit", true);
 				this.loadObj(id, category_id);
+				this.checkExistingTxn(id);
 			}else{
 				if(this.get("isEdit") || this.dataSource.total()==0){
 					this.addEmpty();
@@ -74826,12 +74807,12 @@
 				para.push({ field:"number", value: obj.number });
 				para.push({ field:"category_id", value: obj.category_id });
 
-				this.existingDS.query({
+				this.numberDS.query({
 					filter: para,
 					page: 1,
 					pageSize: 1
 				}).then(function(e){
-					var view = self.existingDS.view();
+					var view = self.numberDS.view();
 					
 					if(view.length>0){
 				 		self.set("notDuplicateNumber", false);						
@@ -74948,6 +74929,23 @@
 				this.itemCustomerDS.remove(obj);
 			}
 		},
+		checkExistingTxn 		: function(id){
+			var self = this;
+
+			this.deleteDS.query({
+			  	filter: { field: "item_id", value: id },
+			  	page: 1,
+			  	pageSize: 1
+			}).then(function() {
+				var view = self.deleteDS.view();
+
+				if(view.length>0){
+					self.set("isLock", true);
+				}else{
+					self.set("isLock", false);
+				}
+			});
+		},
 		//Obj
 		loadObj 				: function(id, category_id){
     		var self = this, para = [];
@@ -74967,7 +74965,6 @@
 				var view = self.dataSource.view();
 						    	
 		    	self.set("obj", view[0]);
-		    	self.set("originalNo", view[0].number);
 		    	self.loadItemContact();
 			});
     	},
@@ -74978,6 +74975,7 @@
       		this.itemVendorDS.data([]);
 	      	this.itemCustomerDS.data([]);
 
+	      	this.set("isLock", false);
 	      	this.set("isEdit", false);
       		this.set("obj", null);
 
@@ -75121,6 +75119,8 @@
 				        window.history.back();				        
 					}
 				});
+			}else{
+				alert("Sorry, you can not delete it because it is system's item.");
 			}	
 		},
 		openConfirm 			: function(){
@@ -75134,15 +75134,18 @@
     	lang 					: langVM,    	
     	dataSource 				: dataStore(apiUrl + "items"),
     	patternDS 				: dataStore(apiUrl + "items"),
+    	numberDS 				: dataStore(apiUrl + "items"),
     	deleteDS 				: dataStore(apiUrl + "item_lines"),
     	itemGroupDS 			: dataStore(apiUrl + "items/group"),
     	brandDS 	 			: dataStore(apiUrl + "brands"),
-    	measurementDS			: dataStore(apiUrl + "measurements"),
-    	numberDS 				: dataStore(apiUrl + "items"),
-    	existingDS 				: dataStore(apiUrl + "items"),
+    	measurementDS			: dataStore(apiUrl + "measurements"),    	
     	itemPriceDS 			: dataStore(apiUrl + "item_prices"),
     	itemVendorDS 	 		: dataStore(apiUrl + "items/contact"),
     	itemCustomerDS 	 		: dataStore(apiUrl + "items/contact"),
+    	currencyDS  			: new kendo.data.DataSource({
+		  	data: banhji.source.currencyList,
+		  	filter: { field:"status", value: 1 }
+		}),
     	vendorDS  				: new kendo.data.DataSource({
 		  	data: banhji.source.supplierList,
 		  	filter:{ field:"status", value:1 },
@@ -75166,14 +75169,15 @@
     	confirmMessage 			: banhji.source.confirmMessage,
     	obj 	 				: null,
     	isEdit 					: false,
+    	isLock 					: false,
     	saveClose 				: false,
 		showConfirm 			: false,
-		originalNo 				: "",
 		notDuplicateNumber 		: true,    	
     	pageLoad 				: function(id, category_id){
 			if(id){
 				this.set("isEdit", true);
 				this.loadObj(id, category_id);
+				this.checkExistingTxn(id);
 			}else{
 				if(this.get("isEdit") || this.dataSource.total()==0){
 					this.addEmpty();
@@ -75244,12 +75248,12 @@
 				para.push({ field:"number", value: obj.number });
 				para.push({ field:"category_id", value: obj.category_id });
 
-				this.existingDS.query({
+				this.numberDS.query({
 					filter: para,
 					page: 1,
 					pageSize: 1
 				}).then(function(e){
-					var view = self.existingDS.view();
+					var view = self.numberDS.view();
 					
 					if(view.length>0){
 				 		self.set("notDuplicateNumber", false);						
@@ -75366,7 +75370,7 @@
 
 				this.itemCustomerDS.remove(obj);
 			}
-		},
+		},		
 		//Obj
 		loadObj 				: function(id, category_id){
     		var self = this, para = [];
@@ -75389,6 +75393,23 @@
 		    	self.loadItemContact();
 			});
     	},
+    	checkExistingTxn 		: function(id){
+			var self = this;
+
+			this.deleteDS.query({
+			  	filter: { field: "item_id", value: id },
+			  	page: 1,
+			  	pageSize: 1
+			}).then(function() {
+				var view = self.deleteDS.view();
+
+				if(view.length>0){
+					self.set("isLock", true);
+				}else{
+					self.set("isLock", false);
+				}
+			});
+		},
       	addEmpty 				: function(){
       		var self = this;
 
@@ -75396,6 +75417,7 @@
       		this.itemVendorDS.data([]);
 	      	this.itemCustomerDS.data([]);
 
+	      	this.set("isLock", false);
 	      	this.set("isEdit", false);
       		this.set("obj", null);
 
@@ -75419,6 +75441,7 @@
 	      			abbr 					: cat.abbr,
 	      			number 					: "",
 	      			name 					: "",
+	      			locale 					: view[0].locale,
 	      			purchase_description	: view[0].purchase_description,
 	      			sale_description		: view[0].sale_description,
 	      			measurements 			: view[0].measurements,
@@ -75531,10 +75554,12 @@
 						obj.set("deleted", 1);
 				        self.dataSource.sync();
 
-				        window.history.back();				        
+				        window.history.back();
 					}
 				});
-			}	
+			}else{
+				alert("Sorry, you can not delete it because it is system's item.");
+			}
 		},
 		openConfirm 			: function(){
 			this.set("showConfirm", true);
@@ -79399,7 +79424,6 @@
     	dataSource 				: dataStore(apiUrl + "items"),
     	deleteDS 				: dataStore(apiUrl + "item_lines"),
     	numberDS 				: dataStore(apiUrl + "items"),
-    	existingDS 				: dataStore(apiUrl + "items"),
     	currencyDS  			: new kendo.data.DataSource({
 		  	data: banhji.source.currencyList,
 		  	filter: { field:"status", value: 1 }
@@ -79409,9 +79433,9 @@
     	confirmMessage 			: banhji.source.confirmMessage,
     	obj 	 				: null,
     	isEdit 					: false,
+    	isLock 					: false,
     	saveClose 				: false,
 		showConfirm 			: false,
-		originalName 			: "",
 		isDuplicateNumber 		: false,
 		account_id 				: 0,
 		user_id					: banhji.source.user_id,
@@ -79419,6 +79443,7 @@
 			if(id){
 				this.set("isEdit", true);						
 				this.loadObj(id);
+				this.checkExistingTxn(id);
 			}else{				
 				if(this.get("isEdit") || this.dataSource.total()==0){
 					this.addEmpty();
@@ -79432,7 +79457,7 @@
 			originalName = this.get("originalName");			
 			
 			if(obj.name!=="" && obj.name!==originalName){
-				this.existingDS.query({
+				this.numberDS.query({
 					filter: [
 						{ field:"name", value: obj.name },
 						{ field:"category_id", value: obj.category_id }
@@ -79440,7 +79465,7 @@
 					page: 1,
 					pageSize: 1
 				}).then(function(e){
-					var view = self.existingDS.view();
+					var view = self.numberDS.view();
 					
 					if(view.length>0){
 				 		self.set("isDuplicateNumber", true);						
@@ -79471,10 +79496,28 @@
 		    	}		    	
 		    	self.set("originalName", view[0].name);
 			});
-    	},		
+    	},
+    	checkExistingTxn 		: function(id){
+			var self = this;
+
+			this.deleteDS.query({
+			  	filter: { field: "item_id", value: id },
+			  	page: 1,
+			  	pageSize: 1
+			}).then(function() {
+				var view = self.deleteDS.view();
+
+				if(view.length>0){
+					self.set("isLock", true);
+				}else{
+					self.set("isLock", false);
+				}
+			});
+		},		
       	addEmpty 				: function(){
       		this.dataSource.data([]);
 
+      		this.set("isLock", false);
       		this.set("isEdit", false);
       		this.set("obj", null);
 
@@ -79546,22 +79589,26 @@
 			var self = this, obj = this.get("obj");
 			this.set("showConfirm",false);
 
-			this.deleteDS.query({
-			  	filter: { field: "item_id", value: obj.id },
-			  	page: 1,
-			  	pageSize: 1
-			}).then(function() {
-				var view = self.deleteDS.view();
+			if(!obj.is_system==1){
+				this.deleteDS.query({
+				  	filter: { field: "item_id", value: obj.id },
+				  	page: 1,
+				  	pageSize: 1
+				}).then(function() {
+					var view = self.deleteDS.view();
 
-				if(view.length>0){
-					alert("Sorry, you can not delete it because it is using now.");
-				}else{
-					obj.set("deleted", 1);
-			        self.dataSource.sync();
+					if(view.length>0){
+						alert("Sorry, you can not delete it because it is using now.");
+					}else{
+						obj.set("deleted", 1);
+				        self.dataSource.sync();
 
-			        window.history.back();				        
-				}
-			});	
+				        window.history.back();
+					}
+				});
+			}else{
+				alert("Sorry, you can not delete it because it is system's item.");
+			}
 		},
 		openConfirm 			: function(){
 			this.set("showConfirm", true);
@@ -87318,7 +87365,6 @@
 		}),
 		employeeDS  		: new kendo.data.DataSource({
 		  	data: banhji.source.employeeList,
-		  	filter:{ field: "item_type_id", value: 10 },//Sale Rep.
 			sort: { field:"number", dir:"asc" }
 		}),
 		accountDS  			: new kendo.data.DataSource({
@@ -87766,7 +87812,6 @@
 		}),
 		employeeDS  		: new kendo.data.DataSource({
 		  	data: banhji.source.employeeList,
-		  	filter:{ field: "item_type_id", value: 10 },//Sale Rep.
 			sort: { field:"number", dir:"asc" }
 		}),
 		accountDS  			: new kendo.data.DataSource({
