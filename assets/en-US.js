@@ -1444,9 +1444,12 @@ var	en_US = {
 
 	//Web Store
 	"app_center": "App Center",
-
-
-
+	"backup": "Backup",
+	"download_db": "Download Database",
+	"upload_db": "Upload Database",
+	"start_session": "Start Session",
+	"add_session": "Add Session",
+	"end_session": "End Session",
 
 
 

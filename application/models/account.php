@@ -12,14 +12,14 @@ class Account extends DataMapper {
 		'sub_of' => array(
 			'class' => "account",
 			'other_field' => 'account'
-		),
-		'attachment' => array(
-			'class' => 'attachment',
-			'other_field' => 'account'
 		)
 	);
 
 	public $has_many = array(
+		'attachment' => array(
+			'class' => 'attachment',
+			'other_field' => 'account'
+		),
 		'journal_line' => array(
 			'class' => "journal_line",
 			'other_field' => 'account'

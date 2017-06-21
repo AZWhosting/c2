@@ -1419,8 +1419,12 @@ var	km_KH = {
 
 	//Web Store
 	"app_center": "App Center",
-
-
+	"backup": "Backup",
+	"download_db": "ទាញ​យក Database",
+	"upload_db": "បញ្ចូល Database",
+	"start_session": "Start Session",
+	"add_session": "Add Session",
+	"end_session": "End Session",
 
 
 

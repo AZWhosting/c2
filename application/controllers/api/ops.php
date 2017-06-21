@@ -6,6 +6,7 @@ class Ops extends REST_Controller {
 
 	function runs_get() {
 		$this->load->dbutil();
+		$this->load->dbforge();
 		$dbs = $this->dbutil->list_databases();
 		$companyList = array("api","banhji","banhji_mac","information_schema","innodb","mysql","performance_schema","tmp");
 		$data["results"] = [];
@@ -14,8 +15,25 @@ class Ops extends REST_Controller {
 		foreach ($dbs as $key => $db)
 		{	
 			if (!in_array("$db", $companyList)) {
-			    $connection = 'use '.$db;
-			    $this->db->query($connection);
+				// $dsn = 'mysql://'.$this->db->username.':'.$this->db->password.'@'.$this->db->hostname.'/'.$db;
+				// $DB1 = $this->load->database($dsn, TRUE);
+				// get all of the tables				
+				$this->db = $DB1;
+			    // $connection = 'use db_1489395794';
+			    // $this->db->query($connection);
+			    // if($this->db->table_exists('plan_items')) {
+			    // 	$field = array(
+			    // 		'type' => array(
+			    // 			'name' => 'type',
+			    // 			'type' => 'VARCHAR',
+			    // 			'constraint' => 255
+			    // 		)
+			    // 	);
+			    // 	if($this->dbforge->modify_column('plan_items', $field)) {
+			    // 		$data['results'][] = $db;
+			    // 	}
+			    // } 
+
 
 			    //Check missing field
 				// if ($this->db->field_exists('quantity', 'measurements')==FALSE)

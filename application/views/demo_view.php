@@ -7096,7 +7096,7 @@
 					<div class="row-fluid">
 						<table class="table table-borderless table-condensed">
 							<tr>
-								<td style="width: 50%">
+		
 									<h3 ><a href="#/sale_summary_by_customer" data-bind="text: lang.lang.sale_summary_by_customer" style="text-transform: capitalize;"></a></h3>
 								</td>
 								<td>
