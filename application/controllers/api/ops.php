@@ -18,8 +18,8 @@ class Ops extends REST_Controller {
 				// $dsn = 'mysql://'.$this->db->username.':'.$this->db->password.'@'.$this->db->hostname.'/'.$db;
 				// $DB1 = $this->load->database($dsn, TRUE);
 				// get all of the tables				
-				$this->db = $DB1;
-			    // $connection = 'use db_1489395794';
+				// $this->db = $DB1;
+			    $connection = 'use '.$db;
 			    // $this->db->query($connection);
 			    // if($this->db->table_exists('plan_items')) {
 			    // 	$field = array(
