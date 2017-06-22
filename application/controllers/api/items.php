@@ -88,7 +88,7 @@ class Items extends REST_Controller {
 				// 	$itemMovement->get_iterated();
 					
 				// 	foreach ($itemMovement as $val) {
-				// 		$onHand += ($val->quantity * $val->unit_value * $val->movement);
+				// 		$onHand += ($val->quantity * $val->conversion_ratio * $val->movement);
 				// 	}
 				// }
 
@@ -414,7 +414,7 @@ class Items extends REST_Controller {
 			}
 		}
 		
-		$obj->select("item_id, quantity, unit_value, movement");
+		$obj->select("item_id, quantity, conversion_ratio, movement");
 		$obj->where_in_related("transaction", "type", array("Cash_Purchase", "Credit_Purchase", "Commercial_Invoice", "Vat_Invoice", "Invoice", "Commercial_Cash_Sale", "Vat_Cash_Sale", "Cash_Sale", "Item_Adjustment", "Internal_Usage"));		
 		$obj->where_related("transaction", "is_recurring <>", 1);
 		$obj->where_related("transaction", "deleted <>", 1);
@@ -423,7 +423,7 @@ class Items extends REST_Controller {
 		$objList = [];
 		if($obj->exists()){			
 			foreach ($obj as $value) {
-				$quantity = ($value->quantity * $value->unit_value * $value->movement);
+				$quantity = ($value->quantity * $value->conversion_ratio * $value->movement);
 				if(isset($objList[$value->item_id])){
 					$objList[$value->item_id]["on_hand"] += $quantity;
 				}else{

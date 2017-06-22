@@ -98,7 +98,7 @@ class Item_lines extends REST_Controller {
 					"on_so" 			=> floatval($value->on_so),
 					"quantity" 			=> floatval($value->quantity),
 				   	"quantity_adjusted" => floatval($value->quantity_adjusted),
-				   	"unit_value" 		=> floatval($value->unit_value),
+				   	"conversion_ratio" 		=> floatval($value->conversion_ratio),
 				   	"cost"				=> floatval($value->cost),
 				   	"price"				=> floatval($value->price),
 				   	"price_avg" 		=> floatval($value->price_avg),
@@ -157,10 +157,10 @@ class Item_lines extends REST_Controller {
 
 						$onHand = 0;
 						foreach ($itemMovement as $val) {
-							$onHand += ($val->quantity * $val->unit_value * $val->movement);
+							$onHand += ($val->quantity * $val->conversion_ratio * $val->movement);
 						}
 
-						$currentQuantity = floatval($value->quantity) * floatval($value->unit_value);
+						$currentQuantity = floatval($value->quantity) * floatval($value->conversion_ratio);
 						$totalQty = $onHand + $currentQuantity;
 
 						if($totalQty==0){
@@ -208,9 +208,9 @@ class Item_lines extends REST_Controller {
 							$onPO = 0; $onSO = 0;
 							foreach ($poso as $val) {
 								if($val->type=="Purchase_Order"){
-									$onPO += ($val->quantity * $val->unit_value);
+									$onPO += ($val->quantity * $val->conversion_ratio);
 								}else{
-									$onSO += ($val->quantity * $val->unit_value);
+									$onSO += ($val->quantity * $val->conversion_ratio);
 								}
 							}
 							$obj->on_po = $onPO;
@@ -232,7 +232,7 @@ class Item_lines extends REST_Controller {
 		   	// isset($value->on_so)			? $obj->on_so 				= $value->on_so : "";
 		   	isset($value->quantity)			? $obj->quantity 			= $value->quantity : "";
 		   	isset($value->quantity_adjusted)? $obj->quantity_adjusted 	= $value->quantity_adjusted : "";
-		   	isset($value->unit_value)		? $obj->unit_value 			= $value->unit_value : $obj->unit_value = 1;
+		   	isset($value->conversion_ratio)		? $obj->conversion_ratio 			= $value->conversion_ratio : $obj->conversion_ratio = 1;
 		   	isset($value->cost)				? $obj->cost 				= $value->cost : "";
 		   	isset($value->price)			? $obj->price 				= $value->price : "";
 		   	//isset($value->price_avg)		? $obj->price_avg 			= $value->price_avg : "";
@@ -260,7 +260,7 @@ class Item_lines extends REST_Controller {
 					"on_so" 			=> floatval($obj->on_so),
 					"quantity" 			=> floatval($obj->quantity),
 				   	"quantity_adjusted" => floatval($obj->quantity_adjusted),
-				   	"unit_value" 		=> floatval($obj->unit_value),
+				   	"conversion_ratio" 		=> floatval($obj->conversion_ratio),
 				   	"cost"				=> floatval($obj->cost),
 				   	"price"				=> floatval($obj->price),
 				   	"price_avg" 		=> floatval($obj->price_avg),
@@ -324,7 +324,7 @@ class Item_lines extends REST_Controller {
 		   	isset($value->on_so)			? $obj->on_so 				= $value->on_so : "";
 		   	isset($value->quantity)			? $obj->quantity 			= $value->quantity : "";
 		   	isset($value->quantity_adjusted)? $obj->quantity_adjusted 	= $value->quantity_adjusted : "";
-		   	isset($value->unit_value)		? $obj->unit_value 			= $value->unit_value : "";
+		   	isset($value->conversion_ratio)		? $obj->conversion_ratio 			= $value->conversion_ratio : "";
 		   	isset($value->cost)				? $obj->cost 				= $value->cost : "";
 		   	isset($value->price)			? $obj->price 				= $value->price : "";
 		   	isset($value->price_avg)		? $obj->price_avg 			= $value->price_avg : "";
@@ -353,7 +353,7 @@ class Item_lines extends REST_Controller {
 					"on_so" 			=> floatval($obj->on_so),
 					"quantity" 			=> floatval($obj->quantity),
 				   	"quantity_adjusted" => floatval($obj->quantity_adjusted),
-				   	"unit_value" 		=> floatval($obj->unit_value),
+				   	"conversion_ratio" 		=> floatval($obj->conversion_ratio),
 				   	"cost"				=> floatval($obj->cost),
 				   	"price"				=> floatval($obj->price),
 				   	"price_avg" 		=> floatval($obj->price_avg),

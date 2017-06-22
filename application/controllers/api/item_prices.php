@@ -71,7 +71,7 @@ class Item_prices extends REST_Controller {
 					"assembly_id" 		=> $value->assembly_id,
 					"measurement_id" 	=> $value->measurement_id,
 					"quantity" 			=> floatval($value->quantity),					
-					"unit_value" 		=> floatval($value->unit_value),
+					"conversion_ratio" 		=> floatval($value->conversion_ratio),
 					"price" 			=> floatval($value->price),
 					"amount" 			=> floatval($value->amount),					
 					"locale" 			=> $value->locale,					
@@ -94,7 +94,7 @@ class Item_prices extends REST_Controller {
 			isset($value->assembly_id) 		? $obj->assembly_id 	= $value->assembly_id : "";
 			isset($value->measurement_id) 	? $obj->measurement_id 	= $value->measurement_id : "";
 			isset($value->quantity) 		? $obj->quantity 		= $value->quantity : "";
-			isset($value->unit_value) 		? $obj->unit_value 		= $value->unit_value : "";
+			isset($value->conversion_ratio) 		? $obj->conversion_ratio 		= $value->conversion_ratio : "";
 			isset($value->price) 			? $obj->price 			= $value->price : "";			
 			isset($value->amount) 			? $obj->amount 			= $value->amount : "";			
 			isset($value->locale) 			? $obj->locale 			= $value->locale : "";
@@ -107,7 +107,7 @@ class Item_prices extends REST_Controller {
 					"assembly_id" 		=> $obj->assembly_id,
 					"measurement_id" 	=> $obj->measurement_id,
 					"quantity" 			=> floatval($obj->quantity),					
-					"unit_value" 		=> floatval($obj->unit_value),
+					"conversion_ratio" 		=> floatval($obj->conversion_ratio),
 					"price" 			=> floatval($obj->price),
 					"amount" 			=> floatval($obj->amount),					
 					"locale" 			=> $obj->locale,					
@@ -134,7 +134,7 @@ class Item_prices extends REST_Controller {
 			isset($value->assembly_id) 		? $obj->assembly_id 	= $value->assembly_id : "";
 			isset($value->measurement_id) 	? $obj->measurement_id 	= $value->measurement_id : "";
 			isset($value->quantity) 		? $obj->quantity 		= $value->quantity : "";
-			isset($value->unit_value) 		? $obj->unit_value 		= $value->unit_value : "";
+			isset($value->conversion_ratio) 		? $obj->conversion_ratio 		= $value->conversion_ratio : "";
 			isset($value->price) 			? $obj->price 			= $value->price : "";			
 			isset($value->amount) 			? $obj->amount 			= $value->amount : "";			
 			isset($value->locale) 			? $obj->locale 			= $value->locale : "";			
@@ -147,7 +147,7 @@ class Item_prices extends REST_Controller {
 					"assembly_id" 		=> $obj->assembly_id,
 					"measurement_id" 	=> $obj->measurement_id,
 					"quantity" 			=> floatval($obj->quantity),					
-					"unit_value" 		=> floatval($obj->unit_value),
+					"conversion_ratio" 		=> floatval($obj->conversion_ratio),
 					"price" 			=> floatval($obj->price),
 					"amount" 			=> floatval($obj->amount),					
 					"locale" 			=> $obj->locale,					

@@ -505,7 +505,7 @@ class Vendorreports extends REST_Controller {
 		if($obj->exists()){
 			$objList = [];
 			foreach ($obj as $value) {								
-				$quantity = floatval($value->quantity) * floatval($value->unit_value);
+				$quantity = floatval($value->quantity) * floatval($value->conversion_ratio);
 				$amount = floatval($value->amount) / floatval($value->transaction_rate);
 								
 				if(isset($objList[$value->item_id])){

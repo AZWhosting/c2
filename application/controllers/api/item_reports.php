@@ -89,7 +89,7 @@ class Item_reports extends REST_Controller {
 				$saleAmount = 0;
 				$amount = 0;
 
-				$quantity = floatval($value->quantity) * floatval($value->unit_value) * intval($value->movement);
+				$quantity = floatval($value->quantity) * floatval($value->conversion_ratio) * intval($value->movement);
 				
 				if($value->transaction_type==="Purchase_Order"){
 					$po = $quantity;
@@ -203,7 +203,7 @@ class Item_reports extends REST_Controller {
 			foreach ($obj as $value) {
 				$cost = floatval($value->cost) * floatval($value->transaction_rate);
 				$price = floatval($value->price) * $value->transaction_rate;
-				$quantity = floatval($value->quantity) * floatval($value->unit_value) * intval($value->movement);
+				$quantity = floatval($value->quantity) * floatval($value->conversion_ratio) * intval($value->movement);
 				$amount = floatval($value->amount) / floatval($value->transaction_rate);
 
 				if(isset($objList[$value->item_id])){
@@ -233,8 +233,8 @@ class Item_reports extends REST_Controller {
 					$purchaseQty = 0; 
 					$purchaseAmount = 0;
 					foreach ($bf as $val) {
-						$qty = $val->quantity * $val->unit_value * $val->movement;
-						$amt = $val->quantity * $val->unit_value * $val->cost * $val->transaction_rate;
+						$qty = $val->quantity * $val->conversion_ratio * $val->movement;
+						$amt = $val->quantity * $val->conversion_ratio * $val->cost * $val->transaction_rate;
 
 						$sumOnHand += $qty;
 

@@ -987,7 +987,7 @@ class Transactions extends REST_Controller {
 							"assembly_id"	=> $p->assembly_id,
 							"measurement_id"=> $p->measurement_id,
 							"quantity"		=> floatval($p->quantity),
-							"unit_value" 	=> floatval($p->unit_value),
+							"conversion_ratio" 	=> floatval($p->conversion_ratio),
 							"price" 		=> floatval($p->price),
 							"amount" 		=> floatval($p->amount),
 							"locale" 		=> $p->locale,

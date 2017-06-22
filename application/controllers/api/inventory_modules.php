@@ -208,7 +208,7 @@ class Inventory_modules extends REST_Controller {
 				$saleAmount = 0;
 				$amount = 0;
 
-				$quantity = floatval($value->quantity) * floatval($value->unit_value) * intval($value->movement);
+				$quantity = floatval($value->quantity) * floatval($value->conversion_ratio) * intval($value->movement);
 				
 				if($value->transaction_type==="Purchase_Order"){
 					$po = $quantity;
@@ -323,7 +323,7 @@ class Inventory_modules extends REST_Controller {
 			foreach ($obj as $value) {
 				$cost = floatval($value->cost) / floatval($value->transaction_rate);
 				$price = floatval($value->price) / $value->transaction_rate;
-				$quantity = floatval($value->quantity) * floatval($value->unit_value) * intval($value->movement);
+				$quantity = floatval($value->quantity) * floatval($value->conversion_ratio) * intval($value->movement);
 				$amount = $quantity * $cost;				
 
 				if(isset($objList[$value->item_id])){
@@ -353,7 +353,7 @@ class Inventory_modules extends REST_Controller {
 					$purchaseQty = 0; 
 					$purchaseAmount = 0;
 					foreach ($bf as $val) {
-						$qty = $val->quantity * $val->unit_value * $val->movement;
+						$qty = $val->quantity * $val->conversion_ratio * $val->movement;
 						$amt = ($qty * $val->cost) / $val->transaction_rate;
 
 						$sumOnHand += $qty;
@@ -497,7 +497,7 @@ class Inventory_modules extends REST_Controller {
 		//Group by item_id
 		$product = [];
 		foreach($obj as $value) {
-			$quantity = floatval($value->quantity) * floatval($value->unit_value);
+			$quantity = floatval($value->quantity) * floatval($value->conversion_ratio);
 
 			if(isset($product[$value->item_id])){
 				$product[$value->item_id]['quantity'] 	+= $quantity;
@@ -577,7 +577,7 @@ class Inventory_modules extends REST_Controller {
 		//Group by item_id
 		$product = [];
 		foreach($obj as $value) {			
-			$quantity = floatval($value->quantity) * floatval($value->unit_value);
+			$quantity = floatval($value->quantity) * floatval($value->conversion_ratio);
 
 			if(isset($product[$value->item_id])){
 				$product[$value->item_id]['quantity'] 	+= $quantity;

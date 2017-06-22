@@ -298,7 +298,7 @@ a:hover {
   }
 }
 /*Landscape &&& Portrait*/
-@media (orientation:landscape) {
+/*@media (orientation:landscape) {
   .help .dropdown-menu{
     left: -210px ;
   }
@@ -307,7 +307,7 @@ a:hover {
   .help .dropdown-menu{
     left: -274px ;
   }
-}
+}*/
 @media only screen
 and (min-device-width : 320px)
 and (max-device-width : 480px) {

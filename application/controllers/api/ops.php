@@ -74,18 +74,17 @@ class Ops extends REST_Controller {
 				// );
 				// $this->dbforge->add_column("attachments", $fields);
 
-			    // Modify field
-				// $this->dbforge->modify_column(
-		  		// 		    'measurements', array(
-				// 		'is_system' => array(
-				// 					'name' 		=> 'is_system', 
-				// 					'type'		=> 'TINYINT',
-				// 					'constraint'=> 1,
-				// 					'null' 		=> FALSE,
-				// 					'default' 	=> 0
-				// 		)
-				//     )
-				// );
+			    // Modify fields
+			    $fields = array(
+					'unit_value' => array(
+						'name' 		=> 'conversion_ratio', 
+						'type'		=> 'DECIMAL',
+						'constraint'=> '30,15',
+						'null' 		=> FALSE,
+						'default' 	=> 1
+					)
+				);
+				$data["results"][] = $this->dbforge->modify_column('item_prices', $fields);
 
 				//Custom
 				// $dsn = 'mysql://'.$this->db->username.':'.$this->db->password.'@'.$this->db->hostname.'/'.$db;

@@ -3271,8 +3271,8 @@
 								
 							</div>
 							<div class="span9" align="right">
-								<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save_new"></span></span>
-								<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save_close"></span></span>
+								<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 80px;margin-bottom: 0;"><i></i> <span data-bind="text: lang.lang.save"></span></span>
+								
 								<span class="btn btn-icon btn-warning glyphicons remove_2" onclick="javascript:window.history.back()" data-bind="click: cancel" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.cancel"></span></span>
 							</div>
 						</div>
@@ -4184,15 +4184,15 @@
 									<div id="tabDownload" style="border: 1px solid #ccc; overflow: hidden;" class="tab-pane active widget-body-regular">
 										<h4 class="separator bottom" style="margin-top: 10px;" data-bind="text: lang.lang.please_select_license">Please Select License and Location to download reading book</h4>
 									  	<div class="span12 row-fluid" style="padding:20px 0;padding-top: 0;">
-											<div class="span5" style="padding-left: 0;">
-												<div class="control-group">								
+											<div class="span3" style="padding-left: 0;">
+												<div class="control-group">	
 													<label ><span data-bind="text: lang.lang.license">License</span></label>
 													<input 
 														data-role="dropdownlist" 
 														style="width: 100%;" 
 														data-option-label="License ..." 
 														data-auto-bind="false" 
-														data-value-primitive="false" 
+														data-value-primitive="true" 
 														data-text-field="name" 
 														data-value-field="id" 
 														data-bind="
@@ -4201,7 +4201,7 @@
 						                  					events: {change: onLicenseChange}">
 						                  		</div>
 											</div>
-											<div class="span6" style="padding: 0;">
+											<div class="span2" >
 												<div class="control-group">								
 													<label ><span data-bind="text: lang.lang.location">Location</span></label>
 													<input 
@@ -4209,13 +4209,49 @@
 														style="width: 100%;" 
 														data-option-label="Location ..." 
 														data-auto-bind="false" 
-														data-value-primitive="false" 
+														data-value-primitive="true" 
 														data-text-field="name" 
 														data-value-field="id" 
 														data-bind="
 															value: blocSelect,
 															enabled: haveSelect,
+															events: {change: onLocationChange},
 						                  					source: blocDS">
+						                  		</div>
+											</div>
+											<div class="span2">
+												<div class="control-group">								
+													<label ><span data-bind="text: lang.lang.sub_location">Location</span></label>
+													<input 
+														data-role="dropdownlist" 
+														style="width: 100%;" 
+														data-option-label="Sub Location ..." 
+														data-auto-bind="false" 
+														data-value-primitive="false" 
+														data-text-field="name" 
+														data-value-field="id" 
+														data-bind="
+															value: sublocationSelect,
+															enabled: locationSelect,
+															events: {change: onSubLocationChange},
+						                  					source: subLocationDS">
+						                  		</div>
+											</div>
+											<div class="span2" style=>
+												<div class="control-group">								
+													<label ><span data-bind="text: lang.lang.box">Box</span></label>
+													<input 
+														data-role="dropdownlist" 
+														style="width: 100%;" 
+														data-option-label="Box ..." 
+														data-auto-bind="false" 
+														data-value-primitive="false" 
+														data-text-field="name" 
+														data-value-field="id" 
+														data-bind="
+															value: boxSelect,
+															enabled: sublocationSelect,
+						                  					source: boxDS">
 						                  		</div>
 											</div>
 											<div class="span1" style="padding-left: 15px;">
@@ -4262,15 +4298,15 @@
 										<h4 class="separator bottom" style="margin-top: 10px;" data-bind="text: lang.lang.please_upload_reading_book">Please upload reading book</h4>
 
 										<div class="row-fluid clear" style="overflow: hidden;margin-bottom: 20px;">
-											<div class="span3" style="padding-left: 0;">
-												<div class="control-group">								
+											<div class="span4" style="padding-left: 0;">
+												<div class="control-group">	
 													<label ><span data-bind="text: lang.lang.license">License</span></label>
 													<input 
 														data-role="dropdownlist" 
 														style="width: 100%;" 
 														data-option-label="License ..." 
 														data-auto-bind="false" 
-														data-value-primitive="false" 
+														data-value-primitive="true" 
 														data-text-field="name" 
 														data-value-field="id" 
 														data-bind="
@@ -4279,15 +4315,15 @@
 						                  					events: {change: onLicenseChangeU}">
 						                  		</div>
 											</div>
-											<div class="span3">
-												<div class="control-group">								
+											<div class="span4">
+												<div class="control-group">
 													<label ><span data-bind="text: lang.lang.location">Location</span></label>
 													<input 
 														data-role="dropdownlist" 
 														style="width: 100%;" 
 														data-option-label="Location ..." 
 														data-auto-bind="false" 
-														data-value-primitive="false" 
+														data-value-primitive="true" 
 														data-text-field="name" 
 														data-value-field="id" 
 														data-bind="
@@ -4296,7 +4332,42 @@
 						                  					source: blocDSU">
 						                  		</div>
 											</div>
-											<div class="span3">
+											<div class="span4">
+												<div class="control-group">	
+													<label ><span data-bind="text: lang.lang.sub_location">Location</span></label>
+													<input 
+														data-role="dropdownlist" 
+														style="width: 100%;" 
+														data-option-label="Sub Location ..." 
+														data-auto-bind="false" 
+														data-value-primitive="false" 
+														data-text-field="name" 
+														data-value-field="id" 
+														data-bind="
+															value: sublocationSelectU,
+															enabled: locationSelectU,
+															events: {change: onSubLocationChangeU},
+						                  					source: subLocationDSU">
+						                  		</div>
+											</div>
+											<div class="span4" style=>
+												<div class="control-group">
+													<label ><span data-bind="text: lang.lang.box">Box</span></label>
+													<input 
+														data-role="dropdownlist" 
+														style="width: 100%;" 
+														data-option-label="Box ..." 
+														data-auto-bind="false" 
+														data-value-primitive="false" 
+														data-text-field="name" 
+														data-value-field="id" 
+														data-bind="
+															value: boxSelectU,
+															enabled: sublocationSelectU,
+						                  					source: boxDSU">
+						                  		</div>
+											</div>
+											<div class="span4">
 												<div class="control-group">	
 													<label ><span data-bind="text: lang.lang.month_of">Month Of</span></label>
 										            <input type="text" 
@@ -4309,7 +4380,7 @@
 											           	data-bind="value: monthOfUpload,
 											           			events: {change: monthOfUSelect}" />
 												</div>
-											</div>											<div class="span3">
+											</div>											<div class="span4">
 												<div class="control-group">	
 													<label ><span data-bind="text: lang.lang.to_date">To Date</span></label>
 										            <input type="text" 
@@ -13475,8 +13546,12 @@
 		uploadDS  			: dataStore(apiUrl + "readings/books"),
 		licenseDS 			: dataStore(apiUrl + "branches"),
 		blocDS 				: dataStore(apiUrl + "locations"),
+		subLocationDS 		: dataStore(apiUrl + "locations"),
+		boxDS 				: dataStore(apiUrl + "locations"),
 		licenseDSU 			: dataStore(apiUrl + "branches"),
 		blocDSU 			: dataStore(apiUrl + "locations"),
+		subLocationDSU 		: dataStore(apiUrl + "locations"),
+		boxDSU 				: dataStore(apiUrl + "locations"),
 		meterDS 			: dataStore(apiUrl + "meters/record"),
 		existReading 		: dataStore(apiUrl + "readings"),
 		itemDS 				: null,
@@ -13490,10 +13565,11 @@
 		miniMonthofS 		: new Date(),
 		haveSelect			: false,
 		haveSelectU			: false,
+		locationSelect 		: false,
+		sublocationSelect 	: false,
+		locationSelectU 	: false,
+		sublocationSelectU 	: false,
 		pageLoad 			: function(id){
-			var self = this;
-			this.set("haveSelect", false);
-			this.set("haveSelectU", false);
 		},
 		onLicenseChange 	: function(e) {
 			var data = e.data;
@@ -13505,6 +13581,37 @@
 			]);
 			this.set("haveSelect", true);
 		},
+		onLocationChange 	: function(e) {
+			var self = this;
+			this.subLocationDS.filter([
+				{field: "branch_id", value: this.get("licenseSelect")},
+				{field: "main_bloc", value: this.get("blocSelect")},
+				{field: "main_pole", value: 0}
+			]);
+			this.subLocationDS.bind("requestEnd", function(e){
+				if(e.response){
+					console.log(self.subLocationDS.data().length);
+					if(self.subLocationDS.data().length > 0){
+						self.set("locationSelect", true);
+					}
+				}
+			});
+		},
+		onSubLocationChange : function(e) {
+			var self = this;
+			this.boxDS.filter([
+				{field: "branch_id", value: this.get("licenseSelect")},
+				{field: "main_bloc", value: this.get("blocSelect")},
+				{field: "main_pole", value: this.get("sublocationSelect")}
+			]);
+			this.boxDS.bind("requestEnd", function(e){
+				if(e.response){
+					if(self.boxDS.data().length > 0){
+						self.set("sublocationSelect", true);
+					}
+				}
+			});
+		},
 		onLicenseChangeU 	: function(e) {
 			var data = e.data;
 			var license = this.licenseDSU.at(e.sender.selectedIndex - 1);
@@ -13515,17 +13622,23 @@
 			]);
 			this.set("haveSelectU", true);
 		},
-		search 		 		: function(){	
+		search 		 		: function(){
 			this.uploadDS.data([]);
-			this.set("haveData", false);	
+			this.set("haveData", false);
 			var monthOfSearch = this.get("monthOfSelect"),
 			license_id = this.get("licenseSelect"),
 			bloc_id = this.get("blocSelect");
 			var para = [];	
 			if(license_id){
 				if(bloc_id){
-					para.push({field: "location_id", value: bloc_id.id});
+					para.push({field: "location_id", value: bloc_id});
 					this.set("selectMeter", true);
+					if(this.get("sublocationSelect")){
+						para.push({field: "pole_id", value: this.get("sublocationSelect")});
+					}
+					if(this.get("boxSelect")){
+						para.push({field: "box_id", value: this.get("boxSelect")});
+					}
 					var self = this;
 					this.uploadDS.query({
 						filter: para
@@ -13672,10 +13785,10 @@
 	        this.ExistRUpload.splice(0, this.ExistRUpload.length);
 	        $("#loadImport").css("display","block");
 	        var reader = new FileReader();
-			banhji.reading.dataSource.data([]);	
-			reader.onload = function() {	
-				var data = reader.result;	
-				var result = {}; 					
+			banhji.reading.dataSource.data([]);
+			reader.onload = function() {
+				var data = reader.result;
+				var result = {};
 				var workbook = XLSX.read(data, {type : 'binary'});
 				workbook.SheetNames.forEach(function(sheetName) {
 					var roa = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
@@ -13699,7 +13812,7 @@
 							banhji.reading.dataSource.add(roa[i]);
 							$("#loadImport").css("display","none");	
 						}
-					}					
+					}
 				});	
 				if(self.Uploaderror.length > 0){
 					self.set("errorShow", true);
@@ -13727,7 +13840,6 @@
 				banhji.reading.dataSource.sync();
 				banhji.reading.dataSource.bind("requestEnd", function(e){
 					if(e.type != 'read') {
-
 						if(e.type == 'update') {
 							// update current invoice
 							banhji.invoice.dataSource.query({
@@ -13737,7 +13849,7 @@
 							// create new invoice
 						}
 				    	if(e.response){	
-				    		dfd.resolve(e.response.results);			
+				    		dfd.resolve(e.response.results);
 				    		// self.cancel();
 							$("#loadImport").css("display","none");
 							$('li.k-file').remove();
@@ -13745,21 +13857,20 @@
 							self.set("monthOfUpload", "");
 							self.set("toDateUpload", "");
 							banhji.router.navigate("/run_bill");
-						}	
-
-					}			  				
+						}
+					}
 			    });
 			    banhji.reading.dataSource.bind("error", function(e){
-			    	dfd.reject(e);		    		    				
+			    	dfd.reject(e);
 			    });
 			}
-			return dfd.promise();	
+			return dfd.promise();
 		},
 		cancel 				: function(){
-			banhji.reading.dataSource.data([]);	
-			banhji.reading.uploadDS.data([]);	
+			banhji.reading.dataSource.data([]);
+			banhji.reading.uploadDS.data([]);
 			// banhji.reading.dataSource.data([]);
-			// banhji.reading.uploadDS.data([]);	
+			// banhji.reading.uploadDS.data([]);
 			banhji.router.navigate("/");
 		}
 	});
@@ -15276,7 +15387,7 @@
 		contactDS 			: new kendo.data.DataSource({
 			data: banhji.source.customerList,
 			filter: {field: 'status', value: 1},
-			sort: {field: 'number', dir: "asc"}
+			sort: {field: 'id', dir: "desc"}
 		}),
 		onContactChange 	: function(e) {
 			this.dataSource.query({
@@ -24401,7 +24512,7 @@
 		lang 					: langVM,
 		dataSource 				: dataStore(apiUrl + "contacts"),
 		propertyDS 				: dataStore(apiUrl + "properties"),
-		proDS 				: dataStore(apiUrl + "properties"),
+		proDS 					: dataStore(apiUrl + "properties"),
 		patternDS 				: dataStore(apiUrl + "contacts"),
 		numberDS 				: dataStore(apiUrl + "contacts"),
 		deleteDS 				: dataStore(apiUrl + "transactions"),
@@ -24530,43 +24641,79 @@
 				if(this.get("isEdit") || this.dataSource.total()==0){
 					this.addEmpty();
 				}
-				this.set("propertyVisible", false);
+				this.set("propertyVisible", true);
 			}
 		},
 		addProperty 		: function(e) {
 			var self = this;
 			if(this.get("pName") && this.get("pCode") && this.get("pAbbr")){
-				this.proDS.data([]);
-				this.proDS.insert(0,{
-					contact_id			: this.get("contactID"),
-					code 				: this.get("pCode"),
-					abbr 				: this.get("pAbbr"),
-					name 				: this.get("pName"),
-					address 			: this.get("pAddress")
-		    	});
-				this.proDS.sync();
-				this.proDS.bind("requestEnd", function(e){
-	        		if(e.type != 'read' && e.response) {
-	        			var notificat = $("#ntf1").data("kendoNotification");
-						notificat.hide();
-						notificat.success(self.lang.lang.success_message);
-			        	self.set("pCode", "");
-			        	self.set("pAbbr", "");
-			        	self.set("pName", "");
-			        	self.set("pAddress","");
-			        	self.propertyDS.filter({field: "contact_id", value: self.get("contactID")});
-				    }
-				});
-				this.proDS.bind("error", function(e){
-					var notificat = $("#ntf1").data("kendoNotification");
-					notificat.hide();
-					notificat.error(self.lang.lang.error_message);
-				});
+		    	if(this.get("contactID") != 0){
+		    		this.savePro(this.get("contactID"));
+		    	}else{
+		    		this.proDS.insert(0,{
+						contact_id			: "",
+						code 				: this.get("pCode"),
+						abbr 				: this.get("pAbbr"),
+						name 				: this.get("pName"),
+						address 			: this.get("pAddress")
+			    	});
+			    	this.propertyDS.insert(0,{
+						contact_id			: "",
+						code 				: this.get("pCode"),
+						abbr 				: this.get("pAbbr"),
+						name 				: this.get("pName"),
+						address 			: this.get("pAddress")
+			    	});
+		    	}
 			}else{
 				var notificat = $("#ntf1").data("kendoNotification");
 				notificat.hide();
 				notificat.error(this.lang.lang.field_required_message);
 			}
+		},
+		savePro 			: function(contact_id){
+			this.proDS.data([]);
+			this.proDS.insert(0,{
+				contact_id			: contact_id,
+				code 				: this.get("pCode"),
+				abbr 				: this.get("pAbbr"),
+				name 				: this.get("pName"),
+				address 			: this.get("pAddress")
+	    	});
+			this.proDS.sync();
+			this.proDS.bind("requestEnd", function(e){
+        		if(e.type != 'read' && e.response) {
+        			var notificat = $("#ntf1").data("kendoNotification");
+					notificat.hide();
+					notificat.success(self.lang.lang.success_message);
+		        	self.set("pCode", "");
+		        	self.set("pAbbr", "");
+		        	self.set("pName", "");
+		        	self.set("pAddress","");
+		        	self.propertyDS.filter({field: "contact_id", value: self.get("contactID")});
+			    }
+			});
+			this.proDS.bind("error", function(e){
+				var notificat = $("#ntf1").data("kendoNotification");
+				notificat.hide();
+				notificat.error(self.lang.lang.error_message);
+			});
+		},
+		setProperty 		: function(contact_id) {
+			var self = this;
+			$.each(this.proDS.data(), function(index, value) {
+				value.set("contact_id", contact_id);
+			});
+			this.proDS.sync();
+			this.proDS.bind("requestEnd", function(e){
+        		if(e.type != 'read' && e.response) {
+		        	self.set("pCode", "");
+		        	self.set("pAbbr", "");
+		        	self.set("pName", "");
+		        	self.set("pAddress","");
+		        	self.proDS.data([]);
+			    }
+			});
 		},
 		licenseChange 		: function(e) {
 			var obj = this.get("utility"), self = this;
@@ -24815,6 +24962,7 @@
 						notificat.hide();
 						notificat.success(self.lang.lang.success_message);
 					});
+					self.setProperty(e.response.results[0].id);
 					dfd.resolve(e.response.results);
 				}
 		    });
@@ -24828,7 +24976,6 @@
 	    },
 		save 					: function(){
 			var self = this, obj = this.get("obj");
-			
 			//Edit Mode
 	    	if(this.get("isEdit")){
 	    		//Contact Person has changes
@@ -24855,24 +25002,18 @@
 				var notificat = $("#ntf1").data("kendoNotification");
 				notificat.hide();
 				notificat.success(self.lang.lang.success_message);
-				if(self.get("saveClose")){
-					//Save Close
-					self.set("saveClose", false);
-					self.cancel();
-				}else{
-					//Save New
-					self.addEmpty();
-				}
+				//Save Close
+				self.cancel();
+				//Save New
+				self.addEmpty();
 				banhji.source.loadCustomers();
 			});
 		},
 		cancel 					: function(){
-			this.dataSource.cancelChanges();
-			this.contactPersonDS.cancelChanges();
-			this.utilityDS.cancelChanges();
 			this.utilityDS.data([]);
 			this.dataSource.data([]);
 			this.contactPersonDS.data([]);
+			this.proDS.data([]);
 			this.set("contact_type_id", 0);
 			window.history.back();
 			banhji.userManagement.removeMultiTask("customer");
