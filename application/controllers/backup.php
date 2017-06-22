@@ -27,11 +27,20 @@ class Backup extends CI_Controller {
 		parent::__construct();
 	}
 
-	public function index($id=NULL)
+	public function index()
 	{
-		if($id != NULL){
+		$comint = "";
+		$intID = $this->input->post("institute");
+		$userID = $this->input->post("uid");
+		$users = new User(null);
+		$users->where("id", $userID)->limit(1)->get();
+		foreach ($users as $user) {
+			$inst = $user->institute->get();
+			$comint = $inst->id;
+		}
+		if($intID == $comint){
 			$institute = new Institute();
-			$institute->where('id', $id)->get();
+			$institute->where('id', $comint)->get();
 			if($institute->exists()) {	
 				$conn = $institute->connection->get();
 				$this->_database = $conn->inst_database;
@@ -65,6 +74,8 @@ class Backup extends CI_Controller {
 			    $data = file_get_contents("assets/backupdb/".$dbname);
 	    		force_download($dbname, $backup);
 			}
+		}else{
+			echo "My Ass";
 		}
 	}
 }

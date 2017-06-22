@@ -65,27 +65,27 @@
 	            <!-- Brand and toggle get grouped for better mobile display -->
 	            <div class="navbar-header" style="margin: 0">
 	            	<!-- Menu Phone -->
-	                <!-- <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+	                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
 	                    <span class="sr-only">Toggle navigation</span>
 	                    <span class="icon-bar"></span>
 	                    <span class="icon-bar"></span>
 	                    <span class="icon-bar"></span>
-	                </button> -->
+	                </button>
 
 	                <!-- Menu Phone Multipel Task-->
-	               <!--  <button type="button" class="navbar-toggle phone-multitasklist" data-toggle="collapse" data-target="#bs-example-navbar-collapse-2">	                   
+	                <button type="button" class="navbar-toggle phone-multitasklist" data-toggle="collapse" data-target="#bs-example-navbar-collapse-2">	                   
 	                    <span class="icon-th-list"></span>
-	                </button> -->
+	                </button>
 
 	                <!-- Menu Phone Langauge-->
-	               <!--  <button type="button" class="navbar-toggle phone-lang" data-toggle="collapse" data-target="#bs-example-navbar-collapse-4">
-	                    <span data-bind="text: lang.localeCode"></span>	                   
-	                </button> -->
+	                <button type="button" class="navbar-toggle phone-lang" data-toggle="collapse" data-target="#bs-example-navbar-collapse-4">
+	                    <span data-bind="text: lang.localeCode"></span>
+	                </button>
 
 	                <!-- Menu Phone Search-->
-	                <!-- <button type="button" class="navbar-toggle phone-search" data-toggle="collapse" data-target="#bs-example-navbar-collapse-3">
-	                    <span class="icon-search"></span>	                   
-	                </button> -->
+	                <button type="button" class="navbar-toggle phone-search" data-toggle="collapse" data-target="#bs-example-navbar-collapse-3">
+	                    <span class="icon-search"></span>
+	                </button>
 
 	                <!--Logo-->
 	                <a class="navbar-brand" href="#" data-bind="click: checkRole">
@@ -205,7 +205,7 @@
 				</ul>
 
 	            <!-- Menu Phone -->
-	            <!-- <div class="menu-phone collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+	            <div class="menu-phone collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 	                <ul class="nav navbar-nav hidden-lg hidden-md hidden-sm">
 	                	<li>
 	                    	<a href="#" data-bind="click: lang.changeToKh">
@@ -229,10 +229,10 @@
 	                        <a href="#">Contact</a>
 	                    </li>
 	                </ul>
-	            </div> -->
+	            </div>
 
 	            <!-- Menu Phone Multipel Task-->
-	            <!-- <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
+	            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
 	            	<form class="navbar-form pull-left hidden-lg hidden-md hidden-sm">
 						<div class="btn-group">
 						  	<a class="btn btn-inverse dropdown-toggle" data-toggle="dropdown" href="#">
@@ -249,10 +249,10 @@
 					  			<i class="icon-search"></i>
 					  	</button>
 					</form>
-	            </div> -->
+	            </div>
 
 	            <!-- Menu Phone Search-->
-	            <!-- <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-3">
+	            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-3">
 	            	<form class="navbar-form pull-left hidden-lg hidden-md hidden-sm">
 						<div class="btn-group">
 						  	<a class="btn btn-inverse dropdown-toggle" data-toggle="dropdown" href="#">
@@ -269,10 +269,10 @@
 					  			<i class="icon-search"></i>
 					  	</button>
 					</form>
-	            </div> -->
+	            </div>
 
 	            <!-- Menu Phone Langauge-->
-	            <!-- <div class="menu-phone collapse navbar-collapse" id="bs-example-navbar-collapse-4">
+	            <div class="menu-phone collapse navbar-collapse" id="bs-example-navbar-collapse-4">
 	            	<ul class=" nav navbar-nav hidden-lg hidden-md hidden-sm phone-language">
 	                    <li>
 	                    	<a href="#" data-bind="click: lang.changeToKh">
@@ -287,7 +287,7 @@
     						</a>
     					</li>	
 	                </ul>
-	            </div> -->
+	            </div>
 
 
 	            <!-- /.navbar-collapse -->

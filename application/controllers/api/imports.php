@@ -854,7 +854,93 @@ class Imports extends REST_Controller {
 
 		$this->response(array('results'=> array(), 'msg' => "Operation is good."), 201);
 	}
+	//Location
+	function location_post() {
+		$models = json_decode($this->post('models'));
+		$data["results"] = array();
+		$data["count"] = 0;
 
+		foreach ($models as $value) {
+			$obj = new Location(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$branch = new Branch(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$branch->select('id, type')->where('name', $value->license)->get();
+			isset($value->location) 			? $obj->name 				= $value->location : "";
+			isset($value->abbr) 				? $obj->abbr 				= $value->abbr : "";
+			isset($branch->id) 					? $obj->branch_id			= $branch->id : 0;
+			isset($branch->type) 				? $obj->type 				= $branch->type : "w";
+	   		if($obj->save()){
+			   	$data["results"][] = array(
+			   		"id" 				=> $obj->id,
+			   		"branch_id" 		=> $obj->branch_id,
+					"name" 				=> $obj->name,
+					"abbr" 				=> $obj->abbr
+			   	);
+		    }
+		}
+
+		$data["count"] = count($data["results"]);
+		$this->response($data, 201);
+	}
+	function sublocation_post() {
+		$models = json_decode($this->post('models'));
+		$data["results"] = array();
+		$data["count"] = 0;
+
+		foreach ($models as $value) {
+			$obj = new Location(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$mlocation = new Location(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$mlocation->select('id, branch_id, type')->where('name', $value->location)->get();
+			isset($value->sub_location) 			? $obj->name 				= $value->sub_location : "";
+			isset($value->abbr) 					? $obj->abbr 				= $value->abbr : "";
+			isset($mlocation->id) 					? $obj->main_bloc			= $mlocation->id : 0;
+			isset($mlocation->type) 				? $obj->type 				= $mlocation->type : "w";
+			isset($mlocation->branch_id) 			? $obj->branch_id 			= $mlocation->branch_id : 0;
+	   		if($obj->save()){
+			   	$data["results"][] = array(
+			   		"id" 				=> $obj->id,
+			   		"branch_id" 		=> $obj->branch_id,
+			   		"main_bloc" 		=> $obj->main_bloc,
+					"name" 				=> $obj->name,
+					"abbr" 				=> $obj->abbr
+			   	);
+		    }
+		}
+
+		$data["count"] = count($data["results"]);
+		$this->response($data, 201);
+	}
+	function box_post() {
+		$models = json_decode($this->post('models'));
+		$data["results"] = array();
+		$data["count"] = 0;
+
+		foreach ($models as $value) {
+			$obj = new Location(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$mlocation = new Location(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$mlocation->select('id, branch_id, type, main_bloc')->where('name', $value->sub_location)->get();
+			isset($value->box) 						? $obj->name 				= $value->box : "";
+			isset($value->abbr) 					? $obj->abbr 				= $value->abbr : "";
+			isset($mlocation->id) 					? $obj->main_pole			= $mlocation->id : 0;
+			isset($mlocation->main_bloc) 			? $obj->main_bloc			= $mlocation->main_bloc : 0;
+			isset($mlocation->type) 				? $obj->type 				= $mlocation->type : "w";
+			isset($mlocation->branch_id) 			? $obj->branch_id 			= $mlocation->branch_id : 0;
+	   		if($obj->save()){
+			   	$data["results"][] = array(
+			   		"id" 				=> $obj->id,
+			   		"branch_id" 		=> $obj->branch_id,
+			   		"main_bloc" 		=> $obj->main_bloc,
+			   		"main_pole" 		=> $obj->main_pole,
+					"name" 				=> $obj->name,
+					"abbr" 				=> $obj->abbr
+			   	);
+		    }
+		}
+
+		$data["count"] = count($data["results"]);
+		$this->response($data, 201);
+	}
+
+	
 	function coa_post() {
 		$models = json_decode($this->post('models'));
 		$journals = array();

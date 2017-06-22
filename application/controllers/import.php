@@ -28,12 +28,21 @@ class Import extends CI_Controller {
 		$this->load->helper(array('form', 'url'));
 	}
 
-	public function index($id=NULL)
+	public function index()
 	{
-		if($id != NULL){
+		$comint = "";
+		$intID = $this->input->post("institute");
+		$userID = $this->input->post("uid");
+		$users = new User(null);
+		$users->where("id", $userID)->limit(1)->get();
+		foreach ($users as $user) {
+			$inst = $user->institute->get();
+			$comint = $inst->id;
+		}
+		if($intID == $comint){
 			$this->load->view('import', array('error' => ' ' ));
 			$institute = new Institute();
-			$institute->where('id', $id)->get();
+			$institute->where('id', $comint)->get();
 			if($institute->exists()) {	
 				$conn = $institute->connection->get();
 				$this->_database = $conn->inst_database;
@@ -46,7 +55,6 @@ class Import extends CI_Controller {
 			$this->load->helper('download');
 			$this->db = $DB1;
 			$templine = '';
-	        // echo $_FILES["userfile"]["tmp_name"];
 			// Read in entire file
 			if(isset($_FILES["userfile"])){
 				$lines = file($_FILES["userfile"]["tmp_name"]); 
@@ -68,7 +76,8 @@ class Import extends CI_Controller {
 						$templine = '';
 					}
 				}
-				
+				echo '<script>alert("Successfull!");</script>';
+				redirect('bill', 'refresh');
 			}
 		}
 	}
