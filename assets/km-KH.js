@@ -846,7 +846,7 @@ var	km_KH = {
 	"unit_price" : "តម្លៃ​លក់ ឬ ឯកតា",
 	"close" : "បិទ",
 	"set_new_price" : "កំណត់​ថ្លៃ​លក់ ថ្មី",
-	"unit_value" : "តម្លៃ​ឯកតា",
+	"conversion_ratio" : "មេគុណសមាមាត្រ",
 	"edit" : "កែប្រែ",
 	"products_services_setting" : "កំណត់​ផលិតផល ឬ ទំនិញ​ទូទៅ",
 	"add_measurement" : "បន្ថែម​រង្វាស់​ប្រវែង",

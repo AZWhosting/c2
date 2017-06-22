@@ -220,30 +220,39 @@ class Item_lines extends REST_Controller {
 				}
 			}
 
-			isset($value->transaction_id) 	? $obj->transaction_id 		= $value->transaction_id : "";
-			isset($value->item_id)			? $obj->item_id				= $value->item_id : "";
-			isset($value->assembly_id)		? $obj->assembly_id 		= $value->assembly_id : "";
-			isset($value->measurement_id)	? $obj->measurement_id		= $value->measurement_id : "";
-			isset($value->tax_item_id)		? $obj->tax_item_id			= $value->tax_item_id : "";
-		   	isset($value->wht_account_id)	? $obj->wht_account_id		= $value->wht_account_id : "";
-		   	isset($value->description)		? $obj->description 		= $value->description : "";
-		   	isset($value->on_hand)			? $obj->on_hand 			= $value->on_hand : "";
-		   	// isset($value->on_po)			? $obj->on_po 				= $value->on_po : "";
-		   	// isset($value->on_so)			? $obj->on_so 				= $value->on_so : "";
-		   	isset($value->quantity)			? $obj->quantity 			= $value->quantity : "";
-		   	isset($value->quantity_adjusted)? $obj->quantity_adjusted 	= $value->quantity_adjusted : "";
-		   	isset($value->conversion_ratio)		? $obj->conversion_ratio 			= $value->conversion_ratio : $obj->conversion_ratio = 1;
-		   	isset($value->cost)				? $obj->cost 				= $value->cost : "";
-		   	isset($value->price)			? $obj->price 				= $value->price : "";
-		   	//isset($value->price_avg)		? $obj->price_avg 			= $value->price_avg : "";
-		   	isset($value->amount)			? $obj->amount 				= $value->amount : "";
-		   	isset($value->discount)			? $obj->discount 			= $value->discount : "";
-		   	isset($value->fine)				? $obj->fine 				= $value->fine : "";
-		   	isset($value->rate)				? $obj->rate 				= $value->rate : "";
-		   	isset($value->locale)			? $obj->locale 				= $value->locale : "";
-		   	isset($value->additional_cost)	? $obj->additional_cost  	= $value->additional_cost : "";
-		   	isset($value->movement)			? $obj->movement 			= $value->movement : "";
-		   	isset($value->required_date)	? $obj->required_date 		= $value->required_date : "";
+			isset($value->transaction_id) 		? $obj->transaction_id 		= $value->transaction_id : "";
+			isset($value->item_id)				? $obj->item_id				= $value->item_id : "";
+			isset($value->assembly_id)			? $obj->assembly_id 		= $value->assembly_id : "";
+			isset($value->measurement_id)		? $obj->measurement_id		= $value->measurement_id : "";
+			isset($value->tax_item_id)			? $obj->tax_item_id			= $value->tax_item_id : "";
+		   	isset($value->wht_account_id)		? $obj->wht_account_id		= $value->wht_account_id : "";
+		   	isset($value->description)			? $obj->description 		= $value->description : "";
+		   	isset($value->on_hand)				? $obj->on_hand 			= $value->on_hand : "";
+		   	// isset($value->on_po)				? $obj->on_po 				= $value->on_po : "";
+		   	// isset($value->on_so)				? $obj->on_so 				= $value->on_so : "";
+		   	isset($value->quantity)				? $obj->quantity 			= $value->quantity : "";
+		   	isset($value->quantity_adjusted) 	? $obj->quantity_adjusted 	= $value->quantity_adjusted : "";
+		   	// isset($value->conversion_ratio)		? $obj->conversion_ratio 	= $value->conversion_ratio : $obj->conversion_ratio = 1;
+		   	isset($value->cost)					? $obj->cost 				= $value->cost : "";
+		   	isset($value->price)				? $obj->price 				= $value->price : "";
+		   	//isset($value->price_avg)			? $obj->price_avg 			= $value->price_avg : "";
+		   	isset($value->amount)				? $obj->amount 				= $value->amount : "";
+		   	isset($value->discount)				? $obj->discount 			= $value->discount : "";
+		   	isset($value->fine)					? $obj->fine 				= $value->fine : "";
+		   	isset($value->rate)					? $obj->rate 				= $value->rate : "";
+		   	isset($value->locale)				? $obj->locale 				= $value->locale : "";
+		   	isset($value->additional_cost)		? $obj->additional_cost  	= $value->additional_cost : "";
+		   	isset($value->movement)				? $obj->movement 			= $value->movement : "";
+		   	isset($value->required_date)		? $obj->required_date 		= $value->required_date : "";
+
+		   	//Conversion ratio
+			$conversion_ratio = 1;
+			if(isset($value->conversion_ratio)){
+				if($value->conversion_ratio>0){
+					$conversion_ratio = $value->conversion_ratio;
+				}
+			}
+			$obj->conversion_ratio = $conversion_ratio;
 
 		   	if($obj->save()){
 			   	$data["results"][] = array(
@@ -324,7 +333,7 @@ class Item_lines extends REST_Controller {
 		   	isset($value->on_so)			? $obj->on_so 				= $value->on_so : "";
 		   	isset($value->quantity)			? $obj->quantity 			= $value->quantity : "";
 		   	isset($value->quantity_adjusted)? $obj->quantity_adjusted 	= $value->quantity_adjusted : "";
-		   	isset($value->conversion_ratio)		? $obj->conversion_ratio 			= $value->conversion_ratio : "";
+		   	// isset($value->conversion_ratio)		? $obj->conversion_ratio 			= $value->conversion_ratio : "";
 		   	isset($value->cost)				? $obj->cost 				= $value->cost : "";
 		   	isset($value->price)			? $obj->price 				= $value->price : "";
 		   	isset($value->price_avg)		? $obj->price_avg 			= $value->price_avg : "";
@@ -336,6 +345,15 @@ class Item_lines extends REST_Controller {
 		   	isset($value->additional_cost)	? $obj->additional_cost  	= $value->additional_cost : "";
 		   	isset($value->movement)			? $obj->movement 			= $value->movement : "";
 		   	isset($value->required_date)	? $obj->required_date 		= $value->required_date : "";
+
+		   	//Conversion ratio
+			$conversion_ratio = 1;
+			if(isset($value->conversion_ratio)){
+				if($value->conversion_ratio>0){
+					$conversion_ratio = $value->conversion_ratio;
+				}
+			}
+			$obj->conversion_ratio = $conversion_ratio;
 
 			if($obj->save()){
 				//Results

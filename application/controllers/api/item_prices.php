@@ -47,7 +47,11 @@ class Item_prices extends REST_Controller {
 		if(!empty($filter) && isset($filter)){
 	    	foreach ($filter['filters'] as $value) {
 	    		if(isset($value['operator'])) {
-					$obj->{$value['operator']}($value['field'], $value['value']);
+					if($value["operator"]=="measurement") {
+	    				$obj->include_related("measurement", array("name"));
+					}else{
+						$obj->{$value["operator"]}($value["field"], $value["value"]);
+					}
 				} else {
 					$obj->where($value["field"], $value["value"]);
 				}
@@ -71,11 +75,11 @@ class Item_prices extends REST_Controller {
 					"assembly_id" 		=> $value->assembly_id,
 					"measurement_id" 	=> $value->measurement_id,
 					"quantity" 			=> floatval($value->quantity),					
-					"conversion_ratio" 		=> floatval($value->conversion_ratio),
+					"conversion_ratio" 	=> floatval($value->conversion_ratio),
 					"price" 			=> floatval($value->price),
 					"amount" 			=> floatval($value->amount),					
 					"locale" 			=> $value->locale,					
-					"measurement" 		=> $value->measurement->get()->name					
+					"measurement" 		=> $value->measurement_name					
 				);
 			}
 		}
@@ -94,10 +98,19 @@ class Item_prices extends REST_Controller {
 			isset($value->assembly_id) 		? $obj->assembly_id 	= $value->assembly_id : "";
 			isset($value->measurement_id) 	? $obj->measurement_id 	= $value->measurement_id : "";
 			isset($value->quantity) 		? $obj->quantity 		= $value->quantity : "";
-			isset($value->conversion_ratio) 		? $obj->conversion_ratio 		= $value->conversion_ratio : "";
+			// isset($value->conversion_ratio) ? $obj->conversion_ratio= $value->conversion_ratio : "";
 			isset($value->price) 			? $obj->price 			= $value->price : "";			
 			isset($value->amount) 			? $obj->amount 			= $value->amount : "";			
 			isset($value->locale) 			? $obj->locale 			= $value->locale : "";
+
+			//Conversion ratio
+			$conversion_ratio = 1;
+			if(isset($value->conversion_ratio)){
+				if($value->conversion_ratio>0){
+					$conversion_ratio = $value->conversion_ratio;
+				}
+			}
+			$obj->conversion_ratio = $conversion_ratio;
 
 			if($obj->save()){				
 				//Respsone
@@ -107,7 +120,7 @@ class Item_prices extends REST_Controller {
 					"assembly_id" 		=> $obj->assembly_id,
 					"measurement_id" 	=> $obj->measurement_id,
 					"quantity" 			=> floatval($obj->quantity),					
-					"conversion_ratio" 		=> floatval($obj->conversion_ratio),
+					"conversion_ratio" 	=> floatval($obj->conversion_ratio),
 					"price" 			=> floatval($obj->price),
 					"amount" 			=> floatval($obj->amount),					
 					"locale" 			=> $obj->locale,					
@@ -134,10 +147,19 @@ class Item_prices extends REST_Controller {
 			isset($value->assembly_id) 		? $obj->assembly_id 	= $value->assembly_id : "";
 			isset($value->measurement_id) 	? $obj->measurement_id 	= $value->measurement_id : "";
 			isset($value->quantity) 		? $obj->quantity 		= $value->quantity : "";
-			isset($value->conversion_ratio) 		? $obj->conversion_ratio 		= $value->conversion_ratio : "";
+			// isset($value->conversion_ratio) 		? $obj->conversion_ratio 		= $value->conversion_ratio : "";
 			isset($value->price) 			? $obj->price 			= $value->price : "";			
 			isset($value->amount) 			? $obj->amount 			= $value->amount : "";			
-			isset($value->locale) 			? $obj->locale 			= $value->locale : "";			
+			isset($value->locale) 			? $obj->locale 			= $value->locale : "";
+
+			//Conversion ratio
+			$conversion_ratio = 1;
+			if(isset($value->conversion_ratio)){
+				if($value->conversion_ratio>0){
+					$conversion_ratio = $value->conversion_ratio;
+				}
+			}
+			$obj->conversion_ratio = $conversion_ratio;			
 
 			if($obj->save()){				
 				//Results
@@ -147,7 +169,7 @@ class Item_prices extends REST_Controller {
 					"assembly_id" 		=> $obj->assembly_id,
 					"measurement_id" 	=> $obj->measurement_id,
 					"quantity" 			=> floatval($obj->quantity),					
-					"conversion_ratio" 		=> floatval($obj->conversion_ratio),
+					"conversion_ratio" 	=> floatval($obj->conversion_ratio),
 					"price" 			=> floatval($obj->price),
 					"amount" 			=> floatval($obj->amount),					
 					"locale" 			=> $obj->locale,					

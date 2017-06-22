@@ -25,37 +25,46 @@ class Readings extends REST_Controller {
 	
 	//GET 
 	function index_get() {		
-		$filters 	= $this->get("filter")["filters"];		
-		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
-		$limit 		= $this->get('limit');								
-		$sort 	 	= $this->get("sort");		
+		$filter 	= $this->get("filter");
+		$page 		= $this->get('page');
+		$limit 		= $this->get('limit');
+		$sort 	 	= $this->get("sort");	
 		$data["results"] = array();
 		$data["count"] = 0;
 
 		$obj = new Meter_record(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
 
 		//Sort
-		if(!empty($sort) && isset($sort)){					
+		if(!empty($sort) && isset($sort)){
 			foreach ($sort as $value) {
-				$obj->order_by($value["field"], $value["dir"]);
+				if(isset($value['operator'])){
+					$obj->{$value['operator']}($value["field"], $value["dir"]);
+				}else{
+					$obj->order_by($value["field"], $value["dir"]);
+				}
 			}
 		}
-		
-		//Filter		
-		if(!empty($filters) && isset($filters)){			
-	    	foreach ($filters as $value) {
-	    		if(!empty($value["operator"]) && isset($value["operator"])){
-		    		$obj->{$value["operator"]}($value["field"], $value["value"]);
-	    		}else{
-	    			$obj->where($value["field"], $value["value"]);
-	    		}
-			}									 			
+
+		//Filter
+		if(!empty($filter) && isset($filter)){
+	    	foreach ($filter["filters"] as $value) {
+	    		if(isset($value["operator"])) {
+					//$obj->{$value["operator"]}($value["field"], $value["value"]);
+				} else {
+					if($value["field"]=="is_recurring"){
+	    				$is_recurring = $value["value"];
+	    			}else{
+	    				$obj->where($value["field"], $value["value"]);
+	    			}
+				}
+			}
 		}			
 
 		//Get Result
 		$obj->order_by('created_at', 'desc');
 		$obj->order_by('id', 'desc');
 		$obj->where('deleted', 0);
+		//Results
 		if($page && $limit){
 			$obj->get_paged_iterated($page, $limit);
 			$data["count"] = $obj->paged->total_rows;
@@ -66,16 +75,10 @@ class Readings extends REST_Controller {
 		// $obj->get_paged_iterated($page, $limit);
 		// $data["count"] = $obj->paged->total_rows;		
 
-		if($obj->result_count()>0){			
+		if($obj->exists()){
 			foreach ($obj as $value) {
 				//Results
 				$meter  = $value->meter->get();
-				//$license = $value->branch->get();
-				// 			$data["meta"] = array(
-				// 						'meter_id' => $meter->id,
-				// 						'meter_number' => $meter_number,
-				// 						'meter_multiplier' => $meter_multiplier
-				// 					);	
 				$data["results"][] = array(
 					"id" 			=> $value->id,
 					"meter_id" 		=> $value->meter_id,

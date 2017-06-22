@@ -4329,6 +4329,7 @@
 														data-bind="
 															value: blocSelectU,
 															enabled: haveSelectU,
+															events: {change: onLocationChangeU},
 						                  					source: blocDSU">
 						                  		</div>
 											</div>
@@ -4350,6 +4351,8 @@
 						                  					source: subLocationDSU">
 						                  		</div>
 											</div>
+										</div>
+										<div class="row-fluid clear" style="overflow: hidden;margin-bottom: 20px;">
 											<div class="span4" style=>
 												<div class="control-group">
 													<label ><span data-bind="text: lang.lang.box">Box</span></label>
@@ -4378,9 +4381,11 @@
 										  				data-depth="year"
 									                	placeholder="Moth of ..." 
 											           	data-bind="value: monthOfUpload,
+											           			enabled: haveLocationU,
 											           			events: {change: monthOfUSelect}" />
 												</div>
-											</div>											<div class="span4">
+											</div>											
+											<div class="span4">
 												<div class="control-group">	
 													<label ><span data-bind="text: lang.lang.to_date">To Date</span></label>
 										            <input type="text" 
@@ -4740,7 +4745,7 @@
 			        <h2 style="padding:0 15px 0 0;" data-bind="text: lang.lang.run_bill">Run Bill</h2>
 			        <div class="span12 row" style="padding:0 0 20px 0;">
 
-			        	<div class="span5" style="padding-right: 0;">
+			        	<div class="span4" style="padding-right: 0;">
 				        	<div class="span6">	
 								<!-- Group -->
 								<div class="control-group">								
@@ -4773,10 +4778,10 @@
 		                  					source: licenseDS,
 		                  					events: {change: licenseChange}">
 		                  		</div>
-							</div>	
+							</div>
 						</div>
-						<div class="span7" style="padding-left: 0;">
-							<div class="span4">
+						<div class="span8" style="padding-left: 0;">
+							<div class="span3">
 								<div class="control-group">								
 									<label ><span data-bind="text: lang.lang.location">Location</span></label>
 									<input 
@@ -4789,10 +4794,47 @@
 										data-value-field="id" 
 										data-bind="
 											value: blocSelect,
+											enabled: haveLicense,
+											events: {change: onLocationChange},
 		                  					source: blocDS">
 		                  		</div>
 							</div>
-							<div class="span4">
+							<div class="span3">
+								<div class="control-group">								
+									<label ><span data-bind="text: lang.lang.sub_location">Location</span></label>
+									<input 
+										data-role="dropdownlist" 
+										style="width: 100%;" 
+										data-option-label="Sub Location ..." 
+										data-auto-bind="false" 
+										data-value-primitive="true" 
+										data-text-field="name" 
+										data-value-field="id" 
+										data-bind="
+											value: subLocationSelect,
+											enabled: haveLocation,
+											events: {change: onSubLocationChange},
+		                  					source: subLocationDS">
+		                  		</div>
+							</div>
+							<div class="span3">
+								<div class="control-group">								
+									<label ><span data-bind="text: lang.lang.box">Location</span></label>
+									<input 
+										data-role="dropdownlist" 
+										style="width: 100%;" 
+										data-option-label="Box ..." 
+										data-auto-bind="false" 
+										data-value-primitive="true" 
+										data-text-field="name" 
+										data-value-field="id" 
+										data-bind="
+											value: boxSelect,
+											enabled: haveSubLocation,
+		                  					source: boxDS">
+		                  		</div>
+							</div>
+							<div class="span3">
 								<div class="control-group">	
 									<label ><span data-bind="text: lang.lang.action">Action</span></label>	
 									<div class="row" style="margin: 0;">					
@@ -13569,6 +13611,7 @@
 		sublocationSelect 	: false,
 		locationSelectU 	: false,
 		sublocationSelectU 	: false,
+		haveLocationU 		: false,
 		pageLoad 			: function(id){
 		},
 		onLicenseChange 	: function(e) {
@@ -13621,6 +13664,38 @@
 				{field: "main_pole", value: 0}
 			]);
 			this.set("haveSelectU", true);
+		},
+		onLocationChangeU 	: function(e) {
+			var self = this;
+			this.subLocationDSU.filter([
+				{field: "branch_id", value: this.get("licenseSelectU")},
+				{field: "main_bloc", value: this.get("blocSelectU")},
+				{field: "main_pole", value: 0}
+			]);
+			this.subLocationDSU.bind("requestEnd", function(e){
+				if(e.response){
+					console.log(self.subLocationDSU.data().length);
+					if(self.subLocationDSU.data().length > 0){
+						self.set("locationSelectU", true);
+					}
+				}
+			});
+			this.set("haveLocationU", true)
+		},
+		onSubLocationChangeU : function(e) {
+			var self = this;
+			this.boxDSU.filter([
+				{field: "branch_id", value: this.get("licenseSelectU")},
+				{field: "main_bloc", value: this.get("blocSelectU")},
+				{field: "main_pole", value: this.get("sublocationSelectU")}
+			]);
+			this.boxDSU.bind("requestEnd", function(e){
+				if(e.response){
+					if(self.boxDSU.data().length > 0){
+						self.set("sublocationSelectU", true);
+					}
+				}
+			});
 		},
 		search 		 		: function(){
 			this.uploadDS.data([]);
@@ -13748,6 +13823,7 @@
 		Uploaderror			: [],
 		ExistRUpload 		: [],
 		monthOfUSelect 		: function(e){
+			$("#loadImport").css("display","block");
 			var para = [], self = this;
 			bloc_id = this.get("blocSelectU");
 			var monthOfSearch = self.get("monthOfUpload");
@@ -13764,11 +13840,18 @@
 				{field: "month_of >", value: monthOf},
 				{field: "month_of <=", value: monthL}
 			);
+			if(this.get("sublocationSelectU")){
+				para.push({field: "pole_id", value: this.get("sublocationSelectU")});
+			}
+			if(this.get("boxSelectU")){
+				para.push({field: "box_id", value: this.get("boxSelectU")});
+			}
 			this.existReading.query({
 				filter: para
 			})
 			.then(function(e){
 				self.set("toDateDisabled", false);
+				$("#loadImport").css("display","none");
 			});
 		},
 		selectMonthTo 		: function(e){
@@ -16557,6 +16640,8 @@
 		lang 				: langVM,
 		licenseDS 			: dataStore(apiUrl + "branches"),
 		blocDS 				: dataStore(apiUrl + "locations"),
+		subLocationDS 		: dataStore(apiUrl + "locations"),
+		boxDS 				: dataStore(apiUrl + "locations"),
 		invoiceDS	     	: dataStore(apiUrl + "winvoices/make"),
 		invoiceCollection 	: dataStore(apiUrl + "winvoices"),
 		chkAll 				: false,
@@ -16566,6 +16651,9 @@
 		totalOfInv 			: 0,
 		meterSold 			: 0,
 		amountSold 			: 0,
+		haveLicense 		: false,
+		haveLocation 		: false,
+		haveSubLocation 	: false,
 		pageLoad 			: function(){
 		},   
 		invoiceArray 		: [],
@@ -16606,11 +16694,45 @@
 				{field: "main_bloc",value: 0},
 				{field: "main_pole",value: 0}
 			]);
+			this.set("haveLicense", true);
 	    },
+	    onLocationChange 	: function(e) {
+			var self = this;
+			this.subLocationDS.filter([
+				{field: "branch_id", value: this.get("licenseSelect")},
+				{field: "main_bloc", value: this.get("blocSelect")},
+				{field: "main_pole", value: 0}
+			]);
+			this.subLocationDS.bind("requestEnd", function(e){
+				if(e.response){
+					console.log(self.subLocationDS.data().length);
+					if(self.subLocationDS.data().length > 0){
+						self.set("haveLocation", true);
+					}
+				}
+			});
+		},
+		onSubLocationChange : function(e) {
+			var self = this;
+			this.boxDS.filter([
+				{field: "branch_id", value: this.get("licenseSelect")},
+				{field: "main_bloc", value: this.get("blocSelect")},
+				{field: "main_pole", value: this.get("subLocationSelect")}
+			]);
+			this.boxDS.bind("requestEnd", function(e){
+				if(e.response){
+					if(self.boxDS.data().length > 0){
+						self.set("haveSubLocation", true);
+					}
+				}
+			});
+		},
 	    search 				: function(){
 	    	var monthOfSearch = this.get("monthSelect"),
 			license_id = this.get("licenseSelect"),
 			bloc_id = this.get("blocSelect");
+			pole_id = this.get("subLocationSelect");
+			box_id = this.get("boxSelect");
 			this.clearAll();
 			var para = [];	
 			if(monthOfSearch){						
@@ -16631,9 +16753,14 @@
 				);
 				//this.dataSource.filter(para);
 				if(license_id){
-					// para.push({field: "branch_id", operator: 'where_related_meter', value: license_id});
 					if(bloc_id){
-						para.push({field: "location_id", operator: 'where_related_meter', value: bloc_id});
+						if(box_id){
+							para.push({field: "box_id", operator: 'where_related_meter', value: box_id});
+						}else if(pole_id){
+							para.push({field: "pole_id", operator: 'where_related_meter', value: pole_id});
+						}else{
+							para.push({field: "location_id", operator: 'where_related_meter', value: bloc_id});
+						}
 						this.invoiceDS.filter(para);
 					}else{
 						alert("Please Select Location");

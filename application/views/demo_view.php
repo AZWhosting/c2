@@ -472,6 +472,24 @@
 
 		<h2>Transaction</h2>
 
+		<table class="table table-bordered table-primary table-striped table-vertical-center" style="margin-bottom: 0;">
+			<thead>
+			<tr>
+				<tH>type</tH>
+				<tH>number</tH>
+				<tH>sub total</tH>
+				<tH>discount</tH>
+				<tH>tax</tH>
+				<tH>amount</tH>
+				<tH>deposit</tH>
+				<tH>remaining</tH>
+				<tH>issued_date</tH>
+				<tH>due_date</tH>
+				<tH>status</tH>
+				<tH>deleted</tH>
+			</tr>
+			</thead>
+		</table>
         <div data-role="grid"
              data-editable="true"
              data-auto-bind="false"
@@ -21013,7 +21031,7 @@
 					            <tr>	            	
 					            	<th data-bind="text: lang.lang.price"></th>			            		             
 					                <th data-bind="text: lang.lang.conversion_ratio"></th>
-					                <th data-bind="text: lang.lang.unit_measure"></th>			                
+					                <th data-bind="text: lang.lang.uom"></th>			                
 					                <th style="text-align: center;"></th>	                
 					            </tr>
 					        </thead>
@@ -21054,9 +21072,9 @@
 </script>
 <script id="itemPrice-template" type="text/x-kendo-template">
     <tr>
-    	<td>#=kendo.toString(price, "c", locale)#</td>    	
-    	<td>#=conversion_ratio#</td>
-    	<td>#=measurement#</td>    	
+    	<td class="right">#=kendo.toString(price, "c", locale)#</td>    	
+    	<td class="right">#=conversion_ratio#</td>
+    	<td class="left">#=measurement#</td>    	
     	<td style="text-align: center;">
     		<span style="cursor: pointer;" data-bind="click: edit"><i class="icon-edit"></i> <span data-bind="text: lang.lang.edit"></span></span>
     		
@@ -46733,6 +46751,26 @@
 			});
 
 			return code;
+		},
+		getPriceList 				: function(id){
+			var self = this, priceList = [];
+
+			$.each(this.itemPriceList, function(index, value){
+				if(value.item_id==id){
+					var measurement = self.measurementDS.get(value.measurement_id);
+
+					priceList.push({ 
+						item_id: value.item_id,
+						measurement_id: value.measurement_id,
+						conversion_ratio: value.conversion_ratio,
+						price: value.price,
+						locale: value.locale,
+						measurement: measurement.name 
+					});
+				}
+			});
+
+			return priceList;
 		}
 	});
 	
@@ -48397,7 +48435,7 @@
 			e.preventDefault();
 
 			var self = this, data = e.data,
-			obj = this.get("obj");
+				obj = this.get("obj");
 			
 			if(data.item_id>0){
 				var item = this.itemDS.get(data.item_id), assemblyId = 0;
@@ -48499,35 +48537,26 @@
 					        });
 				        });
 			        }else{
-						var itemPriceList = [], counter = 0,
-						rate = obj.rate / banhji.source.getRate(item.locale, new Date(obj.issued_date)),
-						price = item.price, 
-						conversion_ratio = 1, 
-						measurement_id = item.measurement_id, 
-						locale = item.locale;
+						var rate = obj.rate / banhji.source.getRate(item.locale, new Date(obj.issued_date));
 
-						$.each(banhji.source.itemPriceList, function(index, value){
-							if(value.item_id==data.item_id){
-								itemPriceList.push(value);
-
-								if(counter==0){
-									rate = obj.rate / banhji.source.getRate(value.locale, new Date(obj.issued_date));
-									price = value.price;
-									conversion_ratio = value.conversion_ratio;
-									measurement_id = value.measurement_id;
-									locale = value.locale;
-			        			}
-			        			counter++;
-							}
+						var itemPriceList = banhji.source.getPriceList(data.item_id);
+						var measurement = banhji.source.measurementDS.get(item.measurement_id);
+						itemPriceList.push({ 
+							item_id: data.item_id,
+							measurement_id: item.measurement_id,
+							conversion_ratio: 1,
+							price: item.price,
+							locale: item.locale,
+							measurement: measurement.name  
 						});
 
-			    		data.set("measurement_id", measurement_id);
+			    		data.set("measurement_id", item.measurement_id);
 			    		data.set("description", item.sale_description);
 			    		data.set("quantity", 1);
-			    		data.set("conversion_ratio", conversion_ratio);
-				        data.set("price", price*rate);
+			    		data.set("conversion_ratio", 1);
+				        data.set("price", item.price * rate);
 				        data.set("rate", rate);	
-				        data.set("locale", locale);
+				        data.set("locale", item.locale);
 				        data.set("item_prices", itemPriceList);			        
 
 				        this.changes();
@@ -73401,7 +73430,10 @@
     	on_so 				: 0,
     	on_hand 			: 0,
     	pageLoad 			: function(id){
-    		this.dataSource.filter({ field:"item_id", value: id });
+    		this.dataSource.filter([
+    			{ field:"item_id", value: id },
+    			{ operator:"measurement" }
+    		]);
     		this.recordDS.filter({ field:"item_id", value: id });
     		this.loadObj(id);
     		this.loadData(id);
@@ -73807,28 +73839,6 @@
 				}
 			});
 		},
-		//Item Price
-		addItemPrice 			: function (item_id) {
-			var obj = this.get("obj");
-
-      		this.itemPriceDS.add({
-      			item_id			: item_id,
-      			measurement_id 	: obj.measurement_id,
-      			price 			: obj.price,
-      			conversion_ratio		: 1,
-      			locale 			: obj.locale
-			});
-
-			this.itemPriceDS.sync();
-			var loaded = false;
-			this.itemPriceDS.bind("requestEnd", function(e){
-				if(e.type=="create" && loaded==false){
-					loaded = true;
-
-					banhji.source.loadItemPrices();
-				}
-			});
-      	},
       	//Number      	
 		checkExistingNumber 	: function(){
 			var self = this, para = [], 
@@ -74093,8 +74103,6 @@
 					$.each(self.attachmentDS.data(), function(index, value){
 			    		value.set("item_id", data[0].id);
 		            });
-
-					self.addItemPrice(data[0].id);
 				}
 				
       			self.itemVendorDS.sync();

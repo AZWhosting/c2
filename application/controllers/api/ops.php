@@ -33,8 +33,8 @@ class Ops extends REST_Controller {
 			    // $this->dbforge->create_table('measurement_categories');
 			    
 			    //Update data
-			    // $this->db->where('id', 2);
-			    // $this->db->update('tax_types', array('sub_of_id' => 12));
+			    // $this->db->where('conversion_ratio', 0);
+			    // $this->db->update('item_prices', array('conversion_ratio' => 1));
 
 			 	//Update batch
 			 	// 	$raw = array(
@@ -75,16 +75,16 @@ class Ops extends REST_Controller {
 				// $this->dbforge->add_column("attachments", $fields);
 
 			    // Modify fields
-			    $fields = array(
-					'unit_value' => array(
-						'name' 		=> 'conversion_ratio', 
-						'type'		=> 'DECIMAL',
-						'constraint'=> '30,15',
-						'null' 		=> FALSE,
-						'default' 	=> 1
-					)
-				);
-				$data["results"][] = $this->dbforge->modify_column('item_prices', $fields);
+			 	// $fields = array(
+				// 	'unit_value' => array(
+				// 		'name' 		=> 'conversion_ratio', 
+				// 		'type'		=> 'DECIMAL',
+				// 		'constraint'=> '30,15',
+				// 		'null' 		=> FALSE,
+				// 		'default' 	=> 1
+				// 	)
+				// );
+				// $this->dbforge->modify_column('item_lines', $fields);
 
 				//Custom
 				// $dsn = 'mysql://'.$this->db->username.':'.$this->db->password.'@'.$this->db->hostname.'/'.$db;

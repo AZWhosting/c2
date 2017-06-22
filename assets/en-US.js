@@ -864,7 +864,7 @@ var	en_US = {
 	"unit_price" : "Unit Price",
 	"close" : "Close",
 	"set_new_price" : "Set New Price",
-	"unit_value" : "Unit Value",
+	"conversion_ratio" : "Conversion Ratio",
 	"edit" : "Edit",
 	"products_services_setting" : "PRODUCTS/ SERVICES SETTING",
 	"add_measurement" : "Add Measurement",
