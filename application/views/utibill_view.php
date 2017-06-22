@@ -18321,6 +18321,7 @@
 								   	status 				: 0,
 								   	segments 			: obj.segments,
 								   	is_journal 			: 1,
+								   	location_id 		: value.location_id,
 								   	//Recurring
 								   	recurring_name 		: "",
 								   	start_date 			: new Date(),
@@ -18442,6 +18443,7 @@
 						   	status 				: 0,
 						   	segments 			: obj.segments,
 						   	is_journal 			: 1,
+						   	location_id 		: obj.location_id,
 						   	recurring_name 		: "",
 						   	start_date 			: new Date(),
 						   	frequency 			: "Daily",
@@ -18677,6 +18679,7 @@
 						   	status 				: 0,
 						   	segments 			: obj.segments,
 						   	is_journal 			: 1,
+						   	location_id			: view[0].location_id,
 						   	//Recurring
 						   	recurring_name 		: "",
 						   	start_date 			: new Date(),
@@ -18753,6 +18756,7 @@
 						   	status 				: 0,
 						   	segments 			: obj.segments,
 						   	is_journal 			: 1,
+						   	location_id 		: obj.location_id,
 						   	//Recurring
 						   	recurring_name 		: "",
 						   	start_date 			: new Date(),
@@ -18820,6 +18824,7 @@
 						   	status 				: 0,
 						   	segments 			: obj.segments,
 						   	is_journal 			: 1,
+						   	location_id 		: obj.location_id,
 						   	//Recurring
 						   	recurring_name 		: "",
 						   	start_date 			: new Date(),
@@ -19023,6 +19028,11 @@
 				});
 				self.journalLineDS.sync();
 				self.sessionReceiveDS.sync();
+				self.sessionReceiveDS.bind("requestEnd", function(e){
+					if(e.response){
+						self.setReceive();
+					}
+				});
 				self.updateTxnStatus(ids);
 				return data;
 			}, function(reason) { //Error
@@ -19034,7 +19044,6 @@
 				//Save New
 				self.addEmpty();
 				self.set("btnActive", false);
-				self.setReceive();
 				$("#loadING").css("display", "none");
 			});
 		},
