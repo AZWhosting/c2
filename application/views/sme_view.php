@@ -381,7 +381,9 @@
 								</div>
 							</div>
 						</div>
+					</div>
 
+					<div class="row hidden-xs">
 						<div class="col-md-12">
 							<div class="board-chart" style="margin-top: 15px; ">
 								<div class="col-md-3" style="padding-left: 0;">
@@ -491,9 +493,122 @@
 								</div>
 							</div>
 						</div>
-
 					</div>
 
+					<div class="row hidden-xs">
+						<div class="col-md-12">
+							<div class="board-chart" >
+								<div class="col-md-12">
+									<div class="col-md-6">
+										<p><span data-bind="text: lang.lang.performance"></span></p>
+										<a href="#/statement_profit_loss">
+											<table class="performance">
+												<tr>
+													<td><span data-bind="text: lang.lang.income"></span></td>
+													<td></td>
+													<td align="right"><span data-bind="text: obj.income"></span></td>
+												</tr>
+												<tr>
+													<td><span data-bind="text: lang.lang.expense"></span></td>
+													<td></td>
+													<td align="right"><span data-bind="text: obj.expense"></span></td>
+												</tr>
+												<tr>
+													<td><b><span data-bind="text: lang.lang.net_income"></span></b></td>
+													<td></td>
+													<td align="right"><b data-bind="text: obj.net_income"></b></td>
+												</tr>
+											</table>
+										</a>     
+									</div>
+									<div class="col-md-6">
+										<p><span data-bind="text: lang.lang.position"></span></p>
+										<a href="#/statement_financial_position">
+											<table class="position" style="width: 100%;">
+												<tr>
+													<td><span data-bind="text: lang.lang.asset"></span></td>
+													<td></td>
+													<td align="right"><span data-bind="text: obj.asset"></span></td>
+												</tr>
+												<tr>
+													<td><span data-bind="text: lang.lang.liabilities"></span></td>
+													<td></td>
+													<td align="right"><span data-bind="text: obj.liability"></span></td>
+												</tr>
+												<tr>
+													<td><b><span data-bind="text: lang.lang.equity"></span></b></td>
+													<td></td>
+													<td align="right"><b data-bind="text: obj.equity"></b></td>
+												</tr>
+											</table>
+										</a>
+									</div>
+								</div>
+								
+								<div class="col-md-12">
+									<div class="col-md-6">
+										<a href="#/customer_balance_summary">
+											<div class="widget-body alert-info welcome-nopadding" >
+												<p><span data-bind="text: lang.lang.receivable"></span></p>
+										
+												<div align="center" class="text-large strong" data-bind="text: obj.ar"></div>
+											
+												<table width="100%" >
+													<tr align="center">
+														<td>										
+															<span data-bind="text: obj.ar_open"></span>
+															<br>
+															<span><span data-bind="text: lang.lang.open"></span></span>
+														</td>
+														<td>
+															<span data-bind="text: obj.ar_customer"></span>
+															<br>
+															<span><span data-bind="text: lang.lang.customers"></span></span>
+														</td>
+														<td>
+															<span data-bind="text: obj.ar_overdue"></span>
+															<br>
+															<span><span data-bind="text: lang.lang.overdue"></span></span>
+														</td>
+													</tr>
+												</table>
+											</div>
+										</a>
+									</div>
+									<div class="col-md-6">
+										
+										<a href="#/suppliers_balance_summary">
+											<div class="widget-body  alert-info welcome-nopadding" style="width: 100%;">
+												<p><span data-bind="text: lang.lang.payables"></span></p>
+										
+												<div align="center" class="text-large strong" data-bind="text: obj.ap"></div>
+											
+												<table width="100%">
+													<tr align="center">
+														<td>										
+															<span data-bind="text: obj.ap_open"></span>
+															<br>
+															<span><span data-bind="text: lang.lang.open"></span></span>
+														</td>
+														<td>
+															<span data-bind="text: obj.ap_vendor"></span>
+															<br>
+															<span><span data-bind="text: lang.lang.suppliers"></span></span>
+														</td>
+														<td>
+															<span data-bind="text: obj.ap_overdue"></span>
+															<br>
+															<span><span data-bind="text: lang.lang.overdue"></span></span>
+														</td>
+													</tr>
+												</table>
+											</div>
+										</div>
+									</a>
+								</div>					
+							</div>
+						</div>
+					</div> 
 
 				</div>
 

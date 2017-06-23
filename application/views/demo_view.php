@@ -2322,6 +2322,8 @@
 				   data-value-primitive="true"
                    data-text-field="name"
                    data-value-field="id"
+                   data-filter="contains"
+                   data-min-length="3"
                    data-bind="value: item_id, 
                    			  source: itemDS,
                    			  events:{ change: itemChanges }"
@@ -2908,6 +2910,8 @@
 				   data-value-primitive="true"
                    data-text-field="name"
                    data-value-field="id"
+                   data-filter="contains"
+                   data-min-length="3"
                    data-bind="value: item_id, 
                    			  source: itemDS,
                    			  events:{ change: itemChanges }"
@@ -4132,6 +4136,8 @@
 				   data-value-primitive="true"
                    data-text-field="name"
                    data-value-field="id"
+                   data-filter="contains"
+                   data-min-length="3"
                    data-bind="value: item_id, 
                    			  source: itemDS,
                    			  events:{ change: itemChanges }"
@@ -4813,6 +4819,8 @@
 				   data-value-primitive="true"
                    data-text-field="name"
                    data-value-field="id"
+                   data-filter="contains"
+                   data-min-length="3"
                    data-bind="value: item_id, 
                    			  source: itemDS,
                    			  events:{ change: itemChanges }"
@@ -5305,6 +5313,8 @@
 				   data-value-primitive="true"
                    data-text-field="name"
                    data-value-field="id"
+                   data-filter="contains"
+                   data-min-length="3"
                    data-bind="value: item_id, 
                    			  source: itemDS,
                    			  events:{ change: itemChanges }"
@@ -5816,6 +5826,8 @@
 				   data-value-primitive="true"
                    data-text-field="name"
                    data-value-field="id"
+                   data-filter="contains"
+                   data-min-length="3"
                    data-bind="value: item_id, 
                    			  source: itemDS,
                    			  events:{ change: itemChanges }"
@@ -5888,6 +5900,8 @@
                    data-value-primitive="true"                                     
                    data-text-field="name"
                    data-value-field="id"
+                   data-filter="contains"
+                   data-min-length="3"
                    data-bind="value: account_id,
                               source: accountDS"
                    data-placeholder="Add Account.."        
@@ -6316,6 +6330,8 @@
 				   data-value-primitive="true"
                    data-text-field="name"
                    data-value-field="id"
+                   data-filter="contains"
+                   data-min-length="3"
                    data-bind="value: item_id, 
                    			  source: itemDS,
                    			  events:{ change: itemChanges }"
@@ -11483,6 +11499,8 @@
 				   data-value-primitive="true"
                    data-text-field="name"
                    data-value-field="id"
+                   data-filter="contains"
+                   data-min-length="3"
                    data-bind="value: item_id, 
                    			  source: itemDS,
                    			  events:{ change: itemChanges }"
@@ -11960,6 +11978,8 @@
 				   data-value-primitive="true"
                    data-text-field="name"
                    data-value-field="id"
+                   data-filter="contains"
+                   data-min-length="3"
                    data-bind="value: item_id, 
                    			  source: itemDS,
                    			  events:{ change: itemChanges }"
@@ -13399,6 +13419,8 @@
 				   data-value-primitive="true"
                    data-text-field="name"
                    data-value-field="id"
+                   data-filter="contains"
+                   data-min-length="3"
                    data-bind="value: item_id, 
                    			  source: itemDS,
                    			  events:{ change: itemChanges }"
@@ -13501,6 +13523,8 @@
                    data-value-primitive="true"
                    data-text-field="name"
                    data-value-field="id"
+                   data-filter="contains"
+                   data-min-length="3"
                    data-bind="value: account_id,
                               source: expenseAccountDS"
                    data-placeholder="Add Account.."        
@@ -14055,6 +14079,8 @@
 				   data-value-primitive="true"
                    data-text-field="name"
                    data-value-field="id"
+                   data-filter="contains"
+                   data-min-length="3"
                    data-bind="value: item_id, 
                    			  source: itemDS,
                    			  events:{ change: itemChanges }"
@@ -14137,6 +14163,8 @@
                    data-value-primitive="true"                                     
                    data-text-field="name"
                    data-value-field="id"
+                   data-filter="contains"
+                   data-min-length="3"
                    data-bind="value: account_id,
                               source: accountDS"
                    data-placeholder="Add Account.."        
@@ -14565,6 +14593,8 @@
 				   data-value-primitive="true"
                    data-text-field="name"
                    data-value-field="id"
+                   data-filter="contains"
+                   data-min-length="3"
                    data-bind="value: item_id, 
                    			  source: itemDS,
                    			  events:{ change: itemChanges }"
@@ -21027,10 +21057,10 @@
 
 						<table class="table table-bordered table-primary table-striped table-vertical-center">
 					        <thead>
-					            <tr>	            	
-					            	<th data-bind="text: lang.lang.price"></th>			            		             
+					            <tr>
 					                <th data-bind="text: lang.lang.conversion_ratio"></th>
-					                <th data-bind="text: lang.lang.uom"></th>			                
+					                <th data-bind="text: lang.lang.uom"></th>
+					                <th data-bind="text: lang.lang.price"></th>			                
 					                <th style="text-align: center;"></th>	                
 					            </tr>
 					        </thead>
@@ -21071,9 +21101,9 @@
 </script>
 <script id="itemPrice-template" type="text/x-kendo-template">
     <tr>
-    	<td class="right">#=kendo.toString(price, "c", locale)#</td>    	
     	<td class="right">#=conversion_ratio#</td>
-    	<td class="left">#=measurement#</td>    	
+    	<td class="left">#=measurement#</td>
+    	<td class="right">#=kendo.toString(price, "c", locale)#</td>    	
     	<td style="text-align: center;">
     		<span style="cursor: pointer;" data-bind="click: edit"><i class="icon-edit"></i> <span data-bind="text: lang.lang.edit"></span></span>
     		
@@ -22013,6 +22043,8 @@
 				   data-value-primitive="true"
                    data-text-field="name"
                    data-value-field="id"
+                   data-filter="contains"
+                   data-min-length="3"
                    data-bind="value: item_id, 
                    			  source: itemDS,
                    			  events:{ change: itemChanges }"
@@ -22064,6 +22096,8 @@
                    data-value-primitive="true"
                    data-text-field="name"
                    data-value-field="id"
+                   data-filter="contains"
+                   data-min-length="3"
                    data-bind="value: account_id,
                               source: accountDS"
                    data-placeholder="Add Account.."                                     
@@ -22098,6 +22132,8 @@
 				   data-value-primitive="true"
                    data-text-field="name"
                    data-value-field="id"
+                   data-filter="contains"
+                   data-min-length="3"
                    data-bind="value: item_id, 
                    			  source: itemDS,
                    			  events:{ change: toItemChanges }"
@@ -22159,6 +22195,8 @@
                    data-value-primitive="true"
                    data-text-field="name"
                    data-value-field="id"
+                   data-filter="contains"
+                   data-min-length="3"
                    data-bind="value: account_id,
                               source: toAccountDS"
                    data-placeholder="Add Account.."                                     
@@ -26305,6 +26343,8 @@
                    data-value-primitive="true"
                    data-text-field="name"
                    data-value-field="id"
+                   data-filter="contains"
+                   data-min-length="3"
                    data-bind="value: account_id,
                               source: accountDS,
 				   			  events:{ change: accountChanges }"
@@ -26812,6 +26852,8 @@
                    data-value-primitive="true"
                    data-text-field="name"
                    data-value-field="id"
+                   data-filter="contains"
+                   data-min-length="3"
                    data-bind="value: account_id,
                               source: accountDS"
                    data-placeholder="Add Account.."
@@ -27339,6 +27381,8 @@
                    data-template="account-list-tmpl"
                    data-text-field="name"
                    data-value-field="id"
+                   data-filter="contains"
+                   data-min-length="3"
                    data-bind="value: account_id,
                               source: advAccountDS"
                    data-placeholder="Add Account.."
@@ -27918,6 +27962,8 @@
                    data-value-primitive="true"
                    data-text-field="name"
                    data-value-field="id"
+                   data-filter="contains"
+                   data-min-length="3"
                    data-bind="value: account_id,
                               source: accountDS"
                    data-placeholder="Add Account.."                                     
@@ -46754,13 +46800,12 @@
 		getPriceList 				: function(id){
 			var priceList = [];
 
-			$.each(this.itemPriceList, function(index, value){
-				
+			$.each(this.itemPriceList, function(index, value){				
 				if(value.item_id==id){
 					priceList.push(value);
 				}
 			});
-			console.log(priceList);
+
 			return priceList;
 		}
 	});
@@ -48528,17 +48573,17 @@
 					        });
 				        });
 			        }else{
-						var rate = obj.rate / banhji.source.getRate(item.locale, new Date(obj.issued_date));
+						var itemPriceList = banhji.source.getPriceList(data.item_id),
+							measurement = banhji.source.measurementDS.get(item.measurement_id),
+							rate = obj.rate / banhji.source.getRate(item.locale, new Date(obj.issued_date));
 
-						var itemPriceList = banhji.source.getPriceList(data.item_id);
-						var measurement = banhji.source.measurementDS.get(item.measurement_id);
 						itemPriceList.push({ 
 							item_id: data.item_id,
 							measurement_id: item.measurement_id,
 							conversion_ratio: 1,
 							price: item.price,
 							locale: item.locale,
-							measurement: measurement.name  
+							measurement: measurement.name + " (Base)"  
 						});
 
 			    		data.set("measurement_id", item.measurement_id);
@@ -73423,7 +73468,10 @@
     	on_so 				: 0,
     	on_hand 			: 0,
     	pageLoad 			: function(id){
-    		this.dataSource.filter({ field:"item_id", value: id });
+    		this.dataSource.filter([
+    			{ field:"item_id", value: id },
+    			{ field:"assembly_id", value: 0 }
+    		]);
     		this.recordDS.filter({ field:"item_id", value: id });
     		this.loadObj(id);
     		this.loadData(id);

@@ -5234,8 +5234,7 @@
 				<br>
 				#:typeof banhji.InvoicePrint.license.mobile != 'undefined' ? banhji.InvoicePrint.license.mobile: ''#</h5>					
 			</div>
-		</div>		
-
+		</div>
 		<div class="span12 cover-customer">
 			
 			<div class="span6">
@@ -5250,30 +5249,30 @@
 			<div class="span5">
 				<table >
 					<tr>
-						<td width="140" style="#= banhji.InvoicePrint.formVisible#"><p>លេខ​វិក្កយ​បត្រ</p></td>
+						<td width="140" style><p>លេខ​វិក្កយ​បត្រ</p></td>
 						<td><p>#:number#</p></td>
 					</tr>
 					<tr>
-						<td style="#= banhji.InvoicePrint.formVisible#"><p>ថ្ងៃ​ចេញ វិក្កយ​បត្រ</p></td>
+						<td style><p>ថ្ងៃ​ចេញ វិក្កយ​បត្រ</p></td>
 						<td><p>#=kendo.toString(new Date(issue_date), "dd-MMMM-yyyy", "km-KH")#</p></td>
 					</tr>
 					<tr>
-						<td style="#= banhji.InvoicePrint.formVisible#"><p>តំបន់</p></td>
+						<td style><p>តំបន់</p></td>
 						<td><p>#:meter.location[0].abbr# - #:meter.location[0].name#</p></td>
 					</tr>
 					<tr>
-						<td style="#= banhji.InvoicePrint.formVisible#"><p>គិត​ចាប់​ពី​ថ្ងៃ​ទី</p></td>
+						<td style><p>គិត​ចាប់​ពី​ថ្ងៃ​ទី</p></td>
 						<td><p>#=kendo.toString(new Date(invoice_lines[0].from_date), "dd-MMMM-yyyy", "km-KH")#</p></td>
 					</tr>
 					<tr>
-						<td style="#= banhji.InvoicePrint.formVisible#"><p>ដល់​ថ្ងៃ​ទី</p></td>
+						<td style><p>ដល់​ថ្ងៃ​ទី</p></td>
 						<td><p>#=kendo.toString(new Date(invoice_lines[0].to_date), "dd-MMMM-yyyy", "km-KH")#</p></td>
 					</tr>
 				</table>		
 			</div>
 		</div>
 		<table class="span12 table table-bordered footerTbl" style="padding:0;margin-top: 40px; border-radius: 3px;border-collapse: inherit;margin-left: 0px;#= banhji.InvoicePrint.formBorder#">
-			<thead style="#= banhji.InvoicePrint.formVisible#">
+			<thead style>
 				<tr>
 					<th width="180" class="darkbblue main-color" style="background-color: #: formcolor #!important;border:none!important">លេខ​កុងទ័រ<br>METER</th>
 					<th width="150" class="darkbblue main-color" style="background-color: #: formcolor #!important;border:none!important">អំណានចាស់<br>PREVIOUS</th>
@@ -5364,7 +5363,7 @@
 				</tr>
 			</tbody>
 		</table>
-		<div class="line" style="#= banhji.InvoicePrint.formVisible#"></div>
+		<div class="line" style></div>
 		<table class="span12 table table-bordered footerTbl" style="padding:0;margin-bottom:75px;border-collapse: inherit;margin-top: 15px;border-radius: 3px;margin-left: 0px;#= banhji.InvoicePrint.formBorder#">
 			<tbody style="border:none!important">
 				<tr style="border:none!important">
@@ -5376,25 +5375,25 @@
 					<td width="180" align="right"><strong>#= kendo.toString(amount + amount_remain, locale=="km-KH"?"c0":"c", locale)#</strong></td>
 				</tr>
 				<tr>
-					<td style="#= banhji.InvoicePrint.formVisible#"><p>វិក្កយបត្រ</p></td>
+					<td style><p>វិក្កយបត្រ</p></td>
 					<td>#: kendo.toString(new Date(issue_date), "dd-MMMM-yyyy", "km-KH")# - #: number#</td>
 					<td class="greyy" style="background: \\#ccc;border-bottom:1px solid \\#fff;#= banhji.InvoicePrint.formVisible#">ថ្ងៃបង់ប្រាក់ PAY DATE</td>
 					<td align="left">#=kendo.toString(new Date(bill_date), "dd-MMMM-yyyy", "km-KH")#</td>
 				</tr>
 				<tr>
-					<td style="#= banhji.InvoicePrint.formVisible#"><p>អតិថិជន</p></td>
+					<td style><p>អតិថិជន</p></td>
 					<td>#=contact.number# #=contact.name#<br>#: contact.phone# #:contact.address#</td>
 					<td class="greyy" style="background: \\#ccc;border-bottom:1px solid \\#fff;#= banhji.InvoicePrint.formVisible#">ប្រាក់បានបង់ PAY AMOUNT</td>
 					<td></td>
 				</tr>
 				<tr>
-					<td style="#= banhji.InvoicePrint.formVisible#">លេខ​ទី​តាំង</td>
+					<td style>លេខ​ទី​តាំង</td>
 					<td>#:meter.location[0].abbr# - #:meter.location[0].name#</td>
 					<td rowspan="2" class="greyy" style="#= banhji.InvoicePrint.formVisible#background: \\#ccc;">អ្នកទទួលប្រាក់ RECEIVER</td>
 					<td rowspan="2"></td>
 				</tr>
 				<tr>
-					<td style="#= banhji.InvoicePrint.formVisible#">លេខ​កុង​ទ័រ</td>
+					<td style>លេខ​កុង​ទ័រ</td>
 					<td>#: meter.meter_number#</td>
 				</tr>
 			</tbody>
@@ -5701,7 +5700,7 @@
 						<td><p data-bind="text: obj.invoice_lines[0].from_date"></p></td>
 					</tr>
 					<tr>
-						<td style="#= banhji.InvoicePrint.formVisible#"><p>ដល់​ថ្ងៃ​ទី</p></td>
+						<td style><p>ដល់​ថ្ងៃ​ទី</p></td>
 						<td><p data-bind="text: obj.invoice_lines[0].to_date"></p></td>
 					</tr>
 				</table>		
@@ -5798,7 +5797,7 @@
 				</tr>
 			</tbody>
 		</table> -->
-		<!-- <div class="line" style="#= banhji.InvoicePrint.formVisible#"></div>
+		<!-- <div class="line" style></div>
 		<table class="span12 table table-bordered footerTbl" style="padding:0;margin-bottom:75px;border-collapse: inherit;margin-top: 15px;border-radius: 3px;margin-left: 0px;#= banhji.InvoicePrint.formBorder#">
 			<tbody style="border:none!important">
 				<tr style="border:none!important">
@@ -5810,25 +5809,25 @@
 					<td width="180" align="right"><strong>#= kendo.toString(amount + amount_remain, "c", locale)#</strong></td>
 				</tr>
 				<tr>
-					<td style="#= banhji.InvoicePrint.formVisible#"><p>វិក្កយបត្រ</p></td>
+					<td style><p>វិក្កយបត្រ</p></td>
 					<td>#: kendo.toString(new Date(issue_date), "dd-MMM-yyyy")# - #: number#</td>
 					<td class="greyy" style="background: \\#ccc;border-bottom:1px solid \\#fff;#= banhji.InvoicePrint.formVisible#">ថ្ងៃបង់ប្រាក់ PAY DATE</td>
 					<td align="left">#=kendo.toString(new Date(bill_date), "dd-MMM-yyyy")#</td>
 				</tr>
 				<tr>
-					<td style="#= banhji.InvoicePrint.formVisible#"><p>អតិថិជន</p></td>
+					<td style><p>អតិថិជន</p></td>
 					<td>#=contact.number# #=contact.name#<br>#: contact.phone# #:contact.address#</td>
 					<td class="greyy" style="background: \\#ccc;border-bottom:1px solid \\#fff;#= banhji.InvoicePrint.formVisible#">ប្រាក់បានបង់ PAY AMOUNT</td>
 					<td></td>
 				</tr>
 				<tr>
-					<td style="#= banhji.InvoicePrint.formVisible#">លេខ​ទី​តាំង</td>
+					<td style>លេខ​ទី​តាំង</td>
 					<td>#:meter.location[0].abbr# - #:meter.location[0].name#</td>
 					<td rowspan="2" class="greyy" style="#= banhji.InvoicePrint.formVisible#background: \\#ccc;">អ្នកទទួលប្រាក់ RECEIVER</td>
 					<td rowspan="2"></td>
 				</tr>
 				<tr>
-					<td style="#= banhji.InvoicePrint.formVisible#">លេខ​កុនង​ទ័រ</td>
+					<td style>លេខ​កុនង​ទ័រ</td>
 					<td>#: meter.meter_number#</td>
 				</tr>
 			</tbody>
@@ -17391,7 +17390,7 @@
 						}else if(this.get("subLocationSelect")){
 							para.push({field: "pole_id", value: this.get("subLocationSelect")});
 						}else{
-							para.push({field: "location_id", value: this.get("locationSelect")});
+							para.push({field: "location_id", value: this.get("blocSelect")});
 						}
 						this.invoiceCollection.dataSource.query({
 							filter: para
