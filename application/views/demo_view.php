@@ -20956,7 +20956,7 @@
 												<label for="txtQuantity"><span data-bind="text: lang.lang.quantity"></span> <span style="color:red">*</span></label>
 									            <input id="txtQuantity" name="txtQuantity"
 									            	data-role="numerictextbox" 
-													data-format="n" data-min="0"
+													data-format="n" data-min="1"
 													data-spinners="false"
 									            	data-bind="value: priceList.quantity,
 									            				disabled: isBase,
@@ -21106,11 +21106,7 @@
     	<td class="right">#=kendo.toString(price, "c", locale)#</td>    	
     	<td style="text-align: center;">
     		<span style="cursor: pointer;" data-bind="click: edit"><i class="icon-edit"></i> <span data-bind="text: lang.lang.edit"></span></span>
-    		
-    		#if(banhji.itemPrice.dataSource.indexOf(data)>0){#
-    			|
-    			<span style="cursor: pointer;" data-bind="click: delete"><i class="icon-remove"></i> <span data-bind="text: lang.lang.delete"></span></span>
-    		#}#
+    		<span style="cursor: pointer;" data-bind="click: delete"><i class="icon-remove"></i> <span data-bind="text: lang.lang.delete"></span></span>
     	</td>
     </tr>
 </script>
