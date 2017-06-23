@@ -3368,10 +3368,6 @@
             var res = e.response;
             if(res.results.length > 0) {
               $("#ntf1").data("kendoNotification").success("Data saved.");
-              // institute.showIn('#companyInfoPlaceholder', instInfo);
-              // console.log("kdsslfds");
-              //
-              // banhji.company.setCurrent(res.results[0]);
               let d = new Date(res.results[0].fiscal_date*1000);
               let day = d.getDate() < 10 ? '0'+ d.getDate() : d.getDate();
               let mnth= (d.getMonth() +1);

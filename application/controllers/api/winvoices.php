@@ -260,6 +260,8 @@ class Winvoices extends REST_Controller {
 		   	$obj->meter_id 			= isset($value->meter_id) ? $value->meter_id: "";
 		   	$obj->status 			= isset($value->status) ? $value->status: "";
 		   	$obj->sub_total 		= isset($value->amount) ? $value->amount : "";
+		   	$obj->pole_id 			= isset($value->pole_id) ? $value->pole_id : 0;
+		   	$obj->box_id 			= isset($value->box_id) ? $value->box_id : 0;
 		   	$obj->payment_term_id 	= 5;
 
 	   		if($obj->save()){
@@ -450,7 +452,7 @@ class Winvoices extends REST_Controller {
 				}
 			}
 		}
-		//$table->where('status', 0);
+		$table->where('status <>', 1);
 		$table->where('deleted', 0);
 		$table->where('type','Utility_Invoice');
 		//$table->get();

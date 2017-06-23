@@ -55,9 +55,9 @@ class Institutes extends REST_Controller {
 		}
 	}
 
-	public function index_post() {
+	public function index_post($id = NULL, $user = NULL, $userID = NULL) {
 		$posted_data = json_decode($this->post('models'));
-
+		
 		foreach($posted_data as $d) {
 			$company = new Institute();
 			$company->industry_id = $d->industry->id;

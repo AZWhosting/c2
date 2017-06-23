@@ -7,7 +7,7 @@ body {
     font-size: 14px;
 }
 h1,h2,h3,h4,h5,h6{
-  font-family: 'Battambang', 'Open Sans' !important;
+  font-family: "Preahvihear","Open Sans";
 }
 html.k-ff.k-ff50{
   background: none;
@@ -23,11 +23,13 @@ ul{
 a:hover {
     text-decoration: none;
 }
+.row-fluid {
+  clear: both;
+}
 .wrapper{
   width: 100%;
   position: relative;
   background: #F4F4F4;
-  height: 1000px;
 }
 
 /*---------
@@ -47,6 +49,7 @@ a:hover {
   border-radius: 0 !important;
   background: none !important;
   border: none !important;
+  z-index: 2;
 }
 .navbar > .container .navbar-brand, .navbar > .container-fluid .navbar-brand{
   border-right: 1px solid #333333;
@@ -292,26 +295,101 @@ a:hover {
 .phone-lang a img{
   width: 20px;
 }
-@media only screen and (min-width : 1200px) {
-  .help .dropdown-menu{
-    left: -150px;
-  }
+
+/*Content Index*/
+#content{
+  background: none;
+  position: static;
+  padding: 0;
+  margin-top: 30px;
+  width: 100%;
+  display: inline-block;
 }
+#module-image{
+  float: left;
+  clear: both;
+}
+#module-image .col-sm-3{
+  text-align: center;
+  float: left;
+  padding: 0;
+}
+#module-image .col-sm-3 a img{
+  float: left;
+  width: 98.5%;
+}
+#module-image .col-sm-3 a h5{
+  color: #333;
+  margin-top: 8px;
+  display: inline-block;
+  font-size: 14px;
+}
+#module-image .col-sm-3 a:hover h5{
+  color: #6399d5;
+}
+.home-chart .col-xs-12.col-sm-12{
+  background: #fff;
+  width: 100%;
+}
+.home-chart .col-xs-12.col-sm-12 .chart{
+  width: 100%;
+}
+/*Sidebar Right*/
+.board-chart {
+  background: #fff;
+  color: #333;
+  float: left;
+  overflow: hidden;
+  padding: 15px;
+  position: relative;
+  width: 100%;
+}
+.board-chart h2{
+  color: #113051;
+  margin: 8px 0 10px;
+  display: inline-block;
+  width: 100%;
+  font-size: 30px;
+}
+
+
+
+
+
+
 /*Landscape &&& Portrait*/
-/*@media (orientation:landscape) {
-  .help .dropdown-menu{
-    left: -210px ;
+@media (orientation:landscape) {
+  .board-chart h2{
+    font-size: 25px;
   }
 }
 @media (orientation:portrait) {
-  .help .dropdown-menu{
-    left: -274px ;
+  .board-chart h2{
+    font-size: 20px;
   }
-}*/
+}
 @media only screen
 and (min-device-width : 320px)
 and (max-device-width : 480px) {
   .navbar > .container .navbar-brand, .navbar > .container-fluid .navbar-brand{
     border-right: none;
+  }
+  #content{
+    margin-top: 15px;
+  }
+  #module-image {
+    padding: 0 15px 0 15px;
+  }
+  #module-image .col-sm-3 a h5{
+    font-size: 12px;
+  }
+  .home-chart .col-xs-12.col-sm-12{
+    background: none;
+  }
+  .board-chart{
+    margin-top: 15px;
+  }
+  .board-chart h2{
+    font-size: 25px;
   }
 }

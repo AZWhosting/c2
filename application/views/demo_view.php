@@ -2343,9 +2343,8 @@
                    placeholder="Qty..." 
                    style="text-align: right; width: 40%;" />
 
-			<input 	id="ddlMesurement"
-					data-role="dropdownlist"					
-					data-header-template="item-measurement-header-tmpl"
+			<input id="ddlMesurement"
+					data-role="dropdownlist"
 					data-value-primitive="true"                 
                 	data-text-field="measurement"
                    	data-value-field="measurement_id"
@@ -46753,23 +46752,15 @@
 			return code;
 		},
 		getPriceList 				: function(id){
-			var self = this, priceList = [];
+			var priceList = [];
 
 			$.each(this.itemPriceList, function(index, value){
+				
 				if(value.item_id==id){
-					var measurement = self.measurementDS.get(value.measurement_id);
-
-					priceList.push({ 
-						item_id: value.item_id,
-						measurement_id: value.measurement_id,
-						conversion_ratio: value.conversion_ratio,
-						price: value.price,
-						locale: value.locale,
-						measurement: measurement.name 
-					});
+					priceList.push(value);
 				}
 			});
-
+			console.log(priceList);
 			return priceList;
 		}
 	});
@@ -48567,21 +48558,23 @@
 	        }
 		},
 		measurementChanges 	: function(e){
-			var data = e.data, obj = this.get("obj");
+			var data = e.data,
+				selectedIndex = e.sender.selectedIndex, 
+				obj = this.get("obj");
 
-			if(data.measurement_id>0){
-				$.each(banhji.source.itemPriceList, function(index, value){
-					if(value.item_id==data.item_id && value.measurement_id==data.measurement_id){
-						var rate = obj.rate / banhji.source.getRate(value.locale, new Date(obj.issued_date));
-				        
-				        data.set("price", value.price*rate);
-				        data.set("conversion_ratio", value.conversion_ratio);
-				        
-						return false;
-					}
-				});
+			if(selectedIndex>0){				
+				var itemPrice = data.item_prices[selectedIndex-1],
+					rate = obj.rate / banhji.source.getRate(itemPrice.locale, new Date(obj.issued_date));
+		        
+		        data.set("price", itemPrice.price*rate);
+		        data.set("conversion_ratio", itemPrice.conversion_ratio);
+		        data.set("locale", itemPrice.locale);
 
 		        this.changes();
+	        }else{
+	        	data.set("price", 0);
+		        data.set("conversion_ratio", 1);
+		        data.set("locale", banhji.locale);
 	        }
 		},
 		//Number      	
@@ -73430,10 +73423,7 @@
     	on_so 				: 0,
     	on_hand 			: 0,
     	pageLoad 			: function(id){
-    		this.dataSource.filter([
-    			{ field:"item_id", value: id },
-    			{ operator:"measurement" }
-    		]);
+    		this.dataSource.filter({ field:"item_id", value: id });
     		this.recordDS.filter({ field:"item_id", value: id });
     		this.loadObj(id);
     		this.loadData(id);

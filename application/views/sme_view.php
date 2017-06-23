@@ -4,7 +4,8 @@
     <title>BanhJi - ASEAN Accounting Platform</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://fonts.googleapis.com/css?family=Battambang" rel="stylesheet"> 
+    <link href="https://fonts.googleapis.com/css?family=Battambang" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Preahvihear" rel="stylesheet"> 
 
 	<!-- CSS Themes -->
     <link rel="stylesheet" href="<?php echo base_url()?>assets/style-default-menus-dark.css" >
@@ -46,7 +47,7 @@
 	<script src="<?php echo base_url()?>assets/libraries/kendoui/js/cultures/kendo.culture.de-DE.min.js"></script>
 
 	<script src="<?php echo base_url()?>assets/km-KH.js"></script>
-	<script src="<?php echo base_url()?>assets/en-US.js"></script>	
+	<script src="<?php echo base_url()?>assets/en-US.js"></script>
 
 </head>
 <body>
@@ -54,12 +55,11 @@
 	<!-- template section starts -->
 	<script type="text/x-kendo-template" id="layout">
 		<div id="menu" class="menu"></div>
-		<div  class="container-fluid"></div>
+		<div id="content"></div>
 	</script>
 	<script type="text/x-kendo-template" id="blank-tmpl">
 	</script>
 	<script type="text/x-kendo-template" id="menu-tmpl">
-	<!-- 	<div class="container-fluid"> -->
 		<nav class="navbar navbar-inverse " role="navigation">
 	        <div class="container-fluid">
 	            <!-- Brand and toggle get grouped for better mobile display -->
@@ -115,7 +115,7 @@
 				<ul class="col-sm-3 topnav pull-right hidden-xs">
 					<li role="presentation" class="setting dropdown">
 				  		<a style="color: #fff;" class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">[<span data-bind="text: getUsername"></span>]</a>
-			  			<ul class="dropdown-menu">  				  				
+			  			<ul class="dropdown-menu">
 			  				<li>
 		                    	<a href="#" data-bind="click: lang.changeToKh">
 		                    		<img class="kh-flag" src="https://lipis.github.io/flag-icon-css/flags/4x3/kh.svg">
@@ -140,7 +140,7 @@
 									<i class="icon-power-off"></i>
 									Logout
 								</a>
-							</li> 				
+							</li>
 			  			</ul>
 				  	</li>
 				  	<li class="help">
@@ -201,33 +201,24 @@
 				  		<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"> <i class="icon-th-list"></i></a>
 			  			<ul class="dropdown-menu ul-multiTaskList" data-template="multiTaskList-row-template" data-bind="source: multiTaskList">  				  				
 			  			</ul>
-				  	</li>										
+				  	</li>
 				</ul>
 
 	            <!-- Menu Phone -->
 	            <div class="menu-phone collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 	                <ul class="nav navbar-nav hidden-lg hidden-md hidden-sm">
 	                	<li>
-	                    	<a href="#" data-bind="click: lang.changeToKh">
-	                    		<img class="kh-flag" src="https://lipis.github.io/flag-icon-css/flags/4x3/kh.svg">
-	                    		<span>ភាសាខ្មែរ</span>
-	                    	</a>
-	                    </li>
-    					<li>
-    						<a href="#" data-bind="click: lang.changeToEn">
-    							<img class="en-flag" src="https://lipis.github.io/flag-icon-css/flags/4x3/gb.svg">
-    							<span>English</span>
-    						</a>
-    					</li>
-	                    <li>
-	                        <a href="#">About</a>
-	                    </li>
-	                    <li>
-	                        <a href="#">Services</a>
-	                    </li>
-	                    <li>
-	                        <a href="#">Contact</a>
-	                    </li>
+							<a  href="<?php echo base_url(); ?>admin">
+								<i class="icon-cog"></i>
+								Setting
+							</a>
+						</li>
+						<li>
+							<a href="#/manage" data-bind="click: logout">
+								<i class="icon-power-off"></i>
+								Logout
+							</a>
+						</li>
 	                </ul>
 	            </div>
 
@@ -288,50 +279,10 @@
     					</li>	
 	                </ul>
 	            </div>
-
-
 	            <!-- /.navbar-collapse -->
 	        </div>
 	        <!-- /.container -->
-	    </nav>
-			<!-- <div class="menu-hidden sidebar-hidden-phone menu-left hidden-print">
-				<div class="navbar main navbar-fixed-top" id="main-menu">
-					<ul class="topnav">
-						<li><a href="#" data-bind="click: checkRole"><img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/banhji-logo.png" style="height: 40px;"></a></li>
-					</ul>
-					<form class="navbar-form pull-left">
-						<div class="btn-group">
-						  	<a class="btn btn-inverse dropdown-toggle" data-toggle="dropdown" href="#">
-						    	<i class="icon-th"></i>
-						  	</a>
-						</div>
-					  	<input type="text" class="span2 search-query" placeholder="Search" id="search-placeholder" 
-					  			data-bind="value: searchText" 
-					  			style="background-color: #555555; color: #ffffff; border-color: #333333; height: 22px;">
-					  	<button type="submit" class="btn btn-inverse" data-bind="click: search"><i class="icon-search"></i></button>
-					</form>
-					<ul class="topnav" id="secondary-menu">
-					</ul> 
-					<ul class="topnav pull-right">
-						<li role="presentation" class="dropdown">
-					  		<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"> <i class="icon-th-list"></i></a>
-				  			<ul class="dropdown-menu ul-multiTaskList" data-template="multiTaskList-row-template" data-bind="source: multiTaskList">  				  				
-				  			</ul>
-					  	</li>
-						<li role="presentation" class="dropdown">
-					  		<a style="color: #fff;" class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">[<span data-bind="text: getUsername"></span>]</a>
-				  			<ul class="dropdown-menu">  				  				
-				  				<li><a href="#" data-bind="click: lang.changeToKh">ភាសាខ្មែរ</a></li>
-		    					<li><a href="#" data-bind="click: lang.changeToEn">English</a></li>
-								<li class="divider"></li>
-								<li><a href="<?php echo base_url(); ?>admin">Setting</a></li>
-								<li><a href="#/manage" data-bind="click: logout"><i class="icon-power-off"></i> Logout</a></li> 				
-				  			</ul>
-					  	</li>				
-					</ul>
-				</div>
-			</div> -->
-		<!-- </div> -->
+	    </nav>			
 	</script>
 	<script id="multiTaskList-row-template" type="text/x-kendo-template">
 	    <li>
@@ -346,259 +297,529 @@
 	</script>
 
 	<script type="text/x-kendo-template" id="index">
-		<br><br><h2 data-bind="text: lang.lang.quote"></h2>
-		<!-- <div class="row-fluid">
-			<div class="span6">
-				<div class="row">
-					<div class="span12" style="padding-left: 0; margin-left: 0; margin-top: 0;">
+		<div class="container">
+			<div class="row">
+				<!-- Module Image -->
+				<div class="col-xs-12 col-sm-6">
+					<div class="row">
 						<ul id="module-image">
-							<li style="text-align:center;">
+							<li class="col-xs-3 col-sm-3">
 								<a href="#/customers">
 									<img title="Customers Module" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/customers.jpg" alt="Customer">
+									<h5 data-bind="text: lang.lang.customers" ></h5>
 								</a>
-								<h style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><h5 data-bind="text: lang.lang.customers" style="margin-top: 5px; display: inline-block;"></h5></span>
 							</li>
-							<li style="text-align:center;">
+							<li class="col-xs-3 col-sm-3">
 								<a href="#/vendors">
 									<img title="Supplier Module" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/supplier.jpg" alt="Vendor">
+									<h5 data-bind="text: lang.lang.suppliers" ></h5>
 								</a>
-								<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><h5 data-bind="text: lang.lang.suppliers" style="margin-top: 5px; display: inline-block;"></h5></span>
+								
 							</li>
-							<li style="text-align:center;">
+							<li class="col-xs-3 col-sm-3">
 								<a href="#/inventories">
 									<img title="Products/Sercies Module" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/inventory.jpg" alt="Inventory">
+									<h5 data-bind="text: lang.lang.products_services" ></h5>
 								</a>
-								<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><h5 data-bind="text: lang.lang.products_services" style="margin-top: 5px; display: inline-block;"></h5></span>
 							</li>
-							<li style="text-align:center;">
+							<li class="col-xs-3 col-sm-3">
 								<a href="#/documents">
 									<img title="Attached Documents" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/attach_file.jpg" alt="Attachment">
+									<h5 data-bind="text: lang.lang.documents" ></h5>
 								</a>
-								<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><h5 data-bind="text: lang.lang.documents" style="margin-top: 5px; display: inline-block;"></h5></span>
+								
 							</li>
 						</ul>
-						<ul id="module-image">						
-							<li style="text-align:center;">
+						<ul id="module-image">
+							<li class="col-xs-3 col-sm-3">
 								<a href="#/accounting">
-									<img title="Accounting Module" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/accounting.jpg" alt="Customer">							
-									<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><h5 data-bind="text: lang.lang.accounting" style="margin-top: 5px; display: inline-block;" style="margin-top: 5px; display: inline-block;"></h5></span>
+									<img title="Accounting Module" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/accounting.jpg" alt="Customer">
+									<h5 data-bind="text: lang.lang.accounting"  ></h5>
 								</a>
 							</li>
-							<li style="text-align:center;">
+							<li class="col-xs-3 col-sm-3">
 								<a href="#/reports">
 									<img title="Reports Module" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/report.jpg" alt="Reports">
+									<h5 data-bind="text: lang.lang.reports" ></h5>
 								</a>
-								<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><h5 data-bind="text: lang.lang.reports" style="margin-top: 5px; display: inline-block;"></h5></span>
 							</li>
-							<li style="text-align:center;">
+							<li class="col-xs-3 col-sm-3">
 								<a href="#/tax">
 									<img title="Tax Module" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/tax.jpg" alt="Tax">
+									<h5 data-bind="text: lang.lang.tax" ></h5>
 								</a>
-								<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><h5 data-bind="text: lang.lang.tax" style="margin-top: 5px; display: inline-block;" style="margin-top: 5px; display: inline-block;"></h5></span>
 							</li>
-							<li style="text-align:center;">
-								<a href="<?php echo base_url(); ?>admin">
-									<img title="Admin Module" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/setting.jpg" alt="Admin">
-									<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><h5 data-bind="text: lang.lang.settings" style="margin-top: 5px; display: inline-block;" style="margin-top: 5px; display: inline-block;"></h5></span>
+							<li class="col-xs-3 col-sm-3">
+								<a href="#/app_center">
+									<img title="App Center" src="http://192.168.88.100/c2/assets/app_center/app_center.jpg" alt="App Center">
+									<h5 data-bind="text: lang.lang.app_center" ></h5>
 								</a>
-							</li>											
+							</li>
+						</ul>						
+					</div>
+				</div>
+
+				<div class="col-xs-12 col-sm-6">
+					<div class="row">
+						<div class="col-sm-12 col-md-8">
+							<div class="board-chart">
+								<h4 data-bind="text: companyName"></h4>
+								<h2 data-bind="text: lang.lang.financial_snapshot"></h2>
+								<span data-bind="text: lang.lang.as_of"></span>
+								:&nbsp;
+								<span id="today-date" data-bind="text: today"></span>
+							</div>
+						</div>
+						<div class="col-sm-6 col-md-4 hidden-xs">
+							<div class="row">
+								<div class="board-chart" style="float: right; margin-bottom: 15px;">
+									<p style="text-align: center; margin-bottom: 0; cursor: pointer;">Welcome Guide</p>
+								</div>
+
+								<div class="board-chart" style="float: right;">
+									<p style="text-align: center; margin-bottom: 0; cursor: pointer;">User Guide</p>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-md-12">
+							<div class="board-chart" style="margin-top: 15px; ">
+								<div class="col-md-3" style="padding-left: 0;">
+									<div style="background: #0ec9fc; width: 100%; float: left; text-align: center; height: 135px;	">
+										<p style="margin-top: 10px; font-size: 10px;">Your Business Financial Health Score</p>
+										<p style="color: #fff; display: inline-block; margin-top: 27px;">
+											<sup style="font-size: 47px; font-weight: 600; margin-top: 8px; margin-left: 13px;">100</sup>
+											<span style="font-size: 35px; font-weight: 300; margin-left: -10px;">/</span>
+											<sub style="font-size: 11px; margin-left: -9px;">100</sub>
+										</p>
+									</div>
+								</div>
+								<div class="col-md-2" style="padding-left: 0;">
+									<div style="background: #96e95b; width: 100%; float: left; text-align: center; height: 135px; padding: 20px 0;">
+										<p></p>
+										<img src="<?php echo base_url()?>assets/sign-new.png" style="width: 45px;">
+										<p style="font-size: 10px; margin-top: 20px;">Outperform your peer</p>
+									</div>
+								</div>
+								<div class="col-md-7" style="padding: 0;">
+									<div style="width: 100%; float: left; ">
+										<div style="width: 100%; padding: 8px; text-align: center; color: #333; float: left; background: #ddd;">
+											Recommand
+										</div>
+										<div style="width: 100%; background: #f4f4f4; float: left; padding: 5px 10px; text-align: left;">
+											<div id="carousel-1" class="carousel slide" style="margin-bottom: 0; float: left;">
+												<!-- Indicators -->
+												<ol class="carousel-indicators" style="bottom: -14px; left: 86%;">
+													<li data-target="#carousel-1" data-slide-to="0" class="active"></li>
+													<li data-target="#carousel-1" data-slide-to="1"></li>
+													<li data-target="#carousel-1" data-slide-to="2"></li>
+													<li data-target="#carousel-1" data-slide-to="3"></li>
+													<li data-target="#carousel-1" data-slide-to="4"></li>
+												</ol>
+												<!-- // Indicators END -->
+												
+												<!-- Items -->
+												<div class="carousel-inner" style=" float: left;">
+												
+													<!-- Item -->
+													<div class="item active">
+														<div class="carousel-caption" style="position: relative; right: 0; left: 0; padding: 0; top: 0; background: none;">
+															<h4 style="font-size: 15px; float: left; width: 100%; text-align: left;">Get this item now!</h4>
+															<p style="margin-bottom: 0; font-size: 12px; text-align: left;">
+																Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
+															</p>
+														</div>
+													</div>
+													<!-- // Item END -->
+
+													<!-- Item -->
+													<div class="item">
+														<div class="carousel-caption" style="position: relative; right: 0; left: 0; padding: 0; top: 0; background: none;">
+															<h4 style="font-size: 15px; float: left; width: 100%; text-align: left;">Get this item now!</h4>
+															<p style="margin-bottom: 0; font-size: 12px; text-align: left;">
+																Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
+															</p>
+														</div>
+													</div>
+													<!-- // Item END -->
+
+													<!-- Item -->
+													<div class="item">
+														<div class="carousel-caption" style="position: relative; right: 0; left: 0; padding: 0; top: 0; background: none;">
+															<h4 style="font-size: 15px; float: left; width: 100%; text-align: left;">Get this item now!</h4>
+															<p style="margin-bottom: 0; font-size: 12px; text-align: left;">
+																Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
+															</p>
+														</div>
+													</div>
+													<!-- // Item END -->
+
+													<!-- Item -->
+													<div class="item">
+														<div class="carousel-caption" style="position: relative; right: 0; left: 0; padding: 0; top: 0; background: none;">
+															<h4 style="font-size: 15px; float: left; width: 100%; text-align: left;">Get this item now!</h4>
+															<p style="margin-bottom: 0; font-size: 12px; text-align: left;">
+																Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
+															</p>
+														</div>
+													</div>
+													<!-- // Item END -->
+
+													<!-- Item -->
+													<div class="item">
+														<div class="carousel-caption" style="position: relative; right: 0; left: 0; padding: 0; top: 0; background: none;">
+															<h4 style="font-size: 15px; float: left; width: 100%; text-align: left;">Get this item now!</h4>
+															<p style="margin-bottom: 0; font-size: 12px; text-align: left;">
+																Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
+															</p>
+														</div>
+													</div>
+													<!-- // Item END -->
+													
+
+												</div>
+												<!-- // Items END -->
+												
+												<!-- Navigation -->
+												<!-- <a class="left carousel-control" href="#carousel-1" data-slide="prev">&lsaquo;</a>
+												<a class="right carousel-control" href="#carousel-1" data-slide="next">&rsaquo;</a> -->
+												<!-- // Navigation END -->
+												
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+					</div>
+
+
+				</div>
+
+
+				<!-- <div class="col-xs-12 col-sm-6">
+					<div class="row">
+						<ul id="module-image">
+							<li class="col-xs-3 col-sm-3">
+								<a href="#/customers">
+									<img title="Customers Module" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/customers.jpg" alt="Customer">
+									<h5 data-bind="text: lang.lang.customers" ></h5>
+								</a>
+							</li>
+							<li class="col-xs-3 col-sm-3">
+								<a href="#/vendors">
+									<img title="Supplier Module" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/supplier.jpg" alt="Vendor">
+									<h5 data-bind="text: lang.lang.suppliers" ></h5>
+								</a>
+								
+							</li>
+							<li class="col-xs-3 col-sm-3">
+								<a href="#/inventories">
+									<img title="Products/Sercies Module" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/inventory.jpg" alt="Inventory">
+									<h5 data-bind="text: lang.lang.products_services" ></h5>
+								</a>
+							</li>
+							<li class="col-xs-3 col-sm-3">
+								<a href="#/documents">
+									<img title="Attached Documents" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/attach_file.jpg" alt="Attachment">
+									<h5 data-bind="text: lang.lang.documents" ></h5>
+								</a>
+								
+							</li>
+						</ul>
+						<ul id="module-image">
+							<li class="col-xs-3 col-sm-3">
+								<a href="#/accounting">
+									<img title="Accounting Module" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/accounting.jpg" alt="Customer">
+									<h5 data-bind="text: lang.lang.accounting"  ></h5>
+								</a>
+							</li>
+							<li class="col-xs-3 col-sm-3">
+								<a href="#/reports">
+									<img title="Reports Module" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/report.jpg" alt="Reports">
+									<h5 data-bind="text: lang.lang.reports" ></h5>
+								</a>
+							</li>
+							<li class="col-xs-3 col-sm-3">
+								<a href="#/tax">
+									<img title="Tax Module" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/tax.jpg" alt="Tax">
+									<h5 data-bind="text: lang.lang.tax" ></h5>
+								</a>
+							</li>
+							<li class="col-xs-3 col-sm-3">
+								<a href="#/app_center">
+									<img title="App Center" src="http://192.168.88.100/c2/assets/app_center/app_center.jpg" alt="App Center">
+									<h5 data-bind="text: lang.lang.app_center" ></h5>
+								</a>
+							</li>
 						</ul>
 					</div>
-				</div>
-				<div class="row" style="margin-top: 5px;">
-					<div class="span12" style="width: 100%; padding: 0 5px;">
-						<div class="home-chart" style="width: 95%; padding: 0 15px;">
-							
-							<div data-role="chart"
-								 data-auto-bind="false"
-				                 data-legend="{ position: 'top' }"
-				                 data-series-defaults="{ type: 'column' }"
-				                 data-tooltip='{
-				                    visible: true,
-				                    format: "{0}%",
-				                    template: "#= series.name #: #= kendo.toString(value, &#39;c&#39;, banhji.locale) #"
-				                 }'                 
-				                 data-series="[
-				                                 { field: 'cash_in', name: 'Cash In', categoryField:'month', color: '#203864', overlay:{ gradient: 'none'}  },
-				                                 { field: 'cash_out', name: 'Cash Out', categoryField:'month', color: '#A6C9E3' , overlay:{ gradient: 'none'} }
-				                             ]"	                             
-				                 data-bind="source: graphDS"
-				                 style="height: 240px;" ></div>
-				           
-						</div>
-					</div>
-				</div>
-				<br>
-				<br>
-			</div>		
-			
-			<div class="span6" style="margin-bottom: 15px;">
-				<div class="row">
-					<div class="span12" style="background: #fff;">
-						
-						<div class="board-add" style="padding: 15px 0;">
-							<div class="span4" style="padding-right: 0;">
-								<h2 style="color: #6399D5; font-size: 20px;" data-bind="text: lang.lang.welcome"></h2>
-								<p style="font-size: 12px;">
-									<span data-bind="text: lang.lang.to_get_you_started_with_banhji"></span> <a target="_blank" href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/guide/welcome_guide.pdf">[Welcome Guide]</a>.
-								</p>
-							</div>
-							<div class="span8" style="padding-right: 0; padding-left: 0;">
-								<div class="span12" style="padding-right: 0; padding-left: 0;">
-									<div class="span3">
-										<a href="#/customer" class="center">
-											<img  title="Add Customer" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/customers.ico" />
-										</a>
-									</div>
-									<div class="span3">
-										<a href="#/vendor" class="center">
-											<img  title="Add Supplier" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/suppliers.ico" />
-										</a>
-									</div>
-									<div class="span3">
-										<a href="#/item" class="center">
-											<img  title="Add Inventory" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/inventories.ico" />
-										</a>
-									</div>
-									<div class="span3">
-										<a href="#/item_service" class="center">
-											<img  title="Add Service" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/services.ico" />
-										</a>
-									</div>
-								</div>
-							</div>
-						</div>
-
-					</div>
 					
-					<div class="board-chart">
-						<div class="span12">
+					<div class="home-chart row" style="margin-top: 15px;">
+						<div class="col-xs-12 col-sm-12">
+							<div class="chart">
+								<div data-role="chart"
+									 data-auto-bind="false"
+					                 data-legend="{ position: 'top' }"
+					                 data-series-defaults="{ type: 'column' }"
+					                 data-tooltip='{
+					                    visible: true,
+					                    format: "{0}%",
+					                    template: "#= series.name #: #= kendo.toString(value, &#39;c&#39;, banhji.locale) #"
+					                 }'
+					                 data-series="[
+					                                 { field: 'cash_in', name: 'Cash In', categoryField:'month', color: '#203864', overlay:{ gradient: 'none'}  },
+					                                 { field: 'cash_out', name: 'Cash Out', categoryField:'month', color: '#A6C9E3' , overlay:{ gradient: 'none'} }
+					                             ]"
+					                 data-bind="source: graphDS"
+					                 style="height: 240px;" >
+					            </div>
+							</div>
+						</div>
+					</div>
+				</div> -->
+
+				<!-- <div class="col-xs-12 col-sm-6">
+					<div class="row"> -->
+						<!-- <div class="board-chart" style="margin-top: 0; width: 64%; background: #fff;">
 							<h4 data-bind="text: companyName"></h4>
 							<h2 style="color: #113051; margin-bottom: 11px; display: inline-block; width: 100%;" data-bind="text: lang.lang.financial_snapshot"></h2>
-							<span style="color: #000000;"><span data-bind="text: lang.lang.as_of"></span>:&nbsp;<span id="today-date" data-bind="text: today"></span></span><br/>
-						</div>
-					</div>
+							<span style="color: #000000;"><span data-bind="text: lang.lang.as_of"></span>:&nbsp;<span id="today-date" data-bind="text: today"></span></span>
+						</div> -->
 
-					<div class="board-chart">
-						<div class="span12">
-							<div class="span6">
-								<p><span data-bind="text: lang.lang.performance"></span></p>
-								<a href="#/statement_profit_loss">
-									<table class="performance">
-										<tr>
-											<td><span data-bind="text: lang.lang.income"></span></td>
-											<td></td>
-											<td align="right"><span data-bind="text: obj.income"></span></td>
-										</tr>
-										<tr>
-											<td><span data-bind="text: lang.lang.expense"></span></td>
-											<td></td>
-											<td align="right"><span data-bind="text: obj.expense"></span></td>
-										</tr>
-										<tr>
-											<td><b><span data-bind="text: lang.lang.net_income"></span></b></td>
-											<td></td>
-											<td align="right"><b data-bind="text: obj.net_income"></b></td>
-										</tr>
-									</table>
-								</a>     
+						<!-- <div class="board-chart" style="margin-top: 0; width: 33.33333333%; background: #fff; float: right; margin-bottom: 15px;">
+							<p style="text-align: center; margin-bottom: 0; cursor: pointer;">Welcome Guide</p>
+						</div> -->
+
+						<!-- <div class="board-chart" style="margin-top: 0; width: 33.33333333%; background: #fff; float: right;">
+							<p style="text-align: center; margin-bottom: 0; cursor: pointer;">User Guide</p>
+						</div> -->
+
+						<!-- <div class="board-chart" style="margin-top: 20px; ">
+							<div class="span3" style="padding-left: 0;">
+								<div style="background: #0ec9fc; width: 100%; float: left; text-align: center; height: 135px;	">
+									<p style="margin-top: 10px; font-size: 10px;">Your Business Financial Health Score</p>
+									<p style="color: #fff; display: inline-block; margin-top: 27px;">
+										<sup style="font-size: 47px; font-weight: 600; margin-top: 8px; margin-left: 13px;">100</sup>
+										<span style="font-size: 35px; font-weight: 300; margin-left: -10px;">/</span>
+										<sub style="font-size: 11px; margin-left: -9px;">100</sub>
+									</p>
+								</div>
 							</div>
-							<div class="span6">
-								<p><span data-bind="text: lang.lang.position"></span></p>
-								<a href="#/statement_financial_position">
-									<table class="position" style="width: 100%;">
-										<tr>
-											<td><span data-bind="text: lang.lang.asset"></span></td>
-											<td></td>
-											<td align="right"><span data-bind="text: obj.asset"></span></td>
-										</tr>
-										<tr>
-											<td><span data-bind="text: lang.lang.liabilities"></span></td>
-											<td></td>
-											<td align="right"><span data-bind="text: obj.liability"></span></td>
-										</tr>
-										<tr>
-											<td><b><span data-bind="text: lang.lang.equity"></span></b></td>
-											<td></td>
-											<td align="right"><b data-bind="text: obj.equity"></b></td>
-										</tr>
-									</table>
-								</a>
+							<div class="span2" style="padding-left: 0;">
+								<div style="background: #96e95b; width: 100%; float: left; text-align: center; height: 135px; padding: 20px 0;">
+									<p></p>
+									<img src="<?php echo base_url()?>assets/sign-new.png" style="width: 45px;">
+									<p style="font-size: 10px; margin-top: 20px;">Outperform your peer</p>
+								</div>
 							</div>
-						</div>
-						
-						<div class="span12">
-							<div class="span6">
-								<a href="#/customer_balance_summary">
-									<div class="widget-body alert-info welcome-nopadding" >
-										<p><span data-bind="text: lang.lang.receivable"></span></p>
-								
-										<div align="center" class="text-large strong" data-bind="text: obj.ar"></div>
-									
-										<table width="100%" >
-											<tr align="center">
-												<td>										
-													<span data-bind="text: obj.ar_open"></span>
-													<br>
-													<span><span data-bind="text: lang.lang.open"></span></span>
-												</td>
-												<td>
-													<span data-bind="text: obj.ar_customer"></span>
-													<br>
-													<span><span data-bind="text: lang.lang.customers"></span></span>
-												</td>
-												<td>
-													<span data-bind="text: obj.ar_overdue"></span>
-													<br>
-													<span><span data-bind="text: lang.lang.overdue"></span></span>
-												</td>
-											</tr>
-										</table>
+							<div class="span7" style="padding: 0;">
+								<div style="width: 100%; float: left; ">
+									<div style="width: 100%; padding: 8px; text-align: center; color: #333; float: left; background: #ddd;">
+										Recommand
 									</div>
-								</a>
-							</div>
-							<div class="span6">
-								
-								<a href="#/suppliers_balance_summary">
-									<div class="widget-body  alert-info welcome-nopadding" style="width: 100%;">
-										<p><span data-bind="text: lang.lang.payables"></span></p>
-								
-										<div align="center" class="text-large strong" data-bind="text: obj.ap"></div>
-									
-										<table width="100%">
-											<tr align="center">
-												<td>										
-													<span data-bind="text: obj.ap_open"></span>
-													<br>
-													<span><span data-bind="text: lang.lang.open"></span></span>
-												</td>
-												<td>
-													<span data-bind="text: obj.ap_vendor"></span>
-													<br>
-													<span><span data-bind="text: lang.lang.suppliers"></span></span>
-												</td>
-												<td>
-													<span data-bind="text: obj.ap_overdue"></span>
-													<br>
-													<span><span data-bind="text: lang.lang.overdue"></span></span>
-												</td>
-											</tr>
-										</table>
+									<div style="width: 100%; background: #f4f4f4; float: left; padding: 5px 10px; text-align: left;">
+										<div id="carousel-1" class="carousel slide" style="margin-bottom: 0; float: left;">
+											
+											<ol class="carousel-indicators" style="bottom: -14px; left: 86%;">
+												<li data-target="#carousel-1" data-slide-to="0" class="active"></li>
+												<li data-target="#carousel-1" data-slide-to="1"></li>
+												<li data-target="#carousel-1" data-slide-to="2"></li>
+												<li data-target="#carousel-1" data-slide-to="3"></li>
+												<li data-target="#carousel-1" data-slide-to="4"></li>
+											</ol>
+											
+											
+										
+											<div class="carousel-inner" style=" float: left;">
+											
+											
+												<div class="item active">
+													<div class="carousel-caption" style="position: relative; right: 0; left: 0; padding: 0; top: 0; background: none;">
+														<h4 style="font-size: 15px; float: left; width: 100%; text-align: left;">Get this item now!</h4>
+														<p style="margin-bottom: 0; font-size: 12px; text-align: left;">
+															Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
+														</p>
+													</div>
+												</div>
+												
+
+												
+												<div class="item">
+													<div class="carousel-caption" style="position: relative; right: 0; left: 0; padding: 0; top: 0; background: none;">
+														<h4 style="font-size: 15px; float: left; width: 100%; text-align: left;">Get this item now!</h4>
+														<p style="margin-bottom: 0; font-size: 12px; text-align: left;">
+															Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
+														</p>
+													</div>
+												</div>
+												
+												<div class="item">
+													<div class="carousel-caption" style="position: relative; right: 0; left: 0; padding: 0; top: 0; background: none;">
+														<h4 style="font-size: 15px; float: left; width: 100%; text-align: left;">Get this item now!</h4>
+														<p style="margin-bottom: 0; font-size: 12px; text-align: left;">
+															Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
+														</p>
+													</div>
+												</div>
+												
+												<div class="item">
+													<div class="carousel-caption" style="position: relative; right: 0; left: 0; padding: 0; top: 0; background: none;">
+														<h4 style="font-size: 15px; float: left; width: 100%; text-align: left;">Get this item now!</h4>
+														<p style="margin-bottom: 0; font-size: 12px; text-align: left;">
+															Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
+														</p>
+													</div>
+												</div>
+												
+												<div class="item">
+													<div class="carousel-caption" style="position: relative; right: 0; left: 0; padding: 0; top: 0; background: none;">
+														<h4 style="font-size: 15px; float: left; width: 100%; text-align: left;">Get this item now!</h4>
+														<p style="margin-bottom: 0; font-size: 12px; text-align: left;">
+															Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
+														</p>
+													</div>
+												</div>
+												
+												
+
+											</div>
+											
+											
+											
+											
+											
+										</div>
 									</div>
 								</div>
-							</a>
-						</div>					
-					</div>	
+							</div>
+						</div>-->
 
+						<!-- <div class="board-chart" >
+							<div class="span12">
+								<div class="span6">
+									<p><span data-bind="text: lang.lang.performance"></span></p>
+									<a href="#/statement_profit_loss">
+										<table class="performance">
+											<tr>
+												<td><span data-bind="text: lang.lang.income"></span></td>
+												<td></td>
+												<td align="right"><span data-bind="text: obj.income"></span></td>
+											</tr>
+											<tr>
+												<td><span data-bind="text: lang.lang.expense"></span></td>
+												<td></td>
+												<td align="right"><span data-bind="text: obj.expense"></span></td>
+											</tr>
+											<tr>
+												<td><b><span data-bind="text: lang.lang.net_income"></span></b></td>
+												<td></td>
+												<td align="right"><b data-bind="text: obj.net_income"></b></td>
+											</tr>
+										</table>
+									</a>     
+								</div>
+								<div class="span6">
+									<p><span data-bind="text: lang.lang.position"></span></p>
+									<a href="#/statement_financial_position">
+										<table class="position" style="width: 100%;">
+											<tr>
+												<td><span data-bind="text: lang.lang.asset"></span></td>
+												<td></td>
+												<td align="right"><span data-bind="text: obj.asset"></span></td>
+											</tr>
+											<tr>
+												<td><span data-bind="text: lang.lang.liabilities"></span></td>
+												<td></td>
+												<td align="right"><span data-bind="text: obj.liability"></span></td>
+											</tr>
+											<tr>
+												<td><b><span data-bind="text: lang.lang.equity"></span></b></td>
+												<td></td>
+												<td align="right"><b data-bind="text: obj.equity"></b></td>
+											</tr>
+										</table>
+									</a>
+								</div>
+							</div>
+							
+							<div class="span12">
+								<div class="span6">
+									<a href="#/customer_balance_summary">
+										<div class="widget-body alert-info welcome-nopadding" >
+											<p><span data-bind="text: lang.lang.receivable"></span></p>
+									
+											<div align="center" class="text-large strong" data-bind="text: obj.ar"></div>
+										
+											<table width="100%" >
+												<tr align="center">
+													<td>
+														<span data-bind="text: obj.ar_open"></span>
+														<br>
+														<span><span data-bind="text: lang.lang.open"></span></span>
+													</td>
+													<td>
+														<span data-bind="text: obj.ar_customer"></span>
+														<br>
+														<span><span data-bind="text: lang.lang.customers"></span></span>
+													</td>
+													<td>
+														<span data-bind="text: obj.ar_overdue"></span>
+														<br>
+														<span><span data-bind="text: lang.lang.overdue"></span></span>
+													</td>
+												</tr>
+											</table>
+										</div>
+									</a>
+								</div>
+								<div class="span6">
+									
+									<a href="#/suppliers_balance_summary">
+										<div class="widget-body  alert-info welcome-nopadding" style="width: 100%;">
+											<p><span data-bind="text: lang.lang.payables"></span></p>
+									
+											<div align="center" class="text-large strong" data-bind="text: obj.ap"></div>
+										
+											<table width="100%">
+												<tr align="center">
+													<td>
+														<span data-bind="text: obj.ap_open"></span>
+														<br>
+														<span><span data-bind="text: lang.lang.open"></span></span>
+													</td>
+													<td>
+														<span data-bind="text: obj.ap_vendor"></span>
+														<br>
+														<span><span data-bind="text: lang.lang.suppliers"></span></span>
+													</td>
+													<td>
+														<span data-bind="text: obj.ap_overdue"></span>
+														<br>
+														<span><span data-bind="text: lang.lang.overdue"></span></span>
+													</td>
+												</tr>
+											</table>
+										</div>
+									</div>
+								</a>
+							</div>					
+						</div> -->
+					<!-- </div>
+				</div> -->
+			</div>
+
+			<!-- Footer -->
+			<div class="row" style="margin-top: 30px;">
+				<div class="col-xs-12 col-sm-12" align="center">
+					<p>
+						&copy; <?php echo date('Y'); ?>
+						<span data-bind="text: lang.lang.all_rights_reserved"></span>
+					</p>
 				</div>
 			</div>
-		</div> -->
-
-		<!-- <div class="row-fluid">
-			<div style="margin-top: 10px; margin-left: 0;" align="center">
-				<p>&copy; <?php echo date('Y'); ?><span data-bind="text: lang.lang.all_rights_reserved"></span></p>
-			</div>	
-		</div> -->		
+		</div>
 	</script>
 	<!-- ADVANCE SEARCH -->
 	<script id="searchAdvanced" type="text/x-kendo-template">

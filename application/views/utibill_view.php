@@ -4198,7 +4198,7 @@
 														data-bind="
 															value: licenseSelect,
 						                  					source: licenseDS,
-						                  					events: {change: onLicenseChange}">
+						                  					events: {change: licenseChange}">
 						                  		</div>
 											</div>
 											<div class="span2" >
@@ -4214,7 +4214,7 @@
 														data-value-field="id" 
 														data-bind="
 															value: blocSelect,
-															enabled: haveSelect,
+															enabled: haveLicense,
 															events: {change: onLocationChange},
 						                  					source: blocDS">
 						                  		</div>
@@ -4227,12 +4227,12 @@
 														style="width: 100%;" 
 														data-option-label="Sub Location ..." 
 														data-auto-bind="false" 
-														data-value-primitive="false" 
+														data-value-primitive="true" 
 														data-text-field="name" 
 														data-value-field="id" 
 														data-bind="
-															value: sublocationSelect,
-															enabled: locationSelect,
+															value: subLocationSelect,
+															enabled: haveLocation,
 															events: {change: onSubLocationChange},
 						                  					source: subLocationDS">
 						                  		</div>
@@ -4245,12 +4245,12 @@
 														style="width: 100%;" 
 														data-option-label="Box ..." 
 														data-auto-bind="false" 
-														data-value-primitive="false" 
+														data-value-primitive="true" 
 														data-text-field="name" 
 														data-value-field="id" 
 														data-bind="
 															value: boxSelect,
-															enabled: sublocationSelect,
+															enabled: haveSubLocation,
 						                  					source: boxDS">
 						                  		</div>
 											</div>
@@ -4312,7 +4312,7 @@
 														data-bind="
 															value: licenseSelectU,
 						                  					source: licenseDSU,
-						                  					events: {change: onLicenseChangeU}">
+						                  					events: {change: licenseChangeU}">
 						                  		</div>
 											</div>
 											<div class="span4">
@@ -4328,7 +4328,7 @@
 														data-value-field="id" 
 														data-bind="
 															value: blocSelectU,
-															enabled: haveSelectU,
+															enabled: haveLicenseU,
 															events: {change: onLocationChangeU},
 						                  					source: blocDSU">
 						                  		</div>
@@ -4341,12 +4341,12 @@
 														style="width: 100%;" 
 														data-option-label="Sub Location ..." 
 														data-auto-bind="false" 
-														data-value-primitive="false" 
+														data-value-primitive="true" 
 														data-text-field="name" 
 														data-value-field="id" 
 														data-bind="
-															value: sublocationSelectU,
-															enabled: locationSelectU,
+															value: subLocationSelectU,
+															enabled: haveLocationU,
 															events: {change: onSubLocationChangeU},
 						                  					source: subLocationDSU">
 						                  		</div>
@@ -4361,12 +4361,12 @@
 														style="width: 100%;" 
 														data-option-label="Box ..." 
 														data-auto-bind="false" 
-														data-value-primitive="false" 
+														data-value-primitive="true" 
 														data-text-field="name" 
 														data-value-field="id" 
 														data-bind="
 															value: boxSelectU,
-															enabled: sublocationSelectU,
+															enabled: haveSubLocationU,
 						                  					source: boxDSU">
 						                  		</div>
 											</div>
@@ -4999,7 +4999,7 @@
 					</div>
 			        <h2 style="padding:0 15px 0 0;" data-bind="text: lang.lang.print_bill">Print Bill</h2>
 			        <div class="span12 row" style="padding: 20px 0;">
-			        	<div class="span5" style="padding-right: 0;">
+			        	<div class="span4" style="padding-right: 0;">
 				        	<div class="span6">	
 								<!-- Group -->
 								<div class="control-group">								
@@ -5032,10 +5032,10 @@
 		                  					source: licenseDS,
 		                  					events: {change: licenseChange}">
 		                  		</div>
-							</div>	
+							</div>
 						</div>
-						<div class="span7" style="padding-left: 0;">
-							<div class="span4">
+						<div class="span8" style="padding-left: 0;">
+							<div class="span3">
 								<div class="control-group">								
 									<label ><span data-bind="text: lang.lang.location">Location</span></label>
 									<input 
@@ -5048,12 +5048,47 @@
 										data-value-field="id" 
 										data-bind="
 											value: blocSelect,
-		                  					source: blocDS,
-		                  					enabled: blocEnable,
-		                  					events: {change: blocChange}">
+											enabled: haveLicense,
+											events: {change: onLocationChange},
+		                  					source: blocDS">
 		                  		</div>
 							</div>
-							<div class="span4">
+							<div class="span3">
+								<div class="control-group">								
+									<label ><span data-bind="text: lang.lang.sub_location">Location</span></label>
+									<input 
+										data-role="dropdownlist" 
+										style="width: 100%;" 
+										data-option-label="Sub Location ..." 
+										data-auto-bind="false" 
+										data-value-primitive="true" 
+										data-text-field="name" 
+										data-value-field="id" 
+										data-bind="
+											value: subLocationSelect,
+											enabled: haveLocation,
+											events: {change: onSubLocationChange},
+		                  					source: subLocationDS">
+		                  		</div>
+							</div>
+							<div class="span3">
+								<div class="control-group">								
+									<label ><span data-bind="text: lang.lang.box">Location</span></label>
+									<input 
+										data-role="dropdownlist" 
+										style="width: 100%;" 
+										data-option-label="Box ..." 
+										data-auto-bind="false" 
+										data-value-primitive="true" 
+										data-text-field="name" 
+										data-value-field="id" 
+										data-bind="
+											value: boxSelect,
+											enabled: haveSubLocation,
+		                  					source: boxDS">
+		                  		</div>
+							</div>
+							<div class="span3">
 								<div class="control-group">	
 									<label ><span data-bind="text: lang.lang.action">Action</span></label>	
 									<div class="row" style="margin: 0;">					
@@ -13605,95 +13640,133 @@
 		haveData 			: false,
 		rows 				: [],
 		miniMonthofS 		: new Date(),
-		haveSelect			: false,
-		haveSelectU			: false,
-		locationSelect 		: false,
-		sublocationSelect 	: false,
-		locationSelectU 	: false,
-		sublocationSelectU 	: false,
+		haveLicense			: false,
+		haveLocation 		: false,
+		haveSubLocation 	: false,
+		haveLicenseU		: false,
 		haveLocationU 		: false,
+		haveSubLocationU 	: false,
 		pageLoad 			: function(id){
 		},
-		onLicenseChange 	: function(e) {
-			var data = e.data;
-			var license = this.licenseDS.at(e.sender.selectedIndex - 1);
-			banhji.reading.blocDS.filter([
-				{field: "branch_id", value: license.id},
-				{field: "main_bloc", value: 0},
-				{field: "main_pole", value: 0}
-			]);
-			this.set("haveSelect", true);
-		},
-		onLocationChange 	: function(e) {
+		licenseChange 		: function(e) {
 			var self = this;
-			this.subLocationDS.filter([
-				{field: "branch_id", value: this.get("licenseSelect")},
-				{field: "main_bloc", value: this.get("blocSelect")},
-				{field: "main_pole", value: 0}
+			this.blocDS.data([]);
+			this.set("locationSelect", "");
+			this.set("haveLicense", false)
+			this.subLocationDS.data([]);
+			this.boxDS.data([]);
+			this.set("boxSelect", "");
+			this.set("haveLocation", false);
+			this.set("haveSubLocation", false);
+
+			this.blocDS.filter([
+				{field: "branch_id",value: this.get("licenseSelect")},
+				{field: "main_bloc",value: 0},
+				{field: "main_pole",value: 0}
 			]);
-			this.subLocationDS.bind("requestEnd", function(e){
-				if(e.response){
-					console.log(self.subLocationDS.data().length);
-					if(self.subLocationDS.data().length > 0){
-						self.set("locationSelect", true);
-					}
+			this.set("haveLicense", true);
+	    },
+	    onLocationChange 	: function(e) {
+			var self = this;
+			this.subLocationDS.data([]);
+			this.boxDS.data([]);
+			this.set("boxSelect", "");
+			this.set("haveSubLocation", false);
+			this.subLocationDS.query({
+				filter: [
+					{field: "branch_id", value: this.get("licenseSelect")},
+					{field: "main_bloc", value: this.get("blocSelect")},
+					{field: "main_pole", value: 0}
+					],
+				page: 1
+			})
+			.then(function(e){
+				if(self.subLocationDS.data().length > 0){
+					self.set("haveLocation", true);
+				}else{
+					self.set("haveLocation", false);
+					self.set("subLocationSelect", "");
+					self.subLocationDS.data([]);
 				}
 			});
 		},
 		onSubLocationChange : function(e) {
 			var self = this;
-			this.boxDS.filter([
-				{field: "branch_id", value: this.get("licenseSelect")},
-				{field: "main_bloc", value: this.get("blocSelect")},
-				{field: "main_pole", value: this.get("sublocationSelect")}
-			]);
-			this.boxDS.bind("requestEnd", function(e){
-				if(e.response){
-					if(self.boxDS.data().length > 0){
-						self.set("sublocationSelect", true);
-					}
+			this.boxDS.query({
+				filter: [
+					{field: "branch_id", value: this.get("licenseSelect")},
+					{field: "main_bloc", value: this.get("blocSelect")},
+					{field: "main_pole", value: this.get("subLocationSelect")}
+				]
+			})
+			.then(function(e){
+				if(self.boxDS.data().length > 0){
+					self.set("haveSubLocation", true);
+				}else{
+					self.set("haveSubLocation", false);
+					self.set("boxSelect", "");
+					self.boxDS.data([]);
 				}
 			});
 		},
-		onLicenseChangeU 	: function(e) {
-			var data = e.data;
-			var license = this.licenseDSU.at(e.sender.selectedIndex - 1);
-			banhji.reading.blocDSU.filter([
-				{field: "branch_id", value: license.id},
-				{field: "main_bloc", value: 0},
-				{field: "main_pole", value: 0}
-			]);
-			this.set("haveSelectU", true);
-		},
-		onLocationChangeU 	: function(e) {
+		licenseChangeU 		: function(e) {
 			var self = this;
-			this.subLocationDSU.filter([
-				{field: "branch_id", value: this.get("licenseSelectU")},
-				{field: "main_bloc", value: this.get("blocSelectU")},
-				{field: "main_pole", value: 0}
+			this.blocDSU.data([]);
+			this.set("locationSelectU", "");
+			this.set("haveLicenseU", false)
+			this.subLocationDSU.data([]);
+			this.boxDSU.data([]);
+			this.set("boxSelectU", "");
+			this.set("haveLocationU", false);
+			this.set("haveSubLocationU", false);
+
+			this.blocDSU.filter([
+				{field: "branch_id",value: this.get("licenseSelectU")},
+				{field: "main_bloc",value: 0},
+				{field: "main_pole",value: 0}
 			]);
-			this.subLocationDSU.bind("requestEnd", function(e){
-				if(e.response){
-					console.log(self.subLocationDSU.data().length);
-					if(self.subLocationDSU.data().length > 0){
-						self.set("locationSelectU", true);
-					}
+			this.set("haveLicenseU", true);
+	    },
+	    onLocationChangeU 	: function(e) {
+			var self = this;
+			this.subLocationDSU.data([]);
+			this.boxDSU.data([]);
+			this.set("boxSelectU", "");
+			this.set("haveSubLocationU", false);
+			this.subLocationDSU.query({
+				filter: [
+					{field: "branch_id", value: this.get("licenseSelectU")},
+					{field: "main_bloc", value: this.get("blocSelectU")},
+					{field: "main_pole", value: 0}
+					],
+				page: 1
+			})
+			.then(function(e){
+				if(self.subLocationDSU.data().length > 0){
+					self.set("haveLocationU", true);
+				}else{
+					self.set("haveLocationU", false);
+					self.set("subLocationSelectU", "");
+					self.subLocationDSU.data([]);
 				}
 			});
-			this.set("haveLocationU", true)
 		},
 		onSubLocationChangeU : function(e) {
 			var self = this;
-			this.boxDSU.filter([
-				{field: "branch_id", value: this.get("licenseSelectU")},
-				{field: "main_bloc", value: this.get("blocSelectU")},
-				{field: "main_pole", value: this.get("sublocationSelectU")}
-			]);
-			this.boxDSU.bind("requestEnd", function(e){
-				if(e.response){
-					if(self.boxDSU.data().length > 0){
-						self.set("sublocationSelectU", true);
-					}
+			this.boxDSU.query({
+				filter: [
+					{field: "branch_id", value: this.get("licenseSelectU")},
+					{field: "main_bloc", value: this.get("blocSelectU")},
+					{field: "main_pole", value: this.get("subLocationSelectU")}
+				]
+			})
+			.then(function(e){
+				if(self.boxDSU.data().length > 0){
+					self.set("haveSubLocationU", true);
+				}else{
+					self.set("haveSubLocationU", false);
+					self.set("boxSelectU", "");
+					self.boxDSU.data([]);
 				}
 			});
 		},
@@ -13706,13 +13779,13 @@
 			var para = [];	
 			if(license_id){
 				if(bloc_id){
-					para.push({field: "location_id", value: bloc_id});
 					this.set("selectMeter", true);
-					if(this.get("sublocationSelect")){
-						para.push({field: "pole_id", value: this.get("sublocationSelect")});
-					}
 					if(this.get("boxSelect")){
 						para.push({field: "box_id", value: this.get("boxSelect")});
+					}else if(this.get("subLocationSelect")){
+						para.push({field: "pole_id", value: this.get("subLocationSelect")});
+					}else{
+						para.push({field: "location_id", value: bloc_id});
 					}
 					var self = this;
 					this.uploadDS.query({
@@ -13825,7 +13898,6 @@
 		monthOfUSelect 		: function(e){
 			$("#loadImport").css("display","block");
 			var para = [], self = this;
-			bloc_id = this.get("blocSelectU");
 			var monthOfSearch = self.get("monthOfUpload");
 			var monthOf = new Date(monthOfSearch);
 			monthOf.setDate(1);
@@ -13835,17 +13907,17 @@
 			lastDayOfMonth = lastDayOfMonth.getDate();
 			monthL.setDate(lastDayOfMonth);
 			monthL = kendo.toString(monthL, "yyyy-MM-dd");
-			para.push({field: "location_id", operator: "where_related_meter", value: bloc_id.id});
+			if(this.get("boxSelectU")){
+				para.push({field: "box_id", operator: "where_related_meter", value: this.get("boxSelectU")});
+			}else if(this.get("subLocationSelectU")){
+				para.push({field: "pole_id", operator: "where_related_meter", value: this.get("subLocationSelectU")});
+			}else{
+				para.push({field: "location_id", operator: "where_related_meter", value: this.get("blocSelectU")});
+			}
 			para.push(
 				{field: "month_of >", value: monthOf},
 				{field: "month_of <=", value: monthL}
 			);
-			if(this.get("sublocationSelectU")){
-				para.push({field: "pole_id", value: this.get("sublocationSelectU")});
-			}
-			if(this.get("boxSelectU")){
-				para.push({field: "box_id", value: this.get("boxSelectU")});
-			}
 			this.existReading.query({
 				filter: para
 			})
@@ -15790,11 +15862,9 @@
 				}else{
 					banhji.router.navigate("/center");
 				}
-				
 			}
 			this.planDS.fetch();
 			this.setWords();
-			
 		},
 		licenseData 		: [],
 		otherINFO 			: false,
@@ -16687,10 +16757,17 @@
 	        return kendo.toString(sum, "n0");
 	    },	 
 	    licenseChange 		: function(e) {
-			var data = e.data;
-			var license = this.licenseDS.at(e.sender.selectedIndex - 1);
+			var self = this;
+			this.blocDS.data([]);
+			this.set("locationSelect", "");
+			this.set("haveLicense", false)
+			this.subLocationDS.data([]);
+			this.boxDS.data([]);
+			this.set("boxSelect", "");
+			this.set("haveSubLocation", false);
+
 			this.blocDS.filter([
-				{field: "branch_id",value: license.id},
+				{field: "branch_id",value: this.get("licenseSelect")},
 				{field: "main_bloc",value: 0},
 				{field: "main_pole",value: 0}
 			]);
@@ -16698,32 +16775,44 @@
 	    },
 	    onLocationChange 	: function(e) {
 			var self = this;
-			this.subLocationDS.filter([
-				{field: "branch_id", value: this.get("licenseSelect")},
-				{field: "main_bloc", value: this.get("blocSelect")},
-				{field: "main_pole", value: 0}
-			]);
-			this.subLocationDS.bind("requestEnd", function(e){
-				if(e.response){
-					console.log(self.subLocationDS.data().length);
-					if(self.subLocationDS.data().length > 0){
-						self.set("haveLocation", true);
-					}
+			this.subLocationDS.data([]);
+			this.boxDS.data([]);
+			this.set("boxSelect", "");
+			this.set("haveSubLocation", false);
+			this.subLocationDS.query({
+				filter: [
+					{field: "branch_id", value: this.get("licenseSelect")},
+					{field: "main_bloc", value: this.get("blocSelect")},
+					{field: "main_pole", value: 0}
+					],
+				page: 1
+			})
+			.then(function(e){
+				if(self.subLocationDS.data().length > 0){
+					self.set("haveLocation", true);
+				}else{
+					self.set("haveLocation", false);
+					self.set("subLocationSelect", "");
+					self.subLocationDS.data([]);
 				}
 			});
 		},
 		onSubLocationChange : function(e) {
 			var self = this;
-			this.boxDS.filter([
-				{field: "branch_id", value: this.get("licenseSelect")},
-				{field: "main_bloc", value: this.get("blocSelect")},
-				{field: "main_pole", value: this.get("subLocationSelect")}
-			]);
-			this.boxDS.bind("requestEnd", function(e){
-				if(e.response){
-					if(self.boxDS.data().length > 0){
-						self.set("haveSubLocation", true);
-					}
+			this.boxDS.query({
+				filter: [
+					{field: "branch_id", value: this.get("licenseSelect")},
+					{field: "main_bloc", value: this.get("blocSelect")},
+					{field: "main_pole", value: this.get("subLocationSelect")}
+				]
+			})
+			.then(function(e){
+				if(self.boxDS.data().length > 0){
+					self.set("haveSubLocation", true);
+				}else{
+					self.set("haveSubLocation", false);
+					self.set("boxSelect", "");
+					self.boxDS.data([]);
 				}
 			});
 		},
@@ -16774,7 +16863,6 @@
 	    },
 	    makeInvoice 		: function(e) {
 	    	var that = this;
-	    	
 	    	if(e.data.invoiced) {
 	    		banhji.runBill.invoiceArray.push(e.data);
 	    	} else {
@@ -17022,7 +17110,8 @@
 				bill_date 			: BillingDate,
 				due_date 			: DueDate,
 				meter_id 			: MeterID,
-
+				pole_id 			: this.get("subLocationSelect"),
+				box_id 				: this.get("boxSelect"),
 				invoice_lines    	: invoiceItems
 			});
 	    },
@@ -17088,6 +17177,8 @@
 		dataSource 			: dataStore(apiUrl + "branches"),
 		licenseDS 			: dataStore(apiUrl + "branches"),
 		blocDS 				: dataStore(apiUrl + "locations"),
+		subLocationDS 		: dataStore(apiUrl + "locations"),
+		boxDS 				: dataStore(apiUrl + "locations"),
 		invoiceDS	     	: dataStore(apiUrl + "winvoices/make"),
 		attachmentDS		: dataStore(apiUrl + "attachments"),
 		printBTN 			: false,
@@ -17148,6 +17239,9 @@
 		noPrint 			: 0,
 		amountTotal 		: 0,
 		totalMeter 			: 0,
+		haveLicense 		: false,
+		haveLocation 		: false,
+		haveSubLocation 	: false,
 		pageLoad 			: function(id){
 			this.txnTemplateDS.filter({field:"moduls", value: "water_mg" });
 		}, 
@@ -17200,23 +17294,71 @@
 	    	this.set("totalInv", this.printArray.length);
 	    },
 	    blocEnable 		: false,
-	    licenseChange 	: function(e) {
-			var data = e.data, self = this;
-			var license = this.licenseDS.at(e.sender.selectedIndex - 1);
+		licenseChange 		: function(e) {
+			var self = this;
+			this.blocDS.data([]);
+			this.set("locationSelect", "");
+			this.set("haveLicense", false)
+			this.subLocationDS.data([]);
+			this.boxDS.data([]);
+			this.set("boxSelect", "");
+			this.set("haveSubLocation", false);
+
 			this.blocDS.filter([
-				{field: "branch_id", value: license.id},
-				{field: "main_bloc", value: 0},
-				{field: "main_pole", value: 0}
+				{field: "branch_id",value: this.get("licenseSelect")},
+				{field: "main_bloc",value: 0},
+				{field: "main_pole",value: 0}
 			]);
-			this.set("blocEnable", true);
+			this.set("haveLicense", true);
 			this.dataSource.query(
-				{filter: {field: "id", value: license.id}}
+				{filter: {field: "id", value: this.get("licenseSelect")}}
 			).then(function(e){
 				var view = self.dataSource.view();
 				banhji.InvoicePrint.license = view[0];
 			});
+	    },
+	    onLocationChange 	: function(e) {
+			var self = this;
+			this.subLocationDS.data([]);
+			this.boxDS.data([]);
+			this.set("boxSelect", "");
+			this.set("haveSubLocation", false);
+			this.subLocationDS.query({
+				filter: [
+					{field: "branch_id", value: this.get("licenseSelect")},
+					{field: "main_bloc", value: this.get("blocSelect")},
+					{field: "main_pole", value: 0}
+					],
+				page: 1
+			})
+			.then(function(e){
+				if(self.subLocationDS.data().length > 0){
+					self.set("haveLocation", true);
+				}else{
+					self.set("haveLocation", false);
+					self.set("subLocationSelect", "");
+					self.subLocationDS.data([]);
+				}
+			});
 		},
-		blocChange 			: function(e){
+		onSubLocationChange : function(e) {
+			var self = this;
+			this.boxDS.query({
+				filter: [
+					{field: "branch_id", value: this.get("licenseSelect")},
+					{field: "main_bloc", value: this.get("blocSelect")},
+					{field: "main_pole", value: this.get("subLocationSelect")}
+				]
+			})
+			.then(function(e){
+				if(self.boxDS.data().length > 0){
+					self.set("haveSubLocation", true);
+				}else{
+					self.set("haveSubLocation", false);
+					self.set("boxSelect", "");
+					self.boxDS.data([]);
+				}
+			});
 		},
 		noPrintIDTransaction: [],
 		search 				: function(){
@@ -17241,13 +17383,16 @@
 					{field: "month_of >=", value: monthOf},
 					{field: "month_of <=", value: monthL}
 				);
-				//this.dataSource.filter(para);
 				if(license_id){
 					if(bloc_id){
-						para.push(
-							{field: "location_id", value: bloc_id},
-							{field: "type", value: "Utility_Invoice"}
-						);
+						para.push({field: "type", value: "Utility_Invoice"});
+						if(this.get("boxSelect")){
+							para.push({field: "box_id", value: this.get("boxSelect")});
+						}else if(this.get("subLocationSelect")){
+							para.push({field: "pole_id", value: this.get("subLocationSelect")});
+						}else{
+							para.push({field: "location_id", value: this.get("locationSelect")});
+						}
 						this.invoiceCollection.dataSource.query({
 							filter: para
 						}).then(function(e){
@@ -17272,7 +17417,6 @@
 			}
 	    },
 	    goNoPrint 			: function(){
-	    	
 	    	if(this.noPrintIDTransaction.length > 0){
 	    		this.clearAll();
 		    	var noPArray = [];
@@ -24458,7 +24602,6 @@
 		},
 		loadReading 		: function(){
 			var that = this, objMeter = this.get("objMeter");
-
 			if(this.readingVM.dataSource.total()==0){
 				if(objMeter){
 					this.readingVM.set('NumberSR', objMeter.meter_number);
@@ -24470,11 +24613,13 @@
 						that.set("miniMonthofS", last.month_of);
 					});
 				}else{
-					var meterIds = [];
-					$.each(this.meterDS.data(), function(index, value) {
-						meterIds.push(value.id);
-					});
-					this.readingVM.dataSource.filter({field: 'meter_id', operator: 'where_in', value: meterIds});
+					if(objMeter.id){
+						var meterIds = [];
+						$.each(this.meterDS.data(), function(index, value) {
+							meterIds.push(value.id);
+						});
+						this.readingVM.dataSource.filter({field: 'meter_id', operator: 'where_in', value: meterIds});
+					}
 				}
 			}
 		},
