@@ -115,7 +115,6 @@ class Item_lines extends REST_Controller {
 				   	"item_prices" 		=> [],
 				   	"item" 				=> $item
 				);
-				// 	$data["results"][$key]["$row"] = $q;
 			}
 		}
 
