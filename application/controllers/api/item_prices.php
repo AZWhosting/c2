@@ -48,7 +48,7 @@ class Item_prices extends REST_Controller {
 	    	foreach ($filter['filters'] as $value) {
 	    		if(isset($value['operator'])) {
 					if($value["operator"]=="measurement") {
-	    				$obj->include_related("measurement", array("name"));
+	    				// $obj->include_related("measurement", array("name"));
 					}else{
 						$obj->{$value["operator"]}($value["field"], $value["value"]);
 					}
@@ -57,6 +57,8 @@ class Item_prices extends REST_Controller {
 				}
 			}
 		}
+
+		$obj->include_related("measurement", array("name"));
 
 		//Results
 		if($page && $limit){
