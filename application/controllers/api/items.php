@@ -157,7 +157,8 @@ class Items extends REST_Controller {
 		$data["count"] = 0;				
 		
 		foreach ($models as $value) {
-			$obj = new Item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);			
+			$obj = new Item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
 			isset($value->company_id) 				? $obj->company_id 				= $value->company_id : "";
 			isset($value->contact_id) 				? $obj->contact_id 				= $value->contact_id : "";			
 			isset($value->currency_id) 				? $obj->currency_id 			= $value->currency_id : "";
@@ -202,6 +203,16 @@ class Items extends REST_Controller {
 		   	isset($value->deleted) 					? $obj->deleted 				= $value->deleted : "";
 
 	   		if($obj->save()){
+	   			//Item Price
+	   			$itemPrice = new Item_price(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+	   			$itemPrice->item_id 			= $obj->id;
+				$itemPrice->measurement_id 		= $obj->measurement_id;
+				$itemPrice->quantity 			= 1;
+				$itemPrice->conversion_ratio 	= 1;
+				$itemPrice->price 				= $obj->price;			
+				$itemPrice->locale 				= $obj->locale;
+				$itemPrice->save();
+
 			   	$data["results"][] = array(
 			   		"id" 						=> $obj->id,
 					"company_id" 				=> $obj->company_id,

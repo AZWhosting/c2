@@ -46798,15 +46798,6 @@
 				item = this.itemDS.get(id),
 				measurement = this.measurementDS.get(item.measurement_id);
 
-			priceList.push({ 
-				item_id: id,
-				measurement_id: item.measurement_id,
-				conversion_ratio: 1,
-				price: item.price,
-				locale: item.locale,
-				measurement: measurement.name  
-			});
-
 			$.each(this.itemPriceList, function(index, value){				
 				if(value.item_id==id){
 					priceList.push(value);
