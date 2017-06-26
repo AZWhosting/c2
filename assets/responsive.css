@@ -1596,6 +1596,12 @@ width: 50% !important;
 .recevable-report table tr td h3 a:hover{
   color: #2D77B7;
 }
+.sale-report.rice-report table tr td h3 a,
+.sale-report.rice-report table tr td h3 a:hover,
+.recevable-report.rice-report table tr td h3 a,
+.recevable-report.rice-report table tr td h3 a:hover{
+  color: #4f961f;
+}
 .sale-report table tr td,
 .recevable-report table tr td{
   padding: 0 !important;
@@ -2877,7 +2883,6 @@ a.activate {
     position: relative;
     cursor: pointer;
     margin-right: 20px;
-    margin-bottom: 20px;
     overflow: hidden;
     text-align: center;
     background: #FFF;

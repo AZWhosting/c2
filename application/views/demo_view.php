@@ -21060,10 +21060,10 @@
 						<table class="table table-bordered table-primary table-striped table-vertical-center">
 					        <thead>
 					            <tr>
-					                <th data-bind="text: lang.lang.conversion_ratio"></th>
-					                <th data-bind="text: lang.lang.uom"></th>
-					                <th data-bind="text: lang.lang.price"></th>			                
-					                <th style="text-align: center;"></th>	                
+					                <th data-bind="text: lang.lang.conversion_ratio" class="center" style="width: 30%"></th>
+					                <th data-bind="text: lang.lang.uom" style="width: 25%"></th>
+					                <th data-bind="text: lang.lang.price" class="center" style="width: 30%"></th>			                
+					                <th style="text-align: center; width: 15%"></th>	                
 					            </tr>
 					        </thead>
 					        <tbody data-template="itemPrice-template"
@@ -21092,7 +21092,9 @@
 					    <div id="pager" class="k-pager-wrap"
 				             data-role="pager"
 				             data-auto-bind="false" 
-				             data-bind="source: recordDS"></div>					
+				             data-bind="source: recordDS"></div>
+
+				        <div id="ntf1" data-role="notification"></div>					
 
 					</div>
 
@@ -46386,7 +46388,7 @@
 		selectCustomerMessage 		: "Please select a customer.",
 		selectSupplierMessage 		: "Please select a supplier.",
 		selectItemMessage 			: "Please select an item.",
-		existingMeasurement 		: "This measurement is already exists!",
+		duplicateMeasurementMessage	: "Sorry, you can not use the same measurement.",
 		duplicateSelectedItemMessage: "You already selected this item.",
 		pageLoad 					: function(){
 			this.loadAccounts();
@@ -47297,8 +47299,6 @@
 					page: 1,
 					pageSize: 10
 				});
-			}else{
-				alert(banhji.source.selectCustomerMessage);
 			}
 		},
 		//Upload
@@ -47337,8 +47337,6 @@
 		            	alert("This type of file is not allowed to attach.");
 		            }
 		        });
-	    	}else{
-	    		alert("Please select a customer!");
 	    	}
 	    },
 	    removeFile 			: function(e){
@@ -47446,8 +47444,6 @@
 					self.set("overInvoice", kendo.toString(over, "n0"));
 					self.set("balance", kendo.toString(balance, obj.locale=="km-KH"?"c0":"c", obj.locale));
 				});
-			}else{
-				alert(banhji.source.selectCustomerMessage);
 			}
 		},
 		loadBalance 		: function(){
@@ -47467,8 +47463,6 @@
 				  	page: 1,
 				  	pageSize: 10
 				});
-			}else{
-				alert(banhji.source.selectCustomerMessage);
 			}
 		},
 		loadDeposit 		: function(){
@@ -47487,8 +47481,6 @@
 				  	page: 1,
 				  	pageSize: 10
 				});
-			}else{
-				alert(banhji.source.selectCustomerMessage);
 			}
 		},
 		loadOverInvoice 	: function(){
@@ -47509,8 +47501,6 @@
 				  	page: 1,
 				  	pageSize: 10
 				});
-			}else{
-				alert(banhji.source.selectCustomerMessage);
 			}
 		},	
 		selectedRow			: function(e){
@@ -47585,9 +47575,7 @@
 	            	page: 1,
 	            	pageSize: 10
 	            });
-	        }else{
-	        	alert("Please select a customer.");
-	        }            
+	        }
 		},
 		//Links			
 		goEdit 		 		: function(){
@@ -47595,8 +47583,6 @@
 
 			if(obj!==null){
 				banhji.router.navigate('/customer/'+obj.id);
-			}else{
-				alert(banhji.source.selectCustomerMessage);
 			}
 		},
 		goReference 		: function(e){
@@ -47616,8 +47602,6 @@
 			if(obj!==null){
 				banhji.router.navigate('/quote');
 				banhji.quote.loadContact(obj.id);
-			}else{
-				alert(banhji.source.selectCustomerMessage);
 			}
 		},
 		goDeposit			: function(){
@@ -47626,8 +47610,6 @@
 			if(obj!==null){
 				banhji.router.navigate('/customer_deposit');
 				banhji.customerDeposit.loadContact(obj.id);
-			}else{
-				alert(banhji.source.selectCustomerMessage);
 			}
 		},
 		goSaleOrder			: function(){
@@ -47636,8 +47618,6 @@
 			if(obj!==null){
 				banhji.router.navigate('/sale_order');
 				banhji.saleOrder.loadContact(obj.id);
-			}else{
-				alert(banhji.source.selectCustomerMessage);
 			}
 		},
 		goCashSale			: function(){
@@ -47646,8 +47626,6 @@
 			if(obj!==null){
 				banhji.router.navigate('/cash_sale');
 				banhji.cashSale.loadContact(obj.id);
-			}else{
-				alert(banhji.source.selectCustomerMessage);
 			}
 		},
 		goInvoice			: function(){
@@ -47656,8 +47634,6 @@
 			if(obj!==null){
 				banhji.router.navigate('/invoice');
 				banhji.invoice.loadContact(obj.id);
-			}else{
-				alert(banhji.source.selectCustomerMessage);
 			}
 		},
 		goGDN				: function(){
@@ -47666,8 +47642,6 @@
 			if(obj!==null){
 				banhji.router.navigate('/gdn');
 				banhji.gdn.loadContact(obj.id);
-			}else{
-				alert(banhji.source.selectCustomerMessage);
 			}
 		},
 		goSaleReturn		: function(){
@@ -47676,8 +47650,6 @@
 			if(obj!==null){
 				banhji.router.navigate('/sale_return');
 				banhji.saleReturn.loadContact(obj.id);
-			}else{
-				alert(banhji.source.selectCustomerMessage);
 			}
 		},
 		goStatement			: function(){
@@ -47686,8 +47658,6 @@
 			if(obj!==null){
 				banhji.router.navigate('/statement');
 				banhji.statement.loadContact(obj.id);
-			}else{
-				alert(banhji.source.selectCustomerMessage);
 			}
 		},
 		goCashRefound		: function(){
@@ -47696,8 +47666,6 @@
 			if(obj!==null){
 				banhji.router.navigate('/cash_refund');
 				banhji.statement.loadContact(obj.id);
-			}else{
-				alert(banhji.source.selectCustomerMessage);
 			}
 		},
 		goCashReceipt		: function(){
@@ -47706,8 +47674,6 @@
 			if(obj!==null){
 				banhji.router.navigate('/cash_receipt');
 				banhji.cashReceipt.loadContact(obj.id);
-			}else{
-				alert(banhji.source.selectCustomerMessage);
 			}
 		},
 		payInvoice			: function(e){
@@ -47716,8 +47682,6 @@
 			if(obj!==null){
 				banhji.router.navigate('/cash_receipt');
 				banhji.cashReceipt.loadInvoice(data.id);
-			}else{
-				alert(banhji.source.selectCustomerMessage);
 			}
 		},
 		//Note
@@ -61612,8 +61576,6 @@
 					page: 1,
 					pageSize: 10
 				});
-			}else{
-				alert(banhji.source.selectSupplierMessage);
 			}
 		},
 		//Upload
@@ -61761,8 +61723,6 @@
 					self.set("openInvoice", kendo.toString(open, "n0"));
 					self.set("overInvoice", kendo.toString(over, "n0"));
 				});
-			}else{
-				alert(banhji.source.selectSupplierMessage);
 			}
 		},
 		loadBalance 		: function(){
@@ -61782,8 +61742,6 @@
 				  	page: 1,
 				  	pageSize: 10
 				});
-			}else{
-				alert(banhji.source.selectSupplierMessage);
 			}
 		},
 		loadPO 				: function(){
@@ -61803,8 +61761,6 @@
 				  	page: 1,
 				  	pageSize: 10
 				});
-			}else{
-				alert(banhji.source.selectSupplierMessage);
 			}
 		},
 		loadOverInvoice 	: function(){
@@ -61825,8 +61781,6 @@
 				  	page: 1,
 				  	pageSize: 10
 				});
-			}else{
-				alert(banhji.source.selectSupplierMessage);
 			}
 		},
 		selectedRow			: function(e){
@@ -61912,8 +61866,6 @@
 
 			if(obj!==null){
 				banhji.router.navigate('/vendor/'+obj.id);
-			}else{
-				alert(banhji.source.selectSupplierMessage);
 			}
 		},
 		goReference 		: function(e){
@@ -61933,8 +61885,6 @@
 			if(obj!==null){
 				banhji.router.navigate('/purchase_order');
 				banhji.purchaseOrder.loadContact(obj.id);
-			}else{
-				alert(banhji.source.selectSupplierMessage);
 			}
 		},
 		goDeposit			: function(){
@@ -61943,8 +61893,6 @@
 			if(obj!==null){
 				banhji.router.navigate('/vendor_deposit');
 				banhji.vendorDeposit.loadContact(obj.id);
-			}else{
-				alert(banhji.source.selectSupplierMessage);
 			}
 		},
 		goPurchase			: function(){
@@ -61953,8 +61901,6 @@
 			if(obj!==null){
 				banhji.router.navigate('/purchase');
 				banhji.purchase.loadContact(obj.id);
-			}else{
-				alert(banhji.source.selectSupplierMessage);
 			}
 		},
 		goPurchaseReturn	: function(){
@@ -61963,8 +61909,6 @@
 			if(obj!==null){
 				banhji.router.navigate('/purchase_return');
 				banhji.purchaseReturn.loadContact(obj.id);
-			}else{
-				alert(banhji.source.selectSupplierMessage);
 			}
 		},
 		goGRN				: function(){
@@ -61973,8 +61917,6 @@
 			if(obj!==null){
 				banhji.router.navigate('/grn');
 				banhji.grn.loadContact(obj.id);
-			}else{
-				alert(banhji.source.selectSupplierMessage);
 			}
 		},
 		goCashPayment		: function(){
@@ -61983,8 +61925,6 @@
 			if(obj!==null){
 				banhji.router.navigate('/cash_payment');
 				banhji.cashPayment.loadContact(obj.id);
-			}else{
-				alert(banhji.source.selectSupplierMessage);
 			}
 		},
 		goPaymentRefund		: function(){
@@ -61993,8 +61933,6 @@
 			if(obj!==null){
 				banhji.router.navigate('/payment_refund');
 				banhji.cashPayment.loadContact(obj.id);
-			}else{
-				alert(banhji.source.selectSupplierMessage);
 			}
 		},
 		payBill 			: function(e){
@@ -62003,8 +61941,6 @@
 			if(obj!==null){
 				banhji.router.navigate('/cash_payment');
 				banhji.cashPayment.loadInvoice(data.id);
-			}else{
-				alert(banhji.source.selectSupplierMessage);
 			}
 		},
 		//Note
@@ -72638,7 +72574,7 @@
 		loadOnHand 			: function(){
 			var self = this, rateList = {}, obj = this.get("obj");
 			
-			if(obj.item_type_id==1){
+			if(obj.item_type_id==1 && obj.is_catalog==0 && obj.is_assembly==0){
 				this.onHandDS.query({
 					filter:[
 						{ field:"item_id", value: obj.id },
@@ -72662,38 +72598,35 @@
 
 					self.set("on_hand", kendo.toString(onHand, "n"));
 
-					//Inventory Value
-					return self.inventoryValueDS.query({
-						filter:[
-							{ field:"transaction_id", operator:"where_in", value: txnIds },
-							{ field:"account_type_id", operator:"where_in_related_account", value: 13 },
-							{ field:"is_recurring <>", operator:"where_related_transaction", value: 1 },
-							{ field:"deleted <>", operator:"where_related_transaction", value: 1 },
-							{ field:"deleted <>", value: 1 }
-						]
-					});
-				}).then(function(){
-					var view = self.inventoryValueDS.view();
+					if(txnIds.length>0){
+						self.inventoryValueDS.query({
+							filter:[
+								{ field:"transaction_id", operator:"where_in", value: txnIds },
+								{ field:"account_type_id", operator:"where_in_related_account", value: 13 },
+								{ field:"is_recurring <>", operator:"where_related_transaction", value: 1 },
+								{ field:"deleted <>", operator:"where_related_transaction", value: 1 },
+								{ field:"deleted <>", value: 1 }
+							]
+						}).then(function(){
+							var view = self.inventoryValueDS.view();
 
-					var inventoryDr = 0, inventoryCr = 0, totalInventory = 0;
-					$.each(view, function(index, value){
-						var rate = 1;
-
-						if(value.dr>0){
-							inventoryDr += kendo.parseFloat(value.dr) / rateList[value.transaction_id];
-						}
-						if(value.cr>0){
-							inventoryCr += kendo.parseFloat(value.cr) / rateList[value.transaction_id];
-						}
-					});
-					
-					totalInventory = inventoryDr - inventoryCr;
-
-					self.set("total_value", kendo.toString(totalInventory, "c2", obj.locale));
+							if(view.length>0){
+								var inventoryDr = 0, inventoryCr = 0, totalInventory = 0;
+								$.each(view, function(index, value){
+									if(value.dr>0){
+										inventoryDr += kendo.parseFloat(value.dr) / rateList[value.transaction_id];
+									}
+									if(value.cr>0){
+										inventoryCr += kendo.parseFloat(value.cr) / rateList[value.transaction_id];
+									}
+								});
+								
+								totalInventory = inventoryDr - inventoryCr;
+								self.set("total_value", kendo.toString(totalInventory, "c2", obj.locale));
+							}
+						});
+					}
 				});
-			}else{
-				this.set("on_hand", 0);
-				this.set("total_value", 0);
 			}
 		},
 		//Upload
@@ -72824,13 +72757,14 @@
 				this.setUOM();
 				this.setItemType();
 				this.loadOnHand();
-			}else{
-				alert(banhji.source.selectItemMessage);
 			}
 		},
 		selectedRow			: function(e){
 			var id = e.data.id,
-			data = e.data;			
+			data = e.data;
+
+			this.set("on_hand", 0);
+			this.set("total_value", 0);			
 			
 			this.set("obj", data);
 			this.loadData();
@@ -72946,9 +72880,7 @@
 	            	page: 1,
 	            	pageSize: 10
 	            });
-	        }else{
-				alert("Please select an item.");
-			}            
+	        }          
 		},
 		edit				: function(){
 			var obj = this.get("obj");
@@ -72973,8 +72905,6 @@
 				}else{
 
 				}
-			}else{
-				alert(banhji.source.selectItemMessage);
 			}
 		},
 		pricing				: function(){
@@ -72988,8 +72918,6 @@
 				}else{
 					banhji.router.navigate('/item_prices/'+obj.id);
 				}
-			}else{
-				alert(banhji.source.selectItemMessage);
 			}
 		}
 	});	
@@ -73137,17 +73065,18 @@
     		this.changes();
     	},
     	measurementChanges 	: function(){
-    		var priceList = this.get("priceList");
+    		var priceList = this.get("priceList"), lastIndex = this.dataSource.total()-1;
 
     		if(priceList.measurement_id>0){
     			$.each(this.dataSource.data(), function(index, value){
-    				if(value.measurement_id==priceList.measurement_id){
+    				if(index < lastIndex && value.measurement_id==priceList.measurement_id){    					
     					priceList.set("measurement_id", 0);
 
-    					// $("#ntf1").data("kendoNotification").error(banhji.source.existingMeasurement);
+    					$("#ntf1").data("kendoNotification").error(banhji.source.duplicateMeasurementMessage);
+
+    					return false;
     				}
     			});
-
     		}
     	},
     	openWindow			: function(){
@@ -73178,17 +73107,37 @@
       						
 			this.set("priceList", obj);	
       	},
-      	save 				: function(){
-      		this.dataSource.sync();
-      		var saved = false;
-      		this.dataSource.bind("requestEnd",function(e){
-      			if(saved==false){
-      				saved = true;
-      				banhji.source.loadItemPrices();
-      			}
-      		});
+      	validating 			: function(){
+      		var result = true,
+      			priceList = this.get("priceList");
 
-      		this.set("windowVisible", false); 		
+      		if(priceList.measurement_id==0){
+      			result = false;
+      		}
+
+      		if(priceList.locale==null){
+      			result = false;
+      		}
+
+      		return result;
+      	},
+      	save 				: function(){
+      		if(this.validating()){
+	      		this.dataSource.sync();
+	      		var saved = false;
+	      		this.dataSource.bind("requestEnd",function(e){
+	      			if(saved==false){
+	      				saved = true;
+	      				banhji.source.loadItemPrices();
+
+	      				$("#ntf1").data("kendoNotification").success(banhji.source.successMessage);
+	      			}
+	      		});
+
+	      		this.set("windowVisible", false);
+      		}else{
+      			$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+      		} 		
       	},
       	edit 				: function(e){
       		var data = e.data;
@@ -73731,6 +73680,7 @@
 
 				//Refresh
 				banhji.source.loadItems();
+				banhji.source.loadItemPrices();
 			});
 		},
 		cancel 					: function(){
@@ -78513,8 +78463,6 @@
 		            	alert("This type of file is not allowed to attach.");
 		            }
 		        });
-	    	}else{
-	    		alert("Please select an account!");
 	    	}
 	    },
 	    removeFile 			: function(e){
@@ -89269,8 +89217,6 @@
 		            	alert("This type of file is not allowed to attach.");
 		            }
 		        });
-	    	}else{
-	    		alert("Please select a customer!");
 	    	}
 	    },
 	    removeFile 			: function(e){

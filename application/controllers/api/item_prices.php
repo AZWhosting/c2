@@ -77,7 +77,7 @@ class Item_prices extends REST_Controller {
 					"price" 			=> floatval($value->price),
 					"amount" 			=> floatval($value->amount),					
 					"locale" 			=> $value->locale,					
-					"measurement" 		=> $value->measurement_name					
+					"measurement" 		=> $value->measurement_name
 				);
 			}
 		}
@@ -121,7 +121,8 @@ class Item_prices extends REST_Controller {
 					"conversion_ratio" 	=> floatval($obj->conversion_ratio),
 					"price" 			=> floatval($obj->price),
 					"amount" 			=> floatval($obj->amount),					
-					"locale" 			=> $obj->locale
+					"locale" 			=> $obj->locale,
+					"measurement" 		=> $obj->measurement->get()->name
 				);				
 			}			
 		}
@@ -169,7 +170,8 @@ class Item_prices extends REST_Controller {
 					"conversion_ratio" 	=> floatval($obj->conversion_ratio),
 					"price" 			=> floatval($obj->price),
 					"amount" 			=> floatval($obj->amount),					
-					"locale" 			=> $obj->locale
+					"locale" 			=> $obj->locale,
+					"measurement" 		=> $obj->measurement->get()->name
 				);						
 			}
 		}

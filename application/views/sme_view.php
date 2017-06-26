@@ -386,107 +386,109 @@
 					<div class="row hidden-xs">
 						<div class="col-md-12">
 							<div class="board-chart" style="margin-top: 15px; ">
-								<div class="col-md-3" style="padding-left: 0;">
-									<div style="background: #0ec9fc; width: 100%; float: left; text-align: center; height: 135px;	">
-										<p style="margin-top: 10px; font-size: 10px;">Your Business Financial Health Score</p>
-										<p style="color: #fff; display: inline-block; margin-top: 27px;">
-											<sup style="font-size: 47px; font-weight: 600; margin-top: 8px; margin-left: 13px;">100</sup>
-											<span style="font-size: 35px; font-weight: 300; margin-left: -10px;">/</span>
-											<sub style="font-size: 11px; margin-left: -9px;">100</sub>
-										</p>
-									</div>
-								</div>
-								<div class="col-md-2" style="padding-left: 0;">
-									<div style="background: #96e95b; width: 100%; float: left; text-align: center; height: 135px; padding: 20px 0;">
-										<p></p>
-										<img src="<?php echo base_url()?>assets/sign-new.png" style="width: 45px;">
-										<p style="font-size: 10px; margin-top: 20px;">Outperform your peer</p>
-									</div>
-								</div>
-								<div class="col-md-7" style="padding: 0;">
-									<div style="width: 100%; float: left; ">
-										<div style="width: 100%; padding: 8px; text-align: center; color: #333; float: left; background: #ddd;">
-											Recommand
+								<div class="row">
+									<div class="col-md-3">
+										<div style="background: #0ec9fc; width: 100%; float: left; text-align: center; height: 135px;	">
+											<p style="margin-top: 10px; font-size: 10px;">Your Business Financial Health Score</p>
+											<p style="color: #fff; display: inline-block; margin-top: 27px;">
+												<sup style="font-size: 47px; font-weight: 600; margin-top: 8px; margin-left: 13px;">100</sup>
+												<span style="font-size: 35px; font-weight: 300; margin-left: -10px;">/</span>
+												<sub style="font-size: 11px; margin-left: -9px;">100</sub>
+											</p>
 										</div>
-										<div style="width: 100%; background: #f4f4f4; float: left; padding: 5px 10px; text-align: left;">
-											<div id="carousel-1" class="carousel slide" style="margin-bottom: 0; float: left;">
-												<!-- Indicators -->
-												<ol class="carousel-indicators" style="bottom: -14px; left: 86%;">
-													<li data-target="#carousel-1" data-slide-to="0" class="active"></li>
-													<li data-target="#carousel-1" data-slide-to="1"></li>
-													<li data-target="#carousel-1" data-slide-to="2"></li>
-													<li data-target="#carousel-1" data-slide-to="3"></li>
-													<li data-target="#carousel-1" data-slide-to="4"></li>
-												</ol>
-												<!-- // Indicators END -->
-												
-												<!-- Items -->
-												<div class="carousel-inner" style=" float: left;">
-												
-													<!-- Item -->
-													<div class="item active">
-														<div class="carousel-caption" style="position: relative; right: 0; left: 0; padding: 0; top: 0; background: none;">
-															<h4 style="font-size: 15px; float: left; width: 100%; text-align: left;">Get this item now!</h4>
-															<p style="margin-bottom: 0; font-size: 12px; text-align: left;">
-																Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
-															</p>
-														</div>
-													</div>
-													<!-- // Item END -->
-
-													<!-- Item -->
-													<div class="item">
-														<div class="carousel-caption" style="position: relative; right: 0; left: 0; padding: 0; top: 0; background: none;">
-															<h4 style="font-size: 15px; float: left; width: 100%; text-align: left;">Get this item now!</h4>
-															<p style="margin-bottom: 0; font-size: 12px; text-align: left;">
-																Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
-															</p>
-														</div>
-													</div>
-													<!-- // Item END -->
-
-													<!-- Item -->
-													<div class="item">
-														<div class="carousel-caption" style="position: relative; right: 0; left: 0; padding: 0; top: 0; background: none;">
-															<h4 style="font-size: 15px; float: left; width: 100%; text-align: left;">Get this item now!</h4>
-															<p style="margin-bottom: 0; font-size: 12px; text-align: left;">
-																Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
-															</p>
-														</div>
-													</div>
-													<!-- // Item END -->
-
-													<!-- Item -->
-													<div class="item">
-														<div class="carousel-caption" style="position: relative; right: 0; left: 0; padding: 0; top: 0; background: none;">
-															<h4 style="font-size: 15px; float: left; width: 100%; text-align: left;">Get this item now!</h4>
-															<p style="margin-bottom: 0; font-size: 12px; text-align: left;">
-																Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
-															</p>
-														</div>
-													</div>
-													<!-- // Item END -->
-
-													<!-- Item -->
-													<div class="item">
-														<div class="carousel-caption" style="position: relative; right: 0; left: 0; padding: 0; top: 0; background: none;">
-															<h4 style="font-size: 15px; float: left; width: 100%; text-align: left;">Get this item now!</h4>
-															<p style="margin-bottom: 0; font-size: 12px; text-align: left;">
-																Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
-															</p>
-														</div>
-													</div>
-													<!-- // Item END -->
+									</div>
+									<div class="col-md-2" >
+										<div style="background: #96e95b; width: 100%; float: left; text-align: center; height: 135px; padding: 20px 0;">
+											<p></p>
+											<img src="<?php echo base_url()?>assets/sign-new.png" style="width: 45px;">
+											<p style="font-size: 10px; margin-top: 20px;">Outperform your peer</p>
+										</div>
+									</div>
+									<div class="col-md-7" >
+										<div style="width: 100%; float: left; ">
+											<div style="width: 100%; padding: 8px; text-align: center; color: #333; float: left; background: #ddd;">
+												Recommand
+											</div>
+											<div style="width: 100%; background: #f4f4f4; float: left; padding: 5px 10px; text-align: left;">
+												<div id="carousel-1" class="carousel slide" style="margin-bottom: 0; float: left;">
+													<!-- Indicators -->
+													<ol class="carousel-indicators" style="bottom: -14px; left: 86%;">
+														<li data-target="#carousel-1" data-slide-to="0" class="active"></li>
+														<li data-target="#carousel-1" data-slide-to="1"></li>
+														<li data-target="#carousel-1" data-slide-to="2"></li>
+														<li data-target="#carousel-1" data-slide-to="3"></li>
+														<li data-target="#carousel-1" data-slide-to="4"></li>
+													</ol>
+													<!-- // Indicators END -->
 													
+													<!-- Items -->
+													<div class="carousel-inner" style=" float: left;">
+													
+														<!-- Item -->
+														<div class="item active">
+															<div class="carousel-caption" style="position: relative; right: 0; left: 0; padding: 0; top: 0; background: none;">
+																<h4 style="font-size: 15px; float: left; width: 100%; text-align: left;">Get this item now!</h4>
+																<p style="margin-bottom: 0; font-size: 12px; text-align: left;">
+																	Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
+																</p>
+															</div>
+														</div>
+														<!-- // Item END -->
 
+														<!-- Item -->
+														<div class="item">
+															<div class="carousel-caption" style="position: relative; right: 0; left: 0; padding: 0; top: 0; background: none;">
+																<h4 style="font-size: 15px; float: left; width: 100%; text-align: left;">Get this item now!</h4>
+																<p style="margin-bottom: 0; font-size: 12px; text-align: left;">
+																	Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
+																</p>
+															</div>
+														</div>
+														<!-- // Item END -->
+
+														<!-- Item -->
+														<div class="item">
+															<div class="carousel-caption" style="position: relative; right: 0; left: 0; padding: 0; top: 0; background: none;">
+																<h4 style="font-size: 15px; float: left; width: 100%; text-align: left;">Get this item now!</h4>
+																<p style="margin-bottom: 0; font-size: 12px; text-align: left;">
+																	Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
+																</p>
+															</div>
+														</div>
+														<!-- // Item END -->
+
+														<!-- Item -->
+														<div class="item">
+															<div class="carousel-caption" style="position: relative; right: 0; left: 0; padding: 0; top: 0; background: none;">
+																<h4 style="font-size: 15px; float: left; width: 100%; text-align: left;">Get this item now!</h4>
+																<p style="margin-bottom: 0; font-size: 12px; text-align: left;">
+																	Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
+																</p>
+															</div>
+														</div>
+														<!-- // Item END -->
+
+														<!-- Item -->
+														<div class="item">
+															<div class="carousel-caption" style="position: relative; right: 0; left: 0; padding: 0; top: 0; background: none;">
+																<h4 style="font-size: 15px; float: left; width: 100%; text-align: left;">Get this item now!</h4>
+																<p style="margin-bottom: 0; font-size: 12px; text-align: left;">
+																	Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
+																</p>
+															</div>
+														</div>
+														<!-- // Item END -->
+														
+
+													</div>
+													<!-- // Items END -->
+													
+													<!-- Navigation -->
+													<!-- <a class="left carousel-control" href="#carousel-1" data-slide="prev">&lsaquo;</a>
+													<a class="right carousel-control" href="#carousel-1" data-slide="next">&rsaquo;</a> -->
+													<!-- // Navigation END -->
+													
 												</div>
-												<!-- // Items END -->
-												
-												<!-- Navigation -->
-												<!-- <a class="left carousel-control" href="#carousel-1" data-slide="prev">&lsaquo;</a>
-												<a class="right carousel-control" href="#carousel-1" data-slide="next">&rsaquo;</a> -->
-												<!-- // Navigation END -->
-												
 											</div>
 										</div>
 									</div>

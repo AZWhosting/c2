@@ -241,19 +241,19 @@
 				
 				
 
-				<div class="board-chart" style="margin-top: 0; width: 64%; background: #fff;">
+				<div class="board-chart" style="margin-top: 0; width: 100%; background: #fff;">
 					<h4 data-bind="text: companyName"></h4>
 					<h2 style="color: #113051; margin-bottom: 11px; display: inline-block; width: 100%;" data-bind="text: lang.lang.financial_snapshot"></h2>
 					<span style="color: #000000;"><span data-bind="text: lang.lang.as_of"></span>:&nbsp;<span id="today-date" data-bind="text: today"></span></span>
 				</div>
 
-				<div class="board-chart" style="margin-top: 0; width: 33.33333333%; background: #fff; float: right; margin-bottom: 15px;">
+				<!-- <div class="board-chart" style="margin-top: 0; width: 33.33333333%; background: #fff; float: right; margin-bottom: 15px;">
 					<p style="text-align: center; margin-bottom: 0; cursor: pointer;">Welcome Guide</p>
 				</div>
 
 				<div class="board-chart" style="margin-top: 0; width: 33.33333333%; background: #fff; float: right;">
 					<p style="text-align: center; margin-bottom: 0; cursor: pointer;">User Guide</p>
-				</div>
+				</div> -->
 
 				<div class="board-chart" style="margin-top: 20px; ">
 					<div class="span3" style="padding-left: 0;">
@@ -18796,7 +18796,7 @@
 					
 						<!-- Widget heading -->
 						<div class="widget-head">
-							<h4 class="heading"><span class="glyphicons coins"><i></i></span><span style="color: #203864; font-weight: 600; font-style: normal;">Inventory Value</span></h4>
+							<h4 class="heading"><span class="glyphicons coins"><i></i></span><span style="color: #203864; font-weight: 600; font-style: normal; " data-bind="text: lang.lang.inventory_value">Inventory Value</span></h4>
 						</div>
 						<!-- // Widget heading END -->
 						
@@ -23053,7 +23053,7 @@
 			<div class="span5">
 				<div class="report-chart" style="margin-bottom: 20px; padding: 15px; margin-top: 10px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
 					<div class="widget-body alert alert-primary sale-overview">
-						<h2>Inventory Value</h2>
+						<h2 data-bind="text: lang.lang.inventory_value">Inventory Value</h2>
 						<div align="center" class="text-large strong" data-bind="text: obj.inventory_value"></div>
 						<table width="100%">
 							<tr align="center">
@@ -44471,7 +44471,6 @@
 					        				</a>
 					        			</div>
 					        		</div>
-					        		<a href="" class="see-all-apps">See all apps</a>
 					        	</div>					        	
 							</div>
 			        	</div>
@@ -44690,10 +44689,10 @@
 						    				</div>
 						    				<span style="float: right; margin-top: -5px; cursor: pointer; color: #999; font-weight: 600; font-size: 15px; margin-right: -15px;" data-bind="click: closeWindow" >x</span>
 						    				<div class="win-heder-btn" style="float: right;">
-						    					<span class="win-header-bth-plus">
+						    					<!-- <span class="win-header-bth-plus">
 						    						<i class="icon-plus"></i>
 						    						<span class="win-header-add-btn">Add</span>
-						    					</span>
+						    					</span> -->
 						    					<span class="win-header-bth-share">
 						    						<a class="glyphicons no-js share_alt win_share_alt">
 						    							<i></i>
@@ -44978,7 +44977,7 @@
 											</div>
 						    			</div>
 						    			<div class="window-content" style="width: 92%; margin-top: 25px;">
-						    				<a style="float: left; background: #ddd; color: #fff; padding: 8px 15px; border: 1px solid #333;">
+						    				<a data-bind="click: closeWindow1" style="float: left; background: #ddd; color: #fff; padding: 8px 15px; border: 1px solid #333;">
 						    					No, thanks
 						    				</a>
 						    				<a style="float: right; background: blue; color: #fff; padding: 8px 15px;">
@@ -45208,7 +45207,7 @@
 				</div>
 				<div class="span3" style="padding-left: 0; text-align: center;">
 					<a href="#/cash_payment">
-						<img title="Add Cash Payment" src="<?php echo base_url(); ?>assets/rice_mill/cash_payment.png" style="width: 100%;"  />
+						<img title="Add Cash Payment" src="<?php echo base_url(); ?>assets/rice_mill/cash_payment.jpg" style="width: 100%;"  />
 						<span data-bind="text: lang.lang.cash_payment" style=" text-transform: uppercase; color: #000; font-weight: 600; margin-top: 8px; display: inline-block;">Run Bill</span>
 					</a>
 				</div>
@@ -45230,33 +45229,29 @@
 
 			<div class="cash-bg" style="margin-bottom: 10px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
 	    		<a href="#/">
-					<div class="cash-invoice" style="background: #24351b; color: #fff;">
+					<div class="cash-invoice" style="background: #eac654; color: #fff;">
 						<div class="span6" style="padding-left: 0;">
-							<span style="font-size: 15px; ">Cash Position</span>
+							<span style="font-size: 20px; color: #333">Cash Position</span>
 							<br>
 							<span style="color: #9EA7B8;" data-bind="text: totalUser"></span>
 						</div>
-						<div class="span6" style=" text-align: center; font-size: 15px; font-weight: 600; padding: 0;">
-							<span style="float: right;" >1000</span>
+						<div class="span6" style=" text-align: center; font-size: 20px; font-weight: 600; padding: 0;">
+							<span style="float: right; color: #333" >1000</span>
 						</div>
 						<!-- <div class="span3" style="text-align: center; margin-top: 7px; padding-right: 0; color: #fff; font-size: 35px;">
 							<span data-bind="text: totalUser"></span>
 						</div> -->					
 					</div>
 				</a>
-				<a href="#/">
+				<!-- <a href="#/">
 					<div class="cash-invoice" style=" background: #24351b; color: #fff;">
 						<div class="span7" style="padding-left: 0;">
 							<span style="font-size: 15px; color: #fff;">Amount to Collect</span><br>
 							<span style="color: #9EA7B8;" ></span>
-							<!-- <span style="color: #9EA7B8;">This week</span> -->
 						</div>
 						<div class="span5" style="color: #fff; text-align: center; font-size: 15px; font-weight: 600; padding: 0;">
 							<span style="float: right;" >1000</span>
-						</div>
-						<!-- <div class="span4" style="text-align: center; margin-top: 7px; padding-right: 0; color: #fff; font-size: 35px;">
-							<span data-bind="text: totalUsage"></span><span style="font-size: 25px;">m<sup >3</sup></span>
-						</div> -->										
+						</div>									
 					</div>
 				</a>
 				<a href="#/">
@@ -45264,23 +45259,19 @@
 						<div class="span6" style="padding-left: 0;">
 							<span style="font-size: 15px; color: #fff;">Amount to Pay</span><br>
 							<span style="color: #9EA7B8;" > </span>
-							<!-- <span style="color: #9EA7B8;">This week</span> -->
 						</div>
 						<div class="span6" style="color: #fff; text-align: center; font-size: 15px; font-weight: 600; padding: 0;">
 							<span style="float: right;" >1000</span>
-						</div>
-						<!-- <div class="span4" style="text-align: center; margin-top: 7px; padding-right: 0; color: #fff; font-size: 35px;">
-							<span data-bind="text: totalUsage"></span><span style="font-size: 25px;">m<sup >3</sup></span>
-						</div> -->										
+						</div>									
 					</div>
-				</a>
+				</a> -->
 	    	</div>
 
 	    	<div class="cash-bg" style="margin-bottom: 10px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
 		    	<div class="row-fluid">
 		    		<div class="col-xs-12 col-sm-6 col-md-12" style="padding: 0">
 						<div class="widget widget-3 customer-border">
-							<div class="widget-body alert alert-primary" style="min-height: 135px; background: #24351b; color: #fff; padding-top: 0; padding-bottom: 0;">
+							<div class="widget-body alert alert-primary" style="min-height: 135px; background: #eac654; color: #333; padding-top: 10px; padding-bottom: 10px;">
 								<div align="center" class="text-large strong" style="font-size: 25px;">
 									<span data-bind="text: ccc"></span>
 									<br>
@@ -45312,7 +45303,7 @@
 					</div>
 					<div class="col-xs-12 col-sm-6 col-md-12" style="padding: 0;">
 						<div class="widget widget-3 customer-border" style="margin-bottom: 0;">					
-							<div class="widget-body alert-info" style="min-height: 135px; background: #24351b; color: #fff; padding-top: 0; padding-bottom: 0; ">
+							<div class="widget-body alert-info" style="min-height: 135px; background: #eac654; color: #333; padding-top: 10px; padding-bottom: 10px; ">
 								<div align="center" class="text-large strong" style="font-size: 25px;">
 									<span data-bind="text: currentRatio"></span>
 									<br>
@@ -45351,7 +45342,7 @@
 	    		<div class="row-fluid" >
 					<div class="span4">
 						<a href="#/customer_balance_summary">
-							<div class="widget-body alert alert-primary sale-overview" style="background: #54833b; border: none; padding: 30px 15px!important;">
+							<div class="widget-body alert alert-primary sale-overview" style="background: #4f961f; border: none; padding: 30px 15px!important;">
 								<h2 data-bind="text: lang.lang.receivable"></h2>
 								<div align="center" class="text-large strong" data-bind="text: obj.ar"></div>
 								<!-- <table width="100%">
@@ -45379,7 +45370,7 @@
 
 					<div class="span4">
 						<a href="#/suppliers_balance_summary">
-							<div class="widget-body alert alert-primary sale-overview" style="background: #54833b; border: none; padding: 30px 15px!important;">
+							<div class="widget-body alert alert-primary sale-overview" style="background: #4f961f; border: none; padding: 30px 15px!important;">
 								<h2 data-bind="text: lang.lang.payables"></h2>
 								<div align="center" class="text-large strong" data-bind="text: obj.ap"></div>
 								<!-- <table width="100%">
@@ -45406,8 +45397,8 @@
 					</div>
 
 					<div class="span4">
-						<div class="widget-body alert alert-primary sale-overview" style="background: #54833b; border: none; padding: 30px 15px!important;">
-							<h2>Inventory Value</h2>
+						<div class="widget-body alert alert-primary sale-overview" style="background: #4f961f; border: none; padding: 30px 15px!important;">
+							<h2 data-bind="text: lang.lang.inventory_value">Inventory Value</h2>
 							<div align="center" class="text-large strong" data-bind="text: obj.inventory_value"></div>
 							<!-- <table width="100%">
 								<tr align="center">
@@ -45431,7 +45422,7 @@
 						<table class="table table-bordered table-primary table-striped table-vertical-center" style="font-size: 12px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1; margin-bottom: 0;">
 					        <thead>
 					            <tr>
-					                <th class="center" colspan="2" style="background: #24351b;"><span data-bind="text: lang.lang.top_5_ar_balance"></span></th>				                			                
+					                <th class="center" colspan="2" style="background: #4f961f;"><span data-bind="text: lang.lang.top_5_ar_balance"></span></th>				                			                
 					            </tr>					        
 					        </thead>
 					        <tbody data-role="listview"
@@ -45444,7 +45435,7 @@
 						<table class="table table-bordered table-primary table-striped table-vertical-center" style="font-size: 12px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1; margin-bottom: 0;">
 					        <thead>
 					            <tr>
-					                <th style="background: #24351b;" class="center" colspan="2"><span data-bind="text: lang.lang.top_5_ap_balance"></span></th>
+					                <th style="background: #4f961f;" class="center" colspan="2"><span data-bind="text: lang.lang.top_5_ap_balance"></span></th>
 					            </tr>
 					        </thead>
 					        <tbody data-role="listview"
@@ -45457,7 +45448,7 @@
 						<table class="table table-bordered table-primary table-striped table-vertical-center" style="font-size: 12px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1; margin-bottom: 0;">
 					        <thead>
 					            <tr>
-					                <th style="background: #24351b;" colspan="2" class="center"><span data-bind="text: lang.lang.top_5_purchased_products"></span></th>				                			                
+					                <th style="background: #4f961f;" colspan="2" class="center"><span data-bind="text: lang.lang.top_5_purchased_products"></span></th>				                			                
 					            </tr>
 					        </thead>
 					        <tbody data-role="listview"
@@ -45471,7 +45462,7 @@
 
 	    	<div class="row-fluid" style="margin-top: 5px;">
 				<div class="span12" style="width: 100%; padding: 0 5px;">
-					<div class="home-chart" style="    padding: 30px 15px 30px 20px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
+					<div class="home-chart" style="    padding: 6px 15px 6px 20px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
 						
 						<div data-role="chart"
 							 data-auto-bind="false"
@@ -45496,6 +45487,890 @@
 	</div>
 </script>
 
+<script id="riceReportCenter" type="text/x-kendo-template" >
+	<div class="row-fluid">
+		<div class="span12">
+			<div class="span4 report-module">
+				<img style="margin-bottom: 5px; width: 200px; float: left;" src="http://192.168.88.100/c2/assets/rice_mill/ricemill_logo.png">
+				<h2 style="float: left; font-family: 'Open Sans', sans-serif; margin: 24px 0 0 7px ;font-weight: 400; color: #4f961f; font-size: 26px; text-transform: uppercase;" data-bind="text: lang.lang.reports">REPORTS</h2>
+				<p style="float: left; width:100%; margin: 0 0 10px; line-height: normal;" data-bind="text: lang.lang.rice_report_center_description">					
+				</p>
+			</div>
+			<div class="span8">				
+			</div>
+		</div>	
+
+		<div class="span12" style="margin-top: 20px;">
+			<div class="relativeWrap" data-toggle="source-code">
+				<div class="widget widget-tabs widget-tabs-gray report-tab" style="padding-bottom: 20px; background: #fff; overflow: hidden;">
+					<div class="widget-head head-custom" style="height: 50px; background: #4f961f !important;">
+						<ul>
+							<li class="active"><a href="#tab-1" data-toggle="tab"><i></i><span data-bind="text: lang.lang.customer"></span></a></li>
+							<li><a href="#tab-2" data-toggle="tab"><i></i><span data-bind="text: lang.lang.supplier"></span></a></li>
+							<li><a href="#tab-3" data-toggle="tab"><i></i><span data-bind="text: lang.lang.products_services"></span></a></li>
+							<li><a href="#tab-4" data-toggle="tab"><i></i><span data-bind="text: lang.lang.cash"></span></a></li>
+							<li><a href="#tab-5" data-toggle="tab"><i></i><span data-bind="text: lang.lang.period_end"></span></a></li>
+							<li><a href="#tab-6" data-toggle="tab"><i></i><span data-bind="text: lang.lang.financial_statements"></span></a></li>
+						</ul>
+					</div>
+
+					<div class="widget-body">
+						<div class="tab-content">
+					        <div class="tab-pane active" id="tab-1">
+								<div class="row-fluid">
+									<div class="row-fluid sale-report rice-report">
+										<h2 data-bind="text: lang.lang.sale_managment_reports" style="text-transform: uppercase;"></h2>
+										<p data-bind="text: lang.lang.the_following_reports_provide">
+											The following reports provide summary and detailed reports in 
+											different ways to help analyze your revenue performance.
+										</p>
+										<div class="row-fluid">
+											<table class="span12" style="margin-top: 10px;">
+												<tr>
+													<td class="span4">
+														<h3 ><a href="#/sale_summary_by_customer" data-bind="text: lang.lang.sale_summary_by_customer" style="text-transform: capitalize;"></a></h3>
+													</td>
+													<td class="span4">
+														<h3><a href="#/sale_detail_by_customer" data-bind="text: lang.lang.sale_detail_by_customer" style="text-transform: capitalize;"></a></h3>
+													</td>
+													<td class="span4">
+														<h3><a href="#/customer_transaction_list" data-bind="text: lang.lang.customer_transaction_list" style="text-transform: capitalize;"></a></h3>
+													</td>
+												</tr>
+
+												<tr>
+													<td class="span4">
+														<p style="padding-right: 25px;" data-bind="text: lang.lang.summarizes_total_sales">
+															Summarizes total sales for each customer within a period 
+															of time so you can see which ones generate the most revenue for you.
+														</p>									
+													</td>
+													<td class="span4" style="vertical-align: top;">
+														<p style="padding-right: 25px;" data-bind="text: lang.lang.lists_individual_sale">
+															Lists individual sale transactions by date for each customer with a period of time.
+														</p>
+													</td>
+													<td class="span4" >
+														<p data-bind="text: lang.lang.list_of_all_transactions_related">
+															List of all transactions related to and grouped by each customer, including invoice, cash sale
+														</p>
+													</td>
+												</tr>
+
+												<tr>
+													<td class="span4">
+														<h3><a href="#/sale_summary_by_product" data-bind="text: lang.lang.sale_summary_by_product_services" style="text-transform: capitalize;"></a></h3>
+													</td>
+													<td class="span4">
+														<h3><a href="#/sale_detail_by_product" data-bind="text: lang.lang.sale_detail_by_product_services" style="text-transform: capitalize;"></a></h3>
+													</td>
+													<td class="span4">
+														<h3><a href="#/deposit_detail_by_customer" data-bind="text: lang.lang.deposit_detail_by_customer" style="text-transform: capitalize;"></a></h3>
+													</td>
+												</tr>
+
+												<tr>
+													<td class="span4">
+														<p style="padding-right: 25px;" data-bind="text: lang.lang.summarizes_total_sales_for_each_product">
+															Summarizes total sales for each product/ service within a period of time. In addition, it also includes gross profit margin, quantity, amount, cost, and average prices. 
+														</p>
+													</td>
+													<td class="span4" style="vertical-align: top;">
+														<p data-bind="text: lang.lang.lists_individual_sale_transactions">
+															Lists individual sale transactions by date for each product/ service with a period of time.
+														</p>
+													</td>
+													<td class="span4">
+														<p style="padding-right: 25px;" data-bind="text: lang.lang.provides_detailed_information_about_customer_deposit">
+															Provides detailed information about customer deposit for specific order, prepayment, or credit.
+														</p>
+													</td>
+												</tr>
+												<tr>
+													<td class="span4">
+														<h3><a href="#/sale_order_list" data-bind="text: lang.lang.sale_order_list" style="text-transform: capitalize;"></a></h3>
+													</td>
+													<td class="span4"></td>
+													<td class="span4"></td>
+												</tr>
+												<tr>
+													<td class="span4">
+														<p style="padding-right: 25px;"></p>
+													</td>
+													<td class="span4"></td>
+													<td class="span4"></td>
+												</tr>
+
+
+												<!-- <tr>
+													<td class="span4" ><h3><a href="#/deposit_detail_by_customer" data-bind="text: lang.lang.deposit_detail_by_customer"></a></h3></td>
+													<td class="span4" ><h3><a href="#/customer_transaction_list" data-bind="text: lang.lang.customer_transaction_list"></a></h3></td>
+													<td class="span4" ><h3><a href="#/sale_detail_by_customer" data-bind="text: lang.lang.sale_detail_by_customer"></a></h3></td>
+												</tr>												
+												<tr>
+													<td class="span4" ><p style="padding-right: 25px;">Provides detailed information about customer deposit for specific order, prepayment, or credit.</p></td>													
+													<td class="span4" ><p style="padding-right: 25px;">List of all transactions related to and grouped by each customer, including invoice, cash sale</p></td>
+													<td class="span4" ><p>Lists individual sale transactions by date for each customer with a period of time.</p></td>
+												</tr>
+
+												<tr>
+													<td class="span4" ><h3><a href="#/sale_summary_by_customer" data-bind="text: lang.lang.sale_summary_by_customer"></a></h3></td>
+													<td class="span4" ><h3><a href="#/sale_summary_by_product" data-bind="text: lang.lang.sale_summary_by_product_Services"></a></h3></td>
+													<td class="span4" ><h3><a href="#/sale_detail_by_product" data-bind="text: lang.lang.sale_detail_by_product_Services"></a></h3></td>
+												</tr>												
+												<tr>
+													<td class="span4" ><p style="padding-right: 25px;">Summarizes total sales for each customer within a period of time so you can see which ones generate the most revenue for you.</p></td>
+													<td class="span4" ><p style="padding-right: 25px;">Summarizes total sales for each product/ service within a period of time. In addition, it also includes gross profit margin, quantity, amount, cost, and average prices.</p></td>
+													<td class="span4" ><p>Lists individual sale transactions by date for each product/ service with a period of time.</p></td>
+												</tr>
+
+												<tr>
+													<td class="span4" ><h3><a href="#/sale_job_engagement" data-bind="text: lang.lang.sale_by_job_engagement"></a></h3></td>
+													<td class="span4" ><h3><a href="#/sale_order_list" data-bind="text: lang.lang.sale_order_list"></a></h3></td>
+												</tr> -->												
+											</table>
+										</div>
+									</div>
+
+									<div class="row-fluid recevable-report rice-report" style="margin-top: 15px; display: inline-block;">
+										<h2 data-bind="text: lang.lang.receivable_management_reports" style="text-transform: uppercase;"></h2>
+										<p data-bind="text: lang.lang.the_following_reports_provide_summary">
+											The following reports provide summary and detailed reports.
+										</p>
+										<div class="row-fluid">
+											<table class="span12" >
+												<tr>
+													<td class="span4">
+														<h3><a href="#/customer_balance_summary" data-bind="text: lang.lang.customer_balance_summary"></a></h3>
+													</td>
+													<td class="span4">
+														<h3><a href="#/customer_balance_detail" data-bind="text: lang.lang.customer_balance_detail"></a></h3>								
+													</td>
+													<td class="span4">
+														<h3><a href="#/customer_list" data-bind="text: lang.lang.customer_list"></a></h3>
+													</td>
+												</tr>
+												<tr>													
+													<td class="span4">
+														<p style="padding-right: 25px;" data-bind="text: lang.lang.show_each_customers_total_outstanding_balances">
+															Show each customer’s total outstanding balances.
+														</p>
+													</td>
+													<td class="span4">
+														<p style="padding-right: 25px;" data-bind="text: lang.lang.lists_individual_unpaid_invoices_for_each_customer">Lists all unpaid invoices, grouped by Due today and Overdue.</p>
+													</td>
+													<td class="span4">													
+														<p data-bind="text: lang.lang.list_of_all_active_customers">
+															List of all active customers
+														</p>													
+													</td>													
+												</tr>
+												<tr>
+													<td class="span4">
+														<h3><a href="#/receivable_aging_summary" data-bind="text: lang.lang.receivable_aging_summary"></a></h3>
+													</td>
+													<td class="span4">
+														<h3><a href="#/receivable_aging_detail" data-bind="text: lang.lang.receivable_aging_detail"></a></h3>
+													</td>
+													<td class="span4" >
+														<h3><a href="#/invoice_list" data-bind="text: lang.lang.invoice_list"></a></h3>
+													</td>
+												</tr>
+												<tr>
+													<td class="span4">
+														<p style="padding-right: 25px;" data-bind="text: lang.lang.lists_all_unpaid_invoices1">
+															Lists all unpaid invoices for the current period, 30, 60, 90, and more than 90 days, grouped by individual customers.
+														</p>
+													</td>
+													<td class="span4">
+														<p style="padding-right: 25px;" data-bind="text: lang.lang.lists_individual_unpaid_invoices_grouped_by_customer">Lists individual unpaid invoices, grouped by customer. This includes due date, outstanding days (aging days), and amount.</p>
+													</td>
+													<td class="span4" >
+														<p data-bind="text: lang.lang.shows_a_chronological_list_of_all_your_invoices_for_a_selected_date_range">
+															Shows a chronological list of all your invoices for a selected date range.
+														</p>													
+													</td>
+												</tr>
+												<tr>
+													<td class="span4">
+														<h3><a href="#/collect_invoice" data-bind="text: lang.lang.list_of_invoices_to_be_collected"></a></h3>
+													</td>
+													<td class="span4">
+														<h3><a href="#/collection_report" data-bind="text: lang.lang.collection_report"></a></h3>
+													</td>
+													<td class="span4"></td>
+												</tr>
+												<tr>
+													<td class="span4">
+														<p data-bind="text: lang.lang.lists_all_unpaid_invoices_grouped_by_due_today_and_overdue">
+															Lists individual unpaid invoices for each customer
+														</p>														
+													</td>
+													<td class="span4">
+														<p style="padding-right: 25px;" data-bind="text: lang.lang.lists_of_collected_invoices_for_the_select_period_of_time_group_by_method_of_payment">
+															Lists of collected invoices for the select period of time, group by method of payment.
+														</p>														
+													</td>
+													<td class="span4">
+													</td>
+												</tr>
+
+
+												<!-- <tr>
+													
+																										
+																			
+												</tr>
+												<tr>
+													
+												
+													
+													
+													
+												</tr>
+												<tr>
+													
+													
+																										
+													
+													
+												</tr>
+												<tr>
+																										
+													
+													<td class="span4" >
+														<p>Lists individual unpaid invoices for each customer</p>
+													</td>
+												</tr>
+
+												<tr>
+													<td class="span4" >
+														<h3><a href="#/customer_balance_summary" data-bind="text: lang.lang.customer_balance_summary"></a></h3>
+													</td>
+													
+												</tr>
+												
+													
+												</tr> -->
+
+											</table>
+										</div>
+									</div>
+									
+									<div class=" span12  recevable-report rice-report" style="margin-top: 15px; display: inline-block; padding-left: 0;">
+										<h2 data-bind="text: lang.lang.other_reports_lists"></h2>
+										<div class="row-fluid">
+											<table class="span12">
+												<tr>
+													<td class="span4" >
+														<h3><a href="#/customer_recurring" data-bind="text: lang.lang.recurring_customer_template_list"></a></h3>
+													</td>
+													<td class="span4" >
+														<h3><a href="#/customer_setting" data-bind="text: lang.lang.payment_method_term_list"></a></h3>								
+													</td>
+													<td class="span4"></td>						
+												</tr>
+												<tr>
+													<td class="span4">																				
+													</td>
+													<td class="span4" >
+															List the types of payments and the term that determine due date for payment from customers.
+														
+													</td>
+													<td class="span4"></td>															
+												</tr>
+											</table>
+										</div>
+									</div>
+								</div>
+				        	</div>
+
+				        	<div class="tab-pane" id="tab-2">
+					        	<div class="row-fluid">
+					        		<div class="row-fluid sale-report rice-report">
+										<h2 data-bind="text: lang.lang.expense_purchase_management_reports" style="text-transform: uppercase;"></h2>
+										<p data-bind="text: lang.lang.the_following_reports_provide_summary_and_detailed_reports">
+											The following reports provide summary and detailed reports in different ways to help analyze what 
+											you spent and their impact on your cash flow and performance. 
+										</p>
+										<div class="row-fluid">
+											<table class="span12">
+												<tr>
+													<td class="span4">
+														<h3><a href="#/expenses_purchase_summary_supplier" data-bind="text: lang.lang.expenses_purchase_summary_by_supplier"></a></h3>
+													</td>
+													<td class="span4">
+														<h3><a href="#/expenses_purchase_detail_supplier" data-bind="text: lang.lang.expeneses_purchase_detail_by_suppplier"></a></h3>
+													</td>
+													<td class="span4">
+														<h3><a href="#/suppliers_transaction_list" data-bind="text: lang.lang.suppliers_transaction_list"></a></h3>								
+													</td>
+												</tr>
+												<tr>
+													<td class="span4">
+														<p style="padding-right: 25px;" data-bind="text: lang.lang.summarizes_total_expenses_purchase_for_each">
+															Summarizes total expenses/ purchase for each suppliers within a period of time.
+														</p>																												
+													</td>
+													<td class="span4">
+														<p style="padding-right: 25px;" data-bind="text: lang.lang.lists_individual_expenses_purchase_transactions_by">
+															Lists individual expenses/ purchase transactions by date for each supplier within a period of time.
+														</p>														
+													</td>
+													<td class="span4">
+														<p data-bind="text: lang.lang.lists_of_all_transactions_related_to_and_grouped_by_each_suppliers">
+															Lists of all transactions related to and grouped by each suppliers
+														</p>													
+													</td>
+												</tr>
+												<tr>
+													<td class="span4">
+														<h3><a href="#/purchase_summary_product_services" data-bind="text: lang.lang.purchase_summary_by_product_services"></a></h3>
+													</td>
+													<td class="span4">
+														<h3><a href="#/purchase_detail_product_services" data-bind="text: lang.lang.purchase_detail_by_product_services"></a></h3>
+													</td>
+													<td class="span4">
+														<h3><a href="#/deposit_detail_supplier" data-bind="text: lang.lang.deposit_detail_by_supplier"></a></h3>
+													</td>
+												</tr>
+												<tr>
+													<td class="span4">
+														<p style="padding-right: 25px;" data-bind="text: lang.lang.summarizes_total_expenses_purchase_for_each">
+															Summarizes total expenses/ purchase for each product/ service within a period of time.
+														</p>														
+													</td>
+													<td class="span4">
+														<p style="padding-right: 25px;" data-bind="text: lang.lang.lists_individual_sale_transactions_by_date_for_each_product">
+															Lists individual sale transactions by date for each product/ service with a period of time.
+														</p>													
+													</td>
+													<td class="span4">
+														<p data-bind="text: lang.lang.provides_detailed_information_about_supplier_deposit">
+															Provides detailed information about supplier deposit for specific order, prepayment, or credit.
+														</p>
+													</td>
+												</tr>
+												<tr>
+													<td class="span4">
+														<h3><a href="#/open_purchase_order" data-bind="text: lang.lang.open_purchase_order"></a></h3>
+													</td>
+													<td class="span4"></td>
+													<td class="span4"></td>
+												</tr>
+												<tr>
+													<td class="span4">
+														<p style="padding-right: 25px;" data-bind="text: lang.lang.lists_all_the_open_purchase_order_grouped_by_suppliers">
+															Lists all the open purchase order grouped by suppliers including the original amount as well.
+														</p>														
+													</td>
+													<td class="span4"></td>
+													<td class="span4"></td>
+												</tr>
+											</table>
+										</div>
+									</div>
+
+									<div class="row-fluid recevable-report rice-report" style="margin-top: 15px; display: inline-block;">
+										<h2 data-bind="text: lang.lang.payable_management_reports"></h2>
+										<p data-bind="text: lang.lang.the_following_reports_provide_summary_and_detailed_reports">
+											The following reports provide summary and detailed reports.
+										</p>
+										<div class="row-fluid">
+											<table class="span12">
+												<tr>
+													<td class="span4">
+														<h3><a href="#/suppliers_balance_summary" data-bind="text: lang.lang.suppliers_balance_summary"></a></h3>
+													</td>
+													<td class="span4">
+														<h3><a href="#/suppliers_balance_detail" data-bind="text: lang.lang.suppliers_balance_detail"></a></h3>								
+													</td>
+													<td class="span4">
+														<h3><a href="#/bill_payment_list" data-bind="text: lang.lang.bill_payment_list"></a></h3>
+													</td>																			
+												</tr>
+												<tr>
+													<td class="span4">
+														<p style="padding-right: 25px;" data-bind="text: lang.lang.show_each_supplier_total_outstanding_balances">
+															Show each supplier’s total outstanding balances.
+														</p>														
+													</td>
+													<td class="span4">
+														<p style="padding-right: 25px;" data-bind="text: lang.lang.lists_individual_unpaid_bill_for_each_supplier">
+															Lists individual unpaid bill for each supplier
+														</p>													
+													</td>
+													<td class="span4">
+														<p data-bind="text: lang.lang.lists_of_paid_bills_for_the_select_period_of_time_group_by_method_of_payments">
+															Lists individual unpaid bills, grouped by suppliers. This includes due date, outstanding days (aging days), and amount.
+														</p>														
+													</td>																										
+												</tr>												
+												<tr>
+													<td class="span4">
+														<h3><a href="#/payables_aging_summary" data-bind="text: lang.lang.payables_aging_summary"></a></h3>
+													</td>
+													<td class="span4">
+														<h3><a href="#/payables_aging_detail" data-bind="text: lang.lang.payables_aging_detail"></a></h3>
+													</td>
+													<td class="span4">
+														<h3><a href="#/list_bills_paid" data-bind="text: lang.lang.list_of_bills_to_be_paid"></a></h3>
+													</td>													
+												</tr>
+												<tr>
+													<td class="span4">
+														<p style="padding-right: 25px;" data-bind="text: lang.lang.lists_all_unpaid_bills_for_the_current_period_30_60_90_and_more">
+															Lists all unpaid bills for the current period, 30, 60, 90, and more than 90 days, grouped by individual suppliers.
+														</p> 														
+													</td>
+													<td class="span4">
+														<p style="padding-right: 25px;" data-bind="text: lang.lang.lists_individual_unpaid_bills_grouped_by_suppliers_this_includes">
+															Lists all unpaid invoices, grouped by Due today and Overdue.
+														</p>
+													</td>
+													<td class="span4">
+														<p data-bind="text: lang.lang.lists_of_paid_bills_for_the_select_period_of_time_group_by_method_of_payments">
+															Lists of paid bills for the select period of time, group by method of payments.
+														</p>													
+													</td>
+													
+												</tr>						
+
+											</table>
+										</div>
+									</div>
+
+									<div class="row-fluid recevable-report rice-report">
+										<h2 data-bind="text: lang.lang.other_reports_lists"></h2>
+										<div class="row-fluid">
+											<table class="span12">
+												<tr>
+													<!-- <td class="span4">
+														<h3><a href="#/product_service_list">Product/ Service List</a></h3>
+													</td> -->
+													<td class="span4">
+														<h3><a href="#/supplier_list" data-bind="text: lang.lang.supplier_list"></a></h3>								
+													</td>
+													<td class="span4">
+														<h3><a href="#/customer_recurring" data-bind="text: lang.lang.recurring_supplier_template_list"></a></h3>								
+													</td>
+													<td class="span4">
+													</td>						
+												</tr>
+												<tr>
+													<!-- <td class="span4">
+														Lists the products and services you purchase. The following information is included: name, 
+															description, cost, sales price, and quantity on hand.
+													</td> -->
+													<td class="span4">
+														<p data-bind="text: lang.lang.lists_of_all_active_suppliers">
+															Lists of all active suppliers
+														</p>
+													</td>
+													<td class="span4">
+													</td>
+													<td class="span4">
+													</td>						
+												</tr>												
+											</table>
+										</div>
+									</div>
+					        	</div>
+				        	</div>
+
+				        	<div class="tab-pane" id="tab-3">
+					        	<div class="row-fluid">
+					        		<div class="row-fluid sale-report rice-report">
+										<h2 data-bind="text: lang.lang.inventory_position" style="text-transform: uppercase;"></h2>
+										<p data-bind="text: lang.lang.the_following_reports_provide_summary_and_detailed_reports_on_the_position_of_inventory">
+											The following reports provide summary and detailed reports on the position of inventory. 
+										</p>
+										<div class="row-fluid">
+											<table class="span12">
+												<tr>
+													<td class="span4">
+														<h3><a href="#/inventory_position_summary" data-bind="text: lang.lang.inventory_position_summary"></a></h3>
+													</td>
+													<td class="span4">
+														<h3><a href="#/inventory_position_detail" data-bind="text: lang.lang.inventory_position_detail"></a></h3>
+													</td>
+													<td class="span4"></td>						
+												</tr>
+												<tr>
+													<td class="span4">
+														<p style="padding-right: 25px;" data-bind="text: lang.lang.summarizes_each_inventory_balance_by_quantity_on_hand">
+															Summarizes each inventory balance by quantity on hand, on purchase order and sale order. In addition, it also includes average cost and price.
+														</p> 
+													</td>
+													<td class="span4">
+														<p style="padding-right: 25px;" data-bind="text: lang.lang.lists_individual_inventory_movement_transactions_by_date_for_each_inventory_within_a_period_of_time">
+															Lists individual inventory movement transactions by date for each inventory within a period of time.
+														</p>
+													</td>
+													<td class="span4"></td>
+												</tr>
+												<!-- <tr>													
+													<td class="span4">
+														<h3><a href="#/inventory_turnover_list">Inventory Turnover List</a></h3>
+													</td>
+												</tr>
+												<tr>													
+													<td class="span4">
+														Provides analysis of inventory turnover days by each inventory.
+													</td>
+												</tr> -->
+											</table>
+										</div>
+									</div>
+
+									<div class="row-fluid recevable-report rice-report" style="margin-top: 15px; display: inline-block;">
+										<h2 data-bind="text: lang.lang.inventory_movement_reports" style="text-transform: uppercase;"></h2>
+										<p data-bind="text: lang.lang.the_following_reports_provide_summary_and_detailed_reports_on_the_movement_of_the_inventories">
+											The following reports provide summary and detailed reports on the movement of the inventories
+										</p>
+										<div class="row-fluid">
+											<table class="span12">
+												<tr>
+													<td class="span4">
+														<h3><a href="#/purchase_summary_product_services" data-bind="text: lang.lang.purchase_summary_by_product_services""></a></h3>
+													</td>
+													<td class="span4">
+														<h3><a href="#/purchase_detail_product_services" data-bind="text: lang.lang.purchase_detail_by_product_services"></a></h3>
+													</td>
+													<td class="span4">
+														<h3><a href="#/sale_summary_by_customer" data-bind="text: lang.lang.sale_by_customer_summary"></a></h3>
+													</td>					
+												</tr>
+												<tr>
+													<td class="span4">
+														<p style="padding-right: 25px;">Lists all inventory purchases from each suppliers</p>
+													</td>
+													<td class="span4">
+														<p style="padding-right: 25px;">Lists all inventory sold to each customer</p>
+													</td>
+													<td class="span4">
+														<p >Lists of detailed inventory sale transactions to each customer</p>
+													</td>
+												</tr>
+												
+												<tr>													
+													<td class="span4">
+														<h3><a href="#/sale_detail_by_customer" data-bind="text: lang.lang.sale_by_customer_detail"></a></h3>
+													</td>
+													<td class="span4"></td>
+													<td class="span4"></td>
+												</tr>
+												<tr>
+													<td class="span4">
+														<p style="padding-right: 25px;">Lists of detailed inventory purchase transactions from each suppliers</p>
+													</td>
+													<td class="span4"></td>
+													<td class="span4"></td>
+												</tr>
+												
+											</table>
+										</div>
+									</div>
+									<!-- <div class="span12 recevable-report" style="margin-top: 15px; display: inline-block; padding-left: 0;">
+										<h2>OTHER REPORTS/ LISTS</h2>
+										<p>
+											The following reports provide summary and detailed reports on the movement of the inventories
+										</p>
+										<div class="row-fluid">
+											<table class="span12">
+												<tr>
+													<td class="span4">
+														<h3><a href="#/inventory_list">Inventory List</a></h3>
+													</td>
+													<td class="span4">
+														<h3><a href="#/">Recurring Inventory Template List</a></h3>
+													</td>
+													<td class="span4">								
+													</td>						
+												</tr>
+												<tr>
+													<td class="span4">
+														Lists the products you purchase and sold. The following information is included: name, description, cost, sales price, and quantity on hand.		
+													</td>
+													<td class="span4">								
+													</td>
+													<td class="span4">								
+													</td>
+												</tr>
+												
+											</table>
+										</div>
+									</div> -->
+					        	</div>
+				        	</div>
+
+				        	<div class="tab-pane" id="tab-4">
+				        		<!-- <div align="center" style="min-height: 150px;">
+				        			<h1 style="font-style: 30px; margin-top: 20px;">Coming Soon</h1>
+				        		</div> -->
+				        		<div class="row-fluid">
+									<div class="row-fluid sale-report rice-report" style="margin-top: 15px;">
+										<h2 data-bind="text: lang.lang.cash_position" style="text-transform: uppercase;"></h2>
+										<p>
+											The following reports provide summary and detailed reports on your cash position and related cash transactions.  
+										</p>
+										<div class="row-fluid">
+											<table class="span12">
+												<tr>
+													<td class="span4">
+														<h3><a href="#/cash_movement" data-bind="text: lang.lang.cash_movement"></a></h3>
+													</td>													
+													<td class="span4">
+														<h3><a href="#/collection_report" data-bind="text: lang.lang.cash_collection_report"></a></h3>
+													</td>
+													<td class="span4">
+														<h3><a href="#/bill_payment_list" data-bind="text: lang.lang.bill_payment_report"></a></h3>
+													</td>
+												</tr>
+												<tr>
+													<td class="span4">
+														<p style="padding-right: 25px;">List of detail movement transaction by each Cash & Cash Equivalent accounts</p> 
+													</td>
+													<td class="span4">
+														<p style="padding-right: 25px;">Lists of collected invoices for the select period of time, group by method of payment.</p>
+													</td>
+													<td class="span4">
+														<p>Lists of paid bills for the select period of time, group by method of payments.</p>
+													</td>
+												</tr>
+												<tr>
+													<td class="span4">
+														<h3><a href="#/cash_advance_report" data-bind="text: lang.lang.cash_advance"></a></h3>
+													</td>	
+												</tr>
+												<tr>
+													<td class="span4">
+														<p style="padding-right: 25px;">List of detail movement transaction by each Cash Advance accounts</p>
+													</td>
+												</tr>
+											</table>					
+										</div>
+									</div>									
+					        	</div>						        	
+					        	<!-- <div class="row-fluid">
+									<div class="row-fluid sale-report" style="margin-top: 15px;">
+										<h2>CASH POSITION</h2>
+										<p>
+											The following reports provide summary and detailed reports on employee related transactions.  
+										</p>
+										<div class="row-fluid">
+											<table class="span12">
+												<tr>
+													<td class="span4">
+														<h3><a href="#/cash_position_report">Cash Position Report</a></h3>
+													</td>
+													<td class="span4">
+														<h3>Cash Payment Report (Coming Soon)</h3>
+													</td>
+													<td class="span4">
+														<h3>Cash Receipt Report (Coming Soon)</h3>
+													</td>
+												</tr>
+												<tr>
+													<td class="span4">
+														Summarizes each inventory balance by quantity on hand, on purchase order and sale order. In addition, it also includes average cost and price. 
+													</td>
+													<td class="span4">
+														Lists of all transactions related to and grouped by each inventory with analysis of average gross profit margin.
+													</td>
+													<td class="span4">
+														Lists individual inventory movement transactions by date for each inventory within a period of time.
+													</td>
+												</tr>
+												<tr>													
+													<td class="span4">
+														<h3>Reconciliation Report (Coming Soon)</h3>
+													</td>
+												</tr>
+												<tr>													
+													<td class="span4">
+														List of all cash related reconciliation reports.
+													</td>
+												</tr>
+											</table>					
+										</div>
+									</div>									
+					        	</div> -->
+				        	</div>
+
+				        	<div class="tab-pane" id="tab-5">
+					        	<div class="row-fluid">
+					        		<div class="row-fluid sale-report rice-report">
+										<h2 data-bind="text: lang.lang.period_end_closing_reports"></h2>
+										<div class="row-fluid">
+											<table class="span12">
+												<tr>
+													<td class="span4">
+														<h3><a href="#/journal_report" data-bind="text: lang.lang.journal_entry_report"></a></h3>
+													</td>
+													<td class="span4">
+														<h3><a href="#/general_ledger" data-bind="text: lang.lang.general_ledger"></a></h3>
+													</td>
+													<td class="span4">
+														<h3><a href="#/trial_balance" data-bind="text: lang.lang.trial_balance"></a></h3>
+													</td>					
+												</tr>
+												<tr>
+													<td class="span4">
+														<p style="padding-right: 25px;">Lists all accounting transactions within a period of time into debits and credits and displays them chronologically.</p>
+													</td>
+													<td class="span4">
+														<p style="padding-right: 25px;">Groups all accounting transactions by each account in your chart of accounts within a period of time into debits, credits, and balances.</p>
+													</td>
+													<td class="span4">
+														<p >Summarizes each account balance on your chart of accounts in the format of debit and credit within a period of time</p>
+													</td>
+												</tr>
+
+												<!-- <tr>
+													<td class="span4">
+														<h3><a href="#/transaction_list_date">Transaction List by Date</a></h3>
+													</td>
+													<td class="span4">
+														<h3><a href="#/recent_transactions_list">Recent Transactions List</a></h3>
+													</td>
+													<td class="span4">
+														<h3><a href="#/">Period-End Closing Checklist</a></h3>
+													</td>
+												</tr>
+												<tr>
+													<td class="span4">
+														This is similar with journal entry; however, it does not include debit and credit. In addition, it includes not financial transactions, such as sale order or purchase order.
+													</td>
+													<td class="span4">
+														Lists all transaction recorded or edited within the last five days.
+													</td>
+													<td class="span4">
+														
+													</td>
+												</tr> -->
+											</table>
+										</div>
+									</div>									
+					        	</div>
+
+					        	<div class="span12 recevable-report rice-report" style="margin-top: 15px; display: inline-block; padding-left: 0;">
+										<h2 data-bind="text: lang.lang.other_reports_lists"></h2>
+										<div class="row-fluid">
+											<table class="span12">
+												<tr>
+													<td class="span4">
+														<h3><a href="#/chart_of_account" data-bind="text: lang.lang.chart_of_account"></a></h3>
+													</td>
+													<td class="span4"></td>
+													<td class="span4"></td>
+													<!-- <td class="span4">
+														<h3><a href="#/audit_trial_report">Audit Trial Report</a></h3>								
+													</td>
+													<td class="span4">
+														<h3><a href="#/recurring_journal_list">Recurring Journal List</a></h3>							
+													</td>	 -->					
+												</tr>
+												<tr>
+													<td class="span4">
+														<p style="padding-right: 25px;">Lists of all accounts with name, type, and balance.</p>
+													</td>
+													<td class="span4"></td>
+													<td class="span4"></td>
+												</tr>
+												<!-- <tr>
+													<td class="span4">
+														<h3><a href="#/">Realized Exchange Gains & Losses</a></h3>
+													</td>
+													<td class="span4">
+														<h3><a href="#/">Unrealized Exchange Gains & Losses</a></h3>							
+													</td>						
+												</tr>
+												<tr>
+													<td class="span4">
+														This detailed report lists foreign transactions that are closed (referred to as realized gains and losses) and totals the gains and losses due to changes in exchange rates.
+													</td>
+													<td class="span4">
+														This summary report lists your foreign accounts and calculates the potential gain or loss for each account.
+													</td>							
+												</tr>			 -->									
+											</table>
+										</div>
+									</div>
+
+				        	</div>
+
+				        	<div class="tab-pane" id="tab-6">
+					        	<div class="row-fluid">
+
+									<div class="row-fluid recevable-report rice-report" style="margin-top: 15px;">
+										<h2 data-bind="text: lang.lang.financial_statements"></h2>
+										<div class="row-fluid">
+											<table class="span12">
+												<tr>
+													<td class="span4">
+														<h3><a href="#/statement_profit_loss" data-bind="text: lang.lang.statement_of_profit_or_loss"></a></h3>
+													</td>
+													<td class="span4">
+														<h3><a href="#/statement_financial_position" data-bind="text: lang.lang.statement_of_financial_position"></a></h3>								
+													</td>
+													<td class="span4">
+														<!-- <h3><a href="#/statement_profit_loss_comparison">Statement of Profit or Loss Comparison</a></h3> -->
+													</td>					
+												</tr>
+												<tr>
+													<td class="span4">
+														<p style="padding-right: 25px;">Provides the progress of your company’s financial performance, summarized in a record of income generated and expenses incurred over a given period.</p>
+													</td>
+													<td class="span4">
+														<p style="padding-right: 25px;">Provides the snapshot of your company’s financial position on value and ownership. It is the relationship of the company’s assets, liabilities and equities as of a specific date.</p>
+													</td>
+													<td class="span4">
+														<!-- Shows a year-over-year comparison of your financial performance. -->
+													</td>													
+												</tr>
+												<!-- <tr>
+													<td class="span4">
+														<h3><a href="#/statement_financial_position_comparison">Statement of Financial Position Comparison</a></h3>
+													</td>
+													<td class="span4">
+														<h3><a href="#/statement_cash_flow">Statement of Cash Flow</a></h3>
+													</td>
+													<td class="span4">
+														<h3><a href="#/statement_changes_equity">Statement of Changes in Equity</a></h3>
+													</td>
+												</tr>
+												<tr>
+													<td class="span4">
+														Shows cash generated by your company operating activities, cash spent on investing in your company assets long term asset, and cash in or out from your own share or financial institutions.
+													</td>
+													<td class="span4">
+														Shows the movement of your paid-up capital, dividends, the effects of changes in accounting policies and corrections of errors recognized in the period, and the profit or loss for a reporting period
+													</td>
+													<td class="span4">
+														Shows a year-over-year comparison of your financial position.
+													</td>
+												</tr> -->
+
+											</table>
+										</div>
+									</div>
+
+									
+
+									
+					        	</div>
+				        	</div>
+
+				        	
+
+					    </div>
+					</div>
+				</div>
+			</div>		
+		</div>
+	</div>
+</script>
 
 
 
@@ -45975,15 +46850,25 @@
   			<ul class='dropdown-menu'>
   				<li><a href='#/customer'><span data-bind="text: lang.lang.add_customer"></span></a></li> 
   				<li ><a href='#/job'><span data-bind="text: lang.lang.add_job"></span></a></li>	
-  				<li><a href='#/item_catalog'><span data-bind="text: lang.lang.add_new_catalog"></span></a></li>
-  				<li><a href='#/item_assembly'><span data-bind="text: lang.lang.build_assembly"></span></a></li>
+  				<li><a href='#/vendor'><span data-bind="text: lang.lang.add_supplier"></span></a></li>
+  				<li><a href='#/item'><span data-bind="text: lang.lang.add_inventory"></span></a></li>
+  				<li><a href='#/internal_usage'><span data-bind="text: lang.lang.internal_usage"></span></a></li>
   				<li> <span class="li-line"></span></li>
-  				<li ><a href='#/sale'>Mobile Sale</a></li>
-  				<li ><a href='#/quote'><span data-bind="text: lang.lang.create_quotation"></span></a></li>
-  				<li><a href='#/sale_order'><span data-bind="text: lang.lang.create_sale_order"></span></a></li>
+  				<li ><a href='#/gdn'><span data-bind="text: lang.lang.create_goods_delivery_note"></span></a></li>
+  				<li><a href='#/cash_sale'><span data-bind="text: lang.lang.create_cash_sale"></span></a></li>
+  				<li><a href='#/invoice'><span data-bind="text: lang.lang.create_invoice"></span></a></li>
+  				<li><a href='#/cash_receipt'><span data-bind="text: lang.lang.create_cash_receipt"></span></a></li>
   				<li> <span class="li-line"></span></li>
-  				<li><a href='#/sale_recurring'>Recurring</a></li>
-  				<li><a href='#/imports'><span ></span>Imports</a></li>
+  				<li><a href='#/grn'><span data-bind="text: lang.lang.make_goods_received_note"></span></a></li>
+  				<li><a href='#/vendor_deposit'><span data-bind="text: lang.lang.make_vendor_deposit"></span></a></li>
+  				<li><a href='#/purchase'><span data-bind="text: lang.lang.make_purchase"></span></a></li>
+  				<li><a href='#/cash_payment'><span data-bind="text: lang.lang.make_cash_payment"></span></a></li>
+  				<li> <span class="li-line"></span></li>
+  				<li><a href='#/journal'><span data-bind="text: lang.lang.make_journal"></span></a></li>
+  				<li><a href='#/cash_transaction'><span data-bind="text: lang.lang.make_cash_transaction"></span></a></li>
+  				<li><a href='#/cash_advance'><span data-bind="text: lang.lang.make_cash_advance"></span></a></li>
+  				<li><a href='#/expense'><span data-bind="text: lang.lang.make_expense"></span></a></li>  				
+  				<li><a href='#/'><span data-bind="text: lang.lang.recurring_list">Recurring List</a></li>
   			</ul>
 	  	</li>
 	  	<li><a href="#/rice_report_center" style="color: #fff;">Reports</a></li>
@@ -91851,6 +92736,48 @@
 			});								
 		}
 	});
+	banhji.riceReportCenter = kendo.observable({
+    	lang 				: langVM,
+    	dataSource			: dataStore(apiUrl+"accounting_modules/ratio_analysis"),
+    	quickRatio			: 0,
+		currentRatio 		: 0,
+		cashRatio  			: 0,
+		wcSale 				: 0,
+		grossProfitMargin 	: 0,
+		profitMargin 		: 0,
+		returnOnAsset 		: 0,
+		roce 				: 0,
+		arCollectionPeriod 	: 0,
+		apPaymentPeriod 	: 0,
+		inventoryTurnOver 	: 0,
+		ccc 				: 0,
+    	pageLoad 			: function(){
+			var self = this;
+
+			this.dataSource.query({
+				filter: [],
+				page: 1,
+				pageSize: 100
+			}).then(function(){
+				var view = self.dataSource.view();				
+				
+				self.set("quickRatio", kendo.toString(view[0].quickRatio, "n"));
+				self.set("currentRatio", kendo.toString(view[0].currentRatio, "n"));
+				self.set("cashRatio", kendo.toString(view[0].cashRatio, "n"));
+				
+				self.set("wcSale", kendo.toString(view[0].wcSale, "p"));
+				self.set("grossProfitMargin", kendo.toString(view[0].grossProfitMargin, "p"));
+				self.set("profitMargin", kendo.toString(view[0].profitMargin, "p"));
+				self.set("returnOnAsset", kendo.toString(view[0].returnOnAsset, "n"));
+				
+				self.set("roce", kendo.toString(view[0].roce, "p"));
+				self.set("arCollectionPeriod", kendo.toString(view[0].arCollectionPeriod, "n"));
+				self.set("apPaymentPeriod", kendo.toString(view[0].apPaymentPeriod, "n"));
+				self.set("inventoryTurnOver", kendo.toString(view[0].inventoryTurnOver, "n"));
+				self.set("ccc", kendo.toString(view[0].ccc, "n"));
+			});
+		}
+    });
 
 
 
@@ -92988,6 +93915,7 @@
 		//App Center
 		appCenter: new kendo.Layout("#appCenter", {model: banhji.appCenter}),
 		riceMill: new kendo.Layout("#riceMill", {model: banhji.riceMill}),
+		riceReportCenter: new kendo.Layout("#riceReportCenter", {model: banhji.riceReportCenter}),
 
 
 		//Menu
@@ -101060,6 +101988,45 @@
 			}
 		});
 	});
+	banhji.router.route("/rice_report_center", function(){
+		banhji.accessMod.query({
+			filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		}).then(function(e){
+			var allowed = false;
+			if(banhji.accessMod.data().length > 0) {
+				for(var i = 0; i < banhji.accessMod.data().length; i++) {
+					if("customer" == banhji.accessMod.data()[i].name.toLowerCase()) {
+						allowed = true;
+						break;
+					}
+				}
+			} 
+			if(allowed) {
+				banhji.view.layout.showIn("#content", banhji.view.riceReportCenter);
+				banhji.view.layout.showIn('#menu', banhji.view.menu);
+				banhji.view.menu.showIn('#secondary-menu', banhji.view.riceMillMenu);
+				
+				//eraseCookie("isshow");
+				var isshow = readCookie("cusVisit");
+				
+			    if (isshow != 1) {
+			        createCookie("cusVisit", 1);
+					$("a.aCustomer").click();
+				}
+
+				var vm = banhji.riceReportCenter;
+				banhji.userManagement.addMultiTask("Rice Report Center","rice_report_center",null);
+				if(banhji.pageLoaded["riceReportCenter"]==undefined){
+					banhji.pageLoaded["riceReportCenter"] = true;
+
+					vm.setObj();
+				}
+				vm.pageLoad();
+			} else {
+				window.location.replace(baseUrl + "admin");
+			}
+		});
+	});
 
 
 
@@ -101069,7 +102036,7 @@
 	$(function() {
 		banhji.router.start();
 		banhji.source.pageLoad();
-		console.log($(location).attr('hash').substr(1));
+		//console.log($(location).attr('hash').substr(1));
 
 		var cognitoUser = userPool.getCurrentUser();
 		cognitoUser.getSession(function(err, session) {

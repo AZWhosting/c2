@@ -503,8 +503,12 @@
                                 data-option-label="Select Business Type" style="text-align: left; border: 1px solid #d0cfd5;">
                             </select>
                         </div>
-                        <div class="col-sm-6" style="padding-right: 0;">
-                            <p style="font-size: 12px; margin-bottom: 0; float: left; margin-top: 13px" data-bind="text: lang.lang.please_select_the_industry"></p>
+                        <div class="col-sm-6"">
+                            <input type="date" 
+                                class="k-input"
+                                data-role="datepicker"
+                                label="Fiscal Date">
+                            
                         </div>
                         <!-- <div class="col-sm-6">
                             <select class="signup-country"
@@ -516,6 +520,14 @@
                                 data-place-holder="select one" style="text-align: left; border: 1px solid #d0cfd5;">
                             </select>   
                         </div> -->
+                    </div>
+                    <div>
+                        <div class="col-sm-6" style="padding-right: 0;">
+                            <p style="font-size: 12px; margin-bottom: 0; float: left; margin-top: 13px" data-bind="text: lang.lang.please_select_the_industry"></p>
+                        </div>
+                        <div class="col-sm-6" style="padding-right: 0;">
+                            
+                        </div>
                     </div>
                     <div class="row-fluid" style="color: #333; margin-top: 8px;">
                         
