@@ -170,10 +170,10 @@ class Item_lines extends REST_Controller {
 						if($transaction->type=="Commercial_Invoice" || $transaction->type=="Vat_Invoice" || $transaction->type=="Invoice" || $transaction->type=="Commercial_Cash_Sale" || $transaction->type=="Vat_Cash_Sale" || $transaction->type=="Cash_Sale"){
 							//Avg Price
 							$lastPrice = $onHand * floatval($item->price);
-							$currentPrice = $currentQuantity * (floatval($value->price) / floatval($transaction->rate));
+							$currentPrice = $currentQuantity * (floatval($value->price) / floatval($value->rate));
 
 							$item->price = ($lastPrice + $currentPrice) / $totalQty;
-							$obj->cost = floatval($item->cost) * floatval($transaction->rate);
+							$obj->cost = floatval($item->cost) * floatval($value->rate);
 							$obj->price_avg = ($lastPrice + $currentPrice) / $totalQty;
 						}
 

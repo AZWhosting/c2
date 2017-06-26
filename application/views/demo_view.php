@@ -21060,10 +21060,10 @@
 						<table class="table table-bordered table-primary table-striped table-vertical-center">
 					        <thead>
 					            <tr>
-					                <th data-bind="text: lang.lang.conversion_ratio" class="center" style="width: 30%"></th>
-					                <th data-bind="text: lang.lang.uom" style="width: 25%"></th>
-					                <th data-bind="text: lang.lang.price" class="center" style="width: 30%"></th>			                
-					                <th style="text-align: center; width: 15%"></th>	                
+					                <th data-bind="text: lang.lang.conversion_ratio" class="center" style="width: 20%"></th>
+					                <th data-bind="text: lang.lang.uom" style="width: 20%"></th>
+					                <th data-bind="text: lang.lang.price" class="center" style="width: 20%"></th>			                
+					                <th style="text-align: center;"></th>	                
 					            </tr>
 					        </thead>
 					        <tbody data-template="itemPrice-template"
@@ -51858,7 +51858,7 @@
 			//Item lines
 			$.each(this.lineDS.data(), function(index, value){
 				var item = self.itemDS.get(value.item_id),
-					itemRate = banhji.source.getRate(item.locale, new Date(obj.issued_date));
+					itemRate = obj.rate / banhji.source.getRate(item.locale, new Date(obj.issued_date));
 
 				//COGS on Dr
 				var cogsID = kendo.parseInt(item.expense_account_id);
@@ -51878,7 +51878,7 @@
 							description 		: value.description,
 							reference_no 		: "",
 							segments 	 		: [],
-							dr 	 				: cogsAmount,
+							dr 	 				: cogsAmount * itemRate,
 							cr 					: 0,
 							rate				: itemRate,
 							locale				: item.locale
@@ -51907,7 +51907,7 @@
 							reference_no 		: "",
 							segments 	 		: [],
 							dr 	 				: 0,
-							cr 					: inventoryAmount,
+							cr 					: inventoryAmount * itemRate,
 							rate				: itemRate,
 							locale				: item.locale
 						};
@@ -51968,7 +51968,7 @@
 			//Assembly Item
 			$.each(this.assemblyLineDS.data(), function(index, value){
 				var item = self.itemDS.get(value.item_id),
-					itemRate = banhji.source.getRate(item.locale, new Date(obj.issued_date));
+					itemRate = obj.rate / banhji.source.getRate(item.locale, new Date(obj.issued_date));
 
 				//COGS on Dr
 				var cogsID = kendo.parseInt(item.expense_account_id);
@@ -51988,7 +51988,7 @@
 							description 		: value.description,
 							reference_no 		: "",
 							segments 	 		: [],
-							dr 	 				: cogsAmount,
+							dr 	 				: cogsAmount * itemRate,
 							cr 					: 0,
 							rate				: itemRate,
 							locale				: item.locale
@@ -52017,7 +52017,7 @@
 							reference_no 		: "",
 							segments 	 		: [],
 							dr 	 				: 0,
-							cr 					: inventoryAmount,
+							cr 					: inventoryAmount * itemRate,
 							rate				: itemRate,
 							locale				: item.locale
 						};
@@ -52850,7 +52850,7 @@
 				        
 				        data.set("price", value.price * rate);
 				        data.set("conversion_ratio", value.conversion_ratio);
-				        data.set("rate", rate);
+				        // data.set("rate", rate);
 				        data.set("locale", value.locale);
 				        
 						return false;
@@ -53387,8 +53387,8 @@
 			//Item lines
 			$.each(this.lineDS.data(), function(index, value){
 				var item = self.itemDS.get(value.item_id),
-					itemRate = banhji.source.getRate(item.locale, new Date(obj.issued_date));
-				
+					itemRate = obj.rate / banhji.source.getRate(item.locale, new Date(obj.issued_date));
+					
 				//COGS on Dr
 				var cogsID = kendo.parseInt(item.expense_account_id);
 				if(cogsID>0){
@@ -53407,9 +53407,9 @@
 							description 		: value.description,
 							reference_no 		: "",
 							segments 	 		: [],
-							dr 	 				: cogsAmount,
+							dr 	 				: cogsAmount * value.rate,
 							cr 					: 0,
-							rate				: itemRate,
+							rate				: value.rate,
 							locale				: item.locale
 						};
 					}else{
@@ -53436,8 +53436,8 @@
 							reference_no 		: "",
 							segments 	 		: [],
 							dr 	 				: 0,
-							cr 					: inventoryAmount,
-							rate				: itemRate,
+							cr 					: inventoryAmount * value.rate,
+							rate				: value.rate,
 							locale				: item.locale
 						};
 					}else{
@@ -53497,7 +53497,7 @@
 			//Assembly Item
 			$.each(this.assemblyLineDS.data(), function(index, value){
 				var item = self.itemDS.get(value.item_id),
-					itemRate = banhji.source.getRate(item.locale, new Date(obj.issued_date));
+					itemRate = obj.rate / banhji.source.getRate(item.locale, new Date(obj.issued_date));
 
 				//COGS on Dr
 				var cogsID = kendo.parseInt(item.expense_account_id);
@@ -53517,7 +53517,7 @@
 							description 		: value.description,
 							reference_no 		: "",
 							segments 	 		: [],
-							dr 	 				: cogsAmount,
+							dr 	 				: cogsAmount * itemRate,
 							cr 					: 0,
 							rate				: itemRate,
 							locale				: item.locale
@@ -53546,7 +53546,7 @@
 							reference_no 		: "",
 							segments 	 		: [],
 							dr 	 				: 0,
-							cr 					: inventoryAmount,
+							cr 					: inventoryAmount * itemRate,
 							rate				: itemRate,
 							locale				: item.locale
 						};
@@ -55732,7 +55732,7 @@
 			//Item lines
 			$.each(this.lineDS.data(), function(index, value){
 				var item = self.itemDS.get(value.item_id),
-					itemRate = banhji.source.getRate(item.locale, new Date(obj.issued_date));
+					itemRate = obj.rate / banhji.source.getRate(item.locale, new Date(obj.issued_date));
 
 				//COGS on Cr
 				var cogsID = kendo.parseInt(item.expense_account_id);
@@ -55753,7 +55753,7 @@
 							reference_no 		: "",
 							segments 	 		: [],
 							dr 	 				: 0,
-							cr 					: cogsAmount,
+							cr 					: cogsAmount * itemRate,
 							rate				: itemRate,
 							locale				: item.locale
 						};
@@ -55780,7 +55780,7 @@
 							description 		: value.description,
 							reference_no 		: "",
 							segments 	 		: [],
-							dr 	 				: inventoryAmount,
+							dr 	 				: inventoryAmount * itemRate,
 							cr 					: 0,
 							rate				: itemRate,
 							locale				: item.locale
@@ -55842,7 +55842,7 @@
 			//Assembly Item
 			$.each(this.assemblyLineDS.data(), function(index, value){
 				var item = self.itemDS.get(value.item_id),
-					itemRate = banhji.source.getRate(item.locale, new Date(obj.issued_date));
+					itemRate = obj.rate / banhji.source.getRate(item.locale, new Date(obj.issued_date));
 
 				//COGS on Cr
 				var cogsID = kendo.parseInt(item.expense_account_id);
@@ -55863,7 +55863,7 @@
 							reference_no 		: "",
 							segments 	 		: [],
 							dr 	 				: 0,
-							cr 					: cogsAmount,
+							cr 					: cogsAmount * itemRate,
 							rate				: itemRate,
 							locale				: item.locale
 						};
@@ -55890,7 +55890,7 @@
 							description 		: value.description,
 							reference_no 		: "",
 							segments 	 		: [],
-							dr 	 				: inventoryAmount,
+							dr 	 				: inventoryAmount * itemRate,
 							cr 					: 0,
 							rate				: itemRate,
 							locale				: item.locale
@@ -56830,7 +56830,7 @@
 		    //Item lines
 			$.each(this.lineDS.data(), function(index, value){
 				var item = self.itemDS.get(value.item_id),
-					itemRate = banhji.source.getRate(item.locale, new Date(obj.issued_date));
+					itemRate = obj.rate / banhji.source.getRate(item.locale, new Date(obj.issued_date));
 
 				//COGS on Cr
 				var cogsID = kendo.parseInt(item.expense_account_id);
@@ -56851,7 +56851,7 @@
 							reference_no 		: "",
 							segments 	 		: [],
 							dr 	 				: 0,
-							cr 					: cogsAmount,
+							cr 					: cogsAmount * itemRate,
 							rate				: itemRate,
 							locale				: item.locale
 						};
@@ -56878,7 +56878,7 @@
 							description 		: value.description,
 							reference_no 		: "",
 							segments 	 		: [],
-							dr 	 				: inventoryAmount,
+							dr 	 				: inventoryAmount * itemRate,
 							cr 					: 0,
 							rate				: itemRate,
 							locale				: item.locale
@@ -56940,7 +56940,7 @@
 			//Assembly Item
 			$.each(this.assemblyLineDS.data(), function(index, value){
 				var item = self.itemDS.get(value.item_id),
-					itemRate = banhji.source.getRate(item.locale, new Date(obj.issued_date));
+					itemRate = obj.rate / banhji.source.getRate(item.locale, new Date(obj.issued_date));
 
 				//COGS on Cr
 				var cogsID = kendo.parseInt(item.expense_account_id);
@@ -56961,7 +56961,7 @@
 							reference_no 		: "",
 							segments 	 		: [],
 							dr 	 				: 0,
-							cr 					: cogsAmount,
+							cr 					: cogsAmount * itemRate,
 							rate				: itemRate,
 							locale				: item.locale
 						};
@@ -56988,7 +56988,7 @@
 							description 		: value.description,
 							reference_no 		: "",
 							segments 	 		: [],
-							dr 	 				: inventoryAmount,
+							dr 	 				: inventoryAmount * itemRate,
 							cr 					: 0,
 							rate				: itemRate,
 							locale				: item.locale
@@ -66034,8 +66034,7 @@
 
 		    //Item lines
 			$.each(this.lineDS.data(), function(index, value){
-				var item = self.itemDS.get(value.item_id),
-					itemRate = banhji.source.getRate(item.locale, new Date(obj.issued_date));
+				var item = self.itemDS.get(value.item_id);
 				
 				//Service on Dr
 				var serviceID = kendo.parseInt(item.expense_account_id);
@@ -66054,7 +66053,7 @@
 							segments 	 		: [],
 							dr 	 				: serviceAmount,
 							cr 					: 0,
-							rate				: itemRate,
+							rate				: value.rate,
 							locale				: item.locale
 						};
 					}else{
@@ -66082,7 +66081,7 @@
 							segments 	 		: [],
 							dr 	 				: inventoryAmount,
 							cr 					: 0,
-							rate				: itemRate,
+							rate				: value.rate,
 							locale				: item.locale
 						};
 					}else{
@@ -67500,8 +67499,7 @@
 
 			//Item lines
 			$.each(this.lineDS.data(), function(index, value){
-				var item = self.itemDS.get(value.item_id),
-					itemRate = banhji.source.getRate(item.locale, new Date(obj.issued_date));
+				var item = self.itemDS.get(value.item_id);
 
 				//Service on Cr
 				var serviceID = kendo.parseInt(item.expense_account_id);
@@ -67523,7 +67521,7 @@
 							segments 	 		: [],
 							dr 	 				: 0,
 							cr 					: serviceAmount,
-							rate				: itemRate,
+							rate				: value.rate,
 							locale				: item.locale
 						};
 					}else{
@@ -67551,7 +67549,7 @@
 							segments 	 		: [],
 							dr 	 				: 0,
 							cr 					: inventoryAmount,
-							rate				: itemRate,
+							rate				: value.rate,
 							locale				: item.locale
 						};
 					}else{
@@ -68481,8 +68479,7 @@
 
 			//Item lines
 			$.each(this.lineDS.data(), function(index, value){
-				var item = self.itemDS.get(value.item_id),
-					itemRate = banhji.source.getRate(item.locale, new Date(obj.issued_date));
+				var item = self.itemDS.get(value.item_id);
 
 				//Service on Cr
 				var serviceID = kendo.parseInt(item.expense_account_id);
@@ -68504,7 +68501,7 @@
 							segments 	 		: [],
 							dr 	 				: 0,
 							cr 					: serviceAmount,
-							rate				: itemRate,
+							rate				: value.rate,
 							locale				: item.locale
 						};
 					}else{
@@ -68532,7 +68529,7 @@
 							segments 	 		: [],
 							dr 	 				: 0,
 							cr 					: inventoryAmount,
-							rate				: itemRate,
+							rate				: value.rate,
 							locale				: item.locale
 						};
 					}else{

@@ -52,7 +52,7 @@ class Inventory_modules extends REST_Controller {
 		$today = date("Y-m-d");
 		$asOftoday = date("Y-m-d", strtotime($today . "+1 days"));
 
-		//INVENTORY TURN OVER
+		//INVENTORY VALUE
 		$inventory = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$inventory->include_related("transaction", array("rate"));
 		$inventory->where_related("account", "account_type_id", 13);		

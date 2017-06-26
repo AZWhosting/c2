@@ -18,6 +18,11 @@ class Ops extends REST_Controller {
 				$connection = 'use ' . $db;
 				$this->db->query($connection);
 
+				$counter = $this->db->count_all('transactions');
+
+				$data["results"][] = array( "db" => $db, "rows" => $counter );
+
+
 			    //Check missing field
 				// if ($this->db->field_exists('account_id', 'attachments')===FALSE){
 				//    	$data["results"][] = $db;
