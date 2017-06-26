@@ -40,8 +40,14 @@
 	    border-bottom: 2px solid #000;
 } 
 table.footerTbl > tbody > tr > td {
-	border: none;
+	
 }
 .table-bordered > tbody > tr > td {
-	border-color: #fff!important;
+	
+}
+.table {
+	width: 768px;
+}
+.table-bordered > tbody > tr > td {
+	border: 1px solid #000!important;
 }

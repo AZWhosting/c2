@@ -20973,7 +20973,8 @@
 									                    data-text-field="name"
 									                    data-value-field="id"
 									                    data-bind="value: priceList.measurement_id,
-									                   			  source: measurementDS"
+									                   			  	source: measurementDS,
+									                   			  	events:{change: measurementChanges}"
 									                    data-option-label="UM"
 									                    required data-required-msg="required" style="width: 100%;" />																				            
 											</div>
@@ -20990,7 +20991,8 @@
 									                    data-text-field="name"
 									                    data-value-field="id"
 									                    data-bind="value: priceList.measurement_id,
-									                   			  	source: measurementDS"
+									                   			  	source: measurementDS,
+									                   			  	events:{change: measurementChanges}"
 									                    data-option-label="UM"
 									                    required data-required-msg="required" style="width: 100%;" />
 											</div>
@@ -46384,6 +46386,7 @@
 		selectCustomerMessage 		: "Please select a customer.",
 		selectSupplierMessage 		: "Please select a supplier.",
 		selectItemMessage 			: "Please select an item.",
+		existingMeasurement 		: "This measurement is already exists!",
 		duplicateSelectedItemMessage: "You already selected this item.",
 		pageLoad 					: function(){
 			this.loadAccounts();
@@ -73017,7 +73020,11 @@
     			{ field:"item_id", value: id },
     			{ field:"assembly_id", value: 0 }
     		]);
-    		this.recordDS.filter({ field:"item_id", value: id });
+    		this.recordDS.query({
+    			filter: { field:"item_id", value: id },
+    			page:1,
+    			pageSize:10
+    		});
     		this.loadObj(id);
     		this.loadData(id);
     	},
@@ -73128,6 +73135,20 @@
     		}
 
     		this.changes();
+    	},
+    	measurementChanges 	: function(){
+    		var priceList = this.get("priceList");
+
+    		if(priceList.measurement_id>0){
+    			$.each(this.dataSource.data(), function(index, value){
+    				if(value.measurement_id==priceList.measurement_id){
+    					priceList.set("measurement_id", 0);
+
+    					// $("#ntf1").data("kendoNotification").error(banhji.source.existingMeasurement);
+    				}
+    			});
+
+    		}
     	},
     	openWindow			: function(){
       		this.addEmpty();
