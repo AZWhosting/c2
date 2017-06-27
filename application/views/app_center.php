@@ -67,7 +67,7 @@
 		  						</div>
 		  						<div class="help-desc" style="float: left;">
 		  							<p>Need more help?</p>
-		  							<a href="" target="_blank">Accountant Help hub</a>
+		  							<a href="" target="_blank">Help Center</a>
 		  						</div>
 		  					</div>
 		  					<div class="what-help" style="width: 100%; float: left;">
@@ -713,7 +713,22 @@
 
     </div>
 </script>
-
+<script id="helpCenter" type="text/x-kendo-template">
+	<div class="row-fluid">
+		<div class="search-box search-box-home">
+			<div class="search-box-heading">
+				<h2>Hi, what can we help you with?</h2>
+			</div>
+			<div class="homepage-search-box">
+				<form class="search" role="search" data-search="" data-instant="true" autocomplete="off" action="/hc/en-us/search" accept-charset="UTF-8" method="get">
+					<input name="utf8" value="✓" type="hidden">
+					<input id="query" name="query" placeholder="Search using keywords like "store setup" or "store management"" autocomplete="off" aria-label="Search" type="search">
+					<input name="commit" value="Search" type="submit">
+				</form>
+			</div>
+		</div>
+	</div>		
+</script>
 
 
 
@@ -93917,6 +93932,8 @@
 		riceMill: new kendo.Layout("#riceMill", {model: banhji.riceMill}),
 		riceReportCenter: new kendo.Layout("#riceReportCenter", {model: banhji.riceReportCenter}),
 
+		//Help Center
+		helpCenter: new kendo.Layout("#helpCenter", {model: banhji.helpCenter}),
 
 		//Menu
 		accountingMenu: new kendo.View("#accountingMenu", {model: langVM}),
@@ -101904,6 +101921,50 @@
 	*************************************************/
 	banhji.router.route("/imports", function(){
 		banhji.view.layout.showIn("#content", banhji.view.imports);
+	});
+
+
+	/*************************************************
+	*   HELP CENTER ROUTER  							 	 *
+	*************************************************/
+	banhji.router.route("/help_center", function(){
+		banhji.accessMod.query({
+			filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		}).then(function(e){
+			var allowed = false;
+			if(banhji.accessMod.data().length > 0) {
+				for(var i = 0; i < banhji.accessMod.data().length; i++) {
+					if("customer" == banhji.accessMod.data()[i].name.toLowerCase()) {
+						allowed = true;
+						break;
+					}
+				}
+			} 
+			if(allowed) {
+				banhji.view.layout.showIn("#content", banhji.view.helpCenter);
+				banhji.view.layout.showIn('#menu', banhji.view.menu);
+				//banhji.view.menu.showIn('#secondary-menu', banhji.view.appMenu);
+				
+				//eraseCookie("isshow");
+				var isshow = readCookie("cusVisit");
+				
+			    if (isshow != 1) {
+			        createCookie("cusVisit", 1);
+					$("a.aCustomer").click();
+				}
+
+				var vm = banhji.helpCenter;
+				banhji.userManagement.addMultiTask("Help Center","help_center",null);
+				if(banhji.pageLoaded["helpCenter"]==undefined){
+					banhji.pageLoaded["helpCenter"] = true;
+
+					vm.setObj();
+				}
+				vm.pageLoad();
+			} else {
+				window.location.replace(baseUrl + "admin");
+			}
+		});
 	});
 
 

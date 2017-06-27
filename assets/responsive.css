@@ -3309,3 +3309,101 @@ html.top-full .navbar.main .topnav .dropdown > a .caret{
     font-size: 10px;
     height: 40px;
 }
+
+/*Help Center*/
+.search-box-home {
+  padding: 180px;
+}
+.search-box {
+  background-image: url("//p5.zdassets.com/hc/theme_assets/86104/200000644/Help_Centre_Banner.jpg");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 500px;
+  margin-bottom: 0;
+}
+.homepage-search-box {
+  margin: 0 auto;
+  max-width: 809px;
+}
+.search-box h2 {
+  color: #ffffff;
+  font-size: 44px;
+  margin-bottom: 40px;
+}
+.Homepage-search-box .search::before {
+  content: url("//p5.zdassets.com/hc/theme_assets/86104/200000644/icon_25_magnifying_glass.svg");
+  right: 21px;
+  top: 31%;
+  width: 26px;
+}
+.search::before {
+  color: #adadad;
+  content: "🔍";
+  font-family: "entypo";
+  font-size: 25px;
+  line-height: 0;
+  position: absolute;
+  text-align: center;
+  top: 50%;
+  width: 55px;
+  z-index: 1;
+}
+.search {
+  border-radius: 3px;
+  position: relative;
+}
+.search input {
+  border: 0 none;
+  display: inline-block;
+  height: 50px;
+  outline: 0 none;
+  vertical-align: middle;
+  width: 20px;
+}
+.homepage-search-box #query {
+  border-radius: 3px;
+  box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.2);
+  height: 65px;
+  padding-bottom: 11px;
+  padding-left: 20px;
+  padding-right: 55px;
+}
+.search input[type="search"], .search input[type="text"] {
+  background: #fff ;
+  border-radius: 0;
+  font-size: 20px;
+  padding: 15px 0 15px 50px;
+  width: 100%;
+}
+.search input {
+  border: 0 none;
+  display: inline-block;
+  height: 50px;
+  outline: 0 none;
+  vertical-align: middle;
+  width: 20px;
+}
+.homepage-search-box .search input[type="submit"] {
+  display: none;
+}
+.search input[type="submit"] {
+  background-color: #ffffff;
+  border: 1px solid #41af4b;
+  border-radius: 3px;
+  box-shadow: none;
+  color: #41af4b;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1em;
+  padding: 12px 0;
+  position: absolute;
+  right: 0;
+  text-transform: uppercase;
+  top: 0;
+  width: 15%;
+}
+.search-box-home input[type="submit"] {
+  height: 40px;
+  margin: 5px;
+}
