@@ -713,6 +713,7 @@ class Wreports extends REST_Controller {
 		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
 		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;								
 		$sort 	 	= $this->get("sort");
+		$totalAmount = 0;
 
 		$activeMeter = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$allMeter = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
@@ -721,6 +722,7 @@ class Wreports extends REST_Controller {
 		$branch = new Branch(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$avgUsage = new Meter_record(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$deposit = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$contact = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
 		if(!empty($filters) && isset($filters)){			
 	    	foreach ($filters as $value) {	    		    			
@@ -733,6 +735,8 @@ class Wreports extends REST_Controller {
 
 		$activeMeter->where('status', 1);
 		$nActiveMeter = $activeMeter->count();
+		$contact->where('use_water', '1');
+		$nContact 		= $contact->count();
 
 		$branch->get();
 		$totalAllowCustomer = $branch->max_customer == 0 ? 0: $nActiveMeter / intval($branch->max_customer);
@@ -744,11 +748,13 @@ class Wreports extends REST_Controller {
 			// $usage += $loc_transaction_winvoice_line_quanity;
 			$locs[] = $loc->id;
 		}
-		$income->select_sum("amount");
-		$income->where_in('location_id', $locs);
+
 		$income->where("type", "Utility_Invoice");
-		$income->where("deleted <>", 1);
-		$income->get();
+	
+		$income->get_iterated();
+		foreach ($income as $nIncome) {
+			$totalAmount += floatval($nIncome->amount)/floatval($nIncome->rate);
+		}
 
 		$avgUsage->get();
 		$totalUsage = 0;
@@ -756,7 +762,7 @@ class Wreports extends REST_Controller {
 		foreach($avgUsage as $avgUsg) {
 			$totalUsage += $avgUsg->usage;
 		}
-		$avg = $nActiveMeter == 0 ? 0:$totalUsage / $activeMeter->count();
+		$avg = $nActiveMeter == 0 ? 0:$totalUsage / $nActiveMeter;
 
 		$deposit->select_sum("amount");
 		$deposit->where_in('location_id', $locs);
@@ -766,10 +772,10 @@ class Wreports extends REST_Controller {
 		$data["results"][] = array(
 				"id" 						=> 0,
 				"totalCustomer" 			=> $nActiveMeter,
-				"totalAllowCustomer" 		=> $totalAllowCustomer,
-				"totalActiveCustomer" 		=> $nActiveMeter / $allMeter->count(),
-				"totalIncome" 				=> floatval($income->amount), //water revenue
-				"avgIncome" 				=> floatval($income->amount) / $nActiveMeter, // avg revenue/connection
+				"totalAllowCustomer" 		=> $branch->max_customer == 0 ? 0: $nContact / $branch->max_customer,
+				"totalActiveCustomer" 		=> $branch->max_customer == 0 ? 0: $nActiveMeter / $branch->max_customer,
+				"totalIncome" 				=> $totalAmount, //water revenue
+				"avgIncome" 				=> $nActiveMeter == 0? 0 : $totalAmount  / $nActiveMeter, // avg revenue/connection
 				"avgUsage" 					=> floatval($avg),
 				"totalUsage"				=> floatval($totalUsage),			
 				"totalDeposit" 				=> floatval($deposit->amount)
@@ -779,6 +785,7 @@ class Wreports extends REST_Controller {
 
 		$this->response($data, 200);
 	}
+
 
 	//GET WATER AGING SUMMARY
 	function aging_summary11_get() {		
