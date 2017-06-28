@@ -54180,12 +54180,9 @@
 			if(data.measurement_id>0){
 				$.each(data.item_prices, function(index, value){
 					if(value.measurement_id==data.measurement_id){
-						var rate = obj.rate / banhji.source.getRate(value.locale, new Date(obj.issued_date));
-				        
-				        data.set("price", value.price * rate);
+
+				        data.set("price", value.price * data.rate);
 				        data.set("conversion_ratio", value.conversion_ratio);
-				        data.set("rate", rate);
-				        data.set("locale", value.locale);
 				        
 						return false;
 					}
