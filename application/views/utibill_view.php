@@ -8202,30 +8202,28 @@
 								<!-- Tabs Heading -->
 								<div class="widget-head">
 									<ul>
-										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i><span data-bind="text: lang.lang.date">Date</span></a></li>
-										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab" data-bind="click: printGrid"><i></i><span data-bind="text: lang.lang.print_export">Print/Export</span></a></li>
+										
+										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab"><i></i><span data-bind="text: lang.lang.print_export" style="text-transform: capitalize;"></span></a></li>
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
-								<!-- <div class="widget-body">
+								<div class="widget-body">
 									<div class="tab-content">
-								        <div class="tab-pane active" id="tab-1">
-											<input 
-												data-role="dropdownlist" 
-												data-option-label="Property ..." 
-												data-auto-bind="false" 
-												data-value-primitive="true" 
-												data-text-field="name" 
-												data-value-field="id" 
-												data-bind="
-													value: licenseSelect,
-				                  					source: licenseDS,
-				                  					events: {change: licenseChange}">
 
-										  	 <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>							
-									    </div>									        							       
+							        	<!-- PRINT/EXPORT  -->
+								        <div class="tab-pane" id="tab-3">								        	
+								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: printGrid" style="width: 80px;"><i></i> Print</span>
+								        	<!-- <span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
+								        		<i class="fa fa-file-pdf-o"></i>
+								        		Print as PDF
+								        	</span> -->
+								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: ExportExcel" style="width: 80px;">
+								        		<i class="fa fa-file-excel-o"></i>
+								        		Export to Excel
+								        	</span>
+							        	</div>
 								    </div>
-								</div> -->
+								</div>
 							</div>
 						</div>
 						<!-- // Tabs END -->						
@@ -8247,10 +8245,10 @@
 						<table class="table table-borderless table-condensed ">
 							<thead>
 								<tr>
-									<th style="vertical-align: top;"><span data-bind="text: lang.lang.customer_name">Customer Name</span></th>
-									<th style="vertical-align: top;"><span data-bind="text: lang.lang.number">Number</span></th>
-									<th style="vertical-align: top;"><span data-bind="text: lang.lang.phone">Phone</span></th>
-									<th style="vertical-align: top;"><span data-bind="text: lang.lang.address">Address</span></th>
+									<th style="vertical-align: top;">Property</th>
+									<th style="vertical-align: top;">Meter</th>
+									<th style="vertical-align: top;">Block</th>
+									<th style="vertical-align: top;">License</th>
 								</tr>
 							</thead>
 							<tbody data-role="listview"
@@ -8267,11 +8265,17 @@
 </script>
 <script id="customerList-temp" type="text/x-kendo-template" >
 	<tr>
-		<td>#=name#</td>
-		<td>#=number#</td>
-		<td>#=phone#</td>
-		<td style="text-align: right;">#=address#</td>		
+		<td colspan="4" style="font-weight: bold; color: black;">#: name #</td>
 	</tr>
+	#for(var i= 0; i <line.length; i++) {#
+		<tr>
+			<td>#=line[i].property#</td>
+			<td>#=line[i].meter#</td>
+			<td>#=line[i].location#</td>
+			<td style="text-align: right;">#=line[i].branch#</td>
+		</tr>
+
+	#}#
 </script>
 <script id="customerNoConnection" type="text/x-kendo-template">
 	<div id="slide-form">
@@ -8849,7 +8853,7 @@
 									<ul>
 										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i><span data-bind="text: lang.lang.date">Date</span></a></li>	
 										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i><span data-bind="text: lang.lang.filter">Filter</span></a></li>
-										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab" data-bind="click: printGrid"><i></i><span data-bind="text: lang.lang.print_export">Print/Export</span></a></li>
+										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab" ><i></i><span data-bind="text: lang.lang.print_export">Print/Export</span></a></li>
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
@@ -8934,6 +8938,18 @@
 												</div>														
 											</div>		
 							        	</div>
+							        	 <!-- PRINT/EXPORT  -->
+								        <div class="tab-pane" id="tab-3">								        	
+								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: printGrid" style="width: 80px;"><i></i> Print</span>
+								        	<!-- <span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
+								        		<i class="fa fa-file-pdf-o"></i>
+								        		Print as PDF
+								        	</span> -->
+								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: ExportExcel" style="width: 80px;">
+								        		<i class="fa fa-file-excel-o"></i>
+								        		Export to Excel
+								        	</span>
+							        	</div>	
 								    </div>
 								</div>
 							</div>
@@ -9012,7 +9028,7 @@
 									<ul>
 										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i><span data-bind="text: lang.lang.date">Date</span></a></li>	
 										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i><span data-bind="text: lang.lang.filter">Filter</span></a></li>
-										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab" data-bind="click: printGrid"><i></i><span data-bind="text: lang.lang.print_export">Print/Export</span></a></li>
+										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab"><i></i><span data-bind="text: lang.lang.print_export">Print/Export</span></a></li>
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
@@ -9083,6 +9099,18 @@
 										  			<button style="margin-top: 20px;" type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
 												</div>														
 											</div>		
+							        	</div>
+							        	<!-- PRINT/EXPORT  -->
+								        <div class="tab-pane" id="tab-3">								        	
+								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: printGrid" style="width: 80px;"><i></i> Print</span>
+								        	<!-- <span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
+								        		<i class="fa fa-file-pdf-o"></i>
+								        		Print as PDF
+								        	</span> -->
+								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: ExportExcel" style="width: 80px;">
+								        		<i class="fa fa-file-excel-o"></i>
+								        		Export to Excel
+								        	</span>
 							        	</div>
 								    </div>
 								</div>
@@ -9192,7 +9220,7 @@
 									<ul>
 										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i><span data-bind="text: lang.lang.date">Date</span></a></li>	
 										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i><span data-bind="text: lang.lang.filter">Filter</span></a></li>
-										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab" data-bind="click: printGrid"><i></i><span data-bind="text: lang.lang.print_export">Print/Export</span></a></li>
+										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab" ><i></i><span data-bind="text: lang.lang.print_export">Print/Export</span></a></li>
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
@@ -9264,6 +9292,18 @@
 												</div>														
 											</div>		
 							        	</div>
+							        	<!-- PRINT/EXPORT  -->
+								        <div class="tab-pane" id="tab-3">								        	
+								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: printGrid" style="width: 80px;"><i></i> Print</span>
+								        	<!-- <span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
+								        		<i class="fa fa-file-pdf-o"></i>
+								        		Print as PDF
+								        	</span> -->
+								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: ExportExcel" style="width: 80px;">
+								        		<i class="fa fa-file-excel-o"></i>
+								        		Export to Excel
+								        	</span>
+							        	</div>	
 								    </div>
 								</div>
 							</div>
@@ -9333,9 +9373,7 @@
 			<td style="padding-left: 20px !important;">#=line[i].type#</td>
 			<td>#=kendo.toString(new Date(line[i].date), "dd-MM-yyyy")#</td>
 			<td>#=line[i].location#</td>
-			<td style="text-align: right;">
-				<a href="\#/#=line[i].type.toLowerCase()#/#=line[i].id#">#=line[i].number#</a>
-			</td>		
+			<td>#=line[i].number#</td>		
 			<td>#=line[i].usage#</td>	
 			<td style="text-align: right;">#=kendo.toString(line[i].amount, banhji.locale=="km-KH"?"c0":"c", banhji.locale)#</td>
 		</tr>
@@ -9447,7 +9485,7 @@
 									<ul>
 										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i><span data-bind="text: lang.lang.date">Date</span></a></li>	
 										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i><span data-bind="text: lang.lang.filter">Filter</span></a></li>
-										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab" data-bind="click: printGrid"><i></i><span data-bind="text: lang.lang.print_export">Print/Export</span></a></li>
+										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab"><i></i><span data-bind="text: lang.lang.print_export">Print/Export</span></a></li>
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
@@ -9512,6 +9550,18 @@
 										  			<button style="margin-top: 20px;" type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
 												</div>														
 											</div>		
+							        	</div>
+							        								        	<!-- PRINT/EXPORT  -->
+								        <div class="tab-pane" id="tab-3">								        	
+								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: printGrid" style="width: 80px;"><i></i> Print</span>
+								        	<!-- <span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
+								        		<i class="fa fa-file-pdf-o"></i>
+								        		Print as PDF
+								        	</span> -->
+								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: ExportExcel" style="width: 80px;">
+								        		<i class="fa fa-file-excel-o"></i>
+								        		Export to Excel
+								        	</span>
 							        	</div>
 								    </div>
 								</div>
@@ -9756,7 +9806,7 @@
 									<ul>
 										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i><span data-bind="text: lang.lang.date">Date</span></a></li>	
 										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i><span data-bind="text: lang.lang.filter">Filter</span></a></li>
-										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab" data-bind="click: printGrid"><i></i><span data-bind="text: lang.lang.print_export">Print/Export</span></a></li>
+										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab"><i></i><span data-bind="text: lang.lang.print_export">Print/Export</span></a></li>
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
@@ -9840,6 +9890,17 @@
 										  			<button style="margin-top: 20px;" type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
 												</div>														
 											</div>		
+							        	</div>
+							        	<div class="tab-pane" id="tab-3">								        	
+								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: printGrid" style="width: 80px;"><i></i> Print</span>
+								        	<!-- <span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
+								        		<i class="fa fa-file-pdf-o"></i>
+								        		Print as PDF
+								        	</span> -->
+								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: ExportExcel" style="width: 80px;">
+								        		<i class="fa fa-file-excel-o"></i>
+								        		Export to Excel
+								        	</span>
 							        	</div>
 								    </div>
 								</div>
@@ -10149,7 +10210,7 @@
 								<div class="widget-head">
 									<ul>
 										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i><span data-bind="text: lang.lang.date"></span></a></li>	
-										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab" data-bind="click: printGrid"><i></i><span data-bind="text: lang.lang.print_export"></span></a></li>
+										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab"><i></i><span data-bind="text: lang.lang.print_export"></span></a></li>
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
@@ -10165,6 +10226,17 @@
 
 								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
 							
+							        	</div>
+							        	<div class="tab-pane" id="tab-3">								        	
+								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: printGrid" style="width: 80px;"><i></i> Print</span>
+								        	<!-- <span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
+								        		<i class="fa fa-file-pdf-o"></i>
+								        		Print as PDF
+								        	</span> -->
+								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: ExportExcel" style="width: 80px;">
+								        		<i class="fa fa-file-excel-o"></i>
+								        		Export to Excel
+								        	</span>
 							        	</div>
 								    </div>
 								</div>
@@ -21567,6 +21639,70 @@
             	
             	self.set("totalAmount", kendo.toString(amount, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
             });
+            this.dataSource.bind("requestEnd", function(e){				
+				if(e.type=="read"){
+					var response = e.response, balanceRec = 0;
+					self.exArray = [];
+
+					self.exArray.push({
+	            		cells: [
+	            			{ value: self.company.name, textAlign: "center", colSpan: 5 }
+	            		]
+	            	});
+	            	self.exArray.push({
+	            		cells: [
+	            			{ value: "Sale Summary Report",bold: true, fontSize: 20, textAlign: "center", colSpan: 5 }
+	            		]
+	            	});
+	            	if(self.displayDate){
+		            	self.exArray.push({
+		            		cells: [
+		            			{ value: self.displayDate, textAlign: "center", colSpan: 5 }
+		            		]
+		            	});
+		            }
+	            	self.exArray.push({
+	            		cells: [
+	            			{ value: "", colSpan: 5 }
+	            		]
+	            	});
+	            	self.exArray.push({ 
+	            		cells: [
+							{ value: "Customer", background: "#496cad", color: "#ffffff" },
+							{ value: "Location", background: "#496cad", color: "#ffffff" },
+							{ value: "Usage", background: "#496cad", color: "#ffffff" },
+							{ value: "Invoice Number", background: "#496cad", color: "#ffffff" },
+							{ value: "Total Sale", background: "#496cad", color: "#ffffff" }
+						]
+					});
+					for (var i = 0; i < response.results.length; i++){
+					    	balanceRec += response.results[i].amount;
+				          	self.exArray.push({
+				          		cells: [
+				          	  		{ value: response.results[i].name },
+				              		{ value: response.results[i].location },
+				              		{ value: response.results[i].usage },
+				              		{ value: response.results[i].invoice },
+				              		{ value: kendo.parseFloat(response.results[i].amount)},
+				            	]
+				          	});
+					    self.exArray.push({
+					        cells: [
+					          	{ value: "", colSpan: 5 }
+					        ]
+					    });
+					}
+					self.exArray.push({
+				        cells: [
+				          	{ value: "TOTAL", bold: true,fontSize: 16 },
+				            { value: "" },
+				            { value: "" },
+				            { value: "" },
+				            { value: kendo.parseFloat(response.balanceRec), bold: true, fontSize: 16 },
+				        ]
+				    });
+				}
+			}); 
 		},		
 		printGrid			: function() {
 			var gridElement = $('#grid'),
@@ -21653,15 +21789,14 @@
 	                { autoWidth: true },
 	                { autoWidth: true },
 	                { autoWidth: true },
-	                { autoWidth: true }
 	              ],
-	              title: "General Ledger",
+	              title: "Sale Summary",
 	              rows: this.exArray
 	            }
 	          ]
 	        });
 	        //save the file as Excel file with extension xlsx
-	        kendo.saveAs({dataURI: workbook.toDataURL(), fileName: "GeneralLedger.xlsx"});
+	        kendo.saveAs({dataURI: workbook.toDataURL(), fileName: "saleSummary.xlsx"});
 		}
 	});
 	banhji.connectServiceRevenue =  kendo.observable({
@@ -21786,6 +21921,79 @@
             	
             	self.set("totalAmount", kendo.toString(amount, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
             });
+            this.dataSource.bind("requestEnd", function(e){				
+				if(e.type=="read"){
+					var response = e.response, balanceCal = 0;
+					self.exArray = [];
+
+					self.exArray.push({
+	            		cells: [
+	            			{ value: self.company.name, textAlign: "center", colSpan: 4 }
+	            		]
+	            	});
+	            	self.exArray.push({
+	            		cells: [
+	            			{ value: "Connection Service Revenue Report",bold: true, fontSize: 20, textAlign: "center", colSpan: 4 }
+	            		]
+	            	});
+	            	if(self.displayDate){
+		            	self.exArray.push({
+		            		cells: [
+		            			{ value: self.displayDate, textAlign: "center", colSpan: 4 }
+		            		]
+		            	});
+		            }
+	            	self.exArray.push({
+	            		cells: [
+	            			{ value: "", colSpan: 4 }
+	            		]
+	            	});
+	            	self.exArray.push({ 
+	            		cells: [
+							{ value: "Type", background: "#496cad", color: "#ffffff" },
+							{ value: "Location", background: "#496cad", color: "#ffffff" },
+							{ value: "Reference", background: "#496cad", color: "#ffffff" },
+							{ value: "Revenue", background: "#496cad", color: "#ffffff" }
+						]
+					});
+					for (var i = 0; i < response.results.length; i++){
+						self.exArray.push({
+					        cells: [
+					          	{ value: response.results[i].name, bold: true, },
+					            { value: "" },
+					            { value: "" },
+					            { value: "" }
+					        ]
+					    });
+					    for(var j = 0; j < response.results[i].line.length; j++){
+					    	balanceCal += response.results[i].line[j].amount;
+				          	self.exArray.push({
+				          		cells: [
+				          	  		{ value: response.results[i].line[j].type },
+				              		{ value: response.results[i].line[j].date },
+				              		{ value: response.results[i].line[j].location},
+				              		{ value: kendo.parseFloat(response.results[i].line[j].amount)},
+				            	]
+				          	});
+				        }
+					    self.exArray.push({
+					        cells: [
+					          	{ value: "", colSpan: 4 }
+					        ]
+					    });
+					}
+					self.exArray.push({
+				        cells: [
+				          	{ value: "TOTAL", bold: true,fontSize: 16 },
+				            { value: "" },
+				            { value: "" },
+				            { value: "" },
+				            { value: "" },
+				            { value: kendo.parseFloat(response.balanceCal), bold: true, fontSize: 16 },
+				        ]
+				    });
+				}
+			}); 
 		},
 		printGrid			: function() {
 			var gridElement = $('#grid'),
@@ -21871,16 +22079,14 @@
 	                { autoWidth: true },
 	                { autoWidth: true },
 	                { autoWidth: true },
-	                { autoWidth: true },
-	                { autoWidth: true }
 	              ],
-	              title: "General Ledger",
+	              title: "Connection Service Revenue",
 	              rows: this.exArray
 	            }
 	          ]
 	        });
 	        //save the file as Excel file with extension xlsx
-	        kendo.saveAs({dataURI: workbook.toDataURL(), fileName: "GeneralLedger.xlsx"});
+	        kendo.saveAs({dataURI: workbook.toDataURL(), fileName: "connectionRevenue.xlsx"});
 		}
 	});
 	banhji.saleDetail =  kendo.observable({
@@ -22006,6 +22212,85 @@
             	
             	self.set("totalAmount", kendo.toString(amount, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
             });
+            this.dataSource.bind("requestEnd", function(e){				
+				if(e.type=="read"){
+					var response = e.response, balanceCal = 0, balanceRec = 0;
+					self.exArray = [];
+
+					self.exArray.push({
+	            		cells: [
+	            			{ value: self.company.name, textAlign: "center", colSpan: 6 }
+	            		]
+	            	});
+	            	self.exArray.push({
+	            		cells: [
+	            			{ value: "Sale Detail Report",bold: true, fontSize: 20, textAlign: "center", colSpan: 6 }
+	            		]
+	            	});
+	            	if(self.displayDate){
+		            	self.exArray.push({
+		            		cells: [
+		            			{ value: self.displayDate, textAlign: "center", colSpan: 6 }
+		            		]
+		            	});
+		            }
+	            	self.exArray.push({
+	            		cells: [
+	            			{ value: "", colSpan: 6 }
+	            		]
+	            	});
+	            	self.exArray.push({ 
+	            		cells: [
+							{ value: "Type", background: "#496cad", color: "#ffffff" },
+							{ value: "Date", background: "#496cad", color: "#ffffff" },
+							{ value: "Location", background: "#496cad", color: "#ffffff" },
+							{ value: "Reference", background: "#496cad", color: "#ffffff" },
+							{ value: "Usage", background: "#496cad", color: "#ffffff" },
+							{ value: "Amount", background: "#496cad", color: "#ffffff" }
+						]
+					});
+					for (var i = 0; i < response.results.length; i++){
+						self.exArray.push({
+					        cells: [
+					          	{ value: response.results[i].name, bold: true, },
+					            { value: "" },
+					            { value: "" },
+					            { value: "" },
+					            { value: "" },
+					            { value: "" }
+					        ]
+					    });
+					    for(var j = 0; j < response.results[i].line.length; j++){
+					    	balanceCal += response.results[i].line[j].amount;
+				          	self.exArray.push({
+				          		cells: [
+				          	  		{ value: response.results[i].line[j].type },
+				              		{ value: response.results[i].line[j].date },
+				              		{ value: response.results[i].line[j].location},
+				              		{ value: response.results[i].line[j].number },
+				              		{ value: response.results[i].line[j].usage },
+				              		{ value: kendo.parseFloat(response.results[i].line[j].amount)},
+				            	]
+				          	});
+				        }
+					    self.exArray.push({
+					        cells: [
+					          	{ value: "", colSpan: 6 }
+					        ]
+					    });
+					}
+					self.exArray.push({
+				        cells: [
+				          	{ value: "TOTAL", bold: true,fontSize: 16 },
+				            { value: "" },
+				            { value: "" },
+				            { value: "" },
+				            { value: "" },
+				            { value: kendo.parseFloat(response.balanceCal), bold: true, fontSize: 16 },
+				        ]
+				    });
+				}
+			});  
 		},
 		printGrid			: function() {
 			var gridElement = $('#grid'),
@@ -22094,13 +22379,13 @@
 	                { autoWidth: true },
 	                { autoWidth: true }
 	              ],
-	              title: "General Ledger",
+	              title: "Sale Detail",
 	              rows: this.exArray
 	            }
 	          ]
 	        });
 	        //save the file as Excel file with extension xlsx
-	        kendo.saveAs({dataURI: workbook.toDataURL(), fileName: "GeneralLedger.xlsx"});
+	        kendo.saveAs({dataURI: workbook.toDataURL(), fileName: "saleDetail.xlsx"});
 		}
 	});
 	banhji.otherRevenues = kendo.observable({
@@ -22221,6 +22506,82 @@
 
             	self.set("totalAmount", kendo.toString(amount, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
             });
+           	this.dataSource.bind("requestEnd", function(e){				
+				if(e.type=="read"){
+					var response = e.response, balanceRec = 0;
+					self.exArray = [];
+
+					self.exArray.push({
+	            		cells: [
+	            			{ value: self.company.name, textAlign: "center", colSpan: 7 }
+	            		]
+	            	});
+	            	self.exArray.push({
+	            		cells: [
+	            			{ value: "Accounts Receivable Listing",bold: true, fontSize: 20, textAlign: "center", colSpan: 7 }
+	            		]
+	            	});
+	            	if(self.displayDate){
+		            	self.exArray.push({
+		            		cells: [
+		            			{ value: self.displayDate, textAlign: "center", colSpan: 7 }
+		            		]
+		            	});
+		            }
+	            	self.exArray.push({
+	            		cells: [
+	            			{ value: "", colSpan: 7 }
+	            		]
+	            	});
+	            	self.exArray.push({ 
+	            		cells: [
+							{ value: "Type", background: "#496cad", color: "#ffffff" },
+							{ value: "Date", background: "#496cad", color: "#ffffff" },
+							{ value: "Name", background: "#496cad", color: "#ffffff" },
+							{ value: "Reference", background: "#496cad", color: "#ffffff" },
+							{ value: "Location", background: "#496cad", color: "#ffffff" },
+							{ value: "Status", background: "#496cad", color: "#ffffff" },
+							{ value: "Amount", background: "#496cad", color: "#ffffff" }
+						]
+					});
+					for (var i = 0; i < response.results.length; i++){
+					    	balanceRec += response.results[i].amount;
+					    	var date = new Date(), dueDates = new Date(response.results[i].due_date).getTime(),overDue, toDay = new Date(date).getTime();
+							if(dueDates < toDay) {
+								overDue = Math.floor((toDay - dueDates)/(1000*60*60*24))+"days";
+							} else {
+								overDue = Math.floor((dueDates - toDay)/(1000*60*60*24))+"days to pay";
+							}
+				          	self.exArray.push({
+				          		cells: [
+				          	  		{ value: response.results[i].type },
+				              		{ value: response.results[i].issued_date },
+				              		{ value: response.results[i].name },
+				              		{ value: response.results[i].number},
+				              		{ value: response.results[i].location},
+				              		{ value: overDue},
+				              		{ value: kendo.parseFloat(response.results[i].amount)},
+				            	]
+				          	});
+					    self.exArray.push({
+					        cells: [
+					          	{ value: "", colSpan: 7 }
+					        ]
+					    });
+					}
+					self.exArray.push({
+				        cells: [
+				          	{ value: "TOTAL", bold: true,fontSize: 16 },
+				            { value: "" },
+				            { value: "" },
+				            { value: "" },
+				            { value: "" },
+				            { value: "" },
+				            { value: kendo.parseFloat(response.balanceRec), bold: true, fontSize: 16 },
+				        ]
+				    });
+				}
+			}); 
 		},
 		printGrid			: function() {
 			var gridElement = $('#grid'),
@@ -22307,15 +22668,16 @@
 	                { autoWidth: true },
 	                { autoWidth: true },
 	                { autoWidth: true },
+	                { autoWidth: true },
 	                { autoWidth: true }
 	              ],
-	              title: "General Ledger",
+	              title: "Accounts Receivable Listing",
 	              rows: this.exArray
 	            }
 	          ]
 	        });
 	        //save the file as Excel file with extension xlsx
-	        kendo.saveAs({dataURI: workbook.toDataURL(), fileName: "GeneralLedger.xlsx"});
+	        kendo.saveAs({dataURI: workbook.toDataURL(), fileName: "ARListing.xlsx"});
 		}
 	});
 	banhji.agingSummary =  kendo.observable({
@@ -22609,6 +22971,89 @@
             	
             	self.set("totalAmount", kendo.toString(amount, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
             });
+                        this.dataSource.bind("requestEnd", function(e){				
+				if(e.type=="read"){
+					var response = e.response, balanceCal = 0, balanceRec = 0;
+					self.exArray = [];
+
+					self.exArray.push({
+	            		cells: [
+	            			{ value: self.company.name, textAlign: "center", colSpan: 7 }
+	            		]
+	            	});
+	            	self.exArray.push({
+	            		cells: [
+	            			{ value: "Customer Deposit Report",bold: true, fontSize: 20, textAlign: "center", colSpan: 7 }
+	            		]
+	            	});
+	            	if(self.displayDate){
+		            	self.exArray.push({
+		            		cells: [
+		            			{ value: self.displayDate, textAlign: "center", colSpan: 7 }
+		            		]
+		            	});
+		            }
+	            	self.exArray.push({
+	            		cells: [
+	            			{ value: "", colSpan: 7 }
+	            		]
+	            	});
+	            	self.exArray.push({ 
+	            		cells: [
+							{ value: "Type", background: "#496cad", color: "#ffffff" },
+							{ value: "Date", background: "#496cad", color: "#ffffff" },
+							{ value: "Number", background: "#496cad", color: "#ffffff" },
+							{ value: "Reference", background: "#496cad", color: "#ffffff" },
+							{ value: "Location", background: "#496cad", color: "#ffffff" },
+							{ value: "Amount", background: "#496cad", color: "#ffffff" },
+							{ value: "Balance", background: "#496cad", color: "#ffffff" },
+						]
+					});
+					for (var i = 0; i < response.results.length; i++){
+						self.exArray.push({
+					        cells: [
+					          	{ value: response.results[i].name, bold: true, },
+					            { value: "" },
+					            { value: "" },
+					            { value: "" },
+					            { value: "" },
+					            { value: "" },
+					            { value: "" }
+					        ]
+					    });
+					    for(var j = 0; j < response.results[i].line.length; j++){
+					    	balanceCal += response.results[i].line[j].amount;
+				          	self.exArray.push({
+				          		cells: [
+				          	  		{ value: response.results[i].line[j].type },
+				              		{ value: response.results[i].line[j].issued_date },
+				              		{ value: response.results[i].line[j].number},
+				              		{ value: response.results[i].line[j].reference} ,
+				              		{ value: response.results[i].line[j].location},
+				              		{ value: kendo.parseFloat(response.results[i].line[j].amount)},
+				              		{ value: balanceCal},
+				            	]
+				          	});
+				        }
+					    self.exArray.push({
+					        cells: [
+					          	{ value: "", colSpan: 7 }
+					        ]
+					    });
+					}
+					self.exArray.push({
+				        cells: [
+				          	{ value: "TOTAL", bold: true,fontSize: 16 },
+				            { value: "" },
+				            { value: "" },
+				            { value: "" },
+				            { value: "" },
+				            { value: "" },
+				            { value: kendo.parseFloat(response.balanceCal), bold: true, fontSize: 16 },
+				        ]
+				    });
+				}
+			}); 
 		},
 		printGrid			: function() {
 			var gridElement = $('#grid'),
@@ -22695,15 +23140,16 @@
 	                { autoWidth: true },
 	                { autoWidth: true },
 	                { autoWidth: true },
+	                { autoWidth: true },
 	                { autoWidth: true }
 	              ],
-	              title: "General Ledger",
+	              title: "Customer Deposit",
 	              rows: this.exArray
 	            }
 	          ]
 	        });
 	        //save the file as Excel file with extension xlsx
-	        kendo.saveAs({dataURI: workbook.toDataURL(), fileName: "GeneralLedger.xlsx"});
+	        kendo.saveAs({dataURI: workbook.toDataURL(), fileName: "customerDeposit.xlsx"});
 		}
 	});
 	banhji.customerBalanceSummary =  kendo.observable({
@@ -22747,6 +23193,64 @@
             	self.set("total_txn", kendo.toString(txnCount, "n0"));
             	self.set("total_balance", kendo.toString(balance, "c2", banhji.locale));
             });
+            this.dataSource.bind("requestEnd", function(e){				
+				if(e.type=="read"){
+					var response = e.response, balanceRec = 0;
+					self.exArray = [];
+
+					self.exArray.push({
+	            		cells: [
+	            			{ value: self.company.name, textAlign: "center", colSpan: 3 }
+	            		]
+	            	});
+	            	self.exArray.push({
+	            		cells: [
+	            			{ value: "Customer Balance Summary",bold: true, fontSize: 20, textAlign: "center", colSpan: 3 }
+	            		]
+	            	});
+	            	if(self.displayDate){
+		            	self.exArray.push({
+		            		cells: [
+		            			{ value: self.displayDate, textAlign: "center", colSpan: 3 }
+		            		]
+		            	});
+		            }
+	            	self.exArray.push({
+	            		cells: [
+	            			{ value: "", colSpan: 3 }
+	            		]
+	            	});
+	            	self.exArray.push({ 
+	            		cells: [
+							{ value: "Customer Name", background: "#496cad", color: "#ffffff" },
+							{ value: "No. OF Invoice", background: "#496cad", color: "#ffffff" },
+							{ value: "Balance", background: "#496cad", color: "#ffffff" },
+						]
+					});
+					for (var i = 0; i < response.results.length; i++){
+					    	balanceRec += response.results[i].amount;
+				          	self.exArray.push({
+				          		cells: [
+				          	  		{ value: response.results[i].name },
+				              		{ value: response.results[i].number },
+				              		{ value: kendo.parseFloat(response.results[i].amount)},
+				            	]
+				          	});
+					    self.exArray.push({
+					        cells: [
+					          	{ value: "", colSpan: 3 }
+					        ]
+					    });
+					}
+					self.exArray.push({
+				        cells: [
+				          	{ value: "TOTAL", bold: true,fontSize: 16 },
+				            { value: "" },
+				            { value: kendo.parseFloat(response.balanceRec), bold: true, fontSize: 16 },
+				        ]
+				    });
+				}
+			});
 		},
 		printGrid			: function() {
 			var gridElement = $('#grid'),
@@ -22830,18 +23334,15 @@
 	              columns: [
 	                { autoWidth: true },
 	                { autoWidth: true },
-	                { autoWidth: true },
-	                { autoWidth: true },
-	                { autoWidth: true },
 	                { autoWidth: true }
 	              ],
-	              title: "General Ledger",
+	              title: "Customer Balance Summary",
 	              rows: this.exArray
 	            }
 	          ]
 	        });
 	        //save the file as Excel file with extension xlsx
-	        kendo.saveAs({dataURI: workbook.toDataURL(), fileName: "GeneralLedger.xlsx"});
+	        kendo.saveAs({dataURI: workbook.toDataURL(), fileName: "customerBalanceSummary.xlsx"});
 		}
 	});
 	banhji.customerBalanceDetail =  kendo.observable({
