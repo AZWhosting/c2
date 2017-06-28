@@ -20858,7 +20858,7 @@
 <script id="itemPrice" type="text/x-kendo-template">
 	<div id="slide-form">
 		<div class="customer-background" style="overflow: hidden;">
-			<div class="container-960">					
+			<div class="container-960">
 				<div id="example" class="k-content">
 
 					<span class="glyphicons no-js remove_2 pull-right" 
@@ -20911,14 +20911,13 @@
 											<span class="txt"><span data-bind="text: lang.lang.on_so"></span></span>
 										</a>
 									</div>
-									
-								</div>					
+								</div>
 							</div>
 						</div>
 
 						<!-- Item Price Type Window -->
 					    <div data-role="window"
-				                 data-title="Item Price"		                 
+				                 data-title="Item Price"
 				                 data-width="810"
 				                 data-height="290"
 				                 data-actions="{}"
@@ -20952,8 +20951,8 @@
 					            		</td>
 					            		<td><span style="float: left; margin-top: 7px; font-size: 25px; font-weight: 600;">=</span></td>
 					            		<td>
-					            			<div class="control-group" style="padding: 5px; float: left;">								
-												<label for="txtQuantity"><span data-bind="text: lang.lang.quantity"></span> <span style="color:red">*</span></label>
+					            			<div class="control-group" style="padding: 5px; float: left;">
+					            				<label for="txtQuantity"><span data-bind="text: lang.lang.quantity"></span> <span style="color:red">*</span></label>
 									            <input id="txtQuantity" name="txtQuantity"
 									            	data-role="numerictextbox" 
 													data-format="n" data-min="1"
@@ -20965,29 +20964,32 @@
 											</div>
 					            		</td>
 					            		<td>
-					            			<div class="control-group" style="padding: 5px; float: left;">										
-												<label for="ddlMesurement"><span >UOM</span> <span style="color:red">*</span></label>
+					            			<div class="control-group" style="padding: 5px; float: left;">
+					            				<label for="ddlMesurement"><span >UOM</span> <span style="color:red">*</span></label>
 												<input id="ddlMesurement" name="ddlMesurement" 
 														data-role="dropdownlist"
-														data-value-primitive="true"                  
+														data-value-primitive="true"
 									                    data-text-field="name"
 									                    data-value-field="id"
 									                    data-bind="value: priceList.measurement_id,
 									                   			  	source: measurementDS,
 									                   			  	events:{change: measurementChanges}"
 									                    data-option-label="UM"
-									                    required data-required-msg="required" style="width: 100%;" />																				            
+									                    required data-required-msg="required" style="width: 100%;" />
 											</div>
+					            		</td>
+					            		<td style="border: 1px solid #D5DBDB;">
+					            			teinghkfdjgfslkgnsdfgnfdskjgnfdkssj
 					            		</td>
 					            	</tr>
 					            	<tr data-bind="invisible: isltBase">
 						            	<td><span style="float: left;">1</span></td>
-						            	<td>						            		
-						            		<div class="control-group" style="padding: 5px; float: left;">										
-												<label for="ddlMesurement"><span >UOM</span> <span style="color:red">*</span></label>
+						            	<td>
+						            		<div class="control-group" style="padding: 5px; float: left;">
+						            			<label for="ddlMesurement"><span >UOM</span> <span style="color:red">*</span></label>
 												<input id="ddlMesurement" name="ddlMesurement" 
 														data-role="dropdownlist"
-														data-value-primitive="true"                  
+														data-value-primitive="true"
 									                    data-text-field="name"
 									                    data-value-field="id"
 									                    data-bind="value: priceList.measurement_id,
@@ -21012,35 +21014,21 @@
 											</div>
 					            		</td>
 					            		<td><span >Base UOM</span></td>
+					            		<td style="border: 1px solid #D5DBDB;">
+					            			teinghkfdjgfslkgnsdfgnfdskjgnfdkssj
+					            		</td>
 						            </tr>
+						            <tr><td colspan="6"></td></tr>
 						            <tr style="background-color: #D5DBDB;">
-						            	<td></td>
-						            	<td>
-						            		<div class="control-group" style="padding: 5px; float: left;">										
-												<label for="txtPrice"><span >Price</span> <span style="color:red">*</span></label>												
+						            	<td colspan="6">
+						            		<div class="control-group" style="padding: 5px; float: left;">
+												<label for="txtPrice"><span >Price</span> <span style="color:red">*</span></label>
 												<input id="txtPrice" name="txtPrice"
-												   type="number" class="k-textbox" min="0"
-								                   data-bind="value: priceList.price"
-								                   required data-required-msg="required" />																				            
+													   type="number" class="k-textbox" min="0"
+									                   data-bind="value: priceList.price"
+									                   required data-required-msg="required" style="width:100%;" />
 											</div>
 						            	</td>
-						            	<td></td>
-						            	<td >
-						            		<div class="control-group" style="padding: 5px; float: left;">								
-												<label for="ddlCurrency"><span data-bind="text: lang.lang.currency"></span><span style="color:red">*</span></label>
-									            <input id="ddlCurrency" name="ddlCurrency" 
-									               data-role="dropdownlist"
-												   data-option-label="(--- Select ---)"
-												   data-template="currency-list-tmpl"			                   
-								                   data-value-primitive="true"
-								                   data-text-field="code"
-								                   data-value-field="locale"
-								                   data-bind="value: priceList.locale,
-								                              source: currencyDS"
-								                   required data-required-msg="required" />
-											</div>
-						            	</td>
-						            	<td></td>
 						            </tr>
 					            </table>
 							</div>
@@ -21050,7 +21038,7 @@
 								<span class="btn btn-success btn-icon glyphicons ok_2" data-bind="click: save"><i></i>Save</span>
 								<span class="btn btn-danger btn-icon glyphicons remove_2" data-bind="click: closeWindow"><i></i><span data-bind="text: lang.lang.close"></span></span> 
 							</div> 
-						</div>		
+						</div>
 
 						<button class="btn btn-inverse" data-bind="click: openWindow"><i class="icon-plus icon-white"></i></button>
 						<span data-bind="text: lang.lang.set_new_price"></span>
@@ -21062,12 +21050,12 @@
 					            <tr>
 					                <th data-bind="text: lang.lang.conversion_ratio" class="center" style="width: 20%"></th>
 					                <th data-bind="text: lang.lang.uom" style="width: 20%"></th>
-					                <th data-bind="text: lang.lang.price" class="center" style="width: 20%"></th>			                
-					                <th style="text-align: center;"></th>	                
+					                <th data-bind="text: lang.lang.price" class="center" style="width: 20%"></th>
+					                <th style="text-align: center;"></th>
 					            </tr>
 					        </thead>
 					        <tbody data-template="itemPrice-template"
-					        	data-auto-bind="false"			        	
+					        	data-auto-bind="false"
 					        	data-bind="source: dataSource"></tbody>
 					    </table>
 
@@ -21075,13 +21063,13 @@
 
 						<table class="table table-bordered table-primary table-striped table-vertical-center">
 					        <thead>
-					            <tr>	            	
+					            <tr>
 					            	<th data-bind="text: lang.lang.date"></th>
-					            	<th data-bind="text: lang.lang.type"></th>	                
-					                <th data-bind="text: lang.lang.reference"></th>				               
+					            	<th data-bind="text: lang.lang.type"></th>
+					                <th data-bind="text: lang.lang.reference"></th>
 					                <th data-bind="text: lang.lang.quantity"></th>
 					                <th data-bind="text: lang.lang.cost"></th>
-					                <th data-bind="text: lang.lang.price"></th>			                	             
+					                <th data-bind="text: lang.lang.price"></th>
 					            </tr>
 					        </thead>
 					        <tbody data-template="itemPrice-movement-tmpl"
@@ -21094,7 +21082,7 @@
 				             data-auto-bind="false" 
 				             data-bind="source: recordDS"></div>
 
-				        <div id="ntf1" data-role="notification"></div>					
+				        <div id="ntf1" data-role="notification"></div>
 
 					</div>
 
@@ -21107,7 +21095,7 @@
     <tr>
     	<td class="right">#=conversion_ratio#</td>
     	<td class="left">#=measurement#</td>
-    	<td class="right">#=kendo.toString(price, "c", locale)#</td>    	
+    	<td class="right">#=kendo.toString(price, "c", locale)#</td>
     	<td style="text-align: center;">
     		<span style="cursor: pointer;" data-bind="click: edit"><i class="icon-edit"></i> <span data-bind="text: lang.lang.edit"></span></span>
     		<span style="cursor: pointer;" data-bind="click: delete"><i class="icon-remove"></i> <span data-bind="text: lang.lang.delete"></span></span>
@@ -48456,24 +48444,25 @@
 							var catalogItem = self.itemDS.get(val);
 
 							if(catalogItem){
-								var rate = obj.rate / banhji.source.getRate(catalogItem.locale, new Date(obj.issued_date));
+								var rate = obj.rate / banhji.source.getRate(catalogItem.locale, new Date(obj.issued_date)),
+									itemPrices = banhji.source.getPriceList(catalogItem.id);
 
 								self.lineDS.add({
 									transaction_id 		: obj.id,
 									tax_item_id 		: 0,
 									item_id 			: catalogItem.id,
-									measurement_id 		: catalogItem.measurement_id,
+									measurement_id 		: itemPrices.length>0 ? itemPrices[0].measurement_id : catalogItem.measurement_id,
 									description 		: catalogItem.sale_description,
 									quantity 	 		: 1,
-									conversion_ratio 	: 1,
-									price 				: catalogItem.price * rate,
-									amount 				: catalogItem.price * rate,
+									conversion_ratio 	: itemPrices.length>0 ? itemPrices[0].conversion_ratio : 1,
+									price 				: itemPrices.length>0 ? itemPrices[0].price * rate : catalogItem.price * rate,
+									amount 				: 0,
 									discount 			: 0,
 									rate				: rate,
 									locale				: catalogItem.locale,
 									movement 			: -1,
 
-									item_prices 		: banhji.source.getPriceList(catalogItem.id)
+									item_prices 		: itemPrices
 								});
 							}
 						});
@@ -48489,7 +48478,7 @@
 				        data.set("price", item.price*rate);
 				        data.set("rate", rate);
 				        data.set("locale", item.locale);
-				        data.set("movement", 0);
+				        data.set("movement", -1);
 
 				        this.changes();
 
@@ -48508,7 +48497,8 @@
 									measurement_id 		: value.measurement_id,
 									description 		: "",
 									quantity 	 		: value.quantity,
-									conversion_ratio 			: value.conversion_ratio,
+									conversion_ratio 	: value.conversion_ratio,
+									cost 				: value.cost*rate,
 									price 				: value.price*rate,
 									amount 				: value.price*rate,
 									rate				: rate,
@@ -48518,14 +48508,15 @@
 					        });
 				        });
 			        }else{
-						var rate = obj.rate / banhji.source.getRate(item.locale, new Date(obj.issued_date));
+						var rate = obj.rate / banhji.source.getRate(item.locale, new Date(obj.issued_date)),
+							itemPrices = banhji.source.getPriceList(data.item_id);
 
 						data.set("item_prices", banhji.source.getPriceList(data.item_id));
-			    		data.set("measurement_id", item.measurement_id);
+			    		data.set("measurement_id", itemPrices.length>0 ? itemPrices[0].measurement_id : item.measurement_id);
 			    		data.set("description", item.sale_description);
 			    		data.set("quantity", 1);
-			    		data.set("conversion_ratio", 1);
-				        data.set("price", item.price * rate);
+			    		data.set("conversion_ratio", itemPrices.length>0 ? itemPrices[0].conversion_ratio : 1);
+				        data.set("price", itemPrices.length>0 ? itemPrices[0].price * rate : item.price * rate);
 				        data.set("rate", rate);	
 				        data.set("locale", item.locale);
 
@@ -48542,12 +48533,9 @@
 			if(data.measurement_id>0){
 				$.each(data.item_prices, function(index, value){
 					if(value.measurement_id==data.measurement_id){
-						var rate = obj.rate / banhji.source.getRate(value.locale, new Date(obj.issued_date));
 				        
-				        data.set("price", value.price * rate);
+				        data.set("price", value.price * data.rate);
 				        data.set("conversion_ratio", value.conversion_ratio);
-				        data.set("rate", rate);
-				        data.set("locale", value.locale);
 				        
 						return false;
 					}
@@ -48809,7 +48797,7 @@
 				measurement_id 		: 0,
 				description 		: "",
 				quantity 	 		: 1,
-				conversion_ratio 			: 1,
+				conversion_ratio 	: 1,
 				price 				: 0,
 				amount 				: 0,
 				discount 			: 0,
@@ -49388,24 +49376,25 @@
 							var catalogItem = self.itemDS.get(val);
 
 							if(catalogItem){
-								var rate = obj.rate / banhji.source.getRate(catalogItem.locale, new Date(obj.issued_date));
+								var rate = obj.rate / banhji.source.getRate(catalogItem.locale, new Date(obj.issued_date)),
+									itemPrices = banhji.source.getPriceList(catalogItem.id);
 
 								self.lineDS.add({
 									transaction_id 		: obj.id,
 									tax_item_id 		: 0,
 									item_id 			: catalogItem.id,
-									measurement_id 		: catalogItem.measurement_id,
+									measurement_id 		: itemPrices.length>0 ? itemPrices[0].measurement_id : catalogItem.measurement_id,
 									description 		: catalogItem.sale_description,
 									quantity 	 		: 1,
-									conversion_ratio 	: 1,
-									price 				: catalogItem.price * rate,
-									amount 				: catalogItem.price * rate,
+									conversion_ratio 	: itemPrices.length>0 ? itemPrices[0].conversion_ratio : 1,
+									price 				: itemPrices.length>0 ? itemPrices[0].price * rate : catalogItem.price * rate,
+									amount 				: 0,
 									discount 			: 0,
 									rate				: rate,
 									locale				: catalogItem.locale,
 									movement 			: -1,
 
-									item_prices 		: banhji.source.getPriceList(catalogItem.id)
+									item_prices 		: itemPrices
 								});
 							}
 						});
@@ -49421,7 +49410,7 @@
 				        data.set("price", item.price*rate);
 				        data.set("rate", rate);
 				        data.set("locale", item.locale);
-				        data.set("movement", 0);
+				        data.set("movement", -1);
 
 				        this.changes();
 
@@ -49440,7 +49429,7 @@
 									measurement_id 		: value.measurement_id,
 									description 		: "",
 									quantity 	 		: value.quantity,
-									conversion_ratio 			: value.conversion_ratio,
+									conversion_ratio 	: value.conversion_ratio,
 									price 				: value.price*rate,
 									amount 				: value.price*rate,
 									rate				: rate,
@@ -49450,14 +49439,15 @@
 					        });
 				        });
 			        }else{
-						var rate = obj.rate / banhji.source.getRate(item.locale, new Date(obj.issued_date));
+						var rate = obj.rate / banhji.source.getRate(item.locale, new Date(obj.issued_date)),
+							itemPrices = banhji.source.getPriceList(data.item_id);
 
-						data.set("item_prices", banhji.source.getPriceList(data.item_id));
-			    		data.set("measurement_id", item.measurement_id);
+						data.set("item_prices", itemPrices);						
+			    		data.set("measurement_id", itemPrices.length>0 ? itemPrices[0].measurement_id : item.measurement_id);
 			    		data.set("description", item.sale_description);
 			    		data.set("quantity", 1);
-			    		data.set("conversion_ratio", 1);
-				        data.set("price", item.price * rate);
+			    		data.set("conversion_ratio", itemPrices.length>0 ? itemPrices[0].conversion_ratio : 1);
+				        data.set("price", itemPrices.length>0 ? itemPrices[0].price * rate : item.price * rate);
 				        data.set("rate", rate);	
 				        data.set("locale", item.locale);
 
@@ -49474,12 +49464,9 @@
 			if(data.measurement_id>0){
 				$.each(data.item_prices, function(index, value){
 					if(value.measurement_id==data.measurement_id){
-						var rate = obj.rate / banhji.source.getRate(value.locale, new Date(obj.issued_date));
 				        
-				        data.set("price", value.price * rate);
+				        data.set("price", value.price * data.rate);
 				        data.set("conversion_ratio", value.conversion_ratio);
-				        data.set("rate", rate);
-				        data.set("locale", value.locale);
 				        
 						return false;
 					}
@@ -49744,7 +49731,7 @@
 				measurement_id 		: 0,
 				description 		: "",
 				quantity 	 		: 1,
-				conversion_ratio 			: 0,
+				conversion_ratio 	: 0,
 				price 				: 0,
 				amount 				: 0,
 				discount 			: 0,
@@ -51241,24 +51228,26 @@
 							var catalogItem = self.itemDS.get(val);
 
 							if(catalogItem){
-								var rate = obj.rate / banhji.source.getRate(catalogItem.locale, new Date(obj.issued_date));
+								var rate = obj.rate / banhji.source.getRate(catalogItem.locale, new Date(obj.issued_date)),
+									itemPrices = banhji.source.getPriceList(catalogItem.id);
 
 								self.lineDS.add({
 									transaction_id 		: obj.id,
 									tax_item_id 		: 0,
 									item_id 			: catalogItem.id,
-									measurement_id 		: catalogItem.measurement_id,
+									measurement_id 		: itemPrices.length>0 ? itemPrices[0].measurement_id : catalogItem.measurement_id,
 									description 		: catalogItem.sale_description,
 									quantity 	 		: 1,
-									conversion_ratio 	: 1,
-									price 				: catalogItem.price * rate,
-									amount 				: catalogItem.price * rate,
+									conversion_ratio 	: itemPrices.length>0 ? itemPrices[0].conversion_ratio : 1,
+									cost 				: catalogItem.cost * rate,
+									price 				: itemPrices.length>0 ? itemPrices[0].price * rate : catalogItem.price * rate,
+									amount 				: 0,
 									discount 			: 0,
 									rate				: rate,
 									locale				: catalogItem.locale,
 									movement 			: -1,
 
-									item_prices 		: banhji.source.getPriceList(catalogItem.id)
+									item_prices 		: itemPrices
 								});
 							}
 						});
@@ -51271,10 +51260,11 @@
 			    		data.set("description", item.sale_description);
 			    		data.set("quantity", 1);
 			    		data.set("conversion_ratio", 1);
+				        data.set("cost", item.cost*rate);
 				        data.set("price", item.price*rate);
 				        data.set("rate", rate);
 				        data.set("locale", item.locale);
-				        data.set("movement", 0);
+				        data.set("movement", -1);
 
 				        this.changes();
 
@@ -51294,6 +51284,7 @@
 									description 		: "",
 									quantity 	 		: value.quantity,
 									conversion_ratio 	: value.conversion_ratio,
+									cost 				: value.cost*rate,
 									price 				: value.price*rate,
 									amount 				: value.price*rate,
 									rate				: rate,
@@ -51303,14 +51294,16 @@
 					        });
 				        });
 			        }else{
-						var rate = obj.rate / banhji.source.getRate(item.locale, new Date(obj.issued_date));
+						var rate = obj.rate / banhji.source.getRate(item.locale, new Date(obj.issued_date)),
+							itemPrices = banhji.source.getPriceList(data.item_id);
 
-						data.set("item_prices", banhji.source.getPriceList(data.item_id));
-			    		data.set("measurement_id", item.measurement_id);
+						data.set("item_prices", itemPrices);						
+			    		data.set("measurement_id", itemPrices.length>0 ? itemPrices[0].measurement_id : item.measurement_id);
 			    		data.set("description", item.sale_description);
 			    		data.set("quantity", 1);
-			    		data.set("conversion_ratio", 1);
-				        data.set("price", item.price * rate);
+			    		data.set("conversion_ratio", itemPrices.length>0 ? itemPrices[0].conversion_ratio : 1);
+				        data.set("cost", item.cost * rate);
+				        data.set("price", itemPrices.length>0 ? itemPrices[0].price * rate : item.price * rate);
 				        data.set("rate", rate);	
 				        data.set("locale", item.locale);
 
@@ -51327,12 +51320,9 @@
 			if(data.measurement_id>0){
 				$.each(data.item_prices, function(index, value){
 					if(value.measurement_id==data.measurement_id){
-						var rate = obj.rate / banhji.source.getRate(value.locale, new Date(obj.issued_date));
-				        
-				        data.set("price", value.price * rate);
+
+				        data.set("price", value.price * data.rate);
 				        data.set("conversion_ratio", value.conversion_ratio);
-				        data.set("rate", rate);
-				        data.set("locale", value.locale);
 				        
 						return false;
 					}
@@ -52760,24 +52750,26 @@
 							var catalogItem = self.itemDS.get(val);
 
 							if(catalogItem){
-								var rate = obj.rate / banhji.source.getRate(catalogItem.locale, new Date(obj.issued_date));
+								var rate = obj.rate / banhji.source.getRate(catalogItem.locale, new Date(obj.issued_date)),
+									itemPrices = banhji.source.getPriceList(catalogItem.id);
 
 								self.lineDS.add({
 									transaction_id 		: obj.id,
 									tax_item_id 		: 0,
 									item_id 			: catalogItem.id,
-									measurement_id 		: catalogItem.measurement_id,
+									measurement_id 		: itemPrices.length>0 ? itemPrices[0].measurement_id : catalogItem.measurement_id,
 									description 		: catalogItem.sale_description,
 									quantity 	 		: 1,
-									conversion_ratio 	: 1,
-									price 				: catalogItem.price * rate,
+									conversion_ratio 	: itemPrices.length>0 ? itemPrices[0].conversion_ratio : 1,
+									cost 				: catalogItem.cost * rate,
+									price 				: itemPrices.length>0 ? itemPrices[0].price * rate : catalogItem.price * rate,
 									amount 				: catalogItem.price * rate,
 									discount 			: 0,
 									rate				: rate,
 									locale				: catalogItem.locale,
 									movement 			: -1,
 
-									item_prices 		: banhji.source.getPriceList(catalogItem.id)
+									item_prices 		: itemPrices
 								});
 							}
 						});
@@ -52790,10 +52782,11 @@
 			    		data.set("description", item.sale_description);
 			    		data.set("quantity", 1);
 			    		data.set("conversion_ratio", 1);
+				        data.set("cost", item.cost*rate);
 				        data.set("price", item.price*rate);
 				        data.set("rate", rate);
 				        data.set("locale", item.locale);
-				        data.set("movement", 0);
+				        data.set("movement", -1);
 
 				        this.changes();
 
@@ -52812,7 +52805,8 @@
 									measurement_id 		: value.measurement_id,
 									description 		: "",
 									quantity 	 		: value.quantity,
-									conversion_ratio 			: value.conversion_ratio,
+									conversion_ratio 	: value.conversion_ratio,
+									cost 				: value.cost*rate,
 									price 				: value.price*rate,
 									amount 				: value.price*rate,
 									rate				: rate,
@@ -52822,14 +52816,17 @@
 					        });
 				        });
 			        }else{
-						var rate = obj.rate / banhji.source.getRate(item.locale, new Date(obj.issued_date));
+						var rate = obj.rate / banhji.source.getRate(item.locale, new Date(obj.issued_date)),
+							itemPrices = banhji.source.getPriceList(data.item_id);
 
-						data.set("item_prices", banhji.source.getPriceList(data.item_id));
-			    		data.set("measurement_id", item.measurement_id);
+						data.set("item_prices", itemPrices);
+
+			    		data.set("measurement_id", itemPrices.length>0 ? itemPrices[0].measurement_id : item.measurement_id);
 			    		data.set("description", item.sale_description);
 			    		data.set("quantity", 1);
-			    		data.set("conversion_ratio", 1);
-				        data.set("price", item.price * rate);
+			    		data.set("conversion_ratio", itemPrices.length>0 ? itemPrices[0].conversion_ratio : 1);
+				        data.set("cost", item.cost * rate);
+				        data.set("price", itemPrices.length>0 ? itemPrices[0].price * rate : item.price * rate);
 				        data.set("rate", rate);	
 				        data.set("locale", item.locale);
 
@@ -52846,12 +52843,9 @@
 			if(data.measurement_id>0){
 				$.each(data.item_prices, function(index, value){
 					if(value.measurement_id==data.measurement_id){
-						var rate = obj.rate / banhji.source.getRate(value.locale, new Date(obj.issued_date));
 				        
-				        data.set("price", value.price * rate);
+				        data.set("price", value.price * data.rate);
 				        data.set("conversion_ratio", value.conversion_ratio);
-				        // data.set("rate", rate);
-				        data.set("locale", value.locale);
 				        
 						return false;
 					}
@@ -54098,24 +54092,25 @@
 							var catalogItem = self.itemDS.get(val);
 
 							if(catalogItem){
-								var rate = obj.rate / banhji.source.getRate(catalogItem.locale, new Date(obj.issued_date));
+								var rate = obj.rate / banhji.source.getRate(catalogItem.locale, new Date(obj.issued_date)),
+									itemPrices = banhji.source.getPriceList(catalogItem.id);
 
 								self.lineDS.add({
 									transaction_id 		: obj.id,
 									tax_item_id 		: 0,
 									item_id 			: catalogItem.id,
-									measurement_id 		: catalogItem.measurement_id,
+									measurement_id 		: itemPrices.length>0 ? itemPrices[0].measurement_id : catalogItem.measurement_id,
 									description 		: catalogItem.sale_description,
 									quantity 	 		: 1,
-									conversion_ratio 	: 1,
-									price 				: catalogItem.price * rate,
-									amount 				: catalogItem.price * rate,
+									conversion_ratio 	: itemPrices.length>0 ? itemPrices[0].conversion_ratio : 1,
+									price 				: itemPrices.length>0 ? itemPrices[0].price * rate : catalogItem.price * rate,
+									amount 				: 0,
 									discount 			: 0,
 									rate				: rate,
 									locale				: catalogItem.locale,
 									movement 			: -1,
 
-									item_prices 		: banhji.source.getPriceList(catalogItem.id)
+									item_prices 		: itemPrices
 								});
 							}
 						});
@@ -54131,7 +54126,7 @@
 				        data.set("price", item.price*rate);
 				        data.set("rate", rate);
 				        data.set("locale", item.locale);
-				        data.set("movement", 0);
+				        data.set("movement", -1);
 
 				        this.changes();
 
@@ -54150,7 +54145,7 @@
 									measurement_id 		: value.measurement_id,
 									description 		: "",
 									quantity 	 		: value.quantity,
-									conversion_ratio 			: value.conversion_ratio,
+									conversion_ratio 	: value.conversion_ratio,
 									price 				: value.price*rate,
 									amount 				: value.price*rate,
 									rate				: rate,
@@ -54160,14 +54155,15 @@
 					        });
 				        });
 			        }else{
-						var rate = obj.rate / banhji.source.getRate(item.locale, new Date(obj.issued_date));
+						var rate = obj.rate / banhji.source.getRate(item.locale, new Date(obj.issued_date)),
+							itemPrices = banhji.source.getPriceList(data.item_id);
 
-						data.set("item_prices", banhji.source.getPriceList(data.item_id));
-			    		data.set("measurement_id", item.measurement_id);
+						data.set("item_prices", itemPrices);
+			    		data.set("measurement_id", itemPrices.length>0 ? itemPrices[0].measurement_id : item.measurement_id);
 			    		data.set("description", item.sale_description);
 			    		data.set("quantity", 1);
-			    		data.set("conversion_ratio", 1);
-				        data.set("price", item.price * rate);
+			    		data.set("conversion_ratio", itemPrices.length>0 ? itemPrices[0].conversion_ratio : 1);
+				        data.set("price", itemPrices.length>0 ? itemPrices[0].price * rate : item.price * rate);
 				        data.set("rate", rate);	
 				        data.set("locale", item.locale);
 
@@ -54407,7 +54403,7 @@
 				measurement_id 		: 0,
 				description 		: "",
 				quantity 	 		: 1,
-				conversion_ratio 			: 0,
+				conversion_ratio 	: 0,
 				price 				: 0,
 				amount 				: 0,
 				rate				: obj.rate,
@@ -55024,25 +55020,26 @@
 							var catalogItem = self.itemDS.get(val);
 
 							if(catalogItem){
-								var rate = obj.rate / banhji.source.getRate(catalogItem.locale, new Date(obj.issued_date));
+								var rate = obj.rate / banhji.source.getRate(catalogItem.locale, new Date(obj.issued_date)),
+									itemPrices = banhji.source.getPriceList(catalogItem.id);
 
 								self.lineDS.add({
 									transaction_id 		: obj.id,
 									tax_item_id 		: 0,
 									item_id 			: catalogItem.id,
-									measurement_id 		: catalogItem.measurement_id,
+									measurement_id 		: itemPrices.length>0 ? itemPrices[0].measurement_id : catalogItem.measurement_id,
 									description 		: catalogItem.sale_description,
 									quantity 	 		: 1,
-									conversion_ratio 	: 1,
+									conversion_ratio 	: itemPrices.length>0 ? itemPrices[0].conversion_ratio : 1,
 									cost 				: catalogItem.cost * rate,
-									price 				: catalogItem.price * rate,
-									amount 				: catalogItem.price * rate,
+									price 				: itemPrices.length>0 ? itemPrices[0].price * rate : catalogItem.price * rate,
+									amount 				: 0,
 									discount 			: 0,
 									rate				: rate,
 									locale				: catalogItem.locale,
-									movement 			: -1,
+									movement 			: 1,
 
-									item_prices 		: banhji.source.getPriceList(catalogItem.id)
+									item_prices 		: itemPrices
 								});
 							}
 						});
@@ -55058,7 +55055,7 @@
 				        data.set("price", item.price * rate);
 				        data.set("rate", rate);
 				        data.set("locale", item.locale);
-				        data.set("movement", 0);
+				        data.set("movement", 1);
 
 				        this.changes();
 
@@ -55082,20 +55079,21 @@
 									amount 				: value.price*rate,
 									rate				: rate,
 									locale				: value.locale,
-									movement 			: -1
+									movement 			: 1
 								});
 					        });
 				        });
 			        }else{
-						var rate = obj.rate / banhji.source.getRate(item.locale, new Date(obj.issued_date));
+						var rate = obj.rate / banhji.source.getRate(item.locale, new Date(obj.issued_date)),
+							itemPrices = banhji.source.getPriceList(data.item_id);
 
-						data.set("item_prices", banhji.source.getPriceList(data.item_id));
-						data.set("measurement_id", item.measurement_id);
+						data.set("item_prices", itemPrices);
+						data.set("measurement_id", itemPrices.length>0 ? itemPrices[0].measurement_id : item.measurement_id);
 						data.set("description", item.sale_description);
 						data.set("quantity", 1);
-						data.set("conversion_ratio", 1);
+						data.set("conversion_ratio", itemPrices.length>0 ? itemPrices[0].conversion_ratio : 1);
 						data.set("cost", item.cost * rate);
-						data.set("price", item.price * rate);
+						data.set("price", itemPrices.length>0 ? itemPrices[0].price * rate : item.price * rate);
 						data.set("rate", rate);	
 						data.set("locale", item.locale);
 
@@ -55112,13 +55110,9 @@
 			if(data.measurement_id>0){
 				$.each(data.item_prices, function(index, value){
 					if(value.measurement_id==data.measurement_id){
-						var rate = obj.rate / banhji.source.getRate(value.locale, new Date(obj.issued_date));
-				        
-				        data.set("cost", value.cost * rate);
-				        data.set("price", value.price * rate);
+
+				        data.set("price", value.price * data.rate);
 				        data.set("conversion_ratio", value.conversion_ratio);
-				        data.set("rate", rate);
-				        data.set("locale", value.locale);
 				        
 						return false;
 					}
@@ -55390,7 +55384,7 @@
 				measurement_id 		: 0,
 				description 		: "",
 				quantity 	 		: 1,
-				conversion_ratio 			: 0,
+				conversion_ratio 	: 0,
 				price 				: 0,
 				amount 				: 0,
 				discount 			: 0,
@@ -56243,25 +56237,26 @@
 							var catalogItem = self.itemDS.get(val);
 
 							if(catalogItem){
-								var rate = obj.rate / banhji.source.getRate(catalogItem.locale, new Date(obj.issued_date));
+								var rate = obj.rate / banhji.source.getRate(catalogItem.locale, new Date(obj.issued_date)),
+									itemPrices = banhji.source.getPriceList(catalogItem.id);
 
 								self.lineDS.add({
 									transaction_id 		: obj.id,
 									tax_item_id 		: 0,
 									item_id 			: catalogItem.id,
-									measurement_id 		: catalogItem.measurement_id,
+									measurement_id 		: itemPrices.length>0 ? itemPrices[0].measurement_id : catalogItem.measurement_id,
 									description 		: catalogItem.sale_description,
 									quantity 	 		: 1,
-									conversion_ratio 	: 1,
+									conversion_ratio 	: itemPrices.length>0 ? itemPrices[0].conversion_ratio : 1,
 									cost 				: catalogItem.cost * rate,
-									price 				: catalogItem.price * rate,
-									amount 				: catalogItem.price * rate,
+									price 				: itemPrices.length>0 ? itemPrices[0].price * rate : catalogItem.price * rate,
+									amount 				: 0,
 									discount 			: 0,
 									rate				: rate,
 									locale				: catalogItem.locale,
-									movement 			: -1,
+									movement 			: 1,
 
-									item_prices 		: banhji.source.getPriceList(catalogItem.id)
+									item_prices 		: itemPrices
 								});
 							}
 						});
@@ -56277,7 +56272,7 @@
 				        data.set("price", item.price*rate);
 				        data.set("rate", rate);
 				        data.set("locale", item.locale);
-				        data.set("movement", 0);
+				        data.set("movement", 1);
 
 				        this.changes();
 
@@ -56296,25 +56291,26 @@
 									measurement_id 		: value.measurement_id,
 									description 		: "",
 									quantity 	 		: value.quantity,
-									conversion_ratio 			: value.conversion_ratio,
+									conversion_ratio 	: value.conversion_ratio,
 									price 				: value.price*rate,
 									amount 				: value.price*rate,
 									rate				: rate,
 									locale				: value.locale,
-									movement 			: -1
+									movement 			: 1
 								});
 					        });
 				        });
 			        }else{
-						var rate = obj.rate / banhji.source.getRate(item.locale, new Date(obj.issued_date));
+						var rate = obj.rate / banhji.source.getRate(item.locale, new Date(obj.issued_date)),
+							itemPrices = banhji.source.getPriceList(data.item_id);
 
 						data.set("item_prices", banhji.source.getPriceList(data.item_id));
-						data.set("measurement_id", item.measurement_id);
+						data.set("measurement_id", itemPrices.length>0 ? itemPrices[0].measurement_id : item.measurement_id);
 						data.set("description", item.sale_description);
 						data.set("quantity", 1);
-						data.set("conversion_ratio", 1);
+						data.set("conversion_ratio", itemPrices.length>0 ? itemPrices[0].conversion_ratio : 1);
 						data.set("cost", item.cost * rate);
-						data.set("price", item.price * rate);
+						data.set("price", itemPrices.length>0 ? itemPrices[0].price * rate : item.price * rate);
 						data.set("rate", rate);	
 						data.set("locale", item.locale);	        
 
@@ -56331,13 +56327,9 @@
 			if(data.measurement_id>0){
 				$.each(data.item_prices, function(index, value){
 					if(value.measurement_id==data.measurement_id){
-						var rate = obj.rate / banhji.source.getRate(value.locale, new Date(obj.issued_date));
 				        
-				        data.set("cost", value.cost * rate);
-				        data.set("price", value.price * rate);
+				        data.set("price", value.price * data.rate);
 				        data.set("conversion_ratio", value.conversion_ratio);
-				        data.set("rate", rate);
-				        data.set("locale", value.locale);
 				        
 						return false;
 					}
@@ -62410,7 +62402,7 @@
 			  	{ field: "code", dir: "asc" }
 			]
 		}),
-		taxItemDS 		: new kendo.data.DataSource({
+		taxItemDS 			: new kendo.data.DataSource({
 		  	data: banhji.source.taxList,
 		  	filter:{
 			    logic: "or",
@@ -62668,7 +62660,7 @@
 								quantity 	 		: 1,
 								conversion_ratio 	: 1,
 								cost 				: catalogItem.cost * rate,
-								amount 				: catalogItem.cost * rate,
+								amount 				: 0,
 								discount 			: 0,
 								rate				: rate,
 								locale				: catalogItem.locale,
@@ -62707,8 +62699,6 @@
 						var rate = obj.rate / banhji.source.getRate(value.locale, new Date(obj.issued_date));
 				        
 				        data.set("conversion_ratio", value.conversion_ratio);
-				        data.set("rate", rate);
-				        data.set("locale", value.locale);
 				        
 						return false;
 					}
@@ -63432,7 +63422,7 @@
 								quantity 	 		: 1,
 								conversion_ratio 	: 1,
 								cost 				: catalogItem.cost * rate,
-								amount 				: catalogItem.cost * rate,
+								amount 				: 0,
 								discount 			: 0,
 								rate				: rate,
 								locale				: catalogItem.locale,
@@ -63468,11 +63458,8 @@
 			if(data.measurement_id>0){
 				$.each(data.item_prices, function(index, value){
 					if(value.measurement_id==data.measurement_id){
-						var rate = obj.rate / banhji.source.getRate(value.locale, new Date(obj.issued_date));
-				        
+
 				        data.set("conversion_ratio", value.conversion_ratio);
-				        data.set("rate", rate);
-				        data.set("locale", value.locale);
 				        
 						return false;
 					}
@@ -65184,7 +65171,7 @@
 								quantity 	 		: 1,
 								conversion_ratio 	: 1,
 								cost 				: catalogItem.cost * rate,
-								amount 				: catalogItem.cost * rate,
+								amount 				: 0,
 								discount 			: 0,
 								rate				: rate,
 								locale				: catalogItem.locale,
@@ -65220,11 +65207,8 @@
 			if(data.measurement_id>0){
 				$.each(data.item_prices, function(index, value){
 					if(value.measurement_id==data.measurement_id){
-						var rate = obj.rate / banhji.source.getRate(value.locale, new Date(obj.issued_date));
 				        
 				        data.set("conversion_ratio", value.conversion_ratio);
-				        data.set("rate", rate);
-				        data.set("locale", value.locale);
 				        
 						return false;
 					}
@@ -66850,7 +66834,7 @@
 								quantity 	 		: 1,
 								conversion_ratio 	: 1,
 								cost 				: catalogItem.cost * rate,
-								amount 				: catalogItem.cost * rate,
+								amount 				: 0,
 								discount 			: 0,
 								rate				: rate,
 								locale				: catalogItem.locale,
@@ -66886,12 +66870,9 @@
 			if(data.measurement_id>0){
 				$.each(data.item_prices, function(index, value){
 					if(value.measurement_id==data.measurement_id){
-						var rate = obj.rate / banhji.source.getRate(value.locale, new Date(obj.issued_date));
-				        
+
 				        data.set("conversion_ratio", value.conversion_ratio);
-				        data.set("rate", rate);
-				        data.set("locale", value.locale);
-				        
+
 						return false;
 					}
 				});
@@ -67925,7 +67906,7 @@
 								quantity 	 		: 1,
 								conversion_ratio 	: 1,
 								cost 				: catalogItem.cost * rate,
-								amount 				: catalogItem.cost * rate,
+								amount 				: 0,
 								discount 			: 0,
 								rate				: rate,
 								locale				: catalogItem.locale,
@@ -67961,11 +67942,8 @@
 			if(data.measurement_id>0){
 				$.each(data.item_prices, function(index, value){
 					if(value.measurement_id==data.measurement_id){
-						var rate = obj.rate / banhji.source.getRate(value.locale, new Date(obj.issued_date));
 				        
 				        data.set("conversion_ratio", value.conversion_ratio);
-				        data.set("rate", rate);
-				        data.set("locale", value.locale);
 				        
 						return false;
 					}

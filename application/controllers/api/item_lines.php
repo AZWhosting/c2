@@ -147,7 +147,7 @@ class Item_lines extends REST_Controller {
 					if($transaction->exists()){
 						//Sum On Hand
 						$itemMovement = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);						
-						$itemMovement->where_in_related("transaction", "type", array("Cash_Purchase", "Credit_Purchase", "Commercial_Invoice", "Vat_Invoice", "Invoice", "Commercial_Cash_Sale", "Vat_Cash_Sale", "Cash_Sale", "Adjustment"));
+						$itemMovement->where_in_related("transaction", "type", array("Cash_Purchase", "Credit_Purchase", "Commercial_Invoice", "Vat_Invoice", "Invoice", "Commercial_Cash_Sale", "Vat_Cash_Sale", "Cash_Sale", "Item_Adjustment"));
 						$itemMovement->where("item_id", $value->item_id);
 						$itemMovement->where_related("transaction", "issued_date <=", $transaction->issued_date);
 						$itemMovement->where_related("transaction", "is_recurring <>", 1);
@@ -159,7 +159,7 @@ class Item_lines extends REST_Controller {
 							$onHand += ($val->quantity * $val->conversion_ratio * $val->movement);
 						}
 
-						$currentQuantity = floatval($value->quantity) * floatval($value->conversion_ratio);
+						$currentQuantity = floatval($value->quantity) * floatval($value->conversion_ratio) * floatval($value->movement);
 						$totalQty = $onHand + $currentQuantity;
 
 						if($totalQty==0){
@@ -181,7 +181,7 @@ class Item_lines extends REST_Controller {
 						if($transaction->type=="Cash_Purchase" || $transaction->type=="Credit_Purchase" || $transaction->type=="Item_Adjustment"){
 							//Avg Cost
 							$lastCost = $onHand * floatval($item->cost);
-							$currentCost = ($currentQuantity*floatval($value->cost) + floatval($value->additional_cost)) / floatval($transaction->rate);
+							$currentCost = ($currentQuantity * floatval($value->cost) + floatval($value->additional_cost)) / floatval($value->rate);
 
 							if($onHand>0){
 								$item->cost = ($lastCost + $currentCost) / $totalQty;

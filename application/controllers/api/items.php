@@ -1555,6 +1555,5 @@ class Items extends REST_Controller {
 		$result["$requestedDate"] = array();
 
 		$this->response($result, 200);
-	}
-	
+	}	
 }

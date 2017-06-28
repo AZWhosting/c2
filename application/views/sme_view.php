@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="<?php echo base_url()?>assets/style-default-menus-dark.css" >
 	<link rel="stylesheet" href="<?php echo base_url()?>assets/blue-gray.css" >
 	
+	<!-- Glyphicons Font Icons -->
+	<link href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/common/theme/fonts/glyphicons/css/glyphicons.css" rel="stylesheet" />
 
 	<!-- Bootstrap Extended -->
 	<link rel="stylesheet" href="<?php echo base_url()?>assets/bootstrap.css" />
@@ -31,6 +33,7 @@
 
     <!-- Customize CSS-->
 	<link rel="stylesheet" href="<?php echo base_url()?>assets/sme.css" />
+	<link rel="stylesheet" href="<?php echo base_url()?>assets/responsive.css" />
 
     <script src="<?php echo base_url()?>assets/kendo/js/jquery.min.js"></script>
     <script src="<?php echo base_url()?>assets/bootstrap.min.js"></script>
@@ -4816,590 +4819,594 @@
 	    </tr>   
 	</script>
 	<script id="invoice" type="text/x-kendo-template">
-		<div id="slide-form">
-			<div class="customer-background">
-				<div class="container-960">
-					<div id="example" class="k-content">
-					    
-				    	<span class="glyphicons no-js remove_2 pull-right"
-								data-bind="click: cancel"><i></i></span>
+		<div class="container">
+			<div class="row">
+				<div id="slide-form">
+					<div class="customer-background" style="margin-top: 30px;">
+						<div class="container-960">
+							<div id="example" class="k-content" style="margin-top: 0; margin-bottom: 0;">
+							    
+						    	<span class="glyphicons no-js remove_2 pull-right"
+										data-bind="click: cancel"><i></i></span>
 
-				        <h2 data-bind="text: lang.lang.invoice"></h2>
+						        <h2 data-bind="text: lang.lang.invoice"></h2>
 
-					    <br>
-							
-						<!-- Upper Part -->
-						<div class="row-fluid">
-							<div class="span4">
-								<div class="box-generic well" style="height: 190px;">				
-									<table class="table table-borderless table-condensed cart_total">
-										<tr>
-											<td style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></td>
-											<td>
-												<input id="txtNumber" name="txtNumber" class="k-textbox" 
-														data-bind="value: obj.number,
-																	disabled: obj.is_recurring,
-																	events:{change:checkExistingNumber}" 
-														required data-required-msg="required" 
-														placeholder="eg. ABC00001" style="width: 83%; float: left; margin-right: 5px;"" />
-												<div style="padding-left: 0; width: 25px; float: left;">
-													<a class="glyphicons no-js qrcode" data-bind="click: generateNumber" title="Generate Number" style="float: left; margin: 2px 0 0 0 ;"><i></i></a>
-												</div>
-											</td>
-										</tr>
-										<tr>
-											<td><span data-bind="text: lang.lang.date"></span></td>
-											<td class="right">
-												<input id="issuedDate" name="issuedDate" 
-														data-role="datepicker"
-														data-format="dd-MM-yyyy"
-														data-parse-formats="yyyy-MM-dd HH:mm:ss"
-														data-bind="value: obj.issued_date, 
-																	events:{ change : setRate }" 
-														required data-required-msg="required"
-														style="width:100%;" />
-											</td>
-										</tr>
-										<tr>
-											<td><span data-bind="text: lang.lang.type"></span></td>
-											<td>
-												<input id="cbbType" name="cbbType"
-													   data-role="dropdownlist"											                    
-									                   data-value-primitive="true"
-									                   data-text-field="name"
-									                   data-value-field="type"
-									                   data-bind="value: obj.type,
-									                              source: typeList,
-									                              events:{ change: typeChanges }"
-									                   required data-required-msg="required" style="width: 100%" />
-											</td>
-										</tr>								
-										<tr>
-											<td><span data-bind="text: lang.lang.customers"></span></td>
-											<td>
-												<input id="cbbContact" name="cbbContact"
-													   data-role="combobox"
-									                   data-header-template="contact-header-tmpl"
-									                   data-template="contact-list-tmpl"
-									                   data-value-primitive="true"
-									                   data-text-field="name"
-									                   data-value-field="id"
-									                   data-bind="value: obj.contact_id,
-									                              source: contactDS,
-									                              events:{ change: contactChanges }"
-									                   data-placeholder="Type Name.."                    
-									                   required data-required-msg="required" style="width: 100%" />
-											</td>
-										</tr>
-									</table>
-
-									<div class="strong" style="margin-bottom:0; width: 100%; padding: 10px;" align="center"
-										data-bind="style: { backgroundColor: amtDueColor}">
-										<div align="left"><span data-bind="text: lang.lang.amount_due"></span></div>
-										<h2 data-bind="text: amount_due" align="right"></h2>
-									</div>
-
-								</div>						
-							</div>
-
-							<div class="span8">
-
-								<div class="box-generic-noborder">
-
-								    <!-- Tabs Heading -->
-								    <div class="tabsbar tabsbar-2">
-								        <ul class="row-fluid row-merge">
-								        	<li class="span1 glyphicons cogwheels active"><a href="#tab-1" data-toggle="tab"><i></i></a>
-								            </li>
-								            <li class="span1 glyphicons link"><a href="#tab-2" data-toggle="tab"><i></i></a>
-								            </li>
-								            <li class="span1 glyphicons adress_book"><a href="#tab-3" data-toggle="tab"><i></i></a>
-								            </li>
-								            <li class="span1 glyphicons circle_info"><a href="#tab-4" data-toggle="tab"><i></i></a>
-								            </li>
-								            <li class="span1 glyphicons paperclip"><a href="#tab-5" data-toggle="tab"><i></i></a>
-								            </li>
-								            <li class="span1 glyphicons history"><a href="#tab-6" data-toggle="tab"><i></i></a>
-								            </li>
-								            <!-- <li class="span1 glyphicons show_liness"><a href="#tab6-6" data-toggle="tab"><i></i></a></li> -->
-								        </ul>
-								    </div>
-								    <!-- // Tabs Heading END -->
-
-								    <div class="tab-content">
-
-								    	<!-- Options -->
-								        <div class="tab-pane active" id="tab-1">
-								            <table style="margin-bottom: 0;" class="table table-borderless table-condensed cart_total">
+							    <br>
+									
+								<!-- Upper Part -->
+								<div class="row-fluid">
+									<div class="span4">
+										<div class="box-generic well" style="height: 190px;">				
+											<table class="table table-borderless table-condensed cart_total">
 												<tr>
+													<td style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></td>
 													<td>
-														<span data-bind="text: lang.lang.balance"></span>
-														<span data-bind="text: balance"></span>
-													</td>
-													<td>
-														<span data-bind="text: lang.lang.credit_allowed"></span>
-														<span data-format="n" data-bind="text: obj.credit_allowed"></span> 
+														<input id="txtNumber" name="txtNumber" class="k-textbox" 
+																data-bind="value: obj.number,
+																			disabled: obj.is_recurring,
+																			events:{change:checkExistingNumber}" 
+																required data-required-msg="required" 
+																placeholder="eg. ABC00001" style="width: 83%; float: left; margin-right: 5px;"" />
+														<div style="padding-left: 0; width: 24px; float: left;">
+															<a class="glyphicons no-js qrcode" data-bind="click: generateNumber" title="Generate Number" style="float: left; margin: 2px 0 0 0 ;"><i></i></a>
+														</div>
 													</td>
 												</tr>
 												<tr>
-									            	<td>
-									            		<span data-bind="text: lang.lang.term"></span>
-									            	</td>
-													<td>
-														<input data-role="dropdownlist"
-									              				data-value-primitive="true"
-																data-text-field="name" 
-									              				data-value-field="id"
-									              				data-header-template='customer-term-header-tmpl'
-									              				data-bind="value: obj.payment_term_id,
-									              							source: paymentTermDS,
-									              							events:{ change: setTerm }"
-									              				data-option-label="Select Term..." 
-									              				style="width: 100%" />
-													</td>
-												</tr>
-									            <tr>
-									            	<td><span data-bind="text: lang.lang.due_date"></span></td>
-									            	<td>
-									            		<input id="txtDueDate" name="txtDueDate" 
+													<td><span data-bind="text: lang.lang.date"></span></td>
+													<td class="right">
+														<input id="issuedDate" name="issuedDate" 
 																data-role="datepicker"
 																data-format="dd-MM-yyyy"
-																data-parse-formats="yyyy-MM-dd" 
-																data-bind="value: obj.due_date" 
+																data-parse-formats="yyyy-MM-dd HH:mm:ss"
+																data-bind="value: obj.issued_date, 
+																			events:{ change : setRate }" 
 																required data-required-msg="required"
 																style="width:100%;" />
-									            	</td>
-									            </tr>
-								            </table>
-								        </div>
-								        <!-- // Options END -->
-
-								        <!-- References -->
-								        <div class="tab-pane" id="tab-2">
-								            <table style="margin-bottom: 0;" class="table table-borderless table-condensed cart_total">											
-									            <tr>
-													<td style="vertical-align: top;">
-									            		<span data-bind="text: lang.lang.reference"></span>
-									            	</td>
-									            	<td>
-									            		<input data-role="dropdownlist"
-									            			   data-item-template="reference-list-tmpl"
-											                   data-auto-bind="false"
-											                   data-value-primitive="true"
-											                   data-text-field="number"
-											                   data-value-field="id"
-											                   data-bind="value: reference_id,
-											                              source: referenceDS,
-											                              events: { change: referenceChanges }"
-											                   data-option-label="Add Reference..."
-											                   style="width: 100%;" />
-											            <br>
-											            <table class="table table-bordered">
-													        <tbody data-template="invoice-reference-template"
-													        		data-bind="source: referenceList"></tbody>			        
-													    </table>
 													</td>
 												</tr>
-								            </table>
-								        </div>
-								        <!-- // References END -->
-
-								        <!-- Address -->
-								        <div class="tab-pane" id="tab-3">
-								        	<span data-bind="text: lang.lang.billing_address"></span>
-											<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.bill_to" placeholder="Billing to ..."></textarea>								
-											
-											<span data-bind="text: lang.lang.delivery_address"></span>
-											<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.ship_to" placeholder="Shipping to ..."></textarea>	
-
-								        </div>
-								        <!-- // Address END -->
-
-								        <!-- Info -->
-								        <div class="tab-pane" id="tab-4">
-								        	
-											<table class="table table-borderless table-condensed cart_total">
-									            <tr>
-													<td><span data-bind="text: lang.lang.sale_rep"></span></td>
+												<tr>
+													<td><span data-bind="text: lang.lang.type"></span></td>
 													<td>
-														<input id="cbbEmployee" name="cbbEmployee"
+														<input id="cbbType" name="cbbType"
+															   data-role="dropdownlist"											                    
+											                   data-value-primitive="true"
+											                   data-text-field="name"
+											                   data-value-field="type"
+											                   data-bind="value: obj.type,
+											                              source: typeList,
+											                              events:{ change: typeChanges }"
+											                   required data-required-msg="required" style="width: 100%" />
+													</td>
+												</tr>								
+												<tr>
+													<td><span data-bind="text: lang.lang.customers"></span></td>
+													<td>
+														<input id="cbbContact" name="cbbContact"
 															   data-role="combobox"
-											                   data-value-primitive="true"
-											                   data-header-template="employee-header-tmpl"
+											                   data-header-template="contact-header-tmpl"
 											                   data-template="contact-list-tmpl"
+											                   data-value-primitive="true"
 											                   data-text-field="name"
 											                   data-value-field="id"
-											                   data-bind="value: obj.employee_id,
-											                              source: employeeDS"
-											                   data-placeholder="Type Name..." 
-											                   style="width: 100%" />
-													</td>
-												</tr>						            	
-												<tr>
-													<td><span data-bind="text: lang.lang.segments"></span></td>
-													<td>
-														<select data-role="multiselect"
-															   data-value-primitive="true"
-															   data-header-template="segment-header-tmpl"
-															   data-item-template="segment-list-tmpl"
-															   data-value-field="id"
-															   data-text-field="code"
-															   data-bind="value: obj.segments, 
-															   			source: segmentItemDS,
-															   			events:{ change: segmentChanges }"
-															   data-placeholder="Add Segment.."
-															   style="width: 100%" /></select>
+											                   data-bind="value: obj.contact_id,
+											                              source: contactDS,
+											                              events:{ change: contactChanges }"
+											                   data-placeholder="Type Name.."                    
+											                   required data-required-msg="required" style="width: 100%" />
 													</td>
 												</tr>
-												<tr>
-													<td><span data-bind="text: lang.lang.job"></span></td>
-													<td>
-														<input id="ddlJob" name="ddlJob"
-															   data-role="dropdownlist"
-															   data-header-template="job-header-tmpl"
-															   data-template="job-list-tmpl"
-															   data-auto-bind="false"				                
-											                   data-value-primitive="true"									                   				   
-											                   data-text-field="name"
-											                   data-value-field="id"
-											                   data-bind="value: obj.job_id, 
-											                   			source: jobDS"
-											                   data-option-label="Add job..." 
-											                   style="width: 100%" />										
-													</td>
-												</tr>											
-								            </table>
+											</table>
 
-								        </div>
-								        <!-- // Info END -->
+											<div class="strong" style="margin-bottom:0; width: 100%; padding: 10px;" align="center"
+												data-bind="style: { backgroundColor: amtDueColor}">
+												<div align="left"><span data-bind="text: lang.lang.amount_due"></span></div>
+												<h2 data-bind="text: amount_due" align="right"></h2>
+											</div>
 
-								        <!-- Attach -->
-								        <div class="tab-pane" id="tab-5">
+										</div>						
+									</div>
 
-								        	<p><span data-bind="text: lang.lang.file_type"></span>: [PDF, JPG, JPEG, TIFF, PNG, GIF]</p>		
-								            <input id="files" name="files"
-								                   type="file"
-								                   data-role="upload"
-								                   data-show-file-list="false"
-								                   data-bind="events: { 
-						                   				select: onSelect
-								                   }">
+									<div class="span8">
 
-								            <table class="table table-bordered">
-										        <thead>
-										            <tr>			                
-										                <th><span data-bind="text: lang.lang.file_name"></span></th>
-										                <th><span data-bind="text: lang.lang.description"></span></th>
-										                <th><span data-bind="text: lang.lang.date"></span></th>
-										                <th style="width: 13%;"></th>                			                
-										            </tr> 
-										        </thead>
-										        <tbody data-role="listview" 
-										        		data-template="attachment-list-tmpl" 
-										        		data-auto-bind="false"
-										        		data-bind="source: attachmentDS"></tbody>			        
-										    </table>
+										<div class="box-generic-noborder">
 
-								        </div>
-								        <!-- // Attach END -->
+										    <!-- Tabs Heading -->
+										    <div class="tabsbar tabsbar-2">
+										        <ul class="row-fluid row-merge">
+										        	<li class="span1 glyphicons cogwheels active"><a href="#tab-1" data-toggle="tab"><i></i></a>
+										            </li>
+										            <li class="span1 glyphicons link"><a href="#tab-2" data-toggle="tab"><i></i></a>
+										            </li>
+										            <li class="span1 glyphicons adress_book"><a href="#tab-3" data-toggle="tab"><i></i></a>
+										            </li>
+										            <li class="span1 glyphicons circle_info"><a href="#tab-4" data-toggle="tab"><i></i></a>
+										            </li>
+										            <li class="span1 glyphicons paperclip"><a href="#tab-5" data-toggle="tab"><i></i></a>
+										            </li>
+										            <li class="span1 glyphicons history"><a href="#tab-6" data-toggle="tab"><i></i></a>
+										            </li>
+										            <!-- <li class="span1 glyphicons show_liness"><a href="#tab6-6" data-toggle="tab"><i></i></a></li> -->
+										        </ul>
+										    </div>
+										    <!-- // Tabs Heading END -->
 
-								        <!-- Recuring -->
-								        <div class="tab-pane" id="tab-6">
-								            
-								            <table style="width: 100%" class="table borderless">
-								            	<tr align="right">
-								            		<td style="border-top: 0;">
-								            			<span data-bind="text: lang.lang.name"></span>
-								            		</td>
-								            		<td style="border-top: 0;">
-								            			<input id="txtRecurringName" name="txtRecurringName"
-								            					class="k-textbox" 
-								            					data-bind="value: obj.recurring_name" 
-								            					placeholder="Recurring name.." 
-								            					style="width: 43%; " />
+										    <div class="tab-content">
 
-								            			<span data-bind="text: lang.lang.start"></span>
+										    	<!-- Options -->
+										        <div class="tab-pane active" id="tab-1">
+										            <table style="margin-bottom: 0;" class="table table-borderless table-condensed cart_total">
+														<tr>
+															<td>
+																<span data-bind="text: lang.lang.balance"></span>
+																<span data-bind="text: balance"></span>
+															</td>
+															<td>
+																<span data-bind="text: lang.lang.credit_allowed"></span>
+																<span data-format="n" data-bind="text: obj.credit_allowed"></span> 
+															</td>
+														</tr>
+														<tr>
+											            	<td>
+											            		<span data-bind="text: lang.lang.term"></span>
+											            	</td>
+															<td>
+																<input data-role="dropdownlist"
+											              				data-value-primitive="true"
+																		data-text-field="name" 
+											              				data-value-field="id"
+											              				data-header-template='customer-term-header-tmpl'
+											              				data-bind="value: obj.payment_term_id,
+											              							source: paymentTermDS,
+											              							events:{ change: setTerm }"
+											              				data-option-label="Select Term..." 
+											              				style="width: 100%" />
+															</td>
+														</tr>
+											            <tr>
+											            	<td><span data-bind="text: lang.lang.due_date"></span></td>
+											            	<td>
+											            		<input id="txtDueDate" name="txtDueDate" 
+																		data-role="datepicker"
+																		data-format="dd-MM-yyyy"
+																		data-parse-formats="yyyy-MM-dd" 
+																		data-bind="value: obj.due_date" 
+																		required data-required-msg="required"
+																		style="width:100%;" />
+											            	</td>
+											            </tr>
+										            </table>
+										        </div>
+										        <!-- // Options END -->
 
-										                <input data-role="datepicker"
-																data-format="dd-MM-yyyy"
-																data-parse-formats="yyyy-MM-dd"
-																data-bind="value: obj.start_date"
-																style="width: 40%; " />
-								            		</td>
-								            	</tr>
-								            	<tr align="right">
-								            		<td style="border-top: 0;">
-									            		<span data-bind="text: lang.lang.every"></span>
-									            	</td>
-								            		<td style="border-top: 0;">
-									            		<input data-role="numerictextbox"
-										                   data-format="n0"
-										                   data-min="0"								                   
-										                   data-bind="value: obj.interval"
-										                   style="width: 45%; " />
+										        <!-- References -->
+										        <div class="tab-pane" id="tab-2">
+										            <table style="margin-bottom: 0;" class="table table-borderless table-condensed cart_total">											
+											            <tr>
+															<td style="vertical-align: top;">
+											            		<span data-bind="text: lang.lang.reference"></span>
+											            	</td>
+											            	<td>
+											            		<input data-role="dropdownlist"
+											            			   data-item-template="reference-list-tmpl"
+													                   data-auto-bind="false"
+													                   data-value-primitive="true"
+													                   data-text-field="number"
+													                   data-value-field="id"
+													                   data-bind="value: reference_id,
+													                              source: referenceDS,
+													                              events: { change: referenceChanges }"
+													                   data-option-label="Add Reference..."
+													                   style="width: 100%;" />
+													            <br>
+													            <table class="table table-bordered">
+															        <tbody data-template="invoice-reference-template"
+															        		data-bind="source: referenceList"></tbody>			        
+															    </table>
+															</td>
+														</tr>
+										            </table>
+										        </div>
+										        <!-- // References END -->
 
-									            		<input data-role="dropdownlist"									                   
-											                   data-value-primitive="true"
-											                   data-text-field="name"
-											                   data-value-field="id"
-											                   data-bind="value: obj.frequency,
-											                              source: frequencyList,
-											                              events: { change: frequencyChanges }"
-											                   style="width: 45%;" />
-									            	</td>
-								            	</tr>
-									            <tr align="right">
-									            	<td style="border-top: 0;">
-									            		<span data-bind="text: lang.lang.on"></span>
-									            	</td>							            	
-									            	<td style="border-top: 0;">
+										        <!-- Address -->
+										        <div class="tab-pane" id="tab-3">
+										        	<span data-bind="text: lang.lang.billing_address"></span>
+													<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.bill_to" placeholder="Billing to ..."></textarea>								
+													
+													<span data-bind="text: lang.lang.delivery_address"></span>
+													<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.ship_to" placeholder="Shipping to ..."></textarea>	
 
-									            		<input data-role="dropdownlist"									                   
-											                   data-value-primitive="true"
-											                   data-text-field="name"
-											                   data-value-field="id"
-											                   data-bind="value: obj.month,
-											                   			  visible: showMonth,
-											                              source: monthList"										                   
-											                   style="width: 45%;" />
+										        </div>
+										        <!-- // Address END -->
 
-									            		<input data-role="dropdownlist"									                   
-											                   data-value-primitive="true"
-											                   data-text-field="name"
-											                   data-value-field="id"
-											                   data-bind="value: obj.month_option,
-											                   			  visible: showMonthOption,
-											                              source: monthOptionList,
-											                              events: { change: monthOptionChanges }"										                   
-											                   style="width: 45%;" />
+										        <!-- Info -->
+										        <div class="tab-pane" id="tab-4">
+										        	
+													<table class="table table-borderless table-condensed cart_total">
+											            <tr>
+															<td><span data-bind="text: lang.lang.sale_rep"></span></td>
+															<td>
+																<input id="cbbEmployee" name="cbbEmployee"
+																	   data-role="combobox"
+													                   data-value-primitive="true"
+													                   data-header-template="employee-header-tmpl"
+													                   data-template="contact-list-tmpl"
+													                   data-text-field="name"
+													                   data-value-field="id"
+													                   data-bind="value: obj.employee_id,
+													                              source: employeeDS"
+													                   data-placeholder="Type Name..." 
+													                   style="width: 100%" />
+															</td>
+														</tr>						            	
+														<tr>
+															<td><span data-bind="text: lang.lang.segments"></span></td>
+															<td>
+																<select data-role="multiselect"
+																	   data-value-primitive="true"
+																	   data-header-template="segment-header-tmpl"
+																	   data-item-template="segment-list-tmpl"
+																	   data-value-field="id"
+																	   data-text-field="code"
+																	   data-bind="value: obj.segments, 
+																	   			source: segmentItemDS,
+																	   			events:{ change: segmentChanges }"
+																	   data-placeholder="Add Segment.."
+																	   style="width: 100%" /></select>
+															</td>
+														</tr>
+														<tr>
+															<td><span data-bind="text: lang.lang.job"></span></td>
+															<td>
+																<input id="ddlJob" name="ddlJob"
+																	   data-role="dropdownlist"
+																	   data-header-template="job-header-tmpl"
+																	   data-template="job-list-tmpl"
+																	   data-auto-bind="false"				                
+													                   data-value-primitive="true"									                   				   
+													                   data-text-field="name"
+													                   data-value-field="id"
+													                   data-bind="value: obj.job_id, 
+													                   			source: jobDS"
+													                   data-option-label="Add job..." 
+													                   style="width: 100%" />										
+															</td>
+														</tr>											
+										            </table>
 
-									            		<input data-role="dropdownlist"									                   
-											                   data-value-primitive="true"
-											                   data-text-field="name"
-											                   data-value-field="id"
-											                   data-bind="value: obj.week,
-											                   			  visible: showWeek,
-											                              source: weekDayList"										                  
-											                   style="width: 45%;" />										            
-											        
-									            		<input data-role="dropdownlist"									                   
-											                   data-value-primitive="true"
-											                   data-text-field="name"
-											                   data-value-field="id"
-											                   data-bind="value: obj.day,
-											                   			  visible: showDay,
-											                              source: dayList"										                   
-											                   style="width: 45%;" />
+										        </div>
+										        <!-- // Info END -->
 
-									            	</td>
-									            </tr>
-								            </table>
+										        <!-- Attach -->
+										        <div class="tab-pane" id="tab-5">
 
-								            <span id="saveRecurring" class="btn btn-icon btn-default glyphicons history" data-bind="visible: obj.isNew" style="float: right; margin-top: -12px;"><i></i> <span data-bind="text: lang.lang.save_recurring"></span></span>									     
-								            
-								        </div>
-								        <!-- // Recuring END -->
+										        	<p><span data-bind="text: lang.lang.file_type"></span>: [PDF, JPG, JPEG, TIFF, PNG, GIF]</p>		
+										            <input id="files" name="files"
+										                   type="file"
+										                   data-role="upload"
+										                   data-show-file-list="false"
+										                   data-bind="events: { 
+								                   				select: onSelect
+										                   }">
 
-								        <div class="tab-pane saleSummaryCustomer" id="tab5-6">
-											<table class="table table-borderless table-condensed">
-										        <thead>
-										            <tr>
-										                <th>NUMBER</th>
-										                <th>ACCOUNT</th>                		                
-										                <th class="right">DEBITS (Dr)</th>
-										                <th class="right">CREDITS (Cr)</th>		                
-										            </tr>
-										        </thead> 
-										        <tbody>
-										        	<tr>
-										        		<td>1</td>
-										        		<td>2</td>
-										        		<td class="right">3</td>
-										        		<td class="right">4</td>
-										        	</tr>
-										        	<tr>
-										        		<td>1</td>
-										        		<td>2</td>
-										        		<td class="right">3</td>
-										        		<td class="right">4</td>
-										        	</tr>
-										        </tbody>			        
-										    </table>
+										            <table class="table table-bordered">
+												        <thead>
+												            <tr>			                
+												                <th><span data-bind="text: lang.lang.file_name"></span></th>
+												                <th><span data-bind="text: lang.lang.description"></span></th>
+												                <th><span data-bind="text: lang.lang.date"></span></th>
+												                <th style="width: 13%;"></th>                			                
+												            </tr> 
+												        </thead>
+												        <tbody data-role="listview" 
+												        		data-template="attachment-list-tmpl" 
+												        		data-auto-bind="false"
+												        		data-bind="source: attachmentDS"></tbody>			        
+												    </table>
+
+										        </div>
+										        <!-- // Attach END -->
+
+										        <!-- Recuring -->
+										        <div class="tab-pane" id="tab-6">
+										            
+										            <table style="width: 100%" class="table borderless">
+										            	<tr align="right">
+										            		<td style="border-top: 0;">
+										            			<span data-bind="text: lang.lang.name"></span>
+										            		</td>
+										            		<td style="border-top: 0;">
+										            			<input id="txtRecurringName" name="txtRecurringName"
+										            					class="k-textbox" 
+										            					data-bind="value: obj.recurring_name" 
+										            					placeholder="Recurring name.." 
+										            					style="width: 43%; " />
+
+										            			<span data-bind="text: lang.lang.start"></span>
+
+												                <input data-role="datepicker"
+																		data-format="dd-MM-yyyy"
+																		data-parse-formats="yyyy-MM-dd"
+																		data-bind="value: obj.start_date"
+																		style="width: 40%; " />
+										            		</td>
+										            	</tr>
+										            	<tr align="right">
+										            		<td style="border-top: 0;">
+											            		<span data-bind="text: lang.lang.every"></span>
+											            	</td>
+										            		<td style="border-top: 0;">
+											            		<input data-role="numerictextbox"
+												                   data-format="n0"
+												                   data-min="0"								                   
+												                   data-bind="value: obj.interval"
+												                   style="width: 45%; " />
+
+											            		<input data-role="dropdownlist"									                   
+													                   data-value-primitive="true"
+													                   data-text-field="name"
+													                   data-value-field="id"
+													                   data-bind="value: obj.frequency,
+													                              source: frequencyList,
+													                              events: { change: frequencyChanges }"
+													                   style="width: 45%;" />
+											            	</td>
+										            	</tr>
+											            <tr align="right">
+											            	<td style="border-top: 0;">
+											            		<span data-bind="text: lang.lang.on"></span>
+											            	</td>							            	
+											            	<td style="border-top: 0;">
+
+											            		<input data-role="dropdownlist"									                   
+													                   data-value-primitive="true"
+													                   data-text-field="name"
+													                   data-value-field="id"
+													                   data-bind="value: obj.month,
+													                   			  visible: showMonth,
+													                              source: monthList"										                   
+													                   style="width: 45%;" />
+
+											            		<input data-role="dropdownlist"									                   
+													                   data-value-primitive="true"
+													                   data-text-field="name"
+													                   data-value-field="id"
+													                   data-bind="value: obj.month_option,
+													                   			  visible: showMonthOption,
+													                              source: monthOptionList,
+													                              events: { change: monthOptionChanges }"										                   
+													                   style="width: 45%;" />
+
+											            		<input data-role="dropdownlist"									                   
+													                   data-value-primitive="true"
+													                   data-text-field="name"
+													                   data-value-field="id"
+													                   data-bind="value: obj.week,
+													                   			  visible: showWeek,
+													                              source: weekDayList"										                  
+													                   style="width: 45%;" />										            
+													        
+											            		<input data-role="dropdownlist"									                   
+													                   data-value-primitive="true"
+													                   data-text-field="name"
+													                   data-value-field="id"
+													                   data-bind="value: obj.day,
+													                   			  visible: showDay,
+													                              source: dayList"										                   
+													                   style="width: 45%;" />
+
+											            	</td>
+											            </tr>
+										            </table>
+
+										            <span id="saveRecurring" class="btn btn-icon btn-default glyphicons history" data-bind="visible: obj.isNew" style="float: right; margin-top: -12px;"><i></i> <span data-bind="text: lang.lang.save_recurring"></span></span>									     
+										            
+										        </div>
+										        <!-- // Recuring END -->
+
+										        <div class="tab-pane saleSummaryCustomer" id="tab5-6">
+													<table class="table table-borderless table-condensed">
+												        <thead>
+												            <tr>
+												                <th>NUMBER</th>
+												                <th>ACCOUNT</th>                		                
+												                <th class="right">DEBITS (Dr)</th>
+												                <th class="right">CREDITS (Cr)</th>		                
+												            </tr>
+												        </thead> 
+												        <tbody>
+												        	<tr>
+												        		<td>1</td>
+												        		<td>2</td>
+												        		<td class="right">3</td>
+												        		<td class="right">4</td>
+												        	</tr>
+												        	<tr>
+												        		<td>1</td>
+												        		<td>2</td>
+												        		<td class="right">3</td>
+												        		<td class="right">4</td>
+												        	</tr>
+												        </tbody>			        
+												    </table>
+												</div>
+
+										    </div>
 										</div>
 
 								    </div>
 								</div>
 
-						    </div>
-						</div>
+								<!-- Item List -->
+								<table class="table table-bordered table-primary table-striped table-vertical-center">
+							        <thead>
+							            <tr>
+							                <th class="center" style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></th>			  
+							                <th><span data-bind="text: lang.lang.items"></span></th>
+							                <th><span data-bind="text: lang.lang.description"></span></th>
+							                <th style="width: 20%;"><span data-bind="text: lang.lang.quantity"></span></th>
+							                <th style="width: 13%;"><span data-bind="text: lang.lang.price"></span></th>
+							                <th style="width: 1%;" data-bind="visible: showDiscount"><span data-bind="text: lang.lang.discount"></span></th>			                
+							                <th style="width: 10%;"><span data-bind="text: lang.lang.amount"></span></th>
+							                <th style="width: 11%;"><span data-bind="text: lang.lang.tax"></span></th>			                			                			                
+							            </tr> 
+							        </thead>
+							        <tbody data-role="listview" 
+							        		data-template="invoice-template" 
+							        		data-auto-bind="false"
+							        		data-bind="source: lineDS"></tbody>			        
+							    </table>
 
-						<!-- Item List -->
-						<table class="table table-bordered table-primary table-striped table-vertical-center">
-					        <thead>
-					            <tr>
-					                <th class="center" style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></th>			  
-					                <th><span data-bind="text: lang.lang.items"></span></th>
-					                <th><span data-bind="text: lang.lang.description"></span></th>
-					                <th style="width: 20%;"><span data-bind="text: lang.lang.quantity"></span></th>
-					                <th style="width: 13%;"><span data-bind="text: lang.lang.price"></span></th>
-					                <th style="width: 1%;" data-bind="visible: showDiscount"><span data-bind="text: lang.lang.discount"></span></th>			                
-					                <th style="width: 10%;"><span data-bind="text: lang.lang.amount"></span></th>
-					                <th style="width: 11%;"><span data-bind="text: lang.lang.tax"></span></th>			                			                			                
-					            </tr> 
-					        </thead>
-					        <tbody data-role="listview" 
-					        		data-template="invoice-template" 
-					        		data-auto-bind="false"
-					        		data-bind="source: lineDS"></tbody>			        
-					    </table>
-
-			            <!-- Bottom part -->
-			            <div class="row-fluid">
-				
-							<!-- Column -->
-							<div class="span4">
-								<button class="btn btn-inverse" data-bind="click: addRow"><i class="icon-plus icon-white"></i></button>
-
-								<div class="btn-group">
-									<div class="leadcontainer">
-										
-									</div>
-									<a class="btn btn-default dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-list"></i> </a>
-									<ul class="dropdown-menu" style="padding-left: 10px">
-										<li>
-											<input type="checkbox" id="chbDiscount" class="k-checkbox" data-bind="checked: showDiscount">
-	      									<label class="k-checkbox-label" for="chbDiscount"><span data-bind="text: lang.lang.discount"></span></label>
-										</li>															
-									</ul>
-								</div>
-
-								<!-- Add New Item -->
-								<ul class="topnav addNew">
-									<li role="presentation" class="dropdown ">
-								  		<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-								  			<span data-bind="text: lang.lang.add_new_item"></span>
-					    					<span class="caret"></span>
-								  		</a>
-							  			<ul class="dropdown-menu addNewItem">  				  				
-							  				<li><a href='#/item'><span data-bind="text: lang.lang.add_inventory_for_sale"></span></a></li>
-							  				<li><a href='#/non_inventory_part'><span data-bind="text: lang.lang.add_noninventory_for_sale"></span></a></li>
-							  				<li><a href='#/fixed_assets'><span data-bind="text: lang.lang.add_fixed_assets"></span></a></li>
-							  				<li><a href='#/item_service'><span data-bind="text: lang.lang.add_services"></span></a></li>
-							  				<li><a href='#/txn_item'><span data-bind="text: lang.lang.add_transaction_item"></span></a></li>  	
-							  			</ul>
-								  	</li>				
-								</ul>
-								<!--End Add New Item -->
-								
-								<br><br>
-								<div class="well">
-									<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.memo" placeholder="memo for external ..."></textarea>
-									<br>						
-									<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.memo2" placeholder="memo for internal ..."></textarea>
-								</div>
-							</div>
-							<!-- Column END -->
-							
-							<!-- Column -->
-							<div class="span4" align="center">
-								<img data-bind="visible: isEdit, attr: { src: statusSrc }" width="150px;" height="150px;" />	
-							</div>
-							<!-- Column END -->
-
-							<!-- Column -->
-							<div class="span4">
-								<table class="table table-condensed table-striped table-white">
-									<tbody>
-										<tr>
-											<td class="right"><span data-bind="text: lang.lang.subtotal"></span></td>
-											<td class="right strong" width="40%"><span data-format="n" data-bind="text: obj.sub_total"></span></td>
-										</tr>								
-										<tr>
-											<td class="right"><span data-bind="text: lang.lang.total_discount"></span></td>
-											<td class="right strong"><span data-format="n" data-bind="text: obj.discount"></span></td>
-										</tr>
-										<tr>
-											<td class="right"><span data-bind="text: lang.lang.total_tax"></span></td>
-											<td class="right strong"><span data-format="n" data-bind="text: obj.tax"></span></td>
-										</tr>
-										<tr>
-											<td class="right"><h4 span data-bind="text: lang.lang.total"></h4></td>
-											<td class="right strong"><h4 data-bind="text: total"></h4></td>
-										</tr>
-										<tr>
-											<td class="right">
-												<span data-bind="text: lang.lang.deposit"></span>
-												<span data-format="n" data-bind="text: total_deposit"></span>										
-											</td>
-											<td class="right">
-												<input data-role="numerictextbox"
-									                   data-format="n"
-									                   data-spinners="false"
-									                   data-min="0"							                                      
-									                   data-bind="value: obj.deposit,
-									                              events: { change: changes }"
-									                   style="width: 90%; text-align: right;">
-											</td>
-										</tr>
-										<tr>
-											<td class="right">
-												<span data-bind="text: lang.lang.remaining"></span>
-											</td>
-											<td class="right">
-												<span data-format="n" data-bind="text: obj.remaining"></span>
-											</td>
-										</tr>								
-									</tbody>
-								</table>
-							</div>
-							<!-- // Column END -->
-							
-						</div>
+					            <!-- Bottom part -->
+					            <div class="row-fluid">
 						
-						<!-- Form actions -->
-						<div class="box-generic bg-action-button">
-							<div id="ntf1" data-role="notification"></div>
+									<!-- Column -->
+									<div class="span4">
+										<button class="btn btn-inverse" data-bind="click: addRow"><i class="icon-plus icon-white"></i></button>
 
-							<!-- Delete Confirmation -->
-							<div data-role="window"
-				                 data-title="Delete Confirmation"
-				                 data-width="350"
-				                 data-height="200"
-				                 data-iframe="true"
-				                 data-modal="true"
-				                 data-visible="false"
-				                 data-position="{top:'40%',left:'35%'}"
-				                 data-actions="{}"
-				                 data-resizable="false"
-				                 data-bind="visible: showConfirm"
-				                 style="text-align:center;">
-				                <p style="font-size:25px; margin: 15px 0 25px;" class="delete-message" data-bind="text: confirmMessage"></p>
-							    <button style="font-size:14px; border:none; background:#496cad; color:#fff; padding:5px 25px;" data-bind="click:delete"><span data-bind="text: lang.lang.yes"></span></button> 
-							    <button style="font-size:14px; border:none; background:red; color:#fff; padding:5px 25px;" data-bind="click:closeConfirm"><span data-bind="text: lang.lang.no"></span></button>
-				            </div>
-				            <!-- // Delete Confirmation -->
+										<div class="btn-group">
+											<div class="leadcontainer">
+												
+											</div>
+											<a class="btn btn-default dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-list"></i> </a>
+											<ul class="dropdown-menu" style="padding-left: 10px">
+												<li>
+													<input type="checkbox" id="chbDiscount" class="k-checkbox" data-bind="checked: showDiscount">
+			      									<label class="k-checkbox-label" for="chbDiscount"><span data-bind="text: lang.lang.discount"></span></label>
+												</li>															
+											</ul>
+										</div>
 
-							<div class="row">
-								<div class="span3">
-									<input data-role="dropdownlist"
-						                   data-value-primitive="true"
-						                   data-text-field="name"
-						                   data-value-field="id"
-						                   data-bind="value: obj.transaction_template_id,
-						                              source: txnTemplateDS"
-						                   data-option-label="Select Template..." />
+										<!-- Add New Item -->
+										<ul class="topnav addNew">
+											<li role="presentation" class="dropdown ">
+										  		<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+										  			<span data-bind="text: lang.lang.add_new_item"></span>
+							    					<span class="caret"></span>
+										  		</a>
+									  			<ul class="dropdown-menu addNewItem">  				  				
+									  				<li><a href='#/item'><span data-bind="text: lang.lang.add_inventory_for_sale"></span></a></li>
+									  				<li><a href='#/non_inventory_part'><span data-bind="text: lang.lang.add_noninventory_for_sale"></span></a></li>
+									  				<li><a href='#/fixed_assets'><span data-bind="text: lang.lang.add_fixed_assets"></span></a></li>
+									  				<li><a href='#/item_service'><span data-bind="text: lang.lang.add_services"></span></a></li>
+									  				<li><a href='#/txn_item'><span data-bind="text: lang.lang.add_transaction_item"></span></a></li>  	
+									  			</ul>
+										  	</li>				
+										</ul>
+										<!--End Add New Item -->
+										
+										<br><br>
+										<div class="well">
+											<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.memo" placeholder="memo for external ..."></textarea>
+											<br>						
+											<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.memo2" placeholder="memo for internal ..."></textarea>
+										</div>
+									</div>
+									<!-- Column END -->
+									
+									<!-- Column -->
+									<div class="span4" align="center">
+										<img data-bind="visible: isEdit, attr: { src: statusSrc }" width="150px;" height="150px;" />	
+									</div>
+									<!-- Column END -->
+
+									<!-- Column -->
+									<div class="span4">
+										<table class="table table-condensed table-striped table-white">
+											<tbody>
+												<tr>
+													<td class="right"><span data-bind="text: lang.lang.subtotal"></span></td>
+													<td class="right strong" width="40%"><span data-format="n" data-bind="text: obj.sub_total"></span></td>
+												</tr>								
+												<tr>
+													<td class="right"><span data-bind="text: lang.lang.total_discount"></span></td>
+													<td class="right strong"><span data-format="n" data-bind="text: obj.discount"></span></td>
+												</tr>
+												<tr>
+													<td class="right"><span data-bind="text: lang.lang.total_tax"></span></td>
+													<td class="right strong"><span data-format="n" data-bind="text: obj.tax"></span></td>
+												</tr>
+												<tr>
+													<td class="right"><h4 span data-bind="text: lang.lang.total"></h4></td>
+													<td class="right strong"><h4 data-bind="text: total"></h4></td>
+												</tr>
+												<tr>
+													<td class="right">
+														<span data-bind="text: lang.lang.deposit"></span>
+														<span data-format="n" data-bind="text: total_deposit"></span>										
+													</td>
+													<td class="right">
+														<input data-role="numerictextbox"
+											                   data-format="n"
+											                   data-spinners="false"
+											                   data-min="0"							                                      
+											                   data-bind="value: obj.deposit,
+											                              events: { change: changes }"
+											                   style="width: 90%; text-align: right;">
+													</td>
+												</tr>
+												<tr>
+													<td class="right">
+														<span data-bind="text: lang.lang.remaining"></span>
+													</td>
+													<td class="right">
+														<span data-format="n" data-bind="text: obj.remaining"></span>
+													</td>
+												</tr>								
+											</tbody>
+										</table>
+									</div>
+									<!-- // Column END -->
+									
 								</div>
-								<div class="span9" align="right">
-									<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save_new"></span></span>
-									<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save_close"></span></span>															
-									<span id="savePrint" class="btn btn-icon btn-default glyphicons print" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save_print"></span></span>
-									<span class="btn btn-icon btn-warning glyphicons remove_2" onclick="javascript:window.history.back()" data-bind="click: cancel" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.cancel"></span></span>
-									<span class="btn btn-danger btn-icon glyphicons bin" data-bind="click: openConfirm, visible: isEdit" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.delete"></span></span>					
+								
+								<!-- Form actions -->
+								<div class="box-generic bg-action-button">
+									<div id="ntf1" data-role="notification"></div>
+
+									<!-- Delete Confirmation -->
+									<div data-role="window"
+						                 data-title="Delete Confirmation"
+						                 data-width="350"
+						                 data-height="200"
+						                 data-iframe="true"
+						                 data-modal="true"
+						                 data-visible="false"
+						                 data-position="{top:'40%',left:'35%'}"
+						                 data-actions="{}"
+						                 data-resizable="false"
+						                 data-bind="visible: showConfirm"
+						                 style="text-align:center;">
+						                <p style="font-size:25px; margin: 15px 0 25px;" class="delete-message" data-bind="text: confirmMessage"></p>
+									    <button style="font-size:14px; border:none; background:#496cad; color:#fff; padding:5px 25px;" data-bind="click:delete"><span data-bind="text: lang.lang.yes"></span></button> 
+									    <button style="font-size:14px; border:none; background:red; color:#fff; padding:5px 25px;" data-bind="click:closeConfirm"><span data-bind="text: lang.lang.no"></span></button>
+						            </div>
+						            <!-- // Delete Confirmation -->
+
+									<div class="row">
+										<div class="span3">
+											<input data-role="dropdownlist"
+								                   data-value-primitive="true"
+								                   data-text-field="name"
+								                   data-value-field="id"
+								                   data-bind="value: obj.transaction_template_id,
+								                              source: txnTemplateDS"
+								                   data-option-label="Select Template..." />
+										</div>
+										<div class="span9" align="right">
+											<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save_new"></span></span>
+											<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save_close"></span></span>															
+											<span id="savePrint" class="btn btn-icon btn-default glyphicons print" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save_print"></span></span>
+											<span class="btn btn-icon btn-warning glyphicons remove_2" onclick="javascript:window.history.back()" data-bind="click: cancel" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.cancel"></span></span>
+											<span class="btn btn-danger btn-icon glyphicons bin" data-bind="click: openConfirm, visible: isEdit" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.delete"></span></span>					
+										</div>
+									</div>
 								</div>
+								<!-- // Form actions END -->
+
 							</div>
 						</div>
-						<!-- // Form actions END -->
-
 					</div>
 				</div>
 			</div>
