@@ -20979,7 +20979,10 @@
 											</div>
 					            		</td>
 					            		<td style="border: 1px solid #D5DBDB;">
-					            			teinghkfdjgfslkgnsdfgnfdskjgnfdkssj
+					            			<p>
+					            				Example:
+					            					1 day (Base UOM) = 24 hours
+					            			</p>
 					            		</td>
 					            	</tr>
 					            	<tr data-bind="invisible: isltBase">
@@ -21015,7 +21018,8 @@
 					            		</td>
 					            		<td><span >Base UOM</span></td>
 					            		<td style="border: 1px solid #D5DBDB;">
-					            			teinghkfdjgfslkgnsdfgnfdskjgnfdkssj
+					            			Example:
+					            				1 week = 7 days (Base UOM)
 					            		</td>
 						            </tr>
 						            <tr><td colspan="6"></td></tr>
@@ -21095,7 +21099,7 @@
     <tr>
     	<td class="right">#=conversion_ratio#</td>
     	<td class="left">#=measurement#</td>
-    	<td class="right">#=kendo.toString(price, "c", locale)#</td>
+    	<td class="right">#=kendo.toString(price, "n")#</td>
     	<td style="text-align: center;">
     		<span style="cursor: pointer;" data-bind="click: edit"><i class="icon-edit"></i> <span data-bind="text: lang.lang.edit"></span></span>
     		<span style="cursor: pointer;" data-bind="click: delete"><i class="icon-remove"></i> <span data-bind="text: lang.lang.delete"></span></span>
