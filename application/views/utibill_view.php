@@ -2154,7 +2154,7 @@
 						 data-role="grid"						 
 						 data-bind="source: contactDS"
 						 data-row-template="waterCenter-customer-list-tmpl"
-						 data-columns="[{title: 'abc'}]"
+						 data-columns="[{title: 'Properties'}]"
 						 data-selectable=true
 						 data-height="600"		
 						 data-scrollable="{virtual: true}"></div>									
@@ -3205,7 +3205,7 @@
 								                   data-bind="value: obj.settlement_discount_id,
 								                              source: settlementDiscountDS"
 								                   data-option-label="(--- Select ---)"
-								                   required data-required-msg="required" style="width: 100%;" />														
+								                   required data-required-msg="required" style="width: 100%;" />		
 										</div>												
 							        </div>
 
@@ -3499,7 +3499,6 @@
 			    		<span class="glyphicons no-js remove_2" data-bind="click: cancel"><i></i></span>						
 					</div>
 			        <h2 data-bind="text: lang.lang.meter" style="margin-bottom: 10px;">Meter</h2>
-			       
 			       	<div class="span12 row">			       		
 			       		<!-- Top Part -->
 				    	<div class="row-fluid">
@@ -3528,13 +3527,12 @@
 										<div class="control-group">							
 											<label><span data-bind="text: lang.lang.multiplier">Multiplier</span></label>			
 					              			<br>
-
 					              			<input class="k-textbox"					    
 						              			data-bind="value: obj.multiplier"
 								                placeholder="eg. 1" required data-required-msg="required"
 								                style="width: 93%" />
 										</div>
-										<!-- // Group END -->											
+										<!-- // Group END -->		
 									</div>
 								</div>								
 								<div class="row">
@@ -3543,32 +3541,31 @@
 										<div class="control-group">							
 											<label><span data-bind="text: lang.lang.meter_code">Meter Code</span> <span style="color:red">*</span></label>			
 					              			<br>
-
 					              			<input class="k-textbox"					    
 						              			data-bind="value: obj.meter_number, events: {change: meterNumberChange}"
 								                placeholder="eg. 1" required data-required-msg="required"
 								                style="width: 100%" />
 										</div>
-										<!-- // Group END -->											
+										<!-- // Group END -->	
 									</div>
 									<div class="span6" style="padding-right: 0;">	
 										<!-- Group -->
 										<div class="control-group">							
-											<label for="txtAbbr"><span data-bind="text: lang.lang.meter_no_digit">Meter No. Digit</span> <span style="color:red">*</span></label>										
+											<label for="txtAbbr"><span data-bind="text: lang.lang.meter_no_digit">Meter No. Digit</span> <span style="color:red">*</span></label>			
 					              			<br>
 						              		<input class="k-textbox"					    
 						              			data-bind="value: obj.number_digit"
 								                placeholder="eg. 1" required data-required-msg="required"
 								                style="width: 93%" />
 										</div>
-										<!-- // Group END -->											
+										<!-- // Group END -->
 									</div>
 								</div>
 								<div class="row">
 									<div class="span6" style="padding-right: 0;">	
 										<!-- Group -->
 										<div class="control-group">							
-											<label for="txtAbbr"><span data-bind="text: lang.lang.plan">Plan</span> <span style="color:red">*</span></label>										
+											<label for="txtAbbr"><span data-bind="text: lang.lang.plan">Plan</span> <span style="color:red">*</span></label>	
 					              			<br>
 						              		<input data-role="dropdownlist"
 					              			   data-option-label="(--- Select ---)"	      
@@ -3578,23 +3575,23 @@
 							                   data-bind="source: planDS, value: obj.plan_id"
 							                   style="width: 100%;" />
 										</div>
-										<!-- // Group END -->											
+										<!-- // Group END -->	
 									</div>
 									<div class="span6">	
 										<!-- Group -->
 										<div class="control-group">							
-											<label for="txtAbbr"><span data-bind="text: lang.lang.starting_meter_no">Starting Meter No.</span></label>										
+											<label for="txtAbbr"><span data-bind="text: lang.lang.starting_meter_no">Starting Meter No.</span></label>
 					              			<br>
 						              		<input class="k-textbox" data-bind="value: obj.starting_no" 
 														placeholder="e.g. 0" style="width: 100%;" />
 										</div>
-										<!-- // Group END -->											
+										<!-- // Group END -->	
 									</div>
 								</div>
 								<div class="row">
 									<div class="span6" style="padding-right: 0;">	
 										<!-- Group -->
-										<div class="control-group">								
+										<div class="control-group">
 											<label for="customerStatus"><span data-bind="text: lang.lang.status"></span> <span style="color:red">*</span></label>
 								            <select data-role="dropdownlist"
 							                   data-value-primitive="true"
@@ -3604,38 +3601,34 @@
 							                   	source: selectType,
 							                   	value: obj.status"
 							                   style="width: 100%;margin-bottom: 15px;" ></select>
-										</div>																		
+										</div>				
 										<!-- // Group END -->
 										<div class="control-group" data-bind="visible: electricMeter">	
 											<input type="checkbox" data-bind="checked: chkRe, events: {change : checkRe}">
 											<label for="registeredDate"><span data-bind="text: lang.lang.reactive_meter"></span></label>
-								            
 										</div>
 									</div>
 									<div class="span6">	
 										<!-- Group -->
-										<div class="control-group">								
+										<div class="control-group">
 											<label for="registeredDate"><span data-bind="text: lang.lang.register_date"></span></label>
 								            <input
-							            		data-role="datepicker"			            		
+							            		data-role="datepicker"
 				            					data-bind="value: obj.date_used" 
 				            					data-format="dd-MM-yyyy"
 				            					placeholder="Register Date" 
 				            					style="width: 100%;" />
-										</div>																		
+										</div>					
 										<!-- // Group END -->
 									</div>
-									
-								</div>																					
+								</div>						
 							</div>
 							<div class="span6">
 								<div class="row-fluid">	
 									<!-- Map -->
 									<div id="map" class="span12" style="height: 225px;"></div>
 								</div>
-
 								<div class="separator line bottom"></div>
-
 								<div class="row-fluid">	
 									<div class="span6">									
 										<!-- Group -->
@@ -3647,8 +3640,7 @@
 											</div>
 										</div>									
 										<!-- // Group END -->
-									</div>	
-									
+									</div>
 									<div class="span6">	
 										<!-- Group -->
 										<div class="control-group">
@@ -3697,8 +3689,8 @@
 										                   data-value-field="id"
 										                   data-bind="
 										                   	source: locationDS, 
-										                   	value: obj.location_id,
-										                   	events: {change: blocChange}" 
+										                   	value: locationSelect,
+										                   	events: {change: onLocationChange}" 
 										                   style="width: 100%;" />
 													</div>
 												</div>
@@ -3713,9 +3705,9 @@
 										                   data-value-field="id"
 										                   data-bind="
 										                   	source: poleDS, 
-										                   	value: obj.pole_id,
-										                   	events: {change: poleChange},
-										                   	enabled: selectLocation" 
+										                   	value: subLocationSelect,
+										                   	events: {change: onSubLocationChange},
+										                   	enabled: haveLocation" 
 										                   style="width: 100%;" />
 													</div>
 												</div>
@@ -3730,8 +3722,8 @@
 										                   data-value-field="id"
 										                   data-bind="
 										                   	source: boxDS, 
-										                   	value: obj.box_id,
-										                   	enabled: selectSLocation" 
+										                   	value: boxSelect,
+										                   	enabled: haveSubLocation" 
 										                   style="width: 100%;" />
 													</div>
 												</div>
@@ -3749,8 +3741,7 @@
 												</div>									
 												<!-- // Group END -->
 											</div>	
-											<div class="span6">	
-												
+											<div class="span6">
 												<!-- Group -->
 												<div class="control-group">
 									    			<img data-bind="attr: { src: obj.image_url, alt: obj.name, title: obj.name }" width="120px" style="margin-bottom: 15px; border: 1px solid #ddd;">
@@ -3852,7 +3843,7 @@
 							<div class="span3">
 							</div>
 							<div class="span9" align="right">
-								<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit, click: save" style="width: 80px;margin:0;"><i></i> <span data-bind="text: lang.lang.save">Save</span></span>
+								<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="click: save" style="width: 80px;margin:0;"><i></i> <span data-bind="text: lang.lang.save">Save</span></span>
 								<span id="saveClose" data-bind="click: cancel" class="btn btn-icon btn-success glyphicons power" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.cancel">Cancel</span></span>		
 							</div>
 						</div>
@@ -16080,6 +16071,7 @@
 		},
 		licenseData 		: [],
 		otherINFO 			: false,
+		licenseID 			: "",
 		licenseChange 		: function(e){
 			var obj = this.get("obj"), self = this;
 			this.set("otherINFO", false);
@@ -16100,6 +16092,7 @@
 				]);
 				self.set("otherINFO", true);
 				self.get("obj").set("type", view[0].type);
+				self.set("licenseID", view[0].id);
 				// self.get("objReactive").set("type", view[0].type);
 			});
 		},
@@ -16142,6 +16135,18 @@
 		    	}
 		    	//Set all OBJ
 		    	self.set("obj", view[0]);
+		    	self.set("licenseID", view[0].branch_id);
+		    	self.set("licenseSelect", view[0].branch_id);
+		    	self.set("locationSelect", view[0].location_id);
+		    	
+		    	if(view[0].pole_id != 0 ){
+		    		self.set("haveLocation", true);
+		    		self.set("subLocationSelect", view[0].pole_id);
+		    	}
+		    	if(view[0].box_id != 0){
+		    		self.set("haveSubLocation", true);
+		    		self.set("boxSelect", view[0].box_id);
+		    	}
 		    	self.loadMap();
 			});
 		},
@@ -16263,19 +16268,46 @@
 			var Name = this.get("obj").meter_number + "(Reactive)";
 			this.get("objReactive").set("meter_number", Name);
 		},
-		blocChange 			: function(e){
-			this.poleDS.filter([
-				{ field: "main_bloc", value: this.get("obj").location_id},
-				{ field: "main_pole", value: 0}
-			]);
+		haveLocation 		: false,
+		haveSubLocation 	: false,
+		onLocationChange : function(){
+			var self = this;
+			this.poleDS.data([]);
+			this.poleDS.query({
+				filter: [
+					{ field: "branch_id", value: this.get("licenseID")},
+					{ field: "main_bloc", value: this.get("locationSelect")},
+					{ field: "main_pole", value: 0}
+				],
+				page: 1
+			}).then(function(e){
+				if(self.poleDS.data().length > 0){
+					self.set("haveLocation", true);
+				}else{
+					self.set("haveLocation", false);
+					self.set("subLocationSelect", "");
+					self.boxDS.data([]);
+				}
+			});
 			this.set("selectLocation", true);
 		},
-		poleChange 			: function(e){
-			this.boxDS.filter([
-				{ field: "main_bloc", value: this.get("obj").location_id},
-				{ field: "main_pole", value: this.get("obj").pole_id}
-			]);
-			this.set("selectSLocation", true);
+		onSubLocationChange 			: function(){
+			var self = this;
+			this.boxDS.data([]);
+			this.boxDS.query({
+				filter: [
+					{ field: "branch_id", value: this.get("licenseID")},
+					{ field: "main_bloc", value: this.get("locationSelect")},
+					{ field: "main_pole", value: this.get("subLocationSelect")}
+				],
+				page: 1
+			}).then(function(e){
+				if(self.boxDS.data().length > 0){
+					self.set("haveSubLocation", true);
+				}else{
+					self.set("haveSubLocation", false);
+				}
+			});
 		},
 		onSelect 	: function(e){
 	        // Array with information about the uploaded files
@@ -16349,7 +16381,10 @@
 		save 		: function() {
 			var self = this;
 			var obj = this.get("obj");
-			if(obj.meter_number && obj.plan_id != 0 && obj.plan_id && obj.location_id && obj.date_used && obj.number_digit){
+			if(obj.meter_number && obj.plan_id != 0 && obj.plan_id && this.get("locationSelect") && obj.date_used && obj.number_digit){
+				obj.location_id = this.get("locationSelect");
+				obj.pole_id = this.get("subLocationSelect");
+				obj.box_id = this.get("boxSelect");
 				if(obj.type == "w"){
 					if(this.attachmentDS.hasChanges() == true) {
 						this.uploadFile();
@@ -17011,12 +17046,14 @@
 		},
 		onSubLocationChange : function(e) {
 			var self = this;
+			this.boxDS.data([]);
 			this.boxDS.query({
 				filter: [
 					{field: "branch_id", value: this.get("licenseSelect")},
 					{field: "main_bloc", value: this.get("blocSelect")},
 					{field: "main_pole", value: this.get("subLocationSelect")}
-				]
+				],
+				page: 1
 			})
 			.then(function(e){
 				if(self.boxDS.data().length > 0){

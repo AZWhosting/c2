@@ -18,10 +18,8 @@ class Ops extends REST_Controller {
 				$connection = 'use ' . $db;
 				$this->db->query($connection);
 
-				$counter = $this->db->count_all('transactions');
-
-				$data["results"][] = array( "db" => $db, "rows" => $counter );
-
+				// $counter = $this->db->count_all('transactions');
+				// $data["results"][] = array( "db" => $db, "rows" => $counter );
 
 			    //Check missing field
 				// if ($this->db->field_exists('account_id', 'attachments')===FALSE){
@@ -68,16 +66,15 @@ class Ops extends REST_Controller {
 			 	//    $this->db->insert_batch('measurement_categories', $data);
 				
 				//Add new fields
-				// $fields = array(
-				// 	"account_id" => array(
-				// 		"type" 		=> "INT",
-				// 		"constraint"=> 11,
-				// 		'unsigned' 	=> TRUE,
-				// 		"null" 		=> FALSE,
-				// 		"default" 	=> 0
-				// 	)
-				// );
-				// $this->dbforge->add_column("attachments", $fields);
+				$fields = array(
+					"deleted" => array(
+						"type" 		=> "TINYINT",
+						"constraint"=> 1,
+						"null" 		=> FALSE,
+						"default" 	=> 0
+					)
+				);
+				$this->dbforge->add_column("account_lines", $fields);
 
 			    // Modify fields
 			 	// $fields = array(

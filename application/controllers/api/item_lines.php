@@ -178,7 +178,7 @@ class Item_lines extends REST_Controller {
 						}
 
 						//Purchase
-						if($transaction->type=="Cash_Purchase" || $transaction->type=="Credit_Purchase" || $transaction->type=="Item_Adjustment"){
+						if($transaction->type=="Cash_Purchase" || $transaction->type=="Credit_Purchase" || $transaction->type=="Item_Adjustment" || $transaction->type=="Internal_Usage"){
 							//Avg Cost
 							$lastCost = $onHand * floatval($item->cost);
 							$currentCost = ($currentQuantity * floatval($value->cost) + floatval($value->additional_cost)) / floatval($value->rate);
