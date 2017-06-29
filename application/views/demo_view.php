@@ -73082,7 +73082,7 @@
       			measurement_id 	: 0,
       			quantity 		: 1,
       			price 			: 0,
-      			conversion_ratio		: 0,
+      			conversion_ratio: 0,
       			locale 			: obj.locale,      			
       			measurement 	: ""
 			});
@@ -73099,11 +73099,7 @@
       		if(priceList.measurement_id==0){
       			result = false;
       		}
-
-      		if(priceList.locale==null){
-      			result = false;
-      		}
-
+      		
       		return result;
       	},
       	save 				: function(){

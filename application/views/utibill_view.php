@@ -5894,7 +5894,6 @@
 				</ul>
 			</div>
 			<span class="btn btn-icon btn-warning glyphicons remove" data-bind="visible: haveSession ,click: endSession" style="width: 100%;background: #a22314;"><i></i> <span data-bind="text: lang.lang.end_session">End Session</span></span>
-
 		</div>
 
 		<!-- Right Side -->
@@ -18832,9 +18831,10 @@
 	    },
 	    blocChange 			: function(){
 	    	this.set("haveMonth", true);
+	    	this.set("balanceView", true);
 	    },
 	    monthChange 		: function(){
-	    	this.set("balanceView", true);
+	    	
 	    },
 	    exArray 			: [],
 	    downloadView 		: false,

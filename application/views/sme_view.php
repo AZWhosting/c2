@@ -5239,7 +5239,7 @@
 								</div>
 
 								<!-- Item List -->
-								<table class="table table-bordered table-primary table-striped table-vertical-center">
+								<!-- <table class="table table-bordered table-primary table-striped table-vertical-center">
 							        <thead>
 							            <tr>
 							                <th class="center" style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></th>			  
@@ -5256,7 +5256,27 @@
 							        		data-template="invoice-template" 
 							        		data-auto-bind="false"
 							        		data-bind="source: lineDS"></tbody>			        
-							    </table>
+							    </table> -->							   
+
+							    <div data-role="grid"
+							    	 data-editable="true"
+					                 data-columns="[
+									    { title:'No.', attributes: { style: 'text-align: center;' }, width: '40px',
+									        template: function (dataItem) {
+									        	return banhji.invoice.lineDS.indexOf(dataItem)+1;
+									      	}
+									    },
+					                 	{ field: 'item', title: 'Item', editor: itemComboBoxEditor, template: '#=item.name#' },
+			                            { field: 'description', title:'Description', width: '250px' },
+			                            { field: 'cost', title:'Cost', attributes: { style: 'text-align: right;' }, width: '100px' },
+			                            { field: 'on_hand', title:'Qty On Hand', attributes: { style: 'text-align: right;' }, width: '100px' },
+			                            { field: 'quantity_adjusted', title:'Qty Count', attributes: { style: 'text-align: right;' }, width: '100px' },
+			                            { field: 'quantity', title:'Different', editable: 'false', attributes: { style: 'text-align: right;' }, width: '100px' },                            
+			                            { command: 'destroy', title: ' ', width: 96 }
+			                         ]"
+			                         data-auto-bind="false"
+					                 data-bind="source: lineDS"></div>
+
 
 					            <!-- Bottom part -->
 					            <div class="row-fluid">
@@ -53913,6 +53933,7 @@
 					locale				: obj.locale,
 					movement 			: -1,
 
+					item 				: [],
 					item_prices 		: []
 				});
 			},
