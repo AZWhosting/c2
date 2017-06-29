@@ -7129,7 +7129,7 @@
 					<div class="row-fluid">
 						<table class="table table-borderless table-condensed">
 							<tr>
-		
+								<td>
 									<h3 ><a href="#/sale_summary_by_customer" data-bind="text: lang.lang.sale_summary_by_customer" style="text-transform: capitalize;"></a></h3>
 								</td>
 								<td>
@@ -7152,7 +7152,7 @@
 							</tr>
 
 							<tr>
-								<td>
+								<td style="vertical-align: top;">
 									<h3><a href="#/sale_summary_by_product" data-bind="text: lang.lang.sale_summary_by_product_services" style="text-transform: capitalize;"></a></h3>
 								</td>
 								<td>
@@ -21436,21 +21436,6 @@
 							</div>
 					    </div>
 					</div>
-
-					<table class="table table-bordered table-primary table-striped table-vertical-center" style="margin-bottom: 0;">
-				        <thead>
-				            <tr>
-				            	<th class="center" style="width: 40px;vertical-align: top;border-bottom: none;"><span data-bind="text: lang.lang.no_"></span></th>
-				                <th style="vertical-align: top; border-bottom: none;" data-bind="text: lang.lang.item"></th>
-				                <th style="width: 250px; vertical-align: top; border-bottom: none;" data-bind="text: lang.lang.description"></th>
-				                <th style="width: 100px; vertical-align: top; border-bottom: none;" data-bind="text: lang.lang.cost"></th>
-				                <th style="width: 100px; vertical-align: top; border-bottom: none;" data-bind="text: lang.lang.qoh"></th>
-				                <th style="width: 100px; vertical-align: top; border-bottom: none;" data-bind="text: lang.lang.quantity_count"></th>
-				                <th style="width: 100px; vertical-align: top; border-bottom: none;" data-bind="text: lang.lang.different"></th>
-				            	<th style="width: 111px; vertical-align: top; border-bottom: none;"></th>
-				            </tr>
-				        </thead>
-				    </table>
 
 				    <div data-role="grid"
 				    	 data-editable="true"

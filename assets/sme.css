@@ -31,7 +31,9 @@ a:hover {
   position: relative;
   background: #F4F4F4;
 }
-
+/*.k-grid-header-wrap table tr .k-header {
+  display: block !important; 
+}*/
 /*---------
   CSS Menu
 -----------*/

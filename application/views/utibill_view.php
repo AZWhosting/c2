@@ -18944,11 +18944,11 @@
 					        	});
 					        	self.numCustomer += 1;
 							});
-							
 							self.applyTerm();
 							self.setRate();
 							$("#loadING").css("display", "none");
 							self.set("downloadView", true);
+							self.set("btnActive", true);
 						}else{
 							var notifi = $("#ntf1").data("kendoNotification");
 							notifi.hide();
@@ -18960,10 +18960,14 @@
 						self.set("invoice_id", 0);
 					});
 				}else{
-					alert("Please Select Location");
+					var notifi = $("#ntf1").data("kendoNotification");
+					notifi.hide();
+					notifi.error(this.lang.lang.field_required_message);
 				}
 			}else{
-				alert("Please Select License");
+				var notifi = $("#ntf1").data("kendoNotification");
+				notifi.hide();
+				notifi.error(this.lang.lang.field_required_message);
 			}
 	    },
 	    upArray 			: [],
@@ -19182,6 +19186,11 @@
 	    	var self = this, obj = this.get("obj"),
 	    	today = new Date();
 	    	$.each(this.dataSource.data(), function(index, value){
+	    		if(value.payment_term_id){
+	    			value.payment_term_id = value.payment_term_id;
+	    		}else{
+	    			value.payment_term_id = 5;
+	    		}
 	    		var term = self.paymentTermDS.get(value.payment_term_id),
 	    		termDate = new Date(value.reference[0].issued_date);
 	    		term.discount_period
@@ -19437,6 +19446,7 @@
 					self.applyTerm();
 					self.setRate();
 					$("#loadING").css("display", "none");
+					self.set("btnActive", true);
 				}else{
 					$("#loadING").css("display", "none");
 					var notifact = $("#ntf1").data("kendoNotification");

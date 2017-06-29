@@ -1531,9 +1531,9 @@ width: 50% !important;
 .k-widget.k-combobox.k-header .k-dropdown-wrap.k-state-default{
   border-radius: 0 !important;
 }
-.k-grid-header-wrap table tr .k-header{
+/*.k-grid-header-wrap table tr .k-header{
   display: none;
-}
+}*/
 .span3.listWrapper>.results{
   border: none !important;
   padding: 10px 8px !important;

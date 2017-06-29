@@ -5,11 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://fonts.googleapis.com/css?family=Battambang" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Preahvihear" rel="stylesheet"> 
-
-    <!-- Customize CSS-->
-	<link rel="stylesheet" href="<?php echo base_url()?>assets/sme.css" />
-	<link rel="stylesheet" href="<?php echo base_url()?>assets/responsive.css" />
+    <link href="https://fonts.googleapis.com/css?family=Preahvihear" rel="stylesheet">   
 
 	<!-- CSS Themes -->
     <link rel="stylesheet" href="<?php echo base_url()?>assets/style-default-menus-dark.css" >
@@ -35,6 +31,10 @@
 
     <link rel="stylesheet" href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/common/theme/fonts/font-awesome/css/font-awesome.min.css" />
     
+    <!-- Customize CSS-->
+	<link rel="stylesheet" href="<?php echo base_url()?>assets/sme.css" />
+	<link rel="stylesheet" href="<?php echo base_url()?>assets/responsive.css" />
+
     <script src="<?php echo base_url()?>assets/kendo/js/jquery.min.js"></script>
     <script src="<?php echo base_url()?>assets/bootstrap.min.js"></script>
 
