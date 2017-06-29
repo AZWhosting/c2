@@ -18834,7 +18834,6 @@
 	    	this.set("balanceView", true);
 	    },
 	    monthChange 		: function(){
-	    	
 	    },
 	    exArray 			: [],
 	    downloadView 		: false,
@@ -19438,6 +19437,11 @@
 					self.applyTerm();
 					self.setRate();
 					$("#loadING").css("display", "none");
+				}else{
+					$("#loadING").css("display", "none");
+					var notifact = $("#ntf1").data("kendoNotification");
+					notifact.hide();
+					notifact.success(self.lang.lang.no_data);
 				}
 			});
 		},
