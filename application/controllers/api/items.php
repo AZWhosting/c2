@@ -50,7 +50,11 @@ class Items extends REST_Controller {
 		if(!empty($filter["filters"]) && isset($filter["filters"])){
 	    	foreach ($filter['filters'] as $value) {
 	    		if(isset($value['operator'])) {
-					$obj->{$value['operator']}($value['field'], $value['value']);
+	    			if($value['operator']=="contains"){
+	    				$obj->like($value['field'], $value['value'], 'both');
+	    			}else{
+						$obj->{$value['operator']}($value['field'], $value['value']);
+	    			}
 				} else {
 					if($value["field"]=="is_pattern"){
 	    				$is_pattern = $value["value"];
@@ -131,8 +135,8 @@ class Items extends REST_Controller {
 				   	"preferred_vendor_id" 		=> $value->preferred_vendor_id,
 				   	"image_url" 				=> $value->image_url!="" ? $value->image_url : $this->noImageUrl,
 				   	"favorite" 					=> $value->favorite=="true"?true:false,
-				   	"is_catalog" 				=> $value->is_catalog,
-				   	"is_assembly" 				=> $value->is_assembly,
+				   	"is_catalog" 				=> intval($value->is_catalog),
+				   	"is_assembly" 				=> intval($value->is_assembly),
 				   	"is_pattern" 				=> intval($value->is_pattern),				  
 				   	"status" 					=> $value->status,
 				   	"deleted" 					=> $value->deleted,

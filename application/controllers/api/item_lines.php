@@ -58,6 +58,9 @@ class Item_lines extends REST_Controller {
 			}
 		}
 
+		$obj->include_related("measurement", array("name"));
+		$obj->where("deleted <>", 1);
+
 		//Results
 		if($page && $limit){
 			$obj->get_paged_iterated($page, $limit);
@@ -113,7 +116,8 @@ class Item_lines extends REST_Controller {
 				   	"required_date"		=> $value->required_date,
 
 				   	"item_prices" 		=> [],
-				   	"item" 				=> $item
+				   	"item" 				=> $item,
+				   	"measurement" 		=> array("measurement_id"=>$value->measurement_id, "measurement"=>$value->measurement_name)
 				);
 			}
 		}
@@ -398,10 +402,11 @@ class Item_lines extends REST_Controller {
 		foreach ($models as $key => $value) {
 			$obj = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$obj->where("id", $value->id)->get();
+			$obj->deleted = 1;
 
 			$data["results"][] = array(
-				"data"   => $value,
-				"status" => $obj->delete()
+				"data"   	=> $value,
+				"deleted" 	=> $obj->save()
 			);
 		}
 

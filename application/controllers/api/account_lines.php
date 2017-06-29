@@ -54,6 +54,10 @@ class Account_lines extends REST_Controller {
 				}
 			}
 		}
+
+		$obj->include_related("account", array("number","name"));
+		$obj->include_related("contact", array("abbr","number","name"));
+		$obj->where("deleted <>", 1);
 		
 		//Results
 		if($page && $limit){
@@ -66,6 +70,16 @@ class Account_lines extends REST_Controller {
 
 		if($obj->exists()){
 			foreach ($obj as $value) {
+				$account = array(
+					"number" 				=> $value->account_number, 
+					"name" 					=> $value->account_name
+				);
+				$account = array(
+					"abbr"					=> $value->contact_abbr, 
+					"number" 				=> $value->contact_number, 
+					"name" 					=> $value->contact_name
+				);
+
 				$data["results"][] = array(
 					"id" 				=> $value->id,
 			   		"transaction_id"	=> $value->transaction_id,
@@ -83,8 +97,8 @@ class Account_lines extends REST_Controller {
 				   	"reference_date" 	=> $value->reference_date,
 				   	"movement" 			=> intval($value->movement),
 
-				   	"account" 			=> $value->account->get_raw()->result(),
-				   	"contact" 			=> $value->contact->get_raw()->result()
+				   	"account" 			=> $account,
+				   	"contact" 			=> $contact
 				);
 			}						 			
 		}		
@@ -204,10 +218,11 @@ class Account_lines extends REST_Controller {
 		foreach ($models as $key => $value) {
 			$obj = new Account_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$obj->where("id", $value->id)->get();
-			
+			$obj->deleted = 1;
+
 			$data["results"][] = array(
-				"data"   => $value,
-				"status" => $obj->delete()
+				"data"   	=> $value,
+				"deleted" 	=> $obj->save()
 			);							
 		}
 

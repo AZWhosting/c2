@@ -3770,7 +3770,7 @@
 										                   data-auto-bind="false"
 										                   data-text-field="name"
 										                   data-value-field="id"
-										                   data-bind="value: obj.phase_id, source: phaseDS" style="width: 100%;" />
+										                   data-bind="value: phaseSelect, source: phaseDS" style="width: 100%;" />
 													</div>
 												</div>
 												<div class="control-group">
@@ -3782,7 +3782,7 @@
 										                   data-auto-bind="false"
 										                   data-text-field="name"
 										                   data-value-field="id"
-										                   data-bind="value: obj.voltage_id, source: voltageDS" style="width: 100%;" />
+										                   data-bind="value: voltageSelect, source: voltageDS" style="width: 100%;" />
 													</div>
 												</div>
 												<div class="control-group">
@@ -3794,7 +3794,7 @@
 										                   data-auto-bind="false"
 										                   data-text-field="name"
 										                   data-value-field="id"
-										                   data-bind="value: obj.ampere_id, source: ampereDS" style="width: 100%;" />
+										                   data-bind="value: ampereSelect, source: ampereDS" style="width: 100%;" />
 													</div>
 												</div>
 											</div>								
@@ -16050,6 +16050,18 @@
 		selectLocation 		: false,
 		selectSLocation 	: false,
 		pageLoad 			: function(id){
+			this.set("licenseSelect", "");
+			this.set("locationSelect", "");
+			this.set("subLocationSelect", "");
+			this.set("boxSelect", "");
+			this.set("haveLocation", false);
+			this.set("haveSubLocation", false);
+			this.set("ampereSelect", "");
+			this.set("phaseSelect", "");
+			this.set("voltageSelect", "");
+			this.phaseDS.filter({field: "type", value: "phase"});
+			this.ampereDS.filter({field: "type", value: "ampere"});
+			this.voltageDS.filter({field: "type", value: "voltage"});
 			if(id){
 				this.loadObj(id);
 				this.set("otherINFO", true);
@@ -16058,13 +16070,13 @@
 				if(this.propertyID){
 					this.addEmpty(this.propertyID);
 					this.addEmptyRe(this.propertyID);
-					this.phaseDS.filter({field: "type", value: "phase"});
-					this.ampereDS.filter({field: "type", value: "ampere"});
-					this.voltageDS.filter({field: "type", value: "voltage"});
+					
 					this.locationDS.filter([{field: "main_bloc", value: "0"},{field: "main_pole", value: "0"}]);
 				}else{
 					banhji.router.navigate("/center");
 				}
+				this.set("haveLocation", false);
+				this.set("haveSubLocation", false);
 			}
 			this.planDS.fetch();
 			this.setWords();
@@ -16130,6 +16142,15 @@
 		    		self.set("electricMeter", true);
 		    		self.set("selectLocation", true);
 		    		self.set("selectSLocation", true);
+		    		if(view[0].ampere_id != 0){
+		    			self.set("ampereSelect", view[0].ampere_id);
+		    		}
+		    		if(view[0].phase_id != 0){
+		    			self.set("phaseSelect", view[0].phase_id);
+		    		}
+		    		if(view[0].voltage_id != 0){
+		    			self.set("voltageSelect", view[0].voltage_id);
+		    		}
 		    	}else{
 		    		self.set("electricMeter", false);
 		    	}
@@ -16138,7 +16159,6 @@
 		    	self.set("licenseID", view[0].branch_id);
 		    	self.set("licenseSelect", view[0].branch_id);
 		    	self.set("locationSelect", view[0].location_id);
-		    	
 		    	if(view[0].pole_id != 0 ){
 		    		self.set("haveLocation", true);
 		    		self.set("subLocationSelect", view[0].pole_id);
@@ -16147,6 +16167,7 @@
 		    		self.set("haveSubLocation", true);
 		    		self.set("boxSelect", view[0].box_id);
 		    	}
+
 		    	self.loadMap();
 			});
 		},
@@ -16293,21 +16314,23 @@
 		},
 		onSubLocationChange 			: function(){
 			var self = this;
-			this.boxDS.data([]);
-			this.boxDS.query({
-				filter: [
-					{ field: "branch_id", value: this.get("licenseID")},
-					{ field: "main_bloc", value: this.get("locationSelect")},
-					{ field: "main_pole", value: this.get("subLocationSelect")}
-				],
-				page: 1
-			}).then(function(e){
-				if(self.boxDS.data().length > 0){
-					self.set("haveSubLocation", true);
-				}else{
-					self.set("haveSubLocation", false);
-				}
-			});
+			if(this.get("subLocationSelect")){
+				this.boxDS.data([]);
+				this.boxDS.query({
+					filter: [
+						{ field: "branch_id", value: this.get("licenseID")},
+						{ field: "main_bloc", value: this.get("locationSelect")},
+						{ field: "main_pole", value: this.get("subLocationSelect")}
+					],
+					page: 1
+				}).then(function(e){
+					if(self.boxDS.data().length > 0){
+						self.set("haveSubLocation", true);
+					}else{
+						self.set("haveSubLocation", false);
+					}
+				});
+			}
 		},
 		onSelect 	: function(e){
 	        // Array with information about the uploaded files
@@ -16392,6 +16415,9 @@
 						this.checkReactive();
 					}
 				}else{
+					obj.ampere_id = this.get("ampereSelect");
+					obj.phase_id = this.get("phaseSelect");
+					obj.voltage_id = this.get("voltageSelect");
 					if(obj.pole_id != 0 && obj.box_id != 0){
 						if(this.attachmentDS.hasChanges() == true) {
 							this.uploadFile();

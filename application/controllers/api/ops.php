@@ -66,15 +66,15 @@ class Ops extends REST_Controller {
 			 	//    $this->db->insert_batch('measurement_categories', $data);
 				
 				//Add new fields
-				$fields = array(
-					"deleted" => array(
-						"type" 		=> "TINYINT",
-						"constraint"=> 1,
-						"null" 		=> FALSE,
-						"default" 	=> 0
-					)
-				);
-				$this->dbforge->add_column("account_lines", $fields);
+				// $fields = array(
+				// 	"deleted" => array(
+				// 		"type" 		=> "TINYINT",
+				// 		"constraint"=> 1,
+				// 		"null" 		=> FALSE,
+				// 		"default" 	=> 0
+				// 	)
+				// );
+				// $this->dbforge->add_column("account_lines", $fields);
 
 			    // Modify fields
 			 	// $fields = array(
