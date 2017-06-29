@@ -3271,7 +3271,7 @@
 								
 							</div>
 							<div class="span9" align="right">
-								<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 80px;margin-bottom: 0;"><i></i> <span data-bind="text: lang.lang.save"></span></span>
+								<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" style="width: 80px;margin-bottom: 0;"><i></i> <span data-bind="text: lang.lang.save"></span></span>
 								
 								<span class="btn btn-icon btn-warning glyphicons remove_2" onclick="javascript:window.history.back()" data-bind="click: cancel" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.cancel"></span></span>
 							</div>
