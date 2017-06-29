@@ -12941,7 +12941,7 @@
 		                 data-width="650"
 		                 data-actions="{}"
 		                 data-position="{top: '150px', left: '30%'}"
-		                 data-height="330"
+		                 data-height="355"
 		                 data-bind="visible: windowVisible">
 
 						<table class="table table-bordered table-primary table-striped table-vertical-center">							
@@ -64750,7 +64750,9 @@
 		accountDS  					: new kendo.data.DataSource({
 		  	data: banhji.source.accountList
 		}),
-		additionalCostAccountDS 	: banhji.source.accountList,
+		additionalCostAccountDS  	: new kendo.data.DataSource({
+		  	data: banhji.source.accountList
+		}),
 		expenseAccountDS  			: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
 		  	filter: {
