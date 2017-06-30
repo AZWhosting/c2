@@ -471,24 +471,7 @@
 		<br>
 
 		<h2>Transaction</h2>
-
-		<table class="table table-bordered table-primary table-striped table-vertical-center" style="margin-bottom: 0;">
-			<thead>
-			<tr>
-				<tH>type</tH>
-				<tH>number</tH>
-				<tH>sub total</tH>
-				<tH>discount</tH>
-				<tH>tax</tH>
-				<tH>amount</tH>
-				<tH>deposit</tH>
-				<tH>remaining</tH>
-				<tH>issued_date</tH>
-				<tH>due_date</tH>
-				<tH>status</tH>
-				<tH>deleted</tH>
-			</tr>
-			</thead>
+		
 		</table>
         <div data-role="grid"
              data-editable="true"
@@ -5331,13 +5314,13 @@
 						        	return banhji.invoiceAdvance.lineDS.indexOf(dataItem)+1;
 						      	}
 						    },
-		                 	{ field: 'item', title: 'Item', editor: itemDropDownEditor, template: '#=item.name#' },
-                            { field: 'description', title:'Description', width: '250px' },                            
+		                 	{ field: 'item', title: 'Item', editor: itemDropDownEditor, template: '#=item.name#', width: '150px' },
+                            { field: 'description', title:'Description', width: '200px' },                            
                             { field: 'quantity', title:'Quantity', attributes: { style: 'text-align: right;' }, width: '100px' },
-                            { field: 'measurement', title: 'UOM', editor: measurementDropDownEditor, template: '#=measurement.measurement#' },
+                            { field: 'measurement', title: 'UOM', editor: measurementDropDownEditor, template: '#=measurement.measurement#', width: '100px' },
                             { field: 'price', title:'Price', attributes: { style: 'text-align: right;' }, width: '100px' },
                             { field: 'amount', title:'Amount', editable: 'false', attributes: { style: 'text-align: right;' }, width: '100px' },
-                            { field: 'tax_item_id', title:'Tax', width: '100px' },
+                            { field: 'tax_item', title:'Tax', editor: taxForSaleDropDownEditor, template: '#=tax_item.name#', width: '100px' },
                             { command: 'destroy', title: ' ', width: 96 }
                          ]"
                          data-auto-bind="false"
@@ -23585,28 +23568,53 @@
 								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
 							        	</div>
 
-								    	<!-- Filter -->
-								        <div class="tab-pane" id="tab-2">
-											<table class="table table-condensed">
-												<tr>
-									            	<td style="padding: 8px 0 0 0 !important; ">
-														<span data-bind="text: lang.lang.item"></span>
-														<select data-role="multiselect"
-															   data-value-primitive="true"
-															   data-header-template="item-header-tmpl"
-															   data-item-template="item-list-tmpl"
-															   data-value-field="id"
-															   data-text-field="name"
-															   data-bind="value: obj.itemIds, 
-															   			source: itemDS"
-															   data-placeholder="Select Item..."
-															   style="width: 100%" /></select>
-													</td>
-													<td style="padding-top: 31px !important; float: left;">
-										  				<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
-													</td>
-												</tr>
-											</table>
+							        	<div class="tab-pane" id="tab-2">
+											<div class="row">
+												<div class="span3" style="padding-left: 15px;">
+													<span data-bind="text: lang.lang.category">Category</span>
+													<input 
+														data-role="dropdownlist" 
+														data-option-label="Category ..." 
+														data-auto-bind="false" 
+														data-value-primitive="true" 
+														data-text-field="name" 
+														data-value-field="id" 
+														data-bind="
+															value: categorySelect,
+															source: categoryDS,
+															events: {change: catagoryChange}" style="width: 100%">
+												</div>
+												<div class="span3">													
+													<span>Group</span>
+														<input 
+															data-role="dropdownlist" 
+															data-option-label="Group ..." 
+															data-auto-bind="false" 
+															data-value-primitive="false" 
+															data-text-field="name" 
+															data-value-field="id" 
+															data-bind="
+																value: groupSelect,
+																enabled: haveGroup,
+																source: itemGroupDS" style="width: 100%">
+												</div>
+												<div class="span5">
+													<span data-bind="text: lang.lang.item"></span>
+													<select data-role="multiselect"
+														   data-value-primitive="true"
+														   data-header-template="item-header-tmpl"
+														   data-item-template="item-list-tmpl"
+														   data-value-field="id"
+														   data-text-field="name"
+														   data-bind="value: obj.itemIds, 
+														   			source: itemDS"
+														   data-placeholder="Select Item.."
+														   style="width: 100%" /></select>
+												</div>
+												<div class="span1">											
+										  			<button style="margin-top: 20px;" type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+												</div>														
+											</div>		
 							        	</div>
 								    </div>
 								</div>
@@ -23725,27 +23733,53 @@
 										  	<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
 									    </div>
 									    <div class="tab-pane" id="tab-2">
-								        	<table class="table table-condensed">
-												<tr>
-									            	<td style="padding: 8px 0 0 0 !important; ">
-														<span data-bind="text: lang.lang.item"></span>
-														<select data-role="multiselect"
-															   data-value-primitive="true"
-															   data-header-template="item-header-tmpl"
-															   data-item-template="item-list-tmpl"
-															   data-value-field="id"
-															   data-text-field="name"
-															   data-bind="value: obj.itemIds, 
-															   			source: itemDS"
-															   data-placeholder="Select Item..."
-															   style="width: 100%" /></select>
-													</td>
-													<td style="padding-top: 31px !important; float: left;">
-										  				<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
-													</td>
-												</tr>
-											</table>
-									    </div>
+											<div class="row">
+												<div class="span3" style="padding-left: 15px;">
+													<span data-bind="text: lang.lang.category">Category</span>
+													<input 
+														data-role="dropdownlist" 
+														data-option-label="Category ..." 
+														data-auto-bind="false" 
+														data-value-primitive="true" 
+														data-text-field="name" 
+														data-value-field="id" 
+														data-bind="
+															value: categorySelect,
+															source: categoryDS,
+															events: {change: catagoryChange}" style="width: 100%">
+												</div>
+												<div class="span3">													
+													<span>Group</span>
+														<input 
+															data-role="dropdownlist" 
+															data-option-label="Group ..." 
+															data-auto-bind="false" 
+															data-value-primitive="false" 
+															data-text-field="name" 
+															data-value-field="id" 
+															data-bind="
+																value: groupSelect,
+																enabled: haveGroup,
+																source: itemGroupDS" style="width: 100%">
+												</div>
+												<div class="span5">
+													<span data-bind="text: lang.lang.item"></span>
+													<select data-role="multiselect"
+														   data-value-primitive="true"
+														   data-header-template="item-header-tmpl"
+														   data-item-template="item-list-tmpl"
+														   data-value-field="id"
+														   data-text-field="name"
+														   data-bind="value: obj.itemIds, 
+														   			source: itemDS"
+														   data-placeholder="Select Item.."
+														   style="width: 100%" /></select>
+												</div>
+												<div class="span1">											
+										  			<button style="margin-top: 20px;" type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+												</div>														
+											</div>		
+							        	</div>
 								    </div>
 								</div>
 							</div>
@@ -23823,7 +23857,7 @@
 			<td style="color: black;">
 				<a href="\#/#=line[i].type.toLowerCase()#/#=line[i].id#"><i></i> #=line[i].number#</a>
 			</td>		
-			<td class="right" style="color: black;">
+			<td class="left" style="color: black;">
 				#=kendo.toString(line[i].quantity, "n2")# #=measurement#
 			</td>
 			<td class="center" style="color: black;">
@@ -23831,7 +23865,7 @@
 				/
 				<span >#=kendo.toString(line[i].price, "c2", banhji.locale)#</span>
 			</td>
-			<td class="right" style="color: black;">
+			<td class="left" style="color: black;">
 				#=kendo.toString(qty, "n2")#
 			</td>
 			<td class="right" style="color: black;">
@@ -23840,7 +23874,7 @@
 	    </tr>    
     #}# 
     <tr>
-    	<td colspan="5" style="font-weight: bold; color: black;"><span data-bind="text: lang.lang.total"></span> #: name #</td>
+    	<td colspan="5"  style="font-weight: bold; color: black;" data-bind="text: lang.lang.total">Total</td>
     	<td class="right" style="font-weight: bold; border-top: 1px solid black !important; color: black;">
     		#=kendo.toString(qty, "n2")#
     	</td>
@@ -44696,10 +44730,10 @@
     </strong>
 </script>
 <script id="item-list-tmpl" type="text/x-kendo-tmpl">
-	<span class="pull-left">
+	<div class="pull-left">
 		#=abbr##=number# #=name#
-	</span>
-	<span class="pull-right">#=category#</span>	
+	</div>
+	<div class="pull-right">#=category#</div>
 </script>
 <script id="item-group-header-tmpl" type="text/x-kendo-tmpl">
     <strong>
@@ -44878,7 +44912,7 @@
         	placeholder: "Select Item",
             dataTextField: "name",
             dataValueField: "id",
-            autoWidth: true,
+            width: true,
             height: 200,
             template: kendo.template($("#item-list-tmpl").html()),
             dataSource: banhji.source.itemList
@@ -44894,7 +44928,47 @@
             dataValueField: "id",
             autoWidth: true,
             height: 200,
-            dataSource: dataStore(apiUrl + "items")
+            template: kendo.template($("#item-list-tmpl").html()),
+            dataSource: {
+            	transport: {
+					read 	: {
+						url: apiUrl + "items",
+						type: "GET",
+						headers: banhji.header,
+						dataType: 'json'
+					},
+					parameterMap: function(options, operation) {
+						if(operation === 'read') {
+							return {
+								page: options.page,
+								limit: options.pageSize,
+								filter: options.filter,
+								sort: options.sort
+							};
+						} else {
+							return {models: kendo.stringify(options.models)};
+						}
+					}
+				},
+				schema 	: {
+					model: {
+						id: 'id'
+					},
+					data: 'results',
+					total: 'count'
+				},
+				filter:{ field: "item_type_id <>", value: 3 },
+				sort: [
+					{ field:"item_type_id", dir:"asc" },
+					{ field:"number", dir:"asc" }
+				],
+				batch: true,
+				serverFiltering: true,
+				serverSorting: true,
+				serverPaging: true,
+				page: 1,
+				pageSize: 100
+            }
         });
     }
 
@@ -44906,7 +44980,96 @@
             dataValueField: "measurement_id",
             autoWidth: true,
             height: 200,
-            dataSource: options.model.item_prices
+            dataSource: {
+            	transport: {
+					read 	: {
+						url: apiUrl + "item_prices",
+						type: "GET",
+						headers: banhji.header,
+						dataType: 'json'
+					},
+					parameterMap: function(options, operation) {
+						if(operation === 'read') {
+							return {
+								page: options.page,
+								limit: options.pageSize,
+								filter: options.filter,
+								sort: options.sort
+							};
+						} else {
+							return {models: kendo.stringify(options.models)};
+						}
+					}
+				},
+				schema 	: {
+					model: {
+						id: 'id'
+					},
+					data: 'results',
+					total: 'count'
+				},
+				filter:[
+					{ field:"item_id", value: options.model.item_id },
+					{ field:"assembly_id", value: 0 }
+				],
+				batch: true,
+				serverFiltering: true,
+				serverSorting: true,
+				serverPaging: true,
+				page: 1,
+				pageSize: 100
+            }
+        });
+    }
+
+    function taxForSaleDropDownEditor(container, options) {
+        $('<input name="' + options.field + '"/>')
+        .appendTo(container)
+        .kendoDropDownList({       	
+            dataTextField: "name",
+            dataValueField: "id",
+            autoWidth: true,
+            height: 200,
+            dataSource: {
+            	transport: {
+					read 	: {
+						url: apiUrl + "tax_items",
+						type: "GET",
+						headers: banhji.header,
+						dataType: 'json'
+					},
+					parameterMap: function(options, operation) {
+						if(operation === 'read') {
+							return {
+								page: options.page,
+								limit: options.pageSize,
+								filter: options.filter,
+								sort: options.sort
+							};
+						} else {
+							return {models: kendo.stringify(options.models)};
+						}
+					}
+				},
+				schema 	: {
+					model: {
+						id: 'id'
+					},
+					data: 'results',
+					total: 'count'
+				},
+				filter:{ field: "tax_type_id", operator:"where_in", value: [3,9] },//Customer Tax
+			  	sort: [
+				  	{ field: "tax_type_id", dir: "asc" },
+				  	{ field: "name", dir: "asc" }
+				],
+				batch: true,
+				serverFiltering: true,
+				serverSorting: true,
+				serverPaging: true,
+				page: 1,
+				pageSize: 100
+            }
         });
     }
 </script>
@@ -55254,22 +55417,16 @@
 				if(arg.field=="item"){
 					var dataRow = arg.items[0],
 						item = dataRow.item,
-						rate = obj.rate / banhji.source.getRate(item.locale, new Date(obj.issued_date)),
-						itemPrices = banhji.source.getPriceList(item.id),
-						measurement_id = itemPrices.length>0 ? itemPrices[0].measurement_id : item.measurement_id,
-						measurement_name = itemPrices.length>0 ? itemPrices[0].measurement : "",
-						measurement = { measurement_id: measurement_id, measurement: measurement_name };
-
-					dataRow.set("item_prices", itemPrices);
+						rate = obj.rate / banhji.source.getRate(item.locale, new Date(obj.issued_date));
+					
 					dataRow.set("item_id", item.id);
-					dataRow.set("measurement_id", measurement_id);					
+					dataRow.set("measurement_id", 0);					
 					dataRow.set("description", item.sale_description);
 					dataRow.set("cost", item.cost);
 					dataRow.set("price", 0);
 					dataRow.set("conversion_ratio", 1);
 					dataRow.set("rate", rate);
 					dataRow.set("locale", item.locale);
-					dataRow.set("measurement", measurement);
 
 				}else if(arg.field=="quantity" || arg.field=="price"){
 					var total = 0, subTotal = 0, discount = 0, tax = 0, remaining = 0, amount_due = 0, itemIds = [];
@@ -55356,16 +55513,8 @@
 					var dataRow = arg.items[0];
 					
 					dataRow.set("measurement_id", dataRow.measurement.measurement_id);
-
-					$.each(dataRow.item_prices, function(index, value){
-						if(value.measurement_id==dataRow.measurement.measurement_id){
-					        
-					        dataRow.set("price", value.price * dataRow.rate);
-					        dataRow.set("conversion_ratio", value.conversion_ratio);
-					        
-							return false;
-						}
-					});
+			        dataRow.set("price", dataRow.measurement.price * dataRow.rate);
+			        dataRow.set("conversion_ratio", dataRow.measurement.conversion_ratio);
 				}
 			}
 		},
@@ -55483,6 +55632,7 @@
 
 				item 				: { id:"", name:"" },
 				measurement 		: { measurement_id:"", measurement:"" },
+				tax_item 			: { id:"", name:"" },
 				item_prices 		: []
 			});
 		},
@@ -79330,7 +79480,10 @@
 				{ field:"number", dir:"asc" }
 			]
 		}),
-		obj 				: { itemIds: [] },
+		categoryDS 			: banhji.source.categoryDS,
+		itemGroupDS 		: banhji.source.itemGroupDS,   
+		itemCustomerDS 	 	: dataStore(apiUrl + "items/contact"),
+		obj 				: { itemIds: []},
 		institute 			: banhji.institute,
 		as_of 				: new Date(),
 		displayDate 		: "",
@@ -79338,12 +79491,42 @@
 		exArray 			: [],
 		pageLoad 			: function(){
 			this.search();
+			
+			this.set("haveGroup", false);
+		},
+		catagoryChange 		: function(){
+			var self = this;
+			this.itemGroupDS.data([]);
+
+			this.itemGroupDS.filter([
+				{field: "category_id", value: this.get("categorySelect")}
+			]);
+			this.set("haveGroup", true);
 		},
 		search				: function(){
 			var self = this, para = [], 
 				obj = this.get("obj"),
 				as_of = this.get("as_of"),
         		displayDate = "";
+        		group  = this.get("groupSelect");
+        		category = this.get("categorySelect");
+
+        	if(category){
+        		para.push({field:"category_id", operator:"where_related_item", value: category});
+        	}
+
+        	if(group){
+        		para.push({field:"item_group_id", operator:"where_related_item", value: group.id});
+        	}        	
+
+			//Items
+            if(obj.itemIds.length>0){
+            	var itemIds = [];
+            	$.each(obj.itemIds, function(index, value){
+            		itemIds.push(value);
+            	});          	
+	            para.push({ field:"item_id", operator:"where_in", value:itemIds });
+	        }
     	
         	if(as_of){
 				as_of = new Date(as_of);
@@ -79354,17 +79537,9 @@
 				para.push({ field:"issued_date <", operator:"where_related_transaction", value:kendo.toString(as_of, "yyyy-MM-dd") });
 			}
 
-			//Items
-            if(obj.itemIds.length>0){
-            	var itemIds = [];
-            	$.each(obj.itemIds, function(index, value){
-            		itemIds.push(value);
-            	});          	
-	            para.push({ field:"item_id", operator:"where_in", value:itemIds });
-	        }
-
             this.dataSource.query({
-            	filter:para
+            	filter:para,
+            	page: 1
             }).then(function(){
             	var view = self.dataSource.view();
 
@@ -79487,6 +79662,8 @@
 				{ field:"number", dir:"asc" }
 			]
 		}),
+		categoryDS 			: banhji.source.categoryDS,
+		itemGroupDS 		: banhji.source.itemGroupDS,   
 		obj 					: { itemIds: [] },
 		sortList				: banhji.source.sortList,
 		sorter 					: "month",
@@ -79498,6 +79675,16 @@
 		exArray 				: [],
 		pageLoad 				: function(){
 			this.search();
+			this.set("haveGroup", false);
+		},
+		catagoryChange 		: function(){
+			var self = this;
+			this.itemGroupDS.data([]);
+
+			this.itemGroupDS.filter([
+				{field: "category_id", value: this.get("categorySelect")}
+			]);
+			this.set("haveGroup", true);
 		},
 		sorterChanges 			: function(){
 	        var today = new Date(),
@@ -79539,6 +79726,16 @@
 				obj = this.get("obj"),
 				start = this.get("sdate"),
         		end = this.get("edate");
+        		group  = this.get("groupSelect");
+        		category = this.get("categorySelect");
+
+        	if(category){
+        		para.push({field:"category_id", operator:"where_related_item", value: category});
+        	}
+
+        	if(group){
+        		para.push({field:"item_group_id", operator:"where_related_item", value: group.id});
+        	}   
     	
         	//Dates
         	if(start && end){

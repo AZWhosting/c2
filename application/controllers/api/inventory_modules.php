@@ -174,7 +174,7 @@ class Inventory_modules extends REST_Controller {
 			}
 		}
 
-		//Filter
+		//Filter		
 		if(!empty($filter) && isset($filter)){
 	    	foreach ($filter['filters'] as $value) {
 	    		if(isset($value['operator'])) {

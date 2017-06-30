@@ -59,6 +59,7 @@ class Item_lines extends REST_Controller {
 		}
 
 		$obj->include_related("measurement", array("name"));
+		$obj->include_related("tax_item", array("name"));
 		$obj->where("deleted <>", 1);
 
 		//Results
@@ -101,7 +102,7 @@ class Item_lines extends REST_Controller {
 					"on_so" 			=> floatval($value->on_so),
 					"quantity" 			=> floatval($value->quantity),
 				   	"quantity_adjusted" => floatval($value->quantity_adjusted),
-				   	"conversion_ratio" 		=> floatval($value->conversion_ratio),
+				   	"conversion_ratio" 	=> floatval($value->conversion_ratio),
 				   	"cost"				=> floatval($value->cost),
 				   	"price"				=> floatval($value->price),
 				   	"price_avg" 		=> floatval($value->price_avg),
@@ -117,7 +118,8 @@ class Item_lines extends REST_Controller {
 
 				   	"item_prices" 		=> [],
 				   	"item" 				=> $item,
-				   	"measurement" 		=> array("measurement_id"=>$value->measurement_id, "measurement"=>$value->measurement_name)
+				   	"measurement" 		=> array("measurement_id"=>$value->measurement_id, "measurement"=>$value->measurement_name),
+				   	"tax_item" 			=> array("id"=>$value->tax_item_id, "name"=>$value->tax_item_name)
 				);
 			}
 		}

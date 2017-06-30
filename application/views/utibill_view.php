@@ -24764,7 +24764,7 @@
     banhji.Backup = kendo.observable({
     	lang 				: langVM,
     	institute_id 		: banhji.institute.id,
-    	user_id 				: banhji.userData.id,
+    	user_id 			: banhji.userData.id,
     	pageLoad 			: function(){
     	}
     });

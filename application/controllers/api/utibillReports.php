@@ -1027,16 +1027,19 @@ class UtibillReports extends REST_Controller {
 	}
 
 	//Customer List
-	function customer_list_get(){
+	function customer_list_get() {
 		$filter 	= $this->get("filter");
-		$page 		= $this->get("page");
-		$sort 		= $this->get("sort");
-		$limit 		= $this->get("limit");
+		$page 		= $this->get('page');
+		$limit 		= $this->get('limit');
+		$sort 	 	= $this->get("sort");
+		$data["results"] = [];
+		$data["count"] = 0;
 
-		$obj = new property(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$obj = new meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
+		//Sort
 		if(!empty($sort) && isset($sort)){
-			foreach($sort as $value){
+			foreach ($sort as $value) {
 				if(isset($value['operator'])){
 					$obj->{$value['operator']}($value["field"], $value["dir"]);
 				}else{
@@ -1044,31 +1047,48 @@ class UtibillReports extends REST_Controller {
 				}
 			}
 		}
-
+		
+		//Filter		
 		if(!empty($filter) && isset($filter)){
-			foreach($filter["filter"] as $value){
-				if(isset($value['operator'])){
-					$obj->{$value['operator']}($value['field'], $value["dir"]);
-				}else{
-					$obj->where($value['field'], $value['value']);
-				}
+	    	foreach ($filter["filters"] as $value) {
+	    		if(isset($value['operator'])){
+	    			$obj->{$value['operator']}($value['field'], $value['value']);	    		
+	    		} else {
+	    			$obj->where($value['field'], $value['value']);
+	    		}
 			}
 		}
 
+		//Results
 		$obj->include_related("contact", array("abbr", "number", "address", "phone", "name"));
+		$obj->include_related("property", array("abbr", "name"));
+		$obj->include_related("location", "name");
+		$obj->include_related("branch", "name");
+		$obj->where("status", 1);		
 		$obj->get_iterated();
-
+		
 		if($obj->exists()){
 			$objList = [];
-			foreach ($obj as $value) {
+			foreach ($obj as $value) {								
+				
 				if(isset($objList[$value->contact_id])){
-					$objList[$value->contact_id]["id"]		= $value->contact_id;
+					$objList[$value->contact_id]["line"][] = array(
+						"id"		=> $value->id,
+						"meter"		=> $value->number,
+						"location"  => $value->location_name,
+						"branch"	=> $value->branch_name,
+						"property"	=> $value->property_name,
+					);
 				}else{
-					$objList[$value->contact_id]["id"]		= $value->contact_id;
-					$objList[$value->contact_id]["name"]	= $value->contact_abbr.$value->contact_number." ".$value->contact_name;
-					$objList[$value->contact_id]["number"]	= $value->contact_abbr ."-". $value->contact_number;
-					$objList[$value->contact_id]["phone"]	= $value->contact_phone;
-					$objList[$value->contact_id]["address"]	= $value->contact_address;
+					$objList[$value->contact_id]["id"] 		= $value->contact_id;
+					$objList[$value->contact_id]["name"] 	= $value->contact_abbr.$value->contact_number." ".$value->contact_name;
+					$objList[$value->contact_id]["line"][]	= array(
+						"id"		=> $value->id,
+						"meter"		=> $value->number,
+						"location"  => $value->location_name,
+						"branch"	=> $value->branch_name,
+						"property"	=> $value->property_name,
+					);
 				}
 			}
 
@@ -1078,6 +1098,7 @@ class UtibillReports extends REST_Controller {
 			$data["count"] = count($data["results"]);
 		}
 
+		//Response Data
 		$this->response($data, 200);
 	}
 

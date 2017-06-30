@@ -44,13 +44,13 @@ class Categories extends REST_Controller {
 			}
 		}
 		
-		//Filter
-		if(!empty($filter) && isset($filter)){
+		//Filter		
+		if(!empty($filter['filters']) && isset($filter['filters'])){
 	    	foreach ($filter['filters'] as $value) {
 	    		if(isset($value['operator'])) {
 					$obj->{$value['operator']}($value['field'], $value['value']);
 				} else {
-					$obj->where($value["field"], $value["value"]);
+	    			$obj->where($value["field"], $value["value"]);
 				}
 			}
 		}
