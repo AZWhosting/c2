@@ -16041,6 +16041,7 @@
 		disableOnly 		: false,
 		contact 			: null,
 		electricMeter 		: false,
+		haveEdit 			: false,
 		propertyID 			: 0,
 		selectType 			: [
 			{id: 1, name: "Active"},
@@ -16050,6 +16051,7 @@
 		selectLocation 		: false,
 		selectSLocation 	: false,
 		pageLoad 			: function(id){
+			this.set("haveEdit", false);
 			this.set("licenseSelect", "");
 			this.set("locationSelect", "");
 			this.set("subLocationSelect", "");
@@ -16065,6 +16067,7 @@
 			if(id){
 				this.loadObj(id);
 				this.set("otherINFO", true);
+				this.set("haveEdit", true);
 			}else{
 				this.set("chkRe", false);
 				if(this.propertyID){
@@ -16113,6 +16116,7 @@
 			this.selectType[1].set("name", this.lang.lang.inactive);
 			this.selectType[2].set("name", this.lang.lang.void);
 		},
+		oldPlan 			: "",
 		loadObj 			: function(id){
 			var self = this;
 			this.dataSource.data([]);
@@ -16132,7 +16136,6 @@
 					self.set("chkRe", true);
 					self.set("visibleReMeter", true);
 					self.editRe(view[0].reactive_id);
-					
 				}else{
 					self.set("chkRe", false);
 					self.set("visibleReMeter", false);
@@ -16167,7 +16170,7 @@
 		    		self.set("haveSubLocation", true);
 		    		self.set("boxSelect", view[0].box_id);
 		    	}
-
+		    	self.set("oldPlan", view[0].plan_id);
 		    	self.loadMap();
 			});
 		},
@@ -16428,6 +16431,11 @@
 						var notificat = $("#ntf1").data("kendoNotification");
 			    		notificat.hide();
 			    		notificat.error(self.lang.lang.field_required_message);	
+					}
+				}
+				if(this.get("haveEdit") == true){
+					if(obj.plan_id != this.get("oldPlan")){
+						alert(this.lang.lang.plan_change_alert);
 					}
 				}
 			}else{

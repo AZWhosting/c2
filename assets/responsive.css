@@ -34,6 +34,14 @@ div.k-window{
   margin-bottom: 15px;
 
 }
+.k-draghandle.k-state-selected:hover, .k-ghost-splitbar-horizontal, .k-ghost-splitbar-vertical, .k-list>.k-state-highlight, .k-list>.k-state-selected, .k-marquee-color, .k-panel>.k-state-selected, .k-scheduler .k-scheduler-toolbar .k-state-selected, .k-scheduler .k-today.k-state-selected, .k-state-selected, .k-state-selected:link, .k-state-selected:visited{
+  background-color: #21abf6 !important;
+  border-color: #21abf6 !important;
+}
+.k-grid tr:hover{
+  background: #0077c5 !important;
+  color: #fff !important;
+}
 .widget.widget-3.customer-border a .widget-body.alert.alert-primary,
 .widget.widget-3.customer-border .widget-body.alert.alert-primary{
   border: none !important;

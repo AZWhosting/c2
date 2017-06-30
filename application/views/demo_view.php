@@ -5307,20 +5307,60 @@
 
 					<!-- Item List -->
 				    <div data-role="grid"
+				    	 data-column-menu="true"
+				    	 data-reorderable="true"
 				    	 data-editable="true"
 		                 data-columns="[
 						    { title:'No.', attributes: { style: 'text-align: center;' }, width: '40px',
 						        template: function (dataItem) {
 						        	return banhji.invoiceAdvance.lineDS.indexOf(dataItem)+1;
 						      	}
-						    },
+						    },						    
 		                 	{ field: 'item', title: 'Item', editor: itemDropDownEditor, template: '#=item.name#', width: '150px' },
-                            { field: 'description', title:'Description', width: '200px' },                            
-                            { field: 'quantity', title:'Quantity', attributes: { style: 'text-align: right;' }, width: '100px' },
+                            { field: 'description', title:'Description', width: '250px' },                            
+                            {
+							    field: 'quantity',
+							    title: 'Quantity',
+							    format: '{0:n}',
+							    editor: function(container, options) {
+								    var input = $('<input/>');
+								    input.attr('name', options.field);
+								    input.attr('type', 'number');
+								    input.appendTo(container);
+							    },
+							    width: '100px',
+							    attributes: { style: 'text-align: right;' }
+							},
                             { field: 'measurement', title: 'UOM', editor: measurementDropDownEditor, template: '#=measurement.measurement#', width: '100px' },
-                            { field: 'price', title:'Price', attributes: { style: 'text-align: right;' }, width: '100px' },
-                            { field: 'amount', title:'Amount', editable: 'false', attributes: { style: 'text-align: right;' }, width: '100px' },
-                            { field: 'tax_item', title:'Tax', editor: taxForSaleDropDownEditor, template: '#=tax_item.name#', width: '100px' },
+                            {
+							    field: 'price',
+							    title: 'Price',
+							    format: '{0:n}',
+							    editor: function(container, options) {
+								    var input = $('<input/>');
+								    input.attr('name', options.field);
+								    input.attr('type', 'number');
+								    input.appendTo(container);
+							    },
+							    width: '100px',
+							    attributes: { style: 'text-align: right;' }
+							},
+                            { field: 'amount', title:'Amount', format: '{0:n}', editable: 'false', attributes: { style: 'text-align: right;' }, width: '100px' },
+                            {
+							    field: 'discount',
+							    title: 'Discount',
+							    hidden: true,
+							    format: '{0:n}',
+							    editor: function(container, options) {
+								    var input = $('<input/>');
+								    input.attr('name', options.field);
+								    input.attr('type', 'number');
+								    input.appendTo(container);
+							    },
+							    width: '100px',
+							    attributes: { style: 'text-align: right;' }
+							},
+                            { field: 'tax_item', title:'Tax', hidden: true, editor: taxForSaleDropDownEditor, template: '#=tax_item.name#', width: '100px' },
                             { command: 'destroy', title: ' ', width: 96 }
                          ]"
                          data-auto-bind="false"
@@ -5332,7 +5372,6 @@
 			
 						<!-- Column -->
 						<div class="span4">
-							<button class="btn btn-inverse" data-bind="click: addRow"><i class="icon-plus icon-white"></i></button>
 
 							<div class="btn-group">
 								<div class="leadcontainer">
@@ -55420,7 +55459,8 @@
 						rate = obj.rate / banhji.source.getRate(item.locale, new Date(obj.issued_date));
 					
 					dataRow.set("item_id", item.id);
-					dataRow.set("measurement_id", 0);					
+					dataRow.set("tax_item_id", dataRow.tax_item.id);
+					dataRow.set("measurement_id", 0);
 					dataRow.set("description", item.sale_description);
 					dataRow.set("cost", item.cost);
 					dataRow.set("price", 0);
@@ -55428,7 +55468,7 @@
 					dataRow.set("rate", rate);
 					dataRow.set("locale", item.locale);
 
-				}else if(arg.field=="quantity" || arg.field=="price"){
+				}else if(arg.field=="quantity" || arg.field=="price" || arg.field=="discount" || arg.field=="tax_item"){
 					var total = 0, subTotal = 0, discount = 0, tax = 0, remaining = 0, amount_due = 0, itemIds = [];
 					
 					$.each(self.lineDS.data(), function(index, value){
@@ -55436,9 +55476,8 @@
 
 						//Discount by line
 						if(value.discount>0){
-							var discount_amount = amount * value.discount;
-							amount -= discount_amount;
-							discount += discount_amount;
+							amount -= value.discount;
+							discount += value.discount;
 						}
 
 						//Tax by line
@@ -55626,6 +55665,7 @@
 				price 				: 0,
 				amount 				: 0,
 				discount 			: 0,
+				tax 				: 0,
 				rate				: obj.rate,
 				locale				: obj.locale,
 				movement 			: -1,

@@ -1456,7 +1456,7 @@ var	en_US = {
 	"inventory_value": "Inventory Value",
 	"recurring_list": "Recurring List",
 	"rice_report_center_description": "This module consolidates different modules report into one place.",
-
+	"plan_change_alert": "Your plan will apply to your meter on new transaction",
 
 
 

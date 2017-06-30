@@ -109,6 +109,7 @@ class Item_lines extends REST_Controller {
 				   	"amount" 			=> floatval($value->amount),
 				   	"discount" 			=> floatval($value->discount),
 				   	"fine" 				=> floatval($value->fine),
+				   	"tax" 				=> floatval($value->tax),
 				   	"additional_cost" 	=> floatval($value->additional_cost),
 				   	"additional_applied"=> $value->additional_applied,
 				   	"rate"				=> floatval($value->rate),
@@ -244,6 +245,7 @@ class Item_lines extends REST_Controller {
 		   	isset($value->amount)				? $obj->amount 				= $value->amount : "";
 		   	isset($value->discount)				? $obj->discount 			= $value->discount : "";
 		   	isset($value->fine)					? $obj->fine 				= $value->fine : "";
+		   	isset($value->tax)					? $obj->tax 				= $value->tax : "";
 		   	isset($value->rate)					? $obj->rate 				= $value->rate : "";
 		   	isset($value->locale)				? $obj->locale 				= $value->locale : "";
 		   	isset($value->additional_cost)		? $obj->additional_cost  	= $value->additional_cost : "";
@@ -281,6 +283,7 @@ class Item_lines extends REST_Controller {
 				   	"amount" 			=> floatval($obj->amount),
 				   	"discount" 			=> floatval($obj->discount),
 				   	"fine" 				=> floatval($obj->fine),
+				   	"tax" 				=> floatval($obj->tax),
 				   	"additional_cost" 	=> floatval($obj->additional_cost),
 				   	"additional_applied"=> $obj->additional_applied,
 				   	"rate"				=> floatval($obj->rate),
@@ -345,6 +348,7 @@ class Item_lines extends REST_Controller {
 		   	isset($value->amount)			? $obj->amount 				= $value->amount : "";
 		   	isset($value->discount)			? $obj->discount 			= $value->discount : "";
 		   	isset($value->fine)				? $obj->fine 				= $value->fine : "";
+		   	isset($value->tax)				? $obj->tax 				= $value->tax : "";
 		   	isset($value->rate)				? $obj->rate 				= $value->rate : "";
 		   	isset($value->locale)			? $obj->locale 				= $value->locale : "";
 		   	isset($value->additional_cost)	? $obj->additional_cost  	= $value->additional_cost : "";
@@ -383,6 +387,7 @@ class Item_lines extends REST_Controller {
 				   	"amount" 			=> floatval($obj->amount),
 				   	"discount" 			=> floatval($obj->discount),
 				   	"fine" 				=> floatval($obj->fine),
+				   	"tax" 				=> floatval($obj->tax),
 				   	"additional_cost" 	=> floatval($obj->additional_cost),
 				   	"additional_applied"=> $obj->additional_applied,
 				   	"rate"				=> floatval($obj->rate),

@@ -1430,7 +1430,7 @@ var	km_KH = {
 	"inventory_value": "តម្លៃសន្និធិ",
 	"recurring_list": "បញ្ជីរក្សាទុកប្រតិបត្តិការញឹកញាប់",
 	"rice_report_center_description": "This module consolidates different modules report into one place.",
-
+	"plan_change_alert": "បត្រូរគម្រោងសម្រាប់កុងទ័រនិង ធ្វើឡើងបន្ទាប់ពីពេលនេះទៅ",
 
 
 
