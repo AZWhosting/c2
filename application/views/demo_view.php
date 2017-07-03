@@ -5309,58 +5309,51 @@
 				    <div data-role="grid"
 				    	 data-column-menu="true"
 				    	 data-reorderable="true"
+				    	 data-resizable="true"
 				    	 data-editable="true"
 		                 data-columns="[
-						    { title:'No.', attributes: { style: 'text-align: center;' }, width: '40px',
+		                 	{ 
+						    	title:'',
+						    	attributes: { style: 'text-align: center;' },
+						    	width: '30px',
+						    	template:'<i class=icon-trash data-bind=click:removeRow></i>'
+						    },
+						    { title:'NO', attributes: { style: 'text-align: center;' }, width: '40px',
 						        template: function (dataItem) {
 						        	return banhji.invoiceAdvance.lineDS.indexOf(dataItem)+1;
 						      	}
 						    },						    
-		                 	{ field: 'item', title: 'Item', editor: itemDropDownEditor, template: '#=item.name#', width: '150px' },
-                            { field: 'description', title:'Description', width: '250px' },                            
+						    {
+							    field: 'discount',
+							    title: 'DISCOUNT',
+							    hidden: false,
+							    format: '{0:n}',
+							    editor: numberTextboxEditor,
+							    width: '120px',
+							    attributes: { style: 'text-align: right;' }
+							},						    
+		                 	{ field: 'item', title: 'PRODUCTS/SERVICES', editor: itemEditor, template: '#=item.name#', width: '170px' },
+                            { field: 'description', title:'DESCRIPTION', width: '200px' },                            
                             {
 							    field: 'quantity',
-							    title: 'Quantity',
+							    title: 'QTY',
 							    format: '{0:n}',
-							    editor: function(container, options) {
-								    var input = $('<input/>');
-								    input.attr('name', options.field);
-								    input.attr('type', 'number');
-								    input.appendTo(container);
-							    },
-							    width: '100px',
+							    editor: numberTextboxEditor,
+							    width: '120px',
 							    attributes: { style: 'text-align: right;' }
 							},
-                            { field: 'measurement', title: 'UOM', editor: measurementDropDownEditor, template: '#=measurement.measurement#', width: '100px' },
+                            { field: 'measurement', title: 'UOM', editor: measurementEditor, template: '#=measurement.measurement#', width: '75px' },
                             {
 							    field: 'price',
-							    title: 'Price',
+							    title: 'PRICE',
 							    format: '{0:n}',
-							    editor: function(container, options) {
-								    var input = $('<input/>');
-								    input.attr('name', options.field);
-								    input.attr('type', 'number');
-								    input.appendTo(container);
-							    },
-							    width: '100px',
+							    editor: numberTextboxEditor,
+							    width: '120px',
 							    attributes: { style: 'text-align: right;' }
 							},
-                            { field: 'amount', title:'Amount', format: '{0:n}', editable: 'false', attributes: { style: 'text-align: right;' }, width: '100px' },
-                            {
-							    field: 'discount',
-							    title: 'Discount',
-							    hidden: true,
-							    format: '{0:n}',
-							    editor: function(container, options) {
-								    var input = $('<input/>');
-								    input.attr('name', options.field);
-								    input.attr('type', 'number');
-								    input.appendTo(container);
-							    },
-							    width: '100px',
-							    attributes: { style: 'text-align: right;' }
-							},
-                            { field: 'tax_item', title:'Tax', hidden: true, editor: taxForSaleDropDownEditor, template: '#=tax_item.name#', width: '100px' },
+                            { field: 'amount', title:'AMOUNT', format: '{0:n}', editable: 'false', attributes: { style: 'text-align: right;' }, width: '120px' },
+                            
+                            { field: 'tax_item', title:'TAX', hidden: true, editor: taxForSaleEditor, template: '#=tax_item.name#', width: '120px' },
                             { command: 'destroy', title: ' ', width: 96 }
                          ]"
                          data-auto-bind="false"
@@ -5372,19 +5365,7 @@
 			
 						<!-- Column -->
 						<div class="span4">
-
-							<div class="btn-group">
-								<div class="leadcontainer">
-									
-								</div>
-								<a class="btn btn-default dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-list"></i> </a>
-								<ul class="dropdown-menu" style="padding-left: 10px">
-									<li>
-										<input type="checkbox" id="chbDiscount" class="k-checkbox" data-bind="checked: showDiscount">
-      									<label class="k-checkbox-label" for="chbDiscount"><span data-bind="text: lang.lang.discount"></span></label>
-									</li>															
-								</ul>
-							</div>
+							<button class="btn btn-inverse" data-bind="click: addRow"><i class="icon-plus icon-white"></i></button>
 
 							<!-- Add New Item -->
 							<ul class="topnav addNew">
@@ -5424,20 +5405,20 @@
 							<table class="table table-condensed table-striped table-white">
 								<tbody>
 									<tr>
-										<td class="right"><span data-bind="text: lang.lang.subtotal"></span></td>
+										<td class="right strong"><span data-bind="text: lang.lang.subtotal"></span></td>
 										<td class="right strong" width="40%"><span data-format="n" data-bind="text: obj.sub_total"></span></td>
 									</tr>								
 									<tr>
 										<td class="right"><span data-bind="text: lang.lang.total_discount"></span></td>
-										<td class="right strong"><span data-format="n" data-bind="text: obj.discount"></span></td>
+										<td class="right"><span data-format="n" data-bind="text: obj.discount"></span></td>
 									</tr>
 									<tr>
 										<td class="right"><span data-bind="text: lang.lang.total_tax"></span></td>
-										<td class="right strong"><span data-format="n" data-bind="text: obj.tax"></span></td>
+										<td class="right"><span data-format="n" data-bind="text: obj.tax"></span></td>
 									</tr>
 									<tr>
 										<td class="right"><h4 span data-bind="text: lang.lang.total"></h4></td>
-										<td class="right strong"><h4 data-bind="text: total"></h4></td>
+										<td class="right"><h4 data-bind="text: total"></h4></td>
 									</tr>
 									<tr>
 										<td class="right">
@@ -5455,10 +5436,10 @@
 										</td>
 									</tr>
 									<tr>
-										<td class="right">
+										<td class="right strong">
 											<span data-bind="text: lang.lang.remaining"></span>
 										</td>
-										<td class="right">
+										<td class="right strong">
 											<span data-format="n" data-bind="text: obj.remaining"></span>
 										</td>
 									</tr>								
@@ -44958,7 +44939,7 @@
         });
     }
 
-    function itemDropDownEditor(container, options) {
+    function itemEditor(container, options) {
         $('<input name="' + options.field + '"/>')
         .appendTo(container)
         .kendoDropDownList({
@@ -45011,7 +44992,7 @@
         });
     }
 
-    function measurementDropDownEditor(container, options) {
+    function measurementEditor(container, options) {
         $('<input name="' + options.field + '"/>')
         .appendTo(container)
         .kendoDropDownList({       	
@@ -45061,10 +45042,10 @@
         });
     }
 
-    function taxForSaleDropDownEditor(container, options) {
+    function taxForSaleEditor(container, options) {
         $('<input name="' + options.field + '"/>')
         .appendTo(container)
-        .kendoDropDownList({       	
+        .kendoDropDownList({
             dataTextField: "name",
             dataValueField: "id",
             autoWidth: true,
@@ -45110,6 +45091,11 @@
 				pageSize: 100
             }
         });
+    }
+
+    function numberTextboxEditor(container, options) {
+        $('<input name="' + options.field + '" type="number" style="width: 95%;" />')
+        .appendTo(container);
     }
 </script>
 
@@ -55368,6 +55354,7 @@
 			});
 		},
 		changes				: function(){
+			console.log("changes");
 			var self = this, obj = this.get("obj"),
 			total = 0, subTotal = 0, discount =0, tax = 0, remaining = 0, amount_due = 0, itemIds = [];
 
@@ -55376,15 +55363,15 @@
 
 				//Discount by line
 				if(value.discount>0){
-					var discount_amount = amt * value.discount;
-					amt -= discount_amount;
-					discount += discount_amount;
+					amt -= value.discount;
+					discount += value.discount;
 				}
 
 				//Tax by line
 				if(value.tax_item_id>0){
-					var taxItem = self.taxItemDS.get(value.tax_item_id);
-					tax += amt * taxItem.rate;
+					var taxAmount = amt * value.tax_item.rate;
+					tax += taxAmount;
+					value.set("tax", taxAmount);
 				}
 
 				value.set("amount", amt);
@@ -55452,6 +55439,7 @@
 		},
 		lineDSChanges 			: function(arg){
 			var self = banhji.invoiceAdvance, obj = self.get("obj");
+
 			if(arg.field){
 				if(arg.field=="item"){
 					var dataRow = arg.items[0],
@@ -55459,7 +55447,6 @@
 						rate = obj.rate / banhji.source.getRate(item.locale, new Date(obj.issued_date));
 					
 					dataRow.set("item_id", item.id);
-					dataRow.set("tax_item_id", dataRow.tax_item.id);
 					dataRow.set("measurement_id", 0);
 					dataRow.set("description", item.sale_description);
 					dataRow.set("cost", item.cost);
@@ -55467,93 +55454,21 @@
 					dataRow.set("conversion_ratio", 1);
 					dataRow.set("rate", rate);
 					dataRow.set("locale", item.locale);
-
-				}else if(arg.field=="quantity" || arg.field=="price" || arg.field=="discount" || arg.field=="tax_item"){
-					var total = 0, subTotal = 0, discount = 0, tax = 0, remaining = 0, amount_due = 0, itemIds = [];
-					
-					$.each(self.lineDS.data(), function(index, value){
-						var amount = value.quantity * value.price;
-
-						//Discount by line
-						if(value.discount>0){
-							amount -= value.discount;
-							discount += value.discount;
-						}
-
-						//Tax by line
-						if(value.tax_item_id>0){
-							var taxItem = self.taxItemDS.get(value.tax_item_id);
-							tax += amount * taxItem.rate;
-						}
-
-						value.set("amount", amount);
-						subTotal += amount;
-
-						if(value.item_id>0){
-							itemIds.push(value.item_id);
-						}
-					});
-
-					// Total
-			        total = subTotal + tax;
-
-			        //Apply Deposit
-			        if(obj.deposit>0){
-			        	if(obj.deposit <= self.get("total_deposit")){
-				        	if(obj.deposit <= total){
-				        		remaining = total - obj.deposit;
-				        	}else{
-				        		obj.set("deposit", total);
-				        	}
-				        }else{
-			        		alert("Over deposit to apply!");
-			        		obj.set("deposit", 0);
-			        	}
-
-			        	//Status
-				        if(remaining==0){
-				    		obj.set("status", 1);
-				    	}else if(remaining==total){
-				    		obj.set("status", 0);
-				    	}else{
-				    		obj.set("status", 2);
-				    	}
-			        }
-
-			        //Warning over credit allowed
-			        if(obj.credit_allowed>0 && total>obj.credit_allowed){
-			        	self.set("amtDueColor", "Gold");		        	
-			        }else{
-			        	self.set("amtDueColor", banhji.source.amtDueColor);
-			        }
-
-			        amount_due = total - obj.deposit;
-
-			        obj.set("sub_total", subTotal);
-			        obj.set("discount", discount);
-			        obj.set("tax", tax);			
-					obj.set("amount", total);
-					obj.set("remaining", remaining);
-
-					self.set("total", kendo.toString(total, "c", obj.locale));
-			        self.set("amount_due", kendo.toString(amount_due, "c", obj.locale));
-			    	
-			    	//Remove Assembly Item List
-					var raw = self.assemblyLineDS.data();
-				    var item, i;
-				    for(i=raw.length-1; i>=0; i--){
-				    	item = raw[i];
-
-				    	if (jQuery.inArray(kendo.parseInt(item.assembly_id), itemIds)==-1) {
-					       	self.assemblyLineDS.remove(item);
-					    }
-				    }
+				}else if(arg.field=="quantity" || arg.field=="price" || arg.field=="discount"){
+					self.changes();					
 				}else if(arg.field=="measurement"){
 					var dataRow = arg.items[0];
 					
 					dataRow.set("measurement_id", dataRow.measurement.measurement_id);
 			        dataRow.set("price", dataRow.measurement.price * dataRow.rate);
 			        dataRow.set("conversion_ratio", dataRow.measurement.conversion_ratio);
+				}else if(arg.field=="tax_item"){
+					var dataRow = arg.items[0];
+					
+					dataRow.set("tax_item_id", dataRow.tax_item.id);
+					dataRow.set("tax", 0);
+
+					self.changes();
 				}
 			}
 		},
@@ -55661,9 +55576,9 @@
 				measurement_id 		: 0,
 				description 		: "",
 				quantity 	 		: 1,
-				conversion_ratio 			: 0,
-				price 				: 0,
-				amount 				: 0,
+				conversion_ratio 	: 0,
+				price 				: 500,
+				amount 				: 500,
 				discount 			: 0,
 				tax 				: 0,
 				rate				: obj.rate,

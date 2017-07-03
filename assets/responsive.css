@@ -42,6 +42,18 @@ div.k-window{
   background: #0077c5 !important;
   color: #fff !important;
 }
+.k-grid-content.k-auto-scrollable tr:hover{
+  color: #333 !important;
+}
+/*.k-grid-header{
+  padding-right: 0 !important;
+}*/
+
+.k-widget.k-tooltip-validation{
+  border-color: #fdefba !important;
+  background-color: #fdefba !important;
+  color: #816704 !important;
+}
 .widget.widget-3.customer-border a .widget-body.alert.alert-primary,
 .widget.widget-3.customer-border .widget-body.alert.alert-primary{
   border: none !important;

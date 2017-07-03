@@ -13737,6 +13737,7 @@
 	        data: 'results',
 	        total: 'count'
 	      },
+	      sort: {field: "worder", operator: "where_related_meter", dir: "asc"},
 	      batch: true,
 	      serverFiltering: true,
 	      serverPaging: true,
@@ -16985,7 +16986,6 @@
 	/*==== End Meter=====*/
 	
 	// Invoice
-	
 	/*Bill*/
 	banhji.runBill = kendo.observable({
 		lang 				: langVM,
@@ -17107,6 +17107,7 @@
 			box_id = this.get("boxSelect");
 			this.clearAll();
 			var para = [];	
+			var monthPara = [];
 			if(monthOfSearch){						
 				var monthOf = new Date(monthOfSearch);
 				monthOf.setDate(1);
@@ -17127,13 +17128,16 @@
 				if(license_id){
 					if(bloc_id){
 						if(box_id){
-							para.push({field: "box_id", operator: 'where_related_meter', value: box_id});
+							para.push({field: "box_id", value: box_id});
 						}else if(pole_id){
-							para.push({field: "pole_id", operator: 'where_related_meter', value: pole_id});
+							para.push({field: "pole_id", value: pole_id});
 						}else{
-							para.push({field: "location_id", operator: 'where_related_meter', value: bloc_id});
+							para.push({field: "location_id", value: bloc_id});
 						}
-						this.invoiceDS.filter(para);
+						this.invoiceDS.query({
+							filter: para,
+							limit: 300
+						});
 					}else{
 						alert("Please Select Location");
 					}
@@ -17677,7 +17681,8 @@
 							para.push({field: "location_id", value: this.get("blocSelect")});
 						}
 						this.invoiceCollection.dataSource.query({
-							filter: para
+							filter: para,
+							order: { field: "worder", operator: "where_related_meter", dir: "asc" }
 						}).then(function(e){
 							var numberNoPrint = 0;
 							$.each(self.invoiceCollection.dataSource.data(), function(i, v){

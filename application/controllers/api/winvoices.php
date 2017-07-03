@@ -23,171 +23,191 @@ class Winvoices extends REST_Controller {
 		}
 		// $this->_database = "db_banhji";
 	}
-	function make_get() {
-		$getData = $this->get('filter');
-		$filters = $getData['filters'];
-		$table = new Meter_record(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+	function make_get(){
+		$filter 	= $this->get("filter");
+		$page 		= $this->get('page');
+		$limit 		= $this->get('limit');
+		$sort 	 	= $this->get("sort");
+		$obj = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$data = array();
 
-		if(isset($filters)) {
-			foreach($filters as $filter) {
-				if(isset($filter['operator'])) {
-					$table->{$filter['operator']}($filter['field'], $filter['value']);
-				} else {
-					$table->where($filter['field'], $filter['value']);
-				}
+		//Filter
+		if(!empty($filter) && isset($filter)){
+	    	foreach ($filter["filters"] as $value) {
+	    		if($value['field'] == "location_id" || $value['field'] == "pole_id" || $value['field'] == "box_id"){
+					$obj->where($value["field"], $value["value"]);
+	    		}
 			}
 		}
-		$table->where('invoiced <>', 1);
-		$table->order_by('id','desc');
-		$table->get();
+		$obj->where("activated", 1);
+		$obj->order_by("worder", "asc");
+		//Results
+		if($page && $limit){
+			$obj->get_paged_iterated($page, $limit);
+		}else{
+			$obj->get_iterated();
+		}
 
-		$tmp = array();
-
-		foreach($table as $row) {
-			$meter = $row->meter->get();
-			if($meter->reactive_status == 0){
-				$contact = $meter->contact->get();
-
-				$plan  = $meter->plan->get();
-				
-				if(isset($tmp["$meter->number"])){
-					$tmp["$meter->number"]['items'][] = array(
-					'type' => 'usage',
-						'line' => array(
-							'id'   => $row->id,
-							'name' => 'usage',
-							'from' => $row->from_date,
-							'to'   => $row->to_date,
-							'prev'=> intval($row->previous),
-							'current'=> intval($row->current),
-							'usage' => intval($row->usage),
-							'unit' => 'm3',
+		if($obj->exists()){
+			foreach ($obj as $value) {
+				//Reactive Meter
+				if($value->reactive_id != 0){
+					$reactive = new Meter_record(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					$reactive->where("meter_id", $value->reactive_id);
+					$reactive->where('invoiced <>', 1);
+					$reactive->order_by("id", "desc");
+					$reactive->limit(1)->get();
+					if($reactive->exists()){
+						$tmp["$value->number"]['reactive'] = array(
+							'type' => 'reactive',
+							'id'   => $reactive->id,
+							'name' => 'reactive',
+							'from' => $reactive->from_date,
+							'to'   => $reactive->to_date,
+							'prev'=> intval($reactive->previous),
+							'current'=> intval($reactive->current),
+							'usage' => intval($reactive->usage),
+							'meter_number' => $value->number."(Reactive)",
 							'amount'=> 0
-						));
-				} else {
-					$tmp["$meter->number"]['type'] = 'Utility_invoice';
-					$tmp["$meter->number"]['contact'] = array(
-							'id' => $contact->id,
-							'account_id' => $contact->account_id,
-							'ra_id' => $contact->ra_id,
-							'name' => $contact->name,
-							'vat' => $contact->vat_no,
-							'locale' => $contact->locale
-													);
-					$tmp["$meter->number"]['meter'] = array(
-						'id' => $meter->id,
-						'meter_number' => $meter->number,
-						'location_id' => $meter->location_id,
-						'multiplier' => intval($meter->multiplier)
-					);
-					$tmp["$meter->number"]['items'][] = array(
-					'type' => 'usage',
-					'line' => array(													
-						'id'   => $row->id,
-						'name' => 'Usage',
-						'from' => $row->from_date,
-						'to'   => $row->to_date,
-						'prev'=> intval($row->previous),
-						'current'=> intval($row->current),
-						'usage_real' => intval($row->usage),
-						'usage' => floatval($row->usage * $meter->multiplier),
-						'amount'=> 0
-					));
-					// plan items
-					$items = $plan->plan_item->get();
-					foreach($items as $item) {
-						$types = array('tariff', 'exemption', 'maintenance');
-						if(in_array($item->type, $types)) {
-							if($item->type == 'tariff') {
-								$tmp["$meter->number"]['tariffMain'][] = array(
-									"is_flat" => intval($item->is_flat)
-								);
-								$tariff = new Plan_item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-								$tariff->where('tariff_id', $item->id)->get();
-								if($tariff->exists()) {
-									foreach($tariff as $t) {
-										$tmp["$meter->number"]['tariff'][] = array(
-											"type" => 'tariff',
+						);
+					}
+				}
+				//Check Reactive Meter
+				if($value->reactive_status == 0){
+					$contact = $value->contact->get();
+					$monthQ = $this->get("monthrecord");
+					$record = new Meter_record(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					//Filter
+					if(!empty($filter) && isset($filter)){
+				    	foreach ($filter["filters"] as $qu) {
+				    		if($qu['field'] == "month_of >=" || $qu['field'] == "month_of <="){
+								$record->where($qu["field"], $qu["value"]);
+				    		}
+						}
+					}
+					$record->where("meter_id", $value->id);
+					$record->where("invoiced", 0);
+					$record->where("deleted", 0);
+					$record->limit(1)->get();
+					if($record->exists()){
+						$plan  = $value->plan->get();
+						if(isset($tmp["$value->number"])){
+							$tmp["$value->number"]['items'][] = array(
+							'type' => 'usage',
+								'line' => array(
+									'id'   => $record->id,
+									'name' => 'usage',
+									'from' => $record->from_date,
+									'to'   => $record->to_date,
+									'prev'=> intval($record->previous),
+									'current'=> intval($record->current),
+									'usage' => intval($record->usage),
+									'unit' => 'm3',
+									'amount'=> 0
+								));
+						} else {
+							$tmp["$value->number"]['type'] = 'Utility_invoice';
+							$tmp["$value->number"]['contact'] = array(
+									'id' => $contact->id,
+									'account_id' => $contact->account_id,
+									'ra_id' => $contact->ra_id,
+									'name' => $contact->name,
+									'vat' => $contact->vat_no,
+									'locale' => $contact->locale
+															);
+							$tmp["$value->number"]['meter'] = array(
+								'id' => $value->id,
+								'meter_number' => $value->number,
+								'location_id' => $value->location_id,
+								'multiplier' => intval($value->multiplier)
+							);
+							$tmp["$value->number"]['items'][] = array(
+							'type' => 'usage',
+							'line' => array(													
+								'id'   => $record->id,
+								'name' => 'usage',
+								'from' => $record->from_date,
+								'to'   => $record->to_date,
+								'prev'=> intval($record->previous),
+								'current'=> intval($record->current),
+								'usage_real' => intval($record->usage),
+								'usage' => floatval($record->usage * $value->multiplier),
+								'amount'=> 0
+							));
+							// plan items
+							$items = $plan->plan_item->get();
+							foreach($items as $item) {
+								$types = array('tariff', 'exemption', 'maintenance');
+								if(in_array($item->type, $types)) {
+									if($item->type == 'tariff') {
+										$tmp["$value->number"]['tariffMain'][] = array(
+											"is_flat" => intval($item->is_flat)
+										);
+										$tariff = new Plan_item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+										$tariff->where('tariff_id', $item->id)->get();
+										if($tariff->exists()) {
+											foreach($tariff as $t) {
+												$tmp["$value->number"]['tariff'][] = array(
+													"type" => 'tariff',
+													"line" => array(
+														'id'   => $t->id,
+														'name' => $t->name,
+														'is_flat' => $t->is_flat,
+														'usage'  => floatval($t->usage),
+														'amount'=> floatval($t->amount)
+													)
+												);
+											}								
+										}
+									} else if($item->type == 'exemption'){
+										$tmp["$value->number"]['exemption'][] = array(
+											"type" => $item->type,
 											"line" => array(
-												'id'   => $t->id,
-												'name' => $t->name,
-												'is_flat' => $t->is_flat,
-												'usage'  => floatval($t->usage),
-												'amount'=> floatval($t->amount)
+												'id'   => $item->id,
+												'currency_id' => $item->currency_id,
+												'name' => $item->name,
+												'unit'  => $item->unit,
+												'amount'=> floatval($item->amount),
+												'type' => $item->type
 											)
 										);
-									}								
-								}
-							} else if($item->type == 'exemption'){
-								$tmp["$meter->number"]['exemption'][] = array(
-									"type" => $item->type,
-									"line" => array(
-										'id'   => $item->id,
-										'currency_id' => $item->currency_id,
-										'name' => $item->name,
-										'unit'  => $item->unit,
-										'amount'=> floatval($item->amount),
-										'type' => $item->type
-									)
-								);
-							}else {
-								$tmp["$meter->number"]['maintenance'][] = array(
-									"type" => $item->type,
-									"line" => array(
-										'id'   => $item->id,
-										'name' => $item->name,
-										'is_flat' => $item->is_flat == 0 ? FALSE:TRUE,
-										'unit'  => $item->unit,
-										'amount'=> floatval($item->amount)
-									)
-								);
-							}							
-						}						
-					}
+									}else {
+										$tmp["$value->number"]['maintenance'][] = array(
+											"type" => $item->type,
+											"line" => array(
+												'id'   => $item->id,
+												'name' => $item->name,
+												'is_flat' => $item->is_flat == 0 ? FALSE:TRUE,
+												'unit'  => $item->unit,
+												'amount'=> floatval($item->amount)
+											)
+										);
+									}							
+								}						
+							}
 
-					// installment
-					$installment = $meter->installment->include_related('installment_schedule', array('id','amount'))->limit(1)->where_related_installment_schedule('invoiced', 0)->get();
-					if($installment->exists()){
-						$tmp["$meter->number"]['installment'][] = array(
-							"type" => 'installment',
-							"line" => array(
-								'id'   => $installment->installment_schedule_id,
-								'name' => 'រំលោះ',
-								'from' => $installment->date,
-								'to'   => 0,
-								'prev' =>0,
-								'current'=>0,
-								'usage' => 1,
-								'unit'  => 'money',
-								'amount'=> floatval($installment->installment_schedule_amount)
-							));
+							// installment
+							$installment = $value->installment->include_related('installment_schedule', array('id','amount'))->limit(1)->where_related_installment_schedule('invoiced', 0)->get();
+							if($installment->exists()){
+								$tmp["$value->number"]['installment'][] = array(
+									"type" => 'installment',
+									"line" => array(
+										'id'   => $installment->installment_schedule_id,
+										'name' => 'រំលោះ',
+										'from' => $installment->date,
+										'to'   => 0,
+										'prev' =>0,
+										'current'=>0,
+										'usage' => 1,
+										'unit'  => 'money',
+										'amount'=> floatval($installment->installment_schedule_amount)
+									));
+							}
+						}
 					}
-				}
-			}
-			if($meter->reactive_id != 0){
-				$reactive = new Meter_record(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				$reactive->where("meter_id", $meter->reactive_id);
-				$reactive->where('invoiced <>', 1);
-				$reactive->order_by("id", "desc");
-				$reactive->limit(1)->get();
-				if($reactive->exists()){
-					$tmp["$meter->number"]['reactive'] = array(
-						'type' => 'reactive',
-						'id'   => $reactive->id,
-						'name' => 'reactive',
-						'from' => $reactive->from_date,
-						'to'   => $reactive->to_date,
-						'prev'=> intval($reactive->previous),
-						'current'=> intval($reactive->current),
-						'usage' => intval($reactive->usage),
-						'meter_number' => $meter->number."(Reactive)",
-						'amount'=> 0
-					);
 				}
 			}
 		}
-
 		foreach($tmp as $t) {
 			$exemption = isset($t['exemption']) ? $t['exemption'] : [];
 			$maintenance = isset($t['maintenance']) ? $t['maintenance'] : [];
@@ -472,7 +492,7 @@ class Winvoices extends REST_Controller {
 				//echo $row->id."__";
 				$meter = null;
 				$invoiceLine = new winvoice_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				$invoiceLine->include_related('meter_record/meter', array("id", "number"));
+				$invoiceLine->include_related('meter_record/meter', array("id", "number", "worder"));
 
 				$location = $row->location->get_raw();
 
@@ -485,6 +505,7 @@ class Winvoices extends REST_Controller {
 						if($box->exists()){
 							$meter = array(
 								'meter_number'   => $line->meter_record_meter_number,
+								'meter_order'   => $line->meter_record_meter_worder,
 								'meter_id'   => $line->meter_record_meter_id,
 								'location' => $location->result(),
 								'box' => $box
@@ -492,6 +513,7 @@ class Winvoices extends REST_Controller {
 						}else{
 							$meter = array(
 								'meter_number'   => $line->meter_record_meter_number,
+								'meter_order'   => $line->meter_record_meter_worder,
 								'meter_id'   => $line->meter_record_meter_id,
 								'location' => $location->result(),
 								'box' => []
