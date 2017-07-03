@@ -1,6 +1,33 @@
 h1,h2,h3,h4,h5,h6{
-  font-family: 'Preahvihear', 'Open Sans' !important;
+  font-family: 'Preahvihear', 'Roboto Slab' !important;
+  color: #203864 !important;
 }
+.container-960 {
+    width: 1020px;
+    margin: 0 auto;
+}
+/*.glyphicons.remove_2 i:before {
+  content: "\e208";
+  font-weight: 300 !important;
+  font-size: 30px;
+  color: #393a3d;
+}*/
+.tabsbar.tabsbar-2 ul li.active,
+.well{
+  background: #f4f5f8 !important;
+}
+.tabsbar {
+  background: #ddd !important;
+}
+.table-striped tbody tr:nth-child(odd) td, .table-striped tbody tr:nth-child(odd) th{
+  background: #f4f5f8 !important;
+}
+
+
+
+
+
+
 .k-pager-wrap .k-pager-nav.k-pager-last{
   border-radius: 50% !important;
 }
@@ -40,9 +67,9 @@ div.k-window{
 }
 .k-grid tr:hover{
   background: #0077c5 !important;
-  color: #fff !important;
+  color: #333 !important;
 }
-.k-grid-content.k-auto-scrollable tr:hover{
+.k-grid-content .k-auto-scrollable tr:hover{
   color: #333 !important;
 }
 /*.k-grid-header{
@@ -477,7 +504,7 @@ input.k-textbox{
 }
 .topnav.addNew{
   display: inline-block;
-  background: #f4f4f4;
+  background: #f4f5f8;
   padding: 3px 15px 6px 15px;
   margin: 0;
   line-height: 23px;
@@ -811,7 +838,7 @@ input.k-textbox{
   }
   #content {
     margin-top: -20px;
-    background: #f4f4f4;
+    background: #f4f5f8;
   }
   .vendor {
     list-style: none;
@@ -1376,7 +1403,7 @@ width: 50% !important;
 }
 
 .customer-background{
-  width: 85%;
+  width: 90%;
   background: #fff;
   margin: 0 auto;
   padding: 15px 0 10px;

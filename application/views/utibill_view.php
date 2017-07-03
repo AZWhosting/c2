@@ -4064,49 +4064,83 @@
 									<div class="tab-content">
 								        <div class="tab-pane active" id="tab-1">
 											<div class="span12 row-fluid" style="padding:20px 0;padding-top: 0;">
-									        	<div class="span8" style="padding-left: 0;">
-													<div class="span4" style="padding-left: 0;">
-														<div class="control-group">
-															<label ><span data-bind="text: lang.lang.license">License</span></label>
-															<input 
-																data-role="dropdownlist" 
-																style="width: 100%;" 
-																data-option-label="License ..." 
-																data-auto-bind="false" 
-																data-value-primitive="false" 
-																data-text-field="name" 
-																data-value-field="id" 
-																data-bind="
-																	value: licenseSelect,
-								                  					source: licenseDS,
-								                  					events: {change: onLicenseChange}">
-								                  		</div>
-													</div>	
-													<div class="span4">
-														<div class="control-group">								
-															<label ><span data-bind="text: lang.lang.location">Location</span></label>
-															<input 
-																data-role="dropdownlist" 
-																style="width: 100%;" 
-																data-option-label="Location ..." 
-																data-auto-bind="false" 
-																data-value-primitive="false" 
-																data-text-field="name" 
-																data-value-field="id" 
-																data-bind="
-																	value: blocSelect,
-								                  					source: blocDS,
-								                  					enabled: selectLocation}">
-								                  		</div>
-													</div>
-													<div class="span4">
-														<div class="control-group">	
-															<label ><span data-bind="text: lang.lang.action">Action</span></label>	
-															<div class="row" style="margin: 0;">					
-																<button type="button" data-role="button" data-bind="click: search" class="k-button" role="button" aria-disabled="false" tabindex="0"><i class="icon-search"></i></button>
-															</div>
-								                  		</div>
-													</div>		
+												<div class="span3" style="padding-left: 0;">
+													<div class="control-group">
+														<label ><span data-bind="text: lang.lang.license">License</span></label>
+														<input 
+															data-role="dropdownlist" 
+															style="width: 100%;" 
+															data-option-label="License ..." 
+															data-auto-bind="false" 
+															data-value-primitive="true" 
+															data-text-field="name" 
+															data-value-field="id" 
+															data-bind="
+																value: licenseSelect,
+							                  					source: licenseDS,
+							                  					events: {change: licenseChange}">
+							                  		</div>
+												</div>	
+												<div class="span2">
+													<div class="control-group">		
+														<label ><span data-bind="text: lang.lang.location">Location</span></label>
+														<input 
+															data-role="dropdownlist" 
+															style="width: 100%;" 
+															data-option-label="Location ..." 
+															data-auto-bind="false" 
+															data-value-primitive="true" 
+															data-text-field="name" 
+															data-value-field="id" 
+															data-bind="
+																value: blocSelect,
+							                  					source: blocDS,
+							                  					enabled: haveLicense,
+							                  					events: {change: onLocationChange}">
+							                  		</div>
+												</div>
+												<div class="span2">
+													<div class="control-group">		
+														<label ><span data-bind="text: lang.lang.sub_location">Location</span></label>
+														<input 
+															data-role="dropdownlist" 
+															style="width: 100%;" 
+															data-option-label="Sub Location ..." 
+															data-auto-bind="false" 
+															data-value-primitive="true" 
+															data-text-field="name" 
+															data-value-field="id" 
+															data-bind="
+																value: subLocationSelect,
+							                  					source: subLocationDS,
+							                  					enabled: haveLocation,
+							                  					events: {change: onSubLocationChange}">
+							                  		</div>
+												</div>
+												<div class="span2">
+													<div class="control-group">		
+														<label ><span data-bind="text: lang.lang.box">Location</span></label>
+														<input 
+															data-role="dropdownlist" 
+															style="width: 100%;" 
+															data-option-label="Box ..." 
+															data-auto-bind="false" 
+															data-value-primitive="true" 
+															data-text-field="name" 
+															data-value-field="id" 
+															data-bind="
+																value: boxSelect,
+							                  					source: boxDS,
+							                  					enabled: haveSubLocation">
+							                  		</div>
+												</div>
+												<div class="span2">
+													<div class="control-group">	
+														<label ><span data-bind="text: lang.lang.action">Action</span></label>	
+														<div class="row" style="margin: 0;">					
+															<button type="button" data-role="button" data-bind="click: search" class="k-button" role="button" aria-disabled="false" tabindex="0"><i class="icon-search"></i></button>
+														</div>
+							                  		</div>
 												</div>
 									        </div>					
 									    </div>		
@@ -16805,28 +16839,78 @@
 		dataSource  		: dataStore(apiUrl + "meters"),
 		licenseDS 			: dataStore(apiUrl + "branches"),
 		blocDS 				: dataStore(apiUrl + "locations"),
+		subLocationDS 		: dataStore(apiUrl + "locations"),
+		boxDS 				: dataStore(apiUrl + "locations"),
 		licenseSelect		: null,
 		blocSelect			: null,
 		selectMeter 		: false,
 		selectLocation 		: false,
+		haveLicense 		: false,
+		haveLocation 		: false,
+		haveSubLocation 	: false,
 		pageLoad 			: function(id){
-			this.set("selectLocation", false);
 		},
-		onLicenseChange 	: function(e) {
-			var data = e.data;
-			var license = this.licenseDS.at(e.sender.selectedIndex - 1);
-			this.set("licenseSelect", license);
+		licenseChange 		: function(e) {
+			var self = this;
+			this.blocDS.data([]);
+			this.set("locationSelect", "");
+			this.set("haveLicense", false)
+			this.subLocationDS.data([]);
+			this.boxDS.data([]);
+			this.set("boxSelect", "");
+			this.set("haveSubLocation", false);
+
 			this.blocDS.filter([
-				{field: "branch_id", value: license.id},
-				{field: "main_bloc", value: 0},
-				{field: "main_pole", value: 0}
+				{field: "branch_id",value: this.get("licenseSelect")},
+				{field: "main_bloc",value: 0},
+				{field: "main_pole",value: 0}
 			]);
-			this.set("selectLocation", true);
+			this.set("haveLicense", true);
+	    },
+	    onLocationChange 	: function(e) {
+			var self = this;
+			this.subLocationDS.data([]);
+			this.boxDS.data([]);
+			this.set("boxSelect", "");
+			this.set("haveSubLocation", false);
+			this.subLocationDS.query({
+				filter: [
+					{field: "branch_id", value: this.get("licenseSelect")},
+					{field: "main_bloc", value: this.get("blocSelect")},
+					{field: "main_pole", value: 0}
+					],
+				page: 1
+			})
+			.then(function(e){
+				if(self.subLocationDS.data().length > 0){
+					self.set("haveLocation", true);
+				}else{
+					self.set("haveLocation", false);
+					self.set("subLocationSelect", "");
+					self.subLocationDS.data([]);
+				}
+			});
 		},
-		blocChange 			: function(e){
-			var data = e.data;
-			var bloc = this.blocDS.at(e.sender.selectedIndex - 1);
-			this.set("blocSelect", bloc);
+		onSubLocationChange : function(e) {
+			var self = this;
+			this.boxDS.data([]);
+			this.boxDS.query({
+				filter: [
+					{field: "branch_id", value: this.get("licenseSelect")},
+					{field: "main_bloc", value: this.get("blocSelect")},
+					{field: "main_pole", value: this.get("subLocationSelect")}
+				],
+				page: 1
+			})
+			.then(function(e){
+				if(self.boxDS.data().length > 0){
+					self.set("haveSubLocation", true);
+				}else{
+					self.set("haveSubLocation", false);
+					self.set("boxSelect", "");
+					self.boxDS.data([]);
+				}
+			});
 		},
 		exArray 			: [],
 		search 		 		: function(){	
@@ -16835,9 +16919,16 @@
 			var para = [{field: "activated", value: 1}];	
 			
 			if(license_id){
-				para.push({field: "branch_id", value: license_id.id});
+				para.push({field: "branch_id", value: license_id});
 				if(bloc_id){
-					para.push({field: "location_id", value: bloc_id.id});
+					if(this.get("boxSelect")){
+						para.push({field: "box_id", value: this.get("boxSelect")});
+					}else if(this.get("subLocationSelect")){
+						para.push({field: "pole_id", value: this.get("subLocationSelect")});
+					}else{
+						para.push({field: "location_id", value: bloc_id});
+					}
+					
 					var self = this;
 					this.dataSource.query({
 						filter: para
@@ -18073,8 +18164,6 @@
 			window.history.back();
 		}
 	});
-	
-
 	banhji.reconReceipt= kendo.observable({
 		dataSource 		: dataStore(apiUrl + 'reconciles/receipt'),
 		sDate 			: new Date(2016, 01, 12, 01),
@@ -18285,7 +18374,6 @@
 			banhji.reconcileVM.dataSource.bind('error', function(e){});
 		}
 	});
-
 	banhji.cashReceipt = kendo.observable({
 		lang 				: langVM,
 		numCustomer			: 0,

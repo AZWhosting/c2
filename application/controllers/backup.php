@@ -35,8 +35,8 @@ class Backup extends CI_Controller {
 		$users = new User(null);
 		$users->where("id", $userID)->limit(1)->get();
 		foreach ($users as $user) {
-			$inst = $user->institute->get();
-			$comint = $inst->id;
+			echo $inst = $user->institute->get();
+			echo $comint = $inst->id;
 		}
 		if($intID == $comint){
 			$institute = new Institute();
@@ -69,7 +69,7 @@ class Backup extends CI_Controller {
 			$dbname = $this->db->database .'-'. date("Y-m-d-H-i-s").'-backup.sql';
 			
 			if ( ! write_file('assets/backupdb/'.$dbname, $backup)){
-			    
+			    echo "error";
 			}else{
 			    $data = file_get_contents("assets/backupdb/".$dbname);
 	    		force_download($dbname, $backup);

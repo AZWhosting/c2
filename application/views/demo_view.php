@@ -5309,31 +5309,21 @@
 				    <div data-role="grid"
 				    	 data-column-menu="true"
 				    	 data-reorderable="true"
+				    	 data-scrollable="false"
 				    	 data-resizable="true"
 				    	 data-editable="true"
 		                 data-columns="[
-		                 	{ 
-						    	title:'',
-						    	attributes: { style: 'text-align: center;' },
-						    	width: '30px',
-						    	template:'<i class=icon-trash data-bind=click:removeRow></i>'
-						    },
-						    { title:'NO', attributes: { style: 'text-align: center;' }, width: '40px',
+						    { 
+						    	title:'NO',
+						    	width: '50px', 
+						    	attributes: { style: 'text-align: center;' }, 
 						        template: function (dataItem) {
-						        	return banhji.invoiceAdvance.lineDS.indexOf(dataItem)+1;
+						        	var rowIndex = banhji.invoiceAdvance.lineDS.indexOf(dataItem)+1;
+						        	return '<i class=icon-trash data-bind=click:removeRow></i>' + ' ' + rowIndex;
 						      	}
-						    },						    
-						    {
-							    field: 'discount',
-							    title: 'DISCOUNT',
-							    hidden: false,
-							    format: '{0:n}',
-							    editor: numberTextboxEditor,
-							    width: '120px',
-							    attributes: { style: 'text-align: right;' }
-							},						    
+						    },
 		                 	{ field: 'item', title: 'PRODUCTS/SERVICES', editor: itemEditor, template: '#=item.name#', width: '170px' },
-                            { field: 'description', title:'DESCRIPTION', width: '200px' },                            
+                            { field: 'description', title:'DESCRIPTION', width: '250px' },                            
                             {
 							    field: 'quantity',
 							    title: 'QTY',
@@ -5342,7 +5332,7 @@
 							    width: '120px',
 							    attributes: { style: 'text-align: right;' }
 							},
-                            { field: 'measurement', title: 'UOM', editor: measurementEditor, template: '#=measurement.measurement#', width: '75px' },
+                            { field: 'measurement', title: 'UOM', editor: measurementEditor, template: '#=measurement.measurement#', width: '80px' },
                             {
 							    field: 'price',
 							    title: 'PRICE',
@@ -5351,10 +5341,26 @@
 							    width: '120px',
 							    attributes: { style: 'text-align: right;' }
 							},
-                            { field: 'amount', title:'AMOUNT', format: '{0:n}', editable: 'false', attributes: { style: 'text-align: right;' }, width: '120px' },
-                            
-                            { field: 'tax_item', title:'TAX', hidden: true, editor: taxForSaleEditor, template: '#=tax_item.name#', width: '120px' },
-                            { command: 'destroy', title: ' ', width: 96 }
+							{
+							    field: 'discount',
+							    title: 'DISCOUNT VALUE',
+							    hidden: true,
+							    format: '{0:n}',
+							    editor: numberTextboxEditor,
+							    width: '120px',
+							    attributes: { style: 'text-align: right;' }
+							},
+							{
+							    field: 'discount_percentage',
+							    title: 'DISCOUNT %',
+							    hidden: true,
+							    format: '{0:p}',
+							    editor: discountEditor,
+							    width: '120px',
+							    attributes: { style: 'text-align: right;' }
+							},
+                            { field: 'amount', title:'AMOUNT', format: '{0:n}', editable: 'false', attributes: { style: 'text-align: right;' }, width: '120px' },                            
+                            { field: 'tax_item', title:'TAX', editor: taxForSaleEditor, template: '#=tax_item.name#', width: '90px' }
                          ]"
                          data-auto-bind="false"
 		                 data-bind="source: lineDS"
@@ -7377,9 +7383,9 @@
    		</td>
    		<td align="center">   			
    			<div class="edit-buttons">       
-		        <a class="k-button k-edit-button" href="\\#"><span class="k-icon k-edit"></span></a>
+		        <a class="k-button k-edit-button" href="\\#"><span class="k-icon k-i-edit"></span></a>
 		        #if(is_system=="0"){#
-			        <a class="k-button k-delete-button" href="\\#"><span class="k-icon k-delete"></span></a>				        
+			        <a class="k-button k-delete-button" href="\\#"><span class="k-icon k-i-delete"></span></a>				        
 		        #}#
 		        <a class="k-button" href="\#/customer/0/#=id#"><span data-bind="text: lang.lang.pattern"></span></a>
 		   	</div>		   	
@@ -7409,8 +7415,8 @@
             </dd>              
         </dl>
         <div class="edit-buttons">
-            <a class="k-button k-update-button" href="\\#"><span class="k-icon k-update"></span></a>
-            <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-cancel"></span></a>
+            <a class="k-button k-update-button" href="\\#"><span class="k-icon k-i-check"></span></a>
+            <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-i-cancel"></span></a>
         </div>
     </div>
 </script>
@@ -7421,9 +7427,9 @@
    		</td>
    		<td align="center">   			
    			<div class="edit-buttons">       
-		        <a class="k-button k-edit-button" href="\\#"><span class="k-icon k-edit"></span></a>
+		        <a class="k-button k-edit-button" href="\\#"><span class="k-icon k-i-edit"></span></a>
 		        #if(is_system=="0"){#
-			        <a class="k-button k-delete-button" href="\\#"><span class="k-icon k-delete"></span></a>				        
+			        <a class="k-button k-delete-button" href="\\#"><span class="k-icon k-i-delete"></span></a>				        
 		        #}#		        
 		   	</div>		   	
    		</td>
@@ -7438,8 +7444,8 @@
             </dd>               
         </dl>
         <div class="edit-buttons">
-            <a class="k-button k-update-button" href="\\#"><span class="k-icon k-update"></span></a>
-            <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-cancel"></span></a>
+            <a class="k-button k-update-button" href="\\#"><span class="k-icon k-i-check"></span></a>
+            <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-i-cancel"></span></a>
         </div>
     </div>
 </script>
@@ -7459,9 +7465,9 @@
    		</td>
    		<td align="center">   			
    			<div class="edit-buttons">       
-		        <a class="k-button k-edit-button" href="\\#"><span class="k-icon k-edit"></span></a>
+		        <a class="k-button k-edit-button" href="\\#"><span class="k-icon k-i-edit"></span></a>
 		        #if(is_system=="0"){#
-			        <a class="k-button k-delete-button" href="\\#"><span class="k-icon k-delete"></span></a>				        
+			        <a class="k-button k-delete-button" href="\\#"><span class="k-icon k-i-delete"></span></a>				        
 		        #}#		        
 		   	</div>		   	
    		</td>
@@ -7488,8 +7494,8 @@
             </dd>               
         </dl>
         <div class="edit-buttons">
-            <a class="k-button k-update-button" href="\\#"><span class="k-icon k-update"></span></a>
-            <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-cancel"></span></a>
+            <a class="k-button k-update-button" href="\\#"><span class="k-icon k-i-check"></span></a>
+            <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-i-cancel"></span></a>
         </div>
     </div>
 </script>
@@ -15446,9 +15452,9 @@
     	<td>#:abbr#</td>
    		<td align="center">   			
    			<div class="edit-buttons">       
-		        <a class="k-button k-edit-button" href="\\#"><span class="k-icon k-edit"></span></a>
+		        <a class="k-button k-edit-button" href="\\#"><span class="k-icon k-i-edit"></span></a>
 		        #if(is_system=="0"){#
-			        <a class="k-button k-delete-button" href="\\#"><span class="k-icon k-delete"></span></a>				        
+			        <a class="k-button k-delete-button" href="\\#"><span class="k-icon k-i-delete"></span></a>				        
 		        #}#
 		        <a class="k-button" href="\#/vendor/0/#=id#"><span data-bind="text: lang.lang.pattern"></span></a>
 		   	</div>		   	
@@ -15470,8 +15476,8 @@
             </dd>
         </dl>
         <div class="edit-buttons">
-            <a class="k-button k-update-button" href="\\#"><span class="k-icon k-update"></span></a>
-            <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-cancel"></span></a>
+            <a class="k-button k-update-button" href="\\#"><span class="k-icon k-i-check"></span></a>
+            <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-i-cancel"></span></a>
         </div>
     </div>
 </script>
@@ -15482,9 +15488,9 @@
    		</td>
    		<td align="center">   			
    			<div class="edit-buttons">       
-		        <a class="k-button k-edit-button" href="\\#"><span class="k-icon k-edit"></span></a>
+		        <a class="k-button k-edit-button" href="\\#"><span class="k-icon k-i-edit"></span></a>
 		        #if(is_system=="0"){#
-			        <a class="k-button k-delete-button" href="\\#"><span class="k-icon k-delete"></span></a>				        
+			        <a class="k-button k-delete-button" href="\\#"><span class="k-icon k-i-delete"></span></a>				        
 		        #}#		        
 		   	</div>		   	
    		</td>
@@ -15499,8 +15505,8 @@
             </dd>               
         </dl>
         <div class="edit-buttons">
-            <a class="k-button k-update-button" href="\\#"><span class="k-icon k-update"></span></a>
-            <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-cancel"></span></a>
+            <a class="k-button k-update-button" href="\\#"><span class="k-icon k-i-check"></span></a>
+            <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-i-cancel"></span></a>
         </div>
     </div>
 </script>
@@ -15520,9 +15526,9 @@
    		</td>
    		<td>   			
    			<div class="edit-buttons">       
-		        <a class="k-button k-edit-button" href="\\#"><span class="k-icon k-edit"></span></a>
+		        <a class="k-button k-edit-button" href="\\#"><span class="k-icon k-i-edit"></span></a>
 		        #if(is_system=="0"){#
-			        <a class="k-button k-delete-button" href="\\#"><span class="k-icon k-delete"></span></a>				        
+			        <a class="k-button k-delete-button" href="\\#"><span class="k-icon k-i-delete"></span></a>				        
 		        #}#		        
 		   	</div>		   	
    		</td>
@@ -15549,8 +15555,8 @@
             </dd>               
         </dl>
         <div class="edit-buttons">
-            <a class="k-button k-update-button" href="\\#"><span class="k-icon k-update"></span></a>
-            <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-cancel"></span></a>
+            <a class="k-button k-update-button" href="\\#"><span class="k-icon k-i-check"></span></a>
+            <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-i-cancel"></span></a>
         </div>
     </div>
 </script>
@@ -23056,9 +23062,9 @@
    		</td>   		
    		<td align="left">   			
    			<div class="edit-buttons">       
-		        <a class="k-button k-edit-button" href="\\#"><span class="k-icon k-edit"></span></a>
+		        <a class="k-button k-edit-button" href="\\#"><span class="k-icon k-i-edit"></span></a>
 		        #if(is_system=="0"){#
-			        <a class="k-button k-delete-button" href="\\#"><span class="k-icon k-delete"></span></a>				        
+			        <a class="k-button k-delete-button" href="\\#"><span class="k-icon k-i-delete"></span></a>				        
 		        #}#
 
 		        #if(id=="4" || id=="5" || id=="6"){#
@@ -23092,8 +23098,8 @@
             </dd>               
         </dl>
         <div class="edit-buttons">
-            <a class="k-button k-update-button" href="\\#"><span class="k-icon k-update"></span></a>
-            <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-cancel"></span></a>
+            <a class="k-button k-update-button" href="\\#"><span class="k-icon k-i-check"></span></a>
+            <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-i-cancel"></span></a>
         </div>
     </div>
 </script>
@@ -23110,8 +23116,8 @@
    		</td>   		
    		<td align="center">	        
         	<div class="edit-buttons">
-	        	<a class="k-button k-edit-button" href="\\#"><span class="k-icon k-edit"></span></a>
-	        	<a class="k-button k-delete-button" href="\\#"><span class="k-icon k-delete"></span></a>
+	        	<a class="k-button k-edit-button" href="\\#"><span class="k-icon k-i-edit"></span></a>
+	        	<a class="k-button k-delete-button" href="\\#"><span class="k-icon k-i-delete"></span></a>
         	</div>	        	   	
    		</td>
    	</tr>
@@ -23139,8 +23145,8 @@
             </dd>               
         </dl>
         <div class="edit-buttons">
-            <a class="k-button k-update-button" href="\\#"><span class="k-icon k-update"></span></a>
-            <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-cancel"></span></a>
+            <a class="k-button k-update-button" href="\\#"><span class="k-icon k-i-check"></span></a>
+            <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-i-cancel"></span></a>
         </div>
     </div>
 </script>
@@ -23151,9 +23157,9 @@
    		</td>
    		<td align="center">   			
    			<div class="edit-buttons">       
-		        <a class="k-button k-edit-button" href="\\#"><span class="k-icon k-edit"></span></a>
+		        <a class="k-button k-edit-button" href="\\#"><span class="k-icon k-i-edit"></span></a>
 		        #if(is_system=="0"){#
-			        <a class="k-button k-delete-button" href="\\#"><span class="k-icon k-delete"></span></a>				        
+			        <a class="k-button k-delete-button" href="\\#"><span class="k-icon k-i-delete"></span></a>				        
 		        #}#
 		   	</div>		   	
    		</td>
@@ -23168,8 +23174,8 @@
             </dd>
         </dl>
         <div class="edit-buttons">
-            <a class="k-button k-update-button" href="\\#"><span class="k-icon k-update"></span></a>
-            <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-cancel"></span></a>
+            <a class="k-button k-update-button" href="\\#"><span class="k-icon k-i-check"></span></a>
+            <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-i-cancel"></span></a>
         </div>
     </div>
 </script>
@@ -23183,9 +23189,9 @@
    		</td>
    		<td align="center">   			
    			<div class="edit-buttons">       
-		        <a class="k-button k-edit-button" href="\\#"><span class="k-icon k-edit"></span></a>
+		        <a class="k-button k-edit-button" href="\\#"><span class="k-icon k-i-edit"></span></a>
 		        #if(is_system=="0"){#
-			        <a class="k-button k-delete-button" href="\\#"><span class="k-icon k-delete"></span></a>				        
+			        <a class="k-button k-delete-button" href="\\#"><span class="k-icon k-i-delete"></span></a>				        
 		        #}#
 		   	</div>		   	
    		</td>
@@ -23211,8 +23217,8 @@
             </dd>               
         </dl>
         <div class="edit-buttons">
-            <a class="k-button k-update-button" href="\\#"><span class="k-icon k-update"></span></a>
-            <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-cancel"></span></a>
+            <a class="k-button k-update-button" href="\\#"><span class="k-icon k-i-check"></span></a>
+            <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-i-cancel"></span></a>
         </div>
     </div>
 </script>
@@ -23229,8 +23235,8 @@
    		</td>
    		<td align="center">
    			<div class="edit-buttons">		        
-	        	<a class="k-button k-edit-button" href="\\#"><span class="k-icon k-edit"></span></a>
-	        	<a class="k-button k-delete-button" href="\\#"><span class="k-icon k-delete"></span></a>		        
+	        	<a class="k-button k-edit-button" href="\\#"><span class="k-icon k-i-edit"></span></a>
+	        	<a class="k-button k-delete-button" href="\\#"><span class="k-icon k-i-delete"></span></a>		        
 		   	</div>		   
    		</td>
    	</tr>
@@ -23257,8 +23263,8 @@
             </dd>               
         </dl>
         <div class="edit-buttons">
-            <a class="k-button k-update-button" href="\\#"><span class="k-icon k-update"></span></a>
-            <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-cancel"></span></a>
+            <a class="k-button k-update-button" href="\\#"><span class="k-icon k-i-check"></span></a>
+            <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-i-cancel"></span></a>
         </div>
     </div>
 </script>
@@ -28921,8 +28927,8 @@
    		<td>
    			#if(is_system=="0"){#
 	   			<div class="edit-buttons">       
-			        <a class="k-button k-edit-button" href="\\#"><span class="k-icon k-edit"></span></a>
-			        <a class="k-button k-delete-button" href="\\#"><span class="k-icon k-delete"></span></a>
+			        <a class="k-button k-edit-button" href="\\#"><span class="k-icon k-i-edit"></span></a>
+			        <a class="k-button k-delete-button" href="\\#"><span class="k-icon k-i-delete"></span></a>
 			   	</div>
 		   	#}#
    		</td>
@@ -28937,8 +28943,8 @@
             </dd>               
         </dl>
         <div class="edit-buttons">
-            <a class="k-button k-update-button" href="\\#"><span class="k-icon k-update"></span></a>
-            <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-cancel"></span></a>
+            <a class="k-button k-update-button" href="\\#"><span class="k-icon k-i-check"></span></a>
+            <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-i-cancel"></span></a>
         </div>
     </div>
 </script>
@@ -28949,8 +28955,8 @@
    		</td>
    		<td>
    			<div class="edit-buttons">       
-		        <a class="k-button k-edit-button" href="\\#"><span class="k-icon k-edit"></span></a>
-		        <a class="k-button k-delete-button" href="\\#"><span class="k-icon k-delete"></span></a>
+		        <a class="k-button k-edit-button" href="\\#"><span class="k-icon k-i-edit"></span></a>
+		        <a class="k-button k-delete-button" href="\\#"><span class="k-icon k-i-delete"></span></a>
 		   	</div>
 		</td>
    	</tr>
@@ -28964,8 +28970,8 @@
             </dd>               
         </dl>
         <div class="edit-buttons">
-            <a class="k-button k-update-button" href="\\#"><span class="k-icon k-update"></span></a>
-            <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-cancel"></span></a>
+            <a class="k-button k-update-button" href="\\#"><span class="k-icon k-i-check"></span></a>
+            <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-i-cancel"></span></a>
         </div>
     </div>
 </script>
@@ -28982,8 +28988,8 @@
    		</td>
    		<td>
    			<div class="edit-buttons">       
-		        <a class="k-button k-edit-button" href="\\#"><span class="k-icon k-edit"></span></a>
-		        <a class="k-button k-delete-button" href="\\#"><span class="k-icon k-delete"></span></a>
+		        <a class="k-button k-edit-button" href="\\#"><span class="k-icon k-i-edit"></span></a>
+		        <a class="k-button k-delete-button" href="\\#"><span class="k-icon k-i-delete"></span></a>
 		   	</div>
 		</td>
    	</tr>
@@ -29005,8 +29011,8 @@
             </dd>               
         </dl>
         <div class="edit-buttons">
-            <a class="k-button k-update-button" href="\\#"><span class="k-icon k-update"></span></a>
-            <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-cancel"></span></a>
+            <a class="k-button k-update-button" href="\\#"><span class="k-icon k-i-check"></span></a>
+            <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-i-cancel"></span></a>
         </div>
     </div>
 </script>
@@ -37129,8 +37135,8 @@
    		<td>
    			#if(is_system=="0"){#
 	   			<div class="edit-buttons">       
-			        <a class="k-button k-edit-button" href="\\#"><span class="k-icon k-edit"></span></a>
-			        <a class="k-button k-delete-button" href="\\#"><span class="k-icon k-delete"></span></a>
+			        <a class="k-button k-edit-button" href="\\#"><span class="k-icon k-i-edit"></span></a>
+			        <a class="k-button k-delete-button" href="\\#"><span class="k-icon k-i-delete"></span></a>
 			   	</div>
 		   	#}#
    		</td>
@@ -37145,8 +37151,8 @@
             </dd>               
         </dl>
         <div class="edit-buttons">
-            <a class="k-button k-update-button" href="\\#"><span class="k-icon k-update"></span></a>
-            <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-cancel"></span></a>
+            <a class="k-button k-update-button" href="\\#"><span class="k-icon k-i-check"></span></a>
+            <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-i-cancel"></span></a>
         </div>
     </div>
 </script>
@@ -37157,8 +37163,8 @@
    		</td>
    		<td>
    			<div class="edit-buttons">       
-		        <a class="k-button k-edit-button" href="\\#"><span class="k-icon k-edit"></span></a>
-		        <a class="k-button k-delete-button" href="\\#"><span class="k-icon k-delete"></span></a>
+		        <a class="k-button k-edit-button" href="\\#"><span class="k-icon k-i-edit"></span></a>
+		        <a class="k-button k-delete-button" href="\\#"><span class="k-icon k-i-delete"></span></a>
 		   	</div>
 		</td>
    	</tr>
@@ -37172,8 +37178,8 @@
             </dd>               
         </dl>
         <div class="edit-buttons">
-            <a class="k-button k-update-button" href="\\#"><span class="k-icon k-update"></span></a>
-            <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-cancel"></span></a>
+            <a class="k-button k-update-button" href="\\#"><span class="k-icon k-i-check"></span></a>
+            <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-i-cancel"></span></a>
         </div>
     </div>
 </script>
@@ -37190,8 +37196,8 @@
    		</td>
    		<td>
    			<div class="edit-buttons">       
-		        <a class="k-button k-edit-button" href="\\#"><span class="k-icon k-edit"></span></a>
-		        <a class="k-button k-delete-button" href="\\#"><span class="k-icon k-delete"></span></a>
+		        <a class="k-button k-edit-button" href="\\#"><span class="k-icon k-i-edit"></span></a>
+		        <a class="k-button k-delete-button" href="\\#"><span class="k-icon k-i-delete"></span></a>
 		   	</div>
 		</td>
    	</tr>
@@ -37213,8 +37219,8 @@
             </dd>               
         </dl>
         <div class="edit-buttons">
-            <a class="k-button k-update-button" href="\\#"><span class="k-icon k-update"></span></a>
-            <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-cancel"></span></a>
+            <a class="k-button k-update-button" href="\\#"><span class="k-icon k-i-check"></span></a>
+            <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-i-cancel"></span></a>
         </div>
     </div>
 </script>
@@ -45042,6 +45048,11 @@
         });
     }
 
+    function discountEditor(container, options) {
+        $('<input name="' + options.field + '" type="number" style="width: 95%;" min="0" max="1" />')
+        .appendTo(container);
+    }
+
     function taxForSaleEditor(container, options) {
         $('<input name="' + options.field + '"/>')
         .appendTo(container)
@@ -45097,6 +45108,7 @@
         $('<input name="' + options.field + '" type="number" style="width: 95%;" />')
         .appendTo(container);
     }
+    
 </script>
 
 
@@ -55182,23 +55194,6 @@
 		        }
 		    }
 		},
-		measurementChanges 	: function(e){
-			var data = e.data, obj = this.get("obj");
-
-			if(data.measurement_id>0){
-				$.each(data.item_prices, function(index, value){
-					if(value.measurement_id==data.measurement_id){
-				        
-				        data.set("price", value.price * data.rate);
-				        data.set("conversion_ratio", value.conversion_ratio);
-				        
-						return false;
-					}
-				});
-
-		        this.changes();
-	        }
-		},
 		//Number
 		checkExistingNumber 	: function(){
 			var self = this, para = [], 
@@ -55354,9 +55349,8 @@
 			});
 		},
 		changes				: function(){
-			console.log("changes");
 			var self = this, obj = this.get("obj"),
-			total = 0, subTotal = 0, discount =0, tax = 0, remaining = 0, amount_due = 0, itemIds = [];
+				total = 0, subTotal = 0, discount =0, tax = 0, remaining = 0, amount_due = 0, itemIds = [];
 
 			$.each(this.lineDS.data(), function(index, value) {
 				var amt = value.quantity * value.price;
@@ -55372,6 +55366,8 @@
 					var taxAmount = amt * value.tax_item.rate;
 					tax += taxAmount;
 					value.set("tax", taxAmount);
+				}else{
+					value.set("tax", 0);
 				}
 
 				value.set("amount", amt);
@@ -55394,8 +55390,8 @@
 		        		obj.set("deposit", total);
 		        	}
 		        }else{
-	        		alert("Over deposit to apply!");
-	        		obj.set("deposit", 0);
+		        	obj.set("deposit", 0);
+	        		alert("Over deposit to apply!");	        		
 	        	}
 
 	        	//Status
@@ -55443,17 +55439,24 @@
 			if(arg.field){
 				if(arg.field=="item"){
 					var dataRow = arg.items[0],
-						item = dataRow.item,
-						rate = obj.rate / banhji.source.getRate(item.locale, new Date(obj.issued_date));
-					
-					dataRow.set("item_id", item.id);
-					dataRow.set("measurement_id", 0);
-					dataRow.set("description", item.sale_description);
-					dataRow.set("cost", item.cost);
-					dataRow.set("price", 0);
-					dataRow.set("conversion_ratio", 1);
-					dataRow.set("rate", rate);
-					dataRow.set("locale", item.locale);
+						item = dataRow.item;
+
+					if(item.is_catalog=="1"){
+						self.addItemCatalog(dataRow.uid);
+					}else if(item.is_assembly=="1"){
+						self.addItemAssembly(dataRow.uid);
+					}else{
+						var rate = obj.rate / banhji.source.getRate(item.locale, new Date(obj.issued_date));
+
+						dataRow.set("item_id", item.id);
+						dataRow.set("measurement_id", 0);
+						dataRow.set("description", item.sale_description);
+						dataRow.set("conversion_ratio", 1);
+						dataRow.set("cost", item.cost * rate);
+						dataRow.set("price", 0);						
+						dataRow.set("rate", rate);
+						dataRow.set("locale", item.locale);
+					}
 				}else if(arg.field=="quantity" || arg.field=="price" || arg.field=="discount"){
 					self.changes();					
 				}else if(arg.field=="measurement"){
@@ -55462,6 +55465,11 @@
 					dataRow.set("measurement_id", dataRow.measurement.measurement_id);
 			        dataRow.set("price", dataRow.measurement.price * dataRow.rate);
 			        dataRow.set("conversion_ratio", dataRow.measurement.conversion_ratio);
+			    }else if(arg.field=="discount_percentage"){
+			    	var dataRow = arg.items[0],
+			    		percentageAmount = dataRow.quantity * dataRow.price * dataRow.discount_percentage;
+
+			    	dataRow.set("discount", percentageAmount);
 				}else if(arg.field=="tax_item"){
 					var dataRow = arg.items[0];
 					
@@ -55471,6 +55479,101 @@
 					self.changes();
 				}
 			}
+		},
+		addItemCatalog 			: function(uid){
+			var self = this,
+				row = this.lineDS.getByUid(uid),
+				obj = this.get("obj"),
+				item = row.item;
+
+			this.lineDS.remove(row);
+
+        	$.each(item.catalogs, function(index, value){
+				var catalogItem = banhji.source.itemDS.get(value);
+
+				if(catalogItem){
+					var rate = obj.rate / banhji.source.getRate(catalogItem.locale, new Date(obj.issued_date));
+
+					self.lineDS.add({
+						transaction_id 		: obj.id,
+						tax_item_id 		: 0,
+						item_id 			: catalogItem.id,
+						measurement_id 		: 0,
+						description 		: catalogItem.sale_description,
+						quantity 	 		: 1,
+						conversion_ratio 	: 1,
+						cost 				: catalogItem.cost * rate,
+						price 				: 0,
+						amount 				: 0,
+						discount 			: 0,
+						rate				: rate,
+						locale				: catalogItem.locale,
+						movement 			: -1,
+
+						discount_percentage : 0,
+						item 				: { id:catalogItem.id, name:catalogItem.name },
+						measurement 		: { measurement_id:"", measurement:"" },
+						tax_item 			: { id:"", name:"" }
+					});
+				}
+			});
+		},
+		addItemAssembly 		: function(uid){
+			var self = this,
+				row = this.lineDS.getByUid(uid),
+				obj = this.get("obj"),
+				item = row.item,
+				rate = obj.rate / banhji.source.getRate(item.locale, new Date(obj.issued_date));
+
+			var notExist = true;
+			$.each(this.assemblyLineDS.data(), function(index, value){
+				if(value.assembly_id==item.id){
+					notExist = false;
+
+					return false;
+				}
+			});
+
+			if(notExist){				
+				row.set("item_id", item.id);
+	        	row.set("measurement_id", item.measurement_id);
+	    		row.set("description", item.sale_description);
+	    		row.set("conversion_ratio", 1);
+		        row.set("cost", item.cost * rate);
+		        row.set("price", item.price * rate);
+		        row.set("rate", rate);
+		        row.set("locale", item.locale);
+
+		        this.assemblyDS.query({
+		        	filter:{ field:"assembly_id", value:row.item_id }
+		        }).then(function(){
+		        	var view = self.assemblyDS.view();
+
+		        	$.each(view, function(index, value){
+		        		var itemAssembly = banhji.source.itemDS.get(value.item_id);
+
+						self.assemblyLineDS.add({
+							transaction_id 		: obj.id,
+							item_id 			: value.item_id,
+							assembly_id 		: value.assembly_id,
+							measurement_id 		: value.measurement_id,
+							description 		: "",//itemAssembly.sale_description,
+							quantity 	 		: value.quantity,
+							conversion_ratio 	: value.conversion_ratio,
+							cost 				: 0,//itemAssembly.cost * rate,
+							price 				: value.price * rate,
+							amount 				: value.price * rate,
+							rate				: rate,
+							locale				: value.locale,
+							movement 			: -1
+						});
+			        });
+		        });
+	    	}else{
+	    		alert("Duplicate Item Assembly!");
+	    		row.set("item_id", 0);
+	    		row.set("item", { id:"", name:"" });
+	    	}
 		},
 		typeChanges 		: function(){
 			var obj = this.get("obj");
@@ -55482,19 +55585,7 @@
 					return false;
 				}
 			});
-		},
-		discountChanges 	: function(){
-			var obj = this.get("obj");
-
-			var total = (obj.sub_total + obj.tax) - obj.discount;
-	        var remaining = total - obj.deposit;
-
-	        this.set("total", kendo.toString(total, "c", obj.locale));
-	        this.set("remaining", kendo.toString(remaining, "c", obj.locale));
-
-	        obj.set("amount", total);
-	        obj.set("remaining", remaining);
-		},
+		},		
 		addEmpty 		 	: function(){
 			this.dataSource.data([]);
 			this.lineDS.data([]);
@@ -55570,25 +55661,26 @@
 
 			this.lineDS.add({
 				transaction_id 		: obj.id,
-				tax_item_id 		: "",
-				item_id 			: "",
+				tax_item_id 		: 0,
+				item_id 			: 0,
 				assembly_id 		: 0,
 				measurement_id 		: 0,
 				description 		: "",
 				quantity 	 		: 1,
-				conversion_ratio 	: 0,
-				price 				: 500,
-				amount 				: 500,
+				conversion_ratio 	: 1,
+				cost 				: 0,
+				price 				: 0,
+				amount 				: 0,
 				discount 			: 0,
 				tax 				: 0,
 				rate				: obj.rate,
 				locale				: obj.locale,
 				movement 			: -1,
 
+				discount_percentage : 0,
 				item 				: { id:"", name:"" },
 				measurement 		: { measurement_id:"", measurement:"" },
-				tax_item 			: { id:"", name:"" },
-				item_prices 		: []
+				tax_item 			: { id:"", name:"" }
 			});
 		},
 		removeRow 			: function(e){
@@ -79435,7 +79527,12 @@
 				{ field:"number", dir:"asc" }
 			]
 		}),
-		categoryDS 			: banhji.source.categoryDS,
+		categoryDS 			: new kendo.data.DataSource({
+			data: banhji.source.categoryList,
+			filter: [
+				{field:"item_type_id", value: 1}
+			]
+		}),
 		itemGroupDS 		: banhji.source.itemGroupDS,   
 		itemCustomerDS 	 	: dataStore(apiUrl + "items/contact"),
 		obj 				: { itemIds: []},
@@ -79617,7 +79714,12 @@
 				{ field:"number", dir:"asc" }
 			]
 		}),
-		categoryDS 			: banhji.source.categoryDS,
+		categoryDS 			: new kendo.data.DataSource({
+			data: banhji.source.categoryList,
+			filter: [
+				{field:"item_type_id", value: 1}
+			]
+		}),
 		itemGroupDS 		: banhji.source.itemGroupDS,   
 		obj 					: { itemIds: [] },
 		sortList				: banhji.source.sortList,
