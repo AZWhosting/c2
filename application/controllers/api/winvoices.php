@@ -532,9 +532,8 @@ class Winvoices extends REST_Controller {
 				$remain->where("month_of <", $row->month_of);
 				$remain->where("id <>", $row->id);
 				$remain->where("deleted", 0);
-				$remain->where("status <>", 1)->get();
+				$remain->where("status <>", 1)->get_iterated();
 				$amountOwed = 0;
-				$ZZZ = "";
 				foreach($remain as $rem) {
 					$amountOwed += $rem->amount;
 					if($rem->status == 2) {
