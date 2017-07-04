@@ -17764,15 +17764,15 @@
 					{field: "month_of <=", value: monthL}
 				);
 				if(license_id){
-					// if(bloc_id){
+					if(bloc_id){
 						para.push({field: "type", value: "Utility_Invoice"});
-						// if(this.get("boxSelect")){
-						// 	para.push({field: "box_id", value: this.get("boxSelect")});
-						// }else if(this.get("subLocationSelect")){
-						// 	para.push({field: "pole_id", value: this.get("subLocationSelect")});
-						// }else{
-						// 	para.push({field: "location_id", value: this.get("blocSelect")});
-						// }
+						if(this.get("boxSelect")){
+							para.push({field: "box_id", value: this.get("boxSelect")});
+						}else if(this.get("subLocationSelect")){
+							para.push({field: "pole_id", value: this.get("subLocationSelect")});
+						}else{
+							para.push({field: "location_id", value: this.get("blocSelect")});
+						}
 						this.invoiceCollection.dataSource.query({
 							filter: para,
 							order: { field: "worder", operator: "where_related_meter", dir: "asc" }
@@ -17796,7 +17796,7 @@
 								self.exArray.push({
 						          	cells: [
 						          	  { value: v.number },
-						              { value: v.contact.code },
+						              { value: v.contact.number },
 						              { value: v.contact.name },
 						              { value: v.issue_date },
 						              { value: (v.amount + v.amount_remain) }       
@@ -17806,9 +17806,9 @@
 							self.set("noPrint", numberNoPrint);
 						});
 						this.set("selectInv", true);
-					// }else{
-					// 	alert("Please Select Location");
-					// }
+					}else{
+						alert("Please Select Location");
+					}
 				}else{
 					alert("Please Select License");
 				}
