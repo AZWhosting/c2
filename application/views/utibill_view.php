@@ -5118,7 +5118,7 @@
 									<label ><span data-bind="text: lang.lang.action">Action</span></label>	
 									<div class="row" style="margin: 0;">					
 										<button type="button" data-role="button" data-bind="click: search" class="k-button" role="button" aria-disabled="false" tabindex="0"><i class="icon-search"></i></button>
-										<button style="display: none;" type="button" data-role="button" data-bind="click: ExportExcel" class="k-button" role="button" aria-disabled="false" tabindex="0"><i class="charts"></i> Export EX</button>
+										<button type="button" data-role="button" data-bind="click: ExportExcel" class="k-button" role="button" aria-disabled="false" tabindex="0"><i class="charts"></i> Export EX</button>
 									</div>
 		                  		</div>
 							</div>		
@@ -17764,15 +17764,15 @@
 					{field: "month_of <=", value: monthL}
 				);
 				if(license_id){
-					if(bloc_id){
+					// if(bloc_id){
 						para.push({field: "type", value: "Utility_Invoice"});
-						if(this.get("boxSelect")){
-							para.push({field: "box_id", value: this.get("boxSelect")});
-						}else if(this.get("subLocationSelect")){
-							para.push({field: "pole_id", value: this.get("subLocationSelect")});
-						}else{
-							para.push({field: "location_id", value: this.get("blocSelect")});
-						}
+						// if(this.get("boxSelect")){
+						// 	para.push({field: "box_id", value: this.get("boxSelect")});
+						// }else if(this.get("subLocationSelect")){
+						// 	para.push({field: "pole_id", value: this.get("subLocationSelect")});
+						// }else{
+						// 	para.push({field: "location_id", value: this.get("blocSelect")});
+						// }
 						this.invoiceCollection.dataSource.query({
 							filter: para,
 							order: { field: "worder", operator: "where_related_meter", dir: "asc" }
@@ -17781,10 +17781,10 @@
 							var numberNoPrint = 0;
 							self.exArray.push({
 					          	cells: [
-					          	  { value: "Number", bold: true, background: "#bbbbbb" },
-					              { value: "Contact(Abbr,code,name)", background: "#bbbbbb" },
-					              { value: "Meter", background: "#bbbbbb" },
-					              { value: "Due Date", background: "#bbbbbb" },
+					          	  { value: "Invoice Number", bold: true, background: "#bbbbbb" },
+					              { value: "Customer Code", background: "#bbbbbb" },
+					              { value: "Customer Name", background: "#bbbbbb" },
+					              { value: "Invoice Date", background: "#bbbbbb" },
 					              { value: "Amount", background: "#bbbbbb" }       
 					            ]
 					        });
@@ -17796,9 +17796,9 @@
 								self.exArray.push({
 						          	cells: [
 						          	  { value: v.number },
-						              { value: v.contact.abbr + "," + v.contact.number + "," + v.contact.name },
-						              { value: v.meter.meter_number },
-						              { value: v.due_date },
+						              { value: v.contact.code },
+						              { value: v.contact.name },
+						              { value: v.issue_date },
 						              { value: (v.amount + v.amount_remain) }       
 						            ]
 						        });
@@ -17806,9 +17806,9 @@
 							self.set("noPrint", numberNoPrint);
 						});
 						this.set("selectInv", true);
-					}else{
-						alert("Please Select Location");
-					}
+					// }else{
+					// 	alert("Please Select Location");
+					// }
 				}else{
 					alert("Please Select License");
 				}

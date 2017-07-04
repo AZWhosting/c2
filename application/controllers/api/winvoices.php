@@ -543,7 +543,7 @@ class Winvoices extends REST_Controller {
 						$Rremain->where("status <>", 1)->get();
 						
 						foreach($Rremain as $Rrem) {
-							$amountOwed = $Rrem->sub_total - $Rrem->amount;
+							$amountOwed -= $Rrem->amount;
 						}
 					} else {
 						$amountOwed += $rem->amount;
