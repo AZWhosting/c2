@@ -544,7 +544,6 @@ class Winvoices extends REST_Controller {
 					}
 				}
 				foreach($items as $item) {
-					
 					if($item->type == 'usage') {
 						$record = $item->meter_record->limit(1)->get();
 						$usage = $record->usage;
@@ -647,8 +646,7 @@ class Winvoices extends REST_Controller {
 					),
 					'amount_remain' => floatval($amountOwed),
 					'meter'=> $meter,
-					'invoice_lines'=> $lines,
-					'ZZZ' => $ZZZ
+					'invoice_lines'=> $lines
 				);
 
 			}
