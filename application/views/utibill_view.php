@@ -5118,7 +5118,7 @@
 									<label ><span data-bind="text: lang.lang.action">Action</span></label>	
 									<div class="row" style="margin: 0;">					
 										<button type="button" data-role="button" data-bind="click: search" class="k-button" role="button" aria-disabled="false" tabindex="0"><i class="icon-search"></i></button>
-										<button type="button" data-role="button" data-bind="click: ExportExcel" class="k-button" role="button" aria-disabled="false" tabindex="0"><i class="charts"></i> Export EX</button>
+										<button style="display: none;" type="button" data-role="button" data-bind="click: ExportExcel" class="k-button" role="button" aria-disabled="false" tabindex="0"><i class="charts"></i> Export EX</button>
 									</div>
 		                  		</div>
 							</div>		
@@ -5276,7 +5276,7 @@
 				<table >
 					<tr>
 						<td width="140" style><p>លេខ​វិក្កយ​បត្រ</p></td>
-						<td><p>#:number#</p></td>
+						<td><p>#:number#-#=banhji.institute.id#</p></td>
 					</tr>
 					<tr>
 						<td style><p>ថ្ងៃ​ចេញ វិក្កយ​បត្រ</p></td>
@@ -12716,32 +12716,32 @@
 		lang 				: langVM,
 		dataSource			: dataStore(apiUrl+"dashboards/home"),
 		summaryDS			: dataStore(apiUrl+"accounting_reports/financial_snapshot"),
-		graphDS  			: new kendo.data.DataSource({
-			transport: {
-				read 	: {
-					url: apiUrl + "dashboards/home_graph",
-					type: "GET",
-					headers: banhji.header,
-					dataType: 'json'
-				}
-			},
-			schema 	: {
-				model: {
-					id: 'id'
-				},
-				data: 'results',
-				total: 'count'
-			},
-			sort: {
-                field: "month",
-                dir: "asc"
-            },								
-			batch: true,			
-			serverFiltering: true,
-			serverSorting: true,
-			serverPaging: true,
-			pageSize: 100
-		}),		
+		// graphDS  			: new kendo.data.DataSource({
+		// 	transport: {
+		// 		read 	: {
+		// 			url: apiUrl + "dashboards/home_graph",
+		// 			type: "GET",
+		// 			headers: banhji.header,
+		// 			dataType: 'json'
+		// 		}
+		// 	},
+		// 	schema 	: {
+		// 		model: {
+		// 			id: 'id'
+		// 		},
+		// 		data: 'results',
+		// 		total: 'count'
+		// 	},
+		// 	sort: {
+  //               field: "month",
+  //               dir: "asc"
+  //           },								
+		// 	batch: true,			
+		// 	serverFiltering: true,
+		// 	serverSorting: true,
+		// 	serverPaging: true,
+		// 	pageSize: 100
+		// }),		
 		companyLogo 		: '',
 		modules 			: new kendo.data.DataSource({
 			transport: {
@@ -12819,41 +12819,40 @@
 		pageLoad 			: function(){
 			var self = this;
 
-			this.graphDS.fetch();
+			// this.graphDS.fetch();
 			banhji.wDashBoard.dashSource.read();
-			this.dataSource.query({
-				filter: [],								
-				page: 1,
-				pageSize: 5
-			}).then(function(){
-				var view = self.dataSource.view();				
+			// this.dataSource.query({
+			// 	filter: [],								
+			// 	page: 1,
+			// 	pageSize: 5
+			// }).then(function(){
+			// 	var view = self.dataSource.view();				
 				
-				self.set("ar", kendo.toString(view[0].ar, banhji.locale));
-				self.set("ar_open", kendo.toString(view[0].ar_open, "n0", banhji.locale));
-				self.set("ar_customer", kendo.toString(view[0].ar_customer, "n0", banhji.locale));
-				self.set("ar_overdue", kendo.toString(view[0].ar_overdue, "n0", banhji.locale));
+			// 	self.set("ar", kendo.toString(view[0].ar, banhji.locale));
+			// 	self.set("ar_open", kendo.toString(view[0].ar_open, "n0", banhji.locale));
+			// 	self.set("ar_customer", kendo.toString(view[0].ar_customer, "n0", banhji.locale));
+			// 	self.set("ar_overdue", kendo.toString(view[0].ar_overdue, "n0", banhji.locale));
+			// 	self.set("ap", kendo.toString(view[0].ap, banhji.locale));
+			// 	self.set("ap_open", kendo.toString(view[0].ap_open, "n0"));
+			// 	self.set("ap_vendor", kendo.toString(view[0].ap_vendor, "n0"));
+			// 	self.set("ap_overdue", kendo.toString(view[0].ap_overdue, "n0"));
+			// });
 
-				self.set("ap", kendo.toString(view[0].ap, banhji.locale));
-				self.set("ap_open", kendo.toString(view[0].ap_open, "n0"));
-				self.set("ap_vendor", kendo.toString(view[0].ap_vendor, "n0"));
-				self.set("ap_overdue", kendo.toString(view[0].ap_overdue, "n0"));
-			});
-
-			this.summaryDS.query({
-				filter: [],								
-				page: 1,
-				pageSize: 5
-			}).then(function(){
-				var view = self.summaryDS.view();				
+			// this.summaryDS.query({
+			// 	filter: [],								
+			// 	page: 1,
+			// 	pageSize: 5
+			// }).then(function(){
+			// 	var view = self.summaryDS.view();				
 				
-				self.set("income", kendo.toString(view[0].income, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
-				self.set("expense", kendo.toString(view[0].expense, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
-				self.set("net_income", kendo.toString(view[0].net_income, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
+			// 	self.set("income", kendo.toString(view[0].income, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
+			// 	self.set("expense", kendo.toString(view[0].expense, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
+			// 	self.set("net_income", kendo.toString(view[0].net_income, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
 				
-				self.set("asset", kendo.toString(view[0].asset, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
-				self.set("liability", kendo.toString(view[0].liability, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
-				self.set("equity", kendo.toString(view[0].equity, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
-			});										
+			// 	self.set("asset", kendo.toString(view[0].asset, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
+			// 	self.set("liability", kendo.toString(view[0].liability, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
+			// 	self.set("equity", kendo.toString(view[0].equity, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
+			// });										
 		}
 	});
 	banhji.searchAdvanced =  kendo.observable({
@@ -24976,7 +24975,6 @@
 				parameterMap: function(options, operation) {
 					if(operation === 'read') {
 						return {
-							limit: options.take,
 							page: options.page,
 							filter: options.filter
 						};
@@ -25064,10 +25062,7 @@
 	    totalUsage: 0,
 	    totalUser: 0,
 	    totalDeposit: 0,
-	    avgUsage: 0,
-	    goBackUp: function(){
-	    	window.location.replace("<?php echo base_url(); ?>backup/index/"+banhji.institute.id);
-	    }
+	    avgUsage: 0
 	});
 	banhji.waterCenter = kendo.observable({
 		lang 				: langVM,
