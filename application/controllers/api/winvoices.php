@@ -541,7 +541,7 @@ class Winvoices extends REST_Controller {
 						$Rremain->where("reference_id", $rem->id);
 						$Rremain->where("deleted <>", 1);
 						$Rremain->where("status <>", 1)->get();
-						
+						 
 						foreach($Rremain as $Rrem) {
 							$amountOwed -= $Rrem->amount;
 						}
