@@ -17783,7 +17783,7 @@
 							self.exArray.push({
 					          	cells: [
 					          	  { value: "Number", bold: true, background: "#bbbbbb" },
-					              { value: "Contact", background: "#bbbbbb" },
+					              { value: "Contact(Abbr,code,name)", background: "#bbbbbb" },
 					              { value: "Meter", background: "#bbbbbb" },
 					              { value: "Due Date", background: "#bbbbbb" },
 					              { value: "Amount", background: "#bbbbbb" }       
@@ -17797,7 +17797,7 @@
 								self.exArray.push({
 						          	cells: [
 						          	  { value: v.number },
-						              { value: v.contact.name },
+						              { value: v.contact.abbr + "," + v.contact.number + "," + v.contact.name },
 						              { value: v.meter.meter_number },
 						              { value: v.due_date },
 						              { value: (v.amount + v.amount_remain) }       
