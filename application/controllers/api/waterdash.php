@@ -90,7 +90,7 @@ class Waterdash extends REST_Controller {
 		$trx->where('type', 'Utility_Invoice');
 		$trx->where('status <>', 1);
 		$trx->where('deleted <>', 1);
-		$trx->get();
+		$trx->get_iterated();
 
 		$invoices = 0;
 		$customer = array();
@@ -109,6 +109,24 @@ class Waterdash extends REST_Controller {
 
 			$invoices += 1;
 			$amount += $invoice->amount;
+			if($invoice->status == 2){
+				$qu = $invoice->transaction->select('amount')->where('type', 'Cash_Receipt')->get();
+				foreach($qu as $q){
+					$amount -= $q->amount;
+				};
+			}
+
+			// if($invoice->status == 2){
+			// 	$qu = $invoice->transaction->select('amount')->where('type', 'Cash_Receipt')->get();
+			// 	$a = 0;
+			// 	foreach($qu as $q){
+			// 		$a += $q->amount;
+			// 	};
+			// 	$fnamount = $invoice->amount - $a;
+			// }else{
+			// 	$fnamount = $invoice->amount;
+			// }
+			// $amount += $fnamount;
 		}
 
 		$data[] = array(
@@ -157,7 +175,7 @@ class Waterdash extends REST_Controller {
 		// $obj->include_related('location', 'id');
 		$obj->include_related_count('location');
 		// $obj->include_related_count('location/contact');
-		$obj->get();
+		$obj->get_iterated();
 		if($obj->exists()) {
 			foreach($obj as $value) {
 				$location = new Location(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
@@ -266,7 +284,6 @@ class Waterdash extends REST_Controller {
 
 		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
-
 		//Sort
 		if(!empty($sort) && isset($sort)){					
 			foreach ($sort as $value) {
@@ -290,7 +307,7 @@ class Waterdash extends REST_Controller {
 		$obj->where("issued_date >=", date("Y")."-01-01");
 		$obj->where("issued_date <=", date("Y")."-12-31");						
 		$obj->order_by("issued_date");	
-		$obj->get();
+		$obj->get_iterated();
 		$temp = array();
 
 		if($obj->exists()){
@@ -302,12 +319,14 @@ class Waterdash extends REST_Controller {
 					$temp["$invoiceMonth"]['amount'] = floatval($value->amount);
 				}
 			}
+			
 			foreach($temp as $key => $value) {
 				$data["results"][] = array(					
 				   	"amount" 		=> floatval($value['amount']),				   	
 				   	"month"			=> $key				   	
 				);
 			}
+
 		}else{
 			$data["results"][] = array(					
 			   	"amount" 		=> 0,			   	
