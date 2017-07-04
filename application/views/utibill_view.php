@@ -5118,6 +5118,7 @@
 									<label ><span data-bind="text: lang.lang.action">Action</span></label>	
 									<div class="row" style="margin: 0;">					
 										<button type="button" data-role="button" data-bind="click: search" class="k-button" role="button" aria-disabled="false" tabindex="0"><i class="icon-search"></i></button>
+										<button type="button" data-role="button" data-bind="click: ExportExcel" class="k-button" role="button" aria-disabled="false" tabindex="0"><i class="charts"></i> Export EX</button>
 									</div>
 		                  		</div>
 							</div>		
@@ -17644,7 +17645,7 @@
 		        });
 	        }
 	        this.preparePrint();
-		},	
+		},
 		isCheck 		: function(e) {
 	    	var that = this;
 	    	this.set("chkAll", false);
@@ -17739,6 +17740,7 @@
 			});
 		},
 		noPrintIDTransaction: [],
+		exArray 			: [],
 		search 				: function(){
 	    	var monthOfSearch = this.get("monthSelect"),
 			license_id = this.get("licenseSelect"),
@@ -17747,6 +17749,7 @@
 			this.clearAll();
 			this.set("noPrint", 0);
 			var para = [];	
+			this.exArray = [];
 			if(monthOfSearch){
 				var monthOf = new Date(monthOfSearch);
 				monthOf.setDate(1);
@@ -17775,12 +17778,31 @@
 							filter: para,
 							order: { field: "worder", operator: "where_related_meter", dir: "asc" }
 						}).then(function(e){
+							
 							var numberNoPrint = 0;
+							self.exArray.push({
+					          	cells: [
+					          	  { value: "Number", bold: true, background: "#bbbbbb" },
+					              { value: "Contact", background: "#bbbbbb" },
+					              { value: "Meter", background: "#bbbbbb" },
+					              { value: "Due Date", background: "#bbbbbb" },
+					              { value: "Amount", background: "#bbbbbb" }       
+					            ]
+					        });
 							$.each(self.invoiceCollection.dataSource.data(), function(i, v){
 								if(v.print_count == 0){
 									self.noPrintIDTransaction.push(v.id);
 									numberNoPrint++;
 								}
+								self.exArray.push({
+						          	cells: [
+						          	  { value: v.number },
+						              { value: v.contact.name },
+						              { value: v.meter.meter_number },
+						              { value: v.due_date },
+						              { value: (v.amount + v.amount_remain) }       
+						            ]
+						        });
 							});
 							self.set("noPrint", numberNoPrint);
 						});
@@ -17873,6 +17895,28 @@
 			}else{
 				alert("Please Select Template!");
 			}
+		},
+		ExportExcel 		: function(){
+	        if(this.exArray.length > 1) {
+        		$("#loadImport").css("display","none");
+        		var workbook = new kendo.ooxml.Workbook({
+		          sheets: [
+		            {
+		              columns: [
+		                { autoWidth: true },
+		                { autoWidth: true },
+		                { autoWidth: true },
+		                { autoWidth: true },
+		                { autoWidth: true }
+		              ],
+		              title: "Receive",
+		              rows: this.exArray
+		            }
+		          ]
+		        });
+		        //save the file as Excel file with extension xlsx
+		        kendo.saveAs({dataURI: workbook.toDataURL(), fileName: "Receive.xlsx"});
+	        }
 		},
 		cancel 				: function(){
 			this.invoiceCollection.dataSource.data([]);
@@ -25234,7 +25278,6 @@
 		},
 		loadData 			: function(){
 			var obj = this.get("obj");
-
 			this.loadSummary(obj.id);
 			this.setCurrencyCode();
 			this.attachmentDS.filter({ field:"contact_id", value: obj.id });
@@ -25453,7 +25496,6 @@
 		propertyID 			: 0,
 		selectedRow			: function(e){
 			$("#tabMS").click();
-
 			var data = e.data, self = this;
 			this.set('meter_visible', true);
 			this.set('propertyID', data.id);
