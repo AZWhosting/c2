@@ -17928,7 +17928,7 @@
 			this.set("noPrint", 0);
 			this.clearAll();
 			banhji.router.navigate("/");
-		}
+		} 
 	});
 	banhji.InvoicePrint = kendo.observable({
 		lang 				: langVM,
