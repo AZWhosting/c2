@@ -534,19 +534,14 @@ class Winvoices extends REST_Controller {
 				$remain->where("deleted", 0);
 				$remain->where("status <>", 1)->get();
 				$amountOwed = 0;
+				$ZZZ = "";
 				foreach($remain as $rem) {
+					$amountOwed += $rem->amount;
 					if($rem->status == 2) {
-						$Rremain = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-						$Rremain->where("type", "Cash_Receipt");
-						$Rremain->where("reference_id", $rem->id);
-						$Rremain->where("deleted <>", 1);
-						$Rremain->where("status <>", 1)->get();
-						 
-						foreach($Rremain as $Rrem) {
-							$amountOwed -= $Rrem->amount;
-						}
-					} else {
-						$amountOwed += $rem->amount;
+						$qu = $rem->transaction->select('amount')->where('type', 'Cash_Receipt')->get();
+						foreach($qu as $q){
+							$amountOwed -= $q->amount;
+						};
 					}
 				}
 				foreach($items as $item) {
@@ -653,7 +648,8 @@ class Winvoices extends REST_Controller {
 					),
 					'amount_remain' => floatval($amountOwed),
 					'meter'=> $meter,
-					'invoice_lines'=> $lines
+					'invoice_lines'=> $lines,
+					'ZZZ' => $ZZZ
 				);
 
 			}
