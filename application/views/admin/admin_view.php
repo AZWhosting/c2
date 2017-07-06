@@ -3653,43 +3653,6 @@
         } else {
           window.location.replace("<?php echo base_url(); ?>login");
         }
-          
-
-        // banhji.profileDS.read().then(function(e){
-        //   banhji.profile.set('currentID', banhji.profileDS.data()[0]);
-        //   layout.showIn('#menu', menu);
-        //   if(banhji.profileDS.data()[0].role == 1) {
-        //     banhji.profile.set('getRole', "Admin");
-        //   }
-
-        //   var cognitoUser = userPool.getCurrentUser();
-        //   if(cognitoUser !== null) {
-        //     banhji.aws.getImage(banhji.profileDS.data()[0].profile_photo);
-        //     cognitoUser.getSession(function(err, result){
-        //       if(result) {
-
-        //         AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-        //           IdentityPoolId: 'us-east-1:35445541-da4c-4dbb-b83f-d1d0301a26a9',
-        //           Logins: {
-        //             'cognito-idp.us-east-1.amazonaws.com/us-east-1_56S0nUDS4' : result.getIdToken().getJwtToken()
-        //           }
-        //         });
-        //       }
-        //     });
-        //   }
-        //   console.log('init');
-        // });
-        // 
-        // localforage.getItem('user').then(function(value) {
-        //   if(value == null) {
-        //     window.location.replace(baseUrl + "login");
-        //   }
-        // }).catch(function(err) {
-        //   console.log(err);
-        // });
-  
-        // var cognitoUser = userPool.getCurrentUser();
-        // }
       });
     </script>
   </body>
