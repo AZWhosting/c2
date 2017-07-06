@@ -3360,18 +3360,18 @@
               let mnth= (d.getMonth() +1);
               let m = mnth < 10 ? '0'+mnth : mnth;
               banhji.company.get('current').set('fiscal_date', day +"-"+ m);
-              var appData = JSON.parse(localStorage.getItem('userData/user'));
-              localforage.removeItem('user').then(function() {
-                var data = {id: appData.id, username: appData.username, role: appData.role, institute: res.results[0]};
-                localforage.setItem('user', data).then(function (value) {
-                    // console.log(value);
-                }).catch(function(err) {
-                    // console.log(err);
-                });
-              }).catch(function(err) {
-                  // This code runs if there were any errors
-                  // console.log(err);
-              });
+              // var appData = JSON.parse(localStorage.getItem('userData/user'));
+              // localforage.removeItem('user').then(function() {
+              //   var data = {id: appData.id, username: appData.username, role: appData.role, institute: res.results[0]};
+              //   localforage.setItem('user', data).then(function (value) {
+              //       // console.log(value);
+              //   }).catch(function(err) {
+              //       // console.log(err);
+              //   });
+              // }).catch(function(err) {
+              //     // This code runs if there were any errors
+              //     // console.log(err);
+              // });
 
               banhji.router.navigate('company');
             } else {
@@ -3582,8 +3582,7 @@
           banhji.router.navigate("profile/"+banhji.profileDS.data()[0].id);
         } else {
           layout.showIn("#container", instEdit);
-        }
-        
+        }        
       });
 
       banhji.router.route('profile', function() {
