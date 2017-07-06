@@ -47,7 +47,7 @@
               <div class="site-header-shown">
                 <div class="dropdown user-menu">
                   <button class="dropdown-toggle" id="dd-user-menu" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <span style="color:#fff;" data-bind="text: currentID.username"></span>
+                    <span style="color:#fff;" data-bind="text: cache.username"></span>
                   </button>
                   <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dd-user-menu">
                     <a class="dropdown-item" href="#" data-bind="click: logOut"><span class="font-icon glyphicon glyphicon-log-out"></span>Logout</a>
@@ -68,25 +68,25 @@
                       <section class="box-typical">
                           <div class="profile-card">
                               <div class="profile-card-photo">
-                                  <img data-bind="attr: {src: userProfile.currentID.profile_photo.url}">
+                                  <img data-bind="attr: {src: userDS.data()[0].profile_photo.url}">
                               </div>
                               <div class="profile-card-name">
-                                  <span data-bind="text: userProfile.currentID.last_name"></span>&nbsp;
-                                  <span data-bind="text: userProfile.currentID.first_name"></span>
+                                  <span data-bind="text: userDS.data()[0].last_name"></span>&nbsp;
+                                  <span data-bind="text: userDS.data()[0].first_name"></span>
                               </div>
                               <div class="profile-card-status">
                                   Registered Email: <span><a href="mailto:somsreypoch@gmail.com">
-                                    <span data-bind="text: userProfile.currentID.username"></span>
+                                    <span data-bind="text: userDS.data()[0].username"></span>
                                   </a></span>
                               </div>
                                <div class="profile-card-status">
-                              <strong>Joined In</strong>: <span data-bind="text: userProfile.currentID.joined"></span>
+                              <strong>Joined In</strong>: <span data-bind="text: userDS.data()[0].joined"></span>
                           </div>
                           <div class="profile-card-status">
-                              <strong>Logged In</strong>: <span data-bind="text: userProfile.currentID.logged_in"></span>
+                              <strong>Logged In</strong>: <span data-bind="text: userDS.data()[0].logged_in"></span>
                           </div>
                           <div class="profile-card-status">
-                              <strong>Assigned Role</strong>: <span data-bind="text: userProfile.getRole"></span>
+                              <strong>Assigned Role</strong>: <span data-bind="text: userDS.data()[0].role"></span>
                           </div>
                           </div>
                           <div class="profile-statistic tbl" style="margin-top: 15px;">
@@ -113,7 +113,7 @@
                                           Total Users</h4>
                                   </div>
                                   <div class="widget-body alert alert-primary" style="background: #496cad;">
-                                      <div align="center" class="text-large strong"><span data-bind="text: data"></span></div>
+                                      <div align="center" class="text-large strong"><span data-bind="text: totalUsers"></span></div>
                                       <a style="color: #fff;">Users</a>
                                   </div>
                               </div>
@@ -1435,7 +1435,6 @@
         name: 'userData'
       });
 
-
       var image = kendo.Class.extend({
         dataSource: new kendo.data.DataSource({
           transport: {
@@ -2153,11 +2152,11 @@
         dataSource: banhji.profileDS,
         checkRole  : function(e) {
           e.preventDefault();
-        if(JSON.parse(localStorage.getItem('userData/user')).role == 1) {
-                window.location.replace(baseUrl + "rrd/");
-              } else {
-                window.location.replace("<?php echo base_url(); ?>admin");
-              }
+          if(JSON.parse(localStorage.getItem('userData/user')).role == 1) {
+            window.location.replace(baseUrl + "rrd/");
+          } else {
+            window.location.replace("<?php echo base_url(); ?>admin");
+          }
         },
         showAdmin: function() {
           if(JSON.parse(localStorage.getItem('userData/user')).role == 1) {
@@ -3244,18 +3243,6 @@
           });
           return dfd.promise();
         },
-        goUser: function() {
-          banhji.router.navigate('userlist');
-          // mainDash.showIn("#placeholder", user);
-        },
-        goEmployee: function() {
-          banhji.router.navigate('employeelist');
-          // mainDash.showIn("#placeholder", employee);
-        },
-        goCompany: function() {
-          banhji.router.navigate('company');
-          // mainDash.showIn("#placeholder", company);
-        },
         showLogo: function(e) {
           e.preventDefault();
           this.get('showLogoEdit') == true ? this.set('showLogoEdit', false) : this.set('showLogoEdit', true);
@@ -3442,10 +3429,41 @@
         }
       });
 
+      banhji.app = kendo.observable({
+        cache: null,
+        userDS: banhji.profile.dataSource,
+        users: banhji.users,
+        totalUsers: 0,
+        appSub: 0,
+        lastLogin: 0,
+        userProfile: banhji.profile,
+        goUser: function() {
+          banhji.router.navigate('userlist');
+          // mainDash.showIn("#placeholder", user);
+        },
+        goEmployee: function() {
+          banhji.router.navigate('employeelist');
+          // mainDash.showIn("#placeholder", employee);
+        },
+        goCompany: function() {
+          banhji.router.navigate('company');
+          // mainDash.showIn("#placeholder", company);
+        },
+        goModule    : function() {
+          // banhji.moduleDS.filter({field: 'id', value: JSON.parse(localStorage.getItem('userData/user')).institute.id});
+          // mainDash.showIn("#placeholder", instituteModule);
+          banhji.router.navigate("");
+        },
+        goProfile   : function() {
+          banhji.profile.set('currentID', this.userDS.data()[0]);
+          banhji.router.navigate("profile");
+        }
+      });
+
       // index view
       var layout = new kendo.Layout('#placeholder');
-      var menu = new kendo.View('#header-menu', {model: banhji.profile});
-      var mainDash = new kendo.Layout('#companyDash', {model: banhji.company});
+      var menu = new kendo.View('#header-menu', {model: banhji.app});
+      var mainDash = new kendo.Layout('#companyDash', {model: banhji.app});
       var company = new kendo.Layout('#template-placeholder-company', {model: banhji.company});
       var dash = new kendo.View('#template-dashboard', {model: banhji.company});
       var user = new kendo.View('#template-placeholder-user', {model: banhji.users});
@@ -3469,67 +3487,45 @@
       // router initization
       banhji.router = new kendo.Router({
         init: function() {
-            if(userPool.getCurrentUser()) {
-              layout.render("#main");
-              
-              institute = JSON.parse(localStorage.getItem('userData/user')) != null ? JSON.parse(localStorage.getItem('userData/user')).institute.id : 0;
-              
-            } else {
-              window.location.replace("<?php echo base_url(); ?>login");
-            }
+          layout.render("#main");
         },
         routeMissing: function(e) {
-            // banhji.view.layout.showIn("#layout-view", banhji.view.missing);
-            console.log("no resource found.")
+          console.log("no resource found.")
         }
       });
 
       // start here
       banhji.router.route('/', function() {
-        var admin = JSON.parse(localStorage.getItem('userData/user')) != null ? JSON.parse(localStorage.getItem('userData/user')).role : 0;
-        if(admin != 1) {
-          banhji.users.users.filter([
-            {field: 'id', value: JSON.parse(localStorage.getItem('userData/user')) != null ? JSON.parse(localStorage.getItem('userData/user')).institute.id : 0},
-            {field: 'id', operator: 'user', value:JSON.parse(localStorage.getItem('userData/user')) != null ? JSON.parse(localStorage.getItem('userData/user')).id : 0}
-          ]);
-          banhji.users.users.bind('requestEnd', function(e){
-            if(e.response) {
-              banhji.users.setCurrent(e.response.results[0]);
-              banhji.users.modules.filter({field: 'id', value: JSON.parse(localStorage.getItem('userData/user')) != null ? JSON.parse(localStorage.getItem('userData/user')).id : 0});
-              layout.showIn("#container", mainDash);
-              mainDash.showIn("#placeholder", profileMod);
-            }
-          });
-        } else {
           banhji.companyDS.fetch(function() {
             banhji.company.set('data', banhji.companyDS.data()[0]);
-            banhji.moduleDS.filter({field: 'id', value: JSON.parse(localStorage.getItem('userData/user')) != null ? JSON.parse(localStorage.getItem('userData/user')).institute.id : 0});
-            banhji.moduleDS.bind('requestEnd', function(e){
-              if(e.response) {
-                banhji.company.setCurrent(banhji.companyDS.data()[0]);
+            banhji.moduleDS.query({
+              filter: [
+                {field: 'id', value: JSON.parse(localStorage.getItem('userData/user')) != null ? JSON.parse(localStorage.getItem('userData/user')).institute.id : 0}
+              ]})
+            .then(function(){
+              banhji.company.setCurrent(banhji.companyDS.data()[0]);
                 
-                for(let i = 0; i < e.response.results.length; i++) {
-                  if(e.response.results[i].id == 12) {
-                    banhji.users.set('showWater', false);
-                    break;
-                  }
+              for(let i = 0; i < banhji.moduleDS.data().length; i++) {
+                if(banhji.moduleDS.data()[i].id == 12) {
+                  banhji.users.set('showWater', false);
+                  break;
                 }
-                let d = new Date(banhji.company.get('current').fiscal_date);
-                let day = d.getDate() < 10 ? '0'+ d.getDate() : d.getDate();
-                let mnth= (d.getMonth() +1);
-                let m = mnth < 10 ? '0'+mnth : mnth;
-                banhji.company.get('current').set('fiscal_date', day +"-"+m);
-                //
-                banhji.company.set('appSub', e.response.results.length || 0);
-                banhji.company.set('data', banhji.companyDS.data()[0].users);
-                banhji.company.set('lastLogin', banhji.companyDS.data()[0].lastLogin);
-                // console.log(e.response.results[0]);
-                banhji.userDS.filter([
-                  {field: 'id', value: institute.id},
-                  {field: 'id <>', operator: "user", value: JSON.parse(localStorage.getItem('userData/user')) != null ? JSON.parse(localStorage.getItem('userData/user')).id : 0}
-                ]);
-              }            
+              }
+              let d = new Date(banhji.company.get('current').fiscal_date);
+              let day = d.getDate() < 10 ? '0'+ d.getDate() : d.getDate();
+              let mnth= (d.getMonth() +1);
+              let m = mnth < 10 ? '0'+mnth : mnth;
+              banhji.company.get('current').set('fiscal_date', day +"-"+m);
+              //
+              banhji.app.set('appSub', banhji.moduleDS.data().length || 0);
+              banhji.app.set('totalUsers', banhji.companyDS.data()[0].users);
+              banhji.app.set('lastLogin', banhji.companyDS.data()[0].lastLogin);
+              
+              banhji.app.userDS.filter([
+                {field: 'id', operator: 'user', value: banhji.app.get('cache').id}
+              ]);
             });
+            
             banhji.users.modules.filter({field: 'id', value: JSON.parse(localStorage.getItem('userData/user')) != null ? JSON.parse(localStorage.getItem('userData/user')).id : 0});
             banhji.users.modules.bind('requestEnd', function(e){
               if(e.type === 'read' && e.response) {
@@ -3540,7 +3536,6 @@
               }
             });
           });
-        }
       });
 
       banhji.router.route('userlist/new', function() {
@@ -3585,30 +3580,14 @@
       banhji.router.route('company/edit', function() {
         if(banhji.profileDS.data()[0] && banhji.profileDS.data()[0].role != 1) {
           banhji.router.navigate("profile/"+banhji.profileDS.data()[0].id);
+        } else {
+          layout.showIn("#container", instEdit);
         }
-        layout.showIn("#container", instEdit);
+        
       });
 
       banhji.router.route('profile', function() {
         layout.showIn("#container", profile);
-        // if(banhji.users.get('current')){
-        //   profile.showIn("#profile-placeholder", profileMod);
-        //   banhji.users.modules.filter({field: 'id', value: id});
-        // } else {
-        //   banhji.users.users.filter([
-        //     {field: 'id', value: JSON.parse(localStorage.getItem('userData/user')).institute.id},
-        //     {field: 'id', operator: 'user', value: id}
-        //     ]);
-        //   banhji.users.users.bind('requestEnd', function(e){
-        //     if(e.response) {
-        //       banhji.users.setCurrent(e.response.results[0]);
-        //       banhji.users.modules.filter({field: 'id', value: id});
-        //       profile.showIn("#profile-placeholder", profileMod);
-        //     }
-        //   });
-        // }
-        
-        // banhji.users.setCurrent(banhji.users.users.get(id));
       });
 
       banhji.router.route('assignto/:id', function(id) {
@@ -3665,42 +3644,53 @@
         mainDash.showIn("#placeholder", water);
       });
 
-
       $(document).ready(function() {
-        banhji.profileDS.read().then(function(e){
-          banhji.profile.set('currentID', banhji.profileDS.data()[0]);
-          layout.showIn('#menu', menu);
-          if(banhji.profileDS.data()[0].role == 1) {
-            banhji.profile.set('getRole', "Admin");
-          }
+        var user = JSON.parse(localStorage.getItem('userData/user')) != null ? JSON.parse(localStorage.getItem('userData/user')):null;
+        if(user != null) {
+          banhji.app.set('cache', user);
+          layout.showIn("#menu", menu);
+          banhji.router.start();
+          banhji.router.navigate('');
+        } else {
+          window.location.replace("<?php echo base_url(); ?>login");
+        }
+          
 
-          var cognitoUser = userPool.getCurrentUser();
-          if(cognitoUser !== null) {
-            banhji.aws.getImage(banhji.profileDS.data()[0].profile_photo);
-            cognitoUser.getSession(function(err, result){
-              if(result) {
+        // banhji.profileDS.read().then(function(e){
+        //   banhji.profile.set('currentID', banhji.profileDS.data()[0]);
+        //   layout.showIn('#menu', menu);
+        //   if(banhji.profileDS.data()[0].role == 1) {
+        //     banhji.profile.set('getRole', "Admin");
+        //   }
 
-                AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-                  IdentityPoolId: 'us-east-1:35445541-da4c-4dbb-b83f-d1d0301a26a9',
-                  Logins: {
-                    'cognito-idp.us-east-1.amazonaws.com/us-east-1_56S0nUDS4' : result.getIdToken().getJwtToken()
-                  }
-                });
-              }
-            });
-          }
-          console.log('init');
-        });
-        banhji.router.start();
-        localforage.getItem('user').then(function(value) {
-          if(value == null) {
-            window.location.replace(baseUrl + "login");
-          }
-        }).catch(function(err) {
-          console.log(err);
-        });
+        //   var cognitoUser = userPool.getCurrentUser();
+        //   if(cognitoUser !== null) {
+        //     banhji.aws.getImage(banhji.profileDS.data()[0].profile_photo);
+        //     cognitoUser.getSession(function(err, result){
+        //       if(result) {
+
+        //         AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+        //           IdentityPoolId: 'us-east-1:35445541-da4c-4dbb-b83f-d1d0301a26a9',
+        //           Logins: {
+        //             'cognito-idp.us-east-1.amazonaws.com/us-east-1_56S0nUDS4' : result.getIdToken().getJwtToken()
+        //           }
+        //         });
+        //       }
+        //     });
+        //   }
+        //   console.log('init');
+        // });
+        // 
+        // localforage.getItem('user').then(function(value) {
+        //   if(value == null) {
+        //     window.location.replace(baseUrl + "login");
+        //   }
+        // }).catch(function(err) {
+        //   console.log(err);
+        // });
   
-        var cognitoUser = userPool.getCurrentUser();
+        // var cognitoUser = userPool.getCurrentUser();
+        // }
       });
     </script>
   </body>
