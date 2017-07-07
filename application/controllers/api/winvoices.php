@@ -119,6 +119,8 @@ class Winvoices extends REST_Controller {
 								'id' => $value->id,
 								'meter_number' => $value->number,
 								'location_id' => $value->location_id,
+								'pole_id' => $value->pole_id,
+								'box_id' => $value->box_id,
 								'multiplier' => intval($value->multiplier)
 							);
 							$tmp["$value->number"]['items'][] = array(
@@ -443,10 +445,8 @@ class Winvoices extends REST_Controller {
 		$sort 	 	= $this->get("sort");
 		$data["results"] = [];
 		$data["count"] = 0;
-
 		$table = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$data = array();
-
 		//Sort
 		if(!empty($sort) && isset($sort)){
 			foreach ($sort as $value) {
@@ -457,7 +457,6 @@ class Winvoices extends REST_Controller {
 				}
 			}
 		}
-
 		//Filter
 		if(!empty($filter) && isset($filter)){
 	    	foreach ($filter["filters"] as $value) {
@@ -475,8 +474,6 @@ class Winvoices extends REST_Controller {
 		$table->where('status <>', 1);
 		$table->where('deleted', 0);
 		$table->where('type','Utility_Invoice');
-		//$table->get();
-
 		//Results
 		if($page && $limit){
 			$table->get_paged_iterated($page, $limit);
@@ -485,30 +482,25 @@ class Winvoices extends REST_Controller {
 			$table->get_iterated();
 			$data["count"] = $table->result_count();
 		}
-
 		if($table->exists()){
-
 			foreach($table as $row) {
-				//echo $row->id."__";
 				$meter = null;
 				$invoiceLine = new winvoice_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				$invoiceLine->include_related('meter_record/meter', array("id", "number", "worder"));
-
+				$invoiceLine->include_related('meter_record/meter', array("id", "number", "worder", "box_id"));
 				$location = $row->location->get_raw();
-
 				$invoiceLine->where('transaction_id', $row->id);
 				$invoiceLine->limit(1)->get();
 				if($invoiceLine->exists()) {
 					foreach($invoiceLine as $line) {
 						$box = new Location(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-						$box->where("id", $line->meter_record_box_id)->limit(1)->get();
+						$box->where("id", $line->meter_record_meter_box_id)->limit(1)->get();
 						if($box->exists()){
 							$meter = array(
 								'meter_number'   => $line->meter_record_meter_number,
 								'meter_order'   => $line->meter_record_meter_worder,
 								'meter_id'   => $line->meter_record_meter_id,
 								'location' => $location->result(),
-								'box' => $box
+								'box' => $box->name
 							);
 						}else{
 							$meter = array(
@@ -516,7 +508,7 @@ class Winvoices extends REST_Controller {
 								'meter_order'   => $line->meter_record_meter_worder,
 								'meter_id'   => $line->meter_record_meter_id,
 								'location' => $location->result(),
-								'box' => []
+								'box' => ""
 							);
 						}
 					}

@@ -73,7 +73,11 @@ var	km_KH = {
 	"cash_management" :  "ការ​គ្រប់​គ្រង់​សាច់​ប្រាក់",
 	"web_store" : "",
 	//Customer Modual "មណ្ឌល​អតិថិជន",
-	"save_new" : "រក្សាទុក ឬ ថ្មី",
+	"save_new" : "រក្សាទុក និង បង្កើតថ្មី",
+	"save_close" : "រក្សាទុក​ និង បិទ",
+	"save_print" : "រក្សាទុក​ និង បោះ​ពុម្ព",
+	"save_option" : "ជម្រើសនៃការរក្សាទុក",
+	"save_draft" : "រក្សាទុក​បណ្ដោះអាសន្ន",
 	"in_here" : "នៅ​ក្នុង​ទំព័រ នេះ​អ្នក​អាច​គ្រប់​គ្រង​ព័ត៌មាន​អតិថិជន ចំណូល និង​ប្រតិបត្តិការ​ដែល​ទាក់​ទង​នឹង​អតិថិជន",
 	"add_new_cutomer" :  "បញ្ចូល​អតិថិជន​ថ្មី",
 	"add_new_inventory" :  "បញ្ចូល​ស្តុក​ថ្មី",
@@ -623,8 +627,7 @@ var	km_KH = {
 	"new_vendor_item" : "លេខ​កូដ​ទំនិញ​អ្នក​ផ្គត់ផ្គង់",
 	"code" : "លេខ​កូដ",
 	"new_customer_item" : "លេខ​កូដ​ទំនិញ​អតិថិជន",
-	"international_code" : "លេខ​កូដ​អន្តរជាតិ",
-	"save_close" : "រក្សាទុក​ ឬ បិទ",
+	"international_code" : "លេខ​កូដ​អន្តរជាតិ",	
 	"cancel" : "បោះបង់",
 	"add_new_catalog" : "បង្កើត​ប្រភេទ​ថ្មី",
 	"catalog" : "កាតាឡុក",
@@ -673,8 +676,7 @@ var	km_KH = {
 	"total" : "សរុប",
 	"memo_for_internal" : "ការ​កំណត់​សម្គាល់​សម្រាប់​ផ្ទៃ​ក្នុង",
 	"memo_for_external" : "ការ​កំណត់​សម្គាល់ ខាង​ក្រៅ",
-	"select_template" : "ជ្រើស​រើស​គំរូ",
-	"save_print" : "បោះ​ពុម្ព",
+	"select_template" : "ជ្រើស​រើស​គំរូ",	
 	"add_delivery_note" : "បង្កើត​ប័ណ្ណ​ដឹក​ជញ្ជូន",
 	"goods_delivery_note" : "ប័ណ្ណ​ដឹក​ទំនិញ",
 	"customer" : "អតិថិជន",
@@ -1431,7 +1433,7 @@ var	km_KH = {
 	"recurring_list": "បញ្ជីរក្សាទុកប្រតិបត្តិការញឹកញាប់",
 	"rice_report_center_description": "This module consolidates different modules report into one place.",
 	"plan_change_alert": "បត្រូរគម្រោងសម្រាប់កុងទ័រនិង ធ្វើឡើងបន្ទាប់ពីពេលនេះទៅ",
-
+	"change_currency": "លុយអាប់",
 
 
 	"end" : "ចប់"

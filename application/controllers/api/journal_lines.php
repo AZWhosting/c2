@@ -55,6 +55,8 @@ class Journal_lines extends REST_Controller {
 			}
 		}
 
+		$obj->include_related("contact", array("abbr","number","name"));
+		$obj->include_related("account", array("number","name"));
 		$obj->where("deleted <>", 1);
 		
 		//Results
@@ -68,7 +70,21 @@ class Journal_lines extends REST_Controller {
 
 		if($obj->exists()){
 			foreach ($obj as $value) {
-				$account = $value->account->get();
+				//Account
+				$account = array(
+					"id" 		=> $value->account_id,
+					"number" 	=> $value->account_number ? $value->account_number : "", 
+					"name" 		=> $value->account_name ? $value->account_name : ""
+				);
+
+				//Contact
+				$contact = array(
+					"id" 		=> $value->contact_id,
+					"abbr"		=> $value->contact_abbr ? $value->contact_abbr : "", 
+					"number" 	=> $value->contact_number ? $value->contact_number : "", 
+					"name" 		=> $value->contact_name ? $value->contact_name : ""
+				);
+
 				$data["results"][] = array(
 					"id" 				=> $value->id,
 			   		"transaction_id"	=> $value->transaction_id,			   		
@@ -83,8 +99,8 @@ class Journal_lines extends REST_Controller {
 				   	"locale" 			=> $value->locale,
 				   	"deleted"			=> $value->deleted,
 
-				   	"account" 			=> $value->account->get_raw()->result(),
-				   	"contact" 			=> $value->contact->get_raw()->result(),
+				   	"account" 			=> $account,
+				   	"contact" 			=> $contact,
 
 				   	"donor"				=> ""
 				);

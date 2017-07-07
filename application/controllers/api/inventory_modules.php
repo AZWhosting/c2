@@ -191,6 +191,7 @@ class Inventory_modules extends REST_Controller {
 		$obj->where_related("transaction", "is_recurring <>", 1);
 		$obj->where_related("transaction", "deleted <>", 1);
 		$obj->where_related("item", "item_type_id", 1);
+		$obj->where("deleted <>", 1);
 		$obj->order_by_related("item", "number", "asc");
 
 		//Results
@@ -312,7 +313,8 @@ class Inventory_modules extends REST_Controller {
 		$obj->where_in_related("transaction", "type", array("Cash_Purchase", "Credit_Purchase", "Purchase_Return", "Payment_Refund", "Commercial_Invoice", "Vat_Invoice", "Invoice", "Commercial_Cash_Sale", "Vat_Cash_Sale", "Cash_Sale", "Sale_Return", "Cash_Refund", "Item_Adjustment", "Internal_Usage"));
 		$obj->where_related("transaction", "is_recurring <>", 1);
 		$obj->where_related("transaction", "deleted <>", 1);
-		$obj->where_related("item", "item_type_id", 1);		
+		$obj->where_related("item", "item_type_id", 1);
+		$obj->where("deleted <>", 1);		
 		$obj->order_by_related("transaction", "issued_date", "asc");
 
 		//Results
@@ -346,6 +348,7 @@ class Inventory_modules extends REST_Controller {
 					$bf->where_related("transaction", "is_recurring <>", 1);
 					$bf->where_related("transaction", "deleted <>", 1);
 					$bf->where("item_id", $value->item_id);
+					$bf->where("deleted <>", 1);
 					$bf->get_iterated();
 					
 					$balance_forward = 0; 
@@ -492,6 +495,7 @@ class Inventory_modules extends REST_Controller {
 		$obj->where_related("transaction", "deleted <>", 1);
 		$obj->where_related("item", "item_type_id", 1);
 		$obj->where("item_id >", 0);
+		$obj->where("deleted <>", 1);
 		$obj->get_iterated();
 
 		//Group by item_id
@@ -572,6 +576,7 @@ class Inventory_modules extends REST_Controller {
 		$obj->where_related("transaction", "deleted <>", 1);
 		$obj->where_related("item", "item_type_id", 1);
 		$obj->where("item_id >", 0);
+		$obj->where("deleted <>", 1);
 		$obj->get_iterated();
 
 		//Group by item_id

@@ -70,14 +70,19 @@ class Account_lines extends REST_Controller {
 
 		if($obj->exists()){
 			foreach ($obj as $value) {
+				//Account
 				$account = array(
-					"number" 				=> $value->account_number, 
-					"name" 					=> $value->account_name
+					"id" 		=> $value->account_id,
+					"number" 	=> $value->account_number ? $value->account_number : "", 
+					"name" 		=> $value->account_name ? $value->account_name : ""
 				);
-				$account = array(
-					"abbr"					=> $value->contact_abbr, 
-					"number" 				=> $value->contact_number, 
-					"name" 					=> $value->contact_name
+
+				//Contact
+				$contact = array(
+					"id" 		=> $value->contact_id,
+					"abbr"		=> $value->contact_abbr ? $value->contact_abbr : "", 
+					"number" 	=> $value->contact_number ? $value->contact_number : "", 
+					"name" 		=> $value->contact_name ? $value->contact_name : ""
 				);
 
 				$data["results"][] = array(
@@ -96,6 +101,7 @@ class Account_lines extends REST_Controller {
 				   	"locale" 			=> $value->locale,
 				   	"reference_date" 	=> $value->reference_date,
 				   	"movement" 			=> intval($value->movement),
+				   	"deleted"			=> $value->deleted,
 
 				   	"account" 			=> $account,
 				   	"contact" 			=> $contact
@@ -128,7 +134,8 @@ class Account_lines extends REST_Controller {
 		   	isset($value->locale)			? $obj->locale 				= $value->locale : "";
 		   	isset($value->reference_date)	? $obj->reference_date 		= $value->reference_date : "";
 		   	isset($value->movement)			? $obj->movement 			= $value->movement : "";
-		   			   	
+		   	isset($value->deleted) 			? $obj->deleted 			= $value->deleted : "";
+
 		   	if($obj->save()){
 			   	$data["results"][] = array(
 			   		"id" 				=> $obj->id,
@@ -146,9 +153,10 @@ class Account_lines extends REST_Controller {
 				   	"locale" 			=> $obj->locale,
 				   	"reference_date" 	=> $obj->reference_date,
 				   	"movement" 			=> intval($obj->movement),
+				   	"deleted"			=> $obj->deleted,
 
-				   	"account" 			=> $obj->account->get_raw()->result(),
-				   	"contact" 			=> $obj->contact->get_raw()->result()			   	
+				   	"account" 			=> isset($value->account) ? $value->account : [],
+				   	"contact" 			=> isset($value->contact) ? $value->contact : [],
 			   	);
 		    }
 		}		
@@ -181,7 +189,8 @@ class Account_lines extends REST_Controller {
 		   	isset($value->locale)			? $obj->locale 				= $value->locale : "";
 		   	isset($value->reference_date)	? $obj->reference_date 		= $value->reference_date : "";
 		   	isset($value->movement)			? $obj->movement 			= $value->movement : "";
-		   
+		    isset($value->deleted) 			? $obj->deleted 			= $value->deleted : "";
+
 			if($obj->save()){				
 				//Results
 				$data["results"][] = array(
@@ -200,9 +209,10 @@ class Account_lines extends REST_Controller {
 				   	"locale" 			=> $obj->locale,
 				   	"reference_date" 	=> $obj->reference_date,
 				   	"movement" 			=> intval($obj->movement),
+				   	"deleted"			=> $obj->deleted,
 
-				   	"account" 			=> $obj->account->get_raw()->result(),
-				   	"contact" 			=> $obj->contact->get_raw()->result()
+				   	"account" 			=> isset($value->account) ? $value->account : [],
+				   	"contact" 			=> isset($value->contact) ? $value->contact : [],
 				);						
 			}
 		}

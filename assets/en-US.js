@@ -76,8 +76,11 @@ var	en_US = {
 	"cash_management" : "Cash Management",
 	"web_store" : "Web Store",
 	//Customer Modual,
-	"save_new" : "Save New",
-	"save_close" : "Save Close",
+	"save_new" : "Save and New",
+	"save_close" : "Save and Close",
+	"save_print" : "Save and Print",
+	"save_option" : "Save Options",
+	"save_draft" : "Save as Draft",
 	"center" : "CENTER",
 	"in_here" : "In here, you can manage your customer information, revenues, collections, and other related transactions.",
 	"add_new_cutomer" : "Add New Customer",
@@ -692,8 +695,7 @@ var	en_US = {
 	"quantity" : "QUANTITY",
 	"memo_for_internal" : "meno for internal",
 	"memo_for_external" : "memo for external",
-	"select_template" : "Select Template",
-	"save_print" : "Save Print",
+	"select_template" : "Select Template",	
 	"add_delivery_note" : "Add Delivery Note",
 	"customer" : "Customer",
 	"type_name" : "Type Name",
@@ -1457,7 +1459,7 @@ var	en_US = {
 	"recurring_list": "Recurring List",
 	"rice_report_center_description": "This module consolidates different modules report into one place.",
 	"plan_change_alert": "Your plan will apply to your meter on new transaction",
-
+	"change_currency": "Change",
 
 
 

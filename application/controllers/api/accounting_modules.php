@@ -809,7 +809,7 @@ class Accounting_modules extends REST_Controller {
 		$obj->include_related("transaction", array("type", "number", "issued_date", "memo","rate"));
 		$obj->include_related("account", array("number","name"));
 		$obj->include_related("contact", array("abbr","number","name"));
-		// $obj->where_related("transaction", "is_journal", 1);
+		$obj->where_related("transaction", "is_journal", 1);
 		$obj->where_related("transaction", "is_recurring <>", 1);		
 		$obj->where_related("transaction", "deleted <>", 1);
 		$obj->where("deleted <>", 1);

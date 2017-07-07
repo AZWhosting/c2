@@ -48,7 +48,7 @@ class Item_lines extends REST_Controller {
 	    	foreach ($filter["filters"] as $value) {
 	    		if(isset($value["operator"])) {
 	    			if($value["operator"]=="item") {
-	    				$obj->include_related("item", array("abbr","number","name","cost","price","locale","income_account_id","expense_account_id","inventory_account_id"));
+	    				
 					}else{
 						$obj->{$value["operator"]}($value["field"], $value["value"]);
 					}
@@ -58,8 +58,9 @@ class Item_lines extends REST_Controller {
 			}
 		}
 
+		$obj->include_related("item", array("abbr","number","name","cost","price","locale","income_account_id","expense_account_id","inventory_account_id"));
 		$obj->include_related("measurement", array("name"));
-		$obj->include_related("tax_item", array("name"));
+		$obj->include_related("tax_item", array("account_id","name"));
 		$obj->where("deleted <>", 1);
 
 		//Results
@@ -73,20 +74,32 @@ class Item_lines extends REST_Controller {
 
 		if($obj->exists()){
 			foreach ($obj as $value) {
-				$item = [];
-				if($value->item_name){
-					$item = array(
-						"abbr"					=> $value->item_abbr, 
-						"number" 				=> $value->item_number, 
-						"name" 					=> $value->item_name,
-						"cost"					=> $value->item_cost,
-						"price"					=> $value->item_price,
-						"locale"				=> $value->item_locale,
-						"income_account_id"		=> $value->item_income_account_id, 
-						"expense_account_id" 	=> $value->item_expense_account_id, 
-						"inventory_account_id" 	=> $value->item_inventory_account_id
-					);
-				}
+				//Item
+				$item = array(
+					"id" 					=> $value->item_id,
+					"abbr"					=> $value->item_abbr, 
+					"number" 				=> $value->item_number, 
+					"name" 					=> $value->item_name,
+					"cost"					=> $value->item_cost,
+					"price"					=> $value->item_price,
+					"locale"				=> $value->item_locale,
+					"income_account_id"		=> $value->item_income_account_id, 
+					"expense_account_id" 	=> $value->item_expense_account_id, 
+					"inventory_account_id" 	=> $value->item_inventory_account_id
+				);
+
+				//Measurement
+				$measurement = array(
+					"measurement_id" 	=> $value->measurement_id,
+					"measurement"		=> $value->measurement_name ? $value->measurement_name : ""
+				);
+
+				//Tax Item
+				$tax_item = array(
+					"id" 			=> $value->tax_item_id, 
+					"account_id" 	=> $value->tax_item_account_id ? $value->tax_item_account_id : "",
+					"name" 			=> $value->tax_item_name ? $value->tax_item_name : ""
+				);
 				
 				$data["results"][] = array(
 					"id" 				=> $value->id,
@@ -116,11 +129,12 @@ class Item_lines extends REST_Controller {
 				   	"locale" 			=> $value->locale,
 				   	"movement" 			=> $value->movement,
 				   	"required_date"		=> $value->required_date,
+				   	"deleted"			=> $value->deleted,
 
 				   	"item_prices" 		=> [],
 				   	"item" 				=> $item,
-				   	"measurement" 		=> array("measurement_id"=>$value->measurement_id, "measurement"=>$value->measurement_name),
-				   	"tax_item" 			=> array("id"=>$value->tax_item_id, "name"=>$value->tax_item_name)
+				   	"measurement" 		=> $measurement,
+				   	"tax_item" 			=> $tax_item
 				);
 			}
 		}
@@ -251,6 +265,7 @@ class Item_lines extends REST_Controller {
 		   	isset($value->additional_cost)		? $obj->additional_cost  	= $value->additional_cost : "";
 		   	isset($value->movement)				? $obj->movement 			= $value->movement : "";
 		   	isset($value->required_date)		? $obj->required_date 		= $value->required_date : "";
+		   	isset($value->deleted) 				? $obj->deleted 			= $value->deleted : "";
 
 		   	//Conversion ratio
 			$conversion_ratio = 1;
@@ -289,7 +304,8 @@ class Item_lines extends REST_Controller {
 				   	"rate"				=> floatval($obj->rate),
 				   	"locale" 			=> $obj->locale,
 				   	"movement" 			=> $obj->movement,
-				   	"required_date"		=> $obj->required_date
+				   	"required_date"		=> $obj->required_date,
+				   	"deleted"			=> $obj->deleted
 			   	);
 		    }
 		}
@@ -354,6 +370,7 @@ class Item_lines extends REST_Controller {
 		   	isset($value->additional_cost)	? $obj->additional_cost  	= $value->additional_cost : "";
 		   	isset($value->movement)			? $obj->movement 			= $value->movement : "";
 		   	isset($value->required_date)	? $obj->required_date 		= $value->required_date : "";
+		   	isset($value->deleted) 			? $obj->deleted 			= $value->deleted : "";
 
 		   	//Conversion ratio
 			$conversion_ratio = 1;
@@ -393,7 +410,8 @@ class Item_lines extends REST_Controller {
 				   	"rate"				=> floatval($obj->rate),
 				   	"locale" 			=> $obj->locale,
 				   	"movement" 			=> $obj->movement,
-				   	"required_date"		=> $obj->required_date
+				   	"required_date"		=> $obj->required_date,
+				   	"deleted"			=> $obj->deleted
 				);
 			}
 		}

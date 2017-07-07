@@ -583,6 +583,7 @@ class UtibillReports extends REST_Controller {
 
 		//Results
 		$obj->include_related("contact", array("abbr", "number", "name"));
+		$obj->include_related("location", "name");
 		$obj->where("type", "Utility_Invoice");
 		$obj->where_in("status", array(0,2));
 		$obj->where("is_recurring <>", 1);
@@ -766,6 +767,8 @@ class UtibillReports extends REST_Controller {
 		$sort 	 	= $this->get("sort");
 		$data["results"] = [];
 		$data["count"] = 0;
+		$cashReceipt = 0;
+		$total = 0;
 
 		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
@@ -793,6 +796,7 @@ class UtibillReports extends REST_Controller {
 
 		//Results
 		$obj->include_related("contact", array("abbr", "number", "name"));
+		$obj->include_related("location", "name");
 		$obj->where("type", "Cash_Receipt");
 		$obj->where("is_recurring <>", 1);
 		$obj->where("deleted <>", 1);
@@ -805,7 +809,7 @@ class UtibillReports extends REST_Controller {
 				//Reference
 				$ref = $value->reference->select("type, number, issued_date, amount, deposit, rate")->get();				
 				$refAmount = (floatval($ref->amount) - floatval($ref->deposit)) / floatval($ref->rate);
-
+				$cashReceipt +=1;
 				$amount = (floatval($value->amount) - floatval($value->deposit)) / floatval($value->rate);
 
 				if(isset($objList[$value->contact_id])){
@@ -837,11 +841,14 @@ class UtibillReports extends REST_Controller {
 						"reference_amount" 		=> $refAmount
 					);			
 				}
+				$total += $amount;
 			}
 
 			foreach ($objList as $value) {
 				$data["results"][] = $value;
 			}
+			$data['total'] = $total;
+			$data['cashReceipt'] = $cashReceipt;
 			$data["count"] = count($data["results"]);
 		}
 
@@ -886,6 +893,7 @@ class UtibillReports extends REST_Controller {
 		//Results
 		$obj->include_related("contact", array("abbr", "number", "name"));
 		$obj->include_related("payment_method", "name");
+		$obj->include_related("location", "name");
 		$obj->where("type", "Cash_Receipt");
 		$obj->where("is_recurring <>", 1);
 		$obj->where("deleted <>", 1);
@@ -1355,25 +1363,20 @@ class UtibillReports extends REST_Controller {
 		$obj = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
 
 		//Sort
-		//Sort
-		if(!empty($sort) && isset($sort)){
+		if(!empty($sort) && isset($sort)){				
 			foreach ($sort as $value) {
-				if(isset($value['operator'])){
-					$obj->{$value['operator']}($value["field"], $value["dir"]);
-				}else{
-					$obj->order_by($value["field"], $value["dir"]);
-				}
+				$obj->order_by($value["field"], $value["dir"]);
 			}
 		}
-		
+
 		//Filter		
-		if(!empty($filter) && isset($filter)){
-	    	foreach ($filter["filters"] as $value) {
-	    		if(isset($value['operator'])){
-	    			$obj->{$value['operator']}($value['field'], $value['value']);	    		
-	    		} else {
-	    			$obj->where($value['field'], $value['value']);
-	    		}
+		if(!empty($filters) && isset($filters['filters'])){
+	    	foreach ($filters['filters'] as $value) {
+	    		if(isset($value['operator'])) {
+					$obj->{$value['operator']}($value['field'], $value['value']);
+				} else {
+	    			$obj->where($value["field"], $value["value"]);
+				}
 			}
 		}
 		$obj->include_related('branch', array('name'));

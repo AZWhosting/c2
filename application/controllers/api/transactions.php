@@ -98,12 +98,15 @@ class Transactions extends REST_Controller {
 					$paid->get();
 					$amount_paid = floatval($paid->amount) + floatval($paid->received);
 				}
+
+				//Meter By Choeun
 				$meter = "";
 				$meterNum = "";
 				if($value->meter_id != 0){
 					$meter = $value->meter->get();
 					$meterNum = $meter->get()->number;
 				}
+
 				$data["results"][] = array(
 					"id" 						=> $value->id,
 					"company_id" 				=> $value->company_id,
@@ -162,6 +165,7 @@ class Transactions extends REST_Controller {
 					"week" 						=> $value->week,
 					"month" 					=> $value->month,
 				   	"status" 					=> intval($value->status),
+				   	"progress" 					=> $value->progress,
 				   	"is_recurring" 				=> intval($value->is_recurring),
 				   	"is_journal" 				=> $value->is_journal,
 				   	"print_count" 				=> $value->print_count,
@@ -260,12 +264,13 @@ class Transactions extends REST_Controller {
 		   	isset($value->week) 					? $obj->week 						= $value->week : "";
 		   	isset($value->month) 					? $obj->month 						= $value->month : "";
 		   	isset($value->status) 					? $obj->status 						= $value->status : "";
+		   	isset($value->progress) 				? $obj->progress 					= $value->progress : "";
 		   	isset($value->is_recurring) 			? $obj->is_recurring 				= $value->is_recurring : "";
 		   	isset($value->is_journal) 				? $obj->is_journal 					= $value->is_journal : "";
 		   	isset($value->print_count) 				? $obj->print_count 				= $value->print_count : "";
 		   	isset($value->printed_by) 				? $obj->printed_by 					= $value->printed_by : "";
 		   	isset($value->deleted) 					? $obj->deleted 					= $value->deleted : "";
-		   	isset($value->meter_id) 				? $obj->meter_id 					= $value->meter_id : 0;
+		   	isset($value->meter_id) 				? $obj->meter_id 					= $value->meter_id : "";
 		   	
 	   		if($obj->save()){
 			   	$data["results"][] = array(
@@ -325,7 +330,8 @@ class Transactions extends REST_Controller {
 					"day" 						=> $obj->day,
 					"week" 						=> $obj->week,
 					"month" 					=> $obj->month,
-				   	"status" 					=> $obj->status,
+				   	"status" 					=> intval($obj->status),
+				   	"progress" 					=> $obj->progress,
 				   	"is_recurring" 				=> floatval($obj->is_recurring),
 				   	"is_journal" 				=> $obj->is_journal,
 				   	"print_count" 				=> $obj->print_count,
@@ -407,12 +413,13 @@ class Transactions extends REST_Controller {
 		   	isset($value->week) 					? $obj->week 						= $value->week : "";
 		   	isset($value->month) 					? $obj->month 						= $value->month : "";
 		   	isset($value->status) 					? $obj->status 						= $value->status : "";
+		   	isset($value->progress) 				? $obj->progress 					= $value->progress : "";
 		   	isset($value->is_recurring) 			? $obj->is_recurring 				= $value->is_recurring : "";
 		   	isset($value->is_journal) 				? $obj->is_journal 					= $value->is_journal : "";
 		   	isset($value->print_count) 				? $obj->print_count 				= $value->print_count : "";
 		   	isset($value->printed_by) 				? $obj->printed_by 					= $value->printed_by : "";
 		   	isset($value->deleted) 					? $obj->deleted 					= $value->deleted : "";
-		   	isset($value->meter_id) 					? $obj->meter_id 					= $value->meter_id : 0;
+		   	isset($value->meter_id) 				? $obj->meter_id 					= $value->meter_id : "";
 		   	
 			if($obj->save()){
 				//Results
@@ -473,7 +480,8 @@ class Transactions extends REST_Controller {
 					"day" 						=> $obj->day,
 					"week" 						=> $obj->week,
 					"month" 					=> $obj->month,
-				   	"status" 					=> $obj->status,
+				   	"status" 					=> intval($obj->status),
+				   	"progress" 					=> $obj->progress,
 				   	"is_recurring" 				=> floatval($obj->is_recurring),
 				   	"is_journal" 				=> $obj->is_journal,
 				   	"print_count" 				=> $obj->print_count,
@@ -565,6 +573,59 @@ class Transactions extends REST_Controller {
 		return $number;
 	}
 
+
+	//GET BALANCE
+	function balance_get() {
+		$filter 	= $this->get("filter");
+		$data["results"] = [];
+		$data["count"] = 1;
+
+		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+		//Filter
+		if(!empty($filter) && isset($filter)){
+	    	foreach ($filter["filters"] as $value) {
+	    		if(isset($value["operator"])) {
+					$obj->{$value["operator"]}($value["field"], $value["value"]);
+				} else {
+	    			$obj->where($value["field"], $value["value"]);
+				}
+			}
+		}
+		
+		$obj->like("type", "Invoice", "before");
+		$obj->where_in("status", array(0,2));
+		$obj->where("is_recurring <>", 1);
+		$obj->where("deleted <>", 1);
+		$obj->get_iterated();
+
+		$ids = [];
+		$sum = 0;
+		if($obj->exists()){
+			foreach ($obj as $value) {
+				array_push($ids, $value->id);
+				$sum += floatval($value->amount) - floatval($value->deposit);
+			}
+		}
+
+		//Cash Receipts
+		$receipt = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$receipt->where_in("reference_id", $ids);
+		$receipt->where_in("type", array("Cash_Receipt","Offset_Invoice"));
+		$receipt->where("deleted <>", 1);
+		$receipt->get_iterated();
+
+		if($receipt->exists()){
+			foreach ($receipt as $value) {
+				$sum -= floatval($value->amount) + floatval($value->discount);
+			}
+		}
+
+		$data["results"][] = array("amount"=>$sum);
+
+		//Response Data
+		$this->response($data, 200);
+	}
 
 	//GET AMOUNT SUM
 	function amount_sum_get() {

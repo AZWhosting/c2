@@ -433,6 +433,7 @@ class Items extends REST_Controller {
 		$obj->where_in_related("transaction", "type", array("Cash_Purchase", "Credit_Purchase", "Commercial_Invoice", "Vat_Invoice", "Invoice", "Commercial_Cash_Sale", "Vat_Cash_Sale", "Cash_Sale", "Item_Adjustment", "Internal_Usage"));		
 		$obj->where_related("transaction", "is_recurring <>", 1);
 		$obj->where_related("transaction", "deleted <>", 1);
+		$obj->where("deleted <>", 1);
 		$obj->get_iterated();
 
 		$objList = [];
@@ -809,6 +810,7 @@ class Items extends REST_Controller {
 		//Gross Profit Margin
 		$gpm->where_in_related("transaction", "type", array("Invoice", "Cash_Sale"));
 		$gpm->where_in_related("item", "item_type_id", 1);
+		$gpm->where("deleted <>", 1);
 		$gpm->get();
 
 		$cogs = 0; $sale = 0;
@@ -844,6 +846,7 @@ class Items extends REST_Controller {
 			//Total Cost
 			$line->where_in_related("transaction", "type", array("Invoice","Cash_Sale"));
 			$line->where("item_id", $i->id);
+			$line->where("deleted <>", 1);
 			$line->order_by("issued_date", "desc");
 			$line->limit(1);			
 			$line->get();
@@ -856,7 +859,8 @@ class Items extends REST_Controller {
 			$lineA->where_related("transaction", "issued_date >=", $sdate);
 			$lineA->where_related("transaction", "issued_date <=", $as_of);
 			$lineA->where_in_related("transaction", "type", array("Invoice","Cash_Sale"));
-			$lineA->where("item_id", $i->id);					
+			$lineA->where("item_id", $i->id);
+			$lineA->where("deleted <>", 1);					
 			$lineA->get();
 			
 			foreach ($lineA as $la) {				
@@ -913,7 +917,7 @@ class Items extends REST_Controller {
 
 		if($obj->result_count()>0){
 			foreach ($obj as $value) {
-				$record = $value->item_line;				
+				$record = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);				
 				
 				if(!empty($filters) && isset($filters)){			
 			    	foreach ($filters as $val) {			    				
@@ -922,6 +926,7 @@ class Items extends REST_Controller {
 				}
 				
 				//Record
+				$record->where("deleted <>", 1);
 				$record->order_by_related("transaction", "issued_date", "desc");
 				$record->limit(1);
 				$record->get();
@@ -931,7 +936,7 @@ class Items extends REST_Controller {
 					"item_id" 		=> $value->item_id,
 					"category_id" 	=> $value->category_id,
 					"item_group_id" => $value->item_group_id,					
-					"number"			=> $value->number,
+					"number"		=> $value->number,
 					"name" 			=> $value->name,									
 					"category" 		=> $value->category->get_raw()->result(),
 					"item_group" 	=> $value->item_group->get_raw()->result(),
@@ -974,7 +979,8 @@ class Items extends REST_Controller {
 		}
 
 		$obj->where_in_related("transaction", "type", array("Invoice", "Cash_Sale", "Cash_Purchase", "Credit_Purchase", "Item_Adjustment"));		
-		
+		$obj->where("deleted <>", 1);
+
 		//Results
 		$obj->get_paged_iterated($page, $limit);
 		$data["count"] = $obj->paged->total_rows;							
@@ -1032,13 +1038,14 @@ class Items extends REST_Controller {
 
 		if($obj->result_count()>0){
 			foreach ($obj as $value) {
-				$record = $value->item_line;				
+				$record = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);				
 				
 				if(!empty($filters) && isset($filters)){			
 			    	foreach ($filters as $val) {			    				
 			    		$record->where_related("transaction", $val["field"], $val["value"]);		    		
 					}									 			
 				}
+				$record->where("deleted <>", 1);
 				$record->get();
 				
 				$qty = 0; $cost = 0; $price = 0;
@@ -1097,7 +1104,7 @@ class Items extends REST_Controller {
 		if($obj->result_count()>0){
 			foreach ($obj as $value) {
 				$sale = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				$record = $value->item_line;				
+				$record = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);				
 				$edate = date("Y-m-d");				
 
 				if(!empty($filters) && isset($filters)){			
@@ -1106,6 +1113,7 @@ class Items extends REST_Controller {
 			    		$edate = $val["value"];			    				    		
 					}									 			
 				}
+				$record->where("deleted <>", 1);
 				$record->order_by_related("transaction", "issued_date", "desc");
 				$record->limit(1);
 				$record->get();
@@ -1120,6 +1128,7 @@ class Items extends REST_Controller {
 				$sale->where_related("transaction", "issued_date >=", $sdate);
 				$sale->where_related("transaction", "issued_date <=", $edate);
 				$sale->where_in_related("transaction", "type", array("Invoice", "Cash_Sale"));
+				$sale->where("deleted <>", 1);
 				$sale->get();
 				
 				$cogs = intval($sale->quantity) * floatval($record->cost);
@@ -1191,6 +1200,7 @@ class Items extends REST_Controller {
 				
 				//Begining
 				$begin->where("item_id", $value->id);
+				$begin->where("deleted <>", 1);
 				$begin->order_by_related("transaction", "issued_date", "asc");
 				$begin->limit(1);
 				$begin->get();
@@ -1198,19 +1208,22 @@ class Items extends REST_Controller {
 				//Purchase
 				$purchase->where("item_id", $value->id);
 				$purchase->select_sum("quantity");
-				$purchase->where_related("transaction", "type", "PO");							
+				$purchase->where_related("transaction", "type", "PO");
+				$purchase->where("deleted <>", 1);							
 				$purchase->get();
 
 				//Sale
 				$sale->where("item_id", $value->id);
 				$sale->select_sum("quantity");
-				$sale->where_related("transaction", "type", "SO");							
+				$sale->where_related("transaction", "type", "SO");
+				$sale->where("deleted <>", 1);							
 				$sale->get();
 
 				//Adjustment
 				$adj->where("item_id", $value->id);
 				$adj->select_sum("quantity");
-				$adj->where_related("transaction", "type", "Item_Adjustment");							
+				$adj->where_related("transaction", "type", "Item_Adjustment");
+				$adj->where("deleted <>", 1);							
 				$adj->get();
 
 				$data["results"][] = array(
@@ -1259,7 +1272,8 @@ class Items extends REST_Controller {
 		}
 
 		$obj->where_in_related("transaction", "type", array("Invoice", "Cash_Sale", "Cash_Purchase", "Credit_Purchase", "Item_Adjustment"));		
-		
+		$obj->where("deleted <>", 1);
+
 		//Results
 		$obj->get_paged_iterated($page, $limit);
 		$data["count"] = $obj->paged->total_rows;							
@@ -1328,6 +1342,7 @@ class Items extends REST_Controller {
 				$line->select_sum("quantity");
 				$line->where_related("transaction", "contact_id", $value->id);
 				$line->where_related("transaction", "type", "Purchase");
+				$line->where("deleted <>", 1);
 				$line->get();
 
 				if($line->amount>0){
@@ -1372,6 +1387,7 @@ class Items extends REST_Controller {
 		$obj->include_related('transaction', array('number','type','issued_date'));
 		$obj->include_related('transaction/contact', 'company');
 		$obj->where_related("transaction", "type", "Purchase");
+		$obj->where("deleted <>", 1);
 				
 		//Results
 		$obj->get_paged_iterated($page, $limit);
@@ -1522,6 +1538,7 @@ class Items extends REST_Controller {
 		$obj->where_related("transaction","deleted <>", 1);
 		$obj->order_by_related("transaction", "issued_date", "desc");
 		$obj->order_by_related("transaction", "number", "desc");
+		$obj->where("deleted <>", 1);
 
 		//Results
 		$obj->get_paged_iterated($page, $limit);

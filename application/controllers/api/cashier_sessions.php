@@ -128,7 +128,6 @@ class Cashier_sessions extends REST_Controller {
 		//Response data
 		$this->response($data, 200);
 	}
-
 	//Items
 	function item_get() {
 		$filters 	= $this->get("filter");
@@ -251,6 +250,73 @@ class Cashier_sessions extends REST_Controller {
 					"contact_id" 				=> $obj->contact_id,
 					"transaction_id" 			=> $obj->transaction_id,
 					"time" 						=> $obj->time,
+				);
+			}
+		}
+		$data["count"] = count($data["results"]);
+		$this->response($data, 201);
+	}
+	//Currency
+	function currency_get() {
+		$filters 	= $this->get("filter");
+		$page 		= $this->get('page') !== false ? $this->get('page') : 1;
+		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;
+		$sort 	 	= $this->get("sort");
+		$data["results"] = array();
+		$data["count"] = 0;
+		$obj = new Cashier_currency(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		//Sort
+		if(!empty($sort) && isset($sort)){
+			foreach ($sort as $value) {
+				$obj->order_by($value["field"], $value["dir"]);
+			}
+		}
+		//Filter
+		if(!empty($filters) && isset($filters["filters"])){
+	    	foreach ($filters["filters"] as $value) {
+	    		if(isset($value['operator'])) {
+					$obj->{$value['operator']}($value['field'], $value['value']);
+				} else {
+	    			$obj->where($value["field"], $value["value"]);
+				}
+			}
+		}
+		//Results
+		$obj->get_paged_iterated($page, $limit);
+		$data["count"] = $obj->paged->total_rows;
+		if($obj->result_count()>0){
+			foreach ($obj as $value) {	
+		 		$data["results"][] = array(	
+		 			"id"     				=> $value->id,
+				   	"cashier_session_id" 	=> $value->cashier_session_id,
+				   	"type" 					=> $value->type,
+				   	"currency" 				=> $value->currency,
+				   	"locale" 				=> $value->locale,
+				   	"amount" 				=> $value->amount
+		 		);
+			}
+		}
+		//Response Data		
+		$this->response($data, 200);
+	}
+	function currency_post() {
+		$models = json_decode($this->post('models'));
+		foreach ($models as $value) {
+			$obj = new Cashier_currency(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			isset($value->cashier_session_id) 	? $obj->cashier_session_id 	= $value->cashier_session_id : 0;
+			isset($value->type) 				? $obj->type 				= $value->type : 0;
+			isset($value->currency) 			? $obj->currency 			= $value->currency : 3;
+			isset($value->locale) 				? $obj->locale 				= $value->locale : "km-KH";
+			isset($value->amount) 				? $obj->amount 				= $value->amount : "";
+			if($obj->save()){
+				//Respsone
+				$data["results"][] = array(
+					"id" 						=> $obj->id,
+					"cashier_session_id" 		=> $obj->cashier_session_id,
+					"type" 						=> $obj->type,
+					"currency" 					=> $obj->currency,
+					"locale" 					=> $obj->locale,
+					"amount" 					=> $obj->amount
 				);
 			}
 		}

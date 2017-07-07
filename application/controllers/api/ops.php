@@ -67,14 +67,14 @@ class Ops extends REST_Controller {
 				
 				//Add new fields
 				// $fields = array(
-				// 	"tax" => array(
-				// 		"type" 		=> "DECIMAL",
-				// 		"constraint"=> "30,15",
+				// 	"progress" => array(
+				// 		"type" 		=> "VARCHAR",
+				// 		"constraint"=> "255",
 				// 		"null" 		=> FALSE,
-				// 		"default" 	=> 0
+				// 		"default" 	=> ""
 				// 	)
 				// );
-				// $this->dbforge->add_column("item_lines", $fields);
+				// $this->dbforge->add_column("transactions", $fields);
 
 			    // Modify fields
 			 	// $fields = array(
