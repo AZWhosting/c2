@@ -489,16 +489,30 @@ class Ops extends REST_Controller {
 	// }
 	//End made by Great Mighty Dawine ^_^
 
-	// function list_get() {
-	// 	$this->load->dbutil();
-	// 	$dbs = $this->dbutil->list_databases();
-	// 	$data = array();
-	// 	$companyList = array("banhji","banhji_mac", "db_banhji", "information_schema","innodb","mysql","performance_schema","tmp");
-	// 	foreach ($dbs as $db) {
-	// 		if (!in_array("$db", $companyList)) {
-	// 			$data[] = $db;
-	// 		}
-	// 	}
-	// 	$this->response(array('results'=> $data), 200);
-	// }
+	function list_get() {		
+		$this->db->select('table_schema, data_length, index_length');
+		$this->db->from('information_schema.TABLES');
+		$this->db->group_by('table_schema');
+
+		$result = $this->db->get();
+		foreach($result->result() as $row) {
+			$data[] = array(
+				'database' => $row->table_schema,
+				'size' => ($row->data_length + $row->index_length) / 1024/1024 .' in MB'
+			);
+		}
+		$this->response($data, 200);
+	}
+
+	function connection_get() {
+		$this->db->select('connections.inst_database, connections.institute_id, institutes.id, institutes.name, institutes.telephone');
+		$this->db->from('connections');
+		$this->db->join('institutes', 'institutes.id = connections.institute_id');
+		$query = $this->db->get();
+
+		foreach($query->result() as $row) {
+			$data[] = array('name' => $row->name, 'db' => $row->inst_database, 'tel'=> $row->telephone);
+		}
+		$this->response($data, 200);
+	}
 }
