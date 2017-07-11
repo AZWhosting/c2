@@ -13747,7 +13747,6 @@
 		},
 		loadCustomers 				: function(){
 			var self = this, raw = this.get("customerList");
-
 			//Clear array
 			if(raw.length>0){
 				raw.splice(0,raw.length);
@@ -13756,7 +13755,9 @@
 			this.customerDS.query({
 				filter:[
 					{ field:"parent_id", operator:"where_related_contact_type", value:1 }
-				]
+				],
+				page: 1,
+				sort: {field: "id", dir: "desc"}
 			}).then(function(){
 				var view = self.customerDS.view();
 
@@ -16031,17 +16032,12 @@
 		dataSource  		: dataStore(apiUrl + "properties"),
 		propertyDS  		: dataStore(apiUrl + "properties"),
 		numberDS  			: dataStore(apiUrl + "properties"),
-		contactDS 			: new kendo.data.DataSource({
-			data: banhji.source.customerList,
-			filter: {field: 'status', value: 1},
-			sort: {field: 'id', dir: "desc"}
-		}),
+		contactDS 			: dataStore(apiUrl + "contacts"),
 		onContactChange 	: function(e) {
 			this.dataSource.query({
 				filter: {field: 'contact_id', value: this.get('contactOBJ')}
 			});
 			this.set("haveContact", true);
-			
 		},
 		obj 				: null,
 		contactOBJ 			: null,
@@ -16053,6 +16049,11 @@
 			var boxwindow = $("#addProperty").kendoWindow({
 			  title: this.lang.lang.add_property
 			});
+			this.contactDS.query({
+				page: 1,
+				limit: 100,
+				sort: {field: "id", dir: "desc"}
+			})
 		},
 		loadContact 		: function(id){
 			var self = this;
@@ -19242,7 +19243,7 @@
 	//Receipt
 	banhji.Receipt =  kendo.observable({
 		lang 				: langVM,
-		dataSource 			: dataStore(apiUrl + "utibills/cashreceipt"),
+		dataSource 			: dataStore(apiUrl + "utibills/cashreceipt"), //dataStore(apiUrl + "transactions"),
 		txnDS 				: dataStore(apiUrl + "utibills/search"),
 		remainDS 			: dataStore(apiUrl + "transactions"),
 		balanceDS 			: dataStore(apiUrl + "transactions"),
@@ -20162,38 +20163,23 @@
 				j++;
 			});
 		},
-		tmpChangeMoney 		: 0,
 		checkChangeMoney  	: function(e){
 			console.log(e.data);
 			var data = e.data;
 			var currentAmountChange = data.amount / parseFloat(data.rate);
-			console.log(currentAmountChange);
-			var changeMoney = 0;
-			if(this.get("tmpChangeMoney") > 0){
-				changeMoney = parseFloat(this.get("tmpChangeMoney"));
-			}else{
-				this.set("tmpChangeMoney",  parseFloat(this.get("changeMoney")));
-				changeMoney = parseFloat(this.get("changeMoney"));
-			}
+			var changeMoney = parseFloat(this.get("changeMoney"));
 			if(currentAmountChange < changeMoney){
 				var firstAmountChagne = changeMoney - currentAmountChange;
 				var currencyReceipt = 0;
-				this.receipChangeDS.data()[0].set("amount", firstAmountChagne);
 				$.each(this.receipChangeDS.data(), function(i,v){
 					var amountAfterRate = parseFloat(v.amount) / parseFloat(v.rate);
 					currencyReceipt += amountAfterRate;
 				});
-				if(currencyReceipt > this.get("changeMoney")){
-					var A = currencyReceipt - this.get("changeMoney");
-					if(A > firstAmountChagne){
-
-					}else{
-						firstAmountChagne = firstAmountChagne - A;
-					}
+				if(currencyReceipt > changeMoney){n
+					var A = currencyReceipt - changeMoney;
+					firstAmountChagne = firstAmountChagne - A;
 				}
-				if(this.get("tmpChangeMoney") > 0){
-					this.set("tmpChangeMoney", firstAmountChagne);
-				}
+				this.receipChangeDS.data()[0].set("amount", firstAmountChagne);
 			}else{
 				data.amount = 0;
 			}

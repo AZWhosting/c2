@@ -72,8 +72,9 @@ class Backup extends CI_Controller {
 			    echo "error";
 			}else{
 			    $data = file_get_contents("assets/backupdb/".$dbname);
-	    		force_download($dbname, $backup);
+	    		
 			}
+			force_download($dbname, $backup);
 		}else{
 			echo "My Ass";
 		}

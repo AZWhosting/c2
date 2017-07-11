@@ -75,7 +75,7 @@
 
                 <!--Logo-->
                 <a class="navbar-brand" href="#" data-bind="click: checkRole">
-                    <img src="<?php echo base_url();?>/assets/water/utibill.png" style="height: 40px;">
+                    <img src="<?php echo base_url();?>/assets/water/utibill.png" >
                 </a>
             </div>
 
@@ -6094,18 +6094,22 @@
 		<div class="customer-background">
 			<div class="container-960">					
 				<div id="example" class="k-content">
+					<div class="hidden-print pull-right">
+				    		<span class="glyphicons no-js remove_2" 
+								data-bind="click: cancel"><i></i></span>
+						</div>
 					<div class="">
 						<div class="col-sm-4">
 							<table width="100%" cellpadding="10">
 								<tr>
 							        <td>
-							        	<h2 data-bind="text: lang.lang.wreceipt">Receipt</h2>
+							        	<h2 style="margin-bottom: 15px;" data-bind="text: lang.lang.wreceipt">Receipt</h2>
 							        	<p>
 							        		<span data-bind="text: lang.lang.in_here"></span>
 							        	</p>
 							        	<p style="width: 100%; float: left; margin-top: 8px;">
 								        	<span style="position: relative; height: 35px; line-height: 35px;  float: left; display: block; ">
-												<a data-bind="text: lang.lang.reconcile_transfer" style="color: #203864; margin-top: 4px; line-height: 17px; background: #fff; padding: 8px 60px; font-size: 20px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;" href="#/reconcile">
+												<a data-bind="text: lang.lang.reconcile_transfer" style="color: #203864; margin-top: 4px; line-height: 17px; background: #fff; padding: 10px 29px; font-size: 20px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1; float: left;" href="#/reconcile">
 													Reconcile & Transfer
 												</a>
 											</span>
@@ -6114,7 +6118,7 @@
 							 	</tr>
 							</table>
 							<div class="row">
-								<div class="span12">
+								<div class="col-sm-12">
 									<div class="innerAll padding-bottom-none-phone" style="padding: 0 !important; margin: 8px 0 15px 0;">
 										<a href="javascript:void(0)" class="widget-stats widget-stats-gray widget-stats-4" style="background: #fff; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1; "> 
 											<span class="txt" style="color: #203864;"><span data-bind="text: lang.lang.customer">Customer</span></span>
@@ -6123,7 +6127,7 @@
 										</a>
 									</div>
 								</div>
-								<div class="span12">
+								<div class="col-sm-12">
 									<div class="innerAll padding-bottom-none-phone" style="background: #fff; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1; margin: 0 0 15px 0">
 										<a href="#/wPayment_summary" class="widget-stats widget-stats-primary widget-stats-4" style="background: #fff; padding-left: 15px !important;">
 											<span class="txt" style="color: #203864;"><span data-bind="text: lang.lang.today_payment">Today Payment</span></span>
@@ -6133,31 +6137,31 @@
 									</div>
 								</div>
 							</div>
-							<div class="cover-block" style="padding: 10px 15px 8px 15px; width: 99%;">
+							<div class="cover-block">
 								<h2 data-bind="text: lang.lang.reports">Report</h2>
 								<p data-bind="text: lang.lang.summary_and_detail_cash">
 									Summary and detail cash receipt reports grouped by sources/ methods of receipts
 								</p>
-								<ul style="margin-left: -20px;">
+								<ul >
 									<li><a href="#/cash_receipt_detail"><span data-bind="text: lang.lang.cash_receipt_by_detail">Cash Receipt By Detail</span></a></li>  
 					  				<li><a href="#/cash_receipt_source_summary"><span data-bind="text: lang.lang.cash_receipt_by_sources_summary">Cash Receipt By Sources Summary</span></a></li>
 					  				<li><a href="#/cash_receipt_source_detail"><span data-bind="text: lang.lang.cash_receipt_by_sources_detail">Cash Receipt By Sources Detail</span></a></li> 
 								</ul>
 							</div>
-							<span class="btn btn-icon btn-warning glyphicons remove" data-bind="visible: haveSession ,click: endSession" style="width: 100%;background: #a22314;"><i></i> <span data-bind="text: lang.lang.end_session">End Session</span></span>
+							<span class="btn btn-icon btn-warning glyphicons remove" data-bind="visible: haveSession ,click: endSession" style="width: 100%;background: #a22314; border-radius: 0;"><i></i> <span data-bind="text: lang.lang.end_session">End Session</span></span>
 						</div>
 						<!-- Right Side -->
 						<div class="col-sm-8">
 							<div id="loadING" style="display:none;text-align: center;position: absolute;top: 0; left: 0;width: 100%; height: 100%;background: rgba(142, 159, 167, 0.8);z-index: 9999;">
 								<i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 45%;left: 45%"></i>
 							</div>
-							<div class="row-fluid" data-bind="visible: haveSession" style="background: #fff; float: left; padding: 15px; margin-left: -15px;">
+							<div class="row-fluid" data-bind="visible: haveSession" style="background: #fff; float: left; padding: 15px 0 15px; margin-left: -15px; float: left;width: 100%;">
 								<!-- Upper Part -->
-								<div class="row-fluid" >
-									<div class="span12" style="padding: 0;display: none;">
+								<div class="row" >
+									<div class="col-sm-12" style="padding: 0;display: none;">
 										<div class="box-generic-noborder" style="min-height: 90px;background: #eee;">
 										    <div class="tab-content" style="padding-top: 12px;">
-										    	<div class="span3" style="padding-left: 0;">
+										    	<div class="col-sm-3" style="padding-left: 0;">
 													<div class="control-group">
 														<label ><span data-bind="text: lang.lang.license">License</span></label>
 														<input 
@@ -6174,7 +6178,7 @@
 							                  					events: {change: licenseChange}">
 							                  		</div>
 												</div>
-												<div class="span3" style="padding-left: 0;">
+												<div class="col-sm-3" style="padding-left: 0;">
 													<div class="control-group">								
 														<label ><span data-bind="text: lang.lang.location">Bloc</span></label>
 														<input 
@@ -6192,7 +6196,7 @@
 							                  					enabled: slocation">
 							                  		</div>
 												</div>
-												<div class="span3" style="padding-left: 0;">
+												<div class="col-sm-3" style="padding-left: 0;">
 													<div class="control-group">								
 														<label ><span data-bind="text: lang.lang.month_of">Month Of</span></label>
 											            <input type="text" 
@@ -6207,7 +6211,7 @@
 												           				events: {change: monthChange}" />
 													</div>
 												</div>
-												<div class="span1" style="padding-left: 0;">
+												<div class="col-sm-1" style="padding-left: 0;">
 													<div class="control-group">
 														<label ><span data-bind="text: lang.lang.action">Action</span></label>	
 														<div class="row" style="margin: 0;">
@@ -6215,7 +6219,7 @@
 														</div>
 							                  		</div>
 												</div>
-												<div class="span2" data-bind="visible: downloadView" style="padding-left: 0;">
+												<div class="col-sm-2" data-bind="visible: downloadView" style="padding-left: 0;">
 													<div class="control-group">
 														<label ><span data-bind="text: lang.lang.download">Download</span></label>	
 														<div class="row" style="margin: 0;">
@@ -6229,7 +6233,7 @@
 													  	<input style="padding: 0; margin: 0;border: none" type="file"  data-role="upload" data-show-file-list="false" data-bind="events: {select: onSelected}" id="myFile"  class="margin-none" />
 							                  		</div>
 												</div> -->
-												<div class="span2" data-bind="visible: balanceView" style="padding-left: 0;">
+												<div class="col-sm-2" data-bind="visible: balanceView" style="padding-left: 0;">
 													<div class="control-group">
 														<label ><span data-bind="text: lang.lang.balance">Download</span></label>	
 														<div class="row" style="margin: 0;">
@@ -6240,7 +6244,7 @@
 										    </div>
 										</div>
 									</div>
-									<div class="span4">
+									<div class="col-sm-4">
 										<div class="widget widget-heading-simple widget-body-primary widget-employees">
 											<div class="widget-body padding-none">
 												<div class="row-fluid row-merge">
@@ -6263,7 +6267,7 @@
 											<h2 data-bind="text: total_received" align="right"></h2>
 										</div>
 									</div>
-									<div class="span8" style="padding: 0;">
+									<div class="col-sm-8" style="padding: 0;">
 										<div class="box-generic-noborder" >
 										    <div class="tab-content" style="padding-top: 12px;">
 										    	<!-- Options Tab content -->
@@ -6339,7 +6343,7 @@
 										</div>
 								    </div>
 								</div>
-								<table class="table table-bordered table-primary table-striped table-vertical-center">
+								<table class="table table-bordered table-primary table-striped table-vertical-center" style="margin-top: 15px;">
 							        <thead>
 							            <tr>
 							                <th class="center" style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></th>
@@ -6359,7 +6363,7 @@
 						        		data-bind="source: dataSource"></tbody>
 							    </table>
 					            <div class="row-fluid">
-									<div class="span5" style="padding-left: 0;  "> 
+									<div class="col-sm-5" style="padding-left: 0;  "> 
 										<div class="btn-group">
 											<div class="leadcontainer">
 											</div>
@@ -6373,7 +6377,7 @@
 										</div>
 										<br>
 									</div>
-									<div class="span7">
+									<div class="col-sm-7">
 										<table class="table table-condensed table-striped table-white">
 											<tbody>
 												<tr>
@@ -6401,13 +6405,13 @@
 									</div>
 								</div>
 								<div class="row">
-									<div class="span5" style="min-height: 200px;">
+									<div class="col-sm-5" style="min-height: 200px;">
 										<div class="well" style="overflow: hidden;">
 											<textarea cols="0" rows="2" class="k-textbox" style="width:100% !important;" data-bind="value: obj.memo" placeholder="memo for external ..."></textarea>
 											<textarea cols="0" rows="2" class="k-textbox" style="width:100% !important;" data-bind="value: obj.memo2" placeholder="memo for internal ..."></textarea>
 										</div>
 									</div>
-									<div class="span7" style="padding-left: 0;" data-bind="visible: btnActive">
+									<div class="col-sm-7" style="padding-left: 0;" data-bind="visible: btnActive">
 										<table class="table table-bordered table-primary table-striped table-vertical-center">
 									        <thead>
 									            <tr>
@@ -6442,11 +6446,11 @@
 								<div class="box-generic bg-action-button">
 									<div id="ntf1" data-role="notification"></div>
 									<div class="row">
-										<div class="span3">
+										<div class="col-sm-3">
 										</div>
 										<div class="span9" align="right">
-											<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="visible: btnActive, click: save" style="width: 80px;margin-bottom:0;"><i></i><span data-bind="text: lang.lang.save"></span></span>
-											<span class="btn btn-icon btn-warning glyphicons remove_2" data-bind="click: cancel" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.cancel"></span></span>
+											<span id="saveNew" class="btn-btn" data-bind="visible: btnActive, click: save" ><i></i><span data-bind="text: lang.lang.save"></span></span>
+											<span class="btn-btn" data-bind="click: cancel" ><i></i> <span data-bind="text: lang.lang.cancel"></span></span>
 										</div>
 									</div>
 								</div>

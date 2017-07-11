@@ -57,7 +57,9 @@ html.no-touch.sticky-top:not(.animations-gpu) #content {
 	padding-top: 0 !important
 	
 }
-
+form.navbar-form.pull-left.hidden-xs{
+	margin: 13px 0;
+}
 
 .widget.widget-tabs-gray > .widget-head ul li.active {
   background: #fff;
@@ -165,7 +167,7 @@ p.addItem.glyphicons.circle_remove i:before {
   box-shadow: 0 1px 3px #ddd !important;
   color: #fff;
   float: left !important;
-  height: 50px !important;
+  height: 60px !important;
   overflow: inherit !important;
   position: relative !important;
   width: 100% !important;
@@ -184,10 +186,11 @@ p.addItem.glyphicons.circle_remove i:before {
   margin-left: 15px;
   padding-left: 0;
   padding-top: 0;
-  width: 130px;
+  width: 155px;
+  height: 60px;
 }
 .navbar-brand > img {
-  height: 40px;
+  height: 50px;
   line-height: 50px;
   margin-top: 5px;
 }
@@ -201,9 +204,9 @@ p.addItem.glyphicons.circle_remove i:before {
 #secondary-menu ul li {
     position: relative;
     float: left;
-    height: 50px;
+    height: 60px;
     width: 45px;
-    line-height: 50px;
+    line-height: 60px;
     border-right: 1px solid #333333;
     text-transform: capitalize!important;
     list-style: none;
@@ -230,7 +233,7 @@ p.addItem.glyphicons.circle_remove i:before {
 	color: #999999;
 	cursor: pointer;
 	float: left;
-	height: 50px;
+	height: 60px;
 	width: 45px;
 	display: block;
 }
@@ -243,7 +246,7 @@ p.addItem.glyphicons.circle_remove i:before {
     color: #fff !important;
     font-size: 15px;
     left: 15px;
-    top: 18px;
+    top: 23px;
 }
 
 #secondary-menu li.dropdown .dropdown-menu{
@@ -338,14 +341,14 @@ p.addItem.glyphicons.circle_remove i:before {
 .menu-right.topnav li.setting.dropdown,
 .menu-right.topnav li.help,
 .menu-right.topnav li.dropdown.multitasklist {
-  height: 50px;
+  height: 60px;
   list-style: none;
 }
 .menu-right.topnav li a{
   cursor: pointer;
   display: block;
   line-height: 17px;
-  padding: 16px 15px;
+  padding: 21px 15px;
   text-transform: uppercase;
   color: #fff;
 }
@@ -354,8 +357,8 @@ p.addItem.glyphicons.circle_remove i:before {
   background: #333;
 }
 .menu-right.topnav li.help a{
-  padding: 13px 15px;
-  height: 49px;
+  padding: 15px;
+  height: 60px;
 }
 .navbar.navbar-inverse.navbar-fixed-top .topnav li a.dropdown .dropdown-menu {
   background: #fff none repeat scroll 0 0;
@@ -477,6 +480,9 @@ p.addItem.glyphicons.circle_remove i:before {
   width: 20px;
   margin-right: 8px;
 }
+.navbar-toggle{
+	margin-top: 12px;
+}
 .navbar-inverse .navbar-toggle{
   border-color: #fff;
 }
@@ -500,7 +506,7 @@ p.addItem.glyphicons.circle_remove i:before {
 .phone-multitasklist,
 .phone-search,
 .phone-lang{
-  margin: 8px 7px 0 0;
+  margin: 13px 7px 0 0;
   padding: 6px 10px;
 }
 .phone-multitasklist a,
@@ -578,9 +584,33 @@ p.addItem.glyphicons.circle_remove i:before {
     float: right;
     margin-left: 8px;
 }
-
-
-
+.cover-block h2{
+	margin-bottom: 15px;
+	float: left;
+	width: 100%;
+}
+.cover-block ul li{
+	list-style: none;
+	float: left;
+	width: 100%;
+}
+.cover-block ul{
+	margin-bottom: 15px;
+	float: left;
+}
+.tabsbar.tabsbar-2 ul li.active, .well {
+    background: #f4f5f8 !important;
+    border-radius: 0;
+    box-shadow: none;
+    padding: 15px;
+}
+.well textarea{
+	resize: none;
+	margin-bottom: 15px;
+}
+.well textarea:last-child{
+	margin-bottom: 0;
+}
 @charset "UTF-8";
 /* CSS Document */
 .winvoice-print * {
@@ -697,8 +727,13 @@ p.addItem.glyphicons.circle_remove i:before {
 	.widget-body table tr td{
     width: auto !important;
 }
-/*@media (max-width: 767px){
-	.container-960 {
-	    width: auto !important;
+@media (max-width: 767px){
+	.navbar > .container .navbar-brand, .navbar > .container-fluid .navbar-brand{
+		width: 100px !important;
 	}
-}*/
+	.navbar-brand > img{
+		width: 100%;
+	    height: auto;
+	    margin-top: 13px;
+	}
+}
