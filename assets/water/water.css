@@ -1,3 +1,64 @@
+-------------
+    Deafult CSS
+--------------*/
+body {
+    color: #333;
+    font-family: "Open Sans", 'Battambang';
+    font-size: 14px;
+    background: #F4F5F8;
+}
+h1,h2,h3,h4,h5,h6{
+  font-family: 'Preahvihear', 'Roboto Slab' !important;
+  color: #203864 !important;
+  margin: 0;
+}
+html.k-ff.k-ff50{
+  background: none;
+}
+*{
+  margin: 0 auto;
+  padding: 0;
+}
+ul{
+  padding: 0;
+  margin: 0;
+}
+a:hover {
+    text-decoration: none;
+}
+.row-fluid {
+  clear: both;
+}
+.wrapper{
+  width: 100%;
+  position: relative;
+  background: #F4F5F8;
+}
+#content{
+	background: #F4F5F8;
+	position: static;
+	margin: 0 auto !important;
+}
+.customer-background {
+    width: 90%;
+    background: #fff;
+    margin: 0 auto;
+    padding: 15px 0 10px;
+    border: 1px solid #d8e2e7;
+    border-radius: 2px;
+    margin-top: 30px;
+}
+.container-960 {
+    width: 1020px;
+    margin: 0 auto;
+    overflow: hidden;
+}
+html.no-touch.sticky-top:not(.animations-gpu) #content {
+	padding-top: 0 !important
+	
+}
+
+
 .widget.widget-tabs-gray > .widget-head ul li.active {
   background: #fff;
 }
@@ -18,8 +79,13 @@
 .reconcile table tr td .k-widget .k-state-hover .k-icon.k-i-close{
 	display: none !important;
 }
+.widget-body table tr td{
+    width: auto !important;
 }
 
+.k-dropdown{
+	width: auto;
+}
 p.addItem {
 	cursor: pointer;
 }
@@ -69,6 +135,451 @@ p.addItem.glyphicons.circle_remove i:before {
 .k-state-default .k-input {
 	width: 96%!important;
 }
+.cash-bg {
+    width: 100%;
+    padding: 15px;
+    background: #fff;
+    display: inline-block;
+}
+.cash-invoice {
+    background: #d5dce6;
+    padding: 10px;
+    width: 100%;
+    float: left;
+    margin-bottom: 10px;
+}
+.cash-bg .col-sm-3{
+	float: left;
+    padding: 0;
+    text-align: center;
+}
+.cash-bg .col-sm-3 a img {
+    float: left;
+    width: 98.5%;
+}
+/*---------
+  CSS Menu
+-----------*/
+.menu {
+  background: #1c2633 !important;
+  box-shadow: 0 1px 3px #ddd !important;
+  color: #fff;
+  float: left !important;
+  height: 50px !important;
+  overflow: inherit !important;
+  position: relative !important;
+  width: 100% !important;
+  z-index: 999;
+}
+.navbar{
+  border-radius: 0 !important;
+  background: none !important;
+  border: none !important;
+  z-index: 2;
+  position: static !important;
+}
+.navbar > .container .navbar-brand, .navbar > .container-fluid .navbar-brand{
+  border-right: 1px solid #333333;
+  float: left;
+  margin-left: 15px;
+  padding-left: 0;
+  padding-top: 0;
+  width: 130px;
+}
+.navbar-brand > img {
+  height: 40px;
+  line-height: 50px;
+  margin-top: 5px;
+}
+#secondary-menu{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    height: 50px;
+    float: left;
+}
+#secondary-menu ul li {
+    position: relative;
+    float: left;
+    height: 50px;
+    width: 45px;
+    line-height: 50px;
+    border-right: 1px solid #333333;
+    text-transform: capitalize!important;
+    list-style: none;
+}
+#secondary-menu ul li:nth-child(2),
+#secondary-menu ul li:nth-child(4){
+	width: 82px;
+}
+#secondary-menu ul li:nth-child(3),
+#secondary-menu ul li:nth-child(3) a{
+	width: 60px;
+}
+#secondary-menu ul li:nth-child(2) a,
+#secondary-menu ul li:nth-child(4) a{
+    float: left;
+    padding-left: 15px;
+    padding-right: 15px;
+    width: 82px;
+}
+#secondary-menu ul li a span{
+	color: #fff;
+}
+#secondary-menu ul > li > a {
+	color: #999999;
+	cursor: pointer;
+	float: left;
+	height: 50px;
+	width: 45px;
+	display: block;
+}
+#secondary-menu  ul> li > a:hover {
+	background: #333;
+}
+#secondary-menu .topnav > li > a.glyphicons i:before, 
+#secondary-menu .topnav > li > a.glyphicons i:before, 
+#secondary-menu .topnav > li > a.glyphicons i:before {
+    color: #fff !important;
+    font-size: 15px;
+    left: 15px;
+    top: 18px;
+}
+
+#secondary-menu li.dropdown .dropdown-menu{
+	background: #f4f5f8;
+	border-radius: 0;
+	margin: 0;
+	border: 0;
+}
+#secondary-menu li.dropdown .dropdown-menu li{
+	float: left;
+    width: 100%;
+    line-height: 0 !important;
+    border: 0;
+    height: auto; 
+}
+#secondary-menu li.dropdown .dropdown-menu li a{
+	color: #333;
+    float: left;
+    width: 100%;
+    height: auto;
+    padding: 6px 15px;
+}
+#secondary-menu li.dropdown .dropdown-menu li a span{
+	color: #333;
+}
+#secondary-menu li.dropdown .dropdown-menu li a:hover span{
+	background: #333;
+	color: #fff;
+}
+.li-line {
+    border-bottom: 1px solid #c5c5c5;
+    width: 83%;
+    margin: -12px auto 0;
+}
+
+/*Menu Search*/
+
+.navbar-form .search-query {
+  width: 170px;
+  background: #555555;
+  border: none;
+  color: #ffffff;
+  height: 33px;
+  padding: 0 10px;
+}
+.btn-group.open 
+.btn-inverse.dropdown-toggle, 
+.btn-inverse.disabled, 
+.btn-inverse[disabled], 
+.btn-inverse:hover, 
+.btn-inverse:focus, 
+.btn-inverse {
+  background: #203864 !important;
+  border: none !important;
+  line-height: 21px;
+  border-radius: 0;
+}
+.icon-question {
+  border: 1px solid #fff;
+  border-radius: 50%;
+  float: left;
+  font-size: 20px;
+  height: 25px;
+  width: 25px;
+}
+.icon-question.icon-question1::before {
+  color: #fff;
+  content: "";
+  margin-left: 21%;
+  margin-top: 2px;
+  cursor: pointer;
+  display: inline-block;
+}
+.icon-th-list::before {
+  cursor: pointer;
+}
+.navbar.navbar-inverse.navbar-fixed-top .topnav {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.col-sm-3.topnav.pull-right.hidden-xs{
+  padding-right: 0;
+}
+.menu-right.topnav li{
+  float: right;
+  border-right: 1px solid #333333;
+}
+.menu-right.topnav li.setting.dropdown{
+  border-right: none;
+}
+.menu-right.topnav li.setting.dropdown,
+.menu-right.topnav li.help,
+.menu-right.topnav li.dropdown.multitasklist {
+  height: 50px;
+  list-style: none;
+}
+.menu-right.topnav li a{
+  cursor: pointer;
+  display: block;
+  line-height: 17px;
+  padding: 16px 15px;
+  text-transform: uppercase;
+  color: #fff;
+}
+.menu-right.topnav li a:hover{
+  text-decoration: none;
+  background: #333;
+}
+.menu-right.topnav li.help a{
+  padding: 13px 15px;
+  height: 49px;
+}
+.navbar.navbar-inverse.navbar-fixed-top .topnav li a.dropdown .dropdown-menu {
+  background: #fff none repeat scroll 0 0;
+  border: medium none;
+  right: 0;
+  width: 180px;
+  color: #fff;
+  left: -500px;
+}
+
+.help .dropdown-menu{
+  border: medium none;
+  border-radius: 0;
+  left: -150px ;
+  margin-top: 0;
+  padding-bottom: 0;
+  top: 50px;
+  color: #333;
+  width: 408px;
+}
+.help .dropdown-menu .top-help{
+  background: #fff none repeat scroll 0 0;
+  display: inline-block;
+  padding: 10px 20px 20px;
+  text-align: left;
+  width: 100%;
+}
+.help .dropdown-menu .top-help h3{ 
+  margin-bottom: 12px;
+}
+.help .dropdown-menu .top-help .search-help{
+  width: 77%; 
+  float: left;
+  border-radius: 0;
+}
+.help .dropdown-menu .top-help .btn-help-search{
+  float: left;
+  width: 35px; 
+  margin-left: 8px; 
+  height: 30px;
+  border-radius: 0;
+}
+.help .dropdown-menu .middle-help{
+  background: #f4f4f4;
+  padding: 20px 20px 20px;
+  text-align: left;
+  display: inline-block;
+  width: 100%;
+}
+.help .dropdown-menu .middle-help .more-help{
+  border-bottom: 1px solid #ddd;
+  float: left;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  width: 100%;
+}
+.help .dropdown-menu .middle-help .more-help .help-img{
+  float: left;
+  margin-right: 20px;
+}
+.help .dropdown-menu .middle-help .more-help .help-desc{
+  float: left;
+}
+.help .dropdown-menu .middle-help .more-help .help-desc a{
+  color: #496cad;
+  padding-left: 0;
+}
+.help .dropdown-menu .middle-help .what-help .help-img{
+  float: left;
+  margin-right: 20px;
+}
+.help .dropdown-menu .middle-help .what-help .help-desc{
+  float: left;
+}
+.help .dropdown-menu .middle-help .what-help .help-desc a{
+  color: #496cad;
+  padding-left: 0;
+}
+.dropdown.multitasklist .dropdown-menu{
+  border: medium none;
+  border-radius: 0;
+  color: #333;
+  left: -268px !important;
+  margin-top: 0;
+  padding: 8px;
+  top: 50px;
+  width: 313px !important;
+}
+.setting.dropdown .dropdown-menu{
+  border: medium none;
+  border-radius: 0;
+  color: #333;
+  left: -102px !important;
+  margin-top: 0;
+  padding: 8px;
+  top: 50px;
+  width: 150px !important;
+}
+.setting.dropdown .dropdown-menu li{
+  float: left;
+  width: 100%;  
+  border-right: none;
+}
+.setting.dropdown .dropdown-menu li a{
+  color: #333;
+  float: left;
+  padding: 5px 15px;
+  width: 100%;
+}
+.menu .navbar .topnav li.setting.dropdown ul li a img{
+   width: 20px;
+}
+/*Menu Phone*/
+
+.menu-phone ul li{
+  padding-left: 15px;
+}
+.menu-phone ul li a img{
+  width: 20px;
+  margin-right: 8px;
+}
+.navbar-inverse .navbar-toggle{
+  border-color: #fff;
+}
+.navbar-collapse {
+  /*border-top: 1px solid transparent;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1) inset;
+  overflow-x: visible;*/
+  padding-left: 15px;
+  padding-right: 15px;
+  background: #1c2633;
+}
+.navbar-form.pull-left.hidden-sm{
+  width: 100%;
+  margin: 0;
+}
+.navbar-fixed-top .nav {
+  float: left;
+  margin: 0;
+  width: 100%;
+}
+.phone-multitasklist,
+.phone-search,
+.phone-lang{
+  margin: 8px 7px 0 0;
+  padding: 6px 10px;
+}
+.phone-multitasklist a,
+.phone-search a,
+.phone-lang a{
+  color: #fff;
+}
+.phone-language li a img{
+  width: 30px;
+  margin-right: 8px;
+}
+.phone-lang a img{
+  width: 20px;
+}
+.menu-phone ul > li > a.glyphicons i:before, 
+.menu-phone ul > li > a.glyphicons i:before, 
+.menu-phone ul > li > a.glyphicons i:before {
+    color: #fff !important;
+    font-size: 15px;
+    left: 15px;
+    top: 14px;
+}
+.menu-phone ul > li > a span{
+	margin-left: 22px;
+    color: #fff;
+}
+.menu-phone ul > li a:hover span{
+	background: #333;
+	color: #fff;
+}
+.menu-phone ul > li:nth-child(2) > a span,
+.menu-phone ul > li:nth-child(4) > a span,
+.menu-phone ul > li:nth-child(6) > a span{
+	margin-left: 0;
+    color: #fff;
+}
+.menu-phone ul > li.dropdown .dropdown-menu li a span{
+	margin-left: 0;
+	color: #fff;
+} 
+.menu-right .multitasklist .ul-multiTaskList{
+	padding: 0;
+}
+.menu-right .multitasklist .ul-multiTaskList li{
+	border-right: none !important;
+    float: left;
+    width: 100%;
+}
+.menu-right .multitasklist .ul-multiTaskList li a{
+    padding: 8px;
+}
+.menu-right .multitasklist .ul-multiTaskList li a span{
+	color: #333;
+}
+.menu-right .multitasklist .ul-multiTaskList li a .glyphicons.remove_2 i:before{
+	font-size: 20px;
+}
+.menu-right .multitasklist .ul-multiTaskList li:hover a span,
+.menu-right .multitasklist .ul-multiTaskList li:hover a .glyphicons.remove_2 i:before{
+	color: #fff;
+}
+.bg-action-button {
+    background: #203864;
+    margin-bottom: 0;
+}
+.bg-action-button .btn-btn:hover {
+    background: #0077c5;
+}
+.bg-action-button .btn-btn {
+    color: #FFF;
+    border: 1px solid #d5d5d5;
+    border-radius: 2px;
+    padding: 5px 15px;
+    cursor: pointer;
+    float: right;
+    margin-left: 8px;
+}
+
+
 
 @charset "UTF-8";
 /* CSS Document */
@@ -148,3 +659,46 @@ p.addItem.glyphicons.circle_remove i:before {
 .table-primary tbody tr td.mm {
 	cursor: pointer;
 }
+
+
+
+
+
+/*Kendo*/
+.k-animation-container .k-list-container .k-list-scroller ul li:hover, .table .k-grid-content.k-auto-scrollable .k-virtual-scrollable-wrap table tr:hover {
+    background: #0077c5 !important;
+    color: #fff;
+    border: 0;
+	border-radius: 0;
+}
+.k-autocomplete, .k-block, .k-button, .k-calendar .k-link, .k-calendar td, .k-calendar-container, .k-colorpicker, .k-combobox, .k-datepicker, .k-datetimepicker, .k-drag-clue, .k-dropdown, .k-dropdown-wrap, .k-editor-inline, .k-gantt-views>.k-current-view, .k-grid .k-filter-options, .k-grouping-header .k-group-indicator, .k-inline-block, .k-list-container, .k-multiselect, .k-notification, .k-numeric-wrap, .k-numerictextbox, .k-picker-wrap, .k-slider-selection, .k-slider-track, .k-split-button .k-gantt-views, .k-textbox, .k-tile, .k-timepicker, .k-tooltip, .k-touch-scrollbar, .k-treeview .k-in, .k-upload, .k-window, .k-window-action, .k-window-titleless .k-window-content{
+	border-radius: 0;
+}
+.k-draghandle.k-state-selected:hover, .k-ghost-splitbar-horizontal, .k-ghost-splitbar-vertical, .k-list>.k-state-highlight, .k-list>.k-state-selected, .k-marquee-color, .k-panel>.k-state-selected, .k-scheduler .k-scheduler-toolbar .k-state-selected, .k-scheduler .k-today.k-state-selected, .k-state-selected, .k-state-selected:link, .k-state-selected:visited{
+	background: #0077c5 !important;
+	color: #fff;
+	border: 0;
+	border-radius: 0;
+}
+.k-content, .k-editable-area, .k-panel>li.k-item, .k-panelbar>li.k-item, .k-tiles{
+	background: none;
+}
+.btn-primary, #flotTip, .btn-group.open .btn-primary.dropdown-toggle, .btn-primary.disabled, .btn-primary[disabled], .btn-primary:hover, .label-primary, .table-primary thead th, .pagination ul > .active > a, .pagination ul > .active > span, .gallery ul li .thumb, .widget-activity ul.filters li.glyphicons.active i, .ui-slider-wrap .slider-primary .ui-slider-range, .accordion-heading .accordion-toggle, .ui-widget-header, .ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active, .fc-event-skin, #external-events li, .notyfy_wrapper.notyfy_primary, .progress.progress-primary .bar, .alert.alert-primary, .pagination ul > li > a:hover, .pagination ul > li.primary > a, .gritter-item-wrapper.gritter-primary .gritter-item, #content-notification .notyfy_wrapper.notyfy_primary, .ribbon-wrapper .ribbon.primary, .label.label-primary, .widget-stats.primary, .widget-stats.primary:hover, .widget.widget-wizard-pills .widget-head ul li.primary a, .bwizard-steps li.active, .sliderContainer .ui-rangeSlider-bar, #tlyPageGuideWrapper #tlyPageGuide li.tlypageguide-active, #tlyPageGuideWrapper #tlyPageGuideMessages .tlypageguide_close, #tlyPageGuideWrapper #tlyPageGuideMessages span, .tabsbar.tabsbar-2.active-fill ul li.active a, .shop-client-products.list ul li a .glyphicons i, .social-large:not(.social-large-2) a.active, .social-large:not(.social-large-2) a:hover, #landing_1 .banner-1 .carousel-indicators li.active, .nav-timeline > li.active > a, .nav-timeline > li > a:hover, .nav-timeline > li.active > a:hover, .layout-timeline ul.timeline > li.active .type:before, .layout-timeline ul.timeline > li.active .type:after, .layout-timeline ul.timeline > li.active:before, .carousel.carousel-1 .carousel-indicators li.active, .widget-body-gray .ui-datepicker .ui-datepicker-calendar tbody td a.ui-state-active, .widget.widget-body-primary > .widget-body, .badge.badge-primary, .widget-stats.widget-stats-primary, .widget-employees [class*='span'].listWrapper .results{
+	background: #203864;
+}
+
+/*Theme*/
+.widget.widget-tabs > .widget-head ul li a{
+	color: #fff;
+}
+
+
+@media only screen and (-webkit-min-device-pixel-ratio: 2) and (max-device-width: 1024px) and (min-device-width: 768px){
+	.widget-body table tr td{
+    width: auto !important;
+}
+/*@media (max-width: 767px){
+	.container-960 {
+	    width: auto !important;
+	}
+}*/

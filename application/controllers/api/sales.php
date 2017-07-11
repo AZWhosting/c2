@@ -562,6 +562,351 @@ class Sales extends REST_Controller {
 		$this->response($data, 200);
 	}
 
+	//Cash SALE BY CUSTOMER
+	function cashSale_summary_by_customer_get() {
+		$filter 	= $this->get("filter");
+		$page 		= $this->get('page');
+		$limit 		= $this->get('limit');
+		$sort 	 	= $this->get("sort");
+		$data["results"] = [];
+		$data["count"] = 0;
+
+		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+		//Sort
+		if(!empty($sort) && isset($sort)){
+			foreach ($sort as $value) {
+				if(isset($value['operator'])){
+					$obj->{$value['operator']}($value["field"], $value["dir"]);
+				}else{
+					$obj->order_by($value["field"], $value["dir"]);
+				}
+			}
+		}
+		
+		//Filter		
+		if(!empty($filter) && isset($filter)){
+	    	foreach ($filter["filters"] as $value) {
+	    		if(isset($value['operator'])){
+	    			$obj->{$value['operator']}($value['field'], $value['value']);	    		
+	    		} else {
+	    			$obj->where($value['field'], $value['value']);
+	    		}
+			}
+		}
+
+		//Results
+		$obj->include_related("contact", array("abbr", "number", "name"));
+		$obj->where_in("type", array("Commercial_Cash_Sale","Vat_Cash_Sale","Cash_Sale"));
+		$obj->where("is_recurring <>", 1);
+		$obj->where("deleted <>", 1);
+		$obj->order_by("issued_date", "asc");
+		$obj->get_iterated();
+		
+		if($obj->exists()){
+			$objList = [];
+			foreach ($obj as $value) {								
+				$amount = (floatval($value->amount) - floatval($value->deposit)) / floatval($value->rate);
+				$invoice = 0;
+				$cashSale = 0;
+				if($value->type=="Commercial_Invoice" || $value->type=="Vat_Invoice" || $value->type=="Invoice"){
+					$invoice++;
+				}else{
+					$cashSale++;
+				}
+
+				if(isset($objList[$value->contact_id])){
+					$objList[$value->contact_id]["cash_sale_count"] += $cashSale;
+					$objList[$value->contact_id]["amount"] 			+= $amount;
+				}else{
+					$objList[$value->contact_id]["id"] 				= $value->contact_id;
+					$objList[$value->contact_id]["name"] 			= $value->contact_abbr.$value->contact_number." ".$value->contact_name;
+
+					$objList[$value->contact_id]["cash_sale_count"]	= $cashSale;
+					$objList[$value->contact_id]["amount"]			= $amount;
+				}
+			}
+
+			foreach ($objList as $value) {
+				$data["results"][] = $value;
+			}
+			$data["count"] = count($data["results"]);
+		}
+
+		//Response Data
+		$this->response($data, 200);
+	}
+	function cashSale_detail_by_customer_get() {
+		$filter 	= $this->get("filter");
+		$page 		= $this->get('page');
+		$limit 		= $this->get('limit');
+		$sort 	 	= $this->get("sort");
+		$data["results"] = [];
+		$data["count"] = 0;
+
+		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+		//Sort
+		if(!empty($sort) && isset($sort)){
+			foreach ($sort as $value) {
+				if(isset($value['operator'])){
+					$obj->{$value['operator']}($value["field"], $value["dir"]);
+				}else{
+					$obj->order_by($value["field"], $value["dir"]);
+				}
+			}
+		}
+		
+		//Filter		
+		if(!empty($filter) && isset($filter)){
+	    	foreach ($filter["filters"] as $value) {
+	    		if(isset($value['operator'])){
+	    			$obj->{$value['operator']}($value['field'], $value['value']);	    		
+	    		} else {
+	    			$obj->where($value['field'], $value['value']);
+	    		}
+			}
+		}
+
+		//Results
+		$obj->include_related("contact", array("abbr", "number", "name"));
+		$obj->where_in("type", array("Commercial_Cash_Sale","Vat_Cash_Sale","Cash_Sale"));
+		$obj->where("is_recurring <>", 1);
+		$obj->where("deleted <>", 1);
+		$obj->order_by("issued_date", "asc");
+		$obj->get_iterated();
+		
+		if($obj->exists()){
+			$objList = [];
+			foreach ($obj as $value) {								
+				$amount = (floatval($value->amount) - floatval($value->deposit)) / floatval($value->rate);
+				
+				if(isset($objList[$value->contact_id])){
+					$objList[$value->contact_id]["line"][] = array(
+						"id" 				=> $value->id,
+						"type" 				=> $value->type,
+						"number" 			=> $value->number,
+						"issued_date" 		=> $value->issued_date,
+						"rate" 				=> $value->rate,
+						"amount" 			=> $amount
+					);
+				}else{
+					$objList[$value->contact_id]["id"] 		= $value->contact_id;
+					$objList[$value->contact_id]["name"] 	= $value->contact_abbr.$value->contact_number." ".$value->contact_name;
+					$objList[$value->contact_id]["line"][]	= array(
+						"id" 				=> $value->id,
+						"type" 				=> $value->type,
+						"number" 			=> $value->number,
+						"issued_date" 		=> $value->issued_date,
+						"rate" 				=> $value->rate,
+						"amount" 			=> $amount
+					);
+				}
+			}
+
+			foreach ($objList as $value) {
+				$data["results"][] = $value;
+			}
+			$data["count"] = count($data["results"]);
+		}
+
+		//Response Data
+		$this->response($data, 200);
+	}
+
+	//Cash SALE BY PRODUCT
+	function cashSale_summary_by_product_get() {
+		$filter 	= $this->get("filter");
+		$page 		= $this->get('page');
+		$limit 		= $this->get('limit');
+		$sort 	 	= $this->get("sort");
+		$data["results"] = [];
+		$data["count"] = 0;
+
+		$obj = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+		//Sort
+		if(!empty($sort) && isset($sort)){
+			foreach ($sort as $value) {
+				if(isset($value['operator'])){
+					$obj->{$value['operator']}($value["field"], $value["dir"]);
+				}else{
+					$obj->order_by($value["field"], $value["dir"]);
+				}
+			}
+		}
+		
+		//Filter		
+		if(!empty($filter) && isset($filter)){
+	    	foreach ($filter["filters"] as $value) {
+	    		if(isset($value['operator'])){
+	    			$obj->{$value['operator']}($value['field'], $value['value']);	    		
+	    		} else {
+	    			$obj->where($value['field'], $value['value']);
+	    		}
+			}
+		}
+
+		//Results
+		$obj->include_related("item", array("abbr", "number", "name", "measurement_id"));
+		$obj->where_related("item", "item_type_id", array(1,4));
+		$obj->include_related("transaction", array("rate"));		
+		$obj->where_in_related("transaction", "type", array("Commercial_Cash_Sale","Vat_Cash_Sale","Cash_Sale"));
+		$obj->where_related("transaction", "is_recurring <>", 1);
+		$obj->where_related("transaction", "deleted <>", 1);
+		$obj->order_by_related("transaction", "issued_date", "asc");
+		$obj->get_iterated();
+		
+		if($obj->exists()){
+			$objList = [];
+			foreach ($obj as $value) {								
+				$quantity = floatval($value->quantity) * floatval($value->conversion_ratio);
+				$amount = floatval($value->amount) / floatval($value->transaction_rate);
+								
+				if(isset($objList[$value->item_id])){
+					$objList[$value->item_id]["quantity"] 		+= $quantity;
+					$objList[$value->item_id]["amount"] 		+= $amount;
+					$objList[$value->item_id]["cost"] 			+= $value->cost;
+					$objList[$value->item_id]["price"] 			+= $value->price;
+					$objList[$value->item_id]["txn_count"]++;
+				}else{
+					$measurement = new Measurement(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					$measurement->get_by_id($value->measurement_id);
+
+					$objList[$value->item_id]["id"] 			= $value->item_id;
+					$objList[$value->item_id]["name"] 			= $value->item_abbr.$value->item_number." ".$value->item_name;
+					$objList[$value->item_id]["quantity"] 		= $quantity;
+					$objList[$value->item_id]["measurement"]	= $measurement->name;
+					$objList[$value->item_id]["amount"] 		= $amount;
+					$objList[$value->item_id]["cost"] 			= $value->cost;
+					$objList[$value->item_id]["price"] 			= $value->price;
+					$objList[$value->item_id]["avg_cost"] 		= 0;
+					$objList[$value->item_id]["avg_price"] 		= 0;
+					$objList[$value->item_id]["gpm"] 			= 0;
+					$objList[$value->item_id]["txn_count"]		= 1;
+				}
+			}
+			
+			foreach ($objList as $value) {
+				$avgPrice = 0;
+				$avgCost = 0;
+				$gp = 0;
+				$gpm = 0;
+
+				if($value["quantity"]>0){
+					$avgPrice = $value["amount"] / $value["quantity"];
+					$avgCost = $value["cost"] / $value["quantity"];
+
+					$gp = ($value["quantity"] * $value["price"]) - ($value["quantity"] * $value["cost"]);
+					
+					$price = ($value["quantity"] * $value["price"]);
+					if($price>0){
+						$gpm = $gp / $price;
+					}else{
+						$gpm = $gp;
+					}
+				}
+
+				$value["avg_price"] = $avgPrice;
+				$value["avg_cost"] = $avgCost;
+				$value["gpm"] = $gpm;
+
+				$data["results"][] = $value;
+			}
+			$data["count"] = count($data["results"]);
+		}
+
+		//Response Data
+		$this->response($data, 200);
+	}
+	function cashSale_detail_by_product_get() {
+		$filter 	= $this->get("filter");
+		$page 		= $this->get('page');
+		$limit 		= $this->get('limit');
+		$sort 	 	= $this->get("sort");
+		$data["results"] = [];
+		$data["count"] = 0;
+
+		$obj = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+		//Sort
+		if(!empty($sort) && isset($sort)){
+			foreach ($sort as $value) {
+				if(isset($value['operator'])){
+					$obj->{$value['operator']}($value["field"], $value["dir"]);
+				}else{
+					$obj->order_by($value["field"], $value["dir"]);
+				}
+			}
+		}
+		
+		//Filter		
+		if(!empty($filter) && isset($filter)){
+	    	foreach ($filter["filters"] as $value) {
+	    		if(isset($value['operator'])){
+	    			$obj->{$value['operator']}($value['field'], $value['value']);	    		
+	    		} else {
+	    			$obj->where($value['field'], $value['value']);
+	    		}
+			}
+		}
+
+		//Results
+		$obj->include_related("item", array("abbr", "number", "name", "measurement_id"));
+		$obj->where_related("item", "item_type_id", array(1,4));
+		$obj->include_related("measurement", array("name"));
+		$obj->include_related("transaction", array("type","number","issued_date","amount","deposit","rate"));
+		$obj->where_in_related("transaction", "type", array("Commercial_Cash_Sale","Vat_Cash_Sale","Cash_Sale"));
+		$obj->where_related("transaction", "is_recurring <>", 1);
+		$obj->where_related("transaction", "deleted <>", 1);
+		$obj->include_related('transaction/contact', array("abbr", "number", "name"));
+		$obj->order_by_related("transaction", "issued_date", "asc");
+		$obj->get_iterated();
+		
+		if($obj->exists()){
+			$objList = [];
+			foreach ($obj as $value) {
+				$amount = floatval($value->amount) / floatval($value->transaction_rate);
+								
+				if(isset($objList[$value->item_id])){
+					$objList[$value->item_id]["line"][]		= array(
+						"id" 			=> $value->transaction_id,
+						"type" 			=> $value->transaction_type,
+						"customer"		=> $value->transaction_contact_name,
+						"number" 		=> $value->transaction_number,
+						"issued_date" 	=> $value->transaction_issued_date,
+						"quantity" 		=> $value->quantity,
+						"measurement"	=> $value->measurement_name,
+						"price" 		=> $value->price,
+						"amount" 		=> $amount
+					);
+				}else{
+					$objList[$value->item_id]["id"] 		= $value->item_id;
+					$objList[$value->item_id]["name"] 		= $value->item_abbr.$value->item_number." ".$value->item_name;
+					$objList[$value->item_id]["line"][]		= array(
+						"id" 			=> $value->transaction_id,
+						"type" 			=> $value->transaction_type,
+						"customer"		=> $value->transaction_contact_name,
+						"number" 		=> $value->transaction_number,
+						"issued_date" 	=> $value->transaction_issued_date,
+						"quantity" 		=> $value->quantity,
+						"measurement"	=> $value->measurement_name,
+						"price" 		=> $value->price,
+						"amount" 		=> $amount
+					);
+				}
+			}
+			
+			foreach ($objList as $value) {
+				$data["results"][] = $value;
+			}
+			$data["count"] = count($data["results"]);
+		}
+
+		//Response Data
+		$this->response($data, 200);
+	}
+
 	//BALANCE
 	function balance_summary_get() {
 		$filter 	= $this->get("filter");

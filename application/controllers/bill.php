@@ -10,12 +10,15 @@ class Bill extends MY_Controller {
 	}
 	
 	public function index() {	
-		
+		redirect('utibill', 'refresh');
 		/*
 		 *set up title and keywords (if not the default in custom.php config file will be set) 
 		 */
 		// $this->_render("utibill_view");
-		$this->_render("utibill_view");
+		$this->load->view("template/utibill-header");
+		// $this->_render("utibill_view");
+		$this->load->view("utibill_view");
+		$this->load->view("template/utibill-footer");
 	}
 	
 }

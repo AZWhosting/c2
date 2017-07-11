@@ -1,24 +1,18 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Utibill extends MY_Controller {
+class Utibill extends CI_Controller {
 	
 	function __construct() {
 		parent::__construct();
-		// if(!$this->session->userdata('logged_in')) {
-		// 	redirect('home');
-		// }
 	}
 	
 	public function index() {	
-		
-		/*
-		 *set up title and keywords (if not the default in custom.php config file will be set) 
-		 */
+		$this->load->view("template/utibill-header");
 		// $this->_render("utibill_view");
-		$this->_render("admin/login_view");
+		$this->load->view("utibill_view");
+		$this->load->view("template/utibill-footer");
 	}
-	
 }
 
-/* End of file water.php */
-/* Location: ./application/controllers/water.php */
+/* End of file home.php */
+/* Location: ./application/controllers/utibill_view.php */

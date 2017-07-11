@@ -360,6 +360,29 @@
 							</li>
 						</ul>						
 					</div>
+
+					<div class="home-chart row" style="margin-top: 15px;">
+						<div class="col-xs-12 col-sm-12">
+							<div class="chart">
+								<div data-role="chart"
+									 data-auto-bind="false"
+					                 data-legend="{ position: 'top' }"
+					                 data-series-defaults="{ type: 'column' }"
+					                 data-tooltip='{
+					                    visible: true,
+					                    format: "{0}%",
+					                    template: "#= series.name #: #= kendo.toString(value, &#39;c&#39;, banhji.locale) #"
+					                 }'
+					                 data-series="[
+					                                 { field: 'cash_in', name: 'Cash In', categoryField:'month', color: '#203864', overlay:{ gradient: 'none'}  },
+					                                 { field: 'cash_out', name: 'Cash Out', categoryField:'month', color: '#A6C9E3' , overlay:{ gradient: 'none'} }
+					                             ]"
+					                 data-bind="source: graphDS"
+					                 style="height: 240px;" >
+					            </div>
+							</div>
+						</div>
+					</div>
 				</div>
 
 				<div class="col-xs-12 col-sm-6">

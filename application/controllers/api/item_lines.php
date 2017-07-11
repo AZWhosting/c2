@@ -173,6 +173,7 @@ class Item_lines extends REST_Controller {
 						$itemMovement->where_related("transaction", "issued_date <=", $transaction->issued_date);
 						$itemMovement->where_related("transaction", "is_recurring <>", 1);
 						$itemMovement->where_related("transaction", "deleted <>", 1);
+						$itemMovement->where("deleted <>", 1);
 						$itemMovement->get_iterated();
 
 						$onHand = 0;
@@ -186,30 +187,31 @@ class Item_lines extends REST_Controller {
 						if($totalQty==0){
 							$totalQty = 1;
 						}
+						
+						// if($transaction->status==0 || $transaction->status==1 || $transaction->status==2 || $transaction->status==3){
+							//Sale
+							if($transaction->type=="Commercial_Invoice" || $transaction->type=="Vat_Invoice" || $transaction->type=="Invoice" || $transaction->type=="Commercial_Cash_Sale" || $transaction->type=="Vat_Cash_Sale" || $transaction->type=="Cash_Sale"){
+								//Avg Price
+								$lastPrice = $onHand * floatval($item->price);
+								$currentPrice = $currentQuantity * (floatval($value->price) / floatval($value->rate));
 
-						//Sale
-						if($transaction->type=="Commercial_Invoice" || $transaction->type=="Vat_Invoice" || $transaction->type=="Invoice" || $transaction->type=="Commercial_Cash_Sale" || $transaction->type=="Vat_Cash_Sale" || $transaction->type=="Cash_Sale"){
-							//Avg Price
-							$lastPrice = $onHand * floatval($item->price);
-							$currentPrice = $currentQuantity * (floatval($value->price) / floatval($value->rate));
-
-							$item->price = ($lastPrice + $currentPrice) / $totalQty;
-							// $obj->cost = floatval($item->cost) * floatval($value->rate);
-							$obj->price_avg = ($lastPrice + $currentPrice) / $totalQty;
-						}
-
-						//Purchase
-						if($transaction->type=="Cash_Purchase" || $transaction->type=="Credit_Purchase" || $transaction->type=="Item_Adjustment" || $transaction->type=="Internal_Usage"){
-							//Avg Cost
-							$lastCost = $onHand * floatval($item->cost);
-							$currentCost = ($currentQuantity * floatval($value->cost) + floatval($value->additional_cost)) / floatval($value->rate);
-
-							if($onHand>0){
-								$item->cost = ($lastCost + $currentCost) / $totalQty;
-							}else{
-								$item->cost = $currentCost / $currentQuantity;
+								$item->price = ($lastPrice + $currentPrice) / $totalQty;
+								$obj->price_avg = ($lastPrice + $currentPrice) / $totalQty;
 							}
-						}
+
+							//Purchase
+							if($transaction->type=="Cash_Purchase" || $transaction->type=="Credit_Purchase" || $transaction->type=="Item_Adjustment" || $transaction->type=="Internal_Usage"){
+								//Avg Cost
+								$lastCost = $onHand * floatval($item->cost);
+								$currentCost = ($currentQuantity * floatval($value->cost) + floatval($value->additional_cost)) / floatval($value->rate);
+
+								if($onHand>0){
+									$item->cost = ($lastCost + $currentCost) / $totalQty;
+								}else{
+									$item->cost = $currentCost / $currentQuantity;
+								}
+							}
+						// }
 
 						if($transaction->type=="Item_Adjustment" && $item->cost==0){
 							//Avg Cost
@@ -223,6 +225,7 @@ class Item_lines extends REST_Controller {
 							$poso->where_related("transaction", "status", 0);
 							$poso->where_related("transaction", "is_recurring <>", 1);
 							$poso->where_related("transaction", "deleted <>", 1);
+							$poso->where("deleted <>", 1);
 							$poso->get_iterated();
 
 							$onPO = 0; $onSO = 0;
@@ -426,7 +429,7 @@ class Item_lines extends REST_Controller {
 
 		foreach ($models as $key => $value) {
 			$obj = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			$obj->where("id", $value->id)->get();
+			$obj->get_by_id($value->id);
 			$obj->deleted = 1;
 
 			$data["results"][] = array(

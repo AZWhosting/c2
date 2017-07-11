@@ -668,7 +668,7 @@
                                       class="form-control"
                                       data-format="dd-MM"
                                       data-parse-formats="yyyy-MM-dd" 
-                                      data-bind="value: current.fiscal_date">
+                                      data-bind="value: current.fiscal_date, events: {change: fiscalChange}">
                                   </td>
                                 </tr>
                                 <tr>
@@ -3231,6 +3231,10 @@
         users   : banhji.users,
         userProfile: banhji.profile,
         showLogoEdit: true,
+        isFiscalChange: false,
+        fiscalChange: function(e) {
+          this.set('isFiscalChange', true);
+        },
         retrieve: function() {
           var dfd = $.Deferred();
 
@@ -3340,8 +3344,12 @@
         save: function() {
           // let kDate = new Date(banhji.company.get('current').fiscal_date);
           // console.log(kDate.getTime());
-          let dd = new Date(banhji.company.get('current').fiscal_date);
-          banhji.company.get('current').fiscal_date = dd.getTime();
+          if(this.get('isFiscalChange')) {
+            let dd = new Date(banhji.company.get('current').fiscal_date);
+            banhji.company.get('current').fiscal_date = dd.getTime();
+          } else {
+            banhji.company.get('current').fiscal_date = banhji.app.get('cache').institute.fiscal_date;
+          }
           if(banhji.company.media.dataSource.hasChanges()) {
             banhji.company.media.save().then(function(data){
               banhji.company.get('current').set('logo', {id: data.id, url: data.url});
@@ -3372,8 +3380,9 @@
               //     // This code runs if there were any errors
               //     // console.log(err);
               // });
-
-              banhji.router.navigate('company');
+              $("#ntf1").data("kendoNotification").success("");
+              banhji.company.set('isFiscalChange', false);
+              banhji.router.navigate('');
             } else {
               $("#ntf1").data("kendoNotification").error("Operation failed.");
             }
@@ -3437,6 +3446,25 @@
         appSub: 0,
         lastLogin: 0,
         userProfile: banhji.profile,
+        logOut    : function() {
+          var userData = {
+              Username : userPool.getCurrentUser().username,
+              Pool : userPool
+          };
+          var cognitoUser = new AWSCognito.CognitoIdentityServiceProvider.CognitoUser(userData);
+          if(cognitoUser != null) {
+              cognitoUser.signOut();
+              window.location.replace("<?php echo base_url(); ?>login");
+          }
+        },
+        checkRole  : function() {
+          // e.preventDefault();
+          if(JSON.parse(localStorage.getItem('userData/user')).role == 1) {
+            window.location.replace(baseUrl + "rrd/");
+          } else {
+            window.location.replace("<?php echo base_url(); ?>admin");
+          }
+        },
         goUser: function() {
           banhji.router.navigate('userlist');
           // mainDash.showIn("#placeholder", user);
@@ -3450,8 +3478,6 @@
           // mainDash.showIn("#placeholder", company);
         },
         goModule    : function() {
-          // banhji.moduleDS.filter({field: 'id', value: JSON.parse(localStorage.getItem('userData/user')).institute.id});
-          // mainDash.showIn("#placeholder", instituteModule);
           banhji.router.navigate("");
         },
         goProfile   : function() {
