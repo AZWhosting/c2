@@ -300,7 +300,7 @@ class Utibills extends REST_Controller {
 	   			//Journal CR
 	   			$journal2 = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 	   			$journal2->transaction_id = $obj->id;
-	   			$journal2->account_id = $obj->account_id;
+	   			$journal2->account_id = 10;
 	   			$journal2->contact_id = $obj->contact_id;
 	   			$journal2->dr 		  = 0.00;
 	   			$journal2->cr 		  = $obj->amount + $obj->discount;
@@ -373,7 +373,57 @@ class Utibills extends REST_Controller {
 		//Response Data
 		$this->response($data, 200);
 	}
-
+	//Contact 
+	function contact_get(){
+		$filter 	= $this->get("filter");
+		$page 		= $this->get('page');
+		$limit 		= $this->get('limit');
+		$sort 	 	= $this->get("sort");
+		$data["results"] = [];
+		$data["count"] = 0;
+		$obj = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		//Sort
+		if(!empty($sort) && isset($sort)){
+			foreach ($sort as $value) {
+				if(isset($value['operator'])){
+					$obj->{$value['operator']}($value["field"], $value["dir"]);
+				}else{
+					$obj->order_by($value["field"], $value["dir"]);
+				}
+			}
+		}
+		//Filter		
+		if(!empty($filter) && isset($filter)){
+	    	foreach ($filter['filters'] as $value) {
+	    		if(isset($value['operator'])) {
+					$obj->{$value['operator']}($value['field'], $value['value']);
+				} else {
+	    			$obj->where($value["field"], $value["value"]);
+				}
+			}
+		}
+		//Results
+		if($page && $limit){
+			$obj->get_paged_iterated($page, $limit);
+			$data["count"] = $obj->paged->total_rows;
+		}else{
+			$obj->get_iterated();
+			$data["count"] = $obj->result_count();
+		}
+		if($obj->exists()){
+			foreach ($obj as $value) {		
+		 		$data["results"][] = array(
+		 			"id" 				=> $value->id,
+		 			"name" 				=> $value->name,	
+		 			"abbr"				=> $value->abbr,
+		 			"code"				=> $value->number,
+					"address" 			=> $value->address
+		 		);
+			}
+		}
+		//Response Data		
+		$this->response($data, 200);
+	}
 	//Generate invoice number
 	public function _generate_number($type, $date){
 		$YY = date("y");

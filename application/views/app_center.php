@@ -45212,30 +45212,37 @@
 	<img style="margin-bottom: 5px; width: 200px;" src="<?php echo base_url(); ?>assets/rice_mill/ricemill_logo.png" >
 	<div class="row-fluid" >
 		<div class="col-xs-12 col-sm-12 col-md-5" style="padding-left: 0;">
-			<div class="cash-bg" style="padding-right: 0; margin-bottom: 10px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
+			<div class="cash-bg" style="margin-bottom: 10px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
 				
-				<div class="span3" style="padding-left: 0; text-align: center;">
+				<div class="" style="padding-left: 0; text-align: center; width: 20%; float: left;">
 					<a href="#/purchase">
-						<img title="Add Purchase" src="<?php echo base_url(); ?>assets/rice_mill/purchase.png"  style="width: 100%; "  />
+						<img title="Add Purchase" src="<?php echo base_url(); ?>assets/rice_mill/purchase.png"  style="width:95%; float: left; "  />
 						<span data-bind="text: lang.lang.purchase" style="text-transform: uppercase; color: #000; font-weight: 600; margin-top: 8px; display: inline-block;">Readings</span>
 					</a>
 				</div>
-				<div class="span3" style="padding-left: 0; text-align: center;">
+				<div class="" style="padding-left: 0; text-align: center; width: 20%; float: left;">
 					<a href="#/cash_payment">
-						<img title="Add Cash Payment" src="<?php echo base_url(); ?>assets/rice_mill/cash_payment.jpg" style="width: 100%;"  />
+						<img title="Add Cash Payment" src="<?php echo base_url(); ?>assets/rice_mill/cash_payment.jpg" style="width: 95%; float: left;"  />
 						<span data-bind="text: lang.lang.cash_payment" style=" text-transform: uppercase; color: #000; font-weight: 600; margin-top: 8px; display: inline-block;">Run Bill</span>
 					</a>
 				</div>
-				<div class="span3" style="padding-left: 0; text-align: center;">						
+				<div class="" style="padding-left: 0; text-align: center; width: 20%; float: left;">						
 					<a href="#/invoice">
-						<img title="Add Invoice" src="<?php echo base_url(); ?>assets/rice_mill/invoice.png" style="width: 100%;"  />
+						<img title="Add Invoice" src="<?php echo base_url(); ?>assets/rice_mill/invoice.png" style="width: 95%; float: left;"  />
 						<span data-bind="text: lang.lang.invoice" style="text-transform: uppercase; color: #000; font-weight: 600; margin-top: 8px; display: inline-block;">Print Bill</span>
 					</a>
 				</div>
 			
-				<div class="span3" style="padding-left: 0; text-align: center;">
+				<div class="" style="padding-left: 0; text-align: center; width: 20%; float: left;">
 					<a href="#/cash_receipt">
-						<img title="Add Cash Receipt" src="<?php echo base_url(); ?>assets/rice_mill/cash_receipt.png" style="width: 100%;"  />
+						<img title="Add Cash Receipt" src="<?php echo base_url(); ?>assets/rice_mill/cash_receipt.png" style="width: 95%; float: left;"  />
+						<span data-bind="text: lang.lang.cash_receipt"  style=" text-transform: uppercase; color: #000; font-weight: 600; margin-top: 8px; display: inline-block;">Receipt</span>
+					</a>
+				</div>
+
+				<div class="" style="padding-left: 0; text-align: center; width: 20%; float: left;">
+					<a href="#/internal_usage">
+						<img title="Add Internal Usage" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/internal_usage.png" style="width: 95%; float: left;"  />
 						<span data-bind="text: lang.lang.cash_receipt"  style=" text-transform: uppercase; color: #000; font-weight: 600; margin-top: 8px; display: inline-block;">Receipt</span>
 					</a>
 				</div>

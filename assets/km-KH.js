@@ -1434,7 +1434,7 @@ var	km_KH = {
 	"rice_report_center_description": "This module consolidates different modules report into one place.",
 	"plan_change_alert": "បត្រូរគម្រោងសម្រាប់កុងទ័រនិង ធ្វើឡើងបន្ទាប់ពីពេលនេះទៅ",
 	"change_currency": "លុយអាប់",
-
+	"error_input": "ទិន្ន័យបញ្ចូលមិនត្រឹមត្រូវ",
 
 	"end" : "ចប់"
 

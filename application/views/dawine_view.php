@@ -49621,6 +49621,7 @@
 				description 		: "",
 				quantity 	 		: 1,
 				conversion_ratio 	: 1,
+				cost 				: 0,
 				price 				: 0,
 				amount 				: 0,
 				discount 			: 0,

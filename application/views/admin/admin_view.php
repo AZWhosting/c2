@@ -3382,7 +3382,7 @@
               // });
               $("#ntf1").data("kendoNotification").success("");
               banhji.company.set('isFiscalChange', false);
-              banhji.router.navigate('');
+              window.location.replace("<?php echo base_url(); ?>admin");
             } else {
               $("#ntf1").data("kendoNotification").error("Operation failed.");
             }

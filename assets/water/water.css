@@ -1,9 +1,9 @@
--------------
+/*-------------
     Deafult CSS
 --------------*/
 body {
     color: #333;
-    font-family: "Open Sans", 'Battambang';
+    font-family: 'Battambang',"Open Sans";
     font-size: 14px;
     background: #F4F5F8;
 }
@@ -375,7 +375,7 @@ p.addItem.glyphicons.circle_remove i:before {
   left: -150px ;
   margin-top: 0;
   padding-bottom: 0;
-  top: 50px;
+  top: 100%;
   color: #333;
   width: 408px;
 }
@@ -424,7 +424,8 @@ p.addItem.glyphicons.circle_remove i:before {
 }
 .help .dropdown-menu .middle-help .more-help .help-desc a{
   color: #496cad;
-  padding-left: 0;
+  padding: 0;
+  height: auto;
 }
 .help .dropdown-menu .middle-help .what-help .help-img{
   float: left;
@@ -435,7 +436,12 @@ p.addItem.glyphicons.circle_remove i:before {
 }
 .help .dropdown-menu .middle-help .what-help .help-desc a{
   color: #496cad;
-  padding-left: 0;
+  padding: 0;
+  height: auto;
+}
+.help .dropdown-menu .middle-help .more-help .help-desc a:hover,
+.help .dropdown-menu .middle-help .what-help .help-desc a:hover{
+  background: none;
 }
 .dropdown.multitasklist .dropdown-menu{
   border: medium none;
@@ -453,8 +459,7 @@ p.addItem.glyphicons.circle_remove i:before {
   color: #333;
   left: -102px !important;
   margin-top: 0;
-  padding: 8px;
-  top: 50px;
+  top: 100%;
   width: 150px !important;
 }
 .setting.dropdown .dropdown-menu li{
@@ -465,8 +470,12 @@ p.addItem.glyphicons.circle_remove i:before {
 .setting.dropdown .dropdown-menu li a{
   color: #333;
   float: left;
-  padding: 5px 15px;
+  padding: 6px 15px;
   width: 100%;
+}
+.setting.dropdown .dropdown-menu li a:hover span,
+.setting.dropdown .dropdown-menu li a:hover .icon-off:before{
+  color: #fff;
 }
 .menu .navbar .topnav li.setting.dropdown ul li a img{
    width: 20px;
@@ -608,9 +617,117 @@ p.addItem.glyphicons.circle_remove i:before {
 	resize: none;
 	margin-bottom: 15px;
 }
+
+#example h2{
+  float: left;
+  width: 80%;
+  margin: 6px 0 15px;
+}
+#example .relativeWrap{
+  width: 100%;
+  float: left;
+}
+.widget.widget-tabs-gray{
+  margin-bottom: 0;
+}
+.icon-search:before{
+  color: #333;
+}
+.widget.widget-body-primary > .widget-body *{
+  color: #333;
+}
+.col-sm-12 >.box-generic-noborder{
+  height: auto !important;
+  background: #f4f5f8;
+  padding: 0 15px 15px;
+  margin-bottom: 15px;
+  min-height: auto !important;
+  float: left;
+}
+.btn{
+  border-radius: 0;
+}
+input{
+  padding: 4px 8px;
+  border: none;
+}
+.background{
+    width: 100%;
+    background: #fff;
+    margin: 0 auto;
+    padding: 15px;
+    border: 1px solid #d8e2e7;
+    border-radius: 2px;
+    margin-top: 30px;
+    float: left;
+
+}
 .well textarea:last-child{
 	margin-bottom: 0;
 }
+.listWrapper {
+  height: auto;
+  min-height: 410px;
+  position: relative;
+  overflow: hidden;
+  background: #fff;
+  float: left;
+  width: 100%;
+  padding: 15px;
+}
+.listWrapper > .innerAll{
+  background: #424242;
+  height: auto !important;
+  padding: 15px;
+}
+.listWrapper .results {
+  background: #203864;
+  color: #fff;
+  float: left;
+  width: 100%;
+  padding: 4px 15px;
+  text-align: center;
+  font-weight: 700;
+}
+.table{
+  float: left;
+  width: 100%;
+}
+.widget-body .tab-content > .tab-pane {
+  border: 1px solid #c5c5c5;
+  padding: 5px;
+  float: left;
+  width: 100%;
+}
+#tab3 .table .k-grid-content.k-auto-scrollable .k-virtual-scrollable-wrap table tr:hover {
+  background: none;
+  color: #333;
+}
+.btn-success{
+  background: #203864;
+  border: none;
+}
+#tab1 .col-sm-3.col-sx-12 textarea{
+  resize: none;
+}
+.sale-report .table > tbody > tr > td,
+.customer-report-center tbody > tr > td{
+  border-top: none;
+}
+.cover-block{
+  float: left;
+  padding-top: 15px;
+  margin-bottom: 15px;
+}
+.sale-report .table > tbody > tr > td h3,
+.customer-report-center tbody > tr > td h3{
+  font-size: 15px;
+}
+.setting.widget-body .tab-content > .tab-pane {
+  border: none;
+}
+
+
 @charset "UTF-8";
 /* CSS Document */
 .winvoice-print * {
@@ -715,6 +832,18 @@ p.addItem.glyphicons.circle_remove i:before {
 }
 .btn-primary, #flotTip, .btn-group.open .btn-primary.dropdown-toggle, .btn-primary.disabled, .btn-primary[disabled], .btn-primary:hover, .label-primary, .table-primary thead th, .pagination ul > .active > a, .pagination ul > .active > span, .gallery ul li .thumb, .widget-activity ul.filters li.glyphicons.active i, .ui-slider-wrap .slider-primary .ui-slider-range, .accordion-heading .accordion-toggle, .ui-widget-header, .ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active, .fc-event-skin, #external-events li, .notyfy_wrapper.notyfy_primary, .progress.progress-primary .bar, .alert.alert-primary, .pagination ul > li > a:hover, .pagination ul > li.primary > a, .gritter-item-wrapper.gritter-primary .gritter-item, #content-notification .notyfy_wrapper.notyfy_primary, .ribbon-wrapper .ribbon.primary, .label.label-primary, .widget-stats.primary, .widget-stats.primary:hover, .widget.widget-wizard-pills .widget-head ul li.primary a, .bwizard-steps li.active, .sliderContainer .ui-rangeSlider-bar, #tlyPageGuideWrapper #tlyPageGuide li.tlypageguide-active, #tlyPageGuideWrapper #tlyPageGuideMessages .tlypageguide_close, #tlyPageGuideWrapper #tlyPageGuideMessages span, .tabsbar.tabsbar-2.active-fill ul li.active a, .shop-client-products.list ul li a .glyphicons i, .social-large:not(.social-large-2) a.active, .social-large:not(.social-large-2) a:hover, #landing_1 .banner-1 .carousel-indicators li.active, .nav-timeline > li.active > a, .nav-timeline > li > a:hover, .nav-timeline > li.active > a:hover, .layout-timeline ul.timeline > li.active .type:before, .layout-timeline ul.timeline > li.active .type:after, .layout-timeline ul.timeline > li.active:before, .carousel.carousel-1 .carousel-indicators li.active, .widget-body-gray .ui-datepicker .ui-datepicker-calendar tbody td a.ui-state-active, .widget.widget-body-primary > .widget-body, .badge.badge-primary, .widget-stats.widget-stats-primary, .widget-employees [class*='span'].listWrapper .results{
 	background: #203864;
+}
+.k-pager-wrap {
+    background-color: #203864;
+    color: #fff;
+    background-image: none;
+}
+.k-state-disabled .k-icon{
+  color: #fff;
+}
+.k-i-seek-w:before {
+    content: "\e00b";
+    color: #fff;
 }
 
 /*Theme*/

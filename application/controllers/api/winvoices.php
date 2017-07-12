@@ -285,7 +285,7 @@ class Winvoices extends REST_Controller {
 		   	$obj->pole_id 			= isset($value->pole_id) ? $value->pole_id : 0;
 		   	$obj->box_id 			= isset($value->box_id) ? $value->box_id : 0;
 		   	$obj->payment_term_id 	= 5;
-
+		   	$obj->user_id 			= isset($value->biller_id) ? $value->biller_id : 0;
 	   		if($obj->save()){
 
 	   			$journal = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);

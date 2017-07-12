@@ -1460,7 +1460,7 @@ var	en_US = {
 	"rice_report_center_description": "This module consolidates different modules report into one place.",
 	"plan_change_alert": "Your plan will apply to your meter on new transaction",
 	"change_currency": "Change",
-
+	"error_input": "Data Input Not Correct!",
 
 
 

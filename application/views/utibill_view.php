@@ -117,7 +117,7 @@
 						<li>
 							<a href="#/manage" data-bind="click: logout">
 								<i class="icon-power-off"></i>
-								Logout
+								<span>Logout</span>
 							</a>
 						</li>
 		  			</ul>
@@ -378,7 +378,7 @@
 		    	</div>
 		    	<div class="cash-bg" style="margin-bottom: 10px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
 		    		<div class="row-fluid" >
-						<div class="col-xs-12 col-sm-6 col-md-7" style="background: #0077c5;">
+						<div class="col-xs-12 col-sm-6 col-md-7" style="background: #0077c5; padding-bottom: 15px; padding-top: 15px; padding-right: 0;">
 							<a href="#/customer_aging_sum_list">
 								<div class="widget-body alert-info welcome-nopadding" style="width: 100%; background: #0077c5;">
 									<p style="color: #fff;"><span data-bind="text: lang.lang.expected_due">Expected due</span></p>
@@ -410,7 +410,7 @@
 							</a>
 						</div>
 
-						<div class="col-xs-12 col-sm-6 col-md-5" style="background: #21abf6; padding-right: 0">
+						<div class="col-xs-12 col-sm-6 col-md-5" style="background: #21abf6; padding-bottom: 15px; padding-top: 15px; padding-right: 0;">
 							<a href="#/customer_list">
 								<div class="widget-body alert-info welcome-nopadding" style="width: 100%; background: #21abf6;">
 									<p style="color: #fff;"><span data-bind="text: lang.lang.active_meter">Active Meter</span></p>
@@ -583,7 +583,7 @@
 	    </div>
 	    <!-- // Tabs Heading END -->
 
-	    <div class="widget-body span9">
+	    <div class="widget-body span9 setting">
 	        <div class="tab-content" style="padding-right: 0;">
 	            <div class="tab-pane active" id="tab1">
 	            	<a class="btn-icon btn-primary glyphicons circle_plus" style="width: 80px; padding: 5px 7px 5px 35px !important; text-align: left;" href="#/add_license"><i></i><span data-bind="text: lang.lang.add">Add</span></a>
@@ -1283,8 +1283,8 @@
 		<td align="center">
     
 	        <div class="edit-buttons">
-	            <a class="k-button k-i-check-button" href="\\#"><span class="k-icon k-i-check"></span></a>
-	            <a class="k-button k-i-cancel-button" href="\\#"><span class="k-icon k-i-cancel"></span></a>
+	            <a class="k-button k-update-button" href="\\#"><span class="k-icon k-i-check"></span></a>
+	            <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-i-cancel"></span></a>
 	        </div>
 	    </td>
 	</tr>
@@ -1311,8 +1311,8 @@
 		<td align="center">
     
 	        <div class="edit-buttons">
-	            <a class="k-button k-i-check-button" href="\\#"><span class="k-icon k-i-check"></span></a>
-	            <a class="k-button k-i-cancel-button" href="\\#"><span class="k-icon k-i-cancel"></span></a>
+	            <a class="k-button k-update-button" href="\\#"><span class="k-icon k-i-check"></span></a>
+	            <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-i-cancel"></span></a>
 	        </div>
 	    </td>
 	</tr>
@@ -1335,8 +1335,8 @@
 		<td align="center">
     
 	        <div class="edit-buttons">
-	            <a class="k-button k-i-check-button" href="\\#"><span class="k-icon k-i-check"></span></a>
-	            <a class="k-button k-i-cancel-button" href="\\#"><span class="k-icon k-i-cancel"></span></a>
+	            <a class="k-button k-update-button" href="\\#"><span class="k-icon k-i-check"></span></a>
+	            <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-i-cancel"></span></a>
 	        </div>
 	    </td>
 	</tr>
@@ -1411,8 +1411,8 @@
         	<input style="width: 100%;" type="text" class="k-textbox" data-bind="value:amount" />
         </td>
 	    <td class="edit-buttons" style="text-align: center;">
-	        <a class="k-button k-i-check-button" href="\\#"><span class="k-icon k-i-check"></span></a>
-	        <a class="k-button k-i-cancel-button" href="\\#"><span class="k-icon k-i-cancel"></span></a>
+	        <a class="k-button k-update-button" href="\\#"><span class="k-icon k-i-check"></span></a>
+	        <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-i-cancel"></span></a>
 	    </td>
     </tr>
 </script>
@@ -1474,8 +1474,8 @@
                    source: currencyDS"/>
         </td>  
 	    <td class="edit-buttons" style="text-align: center;">
-	        <a class="k-button k-i-check-button" href="\\#"><span class="k-icon k-i-check"></span></a>
-	        <a class="k-button k-i-cancel-button" href="\\#"><span class="k-icon k-i-cancel"></span></a>
+	        <a class="k-button k-update-button" href="\\#"><span class="k-icon k-i-check"></span></a>
+	        <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-i-cancel"></span></a>
 	    </td>
     </tr>
 </script>
@@ -1500,8 +1500,8 @@
     	</td>
     	<td><input style="width: 100%;" type="text" class="k-textbox" data-bind="value:amount" /></td>
     	<td class="edit-buttons" style="text-align: center;">
-	        <a class="k-button k-i-check-button" href="\\#"><span class="k-icon k-i-check"></span></a>
-	        <a class="k-button k-i-cancel-button" href="\\#"><span class="k-icon k-i-cancel"></span></a>
+	        <a class="k-button k-update-button" href="\\#"><span class="k-icon k-i-check"></span></a>
+	        <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-i-cancel"></span></a>
 	    </td>
    	</tr>
 </script>
@@ -1553,8 +1553,8 @@
         </td>
 
 	    <td class="edit-buttons" style="text-align: center;">
-	        <a class="k-button k-i-check-button" href="\\#"><span class="k-icon k-i-check"></span></a>
-	        <a class="k-button k-i-cancel-button" href="\\#"><span class="k-icon k-i-cancel"></span></a>
+	        <a class="k-button k-update-button" href="\\#"><span class="k-icon k-i-check"></span></a>
+	        <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-i-cancel"></span></a>
 	    </td>
     </tr>
 </script>
@@ -1605,8 +1605,8 @@
         </td>
 
 	    <td class="edit-buttons" style="text-align: center;">
-	        <a class="k-button k-i-check-button" href="\\#"><span class="k-icon k-i-check"></span></a>
-	        <a class="k-button k-i-cancel-button" href="\\#"><span class="k-icon k-i-cancel"></span></a>
+	        <a class="k-button k-update-button" href="\\#"><span class="k-icon k-i-check"></span></a>
+	        <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-i-cancel"></span></a>
 	    </td>
     </tr>
 </script>
@@ -1659,8 +1659,8 @@
         </td>
 
 	    <td class="edit-buttons" style="text-align: center;">
-	        <a class="k-button k-i-check-button" href="\\#"><span class="k-icon k-i-check"></span></a>
-	        <a class="k-button k-i-cancel-button" href="\\#"><span class="k-icon k-i-cancel"></span></a>
+	        <a class="k-button k-update-button" href="\\#"><span class="k-icon k-i-check"></span></a>
+	        <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-i-cancel"></span></a>
 	    </td>
     </tr>
 </script>
@@ -1732,8 +1732,8 @@
         </td>
 
 	    <td class="edit-buttons" style="text-align: center;">
-	        <a class="k-button k-i-check-button" href="\\#"><span class="k-icon k-i-check"></span></a>
-	        <a class="k-button k-i-cancel-button" href="\\#"><span class="k-icon k-i-cancel"></span></a>
+	        <a class="k-button k-update-button" href="\\#"><span class="k-icon k-i-check"></span></a>
+	        <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-i-cancel"></span></a>
 	    </td>
     </tr>
 </script>
@@ -1874,8 +1874,8 @@
 			<td align="center">
     
 	        <div class="edit-buttons">
-	            <a class="k-button k-i-check-button" href="\\#"><span class="k-icon k-i-check"></span></a>
-	            <a class="k-button k-i-cancel-button" href="\\#"><span class="k-icon k-i-cancel"></span></a>
+	            <a class="k-button k-update-button" href="\\#"><span class="k-icon k-i-check"></span></a>
+	            <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-i-cancel"></span></a>
 	        </div>
 	    </td>
 	</tr>
@@ -1901,8 +1901,8 @@
         </td>              
  
     	<td class="edit-buttons" style="text-align: center;">
-            <a class="k-button k-i-check-button" href="\\#"><span class="k-icon k-i-check"></span></a>
-            <a class="k-button k-i-cancel-button" href="\\#"><span class="k-icon k-i-cancel"></span></a>
+            <a class="k-button k-update-button" href="\\#"><span class="k-icon k-i-check"></span></a>
+            <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-i-cancel"></span></a>
         </td>
     </tr>  
 </script>
@@ -2365,31 +2365,34 @@
 
 <!-- Water Center -->
 <script id="waterCenter" type="text/x-kendo-template">	
-	<div class="widget widget-heading-simple widget-body-gray widget-employees">		
-		<div class="widget-body padding-none">			
-			<div class="row-fluid row-merge">
-				<div class="span3 listWrapper" >
+	<div class="container">
+		<div class="row" style="margin-top: 30px;">
+			<div class="col-xs-12 col-sm-4 col-md-3" >
+				<div class="listWrapper" >
 					<div class="innerAll" style="height: 55px;">
-						<div class="widget-search separator bottom">
+						<div class="widget-search separator bottom" style="padding: 0;">
 							<a class="btn btn-default pull-right" data-bind="click: search"><i class="icon-search"></i></a>
 							<div class="overflow-hidden">
-								<input type="search" placeholder="Number or Name..." data-bind="value: searchText, events:{change: search}">
+								<input style="line-height: 26px;" type="search" placeholder="Number or Name..." data-bind="value: searchText, events:{change: search}">
 							</div>
 						</div>
 					</div>
 					<span class="results"><span data-bind="text: contactDS.total"></span> <span data-bind="text: lang.lang.found_search"></span></span>
-					<div class="table table-condensed" id="listContact" style="height: 580px;"						 
-						 data-role="grid"						 
+					<div class="table table-condensed" id="listContact" style="height: 580px; margin-bottom: 0;"
+						 data-role="grid"
 						 data-bind="source: contactDS"
 						 data-row-template="waterCenter-customer-list-tmpl"
 						 data-columns="[{title: 'Properties'}]"
 						 data-selectable=true
-						 data-height="600"		
-						 data-scrollable="{virtual: true}"></div>									
-				</div>
-				<div class="span9 detailsWrapper">
-					<div class="row-fluid">					
-						<div class="span6">
+						 data-height="600"
+						 data-scrollable="{virtual: true}"></div>
+				</div>	
+			</div>
+
+			<div class="col-xs-12 col-sm-8 col-md-9 ">
+				<div class="listWrapper" >
+					<div class="row" style="margin-bottom: 15px;">
+						<div class="col-xs-12 col-sm-6" style="margin-bottom: 15px;">
 							<div class="widget widget-4 widget-tabs-icons-only margin-bottom-none">
 							    <!-- Widget Heading -->
 							    <div class="widget-head">
@@ -2421,9 +2424,9 @@
 							            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
 										        <thead>
 										            <tr>			                
-										                <th width="140"><span data-bind="text: lang.lang.meter_no">Meter No.</span></th>
-										                <th width="50"><span data-bind="text: lang.lang.status">Status</span></th>
-										                <th width="100"><span data-bind="text: lang.lang.active">Action</span></th>            
+										                <th style="vertical-align: top;"><span data-bind="text: lang.lang.meter_no">Meter No.</span></th>
+										                <th style="vertical-align: top;"><span data-bind="text: lang.lang.status">Status</span></th>
+										                <th style="vertical-align: top;"><span data-bind="text: lang.lang.active">Action</span></th>            
 										            </tr> 
 										        </thead>
 										        <tbody data-role="listview" 
@@ -2483,23 +2486,23 @@
 															</td>
 														</tr>
 													</table>
-													<span class="btn btn-primary btn-icon glyphicons edit pull-right" data-bind="click: goEdit"><i></i><span data-bind="text: lang.lang.view_edit_profile"></span></span>
+													<span style="margin-bottom: 0;" class="btn btn-primary btn-icon glyphicons edit pull-right" data-bind="click: goEdit"><i></i><span data-bind="text: lang.lang.view_edit_profile"></span></span>
 												</div>
 											</div>
 							            </div>
 							            <!-- // INFO END -->
 
 							            <!-- NOTE -->
-							            <div id="tab3" class="tab-pane">							            	
+							            <div id="tab3" class="tab-pane">
 										    <div>
 												<input type="text" class="k-textbox" 
 														data-bind="value: note, events:{change:saveNoteEnter}" 
 														placeholder="Add memo ..." 
-														style="width: 366px;" >
-												<span class="btn btn-primary" data-bind="click: saveNote"><span data-bind="text: lang.lang.add"></span></span>
+														style="width: 100%;" >
+												<span style="margin-top: 8px;" class="btn btn-primary" data-bind="click: saveNote"><span data-bind="text: lang.lang.add"></span></span>
 											</div>
 											<br>
-											<div class="table table-condensed" style="height: 100;"
+											<div class="table table-condensed" style="height: 100; margin-bottom: 0"
 												 data-role="grid"
 												 data-auto-bind="false"						 
 												 data-bind="source: noteDS"
@@ -2511,7 +2514,7 @@
 							            <!-- // NOTE END -->
 
 							            <!-- ATTACHMENT -->
-								        <div id="tab4" class="tab-pane">							            	
+								        <div id="tab4" class="tab-pane">
 								            <p><span data-bind="text: lang.lang.file_type"></span> [PDF, JPG, JPEG, TIFF, PNG, GIF]</p>
 								            <input id="files" name="files"
 							                   type="file"
@@ -2523,10 +2526,10 @@
 								            <table class="table table-bordered">
 										        <thead>
 										            <tr>			                
-										                <th><span data-bind="text: lang.lang.file_name"></span></th>
-										                <th><span data-bind="text: lang.lang.description"></span></th>
-										                <th><span data-bind="text: lang.lang.date"></span></th>
-										                <th style="width: 13%;"></th>                			                
+										                <th style="vertical-align: top;"><span data-bind="text: lang.lang.file_name"></span></th>
+										                <th style="vertical-align: top;"><span data-bind="text: lang.lang.description"></span></th>
+										                <th style="vertical-align: top;"><span data-bind="text: lang.lang.date"></span></th>
+										                <th style="vertical-align: top;"></th>                			                
 										            </tr> 
 										        </thead>
 										        <tbody data-role="listview" 
@@ -2544,16 +2547,17 @@
 							    </div>
 							</div>
 						</div>
-						<div class="span6" style="margin-bottom: 10px;">
-							<div class="row-fluid">
-								<div class="span6">
+
+						<div class="col-xs-12 col-sm-6">
+							<div class="row">
+								<div class="col-xs-12 col-sm-6">
 									<div style="background: #203864;" class="widget-stats widget-stats-primary widget-stats-5" data-bind="click: loadBalance">
 										<span class="glyphicons coins"><i></i></span>
 										<span class="txt"><span data-bind="text: lang.lang.balance"></span><span data-bind="text: balance" style="font-size:medium;"></span></span>
 										<div class="clearfix"></div>
 									</div>
 								</div>
-								<div class="span6">
+								<div class="col-xs-12 col-sm-6">
 									<a href="#/customer_deposit_report">
 										<div style="background: #0077c5;" class="widget-stats widget-stats-inverse widget-stats-5">
 											<span class="glyphicons briefcase"><i></i></span>
@@ -2562,17 +2566,14 @@
 										</div>
 									</a>
 								</div>
-							</div>							
-							
-							<div class="row-fluid">
-								<div class="span6">
+								<div class="col-xs-12 col-sm-6">
 									<div style="background: #21abf6;" class="widget-stats widget-stats-info widget-stats-5" data-bind="click: loadBalance">
 										<span class="glyphicons circle_exclamation_mark"><i></i></span>
 										<span class="txt"><span data-bind="text: outInvoice"></span> <span data-bind="text: lang.lang.open_invoice"></span></span>
 										<div class="clearfix"></div>
 									</div>
 								</div>
-								<div class="span6">
+								<div class="col-xs-12 col-sm-6">
 									<div class="widget-stats widget-stats-default widget-stats-5" data-bind="click: loadOverInvoice">
 										<span class="glyphicons turtle"><i></i></span>
 										<span class="txt"><span data-bind="text: overInvoice"></span> <span data-bind="text: lang.lang.over_due"></span></span>
@@ -2583,7 +2584,7 @@
 						</div>
 					</div>
 
-					<div class="row-fluid">								
+					<div class="row-fluid">
 						<div style="margin-bottom: 0; padding-bottom: 0;">
 						    <!-- //Tabs Heading -->
 						    <div class="tabsbar tabsbar-1">
@@ -2627,31 +2628,37 @@
 
 						    	<!-- //WATER SALE -->
 						        <div class="tab-pane" id="tab-2">
-						        	<div>
-										<input data-role="dropdownlist"
-											   class="sorter"
-									           data-value-primitive="true"
-									           data-text-field="text"
-									           data-value-field="value"
-									           data-bind="value: sorter,
-									                      source: sortList,
-									                      events: { change: sorterChanges }" />
+						        	<div class="row">
+						        		<div class="col-xs-12 col-sm-3">
+											<input data-role="dropdownlist"
+												   class="sorter "
+										           data-value-primitive="true"
+										           data-text-field="text"
+										           data-value-field="value"
+										           data-bind="value: sorter,
+										                      source: sortList,
+										                      events: { change: sorterChanges }" style="background: none; width: 100%;" />
+										</div>
+										<div class="col-xs-12 col-sm-3">
+											<input data-role="datepicker"
+												   class="sdate "
+												   data-format="dd-MM-yyyy"
+										           data-bind="value: sdate,
+										           			  max: edate"
+										           placeholder="From ..." style="background: none; width: 100%;" />
+										</div>
+										<div class="col-xs-12 col-sm-3">
+										    <input data-role="datepicker"
+										    	   class="edate "
+										    	   data-format="dd-MM-yyyy"
+										           data-bind="value: edate,
+										                      min: sdate"
+										           placeholder="To ..." style="background: none; width: 100%;" />
 
-										<input data-role="datepicker"
-											   class="sdate"
-											   data-format="dd-MM-yyyy"
-									           data-bind="value: sdate,
-									           			  max: edate"
-									           placeholder="From ..." >
-
-									    <input data-role="datepicker"
-									    	   class="edate"
-									    	   data-format="dd-MM-yyyy"
-									           data-bind="value: edate,
-									                      min: sdate"
-									           placeholder="To ..." >
-
-									  	<button type="button" data-role="button" data-bind="click: searchTransaction"><i class="icon-search"></i></button>
+										</div>
+										<div class="col-xs-12 col-sm-3">
+									  		<button type="button" data-role="button" data-bind="click: searchTransaction"><i class="icon-search"></i></button>
+										</div>
 									</div>
 
 									<br>
@@ -2659,11 +2666,11 @@
 						        	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
 							        	<thead>
 								            <tr>			                
-								                <th width="50"><span data-bind="text: lang.lang.month">Month</span></th>
-								                <th width="50"><span data-bind="text: lang.lang.meter_number">Meter Number</span></th>
-								                <th width="50"><span data-bind="text: lang.lang.amount">Amount</span></th>
-								                <th width="50"><span data-bind="text: lang.lang.status">Status</span></th>
-								                <th width="50"><span data-bind="text: lang.lang.action">Action</span></th>     
+								                <th style="vertical-align: top;"><span data-bind="text: lang.lang.month">Month</span></th>
+								                <th style="vertical-align: top;"><span data-bind="text: lang.lang.meter_number">Meter Number</span></th>
+								                <th style="vertical-align: top;"><span data-bind="text: lang.lang.amount">Amount</span></th>
+								                <th style="vertical-align: top;"><span data-bind="text: lang.lang.status">Status</span></th>
+								                <th style="vertical-align: top;"><span data-bind="text: lang.lang.action">Action</span></th>     
 								            </tr> 
 								        </thead>
 								        <tbody data-role="listview"
@@ -2685,77 +2692,73 @@
 						        <div class="tab-pane" id="tab-3">
 						        	<h2 style="margin-left: 0;" data-bind="text: lang.lang.add_single_reading">Add Single Reading</h2>
 						        	
-						        	<div class="row" style="padding: 15px 0;overflow:hidden;">
-						        		<div class="span10" style="padding-right: 0">
-						        			<div class="span3">	
-												<div class="control-group">								
-													<label ><span data-bind="text: lang.lang.month_of" >Month Of</span></label>
-										            <input type="text" 
-									                	style="width: 100%;" 
-									                	data-role="datepicker"
-									                	data-format="MM-yyyy"
-									                	data-parse-formats="yyyy-MM-dd HH:mm:ss"
-									                	data-start="year" 
-										  				data-depth="year" 
-									                	placeholder="Moth of ..." 
-											           	data-bind="value: readingVM.monthOfSR, min: miniMonthofS" />
-												</div>
+						        	<div class="row" style="margin-bottom: 15px">
+					        			<div class="col-xs-12 col-sm-2">
+											<div class="control-group">								
+												<label ><span data-bind="text: lang.lang.month_of" >Month Of</span></label>
+									            <input type="text" 
+								                	style="width: 100%;" 
+								                	data-role="datepicker"
+								                	data-format="MM-yyyy"
+								                	data-parse-formats="yyyy-MM-dd HH:mm:ss"
+								                	data-start="year" 
+									  				data-depth="year" 
+								                	placeholder="Moth of ..." 
+										           	data-bind="value: readingVM.monthOfSR, min: miniMonthofS" />
 											</div>
-											<div class="span6">
-												<div class="span4">	
-													<div class="control-group">								
-														<label ><span data-bind="text: lang.lang.meter_number">Meter Number</span></label>
-										        		<p class="k-input k-textbox" 
-										        			style="width:100%; padding: 5px;"
-										        			data-bind="text: readingVM.NumberSR"></p>
-										        	</div>
-										        </div>
-										        <div class="span4">	
-													<div class="control-group">								
-														<label ><span data-bind="text: lang.lang.previous">Previous</span></label>
-										        		<p class="k-input k-textbox" 
-										        			style="width:100%; border:1px solid #ccc; padding: 5px;"
-										        			data-bind="text: readingVM.previousSR" >
-										        			</p>
-										        	</div>
-										       	</div>
-										       	<div class="span4">	
-													<div class="control-group">								
-														<label ><span data-bind="text: lang.lang.current">Current</span></label>
-										        		<input type="text" 
-										        			class="k-input k-textbox" 
-										        			placeholder="Current" 
-										        			style="width:100%;border:1px solid #ccc;"
-										        			data-bind="value: readingVM.currentSR" />
-										        	</div>
-										        </div>
-										    </div>
-									        <div class="span3" style="padding-left: 15px;">	
-												<div class="control-group">								
-													<label ><span data-bind="text: lang.lang.to_date">To Date</span></label>
-										            <input type="text" 
-									                	style="width: 100%;" 
-									                	data-role="datepicker"
-									                	placeholder="To Date ..." 
-									                	data-parse-formats="yyyy-MM-dd HH:mm:ss"
-											           	data-bind="value: readingVM.toDateSR, min: miniMonthofS" />
-												</div>
-									        </div>
-							        	</div>
-							        	<div class="span1">
-							        		<span id="saveNew" style="width: 80px!important;margin:0;top: 22px;" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="click: readingVM.addSingleReading"><i></i> <span data-bind="text: lang.lang.add">Add</span></span>
+										</div>										
+										<div class="col-xs-12 col-sm-2">
+											<div class="control-group">								
+												<label ><span data-bind="text: lang.lang.meter_number">Meter Number</span></label>
+								        		<input class="k-input k-textbox" 
+								        			style="width:100%; border:1px solid #ccc; padding: 5px;"
+								        			data-bind="text: readingVM.NumberSR">
+								        	</div>
+								        </div>
+								        <div class="col-xs-12 col-sm-2">
+											<div class="control-group">								
+												<label ><span data-bind="text: lang.lang.previous">Previous</span></label>
+								        		<input class="k-input k-textbox" 
+								        			style="width:100%; border:1px solid #ccc; padding: 5px;"
+								        			data-bind="text: readingVM.previousSR" >
+								        	</div>
+								       	</div>
+								       	<div class="col-xs-12 col-sm-2">
+											<div class="control-group">								
+												<label ><span data-bind="text: lang.lang.current">Current</span></label>
+								        		<input type="text" 
+								        			class="k-input k-textbox" 
+								        			placeholder="Current" 
+								        			style="width:100%;border:1px solid #ccc;"
+								        			data-bind="value: readingVM.currentSR" />
+								        	</div>
+								        </div>									   
+								        <div class="col-xs-12 col-sm-2">
+											<div class="control-group">								
+												<label ><span data-bind="text: lang.lang.to_date">To Date</span></label>
+									            <input type="text" 
+								                	style="width: 100%;" 
+								                	data-role="datepicker"
+								                	placeholder="To Date ..." 
+								                	data-parse-formats="yyyy-MM-dd HH:mm:ss"
+										           	data-bind="value: readingVM.toDateSR, min: miniMonthofS" />
+											</div>
+								        </div>
+							        	<div class="col-xs-12 col-sm-2">
+							        		<br>
+							        		<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="click: readingVM.addSingleReading"><i></i> <span data-bind="text: lang.lang.add">Add</span></span>
 							        	</div>
 						        	</div>
 
 						        	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
 							        	<thead>
 								            <tr>			                
-								                <th width="140" style="vertical-align: top;"><span data-bind="text: lang.lang.month">Month</span></th>
-								                <th width="50"  style="vertical-align: top;"><span data-bind="text: lang.lang.meter_number">Meter Number</span></th>
-								                <th width="50"  style="vertical-align: top;"><span data-bind="text: lang.lang.previous">Previous</span></th>
-								                <th width="50"  style="vertical-align: top;"><span data-bind="text: lang.lang.current">Current</span></th>
-								                <th width="100" style="vertical-align: top;">m<sup>3</sup></th> 					                
-								                <th width="50"  style="vertical-align: top;"><span data-bind="text: lang.lang.action">Action</span></th>     
+								                <th style="vertical-align: top;"><span data-bind="text: lang.lang.month">Month</span></th>
+								                <th style="vertical-align: top;"><span data-bind="text: lang.lang.meter_number">Meter Number</span></th>
+								                <th style="vertical-align: top;"><span data-bind="text: lang.lang.previous">Previous</span></th>
+								                <th style="vertical-align: top;"><span data-bind="text: lang.lang.current">Current</span></th>
+								                <th style="vertical-align: top;">m<sup>3</sup></th> 					                
+								                <th style="vertical-align: top;"><span data-bind="text: lang.lang.action">Action</span></th>     
 								            </tr> 
 								        </thead>
 								        <tbody data-role="listview"
@@ -2779,9 +2782,9 @@
 						        	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
 								        <thead>
 								            <tr>
-								                <th width="140"><span data-bind="text: lang.lang.date">Date</span></th>
-								                <th width="50"><span data-bind="text: lang.lang.installment">Installment</span></th>
-								                <th width="100"><span data-bind="text: lang.lang.status">Status</span></th>
+								                <th style="vertical-align: top;"><span data-bind="text: lang.lang.date">Date</span></th>
+								                <th style="vertical-align: top;"><span data-bind="text: lang.lang.installment">Installment</span></th>
+								                <th style="vertical-align: top;"><span data-bind="text: lang.lang.status">Status</span></th>
 								            </tr> 
 								        </thead>
 								        <tbody 
@@ -2798,12 +2801,14 @@
 						</div>
 					</div>
 
-					<div id="ntf1" data-role="notification"></div>
-
+					<div id="ntf1" data-role=
 				</div>
-			</div>			
+			</div>
+			<div class="clear"></div>
+
+
 		</div>
-	</div>		
+	</div>
 </script>
 <script id="waterCenter-customer-list-tmpl" type="text/x-kendo-tmpl">
 	<tr data-bind="click: selectedRow">
@@ -3052,8 +3057,8 @@
 		</td>
 		<td>
 			<div class="edit-buttons">
-	            <a class="k-button k-i-check-button" href="\\#"><span class="k-icon k-i-check"></span></a>
-	            <a class="k-button k-i-cancel-button" href="\\#"><span class="k-icon k-i-cancel"></span></a>
+	            <a class="k-button k-update-button" href="\\#"><span class="k-icon k-i-check"></span></a>
+	            <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-i-cancel"></span></a>
 	        </div>
 		</td>
 	</tr>
@@ -3062,177 +3067,191 @@
 
 <!-- Customer -->
 <script id="customer" type="text/x-kendo-template">
-	<div id="slide-form">
-		<div class="customer-background" style="margin-top: 15px;">
-			<div class="container-960">					
-				<div id="example" class="k-content">
-			    	<span class="glyphicons no-js remove_2 pull-right"
-						data-bind="click: cancel"><i></i></span>
-			        <h2 span data-bind="text: lang.lang.customers"></h2>
-				    <br>
-				    <!-- Top Part -->
-			    	<div class="row-fluid">
-			    		<div class="span6 well">									
-							<div class="row">
-								<div class="span6">		
-									<!-- Group -->
-									<div class="control-group">
-										<label for="ddlContactType"><span data-bind="text: lang.lang.customer_type"></span> <span style="color:red">*</span></label>
-										<input id="ddlContactType" name="ddlContactType"
-										   data-role="dropdownlist"
-										   data-header-template="customer-type-header-tmpl"       
-						                   data-value-primitive="true"
-						                   data-text-field="name"
-						                   data-value-field="id"
-						                   data-bind="value: obj.contact_type_id,
-						                   			  disabled: obj.is_pattern,
-						                              source: contactTypeDS,
-						                              events:{change: typeChanges}"
-						                   data-option-label="(--- Select ---)"
-						                   required data-required-msg="required" style="width: 100%;" />	            
-									</div>
-									<!-- // Group END -->
-								</div>
-								<div class="span6" style="padding-right: 0;">	
-									<!-- Group -->
-									<div class="control-group">	
-										<label for="txtAbbr"><span data-bind="text: lang.lang.number"></span> <span style="color:red">*</span></label>			
-				              			<br>
-				              			<input id="txtAbbr" name="txtAbbr" class="k-textbox"
-				              				data-bind="value: obj.abbr, 
-				              						   disabled: obj.is_pattern" 
-				              				placeholder="eg. AB" required data-required-msg="required"
-				              				style="width: 55px;" />
-					              		-					              		
-					              		<input id="txtNumber" name="txtNumber"
-				              			   class="k-textbox"       
-						                   data-bind="value: obj.number, 
-						                   			  disabled: obj.is_pattern,
-						                   			  events:{change:checkExistingNumber}"
-						                   placeholder="eg. 001" required data-required-msg="required"
-						                   style="width: 143px;" />
-									</div>
-									<!-- // Group END -->											
-								</div>
-							</div>
-							
-							<div class="row">
-								<div class="span12">	
-									<!-- Group -->
-									<div class="control-group">	
-										<label for="fullname"><span data-bind="text: lang.lang.full_name"></span> <span style="color:red">*</span></label>
-							            <input id="fullname" name="fullname" class="k-textbox" 
-						            		data-bind="value: obj.name, 
-						            					disabled: obj.is_pattern,
-						            					attr: { placeholder: phFullname }" 
-						              		required data-required-msg="required"
-						              		style="width: 100%;" />
-									</div>	
-									<!-- // Group END -->
-								</div>
-							</div>
-							<div class="row">
-								<div class="span6">	
-									<!-- Group -->
-									<div class="control-group">
-										<label for="customerStatus"><span data-bind="text: lang.lang.status"></span> <span style="color:red">*</span></label>
-							            <input id="customerStatus" name="customerStatus" 
-				              				data-role="dropdownlist"
-						            		data-text-field="name"
-			           						data-value-field="id"
-			           						data-value-primitive="true" 
-						            		data-bind="source: statusList, value: obj.status"
-						            		data-option-label="(--- Select ---)"
-						            		required data-required-msg="required" style="width: 100%;" />
-									</div>					
-									<!-- // Group END -->
-								</div>
-								<div class="span6">	
-									<!-- Group -->
-									<div class="control-group">
-										<label for="registeredDate"><span data-bind="text: lang.lang.register_date"></span> <span style="color:red">*</span></label>
-							            <input id="registeredDate" name="registeredDate" 
-						            		data-role="datepicker"
-			            					data-bind="value: obj.registered_date, disabled: obj.is_pattern" 
-			            					data-format="dd-MM-yyyy"
-			            					data-parse-formats="yyyy-MM-dd" 
-			            					placeholder="dd-MM-yyyy" required data-required-msg="required" style="width: 100%;" />
-									</div>					
-									<!-- // Group END -->
-								</div>
-							</div>						
+	<div class="container">
+		<div class="row-fluid">
+			<div class="background">
+				<div class="row-fluid">
+					<div id="loadImport" style="display:none;text-align: center;position: absolute;width: 100%; height: 100%;margin-top: -15px;background: rgba(142, 159, 167, 0.8);z-index: 9999;">
+						<i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 35%;left: 45%"></i>
+					</div>
+					<div id="example" class="k-content">
+						<h2 span data-bind="text: lang.lang.customers"></h2>
+						<div class="hidden-print pull-right">
+				    		<span class="glyphicons no-js remove_2" 
+								data-bind="click: cancel"><i></i></span>
 						</div>
-						<div class="span6">
-							<div class="row-fluid">	
-								<!-- Map -->
-								<div id="map" class="span12" style="height: 130px;"></div>
-							</div>
-							<div class="separator line bottom"></div>
-							<div class="row-fluid">	
-								<div class="span6">									
-									<!-- Group -->
-									<div class="control-group">
-						    			<label for="latitute"><span data-bind="text: lang.lang.latitute"></span> </label>
-										<div class="input-prepend">
-											<span class="add-on glyphicons direction"><i></i></span>
-											<input type="text" class="input-large span12" data-bind="value: obj.latitute, events:{change: loadMap}" placeholder="012345.67897">
+
+						<!-- Top Part -->
+				    	<div class="row-fluid">
+				    		<div class="col-sm-6 well">
+								<div class="row">
+									<div class="col-xs-12 col-sm-6">
+										<!-- Group -->
+										<div class="control-group">
+											<label for="ddlContactType"><span data-bind="text: lang.lang.customer_type"></span> <span style="color:red">*</span></label>
+											<input id="ddlContactType" name="ddlContactType"
+											   data-role="dropdownlist"
+											   data-header-template="customer-type-header-tmpl"       
+							                   data-value-primitive="true"
+							                   data-text-field="name"
+							                   data-value-field="id"
+							                   data-bind="value: obj.contact_type_id,
+							                   			  disabled: obj.is_pattern,
+							                              source: contactTypeDS,
+							                              events:{change: typeChanges}"
+							                   data-option-label="(--- Select ---)"
+							                   required data-required-msg="required" style="width: 100%;" />	            
 										</div>
-									</div>									
-									<!-- // Group END -->
-								</div>	
-								
-								<div class="span6">	
-									<!-- Group -->
-									<div class="control-group">
-						    			<label for="longtitute"><span data-bind="text: lang.lang.longtitute"></span> </label>
-						    			<div class="input-prepend">
-											<span class="add-on glyphicons google_maps"><i></i></span>
-											<input type="text" class="input-large span12" data-bind="value: obj.longtitute, events:{change: loadMap}" placeholder="012345.67897">
-										</div>										
+										<!-- // Group END -->
 									</div>
-									<!-- // Group END -->
-								</div>										
+									<div class="col-xs-12 col-sm-6">
+										<!-- Group -->
+										<div class="control-group">	
+											<label for="txtAbbr"><span data-bind="text: lang.lang.number"></span> <span style="color:red">*</span></label>			
+					              			<br>
+					              			<input id="txtAbbr" name="txtAbbr" class="k-textbox"
+					              				data-bind="value: obj.abbr, 
+					              						   disabled: obj.is_pattern" 
+					              				placeholder="eg. AB" required data-required-msg="required"
+					              				style="width: 48%; float: left;" />
+						              		<span style="float: left;">-</span>					              		
+						              		<input id="txtNumber" name="txtNumber"
+					              			   class="k-textbox"       
+							                   data-bind="value: obj.number, 
+							                   			  disabled: obj.is_pattern,
+							                   			  events:{change:checkExistingNumber}"
+							                   placeholder="eg. 001" required data-required-msg="required"
+							                   style="width: 48%; float: left;" />
+										</div>
+										<!-- // Group END -->											
+									</div>
+								</div>
+								
+								<div class="row">
+									<div class="col-xs-12 col-sm-12">
+										<!-- Group -->
+										<div class="control-group">	
+											<label for="fullname"><span data-bind="text: lang.lang.full_name"></span> <span style="color:red">*</span></label>
+								            <input id="fullname" name="fullname" class="k-textbox" 
+							            		data-bind="value: obj.name, 
+							            					disabled: obj.is_pattern,
+							            					attr: { placeholder: phFullname }" 
+							              		required data-required-msg="required"
+							              		style="width: 100%;" />
+										</div>	
+										<!-- // Group END -->
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="col-xs-12 col-sm-6">
+										<!-- Group -->
+										<div class="control-group">
+											<label for="customerStatus"><span data-bind="text: lang.lang.status"></span> <span style="color:red">*</span></label>
+								            <input id="customerStatus" name="customerStatus" 
+					              				data-role="dropdownlist"
+							            		data-text-field="name"
+				           						data-value-field="id"
+				           						data-value-primitive="true" 
+							            		data-bind="source: statusList, value: obj.status"
+							            		data-option-label="(--- Select ---)"
+							            		required data-required-msg="required" style="width: 100%;" />
+										</div>					
+										<!-- // Group END -->
+									</div>
+									<div class="col-xs-12 col-sm-6">
+										<!-- Group -->
+										<div class="control-group">
+											<label for="registeredDate"><span data-bind="text: lang.lang.register_date"></span> <span style="color:red">*</span></label>
+								            <input id="registeredDate" name="registeredDate" 
+							            		data-role="datepicker"
+				            					data-bind="value: obj.registered_date, disabled: obj.is_pattern" 
+				            					data-format="dd-MM-yyyy"
+				            					data-parse-formats="yyyy-MM-dd" 
+				            					placeholder="dd-MM-yyyy" required data-required-msg="required" style="width: 100%;" />
+										</div>					
+										<!-- // Group END -->
+									</div>
+								</div>						
+							</div>
+
+							<div class="col-sm-6">
+								<div class="row-fluid">	
+									<!-- Map -->
+									<div id="map" class="col-xs-12 col-sm-12" style="height: 130px;"></div>
+								</div>
+								<div class="separator line bottom"></div>
+								<div class="row-fluid">	
+									<div class="col-xs-12 col-sm-6">
+										<!-- Group -->
+										<div class="control-group">
+							    			<label for="latitute"><span data-bind="text: lang.lang.latitute"></span> </label>
+											<div class="input-prepend">
+												<span style="float: left;" class="add-on glyphicons direction"><i></i></span>
+												<input style="float: left;  width: 77%; padding: 4px 8px; border: 1px solid #efefef; line-height: 20px; box-shadow: none;" type="text" class="input-large span12" data-bind="value: obj.latitute, events:{change: loadMap}" placeholder="012345.67897">
+											</div>
+										</div>									
+										<!-- // Group END -->
+									</div>	
+									
+									<div class="col-xs-12 col-sm-6">	
+										<!-- Group -->
+										<div class="control-group">
+							    			<label for="longtitute"><span data-bind="text: lang.lang.longtitute"></span> </label>
+							    			<div class="input-prepend">
+												<span style="float: left;" class="add-on glyphicons google_maps"><i></i></span>
+												<input style="float: left;  width: 77%;  box-shadow: none;padding: 4px 8px; border: 1px solid #efefef; line-height: 20px; box-shadow: none;" type="text" class="input-large span12" data-bind="value: obj.longtitute, events:{change: loadMap}" placeholder="012345.67897">
+											</div>										
+										</div>
+										<!-- // Group END -->
+									</div>										
+								</div>
 							</div>
 						</div>
-					</div>								
-							
-					<!-- // Bottom Tabs -->
-					<div class="row-fluid">								
-						<div class="box-generic">
-						    <!-- //Tabs Heading -->
-						    <div class="tabsbar tabsbar-1">
-						        <ul class="row-fluid row-merge">
-						            <li class="span2 glyphicons nameplate_alt active">
-						            	<a href="#tab1" data-toggle="tab"><i></i> <span><span data-bind="text: lang.lang.info"></span></span></a>
-						            </li>							            
-						            <li class="span2 glyphicons usd">
-						            	<a href="#tab3" data-toggle="tab"><i></i> <span><span data-bind="text: lang.lang.account"></span></span></a>
-						            </li>
-						            <li class="span2 glyphicons parents">
-						            	<a href="#tab4" data-toggle="tab"><i></i> <span><span data-bind="text: lang.lang.contact"></span></span></a>
-						            </li>
-						            <li data-bind="visible: propertyVisible" class="span2 glyphicons adress_book">
-						            	<a href="#tab2" data-toggle="tab"><i></i> <span><span data-bind="text: lang.lang.add_property">Add Property</span></span></a>
-						            </li>				            					            
-						        </ul>
-						    </div>
-						    <!-- // Tabs Heading END -->
-						    <div class="tab-content">
-						    	<!-- //GENERAL INFO -->
-						        <div class="tab-pane active" id="tab1">
-					            	<table class="table table-borderless table-condensed cart_total">	
-							            <tr>
-							                <td><span data-bind="text: lang.lang.vat_no"></span></td>
-							              	<td>
+
+						<!-- // Bottom Tabs -->
+						<div class="row-fluid">
+							<div class="box-generic">
+							    <!-- //Tabs Heading -->
+							    <div class="tabsbar tabsbar-1">
+							        <ul class="row-fluid row-merge">
+							            <li class="span2 glyphicons nameplate_alt active">
+							            	<a href="#tab1" data-toggle="tab"><i></i> <span><span data-bind="text: lang.lang.info"></span></span></a>
+							            </li>							            
+							            <li class="span2 glyphicons usd">
+							            	<a href="#tab3" data-toggle="tab"><i></i> <span><span data-bind="text: lang.lang.account"></span></span></a>
+							            </li>
+							            <li class="span2 glyphicons parents">
+							            	<a href="#tab4" data-toggle="tab"><i></i> <span><span data-bind="text: lang.lang.contact"></span></span></a>
+							            </li>
+							            <li data-bind="visible: propertyVisible" class="span2 glyphicons adress_book">
+							            	<a href="#tab2" data-toggle="tab"><i></i> <span><span data-bind="text: lang.lang.add_property">Add Property</span></span></a>
+							            </li>
+							        </ul>
+							    </div>
+							    <!-- // Tabs Heading END -->
+							    <div class="tab-content">
+							    	<!-- //GENERAL INFO -->
+							        <div class="tab-pane active" id="tab1">
+							        	<div class="row" style="margin-bottom: 15px;">
+							        		<div class="col-sm-3 col-sx-12">
+							        			<span data-bind="text: lang.lang.vat_no"></span>
+							        		</div>
+							              	<div class="col-sm-3 col-sx-12">
 					            				<input class="k-textbox" data-bind="value: obj.vat_no" 
-													placeholder="e.g. 01234567897" style="width: 100%;" />			
-							              	</td>         	
-							            	<td><span data-bind="text: lang.lang.phone"></span></td>
-							              	<td><input class="k-textbox" data-bind="value: obj.phone" placeholder="e.g. 012 333 444" style="width: 100%;" /></td>
-							            </tr>
-							            <tr>
-							            	<td><span data-bind="text: lang.lang.country"></span></td>
-							              	<td>
+													placeholder="e.g. 01234567897" style="width: 100%;">
+											</div>         	
+							            	<div class="col-sm-3 col-sx-12">
+							            		<span data-bind="text: lang.lang.phone"></span>
+							            	</div>
+							              	<div class="col-sm-3 col-sx-12">
+							              		<input class="k-textbox" data-bind="value: obj.phone" 
+							              			placeholder="e.g. 012 333 444" style="width: 100%;" />
+							              	</div>
+							            </div>
+							            <div class="row" style="margin-bottom: 15px;">
+							              	<div class="col-sm-3 col-sx-12"><span data-bind="text: lang.lang.country"></span></div>
+							              	<div class="col-sm-3 col-sx-12">
 							              		<input data-role="dropdownlist"
 						              			   data-option-label="(--- Select ---)"	                   
 								                   data-value-primitive="true"
@@ -3240,273 +3259,285 @@
 								                   data-value-field="id"
 								                   data-bind="value: obj.country_id,
 								                              source: countryDS" style="width: 100%;" />
-							              	</td>      	
-							            	<td><span data-bind="text: lang.lang.email"></span></td>
-							              	<td><input class="k-textbox" data-bind="value: obj.email" placeholder="e.g. me@email.com" style="width: 100%;" />							            	
-							            </tr>
-							            <tr>
-							            	<td><span data-bind="text: lang.lang.city"></span></td>
-							              	<td><input class="k-textbox" data-bind="value: obj.city" placeholder="city name ..." style="width: 100%;" /></td>							              	
-							            	<td><span data-bind="text: lang.lang.post_code"></span></td>
-							              	<td><input class="k-textbox" data-bind="value: obj.post_code" placeholder="e.g. 12345" style="width: 100%;" /></td>
-							            </tr>							            
-							            <tr style="vertical-align: top;">
-							            	<td><span data-bind="text: lang.lang.address"></span></td>
-							              	<td><textarea class="k-textbox" data-bind="value: obj.address" placeholder="where you live ..." style="width: 100%;" /></textarea></td>									            								              	
-							            	<td><span data-bind="text: lang.lang.memo"></span></td>
-							              	<td><textarea rows="2" class="k-textbox" data-bind="value: obj.memo" placeholder="memo ..." style="width: 100%;" ></textarea></td>							              	
-							            </tr>									            
-							            <tr  style="vertical-align: top;">
-							            	<td>
+							              	</div>      	
+							            	<div class="col-sm-3 col-sx-12"><span data-bind="text: lang.lang.email"></span></div>
+							              	<div class="col-sm-3 col-sx-12"><input class="k-textbox" data-bind="value: obj.email" placeholder="e.g. me@email.com" style="width: 100%;" />
+							              	</div>
+
+							            </div>
+							            <div class="row" style="margin-bottom: 15px;">
+
+							              	<div class="col-sm-3 col-sx-12"><span data-bind="text: lang.lang.city"></span></div>
+							              	<div class="col-sm-3 col-sx-12"><input class="k-textbox" data-bind="value: obj.city" placeholder="city name ..." style="width: 100%;" /></div>							              	
+							            	<div class="col-sm-3 col-sx-12"><span data-bind="text: lang.lang.post_code"></span></div>
+							              	<div class="col-sm-3 col-sx-12"><input class="k-textbox" data-bind="value: obj.post_code" placeholder="e.g. 12345" style="width: 100%;" /></div>
+							            </div>
+							            <div class="row" style="margin-bottom: 15px;">
+
+							              	<div class="col-sm-3 col-sx-12"><span data-bind="text: lang.lang.address"></span></div>
+							              	<div class="col-sm-3 col-sx-12"><textarea class="k-textbox" data-bind="value: obj.address" placeholder="where you live ..." style="width: 100%;" /></textarea></div>									            								              	
+							            	<div class="col-sm-3 col-sx-12"><span data-bind="text: lang.lang.memo"></span></div>
+							              	<div class="col-sm-3 col-sx-12"><textarea rows="2" class="k-textbox" data-bind="value: obj.memo" placeholder="memo ..." style="width: 100%;" ></textarea></div>
+							              	
+							            </div>
+							            <div class="row">
+
+							              	<div class="col-sm-3 col-sx-12">
 							            		<span for="txtBillTo" data-bind="click: copyBillTo"><span data-bind="text: lang.lang.bill_to"></span> </span>		            
-							            	</td>
-							            	<td>
+							            	</div>
+							            	<div class="col-sm-3 col-sx-12">
 							            		<textarea rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.bill_to" placeholder="billed to ..."></textarea>
-							            	</td>
-							            	<td><span data-bind="text: lang.lang.delivered_to"></span></td>
-							            	<td>
+							            	</div>
+							            	<div class="col-sm-3 col-sx-12"><span data-bind="text: lang.lang.delivered_to"></span></div>
+							            	<div class="col-sm-3 col-sx-12">
 							            		<textarea rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.ship_to" placeholder="delivered to ..."></textarea>
-							            	</td>
-							            </tr>    
-							        </table>
-					        	</div>
-						        <!-- //GENERAL INFO END -->
+							            	</div>
 
-						        <!-- //Utility INFO -->
-						        <div class="tab-pane" id="tab2">
-						        	<div style="clear: both;">
-						            	<input 
-						            		data-bind="value: pAbbr, 
-						            			attr: {placeholder: lang.lang.abbr}" type="text"
-						            		style="height: 32px; padding: 5px; margin-right: 10px; margin-left: 10px;"  class="span2 k-textbox k-invalid" />
-						            	<input 
-						            		data-bind="value: pCode, 
-						            			attr: {placeholder: lang.lang.code}" type="text"
-						            		style="height: 32px; padding: 5px; margin-right: 10px; margin-left: 10px;"  class="span2 k-textbox k-invalid" />
-						            	
-						            	<input 
-						            		data-bind="value: pName, 
-						            			attr: {placeholder: lang.lang.name}" type="text"
-						            		style="height: 32px; padding: 5px; margin-right: 10px; margin-left: 10px;"  class="span2 k-textbox k-invalid" />
+							        	</div>
+						        	</div>
+							        <!-- //GENERAL INFO END -->
 
-						            	<input 
-						            		data-bind="value: pAddress, 
-						            			attr: {placeholder: lang.lang.address}" type="text"
-						            		style="height: 32px; padding: 5px; margin-right: 10px; margin-left: 10px;"  class="span2 k-textbox k-invalid" />
+							        <!-- //Utility INFO -->
+							        <div class="tab-pane" id="tab2">
+							        	<div class="row">
+							        		<div class="col-xs-12 col-sm-2">
+								            	<input 
+								            		data-bind="value: pAbbr, 
+								            			attr: {placeholder: lang.lang.abbr}" type="text"
+								            		style="height: 32px; padding: 5px; width: 100%;"  class="span2 k-textbox k-invalid" />
+							            	</div>
+							            	<div class="col-xs-12 col-sm-3">
+								            	<input 
+								            		data-bind="value: pCode, 
+								            			attr: {placeholder: lang.lang.code}" type="text"
+								            		style="height: 32px; padding: 5px; width: 100%;"  class="span2 k-textbox k-invalid" />
+								            </div>
+								            <div class="col-xs-12 col-sm-3 width: 100%;">	
+								            	<input 
+								            		data-bind="value: pName, 
+								            			attr: {placeholder: lang.lang.name}" type="text"
+								            		style="height: 32px; padding: 5px; width: 100%;"  class="span2 k-textbox k-invalid" />
+								            </div>
+								            <div class="col-xs-12 col-sm-2">
+								            	<input 
+								            		data-bind="value: pAddress, 
+								            			attr: {placeholder: lang.lang.address}" type="text"
+								            		style="height: 32px; padding: 5px; width: 100%;"  class="span2 k-textbox k-invalid" />
+								            </div>
+								            <div class="col-xs-12 col-sm-2">
+								            	<a class="btn-icon btn-primary glyphicons circle_plus cutype-icon" style="width: 80px; padding: 5px 7px 5px 35px !important; text-align: left;" data-bind="click: addProperty"><i></i><span data-bind="text: lang.lang.add">Add</span></a>
+							            	</div>
+							            </div>
 
-						            	<a class="btn-icon btn-primary glyphicons circle_plus cutype-icon" style="width: 80px; padding: 5px 7px 5px 35px !important; text-align: left;" data-bind="click: addProperty"><i></i><span data-bind="text: lang.lang.add">Add</span></a>
-						            </div>
-					            	<div class="span12 well" style="overflow: hidden;">
-							        	<table class="table table-striped">
-							        		<thead>
-								        		<tr>
-									        		<th data-bind="text: lang.lang.abbr">ABBR</th>
-									        		<th data-bind="text: lang.lang.code">Code</th>
-									        		<th data-bind="text: lang.lang.name">Name</th>
-									        		<th data-bind="text: lang.lang.address">Address</th>
-									        		<th style="text-align: center;" data-bind="text: lang.lang.action">Action</th>
-								        		</tr>
-								        	</thead>
-								        	<tbody 
-								        		data-role="listview" 
-								        		data-bind="source: propertyDS" 
-								        		data-template="property-template-list" 
-								        		data-edit-template="property-edit-template-list"
-								        		data-auto-bind="false">
-								        	</tbody>
-							        	</table>
-							        </div>
-					        	</div>
-						        <!-- //Utility END -->
+						            	<div class="row-fluid" style="overflow: hidden;">
+								        	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center">
+								        		<thead>
+									        		<tr>
+										        		<th style="vertical-align: top;" data-bind="text: lang.lang.abbr">ABBR</th>
+										        		<th style="vertical-align: top;" data-bind="text: lang.lang.code">Code</th>
+										        		<th style="vertical-align: top;" data-bind="text: lang.lang.name">Name</th>
+										        		<th style="vertical-align: top;" data-bind="text: lang.lang.address">Address</th>
+										        		<th style="vertical-align: top;" data-bind="text: lang.lang.action">Action</th>
+									        		</tr>
+									        	</thead>
+									        	<tbody 
+									        		data-role="listview" 
+									        		data-bind="source: propertyDS" 
+									        		data-template="property-template-list" 
+									        		data-edit-template="property-edit-template-list"
+									        		data-auto-bind="false">
+									        	</tbody>
+								        	</table>
+								        </div>
+						        	</div>
+							        <!-- //Utility END -->
 
-						        <!-- //ACCOUNTING -->
-						        <div class="tab-pane" id="tab3">
-						        	<div class="row-fluid">	
-						            	<div class="span3">
-											<label for="ddlAR"><span data-bind="text: lang.lang.account_receiveable"></span> <span style="color:red">*</span></label>
-											<input id="ddlAR" name="ddlAR"
-												   data-role="dropdownlist"
-												   data-header-template="account-header-tmpl"
-												   data-template="account-list-tmpl"
-								                   data-value-primitive="true"
-								                   data-text-field="name"
-								                   data-value-field="id"
-								                   data-bind="value: obj.account_id,
-								                              source: arDS"
-								                   data-option-label="(--- Select ---)"
-								                   required data-required-msg="required" style="width: 100%;" />	
-										</div>
-										<div class="span3">
-											<label for="ddlRA"><span data-bind="text: lang.lang.revenue_account"></span> <span style="color:red">*</span></label>
-											<input id="ddlRA" name="ddlRA"
-												   data-role="dropdownlist"
-												   data-header-template="account-header-tmpl"
-												   data-template="account-list-tmpl" 
-								                   data-value-primitive="true"
-								                   data-text-field="name"
-								                   data-value-field="id"
-								                   data-bind="value: obj.ra_id,
-								                              source: raDS"
-								                   data-option-label="(--- Select ---)"
-								                   required data-required-msg="required" style="width: 100%;" />	
-										</div>
-										<div class="span3">
-											<label for="ddlDepositAccount"><span data-bind="text: lang.lang.deposit_account"></span> <span style="color:red">*</span></label>
-											<input id="ddlDepositAccount" name="ddlDepositAccount"
-											   data-role="dropdownlist"
-											   data-header-template="account-header-tmpl"
-											   data-template="account-list-tmpl"      
-							                   data-value-primitive="true"
-							                   data-text-field="name"
-							                   data-value-field="id"
-							                   data-bind="value: obj.deposit_account_id,
-							                              source: depositDS"
-							                   data-option-label="(--- Select ---)"
-							                   required data-required-msg="required" style="width: 100%;" />													
-										</div>
-										<div class="span3">
-											<label for="ddlTradeDiscount"><span data-bind="text: lang.lang.trade_discount"></span> <span style="color:red">*</span></label>
-											<input id="ddlTradeDiscount" name="ddlTradeDiscount"
+							        <!-- //ACCOUNTING -->
+							        <div class="tab-pane" id="tab3">
+							        	<div class="row">	
+							            	<div class="col-sm-3 col-xs-12">
+												<label for="ddlAR"><span data-bind="text: lang.lang.account_receiveable"></span> <span style="color:red">*</span></label>
+												<input id="ddlAR" name="ddlAR"
+													   data-role="dropdownlist"
+													   data-header-template="account-header-tmpl"
+													   data-template="account-list-tmpl"
+									                   data-value-primitive="true"
+									                   data-text-field="name"
+									                   data-value-field="id"
+									                   data-bind="value: obj.account_id,
+									                              source: arDS"
+									                   data-option-label="(--- Select ---)"
+									                   required data-required-msg="required" style="width: 100%;" />	
+											</div>
+											<div class="col-sm-3 col-xs-12">
+												<label for="ddlRA"><span data-bind="text: lang.lang.revenue_account"></span> <span style="color:red">*</span></label>
+												<input id="ddlRA" name="ddlRA"
+													   data-role="dropdownlist"
+													   data-header-template="account-header-tmpl"
+													   data-template="account-list-tmpl" 
+									                   data-value-primitive="true"
+									                   data-text-field="name"
+									                   data-value-field="id"
+									                   data-bind="value: obj.ra_id,
+									                              source: raDS"
+									                   data-option-label="(--- Select ---)"
+									                   required data-required-msg="required" style="width: 100%;" />	
+											</div>
+											<div class="col-sm-3 col-xs-12">
+												<label for="ddlDepositAccount"><span data-bind="text: lang.lang.deposit_account"></span> <span style="color:red">*</span></label>
+												<input id="ddlDepositAccount" name="ddlDepositAccount"
 												   data-role="dropdownlist"
 												   data-header-template="account-header-tmpl"
 												   data-template="account-list-tmpl"      
 								                   data-value-primitive="true"
 								                   data-text-field="name"
 								                   data-value-field="id"
-								                   data-bind="value: obj.trade_discount_id,
-								                              source: tradeDiscountDS"
+								                   data-bind="value: obj.deposit_account_id,
+								                              source: depositDS"
 								                   data-option-label="(--- Select ---)"
-								                   required data-required-msg="required" style="width: 100%;" />														
-										</div>												
-							        </div>
-
-							        <div class="separator line bottom"></div>
-
-							        <div class="row-fluid">
-						        		<div class="span3">						
-								            <label for="currency"><span data-bind="text: lang.lang.currency"></span> <span style="color:red">*</span></label>
-								            <input id="currency" name="currency" 
-								            	data-role="dropdownlist"
-								            	data-template="currency-list-tmpl"
-								            	data-value-primitive="true"
-								                data-text-field="code"
-								                data-value-field="locale"
-												data-bind="value: obj.locale,
-															disabled: isProtected, 
-															source: currencyDS"
-												data-option-label="(--- Select ---)" 
-												required data-required-msg="required" style="width: 100%;" />
+								                   required data-required-msg="required" style="width: 100%;" />													
+											</div>
+											<div class="col-sm-3 col-xs-12">
+												<label for="ddlTradeDiscount"><span data-bind="text: lang.lang.trade_discount"></span> <span style="color:red">*</span></label>
+												<input id="ddlTradeDiscount" name="ddlTradeDiscount"
+													   data-role="dropdownlist"
+													   data-header-template="account-header-tmpl"
+													   data-template="account-list-tmpl"      
+									                   data-value-primitive="true"
+									                   data-text-field="name"
+									                   data-value-field="id"
+									                   data-bind="value: obj.trade_discount_id,
+									                              source: tradeDiscountDS"
+									                   data-option-label="(--- Select ---)"
+									                   required data-required-msg="required" style="width: 100%;" />														
+											</div>												
 								        </div>
-						            	<div class="span3">
-											<label for="ddlPaymentTerm"><span data-bind="text: lang.lang.payment_term"></span></label>
-											<input id="ddlPaymentTerm" name="ddlPaymentTerm"
-												data-header-template="customer-term-header-tmpl"
-												data-role="dropdownlist"
-								            	data-value-primitive="true"
-								                data-text-field="name"
-								                data-value-field="id"
-												data-bind="value: obj.payment_term_id, source: paymentTermDS" 
-												data-option-label="(--- Select ---)"
-												style="width: 100%;" />
+
+								        <div class="separator line bottom"></div>
+
+								        <div class="row">
+							        		<div class="col-sm-3 col-xs-12">
+									            <label for="currency"><span data-bind="text: lang.lang.currency"></span> <span style="color:red">*</span></label>
+									            <input id="currency" name="currency" 
+									            	data-role="dropdownlist"
+									            	data-template="currency-list-tmpl"
+									            	data-value-primitive="true"
+									                data-text-field="code"
+									                data-value-field="locale"
+													data-bind="value: obj.locale,
+																disabled: isProtected, 
+																source: currencyDS"
+													data-option-label="(--- Select ---)" 
+													required data-required-msg="required" style="width: 100%;" />
+									        </div>
+							            	<div class="col-sm-3 col-xs-12">
+												<label for="ddlPaymentTerm"><span data-bind="text: lang.lang.payment_term"></span></label>
+												<input id="ddlPaymentTerm" name="ddlPaymentTerm"
+													data-header-template="customer-term-header-tmpl"
+													data-role="dropdownlist"
+									            	data-value-primitive="true"
+									                data-text-field="name"
+									                data-value-field="id"
+													data-bind="value: obj.payment_term_id, source: paymentTermDS" 
+													data-option-label="(--- Select ---)"
+													style="width: 100%;" />
+											</div>
+											<div class="col-sm-3 col-xs-12">
+												<label for="ddlPaymentMethod"><span data-bind="text: lang.lang.payment_method"></span></label>
+												<input id="ddlPaymentMethod" name="ddlPaymentMethod"
+													data-header-template="customer-payment-method-header-tmpl"
+													data-role="dropdownlist"
+									            	data-value-primitive="true"
+									                data-text-field="name"
+									                data-value-field="id"
+													data-bind="value: obj.payment_method_id, source: paymentMethodDS"
+													data-option-label="(--- Select ---)" 
+													style="width: 100%;" />
+											</div>
+											<div class="col-sm-3 col-xs-12">
+												<label for="ddlSettlementDiscount"><span data-bind="text: lang.lang.settlement_discount"></span> <span style="color:red">*</span></label>
+												<input id="ddlSettlementDiscount" name="ddlSettlementDiscount"
+													   data-role="dropdownlist"
+													   data-header-template="account-header-tmpl"
+													   data-template="account-list-tmpl"
+									                   data-value-primitive="true"
+									                   data-text-field="name"
+									                   data-value-field="id"
+									                   data-bind="value: obj.settlement_discount_id,
+									                              source: settlementDiscountDS"
+									                   data-option-label="(--- Select ---)"
+									                   required data-required-msg="required" style="width: 100%;" />		
+											</div>												
+								        </div>
+
+								        <div class="separator line bottom"></div>
+
+								        <div class="row">
+								        	<div class="col-sm-3 col-xs-12">
+												<label for="ddlTaxItem"><span data-bind="text: lang.lang.tax"></span></label>
+												<input id="ddlTaxItem" name="ddlTaxItem"
+													   data-role="dropdownlist"
+													   data-header-template="tax-header-tmpl"
+									                   data-value-primitive="true"
+									                   data-text-field="name"
+									                   data-value-field="id"
+									                   data-bind="value: obj.tax_item_id,
+									                              source: taxItemDS"
+									                   data-option-label="(--- Select ---)"
+									                   style="width: 100%;" />
+											</div>	
+									        <div class="col-sm-3 col-xs-12">
+												<label for="txtCreditLimit"><span data-bind="text: lang.lang.credit_limit"></span> </label>								              		
+									            <input data-role="numerictextbox"
+									                   data-format="n"
+									                   data-min="0"	                   
+									                   data-bind="value: obj.credit_limit"
+									                   style="width: 100%;">
+											</div>																							
 										</div>
-										<div class="span3">
-											<label for="ddlPaymentMethod"><span data-bind="text: lang.lang.payment_method"></span></label>
-											<input id="ddlPaymentMethod" name="ddlPaymentMethod"
-												data-header-template="customer-payment-method-header-tmpl"
-												data-role="dropdownlist"
-								            	data-value-primitive="true"
-								                data-text-field="name"
-								                data-value-field="id"
-												data-bind="value: obj.payment_method_id, source: paymentMethodDS"
-												data-option-label="(--- Select ---)" 
-												style="width: 100%;" />
-										</div>
-										<div class="span3">
-											<label for="ddlSettlementDiscount"><span data-bind="text: lang.lang.settlement_discount"></span> <span style="color:red">*</span></label>
-											<input id="ddlSettlementDiscount" name="ddlSettlementDiscount"
-												   data-role="dropdownlist"
-												   data-header-template="account-header-tmpl"
-												   data-template="account-list-tmpl"
-								                   data-value-primitive="true"
-								                   data-text-field="name"
-								                   data-value-field="id"
-								                   data-bind="value: obj.settlement_discount_id,
-								                              source: settlementDiscountDS"
-								                   data-option-label="(--- Select ---)"
-								                   required data-required-msg="required" style="width: 100%;" />		
-										</div>												
-							        </div>
+						        	</div>
+							        <!-- //ACCOUNTING END -->						       
 
-							        <div class="separator line bottom"></div>
+							        <!-- //CONTACT PERSON -->
+							        <div class="tab-pane" id="tab4">
+							        	<span style="margin-bottom: 15px;" class="btn btn-primary btn-icon glyphicons circle_plus" data-bind="click: addEmptyContactPerson"><i></i><span data-bind="text: lang.lang.new_contact_person"></span></span>
 
-							        <div class="row-fluid">
-							        	<div class="span3">
-											<label for="ddlTaxItem"><span data-bind="text: lang.lang.tax"></span></label>
-											<input id="ddlTaxItem" name="ddlTaxItem"
-												   data-role="dropdownlist"
-												   data-header-template="tax-header-tmpl"
-								                   data-value-primitive="true"
-								                   data-text-field="name"
-								                   data-value-field="id"
-								                   data-bind="value: obj.tax_item_id,
-								                              source: taxItemDS"
-								                   data-option-label="(--- Select ---)"
-								                   style="width: 100%;" />
-										</div>	
-								        <div class="span3">
-											<label for="txtCreditLimit"><span data-bind="text: lang.lang.credit_limit"></span> </label>								              		
-								            <input data-role="numerictextbox"
-								                   data-format="n"
-								                   data-min="0"	                   
-								                   data-bind="value: obj.credit_limit"
-								                   style="width: 100%;">
-										</div>																							
-									</div>
-					        	</div>
-						        <!-- //ACCOUNTING END -->						       
-
-						        <!-- //CONTACT PERSON -->
-						        <div class="tab-pane" id="tab4">
-						        	<span style="margin-bottom: 15px;" class="btn btn-primary btn-icon glyphicons circle_plus" data-bind="click: addEmptyContactPerson"><i></i><span data-bind="text: lang.lang.new_contact_person"></span></span>
-
-						        	<table class="table table-bordered table-white">
-								        <thead>
-								            <tr>
-								                <th><span data-bind="text: lang.lang.name"></span></th>
-								                <th><span data-bind="text: lang.lang.department"></span></th>						                
-								                <th><span data-bind="text: lang.lang.phone"></span></th>
-								                <th><span data-bind="text: lang.lang.email"></span></th>
-								                <th width="20px"></th>										               
-								            </tr>
-								        </thead>
-								        <tbody data-role="listview"	  		
-								        		data-auto-bind="false"
-								        		data-template="contact-person-row-tmpl"
-								        		data-bind="source: contactPersonDS">
-								        </tbody>     						        
-								    </table>
-					        	</div>
-						        <!-- //CONTACT PERSON END -->
-						    </div>
-						</div>
-					</div>
-					<br>
-					<!-- Form actions -->
-					<div class="box-generic bg-action-button">
-						<div id="ntf1" data-role="notification"></div>
-						<div class="row">
-							<div class="span3">
-								
-							</div>
-							<div class="span9" align="right">
-								<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" style="width: 80px;margin-bottom: 0;"><i></i> <span data-bind="text: lang.lang.save"></span></span>
-								
-								<span class="btn btn-icon btn-warning glyphicons remove_2" onclick="javascript:window.history.back()" data-bind="click: cancel" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.cancel"></span></span>
+							        	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center">
+									        <thead>
+									            <tr>
+									                <th style="vertical-align: top;"><span data-bind="text: lang.lang.name"></span></th>
+									                <th style="vertical-align: top;"><span data-bind="text: lang.lang.department"></span></th>						                
+									                <th style="vertical-align: top;"><span data-bind="text: lang.lang.phone"></span></th>
+									                <th style="vertical-align: top;"><span data-bind="text: lang.lang.email"></span></th>
+									                <th style="vertical-align: top;"></th>										               
+									            </tr>
+									        </thead>
+									        <tbody data-role="listview"	  		
+									        		data-auto-bind="false"
+									        		data-template="contact-person-row-tmpl"
+									        		data-bind="source: contactPersonDS">
+									        </tbody>
+									    </table>
+						        	</div>
+							        <!-- //CONTACT PERSON END -->
+							    </div>
 							</div>
 						</div>
-					</div>
-					<!-- // Form actions END -->
 
+
+						<!-- Form actions -->
+						<div class="box-generic bg-action-button">
+							<div id="ntf1" data-role="notification"></div>
+							<div class="row">
+								<div class="col-sm-12" align="right">
+									<span class="btn-btn" onclick="javascript:window.history.back()" data-bind="click: cancel" ><span data-bind="text: lang.lang.cancel"></span></span>
+									<span id="saveNew" class="btn-btn" ><span data-bind="text: lang.lang.save"></span></span>
+								</div>
+							</div>
+						</div>
+						<!-- // Form actions END -->
+
+					</div>
 				</div>
 			</div>
 		</div>
@@ -3574,110 +3605,158 @@
 	</span>
 </script>
 <!-- End Customer -->
-
+<!-- Property -->
 <script id="property" type="text/x-kendo-template">
-	<div id="slide-form">
-		<div class="customer-background" style="overflow: hidden; margin-top: 15px;">
-			<div class="container-960">					
-				<div id="example" class="k-content">
-			    	<div class="hidden-print pull-right">
-			    		<span class="glyphicons no-js remove_2" 
-							data-bind="click: cancel"><i></i></span>						
+	<div class="container">
+		<div class="row-fluid">
+			<div class="background">
+				<div class="row-fluid">
+					<div id="loadImport" style="display:none;text-align: center;position: absolute;width: 100%; height: 100%;margin-top: -15px;background: rgba(142, 159, 167, 0.8);z-index: 9999;">
+						<i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 35%;left: 45%"></i>
 					</div>
-					<h2 data-bind="text: lang.lang.add_property">Property</h2>
-					<br>
-					<br>
-					<label for="ddlContactType"><span data-bind="text: lang.lang.name">Name</span> <span style="color:red">*</span></label>
-							<input type="text"
-								data-role="dropdownlist" 
-								data-option-label="(---Select---)"
-								data-bind="value: contactOBJ, 
-											source: contactDS, 
-											events: {change: onContactChange}" 
-								data-value-primitive="true"  
-								data-text-field="name" 
-								data-filter="contains"
-								data-value-field="id" style="width: 300px">
-								<a class="btn-icon btn-primary glyphicons circle_plus" data-bind="click: addProperty, visible: haveContact" style="width: 80px; padding: 5px 7px 5px 35px !important; text-align: left;"><i></i><span data-bind="text: lang.lang.add">Add</span></a>
-			        <br><br>
-			        <div class="span12 well" style="overflow: hidden;">
-			        	<table class="table table-striped">
-			        		<thead>
-				        		<tr>
-					        		<th data-bind="text: lang.lang.abbr" width="80">ABBR</th>
-					        		<th data-bind="text: lang.lang.code">Code</th>
-					        		<th data-bind="text: lang.lang.name">Name</th>
-					        		<th data-bind="text: lang.lang.address">Address</th>
-					        		<th style="text-align: center;" data-bind="text: lang.lang.action">Action</th>
-				        		</tr>
-				        	</thead>
-				        	<tbody 
-				        		data-role="listview" 
-				        		data-bind="source: dataSource" 
-				        		data-template="property-template-list" 
-				        		data-edit-template="property-edit-template-list"
-				        		data-auto-bind="false">
-				        	</tbody>
-			        	</table>
-			        </div>
-				    <br>
-				    <!-- Property Item Window -->
-		            <div id="addProperty"
-		            	data-role="window"
-			                 data-width="250"
-			                 data-height="250"
-			                 data-actions="{}"
-			                 data-resizable="false"
-			                 data-position="{top: '30%', left: '37%'}"		                 
-			                 data-bind="visible: pVisible">
-	            		<table>
-	            			<tr style="border-bottom: 8px solid #fff;">
-								<td width="35%"><span data-bind="text: lang.lang.abbr"></span></td>
-								<td>
-									<input class="k-textbox" placeholder="Name ..." data-bind="attr: {placeholder: lang.lang.abbr}, value: pAbbr" style="width: 100%;">
-								</td>
-							</tr>
-							<tr style="border-bottom: 8px solid #fff;">
-								<td width="35%"><span data-bind="text: lang.lang.code"></span></td>
-								<td>
-									<input class="k-textbox" placeholder="Name ..." data-bind="attr: {placeholder: lang.lang.code}, value: pCode" style="width: 100%;">
-								</td>
-							</tr>
-							<tr style="border-bottom: 8px solid #fff;">
-								<td width="35%"><span data-bind="text: lang.lang.name"></span></td>
-								<td>
-									<input class="k-textbox" placeholder="Name ..." data-bind="attr: {placeholder: lang.lang.name}, value: pName" style="width: 100%;">
-								</td>
-							</tr>
-							<tr style="border-bottom: 8px solid #fff;">
-								<td width="35%"><span data-bind="text: lang.lang.address"></span></td>
-								<td>
-									<input class="k-textbox" placeholder="Name ..." data-bind="attr: {placeholder: lang.lang.address}, value: pAddress" style="width: 100%;">
-								</td>
-							</tr>
-						</table>
-
-						<br>
-						<div style="text-align: center;">
-							<span style="margin-bottom: 0;" class="btn btn-success btn-icon glyphicons ok_2" data-bind="click: saveProperty"><i></i><span data-bind="text: lang.lang.save"></span></span>
-
-							<span class="btn btn-danger btn-icon glyphicons remove_2" data-bind="click: closePropertyWin"><i></i><span data-bind="text: lang.lang.close"></span></span>  
+					<div id="example" class="k-content">
+						<h2 data-bind="text: lang.lang.add_property">Property</h2>
+						<div class="hidden-print pull-right">
+				    		<span class="glyphicons no-js remove_2" 
+								data-bind="click: cancel"><i></i></span>
 						</div>
-					</div>
-				    <!-- Form actions -->
-					<div class="box-generic bg-action-button">
-						<div id="ntf1" data-role="notification"></div>
-						<div class="row">
-							<div class="span3">
-								
-							</div>
-							<div class="span9" align="right">
-								<span id="cancel" data-bind="click: cancel" class="btn btn-icon btn-success glyphicons power" style="width: 100px;"><i></i> <span data-bind="text: lang.lang.cancel">Cancel </span></span>
+						<div class="clear"></div>
+
+						<div class="well" style="overflow: hidden; margin-bottom: 0;">
+							<div class="row">
+					        	<div class="col-sm-4 ">
+					        		<div class="listWrapper">
+										<div class="innerAll" style="height: 55px;padding:0;">
+											<div class="widget-search separator bottom">
+												<a class="btn btn-default pull-right" data-bind="click: search"><i class="icon-search"></i></a>
+												<div class="overflow-hidden">
+													<input type="search" style="border: 1px solid #ccc;height: 34px;" placeholder="Number or Name..." data-bind="value: searchText, events:{change: search}">
+												</div>
+											</div>
+										</div>
+										<div class="table table-condensed" id="listContact" style="height: 580px; margin-bottom: 0;"
+											 data-role="grid"
+											 data-bind="source: contactDS"
+											 data-row-template="waterCenter-customer-list-tmpl"
+											 data-columns="[{title: 'Contacts'}]"
+											 data-selectable=true
+											 data-height="400"
+											 data-scrollable="{virtual: true}"></div>
+									</div>
+								</div>
+					        	<div class="col-sm-8">
+					        		<div class="row" style="clear: both;" data-bind="visible: haveContact">
+					        			<div class="col-xs-12 col-sm-2">
+							            	<input 
+							            		data-bind="value: pAbbr, 
+							            			attr: {placeholder: lang.lang.abbr}" type="text"
+							            		style="height: 32px; padding: 5px; width: 100%"  class="span2 k-textbox k-invalid" />
+							           	</div>
+							           	<div class="col-xs-12 col-sm-2">
+							            	<input 
+							            		data-bind="value: pCode, 
+							            			attr: {placeholder: lang.lang.code}" type="text"
+							            		style="height: 32px; padding: 5px; width: 100%"  class="span2 k-textbox k-invalid" />
+							            </div>
+							           	<div class="col-xs-12 col-sm-3">							            	
+							            	<input 
+							            		data-bind="value: pName, 
+							            			attr: {placeholder: lang.lang.name}" type="text"
+							            		style="height: 32px; padding: 5px; width: 100%"  class="span2 k-textbox k-invalid" />
+										</div>
+							           	<div class="col-xs-12 col-sm-3">							            	
+							            	<input 
+							            		data-bind="value: pAddress, 
+							            			attr: {placeholder: lang.lang.address}" type="text"
+							            		style="height: 32px; padding: 5px; width: 100%"  class="span2 k-textbox k-invalid" />
+							            </div>
+							           	<div class="col-xs-12 col-sm-2">							            	
+							            	<a class="btn-icon btn-primary glyphicons circle_plus cutype-icon" style="width: 80px; padding: 5px 7px 5px 35px !important; text-align: left;" data-bind="click: addProperty"><i></i><span data-bind="text: lang.lang.add">Add</span></a>
+						            	</div>
+						            </div>
+
+						        	<table style="margin-bottom: 0;" class="table table-bordered table-condensed table-striped table-primary table-vertical-center">
+						        		<thead>
+							        		<tr>
+								        		<th style="vertical-align: top;" data-bind="text: lang.lang.abbr">ABBR</th>
+								        		<th style="vertical-align: top;" data-bind="text: lang.lang.code">Code</th>
+								        		<th style="vertical-align: top;" data-bind="text: lang.lang.name">Name</th>
+								        		<th style="vertical-align: top;" data-bind="text: lang.lang.address">Address</th>
+								        		<th style="vertical-align: top;" data-bind="text: lang.lang.action">Action</th>
+							        		</tr>
+							        	</thead>
+							        	<tbody 
+							        		data-role="listview" 
+							        		data-bind="source: dataSource" 
+							        		data-template="property-template-list" 
+							        		data-edit-template="property-edit-template-list"
+							        		data-auto-bind="false">
+							        	</tbody>
+						        	</table>
+						        </div>
+						    </div>
+				        </div>
+					    <br>
+					    <!-- Property Item Window -->
+			            <div id="addProperty"
+			            	data-role="window"
+				                 data-width="250"
+				                 data-height="250"
+				                 data-actions="{}"
+				                 data-resizable="false"
+				                 data-position="{top: '30%', left: '37%'}"		                 
+				                 data-bind="visible: pVisible">
+		            		<table>
+		            			<tr style="border-bottom: 8px solid #fff;">
+									<td width="35%"><span data-bind="text: lang.lang.abbr"></span></td>
+									<td>
+										<input class="k-textbox" placeholder="Name ..." data-bind="attr: {placeholder: lang.lang.abbr}, value: pAbbr" style="width: 100%;">
+									</td>
+								</tr>
+								<tr style="border-bottom: 8px solid #fff;">
+									<td width="35%"><span data-bind="text: lang.lang.code"></span></td>
+									<td>
+										<input class="k-textbox" placeholder="Name ..." data-bind="attr: {placeholder: lang.lang.code}, value: pCode" style="width: 100%;">
+									</td>
+								</tr>
+								<tr style="border-bottom: 8px solid #fff;">
+									<td width="35%"><span data-bind="text: lang.lang.name"></span></td>
+									<td>
+										<input class="k-textbox" placeholder="Name ..." data-bind="attr: {placeholder: lang.lang.name}, value: pName" style="width: 100%;">
+									</td>
+								</tr>
+								<tr style="border-bottom: 8px solid #fff;">
+									<td width="35%"><span data-bind="text: lang.lang.address"></span></td>
+									<td>
+										<input class="k-textbox" placeholder="Name ..." data-bind="attr: {placeholder: lang.lang.address}, value: pAddress" style="width: 100%;">
+									</td>
+								</tr>
+							</table>
+
+							<br>
+							<div style="text-align: center;">
+								<span style="margin-bottom: 0;" class="btn btn-success btn-icon glyphicons ok_2" data-bind="click: saveProperty"><i></i><span data-bind="text: lang.lang.save"></span></span>
+
+								<span class="btn btn-danger btn-icon glyphicons remove_2" data-bind="click: closePropertyWin"><i></i><span data-bind="text: lang.lang.close"></span></span>  
 							</div>
 						</div>
+
+					    <!-- Form actions -->
+						<div class="box-generic bg-action-button">
+							<div id="ntf1" data-role="notification"></div>
+							<div class="row">
+								<div class="col-sm-12" align="right">
+									<span id="cancel" data-bind="click: cancel" class="btn-btn"><span data-bind="text: lang.lang.cancel">Cancel </span></span>
+								</div>
+							</div>
+						</div>
+						<!-- // Form actions END -->
+
+
+
+
 					</div>
-					<!-- // Form actions END -->		
-				</div>						
+				</div>
 			</div>
 		</div>
 	</div>
@@ -3697,26 +3776,26 @@
 <script id="property-edit-template-list" type="text/x-kendo-template">
 	<tr>
 		<td>
-			<input type="text" class="k-textbox" data-bind="value:abbr" name="ProductName" required="required" validationMessage="required" />
+			<input type="text" style="width:70px" class="k-textbox" data-bind="value:abbr" name="ProductName" required="required" validationMessage="required" />
 		</td>
 		<td>
-			<input type="text" class="k-textbox" data-bind="value:code" name="ProductName" required="required" validationMessage="required" />
+			<input type="text"  style="width:100px" class="k-textbox" data-bind="value:code" name="ProductName" required="required" validationMessage="required" />
 		</td>
 		<td>
 			<input type="text" class="k-textbox" data-bind="value:name" name="ProductName" required="required" validationMessage="required" />
 		</td>
 		<td>
-			<input type="text" class="k-textbox" data-bind="value:address" name="ProductName" required="required" validationMessage="required" />
+			<input type="text"  style="width:100px" class="k-textbox" data-bind="value:address" name="ProductName" required="required" validationMessage="required" />
 		</td>
 		<td align="center">
 	        <div class="edit-buttons">
-	            <a class="k-button k-i-check-button" href="\\#"><span class="k-icon k-i-check"></span></a>
-	            <a class="k-button k-i-cancel-button" href="\\#"><span class="k-icon k-i-cancel"></span></a>
+	            <a class="k-button k-update-button" href="\\#"><span class="k-icon k-i-check"></span></a>
+	            <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-i-cancel"></span></a>
 	        </div>
 	    </td>
 	</tr>
 </script>
-
+<!-- End Property -->
 <!--  Meter  -->
 <script id="waterAddMeter" type="text/x-kendo-template">
 	<div id="slide-form">
@@ -4270,15 +4349,23 @@
 	</tr>
 </script>
 <script id="Reorder" type="text/x-kendo-template">
-	<div id="slide-form">
-		<div class="customer-background" style="margin-top: 15px;">
-			<div class="container-960">
-				<div id="example" class="k-content saleSummaryCustomer">
-			    	<span class="pull-right glyphicons no-js remove_2" data-bind="click: cancel"><i></i></span>
-					<h2 style="padding:0 15px 15px 0;" >Reading Route Management</h2>
-					<div class="row-fluid">
-					    <!-- Tabs -->
-						<div class="relativeWrap" data-toggle="source-code">
+	<div class="container">
+		<div class="row-fluid">
+			<div class="background">
+				<div class="row-fluid">
+					<div id="loadImport" style="display:none;text-align: center;position: absolute;width: 100%; height: 100%;margin-top: -15px;background: rgba(142, 159, 167, 0.8);z-index: 9999;">
+						<i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 35%;left: 45%"></i>
+					</div>
+					<div id="example" class="k-content">
+						<h2 data-bind="">Reading Route Management</h2>
+						<div class="hidden-print pull-right">
+				    		<span class="glyphicons no-js remove_2" 
+								data-bind="click: cancel"><i></i></span>
+						</div>
+						<div class="clear"></div>
+
+						<!-- Tabs -->
+						<div class="relativeWrap" data-toggle="source-code" style="margin-bottom: 15px;">
 							<div class="widget widget-tabs widget-tabs-gray report-tab">
 								<!-- Tabs Heading -->
 								<div class="widget-head">
@@ -4290,9 +4377,9 @@
 								<!-- // Tabs Heading END -->								
 								<div class="widget-body" style="overflow:hidden;">
 									<div class="tab-content">
-								        <div class="tab-pane active" id="tab-1">
-											<div class="span12 row-fluid" style="padding:20px 0;padding-top: 0;">
-												<div class="span3" style="padding-left: 0;">
+								        <div class="tab-pane active" id="tab-1" style="border: none; padding: 15px;">
+											<div class="row">
+												<div class="col-sm-3 col-xs-12" >
 													<div class="control-group">
 														<label ><span data-bind="text: lang.lang.license">License</span></label>
 														<input 
@@ -4309,7 +4396,7 @@
 							                  					events: {change: licenseChange}">
 							                  		</div>
 												</div>	
-												<div class="span2">
+												<div class="col-sm-2 col-xs-12">
 													<div class="control-group">		
 														<label ><span data-bind="text: lang.lang.location">Location</span></label>
 														<input 
@@ -4327,7 +4414,7 @@
 							                  					events: {change: onLocationChange}">
 							                  		</div>
 												</div>
-												<div class="span2">
+												<div class="col-sm-2 col-xs-12">
 													<div class="control-group">		
 														<label ><span data-bind="text: lang.lang.sub_location">Location</span></label>
 														<input 
@@ -4345,7 +4432,7 @@
 							                  					events: {change: onSubLocationChange}">
 							                  		</div>
 												</div>
-												<div class="span2">
+												<div class="col-sm-2 col-xs-12">
 													<div class="control-group">		
 														<label ><span data-bind="text: lang.lang.box">Location</span></label>
 														<input 
@@ -4362,7 +4449,7 @@
 							                  					enabled: haveSubLocation">
 							                  		</div>
 												</div>
-												<div class="span2">
+												<div class="col-sm-2 col-xs-12">
 													<div class="control-group">	
 														<label ><span data-bind="text: lang.lang.action">Action</span></label>	
 														<div class="row" style="margin: 0;">					
@@ -4376,24 +4463,25 @@
 								</div>
 							</div>
 						</div>
-						<!-- // Tabs END -->						
-					</div>
-					<br>
-					<div id="invFormContent">
-						<div id="grid"></div>
-					</div>
-					<br>
-					<div class="box-generic bg-action-button">
-						<div id="ntf1" data-role="notification" style="display: none;"></div>
-						<div class="row">
-							<div class="span3">
-								
-							</div>
-							<div class="span9" align="right">
-								<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" style="width: 80px;"><i></i> <span data-bind="click: save, text: lang.lang.save">Save</span></span>
-								<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;margin-bottom: 10px"><i></i> <span data-bind="text: lang.lang.cancel, click: cancel">Cancel</span></span>		
+						<!-- // Tabs END -->
+
+						<div id="invFormContent">
+							<div id="grid" style="clear: both; margin-bottom: 15px;"></div>
+						</div>
+
+
+
+
+						<div class="box-generic bg-action-button">
+							<div id="ntf1" data-role="notification" style="display: none;"></div>
+							<div class="row">
+								<div class="col-xs-12" align="right">
+									<span id="saveClose" class="btn-btn" ><span data-bind="text: lang.lang.cancel, click: cancel">Cancel</span></span>
+									<span id="saveNew" class="btn-btn" > <span data-bind="click: save, text: lang.lang.save">Save</span></span>											
+								</div>
 							</div>
 						</div>
+
 					</div>
 				</div>
 			</div>
@@ -4404,20 +4492,20 @@
 
 <!--  Reading  -->
 <script id="Reading" type="text/x-kendo-template">
-	<div id="slide-form">
-		<div class="customer-background">
-			<div id="loadImport" style="display:none;text-align: center;position: absolute;width: 100%; height: 100%;margin-top: -15px;background: rgba(142, 159, 167, 0.8);z-index: 9999;">
-				<i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 35%;left: 45%"></i>
-			</div>
-			<div class="container-960">					
-				<div id="example" class="k-content">
-
-				    	<div class="hidden-print pull-right">
+	<div class="container">
+		<div class="row-fluid">
+			<div class="background">
+				<div class="row-fluid">
+					<div id="loadImport" style="display:none;text-align: center;position: absolute;width: 100%; height: 100%;margin-top: -15px;background: rgba(142, 159, 167, 0.8);z-index: 9999;">
+						<i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 35%;left: 45%"></i>
+					</div>
+					<div id="example" class="k-content">
+						<h2 data-bind="text: lang.lang.reading">Reading</h2>
+						<div class="hidden-print pull-right">
 				    		<span class="glyphicons no-js remove_2" 
 								data-bind="click: cancel"><i></i></span>
 						</div>
-				        <h2 data-bind="text: lang.lang.reading">Reading</h2>
-						<br />
+						<div class="clear"></div>
 						<!-- Tabs -->
 						<div class="relativeWrap" data-toggle="source-code">
 							<div class="widget widget-tabs widget-tabs-double-2 widget-tabs-gray">
@@ -4435,9 +4523,9 @@
 								<div class="widget-body">
 									<div class="tab-content">
 										<!-- Tab content -->
-										<div id="tabDownload" style="border: 1px solid #ccc; overflow: hidden;" class="tab-pane active widget-body-regular">
+										<div id="tabDownload" style="border: 1px solid #ccc; overflow: hidden; padding: 15px" class="tab-pane active widget-body-regular" >
 											<h4 class="separator bottom" style="margin-top: 10px;" data-bind="text: lang.lang.please_select_license">Please Select License and Location to download reading book</h4>
-										  	<div class="col-sm-12 row-fluid" style="padding:20px 0;padding-top: 0;">
+										  	<div class="col-sm-12 row" style="padding:20px 0;padding-top: 0;">
 												<div class="col-xs-12 col-sm-3" >
 													<div class="control-group">	
 														<label ><span data-bind="text: lang.lang.license">License</span></label>
@@ -4473,7 +4561,7 @@
 							                  					source: blocDS">
 							                  		</div>
 												</div>
-												<div class="col-xs-12 col-sm-2">
+												<div class="col-xs-12 col-sm-3">
 													<div class="control-group">								
 														<label ><span data-bind="text: lang.lang.sub_location">Location</span></label>
 														<input 
@@ -4517,7 +4605,7 @@
 							                  		</div>
 												</div>
 									        </div>
-									        <div class="row-fluid" data-bind="visible: selectMeter">
+									        <div class="row" data-bind="visible: selectMeter">
 												<a data-bind="visible: haveData, click: exportEXCEL">
 													<span id="saveClose" class="btn btn-icon btn-success glyphicons download" style="width: 250px!important;">
 														<i></i> 
@@ -4528,13 +4616,13 @@
 												<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
 													<thead>
 														<tr>
-															<th class="center"><span data-bind="text: lang.lang.name">name</span></th>
-															<th class="center"><span data-bind="text: lang.lang.meter_number">Meter Number</span></th>
-															<th class="center"><span data-bind="text: lang.lang.from_date">From Date</span></th>
-															<th class="center"><span data-bind="text: lang.lang.to_date">To Date</span></th>
-															<th class="center"><span data-bind="text: lang.lang.month_of">Month Of</span></th>
-															<th class="center"><span data-bind="text: lang.lang.previous">Previouse</span></th>
-															<th class="center"><span data-bind="text: lang.lang.current">Current</span></th>
+															<th style="vertical-align: top;"><span data-bind="text: lang.lang.name">name</span></th>
+															<th style="vertical-align: top;"><span data-bind="text: lang.lang.meter_number">Meter Number</span></th>
+															<th style="vertical-align: top;"><span data-bind="text: lang.lang.from_date">From Date</span></th>
+															<th style="vertical-align: top;"><span data-bind="text: lang.lang.to_date">To Date</span></th>
+															<th style="vertical-align: top;"><span data-bind="text: lang.lang.month_of">Month Of</span></th>
+															<th style="vertical-align: top;"><span data-bind="text: lang.lang.previous">Previouse</span></th>
+															<th style="vertical-align: top;"><span data-bind="text: lang.lang.current">Current</span></th>
 														</tr>
 													</thead>
 													<tbody 
@@ -4547,12 +4635,13 @@
 											</div>
 										</div>
 										<!-- // Tab content END -->
+
 										<!-- Tab content -->
-										<div id="tabReading" style="border: 1px solid #ccc" class="tab-pane widget-body-regular">	
+										<div id="tabReading" style="border: 1px solid #ccc; padding: 15px" class="tab-pane widget-body-regular">	
 											<h4 class="separator bottom" style="margin-top: 10px;" data-bind="text: lang.lang.please_upload_reading_book">Please upload reading book</h4>
 
-											<div class="row-fluid clear" style="overflow: hidden;margin-bottom: 20px;">
-												<div class="span4" style="padding-left: 0;">
+											<div class="row clear" style="overflow: hidden;margin-bottom: 20px;">
+												<div class="col-xs-12 col-sm-4" >
 													<div class="control-group">	
 														<label ><span data-bind="text: lang.lang.license">License</span></label>
 														<input 
@@ -4569,7 +4658,7 @@
 							                  					events: {change: licenseChangeU}">
 							                  		</div>
 												</div>
-												<div class="span4">
+												<div class="col-xs-12 col-sm-4">
 													<div class="control-group">
 														<label ><span data-bind="text: lang.lang.location">Location</span></label>
 														<input 
@@ -4587,7 +4676,7 @@
 							                  					source: blocDSU">
 							                  		</div>
 												</div>
-												<div class="span4">
+												<div class="col-xs-12 col-sm-4">
 													<div class="control-group">	
 														<label ><span data-bind="text: lang.lang.sub_location">Location</span></label>
 														<input 
@@ -4606,8 +4695,8 @@
 							                  		</div>
 												</div>
 											</div>
-											<div class="row-fluid clear" style="overflow: hidden;margin-bottom: 20px;">
-												<div class="span4" style=>
+											<div class="row clear" style="overflow: hidden; ">
+												<div class="col-xs-12 col-sm-4" >
 													<div class="control-group">
 														<label ><span data-bind="text: lang.lang.box">Box</span></label>
 														<input 
@@ -4624,7 +4713,7 @@
 							                  					source: boxDSU">
 							                  		</div>
 												</div>
-												<div class="span4">
+												<div class="col-xs-12 col-sm-4">
 													<div class="control-group">	
 														<label ><span data-bind="text: lang.lang.month_of">Month Of</span></label>
 											            <input type="text" 
@@ -4639,7 +4728,7 @@
 												           			events: {change: monthOfUSelect}" />
 													</div>
 												</div>											
-												<div class="span4">
+												<div class="col-xs-12 col-sm-4">
 													<div class="control-group">	
 														<label ><span data-bind="text: lang.lang.to_date">To Date</span></label>
 											            <input type="text" 
@@ -4704,6 +4793,9 @@
 							</div>
 						</div>
 						<!-- // Tabs END -->
+
+					</div>
+
 				</div>
 			</div>
 		</div>
@@ -4919,8 +5011,8 @@
         </td>
 		<td align="center">
 	        <div class="edit-buttons">
-	            <a class="k-button k-i-check-button" href="\\#"><span class="k-icon k-i-check"></span></a>
-	            <a class="k-button k-i-cancel-button" href="\\#"><span class="k-icon k-i-cancel"></span></a>
+	            <a class="k-button k-update-button" href="\\#"><span class="k-icon k-i-check"></span></a>
+	            <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-i-cancel"></span></a>
 	        </div>
 	    </td>
 	</tr>
@@ -4985,22 +5077,23 @@
 </script>
 
 <script id="runBill" type="text/x-kendo-template">
-	<div id="slide-form">
-		<div class="customer-background">
-			<div id="loadImport" style="display:none;margin-top: -15px;text-align: center;position: absolute;width: 100%; height: 100%;background: rgba(142, 159, 167, 0.8);z-index: 9999;">
-				<i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 45%;left: 45%"></i>
-			</div>
-			<div class="container-960">					
-				<div id="example" class="k-content">
-			    	<div class="hidden-print pull-right">
-			    		<span class="glyphicons no-js remove_2" 
-							data-bind="click: cancel"><i></i></span>	
+	<div class="container">
+		<div class="row-fluid">
+			<div class="background">
+				<div class="row-fluid">
+					<div id="loadImport" style="display:none;text-align: center;position: absolute;width: 100%; height: 100%;margin-top: -15px;background: rgba(142, 159, 167, 0.8);z-index: 9999;">
+						<i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 35%;left: 45%"></i>
 					</div>
-			        <h2 data-bind="text: lang.lang.run_bill">Run Bill</h2>
-			        <div class="span12 row" style="padding:0 0 20px 0;">
+					<div id="example" class="k-content">
+						<h2 data-bind="text: lang.lang.run_bill">Run Bill</h2>
+						<div class="hidden-print pull-right">
+				    		<span class="glyphicons no-js remove_2" 
+								data-bind="click: cancel"><i></i></span>
+						</div>
+						<div class="clear"></div>
 
-			        	<div class="span4" style="padding-right: 0;">
-				        	<div class="span6">	
+						<div class="row">
+				        	<div class="col-sx-12 col-sm-2">
 								<!-- Group -->
 								<div class="control-group">								
 									<label ><span data-bind="text: lang.lang.month_of">Month Of</span></label>
@@ -5013,10 +5106,10 @@
 					                	placeholder="Moth of ..." 
 							           	data-bind="value: monthSelect" />
 								</div>
-																								
-								<!-- // Group END -->
-							</div>
-							<div class="span6" style="padding-left: 0;">
+																									
+									<!-- // Group END -->
+							</div>	
+							<div class="col-sx-12 col-sm-2">
 								<div class="control-group">								
 									<label ><span data-bind="text: lang.lang.license">License</span></label>
 									<input 
@@ -5033,9 +5126,7 @@
 		                  					events: {change: licenseChange}">
 		                  		</div>
 							</div>
-						</div>
-						<div class="span8" style="padding-left: 0;">
-							<div class="span3">
+							<div class="col-sx-12 col-sm-2">
 								<div class="control-group">								
 									<label ><span data-bind="text: lang.lang.location">Location</span></label>
 									<input 
@@ -5053,7 +5144,7 @@
 		                  					source: blocDS">
 		                  		</div>
 							</div>
-							<div class="span3">
+							<div class="col-sx-12 col-sm-2">
 								<div class="control-group">								
 									<label ><span data-bind="text: lang.lang.sub_location">Location</span></label>
 									<input 
@@ -5071,7 +5162,7 @@
 		                  					source: subLocationDS">
 		                  		</div>
 							</div>
-							<div class="span3">
+							<div class="col-sx-12 col-sm-2">
 								<div class="control-group">								
 									<label ><span data-bind="text: lang.lang.box">Location</span></label>
 									<input 
@@ -5088,140 +5179,138 @@
 		                  					source: boxDS">
 		                  		</div>
 							</div>
-							<div class="span3">
+							<div class="col-sx-12 col-sm-1">
 								<div class="control-group">	
 									<label ><span data-bind="text: lang.lang.action">Action</span></label>	
 									<div class="row" style="margin: 0;">					
 										<button type="button" data-role="button" data-bind="click: search" class="k-button" role="button" aria-disabled="false" tabindex="0"><i class="icon-search"></i></button>
 									</div>
 		                  		</div>
-							</div>		
-						</div>
-			        </div>
-			        <div class="row-fluid saleSummaryCustomer">
-			        	<div class="span12" >
-				        	<div class="row">
-								<div class="span4">
-									<div class="total-customer">
-										<div class="span12">
+							</div>
+				        </div>
+
+				        <div class="row saleSummaryCustomer" style="margin-top: 15px;">
+				        	<div class="col-sm-12" >
+					        	<div class="row">
+									<div class="col-xs-12 col-sm-4">
+										<div class="total-customer" style="width: 100%; background: #f4f5f8; padding: 15px; margin-bottom: 15px;">											
 											<p data-bind="text: lang.lang.total_number_of_invoice">Total Number of Invoices</p>
 											<span data-bind="text: totalOfInv"></span>
-										</div>	
+										</div>
 									</div>
-								</div>
-								<div class="span4">
-									<div class="total-customer">
-										<p>m<sup>3</sup>/kWh <span style="font-size: 12px;font-weight: normal;" data-bind="text: lang.lang.sold">Sold</span></p>
-										<span data-bind="text: meterSold"></span>
+									<div class="col-xs-12 col-sm-4">
+										<div class="total-customer" style="width: 100%; background: #f4f5f8; padding: 15px; margin-bottom: 15px;">
+											<p>m<sup>3</sup>/kWh <span style="font-size: 12px;font-weight: normal;" data-bind="text: lang.lang.sold">Sold</span></p>
+											<span data-bind="text: meterSold"></span>
+										</div>
 									</div>
-								</div>
-								<div class="span4">
-									<div class="total-customer">
-										<div class="span12">
+									<div class="col-xs-12 col-sm-4">
+										<div class="total-customer" style="width: 100%; background: #f4f5f8; padding: 15px;">											
 											<p data-bind="text: lang.lang.amount">Amount</p>
-											<span data-bind="text: amountSold"></span>
-										</div>	
+											<span data-bind="text: amountSold"></span>											
+										</div>
 									</div>
+								</div>
+							</div>							
+						</div>
+
+						<div class="row-fluid" style="margin-bottom: 15px">
+				        	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
+						        <thead>
+						            <tr>
+						                <th align="center" style="text-align: center; vertical-align: top;"><input type="checkbox" data-bind="checked: chkAll, events: {change : checkAll}" /></th>                
+						                <th style="vertical-align: top;"><span data-bind="text: lang.lang.customer">Customer</span></th>		         
+						                <th style="vertical-align: top;"><span data-bind="text: lang.lang.meter">Meter</span></th>
+						                <th style="vertical-align: top;"><span data-bind="text: lang.lang.previous">Previous</span></th>
+						                <th style="vertical-align: top;"><span data-bind="text: lang.lang.current">Current</span></th>
+						                <th style="vertical-align: top;"><span data-bind="text: lang.lang.total">Total</span></th>	                    
+						            </tr>
+						        </thead>
+						        <tbody data-role="listview" 
+						        		data-template="runbill-row-template" 
+						        		data-auto-bind="false" 
+						        		data-bind="source: invoiceDS"></tbody>
+						        <tfoot data-template="runbill-footer-template" 
+							        		data-bind="source: this"></tfoot>	            
+						    </table>
+						    <div id="pager" class="k-pager-wrap"
+						    	 data-auto-bind="false"
+					             data-role="pager" data-bind="source: invoiceDS"></div>
+				        </div>
+
+				        <div class="row" style="margin-bottom: 15px;">
+				        	<div class="col-xs-12 col-sm-3">
+								<!-- Group -->
+								<div class="control-group">								
+									<label ><span data-bind="text: lang.lang.month_of">Month Of</span></label>
+						            <input type="text" 
+					                	style="width: 100%;" 
+					                	data-role="datepicker"
+					                	data-format="MM-yyyy"
+					                	data-start="year" 
+						  				data-depth="year" 
+						  				data-parse-formats="yyyy-MM-dd HH:mm:ss"
+					                	placeholder="Moth of ..." 
+							           	data-bind="value: FmonthSelect,
+							           			events: {change: makeBilled}" />
+								</div>	
+							</div>
+							<div class="col-xs-12 col-sm-3">
+								<div class="control-group">								
+									<label ><span data-bind="text: lang.lang.billing_date">Billing Date</span></label>
+									<input type="text" 
+					                	style="width: 100%;" 
+					                	data-role="datepicker"
+					                	data-format="dd-MM-yyyy"
+					                	placeholder="Bill Date ..." 
+					                	data-parse-formats="yyyy-MM-dd HH:mm:ss"
+							           	data-bind="value: BillingDate,
+							           	events: {change: makeBilled}" />
+		                  		</div>
+							</div>	
+							<div class="col-xs-12 col-sm-3">
+								<div class="control-group">								
+									<label ><span data-bind="text: lang.lang.due_date">Due Date</span></label>
+									<input type="text" 
+					                	style="width: 100%;" 
+					                	data-role="datepicker"
+					                	data-format="dd-MM-yyyy"
+					                	placeholder="Due Date ..." 
+					                	data-parse-formats="yyyy-MM-dd HH:mm:ss"
+							           	data-bind="value: DueDate,
+							           	events: {change: makeBilled}" />
+		                  		</div>
+							</div>	
+							<div class="col-xs-12 col-sm-3">
+								<div class="control-group">								
+									<label ><span data-bind="text: lang.lang.issue_date">Issue Date</span></label>
+									<input type="text" 
+					                	style="width: 100%;" 
+					                	data-role="datepicker"
+					                	data-format="dd-MM-yyyy"
+					                	data-parse-formats="yyyy-MM-dd HH:mm:ss"
+					                	placeholder="Issue Date ..." 
+							           	data-bind="value: IssueDate,
+							           	events: {change: makeBilled}" />
+		                  		</div>
+							</div>
+			        	</div>
+
+			        	<div class="box-generic bg-action-button">
+							<div id="ntf1" data-role="notification"></div>
+					        <div class="row">
+								<div class="span12" align="right">
+									<span class="btn-btn" data-bind="click: save, visible: showButton" ><i></i> <span data-bind="text: lang.lang.run_bill">Run Bill</span></span>									
+									<span class="btn-btn" data-bind="click: cancel" ><i></i> <span data-bind="text: lang.lang.cancel"></span></span>
 								</div>
 							</div>
 						</div>
-						
+
 					</div>
-			        <div class="span12 row-fluid" style="padding:20px 0;padding-top: 0;">
-			        	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
-					        <thead>
-					            <tr>
-					                <th align="center" style="text-align: center;"><input type="checkbox" data-bind="checked: chkAll, events: {change : checkAll}" /></th>                
-					                <th><span data-bind="text: lang.lang.customer">Customer</span></th>		         
-					                <th><span data-bind="text: lang.lang.meter">Meter</span></th>
-					                <th><span data-bind="text: lang.lang.previous">Previous</span></th>
-					                <th><span data-bind="text: lang.lang.current">Current</span></th>
-					                <th><span data-bind="text: lang.lang.total">Total</span></th>	                    
-					            </tr>
-					        </thead>
-					        <tbody data-role="listview" 
-					        		data-template="runbill-row-template" 
-					        		data-auto-bind="false" 
-					        		data-bind="source: invoiceDS"></tbody>
-					        <tfoot data-template="runbill-footer-template" 
-						        		data-bind="source: this"></tfoot>	            
-					    </table>
-					    <div id="pager" class="k-pager-wrap"
-					    	 data-auto-bind="false"
-				             data-role="pager" data-bind="source: invoiceDS"></div>
-			        </div>
-			        <div class="span12 row" style="padding:20px 0;padding-top: 0">
-			        	<div class="span3">	
-							<!-- Group -->
-							<div class="control-group">								
-								<label ><span data-bind="text: lang.lang.month_of">Month Of</span></label>
-					            <input type="text" 
-				                	style="width: 100%;" 
-				                	data-role="datepicker"
-				                	data-format="MM-yyyy"
-				                	data-start="year" 
-					  				data-depth="year" 
-					  				data-parse-formats="yyyy-MM-dd HH:mm:ss"
-				                	placeholder="Moth of ..." 
-						           	data-bind="value: FmonthSelect,
-						           			events: {change: makeBilled}" />
-							</div>	
-						</div>
-						<div class="span3" style="padding-left: 0;">
-							<div class="control-group">								
-								<label ><span data-bind="text: lang.lang.billing_date">Billing Date</span></label>
-								<input type="text" 
-				                	style="width: 100%;" 
-				                	data-role="datepicker"
-				                	data-format="dd-MM-yyyy"
-				                	placeholder="Bill Date ..." 
-				                	data-parse-formats="yyyy-MM-dd HH:mm:ss"
-						           	data-bind="value: BillingDate,
-						           	events: {change: makeBilled}" />
-	                  		</div>
-						</div>	
-						<div class="span3">
-							<div class="control-group">								
-								<label ><span data-bind="text: lang.lang.due_date">Due Date</span></label>
-								<input type="text" 
-				                	style="width: 100%;" 
-				                	data-role="datepicker"
-				                	data-format="dd-MM-yyyy"
-				                	placeholder="Due Date ..." 
-				                	data-parse-formats="yyyy-MM-dd HH:mm:ss"
-						           	data-bind="value: DueDate,
-						           	events: {change: makeBilled}" />
-	                  		</div>
-						</div>	
-						<div class="span3">
-							<div class="control-group">								
-								<label ><span data-bind="text: lang.lang.issue_date">Issue Date</span></label>
-								<input type="text" 
-				                	style="width: 100%;" 
-				                	data-role="datepicker"
-				                	data-format="dd-MM-yyyy"
-				                	data-parse-formats="yyyy-MM-dd HH:mm:ss"
-				                	placeholder="Issue Date ..." 
-						           	data-bind="value: IssueDate,
-						           	events: {change: makeBilled}" />
-	                  		</div>
-						</div>
-			        </div>
-			        <div class="box-generic bg-action-button">
-						<div id="ntf1" data-role="notification"></div>
-				        <div class="row">
-							<div class="span12" align="right">
-								<span class="btn-btn" data-bind="click: save, visible: showButton" ><i></i> <span data-bind="text: lang.lang.run_bill">Run Bill</span></span>
-								
-								<span class="btn-btn" data-bind="click: cancel" ><i></i> <span data-bind="text: lang.lang.cancel"></span></span>
-													
-							</div>
-						</div>
-					</div>
-				</div>						
+				</div>
 			</div>
 		</div>
-	</div>				  	
+	</div>		  	
 </script>
 <script id="runbill-row-template" type="text/x-kendo-tmpl">
 	<tr>
@@ -5243,20 +5332,25 @@
     </tr>
 </script>
 <script id="printBill" type="text/x-kendo-template">
-	<div id="slide-form">
-		<div class="customer-background" >
-			<div class="container-960">					
-				<div id="example" class="k-content">
-			    	<div class="hidden-print pull-right">
-			    		<span class="glyphicons no-js remove_2" 
-							data-bind="click: cancel"><i></i></span>	
+	<div class="container">
+		<div class="row-fluid">
+			<div class="background">
+				<div class="row-fluid">
+					<div id="loadImport" style="display:none;text-align: center;position: absolute;width: 100%; height: 100%;margin-top: -15px;background: rgba(142, 159, 167, 0.8);z-index: 9999;">
+						<i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 35%;left: 45%"></i>
 					</div>
-			        <h2 data-bind="text: lang.lang.print_bill">Print Bill</h2>
-			        <div class="span12 row" style="padding: 20px 0;">
-			        	<div class="span4" style="padding-right: 0;">
-				        	<div class="span6">	
+					<div id="example" class="k-content">
+						<h2 data-bind="text: lang.lang.print_bill">Print Bill</h2>
+						<div class="hidden-print pull-right">
+				    		<span class="glyphicons no-js remove_2" 
+								data-bind="click: cancel"><i></i></span>
+						</div>
+						<div class="clear"></div>
+
+						<div class=" row" >
+				        	<div class="col-sx-12 col-sm-2"">
 								<!-- Group -->
-								<div class="control-group">								
+								<div class="control-group">
 									<label ><span data-bind="text: lang.lang.month_of">Month Of</span></label>
 						            <input type="text" 
 					                	style="width: 100%;" 
@@ -5267,11 +5361,10 @@
 					                	placeholder="Moth of ..." 
 							           	data-bind="value: monthSelect" />
 								</div>
-																								
 								<!-- // Group END -->
 							</div>
-							<div class="span6" style="padding-left: 0;">
-								<div class="control-group">								
+							<div class="col-sx-12 col-sm-2"" >
+								<div class="control-group">
 									<label ><span data-bind="text: lang.lang.license">License</span></label>
 									<input 
 										data-role="dropdownlist" 
@@ -5287,9 +5380,7 @@
 		                  					events: {change: licenseChange}">
 		                  		</div>
 							</div>
-						</div>
-						<div class="span8" style="padding-left: 0;">
-							<div class="span3">
+							<div class="col-sx-12 col-sm-2"">
 								<div class="control-group">								
 									<label ><span data-bind="text: lang.lang.location">Location</span></label>
 									<input 
@@ -5307,7 +5398,7 @@
 		                  					source: blocDS">
 		                  		</div>
 							</div>
-							<div class="span3">
+							<div class="col-sx-12 col-sm-2"">
 								<div class="control-group">								
 									<label ><span data-bind="text: lang.lang.sub_location">Location</span></label>
 									<input 
@@ -5325,7 +5416,7 @@
 		                  					source: subLocationDS">
 		                  		</div>
 							</div>
-							<div class="span3">
+							<div class="col-sx-12 col-sm-2"">
 								<div class="control-group">								
 									<label ><span data-bind="text: lang.lang.box">Location</span></label>
 									<input 
@@ -5342,7 +5433,7 @@
 		                  					source: boxDS">
 		                  		</div>
 							</div>
-							<div class="span3">
+							<div class="col-sx-12 col-sm-2"">
 								<div class="control-group">	
 									<label ><span data-bind="text: lang.lang.action">Action</span></label>	
 									<div class="row" style="margin: 0;">					
@@ -5350,91 +5441,78 @@
 										<button type="button" data-role="button" data-bind="click: ExportExcel" class="k-button" role="button" aria-disabled="false" tabindex="0"><i class="charts"></i> Export EX</button>
 									</div>
 		                  		</div>
-							</div>		
-						</div>
-			        </div>
-			         
-			        <div class="row-fluid saleSummaryCustomer">
-			        	<div class="span6" >
-				        	<div class="row">
-								<div class="span4">
-									<div class="total-customer">
-										<div class="span12">
-											<p data-bind="text: lang.lang.total_invoice">Total Invoice</p>
-											<span data-bind="text: totalInv"></span>
-										</div>	
-									</div>
-								</div>
-								<div class="span4">
-									<div class="total-customer">
-										<p data-bind="text: lang.lang.no_print">No Print</p>
-										<span data-bind="text: noPrint, click: goNoPrint" style="cursor: pointer;"></span>
-									</div>
-								</div>
-								<div class="span4">
-									<div class="total-customer">
-										<div class="span12">
-											<p>m<sup>3</sup>/kWh</p>
-											<span data-bind="text: totalMeter"></span>
-										</div>	
-									</div>
-								</div>
 							</div>
-						</div>
-						<div class="span6" style="padding-right: 0;">
-							<div class="total-customer" style="background: #0B0B3B; color: #fff;">
-								<p data-bind="text: lang.lang.amount">Amount</p>
-								<span data-bind="text: amountTotal"></span>
-							</div>
-						</div>
-					</div>
+				        </div>
 
-			        <div class="span12 row-fluid" data-bind="visible: selectInv" style="padding:20px 0;padding-top: 0;">
-			        	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
-					        <thead>
-					            <tr>
-					                <th style="text-align:center"><input type="checkbox" data-bind="checked: chkAll, events: {change : checkAll}" /></th>                
-					                <th><span data-bind="text: lang.lang.customer">Customer</span></th>		         
-					                <th><span data-bind="text: lang.lang.number">Number</span></th>
-					                <th align="center"><span >Usage</span></th>
-					                <th align="right"><span data-bind="text: lang.lang.amount">Amount</span></th>
-					            </tr>
-					        </thead>
-					        <tbody data-role="listview" 
-					        		data-template="printbill-row-template" 
-					        		data-auto-bind="false" 
-					        		data-bind="source: invoiceCollection.dataSource"></tbody>
-					        <tfoot data-template="printbill-footer-template" 
-						        		data-bind="source: this"></tfoot>	            
-					    </table>
-					    <div id="pager" class="k-pager-wrap"
-					    	 data-auto-bind="false"
-				             data-role="pager" data-bind="source: invoiceCollection.dataSource"></div>
-				       	
-			        </div>
-			        <div class="box-generic bg-action-button" style="margin-top: 15px;">
-						<div id="ntf1" data-role="notification"></div>
-				        <div class="row">
-							<div class="span3">
-								<input data-role="dropdownlist"
-					                   data-value-primitive="true"
-					                   data-text-field="name"
-					                   data-value-field="id"
-					                   data-auto-bind="false"
-					                   data-bind="value: TemplateSelect,
-					                              source: txnTemplateDS"
-					                   data-option-label="Select Template..." />
+				        <div class="row saleSummaryCustomer" style="margin-top: 15px;">
+				        	<div class="col-sm-6" >
+					        	<div class="row">
+									<div class="col-sm-4">
+										<div class="total-customer" style="width: 100%; background: #f4f5f8; padding: 15px; margin-bottom: 15px;">
+											<p data-bind="text: lang.lang.total_invoice">Total Invoice</p>
+											<span data-bind="text: totalInv"></span>												
+										</div>
+									</div>
+									<div class="col-sm-4">
+										<div class="total-customer" style="width: 100%; background: #f4f5f8; padding: 15px; margin-bottom: 15px;">
+											<p data-bind="text: lang.lang.no_print">No Print</p>
+											<span data-bind="text: noPrint, click: goNoPrint" style="cursor: pointer;"></span>
+										</div>
+									</div>
+									<div class="col-sm-4">
+										<div class="total-customer" style="width: 100%; background: #f4f5f8; padding: 15px; margin-bottom: 15px;">
+											<p>m<sup>3</sup>/kWh</p>
+											<span data-bind="text: totalMeter"></span>												
+										</div>
+									</div>
+								</div>
 							</div>
-							<div class="span9" align="right">								
-								<span class="btn-btn" data-bind="click: cancel"><i></i> <span data-bind="text: lang.lang.cancel"></span></span>
-								<span class="btn-btn" data-bind="click: printBill" ><i></i> <span data-bind="text: lang.lang.print"></span></span>
+							<div class="col-sm-6" >
+								<div class="total-customer" style="background: #203864; color: #fff; padding: 15px;">
+									<p data-bind="text: lang.lang.amount">Amount</p>
+									<span data-bind="text: amountTotal"></span>
+								</div>
 							</div>
 						</div>
+
+						<div class="row-fluid" style="margin-bottom: 15px" data-bind="visible: selectInv">
+				        	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
+						        <thead>
+						            <tr>
+						                <th style="text-align:center"><input type="checkbox" data-bind="checked: chkAll, events: {change : checkAll}" /></th>                
+						                <th><span data-bind="text: lang.lang.customer">Customer</span></th>		         
+						                <th><span data-bind="text: lang.lang.number">Number</span></th>
+						                <th align="center"><span >Usage</span></th>
+						                <th align="right"><span data-bind="text: lang.lang.amount">Amount</span></th>
+						            </tr>
+						        </thead>
+						        <tbody data-role="listview" 
+						        		data-template="printbill-row-template" 
+						        		data-auto-bind="false" 
+						        		data-bind="source: invoiceCollection.dataSource"></tbody>
+						        <tfoot data-template="printbill-footer-template" 
+							        		data-bind="source: this"></tfoot>	            
+						    </table>
+						    <div id="pager" class="k-pager-wrap"
+						    	 data-auto-bind="false"
+					             data-role="pager" data-bind="source: invoiceCollection.dataSource"></div>					       	
+				        </div>
+
+				        <div class="box-generic bg-action-button">
+							<div id="ntf1" data-role="notification"></div>
+					        <div class="row">
+								<div class="span12" align="right">
+									<span class="btn-btn" data-bind="click: save, visible: showButton" ><i></i> <span data-bind="text: lang.lang.run_bill">Run Bill</span></span>									
+									<span class="btn-btn" data-bind="click: cancel" ><i></i> <span data-bind="text: lang.lang.cancel"></span></span>
+								</div>
+							</div>
+						</div>
+
 					</div>
-				</div>						
+				</div>
 			</div>
 		</div>
-	</div>				  	
+	</div>	  	
 </script>
 <script id="printbill-row-template" type="text/x-kendo-tmpl">
 	<tr>
@@ -6090,393 +6168,397 @@
 </script>
 
 <script id="Receipt" type="text/x-kendo-template">
-	<div id="slide-form">
-		<div class="customer-background">
-			<div class="container-960">					
-				<div id="example" class="k-content">
-					<div class="hidden-print pull-right">
+	<div class="container">
+		<div class="row-fluid">
+			<div class="background">
+				<div class="row-fluid">
+					<div id="loadImport" style="display:none;text-align: center;position: absolute;width: 100%; height: 100%;margin-top: -15px;background: rgba(142, 159, 167, 0.8);z-index: 9999;">
+						<i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 35%;left: 45%"></i>
+					</div>
+					<div id="example" class="k-content">
+					<div class="hidden-print hidden-lg hidden-md pull-right">
 				    		<span class="glyphicons no-js remove_2" 
 								data-bind="click: cancel"><i></i></span>
 						</div>
-					<div class="">
-						<div class="col-sm-4">
-							<table width="100%" cellpadding="10">
-								<tr>
-							        <td>
-							        	<h2 style="margin-bottom: 15px;" data-bind="text: lang.lang.wreceipt">Receipt</h2>
-							        	<p>
-							        		<span data-bind="text: lang.lang.in_here"></span>
-							        	</p>
-							        	<p style="width: 100%; float: left; margin-top: 8px;">
-								        	<span style="position: relative; height: 35px; line-height: 35px;  float: left; display: block; ">
-												<a data-bind="text: lang.lang.reconcile_transfer" style="color: #203864; margin-top: 4px; line-height: 17px; background: #fff; padding: 10px 29px; font-size: 20px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1; float: left;" href="#/reconcile">
-													Reconcile & Transfer
-												</a>
-											</span>
-										</p>
-							        </td>
-							 	</tr>
-							</table>
-							<div class="row">
-								<div class="col-sm-12">
-									<div class="innerAll padding-bottom-none-phone" style="padding: 0 !important; margin: 8px 0 15px 0;">
-										<a href="javascript:void(0)" class="widget-stats widget-stats-gray widget-stats-4" style="background: #fff; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1; "> 
-											<span class="txt" style="color: #203864;"><span data-bind="text: lang.lang.customer">Customer</span></span>
-											<span class="count" style="color: #203864;" data-bind="text: numCustomer">0</span>
-											<span class="glyphicons user userss"><i></i></span>
-										</a>
-									</div>
-								</div>
-								<div class="col-sm-12">
-									<div class="innerAll padding-bottom-none-phone" style="background: #fff; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1; margin: 0 0 15px 0">
-										<a href="#/wPayment_summary" class="widget-stats widget-stats-primary widget-stats-4" style="background: #fff; padding-left: 15px !important;">
-											<span class="txt" style="color: #203864;"><span data-bind="text: lang.lang.today_payment">Today Payment</span></span>
-											<span class="count"><span style="font-size: 35px; color: #203864;" data-bind="text: paymentReceiptToday">0៛</span></span>
-											<span class="glyphicons coins addcolors"><i></i></span>
-										</a>
-									</div>
-								</div>
-							</div>
-							<div class="cover-block">
-								<h2 data-bind="text: lang.lang.reports">Report</h2>
-								<p data-bind="text: lang.lang.summary_and_detail_cash">
-									Summary and detail cash receipt reports grouped by sources/ methods of receipts
-								</p>
-								<ul >
-									<li><a href="#/cash_receipt_detail"><span data-bind="text: lang.lang.cash_receipt_by_detail">Cash Receipt By Detail</span></a></li>  
-					  				<li><a href="#/cash_receipt_source_summary"><span data-bind="text: lang.lang.cash_receipt_by_sources_summary">Cash Receipt By Sources Summary</span></a></li>
-					  				<li><a href="#/cash_receipt_source_detail"><span data-bind="text: lang.lang.cash_receipt_by_sources_detail">Cash Receipt By Sources Detail</span></a></li> 
-								</ul>
-							</div>
-							<span class="btn btn-icon btn-warning glyphicons remove" data-bind="visible: haveSession ,click: endSession" style="width: 100%;background: #a22314; border-radius: 0;"><i></i> <span data-bind="text: lang.lang.end_session">End Session</span></span>
-						</div>
-						<!-- Right Side -->
-						<div class="col-sm-8">
-							<div id="loadING" style="display:none;text-align: center;position: absolute;top: 0; left: 0;width: 100%; height: 100%;background: rgba(142, 159, 167, 0.8);z-index: 9999;">
-								<i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 45%;left: 45%"></i>
-							</div>
-							<div class="row-fluid" data-bind="visible: haveSession" style="background: #fff; float: left; padding: 15px 0 15px; margin-left: -15px; float: left;width: 100%;">
-								<!-- Upper Part -->
-								<div class="row" >
-									<div class="col-sm-12" style="padding: 0;display: none;">
-										<div class="box-generic-noborder" style="min-height: 90px;background: #eee;">
-										    <div class="tab-content" style="padding-top: 12px;">
-										    	<div class="col-sm-3" style="padding-left: 0;">
-													<div class="control-group">
-														<label ><span data-bind="text: lang.lang.license">License</span></label>
-														<input 
-															data-role="dropdownlist" 
-															style="width: 100%;" 
-															data-option-label="License ..." 
-															data-auto-bind="false" 
-															data-value-primitive="true" 
-															data-text-field="name" 
-															data-value-field="id" 
-															data-bind="
-																value: licenseSelect,
-							                  					source: licenseDS,
-							                  					events: {change: licenseChange}">
-							                  		</div>
-												</div>
-												<div class="col-sm-3" style="padding-left: 0;">
-													<div class="control-group">								
-														<label ><span data-bind="text: lang.lang.location">Bloc</span></label>
-														<input 
-															data-role="dropdownlist" 
-															style="width: 100%;" 
-															data-option-label="Location ..." 
-															data-auto-bind="false" 
-															data-value-primitive="true" 
-															data-text-field="name" 
-															data-value-field="id" 
-															data-bind="
-																value: locationSelect,
-							                  					source: locationDS,
-							                  					events: {change: blocChange},
-							                  					enabled: slocation">
-							                  		</div>
-												</div>
-												<div class="col-sm-3" style="padding-left: 0;">
-													<div class="control-group">								
-														<label ><span data-bind="text: lang.lang.month_of">Month Of</span></label>
-											            <input type="text" 
-										                	style="width: 100%;" 
-										                	data-role="datepicker"
-										                	data-format="MM-yyyy"
-										                	data-start="year" 
-											  				data-depth="year" 
-										                	placeholder="Moth of ..." 
-												           	data-bind="value: monthSelect,
-												           				enabled: haveMonth,
-												           				events: {change: monthChange}" />
-													</div>
-												</div>
-												<div class="col-sm-1" style="padding-left: 0;">
-													<div class="control-group">
-														<label ><span data-bind="text: lang.lang.action">Action</span></label>	
-														<div class="row" style="margin: 0;">
-															<button type="button" data-role="button" data-bind="click: searchINV" class="k-button" role="button" aria-disabled="false" tabindex="0"><i class="icon-search"></i></button>
-														</div>
-							                  		</div>
-												</div>
-												<div class="col-sm-2" data-bind="visible: downloadView" style="padding-left: 0;">
-													<div class="control-group">
-														<label ><span data-bind="text: lang.lang.download">Download</span></label>	
-														<div class="row" style="margin: 0;">
-															<button type="button" data-role="button" data-bind="click: ExportExcel" class="k-button" role="button" aria-disabled="false" tabindex="0"><i class="download_alt"></i> <span data-bind="text: lang.lang.download"></span></button>
-														</div>
-							                  		</div>
-												</div>
-												<!-- <div class="span2" data-bind="visible: downloadView" style="padding-left: 0;">
-													<div class="control-group">
-														<label ><span data-bind="text: lang.lang.upload">Upload</span></label>	
-													  	<input style="padding: 0; margin: 0;border: none" type="file"  data-role="upload" data-show-file-list="false" data-bind="events: {select: onSelected}" id="myFile"  class="margin-none" />
-							                  		</div>
-												</div> -->
-												<div class="col-sm-2" data-bind="visible: balanceView" style="padding-left: 0;">
-													<div class="control-group">
-														<label ><span data-bind="text: lang.lang.balance">Download</span></label>	
-														<div class="row" style="margin: 0;">
-															<button type="button" data-role="button" data-bind="click: serachBalance" class="k-button" role="button" aria-disabled="false" tabindex="0"><i class="download_alt"></i> <span data-bind="text: lang.lang.balance"></span></button>
-														</div>
-							                  		</div>
-												</div>
-										    </div>
+
+						<div class="row">
+							<div class="col-xs-12 col-sm-4">
+								<table width="100%" cellpadding="10">
+									<tr>
+								        <td>
+								        	<h2 style="width: 100%" data-bind="text: lang.lang.wreceipt">Receipt</h2>
+								        	<p>
+								        		<span data-bind="text: lang.lang.in_here"></span>
+								        	</p>
+								        	<p style="width: 100%; float: left; margin-top: 8px;">
+									        	<span style="position: relative; height: 35px; line-height: 35px;  float: left; display: block; ">
+													<a data-bind="text: lang.lang.reconcile_transfer" style="color: #203864; line-height: 17px; background: #fff; width: 100%; padding: 10px 13px; font-size: 18px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1; float: left;" href="#/reconcile">
+														Reconcile & Transfer
+													</a>
+												</span>
+											</p>
+								        </td>
+								 	</tr>
+								</table>
+
+								<div class="row">
+									<div class="col-xs-12 col-sm-12">
+										<div class="innerAll padding-bottom-none-phone" style="padding: 0 !important; margin: 8px 0 15px 0;">
+											<a href="javascript:void(0)" class="widget-stats widget-stats-gray widget-stats-4" style="background: #fff; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1; "> 
+												<span class="txt" style="color: #203864;"><span data-bind="text: lang.lang.customer">Customer</span></span>
+												<span class="count" style="color: #203864;" data-bind="text: numCustomer">0</span>
+												<span class="glyphicons user userss"><i></i></span>
+											</a>
 										</div>
 									</div>
-									<div class="col-sm-4">
-										<div class="widget widget-heading-simple widget-body-primary widget-employees">
-											<div class="widget-body padding-none">
-												<div class="row-fluid row-merge">
-													<div class="listWrapper">
-														<div class="innerAll" style="padding: 15px 15px 19px;">
-															<div class="widget-search separator bottom">
-																<button class="btn btn-default pull-right" data-bind="click: search"><i class="icon-search"></i></button>
-																<div class="overflow-hidden">
-																	<input type="text" placeholder="Invoice Number..." data-bind="value: searchText, events: {change: search}">
+									<div class="col-xs-12 col-sm-12">
+										<div class="innerAll padding-bottom-none-phone" style="background: #fff; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1; margin: 0 0 15px 0">
+											<a href="#/wPayment_summary" class="widget-stats widget-stats-primary widget-stats-4" style="background: #fff; padding-left: 15px !important;">
+												<span class="txt" style="color: #203864;"><span data-bind="text: lang.lang.today_payment">Today Payment</span></span>
+												<span class="count"><span style="font-size: 35px; color: #203864;" data-bind="text: paymentReceiptToday">0៛</span></span>
+												<span class="glyphicons coins addcolors"><i></i></span>
+											</a>
+										</div>
+									</div>
+								</div>
+
+								<div class="cover-block">
+									<h2 data-bind="text: lang.lang.reports" style="width: 100%;">Report</h2>
+									<p data-bind="text: lang.lang.summary_and_detail_cash">
+										Summary and detail cash receipt reports grouped by sources/ methods of receipts
+									</p>
+									<ul >
+										<li><a href="#/cash_receipt_detail"><span data-bind="text: lang.lang.cash_receipt_by_detail">Cash Receipt By Detail</span></a></li>  
+						  				<li><a href="#/cash_receipt_source_summary"><span data-bind="text: lang.lang.cash_receipt_by_sources_summary">Cash Receipt By Sources Summary</span></a></li>
+						  				<li><a href="#/cash_receipt_source_detail"><span data-bind="text: lang.lang.cash_receipt_by_sources_detail">Cash Receipt By Sources Detail</span></a></li> 
+									</ul>
+								</div>
+								<span class="btn btn-icon btn-warning glyphicons remove" data-bind="visible: haveSession ,click: endSession" style="width: 100%;background: #a22314; border-radius: 0;"><i></i> <span data-bind="text: lang.lang.end_session">End Session</span></span>
+							</div>
+
+							<div class="col-xs-12 col-sm-8" style="padding-right: 0">
+								<div class="hidden-print hidden-xs hidden-sm pull-right">
+						    		<span class="glyphicons no-js remove_2" 
+										data-bind="click: cancel"><i></i></span>
+								</div>
+								<div id="loadING" style="display:none;text-align: center;position: absolute;top: 0; left: 0;width: 100%; height: 100%;background: rgba(142, 159, 167, 0.8);z-index: 9999;">
+									<i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 45%;left: 45%"></i>
+								</div>
+								<div class="row" data-bind="visible: haveSession" style="background: #fff; float: left; width: 100%; margin-top: 15px; padding: 15px 0;">
+									<div class="col-sm-12" style="padding-right: 0;/">
+										<!-- Upper Part -->
+										<div class="row" >
+											<div class="col-sm-12" style="display: none;">
+												<div class="box-generic-noborder" >
+												    <div class="tab-content" style="padding-top: 12px;">
+												    	<div class="col-sm-3" style="padding-left: 0;">
+															<div class="control-group">
+																<label ><span data-bind="text: lang.lang.license">License</span></label>
+																<input 
+																	data-role="dropdownlist" 
+																	style="width: 100%;" 
+																	data-option-label="License ..." 
+																	data-auto-bind="false" 
+																	data-value-primitive="true" 
+																	data-text-field="name" 
+																	data-value-field="id" 
+																	data-bind="
+																		value: licenseSelect,
+									                  					source: licenseDS,
+									                  					events: {change: licenseChange}">
+									                  		</div>
+														</div>
+														<div class="col-sm-3" style="padding-left: 0;">
+															<div class="control-group">								
+																<label ><span data-bind="text: lang.lang.location">Bloc</span></label>
+																<input 
+																	data-role="dropdownlist" 
+																	style="width: 100%;" 
+																	data-option-label="Location ..." 
+																	data-auto-bind="false" 
+																	data-value-primitive="true" 
+																	data-text-field="name" 
+																	data-value-field="id" 
+																	data-bind="
+																		value: locationSelect,
+									                  					source: locationDS,
+									                  					events: {change: blocChange},
+									                  					enabled: slocation">
+									                  		</div>
+														</div>
+														<div class="col-sm-3" style="padding-left: 0;">
+															<div class="control-group">								
+																<label ><span data-bind="text: lang.lang.month_of">Month Of</span></label>
+													            <input type="text" 
+												                	style="width: 100%;" 
+												                	data-role="datepicker"
+												                	data-format="MM-yyyy"
+												                	data-start="year" 
+													  				data-depth="year" 
+												                	placeholder="Moth of ..." 
+														           	data-bind="value: monthSelect,
+														           				enabled: haveMonth,
+														           				events: {change: monthChange}" />
+															</div>
+														</div>
+														<div class="col-sm-1" style="padding-left: 0;">
+															<div class="control-group">
+																<label ><span data-bind="text: lang.lang.action">Action</span></label>	
+																<div class="row" style="margin: 0;">
+																	<button type="button" data-role="button" data-bind="click: searchINV" class="k-button" role="button" aria-disabled="false" tabindex="0"><i class="icon-search"></i></button>
+																</div>
+									                  		</div>
+														</div>
+														<div class="col-sm-2" data-bind="visible: downloadView" style="padding-left: 0;">
+															<div class="control-group">
+																<label ><span data-bind="text: lang.lang.download">Download</span></label>	
+																<div class="row" style="margin: 0;">
+																	<button type="button" data-role="button" data-bind="click: ExportExcel" class="k-button" role="button" aria-disabled="false" tabindex="0"><i class="download_alt"></i> <span data-bind="text: lang.lang.download"></span></button>
+																</div>
+									                  		</div>
+														</div>
+														<!-- <div class="span2" data-bind="visible: downloadView" style="padding-left: 0;">
+															<div class="control-group">
+																<label ><span data-bind="text: lang.lang.upload">Upload</span></label>	
+															  	<input style="padding: 0; margin: 0;border: none" type="file"  data-role="upload" data-show-file-list="false" data-bind="events: {select: onSelected}" id="myFile"  class="margin-none" />
+									                  		</div>
+														</div> -->
+														<div class="col-sm-2" data-bind="visible: balanceView" style="padding-left: 0;">
+															<div class="control-group">
+																<label ><span data-bind="text: lang.lang.balance">Download</span></label>	
+																<div class="row" style="margin: 0;">
+																	<button type="button" data-role="button" data-bind="click: serachBalance" class="k-button" role="button" aria-disabled="false" tabindex="0"><i class="download_alt"></i> <span data-bind="text: lang.lang.balance"></span></button>
+																</div>
+									                  		</div>
+														</div>
+												    </div>
+												</div>
+											</div>
+										</div>
+
+										<div class="row" >
+											<div class="col-xs-12 col-sm-6">
+												<div class="widget widget-heading-simple widget-body-primary widget-employees">
+													<div class="widget-body padding-none">
+														<div class="row-fluid row-merge">
+															<div class="listWrapper" style="min-height: 0; margin-bottom: 15px;">
+																<div class="innerAll" style="padding: 15px 15px 0; ">
+																	<div class="widget-search separator bottom">
+																		<button class="btn btn-default pull-right" data-bind="click: search"><i class="icon-search"></i></button>
+																		<div class="overflow-hidden">
+																			<input style="line-height: 26px;" type="text" placeholder="Invoice Number..." data-bind="value: searchText, events: {change: search}">
+																		</div>
+																	</div>
 																</div>
 															</div>
 														</div>
 													</div>
 												</div>
+												<div class="strong" style="margin-bottom: 15px; width: 100%; padding: 10px; float: left;" align="center"
+													data-bind="style: { backgroundColor: amtDueColor}">
+													<div align="left"><span data-bind="text: lang.lang.amount_received"></span></div>
+													<h2 data-bind="text: total_received" align="right"></h2>
+												</div>
 											</div>
-										</div>
-										<div class="strong" style="margin-bottom: 15px; width: 100%; padding: 10px;" align="center"
-											data-bind="style: { backgroundColor: amtDueColor}">
-											<div align="left"><span data-bind="text: lang.lang.amount_received"></span></div>
-											<h2 data-bind="text: total_received" align="right"></h2>
-										</div>
-									</div>
-									<div class="col-sm-8" style="padding: 0;">
-										<div class="box-generic-noborder" >
-										    <div class="tab-content" style="padding-top: 12px;">
-										    	<!-- Options Tab content -->
-										        <div class="tab-pane active" id="tab1-1">
-										            <table style="margin-bottom: 0;" class="table table-borderless table-condensed cart_total">
-										            	<tr>
-															<td><span data-bind="text: lang.lang.date"></span></td>
-															<td class="right">
-																<input id="issuedDate" name="issuedDate" 
-																	data-role="datepicker"
-																	data-format="dd-MM-yyyy"
-																	data-parse-formats="yyyy-MM-dd HH:mm:ss"
-																	data-bind="value: obj.issued_date, 
-																				events:{ change : issuedDateChanges }" 
-																	required data-required-msg="required"
-																	style="width:100%;" />
-															</td>
-														</tr>
-														<tr>
-											            	<td>
-											            		<span data-bind="text: lang.lang.payment_term"></span>
-											            	</td>
-															<td>
-																<input id="ddlPaymentMethod" name="ddlPaymentMethod"
-																	data-role="dropdownlist"
-																	data-header-template="customer-payment-method-header-tmpl"
-										              				data-value-primitive="true"
-																	data-text-field="name" 
-										              				data-value-field="id"
-										              				data-bind="value: obj.payment_method_id,
-										              							source: paymentMethodDS"
-										              				data-option-label="Select Method..."
-										              				required data-required-msg="required" 
-										              				style="width: 100%" />
-															</td>
-														</tr>
-														<tr>
-											            	<td><span data-bind="text: lang.lang.cash_account"></span></td>
-										            		<td>
-																<input id="ddlCashAccount" name="ddlCashAccount" 
-																	data-role="dropdownlist"
-																	data-header-template="account-header-tmpl"
-																	data-template="account-list-tmpl"
-										              				data-value-primitive="true"
-																	data-text-field="name" 
-										              				data-value-field="id"
-										              				data-bind="value: obj.account_id,
-										              							source: accountDS"
-										              				data-option-label="Select Account..."
-										              				required data-required-msg="required" 
-										              				style="width: 100%" />
-															</td>
-											            </tr>
-											            <tr>
-															<td><span data-bind="text: lang.lang.segment"></span></td>
-															<td>
-																<select data-role="multiselect"
-																   data-value-primitive="true"
-																   data-header-template="segment-header-tmpl"
-																   data-item-template="segment-list-tmpl" 
-																   data-value-field="id" 
-																   data-text-field="code"
-																   data-bind="value: obj.segments, 
-																   			source: segmentItemDS,
-																   			events:{ change: segmentChanges }"
-																   data-placeholder="Add Segment.."
-																   style="width: 100%" /></select>
-															</td>
-														</tr>
-										            </table>
-										        </div>
+											<div class="col-xs-12 col-sm-6">
+												<div class="box-generic-noborder" >
+												    <div class="tab-content">
+												    	<!-- Options Tab content -->
+												        <div class="tab-pane active" id="tab1-1">
+												            <table style="margin-bottom: 0;" class="table table-borderless table-condensed cart_total">
+												            	<tr>
+																	<td><span data-bind="text: lang.lang.date"></span></td>
+																	<td class="right">
+																		<input id="issuedDate" name="issuedDate" 
+																			data-role="datepicker"
+																			data-format="dd-MM-yyyy"
+																			data-parse-formats="yyyy-MM-dd HH:mm:ss"
+																			data-bind="value: obj.issued_date, 
+																						events:{ change : issuedDateChanges }" 
+																			required data-required-msg="required"
+																			style="width:100%;" />
+																	</td>
+																</tr>
+																<tr>
+													            	<td>
+													            		<span data-bind="text: lang.lang.payment_term"></span>
+													            	</td>
+																	<td>
+																		<input id="ddlPaymentMethod" name="ddlPaymentMethod"
+																			data-role="dropdownlist"
+																			data-header-template="customer-payment-method-header-tmpl"
+												              				data-value-primitive="true"
+																			data-text-field="name" 
+												              				data-value-field="id"
+												              				data-bind="value: obj.payment_method_id,
+												              							source: paymentMethodDS"
+												              				data-option-label="Select Method..."
+												              				required data-required-msg="required" 
+												              				style="width: 100%" />
+																	</td>
+																</tr>
+																<tr>
+													            	<td><span data-bind="text: lang.lang.cash_account"></span></td>
+												            		<td>
+																		<input id="ddlCashAccount" name="ddlCashAccount" 
+																			data-role="dropdownlist"
+																			data-header-template="account-header-tmpl"
+																			data-template="account-list-tmpl"
+												              				data-value-primitive="true"
+																			data-text-field="name" 
+												              				data-value-field="id"
+												              				data-bind="value: obj.account_id,
+												              							source: accountDS"
+												              				data-option-label="Select Account..."
+												              				required data-required-msg="required" 
+												              				style="width: 100%" />
+																	</td>
+													            </tr>
+													            <tr>
+																	<td><span data-bind="text: lang.lang.segment"></span></td>
+																	<td>
+																		<select data-role="multiselect"
+																		   data-value-primitive="true"
+																		   data-header-template="segment-header-tmpl"
+																		   data-item-template="segment-list-tmpl" 
+																		   data-value-field="id" 
+																		   data-text-field="code"
+																		   data-bind="value: obj.segments, 
+																		   			source: segmentItemDS,
+																		   			events:{ change: segmentChanges }"
+																		   data-placeholder="Add Segment.."
+																		   style="width: 100%" /></select>
+																	</td>
+																</tr>
+												            </table>
+												        </div>
+												    </div>
+												</div>
 										    </div>
 										</div>
-								    </div>
-								</div>
-								<table class="table table-bordered table-primary table-striped table-vertical-center" style="margin-top: 15px;">
-							        <thead>
-							            <tr>
-							                <th class="center" style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></th>
-							                <th width="100"><span data-bind="text: lang.lang.date"></span></th>
-							                <th width="100"><span data-bind="text: lang.lang.name"></span></th>
-							                <th><span data-bind="text: lang.lang.number"></span></th>
-							                <th><span data-bind="text: lang.lang.meter"></span></th>
-							                <th style="width: 15%"><span data-bind="text: lang.lang.amount"></span></th>
-							                <th style="width: 15%" data-bind="visible: chhDiscount"><span data-bind="text: lang.lang.discount"></span></th>
-							                <th style="width: 15%" data-bind="visible: chhFine"><span data-bind="text: lang.lang.fine"></span></th>
-							                <th style="width: 15%"><span data-bind="text: lang.lang.receive">RECEIVE</span></th>
-							            </tr> 
-							        </thead>
-							        <tbody data-role="listview" 
-						        		data-template="cashReceipt-list-template" 
-						        		data-auto-bind="false"
-						        		data-bind="source: dataSource"></tbody>
-							    </table>
-					            <div class="row-fluid">
-									<div class="col-sm-5" style="padding-left: 0;  "> 
-										<div class="btn-group">
-											<div class="leadcontainer">
-											</div>
-											<a class="btn btn-default dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-list"></i> </a>
-											<ul class="dropdown-menu" style="padding: 5px; border-radius:0;">
-												<li>
-													<input type="checkbox" id="chhDiscount" class="k-checkbox" data-bind="checked: chhDiscount">
-				  									<label class="k-checkbox-label" for="chhDiscount"><span data-bind="text: lang.lang.discount"></span></label>
-				  								</li>
-											</ul>
-										</div>
-										<br>
-									</div>
-									<div class="col-sm-7">
-										<table class="table table-condensed table-striped table-white">
-											<tbody>
-												<tr>
-													<td class="right"><span data-bind="text: lang.lang.total_received"></span>:</td>
-													<td class="right strong"><span data-bind="text: total_received"></span></td>
-													<td class="right"><span data-bind="text: lang.lang.subtotal"></span>:</td>
-													<td class="right strong" width="40%"><span data-format="n2" data-bind="text: obj.sub_total"></span></td>
-												</tr>
-												<tr>
-													<td class="right"><span data-bind="text: lang.lang.remaining"></span>:</td>
-													<td class="right strong"><span data-format="n2" data-bind="text: obj.remaining"></span></td>
-													<td class="right"><span data-bind="text: lang.lang.total_discount"></span>:</td>
-													<td class="right strong">
-														<span data-format="n2" data-bind="text: obj.discount"></span>
-				                   					</td>
-												</tr>
-												<tr>
-													<td></td>
-													<td></td>
-													<td class="right"><h4 data-bind="text: lang.lang.total"></h4></td>
-													<td class="right strong"><h4 data-bind="text: total"></h4></td>
-												</tr>
-											</tbody>
-										</table>
-									</div>
-								</div>
-								<div class="row">
-									<div class="col-sm-5" style="min-height: 200px;">
-										<div class="well" style="overflow: hidden;">
-											<textarea cols="0" rows="2" class="k-textbox" style="width:100% !important;" data-bind="value: obj.memo" placeholder="memo for external ..."></textarea>
-											<textarea cols="0" rows="2" class="k-textbox" style="width:100% !important;" data-bind="value: obj.memo2" placeholder="memo for internal ..."></textarea>
-										</div>
-									</div>
-									<div class="col-sm-7" style="padding-left: 0;" data-bind="visible: btnActive">
-										<table class="table table-bordered table-primary table-striped table-vertical-center">
+
+										<table class="table table-bordered table-primary table-striped table-vertical-center" style="margin-top: 15px;">
 									        <thead>
 									            <tr>
-									                <th class="center" style="width: 50px;"><span data-bind="text: lang.lang.no_">No.</span></th>
-									                <th><span data-bind="text: lang.lang.currency">Currency</span></th>
-									                <th><span data-bind="text: lang.lang.cash_receipt">Cash Receipt</span></th>
+									                <th style="vertical-align: top;" ><span data-bind="text: lang.lang.no_"></span></th>
+									                <th style="vertical-align: top;" ><span data-bind="text: lang.lang.date"></span></th>
+									                <th style="vertical-align: top;" ><span data-bind="text: lang.lang.name"></span></th>
+
+									                <th style="vertical-align: top;" ><span data-bind="text: lang.lang.number"></span></th>
+									                
+									                <th style="vertical-align: top;" ><span data-bind="text: lang.lang.meter"></span></th>
+									                <th style="vertical-align: top;" ><span data-bind="text: lang.lang.amount"></span></th>
+									                <th style="width: 15%" data-bind="visible: chhDiscount"><span data-bind="text: lang.lang.discount"></span></th>
+			                						<th style="vertical-align: top;" ><span data-bind="text: lang.lang.receive">RECEIVE</span></th>
 									            </tr> 
 									        </thead>
 									        <tbody data-role="listview" 
-								        		data-template="cash-currency-template" 
+								        		data-template="cashReceipt-list-template" 
 								        		data-auto-bind="false"
-								        		data-bind="source: receipCurrencyDS"></tbody>
+								        		data-bind="source: dataSource"></tbody>
 									    </table>
-									    <div class="row-fluid" data-bind="visible: haveChangeMoney">
-									    	<h5 data-bind="text: lang.lang.change_currency"></h5><br>
-									    	<table class="table table-bordered table-primary table-striped table-vertical-center">
-										        <thead>
-										            <tr>
-										                <th class="center" style="width: 50px;"><span data-bind="text: lang.lang.no_">No.</span></th>
-										                <th><span data-bind="text: lang.lang.currency">Currency</span></th>
-										                <th><span data-bind="text: lang.lang.cash_receipt">Cash Receipt</span></th>
-										            </tr> 
-										        </thead>
-										        <tbody data-role="listview" 
-									        		data-template="change-currency-receipt-template" 
-									        		data-auto-bind="false"
-									        		data-bind="source: receipChangeDS"></tbody>
-										    </table>
-									    </div>
+
+							            <div class="row">
+											<div class="col-xs-12 col-sm-5"> 
+												<div class="btn-group">
+													<div class="leadcontainer">
+													</div>
+													<a style="margin-bottom: 15px" class="btn btn-default dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-list"></i> </a>
+													<ul class="dropdown-menu" style="padding: 5px; border-radius:0;">
+														<li>
+															<input type="checkbox" id="chhDiscount" class="k-checkbox" data-bind="checked: chhDiscount">
+						  									<label class="k-checkbox-label" for="chhDiscount"><span data-bind="text: lang.lang.discount"></span></label>
+						  								</li>
+													</ul>
+												</div>
+												<br>
+											</div>
+											<div class="col-xs-12 col-sm-7">
+												<table class="table table-condensed table-striped table-white">
+													<tbody>
+														<tr>
+															<td class="right"><span data-bind="text: lang.lang.total_received"></span>:</td>
+															<td class="right strong"><span data-bind="text: total_received"></span></td>
+															<td class="right"><span data-bind="text: lang.lang.subtotal"></span>:</td>
+															<td class="right strong" width="40%"><span data-format="n2" data-bind="text: obj.sub_total"></span></td>
+														</tr>
+														<tr>
+															<td class="right"><span data-bind="text: lang.lang.remaining"></span>:</td>
+															<td class="right strong"><span data-format="n2" data-bind="text: obj.remaining"></span></td>
+															<td class="right"><span data-bind="text: lang.lang.total_discount"></span>:</td>
+															<td class="right strong">
+																<span data-format="n2" data-bind="text: obj.discount"></span>
+						                   					</td>
+														</tr>
+														<tr>
+															<td></td>
+															<td></td>
+															<td class="right"><h4 data-bind="text: lang.lang.total"></h4></td>
+															<td class="right strong"><h4 data-bind="text: total"></h4></td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
+										</div>
+
+										<div class="row">
+											<div class="col-xs-12 col-sm-12 col-md-5" >
+												<div class="well" style="overflow: hidden;">
+													<textarea cols="0" rows="2" class="k-textbox" style="width:100% !important;" data-bind="value: obj.memo" placeholder="memo for external ..."></textarea>
+													<textarea cols="0" rows="2" class="k-textbox" style="width:100% !important;" data-bind="value: obj.memo2" placeholder="memo for internal ..."></textarea>
+												</div>
+											</div>
+											<div class="col-xs-12 col-sm-12 col-md-7" data-bind="visible: btnActive">
+												<table class="table table-bordered table-primary table-striped table-vertical-center">
+											        <thead>
+											            <tr>
+											                <th style="vertical-align: top;"><span data-bind="text: lang.lang.no_">No.</span></th>
+											                <th style="vertical-align: top;"><span data-bind="text: lang.lang.currency">Currency</span></th>
+											                <th style="vertical-align: top;"><span data-bind="text: lang.lang.cash_receipt">Cash Receipt</span></th>
+											            </tr> 
+											        </thead>
+											        <tbody data-role="listview" 
+										        		data-template="cash-currency-template" 
+										        		data-auto-bind="false"
+										        		data-bind="source: receipCurrencyDS"></tbody>
+											    </table>
+											    <div class="row-fluid" data-bind="visible: haveChangeMoney">
+											    	<h5 data-bind="text: lang.lang.change_currency"></h5><br>
+											    	<table class="table table-bordered table-primary table-striped table-vertical-center">
+												        <thead>
+												            <tr>
+												                <th class="center" style="width: 50px;"><span data-bind="text: lang.lang.no_">No.</span></th>
+												                <th><span data-bind="text: lang.lang.currency">Currency</span></th>
+												                <th><span data-bind="text: lang.lang.cash_receipt">Cash Receipt</span></th>
+												            </tr> 
+												        </thead>
+												        <tbody data-role="listview" 
+											        		data-template="change-currency-receipt-template" 
+											        		data-auto-bind="false"
+											        		data-bind="source: receipChangeDS"></tbody>
+												    </table>
+											    </div>
+											</div>
+										</div>
+
+										<div class="box-generic bg-action-button">
+											<div id="ntf1" data-role="notification"></div>
+											<div class="row">
+												<div class="col-sm-12" align="right">
+													<span class="btn-btn" data-bind="click: cancel" ><span data-bind="text: lang.lang.cancel"></span></span>
+													<span id="saveNew" class="btn-btn" data-bind="visible: btnActive, click: save" ><span data-bind="text: lang.lang.save"></span></span>													
+												</div>
+											</div>
+										</div>
 									</div>
 								</div>
-								<div class="box-generic bg-action-button">
-									<div id="ntf1" data-role="notification"></div>
-									<div class="row">
-										<div class="col-sm-3">
-										</div>
-										<div class="span9" align="right">
-											<span id="saveNew" class="btn-btn" data-bind="visible: btnActive, click: save" ><i></i><span data-bind="text: lang.lang.save"></span></span>
-											<span class="btn-btn" data-bind="click: cancel" ><i></i> <span data-bind="text: lang.lang.cancel"></span></span>
-										</div>
-									</div>
-								</div>
-							</div>
-							<!--Session-->
-							<div class="row-fluid" data-bind="invisible: haveSession" style="background: #fff; float: left; padding: 15px; margin-left: -15px;">
-								<h2 style="padding:0 15px 0 0;" data-bind="text: lang.lang.start_session">Start Session</h2><br><br>
-								<table class="table table-bordered table-primary table-striped table-vertical-center">
-							        <thead>
-							            <tr>
-							                <th class="center" style="width: 50px;"><span data-bind="text: lang.lang.no_">No.</span></th> 
-							                <th><span data-bind="text: lang.lang.amount">Amount</span></th>
-							                <th><span data-bind="text: lang.lang.currency">Currency</span></th>
-							            </tr> 
-							        </thead>
-							        <tbody data-role="listview" 
-						        		data-template="cashier-session-template" 
-						        		data-auto-bind="false"
-						        		data-bind="source: cashierItemDS"></tbody>
-							    </table>
-							    <a style="margin-bottom: 15px; float: left;" class="btn btn-inverse" data-bind="click: addCashierItem">
-							    	<i class="icon-plus icon-white"></i>
-							    </a>
-							    <span class="btn btn-icon btn-primary glyphicons ok_2" style="width: 135px;float: left; margin-bottom: 0px;"><i></i><span data-bind="text: lang.lang.add_session, click: addSession">Save</span></span>
+
+
 							</div>
 						</div>
+
+
+
 					</div>
 				</div>
 			</div>
@@ -6814,16 +6896,7 @@
                               events: { change: changes }"
                    style="width: 100%; text-align: right;">			
 		</td>
-		<td class="center" data-bind="visible: chhFine">
-			<input data-role="numerictextbox"
-				   data-spinners="false"
-				   data-format="c0"
-				   data-culture="#:locale#"
-                   data-min="0"                   
-                   data-bind="value: fine,
-                              events: { change: changes }"
-                   style="width: 100%; text-align: right;">			
-		</td>
+		
 		<td class="center">
 			<input data-role="numerictextbox"
 				   data-spinners="false"
@@ -16035,10 +16108,10 @@
 		dataSource  		: dataStore(apiUrl + "properties"),
 		propertyDS  		: dataStore(apiUrl + "properties"),
 		numberDS  			: dataStore(apiUrl + "properties"),
-		contactDS 			: new kendo.data.DataSource({
+		contactDS			: new kendo.data.DataSource({
 			transport: {
 				read 	: {
-					url: apiUrl + "contacts",
+					url: apiUrl + "utibills/contact",
 					type: "GET",
 					headers: banhji.header,
 					dataType: 'json'
@@ -16063,11 +16136,7 @@
 				data: 'results',
 				total: 'count'
 			},
-			// filter:
-			//[
-			// {field:"use_water", value:1 },
-			// {field:"parent_id", operation: "where_related", model: "contact_type", value: 1}],
-			// sort:{ field:"number", dir:"asc" },
+			sort : {field: "id", dir: "desc"},
 			batch: true,
 			serverFiltering: true,
 			serverSorting: true,
@@ -16080,6 +16149,21 @@
 				filter: {field: 'contact_id', value: this.get('contactOBJ')}
 			});
 			this.set("haveContact", true);
+		},
+		contactID 			: "",
+		haveContact 		: false,
+		selectedRow			: function(e){
+			var data = e.data, self = this;
+			this.set("haveContact", false);
+			this.dataSource.query({
+				filter: [
+					{field: "contact_id", value: data.id}
+				]
+			})
+			.then(function(e){
+				self.set("haveContact", true);
+				self.set("contactID", data.id);
+			});
 		},
 		obj 				: null,
 		contactOBJ 			: null,
@@ -16108,10 +16192,6 @@
 			    }
 			});
 		},
-		pVisible 			: false,
-		addProperty 		: function(e){
-			this.set("pVisible", true);
-		},
 		closePropertyWin 	: function(){
 			this.set("pVisible", false);
 		},
@@ -16126,10 +16206,17 @@
 				address 			: this.get("pAddress")
 	    	});
 		},
-		saveProperty 		: function(){
+		addProperty 		: function(){
 			var self = this;
 			if(this.get("pName") && this.get("pCode") && this.get("pAbbr")){
-				this.addEmpty(this.get("contactOBJ"));
+				this.propertyDS.data([]);
+				this.propertyDS.add({
+					contact_id			: this.get("contactID"),
+					code 				: this.get("pCode"),
+					abbr 				: this.get("pAbbr"),
+					name 				: this.get("pName"),
+					address 			: this.get("pAddress")
+				});
 				this.propertyDS.sync();
 				this.propertyDS.bind("requestEnd", function(e){
 	        		if(e.type != 'read' && e.response) {
@@ -16140,8 +16227,7 @@
 			        	self.set("pAbbr", "");
 			        	self.set("pName", "");
 			        	self.set("pAddress","");
-			        	self.dataSource.filter({field: "contact_id", value: self.get("contactOBJ")});
-			        	self.closePropertyWin();
+			        	self.dataSource.filter({field: "contact_id", value: self.get("contactID")});
 				    }
 				});
 				this.propertyDS.bind("error", function(e){
@@ -16189,7 +16275,7 @@
 				}
 			});
 		},
-		checkExistingNumber 	: function(){
+		checkExistingNumber : function(){
 			var self = this, para = [], 
 			obj = this.get("obj");
 			if(obj.code!==""){
@@ -16228,6 +16314,21 @@
 			}else{
 				alert("Fields Required!");
 			}
+		},
+		search 				: function(){
+			var self = this, 
+			para = [],
+      		searchText = this.get("searchText"),
+      		contact_type_id = this.get("contact_type_id");
+      		if(searchText){
+      			var textParts = searchText.replace(/([a-z]+)/i, "$1 ").split(/[^0-9a-z]+/ig);
+      			para.push(
+      				{ field: "name", operator: "like", value: searchText },
+      				{ field: "number", operator: "or_where", value: textParts[1] },
+      				{ field: "abbr", operator: "or_where", value: searchText }
+      			);
+      		}
+      		this.contactDS.filter(para);
 		},
 		cancel 				: function(){
 			this.dataSource.data([]);

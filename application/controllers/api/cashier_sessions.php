@@ -305,7 +305,8 @@ class Cashier_sessions extends REST_Controller {
 			$obj = new Cashier_currency(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			isset($value->cashier_session_id) 	? $obj->cashier_session_id 	= $value->cashier_session_id : 0;
 			isset($value->type) 				? $obj->type 				= $value->type : 0;
-			isset($value->currency) 			? $obj->currency 			= $value->currency : 3;
+			isset($value->currency) 			? $obj->currency 			= $value->currency : "KHR";
+			isset($value->rate) 				? $obj->rate 				= $value->rate : 1;
 			isset($value->locale) 				? $obj->locale 				= $value->locale : "km-KH";
 			isset($value->amount) 				? $obj->amount 				= $value->amount : "";
 			if($obj->save()){
@@ -316,6 +317,7 @@ class Cashier_sessions extends REST_Controller {
 					"type" 						=> $obj->type,
 					"currency" 					=> $obj->currency,
 					"locale" 					=> $obj->locale,
+					"rate" 						=> $obj->rate,
 					"amount" 					=> $obj->amount
 				);
 			}

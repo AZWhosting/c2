@@ -20075,6 +20075,8 @@
 				self.set("btnActive", false);
 				$("#loadING").css("display", "none");
 			});
+			this.receipCurrencyDS.sync();
+			this.receipChangeDS.sync();
 		},
 		receiveDS 			: dataStore(apiUrl + "cashier_sessions/total_receive"),
 		setReceive 			: function(){
@@ -20116,20 +20118,26 @@
 		},
 		haveChangeMoney 	: false,
 		checkChange 		: function(e){
-			var self = this;
-			var currencyReceipt = 0;
-			var moneyReceipt = parseFloat(this.get("amountReceive"));
-			$.each(this.receipCurrencyDS.data(), function(i,v){
-				var amountAfterRate = parseFloat(v.amount) / parseFloat(v.rate);
-				currencyReceipt += amountAfterRate;
-			});
-			console.log(currencyReceipt);
-			var changeAmount = parseFloat(currencyReceipt) - moneyReceipt;
-			if(currencyReceipt > moneyReceipt){
-				this.setDefaultChangeCurrency(changeAmount);
-				this.set("haveChangeMoney", true);
+			var data = e.data;
+			if(data.amount === undefined || data.amount === null){
+				var index = this.receipCurrencyDS.indexOf(data);
+				alert(this.lang.lang.error_input);
+				this.receipCurrencyDS.data()[index].set("amount", 0);
 			}else{
-				this.set("haveChangeMoney", false);
+				var self = this;
+				var currencyReceipt = 0;
+				var moneyReceipt = parseFloat(this.get("amountReceive"));
+				$.each(this.receipCurrencyDS.data(), function(i,v){
+					var amountAfterRate = parseFloat(v.amount) / parseFloat(v.rate);
+					currencyReceipt += amountAfterRate;
+				});
+				var changeAmount = parseFloat(currencyReceipt) - moneyReceipt;
+				if(currencyReceipt > moneyReceipt){
+					this.setDefaultChangeCurrency(changeAmount);
+					this.set("haveChangeMoney", true);
+				}else{
+					this.set("haveChangeMoney", false);
+				}
 			}
 		},
 		receipCurrencyDS  	: dataStore(apiUrl + "cashier_sessions/currency"),
@@ -20144,7 +20152,7 @@
 				if(j == 1){
 					self.receipChangeDS.add({
 						cashier_session_id 	: self.get("CashierID"),
-						type 				: 0,
+						type 				: 1,
 						currency 			: v.code,
 						locale				: v.locale,
 						rate 				: v.rate,
@@ -20153,7 +20161,7 @@
 				}else{
 					self.receipChangeDS.add({
 						cashier_session_id 	: self.get("CashierID"),
-						type 				: 0,
+						type 				: 1,
 						currency 			: v.code,
 						locale				: v.locale,
 						rate 				: v.rate,
@@ -20163,25 +20171,49 @@
 				j++;
 			});
 		},
+		tmpChangeMoney 		: 0,
 		checkChangeMoney  	: function(e){
-			console.log(e.data);
 			var data = e.data;
 			var currentAmountChange = data.amount / parseFloat(data.rate);
-			var changeMoney = parseFloat(this.get("changeMoney"));
-			if(currentAmountChange < changeMoney){
-				var firstAmountChagne = changeMoney - currentAmountChange;
-				var currencyReceipt = 0;
-				$.each(this.receipChangeDS.data(), function(i,v){
-					var amountAfterRate = parseFloat(v.amount) / parseFloat(v.rate);
-					currencyReceipt += amountAfterRate;
-				});
-				if(currencyReceipt > changeMoney){n
-					var A = currencyReceipt - changeMoney;
-					firstAmountChagne = firstAmountChagne - A;
-				}
-				this.receipChangeDS.data()[0].set("amount", firstAmountChagne);
+			var changeMoney = 0;
+			var currencyReceipt = 0;
+			if(data.amount === undefined || data.amount === null){
+				var index = this.receipChangeDS.indexOf(data);
+				alert(this.lang.lang.error_input);
+				this.receipChangeDS.data()[index].set("amount", 0);
 			}else{
-				data.amount = 0;
+				if(this.get("tmpChangeMoney") == 0){
+					changeMoney = parseFloat(this.get("changeMoney"));
+				}else{
+					changeMoney = this.get("tmpChangeMoney");
+				}
+				if(currentAmountChange < this.receipChangeDS.data()[0].amount){
+					var firstAmountChagne = changeMoney - currentAmountChange;
+					this.receipChangeDS.data()[0].set("amount", firstAmountChagne);
+					this.set("tmpChangeMoney", firstAmountChagne);
+				}else{
+					var index = this.receipChangeDS.indexOf(data);
+					alert(this.lang.lang.error_input);
+					this.receipChangeDS.data()[index].set("amount", 0);
+				}
+			}
+			this.recheckChangeMoney();
+		},
+		recheckChangeMoney 	: function(){
+			var allChangeMoney = 0,
+				totalChangeMoney = 0;
+			$.each(this.receipChangeDS.data(), function(i,v){
+				var amountAfterRate = parseFloat(v.amount) / parseFloat(v.rate);
+				allChangeMoney += amountAfterRate;
+			});
+			if(allChangeMoney > this.get("changeMoney")){
+				totalChangeMoney = allChangeMoney - this.get("changeMoney");
+				var AMOUNT = this.receipChangeDS.data()[0].amount;
+				this.receipChangeDS.data()[0].set("amount", AMOUNT - totalChangeMoney);
+			}else{
+				totalChangeMoney = this.get("changeMoney") - allChangeMoney;
+				var AMOUNT = this.receipChangeDS.data()[0].amount;
+				this.receipChangeDS.data()[0].set("amount", AMOUNT + totalChangeMoney);
 			}
 		},
 		cancel 				: function(){

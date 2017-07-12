@@ -13,15 +13,17 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE" />
 <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:300" rel="stylesheet">
+<!-- <link href='https://fonts.googleapis.com/css?family=Content:400,700' rel='stylesheet' type='text/css'>
+<link href="https://fonts.googleapis.com/css?family=Moul" rel="stylesheet"> -->
+<link href="https://fonts.googleapis.com/css?family=Preahvihear" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Battambang" rel="stylesheet"> 
 
 <!-- Main Theme Stylesheet :: CSS -->
 <!--<link href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/common/theme/css/style-default-menus-dark.css?1374506511" rel="stylesheet" type="text/css" />
 <link href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/common/theme/skins/css/blue-gray.css" rel="stylesheet" type="text/css" />-->
 <link rel="stylesheet" href="<?php echo base_url()?>assets/style-default-menus-dark.css" >
 <link rel="stylesheet" href="<?php echo base_url()?>assets/blue-gray.css" >
-<link href='https://fonts.googleapis.com/css?family=Content:400,700' rel='stylesheet' type='text/css'>
-<link href="https://fonts.googleapis.com/css?family=Moul" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css?family=Preahvihear" rel="stylesheet"> 
+
 
 <!-- CSS Kendo By DAWINE -->
 <!-- <link rel="stylesheet" href="<?php echo base_url()?>assets/kendo/examples/content/shared/styles/examples-offline.css" /> -->
