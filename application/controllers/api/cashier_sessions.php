@@ -72,8 +72,16 @@ class Cashier_sessions extends REST_Controller {
 			isset($value->start_date) 			? $obj->start_date 			= $value->start_date : "";
 			isset($value->end_date) 			? $obj->end_date 			= $value->end_date : "";
 			isset($value->status) 				? $obj->status 				= $value->status : "";
-
 			if($obj->save()){
+				foreach ($value->items as $item) {
+					if($item->amount > 0){
+						$cashierItem = new Cashier_session_item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+						$cashierItem->cashier_session_id 	= $obj->id;
+						$cashierItem->amount 				= $item->amount;
+						$cashierItem->currency 				= $item->currency;
+						$cashierItem->save();
+					}
+				}
 				//Respsone
 				$data["results"][] = array(
 					"id" 				=> $obj->id,
@@ -372,6 +380,28 @@ class Cashier_sessions extends REST_Controller {
 		   	"total_contact" 			=> $CountContact
  		);
 		//Response Data		
+		$this->response($data, 200);
+	}
+	//Reconcile
+	function reconcile_get() {
+		$data["results"] = array();
+		$data["count"] = 0;
+		$session = new Cashier_session(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$session->where("status", 0)->order_by("id", "desc")->limit(1)->get();
+		if($session->exists()){
+			$item = new Cashier_session_item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$item->where("cashier_session_id", $session->id)->get_iterated();
+			if($item->exists()){
+				foreach ($item as $items) {
+					$data["results"][] = array(
+						'id' => $items->id,
+						'code' => $items->currency,
+						'amount' => $items->amount,
+						'_date'  => $items->created_at
+					);
+				}
+			}
+		}
 		$this->response($data, 200);
 	}
 }

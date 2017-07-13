@@ -611,7 +611,7 @@
                               <td>Company Registraion Number</td>
                               <td>:</td>
                               <td>
-                                <input type="text" class="form-control" id="" placeholder="" data-bind="value: current.year_founded">
+                                <input type="text" class="form-control" id="" placeholder="" data-bind="value: current.registrationNumber">
                               </td>
                             </tr>
                             <tr>
@@ -792,7 +792,7 @@
             <tr>
               <td>Company Registration Number</td>
               <td>:</td>
-              <td><span data-bind="text:current.year_founded"></span></td>
+              <td><span data-bind="text:current.registrationNumber"></span></td>
             </tr>
             <tr>
               <td>City/Province</td>

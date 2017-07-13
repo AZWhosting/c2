@@ -5441,7 +5441,6 @@
 							</div>
 							<div class="span9" align="right">
 								<span class="btn btn-icon btn-primary glyphicons print" data-bind="click: printBill" style="width: 110px;margin-bottom: 0;"><i></i> <span data-bind="text: lang.lang.print"></span></span>
-								
 								<span class="btn btn-icon btn-warning glyphicons remove_2" data-bind="click: cancel" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.cancel"></span></span>
 							</div>
 						</div>
@@ -6463,7 +6462,7 @@
 				</div>
 			</div>
 			<!--Session-->
-			<div class="row-fluid" data-bind="invisible: haveSession" style="background: #fff; float: left; padding: 15px; margin-left: -15px;">
+			<div class="row-fluid" data-bind="invisible: haveSession" style="width:100%;background: #fff; float: left; padding: 15px; margin-left: -15px;">
 				<h2 style="padding:0 15px 0 0;" data-bind="text: lang.lang.start_session">Start Session</h2><br><br>
 				<table class="table table-bordered table-primary table-striped table-vertical-center">
 			        <thead>
@@ -6478,9 +6477,6 @@
 		        		data-auto-bind="false"
 		        		data-bind="source: cashierItemDS"></tbody>
 			    </table>
-			    <a style="margin-bottom: 15px; float: left;" class="btn btn-inverse" data-bind="click: addCashierItem">
-			    	<i class="icon-plus icon-white"></i>
-			    </a>
 			    <span class="btn btn-icon btn-primary glyphicons ok_2" style="width: 135px;float: left; margin-bottom: 0px;"><i></i><span data-bind="text: lang.lang.add_session, click: addSession">Save</span></span>
 			</div>
 		</div>
@@ -6495,15 +6491,7 @@
 			<input style="text-align: right;" id="numeric" class="k-formatted-value k-input" type="number" value="17" min="0" data-bind="value: amount" step="1" />
 		</td>
 		<td>
-			<input data-role="dropdownlist"
-        	   style="padding-right: 1px;height: 32px;" 
-			   data-option-label="(--- Currency ---)"
-			   data-auto-bind="false"
-               data-value-primitive="true"
-               data-text-field="code"
-               data-value-field="code"
-               data-bind="value: currency,
-                          source: currencyDS"/>
+			<p> #: currency# </p>
 		</td>
 	</tr>
 </script>
@@ -18479,16 +18467,14 @@
 		}
 	});
 	banhji.reconReceipt= kendo.observable({
-		dataSource 		: dataStore(apiUrl + 'reconciles/receipt'),
+		dataSource 		: dataStore(apiUrl + 'cashier_sessions/reconcile'),
 		sDate 			: new Date(2016, 01, 12, 01),
 		eDate 			: new Date(),
 		search 			: function() {
 			var dfd = $.Deferred();
 			banhji.reconReceipt.dataSource.query({
-				filter: [
-					{field: 'created_at >=', value: banhji.reconReceipt.get('sDate').getTime()},
-					{field: 'created_at <=', value: banhji.reconReceipt.get('eDate').getTime()}
-				]
+				filter: {field: "status", value: "0"},
+				limit: 1
 			}).then(function(e){
 				if(banhji.reconReceipt.dataSource.data().length > 0) {
 					dfd.resolve(banhji.reconReceipt.dataSource.data());
@@ -18660,18 +18646,16 @@
 			banhji.reconcileVM.receiptDS.splice(0, banhji.reconcileVM.receiptDS.length);
 			this.currencyVM.search()
 			.then(function(data) {
+				console.log(data);
 				$.each(data, function(i,v){
 					banhji.reconcileVM.receiptDS.push(v);
 				});
-
 				banhji.reconcileVM.list.countActual(data);
-			
 			}, function(error){
 			});
 		},
 		sync 			: function() {
 			var dfd = $.Deferred();
-
 			banhji.reconcileVM.add({
 				cashier: banhji.userData.id,
 				memo: "",
@@ -19243,7 +19227,7 @@
 	//Receipt
 	banhji.Receipt =  kendo.observable({
 		lang 				: langVM,
-		dataSource 			: dataStore(apiUrl + "utibills/cashreceipt"), //dataStore(apiUrl + "transactions"),
+		dataSource 			: dataStore(apiUrl + "utibills/cashreceipt"),
 		txnDS 				: dataStore(apiUrl + "utibills/search"),
 		remainDS 			: dataStore(apiUrl + "transactions"),
 		balanceDS 			: dataStore(apiUrl + "transactions"),
@@ -19550,19 +19534,14 @@
 		sessionReceiveDS 	: dataStore(apiUrl + "cashier_sessions/receive"),
 		CashierID 			: "",
 		pageLoad 			: function(id){
+			var self = this;
 			$("#loadING").css("display", "block");
 			this.currencyDS.query({
 				sort: { field: "created_at", dir: "asc"}
+			}).then(function(e){
+				self.setCashierItems();
 			});
-			if(id){
-				this.set("isEdit", true);
-				this.loadObj(id);
-			}else{
-				if(this.get("isEdit") || this.dataSource.total()==0){
-					this.addEmpty();
-				}
-			}
-			var self = this;
+			this.addEmpty();
 			this.cashierSessionDS.query({
 				filter: {field: "status", value: 0},
 				limit: 1,
@@ -19588,17 +19567,21 @@
 						cashier_id 	: banhji.userData.id,
 						start_date 	: new Date(),
 						end_date 	: "",
-						status 		: 0
+						status 		: 0,
+						items 		: []
 					});
 					$("#loadING").css("display", "none");
 				}
 			});
 		},
-		addCashierItem 		: function(){
-			this.cashierItemDS.add({
-				cashier_session_id 	: "",
-				amount 				: "",
-				currency 			: ""
+		setCashierItems 	: function(){
+			var self = this;
+			$.each(this.currencyDS.data(), function(i, v){
+				self.cashierItemDS.add({
+					cashier_session_id : "",
+					currency : v.code,
+					amount: 0,
+				});
 			});
 		},
 		endSession 			: function(){
@@ -19615,20 +19598,13 @@
 		},
 		addSession 			: function(){
 			var self = this;
+			this.updateSessionDS.data()[0].set("items", this.cashierItemDS.data());
 			this.updateSessionDS.sync();
 			this.updateSessionDS.bind("requestEnd", function(e){
 				if(e.response){
-					var SID = e.response.results[0].id;
-					self.syncCashierItem(SID);
+					self.set("haveSession", true);
 				}
 			});
-		},
-		syncCashierItem 	: function(session_id){
-			$.each(this.cashierItemDS.data(), function(i, v){
-				v.cashier_session_id = session_id;
-			});
-			this.cashierItemDS.sync();
-			this.set("haveSession", true);
 		},
 		loadInvoice 		: function(id){
 			this.set("invoice_id", id);
@@ -21236,7 +21212,7 @@
 			window.history.back();
 		}
 	});
-	
+	//Reconcile
 	banhji.Reconcile = kendo.observable({
 		lang 					: langVM,
 		institute 				: banhji.institute,	

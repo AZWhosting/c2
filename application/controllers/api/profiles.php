@@ -344,6 +344,7 @@ class Profiles extends REST_Controller {
 				$data[] = array(
 					'id' => $u->institute->id,
 					'name'=>$u->institute->name,
+					'registrationNumber' => $u->institute->registration_number,
 					'email' => $u->institute->email,
 					'telephone' => $u->institute->telephone,
 					'address'=>$u->institute->address,
@@ -472,6 +473,7 @@ class Profiles extends REST_Controller {
 			$pimage->where('url', $req->logo->url)->get();
 
 			$company->name = $req->name;
+			$company->registration_number = $req->registrationNumber;
 			$company->email= isset($req->email) ? $req->email: "";
 			$company->address= isset($req->address) ? $req->address:"";
 			$company->pimage_id = $pimage->id;

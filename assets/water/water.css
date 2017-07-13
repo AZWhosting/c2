@@ -62,7 +62,7 @@ form.navbar-form.pull-left.hidden-xs{
 }
 
 .widget.widget-tabs-gray > .widget-head ul li.active {
-  background: #fff;
+  background: #fff !important;
 }
 .glyphicons.btn-icon {
 	color: #fff;
@@ -711,13 +711,18 @@ input{
   resize: none;
 }
 .sale-report .table > tbody > tr > td,
-.customer-report-center tbody > tr > td{
+.customer-report-center tbody > tr > td,
+#plan .table tbody > tr > td{
   border-top: none;
 }
 .cover-block{
   float: left;
   padding-top: 15px;
   margin-bottom: 15px;
+  background: #fff !important;
+  width: 100%;
+  box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;
+  padding-bottom: 15px;
 }
 .sale-report .table > tbody > tr > td h3,
 .customer-report-center tbody > tr > td h3{
@@ -726,6 +731,97 @@ input{
 .setting.widget-body .tab-content > .tab-pane {
   border: none;
 }
+#tabContact,
+#tabInventery,
+#tabLocation,
+#tabProperty,
+#Download,
+#Upload{
+  border: 1px solid #ccc; 
+  overflow: hidden; 
+  padding: 15px;
+  position: relative;;
+}
+.widget.widget-tabs > .widget-head ul li a i:before{
+  color: #fff;
+}
+#tabContact h4,
+#tabContact a,
+#tabContact .fileupload,
+#tabInventery h4,
+#tabInventery a,
+#tabInventery .fileupload,
+#tabLocation h4,
+#tabLocation a,
+#tabLocation .fileupload,
+#tabProperty h4,
+#tabProperty a,
+#tabProperty .fileupload{
+  float: left;
+  width: 100%;
+}
+.btn:hover, .btn:focus, .btn.focus {
+  color: #fff;
+  text-decoration: none;
+}
+.icon-search:before {
+    color: #fff;
+}
+#Download button,
+#Upload button{
+  border: none;
+  background: none;
+}
+/*#saveClose:hover{
+  background: #203864;
+}*/
+.activatemeter .table.table-borderless.table-condensed tr td,
+.tab-pane.active .table.table-borderless.table-condensed tr td{
+  border-top: none !important;
+}
+
+#setting ul li{
+  color: #7c7c7c;
+  text-shadow: none;
+  background: #203864;
+  float: left;
+  width: 100%;
+  height: 40px;
+  line-height: 20px;
+}
+#setting ul li a .strong span{
+  display: block;
+  line-height: 29px;
+  float: left;
+}
+#report #savePrint{
+  width: 80px;
+  background: #203864;
+  border: none;
+  margin-bottom: 0;
+  float: left;
+}
+#report #excel{
+  width: 140px;
+  background: #203864;
+  color: #fff;
+  float: left;
+  margin-bottom: 0;
+  padding: 5px 15px;
+  border: none;
+}
+#report .glyphicons.print i:before {
+  color: #fff;
+}
+.total-sale {
+  width: 100%;
+  padding: 10px;
+  background: #DDEBF7;
+  text-align: center;
+  margin-bottom: 15px;
+  display: inline-block;
+}
+
 
 
 @charset "UTF-8";
