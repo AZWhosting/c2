@@ -3622,7 +3622,7 @@
 						</div>
 						<div class="clear"></div>
 
-						<div class="well" style="overflow: hidden; margin-bottom: 0;">
+						<div class="well" style="overflow: hidden; margin-bottom: 0;float: left;">
 							<div class="row">
 					        	<div class="col-sm-4 ">
 					        		<div class="listWrapper">
