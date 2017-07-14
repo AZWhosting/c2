@@ -18512,23 +18512,7 @@
 			}			
 		},
 		onChange 		: function(e) {
-			e.data.set('total', e.data.note * e.data.unit);
-			
-			// if(banhji.reconList.cashReceiptArr.length > 0) {
-				
-			// 	$.each(banhji.reconList.cashReceiptArr, function(x, y) {
-			// 		$.each(banhji.reconList.dataSource.data(), function(i, v){
-			// 			if(banhji.reconList.cashReceiptArr[x].code == banhji.reconList.dataSource.data()[i].code) {
-							
-			// 				banhji.reconList.cashReceiptArr[x].total += v.total; 
-			// 			} else {
-			// 				banhji.reconList.cashReceiptArr.push(v);
-			// 			}
-			// 		});
-			// 	});
-			// } else {
-			// 	banhji.reconList.cashReceiptArr.push(e.data);
-			// }			
+			e.data.set('total', e.data.note * e.data.unit);			
 		},
 		countActual 	: function(data) {
 			var self = this, temp =[];
@@ -18642,17 +18626,24 @@
 		setCurrent 		: function(current) {
 			this.set('current', current);
 		},
+		notMatch 		: false,
 		verify 			: function() {
 			banhji.reconcileVM.receiptDS.splice(0, banhji.reconcileVM.receiptDS.length);
 			this.currencyVM.search()
 			.then(function(data) {
-				console.log(data);
 				$.each(data, function(i,v){
 					banhji.reconcileVM.receiptDS.push(v);
 				});
 				banhji.reconcileVM.list.countActual(data);
+				self.checkBalance();
 			}, function(error){
 			});
+		},
+		checkBalance 	: function() {
+			var CashCount = 0, cashReceipt = 0;
+			// $.each(this.list.cashReceiptArr, function(i, v){
+			// 	CashCount += v.
+			// });
 		},
 		sync 			: function() {
 			var dfd = $.Deferred();
@@ -26146,7 +26137,6 @@
 		},
 		loadSummary 		: function(id){
 			var self = this, obj = this.get("obj");
-
 			this.summaryDS.query({
 			  	filter: [
 			  		{ field:"contact_id", value: obj.id },
@@ -26162,7 +26152,7 @@
 					if(value.type=="Utility_Deposit"){
 						deposit += kendo.parseFloat(value.amount);
 					}else{
-						balance += kendo.parseFloat(value.amount) - kendo.parseFloat(value.deposit);
+						balance += (kendo.parseFloat(value.amount) - kendo.parseFloat(value.deposit)) - kendo.parseFloat(value.amount_paid);
 						open++;
 						if(new Date(value.due_date)<today){
 							over++;

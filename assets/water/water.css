@@ -630,9 +630,7 @@ p.addItem.glyphicons.circle_remove i:before {
 .widget.widget-tabs-gray{
   margin-bottom: 0;
 }
-.icon-search:before{
-  color: #333;
-}
+
 .widget.widget-body-primary > .widget-body *{
   color: #333;
 }
@@ -698,6 +696,7 @@ input{
   padding: 5px;
   float: left;
   width: 100%;
+  position: relative;
 }
 #tab3 .table .k-grid-content.k-auto-scrollable .k-virtual-scrollable-wrap table tr:hover {
   background: none;
@@ -764,8 +763,11 @@ input{
   color: #fff;
   text-decoration: none;
 }
-.icon-search:before {
-    color: #fff;
+#menu .icon-search:before {
+    color: #fff !important;
+}
+#example .icon-search:before {
+    color: #333 !important;
 }
 #Download button,
 #Upload button{
@@ -794,14 +796,14 @@ input{
   line-height: 29px;
   float: left;
 }
-#report #savePrint{
+.report #savePrint{
   width: 80px;
   background: #203864;
   border: none;
   margin-bottom: 0;
   float: left;
 }
-#report #excel{
+.report #excel{
   width: 140px;
   background: #203864;
   color: #fff;
@@ -810,7 +812,7 @@ input{
   padding: 5px 15px;
   border: none;
 }
-#report .glyphicons.print i:before {
+.report .glyphicons.print i:before {
   color: #fff;
 }
 .total-sale {
@@ -821,6 +823,36 @@ input{
   margin-bottom: 15px;
   display: inline-block;
 }
+.glyphicons.remove_2 i:before {
+  cursor: pointer;
+}
+#invFormContent .block-title{
+  text-align: center; 
+  width: 100%; 
+  margin-bottom: 15px; 
+  float: left;
+}
+#invFormContent .block-title h3,
+#invFormContent .block-title h2{
+  width: 100%;
+  text-align: center;
+}
+#waterreport .relativeWrap{
+  margin: 15px 0;
+}
+#waterreport .relativeWrap .widget-head{
+  background: #203864 !important; 
+  color: #fff;
+} 
+#waterreport .relativeWrap .tab-pane{
+  border: 1px solid #ccc; 
+  overflow: hidden; 
+  padding: 15px
+}
+
+
+
+
 
 
 

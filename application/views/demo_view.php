@@ -1271,11 +1271,13 @@
     	</td>
     	<!-- Status -->
     	<td align="center">
+    		#if(status=="4") {#
+    			#=progress#
+    		#}#
+
     		#if(type=="Quote"){#       		
 				#if(status=="0"){#
-        			Open
-        		#}else{#
-        			Used        			
+        			Open      			
         		#}#
         	#}else if(type=="Sale_Order"){#
         		#if(status=="0"){#
@@ -1297,8 +1299,6 @@
 					Paid
 				#} else if(status=="3") {#
 					Returned
-				#} else if(status=="4") {#
-					Draft
 				#}#        	
         	#}#        				
 		</td>
@@ -2159,24 +2159,64 @@
 					</div>
 
 					<!-- Item List -->
-					<table class="table table-bordered table-primary table-striped table-vertical-center">
-				        <thead>
-				            <tr>
-				                <th class="center" style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></th>             
-				                <th><span data-bind="text: lang.lang.items"></span></th>
-				                <th><span data-bind="text: lang.lang.description"></span></th>
-				                <th style="width: 15%;"><span data-bind="text: lang.lang.quantity"></span></th>
-				                <th style="width: 10%;"><span data-bind="text: lang.lang.price"></span></th>
-				                <th style="width: 10%;" data-bind="visible: showDiscount"><span data-bind="text: lang.lang.discount"></span></th>			                
-				                <th style="width: 10%;"><span data-bind="text: lang.lang.amount"></span></th>
-				                <th style="width: 10%;"><span data-bind="text: lang.lang.tax"></span></th>			                			                			                			                
-				            </tr> 
-				        </thead>
-				        <tbody data-role="listview" 
-				        		data-template="quote-template" 
-				        		data-auto-bind="false"
-				        		data-bind="source: lineDS"></tbody>			        
-				    </table>			    
+					<div data-role="grid" class="costom-grid"
+				    	 data-column-menu="true"
+				    	 data-reorderable="true"
+				    	 data-scrollable="false"
+				    	 data-resizable="true"
+				    	 data-editable="true"
+		                 data-columns="[
+						    { 
+						    	title:'NO',
+						    	width: '50px', 
+						    	attributes: { style: 'text-align: center;' }, 
+						        template: function (dataItem) {
+						        	var rowIndex = banhji.quote.lineDS.indexOf(dataItem)+1;
+						        	return '<i class=icon-trash data-bind=click:removeRow></i>' + ' ' + rowIndex;
+						      	}
+						    },
+		                 	{ field: 'item', title: 'PRODUCTS/SERVICES', editor: itemEditor, template: '#=item.name#', width: '170px' },
+                            { field: 'description', title:'DESCRIPTION', width: '250px' },                            
+                            {
+							    field: 'quantity',
+							    title: 'QTY',
+							    format: '{0:n}',
+							    editor: numberTextboxEditor,
+							    width: '120px',
+							    attributes: { style: 'text-align: right;' }
+							},
+                            { field: 'measurement', title: 'UOM', editor: measurementEditor, template: '#=measurement.measurement#', width: '80px' },
+                            {
+							    field: 'price',
+							    title: 'PRICE',
+							    format: '{0:n}',
+							    editor: numberTextboxEditor,
+							    width: '120px',
+							    attributes: { style: 'text-align: right;' }
+							},
+							{
+							    field: 'discount',
+							    title: 'DISCOUNT VALUE',
+							    hidden: true,
+							    format: '{0:n}',
+							    editor: numberTextboxEditor,
+							    width: '120px',
+							    attributes: { style: 'text-align: right;' }
+							},
+							{
+							    field: 'discount_percentage',
+							    title: 'DISCOUNT %',
+							    hidden: true,
+							    format: '{0:p}',
+							    editor: discountEditor,
+							    width: '120px',
+							    attributes: { style: 'text-align: right;' }
+							},
+                            { field: 'amount', title:'AMOUNT', format: '{0:n}', editable: 'false', attributes: { style: 'text-align: right;' }, width: '120px' },
+                            { field: 'tax_item', title:'TAX', editor: taxForSaleEditor, template: '#=tax_item.name#', width: '90px' }
+                         ]"
+                         data-auto-bind="false"
+		                 data-bind="source: lineDS" ></div>	
 									
 		            <!-- Bottom part -->
 		            <div class="row-fluid">
@@ -2184,20 +2224,6 @@
 						<!-- Column -->
 						<div class="span4">
 							<button class="btn btn-inverse" data-bind="click: addRow"><i class="icon-plus icon-white"></i></button>												
-
-							<div class="btn-group">
-								<div class="leadcontainer">
-									
-								</div>
-								<a class="btn btn-default dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-list"></i> </a>
-								<ul class="dropdown-menu" style="padding: 5px; border-radius:0;">
-									<li>											 
-	 									<input type="checkbox" id="chbDiscount" class="k-checkbox" data-bind="checked: showDiscount">
-	  									<label class="k-checkbox-label" for="chbDiscount"><span data-bind="text: lang.lang.discount"></span></label>
-
-									</li>															
-								</ul>
-							</div>
 
 							<!-- Add New Item -->
 							<ul class="topnav addNew">
@@ -2208,8 +2234,7 @@
 							  		</a>
 						  			<ul class="dropdown-menu addNewItem">  				  				
 						  				<li><a href='#/item'><span data-bind="text: lang.lang.add_inventory_for_sale"></span></a></li>
-						  				<li><a href='#/non_inventory_part'><span data-bind="text: lang.lang.add_noninventory_for_sale"></span></a></li>
-						  				<li><a href='#/fixed_assets'><span data-bind="text: lang.lang.add_fixed_assets"></span>
+						  				<li><a href='#/non_inventory_part'><span data-bind="text: lang.lang.add_noninventory_for_sale"></span></a></li>						  				
 						  				<li><a href='#/item_service'><span data-bind="text: lang.lang.add_services"></span></a></li>
 						  				<li><a href='#/txn_item'><span data-bind="text: lang.lang.add_transaction_item"></span></a></li>  				
 						  				 				
@@ -2229,7 +2254,12 @@
 
 						<!-- Column -->
 						<div class="span4" align="center">
-							<img data-bind="visible: isEdit, attr: { src: statusSrc }" width="150px;" height="150px;" />	
+							<div data-bind="visible: isEdit" style="margin-top: 10%;">
+								<h2 data-bind="text: statusObj.text" style="text-transform: uppercase;"></h2>
+								<p data-bind="text: statusObj.date"></p>
+								<a data-bind="text: statusObj.number,
+											attr: { href: statusObj.url }"></a>
+							</div>
 						</div>
 						<!-- Column END -->
 						
@@ -2310,10 +2340,7 @@
 						  			</ul>
 							  	</span>
 							  	<span class="btn-btn" id="saveClose"><span data-bind="text: lang.lang.save_close"></span></span>
-							  	<span class="btn-btn" id="saveDraft"><span data-bind="text: lang.lang.save_draft"></span></span>
-								<!-- <span class="btn-btn" data-bind="invisible: isEdit"><span data-bind="text: lang.lang.save_new"></span></span>
-								<span class="btn-btn"><span data-bind="text: lang.lang.save_close"></span></span>
-								<span class="btn-btn"><span data-bind="text: lang.lang.save_print"></span></span> -->
+							  	<span class="btn-btn" id="saveDraft1" data-bind="invisible: isEdit"><span data-bind="text: lang.lang.save_draft"></span></span>
 							</div>
 						</div>
 					</div>
@@ -2779,7 +2806,6 @@
 							    attributes: { style: 'text-align: right;' }
 							},
                             { field: 'measurement', title: 'UOM', editor: measurementEditor, template: '#=measurement.measurement#', width: '80px' },
-                            { field: 'cost', title:'COST', format: '{0:n}', hidden: true, editable: 'false', attributes: { style: 'text-align: right;' }, width: '120px' },
                             {
 							    field: 'price',
 							    title: 'PRICE',
@@ -2829,8 +2855,7 @@
 							  		</a>
 						  			<ul class="dropdown-menu addNewItem">  				  				
 						  				<li><a href='#/item'><span data-bind="text: lang.lang.add_inventory_for_sale"></span></a></li>
-						  				<li><a href='#/non_inventory_part'><span data-bind="text: lang.lang.add_noninventory_for_sale"></span></a></li>
-						  				<li><a href='#/fixed_assets'><span data-bind="text: lang.lang.add_fixed_assets"></span></a></li>
+						  				<li><a href='#/non_inventory_part'><span data-bind="text: lang.lang.add_noninventory_for_sale"></span></a></li>						  				
 						  				<li><a href='#/item_service'><span data-bind="text: lang.lang.add_services"></span></a></li>
 						  				<li><a href='#/txn_item'><span data-bind="text: lang.lang.add_transaction_item"></span></a></li>	
 						  			</ul>
@@ -4090,7 +4115,6 @@
 						  			<ul class="dropdown-menu addNewItem">  				  				
 						  				<li><a href='#/item'><span data-bind="text: lang.lang.add_inventory_for_sale"></span></a></li>
 						  				<li><a href='#/non_inventory_part'><span data-bind="text: lang.lang.add_noninventory_for_sale"></span></a></li>
-						  				<li><a href='#/fixed_assets'><span data-bind="text: lang.lang.add_fixed_assets"></span></a></li>
 						  				<li><a href='#/item_service'><span data-bind="text: lang.lang.add_services"></span></a></li>
 						  				<li><a href='#/txn_item'><span data-bind="text: lang.lang.add_transaction_item"></span></a></li> 	
 						  			</ul>
@@ -4815,7 +4839,6 @@
 						  			<ul class="dropdown-menu addNewItem">  				  				
 						  				<li><a href='#/item'><span data-bind="text: lang.lang.add_inventory_for_sale"></span></a></li>
 						  				<li><a href='#/non_inventory_part'><span data-bind="text: lang.lang.add_noninventory_for_sale"></span></a></li>
-						  				<li><a href='#/fixed_assets'><span data-bind="text: lang.lang.add_fixed_assets"></span></a></li>
 						  				<li><a href='#/item_service'><span data-bind="text: lang.lang.add_services"></span></a></li>
 						  				<li><a href='#/txn_item'><span data-bind="text: lang.lang.add_transaction_item"></span></a></li>  	
 						  			</ul>
@@ -7649,7 +7672,7 @@
 									<ul>
 										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i><span data-bind="text: lang.lang.date"></span></a></li>	
 										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i><span data-bind="text: lang.lang.filter"></span></a></li>
-										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab" data-bind="click: printGrid"><i></i><span data-bind="text: lang.lang.print_export"></span>Print/Export</a></li>
+										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab"><i></i><span data-bind="text: lang.lang.print_export"></span>Print/Export</a></li>
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
@@ -7708,6 +7731,18 @@
 													</td>
 												</tr>
 											</table>
+							        	</div>
+							        								        	<!-- PRINT/EXPORT  -->
+								        <div class="tab-pane" id="tab-3">								        	
+								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: printGrid" style="width: 80px;"><i></i> Print</span>
+								        	<!-- <span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
+								        		<i class="fa fa-file-pdf-o"></i>
+								        		Print as PDF
+								        	</span> -->
+								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: ExportExcel" style="width: 80px;">
+								        		<i class="fa fa-file-excel-o"></i>
+								        		Export to Excel
+								        	</span>
 							        	</div>
 								    </div>
 								</div>
@@ -7785,7 +7820,7 @@
 									<ul>
 										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i><span data-bind="text: lang.lang.date"></span></a></li>	
 										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i><span data-bind="text: lang.lang.filter"></span></a></li>
-										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab" data-bind="click: printGrid"><i></i><span data-bind="text: lang.lang.print_export"></span></a></li>
+										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab"><i></i><span data-bind="text: lang.lang.print_export"></span></a></li>
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
@@ -7844,6 +7879,18 @@
 													</td>
 												</tr>
 											</table>
+							        	</div>
+							        								        								        	<!-- PRINT/EXPORT  -->
+								        <div class="tab-pane" id="tab-3">								        	
+								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: printGrid" style="width: 80px;"><i></i> Print</span>
+								        	<!-- <span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
+								        		<i class="fa fa-file-pdf-o"></i>
+								        		Print as PDF
+								        	</span> -->
+								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: ExportExcel" style="width: 80px;">
+								        		<i class="fa fa-file-excel-o"></i>
+								        		Export to Excel
+								        	</span>
 							        	</div>
 								    </div>
 								</div>
@@ -7951,7 +7998,7 @@
 									<ul>
 										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i><span data-bind="text: lang.lang.date"></span></a></li>	
 										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i><span data-bind="text: lang.lang.filter"></span></a></li>
-										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab" data-bind="click: printGrid"><i></i><span data-bind="text: lang.lang.print_export"></span></a></li>
+										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab"><i></i><span data-bind="text: lang.lang.print_export"></span></a></li>
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
@@ -8010,6 +8057,17 @@
 													</td>
 												</tr>
 											</table>
+							        	</div>
+							        	<div class="tab-pane" id="tab-3">								        	
+								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: printGrid" style="width: 80px;"><i></i> Print</span>
+								        	<!-- <span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
+								        		<i class="fa fa-file-pdf-o"></i>
+								        		Print as PDF
+								        	</span> -->
+								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: ExportExcel" style="width: 80px;">
+								        		<i class="fa fa-file-excel-o"></i>
+								        		Export to Excel
+								        	</span>
 							        	</div>
 								    </div>
 								</div>
@@ -8105,7 +8163,7 @@
 									<ul>
 										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i><span data-bind="text: lang.lang.date"></span></a></li>	
 										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i><span data-bind="text: lang.lang.filter"></span></a></li>
-										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab" data-bind="click: printGrid"><i></i><span data-bind="text: lang.lang.print_export"></span></a></li>
+										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab"><i></i><span data-bind="text: lang.lang.print_export"></span></a></li>
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
@@ -8164,6 +8222,17 @@
 													</td>
 												</tr>
 											</table>
+							        	</div>
+							        	<div class="tab-pane" id="tab-3">								        	
+								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: printGrid" style="width: 80px;"><i></i> Print</span>
+								        	<!-- <span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
+								        		<i class="fa fa-file-pdf-o"></i>
+								        		Print as PDF
+								        	</span> -->
+								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: ExportExcel" style="width: 80px;">
+								        		<i class="fa fa-file-excel-o"></i>
+								        		Export to Excel
+								        	</span>
 							        	</div>
 								    </div>
 								</div>
@@ -8253,7 +8322,7 @@
 									<ul>
 										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i><span data-bind="text: lang.lang.date"></span></a></li>	
 										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i><span data-bind="text: lang.lang.filter"></span></a></li>
-										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab" data-bind="click: printGrid"><i></i><span data-bind="text: lang.lang.print_export"></span></a></li>
+										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab"><i></i><span data-bind="text: lang.lang.print_export"></span></a></li>
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
@@ -8312,6 +8381,17 @@
 													</td>
 												</tr>
 											</table>
+							        	</div>
+							        	<div class="tab-pane" id="tab-3">								        	
+								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: printGrid" style="width: 80px;"><i></i> Print</span>
+								        	<!-- <span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
+								        		<i class="fa fa-file-pdf-o"></i>
+								        		Print as PDF
+								        	</span> -->
+								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: ExportExcel" style="width: 80px;">
+								        		<i class="fa fa-file-excel-o"></i>
+								        		Export to Excel
+								        	</span>
 							        	</div>
 								    </div>
 								</div>
@@ -8424,7 +8504,7 @@
 									<ul>
 										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i><span data-bind="text: lang.lang.date"></span></a></li>	
 										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i><span data-bind="text: lang.lang.filter"></span></a></li>
-										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab" data-bind="click: printGrid"><i></i><span data-bind="text: lang.lang.print_export"></span></a></li>
+										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab"><i></i><span data-bind="text: lang.lang.print_export"></span></a></li>
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
@@ -8483,6 +8563,17 @@
 													</td>
 												</tr>
 											</table>
+							        	</div>
+							        	<div class="tab-pane" id="tab-3">								        	
+								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: printGrid" style="width: 80px;"><i></i> Print</span>
+								        	<!-- <span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
+								        		<i class="fa fa-file-pdf-o"></i>
+								        		Print as PDF
+								        	</span> -->
+								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: ExportExcel" style="width: 80px;">
+								        		<i class="fa fa-file-excel-o"></i>
+								        		Export to Excel
+								        	</span>
 							        	</div>
 								    </div>
 								</div>
@@ -8600,7 +8691,7 @@
 									<ul>
 										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i><span data-bind="text: lang.lang.date"></span></a></li>	
 										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i><span data-bind="text: lang.lang.filter"></span></a></li>
-										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab" data-bind="click: printGrid"><i></i><span data-bind="text: lang.lang.print_export"></span>Print/Export</a></li>
+										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab"><i></i><span data-bind="text: lang.lang.print_export"></span>Print/Export</a></li>
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
@@ -8659,6 +8750,17 @@
 													</td>
 												</tr>
 											</table>
+							        	</div>							        								<!-- PRINT/EXPORT  -->
+								        <div class="tab-pane" id="tab-3">								        	
+								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: printGrid" style="width: 80px;"><i></i> Print</span>
+								        	<!-- <span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
+								        		<i class="fa fa-file-pdf-o"></i>
+								        		Print as PDF
+								        	</span> -->
+								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: ExportExcel" style="width: 80px;">
+								        		<i class="fa fa-file-excel-o"></i>
+								        		Export to Excel
+								        	</span>
 							        	</div>
 								    </div>
 								</div>
@@ -8734,7 +8836,7 @@
 									<ul>
 										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i><span data-bind="text: lang.lang.date"></span></a></li>	
 										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i><span data-bind="text: lang.lang.filter"></span></a></li>
-										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab" data-bind="click: printGrid"><i></i><span data-bind="text: lang.lang.print_export"></span></a></li>
+										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab"><i></i><span data-bind="text: lang.lang.print_export"></span></a></li>
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
@@ -8794,6 +8896,18 @@
 												</tr>
 											</table>
 							        	</div>
+							        	<!--PRINT/EXPORT  -->
+								        <div class="tab-pane" id="tab-3">								        	
+								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: printGrid" style="width: 80px;"><i></i> Print</span>
+								        	<!-- <span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
+								        		<i class="fa fa-file-pdf-o"></i>
+								        		Print as PDF
+								        	</span> -->
+								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: ExportExcel" style="width: 80px;">
+								        		<i class="fa fa-file-excel-o"></i>
+								        		Export to Excel
+								        	</span>
+							        	</div>
 								    </div>
 								</div>
 							</div>
@@ -8804,7 +8918,7 @@
 					<div id="invFormContent">
 						<div class="block-title">
 							<h3 data-bind="text: company.name"></h3>
-							<h2 data-bind="text: lang.lang.sale_detail_by_customer"></h2>
+							<h2>Cash Sale Detail by Customer</h2>
 							<p data-bind="text: displayDate"></p>
 						</div>
 
@@ -8900,7 +9014,7 @@
 									<ul>
 										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i><span data-bind="text: lang.lang.date"></span></a></li>	
 										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i><span data-bind="text: lang.lang.filter"></span></a></li>
-										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab" data-bind="click: printGrid"><i></i><span data-bind="text: lang.lang.print_export"></span></a></li>
+										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab"><i></i><span data-bind="text: lang.lang.print_export"></span></a></li>
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
@@ -8960,6 +9074,18 @@
 												</tr>
 											</table>
 							        	</div>
+							        	<!--PRINT/EXPORT  -->
+								        <div class="tab-pane" id="tab-3">								        	
+								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: printGrid" style="width: 80px;"><i></i> Print</span>
+								        	<!-- <span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
+								        		<i class="fa fa-file-pdf-o"></i>
+								        		Print as PDF
+								        	</span> -->
+								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: ExportExcel" style="width: 80px;">
+								        		<i class="fa fa-file-excel-o"></i>
+								        		Export to Excel
+								        	</span>
+							        	</div>
 								    </div>
 								</div>
 							</div>
@@ -8970,7 +9096,7 @@
 					<div id="invFormContent">
 						<div class="block-title">
 							<h3 data-bind="text: company.name"></h3>
-							<h2 data-bind="text: lang.lang.sale_summary_by_product_services"></h2>
+							<h2>Cash Sale by Product/Service</h2>
 							<p data-bind="text: displayDate"></p>
 						</div>
 
@@ -9048,7 +9174,7 @@
 									<ul>
 										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i><span data-bind="text: lang.lang.date"></span></a></li>	
 										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i><span data-bind="text: lang.lang.filter"></span></a></li>
-										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab" data-bind="click: printGrid"><i></i><span data-bind="text: lang.lang.print_export"></span></a></li>
+										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab"><i></i><span data-bind="text: lang.lang.print_export"></span></a></li>
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
@@ -9108,6 +9234,18 @@
 												</tr>
 											</table>
 							        	</div>
+							        	<!--PRINT/EXPORT  -->
+								        <div class="tab-pane" id="tab-3">								        	
+								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: printGrid" style="width: 80px;"><i></i> Print</span>
+								        	<!-- <span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
+								        		<i class="fa fa-file-pdf-o"></i>
+								        		Print as PDF
+								        	</span> -->
+								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: ExportExcel" style="width: 80px;">
+								        		<i class="fa fa-file-excel-o"></i>
+								        		Export to Excel
+								        	</span>
+							        	</div>
 								    </div>
 								</div>
 							</div>
@@ -9118,7 +9256,7 @@
 					<div id="invFormContent">
 						<div class="block-title">
 							<h3 data-bind="text: company.name"></h3>
-							<h2 data-bind="text: lang.lang.sale_detail_by_product_services"></h2>
+							<h2>Cash Sale Detail by Product/Services</h2>
 							<p data-bind="text: displayDate"></p>
 						</div>
 
@@ -9218,7 +9356,7 @@
 								<div class="widget-head">
 									<ul>
 										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i><span data-bind="text: lang.lang.date"></span></a></li>	
-										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab" data-bind="click: printGrid"><i></i><span data-bind="text: lang.lang.print_export"></span></a></li>
+										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab"><i></i><span data-bind="text: lang.lang.print_export"></span></a></li>
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
@@ -9234,6 +9372,18 @@
 
 								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
 							
+							        	</div>
+							        	<!--PRINT/EXPORT  -->
+								        <div class="tab-pane" id="tab-3">								        	
+								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: printGrid" style="width: 80px;"><i></i> Print</span>
+								        	<!-- <span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
+								        		<i class="fa fa-file-pdf-o"></i>
+								        		Print as PDF
+								        	</span> -->
+								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: ExportExcel" style="width: 80px;">
+								        		<i class="fa fa-file-excel-o"></i>
+								        		Export to Excel
+								        	</span>
 							        	</div>
 								    </div>
 								</div>
@@ -9315,7 +9465,7 @@
 								<div class="widget-head">
 									<ul>
 										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i><span data-bind="text: lang.lang.date"></span></a></li>	
-										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab" data-bind="click: printGrid"><i></i><span data-bind="text: lang.lang.print_export"></span></a></li>
+										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab"><i></i><span data-bind="text: lang.lang.print_export"></span></a></li>
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
@@ -9331,6 +9481,18 @@
 
 								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
 							
+							        	</div>
+							        	<!--PRINT/EXPORT  -->
+								        <div class="tab-pane" id="tab-3">								        	
+								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: printGrid" style="width: 80px;"><i></i> Print</span>
+								        	<!-- <span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
+								        		<i class="fa fa-file-pdf-o"></i>
+								        		Print as PDF
+								        	</span> -->
+								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: ExportExcel" style="width: 80px;">
+								        		<i class="fa fa-file-excel-o"></i>
+								        		Export to Excel
+								        	</span>
 							        	</div>
 								    </div>
 								</div>
@@ -9438,7 +9600,7 @@
 									<ul>
 										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i><span data-bind="text: lang.lang.date"></span></a></li>	
 										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i><span data-bind="text: lang.lang.filter"></span></a></li>
-										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab" data-bind="click: printGrid"><i></i><span data-bind="text: lang.lang.print_export"></span></a></li>
+										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab"><i></i><span data-bind="text: lang.lang.print_export"></span></a></li>
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
@@ -9478,6 +9640,18 @@
 													</td>
 												</tr>
 											</table>
+							        	</div>
+							        	<!--PRINT/EXPORT  -->
+								        <div class="tab-pane" id="tab-3">								        	
+								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: printGrid" style="width: 80px;"><i></i> Print</span>
+								        	<!-- <span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
+								        		<i class="fa fa-file-pdf-o"></i>
+								        		Print as PDF
+								        	</span> -->
+								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: ExportExcel" style="width: 80px;">
+								        		<i class="fa fa-file-excel-o"></i>
+								        		Export to Excel
+								        	</span>
 							        	</div>
 								    </div>
 								</div>
@@ -9562,7 +9736,7 @@
 									<ul>
 										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i><span data-bind="text: lang.lang.date"></span></a></li>	
 										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i><span data-bind="text: lang.lang.filter"></span></a></li>
-										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab" data-bind="click: printGrid"><i></i><span data-bind="text: lang.lang.print_export"></span></a></li>
+										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab"><i></i><span data-bind="text: lang.lang.print_export"></span></a></li>
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
@@ -9603,6 +9777,18 @@
 													</td>
 												</tr>
 											</table>
+							        	</div>
+							        	<!--PRINT/EXPORT  -->
+								        <div class="tab-pane" id="tab-3">								        	
+								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: printGrid" style="width: 80px;"><i></i> Print</span>
+								        	<!-- <span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
+								        		<i class="fa fa-file-pdf-o"></i>
+								        		Print as PDF
+								        	</span> -->
+								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: ExportExcel" style="width: 80px;">
+								        		<i class="fa fa-file-excel-o"></i>
+								        		Export to Excel
+								        	</span>
 							        	</div>
 								    </div>
 								</div>
@@ -10439,7 +10625,7 @@
 									<ul>
 										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i><span data-bind="text: lang.lang.date"></span></a></li>	
 										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i><span data-bind="text: lang.lang.filter"></span></a></li>
-										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab" data-bind="click: printGrid"><i></i><span data-bind="text: lang.lang.print_export"></span></a></li>
+										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab"><i></i><span data-bind="text: lang.lang.print_export"></span></a></li>
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
@@ -10498,6 +10684,18 @@
 													</td>
 												</tr>
 											</table>
+							        	</div>
+							        	<!-- PRINT/EXPORT  -->
+								        <div class="tab-pane" id="tab-3">								        	
+								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: printGrid" style="width: 80px;"><i></i><span data-bind="text: lang.lang.print"></span></span>
+								        	<!-- <span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
+								        		<i class="fa fa-file-pdf-o"></i>
+								        		Print as PDF
+								        	</span> -->
+								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: ExportExcel" style="width: 80px;">
+								        		<i class="fa fa-file-excel-o"></i>
+								        		<span data-bind="text: lang.lang.export_to_excel"></span>
+								        	</span>
 							        	</div>
 								    </div>
 								</div>
@@ -11276,7 +11474,11 @@
     		#}#
     	</td>
     	<!-- Status -->
-    	<td align="center">        	
+    	<td align="center">
+    		#if(status=="4") {#
+    			#=progress#
+    		#}#
+
         	#if(type=="Credit_Purchase"){#
         		#if(status=="0" || status=="2") {#
         			# var date = new Date(), dueDate = new Date(due_date).getTime(), toDay = new Date(date).getTime(); #
@@ -11293,7 +11495,7 @@
         	#}else if(type=="Purchase_Order"){#
         		#if(status=="0"){#
         			Open
-        		#}else{#
+        		#}else if(status=="1"){#
         			Done        			
         		#}#
         	#}else if(type=="GRN"){#
@@ -11307,6 +11509,10 @@
         			<a data-bind="click: payBill"><i></i> Pay Bill</a>
         		#}#	
         	#}#
+
+        	#if(status=="4") {#
+				<a href="\#/#=type.toLowerCase()#/#=id#"><i></i> Use</a>
+    		#}#
 		</td>     	
     </tr>
 </script>
@@ -12162,49 +12368,72 @@
 					</div>
 
 					<!-- Item List -->
-					<table class="table table-bordered table-primary table-striped table-vertical-center">
-				        <thead>
-				            <tr>
-				                <th class="center" style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></th>			                
-				                <th data-bind="text: lang.lang.item"></th>
-				                <th data-bind="text: lang.lang.description"></th>
-				                <th style="width: 20%;"><span data-bind="text: lang.lang.qty1"></span></th>
-				                <th style="width: 13%;"><span data-bind="text: lang.lang.cost1"></span></th>
-				                <th style="width: 1%;" data-bind="visible: showDiscount"><span data-bind="text: lang.lang.discount"></span></th>
-				                <th style="width: 10%;" data-bind="visible: showRequiredDate"><span data-bind="text: lang.lang.tax"></span><span data-bind="text: lang.lang.deliv_date"></span></th>			                
-				                <th style="width: 10%;"><span data-bind="text: lang.lang.amount"></span></th>
-				                <th style="width: 11%;"><span data-bind="text: lang.lang.tax"></span></th>			                			                			                
-				            </tr> 
-				        </thead>
-				        <tbody data-role="listview" 
-				        		data-template="purchaseOrder-template" 
-				        		data-auto-bind="false"
-				        		data-bind="source: lineDS"></tbody>			        
-				    </table>			    
-									
+				    <div data-role="grid" class="costom-grid"
+				    	 data-column-menu="true"
+				    	 data-reorderable="true"
+				    	 data-scrollable="false"
+				    	 data-resizable="true"
+				    	 data-editable="true"
+		                 data-columns="[
+						    { 
+						    	title:'NO',
+						    	width: '50px', 
+						    	attributes: { style: 'text-align: center;' }, 
+						        template: function (dataItem) {
+						        	var rowIndex = banhji.purchaseOrder.lineDS.indexOf(dataItem)+1;
+						        	return '<i class=icon-trash data-bind=click:removeRow></i>' + ' ' + rowIndex;
+						      	}
+						    },
+		                 	{ field: 'item', title: 'PRODUCTS/SERVICES', editor: itemEditor, template: '#=item.name#', width: '170px' },
+                            { field: 'description', title:'DESCRIPTION', width: '250px' },                            
+                            {
+							    field: 'quantity',
+							    title: 'QTY',
+							    format: '{0:n}',
+							    editor: numberTextboxEditor,
+							    width: '120px',
+							    attributes: { style: 'text-align: right;' }
+							},
+                            { field: 'measurement', title: 'UOM', editor: measurementEditor, template: '#=measurement.measurement#', width: '80px' },
+                            {
+							    field: 'cost',
+							    title: 'COST',
+							    format: '{0:n}',
+							    editor: numberTextboxEditor,
+							    width: '120px',
+							    attributes: { style: 'text-align: right;' }
+							},
+							{
+							    field: 'discount',
+							    title: 'DISCOUNT VALUE',
+							    hidden: true,
+							    format: '{0:n}',
+							    editor: numberTextboxEditor,
+							    width: '120px',
+							    attributes: { style: 'text-align: right;' }
+							},
+							{
+							    field: 'discount_percentage',
+							    title: 'DISCOUNT %',
+							    hidden: true,
+							    format: '{0:p}',
+							    editor: discountEditor,
+							    width: '120px',
+							    attributes: { style: 'text-align: right;' }
+							},
+                            { field: 'amount', title:'AMOUNT', format: '{0:n}', editable: 'false', attributes: { style: 'text-align: right;' }, width: '120px' },
+                            { field: 'tax_item', title:'TAX', editor: taxForPurchaseEditor, template: '#=tax_item.name#', width: '90px' },
+                         	{ field: 'required_date', title:'DELIVERY DATE', format: '{0: dd-MM-yyyy}', hidden: true, editor: dateEditor, width: '120px' }
+                         ]"
+                         data-auto-bind="false"
+		                 data-bind="source: lineDS" ></div>
+
 		            <!-- Bottom part -->
 		            <div class="row-fluid">
 			
 						<!-- Column -->
 						<div class="span4">
 							<button class="btn btn-inverse" data-bind="click: addRow"><i class="icon-plus icon-white"></i></button>												
-
-							<div class="btn-group">
-								<div class="leadcontainer">
-									
-								</div>
-								<a class="btn btn-default dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-list"></i> </a>
-								<ul class="dropdown-menu" style="padding: 5px; border-radius:0;">
-									<li>
-										<input type="checkbox" id="chbDiscount" class="k-checkbox" data-bind="checked: showDiscount">
-	  									<label class="k-checkbox-label" for="chbDiscount"><span data-bind="text: lang.lang.discount"></span></label>
-									</li>
-									<li>
-										<input type="checkbox" id="chbRequiredDate" class="k-checkbox" data-bind="checked: showRequiredDate">
-      									<label class="k-checkbox-label" for="chbRequiredDate"><span data-bind="text: lang.lang.delivery_date"></span></label>
-									</li>															
-								</ul>
-							</div>
 							
 							<!-- Add New Item -->
 							<ul class="topnav addNew">
@@ -12215,8 +12444,7 @@
 							  		</a>
 						  			<ul class="dropdown-menu addNewItem">  				  				
 						  				<li><a href='#/item'><span data-bind="text: lang.lang.add_inventory_for_sale"></span></a></li>
-						  				<li><a href='#/non_inventory_part'><span data-bind="text: lang.lang.add_noninventory_for_sale"></span></a></li>
-						  				<li><a href='#/fixed_assets'><span data-bind="text: lang.lang.add_fixed_assets"></span></a></li>
+						  				<li><a href='#/non_inventory_part'><span data-bind="text: lang.lang.add_noninventory_for_sale"></span></a></li>						  				
 						  				<li><a href='#/item_service'><span data-bind="text: lang.lang.add_services"></span></a></li>
 						  				<li><a href='#/txn_item'><span data-bind="text: lang.lang.add_transaction_item"></span></a></li>  				
 						  				 				
@@ -12236,7 +12464,12 @@
 
 						<!-- Column -->
 						<div class="span4" align="center">
-							<img data-bind="visible: isEdit, attr: { src: statusSrc }" width="150px;" height="150px;" />	
+							<div data-bind="visible: isEdit" style="margin-top: 10%;">
+								<h2 data-bind="text: statusObj.text" style="text-transform: uppercase;"></h2>
+								<p data-bind="text: statusObj.date"></p>
+								<a data-bind="text: statusObj.number,
+											attr: { href: statusObj.url }"></a>
+							</div>
 						</div>
 						<!-- Column END -->
 						
@@ -12317,10 +12550,7 @@
 						  			</ul>
 							  	</span>
 							  	<span class="btn-btn" id="saveClose"><span data-bind="text: lang.lang.save_close"></span></span>
-							  	<span class="btn-btn" id="saveDraft"><span data-bind="text: lang.lang.save_draft"></span></span>
-								<!-- <span class="btn-btn" data-bind="invisible: isEdit"><span data-bind="text: lang.lang.save_new"></span></span>
-								<span class="btn-btn"><span data-bind="text: lang.lang.save_close"></span></span>
-								<span class="btn-btn"><span data-bind="text: lang.lang.save_print"></span></span> -->
+							  	<span class="btn-btn" id="saveDraft1" data-bind="invisible: isEdit"><span data-bind="text: lang.lang.save_draft"></span></span>
 							</div>
 						</div>
 					</div>
@@ -13972,6 +14202,66 @@
 						        <div class="tab-pane active" id="tab-1">
 
 						            <!-- Item Line -->
+						            <!-- <div data-role="grid" class="costom-grid"
+								    	 data-column-menu="true"
+								    	 data-reorderable="true"
+								    	 data-scrollable="false"
+								    	 data-resizable="true"
+								    	 data-editable="true"
+						                 data-columns="[
+										    { 
+										    	title:'NO',
+										    	width: '50px', 
+										    	attributes: { style: 'text-align: center;' }, 
+										        template: function (dataItem) {
+										        	var rowIndex = banhji.purchaseOrder.lineDS.indexOf(dataItem)+1;
+										        	return '<i class=icon-trash data-bind=click:removeRow></i>' + ' ' + rowIndex;
+										      	}
+										    },
+						                 	{ field: 'item', title: 'PRODUCTS/SERVICES', editor: itemEditor, template: '#=item.name#', width: '170px' },
+				                            { field: 'description', title:'DESCRIPTION', width: '250px' },                            
+				                            {
+											    field: 'quantity',
+											    title: 'QTY',
+											    format: '{0:n}',
+											    editor: numberTextboxEditor,
+											    width: '120px',
+											    attributes: { style: 'text-align: right;' }
+											},
+				                            { field: 'measurement', title: 'UOM', editor: measurementEditor, template: '#=measurement.measurement#', width: '80px' },
+				                            {
+											    field: 'cost',
+											    title: 'COST',
+											    format: '{0:n}',
+											    editor: numberTextboxEditor,
+											    width: '120px',
+											    attributes: { style: 'text-align: right;' }
+											},
+											{
+											    field: 'discount',
+											    title: 'DISCOUNT VALUE',
+											    hidden: true,
+											    format: '{0:n}',
+											    editor: numberTextboxEditor,
+											    width: '120px',
+											    attributes: { style: 'text-align: right;' }
+											},
+											{
+											    field: 'discount_percentage',
+											    title: 'DISCOUNT %',
+											    hidden: true,
+											    format: '{0:p}',
+											    editor: discountEditor,
+											    width: '120px',
+											    attributes: { style: 'text-align: right;' }
+											},
+				                            { field: 'amount', title:'AMOUNT', format: '{0:n}', editable: 'false', attributes: { style: 'text-align: right;' }, width: '120px' },
+				                            { field: 'tax_item', title:'TAX', editor: taxForPurchaseEditor, template: '#=tax_item.name#', width: '90px' },
+				                         	{ field: 'required_date', title:'DELIVERY DATE', format: '{0: dd-MM-yyyy}', hidden: true, editor: dateEditor, width: '120px' }
+				                         ]"
+				                         data-auto-bind="false"
+						                 data-bind="source: lineDS" ></div> -->
+						                 
 									<table class="table table-bordered table-primary table-striped table-vertical-center">
 								        <thead>
 								            <tr>
@@ -35116,9 +35406,9 @@
 											</table>
 							        	</div>
 
-							        	<!-- PRINT/EXPORT  -->
+									        	<!-- PRINT/EXPORT  -->
 								        <div class="tab-pane" id="tab-3">								        	
-								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: printGrid" style="width: 80px;"><i></i> Print</span>
+								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: printGrid" style="width: 80px;"><i></i><span data-bind="text: lang.lang.print"></span></span>
 								        	<!-- <span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
 								        		<i class="fa fa-file-pdf-o"></i>
 								        		Print as PDF
@@ -45647,7 +45937,7 @@
     }
 
     function discountEditor(container, options) {
-        $('<input name="' + options.field + '" type="number" class="k-textbox" style="width: 95%;" min="0" max="1" step="0.05" />')
+        $('<input name="' + options.field + '" type="number" class="k-textbox" style="width: 95%;" min="0" max="1" />')
         .appendTo(container);
     }
 
@@ -45675,6 +45965,33 @@
             }
         });
     }
+
+    function taxForPurchaseEditor(container, options) {
+        $('<input name="' + options.field + '"/>')
+        .appendTo(container)
+        .kendoDropDownList({
+            dataTextField: "name",
+            dataValueField: "id",
+            autoWidth: true,
+            height: 200,
+            dataSource: {
+            	data: banhji.source.taxList,
+			  	filter:{
+				    logic: "or",
+				    filters: [
+				      	{ field: "tax_type_id", value: 1 },//Supplier Tax
+				      	{ field: "tax_type_id", value: 2 },
+				      	{ field: "tax_type_id", value: 3 },
+				      	{ field: "tax_type_id", value: 9 }
+				    ]
+				},
+			  	sort: [
+				  	{ field: "tax_type_id", dir: "asc" },
+				  	{ field: "name", dir: "asc" }
+				]
+            }
+        });
+    }    
 
     function numberTextboxEditor(container, options) {
         $('<input name="' + options.field + '" type="number" class="k-textbox" style="width: 95%;" />')
@@ -47362,7 +47679,7 @@
 			}
 		});
 		return o;
-	}	
+	}
 	banhji.Layout = kendo.observable({
 		locale: "km-KH",
 		menu 	: [],
@@ -47741,6 +48058,7 @@
 			{ id: "Journal", name: "Journal" }
 	    ],
 	    statusObj 					: { text:"", date:"", number:"", url:"" },
+	    defaultLines 				: 2,
 		genderList					: ["M", "F"],
 		typeList 					: ['Invoice','Commercial_Invoice','Vat_Invoice','Electricity_Invoice','Water_Invoice','Cash_Sale','Commercial_Cash_Sale','Vat_Cash_Sale','Receipt_Allocation','Sale_Order','Quote','GDN','Sale_Return','Purchase_Order','GRN','Cash_Purchase','Credit_Purchase','Purchase_Return','Payment_Allocation','Deposit','Electricty_Deposit','Water_Deposit','Customer_Deposit','Vendor_Deposit','Withdraw','Transfer','Journal','Item_Adjustment','Cash_Advance','Reimbursement','Direct_Expense','Advance_Settlement','Additional_Cost','Cash_Payment','Cash_Receipt','Credit_Note','Debit_Note','Offset_Bill','Offset_Invoice','Cash_Transfer','Internal_Usage'],
 		user_id						: banhji.userData.id,
@@ -49509,11 +49827,13 @@
 		lang 				: langVM,
 		dataSource 			: dataStore(apiUrl + "transactions"),
 		lineDS  			: dataStore(apiUrl + "item_lines"),
-		assemblyLineDS  	: dataStore(apiUrl + "item_lines"),
-		txnDS 				: dataStore(apiUrl + "transactions"),
+		assemblyLineDS  	: dataStore(apiUrl + "item_lines"),		
 		recurringDS 		: dataStore(apiUrl + "transactions"),
 		recurringLineDS 	: dataStore(apiUrl + "item_lines"),
+		txnDS 				: dataStore(apiUrl + "transactions"),
+		balanceDS 			: dataStore(apiUrl + "transactions/balance"),
 		attachmentDS	 	: dataStore(apiUrl + "attachments"),
+		assemblyDS			: dataStore(apiUrl + "item_prices"),
 		paymentTermDS 		: banhji.source.paymentTermDS,
 		contactDS  			: new kendo.data.DataSource({
 		  	data: banhji.source.customerList,
@@ -49535,33 +49855,11 @@
 			  	{ field: "code", dir: "asc" }
 			]
 		}),
-		taxItemDS 			: new kendo.data.DataSource({
-		  	data: banhji.source.taxList,
-		  	filter:{
-			    logic: "or",
-			    filters: [
-			      	{ field: "tax_type_id", value: 3 },//Customer Tax
-			      	{ field: "tax_type_id", value: 9 }
-			    ]
-			},
-		  	sort: [
-			  	{ field: "tax_type_id", dir: "asc" },
-			  	{ field: "name", dir: "asc" }
-			]
-		}),
-		itemDS  			: new kendo.data.DataSource({
-		  	data: banhji.source.itemList,
-			filter:{ field: "item_type_id", operator:"neq", value: 3 },
-			sort: [
-				{ field:"item_type_id", dir:"asc" },
-				{ field:"number", dir:"asc" }
-			]
-		}),
 		txnTemplateDS 		: new kendo.data.DataSource({
 		  	data: banhji.source.txnTemplateList,
 		  	filter:{ field: "type", value: "Quote" }
 		}),
-		assemblyDS			: dataStore(apiUrl + "item_prices"),
+		statusObj 			: banhji.source.statusObj,		
 		amtDueColor 		: banhji.source.amtDueColor,
 	    confirmMessage 		: banhji.source.confirmMessage,
 		frequencyList 		: banhji.source.frequencyList,
@@ -49575,17 +49873,14 @@
 		showDay 			: false,
 		obj 				: null,
 		isEdit 				: false,
+		saveDraft 			: false,
 		saveClose 			: false,
 		savePrint 			: false,
 		saveRecurring 		: false,
 		showConfirm 		: false,
 		notDuplicateNumber 	: true,
-		statusSrc 			: "",
 		recurring 			: "",
 		recurring_validate 	: false,
-		showDiscount 		: false,
-		sub_total 			: 0,		
-		discount 			: 0,
 		balance 			: 0,		
 		total 				: 0,		
 		user_id				: banhji.source.user_id,
@@ -49692,67 +49987,35 @@
 		    obj.set("contact_id", id);
 		    this.contactChanges();
 	    },
-	    contactChanges 		: function(id){
+		contactChanges 		: function(){
 			var self = this, obj = this.get("obj");
 
-	    	if(obj.contact_id>0){
+	    	if(obj.contact_id>0){	    				    			    	
 		    	var contact = this.contactDS.get(obj.contact_id);
-		    		    	
+		    	
+		    	obj.set("payment_term_id", contact.payment_term_id);
 		    	obj.set("locale", contact.locale);
 		    	obj.set("bill_to", contact.bill_to);
 		    	obj.set("ship_to", contact.ship_to);
 
 		    	this.setRate();
+		    	this.setTerm();
 		    	this.loadBalance();
-		    	this.jobDS.filter({ field:"contact_id", value:obj.contact_id });
+		    	this.jobDS.filter({ field:"contact_id", value: obj.contact_id });
 	    	}
 	    	
 		    this.changes();
 	    },
-		loadBalance 		: function(){
-			var self = this, 
-			obj = this.get("obj"),
-			contact = this.contactDS.get(obj.contact_id),
-			balance = 0, creditAllowed = 0;			
+	    loadBalance 		: function(){
+			var self = this, obj = this.get("obj");
 
-			this.txnDS.query({    			
-				filter:[
-					{ field:"amount", operator:"select_sum", value:"amount" },
-					{ field:"contact_id", value:obj.contact_id },
-					{ field:"type", operator:"where_in", value:["Commercial_Invoice", "Vat_Invoice", "Invoice"] },
-					{ field:"status", operator:"where_in", value:[0,2] }
-				]
-			}).then(function(){
-				var view = self.txnDS.view();
-
-				balance += view[0].amount;
-
-		    	return self.txnDS.query({
-		    		filter:[
-						{ field:"contact_id", value:obj.contact_id },
-						{ field:"type", operator:"where_in", value:["Commercial_Invoice", "Vat_Invoice", "Invoice"] },
-						{ field:"status", value:2 }
-					]
-		    	});	
-			}).then(function(){
-				var view = self.txnDS.view();				
-
-				var idList = [0];
-				$.each(view, function(index, value){
-					idList.push(value.id);
-				});
-
-		    	return self.txnDS.query({
-		    		filter:[
-		    			{ field:"amount", operator:"select_sum", value:"amount" },
-						{ field:"reference_id", operator:"where_in", value: idList },
-						{ field:"type", value:"Cash_Receipt" }
-					]
-		    	});
+			this.balanceDS.query({
+				filter: { field:"contact_id", value:obj.contact_id }
 		    }).then(function(){
-		    	var view = self.txnDS.view();
-
-		    	balance -= view[0].amount;
+		    	var view = self.balanceDS.view(),
+		  			contact = self.contactDS.get(obj.contact_id), 
+					balance = view[0].amount,
+					creditAllowed = 0;
 
 		    	if(contact.credit_limit > balance){
 					creditAllowed = contact.credit_limit - balance;
@@ -49762,17 +50025,24 @@
 		    	obj.set("credit_allowed", creditAllowed);
 			});				
 		},
-	    //Currency Rate	
+	    //Currency Rate
 		setRate 			: function(){
 			var obj = this.get("obj"), 
-			rate = banhji.source.getRate(obj.locale, new Date(obj.issued_date));			
+			rate = banhji.source.getRate(obj.locale, new Date(obj.issued_date));
 			
 			obj.set("rate", rate);
 
+			//Item Lines
 			$.each(this.lineDS.data(), function(index, value){
 				var itemRate = rate / banhji.source.getRate(value.locale, new Date(obj.issued_date));
 				value.set("rate", itemRate);
-			});						
+			});
+
+			//Assembly Lines
+			$.each(this.assemblyLineDS.data(), function(index, value){
+				var itemRate = rate / banhji.source.getRate(value.locale, new Date(obj.issued_date));
+				value.set("rate", itemRate);
+			});
 		},
 		//Payment Term
 		setTerm 			: function(){
@@ -49806,130 +50076,139 @@
 				}
 			}				
 		},
-		//Item		
-		itemChanges 		: function(e){
-			e.preventDefault();
+		//Item
+		addItem 			: function(uid){
+			var self = this,
+				row = this.lineDS.getByUid(uid),
+				obj = this.get("obj"),
+				item = row.item,
+				rate = obj.rate / banhji.source.getRate(item.locale, new Date(obj.issued_date));
 
-			var self = this, data = e.data,
-				obj = this.get("obj");
-			
-			if(data.item_id>0){
-				var item = this.itemDS.get(data.item_id), assemblyId = 0;
-				if(item.is_assembly=="1"){
-					$.each(this.lineDS.data(), function(index, value){
-						if(value.item_id==data.item_id){
-							assemblyId++;
-						}
+			row.set("item_id", item.id);			
+			row.set("description", item.sale_description);
+			row.set("cost", item.cost * rate);
+			row.set("rate", rate);
+			row.set("locale", item.locale);
+
+			//Get first price
+			this.assemblyDS.query({
+	        	filter:[
+	        		{ field:"item_id", value:item.id },
+	        		{ field:"assembly_id", value:0 }
+	        	],
+	        	page: 1,
+	        	pageSize: 1
+	        }).then(function(){
+	        	var view = self.assemblyDS.view();
+
+	        	if(view.length>0){
+	        		var measurement = { 
+	        			measurement_id 	: view[0].measurement_id,
+	        			price 			: view[0].price * rate,
+	        			conversion_ratio: view[0].conversion_ratio, 
+	        			measurement 	: view[0].measurement 
+	        		};
+	        		row.set("measurement", measurement);
+	        	}
+	        });
+		},
+		addItemCatalog 		: function(uid){
+			var self = this,
+				row = this.lineDS.getByUid(uid),
+				obj = this.get("obj"),
+				item = row.item;
+
+			this.lineDS.remove(row);
+
+        	$.each(item.catalogs, function(index, value){
+				var catalogItem = banhji.source.itemDS.get(value);
+
+				if(catalogItem){
+					var rate = obj.rate / banhji.source.getRate(catalogItem.locale, new Date(obj.issued_date));
+
+					self.lineDS.add({
+						transaction_id 		: obj.id,
+						tax_item_id 		: 0,
+						item_id 			: catalogItem.id,
+						measurement_id 		: 0,
+						description 		: catalogItem.sale_description,
+						quantity 	 		: 1,
+						conversion_ratio 	: 1,
+						cost 				: catalogItem.cost * rate,
+						price 				: 0,
+						amount 				: 0,
+						discount 			: 0,
+						rate				: rate,
+						locale				: catalogItem.locale,
+						movement 			: -1,
+
+						discount_percentage : 0,
+						item 				: catalogItem,
+						measurement 		: { measurement_id:"", measurement:"" },
+						tax_item 			: { id:"", name:"" }
 					});
 				}
-
-				if(assemblyId<2){//No duplicate assembly item
-			        if(item.is_catalog=="1"){
-			        	this.lineDS.remove(data);
-
-						$.each(item.catalogs, function(ind, val){
-							var catalogItem = self.itemDS.get(val);
-
-							if(catalogItem){
-								var rate = obj.rate / banhji.source.getRate(catalogItem.locale, new Date(obj.issued_date)),
-									itemPrices = banhji.source.getPriceList(catalogItem.id);
-
-								self.lineDS.add({
-									transaction_id 		: obj.id,
-									tax_item_id 		: 0,
-									item_id 			: catalogItem.id,
-									measurement_id 		: itemPrices.length>0 ? itemPrices[0].measurement_id : catalogItem.measurement_id,
-									description 		: catalogItem.sale_description,
-									quantity 	 		: 1,
-									conversion_ratio 	: itemPrices.length>0 ? itemPrices[0].conversion_ratio : 1,
-									price 				: itemPrices.length>0 ? itemPrices[0].price * rate : catalogItem.price * rate,
-									amount 				: 0,
-									discount 			: 0,
-									rate				: rate,
-									locale				: catalogItem.locale,
-									movement 			: -1,
-
-									item_prices 		: itemPrices
-								});
-							}
-						});
-
-						this.changes();
-			        }else if(item.is_assembly=="1"){
-			        	var rate = obj.rate / banhji.source.getRate(item.locale, new Date(obj.issued_date));
-
-			        	data.set("measurement_id", item.measurement_id);
-			    		data.set("description", item.sale_description);
-			    		data.set("quantity", 1);
-			    		data.set("conversion_ratio", 1);
-				        data.set("price", item.price*rate);
-				        data.set("rate", rate);
-				        data.set("locale", item.locale);
-				        data.set("movement", -1);
-
-				        this.changes();
-
-				        this.assemblyDS.query({
-				        	filter:{ field:"assembly_id", value:data.item_id }
-				        }).then(function(){
-				        	var view = self.assemblyDS.view();
-
-				        	$.each(view, function(index, value){
-				        		rate = obj.rate / banhji.source.getRate(value.locale, new Date(obj.issued_date));
-
-								self.assemblyLineDS.add({
-									transaction_id 		: obj.id,
-									item_id 			: value.item_id,
-									assembly_id 		: value.assembly_id,
-									measurement_id 		: value.measurement_id,
-									description 		: "",
-									quantity 	 		: value.quantity,
-									conversion_ratio 	: value.conversion_ratio,
-									cost 				: value.cost*rate,
-									price 				: value.price*rate,
-									amount 				: value.price*rate,
-									rate				: rate,
-									locale				: value.locale,
-									movement 			: -1
-								});
-					        });
-				        });
-			        }else{
-						var rate = obj.rate / banhji.source.getRate(item.locale, new Date(obj.issued_date)),
-							itemPrices = banhji.source.getPriceList(data.item_id);
-
-						data.set("item_prices", banhji.source.getPriceList(data.item_id));
-			    		data.set("measurement_id", itemPrices.length>0 ? itemPrices[0].measurement_id : item.measurement_id);
-			    		data.set("description", item.sale_description);
-			    		data.set("quantity", 1);
-			    		data.set("conversion_ratio", itemPrices.length>0 ? itemPrices[0].conversion_ratio : 1);
-				        data.set("price", itemPrices.length>0 ? itemPrices[0].price * rate : item.price * rate);
-				        data.set("rate", rate);	
-				        data.set("locale", item.locale);
-
-				        this.changes();
-			    	}
-			    }else{
-			    	data.set("item_id", "");
-			    }
-	        }
+			});
 		},
-		measurementChanges 		: function(e){
-			var data = e.data, obj = this.get("obj");
+		addItemAssembly 	: function(uid){
+			var self = this,
+				row = this.lineDS.getByUid(uid),
+				obj = this.get("obj"),
+				item = row.item,
+				rate = obj.rate / banhji.source.getRate(item.locale, new Date(obj.issued_date));
 
-			if(data.measurement_id>0){
-				$.each(data.item_prices, function(index, value){
-					if(value.measurement_id==data.measurement_id){
-				        
-				        data.set("price", value.price * data.rate);
-				        data.set("conversion_ratio", value.conversion_ratio);
-				        
-						return false;
-					}
-				});
+			var notExist = true;
+			$.each(this.assemblyLineDS.data(), function(index, value){
+				if(value.assembly_id==item.id){
+					notExist = false;
 
-		        this.changes();
-	        }
+					return false;
+				}
+			});
+
+			if(notExist){
+				row.set("item_id", item.id);
+	        	row.set("measurement_id", item.measurement_id);
+	    		row.set("description", item.sale_description);
+	    		row.set("conversion_ratio", 1);
+		        row.set("cost", item.cost * rate);
+		        row.set("price", item.price * rate);
+		        row.set("rate", rate);
+		        row.set("locale", item.locale);
+
+		        this.assemblyDS.query({
+		        	filter:{ field:"assembly_id", value:row.item_id }
+		        }).then(function(){
+		        	var view = self.assemblyDS.view();
+
+		        	$.each(view, function(index, value){
+		        		var itemAssembly = banhji.source.itemDS.get(value.item_id),
+		        			itemAssemblyRate = obj.rate / banhji.source.getRate(itemAssembly.locale, new Date(obj.issued_date));
+
+						self.assemblyLineDS.add({
+							transaction_id 		: obj.id,
+							item_id 			: value.item_id,
+							assembly_id 		: value.assembly_id,
+							measurement_id 		: value.measurement_id,
+							description 		: itemAssembly.sale_description,
+							quantity 	 		: value.quantity,
+							conversion_ratio 	: value.conversion_ratio,
+							cost 				: itemAssembly.cost * rate,
+							price 				: value.price * itemAssemblyRate,
+							amount 				: value.price * itemAssemblyRate,
+							rate				: itemAssemblyRate,
+							locale				: value.locale,
+							movement 			: -1,
+
+							item 				: itemAssembly
+						});
+			        });
+		        });
+	    	}else{
+	    		alert("Duplicate Item Assembly!");
+	    		row.set("item_id", 0);
+	    		row.set("item", { id:"", name:"" });
+	    	}
 		},
 		//Number      	
 		checkExistingNumber 	: function(){
@@ -49998,11 +50277,52 @@
 				obj.set("number", str);
 			});
 		},
+		setStatus 			: function(){
+			var self = this,
+				obj = this.get("obj"), 
+				statusObj = this.get("statusObj");
+
+			statusObj.set("text", "");
+	        statusObj.set("date", "");
+	        statusObj.set("number", "");
+	        statusObj.set("url", "");
+
+			switch(obj.status) {
+				case 1:
+			    	statusObj.set("text", "used");
+
+			    	this.txnDS.query({
+			    		filter:{ field:"reference_id", value: obj.id },
+			    		sort: { field:"issued_date", dir:"desc" },
+			    		page:1,
+			    		pageSize:1
+			    	}).then(function(){
+			    		var view = self.txnDS.view();
+
+			    		if(view.length>0){
+			    			statusObj.set("date", kendo.toString(new Date(view[0].issued_date), "dd-MM-yyyy h:mm:ss tt"));
+			    			statusObj.set("number", view[0].number);
+			    			
+			    			var url = "#/" + view[0].type.toLowerCase() + "/" + view[0].id;
+			    			statusObj.set("url", url);
+			    		}
+			    	});
+			        break;
+			    case 3:
+			        statusObj.set("text", "return");
+			        break;
+			    case 4:
+			        statusObj.set("text", "draft");
+			        break;
+			    default:
+			        //Default here
+			}
+		},
 		//Obj
-		loadObj 				: function(id){
+		loadObj 			: function(id){
 			var self = this, para = [];
 
-			para.push({ field:"id", value: id });			
+			para.push({ field:"id", value: id });
 
 			if(this.get("recurring")=="use"){
 				this.set("recurring","");
@@ -50014,7 +50334,7 @@
 					para.push({ field:"is_recurring", value: 1 });
 				}
 
-				this.dataSource.query({    			
+				this.dataSource.query({
 					filter: para,
 					page: 1,
 					pageSize: 100
@@ -50022,63 +50342,46 @@
 					var view = self.dataSource.view();
 
 					self.set("obj", view[0]);
+					self.set("total", kendo.toString(view[0].amount, "c2", view[0].locale));					
+					self.setStatus();
 					
-			        self.set("total", kendo.toString(view[0].amount, "c", view[0].locale));				
-					
-					if(view[0].status=="1"){
-						self.set("statusSrc", banhji.source.usedSrc);
-					}else{
-						self.set("statusSrc", banhji.source.openSrc);
-					}
+					self.lineDS.query({
+						filter: [
+							{ field: "transaction_id", value: id },
+							{ field: "assembly_id", value: 0 }
+						],
+					});
 
-					if(view[0].discount>0){
-						self.set("showDiscount", true);
-					}
-					
-					self.loadLines(id);
 					self.assemblyLineDS.filter([
 						{ field: "transaction_id", value: id },
 						{ field: "assembly_id >", value: 0 }
 					]);
-					self.attachmentDS.filter({ field: "transaction_id", value: id });
+					
+					self.attachmentDS.filter({ field: "transaction_id", value: id });					
 				});
-			}
-		},
-		loadLines 				: function(id){
-			var self = this;
-
-			self.lineDS.query({
-				filter: [
-					{ field: "transaction_id", value: id },
-					{ field: "assembly_id", value: 0 }
-				]
-			}).then(function(){
-				var view = self.lineDS.view();
-
-				$.each(view, function(index, value){
-					value.set("item_prices", banhji.source.getPriceList(value.item_id));
-				});
-			});
+			}				
 		},
 		changes				: function(){
 			var self = this, obj = this.get("obj"),
-			total = 0, subTotal = 0, discount = 0, tax = 0, itemIds = [];
+				total = 0, subTotal = 0, discount =0, tax = 0, remaining = 0, amount_due = 0, itemIds = [];
 
-			$.each(this.lineDS.data(), function(index, value) {					
+			$.each(this.lineDS.data(), function(index, value) {
 				var amt = value.quantity * value.price;
 
 				//Discount by line
 				if(value.discount>0){
-					var discount_amount = amt * value.discount;
-					amt -= discount_amount;
-					discount += discount_amount;
+					amt -= value.discount;
+					discount += value.discount;
 				}
 
 				//Tax by line
 				if(value.tax_item_id>0){
-					var taxItem = self.taxItemDS.get(value.tax_item_id);
-					tax += amt * taxItem.rate;
-				}					
+					var taxAmount = amt * value.tax_item.rate;
+					tax += taxAmount;
+					value.set("tax", taxAmount);
+				}else{
+					value.set("tax", 0);
+				}
 
 				value.set("amount", amt);
 				subTotal += amt;
@@ -50093,35 +50396,75 @@
 
 	        //Warning over credit allowed
 	        if(obj.credit_allowed>0 && total>obj.credit_allowed){
-	        	this.set("amtDueColor", "Gold");
+	        	this.set("amtDueColor", "Gold");		        	
 	        }else{
 	        	this.set("amtDueColor", banhji.source.amtDueColor);
 	        }
 
 	        obj.set("sub_total", subTotal);
 	        obj.set("discount", discount);
-	        obj.set("tax", tax);
+	        obj.set("tax", tax);			
 			obj.set("amount", total);
 
-			this.set("total", kendo.toString(total, "c", obj.locale));	    	
-
+			this.set("total", kendo.toString(total, "c", obj.locale));
+	    	
 	    	//Remove Assembly Item List
-			var raw = this.assemblyLineDS.data();			
+			var raw = this.assemblyLineDS.data();
 		    var item, i;
 		    for(i=raw.length-1; i>=0; i--){
 		    	item = raw[i];
-		    	
+
 		    	if (jQuery.inArray(kendo.parseInt(item.assembly_id), itemIds)==-1) {
 			       	this.assemblyLineDS.remove(item);
 			    }
 		    }
+		},
+		lineDSChanges 		: function(arg){
+			var self = banhji.quote;
+
+			if(arg.field){
+				if(arg.field=="item"){
+					var dataRow = arg.items[0],
+						item = dataRow.item;
+
+					if(item.is_catalog=="1"){
+						self.addItemCatalog(dataRow.uid);
+					}else if(item.is_assembly=="1"){
+						self.addItemAssembly(dataRow.uid);
+					}else{
+						self.addItem(dataRow.uid);
+					}
+
+					self.addExtraRow(dataRow.uid);
+				}else if(arg.field=="quantity" || arg.field=="price" || arg.field=="discount"){
+					self.changes();					
+				}else if(arg.field=="measurement"){
+					var dataRow = arg.items[0];
+					
+					dataRow.set("measurement_id", dataRow.measurement.measurement_id);
+			        dataRow.set("price", dataRow.measurement.price * dataRow.rate);
+			        dataRow.set("conversion_ratio", dataRow.measurement.conversion_ratio);
+			    }else if(arg.field=="discount_percentage"){
+			    	var dataRow = arg.items[0],
+			    		percentageAmount = dataRow.quantity * dataRow.price * dataRow.discount_percentage;
+
+			    	dataRow.set("discount", percentageAmount);
+				}else if(arg.field=="tax_item"){
+					var dataRow = arg.items[0];
+					
+					dataRow.set("tax_item_id", dataRow.tax_item.id);
+					dataRow.set("tax", 0);
+
+					self.changes();
+				}
+			}
 		},
 		addEmpty 		 	: function(){
 			this.dataSource.data([]);
 			this.lineDS.data([]);
 			this.assemblyLineDS.data([]);
 			this.attachmentDS.data([]);
-
+			
 			this.set("isEdit", false);
 			this.set("obj", null);
 			this.set("total", 0);
@@ -50131,47 +50474,53 @@
 			var duedate = new Date();
 			duedate.setDate(duedate.getDate() + 30);
 
-			this.dataSource.insert(0,{
-				contact_id 				: "",
+			this.dataSource.insert(0, {
+				contact_id 			: "",
 				transaction_template_id : 1,
-				payment_term_id 		: 0,
-				recurring_id 			: "",
-				user_id 				: this.get("user_id"),
-				employee_id 			: "",
-			   	type					: "Quote",//Required
-			   	number 					: "",
-			   	sub_total 				: 0,
-			   	amount					: 0,
-			   	discount 				: 0,
-			   	tax 					: 0,
-			   	rate					: 1,
-			   	locale 					: banhji.locale,
-			   	issued_date 			: new Date(),
-			   	due_date 				: duedate,
-			   	bill_to 				: "",
-			   	ship_to 				: "",
-			   	memo 					: "",
-			   	memo2 					: "",
-			   	status 					: 0,
-			   	segments 				: [],
+				payment_term_id 	: 0,
+				reference_id 		: "",
+				recurring_id 		: "",
+				job_id 				: 0,
+				user_id 			: this.get("user_id"),
+				employee_id			: "",
+			   	type				: "Quote",//Required
+			   	number 				: "",
+			   	sub_total 			: 0,
+			   	amount				: 0,
+			   	credit_allowed 		: 0,
+			   	discount 			: 0,
+			   	tax 				: 0,
+			   	rate				: 1,
+			   	locale 				: banhji.locale,
+			   	issued_date 		: new Date(),
+			   	due_date 			: duedate,
+			   	bill_to 			: "",
+			   	ship_to 			: "",
+			   	memo 				: "",
+			   	memo2 				: "",
+			   	status 				: 0,
+			   	segments 			: [],
 			   	//Recurring
-			   	recurring_name 			: "",
-			   	start_date 				: new Date(),
-			   	frequency 				: "Daily",
-			   	month_option 			: "Day",
-			   	interval 				: 1,
-			   	day 					: 1,
-			   	week 					: 0,
-			   	month 					: 0,
-			   	is_recurring 			: 0
-	    	});		    		
+			   	recurring_name 		: "",
+			   	start_date 			: new Date(),
+			   	frequency 			: "Daily",
+			   	month_option 		: "Day",
+			   	interval 			: 1,
+			   	day 				: 1,
+			   	week 				: 0,
+			   	month 				: 0,
+			   	is_recurring 		: 0
+	    	});
 			
 			var obj = this.dataSource.at(0);
 			this.set("obj", obj);
-			
-			this.generateNumber();
 			this.setRate();
-			this.addRow();
+			this.generateNumber();
+
+			//Default rows
+			for (var i = 0; i < banhji.source.defaultLines; i++) {
+				this.addRow();
+			}
 		},
 		addRow 				: function(){
 			var obj = this.get("obj");
@@ -50184,7 +50533,8 @@
 				measurement_id 		: 0,
 				description 		: "",
 				quantity 	 		: 1,
-				conversion_ratio 	: 1,
+				conversion_ratio 	: 0,
+				cost 				: 0,
 				price 				: 0,
 				amount 				: 0,
 				discount 			: 0,
@@ -50192,12 +50542,33 @@
 				locale				: obj.locale,
 				movement 			: -1,
 
-				item_prices 		: []
+				discount_percentage : 0,
+				item 				: { id:"", name:"" },
+				measurement 		: { measurement_id:"", measurement:"" },
+				tax_item 			: { id:"", name:"" }
 			});
 		},
+		addExtraRow 		: function(uid){
+			var row = this.lineDS.getByUid(uid),
+				index = this.lineDS.indexOf(row);
+
+			if(index==this.lineDS.total()-1){
+				this.addRow();
+			}
+		},
+		removeEmptyRow 		: function(){
+			var raw = this.lineDS.data();
+		    var item, i;
+		    for(i=raw.length-1; i>=0; i--){
+		    	item = raw[i];
+
+		    	if (item.item_id==0) {
+			       	this.lineDS.remove(item);
+			    }
+		    }
+	    },
 		removeRow 			: function(e){
 			var data = e.data;
-
 			if(this.lineDS.total()>1){
 				this.lineDS.remove(data);
 		        this.changes();
@@ -50220,17 +50591,43 @@
 	    },
 		save 				: function(){
 	    	var self = this, obj = this.get("obj");
-	    	obj.set("issued_date", kendo.toString(new Date(obj.issued_date), "s"));
 
-	    	//Recurring
+	    	obj.set("issued_date", kendo.toString(new Date(obj.issued_date), "s"));
+	    	obj.set("due_date", kendo.toString(new Date(obj.due_date), "yyyy-MM-dd"));
+
+	    	//Warning over credit allowed
+	        if(obj.credit_limit>0 && obj.amount>obj.credit_allowed){
+	        	alert("Over credit allowed!");
+	        }
+
+	        this.removeEmptyRow();
+
+	        //Save Draft
+	        if(this.get("saveDraft")){
+	        	obj.set("status", 4); //In progress
+	        	obj.set("progress", "Draft");
+	        	obj.set("is_journal", 0);//No Journal
+	        }
+
+	        //Recurring
 	    	if(this.get("saveRecurring")){
 	    		this.set("saveRecurring", false);
 	    		
 	    		obj.set("number", "");
 	    		obj.set("is_recurring", 1);
 	    	}
+
+	        //Edit Mode
+	    	if(obj.isNew()==false){
+	    		//Use draft
+	    		if(obj.status==4){
+	    			obj.set("status", 0);//Open
+	    			obj.set("progress", "");
+	    			obj.set("is_journal", 1);//Add Journal
+	    		}
+	    	}	
 	    	
-    		//Save Obj
+			//Save Obj
 			this.objSync()
 			.then(function(data){ //Success
 				if(self.get("isEdit")==false){
@@ -50239,7 +50636,7 @@
 						value.set("transaction_id", data[0].id);
 					});
 
-					//Assembly line
+					//Assembly Item line
 					$.each(self.assemblyLineDS.data(), function(index, value){
 						value.set("transaction_id", data[0].id);
 					});
@@ -50248,9 +50645,10 @@
 					$.each(self.attachmentDS.data(), function(index, value){
 			    		value.set("transaction_id", data[0].id);
 		            });
-				}
+				}	
+
 				self.lineDS.sync();
-				self.assemblyLineDS.sync();
+				self.assemblyLineDS.sync();				
 				self.uploadFile();
 				
 				return data;
@@ -50259,15 +50657,15 @@
 			}).then(function(result){
 				$("#ntf1").data("kendoNotification").success(banhji.source.successMessage);
 
-				if(self.get("saveClose")){
-					//Save Close
+				if(self.get("saveDraft") || self.get("saveClose")){
+					//Save Draft or Save Close
+					self.set("saveDraft", false);
 					self.set("saveClose", false);
 					self.cancel();
-					window.history.back();
 				}else if(self.get("savePrint")){
 					//Save Print
 					self.set("savePrint", false);
-					self.cancel();
+					self.clear();
 					if(result[0].transaction_template_id>0){
 						banhji.router.navigate("/invoice_form/"+result[0].id);
 					}
@@ -50277,18 +50675,22 @@
 				}
 			});
 		},
-		cancel 				: function(){
+		clear 				: function(){
 			this.dataSource.cancelChanges();
 			this.lineDS.cancelChanges();
 			this.assemblyLineDS.cancelChanges();
 			this.attachmentDS.cancelChanges();
-
+			
 			this.dataSource.data([]);
 			this.lineDS.data([]);
 			this.assemblyLineDS.data([]);
 			this.attachmentDS.data([]);
-			
+
 			banhji.userManagement.removeMultiTask("quote");
+		},
+		cancel 				: function(){
+			this.clear();
+			window.history.back();
 		},
 		delete 				: function(){
 			var self = this, obj = this.get("obj");
@@ -50339,6 +50741,7 @@
 				obj = self.get("obj");
 				
 				obj.set("recurring_id", id);
+				obj.set("payment_term_id", view[0].payment_term_id);
 				obj.set("employee_id", view[0].employee_id);//Sale Rep
 				obj.set("job_id", view[0].job_id);
 				obj.set("segments", view[0].segments);
@@ -50352,27 +50755,33 @@
 			});
 
 			this.recurringLineDS.query({
-				filter: { field:"transaction_id", value:id },
-				page: 1,
-				pageSize: 100
+				filter:[
+					{ field: "transaction_id", value: id },
+					{ field: "assembly_id", value: 0 }
+				]
 			}).then(function(){
 				var view = self.recurringLineDS.view();
 				self.lineDS.data([]);
 
 				$.each(view, function(index, value){
-					self.lineDS.add({					
+					self.lineDS.add({
 						transaction_id 		: 0,
-						tax_item_id 		: value.tax_item_id,							
-						item_id 			: value.item_id,									
-						description 		: value.description,							
-						quantity 			: value.quantity,
-						price 				: value.price,								
-						amount 	 			: value.amount,									
+						tax_item_id 		: value.tax_item_id,
+						item_id 			: value.item_id,
+						measurement_id 		: value.measurement_id,
+						description 		: value.description,
+						quantity 	 		: value.quantity,
+						cost 				: value.cost,
+						price 				: value.price,
+						amount 				: value.amount,
+						discount 			: value.discount,
 						rate				: value.rate,
 						locale				: value.locale,
 						movement 			: value.movement,
-						
-						item_prices 		: banhji.source.getPriceList(value.item_id)
+
+						item 				: value.item,
+						measurement 		: value.measurement,
+						tax_item 			: value.tax_item
 					});
 				});
 
@@ -50471,20 +50880,6 @@
 		  	sort: [
 			  	{ field: "segment_id", dir: "asc" },
 			  	{ field: "code", dir: "asc" }
-			]
-		}),
-		taxItemDS 			: new kendo.data.DataSource({
-		  	data: banhji.source.taxList,
-		  	filter:{
-			    logic: "or",
-			    filters: [
-			      	{ field: "tax_type_id", value: 3 },//Customer Tax
-			      	{ field: "tax_type_id", value: 9 }
-			    ]
-			},
-		  	sort: [
-			  	{ field: "tax_type_id", dir: "asc" },
-			  	{ field: "name", dir: "asc" }
 			]
 		}),
 		contactDS  			: new kendo.data.DataSource({
@@ -50911,14 +51306,37 @@
 	        statusObj.set("url", "");
 
 			switch(obj.status) {
-			    case 3:
-			        statusObj.set("text", "return");
+				case 0:
+			        statusObj.set("text", "open");
+			        break;
+				case 1:
+			    	statusObj.set("text", "used");
+
+			    	this.txnDS.query({
+			    		filter:{ field:"reference_id", value: obj.id },
+			    		sort: { field:"issued_date", dir:"desc" },
+			    		page:1,
+			    		pageSize:1
+			    	}).then(function(){
+			    		var view = self.txnDS.view();
+
+			    		if(view.length>0){
+			    			statusObj.set("date", kendo.toString(new Date(view[0].issued_date), "dd-MM-yyyy h:mm:ss tt"));
+			    			statusObj.set("number", view[0].number);
+		    				
+		    				var url = "#/" + view[0].type.toLowerCase() + "/" + view[0].id;
+		    				statusObj.set("url", url);
+			    		}
+			    	});
+			        break;
+			    case 2:
+			        statusObj.set("text", "partialy used");
 			        break;
 			    case 4:
 			        statusObj.set("text", "draft");
 			        break;
 			    default:
-			        statusObj.set("text", "paid");
+			        //Default here
 			}
 		},
 		//Obj
@@ -51120,8 +51538,8 @@
 			this.setRate();
 			this.generateNumber();
 
-			//Default 5 rows
-			for (var i = 0; i < 5; i++) {
+			//Default rows
+			for (var i = 0; i < banhji.source.defaultLines; i++) {
 				this.addRow();
 			}
 		},
@@ -53122,8 +53540,8 @@
 			this.setRate();
 			this.generateNumber();
 
-			//Default 5 rows
-			for (var i = 0; i < 5; i++) {
+			//Default rows
+			for (var i = 0; i < banhji.source.defaultLines; i++) {
 				this.addRow();
 			}
 		},
@@ -54440,7 +54858,7 @@
 			    				statusObj.set("url", url);
 			    			}
 			    		}
-			    	});			        
+			    	});
 			        break;
 			    case 2:
 			        statusObj.set("text", "partialy paid");
@@ -54723,8 +55141,8 @@
 			this.setRate();
 			this.generateNumber();
 
-			//Default 5 rows
-			for (var i = 0; i < 5; i++) {
+			//Default rows
+			for (var i = 0; i < banhji.source.defaultLines; i++) {
 				this.addRow();
 			}
 		},
@@ -59312,6 +59730,58 @@
             	
             	self.set("totalAmount", kendo.toString(amount, "c2", banhji.locale));
             });
+            this.dataSource.bind("requestEnd", function(e){				
+				if(e.type=="read"){
+					var response = e.response;
+					self.exArray = [];
+
+					self.exArray.push({
+	            		cells: [
+	            			{ value: self.company.name, textAlign: "center", colSpan: 4 }
+	            		]
+	            	});
+	            	self.exArray.push({
+	            		cells: [
+	            			{ value: "Sale Summary by Customer",bold: true, fontSize: 20, textAlign: "center", colSpan: 4 }
+	            		]
+	            	});
+	            	if(self.displayDate){
+		            	self.exArray.push({
+		            		cells: [
+		            			{ value: self.displayDate, textAlign: "center", colSpan: 4 }
+		            		]
+		            	});
+		            };
+	            	self.exArray.push({
+	            		cells: [
+	            			{ value: "", colSpan: 4 }
+	            		]
+	            	});
+	            	self.exArray.push({ 
+	            		cells: [
+							{ value: "Customer", background: "#496cad", color: "#ffffff" },
+							{ value: "Number of Invoice", background: "#496cad", color: "#ffffff" },
+							{ value: "Number of Cash Sale", background: "#496cad", color: "#ffffff" },
+							{ value: "Total Sale", background: "#496cad", color: "#ffffff" },
+						]
+					});
+	            	for (var i = 0; i < response.results.length; i++){
+				          	self.exArray.push({
+				          		cells: [
+				          	  		{ value: response.results[i].name },
+				          	  		{ value: response.results[i].invoice_count },
+				          	  		{ value: response.results[i].cash_sale_count },
+				              		{ value: kendo.parseFloat(response.results[i].amount)},
+				            	]
+				          	});
+					    self.exArray.push({
+					        cells: [
+					          	{ value: "", colSpan: 7 }
+					        ]
+					    });
+					}		
+				}
+			}); 
 		},
 		printGrid			: function() {
 			var gridElement = $('#grid'),
@@ -59396,17 +59866,15 @@
 	                { autoWidth: true },
 	                { autoWidth: true },
 	                { autoWidth: true },
-	                { autoWidth: true },
-	                { autoWidth: true },
 	                { autoWidth: true }
 	              ],
-	              title: "General Ledger",
+	              title: "Sale Summary Customer",
 	              rows: this.exArray
 	            }
 	          ]
 	        });
 	        //save the file as Excel file with extension xlsx
-	        kendo.saveAs({dataURI: workbook.toDataURL(), fileName: "GeneralLedger.xlsx"});
+	        kendo.saveAs({dataURI: workbook.toDataURL(), fileName: "saleSummaryCustomer.xlsx"});
 		}
 	});
 	banhji.saleDetailByCustomer =  kendo.observable({
@@ -59519,6 +59987,70 @@
             	
             	self.set("totalAmount", kendo.toString(amount, "c2", banhji.locale));
             });
+            this.dataSource.bind("requestEnd", function(e){				
+				if(e.type=="read"){
+					var response = e.response, balanceCal = 0, balance= 0;
+					self.exArray = [];
+
+					self.exArray.push({
+	            		cells: [
+	            			{ value: self.company.name, textAlign: "center", colSpan: 4}
+	            		]
+	            	});
+	            	self.exArray.push({
+	            		cells: [
+	            			{ value: "Sale Detail by Customer",bold: true, fontSize: 20, textAlign: "center", colSpan: 4 }
+	            		]
+	            	});
+	            	if(self.displayDate){
+		            	self.exArray.push({
+		            		cells: [
+		            			{ value: self.displayDate, textAlign: "center", colSpan: 4 }
+		            		]
+		            	});
+		            }
+	            	self.exArray.push({
+	            		cells: [
+	            			{ value: "", colSpan: 4 }
+	            		]
+	            	});
+	            	self.exArray.push({ 
+	            		cells: [
+							{ value: "Type", background: "#496cad", color: "#ffffff" },
+							{ value: "Date", background: "#496cad", color: "#ffffff" },
+							{ value: "Reference", background: "#496cad", color: "#ffffff" },
+							{ value: "Amount", background: "#496cad", color: "#ffffff" },
+						]
+					});
+					for (var i = 0; i < response.results.length; i++){
+						self.exArray.push({
+					        cells: [
+					          	{ value: response.results[i].name, bold: true, },
+					            { value: "" },
+					            { value: "" },
+					            { value: "" },
+					        ]
+					        
+					    });
+					    for(var j = 0; j < response.results[i].line.length; j++){
+					    	balance += response.results[i].line[j].amount;
+				          	self.exArray.push({
+				          		cells: [
+				          	  		{ value: response.results[i].line[j].type },
+				              		{ value: response.results[i].line[j].issued_date },
+				              		{ value: response.results[i].line[j].number},
+				              		{ value: response.results[i].line[j].amount },
+				            	]
+				          	});
+				        }
+				    	self.exArray.push({
+					        cells: [
+					          	{ value: "", colSpan: 4 }
+					        ]
+					    });
+					}
+				}
+			});
 		},
 		printGrid			: function() {
 			var gridElement = $('#grid'),
@@ -59604,16 +60136,14 @@
 	                { autoWidth: true },
 	                { autoWidth: true },
 	                { autoWidth: true },
-	                { autoWidth: true },
-	                { autoWidth: true }
 	              ],
-	              title: "General Ledger",
+	              title: "Sale Detail by Customer",
 	              rows: this.exArray
 	            }
 	          ]
 	        });
 	        //save the file as Excel file with extension xlsx
-	        kendo.saveAs({dataURI: workbook.toDataURL(), fileName: "GeneralLedger.xlsx"});
+	        kendo.saveAs({dataURI: workbook.toDataURL(), fileName: "saleDetailCustomer.xlsx"});
 		}
 	});
 	banhji.customerTransactionList =  kendo.observable({
@@ -59715,6 +60245,70 @@
             this.set("displayDate", displayDate);
 
             this.dataSource.filter(para);
+            this.dataSource.bind("requestEnd", function(e){				
+				if(e.type=="read"){
+					var response = e.response, balanceCal = 0, balance= 0;
+					self.exArray = [];
+
+					self.exArray.push({
+	            		cells: [
+	            			{ value: self.company.name, textAlign: "center", colSpan: 4}
+	            		]
+	            	});
+	            	self.exArray.push({
+	            		cells: [
+	            			{ value: "Customer Transaction List",bold: true, fontSize: 20, textAlign: "center", colSpan: 4 }
+	            		]
+	            	});
+	            	if(self.displayDate){
+		            	self.exArray.push({
+		            		cells: [
+		            			{ value: self.displayDate, textAlign: "center", colSpan: 4}
+		            		]
+		            	});
+		            }
+	            	self.exArray.push({
+	            		cells: [
+	            			{ value: "", colSpan: 4}
+	            		]
+	            	});
+	            	self.exArray.push({ 
+	            		cells: [
+							{ value: "Type", background: "#496cad", color: "#ffffff" },
+							{ value: "Date", background: "#496cad", color: "#ffffff" },
+							{ value: "Reference", background: "#496cad", color: "#ffffff" },
+							{ value: "Amount", background: "#496cad", color: "#ffffff" },
+						]
+					});
+					for (var i = 0; i < response.results.length; i++){
+						self.exArray.push({
+					        cells: [
+					          	{ value: response.results[i].name, bold: true, },
+					            { value: "" },
+					            { value: "" },
+					            { value: "" },
+					        ]
+					        
+					    });
+					    for(var j = 0; j < response.results[i].line.length; j++){
+					    	var aaa = response.results[i].line[j].quantity + response.results[i].line[j].measurement;
+				          	self.exArray.push({
+				          		cells: [
+				          	  		{ value: response.results[i].line[j].type },
+				              		{ value: response.results[i].line[j].issued_date },
+				              		{ value: response.results[i].line[j].number},
+				              		{ value: response.results[i].line[j].amount},
+				            	]
+				          	});
+				        }
+				    	self.exArray.push({
+					        cells: [
+					          	{ value: "", colSpan: 4}
+					        ]
+					    });
+					}
+				}
+			});
 		},
 		printGrid			: function() {
 			var gridElement = $('#grid'),
@@ -59800,16 +60394,14 @@
 	                { autoWidth: true },
 	                { autoWidth: true },
 	                { autoWidth: true },
-	                { autoWidth: true },
-	                { autoWidth: true }
 	              ],
-	              title: "General Ledger",
+	              title: "Customer Transaction List",
 	              rows: this.exArray
 	            }
 	          ]
 	        });
 	        //save the file as Excel file with extension xlsx
-	        kendo.saveAs({dataURI: workbook.toDataURL(), fileName: "GeneralLedger.xlsx"});
+	        kendo.saveAs({dataURI: workbook.toDataURL(), fileName: "customerTransaction.xlsx"});
 		}
 	});
 	banhji.depositDetailByCustomer =  kendo.observable({
@@ -59922,6 +60514,77 @@
             	
             	self.set("totalAmount", kendo.toString(amount, "c2", banhji.locale));
             });
+            this.dataSource.bind("requestEnd", function(e){				
+				if(e.type=="read"){
+					var response = e.response, balanceCal = 0, balance= 0;
+					self.exArray = [];
+
+					self.exArray.push({
+	            		cells: [
+	            			{ value: self.company.name, textAlign: "center", colSpan: 6}
+	            		]
+	            	});
+	            	self.exArray.push({
+	            		cells: [
+	            			{ value: "Deposit Detail by Customer",bold: true, fontSize: 20, textAlign: "center", colSpan: 6}
+	            		]
+	            	});
+	            	if(self.displayDate){
+		            	self.exArray.push({
+		            		cells: [
+		            			{ value: self.displayDate, textAlign: "center", colSpan: 6}
+		            		]
+		            	});
+		            }
+	            	self.exArray.push({
+	            		cells: [
+	            			{ value: "", colSpan: 6}
+	            		]
+	            	});
+	            	self.exArray.push({ 
+	            		cells: [
+							{ value: "Type", background: "#496cad", color: "#ffffff" },
+							{ value: "Date", background: "#496cad", color: "#ffffff" },
+							{ value: "Number", background: "#496cad", color: "#ffffff" },
+							{ value: "Reference", background: "#496cad", color: "#ffffff" },
+							{ value: "Amount", background: "#496cad", color: "#ffffff" },
+							{ value: "Balance", background: "#496cad", color: "#ffffff" },
+						]
+					});
+					for (var i = 0; i < response.results.length; i++){
+						var balance = response.results[i].balance_forward;
+						self.exArray.push({
+					        cells: [
+					          	{ value: response.results[i].name, bold: true, },
+					            { value: "" },
+					            { value: "" },
+					            { value: "" },
+					            { value: "" },
+					            { value: balance, bold: true, },
+					        ]
+					        
+					    });
+					    for(var j = 0; j < response.results[i].line.length; j++){
+					    	balance += response.results[i].line[j].amount;
+				          	self.exArray.push({
+				          		cells: [
+				          	  		{ value: response.results[i].line[j].type },
+				              		{ value: response.results[i].line[j].issued_date },
+				              		{ value: response.results[i].line[j].number},
+				              		{ value: response.results[i].line[j].reference},
+				              		{ value: response.results[i].line[j].amount},
+				              		{ value: balance},
+				            	]
+				          	});
+				        }
+				    	self.exArray.push({
+					        cells: [
+					          	{ value: "", colSpan: 4}
+					        ]
+					    });
+					}
+				}
+			});
 		},
 		printGrid			: function() {
 			var gridElement = $('#grid'),
@@ -60010,13 +60673,13 @@
 	                { autoWidth: true },
 	                { autoWidth: true }
 	              ],
-	              title: "General Ledger",
+	              title: "Deposit Detail Customer",
 	              rows: this.exArray
 	            }
 	          ]
 	        });
 	        //save the file as Excel file with extension xlsx
-	        kendo.saveAs({dataURI: workbook.toDataURL(), fileName: "GeneralLedger.xlsx"});
+	        kendo.saveAs({dataURI: workbook.toDataURL(), fileName: "depositDetailCustomer.xlsx"});
 		}
 	});
 	banhji.saleSummaryByProduct =  kendo.observable({
@@ -60151,6 +60814,62 @@
             	self.set("avg_sale", kendo.toString(avgSale, "c2", banhji.locale));
             	self.set("total_sale", kendo.toString(amount, "c2", banhji.locale));
             });
+            this.dataSource.bind("requestEnd", function(e){				
+				if(e.type=="read"){
+					var response = e.response;
+					self.exArray = [];
+
+					self.exArray.push({
+	            		cells: [
+	            			{ value: self.company.name, textAlign: "center", colSpan: 6 }
+	            		]
+	            	});
+	            	self.exArray.push({
+	            		cells: [
+	            			{ value: "Sale Summary by Product/Service",bold: true, fontSize: 20, textAlign: "center", colSpan: 6 }
+	            		]
+	            	});
+	            	if(self.displayDate){
+		            	self.exArray.push({
+		            		cells: [
+		            			{ value: self.displayDate, textAlign: "center", colSpan: 6 }
+		            		]
+		            	});
+		            };
+	            	self.exArray.push({
+	            		cells: [
+	            			{ value: "", colSpan: 6 }
+	            		]
+	            	});
+	            	self.exArray.push({ 
+	            		cells: [
+							{ value: "Item", background: "#496cad", color: "#ffffff" },
+							{ value: "QTY", background: "#496cad", color: "#ffffff" },
+							{ value: "Amount", background: "#496cad", color: "#ffffff" },
+							{ value: "AVG Price", background: "#496cad", color: "#ffffff" },
+							{ value: "AVG Cost", background: "#496cad", color: "#ffffff" },
+							{ value: "Gross Profit Margin", background: "#496cad", color: "#ffffff" },
+						]
+					});
+	            	for (var i = 0; i < response.results.length; i++){
+				          	self.exArray.push({
+				          		cells: [
+				          	  		{ value: response.results[i].name },
+				          	  		{ value: kendo.parseFloat(response.results[i].quantity)},
+				          	  		{ value: kendo.parseFloat(response.results[i].amount)},
+				          	  		{ value: kendo.parseFloat(response.results[i].avg_price)},
+				          	  		{ value: kendo.parseFloat(response.results[i].avg_cost)},
+				              		{ value: kendo.parseFloat(response.results[i].gpm)},
+				            	]
+				          	});
+					    self.exArray.push({
+					        cells: [
+					          	{ value: "", colSpan: 6 }
+					        ]
+					    });
+					}		
+				}
+			}); 
 		},
 		printGrid			: function() {
 			var gridElement = $('#grid'),
@@ -60239,13 +60958,13 @@
 	                { autoWidth: true },
 	                { autoWidth: true }
 	              ],
-	              title: "General Ledger",
+	              title: "Sale Summary Product",
 	              rows: this.exArray
 	            }
 	          ]
 	        });
 	        //save the file as Excel file with extension xlsx
-	        kendo.saveAs({dataURI: workbook.toDataURL(), fileName: "GeneralLedger.xlsx"});
+	        kendo.saveAs({dataURI: workbook.toDataURL(), fileName: "saleSummaryProduct.xlsx"});
 		}
 	});
 	banhji.saleDetailByProduct =  kendo.observable({
@@ -60382,6 +61101,79 @@
             	self.set("product_sale", kendo.toString(avgSale, "c2", banhji.locale));
             	self.set("total_sale", kendo.toString(amount, "c2", banhji.locale));
             });
+            this.dataSource.bind("requestEnd", function(e){				
+				if(e.type=="read"){
+					var response = e.response, balanceCal = 0, balance= 0;
+					self.exArray = [];
+
+					self.exArray.push({
+	            		cells: [
+	            			{ value: self.company.name, textAlign: "center", colSpan: 7}
+	            		]
+	            	});
+	            	self.exArray.push({
+	            		cells: [
+	            			{ value: "Sale Detail by Product/Service",bold: true, fontSize: 20, textAlign: "center", colSpan: 7 }
+	            		]
+	            	});
+	            	if(self.displayDate){
+		            	self.exArray.push({
+		            		cells: [
+		            			{ value: self.displayDate, textAlign: "center", colSpan: 7 }
+		            		]
+		            	});
+		            }
+	            	self.exArray.push({
+	            		cells: [
+	            			{ value: "", colSpan: 7 }
+	            		]
+	            	});
+	            	self.exArray.push({ 
+	            		cells: [
+							{ value: "Type", background: "#496cad", color: "#ffffff" },
+							{ value: "Customer", background: "#496cad", color: "#ffffff" },
+							{ value: "Invoice Date", background: "#496cad", color: "#ffffff" },
+							{ value: "Reference", background: "#496cad", color: "#ffffff" },
+							{ value: "QTY", background: "#496cad", color: "#ffffff" },
+							{ value: "Price", background: "#496cad", color: "#ffffff" },
+							{ value: "Amount", background: "#496cad", color: "#ffffff" },
+						]
+					});
+					for (var i = 0; i < response.results.length; i++){
+						self.exArray.push({
+					        cells: [
+					          	{ value: response.results[i].name, bold: true, },
+					            { value: "" },
+					            { value: "" },
+					            { value: "" },
+					            { value: "" },
+					            { value: "" },
+					            { value: "" },
+					        ]
+					        
+					    });
+					    for(var j = 0; j < response.results[i].line.length; j++){
+					    	var aaa = response.results[i].line[j].quantity + response.results[i].line[j].measurement;
+				          	self.exArray.push({
+				          		cells: [
+				          	  		{ value: response.results[i].line[j].type },
+				              		{ value: response.results[i].line[j].customer },
+				              		{ value: response.results[i].line[j].issued_date},
+				              		{ value: response.results[i].line[j].number },
+				              		{ value: aaa},
+				              		{ value: response.results[i].line[j].price },
+				              		{ value: response.results[i].line[j].amount },
+				            	]
+				          	});
+				        }
+				    	self.exArray.push({
+					        cells: [
+					          	{ value: "", colSpan: 7}
+					        ]
+					    });
+					}
+				}
+			});
 		},
 		printGrid			: function() {
 			var gridElement = $('#grid'),
@@ -60468,15 +61260,16 @@
 	                { autoWidth: true },
 	                { autoWidth: true },
 	                { autoWidth: true },
+	                { autoWidth: true },
 	                { autoWidth: true }
 	              ],
-	              title: "General Ledger",
+	              title: "Sale Detail by Product/Service",
 	              rows: this.exArray
 	            }
 	          ]
 	        });
 	        //save the file as Excel file with extension xlsx
-	        kendo.saveAs({dataURI: workbook.toDataURL(), fileName: "GeneralLedger.xlsx"});
+	        kendo.saveAs({dataURI: workbook.toDataURL(), fileName: "saleDetailProduct.xlsx"});
 		}
 	});
 	banhji.cashSaleSummaryByCustomer =  kendo.observable({
@@ -60587,6 +61380,56 @@
             	
             	self.set("totalAmount", kendo.toString(amount, "c2", banhji.locale));
             });
+            this.dataSource.bind("requestEnd", function(e){				
+				if(e.type=="read"){
+					var response = e.response;
+					self.exArray = [];
+
+					self.exArray.push({
+	            		cells: [
+	            			{ value: self.company.name, textAlign: "center", colSpan: 3}
+	            		]
+	            	});
+	            	self.exArray.push({
+	            		cells: [
+	            			{ value: "Cash Sale Summary by Customer",bold: true, fontSize: 20, textAlign: "center", colSpan: 3}
+	            		]
+	            	});
+	            	if(self.displayDate){
+		            	self.exArray.push({
+		            		cells: [
+		            			{ value: self.displayDate, textAlign: "center", colSpan: 3}
+		            		]
+		            	});
+		            };
+	            	self.exArray.push({
+	            		cells: [
+	            			{ value: "", colSpan: 3}
+	            		]
+	            	});
+	            	self.exArray.push({ 
+	            		cells: [
+							{ value: "Customer", background: "#496cad", color: "#ffffff" },
+							{ value: "Number of Cash Sale", background: "#496cad", color: "#ffffff" },
+							{ value: "Total", background: "#496cad", color: "#ffffff" },
+						]
+					});
+	            	for (var i = 0; i < response.results.length; i++){
+				          	self.exArray.push({
+				          		cells: [
+				          	  		{ value: response.results[i].name },
+				          	  		{ value: response.results[i].cash_sale_count },
+				              		{ value: kendo.parseFloat(response.results[i].amount)},
+				            	]
+				          	});
+					    self.exArray.push({
+					        cells: [
+					          	{ value: "", colSpan: 3 }
+					        ]
+					    });
+					}		
+				}
+			}); 
 		},
 		printGrid			: function() {
 			var gridElement = $('#grid'),
@@ -60671,17 +61514,14 @@
 	                { autoWidth: true },
 	                { autoWidth: true },
 	                { autoWidth: true },
-	                { autoWidth: true },
-	                { autoWidth: true },
-	                { autoWidth: true }
 	              ],
-	              title: "General Ledger",
+	              title: "Cash Sale Summary by Customer",
 	              rows: this.exArray
 	            }
 	          ]
 	        });
 	        //save the file as Excel file with extension xlsx
-	        kendo.saveAs({dataURI: workbook.toDataURL(), fileName: "GeneralLedger.xlsx"});
+	        kendo.saveAs({dataURI: workbook.toDataURL(), fileName: "cashSaleSummaryCustomer.xlsx"});
 		}
 	});
 	banhji.cashSaleDetailByCustomer =  kendo.observable({
@@ -60794,6 +61634,70 @@
             	
             	self.set("totalAmount", kendo.toString(amount, "c2", banhji.locale));
             });
+            this.dataSource.bind("requestEnd", function(e){				
+				if(e.type=="read"){
+					var response = e.response, balanceCal = 0, balance= 0;
+					self.exArray = [];
+
+					self.exArray.push({
+	            		cells: [
+	            			{ value: self.company.name, textAlign: "center", colSpan: 4}
+	            		]
+	            	});
+	            	self.exArray.push({
+	            		cells: [
+	            			{ value: "Cash Sale Detail by Customer",bold: true, fontSize: 20, textAlign: "center", colSpan: 4 }
+	            		]
+	            	});
+	            	if(self.displayDate){
+		            	self.exArray.push({
+		            		cells: [
+		            			{ value: self.displayDate, textAlign: "center", colSpan: 4 }
+		            		]
+		            	});
+		            }
+	            	self.exArray.push({
+	            		cells: [
+	            			{ value: "", colSpan: 4 }
+	            		]
+	            	});
+	            	self.exArray.push({ 
+	            		cells: [
+							{ value: "Type", background: "#496cad", color: "#ffffff" },
+							{ value: "Date", background: "#496cad", color: "#ffffff" },
+							{ value: "Reference", background: "#496cad", color: "#ffffff" },
+							{ value: "Amount", background: "#496cad", color: "#ffffff" },
+						]
+					});
+					for (var i = 0; i < response.results.length; i++){
+						self.exArray.push({
+					        cells: [
+					          	{ value: response.results[i].name, bold: true, },
+					            { value: "" },
+					            { value: "" },
+					            { value: "" },
+					        ]
+					        
+					    });
+					    for(var j = 0; j < response.results[i].line.length; j++){
+					    	balance += response.results[i].line[j].amount;
+				          	self.exArray.push({
+				          		cells: [
+				          	  		{ value: response.results[i].line[j].type },
+				              		{ value: response.results[i].line[j].issued_date },
+				              		{ value: response.results[i].line[j].number},
+				              		{ value: response.results[i].line[j].amount },
+				            	]
+				          	});
+				        }
+				    	self.exArray.push({
+					        cells: [
+					          	{ value: "", colSpan: 4 }
+					        ]
+					    });
+					}
+				}
+			});
 		},
 		printGrid			: function() {
 			var gridElement = $('#grid'),
@@ -60879,16 +61783,14 @@
 	                { autoWidth: true },
 	                { autoWidth: true },
 	                { autoWidth: true },
-	                { autoWidth: true },
-	                { autoWidth: true }
 	              ],
-	              title: "General Ledger",
+	              title: "Cash Sale Detail by Customer",
 	              rows: this.exArray
 	            }
 	          ]
 	        });
 	        //save the file as Excel file with extension xlsx
-	        kendo.saveAs({dataURI: workbook.toDataURL(), fileName: "GeneralLedger.xlsx"});
+	        kendo.saveAs({dataURI: workbook.toDataURL(), fileName: "cashSaleDetailCustomer.xlsx"});
 		}
 	});
 	banhji.cashSaleSummaryByProduct =  kendo.observable({
@@ -61023,6 +61925,63 @@
             	self.set("avg_sale", kendo.toString(avgSale, "c2", banhji.locale));
             	self.set("total_sale", kendo.toString(amount, "c2", banhji.locale));
             });
+                        this.dataSource.bind("requestEnd", function(e){				
+				if(e.type=="read"){
+					var response = e.response;
+					self.exArray = [];
+
+					self.exArray.push({
+	            		cells: [
+	            			{ value: self.company.name, textAlign: "center", colSpan: 6}
+	            		]
+	            	});
+	            	self.exArray.push({
+	            		cells: [
+	            			{ value: "Cash Sale Summary by Product/Service",bold: true, fontSize: 20, textAlign: "center", colSpan: 6}
+	            		]
+	            	});
+	            	if(self.displayDate){
+		            	self.exArray.push({
+		            		cells: [
+		            			{ value: self.displayDate, textAlign: "center", colSpan: 6}
+		            		]
+		            	});
+		            };
+	            	self.exArray.push({
+	            		cells: [
+	            			{ value: "", colSpan: 6}
+	            		]
+	            	});
+	            	self.exArray.push({ 
+	            		cells: [
+							{ value: "Item", background: "#496cad", color: "#ffffff" },
+							{ value: "QTY", background: "#496cad", color: "#ffffff" },
+							{ value: "Amount", background: "#496cad", color: "#ffffff" },
+							{ value: "AVG Price", background: "#496cad", color: "#ffffff" },
+							{ value: "AVG Cost", background: "#496cad", color: "#ffffff" },
+							{ value: "Gross Profit Margin", background: "#496cad", color: "#ffffff" },
+						]
+					});
+	            	for (var i = 0; i < response.results.length; i++){
+				          	self.exArray.push({
+				          		cells: [
+				          	  		{ value: response.results[i].name },
+				          	  		{ value: response.results[i].quantity },
+				          	  		{ value: kendo.parseFloat(response.results[i].amount)},
+				          	  		{ value: response.results[i].avg_price },
+				          	  		{ value: response.results[i].avg_cost },
+				          	  		{ value: response.results[i].gpm },
+				              		
+				            	]
+				          	});
+					    self.exArray.push({
+					        cells: [
+					          	{ value: "", colSpan: 6}
+					        ]
+					    });
+					}		
+				}
+			}); 
 		},
 		printGrid			: function() {
 			var gridElement = $('#grid'),
@@ -61111,13 +62070,13 @@
 	                { autoWidth: true },
 	                { autoWidth: true }
 	              ],
-	              title: "General Ledger",
+	              title: "Cash Sale Summary Product",
 	              rows: this.exArray
 	            }
 	          ]
 	        });
 	        //save the file as Excel file with extension xlsx
-	        kendo.saveAs({dataURI: workbook.toDataURL(), fileName: "GeneralLedger.xlsx"});
+	        kendo.saveAs({dataURI: workbook.toDataURL(), fileName: "cashSaleSummaryProduct.xlsx"});
 		}
 	});
 	banhji.cashSaleDetailByProduct =  kendo.observable({
@@ -61254,6 +62213,79 @@
             	self.set("product_sale", kendo.toString(avgSale, "c2", banhji.locale));
             	self.set("total_sale", kendo.toString(amount, "c2", banhji.locale));
             });
+            this.dataSource.bind("requestEnd", function(e){				
+				if(e.type=="read"){
+					var response = e.response, balanceCal = 0, balance= 0;
+					self.exArray = [];
+
+					self.exArray.push({
+	            		cells: [
+	            			{ value: self.company.name, textAlign: "center", colSpan: 7}
+	            		]
+	            	});
+	            	self.exArray.push({
+	            		cells: [
+	            			{ value: "Cash Sale Detail by Product/Service",bold: true, fontSize: 20, textAlign: "center", colSpan: 7 }
+	            		]
+	            	});
+	            	if(self.displayDate){
+		            	self.exArray.push({
+		            		cells: [
+		            			{ value: self.displayDate, textAlign: "center", colSpan: 7}
+		            		]
+		            	});
+		            }
+	            	self.exArray.push({
+	            		cells: [
+	            			{ value: "", colSpan: 7}
+	            		]
+	            	});
+	            	self.exArray.push({ 
+	            		cells: [
+							{ value: "Type", background: "#496cad", color: "#ffffff" },
+							{ value: "Customer", background: "#496cad", color: "#ffffff" },
+							{ value: "Invoice Date", background: "#496cad", color: "#ffffff" },
+							{ value: "Reference", background: "#496cad", color: "#ffffff" },
+							{ value: "QTY", background: "#496cad", color: "#ffffff" },
+							{ value: "Price", background: "#496cad", color: "#ffffff" },
+							{ value: "Amount", background: "#496cad", color: "#ffffff" },
+						]
+					});
+					for (var i = 0; i < response.results.length; i++){
+						self.exArray.push({
+					        cells: [
+					          	{ value: response.results[i].name, bold: true, },
+					            { value: "" },
+					            { value: "" },
+					            { value: "" },
+					            { value: "" },
+					            { value: "" },
+					            { value: "" },
+					        ]
+					        
+					    });
+					    for(var j = 0; j < response.results[i].line.length; j++){
+					    	balance += response.results[i].line[j].amount;
+				          	self.exArray.push({
+				          		cells: [
+				          	  		{ value: response.results[i].line[j].type },
+				              		{ value: response.results[i].line[j].customer },
+				              		{ value: response.results[i].line[j].issued_date},
+				              		{ value: response.results[i].line[j].number},
+				              		{ value: response.results[i].line[j].quantity},
+				              		{ value: response.results[i].line[j].price},
+				              		{ value: response.results[i].line[j].amount },
+				            	]
+				          	});
+				        }
+				    	self.exArray.push({
+					        cells: [
+					          	{ value: "", colSpan: 7}
+					        ]
+					    });
+					}
+				}
+			});
 		},
 		printGrid			: function() {
 			var gridElement = $('#grid'),
@@ -61340,15 +62372,16 @@
 	                { autoWidth: true },
 	                { autoWidth: true },
 	                { autoWidth: true },
-	                { autoWidth: true }
+	                { autoWidth: true },
+	                { autoWidth: true },
 	              ],
-	              title: "General Ledger",
+	              title: "Cash Sale Detail by Product",
 	              rows: this.exArray
 	            }
 	          ]
 	        });
 	        //save the file as Excel file with extension xlsx
-	        kendo.saveAs({dataURI: workbook.toDataURL(), fileName: "GeneralLedger.xlsx"});
+	        kendo.saveAs({dataURI: workbook.toDataURL(), fileName: "cashSaleDetailProduct.xlsx"});
 		}
 	});
 	banhji.customerBalanceSummary =  kendo.observable({
@@ -61392,6 +62425,56 @@
             	self.set("total_txn", kendo.toString(txnCount, "n0"));
             	self.set("total_balance", kendo.toString(balance, "c2", banhji.locale));
             });
+                        this.dataSource.bind("requestEnd", function(e){				
+				if(e.type=="read"){
+					var response = e.response;
+					self.exArray = [];
+
+					self.exArray.push({
+	            		cells: [
+	            			{ value: self.company.name, textAlign: "center", colSpan: 3}
+	            		]
+	            	});
+	            	self.exArray.push({
+	            		cells: [
+	            			{ value: "Cash Sale Summary by Customer",bold: true, fontSize: 20, textAlign: "center", colSpan: 3}
+	            		]
+	            	});
+	            	if(self.displayDate){
+		            	self.exArray.push({
+		            		cells: [
+		            			{ value: self.displayDate, textAlign: "center", colSpan: 3}
+		            		]
+		            	});
+		            };
+	            	self.exArray.push({
+	            		cells: [
+	            			{ value: "", colSpan: 3}
+	            		]
+	            	});
+	            	self.exArray.push({ 
+	            		cells: [
+							{ value: "Customer", background: "#496cad", color: "#ffffff" },
+							{ value: "No. OF Transaction", background: "#496cad", color: "#ffffff" },
+							{ value: "Balance", background: "#496cad", color: "#ffffff" },
+						]
+					});
+	            	for (var i = 0; i < response.results.length; i++){
+				          	self.exArray.push({
+				          		cells: [
+				          	  		{ value: response.results[i].name },
+				          	  		{ value: response.results[i].txn_count },
+				              		{ value: kendo.parseFloat(response.results[i].amount)},
+				            	]
+				          	});
+					    self.exArray.push({
+					        cells: [
+					          	{ value: "", colSpan: 3 }
+					        ]
+					    });
+					}		
+				}
+			}); 
 		},
 		printGrid			: function() {
 			var gridElement = $('#grid'),
@@ -61476,17 +62559,14 @@
 	                { autoWidth: true },
 	                { autoWidth: true },
 	                { autoWidth: true },
-	                { autoWidth: true },
-	                { autoWidth: true },
-	                { autoWidth: true }
 	              ],
-	              title: "General Ledger",
+	              title: "Customer Balance Summary",
 	              rows: this.exArray
 	            }
 	          ]
 	        });
 	        //save the file as Excel file with extension xlsx
-	        kendo.saveAs({dataURI: workbook.toDataURL(), fileName: "GeneralLedger.xlsx"});
+	        kendo.saveAs({dataURI: workbook.toDataURL(), fileName: "customerBalanceSummary.xlsx"});
 		}
 	});
 	banhji.customerBalanceDetail =  kendo.observable({
@@ -61537,6 +62617,69 @@
             	self.set("total_txn", kendo.toString(txnCount, "n0"));
             	self.set("total_balance", kendo.toString(balance, "c2", banhji.locale));
             });
+            this.dataSource.bind("requestEnd", function(e){				
+				if(e.type=="read"){
+					var response = e.response, balanceCal = 0, balance= 0;
+					self.exArray = [];
+
+					self.exArray.push({
+	            		cells: [
+	            			{ value: self.company.name, textAlign: "center", colSpan: 4}
+	            		]
+	            	});
+	            	self.exArray.push({
+	            		cells: [
+	            			{ value: "Customer Balance Summary",bold: true, fontSize: 20, textAlign: "center", colSpan: 4 }
+	            		]
+	            	});
+	            	if(self.displayDate){
+		            	self.exArray.push({
+		            		cells: [
+		            			{ value: self.displayDate, textAlign: "center", colSpan: 4 }
+		            		]
+		            	});
+		            }
+	            	self.exArray.push({
+	            		cells: [
+	            			{ value: "", colSpan: 4 }
+	            		]
+	            	});
+	            	self.exArray.push({ 
+	            		cells: [
+							{ value: "Type", background: "#496cad", color: "#ffffff" },
+							{ value: "Invoice Date", background: "#496cad", color: "#ffffff" },
+							{ value: "Reference", background: "#496cad", color: "#ffffff" },
+							{ value: "Balance", background: "#496cad", color: "#ffffff" },
+						]
+					});
+					for (var i = 0; i < response.results.length; i++){
+						self.exArray.push({
+					        cells: [
+					          	{ value: response.results[i].name, bold: true, },
+					            { value: "" },
+					            { value: "" },
+					            { value: "" },
+					        ]
+					        
+					    });
+					    for(var j = 0; j < response.results[i].line.length; j++){
+				          	self.exArray.push({
+				          		cells: [
+				          	  		{ value: response.results[i].line[j].type },
+				              		{ value: response.results[i].line[j].issued_date },
+				              		{ value: response.results[i].line[j].number},
+				              		{ value: response.results[i].line[j].amount },
+				            	]
+				          	});
+				        }
+				    	self.exArray.push({
+					        cells: [
+					          	{ value: "", colSpan: 4 }
+					        ]
+					    });
+					}
+				}
+			});
 		},
 		printGrid			: function() {
 			var gridElement = $('#grid'),
@@ -61622,16 +62765,14 @@
 	                { autoWidth: true },
 	                { autoWidth: true },
 	                { autoWidth: true },
-	                { autoWidth: true },
-	                { autoWidth: true }
 	              ],
-	              title: "General Ledger",
+	              title: "Customer Balance Detail",
 	              rows: this.exArray
 	            }
 	          ]
 	        });
 	        //save the file as Excel file with extension xlsx
-	        kendo.saveAs({dataURI: workbook.toDataURL(), fileName: "GeneralLedger.xlsx"});
+	        kendo.saveAs({dataURI: workbook.toDataURL(), fileName: "customerBalanceDetail.xlsx"});
 		}
 	});
 	banhji.receivableAgingSummary =  kendo.observable({
@@ -61677,6 +62818,64 @@
 
             	self.set("totalBalance", kendo.toString(balance, "c2", banhji.locale));
             });
+                        this.dataSource.bind("requestEnd", function(e){				
+				if(e.type=="read"){
+					var response = e.response;
+					self.exArray = [];
+
+					self.exArray.push({
+	            		cells: [
+	            			{ value: self.company.name, textAlign: "center", colSpan: 7}
+	            		]
+	            	});
+	            	self.exArray.push({
+	            		cells: [
+	            			{ value: "Receivable Aging Summary",bold: true, fontSize: 20, textAlign: "center", colSpan: 7}
+	            		]
+	            	});
+	            	if(self.displayDate){
+		            	self.exArray.push({
+		            		cells: [
+		            			{ value: self.displayDate, textAlign: "center", colSpan: 7}
+		            		]
+		            	});
+		            };
+	            	self.exArray.push({
+	            		cells: [
+	            			{ value: "", colSpan: 7}
+	            		]
+	            	});
+	            	self.exArray.push({ 
+	            		cells: [
+							{ value: "Name", background: "#496cad", color: "#ffffff" },
+							{ value: "Current", background: "#496cad", color: "#ffffff" },
+							{ value: "1-30", background: "#496cad", color: "#ffffff" },
+							{ value: "31-60", background: "#496cad", color: "#ffffff" },
+							{ value: "61-90", background: "#496cad", color: "#ffffff" },
+							{ value: "Over 90", background: "#496cad", color: "#ffffff" },
+							{ value: "Total", background: "#496cad", color: "#ffffff" },
+						]
+					});
+	            	for (var i = 0; i < response.results.length; i++){
+				          	self.exArray.push({
+				          		cells: [
+				          	  		{ value: response.results[i].name },
+				          	  		{ value: response.results[i].current },
+				          	  		{ value: response.results[i].in30 },
+				          	  		{ value: response.results[i].in60 },
+				          	  		{ value: response.results[i].in90 },
+				          	  		{ value: response.results[i].over90 },
+				              		{ value: kendo.parseFloat(response.results[i].total)},
+				            	]
+				          	});
+					    self.exArray.push({
+					        cells: [
+					          	{ value: "", colSpan: 7 }
+					        ]
+					    });
+					}		
+				}
+			}); 
 		},
 		printGrid			: function() {
 			var gridElement = $('#grid'),
@@ -61763,15 +62962,16 @@
 	                { autoWidth: true },
 	                { autoWidth: true },
 	                { autoWidth: true },
+	                { autoWidth: true },
 	                { autoWidth: true }
 	              ],
-	              title: "General Ledger",
+	              title: "Receivable Aging Summary",
 	              rows: this.exArray
 	            }
 	          ]
 	        });
 	        //save the file as Excel file with extension xlsx
-	        kendo.saveAs({dataURI: workbook.toDataURL(), fileName: "GeneralLedger.xlsx"});
+	        kendo.saveAs({dataURI: workbook.toDataURL(), fileName: "receivableAgingSummary.xlsx"});
 		}
 	});
 	banhji.receivableAgingDetail =  kendo.observable({
@@ -61833,6 +63033,79 @@
 
             	self.set("totalBalance", kendo.toString(balance, "c2", banhji.locale));
             });
+            this.dataSource.bind("requestEnd", function(e){				
+				if(e.type=="read"){
+					var response = e.response, balanceCal = 0, balance= 0;
+					self.exArray = [];
+
+					self.exArray.push({
+	            		cells: [
+	            			{ value: self.company.name, textAlign: "center", colSpan: 7}
+	            		]
+	            	});
+	            	self.exArray.push({
+	            		cells: [
+	            			{ value: "Receivable Aging Detail",bold: true, fontSize: 20, textAlign: "center", colSpan: 7 }
+	            		]
+	            	});
+	            	if(self.displayDate){
+		            	self.exArray.push({
+		            		cells: [
+		            			{ value: self.displayDate, textAlign: "center", colSpan: 7 }
+		            		]
+		            	});
+		            }
+	            	self.exArray.push({
+	            		cells: [
+	            			{ value: "", colSpan: 7 }
+	            		]
+	            	});
+	            	self.exArray.push({ 
+	            		cells: [
+							{ value: "Type", background: "#496cad", color: "#ffffff" },
+							{ value: "Invoice Date", background: "#496cad", color: "#ffffff" },
+							{ value: "Due Date", background: "#496cad", color: "#ffffff" },
+							{ value: "Reference", background: "#496cad", color: "#ffffff" },
+							{ value: "Status", background: "#496cad", color: "#ffffff" },
+							{ value: "Amount", background: "#496cad", color: "#ffffff" },
+							{ value: "Balance", background: "#496cad", color: "#ffffff" },
+						]
+					});
+					for (var i = 0; i < response.results.length; i++){
+						self.exArray.push({
+					        cells: [
+					          	{ value: response.results[i].name, bold: true, },
+					            { value: "" },
+					            { value: "" },
+					            { value: "" },
+					            { value: "" },
+					            { value: "" },
+					            { value: "" },
+					        ]
+					        
+					    });
+					    for(var j = 0; j < response.results[i].line.length; j++){
+					    	var aaa = response.results[i].line[j].quantity + response.results[i].line[j].measurement;
+				          	self.exArray.push({
+				          		cells: [
+				          	  		{ value: response.results[i].line[j].type },
+				              		{ value: response.results[i].line[j].customer },
+				              		{ value: response.results[i].line[j].issued_date},
+				              		{ value: response.results[i].line[j].number },
+				              		{ value: aaa},
+				              		{ value: response.results[i].line[j].price },
+				              		{ value: response.results[i].line[j].amount },
+				            	]
+				          	});
+				        }
+				    	self.exArray.push({
+					        cells: [
+					          	{ value: "", colSpan: 7}
+					        ]
+					    });
+					}
+				}
+			});
 		},
 		printGrid			: function() {
 			var gridElement = $('#grid'),
@@ -61919,15 +63192,16 @@
 	                { autoWidth: true },
 	                { autoWidth: true },
 	                { autoWidth: true },
+	                { autoWidth: true },
 	                { autoWidth: true }
 	              ],
-	              title: "General Ledger",
+	              title: "Receivable Aging Detail",
 	              rows: this.exArray
 	            }
 	          ]
 	        });
 	        //save the file as Excel file with extension xlsx
-	        kendo.saveAs({dataURI: workbook.toDataURL(), fileName: "GeneralLedger.xlsx"});
+	        kendo.saveAs({dataURI: workbook.toDataURL(), fileName: "receivableAgingDetail.xlsx"});
 		}
 	});
 	banhji.collectInvoice =  kendo.observable({
@@ -62407,6 +63681,78 @@
             	self.set("orderCount", kendo.toString(orderCount, "n0"));
             	self.set("totalAmount", kendo.toString(amount, "c2", banhji.locale));
             });
+            this.dataSource.bind("requestEnd", function(e){				
+				if(e.type=="read"){
+					var response = e.response, balanceCal = 0, balance= 0;
+					self.exArray = [];
+
+					self.exArray.push({
+	            		cells: [
+	            			{ value: self.company.name, textAlign: "center", colSpan: 5}
+	            		]
+	            	});
+	            	self.exArray.push({
+	            		cells: [
+	            			{ value: "Sale Order List",bold: true, fontSize: 20, textAlign: "center", colSpan: 5 }
+	            		]
+	            	});
+	            	if(self.displayDate){
+		            	self.exArray.push({
+		            		cells: [
+		            			{ value: self.displayDate, textAlign: "center", colSpan: 5 }
+		            		]
+		            	});
+		            }
+	            	self.exArray.push({
+	            		cells: [
+	            			{ value: "", colSpan: 4 }
+	            		]
+	            	});
+	            	self.exArray.push({ 
+	            		cells: [
+							{ value: "Number", background: "#496cad", color: "#ffffff" },
+							{ value: "Reference", background: "#496cad", color: "#ffffff" },
+							{ value: "Date", background: "#496cad", color: "#ffffff" },
+							{ value: "Status", background: "#496cad", color: "#ffffff" },
+							{ value: "Amount", background: "#496cad", color: "#ffffff" },
+						]
+					});
+					for (var i = 0; i < response.results.length; i++){
+						self.exArray.push({
+					        cells: [
+					          	{ value: response.results[i].name, bold: true, },
+					            { value: "" },
+					            { value: "" },
+					            { value: "" },
+					            { value: "" },
+					        ]
+					        
+					    });
+					    for(var j = 0; j < response.results[i].line.length; j++){
+					    	var status = response.results[i].line[j].status
+					    	if (status==0){
+					    		status = "Open"
+					    	}else{
+					    		status = "Used"
+					    	}
+				          	self.exArray.push({
+				          		cells: [
+				          	  		{ value: response.results[i].line[j].number },
+				              		{ value: response.results[i].line[j].number },
+				              		{ value: response.results[i].line[j].issued_date},
+				              		{ value: status },
+				              		{ value: response.results[i].line[j].amount},
+				            	]
+				          	});
+				        }
+				    	self.exArray.push({
+					        cells: [
+					          	{ value: "", colSpan: 4 }
+					        ]
+					    });
+					}
+				}
+			});
 		},
 		printGrid			: function() {
 			var gridElement = $('#grid'),
@@ -62493,15 +63839,14 @@
 	                { autoWidth: true },
 	                { autoWidth: true },
 	                { autoWidth: true },
-	                { autoWidth: true }
 	              ],
-	              title: "General Ledger",
+	              title: "Sale Order List",
 	              rows: this.exArray
 	            }
 	          ]
 	        });
 	        //save the file as Excel file with extension xlsx
-	        kendo.saveAs({dataURI: workbook.toDataURL(), fileName: "GeneralLedger.xlsx"});
+	        kendo.saveAs({dataURI: workbook.toDataURL(), fileName: "saleOrderList.xlsx"});
 		}
 	});
 	banhji.invoiceList =  kendo.observable({
@@ -64832,6 +66177,8 @@
 		txnDS  				: dataStore(apiUrl + "transactions"),
 		recurringDS 		: dataStore(apiUrl + "transactions"),
 		recurringLineDS 	: dataStore(apiUrl + "item_lines"),
+		balanceDS 			: dataStore(apiUrl + "transactions/balance"),
+		assemblyDS			: dataStore(apiUrl + "item_prices"),
 		attachmentDS	 	: dataStore(apiUrl + "attachments"),
 		txnTemplateDS 		: new kendo.data.DataSource({
 		  	data: banhji.source.txnTemplateList,
@@ -64841,14 +66188,6 @@
 		  	data: banhji.source.supplierList,
 		  	filter:{ field:"status", value:1 },
 			sort: { field:"number", dir:"asc" }
-		}),
-		itemDS  			: new kendo.data.DataSource({
-		  	data: banhji.source.itemList,
-		  	filter: { field:"is_assembly", operator:"neq", value: 1 },
-			sort: [
-				{ field:"item_type_id", dir:"asc" },
-				{ field:"number", dir:"asc" }
-			]
 		}),
 		jobDS 				: new kendo.data.DataSource({
 		  	data: banhji.source.jobList,
@@ -64861,22 +66200,7 @@
 			  	{ field: "code", dir: "asc" }
 			]
 		}),
-		taxItemDS 			: new kendo.data.DataSource({
-		  	data: banhji.source.taxList,
-		  	filter:{
-			    logic: "or",
-			    filters: [
-			      	{ field: "tax_type_id", value: 1 },//Supplier Tax
-			      	{ field: "tax_type_id", value: 2 },
-			      	{ field: "tax_type_id", value: 3 },
-			      	{ field: "tax_type_id", value: 9 }
-			    ]
-			},
-		  	sort: [
-			  	{ field: "tax_type_id", dir: "asc" },
-			  	{ field: "name", dir: "asc" }
-			]
-		}),
+		statusObj 			: banhji.source.statusObj,
 		amtDueColor 		: banhji.source.amtDueColor,
 	    confirmMessage 		: banhji.source.confirmMessage,
 		frequencyList 		: banhji.source.frequencyList,
@@ -64890,23 +66214,16 @@
 		showDay 			: false,
 		obj 				: null,
 		isEdit 				: false,
+		saveDraft 			: false,
 		saveClose 			: false,
 		savePrint 			: false,
 		saveRecurring 		: false,
 		showConfirm   		: false,
 		notDuplicateNumber 	: true,
-		statusSrc 			: "",
 		recurring 			: "",
 		recurring_validate 	: false,
-		showDeposit 		: false,
-		showDiscount 		: false,
-		showRequiredDate 	: false,
-		sub_total 			: 0,
-		tax 				: 0,
-		discount 			: 0,
 		balance 			: 0,
 		total 				: 0,
-		original_total 		: 0,
 		user_id				: banhji.source.user_id,
 		pageLoad 			: function(id){
 			if(id){
@@ -65011,67 +66328,31 @@
 		    this.contactChanges();
 	    },
 		contactChanges 		: function(){
-			var obj = this.get("obj");
-			
-	    	if(obj.contact_id>0){		    			    	
+			var self = this, obj = this.get("obj");
+
+	    	if(obj.contact_id>0){	    				    			    	
 		    	var contact = this.contactDS.get(obj.contact_id);
-		    		    	
+		    	
 		    	obj.set("locale", contact.locale);
 		    	obj.set("bill_to", contact.bill_to);
 		    	obj.set("ship_to", contact.ship_to);
 
 		    	this.setRate();
-		    	this.loadBalance();	    			    	
-	    	}else{
-	    		this.set("total_credit", 0);
+		    	this.loadBalance();
 	    	}
-
-	    	this.changes();
+	    	
+		    this.changes();
 	    },
 	    loadBalance 		: function(){
-			var self = this, 
-			obj = this.get("obj"),
-			contact = this.contactDS.get(obj.contact_id),
-			balance = 0, creditAllowed = 0;			
+			var self = this, obj = this.get("obj");
 
-			this.txnDS.query({    			
-				filter:[
-					{ field:"amount", operator:"select_sum", value:"amount" },
-					{ field:"contact_id", value:obj.contact_id },
-					{ field:"type", value:"Credit_Purchase" },
-					{ field:"status", operator:"where_in", value:[0,2] }
-				]
-			}).then(function(){
-				var view = self.txnDS.view();
-
-				balance += view[0].amount;
-
-		    	return self.txnDS.query({
-		    		filter:[
-						{ field:"contact_id", value:obj.contact_id },
-						{ field:"type", value:"Credit_Purchase" },
-						{ field:"status", value:2 }
-					]
-		    	});	
-			}).then(function(){
-				var view = self.txnDS.view();				
-
-				var idList = [0];
-				$.each(view, function(index, value){
-					idList.push(value.id);
-				});
-
-		    	return self.txnDS.query({
-		    		filter:[
-		    			{ field:"amount", operator:"select_sum", value:"amount" },
-						{ field:"reference_id", operator:"where_in", value: idList },
-						{ field:"type", value:"Cash_Payment" }
-					]
-		    	});
+			this.balanceDS.query({
+				filter: { field:"contact_id", value:obj.contact_id }
 		    }).then(function(){
-		    	var view = self.txnDS.view();
-
-		    	balance -= view[0].amount;
+		    	var view = self.balanceDS.view(),
+		  			contact = self.contactDS.get(obj.contact_id), 
+					balance = view[0].amount,
+					creditAllowed = 0;
 
 		    	if(contact.credit_limit > balance){
 					creditAllowed = contact.credit_limit - balance;
@@ -65081,91 +66362,90 @@
 		    	obj.set("credit_allowed", creditAllowed);
 			});				
 		},
-		//Currency Rate
+	    //Currency Rate
 		setRate 			: function(){
 			var obj = this.get("obj"), 
-			rate = banhji.source.getRate(obj.locale, new Date(obj.issued_date));			
+			rate = banhji.source.getRate(obj.locale, new Date(obj.issued_date));
 			
 			obj.set("rate", rate);
 
+			//Item Lines
 			$.each(this.lineDS.data(), function(index, value){
 				var itemRate = rate / banhji.source.getRate(value.locale, new Date(obj.issued_date));
-				
 				value.set("rate", itemRate);
-			});						
+			});
 		},
 		//Item
-		itemChanges 		: function(e){
-			var self = this, data = e.data, obj = this.get("obj");
+		addItem 			: function(uid){
+			var self = this,
+				row = this.lineDS.getByUid(uid),
+				obj = this.get("obj"),
+				item = row.item,
+				rate = obj.rate / banhji.source.getRate(item.locale, new Date(obj.issued_date));
 
-			if(data.item_id>0){
-				var item = this.itemDS.get(data.item_id);
+			row.set("item_id", item.id);			
+			row.set("description", item.sale_description);
+			row.set("rate", rate);
+			row.set("locale", item.locale);
 
-		        if(item.is_catalog=="1"){
-	        		this.lineDS.remove(data);
+			//Get first price
+			this.assemblyDS.query({
+	        	filter:[
+	        		{ field:"item_id", value:item.id },
+	        		{ field:"assembly_id", value:0 }
+	        	],
+	        	page: 1,
+	        	pageSize: 1
+	        }).then(function(){
+	        	var view = self.assemblyDS.view();
 
-	        		$.each(item.catalogs, function(ind, val){
-						var catalogItem = self.itemDS.get(val);
-
-						if(catalogItem){
-							var rate = obj.rate / banhji.source.getRate(catalogItem.locale, new Date(obj.issued_date)),
-								itemPrices = banhji.source.getPriceList(catalogItem.id);
-
-							self.lineDS.add({
-								transaction_id 		: obj.id,
-								tax_item_id 		: 0,
-								item_id 			: catalogItem.id,
-								measurement_id 		: itemPrices.length>0 ? itemPrices[0].measurement_id : catalogItem.measurement_id,
-								description 		: catalogItem.purchase_description,
-								quantity 	 		: 1,
-								conversion_ratio 	: itemPrices.length>0 ? itemPrices[0].conversion_ratio : 1,
-								cost 				: catalogItem.cost * rate,
-								amount 				: 0,
-								discount 			: 0,
-								rate				: rate,
-								locale				: catalogItem.locale,
-								movement 			: 1,
-
-								item_prices 		: itemPrices
-							});
-						}
-					});
-
-	        		this.changes();
-		        }else{
-		        	var rate = obj.rate / banhji.source.getRate(item.locale, new Date(obj.issued_date)),
-		        		itemPrices = banhji.source.getPriceList(data.item_id);
-
-					data.set("item_prices", itemPrices);
-					data.set("measurement_id", itemPrices.length>0 ? itemPrices[0].measurement_id : item.measurement_id);
-					data.set("description", item.purchase_description);
-					data.set("quantity", 1);
-					data.set("conversion_ratio", itemPrices.length>0 ? itemPrices[0].conversion_ratio : 1);
-					data.set("cost", item.cost * rate);
-					data.set("rate", rate);	
-					data.set("locale", item.locale);
-
-			        this.changes();
-		    	}
-	        }else{
-	        	data.set("item_id", "");
-	        }
+	        	if(view.length>0){
+	        		var measurement = { 
+	        			measurement_id 	: view[0].measurement_id,
+	        			conversion_ratio: view[0].conversion_ratio, 
+	        			measurement 	: view[0].measurement 
+	        		};
+	        		row.set("measurement", measurement);
+	        	}
+	        });
 		},
-		measurementChanges 	: function(e){
-			var data = e.data, obj = this.get("obj");
+		addItemCatalog 		: function(uid){
+			var self = this,
+				row = this.lineDS.getByUid(uid),
+				obj = this.get("obj"),
+				item = row.item;
 
-			if(data.measurement_id>0){
-				$.each(data.item_prices, function(index, value){
-					if(value.measurement_id==data.measurement_id){
-				        
-				        data.set("conversion_ratio", value.conversion_ratio);
-				        
-						return false;
-					}
-				});
+			this.lineDS.remove(row);
 
-			    this.changes();
-			}
+        	$.each(item.catalogs, function(index, value){
+				var catalogItem = banhji.source.itemDS.get(value);
+
+				if(catalogItem){
+					var rate = obj.rate / banhji.source.getRate(catalogItem.locale, new Date(obj.issued_date));
+
+					self.lineDS.add({
+						transaction_id 		: obj.id,
+						tax_item_id 		: 0,
+						item_id 			: catalogItem.id,
+						measurement_id 		: 0,
+						description 		: catalogItem.sale_description,
+						quantity 	 		: 1,
+						conversion_ratio 	: 1,
+						cost 				: 0,
+						price 				: 0,
+						amount 				: 0,
+						discount 			: 0,
+						rate				: rate,
+						locale				: catalogItem.locale,
+						movement 			: 1,
+
+						discount_percentage : 0,
+						item 				: catalogItem,
+						measurement 		: { measurement_id:"", measurement:"" },
+						tax_item 			: { id:"", name:"" }
+					});
+				}
+			});
 		},
 		//Segment
 		segmentChanges 		: function(e) {
@@ -65252,9 +66532,53 @@
 				obj.set("number", str);
 			});
 		},
+		setStatus 			: function(){
+			var self = this,
+				obj = this.get("obj"), 
+				statusObj = this.get("statusObj");
+
+			statusObj.set("text", "");
+	        statusObj.set("date", "");
+	        statusObj.set("number", "");
+	        statusObj.set("url", "");
+
+			switch(obj.status) {
+				case 0:
+			        statusObj.set("text", "open");
+			        break;
+				case 1:
+			    	statusObj.set("text", "used");
+
+			    	this.txnDS.query({
+			    		filter:{ field:"reference_id", value: obj.id },
+			    		sort: { field:"issued_date", dir:"desc" },
+			    		page:1,
+			    		pageSize:1
+			    	}).then(function(){
+			    		var view = self.txnDS.view();
+
+			    		if(view.length>0){
+			    			statusObj.set("date", kendo.toString(new Date(view[0].issued_date), "dd-MM-yyyy h:mm:ss tt"));
+			    			statusObj.set("number", view[0].number);
+		    				
+		    				var url = "#/" + view[0].type.toLowerCase() + "/" + view[0].id;
+		    				statusObj.set("url", url);
+			    		}
+			    	});
+			        break;
+			    case 2:
+			        statusObj.set("text", "partialy used");
+			        break;
+			    case 4:
+			        statusObj.set("text", "draft");
+			        break;
+			    default:
+			        //Default here
+			}
+		},
 		//Obj
 		loadObj 			: function(id){
-			var self = this, para = [];
+			var self = this, para = [], referenceIds = [];
 
 			para.push({ field:"id", value: id });
 
@@ -65268,71 +66592,60 @@
 					para.push({ field:"is_recurring", value: 1 });
 				}
 
-				this.dataSource.query({    			
+				this.dataSource.query({
 					filter: para,
 					page: 1,
 					pageSize: 100
 				}).then(function(e){
 					var view = self.dataSource.view();
-					
+
 					self.set("obj", view[0]);
-
-					self.set("total", kendo.toString(view[0].amount, "c", view[0].locale));
-
-					if(view[0].status=="1"){
-						self.set("statusSrc", banhji.source.approvedSrc);
-					}else{
-						self.set("statusSrc", banhji.source.openSrc);
-					}
-
-					if(view[0].discount>0){
-						self.set("showDiscount", true);
-					}
+					self.set("total", kendo.toString(view[0].amount, "c2", view[0].locale));					
+					self.setStatus();
 					
-					self.loadLines(id);
+					self.lineDS.query({
+						filter: [
+							{ field: "transaction_id", value: id },
+							{ field: "assembly_id", value: 0 }
+						],
+					});
+					
 					self.attachmentDS.filter({ field: "transaction_id", value: id });
 				});
 			}				
 		},
-		loadLines 			: function(id){
-			var self = this;
-
-			self.lineDS.query({
-				filter: { field: "transaction_id", value: id }
-			}).then(function(){
-				var view = self.lineDS.view();
-
-				$.each(view, function(index, value){
-					value.set("item_prices", banhji.source.getPriceList(value.item_id));
-				});
-			});
-		},
 		changes				: function(){
 			var self = this, obj = this.get("obj"),
-			total = 0, subTotal = 0, discount =0, tax = 0;											
+				total = 0, subTotal = 0, discount =0, tax = 0, remaining = 0, amount_due = 0, itemIds = [];
 
-			$.each(this.lineDS.data(), function(index, value) {				
-				var amt = value.quantity * value.cost;					
+			$.each(this.lineDS.data(), function(index, value) {
+				var amt = value.quantity * value.cost;
 
 				//Discount by line
-				if(value.discount>0){										
-					var discount_amount = amt * value.discount;
-					amt -= discount_amount;
-					discount += discount_amount;																	
+				if(value.discount>0){
+					amt -= value.discount;
+					discount += value.discount;
 				}
 
 				//Tax by line
 				if(value.tax_item_id>0){
-					var taxItem = self.taxItemDS.get(value.tax_item_id);										
-					tax += amt * taxItem.rate;																	
-				}					
+					var taxAmount = amt * value.tax_item.rate;
+					tax += taxAmount;
+					value.set("tax", taxAmount);
+				}else{
+					value.set("tax", 0);
+				}
 
-				value.set("amount", amt);					
+				value.set("amount", amt);
 				subTotal += amt;
+
+				if(value.item_id>0){
+					itemIds.push(value.item_id);
+				}
 	        });
 
 	    	//Total
-	        total = subTotal + tax;		        
+	        total = subTotal + tax;
 
 	        //Warning over credit allowed
 	        if(obj.credit_allowed>0 && total>obj.credit_allowed){
@@ -65348,35 +66661,72 @@
 
 			this.set("total", kendo.toString(total, "c", obj.locale));
 		},
+		lineDSChanges 		: function(arg){
+			var self = banhji.purchaseOrder;
+
+			if(arg.field){
+				if(arg.field=="item"){
+					var dataRow = arg.items[0],
+						item = dataRow.item;
+
+					if(item.is_catalog=="1"){
+						self.addItemCatalog(dataRow.uid);
+					}else{
+						self.addItem(dataRow.uid);
+					}
+
+					self.addExtraRow(dataRow.uid);
+				}else if(arg.field=="quantity" || arg.field=="cost" || arg.field=="discount"){
+					self.changes();					
+				}else if(arg.field=="measurement"){
+					var dataRow = arg.items[0];
+					
+					dataRow.set("measurement_id", dataRow.measurement.measurement_id);
+			        dataRow.set("conversion_ratio", dataRow.measurement.conversion_ratio);
+			    }else if(arg.field=="discount_percentage"){
+			    	var dataRow = arg.items[0],
+			    		percentageAmount = dataRow.quantity * dataRow.cost * dataRow.discount_percentage;
+
+			    	dataRow.set("discount", percentageAmount);
+				}else if(arg.field=="tax_item"){
+					var dataRow = arg.items[0];
+					
+					dataRow.set("tax_item_id", dataRow.tax_item.id);
+					dataRow.set("tax", 0);
+
+					self.changes();
+				}
+			}
+		},
 		addEmpty 		 	: function(){
 			this.dataSource.data([]);
 			this.lineDS.data([]);
 			this.attachmentDS.data([]);
-
+			
 			this.set("isEdit", false);
 			this.set("obj", null);
 			this.set("total", 0);
+			this.set("amtDueColor", banhji.source.amtDueColor);
 
 			//Set Date
 			var duedate = new Date();
 			duedate.setDate(duedate.getDate() + 30);
 
 			this.dataSource.insert(0, {
-				transaction_template_id : 11,
 				contact_id 			: "",
+				transaction_template_id : 11,
+				reference_id 		: "",
 				recurring_id 		: "",
-				job_id 				: "",
+				job_id 				: 0,
 				user_id 			: this.get("user_id"),
+				employee_id			: "",
 			   	type				: "Purchase_Order",//Required
 			   	number 				: "",
 			   	sub_total 			: 0,
+			   	amount				: 0,
+			   	credit_allowed 		: 0,
 			   	discount 			: 0,
 			   	tax 				: 0,
-			   	amount				: 0,
-			   	deposit 			: 0,
-			   	credit_allowed 		: 0,
-			   	credit 				: 0,
-			   	check_no 			: "",
 			   	rate				: 1,
 			   	locale 				: banhji.locale,
 			   	issued_date 		: new Date(),
@@ -65397,37 +66747,64 @@
 			   	week 				: 0,
 			   	month 				: 0,
 			   	is_recurring 		: 0
-	    	});		    		
+	    	});
 			
 			var obj = this.dataSource.at(0);
 			this.set("obj", obj);
-
-			this.generateNumber();
 			this.setRate();
-			this.addRow();
+			this.generateNumber();
+
+			//Default rows
+			for (var i = 0; i < banhji.source.defaultLines; i++) {
+				this.addRow();
+			}
 		},
 		addRow 				: function(){
 			var obj = this.get("obj");
-									
+
 			this.lineDS.add({
 				transaction_id 		: obj.id,
 				tax_item_id 		: "",
 				item_id 			: "",
+				assembly_id 		: 0,
 				measurement_id 		: 0,
 				description 		: "",
 				quantity 	 		: 1,
-				conversion_ratio 			: 1,
+				conversion_ratio 	: 0,
 				cost 				: 0,
+				price 				: 0,
 				amount 				: 0,
 				discount 			: 0,
 				rate				: obj.rate,
 				locale				: obj.locale,
 				movement 			: 1,
-				required_date 		: new Date(),
+				required_date 		: "",
 
-				item_prices 		: []
+				discount_percentage : 0,
+				item 				: { id:"", name:"" },
+				measurement 		: { measurement_id:"", measurement:"" },
+				tax_item 			: { id:"", name:"" }
 			});
 		},
+		addExtraRow 		: function(uid){
+			var row = this.lineDS.getByUid(uid),
+				index = this.lineDS.indexOf(row);
+
+			if(index==this.lineDS.total()-1){
+				this.addRow();
+			}
+		},
+		removeEmptyRow 		: function(){
+			var raw = this.lineDS.data();
+		    var item, i;
+		    for(i=raw.length-1; i>=0; i--){
+		    	item = raw[i];
+
+		    	if (item.item_id==0) {
+			       	this.lineDS.remove(item);
+			    }
+		    }
+	    },
 		removeRow 			: function(e){
 			var data = e.data;
 			if(this.lineDS.total()>1){
@@ -65452,17 +66829,43 @@
 	    },
 		save 				: function(){
 	    	var self = this, obj = this.get("obj");
-	    	obj.set("issued_date", kendo.toString(new Date(obj.issued_date), "s"));
 
-	    	//Recurring
+	    	obj.set("issued_date", kendo.toString(new Date(obj.issued_date), "s"));
+	    	obj.set("due_date", kendo.toString(new Date(obj.due_date), "yyyy-MM-dd"));
+
+	    	//Warning over credit allowed
+	        if(obj.credit_limit>0 && obj.amount>obj.credit_allowed){
+	        	alert("Over credit allowed!");
+	        }
+
+	        this.removeEmptyRow();
+
+	        //Save Draft
+	        if(this.get("saveDraft")){
+	        	obj.set("status", 4); //In progress
+	        	obj.set("progress", "Draft");
+	        	obj.set("is_journal", 0);//No Journal
+	        }
+
+	        //Recurring
 	    	if(this.get("saveRecurring")){
 	    		this.set("saveRecurring", false);
-
+	    		
 	    		obj.set("number", "");
 	    		obj.set("is_recurring", 1);
 	    	}
+
+	        //Edit Mode
+	    	if(obj.isNew()==false){
+	    		//Use draft
+	    		if(obj.status==4){
+	    			obj.set("status", 0);//Open
+	    			obj.set("progress", "");
+	    			obj.set("is_journal", 1);//Add Journal
+	    		}
+	    	}
 	    	
-    		//Save Obj
+			//Save Obj
 			this.objSync()
 			.then(function(data){ //Success
 				if(self.get("isEdit")==false){
@@ -65475,8 +66878,9 @@
 					$.each(self.attachmentDS.data(), function(index, value){
 			    		value.set("transaction_id", data[0].id);
 		            });
-				}
-				self.lineDS.sync();
+				}	
+
+				self.lineDS.sync();			
 				self.uploadFile();
 				
 				return data;
@@ -65485,15 +66889,15 @@
 			}).then(function(result){
 				$("#ntf1").data("kendoNotification").success(banhji.source.successMessage);
 
-				if(self.get("saveClose")){
-					//Save Close
+				if(self.get("saveDraft") || self.get("saveClose")){
+					//Save Draft or Save Close
+					self.set("saveDraft", false);
 					self.set("saveClose", false);
 					self.cancel();
-					window.history.back();
 				}else if(self.get("savePrint")){
 					//Save Print
 					self.set("savePrint", false);
-					self.cancel();
+					self.clear();
 					if(result[0].transaction_template_id>0){
 						banhji.router.navigate("/invoice_form/"+result[0].id);
 					}
@@ -65503,16 +66907,20 @@
 				}
 			});
 		},
-		cancel 				: function(){
+		clear 				: function(){
 			this.dataSource.cancelChanges();
 			this.lineDS.cancelChanges();
 			this.attachmentDS.cancelChanges();
-
+			
 			this.dataSource.data([]);
 			this.lineDS.data([]);
 			this.attachmentDS.data([]);
 
 			banhji.userManagement.removeMultiTask("purchase_order");
+		},
+		cancel 				: function(){
+			this.clear();
+			window.history.back();
 		},
 	    delete 				: function(){
 			var self = this, obj = this.get("obj");
@@ -65562,7 +66970,7 @@
 				obj = self.get("obj");
 				
 				obj.set("recurring_id", id);
-				obj.set("contact_id", view[0].contact_id);
+				obj.set("employee_id", view[0].employee_id);//Sale Rep
 				obj.set("job_id", view[0].job_id);
 				obj.set("segments", view[0].segments);
 				obj.set("locale", view[0].locale);
@@ -65575,15 +66983,16 @@
 			});
 
 			this.recurringLineDS.query({
-				filter: { field:"transaction_id", value:id },
-				page: 1,
-				pageSize: 100
+				filter:[
+					{ field: "transaction_id", value: id },
+					{ field: "assembly_id", value: 0 }
+				]
 			}).then(function(){
 				var view = self.recurringLineDS.view();
 				self.lineDS.data([]);
 
 				$.each(view, function(index, value){
-					self.lineDS.add({					
+					self.lineDS.add({
 						transaction_id 		: 0,
 						tax_item_id 		: value.tax_item_id,
 						item_id 			: value.item_id,
@@ -65591,14 +67000,17 @@
 						description 		: value.description,
 						quantity 	 		: value.quantity,
 						cost 				: value.cost,
+						price 				: value.price,
 						amount 				: value.amount,
 						discount 			: value.discount,
 						rate				: value.rate,
 						locale				: value.locale,
 						movement 			: value.movement,
-						required_date 		: new Date(),
+						required_date 		: value.required_date,
 
-						item_prices 		: banhji.source.getPriceList(value.item_id)
+						item 				: value.item,
+						measurement 		: value.measurement,
+						tax_item 			: value.tax_item
 					});
 				});
 
@@ -88343,6 +89755,67 @@
             	self.set("expense", kendo.toString(expense, "c2", banhji.locale));
             	self.set("profit", kendo.toString(revenue-expense, "c2", banhji.locale));
             });
+            this.dataSource.bind("requestEnd", function(e){				
+				if(e.type=="read"){
+					var response = e.response, profit =0, margin1 = 0, expense = 0;
+					self.exArray = [];
+
+					self.exArray.push({
+	            		cells: [
+	            			{ value: self.company.name, textAlign: "center", colSpan: 7 }
+	            		]
+	            	});
+	            	self.exArray.push({
+	            		cells: [
+	            			{ value: "Profitability Summary by Job",bold: true, fontSize: 20, textAlign: "center", colSpan: 7 }
+	            		]
+	            	});
+	            	if(self.displayDate){
+		            	self.exArray.push({
+		            		cells: [
+		            			{ value: self.displayDate, textAlign: "center", colSpan: 7}
+		            		]
+		            	});
+		            };
+	            	self.exArray.push({
+	            		cells: [
+	            			{ value: "", colSpan: 7}
+	            		]
+	            	});
+	            	self.exArray.push({ 
+	            		cells: [
+							{ value: "Job", background: "#496cad", color: "#ffffff" },
+							{ value: "Type", background: "#496cad", color: "#ffffff" },
+							{ value: "Reference", background: "#496cad", color: "#ffffff" },
+							{ value: "Revenue", background: "#496cad", color: "#ffffff" },
+							{ value: "Expense", background: "#496cad", color: "#ffffff" },
+							{ value: "Profit", background: "#496cad", color: "#ffffff" },
+							{ value: "Margin", background: "#496cad", color: "#ffffff" },
+						]
+					});
+	            	for (var i = 0; i < response.results.length; i++){
+	            		profit = response.results[i].revenue - response.results[i].expense ;
+	            		expense = response.results[i].expense;
+	            		margin1 = response.results[i].revenue /expense *100;
+				          	self.exArray.push({
+				          		cells: [
+				          	  		{ value: response.results[i].name },
+				          	  		{ value: response.results[i].type },
+				          	  		{ value: response.results[i].number },
+				          	  		{ value: response.results[i].revenue },
+				          	  		{ value: response.results[i].expense },
+				          	  		{ value: profit},
+				              		{ value: margin1+"%"},
+				            	]
+				          	});
+					    self.exArray.push({
+					        cells: [
+					          	{ value: "", colSpan: 7 }
+					        ]
+					    });
+					}		
+				}
+			}); 
 		},
 		printGrid			: function() {
 			var gridElement = $('#grid'),
@@ -88429,15 +89902,16 @@
 	                { autoWidth: true },
 	                { autoWidth: true },
 	                { autoWidth: true },
+	                { autoWidth: true },
 	                { autoWidth: true }
 	              ],
-	              title: "General Ledger",
+	              title: "Profitability Summary by Job",
 	              rows: this.exArray
 	            }
 	          ]
 	        });
 	        //save the file as Excel file with extension xlsx
-	        kendo.saveAs({dataURI: workbook.toDataURL(), fileName: "GeneralLedger.xlsx"});
+	        kendo.saveAs({dataURI: workbook.toDataURL(), fileName: "profitableSummarybyJob.xlsx"});
 		}
 	});
 	banhji.profitabilityDetailJob =  kendo.observable({
@@ -88542,6 +90016,75 @@
             	filter:para,
             	sort:{ field:"number", operator:"order_by_related_job", dir:"asc" }
             });
+                        this.dataSource.bind("requestEnd", function(e){				
+				if(e.type=="read"){
+					var response = e.response, balanceCal = 0, balance= 0;
+					self.exArray = [];
+
+					self.exArray.push({
+	            		cells: [
+	            			{ value: self.company.name, textAlign: "center", colSpan: 6}
+	            		]
+	            	});
+	            	self.exArray.push({
+	            		cells: [
+	            			{ value: "Profitability Detail by Job",bold: true, fontSize: 20, textAlign: "center", colSpan: 6}
+	            		]
+	            	});
+	            	if(self.displayDate){
+		            	self.exArray.push({
+		            		cells: [
+		            			{ value: self.displayDate, textAlign: "center", colSpan: 6}
+		            		]
+		            	});
+		            }
+	            	self.exArray.push({
+	            		cells: [
+	            			{ value: "", colSpan: 6}
+	            		]
+	            	});
+	            	self.exArray.push({ 
+	            		cells: [
+							{ value: "Type", background: "#496cad", color: "#ffffff" },
+							{ value: "Date", background: "#496cad", color: "#ffffff" },
+							{ value: "Reference No.", background: "#496cad", color: "#ffffff" },
+							{ value: "Description", background: "#496cad", color: "#ffffff" },
+							{ value: "Revenue", background: "#496cad", color: "#ffffff" },
+							{ value: "Expense", background: "#496cad", color: "#ffffff" },
+						]
+					});
+					for (var i = 0; i < response.results.length; i++){
+						self.exArray.push({
+					        cells: [
+					          	{ value: response.results[i].name, bold: true, },
+					            { value: "" },
+					            { value: "" },
+					            { value: "" },
+					            { value: "" },
+					            { value: "" },
+					        ]
+					        
+					    });
+					    for(var j = 0; j < response.results[i].line.length; j++){
+				          	self.exArray.push({
+				          		cells: [
+				          	  		{ value: response.results[i].line[j].type },
+				              		{ value: response.results[i].line[j].issued_date },
+				              		{ value: response.results[i].line[j].number},
+				              		{ value: response.results[i].line[j].description},
+				              		{ value: response.results[i].line[j].revenue},
+				              		{ value: response.results[i].line[j].expense},
+				            	]
+				          	});
+				        }
+				    	self.exArray.push({
+					        cells: [
+					          	{ value: "", colSpan: 6 }
+					        ]
+					    });
+					}
+				}
+			});
 		},
 		printGrid			: function() {
 			var gridElement = $('#grid'),
@@ -88630,13 +90173,13 @@
 	                { autoWidth: true },
 	                { autoWidth: true }
 	              ],
-	              title: "General Ledger",
+	              title: "Profitability Detail by Job",
 	              rows: this.exArray
 	            }
 	          ]
 	        });
 	        //save the file as Excel file with extension xlsx
-	        kendo.saveAs({dataURI: workbook.toDataURL(), fileName: "GeneralLedger.xlsx"});
+	        kendo.saveAs({dataURI: workbook.toDataURL(), fileName: "profitabilityDeataiJob.xlsx"});
 		}
 	});
 
@@ -93773,6 +95316,8 @@
 				if(banhji.pageLoaded["quote"]==undefined){
 					banhji.pageLoaded["quote"] = true;
 
+					vm.lineDS.bind("change", vm.lineDSChanges);
+
 					var validator = $("#example").kendoValidator({
 			        	rules: {
 					        customRule1: function(input) {
@@ -93794,6 +95339,17 @@
 					        customRule2: banhji.source.duplicateNumber
 					    }
 			        }).data("kendoValidator");
+
+			        $("#saveDraft1").click(function(e){
+						e.preventDefault();
+
+						if(validator.validate()){
+							vm.set("saveDraft", true);
+			            	vm.save();
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }
+					});
 			        
 			        $("#saveNew").click(function(e){
 						e.preventDefault();
@@ -95670,6 +97226,8 @@
 				if(banhji.pageLoaded["purchase_order"]==undefined){
 					banhji.pageLoaded["purchase_order"] = true;
 
+					vm.lineDS.bind("change", vm.lineDSChanges);
+
 					var validator = $("#example").kendoValidator({
 			        	rules: {
 					        customRule1: function(input) {
@@ -95691,6 +97249,17 @@
 					        customRule2: banhji.source.duplicateNumber
 					    }
 			        }).data("kendoValidator");
+
+			        $("#saveDraft1").click(function(e){
+						e.preventDefault();
+
+						if(validator.validate()){
+							vm.set("saveDraft", true);
+			            	vm.save();
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }
+					});
 
 			        $("#saveNew").click(function(e){
 						e.preventDefault();

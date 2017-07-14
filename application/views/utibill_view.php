@@ -88,7 +88,7 @@
 			  	<button class="btn btn-inverse"
 			  		type="submit" 
 			  		data-bind="click: search" >
-			  			<i class="icon-search"></i>
+			  			<i class="icon-search iconsearch"></i>
 			  	</button>
 			</form>
 
@@ -248,7 +248,7 @@
 				  	<button class="btn btn-inverse"
 				  		type="submit" 
 				  		data-bind="click: search" >
-				  			<i class="icon-search"></i>
+				  			<i class="icon-search "></i>
 				  	</button>
 				</form>
             </div>
@@ -5586,7 +5586,7 @@
 								</div>
 								<div class="col-sm-9" align="right">
 									<span class="btn-btn" data-bind="click: cancel" ><i></i> <span data-bind="text: lang.lang.cancel"></span></span>
-									<span class="btn-btn" data-bind="click: printBill" ><i></i> <span data-bind="text: lang.lang.run_bill">Run Bill</span></span>									
+									<span class="btn-btn" data-bind="click: printBill" ><i></i> <span data-bind="text: lang.lang.print_bill">Print Bill</span></span>									
 								</div>
 							</div>
 						</div>
@@ -8629,23 +8629,23 @@
 <script id="customerList" type="text/x-kendo-template">
 	<div class="container">
 		<div class="row-fluid">
-			<div class="background">
+			<div id="waterreport" class="background">
 				<div class="row-fluid">
 					<div id="loadImport" style="display:none;text-align: center;position: absolute;width: 100%; height: 100%;margin-top: -15px;background: rgba(142, 159, 167, 0.8);z-index: 9999;">
 						<i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 35%;left: 45%"></i>
 					</div>
 					<div id="example" class="k-content">
-						<div class="hidden-print pull-right">
-				    		<span class="glyphicons no-js remove_2" 
-								data-bind="click: cancel"><i></i></span>
+						<div class="hidden-print pull-right" style="margin-bottom: 15px;">
+				    		<span class="pull-right glyphicons no-js remove_2"
+						onclick="javascript:window.history.back()"><i></i></span>
 						</div>
 						<div class="clear"></div>
 
 						<!-- Tabs -->
-						<div class="relativeWrap" data-toggle="source-code" style="margin: 15px 0;">
+						<div class="relativeWrap" data-toggle="source-code">
 							<div class="widget widget-tabs widget-tabs-gray report-tab">
 								<!-- Tabs Heading -->
-								<div class="widget-head" style="background: #203864 !important; color: #fff;">
+								<div class="widget-head">
 									<ul>										
 										<li class="active"><a class="glyphicons print" href="#tab-1" data-toggle="tab"><i></i><span data-bind="text: lang.lang.print_export" style="text-transform: capitalize;"></span></a></li>
 									</ul>
@@ -8654,7 +8654,7 @@
 								<div class="widget-body">
 									<div class="tab-content">
 							        	<!-- PRINT/EXPORT  -->
-								        <div id="report" class="tab-pane active" id="tab-1" style="border: 1px solid #ccc; overflow: hidden; padding: 15px">
+								        <div class="tab-pane active report" id="tab-1" >
 								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: printGrid" ><i></i> Print</span>
 								        	<span id="excel" class="btn btn-icon btn-default execl" data-bind="click: ExportExcel" >
 								        		<i class="fa fa-file-excel-o"></i>
@@ -8668,9 +8668,9 @@
 						<!-- // Tabs END -->
 						
 						<div id="invFormContent">
-							<div class="block-title" style="text-align: center; width: 100%; margin-bottom: 15px; float: left;">
-								<h3 data-bind="text: institute.name" style="text-align: center;"></h3>
-								<h2 data-bind="text: lang.lang.customer_list" style="text-align: center; width: 100%;">Customer List</h2>
+							<div class="block-title">
+								<h3 data-bind="text: institute.name"></h3>
+								<h2 data-bind="text: lang.lang.customer_list">Customer List</h2>
 							</div>
 							<div class="row">
 								<div class="col-xs-12 col-sm-6">
@@ -8816,63 +8816,72 @@
 	</tr>
 </script>
 <script id="disconnectList" type="text/x-kendo-template">
-	<div id="slide-form">
-		<div class="customer-background" style="margin-top: 15px;">
-			<div class="container-960">
-				<div id="example" class="k-content saleSummaryCustomer">
-			    	<span class="pull-right glyphicons no-js remove_2"
+	<div class="container">
+		<div class="row-fluid">
+			<div id="waterreport" class="background">
+				<div class="row-fluid">
+					<div id="loadImport" style="display:none;text-align: center;position: absolute;width: 100%; height: 100%;margin-top: -15px;background: rgba(142, 159, 167, 0.8);z-index: 9999;">
+						<i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 35%;left: 45%"></i>
+					</div>
+					<div id="example" class="k-content">
+						<div class="hidden-print pull-right" style="margin-bottom: 15px;">
+				    		<span class="pull-right glyphicons no-js remove_2"
 						onclick="javascript:window.history.back()"><i></i></span>
-					<br>
-					<br>
-					<div class="row-fluid">
-					    <!-- Tabs -->
-						<div class="relativeWrap" data-toggle="source-code">
+						</div>
+						<div class="clear"></div>
+
+						<!-- Tabs -->
+						<div class="relativeWrap" data-toggle="source-code" style="margin: 15px 0;">
 							<div class="widget widget-tabs widget-tabs-gray report-tab">
 								<!-- Tabs Heading -->
-								<div class="widget-head">
+								<div class="widget-head" style="background: #203864 !important; color: #fff;">
 									<ul>
-										<li><a class="glyphicons filter" href="#tab-1" data-toggle="tab"><i></i><span data-bind="text: lang.lang.filter">Filter</span></a></li>	
+										<li class="active"><a class="glyphicons filter" href="#tab-1" data-toggle="tab"><i></i><span data-bind="text: lang.lang.filter">Filter</span></a></li>	
 										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i><span data-bind="text: lang.lang.print_export">Print/Export</span></a></li>
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
 								<div class="widget-body">
 									<div class="tab-content">
-								        <div class="tab-pane active" id="tab-1">
-											<input 
-												data-role="dropdownlist" 
-												data-option-label="License ..." 
-												data-auto-bind="false" 
-												data-value-primitive="true" 
-												data-text-field="name" 
-												data-value-field="id" 
-												data-bind="
-													value: licenseSelect,
-				                  					source: licenseDS,
-				                  					events: {change: licenseChange}">
-
-									        <input 
-												data-role="dropdownlist" 
-												data-option-label="Location ..." 
-												data-auto-bind="false" 
-												data-value-primitive="false" 
-												data-text-field="name" 
-												data-value-field="id" 
-												data-bind="
-													value: blocSelect,
-													enabled: haveBloc,
-				                  					source: blocDS">
-
-										  	 <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>							
+								        <div class="tab-pane active" id="tab-1" style="border: 1px solid #ccc; overflow: hidden; padding: 15px">
+											<div class="row">
+												<div class="col-xs-12-3 col-sm-2">
+													<input 
+														data-role="dropdownlist" 
+														data-option-label="License ..." 
+														data-auto-bind="false" 
+														data-value-primitive="true" 
+														data-text-field="name" 
+														data-value-field="id" 
+														data-bind="
+															value: licenseSelect,
+						                  					source: licenseDS,
+						                  					events: {change: licenseChange}"
+						                  					style="width: 100%;">
+						                  		</div>
+						                  		<div class="col-xs-12-3 col-sm-2">
+											        <input 
+														data-role="dropdownlist" 
+														data-option-label="Location ..." 
+														data-auto-bind="false" 
+														data-value-primitive="false" 
+														data-text-field="name" 
+														data-value-field="id" 
+														data-bind="
+															value: blocSelect,
+															enabled: haveBloc,
+						                  					source: blocDS"
+						                  					style="width: 100%;">
+						                  		</div>
+						                  		<div class="col-xs-12-3 col-sm-1">
+												  	 <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>							
+									    		</div>
+									    	</div>
 									    </div>	
 									    <!-- PRINT/EXPORT  -->
-								        <div class="tab-pane" id="tab-2">								        	
-								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: printGrid" style="width: 80px;"><i></i> Print</span>
-								        	<!-- <span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-pdf-o"></i>
-								        		Print as PDF
-								        	</span> -->
-								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: ExportExcel" style="width: 80px;">
+								        <div class="tab-pane report" id="tab-2" style="border: 1px solid #ccc; overflow: hidden; padding: 15px">								        	
+								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: printGrid" ><i></i> Print</span>
+								        	<span id="excel" class="btn btn-icon btn-default execl" data-bind="click: ExportExcel" >
 								        		<i class="fa fa-file-excel-o"></i>
 								        		Export to Excel
 								        	</span>
@@ -8881,29 +8890,30 @@
 								</div>
 							</div>
 						</div>
-						<!-- // Tabs END -->						
-					</div>
-					<br>
-					<div id="invFormContent">
-						<div class="block-title">
-							<h3 data-bind="text: institute.name"></h3>
-							<h2 data-bind="text: lang.lang.disconnect_customer_list">Disconnect Customer List</h2>
+						<!-- // Tabs END -->
+
+						<div id="invFormContent">
+							<div class="block-title" style="">
+								<h3 data-bind="text: institute.name"></h3>
+								<h2 data-bind="text: lang.lang.disconnect_customer_list">Disconnect Customer List</h2>
+							</div>
+							<table style="margin-bottom: 0;" class="table table-bordered table-condensed table-striped table-primary table-vertical-center">
+								<thead>
+									<tr>
+										<th style="vertical-align: top;"><span data-bind="text: lang.lang.customer_name">Customer Name</span></th>
+										<th style="vertical-align: top;"><span data-bind="">License</span></th>
+										<th style="vertical-align: top;"><span data-bind="text: lang.lang.number">Number</span></th>
+										<th style="vertical-align: top;"><span data-bind="text: lang.lang.phone">Phone</span></th>
+										<th style="vertical-align: top;"><span data-bind="text: lang.lang.address">Address</span></th>
+									</tr>
+								</thead>
+								<tbody data-role="listview"
+											 data-bind="source: dataSource"
+											 data-template="disconnectList-temp"
+								></tbody>
+							</table>
 						</div>
-						<table class="table table-borderless table-condensed ">
-							<thead>
-								<tr>
-									<th style="vertical-align: top;"><span data-bind="text: lang.lang.customer_name">Customer Name</span></th>
-									<th style="vertical-align: top;"><span data-bind="">License</span></th>
-									<th style="vertical-align: top;"><span data-bind="text: lang.lang.number">Number</span></th>
-									<th style="vertical-align: top;"><span data-bind="text: lang.lang.phone">Phone</span></th>
-									<th style="vertical-align: top;"><span data-bind="text: lang.lang.address">Address</span></th>
-								</tr>
-							</thead>
-							<tbody data-role="listview"
-										 data-bind="source: dataSource"
-										 data-template="disconnectList-temp"
-							></tbody>
-						</table>
+
 					</div>
 				</div>
 			</div>
@@ -8920,22 +8930,26 @@
 	</tr>
 </script>
 <script id="to_be_disconnectList" type="text/x-kendo-template">
-	<div id="slide-form">
-		<div class="customer-background" style="margin-top: 15px;">
-			<div class="container-960">
-				<div id="example" class="k-content saleSummaryCustomer">
-			    	<span class="pull-right glyphicons no-js remove_2"
+	<div class="container">
+		<div class="row-fluid">
+			<div id="waterreport" class="background">
+				<div class="row-fluid">
+					<div id="loadImport" style="display:none;text-align: center;position: absolute;width: 100%; height: 100%;margin-top: -15px;background: rgba(142, 159, 167, 0.8);z-index: 9999;">
+						<i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 35%;left: 45%"></i>
+					</div>
+					<div id="example" class="k-content">
+						<div class="hidden-print pull-right" style="margin-bottom: 15px;">
+				    		<span class="pull-right glyphicons no-js remove_2"
 						onclick="javascript:window.history.back()"><i></i></span>
-					<br>
-					<br>
-					<div class="row-fluid">
+						</div>
+						<div class="clear"></div>
 					    <!-- Tabs -->
 						<div class="relativeWrap" data-toggle="source-code">
 							<div class="widget widget-tabs widget-tabs-gray report-tab">
 								<!-- Tabs Heading -->
 								<div class="widget-head">
 									<ul>
-										<li><a class="glyphicons filter" href="#tab-1" data-toggle="tab"><i></i><span data-bind="text: lang.lang.filter">Filter</span></a></li>	
+										<li class="active"><a class="glyphicons filter" href="#tab-1" data-toggle="tab"><i></i><span data-bind="text: lang.lang.filter">Filter</span></a></li>	
 										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i><span data-bind="text: lang.lang.print_export">Print/Export</span></a></li>
 									</ul>
 								</div>
@@ -8943,40 +8957,42 @@
 								<div class="widget-body">
 									<div class="tab-content">
 								        <div class="tab-pane active" id="tab-1">
-											<input 
-												data-role="dropdownlist" 
-												data-option-label="License ..." 
-												data-auto-bind="false" 
-												data-value-primitive="true" 
-												data-text-field="name" 
-												data-value-field="id" 
-												data-bind="
-													value: licenseSelect,
-				                  					source: licenseDS,
-				                  					events: {change: licenseChange}">
-
-									        <input 
-												data-role="dropdownlist" 
-												data-option-label="Location ..." 
-												data-auto-bind="false" 
-												data-value-primitive="false" 
-												data-text-field="name" 
-												data-value-field="id" 
-												data-bind="
-													value: blocSelect,
-													enabled: haveBloc,
-				                  					source: blocDS">
-
-										  	 <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>							
+								        	<div class="row">
+												<div class="col-xs-12-3 col-sm-2">
+													<input 
+														data-role="dropdownlist" 
+														data-option-label="License ..." 
+														data-auto-bind="false" 
+														data-value-primitive="true" 
+														data-text-field="name" 
+														data-value-field="id" 
+														data-bind="
+															value: licenseSelect,
+						                  					source: licenseDS,
+						                  					events: {change: licenseChange}" style="width: 100%;">
+						                  		</div>
+												<div class="col-xs-12-3 col-sm-2">
+											        <input 
+														data-role="dropdownlist" 
+														data-option-label="Location ..." 
+														data-auto-bind="false" 
+														data-value-primitive="false" 
+														data-text-field="name" 
+														data-value-field="id" 
+														data-bind="
+															value: blocSelect,
+															enabled: haveBloc,
+						                  					source: blocDS" style="width: 100%;">
+												</div>
+												<div class="col-xs-12-3 col-sm-1">
+												  	<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>							
+									    		</div>
+									    	</div>
 									    </div>	
 									    <!-- PRINT/EXPORT  -->
-								        <div class="tab-pane" id="tab-2">								        	
-								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: printGrid" style="width: 80px;"><i></i> Print</span>
-								        	<!-- <span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-pdf-o"></i>
-								        		Print as PDF
-								        	</span> -->
-								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: ExportExcel" style="width: 80px;">
+								        <div class="tab-pane report" id="tab-2">								        	
+								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: printGrid" ><i></i> Print</span>
+								        	<span id="excel" class="btn btn-icon btn-default execl" data-bind="click: ExportExcel" >
 								        		<i class="fa fa-file-excel-o"></i>
 								        		Export to Excel
 								        	</span>
@@ -8986,28 +9002,28 @@
 							</div>
 						</div>
 						<!-- // Tabs END -->						
-					</div>
-					<br>
-					<div id="invFormContent">
-						<div class="block-title">
-							<h3 data-bind="text: institute.name"></h3>
-							<h2 data-bind="">To Be Disconnect Customer List</h2>
+					
+						<div id="invFormContent">
+							<div class="block-title">
+								<h3 data-bind="text: institute.name"></h3>
+								<h2 data-bind="">To Be Disconnect Customer List</h2>
+							</div>
+							<table style="margin-bottom: 0;" class="table table-bordered table-condensed table-striped table-primary table-vertical-center">
+								<thead>
+									<tr>
+										<th style="vertical-align: top;"><span data-bind="text: lang.lang.customer_name">Customer Name</span></th>
+										<th style="vertical-align: top;"><span data-bind="">Date</span></th>
+										<th style="vertical-align: top;"><span data-bind="text: lang.lang.reference">Reference</span></th>										
+										<th style="vertical-align: top; text-align: center;"><span data-bind="text: lang.lang.status">Status</span></th>
+										<th style="vertical-align: top;"><span data-bind="">Location</span></th>
+									</tr>
+								</thead>
+								<tbody data-role="listview"
+											 data-bind="source: dataSource"
+											 data-template="to_be_disconnectList-temp"
+								></tbody>
+							</table>
 						</div>
-						<table class="table table-borderless table-condensed ">
-							<thead>
-								<tr>
-									<th style="vertical-align: top;"><span data-bind="text: lang.lang.customer_name">Customer Name</span></th>
-									<th style="vertical-align: top;"><span data-bind="">Date</span></th>
-									<th style="vertical-align: top;"><span data-bind="text: lang.lang.reference">Reference</span></th>										
-									<th style="vertical-align: top; text-align: center;"><span data-bind="text: lang.lang.status">Status</span></th>
-									<th style="vertical-align: top;"><span data-bind="">Location</span></th>
-								</tr>
-							</thead>
-							<tbody data-role="listview"
-										 data-bind="source: dataSource"
-										 data-template="to_be_disconnectList-temp"
-							></tbody>
-						</table>
 					</div>
 				</div>
 			</div>
@@ -9174,17 +9190,21 @@
 	</tr>
 </script>
 <script id="miniUsageList" type="text/x-kendo-template">
-	<div id="slide-form">
-		<div class="customer-background" style="margin-top: 15px;">
-			<div class="container-960">
-				<div id="example" class="k-content saleSummaryCustomer">
-			    	<span class="pull-right glyphicons no-js remove_2"
+	<div class="container">
+		<div class="row-fluid">
+			<div id="waterreport" class="background">
+				<div class="row-fluid">
+					<div id="loadImport" style="display:none;text-align: center;position: absolute;width: 100%; height: 100%;margin-top: -15px;background: rgba(142, 159, 167, 0.8);z-index: 9999;">
+						<i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 35%;left: 45%"></i>
+					</div>
+					<div id="example" class="k-content">
+						<div class="hidden-print pull-right" style="margin-bottom: 15px;">
+				    		<span class="pull-right glyphicons no-js remove_2"
 						onclick="javascript:window.history.back()"><i></i></span>
-					<br>
-					<br>
-					<div class="row-fluid">
+						</div>
+						<div class="clear"></div>
 					    <!-- Tabs -->
-						<div class="relativeWrap" data-toggle="source-code">
+						<div class="relativeWrap" data-toggle="source-code" >
 							<div class="widget widget-tabs widget-tabs-gray report-tab">
 								<!-- Tabs Heading -->
 								<div class="widget-head">
@@ -9197,37 +9217,42 @@
 								<!-- // Tabs Heading END -->								
 								<div class="widget-body">
 									<div class="tab-content">
-								        <div class="tab-pane active" id="tab-1">									        	
-											
-											<input data-role="dropdownlist"
-												   class="sorter"                  
-										           data-value-primitive="true"
-										           data-text-field="text"
-										           data-value-field="value"
-										           data-bind="value: sorter,
-										                      source: sortList,                              
-										                      events: { change: sorterChanges }" />
-
-											<input data-role="datepicker"
-												   class="sdate"
-												   data-format="dd-MM-yyyy"
-										           data-bind="value: sdate,
-										           			  max: edate"
-										           placeholder="From ..." >
-
-										    <input data-role="datepicker"
-										    	   class="edate"
-										    	   data-format="dd-MM-yyyy"
-										           data-bind="value: edate,
-										                      min: sdate"
-										           placeholder="To ..." >
-
-										  	<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
-							
+								        <div class="tab-pane active" id="tab-1">
+								        	<div class="row">
+												<div class="col-xs-12-3 col-sm-2">											
+													<input data-role="dropdownlist"
+														   class="sorter"                  
+												           data-value-primitive="true"
+												           data-text-field="text"
+												           data-value-field="value"
+												           data-bind="value: sorter,
+												                      source: sortList,                              
+												                      events: { change: sorterChanges }" style="width: 100%" />
+												</div>
+												<div class="col-xs-12-3 col-sm-2">
+													<input data-role="datepicker"
+														   class="sdate"
+														   data-format="dd-MM-yyyy"
+												           data-bind="value: sdate,
+												           			  max: edate"
+												           placeholder="From ..." style="width: 100%" />
+												</div>
+												<div class="col-xs-12-3 col-sm-2">
+												    <input data-role="datepicker"
+												    	   class="edate"
+												    	   data-format="dd-MM-yyyy"
+												           data-bind="value: edate,
+												                      min: sdate"
+												           placeholder="To ..."  style="width: 100%" />
+												</div>
+												<div class="col-xs-12-3 col-sm-1">
+												  	<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+												</div>
+											</div>
 							        	</div>	
 							        	<div class="tab-pane" id="tab-2">
 											<div class="row">
-												<div class="span3" style="padding-left: 15px;">
+												<div class="col-xs-12-3 col-sm-2">
 													<span data-bind="text: lang.lang.license">Licenses</span>
 													<input 
 														data-role="dropdownlist" 
@@ -9241,7 +9266,7 @@
 																source: licenseDS,
 																events: {change: licenseChange}" style="width: 100%">
 												</div>
-												<div class="span3">													
+												<div class="col-xs-12-3 col-sm-2">													
 													<span data-bind="text: lang.lang.location">Locations</span>
 														<input 
 															data-role="dropdownlist" 
@@ -9255,19 +9280,15 @@
 																enabled: haveBloc,
 																source: blocDS" style="width: 100%">
 												</div>
-												<div class="span1">											
+												<div class="col-xs-12-3 col-sm-1">											
 										  			<button style="margin-top: 20px;" type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
 												</div>														
 											</div>		
 							        	</div>	
 							        	<!-- PRINT/EXPORT  -->
-								        <div class="tab-pane" id="tab-3">								        	
-								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: printGrid" style="width: 80px;"><i></i> Print</span>
-								        	<!-- <span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-pdf-o"></i>
-								        		Print as PDF
-								        	</span> -->
-								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: ExportExcel" style="width: 80px;">
+								        <div class="tab-pane report" id="tab-3">
+								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: printGrid" ><i></i> Print</span>
+								        	<span id="excel" class="btn btn-icon btn-default execl" data-bind="click: ExportExcel" >
 								        		<i class="fa fa-file-excel-o"></i>
 								        		Export to Excel
 								        	</span>
@@ -9276,32 +9297,31 @@
 								</div>
 							</div>
 						</div>
-						<!-- // Tabs END -->						
-					</div>
-					<br>
-					<div id="invFormContent">
-						<div class="block-title">
-							<h3 data-bind="text: institute.name"></h3>
-							<h2 data-bind="text:lang.lang.minimum_water_usage_list">Minimum Water Usage List</h2>
-							<p data-bind="text: displayDate"></p>
+						<!-- // Tabs END -->
+
+						<div id="invFormContent">
+							<div class="block-title">
+								<h3 data-bind="text: institute.name"></h3>
+								<h2 data-bind="text:lang.lang.minimum_water_usage_list">Minimum Water Usage List</h2>
+								<p data-bind="text: displayDate"></p>
+							</div>
+							<table style="margin-bottom: 0;" class="table table-bordered table-condensed table-striped table-primary table-vertical-center">
+								<thead>
+									<tr>
+										<th style="vertical-align: top;"><span data-bind="text:lang.lang.meter_number">Meter Number</span></th>
+										<th style="vertical-align: top;"><span data-bind="text:lang.lang.date">Date</span></th>
+										<th style="vertical-align: top;"><span data-bind="text:lang.lang.license">License</span></th>
+										<th style="vertical-align: top;"><span data-bind="text:lang.lang.address">Address</span></th>
+										<th style="vertical-align: top;"><span data-bind="text:lang.lang.usage">Usage</span></th>
+									</tr>
+								</thead>
+								<tbody data-role="listview"
+											 data-bind="source: dataSource"
+											 data-auto-bind="false" 
+											 data-template="miniCustomerList-temp"
+								></tbody>
+							</table>					
 						</div>
-						<table class="table table-borderless table-condensed ">
-							<thead>
-								<tr>
-									<th><span data-bind="text:lang.lang.meter_number">Meter Number</span></th>
-									<th><span data-bind="text:lang.lang.date">Date</span></th>
-									<th><span data-bind="text:lang.lang.license">License</span></th>
-									<th><span data-bind="text:lang.lang.address">Address</span></th>
-									<th><span data-bind="text:lang.lang.usage">Usage</span></th>
-								</tr>
-							</thead>
-							<tbody data-role="listview"
-										 data-bind="source: dataSource"
-										 data-auto-bind="false" 
-										 data-template="miniCustomerList-temp"
-							></tbody>
-						</table>
-				
 					</div>
 				</div>
 			</div>
@@ -9953,16 +9973,19 @@
 	</div>
 </script>
 <script id="accountReceivableList" type="text/x-kendo-template">
-	<div id="slide-form">
-		<div class="customer-background" style="margin-top: 20px;">
-			<div class="container-960">
-				<div id="example" class="k-content saleSummaryCustomer">
-			    	<span class="pull-right glyphicons no-js remove_2"
+	<div class="container">
+		<div class="row-fluid">
+			<div id="waterreport" class="background">
+				<div class="row-fluid">
+					<div id="loadImport" style="display:none;text-align: center;position: absolute;width: 100%; height: 100%;margin-top: -15px;background: rgba(142, 159, 167, 0.8);z-index: 9999;">
+						<i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 35%;left: 45%"></i>
+					</div>
+					<div id="example" class="k-content">
+						<div class="hidden-print pull-right" style="margin-bottom: 15px;">
+				    		<span class="pull-right glyphicons no-js remove_2"
 						onclick="javascript:window.history.back()"><i></i></span>
-					<br>
-					<br>
-					
-					<div class="row-fluid">
+						</div>
+						<div class="clear"></div>
 					    <!-- Tabs -->
 						<div class="relativeWrap" data-toggle="source-code">
 							<div class="widget widget-tabs widget-tabs-gray report-tab">
@@ -9993,7 +10016,7 @@
 								    	<!-- Filter -->
 								        <div class="tab-pane" id="tab-2">
 											<div class="row">
-												<div class="span3" style="padding-left: 15px;">
+												<div class="col-xs-12 col-sm-2" style="padding-left: 15px;">
 													<span data-bind="text: lang.lang.license">Licenses</span>
 													<input 
 														data-role="dropdownlist" 
@@ -10007,7 +10030,7 @@
 																source: licenseDS,
 																events: {change: licenseChange}" style="width: 100%">
 												</div>
-												<div class="span3">													
+												<div class="col-xs-12 col-sm-2">													
 													<span data-bind="text: lang.lang.location">Locations</span>
 														<input 
 															data-role="dropdownlist" 
@@ -10021,7 +10044,7 @@
 																enabled: haveBloc,
 																source: blocDS" style="width: 100%">
 												</div>
-												<div class="span3">
+												<div class="col-xs-12 col-sm-2">
 													<span data-bind="text: lang.lang.customers"></span>
 													<select data-role="multiselect"
 														   data-value-primitive="true"
@@ -10034,19 +10057,15 @@
 														   data-placeholder="Select Customer.."
 														   style="width: 100%" /></select>
 												</div>
-												<div class="span1">											
+												<div class="col-xs-12 col-sm-1">											
 										  			<button style="margin-top: 20px;" type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
 												</div>														
 											</div>		
 							        	</div>
 							        								        	<!-- PRINT/EXPORT  -->
-								        <div class="tab-pane" id="tab-3">								        	
-								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: printGrid" style="width: 80px;"><i></i> Print</span>
-								        	<!-- <span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-pdf-o"></i>
-								        		Print as PDF
-								        	</span> -->
-								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: ExportExcel" style="width: 80px;">
+								        <div class="tab-pane report" id="tab-3">								        	
+								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: printGrid" ><i></i> Print</span>
+								        	<span id="excel" class="btn btn-icon btn-default execl" data-bind="click: ExportExcel" >
 								        		<i class="fa fa-file-excel-o"></i>
 								        		Export to Excel
 								        	</span>
@@ -10055,48 +10074,49 @@
 								</div>
 							</div>
 						</div>
-						<!-- // Tabs END -->						
-					</div>
-					<div id="invFormContent">
-						<div class="block-title">
-							<h3 data-bind="text: company.name"></h3>
-							<h2 data-bind="text: lang.lang.accounts_receivable_listing">List Of Invoice To Be Collected</h2>
-							<p data-bind="text: displayDate"></p>
-						</div>
+						<!-- // Tabs END -->
+						<div id="invFormContent">
+							<div class="block-title">
+								<h3 data-bind="text: company.name"></h3>
+								<h2 data-bind="text: lang.lang.accounts_receivable_listing">List Of Invoice To Be Collected</h2>
+								<p data-bind="text: displayDate"></p>
+							</div>
 
-						<div class="row-fluid">
-							<div class="span3" style="padding: 0;">
-								<div class="total-customer">									
-									<p data-bind="text: lang.lang.number_of_customer">Number of Customer</p>
-									<span data-format="n0" data-bind="text: dataSource.total"></span>
+							<div class="row">
+								<div class="col-xs-12 col-sm-3">
+									<div class="total-sale">									
+										<p data-bind="text: lang.lang.number_of_customer">Number of Customer</p>
+										<span data-format="n0" data-bind="text: dataSource.total"></span>
+									</div>
+								</div>
+								<div class="col-xs-12 col-sm-9">
+									<div class="total-sale">
+										<p data-bind="text: lang.lang.total_amount">Total Amount</p>
+										<span data-bind="text: totalAmount"></span>
+									</div>
 								</div>
 							</div>
-							<div class="span9" style="padding-right: 0;">
-								<div class="total-customer">
-									<p data-bind="text: lang.lang.total_amount">Total Amount</p>
-									<span data-bind="text: totalAmount"></span>
-								</div>
-							</div>
+
+							<table style="margin-bottom: 0;" class="table table-bordered table-condensed table-striped table-primary table-vertical-center">
+								<thead>
+									<tr>
+										<th style="vertical-align: top;"><span data-bind="text: lang.lang.type">Type</span></th>
+										<th style="vertical-align: top;"><span data-bind="text: lang.lang.date">Date</span></th>
+										<th style="vertical-align: top;"><span data-bind="text: lang.lang.name">Name</span></th>
+										<th style="vertical-align: top;"><span data-bind="text: lang.lang.reference">Reference</span></th>
+										<th style="vertical-align: top;"><span data-bind="text: lang.lang.location">Location</span></th>
+										<th style="vertical-align: top;"><span data-bind="text: lang.lang.status">Status</span></th>	
+										<th style="vertical-align: top;"><span data-bind="text: lang.lang.amount">Amount</span></th>
+									</tr>
+								</thead>
+								<tbody data-role="listview"
+										data-auto-bind="false"
+									 	data-bind="source: dataSource"
+									 	data-template="accountReceivableList-template"
+								></tbody>
+							</table>
 						</div>
 
-						<table class="table table-borderless table-condensed ">
-							<thead>
-								<tr>
-									<th><span data-bind="text: lang.lang.type">Type</span></th>
-									<th><span data-bind="text: lang.lang.date">Date</span></th>
-									<th><span data-bind="text: lang.lang.name">Name</span></th>
-									<th><span data-bind="text: lang.lang.reference">Reference</span></th>
-									<th><span data-bind="text: lang.lang.location">Location</span></th>
-									<th style="text-align: center;"><span data-bind="text: lang.lang.status">Status</span></th>	
-									<th><span data-bind="text: lang.lang.amount">Amount</span></th>
-								</tr>
-							</thead>
-							<tbody data-role="listview"
-									data-auto-bind="false"
-								 	data-bind="source: dataSource"
-								 	data-template="accountReceivableList-template"
-							></tbody>
-						</table>
 					</div>
 				</div>
 			</div>
@@ -10288,16 +10308,20 @@
 	</tr>
 </script>
 <script id="customerDepositReport" type="text/x-kendo-template">
-	<div id="slide-form">
-		<div class="customer-background" style="margin-top: 20px;">
-			<div class="container-960">
-				<div id="example" class="k-content saleSummaryCustomer">
-			    	<span class="pull-right glyphicons no-js remove_2"
+	<div class="container">
+		<div class="row-fluid">
+			<div id="waterreport" class="background">
+				<div class="row-fluid">
+					<div id="loadImport" style="display:none;text-align: center;position: absolute;width: 100%; height: 100%;margin-top: -15px;background: rgba(142, 159, 167, 0.8);z-index: 9999;">
+						<i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 35%;left: 45%"></i>
+					</div>
+					<div id="example" class="k-content">
+						<div class="hidden-print pull-right" style="margin-bottom: 15px;">
+				    		<span class="pull-right glyphicons no-js remove_2"
 						onclick="javascript:window.history.back()"><i></i></span>
-					<br>
-					<br>
-					
-					<div class="row-fluid">
+						</div>
+						<div class="clear"></div>
+
 					    <!-- Tabs -->
 						<div class="relativeWrap" data-toggle="source-code">
 							<div class="widget widget-tabs widget-tabs-gray report-tab">
@@ -10313,41 +10337,45 @@
 								<!-- // Tabs Heading END -->								
 								<div class="widget-body">
 									<div class="tab-content">
-
 								        <!-- Date -->
-								        <div class="tab-pane active" id="tab-1">									        	
-											
-											<input data-role="dropdownlist"
-												   class="sorter"                  
-										           data-value-primitive="true"
-										           data-text-field="text"
-										           data-value-field="value"
-										           data-bind="value: sorter,
-										                      source: sortList,                              
-										                      events: { change: sorterChanges }" />
-
-											<input data-role="datepicker"
-												   class="sdate"
-												   data-format="dd-MM-yyyy"
-										           data-bind="value: sdate,
-										           			  max: edate"
-										           placeholder="From ..." >
-
-										    <input data-role="datepicker"
-										    	   class="edate"
-										    	   data-format="dd-MM-yyyy"
-										           data-bind="value: edate,
-										                      min: sdate"
-										           placeholder="To ..." >
-
-										  	<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
-							
+								        <div class="tab-pane active" id="tab-1">
+								        	<div class="row">									        	
+												<div class="col-xs-12 col-sm-2">
+													<input data-role="dropdownlist"
+														   class="sorter"                  
+												           data-value-primitive="true"
+												           data-text-field="text"
+												           data-value-field="value"
+												           data-bind="value: sorter,
+												                      source: sortList,
+												                      events: { change: sorterChanges }" style="width: 100%" />
+												</div>
+												<div class="col-xs-12 col-sm-2">
+													<input data-role="datepicker"
+														   class="sdate"
+														   data-format="dd-MM-yyyy"
+												           data-bind="value: sdate,
+												           			  max: edate"
+												           placeholder="From ..." style="width: 100%">
+												</div>
+												<div class="col-xs-12 col-sm-2">
+												    <input data-role="datepicker"
+												    	   class="edate"
+												    	   data-format="dd-MM-yyyy"
+												           data-bind="value: edate,
+												                      min: sdate"
+												           placeholder="To ..." style="width: 100%">
+												</div>
+												<div class="col-xs-12 col-sm-1">
+												  	<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+												</div>
+											</div>
 							        	</div>
 
 								    	<!-- Filter -->
 								        <div class="tab-pane" id="tab-2">
 											<div class="row">
-												<div class="span3" style="padding-left: 15px;">
+												<div class="col-xs-12 col-sm-2">
 													<span data-bind="text: lang.lang.license">Licenses</span>
 													<input 
 														data-role="dropdownlist" 
@@ -10361,7 +10389,7 @@
 																source: licenseDS,
 																events: {change: licenseChange}" style="width: 100%">
 												</div>
-												<div class="span3">													
+												<div class="col-xs-12 col-sm-2">
 													<span data-bind="text: lang.lang.location">Locations</span>
 														<input 
 															data-role="dropdownlist" 
@@ -10375,7 +10403,7 @@
 																enabled: haveBloc,
 																source: blocDS" style="width: 100%">
 												</div>
-												<div class="span3">
+												<div class="col-xs-12 col-sm-2">
 													<span data-bind="text: lang.lang.customers"></span>
 													<select data-role="multiselect"
 														   data-value-primitive="true"
@@ -10388,18 +10416,14 @@
 														   data-placeholder="Select Customer.."
 														   style="width: 100%" /></select>
 												</div>
-												<div class="span1">											
+												<div class="col-xs-12 col-sm-1">											
 										  			<button style="margin-top: 20px;" type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
 												</div>														
 											</div>		
 							        	</div>
-							        	<div class="tab-pane" id="tab-3">								        	
-								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: printGrid" style="width: 80px;"><i></i> Print</span>
-								        	<!-- <span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-pdf-o"></i>
-								        		Print as PDF
-								        	</span> -->
-								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: ExportExcel" style="width: 80px;">
+							        	<div class="tab-pane report" id="tab-3">								        	
+								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: printGrid" ><i></i> Print</span>
+								        	<span id="excel" class="btn btn-icon btn-default execl" data-bind="click: ExportExcel" >
 								        		<i class="fa fa-file-excel-o"></i>
 								        		Export to Excel
 								        	</span>
@@ -10409,49 +10433,50 @@
 							</div>
 						</div>
 						<!-- // Tabs END -->						
-					</div>
+					
 
-					<div id="invFormContent">
-						<div class="block-title">
-							<h3 data-bind="text: company.name"></h3>
-							<h2 data-bind="text: lang.lang.customer_deposit_detail">Customer Deposit Detail</h2>
-							<p data-bind="text: displayDate"></p>
-						</div>
+						<div id="invFormContent">
+							<div class="block-title">
+								<h3 data-bind="text: company.name"></h3>
+								<h2 data-bind="text: lang.lang.customer_deposit_detail">Customer Deposit Detail</h2>
+								<p data-bind="text: displayDate"></p>
+							</div>
 
-						<div class="row-fluid">
-							<div class="span5">
-								<div class="total-customer">
-									<p data-bind="text: lang.lang.number_of_customer">Number of Customer</p>
-									<span data-bind="text: dataSource.total"></span>
+							<div class="row">
+								<div class="col-xs-12 col-sm-5">
+									<div class="total-sale">
+										<p data-bind="text: lang.lang.number_of_customer">Number of Customer</p>
+										<span data-bind="text: dataSource.total"></span>
+									</div>
+								</div>
+								<div class="col-xs-12 col-sm-7">
+									<div class="total-sale">
+										<p data-bind="text: lang.lang.deposit_balance">Deposit Balance</p>
+										<span data-bind="text: totalAmount"></span>
+									</div>
 								</div>
 							</div>
-							<div class="span7">
-								<div class="total-customer">
-									<p data-bind="text: lang.lang.deposit_balance">Deposit Balance</p>
-									<span data-bind="text: totalAmount"></span>
-								</div>
-							</div>
+
+							<table style="margin-bottom: 0;" class="table table-bordered table-condensed table-striped table-primary table-vertical-center">
+								<thead>
+									<tr>
+										<th style="vertical-align: top;"><span data-bind="text: lang.lang.type">Type</span></th>
+										<th style="vertical-align: top;"><span data-bind="text: lang.lang.date">Date</span></th>
+										<th style="vertical-align: top;"><span data-bind="text: lang.lang.number">Number</span></th>
+										<th style="vertical-align: top;"><span data-bind="text: lang.lang.reference">Reference</span></th>
+										<th style="vertical-align: top;"><span data-bind="text: lang.lang.location">Location</span></th>
+										<th style="vertical-align: top; text-align: right;"><span data-bind="text: lang.lang.amount">Amount</span></th>
+										<th style="vertical-align: top; text-align: right;"><span data-bind="text: lang.lang.balance">Balance</span></th>
+									</tr>
+								</thead>
+								<tbody data-role="listview"
+										 data-bind="source: dataSource"
+										 data-auto-bind="false"
+										 data-template="customerDepositReport-template"
+								></tbody>
+							</table>
+
 						</div>
-
-						<table class="table table-borderless table-condensed ">
-							<thead>
-								<tr>
-									<th><span data-bind="text: lang.lang.type">Type</span></th>
-									<th><span data-bind="text: lang.lang.date">Date</span></th>
-									<th><span data-bind="text: lang.lang.number">Number</span></th>
-									<th><span data-bind="text: lang.lang.reference">Reference</span></th>
-									<th><span data-bind="text: lang.lang.location">Location</span></th>
-									<th style="text-align: right;"><span data-bind="text: lang.lang.amount">Amount</span></th>
-									<th style="text-align: right;"><span data-bind="text: lang.lang.balance">Balance</span></th>
-								</tr>
-							</thead>
-							<tbody data-role="listview"
-									 data-bind="source: dataSource"
-									 data-auto-bind="false"
-									 data-template="customerDepositReport-template"
-							></tbody>
-						</table>
-
 					</div>
 				</div>
 			</div>
@@ -10707,16 +10732,20 @@
     </tr>  
 </script>
 <script id="customerBalanceSummary" type="text/x-kendo-template">
-	<div id="slide-form">
-		<div class="customer-background">
-			<div class="container-960">
-				<div id="example" class="k-content saleSummaryCustomer">
-			    	<span class="pull-right glyphicons no-js remove_2"
+	<div class="container">
+		<div class="row-fluid">
+			<div id="waterreport" class="background">
+				<div class="row-fluid">
+					<div id="loadImport" style="display:none;text-align: center;position: absolute;width: 100%; height: 100%;margin-top: -15px;background: rgba(142, 159, 167, 0.8);z-index: 9999;">
+						<i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 35%;left: 45%"></i>
+					</div>
+					<div id="example" class="k-content">
+						<div class="hidden-print pull-right" style="margin-bottom: 15px;">
+				    		<span class="pull-right glyphicons no-js remove_2"
 						onclick="javascript:window.history.back()"><i></i></span>
-					<br>
-					<br>
-					
-					<div class="row-fluid">
+						</div>
+						<div class="clear"></div>
+
 					    <!-- Tabs -->
 						<div class="relativeWrap" data-toggle="source-code">
 							<div class="widget widget-tabs widget-tabs-gray report-tab">
@@ -10742,60 +10771,57 @@
 								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
 							
 							        	</div>
-							        	<div class="tab-pane" id="tab-3">								        	
-								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: printGrid" style="width: 80px;"><i></i> Print</span>
-								        	<!-- <span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-pdf-o"></i>
-								        		Print as PDF
-								        	</span> -->
-								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: ExportExcel" style="width: 80px;">
-								        		<i class="fa fa-file-excel-o"></i>
-								        		Export to Excel
-								        	</span>
+							        	<div class="tab-pane report" id="tab-3">								        	
+								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: printGrid" ><i></i> Print</span>
+											<span id="excel" class="btn btn-icon btn-default execl" data-bind="click: ExportExcel" >
+												<i class="fa fa-file-excel-o"></i>
+												Export to Excel
+											</span>
 							        	</div>
 								    </div>
 								</div>
 							</div>
 						</div>
 						<!-- // Tabs END -->						
-					</div>
-					<div id="invFormContent">
-						<div class="block-title">
-							<h3 data-bind="text: company.name"></h3>
-							<h2 data-bind="text: lang.lang.customer_balance_summary"></h2>
-							<p data-bind="text: displayDate"></p>
-						</div>
+					
+						<div id="invFormContent">
+							<div class="block-title">
+								<h3 data-bind="text: company.name"></h3>
+								<h2 data-bind="text: lang.lang.customer_balance_summary"></h2>
+								<p data-bind="text: displayDate"></p>
+							</div>
 
-						<div class="row-fluid">
-							<div class="span5">
-								<div class="total-customer">	
-									<p data-bind="text: lang.lang.number_of_customer"></p>
-									<span data-bind="text: dataSource.total"></span>
+							<div class="row">
+								<div class="col-xs-12 col-sm-5">
+									<div class="total-sale">	
+										<p data-bind="text: lang.lang.number_of_customer"></p>
+										<span data-bind="text: dataSource.total"></span>
+									</div>
+								</div>
+								<div class="col-xs-12 col-sm-7">
+									<div class="total-sale">
+										<p data-bind="text: lang.lang.total_customer_balance"></p>
+										<span data-bind="text: total_balance"></span>									
+									</div>
 								</div>
 							</div>
-							<div class="span7">
-								<div class="total-customer">
-									<p data-bind="text: lang.lang.total_customer_balance"></p>
-									<span data-bind="text: total_balance"></span>									
-								</div>
-							</div>
-						</div>
 
-						<table class="table table-borderless table-condensed ">
-							<thead>
-								<tr>
-									<th data-bind="text: lang.lang.customer_name" style="text-transform: uppercase;"></th>
-									<th style="text-align: right;text-transform: uppercase;" >NO. OF Invoice</th>
-									<th data-bind="text: lang.lang.account_receivable_balance"></th>
-								</tr>
-							</thead>
-		            		<tbody data-role="listview"
-		            				data-auto-bind="false"
-					                data-template="customerBalanceSummary-template"
-					                data-bind="source: dataSource" >
-					        </tbody>
-		            	</table>
-		            </div>
+							<table style="margin-bottom: 0;" class="table table-bordered table-condensed table-striped table-primary table-vertical-center">
+								<thead>
+									<tr>
+										<th style="text-transform: uppercase; vertical-align: top;" data-bind="text: lang.lang.customer_name"></th>
+										<th style="text-align: right; text-transform: uppercase; vertical-align: top;" >NO. OF Invoice</th>
+										<th style="vertical-align: top;" data-bind="text: lang.lang.account_receivable_balance"></th>
+									</tr>
+								</thead>
+			            		<tbody data-role="listview"
+			            				data-auto-bind="false"
+						                data-template="customerBalanceSummary-template"
+						                data-bind="source: dataSource" >
+						        </tbody>
+			            	</table>
+			            </div>
+			        </div>
 				</div>
 			</div>
 		</div>
@@ -10809,16 +10835,20 @@
 	</tr>
 </script>	
 <script id="customerBalanceDetail" type="text/x-kendo-template">
-	<div id="slide-form">
-		<div class="customer-background">
-			<div class="container-960">
-				<div id="example" class="k-content saleSummaryCustomer">
-			    	<span class="pull-right glyphicons no-js remove_2"
+	<div class="container">
+		<div class="row-fluid">
+			<div id="waterreport" class="background">
+				<div class="row-fluid">
+					<div id="loadImport" style="display:none;text-align: center;position: absolute;width: 100%; height: 100%;margin-top: -15px;background: rgba(142, 159, 167, 0.8);z-index: 9999;">
+						<i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 35%;left: 45%"></i>
+					</div>
+					<div id="example" class="k-content">
+						<div class="hidden-print pull-right" style="margin-bottom: 15px;">
+				    		<span class="pull-right glyphicons no-js remove_2"
 						onclick="javascript:window.history.back()"><i></i></span>
-					<br>
-					<br>					
-					
-					<div class="row-fluid">
+						</div>
+						<div class="clear"></div>
+
 					    <!-- Tabs -->
 						<div class="relativeWrap" data-toggle="source-code">
 							<div class="widget widget-tabs widget-tabs-gray report-tab">
@@ -10826,8 +10856,7 @@
 								<!-- Tabs Heading -->
 								<div class="widget-head">
 									<ul>
-										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i><span data-bind="text: lang.lang.date"></span></a></li>	
-										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab" data-bind="click: printGrid"><i></i><span data-bind="text: lang.lang.print_export"></span></a></li>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i><span data-bind="text: lang.lang.date"></span></a></li>										
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
@@ -10841,55 +10870,53 @@
 													data-parse-formats="yyyy-MM-dd" 
 													data-bind="value: as_of" />
 
-								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
-							
+								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>							
 							        	</div>
 								    </div>
 								</div>
 							</div>
 						</div>
-						<!-- // Tabs END -->						
-					</div>
+						<!-- // Tabs END -->
+						<div id="invFormContent">
+							<div class="block-title">
+								<h3 data-bind="text: company.name"></h3>
+								<h2 data-bind="text: lang.lang.customer_balance_detail"></h2>
+								<p data-bind="text: displayDate"></p>
+							</div>
 
-					<div id="invFormContent">
-						<div class="block-title">
-							<h3 data-bind="text: company.name"></h3>
-							<h2 data-bind="text: lang.lang.customer_balance_detail"></h2>
-							<p data-bind="text: displayDate"></p>
-						</div>
-
-						<div class="row-fluid">
-							<div class="span5">
-								<div class="total-customer">
-									<p data-bind="text: lang.lang.number_of_customer"></p>
-									<span data-bind="text: dataSource.total"></span>
+							<div class="row">
+								<div class="col-xs-12 col-sm-5">
+									<div class="total-sale">
+										<p data-bind="text: lang.lang.number_of_customer"></p>
+										<span data-bind="text: dataSource.total"></span>
+									</div>
+								</div>
+								<div class="col-xs-12 col-sm-7">
+									<div class="total-sale">
+										<p data-bind="text: lang.lang.total_customer_balance"></p>
+										<span data-bind="text: total_balance"></span>						
+									</div>
 								</div>
 							</div>
-							<div class="span7">
-								<div class="total-customer">
-									<p data-bind="text: lang.lang.total_customer_balance"></p>
-									<span data-bind="text: total_balance"></span>						
-								</div>
-							</div>
-						</div>
 
-						<table class="table table-borderless table-condensed ">
-							<thead>
-								<tr>
-									<th data-bind="text: lang.lang.type"></th>
-									<th style="text-align: right;" data-bind="text: lang.lang.date"></th>
-									<th style="text-align: right;" data-bind="text: lang.lang.reference"></th>		
-									<th style="text-align: right;" data-bind="text: lang.lang.location"></th>	
-									<th style="text-align: right;" data-bind="text: lang.lang.status"></th>	
-									<th data-bind="text: lang.lang.balance"></th>
-								</tr>
-							</thead>
-							<tbody data-role="listview"
-										 data-auto-bind="false"
-										 data-bind="source: dataSource"										 
-										 data-template="customerBalanceDetail-template"
-							></tbody>
-						</table>
+							<table style="margin-bottom: 0;" class="table table-bordered table-condensed table-striped table-primary table-vertical-center">
+								<thead>
+									<tr>
+										<th style="vertical-align: top;" data-bind="text: lang.lang.type"></th>
+										<th style="text-align: right; vertical-align: top;" data-bind="text: lang.lang.date"></th>
+										<th style="text-align: right; vertical-align: top;" data-bind="text: lang.lang.reference"></th>		
+										<th style="text-align: right; vertical-align: top;" data-bind="text: lang.lang.location"></th>	
+										<th style="text-align: right; vertical-align: top;" data-bind="text: lang.lang.status"></th>	
+										<th style="vertical-align: top;" data-bind="text: lang.lang.balance"></th>
+									</tr>
+								</thead>
+								<tbody data-role="listview"
+											 data-auto-bind="false"
+											 data-bind="source: dataSource"										 
+											 data-template="customerBalanceDetail-template"
+								></tbody>
+							</table>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -26447,7 +26474,7 @@
 					if(value.type=="Utility_Deposit"){
 						deposit += kendo.parseFloat(value.amount);
 					}else{
-						balance += kendo.parseFloat(value.amount) - kendo.parseFloat(value.deposit);
+						balance += (kendo.parseFloat(value.amount) - kendo.parseFloat(value.deposit)) - kendo.parseFloat(value.amount_paid);
 						open++;
 						if(new Date(value.due_date)<today){
 							over++;
