@@ -450,7 +450,7 @@ p.addItem.glyphicons.circle_remove i:before {
   left: -268px !important;
   margin-top: 0;
   padding: 8px;
-  top: 50px;
+  top: 100%;
   width: 313px !important;
 }
 .setting.dropdown .dropdown-menu{
@@ -849,11 +849,31 @@ input{
   overflow: hidden; 
   padding: 15px
 }
-
-
-
-
-
+#tab2 .k-widget.k-dropdown.k-header,
+#tab5 .k-widget.k-dropdown.k-header{
+  background: none;
+  padding: 0;
+}
+#formStyle{
+  float: left;
+}
+.colorPalatte area{
+  resize: none;
+}
+.tabsbar ul li a{
+  color: #fff;
+}
+.glyphicons.nameplate i:before,
+.glyphicons.paperclip i:before,
+.glyphicons.nameplate_alt i:before,
+.glyphicons.usd i:before,
+.glyphicons.parents i:before,
+.glyphicons.adress_book i:before {
+    color: #fff;
+}
+.k-grid-header{
+  padding-right: 0 !important;
+}
 
 
 @charset "UTF-8";

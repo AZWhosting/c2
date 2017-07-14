@@ -100,6 +100,19 @@ class Item_lines extends REST_Controller {
 					"account_id" 	=> $value->tax_item_account_id ? $value->tax_item_account_id : "",
 					"name" 			=> $value->tax_item_name ? $value->tax_item_name : ""
 				);
+
+				//WHT Account
+				$wht_account = [];
+				if($value->wht_account_id>0){
+					$whtAccounts = new Account(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					$whtAccounts->get_by_id($value->wht_account_id);
+
+					$wht_account = array(
+						"id" 		=> $value->wht_account_id, 
+						"number" 	=> $whtAccounts->number,
+						"name" 		=> $whtAccounts->name
+					);
+				}
 				
 				$data["results"][] = array(
 					"id" 				=> $value->id,
@@ -134,7 +147,8 @@ class Item_lines extends REST_Controller {
 				   	"item_prices" 		=> [],
 				   	"item" 				=> $item,
 				   	"measurement" 		=> $measurement,
-				   	"tax_item" 			=> $tax_item
+				   	"tax_item" 			=> $tax_item,
+				   	"wht_account" 		=> $wht_account
 				);
 			}
 		}

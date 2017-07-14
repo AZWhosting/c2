@@ -402,6 +402,7 @@ class Utibills extends REST_Controller {
 				}
 			}
 		}
+		$obj->where("is_system <>", 1);
 		//Results
 		if($page && $limit){
 			$obj->get_paged_iterated($page, $limit);

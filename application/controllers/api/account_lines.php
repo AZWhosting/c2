@@ -97,6 +97,7 @@ class Account_lines extends REST_Controller {
 				   	"reference_no" 		=> $value->reference_no,
 				   	"segments" 			=> explode(",",$value->segments),
 				   	"amount" 			=> floatval($value->amount),
+				   	"tax"				=> floatval($value->tax),
 				   	"rate"				=> floatval($value->rate),
 				   	"locale" 			=> $value->locale,
 				   	"reference_date" 	=> $value->reference_date,
@@ -130,6 +131,7 @@ class Account_lines extends REST_Controller {
 		   	isset($value->reference_no)		? $obj->reference_no 		= $value->reference_no : "";
 		   	isset($value->segments) 		? $obj->segments 			= implode(",",$value->segments) : "";
 		   	isset($value->amount)			? $obj->amount 				= $value->amount : "";		   	
+		   	isset($value->tax)				? $obj->tax 				= $value->tax : "";
 		   	isset($value->rate)				? $obj->rate 				= $value->rate : "";
 		   	isset($value->locale)			? $obj->locale 				= $value->locale : "";
 		   	isset($value->reference_date)	? $obj->reference_date 		= $value->reference_date : "";
@@ -147,8 +149,9 @@ class Account_lines extends REST_Controller {
 					"contact_id" 		=> $obj->contact_id,							   	
 				   	"description" 		=> $obj->description,
 				   	"reference_no" 		=> $obj->reference_no,
-				   	"segments" 			=> explode(",",$obj->segments),
-				   	"amount" 			=> floatval($obj->amount),				   	
+				   	"segments" 			=> explode(",",$obj->segments),				   
+				   	"amount" 			=> floatval($obj->amount),
+				   	"tax"				=> floatval($obj->tax),				   	
 				   	"rate"				=> floatval($obj->rate),
 				   	"locale" 			=> $obj->locale,
 				   	"reference_date" 	=> $obj->reference_date,
@@ -184,8 +187,9 @@ class Account_lines extends REST_Controller {
 		   	isset($value->description)		? $obj->description 		= $value->description : "";
 		   	isset($value->reference_no)		? $obj->reference_no 		= $value->reference_no : "";
 		   	isset($value->segments) 		? $obj->segments 			= implode(",",$value->segments) : "";
-		   	isset($value->amount)			? $obj->amount 				= $value->amount : "";		   	
-		   	isset($value->rate)				? $obj->rate 				= $value->rate : "";
+		   	isset($value->amount)			? $obj->amount 				= $value->amount : "";
+		   	isset($value->tax)				? $obj->tax 				= $value->tax : "";		   	
+		   	isset($value->rate)				? $obj->rate 				= $value->rate : "";		   	
 		   	isset($value->locale)			? $obj->locale 				= $value->locale : "";
 		   	isset($value->reference_date)	? $obj->reference_date 		= $value->reference_date : "";
 		   	isset($value->movement)			? $obj->movement 			= $value->movement : "";
@@ -205,6 +209,7 @@ class Account_lines extends REST_Controller {
 				   	"reference_no" 		=> $obj->reference_no,
 				   	"segments" 			=> explode(",",$obj->segments),
 				   	"amount" 			=> floatval($obj->amount),				   	
+				   	"tax"				=> floatval($obj->tax),
 				   	"rate"				=> floatval($obj->rate),
 				   	"locale" 			=> $obj->locale,
 				   	"reference_date" 	=> $obj->reference_date,
