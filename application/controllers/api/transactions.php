@@ -594,7 +594,6 @@ class Transactions extends REST_Controller {
 		}
 		
 		// $obj->like("type", "Invoice", "before");
-		// $obj->or_like("type", "Purchase", "before");
 		$obj->where_in("status", array(0,2));
 		$obj->where("is_recurring <>", 1);
 		$obj->where("deleted <>", 1);
@@ -609,16 +608,18 @@ class Transactions extends REST_Controller {
 			}
 		}
 
-		//Cash Receipts
-		$receipt = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$receipt->where_in("reference_id", $ids);
-		$receipt->where_in("type", array("Cash_Receipt","Offset_Invoice","Cash_Payment","Offset_Bill"));
-		$receipt->where("deleted <>", 1);
-		$receipt->get_iterated();
+		//Paid
+		if(count($ids)>0){
+			$receipt = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$receipt->where_in("reference_id", $ids);
+			$receipt->where_in("type", array("Cash_Receipt","Offset_Invoice","Cash_Payment","Offset_Bill"));
+			$receipt->where("deleted <>", 1);
+			$receipt->get_iterated();
 
-		if($receipt->exists()){
-			foreach ($receipt as $value) {
-				$sum -= floatval($value->amount) + floatval($value->discount);
+			if($receipt->exists()){
+				foreach ($receipt as $value) {
+					$sum -= floatval($value->amount) + floatval($value->discount);
+				}
 			}
 		}
 
