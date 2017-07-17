@@ -14186,19 +14186,19 @@
 								</td>
 						    </tr>
 						    <tr>
-						    	<td></td>
-						    	<td></td>
-						    	<td></td>
+						    	<td colspan="2"></td>
+						    	<td>WHT Account</td>
 						    	<td>
 									<input id="cbbWHTAccount" name="cbbWHTAccount"
 										   data-role="combobox"
 						                   data-template="account-list-tmpl"
 						                   data-value-primitive="true"
+						                   data-autoWidth="true"
 						                   data-text-field="name"
 						                   data-value-field="id"
 						                   data-bind="value: additCostObj.wht_account_id,
-						                              source: expenseAccountDS"
-						                   data-placeholder="Add Account.."
+						                              source: whtAccountDS"
+						                   data-placeholder="Add WHT Account.."
 						                   style="width: 100%" />	
 								</td>
 							</tr>
@@ -14234,7 +14234,7 @@
 						        <div class="tab-pane active" id="tab-1">
 
 						            <!-- Item Line -->
-						            <div data-role="grid" class="costom-grid"
+						            <div id="grid" data-role="grid" class="costom-grid"
 								    	 data-column-menu="true"
 								    	 data-reorderable="true"
 								    	 data-scrollable="false"
@@ -14242,7 +14242,7 @@
 								    	 data-editable="true"
 						                 data-columns="[
 										    { 
-										    	title:'NO',
+										    	title:'NO.',
 										    	width: '50px', 
 										    	attributes: { style: 'text-align: center;' }, 
 										        template: function (dataItem) {
@@ -14290,7 +14290,8 @@
 				                            { field: 'amount', title:'AMOUNT', format: '{0:n}', editable: 'false', attributes: { style: 'text-align: right;' }, width: '120px' },
 				                            { field: 'tax_item', title:'TAX', editor: taxForPurchaseEditor, template: '#=tax_item.name#', width: '120px' },
 				                            { field: 'wht_account', title: 'WHT ACCOUNT', hidden: true, editor: whtAccountEditor, template: '#=wht_account.name#', width: '120px' },
-				                            { field: 'additional_cost', title:'ADD.COST', format: '{0:n}', hidden: true, editable: 'false', attributes: { style: 'text-align: right;' }, width: '120px' }
+				                            { field: 'additional_cost', title:'ADD.COST', format: '{0:n}', hidden: true, editable: 'false', attributes: { style: 'text-align: right;' }, width: '120px' },
+				                            { field: 'additional_applied', title:'APPLY ADD.COST', hidden: true, editor: customBoolEditor, width: '120px' }
 				                         ]"
 				                         data-auto-bind="false"
 						                 data-bind="source: lineDS" ></div>
@@ -14333,7 +14334,7 @@
 								    	 data-editable="true"
 						                 data-columns="[
 										    { 
-										    	title:'NO',
+										    	title:'NO.',
 										    	width: '50px', 
 										    	attributes: { style: 'text-align: center;' }, 
 										        template: function (dataItem) {
@@ -14348,7 +14349,7 @@
 											    title: 'AMOUNT',
 											    format: '{0:n}',
 											    editor: numberTextboxEditor,
-											    width: '120px',
+											    width: '150px',
 											    attributes: { style: 'text-align: right;' }
 											},
 											{ field: 'tax_item', title:'TAX', editor: taxForPurchaseEditor, template: '#=tax_item.name#', width: '150px' },
@@ -46045,6 +46046,11 @@
         	parseFormats: ["yyyy-MM-dd"]
         });
     }
+
+    function customBoolEditor(container, options) {
+        $('<input class="k-checkbox" type="checkbox" name="applyAdditionalCostChk" data-type="boolean" data-bind="checked:additional_applied">').appendTo(container);
+        $('<label class="k-checkbox-label">&#8203;</label>').appendTo(container);
+    }
     
 </script>
 
@@ -50252,6 +50258,104 @@
 	    		row.set("item", { id:"", name:"" });
 	    	}
 		},
+		changes				: function(){
+			var self = this, obj = this.get("obj"),
+				total = 0, subTotal = 0, discount =0, tax = 0, remaining = 0, amount_due = 0, itemIds = [];
+
+			$.each(this.lineDS.data(), function(index, value) {
+				var amt = value.quantity * value.price;
+				subTotal += amt;
+
+				//Discount by line
+				if(value.discount>0){
+					amt -= value.discount;
+					discount += value.discount;
+				}
+
+				//Tax by line
+				if(value.tax_item_id>0){
+					var taxAmount = amt * value.tax_item.rate;
+					tax += taxAmount;
+					value.set("tax", taxAmount);
+				}else{
+					value.set("tax", 0);
+				}
+
+				value.set("amount", amt);				
+
+				if(value.item_id>0){
+					itemIds.push(value.item_id);
+				}
+	        });
+
+	    	//Total
+	        total = (subTotal + tax) - discount;
+
+	        //Warning over credit allowed
+	        if(obj.credit_allowed>0 && total>obj.credit_allowed){
+	        	this.set("amtDueColor", "Gold");		        	
+	        }else{
+	        	this.set("amtDueColor", banhji.source.amtDueColor);
+	        }
+
+	        obj.set("sub_total", subTotal);
+	        obj.set("discount", discount);
+	        obj.set("tax", tax);			
+			obj.set("amount", total);
+
+			this.set("total", kendo.toString(total, "c", obj.locale));
+	    	
+	    	//Remove Assembly Item List
+			var raw = this.assemblyLineDS.data();
+		    var item, i;
+		    for(i=raw.length-1; i>=0; i--){
+		    	item = raw[i];
+
+		    	if (jQuery.inArray(kendo.parseInt(item.assembly_id), itemIds)==-1) {
+			       	this.assemblyLineDS.remove(item);
+			    }
+		    }
+		},
+		lineDSChanges 		: function(arg){
+			var self = banhji.quote;
+
+			if(arg.field){
+				if(arg.field=="item"){
+					var dataRow = arg.items[0],
+						item = dataRow.item;
+
+					if(item.is_catalog=="1"){
+						self.addItemCatalog(dataRow.uid);
+					}else if(item.is_assembly=="1"){
+						self.addItemAssembly(dataRow.uid);
+					}else{
+						self.addItem(dataRow.uid);
+					}
+
+					self.addExtraRow(dataRow.uid);
+				}else if(arg.field=="quantity" || arg.field=="price" || arg.field=="discount"){
+					self.changes();					
+				}else if(arg.field=="measurement"){
+					var dataRow = arg.items[0];
+					
+					dataRow.set("measurement_id", dataRow.measurement.measurement_id);
+			        dataRow.set("price", dataRow.measurement.price * dataRow.rate);
+			        dataRow.set("conversion_ratio", dataRow.measurement.conversion_ratio);
+			    }else if(arg.field=="discount_percentage"){
+			    	var dataRow = arg.items[0],
+			    		percentageAmount = dataRow.quantity * dataRow.price * dataRow.discount_percentage;
+
+			    	dataRow.set("discount", percentageAmount);
+				}else if(arg.field=="tax_item"){
+					var dataRow = arg.items[0];
+					
+					dataRow.set("tax_item_id", dataRow.tax_item.id);
+					dataRow.set("tax", 0);
+
+					self.changes();
+				}
+			}
+		},
 		//Number      	
 		checkExistingNumber 	: function(){
 			var self = this, para = [], 
@@ -50402,104 +50506,6 @@
 					self.attachmentDS.filter({ field: "transaction_id", value: id });					
 				});
 			}				
-		},
-		changes				: function(){
-			var self = this, obj = this.get("obj"),
-				total = 0, subTotal = 0, discount =0, tax = 0, remaining = 0, amount_due = 0, itemIds = [];
-
-			$.each(this.lineDS.data(), function(index, value) {
-				var amt = value.quantity * value.price;
-
-				//Discount by line
-				if(value.discount>0){
-					amt -= value.discount;
-					discount += value.discount;
-				}
-
-				//Tax by line
-				if(value.tax_item_id>0){
-					var taxAmount = amt * value.tax_item.rate;
-					tax += taxAmount;
-					value.set("tax", taxAmount);
-				}else{
-					value.set("tax", 0);
-				}
-
-				value.set("amount", amt);
-				subTotal += amt;
-
-				if(value.item_id>0){
-					itemIds.push(value.item_id);
-				}
-	        });
-
-	    	//Total
-	        total = subTotal + tax;
-
-	        //Warning over credit allowed
-	        if(obj.credit_allowed>0 && total>obj.credit_allowed){
-	        	this.set("amtDueColor", "Gold");		        	
-	        }else{
-	        	this.set("amtDueColor", banhji.source.amtDueColor);
-	        }
-
-	        obj.set("sub_total", subTotal);
-	        obj.set("discount", discount);
-	        obj.set("tax", tax);			
-			obj.set("amount", total);
-
-			this.set("total", kendo.toString(total, "c", obj.locale));
-	    	
-	    	//Remove Assembly Item List
-			var raw = this.assemblyLineDS.data();
-		    var item, i;
-		    for(i=raw.length-1; i>=0; i--){
-		    	item = raw[i];
-
-		    	if (jQuery.inArray(kendo.parseInt(item.assembly_id), itemIds)==-1) {
-			       	this.assemblyLineDS.remove(item);
-			    }
-		    }
-		},
-		lineDSChanges 		: function(arg){
-			var self = banhji.quote;
-
-			if(arg.field){
-				if(arg.field=="item"){
-					var dataRow = arg.items[0],
-						item = dataRow.item;
-
-					if(item.is_catalog=="1"){
-						self.addItemCatalog(dataRow.uid);
-					}else if(item.is_assembly=="1"){
-						self.addItemAssembly(dataRow.uid);
-					}else{
-						self.addItem(dataRow.uid);
-					}
-
-					self.addExtraRow(dataRow.uid);
-				}else if(arg.field=="quantity" || arg.field=="price" || arg.field=="discount"){
-					self.changes();					
-				}else if(arg.field=="measurement"){
-					var dataRow = arg.items[0];
-					
-					dataRow.set("measurement_id", dataRow.measurement.measurement_id);
-			        dataRow.set("price", dataRow.measurement.price * dataRow.rate);
-			        dataRow.set("conversion_ratio", dataRow.measurement.conversion_ratio);
-			    }else if(arg.field=="discount_percentage"){
-			    	var dataRow = arg.items[0],
-			    		percentageAmount = dataRow.quantity * dataRow.price * dataRow.discount_percentage;
-
-			    	dataRow.set("discount", percentageAmount);
-				}else if(arg.field=="tax_item"){
-					var dataRow = arg.items[0];
-					
-					dataRow.set("tax_item_id", dataRow.tax_item.id);
-					dataRow.set("tax", 0);
-
-					self.changes();
-				}
-			}
 		},
 		addEmpty 		 	: function(){
 			this.dataSource.data([]);
@@ -51273,6 +51279,104 @@
 	    		row.set("item", { id:"", name:"" });
 	    	}
 		},
+		changes				: function(){
+			var self = this, obj = this.get("obj"),
+				total = 0, subTotal = 0, discount =0, tax = 0, remaining = 0, amount_due = 0, itemIds = [];
+
+			$.each(this.lineDS.data(), function(index, value) {
+				var amt = value.quantity * value.price;
+				subTotal += amt;
+				
+				//Discount by line
+				if(value.discount>0){
+					amt -= value.discount;
+					discount += value.discount;
+				}
+
+				//Tax by line
+				if(value.tax_item_id>0){
+					var taxAmount = amt * value.tax_item.rate;
+					tax += taxAmount;
+					value.set("tax", taxAmount);
+				}else{
+					value.set("tax", 0);
+				}
+
+				value.set("amount", amt);
+
+				if(value.item_id>0){
+					itemIds.push(value.item_id);
+				}
+	        });
+
+	    	//Total
+	        total = (subTotal + tax) - discount;
+
+	        //Warning over credit allowed
+	        if(obj.credit_allowed>0 && total>obj.credit_allowed){
+	        	this.set("amtDueColor", "Gold");		        	
+	        }else{
+	        	this.set("amtDueColor", banhji.source.amtDueColor);
+	        }
+
+	        obj.set("sub_total", subTotal);
+	        obj.set("discount", discount);
+	        obj.set("tax", tax);			
+			obj.set("amount", total);
+
+			this.set("total", kendo.toString(total, "c", obj.locale));
+	    	
+	    	//Remove Assembly Item List
+			var raw = this.assemblyLineDS.data();
+		    var item, i;
+		    for(i=raw.length-1; i>=0; i--){
+		    	item = raw[i];
+
+		    	if (jQuery.inArray(kendo.parseInt(item.assembly_id), itemIds)==-1) {
+			       	this.assemblyLineDS.remove(item);
+			    }
+		    }
+		},
+		lineDSChanges 		: function(arg){
+			var self = banhji.saleOrder;
+
+			if(arg.field){
+				if(arg.field=="item"){
+					var dataRow = arg.items[0],
+						item = dataRow.item;
+
+					if(item.is_catalog=="1"){
+						self.addItemCatalog(dataRow.uid);
+					}else if(item.is_assembly=="1"){
+						self.addItemAssembly(dataRow.uid);
+					}else{
+						self.addItem(dataRow.uid);
+					}
+
+					self.addExtraRow(dataRow.uid);
+				}else if(arg.field=="quantity" || arg.field=="price" || arg.field=="discount"){
+					self.changes();					
+				}else if(arg.field=="measurement"){
+					var dataRow = arg.items[0];
+					
+					dataRow.set("measurement_id", dataRow.measurement.measurement_id);
+			        dataRow.set("price", dataRow.measurement.price * dataRow.rate);
+			        dataRow.set("conversion_ratio", dataRow.measurement.conversion_ratio);
+			    }else if(arg.field=="discount_percentage"){
+			    	var dataRow = arg.items[0],
+			    		percentageAmount = dataRow.quantity * dataRow.price * dataRow.discount_percentage;
+
+			    	dataRow.set("discount", percentageAmount);
+				}else if(arg.field=="tax_item"){
+					var dataRow = arg.items[0];
+					
+					dataRow.set("tax_item_id", dataRow.tax_item.id);
+					dataRow.set("tax", 0);
+
+					self.changes();
+				}
+			}
+		},
 		//Number
 		checkExistingNumber 	: function(){
 			var self = this, para = [], 
@@ -51427,104 +51531,6 @@
 					self.referenceDS.filter({ field: "id", value: view[0].reference_id });					
 				});
 			}				
-		},
-		changes				: function(){
-			var self = this, obj = this.get("obj"),
-				total = 0, subTotal = 0, discount =0, tax = 0, remaining = 0, amount_due = 0, itemIds = [];
-
-			$.each(this.lineDS.data(), function(index, value) {
-				var amt = value.quantity * value.price;
-
-				//Discount by line
-				if(value.discount>0){
-					amt -= value.discount;
-					discount += value.discount;
-				}
-
-				//Tax by line
-				if(value.tax_item_id>0){
-					var taxAmount = amt * value.tax_item.rate;
-					tax += taxAmount;
-					value.set("tax", taxAmount);
-				}else{
-					value.set("tax", 0);
-				}
-
-				value.set("amount", amt);
-				subTotal += amt;
-
-				if(value.item_id>0){
-					itemIds.push(value.item_id);
-				}
-	        });
-
-	    	//Total
-	        total = subTotal + tax;
-
-	        //Warning over credit allowed
-	        if(obj.credit_allowed>0 && total>obj.credit_allowed){
-	        	this.set("amtDueColor", "Gold");		        	
-	        }else{
-	        	this.set("amtDueColor", banhji.source.amtDueColor);
-	        }
-
-	        obj.set("sub_total", subTotal);
-	        obj.set("discount", discount);
-	        obj.set("tax", tax);			
-			obj.set("amount", total);
-
-			this.set("total", kendo.toString(total, "c", obj.locale));
-	    	
-	    	//Remove Assembly Item List
-			var raw = this.assemblyLineDS.data();
-		    var item, i;
-		    for(i=raw.length-1; i>=0; i--){
-		    	item = raw[i];
-
-		    	if (jQuery.inArray(kendo.parseInt(item.assembly_id), itemIds)==-1) {
-			       	this.assemblyLineDS.remove(item);
-			    }
-		    }
-		},
-		lineDSChanges 		: function(arg){
-			var self = banhji.saleOrder;
-
-			if(arg.field){
-				if(arg.field=="item"){
-					var dataRow = arg.items[0],
-						item = dataRow.item;
-
-					if(item.is_catalog=="1"){
-						self.addItemCatalog(dataRow.uid);
-					}else if(item.is_assembly=="1"){
-						self.addItemAssembly(dataRow.uid);
-					}else{
-						self.addItem(dataRow.uid);
-					}
-
-					self.addExtraRow(dataRow.uid);
-				}else if(arg.field=="quantity" || arg.field=="price" || arg.field=="discount"){
-					self.changes();					
-				}else if(arg.field=="measurement"){
-					var dataRow = arg.items[0];
-					
-					dataRow.set("measurement_id", dataRow.measurement.measurement_id);
-			        dataRow.set("price", dataRow.measurement.price * dataRow.rate);
-			        dataRow.set("conversion_ratio", dataRow.measurement.conversion_ratio);
-			    }else if(arg.field=="discount_percentage"){
-			    	var dataRow = arg.items[0],
-			    		percentageAmount = dataRow.quantity * dataRow.price * dataRow.discount_percentage;
-
-			    	dataRow.set("discount", percentageAmount);
-				}else if(arg.field=="tax_item"){
-					var dataRow = arg.items[0];
-					
-					dataRow.set("tax_item_id", dataRow.tax_item.id);
-					dataRow.set("tax", 0);
-
-					self.changes();
-				}
-			}
 		},
 		addEmpty 		 	: function(){
 			this.dataSource.data([]);
@@ -53241,7 +53247,6 @@
 
 			$.each(this.lineDS.data(), function(index, value) {
 				var amt = value.quantity * value.price;
-
 				subTotal += amt;
 
 				//Discount by line
@@ -54815,8 +54820,7 @@
 				total = 0, subTotal = 0, discount =0, tax = 0, remaining = 0, amount_due = 0, itemIds = [];
 
 			$.each(this.lineDS.data(), function(index, value) {
-				var amt = value.quantity * value.price;
-				
+				var amt = value.quantity * value.price;				
 				subTotal += amt;
 
 				//Discount by line
@@ -57350,6 +57354,7 @@
 				subTotal += value.amount;
 	        });
 
+	        //Total
 	        total = subTotal + tax;
 
 	        //Return lines
@@ -66517,6 +66522,96 @@
 				}
 			});
 		},
+		changes				: function(){
+			var self = this, obj = this.get("obj"),
+				total = 0, subTotal = 0, discount =0, tax = 0, remaining = 0, amount_due = 0, itemIds = [];
+
+			$.each(this.lineDS.data(), function(index, value) {
+				var amt = value.quantity * value.cost;
+				subTotal += amt;
+
+				//Discount by line
+				if(value.discount>0){
+					amt -= value.discount;
+					discount += value.discount;
+				}
+
+				//Tax by line
+				if(value.tax_item_id>0){
+					var taxAmount = amt * value.tax_item.rate;
+
+					if(banhji.source.checkWHT(value.tax_item.tax_type_id) && value.wht_account_id==0){
+						tax -= taxAmount;
+					}else{
+						tax += taxAmount;
+					}
+					
+					value.set("tax", taxAmount);
+				}else{
+					value.set("tax", 0);
+				}
+
+				value.set("amount", amt);				
+
+				if(value.item_id>0){
+					itemIds.push(value.item_id);
+				}
+	        });
+
+	    	//Total
+	        total = (subTotal + tax) - discount;
+
+	        //Warning over credit allowed
+	        if(obj.credit_allowed>0 && total>obj.credit_allowed){
+	        	this.set("amtDueColor", "Gold");		        	
+	        }else{
+	        	this.set("amtDueColor", banhji.source.amtDueColor);
+	        }
+
+	        obj.set("sub_total", subTotal);
+	        obj.set("discount", discount);
+	        obj.set("tax", tax);			
+			obj.set("amount", total);
+
+			this.set("total", kendo.toString(total, "c", obj.locale));
+		},
+		lineDSChanges 		: function(arg){
+			var self = banhji.purchaseOrder;
+
+			if(arg.field){
+				if(arg.field=="item"){
+					var dataRow = arg.items[0],
+						item = dataRow.item;
+
+					if(item.is_catalog=="1"){
+						self.addItemCatalog(dataRow.uid);
+					}else{
+						self.addItem(dataRow.uid);
+					}
+
+					self.addExtraRow(dataRow.uid);
+				}else if(arg.field=="quantity" || arg.field=="cost" || arg.field=="discount"){
+					self.changes();					
+				}else if(arg.field=="measurement"){
+					var dataRow = arg.items[0];
+					
+					dataRow.set("measurement_id", dataRow.measurement.measurement_id);
+			        dataRow.set("conversion_ratio", dataRow.measurement.conversion_ratio);
+			    }else if(arg.field=="discount_percentage"){
+			    	var dataRow = arg.items[0],
+			    		percentageAmount = dataRow.quantity * dataRow.cost * dataRow.discount_percentage;
+
+			    	dataRow.set("discount", percentageAmount);
+				}else if(arg.field=="tax_item"){
+					var dataRow = arg.items[0];
+					
+					dataRow.set("tax_item_id", dataRow.tax_item.id);
+					dataRow.set("tax", 0);
+
+					self.changes();
+				}
+			}
+		},
 		//Segment
 		segmentChanges 		: function(e) {
 			var dataArr = this.get("obj").segments,
@@ -66683,96 +66778,6 @@
 					self.attachmentDS.filter({ field: "transaction_id", value: id });
 				});
 			}				
-		},
-		changes				: function(){
-			var self = this, obj = this.get("obj"),
-				total = 0, subTotal = 0, discount =0, tax = 0, remaining = 0, amount_due = 0, itemIds = [];
-
-			$.each(this.lineDS.data(), function(index, value) {
-				var amt = value.quantity * value.cost;
-
-				//Discount by line
-				if(value.discount>0){
-					amt -= value.discount;
-					discount += value.discount;
-				}
-
-				//Tax by line
-				if(value.tax_item_id>0){
-					var taxAmount = amt * value.tax_item.rate;
-
-					if(banhji.source.checkWHT(value.tax_item.tax_type_id) && value.wht_account_id==0){
-						tax -= taxAmount;
-					}else{
-						tax += taxAmount;
-					}
-					
-					value.set("tax", taxAmount);
-				}else{
-					value.set("tax", 0);
-				}
-
-				value.set("amount", amt);
-				subTotal += amt;
-
-				if(value.item_id>0){
-					itemIds.push(value.item_id);
-				}
-	        });
-
-	    	//Total
-	        total = subTotal + tax;
-
-	        //Warning over credit allowed
-	        if(obj.credit_allowed>0 && total>obj.credit_allowed){
-	        	this.set("amtDueColor", "Gold");		        	
-	        }else{
-	        	this.set("amtDueColor", banhji.source.amtDueColor);
-	        }
-
-	        obj.set("sub_total", subTotal);
-	        obj.set("discount", discount);
-	        obj.set("tax", tax);			
-			obj.set("amount", total);
-
-			this.set("total", kendo.toString(total, "c", obj.locale));
-		},
-		lineDSChanges 		: function(arg){
-			var self = banhji.purchaseOrder;
-
-			if(arg.field){
-				if(arg.field=="item"){
-					var dataRow = arg.items[0],
-						item = dataRow.item;
-
-					if(item.is_catalog=="1"){
-						self.addItemCatalog(dataRow.uid);
-					}else{
-						self.addItem(dataRow.uid);
-					}
-
-					self.addExtraRow(dataRow.uid);
-				}else if(arg.field=="quantity" || arg.field=="cost" || arg.field=="discount"){
-					self.changes();					
-				}else if(arg.field=="measurement"){
-					var dataRow = arg.items[0];
-					
-					dataRow.set("measurement_id", dataRow.measurement.measurement_id);
-			        dataRow.set("conversion_ratio", dataRow.measurement.conversion_ratio);
-			    }else if(arg.field=="discount_percentage"){
-			    	var dataRow = arg.items[0],
-			    		percentageAmount = dataRow.quantity * dataRow.cost * dataRow.discount_percentage;
-
-			    	dataRow.set("discount", percentageAmount);
-				}else if(arg.field=="tax_item"){
-					var dataRow = arg.items[0];
-					
-					dataRow.set("tax_item_id", dataRow.tax_item.id);
-					dataRow.set("tax", 0);
-
-					self.changes();
-				}
-			}
 		},
 		addEmpty 		 	: function(){
 			this.dataSource.data([]);
@@ -68713,6 +68718,25 @@
 		accountDS  					: new kendo.data.DataSource({
 		  	data: banhji.source.accountList
 		}),
+		whtAccountDS  			: new kendo.data.DataSource({
+		  	data: banhji.source.accountList,
+		  	filter: {
+	      		logic: "or",
+			    filters: [
+			      	{ field: "account_type_id", value: 13 },//Inventory
+			      	{ field: "account_type_id", value: 16 },//Fixed Asset
+			      	{ field: "account_type_id", value: 17 },//Intangible Assets
+			      	{ field: "account_type_id", value: 36 },//Expense
+			      	{ field: "account_type_id", value: 37 },
+			      	{ field: "account_type_id", value: 38 },
+			      	{ field: "account_type_id", value: 40 },
+			      	{ field: "account_type_id", value: 41 },
+			      	{ field: "account_type_id", value: 42 },
+			      	{ field: "account_type_id", value: 43 }
+			    ]
+			},
+			sort: { field:"number", dir:"asc" }
+		}),
 		additionalCostAccountDS  	: new kendo.data.DataSource({
 		  	data: banhji.source.accountList
 		}),
@@ -69000,151 +69024,23 @@
 				value.set("locale", obj.locale);
 			});
 		},
-		//Item
-		addItem 			: function(uid){
-			var self = this,
-				row = this.lineDS.getByUid(uid),
-				obj = this.get("obj"),
-				item = row.item,
-				rate = obj.rate / banhji.source.getRate(item.locale, new Date(obj.issued_date));
-
-			row.set("item_id", item.id);
-			row.set("description", item.sale_description);
-			row.set("rate", rate);
-			row.set("locale", item.locale);
-
-			//Get first price
-			this.assemblyDS.query({
-	        	filter:[
-	        		{ field:"item_id", value:item.id },
-	        		{ field:"assembly_id", value:0 }
-	        	],
-	        	page: 1,
-	        	pageSize: 1
-	        }).then(function(){
-	        	var view = self.assemblyDS.view();
-
-	        	if(view.length>0){
-	        		var measurement = { 
-	        			measurement_id 	: view[0].measurement_id,
-	        			conversion_ratio: view[0].conversion_ratio, 
-	        			measurement 	: view[0].measurement 
-	        		};
-	        		row.set("measurement", measurement);
-	        	}
-	        });
-		},
-		addItemCatalog 		: function(uid){
-			var self = this,
-				row = this.lineDS.getByUid(uid),
-				obj = this.get("obj"),
-				item = row.item;
-
-			this.lineDS.remove(row);
-
-        	$.each(item.catalogs, function(index, value){
-				var catalogItem = banhji.source.itemDS.get(value);
-
-				if(catalogItem){
-					var rate = obj.rate / banhji.source.getRate(catalogItem.locale, new Date(obj.issued_date));
-
-					self.lineDS.add({
-						transaction_id 		: obj.id,
-						tax_item_id 		: 0,
-						item_id 			: catalogItem.id,
-						measurement_id 		: 0,
-						description 		: catalogItem.sale_description,
-						quantity 	 		: 1,
-						conversion_ratio 	: 1,
-						cost 				: 0,
-						price 				: 0,
-						amount 				: 0,
-						discount 			: 0,
-						rate				: rate,
-						locale				: catalogItem.locale,
-						movement 			: 1,
-
-						discount_percentage : 0,
-						item 				: catalogItem,
-						measurement 		: { measurement_id:"", measurement:"" },
-						tax_item 			: { id:"", name:"" }
-					});
-				}
-			});
-		},
-		addRow 				: function(){
-			var obj = this.get("obj");
-
-			this.lineDS.add({
-				transaction_id 		: obj.id,
-				tax_item_id 		: "",
-				wht_account_id 		: "",
-				item_id 			: "",
-				measurement_id 		: 0,
-				description 		: "",
-				quantity 	 		: 1,
-				conversion_ratio 	: 1,
-				cost 				: 0,
-				amount 				: 0,
-				discount 			: 0,
-				rate				: obj.rate,
-				locale				: obj.locale,
-				additional_cost 	: 0,
-				additional_applied 	: false,
-				movement 			: 1,
-
-				discount_percentage : 0,
-				item 				: { id:"", name:"" },
-				measurement 		: { measurement_id:"", measurement:"" },
-				tax_item 			: { id:"", name:"" },
-				wht_account 		: { id:"", name:"" }
-			});
-		},
-		addExtraRow 		: function(uid){
-			var row = this.lineDS.getByUid(uid),
-				index = this.lineDS.indexOf(row);
-
-			if(index==this.lineDS.total()-1){
-				this.addRow();
-			}
-		},
-		removeEmptyRow 		: function(){
-			var raw = this.lineDS.data();
-		    var item, i;
-		    for(i=raw.length-1; i>=0; i--){
-		    	item = raw[i];
-
-		    	if (item.item_id==0) {
-			       	this.lineDS.remove(item);
-			    }
-		    }
-	    },
-		//Account
-		addRowAccount		: function(){
-			var obj = this.get("obj");
-					
-			this.accountLineDS.add({
-				transaction_id 		: obj.id,
-				tax_item_id 		: "",
-				wht_account_id 		: "",
-				account_id 			: "",
-				description 		: "",
-				reference_no 		: "",
-				segments 	 		: [],
-				amount 	 			: 0,
-				rate				: obj.rate,
-				locale				: obj.locale,
-
-				account 			: { id:"", name:"" },
-				tax_item 			: { id:"", name:"" },
-				wht_account 		: { id:"", name:"" }
-			});
-		},
-		removeRowAccount	: function(e){
-			var d = e.data;
+		//Segment
+		segmentChanges 		: function() {
+			var dataArr = this.get("obj").segments,
+			lastIndex = dataArr.length - 1,
+			last = this.segmentItemDS.get(dataArr[lastIndex]);
 			
-			this.accountLineDS.remove(d);
-	        this.changes();
+			if(dataArr.length > 1) {
+				for(var i = 0; i < dataArr.length - 1; i++) {
+					var current_index = dataArr[i],
+					current = this.segmentItemDS.get(current_index);
+
+					if(current.segment_id === last.segment_id) {
+						dataArr.splice(lastIndex, 1);
+						break;
+					}
+				}
+			}
 		},
 		//Additional Cost
 		additCostContactChanges: function(){
@@ -69282,21 +69178,239 @@
 		windowClose 		: function(){
 			this.set("windowVisible", false);
 		},
-		//Segment
-		segmentChanges 		: function() {
-			var dataArr = this.get("obj").segments,
-			lastIndex = dataArr.length - 1,
-			last = this.segmentItemDS.get(dataArr[lastIndex]);
-			
-			if(dataArr.length > 1) {
-				for(var i = 0; i < dataArr.length - 1; i++) {
-					var current_index = dataArr[i],
-					current = this.segmentItemDS.get(current_index);
+		//Item
+		addItem 			: function(uid){
+			var self = this,
+				row = this.lineDS.getByUid(uid),
+				obj = this.get("obj"),
+				item = row.item,
+				rate = obj.rate / banhji.source.getRate(item.locale, new Date(obj.issued_date));
 
-					if(current.segment_id === last.segment_id) {
-						dataArr.splice(lastIndex, 1);
-						break;
+			row.set("item_id", item.id);
+			row.set("description", item.sale_description);
+			row.set("rate", rate);
+			row.set("locale", item.locale);
+
+			//Get first price
+			this.assemblyDS.query({
+	        	filter:[
+	        		{ field:"item_id", value:item.id },
+	        		{ field:"assembly_id", value:0 }
+	        	],
+	        	page: 1,
+	        	pageSize: 1
+	        }).then(function(){
+	        	var view = self.assemblyDS.view();
+
+	        	if(view.length>0){
+	        		var measurement = { 
+	        			measurement_id 	: view[0].measurement_id,
+	        			conversion_ratio: view[0].conversion_ratio, 
+	        			measurement 	: view[0].measurement 
+	        		};
+	        		row.set("measurement", measurement);
+	        	}
+	        });
+		},
+		addItemCatalog 		: function(uid){
+			var self = this,
+				row = this.lineDS.getByUid(uid),
+				obj = this.get("obj"),
+				item = row.item;
+
+			this.lineDS.remove(row);
+
+        	$.each(item.catalogs, function(index, value){
+				var catalogItem = banhji.source.itemDS.get(value);
+
+				if(catalogItem){
+					var rate = obj.rate / banhji.source.getRate(catalogItem.locale, new Date(obj.issued_date));
+
+					self.lineDS.add({
+						transaction_id 		: obj.id,
+						tax_item_id 		: 0,
+						item_id 			: catalogItem.id,
+						measurement_id 		: 0,
+						description 		: catalogItem.sale_description,
+						quantity 	 		: 1,
+						conversion_ratio 	: 1,
+						cost 				: 0,
+						price 				: 0,
+						amount 				: 0,
+						discount 			: 0,
+						rate				: rate,
+						locale				: catalogItem.locale,
+						movement 			: 1,
+
+						discount_percentage : 0,
+						item 				: catalogItem,
+						measurement 		: { measurement_id:"", measurement:"" },
+						tax_item 			: { id:"", name:"" }
+					});
+				}
+			});
+		},
+		addRow 				: function(){
+			var obj = this.get("obj");
+
+			this.lineDS.add({
+				transaction_id 		: obj.id,
+				tax_item_id 		: "",
+				wht_account_id 		: "",
+				item_id 			: "",
+				measurement_id 		: 0,
+				description 		: "",
+				quantity 	 		: 1,
+				conversion_ratio 	: 1,
+				cost 				: 0,
+				amount 				: 0,
+				discount 			: 0,
+				rate				: obj.rate,
+				locale				: obj.locale,
+				additional_cost 	: 0,
+				additional_applied 	: false,
+				movement 			: 1,
+
+				discount_percentage : 0,
+				item 				: { id:"", name:"" },
+				measurement 		: { measurement_id:"", measurement:"" },
+				tax_item 			: { id:"", name:"" },
+				wht_account 		: { id:"", name:"" }
+			});
+		},
+		addExtraRow 		: function(uid){
+			var row = this.lineDS.getByUid(uid),
+				index = this.lineDS.indexOf(row);
+
+			if(index==this.lineDS.total()-1){
+				this.addRow();
+			}
+		},
+		removeRow 			: function(e){
+			var d = e.data;
+			
+			this.lineDS.remove(d);
+	        this.changes();	        
+		},
+		removeEmptyRow 		: function(){
+			var row, i;
+
+			//Item
+			var item = this.lineDS.data();		    
+		    for(i=item.length-1; i>=0; i--){
+		    	row = item[i];
+
+		    	if (row.item_id==0) {
+			       	this.lineDS.remove(row);
+			    }
+		    }
+
+		    //Account
+		    var account = this.accountLineDS.data();
+		    for(i=account.length-1; i>=0; i--){
+		    	row = account[i];
+
+		    	if (row.account_id==0) {
+			       	this.accountLineDS.remove(row);
+			    }
+		    }
+	    },
+	    itemLineDSChanges 		: function(arg){
+			var self = banhji.purchase;
+
+			if(arg.field){
+				if(arg.field=="item"){
+					var dataRow = arg.items[0],
+						item = dataRow.item;
+
+					if(item.is_catalog=="1"){
+						self.addItemCatalog(dataRow.uid);
+					}else{
+						self.addItem(dataRow.uid);
 					}
+
+					self.addExtraRow(dataRow.uid);
+				}else if(arg.field=="quantity" || arg.field=="cost" || arg.field=="discount" || arg.field=="additional_applied"){
+					self.changes();					
+				}else if(arg.field=="measurement"){
+					var dataRow = arg.items[0];
+					
+					dataRow.set("measurement_id", dataRow.measurement.measurement_id);
+			        dataRow.set("conversion_ratio", dataRow.measurement.conversion_ratio);
+			    }else if(arg.field=="discount_percentage"){
+			    	var dataRow = arg.items[0],
+			    		percentageAmount = dataRow.quantity * dataRow.cost * dataRow.discount_percentage;
+
+			    	dataRow.set("discount", percentageAmount);
+				}else if(arg.field=="tax_item"){
+					var dataRow = arg.items[0];
+					
+					dataRow.set("tax_item_id", dataRow.tax_item.id);
+					dataRow.set("tax", 0);
+
+					self.changes();
+				}else if(arg.field=="wht_account"){
+					var dataRow = arg.items[0];
+					
+					dataRow.set("wht_account_id", dataRow.wht_account.id);
+
+					self.changes();
+				}
+			}
+		},
+		//Account
+		addRowAccount		: function(){
+			var obj = this.get("obj");
+					
+			this.accountLineDS.add({
+				transaction_id 		: obj.id,
+				tax_item_id 		: "",
+				wht_account_id 		: "",
+				account_id 			: "",
+				description 		: "",
+				reference_no 		: "",
+				segments 	 		: [],
+				amount 	 			: 0,
+				rate				: obj.rate,
+				locale				: obj.locale,
+
+				account 			: { id:"", name:"" },
+				tax_item 			: { id:"", name:"" },
+				wht_account 		: { id:"", name:"" }
+			});
+		},
+		removeRowAccount	: function(e){
+			var d = e.data;
+			
+			this.accountLineDS.remove(d);
+	        this.changes();
+		},
+		accountLineDSChanges 		: function(arg){
+			var self = banhji.purchase;
+
+			if(arg.field){
+				if(arg.field=="account"){
+					var dataRow = arg.items[0],
+						account = dataRow.account;
+
+					dataRow.set("account_id", account.id);
+
+					self.addExtraRow(dataRow.uid);
+				}else if(arg.field=="amount"){
+					self.changes();
+				}else if(arg.field=="tax_item"){
+					var dataRow = arg.items[0];
+					
+					dataRow.set("tax_item_id", dataRow.tax_item.id);
+					dataRow.set("tax", 0);
+
+					self.changes();
+				}else if(arg.field=="wht_account"){
+					var dataRow = arg.items[0];
+					
+					dataRow.set("wht_account_id", dataRow.wht_account.id);
+
+					self.changes();
 				}
 			}
 		},
@@ -69472,12 +69586,14 @@
 		},
 		changes				: function(){
 			var self = this, obj = this.get("obj"),
-				total = 0, subTotal = 0, discount =0, tax = 0, 
+				total = 0, subTotal = 0, discount = 0, tax = 0, 
 				countAdditCheck = 0, amountAdditCheck = 0, additionalCost = 0, 
 				remaining = 0, amount_due = 0;
 
+			//Item Line
 			$.each(this.lineDS.data(), function(index, value) {
 				var amt = value.quantity * value.cost;
+				subTotal += amt;
 
 				//Discount by line
 				if(value.discount>0){
@@ -69507,11 +69623,13 @@
 				}
 
 				value.set("amount", amt);
-				subTotal += amt;
+				value.set("additional_cost", 0);//Reset additional cost
 	        });
 
 	        //Account Line
 	        $.each(this.accountLineDS.data(), function(index, value) {
+	        	subTotal += value.amount;
+
 				//Tax by line
 				if(value.tax_item_id>0){
 					var taxAmount = value.amount * value.tax_item.rate;
@@ -69526,8 +69644,6 @@
 				}else{
 					value.set("tax", 0);
 				}
-
-				subTotal += value.amount;
 	        });
 
 	        //Additional Cost Line	        
@@ -69535,9 +69651,10 @@
 	        	//Tax by line
 	        	var additionalTax = 0, additionalRate = obj.rate / value.rate;
 				if(value.tax_item_id>0){
-					var additionalTax = value.sub_total * value.tax_item.rate;
+					var taxItem = self.taxItemDS.get(value.tax_item_id),
+						additionalTax = value.sub_total * taxItem.rate;
 
-					if(banhji.source.checkWHT(value.tax_item.tax_type_id) && value.wht_account_id==0){
+					if(banhji.source.checkWHT(taxItem.tax_type_id) && value.wht_account_id==0){
 						tax -= additionalTax;
 					}else{
 						tax += additionalTax;
@@ -69554,7 +69671,7 @@
 
 	        //Apply additional cost
 	        if(additionalCost>0){
-	        	// this.set("showAdditionalCost", true);
+	        	// this.set("showAdditionalCost", true);				
 
 	        	if(countAdditCheck>0){
 			        $.each(this.lineDS.data(), function(index, value) {
@@ -69570,11 +69687,14 @@
 				        		//subTotal += weightedAdditionalCost;
 				        		value.set("additional_cost", weightedAdditionalCost);
 			        		}
-			        	}else{
-			        		value.set("additional_cost", 0);
-			        	}			        			        	
+			        	}
 			        });
 		    	}
+
+		    	var grid = $("#grid").data("kendoGrid");
+		    	grid.showColumn("additional_cost");
+		    	grid.showColumn("additional_applied");
+				grid.refresh();
 	        }else{
 	        	// this.set("showAdditionalCost", false);
 
@@ -69585,7 +69705,7 @@
 	        }
 
 	    	//Total
-	        total = subTotal + tax;
+	        total = (subTotal + tax) - discount;
 
 	        //Apply Deposit
 	        if(obj.deposit>0){
@@ -69628,67 +69748,7 @@
 
 			this.set("total", kendo.toString(total, "c2", obj.locale));
 	        this.set("amount_due", kendo.toString(amount_due, "c2", obj.locale));
-		},
-		itemLineDSChanges 		: function(arg){
-			var self = banhji.purchase;
-
-			if(arg.field){
-				if(arg.field=="item"){
-					var dataRow = arg.items[0],
-						item = dataRow.item;
-
-					if(item.is_catalog=="1"){
-						self.addItemCatalog(dataRow.uid);
-					}else{
-						self.addItem(dataRow.uid);
-					}
-
-					self.addExtraRow(dataRow.uid);
-				}else if(arg.field=="quantity" || arg.field=="cost" || arg.field=="discount"){
-					self.changes();					
-				}else if(arg.field=="measurement"){
-					var dataRow = arg.items[0];
-					
-					dataRow.set("measurement_id", dataRow.measurement.measurement_id);
-			        dataRow.set("conversion_ratio", dataRow.measurement.conversion_ratio);
-			    }else if(arg.field=="discount_percentage"){
-			    	var dataRow = arg.items[0],
-			    		percentageAmount = dataRow.quantity * dataRow.cost * dataRow.discount_percentage;
-
-			    	dataRow.set("discount", percentageAmount);
-				}else if(arg.field=="tax_item"){
-					var dataRow = arg.items[0];
-					
-					dataRow.set("tax_item_id", dataRow.tax_item.id);
-					dataRow.set("tax", 0);
-
-					self.changes();
-				}
-			}
-		},
-		accountLineDSChanges 		: function(arg){
-			var self = banhji.purchase;
-
-			if(arg.field){
-				if(arg.field=="account"){
-					var dataRow = arg.items[0],
-						account = dataRow.account;
-
-					dataRow.set("account_id", account.id);
-
-					self.addExtraRow(dataRow.uid);
-				}else if(arg.field=="amount"){
-					self.changes();
-				}else if(arg.field=="tax_item"){
-					var dataRow = arg.items[0];
-					
-					dataRow.set("tax_item_id", dataRow.tax_item.id);
-					dataRow.set("tax", 0);
-
-					self.changes();
-				}
-			}
-		},
+		},		
 		typeChanges 		: function(){
 			var obj = this.get("obj");			
 
@@ -69779,6 +69839,7 @@
 			//Default rows
 			for (var i = 0; i < banhji.source.defaultLines; i++) {
 				this.addRow();
+				this.addRowAccount();
 			}
 		},
 	    objSync 			: function(){
@@ -69875,7 +69936,9 @@
 		            self.saveDeposit(data[0].id);
 	        	}	
 
-				self.lineDS.sync();			
+				self.lineDS.sync();
+				self.accountLineDS.sync();
+				self.additionalCostDS.sync();			
 				self.uploadFile();
 				
 				return data;
@@ -70919,6 +70982,7 @@
 			//Item lines
 	        $.each(this.lineDS.data(), function(index, value) {
 				var amt = value.quantity * value.cost;
+				subTotal += amt;
 
 				//Tax by line
 				if(value.tax_item_id>0){
@@ -70926,8 +70990,7 @@
 					tax += amt * taxItem.rate;
 				}
 
-				value.set("amount", amt);
-				subTotal += amt;
+				value.set("amount", amt);				
 
 				if(value.item_id>0){
 					itemIds.push(value.item_id);
@@ -70939,6 +71002,7 @@
 				subTotal += value.amount;
 	        });
 
+	        //Total
 	        total = subTotal + tax;
 
 	        //Return lines
@@ -79814,6 +79878,7 @@
 		recurringAccountLineDS 	: dataStore(apiUrl + "account_lines"),
     	journalLineDS			: dataStore(apiUrl + "journal_lines"),
     	attachmentDS	 		: dataStore(apiUrl + "attachments"),
+    	itemCostDS  			: dataStore(apiUrl + "items"),
 		txnTemplateDS 			: new kendo.data.DataSource({
 		  	data: banhji.source.txnTemplateList,
 		  	filter:{
@@ -80051,26 +80116,30 @@
 			var self = this, data = e.data, obj = this.get("obj");
 			
 			if(data.item_id>0){
-				var item = this.itemDS.get(data.item_id),
-				itemPriceList = [],
-	        	rate = obj.rate / banhji.source.getRate(item.locale, new Date(obj.issued_date));
+				this.itemCostDS.query({
+					filter:{ field:"id", value:data.item_id }
+				}).then(function(){
+					var item = self.itemCostDS.view()[0],
+					itemPriceList = [],
+		        	rate = obj.rate / banhji.source.getRate(item.locale, new Date(obj.issued_date));
 
-	        	$.each(banhji.source.itemPriceList, function(index, value){
-	        		if(value.item_id==data.item_id){
-	        			itemPriceList.push(value);
-	        		}
-	        	});
+		        	$.each(banhji.source.itemPriceList, function(index, value){
+		        		if(value.item_id==data.item_id){
+		        			itemPriceList.push(value);
+		        		}
+		        	});
 
-	    		data.set("measurement_id", item.measurement_id);
-	    		data.set("description", item.purchase_description);
-	    		data.set("quantity", 1);
-	    		data.set("conversion_ratio", 1);
-		        data.set("cost", item.cost*rate);
-		        data.set("rate", rate);	
-		        data.set("locale", item.locale);
-		        data.set("item_prices", itemPriceList);
+		    		data.set("measurement_id", item.measurement_id);
+		    		data.set("description", item.purchase_description);
+		    		data.set("quantity", 1);
+		    		data.set("conversion_ratio", 1);
+			        data.set("cost", item.cost*rate);
+			        data.set("rate", rate);	
+			        data.set("locale", item.locale);
+			        data.set("item_prices", itemPriceList);
 
-		        this.changes();
+			        self.changes();
+				});
 	        }else{
 	        	data.set("item_id", "");
 	        }
@@ -80141,26 +80210,30 @@
 			var self = this, data = e.data, obj = this.get("obj");
 			
 			if(data.item_id>0){
-				var item = this.itemDS.get(data.item_id),
-				itemPriceList = [],
-	        	rate = obj.rate / banhji.source.getRate(item.locale, new Date(obj.issued_date));
+				this.itemCostDS.query({
+					filter:{ field:"id", value:data.item_id }
+				}).then(function(){
+					var item = self.itemCostDS.view()[0],
+					itemPriceList = [],
+		        	rate = obj.rate / banhji.source.getRate(item.locale, new Date(obj.issued_date));
 
-	        	$.each(banhji.source.itemPriceList, function(index, value){
-	        		if(value.item_id==data.item_id){
-	        			itemPriceList.push(value);
-	        		}
-	        	});
+		        	$.each(banhji.source.itemPriceList, function(index, value){
+		        		if(value.item_id==data.item_id){
+		        			itemPriceList.push(value);
+		        		}
+		        	});
 
-	    		data.set("measurement_id", item.measurement_id);
-	    		data.set("description", item.purchase_description);
-	    		data.set("quantity", 1);
-	    		data.set("conversion_ratio", 1);
-		        data.set("cost", item.cost*rate);
-		        data.set("rate", rate);	
-		        data.set("locale", item.locale);
-		        data.set("item_prices", itemPriceList);
+		    		data.set("measurement_id", item.measurement_id);
+		    		data.set("description", item.purchase_description);
+		    		data.set("quantity", 1);
+		    		data.set("conversion_ratio", 1);
+			        data.set("cost", item.cost*rate);
+			        data.set("rate", rate);	
+			        data.set("locale", item.locale);
+			        data.set("item_prices", itemPriceList);
 
-		        this.changes();
+			        self.changes();
+			    });
 	        }else{
 	        	data.set("item_id", "");
 	        }

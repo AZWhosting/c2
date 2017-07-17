@@ -31,9 +31,7 @@ class Utibills extends REST_Controller {
 		$data["results"] = [];
 		$data["count"] = 0;
 		$is_recurring = 0;
-
 		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-
 		//Filter
 		if(!empty($filter) && isset($filter)){
 	    	foreach ($filter["filters"] as $value) {
@@ -47,7 +45,6 @@ class Utibills extends REST_Controller {
 		$obj->where("type", "Utility_Invoice");
 		$obj->where("status <>", 1);
 		$obj->where("deleted <>", 1);
-
 		//Results
 		if($page && $limit){
 			$obj->get_paged_iterated($page, $limit);
@@ -56,7 +53,6 @@ class Utibills extends REST_Controller {
 			$obj->get_iterated();
 			$data["count"] = $obj->result_count();
 		}
-
 		if($obj->exists()){
 			foreach ($obj as $value) {
 				//Sum amount paid

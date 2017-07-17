@@ -17,6 +17,10 @@ class Account_line extends DataMapper {
 			'class' => 'account',
 			'other_field' => 'account_line'
 		),
+		'tax_item' => array(
+			'class' => 'tax_item',
+			'other_field' => 'account_line'
+		),
 		'contact' => array(
 			'class' => 'contact',
 			'other_field' => 'account_line'

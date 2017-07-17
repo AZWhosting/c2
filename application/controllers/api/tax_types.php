@@ -57,7 +57,8 @@ class Tax_types extends REST_Controller {
 		if($obj->result_count()>0){			
 			foreach ($obj as $value) {							
 				$data["results"][] = array(
-					"id" 				=> $value->id,					
+					"id" 				=> $value->id,
+					"sub_of_id" 		=> $value->sub_of_id,					
 					"number" 			=> $value->number,
 					"name" 				=> $value->name,
 					"tax_system" 		=> $value->tax_system,
@@ -82,6 +83,7 @@ class Tax_types extends REST_Controller {
 		foreach ($models as $value) {
 			$obj = new Tax_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
+			isset($value->sub_of_id) 		? $obj->sub_of_id 		= $value->sub_of_id : "";
 			isset($value->number) 			? $obj->number 			= $value->number : "";
 			isset($value->name) 			? $obj->name 			= $value->name : "";
 			isset($value->tax_system) 		? $obj->tax_system 		= $value->tax_system : "";
@@ -95,7 +97,8 @@ class Tax_types extends REST_Controller {
 			if($obj->save()){				
 				//Respsone
 				$data["results"][] = array(
-					"id" 				=> $obj->id,					
+					"id" 				=> $obj->id,
+					"sub_of_id" 		=> $obj->sub_of_id,					
 					"number" 			=> $obj->number,
 					"name" 				=> $obj->name,
 					"tax_system" 		=> $obj->tax_system,
@@ -123,6 +126,7 @@ class Tax_types extends REST_Controller {
 			$obj = new Tax_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$obj->get_by_id($value->id);
 			
+			isset($value->sub_of_id) 		? $obj->sub_of_id 		= $value->sub_of_id : "";
 			isset($value->number) 			? $obj->number 			= $value->number : "";
 			isset($value->name) 			? $obj->name 			= $value->name : "";
 			isset($value->tax_system) 		? $obj->tax_system 		= $value->tax_system : "";
@@ -136,7 +140,8 @@ class Tax_types extends REST_Controller {
 			if($obj->save()){				
 				//Results
 				$data["results"][] = array(
-					"id" 				=> $obj->id,					
+					"id" 				=> $obj->id,
+					"sub_of_id" 		=> $obj->sub_of_id,					
 					"number" 			=> $obj->number,
 					"name" 				=> $obj->name,
 					"tax_system" 		=> $obj->tax_system,

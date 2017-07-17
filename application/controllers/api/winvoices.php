@@ -30,7 +30,6 @@ class Winvoices extends REST_Controller {
 		$sort 	 	= $this->get("sort");
 		$obj = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$data = array();
-
 		//Filter
 		if(!empty($filter) && isset($filter)){
 	    	foreach ($filter["filters"] as $value) {
@@ -47,7 +46,6 @@ class Winvoices extends REST_Controller {
 		}else{
 			$obj->get_iterated();
 		}
-
 		if($obj->exists()){
 			foreach ($obj as $value) {
 				//Reactive Meter
@@ -139,7 +137,7 @@ class Winvoices extends REST_Controller {
 							// plan items
 							$items = $plan->plan_item->get();
 							foreach($items as $item) {
-								$types = array('tariff', 'exemption', 'maintenance');
+								$types = array('tariff', 'exemption', 'maintenance', 'fine');
 								if(in_array($item->type, $types)) {
 									if($item->type == 'tariff') {
 										$tmp["$value->number"]['tariffMain'][] = array(
@@ -163,6 +161,18 @@ class Winvoices extends REST_Controller {
 										}
 									} else if($item->type == 'exemption'){
 										$tmp["$value->number"]['exemption'][] = array(
+											"type" => $item->type,
+											"line" => array(
+												'id'   => $item->id,
+												'currency_id' => $item->currency_id,
+												'name' => $item->name,
+												'unit'  => $item->unit,
+												'amount'=> floatval($item->amount),
+												'type' => $item->type
+											)
+										);
+									} else if($item->type == 'fine'){
+										$tmp["$value->number"]['fine'][] = array(
 											"type" => $item->type,
 											"line" => array(
 												'id'   => $item->id,
@@ -215,6 +225,7 @@ class Winvoices extends REST_Controller {
 			$maintenance = isset($t['maintenance']) ? $t['maintenance'] : [];
 			$installment = isset($t['installment']) ? $t['installment'] : [];
 			$reactive = isset($t['reactive']) ? $t['reactive'] : 0;
+			$fine = isset($t['fine']) ? $t['fine'] : [];
 			$data[] = array(
 				'type' => $t['type'],
 				'invoiced'=> FALSE,
@@ -222,6 +233,7 @@ class Winvoices extends REST_Controller {
 				'meter'=> $t['meter'],
 				'installment' => $installment,
 				'exemption'=> $exemption,
+				'fine'=> $fine,
 				'reactive'=> $reactive,
 				'maintenance' => $maintenance,
 				'tariff' => $t['tariff'],
@@ -578,6 +590,8 @@ class Winvoices extends REST_Controller {
 								'unit' => $unit->unit
 							);
 						}
+					}elseif($item->type == 'fine') {
+						
 					}else{
 						$lines[] = array(
 							'number' => $item->description,

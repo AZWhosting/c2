@@ -60,7 +60,7 @@ class Item_lines extends REST_Controller {
 
 		$obj->include_related("item", array("abbr","number","name","cost","price","locale","income_account_id","expense_account_id","inventory_account_id"));
 		$obj->include_related("measurement", array("name"));
-		$obj->include_related("tax_item", array("account_id","name"));
+		$obj->include_related("tax_item", array("tax_type_id","account_id","name","rate"));
 		$obj->where("deleted <>", 1);
 
 		//Results
@@ -96,9 +96,11 @@ class Item_lines extends REST_Controller {
 
 				//Tax Item
 				$tax_item = array(
-					"id" 			=> $value->tax_item_id, 
+					"id" 			=> $value->tax_item_id,
+					"tax_type_id" 	=> $value->tax_item_tax_type_id ? $value->tax_item_tax_type_id : "",
 					"account_id" 	=> $value->tax_item_account_id ? $value->tax_item_account_id : "",
-					"name" 			=> $value->tax_item_name ? $value->tax_item_name : ""
+					"name" 			=> $value->tax_item_name ? $value->tax_item_name : "",
+					"rate" 			=> $value->tax_item_rate ? $value->tax_item_rate : ""
 				);
 
 				//WHT Account
@@ -108,7 +110,7 @@ class Item_lines extends REST_Controller {
 					$whtAccounts->get_by_id($value->wht_account_id);
 
 					$wht_account = array(
-						"id" 		=> $value->wht_account_id, 
+						"id" 		=> $value->wht_account_id,
 						"number" 	=> $whtAccounts->number,
 						"name" 		=> $whtAccounts->name
 					);
@@ -137,7 +139,7 @@ class Item_lines extends REST_Controller {
 				   	"fine" 				=> floatval($value->fine),
 				   	"tax" 				=> floatval($value->tax),
 				   	"additional_cost" 	=> floatval($value->additional_cost),
-				   	"additional_applied"=> $value->additional_applied,
+				   	"additional_applied"=> intval($value->additional_applied),
 				   	"rate"				=> floatval($value->rate),
 				   	"locale" 			=> $value->locale,
 				   	"movement" 			=> $value->movement,
@@ -216,8 +218,12 @@ class Item_lines extends REST_Controller {
 							//Purchase
 							if($transaction->type=="Cash_Purchase" || $transaction->type=="Credit_Purchase" || $transaction->type=="Item_Adjustment" || $transaction->type=="Internal_Usage"){
 								//Avg Cost
+								$additionalCost = 0;
+								if(isset($value->additional_cost)){
+									$additionalCost = floatval($value->additional_cost);
+								}
 								$lastCost = $onHand * floatval($item->cost);
-								$currentCost = ($currentQuantity * floatval($value->cost) + floatval($value->additional_cost)) / floatval($value->rate);
+								$currentCost = ($currentQuantity * floatval($value->cost) + $additionalCost) / floatval($value->rate);
 
 								if($onHand>0){
 									$item->cost = ($lastCost + $currentCost) / $totalQty;
@@ -280,6 +286,7 @@ class Item_lines extends REST_Controller {
 		   	isset($value->rate)					? $obj->rate 				= $value->rate : "";
 		   	isset($value->locale)				? $obj->locale 				= $value->locale : "";
 		   	isset($value->additional_cost)		? $obj->additional_cost  	= $value->additional_cost : "";
+		   	isset($value->additional_applied)	? $obj->additional_applied  = $value->additional_applied : "";
 		   	isset($value->movement)				? $obj->movement 			= $value->movement : "";
 		   	isset($value->required_date)		? $obj->required_date 		= $value->required_date : "";
 		   	isset($value->deleted) 				? $obj->deleted 			= $value->deleted : "";

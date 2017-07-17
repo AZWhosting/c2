@@ -2441,7 +2441,7 @@
 						 data-row-template="waterCenter-customer-list-tmpl"
 						 data-columns="[{title: 'Properties'}]"
 						 data-selectable=true
-						 data-height="600"
+						 data-height="475"
 						 data-scrollable="{virtual: true}"></div>
 				</div>	
 			</div>
@@ -2470,11 +2470,9 @@
 							        <div class="clearfix"></div>
 							        <!-- // Tabs END -->
 							    </div>
-
 							    <!-- Widget Heading END -->
 							    <div class="widget-body">
 							        <div class="tab-content">
-
 							        	<!-- METER -->
 							            <div id="tab1" class="tab-pane active">
 							            	<a class="btn btn-block btn-inverse" style="margin-bottom: 5px;" data-bind="click: goMeter, visible: meter_visible, text: lang.lang.add_meter">Add Meter</a>
@@ -2494,11 +2492,9 @@
 										    </table>
 										    <div id="pager" class="k-pager-wrap"
 											 data-auto-bind="false"
-										     data-role="pager" data-bind="source: meterDS"></div>	
-							            	
+										     data-role="pager" data-bind="source: meterDS"></div>
 							            </div>
 							            <!-- // METER END -->
-
 							            <!-- INFO -->
 							            <div id="tab2" class="tab-pane">
 							            	<div class="row-fluid">
@@ -2594,12 +2590,9 @@
 										        		data-auto-bind="false"
 										        		data-bind="source: attachmentDS"></tbody>			        
 										    </table>
-
 										    <span class="btn btn-icon btn-success glyphicons ok_2" data-bind="click: uploadFile" style="color: #fff; padding: 5px 38px; text-align: left; width: 98px !important; display: inline-block; margin-top: 10px;"><i></i> <span data-bind="text: lang.lang.save"></span></span>
-
 								        </div>
-								        <!-- // ATTACHMENT END -->							            								            
-
+								        <!-- // ATTACHMENT END -->	
 							        </div>
 							    </div>
 							</div>
@@ -2736,16 +2729,11 @@
 								        		data-bind="source: invoiceVM.dataSource">
 								        </tbody>
 								    </table>
-
 								    <div id="pager" class="k-pager-wrap"
 								        	 data-role="pager"
 											 data-auto-bind="false"
 										     data-bind="source: invoiceVM.dataSource"></div>
-
 					        	</div>
-						        <!-- //WATER SALE END -->
-
-						        <!-- //READING -->
 						        <div class="tab-pane" id="tab-3">
 						        	<h2 style="margin-left: 0;" data-bind="text: lang.lang.add_single_reading">Add Single Reading</h2>
 						        	
@@ -2767,17 +2755,19 @@
 										<div class="col-xs-12 col-sm-2">
 											<div class="control-group">								
 												<label ><span data-bind="text: lang.lang.meter_number">Meter Number</span></label>
-								        		<input class="k-input k-textbox" 
+								        		<p class="k-input k-textbox" 
 								        			style="width:100%; border:1px solid #ccc; padding: 5px;"
 								        			data-bind="text: readingVM.NumberSR">
+								        		</p>
 								        	</div>
 								        </div>
 								        <div class="col-xs-12 col-sm-2">
 											<div class="control-group">								
 												<label ><span data-bind="text: lang.lang.previous">Previous</span></label>
-								        		<input class="k-input k-textbox" 
+								        		<p class="k-input k-textbox" 
 								        			style="width:100%; border:1px solid #ccc; padding: 5px;"
 								        			data-bind="text: readingVM.previousSR" >
+								        		</p>
 								        	</div>
 								       	</div>
 								       	<div class="col-xs-12 col-sm-2">
@@ -2791,7 +2781,7 @@
 								        	</div>
 								        </div>									   
 								        <div class="col-xs-12 col-sm-2">
-											<div class="control-group">								
+											<div class="control-group">	
 												<label ><span data-bind="text: lang.lang.to_date">To Date</span></label>
 									            <input type="text" 
 								                	style="width: 100%;" 
@@ -2832,8 +2822,7 @@
 										     data-bind="source: readingVM.dataSource"></div>
 
 					        	</div>
-						        <!-- //READING END -->						       
-
+						        <!-- //READING END -->
 						        <!-- //INSTALLMENT -->
 						        <div class="tab-pane" id="tab-4">
 						        	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
@@ -2852,18 +2841,13 @@
 								        </tbody>
 								    </table>
 					        	</div>
-						        <!-- //INSTALLMENT END -->
-
 						    </div>
 						</div>
 					</div>
-
-					<div id="ntf1" data-role=
+					<div id="ntf1" data-role="notification"></div>
 				</div>
 			</div>
 			<div class="clear"></div>
-
-
 		</div>
 	</div>
 </script>
@@ -3582,8 +3566,6 @@
 							    </div>
 							</div>
 						</div>
-
-
 						<!-- Form actions -->
 						<div class="box-generic bg-action-button">
 							<div id="ntf1" data-role="notification"></div>
@@ -3595,7 +3577,6 @@
 							</div>
 						</div>
 						<!-- // Form actions END -->
-
 					</div>
 				</div>
 			</div>
@@ -3680,7 +3661,6 @@
 								data-bind="click: cancel"><i></i></span>
 						</div>
 						<div class="clear"></div>
-
 						<div class="well" style="overflow: hidden; margin-bottom: 0;float: left;">
 							<div class="row">
 					        	<div class="col-sm-4 ">
@@ -3717,13 +3697,13 @@
 							            			attr: {placeholder: lang.lang.code}" type="text"
 							            		style="height: 32px; padding: 5px; width: 100%"  class="span2 k-textbox k-invalid" />
 							            </div>
-							           	<div class="col-xs-12 col-sm-3">							            	
+							           	<div class="col-xs-12 col-sm-3">         	
 							            	<input 
 							            		data-bind="value: pName, 
 							            			attr: {placeholder: lang.lang.name}" type="text"
 							            		style="height: 32px; padding: 5px; width: 100%"  class="span2 k-textbox k-invalid" />
 										</div>
-							           	<div class="col-xs-12 col-sm-3">							            	
+							           	<div class="col-xs-12 col-sm-3">     	
 							            	<input 
 							            		data-bind="value: pAddress, 
 							            			attr: {placeholder: lang.lang.address}" type="text"
@@ -3733,7 +3713,6 @@
 							            	<a class="btn-icon btn-primary glyphicons circle_plus cutype-icon" style="width: 80px; padding: 5px 7px 5px 35px !important; text-align: left;" data-bind="click: addProperty"><i></i><span data-bind="text: lang.lang.add">Add</span></a>
 						            	</div>
 						            </div>
-
 						        	<table style="margin-bottom: 0;" class="table table-bordered table-condensed table-striped table-primary table-vertical-center">
 						        		<thead>
 							        		<tr>
@@ -3756,50 +3735,6 @@
 						    </div>
 				        </div>
 					    <br>
-					    <!-- Property Item Window -->
-			            <div id="addProperty"
-			            	data-role="window"
-				                 data-width="250"
-				                 data-height="250"
-				                 data-actions="{}"
-				                 data-resizable="false"
-				                 data-position="{top: '30%', left: '37%'}"		                 
-				                 data-bind="visible: pVisible">
-		            		<table>
-		            			<tr style="border-bottom: 8px solid #fff;">
-									<td width="35%"><span data-bind="text: lang.lang.abbr"></span></td>
-									<td>
-										<input class="k-textbox" placeholder="Name ..." data-bind="attr: {placeholder: lang.lang.abbr}, value: pAbbr" style="width: 100%;">
-									</td>
-								</tr>
-								<tr style="border-bottom: 8px solid #fff;">
-									<td width="35%"><span data-bind="text: lang.lang.code"></span></td>
-									<td>
-										<input class="k-textbox" placeholder="Name ..." data-bind="attr: {placeholder: lang.lang.code}, value: pCode" style="width: 100%;">
-									</td>
-								</tr>
-								<tr style="border-bottom: 8px solid #fff;">
-									<td width="35%"><span data-bind="text: lang.lang.name"></span></td>
-									<td>
-										<input class="k-textbox" placeholder="Name ..." data-bind="attr: {placeholder: lang.lang.name}, value: pName" style="width: 100%;">
-									</td>
-								</tr>
-								<tr style="border-bottom: 8px solid #fff;">
-									<td width="35%"><span data-bind="text: lang.lang.address"></span></td>
-									<td>
-										<input class="k-textbox" placeholder="Name ..." data-bind="attr: {placeholder: lang.lang.address}, value: pAddress" style="width: 100%;">
-									</td>
-								</tr>
-							</table>
-
-							<br>
-							<div style="text-align: center;">
-								<span style="margin-bottom: 0;" class="btn btn-success btn-icon glyphicons ok_2" data-bind="click: saveProperty"><i></i><span data-bind="text: lang.lang.save"></span></span>
-
-								<span class="btn btn-danger btn-icon glyphicons remove_2" data-bind="click: closePropertyWin"><i></i><span data-bind="text: lang.lang.close"></span></span>  
-							</div>
-						</div>
-
 					    <!-- Form actions -->
 						<div class="box-generic bg-action-button">
 							<div id="ntf1" data-role="notification"></div>
@@ -3810,10 +3745,6 @@
 							</div>
 						</div>
 						<!-- // Form actions END -->
-
-
-
-
 					</div>
 				</div>
 			</div>
@@ -4276,9 +4207,7 @@
 				    		<span class="glyphicons no-js remove_2" 
 								data-bind="click: cancel"><i></i></span>
 						</div>
-
 						<div class="clear"></div>
-
 						<!-- Top Part -->
 				    	<div class="row-fluid ">				    		
 				    		<div class="col-xs-12 col-sm-5">
@@ -4287,7 +4216,7 @@
 										<tbody>
 											<tr>
 												<td data-bind="text: lang.lang.customer" style="width: 40%"></td>
-												<td data-bind="text: meterObj.contact[0].name"></td>
+												<td data-bind="text: meterObj.contact_name"></td>
 											</tr>
 											<tr>
 												<td data-bind="text: lang.lang.meter_number">Meter Number</td>
@@ -14630,6 +14559,7 @@
 		currentSR 			: 0,
 		toDateDisabled 		: true,
 		addSingleReading 	: function() {
+			var self = this;
 			if(banhji.reading.get('monthOfSR')){
 				if(kendo.parseInt(banhji.reading.get('previousSR')) > kendo.parseInt(banhji.reading.get('currentSR'))){
 					alert("Current Reading is smaller than Previous Reading");
@@ -14647,7 +14577,9 @@
 					banhji.reading.dataSource.sync();
 					banhji.reading.dataSource.bind("requestEnd",
 						function(data) {
-							$("#ntf1").data("kendoNotification").success("Successfully!");
+							var notificat = $("#ntf1").data("kendoNotification");
+							notificat.hide();
+							notificat.success(self.lang.lang.success_message);
 							banhji.reading.set('monthOfSR', null);
 							banhji.reading.set('toDateSR', null);
 							banhji.reading.set('previousSR', null);
@@ -14657,7 +14589,9 @@
 					);
 				}
 			}else{
-				alert("Please select month");
+				var notificat = $("#ntf1").data("kendoNotification");
+				notificat.hide();
+				notificat.error(this.lang.lang.field_required_message);
 			}
 		},
 		exportEXCEL 		: function(e){
@@ -16398,6 +16332,7 @@
 			var boxwindow = $("#addProperty").kendoWindow({
 			  title: this.lang.lang.add_property
 			});
+			this.contactDS.read();
 		},
 		loadContact 		: function(id){
 			var self = this;
@@ -18019,7 +17954,21 @@
 				   		"type" 				: 'exemption'
 					});
 		    	}
-
+		    	if(v.fine.length > 0){
+	    			invoiceItems.push({				
+						"item_id" 			: v.fine[0].line.id,
+				   		"invoice_id"		: 0,
+					   	"meter_record_id"	: record_id,
+					   	"description" 		: v.fine[0].line.name,
+					   	"quantity" 			: v.fine[0].line.usage,
+					   	"price"				: 0,	
+					   	"amount" 			: v.fine[0].line.amount,
+					   	"rate"				: rate,
+					   	"locale" 			: locale,
+					   	"has_vat" 			: false,
+				   		"type" 				: 'fine'
+					});
+		    	}
 		    	var ReactivePrice = 0, AmountUsage = 0, AmountReactive = 0;
 		    	//Calculate Reactive
 		    	if(v.reactive != 0){
@@ -26273,11 +26222,8 @@
 		exportEXCEL 		: function(){
 		},
 		pageLoad 			: function(id){
-			//Refresh
-			if(this.contactDS.total()>0){
-				this.contactDS.fetch();				
-				this.loadSummary();
-			}
+			this.contactDS.fetch();				
+			this.loadSummary();
 		},
 		sorterChanges 		: function(){
 	        var today = new Date(),
@@ -26850,6 +26796,10 @@
 						name 				: this.get("pName"),
 						address 			: this.get("pAddress")
 			    	});
+			    	this.set("pCode", "");
+		        	this.set("pAbbr", "");
+		        	this.set("pName", "");
+		        	this.set("pAddress","");
 		    	}
 			}else{
 				var notificat = $("#ntf1").data("kendoNotification");
@@ -27127,11 +27077,10 @@
 	    	this.dataSource.sync();
 		    this.dataSource.bind("requestEnd", function(e){
 		    	if(e.response){
-		    		// UTL.set("contact_id", e.response.results[0].id);
+		    		//UTL.set("contact_id", e.response.results[0].id);
 		    		var notificat = $("#ntf1").data("kendoNotification");
 					notificat.hide();
 					notificat.success(self.lang.lang.success_message);
-					self.setProperty(e.response.results[0].id);
 					dfd.resolve(e.response.results);
 				}
 		    });
@@ -27162,6 +27111,7 @@
 					});
 					self.contactPersonDS.sync();
 				}
+				self.setProperty(data[0].id);
 				return data;
 			}, function(reason) { //Error
 				var notificat = $("#ntf1").data("kendoNotification");
