@@ -53235,6 +53235,143 @@
 	    		row.set("item", { id:"", name:"" });
 	    	}
 		},
+		changes				: function(){
+			var self = this, obj = this.get("obj"),
+				total = 0, subTotal = 0, discount =0, tax = 0, remaining = 0, amount_due = 0, itemIds = [];
+
+			$.each(this.lineDS.data(), function(index, value) {
+				var amt = value.quantity * value.price;
+
+				subTotal += amt;
+
+				//Discount by line
+				if(value.discount>0){
+					amt -= value.discount;
+					discount += value.discount;
+				}
+
+				//Tax by line
+				if(value.tax_item_id>0){
+					var taxAmount = amt * value.tax_item.rate;
+					tax += taxAmount;
+					value.set("tax", taxAmount);
+				}else{
+					value.set("tax", 0);
+				}
+
+				value.set("amount", amt);				
+
+				if(value.item_id>0){
+					itemIds.push(value.item_id);
+				}
+	        });
+
+	    	//Total
+	        total = (subTotal + tax) - discount;
+
+	        //Apply Deposit
+	        if(obj.deposit>0){
+	        	if(obj.deposit <= this.get("total_deposit")){
+		        	if(obj.deposit <= total){
+		        		remaining = total - obj.deposit;
+		        	}else{
+		        		obj.set("deposit", total);
+		        	}
+		        }else{
+		        	obj.set("deposit", 0);
+	        		alert("Over deposit to apply!");	        		
+	        	}
+
+	        	//Status
+		        if(remaining==0){
+		    		obj.set("status", 1);
+		    	}else if(remaining==total){
+		    		obj.set("status", 0);
+		    	}else{
+		    		obj.set("status", 2);
+		    	}
+	        }
+
+	        //Warning over credit allowed
+	        if(obj.credit_allowed>0 && total>obj.credit_allowed){
+	        	this.set("amtDueColor", "Gold");		        	
+	        }else{
+	        	this.set("amtDueColor", banhji.source.amtDueColor);
+	        }
+
+	        amount_due = total - obj.deposit;
+
+	        obj.set("sub_total", subTotal);
+	        obj.set("discount", discount);
+	        obj.set("tax", tax);			
+			obj.set("amount", total);
+			obj.set("remaining", remaining);
+
+			this.set("total", kendo.toString(total, "c", obj.locale));
+	        this.set("amount_due", kendo.toString(amount_due, "c", obj.locale));
+	    	
+	    	//Remove Assembly Item List
+			var raw = this.assemblyLineDS.data();
+		    var item, i;
+		    for(i=raw.length-1; i>=0; i--){
+		    	item = raw[i];
+
+		    	if (jQuery.inArray(kendo.parseInt(item.assembly_id), itemIds)==-1) {
+			       	this.assemblyLineDS.remove(item);
+			    }
+		    }
+		},
+		lineDSChanges 		: function(arg){
+			var self = banhji.cashSale;
+
+			if(arg.field){
+				if(arg.field=="item"){
+					var dataRow = arg.items[0],
+						item = dataRow.item;
+
+					if(item.is_catalog=="1"){
+						self.addItemCatalog(dataRow.uid);
+					}else if(item.is_assembly=="1"){
+						self.addItemAssembly(dataRow.uid);
+					}else{
+						self.addItem(dataRow.uid);
+					}
+
+					self.addExtraRow(dataRow.uid);
+				}else if(arg.field=="quantity" || arg.field=="price" || arg.field=="discount"){
+					self.changes();					
+				}else if(arg.field=="measurement"){
+					var dataRow = arg.items[0];
+					
+					dataRow.set("measurement_id", dataRow.measurement.measurement_id);
+			        dataRow.set("price", dataRow.measurement.price * dataRow.rate);
+			        dataRow.set("conversion_ratio", dataRow.measurement.conversion_ratio);
+			    }else if(arg.field=="discount_percentage"){
+			    	var dataRow = arg.items[0],
+			    		percentageAmount = dataRow.quantity * dataRow.price * dataRow.discount_percentage;
+
+			    	dataRow.set("discount", percentageAmount);
+				}else if(arg.field=="tax_item"){
+					var dataRow = arg.items[0];
+					
+					dataRow.set("tax_item_id", dataRow.tax_item.id);
+					dataRow.set("tax", 0);
+
+					self.changes();
+				}
+			}
+		},
+		typeChanges 		: function(){
+			var obj = this.get("obj");
+
+			$.each(this.txnTemplateDS.data(), function(index, value){
+				if(value.type==obj.type){
+					obj.set("transaction_template_id", value.id);
+
+					return false;
+				}
+			});
+		},
 		//Number
 		checkExistingNumber 	: function(){
 			var self = this, para = [], 
@@ -53385,142 +53522,6 @@
 					}
 				});
 			}				
-		},
-		changes				: function(){
-			var self = this, obj = this.get("obj"),
-				total = 0, subTotal = 0, discount =0, tax = 0, remaining = 0, amount_due = 0, itemIds = [];
-
-			$.each(this.lineDS.data(), function(index, value) {
-				var amt = value.quantity * value.price;
-
-				//Discount by line
-				if(value.discount>0){
-					amt -= value.discount;
-					discount += value.discount;
-				}
-
-				//Tax by line
-				if(value.tax_item_id>0){
-					var taxAmount = amt * value.tax_item.rate;
-					tax += taxAmount;
-					value.set("tax", taxAmount);
-				}else{
-					value.set("tax", 0);
-				}
-
-				value.set("amount", amt);
-				subTotal += amt;
-
-				if(value.item_id>0){
-					itemIds.push(value.item_id);
-				}
-	        });
-
-	    	//Total
-	        total = subTotal + tax;
-
-	        //Apply Deposit
-	        if(obj.deposit>0){
-	        	if(obj.deposit <= this.get("total_deposit")){
-		        	if(obj.deposit <= total){
-		        		remaining = total - obj.deposit;
-		        	}else{
-		        		obj.set("deposit", total);
-		        	}
-		        }else{
-		        	obj.set("deposit", 0);
-	        		alert("Over deposit to apply!");	        		
-	        	}
-
-	        	//Status
-		        if(remaining==0){
-		    		obj.set("status", 1);
-		    	}else if(remaining==total){
-		    		obj.set("status", 0);
-		    	}else{
-		    		obj.set("status", 2);
-		    	}
-	        }
-
-	        //Warning over credit allowed
-	        if(obj.credit_allowed>0 && total>obj.credit_allowed){
-	        	this.set("amtDueColor", "Gold");		        	
-	        }else{
-	        	this.set("amtDueColor", banhji.source.amtDueColor);
-	        }
-
-	        amount_due = total - obj.deposit;
-
-	        obj.set("sub_total", subTotal);
-	        obj.set("discount", discount);
-	        obj.set("tax", tax);			
-			obj.set("amount", total);
-			obj.set("remaining", remaining);
-
-			this.set("total", kendo.toString(total, "c", obj.locale));
-	        this.set("amount_due", kendo.toString(amount_due, "c", obj.locale));
-	    	
-	    	//Remove Assembly Item List
-			var raw = this.assemblyLineDS.data();
-		    var item, i;
-		    for(i=raw.length-1; i>=0; i--){
-		    	item = raw[i];
-
-		    	if (jQuery.inArray(kendo.parseInt(item.assembly_id), itemIds)==-1) {
-			       	this.assemblyLineDS.remove(item);
-			    }
-		    }
-		},
-		lineDSChanges 		: function(arg){
-			var self = banhji.cashSale;
-
-			if(arg.field){
-				if(arg.field=="item"){
-					var dataRow = arg.items[0],
-						item = dataRow.item;
-
-					if(item.is_catalog=="1"){
-						self.addItemCatalog(dataRow.uid);
-					}else if(item.is_assembly=="1"){
-						self.addItemAssembly(dataRow.uid);
-					}else{
-						self.addItem(dataRow.uid);
-					}
-
-					self.addExtraRow(dataRow.uid);
-				}else if(arg.field=="quantity" || arg.field=="price" || arg.field=="discount"){
-					self.changes();					
-				}else if(arg.field=="measurement"){
-					var dataRow = arg.items[0];
-					
-					dataRow.set("measurement_id", dataRow.measurement.measurement_id);
-			        dataRow.set("price", dataRow.measurement.price * dataRow.rate);
-			        dataRow.set("conversion_ratio", dataRow.measurement.conversion_ratio);
-			    }else if(arg.field=="discount_percentage"){
-			    	var dataRow = arg.items[0],
-			    		percentageAmount = dataRow.quantity * dataRow.price * dataRow.discount_percentage;
-
-			    	dataRow.set("discount", percentageAmount);
-				}else if(arg.field=="tax_item"){
-					var dataRow = arg.items[0];
-					
-					dataRow.set("tax_item_id", dataRow.tax_item.id);
-					dataRow.set("tax", 0);
-
-					self.changes();
-				}
-			}
-		},
-		typeChanges 		: function(){
-			var obj = this.get("obj");
-
-			$.each(this.txnTemplateDS.data(), function(index, value){
-				if(value.type==obj.type){
-					obj.set("transaction_template_id", value.id);
-
-					return false;
-				}
-			});
 		},
 		addEmpty 		 	: function(){
 			this.dataSource.data([]);
@@ -53903,7 +53904,7 @@
 							reference_no 		: "",
 							segments 	 		: [],
 							dr 	 				: 0,
-							cr 					: saleAmount + obj.discount,
+							cr 					: saleAmount,
 							rate				: obj.rate,
 							locale				: obj.locale
 						};
@@ -54809,6 +54810,143 @@
 	    		row.set("item", { id:"", name:"" });
 	    	}
 		},
+		changes				: function(){
+			var self = this, obj = this.get("obj"),
+				total = 0, subTotal = 0, discount =0, tax = 0, remaining = 0, amount_due = 0, itemIds = [];
+
+			$.each(this.lineDS.data(), function(index, value) {
+				var amt = value.quantity * value.price;
+				
+				subTotal += amt;
+
+				//Discount by line
+				if(value.discount>0){
+					amt -= value.discount;
+					discount += value.discount;
+				}
+
+				//Tax by line
+				if(value.tax_item_id>0){
+					var taxAmount = amt * value.tax_item.rate;
+					tax += taxAmount;
+					value.set("tax", taxAmount);
+				}else{
+					value.set("tax", 0);
+				}
+
+				value.set("amount", amt);				
+
+				if(value.item_id>0){
+					itemIds.push(value.item_id);
+				}
+	        });
+
+	    	//Total
+	        total = (subTotal + tax) - discount;
+
+	        //Apply Deposit
+	        if(obj.deposit>0){
+	        	if(obj.deposit <= this.get("total_deposit")){
+		        	if(obj.deposit <= total){
+		        		remaining = total - obj.deposit;
+		        	}else{
+		        		obj.set("deposit", total);
+		        	}
+		        }else{
+		        	obj.set("deposit", 0);
+	        		alert("Over deposit to apply!");	        		
+	        	}
+
+	        	//Status
+		        if(remaining==0){
+		    		obj.set("status", 1);
+		    	}else if(remaining==total){
+		    		obj.set("status", 0);
+		    	}else{
+		    		obj.set("status", 2);
+		    	}
+	        }
+
+	        //Warning over credit allowed
+	        if(obj.credit_allowed>0 && total>obj.credit_allowed){
+	        	this.set("amtDueColor", "Gold");		        	
+	        }else{
+	        	this.set("amtDueColor", banhji.source.amtDueColor);
+	        }
+
+	        amount_due = total - obj.deposit;
+
+	        obj.set("sub_total", subTotal);
+	        obj.set("discount", discount);
+	        obj.set("tax", tax);			
+			obj.set("amount", total);
+			obj.set("remaining", remaining);
+
+			this.set("total", kendo.toString(total, "c", obj.locale));
+	        this.set("amount_due", kendo.toString(amount_due, "c", obj.locale));
+	    	
+	    	//Remove Assembly Item List
+			var raw = this.assemblyLineDS.data();
+		    var item, i;
+		    for(i=raw.length-1; i>=0; i--){
+		    	item = raw[i];
+
+		    	if (jQuery.inArray(kendo.parseInt(item.assembly_id), itemIds)==-1) {
+			       	this.assemblyLineDS.remove(item);
+			    }
+		    }
+		},
+		lineDSChanges 		: function(arg){
+			var self = banhji.invoice;
+
+			if(arg.field){
+				if(arg.field=="item"){
+					var dataRow = arg.items[0],
+						item = dataRow.item;
+
+					if(item.is_catalog=="1"){
+						self.addItemCatalog(dataRow.uid);
+					}else if(item.is_assembly=="1"){
+						self.addItemAssembly(dataRow.uid);
+					}else{
+						self.addItem(dataRow.uid);
+					}
+
+					self.addExtraRow(dataRow.uid);
+				}else if(arg.field=="quantity" || arg.field=="price" || arg.field=="discount"){
+					self.changes();					
+				}else if(arg.field=="measurement"){
+					var dataRow = arg.items[0];
+					
+					dataRow.set("measurement_id", dataRow.measurement.measurement_id);
+			        dataRow.set("price", dataRow.measurement.price * dataRow.rate);
+			        dataRow.set("conversion_ratio", dataRow.measurement.conversion_ratio);
+			    }else if(arg.field=="discount_percentage"){
+			    	var dataRow = arg.items[0],
+			    		percentageAmount = dataRow.quantity * dataRow.price * dataRow.discount_percentage;
+
+			    	dataRow.set("discount", percentageAmount);
+				}else if(arg.field=="tax_item"){
+					var dataRow = arg.items[0];
+					
+					dataRow.set("tax_item_id", dataRow.tax_item.id);
+					dataRow.set("tax", 0);
+
+					self.changes();
+				}
+			}
+		},
+		typeChanges 		: function(){
+			var obj = this.get("obj");
+
+			$.each(this.txnTemplateDS.data(), function(index, value){
+				if(value.type==obj.type){
+					obj.set("transaction_template_id", value.id);
+
+					return false;
+				}
+			});
+		},
 		//Number
 		checkExistingNumber : function(){
 			var self = this, para = [], 
@@ -54991,142 +55129,6 @@
 				});
 			}				
 		},
-		changes				: function(){
-			var self = this, obj = this.get("obj"),
-				total = 0, subTotal = 0, discount =0, tax = 0, remaining = 0, amount_due = 0, itemIds = [];
-
-			$.each(this.lineDS.data(), function(index, value) {
-				var amt = value.quantity * value.price;
-
-				//Discount by line
-				if(value.discount>0){
-					amt -= value.discount;
-					discount += value.discount;
-				}
-
-				//Tax by line
-				if(value.tax_item_id>0){
-					var taxAmount = amt * value.tax_item.rate;
-					tax += taxAmount;
-					value.set("tax", taxAmount);
-				}else{
-					value.set("tax", 0);
-				}
-
-				value.set("amount", amt);
-				subTotal += amt;
-
-				if(value.item_id>0){
-					itemIds.push(value.item_id);
-				}
-	        });
-
-	    	//Total
-	        total = subTotal + tax;
-
-	        //Apply Deposit
-	        if(obj.deposit>0){
-	        	if(obj.deposit <= this.get("total_deposit")){
-		        	if(obj.deposit <= total){
-		        		remaining = total - obj.deposit;
-		        	}else{
-		        		obj.set("deposit", total);
-		        	}
-		        }else{
-		        	obj.set("deposit", 0);
-	        		alert("Over deposit to apply!");	        		
-	        	}
-
-	        	//Status
-		        if(remaining==0){
-		    		obj.set("status", 1);
-		    	}else if(remaining==total){
-		    		obj.set("status", 0);
-		    	}else{
-		    		obj.set("status", 2);
-		    	}
-	        }
-
-	        //Warning over credit allowed
-	        if(obj.credit_allowed>0 && total>obj.credit_allowed){
-	        	this.set("amtDueColor", "Gold");		        	
-	        }else{
-	        	this.set("amtDueColor", banhji.source.amtDueColor);
-	        }
-
-	        amount_due = total - obj.deposit;
-
-	        obj.set("sub_total", subTotal);
-	        obj.set("discount", discount);
-	        obj.set("tax", tax);			
-			obj.set("amount", total);
-			obj.set("remaining", remaining);
-
-			this.set("total", kendo.toString(total, "c", obj.locale));
-	        this.set("amount_due", kendo.toString(amount_due, "c", obj.locale));
-	    	
-	    	//Remove Assembly Item List
-			var raw = this.assemblyLineDS.data();
-		    var item, i;
-		    for(i=raw.length-1; i>=0; i--){
-		    	item = raw[i];
-
-		    	if (jQuery.inArray(kendo.parseInt(item.assembly_id), itemIds)==-1) {
-			       	this.assemblyLineDS.remove(item);
-			    }
-		    }
-		},
-		lineDSChanges 		: function(arg){
-			var self = banhji.invoice;
-
-			if(arg.field){
-				if(arg.field=="item"){
-					var dataRow = arg.items[0],
-						item = dataRow.item;
-
-					if(item.is_catalog=="1"){
-						self.addItemCatalog(dataRow.uid);
-					}else if(item.is_assembly=="1"){
-						self.addItemAssembly(dataRow.uid);
-					}else{
-						self.addItem(dataRow.uid);
-					}
-
-					self.addExtraRow(dataRow.uid);
-				}else if(arg.field=="quantity" || arg.field=="price" || arg.field=="discount"){
-					self.changes();					
-				}else if(arg.field=="measurement"){
-					var dataRow = arg.items[0];
-					
-					dataRow.set("measurement_id", dataRow.measurement.measurement_id);
-			        dataRow.set("price", dataRow.measurement.price * dataRow.rate);
-			        dataRow.set("conversion_ratio", dataRow.measurement.conversion_ratio);
-			    }else if(arg.field=="discount_percentage"){
-			    	var dataRow = arg.items[0],
-			    		percentageAmount = dataRow.quantity * dataRow.price * dataRow.discount_percentage;
-
-			    	dataRow.set("discount", percentageAmount);
-				}else if(arg.field=="tax_item"){
-					var dataRow = arg.items[0];
-					
-					dataRow.set("tax_item_id", dataRow.tax_item.id);
-					dataRow.set("tax", 0);
-
-					self.changes();
-				}
-			}
-		},
-		typeChanges 		: function(){
-			var obj = this.get("obj");
-
-			$.each(this.txnTemplateDS.data(), function(index, value){
-				if(value.type==obj.type){
-					obj.set("transaction_template_id", value.id);
-
-					return false;
-				}
-			});
-		},		
 		addEmpty 		 	: function(){
 			this.dataSource.data([]);
 			this.lineDS.data([]);
@@ -55513,7 +55515,7 @@
 							reference_no 		: "",
 							segments 	 		: [],
 							dr 	 				: 0,
-							cr 					: saleAmount + obj.discount,
+							cr 					: saleAmount,
 							rate				: obj.rate,
 							locale				: obj.locale
 						};
