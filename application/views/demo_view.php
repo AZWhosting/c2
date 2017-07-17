@@ -50049,7 +50049,10 @@
 			var self = this, obj = this.get("obj");
 
 			this.balanceDS.query({
-				filter: { field:"contact_id", value:obj.contact_id }
+				filter:[
+					{ field:"contact_id", value:obj.contact_id },
+					{ field:"type", operator:"where_in", value:["Commercial_Invoice", "Vat_Invoice", "Invoice"] }
+				]
 		    }).then(function(){
 		    	var view = self.balanceDS.view(),
 		  			contact = self.contactDS.get(obj.contact_id), 
@@ -51081,7 +51084,10 @@
 			var self = this, obj = this.get("obj");
 
 			this.balanceDS.query({
-				filter: { field:"contact_id", value:obj.contact_id }
+				filter:[
+					{ field:"contact_id", value:obj.contact_id },
+					{ field:"type", operator:"where_in", value:["Commercial_Invoice", "Vat_Invoice", "Invoice"] }
+				]
 		    }).then(function(){
 		    	var view = self.balanceDS.view(),
 		  			contact = self.contactDS.get(obj.contact_id), 
@@ -53034,7 +53040,10 @@
 			var self = this, obj = this.get("obj");
 
 			this.balanceDS.query({
-				filter: { field:"contact_id", value:obj.contact_id }
+				filter:[
+					{ field:"contact_id", value:obj.contact_id },
+					{ field:"type", operator:"where_in", value:["Commercial_Invoice", "Vat_Invoice", "Invoice"] }
+				]
 		    }).then(function(){
 		    	var view = self.balanceDS.view(),
 		  			contact = self.contactDS.get(obj.contact_id), 
@@ -53894,7 +53903,7 @@
 							reference_no 		: "",
 							segments 	 		: [],
 							dr 	 				: 0,
-							cr 					: saleAmount,
+							cr 					: saleAmount + obj.discount,
 							rate				: obj.rate,
 							locale				: obj.locale
 						};
@@ -54591,7 +54600,10 @@
 			var self = this, obj = this.get("obj");
 
 			this.balanceDS.query({
-				filter: { field:"contact_id", value:obj.contact_id }
+				filter:[
+					{ field:"contact_id", value:obj.contact_id },
+					{ field:"type", operator:"where_in", value:["Commercial_Invoice", "Vat_Invoice", "Invoice"] }
+				]
 		    }).then(function(){
 		    	var view = self.balanceDS.view(),
 		  			contact = self.contactDS.get(obj.contact_id), 
@@ -55501,7 +55513,7 @@
 							reference_no 		: "",
 							segments 	 		: [],
 							dr 	 				: 0,
-							cr 					: saleAmount,
+							cr 					: saleAmount + obj.discount,
 							rate				: obj.rate,
 							locale				: obj.locale
 						};
@@ -66400,7 +66412,10 @@
 			var self = this, obj = this.get("obj");
 
 			this.balanceDS.query({
-				filter: { field:"contact_id", value:obj.contact_id }
+				filter:[
+					{ field:"contact_id", value:obj.contact_id },
+					{ field:"type", operator:"where_in", value:["Cash_Purchase", "Credit_Purchase"] }
+				]
 		    }).then(function(){
 		    	var view = self.balanceDS.view(),
 		  			contact = self.contactDS.get(obj.contact_id), 
@@ -68946,7 +68961,10 @@
 			var self = this, obj = this.get("obj");
 
 			this.balanceDS.query({
-				filter: { field:"contact_id", value:obj.contact_id }
+				filter:[
+					{ field:"contact_id", value:obj.contact_id },
+					{ field:"type", operator:"where_in", value:["Cash_Purchase", "Credit_Purchase"] }
+				]
 		    }).then(function(){
 		    	var view = self.balanceDS.view(),
 		  			contact = self.contactDS.get(obj.contact_id), 

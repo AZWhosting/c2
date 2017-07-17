@@ -593,8 +593,8 @@ class Transactions extends REST_Controller {
 			}
 		}
 		
-		$obj->like("type", "Invoice", "before");
-		$obj->or_like("type", "Purchase", "before");
+		// $obj->like("type", "Invoice", "before");
+		// $obj->or_like("type", "Purchase", "before");
 		$obj->where_in("status", array(0,2));
 		$obj->where("is_recurring <>", 1);
 		$obj->where("deleted <>", 1);

@@ -614,7 +614,7 @@ class Imports extends REST_Controller {
 		foreach($models as $row) {
 			$contact = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			// problem with same name for two different people
-			$contact->where('name', $row->contact)->get();
+			$contact->where('name', $row->contact)->order_by("id", "desc")->get();
 			$property = new Property(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$property->contact_id = $contact->id;
 			$property->name = $row->name;

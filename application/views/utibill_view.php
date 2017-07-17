@@ -5193,7 +5193,7 @@
 						</div>
 						<div class="clear"></div>
 
-						<div class="row">
+						<div class="row" style="clear:both;">
 				        	<div class="col-sx-12 col-sm-2">
 								<!-- Group -->
 								<div class="control-group">								
@@ -5448,7 +5448,7 @@
 						</div>
 						<div class="clear"></div>
 
-						<div class=" row" >
+						<div class=" row" style="clear:both;">
 				        	<div class="col-sx-12 col-sm-2"">
 								<!-- Group -->
 								<div class="control-group">
@@ -26201,7 +26201,7 @@
 			//[
 			// {field:"use_water", value:1 },
 			// {field:"parent_id", operation: "where_related", model: "contact_type", value: 1}],
-			// sort:{ field:"number", dir:"asc" },
+			sort:{ field:"id", dir:"desc" },
 			batch: true,
 			serverFiltering: true,
 			serverSorting: true,
