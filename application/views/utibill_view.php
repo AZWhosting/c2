@@ -5678,14 +5678,13 @@
 		<div class="span12 headerinv " style="border-bottom: 2px solid \#000;padding: 15px 0;padding-bottom: 30px;#= banhji.InvoicePrint.formVisible#">
             <img class="logoP" style="position: absolute;left: 0;top: 20px;width: auto;height: 90px;" src="#: banhji.InvoicePrint.license.image_url#" alt="#: banhji.InvoicePrint.license.name#" title="#: banhji.InvoicePrint.license.name#" />
 			<div class="span12" align="center">
-				<h4>#: banhji.InvoicePrint.license.name#</h4>					
+				<h4 style="line-height: 40px;">#: banhji.InvoicePrint.license.name#</h4>					
 				<h5 style="line-height: 30px;">#: banhji.InvoicePrint.license.address# 
 				<br>
 				#:typeof banhji.InvoicePrint.license.mobile != 'undefined' ? banhji.InvoicePrint.license.mobile: ''#</h5>					
 			</div>
 		</div>
 		<div class="span12 cover-customer">
-			
 			<div class="span6">
 				<span id="secondwnumber#= id#" style="margin-left: -14px; float: left;"></span><br />
 				<div class="span12">
@@ -5723,10 +5722,10 @@
 		<table class="span12 table table-bordered footerTbl" style="padding:0;margin-top: 40px; border-radius: 3px;border-collapse: inherit;margin-left: 0px;#= banhji.InvoicePrint.formBorder#">
 			<thead style>
 				<tr>
-					<th class="darkbblue main-color" style="background-color: #: formcolor #!important;border:none!important; vertical-align: top;">លេខ​កុងទ័រ<br>METER</th>
-					<th class="darkbblue main-color" style="background-color: #: formcolor #!important;border:none!important; vertical-align: top;">អំណានចាស់<br>PREVIOUS</th>
-					<th class="darkbblue main-color" style="background-color: #: formcolor #!important;border:none!important; vertical-align: top;">អំណានថ្មី<br>CURRENT</th>
-					<th class="darkbblue main-color" style="background-color: #: formcolor #!important;border:none!important; vertical-align: top;">បរិមាណ<br>CONSUMPTION</th>
+					<th class="darkbblue main-color" style="width: 20%;background-color: #: formcolor #!important;border:none!important; vertical-align: top;">លេខ​កុងទ័រ<br>METER</th>
+					<th class="darkbblue main-color" style="width: 15%;background-color: #: formcolor #!important;border:none!important; vertical-align: top;">អំណានចាស់<br>PREVIOUS</th>
+					<th class="darkbblue main-color" style="width: 15%;background-color: #: formcolor #!important;border:none!important; vertical-align: top;">អំណានថ្មី<br>CURRENT</th>
+					<th class="darkbblue main-color" style="width: 15%;background-color: #: formcolor #!important;border:none!important; vertical-align: top;">បរិមាណ<br>CONSUMPTION</th>
 					<th class="darkbblue main-color" style="background-color: #: formcolor #!important;border:none!important; vertical-align: top;">តំលៃឯកត្តា<br>RATE</th>
 					<th class="darkbblue main-color" style="background-color: #: formcolor #!important;border:none!important; vertical-align: top;">តំលៃសរុប<br>AMOUNT</th>
 				</tr>
@@ -18676,7 +18675,7 @@
 			            '<link href="https://fonts.googleapis.com/css?family=Moul" rel="stylesheet">'+
 			            '<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Battambang&amp;subset=khmer" media="all">'+
 			            '<style type="text/css" media="print">' +
-			            	'@page { size: portrait; margin:0.5cm;' +
+			            	'@page { size: portrait; margin:0.1cm;' +
 			            		'size: A4;' +
 			            	'} '+
 			            	'* {font-weight: lighter!important;}'+
@@ -18724,7 +18723,7 @@
 			            		'color:#fff!important;' +
 			            	'}</style>' +
 					    '</head>' + 
-					    '<body><div class="row-fluid" ><div id="example" class="k-content" style="width: 1000px;overflow: hidden">';
+					    '<body style="background: #fff;"><div class="row-fluid" ><div id="example" class="k-content" style="width: 1000px;overflow: hidden">';
 			    var htmlEnd =
 			            '</div></div></body>' +
 			            '</html>';
@@ -18764,15 +18763,11 @@
 			            '<link href="https://fonts.googleapis.com/css?family=Moul" rel="stylesheet">'+
 			            '<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Battambang&amp;subset=khmer" media="all">'+
 			            '<style type="text/css" media="print">' +
-			            	'@page { size: portrait; margin:0.5cm;' +
+			            	'@page { size: portrait; margin:0.2cm;' +
 			            		'size: A5;' +
 			            	'} '+
 							'@media print {' +
 	  							'html, body {' +
-	    							'max-width: '+ pWidth +';' +
-	    							'max-height: '+ pHeight +';' +
-	    							'min-width: '+ pWidth +';' +
-	    							'min-height: '+ pHeight +';' +
 	  							'}' +
 	  							'.main-color {' +
 				            		'background-color: '+colorM+'!important; ' + ts +
@@ -18811,7 +18806,7 @@
 			            		'color:#fff!important;' +
 			            	'}</style>' +
 					    '</head>' + 
-					    '<body><div class="row-fluid" ><div id="example" class="k-content">';
+					    '<body style="background: #fff;"><div class="row-fluid" ><div id="example" class="k-content">';
 			    var htmlEnd =
 			            '</div></div></body>' +
 			            '</html>';
