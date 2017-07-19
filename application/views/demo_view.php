@@ -24522,7 +24522,8 @@
 									<th data-bind="text: lang.lang.date"></th>								
 									<th data-bind="text: lang.lang.ref"></th>
 									<th data-bind="text: lang.lang.qty"></th>
-									<th class="center" data-bind="text: lang.lang.cost_price"></th>
+									<th class="center" data-bind="text: lang.lang.cost"></th>
+									<th data-bind="text: lang.lang.price"></th>
 									<th data-bind="text: lang.lang.on_hand"></th>
 									<th data-bind="text: lang.lang.balance"></th>
 								</tr>
@@ -24541,8 +24542,8 @@
 </script>
 <script id="inventoryPositionDetail-template" type="text/x-kendo-tmpl">
 	<tr>
-		<td colspan="5" style="font-weight: bold;">#: name #</td>
-    	<td class="left" style="font-weight: bold; !important; color: black;">
+		<td colspan="6" style="font-weight: bold;">#: name #</td>
+    	<td class="center" style="font-weight: bold; !important; color: black;">
     		#=kendo.toString(qoh_forward, "n2")#
     	</td>
     	<td class="right strong" style="color: black;">
@@ -24568,7 +24569,8 @@
 			</td>
 			<td class="center" style="color: black;">
 				<span >#=kendo.toString(line[i].cost, "c2", banhji.locale)#</span>
-				/
+			</td>
+			<td>
 				<span >#=kendo.toString(line[i].price, "c2", banhji.locale)#</span>
 			</td>
 			<td class="left" style="color: black;">
@@ -24580,7 +24582,7 @@
 	    </tr>    
     #}# 
     <tr>
-    	<td colspan="6" style="font-weight: bold; color: black;"><span data-bind="text: lang.lang.total"></span>Total #=name#</td>
+    	<td colspan="7" style="font-weight: bold; color: black;"><span data-bind="text: lang.lang.total"></span>Total #=name#</td>
     	<td class="right" style="font-weight: bold; border-top: 1px solid black !important; color: black;">
     		#=kendo.toString(balance, "c2", banhji.locale)#
     	</td>

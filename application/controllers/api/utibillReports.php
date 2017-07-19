@@ -183,6 +183,89 @@ class UtibillReports extends REST_Controller {
 		$this->response($data, 200);
 	}
 
+	//Fine Collect
+	function fine_collect_get() {
+		$filter 	= $this->get("filter");
+		$page 		= $this->get('page');
+		$limit 		= $this->get('limit');
+		$sort 	 	= $this->get("sort");
+		$data["results"] = [];
+		$data["count"] = 0;
+		$total = 0;
+
+		$obj = new Journal_Line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+		//Sort
+		if(!empty($sort) && isset($sort)){
+			foreach ($sort as $value) {
+				if(isset($value['operator'])){
+					$obj->{$value['operator']}($value["field"], $value["dir"]);
+				}else{
+					$obj->order_by($value["field"], $value["dir"]);
+				}
+			}
+		}
+		
+		//Filter		
+		if(!empty($filter) && isset($filter)){
+	    	foreach ($filter["filters"] as $value) {
+	    		if(isset($value['operator'])){
+	    			$obj->{$value['operator']}($value['field'], $value['value']);	    		
+	    		} else {
+	    			$obj->where($value['field'], $value['value']);
+	    		}
+			}
+		}
+
+		//Results
+
+		$obj->include_related("transaction", array("issued_date", "number"));
+		$obj->include_related("contact", array("abbr", "number", "name"));
+		$obj->include_related('transaction/location', "name");
+		$obj->where("account_id", "110");
+		$obj->where("deleted <>", 1);
+		$obj->get_iterated();
+		
+		if($obj->exists()){
+			$objList = [];
+			foreach ($obj as $value) {								
+				$amount = floatval($value->cr)/ floatval($value->rate);
+				
+				if(isset($objList[$value->contact_id])){
+					$objList[$value->contact_id]["line"][] = array(
+						"id" 				=> $value->id,
+						"type" 				=> $value->description,
+						"date" 				=> $value->transaction_issued_date,
+						"location" 			=> $value->transaction_location_name,
+						"number" 			=> $value->transaction_number,
+						"amount"			=> $amount
+					);
+				}else{
+					$objList[$value->contact_id]["id"] 		= $value->contact_id;
+					$objList[$value->contact_id]["name"] 	= $value->contact_abbr.$value->contact_number." ".$value->contact_name;
+					$objList[$value->contact_id]["line"][]	= array(
+						"id" 				=> $value->id,
+						"type" 				=> $value->description,
+						"date" 				=> $value->transaction_issued_date,
+						"location" 			=> $value->transaction_location_name,
+						"number" 			=> $value->transaction_number,
+						"amount"			=> $amount
+					);
+				}
+				$total +=  $amount;
+			}
+
+			foreach ($objList as $value) {
+				$data["results"][] = $value;
+			}
+			$data['total'] = $total;
+			$data["count"] = count($data["results"]);
+		}
+
+		//Response Data
+		$this->response($data, 200);
+	}
+
 	//BALANCE
 	function balance_summary_get() {
 		$filter 	= $this->get("filter");
@@ -1379,6 +1462,7 @@ class UtibillReports extends REST_Controller {
 				}
 			}
 		}
+		$obj->include_related("contact", array("abbr", "number", "address", "phone", "name"));
 		$obj->include_related('branch', array('name'));
 		$obj->include_related('record', array('from_date', 'to_date', 'usage'));
 		$obj->include_related('location', array('name'));
@@ -1389,7 +1473,7 @@ class UtibillReports extends REST_Controller {
 				//$utility = $row->contact->include_related('utility', array('abbr', 'code'))->get();
 				$data[] = array(
 					"id" => $row->id,
-					"meter_number" => $row->number,
+					"meter_number" => $row->contact_name." ".$row->number,
 					"from_date"=>$row->record_from_date,
 					"to_date" =>$row->record_to_date,
 					"license" => $row->branch_name,

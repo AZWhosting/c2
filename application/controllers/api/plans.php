@@ -23,22 +23,40 @@ class Plans extends REST_Controller {
 	}
 
 	function index_get() {
-		$getData = $this->get('filter');
-		$filters = $getData['filters'];
+		$filter 	= $this->get("filter");
+		$page 		= $this->get('page');
+		$limit 		= $this->get('limit');
+		$sort 	 	= $this->get("sort");
 		$table = new Plan(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$data = array();
-
-		if(isset($filters)) {
-			foreach($filters as $filter) {
-				if(isset($filter['operator'])) {
-					$table->{$filter['operator']}($filter['field'], $filter['value']);
-				} else {
-					$table->where($filter['field'], $filter['value']);
+		//Sort
+		if(!empty($sort) && isset($sort)){
+			foreach ($sort as $value) {
+				if(isset($value['operator'])){
+					$table->{$value['operator']}($value["field"], $value["dir"]);
+				}else{
+					$table->order_by($value["field"], $value["dir"]);
 				}
 			}
 		}
-
-		$table->get();
+		//Filter
+		if(!empty($filter) && isset($filter)){
+	    	foreach ($filter["filters"] as $value) {
+	    		if(isset($value["operator"])) {
+					$table->{$value["operator"]}($value["field"], $value["value"]);
+				} else {
+	    			$table->where($value["field"], $value["value"]);
+				}
+			}
+		}
+		//Results
+		if($page && $limit){
+			$table->get_paged_iterated($page, $limit);
+			$data["count"] = $table->paged->total_rows;
+		}else{
+			$table->get_iterated();
+			$data["count"] = $table->result_count();
+		}
 
 		if($table->exists()) {
 			foreach($table as $value) {
@@ -58,7 +76,6 @@ class Plans extends REST_Controller {
 				);
 			}
 		}
-
 		$this->response(array('results' => $data, 'count' => count($data)), 200);
 	}
 
@@ -351,23 +368,45 @@ class Plans extends REST_Controller {
 	}
 
 	function tariff_get() {
-		$getData = $this->get('filter');
-		$filters = $getData['filters'];
+		$filter 	= $this->get("filter");
+		$page 		= $this->get('page');
+		$limit 		= $this->get('limit');
+		$sort 	 	= $this->get("sort");
 		$table = new Plan_item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$data = array();
 
-		if(isset($filters)) {
-			foreach($filters as $filter) {
-				if(isset($filter['operator'])) {
-					$table->{$filter['operator']}($filter['field'], $filter['value']);
-				} else {
-					$table->where($filter['field'], $filter['value']);
+		//Sort
+		if(!empty($sort) && isset($sort)){
+			foreach ($sort as $value) {
+				if(isset($value['operator'])){
+					$table->{$value['operator']}($value["field"], $value["dir"]);
+				}else{
+					$table->order_by($value["field"], $value["dir"]);
 				}
 			}
 		}
+
+		//Filter
+		if(!empty($filter) && isset($filter)){
+	    	foreach ($filter["filters"] as $value) {
+	    		if(isset($value["operator"])) {
+					$table->{$value["operator"]}($value["field"], $value["value"]);
+				} else {
+	    			$table->where($value["field"], $value["value"]);
+				}
+			}
+		}
+
 		$table->where('is_deleted', 0);
-		$table->order_by('usage','asc');
-		$table->get();
+		// $table->order_by('usage','asc');
+		//Results
+		if($page && $limit){
+			$table->get_paged_iterated($page, $limit);
+			$data["count"] = $table->paged->total_rows;
+		}else{
+			$table->get_iterated();
+			$data["count"] = $table->result_count();
+		}
 		if($table->exists()) {
 			$data = array();
 			foreach($table as $row) {

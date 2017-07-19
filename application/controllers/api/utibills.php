@@ -55,6 +55,22 @@ class Utibills extends REST_Controller {
 		}
 		if($obj->exists()){
 			foreach ($obj as $value) {
+				//Calulate Fine
+				$fineAmount = 0;
+				if($value->status == 0){
+					$fine = new Winvoice_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					$fine->where("transaction_id", $value->id);
+					$fine->where("type", "fine")->order_by("id", "desc")->limit(1)->get();
+					if($fine->exists()){
+						$dueDate = new DateTime($value->due_date);
+						$fineDate = new DateTime(date('Y-m-d'));
+						$fineDate = $fineDate->diff($dueDate)->days;
+						$fineDateAmount = intval($fine->usage);
+						if($fineDate >= $fineDateAmount){
+							$fineAmount = floatval($fine->amount);
+						}
+					}
+				}
 				//Sum amount paid
 				$amount_paid = 0;
 				//Check Pastsoldpaid
@@ -116,6 +132,7 @@ class Utibills extends REST_Controller {
 				   	"status" 					=> intval($value->status),
 				   	"is_journal" 				=> $value->is_journal,
 				   	"print_count" 				=> $value->print_count,
+				   	"amount_fine" 				=> $fineAmount,
 				   	"meter"						=> $meterNum,
 				   	"meter_id"					=> $value->meter_id,
 				   	"amount_paid"				=> $amount_paid
@@ -130,6 +147,22 @@ class Utibills extends REST_Controller {
 				$relateinv->get_iterated();
 				if($relateinv->exists()){
 					foreach ($relateinv as $relate) {
+						//Calulate Fine
+						$fineAmount = 0;
+						if($relate->status == 0){
+							$fine = new Winvoice_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+							$fine->where("transaction_id", $relate->id);
+							$fine->where("type", "fine")->order_by("id", "desc")->limit(1)->get();
+							if($fine->exists()){
+								$dueDate = new DateTime($relate->due_date);
+								$fineDate = new DateTime(date('Y-m-d'));
+								$fineDate = $fineDate->diff($dueDate)->days;
+								$fineDateAmount = intval($fine->usage);
+								if($fineDate >= $fineDateAmount){
+									$fineAmount = floatval($fine->amount);
+								}
+							}
+						}
 						//Sum amount paid
 						$amount_paid = 0;
 						//Check Pastsoldpaid
@@ -192,6 +225,7 @@ class Utibills extends REST_Controller {
 						   	"is_journal" 				=> $relate->is_journal,
 						   	"print_count" 				=> $relate->print_count,
 						   	"meter"						=> $meterNum,
+						   	"amount_fine" 				=> $fineAmount,
 						   	"meter_id"					=> $relate->meter_id,
 						   	"amount_paid"				=> $amount_paid
 						);
@@ -240,7 +274,7 @@ class Utibills extends REST_Controller {
 			$obj->number = $number;
 		   	isset($value->type) 					? $obj->type 						= $value->type : "Cash_Receipt";
 		   	isset($value->journal_type) 			? $obj->journal_type 				= $value->journal_type : "";
-		   	isset($value->sub_total) 				? $obj->sub_total 					= $value->sub_total : "";
+		   	isset($value->sub_total) ? $obj->sub_total 	= floatval($value->amount) - floatval($value->amount_fine) : 0;
 		   	isset($value->discount) 				? $obj->discount 					= floatval($value->discount) : 0;
 		   	isset($value->tax) 						? $obj->tax 						= $value->tax : "";
 		   	isset($value->amount) 					? $obj->amount 						= floatval($value->amount) : 0;
@@ -269,6 +303,7 @@ class Utibills extends REST_Controller {
 		   	isset($value->is_recurring) 			? $obj->is_recurring 				= $value->is_recurring : "";
 		   	isset($value->is_journal) 				? $obj->is_journal 					= $value->is_journal : "";
 		   	isset($value->meter_id) 				? $obj->meter_id 					= $value->meter_id : 0;
+		   	isset($value->amount_fine) 				? $obj->fine 						= $value->amount_fine : 0;
 	   		if($obj->save()){
 	   			//Journal DR
 	   			$journal = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
@@ -299,18 +334,32 @@ class Utibills extends REST_Controller {
 	   			$journal2->account_id = 10;
 	   			$journal2->contact_id = $obj->contact_id;
 	   			$journal2->dr 		  = 0.00;
-	   			$journal2->cr 		  = $obj->amount + $obj->discount;
+	   			$journal2->cr 		  = ($obj->amount + $obj->discount) - $value->amount_fine;
 	   			$journal2->description = "Utility Invoice";
 	   			$journal2->rate 	  = $obj->rate;
 	   			$journal2->locale 	  = $obj->locale;
 	   			$journal2->save();
+	   			//Fine
+	   			if($value->amount_fine > 0){
+	   				$journalF = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		   			$journalF->transaction_id = $obj->id;
+		   			$journalF->account_id 	= 110;
+		   			$journalF->contact_id 	= $obj->contact_id;
+		   			$journalF->dr  		 	= 0.00;
+		   			$journalF->description 	= "Utility Fine";
+		   			$journalF->cr 		 	= $value->amount_fine;
+		   			$journalF->rate 	 	= $obj->rate;
+		   			$journalF->locale 	 	= $obj->locale;
+		   			$journalF->save();
+	   			}
 	   			$oldtran = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 	   			$oldtran->where("id", $value->reference_id)->limit(1)->get();
-	   			if($oldtran->amount - ($obj->amount + $obj->discount) == 0){
+	   			if(($oldtran->amount + $value->amount_fine) - ($obj->amount + $obj->discount) == 0){
 	   				$oldtran->status = 1;
 	   			}else{
 	   				$oldtran->status = 2;
 	   			}
+	   			$oldtran->fine = $value->amount_fine;
 	   			$oldtran->save();
 	   			//Session Recieve
 	   			if($value->session_id){

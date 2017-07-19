@@ -45242,8 +45242,8 @@
 
 				<div class="" style="padding-left: 0; text-align: center; width: 20%; float: left;">
 					<a href="#/internal_usage">
-						<img title="Add Internal Usage" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/internal_usage.png" style="width: 95%; float: left;"  />
-						<span data-bind="text: lang.lang.cash_receipt"  style=" text-transform: uppercase; color: #000; font-weight: 600; margin-top: 8px; display: inline-block;">Receipt</span>
+						<img title="Add Internal Usage" src="<?php echo base_url();?>/assets/rice_mill/internal_usage.png" style="width: 95%; float: left;"  />
+						<span data-bind="text: lang.lang.app_internal_usage"  style=" text-transform: uppercase; color: #000; font-weight: 600; margin-top: 8px; display: inline-block;"></span>
 					</a>
 				</div>
 				
@@ -45365,7 +45365,7 @@
 					<div class="span4">
 						<a href="#/customer_balance_summary">
 							<div class="widget-body alert alert-primary sale-overview" style="background: #4f961f; border: none; padding: 30px 15px!important;">
-								<h2 data-bind="text: lang.lang.receivable"></h2>
+								<h2 style="color: #fff !important;" data-bind="text: lang.lang.receivable"></h2>
 								<div align="center" class="text-large strong" data-bind="text: obj.ar"></div>
 								<!-- <table width="100%">
 									<tr align="center">
@@ -45393,7 +45393,7 @@
 					<div class="span4">
 						<a href="#/suppliers_balance_summary">
 							<div class="widget-body alert alert-primary sale-overview" style="background: #4f961f; border: none; padding: 30px 15px!important;">
-								<h2 data-bind="text: lang.lang.payables"></h2>
+								<h2 style="color: #fff !important;" data-bind="text: lang.lang.payables"></h2>
 								<div align="center" class="text-large strong" data-bind="text: obj.ap"></div>
 								<!-- <table width="100%">
 									<tr align="center">
@@ -45420,7 +45420,7 @@
 
 					<div class="span4">
 						<div class="widget-body alert alert-primary sale-overview" style="background: #4f961f; border: none; padding: 30px 15px!important;">
-							<h2 data-bind="text: lang.lang.inventory_value">Inventory Value</h2>
+							<h2 style="color: #fff !important;" data-bind="text: lang.lang.inventory_value">Inventory Value</h2>
 							<div align="center" class="text-large strong" data-bind="text: obj.inventory_value"></div>
 							<!-- <table width="100%">
 								<tr align="center">
@@ -46858,7 +46858,7 @@
 </script>
 <script id="riceMillMenu" type="text/x-kendo-template">
 	<ul class="topnav">
-	  	<li><a href='#/app_center' class='glyphicons show_big_thumbnails'><i></i></a></li>
+	  	<li><a href='#/rice_mill' class='glyphicons show_big_thumbnails'><i></i></a></li>
 	  	<li role='presentation' class='dropdown'>
 	  		<a style="color: #fff;" class='dropdown-toggle glyphicons ' data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false'>CENTER<span class='caret'></span></a>
 	  		<ul class='dropdown-menu'>

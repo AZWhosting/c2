@@ -180,6 +180,7 @@ class Winvoices extends REST_Controller {
 												'name' => $item->name,
 												'unit'  => $item->unit,
 												'amount'=> floatval($item->amount),
+												'usage' => floatval($item->usage),
 												'type' => $item->type
 											)
 										);

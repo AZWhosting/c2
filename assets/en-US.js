@@ -546,6 +546,7 @@ var	en_US = {
 	"c_delivery_note" : "DELIVERY NOTE",
 	"adjustment" : "Adjustment",
 	"internal_usage" : "Internal Usage",
+	"app_internal_usage" : "Internal Usage",
 	"build_assembly" : "Build Assembly",
 	"catalog" : "Catalog ",
 	"quantity_on_hand" : "QUANTITY ON HAND",
