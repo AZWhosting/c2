@@ -116,7 +116,7 @@ p.addItem.glyphicons.circle_remove i:before {
 
 /*Water Dashboard*/
 .water-tableList .table.table-borderless.table-condensed tr th{
-	background: #1E4E78;
+	background: #203864;
 	text-transform: uppercase;
 	color: #fff;
 	padding: 10px;
@@ -211,20 +211,27 @@ p.addItem.glyphicons.circle_remove i:before {
     text-transform: capitalize!important;
     list-style: none;
 }
-#secondary-menu ul li:nth-child(2),
-#secondary-menu ul li:nth-child(4){
+#secondary-menu ul li:nth-child(2){
 	width: 82px;
+}
+#secondary-menu ul li:nth-child(4){
+  width: 90px;
 }
 #secondary-menu ul li:nth-child(3),
 #secondary-menu ul li:nth-child(3) a{
 	width: 60px;
 }
-#secondary-menu ul li:nth-child(2) a,
-#secondary-menu ul li:nth-child(4) a{
+#secondary-menu ul li:nth-child(2) a{
     float: left;
     padding-left: 15px;
     padding-right: 15px;
     width: 82px;
+}
+#secondary-menu ul li:nth-child(4) a{
+    float: left;
+    padding-left: 15px;
+    padding-right: 15px;
+    width: 90px;
 }
 #secondary-menu ul li a span{
 	color: #fff;
@@ -286,11 +293,12 @@ p.addItem.glyphicons.circle_remove i:before {
 
 .navbar-form .search-query {
   width: 170px;
-  background: #555555;
+  background: #fff;
   border: none;
-  color: #ffffff;
+  color: #333;
   height: 33px;
   padding: 0 10px;
+  border-radius: 2px;
 }
 .btn-group.open 
 .btn-inverse.dropdown-toggle, 

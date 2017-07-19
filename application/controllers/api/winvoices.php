@@ -46,6 +46,7 @@ class Winvoices extends REST_Controller {
 		}else{
 			$obj->get_iterated();
 		}
+		$tmp = array();
 		if($obj->exists()){
 			foreach ($obj as $value) {
 				//Reactive Meter

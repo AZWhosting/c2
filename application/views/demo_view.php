@@ -7960,6 +7960,7 @@
 									<th data-bind="text: lang.lang.type"><span></span></th>
 									<th data-bind="text: lang.lang.date"><span></span></th>
 									<th style="text-align: right;" data-bind="text: lang.lang.reference"><span></span></th>
+									<th style="text-align: right;" data-bind="text: lang.lang.memo"><span></span></th>
 									<th data-bind="text: lang.lang.amount"><span></span></th>
 								</tr>
 							</thead>
@@ -7983,6 +7984,7 @@
 		<td></td>
 		<td></td>
 		<td></td>
+		<td></td>
 	</tr>	
 	# var amount = 0;#
 	#for(var i= 0; i <line.length; i++) {#
@@ -7992,9 +7994,10 @@
 				<a href="\#/#=line[i].type.toLowerCase()#/#=line[i].id#"><i></i> #=line[i].type#</a>
 			</td>
 			<td>#=kendo.toString(new Date(line[i].issued_date), "dd-MM-yyyy")#</td>
-			<td style="text-align: right;">
+			<td style="text-align: center;">
 				<a href="\#/#=line[i].type.toLowerCase()#/#=line[i].id#">#=line[i].number#</a>
-			</td>			
+			</td>	
+			<td style="text-align: right;">#=line[i].memo#</td>		
 			<td style="text-align: right;">#=kendo.toString(line[i].amount, "c2", banhji.locale)#</td>
 		</tr>
 	#}#
@@ -8002,12 +8005,13 @@
     	<td style="font-weight: bold; color: black;" data-bind="text: lang.lang.print_export"></td>
     	<td></td>
     	<td></td>
+    	<td></td>
     	<td class="right" style="font-weight: bold; border-top: 1px solid black !important; color: black;">
     		#=kendo.toString(amount, "c2", banhji.locale)#
     	</td>
     </tr>
     <tr>
-    	<td colspan="4">&nbsp;</td>
+    	<td colspan="5">&nbsp;</td>
     </tr>
 </script>
 <script id="customerTransactionList" type="text/x-kendo-template">
@@ -24521,10 +24525,10 @@
 									<th data-bind="text: lang.lang.txn_type"></th>
 									<th data-bind="text: lang.lang.date"></th>								
 									<th data-bind="text: lang.lang.ref"></th>
-									<th data-bind="text: lang.lang.qty"></th>
-									<th class="center" data-bind="text: lang.lang.cost"></th>
-									<th data-bind="text: lang.lang.price"></th>
-									<th data-bind="text: lang.lang.on_hand"></th>
+									<th class="center" data-bind="text: lang.lang.qty"></th>
+									<th class="right" data-bind="text: lang.lang.cost"></th>
+									<th class="right" data-bind="text: lang.lang.price"></th>
+									<th class="right" data-bind="text: lang.lang.on_hand"></th>
 									<th data-bind="text: lang.lang.balance"></th>
 								</tr>
 							</thead>
@@ -24543,7 +24547,7 @@
 <script id="inventoryPositionDetail-template" type="text/x-kendo-tmpl">
 	<tr>
 		<td colspan="6" style="font-weight: bold;">#: name #</td>
-    	<td class="center" style="font-weight: bold; !important; color: black;">
+    	<td class="right" style="font-weight: bold; !important; color: black;">
     		#=kendo.toString(qoh_forward, "n2")#
     	</td>
     	<td class="right strong" style="color: black;">
@@ -24564,16 +24568,16 @@
 			<td style="color: black;">
 				<a href="\#/#=line[i].type.toLowerCase()#/#=line[i].id#"><i></i> #=line[i].number#</a>
 			</td>		
-			<td class="left" style="color: black;">
+			<td class="center" style="color: black;">
 				#=kendo.toString(line[i].quantity, "n2")# #=measurement#
 			</td>
-			<td class="center" style="color: black;">
+			<td class="right" style="color: black;">
 				<span >#=kendo.toString(line[i].cost, "c2", banhji.locale)#</span>
 			</td>
-			<td>
+			<td class="right" style="color: black;">
 				<span >#=kendo.toString(line[i].price, "c2", banhji.locale)#</span>
 			</td>
-			<td class="left" style="color: black;">
+			<td class="right" style="color: black;">
 				#=kendo.toString(qty, "n2")#
 			</td>
 			<td class="right" style="color: black;">
@@ -34274,14 +34278,48 @@
 													<td class="span4">
 														<h3><a href="#/sale_order_list" data-bind="text: lang.lang.sale_order_list" style="text-transform: capitalize;"></a></h3>
 													</td>
-													<td class="span4"></td>
-													<td class="span4"></td>
+													<td class="span4">
+														<h3><a href="#/cashSale_summary_by_customer"  style="text-transform: capitalize;">Cash Sale Summary by Customer</a></h3>
+													</td>
+													<td class="span4">
+														<h3><a href="#/cashSale_detail_by_customer" style="text-transform: capitalize;">Cash Sale Detail by Customer</a></h3>
+													</td>
 												</tr>
 												<tr>
 													<td class="span4">
 														<p style="padding-right: 25px;"></p>
 													</td>
+													<td class="span4">
+														<p style="padding-right: 25px;">
+															Summarizes total cash sales for each customer within a period of time, so you can see which ones generating the most revenue for you.
+														</p>
+													</td>	
+													<td class="span4">
+														<p style="padding-right: 25px;">
+															Lists individual cash sale transactions by date for each customer within a period of time.
+														</p>
+													</td>
+												</tr>
+												<tr>
+													<td class="span4">
+														<h3><a href="#/cashSale_summary_by_product"  style="text-transform: capitalize;">Cash Sale Summary by Product/Service</a></h3>
+													</td>
+													<td class="span4">
+														<h3><a href="#/cashSale_detail_by_product" style="text-transform: capitalize;">Cash Sale Detail by Product/Service</a></h3>
+													</td>
 													<td class="span4"></td>
+												</tr>
+												<tr>
+													<td class="span4">
+														<p >
+															Summarizes total cash sales for each product/service within a period of time. In addition, it includes gross profit margin, quantity, amount, cost, and average prices.
+														</p>
+													</td>
+													<td class="span4">
+														<p style="padding-right: 25px;">
+															Lists individual cash sale transactions by date for each product/service within a period of time.
+														</p>
+													</td>	
 													<td class="span4"></td>
 												</tr>
 

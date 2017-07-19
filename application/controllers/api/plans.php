@@ -27,6 +27,8 @@ class Plans extends REST_Controller {
 		$page 		= $this->get('page');
 		$limit 		= $this->get('limit');
 		$sort 	 	= $this->get("sort");
+		$data["results"] = [];
+		$data["count"] = 0;
 		$table = new Plan(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$data = array();
 		//Sort
@@ -62,7 +64,7 @@ class Plans extends REST_Controller {
 			foreach($table as $value) {
 				$items = $value->plan_item->select('id as item, account_id, name, is_flat, type, unit, amount')->get_raw();
 				$currency= $value->currency->get();
-				$data[] = array(
+				$data["results"][] = array(
 					'id' => $value->id,
 					"currency"			=> $value->currency_id,
 					"_currency"				=> array(
@@ -76,7 +78,7 @@ class Plans extends REST_Controller {
 				);
 			}
 		}
-		$this->response(array('results' => $data, 'count' => count($data)), 200);
+		$this->response($data, 200);
 	}
 
 	function index_post() {

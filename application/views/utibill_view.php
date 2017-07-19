@@ -191,7 +191,7 @@
                 	<li><a href='#/' class='glyphicons show_big_thumbnails'><i></i><span >Dashnboard</span></a></li>
 				  	<li><a href='#/center'><span data-bind="text: lang.lang.center"></span></a></li>
 				  	<li role='presentation' class='dropdown'>
-				  		<a class='dropdown-toggle glyphicons text_bigger' data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false'><i class="text-t"></i> <span class='caret'></span></a>
+				  		<a class='dropdown-toggle glyphicons text_bigger' data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false'><i class="text-t"></i> <span style="margin-top: 12px;" class='caret'></span></a>
 			  			<ul class='dropdown-menu'>
 			  				<li><a href='#/customer'><span >Add New Customer</span></a></li>
 			  				<li><a href='#/property'><span >Add New Property</span></a></li> 
@@ -209,7 +209,7 @@
 				  	</li>
 				  	<li>
 				  		<a href="#/reports">
-				  			<span>Reports</span>
+				  			<span>REPORTS</span>
 				  		</a>
 				  	</li>
                 	<li>
@@ -236,11 +236,11 @@
             <!-- Menu Phone Search-->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-3">
             	<form class="navbar-form pull-left hidden-lg hidden-md hidden-sm">
-					<div class="btn-group">
+					<!-- <div class="btn-group">
 					  	<a class="btn btn-inverse dropdown-toggle" data-toggle="dropdown" href="#">
 					    	<i class="icon-th"></i>
 					  	</a>
-					</div>
+					</div> -->
 				  	<input id="search-placeholder" class="span2 search-query" 
 				  		type="text" 
 				  		placeholder="Search" 
@@ -259,7 +259,7 @@
                     <li>
                     	<a href="#" data-bind="click: lang.changeToKh">
                     		<img class="kh-flag" src="https://lipis.github.io/flag-icon-css/flags/4x3/kh.svg">
-                    		<span>ភាសាខ្មែរ</span>
+                    		<span style="margin-left: 0;">ភាសាខ្មែរ</span>
                     	</a>
                     </li>
 					<li>
@@ -501,7 +501,7 @@
 </script>
 
 <!--Setting-->
-<script id="setting" type="text/x-kendo-template">
+<th data-bind="text: lang.lang.on_hand"></th><script id="setting" type="text/x-kendo-template">
 	<div class="container">
 		<div class="row-fluid">
 			<div class="background">
@@ -6262,7 +6262,7 @@
 										</div>
 									</div>
 								</div>
-								<div class="cover-block">
+								<div class="cover-block" style="padding-left: 15px; padding-right: 15px;">
 									<h2 data-bind="text: lang.lang.reports" style="width: 100%;">Report</h2>
 									<p data-bind="text: lang.lang.summary_and_detail_cash">
 										Summary and detail cash receipt reports grouped by sources/ methods of receipts
@@ -6302,7 +6302,7 @@
 								<div id="loadING" style="display:none;text-align: center;position: absolute;top: 0; left: 0;width: 100%; height: 100%;background: rgba(142, 159, 167, 0.8);z-index: 9999;">
 									<i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 45%;left: 45%"></i>
 								</div>
-								<div class="row" data-bind="visible: haveSession" style="background: #fff; float: left; width: 100%; margin-top: 15px; padding: 15px 0;">
+								<div class="row" data-bind="visible: haveSession" style="background: #fff; float: left; width: 100%; padding: 15px 0 0;">
 									<div class="col-sm-12" style="padding-right: 0;/">
 										<!-- Upper Part -->
 										<div class="row" >
@@ -6390,9 +6390,9 @@
 										<div class="row" >
 											<div class="col-xs-12 col-sm-6">
 												<div class="widget widget-heading-simple widget-body-primary widget-employees">
-													<div class="widget-body padding-none">
+													<div class="widget-body padding-none" style="background: none; width: 100%; float: left; border: none; padding: 0;">
 														<div class="row-fluid row-merge">
-															<div class="listWrapper" style="min-height: 0; margin-bottom: 15px;">
+															<div class="listWrapper" style="min-height: 0; margin-bottom: 15px; padding: 0;">
 																<div class="innerAll" style="padding: 15px 15px 0; ">
 																	<div class="widget-search separator bottom">
 																		<button class="btn btn-default pull-right" data-bind="click: search"><i class="icon-search"></i></button>
@@ -6490,14 +6490,14 @@
 										<table class="table table-bordered table-primary table-striped table-vertical-center" style="margin-top: 15px;">
 									        <thead>
 									            <tr>
-									            	<th data-bind="text: lang.lang.no_"></th>
-									            	<th data-bind="text: lang.lang.date"></th>
-									            	<th data-bind="text: lang.lang.name"></th>
-									            	<th data-bind="text: lang.lang.number"></th>
-									            	<th data-bind="text: lang.lang.meter"></th>
-									            	<th data-bind="text: lang.lang.amount"></th>
-									            	<th data-bind="visible: chhDiscount, text: lang.lang.discount"></th>
-									            	<th data-bind="text: lang.lang.receive"></th>
+									            	<th style="vertical-align: top;" data-bind="text: lang.lang.no_"></th>
+									            	<th style="vertical-align: top;" data-bind="text: lang.lang.date"></th>
+									            	<th style="vertical-align: top;" data-bind="text: lang.lang.name"></th>
+									            	<th style="vertical-align: top;" data-bind="text: lang.lang.number"></th>
+									            	<th style="vertical-align: top;" data-bind="text: lang.lang.meter"></th>
+									            	<th style="vertical-align: top;" data-bind="text: lang.lang.amount"></th>
+									            	<th style="vertical-align: top;" data-bind="visible: chhDiscount, text: lang.lang.discount"></th>
+									            	<th style="vertical-align: top;" data-bind="text: lang.lang.receive"></th>
 									            </tr>
 									        </thead>
 									        <tbody data-role="listview" 
@@ -9884,16 +9884,20 @@
     </tr>
 </script>
 <script id="fineCollect" type="text/x-kendo-template">
-	<div id="slide-form">
-		<div class="customer-background" style="margin-top: 20px;">
-			<div class="container-960">
-				<div id="example" class="k-content saleSummaryCustomer">
-			    	<span class="pull-right glyphicons no-js remove_2"
+	<div class="container">
+		<div class="row-fluid">
+			<div id="waterreport" class="background">
+				<div class="row-fluid">
+					<div id="loadImport" style="display:none;text-align: center;position: absolute;width: 100%; height: 100%;margin-top: -15px;background: rgba(142, 159, 167, 0.8);z-index: 9999;">
+						<i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 35%;left: 45%"></i>
+					</div>
+					<div id="example" class="k-content">
+						<div class="hidden-print pull-right" style="margin-bottom: 15px;">
+				    		<span class="pull-right glyphicons no-js remove_2"
 						onclick="javascript:window.history.back()"><i></i></span>
-					<br>
-					<br>
-					
-					<div class="row-fluid">
+						</div>
+						<div class="clear"></div>
+
 					    <!-- Tabs -->
 						<div class="relativeWrap" data-toggle="source-code">
 							<div class="widget widget-tabs widget-tabs-gray report-tab">
@@ -9906,44 +9910,48 @@
 										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab" ><i></i><span data-bind="text: lang.lang.print_export">Print/Export</span></a></li>
 									</ul>
 								</div>
-								<!-- // Tabs Heading END -->								
+								<!-- // Tabs Heading END -->
 								<div class="widget-body">
 									<div class="tab-content">
-
 								        <!-- //Date -->
-								        <div class="tab-pane active" id="tab-1">									        	
-											
-											<input data-role="dropdownlist"
-												   class="sorter"                  
-										           data-value-primitive="true"
-										           data-text-field="text"
-										           data-value-field="value"
-										           data-bind="value: sorter,
-										                      source: sortList,                              
-										                      events: { change: sorterChanges }" />
-
-											<input data-role="datepicker"
-												   class="sdate"
-												   data-format="dd-MM-yyyy"
-										           data-bind="value: sdate,
-										           			  max: edate"
-										           placeholder="From ..." >
-
-										    <input data-role="datepicker"
-										    	   class="edate"
-										    	   data-format="dd-MM-yyyy"
-										           data-bind="value: edate,
-										                      min: sdate"
-										           placeholder="To ..." >
-
-										  	<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
-							
+								        <div class="tab-pane active" id="tab-1">
+											<div class="row">
+												<div class="col-xs-12 col-sm-2">
+													<input data-role="dropdownlist"
+														   class="sorter"
+												           data-value-primitive="true"
+												           data-text-field="text"
+												           data-value-field="value"
+												           data-bind="value: sorter,
+												                      source: sortList,
+												                      events: { change: sorterChanges }" style="width: 100%" />
+												</div>
+												<div class="col-xs-12 col-sm-2">
+													<input data-role="datepicker"
+														   class="sdate"
+														   data-format="dd-MM-yyyy"
+												           data-bind="value: sdate,
+												           			  max: edate"
+												           placeholder="From ..." style="width: 100%" >
+												</div>
+												<div class="col-xs-12 col-sm-2">
+												    <input data-role="datepicker"
+												    	   class="edate"
+												    	   data-format="dd-MM-yyyy"
+												           data-bind="value: edate,
+												                      min: sdate"
+												           placeholder="To ..." style="width: 100%" >
+												</div>
+												<div class="col-xs-12 col-sm-1">
+												  	<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+												</div>
+											</div>
 							        	</div>
 
 								    	<!-- Filter -->
 								        <div class="tab-pane" id="tab-2">
 											<div class="row">
-												<div class="span3" style="padding-left: 15px;">
+												<div class="col-xs-12 col-sm-3">
 													<span data-bind="text: lang.lang.license">Licenses</span>
 													<input 
 														data-role="dropdownlist" 
@@ -9957,7 +9965,7 @@
 																source: licenseDS,
 																events: {change: licenseChange}" style="width: 100%">
 												</div>
-												<div class="span3">													
+												<div class="col-xs-12 col-sm-3">
 													<span data-bind="text: lang.lang.location">Locations</span>
 														<input 
 															data-role="dropdownlist" 
@@ -9971,76 +9979,71 @@
 																enabled: haveBloc,
 																source: blocDS" style="width: 100%">
 												</div>
-												<div class="span1">											
+												<div class="col-xs-12 col-sm-1">											
 										  			<button style="margin-top: 20px;" type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
 												</div>														
 											</div>		
 							        	</div>
 							        	<!-- PRINT/EXPORT  -->
-								        <div class="tab-pane" id="tab-3">								        	
-								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: printGrid" style="width: 80px;"><i></i> Print</span>
-								        	<!-- <span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-pdf-o"></i>
-								        		Print as PDF
-								        	</span> -->
-								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: ExportExcel" style="width: 80px;">
-								        		<i class="fa fa-file-excel-o"></i>
-								        		Export to Excel
-								        	</span>
+								        <div class="tab-pane report" id="tab-3">
+								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: printGrid" ><i></i> Print</span>
+											<span id="excel" class="btn btn-icon btn-default execl" data-bind="click: ExportExcel" >
+												<i class="fa fa-file-excel-o"></i>
+												Export to Excel
+											</span>
 							        	</div>	
 								    </div>
 								</div>
 							</div>
 						</div>
 						<!-- // Tabs END -->						
-					</div>
+					
 
-					<div id="invFormContent">
-						<div class="block-title">
-							<h3 data-bind="text: company.name"></h3>
-							<h2>Fine Collection</h2>
-							<p data-bind="text: displayDate"></p>
-						</div>
-
-						<div class="row-fluid">
-							<div class="span3" style="padding: 0;">
-								<div class="total-customer">
-									<p data-bind="text: lang.lang.number_of_customer">Number of Customers</p>
-									<span data-bind="text: dataSource.total"></span>
-								</div>
-
+						<div id="invFormContent">
+							<div class="block-title">
+								<h3 data-bind="text: company.name"></h3>
+								<h2>Fine Collection</h2>
+								<p data-bind="text: displayDate"></p>
 							</div>
-							<div class="span9" style="padding-right: 0;">
-								<div class="total-sale">
-									<p data-bind="text: lang.lang.amount">Amount</p>
-									<span data-bind="text: total"></sapn>
+
+							<div class="row">
+								<div class="col-xs-12 col-sm-3">
+									<div class="total-sale">
+										<p data-bind="text: lang.lang.number_of_customer">Number of Customers</p>
+										<span data-bind="text: dataSource.total"></span>
+									</div>
+
+								</div>
+								<div class="col-xs-12 col-sm-9">
+									<div class="total-sale">
+										<p data-bind="text: lang.lang.amount">Amount</p>
+										<span data-bind="text: total"></sapn>
+									</div>
 								</div>
 							</div>
-						</div>
 
-						<table class="table table-borderless table-condensed ">
-							<thead>
-								<tr>									
-									<th><span data-bind="text: lang.lang.type">Type</span></th>
-									<th><span data-bind="text: lang.lang.date">Date</span></th>
-									<th><span data-bind="text: lang.lang.location">Location</span></th>
-									<th><span data-bind="text: lang.lang.reference">Reference</span></th>
-									<th><span data-bind="text: lang.lang.amount">Amount</span></th>
-								</tr>
-							</thead>
-							<tbody data-role="listview"
-									data-template="fineCollect-template"
-									data-auto-bind="false" 
-									data-bind="source: dataSource">
-							</tbody>
-						</table>
+							<table style="margin-bottom: 0;" class="table table-bordered table-condensed table-striped table-primary table-vertical-center">
+								<thead>
+									<tr>									
+										<th style="vertical-align: top;"><span data-bind="text: lang.lang.type">Type</span></th>
+										<th style="vertical-align: top;"><span data-bind="text: lang.lang.date">Date</span></th>
+										<th style="vertical-align: top;"><span data-bind="text: lang.lang.location">Location</span></th>
+										<th style="vertical-align: top;"><span data-bind="text: lang.lang.reference">Reference</span></th>
+										<th style="vertical-align: top;"><span data-bind="text: lang.lang.amount">Amount</span></th>
+									</tr>
+								</thead>
+								<tbody data-role="listview"
+										data-template="fineCollect-template"
+										data-auto-bind="false" 
+										data-bind="source: dataSource">
+								</tbody>
+							</table>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-	<br>
-	<br>
 </script>
 <script id="fineCollect-template" type="text/x-kendo-template">
 	<tr style="font-weight: bold">
@@ -11843,7 +11846,7 @@
   				<li><a href='#/backup'><span >Back Up</span></a></li>
   			</ul>
 	  	</li>
-	  	<li><a href="#/reports" style="color: #fff">Reports</a></li>
+	  	<li><a href="#/reports" style="color: #fff">REPORTS</a></li>
 	  	<li><a href='#/setting' class='glyphicons settings'><i class="text-t"></i></a></li>
 	</ul>
 </script>
