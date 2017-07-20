@@ -53,26 +53,34 @@ class Ops extends REST_Controller {
 			 	//    $this->db->update_batch('measurements', $raw, 'id');
 
 			    //Insert batch data
-			 	//    $data = array(
+			 	// 	$raw = array(
 				// 	array(
-			 	//    		'name' 			=> 'Working Time', 
-				//     	'is_system' 	=> 1
-			 	//    	),
-			 	//    	array(
-			 	//    		'name' 			=> 'Unit', 
-				//     	'is_system' 	=> 1
-			 	//    	)
-				// );
-			 	//    $this->db->insert_batch('measurement_categories', $data);
+				 // 	   		'type' 			=> 'Receipt_Note',
+				 // 	   		'abbr' 			=> 'RTN',
+				 // 	   		'name' 			=> 'Receipt Note'
+				 // 	   	),
+				 // 	   	array(
+				 // 	   		'type' 			=> 'Receipt_Note1',
+				 // 	   		'abbr' 			=> 'RTN1',
+				 // 	   		'name' 			=> 'Receipt Note1'
+				 // 	   	)
+					// );
+				 // 	$this->db->insert_batch('prefixes', $raw);
 				
 				//Add new fields
 				// $fields = array(
-				// 	"gross_weight" => array(
-				// 		"type" 		=> "DECIMAL",
-				// 		"constraint"=> "30,15",
+				// 	"lot_number" => array(
+				// 		"type" 		=> "VARCHAR",
+				// 		"constraint"=> 255,
 				// 		"null" 		=> FALSE,
-				// 		"default" 	=> 0
+				// 		"default" 	=> ""
 				// 	)
+				// 	// "gross_weight" => array(
+				// 	// 	"type" 		=> "DECIMAL",
+				// 	// 	"constraint"=> "30,15",
+				// 	// 	"null" 		=> FALSE,
+				// 	// 	"default" 	=> 0
+				// 	// )
 				// );
 				// $this->dbforge->add_column("item_lines", $fields);
 

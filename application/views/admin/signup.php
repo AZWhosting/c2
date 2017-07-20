@@ -503,13 +503,13 @@
                                 data-option-label="Select Business Type" style="text-align: left; border: 1px solid #d0cfd5;">
                             </select>
                         </div>
-                        <div class="col-sm-6"">
+                        <!-- <div class="col-sm-6"">
                             <input type="date" 
                                 class="k-input"
                                 data-role="datepicker"
                                 label="Fiscal Date">
                             
-                        </div>
+                        </div> -->
                         <!-- <div class="col-sm-6">
                             <select class="signup-country"
                                 data-role="dropdownlist" 
